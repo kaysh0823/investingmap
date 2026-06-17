@@ -10,14 +10,20 @@ const LATEST_CACHE_MS = 45_000;
 const HIST_CACHE_MS = 6 * 60 * 60 * 1000;
 const HIST_TRADING_DAYS = 252;
 const HIST_CALENDAR_SCAN = 400;
-const HIST_DAYS_PER_REQUEST = 8;
+const HIST_DAYS_PER_REQUEST = 4;
 
 let latestCache = null;
 let histCache = null;
 let histWarm = null;
 
 function getAuthKey(env) {
-  const raw = env.KRX_AUTH_KEY || env.AUTH_KEY || env.KRX_OPEN_API_KEY || '';
+  const raw =
+    env.KRX_AUTH_KEY ||
+    env.KRX_API_KEY ||
+    env.AUTH_KEY ||
+    env.KRX_OPEN_API_KEY ||
+    env.OPEN_API_KEY ||
+    '';
   return String(raw).trim();
 }
 
@@ -102,6 +108,9 @@ async function krxDaily(authKey, endpoint, basDd) {
   }
   if (!res.ok) {
     const text = await res.text().catch(() => '');
+    if (res.status === 401) {
+      throw new Error('KRX AUTH_KEY rejected (401) — check Pages Secret name and API approval');
+    }
     throw new Error(`KRX ${res.status} ${endpoint} ${basDd} ${text.slice(0, 120)}`);
   }
   const j = await res.json();
@@ -123,15 +132,25 @@ async function fetchMarketDay(authKey, basDd) {
 }
 
 async function resolveLatestBasDd(authKey) {
-  for (const basDd of businessDates(15)) {
-    try {
-      const byCode = await fetchMarketDay(authKey, basDd);
-      if (byCode.size > 0) return { basDd, byCode };
-    } catch {
-      /* try older date */
+  const dates = businessDates(12);
+  for (let i = 0; i < dates.length; i += 4) {
+    const batch = dates.slice(i, i + 4);
+    const tried = await Promise.all(
+      batch.map(async (basDd) => {
+        try {
+          const byCode = await fetchMarketDay(authKey, basDd);
+          return byCode.size > 0 ? { basDd, byCode } : null;
+        } catch (e) {
+          if (e && String(e.message || e).includes('401')) throw e;
+          return null;
+        }
+      }),
+    );
+    for (const r of tried) {
+      if (r) return r;
     }
   }
-  throw new Error('KRX: no trading data for recent dates');
+  throw new Error('KRX: no trading data — approve stk_bydd_trd and ksq_bydd_trd at openapi.krx.co.kr');
 }
 
 async function getLatestSnapshot(authKey) {
@@ -226,13 +245,18 @@ async function warmHistory(authKey, latestBasDd) {
   return stats;
 }
 
-async function buildQuotes(authKey, codes) {
+async function buildQuotes(authKey, codes, options) {
   const latest = await getLatestSnapshot(authKey);
-  let histStats;
-  try {
-    histStats = await warmHistory(authKey, latest.basDd);
-  } catch {
-    histStats = new Map();
+  let histStats =
+    histCache && histCache.basDd === latest.basDd ? histCache.stats : new Map();
+
+  if (options && options.warmHist) {
+    try {
+      const warmed = await warmHistory(authKey, latest.basDd);
+      histStats = warmed;
+    } catch {
+      /* keep cached/partial stats */
+    }
   }
 
   const items = {};
@@ -289,13 +313,24 @@ export async function onRequest(context) {
   const codesRaw = url.searchParams.get('codes') || '';
   const codes = [...new Set(codesRaw.split(/[, ]+/).map(normalizeTicker).filter(Boolean))];
   if (!codes.length) {
-    return new Response(JSON.stringify({ asOf: new Date().toISOString(), items: {}, source: 'krx-open-api' }), {
-      headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
-    });
+    return new Response(
+      JSON.stringify({
+        asOf: new Date().toISOString(),
+        items: {},
+        source: 'krx-open-api',
+        configured: true,
+        histReady: !!(histCache && histCache.stats && histCache.stats.size),
+      }),
+      {
+        headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
+      },
+    );
   }
 
+  const warmHist = url.searchParams.get('warm') === '1';
+
   try {
-    const payload = await buildQuotes(authKey, codes);
+    const payload = await buildQuotes(authKey, codes, { warmHist });
     return new Response(JSON.stringify(payload), {
       headers: {
         ...ch,

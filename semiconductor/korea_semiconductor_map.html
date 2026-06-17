@@ -1558,9 +1558,14 @@
     }
     let lang = imInitialLang('ko');
     let imQuotesAsOf = '';
+    let imQuotesError = '';
     function updateQuotesAsofDisplay() {
       var el = document.getElementById('quotes-asof');
       if (!el) return;
+      if (imQuotesError) {
+        el.textContent = imQuotesError;
+        return;
+      }
       if (!imQuotesAsOf) { el.textContent = ''; return; }
       var short = imQuotesAsOf.indexOf('T') >= 0 ? imQuotesAsOf.replace('T', ' ').slice(0, 19) + ' UTC' : imQuotesAsOf;
       el.textContent = (lang === 'en' ? 'Live quotes: ' : '실시간 시세: ') + short;
@@ -2117,7 +2122,18 @@
       InvestingMapLiveQuotes.start({
         getCompanies: function () { return koreanCompanies; },
         renderTable: renderTable,
-        onAsOf: function (iso) { imQuotesAsOf = iso || ''; updateQuotesAsofDisplay(); }
+        onAsOf: function (iso) {
+          imQuotesError = '';
+          imQuotesAsOf = iso || '';
+          updateQuotesAsofDisplay();
+        },
+        onError: function (err) {
+          imQuotesError = lang === 'en'
+            ? 'Quotes unavailable (check KRX_AUTH_KEY on Cloudflare)'
+            : '시세 연결 실패 (Cloudflare KRX_AUTH_KEY·KRX API 승인 확인)';
+          imQuotesAsOf = '';
+          updateQuotesAsofDisplay();
+        }
       });
     }
   </script>

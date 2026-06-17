@@ -80,6 +80,7 @@
    * @param {string} [opts.baseUrl] — override meta
    * @param {number} [opts.pollMs]
    * @param {(iso: string) => void} [opts.onAsOf]
+   * @param {(err: Error) => void} [opts.onError]
    */
   function start(opts) {
     var base = (opts && opts.baseUrl != null && opts.baseUrl !== '') ? String(opts.baseUrl).replace(/\/+$/, '') : getApiBase();
@@ -88,8 +89,11 @@
     var renderTable = opts.renderTable;
     var pollMs = (opts && opts.pollMs) || 45000;
     var onAsOf = opts.onAsOf || function () {};
+    var onError = opts.onError || function () {};
+    var pollCount = 0;
 
     function run() {
+      pollCount++;
       var companies = getCompanies();
       if (!companies || !companies.length) return;
       var codes = [];
@@ -102,9 +106,16 @@
       }
       if (!codes.length) return;
       var url = base + '/?codes=' + encodeURIComponent(codes.join(','));
+      if (pollCount % 8 === 0) url += '&warm=1';
       fetch(url, { mode: 'cors', cache: 'no-store' })
         .then(function (r) {
-          return r.ok ? r.json() : Promise.reject(new Error('quotes ' + r.status));
+          return r.json().then(function (j) {
+            if (!r.ok) {
+              var msg = (j && (j.message || j.error)) ? String(j.message || j.error) : ('quotes ' + r.status);
+              throw new Error(msg);
+            }
+            return j;
+          });
         })
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
@@ -113,7 +124,11 @@
           } catch (e1) {}
           if (renderTable) renderTable();
         })
-        .catch(function () {});
+        .catch(function (err) {
+          try {
+            onError(err || new Error('quotes fetch failed'));
+          } catch (e2) {}
+        });
     }
 
     run();
