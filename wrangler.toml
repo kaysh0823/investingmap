@@ -1,6 +1,0 @@
-name = "investingmap"
-compatibility_date = "2024-01-01"
-pages_build_output_dir = "."
-
-# Local dev: npx wrangler pages dev . --port 8788
-# Set secret: npx wrangler pages secret put KRX_AUTH_KEY --project-name investingmap

@@ -44,12 +44,17 @@ node scripts/update_fx_from_naver.mjs
 ## 실시간 시세 (Cloudflare Pages)
 
 1. `investingmap/` 폴더를 **Cloudflare Pages**에 배포합니다.
-2. Pages **Settings → Variables and Secrets**에 Secret **`KRX_AUTH_KEY`**(KRX OPEN API 인증키)를 넣습니다.
-3. [openapi.krx.co.kr](https://openapi.krx.co.kr)에서 **유가증권·코스닥 일별매매정보** API 이용을 신청·승인받습니다.
-4. 지도 페이지는 `/api/quotes?codes=...`를 약 45초마다 호출합니다 (`js/live_quotes.js`).
-5. 로컬 테스트: `npx wrangler pages dev .` + `functions/README.md` 참고.
+2. **Settings → Builds & deployments → Build configuration** (중요):
+   - **Framework preset:** None
+   - **Build command:** *(비움)* 또는 `exit 0`
+   - **Build output directory:** `/` (저장소 루트)
+   - **Root directory:** *(비움 — `index.html`이 repo 루트에 있어야 함)*
+3. **루트에 `wrangler.toml`을 커밋하지 마세요.** Git 연동 시 V2 wrangler 배포로 바뀌며 **배포 실패**(No deployment available)가 날 수 있습니다. 로컬만 `wrangler.toml.example` 복사 후 사용.
+4. **Settings → Variables and Secrets** (Production): Secret **`KRX_AUTH_KEY`**
+5. [openapi.krx.co.kr](https://openapi.krx.co.kr)에서 **유가증권·코스닥 일별매매정보** API 승인
+6. 배포 후 `https://<사이트>/api/quotes?codes=005930` 확인 (`js/live_quotes.js`가 약 45초마다 폴링)
 
-레거시: 별도 Worker(`worker/quotes`) + meta URL — `functions/README.md` 하단 참고.
+로컬: `functions/README.md` · 레거시 Worker: `worker/quotes/`
 
 ## 서브경로 배포
 

@@ -1,0 +1,5 @@
+# Local `npx wrangler pages dev` only — do NOT commit as wrangler.toml
+# (root wrangler.toml makes Git-connected Pages use V2/wrangler deploy and can fail the build)
+name = "investingmap"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "."
