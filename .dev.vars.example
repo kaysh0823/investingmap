@@ -1,2 +1,3 @@
-# Local Pages Functions dev only — do not commit real keys
-KRX_AUTH_KEY=
+# Local Pages Functions dev — copy to .dev.vars (gitignored)
+# Cloudflare Production secret name: KRX OPEN API 인증키 (or KRX_AUTH_KEY)
+KRX OPEN API 인증키=

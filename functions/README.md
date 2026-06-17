@@ -24,8 +24,7 @@ Returns JSON compatible with `js/live_quotes.js`:
    - Build output directory: **`/`**
    - Do **not** commit `wrangler.toml` at repo root (use `wrangler.toml.example` for local dev only).
 3. **Settings → Variables and Secrets** (Production):
-   - Secret **`KRX_AUTH_KEY`** = KRX Data Marketplace 인증키  
-     (또는 `AUTH_KEY` / `KRX_OPEN_API_KEY` — 코드에서 순서대로 읽음)
+   - Secret **`KRX OPEN API 인증키`** 또는 **`KRX_AUTH_KEY`** = KRX Data Marketplace 인증키
 3. [openapi.krx.co.kr](https://openapi.krx.co.kr)에서 아래 API **이용 신청·승인** 필요:
    - 유가증권 일별매매정보 (`stk_bydd_trd`)
    - 코스닥 일별매매정보 (`ksq_bydd_trd`)

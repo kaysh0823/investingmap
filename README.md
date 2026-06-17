@@ -51,8 +51,7 @@ node scripts/update_fx_from_naver.mjs
    - **Root directory:** *(비움 — `index.html`이 repo 루트에 있어야 함)*
 3. **루트에 `wrangler.toml`을 커밋하지 마세요.** Git 연동 시 V2 wrangler 배포로 바뀌며 **배포 실패**(No deployment available)가 날 수 있습니다. 로컬만 `wrangler.toml.example` 복사 후 사용.
 4. **Settings → Variables and Secrets** (Production **및 Preview** 모두):
-   - Secret 이름 **`KRX_AUTH_KEY`** (값 = KRX Data Marketplace 인증키)
-   - `AUTH_KEY`, `KRX_API_KEY` 도 읽습니다
+   - Secret 이름 예: **`KRX OPEN API 인증키`** (현재 설정) 또는 **`KRX_AUTH_KEY`**
    - **Encrypt** 타입(Secret)으로 저장 — Plain text 변수만 있으면 Functions에서 안 읽힐 수 있음
 5. [openapi.krx.co.kr](https://openapi.krx.co.kr)에서 **유가증권·코스닥 일별매매정보** API 승인
 6. 배포 후 `https://<사이트>/api/quotes?codes=005930` 확인 (`js/live_quotes.js`가 약 45초마다 폴링)

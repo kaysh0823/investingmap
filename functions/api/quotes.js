@@ -1,7 +1,16 @@
 /**
  * Cloudflare Pages Function: GET /api/quotes?codes=005930,000660
- * KRX OPEN API (Secret: KRX_AUTH_KEY on Pages)
+ * KRX OPEN API (Pages Secret: KRX OPEN API 인증키, KRX_AUTH_KEY, …)
  */
+
+const KRX_ENV_KEY_NAMES = [
+  'KRX OPEN API 인증키',
+  'KRX_AUTH_KEY',
+  'KRX_API_KEY',
+  'KRX_OPEN_API_KEY',
+  'AUTH_KEY',
+  'OPEN_API_KEY',
+];
 
 const KRX_BASE = 'https://data-dbg.krx.co.kr/svc/apis';
 const KOSPI_DAILY = '/sto/stk_bydd_trd';
@@ -17,14 +26,18 @@ let histCache = null;
 let histWarm = null;
 
 function getAuthKey(env) {
-  const raw =
-    env.KRX_AUTH_KEY ||
-    env.KRX_API_KEY ||
-    env.AUTH_KEY ||
-    env.KRX_OPEN_API_KEY ||
-    env.OPEN_API_KEY ||
-    '';
-  return String(raw).trim();
+  if (!env) return '';
+  for (const k of KRX_ENV_KEY_NAMES) {
+    const v = env[k];
+    if (v != null && String(v).trim()) return String(v).trim();
+  }
+  for (const k of Object.keys(env)) {
+    if (/KRX/i.test(k) && (/AUTH|인증|KEY|API/i.test(k))) {
+      const v = env[k];
+      if (v != null && String(v).trim()) return String(v).trim();
+    }
+  }
+  return '';
 }
 
 function normalizeTicker(t) {
@@ -303,7 +316,7 @@ export async function onRequest(context) {
 
   const authKey = getAuthKey(env);
   if (!authKey) {
-    return new Response(JSON.stringify({ error: 'KRX_AUTH_KEY not configured' }), {
+    return new Response(JSON.stringify({ error: 'KRX auth key not configured (Pages Secret)' }), {
       status: 503,
       headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
     });
