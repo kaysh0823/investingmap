@@ -3,6 +3,6 @@
   "private": true,
   "description": "Static Korea sector investment maps (Cloudflare Pages)",
   "scripts": {
-    "build": "node -e \"process.exit(0)\""
+    "build": "node scripts/pages_build.mjs"
   }
 }

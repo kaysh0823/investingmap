@@ -47,7 +47,7 @@ node scripts/update_fx_from_naver.mjs
 2. **Settings → Builds & deployments → Build configuration** (중요):
    - **Framework preset:** None
    - **Build command:** `npm run build` *(또는 비움 — repo에 no-op `package.json` 포함)*
-   - **Build output directory:** `/` (저장소 루트)
+   - **Build output directory:** `dist` *(또는 `/` — `dist`일 때 `npm run build`가 정적 파일을 복사함)*
    - **Root directory:** *(비움 — `index.html`이 repo 루트에 있어야 함)*
 3. **루트에 `wrangler.toml`을 커밋하지 마세요.** Git 연동 시 V2 wrangler 배포로 바뀌며 **배포 실패**(No deployment available)가 날 수 있습니다. 로컬만 `wrangler.toml.example` 복사 후 사용.
 4. **Settings → Variables and Secrets** (Production): Secret **`KRX_AUTH_KEY`**
