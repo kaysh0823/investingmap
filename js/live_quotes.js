@@ -1,8 +1,7 @@
 /**
- * investingmap — optional live quotes polling (Worker-backed).
- * Requires <meta name="investingmap-quotes-api" content="https://.../"> and
- * company rows with .ticker; merges numeric fields onto each company:
- * quoteLast, quoteHi52, quoteLo52, quoteYoyPct
+ * investingmap — live quotes polling (Cloudflare Pages /api/quotes or custom URL).
+ * Default: same-origin /api/quotes (Pages Function + KRX OPEN API).
+ * Override: <meta name="investingmap-quotes-api" content="https://...">
  */
 (function (global) {
   'use strict';
@@ -10,8 +9,12 @@
   function getApiBase() {
     try {
       var m = document.querySelector('meta[name="investingmap-quotes-api"]');
-      var c = m && m.getAttribute('content') ? String(m.getAttribute('content')).trim() : '';
-      return c.replace(/\/+$/, '');
+      var c = m && m.getAttribute('content') != null ? String(m.getAttribute('content')).trim() : '';
+      if (c) return c.replace(/\/+$/, '');
+      if (typeof window !== 'undefined' && window.location && window.location.protocol && window.location.protocol.indexOf('http') === 0) {
+        return '/api/quotes';
+      }
+      return '';
     } catch (e) {
       return '';
     }

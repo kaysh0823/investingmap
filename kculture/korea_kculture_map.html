@@ -23,7 +23,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="investingmap-quotes-api" content="">
+  <meta name="investingmap-quotes-api" content="/api/quotes">
   <title>한국 K컬처 산업 투자 지도 / Korea K-Culture Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -900,9 +900,9 @@
               <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
               <th id="th-market" onclick="sortTable('market')">시장</th>
               <th id="th-chain" onclick="sortTable('chain')">벨류체인</th>
-              <th id="th-semtype">세부 유형</th>
-              <th id="th-products">주요 제품·서비스</th>
-              <th id="th-partners">글로벌 참고 관계</th>
+              <th id="th-semtype">반도체 유형</th>
+              <th id="th-products">주요 제품</th>
+              <th id="th-partners">글로벌 주요 거래처</th>
             </tr>
           </thead>
           <tbody id="table-body"></tbody>
@@ -936,7 +936,7 @@
       <div class="graph-main">
         <svg id="graph-svg"></svg>
         <div id="graph-tooltip" class="graph-tooltip" style="display:none"></div>
-        <div class="graph-hint" id="graph-hint-text">노드를 클릭하면 peer 연결이 강조됩니다</div>
+        <div class="graph-hint" id="graph-hint-text">거래처·peer·글로벌 피어를 클릭으로 강조합니다</div>
         <div class="graph-controls">
           <button class="graph-ctrl-btn" onclick="resetZoom()" title="Reset">⟳</button>
           <button class="graph-ctrl-btn" onclick="zoomIn()">+</button>
@@ -988,12 +988,12 @@
     const T = {
     "ko": {
         "title": "🇰🇷 한국 K컬처 산업 투자 지도",
-        "subtitle": "라면·식품, 여행, 뷰티, 드라마·웹툰, K-pop 상장사 · 한류 키워드 허브와 글로벌 참고 관계",
+        "subtitle": "라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사·글로벌 네트워크",
         "badgeTotal": "총 <span>25</span>개 상장사",
         "badgeMarket": "KOSPI <span>17</span>사 · KOSDAQ <span>8</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 12일",
         "tabTable": "📋 기업 목록 &amp; 필터",
-        "tabGraph": "🌐 키워드·관계 네트워크",
+        "tabGraph": "🌐 관계 네트워크",
         "langFlag": "🇺🇸",
         "langText": "English",
         "flChain": "벨류체인",
@@ -1003,10 +1003,6 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
-        "thLast": "현재가",
-        "th52High": "52주 최고",
-        "th52Lo": "52주 최저",
-        "thYoy": "1년 수익률",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1015,10 +1011,9 @@
         "thSemType": "세부 유형",
         "thProducts": "주요 제품·서비스",
         "thPartners": "글로벌 참고 관계",
-        "note": "⚠ 종목코드·참고 관계는 에디터리얼 그룹이며 공식 정보가 아닙니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었으며, 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 실시간 시세(현재가·52주 최고·최저·1년 수익률)는 meta investingmap-quotes-api에 Worker URL이 있을 때만 주기적으로 갱신되며, 네이버 금융 지연 시세 기준·오류 시 —로 표시됩니다.",
+        "note": "⚠ 종목코드·참고 관계는 에디터리얼 그룹이며 공식 정보가 아닙니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었으며, 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다.",
         "sbKorean": "국내 상장 (벨류체인)",
-        "sbGlobal": "Peer 링크 안내",
-        "peerNetworkDesc": "보라색 점선=불닭·K-드라마 등 한류 키워드와 기업의 연결, 실선/점선=글로벌 참고 관계. 같은 벨류체인에서 함께 등장하는 글로벌 노드는 회색 점선으로 묶입니다.",
+        "sbGlobal": "글로벌 미디어·유통·여행",
         "sbSize": "노드 크기",
         "sbHow": "조작 방법",
         "chainLabel": {
@@ -1047,9 +1042,9 @@
             "jp": "일본",
             "gb": "영국"
         },
-        "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만",
-        "howDesc": "• 노드 클릭: 키워드·글로벌 링크 강조\n• 드래그·스크롤·빈 곳 클릭으로 선택 해제\n• 보라 점선: 키워드 허브, 회색 점선: 글로벌 피어 그룹",
-        "graphHint": "노드를 클릭하면 연결된 키워드·글로벌 관계가 강조됩니다",
+        "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◇ 글로벌 참고 관계",
+        "howDesc": "• 노드 클릭: 관계 강조\n• 드래그: 이동\n• 스크롤: 확대/축소\n• 빈 건: 선택 해제\n• 범례: 그룹 하이라이트\n• 축: IP→제작(ODM)→유통; 점선=한류 수요 전파(참고)",
+        "graphHint": "ODM·브랜드, OTT, K-pop 연결과 한류 수요 테마 노드를 함께 보세요",
         "ttChain": "벨류",
         "ttSemType": "세부",
         "ttProducts": "제품",
@@ -1059,18 +1054,17 @@
         "ttCountry": "국가",
         "ttSector": "분야",
         "ttTags": "복수 축",
-        "ttKeywordLinks": "키워드 연결 기업",
         "fieldSemType": "semType",
         "fieldProducts": "products"
     },
     "en": {
         "title": "🇰🇷 Korea K-Culture Industry Map",
-        "subtitle": "Listed Korean K-culture — keyword hubs (e.g. Buldak, K-drama) plus global reference links by segment",
+        "subtitle": "Listed Korean names in ramen & food, travel, beauty, drama/webtoon/media, and K-pop, with illustrative global links",
         "badgeTotal": "<span>25</span> listed companies",
         "badgeMarket": "KOSPI <span>17</span> · KOSDAQ <span>8</span>",
         "dataAsof": "Data as of: June 12, 2026",
         "tabTable": "📋 Company list &amp; filters",
-        "tabGraph": "🌐 Keyword &amp; link network",
+        "tabGraph": "🌐 Relationship network",
         "langFlag": "🇰🇷",
         "langText": "한국어",
         "flChain": "Value chain",
@@ -1080,10 +1074,6 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
-        "thLast": "Last",
-        "th52High": "52W High",
-        "th52Lo": "52W Low",
-        "thYoy": "1Y Return",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1092,10 +1082,9 @@
         "thSemType": "Segment",
         "thProducts": "Products / services",
         "thPartners": "Global reference links",
-        "note": "⚠ Public information only. Tickers and reference links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and ~1-year return refresh periodically when meta investingmap-quotes-api points to the quotes Worker; delayed Naver data; shows — if unavailable.",
+        "note": "⚠ Public information only. Tickers and reference links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).",
         "sbKorean": "Korean listed (value chain)",
-        "sbGlobal": "Peer links",
-        "peerNetworkDesc": "Purple dashed lines tie companies to Hallyu keyword hubs (e.g. Buldak, K-drama). Solid/dashed lines are global reference ties. Thin gray chains group global nodes that co-occur in the same segment.",
+        "sbGlobal": "Global media, travel & distribution",
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
@@ -1124,9 +1113,9 @@
             "jp": "Japan",
             "gb": "UK"
         },
-        "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T",
-        "howDesc": "• Click node: highlight keyword & global links\n• Drag / scroll / background click to reset\n• Purple dashes: keyword hubs; gray dashes: global peer grouping",
-        "graphHint": "Click a node to highlight its keyword and global connections",
+        "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◇ Global peers",
+        "howDesc": "• Click: highlight\n• Drag\n• Scroll: zoom\n• Background: clear\n• Legend: group\n• Backbone: IP → production (ODM) → distribution; dashed = K-wave spillover",
+        "graphHint": "See ODM-to-brand links and the K-demand flow node (illustrative)",
         "ttChain": "Chain",
         "ttSemType": "Segment",
         "ttProducts": "Products",
@@ -1136,7 +1125,7 @@
         "ttCountry": "Country",
         "ttSector": "Field",
         "ttTags": "Multi-axis",
-        "ttKeywordLinks": "Companies on this keyword",
+        "fieldSemType": "semTypeEn",
         "fieldProducts": "productsEn"
     }
 };
@@ -1506,7 +1495,7 @@
       ${t.chainLabel[ch] || ch}
     </div>`
       ).join('');
-      // Peer network legend
+      // Region legend
       const regionContainer = document.getElementById('sb-region-legend');
       const regions = ['us', 'tw', 'cn', 'eu', 'kr', 'jp', 'gb'];
       const regionHtml = regions.map(r =>
@@ -1545,53 +1534,6 @@
     function companyLinksTo(c, gid) {
       return (c.partners || []).some(p => partnerRef(p).id === gid);
     }
-
-    const KW_HUB_COLOR = '#a371f7';
-    const KEYWORD_REGISTRY = [
-      {
-        id: 'kw_buldak_ramen',
-        labelKo: '불닭·K-라면',
-        labelEn: 'Buldak & K-instant noodles',
-        test(c) {
-          const blob = (c.name || '') + (c.nameEn || '') + (c.products || '') + (c.productsEn || '') + (c.semType || '') + (c.semTypeEn || '');
-          return c.chain === '음식·라면·식품' && /불닭|Buldak|buldak|신라면|Chapaguri|chapaguri|ramyun|ramen|라면|noodle/i.test(blob);
-        }
-      },
-      {
-        id: 'kw_kfood_other',
-        labelKo: 'K-식품·간편식',
-        labelEn: 'K-food & meal kits',
-        test(c) {
-          if (c.chain !== '음식·라면·식품') return false;
-          const blob = (c.name || '') + (c.nameEn || '') + (c.products || '') + (c.productsEn || '');
-          return !/불닭|Buldak|buldak|신라면|Chapaguri|chapaguri|ramyun|ramen|라면|noodle/i.test(blob);
-        }
-      },
-      {
-        id: 'kw_kdrama',
-        labelKo: 'K-드라마·웹툰',
-        labelEn: 'K-drama & webtoons',
-        test(c) { return c.chain === '드라마·미디어·웹툰·컨텐츠'; }
-      },
-      {
-        id: 'kw_kpop',
-        labelKo: 'K-pop·콘서트',
-        labelEn: 'K-pop & concerts',
-        test(c) { return c.chain === 'K-pop·엔터테인먼트'; }
-      },
-      {
-        id: 'kw_kbeauty',
-        labelKo: 'K-뷰티',
-        labelEn: 'K-beauty',
-        test(c) { return c.chain === '화장품·뷰티케어'; }
-      },
-      {
-        id: 'kw_ktravel',
-        labelKo: 'K-여행·항공',
-        labelEn: 'K-travel & aviation',
-        test(c) { return c.chain === '여행·레저·항공'; }
-      }
-    ];
 
     function renderTable() {
       const t = T[lang];
@@ -1634,14 +1576,14 @@
 
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = data.map(c => {
-        const partnerHtml = (c.partners || []).slice(0, 6).map(p => {
+        const partnerHtml = c.partners.slice(0, 6).map(p => {
           const pr = partnerRef(p);
           const info = getPartnerInfo(pr.id);
           const elbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
           const wpart = (pr.weight != null && Number.isFinite(pr.weight)) ? ` · ~${Math.round(pr.weight * 100)}%` : '';
           const hint = (elbl || wpart) ? `<span class="partner-edge-hint">${elbl || ''}${wpart}</span>` : '';
           return `<span class="partner-tag ${info.region}">${info.name}${hint}</span>`;
-        }).join('') + ((c.partners || []).length > 6 ? `<span class="partner-tag">+${(c.partners || []).length - 6}</span>` : '');
+        }).join('') + (c.partners.length > 6 ? `<span class="partner-tag">+${c.partners.length - 6}</span>` : '');
         const displayName = lang === 'en' ? c.nameEn : c.name;
         const subName = lang === 'en' ? c.name : c.nameEn;
         const semTypeDisplay = c[semTypeField] || c.semType;
@@ -1701,7 +1643,6 @@
       const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
       const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
       const isGlobalId = (id) => globalCompanies.some(g => g.id === id);
-      const ANGLE = { '음식·라면·식품': 0, '여행·레저·항공': 72, '화장품·뷰티케어': 144, '드라마·미디어·웹툰·컨텐츠': 216, 'K-pop·엔터테인먼트': 288 };
 
       const nodes = [];
       const nodeIndex = {};
@@ -1716,7 +1657,6 @@
         });
         nodeIndex[c.id] = nodes.length - 1;
       });
-
       const usedGlobal = new Set();
       koreanCompanies.forEach(c => (c.partners || []).forEach(p => usedGlobal.add(partnerRef(p).id)));
       globalCompanies.filter(g => usedGlobal.has(g.id)).forEach(g => {
@@ -1733,28 +1673,19 @@
         nodeIndex[g.id] = nodes.length - 1;
       });
 
-      const kwDefs = KEYWORD_REGISTRY.map(def => ({ def, hits: koreanCompanies.filter(def.test) })).filter(x => x.hits.length > 0);
-      kwDefs.forEach((o, i) => {
-        const def = o.def;
-        const hits = o.hits;
-        const hitChains = [...new Set(hits.map(c => c.chain))];
-        const kwAngle = (i / Math.max(kwDefs.length, 1)) * 2 * Math.PI;
-        nodes.push({
-          id: def.id,
-          label: def.labelKo,
-          labelEn: def.labelEn,
-          type: 'keyword',
-          hitChains,
-          companyIds: hits.map(c => c.id),
-          kwAngle,
-          r: 12,
-        });
-        nodeIndex[def.id] = nodes.length - 1;
-      });
-
       const links = [];
       const byChain = d3.group(koreanCompanies, d => d.chain);
       for (const [ch, arr] of byChain) {
+        const sorted = [...arr].sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
+        for (let i = 0; i < sorted.length - 1; i++) {
+          links.push({
+            source: sorted[i].id,
+            target: sorted[i + 1].id,
+            sourceChain: ch,
+            kind: 'peer',
+            baseStrokeW: 1.15
+          });
+        }
         const gids = [];
         arr.forEach(c => (c.partners || []).forEach(p => {
           const pid = partnerRef(p).id;
@@ -1772,20 +1703,6 @@
           });
         }
       }
-
-      kwDefs.forEach(o => {
-        const def = o.def;
-        o.hits.forEach(c => {
-          links.push({
-            source: c.id,
-            target: def.id,
-            sourceChain: c.chain,
-            kind: 'keywordLink',
-            baseStrokeW: 0.85
-          });
-        });
-      });
-
       koreanCompanies.forEach(c => {
         (c.partners || []).forEach(p => {
           const pr = partnerRef(p);
@@ -1815,41 +1732,31 @@
         .force('link', d3.forceLink(links).id(d => d.id)
           .distance(d => {
             if (d.kind === 'globalPeer') return 70;
-            if (d.kind === 'keywordLink') return 52;
             const S = d.source, T = d.target;
             const sk = S.type || 'korean', tk = T.type || 'korean';
-            if (sk === 'korean' && tk === 'korean') return 62;
+            if (sk === 'korean' && tk === 'korean') return d.kind === 'peer' ? 52 : 62;
             return 128;
           })
-          .strength(d => (d.kind === 'globalPeer' ? 0.14 : (d.kind === 'keywordLink' ? 0.32 : 0.28))))
-        .force('charge', d3.forceManyBody().strength(d => d.type === 'keyword' ? -320 : (d.type === 'korean' ? -200 : -95)))
+          .strength(d => (d.kind === 'globalPeer' ? 0.14 : (d.kind === 'peer' ? 0.36 : 0.28))))
+        .force('charge', d3.forceManyBody().strength(d => d.type === 'korean' ? -200 : -95))
         .force('center', d3.forceCenter(W / 2, H / 2))
         .force('collide', d3.forceCollide(d => d.r + 8))
         .force('x', d3.forceX(d => {
-          if (d.type === 'keyword') return W / 2 + Math.cos(d.kwAngle) * 125;
-          if (d.type === 'global') return W / 2;
-          const a = ANGLE[d.chain] || 0;
-          return W / 2 + Math.cos(a * Math.PI / 180) * 190;
+          if (d.type === 'korean') { const a = { '음식·라면·식품': 0, '여행·레저·항공': 72, '화장품·뷰티케어': 144, '드라마·미디어·웹툰·컨텐츠': 216, 'K-pop·엔터테인먼트': 288 }[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
+          return W / 2;
         }).strength(0.055))
         .force('y', d3.forceY(d => {
-          if (d.type === 'keyword') return H / 2 + Math.sin(d.kwAngle) * 125;
-          if (d.type === 'global') return H / 2;
-          const a = ANGLE[d.chain] || 0;
-          return H / 2 + Math.sin(a * Math.PI / 180) * 190;
+          if (d.type === 'korean') { const a = { '음식·라면·식품': 0, '여행·레저·항공': 72, '화장품·뷰티케어': 144, '드라마·미디어·웹툰·컨텐츠': 216, 'K-pop·엔터테인먼트': 288 }[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
+          return H / 2;
         }).strength(0.055));
 
-      const linkStroke = (d) => {
-        if (d.kind === 'globalPeer') return '#8b949e';
-        if (d.kind === 'keywordLink') return KW_HUB_COLOR;
-        return CHAIN_COLORS[d.sourceChain] || '#555';
-      };
       const link = g.append('g').selectAll('line').data(links).join('line')
-        .attr('stroke', linkStroke)
-        .attr('stroke-opacity', d => (d.kind === 'globalPeer' ? 0.18 : (d.kind === 'keywordLink' ? 0.38 : 0.22)))
+        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'))
+        .attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22)
         .attr('stroke-width', d => d.baseStrokeW || 1.2)
         .attr('stroke-dasharray', d => {
           if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'keywordLink') return '2 4';
+          if (d.kind === 'peer') return null;
           return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
         });
 
@@ -1872,14 +1779,10 @@
         .attr('fill', d => REGION_COLORS[d.region] || '#888').attr('fill-opacity', 0.8)
         .attr('stroke', graphStroke).attr('stroke-width', 1.2);
 
-      node.filter(d => d.type === 'keyword').append('circle')
-        .attr('r', d => d.r).attr('fill', KW_HUB_COLOR).attr('fill-opacity', 0.28)
-        .attr('stroke', KW_HUB_COLOR).attr('stroke-width', 2).attr('stroke-opacity', 0.9);
-
-      node.filter(d => d.r >= 9 || d.type === 'global' || d.type === 'keyword').append('text')
+      node.filter(d => d.r >= 9 || d.type === 'global').append('text')
         .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label))
         .attr('text-anchor', 'middle').attr('dy', d => d.r + 11)
-        .attr('font-size', d => d.type === 'korean' ? (d.r >= 13 ? 11 : 9) : (d.type === 'keyword' ? 10 : 9))
+        .attr('font-size', d => d.type === 'korean' ? (d.r >= 13 ? 11 : 9) : 9)
         .attr('fill', graphLabel).attr('pointer-events', 'none');
 
       simulation.on('tick', () => {
@@ -1912,19 +1815,13 @@
       selectedNode = null; highlightedChain = null;
       if (!svgEl) return;
       svgEl.selectAll('.node').classed('node-dim', false);
-      svgEl.selectAll('line')
-        .attr('stroke-opacity', d => (d.kind === 'globalPeer' ? 0.18 : (d.kind === 'keywordLink' ? 0.38 : 0.22)))
-        .attr('stroke-width', d => d.baseStrokeW || 1.2)
+      svgEl.selectAll('line').attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22).attr('stroke-width', d => d.baseStrokeW || 1.2)
         .attr('stroke-dasharray', d => {
           if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'keywordLink') return '2 4';
+          if (d.kind === 'peer') return null;
           return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
         })
-        .attr('stroke', d => {
-          if (d.kind === 'globalPeer') return '#8b949e';
-          if (d.kind === 'keywordLink') return KW_HUB_COLOR;
-          return CHAIN_COLORS[d.sourceChain] || '#555';
-        });
+        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'));
     }
 
     function toggleChainHighlight(chain) {
@@ -1934,10 +1831,6 @@
       const chainIds = new Set(koreanCompanies.filter(c => c.chain === chain).map(c => c.id));
       const linkedIds = new Set(chainIds);
       koreanCompanies.filter(c => c.chain === chain).forEach(c => (c.partners || []).forEach(p => linkedIds.add(partnerRef(p).id)));
-      svgEl.selectAll('.node').each(function () {
-        const d = d3.select(this).datum();
-        if (d && d.type === 'keyword' && d.hitChains && d.hitChains.includes(chain)) linkedIds.add(d.id);
-      });
       svgEl.selectAll('.node').classed('node-dim', d => !linkedIds.has(d.id));
       svgEl.selectAll('line').attr('stroke-opacity', l => chainIds.has(l.source.id || l.source) ? 0.75 : 0.03)
         .attr('stroke-width', l => {
@@ -1949,7 +1842,7 @@
     function showTooltip(e, d) {
       const tt = document.getElementById('graph-tooltip');
       const t = T[lang];
-      const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : d.type === 'keyword' ? KW_HUB_COLOR : (REGION_COLORS[d.region] || '#888');
+      const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : (REGION_COLORS[d.region] || '#888');
       const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
       let html = `<div class="tooltip-name" style="color:${color}">${displayName}</div>`;
       if (d.type === 'korean') {
@@ -1967,8 +1860,7 @@
           const tagStr = d.tags.map(x => (typeof x === 'string') ? x : ((lang === 'en' && x.en) ? x.en : (x.ko || x))).join(', ');
           html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttTags}</span><span class="tooltip-val">${tagStr}</span></div>`;
         }
-        const partners = d.data.partners || [];
-        const pNames = partners.slice(0, 6).map(p => {
+        const pNames = d.data.partners.slice(0, 6).map(p => {
           const pr = partnerRef(p);
           const nm = getPartnerInfo(pr.id).name;
           const lbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
@@ -1977,15 +1869,7 @@
           if (pr.weight != null && Number.isFinite(pr.weight)) s += ` (~${Math.round(pr.weight * 100)}%)`;
           return s;
         }).join(', ');
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttPartners}</span><span class="tooltip-val">${pNames}${partners.length > 6 ? '…' : ''}</span></div>`;
-      } else if (d.type === 'keyword') {
-        html += `<div class="tooltip-meta">${t.ttKeywordLinks}</div>`;
-        const ids = d.companyIds || [];
-        const names = ids.slice(0, 12).map(id => {
-          const co = koreanCompanies.find(c => c.id === id);
-          return co ? (lang === 'en' ? co.nameEn : co.name) : id;
-        }).join(', ');
-        html += `<div class="tooltip-row"><span class="tooltip-val">${names}${ids.length > 12 ? '…' : ''}</span></div>`;
+        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttPartners}</span><span class="tooltip-val">${pNames}${d.data.partners.length > 6 ? '…' : ''}</span></div>`;
       } else {
         html += `<div class="tooltip-meta">${d.country} · ${d.sector}</div>`;
         const suppliers = koreanCompanies.filter(c => companyLinksTo(c, d.id));

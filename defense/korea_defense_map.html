@@ -23,7 +23,7 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="investingmap-quotes-api" content="">
+  <meta name="investingmap-quotes-api" content="/api/quotes">
   <title>한국 방위·우주·항공 산업 투자 지도 / Korea Defense & Space Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -900,9 +900,9 @@
               <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
               <th id="th-market" onclick="sortTable('market')">시장</th>
               <th id="th-chain" onclick="sortTable('chain')">벨류체인</th>
-              <th id="th-semtype">세부 유형</th>
-              <th id="th-products">주요 제품·서비스</th>
-              <th id="th-partners">글로벌 참고 관계</th>
+              <th id="th-semtype">반도체 유형</th>
+              <th id="th-products">주요 제품</th>
+              <th id="th-partners">글로벌 주요 거래처</th>
             </tr>
           </thead>
           <tbody id="table-body"></tbody>
@@ -936,7 +936,7 @@
       <div class="graph-main">
         <svg id="graph-svg"></svg>
         <div id="graph-tooltip" class="graph-tooltip" style="display:none"></div>
-        <div class="graph-hint" id="graph-hint-text">거래·계약·peer·글로벌 피어를 클릭으로 강조합니다</div>
+        <div class="graph-hint" id="graph-hint-text">거래처·peer·글로벌 피어를 클릭으로 강조합니다</div>
         <div class="graph-controls">
           <button class="graph-ctrl-btn" onclick="resetZoom()" title="Reset">⟳</button>
           <button class="graph-ctrl-btn" onclick="zoomIn()">+</button>
@@ -988,12 +988,12 @@
     const T = {
     "ko": {
         "title": "🇰🇷 한국 방위·우주·항공 산업 투자 지도",
-        "subtitle": "항공·미사일·육상·해군·우주 상장사 · 국내외 거래·계약·지분 + 동종 peer + 글로벌 피어",
+        "subtitle": "항공기·엔진, 미사일·레이더, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사·글로벌 참고 네트워크",
         "badgeTotal": "총 <span>10</span>개 상장사",
         "badgeMarket": "KOSPI <span>9</span>사 · KOSDAQ <span>1</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 12일",
         "tabTable": "📋 기업 목록 &amp; 필터",
-        "tabGraph": "🌐 관계·피어 네트워크",
+        "tabGraph": "🌐 관계 네트워크",
         "langFlag": "🇺🇸",
         "langText": "English",
         "flChain": "벨류체인",
@@ -1003,10 +1003,6 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
-        "thLast": "현재가",
-        "th52High": "52주 최고",
-        "th52Lo": "52주 최저",
-        "thYoy": "1년 수익률",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1015,10 +1011,9 @@
         "thSemType": "세부 유형",
         "thProducts": "주요 제품·서비스",
         "thPartners": "글로벌 참고 관계",
-        "note": "⚠ 종목코드·참고 관계는 에디터리얼 그룹이며 공식 정보가 아닙니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었으며, 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 실시간 시세(현재가·52주 최고·최저·1년 수익률)는 meta investingmap-quotes-api에 Worker URL이 있을 때만 주기적으로 갱신되며, 네이버 금융 지연 시세 기준·오류 시 —로 표시됩니다.",
+        "note": "⚠ 종목코드·참고 관계는 에디터리얼 그룹이며 공식 정보가 아닙니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었으며, 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다.",
         "sbKorean": "국내 상장 (벨류체인)",
-        "sbGlobal": "글로벌 거래처·지역",
-        "peerNetworkDesc": "국내외 거래·프로그램·수출(실선/점선)과 동일 벨류체인 내 국내 peer, 회색 점선=같은 벨류체인에서 함께 등장하는 글로벌 피어 그룹.",
+        "sbGlobal": "글로벌 방위·항공·우주",
         "sbSize": "노드 크기",
         "sbHow": "조작 방법",
         "chainLabel": {
@@ -1047,9 +1042,9 @@
             "jp": "일본",
             "gb": "영국"
         },
-        "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◇ 글로벌 참고",
-        "howDesc": "• 클릭: 거래처·peer·글로벌 피어 강조\n• 드래그·스크롤·범례 동일\n• 계약·지분·수출 테마는 점선, 회색=글로벌 피어",
-        "graphHint": "국내외 거래·계약·지분과 peer·글로벌 피어를 함께 확인하세요",
+        "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◇ 글로벌 참고 관계",
+        "howDesc": "• 노드 클릭: 관계 강조\n• 드래그: 이동\n• 스크롤: 확대/축소\n• 빈 건: 선택 해제\n• 범례: 그룹 하이라이트\n• 축: 프로그램(prime–협력)·수출 목적지; 점선=수출 디맞",
+        "graphHint": "프로그램·수출 노드를 포함한 참고 네트워크(엔지 가중치는 참고용)",
         "ttChain": "벨류",
         "ttSemType": "세부",
         "ttProducts": "제품",
@@ -1064,12 +1059,12 @@
     },
     "en": {
         "title": "🇰🇷 Korea Defense, Space & Aviation Map",
-        "subtitle": "Defense, space & aviation — customer/program/equity links, domestic peers & global peer mesh",
+        "subtitle": "Listed Korean primes in military aviation, missiles & C4ISR, land systems, naval shipbuilding, and space/civil aviation, with illustrative global links",
         "badgeTotal": "<span>10</span> listed companies",
         "badgeMarket": "KOSPI <span>9</span> · KOSDAQ <span>1</span>",
         "dataAsof": "Data as of: June 12, 2026",
         "tabTable": "📋 Company list &amp; filters",
-        "tabGraph": "🌐 Relationship & peer map",
+        "tabGraph": "🌐 Relationship network",
         "langFlag": "🇰🇷",
         "langText": "한국어",
         "flChain": "Value chain",
@@ -1079,10 +1074,6 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
-        "thLast": "Last",
-        "th52High": "52W High",
-        "th52Lo": "52W Low",
-        "thYoy": "1Y Return",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1091,10 +1082,9 @@
         "thSemType": "Segment",
         "thProducts": "Products / services",
         "thPartners": "Global reference links",
-        "note": "⚠ Public information only. Tickers and reference links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and ~1-year return refresh periodically when meta investingmap-quotes-api points to the quotes Worker; delayed Naver data; shows — if unavailable.",
+        "note": "⚠ Public information only. Tickers and reference links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).",
         "sbKorean": "Korean listed (value chain)",
-        "sbGlobal": "Global counterparties · region",
-        "peerNetworkDesc": "Solid/dashed edges show programs, exports, equity-style ties; domestic peer ladder by market cap; thin gray = global peer links within the same segment.",
+        "sbGlobal": "Global defense & aerospace",
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
@@ -1124,8 +1114,8 @@
             "gb": "UK"
         },
         "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◇ Global peers",
-        "howDesc": "• Click: highlight customers, peers & global peer mesh\n• Drag / scroll / legend as before\n• Dashed = export/equity themes; gray = global peer group",
-        "graphHint": "Read domestic/international ties together with peer ladders and global peer grouping",
+        "howDesc": "• Click: highlight\n• Drag\n• Scroll: zoom\n• Background: clear\n• Legend: group\n• Backbone: program (prime–sub) & export destinations; dashed = export theme",
+        "graphHint": "Click to explore program clusters and export links (weights illustrative)",
         "ttChain": "Chain",
         "ttSemType": "Segment",
         "ttProducts": "Products",
@@ -1396,6 +1386,7 @@
       ${t.chainLabel[ch] || ch}
     </div>`
       ).join('');
+      // Region legend
       const regionContainer = document.getElementById('sb-region-legend');
       const regions = ['us', 'tw', 'cn', 'eu', 'kr', 'jp', 'gb'];
       const regionHtml = regions.map(r =>
@@ -1543,7 +1534,6 @@
       const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
       const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
       const isGlobalId = (id) => globalCompanies.some(g => g.id === id);
-      const ANGLE = { '항공기·엔진·MRO': 0, '미사일·레이더·C4ISR': 72, '육상무기·차량·탄약': 144, '해군·함정·조선방산': 216, '우주·위성·민항': 288 };
 
       const nodes = [];
       const nodeIndex = {};
@@ -1643,11 +1633,11 @@
         .force('center', d3.forceCenter(W / 2, H / 2))
         .force('collide', d3.forceCollide(d => d.r + 8))
         .force('x', d3.forceX(d => {
-          if (d.type === 'korean') { const a = ANGLE[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
+          if (d.type === 'korean') { const a = { '항공기·엔진·MRO': 0, '미사일·레이더·C4ISR': 72, '육상무기·차량·탄약': 144, '해군·함정·조선방산': 216, '우주·위성·민항': 288 }[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
           return W / 2;
         }).strength(0.055))
         .force('y', d3.forceY(d => {
-          if (d.type === 'korean') { const a = ANGLE[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
+          if (d.type === 'korean') { const a = { '항공기·엔진·MRO': 0, '미사일·레이더·C4ISR': 72, '육상무기·차량·탄약': 144, '해군·함정·조선방산': 216, '우주·위성·민항': 288 }[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
           return H / 2;
         }).strength(0.055));
 
