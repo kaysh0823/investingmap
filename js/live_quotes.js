@@ -6,6 +6,8 @@
 (function (global) {
   'use strict';
 
+  var CHUNK_SIZE = 18;
+
   function getApiBase() {
     try {
       var m = document.querySelector('meta[name="investingmap-quotes-api"]');
@@ -18,6 +20,18 @@
     } catch (e) {
       return '';
     }
+  }
+
+  function quotesRequestUrl(base, query) {
+    var q = query.charAt(0) === '?' ? query : '?' + query;
+    if (/^https?:\/\//i.test(base)) {
+      return base.replace(/\/+$/, '') + q;
+    }
+    var origin = (typeof window !== 'undefined' && window.location && window.location.origin)
+      ? window.location.origin
+      : '';
+    var path = base.charAt(0) === '/' ? base : '/' + base;
+    return origin + path.replace(/\/+$/, '') + q;
   }
 
   function normalizeTicker(t) {
@@ -53,14 +67,14 @@
   }
 
   function formatWon(n, lang) {
-    if (n == null || !isFinite(n)) return '—';
+    if (n == null || !isFinite(n)) return '\u2014';
     var loc = lang === 'en' ? 'en-US' : 'ko-KR';
     return Math.round(n).toLocaleString(loc);
   }
 
   function formatYoy(n, lang) {
-    if (n == null || !isFinite(n)) return '—';
-    var s = n.toFixed(2) + (lang === 'en' ? '%' : '%');
+    if (n == null || !isFinite(n)) return '\u2014';
+    var s = n.toFixed(2) + '%';
     return (n > 0 ? '+' : '') + s;
   }
 
@@ -73,11 +87,48 @@
     };
   }
 
+  function fetchJson(url) {
+    return fetch(url, { mode: 'cors', cache: 'no-store', credentials: 'same-origin' })
+      .then(function (r) {
+        return r.json().then(function (j) {
+          if (!r.ok) {
+            var msg = (j && (j.message || j.error)) ? String(j.message || j.error) : ('quotes ' + r.status);
+            throw new Error(msg);
+          }
+          return j;
+        });
+      });
+  }
+
+  function fetchAllCodes(base, codes, warm) {
+    var merged = {};
+    var asOf = '';
+    var chain = Promise.resolve();
+    for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
+      (function (chunk, addWarm) {
+        chain = chain.then(function () {
+          var q = 'codes=' + chunk.map(encodeURIComponent).join(',');
+          if (addWarm) q += '&warm=1';
+          return fetchJson(quotesRequestUrl(base, q));
+        }).then(function (j) {
+          if (j && j.asOf) asOf = j.asOf;
+          var items = (j && j.items) || {};
+          for (var k in items) {
+            if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
+          }
+        });
+      })(codes.slice(i, i + CHUNK_SIZE), warm && i === 0);
+    }
+    return chain.then(function () {
+      return { asOf: asOf, items: merged };
+    });
+  }
+
   /**
    * @param {object} opts
    * @param {() => object[]} opts.getCompanies
    * @param {() => void} opts.renderTable
-   * @param {string} [opts.baseUrl] — override meta
+   * @param {string} [opts.baseUrl]
    * @param {number} [opts.pollMs]
    * @param {(iso: string) => void} [opts.onAsOf]
    * @param {(err: Error) => void} [opts.onError]
@@ -91,11 +142,17 @@
     var onAsOf = opts.onAsOf || function () {};
     var onError = opts.onError || function () {};
     var pollCount = 0;
+    var running = false;
 
     function run() {
+      if (running) return;
+      running = true;
       pollCount++;
       var companies = getCompanies();
-      if (!companies || !companies.length) return;
+      if (!companies || !companies.length) {
+        running = false;
+        return;
+      }
       var codes = [];
       var seen = {};
       for (var j = 0; j < companies.length; j++) {
@@ -104,19 +161,12 @@
         seen[k] = 1;
         codes.push(k);
       }
-      if (!codes.length) return;
-      var url = base + '/?codes=' + encodeURIComponent(codes.join(','));
-      if (pollCount % 8 === 0) url += '&warm=1';
-      fetch(url, { mode: 'cors', cache: 'no-store' })
-        .then(function (r) {
-          return r.json().then(function (j) {
-            if (!r.ok) {
-              var msg = (j && (j.message || j.error)) ? String(j.message || j.error) : ('quotes ' + r.status);
-              throw new Error(msg);
-            }
-            return j;
-          });
-        })
+      if (!codes.length) {
+        running = false;
+        return;
+      }
+      var warm = pollCount % 8 === 0;
+      fetchAllCodes(base, codes, warm)
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
           try {
@@ -128,6 +178,9 @@
           try {
             onError(err || new Error('quotes fetch failed'));
           } catch (e2) {}
+        })
+        .then(function () {
+          running = false;
         });
     }
 

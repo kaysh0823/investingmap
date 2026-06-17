@@ -584,22 +584,24 @@
       if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
     }
 
-    loadFx().then(function () { applyLang(); });
-    if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
-      InvestingMapLiveQuotes.start({
-        getCompanies: function () { return koreanCompanies; },
-        renderTable: renderTable,
-        onAsOf: function (iso) {
-          imQuotesError = '';
-          imQuotesAsOf = iso || '';
-          updateQuotesAsofDisplay();
-        },
-        onError: function (err) {
-          imQuotesError = lang === 'en'
-            ? 'Quotes unavailable (check KRX_AUTH_KEY on Cloudflare)'
-            : '시세 연결 실패 (Cloudflare KRX_AUTH_KEY·KRX API 승인 확인)';
-          imQuotesAsOf = '';
-          updateQuotesAsofDisplay();
-        }
-      });
-    }
+    loadFx().then(function () {
+      applyLang();
+      if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
+        InvestingMapLiveQuotes.start({
+          getCompanies: function () { return koreanCompanies; },
+          renderTable: renderTable,
+          onAsOf: function (iso) {
+            imQuotesError = '';
+            imQuotesAsOf = iso || '';
+            updateQuotesAsofDisplay();
+          },
+          onError: function (err) {
+            imQuotesError = lang === 'en'
+              ? 'Quotes unavailable (check KRX_AUTH_KEY on Cloudflare)'
+              : '시세 연결 실패 (Cloudflare KRX OPEN API 인증키·KRX API 승인 확인)';
+            imQuotesAsOf = '';
+            updateQuotesAsofDisplay();
+          }
+        });
+      }
+    });

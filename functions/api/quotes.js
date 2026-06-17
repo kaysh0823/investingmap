@@ -24,6 +24,7 @@ const HIST_DAYS_PER_REQUEST = 4;
 let latestCache = null;
 let histCache = null;
 let histWarm = null;
+let latestInflight = null;
 
 function getAuthKey(env) {
   if (!env) return '';
@@ -171,9 +172,19 @@ async function getLatestSnapshot(authKey) {
   if (latestCache && now - latestCache.t < LATEST_CACHE_MS) {
     return latestCache;
   }
-  const { basDd, byCode } = await resolveLatestBasDd(authKey);
-  latestCache = { t: now, basDd, rows: byCode };
-  return latestCache;
+  if (latestInflight) {
+    return latestInflight;
+  }
+  latestInflight = (async () => {
+    try {
+      const { basDd, byCode } = await resolveLatestBasDd(authKey);
+      latestCache = { t: Date.now(), basDd, rows: byCode };
+      return latestCache;
+    } finally {
+      latestInflight = null;
+    }
+  })();
+  return latestInflight;
 }
 
 function mergeDayIntoAcc(acc, byCode) {
