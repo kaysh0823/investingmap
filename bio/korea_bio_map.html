@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MSNNTKF2');</script>
+  <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PF8E42DGN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-4PF8E42DGN');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="investingmap-quotes-api" content="">
+  <title>한국 바이오 산업 투자 지도 / Korea Bio Industry Investment Map</title>
+  <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="../js/live_quotes.js"></script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --header-g0: #0d1117;
+      --header-g1: #161b22;
+      --graph-stroke: #0d1117;
+      --graph-label: #c9d1d9;
+      --graph-hint-bg: rgba(13, 17, 23, 0.82);
+      --c-idm: #4FC3F7;
+      --c-fabless: #66BB6A;
+      --c-foundry: #FFA726;
+      --c-material: #EF5350;
+      --c-equipment: #AB47BC;
+      --c-parts: #26C6DA;
+      --c-packaging: #FFCA28;
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --surface2: #eaeef2;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #0969da;
+      --header-g0: #ffffff;
+      --header-g1: #f6f8fa;
+      --graph-stroke: #1f2328;
+      --graph-label: #24292f;
+      --graph-hint-bg: rgba(255, 255, 255, 0.92);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', -apple-system, sans-serif;
+      font-size: 14px;
+      min-height: 100vh
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--header-g0), var(--header-g1));
+      border-bottom: 1px solid var(--border);
+      padding: 20px 28px 16px;
+      position: relative
+    }
+
+    .header-actions {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 52%;
+    }
+
+    .theme-toggle {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      transition: all .2s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .hub-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all .2s;
+    }
+
+    .hub-back:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .data-asof {
+      flex-basis: 100%;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      padding: 4px 2px;
+      letter-spacing: 0.02em
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.5px
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap
+    }
+
+    .badge {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 11px;
+      color: var(--text-muted)
+    }
+
+    .badge span {
+      color: var(--accent);
+      font-weight: 600
+    }
+
+    .lang-toggle {
+      position: static;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all .2s;
+      letter-spacing: .3px
+    }
+
+    .lang-toggle:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .lang-toggle .flag {
+      margin-right: 5px
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      background: var(--surface)
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all .2s
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent)
+    }
+
+    .tab-btn:hover:not(.active) {
+      color: var(--text)
+    }
+
+    /* TAB CONTENT */
+    .tab-content {
+      display: none
+    }
+
+    .tab-content.active {
+      display: block
+    }
+
+    /* TABLE TAB */
+    .table-container {
+      padding: 20px 28px
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      align-items: center
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    #chain-chips,
+    #market-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center
+    }
+
+    .filter-label {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 2px
+    }
+
+    .filter-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 4px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all .15s;
+      white-space: nowrap
+    }
+
+    .filter-chip:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .filter-chip.active {
+      border-color: transparent;
+      color: #0d1117;
+      font-weight: 600
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border)
+    }
+
+    .search-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      width: 200px
+    }
+
+    .search-box:focus {
+      border-color: var(--accent)
+    }
+
+    .result-count {
+      margin-left: auto;
+      color: var(--text-muted);
+      font-size: 12px
+    }
+
+    .tbl-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border)
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    thead th {
+      background: var(--surface2);
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none
+    }
+
+    thead th:hover {
+      color: var(--text)
+    }
+
+    thead th.sort-asc::after {
+      content: ' ↑';
+      color: var(--accent)
+    }
+
+    thead th.sort-desc::after {
+      content: ' ↓';
+      color: var(--accent)
+    }
+
+    tbody tr {
+      border-top: 1px solid var(--border);
+      transition: background .1s
+    }
+
+    tbody tr:hover {
+      background: var(--surface2)
+    }
+
+    td {
+      padding: 11px 14px;
+      vertical-align: middle
+    }
+
+    .company-name {
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .company-name-sub {
+      color: var(--text-muted);
+      font-size: 11px;
+      margin-top: 2px
+    }
+
+    .ticker {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--accent);
+      background: rgba(88, 166, 255, .1);
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap
+    }
+
+    .market-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px
+    }
+
+    .market-badge.kospi {
+      background: rgba(79, 195, 247, .15);
+      color: #4FC3F7
+    }
+
+    .market-badge.kosdaq {
+      background: rgba(102, 187, 106, .15);
+      color: #66BB6A
+    }
+
+    .market-badge.unlisted {
+      background: rgba(139, 148, 158, .15);
+      color: #8b949e
+    }
+
+    .chain-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 12px;
+      white-space: nowrap
+    }
+
+    .partners-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px
+    }
+
+    .partner-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-muted);
+      white-space: nowrap
+    }
+
+    .partner-tag.us {
+      border-color: rgba(144, 164, 174, .4);
+      color: #90A4AE
+    }
+
+    .partner-tag.tw {
+      border-color: rgba(128, 203, 196, .4);
+      color: #80CBC4
+    }
+
+    .partner-tag.eu {
+      border-color: rgba(176, 190, 197, .4);
+      color: #B0BEC5
+    }
+
+    .partner-tag.cn {
+      border-color: rgba(244, 143, 177, .4);
+      color: #F48FB1
+    }
+
+    .partner-tag.kr {
+      border-color: rgba(165, 214, 167, .4);
+      color: #A5D6A7
+    }
+
+    .partner-tag.jp {
+      border-color: rgba(244, 114, 182, .4);
+      color: #F472B6
+    }
+
+    .partner-tag.gb {
+      border-color: rgba(129, 140, 248, .4);
+      color: #A5B4FC
+    }
+
+    .partner-tag.il {
+      border-color: rgba(253, 224, 71, .4);
+      color: #FDE047
+    }
+
+    .partner-tag.dk {
+      border-color: rgba(45, 212, 191, .4);
+      color: #5EEAD4
+    }
+
+    .mcap-cell {
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap
+    }
+
+    .fin-cell {
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-align: right
+    }
+
+    .quote-cell {
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-align: right
+    }
+
+    .quotes-asof {
+      font-size: 11px;
+      color: var(--text-muted);
+      max-width: 280px;
+      text-align: right;
+      line-height: 1.3
+    }
+
+    .products-cell {
+      color: var(--text-muted);
+      font-size: 12px;
+      max-width: 200px
+    }
+
+    .note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--surface2);
+      border-radius: 6px;
+      border-left: 3px solid var(--border)
+    }
+
+    /* GRAPH TAB */
+    .graph-container {
+      display: flex;
+      height: calc(100vh - 110px)
+    }
+
+    .graph-sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 16px;
+      overflow-y: auto
+    }
+
+    .graph-main {
+      flex: 1;
+      position: relative
+    }
+
+    #graph-svg {
+      width: 100%;
+      height: 100%
+    }
+
+    .sidebar-section {
+      margin-bottom: 20px
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--text-muted);
+      margin-bottom: 10px
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 3px 5px;
+      border-radius: 5px;
+      transition: background .15s
+    }
+
+    .legend-item:hover {
+      background: var(--surface2);
+      color: var(--text)
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .legend-diamond {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      transform: rotate(45deg);
+      border-radius: 2px
+    }
+
+    .graph-tooltip {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      pointer-events: none;
+      z-index: 100;
+      min-width: 200px;
+      max-width: 280px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .5)
+    }
+
+    .tooltip-name {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 3px
+    }
+
+    .tooltip-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px
+    }
+
+    .tooltip-row {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      margin-top: 4px;
+      font-size: 12px
+    }
+
+    .tooltip-label {
+      color: var(--text-muted);
+      min-width: 64px;
+      flex-shrink: 0
+    }
+
+    .tooltip-val {
+      color: var(--text)
+    }
+
+    .graph-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--graph-hint-bg);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      pointer-events: none;
+      white-space: nowrap
+    }
+
+    .graph-controls {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      display: flex;
+      gap: 6px
+    }
+
+    .graph-ctrl-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .graph-ctrl-btn:hover {
+      color: var(--text);
+      border-color: var(--accent)
+    }
+
+    .node-dim {
+      opacity: .15
+    }
+
+    @media(max-width:768px) {
+      html {
+        overflow-x: hidden
+      }
+
+      body {
+        overflow-x: hidden
+      }
+
+      .graph-sidebar {
+        display: none
+      }
+
+      .graph-container {
+        height: min(70vh, 620px);
+        min-height: 380px
+      }
+
+      .graph-hint {
+        white-space: normal;
+        max-width: min(320px, 92vw);
+        line-height: 1.35;
+        padding: 8px 12px;
+        text-align: center
+      }
+
+      .graph-controls {
+        bottom: 10px;
+        right: 8px
+      }
+
+      .table-container {
+        padding: 10px 12px
+      }
+
+      .header {
+        padding: 14px 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px
+      }
+
+      .header-actions {
+        position: static;
+        max-width: none;
+        width: 100%;
+        justify-content: flex-start;
+        order: -1;
+        margin: 0;
+        row-gap: 6px
+      }
+
+      .header-actions .data-asof {
+        order: 10;
+        flex-basis: 100%;
+        text-align: left;
+        white-space: normal;
+        font-size: 10px
+      }
+
+      .header h1 {
+        font-size: 18px;
+        line-height: 1.25;
+        padding-right: 0
+      }
+
+      .header p {
+        font-size: 12px
+      }
+
+      .header-meta {
+        margin-top: 4px;
+        gap: 8px
+      }
+
+      .tabs {
+        padding: 0 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap
+      }
+
+      .tab-btn {
+        padding: 10px 12px;
+        font-size: 12px;
+        flex-shrink: 0
+      }
+
+      .filter-bar {
+        gap: 8px
+      }
+
+      .filter-divider {
+        display: none
+      }
+
+      .search-box {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 100%
+      }
+
+      .result-count {
+        margin-left: 0;
+        flex: 1 1 100%
+      }
+
+      .tbl-wrap {
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain
+      }
+
+      thead th {
+        white-space: normal;
+        padding: 8px 7px;
+        font-size: 9px;
+        letter-spacing: .2px;
+        line-height: 1.25;
+        vertical-align: bottom
+      }
+
+      td {
+        padding: 8px 7px;
+        font-size: 12px
+      }
+
+      .products-cell {
+        max-width: none
+      }
+
+      .lang-toggle {
+        padding: 6px 10px;
+        font-size: 11px
+      }
+
+      .theme-toggle {
+        padding: 6px 10px;
+        font-size: 14px
+      }
+
+      .hub-back {
+        padding: 6px 10px;
+        font-size: 11px
+      }
+    }
+  </style>
+  <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div class="header">
+    <div class="header-actions">
+      <a class="hub-back" href="../index.html" id="hub-back"><span aria-hidden="true">←</span> <span id="hub-link-label">허브</span></a>
+      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
+      <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
+      <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
+    </button>
+      <span class="data-asof" id="data-asof">업데이트 기준일: 2026년 6월 15일</span>
+      <span class="quotes-asof" id="quotes-asof" aria-live="polite"></span>
+    </div>
+    <h1 id="hdr-title">🇰🇷 한국 바이오 산업 투자 지도</h1>
+    <p id="hdr-subtitle">국내 바이오·제약 상장사 · 섹터 분류 · 글로벌 빅파마 페어링</p>
+    <div class="header-meta">
+      <div class="badge" id="badge-total">총 <span>58</span>개 기업 매핑</div>
+      <div class="badge" id="badge-market">KOSPI <span>17</span>사 · KOSDAQ <span>40</span>사</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button id="tab-btn-table" class="tab-btn active" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
+    <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 섹터·페어링 네트워크</button>
+  </div>
+
+  <!-- TABLE TAB -->
+  <div id="tab-table" class="tab-content active">
+    <div class="table-container">
+      <div class="filter-bar">
+        <div class="filter-group">
+          <span class="filter-label" id="fl-chain-label">섹터</span>
+          <div id="chain-chips"></div>
+        </div>
+        <div class="filter-divider"></div>
+        <div class="filter-group">
+          <span class="filter-label" id="fl-market-label">시장</span>
+          <div id="market-chips"></div>
+        </div>
+        <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
+          oninput="setSearch(this.value)">
+        <div class="result-count" id="result-label">표시: <span id="show-count">58</span>개</div>
+      </div>
+      <div class="tbl-wrap">
+        <table id="main-table">
+          <thead>
+            <tr>
+              <th id="th-name" onclick="sortTable('name')">기업명</th>
+              <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
+              <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
+              <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
+              <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
+              <th id="th-yoy" onclick="sortTable('quoteYoyPct')">1년 수익률</th>
+              <th id="th-mcap" onclick="sortTable('mcapWon')">시가총액</th>
+              <th id="th-per" onclick="sortTable('per')">PER</th>
+              <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
+              <th id="th-market" onclick="sortTable('market')">시장</th>
+              <th id="th-chain" onclick="sortTable('chain')">섹터</th>
+              <th id="th-semtype">섹터 요약</th>
+              <th id="th-products">핵심 테마</th>
+              <th id="th-partners">글로벌 페어링</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <p class="note" id="table-note">⚠ 종목코드 및 거래 관계는 공개 정보 기반이며, 투자 판단 전 KRX·사업보고서에서 최신 정보를 확인하세요.</p>
+    </div>
+  </div>
+
+  <!-- GRAPH TAB -->
+  <div id="tab-graph" class="tab-content">
+    <div class="graph-container">
+      <div class="graph-sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-korean">국내 상장 (섹터)</div>
+          <div id="sb-chain-legend"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-global">글로벌 파트너</div>
+          <div id="sb-region-legend"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-size">노드 크기 기준</div>
+          <div id="sb-size-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-how">조작 방법</div>
+          <div id="sb-how-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
+        </div>
+      </div>
+      <div class="graph-main">
+        <svg id="graph-svg"></svg>
+        <div id="graph-tooltip" class="graph-tooltip" style="display:none"></div>
+        <div class="graph-hint" id="graph-hint-text">노드를 클릭하면 같은 섹터의 peer 연결이 강조됩니다</div>
+        <div class="graph-controls">
+          <button class="graph-ctrl-btn" onclick="resetZoom()" title="Reset">⟳</button>
+          <button class="graph-ctrl-btn" onclick="zoomIn()">+</button>
+          <button class="graph-ctrl-btn" onclick="zoomOut()">−</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="korea_bio_map.inline.js"></script>
+</body>
+
+</html>

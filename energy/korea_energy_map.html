@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MSNNTKF2');</script>
+  <!-- End Google Tag Manager -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4PF8E42DGN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-4PF8E42DGN');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="investingmap-quotes-api" content="">
+  <title>한국 에너지 산업 투자 지도 / Korea Energy Industry Map</title>
+  <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="../js/live_quotes.js"></script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --header-g0: #0d1117;
+      --header-g1: #161b22;
+      --graph-stroke: #0d1117;
+      --graph-label: #c9d1d9;
+      --graph-hint-bg: rgba(13, 17, 23, 0.82);
+      --c-idm: #4FC3F7;
+      --c-fabless: #66BB6A;
+      --c-foundry: #FFA726;
+      --c-material: #EF5350;
+      --c-equipment: #AB47BC;
+      --c-parts: #26C6DA;
+      --c-packaging: #FFCA28;
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --surface2: #eaeef2;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --accent: #0969da;
+      --header-g0: #ffffff;
+      --header-g1: #f6f8fa;
+      --graph-stroke: #1f2328;
+      --graph-label: #24292f;
+      --graph-hint-bg: rgba(255, 255, 255, 0.92);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', -apple-system, sans-serif;
+      font-size: 14px;
+      min-height: 100vh
+    }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--header-g0), var(--header-g1));
+      border-bottom: 1px solid var(--border);
+      padding: 20px 28px 16px;
+      position: relative
+    }
+
+    .header-actions {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 52%;
+    }
+
+    .theme-toggle {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      transition: all .2s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .hub-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all .2s;
+    }
+
+    .hub-back:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .data-asof {
+      flex-basis: 100%;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      padding: 4px 2px;
+      letter-spacing: 0.02em
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.5px
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 4px
+    }
+
+    .header-meta {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap
+    }
+
+    .badge {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 11px;
+      color: var(--text-muted)
+    }
+
+    .badge span {
+      color: var(--accent);
+      font-weight: 600
+    }
+
+    .lang-toggle {
+      position: static;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all .2s;
+      letter-spacing: .3px
+    }
+
+    .lang-toggle:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .lang-toggle .flag {
+      margin-right: 5px
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      background: var(--surface)
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all .2s
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent)
+    }
+
+    .tab-btn:hover:not(.active) {
+      color: var(--text)
+    }
+
+    /* TAB CONTENT */
+    .tab-content {
+      display: none
+    }
+
+    .tab-content.active {
+      display: block
+    }
+
+    /* TABLE TAB */
+    .table-container {
+      padding: 20px 28px
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      align-items: center
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    #chain-chips,
+    #market-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center
+    }
+
+    .filter-label {
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 2px
+    }
+
+    .filter-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 4px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all .15s;
+      white-space: nowrap
+    }
+
+    .filter-chip:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .filter-chip.active {
+      border-color: transparent;
+      color: #0d1117;
+      font-weight: 600
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border)
+    }
+
+    .search-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      width: 200px
+    }
+
+    .search-box:focus {
+      border-color: var(--accent)
+    }
+
+    .result-count {
+      margin-left: auto;
+      color: var(--text-muted);
+      font-size: 12px
+    }
+
+    .tbl-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border)
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    thead th {
+      background: var(--surface2);
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none
+    }
+
+    thead th:hover {
+      color: var(--text)
+    }
+
+    thead th.sort-asc::after {
+      content: ' ↑';
+      color: var(--accent)
+    }
+
+    thead th.sort-desc::after {
+      content: ' ↓';
+      color: var(--accent)
+    }
+
+    tbody tr {
+      border-top: 1px solid var(--border);
+      transition: background .1s
+    }
+
+    tbody tr:hover {
+      background: var(--surface2)
+    }
+
+    td {
+      padding: 11px 14px;
+      vertical-align: middle
+    }
+
+    .company-name {
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .company-name-sub {
+      color: var(--text-muted);
+      font-size: 11px;
+      margin-top: 2px
+    }
+
+    .ticker {
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--accent);
+      background: rgba(88, 166, 255, .1);
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap
+    }
+
+    .mcap-cell {
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap
+    }
+
+    .fin-cell {
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-align: right
+    }
+
+    .quote-cell {
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-align: right
+    }
+
+    .quotes-asof {
+      font-size: 11px;
+      color: var(--text-muted);
+      max-width: 280px;
+      text-align: right;
+      line-height: 1.3
+    }
+
+    .market-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px
+    }
+
+    .market-badge.kospi {
+      background: rgba(79, 195, 247, .15);
+      color: #4FC3F7
+    }
+
+    .market-badge.kosdaq {
+      background: rgba(102, 187, 106, .15);
+      color: #66BB6A
+    }
+
+    .chain-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 12px;
+      white-space: nowrap
+    }
+
+    .partners-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px
+    }
+
+    .partner-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-muted);
+      white-space: nowrap
+    }
+
+    .partner-tag.us {
+      border-color: rgba(144, 164, 174, .4);
+      color: #90A4AE
+    }
+
+    .partner-tag.tw {
+      border-color: rgba(128, 203, 196, .4);
+      color: #80CBC4
+    }
+
+    .partner-tag.eu {
+      border-color: rgba(176, 190, 197, .4);
+      color: #B0BEC5
+    }
+
+    .partner-tag.cn {
+      border-color: rgba(244, 143, 177, .4);
+      color: #F48FB1
+    }
+
+    .partner-tag.kr {
+      border-color: rgba(165, 214, 167, .4);
+      color: #A5D6A7
+    }
+
+    .partner-edge-hint {
+      display: block;
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+      line-height: 1.25;
+      max-width: 140px;
+    }
+
+    .products-cell {
+      color: var(--text-muted);
+      font-size: 12px;
+      max-width: 200px
+    }
+
+    .note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--surface2);
+      border-radius: 6px;
+      border-left: 3px solid var(--border)
+    }
+
+    /* GRAPH TAB */
+    .graph-container {
+      display: flex;
+      height: calc(100vh - 110px)
+    }
+
+    .graph-sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 16px;
+      overflow-y: auto
+    }
+
+    .graph-main {
+      flex: 1;
+      position: relative
+    }
+
+    #graph-svg {
+      width: 100%;
+      height: 100%
+    }
+
+    .sidebar-section {
+      margin-bottom: 20px
+    }
+
+    .sidebar-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--text-muted);
+      margin-bottom: 10px
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 3px 5px;
+      border-radius: 5px;
+      transition: background .15s
+    }
+
+    .legend-item:hover {
+      background: var(--surface2);
+      color: var(--text)
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .legend-diamond {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      transform: rotate(45deg);
+      border-radius: 2px
+    }
+
+    .graph-tooltip {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      pointer-events: none;
+      z-index: 100;
+      min-width: 200px;
+      max-width: 280px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .5)
+    }
+
+    .tooltip-name {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 3px
+    }
+
+    .tooltip-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px
+    }
+
+    .tooltip-row {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      margin-top: 4px;
+      font-size: 12px
+    }
+
+    .tooltip-label {
+      color: var(--text-muted);
+      min-width: 64px;
+      flex-shrink: 0
+    }
+
+    .tooltip-val {
+      color: var(--text)
+    }
+
+    .graph-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--graph-hint-bg);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      pointer-events: none;
+      white-space: nowrap
+    }
+
+    .graph-controls {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      display: flex;
+      gap: 6px
+    }
+
+    .graph-ctrl-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .graph-ctrl-btn:hover {
+      color: var(--text);
+      border-color: var(--accent)
+    }
+
+    .node-dim {
+      opacity: .15
+    }
+
+    @media(max-width:768px) {
+      html {
+        overflow-x: hidden
+      }
+
+      body {
+        overflow-x: hidden
+      }
+
+      .graph-sidebar {
+        display: none
+      }
+
+      .graph-container {
+        height: min(70vh, 620px);
+        min-height: 380px
+      }
+
+      .graph-hint {
+        white-space: normal;
+        max-width: min(320px, 92vw);
+        line-height: 1.35;
+        padding: 8px 12px;
+        text-align: center
+      }
+
+      .graph-controls {
+        bottom: 10px;
+        right: 8px
+      }
+
+      .table-container {
+        padding: 10px 12px
+      }
+
+      .header {
+        padding: 14px 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px
+      }
+
+      .header-actions {
+        position: static;
+        max-width: none;
+        width: 100%;
+        justify-content: flex-start;
+        order: -1;
+        margin: 0;
+        row-gap: 6px
+      }
+
+      .header-actions .data-asof {
+        order: 10;
+        flex-basis: 100%;
+        text-align: left;
+        white-space: normal;
+        font-size: 10px
+      }
+
+      .header h1 {
+        font-size: 18px;
+        line-height: 1.25;
+        padding-right: 0
+      }
+
+      .header p {
+        font-size: 12px
+      }
+
+      .header-meta {
+        margin-top: 4px;
+        gap: 8px
+      }
+
+      .tabs {
+        padding: 0 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap
+      }
+
+      .tab-btn {
+        padding: 10px 12px;
+        font-size: 12px;
+        flex-shrink: 0
+      }
+
+      .filter-bar {
+        gap: 8px
+      }
+
+      .filter-divider {
+        display: none
+      }
+
+      .search-box {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 100%
+      }
+
+      .result-count {
+        margin-left: 0;
+        flex: 1 1 100%
+      }
+
+      .tbl-wrap {
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain
+      }
+
+      thead th {
+        white-space: normal;
+        padding: 8px 7px;
+        font-size: 9px;
+        letter-spacing: .2px;
+        line-height: 1.25;
+        vertical-align: bottom
+      }
+
+      td {
+        padding: 8px 7px;
+        font-size: 12px
+      }
+
+      .products-cell {
+        max-width: none
+      }
+
+      .lang-toggle {
+        padding: 6px 10px;
+        font-size: 11px
+      }
+
+      .theme-toggle {
+        padding: 6px 10px;
+        font-size: 14px
+      }
+
+      .hub-back {
+        padding: 6px 10px;
+        font-size: 11px
+      }
+    }
+  </style>
+  <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div class="header">
+    <div class="header-actions">
+      <a class="hub-back" href="../index.html" id="hub-back"><span aria-hidden="true">←</span> <span id="hub-link-label">허브</span></a>
+      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
+      <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
+      <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
+    </button>
+      <span class="data-asof" id="data-asof">업데이트 기준일: 2026년 6월 15일</span>
+      <span class="quotes-asof" id="quotes-asof" aria-live="polite"></span>
+    </div>
+    <h1 id="hdr-title">🇰🇷 한국 에너지 산업 투자 지도</h1>
+    <p id="hdr-subtitle">ESS·배터리, 전력설비, 태양광·풍력, 원자력·발전, 수소·연료전지, 전력·가스 — 상장사와 글로벌 참고 관계</p>
+    <div class="header-meta">
+      <div class="badge" id="badge-total">총 <span>22</span>개 상장사</div>
+      <div class="badge" id="badge-market">KOSPI <span>13</span>사 · KOSDAQ <span>9</span>사</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button id="tab-btn-table" class="tab-btn active" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
+    <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
+  </div>
+
+  <!-- TABLE TAB -->
+  <div id="tab-table" class="tab-content active">
+    <div class="table-container">
+      <div class="filter-bar">
+        <div class="filter-group">
+          <span class="filter-label" id="fl-chain-label">벨류체인</span>
+          <div id="chain-chips"></div>
+        </div>
+        <div class="filter-divider"></div>
+        <div class="filter-group">
+          <span class="filter-label" id="fl-market-label">시장</span>
+          <div id="market-chips"></div>
+        </div>
+        <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
+          oninput="setSearch(this.value)">
+        <div class="result-count" id="result-label">표시: <span id="show-count">22</span>개</div>
+      </div>
+      <div class="tbl-wrap">
+        <table id="main-table">
+          <thead>
+            <tr>
+              <th id="th-name" onclick="sortTable('name')">기업명</th>
+              <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
+              <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
+              <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
+              <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
+              <th id="th-yoy" onclick="sortTable('quoteYoyPct')">1년 수익률</th>
+              <th id="th-mcap" onclick="sortTable('mcapWon')">시가총액</th>
+              <th id="th-per" onclick="sortTable('per')">PER</th>
+              <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
+              <th id="th-market" onclick="sortTable('market')">시장</th>
+              <th id="th-chain" onclick="sortTable('chain')">벨류체인</th>
+              <th id="th-semtype">세부 유형</th>
+              <th id="th-products">주요 제품·서비스</th>
+              <th id="th-partners">글로벌 참고 관계</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+      <p class="note" id="table-note">⚠ 종목코드 및 거래 관계는 공개 정보 기반이며, 투자 판단 전 KRX·사업보고서에서 최신 정보를 확인하세요.</p>
+    </div>
+  </div>
+
+  <!-- GRAPH TAB -->
+  <div id="tab-graph" class="tab-content">
+    <div class="graph-container">
+      <div class="graph-sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-korean">국내 상장 (벨류체인)</div>
+          <div id="sb-chain-legend"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-global">글로벌 파트너</div>
+          <div id="sb-region-legend"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-size">노드 크기 기준</div>
+          <div id="sb-size-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title" id="sb-how">조작 방법</div>
+          <div id="sb-how-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
+        </div>
+      </div>
+      <div class="graph-main">
+        <svg id="graph-svg"></svg>
+        <div id="graph-tooltip" class="graph-tooltip" style="display:none"></div>
+        <div class="graph-hint" id="graph-hint-text">노드를 클릭하면 peer 연결이 강조됩니다</div>
+        <div class="graph-controls">
+          <button class="graph-ctrl-btn" onclick="resetZoom()" title="Reset">⟳</button>
+          <button class="graph-ctrl-btn" onclick="zoomIn()">+</button>
+          <button class="graph-ctrl-btn" onclick="zoomOut()">−</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════
+    // CONSTANTS
+    // ═══════════════════════════════════════════════════════
+    let imKrwPerUsd = 1400;
+    function loadFx() {
+      return fetch('../data/fx_usdkrw.json', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('fx')); })
+        .then(function (j) {
+          if (j && typeof j.rate === 'number' && j.rate > 500 && j.rate < 5000) imKrwPerUsd = j.rate;
+        })
+        .catch(function () { /* keep imKrwPerUsd */ });
+    }
+    function fmtMcapKoJo(won) {
+      if (won == null || won === 0) return '—';
+      var jo = won / 1e12;
+      return jo.toFixed(2) + '조원';
+    }
+    function fmtMcapUsdBillion(won) {
+      if (won == null || won === 0) return '—';
+      var usd = won / imKrwPerUsd;
+      var bil = usd / 1e9;
+      return '~$' + bil.toFixed(2) + 'B';
+    }
+    function fmtFinRatio(v) {
+      if (v == null || !Number.isFinite(v)) return '—';
+      return v.toFixed(2);
+    }
+    function fmtMcapTableCell(c) {
+      if (!c.mcapWon) return '—';
+      return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
+    }
+
+    const CHAIN_COLORS = {"ESS·배터리":"#26A69A","전력설비·송배전":"#42A5F5","태양광·풍력":"#FFCA28","원자력·발전설비":"#78909C","수소·연료전지":"#7E57C2","전력·가스":"#8D6E63"};
+    const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
+
+    // ═══════════════════════════════════════════════════════
+    // TRANSLATIONS
+    // ═══════════════════════════════════════════════════════
+    const T = {
+    "ko": {
+        "title": "🇰🇷 한국 에너지 산업 투자 지도",
+        "subtitle": "ESS·배터리, 전력설비·송배전, 태양광·풍력, 원자력·발전설비, 수소·연료전지, 전력·가스 — 상장사와 글로벌 참고 관계",
+        "badgeTotal": "총 <span>22</span>개 상장사",
+        "badgeMarket": "KOSPI <span>13</span>사 · KOSDAQ <span>9</span>사",
+        "dataAsof": "업데이트 기준일: 2026년 6월 15일",
+        "tabTable": "📋 기업 목록 &amp; 필터",
+        "tabGraph": "🌐 관계 네트워크",
+        "langFlag": "🇺🇸",
+        "langText": "English",
+        "flChain": "벨류체인",
+        "flMarket": "시장",
+        "searchPlaceholder": "🔍 기업명·티커 검색...",
+        "resultLabel": "표시: ",
+        "resultUnit": "개",
+        "thName": "기업명",
+        "thTicker": "종목코드",
+        "thLast": "현재가",
+        "th52High": "52주 최고",
+        "th52Lo": "52주 최저",
+        "thYoy": "1년 수익률",
+        "thMcap": "시가총액",
+        "thPer": "PER",
+        "thPbr": "PBR",
+        "thMarket": "시장",
+        "thChain": "벨류체인",
+        "thSemType": "세부 유형",
+        "thProducts": "주요 제품·서비스",
+        "thPartners": "글로벌 참고 관계",
+        "note": "⚠ 종목코드·참고 관계는 공개 정보·에디터리얼 그룹이며 공식 계약을 대체하지 않습니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 실시간 시세(현재가·52주 최고·최저·1년 수익률)는 meta investingmap-quotes-api에 Worker URL이 있을 때만 주기적으로 갱신되며, 네이버 금융 지연 시세 기준·오류 시 —로 표시됩니다.",
+        "sbKorean": "국내 상장 (벨류체인)",
+        "sbGlobal": "Peer 링크 안내",
+        "peerNetworkDesc": "국내외 거래·장비·지분(실선/점선)과 동일 벨류체인 내 국내 peer, 회색 점선=같은 벨류체인에서 함께 등장하는 글로벌 피어 그룹.",
+        "sbSize": "노드 크기",
+        "sbHow": "조작 방법",
+        "chainLabel": {
+            "ESS·배터리": "ESS · 이차전지",
+            "전력설비·송배전": "변압기 · 개폐기 · 케이블",
+            "태양광·풍력": "모듈 · 터빈 · EPC",
+            "원자력·발전설비": "원전 기자재 · 발전",
+            "수소·연료전지": "연료전지 · 수소 인프라",
+            "전력·가스": "송배전 · 도시가스"
+        },
+        "chainFilter": {
+            "ESS·배터리": "ESS·배터리",
+            "전력설비·송배전": "전력설비",
+            "태양광·풍력": "태양광·풍력",
+            "원자력·발전설비": "원자력",
+            "수소·연료전지": "수소·연료전지",
+            "전력·가스": "전력·가스"
+        },
+        "allFilter": "전체",
+        "kosp": "KOSPI",
+        "kosdaq": "KOSDAQ",
+        "regionLabel": {
+            "us": "미국",
+            "tw": "대만",
+            "cn": "중국",
+            "eu": "유럽",
+            "kr": "한국",
+            "jp": "일본",
+            "gb": "영국"
+        },
+        "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만",
+        "howDesc": "• 노드 클릭: 연결된 peer·글로벌 링크 강조\n• 드래그·스크롤·빈 곳 클릭으로 선택 해제\n• 회색 점선: 글로벌 피어 그룹",
+        "graphHint": "노드를 클릭하면 연결된 거래처·peer·글로벌 피어 링크가 강조됩니다",
+        "ttChain": "벨류",
+        "ttSemType": "세부",
+        "ttProducts": "제품",
+        "ttRevenue": "시가총액",
+        "ttPartners": "글로벌 참고",
+        "ttSuppliers": "국내 기업",
+        "ttCountry": "국가",
+        "ttSector": "분야",
+        "ttTags": "복수 축",
+        "fieldSemType": "semType",
+        "fieldProducts": "products"
+    },
+    "en": {
+        "title": "🇰🇷 Korea Energy Industry Map",
+        "subtitle": "ESS & batteries, power equipment, solar & wind, nuclear & power plant supply, hydrogen & fuel cells, utilities — listed Korean names with illustrative global links",
+        "badgeTotal": "<span>22</span> listed companies",
+        "badgeMarket": "KOSPI <span>13</span> · KOSDAQ <span>9</span>",
+        "dataAsof": "Data as of: June 15, 2026",
+        "tabTable": "📋 Company list &amp; filters",
+        "tabGraph": "🌐 Relationship network",
+        "langFlag": "🇰🇷",
+        "langText": "한국어",
+        "flChain": "Value chain",
+        "flMarket": "Market",
+        "searchPlaceholder": "🔍 Search name or ticker...",
+        "resultLabel": "Showing: ",
+        "resultUnit": "",
+        "thName": "Company",
+        "thTicker": "Ticker",
+        "thLast": "Last",
+        "th52High": "52W High",
+        "th52Lo": "52W Low",
+        "thYoy": "1Y Return",
+        "thMcap": "Market cap (~$B)",
+        "thPer": "PER",
+        "thPbr": "PBR",
+        "thMarket": "Market",
+        "thChain": "Value chain",
+        "thSemType": "Segment",
+        "thProducts": "Products / services",
+        "thPartners": "Global reference links",
+        "note": "⚠ Public information only. Tickers and links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and ~1-year return refresh periodically when meta investingmap-quotes-api points to the quotes Worker; delayed Naver data; shows — if unavailable.",
+        "sbKorean": "Korean listed (value chain)",
+        "sbGlobal": "Peer links",
+        "peerNetworkDesc": "Solid/dashed edges show equipment, OEM and equity-style ties; domestic peer ladder by market cap; thin gray = global peer links within the same segment.",
+        "sbSize": "Node size",
+        "sbHow": "Controls",
+        "chainLabel": {
+            "ESS·배터리": "ESS & lithium batteries",
+            "전력설비·송배전": "Transformers, switchgear, cable",
+            "태양광·풍력": "Solar, wind, EPC",
+            "원자력·발전설비": "Nuclear equipment & power OEM",
+            "수소·연료전지": "Fuel cells & hydrogen infra",
+            "전력·가스": "Utilities & gas distribution"
+        },
+        "chainFilter": {
+            "ESS·배터리": "ESS & battery",
+            "전력설비·송배전": "Power equip.",
+            "태양광·풍력": "Solar & wind",
+            "원자력·발전설비": "Nuclear",
+            "수소·연료전지": "H₂ & FC",
+            "전력·가스": "Utility"
+        },
+        "allFilter": "All",
+        "kosp": "KOSPI",
+        "kosdaq": "KOSDAQ",
+        "regionLabel": {
+            "us": "USA",
+            "tw": "Taiwan",
+            "cn": "China",
+            "eu": "Europe",
+            "kr": "Korea",
+            "jp": "Japan",
+            "gb": "UK"
+        },
+        "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T",
+        "howDesc": "• Click node: highlight peers & global links\n• Drag / scroll / background click to reset\n• Gray dashes: global peer grouping",
+        "graphHint": "Click a node to highlight linked customers, peers, and global-peer edges",
+        "ttChain": "Chain",
+        "ttSemType": "Segment",
+        "ttProducts": "Products",
+        "ttRevenue": "Market cap",
+        "ttPartners": "Reference",
+        "ttSuppliers": "Korean cos.",
+        "ttCountry": "Country",
+        "ttSector": "Field",
+        "ttTags": "Multi-axis",
+        "fieldSemType": "semTypeEn",
+        "fieldProducts": "productsEn"
+    }
+};
+
+    // ═══════════════════════════════════════════════════════
+    // COMPANY DATA
+    // ═══════════════════════════════════════════════════════
+    const koreanCompanies = [
+      { id: 'lges', name: 'LG에너지솔루션', nameEn: 'LG Energy Solution', ticker: '373220', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: 'EV·ESS 원통·파우치 셀', semTypeEn: 'EV & ESS cylindrical / pouch cells',
+        products: 'GM·폭스바겐·현대차향 공급, ESS', productsEn: 'OEM cells for OEMs, grid ESS',
+        revenue: '약 35조원', mcapWon: 118000000000000, per: 28.5, pbr: 4.2, revTier: 3, partners: ['catl', 'tesla', 'vw_group', { id: 'posfutu', edgeLabel: '양극재·리사이클 연계', edgeLabelEn: 'Cathode & recycling link', weight: 0.22, kind: 'theme' }] },
+      { id: 'sdi', name: '삼성SDI', nameEn: 'Samsung SDI', ticker: '006400', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: '프리미엄 EV·ESS 팩', semTypeEn: 'Premium EV & ESS packs',
+        products: '고니켈·전고체 파이프라인', productsEn: 'High-nickel & solid-state roadmap',
+        revenue: '약 22조원', mcapWon: 44000000000000, per: 22.1, pbr: 2.8, revTier: 3, partners: ['bmw', 'vw_group', 'catl'] },
+      { id: 'skiet', name: 'SK아이이테크놀로지', nameEn: 'SK ie technology', ticker: '361610', market: 'KOSDAQ', chain: 'ESS·배터리',
+        semType: '분리막·전고체 인터페이스', semTypeEn: 'Battery separators',
+        products: '세라믹 코팅 분리막', productsEn: 'Ceramic-coated separators',
+        revenue: '약 3.5조원', mcapWon: 18000000000000, per: null, pbr: 5.1, revTier: 2, partners: ['catl', 'tesla', { id: 'lges', edgeLabel: 'SK온 계열 공급', edgeLabelEn: 'SK On ecosystem supply', weight: 0.35, kind: 'backing' }] },
+      { id: 'eprobm', name: '에코프로비엠', nameEn: 'Ecopro BM', ticker: '247540', market: 'KOSDAQ', chain: 'ESS·배터리',
+        semType: '양극재', semTypeEn: 'Cathode materials',
+        products: 'NCM·NCMA', productsEn: 'NCM / NCMA cathodes',
+        revenue: '약 4조원', mcapWon: 14000000000000, per: 45.2, pbr: 8.4, revTier: 2, partners: ['catl', 'vw_group', { id: 'lges', edgeLabel: '양극재 납품', edgeLabelEn: 'Cathode supply', weight: 0.28 }] },
+      { id: 'posfutu', name: '포스코퓨처엠', nameEn: 'POSCO Future M', ticker: '003670', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: '양극재·리튬', semTypeEn: 'Cathode & lithium',
+        products: '고니켈, 광물·소재', productsEn: 'High-nickel cathode, minerals',
+        revenue: '약 5조원', mcapWon: 12000000000000, per: 31.0, pbr: 3.9, revTier: 2, partners: ['catl', 'gm_ev', { id: 'lges', edgeLabel: '양극재 협력', edgeLabelEn: 'Cathode collaboration', weight: 0.18 }] },
+      { id: 'iljinm', name: '일진머티리얼즈', nameEn: 'Iljin Materials', ticker: '020150', market: 'KOSDAQ', chain: 'ESS·배터리',
+        semType: '전지용 동박', semTypeEn: 'Electrodeposited copper foil',
+        products: 'EV용 초박동박', productsEn: 'Ultra-thin ED copper foil',
+        revenue: '약 2조원', mcapWon: 3000000000000, per: 18.4, pbr: 2.2, revTier: 2, partners: ['catl', { id: 'lges', edgeLabel: '동박 공급', edgeLabelEn: 'Copper foil supply', weight: 0.24 }] },
+
+      { id: 'hdelec', name: 'HD현대일렉트릭', nameEn: 'HD Hyundai Electric', ticker: '267260', market: 'KOSPI', chain: '전력설비·송배전',
+        semType: '변압기·개폐기', semTypeEn: 'Transformers & switchgear',
+        products: '초고압 변압기, HVDC', productsEn: 'Ultra-HV transformers, HVDC',
+        revenue: '약 4조원', mcapWon: 9000000000000, per: 12.3, pbr: 1.9, revTier: 2, partners: ['siemens_energy', 'ge_vernova', 'schneider_e'] },
+      { id: 'lselec', name: 'LS일렉트릭', nameEn: 'LS Electric', ticker: '010120', market: 'KOSPI', chain: '전력설비·송배전',
+        semType: '전력기기·자동화', semTypeEn: 'Power apparatus & automation',
+        products: '저압·고압 개폐기, 스마트그리드', productsEn: 'LV/HV switchgear, smart grid',
+        revenue: '약 3조원', mcapWon: 5000000000000, per: 15.6, pbr: 2.1, revTier: 2, partners: ['abb', 'schneider_e', 'siemens_energy'] },
+      { id: 'hsheavy', name: '효성중공업', nameEn: 'Hyosung Heavy Industries', ticker: '298040', market: 'KOSPI', chain: '전력설비·송배전',
+        semType: '변압기·ESS PCS', semTypeEn: 'Transformers & PCS',
+        products: '초고압 변압기, STATCOM', productsEn: 'EHV transformers, FACTS',
+        revenue: '약 2.5조원', mcapWon: 2500000000000, per: 9.8, pbr: 1.4, revTier: 2, partners: ['ge_vernova', 'siemens_energy'] },
+      { id: 'sejung', name: '서전기전', nameEn: 'Sejung Electric', ticker: '189860', market: 'KOSDAQ', chain: '전력설비·송배전',
+        semType: '배전반·모터', semTypeEn: 'Switchboards & motors',
+        products: '저압 배전, 산업전동기', productsEn: 'LV distribution, industrial motors',
+        revenue: '약 4000억원', mcapWon: 400000000000, per: null, pbr: 1.1, revTier: 1, partners: ['abb', 'schneider_e'] },
+
+      { id: 'hanwhasol', name: '한화솔루션', nameEn: 'Hanwha Solutions', ticker: '009830', market: 'KOSPI', chain: '태양광·풍력',
+        semType: '모듈·필름·케미컬', semTypeEn: 'Solar modules & chemicals',
+        products: 'Q-셀 모듈, 태양광 EPC', productsEn: 'Qcells modules, solar EPC',
+        revenue: '약 12조원', mcapWon: 4500000000000, per: null, pbr: 1.8, revTier: 2, partners: ['first_solar', 'enphase', 'vestas'] },
+      { id: 'oci', name: 'OCI', nameEn: 'OCI', ticker: '010060', market: 'KOSPI', chain: '태양광·풍력',
+        semType: '폴리실리콘·그린수소', semTypeEn: 'Polysilicon & green H₂',
+        products: '태양광 급 polysilicon', productsEn: 'Solar-grade polysilicon',
+        revenue: '약 4조원', mcapWon: 3000000000000, per: 8.2, pbr: 0.9, revTier: 2, partners: ['first_solar', 'vestas'] },
+      { id: 'cswind', name: '씨에스윈드', nameEn: 'CS Wind', ticker: '112610', market: 'KOSDAQ', chain: '태양광·풍력',
+        semType: '풍력 타워', semTypeEn: 'Wind towers',
+        products: '해상·육상 타워', productsEn: 'Onshore/offshore towers',
+        revenue: '약 2조원', mcapWon: 2000000000000, per: 14.1, pbr: 2.5, revTier: 2, partners: ['vestas', 'siemens_energy'] },
+      { id: 'kometal', name: '한국전자금속', nameEn: 'Korea Electric Terminal', ticker: '004590', market: 'KOSPI', chain: '태양광·풍력',
+        semType: '태양광 구조물·금속', semTypeEn: 'Solar mounting & metal parts',
+        products: '모듈 프레임, 접속함', productsEn: 'Module frames, combiner boxes',
+        revenue: '약 8000억원', mcapWon: 300000000000, per: null, pbr: 1.2, revTier: 1, partners: ['first_solar', 'enphase'] },
+
+      { id: 'doosan_e', name: '두산에너빌리티', nameEn: 'Doosan Enerbility', ticker: '034020', market: 'KOSPI', chain: '원자력·발전설비',
+        semType: '원전 기자재·가스터빈', semTypeEn: 'Nuclear island & gas turbines',
+        products: 'SMR 연료·기자재, GT', productsEn: 'SMR components, heavy-duty GT',
+        revenue: '약 8조원', mcapWon: 7500000000000, per: 55.0, pbr: 6.2, revTier: 2, partners: ['ge_vernova', 'mitsubishi_heavy', 'orano'] },
+      { id: 'kento', name: '한전기술', nameEn: 'KEPCO Engineering & Construction', ticker: '052690', market: 'KOSPI', chain: '원자력·발전설비',
+        semType: '발전 EPC·O&M', semTypeEn: 'Power EPC & O&M',
+        products: '원전·화력 정비·해외 EPC', productsEn: 'Nuclear/thermal O&M, overseas EPC',
+        revenue: '약 3조원', mcapWon: 1500000000000, per: 12.4, pbr: 2.0, revTier: 2, partners: ['ge_vernova', 'mitsubishi_heavy', { id: 'kepco', edgeLabel: '한전 계열 수주', edgeLabelEn: 'KEPCO-linked projects', weight: 0.25, kind: 'theme' }] },
+      { id: 'bhi', name: '비에이치아이', nameEn: 'BHI', ticker: '083650', market: 'KOSDAQ', chain: '원자력·발전설비',
+        semType: '밸브·계측', semTypeEn: 'Valves & instrumentation',
+        products: '원전·화력 밸브', productsEn: 'Nuclear/thermal valves',
+        revenue: '약 5000억원', mcapWon: 500000000000, per: null, pbr: 1.5, revTier: 1, partners: ['ge_vernova', 'orano'] },
+
+      { id: 'doosan_fc', name: '두산퓨셀', nameEn: 'Doosan Fuel Cell', ticker: '336260', market: 'KOSDAQ', chain: '수소·연료전지',
+        semType: '고정형 연료전지', semTypeEn: 'Stationary fuel cells',
+        products: 'PAFC·SOFC', productsEn: 'PAFC / SOFC systems',
+        revenue: '약 1.5조원', mcapWon: 1200000000000, per: null, pbr: 3.8, revTier: 2, partners: ['bloom_energy', 'plug_power', 'hyundai_mt'] },
+      { id: 'spu', name: '에스퓨얼셀', nameEn: 'S Fuel Cell', ticker: '288620', market: 'KOSDAQ', chain: '수소·연료전지',
+        semType: '수소연료전지 스택', semTypeEn: 'Hydrogen fuel-cell stacks',
+        products: '모빌리티·발전용 스택', productsEn: 'Mobility & power stacks',
+        revenue: '약 6000억원', mcapWon: 500000000000, per: null, pbr: 4.2, revTier: 1, partners: ['bloom_energy', 'toyota_ms'] },
+      { id: 'lnf', name: '엘앤에프', nameEn: 'L&F', ticker: '066970', market: 'KOSDAQ', chain: '수소·연료전지',
+        semType: '양극재·전고체', semTypeEn: 'Cathode & solid electrolyte',
+        products: '차세대 양극재', productsEn: 'Next-gen cathode materials',
+        revenue: '약 5조원', mcapWon: 5000000000000, per: 38.0, pbr: 5.5, revTier: 2, partners: ['catl', 'vw_group', { id: 'lges', edgeLabel: '재료 공급', edgeLabelEn: 'Material supply', weight: 0.12 }] },
+
+      { id: 'kepco', name: '한국전력', nameEn: 'KEPCO', ticker: '015760', market: 'KOSPI', chain: '전력·가스',
+        semType: '송배전·발전 유틸', semTypeEn: 'Transmission & generation utility',
+        products: '국가 전력망, 재생 연계', productsEn: 'National grid, renewables integration',
+        revenue: '약 80조원', mcapWon: 22000000000000, per: 4.2, pbr: 0.45, revTier: 3, partners: ['ge_vernova', 'siemens_energy', 'vestas'] },
+      { id: 'kogas', name: '한국가스공사', nameEn: 'KOGAS', ticker: '036460', market: 'KOSPI', chain: '전력·가스',
+        semType: 'LNG 수입·배관', semTypeEn: 'LNG imports & pipelines',
+        products: '도시가스·LNG', productsEn: 'City gas, LNG terminals',
+        revenue: '약 40조원', mcapWon: 3000000000000, per: 6.1, pbr: 0.55, revTier: 2, partners: ['schneider_e', { id: 'kepco', edgeLabel: '복합에너지 수요', edgeLabelEn: 'Integrated energy demand', weight: 0.08, kind: 'theme' }] }
+    ];
+
+    const globalCompanies = [
+      { id: 'catl', name: 'CATL', nameEn: 'CATL', country: '중국/China', region: 'cn', sector: 'Battery cells & ESS' },
+      { id: 'tesla', name: 'Tesla', nameEn: 'Tesla', country: '미국/USA', region: 'us', sector: 'EV & Megapack' },
+      { id: 'vw_group', name: '폭스바겐 그룹', nameEn: 'Volkswagen Group', country: '독일/Germany', region: 'eu', sector: 'OEM EV platforms' },
+      { id: 'bmw', name: 'BMW', nameEn: 'BMW', country: '독일/Germany', region: 'eu', sector: 'Premium EV' },
+      { id: 'gm_ev', name: 'GM', nameEn: 'General Motors', country: '미국/USA', region: 'us', sector: 'Ultium platform' },
+      { id: 'siemens_energy', name: 'Siemens Energy', nameEn: 'Siemens Energy', country: '독일/Germany', region: 'eu', sector: 'Turbines & grid' },
+      { id: 'ge_vernova', name: 'GE Vernova', nameEn: 'GE Vernova', country: '미국/USA', region: 'us', sector: 'Gas turbines & grid' },
+      { id: 'vestas', name: 'Vestas', nameEn: 'Vestas', country: '덴마크/Denmark', region: 'eu', sector: 'Wind turbines' },
+      { id: 'first_solar', name: 'First Solar', nameEn: 'First Solar', country: '미국/USA', region: 'us', sector: 'Thin-film solar' },
+      { id: 'enphase', name: 'Enphase', nameEn: 'Enphase Energy', country: '미국/USA', region: 'us', sector: 'Microinverters' },
+      { id: 'orano', name: '오라노', nameEn: 'Orano', country: '프랑스/France', region: 'eu', sector: 'Nuclear fuel cycle' },
+      { id: 'mitsubishi_heavy', name: '미쓰비시중공업', nameEn: 'Mitsubishi Heavy Industries', country: '일본/Japan', region: 'jp', sector: 'Nuclear & GT' },
+      { id: 'bloom_energy', name: 'Bloom Energy', nameEn: 'Bloom Energy', country: '미국/USA', region: 'us', sector: 'Solid-oxide FC' },
+      { id: 'plug_power', name: 'Plug Power', nameEn: 'Plug Power', country: '미국/USA', region: 'us', sector: 'Hydrogen systems' },
+      { id: 'schneider_e', name: '슈나이더 일렉트릭', nameEn: 'Schneider Electric', country: '프랑스/France', region: 'eu', sector: 'Grid & automation' },
+      { id: 'abb', name: 'ABB', nameEn: 'ABB', country: '스위스/Switzerland', region: 'eu', sector: 'Electrification' },
+      { id: 'toyota_ms', name: '도요타', nameEn: 'Toyota Motor', country: '일본/Japan', region: 'jp', sector: 'FC mobility' },
+      { id: 'hyundai_mt', name: '현대차', nameEn: 'Hyundai Motor', country: '한국/Korea', region: 'kr', sector: 'Hydrogen mobility pilot' }
+    ];
+
+
+    // ═══════════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════════
+    function imInitialLang(fallback) {
+      try {
+        const q = new URLSearchParams(window.location.search).get('lang');
+        if (q === 'en' || q === 'ko') return q;
+        const s = localStorage.getItem('im_lang');
+        if (s === 'en' || s === 'ko') return s;
+      } catch (e) { }
+      return fallback;
+    }
+    let lang = imInitialLang('ko');
+    let imQuotesAsOf = '';
+    function updateQuotesAsofDisplay() {
+      var el = document.getElementById('quotes-asof');
+      if (!el) return;
+      if (!imQuotesAsOf) { el.textContent = ''; return; }
+      var short = imQuotesAsOf.indexOf('T') >= 0 ? imQuotesAsOf.replace('T', ' ').slice(0, 19) + ' UTC' : imQuotesAsOf;
+      el.textContent = (lang === 'en' ? 'Live quotes: ' : '실시간 시세: ') + short;
+    }
+    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = '', sortDir = 1;
+
+    // ═══════════════════════════════════════════════════════
+    // LANGUAGE SYSTEM
+    // ═══════════════════════════════════════════════════════
+    function syncThemeToggle() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.textContent = cur === 'light' ? '🌙' : '☀️';
+      const en = (typeof lang !== 'undefined' && lang === 'en');
+      btn.title = cur === 'light' ? (en ? 'Dark mode' : '다크 모드') : (en ? 'Light mode' : '라이트 모드');
+    }
+
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = cur === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('im_theme', next); } catch (e) { }
+      syncThemeToggle();
+      if (typeof svgEl !== 'undefined' && svgEl) {
+        svgEl.selectAll('*').remove();
+        svgEl = null;
+      }
+      if (document.getElementById('tab-graph').classList.contains('active')) {
+        if (typeof buildGraph === 'function') buildGraph();
+      }
+    }
+
+    function toggleLang() {
+      lang = lang === 'ko' ? 'en' : 'ko';
+      try {
+        const u = new URL(window.location.href);
+        u.searchParams.set('lang', lang);
+        history.replaceState(null, '', u.pathname + u.search + u.hash);
+      } catch (e) { }
+      applyLang();
+    }
+
+    function applyLang() {
+      const t = T[lang];
+      document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'ko');
+      try { localStorage.setItem('im_lang', lang); } catch (e) { }
+      const hubBack = document.getElementById('hub-back');
+      if (hubBack) hubBack.href = '../index.html?lang=' + encodeURIComponent(lang);
+      document.getElementById('hdr-title').textContent = t.title;
+      document.getElementById('hdr-subtitle').textContent = t.subtitle;
+      document.getElementById('badge-total').innerHTML = t.badgeTotal;
+      document.getElementById('badge-market').innerHTML = t.badgeMarket;
+      const asofEl = document.getElementById('data-asof');
+      if (asofEl) asofEl.textContent = t.dataAsof;
+      document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+      document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
+      document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
+      document.getElementById('lang-toggle-text').textContent = t.langText;
+      const hubLbl = document.getElementById('hub-link-label');
+      if (hubLbl) hubLbl.textContent = lang === 'en' ? 'Hub' : '허브';
+      document.getElementById('fl-chain-label').textContent = t.flChain;
+      document.getElementById('fl-market-label').textContent = t.flMarket;
+      document.getElementById('search-input').placeholder = t.searchPlaceholder;
+      document.getElementById('result-label').innerHTML = t.resultLabel + '<span id="show-count"></span>' + t.resultUnit;
+      document.getElementById('th-name').textContent = t.thName;
+      document.getElementById('th-ticker').textContent = t.thTicker;
+      var thLast = document.getElementById('th-last');
+      if (thLast) thLast.textContent = t.thLast;
+      var th52hi = document.getElementById('th-52hi');
+      if (th52hi) th52hi.textContent = t.th52High;
+      var th52lo = document.getElementById('th-52lo');
+      if (th52lo) th52lo.textContent = t.th52Lo;
+      var thyoy = document.getElementById('th-yoy');
+      if (thyoy) thyoy.textContent = t.thYoy;
+      const thMcap = document.getElementById('th-mcap');
+      if (thMcap) thMcap.textContent = t.thMcap;
+      const thPer = document.getElementById('th-per');
+      if (thPer) thPer.textContent = t.thPer;
+      const thPbr = document.getElementById('th-pbr');
+      if (thPbr) thPbr.textContent = t.thPbr;
+      document.getElementById('th-market').textContent = t.thMarket;
+      document.getElementById('th-chain').textContent = t.thChain;
+      document.getElementById('th-semtype').textContent = t.thSemType;
+      document.getElementById('th-products').textContent = t.thProducts;
+      document.getElementById('th-partners').textContent = t.thPartners;
+      document.getElementById('table-note').textContent = t.note;
+      document.getElementById('sb-korean').textContent = t.sbKorean;
+      document.getElementById('sb-global').textContent = t.sbGlobal;
+      document.getElementById('sb-size').textContent = t.sbSize;
+      document.getElementById('sb-how').textContent = t.sbHow;
+      document.getElementById('sb-size-desc').innerHTML = t.sizeDesc.replace(/\n/g, '<br>');
+      document.getElementById('sb-how-desc').innerHTML = t.howDesc.replace(/\n/g, '<br>');
+      document.getElementById('graph-hint-text').textContent = t.graphHint;
+      syncThemeToggle();
+      updateQuotesAsofDisplay();
+      // Rebuild dynamic UI
+      buildChainChips();
+      buildMarketChips();
+      buildSidebarLegend();
+      renderTable();
+      // Update graph node labels if graph is already built
+      if (svgEl) {
+        svgEl.selectAll('.node text')
+          .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label));
+      }
+    }
+
+    function buildChainChips() {
+      const t = T[lang];
+      const container = document.getElementById('chain-chips');
+      const chains = ['all', 'ESS·배터리', '전력설비·송배전', '태양광·풍력', '원자력·발전설비', '수소·연료전지', '전력·가스'];
+      container.innerHTML = chains.map(ch => {
+        const label = ch === 'all' ? t.allFilter : (t.chainFilter[ch] || ch);
+        const isActive = currentChain === ch;
+        const color = CHAIN_COLORS[ch];
+        const style = isActive ? `background:${color || '#4FC3F7'};color:#0d1117;border-color:transparent;` : '';
+        return `<div class="filter-chip${isActive ? ' active' : ''}" style="${style}" data-filter-chain="${ch}" onclick="setChainFilter('${ch}',this)">${label}</div>`;
+      }).join('');
+    }
+
+    function buildMarketChips() {
+      const t = T[lang];
+      const container = document.getElementById('market-chips');
+      const markets = ['all', 'KOSPI', 'KOSDAQ'];
+      container.innerHTML = markets.map(m => {
+        const label = m === 'all' ? t.allFilter : m;
+        const isActive = currentMarket === m;
+        const style = isActive ? 'background:#58a6ff;color:#0d1117;border-color:transparent;' : '';
+        return `<div class="filter-chip${isActive ? ' active' : ''}" style="${style}" data-filter-market="${m}" onclick="setMarketFilter('${m}',this)">${label}</div>`;
+      }).join('');
+    }
+
+    function buildSidebarLegend() {
+      const t = T[lang];
+      // Chain legend
+      const chainContainer = document.getElementById('sb-chain-legend');
+      const chains = ['ESS·배터리', '전력설비·송배전', '태양광·풍력', '원자력·발전설비', '수소·연료전지', '전력·가스'];
+      chainContainer.innerHTML = chains.map(ch =>
+        `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
+      <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
+      ${t.chainLabel[ch] || ch}
+    </div>`
+      ).join('');
+      // Peer network legend
+      const regionContainer = document.getElementById('sb-region-legend');
+      const regions = ['us', 'tw', 'cn', 'eu', 'kr', 'jp', 'gb'];
+      const regionHtml = regions.map(r =>
+        `<div class="legend-item">
+      <div class="legend-diamond" style="background:${REGION_COLORS[r]}"></div>
+      ${t.regionLabel[r]}
+    </div>`
+      ).join('');
+      regionContainer.innerHTML = regionHtml + `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7">${t.peerNetworkDesc}</div>`;
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // TABLE
+    // ═══════════════════════════════════════════════════════
+    function getChainStyle(chain) {
+      const c = CHAIN_COLORS[chain] || '#888';
+      return `background:${c}22;color:${c};border:1px solid ${c}55`;
+    }
+    function getPartnerInfo(id) {
+      const g = globalCompanies.find(x => x.id === id);
+      if (g) return { name: g.name, region: g.region };
+      const k = koreanCompanies.find(x => x.id === id);
+      if (k) return { name: k.name, region: 'kr' };
+      return { name: id, region: 'us' };
+    }
+    function partnerRef(p) {
+      if (typeof p === 'string') return { id: p, edgeLabel: '', edgeLabelEn: '', weight: null, kind: 'default' };
+      return {
+        id: p.id,
+        edgeLabel: (p.edgeLabel || '').trim(),
+        edgeLabelEn: (p.edgeLabelEn || '').trim(),
+        weight: (p.weight != null && Number.isFinite(p.weight)) ? p.weight : null,
+        kind: p.kind || 'default'
+      };
+    }
+    function companyLinksTo(c, gid) {
+      return (c.partners || []).some(p => partnerRef(p).id === gid);
+    }
+
+    function renderTable() {
+      const t = T[lang];
+      let data = koreanCompanies.filter(c => {
+        if (currentChain !== 'all' && c.chain !== currentChain) return false;
+        if (currentMarket !== 'all' && c.market !== currentMarket) return false;
+        if (searchTerm) {
+          const s = searchTerm.toLowerCase();
+          if (!c.name.includes(searchTerm) && !c.nameEn.toLowerCase().includes(s) && !c.ticker.includes(searchTerm) && !(c.semType || '').includes(searchTerm) && !(c.semTypeEn || '').toLowerCase().includes(s)) return false;
+        }
+        return true;
+      });
+      if (sortKey) {
+        data.sort((a, b) => {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quoteYoyPct') {
+            const av = a[sortKey];
+            const bv = b[sortKey];
+            const na = av == null || !Number.isFinite(av);
+            const nb = bv == null || !Number.isFinite(bv);
+            if (na && nb) return 0;
+            if (na) return 1;
+            if (nb) return -1;
+            if (+av < +bv) return -sortDir;
+            if (+av > +bv) return sortDir;
+            return 0;
+          }
+          let av = a[sortKey], bv = b[sortKey];
+          av = av || ''; bv = bv || '';
+          if (av < bv) return -sortDir;
+          if (av > bv) return sortDir;
+          return 0;
+        });
+      }
+      const countEl = document.getElementById('show-count');
+      if (countEl) countEl.textContent = data.length;
+
+      const chainLabel = (ch) => lang === 'ko' ? (t.chainFilter[ch] || ch) : (t.chainFilter[ch] || ch);
+      const semTypeField = t.fieldSemType;
+      const productsField = t.fieldProducts;
+
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = data.map(c => {
+        const partnerHtml = c.partners.slice(0, 6).map(p => {
+          const pr = partnerRef(p);
+          const info = getPartnerInfo(pr.id);
+          const elbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
+          const wpart = (pr.weight != null && Number.isFinite(pr.weight)) ? ` · ~${Math.round(pr.weight * 100)}%` : '';
+          const hint = (elbl || wpart) ? `<span class="partner-edge-hint">${elbl || ''}${wpart}</span>` : '';
+          return `<span class="partner-tag ${info.region}">${info.name}${hint}</span>`;
+        }).join('') + (c.partners.length > 6 ? `<span class="partner-tag">+${c.partners.length - 6}</span>` : '');
+        const displayName = lang === 'en' ? c.nameEn : c.name;
+        const subName = lang === 'en' ? c.name : c.nameEn;
+        const semTypeDisplay = c[semTypeField] || c.semType;
+        const productsDisplay = c[productsField] || c.products;
+        const chainDisplay = chainLabel(c.chain);
+        const qr = window.InvestingMapLiveQuotes ? InvestingMapLiveQuotes.formatQuotesRow(c, lang) : { last: '—', hi: '—', lo: '—', yoy: '—' };
+        return `<tr>
+      <td><div class="company-name">${displayName}</div><div class="company-name-sub">${subName}</div></td>
+      <td><span class="ticker">${c.ticker}</span></td>
+      <td class="quote-cell">${qr.last}</td>
+      <td class="quote-cell">${qr.hi}</td>
+      <td class="quote-cell">${qr.lo}</td>
+      <td class="quote-cell">${qr.yoy}</td>
+      <td class="mcap-cell">${fmtMcapTableCell(c)}</td>
+      <td class="fin-cell">${fmtFinRatio(c.per)}</td>
+      <td class="fin-cell">${fmtFinRatio(c.pbr)}</td>
+      <td><span class="market-badge ${c.market.toLowerCase()}">${c.market}</span></td>
+      <td><span class="chain-tag" style="${getChainStyle(c.chain)}">${chainDisplay}</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">${semTypeDisplay}</td>
+      <td class="products-cell">${productsDisplay}</td>
+      <td><div class="partners-list">${partnerHtml}</div></td>
+    </tr>`;
+      }).join('');
+    }
+
+    function setChainFilter(chain, el) {
+      currentChain = chain;
+      buildChainChips();
+      renderTable();
+    }
+    function setMarketFilter(m, el) {
+      currentMarket = m;
+      buildMarketChips();
+      renderTable();
+    }
+    function setSearch(v) { searchTerm = v; renderTable(); }
+    function sortTable(key) {
+      if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
+      document.querySelectorAll('thead th').forEach(th => th.className = '');
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quoteYoyPct: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
+      const idx = keyMap[key];
+      if (idx !== undefined) {
+        const ths = document.querySelectorAll('thead th');
+        if (ths[idx]) ths[idx].className = sortDir === 1 ? 'sort-asc' : 'sort-desc';
+      }
+      renderTable();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // GRAPH
+    // ═══════════════════════════════════════════════════════
+    let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;
+
+    function buildGraph() {
+      const container = document.getElementById('graph-svg');
+      const W = container.clientWidth || 900, H = container.clientHeight || 700;
+      const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
+      const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
+      const isGlobalId = (id) => globalCompanies.some(g => g.id === id);
+      const ANGLE = { 'ESS·배터리': 0, '전력설비·송배전': 60, '태양광·풍력': 120, '원자력·발전설비': 180, '수소·연료전지': 240, '전력·가스': 300 };
+
+      const nodes = [];
+      const nodeIndex = {};
+      koreanCompanies.forEach(c => {
+        const tags = (c.tags && c.tags.length) ? c.tags : [];
+        nodes.push({
+          id: c.id, label: c.name, labelEn: c.nameEn, type: 'korean', chain: c.chain,
+          ticker: c.ticker, market: c.market, semType: c.semType, semTypeEn: c.semTypeEn,
+          products: c.products, productsEn: c.productsEn, revenue: c.revenue, mcapWon: c.mcapWon,
+          revTier: c.revTier, data: c, tags,
+          r: c.revTier === 3 ? 18 : c.revTier === 2 ? 13 : 9
+        });
+        nodeIndex[c.id] = nodes.length - 1;
+      });
+      const usedGlobal = new Set();
+      koreanCompanies.forEach(c => (c.partners || []).forEach(p => usedGlobal.add(partnerRef(p).id)));
+      globalCompanies.filter(g => usedGlobal.has(g.id)).forEach(g => {
+        nodes.push({
+          id: g.id,
+          label: g.name,
+          labelEn: g.nameEn != null && g.nameEn !== '' ? g.nameEn : g.name,
+          type: 'global',
+          region: g.region,
+          sector: g.sector,
+          country: g.country,
+          r: 7,
+        });
+        nodeIndex[g.id] = nodes.length - 1;
+      });
+
+      const links = [];
+      const byChain = d3.group(koreanCompanies, d => d.chain);
+      for (const [ch, arr] of byChain) {
+        const sorted = [...arr].sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
+        for (let i = 0; i < sorted.length - 1; i++) {
+          links.push({
+            source: sorted[i].id,
+            target: sorted[i + 1].id,
+            sourceChain: ch,
+            kind: 'peer',
+            baseStrokeW: 1.15
+          });
+        }
+        const gids = [];
+        arr.forEach(c => (c.partners || []).forEach(p => {
+          const pid = partnerRef(p).id;
+          if (isGlobalId(pid)) gids.push(pid);
+        }));
+        const uniq = [...new Set(gids)].sort();
+        for (let i = 0; i < uniq.length - 1; i++) {
+          if (nodeIndex[uniq[i]] === undefined || nodeIndex[uniq[i + 1]] === undefined) continue;
+          links.push({
+            source: uniq[i],
+            target: uniq[i + 1],
+            sourceChain: ch,
+            kind: 'globalPeer',
+            baseStrokeW: 0.75
+          });
+        }
+      }
+      koreanCompanies.forEach(c => {
+        (c.partners || []).forEach(p => {
+          const pr = partnerRef(p);
+          const pid = pr.id;
+          if (nodeIndex[pid] === undefined) return;
+          const w = pr.weight;
+          const strokeW = (w != null && Number.isFinite(w))
+            ? Math.max(0.9, 0.85 + w * 4.2)
+            : (pr.kind === 'backing' ? 1.0 : (pr.kind === 'theme' || pr.kind === 'export' ? 1.05 : 1.2));
+          links.push({
+            source: c.id, target: pid, sourceChain: c.chain,
+            edgeLabel: pr.edgeLabel, edgeLabelEn: pr.edgeLabelEn, weight: pr.weight, kind: pr.kind,
+            baseStrokeW: strokeW
+          });
+        });
+      });
+
+      const d3svg = d3.select('#graph-svg');
+      d3svg.selectAll('*').remove();
+      svgEl = d3svg;
+      zoomBehavior = d3.zoom().scaleExtent([0.15, 4]).on('zoom', e => g.attr('transform', e.transform));
+      d3svg.call(zoomBehavior);
+      d3svg.on('click', (e) => { if (e.target === d3svg.node() || e.target.tagName === 'svg') resetSelection(); });
+      g = d3svg.append('g');
+
+      simulation = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id)
+          .distance(d => {
+            if (d.kind === 'globalPeer') return 70;
+            const S = d.source, T = d.target;
+            const sk = S.type || 'korean', tk = T.type || 'korean';
+            if (sk === 'korean' && tk === 'korean') return d.kind === 'peer' ? 52 : 62;
+            return 128;
+          })
+          .strength(d => (d.kind === 'globalPeer' ? 0.14 : (d.kind === 'peer' ? 0.36 : 0.28))))
+        .force('charge', d3.forceManyBody().strength(d => d.type === 'korean' ? -200 : -95))
+        .force('center', d3.forceCenter(W / 2, H / 2))
+        .force('collide', d3.forceCollide(d => d.r + 8))
+        .force('x', d3.forceX(d => {
+          if (d.type === 'korean') { const a = ANGLE[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
+          return W / 2;
+        }).strength(0.055))
+        .force('y', d3.forceY(d => {
+          if (d.type === 'korean') { const a = ANGLE[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
+          return H / 2;
+        }).strength(0.055));
+
+      const link = g.append('g').selectAll('line').data(links).join('line')
+        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'))
+        .attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22)
+        .attr('stroke-width', d => d.baseStrokeW || 1.2)
+        .attr('stroke-dasharray', d => {
+          if (d.kind === 'globalPeer') return '2 5';
+          if (d.kind === 'peer') return null;
+          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
+        });
+
+      const node = g.append('g').selectAll('g').data(nodes).join('g')
+        .attr('class', d => `node node-${d.type}`).attr('cursor', 'pointer')
+        .on('mouseover', (e, d) => showTooltip(e, d))
+        .on('mouseout', () => hideTooltip())
+        .on('click', (e, d) => { e.stopPropagation(); selectNode(d, node, link); })
+        .call(d3.drag()
+          .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+          .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
+          .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+      node.filter(d => d.type === 'korean').append('circle')
+        .attr('r', d => d.r).attr('fill', d => CHAIN_COLORS[d.chain] || '#888')
+        .attr('fill-opacity', 0.85).attr('stroke', graphStroke).attr('stroke-width', 1.5);
+
+      node.filter(d => d.type === 'global').append('polygon')
+        .attr('points', d => { const r = d.r + 2; return `0,${-r} ${r},0 0,${r} ${-r},0`; })
+        .attr('fill', d => REGION_COLORS[d.region] || '#888').attr('fill-opacity', 0.8)
+        .attr('stroke', graphStroke).attr('stroke-width', 1.2);
+
+      node.filter(d => d.r >= 9 || d.type === 'global').append('text')
+        .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label))
+        .attr('text-anchor', 'middle').attr('dy', d => d.r + 11)
+        .attr('font-size', d => d.type === 'korean' ? (d.r >= 13 ? 11 : 9) : 9)
+        .attr('fill', graphLabel).attr('pointer-events', 'none');
+
+      simulation.on('tick', () => {
+        link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+        node.attr('transform', d => `translate(${d.x},${d.y})`);
+      });
+      setTimeout(() => { svgEl.transition().duration(600).call(zoomBehavior.transform, d3.zoomIdentity.translate(W * 0.05, H * 0.05).scale(0.88)); }, 1200);
+    }
+
+    function selectNode(d, node, link) {
+      if (selectedNode === d.id) { resetSelection(); return; }
+      selectedNode = d.id;
+      const connected = new Set([d.id]);
+      link.each(l => {
+        const s = l.source.id || l.source, t = l.target.id || l.target;
+        if (s === d.id || t === d.id) { connected.add(s); connected.add(t); }
+      });
+      node.classed('node-dim', n => !connected.has(n.id));
+      link.attr('stroke-opacity', l => { const s = l.source.id || l.source, t = l.target.id || l.target; return (s === d.id || t === d.id) ? 0.9 : 0.03; })
+        .attr('stroke-width', l => {
+          const s = l.source.id || l.source, t = l.target.id || l.target;
+          const on = (s === d.id || t === d.id);
+          const base = l.baseStrokeW || 1.2;
+          return on ? Math.max(2.4, base * 2.2) : Math.max(0.55, base * 0.55);
+        });
+    }
+
+    function resetSelection() {
+      selectedNode = null; highlightedChain = null;
+      if (!svgEl) return;
+      svgEl.selectAll('.node').classed('node-dim', false);
+      svgEl.selectAll('line').attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22).attr('stroke-width', d => d.baseStrokeW || 1.2)
+        .attr('stroke-dasharray', d => {
+          if (d.kind === 'globalPeer') return '2 5';
+          if (d.kind === 'peer') return null;
+          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
+        })
+        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'));
+    }
+
+    function toggleChainHighlight(chain) {
+      if (!svgEl) return;
+      if (highlightedChain === chain) { resetSelection(); return; }
+      highlightedChain = chain;
+      const chainIds = new Set(koreanCompanies.filter(c => c.chain === chain).map(c => c.id));
+      const linkedIds = new Set(chainIds);
+      koreanCompanies.filter(c => c.chain === chain).forEach(c => (c.partners || []).forEach(p => linkedIds.add(partnerRef(p).id)));
+      svgEl.selectAll('.node').classed('node-dim', d => !linkedIds.has(d.id));
+      svgEl.selectAll('line').attr('stroke-opacity', l => chainIds.has(l.source.id || l.source) ? 0.75 : 0.03)
+        .attr('stroke-width', l => {
+          const base = l.baseStrokeW || 1.2;
+          return chainIds.has(l.source.id || l.source) ? Math.max(2, base * 1.7) : Math.max(0.55, base * 0.55);
+        });
+    }
+
+    function showTooltip(e, d) {
+      const tt = document.getElementById('graph-tooltip');
+      const t = T[lang];
+      const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : (REGION_COLORS[d.region] || '#888');
+      const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
+      let html = `<div class="tooltip-name" style="color:${color}">${displayName}</div>`;
+      if (d.type === 'korean') {
+        const subName = lang === 'en' ? d.label : d.labelEn;
+        const chainDisplay = t.chainFilter[d.chain] || d.chain;
+        const semTypeDisplay = (lang === 'en' ? d.semTypeEn : d.semType) || d.semType;
+        const productsDisplay = (lang === 'en' ? d.productsEn : d.products) || d.products;
+        html += `<div class="tooltip-meta">${subName} · ${d.ticker} · ${d.market}</div>`;
+        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttChain}</span><span class="tooltip-val">${chainDisplay}</span></div>`;
+        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSemType}</span><span class="tooltip-val">${semTypeDisplay}</span></div>`;
+        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttProducts}</span><span class="tooltip-val">${productsDisplay}</span></div>`;
+        const capStr = lang === 'en' ? fmtMcapUsdBillion(d.mcapWon) : fmtMcapKoJo(d.mcapWon);
+        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttRevenue}</span><span class="tooltip-val">${capStr}</span></div>`;
+        if (d.tags && d.tags.length) {
+          const tagStr = d.tags.map(x => (typeof x === 'string') ? x : ((lang === 'en' && x.en) ? x.en : (x.ko || x))).join(', ');
+          html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttTags}</span><span class="tooltip-val">${tagStr}</span></div>`;
+        }
+        const pNames = d.data.partners.slice(0, 6).map(p => {
+          const pr = partnerRef(p);
+          const nm = getPartnerInfo(pr.id).name;
+          const lbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
+          let s = nm;
+          if (lbl) s += ` — ${lbl}`;
+          if (pr.weight != null && Number.isFinite(pr.weight)) s += ` (~${Math.round(pr.weight * 100)}%)`;
+          return s;
+        }).join(', ');
+        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttPartners}</span><span class="tooltip-val">${pNames}${d.data.partners.length > 6 ? '…' : ''}</span></div>`;
+      } else {
+        html += `<div class="tooltip-meta">${d.country} · ${d.sector}</div>`;
+        const suppliers = koreanCompanies.filter(c => companyLinksTo(c, d.id));
+        if (suppliers.length) {
+          const names = suppliers.slice(0, 4).map(s => lang === 'en' ? s.nameEn : s.name).join(', ');
+          html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSuppliers}</span><span class="tooltip-val">${names}${suppliers.length > 4 ? '…' : ''}</span></div>`;
+        }
+      }
+      tt.innerHTML = html; tt.style.display = 'block';
+      const rect = svgEl.node().getBoundingClientRect();
+      tt.style.left = (e.pageX - rect.left - window.scrollX + 14) + 'px';
+      tt.style.top = (e.pageY - rect.top - window.scrollY - 10) + 'px';
+    }
+    function hideTooltip() { document.getElementById('graph-tooltip').style.display = 'none'; }
+    function resetZoom() { const svgNode = svgEl.node(); svgEl.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity.translate(svgNode.clientWidth * 0.05, svgNode.clientHeight * 0.05).scale(0.88)); }
+    function zoomIn() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 1.3); }
+    function zoomOut() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 0.77); }
+
+    // ═══════════════════════════════════════════════════════
+    // TAB SWITCH
+    // ═══════════════════════════════════════════════════════
+    function switchTab(tab, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════
+    loadFx().then(function () { applyLang(); });
+    if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
+      InvestingMapLiveQuotes.start({
+        getCompanies: function () { return koreanCompanies; },
+        renderTable: renderTable,
+        onAsOf: function (iso) { imQuotesAsOf = iso || ''; updateQuotesAsofDisplay(); }
+      });
+    }
+  </script>
+</body>
+
+</html>

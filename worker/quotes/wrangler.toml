@@ -1,0 +1,8 @@
+name = "investingmap-quotes"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Optional: comma-separated origins, e.g. https://youruser.github.io,http://localhost:5173
+# If unset, Worker allows any origin (dev-friendly; tighten for production).
+# [vars]
+# ALLOW_ORIGINS = "https://example.github.io"
