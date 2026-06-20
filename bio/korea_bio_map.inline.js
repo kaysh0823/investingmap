@@ -127,7 +127,7 @@
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
       var thpos = document.getElementById('th-position');
-      if (thpos) thpos.textContent = t.thPosition;
+      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));
       document.getElementById('th-market').textContent = t.thMarket;
       const thM = document.getElementById('th-mcap');
       if (thM) thM.textContent = t.thMcap;
@@ -288,7 +288,7 @@
         const semTypeDisplay = c[semTypeField] || c.semType;
         const productsDisplay = c[productsField] || c.products;
         const chainDisplay = chainLabel(c.chain);
-        const qr = window.InvestingMapLiveQuotes ? InvestingMapLiveQuotes.formatQuotesRow(c, lang) : { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014' };
+        const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014' };
         const mcapCell = fmtMcapTableCell(c);
         const mktClass = c.market === '비상장' ? 'unlisted' : c.market.toLowerCase();
         return '<tr>' +
@@ -297,7 +297,7 @@
           '<td class="quote-cell">' + qr.last + '</td>' +
           '<td class="quote-cell">' + qr.hi + '</td>' +
           '<td class="quote-cell">' + qr.lo + '</td>' +
-          '<td class="quote-cell">' + qr.position + '</td>' +
+          '<td class="quote-cell">' + ((qr && (qr.position != null ? qr.position : qr.yoy)) || '\u2014') + '</td>' +
           '<td class="mcap-cell">' + mcapCell + '</td>' +
           '<td class="fin-cell">' + fmtFinRatio(c.per) + '</td>' +
           '<td class="fin-cell">' + fmtFinRatio(c.pbr) + '</td>' +

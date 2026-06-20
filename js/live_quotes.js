@@ -5,6 +5,8 @@
   'use strict';
 
   var CHUNK_SIZE = 18;
+  var POSITION_FALLBACK_KO = '주가 위치';
+  var POSITION_FALLBACK_EN = 'Price Position';
 
   function getApiBase() {
     try {
@@ -55,6 +57,12 @@
     return pct < 0 ? 0 : pct > 100 ? 100 : pct;
   }
 
+  function resolveQuotePosition(c) {
+    if (!c) return null;
+    if (typeof c.quotePosition === 'number' && isFinite(c.quotePosition)) return c.quotePosition;
+    return calcQuotePosition(c.quoteLast, c.quoteHi52, c.quoteLo52);
+  }
+
   function mergeCompanies(companies, items) {
     if (!companies || !items) return;
     for (var i = 0; i < companies.length; i++) {
@@ -92,13 +100,41 @@
     return n.toFixed(1) + '%';
   }
 
+  /** 90%+ dark green, 80%+ green, 70%+ light green, 50–70% yellow, <50% light red */
+  function positionColorStyle(n) {
+    if (n == null || !isFinite(n)) return '';
+    if (n >= 90) return 'color:#059669;font-weight:700';
+    if (n >= 80) return 'color:#22c55e;font-weight:600';
+    if (n >= 70) return 'color:#86efac';
+    if (n >= 50) return 'color:#facc15';
+    return 'color:#fca5a5';
+  }
+
+  function formatPositionHtml(c) {
+    var n = resolveQuotePosition(c);
+    var text = formatPosition(n);
+    if (text === '\u2014') return text;
+    return '<span style="' + positionColorStyle(n) + '">' + text + '</span>';
+  }
+
   function formatQuotesRow(c, lang) {
+    var posHtml = formatPositionHtml(c);
     return {
       last: formatWon(c.quoteLast, lang),
       hi: formatWon(c.quoteHi52, lang),
       lo: formatWon(c.quoteLo52, lang),
-      position: formatPosition(c.quotePosition),
+      position: posHtml,
+      yoy: posHtml,
     };
+  }
+
+  function emptyQuotesRow() {
+    return { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014', yoy: '\u2014' };
+  }
+
+  function positionHeaderLabel(lang, t) {
+    if (t && t.thPosition) return t.thPosition;
+    return lang === 'en' ? POSITION_FALLBACK_EN : POSITION_FALLBACK_KO;
   }
 
   function fetchJson(url) {
@@ -194,8 +230,12 @@
     start: start,
     mergeCompanies: mergeCompanies,
     calcQuotePosition: calcQuotePosition,
+    resolveQuotePosition: resolveQuotePosition,
     formatWon: formatWon,
     formatPosition: formatPosition,
+    formatPositionHtml: formatPositionHtml,
+    positionHeaderLabel: positionHeaderLabel,
+    emptyQuotesRow: emptyQuotesRow,
     formatQuotesRow: formatQuotesRow,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

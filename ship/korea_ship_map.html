@@ -1003,6 +1003,10 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
+        "thLast": "현재가",
+        "th52High": "52주 최고",
+        "th52Lo": "52주 최저",
+        "thPosition": "주가 위치",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1076,6 +1080,10 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
+        "thLast": "Last",
+        "th52High": "52W High",
+        "th52Lo": "52W Low",
+        "thPosition": "Price Position",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1381,7 +1389,7 @@
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
       var thpos = document.getElementById('th-position');
-      if (thpos) thpos.textContent = t.thPosition;
+      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));
       const thMcap = document.getElementById('th-mcap');
       if (thMcap) thMcap.textContent = t.thMcap;
       const thPer = document.getElementById('th-per');
@@ -1545,14 +1553,14 @@
         const semTypeDisplay = c[semTypeField] || c.semType;
         const productsDisplay = c[productsField] || c.products;
         const chainDisplay = chainLabel(c.chain);
-        const qr = window.InvestingMapLiveQuotes ? InvestingMapLiveQuotes.formatQuotesRow(c, lang) : { last: '—', hi: '—', lo: '—', position: '—' };
+        const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '—', hi: '—', lo: '—', position: '—' };
         return `<tr>
       <td><div class="company-name">${displayName}</div><div class="company-name-sub">${subName}</div></td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
       <td class="quote-cell">${qr.hi}</td>
       <td class="quote-cell">${qr.lo}</td>
-      <td class="quote-cell">${qr.position}</td>
+      <td class="quote-cell">${(qr && (qr.position != null ? qr.position : qr.yoy)) || '—'}</td>
       <td class="mcap-cell">${fmtMcapTableCell(c)}</td>
       <td class="fin-cell">${fmtFinRatio(c.per)}</td>
       <td class="fin-cell">${fmtFinRatio(c.pbr)}</td>
