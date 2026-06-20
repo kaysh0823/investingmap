@@ -9,7 +9,18 @@ import { fileURLToPath } from 'url';
 const repo = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(repo, 'dist');
 
-const ROOT_FILES = ['index.html', 'ads.txt', 'robots.txt', 'sitemap.xml', 'favicon.svg'];
+const ROOT_FILES = [
+  'index.html',
+  'ads.txt',
+  'robots.txt',
+  'sitemap.xml',
+  'llms.txt',
+  'favicon.svg',
+  'editorial-policy.html',
+  'disclaimer.html',
+  'authors.html',
+  'faq.html',
+];
 const ROOT_DIRS = [
   'js',
   'data',

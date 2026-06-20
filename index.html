@@ -21,7 +21,7 @@
 
     gtag('config', 'G-4PF8E42DGN');
   </script>
-  <!-- Google AdSense: ca-pub-6448775418895050 — enable Auto ads in AdSense for this site. -->
+  <!-- Google AdSense: ca-pub-6448775418895050 ??enable Auto ads in AdSense for this site. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
     crossorigin="anonymous"></script>
   <meta charset="UTF-8">
@@ -38,10 +38,10 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="ko_KR">
   <meta property="og:url" content="https://investing-kr.com/">
-  <meta property="og:title" content="Investing Map — Korea industry maps hub">
+  <meta property="og:title" content="Investing Map ??Korea industry maps hub">
   <meta property="og:description" content="Hub for seven Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Investing Map — Korea industry maps hub">
+  <meta name="twitter:title" content="Investing Map ??Korea industry maps hub">
   <meta name="twitter:description" content="Hub for seven Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <script type="application/ld+json">
   {
@@ -50,11 +50,37 @@
     "name": "Investing Map",
     "url": "https://investing-kr.com/",
     "description": "Interactive maps of Korean listed companies across semiconductor, bio, shipbuilding, defense, robotics, energy, and K-culture industries.",
-    "inLanguage": ["ko", "en"]
+    "inLanguage": ["ko", "en"],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Investing Map",
+      "url": "https://investing-kr.com/"
+    }
   }
   </script>
   <script src="js/seo.js"></script>
-  <title>Investing Map — Korea industry maps hub</title>
+  <!-- investingmap-geo-org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Investing Map",
+    "url": "https://investing-kr.com/",
+    "logo": "https://investing-kr.com/favicon.svg",
+    "description": "?�국 KOSPI·KOSDAQ ?�장???�업 지?? ?��?총액·PER·PBR, 밸류체인, �?��??거래처·�?로벌 ?�어 관�?,
+    "knowsAbout": [
+      "?�국 주식 ?�자",
+      "KOSPI",
+      "KOSDAQ",
+      "?�업 밸류체인",
+      "?��?총액",
+      "PER",
+      "PBR"
+    ]
+  }
+  </script>
+
+  <title>Investing Map ??Korea industry maps hub</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <style>
     :root {
@@ -304,6 +330,35 @@
         padding: 18px 16px
       }
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
   </style>
 </head>
 
@@ -314,9 +369,9 @@
   <header class="site-header">
     <div class="header-actions">
       <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Light mode"
-        aria-label="Theme">☀️</button>
+        aria-label="Theme">?��?/button>
       <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
-        <span class="flag">🇰🇷</span><span id="lang-toggle-text">한국어</span>
+        <span class="flag">?��?��</span><span id="lang-toggle-text">?�국??/span>
       </button>
       <span class="data-asof" id="data-asof">Data as of: June 15, 2026</span>
     </div>
@@ -328,124 +383,135 @@
   <main class="hub-main">
     <div class="hub-grid">
       <a class="hub-card" id="hub-link-semi" href="semiconductor/korea_semiconductor_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">💠</span>
+        <span class="hub-card-emoji" aria-hidden="true">?��</span>
         <h2 id="card-semi-title">Korea Semiconductor Investment Map</h2>
         <p class="hub-card-lead" id="card-semi-lead">Semiconductors: design, foundry, memory, materials, equipment,
           substrates, and packaging across the electronics supply chain.</p>
         <p class="hub-card-map" id="card-semi-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-semi-cta">Open map →</span>
+        <span class="hub-card-cta" id="card-semi-cta">Open map ??/span>
       </a>
       <a class="hub-card" id="hub-link-bio" href="bio/korea_bio_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🧬</span>
+        <span class="hub-card-emoji" aria-hidden="true">?��</span>
         <h2 id="card-bio-title">Korea Bio Industry Investment Map</h2>
         <p class="hub-card-lead" id="card-bio-lead">Bio and pharma: drug R&amp;D, CDMO, biosimilars, devices, and
           diagnostics linked to global big-pharma pairings.</p>
         <p class="hub-card-map" id="card-bio-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-bio-cta">Open map →</span>
+        <span class="hub-card-cta" id="card-bio-cta">Open map ??/span>
       </a>
       <a class="hub-card" id="hub-link-ship" href="ship/korea_ship_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">⚓</span>
+        <span class="hub-card-emoji" aria-hidden="true">??/span>
         <h2 id="card-ship-title">Korea Shipbuilding &amp; Marine Equipment Map</h2>
         <p class="hub-card-lead" id="card-ship-lead">Shipbuilding and marine: yards, engines, steel, equipment,
           offshore, shipping, and adjacent defense-at-sea clusters.</p>
         <p class="hub-card-map" id="card-ship-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-ship-cta">Open map →</span>
+        <span class="hub-card-cta" id="card-ship-cta">Open map ??/span>
       </a>
       <a class="hub-card" id="hub-link-defense" href="defense/korea_defense_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🛰️</span>
+        <span class="hub-card-emoji" aria-hidden="true">?���?/span>
         <h2 id="card-defense-title">Korea Defense, Space &amp; Aviation Map</h2>
         <p class="hub-card-lead" id="card-defense-lead">Military aircraft and engines, missiles and C4ISR, land systems,
-          naval shipbuilding, and space plus civil aviation—listed Korean primes with illustrative global links.</p>
+          naval shipbuilding, and space plus civil aviation?�listed Korean primes with illustrative global links.</p>
         <p class="hub-card-map" id="card-defense-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-defense-cta">Open map →</span>
+        <span class="hub-card-cta" id="card-defense-cta">Open map ??/span>
       </a>
       <a class="hub-card" id="hub-link-robot" href="robot/korea_robot_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🤖</span>
+        <span class="hub-card-emoji" aria-hidden="true">?��</span>
         <h2 id="card-robot-title">Korea Robot / Physical AI Industry Map</h2>
         <p class="hub-card-lead" id="card-robot-lead">Robotics and physical AI: factory automation, logistics AMRs,
           cobots, sensing, motion control, and human-scale systems.</p>
         <p class="hub-card-map" id="card-robot-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-robot-cta">Open map →</span>
+        <span class="hub-card-cta" id="card-robot-cta">Open map ??/span>
       </a>
       <a class="hub-card" id="hub-link-energy" href="energy/korea_energy_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">⚡</span>
-        <h2 id="card-energy-title">한국 에너지/파워플랜트 투자 지도</h2>
-        <p class="hub-card-lead" id="card-energy-lead">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계</p>
+        <span class="hub-card-emoji" aria-hidden="true">??/span>
+        <h2 id="card-energy-title">?�국 ?�너지/?�워?�랜???�자 지??/h2>
+        <p class="hub-card-lead" id="card-energy-lead">?�재?��?차전지·?�양광·풍?�·원?�력·?�력기기·ESS·?�소·?�료?��?·?�력·가?????�너지/?�워?�랜??밸류체인�?글로벌 ?�비·?�재 참고 관�?/p>
         <p class="hub-card-map" id="card-energy-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-energy-cta">Open map →</span>
+        <span class="hub-card-cta" id="card-energy-cta">Open map ??/span>
       </a>
       <a class="hub-card" id="hub-link-kculture" href="kculture/korea_kculture_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🎬</span>
+        <span class="hub-card-emoji" aria-hidden="true">?��</span>
         <h2 id="card-kculture-title">Korea K-Culture Industry Map</h2>
         <p class="hub-card-lead" id="card-kculture-lead">Ramen &amp; packaged food, travel and airlines, beauty brands,
-          drama·webtoon·streaming IP, and K-pop labels—listed Korean equities with illustrative global links.</p>
+          drama·webtoon·streaming IP, and K-pop labels?�listed Korean equities with illustrative global links.</p>
         <p class="hub-card-map" id="card-kculture-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-kculture-cta">Open map →</span>
+        <span class="hub-card-cta" id="card-kculture-cta">Open map ??/span>
       </a>
     </div>
     <p class="hub-foot" id="hub-foot">On each map: table &amp; graph, Korean/English, and dark/light theme.</p>
   </main>
 
+  <footer class="im-trust-footer" id="im-trust-footer" data-investingmap-geo-footer>
+    <nav class="im-trust-nav" aria-label="Trust and policies">
+      <a href="editorial-policy.html" id="tf-editorial">?�집·검�??�책</a>
+      <a href="disclaimer.html" id="tf-disclaimer">면책 고�?</a>
+      <a href="authors.html" id="tf-authors">?�집·?�이???�</a>
+      <a href="faq.html" id="tf-faq">FAQ</a>
+      <a href="index.html" id="tf-hub">?�브</a>
+    </nav>
+    <p class="im-trust-disclaimer" id="tf-inline-disclaimer">�?콘텐츠는 ?�보 ?�공 목적?�며 ?�자 권유·?�문???�닙?�다. ?�자 결정�?책임?� ?�자??본인?�게 ?�습?�다.</p>
+  </footer>
+
   <script>
     const T = {
       ko: {
         title: 'Investing Map',
-        subtitle: '반도체·바이오·조선·해양·방위/우주/항공·로봇/피지컬AI·에너지·K컬처 일곱 가지 한국 산업 지도로, 상장사·밸류체인·KRX 데이터·관계 네트워크',
-        langFlag: '🇺🇸',
+        subtitle: '반도체·바?�오·조선·?�양·방위/?�주/??��·로봇/?��?컬AI·?�너지·K컬처 ?�곱 가지 ?�국 ?�업 지?�로, ?�장??�밸류체?�·KRX ?�이?�·�?�??�트?�크',
+        langFlag: '?��?��',
         langText: 'English',
-        cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
-        updateAsOf: '업데이트 기준일: 2026년 6월 15일',
-        semiTitle: '한국 반도체 산업 투자 지도',
-        semiLead: '전자 공급망을 받치는 설계·파운드리·메모리·소재·장비·기판·패키징 등 반도체 밸류체인',
-        semiCta: '지도 열기 →',
-        bioTitle: '한국 바이오 산업 투자 지도',
-        bioLead: '신약·CDMO·바이오시밀러·의료기기·진단 등 국내 제약·바이오 상장사와 글로벌 페어링',
-        bioCta: '지도 열기 →',
-        shipTitle: '한국 조선·조선기자재 산업 투자 지도',
-        shipLead: '조선소·엔진·철강·조선기자재·해양·해운·방산 해양 등 조선·해양 산업 클러스터',
-        shipCta: '지도 열기 →',
-        defenseTitle: '한국 방위·우주·항공 산업 투자 지도',
-        defenseLead: '군용 항공기·엔진, 미사일·레이더·C4ISR, 육상무기·탄약, 해군·함정, 우주·위성·민항 등 상장 주요 방산·항공 클러스터와 글로벌 참고 관계',
-        defenseCta: '지도 열기 →',
-        robotTitle: '한국 로봇/피지컬AI 산업 투자 지도',
-        robotLead: '공장자동화·물류 AMR·협동로봇·센싱·모션 제어·피지컬AI까지 로봇·자동화 생태계',
-        robotCta: '지도 열기 →',
-        kcultureTitle: '한국 K컬처 산업 투자 지도',
-        kcultureLead: '라면·가공식품, 여행·항공·레저, 화장품, 드라마·웹툰·스트리밍 IP, K팝 레이블 등 상장 한국 주식과 글로벌 연계 예시',
-        kcultureCta: '지도 열기 →',
-        energyTitle: '한국 에너지/파워플랜트 투자 지도',
-        energyLead: '신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계',
-        energyCta: '지도 열기 →',
-        foot: '각 지도 페이지에서 표·그래프·언어(한/영)·다크·라이트 테마를 사용할 수 있습니다.'
+        cardMapLine: '�?지??공통: 밸류체인 분류 · KRX ?��?총액 · ?�렬·?�터 가?�한 기업 ??· 관계형 그래??',
+        updateAsOf: '?�데?�트 기�??? 2026??6??15??,
+        semiTitle: '?�국 반도�??�업 ?�자 지??,
+        semiLead: '?�자 공급망을 받치???�계·?�운?�리·메모�?�소??�장비·기?�·패?�징 ??반도�?밸류체인',
+        semiCta: '지???�기 ??,
+        bioTitle: '?�국 바이???�업 ?�자 지??,
+        bioLead: '?�약·CDMO·바이?�시밀??�의료기기·진????�?�� ?�약·바이???�장?��? 글로벌 ?�어�?,
+        bioCta: '지???�기 ??,
+        shipTitle: '?�국 조선·조선기자???�업 ?�자 지??,
+        shipLead: '조선?�·엔진·철강·조?�기?�재·?�양·?�운·방산 ?�양 ??조선·?�양 ?�업 ?�러?�터',
+        shipCta: '지???�기 ??,
+        defenseTitle: '?�국 방위·?�주·??�� ?�업 ?�자 지??,
+        defenseLead: '군용 ??��기·엔�? 미사?�·레?�더·C4ISR, ?�상무기·?�약, ?�군·?�정, ?�주·?�성·민항 ???�장 주요 방산·??�� ?�러?�터?� 글로벌 참고 관�?,
+        defenseCta: '지???�기 ??,
+        robotTitle: '?�국 로봇/?��?컬AI ?�업 ?�자 지??,
+        robotLead: '공장?�동?�·물�?AMR·?�동로봇·?�싱·모션 ?�어·?��?컬AI까�? 로봇·?�동???�태�?,
+        robotCta: '지???�기 ??,
+        kcultureTitle: '?�국 K컬처 ?�업 ?�자 지??,
+        kcultureLead: '?�면·가공식?? ?�행·??��·?��?, ?�장?? ?�라마·웹?�·스?�리�?IP, K???�이�????�장 ?�국 주식�?글로벌 ?�계 ?�시',
+        kcultureCta: '지???�기 ??,
+        energyTitle: '?�국 ?�너지/?�워?�랜???�자 지??,
+        energyLead: '?�재?��?차전지·?�양광·풍?�·원?�력·?�력기기·ESS·?�소·?�료?��?·?�력·가?????�너지/?�워?�랜??밸류체인�?글로벌 ?�비·?�재 참고 관�?,
+        energyCta: '지???�기 ??,
+        foot: '�?지???�이지?�서 ?�·그?�프·?�어(????·?�크·?�이???�마�??�용?????�습?�다.'
       },
       en: {
         title: 'Investing Map',
         subtitle: 'Hub for seven Korean industry maps: listed companies, value chains, KRX data, and relationship networks.',
-        langFlag: '🇰🇷',
-        langText: '한국어',
+        langFlag: '?��?��',
+        langText: '?�국??,
         cardMapLine: 'Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.',
         updateAsOf: 'Data as of: June 15, 2026',
         semiTitle: 'Korea Semiconductor Investment Map',
         semiLead: 'Semiconductors: design, foundry, memory, materials, equipment, substrates, and packaging across the electronics supply chain.',
-        semiCta: 'Open map →',
+        semiCta: 'Open map ??,
         bioTitle: 'Korea Bio Industry Investment Map',
         bioLead: 'Bio and pharma: drug R&D, CDMO, biosimilars, devices, and diagnostics linked to global big-pharma pairings.',
-        bioCta: 'Open map →',
+        bioCta: 'Open map ??,
         shipTitle: 'Korea Shipbuilding & Marine Equipment Map',
         shipLead: 'Shipbuilding and marine: yards, engines, steel, equipment, offshore, shipping, and adjacent defense-at-sea clusters.',
-        shipCta: 'Open map →',
+        shipCta: 'Open map ??,
         defenseTitle: 'Korea Defense, Space & Aviation Map',
-        defenseLead: 'Military aircraft and engines, missiles and C4ISR, land systems and ammunition, naval shipbuilding, satellites and civil aviation—Korean listed primes with illustrative global links.',
-        defenseCta: 'Open map →',
+        defenseLead: 'Military aircraft and engines, missiles and C4ISR, land systems and ammunition, naval shipbuilding, satellites and civil aviation?�Korean listed primes with illustrative global links.',
+        defenseCta: 'Open map ??,
         robotTitle: 'Korea Robot / Physical AI Industry Map',
         robotLead: 'Robotics and physical AI: factory automation, logistics AMRs, cobots, sensing, motion control, and human-scale systems.',
-        robotCta: 'Open map →',
+        robotCta: 'Open map ??,
         kcultureTitle: 'Korea K-Culture Industry Map',
-        kcultureLead: 'Ramen and packaged food, travel and airlines, beauty, drama·webtoon·streaming IP, and K-pop labels—listed Korean equities with illustrative global links.',
-        kcultureCta: 'Open map →',
+        kcultureLead: 'Ramen and packaged food, travel and airlines, beauty, drama·webtoon·streaming IP, and K-pop labels?�listed Korean equities with illustrative global links.',
+        kcultureCta: 'Open map ??,
         energyTitle: 'Korea Energy & Power Plant Map',
-        energyLead: 'Renewables, batteries, solar, wind, nuclear, power equipment, ESS, hydrogen, fuel cells, and utilities—listed Korean energy & power-plant names with illustrative global links.',
-        energyCta: 'Open map →',
+        energyLead: 'Renewables, batteries, solar, wind, nuclear, power equipment, ESS, hydrogen, fuel cells, and utilities?�listed Korean energy & power-plant names with illustrative global links.',
+        energyCta: 'Open map ??,
         foot: 'On each map: table & graph, Korean/English, and dark/light theme.'
       }
     };
@@ -466,10 +532,10 @@
       const cur = document.documentElement.getAttribute('data-theme') || 'dark';
       const btn = document.getElementById('theme-toggle');
       if (!btn) return;
-      btn.textContent = cur === 'light' ? '🌙' : '☀️';
+      btn.textContent = cur === 'light' ? '?��' : '?��?;
       btn.title = cur === 'light'
-        ? (lang === 'en' ? 'Dark mode' : '다크 모드')
-        : (lang === 'en' ? 'Light mode' : '라이트 모드');
+        ? (lang === 'en' ? 'Dark mode' : '?�크 모드')
+        : (lang === 'en' ? 'Light mode' : '?�이??모드');
     }
 
     function toggleTheme() {
@@ -538,14 +604,16 @@
       document.getElementById('card-energy-cta').textContent = t.energyCta;
       document.getElementById('hub-foot').textContent = t.foot;
       document.title = lang === 'en'
-        ? 'Investing Map — Korea industry maps hub'
-        : 'Investing Map — 한국 산업 투자 지도 허브';
+        ? 'Investing Map ??Korea industry maps hub'
+        : 'Investing Map ???�국 ?�업 ?�자 지???�브';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: t.subtitle });
+      if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
       syncThemeToggle();
     }
 
     applyLang();
   </script>
+  <script src="js/geo_footer.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,105 @@
+{
+  "site": {
+    "name": "Investing Map",
+    "url": "https://investing-kr.com",
+    "logo": "https://investing-kr.com/favicon.svg",
+    "description": {
+      "ko": "한국 KOSPI·KOSDAQ 상장사 산업 지도: 시가총액·PER·PBR, 밸류체인, 국내외 거래처·글로벌 피어 관계",
+      "en": "Korean listed-company industry maps: KRX market cap, PER, PBR, value chains, and relationship networks"
+    },
+    "sameAs": []
+  },
+  "dates": {
+    "dataAsOf": "2026-06-15",
+    "geoPublished": "2026-06-20",
+    "geoModified": "2026-06-20"
+  },
+  "citations": [
+    "한국거래소(KRX)",
+    "DART 전자공시",
+    "네이버 금융 환율",
+    "https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW"
+  ],
+  "organization": {
+    "name": "Investing Map",
+    "knowsAbout": [
+      "한국 주식 투자",
+      "KOSPI",
+      "KOSDAQ",
+      "산업 밸류체인",
+      "시가총액",
+      "PER",
+      "PBR"
+    ]
+  },
+  "editorialTeam": {
+    "name": "Investing Map Editorial Team",
+    "jobTitle": {
+      "ko": "데이터·편집 팀",
+      "en": "Data & Editorial Team"
+    },
+    "description": {
+      "ko": "KRX·공시 기반 정량 데이터와 산업 분류를 검증·갱신하는 편집 팀입니다.",
+      "en": "Editorial team that verifies and updates quantitative data and industry classifications from KRX and public filings."
+    },
+    "knowsAbout": ["KRX market data", "Korean equities", "industry mapping"]
+  },
+  "pages": {
+    "semiconductor": {
+      "path": "/semiconductor/korea_semiconductor_map.html",
+      "title": { "ko": "한국 반도체 산업 투자 지도", "en": "Korea Semiconductor Investment Map" },
+      "summary": {
+        "ko": "국내 상장 반도체 64개사의 KRX 시가총액·PER·PBR, 설계·파운드리·메모리·소재·장비·패키징 밸류체인, 국내외 거래처·글로벌 피어 관계를 한 페이지에서 비교할 수 있습니다.",
+        "en": "Compare 64 listed Korean semiconductor companies by KRX market cap, PER, PBR, value-chain segment, and domestic/global customer and peer relationships on one page."
+      }
+    },
+    "bio": {
+      "path": "/bio/korea_bio_map.html",
+      "title": { "ko": "한국 바이오 산업 투자 지도", "en": "Korea Bio Industry Investment Map" },
+      "summary": {
+        "ko": "국내 바이오·제약 상장사의 KRX 정량 데이터, 신약·CDMO·바이오시밀러·의료기기 분류, 기술이전·글로벌 빅파마 페어링 관계를 제공합니다.",
+        "en": "KRX metrics, therapeutic and CDMO segments, and technology-transfer / big-pharma pairing networks for listed Korean bio and pharma names."
+      }
+    },
+    "ship": {
+      "path": "/ship/korea_ship_map.html",
+      "title": { "ko": "한국 조선·조선기자재 산업 투자 지도", "en": "Korea Shipbuilding & Marine Equipment Map" },
+      "summary": {
+        "ko": "조선소·엔진·철강·조선기자재·해양·해운 등 상장사의 KRX 데이터와 밸류체인, 글로벌 거래·수주 관계를 정리합니다.",
+        "en": "KRX data, value-chain tags, and illustrative global order and customer links for listed Korean shipbuilding and marine equipment names."
+      }
+    },
+    "defense": {
+      "path": "/defense/korea_defense_map.html",
+      "title": { "ko": "한국 방위·우주·항공 산업 투자 지도", "en": "Korea Defense, Space & Aviation Map" },
+      "summary": {
+        "ko": "항공기·미사일·육상무기·해군·우주·민항 관련 상장 방산·항공 기업의 KRX 지표와 글로벌 참고 네트워크를 제공합니다.",
+        "en": "KRX metrics and illustrative global reference networks for listed Korean defense, space, and aviation primes."
+      }
+    },
+    "robot": {
+      "path": "/robot/korea_robot_map.html",
+      "title": { "ko": "한국 로봇·피지컬AI 산업 투자 지도", "en": "Korea Robot / Physical AI Industry Map" },
+      "summary": {
+        "ko": "산업로봇·자동화·물류 AMR·협동로봇·센싱·모션 제어·피지컬AI 상장사의 KRX 데이터와 밸류체인, 글로벌 장비·SW 관계를 제공합니다.",
+        "en": "KRX data, automation value chains, and global equipment/software links for listed Korean robotics and physical-AI names."
+      }
+    },
+    "energy": {
+      "path": "/energy/korea_energy_map.html",
+      "title": { "ko": "한국 에너지/파워플랜트 투자 지도", "en": "Korea Energy & Power Plant Map" },
+      "summary": {
+        "ko": "신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 관련 상장사와 글로벌 참고 관계를 정리합니다.",
+        "en": "Listed Korean energy and power-plant names across renewables, batteries, nuclear, grid equipment, ESS, hydrogen, and utilities with global reference links."
+      }
+    },
+    "kculture": {
+      "path": "/kculture/korea_kculture_map.html",
+      "title": { "ko": "한국 K컬처 산업 투자 지도", "en": "Korea K-Culture Industry Map" },
+      "summary": {
+        "ko": "라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
+        "en": "KRX data and keyword-driven global link examples for listed Korean names in ramen/food, travel, beauty, drama/webtoon/media, and K-pop."
+      }
+    }
+  }
+}

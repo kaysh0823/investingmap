@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://investing-kr.com/faq.html">
+  <link rel="alternate" hreflang="ko" href="https://investing-kr.com/faq.html?lang=ko">
+  <link rel="alternate" hreflang="en" href="https://investing-kr.com/faq.html?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://investing-kr.com/faq.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Investing Map">
+  <meta property="og:url" content="https://investing-kr.com/faq.html">
+  <meta property="og:title" content="자주 묻는 질문">
+  <meta property="og:description" content="Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Investing Map",
+    "url": "https://investing-kr.com/",
+    "description": "Korean listed-company industry maps: KRX market cap, PER, PBR, value chains, and relationship networks",
+    "inLanguage": [
+      "ko",
+      "en"
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Investing Map",
+      "url": "https://investing-kr.com/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Investing Map",
+    "url": "https://investing-kr.com/",
+    "logo": "https://investing-kr.com/favicon.svg",
+    "description": "한국 KOSPI·KOSDAQ 상장사 산업 지도: 시가총액·PER·PBR, 밸류체인, 국내외 거래처·글로벌 피어 관계",
+    "knowsAbout": [
+      "한국 주식 투자",
+      "KOSPI",
+      "KOSDAQ",
+      "산업 밸류체인",
+      "시가총액",
+      "PER",
+      "PBR"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "자주 묻는 질문",
+    "description": "Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.",
+    "url": "https://investing-kr.com/faq.html",
+    "datePublished": "2026-06-20T09:00:00+09:00",
+    "dateModified": "2026-06-20T09:00:00+09:00",
+    "author": {
+      "@type": "Organization",
+      "name": "Investing Map Editorial Team",
+      "url": "https://investing-kr.com/authors.html"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Investing Map",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://investing-kr.com/favicon.svg"
+      }
+    },
+    "citation": [
+      "한국거래소(KRX)",
+      "DART 전자공시",
+      "네이버 금융 환율",
+      "https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Investing Map은 무엇을 제공하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Investing Map은 KOSPI·KOSDAQ 상장사를 산업별로 분류한 인터랙티브 지도입니다. 각 페이지에서 KRX 기준 시가총액·PER·PBR, 밸류체인 태그, 정렬·필터 가능한 기업 표, 관계형 그래프를 한국어·영어로 볼 수 있습니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "시가총액·PER·PBR 데이터는 어디서 가져오나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일(예: 2026년 6월 15일)에 맞춥니다. PER·PBR도 동일 CSV 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 KRX OPEN API·네이버 시세 캐시로 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "영문 시가총액은 어떻게 환산하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "관계 지도(그래프)는 공시 데이터인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "관계 그래프의 거래처·피어·키워드 연결은 공개 정보와 편집 분류를 바탕으로 한 참고용 네트워크입니다. 공식 공시·계약 관계를 대체하지 않으며, 투자 판단 전 DART 전자공시와 사업보고서에서 최신 정보를 확인해야 합니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "데이터는 얼마나 자주 갱신되나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "KRX 정량 데이터(시총·PER·PBR)는 주기적으로 CSV를 갱신하며 페이지 기준일을 업데이트합니다. 실시간 시세 필드는 영업일 기준으로 /api/quotes 폴링 주기에 따라 반영됩니다. 고트래픽 페이지는 연 1회 이상 편집·검증 정책에 따라 출처를 재확인합니다."
+        }
+      }
+    ]
+  }
+  </script>
+  <script src="js/seo.js"></script>
+  <title>자주 묻는 질문 | Investing Map</title>
+  <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #21262d; --border: #30363d;
+      --text: #e6edf3; --text-muted: #8b949e; --accent: #58a6ff;
+      --header-g0: #0d1117; --header-g1: #161b22;
+    }
+    [data-theme="light"] {
+      --bg: #f6f8fa; --surface: #fff; --surface2: #eaeef2; --border: #d0d7de;
+      --text: #1f2328; --text-muted: #656d76; --accent: #0969da;
+      --header-g0: #fff; --header-g1: #f6f8fa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 15px; min-height: 100vh; line-height: 1.6 }
+    .site-header { background: linear-gradient(135deg, var(--header-g0), var(--header-g1)); border-bottom: 1px solid var(--border); padding: 24px 28px; position: relative }
+    .header-actions { position: absolute; top: 20px; right: 22px; display: flex; gap: 8px; align-items: center }
+    .theme-toggle, .lang-toggle, .hub-back { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 13px; text-decoration: none }
+    .trust-main { max-width: 760px; margin: 0 auto; padding: 28px 28px 12px }
+    .trust-main h1 { font-size: 26px; margin-bottom: 8px }
+    .trust-main .lead { color: var(--text-muted); margin-bottom: 24px }
+    .trust-main h2 { font-size: 18px; margin: 28px 0 10px }
+    .trust-main p, .trust-main li { margin-bottom: 10px }
+    .trust-main ul { padding-left: 1.25rem }
+    .trust-main a { color: var(--accent) }
+    .answer-capsule { margin-bottom: 20px }
+    .updated { font-size: 13px; color: var(--text-muted); margin-bottom: 20px }
+    .im-trust-footer { border-top: 1px solid var(--border); padding: 20px 28px 28px; margin-top: 24px; font-size: 13px; color: var(--text-muted) }
+    .im-trust-nav { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-bottom: 12px }
+    .im-trust-nav a { color: var(--accent); text-decoration: none }
+    .faq-item { margin-bottom: 22px }
+    .faq-item h2 { font-size: 16px; margin: 0 0 6px }
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-actions">
+      <a class="hub-back" href="index.html" id="hub-back">← <span id="hub-label">허브</span></a>
+      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Theme">☀️</button>
+      <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()"><span class="flag">🇺🇸</span> <span id="lang-text">English</span></button>
+    </div>
+    <h1 id="page-title">자주 묻는 질문</h1>
+    <p class="lead" id="page-lead">Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.</p>
+  </header>
+  <main class="trust-main" id="trust-body-ko" lang="ko">
+<div class="faq-item"><h2>Investing Map은 무엇을 제공하나요?</h2><p>Investing Map은 KOSPI·KOSDAQ 상장사를 산업별로 분류한 인터랙티브 지도입니다. 각 페이지에서 KRX 기준 시가총액·PER·PBR, 밸류체인 태그, 정렬·필터 가능한 기업 표, 관계형 그래프를 한국어·영어로 볼 수 있습니다.</p></div>
+<div class="faq-item"><h2>시가총액·PER·PBR 데이터는 어디서 가져오나요?</h2><p>시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일(예: 2026년 6월 15일)에 맞춥니다. PER·PBR도 동일 CSV 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 KRX OPEN API·네이버 시세 캐시로 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다.</p></div>
+<div class="faq-item"><h2>영문 시가총액은 어떻게 환산하나요?</h2><p>영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW</p></div>
+<div class="faq-item"><h2>관계 지도(그래프)는 공시 데이터인가요?</h2><p>관계 그래프의 거래처·피어·키워드 연결은 공개 정보와 편집 분류를 바탕으로 한 참고용 네트워크입니다. 공식 공시·계약 관계를 대체하지 않으며, 투자 판단 전 DART 전자공시와 사업보고서에서 최신 정보를 확인해야 합니다.</p></div>
+<div class="faq-item"><h2>데이터는 얼마나 자주 갱신되나요?</h2><p>KRX 정량 데이터(시총·PER·PBR)는 주기적으로 CSV를 갱신하며 페이지 기준일을 업데이트합니다. 실시간 시세 필드는 영업일 기준으로 /api/quotes 폴링 주기에 따라 반영됩니다. 고트래픽 페이지는 연 1회 이상 편집·검증 정책에 따라 출처를 재확인합니다.</p></div>
+  </main>
+  <main class="trust-main" id="trust-body-en" lang="en" hidden>
+<div class="faq-item"><h2>What does Investing Map provide?</h2><p>Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed names. Each page shows KRX-based market cap, PER, PBR, value-chain tags, a sortable company table, and a relationship graph in Korean and English.</p></div>
+<div class="faq-item"><h2>Where do market cap, PER, and PBR come from?</h2><p>Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page (e.g. 15 June 2026). Last price and 52-week high/low refresh via /api/quotes (KRX OPEN API and Naver cache) and may show — when delayed or closed.</p></div>
+<div class="faq-item"><h2>How is English market cap converted?</h2><p>English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot stored in data/fx_usdkrw.json from Naver Finance.</p></div>
+<div class="faq-item"><h2>Are relationship graphs official filing data?</h2><p>Graph edges for customers, peers, and keywords are editorial reference networks from public information—not a substitute for DART filings or annual reports.</p></div>
+<div class="faq-item"><h2>How often is data updated?</h2><p>KRX quantitative fields are updated when CSVs are refreshed and the page as-of date changes. Quote fields follow /api/quotes polling on trading days. High-traffic pages are source-checked at least annually per our editorial policy.</p></div>
+  </main>
+  <footer class="im-trust-footer" id="im-trust-footer">
+    <nav class="im-trust-nav" aria-label="Trust and policies">
+      <a href="editorial-policy.html" id="tf-editorial">편집·검증 정책</a>
+      <a href="disclaimer.html" id="tf-disclaimer">면책 고지</a>
+      <a href="authors.html" id="tf-authors">편집·데이터 팀</a>
+      <a href="faq.html" id="tf-faq">FAQ</a>
+      <a href="index.html" id="tf-hub">허브</a>
+    </nav>
+    <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
+  </footer>
+  <script src="js/geo_footer.js"></script>
+  <script>
+    const PAGE = {"titleKo":"자주 묻는 질문","titleEn":"Frequently asked questions","descKo":"Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.","descEn":"FAQ on Investing Map data sources, FX conversion, and reading the relationship graphs."};
+    const T = {
+      ko: { hub: '허브', langFlag: '🇺🇸', langText: 'English', themeLight: '라이트 모드', themeDark: '다크 모드' },
+      en: { hub: 'Hub', langFlag: '🇰🇷', langText: '한국어', themeLight: 'Light mode', themeDark: 'Dark mode' }
+    };
+    function imInitialLang() {
+      try {
+        const q = new URLSearchParams(location.search).get('lang');
+        if (q === 'en' || q === 'ko') return q;
+        const s = localStorage.getItem('im_lang');
+        if (s === 'en' || s === 'ko') return s;
+      } catch (e) {}
+      return 'ko';
+    }
+    let lang = imInitialLang();
+    function toggleTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = cur === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('im_theme', next); } catch (e) {}
+      syncTheme();
+    }
+    function syncTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      const btn = document.getElementById('theme-toggle');
+      if (btn) { btn.textContent = cur === 'light' ? '🌙' : '☀️'; btn.title = cur === 'light' ? T[lang].themeDark : T[lang].themeLight; }
+    }
+    function toggleLang() {
+      lang = lang === 'ko' ? 'en' : 'ko';
+      try {
+        const u = new URL(location.href);
+        u.searchParams.set('lang', lang);
+        history.replaceState(null, '', u.pathname + u.search);
+        localStorage.setItem('im_lang', lang);
+      } catch (e) {}
+      applyLang();
+    }
+    function applyLang() {
+      document.documentElement.lang = lang === 'en' ? 'en' : 'ko';
+      document.getElementById('page-title').textContent = lang === 'en' ? PAGE.titleEn : PAGE.titleKo;
+      document.getElementById('page-lead').textContent = lang === 'en' ? PAGE.descEn : PAGE.descKo;
+      document.getElementById('trust-body-ko').hidden = lang !== 'ko';
+      document.getElementById('trust-body-en').hidden = lang !== 'en';
+      document.getElementById('hub-label').textContent = T[lang].hub;
+      document.querySelector('.lang-toggle .flag').textContent = T[lang].langFlag;
+      document.getElementById('lang-text').textContent = T[lang].langText;
+      document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
+      if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: lang === 'en' ? PAGE.descEn : PAGE.descKo });
+      if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      syncTheme();
+    }
+    applyLang();
+  </script>
+</body>
+</html>

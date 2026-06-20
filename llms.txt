@@ -1,0 +1,28 @@
+# Investing Map
+
+> Investing Map은 국내외 투자자를 위한 한국 상장사 산업 지도 플랫폼입니다.
+> KOSPI·KOSDAQ 상장 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·글로벌 피어 관계를
+> 산업별 인터랙티브 지도로 제공하며, 한국어·영어를 지원합니다.
+
+## 산업 투자 지도 (핵심 콘텐츠)
+- [한국 반도체 산업 투자 지도](https://investing-kr.com/semiconductor/korea_semiconductor_map.html): 상장 반도체 기업 KRX 데이터, 밸류체인, 국내외 거래처·글로벌 피어 그룹
+- [한국 바이오 산업 투자 지도](https://investing-kr.com/bio/korea_bio_map.html): 제약·바이오 상장사, 기술이전·글로벌 빅파마 페어링, peer 네트워크
+- [한국 조선·조선기자재 산업 투자 지도](https://investing-kr.com/ship/korea_ship_map.html): 조선·해양·기자재 밸류체인, 글로벌 거래·수주 관계
+- [한국 방위·우주·항공 산업 투자 지도](https://investing-kr.com/defense/korea_defense_map.html): 방산·항공·우주 상장사 KRX 데이터, 글로벌 참고 네트워크
+- [한국 로봇·피지컬AI 산업 투자 지도](https://investing-kr.com/robot/korea_robot_map.html): 산업로봇·자동화·피지컬AI 밸류체인, 글로벌 장비·SW 관계
+- [한국 에너지/파워플랜트 투자 지도](https://investing-kr.com/energy/korea_energy_map.html): 신재생·2차전지·원자력·전력기기·ESS·수소 등 에너지 밸류체인
+- [한국 K컬처 산업 투자 지도](https://investing-kr.com/kculture/korea_kculture_map.html): 라면·식품, 여행·레저, 화장품, 드라마·웹툰·K-pop 관련 상장사
+
+## 허브
+- [Investing Map 허브](https://investing-kr.com/): 일곱 가지 산업 지도 진입점, 언어·테마 전환
+
+## 신뢰성 / 회사 정보
+- [편집·검증 정책](https://investing-kr.com/editorial-policy.html): 데이터 출처, 갱신 주기, 편집·검증 프로세스
+- [투자 유의 / 면책 고지](https://investing-kr.com/disclaimer.html): 정보 제공 목적, 투자 권유·자문 아님, 데이터 한계
+- [편집·데이터 팀](https://investing-kr.com/authors.html): 콘텐츠 제작·데이터 검증 담당
+- [자주 묻는 질문](https://investing-kr.com/faq.html): 시가총액 출처, 환율·PER·PBR, 관계 지도 해석 방법
+
+## 데이터 출처 (1차)
+- 한국거래소(KRX) 전자공시·시세 데이터 (data/ CSV, 기준일 표기)
+- 네이버 금융 USD/KRW 환율 (영문 시총 환산 참고)
+- DART 전자공시 (기업 공시 확인 권장)
