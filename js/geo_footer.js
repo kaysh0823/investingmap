@@ -50,4 +50,5 @@
   document.addEventListener('DOMContentLoaded', function () {
     applyTrustFooter(imLang());
   });
+  if (document.readyState !== 'loading') applyTrustFooter(imLang());
 })();

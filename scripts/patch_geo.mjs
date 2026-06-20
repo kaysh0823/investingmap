@@ -40,14 +40,19 @@ const GEO_SUMMARY_CSS = `
     .geo-summary {
       max-width: 960px;
       margin: 0 auto;
-      padding: 0 28px 12px;
-      font-size: 14px;
+      padding: 8px 28px 14px;
+      font-size: 13px;
       line-height: 1.55;
-      color: var(--text-muted)
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border)
     }
 
     .geo-summary p {
-      margin: 0 0 8px
+      margin: 0
+    }
+
+    .geo-summary p[hidden] {
+      display: none
     }
 `;
 
@@ -66,6 +71,10 @@ function patchApplyLangHook(html) {
     );
   }
   return html;
+}
+
+function removeGeoSummary(html) {
+  return html.replace(/\s*<!-- investingmap-geo-summary -->[\s\S]*?<\/section>\n?/g, '\n');
 }
 
 function patchMapPage(rel, key) {
@@ -87,31 +96,30 @@ function patchMapPage(rel, key) {
       dateModified: geo.dates.dataAsOf,
     });
     const wpBlock = `  <!-- ${MARKER}-webpage -->\n${ldScript(wp)}\n`;
-    html = html.replace(/(<!-- investingmap-geo-org -->[\s\S]*?<\/script>\n|<!-- investingmap-seo -->[\s\S]*?<script src="\.\.\/js\/seo\.js"><\/script>\n)/, (m) => m + wpBlock);
-  }
-
-  if (!html.includes(`${MARKER}-summary`)) {
     html = html.replace(
-      /(<p id="hdr-subtitle">[^<]*<\/p>)/,
-      `$1\n${geoSummaryBlock(key)}`
+      /(<!-- investingmap-geo-org -->[\s\S]*?<\/script>\n|<!-- investingmap-seo -->[\s\S]*?<script src="\.\.\/js\/seo\.js"><\/script>\n)/,
+      (m) => m + wpBlock
     );
   }
 
+  html = removeGeoSummary(html);
+
   if (!html.includes(TRUST_FOOTER_CSS.trim().slice(0, 20))) {
-    html = html.replace(/(\s*<\/style>)/, `${GEO_SUMMARY_CSS}${TRUST_FOOTER_CSS}$1`);
+    html = html.replace(/(\s*<\/style>)/, `${TRUST_FOOTER_CSS}$1`);
   }
 
   if (!html.includes(TRUST_FOOTER_MARKER)) {
-    html = html.replace(/<\/body>/, `${trustFooterHtml(1)}\n  <script src="../js/geo_footer.js"></script>\n</body>`);
-  }
-
-  if (!html.includes('geo_footer.js') && html.includes(TRUST_FOOTER_MARKER)) {
+    html = html.replace(
+      /<\/body>/,
+      `${trustFooterHtml(1)}\n  <script src="../js/geo_footer.js"></script>\n</body>`
+    );
+  } else if (!html.includes('geo_footer.js')) {
     html = html.replace(/<\/body>/, `  <script src="../js/geo_footer.js"></script>\n</body>`);
   }
 
   html = patchApplyLangHook(html);
 
-  fs.writeFileSync(abs, html);
+  fs.writeFileSync(abs, html, 'utf8');
   console.log('geo patched:', rel);
 }
 
@@ -138,7 +146,7 @@ function patchIndex() {
 
   html = patchApplyLangHook(html);
 
-  fs.writeFileSync(abs, html);
+  fs.writeFileSync(abs, html, 'utf8');
   console.log('geo patched: index.html');
 }
 
@@ -154,7 +162,7 @@ for (const rel of bioInlineFiles) {
       /if \(window\.InvestingMapSeo\) InvestingMapSeo\.sync\([^)]*\);/,
       (m) => m + '\n      if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);'
     );
-    fs.writeFileSync(abs, js);
+    fs.writeFileSync(abs, js, 'utf8');
     console.log('geo patched:', rel);
   }
 }
