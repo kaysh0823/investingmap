@@ -1,3 +1,3 @@
-# Google AdSense — Investing Map (investing-map.pages.dev)
+# Google AdSense — Investing Map (investing-kr.com)
 # IAB ads.txt v1 — https://iabtechlab.com/ads-txt/
 google.com, pub-6448775418895050, DIRECT, f08c47fec0942fa0

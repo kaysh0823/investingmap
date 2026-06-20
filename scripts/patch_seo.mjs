@@ -7,7 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const BASE = 'https://investing-map.pages.dev';
+const BASE = 'https://investing-kr.com';
 const MARKER = 'investingmap-seo';
 
 const PAGES = [

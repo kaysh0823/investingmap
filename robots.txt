@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://investing-map.pages.dev/sitemap.xml
+Sitemap: https://investing-kr.com/sitemap.xml
