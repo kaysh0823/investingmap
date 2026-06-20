@@ -24,7 +24,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="investingmap-quotes-api" content="/api/quotes">
-  <title>한국 에너지 산업 투자 지도 / Korea Energy Industry Map</title>
+  <title>한국 에너지/파워플랜트 투자 지도 / Korea Energy & Power Plant Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="../js/live_quotes.js"></script>
@@ -894,11 +894,11 @@
       <span class="data-asof" id="data-asof">업데이트 기준일: 2026년 6월 15일</span>
       <span class="quotes-asof" id="quotes-asof" aria-live="polite"></span>
     </div>
-    <h1 id="hdr-title">🇰🇷 한국 에너지 산업 투자 지도</h1>
-    <p id="hdr-subtitle">ESS·배터리, 전력설비, 태양광·풍력, 원자력·발전, 수소·연료전지, 전력·가스 — 상장사와 글로벌 참고 관계</p>
+    <h1 id="hdr-title">🇰🇷 한국 에너지/파워플랜트 투자 지도</h1>
+    <p id="hdr-subtitle">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>22</span>개 상장사</div>
-      <div class="badge" id="badge-market">KOSPI <span>13</span>사 · KOSDAQ <span>9</span>사</div>
+      <div class="badge" id="badge-total">총 <span>40</span>개 상장사</div>
+      <div class="badge" id="badge-market">KOSPI <span>26</span>사 · KOSDAQ <span>14</span>사</div>
     </div>
   </div>
 
@@ -1026,10 +1026,10 @@
     // ═══════════════════════════════════════════════════════
     const T = {
     "ko": {
-        "title": "🇰🇷 한국 에너지 산업 투자 지도",
-        "subtitle": "ESS·배터리, 전력설비·송배전, 태양광·풍력, 원자력·발전설비, 수소·연료전지, 전력·가스 — 상장사와 글로벌 참고 관계",
-        "badgeTotal": "총 <span>22</span>개 상장사",
-        "badgeMarket": "KOSPI <span>13</span>사 · KOSDAQ <span>9</span>사",
+        "title": "🇰🇷 한국 에너지/파워플랜트 투자 지도",
+        "subtitle": "신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 — 상장사와 글로벌 참고 관계",
+        "badgeTotal": "총 <span>40</span>개 상장사",
+        "badgeMarket": "KOSPI <span>26</span>사 · KOSDAQ <span>14</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 15일",
         "tabTable": "📋 기업 목록 &amp; 필터",
         "tabGraph": "🌐 관계 네트워크",
@@ -1104,10 +1104,10 @@
         "fieldProducts": "products"
     },
     "en": {
-        "title": "🇰🇷 Korea Energy Industry Map",
-        "subtitle": "ESS & batteries, power equipment, solar & wind, nuclear & power plant supply, hydrogen & fuel cells, utilities — listed Korean names with illustrative global links",
-        "badgeTotal": "<span>22</span> listed companies",
-        "badgeMarket": "KOSPI <span>13</span> · KOSDAQ <span>9</span>",
+        "title": "🇰🇷 Korea Energy & Power Plant Map",
+        "subtitle": "Renewables, batteries, solar, wind, nuclear, power equipment, ESS, hydrogen, fuel cells, and utilities — listed Korean names with illustrative global links",
+        "badgeTotal": "<span>40</span> listed companies",
+        "badgeMarket": "KOSPI <span>26</span> · KOSDAQ <span>14</span>",
         "dataAsof": "Data as of: June 15, 2026",
         "tabTable": "📋 Company list &amp; filters",
         "tabGraph": "🌐 Relationship network",
@@ -1211,6 +1211,46 @@
         semType: '전지용 동박', semTypeEn: 'Electrodeposited copper foil',
         products: 'EV용 초박동박', productsEn: 'Ultra-thin ED copper foil',
         revenue: '약 2조원', mcapWon: 3000000000000, per: 18.4, pbr: 2.2, revTier: 2, partners: ['catl', { id: 'lges', edgeLabel: '동박 공급', edgeLabelEn: 'Copper foil supply', weight: 0.24 }] },
+      { id: 'skinn', name: 'SK이노베이션', nameEn: 'SK Innovation', ticker: '096770', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: '배터리·정유·석유화학', semTypeEn: 'Battery, refining & petrochemicals',
+        products: 'SK온 계열 EV·ESS 셀, 배터리 소재', productsEn: 'SK On EV/ESS cells & battery materials',
+        revenue: '약 80조원', mcapWon: 17936500806800, per: null, pbr: null, revTier: 3, partners: ['catl', 'vw_group', { id: 'lges', edgeLabel: '2차전지 peer', edgeLabelEn: 'Battery peer', weight: 0.12, kind: 'theme' }] },
+      { id: 'ecopro', name: '에코프로', nameEn: 'Ecopro', ticker: '086520', market: 'KOSDAQ', chain: 'ESS·배터리',
+        semType: '양극재·배터리 소재 지주', semTypeEn: 'Cathode & battery materials holding',
+        products: '에코프로비엠·머티리als 계열', productsEn: 'Ecopro BM & Materials group',
+        revenue: '약 8조원', mcapWon: 15709300786400, per: null, pbr: null, revTier: 3, partners: ['catl', { id: 'eprobm', edgeLabel: '그룹 지주', edgeLabelEn: 'Group holding', weight: 0.45, kind: 'backing' }] },
+      { id: 'ecopro_m', name: '에코프로머티리als', nameEn: 'Ecopro Materials', ticker: '450080', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: '전구체·양극재 소재', semTypeEn: 'Precursor & cathode feedstock',
+        products: 'NCA/NCM 전구체', productsEn: 'NCA/NCM precursors',
+        revenue: '약 2조원', mcapWon: 3959513992000, per: null, pbr: null, revTier: 2, partners: [{ id: 'ecopro', edgeLabel: '그룹', edgeLabelEn: 'Ecopro group', weight: 0.5, kind: 'backing' }, 'catl'] },
+      { id: 'soulbrain', name: '솔브레인', nameEn: 'Soulbrain', ticker: '357780', market: 'KOSDAQ', chain: 'ESS·배터리',
+        semType: '전해액·반도체 화학', semTypeEn: 'Battery electrolyte & specialty chemicals',
+        products: 'Li-ion 전해액', productsEn: 'Li-ion electrolytes',
+        revenue: '약 1.5조원', mcapWon: 3434236889000, per: 42.9, pbr: 20.0, revTier: 2, partners: ['catl', { id: 'lges', edgeLabel: '전해액 납품', edgeLabelEn: 'Electrolyte supply', weight: 0.2 }] },
+      { id: 'cheombo', name: '천보', nameEn: 'Chunbo', ticker: '278280', market: 'KOSDAQ', chain: 'ESS·배터리',
+        semType: '배터리용 동박·알루미늄 foil', semTypeEn: 'Battery copper & aluminum foil',
+        products: '2차전지 집전체 foil', productsEn: 'Battery current-collector foil',
+        revenue: '약 5000억원', mcapWon: 521366213750, per: null, pbr: null, revTier: 1, partners: [{ id: 'lges', edgeLabel: 'foil 공급', edgeLabelEn: 'Foil supply', weight: 0.18 }] },
+      { id: 'skc', name: 'SKC', nameEn: 'SKC', ticker: '011790', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: '동박·필름·화학소재', semTypeEn: 'Copper foil, film & chemical materials',
+        products: '전지용 동박, PI·Optical film', productsEn: 'Battery copper foil, PI/optical films',
+        revenue: '약 3조원', mcapWon: 6958641209400, per: null, pbr: null, revTier: 2, partners: ['catl', { id: 'skinn', edgeLabel: 'SK 계열', edgeLabelEn: 'SK group', weight: 0.2, kind: 'backing' }] },
+      { id: 'pi_am', name: 'PI첨단소재', nameEn: 'PI Advanced Materials', ticker: '178920', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: 'PI·배터리용 필름', semTypeEn: 'PI & battery-grade films',
+        products: '전지 separator·바인더용 PI', productsEn: 'PI for separators & binders',
+        revenue: '약 3000억원', mcapWon: 700386779700, per: null, pbr: 23.0, revTier: 1, partners: [{ id: 'lges', edgeLabel: '소재 납품', edgeLabelEn: 'Material supply', weight: 0.1 }] },
+      { id: 'hd_ess', name: 'HD현대에너지솔루션', nameEn: 'HD Hyundai Energy Solutions', ticker: '322000', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: 'ESS·태양광 모듈', semTypeEn: 'ESS & solar modules',
+        products: '산업·계통 ESS, 태양광', productsEn: 'C&I/grid ESS, solar modules',
+        revenue: '약 1.2조원', mcapWon: 1685600000000, per: null, pbr: 40.5, revTier: 2, partners: ['tesla', 'enphase', { id: 'hdelec', edgeLabel: 'HD현대 계열', edgeLabelEn: 'HD Hyundai group', weight: 0.15, kind: 'backing' }] },
+      { id: 'fosung', name: '후성', nameEn: 'Foosung', ticker: '093370', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: 'LiFSI·냉매·특수가스', semTypeEn: 'LiFSI electrolyte salt & specialty gases',
+        products: '전해질 LiFSI, 반도체·배터리 가스', productsEn: 'LiFSI, specialty gases',
+        revenue: '약 1조원', mcapWon: 2038923823300, per: null, pbr: null, revTier: 2, partners: ['catl', { id: 'soulbrain', edgeLabel: '전해질 연계', edgeLabelEn: 'Electrolyte chain', weight: 0.12, kind: 'theme' }] },
+      { id: 'lg_chem', name: 'LG화학', nameEn: 'LG Chem', ticker: '051910', market: 'KOSPI', chain: 'ESS·배터리',
+        semType: '양극재·Petrochem·첨단소재', semTypeEn: 'Cathode, petrochemicals & advanced materials',
+        products: '양극재, ABS, 분리막', productsEn: 'Cathode active materials, ABS, separators',
+        revenue: '약 50조원', mcapWon: 24354358335000, per: null, pbr: null, revTier: 3, partners: ['catl', 'tesla', { id: 'lges', edgeLabel: 'LG 배터리 계열', edgeLabelEn: 'LG battery ecosystem', weight: 0.3, kind: 'backing' }] },
 
       { id: 'hdelec', name: 'HD현대일렉트릭', nameEn: 'HD Hyundai Electric', ticker: '267260', market: 'KOSPI', chain: '전력설비·송배전',
         semType: '변압기·개폐기', semTypeEn: 'Transformers & switchgear',
@@ -1228,6 +1268,22 @@
         semType: '배전반·모터', semTypeEn: 'Switchboards & motors',
         products: '저압 배전, 산업전동기', productsEn: 'LV distribution, industrial motors',
         revenue: '약 4000억원', mcapWon: 400000000000, per: null, pbr: 1.1, revTier: 1, partners: ['abb', 'schneider_e'] },
+      { id: 'taihan', name: '대한전선', nameEn: 'Taihan Cable & Solution', ticker: '001440', market: 'KOSPI', chain: '전력설비·송배전',
+        semType: '초고압·해저 케이블', semTypeEn: 'Extra-HV & submarine cable',
+        products: '송전·배전 케이블, HVDC', productsEn: 'Transmission/distribution cable, HVDC',
+        revenue: '약 3조원', mcapWon: 7418319758600, per: null, pbr: 83.6, revTier: 2, partners: ['siemens_energy', 'ge_vernova'] },
+      { id: 'jeryong', name: '제룡전기', nameEn: 'Cheryong Electric', ticker: '033100', market: 'KOSDAQ', chain: '전력설비·송배전',
+        semType: '변압기·차단기', semTypeEn: 'Transformers & breakers',
+        products: '수배전반·변압기', productsEn: 'Switchgear & transformers',
+        revenue: '약 5000억원', mcapWon: 832032786200, per: null, pbr: 14.2, revTier: 1, partners: ['schneider_e', 'abb'] },
+      { id: 'iljin_el', name: '일진전기', nameEn: 'Iljin Electric', ticker: '103590', market: 'KOSPI', chain: '전력설비·송배전',
+        semType: '전력케이블·전기자재', semTypeEn: 'Power cable & electrical parts',
+        products: '고압 케이블, 전력기기', productsEn: 'HV cable, power apparatus',
+        revenue: '약 2조원', mcapWon: 3900664902000, per: null, pbr: 37.5, revTier: 2, partners: ['siemens_energy', 'ge_vernova'] },
+      { id: 'samwha', name: '금호전기', nameEn: 'Samwha Electric', ticker: '011780', market: 'KOSPI', chain: '전력설비·송배전',
+        semType: '전력기기·전자부품', semTypeEn: 'Power equipment & components',
+        products: '커패시터·전력반도체 모듈', productsEn: 'Capacitors & power modules',
+        revenue: '약 1.5조원', mcapWon: 3099382440000, per: null, pbr: 10.9, revTier: 2, partners: ['schneider_e', 'abb'] },
 
       { id: 'hanwhasol', name: '한화솔루션', nameEn: 'Hanwha Solutions', ticker: '009830', market: 'KOSPI', chain: '태양광·풍력',
         semType: '모듈·필름·케미컬', semTypeEn: 'Solar modules & chemicals',
@@ -1245,6 +1301,14 @@
         semType: '태양광 구조물·금속', semTypeEn: 'Solar mounting & metal parts',
         products: '모듈 프레임, 접속함', productsEn: 'Module frames, combiner boxes',
         revenue: '약 8000억원', mcapWon: 300000000000, per: null, pbr: 1.2, revTier: 1, partners: ['first_solar', 'enphase'] },
+      { id: 'sk_eternix', name: 'SK이터닉스', nameEn: 'SK eternix', ticker: '475150', market: 'KOSPI', chain: '태양광·풍력',
+        semType: '신재생 EPC·운영', semTypeEn: 'Renewable EPC & O&M',
+        products: '태양광·풍력 프로젝트 개발', productsEn: 'Solar & wind project development',
+        revenue: '약 1조원', mcapWon: 1464881172000, per: null, pbr: 47.2, revTier: 2, partners: ['vestas', 'first_solar', { id: 'skinn', edgeLabel: 'SK 계열', edgeLabelEn: 'SK group', weight: 0.25, kind: 'backing' }] },
+      { id: 'unison', name: '유니슨', nameEn: 'Unison', ticker: '018000', market: 'KOSDAQ', chain: '태양광·풍력',
+        semType: '풍력·태양광 발전', semTypeEn: 'Wind & solar power generation',
+        products: '풍력단지·태양광 발전소', productsEn: 'Wind farms & solar plants',
+        revenue: '약 2000억원', mcapWon: 246523369800, per: null, pbr: null, revTier: 1, partners: ['vestas', 'enphase'] },
 
       { id: 'doosan_e', name: '두산에너빌리티', nameEn: 'Doosan Enerbility', ticker: '034020', market: 'KOSPI', chain: '원자력·발전설비',
         semType: '원전 기자재·가스터빈', semTypeEn: 'Nuclear island & gas turbines',
@@ -1258,6 +1322,14 @@
         semType: '밸브·계측', semTypeEn: 'Valves & instrumentation',
         products: '원전·화력 밸브', productsEn: 'Nuclear/thermal valves',
         revenue: '약 5000억원', mcapWon: 500000000000, per: null, pbr: 1.5, revTier: 1, partners: ['ge_vernova', 'orano'] },
+      { id: 'kepco_kps', name: '한전KPS', nameEn: 'KEPCO KPS', ticker: '051600', market: 'KOSPI', chain: '원자력·발전설비',
+        semType: '발전설비 정비·O&M', semTypeEn: 'Power-plant maintenance & O&M',
+        products: '원전·화력·신재생 O&M', productsEn: 'Nuclear, thermal & renewable O&M',
+        revenue: '약 2조원', mcapWon: 2875500000000, per: null, pbr: 23.1, revTier: 2, partners: ['ge_vernova', { id: 'kepco', edgeLabel: '한전 계열', edgeLabelEn: 'KEPCO affiliate', weight: 0.35, kind: 'backing' }] },
+      { id: 'kepid', name: '한국전력공업', nameEn: 'Korea Electric Power Industrial Development', ticker: '130660', market: 'KOSPI', chain: '원자력·발전설비',
+        semType: '발전기·전력기기', semTypeEn: 'Generators & power equipment',
+        products: '발전설비·전력기기 제조', productsEn: 'Power-plant equipment manufacturing',
+        revenue: '약 3000억원', mcapWon: 440426000000, per: null, pbr: null, revTier: 1, partners: [{ id: 'kepco', edgeLabel: '한전 계열', edgeLabelEn: 'KEPCO affiliate', weight: 0.2, kind: 'backing' }] },
 
       { id: 'doosan_fc', name: '두산퓨셀', nameEn: 'Doosan Fuel Cell', ticker: '336260', market: 'KOSDAQ', chain: '수소·연료전지',
         semType: '고정형 연료전지', semTypeEn: 'Stationary fuel cells',
@@ -1267,10 +1339,10 @@
         semType: '수소연료전지 스택', semTypeEn: 'Hydrogen fuel-cell stacks',
         products: '모빌리티·발전용 스택', productsEn: 'Mobility & power stacks',
         revenue: '약 6000억원', mcapWon: 500000000000, per: null, pbr: 4.2, revTier: 1, partners: ['bloom_energy', 'toyota_ms'] },
-      { id: 'lnf', name: '엘앤에프', nameEn: 'L&F', ticker: '066970', market: 'KOSDAQ', chain: '수소·연료전지',
+      { id: 'lnf', name: '엘앤에프', nameEn: 'L&F', ticker: '066970', market: 'KOSDAQ', chain: 'ESS·배터리',
         semType: '양극재·전고체', semTypeEn: 'Cathode & solid electrolyte',
         products: '차세대 양극재', productsEn: 'Next-gen cathode materials',
-        revenue: '약 5조원', mcapWon: 5000000000000, per: 38.0, pbr: 5.5, revTier: 2, partners: ['catl', 'vw_group', { id: 'lges', edgeLabel: '재료 공급', edgeLabelEn: 'Material supply', weight: 0.12 }] },
+        revenue: '약 5조원', mcapWon: 5436104362000, per: 38.0, pbr: 5.5, revTier: 2, partners: ['catl', 'vw_group', { id: 'lges', edgeLabel: '재료 공급', edgeLabelEn: 'Material supply', weight: 0.12 }] },
 
       { id: 'kepco', name: '한국전력', nameEn: 'KEPCO', ticker: '015760', market: 'KOSPI', chain: '전력·가스',
         semType: '송배전·발전 유틸', semTypeEn: 'Transmission & generation utility',
@@ -1330,7 +1402,7 @@
       var short = imQuotesAsOf.indexOf('T') >= 0 ? imQuotesAsOf.replace('T', ' ').slice(0, 19) + ' UTC' : imQuotesAsOf;
       el.textContent = (lang === 'en' ? 'Live quotes: ' : '실시간 시세: ') + short;
     }
-    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = '', sortDir = 1;
+    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
 
     // ═══════════════════════════════════════════════════════
     // LANGUAGE SYSTEM
@@ -1429,6 +1501,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
+      syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
         svgEl.selectAll('.node text')
@@ -1601,6 +1674,18 @@
       renderTable();
     }
     function setSearch(v) { searchTerm = v; renderTable(); }
+
+    function syncSortHeader() {
+      document.querySelectorAll('thead th').forEach(th => th.className = '');
+      if (!sortKey) return;
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
+      const idx = keyMap[sortKey];
+      if (idx !== undefined) {
+        const ths = document.querySelectorAll('thead th');
+        if (ths[idx]) ths[idx].className = sortDir === 1 ? 'sort-asc' : 'sort-desc';
+      }
+    }
+
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');

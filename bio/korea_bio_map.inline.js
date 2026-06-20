@@ -32,7 +32,7 @@
       var short = imQuotesAsOf.indexOf('T') >= 0 ? imQuotesAsOf.replace('T', ' ').slice(0, 19) + ' UTC' : imQuotesAsOf;
       el.textContent = (lang === 'en' ? 'Live quotes: ' : '실시간 시세: ') + short;
     }
-    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = '', sortDir = 1;
+    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
 
     let imKrwPerUsd = 1400;
     function loadFx() {
@@ -326,6 +326,18 @@
       renderTable();
     }
     function setSearch(v) { searchTerm = v; renderTable(); }
+
+    function syncSortHeader() {
+      document.querySelectorAll('thead th').forEach(th => th.className = '');
+      if (!sortKey) return;
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
+      const idx = keyMap[sortKey];
+      if (idx !== undefined) {
+        const ths = document.querySelectorAll('thead th');
+        if (ths[idx]) ths[idx].className = sortDir === 1 ? 'sort-asc' : 'sort-desc';
+      }
+    }
+
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
