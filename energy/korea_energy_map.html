@@ -894,7 +894,7 @@
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
               <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
               <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
-              <th id="th-yoy" onclick="sortTable('quoteYoyPct')">1년 수익률</th>
+              <th id="th-position" onclick="sortTable('quotePosition')">주가 위치</th>
               <th id="th-mcap" onclick="sortTable('mcapWon')">시가총액</th>
               <th id="th-per" onclick="sortTable('per')">PER</th>
               <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
@@ -1006,7 +1006,7 @@
         "thLast": "현재가",
         "th52High": "52주 최고",
         "th52Lo": "52주 최저",
-        "thYoy": "1년 수익률",
+        "thPosition": "주가 위치",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1015,7 +1015,7 @@
         "thSemType": "세부 유형",
         "thProducts": "주요 제품·서비스",
         "thPartners": "글로벌 참고 관계",
-        "note": "⚠ 종목코드·참고 관계는 공개 정보·에디터리얼 그룹이며 공식 계약을 대체하지 않습니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·1년 수익률은 /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·오류 시 —로 표시됩니다.",
+        "note": "⚠ 종목코드·참고 관계는 공개 정보·에디터리얼 그룹이며 공식 계약을 대체하지 않습니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·주가 위치는 /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·오류 시 —로 표시됩니다.",
         "sbKorean": "국내 상장 (벨류체인)",
         "sbGlobal": "Peer 링크 안내",
         "peerNetworkDesc": "국내외 거래·장비·지분(실선/점선)과 동일 벨류체인 내 국내 peer, 회색 점선=같은 벨류체인에서 함께 등장하는 글로벌 피어 그룹.",
@@ -1084,7 +1084,7 @@
         "thLast": "Last",
         "th52High": "52W High",
         "th52Lo": "52W Low",
-        "thYoy": "1Y Return",
+        "thPosition": "Price Position",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1093,7 +1093,7 @@
         "thSemType": "Segment",
         "thProducts": "Products / services",
         "thPartners": "Global reference links",
-        "note": "⚠ Public information only. Tickers and links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and ~1-year return refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.",
+        "note": "⚠ Public information only. Tickers and links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and price position refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.",
         "sbKorean": "Korean listed (value chain)",
         "sbGlobal": "Peer links",
         "peerNetworkDesc": "Solid/dashed edges show equipment, OEM and equity-style ties; domestic peer ladder by market cap; thin gray = global peer links within the same segment.",
@@ -1360,8 +1360,8 @@
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
-      var thyoy = document.getElementById('th-yoy');
-      if (thyoy) thyoy.textContent = t.thYoy;
+      var thpos = document.getElementById('th-position');
+      if (thpos) thpos.textContent = t.thPosition;
       const thMcap = document.getElementById('th-mcap');
       if (thMcap) thMcap.textContent = t.thMcap;
       const thPer = document.getElementById('th-per');
@@ -1484,7 +1484,7 @@
       });
       if (sortKey) {
         data.sort((a, b) => {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quoteYoyPct') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition') {
             const av = a[sortKey];
             const bv = b[sortKey];
             const na = av == null || !Number.isFinite(av);
@@ -1525,14 +1525,14 @@
         const semTypeDisplay = c[semTypeField] || c.semType;
         const productsDisplay = c[productsField] || c.products;
         const chainDisplay = chainLabel(c.chain);
-        const qr = window.InvestingMapLiveQuotes ? InvestingMapLiveQuotes.formatQuotesRow(c, lang) : { last: '—', hi: '—', lo: '—', yoy: '—' };
+        const qr = window.InvestingMapLiveQuotes ? InvestingMapLiveQuotes.formatQuotesRow(c, lang) : { last: '—', hi: '—', lo: '—', position: '—' };
         return `<tr>
       <td><div class="company-name">${displayName}</div><div class="company-name-sub">${subName}</div></td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
       <td class="quote-cell">${qr.hi}</td>
       <td class="quote-cell">${qr.lo}</td>
-      <td class="quote-cell">${qr.yoy}</td>
+      <td class="quote-cell">${qr.position}</td>
       <td class="mcap-cell">${fmtMcapTableCell(c)}</td>
       <td class="fin-cell">${fmtFinRatio(c.per)}</td>
       <td class="fin-cell">${fmtFinRatio(c.pbr)}</td>
@@ -1559,7 +1559,7 @@
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quoteYoyPct: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');

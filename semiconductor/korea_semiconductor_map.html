@@ -894,7 +894,7 @@
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
               <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
               <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
-              <th id="th-yoy" onclick="sortTable('quoteYoyPct')">1년 수익률</th>
+              <th id="th-position" onclick="sortTable('quotePosition')">주가 위치</th>
               <th id="th-mcap" onclick="sortTable('mcapWon')">시가총액</th>
               <th id="th-per" onclick="sortTable('per')">PER</th>
               <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
@@ -998,9 +998,9 @@
         flChain: '벨류체인', flMarket: '시장',
         searchPlaceholder: '🔍 기업명 검색...',
         resultLabel: '표시: ', resultUnit: '개',
-        thName: '기업명', thTicker: '종목코드', thLast: '현재가', th52High: '52주 최고', th52Lo: '52주 최저', thYoy: '1년 수익률', thMcap: '시가총액', thPer: 'PER', thPbr: 'PBR', thMarket: '시장', thChain: '벨류체인',
+        thName: '기업명', thTicker: '종목코드', thLast: '현재가', th52High: '52주 최고', th52Lo: '52주 최저', thPosition: '주가 위치', thMcap: '시가총액', thPer: 'PER', thPbr: 'PBR', thMarket: '시장', thChain: '벨류체인',
         thSemType: '반도체 유형', thProducts: '주요 제품', thPartners: '글로벌 주요 거래처',
-        note: '⚠ 종목코드·거래 관계는 공개 정보 기반이며, 투자 판단 전 KRX·사업보고서에서 최신 정보를 확인하세요. 시가총액·시장 구분은 상단 기준일의 KRX 공시에 맞추었으며, 일부 종목은 공시에 없어 기존 추정치를 유지했습니다. 한국어 열은 시가총액을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·1년 수익률은 Cloudflare Pages /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·휴장일 미제공·오류 시 —로 표시됩니다.',
+        note: '⚠ 종목코드·거래 관계는 공개 정보 기반이며, 투자 판단 전 KRX·사업보고서에서 최신 정보를 확인하세요. 시가총액·시장 구분은 상단 기준일의 KRX 공시에 맞추었으며, 일부 종목은 공시에 없어 기존 추정치를 유지했습니다. 한국어 열은 시가총액을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·주가 위치는 Cloudflare Pages /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·휴장일 미제공·오류 시 —로 표시됩니다.',
         sbKorean: '국내 상장 (벨류체인)', sbGlobal: '글로벌 거래처·지역',
         peerNetworkDesc: '실선 굵게=국내외 거래·납품, 같은 벨류체인 내 국내 시총 순 peer, 점선=지분·테마. 회색 가는 선=같은 벨류체인에서 함께 등장하는 글로벌 피어 그룹.',
         sbSize: '노드 크기 기준', sbHow: '조작 방법',
@@ -1028,9 +1028,9 @@
         flChain: 'Value Chain', flMarket: 'Market',
         searchPlaceholder: '🔍 Search company...',
         resultLabel: 'Showing: ', resultUnit: '',
-        thName: 'Company', thTicker: 'Ticker', thLast: 'Last', th52High: '52W High', th52Lo: '52W Low', thYoy: '1Y Return', thMcap: 'Market cap (~$B)', thPer: 'PER', thPbr: 'PBR', thMarket: 'Market', thChain: 'Value Chain',
+        thName: 'Company', thTicker: 'Ticker', thLast: 'Last', th52High: '52W High', th52Lo: '52W Low', thPosition: 'Price Position', thMcap: 'Market cap (~$B)', thPer: 'PER', thPbr: 'PBR', thMarket: 'Market', thChain: 'Value Chain',
         thSemType: 'Semiconductor Type', thProducts: 'Key Products', thPartners: 'Global Partners',
-        note: '⚠ Tickers and relationships are based on public information. Market cap and segment follow KRX disclosures as of the date shown above; a few tickers had no matching filing and keep prior estimates. Korean table uses market cap in jo (兆) of won, two decimal places. English table shows billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and ~1-year return refresh via Cloudflare Pages /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.',
+        note: '⚠ Tickers and relationships are based on public information. Market cap and segment follow KRX disclosures as of the date shown above; a few tickers had no matching filing and keep prior estimates. Korean table uses market cap in jo (兆) of won, two decimal places. English table shows billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and price position refresh via Cloudflare Pages /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.',
         sbKorean: 'Korean Listed (Value Chain)', sbGlobal: 'Global customers · region',
         peerNetworkDesc: 'Bold solid = trade/supply; same-segment domestic peer ladder by market cap; dashed = equity/theme. Thin gray = global peer links within the same segment.',
         sbSize: 'Node Size', sbHow: 'How to Use',
@@ -1639,8 +1639,8 @@
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
-      var thyoy = document.getElementById('th-yoy');
-      if (thyoy) thyoy.textContent = t.thYoy;
+      var thpos = document.getElementById('th-position');
+      if (thpos) thpos.textContent = t.thPosition;
       const thMcap = document.getElementById('th-mcap');
       if (thMcap) thMcap.textContent = t.thMcap;
       const thPer = document.getElementById('th-per');
@@ -1763,7 +1763,7 @@
       });
       if (sortKey) {
         data.sort((a, b) => {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quoteYoyPct') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition') {
             const av = a[sortKey];
             const bv = b[sortKey];
             const na = av == null || !Number.isFinite(av);
@@ -1804,14 +1804,14 @@
         const semTypeDisplay = c[semTypeField] || c.semType;
         const productsDisplay = c[productsField] || c.products;
         const chainDisplay = chainLabel(c.chain);
-        const qr = window.InvestingMapLiveQuotes ? InvestingMapLiveQuotes.formatQuotesRow(c, lang) : { last: '—', hi: '—', lo: '—', yoy: '—' };
+        const qr = window.InvestingMapLiveQuotes ? InvestingMapLiveQuotes.formatQuotesRow(c, lang) : { last: '—', hi: '—', lo: '—', position: '—' };
         return `<tr>
       <td><div class="company-name">${displayName}</div><div class="company-name-sub">${subName}</div></td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
       <td class="quote-cell">${qr.hi}</td>
       <td class="quote-cell">${qr.lo}</td>
-      <td class="quote-cell">${qr.yoy}</td>
+      <td class="quote-cell">${qr.position}</td>
       <td class="mcap-cell">${fmtMcapTableCell(c)}</td>
       <td class="fin-cell">${fmtFinRatio(c.per)}</td>
       <td class="fin-cell">${fmtFinRatio(c.pbr)}</td>
@@ -1838,7 +1838,7 @@
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quoteYoyPct: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');

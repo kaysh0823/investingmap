@@ -1,7 +1,5 @@
 /**
  * investingmap — live quotes polling (Cloudflare Pages /api/quotes or custom URL).
- * Default: same-origin /api/quotes (Pages Function + KRX OPEN API).
- * Override: <meta name="investingmap-quotes-api" content="https://...">
  */
 (function (global) {
   'use strict';
@@ -45,24 +43,36 @@
     return null;
   }
 
+  /** (현재가 - 52주최저) / (52주최고 - 52주최저) × 100 — 고=100%, 저=0% */
+  function calcQuotePosition(last, hi, lo) {
+    if (last == null || hi == null || lo == null) return null;
+    if (!isFinite(last) || !isFinite(hi) || !isFinite(lo)) return null;
+    if (last >= hi) return 100;
+    if (last <= lo) return 0;
+    var span = hi - lo;
+    if (span <= 0) return null;
+    var pct = ((last - lo) / span) * 100;
+    return pct < 0 ? 0 : pct > 100 ? 100 : pct;
+  }
+
   function mergeCompanies(companies, items) {
     if (!companies || !items) return;
     for (var i = 0; i < companies.length; i++) {
       var c = companies[i];
       var key = normalizeTicker(c.ticker);
       if (!key) {
-        c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quoteYoyPct = null;
+        c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         continue;
       }
       var q = items[key];
       if (!q) {
-        c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quoteYoyPct = null;
+        c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         continue;
       }
       c.quoteLast = typeof q.last === 'number' && isFinite(q.last) ? q.last : null;
       c.quoteHi52 = typeof q.high52w === 'number' && isFinite(q.high52w) ? q.high52w : null;
       c.quoteLo52 = typeof q.low52w === 'number' && isFinite(q.low52w) ? q.low52w : null;
-      c.quoteYoyPct = typeof q.yoyReturnPct === 'number' && isFinite(q.yoyReturnPct) ? q.yoyReturnPct : null;
+      c.quotePosition = calcQuotePosition(c.quoteLast, c.quoteHi52, c.quoteLo52);
       if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) c.mcapWon = q.mcapWon;
       if (typeof q.per === 'number' && isFinite(q.per)) c.per = q.per;
       if (typeof q.pbr === 'number' && isFinite(q.pbr)) c.pbr = q.pbr;
@@ -75,10 +85,11 @@
     return Math.round(n).toLocaleString(loc);
   }
 
-  function formatYoy(n, lang) {
+  function formatPosition(n) {
     if (n == null || !isFinite(n)) return '\u2014';
-    var s = n.toFixed(2) + '%';
-    return (n > 0 ? '+' : '') + s;
+    if (n === 100) return '100%';
+    if (n === 0) return '0%';
+    return n.toFixed(1) + '%';
   }
 
   function formatQuotesRow(c, lang) {
@@ -86,7 +97,7 @@
       last: formatWon(c.quoteLast, lang),
       hi: formatWon(c.quoteHi52, lang),
       lo: formatWon(c.quoteLo52, lang),
-      yoy: formatYoy(c.quoteYoyPct, lang),
+      position: formatPosition(c.quotePosition),
     };
   }
 
@@ -103,15 +114,14 @@
       });
   }
 
-  function fetchAllCodes(base, codes, warm) {
+  function fetchAllCodes(base, codes) {
     var merged = {};
     var asOf = '';
     var chain = Promise.resolve();
     for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
-      (function (chunk, addWarm) {
+      (function (chunk) {
         chain = chain.then(function () {
           var q = 'codes=' + chunk.map(encodeURIComponent).join(',');
-          if (addWarm) q += '&warm=1';
           return fetchJson(quotesRequestUrl(base, q));
         }).then(function (j) {
           if (j && j.asOf) asOf = j.asOf;
@@ -120,22 +130,13 @@
             if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
           }
         });
-      })(codes.slice(i, i + CHUNK_SIZE), warm && i === 0);
+      })(codes.slice(i, i + CHUNK_SIZE));
     }
     return chain.then(function () {
       return { asOf: asOf, items: merged };
     });
   }
 
-  /**
-   * @param {object} opts
-   * @param {() => object[]} opts.getCompanies
-   * @param {() => void} opts.renderTable
-   * @param {string} [opts.baseUrl]
-   * @param {number} [opts.pollMs]
-   * @param {(iso: string) => void} [opts.onAsOf]
-   * @param {(err: Error) => void} [opts.onError]
-   */
   function start(opts) {
     var base = (opts && opts.baseUrl != null && opts.baseUrl !== '') ? String(opts.baseUrl).replace(/\/+$/, '') : getApiBase();
     if (!base) return null;
@@ -144,13 +145,11 @@
     var pollMs = (opts && opts.pollMs) || 300000;
     var onAsOf = opts.onAsOf || function () {};
     var onError = opts.onError || function () {};
-    var pollCount = 0;
     var running = false;
 
     function run() {
       if (running) return;
       running = true;
-      pollCount++;
       var companies = getCompanies();
       if (!companies || !companies.length) {
         running = false;
@@ -168,8 +167,7 @@
         running = false;
         return;
       }
-      var warm = pollCount % 8 === 0;
-      fetchAllCodes(base, codes, warm)
+      fetchAllCodes(base, codes)
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
           try {
@@ -195,8 +193,9 @@
     getApiBase: getApiBase,
     start: start,
     mergeCompanies: mergeCompanies,
+    calcQuotePosition: calcQuotePosition,
     formatWon: formatWon,
-    formatYoy: formatYoy,
+    formatPosition: formatPosition,
     formatQuotesRow: formatQuotesRow,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
