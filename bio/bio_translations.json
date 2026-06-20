@@ -37,6 +37,7 @@
     "allFilter": "전체",
     "kosp": "KOSPI",
     "kosdaq": "KOSDAQ",
+    "unlisted": "비상장",
     "regionLabel": {
       "us": "미국",
       "tw": "대만",
@@ -101,6 +102,7 @@
     "allFilter": "All",
     "kosp": "KOSPI",
     "kosdaq": "KOSDAQ",
+    "unlisted": "Unlisted",
     "regionLabel": {
       "us": "USA",
       "tw": "Taiwan",

@@ -28,6 +28,8 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="../js/live_quotes.js"></script>
+  <script src="../js/map_i18n.js"></script>
+  <script src="../js/sector_nav.js"></script>
   <style>
     :root {
       --bg: #0d1117;
@@ -97,7 +99,7 @@
       align-items: center;
       flex-wrap: wrap;
       justify-content: flex-end;
-      max-width: 52%;
+      max-width: 78%;
     }
 
     .theme-toggle {
@@ -135,6 +137,42 @@
     .hub-back:hover {
       border-color: var(--accent);
       color: var(--text)
+    }
+    .sector-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+      justify-content: flex-end;
+      max-width: min(480px, 46vw);
+    }
+
+    .sector-nav a,
+    .sector-nav .is-current {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+
+    .sector-nav a:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .sector-nav .is-current {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, var(--surface2));
     }
 
     .data-asof {
@@ -854,7 +892,7 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body data-sector="bio">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -862,6 +900,7 @@
 
   <div class="header">
     <div class="header-actions">
+            <nav class="sector-nav" id="sector-nav"></nav>
       <a class="hub-back" href="../index.html" id="hub-back"><span aria-hidden="true">←</span> <span id="hub-link-label">허브</span></a>
       <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">

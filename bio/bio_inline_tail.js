@@ -92,6 +92,8 @@
       try { localStorage.setItem('im_lang', lang); } catch (e) { }
       const hubBack = document.getElementById('hub-back');
       if (hubBack) hubBack.href = '../index.html?lang=' + encodeURIComponent(lang);
+      document.title = t.title;
+      if (window.InvestingMapSectorNav) InvestingMapSectorNav.render(document.body.getAttribute('data-sector') || '', lang);
       document.getElementById('hdr-title').textContent = t.title;
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
@@ -172,7 +174,7 @@
       const container = document.getElementById('market-chips');
       const markets = ['all', 'KOSPI', 'KOSDAQ', '비상장'];
       container.innerHTML = markets.map(m => {
-        const label = m === 'all' ? t.allFilter : m;
+        const label = m === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.marketChipLabel(m, t, lang)) || m);
         const isActive = currentMarket === m;
         const style = isActive ? 'background:#58a6ff;color:#0d1117;border-color:transparent;' : '';
         const em = escAttr(m);
@@ -207,9 +209,9 @@
     }
     function getPartnerInfo(id) {
       const g = globalCompanies.find(x => x.id === id);
-      if (g) return { name: g.name, region: g.region };
+      if (g) return { name: (window.InvestingMapI18n ? InvestingMapI18n.entityName(g, lang) : g.name), region: g.region };
       const k = koreanCompanies.find(x => x.id === id);
-      if (k) return { name: k.name, region: 'kr' };
+      if (k) return { name: (window.InvestingMapI18n ? InvestingMapI18n.entityName(k, lang) : k.name), region: 'kr' };
       return { name: id, region: 'us' };
     }
     function partnerRef(p) {
@@ -263,7 +265,7 @@
       }
       const countEl = document.getElementById('show-count');
       if (countEl) countEl.textContent = data.length;
-      const chainLabel = (ch) => lang === 'en' ? (T.en.chainFilter[ch] || ch) : (T.ko.chainFilter[ch] || ch);
+      const chainLabel = (ch) => t.chainFilter[ch] || ch;
       const semTypeField = t.fieldSemType;
       const productsField = t.fieldProducts;
       const tbody = document.getElementById('table-body');
@@ -273,16 +275,19 @@
           const info = getPartnerInfo(pr.id);
           return '<span class="partner-tag ' + info.region + '">' + info.name + '</span>';
         }).join('') + ((c.partners || []).length > 6 ? '<span class="partner-tag">+' + ((c.partners || []).length - 6) + '</span>' : '');
-        const displayName = lang === 'en' ? c.nameEn : c.name;
-        const subName = lang === 'en' ? c.name : c.nameEn;
-        const semTypeDisplay = c[semTypeField] || c.semType;
-        const productsDisplay = c[productsField] || c.products;
+        const displayName = lang === 'en' ? (c.nameEn || c.name) : (c.name || c.nameEn);
+        const subNameRaw = lang === 'en' ? (c.name || '') : (c.nameEn || '');
+        const subNameHtml = subNameRaw && subNameRaw !== displayName ? '<div class="company-name-sub">' + subNameRaw + '</div>' : '';
+        const I18n = window.InvestingMapI18n;
+        const semTypeDisplay = I18n ? I18n.field(c, 'semType', 'semTypeEn', lang) : (c[semTypeField] || c.semType || '\u2014');
+        const productsDisplay = I18n ? I18n.field(c, 'products', 'productsEn', lang) : (c[productsField] || c.products || '\u2014');
         const chainDisplay = chainLabel(c.chain);
         const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014' };
         const mcapCell = fmtMcapTableCell(c);
-        const mktClass = c.market === '비상장' ? 'unlisted' : c.market.toLowerCase();
+        const mktClass = I18n ? I18n.marketCssClass(c.market) : (c.market === '비상장' ? 'unlisted' : c.market.toLowerCase());
+        const mktLabel = I18n ? I18n.marketLabel(c.market, lang) : c.market;
         return '<tr>' +
-          '<td><div class="company-name">' + displayName + '</div><div class="company-name-sub">' + subName + '</div></td>' +
+          '<td><div class="company-name">' + displayName + '</div>' + subNameHtml + '</td>' +
           '<td><span class="ticker">' + c.ticker + '</span></td>' +
           '<td class="quote-cell">' + qr.last + '</td>' +
           '<td class="quote-cell">' + qr.hi + '</td>' +
@@ -291,7 +296,7 @@
           '<td class="mcap-cell">' + mcapCell + '</td>' +
           '<td class="fin-cell">' + fmtFinRatio(c.per) + '</td>' +
           '<td class="fin-cell">' + fmtFinRatio(c.pbr) + '</td>' +
-          '<td><span class="market-badge ' + mktClass + '">' + c.market + '</span></td>' +
+          '<td><span class="market-badge ' + mktClass + '">' + mktLabel + '</span></td>' +
           '<td><span class="chain-tag" style="' + getChainStyle(c.chain) + '">' + chainDisplay + '</span></td>' +
           '<td style="font-size:12px;color:var(--text-muted)">' + semTypeDisplay + '</td>' +
           '<td class="products-cell">' + productsDisplay + '</td>' +
@@ -537,11 +542,14 @@
       const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
       let html = '<div class="tooltip-name" style="color:' + color + '">' + displayName + '</div>';
       if (d.type === 'korean') {
-        const subName = lang === 'en' ? d.label : d.labelEn;
         const chainDisplay = t.chainFilter[d.chain] || d.chain;
-        const semTypeDisplay = (lang === 'en' ? d.semTypeEn : d.semType) || d.semType;
-        const productsDisplay = (lang === 'en' ? d.productsEn : d.products) || d.products;
-        html += '<div class="tooltip-meta">' + subName + ' · ' + d.ticker + ' · ' + d.market + '</div>';
+        const I18nTt = window.InvestingMapI18n;
+        const semTypeDisplay = I18nTt ? I18nTt.field(d, 'semType', 'semTypeEn', lang) : (lang === 'en' ? (d.semTypeEn || '\u2014') : (d.semType || '\u2014'));
+        const productsDisplay = I18nTt ? I18nTt.field(d, 'products', 'productsEn', lang) : (lang === 'en' ? (d.productsEn || '\u2014') : (d.products || '\u2014'));
+        const mktTt = I18nTt ? I18nTt.marketLabel(d.market, lang) : d.market;
+        const subTt = lang === 'en' ? (d.label || '') : (d.labelEn || '');
+        const subPart = subTt && subTt !== displayName ? subTt + ' \u00B7 ' : '';
+        html += '<div class="tooltip-meta">' + subPart + d.ticker + ' \u00B7 ' + mktTt + '</div>';
         html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttChain + '</span><span class="tooltip-val">' + chainDisplay + '</span></div>';
         html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttSemType + '</span><span class="tooltip-val">' + semTypeDisplay + '</span></div>';
         html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttProducts + '</span><span class="tooltip-val">' + productsDisplay + '</span></div>';

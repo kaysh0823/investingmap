@@ -28,6 +28,8 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="../js/live_quotes.js"></script>
+  <script src="../js/map_i18n.js"></script>
+  <script src="../js/sector_nav.js"></script>
   <style>
     :root {
       --bg: #0d1117;
@@ -97,7 +99,7 @@
       align-items: center;
       flex-wrap: wrap;
       justify-content: flex-end;
-      max-width: 52%;
+      max-width: 78%;
     }
 
     .theme-toggle {
@@ -135,6 +137,42 @@
     .hub-back:hover {
       border-color: var(--accent);
       color: var(--text)
+    }
+    .sector-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+      justify-content: flex-end;
+      max-width: min(480px, 46vw);
+    }
+
+    .sector-nav a,
+    .sector-nav .is-current {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+
+    .sector-nav a:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .sector-nav .is-current {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, var(--surface2));
     }
 
     .data-asof {
@@ -839,7 +877,7 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body data-sector="ship">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -847,6 +885,7 @@
 
   <div class="header">
     <div class="header-actions">
+            <nav class="sector-nav" id="sector-nav"></nav>
       <a class="hub-back" href="../index.html" id="hub-back"><span aria-hidden="true">←</span> <span id="hub-link-label">허브</span></a>
       <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
@@ -1364,6 +1403,8 @@
       try { localStorage.setItem('im_lang', lang); } catch (e) { }
       const hubBack = document.getElementById('hub-back');
       if (hubBack) hubBack.href = '../index.html?lang=' + encodeURIComponent(lang);
+      document.title = t.title;
+      if (window.InvestingMapSectorNav) InvestingMapSectorNav.render(document.body.getAttribute('data-sector') || '', lang);
       document.getElementById('hdr-title').textContent = t.title;
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
@@ -1441,7 +1482,7 @@
       const container = document.getElementById('market-chips');
       const markets = ['all', 'KOSPI', 'KOSDAQ'];
       container.innerHTML = markets.map(m => {
-        const label = m === 'all' ? t.allFilter : m;
+        const label = m === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.marketChipLabel(m, t, lang)) || m);
         const isActive = currentMarket === m;
         const style = isActive ? 'background:#58a6ff;color:#0d1117;border-color:transparent;' : '';
         return `<div class="filter-chip${isActive ? ' active' : ''}" style="${style}" data-filter-market="${m}" onclick="setMarketFilter('${m}',this)">${label}</div>`;
@@ -1480,9 +1521,9 @@
     }
     function getPartnerInfo(id) {
       const g = globalCompanies.find(x => x.id === id);
-      if (g) return { name: g.name, region: g.region };
+      if (g) return { name: (window.InvestingMapI18n ? InvestingMapI18n.entityName(g, lang) : g.name), region: g.region };
       const k = koreanCompanies.find(x => x.id === id);
-      if (k) return { name: k.name, region: 'kr' };
+      if (k) return { name: (window.InvestingMapI18n ? InvestingMapI18n.entityName(k, lang) : k.name), region: 'kr' };
       return { name: id, region: 'us' };
     }
     function partnerRef(p) {
@@ -1548,14 +1589,18 @@
           const hint = (elbl || wpart) ? `<span class="partner-edge-hint">${elbl || ''}${wpart}</span>` : '';
           return `<span class="partner-tag ${info.region}">${info.name}${hint}</span>`;
         }).join('') + (c.partners.length > 6 ? `<span class="partner-tag">+${c.partners.length - 6}</span>` : '');
-        const displayName = lang === 'en' ? c.nameEn : c.name;
-        const subName = lang === 'en' ? c.name : c.nameEn;
-        const semTypeDisplay = c[semTypeField] || c.semType;
-        const productsDisplay = c[productsField] || c.products;
+        const displayName = lang === 'en' ? (c.nameEn || c.name) : (c.name || c.nameEn);
+        const subNameRaw = lang === 'en' ? (c.name || '') : (c.nameEn || '');
+        const subNameHtml = subNameRaw && subNameRaw !== displayName ? `<div class="company-name-sub">${subNameRaw}</div>` : '';
+        const I18n = window.InvestingMapI18n;
+        const semTypeDisplay = I18n ? I18n.field(c, 'semType', 'semTypeEn', lang) : (c[semTypeField] || c.semType || '—');
+        const productsDisplay = I18n ? I18n.field(c, 'products', 'productsEn', lang) : (c[productsField] || c.products || '—');
+        const mktLabel = I18n ? I18n.marketLabel(c.market, lang) : c.market;
+        const mktClass = I18n ? I18n.marketCssClass(c.market) : c.market.toLowerCase();
         const chainDisplay = chainLabel(c.chain);
         const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '—', hi: '—', lo: '—', position: '—' };
         return `<tr>
-      <td><div class="company-name">${displayName}</div><div class="company-name-sub">${subName}</div></td>
+      <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
       <td class="quote-cell">${qr.hi}</td>
@@ -1564,7 +1609,7 @@
       <td class="mcap-cell">${fmtMcapTableCell(c)}</td>
       <td class="fin-cell">${fmtFinRatio(c.per)}</td>
       <td class="fin-cell">${fmtFinRatio(c.pbr)}</td>
-      <td><span class="market-badge ${c.market.toLowerCase()}">${c.market}</span></td>
+      <td><span class="market-badge ${mktClass}">${mktLabel}</span></td>
       <td><span class="chain-tag" style="${getChainStyle(c.chain)}">${chainDisplay}</span></td>
       <td style="font-size:12px;color:var(--text-muted)">${semTypeDisplay}</td>
       <td class="products-cell">${productsDisplay}</td>
@@ -1810,11 +1855,14 @@
       const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
       let html = `<div class="tooltip-name" style="color:${color}">${displayName}</div>`;
       if (d.type === 'korean') {
-        const subName = lang === 'en' ? d.label : d.labelEn;
         const chainDisplay = t.chainFilter[d.chain] || d.chain;
-        const semTypeDisplay = (lang === 'en' ? d.semTypeEn : d.semType) || d.semType;
-        const productsDisplay = (lang === 'en' ? d.productsEn : d.products) || d.products;
-        html += `<div class="tooltip-meta">${subName} · ${d.ticker} · ${d.market}</div>`;
+        const I18nTt = window.InvestingMapI18n;
+        const semTypeDisplay = I18nTt ? I18nTt.field(d, 'semType', 'semTypeEn', lang) : (lang === 'en' ? (d.semTypeEn || '—') : (d.semType || '—'));
+        const productsDisplay = I18nTt ? I18nTt.field(d, 'products', 'productsEn', lang) : (lang === 'en' ? (d.productsEn || '—') : (d.products || '—'));
+        const mktTt = I18nTt ? I18nTt.marketLabel(d.market, lang) : d.market;
+        const subTt = lang === 'en' ? (d.label || '') : (d.labelEn || '');
+        const subPart = subTt && subTt !== displayName ? subTt + ' · ' : '';
+        html += `<div class="tooltip-meta">${subPart}${d.ticker} · ${mktTt}</div>`;
         html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttChain}</span><span class="tooltip-val">${chainDisplay}</span></div>`;
         html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSemType}</span><span class="tooltip-val">${semTypeDisplay}</span></div>`;
         html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttProducts}</span><span class="tooltip-val">${productsDisplay}</span></div>`;
