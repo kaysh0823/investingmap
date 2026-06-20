@@ -8,9 +8,18 @@ Returns JSON compatible with `js/live_quotes.js`:
 {
   "asOf": "ISO-8601",
   "basDd": "20260613",
-  "source": "krx-open-api",
+  "source": "naver-sise-cache",
+  "regularSession": true,
   "items": {
-    "005930": { "last": 60100, "high52w": 89000, "low52w": 49900, "yoyReturnPct": 12.34 }
+    "005930": {
+      "last": 354000,
+      "high52w": 374500,
+      "low52w": 57600,
+      "mcapWon": 2069582600000000,
+      "per": 28.61,
+      "pbr": null,
+      "yoyReturnPct": null
+    }
   }
 }
 ```
@@ -61,9 +70,10 @@ KRX_AUTH_KEY=your-key-here
 
 ## Notes
 
-- **현재가·52주 고저**: KRX 키가 없거나 KRX 필드가 비어 있으면 [네이버 PC 시세](https://finance.naver.com/item/sise.naver?code=005930) 페이지를 크롤링해 보완합니다 (`source`: `naver-sise` 또는 `krx-open-api+naver-sise`).
-- KRX OPEN API는 **틱 실시간**이 아니라 **일별매매(종가·고저)** 기준입니다. 네이버 sise **현재가**는 장중 시세에 가깝습니다.
-- 52주 고저·1년 수익률(KRX)은 최근 약 252영업일 일별 데이터를 모아 계산하며, 6시간 캐시합니다.
-- 일 호출 한도(약 1만 회)를 고려해 최신 시세는 45초, 히스토리는 6시간마다 갱신합니다.
-
-Legacy standalone Worker: `worker/quotes/` (네이버 m.stock + sise fallback, 선택).
+- **데이터 소스**: 현재가·52주 고저·시가총액·PER·PBR은 [네이버 PC 시세](https://finance.naver.com/item/sise.naver?code=005930)에서 가져옵니다.
+- **캐시 정책** (KST 기준):
+  - **정규장 09:00–15:30**(월–금): 종목당 최대 **1시간**에 한 번만 네이버 호출, 이후 캐시 응답
+  - **정규장 외**: 네이버 **추가 호출 없음**, 마지막 저장 캐시만 표시
+- Cloudflare Pages는 isolate 메모리 + Cache API에 캐시합니다. 로컬은 `data/.naver_quotes_cache.json`.
+- 1년 수익률(`yoyReturnPct`)은 KRX Secret + `warm=1` 요청 시에만 보강(선택).
+- Legacy Worker: `worker/quotes/` (m.stock + sise fallback).

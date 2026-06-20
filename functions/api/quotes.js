@@ -1,13 +1,12 @@
 /**
  * Cloudflare Pages Function: GET /api/quotes?codes=005930,000660
- * Primary: KRX OPEN API (Pages Secret: KRX OPEN API 인증키, KRX_AUTH_KEY, …)
- * Fallback: Naver Finance sise page (finance.naver.com/item/sise.naver)
+ * Naver Finance sise (cached: 1h refresh during 09:00–15:30 KST only).
+ * Optional KRX OPEN API: 1-year return when warm=1 and secret configured.
  */
 
-import {
-  fetchNaverSiseQuotes,
-  mergeNaverIntoQuote,
-} from '../../lib/naver_sise_quotes.mjs';
+import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
+import { krxSessionInfo } from '../lib/krx_session.mjs';
+import { emptyQuote } from '../lib/naver_sise_quotes.mjs';
 
 const KRX_ENV_KEY_NAMES = [
   'KRX OPEN API 인증키',
@@ -21,16 +20,13 @@ const KRX_ENV_KEY_NAMES = [
 const KRX_BASE = 'https://data-dbg.krx.co.kr/svc/apis';
 const KOSPI_DAILY = '/sto/stk_bydd_trd';
 const KOSDAQ_DAILY = '/sto/ksq_bydd_trd';
-const LATEST_CACHE_MS = 45_000;
 const HIST_CACHE_MS = 6 * 60 * 60 * 1000;
 const HIST_TRADING_DAYS = 252;
 const HIST_CALENDAR_SCAN = 400;
 const HIST_DAYS_PER_REQUEST = 4;
 
-let latestCache = null;
 let histCache = null;
 let histWarm = null;
-let latestInflight = null;
 
 function getAuthKey(env) {
   if (!env) return '';
@@ -82,19 +78,6 @@ function formatYmd(d) {
   return `${y}${m}${day}`;
 }
 
-function businessDates(maxCal = 20) {
-  const out = [];
-  const now = new Date();
-  for (let i = 0; i < maxCal && out.length < maxCal; i++) {
-    const dt = new Date(now);
-    dt.setDate(dt.getDate() - i);
-    const dow = dt.getDay();
-    if (dow === 0 || dow === 6) continue;
-    out.push(formatYmd(dt));
-  }
-  return out;
-}
-
 function tradingDates(count) {
   const out = [];
   const now = new Date();
@@ -110,29 +93,15 @@ function tradingDates(count) {
 
 async function krxDaily(authKey, endpoint, basDd) {
   const url = `${KRX_BASE}${endpoint}`;
-  const headers = {
-    AUTH_KEY: authKey,
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  };
-  let res = await fetch(url, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ basDd }),
-  });
+  const headers = { AUTH_KEY: authKey, Accept: 'application/json', 'Content-Type': 'application/json' };
+  let res = await fetch(url, { method: 'POST', headers, body: JSON.stringify({ basDd }) });
   if (!res.ok) {
     res = await fetch(`${url}?basDd=${encodeURIComponent(basDd)}`, {
       method: 'GET',
       headers: { AUTH_KEY: authKey, Accept: 'application/json' },
     });
   }
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    if (res.status === 401) {
-      throw new Error('KRX AUTH_KEY rejected (401) — check Pages Secret name and API approval');
-    }
-    throw new Error(`KRX ${res.status} ${endpoint} ${basDd} ${text.slice(0, 120)}`);
-  }
+  if (!res.ok) return [];
   const j = await res.json();
   return Array.isArray(j.OutBlock_1) ? j.OutBlock_1 : [];
 }
@@ -145,213 +114,74 @@ async function fetchMarketDay(authKey, basDd) {
   const byCode = new Map();
   for (const row of [...kospi, ...kosdaq]) {
     const code = shortCodeFromRow(row);
-    if (!code) continue;
-    byCode.set(code, row);
+    if (code) byCode.set(code, row);
   }
   return byCode;
 }
 
-async function resolveLatestBasDd(authKey) {
-  const dates = businessDates(12);
-  for (let i = 0; i < dates.length; i += 4) {
-    const batch = dates.slice(i, i + 4);
-    const tried = await Promise.all(
-      batch.map(async (basDd) => {
-        try {
-          const byCode = await fetchMarketDay(authKey, basDd);
-          return byCode.size > 0 ? { basDd, byCode } : null;
-        } catch (e) {
-          if (e && String(e.message || e).includes('401')) throw e;
-          return null;
-        }
-      }),
-    );
-    for (const r of tried) {
-      if (r) return r;
-    }
-  }
-  throw new Error('KRX: no trading data — approve stk_bydd_trd and ksq_bydd_trd at openapi.krx.co.kr');
-}
-
-async function getLatestSnapshot(authKey) {
-  const now = Date.now();
-  if (latestCache && now - latestCache.t < LATEST_CACHE_MS) {
-    return latestCache;
-  }
-  if (latestInflight) {
-    return latestInflight;
-  }
-  latestInflight = (async () => {
-    try {
-      const { basDd, byCode } = await resolveLatestBasDd(authKey);
-      latestCache = { t: Date.now(), basDd, rows: byCode };
-      return latestCache;
-    } finally {
-      latestInflight = null;
-    }
-  })();
-  return latestInflight;
-}
-
 function mergeDayIntoAcc(acc, byCode) {
   for (const [code, row] of byCode) {
-    const hi = parseNum(row.TDD_HGPRC);
-    const lo = parseNum(row.TDD_LWPRC);
     const cl = parseNum(row.TDD_CLSPRC);
-    if (hi == null && lo == null && cl == null) continue;
+    if (cl == null) continue;
     let slot = acc.get(code);
-    if (!slot) {
-      slot = { highs: [], lows: [], closes: [] };
-      acc.set(code, slot);
-    }
-    if (hi != null) slot.highs.push(hi);
-    if (lo != null) slot.lows.push(lo);
-    if (cl != null) slot.closes.push(cl);
+    if (!slot) slot = { closes: [] };
+    slot.closes.push(cl);
+    acc.set(code, slot);
   }
 }
 
-function accToStats(acc) {
-  const stats = new Map();
-  for (const [code, slot] of acc) {
-    const high52w = slot.highs.length ? Math.max(...slot.highs) : null;
-    const low52w = slot.lows.length ? Math.min(...slot.lows) : null;
-    let yoyReturnPct = null;
-    if (slot.closes.length >= 2) {
-      const last = slot.closes[0];
-      const idx = Math.min(HIST_TRADING_DAYS - 1, slot.closes.length - 1);
-      const prev = slot.closes[idx];
-      if (last != null && prev != null && prev !== 0) {
-        yoyReturnPct = ((last / prev - 1) * 100);
-      }
-    }
-    stats.set(code, { high52w, low52w, yoyReturnPct });
-  }
-  return stats;
+function yoyFromAcc(acc, code) {
+  const slot = acc.get(code);
+  if (!slot || slot.closes.length < 2) return null;
+  const last = slot.closes[0];
+  const idx = Math.min(HIST_TRADING_DAYS - 1, slot.closes.length - 1);
+  const prev = slot.closes[idx];
+  if (last == null || prev == null || prev === 0) return null;
+  return ((last / prev - 1) * 100);
 }
 
-async function warmHistory(authKey, latestBasDd) {
+async function warmYoy(authKey) {
   const now = Date.now();
-  if (histCache && now - histCache.t < HIST_CACHE_MS && histCache.basDd === latestBasDd) {
-    return histCache.stats;
-  }
+  if (histCache && now - histCache.t < HIST_CACHE_MS) return histCache.acc;
 
-  if (!histWarm || histWarm.basDd !== latestBasDd) {
-    histWarm = {
-      basDd: latestBasDd,
-      dates: tradingDates(HIST_TRADING_DAYS),
-      cursor: 0,
-      acc: new Map(),
-    };
+  if (!histWarm) {
+    histWarm = { dates: tradingDates(HIST_TRADING_DAYS), cursor: 0, acc: new Map() };
   }
 
   const end = Math.min(histWarm.cursor + HIST_DAYS_PER_REQUEST, histWarm.dates.length);
   const batch = histWarm.dates.slice(histWarm.cursor, end);
   histWarm.cursor = end;
 
-  const concurrency = 2;
-  for (let i = 0; i < batch.length; i += concurrency) {
-    const slice = batch.slice(i, i + concurrency);
-    const maps = await Promise.all(
-      slice.map(async (basDd) => {
-        try {
-          return await fetchMarketDay(authKey, basDd);
-        } catch {
-          return new Map();
-        }
-      }),
-    );
-    for (const byCode of maps) {
-      mergeDayIntoAcc(histWarm.acc, byCode);
+  for (const basDd of batch) {
+    try {
+      mergeDayIntoAcc(histWarm.acc, await fetchMarketDay(authKey, basDd));
+    } catch {
+      /* skip day */
     }
   }
-
-  const stats = accToStats(histWarm.acc);
 
   if (histWarm.cursor >= histWarm.dates.length) {
-    histCache = { t: now, basDd: latestBasDd, stats };
+    histCache = { t: now, acc: histWarm.acc };
     histWarm = null;
   }
-
-  return stats;
+  return histCache ? histCache.acc : histWarm.acc;
 }
 
-async function buildQuotes(authKey, codes, options) {
-  const latest = await getLatestSnapshot(authKey);
-  let histStats =
-    histCache && histCache.basDd === latest.basDd ? histCache.stats : new Map();
-
-  if (options && options.warmHist) {
-    try {
-      const warmed = await warmHistory(authKey, latest.basDd);
-      histStats = warmed;
-    } catch {
-      /* keep cached/partial stats */
+async function mergeKrxYoy(codes, items, authKey, warmHist) {
+  if (!authKey || !warmHist) return items;
+  try {
+    const acc = await warmYoy(authKey);
+    const out = { ...items };
+    for (const code of codes) {
+      const yoy = yoyFromAcc(acc, code);
+      if (yoy != null) {
+        out[code] = { ...(out[code] || emptyQuote()), yoyReturnPct: yoy };
+      }
     }
+    return out;
+  } catch {
+    return items;
   }
-
-  const items = {};
-  for (const code of codes) {
-    const row = latest.rows.get(code);
-    const hist = histStats.get(code);
-    const last = row ? parseNum(row.TDD_CLSPRC) : null;
-    items[code] = {
-      last,
-      high52w: hist && hist.high52w != null ? hist.high52w : null,
-      low52w: hist && hist.low52w != null ? hist.low52w : null,
-      yoyReturnPct: hist && hist.yoyReturnPct != null ? hist.yoyReturnPct : null,
-      basDd: latest.basDd,
-    };
-  }
-
-  return {
-    asOf: new Date().toISOString(),
-    basDd: latest.basDd,
-    source: 'krx-open-api',
-    items,
-  };
-}
-
-async function buildNaverOnlyQuotes(codes) {
-  const naverItems = await fetchNaverSiseQuotes(codes, { concurrency: 4 });
-  const items = {};
-  for (const code of codes) {
-    const n = naverItems[code] || {};
-    items[code] = mergeNaverIntoQuote(
-      { last: null, high52w: null, low52w: null, yoyReturnPct: null },
-      n,
-      { preferNaverLast: true },
-    );
-  }
-  return {
-    asOf: new Date().toISOString(),
-    source: 'naver-sise',
-    items,
-  };
-}
-
-async function mergeNaverGaps(codes, krxPayload) {
-  const needsNaver = codes.filter((code) => {
-    const q = krxPayload.items[code];
-    return !q || q.last == null || q.high52w == null || q.low52w == null;
-  });
-  if (!needsNaver.length) return krxPayload;
-
-  const naverItems = await fetchNaverSiseQuotes(needsNaver, { concurrency: 4 });
-  const items = { ...krxPayload.items };
-  for (const code of needsNaver) {
-    const base = items[code] || {
-      last: null,
-      high52w: null,
-      low52w: null,
-      yoyReturnPct: null,
-    };
-    items[code] = mergeNaverIntoQuote(base, naverItems[code] || {}, { preferNaverLast: true });
-  }
-  return {
-    ...krxPayload,
-    source: 'krx-open-api+naver-sise',
-    items,
-  };
 }
 
 function corsHeaders(request) {
@@ -378,90 +208,56 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const codesRaw = url.searchParams.get('codes') || '';
   const codes = [...new Set(codesRaw.split(/[, ]+/).map(normalizeTicker).filter(Boolean))];
+  const session = krxSessionInfo();
 
   if (!codes.length) {
     return new Response(
       JSON.stringify({
         asOf: new Date().toISOString(),
         items: {},
-        source: authKey ? 'krx-open-api' : 'naver-sise',
+        source: 'naver-sise-cache',
         configured: true,
         krxConfigured: !!authKey,
-        histReady: !!(histCache && histCache.stats && histCache.stats.size),
+        regularSession: session.regular,
       }),
-      {
-        headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
-      },
+      { headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },
     );
   }
 
   const warmHist = url.searchParams.get('warm') === '1';
 
-  if (!authKey) {
-    try {
-      const payload = await buildNaverOnlyQuotes(codes);
-      return new Response(JSON.stringify(payload), {
-        headers: {
-          ...ch,
-          'Content-Type': 'application/json; charset=utf-8',
-          'Cache-Control': 'public, max-age=30',
-        },
-      });
-    } catch (e) {
-      return new Response(
-        JSON.stringify({
-          error: 'naver_fetch_failed',
-          message: e && e.message ? String(e.message) : 'unknown',
-          asOf: new Date().toISOString(),
-          items: {},
-        }),
-        {
-          status: 502,
-          headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
-        },
-      );
-    }
-  }
-
   try {
-    const krxPayload = await buildQuotes(authKey, codes, { warmHist });
-    const payload = await mergeNaverGaps(codes, krxPayload);
+    const cached = await getCachedNaverQuotes(codes, { concurrency: 4 });
+    let items = cached.items;
+    items = await mergeKrxYoy(codes, items, authKey, warmHist);
+
+    const payload = {
+      asOf: new Date().toISOString(),
+      source: authKey && warmHist ? 'naver-sise-cache+krx-yoy' : 'naver-sise-cache',
+      regularSession: cached.regularSession,
+      cacheHits: cached.cacheHits,
+      naverFetched: cached.fetched,
+      items,
+    };
+
+    const maxAge = session.regular ? 300 : 86400;
     return new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
         'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': 'public, max-age=30',
+        'Cache-Control': `public, max-age=${maxAge}`,
       },
     });
   } catch (e) {
-    try {
-      const payload = await buildNaverOnlyQuotes(codes);
-      return new Response(
-        JSON.stringify({
-          ...payload,
-          krxError: e && e.message ? String(e.message) : 'unknown',
-        }),
-        {
-          headers: {
-            ...ch,
-            'Content-Type': 'application/json; charset=utf-8',
-            'Cache-Control': 'public, max-age=30',
-          },
-        },
-      );
-    } catch (e2) {
-      return new Response(
-        JSON.stringify({
-          error: 'quotes_fetch_failed',
-          message: e2 && e2.message ? String(e2.message) : e && e.message ? String(e.message) : 'unknown',
-          asOf: new Date().toISOString(),
-          items: {},
-        }),
-        {
-          status: 502,
-          headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
-        },
-      );
-    }
+    return new Response(
+      JSON.stringify({
+        error: 'quotes_fetch_failed',
+        message: e && e.message ? String(e.message) : 'unknown',
+        asOf: new Date().toISOString(),
+        items: {},
+        regularSession: session.regular,
+      }),
+      { status: 502, headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },
+    );
   }
 }

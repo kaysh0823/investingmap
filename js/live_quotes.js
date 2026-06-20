@@ -63,6 +63,9 @@
       c.quoteHi52 = typeof q.high52w === 'number' && isFinite(q.high52w) ? q.high52w : null;
       c.quoteLo52 = typeof q.low52w === 'number' && isFinite(q.low52w) ? q.low52w : null;
       c.quoteYoyPct = typeof q.yoyReturnPct === 'number' && isFinite(q.yoyReturnPct) ? q.yoyReturnPct : null;
+      if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) c.mcapWon = q.mcapWon;
+      if (typeof q.per === 'number' && isFinite(q.per)) c.per = q.per;
+      if (typeof q.pbr === 'number' && isFinite(q.pbr)) c.pbr = q.pbr;
     }
   }
 
@@ -138,7 +141,7 @@
     if (!base) return null;
     var getCompanies = opts.getCompanies;
     var renderTable = opts.renderTable;
-    var pollMs = (opts && opts.pollMs) || 45000;
+    var pollMs = (opts && opts.pollMs) || 300000;
     var onAsOf = opts.onAsOf || function () {};
     var onError = opts.onError || function () {};
     var pollCount = 0;

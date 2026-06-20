@@ -11,7 +11,7 @@
 | `data_network/` | 관계 네트워크 참고용 JSON·스펙 (`_schema.json`, 산업별 `*.json`, `demo.html`). 지도 HTML은 기업 `partners` 기반 그래프를 사용합니다. |
 | `lib/` | 공통 유틸: `krx_per_pbr.mjs`, `krx_data_sources.mjs`, `naver_sise_quotes.mjs`, `naver_quote_mapping.md` |
 | `js/` | `live_quotes.js` — 지도 테이블 현재가·52주 고저·1년 수익률 폴링 (기본 `/api/quotes`) |
-| `functions/` | **Cloudflare Pages Functions**: `api/quotes.js` — KRX OPEN API + [네이버 sise](https://finance.naver.com/item/sise.naver) fallback |
+| `functions/` | **Cloudflare Pages Functions**: `api/quotes.js` — 네이버 sise 캐시(정규장 1h) + 선택 KRX 1년 수익률 |
 | `worker/quotes/` | (레거시) 네이버 m.stock + sise Worker — Pages Functions 미사용 시 선택 |
 | `scripts/` | `dev_quotes_server.mjs` — 로컬 `/api/quotes`(KRX 없이 Naver); `update_fx_from_naver.mjs`; `verify_data_refs.mjs`; … |
 | `semiconductor/` | 반도체 지도 `korea_semiconductor_map.html` (다른 지도 빌드의 템플릿 원본) |
@@ -50,10 +50,8 @@ node scripts/update_fx_from_naver.mjs
    - **Build output directory:** `dist` *(또는 `/` — `dist`일 때 `npm run build`가 정적 파일을 복사함)*
    - **Root directory:** *(비움 — `index.html`이 repo 루트에 있어야 함)*
 3. **루트에 `wrangler.toml`을 커밋하지 마세요.** Git 연동 시 V2 wrangler 배포로 바뀌며 **배포 실패**(No deployment available)가 날 수 있습니다. 로컬만 `wrangler.toml.example` 복사 후 사용.
-4. **Settings → Variables and Secrets** (Production **및 Preview** 모두):
-   - Secret **`KRX OPEN API 인증키`** 또는 **`KRX_AUTH_KEY`** — **선택**. 없으면 Naver sise로 현재가·52주 고저 제공
-5. (KRX 사용 시) [openapi.krx.co.kr](https://openapi.krx.co.kr)에서 **유가증권·코스닥 일별매매정보** API 승인
-6. 배포 후 `https://<사이트>/api/quotes?codes=005930` 확인 — `last`, `high52w`, `low52w` 포함 (`js/live_quotes.js`가 약 45초마다 폴링)
+4. **Settings → Variables and Secrets** (선택): **`KRX_AUTH_KEY`** — 1년 수익률(`warm=1`)만 사용. 없어도 현재가·52주·시총·PER·PBR은 네이버 캐시로 제공
+5. 배포 후 `https://<사이트>/api/quotes?codes=005930` 확인 — `last`, `high52w`, `low52w`, `mcapWon`, `per`, `pbr` 포함
 
 **주의:** HTML을 `file://`로 직접 열면 `/api/quotes`를 호출할 수 없습니다. Cloudflare Pages, `npx wrangler pages dev`, 또는 `npm run dev:quotes` + HTTP 서버로 열어야 합니다.
 

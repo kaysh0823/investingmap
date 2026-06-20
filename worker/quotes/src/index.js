@@ -3,7 +3,7 @@
  * GET /?codes=005930,000660,373220
  */
 
-import { fetchNaverSiseQuote, mergeNaverIntoQuote } from '../../../lib/naver_sise_quotes.mjs';
+import { fetchNaverSiseQuote, mergeNaverIntoQuote, emptyQuote } from '../../../functions/lib/naver_sise_quotes.mjs';
 
 const NAVER_UA = 'investingmap-quotes-worker/1.0 (compatible; +https://github.com/)';
 const CACHE_TTL_MS = 45_000;
