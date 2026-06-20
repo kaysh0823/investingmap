@@ -1,6 +1,6 @@
 # investingmap quotes Worker
 
-Proxies [Naver m.stock](https://m.stock.naver.com) domestic JSON so static map pages can refresh **현재가(최근 종가)**, **52주 최고/최저**, **1년 수익률**(약 252영업일 전 종가 대비) without browser CORS issues.
+Proxies Naver **m.stock JSON** and, when needed, [PC sise HTML](https://finance.naver.com/item/sise.naver) so static map pages can refresh **현재가**, **52주 최고/최저**, **1년 수익률** without browser CORS issues.
 
 ## Deploy (Cloudflare)
 

@@ -36,15 +36,24 @@ Returns JSON compatible with `js/live_quotes.js`:
 
 ## Local test
 
+**Option A — full site + API (recommended)**
+
 ```bash
 cd investingmap
 copy wrangler.toml.example wrangler.toml
 npx wrangler pages dev . --port 8788
-# 다른 터미널에서 KRX_AUTH_KEY를 wrangler secret으로 넣거나 .dev.vars 사용
+# KRX key optional: without it, /api/quotes uses Naver sise (finance.naver.com/item/sise.naver)
 curl "http://localhost:8788/api/quotes?codes=005930"
 ```
 
-`.dev.vars` (git 제외):
+**Option B — quotes API only (no KRX key)**
+
+```bash
+node scripts/dev_quotes_server.mjs
+curl "http://127.0.0.1:8788/api/quotes?codes=005930"
+```
+
+`.dev.vars` (git 제외, KRX 사용 시):
 
 ```
 KRX_AUTH_KEY=your-key-here
@@ -52,8 +61,9 @@ KRX_AUTH_KEY=your-key-here
 
 ## Notes
 
-- KRX OPEN API는 **틱 실시간**이 아니라 **일별매매(종가·고저)** 기준입니다. 당일 데이터는 영업일·제공 시점에 따라 없을 수 있습니다.
-- 52주 고저·1년 수익률은 최근 약 252영업일 일별 데이터를 모아 계산하며, 6시간 캐시합니다.
+- **현재가·52주 고저**: KRX 키가 없거나 KRX 필드가 비어 있으면 [네이버 PC 시세](https://finance.naver.com/item/sise.naver?code=005930) 페이지를 크롤링해 보완합니다 (`source`: `naver-sise` 또는 `krx-open-api+naver-sise`).
+- KRX OPEN API는 **틱 실시간**이 아니라 **일별매매(종가·고저)** 기준입니다. 네이버 sise **현재가**는 장중 시세에 가깝습니다.
+- 52주 고저·1년 수익률(KRX)은 최근 약 252영업일 일별 데이터를 모아 계산하며, 6시간 캐시합니다.
 - 일 호출 한도(약 1만 회)를 고려해 최신 시세는 45초, 히스토리는 6시간마다 갱신합니다.
 
-Legacy standalone Worker: `worker/quotes/` (네이버 프록시, 선택).
+Legacy standalone Worker: `worker/quotes/` (네이버 m.stock + sise fallback, 선택).

@@ -1,7 +1,13 @@
 /**
  * Cloudflare Pages Function: GET /api/quotes?codes=005930,000660
- * KRX OPEN API (Pages Secret: KRX OPEN API 인증키, KRX_AUTH_KEY, …)
+ * Primary: KRX OPEN API (Pages Secret: KRX OPEN API 인증키, KRX_AUTH_KEY, …)
+ * Fallback: Naver Finance sise page (finance.naver.com/item/sise.naver)
  */
+
+import {
+  fetchNaverSiseQuotes,
+  mergeNaverIntoQuote,
+} from '../../lib/naver_sise_quotes.mjs';
 
 const KRX_ENV_KEY_NAMES = [
   'KRX OPEN API 인증키',
@@ -305,6 +311,49 @@ async function buildQuotes(authKey, codes, options) {
   };
 }
 
+async function buildNaverOnlyQuotes(codes) {
+  const naverItems = await fetchNaverSiseQuotes(codes, { concurrency: 4 });
+  const items = {};
+  for (const code of codes) {
+    const n = naverItems[code] || {};
+    items[code] = mergeNaverIntoQuote(
+      { last: null, high52w: null, low52w: null, yoyReturnPct: null },
+      n,
+      { preferNaverLast: true },
+    );
+  }
+  return {
+    asOf: new Date().toISOString(),
+    source: 'naver-sise',
+    items,
+  };
+}
+
+async function mergeNaverGaps(codes, krxPayload) {
+  const needsNaver = codes.filter((code) => {
+    const q = krxPayload.items[code];
+    return !q || q.last == null || q.high52w == null || q.low52w == null;
+  });
+  if (!needsNaver.length) return krxPayload;
+
+  const naverItems = await fetchNaverSiseQuotes(needsNaver, { concurrency: 4 });
+  const items = { ...krxPayload.items };
+  for (const code of needsNaver) {
+    const base = items[code] || {
+      last: null,
+      high52w: null,
+      low52w: null,
+      yoyReturnPct: null,
+    };
+    items[code] = mergeNaverIntoQuote(base, naverItems[code] || {}, { preferNaverLast: true });
+  }
+  return {
+    ...krxPayload,
+    source: 'krx-open-api+naver-sise',
+    items,
+  };
+}
+
 function corsHeaders(request) {
   const origin = request.headers.get('Origin') || '';
   return {
@@ -326,23 +375,18 @@ export async function onRequest(context) {
   }
 
   const authKey = getAuthKey(env);
-  if (!authKey) {
-    return new Response(JSON.stringify({ error: 'KRX auth key not configured (Pages Secret)' }), {
-      status: 503,
-      headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
-    });
-  }
-
   const url = new URL(request.url);
   const codesRaw = url.searchParams.get('codes') || '';
   const codes = [...new Set(codesRaw.split(/[, ]+/).map(normalizeTicker).filter(Boolean))];
+
   if (!codes.length) {
     return new Response(
       JSON.stringify({
         asOf: new Date().toISOString(),
         items: {},
-        source: 'krx-open-api',
+        source: authKey ? 'krx-open-api' : 'naver-sise',
         configured: true,
+        krxConfigured: !!authKey,
         histReady: !!(histCache && histCache.stats && histCache.stats.size),
       }),
       {
@@ -353,8 +397,35 @@ export async function onRequest(context) {
 
   const warmHist = url.searchParams.get('warm') === '1';
 
+  if (!authKey) {
+    try {
+      const payload = await buildNaverOnlyQuotes(codes);
+      return new Response(JSON.stringify(payload), {
+        headers: {
+          ...ch,
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'public, max-age=30',
+        },
+      });
+    } catch (e) {
+      return new Response(
+        JSON.stringify({
+          error: 'naver_fetch_failed',
+          message: e && e.message ? String(e.message) : 'unknown',
+          asOf: new Date().toISOString(),
+          items: {},
+        }),
+        {
+          status: 502,
+          headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
+        },
+      );
+    }
+  }
+
   try {
-    const payload = await buildQuotes(authKey, codes, { warmHist });
+    const krxPayload = await buildQuotes(authKey, codes, { warmHist });
+    const payload = await mergeNaverGaps(codes, krxPayload);
     return new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
@@ -363,17 +434,34 @@ export async function onRequest(context) {
       },
     });
   } catch (e) {
-    return new Response(
-      JSON.stringify({
-        error: 'krx_fetch_failed',
-        message: e && e.message ? String(e.message) : 'unknown',
-        asOf: new Date().toISOString(),
-        items: {},
-      }),
-      {
-        status: 502,
-        headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
-      },
-    );
+    try {
+      const payload = await buildNaverOnlyQuotes(codes);
+      return new Response(
+        JSON.stringify({
+          ...payload,
+          krxError: e && e.message ? String(e.message) : 'unknown',
+        }),
+        {
+          headers: {
+            ...ch,
+            'Content-Type': 'application/json; charset=utf-8',
+            'Cache-Control': 'public, max-age=30',
+          },
+        },
+      );
+    } catch (e2) {
+      return new Response(
+        JSON.stringify({
+          error: 'quotes_fetch_failed',
+          message: e2 && e2.message ? String(e2.message) : e && e.message ? String(e.message) : 'unknown',
+          asOf: new Date().toISOString(),
+          items: {},
+        }),
+        {
+          status: 502,
+          headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' },
+        },
+      );
+    }
   }
 }

@@ -1,10 +1,9 @@
 /**
- * Cloudflare Worker: batch domestic quotes from Naver m.stock JSON.
+ * Cloudflare Worker: batch domestic quotes from Naver m.stock JSON + sise HTML fallback.
  * GET /?codes=005930,000660,373220
- *
- * Env:
- * - ALLOW_ORIGINS: optional comma-separated list; if empty, Access-Control-Allow-Origin: *
  */
+
+import { fetchNaverSiseQuote, mergeNaverIntoQuote } from '../../../lib/naver_sise_quotes.mjs';
 
 const NAVER_UA = 'investingmap-quotes-worker/1.0 (compatible; +https://github.com/)';
 const CACHE_TTL_MS = 45_000;
@@ -86,26 +85,35 @@ function yoyFromDaily(daily) {
 }
 
 async function quoteOne(code) {
-  const integrationUrl = `https://m.stock.naver.com/api/stock/${encodeURIComponent(code)}/integration`;
-  const integration = await fetchJson(integrationUrl);
-  const high52w = infoValue(integration, 'highPriceOf52Weeks');
-  const low52w = infoValue(integration, 'lowPriceOf52Weeks');
-  let last = null;
-  const dt = integration && integration.dealTrendInfos;
-  if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
-    last = parseKoreanNumber(dt[0].closePrice);
+  let item = { last: null, high52w: null, low52w: null, yoyReturnPct: null };
+  try {
+    const integrationUrl = `https://m.stock.naver.com/api/stock/${encodeURIComponent(code)}/integration`;
+    const integration = await fetchJson(integrationUrl);
+    const high52w = infoValue(integration, 'highPriceOf52Weeks');
+    const low52w = infoValue(integration, 'lowPriceOf52Weeks');
+    let last = null;
+    const dt = integration && integration.dealTrendInfos;
+    if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
+      last = parseKoreanNumber(dt[0].closePrice);
+    }
+    if (last == null) last = infoValue(integration, 'lastClosePrice');
+
+    const daily = await fetchDailyPages(code);
+    const yoyReturnPct = yoyFromDaily(daily);
+    item = { last, high52w, low52w, yoyReturnPct };
+  } catch {
+    /* try sise below */
   }
-  if (last == null) last = infoValue(integration, 'lastClosePrice');
 
-  const daily = await fetchDailyPages(code);
-  const yoyReturnPct = yoyFromDaily(daily);
-
-  return {
-    last,
-    high52w,
-    low52w,
-    yoyReturnPct,
-  };
+  if (item.last == null || item.high52w == null || item.low52w == null) {
+    try {
+      const sise = await fetchNaverSiseQuote(code);
+      item = mergeNaverIntoQuote(item, sise, { preferNaverLast: true });
+    } catch {
+      /* keep partial */
+    }
+  }
+  return item;
 }
 
 export default {
