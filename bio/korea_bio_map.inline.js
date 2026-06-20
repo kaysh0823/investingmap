@@ -103,6 +103,7 @@
       const hubBack = document.getElementById('hub-back');
       if (hubBack) hubBack.href = '../index.html?lang=' + encodeURIComponent(lang);
       document.title = t.title;
+      if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: t.title, description: t.subtitle });
       if (window.InvestingMapSectorNav) InvestingMapSectorNav.render(document.body.getAttribute('data-sector') || '', lang);
       document.getElementById('hdr-title').textContent = t.title;
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
