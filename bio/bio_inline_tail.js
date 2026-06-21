@@ -599,6 +599,7 @@
     function zoomOut() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 0.77); }
 
     function switchTab(tab, btn) {
+      document.body.classList.toggle('im-tab-table', tab === 'table');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       document.getElementById('tab-' + tab).classList.add('active');
@@ -607,6 +608,7 @@
     }
 
     loadFx().then(function () {
+      document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       applyLang();
       if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
         InvestingMapLiveQuotes.start({

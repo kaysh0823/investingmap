@@ -828,7 +828,7 @@
       opacity: .15
     }
 
-    /* investingmap-mobile-table */
+    /* investingmap-mobile-table-v2 — base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -840,21 +840,26 @@
     }
 
     thead th {
+      position: -webkit-sticky;
       position: sticky;
       top: 0;
       z-index: 2;
+      background: var(--surface2);
+      background-clip: padding-box;
       box-shadow: 0 1px 0 var(--border)
     }
 
     thead th:first-child,
     tbody td:first-child {
+      position: -webkit-sticky;
       position: sticky;
       left: 0;
       z-index: 1
     }
 
     thead th:first-child {
-      z-index: 3
+      z-index: 5;
+      background: var(--surface2)
     }
 
     tbody td:first-child {
@@ -900,6 +905,74 @@
       .table-container {
         padding: 10px 12px
       }
+      /* investingmap-mobile-table-v2 — mobile layout */
+      .tabs {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      #tab-table.tab-content.active {
+        display: flex;
+        flex-direction: column;
+        height: calc(100dvh - 200px);
+        min-height: 280px;
+        overflow: hidden
+      }
+
+      #tab-table .table-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+        padding-bottom: 8px
+      }
+
+      #tab-table .filter-bar {
+        flex-shrink: 0;
+        z-index: 30;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      #tab-table .tbl-wrap {
+        flex: 1;
+        min-height: 0;
+        max-height: none;
+        max-width: 100%;
+        overflow: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch
+      }
+
+      #tab-table .note {
+        flex-shrink: 0;
+        font-size: 11px;
+        margin-top: 6px
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 108px;
+        max-width: 132px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
+
+
+
+
 
       .header {
         padding: 14px 14px 16px;
@@ -971,31 +1044,6 @@
       .result-count {
         margin-left: 0;
         flex: 1 1 100%
-      }
-
-      .tbl-wrap {
-        max-width: 100%;
-        max-height: min(72vh, calc(100dvh - 210px));
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain
-      }
-
-      .tbl-wrap {
-        max-height: min(72vh, calc(100dvh - 210px));
-        overscroll-behavior: contain
-      }
-
-      thead th:first-child,
-      tbody td:first-child {
-        min-width: 104px;
-        max-width: 128px
-      }
-
-      tbody td:first-child .company-name {
-        font-size: 12px;
-        line-height: 1.35;
-        word-break: keep-all
       }
 
 
