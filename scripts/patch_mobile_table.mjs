@@ -84,6 +84,11 @@ const MOBILE_V2_CSS = `
         overflow: hidden
       }
 
+      body.im-tab-table #tab-table.tab-content.active {
+        height: calc(100dvh - 108px);
+        min-height: 240px
+      }
+
       #tab-table .table-container {
         flex: 1;
         display: flex;
@@ -93,6 +98,10 @@ const MOBILE_V2_CSS = `
         padding-bottom: 8px
       }
 
+      body.im-tab-table #tab-table .table-container {
+        padding: 4px 8px 0
+      }
+
       #tab-table .filter-bar {
         flex-shrink: 0;
         z-index: 30;
@@ -100,6 +109,11 @@ const MOBILE_V2_CSS = `
         padding-bottom: 10px;
         background: var(--bg);
         border-bottom: 1px solid var(--border)
+      }
+
+      body.im-tab-table #tab-table .filter-bar {
+        padding-bottom: 6px;
+        gap: 6px
       }
 
       #tab-table .tbl-wrap {
@@ -113,9 +127,35 @@ const MOBILE_V2_CSS = `
       }
 
       #tab-table .note {
-        flex-shrink: 0;
+        display: none
+      }
+
+      body.im-tab-table .header {
+        padding: 8px 12px 6px
+      }
+
+      body.im-tab-table .header h1 {
+        font-size: 15px;
+        line-height: 1.2;
+        margin: 0
+      }
+
+      body.im-tab-table #hdr-subtitle,
+      body.im-tab-table .header-meta,
+      body.im-tab-table .data-asof,
+      body.im-tab-table .quotes-asof {
+        display: none
+      }
+
+      body.im-tab-table thead th {
+        padding: 6px 5px;
+        font-size: 8px
+      }
+
+      body.im-tab-table td {
+        padding: 5px 5px;
         font-size: 11px;
-        margin-top: 6px
+        line-height: 1.3
       }
 
       thead th:first-child,
@@ -128,6 +168,11 @@ const MOBILE_V2_CSS = `
         font-size: 12px;
         line-height: 1.35;
         word-break: keep-all
+      }
+
+      body.im-tab-table tbody td:first-child .company-name {
+        font-size: 11px;
+        line-height: 1.25
       }
 `;
 
@@ -145,6 +190,10 @@ function stripOldMobileCss(html) {
     ''
   );
   html = html.replace(
+    /\n      \/\* investingmap-mobile-table-v2 — mobile layout \*\/[\s\S]*?body\.im-tab-table tbody td:first-child \.company-name \{[\s\S]*?line-height: 1\.25\n      \}\n/g,
+    '\n'
+  );
+  html = html.replace(
     /\n      \/\* investingmap-mobile-table-v2 — mobile layout \*\/[\s\S]*?word-break: keep-all\n      \}\n/g,
     '\n'
   );
@@ -153,6 +202,14 @@ function stripOldMobileCss(html) {
     '\n'
   );
   return html;
+}
+
+function injectMobileV2Css(html) {
+  if (html.includes(`${MARKER_V2} — mobile layout`)) return html;
+  return html.replace(
+    /(\.table-container \{\s*\n\s*padding: 10px 12px\s*\})/,
+    `$1${MOBILE_V2_CSS}`
+  );
 }
 
 function patchSwitchTabSource(src) {
@@ -186,10 +243,7 @@ function patchFile(rel) {
     }
   }
 
-  html = html.replace(
-    /(\.table-container \{\s*\n\s*padding: 10px 12px\s*\})(?!\s*\n\s*\/\* investingmap-mobile-table-v2 — mobile layout)/,
-    `$1${MOBILE_V2_CSS}`
-  );
+  html = injectMobileV2Css(html);
 
   html = patchSwitchTabSource(html);
   html = patchInitTabClassSource(html);
