@@ -462,7 +462,8 @@
 
     table {
       width: 100%;
-      border-collapse: collapse
+      border-collapse: separate;
+      border-spacing: 0
     }
 
     thead th {
@@ -827,6 +828,44 @@
       opacity: .15
     }
 
+    /* investingmap-mobile-table */
+    table {
+      border-collapse: separate;
+      border-spacing: 0
+    }
+
+    .tbl-wrap {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 1px 0 var(--border)
+    }
+
+    thead th:first-child,
+    tbody td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1
+    }
+
+    thead th:first-child {
+      z-index: 3
+    }
+
+    tbody td:first-child {
+      background: var(--bg);
+      box-shadow: 1px 0 0 var(--border)
+    }
+
+    tbody tr:hover td:first-child {
+      background: var(--surface2)
+    }
+
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -936,9 +975,29 @@
 
       .tbl-wrap {
         max-width: 100%;
+        max-height: min(72vh, calc(100dvh - 210px));
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior-x: contain
       }
+
+      .tbl-wrap {
+        max-height: min(72vh, calc(100dvh - 210px));
+        overscroll-behavior: contain
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 104px;
+        max-width: 128px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
 
       thead th {
         white-space: normal;

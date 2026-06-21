@@ -82,8 +82,8 @@ const SEED = [
     chain: S.C1,
     semType: '\uC2DD\uD488\u00B7\uB77C\uBA74\u00B7\uC2A4\uB0B5',
     semTypeEn: 'Food, instant noodles, snacks',
-    products: '\uC2E0\uB77C\uBA74, \uCAB5\uB77C\uBA74, \uC2A4\uB0B5',
-    productsEn: 'Shin Ramyun, Chapaguri, snacks',
+    products: '\uC2E0\uB77C\uBA74, \uC2A4\uB0B5',
+    productsEn: 'Shin Ramyun, snacks',
     partners: [
       'nestle', 'pepsico',
       { id: 'hwave_flow', kind: 'theme', edgeLabel: '\uD55C\uB958 \uC2DD\uD488 \uC218\uC694', edgeLabelEn: 'K-wave food pull', weight: 0.05 },
@@ -97,7 +97,7 @@ const SEED = [
     chain: S.C1,
     semType: '\uB77C\uBA74\u00B7\uC2A4\uB0B5\u00B7\uC218\uCD9C',
     semTypeEn: 'Noodles, snacks, export',
-    products: '\uBD88\uB2E5\uC18D\uB77C\uBA74, \uD654\uC774\uD2B8\uC2DD\uD488',
+    products: '\uBD88\uB2ED\uBCF6\uC74C\uBA74, \uD654\uC774\uD2B8\uC2DD\uD488',
     productsEn: 'Buldak line, overseas brands',
     partners: ['nestle', 'pepsico'],
   },
@@ -196,7 +196,7 @@ const SEED = [
     chain: S.C2,
     semType: 'FSC\u00B7\uAE00\uB85C\uBC8C\uB124\uD2B8\uC6CC\uD06C',
     semTypeEn: 'Full-service global network',
-    products: '\uC5EC\uAC1D\u00B7\uD654\uBB3C\u00B7\uBBF8\uC8C4',
+    products: '\uC5EC\uAC1D\u00B7\uD654\uBB3C\u00B7MICE',
     productsEn: 'Passenger, cargo, MICE',
     partners: ['boeing', 'airbus', 'delta'],
   },
@@ -206,9 +206,9 @@ const SEED = [
     nameEn: 'Amorepacific',
     ticker: '090430',
     chain: S.C3,
-    semType: '\uD654\uC7A5\uD488\u00B7\uBF55\uCF00\uC5B4',
+    semType: '\uD654\uC7A5\uD488\u00B7\uBDF0\uD2F0\uCF00\uC5B4',
     semTypeEn: 'Beauty & skincare',
-    products: '\uC124\uB77C\uD6FC, \uD5C8\uBC14, \uC5D0\uD504\uB9AC',
+    products: '\uC124\uD654\uC218, \uD5C4\uB77C, \uC774\uB2C8\uC2A4\uD504\uB9AC',
     productsEn: 'Sulwhasoo, Hera, innisfree',
     partners: [
       'lvmh', 'estee',
@@ -235,8 +235,8 @@ const SEED = [
     chain: S.C3,
     semType: 'ODM\u00B7\uC81C\uC870\uC704\uD0C1',
     semTypeEn: 'ODM / contract manufacturing',
-    products: 'K-\uBF55\uCF00\uC5B4 ODM, \uC548\uC804',
-    productsEn: 'K-beauty ODM, safety testing',
+    products: 'K-\uBDF0\uD2F0 \uD5E4\uC5B4\u00B7\uBC14\uB514 \uBCFC\uB968 \uCF00\uC5B4',
+    productsEn: 'K-beauty hair·body volume care',
     partners: [
       'estee', 'lvmh',
       { id: 'amore', edgeLabel: 'ODM \uC81C\uC870\u2192\uBE0C\uB79C\uB4DC', edgeLabelEn: 'ODM \u2192 Amore brands', weight: 0.32 },
@@ -715,7 +715,7 @@ function main() {
   html = html.replace(/const T = \{[\s\S]*?\n    \};/, `const T = ${JSON.stringify(T, null, 4)};`);
 
   html = html.replace(
-    /const koreanCompanies = \[[\s\S]*?\n    \];\n\n    const globalCompanies/,
+    /const koreanCompanies = \[[\s\S]*?\n    \];\r?\n\r?\n    const globalCompanies/,
     `const koreanCompanies = ${serializeCompanies(companies)};\n\n    const globalCompanies`,
   );
 

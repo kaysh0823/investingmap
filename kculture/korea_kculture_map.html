@@ -25,29 +25,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- investingmap-seo -->
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <meta name="description" content="라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 글로벌 네트워크 지도.">
+  <meta name="description" content="국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://investing-kr.com/kculture/korea_kculture_map.html">
-  <link rel="alternate" hreflang="ko" href="https://investing-kr.com/kculture/korea_kculture_map.html?lang=ko">
-  <link rel="alternate" hreflang="en" href="https://investing-kr.com/kculture/korea_kculture_map.html?lang=en">
-  <link rel="alternate" hreflang="x-default" href="https://investing-kr.com/kculture/korea_kculture_map.html">
+  <link rel="canonical" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html">
+  <link rel="alternate" hreflang="ko" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html?lang=ko">
+  <link rel="alternate" hreflang="en" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Investing Map">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:locale:alternate" content="en_US">
-  <meta property="og:url" content="https://investing-kr.com/kculture/korea_kculture_map.html">
-  <meta property="og:title" content="한국 K컬처 산업 투자 지도">
-  <meta property="og:description" content="라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 글로벌 네트워크 지도.">
+  <meta property="og:url" content="https://investing-kr.com/semiconductor/korea_semiconductor_map.html">
+  <meta property="og:title" content="한국 반도체 산업 투자 지도">
+  <meta property="og:description" content="국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="한국 K컬처 산업 투자 지도">
-  <meta name="twitter:description" content="라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 글로벌 네트워크 지도.">
+  <meta name="twitter:title" content="한국 반도체 산업 투자 지도">
+  <meta name="twitter:description" content="국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "한국 K컬처 산업 투자 지도",
-    "description": "라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 글로벌 네트워크 지도.",
-    "url": "https://investing-kr.com/kculture/korea_kculture_map.html",
+    "name": "한국 반도체 산업 투자 지도",
+    "description": "국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.",
+    "url": "https://investing-kr.com/semiconductor/korea_semiconductor_map.html",
     "inLanguage": ["ko", "en"],
     "isPartOf": {
       "@type": "WebSite",
@@ -62,9 +62,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "한국 K컬처 산업 투자 지도",
-    "description": "라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
-    "url": "https://investing-kr.com/kculture/korea_kculture_map.html",
+    "name": "한국 반도체 산업 투자 지도",
+    "description": "국내 상장 반도체 64개사의 KRX 시가총액·PER·PBR, 설계·파운드리·메모리·소재·장비·패키징 밸류체인, 국내외 거래처·글로벌 피어 관계를 한 페이지에서 비교할 수 있습니다.",
+    "url": "https://investing-kr.com/semiconductor/korea_semiconductor_map.html",
     "inLanguage": [
       "ko",
       "en"
@@ -462,7 +462,8 @@
 
     table {
       width: 100%;
-      border-collapse: collapse
+      border-collapse: separate;
+      border-spacing: 0
     }
 
     thead th {
@@ -812,6 +813,44 @@
       opacity: .15
     }
 
+    /* investingmap-mobile-table */
+    table {
+      border-collapse: separate;
+      border-spacing: 0
+    }
+
+    .tbl-wrap {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 1px 0 var(--border)
+    }
+
+    thead th:first-child,
+    tbody td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1
+    }
+
+    thead th:first-child {
+      z-index: 3
+    }
+
+    tbody td:first-child {
+      background: var(--bg);
+      box-shadow: 1px 0 0 var(--border)
+    }
+
+    tbody tr:hover td:first-child {
+      background: var(--surface2)
+    }
+
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -921,9 +960,24 @@
 
       .tbl-wrap {
         max-width: 100%;
+        max-height: min(72vh, calc(100dvh - 210px));
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain
+        overscroll-behavior: contain
       }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 104px;
+        max-width: 128px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
 
       thead th {
         white-space: normal;
@@ -1004,6 +1058,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
@@ -1011,7 +1094,7 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body data-sector="kculture">
+<body data-sector="semi">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -1175,10 +1258,6 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
-        "thLast": "현재가",
-        "th52High": "52주 최고",
-        "th52Lo": "52주 최저",
-        "thPosition": "주가 위치",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1250,10 +1329,6 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
-        "thLast": "Last",
-        "th52High": "52W High",
-        "th52Lo": "52W Low",
-        "thPosition": "Price Position",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1317,14 +1392,14 @@
       {
         id: 'nongshim', name: '농심', nameEn: 'Nongshim', ticker: '004370', market: 'KOSPI', chain: '음식·라면·식품',
         semType: '식품·라면·스낵', semTypeEn: 'Food, instant noodles, snacks',
-        products: '신라면, 쪵라면, 스낵', productsEn: 'Shin Ramyun, Chapaguri, snacks',
+        products: '신라면, 스낵', productsEn: 'Shin Ramyun, snacks',
         revenue: '약 2.3조원', mcapWon: 2296197355000, per: 12.87, pbr: 0.78, revTier: 2, partners: ['nestle', 'pepsico', { id: 'hwave_flow', edgeLabel: '한류 식품 수요', edgeLabelEn: 'K-wave food pull', weight: 0.05, kind: 'theme' }]
       },
 
       {
         id: 'samyang', name: '삼양식품', nameEn: 'SamyangFoods', ticker: '003230', market: 'KOSPI', chain: '음식·라면·식품',
         semType: '라면·스낵·수출', semTypeEn: 'Noodles, snacks, export',
-        products: '불닥속라면, 화이트식품', productsEn: 'Buldak line, overseas brands',
+        products: '불닭볶음면, 화이트식품', productsEn: 'Buldak line, overseas brands',
         revenue: '약 8.6조원', mcapWon: 8625302175000, per: 21.95, pbr: 6.87, revTier: 2, partners: ['nestle', 'pepsico']
       },
 
@@ -1380,14 +1455,14 @@
       {
         id: 'korean_air', name: '대한항공', nameEn: 'KoreanAirLines', ticker: '003490', market: 'KOSPI', chain: '여행·레저·항공',
         semType: 'FSC·글로벌네트워크', semTypeEn: 'Full-service global network',
-        products: '여객·화물·미죄', productsEn: 'Passenger, cargo, MICE',
+        products: '여객·화물·MICE', productsEn: 'Passenger, cargo, MICE',
         revenue: '약 9.8조원', mcapWon: 9794669582600, per: 12.47, pbr: 0.9, revTier: 2, partners: ['boeing', 'airbus', 'delta']
       },
 
       {
         id: 'amore', name: '아모레퍼시픽', nameEn: 'AMOREPACIFIC CORPORATION', ticker: '090430', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: '화장품·뽕케어', semTypeEn: 'Beauty & skincare',
-        products: '설라훼, 허바, 에프리', productsEn: 'Sulwhasoo, Hera, innisfree',
+        semType: '화장품·뷰티케어', semTypeEn: 'Beauty & skincare',
+        products: '설화수, 헄라, 이니스프리', productsEn: 'Sulwhasoo, Hera, innisfree',
         revenue: '약 6.6조원', mcapWon: 6551189008000, per: 32.79, pbr: 1.42, revTier: 2, partners: ['lvmh', 'estee', { id: 'hwave_flow', edgeLabel: '콘텐츠 수요→봀티', edgeLabelEn: 'Content → beauty demand', weight: 0.06, kind: 'theme' }]
       },
 
@@ -1401,7 +1476,7 @@
       {
         id: 'kolmar', name: '한국콜마', nameEn: 'KOLMAR KOREA', ticker: '161890', market: 'KOSPI', chain: '화장품·뷰티케어',
         semType: 'ODM·제조위탁', semTypeEn: 'ODM / contract manufacturing',
-        products: 'K-뽕케어 ODM, 안전', productsEn: 'K-beauty ODM, safety testing',
+        products: 'K-뷰티 헤어·바디 볼륨 케어', productsEn: 'K-beauty hair·body volume care',
         revenue: '약 2조원', mcapWon: 2039478652800, per: 16.3, pbr: 2.24, revTier: 2, partners: ['estee', 'lvmh', { id: 'amore', edgeLabel: 'ODM 제조→브랜드', edgeLabelEn: 'ODM → Amore brands', weight: 0.32 }, { id: 'lg_hh', edgeLabel: 'ODM 제조→LG H&H', edgeLabelEn: 'ODM → LG H&H brands', weight: 0.24 }]
       },
 

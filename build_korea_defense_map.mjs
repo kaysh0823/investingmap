@@ -229,7 +229,7 @@ const GLOBALS = [
   { id: 'nasa', name: 'NASA', country: '\uBBF8\uAD6D/USA', region: 'us', sector: 'Space programs' },
   { id: 'prog_kf21', name: '\uD504\uB85C\uADF8\uB7A8: KF-21', country: '\uD504\uB85C\uADF8\uB7A8/Korea', region: 'kr', sector: 'Fighter program (illus.)' },
   { id: 'prog_fa50', name: '\uD504\uB85C\uADF8\uB7A8: T-50/FA-50', country: '\uD504\uB85C\uADF8\uB7A8/Korea', region: 'kr', sector: 'Trainer/light fighter (illus.)' },
-  { id: 'prog_cheongung', name: '\uD504\uB85C\uADF8\uB7A8: \uCC9C\uAD91 II', country: '\uD504\uB85C\uADF8\uB7A8/Korea', region: 'kr', sector: 'SAM program (illus.)' },
+  { id: 'prog_cheongung', name: '\uD504\uB85C\uADF8\uB7A8: \uCC9C\uAD81 II', country: '\uD504\uB85C\uADF8\uB7A8/Korea', region: 'kr', sector: 'SAM program (illus.)' },
   { id: 'exp_poland', name: '\uC218\uCD9C: \uD3F4\uB780\uB4DC', country: 'Poland', region: 'eu', sector: 'Export (illus.)' },
   { id: 'exp_uae', name: '\uC218\uCD9C: \uC911\uB3D9\u00B7\uC544\uD0C0\uC9C0', country: 'Gulf', region: 'us', sector: 'Export (illus.)' },
 ];
@@ -535,7 +535,7 @@ function main() {
   html = html.replace(/const T = \{[\s\S]*?\n    \};/, `const T = ${JSON.stringify(T, null, 4)};`);
 
   html = html.replace(
-    /const koreanCompanies = \[[\s\S]*?\n    \];\n\n    const globalCompanies/,
+    /const koreanCompanies = \[[\s\S]*?\n    \];\r?\n\r?\n    const globalCompanies/,
     `const koreanCompanies = ${serializeCompanies(companies)};\n\n    const globalCompanies`,
   );
 

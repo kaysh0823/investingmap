@@ -462,7 +462,8 @@
 
     table {
       width: 100%;
-      border-collapse: collapse
+      border-collapse: separate;
+      border-spacing: 0
     }
 
     thead th {
@@ -812,6 +813,44 @@
       opacity: .15
     }
 
+    /* investingmap-mobile-table */
+    table {
+      border-collapse: separate;
+      border-spacing: 0
+    }
+
+    .tbl-wrap {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 1px 0 var(--border)
+    }
+
+    thead th:first-child,
+    tbody td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1
+    }
+
+    thead th:first-child {
+      z-index: 3
+    }
+
+    tbody td:first-child {
+      background: var(--bg);
+      box-shadow: 1px 0 0 var(--border)
+    }
+
+    tbody tr:hover td:first-child {
+      background: var(--surface2)
+    }
+
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -921,9 +960,24 @@
 
       .tbl-wrap {
         max-width: 100%;
+        max-height: min(72vh, calc(100dvh - 210px));
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain
+        overscroll-behavior: contain
       }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 104px;
+        max-width: 128px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
 
       thead th {
         white-space: normal;
@@ -1004,6 +1058,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->

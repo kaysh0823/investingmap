@@ -25,29 +25,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- investingmap-seo -->
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <meta name="description" content="항공기·엔진, 미사일·레이더, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사의 KRX 데이터와 글로벌 참고 네트워크.">
+  <meta name="description" content="국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://investing-kr.com/defense/korea_defense_map.html">
-  <link rel="alternate" hreflang="ko" href="https://investing-kr.com/defense/korea_defense_map.html?lang=ko">
-  <link rel="alternate" hreflang="en" href="https://investing-kr.com/defense/korea_defense_map.html?lang=en">
-  <link rel="alternate" hreflang="x-default" href="https://investing-kr.com/defense/korea_defense_map.html">
+  <link rel="canonical" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html">
+  <link rel="alternate" hreflang="ko" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html?lang=ko">
+  <link rel="alternate" hreflang="en" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://investing-kr.com/semiconductor/korea_semiconductor_map.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Investing Map">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:locale:alternate" content="en_US">
-  <meta property="og:url" content="https://investing-kr.com/defense/korea_defense_map.html">
-  <meta property="og:title" content="한국 방위·우주·항공 산업 투자 지도">
-  <meta property="og:description" content="항공기·엔진, 미사일·레이더, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사의 KRX 데이터와 글로벌 참고 네트워크.">
+  <meta property="og:url" content="https://investing-kr.com/semiconductor/korea_semiconductor_map.html">
+  <meta property="og:title" content="한국 반도체 산업 투자 지도">
+  <meta property="og:description" content="국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="한국 방위·우주·항공 산업 투자 지도">
-  <meta name="twitter:description" content="항공기·엔진, 미사일·레이더, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사의 KRX 데이터와 글로벌 참고 네트워크.">
+  <meta name="twitter:title" content="한국 반도체 산업 투자 지도">
+  <meta name="twitter:description" content="국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "한국 방위·우주·항공 산업 투자 지도",
-    "description": "항공기·엔진, 미사일·레이더, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사의 KRX 데이터와 글로벌 참고 네트워크.",
-    "url": "https://investing-kr.com/defense/korea_defense_map.html",
+    "name": "한국 반도체 산업 투자 지도",
+    "description": "국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.",
+    "url": "https://investing-kr.com/semiconductor/korea_semiconductor_map.html",
     "inLanguage": ["ko", "en"],
     "isPartOf": {
       "@type": "WebSite",
@@ -62,9 +62,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "한국 방위·우주·항공 산업 투자 지도",
-    "description": "항공기·미사일·육상무기·해군·우주·민항 관련 상장 방산·항공 기업의 KRX 지표와 글로벌 참고 네트워크를 제공합니다.",
-    "url": "https://investing-kr.com/defense/korea_defense_map.html",
+    "name": "한국 반도체 산업 투자 지도",
+    "description": "국내 상장 반도체 64개사의 KRX 시가총액·PER·PBR, 설계·파운드리·메모리·소재·장비·패키징 밸류체인, 국내외 거래처·글로벌 피어 관계를 한 페이지에서 비교할 수 있습니다.",
+    "url": "https://investing-kr.com/semiconductor/korea_semiconductor_map.html",
     "inLanguage": [
       "ko",
       "en"
@@ -462,7 +462,8 @@
 
     table {
       width: 100%;
-      border-collapse: collapse
+      border-collapse: separate;
+      border-spacing: 0
     }
 
     thead th {
@@ -812,6 +813,44 @@
       opacity: .15
     }
 
+    /* investingmap-mobile-table */
+    table {
+      border-collapse: separate;
+      border-spacing: 0
+    }
+
+    .tbl-wrap {
+      overflow: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      box-shadow: 0 1px 0 var(--border)
+    }
+
+    thead th:first-child,
+    tbody td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1
+    }
+
+    thead th:first-child {
+      z-index: 3
+    }
+
+    tbody td:first-child {
+      background: var(--bg);
+      box-shadow: 1px 0 0 var(--border)
+    }
+
+    tbody tr:hover td:first-child {
+      background: var(--surface2)
+    }
+
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -921,9 +960,24 @@
 
       .tbl-wrap {
         max-width: 100%;
+        max-height: min(72vh, calc(100dvh - 210px));
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior-x: contain
+        overscroll-behavior: contain
       }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 104px;
+        max-width: 128px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
 
       thead th {
         white-space: normal;
@@ -1004,6 +1058,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
@@ -1011,7 +1094,7 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body data-sector="defense">
+<body data-sector="semi">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -1175,10 +1258,6 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
-        "thLast": "현재가",
-        "th52High": "52주 최고",
-        "th52Lo": "52주 최저",
-        "thPosition": "주가 위치",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1250,10 +1329,6 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
-        "thLast": "Last",
-        "th52High": "52W High",
-        "th52Lo": "52W Low",
-        "thPosition": "Price Position",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1399,7 +1474,7 @@
       { id: 'nasa', name: 'NASA', nameEn: 'NASA', country: '미국/USA', region: 'us', sector: 'Space programs' },
       { id: 'prog_kf21', name: '프로그램: KF-21', nameEn: '프로그램: KF-21', country: '프로그램/Korea', region: 'kr', sector: 'Fighter program (illus.)' },
       { id: 'prog_fa50', name: '프로그램: T-50/FA-50', nameEn: '프로그램: T-50/FA-50', country: '프로그램/Korea', region: 'kr', sector: 'Trainer/light fighter (illus.)' },
-      { id: 'prog_cheongung', name: '프로그램: 천궑 II', nameEn: '프로그램: 천궑 II', country: '프로그램/Korea', region: 'kr', sector: 'SAM program (illus.)' },
+      { id: 'prog_cheongung', name: '프로그램: 천궁 II', nameEn: '프로그램: 천궁 II', country: '프로그램/Korea', region: 'kr', sector: 'SAM program (illus.)' },
       { id: 'exp_poland', name: '수출: 폴란드', nameEn: '수출: 폴란드', country: 'Poland', region: 'eu', sector: 'Export (illus.)' },
       { id: 'exp_uae', name: '수출: 중동·아타지', nameEn: '수출: 중동·아타지', country: 'Gulf', region: 'us', sector: 'Export (illus.)' }
     ];

@@ -647,7 +647,7 @@ function main() {
   html = html.replace(/const T = \{[\s\S]*?\n    \};/, `const T = ${JSON.stringify(T, null, 4)};`);
 
   html = html.replace(
-    /const koreanCompanies = \[[\s\S]*?\n    \];\n\n    const globalCompanies/,
+    /const koreanCompanies = \[[\s\S]*?\n    \];\r?\n\r?\n    const globalCompanies/,
     `const koreanCompanies = ${serializeCompanies(companies)};\n\n    const globalCompanies`,
   );
 
