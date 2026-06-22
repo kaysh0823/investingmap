@@ -12,6 +12,7 @@ const out = join(repo, 'dist');
 const ROOT_FILES = [
   'index.html',
   'ads.txt',
+  '_headers',
   'robots.txt',
   'sitemap.xml',
   'llms.txt',
