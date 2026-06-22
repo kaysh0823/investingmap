@@ -101,16 +101,38 @@ function normalizeSector(sec) {
 
 function flattenCompanies(bioSectors, nameEnMap) {
   const list = [];
-  let idx = 0;
+  const byKey = new Map();
+
   for (const sec of bioSectors) {
     for (const d of sec.domestic) {
       let ticker = d.ticker;
       if (!/^([0-9]{6}|[0-9]{4}[A-Z0-9]{2}|[0-9]{5}[A-Z0-9])$/.test(String(ticker))) ticker = 'UNLISTED';
+      const key = ticker === 'UNLISTED' ? `UNLISTED:${d.name}` : ticker;
+      const partners = (sec.global || []).map(g => g.id);
+      const existing = byKey.get(key);
+
+      if (existing) {
+        if (existing.chain !== sec.sector && !(existing.extraChains || []).includes(sec.sector)) {
+          if (!existing.extraChains) existing.extraChains = [];
+          existing.extraChains.push(sec.sector);
+        }
+        if (d.note) {
+          const snippet = d.note.slice(0, 24);
+          if (!existing.products.includes(snippet)) {
+            existing.products += ' · ' + d.note;
+            existing.productsEn = existing.products;
+          }
+        }
+        for (const p of partners) {
+          if (!existing.partners.includes(p)) existing.partners.push(p);
+        }
+        continue;
+      }
+
       const mcapWon = ticker === 'UNLISTED' ? null : (MKT_CAP_KRW[ticker] ?? null);
       const market = ticker === 'UNLISTED' ? '\uBE44\uC0C1\uC7A5' : (KOSPI_TICKERS.has(ticker) ? 'KOSPI' : 'KOSDAQ');
-      const partners = (sec.global || []).map(g => g.id);
-      list.push({
-        id: `bio_${idx++}`,
+      const entry = {
+        id: `bio_${list.length}`,
         name: d.name,
         nameEn: nameEnMap[ticker] || d.name,
         ticker,
@@ -124,10 +146,15 @@ function flattenCompanies(bioSectors, nameEnMap) {
         revenue: fmtMcap(mcapWon),
         mcapWon: mcapWon || 0,
         revTier: mcapTier(mcapWon),
-        partners
-      });
+        partners,
+        extraChains: []
+      };
+      list.push(entry);
+      byKey.set(key, entry);
     }
   }
+
+  list.forEach((c, i) => { c.id = `bio_${i}`; });
   return list;
 }
 
@@ -141,15 +168,30 @@ function collectGlobals(bioSectors) {
   return [...map.values()];
 }
 
-function buildT(bioSectors) {
+function buildT(bioSectors, koreanCompanies) {
   const raw = JSON.parse(fs.readFileSync(join(__dirname, 'bio_translations.json'), 'utf8'));
   const chainLabelKo = Object.fromEntries(bioSectors.map(s => [s.sector, s.sector]));
   const chainLabelEn = Object.fromEntries(bioSectors.map(s => [s.sector, s.sectorEn]));
   const chainFilterKo = { ...chainLabelKo };
   const chainFilterEn = { ...chainLabelEn };
+  const kospi = koreanCompanies.filter(c => c.market === 'KOSPI').length;
+  const kosdaq = koreanCompanies.filter(c => c.market === 'KOSDAQ').length;
+  const total = koreanCompanies.length;
   return {
-    ko: { ...raw.ko, chainLabel: chainLabelKo, chainFilter: chainFilterKo },
-    en: { ...raw.en, chainLabel: chainLabelEn, chainFilter: chainFilterEn }
+    ko: {
+      ...raw.ko,
+      badgeTotal: `\uCD1D <span>${total}</span>\uAC1C \uAE30\uC5C5 \uB9E4\uD551`,
+      badgeMarket: `KOSPI <span>${kospi}</span>\uC0AC \u00B7 KOSDAQ <span>${kosdaq}</span>\uC0AC`,
+      chainLabel: chainLabelKo,
+      chainFilter: chainFilterKo
+    },
+    en: {
+      ...raw.en,
+      badgeTotal: `<span>${total}</span> company mappings`,
+      badgeMarket: `KOSPI <span>${kospi}</span> \u00B7 KOSDAQ <span>${kosdaq}</span>`,
+      chainLabel: chainLabelEn,
+      chainFilter: chainFilterEn
+    }
   };
 }
 
@@ -162,7 +204,7 @@ const CHAIN_COLORS = Object.fromEntries(bioSectors.map(s => [s.sector, s.color])
 const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC', il: '#FDE047', dk: '#5EEAD4' };
 const SECTOR_ORDER = bioSectors.map(s => s.sector);
 const N_SECTORS = SECTOR_ORDER.length;
-const T = buildT(bioSectors);
+const T = buildT(bioSectors, koreanCompanies);
 
 const tail = fs.readFileSync(join(__dirname, 'bio_inline_tail.js'), 'utf8');
 

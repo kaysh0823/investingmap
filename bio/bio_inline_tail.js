@@ -230,16 +230,24 @@
       return (c.partners || []).some(p => partnerRef(p).id === gid);
     }
 
+    function companyChains(c) {
+      return [c.chain].concat(c.extraChains || []);
+    }
+    function chainMatches(c, filter) {
+      if (filter === 'all') return true;
+      return companyChains(c).includes(filter);
+    }
+
     function renderTable() {
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
-        if (currentChain !== 'all' && c.chain !== currentChain) return false;
+        if (!chainMatches(c, currentChain)) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
           const s = searchTerm.toLowerCase();
           const q = searchTerm;
           if (!c.name.includes(q) && !c.nameEn.toLowerCase().includes(s) && !c.ticker.includes(q)
-            && !c.chain.includes(q) && !(c.semType || '').includes(q) && !(c.semTypeEn || '').toLowerCase().includes(s)
+            && !companyChains(c).some(ch => ch.includes(q)) && !(c.semType || '').includes(q) && !(c.semTypeEn || '').toLowerCase().includes(s)
             && !(c.products || '').includes(q)) return false;
         }
         return true;
@@ -283,7 +291,9 @@
         const I18n = window.InvestingMapI18n;
         const semTypeDisplay = I18n ? I18n.field(c, 'semType', 'semTypeEn', lang) : (c[semTypeField] || c.semType || '\u2014');
         const productsDisplay = I18n ? I18n.field(c, 'products', 'productsEn', lang) : (c[productsField] || c.products || '\u2014');
-        const chainDisplay = chainLabel(c.chain);
+        const chainDisplay = companyChains(c).map(ch =>
+          '<span class="chain-tag" style="' + getChainStyle(ch) + '">' + chainLabel(ch) + '</span>'
+        ).join(' ');
         const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014' };
         const mcapCell = fmtMcapTableCell(c);
         const mktClass = I18n ? I18n.marketCssClass(c.market) : (c.market === '비상장' ? 'unlisted' : c.market.toLowerCase());
@@ -299,7 +309,7 @@
           '<td class="fin-cell">' + fmtFinRatio(c.per) + '</td>' +
           '<td class="fin-cell">' + fmtFinRatio(c.pbr) + '</td>' +
           '<td><span class="market-badge ' + mktClass + '">' + mktLabel + '</span></td>' +
-          '<td><span class="chain-tag" style="' + getChainStyle(c.chain) + '">' + chainDisplay + '</span></td>' +
+          '<td>' + chainDisplay + '</td>' +
           '<td style="font-size:12px;color:var(--text-muted)">' + semTypeDisplay + '</td>' +
           '<td class="products-cell">' + productsDisplay + '</td>' +
           '<td><div class="partners-list">' + partnerHtml + '</div></td>' +
@@ -538,9 +548,9 @@
       if (!svgEl) return;
       if (highlightedChain === chain) { resetSelection(); return; }
       highlightedChain = chain;
-      const chainIds = new Set(koreanCompanies.filter(c => c.chain === chain).map(c => c.id));
+      const chainIds = new Set(koreanCompanies.filter(c => chainMatches(c, chain)).map(c => c.id));
       const linkedIds = new Set(chainIds);
-      koreanCompanies.filter(c => c.chain === chain).forEach(c => (c.partners || []).forEach(p => linkedIds.add(partnerRef(p).id)));
+      koreanCompanies.filter(c => chainMatches(c, chain)).forEach(c => (c.partners || []).forEach(p => linkedIds.add(partnerRef(p).id)));
       svgEl.selectAll('.node').classed('node-dim', d => !linkedIds.has(d.id));
       svgEl.selectAll('line').attr('stroke-opacity', l => chainIds.has(l.source.id || l.source) ? 0.75 : 0.03)
         .attr('stroke-width', l => {
