@@ -20,6 +20,7 @@
 
     let lang = imInitialLang('ko');
     let imQuotesAsOf = '';
+    let imQuotesRegularSession = null;
     let imQuotesError = '';
     function updateQuotesAsofDisplay() {
       var el = document.getElementById('quotes-asof');
@@ -28,9 +29,10 @@
         el.textContent = imQuotesError;
         return;
       }
-      if (!imQuotesAsOf) { el.textContent = ''; return; }
-      var short = imQuotesAsOf.indexOf('T') >= 0 ? imQuotesAsOf.replace('T', ' ').slice(0, 19) + ' UTC' : imQuotesAsOf;
-      el.textContent = (lang === 'en' ? 'Live quotes: ' : '실시간 시세: ') + short;
+      var text = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.formatQuotesAsofDisplay)
+        ? InvestingMapLiveQuotes.formatQuotesAsofDisplay(imQuotesAsOf, imQuotesRegularSession, lang)
+        : '';
+      el.textContent = text;
     }
     let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
 
@@ -624,9 +626,10 @@
         InvestingMapLiveQuotes.start({
           getCompanies: function () { return koreanCompanies; },
           renderTable: renderTable,
-          onAsOf: function (iso) {
+          onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';
+            imQuotesRegularSession = meta && meta.regularSession != null ? meta.regularSession : null;
             updateQuotesAsofDisplay();
           },
           onError: function (err) {

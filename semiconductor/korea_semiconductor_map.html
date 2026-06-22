@@ -1005,6 +1005,9 @@
 
 
 
+
+
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1185,6 +1188,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
   </style>
@@ -1463,7 +1495,7 @@
       },
 
       {
-        id: 'siliconmitus', name: '실리콘마이터스', nameEn: 'SUNIC SYSTEM Co., Ltd.', ticker: '171090', market: 'KOSDAQ', chain: '팹리스',
+        id: 'siliconmitus', name: '써닉시스템', nameEn: 'SUNIC SYSTEM Co., Ltd.', ticker: '171090', market: 'KOSDAQ', chain: '팹리스',
         semType: '전력반도체 (PMIC)', semTypeEn: 'Power IC (PMIC)',
         products: 'PMIC(전력관리IC), 오디오 앰프', productsEn: 'PMIC (Power Management IC), Audio Amplifier',
         revenue: '약 7951억원', mcapWon: 795076666200, per: 7.18, pbr: 4.83, revTier: 1, partners: ['apple', 'samsung_d']
@@ -1512,7 +1544,7 @@
       },
 
       {
-        id: 'adtech', name: '에이디테크놀로지', nameEn: 'ADTechnology', ticker: '200030', market: 'KOSDAQ', chain: '팹리스',
+        id: 'adtech', name: '에이디테크놀로지', nameEn: 'ADTechnology Co., Ltd.', ticker: '200710', market: 'KOSDAQ', chain: '팹리스',
         semType: '시스템반도체 (커스텀설계 서비스)', semTypeEn: 'System IC (Custom Design Service)',
         products: '커스텀 IC 설계 서비스 (턴키), AI반도체', productsEn: 'Custom IC Design Service (Turnkey), AI Semiconductor',
         revenue: '약 500억원', mcapWon: 0, per: null, pbr: null, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'tsmc']
@@ -1526,7 +1558,7 @@
       },
 
       {
-        id: 'asicland', name: '에이직랜드', nameEn: 'Asicland', ticker: '371030', market: 'KOSDAQ', chain: '팹리스',
+        id: 'asicland', name: '에이직랜드', nameEn: 'ASICLAND Co.,Ltd', ticker: '445090', market: 'KOSDAQ', chain: '팹리스',
         semType: 'AI반도체 (ASIC 설계)', semTypeEn: 'AI Semiconductor (ASIC Design)',
         products: '데이터센터 AI ASIC, 커스텀 반도체 설계', productsEn: 'Data Center AI ASIC, Custom Semiconductor Design',
         revenue: '약 200억원', mcapWon: 0, per: null, pbr: null, revTier: 1, partners: ['samsung_d', 'tsmc', 'aws']
@@ -1603,7 +1635,7 @@
       },
 
       {
-        id: 'hansoliones', name: '한솔아이원스', nameEn: 'Hansol IWS', ticker: '596040', market: 'KOSDAQ', chain: '소재',
+        id: 'hansoliones', name: '한솔아이온스', nameEn: 'Hansol IONES', ticker: '114810', market: 'KOSDAQ', chain: '소재',
         semType: '정밀부품 세정·가공', semTypeEn: 'Precision Parts Cleaning/Machining',
         products: '반도체 장비 부품 정밀가공, 세정코팅 재생', productsEn: 'Semiconductor Equipment Parts Precision Machining, Cleaning & Coating',
         revenue: '약 1,500억원', mcapWon: 0, per: null, pbr: null, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'lam', 'appmat']
@@ -1848,7 +1880,7 @@
       },
 
       {
-        id: 'exicon', name: '엑시콘', nameEn: 'EXICON', ticker: '039230', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'exicon', name: '엑시콘', nameEn: 'Exicon Co., Ltd.', ticker: '092870', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: '메모리 테스트장비', semTypeEn: 'Memory Test Equipment',
         products: '메모리 반도체 테스트 시스템, 번인 보드', productsEn: 'Memory Semiconductor Test System, Burn-in Board',
         revenue: '약 1,000억원', mcapWon: 0, per: null, pbr: null, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'micron_eq']
@@ -1912,6 +1944,7 @@
     }
     let lang = imInitialLang('ko');
     let imQuotesAsOf = '';
+    let imQuotesRegularSession = null;
     let imQuotesError = '';
     function updateQuotesAsofDisplay() {
       var el = document.getElementById('quotes-asof');
@@ -1920,9 +1953,10 @@
         el.textContent = imQuotesError;
         return;
       }
-      if (!imQuotesAsOf) { el.textContent = ''; return; }
-      var short = imQuotesAsOf.indexOf('T') >= 0 ? imQuotesAsOf.replace('T', ' ').slice(0, 19) + ' UTC' : imQuotesAsOf;
-      el.textContent = (lang === 'en' ? 'Live quotes: ' : '실시간 시세: ') + short;
+      var text = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.formatQuotesAsofDisplay)
+        ? InvestingMapLiveQuotes.formatQuotesAsofDisplay(imQuotesAsOf, imQuotesRegularSession, lang)
+        : '';
+      el.textContent = text;
     }
     let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
 
@@ -2503,9 +2537,10 @@
         InvestingMapLiveQuotes.start({
           getCompanies: function () { return koreanCompanies; },
           renderTable: renderTable,
-          onAsOf: function (iso) {
+          onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';
+            imQuotesRegularSession = meta && meta.regularSession != null ? meta.regularSession : null;
             updateQuotesAsofDisplay();
           },
           onError: function (err) {

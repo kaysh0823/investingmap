@@ -150,9 +150,21 @@
       });
   }
 
+  function formatQuotesAsofDisplay(asOf, regularSession, lang) {
+    if (!asOf) return '';
+    var short = asOf.indexOf('T') >= 0 ? asOf.replace('T', ' ').slice(0, 19) + ' UTC' : asOf;
+    if (regularSession === false) {
+      return lang === 'en'
+        ? 'Market closed \u00b7 last close as of: ' + short
+        : '\uC7A5 \uB9C8\uAC10 \u00b7 \uB9C8\uC9C0\uB9C9 \uC885\uAC00 \uAE30\uC900: ' + short;
+    }
+    return lang === 'en' ? 'Live quotes: ' + short : '\uC2E4\uC2DC\uAC04 \uC2DC\uC138: ' + short;
+  }
+
   function fetchAllCodes(base, codes) {
     var merged = {};
     var asOf = '';
+    var regularSession = null;
     var chain = Promise.resolve();
     for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
       (function (chunk) {
@@ -161,6 +173,7 @@
           return fetchJson(quotesRequestUrl(base, q));
         }).then(function (j) {
           if (j && j.asOf) asOf = j.asOf;
+          if (j && j.regularSession != null) regularSession = j.regularSession;
           var items = (j && j.items) || {};
           for (var k in items) {
             if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
@@ -169,7 +182,7 @@
       })(codes.slice(i, i + CHUNK_SIZE));
     }
     return chain.then(function () {
-      return { asOf: asOf, items: merged };
+      return { asOf: asOf, items: merged, regularSession: regularSession };
     });
   }
 
@@ -207,7 +220,7 @@
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
           try {
-            onAsOf(j.asOf || '');
+            onAsOf(j.asOf || '', { regularSession: j.regularSession });
           } catch (e1) {}
           if (renderTable) renderTable();
         })
@@ -227,6 +240,7 @@
 
   global.InvestingMapLiveQuotes = {
     getApiBase: getApiBase,
+    formatQuotesAsofDisplay: formatQuotesAsofDisplay,
     start: start,
     mergeCompanies: mergeCompanies,
     calcQuotePosition: calcQuotePosition,
