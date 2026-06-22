@@ -158,7 +158,7 @@
         ? 'Market closed \u00b7 last close as of: ' + short
         : '\uC7A5 \uB9C8\uAC10 \u00b7 \uB9C8\uC9C0\uB9C9 \uC885\uAC00 \uAE30\uC900: ' + short;
     }
-    return lang === 'en' ? 'Live quotes: ' + short : '\uC2E4\uC2DC\uAC04 \uC2DC\uC138: ' + short;
+    return lang === 'en' ? 'Price updated: ' + short : '\uD604\uC7AC\uAC00 \uC5C5\uB370\uC774\uD2B8 \uC77C\uC2DC: ' + short;
   }
 
   function fetchAllCodes(base, codes) {

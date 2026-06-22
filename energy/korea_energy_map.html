@@ -966,8 +966,7 @@
 
       body.im-tab-table #hdr-subtitle,
       body.im-tab-table .header-meta,
-      body.im-tab-table .data-asof,
-      body.im-tab-table .quotes-asof {
+      body.im-tab-table .quotes-asof-hidden {
         display: none
       }
 
@@ -1208,14 +1207,13 @@
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
       <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
     </button>
-      <span class="data-asof" id="data-asof">업데이트 기준일: 2026년 6월 15일</span>
       <span class="quotes-asof" id="quotes-asof" aria-live="polite"></span>
     </div>
     <h1 id="hdr-title">🇰🇷 한국 에너지/파워플랜트 투자 지도</h1>
     <p id="hdr-subtitle">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>40</span>개 상장사</div>
-      <div class="badge" id="badge-market">KOSPI <span>26</span>사 · KOSDAQ <span>14</span>사</div>
+      <div class="badge" id="badge-total">총 <span>42</span>개 상장사</div>
+      <div class="badge" id="badge-market">KOSPI <span>28</span>사 · KOSDAQ <span>14</span>사</div>
     </div>
   </div>
   <div class="tabs">
@@ -1344,8 +1342,8 @@
     "ko": {
         "title": "🇰🇷 한국 에너지/파워플랜트 투자 지도",
         "subtitle": "신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 — 상장사와 글로벌 참고 관계",
-        "badgeTotal": "총 <span>40</span>개 상장사",
-        "badgeMarket": "KOSPI <span>26</span>사 · KOSDAQ <span>14</span>사",
+        "badgeTotal": "총 <span>42</span>개 상장사",
+        "badgeMarket": "KOSPI <span>28</span>사 · KOSDAQ <span>14</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 15일",
         "tabTable": "📋 기업 목록 &amp; 필터",
         "tabGraph": "🌐 관계 네트워크",
@@ -1422,8 +1420,8 @@
     "en": {
         "title": "🇰🇷 Korea Energy & Power Plant Map",
         "subtitle": "Renewables, batteries, solar, wind, nuclear, power equipment, ESS, hydrogen, fuel cells, and utilities — listed Korean names with illustrative global links",
-        "badgeTotal": "<span>40</span> listed companies",
-        "badgeMarket": "KOSPI <span>26</span> · KOSDAQ <span>14</span>",
+        "badgeTotal": "<span>42</span> listed companies",
+        "badgeMarket": "KOSPI <span>28</span> · KOSDAQ <span>14</span>",
         "dataAsof": "Data as of: June 15, 2026",
         "tabTable": "📋 Company list &amp; filters",
         "tabGraph": "🌐 Relationship network",
@@ -1600,15 +1598,23 @@
         semType: '전력기기·전자부품', semTypeEn: 'Power equipment & components',
         products: '커패시터·전력반도체 모듈', productsEn: 'Capacitors & power modules',
         revenue: '약 1.5조원', mcapWon: 3099382440000, per: null, pbr: 10.9, revTier: 2, partners: ['schneider_e', 'abb'] },
+      { id: 'sanil', name: '산일전기', nameEn: 'Sanil Electric', ticker: '062040', market: 'KOSPI', chain: '전력설비·송배전',
+        semType: '전력케이블·변전설비', semTypeEn: 'Power cable & substation equipment',
+        products: '초고압·특수 케이블, 변압기·개폐기', productsEn: 'EHV & specialty cable, transformers & switchgear',
+        revenue: '약 1.5조원', mcapWon: 1500000000000, per: null, pbr: 2.0, revTier: 2, partners: ['siemens_energy', 'ge_vernova'] },
 
       { id: 'hanwhasol', name: '한화솔루션', nameEn: 'Hanwha Solutions', ticker: '009830', market: 'KOSPI', chain: '태양광·풍력',
         semType: '모듈·필름·케미컬', semTypeEn: 'Solar modules & chemicals',
         products: 'Q-셀 모듈, 태양광 EPC', productsEn: 'Qcells modules, solar EPC',
         revenue: '약 12조원', mcapWon: 4500000000000, per: null, pbr: 1.8, revTier: 2, partners: ['first_solar', 'enphase', 'vestas'] },
-      { id: 'oci', name: 'OCI', nameEn: 'OCI', ticker: '010060', market: 'KOSPI', chain: '태양광·풍력',
-        semType: '폴리실리콘·그린수소', semTypeEn: 'Polysilicon & green H₂',
-        products: '태양광 급 polysilicon', productsEn: 'Solar-grade polysilicon',
+      { id: 'oci_holdings', name: 'OCI홀딩스', nameEn: 'OCI Holdings', ticker: '010060', market: 'KOSPI', chain: '태양광·풍력',
+        semType: '지주·에너지 투자', semTypeEn: 'Holding & energy investments',
+        products: 'OCI 계열 태양광·화학 사업 지주', productsEn: 'Holding co. for OCI group solar & chemical units',
         revenue: '약 4조원', mcapWon: 3000000000000, per: 8.2, pbr: 0.9, revTier: 2, partners: ['first_solar', 'vestas'] },
+      { id: 'oci', name: 'OCI', nameEn: 'OCI', ticker: '456040', market: 'KOSPI', chain: '태양광·풍력',
+        semType: '폴리실리콘·기초화학', semTypeEn: 'Polysilicon & basic chemicals',
+        products: '태양광급 폴리실리콘, 기초·탄소화학', productsEn: 'Solar-grade polysilicon, basic & carbon chemicals',
+        revenue: '약 3조원', mcapWon: 2000000000000, per: null, pbr: 1.1, revTier: 2, partners: ['first_solar', 'vestas'] },
       { id: 'cswind', name: '씨에스윈드', nameEn: 'CS Wind', ticker: '112610', market: 'KOSPI', chain: '태양광·풍력',
         semType: '풍력 타워', semTypeEn: 'Wind towers',
         products: '해상·육상 타워', productsEn: 'Onshore/offshore towers',
@@ -1647,7 +1653,7 @@
         products: '발전설비·전력기기 제조', productsEn: 'Power-plant equipment manufacturing',
         revenue: '약 3000억원', mcapWon: 440426000000, per: null, pbr: null, revTier: 1, partners: [{ id: 'kepco', edgeLabel: '한전 계열', edgeLabelEn: 'KEPCO affiliate', weight: 0.2, kind: 'backing' }] },
 
-      { id: 'doosan_fc', name: '두산퓨셀', nameEn: 'Doosan Fuel Cell', ticker: '336260', market: 'KOSPI', chain: '수소·연료전지',
+      { id: 'doosan_fc', name: '두산퓨얼셀', nameEn: 'Doosan Fuel Cell Power', ticker: '336260', market: 'KOSPI', chain: '수소·연료전지',
         semType: '고정형 연료전지', semTypeEn: 'Stationary fuel cells',
         products: 'PAFC·SOFC', productsEn: 'PAFC / SOFC systems',
         revenue: '약 1.5조원', mcapWon: 1200000000000, per: null, pbr: 3.8, revTier: 2, partners: ['bloom_energy', 'plug_power', 'hyundai_mt'] },
@@ -1773,9 +1779,7 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-      const asofEl = document.getElementById('data-asof');
-      if (asofEl) asofEl.textContent = t.dataAsof;
-      document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+            document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;

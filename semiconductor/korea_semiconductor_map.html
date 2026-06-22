@@ -966,8 +966,7 @@
 
       body.im-tab-table #hdr-subtitle,
       body.im-tab-table .header-meta,
-      body.im-tab-table .data-asof,
-      body.im-tab-table .quotes-asof {
+      body.im-tab-table .quotes-asof-hidden {
         display: none
       }
 
@@ -1239,7 +1238,6 @@
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
       <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
     </button>
-      <span class="data-asof" id="data-asof">업데이트 기준일: 2026년 6월 15일</span>
       <span class="quotes-asof" id="quotes-asof" aria-live="polite"></span>
     </div>
     <h1 id="hdr-title">🇰🇷 한국 반도체 산업 투자 지도</h1>
@@ -1365,7 +1363,15 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = { IDM: '#4FC3F7', 팹리스: '#66BB6A', 파운드리: '#FFA726', 소재: '#EF5350', 장비: '#AB47BC', '부품/기판': '#26C6DA', '패키징/테스트': '#FFCA28' };
+    const CHAIN_COLORS = { 전공정: '#1E88E5', 후공정: '#43A047', IDM: '#4FC3F7', 팹리스: '#66BB6A', 파운드리: '#FFA726', 소재: '#EF5350', 장비: '#AB47BC', '부품/기판': '#26C6DA', '패키징/테스트': '#FFCA28' };
+    const FE_CHAINS = ['IDM', '팹리스', '파운드리', '소재', '장비'];
+    const BE_CHAINS = ['부품/기판', '패키징/테스트'];
+    function chainMatchesFilter(companyChain, filter) {
+      if (filter === 'all') return true;
+      if (filter === '전공정') return FE_CHAINS.includes(companyChain);
+      if (filter === '후공정') return BE_CHAINS.includes(companyChain);
+      return companyChain === filter;
+    }
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7' };
 
     // ═══════════════════════════════════════════════════════
@@ -1390,8 +1396,8 @@
         sbKorean: '국내 상장 (벨류체인)', sbGlobal: '글로벌 거래처·지역',
         peerNetworkDesc: '실선 굵게=국내외 거래·납품, 같은 벨류체인 내 국내 시총 순 peer, 점선=지분·테마. 회색 가는 선=같은 벨류체인에서 함께 등장하는 글로벌 피어 그룹.',
         sbSize: '노드 크기 기준', sbHow: '조작 방법',
-        chainLabel: { IDM: 'IDM (메모리·종합)', 팹리스: '팹리스 (설계)', 파운드리: '파운드리 (위탁제조)', 소재: '소재·공정부품', 장비: '장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트' },
-        chainFilter: { IDM: 'IDM', 팹리스: '팹리스', 파운드리: '파운드리', 소재: '소재', 장비: '장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트' },
+        chainLabel: { 전공정: '전공정 (설계·제조·소재·장비)', 후공정: '후공정 (부품·기판·패키징·테스트)', IDM: 'IDM (메모리·종합)', 팹리스: '팹리스 (설계)', 파운드리: '파운드리 (위탁제조)', 소재: '소재·공정부품', 장비: '장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트' },
+        chainFilter: { 전공정: '전공정', 후공정: '후공정', IDM: 'IDM', 팹리스: '팹리스', 파운드리: '파운드리', 소재: '소재', 장비: '장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트' },
         allFilter: '전체', kosp: 'KOSPI', kosdaq: 'KOSDAQ',
         regionLabel: { us: '미국', tw: '대만', cn: '중국', eu: '유럽', kr: '한국(비상장)' },
         sizeDesc: '대형: 시가총액 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◆ 글로벌 거래처(◇)',
@@ -1420,8 +1426,8 @@
         sbKorean: 'Korean Listed (Value Chain)', sbGlobal: 'Global customers · region',
         peerNetworkDesc: 'Bold solid = trade/supply; same-segment domestic peer ladder by market cap; dashed = equity/theme. Thin gray = global peer links within the same segment.',
         sbSize: 'Node Size', sbHow: 'How to Use',
-        chainLabel: { IDM: 'IDM (Memory·Integrated)', 팹리스: 'Fabless (Design)', 파운드리: 'Foundry', 소재: 'Materials & Parts', 장비: 'Equipment', '부품/기판': 'Components/Substrate', '패키징/테스트': 'Packaging & Test' },
-        chainFilter: { IDM: 'IDM', 팹리스: 'Fabless', 파운드리: 'Foundry', 소재: 'Materials', 장비: 'Equipment', '부품/기판': 'Components/Sub', '패키징/테스트': 'Packaging/Test' },
+        chainLabel: { 전공정: 'Front-end (design, fab, materials, equipment)', 후공정: 'Back-end (components, substrate, packaging, test)', IDM: 'IDM (Memory·Integrated)', 팹리스: 'Fabless (Design)', 파운드리: 'Foundry', 소재: 'Materials & Parts', 장비: 'Equipment', '부품/기판': 'Components/Substrate', '패키징/테스트': 'Packaging & Test' },
+        chainFilter: { 전공정: 'Front-end', 후공정: 'Back-end', IDM: 'IDM', 팹리스: 'Fabless', 파운드리: 'Foundry', 소재: 'Materials', 장비: 'Equipment', '부품/기판': 'Components/Sub', '패키징/테스트': 'Packaging/Test' },
         allFilter: 'All', kosp: 'KOSPI', kosdaq: 'KOSDAQ',
         regionLabel: { us: 'USA', tw: 'Taiwan', cn: 'China', eu: 'Europe', kr: 'Korea (non-listed)' },
         sizeDesc: 'Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◆ Global counterparties (◇)',
@@ -2011,9 +2017,7 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-      const asofEl = document.getElementById('data-asof');
-      if (asofEl) asofEl.textContent = t.dataAsof;
-      document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+            document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
@@ -2070,7 +2074,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', 'IDM', '팹리스', '파운드리', '소재', '장비', '부품/기판', '패키징/테스트'];
+      const chains = ['all', '전공정', '후공정', 'IDM', '팹리스', '파운드리', '소재', '장비', '부품/기판', '패키징/테스트'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : (t.chainFilter[ch] || ch);
         const isActive = currentChain === ch;
@@ -2146,7 +2150,7 @@
     function renderTable() {
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
-        if (currentChain !== 'all' && c.chain !== currentChain) return false;
+        if (currentChain !== 'all' && !chainMatchesFilter(c.chain, currentChain)) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
           const s = searchTerm.toLowerCase();

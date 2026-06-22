@@ -102,9 +102,7 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-      const asofEl = document.getElementById('data-asof');
-      if (asofEl) asofEl.textContent = t.dataAsof;
-      document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+            document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;

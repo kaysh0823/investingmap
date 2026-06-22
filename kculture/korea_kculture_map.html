@@ -966,8 +966,7 @@
 
       body.im-tab-table #hdr-subtitle,
       body.im-tab-table .header-meta,
-      body.im-tab-table .data-asof,
-      body.im-tab-table .quotes-asof {
+      body.im-tab-table .quotes-asof-hidden {
         display: none
       }
 
@@ -1197,7 +1196,7 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body data-sector="semi">
+<body data-sector="kculture">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -1211,7 +1210,6 @@
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
       <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
     </button>
-      <span class="data-asof" id="data-asof">업데이트 기준일: 2026년 6월 15일</span>
       <span class="quotes-asof" id="quotes-asof" aria-live="polite"></span>
     </div>
     <h1 id="hdr-title">🇰🇷 한국 K컬처 산업 투자 지도</h1>
@@ -1361,6 +1359,11 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
+
+        "thLast": "현재가",
+        "th52High": "52주 최고",
+        "th52Lo": "52주 최저",
+        "thPosition": "주가 위치",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1432,6 +1435,11 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
+
+        "thLast": "Last",
+        "th52High": "52W high",
+        "th52Lo": "52W low",
+        "thPosition": "Price vs range",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -1773,9 +1781,7 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-      const asofEl = document.getElementById('data-asof');
-      if (asofEl) asofEl.textContent = t.dataAsof;
-      document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+            document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
