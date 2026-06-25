@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Investing Map은 국내·해외 투자자를 위해 KOSPI·KOSDAQ 상장사 산업 밸류체인과 관계 지도를 제공하는 편집형 금융 정보 사이트입니다.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://investing-kr.com/about.html">
+  <link rel="alternate" hreflang="ko" href="https://investing-kr.com/about.html?lang=ko">
+  <link rel="alternate" hreflang="en" href="https://investing-kr.com/about.html?lang=en">
+  <script src="js/seo.js"></script>
+  <title>소개 | Investing Map</title>
+  <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
+  <style>
+    :root { --bg: #0d1117; --surface: #161b22; --surface2: #21262d; --border: #30363d; --text: #e6edf3; --text-muted: #8b949e; --accent: #58a6ff; --header-g0: #0d1117; --header-g1: #161b22; }
+    [data-theme="light"] { --bg: #f6f8fa; --surface: #fff; --surface2: #eaeef2; --border: #d0d7de; --text: #1f2328; --text-muted: #656d76; --accent: #0969da; --header-g0: #fff; --header-g1: #f6f8fa; }
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 15px; min-height: 100vh; line-height: 1.6 }
+    .site-header { background: linear-gradient(135deg, var(--header-g0), var(--header-g1)); border-bottom: 1px solid var(--border); padding: 24px 28px; position: relative }
+    .header-actions { position: absolute; top: 20px; right: 22px; display: flex; gap: 8px; align-items: center }
+    .theme-toggle, .lang-toggle, .hub-back { background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 13px; text-decoration: none }
+    .trust-main { max-width: 760px; margin: 0 auto; padding: 28px 28px 12px }
+    .trust-main h1 { font-size: 26px; margin-bottom: 8px }
+    .trust-main .lead { color: var(--text-muted); margin-bottom: 24px }
+    .trust-main h2 { font-size: 18px; margin: 28px 0 10px }
+    .trust-main p, .trust-main li { margin-bottom: 10px }
+    .trust-main ul { padding-left: 1.25rem }
+    .trust-main a { color: var(--accent) }
+    .im-trust-footer { border-top: 1px solid var(--border); padding: 20px 28px 28px; margin-top: 24px; font-size: 13px; color: var(--text-muted) }
+    .im-trust-nav { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-bottom: 12px }
+    .im-trust-nav a { color: var(--accent); text-decoration: none }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-actions">
+      <a class="hub-back" href="index.html" id="hub-back">← <span id="hub-label">허브</span></a>
+      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Theme">☀️</button>
+      <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()"><span class="flag">🇺🇸</span> <span id="lang-text">English</span></button>
+    </div>
+    <h1 id="page-title">Investing Map 소개</h1>
+    <p class="lead" id="page-lead">한국 상장사 산업 지형을 이해하기 위한 편집형 지도·데이터 사이트입니다.</p>
+  </header>
+  <main class="trust-main" id="trust-body-ko" lang="ko">
+    <h2>무엇을 제공하나요?</h2>
+    <p>Investing Map은 반도체, 바이오, 조선·해양, 방위·우주·항공, 로봇·피지컬AI, 에너지·파워플랜트, K컬처 등 <strong>일곱 개 산업</strong>에 대해 KOSPI·KOSDAQ 상장사를 밸류체인별로 분류하고, 시가총액·PER·PBR·52주 가격 구간과 함께 국내외 거래처·글로벌 peer 관계를 시각화합니다. 단순 스크리너가 아니라 <em>산업 구조를 먼저 이해한 뒤 종목을 좁혀 가는</em> 학습·리서치 도구를 목표로 합니다.</p>
+    <h2>누구를 위한 사이트인가요?</h2>
+    <ul>
+      <li>한국 주식 시장에 처음 진입하는 <strong>해외 투자자</strong> — 영문 모드, USD 시총 환산, 글로벌 peer 링크</li>
+      <li>섹터 로테이션·테마 투자 전 산업 지형을 빠르게 훑고 싶은 <strong>국내 투자자</strong></li>
+      <li>IR·리서치·언론 등 <strong>산업 구조 참고 자료</strong>가 필요한 이용자 (투자 권유 목적 아님)</li>
+    </ul>
+    <h2>다른 화면과 무엇이 다른가요?</h2>
+    <p>각 산업 지도 페이지 상단에는 해당 섹터만을 위한 <strong>편집 해설</strong>이 있습니다. 표는 필터·정렬이 가능하고, 그래프 탭에서는 클릭 한 번으로 연결된 거래처·peer를 강조할 수 있습니다. 모든 수치·관계는 <a href="editorial-policy.html">편집·검증 정책</a>에 따라 출처를 명시하며, 투자 권유가 아님을 <a href="disclaimer.html">면책 고지</a>에서 반복합니다.</p>
+    <h2>데이터는 어디서 오나요?</h2>
+    <ul>
+      <li>종목·시장 구분·시가총액·PER·PBR: 한국거래소(KRX) CSV 및 공시 기준일</li>
+      <li>현재가·52주 고저: Naver Finance 시세 페이지 기반 API 캐시 (정규장 시간당 갱신)</li>
+      <li>USD 환산: <a href="https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW" rel="noopener noreferrer" target="_blank">네이버 금융 USD/KRW</a></li>
+      <li>관계 네트워크: 공개 보도·사업보고서·업계 보고서를 편집팀이 분류 (참고용)</li>
+    </ul>
+    <h2>이용 방법</h2>
+    <ol style="padding-left:1.25rem;margin-bottom:12px">
+      <li><a href="index.html">허브</a>에서 관심 산업 카드를 선택합니다.</li>
+      <li>지도 페이지 상단 해설을 읽고, 표에서 밸류체인·시장·검색으로 종목을 좁힙니다.</li>
+      <li>주가 위치 열로 52주 구간 대비 상대 위치를 비교합니다 (기본 내림차순 정렬).</li>
+      <li>그래프 탭에서 국내외 연결 관계를 확인합니다.</li>
+      <li>한/영 전환·다크/라이트 테마는 우측 상단에서 바꿀 수 있습니다.</li>
+    </ol>
+    <h2>투자 유의</h2>
+    <p>본 사이트는 정보 제공 목적이며 증권 투자 권유·자문이 아닙니다. 모든 투자 결정과 책임은 이용자에게 있습니다.</p>
+  </main>
+  <main class="trust-main" id="trust-body-en" lang="en" hidden>
+    <h2>What we offer</h2>
+    <p>Investing Map covers <strong>seven industries</strong>—semiconductors, bio, shipbuilding, defense & aerospace, robotics, energy & power plants, and K-culture—by mapping KOSPI/KOSDAQ listings to value chains with market cap, PER, PBR, 52-week price position, and illustrative domestic/global relationship graphs. It is a research learning tool to understand industry structure before narrowing tickers, not a generic screener.</p>
+    <h2>Who it is for</h2>
+    <ul>
+      <li><strong>International investors</strong> new to Korea — English UI, USD market-cap view, global peer links</li>
+      <li><strong>Domestic investors</strong> scanning sector themes before stock picking</li>
+      <li><strong>Researchers & media</strong> needing industry context (not investment advice)</li>
+    </ul>
+    <h2>What makes it different</h2>
+    <p>Each map opens with a <strong>sector-specific editorial guide</strong>. Tables support filters and default sort by price position; the graph tab highlights customers and peers on click. Sources and limits are documented in our <a href="editorial-policy.html">editorial policy</a> and <a href="disclaimer.html">disclaimer</a>.</p>
+    <h2>Data sources</h2>
+    <ul>
+      <li>Listings, market cap, PER, PBR: KRX CSV as of the date on each page</li>
+      <li>Last price & 52-week range: cached Naver Finance sise data (hourly during regular session)</li>
+      <li>USD conversion: <a href="https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW" rel="noopener noreferrer" target="_blank">Naver USD/KRW</a></li>
+      <li>Relationship graph: editorial classification from public filings and industry sources</li>
+    </ul>
+    <h2>How to use</h2>
+    <ol style="padding-left:1.25rem;margin-bottom:12px">
+      <li>Pick an industry card on the <a href="index.html">hub</a>.</li>
+      <li>Read the on-page guide, then filter the table by chain or market.</li>
+      <li>Compare 52-week price position (default sort: highest first).</li>
+      <li>Open the graph tab for relationship context.</li>
+      <li>Switch Korean/English and theme in the header.</li>
+    </ol>
+    <h2>Not advice</h2>
+    <p>For information only—not a recommendation. You are responsible for investment decisions.</p>
+  </main>
+  <footer class="im-trust-footer" id="im-trust-footer">
+    <nav class="im-trust-nav" aria-label="Trust and policies">
+      <a href="editorial-policy.html" id="tf-editorial">편집·검증 정책</a>
+      <a href="disclaimer.html" id="tf-disclaimer">면책 고지</a>
+      <a href="authors.html" id="tf-authors">편집·데이터 팀</a>
+      <a href="privacy.html" id="tf-privacy">개인정보처리방침</a>
+      <a href="about.html" id="tf-about">소개</a>
+      <a href="faq.html" id="tf-faq">FAQ</a>
+      <a href="index.html" id="tf-hub">허브</a>
+    </nav>
+    <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
+  </footer>
+  <script src="js/geo_footer.js"></script>
+  <script>
+    const PAGE = { titleKo: 'Investing Map 소개', titleEn: 'About Investing Map', descKo: '한국 상장사 산업 지형을 이해하기 위한 편집형 지도·데이터 사이트입니다.', descEn: 'Editorial industry maps and KRX data for Korean listed equities.' };
+    const T = { ko: { hub: '허브', langFlag: '🇺🇸', langText: 'English', themeLight: '라이트 모드', themeDark: '다크 모드' }, en: { hub: 'Hub', langFlag: '🇰🇷', langText: '한국어', themeLight: 'Light mode', themeDark: 'Dark mode' } };
+    function imInitialLang() { try { const q = new URLSearchParams(location.search).get('lang'); if (q === 'en' || q === 'ko') return q; const s = localStorage.getItem('im_lang'); if (s === 'en' || s === 'ko') return s; } catch (e) {} return 'ko'; }
+    let lang = imInitialLang();
+    function toggleTheme() { const cur = document.documentElement.getAttribute('data-theme') || 'dark'; document.documentElement.setAttribute('data-theme', cur === 'light' ? 'dark' : 'light'); try { localStorage.setItem('im_theme', document.documentElement.getAttribute('data-theme')); } catch (e) {} syncTheme(); }
+    function syncTheme() { const cur = document.documentElement.getAttribute('data-theme') || 'dark'; const btn = document.getElementById('theme-toggle'); if (btn) { btn.textContent = cur === 'light' ? '🌙' : '☀️'; btn.title = cur === 'light' ? T[lang].themeDark : T[lang].themeLight; } }
+    function toggleLang() { lang = lang === 'ko' ? 'en' : 'ko'; try { const u = new URL(location.href); u.searchParams.set('lang', lang); history.replaceState(null, '', u.pathname + u.search); localStorage.setItem('im_lang', lang); } catch (e) {} applyLang(); }
+    function applyLang() {
+      document.documentElement.lang = lang === 'en' ? 'en' : 'ko';
+      document.getElementById('page-title').textContent = lang === 'en' ? PAGE.titleEn : PAGE.titleKo;
+      document.getElementById('page-lead').textContent = lang === 'en' ? PAGE.descEn : PAGE.descKo;
+      document.getElementById('trust-body-ko').hidden = lang !== 'ko';
+      document.getElementById('trust-body-en').hidden = lang !== 'en';
+      document.getElementById('hub-label').textContent = T[lang].hub;
+      document.querySelector('.lang-toggle .flag').textContent = T[lang].langFlag;
+      document.getElementById('lang-text').textContent = T[lang].langText;
+      document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
+      if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      syncTheme();
+    }
+    applyLang();
+  </script>
+</body>
+</html>

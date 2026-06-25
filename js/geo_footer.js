@@ -5,6 +5,8 @@
       editorial: '편집·검증 정책',
       disclaimer: '면책 고지',
       authors: '편집·데이터 팀',
+      privacy: '개인정보처리방침',
+      about: '소개',
       faq: '자주 묻는 질문',
       hub: '허브',
       inline:
@@ -14,6 +16,8 @@
       editorial: 'Editorial policy',
       disclaimer: 'Disclaimer',
       authors: 'Editorial team',
+      privacy: 'Privacy policy',
+      about: 'About',
       faq: 'FAQ',
       hub: 'Hub',
       inline:
@@ -33,8 +37,8 @@
 
   function applyTrustFooter(lang) {
     var t = T[lang] || T.en;
-    var ids = ['tf-editorial', 'tf-disclaimer', 'tf-authors', 'tf-faq', 'tf-hub', 'tf-inline-disclaimer'];
-    var keys = ['editorial', 'disclaimer', 'authors', 'faq', 'hub', 'inline'];
+    var ids = ['tf-editorial', 'tf-disclaimer', 'tf-authors', 'tf-privacy', 'tf-about', 'tf-faq', 'tf-hub', 'tf-inline-disclaimer'];
+    var keys = ['editorial', 'disclaimer', 'authors', 'privacy', 'about', 'faq', 'hub', 'inline'];
     for (var i = 0; i < ids.length; i++) {
       var el = document.getElementById(ids[i]);
       if (el) el.textContent = t[keys[i]];

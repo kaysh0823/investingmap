@@ -117,6 +117,7 @@
   <script src="../js/live_quotes.js"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/sector_nav.js"></script>
+  <script src="../js/map_editorial.js"></script>
   <style>
     :root {
       --bg: #0d1117;
@@ -1139,6 +1140,22 @@
       border-bottom: 1px solid var(--border)
     }
 
+    
+    .geo-summary h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px
+    }
+
+    .geo-summary p {
+      margin: 0 0 10px
+    }
+
+    .geo-summary a {
+      color: var(--accent)
+    }
+
     .geo-summary p {
       margin: 0
     }
@@ -1205,6 +1222,11 @@
       <div class="badge" id="badge-market">KOSPI <span>16</span>사 · KOSDAQ <span>35</span>사</div>
     </div>
   </div>
+  <section class="geo-summary" id="map-editorial" aria-labelledby="map-editorial-title">
+    <h2 id="map-editorial-title"></h2>
+    <div id="map-editorial-body"></div>
+  </section>
+
   <div class="tabs">
     <button id="tab-btn-table" class="tab-btn active" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 섹터·페어링 네트워크</button>
@@ -1296,6 +1318,8 @@
       <a href="../editorial-policy.html" id="tf-editorial">편집·검증 정책</a>
       <a href="../disclaimer.html" id="tf-disclaimer">면책 고지</a>
       <a href="../authors.html" id="tf-authors">편집·데이터 팀</a>
+      <a href="../privacy.html" id="tf-privacy">개인정보처리방침</a>
+      <a href="../about.html" id="tf-about">소개</a>
       <a href="../faq.html" id="tf-faq">FAQ</a>
       <a href="../index.html" id="tf-hub">허브</a>
     </nav>

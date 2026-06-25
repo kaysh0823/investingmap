@@ -267,6 +267,50 @@
       line-height: 1.6
     }
 
+    .hub-intro {
+      max-width: 920px;
+      margin: 0 auto 28px;
+      padding: 0 4px
+    }
+
+    .hub-intro h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text)
+    }
+
+    .hub-intro h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0 8px;
+      color: var(--text)
+    }
+
+    .hub-intro p {
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      line-height: 1.65
+    }
+
+    .hub-intro ul {
+      margin: 0 0 12px 1.2rem;
+      color: var(--text-muted);
+      line-height: 1.65
+    }
+
+    .hub-intro a {
+      color: var(--accent)
+    }
+
+    .hub-intro-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 16px;
+      font-size: 13px
+    }
+
     @media (max-width:768px) {
       html {
         overflow-x: hidden
@@ -376,6 +420,24 @@
   </header>
 
   <main class="hub-main">
+    <section class="hub-intro" id="hub-intro" aria-labelledby="hub-intro-title">
+      <h2 id="hub-intro-title">한국 상장사 산업 지도 허브</h2>
+      <p id="hub-intro-p1">Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 <strong>산업 밸류체인</strong> 관점에서 이해하도록 돕는 편집형 정보 사이트입니다. 일곱 개 산업별로 기업 표, 시가총액·PER·PBR·52주 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 전용 해설과 데이터 출처를 명시합니다.</p>
+      <h3 id="hub-intro-h-method">데이터·편집 원칙</h3>
+      <ul id="hub-intro-list">
+        <li>정량 데이터(시총·PER·PBR·시세)는 KRX·Naver Finance 등 공개 출처를 기준일에 맞춰 반영합니다.</li>
+        <li>벨류체인 분류·글로벌 거래처·peer 링크는 편집팀이 공시·보도를 바탕으로 작성한 참고 자료입니다.</li>
+        <li>투자 권유·수익 보장이 아니며, 최종 판단은 이용자 책임입니다.</li>
+      </ul>
+      <p id="hub-intro-p2">아래 카드에서 산업을 선택하세요. 이용 방법·면책·개인정보는 하단 링크에서 확인할 수 있습니다.</p>
+      <nav class="hub-intro-links" aria-label="Site guides">
+        <a href="about.html" id="hub-link-about">소개</a>
+        <a href="editorial-policy.html" id="hub-link-editorial">편집·검증 정책</a>
+        <a href="faq.html" id="hub-link-faq">FAQ</a>
+        <a href="privacy.html" id="hub-link-privacy">개인정보처리방침</a>
+        <a href="disclaimer.html" id="hub-link-disclaimer">면책 고지</a>
+      </nav>
+    </section>
     <div class="hub-grid">
       <a class="hub-card" id="hub-link-semi" href="semiconductor/korea_semiconductor_map.html">
         <span class="hub-card-emoji" aria-hidden="true">💠</span>
@@ -441,6 +503,8 @@
       <a href="editorial-policy.html" id="tf-editorial">편집·검증 정책</a>
       <a href="disclaimer.html" id="tf-disclaimer">면책 고지</a>
       <a href="authors.html" id="tf-authors">편집·데이터 팀</a>
+      <a href="privacy.html" id="tf-privacy">개인정보처리방침</a>
+      <a href="about.html" id="tf-about">소개</a>
       <a href="faq.html" id="tf-faq">FAQ</a>
       <a href="index.html" id="tf-hub">허브</a>
     </nav>
@@ -455,6 +519,25 @@
         langFlag: '🇺🇸',
         langText: 'English',
         cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
+        semiMapLine: '64개 상장사 · IDM·팹리스·파운드리·소재·장비 · 글로벌 거래처·peer 그래프',
+        bioMapLine: '58개 매핑 · 바이오시밀러·신약·CDMO · 글로벌 페어링 네트워크',
+        shipMapLine: '17개 상장사 · 조선소·기자재·해운 · 수주·해외 yard 참고 링크',
+        defenseMapLine: '10개 상장사 · 항공·미사일·육상·해군·우주 · 수출·프로그램 참고',
+        robotMapLine: '12개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
+        energyMapLine: '40개 상장사 · 2차전지·신재생·원자력·전력기기 · ESS·유틸리티',
+        kcultureMapLine: '25개 상장사 · 식품·여행·뷰티·IP·K-pop · 글로벌 수출 테마',
+        introTitle: '한국 상장사 산업 지도 허브',
+        introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 편집형 정보 사이트입니다. 일곱 개 산업별로 기업 표, 시가총액·PER·PBR·52주 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 전용 해설과 데이터 출처를 명시합니다.',
+        introHMethod: '데이터·편집 원칙',
+        introLi1: '정량 데이터(시총·PER·PBR·시세)는 KRX·Naver Finance 등 공개 출처를 기준일에 맞춰 반영합니다.',
+        introLi2: '벨류체인 분류·글로벌 거래처·peer 링크는 편집팀이 공시·보도를 바탕으로 작성한 참고 자료입니다.',
+        introLi3: '투자 권유·수익 보장이 아니며, 최종 판단은 이용자 책임입니다.',
+        introP2: '아래 카드에서 산업을 선택하세요. 이용 방법·면책·개인정보는 하단 링크에서 확인할 수 있습니다.',
+        linkAbout: '소개',
+        linkEditorial: '편집·검증 정책',
+        linkFaq: 'FAQ',
+        linkPrivacy: '개인정보처리방침',
+        linkDisclaimer: '면책 고지',
         updateAsOf: '업데이트 기준일: 2026년 6월 15일',
         semiTitle: '한국 반도체 산업 투자 지도',
         semiLead: '전자 공급망을 받치는 설계·파운드리·메모리·소재·장비·기판·패키징 등 반도체 밸류체인',
@@ -485,6 +568,25 @@
         langFlag: '🇰🇷',
         langText: '한국어',
         cardMapLine: 'Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.',
+        semiMapLine: '64 listings · IDM, fabless, foundry, materials, equipment · customer & peer graph',
+        bioMapLine: '58 mappings · biosimilars, novel drugs, CDMO · global pairing network',
+        shipMapLine: '17 listings · yards, marine equipment, shipping · order & yard reference links',
+        defenseMapLine: '10 listings · aviation, missiles, land, naval, space · export program refs',
+        robotMapLine: '12 listings · FA, AMR, cobots, motion · physical-AI links',
+        energyMapLine: '40 listings · batteries, renewables, nuclear, grid gear · ESS & utilities',
+        kcultureMapLine: '25 listings · food, travel, beauty, IP, K-pop · export theme links',
+        introTitle: 'Korea listed-equity industry map hub',
+        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ names through value-chain lenses. Seven sector maps combine sortable tables, market cap, PER, PBR, 52-week price position, and relationship graphs—each with sector-specific editorial guides and cited sources.',
+        introHMethod: 'Data & editorial principles',
+        introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
+        introLi2: 'Chain tags and global links are editorial reference networks from filings and public sources.',
+        introLi3: 'Not investment advice; you are responsible for decisions.',
+        introP2: 'Pick an industry card below. See About, FAQ, Privacy, and Disclaimer for policies.',
+        linkAbout: 'About',
+        linkEditorial: 'Editorial policy',
+        linkFaq: 'FAQ',
+        linkPrivacy: 'Privacy policy',
+        linkDisclaimer: 'Disclaimer',
         updateAsOf: 'Data as of: June 15, 2026',
         semiTitle: 'Korea Semiconductor Investment Map',
         semiLead: 'Semiconductors: design, foundry, memory, materials, equipment, substrates, and packaging across the electronics supply chain.',
@@ -571,32 +673,49 @@
       document.getElementById('lang-toggle-text').textContent = t.langText;
       document.getElementById('card-semi-title').textContent = t.semiTitle;
       document.getElementById('card-semi-lead').textContent = t.semiLead;
-      document.getElementById('card-semi-map').textContent = t.cardMapLine;
+      document.getElementById('card-semi-map').textContent = t.semiMapLine;
       document.getElementById('card-semi-cta').textContent = t.semiCta;
       document.getElementById('card-bio-title').textContent = t.bioTitle;
       document.getElementById('card-bio-lead').textContent = t.bioLead;
-      document.getElementById('card-bio-map').textContent = t.cardMapLine;
+      document.getElementById('card-bio-map').textContent = t.bioMapLine;
       document.getElementById('card-bio-cta').textContent = t.bioCta;
       document.getElementById('card-ship-title').textContent = t.shipTitle;
       document.getElementById('card-ship-lead').textContent = t.shipLead;
-      document.getElementById('card-ship-map').textContent = t.cardMapLine;
+      document.getElementById('card-ship-map').textContent = t.shipMapLine;
       document.getElementById('card-ship-cta').textContent = t.shipCta;
       document.getElementById('card-defense-title').textContent = t.defenseTitle;
       document.getElementById('card-defense-lead').textContent = t.defenseLead;
-      document.getElementById('card-defense-map').textContent = t.cardMapLine;
+      document.getElementById('card-defense-map').textContent = t.defenseMapLine;
       document.getElementById('card-defense-cta').textContent = t.defenseCta;
       document.getElementById('card-robot-title').textContent = t.robotTitle;
       document.getElementById('card-robot-lead').textContent = t.robotLead;
-      document.getElementById('card-robot-map').textContent = t.cardMapLine;
+      document.getElementById('card-robot-map').textContent = t.robotMapLine;
       document.getElementById('card-robot-cta').textContent = t.robotCta;
       document.getElementById('card-kculture-title').textContent = t.kcultureTitle;
       document.getElementById('card-kculture-lead').textContent = t.kcultureLead;
-      document.getElementById('card-kculture-map').textContent = t.cardMapLine;
+      document.getElementById('card-kculture-map').textContent = t.kcultureMapLine;
       document.getElementById('card-kculture-cta').textContent = t.kcultureCta;
       document.getElementById('card-energy-title').textContent = t.energyTitle;
       document.getElementById('card-energy-lead').textContent = t.energyLead;
-      document.getElementById('card-energy-map').textContent = t.cardMapLine;
+      document.getElementById('card-energy-map').textContent = t.energyMapLine;
       document.getElementById('card-energy-cta').textContent = t.energyCta;
+      const qlNav = '?lang=' + encodeURIComponent(lang);
+      document.getElementById('hub-intro-title').textContent = t.introTitle;
+      document.getElementById('hub-intro-p1').textContent = t.introP1;
+      document.getElementById('hub-intro-h-method').textContent = t.introHMethod;
+      const li = document.getElementById('hub-intro-list');
+      if (li) li.innerHTML = '<li>' + t.introLi1 + '</li><li>' + t.introLi2 + '</li><li>' + t.introLi3 + '</li>';
+      document.getElementById('hub-intro-p2').textContent = t.introP2;
+      document.getElementById('hub-link-about').textContent = t.linkAbout;
+      document.getElementById('hub-link-about').href = 'about.html' + qlNav;
+      document.getElementById('hub-link-editorial').textContent = t.linkEditorial;
+      document.getElementById('hub-link-editorial').href = 'editorial-policy.html' + qlNav;
+      document.getElementById('hub-link-faq').textContent = t.linkFaq;
+      document.getElementById('hub-link-faq').href = 'faq.html' + qlNav;
+      document.getElementById('hub-link-privacy').textContent = t.linkPrivacy;
+      document.getElementById('hub-link-privacy').href = 'privacy.html' + qlNav;
+      document.getElementById('hub-link-disclaimer').textContent = t.linkDisclaimer;
+      document.getElementById('hub-link-disclaimer').href = 'disclaimer.html' + qlNav;
       document.getElementById('hub-foot').textContent = t.foot;
       document.title = lang === 'en'
         ? 'Investing Map — Korea industry maps hub'
