@@ -130,6 +130,7 @@
     if (stylesInjected) return;
     stylesInjected = true;
     var css =
+      '#map-editorial:not(.map-editorial-ready) #map-editorial-body{display:none}' +
       '#map-editorial.map-editorial-collapsible{padding:6px 28px 10px}' +
       '.map-editorial-details{margin:0}' +
       '.map-editorial-summary{font-size:15px;font-weight:700;color:var(--text);cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none;padding:6px 0;margin:0}' +
@@ -148,13 +149,20 @@
   }
 
   function ensureCollapsible(section) {
-    if (!section || section.querySelector('.map-editorial-details')) return;
+    if (!section) return;
+    if (section.querySelector('.map-editorial-details')) {
+      section.classList.add('map-editorial-collapsible');
+      var existing = section.querySelector('.map-editorial-details');
+      if (existing) existing.open = false;
+      return;
+    }
     var titleEl = document.getElementById('map-editorial-title');
     var bodyEl = document.getElementById('map-editorial-body');
     if (!titleEl || !bodyEl) return;
 
     var details = document.createElement('details');
     details.className = 'map-editorial-details';
+    details.open = false;
 
     var summary = document.createElement('summary');
     summary.className = 'map-editorial-summary';
@@ -199,6 +207,7 @@
         .join('');
     }
     section.setAttribute('lang', lang);
+    section.classList.add('map-editorial-ready');
   }
 
   global.InvestingMapEditorial = { render: render };

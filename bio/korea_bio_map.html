@@ -1297,13 +1297,15 @@
     <h1 id="hdr-title">🇰🇷 한국 바이오 산업 투자 지도</h1>
     <p id="hdr-subtitle">국내 바이오·제약 상장사 · 섹터 분류 · 글로벌 빅파마 페어링</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>52</span>개 기업 매핑</div>
+      <div class="badge" id="badge-total">총 <span>157</span>개 기업 매핑</div>
       <div class="badge" id="badge-market">KOSPI <span>16</span>사 · KOSDAQ <span>35</span>사</div>
     </div>
   </div>
-  <section class="geo-summary" id="map-editorial" aria-labelledby="map-editorial-title">
-    <h2 id="map-editorial-title"></h2>
-    <div id="map-editorial-body"></div>
+  <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
+    <details class="map-editorial-details">
+      <summary class="map-editorial-summary" id="map-editorial-title">사이트 활용 방법</summary>
+      <div id="map-editorial-body" class="map-editorial-body"></div>
+    </details>
   </section>
 
   <div class="tabs">
@@ -1339,7 +1341,7 @@
         </div>
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">52</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">157</span>개</div>
       </div>
       <div class="tbl-wrap">
         <table id="main-table">

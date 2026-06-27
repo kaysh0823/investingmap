@@ -11,6 +11,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs';
+import { loadMergedKrxMap } from '../lib/krx_data_sources.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -54,13 +55,7 @@ function flagMeta(flag) {
 
 function fmtMcap(won) {
   if (won == null || won === 0) return '\u2014';
-  if (won >= 1e12) {
-    const t = won / 1e12;
-    const s = t >= 10 ? t.toFixed(0) : t.toFixed(1).replace(/\.0$/, '');
-    return '\uC57D ' + s + '\uC870\uC6D0';
-  }
-  if (won >= 1e8) return '\uC57D ' + (won / 1e8).toFixed(0) + '\uC5B5\uC6D0';
-  return '\uC57D ' + won.toLocaleString('ko-KR') + '\uC6D0';
+  return (won / 1e12).toFixed(2) + '\uC870\uC6D0';
 }
 
 function mcapTier(won) {
@@ -158,6 +153,49 @@ function flattenCompanies(bioSectors, nameEnMap) {
   return list;
 }
 
+function mergeCpListAdditions(list, byKey, nameEnMap) {
+  const cpPath = join(__dirname, 'cp_list_bio_additions.json');
+  if (!fs.existsSync(cpPath)) return 0;
+  const additions = JSON.parse(fs.readFileSync(cpPath, 'utf8'));
+  if (!additions.length) return 0;
+
+  const krx = loadMergedKrxMap(join(__dirname, '..', 'data'));
+  let added = 0;
+
+  for (const a of additions) {
+    const ticker = a.ticker;
+    if (!ticker || byKey.has(ticker)) continue;
+    const row = krx.get(ticker);
+    const mcapWon = row ? row.mcap : 0;
+    const market = row ? row.market : 'KOSDAQ';
+    const entry = {
+      id: `bio_${list.length}`,
+      name: a.name || row?.name || ticker,
+      nameEn: nameEnMap[ticker] || a.name || ticker,
+      ticker,
+      market,
+      chain: a.chain || '합성신약 / 제네릭',
+      sectorId: a.sectorId || 'smallmol',
+      semType: a.subSector || '—',
+      semTypeEn: a.subSector || '—',
+      products: a.subSector || '—',
+      productsEn: a.subSector || '—',
+      revenue: fmtMcap(mcapWon),
+      mcapWon: mcapWon || 0,
+      revTier: mcapTier(mcapWon),
+      partners: [],
+      extraChains: [],
+    };
+    list.push(entry);
+    byKey.set(ticker, entry);
+    added++;
+  }
+
+  list.sort((x, y) => (y.mcapWon || 0) - (x.mcapWon || 0));
+  list.forEach((c, i) => { c.id = `bio_${i}`; });
+  return added;
+}
+
 function collectGlobals(bioSectors) {
   const map = new Map();
   for (const sec of bioSectors) {
@@ -198,6 +236,14 @@ function buildT(bioSectors, koreanCompanies) {
 const bioSectors = JSON.parse(fs.readFileSync(join(__dirname, 'bio_data_from_jsx.json'), 'utf8')).map(normalizeSector);
 const nameEnMap = JSON.parse(fs.readFileSync(join(__dirname, 'bio_ticker_en.json'), 'utf8'));
 const koreanCompanies = flattenCompanies(bioSectors, nameEnMap);
+{
+  const byKey = new Map();
+  for (const c of koreanCompanies) {
+    if (c.ticker && c.ticker !== 'UNLISTED') byKey.set(c.ticker, c);
+  }
+  const cpAdded = mergeCpListAdditions(koreanCompanies, byKey, nameEnMap);
+  if (cpAdded) console.log('cp_list bio additions merged:', cpAdded);
+}
 mergePerPbrIntoCompanies(koreanCompanies, loadPerPbrMap(join(__dirname, '..', 'data')));
 const globalCompanies = collectGlobals(bioSectors);
 const CHAIN_COLORS = Object.fromEntries(bioSectors.map(s => [s.sector, s.color]));
@@ -223,3 +269,22 @@ const dataBlock = `
 const out = header + dataBlock + '\n' + tail;
 fs.writeFileSync(join(__dirname, 'korea_bio_map.inline.js'), out, 'utf8');
 console.log('Wrote korea_bio_map.inline.js rows=', koreanCompanies.length, 'globals=', globalCompanies.length);
+
+const bioHtmlPath = join(__dirname, 'korea_bio_map.html');
+let bioHtml = fs.readFileSync(bioHtmlPath, 'utf8');
+const bioTotal = koreanCompanies.length;
+const bioKospi = koreanCompanies.filter((c) => c.market === 'KOSPI').length;
+const bioKosdaq = koreanCompanies.filter((c) => c.market === 'KOSDAQ').length;
+bioHtml = bioHtml.replace(
+  /<div class="badge" id="badge-total">[^<]*<span>\d+<\/span>[^<]*<\/div>/,
+  `<div class="badge" id="badge-total">\uCD1D <span>${bioTotal}</span>\uAC1C \uAE30\uC5C5 \uB9E4\uD551</div>`,
+);
+bioHtml = bioHtml.replace(
+  /<div class="badge" id="badge-market">KOSPI <span>\d+<\/span>\uC0AC[^<]*<\/div>/,
+  `<div class="badge" id="badge-market">KOSPI <span>${bioKospi}</span>\uC0AC \u00B7 KOSDAQ <span>${bioKosdaq}</span>\uC0AC</div>`,
+);
+bioHtml = bioHtml.replace(
+  /<div class="result-count" id="result-label">\uD45C\uC2DC: <span id="show-count">\d+<\/span>\uAC1C<\/div>/,
+  `<div class="result-count" id="result-label">\uD45C\uC2DC: <span id="show-count">${bioTotal}</span>\uAC1C</div>`,
+);
+fs.writeFileSync(bioHtmlPath, bioHtml, 'utf8');

@@ -1,0 +1,842 @@
+[
+  {
+    "ticker": "214370",
+    "name": "�ɾ���",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "펩타이드·헬스케어",
+    "level": "core"
+  },
+  {
+    "ticker": "290650",
+    "name": "���ؾ����̿�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "인체조직·재생의학",
+    "level": "core"
+  },
+  {
+    "ticker": "007390",
+    "name": "����ó��",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "008930",
+    "name": "�ѹ̻��̾�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "140410",
+    "name": "������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "347700",
+    "name": "���Ǿ�",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "디지털헬스케어",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "039200",
+    "name": "��������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "신약개발",
+    "level": "core"
+  },
+  {
+    "ticker": "445680",
+    "name": "ť���������̿��ý�����",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "세포분석 자동화",
+    "level": "core"
+  },
+  {
+    "ticker": "195940",
+    "name": "HK�̳뿣",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "003090",
+    "name": "���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약 지주",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "115180",
+    "name": "ť����Ʈ",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "086450",
+    "name": "��������",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "제약·헬스케어",
+    "level": "core"
+  },
+  {
+    "ticker": "285130",
+    "name": "SK�ɹ�Į",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약·그린케미칼",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "003850",
+    "name": "����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "102940",
+    "name": "�ڿ��ջ�������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "바이오·원료의약품",
+    "level": "core"
+  },
+  {
+    "ticker": "041960",
+    "name": "�ڹ���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "동물약품·바이오",
+    "level": "core"
+  },
+  {
+    "ticker": "086900",
+    "name": "�޵��彺",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "보툴리눔 톡신",
+    "level": "core"
+  },
+  {
+    "ticker": "249420",
+    "name": "�ϵ�����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "174900",
+    "name": "��Ŭ��",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "000640",
+    "name": "���ƽ�ÿ�Ȧ����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약 지주",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "005250",
+    "name": "�����Ȧ����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "바이오 지주",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "019170",
+    "name": "��ǳ����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "099190",
+    "name": "���̼���",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "혈당측정·진단",
+    "level": "core"
+  },
+  {
+    "ticker": "060280",
+    "name": "ť����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "의료로봇·정형외과",
+    "level": "core"
+  },
+  {
+    "ticker": "003000",
+    "name": "�α���ǰ",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "145720",
+    "name": "��Ƽ��",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "치과 임플란트",
+    "level": "core"
+  },
+  {
+    "ticker": "067630",
+    "name": "HLB��������",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "바이오·헬스케어",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "047920",
+    "name": "HLB����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "389650",
+    "name": "�ؽ�Ʈ���̿��޵���",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "내시경 지혈재·의료기기",
+    "level": "core"
+  },
+  {
+    "ticker": "243070",
+    "name": "�޿½�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약·미용의료",
+    "level": "core"
+  },
+  {
+    "ticker": "206650",
+    "name": "�����̿�������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "084110",
+    "name": "�޿½��۷ι�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약 지주",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "009290",
+    "name": "��������",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "제약·헬스케어",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "228760",
+    "name": "�����Ʈ��",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "분자진단·암진단",
+    "level": "core"
+  },
+  {
+    "ticker": "314930",
+    "name": "���̿�����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "033270",
+    "name": "������Ƽ������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "043150",
+    "name": "����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "치과 영상장비",
+    "level": "core"
+  },
+  {
+    "ticker": "099430",
+    "name": "���̿��÷���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "미용의료·필러",
+    "level": "core"
+  },
+  {
+    "ticker": "144510",
+    "name": "������",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "세포치료·바이오",
+    "level": "core"
+  },
+  {
+    "ticker": "182400",
+    "name": "�����������̿����ڸ���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "005500",
+    "name": "��������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "217730",
+    "name": "�����۹��̿���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "084990",
+    "name": "�︯���̽�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "138610",
+    "name": "���̺�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "펩타이드·치과소재",
+    "level": "core"
+  },
+  {
+    "ticker": "115450",
+    "name": "HLB�׶�ǻƽ��",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "바이오·치료제",
+    "level": "core"
+  },
+  {
+    "ticker": "003220",
+    "name": "�������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "064550",
+    "name": "���̿��Ͼ�",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "분자진단·RNAi",
+    "level": "core"
+  },
+  {
+    "ticker": "256840",
+    "name": "�ѱ��񿣾�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약·미용의료",
+    "level": "core"
+  },
+  {
+    "ticker": "067080",
+    "name": "��ȭ����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "016580",
+    "name": "ȯ������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "004310",
+    "name": "�����ǰ",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "039840",
+    "name": "���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "치과 임플란트",
+    "level": "core"
+  },
+  {
+    "ticker": "058820",
+    "name": "CMG����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "308080",
+    "name": "��������",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "면역세포치료",
+    "level": "core"
+  },
+  {
+    "ticker": "023910",
+    "name": "���Ѿ�ǰ",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "수액제·제약",
+    "level": "core"
+  },
+  {
+    "ticker": "271980",
+    "name": "���Ͼ�ǰ",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "038290",
+    "name": "��ũ����",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "유전체 분석",
+    "level": "core"
+  },
+  {
+    "ticker": "321550",
+    "name": "Ƽ����̿�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "신약개발",
+    "level": "core"
+  },
+  {
+    "ticker": "334970",
+    "name": "������Ƽ�����̿�������",
+    "chain": "CDMO / CMO",
+    "sectorId": "cdmo",
+    "subSector": "바이오 CDMO",
+    "level": "core"
+  },
+  {
+    "ticker": "293780",
+    "name": "��Ÿ���̿�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "신약개발",
+    "level": "core"
+  },
+  {
+    "ticker": "086890",
+    "name": "�̼�������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "바이오의약품",
+    "level": "core"
+  },
+  {
+    "ticker": "322510",
+    "name": "���̿�����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "의료AI",
+    "level": "core"
+  },
+  {
+    "ticker": "307750",
+    "name": "����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "원료의약품·제약",
+    "level": "core"
+  },
+  {
+    "ticker": "323990",
+    "name": "�ڼ����̿�",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "면역세포치료",
+    "level": "core"
+  },
+  {
+    "ticker": "235980",
+    "name": "�޵�����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "310200",
+    "name": "�ִ��÷���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "펩타이드 원료·신약",
+    "level": "core"
+  },
+  {
+    "ticker": "228850",
+    "name": "���̾�",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "디지털 X-ray 디텍터",
+    "level": "core"
+  },
+  {
+    "ticker": "131030",
+    "name": "����������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "안과용 의약품",
+    "level": "core"
+  },
+  {
+    "ticker": "002390",
+    "name": "�ѵ�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "246720",
+    "name": "�ƽ�Ÿ",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "진단장비",
+    "level": "core"
+  },
+  {
+    "ticker": "002210",
+    "name": "��������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약·염모제",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "092040",
+    "name": "�ƹ�����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "바이오소재·효소",
+    "level": "core"
+  },
+  {
+    "ticker": "183490",
+    "name": "�����ͻ�������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "142280",
+    "name": "����ڿ�����",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "진단·혈액백",
+    "level": "core"
+  },
+  {
+    "ticker": "175250",
+    "name": "����ť��",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "패치제·바이오",
+    "level": "core"
+  },
+  {
+    "ticker": "348150",
+    "name": "�����̿���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "299660",
+    "name": "������",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "백신·면역치료",
+    "level": "core"
+  },
+  {
+    "ticker": "002720",
+    "name": "������ǰ",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "004720",
+    "name": "�������̾�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약·바이오",
+    "level": "core"
+  },
+  {
+    "ticker": "039610",
+    "name": "ȭ�����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "원료의약품",
+    "level": "core"
+  },
+  {
+    "ticker": "153710",
+    "name": "��Ƽ��",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "동물·이종장기 바이오",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "000220",
+    "name": "��������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "205470",
+    "name": "�޸��ý�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "222110",
+    "name": "����",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "바이오의약품·세포주",
+    "level": "core"
+  },
+  {
+    "ticker": "294090",
+    "name": "�̿��÷ο�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "웨어러블 인슐린펌프",
+    "level": "core"
+  },
+  {
+    "ticker": "263690",
+    "name": "�����",
+    "chain": "의료기기 / 디지털헬스",
+    "sectorId": "medtech",
+    "subSector": "X-ray 의료기기",
+    "level": "core"
+  },
+  {
+    "ticker": "317690",
+    "name": "��Ÿ��Ʈ����",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "진단기기",
+    "level": "core"
+  },
+  {
+    "ticker": "950220",
+    "name": "�׿��̹���",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "면역항암·해외상장법인",
+    "level": "core"
+  },
+  {
+    "ticker": "348080",
+    "name": "ť��Ƽ��",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "신약개발",
+    "level": "core"
+  },
+  {
+    "ticker": "229000",
+    "name": "��ť����",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "분자진단",
+    "level": "core"
+  },
+  {
+    "ticker": "226330",
+    "name": "����ī���̿�",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "AI 신약개발",
+    "level": "core"
+  },
+  {
+    "ticker": "376930",
+    "name": "����",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "AI 진단·의료기기",
+    "level": "core"
+  },
+  {
+    "ticker": "288330",
+    "name": "�Ķ��ýý��ڸ���",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "신약개발",
+    "level": "core"
+  },
+  {
+    "ticker": "200780",
+    "name": "�񾾿�������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "263050",
+    "name": "��ƿ����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "109820",
+    "name": "����Ʈ����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "225220",
+    "name": "������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "018680",
+    "name": "��������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "298060",
+    "name": "ǳ����ǰ",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "304840",
+    "name": "���ù��̿�",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "진단·알츠하이머",
+    "level": "core"
+  },
+  {
+    "ticker": "354200",
+    "name": "�������̿�",
+    "chain": "체외진단 (IVD)",
+    "sectorId": "diagnostics",
+    "subSector": "정밀진단",
+    "level": "core"
+  },
+  {
+    "ticker": "214610",
+    "name": "�Ѹ�����",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "018620",
+    "name": "���������",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "동물약품·백신",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "352770",
+    "name": "������Ʈ��",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "유전체 진단",
+    "level": "core"
+  },
+  {
+    "ticker": "244460",
+    "name": "�ø��н�",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "RNA 치료제",
+    "level": "core"
+  }
+]

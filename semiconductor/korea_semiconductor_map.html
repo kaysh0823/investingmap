@@ -1339,13 +1339,15 @@
     <h1 id="hdr-title">🇰🇷 한국 반도체 산업 투자 지도</h1>
     <p id="hdr-subtitle">국내 상장 반도체 기업 · 벨류체인 분류 · 글로벌 거래 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>64</span>개 상장기업</div>
-      <div class="badge" id="badge-market">KOSPI <span>14</span>사 · KOSDAQ <span>50</span>사</div>
+      <div class="badge" id="badge-total">총 <span>130</span>개 상장기업</div>
+      <div class="badge" id="badge-market">KOSPI <span>18</span>사 · KOSDAQ <span>112</span>사</div>
     </div>
   </div>
-  <section class="geo-summary" id="map-editorial" aria-labelledby="map-editorial-title">
-    <h2 id="map-editorial-title"></h2>
-    <div id="map-editorial-body"></div>
+  <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
+    <details class="map-editorial-details">
+      <summary class="map-editorial-summary" id="map-editorial-title">사이트 활용 방법</summary>
+      <div id="map-editorial-body" class="map-editorial-body"></div>
+    </details>
   </section>
 
   <div class="tabs">
@@ -1381,7 +1383,7 @@
         </div>
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">64</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">130</span>개</div>
       </div>
       <div class="tbl-wrap">
         <table id="main-table">
@@ -1495,8 +1497,8 @@
       ko: {
         title: '🇰🇷 한국 반도체 산업 투자 지도',
         subtitle: '국내 상장 반도체 · 벨류체인 · 국내외 거래처 + 동종 peer + 글로벌 피어 그룹',
-        badgeTotal: '총 <span>64</span>개 상장기업',
-        badgeMarket: 'KOSPI <span>14</span>사 · KOSDAQ <span>50</span>사',
+        badgeTotal: '총 <span>130</span>개 상장기업',
+        badgeMarket: 'KOSPI <span>18</span>사 · KOSDAQ <span>112</span>사',
         dataAsof: '업데이트 기준일: 2026년 6월 15일',
         tabHeatmap: '🔥 시총 히트맵',
         tabTable: '📋 기업 목록 &amp; 필터',
@@ -1527,8 +1529,8 @@
       en: {
         title: '🇰🇷 Korea Semiconductor Industry Investment Map',
         subtitle: 'Listed Korean semiconductors · value chain · customer/supply links, domestic peers & global peer groups',
-        badgeTotal: '<span>64</span> listed companies',
-        badgeMarket: 'KOSPI <span>14</span> · KOSDAQ <span>50</span>',
+        badgeTotal: '<span>130</span> listed companies',
+        badgeMarket: 'KOSPI <span>18</span> · KOSDAQ <span>112</span>',
         dataAsof: 'Data as of: June 15, 2026',
         tabHeatmap: '🔥 Market cap heatmap',
         heatmapHint: 'Tile size = market cap (KRX) · color = value chain / sector',
@@ -2136,7 +2138,7 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-            document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap;
+            document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Market cap heatmap' : '🔥 시총 히트맵');
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;

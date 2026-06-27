@@ -1308,13 +1308,15 @@
     <h1 id="hdr-title">🇰🇷 한국 에너지/파워플랜트 투자 지도</h1>
     <p id="hdr-subtitle">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>42</span>개 상장사</div>
-      <div class="badge" id="badge-market">KOSPI <span>28</span>사 · KOSDAQ <span>14</span>사</div>
+      <div class="badge" id="badge-total">총 <span>116</span>개 상장기업</div>
+      <div class="badge" id="badge-market">KOSPI <span>84</span>사 · KOSDAQ <span>32</span>사</div>
     </div>
   </div>
-  <section class="geo-summary" id="map-editorial" aria-labelledby="map-editorial-title">
-    <h2 id="map-editorial-title"></h2>
-    <div id="map-editorial-body"></div>
+  <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
+    <details class="map-editorial-details">
+      <summary class="map-editorial-summary" id="map-editorial-title">사이트 활용 방법</summary>
+      <div id="map-editorial-body" class="map-editorial-body"></div>
+    </details>
   </section>
 
   <div class="tabs">
@@ -1350,7 +1352,7 @@
         </div>
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">22</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">116</span>개</div>
       </div>
       <div class="tbl-wrap">
         <table id="main-table">
@@ -1459,6 +1461,8 @@
         "badgeTotal": "총 <span>42</span>개 상장사",
         "badgeMarket": "KOSPI <span>28</span>사 · KOSDAQ <span>14</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 15일",
+        "tabHeatmap": "🔥 시총 히트맵",
+        "heatmapHint": "타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류",
         "tabTable": "📋 기업 목록 &amp; 필터",
         "tabGraph": "🌐 관계 네트워크",
         "langFlag": "🇺🇸",
@@ -1537,6 +1541,8 @@
         "badgeTotal": "<span>42</span> listed companies",
         "badgeMarket": "KOSPI <span>28</span> · KOSDAQ <span>14</span>",
         "dataAsof": "Data as of: June 15, 2026",
+        "tabHeatmap": "🔥 Market cap heatmap",
+        "heatmapHint": "Tile size = market cap (KRX) · color = value chain / sector",
         "tabTable": "📋 Company list &amp; filters",
         "tabGraph": "🌐 Relationship network",
         "langFlag": "🇰🇷",
@@ -1894,7 +1900,7 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-            document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap;
+            document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Market cap heatmap' : '🔥 시총 히트맵');
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;

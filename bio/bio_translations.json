@@ -62,7 +62,9 @@
     "ttSector": "분야",
     "ttTags": "복수 축",
     "fieldSemType": "semType",
-    "fieldProducts": "products"
+    "fieldProducts": "products",
+    "tabHeatmap": "🔥 시총 히트맵",
+    "heatmapHint": "타일 크기 = 시가총액(KRX 기준) · 색상 = 섹터 분류"
   },
   "en": {
     "title": "🇰🇷 Korea Bio Industry Investment Map",
@@ -127,6 +129,8 @@
     "ttSector": "Field",
     "ttTags": "Multi-axis",
     "fieldSemType": "semTypeEn",
-    "fieldProducts": "productsEn"
+    "fieldProducts": "productsEn",
+    "tabHeatmap": "🔥 Market cap heatmap",
+    "heatmapHint": "Tile size = market cap (KRX) · color = sector"
   }
 }
