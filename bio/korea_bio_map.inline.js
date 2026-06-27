@@ -330,6 +330,7 @@
           '<td><div class="partners-list">' + partnerHtml + '</div></td>' +
           '</tr>';
       }).join('');
+      if (window.InvestingMapMobileTable) InvestingMapMobileTable.sync(document.getElementById('main-table'));
     }
 
     function setChainFilter(chain, el) {
@@ -650,7 +651,8 @@
           resetTableFilters();
           switchTab('table', document.getElementById('tab-btn-table'));
           setTimeout(function () {
-            var row = document.querySelector('#table-body tr[data-ticker="' + (c.ticker || '') + '"]');
+            if (window.InvestingMapMobileTable) { InvestingMapMobileTable.scrollToTicker(c.ticker || ''); return; }
+          var row = document.querySelector('#table-body tr[data-ticker="' + (c.ticker || '') + '"]');
             if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
           }, 40);
         }
