@@ -17,6 +17,8 @@ import {
   extractCompaniesFromHtml,
   extractChainColors,
   slugId,
+  patchKoreanCompaniesHtml,
+  countKoreanTickersInHtml,
 } from '../lib/map_company_serialize.mjs';
 import { inferChain, bioSectorIdForChain } from '../lib/cp_list_chain_infer.mjs';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs';
@@ -249,13 +251,14 @@ function main() {
     const { kospi, kosdaq } = applyKrxFields(merged, krx);
     const n = merged.length;
 
-    const newBlock = `const koreanCompanies = ${serializeCompanies(merged)};\n\n    `;
-    html = html.replace(
-      /const koreanCompanies = \[[\s\S]*?\n    \];\n\n    const globalCompanies/,
-      newBlock + 'const globalCompanies',
-    );
+    html = patchKoreanCompaniesHtml(html, merged);
     html = patchMapBadges(html, n, kospi, kosdaq, cfg.badgeKo, cfg.badgeEn);
     fs.writeFileSync(htmlPath, html, 'utf8');
+
+    const written = countKoreanTickersInHtml(fs.readFileSync(htmlPath, 'utf8'));
+    if (written !== n) {
+      throw new Error(`${cfg.path}: wrote ${written} tickers, expected ${n}`);
+    }
 
     results[cfg.key] = { before, after: n, added, skipped };
     console.log(`${cfg.path}: ${before} → ${n} (+${added}, skipped not-in-KRX ${skipped})`);

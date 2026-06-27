@@ -1286,6 +1286,35 @@
       display: inline-block;
       flex-shrink: 0
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
@@ -1622,182 +1651,671 @@
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
-        id: 'nongshim', name: '농심', nameEn: 'Nongshim', ticker: '004370', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: '식품·라면·스낵', semTypeEn: 'Food, instant noodles, snacks',
-        products: '신라면, 스낵', productsEn: 'Shin Ramyun, snacks',
-        revenue: '약 2.3조원', mcapWon: 2296197355000, per: 12.87, pbr: 0.78, revTier: 2, partners: ['nestle', 'pepsico', { id: 'hwave_flow', edgeLabel: '한류 식품 수요', edgeLabelEn: 'K-wave food pull', weight: 0.05, kind: 'theme' }]
-      },
-
-      {
-        id: 'samyang', name: '삼양식품', nameEn: 'SamyangFoods', ticker: '003230', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: '라면·스낵·수출', semTypeEn: 'Noodles, snacks, export',
-        products: '불닭볶음면, 화이트식품', productsEn: 'Buldak line, overseas brands',
-        revenue: '약 8.6조원', mcapWon: 8625302175000, per: 21.95, pbr: 6.87, revTier: 2, partners: ['nestle', 'pepsico']
-      },
-
-      {
-        id: 'ottogi', name: '오뚜기', nameEn: 'OTOKI', ticker: '007310', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: '식품·조미식', semTypeEn: 'Packaged foods & condiments',
-        products: '즉석식품, 커리·스프', productsEn: 'Ready meals, curry, soup',
-        revenue: '약 1.3조원', mcapWon: 1320579985000, per: 16.25, pbr: 0.55, revTier: 2, partners: ['nestle']
-      },
-
-      {
-        id: 'cj_jeil', name: 'CJ제일제당', nameEn: 'CJ CheilJedang Corp', ticker: '097950', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: '식품·라면·스낵', semTypeEn: 'Food & instant noodles',
-        products: '비비고, 허니고, 스낵', productsEn: 'Bibigo, Hetbahn, snacks',
-        revenue: '약 3조원', mcapWon: 2991266758200, per: null, pbr: 0.45, revTier: 2, partners: ['nestle', 'costco']
-      },
-
-      {
-        id: 'hanatour', name: '하나투어', nameEn: 'HANATOUR SERVICE', ticker: '039130', market: 'KOSPI', chain: '여행·레저·항공',
-        semType: '패키지·그룹여행', semTypeEn: 'Package & group travel',
-        products: '해외여행, 인버트여행', productsEn: 'Outbound tours, incentives',
-        revenue: '약 5538억원', mcapWon: 553765069000, per: 17.34, pbr: 3.65, revTier: 1, partners: ['booking', 'marriott', { id: 'hwave_flow', edgeLabel: '콘텐츠→여행·면세', edgeLabelEn: 'Content → travel/tax-free', weight: 0.05, kind: 'theme' }]
-      },
-
-      {
-        id: 'modetour', name: '모두투어', nameEn: 'MODETOUR NETWORK INC.', ticker: '080160', market: 'KOSDAQ', chain: '여행·레저·항공',
-        semType: '여행사·온라인', semTypeEn: 'Travel agency & online',
-        products: '그룹여행, 자유여행', productsEn: 'Group travel, FIT',
-        revenue: '약 1733억원', mcapWon: 173313000000, per: 10.97, pbr: 1.8, revTier: 1, partners: ['booking', 'expedia']
-      },
-
-      {
-        id: 'lotte_dev', name: '롯데관광개발', nameEn: 'LOTTE TOUR DEVELOPMENT CO., LTD', ticker: '032350', market: 'KOSPI', chain: '여행·레저·항공',
-        semType: '레저·호텔·여행지', semTypeEn: 'Resort, hotel, leisure RE',
-        products: '롯데월드·레저자산', productsEn: 'Lotte World, resort assets',
-        revenue: '약 1.4조원', mcapWon: 1418498266680, per: 50.06, pbr: 3.81, revTier: 2, partners: ['marriott', 'disney']
-      },
-
-      {
-        id: 'jejuair', name: '제주항공', nameEn: 'JEJUAIR, CO., LTD.', ticker: '089590', market: 'KOSPI', chain: '여행·레저·항공',
-        semType: 'LCC·내수선', semTypeEn: 'LCC & domestic routes',
-        products: '내수선, 일본·동남아', productsEn: 'Domestic, Japan & SE Asia',
-        revenue: '약 3500억원', mcapWon: 349981874900, per: null, pbr: 1.27, revTier: 1, partners: ['boeing', 'airbus']
-      },
-
-      {
-        id: 'jinair', name: '진에어', nameEn: 'JIN AIR', ticker: '272450', market: 'KOSPI', chain: '여행·레저·항공',
-        semType: 'LCC·그룹관련', semTypeEn: 'LCC & group affiliate',
-        products: '중장거리·청소기', productsEn: 'Medium haul, young fleet',
-        revenue: '약 2876억원', mcapWon: 287622000000, per: null, pbr: 1.27, revTier: 1, partners: ['boeing', 'airbus']
-      },
-
-      {
-        id: 'korean_air', name: '대한항공', nameEn: 'KoreanAirLines', ticker: '003490', market: 'KOSPI', chain: '여행·레저·항공',
-        semType: 'FSC·글로벌네트워크', semTypeEn: 'Full-service global network',
-        products: '여객·화물·MICE', productsEn: 'Passenger, cargo, MICE',
-        revenue: '약 9.8조원', mcapWon: 9794669582600, per: 12.47, pbr: 0.9, revTier: 2, partners: ['boeing', 'airbus', 'delta']
-      },
-
-      {
-        id: 'amore', name: '아모레퍼시픽', nameEn: 'AMOREPACIFIC CORPORATION', ticker: '090430', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: '화장품·뷰티케어', semTypeEn: 'Beauty & skincare',
-        products: '설화수, 헄라, 이니스프리', productsEn: 'Sulwhasoo, Hera, innisfree',
-        revenue: '약 6.6조원', mcapWon: 6551189008000, per: 32.79, pbr: 1.42, revTier: 2, partners: ['lvmh', 'estee', { id: 'hwave_flow', edgeLabel: '콘텐츠 수요→봀티', edgeLabelEn: 'Content → beauty demand', weight: 0.06, kind: 'theme' }]
-      },
-
-      {
-        id: 'lg_hh', name: 'LG생활건강', nameEn: 'LG H&H', ticker: '051900', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: '화장품·일상품', semTypeEn: 'Beauty & household',
-        products: '후·오가니스트, 밤틱', productsEn: 'The History of Whoo, O Hui',
-        revenue: '약 3.7조원', mcapWon: 3700485404000, per: null, pbr: 0.74, revTier: 2, partners: ['estee', 'lvmh']
-      },
-
-      {
-        id: 'kolmar', name: '한국콜마', nameEn: 'KOLMAR KOREA', ticker: '161890', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: 'ODM·제조위탁', semTypeEn: 'ODM / contract manufacturing',
-        products: 'K-뷰티 헤어·바디 볼륨 케어', productsEn: 'K-beauty hair·body volume care',
-        revenue: '약 2조원', mcapWon: 2039478652800, per: 16.3, pbr: 2.24, revTier: 2, partners: ['estee', 'lvmh', { id: 'amore', edgeLabel: 'ODM 제조→브랜드', edgeLabelEn: 'ODM → Amore brands', weight: 0.32 }, { id: 'lg_hh', edgeLabel: 'ODM 제조→LG H&H', edgeLabelEn: 'ODM → LG H&H brands', weight: 0.24 }]
-      },
-
-      {
-        id: 'clio', name: '클리오', nameEn: 'CLIO Cosmetics Co., Ltd', ticker: '237880', market: 'KOSDAQ', chain: '화장품·뷰티케어',
-        semType: '메이크업·친수입', semTypeEn: 'Makeup & color cosmetics',
-        products: '킬일카벤, 퍼프레크', productsEn: 'Kill Cover, Peripera',
-        revenue: '약 1941억원', mcapWon: 194086331220, per: 14.23, pbr: 0.77, revTier: 1, partners: ['lvmh', 'estee']
-      },
-
-      {
-        id: 'apr', name: '에이피알', nameEn: 'APR', ticker: '278470', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: '의료미용·RF 미여듀링', semTypeEn: 'Med-aesthetic devices & RF microneedling',
-        products: '엔터티브, 엘어티브, 글로벌 K-뷰티', productsEn: 'Intensive, Airjet; global K-beauty device exports',
-        revenue: '약 15조원', mcapWon: 14750633070000, per: 50.74, pbr: 33.08, revTier: 2, partners: ['estee', 'lvmh']
-      },
-
-      {
-        id: 'dalba_global', name: '달바글로벌', nameEn: 'd\'Alba Global', ticker: '483650', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: '프리미엄 스킨케어·브랜드 d’Alba', semTypeEn: 'Premium skincare & d’Alba brand',
-        products: '화이트 트러플 스프레이 세럼 미스트 등', productsEn: 'White truffle first spray serum, sun care, global omnichannel',
-        revenue: '약 2.4조원', mcapWon: 2415277260500, per: 29.38, pbr: 12.09, revTier: 2, partners: ['lvmh', 'estee']
-      },
-
-      {
-        id: 'cjenm', name: 'CJ ENM', nameEn: 'CJ ENM CO., Ltd.', ticker: '035760', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
-        semType: '드라마·영화·음악', semTypeEn: 'Drama, film & music',
-        products: 'tvN, Mnet, 영화산업', productsEn: 'tvN, Mnet, film production',
-        revenue: '약 8355억원', mcapWon: 835500767400, per: 26.79, pbr: 0.28, revTier: 1, partners: ['netflix', 'disney', 'spotify', { id: 'hwave_flow', edgeLabel: '한류 수요 전파(참고)', edgeLabelEn: 'K-wave demand spillover (illus.)', weight: 0.08, kind: 'theme' }]
-      },
-
-      {
-        id: 'studio_dragon', name: '스튜디오드래곤', nameEn: 'Studio Dragon Corporation', ticker: '253450', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
-        semType: '드라마·오리지널', semTypeEn: 'Drama production',
-        products: 'K-드라마 제작, 글로벌 수출', productsEn: 'K-drama production, global sales',
-        revenue: '약 7575억원', mcapWon: 757474149600, per: 73.47, pbr: 0.95, revTier: 1, partners: ['netflix', 'disney', 'warner']
-      },
-
-      {
-        id: 'kakao_ent', name: '카카오엔터테인먼트', nameEn: 'Kakao Games Corp.', ticker: '293490', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
-        semType: '웹툰·음악·미디어', semTypeEn: 'Webtoon, music & media',
-        products: '카카웹툰·솔맛·멜론', productsEn: 'Kakao Webtoon, Melon, story IP',
-        revenue: '약 8027억원', mcapWon: 802694984340, per: null, pbr: 0.67, revTier: 1, partners: ['netflix', 'tencent', 'spotify']
+        id: 'kc_samsung_c_t_corporation', name: '�Ｚ����', nameEn: 'SAMSUNG C&T CORPORATION', ticker: '028260', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '패션·리조트·상사', semTypeEn: '패션·리조트·상사',
+        products: '—', productsEn: '—',
+        revenue: '70.06조원', mcapWon: 70056394992000, per: 28.98, pbr: 1.42, revTier: 3, partners: []
       },
 
       {
         id: 'naver', name: '네이버', nameEn: 'NAVER', ticker: '035420', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
         semType: '웹툰·디지털컨텐츠', semTypeEn: 'Webtoon & digital content',
         products: '네이버 웹툰, 시리즈', productsEn: 'NAVER Webtoon, Series',
-        revenue: '약 39조원', mcapWon: 38747822672000, per: 18.99, pbr: 1.34, revTier: 3, partners: ['netflix', 'tencent', 'youtube']
+        revenue: '38.75조원', mcapWon: 38747822672000, per: 18.99, pbr: 1.34, revTier: 3, partners: ['netflix', 'tencent', 'youtube']
       },
 
       {
-        id: 'nhn', name: 'NHN', nameEn: 'NHN', ticker: '181710', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
-        semType: '웹툰·게임·클라우드', semTypeEn: 'Webtoon, games & cloud',
-        products: '컴토즈, 웹툰 플랫폼', productsEn: 'Comics, webtoon platform',
-        revenue: '약 1.3조원', mcapWon: 1303574932200, per: 38.91, pbr: 0.84, revTier: 2, partners: ['tencent', 'youtube']
+        id: 'kc_kakao', name: 'īī��', nameEn: 'Kakao', ticker: '035720', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '웹툰·음악·콘텐츠 플랫폼', semTypeEn: '웹툰·음악·콘텐츠 플랫폼',
+        products: '—', productsEn: '—',
+        revenue: '18.33조원', mcapWon: 18333229157000, per: 37.12, pbr: 1.62, revTier: 3, partners: []
       },
 
       {
-        id: 'sm', name: 'SM엔터테인먼트', nameEn: 'SM ENTERTAINMENT CO., Ltd.', ticker: '041510', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
-        semType: 'K-pop·마다말', semTypeEn: 'K-pop labels & artists',
-        products: 'aespa, NCT, 글로벌 공연', productsEn: 'aespa, NCT, global tours',
-        revenue: '약 1.9조원', mcapWon: 1913996084000, per: 5.51, pbr: 1.91, revTier: 2, partners: ['spotify', 'youtube', 'umg']
+        id: 'apr', name: '에이피알', nameEn: 'APR', ticker: '278470', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: '의료미용·RF 미여듀링', semTypeEn: 'Med-aesthetic devices & RF microneedling',
+        products: '엔터티브, 엘어티브, 글로벌 K-뷰티', productsEn: 'Intensive, Airjet; global K-beauty device exports',
+        revenue: '14.75조원', mcapWon: 14750633070000, per: 50.74, pbr: 33.08, revTier: 2, partners: ['estee', 'lvmh']
       },
 
       {
-        id: 'jyp', name: 'JYP Ent.', nameEn: 'JYP Entertainment Corporation', ticker: '035900', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
-        semType: 'K-pop·엔이전스', semTypeEn: 'K-pop & artist IP',
-        products: 'Stray Kids, TWICE, ITZY', productsEn: 'Stray Kids, TWICE, ITZY',
-        revenue: '약 2조원', mcapWon: 1986266302800, per: 11.54, pbr: 2.98, revTier: 2, partners: ['spotify', 'youtube', 'umg']
+        id: 'kc_krafton', name: 'ũ������', nameEn: 'KRAFTON', ticker: '259960', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '10.93조원', mcapWon: 10934467341000, per: 14.4, pbr: 1.5, revTier: 2, partners: []
       },
 
       {
-        id: 'yg', name: 'YG엔터테인먼트', nameEn: 'YG Entertainment Inc.', ticker: '122870', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
-        semType: 'K-pop·히핑', semTypeEn: 'K-pop & hip-hop',
-        products: 'BLACKPINK, BABYMONSTER', productsEn: 'BLACKPINK, BABYMONSTER',
-        revenue: '약 8579억원', mcapWon: 857919149100, per: 23.07, pbr: 1.66, revTier: 1, partners: ['spotify', 'youtube', 'warner']
+        id: 'korean_air', name: '대한항공', nameEn: 'KoreanAirLines', ticker: '003490', market: 'KOSPI', chain: '여행·레저·항공',
+        semType: 'FSC·글로벌네트워크', semTypeEn: 'Full-service global network',
+        products: '여객·화물·MICE', productsEn: 'Passenger, cargo, MICE',
+        revenue: '9.79조원', mcapWon: 9794669582600, per: 12.47, pbr: 0.9, revTier: 2, partners: ['boeing', 'airbus', 'delta']
       },
 
       {
         id: 'hybe', name: 'HYBE', nameEn: 'HYBE', ticker: '352820', market: 'KOSPI', chain: 'K-pop·엔터테인먼트',
         semType: 'K-pop·글로벌랜드', semTypeEn: 'K-pop & global fandom',
         products: 'BTS, SEVENTEEN, NewJeans', productsEn: 'BTS, SEVENTEEN, NewJeans',
-        revenue: '약 9.7조원', mcapWon: 9698006025000, per: null, pbr: 2.94, revTier: 2, partners: ['spotify', 'youtube', 'umg']
+        revenue: '9.70조원', mcapWon: 9698006025000, per: null, pbr: 2.94, revTier: 2, partners: ['spotify', 'youtube', 'umg']
+      },
+
+      {
+        id: 'samyang', name: '삼양식품', nameEn: 'SamyangFoods', ticker: '003230', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: '라면·스낵·수출', semTypeEn: 'Noodles, snacks, export',
+        products: '불닭볶음면, 화이트식품', productsEn: 'Buldak line, overseas brands',
+        revenue: '8.63조원', mcapWon: 8625302175000, per: 21.95, pbr: 6.87, revTier: 2, partners: ['nestle', 'pepsico']
+      },
+
+      {
+        id: 'amore', name: '아모레퍼시픽', nameEn: 'AMOREPACIFIC CORPORATION', ticker: '090430', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: '화장품·뷰티케어', semTypeEn: 'Beauty & skincare',
+        products: '설화수, 헄라, 이니스프리', productsEn: 'Sulwhasoo, Hera, innisfree',
+        revenue: '6.55조원', mcapWon: 6551189008000, per: 32.79, pbr: 1.42, revTier: 2, partners: ['lvmh', 'estee', { id: 'hwave_flow', edgeLabel: '콘텐츠 수요→봀티', edgeLabelEn: 'Content → beauty demand', weight: 0.06, kind: 'theme' }]
+      },
+
+      {
+        id: 'kc_nc', name: 'NC', nameEn: 'NC', ticker: '036570', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '5.67조원', mcapWon: 5666077786000, per: 14.71, pbr: 1.52, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_orion', name: '������', nameEn: 'ORION', ticker: '271560', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: 'K-푸드·제과', semTypeEn: 'K-푸드·제과',
+        products: '—', productsEn: '—',
+        revenue: '5.36조원', mcapWon: 5357145886000, per: 14, pbr: 1.41, revTier: 2, partners: []
+      },
+
+      {
+        id: 'lg_hh', name: 'LG생활건강', nameEn: 'LG H&H', ticker: '051900', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: '화장품·일상품', semTypeEn: 'Beauty & household',
+        products: '후·오가니스트, 밤틱', productsEn: 'The History of Whoo, O Hui',
+        revenue: '3.70조원', mcapWon: 3700485404000, per: null, pbr: 0.74, revTier: 2, partners: ['estee', 'lvmh']
+      },
+
+      {
+        id: 'kc_youngone_corporation', name: '��������', nameEn: 'Youngone Corporation', ticker: '111770', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '의류 OEM·아웃도어', semTypeEn: '의류 OEM·아웃도어',
+        products: '—', productsEn: '—',
+        revenue: '3.67조원', mcapWon: 3673420697200, per: 7.17, pbr: 0.86, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_netmarble_corporation', name: '�ݸ���', nameEn: 'Netmarble Corporation', ticker: '251270', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '3.48조원', mcapWon: 3478122538950, per: 15.46, pbr: 0.64, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_f_f', name: 'F&F', nameEn: 'F&F', ticker: '383220', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '패션·라이선스 브랜드', semTypeEn: '패션·라이선스 브랜드',
+        products: '—', productsEn: '—',
+        revenue: '3.29조원', mcapWon: 3290577742500, per: 8.1, pbr: 1.71, revTier: 2, partners: []
+      },
+
+      {
+        id: 'cj_jeil', name: 'CJ제일제당', nameEn: 'CJ CheilJedang Corp', ticker: '097950', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: '식품·라면·스낵', semTypeEn: 'Food & instant noodles',
+        products: '비비고, 허니고, 스낵', productsEn: 'Bibigo, Hetbahn, snacks',
+        revenue: '2.99조원', mcapWon: 2991266758200, per: null, pbr: 0.45, revTier: 2, partners: ['nestle', 'costco']
+      },
+
+      {
+        id: 'kc_classys_inc', name: 'Ŭ���ý�', nameEn: 'CLASSYS Inc.', ticker: '214150', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '2.87조원', mcapWon: 2867107213050, per: 21.79, pbr: 5.18, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_pearlabyss_corp', name: '�޾��', nameEn: 'PearlAbyss Corp.', ticker: '263750', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '2.64조원', mcapWon: 2643799233250, per: null, pbr: 3.16, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_e_mart_co_ltd', name: '�̸�Ʈ', nameEn: 'E-MART Co., Ltd.', ticker: '139480', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '유통·K-소비', semTypeEn: '유통·K-소비',
+        products: '—', productsEn: '—',
+        revenue: '2.44조원', mcapWon: 2444989563400, per: 17.43, pbr: 0.22, revTier: 2, partners: []
+      },
+
+      {
+        id: 'dalba_global', name: '달바글로벌', nameEn: 'd\'Alba Global', ticker: '483650', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: '프리미엄 스킨케어·브랜드 d’Alba', semTypeEn: 'Premium skincare & d’Alba brand',
+        products: '화이트 트러플 스프레이 세럼 미스트 등', productsEn: 'White truffle first spray serum, sun care, global omnichannel',
+        revenue: '2.42조원', mcapWon: 2415277260500, per: 29.38, pbr: 12.09, revTier: 2, partners: ['lvmh', 'estee']
+      },
+
+      {
+        id: 'nongshim', name: '농심', nameEn: 'Nongshim', ticker: '004370', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: '식품·라면·스낵', semTypeEn: 'Food, instant noodles, snacks',
+        products: '신라면, 스낵', productsEn: 'Shin Ramyun, snacks',
+        revenue: '2.30조원', mcapWon: 2296197355000, per: 12.87, pbr: 0.78, revTier: 2, partners: ['nestle', 'pepsico', { id: 'hwave_flow', edgeLabel: '한류 식품 수요', edgeLabelEn: 'K-wave food pull', weight: 0.05, kind: 'theme' }]
+      },
+
+      {
+        id: 'kc_silicon_2_co_ltd', name: '�Ǹ�����', nameEn: 'SILICON 2 Co.,Ltd.', ticker: '257720', market: 'KOSDAQ', chain: '화장품·뷰티케어',
+        semType: 'K-뷰티 역직구·유통', semTypeEn: 'K-뷰티 역직구·유통',
+        products: '—', productsEn: '—',
+        revenue: '2.27조원', mcapWon: 2272217131800, per: 12.57, pbr: 4.97, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_misto_holdings_corporati', name: '�̽���Ȧ����', nameEn: 'Misto Holdings Corporation', ticker: '081660', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '패션·스포츠 브랜드', semTypeEn: '패션·스포츠 브랜드',
+        products: '—', productsEn: '—',
+        revenue: '2.27조원', mcapWon: 2269676160000, per: 10.53, pbr: 1.17, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_hotelshilla', name: 'ȣ�ڽŶ�', nameEn: 'HotelShilla', ticker: '008770', market: 'KOSPI', chain: '여행·레저·항공',
+        semType: '면세·관광', semTypeEn: '면세·관광',
+        products: '—', productsEn: '—',
+        revenue: '2.18조원', mcapWon: 2178270715500, per: null, pbr: 1.9, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_gs_retail', name: 'GS������', nameEn: 'GS Retail', ticker: '007070', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '편의점·K-소비', semTypeEn: '편의점·K-소비',
+        products: '—', productsEn: '—',
+        revenue: '2.05조원', mcapWon: 2052562038250, per: 47.21, pbr: 0.62, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kolmar', name: '한국콜마', nameEn: 'KOLMAR KOREA', ticker: '161890', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: 'ODM·제조위탁', semTypeEn: 'ODM / contract manufacturing',
+        products: 'K-뷰티 헤어·바디 볼륨 케어', productsEn: 'K-beauty hair·body volume care',
+        revenue: '2.04조원', mcapWon: 2039478652800, per: 16.3, pbr: 2.24, revTier: 2, partners: ['estee', 'lvmh', { id: 'amore', edgeLabel: 'ODM 제조→브랜드', edgeLabelEn: 'ODM → Amore brands', weight: 0.32 }, { id: 'lg_hh', edgeLabel: 'ODM 제조→LG H&H', edgeLabelEn: 'ODM → LG H&H brands', weight: 0.24 }]
+      },
+
+      {
+        id: 'jyp', name: 'JYP Ent.', nameEn: 'JYP Entertainment Corporation', ticker: '035900', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
+        semType: 'K-pop·엔이전스', semTypeEn: 'K-pop & artist IP',
+        products: 'Stray Kids, TWICE, ITZY', productsEn: 'Stray Kids, TWICE, ITZY',
+        revenue: '1.99조원', mcapWon: 1986266302800, per: 11.54, pbr: 2.98, revTier: 2, partners: ['spotify', 'youtube', 'umg']
+      },
+
+      {
+        id: 'sm', name: 'SM엔터테인먼트', nameEn: 'SM ENTERTAINMENT CO., Ltd.', ticker: '041510', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
+        semType: 'K-pop·마다말', semTypeEn: 'K-pop labels & artists',
+        products: 'aespa, NCT, 글로벌 공연', productsEn: 'aespa, NCT, global tours',
+        revenue: '1.91조원', mcapWon: 1913996084000, per: 5.51, pbr: 1.91, revTier: 2, partners: ['spotify', 'youtube', 'umg']
+      },
+
+      {
+        id: 'kc_cosmax_inc', name: '�ڽ��ƽ�', nameEn: 'COSMAX, INC.', ticker: '192820', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: '화장품 ODM', semTypeEn: '화장품 ODM',
+        products: '—', productsEn: '—',
+        revenue: '1.91조원', mcapWon: 1913527217400, per: 15.54, pbr: 3.43, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_shift_up', name: '����Ʈ��', nameEn: 'SHIFT UP', ticker: '462870', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '1.89조원', mcapWon: 1885737031000, per: 9.76, pbr: 2.02, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_amorepacific_holdings', name: '�Ƹ��۽���Ȧ����', nameEn: 'AMOREPACIFIC Holdings', ticker: '002790', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: 'K-뷰티 지주', semTypeEn: 'K-뷰티 지주',
+        products: '—', productsEn: '—',
+        revenue: '1.88조원', mcapWon: 1884694137000, per: 18.11, pbr: 0.64, revTier: 2, partners: []
+      },
+
+      {
+        id: 'kc_doubleugames', name: '������������', nameEn: 'DoubleUGames', ticker: '192080', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '1.50조원', mcapWon: 1503316228000, per: 10.68, pbr: 1.15, revTier: 2, partners: []
+      },
+
+      {
+        id: 'lotte_dev', name: '롯데관광개발', nameEn: 'LOTTE TOUR DEVELOPMENT CO., LTD', ticker: '032350', market: 'KOSPI', chain: '여행·레저·항공',
+        semType: '레저·호텔·여행지', semTypeEn: 'Resort, hotel, leisure RE',
+        products: '롯데월드·레저자산', productsEn: 'Lotte World, resort assets',
+        revenue: '1.42조원', mcapWon: 1418498266680, per: 50.06, pbr: 3.81, revTier: 2, partners: ['marriott', 'disney']
+      },
+
+      {
+        id: 'ottogi', name: '오뚜기', nameEn: 'OTOKI', ticker: '007310', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: '식품·조미식', semTypeEn: 'Packaged foods & condiments',
+        products: '즉석식품, 커리·스프', productsEn: 'Ready meals, curry, soup',
+        revenue: '1.32조원', mcapWon: 1320579985000, per: 16.25, pbr: 0.55, revTier: 2, partners: ['nestle']
+      },
+
+      {
+        id: 'nhn', name: 'NHN', nameEn: 'NHN', ticker: '181710', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '웹툰·게임·클라우드', semTypeEn: 'Webtoon, games & cloud',
+        products: '컴토즈, 웹툰 플랫폼', productsEn: 'Comics, webtoon platform',
+        revenue: '1.30조원', mcapWon: 1303574932200, per: 38.91, pbr: 0.84, revTier: 2, partners: ['tencent', 'youtube']
+      },
+
+      {
+        id: 'kc_lotte_wellfood', name: '�Ե���Ǫ��', nameEn: 'LOTTE WELLFOOD', ticker: '280360', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: 'K-푸드·제과', semTypeEn: 'K-푸드·제과',
+        products: '—', productsEn: '—',
+        revenue: '1.00조원', mcapWon: 996855364200, per: 13.25, pbr: 0.44, revTier: 1, partners: []
+      },
+
+      {
+        id: 'yg', name: 'YG엔터테인먼트', nameEn: 'YG Entertainment Inc.', ticker: '122870', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
+        semType: 'K-pop·히핑', semTypeEn: 'K-pop & hip-hop',
+        products: 'BLACKPINK, BABYMONSTER', productsEn: 'BLACKPINK, BABYMONSTER',
+        revenue: '0.86조원', mcapWon: 857919149100, per: 23.07, pbr: 1.66, revTier: 1, partners: ['spotify', 'youtube', 'warner']
+      },
+
+      {
+        id: 'cjenm', name: 'CJ ENM', nameEn: 'CJ ENM CO., Ltd.', ticker: '035760', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '드라마·영화·음악', semTypeEn: 'Drama, film & music',
+        products: 'tvN, Mnet, 영화산업', productsEn: 'tvN, Mnet, film production',
+        revenue: '0.84조원', mcapWon: 835500767400, per: 26.79, pbr: 0.28, revTier: 1, partners: ['netflix', 'disney', 'spotify', { id: 'hwave_flow', edgeLabel: '한류 수요 전파(참고)', edgeLabelEn: 'K-wave demand spillover (illus.)', weight: 0.08, kind: 'theme' }]
+      },
+
+      {
+        id: 'kakao_ent', name: '카카오엔터테인먼트', nameEn: 'Kakao Games Corp.', ticker: '293490', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '웹툰·음악·미디어', semTypeEn: 'Webtoon, music & media',
+        products: '카카웹툰·솔맛·멜론', productsEn: 'Kakao Webtoon, Melon, story IP',
+        revenue: '0.80조원', mcapWon: 802694984340, per: null, pbr: 0.67, revTier: 1, partners: ['netflix', 'tencent', 'spotify']
+      },
+
+      {
+        id: 'studio_dragon', name: '스튜디오드래곤', nameEn: 'Studio Dragon Corporation', ticker: '253450', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '드라마·오리지널', semTypeEn: 'Drama production',
+        products: 'K-드라마 제작, 글로벌 수출', productsEn: 'K-drama production, global sales',
+        revenue: '0.76조원', mcapWon: 757474149600, per: 73.47, pbr: 0.95, revTier: 1, partners: ['netflix', 'disney', 'warner']
+      },
+
+      {
+        id: 'kc_cj_cgv', name: 'CJ CGV', nameEn: 'CJ CGV', ticker: '079160', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '영화관·영화 유통', semTypeEn: '영화관·영화 유통',
+        products: '—', productsEn: '—',
+        revenue: '0.75조원', mcapWon: 745948644425, per: null, pbr: 1.31, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_cosmecca_korea_co_ltd', name: '�ڽ���ī�ڸ���', nameEn: 'COSMECCA KOREA CO.,LTD.', ticker: '241710', market: 'KOSDAQ', chain: '화장품·뷰티케어',
+        semType: '화장품 ODM', semTypeEn: '화장품 ODM',
+        products: '—', productsEn: '—',
+        revenue: '0.73조원', mcapWon: 734784000000, per: 16.17, pbr: 2.91, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_lf', name: 'LF', nameEn: 'LF', ticker: '093050', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '패션', semTypeEn: '패션',
+        products: '—', productsEn: '—',
+        revenue: '0.69조원', mcapWon: 687140000000, per: 6.45, pbr: 0.38, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_nexon_games', name: '�ؽ�������', nameEn: 'NEXON Games', ticker: '225570', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '0.64조원', mcapWon: 640160891280, per: null, pbr: 2.4, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_binggrae', name: '���׷�', nameEn: 'Binggrae', ticker: '005180', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: 'K-푸드·빙과/유제품', semTypeEn: 'K-푸드·빙과/유제품',
+        products: '—', productsEn: '—',
+        revenue: '0.63조원', mcapWon: 634001720400, per: 10.88, pbr: 0.81, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_wemade_co_ltd', name: '�����̵�', nameEn: 'Wemade Co., Ltd.', ticker: '112040', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임·블록체인 게임', semTypeEn: '게임·블록체인 게임',
+        products: '—', productsEn: '—',
+        revenue: '0.61조원', mcapWon: 609035785020, per: null, pbr: 1.49, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_dear_u_co_ltd', name: '�����', nameEn: 'DEAR U Co.,Ltd.', ticker: '376300', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '팬덤 플랫폼', semTypeEn: '팬덤 플랫폼',
+        products: '—', productsEn: '—',
+        revenue: '0.56조원', mcapWon: 561413301900, per: 30.13, pbr: 2.67, revTier: 1, partners: []
+      },
+
+      {
+        id: 'hanatour', name: '하나투어', nameEn: 'HANATOUR SERVICE', ticker: '039130', market: 'KOSPI', chain: '여행·레저·항공',
+        semType: '패키지·그룹여행', semTypeEn: 'Package & group travel',
+        products: '해외여행, 인버트여행', productsEn: 'Outbound tours, incentives',
+        revenue: '0.55조원', mcapWon: 553765069000, per: 17.34, pbr: 3.65, revTier: 1, partners: ['booking', 'marriott', { id: 'hwave_flow', edgeLabel: '콘텐츠→여행·면세', edgeLabelEn: 'Content → travel/tax-free', weight: 0.05, kind: 'theme' }]
+      },
+
+      {
+        id: 'kc_handsomecorporation', name: '�Ѽ�', nameEn: 'HandsomeCorporation', ticker: '020000', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '패션', semTypeEn: '패션',
+        products: '—', productsEn: '—',
+        revenue: '0.49조원', mcapWon: 485380064400, per: 10.5, pbr: 0.34, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_samyang_corporation', name: '����', nameEn: 'Samyang Corporation', ticker: '145990', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: '식품소재·K-푸드', semTypeEn: '식품소재·K-푸드',
+        products: '—', productsEn: '—',
+        revenue: '0.45조원', mcapWon: 454307428450, per: null, pbr: 0.28, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_vt', name: '����Ƽ', nameEn: 'VT', ticker: '018290', market: 'KOSDAQ', chain: '화장품·뷰티케어',
+        semType: 'K-뷰티 브랜드', semTypeEn: 'K-뷰티 브랜드',
+        products: '—', productsEn: '—',
+        revenue: '0.45조원', mcapWon: 450050873440, per: 7.45, pbr: 1.84, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_neowiz', name: '�׿�����', nameEn: 'NEOWIZ', ticker: '095660', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '0.43조원', mcapWon: 427969159020, per: 7.84, pbr: 0.74, revTier: 1, partners: []
+      },
+
+      {
+        id: 'jejuair', name: '제주항공', nameEn: 'JEJUAIR, CO., LTD.', ticker: '089590', market: 'KOSPI', chain: '여행·레저·항공',
+        semType: 'LCC·내수선', semTypeEn: 'LCC & domestic routes',
+        products: '내수선, 일본·동남아', productsEn: 'Domestic, Japan & SE Asia',
+        revenue: '0.35조원', mcapWon: 349981874900, per: null, pbr: 1.27, revTier: 1, partners: ['boeing', 'airbus']
+      },
+
+      {
+        id: 'kc_webzen_inc', name: '����', nameEn: 'Webzen Inc.', ticker: '069080', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '0.34조원', mcapWon: 338154999000, per: 13.25, pbr: 0.46, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_com2us_corporation', name: '������', nameEn: 'Com2uS Corporation', ticker: '078340', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '0.31조원', mcapWon: 307723915850, per: 7.97, pbr: 0.29, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_harim_co_ltd', name: '�ϸ�', nameEn: 'HARIM Co., Ltd.', ticker: '136480', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: 'K-푸드·육가공', semTypeEn: 'K-푸드·육가공',
+        products: '—', productsEn: '—',
+        revenue: '0.30조원', mcapWon: 302697650700, per: 7.85, pbr: 0.93, revTier: 1, partners: []
+      },
+
+      {
+        id: 'jinair', name: '진에어', nameEn: 'JIN AIR', ticker: '272450', market: 'KOSPI', chain: '여행·레저·항공',
+        semType: 'LCC·그룹관련', semTypeEn: 'LCC & group affiliate',
+        products: '중장거리·청소기', productsEn: 'Medium haul, young fleet',
+        revenue: '0.29조원', mcapWon: 287622000000, per: null, pbr: 1.27, revTier: 1, partners: ['boeing', 'airbus']
+      },
+
+      {
+        id: 'kc_seoulbroadcastingsystem', name: 'SBS', nameEn: 'SEOULBROADCASTINGSYSTEM', ticker: '034120', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.23조원', mcapWon: 231333937860, per: 28.8, pbr: 0.18, revTier: 1, partners: []
+      },
+
+      {
+        id: 'clio', name: '클리오', nameEn: 'CLIO Cosmetics Co., Ltd', ticker: '237880', market: 'KOSDAQ', chain: '화장품·뷰티케어',
+        semType: '메이크업·친수입', semTypeEn: 'Makeup & color cosmetics',
+        products: '킬일카벤, 퍼프레크', productsEn: 'Kill Cover, Peripera',
+        revenue: '0.19조원', mcapWon: 194086331220, per: 14.23, pbr: 0.77, revTier: 1, partners: ['lvmh', 'estee']
+      },
+
+      {
+        id: 'kc_englewood_lab_inc', name: '�ױۿ�左', nameEn: 'Englewood Lab, Inc.', ticker: '950140', market: 'KOSDAQ', chain: '화장품·뷰티케어',
+        semType: '화장품 ODM', semTypeEn: '화장품 ODM',
+        products: '—', productsEn: '—',
+        revenue: '0.18조원', mcapWon: 182784367200, per: null, pbr: null, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_devsisters_corporation', name: '����ý�����', nameEn: 'Devsisters corporation', ticker: '194480', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임·캐릭터 IP', semTypeEn: '게임·캐릭터 IP',
+        products: '—', productsEn: '—',
+        revenue: '0.18조원', mcapWon: 175872675000, per: 15.22, pbr: 0.96, revTier: 1, partners: []
+      },
+
+      {
+        id: 'modetour', name: '모두투어', nameEn: 'MODETOUR NETWORK INC.', ticker: '080160', market: 'KOSDAQ', chain: '여행·레저·항공',
+        semType: '여행사·온라인', semTypeEn: 'Travel agency & online',
+        products: '그룹여행, 자유여행', productsEn: 'Group travel, FIT',
+        revenue: '0.17조원', mcapWon: 173313000000, per: 10.97, pbr: 1.8, revTier: 1, partners: ['booking', 'expedia']
+      },
+
+      {
+        id: 'kc_showbox_corp', name: '��ڽ�', nameEn: 'SHOWBOX Corp.', ticker: '086980', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '영화 투자·배급', semTypeEn: '영화 투자·배급',
+        products: '—', productsEn: '—',
+        revenue: '0.16조원', mcapWon: 161919230000, per: null, pbr: 1.5, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_tonymoly_co_ltd', name: '��ϸ�', nameEn: 'TONYMOLY Co., Ltd.', ticker: '214420', market: 'KOSPI', chain: '화장품·뷰티케어',
+        semType: 'K-뷰티 브랜드', semTypeEn: 'K-뷰티 브랜드',
+        products: '—', productsEn: '—',
+        revenue: '0.14조원', mcapWon: 135428518370, per: 12.08, pbr: 1.14, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_neptune_company', name: '��ƪ', nameEn: 'Neptune Company', ticker: '217270', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임·메타버스', semTypeEn: '게임·메타버스',
+        products: '—', productsEn: '—',
+        revenue: '0.13조원', mcapWon: 128289340035, per: null, pbr: 0.39, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_kidaristudio', name: 'Ű�ٸ���Ʃ���', nameEn: 'KidariStudio', ticker: '020120', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.12조원', mcapWon: 122866384290, per: 18.52, pbr: 0.6, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_ghost_studio', name: '����Ʈ��Ʃ���', nameEn: 'GHOST STUDIO', ticker: '950190', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '콘텐츠·게임', semTypeEn: '콘텐츠·게임',
+        products: '—', productsEn: '—',
+        revenue: '0.12조원', mcapWon: 118845748670, per: null, pbr: null, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_aniplus_inc', name: '�ִ��÷���', nameEn: 'ANIPLUS INC.', ticker: '310200', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.12조원', mcapWon: 115540681740, per: 8.86, pbr: 0.96, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_d_c_media_co_ltd', name: '��ؾ��̵��', nameEn: 'D&C MEDIA CO.,LTD.', ticker: '263720', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.11조원', mcapWon: 113947585380, per: 14.3, pbr: 1.2, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_cube_entertainment_inc', name: 'ť�꿣��', nameEn: 'CUBE ENTERTAINMENT, INC.', ticker: '182360', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
+        semType: '엔터테인먼트·음악 IP', semTypeEn: '엔터테인먼트·음악 IP',
+        products: '—', productsEn: '—',
+        revenue: '0.11조원', mcapWon: 108693444510, per: null, pbr: 0.65, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_sm_culture_contents_co_l', name: 'SM C&C', nameEn: 'SM Culture & Contents Co., Ltd.', ticker: '048550', market: 'KOSDAQ', chain: '여행·레저·항공',
+        semType: '콘텐츠·광고·여행', semTypeEn: '콘텐츠·광고·여행',
+        products: '—', productsEn: '—',
+        revenue: '0.11조원', mcapWon: 106386082000, per: null, pbr: 1.3, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_chorokbaem_media_co_ltd', name: '�ʷϹ�̵��', nameEn: 'CHOROKBAEM MEDIA CO.,LTD.', ticker: '047820', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '드라마·콘텐츠 제작', semTypeEn: '드라마·콘텐츠 제작',
+        products: '—', productsEn: '—',
+        revenue: '0.11조원', mcapWon: 105029629350, per: 37.35, pbr: 0.39, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_contentreejoongang_corp', name: '����Ʈ���߾�', nameEn: 'ContentreeJoongAng corp.', ticker: '036420', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.10조원', mcapWon: 96215228460, per: null, pbr: 0.66, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_com2us_holdings', name: '������Ȧ����', nameEn: 'Com2uS Holdings', ticker: '063080', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임 지주', semTypeEn: '게임 지주',
+        products: '—', productsEn: '—',
+        revenue: '0.09조원', mcapWon: 94772909040, per: 8.65, pbr: 0.37, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_4by4_inc', name: '��������', nameEn: '4by4 Inc.', ticker: '389140', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '영상콘텐츠·VFX', semTypeEn: '영상콘텐츠·VFX',
+        products: '—', productsEn: '—',
+        revenue: '0.09조원', mcapWon: 94180251000, per: null, pbr: 2.36, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_kt_genie_music', name: 'KT���Ϲ���', nameEn: 'KT GENIE MUSIC', ticker: '043610', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '음원 플랫폼', semTypeEn: '음원 플랫폼',
+        products: '—', productsEn: '—',
+        revenue: '0.09조원', mcapWon: 88103004008, per: null, pbr: 0.61, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_joycity_corporation', name: '���̽�Ƽ', nameEn: 'JoyCity Corporation', ticker: '067000', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '0.08조원', mcapWon: 83604521416, per: null, pbr: 0.96, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_tj_media_co_ltd', name: 'TJ�̵��', nameEn: 'TJ MEDIA CO.,LTD', ticker: '032540', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '노래방·음악기기', semTypeEn: '노래방·음악기기',
+        products: '—', productsEn: '—',
+        revenue: '0.07조원', mcapWon: 73767867890, per: 18.48, pbr: 0.88, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_dreamus_company', name: '�帲����۴�', nameEn: 'Dreamus Company', ticker: '060570', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.07조원', mcapWon: 68247548733, per: 27.09, pbr: 0.47, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_wemade_play', name: '�����̵��÷���', nameEn: 'Wemade Play', ticker: '123420', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '게임', semTypeEn: '게임',
+        products: '—', productsEn: '—',
+        revenue: '0.07조원', mcapWon: 65526558300, per: 3.48, pbr: 0.25, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_daewon_media_co_ltd', name: '����̵��', nameEn: 'DAEWON MEDIA CO.,LTD.', ticker: '048910', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.07조원', mcapWon: 65410519200, per: 11.45, pbr: 0.62, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_ylab_corporation', name: '���̷�', nameEn: 'YLAB Corporation', ticker: '432430', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.06조원', mcapWon: 58934702400, per: null, pbr: 2.13, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_wysiwyg_studios_co_ltd', name: '��������Ʃ���', nameEn: 'WYSIWYG STUDIOS CO., LTD.', ticker: '299900', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.05조원', mcapWon: 52169909620, per: null, pbr: 0.41, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_rbw_inc', name: '�˺������', nameEn: 'RBW Inc.', ticker: '361570', market: 'KOSDAQ', chain: 'K-pop·엔터테인먼트',
+        semType: '엔터테인먼트·음악 IP', semTypeEn: '엔터테인먼트·음악 IP',
+        products: '—', productsEn: '—',
+        revenue: '0.05조원', mcapWon: 50013326340, per: null, pbr: 0.83, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_mr_blue_corporation', name: '�̽��ͺ���', nameEn: 'Mr. Blue Corporation', ticker: '207760', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.05조원', mcapWon: 49764790017, per: null, pbr: 1.22, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_nhn_bugs_corporation', name: 'NHN����', nameEn: 'NHN BUGS Corporation', ticker: '104200', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '음원 플랫폼', semTypeEn: '음원 플랫폼',
+        products: '—', productsEn: '—',
+        revenue: '0.05조원', mcapWon: 48856777250, per: null, pbr: 0.88, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_fnc_entertainment_co_ltd', name: '������������', nameEn: 'FNC ENTERTAINMENT Co., Ltd.', ticker: '173940', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.05조원', mcapWon: 45793603800, per: null, pbr: 2.28, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_dexter_studios_co_ltd', name: '������', nameEn: 'Dexter studios Co., Ltd.', ticker: '206560', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.04조원', mcapWon: 38600426984, per: null, pbr: 1.03, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_giantstep_inc', name: '���̾�Ʈ����', nameEn: 'GIANTSTEP Inc.', ticker: '289220', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.04조원', mcapWon: 38377020120, per: null, pbr: 0.74, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_next_entertainment_world', name: 'NEW', nameEn: 'Next Entertainment World Co., Ltd.', ticker: '160550', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '영화·드라마 콘텐츠', semTypeEn: '영화·드라마 콘텐츠',
+        products: '—', productsEn: '—',
+        revenue: '0.04조원', mcapWon: 35412848514, per: 45.32, pbr: 0.39, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_keyeast_co_ltd', name: 'Ű�̽�Ʈ', nameEn: 'KEYEAST Co., Ltd.', ticker: '054780', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '드라마·매니지먼트', semTypeEn: '드라마·매니지먼트',
+        products: '—', productsEn: '—',
+        revenue: '0.03조원', mcapWon: 31865282453, per: null, pbr: 0.81, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_artist_studio', name: '��Ƽ��Ʈ��Ʃ���', nameEn: 'Artist Studio', ticker: '200350', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '콘텐츠 제작', semTypeEn: '콘텐츠 제작',
+        products: '—', productsEn: '—',
+        revenue: '0.03조원', mcapWon: 31437498625, per: null, pbr: 0.63, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_pan_entertainment_co_ltd', name: '�ҿ������θ�Ʈ', nameEn: 'PAN ENTERTAINMENT CO., LTD.', ticker: '068050', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.03조원', mcapWon: 30851200664, per: null, pbr: 0.44, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_astory_co_ltd', name: '���̽��丮', nameEn: 'ASTORY Co., Ltd.', ticker: '241840', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '드라마 제작', semTypeEn: '드라마 제작',
+        products: '—', productsEn: '—',
+        revenue: '0.03조원', mcapWon: 29573981400, per: null, pbr: 0.58, revTier: 1, partners: []
+      },
+
+      {
+        id: 'kc_samhwa_networks_co_ltd', name: '��ȭ��Ʈ����', nameEn: 'SAMHWA NETWORKS Co.,Ltd.', ticker: '046390', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
+        semType: '—', semTypeEn: '—',
+        products: '—', productsEn: '—',
+        revenue: '0.03조원', mcapWon: 25610183559, per: null, pbr: 0.4, revTier: 1, partners: []
       }
 
     ];
-
     const globalCompanies = [
       { id: 'netflix', name: 'Netflix', nameEn: 'Netflix', country: '미국/USA', region: 'us', sector: 'Streaming' },
       { id: 'disney', name: 'Disney', nameEn: 'Disney', country: '미국/USA', region: 'us', sector: 'Film & streaming' },

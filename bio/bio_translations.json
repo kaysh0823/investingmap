@@ -5,6 +5,8 @@
     "badgeTotal": "총 <span>58</span>개 기업 매핑",
     "badgeMarket": "KOSPI <span>17</span>사 · KOSDAQ <span>40</span>사",
     "dataAsof": "업데이트 기준일: 2026년 6월 15일",
+    "tabHeatmap": "🔥 시총 히트맵",
+    "heatmapHint": "타일 크기 = 시가총액(KRX 기준) · 색상 = 섹터 분류",
     "tabTable": "📋 기업 목록 &amp; 필터",
     "tabGraph": "🌐 섹터·peer 네트워크",
     "langFlag": "🇺🇸",
@@ -62,9 +64,7 @@
     "ttSector": "분야",
     "ttTags": "복수 축",
     "fieldSemType": "semType",
-    "fieldProducts": "products",
-    "tabHeatmap": "🔥 시총 히트맵",
-    "heatmapHint": "타일 크기 = 시가총액(KRX 기준) · 색상 = 섹터 분류"
+    "fieldProducts": "products"
   },
   "en": {
     "title": "🇰🇷 Korea Bio Industry Investment Map",
@@ -72,6 +72,8 @@
     "badgeTotal": "<span>58</span> company mappings",
     "badgeMarket": "KOSPI <span>17</span> · KOSDAQ <span>40</span>",
     "dataAsof": "Data as of: June 15, 2026",
+    "tabHeatmap": "🔥 Market cap heatmap",
+    "heatmapHint": "Tile size = market cap (KRX) · color = sector",
     "tabTable": "📋 List &amp; filters",
     "tabGraph": "🌐 Sector peer network",
     "langFlag": "🇰🇷",
@@ -129,8 +131,6 @@
     "ttSector": "Field",
     "ttTags": "Multi-axis",
     "fieldSemType": "semTypeEn",
-    "fieldProducts": "productsEn",
-    "tabHeatmap": "🔥 Market cap heatmap",
-    "heatmapHint": "Tile size = market cap (KRX) · color = sector"
+    "fieldProducts": "productsEn"
   }
 }
