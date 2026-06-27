@@ -114,6 +114,7 @@
   <title>한국 K컬처 산업 투자 지도 / Korea K-Culture Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="../js/map_mcap_fmt.js"></script>
   <script src="../js/live_quotes.js"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1432,9 +1433,9 @@
         .catch(function () { /* keep imKrwPerUsd */ });
     }
     function fmtMcapKoJo(won) {
-      if (won == null || won === 0) return '—';
-      var jo = won / 1e12;
-      return jo.toFixed(2) + '조원';
+      return (global.InvestingMapMcapFmt && global.InvestingMapMcapFmt.fmtMcapKoJo)
+        ? global.InvestingMapMcapFmt.fmtMcapKoJo(won)
+        : (won == null || won === 0 ? '—' : (Math.round(Number(won) / 1e10) * 1e10 / 1e12).toFixed(2) + '조원');
     }
     function fmtMcapUsdBillion(won) {
       if (won == null || won === 0) return '—';

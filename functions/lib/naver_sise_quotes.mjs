@@ -59,7 +59,18 @@ export function parseMarketCapKoreanText(text) {
 function parseMarketCapWon(html) {
   const blockM = html.match(/<em id="_market_sum">([\s\S]*?)<\/em>\s*억원/);
   if (!blockM) return null;
-  return parseMarketCapKoreanText(blockM[1]);
+  const inner = blockM[1].replace(/<[^>]+>/g, '').replace(/\s+/g, '');
+  const fromKorean = parseMarketCapKoreanText(inner);
+  if (fromKorean != null) return fromKorean;
+  const plain = parseKoreanNumber(inner);
+  if (plain != null && plain > 0) return plain * 1e8;
+  return null;
+}
+
+function mcapWonPrecision(won) {
+  if (won == null || !Number.isFinite(won)) return 0;
+  if (won >= 1e12 && won % 1e12 === 0) return 1;
+  return 2;
 }
 
 function parsePerPbr(html) {
@@ -213,7 +224,17 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   if (naver.last != null && (preferLast || out.last == null)) out.last = naver.last;
   if (naver.high52w != null && (preferLast || out.high52w == null)) out.high52w = naver.high52w;
   if (naver.low52w != null && (preferLast || out.low52w == null)) out.low52w = naver.low52w;
-  if (naver.mcapWon != null && (preferFundamentals || out.mcapWon == null)) out.mcapWon = naver.mcapWon;
+  if (naver.mcapWon != null) {
+    const nextPrec = mcapWonPrecision(naver.mcapWon);
+    const curPrec = mcapWonPrecision(out.mcapWon);
+    if (
+      out.mcapWon == null ||
+      nextPrec > curPrec ||
+      (nextPrec === curPrec && preferFundamentals)
+    ) {
+      out.mcapWon = naver.mcapWon;
+    }
+  }
   if (naver.per != null && (preferFundamentals || out.per == null)) out.per = naver.per;
   if (naver.pbr != null && (preferFundamentals || out.pbr == null)) out.pbr = naver.pbr;
   return out;

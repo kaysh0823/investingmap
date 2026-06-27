@@ -81,7 +81,12 @@
       c.quoteHi52 = typeof q.high52w === 'number' && isFinite(q.high52w) ? q.high52w : null;
       c.quoteLo52 = typeof q.low52w === 'number' && isFinite(q.low52w) ? q.low52w : null;
       c.quotePosition = calcQuotePosition(c.quoteLast, c.quoteHi52, c.quoteLo52);
-      if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) c.mcapWon = q.mcapWon;
+      if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) {
+        var mcapFmt = global.InvestingMapMcapFmt;
+        if (!mcapFmt || mcapFmt.shouldApplyLiveMcap(c.mcapWon, q.mcapWon)) {
+          c.mcapWon = q.mcapWon;
+        }
+      }
       if (typeof q.per === 'number' && isFinite(q.per)) c.per = q.per;
       if (typeof q.pbr === 'number' && isFinite(q.pbr)) c.pbr = q.pbr;
     }

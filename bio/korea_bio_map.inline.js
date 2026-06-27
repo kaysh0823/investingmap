@@ -46,9 +46,9 @@
         .catch(function () { /* keep imKrwPerUsd */ });
     }
     function fmtMcapKoJo(won) {
-      if (won == null || won === 0) return '\u2014';
-      var jo = won / 1e12;
-      return jo.toFixed(2) + '\uC870\uC6D0';
+      return (global.InvestingMapMcapFmt && global.InvestingMapMcapFmt.fmtMcapKoJo)
+        ? global.InvestingMapMcapFmt.fmtMcapKoJo(won)
+        : (won == null || won === 0 ? '—' : (Math.round(Number(won) / 1e10) * 1e10 / 1e12).toFixed(2) + '조원');
     }
     function fmtMcapUsdBillion(won) {
       if (won == null || won === 0) return '\u2014';
