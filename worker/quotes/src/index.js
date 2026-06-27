@@ -3,7 +3,7 @@
  * GET /?codes=005930,000660,373220
  */
 
-import { fetchNaverSiseQuote, mergeNaverIntoQuote, emptyQuote } from '../../../functions/lib/naver_sise_quotes.mjs';
+import { fetchNaverQuote, mergeNaverIntoQuote, emptyQuote } from '../../../functions/lib/naver_sise_quotes.mjs';
 
 const NAVER_UA = 'investingmap-quotes-worker/1.0 (compatible; +https://github.com/)';
 const CACHE_TTL_MS = 45_000;
@@ -85,7 +85,7 @@ function yoyFromDaily(daily) {
 }
 
 async function quoteOne(code) {
-  let item = { last: null, high52w: null, low52w: null, yoyReturnPct: null };
+  let item = emptyQuote();
   try {
     const integrationUrl = `https://m.stock.naver.com/api/stock/${encodeURIComponent(code)}/integration`;
     const integration = await fetchJson(integrationUrl);
@@ -100,18 +100,17 @@ async function quoteOne(code) {
 
     const daily = await fetchDailyPages(code);
     const yoyReturnPct = yoyFromDaily(daily);
-    item = { last, high52w, low52w, yoyReturnPct };
+    item = mergeNaverIntoQuote(item, { last, high52w, low52w }, { preferNaverLast: true });
+    if (yoyReturnPct != null) item.yoyReturnPct = yoyReturnPct;
   } catch {
-    /* try sise below */
+    /* merged below */
   }
 
-  if (item.last == null || item.high52w == null || item.low52w == null) {
-    try {
-      const sise = await fetchNaverSiseQuote(code);
-      item = mergeNaverIntoQuote(item, sise, { preferNaverLast: true });
-    } catch {
-      /* keep partial */
-    }
+  try {
+    const naver = await fetchNaverQuote(code);
+    item = mergeNaverIntoQuote(item, naver, { preferNaverLast: true, preferNaverFundamentals: true });
+  } catch {
+    /* keep partial */
   }
   return item;
 }
@@ -154,7 +153,7 @@ export default {
           try {
             items[code] = await quoteOne(code);
           } catch {
-            items[code] = { last: null, high52w: null, low52w: null, yoyReturnPct: null };
+            items[code] = emptyQuote();
           }
         }),
       );

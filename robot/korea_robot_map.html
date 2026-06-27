@@ -118,6 +118,7 @@
   <script src="../js/map_i18n.js"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_editorial.js"></script>
+  <script src="../js/map_heatmap.js"></script>
   <style>
     :root {
       --bg: #0d1117;
@@ -1178,6 +1179,83 @@
       max-width: 720px
     }
 
+    .heatmap-wrap {
+      padding: 20px 28px 28px;
+      max-width: 1400px;
+      margin: 0 auto
+    }
+
+    .heatmap-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px
+    }
+
+    #heatmap-root {
+      width: 100%;
+      min-height: 420px;
+      height: min(62vh, 640px);
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden
+    }
+
+    #heatmap-root svg {
+      width: 100%;
+      height: 100%;
+      display: block
+    }
+
+    .hm-tile {
+      cursor: default
+    }
+
+    .hm-tile[data-leaf="1"] {
+      cursor: pointer
+    }
+
+    .hm-tile[data-leaf="1"]:hover rect {
+      stroke: var(--accent);
+      stroke-width: 2
+    }
+
+    .hm-chain-label {
+      font-size: 11px;
+      font-weight: 700;
+      fill: var(--text);
+      pointer-events: none
+    }
+
+    .hm-name,
+    .hm-mcap {
+      pointer-events: none
+    }
+
+    .hm-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--text-muted)
+    }
+
+    .hm-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .hm-legend i {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+      flex-shrink: 0
+    }
+
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
@@ -1213,12 +1291,25 @@
   </section>
 
   <div class="tabs">
-    <button id="tab-btn-table" class="tab-btn active" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
+    <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 시총 히트맵</button>
+    <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
+  <!-- HEATMAP TAB -->
+  <div id="tab-heatmap" class="tab-content active">
+    <div class="heatmap-wrap">
+      <p class="heatmap-meta" id="heatmap-hint">타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류</p>
+      <div id="heatmap-root" role="img" aria-label="Market cap heatmap"></div>
+      <div class="hm-legend" id="heatmap-legend"></div>
+    </div>
+  </div>
+
+
 
   <!-- TABLE TAB -->
-  <div id="tab-table" class="tab-content active">
+
+
+  <div id="tab-table" class="tab-content">
     <div class="table-container">
       <div class="filter-bar">
         <div class="filter-group">
@@ -1682,7 +1773,10 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-            document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+            document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap;
+      document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+      var hmHint = document.getElementById('heatmap-hint');
+      if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
@@ -1728,6 +1822,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap();
       syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
@@ -1871,7 +1966,7 @@
         const mktClass = I18n ? I18n.marketCssClass(c.market) : c.market.toLowerCase();
         const chainDisplay = chainLabel(c.chain);
         const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '—', hi: '—', lo: '—', position: '—' };
-        return `<tr>
+        return `<tr data-ticker="${c.ticker}">
       <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
@@ -2187,12 +2282,50 @@
     // ═══════════════════════════════════════════════════════
     // TAB SWITCH
     // ═══════════════════════════════════════════════════════
+
+    function resetTableFilters() {
+      currentChain = 'all';
+      currentMarket = 'all';
+      searchTerm = '';
+      var inp = document.getElementById('search-input');
+      if (inp) inp.value = '';
+      buildChainChips();
+      buildMarketChips();
+      renderTable();
+    }
+
+    function renderHeatmap() {
+      if (!window.InvestingMapHeatmap) return;
+      var el = document.getElementById('heatmap-root');
+      if (!el) return;
+      InvestingMapHeatmap.render({
+        container: el,
+        legend: document.getElementById('heatmap-legend'),
+        companies: koreanCompanies,
+        chainColors: CHAIN_COLORS,
+        lang: lang,
+        formatMcap: fmtMcapTableCell,
+        onSelect: function (c) {
+          resetTableFilters();
+          switchTab('table', document.getElementById('tab-btn-table'));
+          setTimeout(function () {
+            var row = document.querySelector('#table-body tr[data-ticker="' + (c.ticker || '') + '"]');
+            if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          }, 40);
+        }
+      });
+      el.querySelectorAll('.hm-tile').forEach(function (g) {
+        if (g.querySelector('.hm-name')) g.setAttribute('data-leaf', '1');
+      });
+    }
+
     function switchTab(tab, btn) {
       document.body.classList.toggle('im-tab-table', tab === 'table');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       document.getElementById('tab-' + tab).classList.add('active');
       if (btn) btn.classList.add('active');
+      if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
     }
 
@@ -2201,11 +2334,12 @@
     // ═══════════════════════════════════════════════════════
     loadFx().then(function () {
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
       applyLang();
       if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
         InvestingMapLiveQuotes.start({
           getCompanies: function () { return koreanCompanies; },
-          renderTable: renderTable,
+          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); },
           onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';

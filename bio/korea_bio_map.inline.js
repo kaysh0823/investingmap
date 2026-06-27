@@ -113,7 +113,10 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
-            document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+            document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap;
+      document.getElementById('tab-btn-table').innerHTML = t.tabTable;
+      var hmHint = document.getElementById('heatmap-hint');
+      if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
@@ -158,6 +161,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap();
       if (svgEl) {
         svgEl.selectAll('.node text')
           .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label));
@@ -309,7 +313,7 @@
         const mcapCell = fmtMcapTableCell(c);
         const mktClass = I18n ? I18n.marketCssClass(c.market) : (c.market === '비상장' ? 'unlisted' : c.market.toLowerCase());
         const mktLabel = I18n ? I18n.marketLabel(c.market, lang) : c.market;
-        return '<tr>' +
+        return '<tr data-ticker="' + c.ticker + '">' +
           '<td><div class="company-name">' + displayName + '</div>' + subNameHtml + '</td>' +
           '<td><span class="ticker">' + c.ticker + '</span></td>' +
           '<td class="quote-cell">' + qr.last + '</td>' +
@@ -619,22 +623,61 @@
     function zoomIn() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 1.3); }
     function zoomOut() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 0.77); }
 
+
+    function resetTableFilters() {
+      currentChain = 'all';
+      currentMarket = 'all';
+      searchTerm = '';
+      var inp = document.getElementById('search-input');
+      if (inp) inp.value = '';
+      buildChainChips();
+      buildMarketChips();
+      renderTable();
+    }
+
+    function renderHeatmap() {
+      if (!window.InvestingMapHeatmap) return;
+      var el = document.getElementById('heatmap-root');
+      if (!el) return;
+      InvestingMapHeatmap.render({
+        container: el,
+        legend: document.getElementById('heatmap-legend'),
+        companies: koreanCompanies,
+        chainColors: CHAIN_COLORS,
+        lang: lang,
+        formatMcap: fmtMcapTableCell,
+        onSelect: function (c) {
+          resetTableFilters();
+          switchTab('table', document.getElementById('tab-btn-table'));
+          setTimeout(function () {
+            var row = document.querySelector('#table-body tr[data-ticker="' + (c.ticker || '') + '"]');
+            if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          }, 40);
+        }
+      });
+      el.querySelectorAll('.hm-tile').forEach(function (g) {
+        if (g.querySelector('.hm-name')) g.setAttribute('data-leaf', '1');
+      });
+    }
+
     function switchTab(tab, btn) {
       document.body.classList.toggle('im-tab-table', tab === 'table');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       document.getElementById('tab-' + tab).classList.add('active');
       if (btn) btn.classList.add('active');
+      if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
     }
 
     loadFx().then(function () {
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
       applyLang();
       if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
         InvestingMapLiveQuotes.start({
           getCompanies: function () { return koreanCompanies; },
-          renderTable: renderTable,
+          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); },
           onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';

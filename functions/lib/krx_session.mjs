@@ -41,4 +41,13 @@ export function isKrxRegularSession(now) {
   return krxSessionInfo(now).regular;
 }
 
-export const NAVER_REFRESH_MS = 60 * 60 * 1000;
+/** Regular session: refresh Naver quotes (incl. mcap) every 5 min. */
+export const NAVER_REFRESH_MS_REGULAR = 5 * 60 * 1000;
+/** Off-hours / weekends: still refresh, but less often. */
+export const NAVER_REFRESH_MS_OFF = 30 * 60 * 1000;
+/** @deprecated use naverRefreshMs() */
+export const NAVER_REFRESH_MS = NAVER_REFRESH_MS_REGULAR;
+
+export function naverRefreshMs(now = new Date()) {
+  return isKrxRegularSession(now) ? NAVER_REFRESH_MS_REGULAR : NAVER_REFRESH_MS_OFF;
+}

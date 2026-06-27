@@ -1,15 +1,15 @@
 /**
  * Server-side Naver quote cache.
- * Regular session (09:00–15:30 KST): refresh at most once per hour.
- * Outside session: serve cache only — no Naver HTTP calls.
+ * Regular session: refresh at most every 5 minutes (mcap, price, PER/PBR).
+ * Outside session: refresh at most every 30 minutes — still crawls Naver when stale.
  */
 
 import {
-  fetchNaverSiseQuote,
+  fetchNaverQuote,
   emptyQuote,
   mergeNaverIntoQuote,
 } from './naver_sise_quotes.mjs';
-import { isKrxRegularSession, NAVER_REFRESH_MS } from './krx_session.mjs';
+import { isKrxRegularSession, naverRefreshMs } from './krx_session.mjs';
 
 const CACHE_ORIGIN = 'https://investingmap-internal.invalid/naver-quotes/v1';
 const memory = new Map();
@@ -19,7 +19,7 @@ function entryFromQuote(quote) {
 }
 
 function isFresh(entry) {
-  return entry && entry.fetchedAt && Date.now() - entry.fetchedAt < NAVER_REFRESH_MS;
+  return entry && entry.fetchedAt && Date.now() - entry.fetchedAt < naverRefreshMs();
 }
 
 async function readCfCache(code) {
@@ -63,9 +63,8 @@ async function saveEntry(code, entry) {
   await writeCfCache(code, entry);
 }
 
-function shouldFetchFromNaver(entry, regular) {
+function shouldFetchFromNaver(entry) {
   if (!entry) return true;
-  if (!regular) return false;
   return !isFresh(entry);
 }
 
@@ -77,7 +76,7 @@ export async function getCachedNaverQuote(code) {
   const regular = isKrxRegularSession();
   const entry = await loadEntry(code);
 
-  if (!shouldFetchFromNaver(entry, regular)) {
+  if (!shouldFetchFromNaver(entry)) {
     if (entry) {
       return { quote: { ...emptyQuote(), ...entry.quote }, fromCache: true, fetched: false };
     }
@@ -85,8 +84,8 @@ export async function getCachedNaverQuote(code) {
   }
 
   try {
-    const fresh = await fetchNaverSiseQuote(code);
-    const next = entryFromQuote(mergeNaverIntoQuote(emptyQuote(), fresh, { preferNaverLast: true }));
+    const fresh = await fetchNaverQuote(code);
+    const next = entryFromQuote(mergeNaverIntoQuote(emptyQuote(), fresh, { preferNaverLast: true, preferNaverFundamentals: true }));
     await saveEntry(code, next);
     return { quote: { ...emptyQuote(), ...next.quote }, fromCache: false, fetched: true };
   } catch {

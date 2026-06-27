@@ -1,6 +1,6 @@
 /**
  * Cloudflare Pages Function: GET /api/quotes?codes=005930,000660
- * Naver Finance sise (cached: 1h refresh during 09:00–15:30 KST only).
+ * Naver Finance crawl (PC sise + mobile integration, cached: 5 min regular / 30 min off-hours).
  * Optional KRX OPEN API: 1-year return when warm=1 and secret configured.
  */
 

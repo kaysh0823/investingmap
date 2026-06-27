@@ -1,17 +1,17 @@
 /**
  * Local dev: GET /api/quotes?codes=005930
- * File-backed Naver cache (data/.naver_quotes_cache.json) + same session rules.
+ * File-backed Naver cache (data/.naver_quotes_cache.json) — mcap/per/pbr from Naver crawl.
  */
 import http from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  fetchNaverSiseQuote,
+  fetchNaverQuote,
   emptyQuote,
   mergeNaverIntoQuote,
 } from '../functions/lib/naver_sise_quotes.mjs';
-import { isKrxRegularSession, NAVER_REFRESH_MS } from '../functions/lib/krx_session.mjs';
+import { isKrxRegularSession, naverRefreshMs } from '../functions/lib/krx_session.mjs';
 
 const PORT = Number(process.env.PORT) || 8788;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -48,29 +48,24 @@ function normalizeTicker(t) {
   return null;
 }
 
+function isFresh(entry) {
+  return entry && entry.fetchedAt && Date.now() - entry.fetchedAt < naverRefreshMs();
+}
+
 async function getQuote(code) {
   const cache = await loadFileCache();
-  const regular = isKrxRegularSession();
   const entry = cache[code];
-  const fresh = entry && entry.fetchedAt && Date.now() - entry.fetchedAt < NAVER_REFRESH_MS;
 
-  if (!regular && entry) {
-    return { quote: { ...emptyQuote(), ...entry.quote }, fromCache: true, fetched: false };
-  }
-
-  if (entry && fresh) {
-    return { quote: { ...emptyQuote(), ...entry.quote }, fromCache: true, fetched: false };
-  }
-
-  if (!entry && !regular) {
-    /* bootstrap: first fetch even off-hours */
-  } else if (!regular) {
+  if (entry && isFresh(entry)) {
     return { quote: { ...emptyQuote(), ...entry.quote }, fromCache: true, fetched: false };
   }
 
   try {
-    const freshQuote = await fetchNaverSiseQuote(code);
-    const merged = mergeNaverIntoQuote(emptyQuote(), freshQuote, { preferNaverLast: true });
+    const freshQuote = await fetchNaverQuote(code);
+    const merged = mergeNaverIntoQuote(emptyQuote(), freshQuote, {
+      preferNaverLast: true,
+      preferNaverFundamentals: true,
+    });
     cache[code] = { fetchedAt: Date.now(), quote: merged };
     fileCache = cache;
     await saveFileCache();

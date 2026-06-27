@@ -4,6 +4,7 @@
  */
 
 export const NAVER_SISE_URL = 'https://finance.naver.com/item/sise.naver';
+export const NAVER_MOBILE_INTEGRATION_URL = 'https://m.stock.naver.com/api/stock';
 
 export function parseKoreanNumber(s) {
   if (s == null || s === '') return null;
@@ -42,19 +43,23 @@ function parse52WeekFromPairRows(html) {
   return { high52w: last.hi, low52w: last.lo };
 }
 
+/** "1,984조 8,116억", "198,411억" → won */
+export function parseMarketCapKoreanText(text) {
+  if (text == null || text === '') return null;
+  const s = String(text).replace(/\s+/g, '');
+  const joM = s.match(/([\d,]+)조/);
+  const eokM = s.match(/([\d,]+)억/);
+  const jo = joM ? parseKoreanNumber(joM[1]) : 0;
+  const eok = eokM ? parseKoreanNumber(eokM[1]) : 0;
+  if (!jo && !eok) return null;
+  const total = (jo || 0) * 1e12 + (eok || 0) * 1e8;
+  return total > 0 ? total : null;
+}
+
 function parseMarketCapWon(html) {
   const blockM = html.match(/<em id="_market_sum">([\s\S]*?)<\/em>\s*억원/);
   if (!blockM) return null;
-  const text = blockM[1].replace(/\s+/g, '');
-  const joM = text.match(/([\d,]+)조/);
-  const eokM = text.match(/([\d,]+)(?:억)?$/);
-  const jo = joM ? parseKoreanNumber(joM[1]) : 0;
-  const eok = eokM ? parseKoreanNumber(eokM[1]) : 0;
-  if (jo == null && eok == null) return null;
-  const joPart = jo != null ? jo * 1e12 : 0;
-  const eokPart = eok != null ? eok * 1e8 : 0;
-  const total = joPart + eokPart;
-  return total > 0 ? total : null;
+  return parseMarketCapKoreanText(blockM[1]);
 }
 
 function parsePerPbr(html) {
@@ -130,15 +135,87 @@ export async function fetchNaverSiseQuote(code, init) {
   return parseNaverSiseHtml(html);
 }
 
+/**
+ * @param {object} json — m.stock integration payload
+ */
+export function parseNaverMobileIntegration(json) {
+  const out = {
+    last: null,
+    high52w: null,
+    low52w: null,
+    mcapWon: null,
+    per: null,
+    pbr: null,
+  };
+  if (!json || typeof json !== 'object') return out;
+
+  const byCode = {};
+  const arr = json.totalInfos;
+  if (Array.isArray(arr)) {
+    for (const row of arr) {
+      if (row && row.code) byCode[row.code] = row.value;
+    }
+  }
+  if (byCode.marketValue) out.mcapWon = parseMarketCapKoreanText(byCode.marketValue);
+  if (byCode.highPriceOf52Weeks) out.high52w = parseKoreanNumber(byCode.highPriceOf52Weeks);
+  if (byCode.lowPriceOf52Weeks) out.low52w = parseKoreanNumber(byCode.lowPriceOf52Weeks);
+  if (byCode.per) out.per = parseKoreanNumber(byCode.per);
+  if (byCode.pbr) out.pbr = parseKoreanNumber(byCode.pbr);
+
+  const dt = json.dealTrendInfos;
+  if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
+    out.last = parseKoreanNumber(dt[0].closePrice);
+  }
+  if (out.last == null && byCode.lastClosePrice) {
+    out.last = parseKoreanNumber(byCode.lastClosePrice);
+  }
+  return out;
+}
+
+export async function fetchNaverMobileQuote(code, init) {
+  const url = `${NAVER_MOBILE_INTEGRATION_URL}/${encodeURIComponent(code)}/integration`;
+  const res = await fetch(url, {
+    ...init,
+    headers: {
+      'User-Agent': 'investingmap-quotes/1.0',
+      Accept: 'application/json',
+      ...(init && init.headers),
+    },
+  });
+  if (!res.ok) throw new Error(`Naver mobile HTTP ${res.status} ${code}`);
+  return parseNaverMobileIntegration(await res.json());
+}
+
+/** PC sise + mobile integration merged (mcap/per/pbr prefer latest Naver). */
+export async function fetchNaverQuote(code, init) {
+  const [siseR, mobileR] = await Promise.allSettled([
+    fetchNaverSiseQuote(code, init),
+    fetchNaverMobileQuote(code, init),
+  ]);
+  let merged = emptyQuote();
+  const mergeOpts = { preferNaverLast: true, preferNaverFundamentals: true };
+  if (mobileR.status === 'fulfilled') {
+    merged = mergeNaverIntoQuote(merged, mobileR.value, mergeOpts);
+  }
+  if (siseR.status === 'fulfilled') {
+    merged = mergeNaverIntoQuote(merged, siseR.value, mergeOpts);
+  }
+  if (siseR.status === 'rejected' && mobileR.status === 'rejected') {
+    throw siseR.reason || mobileR.reason;
+  }
+  return merged;
+}
+
 export function mergeNaverIntoQuote(quote, naver, opts) {
   const preferLast = opts && opts.preferNaverLast;
+  const preferFundamentals = opts && opts.preferNaverFundamentals;
   const out = { ...quote };
   if (naver.last != null && (preferLast || out.last == null)) out.last = naver.last;
-  if (naver.high52w != null && out.high52w == null) out.high52w = naver.high52w;
-  if (naver.low52w != null && out.low52w == null) out.low52w = naver.low52w;
-  if (naver.mcapWon != null && out.mcapWon == null) out.mcapWon = naver.mcapWon;
-  if (naver.per != null && out.per == null) out.per = naver.per;
-  if (naver.pbr != null && out.pbr == null) out.pbr = naver.pbr;
+  if (naver.high52w != null && (preferLast || out.high52w == null)) out.high52w = naver.high52w;
+  if (naver.low52w != null && (preferLast || out.low52w == null)) out.low52w = naver.low52w;
+  if (naver.mcapWon != null && (preferFundamentals || out.mcapWon == null)) out.mcapWon = naver.mcapWon;
+  if (naver.per != null && (preferFundamentals || out.per == null)) out.per = naver.per;
+  if (naver.pbr != null && (preferFundamentals || out.pbr == null)) out.pbr = naver.pbr;
   return out;
 }
 
