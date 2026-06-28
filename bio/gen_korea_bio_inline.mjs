@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs';
 import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from '../lib/krx_data_sources.mjs';
+import { enrichBioCompanies } from '../lib/company_field_enrich.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -253,6 +254,7 @@ for (const c of koreanCompanies) {
 }
 mergeListedEnglishIntoCompanies(koreanCompanies, meta3557);
 mergePerPbrIntoCompanies(koreanCompanies, loadPerPbrMap(dataDir));
+enrichBioCompanies(koreanCompanies, join(__dirname, '..', '..', 'cp_list'));
 const globalCompanies = collectGlobals(bioSectors);
 const CHAIN_COLORS = Object.fromEntries(bioSectors.map(s => [s.sector, s.color]));
 const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC', il: '#FDE047', dk: '#5EEAD4' };

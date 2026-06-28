@@ -21,6 +21,7 @@ import {
   countKoreanTickersInHtml,
 } from '../lib/map_company_serialize.mjs';
 import { inferChain, bioSectorIdForChain } from '../lib/cp_list_chain_infer.mjs';
+import { enrichCompanyList } from '../lib/company_field_enrich.mjs';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs';
 import {
   loadMergedKrxMap,
@@ -235,6 +236,7 @@ function main() {
     mergePerPbrIntoCompanies(merged, perPbr);
     mergeListedEnglishIntoCompanies(merged, meta3557);
     const { kospi, kosdaq } = applyKrxFields(merged, krx, meta3557);
+    enrichCompanyList(merged, cfg.key, cpListDir);
     const n = merged.length;
 
     html = patchKoreanCompaniesHtml(html, merged);
