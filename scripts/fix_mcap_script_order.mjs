@@ -15,8 +15,9 @@ const maps = [
 ];
 
 const NEW_FMT_BODY = `function fmtMcapKoJo(won) {
-      return (global.InvestingMapMcapFmt && global.InvestingMapMcapFmt.fmtMcapKoJo)
-        ? global.InvestingMapMcapFmt.fmtMcapKoJo(won)
+      var mcapFmt = (typeof window !== 'undefined' ? window : globalThis).InvestingMapMcapFmt;
+      return (mcapFmt && mcapFmt.fmtMcapKoJo)
+        ? mcapFmt.fmtMcapKoJo(won)
         : (won == null || won === 0 ? '—' : (Math.round(Number(won) / 1e10) * 1e10 / 1e12).toFixed(2) + '조원');
     }`;
 

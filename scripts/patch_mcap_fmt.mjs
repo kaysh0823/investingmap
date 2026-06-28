@@ -30,8 +30,9 @@ const OLD_FMT_ASCII = `function fmtMcapKoJo(won) {
     }`;
 
 const NEW_FMT = `function fmtMcapKoJo(won) {
-      return (global.InvestingMapMcapFmt && global.InvestingMapMcapFmt.fmtMcapKoJo)
-        ? global.InvestingMapMcapFmt.fmtMcapKoJo(won)
+      var mcapFmt = (typeof window !== 'undefined' ? window : globalThis).InvestingMapMcapFmt;
+      return (mcapFmt && mcapFmt.fmtMcapKoJo)
+        ? mcapFmt.fmtMcapKoJo(won)
         : (won == null || won === 0 ? '\u2014' : (Math.round(Number(won) / 1e10) * 1e10 / 1e12).toFixed(2) + '\uC870\uC6D0');
     }`;
 

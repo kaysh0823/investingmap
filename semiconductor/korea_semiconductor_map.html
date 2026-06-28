@@ -1490,8 +1490,9 @@
         .catch(function () { /* keep imKrwPerUsd */ });
     }
     function fmtMcapKoJo(won) {
-      return (global.InvestingMapMcapFmt && global.InvestingMapMcapFmt.fmtMcapKoJo)
-        ? global.InvestingMapMcapFmt.fmtMcapKoJo(won)
+      var mcapFmt = (typeof window !== 'undefined' ? window : globalThis).InvestingMapMcapFmt;
+      return (mcapFmt && mcapFmt.fmtMcapKoJo)
+        ? mcapFmt.fmtMcapKoJo(won)
         : (won == null || won === 0 ? '—' : (Math.round(Number(won) / 1e10) * 1e10 / 1e12).toFixed(2) + '조원');
     }
     function fmtMcapUsdBillion(won) {
@@ -2106,6 +2107,13 @@
       },
 
       {
+        id: 'adtech', name: '에이디테크놀로지', nameEn: 'ADTechnology Co., Ltd.', ticker: '200710', market: 'KOSDAQ', chain: '팹리스',
+        semType: '시스템반도체 (커스텀설계 서비스)', semTypeEn: 'System IC (Custom Design Service)',
+        products: '커스텀 IC 설계 서비스 (턴키), AI반도체', productsEn: 'Custom IC Design Service (Turnkey), AI Semiconductor',
+        revenue: '0.54조원', mcapWon: 543865082800, per: 145.32, pbr: 3.86, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'tsmc']
+      },
+
+      {
         id: 'cymechs_inc', name: '���̸ƽ�', nameEn: 'CYMECHS Inc.', ticker: '160980', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
@@ -2124,6 +2132,13 @@
         semType: '검사용 PCB', semTypeEn: '검사용 PCB',
         products: '—', productsEn: '—',
         revenue: '0.50조원', mcapWon: 496934623000, per: 94.25, pbr: 8.53, revTier: 1, partners: []
+      },
+
+      {
+        id: 'hansoliones', name: '한솔아이온스', nameEn: 'Hansol IONES', ticker: '114810', market: 'KOSDAQ', chain: '소재',
+        semType: '정밀부품 세정·가공', semTypeEn: 'Precision Parts Cleaning/Machining',
+        products: '반도체 장비 부품 정밀가공, 세정코팅 재생', productsEn: 'Semiconductor Equipment Parts Precision Machining, Cleaning & Coating',
+        revenue: '0.46조원', mcapWon: 455637987060, per: 15.73, pbr: 2.13, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'lam', 'appmat']
       },
 
       {
@@ -2152,6 +2167,13 @@
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.41조원', mcapWon: 414668830800, per: 25.56, pbr: 2.06, revTier: 1, partners: []
+      },
+
+      {
+        id: 'exicon', name: '엑시콘', nameEn: 'Exicon Co., Ltd.', ticker: '092870', market: 'KOSDAQ', chain: '패키징/테스트',
+        semType: '메모리 테스트장비', semTypeEn: 'Memory Test Equipment',
+        products: '메모리 반도체 테스트 시스템, 번인 보드', productsEn: 'Memory Semiconductor Test System, Burn-in Board',
+        revenue: '0.40조원', mcapWon: 401964547600, per: 43.08, pbr: 2.04, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'micron_eq']
       },
 
       {
@@ -2215,6 +2237,13 @@
         semType: '전구체 (Precursor)', semTypeEn: 'Precursor Materials',
         products: '반도체 전구체 (HCDS 등), OLED 소재', productsEn: 'Semiconductor Precursors (HCDS, Si Precursor), OLED Materials',
         revenue: '0.32조원', mcapWon: 324553856400, per: null, pbr: 2.81, revTier: 1, partners: ['samsung_d', 'skhynix_d']
+      },
+
+      {
+        id: 'asicland', name: '에이직랜드', nameEn: 'ASICLAND Co.,Ltd', ticker: '445090', market: 'KOSDAQ', chain: '팹리스',
+        semType: 'AI반도체 (ASIC 설계)', semTypeEn: 'AI Semiconductor (ASIC Design)',
+        products: '데이터센터 AI ASIC, 커스텀 반도체 설계', productsEn: 'Data Center AI ASIC, Custom Semiconductor Design',
+        revenue: '0.32조원', mcapWon: 322306911000, per: null, pbr: 5.8, revTier: 1, partners: ['samsung_d', 'tsmc', 'aws']
       },
 
       {
@@ -2474,34 +2503,6 @@
         semType: '전력·차량용 반도체', semTypeEn: '전력·차량용 반도체',
         products: '—', productsEn: '—',
         revenue: '0.03조원', mcapWon: 25173318390, per: null, pbr: 0.47, revTier: 1, partners: []
-      },
-
-      {
-        id: 'adtech', name: '에이디테크놀로지', nameEn: 'ADTechnology Co., Ltd.', ticker: '200710', market: 'KOSDAQ', chain: '팹리스',
-        semType: '시스템반도체 (커스텀설계 서비스)', semTypeEn: 'System IC (Custom Design Service)',
-        products: '커스텀 IC 설계 서비스 (턴키), AI반도체', productsEn: 'Custom IC Design Service (Turnkey), AI Semiconductor',
-        revenue: '0.54조원', mcapWon: 543865082800, per: 145.32, pbr: 3.86, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'tsmc']
-      },
-
-      {
-        id: 'asicland', name: '에이직랜드', nameEn: 'ASICLAND Co.,Ltd', ticker: '445090', market: 'KOSDAQ', chain: '팹리스',
-        semType: 'AI반도체 (ASIC 설계)', semTypeEn: 'AI Semiconductor (ASIC Design)',
-        products: '데이터센터 AI ASIC, 커스텀 반도체 설계', productsEn: 'Data Center AI ASIC, Custom Semiconductor Design',
-        revenue: '0.32조원', mcapWon: 322306911000, per: null, pbr: 5.8, revTier: 1, partners: ['samsung_d', 'tsmc', 'aws']
-      },
-
-      {
-        id: 'hansoliones', name: '한솔아이온스', nameEn: 'Hansol IONES', ticker: '114810', market: 'KOSDAQ', chain: '소재',
-        semType: '정밀부품 세정·가공', semTypeEn: 'Precision Parts Cleaning/Machining',
-        products: '반도체 장비 부품 정밀가공, 세정코팅 재생', productsEn: 'Semiconductor Equipment Parts Precision Machining, Cleaning & Coating',
-        revenue: '0.46조원', mcapWon: 455637987060, per: 15.73, pbr: 2.13, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'lam', 'appmat']
-      },
-
-      {
-        id: 'exicon', name: '엑시콘', nameEn: 'Exicon Co., Ltd.', ticker: '092870', market: 'KOSDAQ', chain: '패키징/테스트',
-        semType: '메모리 테스트장비', semTypeEn: 'Memory Test Equipment',
-        products: '메모리 반도체 테스트 시스템, 번인 보드', productsEn: 'Memory Semiconductor Test System, Burn-in Board',
-        revenue: '0.40조원', mcapWon: 401964547600, per: 43.08, pbr: 2.04, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'micron_eq']
       }
 
     ];
