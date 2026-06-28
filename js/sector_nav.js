@@ -11,17 +11,27 @@
     { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC704', en: 'Defense' },
     { id: 'robot', path: '../robot/korea_robot_map.html', ko: '\uB85C\uBD07', en: 'Robot' },
     { id: 'kculture', path: '../kculture/korea_kculture_map.html', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },
-    { id: 'energy', path: '../energy/korea_energy_map.html', ko: '\uC5D0\uB108\uC9C0/\uD30C\uC6CC', en: 'Energy/Power' }
+    { id: 'energy', path: '../energy/korea_energy_map.html', ko: '\uC5D0\uB108\uC9C0/\uD30C\uC6CC', koShort: '\uC5D0\uB108\uC9C0', en: 'Energy/Power', enShort: 'Energy' }
   ];
 
-  function render(currentId, lang) {
+  function navLabel(s, lang, mobile) {
+    if (lang === 'en') return (mobile && s.enShort) ? s.enShort : s.en;
+    return (mobile && s.koShort) ? s.koShort : s.ko;
+  }
+
+  function render(currentId, lang, mobile) {
     var nav = document.getElementById('sector-nav');
     if (!nav) return;
     var isEn = lang === 'en';
+    var compact = mobile != null ? mobile : (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:768px)').matches);
     nav.setAttribute('aria-label', isEn ? 'Industry maps' : '\uC0B0\uC5C5 \uC9C0\uB3C4');
     var qs = '?lang=' + encodeURIComponent(lang || 'ko');
-    nav.innerHTML = SECTORS.map(function (s) {
-      var label = isEn ? s.en : s.ko;
+    var hubLabel = isEn ? 'Hub' : '\uD5C8\uBE0C';
+    var hubHtml =
+      '<a class="hub-back" id="hub-back" href="../index.html' + qs + '">' +
+      '<span aria-hidden="true">\u2190</span> <span id="hub-link-label">' + hubLabel + '</span></a>';
+    nav.innerHTML = hubHtml + SECTORS.map(function (s) {
+      var label = navLabel(s, lang || 'ko', compact);
       if (s.id === currentId) {
         return '<span class="is-current" aria-current="page">' + label + '</span>';
       }

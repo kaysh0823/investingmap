@@ -16,9 +16,9 @@ const MAPS = [
 ];
 
 const KO_INSERT =
-  '"tabHeatmap": "🔥 시총 히트맵",\n        "heatmapHint": "타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류",\n        ';
+  '"tabHeatmap": "🔥 시총 히트맵",\n        "heatmapHint": "시가총액 기준",\n        ';
 const EN_INSERT =
-  '"tabHeatmap": "🔥 Market cap heatmap",\n        "heatmapHint": "Tile size = market cap (KRX) · color = value chain / sector",\n        ';
+  '"tabHeatmap": "🔥 Market cap heatmap",\n        "heatmapHint": "By market cap",\n        ';
 
 const TAB_FALLBACK =
   "document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Market cap heatmap' : '🔥 시총 히트맵');";
@@ -58,8 +58,8 @@ for (const lang of ['ko', 'en']) {
     bioTr[lang].tabHeatmap = lang === 'ko' ? '🔥 시총 히트맵' : '🔥 Market cap heatmap';
     bioTr[lang].heatmapHint =
       lang === 'ko'
-        ? '타일 크기 = 시가총액(KRX 기준) · 색상 = 섹터 분류'
-        : 'Tile size = market cap (KRX) · color = sector';
+        ? '시가총액 기준'
+        : 'By market cap';
   }
 }
 fs.writeFileSync(bioTrPath, JSON.stringify(bioTr, null, 2) + '\n', 'utf8');

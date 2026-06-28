@@ -12,8 +12,8 @@
     var css =
       '@media (max-width:768px){' +
       'html,body{overflow-x:hidden;max-width:100vw}' +
-      '.tabs{overflow-x:visible!important;flex-wrap:wrap;gap:6px;padding:8px 12px!important}' +
-      '.tab-btn{flex:1 1 100%!important;min-width:0!important;text-align:center;white-space:normal;line-height:1.3;padding:10px 12px!important}' +
+      '.tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;overflow:visible!important;flex-wrap:unset!important;padding:8px 0!important}' +
+      '.tab-btn{flex:unset!important;min-width:0!important;text-align:center;white-space:normal!important;word-break:keep-all!important;line-height:1.35;padding:10px 6px!important;font-size:11px!important}' +
       '.tbl-wrap{overflow-x:hidden!important;border:none;background:transparent}' +
       '#main-table.im-hide-mobile{display:none!important}' +
       '.im-mobile-cards{display:block!important}' +

@@ -148,6 +148,7 @@
       document.getElementById('graph-hint-text').textContent = t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
+      if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
       buildChainChips();
       buildMarketChips();
       buildSidebarLegend();

@@ -103,7 +103,7 @@ const HEATMAP_TAB_BLOCK = `
   <!-- HEATMAP TAB -->
   <div id="tab-heatmap" class="tab-content active">
     <div class="heatmap-wrap">
-      <p class="heatmap-meta" id="heatmap-hint">타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류</p>
+      <p class="heatmap-meta" id="heatmap-hint">시가총액 기준</p>
       <div id="heatmap-root" role="img" aria-label="Market cap heatmap"></div>
       <div class="hm-legend" id="heatmap-legend"></div>
     </div>
@@ -202,7 +202,7 @@ function patchMap(rel) {
     );
     c = c.replace(
       "tabGraph: '🌐",
-      "heatmapHint: '타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류',\n        tabGraph: '🌐"
+      "heatmapHint: '시가총액 기준',\n        tabGraph: '🌐"
     );
     c = c.replace(
       "tabTable: '📋 Company List",

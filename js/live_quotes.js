@@ -162,14 +162,13 @@
   }
 
   function formatQuotesAsofDisplay(asOf, regularSession, lang) {
-    if (!asOf) return '';
-    var short = asOf.indexOf('T') >= 0 ? asOf.replace('T', ' ').slice(0, 19) + ' UTC' : asOf;
     if (regularSession === false) {
-      return lang === 'en'
-        ? 'Market closed \u00b7 last close as of: ' + short
-        : '\uC7A5 \uB9C8\uAC10 \u00b7 \uB9C8\uC9C0\uB9C9 \uC885\uAC00 \uAE30\uC900: ' + short;
+      return lang === 'en' ? 'Closed' : '\uC7A5\uB9C8\uAC10';
     }
-    return lang === 'en' ? 'Price updated: ' + short : '\uD604\uC7AC\uAC00 \uC5C5\uB370\uC774\uD2B8 \uC77C\uC2DC: ' + short;
+    if (regularSession === true || asOf) {
+      return lang === 'en' ? 'Live' : '\uC2E4\uC2DC\uAC04';
+    }
+    return '';
   }
 
   function fetchAllCodes(base, codes) {

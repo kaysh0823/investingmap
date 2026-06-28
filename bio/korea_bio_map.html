@@ -121,6 +121,7 @@
   <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js"></script>
   <script src="../js/map_mobile_table.js"></script>
+  <script src="../js/map_mobile_ux.js"></script>
   <style>
     :root {
       --bg: #0d1117;
@@ -1068,16 +1069,23 @@
       }
 
       .tabs {
-        padding: 0 12px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-wrap: nowrap
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: 0;
+        overflow: visible;
+        gap: 0
       }
 
       .tab-btn {
-        padding: 10px 12px;
-        font-size: 12px;
-        flex-shrink: 0
+        padding: 10px 6px;
+        font-size: 11px;
+        white-space: normal;
+        word-break: keep-all;
+        line-height: 1.35;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center
       }
 
       .filter-bar {
@@ -1317,8 +1325,7 @@
   <div class="header">
     <div class="header-actions">
             <nav class="sector-nav" id="sector-nav"></nav>
-      <a class="hub-back" href="../index.html" id="hub-back"><span aria-hidden="true">←</span> <span id="hub-link-label">허브</span></a>
-      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
+<button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
       <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
     </button>
@@ -1346,7 +1353,7 @@
   <!-- HEATMAP TAB -->
   <div id="tab-heatmap" class="tab-content active">
     <div class="heatmap-wrap">
-      <p class="heatmap-meta" id="heatmap-hint">타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류</p>
+      <p class="heatmap-meta" id="heatmap-hint">시가총액 기준</p>
       <div id="heatmap-root" role="img" aria-label="Market cap heatmap"></div>
       <div class="hm-legend" id="heatmap-legend"></div>
     </div>

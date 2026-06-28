@@ -121,7 +121,8 @@
   <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js"></script>
   <script src="../js/map_mobile_table.js"></script>
-  <style>
+  <script src="../js/map_mobile_ux.js"></script>
+<style>
     :root {
       --bg: #0d1117;
       --surface: #161b22;
@@ -1052,16 +1053,23 @@
       }
 
       .tabs {
-        padding: 0 12px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-wrap: nowrap
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: 0;
+        overflow: visible;
+        gap: 0
       }
 
       .tab-btn {
-        padding: 10px 12px;
-        font-size: 12px;
-        flex-shrink: 0
+        padding: 10px 6px;
+        font-size: 11px;
+        white-space: normal;
+        word-break: keep-all;
+        line-height: 1.35;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center
       }
 
       .filter-bar {
@@ -1417,8 +1425,7 @@
   <div class="header">
     <div class="header-actions">
             <nav class="sector-nav" id="sector-nav"></nav>
-      <a class="hub-back" href="../index.html" id="hub-back"><span aria-hidden="true">←</span> <span id="hub-link-label">허브</span></a>
-      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
+<button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
       <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
     </button>
@@ -1446,7 +1453,7 @@
   <!-- HEATMAP TAB -->
   <div id="tab-heatmap" class="tab-content active">
     <div class="heatmap-wrap">
-      <p class="heatmap-meta" id="heatmap-hint">타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류</p>
+      <p class="heatmap-meta" id="heatmap-hint">시가총액 기준</p>
       <div id="heatmap-root" role="img" aria-label="Market cap heatmap"></div>
       <div class="hm-legend" id="heatmap-legend"></div>
     </div>
@@ -1591,7 +1598,7 @@
         dataAsof: '업데이트 기준일: 2026년 6월 15일',
         tabHeatmap: '🔥 시총 히트맵',
         tabTable: '📋 기업 목록 &amp; 필터',
-        heatmapHint: '타일 크기 = 시가총액(KRX 기준) · 색상 = 벨류체인/섹터 분류',
+        heatmapHint: '시가총액 기준',
         tabGraph: '🌐 관계·피어 네트워크',
         langFlag: '🇺🇸', langText: 'English',
         flChain: '벨류체인', flMarket: '시장',
@@ -1622,7 +1629,7 @@
         badgeMarket: 'KOSPI <span>18</span> · KOSDAQ <span>112</span>',
         dataAsof: 'Data as of: June 15, 2026',
         tabHeatmap: '🔥 Market cap heatmap',
-        heatmapHint: 'Tile size = market cap (KRX) · color = value chain / sector',
+        heatmapHint: 'By market cap',
         tabTable: '📋 Company List &amp; Filters',
         tabGraph: '🌐 Relationship & peer map',
         langFlag: '🇰🇷', langText: '한국어',
@@ -2732,6 +2739,7 @@
       document.getElementById('graph-hint-text').textContent = t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
+      if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
       // Rebuild dynamic UI
       buildChainChips();
       buildMarketChips();
