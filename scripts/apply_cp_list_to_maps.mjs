@@ -26,28 +26,11 @@ import {
   loadMergedKrxMap,
   loadListedEnglish3557Map,
   mergeListedEnglishIntoCompanies,
-  resolveLatestCsv,
-  parseKrxMcapLine,
 } from '../lib/krx_data_sources.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const cpListDir = process.argv[2] || join(root, '..', 'cp_list');
-
-function loadKrxDetail(dataDir) {
-  const map = new Map();
-  for (const prefix of ['data_4937_', 'data_4848_']) {
-    const p = resolveLatestCsv(dataDir, prefix);
-    for (const line of fs.readFileSync(p, 'utf8').split(/\r?\n/).slice(1)) {
-      const row = parseKrxMcapLine(line);
-      if (!row) continue;
-      const nameMatch = line.match(/^"([^"]+)","([^"]*)"/);
-      const name = nameMatch ? nameMatch[2] : '';
-      map.set(row.code, { name, market: row.market, mcap: row.mcap });
-    }
-  }
-  return map;
-}
 
 function makeStub(ticker, entry, industryKey, chains, krx, meta3557, idPrefix) {
   const row = krx.get(ticker);
@@ -85,7 +68,7 @@ function makeStub(ticker, entry, industryKey, chains, krx, meta3557, idPrefix) {
   return stub;
 }
 
-function applyKrxFields(companies, krx) {
+function applyKrxFields(companies, krx, meta3557) {
   let kospi = 0;
   let kosdaq = 0;
   for (const c of companies) {
@@ -95,8 +78,11 @@ function applyKrxFields(companies, krx) {
       c.mcapWon = row.mcap;
       c.revenue = fmtMcap(row.mcap);
       c.revTier = mcapTier(row.mcap);
-      if (!c.name || c.name === '—') c.name = row.name;
+      if (row.name) c.name = row.name;
     }
+    const meta = meta3557?.get(c.ticker);
+    if (meta?.nameEn) c.nameEn = meta.nameEn;
+    if (meta?.nameKo && (!c.name || c.name.includes('\uFFFD'))) c.name = meta.nameKo;
     if (c.market === 'KOSPI') kospi++;
     else if (c.market === 'KOSDAQ') kosdaq++;
   }
@@ -217,7 +203,7 @@ function main() {
   console.log('cp_list counts:', countByIndustry(universe));
 
   const dataDir = join(root, 'data');
-  const krx = loadKrxDetail(dataDir);
+  const krx = loadMergedKrxMap(dataDir);
   const perPbr = loadPerPbrMap(dataDir);
   const meta3557 = loadListedEnglish3557Map(dataDir);
 
@@ -248,7 +234,7 @@ function main() {
 
     mergePerPbrIntoCompanies(merged, perPbr);
     mergeListedEnglishIntoCompanies(merged, meta3557);
-    const { kospi, kosdaq } = applyKrxFields(merged, krx);
+    const { kospi, kosdaq } = applyKrxFields(merged, krx, meta3557);
     const n = merged.length;
 
     html = patchKoreanCompaniesHtml(html, merged);
@@ -291,7 +277,7 @@ function main() {
       const chain = inferChain(entry.subSector, 'bio', bioChains);
       bioAdditions.push({
         ticker,
-        name: krx.get(ticker).name || entry.nameKo,
+        name: krx.get(ticker)?.name || entry.nameKo,
         chain,
         sectorId: bioSectorIdForChain(chain),
         subSector: entry.subSector || '',

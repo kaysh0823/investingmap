@@ -683,6 +683,8 @@
               : '시세 연결 실패 (Cloudflare KRX OPEN API 인증키·KRX API 승인 확인)';
             imQuotesAsOf = '';
             updateQuotesAsofDisplay();
+            renderTable();
+            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap();
           }
         });
       }

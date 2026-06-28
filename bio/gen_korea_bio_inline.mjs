@@ -11,7 +11,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs';
-import { loadMergedKrxMap } from '../lib/krx_data_sources.mjs';
+import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from '../lib/krx_data_sources.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -153,7 +153,7 @@ function flattenCompanies(bioSectors, nameEnMap) {
   return list;
 }
 
-function mergeCpListAdditions(list, byKey, nameEnMap) {
+function mergeCpListAdditions(list, byKey, nameEnMap, meta3557) {
   const cpPath = join(__dirname, 'cp_list_bio_additions.json');
   if (!fs.existsSync(cpPath)) return 0;
   const additions = JSON.parse(fs.readFileSync(cpPath, 'utf8'));
@@ -171,7 +171,7 @@ function mergeCpListAdditions(list, byKey, nameEnMap) {
     const entry = {
       id: `bio_${list.length}`,
       name: a.name || row?.name || ticker,
-      nameEn: nameEnMap[ticker] || a.name || ticker,
+      nameEn: nameEnMap[ticker] || meta3557?.get(ticker)?.nameEn || a.name || ticker,
       ticker,
       market,
       chain: a.chain || '합성신약 / 제네릭',
@@ -235,16 +235,24 @@ function buildT(bioSectors, koreanCompanies) {
 
 const bioSectors = JSON.parse(fs.readFileSync(join(__dirname, 'bio_data_from_jsx.json'), 'utf8')).map(normalizeSector);
 const nameEnMap = JSON.parse(fs.readFileSync(join(__dirname, 'bio_ticker_en.json'), 'utf8'));
+const dataDir = join(__dirname, '..', 'data');
+const krxMap = loadMergedKrxMap(dataDir);
+const meta3557 = loadListedEnglish3557Map(dataDir);
 const koreanCompanies = flattenCompanies(bioSectors, nameEnMap);
 {
   const byKey = new Map();
   for (const c of koreanCompanies) {
     if (c.ticker && c.ticker !== 'UNLISTED') byKey.set(c.ticker, c);
   }
-  const cpAdded = mergeCpListAdditions(koreanCompanies, byKey, nameEnMap);
+  const cpAdded = mergeCpListAdditions(koreanCompanies, byKey, nameEnMap, meta3557);
   if (cpAdded) console.log('cp_list bio additions merged:', cpAdded);
 }
-mergePerPbrIntoCompanies(koreanCompanies, loadPerPbrMap(join(__dirname, '..', 'data')));
+for (const c of koreanCompanies) {
+  const row = krxMap.get(c.ticker);
+  if (row?.name) c.name = row.name;
+}
+mergeListedEnglishIntoCompanies(koreanCompanies, meta3557);
+mergePerPbrIntoCompanies(koreanCompanies, loadPerPbrMap(dataDir));
 const globalCompanies = collectGlobals(bioSectors);
 const CHAIN_COLORS = Object.fromEntries(bioSectors.map(s => [s.sector, s.color]));
 const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC', il: '#FDE047', dk: '#5EEAD4' };

@@ -1342,6 +1342,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
   </style>
@@ -1757,7 +1786,7 @@
       },
 
       {
-        id: 'psk_holdings_inc', name: '�ǿ�������Ȧ����', nameEn: 'PSK HOLDINGS INC.', ticker: '031980', market: 'KOSDAQ', chain: '후공정',
+        id: 'psk_holdings_inc', name: '피에스케이홀딩스', nameEn: 'PSK HOLDINGS INC.', ticker: '031980', market: 'KOSDAQ', chain: '후공정',
         semType: '후공정 장비', semTypeEn: '후공정 장비',
         products: '—', productsEn: '—',
         revenue: '3.28조원', mcapWon: 3283952758500, per: 35.82, pbr: 6.49, revTier: 2, partners: []
@@ -1785,7 +1814,7 @@
       },
 
       {
-        id: 'hansolchemical', name: '�Ѽ��ɹ�Į', nameEn: 'HansolChemical', ticker: '014680', market: 'KOSPI', chain: '소재',
+        id: 'hansolchemical', name: '한솔케미칼', nameEn: 'HansolChemical', ticker: '014680', market: 'KOSPI', chain: '소재',
         semType: '과산화수소·프리커서 소재', semTypeEn: '과산화수소·프리커서 소재',
         products: '—', productsEn: '—',
         revenue: '3.21조원', mcapWon: 3212080087500, per: 21.04, pbr: 2.84, revTier: 2, partners: []
@@ -1799,7 +1828,7 @@
       },
 
       {
-        id: 'tse_co_ltd', name: 'Ƽ������', nameEn: 'TSE CO.,Ltd', ticker: '131290', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'tse_co_ltd', name: '티에스이', nameEn: 'TSE CO.,Ltd', ticker: '131290', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: '프로브카드·테스트 인터페이스', semTypeEn: '프로브카드·테스트 인터페이스',
         products: '—', productsEn: '—',
         revenue: '2.99조원', mcapWon: 2992116544500, per: 76.72, pbr: 7.65, revTier: 2, partners: []
@@ -1820,7 +1849,7 @@
       },
 
       {
-        id: 'vm', name: '���̿�', nameEn: 'VM', ticker: '089970', market: 'KOSDAQ', chain: '소재',
+        id: 'vm', name: '브이엠', nameEn: 'VM', ticker: '089970', market: 'KOSDAQ', chain: '소재',
         semType: '식각 장비', semTypeEn: '식각 장비',
         products: '—', productsEn: '—',
         revenue: '2.40조원', mcapWon: 2402883515000, per: 85.46, pbr: 14.21, revTier: 2, partners: []
@@ -1848,14 +1877,14 @@
       },
 
       {
-        id: 'daejoo_electronic_materi', name: '�����������', nameEn: 'Daejoo Electronic Materials Co., Ltd.', ticker: '078600', market: 'KOSDAQ', chain: '소재',
+        id: 'daejoo_electronic_materi', name: '대주전자재료', nameEn: 'Daejoo Electronic Materials Co., Ltd.', ticker: '078600', market: 'KOSDAQ', chain: '소재',
         semType: '전자재료·실리콘계 소재', semTypeEn: '전자재료·실리콘계 소재',
         products: '—', productsEn: '—',
         revenue: '1.89조원', mcapWon: 1887888613600, per: 87.73, pbr: 7.21, revTier: 2, partners: []
       },
 
       {
-        id: 'gigavis_co_ltd', name: '�Ⱑ��', nameEn: 'GigaVis Co., Ltd.', ticker: '420770', market: 'KOSDAQ', chain: '장비',
+        id: 'gigavis_co_ltd', name: '기가비스', nameEn: 'GigaVis Co., Ltd.', ticker: '420770', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '1.85조원', mcapWon: 1850660668000, per: 119.77, pbr: 8.77, revTier: 2, partners: []
@@ -1876,7 +1905,7 @@
       },
 
       {
-        id: 's_s_tech_corporation', name: '�����ؿ�����', nameEn: 'S&S TECH CORPORATION', ticker: '101490', market: 'KOSDAQ', chain: '장비',
+        id: 's_s_tech_corporation', name: '에스앤에스텍', nameEn: 'S&S TECH CORPORATION', ticker: '101490', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '1.36조원', mcapWon: 1363298768100, per: 22.85, pbr: 4.39, revTier: 2, partners: []
@@ -1911,35 +1940,35 @@
       },
 
       {
-        id: 'lake_materials_co_ltd', name: '����ũ��Ƽ������', nameEn: 'Lake Materials Co., Ltd.', ticker: '281740', market: 'KOSDAQ', chain: '소재',
+        id: 'lake_materials_co_ltd', name: '레이크머티리얼즈', nameEn: 'Lake Materials Co., Ltd.', ticker: '281740', market: 'KOSDAQ', chain: '소재',
         semType: '전구체·유기금속소재', semTypeEn: '전구체·유기금속소재',
         products: '—', productsEn: '—',
         revenue: '1.08조원', mcapWon: 1083896736520, per: 140.94, pbr: 8.05, revTier: 2, partners: []
       },
 
       {
-        id: 'soulbrain_holdings_co_lt', name: '�ֺ극��Ȧ����', nameEn: 'Soulbrain Holdings Co., Ltd.', ticker: '036830', market: 'KOSDAQ', chain: '소재',
+        id: 'soulbrain_holdings_co_lt', name: '솔브레인홀딩스', nameEn: 'Soulbrain Holdings Co., Ltd.', ticker: '036830', market: 'KOSDAQ', chain: '소재',
         semType: '반도체 소재 지주·자회사', semTypeEn: '반도체 소재 지주·자회사',
         products: '—', productsEn: '—',
         revenue: '0.99조원', mcapWon: 992392680400, per: 2.01, pbr: 0.56, revTier: 1, partners: []
       },
 
       {
-        id: 'tlb_co_ltd', name: 'Ƽ����', nameEn: 'TLB Co., Ltd.', ticker: '356860', market: 'KOSDAQ', chain: 'IDM',
+        id: 'tlb_co_ltd', name: '티엘비', nameEn: 'TLB Co., Ltd.', ticker: '356860', market: 'KOSDAQ', chain: 'IDM',
         semType: '메모리 모듈 PCB', semTypeEn: '메모리 모듈 PCB',
         products: '—', productsEn: '—',
         revenue: '0.99조원', mcapWon: 985229526000, per: 53.96, pbr: 8.15, revTier: 1, partners: []
       },
 
       {
-        id: 'semcns_co_ltd', name: '����������', nameEn: 'SEMCNS Co., Ltd.', ticker: '252990', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'semcns_co_ltd', name: '샘씨엔에스', nameEn: 'SEMCNS Co., Ltd.', ticker: '252990', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: '세라믹 STF·프로브카드 부품', semTypeEn: '세라믹 STF·프로브카드 부품',
         products: '—', productsEn: '—',
         revenue: '0.98조원', mcapWon: 982755948480, per: 61.82, pbr: 5.7, revTier: 1, partners: []
       },
 
       {
-        id: 'duk_san_neolux_co_ltd', name: '����׿��轺', nameEn: 'DUK SAN NEOLUX CO.,LTD', ticker: '213420', market: 'KOSDAQ', chain: '장비',
+        id: 'duk_san_neolux_co_ltd', name: '덕산네오룩스', nameEn: 'DUK SAN NEOLUX CO.,LTD', ticker: '213420', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.91조원', mcapWon: 910062710350, per: 16.93, pbr: 1.99, revTier: 1, partners: []
@@ -1953,14 +1982,14 @@
       },
 
       {
-        id: 'protec_co_ltd', name: '������', nameEn: 'PROTEC Co., Ltd.', ticker: '053610', market: 'KOSDAQ', chain: '장비',
+        id: 'protec_co_ltd', name: '프로텍', nameEn: 'PROTEC Co., Ltd.', ticker: '053610', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.80조원', mcapWon: 803700000000, per: 16.87, pbr: 2.31, revTier: 1, partners: []
       },
 
       {
-        id: 'siliconmitus', name: '써닉시스템', nameEn: 'SUNIC SYSTEM Co., Ltd.', ticker: '171090', market: 'KOSDAQ', chain: '팹리스',
+        id: 'siliconmitus', name: '선익시스템', nameEn: 'SUNIC SYSTEM Co., Ltd.', ticker: '171090', market: 'KOSDAQ', chain: '팹리스',
         semType: '전력반도체 (PMIC)', semTypeEn: 'Power IC (PMIC)',
         products: 'PMIC(전력관리IC), 오디오 앰프', productsEn: 'PMIC (Power Management IC), Audio Amplifier',
         revenue: '0.80조원', mcapWon: 795076666200, per: 7.18, pbr: 4.83, revTier: 1, partners: ['apple', 'samsung_d']
@@ -1974,7 +2003,7 @@
       },
 
       {
-        id: 'seoul_semiconductor_co_l', name: '����ݵ�ü', nameEn: 'SEOUL SEMICONDUCTOR CO., LTD.', ticker: '046890', market: 'KOSDAQ', chain: '장비',
+        id: 'seoul_semiconductor_co_l', name: '서울반도체', nameEn: 'SEOUL SEMICONDUCTOR CO., LTD.', ticker: '046890', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.77조원', mcapWon: 769631280000, per: null, pbr: 1.2, revTier: 1, partners: []
@@ -2002,14 +2031,14 @@
       },
 
       {
-        id: 'tfe_co_ltd', name: 'Ƽ������', nameEn: 'TFE Co., Ltd.', ticker: '425420', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'tfe_co_ltd', name: '티에프이', nameEn: 'TFE Co., Ltd.', ticker: '425420', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: '테스트 소켓·부품', semTypeEn: '테스트 소켓·부품',
         products: '—', productsEn: '—',
         revenue: '0.71조원', mcapWon: 705024035100, per: 36, pbr: 6.07, revTier: 1, partners: []
       },
 
       {
-        id: 'mico_ltd', name: '����', nameEn: 'MiCo Ltd.', ticker: '059090', market: 'KOSDAQ', chain: '장비',
+        id: 'mico_ltd', name: '미코', nameEn: 'MiCo Ltd.', ticker: '059090', market: 'KOSDAQ', chain: '장비',
         semType: '세라믹 부품·히터', semTypeEn: '세라믹 부품·히터',
         products: '—', productsEn: '—',
         revenue: '0.70조원', mcapWon: 701752338000, per: 22.41, pbr: 5.74, revTier: 1, partners: []
@@ -2030,42 +2059,42 @@
       },
 
       {
-        id: 'mkelectron', name: '����������', nameEn: 'MKElectron', ticker: '033160', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'mkelectron', name: '엠케이전자', nameEn: 'MKElectron', ticker: '033160', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: '본딩와이어·패키징 소재', semTypeEn: '본딩와이어·패키징 소재',
         products: '—', productsEn: '—',
         revenue: '0.66조원', mcapWon: 660508921800, per: 433.33, pbr: 1.55, revTier: 1, partners: []
       },
 
       {
-        id: 'nextin_inc', name: '�ؽ�ƾ', nameEn: 'NEXTIN Inc.', ticker: '348210', market: 'KOSDAQ', chain: '장비',
+        id: 'nextin_inc', name: '넥스틴', nameEn: 'NEXTIN Inc.', ticker: '348210', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.64조원', mcapWon: 643288107000, per: null, pbr: 4.17, revTier: 1, partners: []
       },
 
       {
-        id: 'yest_co_ltd', name: '����Ƽ', nameEn: 'YEST Co.,Ltd.', ticker: '122640', market: 'KOSDAQ', chain: '장비',
+        id: 'yest_co_ltd', name: '예스티', nameEn: 'YEST Co.,Ltd.', ticker: '122640', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.64조원', mcapWon: 641100279600, per: null, pbr: 4.66, revTier: 1, partners: []
       },
 
       {
-        id: 'koses_co_ltd', name: '�ڼ���', nameEn: 'KOSES Co.,Ltd', ticker: '089890', market: 'KOSDAQ', chain: '후공정',
+        id: 'koses_co_ltd', name: '코세스', nameEn: 'KOSES Co.,Ltd', ticker: '089890', market: 'KOSDAQ', chain: '후공정',
         semType: '후공정·레이저 장비', semTypeEn: '후공정·레이저 장비',
         products: '—', productsEn: '—',
         revenue: '0.63조원', mcapWon: 628570059800, per: 45.83, pbr: 8.18, revTier: 1, partners: []
       },
 
       {
-        id: 'nepes_ark_corporation', name: '���н���ũ', nameEn: 'Nepes Ark Corporation', ticker: '330860', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'nepes_ark_corporation', name: '네패스아크', nameEn: 'Nepes Ark Corporation', ticker: '330860', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: '반도체 테스트', semTypeEn: '반도체 테스트',
         products: '—', productsEn: '—',
         revenue: '0.62조원', mcapWon: 615294272500, per: 180.36, pbr: 3.65, revTier: 1, partners: []
       },
 
       {
-        id: 'neosem_inc', name: '�׿���', nameEn: 'Neosem Inc.', ticker: '253590', market: 'KOSDAQ', chain: '팹리스',
+        id: 'neosem_inc', name: '네오셈', nameEn: 'Neosem Inc.', ticker: '253590', market: 'KOSDAQ', chain: '팹리스',
         semType: 'SSD 검사장비', semTypeEn: 'SSD 검사장비',
         products: '—', productsEn: '—',
         revenue: '0.61조원', mcapWon: 613729604360, per: 111.03, pbr: 4.99, revTier: 1, partners: []
@@ -2079,21 +2108,21 @@
       },
 
       {
-        id: 'hanyang_eng_co_ltd', name: '�Ѿ��̿���', nameEn: 'HANYANG ENG CO.,LTD.', ticker: '045100', market: 'KOSDAQ', chain: '장비',
+        id: 'hanyang_eng_co_ltd', name: '한양이엔지', nameEn: 'HANYANG ENG CO.,LTD.', ticker: '045100', market: 'KOSDAQ', chain: '장비',
         semType: '반도체 유틸리티·설비', semTypeEn: '반도체 유틸리티·설비',
         products: '—', productsEn: '—',
         revenue: '0.58조원', mcapWon: 580125000000, per: 13.05, pbr: 0.87, revTier: 1, partners: []
       },
 
       {
-        id: 'innox_advanced_materials', name: '�̳콺÷�ܼ���', nameEn: 'INNOX Advanced Materials Co., Ltd.', ticker: '272290', market: 'KOSDAQ', chain: '부품/기판',
+        id: 'innox_advanced_materials', name: '이녹스첨단소재', nameEn: 'INNOX Advanced Materials Co., Ltd.', ticker: '272290', market: 'KOSDAQ', chain: '부품/기판',
         semType: 'FPCB/OLED/반도체 소재', semTypeEn: 'FPCB/OLED/반도체 소재',
         products: '—', productsEn: '—',
         revenue: '0.58조원', mcapWon: 576194010100, per: 9.38, pbr: 1.38, revTier: 1, partners: []
       },
 
       {
-        id: 'pemtron_corporation', name: '��Ʈ��', nameEn: 'PEMTRON Corporation', ticker: '168360', market: 'KOSDAQ', chain: '장비',
+        id: 'pemtron_corporation', name: '펨트론', nameEn: 'PEMTRON Corporation', ticker: '168360', market: 'KOSDAQ', chain: '장비',
         semType: '검사장비·SMT/반도체', semTypeEn: '검사장비·SMT/반도체',
         products: '—', productsEn: '—',
         revenue: '0.56조원', mcapWon: 560803174400, per: null, pbr: 21.05, revTier: 1, partners: []
@@ -2114,35 +2143,35 @@
       },
 
       {
-        id: 'cymechs_inc', name: '���̸ƽ�', nameEn: 'CYMECHS Inc.', ticker: '160980', market: 'KOSDAQ', chain: '장비',
+        id: 'cymechs_inc', name: '싸이맥스', nameEn: 'CYMECHS Inc.', ticker: '160980', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.51조원', mcapWon: 507977299500, per: 32.63, pbr: 2.62, revTier: 1, partners: []
       },
 
       {
-        id: 'systems_technology_incor', name: '����Ƽ����', nameEn: 'Systems Technology Incorporated', ticker: '039440', market: 'KOSDAQ', chain: '장비',
+        id: 'systems_technology_incor', name: '에스티아이', nameEn: 'Systems Technology Incorporated', ticker: '039440', market: 'KOSDAQ', chain: '장비',
         semType: 'CCSS·리플로우 장비', semTypeEn: 'CCSS·리플로우 장비',
         products: '—', productsEn: '—',
         revenue: '0.50조원', mcapWon: 501652970450, per: 30.96, pbr: 1.72, revTier: 1, partners: []
       },
 
       {
-        id: 'tigerelec_co_ltd', name: 'Ÿ�̰��Ϸ�', nameEn: 'TigerElec Co.,Ltd.', ticker: '219130', market: 'KOSDAQ', chain: '부품/기판',
+        id: 'tigerelec_co_ltd', name: '타이거일렉', nameEn: 'TigerElec Co.,Ltd.', ticker: '219130', market: 'KOSDAQ', chain: '부품/기판',
         semType: '검사용 PCB', semTypeEn: '검사용 PCB',
         products: '—', productsEn: '—',
         revenue: '0.50조원', mcapWon: 496934623000, per: 94.25, pbr: 8.53, revTier: 1, partners: []
       },
 
       {
-        id: 'hansoliones', name: '한솔아이온스', nameEn: 'Hansol IONES', ticker: '114810', market: 'KOSDAQ', chain: '소재',
+        id: 'hansoliones', name: '한솔아이원스', nameEn: 'Hansol IONES', ticker: '114810', market: 'KOSDAQ', chain: '소재',
         semType: '정밀부품 세정·가공', semTypeEn: 'Precision Parts Cleaning/Machining',
         products: '반도체 장비 부품 정밀가공, 세정코팅 재생', productsEn: 'Semiconductor Equipment Parts Precision Machining, Cleaning & Coating',
         revenue: '0.46조원', mcapWon: 455637987060, per: 15.73, pbr: 2.13, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'lam', 'appmat']
       },
 
       {
-        id: 'worldex_industry_trading', name: '������', nameEn: 'WORLDEX INDUSTRY & TRADING CO., LTD', ticker: '101160', market: 'KOSDAQ', chain: '장비',
+        id: 'worldex_industry_trading', name: '월덱스', nameEn: 'WORLDEX INDUSTRY & TRADING CO., LTD', ticker: '101160', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.45조원', mcapWon: 454052307500, per: 11.08, pbr: 1.31, revTier: 1, partners: []
@@ -2156,14 +2185,14 @@
       },
 
       {
-        id: 'shinsung_e_g', name: '�ż��̿���', nameEn: 'SHINSUNG E&G', ticker: '011930', market: 'KOSPI', chain: '장비',
+        id: 'shinsung_e_g', name: '신성이엔지', nameEn: 'SHINSUNG E&G', ticker: '011930', market: 'KOSPI', chain: '장비',
         semType: '클린룸·공조', semTypeEn: '클린룸·공조',
         products: '—', productsEn: '—',
         revenue: '0.43조원', mcapWon: 429193392750, per: null, pbr: 1.82, revTier: 1, partners: []
       },
 
       {
-        id: 'temc_co_ltd', name: 'Ƽ�̿���', nameEn: 'TEMC Co., Ltd.', ticker: '425040', market: 'KOSDAQ', chain: '장비',
+        id: 'temc_co_ltd', name: '티이엠씨', nameEn: 'TEMC Co., Ltd.', ticker: '425040', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.41조원', mcapWon: 414668830800, per: 25.56, pbr: 2.06, revTier: 1, partners: []
@@ -2177,7 +2206,7 @@
       },
 
       {
-        id: 'okins_electronics_co_ltd', name: '��Ų������', nameEn: 'OKins Electronics Co.,Ltd.', ticker: '080580', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'okins_electronics_co_ltd', name: '오킨스전자', nameEn: 'OKins Electronics Co.,Ltd.', ticker: '080580', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: '테스트 소켓·커넥터', semTypeEn: '테스트 소켓·커넥터',
         products: '—', productsEn: '—',
         revenue: '0.40조원', mcapWon: 396088134900, per: 44.29, pbr: 7.49, revTier: 1, partners: []
@@ -2191,21 +2220,21 @@
       },
 
       {
-        id: 'union_semiconductor_equi', name: '���ϼ�', nameEn: 'UNION SEMICONDUCTOR EQUIPMENT&MATERIALS', ticker: '036200', market: 'KOSDAQ', chain: '장비',
+        id: 'union_semiconductor_equi', name: '유니셈', nameEn: 'UNION SEMICONDUCTOR EQUIPMENT&MATERIALS', ticker: '036200', market: 'KOSDAQ', chain: '장비',
         semType: '스크러버·칠러', semTypeEn: '스크러버·칠러',
         products: '—', productsEn: '—',
         revenue: '0.38조원', mcapWon: 382382860810, per: 40.89, pbr: 1.51, revTier: 1, partners: []
       },
 
       {
-        id: 'zeus_co_ltd', name: '���콺', nameEn: 'ZEUS CO., LTD.', ticker: '079370', market: 'KOSDAQ', chain: '장비',
+        id: 'zeus_co_ltd', name: '제우스', nameEn: 'ZEUS CO., LTD.', ticker: '079370', market: 'KOSDAQ', chain: '장비',
         semType: '—', semTypeEn: '—',
         products: '—', productsEn: '—',
         revenue: '0.38조원', mcapWon: 375925918800, per: null, pbr: 1.12, revTier: 1, partners: []
       },
 
       {
-        id: 'mirai_semiconductors_co_', name: '�̷��ݵ�ü', nameEn: 'MIRAI SEMICONDUCTORS CO., LTD.', ticker: '254490', market: 'KOSDAQ', chain: 'IDM',
+        id: 'mirai_semiconductors_co_', name: '미래반도체', nameEn: 'MIRAI SEMICONDUCTORS CO., LTD.', ticker: '254490', market: 'KOSDAQ', chain: 'IDM',
         semType: '반도체 유통·메모리', semTypeEn: '반도체 유통·메모리',
         products: '—', productsEn: '—',
         revenue: '0.37조원', mcapWon: 370334700000, per: 26.2, pbr: 3.36, revTier: 1, partners: []
@@ -2219,14 +2248,14 @@
       },
 
       {
-        id: 'partron_co_ltd', name: '��Ʈ��', nameEn: 'PARTRON CO., LTD', ticker: '091700', market: 'KOSDAQ', chain: '장비',
+        id: 'partron_co_ltd', name: '파트론', nameEn: 'PARTRON CO., LTD', ticker: '091700', market: 'KOSDAQ', chain: '장비',
         semType: '센서·모듈', semTypeEn: '센서·모듈',
         products: '—', productsEn: '—',
         revenue: '0.33조원', mcapWon: 325500000000, per: 9.66, pbr: 0.63, revTier: 1, partners: []
       },
 
       {
-        id: 'device', name: '����̽�', nameEn: 'DEVICE', ticker: '187870', market: 'KOSDAQ', chain: '소재',
+        id: 'device', name: '디바이스', nameEn: 'DEVICE', ticker: '187870', market: 'KOSDAQ', chain: '소재',
         semType: '세정·OLED/반도체 장비', semTypeEn: '세정·OLED/반도체 장비',
         products: '—', productsEn: '—',
         revenue: '0.32조원', mcapWon: 324973416000, per: 18.1, pbr: 1.93, revTier: 1, partners: []
@@ -2254,14 +2283,14 @@
       },
 
       {
-        id: 'knj_co_ltd', name: '���̿�����', nameEn: 'KnJ Co., Ltd.', ticker: '272110', market: 'KOSDAQ', chain: '장비',
+        id: 'knj_co_ltd', name: '케이엔제이', nameEn: 'KnJ Co., Ltd.', ticker: '272110', market: 'KOSDAQ', chain: '장비',
         semType: 'SiC 포커스링·장비', semTypeEn: 'SiC 포커스링·장비',
         products: '—', productsEn: '—',
         revenue: '0.31조원', mcapWon: 309780247000, per: 11.8, pbr: 3.12, revTier: 1, partners: []
       },
 
       {
-        id: 'lbsemicon', name: '엘비세미콘', nameEn: 'LB SEMICON', ticker: '061970', market: 'KOSDAQ', chain: '패키징/테스트',
+        id: 'lbsemicon', name: 'LB세미콘', nameEn: 'LB SEMICON', ticker: '061970', market: 'KOSDAQ', chain: '패키징/테스트',
         semType: 'WLP / 범핑 패키징', semTypeEn: 'WLP / Bumping Packaging',
         products: '웨이퍼 레벨 패키징 (WLP), 범핑, FOWLP', productsEn: 'Wafer Level Packaging (WLP), Bumping, Fan-Out WLP',
         revenue: '0.31조원', mcapWon: 307259101740, per: null, pbr: 1.16, revTier: 1, partners: ['samsung_d', 'qualcomm', 'mediatek']
@@ -2275,70 +2304,70 @@
       },
 
       {
-        id: 'hb_technology_co_ltd', name: 'HB��ũ���', nameEn: 'HB Technology CO.,LTD.', ticker: '078150', market: 'KOSDAQ', chain: '장비',
+        id: 'hb_technology_co_ltd', name: 'HB테크놀러지', nameEn: 'HB Technology CO.,LTD.', ticker: '078150', market: 'KOSDAQ', chain: '장비',
         semType: '검사장비·디스플레이 장비', semTypeEn: '검사장비·디스플레이 장비',
         products: '—', productsEn: '—',
         revenue: '0.27조원', mcapWon: 271657633880, per: 9.16, pbr: 0.91, revTier: 1, partners: []
       },
 
       {
-        id: 'micro_contact_solution_c', name: '����ũ�����ؼ�', nameEn: 'Micro Contact Solution Co.,Ltd.', ticker: '098120', market: 'KOSDAQ', chain: '장비',
+        id: 'micro_contact_solution_c', name: '마이크로컨텍솔', nameEn: 'Micro Contact Solution Co.,Ltd.', ticker: '098120', market: 'KOSDAQ', chain: '장비',
         semType: '반도체 소켓', semTypeEn: '반도체 소켓',
         products: '—', productsEn: '—',
         revenue: '0.25조원', mcapWon: 250629894900, per: 14.84, pbr: 3.08, revTier: 1, partners: []
       },
 
       {
-        id: 'makus', name: '��Ŀ��', nameEn: 'MAKUS', ticker: '093520', market: 'KOSDAQ', chain: 'IDM',
+        id: 'makus', name: '매커스', nameEn: 'MAKUS', ticker: '093520', market: 'KOSDAQ', chain: 'IDM',
         semType: '비메모리 유통·FPGA', semTypeEn: '비메모리 유통·FPGA',
         products: '—', productsEn: '—',
         revenue: '0.24조원', mcapWon: 241012199250, per: 7.78, pbr: 1.4, revTier: 1, partners: []
       },
 
       {
-        id: 'miraecorporation', name: '�̷����', nameEn: 'MiraeCorporation', ticker: '025560', market: 'KOSPI', chain: '패키징/테스트',
+        id: 'miraecorporation', name: '미래산업', nameEn: 'MiraeCorporation', ticker: '025560', market: 'KOSPI', chain: '패키징/테스트',
         semType: '테스트 핸들러', semTypeEn: '테스트 핸들러',
         products: '—', productsEn: '—',
         revenue: '0.24조원', mcapWon: 240541623000, per: 19.72, pbr: 1.72, revTier: 1, partners: []
       },
 
       {
-        id: 'interflex_co_ltd', name: '�����÷���', nameEn: 'INTERFLEX CO., LTD.', ticker: '051370', market: 'KOSDAQ', chain: '부품/기판',
+        id: 'interflex_co_ltd', name: '인터플렉스', nameEn: 'INTERFLEX CO., LTD.', ticker: '051370', market: 'KOSDAQ', chain: '부품/기판',
         semType: 'FPCB·전자부품', semTypeEn: 'FPCB·전자부품',
         products: '—', productsEn: '—',
         revenue: '0.22조원', mcapWon: 221144434560, per: 6.72, pbr: 0.71, revTier: 1, partners: []
       },
 
       {
-        id: 'dnf_co_ltd', name: '�𿣿���', nameEn: 'DNF Co., Ltd.', ticker: '092070', market: 'KOSDAQ', chain: '소재',
+        id: 'dnf_co_ltd', name: '디엔에프', nameEn: 'DNF Co., Ltd.', ticker: '092070', market: 'KOSDAQ', chain: '소재',
         semType: '전구체·공정소재', semTypeEn: '전구체·공정소재',
         products: '—', productsEn: '—',
         revenue: '0.21조원', mcapWon: 213269342940, per: 169.08, pbr: 1.39, revTier: 1, partners: []
       },
 
       {
-        id: 'lot_vacuum_co_ltd', name: '����Ƽ��Ũ', nameEn: 'LOT Vacuum. Co., Ltd.', ticker: '083310', market: 'KOSDAQ', chain: '장비',
+        id: 'lot_vacuum_co_ltd', name: '엘오티베큠', nameEn: 'LOT Vacuum. Co., Ltd.', ticker: '083310', market: 'KOSDAQ', chain: '장비',
         semType: '진공펌프', semTypeEn: '진공펌프',
         products: '—', productsEn: '—',
         revenue: '0.21조원', mcapWon: 212473693690, per: null, pbr: 0.78, revTier: 1, partners: []
       },
 
       {
-        id: 'qualitas_semiconductor_c', name: '����Ÿ���ݵ�ü', nameEn: 'QUALITAS SEMICONDUCTOR CO., LTD.', ticker: '432720', market: 'KOSDAQ', chain: '팹리스',
+        id: 'qualitas_semiconductor_c', name: '퀄리타스반도체', nameEn: 'QUALITAS SEMICONDUCTOR CO., LTD.', ticker: '432720', market: 'KOSDAQ', chain: '팹리스',
         semType: '초고속 인터페이스 IP', semTypeEn: '초고속 인터페이스 IP',
         products: '—', productsEn: '—',
         revenue: '0.20조원', mcapWon: 201605398120, per: null, pbr: 5.53, revTier: 1, partners: []
       },
 
       {
-        id: 'gnbs_eco', name: '���غ񿡽� ����', nameEn: 'GnBS eco', ticker: '382800', market: 'KOSDAQ', chain: '장비',
+        id: 'gnbs_eco', name: '지앤비에스 에코', nameEn: 'GnBS eco', ticker: '382800', market: 'KOSDAQ', chain: '장비',
         semType: '스크러버·친환경 장비', semTypeEn: '스크러버·친환경 장비',
         products: '—', productsEn: '—',
         revenue: '0.20조원', mcapWon: 200535558300, per: 31.66, pbr: 1.7, revTier: 1, partners: []
       },
 
       {
-        id: 'green_resource_co_ltd', name: '�׸����ҽ�', nameEn: 'Green Resource Co.,Ltd', ticker: '402490', market: 'KOSDAQ', chain: '장비',
+        id: 'green_resource_co_ltd', name: '그린리소스', nameEn: 'Green Resource Co.,Ltd', ticker: '402490', market: 'KOSDAQ', chain: '장비',
         semType: '코팅·공정 부품', semTypeEn: '코팅·공정 부품',
         products: '—', productsEn: '—',
         revenue: '0.20조원', mcapWon: 198480743240, per: 18.93, pbr: 2.78, revTier: 1, partners: []
@@ -2366,7 +2395,7 @@
       },
 
       {
-        id: 'rs_automation_co_ltd', name: '�˿���������̼�', nameEn: 'RS Automation Co., Ltd.', ticker: '140670', market: 'KOSDAQ', chain: '장비',
+        id: 'rs_automation_co_ltd', name: '알에스오토메이션', nameEn: 'RS Automation Co., Ltd.', ticker: '140670', market: 'KOSDAQ', chain: '장비',
         semType: '모션제어·자동화', semTypeEn: '모션제어·자동화',
         products: '—', productsEn: '—',
         revenue: '0.17조원', mcapWon: 171283465600, per: null, pbr: 2.92, revTier: 1, partners: []
@@ -2380,28 +2409,28 @@
       },
 
       {
-        id: 'raontech_inc', name: '�����', nameEn: 'RAONTECH INC.', ticker: '418420', market: 'KOSDAQ', chain: '팹리스',
+        id: 'raontech_inc', name: '라온텍', nameEn: 'RAONTECH INC.', ticker: '418420', market: 'KOSDAQ', chain: '팹리스',
         semType: '마이크로디스플레이 팹리스', semTypeEn: '마이크로디스플레이 팹리스',
         products: '—', productsEn: '—',
         revenue: '0.17조원', mcapWon: 166092047530, per: null, pbr: 9.85, revTier: 1, partners: []
       },
 
       {
-        id: 'k_ensol', name: '���̿���', nameEn: 'K-ENSOL', ticker: '053080', market: 'KOSDAQ', chain: '장비',
+        id: 'k_ensol', name: '케이엔솔', nameEn: 'K-ENSOL', ticker: '053080', market: 'KOSDAQ', chain: '장비',
         semType: '클린룸·드라이룸', semTypeEn: '클린룸·드라이룸',
         products: '—', productsEn: '—',
         revenue: '0.15조원', mcapWon: 151837745760, per: null, pbr: 1.22, revTier: 1, partners: []
       },
 
       {
-        id: 'c_g_hi_tech_co_ltd', name: '������������ũ', nameEn: 'C&G Hi Tech Co., Ltd', ticker: '264660', market: 'KOSDAQ', chain: '장비',
+        id: 'c_g_hi_tech_co_ltd', name: '씨앤지하이테크', nameEn: 'C&G Hi Tech Co., Ltd', ticker: '264660', market: 'KOSDAQ', chain: '장비',
         semType: '화학약품 혼합공급장치', semTypeEn: '화학약품 혼합공급장치',
         products: '—', productsEn: '—',
         revenue: '0.15조원', mcapWon: 146303638600, per: 7.24, pbr: 0.99, revTier: 1, partners: []
       },
 
       {
-        id: 'sungdo_engineering_const', name: '�����̿���', nameEn: 'SUNGDO Engineering & Construction', ticker: '037350', market: 'KOSDAQ', chain: '장비',
+        id: 'sungdo_engineering_const', name: '성도이엔지', nameEn: 'SUNGDO Engineering & Construction', ticker: '037350', market: 'KOSDAQ', chain: '장비',
         semType: '클린룸·플랜트', semTypeEn: '클린룸·플랜트',
         products: '—', productsEn: '—',
         revenue: '0.14조원', mcapWon: 142213500000, per: 4.72, pbr: 0.48, revTier: 1, partners: []
@@ -2415,21 +2444,21 @@
       },
 
       {
-        id: 'rorze_systems_corporatio', name: '��ü�ý�����', nameEn: 'RORZE SYSTEMS CORPORATION', ticker: '071280', market: 'KOSDAQ', chain: '장비',
+        id: 'rorze_systems_corporatio', name: '로체시스템즈', nameEn: 'RORZE SYSTEMS CORPORATION', ticker: '071280', market: 'KOSDAQ', chain: '장비',
         semType: '이송·공정 자동화', semTypeEn: '이송·공정 자동화',
         products: '—', productsEn: '—',
         revenue: '0.12조원', mcapWon: 115183420590, per: 9.17, pbr: 0.84, revTier: 1, partners: []
       },
 
       {
-        id: 'imt_co_ltd', name: '���̿�Ƽ', nameEn: 'IMT Co.,Ltd.', ticker: '451220', market: 'KOSDAQ', chain: '소재',
+        id: 'imt_co_ltd', name: '아이엠티', nameEn: 'IMT Co.,Ltd.', ticker: '451220', market: 'KOSDAQ', chain: '소재',
         semType: '건식 세정·레이저 장비', semTypeEn: '건식 세정·레이저 장비',
         products: '—', productsEn: '—',
         revenue: '0.11조원', mcapWon: 112449445080, per: 115.16, pbr: 3.64, revTier: 1, partners: []
       },
 
       {
-        id: 'wot_co_ltd', name: '��Ʈ', nameEn: 'WOT.CO.,LTD.', ticker: '396470', market: 'KOSDAQ', chain: '장비',
+        id: 'wot_co_ltd', name: '워트', nameEn: 'WOT.CO.,LTD.', ticker: '396470', market: 'KOSDAQ', chain: '장비',
         semType: '초정밀 온습도 제어', semTypeEn: '초정밀 온습도 제어',
         products: '—', productsEn: '—',
         revenue: '0.11조원', mcapWon: 111872800000, per: 31.4, pbr: 1.69, revTier: 1, partners: []
@@ -2450,56 +2479,56 @@
       },
 
       {
-        id: 'withtech_inc', name: '������', nameEn: 'WITHTECH, Inc.', ticker: '348350', market: 'KOSDAQ', chain: '장비',
+        id: 'withtech_inc', name: '위드텍', nameEn: 'WITHTECH, Inc.', ticker: '348350', market: 'KOSDAQ', chain: '장비',
         semType: '분자오염 모니터링', semTypeEn: '분자오염 모니터링',
         products: '—', productsEn: '—',
         revenue: '0.09조원', mcapWon: 89009112000, per: 13.54, pbr: 0.69, revTier: 1, partners: []
       },
 
       {
-        id: 'laserssel_co_ltd', name: '��������', nameEn: 'Laserssel Co. Ltd.', ticker: '412350', market: 'KOSDAQ', chain: '장비',
+        id: 'laserssel_co_ltd', name: '레이저쎌', nameEn: 'Laserssel Co. Ltd.', ticker: '412350', market: 'KOSDAQ', chain: '장비',
         semType: '레이저 본딩 장비', semTypeEn: '레이저 본딩 장비',
         products: '—', productsEn: '—',
         revenue: '0.09조원', mcapWon: 85601222260, per: null, pbr: 4.04, revTier: 1, partners: []
       },
 
       {
-        id: 'pro2000', name: '������õ', nameEn: 'PRO2000', ticker: '321260', market: 'KOSDAQ', chain: '장비',
+        id: 'pro2000', name: '프로이천', nameEn: 'PRO2000', ticker: '321260', market: 'KOSDAQ', chain: '장비',
         semType: '디스플레이·반도체 검사부품', semTypeEn: '디스플레이·반도체 검사부품',
         products: '—', productsEn: '—',
         revenue: '0.08조원', mcapWon: 83448568640, per: 20.56, pbr: 1.88, revTier: 1, partners: []
       },
 
       {
-        id: 'genesem_inc', name: '���ʼ�', nameEn: 'Genesem Inc.', ticker: '217190', market: 'KOSDAQ', chain: '후공정',
+        id: 'genesem_inc', name: '제너셈', nameEn: 'Genesem Inc.', ticker: '217190', market: 'KOSDAQ', chain: '후공정',
         semType: '후공정 장비', semTypeEn: '후공정 장비',
         products: '—', productsEn: '—',
         revenue: '0.08조원', mcapWon: 77344114680, per: 82.82, pbr: 1.54, revTier: 1, partners: []
       },
 
       {
-        id: 'surplusglobal_inc', name: '���÷����۷ι�', nameEn: 'SurplusGLOBAL,Inc.', ticker: '140070', market: 'KOSDAQ', chain: '장비',
+        id: 'surplusglobal_inc', name: '서플러스글로벌', nameEn: 'SurplusGLOBAL,Inc.', ticker: '140070', market: 'KOSDAQ', chain: '장비',
         semType: '중고 반도체 장비 유통', semTypeEn: '중고 반도체 장비 유통',
         products: '—', productsEn: '—',
         revenue: '0.07조원', mcapWon: 66615388000, per: null, pbr: 0.35, revTier: 1, partners: []
       },
 
       {
-        id: 'temc_cns', name: 'Ƽ�̿�����������', nameEn: 'TEMC CNS', ticker: '241790', market: 'KOSDAQ', chain: '장비',
+        id: 'temc_cns', name: '티이엠씨씨엔에스', nameEn: 'TEMC CNS', ticker: '241790', market: 'KOSDAQ', chain: '장비',
         semType: '반도체 장비·부품', semTypeEn: '반도체 장비·부품',
         products: '—', productsEn: '—',
         revenue: '0.06조원', mcapWon: 63216646880, per: 14.43, pbr: 0.53, revTier: 1, partners: []
       },
 
       {
-        id: 'russell_co_ltd', name: '����', nameEn: 'RUSSELL CO., LTD.', ticker: '217500', market: 'KOSDAQ', chain: '장비',
+        id: 'russell_co_ltd', name: '러셀', nameEn: 'RUSSELL CO., LTD.', ticker: '217500', market: 'KOSDAQ', chain: '장비',
         semType: '반도체 장비 리퍼비시', semTypeEn: '반도체 장비 리퍼비시',
         products: '—', productsEn: '—',
         revenue: '0.06조원', mcapWon: 61206288000, per: null, pbr: 1.03, revTier: 1, partners: []
       },
 
       {
-        id: 'ia_inc', name: '���̿���', nameEn: 'iA, Inc.', ticker: '038880', market: 'KOSDAQ', chain: '장비',
+        id: 'ia_inc', name: '아이에이', nameEn: 'iA, Inc.', ticker: '038880', market: 'KOSDAQ', chain: '장비',
         semType: '전력·차량용 반도체', semTypeEn: '전력·차량용 반도체',
         products: '—', productsEn: '—',
         revenue: '0.03조원', mcapWon: 25173318390, per: null, pbr: 0.47, revTier: 1, partners: []
