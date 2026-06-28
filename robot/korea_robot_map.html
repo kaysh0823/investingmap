@@ -1313,6 +1313,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
 
@@ -2221,6 +2250,7 @@
     function renderTable() {
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
+        if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.shouldHideFromTable && InvestingMapLiveQuotes.shouldHideFromTable(c)) return false;
         if (currentChain !== 'all' && c.chain !== currentChain) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {

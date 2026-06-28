@@ -247,6 +247,7 @@
     function renderTable() {
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
+        if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.shouldHideFromTable && InvestingMapLiveQuotes.shouldHideFromTable(c)) return false;
         if (!chainMatches(c, currentChain)) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
@@ -631,12 +632,16 @@
       if (!window.InvestingMapHeatmap) return;
       var el = document.getElementById('heatmap-root');
       if (!el) return;
+      var tHm = T[lang];
       InvestingMapHeatmap.render({
         container: el,
         legend: document.getElementById('heatmap-legend'),
         companies: koreanCompanies,
         chainColors: CHAIN_COLORS,
         lang: lang,
+        chainLabel: function (ch) {
+          return (tHm.chainFilter && tHm.chainFilter[ch]) || (tHm.chainLabel && tHm.chainLabel[ch]) || ch;
+        },
         formatMcap: fmtMcapTableCell,
         onSelect: function (c) {
           resetTableFilters();
@@ -663,10 +668,13 @@
       if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
     }
 
-    loadFx().then(function () {
+    loadFx().catch(function () { }).finally(function () {
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
-      applyLang();
+      try { applyLang(); } catch (e) {
+        console.error('applyLang failed', e);
+        try { renderTable(); } catch (e2) { console.error('renderTable failed', e2); }
+      }
       if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
         InvestingMapLiveQuotes.start({
           getCompanies: function () { return koreanCompanies; },

@@ -63,6 +63,12 @@
     return calcQuotePosition(c.quoteLast, c.quoteHi52, c.quoteLo52);
   }
 
+  /** Hide table rows when KRX quotes merged with a zero last / 52w high / 52w low. */
+  function shouldHideFromTable(c) {
+    if (!c) return false;
+    return c.quoteLast === 0 || c.quoteHi52 === 0 || c.quoteLo52 === 0;
+  }
+
   function mergeCompanies(companies, items) {
     if (!companies || !items) return;
     for (var i = 0; i < companies.length; i++) {
@@ -248,6 +254,7 @@
     formatQuotesAsofDisplay: formatQuotesAsofDisplay,
     start: start,
     mergeCompanies: mergeCompanies,
+    shouldHideFromTable: shouldHideFromTable,
     calcQuotePosition: calcQuotePosition,
     resolveQuotePosition: resolveQuotePosition,
     formatWon: formatWon,
