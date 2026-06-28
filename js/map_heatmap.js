@@ -46,6 +46,58 @@
     };
   }
 
+  function injectTooltipStyles() {
+    if (document.getElementById('im-hm-tooltip-css')) return;
+    var el = document.createElement('style');
+    el.id = 'im-hm-tooltip-css';
+    el.textContent =
+      '.im-hm-tooltip{position:fixed;z-index:9999;pointer-events:none;' +
+      'padding:6px 10px;border-radius:6px;font-size:12px;font-weight:600;line-height:1.4;' +
+      'background:var(--surface2,#21262d);color:var(--text,#e6edf3);' +
+      'border:1px solid var(--border,#30363d);box-shadow:0 4px 14px rgba(0,0,0,.35);' +
+      'max-width:360px;display:none}';
+    document.head.appendChild(el);
+  }
+
+  function getTooltip() {
+    injectTooltipStyles();
+    var tt = document.getElementById('im-hm-tooltip');
+    if (!tt) {
+      tt = document.createElement('div');
+      tt.id = 'im-hm-tooltip';
+      tt.className = 'im-hm-tooltip';
+      tt.setAttribute('role', 'tooltip');
+      document.body.appendChild(tt);
+    }
+    return tt;
+  }
+
+  function showTooltip(text, ev) {
+    var tt = getTooltip();
+    tt.textContent = text;
+    tt.style.display = 'block';
+    moveTooltip(ev);
+  }
+
+  function moveTooltip(ev) {
+    var tt = document.getElementById('im-hm-tooltip');
+    if (!tt || tt.style.display === 'none') return;
+    var pad = 12;
+    var x = ev.clientX + pad;
+    var y = ev.clientY - pad;
+    var rect = tt.getBoundingClientRect();
+    if (x + rect.width > window.innerWidth - 8) x = ev.clientX - rect.width - pad;
+    if (y + rect.height > window.innerHeight - 8) y = ev.clientY - rect.height - pad;
+    if (y < 8) y = 8;
+    tt.style.left = x + 'px';
+    tt.style.top = y + 'px';
+  }
+
+  function hideTooltip() {
+    var tt = document.getElementById('im-hm-tooltip');
+    if (tt) tt.style.display = 'none';
+  }
+
   function renderLegend(el, chains, chainColors, lang, chainLabelFn) {
     if (!el) return;
     el.innerHTML = chains
@@ -74,6 +126,7 @@
     var chainLabelFn = opts.chainLabel;
 
     container.innerHTML = '';
+    hideTooltip();
     var w = container.clientWidth || 800;
     var h = container.clientHeight || 480;
     if (w < 200) w = 800;
@@ -158,8 +211,8 @@
 
       var nm = displayName(leaf, lang);
       var mcap = formatMcap(leaf);
-      var tip = nm + ' (' + (leaf.ticker || '') + ') — ' + mcap;
-      g.attr('title', tip);
+      g.attr('data-company-name', nm);
+      g.attr('aria-label', nm + ' (' + (leaf.ticker || '') + ')');
 
       if (tw > 56 && th > 36) {
         g.append('text')
@@ -178,10 +231,19 @@
       }
     });
 
-    nodes.filter(function (d) { return d.depth === 2; }).on('click', function (ev, d) {
-      if (!d.data.company || !opts.onSelect) return;
-      opts.onSelect(d.data.company);
-    });
+    nodes.filter(function (d) { return d.depth === 2 && d.data.company; })
+      .on('mouseenter', function (ev, d) {
+        showTooltip(displayName(d.data.company, lang), ev);
+      })
+      .on('mousemove', function (ev) {
+        moveTooltip(ev);
+      })
+      .on('mouseleave', hideTooltip)
+      .on('click', function (ev, d) {
+        hideTooltip();
+        if (!opts.onSelect) return;
+        opts.onSelect(d.data.company);
+      });
   }
 
   global.InvestingMapHeatmap = { render: render };

@@ -180,14 +180,15 @@
       font-size: 24px;
       font-weight: 700;
       letter-spacing: -.4px;
-      max-width: min(720px, 92%)
+      max-width: min(920px, 92%)
     }
 
     .site-header p {
-      margin-top: 8px;
+      margin-top: 10px;
       color: var(--text-muted);
       font-size: 14px;
-      max-width: min(640px, 92%)
+      line-height: 1.65;
+      max-width: min(920px, 92%)
     }
 
     .hub-main {
@@ -269,8 +270,76 @@
 
     .hub-intro {
       max-width: 920px;
-      margin: 0 auto 28px;
+      margin: 28px auto 0;
       padding: 0 4px
+    }
+
+    .hub-principles-details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 4px 18px 0
+    }
+
+    .hub-principles-summary {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      padding: 12px 0;
+      margin: 0
+    }
+
+    .hub-principles-summary::-webkit-details-marker {
+      display: none
+    }
+
+    .hub-principles-summary::before {
+      content: "\25B8";
+      font-size: 11px;
+      color: var(--accent);
+      transition: transform .2s ease;
+      flex-shrink: 0
+    }
+
+    .hub-principles-details[open] .hub-principles-summary::before {
+      transform: rotate(90deg)
+    }
+
+    .hub-principles-summary:hover {
+      color: var(--accent)
+    }
+
+    .hub-principles-body {
+      padding: 0 0 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65
+    }
+
+    .hub-principles-body ul {
+      margin: 0 0 12px 1.2rem
+    }
+
+    .hub-principles-body p {
+      margin-bottom: 12px
+    }
+
+    .hub-principles-body a {
+      color: var(--accent)
+    }
+
+    .hub-intro-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 4px;
+      font-size: 13px
     }
 
     .hub-intro h2 {
@@ -425,6 +494,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
   </style>
@@ -449,24 +547,6 @@
   </header>
 
   <main class="hub-main">
-    <section class="hub-intro" id="hub-intro" aria-labelledby="hub-intro-title">
-      <h2 id="hub-intro-title">한국 상장사 산업 지도 허브</h2>
-      <p id="hub-intro-p1">Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 <strong>산업 밸류체인</strong> 관점에서 이해하도록 돕는 편집형 정보 사이트입니다. 일곱 개 산업별로 기업 표, 시가총액·PER·PBR·52주 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 전용 해설과 데이터 출처를 명시합니다.</p>
-      <h3 id="hub-intro-h-method">데이터·편집 원칙</h3>
-      <ul id="hub-intro-list">
-        <li>정량 데이터(시총·PER·PBR·시세)는 KRX·Naver Finance 등 공개 출처를 기준일에 맞춰 반영합니다.</li>
-        <li>벨류체인 분류·글로벌 거래처·peer 링크는 편집팀이 공시·보도를 바탕으로 작성한 참고 자료입니다.</li>
-        <li>투자 권유·수익 보장이 아니며, 최종 판단은 이용자 책임입니다.</li>
-      </ul>
-      <p id="hub-intro-p2">아래 카드에서 산업을 선택하세요. 이용 방법·면책·개인정보는 하단 링크에서 확인할 수 있습니다.</p>
-      <nav class="hub-intro-links" aria-label="Site guides">
-        <a href="about.html" id="hub-link-about">소개</a>
-        <a href="editorial-policy.html" id="hub-link-editorial">편집·검증 정책</a>
-        <a href="faq.html" id="hub-link-faq">FAQ</a>
-        <a href="privacy.html" id="hub-link-privacy">개인정보처리방침</a>
-        <a href="disclaimer.html" id="hub-link-disclaimer">면책 고지</a>
-      </nav>
-    </section>
     <div class="hub-grid">
       <a class="hub-card" id="hub-link-semi" href="semiconductor/korea_semiconductor_map.html">
         <span class="hub-card-emoji" aria-hidden="true">💠</span>
@@ -524,6 +604,26 @@
         <span class="hub-card-cta" id="card-kculture-cta">Open map →</span>
       </a>
     </div>
+    <section class="hub-intro" id="hub-principles" aria-labelledby="hub-principles-summary">
+      <details class="hub-principles-details">
+        <summary class="hub-principles-summary" id="hub-principles-summary">데이터·편집 원칙</summary>
+        <div class="hub-principles-body">
+          <ul id="hub-intro-list">
+            <li>정량 데이터(시총·PER·PBR·시세)는 KRX·Naver Finance 등 공개 출처를 기준일에 맞춰 반영합니다.</li>
+            <li>벨류체인 분류·글로벌 거래처·peer 링크는 편집팀이 공시·보도를 바탕으로 작성한 참고 자료입니다.</li>
+            <li>투자 권유·수익 보장이 아니며, 최종 판단은 이용자 책임입니다.</li>
+          </ul>
+          <p id="hub-intro-p2">아래 카드에서 산업을 선택하세요. 이용 방법·면책·개인정보는 하단 링크에서 확인할 수 있습니다.</p>
+          <nav class="hub-intro-links" aria-label="Site guides">
+            <a href="about.html" id="hub-link-about">소개</a>
+            <a href="editorial-policy.html" id="hub-link-editorial">편집·검증 정책</a>
+            <a href="faq.html" id="hub-link-faq">FAQ</a>
+            <a href="privacy.html" id="hub-link-privacy">개인정보처리방침</a>
+            <a href="disclaimer.html" id="hub-link-disclaimer">면책 고지</a>
+          </nav>
+        </div>
+      </details>
+    </section>
     <p class="hub-foot" id="hub-foot">On each map: table &amp; graph, Korean/English, and dark/light theme.</p>
   </main>
 
@@ -561,7 +661,7 @@
         introLi1: '정량 데이터(시총·PER·PBR·시세)는 KRX·Naver Finance 등 공개 출처를 기준일에 맞춰 반영합니다.',
         introLi2: '벨류체인 분류·글로벌 거래처·peer 링크는 편집팀이 공시·보도를 바탕으로 작성한 참고 자료입니다.',
         introLi3: '투자 권유·수익 보장이 아니며, 최종 판단은 이용자 책임입니다.',
-        introP2: '아래 카드에서 산업을 선택하세요. 이용 방법·면책·개인정보는 하단 링크에서 확인할 수 있습니다.',
+        introP2: '산업 카드를 선택해 해당 지도로 이동하세요. 이용 방법·면책·개인정보는 아래 링크에서 확인할 수 있습니다.',
         linkAbout: '소개',
         linkEditorial: '편집·검증 정책',
         linkFaq: 'FAQ',
@@ -610,7 +710,7 @@
         introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
         introLi2: 'Chain tags and global links are editorial reference networks from filings and public sources.',
         introLi3: 'Not investment advice; you are responsible for decisions.',
-        introP2: 'Pick an industry card below. See About, FAQ, Privacy, and Disclaimer for policies.',
+        introP2: 'Pick an industry card above. See About, FAQ, Privacy, and Disclaimer via the links below.',
         linkAbout: 'About',
         linkEditorial: 'Editorial policy',
         linkFaq: 'FAQ',
@@ -694,8 +794,8 @@
       document.getElementById('hub-link-robot').href = 'robot/korea_robot_map.html' + ql;
       document.getElementById('hub-link-kculture').href = 'kculture/korea_kculture_map.html' + ql;
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + ql;
-      document.getElementById('hdr-title').textContent = t.title;
-      document.getElementById('hdr-subtitle').textContent = t.subtitle;
+      document.getElementById('hdr-title').textContent = t.introTitle;
+      document.getElementById('hdr-subtitle').textContent = t.introP1;
       const asofHub = document.getElementById('data-asof');
       if (asofHub) asofHub.textContent = t.updateAsOf;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
@@ -729,9 +829,7 @@
       document.getElementById('card-energy-map').textContent = t.energyMapLine;
       document.getElementById('card-energy-cta').textContent = t.energyCta;
       const qlNav = '?lang=' + encodeURIComponent(lang);
-      document.getElementById('hub-intro-title').textContent = t.introTitle;
-      document.getElementById('hub-intro-p1').textContent = t.introP1;
-      document.getElementById('hub-intro-h-method').textContent = t.introHMethod;
+      document.getElementById('hub-principles-summary').textContent = t.introHMethod;
       const li = document.getElementById('hub-intro-list');
       if (li) li.innerHTML = '<li>' + t.introLi1 + '</li><li>' + t.introLi2 + '</li><li>' + t.introLi3 + '</li>';
       document.getElementById('hub-intro-p2').textContent = t.introP2;
@@ -749,7 +847,7 @@
       document.title = lang === 'en'
         ? 'Investing Map — Korea industry maps hub'
         : 'Investing Map — 한국 산업 투자 지도 허브';
-      if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: t.subtitle });
+      if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: t.introP1 });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
       syncThemeToggle();
     }
