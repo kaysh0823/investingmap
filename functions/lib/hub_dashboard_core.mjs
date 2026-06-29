@@ -3,11 +3,11 @@
  */
 
 import { getCachedNaverQuotes } from './naver_quote_store.mjs';
-import { getAuthKey, mergeKrxYoyFull } from './krx_yoy.mjs';
+import { getAuthKey, mergeKrxYoy } from './krx_yoy.mjs';
 
 export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
 
-const QUOTE_CONCURRENCY = 16;
+const QUOTE_CONCURRENCY = 24;
 
 export function normalizeTicker(ticker) {
   if (ticker == null || ticker === '') return null;
@@ -142,9 +142,14 @@ function buildTop10(hubIndex, items) {
  */
 export async function buildHubDashboard(hubIndex, env) {
   const codes = collectUniqueCodes(hubIndex);
-  const cached = await getCachedNaverQuotes(codes, { concurrency: QUOTE_CONCURRENCY });
+  const cached = await getCachedNaverQuotes(codes, {
+    concurrency: QUOTE_CONCURRENCY,
+    maxFetches: 45,
+  });
+  const top10 = buildTop10(hubIndex, cached.items);
+
   const authKey = getAuthKey(env);
-  const items = await mergeKrxYoyFull(codes, cached.items, authKey);
+  const items = await mergeKrxYoy(codes, cached.items, authKey, true);
 
   return {
     asOf: new Date().toISOString(),
@@ -154,7 +159,7 @@ export async function buildHubDashboard(hubIndex, env) {
     cacheHits: cached.cacheHits,
     naverFetched: cached.fetched,
     sectors: buildSectors(hubIndex, items),
-    top10: buildTop10(hubIndex, items),
+    top10,
   };
 }
 

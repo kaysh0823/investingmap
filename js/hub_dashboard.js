@@ -6,6 +6,8 @@
 
   var SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
   var HUB_API_TIMEOUT_MS = 90000;
+  var HUB_API_RETRIES = 2;
+  var HUB_API_RETRY_DELAY_MS = 2500;
   var hubData = null;
   var dashboardData = null;
   var quotesLoading = false;
@@ -140,8 +142,13 @@
       }, ms);
       fetch(url, { cache: 'default', credentials: 'same-origin' })
         .then(function (r) {
-          if (!r.ok) throw new Error('hub_dashboard_' + r.status);
-          return r.json();
+          return r.json().then(function (j) {
+            if (!r.ok) {
+              if (j && j.top10 && j.top10.length) return j;
+              throw new Error('hub_dashboard_' + r.status);
+            }
+            return j;
+          });
         })
         .then(function (j) {
           if (done) return;
@@ -155,6 +162,17 @@
           clearTimeout(tid);
           reject(err);
         });
+    });
+  }
+
+  function fetchDashboardWithRetry(url, ms, retriesLeft) {
+    return fetchWithTimeout(url, ms).catch(function (err) {
+      if (retriesLeft <= 0) throw err;
+      return new Promise(function (resolve) {
+        setTimeout(resolve, HUB_API_RETRY_DELAY_MS);
+      }).then(function () {
+        return fetchDashboardWithRetry(url, ms, retriesLeft - 1);
+      });
     });
   }
 
@@ -324,7 +342,7 @@
     }
 
     quotesLoading = true;
-    return fetchWithTimeout(api, HUB_API_TIMEOUT_MS)
+    return fetchDashboardWithRetry(api, HUB_API_TIMEOUT_MS, HUB_API_RETRIES)
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
         dashboardData = j;

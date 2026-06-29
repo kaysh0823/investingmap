@@ -17,6 +17,8 @@ function corsHeaders(request) {
   };
 }
 
+const HUB_CACHE_PATH = '/api/hub_dashboard/cache/v1';
+
 export async function onRequest(context) {
   const { request, env } = context;
   const ch = corsHeaders(request);
@@ -27,19 +29,44 @@ export async function onRequest(context) {
     return new Response('Method Not Allowed', { status: 405, headers: ch });
   }
 
+  const url = new URL(request.url);
   const session = krxSessionInfo();
+  const nocache = url.searchParams.get('nocache') === '1';
+
+  if (!nocache) {
+    try {
+      const cache = caches.default;
+      const cacheReq = new Request(new URL(HUB_CACHE_PATH, url.origin).toString());
+      const hit = await cache.match(cacheReq);
+      if (hit) {
+        const headers = new Headers(hit.headers);
+        for (const [k, v] of Object.entries(ch)) headers.set(k, v);
+        headers.set('X-Hub-Cache', 'HIT');
+        return new Response(hit.body, { status: hit.status, headers });
+      }
+    } catch {
+      /* ignore cache read */
+    }
+  }
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
     const payload = await buildHubDashboard(hubIndex, env);
-    const maxAge = session.regular ? 300 : 86400;
-    return new Response(JSON.stringify(payload), {
+    const maxAge = session.regular ? 300 : 1800;
+    const response = new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
         'Content-Type': 'application/json; charset=utf-8',
         'Cache-Control': `public, max-age=${maxAge}`,
+        'X-Hub-Cache': 'MISS',
       },
     });
+    if (!nocache && payload.top10 && payload.top10.length > 0) {
+      const cache = caches.default;
+      const cacheReq = new Request(new URL(HUB_CACHE_PATH, url.origin).toString());
+      context.waitUntil(cache.put(cacheReq, response.clone()));
+    }
+    return response;
   } catch (e) {
     return new Response(
       JSON.stringify({

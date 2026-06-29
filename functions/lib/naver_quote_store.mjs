@@ -70,10 +70,11 @@ function shouldFetchFromNaver(entry) {
 
 /**
  * @param {string} code
+ * @param {{ fetchBudget?: { left: number } }} [opts]
  * @returns {Promise<{ quote: object, fromCache: boolean, fetched: boolean }>}
  */
-export async function getCachedNaverQuote(code) {
-  const regular = isKrxRegularSession();
+export async function getCachedNaverQuote(code, opts) {
+  const budget = opts && opts.fetchBudget;
   const entry = await loadEntry(code);
 
   if (!shouldFetchFromNaver(entry)) {
@@ -83,7 +84,15 @@ export async function getCachedNaverQuote(code) {
     return { quote: emptyQuote(), fromCache: false, fetched: false };
   }
 
+  if (budget && budget.left <= 0) {
+    if (entry) {
+      return { quote: { ...emptyQuote(), ...entry.quote }, fromCache: true, fetched: false };
+    }
+    return { quote: emptyQuote(), fromCache: false, fetched: false };
+  }
+
   try {
+    if (budget) budget.left--;
     const fresh = await fetchNaverQuote(code);
     const next = entryFromQuote(mergeNaverIntoQuote(emptyQuote(), fresh, { preferNaverLast: true, preferNaverFundamentals: true }));
     await saveEntry(code, next);
@@ -98,10 +107,12 @@ export async function getCachedNaverQuote(code) {
 
 /**
  * @param {string[]} codes
- * @param {{ concurrency?: number }} [opts]
+ * @param {{ concurrency?: number, maxFetches?: number }} [opts]
  */
 export async function getCachedNaverQuotes(codes, opts) {
   const concurrency = (opts && opts.concurrency) || 4;
+  const maxFetches = opts && typeof opts.maxFetches === 'number' ? opts.maxFetches : Infinity;
+  const fetchBudget = { left: maxFetches };
   const items = {};
   let cacheHits = 0;
   let fetched = 0;
@@ -110,7 +121,7 @@ export async function getCachedNaverQuotes(codes, opts) {
     const batch = codes.slice(i, i + concurrency);
     const rows = await Promise.all(
       batch.map(async (code) => {
-        const r = await getCachedNaverQuote(code);
+        const r = await getCachedNaverQuote(code, { fetchBudget });
         return { code, ...r };
       }),
     );
