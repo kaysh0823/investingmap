@@ -5,11 +5,9 @@
   'use strict';
 
   var SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
-  var CHUNK_SIZE = 80;
-  var QUOTE_CHUNK_TIMEOUT_MS = 25000;
+  var HUB_API_TIMEOUT_MS = 90000;
   var hubData = null;
-  var quoteItems = {};
-  var quotesMeta = { asOf: '', regularSession: null };
+  var dashboardData = null;
   var quotesLoading = false;
   var fxRate = 1400;
 
@@ -62,19 +60,8 @@
     return I18N[lang] || I18N.ko;
   }
 
-  function normalizeTicker(ticker) {
-    if (ticker == null || ticker === '' || ticker === 'UNLISTED') return null;
-    var s = String(ticker).trim().toUpperCase();
-    if (/^[0-9A-Z]{6}$/.test(s)) return s;
-    var alnum = s.replace(/[^0-9A-Z]/g, '');
-    if (alnum.length > 6) return alnum.slice(0, 6);
-    if (/^[0-9]+$/.test(alnum)) return alnum.padStart(6, '0');
-    if (alnum.length === 6) return alnum;
-    return null;
-  }
-
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v2')) return;
+    if (document.getElementById('im-hub-dashboard-css-v3')) return;
     var css =
       '.hub-sector-pulse{margin-bottom:22px}' +
       '.hub-pulse-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;margin-bottom:12px}' +
@@ -112,9 +99,9 @@
       '.hub-card-keyplayers{font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4;word-break:keep-all}' +
       '.hub-card-keyplayers strong{color:var(--text);font-weight:600}' +
       '@media (max-width:1200px){.hub-pulse-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}' +
-      '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch}.hub-pulse-card{flex:0 0 132px}}';
+      '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}}';
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v2';
+    el.id = 'im-hub-dashboard-css-v3';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -132,19 +119,15 @@
       });
   }
 
-  function getApiBase() {
-    if (global.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getApiBase) {
-      return InvestingMapLiveQuotes.getApiBase();
+  function hubDashboardUrl() {
+    var meta = document.querySelector('meta[name="investingmap-hub-api"]');
+    var custom = meta && meta.getAttribute('content') ? String(meta.getAttribute('content')).trim() : '';
+    if (custom) return custom.replace(/\/+$/, '');
+    if (typeof window !== 'undefined' && window.location && window.location.protocol &&
+        window.location.protocol.indexOf('http') === 0) {
+      return '/api/hub_dashboard';
     }
-    return '/api/quotes';
-  }
-
-  function quotesUrl(base, query) {
-    var q = query.charAt(0) === '?' ? query : '?' + query;
-    if (/^https?:\/\//i.test(base)) return base.replace(/\/+$/, '') + q;
-    var origin = window.location && window.location.origin ? window.location.origin : '';
-    var path = base.charAt(0) === '/' ? base : '/' + base;
-    return origin + path.replace(/\/+$/, '') + q;
+    return '';
   }
 
   function fetchWithTimeout(url, ms) {
@@ -155,8 +138,11 @@
         done = true;
         reject(new Error('timeout'));
       }, ms);
-      fetch(url, { cache: 'no-store', credentials: 'same-origin' })
-        .then(function (r) { return r.json(); })
+      fetch(url, { cache: 'default', credentials: 'same-origin' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('hub_dashboard_' + r.status);
+          return r.json();
+        })
         .then(function (j) {
           if (done) return;
           done = true;
@@ -172,111 +158,13 @@
     });
   }
 
-  function mergeQuoteChunk(target, items, yoyOnly) {
-    for (var k in items) {
-      if (!Object.prototype.hasOwnProperty.call(items, k)) continue;
-      var incoming = items[k];
-      if (yoyOnly && target[k]) {
-        if (incoming.yoyReturnPct != null) {
-          target[k] = Object.assign({}, target[k], { yoyReturnPct: incoming.yoyReturnPct });
-        }
-        continue;
-      }
-      target[k] = incoming;
-    }
-  }
-
-  function fetchAllQuotes(codes, opts) {
-    opts = opts || {};
-    var base = getApiBase();
-    if (!base || !codes.length) {
-      return Promise.resolve({ items: {}, asOf: '', regularSession: null });
-    }
-    var warm = opts.warm ? '&warm=1' : '';
-    var yoyOnly = !!opts.yoyOnly;
-    var onProgress = opts.onProgress;
-    var merged = yoyOnly ? quoteItems : {};
-    var asOf = '';
-    var regularSession = null;
-    var chain = Promise.resolve();
-    for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
-      (function (chunk) {
-        chain = chain.then(function () {
-          var q = 'codes=' + chunk.map(encodeURIComponent).join(',') + warm;
-          return fetchWithTimeout(quotesUrl(base, q), QUOTE_CHUNK_TIMEOUT_MS)
-            .catch(function () { return { items: {} }; });
-        }).then(function (j) {
-          if (j && j.asOf) asOf = j.asOf;
-          if (j && j.regularSession != null) regularSession = j.regularSession;
-          mergeQuoteChunk(merged, (j && j.items) || {}, yoyOnly);
-          if (onProgress) {
-            onProgress({ items: merged, asOf: asOf, regularSession: regularSession });
-          }
-        });
-      })(codes.slice(i, i + CHUNK_SIZE));
-    }
-    return chain.then(function () {
-      return { items: merged, asOf: asOf, regularSession: regularSession };
-    });
-  }
-
-  function collectQuoteCodes() {
-    var codes = [];
-    var seen = {};
-    allCompaniesFlat().forEach(function (c) {
-      var k = normalizeTicker(c.ticker);
-      if (!k || seen[k]) return;
-      seen[k] = 1;
-      codes.push(k);
-    });
-    return codes;
-  }
-
-  function applyQuotesPayload(j) {
-    quoteItems = j.items || {};
-    quotesMeta.asOf = j.asOf || '';
-    if (j.regularSession != null) quotesMeta.regularSession = j.regularSession;
-  }
-
-  function allCompaniesFlat() {
-    if (!hubData || !hubData.sectors) return [];
-    var out = [];
-    SECTOR_ORDER.forEach(function (sid) {
-      var block = hubData.sectors[sid];
-      if (!block || !block.companies) return;
-      block.companies.forEach(function (c) {
-        out.push({
-          ticker: c.ticker,
-          name: c.name,
-          nameEn: c.nameEn,
-          mcapWon: c.mcapWon,
-          market: c.market,
-          sectorId: sid,
-          mapPath: block.meta && block.meta.map,
-        });
-      });
-    });
-    return out;
-  }
-
-  function weightedSectorReturn(companies, items) {
-    var totalMcap = 0;
-    var weighted = 0;
-    var used = 0;
-    companies.forEach(function (c) {
-      var key = normalizeTicker(c.ticker);
-      if (!key) return;
-      var q = items[key];
-      var ret = q && typeof q.yoyReturnPct === 'number' && isFinite(q.yoyReturnPct) ? q.yoyReturnPct : null;
-      if (ret == null) return;
-      var mcap = (q && q.mcapWon > 0) ? q.mcapWon : c.mcapWon;
-      if (!mcap) return;
-      totalMcap += mcap;
-      weighted += mcap * ret;
-      used++;
-    });
-    if (totalMcap <= 0) return { pct: null, used: used };
-    return { pct: weighted / totalMcap, used: used };
+  function loadFx() {
+    return fetch('data/fx_usdkrw.json', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (j && typeof j.rate === 'number' && j.rate > 0) fxRate = j.rate;
+      })
+      .catch(function () {});
   }
 
   function formatMcapWithWeight(won, weightPct, lang) {
@@ -289,15 +177,6 @@
     }
     var trimmed = Math.round(won / 1e10) * 1e10;
     return (trimmed / 1e12).toFixed(2) + '\uC870\uC6D0 (' + weight + ')';
-  }
-
-  function loadFx() {
-    return fetch('data/fx_usdkrw.json', { cache: 'no-store' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        if (j && typeof j.rate === 'number' && j.rate > 0) fxRate = j.rate;
-      })
-      .catch(function () {});
   }
 
   function formatPct(n, lang) {
@@ -316,68 +195,6 @@
       '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts + '"/></svg>';
   }
 
-  function totalMarketMcap() {
-    var sum = 0;
-    allCompaniesFlat().forEach(function (c) {
-      sum += c.mcapWon || 0;
-    });
-    return sum;
-  }
-
-  function renderPulse(lang) {
-    var wrap = document.getElementById('hub-sector-pulse-body');
-    if (!wrap || !hubData) return;
-    var labels = t(lang);
-    var totalMcap = totalMarketMcap();
-    var ql = '?lang=' + encodeURIComponent(lang);
-    var cards = SECTOR_ORDER.map(function (sid) {
-      var block = hubData.sectors[sid];
-      if (!block) return '';
-      var meta = block.meta || {};
-      var label = lang === 'en' ? meta.en : meta.ko;
-      var ret = weightedSectorReturn(block.companies, quoteItems);
-      var sectorMcap = block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
-      var weightPct = totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0;
-      var cls = 'hub-pulse-card-ret is-flat';
-      if (ret.pct != null) cls = ret.pct > 0 ? 'hub-pulse-card-ret is-up' : ret.pct < 0 ? 'hub-pulse-card-ret is-down' : 'hub-pulse-card-ret is-flat';
-      var href = (meta.map || 'index.html') + ql;
-      var countLabel = block.companies.length + (lang === 'en' ? '' : '\uAC1C');
-      return '<a class="hub-pulse-card" href="' + href + '">' +
-        '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">' + (meta.icon || '') + '</span><span>' + label + '</span></div>' +
-        '<div class="' + cls + '">' + formatPct(ret.pct, lang) + '</div>' +
-        sparklineSvg(ret.pct) +
-        '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
-        '<div class="hub-pulse-mcap-val">' + formatMcapWithWeight(sectorMcap, weightPct, lang) + '</div>' +
-        '<div class="hub-pulse-count">' + countLabel + '</div>' +
-        '</a>';
-    }).join('');
-
-    wrap.innerHTML = '<div class="hub-pulse-cards">' + cards + '</div>';
-
-    var sess = document.getElementById('hub-pulse-session');
-    if (sess) {
-      if (quotesMeta.regularSession === true) sess.textContent = labels.sessionLive;
-      else if (quotesMeta.regularSession === false) sess.textContent = labels.sessionClosed;
-      else sess.textContent = '';
-    }
-  }
-
-  function resolvePosition(c, q) {
-    var LQ = global.InvestingMapLiveQuotes;
-    if (LQ && LQ.calcQuotePosition) {
-      var last = q && q.last != null ? q.last : null;
-      var hi = q && q.high52w != null ? q.high52w : null;
-      var lo = q && q.low52w != null ? q.low52w : null;
-      return LQ.calcQuotePosition(last, hi, lo);
-    }
-    return null;
-  }
-
-  function shouldHide(q) {
-    if (!q) return true;
-    return q.last === 0 || q.high52w === 0 || q.low52w === 0;
-  }
-
   function formatPosition(n) {
     if (n == null || !isFinite(n)) return I18N.ko.noData;
     if (n === 100) return '100%';
@@ -392,23 +209,53 @@
     return 'is-low';
   }
 
+  function renderPulse(lang) {
+    var wrap = document.getElementById('hub-sector-pulse-body');
+    if (!wrap || !hubData) return;
+    var labels = t(lang);
+    var ql = '?lang=' + encodeURIComponent(lang);
+    var sectors = dashboardData && dashboardData.sectors ? dashboardData.sectors : {};
+    var cards = SECTOR_ORDER.map(function (sid) {
+      var block = hubData.sectors[sid];
+      if (!block) return '';
+      var meta = block.meta || {};
+      var label = lang === 'en' ? meta.en : meta.ko;
+      var pulse = sectors[sid] || {};
+      var retPct = pulse.yoyReturnPct != null ? pulse.yoyReturnPct : null;
+      var sectorMcap = pulse.mcapWon != null ? pulse.mcapWon :
+        block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
+      var weightPct = pulse.weightPct != null ? pulse.weightPct : 0;
+      var cls = 'hub-pulse-card-ret is-flat';
+      if (retPct != null) cls = retPct > 0 ? 'hub-pulse-card-ret is-up' : retPct < 0 ? 'hub-pulse-card-ret is-down' : 'hub-pulse-card-ret is-flat';
+      var href = (meta.map || 'index.html') + ql;
+      var countLabel = (pulse.listingCount != null ? pulse.listingCount : block.companies.length) +
+        (lang === 'en' ? '' : '\uAC1C');
+      return '<a class="hub-pulse-card" href="' + href + '">' +
+        '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">' + (meta.icon || '') + '</span><span>' + label + '</span></div>' +
+        '<div class="' + cls + '">' + formatPct(retPct, lang) + '</div>' +
+        sparklineSvg(retPct) +
+        '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
+        '<div class="hub-pulse-mcap-val">' + formatMcapWithWeight(sectorMcap, weightPct, lang) + '</div>' +
+        '<div class="hub-pulse-count">' + countLabel + '</div>' +
+        '</a>';
+    }).join('');
+
+    wrap.innerHTML = '<div class="hub-pulse-cards">' + cards + '</div>';
+
+    var sess = document.getElementById('hub-pulse-session');
+    if (sess) {
+      if (dashboardData && dashboardData.regularSession === true) sess.textContent = labels.sessionLive;
+      else if (dashboardData && dashboardData.regularSession === false) sess.textContent = labels.sessionClosed;
+      else sess.textContent = '';
+    }
+  }
+
   function renderTop10(lang) {
     var list = document.getElementById('hub-top-position-list');
     if (!list) return;
     var labels = t(lang);
     var ql = '?lang=' + encodeURIComponent(lang);
-    var ranked = allCompaniesFlat()
-      .map(function (c) {
-        var key = normalizeTicker(c.ticker);
-        var q = key ? quoteItems[key] : null;
-        if (shouldHide(q)) return null;
-        var pos = resolvePosition(c, q);
-        if (pos == null) return null;
-        return { c: c, pos: pos };
-      })
-      .filter(Boolean)
-      .sort(function (a, b) { return b.pos - a.pos; })
-      .slice(0, 10);
+    var ranked = dashboardData && dashboardData.top10 ? dashboardData.top10 : [];
 
     if (!ranked.length) {
       var msg = quotesLoading ? labels.loading : labels.quotesFailed;
@@ -416,19 +263,18 @@
       return;
     }
 
-    list.innerHTML = ranked.map(function (row, i) {
-      var c = row.c;
-      var name = lang === 'en' ? (c.nameEn || c.name) : c.name;
-      var sectorMeta = hubData.sectors[c.sectorId] && hubData.sectors[c.sectorId].meta;
+    list.innerHTML = ranked.map(function (row) {
+      var name = lang === 'en' ? (row.nameEn || row.name) : row.name;
+      var sectorMeta = hubData.sectors[row.sectorId] && hubData.sectors[row.sectorId].meta;
       var sectorLabel = sectorMeta ? (lang === 'en' ? sectorMeta.en : sectorMeta.ko) : '';
-      var href = (c.mapPath || 'index.html') + ql;
+      var href = (row.mapPath || 'index.html') + ql;
       return '<li><a class="hub-top-item" href="' + href + '">' +
         '<div class="hub-top-row">' +
         '<div><div class="hub-top-name">' + name + '</div>' +
-        '<div class="hub-top-ticker">' + c.ticker + '</div>' +
+        '<div class="hub-top-ticker">' + row.ticker + '</div>' +
         (sectorLabel ? '<div class="hub-top-sector">' + sectorLabel + '</div>' : '') +
         '</div>' +
-        '<span class="hub-top-pos ' + positionClass(row.pos) + '">' + formatPosition(row.pos) + '</span>' +
+        '<span class="hub-top-pos ' + positionClass(row.positionPct) + '">' + formatPosition(row.positionPct) + '</span>' +
         '</div></a></li>';
     }).join('');
   }
@@ -468,6 +314,32 @@
     set('hub-top-sub', labels.topSub);
   }
 
+  function fetchDashboardAndRender(lang) {
+    var api = hubDashboardUrl();
+    if (!api) {
+      quotesLoading = false;
+      renderPulse(lang);
+      renderTop10(lang);
+      return Promise.resolve();
+    }
+
+    quotesLoading = true;
+    return fetchWithTimeout(api, HUB_API_TIMEOUT_MS)
+      .then(function (j) {
+        if (j && j.error) throw new Error(j.error);
+        dashboardData = j;
+        quotesLoading = false;
+        renderPulse(lang);
+        renderTop10(lang);
+      })
+      .catch(function () {
+        quotesLoading = false;
+        dashboardData = null;
+        renderPulse(lang);
+        renderTop10(lang);
+      });
+  }
+
   function init(lang) {
     injectStyles();
     lang = pageLang(lang);
@@ -478,7 +350,7 @@
         renderPulse(lang);
         quotesLoading = true;
         renderTop10(lang);
-        return fetchQuotesAndRender(lang);
+        return fetchDashboardAndRender(lang);
       })
       .catch(function (err) {
         if (typeof console !== 'undefined' && console.warn) {
@@ -493,44 +365,6 @@
     enhanceCards(lang);
     renderPulse(lang);
     renderTop10(lang);
-  }
-
-  function fetchQuotesAndRender(lang) {
-    var codes = collectQuoteCodes();
-    if (!codes.length) {
-      quotesLoading = false;
-      renderPulse(lang);
-      renderTop10(lang);
-      return Promise.resolve();
-    }
-
-    quotesLoading = true;
-    var onProgress = function (j) {
-      applyQuotesPayload(j);
-      renderPulse(lang);
-      renderTop10(lang);
-    };
-
-    return fetchAllQuotes(codes, { warm: false, onProgress: onProgress })
-      .then(function (j) {
-        applyQuotesPayload(j);
-        quotesLoading = false;
-        renderPulse(lang);
-        renderTop10(lang);
-        return fetchAllQuotes(codes, {
-          warm: true,
-          yoyOnly: true,
-          onProgress: function (j2) {
-            applyQuotesPayload(j2);
-            renderPulse(lang);
-          },
-        }).catch(function () {});
-      })
-      .catch(function () {
-        quotesLoading = false;
-        renderPulse(lang);
-        renderTop10(lang);
-      });
   }
 
   global.InvestingMapHubDashboard = {

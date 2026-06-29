@@ -12,10 +12,12 @@ import {
   mergeNaverIntoQuote,
 } from '../functions/lib/naver_sise_quotes.mjs';
 import { isKrxRegularSession, naverRefreshMs } from '../functions/lib/krx_session.mjs';
+import { buildHubDashboard } from '../functions/lib/hub_dashboard_core.mjs';
 
 const PORT = Number(process.env.PORT) || 8788;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_FILE = path.join(__dirname, '..', 'data', '.naver_quotes_cache.json');
+const HUB_INDEX_FILE = path.join(__dirname, '..', 'data', 'hub_index.json');
 
 let fileCache = null;
 let fileCacheLoaded = false;
@@ -128,11 +130,26 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+  if (req.method === 'GET' && url.pathname === '/api/hub_dashboard') {
+    try {
+      const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
+      const hubIndex = JSON.parse(raw);
+      const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : null;
+      const payload = await buildHubDashboard(hubIndex, env);
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify(payload));
+    } catch (e) {
+      res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'hub_dashboard_failed', message: String(e.message || e) }));
+    }
+    return;
+  }
   res.writeHead(404);
   res.end('Not Found');
 });
 
 server.listen(PORT, () => {
   console.log(`Quotes dev server http://127.0.0.1:${PORT}/api/quotes?codes=005930`);
+  console.log(`Hub dashboard http://127.0.0.1:${PORT}/api/hub_dashboard`);
   console.log(`Cache file: ${CACHE_FILE}`);
 });

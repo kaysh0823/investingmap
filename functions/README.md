@@ -43,6 +43,11 @@ Returns JSON compatible with `js/live_quotes.js`:
 `<meta name="investingmap-quotes-api" content="/api/quotes">` (기본값).  
 `live_quotes.js`는 meta가 비어 있어도 HTTP로 열면 같은 출처 `/api/quotes`를 호출합니다.
 
+## Hub dashboard
+
+`GET /api/hub_dashboard` — sector mcap-weighted 1Y return + top-10 price position (single JSON).  
+Used by `js/hub_dashboard.js` on `index.html`. Reads `data/hub_index.json` server-side and aggregates Naver quotes (+ optional KRX 1Y).
+
 ## Local test
 
 **Option A — full site + API (recommended)**
