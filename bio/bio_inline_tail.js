@@ -145,6 +145,7 @@
       syncThemeToggle();
       updateQuotesAsofDisplay();
       if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
+      if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       buildChainChips();
       buildMarketChips();

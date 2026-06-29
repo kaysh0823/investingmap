@@ -21,7 +21,6 @@
 
     gtag('config', 'G-4PF8E42DGN');
   </script>
-  <!-- Google AdSense: ca-pub-6448775418895050 — enable Auto ads in AdSense for this site. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
     crossorigin="anonymous"></script>
   <meta charset="UTF-8">
@@ -221,6 +220,100 @@
       padding: 32px 22px 48px
     }
 
+    @media (min-width:769px) {
+      .site-header {
+        border-bottom: none;
+        padding-bottom: 0
+      }
+
+      .hub-topbar {
+        border-bottom: none;
+        padding: 20px 32px 0;
+        background: transparent
+      }
+
+      .hub-hero {
+        padding: 16px 32px 0
+      }
+
+      .hub-main {
+        max-width: min(1400px, calc(100vw - var(--im-sidebar-w, 200px) - 48px));
+        margin: 0;
+        padding: 8px 32px 48px
+      }
+
+      .hub-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        align-items: stretch
+      }
+
+      .hub-card {
+        grid-column: auto;
+        flex-direction: column;
+        align-items: stretch;
+        min-width: 0;
+        overflow: hidden;
+        padding: 18px 16px 16px
+      }
+
+      .hub-card:nth-child(7) {
+        grid-column: 1
+      }
+
+      .hub-card-head {
+        margin-bottom: 10px
+      }
+
+      .hub-card h2 {
+        font-size: 16px;
+        margin-bottom: 8px;
+        word-break: keep-all;
+        line-height: 1.35
+      }
+
+      .hub-card-lead {
+        -webkit-line-clamp: 3;
+        margin-bottom: 10px
+      }
+
+      .hub-card-tags {
+        margin-bottom: 12px
+      }
+
+      .hub-card-cta {
+        margin-top: auto;
+        font-size: 12px
+      }
+
+      .hub-intro {
+        max-width: none;
+        margin-top: 24px
+      }
+
+      .hub-overview-heading {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 14px
+      }
+
+      html[lang="ko"] .hub-overview-heading {
+        text-transform: none;
+        letter-spacing: -.02em;
+        font-size: 15px
+      }
+
+      .im-trust-footer {
+        margin-left: 0;
+        padding-left: 32px;
+        padding-right: 32px
+      }
+    }
+
     .hub-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -237,7 +330,8 @@
       border-radius: 14px;
       padding: 18px 18px 16px;
       transition: border-color .2s, transform .15s, box-shadow .2s;
-      min-height: 100%
+      min-height: 100%;
+      min-width: 0
     }
 
     .hub-card:hover {
@@ -290,7 +384,8 @@
       font-weight: 700;
       margin-bottom: 8px;
       color: var(--text);
-      line-height: 1.35
+      line-height: 1.35;
+      word-break: keep-all
     }
 
     .hub-card p {
@@ -325,7 +420,8 @@
       border-radius: 6px;
       padding: 4px 8px;
       line-height: 1.2;
-      white-space: nowrap
+      white-space: normal;
+      word-break: keep-all
     }
 
     .hub-card-map {
@@ -535,6 +631,10 @@
         gap: 12px
       }
 
+      .hub-card:nth-child(7) {
+        grid-column: auto
+      }
+
       .hub-card {
         padding: 16px 14px 14px
       }
@@ -697,7 +797,21 @@
   </header>
 
   <main class="hub-main" id="hub-sectors">
-    <div class="hub-grid">
+    <section id="hub-sector-pulse" class="hub-sector-pulse" aria-labelledby="hub-pulse-title">
+      <div class="hub-pulse-head">
+        <div>
+          <h2 id="hub-pulse-title">Sector performance</h2>
+          <p id="hub-pulse-sub">Market-cap weighted 1Y return (KRX listed names)</p>
+        </div>
+        <span class="hub-pulse-session" id="hub-pulse-session" aria-live="polite"></span>
+      </div>
+      <div id="hub-sector-pulse-body"></div>
+    </section>
+
+    <div class="hub-dashboard-row">
+      <div class="hub-dashboard-main">
+        <h2 class="hub-overview-heading" id="hub-overview-heading">Industry overview</h2>
+        <div class="hub-grid">
       <a class="hub-card" id="hub-link-semi" href="semiconductor/korea_semiconductor_map.html">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">💠</span>
@@ -706,21 +820,22 @@
         <h2 id="card-semi-title">Korea Semiconductor Investment Map</h2>
         <p class="hub-card-lead" id="card-semi-lead">Semiconductors: design, foundry, memory, materials, equipment,
           substrates, and packaging across the electronics supply chain.</p>
+        <p class="hub-card-keyplayers" id="card-semi-keyplayers"></p>
         <div class="hub-card-tags" id="card-semi-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-semi-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-semi-cta">Open map →</span>
       </a>
-      <a class="hub-card" id="hub-link-bio" href="bio/korea_bio_map.html">
+      <a class="hub-card" id="hub-link-energy" href="energy/korea_energy_map.html">
         <div class="hub-card-head">
-          <span class="hub-card-icon" aria-hidden="true">🧬</span>
-          <span class="hub-card-badge" id="card-bio-badge">157 MAPPINGS</span>
+          <span class="hub-card-icon" aria-hidden="true">⚡</span>
+          <span class="hub-card-badge" id="card-energy-badge">116 LISTINGS</span>
         </div>
-        <h2 id="card-bio-title">Korea Bio Industry Investment Map</h2>
-        <p class="hub-card-lead" id="card-bio-lead">Bio and pharma: drug R&amp;D, CDMO, biosimilars, devices, and
-          diagnostics linked to global big-pharma pairings.</p>
-        <div class="hub-card-tags" id="card-bio-tags" aria-hidden="true"></div>
-        <p class="hub-card-map" id="card-bio-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-bio-cta">Open map →</span>
+        <h2 id="card-energy-title">한국 에너지/파워플랜트 투자 지도</h2>
+        <p class="hub-card-lead" id="card-energy-lead">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계</p>
+        <p class="hub-card-keyplayers" id="card-energy-keyplayers"></p>
+        <div class="hub-card-tags" id="card-energy-tags" aria-hidden="true"></div>
+        <p class="hub-card-map" id="card-energy-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-energy-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-ship" href="ship/korea_ship_map.html">
         <div class="hub-card-head">
@@ -730,6 +845,7 @@
         <h2 id="card-ship-title">Korea Shipbuilding &amp; Marine Equipment Map</h2>
         <p class="hub-card-lead" id="card-ship-lead">Shipbuilding and marine: yards, engines, steel, equipment,
           offshore, shipping, and adjacent defense-at-sea clusters.</p>
+        <p class="hub-card-keyplayers" id="card-ship-keyplayers"></p>
         <div class="hub-card-tags" id="card-ship-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-ship-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-ship-cta">Open map →</span>
@@ -742,32 +858,10 @@
         <h2 id="card-defense-title">Korea Defense, Space &amp; Aviation Map</h2>
         <p class="hub-card-lead" id="card-defense-lead">Military aircraft and engines, missiles and C4ISR, land systems,
           naval shipbuilding, and space plus civil aviation—listed Korean primes with illustrative global links.</p>
+        <p class="hub-card-keyplayers" id="card-defense-keyplayers"></p>
         <div class="hub-card-tags" id="card-defense-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-defense-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-defense-cta">Open map →</span>
-      </a>
-      <a class="hub-card" id="hub-link-robot" href="robot/korea_robot_map.html">
-        <div class="hub-card-head">
-          <span class="hub-card-icon" aria-hidden="true">🤖</span>
-          <span class="hub-card-badge" id="card-robot-badge">47 LISTINGS</span>
-        </div>
-        <h2 id="card-robot-title">Korea Robot / Physical AI Industry Map</h2>
-        <p class="hub-card-lead" id="card-robot-lead">Robotics and physical AI: factory automation, logistics AMRs,
-          cobots, sensing, motion control, and human-scale systems.</p>
-        <div class="hub-card-tags" id="card-robot-tags" aria-hidden="true"></div>
-        <p class="hub-card-map" id="card-robot-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-robot-cta">Open map →</span>
-      </a>
-      <a class="hub-card" id="hub-link-energy" href="energy/korea_energy_map.html">
-        <div class="hub-card-head">
-          <span class="hub-card-icon" aria-hidden="true">⚡</span>
-          <span class="hub-card-badge" id="card-energy-badge">116 LISTINGS</span>
-        </div>
-        <h2 id="card-energy-title">한국 에너지/파워플랜트 투자 지도</h2>
-        <p class="hub-card-lead" id="card-energy-lead">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계</p>
-        <div class="hub-card-tags" id="card-energy-tags" aria-hidden="true"></div>
-        <p class="hub-card-map" id="card-energy-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-energy-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-kculture" href="kculture/korea_kculture_map.html">
         <div class="hub-card-head">
@@ -777,11 +871,46 @@
         <h2 id="card-kculture-title">Korea K-Culture Industry Map</h2>
         <p class="hub-card-lead" id="card-kculture-lead">Ramen &amp; packaged food, travel and airlines, beauty brands,
           drama·webtoon·streaming IP, and K-pop labels—listed Korean equities with illustrative global links.</p>
+        <p class="hub-card-keyplayers" id="card-kculture-keyplayers"></p>
         <div class="hub-card-tags" id="card-kculture-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-kculture-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-kculture-cta">Open map →</span>
       </a>
+      <a class="hub-card" id="hub-link-bio" href="bio/korea_bio_map.html">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🧬</span>
+          <span class="hub-card-badge" id="card-bio-badge">157 MAPPINGS</span>
+        </div>
+        <h2 id="card-bio-title">Korea Bio Industry Investment Map</h2>
+        <p class="hub-card-lead" id="card-bio-lead">Bio and pharma: drug R&amp;D, CDMO, biosimilars, devices, and
+          diagnostics linked to global big-pharma pairings.</p>
+        <p class="hub-card-keyplayers" id="card-bio-keyplayers"></p>
+        <div class="hub-card-tags" id="card-bio-tags" aria-hidden="true"></div>
+        <p class="hub-card-map" id="card-bio-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-bio-cta">Open map →</span>
+      </a>
+      <a class="hub-card" id="hub-link-robot" href="robot/korea_robot_map.html">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🤖</span>
+          <span class="hub-card-badge" id="card-robot-badge">47 LISTINGS</span>
+        </div>
+        <h2 id="card-robot-title">Korea Robot / Physical AI Industry Map</h2>
+        <p class="hub-card-lead" id="card-robot-lead">Robotics and physical AI: factory automation, logistics AMRs,
+          cobots, sensing, motion control, and human-scale systems.</p>
+        <p class="hub-card-keyplayers" id="card-robot-keyplayers"></p>
+        <div class="hub-card-tags" id="card-robot-tags" aria-hidden="true"></div>
+        <p class="hub-card-map" id="card-robot-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-robot-cta">Open map →</span>
+      </a>
     </div>
+      </div>
+      <aside class="hub-side-panel" id="hub-top-position" aria-labelledby="hub-top-title">
+        <h3 id="hub-top-title">Top 10 price position</h3>
+        <p class="hub-side-sub" id="hub-top-sub">Last vs 52-week range — all industries</p>
+        <ol class="hub-top-list" id="hub-top-position-list"></ol>
+      </aside>
+    </div>
+
     <section class="hub-intro" id="hub-principles" aria-labelledby="hub-principles-summary">
       <details class="hub-principles-details">
         <summary class="hub-principles-summary" id="hub-principles-summary">
@@ -871,6 +1000,7 @@
         energyLead: '신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계',
         energyCta: '지도 열기 →',
         foot: '각 지도 페이지에서 표·그래프·언어(한/영)·다크·라이트 테마를 사용할 수 있습니다.',
+        overviewHeading: '산업 개요',
         copyright: '© 2026 Investing Map'
       },
       en: {
@@ -920,6 +1050,7 @@
         energyLead: 'Renewables, batteries, solar, wind, nuclear, power equipment, ESS, hydrogen, fuel cells, and utilities—listed Korean energy & power-plant names with illustrative global links.',
         energyCta: 'Open map →',
         foot: 'On each map: table & graph, Korean/English, and dark/light theme.',
+        overviewHeading: 'Industry overview',
         copyright: '© 2026 Investing Map'
       }
     };
@@ -1001,6 +1132,8 @@
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + ql;
       document.getElementById('hdr-title').textContent = t.introTitle;
       document.getElementById('hdr-subtitle').textContent = t.introP1;
+      var overviewHeading = document.getElementById('hub-overview-heading');
+      if (overviewHeading) overviewHeading.textContent = t.overviewHeading;
       var brandLink = document.getElementById('hub-brand-link');
       if (brandLink) brandLink.href = 'index.html' + ql;
       document.getElementById('hub-brand-name').textContent = t.title;
@@ -1063,12 +1196,17 @@ document.title = lang === 'en'
         : 'Investing Map — 한국 산업 투자 지도 허브';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: t.introP1 });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      if (window.InvestingMapHubDashboard) InvestingMapHubDashboard.refresh(lang);
+      if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncThemeToggle();
     }
 
     applyLang();
   </script>
+  <script src="js/live_quotes.js"></script>
+  <script src="js/hub_dashboard.js"></script>
+  <script src="js/desktop_sidebar_nav.js"></script>
   <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>
 </body>
