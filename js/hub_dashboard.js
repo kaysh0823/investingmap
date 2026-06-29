@@ -5,10 +5,12 @@
   'use strict';
 
   var SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
-  var CHUNK_SIZE = 18;
+  var CHUNK_SIZE = 80;
+  var QUOTE_CHUNK_TIMEOUT_MS = 25000;
   var hubData = null;
   var quoteItems = {};
   var quotesMeta = { asOf: '', regularSession: null };
+  var quotesLoading = false;
   var fxRate = 1400;
 
   var I18N = {
@@ -23,6 +25,7 @@
       topSub: '52주 구간 대비 현재가 — 전 산업 상장사',
       topViewAll: '지도에서 더 보기',
       loading: '시세 불러오는 중…',
+      quotesFailed: '시세를 불러오지 못했습니다.',
       noData: '—',
       companies: '개 상장사',
       keyPlayers: '대표 종목',
@@ -40,6 +43,7 @@
       topSub: 'Last vs 52-week range — all industries',
       topViewAll: 'Browse maps',
       loading: 'Loading quotes…',
+      quotesFailed: 'Could not load quotes.',
       noData: '—',
       companies: ' listings',
       keyPlayers: 'Key names',
@@ -70,7 +74,7 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css')) return;
+    if (document.getElementById('im-hub-dashboard-css-v2')) return;
     var css =
       '.hub-sector-pulse{margin-bottom:22px}' +
       '.hub-pulse-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;margin-bottom:12px}' +
@@ -110,7 +114,7 @@
       '@media (max-width:1200px){.hub-pulse-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}' +
       '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch}.hub-pulse-card{flex:0 0 132px}}';
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css';
+    el.id = 'im-hub-dashboard-css-v2';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -143,26 +147,70 @@
     return origin + path.replace(/\/+$/, '') + q;
   }
 
-  function fetchAllQuotes(codes) {
+  function fetchWithTimeout(url, ms) {
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var tid = setTimeout(function () {
+        if (done) return;
+        done = true;
+        reject(new Error('timeout'));
+      }, ms);
+      fetch(url, { cache: 'no-store', credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (done) return;
+          done = true;
+          clearTimeout(tid);
+          resolve(j);
+        })
+        .catch(function (err) {
+          if (done) return;
+          done = true;
+          clearTimeout(tid);
+          reject(err);
+        });
+    });
+  }
+
+  function mergeQuoteChunk(target, items, yoyOnly) {
+    for (var k in items) {
+      if (!Object.prototype.hasOwnProperty.call(items, k)) continue;
+      var incoming = items[k];
+      if (yoyOnly && target[k]) {
+        if (incoming.yoyReturnPct != null) {
+          target[k] = Object.assign({}, target[k], { yoyReturnPct: incoming.yoyReturnPct });
+        }
+        continue;
+      }
+      target[k] = incoming;
+    }
+  }
+
+  function fetchAllQuotes(codes, opts) {
+    opts = opts || {};
     var base = getApiBase();
-    if (!base || !codes.length) return Promise.resolve({ items: {}, asOf: '', regularSession: null });
-    var merged = {};
+    if (!base || !codes.length) {
+      return Promise.resolve({ items: {}, asOf: '', regularSession: null });
+    }
+    var warm = opts.warm ? '&warm=1' : '';
+    var yoyOnly = !!opts.yoyOnly;
+    var onProgress = opts.onProgress;
+    var merged = yoyOnly ? quoteItems : {};
     var asOf = '';
     var regularSession = null;
     var chain = Promise.resolve();
     for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
       (function (chunk) {
         chain = chain.then(function () {
-          var q = 'codes=' + chunk.map(encodeURIComponent).join(',') + '&warm=1';
-          return fetch(quotesUrl(base, q), { cache: 'no-store', credentials: 'same-origin' }).then(function (r) {
-            return r.json();
-          });
+          var q = 'codes=' + chunk.map(encodeURIComponent).join(',') + warm;
+          return fetchWithTimeout(quotesUrl(base, q), QUOTE_CHUNK_TIMEOUT_MS)
+            .catch(function () { return { items: {} }; });
         }).then(function (j) {
           if (j && j.asOf) asOf = j.asOf;
           if (j && j.regularSession != null) regularSession = j.regularSession;
-          var items = (j && j.items) || {};
-          for (var k in items) {
-            if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
+          mergeQuoteChunk(merged, (j && j.items) || {}, yoyOnly);
+          if (onProgress) {
+            onProgress({ items: merged, asOf: asOf, regularSession: regularSession });
           }
         });
       })(codes.slice(i, i + CHUNK_SIZE));
@@ -170,6 +218,24 @@
     return chain.then(function () {
       return { items: merged, asOf: asOf, regularSession: regularSession };
     });
+  }
+
+  function collectQuoteCodes() {
+    var codes = [];
+    var seen = {};
+    allCompaniesFlat().forEach(function (c) {
+      var k = normalizeTicker(c.ticker);
+      if (!k || seen[k]) return;
+      seen[k] = 1;
+      codes.push(k);
+    });
+    return codes;
+  }
+
+  function applyQuotesPayload(j) {
+    quoteItems = j.items || {};
+    quotesMeta.asOf = j.asOf || '';
+    if (j.regularSession != null) quotesMeta.regularSession = j.regularSession;
   }
 
   function allCompaniesFlat() {
@@ -345,7 +411,8 @@
       .slice(0, 10);
 
     if (!ranked.length) {
-      list.innerHTML = '<li style="font-size:12px;color:var(--text-muted)">' + labels.loading + '</li>';
+      var msg = quotesLoading ? labels.loading : labels.quotesFailed;
+      list.innerHTML = '<li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">' + msg + '</li>';
       return;
     }
 
@@ -408,9 +475,16 @@
       .then(function () {
         renderLabels(lang);
         enhanceCards(lang);
+        renderPulse(lang);
+        quotesLoading = true;
+        renderTop10(lang);
         return fetchQuotesAndRender(lang);
       })
-      .catch(function () {});
+      .catch(function (err) {
+        if (typeof console !== 'undefined' && console.warn) {
+          console.warn('[hub_dashboard] init failed', err);
+        }
+      });
   }
 
   function onLangChange(lang) {
@@ -422,29 +496,41 @@
   }
 
   function fetchQuotesAndRender(lang) {
-    var codes = [];
-    var seen = {};
-    allCompaniesFlat().forEach(function (c) {
-      var k = normalizeTicker(c.ticker);
-      if (!k || seen[k]) return;
-      seen[k] = 1;
-      codes.push(k);
-    });
+    var codes = collectQuoteCodes();
     if (!codes.length) {
+      quotesLoading = false;
       renderPulse(lang);
       renderTop10(lang);
       return Promise.resolve();
     }
-    return fetchAllQuotes(codes).then(function (j) {
-      quoteItems = j.items || {};
-      quotesMeta.asOf = j.asOf || '';
-      quotesMeta.regularSession = j.regularSession;
+
+    quotesLoading = true;
+    var onProgress = function (j) {
+      applyQuotesPayload(j);
       renderPulse(lang);
       renderTop10(lang);
-    }).catch(function () {
-      renderPulse(lang);
-      renderTop10(lang);
-    });
+    };
+
+    return fetchAllQuotes(codes, { warm: false, onProgress: onProgress })
+      .then(function (j) {
+        applyQuotesPayload(j);
+        quotesLoading = false;
+        renderPulse(lang);
+        renderTop10(lang);
+        return fetchAllQuotes(codes, {
+          warm: true,
+          yoyOnly: true,
+          onProgress: function (j2) {
+            applyQuotesPayload(j2);
+            renderPulse(lang);
+          },
+        }).catch(function () {});
+      })
+      .catch(function () {
+        quotesLoading = false;
+        renderPulse(lang);
+        renderTop10(lang);
+      });
   }
 
   global.InvestingMapHubDashboard = {
