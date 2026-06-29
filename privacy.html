@@ -36,8 +36,7 @@
 <body>
   <header class="site-header">
     <div class="header-actions">
-      <a class="hub-back" href="index.html" id="hub-back">← <span id="hub-label">허브</span></a>
-      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Theme">☀️</button>
+<button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Theme">☀️</button>
       <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()"><span class="flag">🇺🇸</span> <span id="lang-text">English</span></button>
     </div>
     <h1 id="page-title">개인정보처리방침</h1>
@@ -123,6 +122,7 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
   </footer>
+  <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>
   <script>
     const PAGE = { titleKo: '개인정보처리방침', titleEn: 'Privacy policy', descKo: 'Investing Map에서 수집·이용하는 정보와 Google 광고·분석 도구에 대한 안내입니다.', descEn: 'How Investing Map handles data, cookies, Google AdSense, and analytics.' };
@@ -143,6 +143,7 @@
       document.getElementById('lang-text').textContent = T[lang].langText;
       document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncTheme();
     }
     applyLang();

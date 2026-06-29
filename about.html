@@ -35,8 +35,7 @@
 <body>
   <header class="site-header">
     <div class="header-actions">
-      <a class="hub-back" href="index.html" id="hub-back">← <span id="hub-label">허브</span></a>
-      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Theme">☀️</button>
+<button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Theme">☀️</button>
       <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()"><span class="flag">🇺🇸</span> <span id="lang-text">English</span></button>
     </div>
     <h1 id="page-title">Investing Map 소개</h1>
@@ -112,6 +111,7 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
   </footer>
+  <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>
   <script>
     const PAGE = { titleKo: 'Investing Map 소개', titleEn: 'About Investing Map', descKo: '한국 상장사 산업 지형을 이해하기 위한 편집형 지도·데이터 사이트입니다.', descEn: 'Editorial industry maps and KRX data for Korean listed equities.' };
@@ -132,6 +132,7 @@
       document.getElementById('lang-text').textContent = T[lang].langText;
       document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncTheme();
     }
     applyLang();

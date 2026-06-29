@@ -37,13 +37,8 @@
   function injectStyles() {
     if (document.getElementById('im-mobile-ux-css')) return;
     var css =
-      '.header-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;width:100%}' +
-      '.sector-nav{max-width:none!important;flex:1 0 100%;width:100%;justify-content:flex-start!important}' +
-      '.sector-nav .hub-back{display:inline-flex;align-items:center;gap:2px;padding:4px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;color:var(--text-muted);text-decoration:none;font-size:11px;font-weight:600;line-height:1.2;white-space:nowrap;transition:all .2s}' +
-      '.sector-nav .hub-back:hover{border-color:var(--accent);color:var(--text)}' +
+      '.header-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px;justify-content:flex-end;width:100%}' +
       '@media (max-width:768px){' +
-      '.sector-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;justify-content:stretch}' +
-      '.sector-nav a,.sector-nav .is-current,.sector-nav .hub-back{justify-content:center;padding:7px 4px;font-size:11px;white-space:nowrap;min-width:0}' +
       '.theme-toggle,.lang-toggle{flex:0 0 auto}' +
       '.header-actions .quotes-asof{flex:1 0 100%;text-align:left;white-space:normal;font-size:10px;line-height:1.4}' +
       '.tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;flex-wrap:unset!important;overflow:visible!important;padding:0!important;border-bottom:1px solid var(--border)}' +
@@ -81,16 +76,9 @@
     });
   }
 
-  function syncSectorNav() {
-    if (!global.InvestingMapSectorNav) return;
-    var sector = document.body.getAttribute('data-sector') || '';
-    InvestingMapSectorNav.render(sector, pageLang(), isMobile());
-  }
-
   function syncAll() {
     injectStyles();
     syncTabs();
-    syncSectorNav();
   }
 
   if (mql && mql.addEventListener) {
@@ -104,7 +92,6 @@
   global.InvestingMapMobileUx = {
     isMobile: isMobile,
     syncTabs: syncTabs,
-    syncSectorNav: syncSectorNav,
     syncAll: syncAll,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

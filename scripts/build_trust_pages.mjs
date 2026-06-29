@@ -75,7 +75,6 @@ ${schemas.map((s) => ldScript(s)).join('\n')}
 <body>
   <header class="site-header">
     <div class="header-actions">
-      <a class="hub-back" href="index.html" id="hub-back">← <span id="hub-label">허브</span></a>
       <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Theme">☀️</button>
       <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()"><span class="flag">🇺🇸</span> <span id="lang-text">English</span></button>
     </div>
@@ -98,6 +97,7 @@ ${bodyEn}
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
   </footer>
+  <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>
   <script>
     const PAGE = ${JSON.stringify({ titleKo, titleEn, descKo, descEn, i18nKey })};
@@ -143,12 +143,12 @@ ${bodyEn}
       document.getElementById('page-lead').textContent = lang === 'en' ? PAGE.descEn : PAGE.descKo;
       document.getElementById('trust-body-ko').hidden = lang !== 'ko';
       document.getElementById('trust-body-en').hidden = lang !== 'en';
-      document.getElementById('hub-label').textContent = T[lang].hub;
       document.querySelector('.lang-toggle .flag').textContent = T[lang].langFlag;
       document.getElementById('lang-text').textContent = T[lang].langText;
       document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: lang === 'en' ? PAGE.descEn : PAGE.descKo });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncTheme();
     }
     applyLang();

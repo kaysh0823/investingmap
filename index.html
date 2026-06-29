@@ -120,20 +120,54 @@
     .site-header {
       background: linear-gradient(135deg, var(--header-g0), var(--header-g1));
       border-bottom: 1px solid var(--border);
-      padding: 28px 28px 22px;
+      padding: 0 0 22px;
       position: relative
     }
 
-    .header-actions {
-      position: absolute;
-      top: 22px;
-      right: 22px;
+    .hub-topbar {
       display: flex;
-      gap: 8px;
       align-items: center;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      max-width: 48%
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 55%, transparent)
+    }
+
+    .hub-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      min-width: 0
+    }
+
+    .hub-brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1f6feb, #58a6ff);
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(88, 166, 255, .25)
+    }
+
+    .hub-brand-name {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -.2px;
+      white-space: nowrap
+    }
+
+    .hub-hero {
+      padding: 22px 28px 0
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-shrink: 0
     }
 
     .theme-toggle,
@@ -165,22 +199,12 @@
       margin-right: 5px
     }
 
-    .data-asof {
-      flex-basis: 100%;
-      text-align: right;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
-      white-space: nowrap;
-      padding: 4px 2px;
-      letter-spacing: 0.02em
-    }
-
     .site-header h1 {
       font-size: 24px;
       font-weight: 700;
       letter-spacing: -.4px;
-      max-width: min(920px, 92%)
+      max-width: min(920px, 100%);
+      line-height: 1.25
     }
 
     .site-header p {
@@ -188,7 +212,7 @@
       color: var(--text-muted);
       font-size: 14px;
       line-height: 1.65;
-      max-width: min(920px, 92%)
+      max-width: min(920px, 100%)
     }
 
     .hub-main {
@@ -204,14 +228,16 @@
     }
 
     .hub-card {
-      display: block;
+      display: flex;
+      flex-direction: column;
       text-decoration: none;
       color: inherit;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 24px 22px;
-      transition: border-color .2s, transform .15s, box-shadow .2s
+      padding: 18px 18px 16px;
+      transition: border-color .2s, transform .15s, box-shadow .2s;
+      min-height: 100%
     }
 
     .hub-card:hover {
@@ -224,17 +250,47 @@
       box-shadow: 0 10px 28px rgba(31, 35, 40, .08)
     }
 
-    .hub-card-emoji {
-      font-size: 28px;
-      display: block;
+    .hub-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
       margin-bottom: 12px
     }
 
+    .hub-card-icon {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      flex-shrink: 0
+    }
+
+    .hub-card-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, var(--surface2));
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+      border-radius: 6px;
+      padding: 4px 8px;
+      white-space: nowrap;
+      line-height: 1.2
+    }
+
     .hub-card h2 {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       margin-bottom: 8px;
-      color: var(--text)
+      color: var(--text);
+      line-height: 1.35
     }
 
     .hub-card p {
@@ -243,21 +299,55 @@
     }
 
     .hub-card-lead {
-      color: var(--text);
-      margin-bottom: 8px;
-      font-weight: 500
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-weight: 400;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden
+    }
+
+    .hub-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+      min-height: 0
+    }
+
+    .hub-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      line-height: 1.2;
+      white-space: nowrap
     }
 
     .hub-card-map {
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      font-size: 12px
+      display: none
     }
 
     .hub-card-cta {
-      font-size: 13px;
-      font-weight: 600;
+      margin-top: auto;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .03em;
       color: var(--accent)
+    }
+
+    html[lang="en"] .hub-card-cta {
+      text-transform: uppercase
+    }
+
+    #hub-sectors,
+    #im-trust-footer {
+      scroll-margin-top: 56px;
+      scroll-margin-bottom: 72px
     }
 
     .hub-foot {
@@ -289,7 +379,7 @@
       list-style: none;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       user-select: none;
       padding: 12px 0;
       margin: 0
@@ -299,16 +389,28 @@
       display: none
     }
 
-    .hub-principles-summary::before {
-      content: "\25B8";
-      font-size: 11px;
-      color: var(--accent);
-      transition: transform .2s ease;
+    .hub-principles-icon {
+      font-size: 16px;
       flex-shrink: 0
     }
 
-    .hub-principles-details[open] .hub-principles-summary::before {
-      transform: rotate(90deg)
+    .hub-principles-chevron {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: transform .2s ease
+    }
+
+    .hub-principles-details[open] .hub-principles-chevron {
+      transform: rotate(180deg)
+    }
+
+    .hub-principles-summary::before {
+      display: none
+    }
+
+    .hub-principles-summary:hover {
+      color: var(--accent)
     }
 
     .hub-principles-summary:hover {
@@ -389,70 +491,120 @@
         overflow-x: hidden
       }
 
+      .hub-topbar {
+        padding: 10px 14px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--bg) 88%, transparent)
+      }
+
+      .hub-hero {
+        padding: 18px 16px 0
+      }
+
       .site-header {
-        padding: 16px 16px 18px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px
-      }
-
-      .header-actions {
-        position: static;
-        max-width: none;
-        width: 100%;
-        justify-content: flex-start;
-        order: -1;
-        margin: 0;
-        row-gap: 6px
-      }
-
-      .header-actions .data-asof {
-        order: 10;
-        flex-basis: 100%;
-        text-align: left;
-        white-space: normal;
-        font-size: 10px
+        padding-bottom: 16px
       }
 
       .site-header h1 {
-        font-size: 20px;
-        max-width: none;
+        font-size: 22px;
         line-height: 1.3;
         word-break: keep-all
       }
 
       .site-header p {
         font-size: 13px;
-        max-width: none;
         line-height: 1.55;
         word-break: keep-all
       }
 
+      .theme-toggle,
+      .lang-toggle {
+        padding: 6px 10px;
+        font-size: 12px
+      }
+
       .hub-main {
-        padding: 20px 14px 36px
+        padding: 16px 14px 24px
       }
 
       .hub-grid {
         grid-template-columns: 1fr;
-        gap: 14px
+        gap: 12px
       }
 
       .hub-card {
-        padding: 18px 16px
+        padding: 16px 14px 14px
       }
 
       .hub-card h2,
-      .hub-card-lead,
-      .hub-card-map {
-        word-break: keep-all;
-        line-height: 1.45
+      .hub-card-lead {
+        word-break: keep-all
       }
 
       .hub-foot {
         word-break: keep-all;
-        line-height: 1.5
+        line-height: 1.5;
+        text-align: left;
+        font-size: 11px
+      }
+
+      .im-trust-footer {
+        padding: 18px 14px 20px
+      }
+
+      .im-trust-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 12px
+      }
+
+      .im-trust-nav a {
+        font-size: 12px
+      }
+
+      .im-trust-copy {
+        margin-top: 14px;
+        font-size: 11px;
+        color: var(--text-muted)
       }
     }
+.im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
+    .im-trust-copy {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted)
+    }
     .im-trust-footer {
       border-top: 1px solid var(--border);
       padding: 20px 28px 28px;
@@ -509,90 +661,8 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
 
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
 
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
 
 
 
@@ -606,79 +676,119 @@
       style="display:none;visibility:hidden"></iframe></noscript>
 
   <header class="site-header">
-    <div class="header-actions">
-      <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Light mode"
-        aria-label="Theme">☀️</button>
-      <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
-        <span class="flag">🇰🇷</span><span id="lang-toggle-text">한국어</span>
-      </button>
+    <div class="hub-topbar">
+      <a class="hub-brand" href="index.html" id="hub-brand-link">
+        <span class="hub-brand-mark" aria-hidden="true"></span>
+        <span class="hub-brand-name" id="hub-brand-name">Investing Map</span>
+      </a>
+      <div class="header-actions">
+        <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Light mode"
+          aria-label="Theme">☀️</button>
+        <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
+          <span class="flag">🇰🇷</span><span id="lang-toggle-text">한국어</span>
+        </button>
+      </div>
     </div>
-    <h1 id="hdr-title">Investing Map</h1>
-    <p id="hdr-subtitle">Hub for seven Korean industry maps: listed companies, value chains, KRX data, and relationship
-      networks.</p>
+    <div class="hub-hero">
+      <h1 id="hdr-title">Investing Map</h1>
+      <p id="hdr-subtitle">Hub for seven Korean industry maps: listed companies, value chains, KRX data, and relationship
+        networks.</p>
+    </div>
   </header>
 
-  <main class="hub-main">
+  <main class="hub-main" id="hub-sectors">
     <div class="hub-grid">
       <a class="hub-card" id="hub-link-semi" href="semiconductor/korea_semiconductor_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">💠</span>
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">💠</span>
+          <span class="hub-card-badge" id="card-semi-badge">130 LISTINGS</span>
+        </div>
         <h2 id="card-semi-title">Korea Semiconductor Investment Map</h2>
         <p class="hub-card-lead" id="card-semi-lead">Semiconductors: design, foundry, memory, materials, equipment,
           substrates, and packaging across the electronics supply chain.</p>
+        <div class="hub-card-tags" id="card-semi-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-semi-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-semi-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-bio" href="bio/korea_bio_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🧬</span>
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🧬</span>
+          <span class="hub-card-badge" id="card-bio-badge">157 MAPPINGS</span>
+        </div>
         <h2 id="card-bio-title">Korea Bio Industry Investment Map</h2>
         <p class="hub-card-lead" id="card-bio-lead">Bio and pharma: drug R&amp;D, CDMO, biosimilars, devices, and
           diagnostics linked to global big-pharma pairings.</p>
+        <div class="hub-card-tags" id="card-bio-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-bio-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-bio-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-ship" href="ship/korea_ship_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">⚓</span>
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">⚓</span>
+          <span class="hub-card-badge" id="card-ship-badge">49 LISTINGS</span>
+        </div>
         <h2 id="card-ship-title">Korea Shipbuilding &amp; Marine Equipment Map</h2>
         <p class="hub-card-lead" id="card-ship-lead">Shipbuilding and marine: yards, engines, steel, equipment,
           offshore, shipping, and adjacent defense-at-sea clusters.</p>
+        <div class="hub-card-tags" id="card-ship-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-ship-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-ship-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-defense" href="defense/korea_defense_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🛰️</span>
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🛰️</span>
+          <span class="hub-card-badge" id="card-defense-badge">44 LISTINGS</span>
+        </div>
         <h2 id="card-defense-title">Korea Defense, Space &amp; Aviation Map</h2>
         <p class="hub-card-lead" id="card-defense-lead">Military aircraft and engines, missiles and C4ISR, land systems,
           naval shipbuilding, and space plus civil aviation—listed Korean primes with illustrative global links.</p>
+        <div class="hub-card-tags" id="card-defense-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-defense-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-defense-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-robot" href="robot/korea_robot_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🤖</span>
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🤖</span>
+          <span class="hub-card-badge" id="card-robot-badge">47 LISTINGS</span>
+        </div>
         <h2 id="card-robot-title">Korea Robot / Physical AI Industry Map</h2>
         <p class="hub-card-lead" id="card-robot-lead">Robotics and physical AI: factory automation, logistics AMRs,
           cobots, sensing, motion control, and human-scale systems.</p>
+        <div class="hub-card-tags" id="card-robot-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-robot-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-robot-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-energy" href="energy/korea_energy_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">⚡</span>
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">⚡</span>
+          <span class="hub-card-badge" id="card-energy-badge">116 LISTINGS</span>
+        </div>
         <h2 id="card-energy-title">한국 에너지/파워플랜트 투자 지도</h2>
         <p class="hub-card-lead" id="card-energy-lead">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계</p>
+        <div class="hub-card-tags" id="card-energy-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-energy-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-energy-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-kculture" href="kculture/korea_kculture_map.html">
-        <span class="hub-card-emoji" aria-hidden="true">🎬</span>
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🎬</span>
+          <span class="hub-card-badge" id="card-kculture-badge">95 LISTINGS</span>
+        </div>
         <h2 id="card-kculture-title">Korea K-Culture Industry Map</h2>
         <p class="hub-card-lead" id="card-kculture-lead">Ramen &amp; packaged food, travel and airlines, beauty brands,
           drama·webtoon·streaming IP, and K-pop labels—listed Korean equities with illustrative global links.</p>
+        <div class="hub-card-tags" id="card-kculture-tags" aria-hidden="true"></div>
         <p class="hub-card-map" id="card-kculture-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-kculture-cta">Open map →</span>
       </a>
     </div>
     <section class="hub-intro" id="hub-principles" aria-labelledby="hub-principles-summary">
       <details class="hub-principles-details">
-        <summary class="hub-principles-summary" id="hub-principles-summary">데이터·편집 원칙</summary>
+        <summary class="hub-principles-summary" id="hub-principles-summary">
+          <span class="hub-principles-icon" aria-hidden="true">📘</span>
+          <span id="hub-principles-label">데이터·편집 원칙</span>
+          <span class="hub-principles-chevron" aria-hidden="true">▾</span>
+        </summary>
         <div class="hub-principles-body">
           <ul id="hub-intro-list">
             <li>정량 데이터(시총·PER·PBR·시세)는 KRX·Naver Finance 등 공개 출처를 기준일에 맞춰 반영합니다.</li>
@@ -710,9 +820,9 @@
       <a href="index.html" id="tf-hub">허브</a>
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
+    <p class="im-trust-copy" id="tf-copyright">© 2026 Investing Map</p>
   </footer>
-
-  <script>
+<script>
     const T = {
       ko: {
         title: 'Investing Map',
@@ -760,7 +870,8 @@
         energyTitle: '한국 에너지/파워플랜트 투자 지도',
         energyLead: '신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계',
         energyCta: '지도 열기 →',
-        foot: '각 지도 페이지에서 표·그래프·언어(한/영)·다크·라이트 테마를 사용할 수 있습니다.'
+        foot: '각 지도 페이지에서 표·그래프·언어(한/영)·다크·라이트 테마를 사용할 수 있습니다.',
+        copyright: '© 2026 Investing Map'
       },
       en: {
         title: 'Investing Map',
@@ -808,7 +919,8 @@
         energyTitle: 'Korea Energy & Power Plant Map',
         energyLead: 'Renewables, batteries, solar, wind, nuclear, power equipment, ESS, hydrogen, fuel cells, and utilities—listed Korean energy & power-plant names with illustrative global links.',
         energyCta: 'Open map →',
-        foot: 'On each map: table & graph, Korean/English, and dark/light theme.'
+        foot: 'On each map: table & graph, Korean/English, and dark/light theme.',
+        copyright: '© 2026 Investing Map'
       }
     };
 
@@ -852,6 +964,29 @@
       applyLang();
     }
 
+    function hubCardMeta(mapLine) {
+      var parts = String(mapLine || '').split('·').map(function (s) { return s.trim(); });
+      var badge = parts[0] || '';
+      var tagStr = parts[1] || '';
+      var tags = tagStr.split(/[,·]/).map(function (s) { return s.trim(); }).filter(Boolean);
+      return { badge: badge, tags: tags };
+    }
+
+    function applyCardMeta(prefix, mapLine) {
+      var meta = hubCardMeta(mapLine);
+      var badgeEl = document.getElementById('card-' + prefix + '-badge');
+      if (badgeEl) {
+        badgeEl.textContent = lang === 'en' ? meta.badge.toUpperCase() : meta.badge;
+      }
+      var tagsEl = document.getElementById('card-' + prefix + '-tags');
+      if (tagsEl) {
+        tagsEl.innerHTML = meta.tags.map(function (tag) {
+          return '<span class="hub-tag">' + tag + '</span>';
+        }).join('');
+        tagsEl.setAttribute('aria-hidden', meta.tags.length ? 'false' : 'true');
+      }
+    }
+
     function applyLang() {
       const t = T[lang];
       document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'ko');
@@ -866,38 +1001,48 @@
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + ql;
       document.getElementById('hdr-title').textContent = t.introTitle;
       document.getElementById('hdr-subtitle').textContent = t.introP1;
+      var brandLink = document.getElementById('hub-brand-link');
+      if (brandLink) brandLink.href = 'index.html' + ql;
+      document.getElementById('hub-brand-name').textContent = t.title;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
       document.getElementById('card-semi-title').textContent = t.semiTitle;
       document.getElementById('card-semi-lead').textContent = t.semiLead;
       document.getElementById('card-semi-map').textContent = t.semiMapLine;
+      applyCardMeta('semi', t.semiMapLine);
       document.getElementById('card-semi-cta').textContent = t.semiCta;
       document.getElementById('card-bio-title').textContent = t.bioTitle;
       document.getElementById('card-bio-lead').textContent = t.bioLead;
       document.getElementById('card-bio-map').textContent = t.bioMapLine;
+      applyCardMeta('bio', t.bioMapLine);
       document.getElementById('card-bio-cta').textContent = t.bioCta;
       document.getElementById('card-ship-title').textContent = t.shipTitle;
       document.getElementById('card-ship-lead').textContent = t.shipLead;
       document.getElementById('card-ship-map').textContent = t.shipMapLine;
+      applyCardMeta('ship', t.shipMapLine);
       document.getElementById('card-ship-cta').textContent = t.shipCta;
       document.getElementById('card-defense-title').textContent = t.defenseTitle;
       document.getElementById('card-defense-lead').textContent = t.defenseLead;
       document.getElementById('card-defense-map').textContent = t.defenseMapLine;
+      applyCardMeta('defense', t.defenseMapLine);
       document.getElementById('card-defense-cta').textContent = t.defenseCta;
       document.getElementById('card-robot-title').textContent = t.robotTitle;
       document.getElementById('card-robot-lead').textContent = t.robotLead;
       document.getElementById('card-robot-map').textContent = t.robotMapLine;
+      applyCardMeta('robot', t.robotMapLine);
       document.getElementById('card-robot-cta').textContent = t.robotCta;
       document.getElementById('card-kculture-title').textContent = t.kcultureTitle;
       document.getElementById('card-kculture-lead').textContent = t.kcultureLead;
       document.getElementById('card-kculture-map').textContent = t.kcultureMapLine;
+      applyCardMeta('kculture', t.kcultureMapLine);
       document.getElementById('card-kculture-cta').textContent = t.kcultureCta;
       document.getElementById('card-energy-title').textContent = t.energyTitle;
       document.getElementById('card-energy-lead').textContent = t.energyLead;
       document.getElementById('card-energy-map').textContent = t.energyMapLine;
+      applyCardMeta('energy', t.energyMapLine);
       document.getElementById('card-energy-cta').textContent = t.energyCta;
       const qlNav = '?lang=' + encodeURIComponent(lang);
-      document.getElementById('hub-principles-summary').textContent = t.introHMethod;
+      document.getElementById('hub-principles-label').textContent = t.introHMethod;
       const li = document.getElementById('hub-intro-list');
       if (li) li.innerHTML = '<li>' + t.introLi1 + '</li><li>' + t.introLi2 + '</li><li>' + t.introLi3 + '</li>';
       document.getElementById('hub-intro-p2').textContent = t.introP2;
@@ -912,16 +1057,19 @@
       document.getElementById('hub-link-disclaimer').textContent = t.linkDisclaimer;
       document.getElementById('hub-link-disclaimer').href = 'disclaimer.html' + qlNav;
       document.getElementById('hub-foot').textContent = t.foot;
-      document.title = lang === 'en'
+      document.getElementById('tf-copyright').textContent = t.copyright;
+document.title = lang === 'en'
         ? 'Investing Map — Korea industry maps hub'
         : 'Investing Map — 한국 산업 투자 지도 허브';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: t.introP1 });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncThemeToggle();
     }
 
     applyLang();
   </script>
+  <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>
 </body>
 

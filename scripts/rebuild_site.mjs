@@ -16,7 +16,8 @@ function run(cmd, label) {
 
 run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry maps');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
-run('node scripts/patch_hub_in_sector_nav.mjs', 'hub link in sector nav row');
+run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
+run('node scripts/patch_map_nav_filters.mjs', 'desktop sector nav, filters, tab state');
 run('node scripts/patch_tab_heatmap_i18n.mjs', 'tabHeatmap i18n');
 run('node scripts/patch_editorial_collapsible_html.mjs', 'editorial collapsible HTML');
 run('node scripts/fix_mcap_script_order.mjs', 'mcap fmt + script order');

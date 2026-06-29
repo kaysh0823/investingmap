@@ -117,8 +117,10 @@
   <script src="../js/map_mcap_fmt.js"></script>
   <script src="../js/live_quotes.js"></script>
   <script src="../js/map_i18n.js"></script>
+  <script src="../js/map_tab_state.js"></script>
   <script src="../js/sector_nav.js"></script>
-  <script src="../js/map_editorial.js"></script>
+  <script src="../js/map_filter_ux.js"></script>
+<script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js"></script>
   <script src="../js/map_mobile_table.js"></script>
   <script src="../js/map_mobile_ux.js"></script>
@@ -210,64 +212,7 @@
       border-color: var(--accent);
       color: var(--text)
     }
-
-    .hub-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 6px 12px;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
-      transition: all .2s;
-    }
-
-    .hub-back:hover {
-      border-color: var(--accent);
-      color: var(--text)
-    }
-    .sector-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      align-items: center;
-      justify-content: flex-end;
-      max-width: min(480px, 46vw);
-    }
-
-    .sector-nav a,
-    .sector-nav .is-current {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 8px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: 600;
-      line-height: 1.2;
-      white-space: nowrap;
-      transition: all .2s;
-    }
-
-    .sector-nav a:hover {
-      border-color: var(--accent);
-      color: var(--text);
-    }
-
-    .sector-nav .is-current {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 12%, var(--surface2));
-    }
-
-    .data-asof {
+.data-asof {
       flex-basis: 100%;
       text-align: right;
       font-size: 11px;
@@ -1135,12 +1080,7 @@
         padding: 6px 10px;
         font-size: 14px
       }
-
-      .hub-back {
-        padding: 6px 10px;
-        font-size: 11px
-      }
-    }
+}
     .geo-summary {
       max-width: 960px;
       margin: 0 auto;
@@ -1324,7 +1264,7 @@
 
   <div class="header">
     <div class="header-actions">
-            <nav class="sector-nav" id="sector-nav"></nav>
+      <nav class="sector-nav" id="sector-nav"></nav>
 <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="라이트 모드" aria-label="Theme">☀️</button>
       <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">
       <span class="flag">🇺🇸</span><span id="lang-toggle-text">English</span>
@@ -1367,18 +1307,19 @@
   <div id="tab-table" class="tab-content">
     <div class="table-container">
       <div class="filter-bar">
-        <div class="filter-group">
-          <span class="filter-label" id="fl-chain-label">섹터</span>
+        <div class="filter-row filter-row-chain">
+          <span class="filter-label" id="fl-chain-label">벨류체인</span>
           <div id="chain-chips"></div>
         </div>
-        <div class="filter-divider"></div>
-        <div class="filter-group">
+        <div class="filter-row filter-row-market">
           <span class="filter-label" id="fl-market-label">시장</span>
           <div id="market-chips"></div>
         </div>
+        <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
         <div class="result-count" id="result-label">표시: <span id="show-count">157</span>개</div>
+        </div>
       </div>
       <div class="tbl-wrap">
         <table id="main-table">
@@ -1456,6 +1397,7 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
   </footer>
+  <script src="../js/global_bottom_nav.js"></script>
   <script src="../js/geo_footer.js"></script>
 </body>
 

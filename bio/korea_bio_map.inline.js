@@ -103,8 +103,6 @@
       const t = T[lang];
       document.documentElement.setAttribute('lang', lang === 'en' ? 'en' : 'ko');
       try { localStorage.setItem('im_lang', lang); } catch (e) { }
-      const hubBack = document.getElementById('hub-back');
-      if (hubBack) hubBack.href = '../index.html?lang=' + encodeURIComponent(lang);
       document.title = t.title;
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: t.title, description: t.subtitle });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
@@ -121,8 +119,6 @@
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
-      const hubLbl = document.getElementById('hub-link-label');
-      if (hubLbl) hubLbl.textContent = lang === 'en' ? 'Hub' : '허브';
       document.getElementById('fl-chain-label').textContent = t.flChain;
       document.getElementById('fl-market-label').textContent = t.flMarket;
       document.getElementById('search-input').placeholder = t.searchPlaceholder;
@@ -159,6 +155,7 @@
       syncThemeToggle();
       updateQuotesAsofDisplay();
       if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
+      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       buildChainChips();
       buildMarketChips();
       buildSidebarLegend();
@@ -677,9 +674,11 @@
       if (btn) btn.classList.add('active');
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
+      if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
     }
 
     loadFx().catch(function () { }).finally(function () {
+      if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
       try { applyLang(); } catch (e) {
