@@ -56,6 +56,7 @@
       '.im-global-bottom-nav{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:120;background:color-mix(in srgb,var(--surface) 94%,transparent);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:6px 2px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 20px rgba(0,0,0,.15)}' +
       '.im-bottom-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 2px;text-decoration:none;color:var(--text-muted);font-size:9px;font-weight:600;border-radius:8px;min-height:44px;min-width:0;text-align:center;line-height:1.2;word-break:keep-all}' +
       '.im-bottom-tab-icon{font-size:16px;line-height:1}' +
+      '.im-bottom-tab-icon--home{font-size:21px;line-height:1}' +
       '.im-bottom-tab-label{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
       '.im-bottom-tab.is-active{color:var(--accent)}' +
       '.im-bottom-tab:active{background:var(--surface2)}' +
@@ -88,8 +89,9 @@
       }
       var label = l === 'en' ? item.en : item.ko;
       var cls = 'im-bottom-tab' + (item.id === active ? ' is-active' : '');
+      var iconCls = 'im-bottom-tab-icon' + (item.id === 'home' ? ' im-bottom-tab-icon--home' : '');
       return '<a class="' + cls + '" href="' + href + '">' +
-        '<span class="im-bottom-tab-icon" aria-hidden="true">' + item.icon + '</span>' +
+        '<span class="' + iconCls + '" aria-hidden="true">' + item.icon + '</span>' +
         '<span class="im-bottom-tab-label">' + label + '</span></a>';
     }).join('');
   }
