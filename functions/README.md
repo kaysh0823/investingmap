@@ -45,7 +45,7 @@ Returns JSON compatible with `js/live_quotes.js`:
 
 ## Hub dashboard
 
-`GET /api/hub_sectors` — sector mcap-weighted 1Y return (KRX only, fast).  
+`GET /api/hub_sectors` — sector 1Y return: Σ(recent KRX mcap) / Σ(~252-session-ago mcap) − 1 (4 KRX calls, cached 6h).  
 `GET /api/hub_top10` — top-10 price position vs 52-week range (Naver).  
 `GET /api/hub_dashboard` — combined response (legacy).
 

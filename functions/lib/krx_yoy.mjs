@@ -104,6 +104,76 @@ async function fetchMarketDay(authKey, basDd) {
   return byCode;
 }
 
+function mcapFromRow(row) {
+  const cl = parseNum(row.TDD_CLSPRC);
+  const shrs = parseNum(row.LIST_SHRS);
+  if (cl != null && shrs != null && cl > 0 && shrs > 0) return cl * shrs;
+  const direct = parseNum(row.MKTCAP);
+  if (direct != null && direct > 0) return direct;
+  return null;
+}
+
+function mcapMapFromMarketDay(byCode) {
+  const out = new Map();
+  for (const [code, row] of byCode) {
+    const mcap = mcapFromRow(row);
+    if (mcap != null && mcap > 0) out.set(code, mcap);
+  }
+  return out;
+}
+
+async function fetchMcapMapForDate(authKey, basDd) {
+  const byCode = await fetchMarketDay(authKey, basDd);
+  return mcapMapFromMarketDay(byCode);
+}
+
+async function fetchMcapMapWithFallback(authKey, dates, minSize) {
+  const min = minSize || 50;
+  for (const basDd of dates) {
+    try {
+      const mcap = await fetchMcapMapForDate(authKey, basDd);
+      if (mcap.size >= min) return { mcap, basDd };
+    } catch {
+      /* try next date */
+    }
+  }
+  return { mcap: new Map(), basDd: null };
+}
+
+let mcapPairCache = null;
+const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
+
+/**
+ * Recent + ~252 trading-day-ago mcap maps (4 KRX calls — fast hub sector return).
+ * @returns {Promise<{ mcapNow: Map, mcapPast: Map, recentDd: string, pastDd: string }|null>}
+ */
+export async function fetchHubSectorMcapPair(authKey) {
+  if (!authKey) return null;
+  const now = Date.now();
+  if (mcapPairCache && now - mcapPairCache.t < MCAP_PAIR_CACHE_MS) {
+    return mcapPairCache.pair;
+  }
+
+  const dates = tradingDates(HIST_TRADING_DAYS);
+  const pastIdx = Math.min(HIST_TRADING_DAYS - 1, dates.length - 1);
+
+  const [recent, past] = await Promise.all([
+    fetchMcapMapWithFallback(authKey, dates.slice(0, 5)),
+    fetchMcapMapWithFallback(authKey, dates.slice(pastIdx, pastIdx + 5)),
+  ]);
+
+  if (!recent.mcap.size || !past.mcap.size) return null;
+
+  const pair = {
+    mcapNow: recent.mcap,
+    mcapPast: past.mcap,
+    recentDd: recent.basDd,
+    pastDd: past.basDd,
+  };
+  mcapPairCache = { t: now, pair };
+  return pair;
+}
+
 function mergeDayIntoAcc(acc, byCode) {
   for (const [code, row] of byCode) {
     const cl = parseNum(row.TDD_CLSPRC);

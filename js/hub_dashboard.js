@@ -21,7 +21,7 @@
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
-      pulseSub: '시총 가중 1년 수익률 (KRX·상장사 합산)',
+      pulseSub: '시총 합산 1년 수익률 (최근 종가 시총 ÷ 252거래일 전 시총)',
       pulseColSector: '섹터',
       pulseColReturn: '1년 수익률',
       pulseMcapLabel: '시가총액 합산(비중)',
@@ -41,7 +41,7 @@
     },
     en: {
       pulseTitle: 'Sector performance',
-      pulseSub: 'Market-cap weighted 1Y return (KRX listed names)',
+      pulseSub: '1Y return: recent mcap sum ÷ mcap sum ~252 sessions ago',
       pulseColSector: 'Sector',
       pulseColReturn: '1Y return',
       pulseMcapLabel: 'Total mcap (weight)',
@@ -441,6 +441,7 @@
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
         applySectorsPayload(j);
+        writeSwr();
       })
       .catch(function () {
         sectorsFailed = true;

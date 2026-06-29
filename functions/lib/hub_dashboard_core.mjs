@@ -3,7 +3,7 @@
  */
 
 import { getCachedNaverQuotes } from './naver_quote_store.mjs';
-import { getAuthKey, mergeKrxYoyHub } from './krx_yoy.mjs';
+import { getAuthKey, fetchHubSectorMcapPair } from './krx_yoy.mjs';
 import { krxSessionInfo } from './krx_session.mjs';
 
 export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
@@ -73,31 +73,39 @@ function flattenCompanies(hubIndex) {
   return out;
 }
 
-function weightedSectorReturn(companies, items) {
-  let totalMcap = 0;
-  let weighted = 0;
+/**
+ * Sector 1Y return = Σ(mcap_recent) / Σ(mcap_252d_ago) − 1 (KRX close-day mcap).
+ */
+function sectorReturnMcapRatio(companies, mcapNow, mcapPast) {
+  let sumNow = 0;
+  let sumPast = 0;
   for (const c of companies) {
     const key = normalizeTicker(c.ticker);
     if (!key) continue;
-    const q = items[key];
-    const ret = q && typeof q.yoyReturnPct === 'number' && Number.isFinite(q.yoyReturnPct)
-      ? q.yoyReturnPct
-      : null;
-    if (ret == null) continue;
-    const mcap = (q && q.mcapWon > 0) ? q.mcapWon : c.mcapWon;
-    if (!mcap) continue;
-    totalMcap += mcap;
-    weighted += mcap * ret;
+    const now = mcapNow.get(key);
+    const past = mcapPast.get(key);
+    if (
+      now == null || past == null
+      || !Number.isFinite(now) || !Number.isFinite(past)
+      || now <= 0 || past <= 0
+    ) {
+      continue;
+    }
+    sumNow += now;
+    sumPast += past;
   }
-  if (totalMcap <= 0) return null;
-  return weighted / totalMcap;
+  if (sumPast <= 0) return null;
+  return ((sumNow / sumPast) - 1) * 100;
 }
 
-function buildSectors(hubIndex, items) {
+function buildSectors(hubIndex, mcapPair) {
   let totalMcap = 0;
   for (const c of flattenCompanies(hubIndex)) {
     totalMcap += c.mcapWon || 0;
   }
+
+  const mcapNow = mcapPair && mcapPair.mcapNow;
+  const mcapPast = mcapPair && mcapPair.mcapPast;
 
   const sectors = {};
   for (const sid of SECTOR_ORDER) {
@@ -106,7 +114,9 @@ function buildSectors(hubIndex, items) {
     const companies = block.companies || [];
     const sectorMcap = companies.reduce((s, c) => s + (c.mcapWon || 0), 0);
     sectors[sid] = {
-      yoyReturnPct: weightedSectorReturn(companies, items),
+      yoyReturnPct: (mcapNow && mcapPast)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast)
+        : null,
       mcapWon: sectorMcap,
       weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
       listingCount: companies.length,
@@ -142,18 +152,19 @@ function buildTop10(hubIndex, items) {
  * @param {object|null} env — Cloudflare env (KRX key)
  */
 export async function buildHubSectors(hubIndex, env) {
-  const codes = collectUniqueCodes(hubIndex);
   const authKey = getAuthKey(env);
   const session = krxSessionInfo();
-  const yoyItems = await mergeKrxYoyHub(codes, authKey, 6);
+  const mcapPair = authKey ? await fetchHubSectorMcapPair(authKey) : null;
 
   return {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
     regularSession: session.regular,
-    source: authKey ? 'krx-yoy' : 'hub_index',
+    source: mcapPair ? 'krx-mcap-ratio' : 'hub_index',
     krxConfigured: !!authKey,
-    sectors: buildSectors(hubIndex, yoyItems),
+    mcapRecentDd: mcapPair ? mcapPair.recentDd : null,
+    mcapPastDd: mcapPair ? mcapPair.pastDd : null,
+    sectors: buildSectors(hubIndex, mcapPair),
   };
 }
 
@@ -190,7 +201,7 @@ export async function buildHubDashboard(hubIndex, env) {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
     regularSession: top10Payload.regularSession,
-    source: sectorsPayload.krxConfigured ? 'naver-sise-cache+krx-yoy' : 'naver-sise-cache',
+    source: sectorsPayload.krxConfigured ? 'krx-mcap-ratio+naver-sise' : 'naver-sise-cache',
     cacheHits: top10Payload.cacheHits,
     naverFetched: top10Payload.naverFetched,
     sectors: sectorsPayload.sectors,
