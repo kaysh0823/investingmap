@@ -3,7 +3,7 @@
  */
 
 import { getCachedNaverQuotes } from './naver_quote_store.mjs';
-import { getAuthKey, fetchHubSectorMcapPair } from './krx_yoy.mjs';
+import { getAuthKey, fetchHubSectorMcapSnapshots } from './krx_yoy.mjs';
 import { krxSessionInfo } from './krx_session.mjs';
 
 export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
@@ -98,14 +98,16 @@ function sectorReturnMcapRatio(companies, mcapNow, mcapPast) {
   return ((sumNow / sumPast) - 1) * 100;
 }
 
-function buildSectors(hubIndex, mcapPair) {
+function buildSectors(hubIndex, snapshots) {
   let totalMcap = 0;
   for (const c of flattenCompanies(hubIndex)) {
     totalMcap += c.mcapWon || 0;
   }
 
-  const mcapNow = mcapPair && mcapPair.mcapNow;
-  const mcapPast = mcapPair && mcapPair.mcapPast;
+  const mcapNow = snapshots && snapshots.mcapNow;
+  const mcapPast1y = snapshots && snapshots.mcapPast1y;
+  const mcapPast6m = snapshots && snapshots.mcapPast6m;
+  const mcapPast3m = snapshots && snapshots.mcapPast3m;
 
   const sectors = {};
   for (const sid of SECTOR_ORDER) {
@@ -114,8 +116,14 @@ function buildSectors(hubIndex, mcapPair) {
     const companies = block.companies || [];
     const sectorMcap = companies.reduce((s, c) => s + (c.mcapWon || 0), 0);
     sectors[sid] = {
-      yoyReturnPct: (mcapNow && mcapPast)
-        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast)
+      yoyReturnPct: (mcapNow && mcapPast1y)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast1y)
+        : null,
+      return6mPct: (mcapNow && mcapPast6m)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast6m)
+        : null,
+      return3mPct: (mcapNow && mcapPast3m)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast3m)
         : null,
       mcapWon: sectorMcap,
       weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
@@ -154,17 +162,19 @@ function buildTop10(hubIndex, items) {
 export async function buildHubSectors(hubIndex, env) {
   const authKey = getAuthKey(env);
   const session = krxSessionInfo();
-  const mcapPair = authKey ? await fetchHubSectorMcapPair(authKey) : null;
+  const snapshots = authKey ? await fetchHubSectorMcapSnapshots(authKey) : null;
 
   return {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
     regularSession: session.regular,
-    source: mcapPair ? 'krx-mcap-ratio' : 'hub_index',
+    source: snapshots ? 'krx-mcap-ratio' : 'hub_index',
     krxConfigured: !!authKey,
-    mcapRecentDd: mcapPair ? mcapPair.recentDd : null,
-    mcapPastDd: mcapPair ? mcapPair.pastDd : null,
-    sectors: buildSectors(hubIndex, mcapPair),
+    mcapRecentDd: snapshots ? snapshots.recentDd : null,
+    mcapPast1yDd: snapshots ? snapshots.past1yDd : null,
+    mcapPast6mDd: snapshots ? snapshots.past6mDd : null,
+    mcapPast3mDd: snapshots ? snapshots.past3mDd : null,
+    sectors: buildSectors(hubIndex, snapshots),
   };
 }
 

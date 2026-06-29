@@ -5,10 +5,15 @@
   'use strict';
 
   var SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
+  var PULSE_HORIZONS = [
+    { retKey: 'yoyReturnPct', labelKey: 'pulseRow1y', compact: false },
+    { retKey: 'return6mPct', labelKey: 'pulseRow6m', compact: true },
+    { retKey: 'return3mPct', labelKey: 'pulseRow3m', compact: true },
+  ];
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v1';
+  var SWR_KEY = 'im-hub-dashboard-v2';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], regularSession: null };
@@ -21,7 +26,10 @@
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
-      pulseSub: '시총 합산 1년 수익률 (최근 종가 시총 ÷ 252거래일 전 시총)',
+      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1년·6개월·3개월',
+      pulseRow1y: '1년',
+      pulseRow6m: '6개월',
+      pulseRow3m: '3개월',
       pulseColSector: '섹터',
       pulseColReturn: '1년 수익률',
       pulseMcapLabel: '시가총액 합산(비중)',
@@ -41,7 +49,10 @@
     },
     en: {
       pulseTitle: 'Sector performance',
-      pulseSub: '1Y return: recent mcap sum ÷ mcap sum ~252 sessions ago',
+      pulseSub: 'Mcap-sum return (recent ÷ past mcap) — 1Y, 6M, 3M',
+      pulseRow1y: '1 year',
+      pulseRow6m: '6 months',
+      pulseRow3m: '3 months',
       pulseColSector: 'Sector',
       pulseColReturn: '1Y return',
       pulseMcapLabel: 'Total mcap (weight)',
@@ -72,7 +83,7 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v4')) return;
+    if (document.getElementById('im-hub-dashboard-css-v5')) return;
     var css =
       '.hub-sector-pulse{margin-bottom:22px}' +
       '.hub-pulse-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;margin-bottom:12px}' +
@@ -82,7 +93,15 @@
       '.hub-pulse-session{font-size:11px;font-weight:600;color:var(--accent);padding:4px 10px;border-radius:12px;background:color-mix(in srgb,var(--accent) 12%,var(--surface2));border:1px solid color-mix(in srgb,var(--accent) 30%,var(--border))}' +
       '.hub-pulse-loading-badge{font-size:11px;font-weight:600;color:var(--text-muted);padding:4px 10px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);animation:hub-pulse-blink 1.2s ease-in-out infinite}' +
       '@keyframes hub-pulse-blink{0%,100%{opacity:1}50%{opacity:.45}}' +
+      '.hub-pulse-rows{display:flex;flex-direction:column;gap:14px}' +
+      '.hub-pulse-row{display:flex;flex-direction:column;gap:8px}' +
+      '.hub-pulse-row-label{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.03em}' +
       '.hub-pulse-cards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}' +
+      '.hub-pulse-cards.is-compact .hub-pulse-card{padding:10px 8px 9px;gap:4px}' +
+      '.hub-pulse-cards.is-compact .hub-pulse-card-ret{font-size:16px}' +
+      '.hub-pulse-cards.is-compact .hub-pulse-card-sector{font-size:10px}' +
+      '.hub-pulse-cards.is-compact .hub-pulse-card-sector .hub-pulse-icon{font-size:16px}' +
+      '.hub-pulse-cards.is-compact .hub-pulse-spark{max-width:56px;height:18px}' +
       '.hub-pulse-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;min-width:0;transition:border-color .15s,box-shadow .15s}' +
       '.hub-pulse-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.12)}' +
       '.hub-pulse-card-sector{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.02em;line-height:1.2;word-break:keep-all}' +
@@ -114,9 +133,9 @@
       '.hub-card-keyplayers{font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4;word-break:keep-all}' +
       '.hub-card-keyplayers strong{color:var(--text);font-weight:600}' +
       '@media (max-width:1200px){.hub-pulse-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}' +
-      '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}}';
+      '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}.hub-pulse-cards.is-compact .hub-pulse-card{flex:0 0 108px}}';
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v4';
+    el.id = 'im-hub-dashboard-css-v5';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -234,6 +253,8 @@
         weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
         listingCount: block.companies.length,
         yoyReturnPct: null,
+        return6mPct: null,
+        return3mPct: null,
       };
     });
     return out;
@@ -294,20 +315,16 @@
     return 'is-low';
   }
 
-  function renderPulse(lang) {
-    var wrap = document.getElementById('hub-sector-pulse-body');
-    if (!wrap || !hubData) return;
+  function buildPulseCards(lang, sectors, local, retKey, compact) {
     var labels = t(lang);
     var ql = '?lang=' + encodeURIComponent(lang);
-    var local = localSectorStats();
-    var sectors = dashboardData && dashboardData.sectors ? dashboardData.sectors : {};
-    var cards = SECTOR_ORDER.map(function (sid) {
+    return SECTOR_ORDER.map(function (sid) {
       var block = hubData.sectors[sid];
       if (!block) return '';
       var meta = block.meta || {};
       var label = lang === 'en' ? meta.en : meta.ko;
       var pulse = sectors[sid] || local[sid] || {};
-      var retPct = pulse.yoyReturnPct != null ? pulse.yoyReturnPct : null;
+      var retPct = pulse[retKey] != null ? pulse[retKey] : null;
       var sectorMcap = pulse.mcapWon != null ? pulse.mcapWon :
         block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
       var weightPct = pulse.weightPct != null ? pulse.weightPct : (local[sid] ? local[sid].weightPct : 0);
@@ -324,17 +341,35 @@
       var href = (meta.map || 'index.html') + ql;
       var countLabel = (pulse.listingCount != null ? pulse.listingCount : block.companies.length) +
         (lang === 'en' ? '' : '\uAC1C');
+      var mcapBlock = compact ? '' :
+        '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
+        '<div class="hub-pulse-mcap-val">' + formatMcapWithWeight(sectorMcap, weightPct, lang) + '</div>' +
+        '<div class="hub-pulse-count">' + countLabel + '</div>';
       return '<a class="hub-pulse-card" href="' + href + '">' +
         '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">' + (meta.icon || '') + '</span><span>' + label + '</span></div>' +
         '<div class="' + cls + '">' + retText + '</div>' +
         sparklineSvg(retPct, isLoading) +
-        '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
-        '<div class="hub-pulse-mcap-val">' + formatMcapWithWeight(sectorMcap, weightPct, lang) + '</div>' +
-        '<div class="hub-pulse-count">' + countLabel + '</div>' +
+        mcapBlock +
         '</a>';
     }).join('');
+  }
 
-    wrap.innerHTML = '<div class="hub-pulse-cards">' + cards + '</div>';
+  function renderPulse(lang) {
+    var wrap = document.getElementById('hub-sector-pulse-body');
+    if (!wrap || !hubData) return;
+    var labels = t(lang);
+    var local = localSectorStats();
+    var sectors = dashboardData && dashboardData.sectors ? dashboardData.sectors : {};
+    var rowsHtml = PULSE_HORIZONS.map(function (h) {
+      var cards = buildPulseCards(lang, sectors, local, h.retKey, h.compact);
+      var gridCls = 'hub-pulse-cards' + (h.compact ? ' is-compact' : '');
+      return '<div class="hub-pulse-row">' +
+        '<div class="hub-pulse-row-label">' + labels[h.labelKey] + '</div>' +
+        '<div class="' + gridCls + '">' + cards + '</div>' +
+        '</div>';
+    }).join('');
+
+    wrap.innerHTML = '<div class="hub-pulse-rows">' + rowsHtml + '</div>';
 
     var statusWrap = document.getElementById('hub-pulse-status');
     if (statusWrap) {

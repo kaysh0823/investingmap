@@ -19,7 +19,8 @@ const KOSDAQ_DAILY = '/sto/ksq_bydd_trd';
 const HIST_CACHE_MS = 6 * 60 * 60 * 1000;
 const HIST_TRADING_DAYS = 252;
 const HIST_CALENDAR_SCAN = 400;
-const HIST_DAYS_PER_REQUEST = 4;
+const HIST_TRADING_DAYS_3M = 63;
+const HIST_TRADING_DAYS_6M = 126;
 
 let histCache = null;
 let histWarm = null;
@@ -140,38 +141,57 @@ async function fetchMcapMapWithFallback(authKey, dates, minSize) {
   return { mcap: new Map(), basDd: null };
 }
 
-let mcapPairCache = null;
+let mcapSnapshotsCache = null;
 const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
 
 /**
- * Recent + ~252 trading-day-ago mcap maps (4 KRX calls — fast hub sector return).
- * @returns {Promise<{ mcapNow: Map, mcapPast: Map, recentDd: string, pastDd: string }|null>}
+ * Recent + 3M / 6M / 1Y trading-day-ago mcap maps (~8 KRX calls, parallel).
  */
-export async function fetchHubSectorMcapPair(authKey) {
+export async function fetchHubSectorMcapSnapshots(authKey) {
   if (!authKey) return null;
   const now = Date.now();
-  if (mcapPairCache && now - mcapPairCache.t < MCAP_PAIR_CACHE_MS) {
-    return mcapPairCache.pair;
+  if (mcapSnapshotsCache && now - mcapSnapshotsCache.t < MCAP_PAIR_CACHE_MS) {
+    return mcapSnapshotsCache.snapshots;
   }
 
   const dates = tradingDates(HIST_TRADING_DAYS);
-  const pastIdx = Math.min(HIST_TRADING_DAYS - 1, dates.length - 1);
+  const idx1y = Math.min(HIST_TRADING_DAYS - 1, dates.length - 1);
+  const idx6m = Math.min(HIST_TRADING_DAYS_6M - 1, dates.length - 1);
+  const idx3m = Math.min(HIST_TRADING_DAYS_3M - 1, dates.length - 1);
 
-  const [recent, past] = await Promise.all([
+  const [recent, past1y, past6m, past3m] = await Promise.all([
     fetchMcapMapWithFallback(authKey, dates.slice(0, 5)),
-    fetchMcapMapWithFallback(authKey, dates.slice(pastIdx, pastIdx + 5)),
+    fetchMcapMapWithFallback(authKey, dates.slice(idx1y, idx1y + 5)),
+    fetchMcapMapWithFallback(authKey, dates.slice(idx6m, idx6m + 5)),
+    fetchMcapMapWithFallback(authKey, dates.slice(idx3m, idx3m + 5)),
   ]);
 
-  if (!recent.mcap.size || !past.mcap.size) return null;
+  if (!recent.mcap.size) return null;
 
-  const pair = {
+  const snapshots = {
     mcapNow: recent.mcap,
-    mcapPast: past.mcap,
+    mcapPast1y: past1y.mcap,
+    mcapPast6m: past6m.mcap,
+    mcapPast3m: past3m.mcap,
     recentDd: recent.basDd,
-    pastDd: past.basDd,
+    past1yDd: past1y.basDd,
+    past6mDd: past6m.basDd,
+    past3mDd: past3m.basDd,
   };
-  mcapPairCache = { t: now, pair };
-  return pair;
+  mcapSnapshotsCache = { t: now, snapshots };
+  return snapshots;
+}
+
+/** @deprecated use fetchHubSectorMcapSnapshots */
+export async function fetchHubSectorMcapPair(authKey) {
+  const s = await fetchHubSectorMcapSnapshots(authKey);
+  if (!s) return null;
+  return {
+    mcapNow: s.mcapNow,
+    mcapPast: s.mcapPast1y,
+    recentDd: s.recentDd,
+    pastDd: s.past1yDd,
+  };
 }
 
 function mergeDayIntoAcc(acc, byCode) {
