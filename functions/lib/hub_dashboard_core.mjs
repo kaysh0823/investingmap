@@ -74,12 +74,15 @@ function flattenCompanies(hubIndex) {
 }
 
 /**
- * Sector 1Y return = Σ(mcap_recent) / Σ(mcap_252d_ago) − 1 (KRX close-day mcap).
+ * Sector return = Σ(mcap_recent) / Σ(mcap_past) − 1 for hub-listed names with both snapshots.
  */
 function sectorReturnMcapRatio(companies, mcapNow, mcapPast) {
   let sumNow = 0;
   let sumPast = 0;
+  let coveredHubMcap = 0;
+  let totalHubMcap = 0;
   for (const c of companies) {
+    totalHubMcap += c.mcapWon || 0;
     const key = normalizeTicker(c.ticker);
     if (!key) continue;
     const now = mcapNow.get(key);
@@ -93,8 +96,10 @@ function sectorReturnMcapRatio(companies, mcapNow, mcapPast) {
     }
     sumNow += now;
     sumPast += past;
+    coveredHubMcap += c.mcapWon || 0;
   }
-  if (sumPast <= 0) return null;
+  if (sumPast <= 0 || totalHubMcap <= 0) return null;
+  if (coveredHubMcap / totalHubMcap < 0.35) return null;
   return ((sumNow / sumPast) - 1) * 100;
 }
 

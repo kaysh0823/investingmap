@@ -30,10 +30,9 @@ export function putHubCache(context, cachePath, origin, response) {
 
 export function hasSectorYoy(sectors) {
   if (!sectors || typeof sectors !== 'object') return false;
+  const keys = ['yoyReturnPct', 'return6mPct', 'return3mPct'];
   return Object.values(sectors).some((s) => {
     if (!s) return false;
-    return ['yoyReturnPct', 'return6mPct', 'return3mPct'].some(
-      (k) => typeof s[k] === 'number' && Number.isFinite(s[k]),
-    );
+    return keys.every((k) => typeof s[k] === 'number' && Number.isFinite(s[k]));
   });
 }

@@ -13,7 +13,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v2';
+  var SWR_KEY = 'im-hub-dashboard-v3';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], regularSession: null };
@@ -161,9 +161,11 @@
   function hubApiUrl(path) {
     var meta = document.querySelector('meta[name="investingmap-hub-api"]');
     var custom = meta && meta.getAttribute('content') ? String(meta.getAttribute('content')).trim() : '';
-    if (custom) return custom.replace(/\/+$/, '') + path;
-    if (hubApiEnabled()) return path;
-    return '';
+    var base = custom ? custom.replace(/\/+$/, '') : (hubApiEnabled() ? '' : '');
+    if (!base && !hubApiEnabled()) return '';
+    var sep = path.indexOf('?') >= 0 ? '&' : '?';
+    var bust = sep + '_v=3';
+    return (base || '') + path + bust;
   }
 
   function fetchWithTimeout(url, ms, acceptPartial) {
@@ -476,6 +478,10 @@
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
         applySectorsPayload(j);
+        var ok = j.sectors && Object.values(j.sectors).some(function (s) {
+          return s && s.return6mPct != null && s.return3mPct != null;
+        });
+        if (!ok) throw new Error('hub_sectors_incomplete');
         writeSwr();
       })
       .catch(function () {

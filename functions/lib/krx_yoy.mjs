@@ -129,7 +129,7 @@ async function fetchMcapMapForDate(authKey, basDd) {
 }
 
 async function fetchMcapMapWithFallback(authKey, dates, minSize) {
-  const min = minSize || 50;
+  const min = minSize || 20;
   for (const basDd of dates) {
     try {
       const mcap = await fetchMcapMapForDate(authKey, basDd);
@@ -141,32 +141,39 @@ async function fetchMcapMapWithFallback(authKey, dates, minSize) {
   return { mcap: new Map(), basDd: null };
 }
 
+function snapshotMapsReady(snapshots) {
+  if (!snapshots || !snapshots.mcapNow || snapshots.mcapNow.size < 20) return false;
+  return ['mcapPast1y', 'mcapPast6m', 'mcapPast3m'].every(
+    (k) => snapshots[k] && snapshots[k].size >= 20,
+  );
+}
+
 let mcapSnapshotsCache = null;
 const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
 
 /**
- * Recent + 3M / 6M / 1Y trading-day-ago mcap maps (~8 KRX calls, parallel).
+ * Recent + 3M / 6M / 1Y trading-day-ago mcap maps (sequential KRX calls, cached 6h).
  */
 export async function fetchHubSectorMcapSnapshots(authKey) {
   if (!authKey) return null;
   const now = Date.now();
   if (mcapSnapshotsCache && now - mcapSnapshotsCache.t < MCAP_PAIR_CACHE_MS) {
-    return mcapSnapshotsCache.snapshots;
+    const cached = mcapSnapshotsCache.snapshots;
+    if (snapshotMapsReady(cached)) return cached;
   }
 
   const dates = tradingDates(HIST_TRADING_DAYS);
   const idx1y = Math.min(HIST_TRADING_DAYS - 1, dates.length - 1);
   const idx6m = Math.min(HIST_TRADING_DAYS_6M - 1, dates.length - 1);
   const idx3m = Math.min(HIST_TRADING_DAYS_3M - 1, dates.length - 1);
+  const window = 12;
 
-  const [recent, past1y, past6m, past3m] = await Promise.all([
-    fetchMcapMapWithFallback(authKey, dates.slice(0, 5)),
-    fetchMcapMapWithFallback(authKey, dates.slice(idx1y, idx1y + 5)),
-    fetchMcapMapWithFallback(authKey, dates.slice(idx6m, idx6m + 5)),
-    fetchMcapMapWithFallback(authKey, dates.slice(idx3m, idx3m + 5)),
-  ]);
-
+  const recent = await fetchMcapMapWithFallback(authKey, dates.slice(0, window));
   if (!recent.mcap.size) return null;
+
+  const past1y = await fetchMcapMapWithFallback(authKey, dates.slice(idx1y, idx1y + window));
+  const past6m = await fetchMcapMapWithFallback(authKey, dates.slice(idx6m, idx6m + window));
+  const past3m = await fetchMcapMapWithFallback(authKey, dates.slice(idx3m, idx3m + window));
 
   const snapshots = {
     mcapNow: recent.mcap,
@@ -178,7 +185,10 @@ export async function fetchHubSectorMcapSnapshots(authKey) {
     past6mDd: past6m.basDd,
     past3mDd: past3m.basDd,
   };
-  mcapSnapshotsCache = { t: now, snapshots };
+
+  if (snapshotMapsReady(snapshots)) {
+    mcapSnapshotsCache = { t: now, snapshots };
+  }
   return snapshots;
 }
 
