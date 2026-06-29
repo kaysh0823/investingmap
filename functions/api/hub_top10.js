@@ -1,19 +1,17 @@
 /**
- * Cloudflare Pages Function: GET /api/hub_dashboard
- * Sector mcap-weighted 1Y return + top-10 price position (single response).
+ * Cloudflare Pages Function: GET /api/hub_top10
+ * Top-10 price position vs 52-week range (Naver only).
  */
 
-import { buildHubDashboard, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
-import { getAuthKey } from '../lib/krx_yoy.mjs';
+import { buildHubTop10, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   corsHeaders,
-  hasSectorYoy,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const HUB_CACHE_PATH = '/api/hub_dashboard/cache/v1';
+const CACHE_PATH = '/api/hub_top10/cache/v1';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -30,7 +28,7 @@ export async function onRequest(context) {
   const nocache = url.searchParams.get('nocache') === '1';
 
   if (!nocache) {
-    const hit = await readHubCache(HUB_CACHE_PATH, url.origin);
+    const hit = await readHubCache(CACHE_PATH, url.origin);
     if (hit) {
       const headers = new Headers(hit.headers);
       for (const [k, v] of Object.entries(ch)) headers.set(k, v);
@@ -41,7 +39,7 @@ export async function onRequest(context) {
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubDashboard(hubIndex, env);
+    const payload = await buildHubTop10(hubIndex, env);
     const maxAge = session.regular ? 300 : 1800;
     const response = new Response(JSON.stringify(payload), {
       headers: {
@@ -51,19 +49,17 @@ export async function onRequest(context) {
         'X-Hub-Cache': 'MISS',
       },
     });
-    if (!nocache && payload.top10 && payload.top10.length > 0 && hasSectorYoy(payload.sectors)) {
-      putHubCache(context, HUB_CACHE_PATH, url.origin, response);
+    if (!nocache && payload.top10 && payload.top10.length > 0) {
+      putHubCache(context, CACHE_PATH, url.origin, response);
     }
     return response;
   } catch (e) {
     return new Response(
       JSON.stringify({
-        error: 'hub_dashboard_failed',
+        error: 'hub_top10_failed',
         message: e && e.message ? String(e.message) : 'unknown',
         asOf: new Date().toISOString(),
-        krxConfigured: !!getAuthKey(env),
         regularSession: session.regular,
-        sectors: {},
         top10: [],
       }),
       { status: 502, headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },

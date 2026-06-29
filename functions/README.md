@@ -45,8 +45,11 @@ Returns JSON compatible with `js/live_quotes.js`:
 
 ## Hub dashboard
 
-`GET /api/hub_dashboard` — sector mcap-weighted 1Y return + top-10 price position (single JSON).  
-Used by `js/hub_dashboard.js` on `index.html`. Reads `data/hub_index.json` server-side and aggregates Naver quotes (+ optional KRX 1Y).
+`GET /api/hub_sectors` — sector mcap-weighted 1Y return (KRX only, fast).  
+`GET /api/hub_top10` — top-10 price position vs 52-week range (Naver).  
+`GET /api/hub_dashboard` — combined response (legacy).
+
+Used by `js/hub_dashboard.js` on `index.html` (parallel `/api/hub_sectors` + `/api/hub_top10`).
 
 ## Local test
 

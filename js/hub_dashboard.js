@@ -8,9 +8,14 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
+  var SWR_KEY = 'im-hub-dashboard-v1';
+  var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
-  var dashboardData = null;
-  var quotesLoading = false;
+  var dashboardData = { sectors: {}, top10: [], regularSession: null };
+  var sectorsLoading = false;
+  var top10Loading = false;
+  var sectorsFailed = false;
+  var top10Failed = false;
   var fxRate = 1400;
 
   var I18N = {
@@ -21,6 +26,8 @@
       pulseColReturn: '1년 수익률',
       pulseMcapLabel: '시가총액 합산(비중)',
       pulseColCount: '종목 수',
+      pulseLoading: '로딩중…',
+      pulseStatusLoading: '계산 중…',
       topTitle: '주가 위치 Top 10',
       topSub: '52주 구간 대비 현재가 — 전 산업 상장사',
       topViewAll: '지도에서 더 보기',
@@ -39,6 +46,8 @@
       pulseColReturn: '1Y return',
       pulseMcapLabel: 'Total mcap (weight)',
       pulseColCount: 'Listings',
+      pulseLoading: 'Loading…',
+      pulseStatusLoading: 'Calculating…',
       topTitle: 'Top 10 price position',
       topSub: 'Last vs 52-week range — all industries',
       topViewAll: 'Browse maps',
@@ -63,13 +72,16 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v3')) return;
+    if (document.getElementById('im-hub-dashboard-css-v4')) return;
     var css =
       '.hub-sector-pulse{margin-bottom:22px}' +
       '.hub-pulse-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;margin-bottom:12px}' +
       '.hub-pulse-head h2{font-size:16px;font-weight:700;color:var(--text)}' +
       '.hub-pulse-head p{font-size:12px;color:var(--text-muted);margin:0}' +
+      '.hub-pulse-head-status{display:flex;flex-wrap:wrap;gap:6px;align-items:center}' +
       '.hub-pulse-session{font-size:11px;font-weight:600;color:var(--accent);padding:4px 10px;border-radius:12px;background:color-mix(in srgb,var(--accent) 12%,var(--surface2));border:1px solid color-mix(in srgb,var(--accent) 30%,var(--border))}' +
+      '.hub-pulse-loading-badge{font-size:11px;font-weight:600;color:var(--text-muted);padding:4px 10px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);animation:hub-pulse-blink 1.2s ease-in-out infinite}' +
+      '@keyframes hub-pulse-blink{0%,100%{opacity:1}50%{opacity:.45}}' +
       '.hub-pulse-cards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}' +
       '.hub-pulse-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;min-width:0;transition:border-color .15s,box-shadow .15s}' +
       '.hub-pulse-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.12)}' +
@@ -79,6 +91,7 @@
       '.hub-pulse-card-ret.is-up{color:#3fb950}' +
       '.hub-pulse-card-ret.is-down{color:#f85149}' +
       '.hub-pulse-card-ret.is-flat{color:var(--text-muted)}' +
+      '.hub-pulse-card-ret.is-loading{font-size:12px;font-weight:600;color:var(--text-muted)}' +
       '.hub-pulse-spark{display:block;width:100%;max-width:72px;height:24px;margin:0 auto}' +
       '.hub-pulse-mcap-label{font-size:9px;font-weight:600;color:var(--text-muted);letter-spacing:.02em;line-height:1.2}' +
       '.hub-pulse-mcap-val{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;word-break:keep-all}' +
@@ -103,7 +116,7 @@
       '@media (max-width:1200px){.hub-pulse-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}' +
       '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}}';
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v3';
+    el.id = 'im-hub-dashboard-css-v4';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -121,18 +134,20 @@
       });
   }
 
-  function hubDashboardUrl() {
+  function hubApiEnabled() {
+    if (typeof window === 'undefined' || !window.location || !window.location.protocol) return false;
+    return window.location.protocol.indexOf('http') === 0;
+  }
+
+  function hubApiUrl(path) {
     var meta = document.querySelector('meta[name="investingmap-hub-api"]');
     var custom = meta && meta.getAttribute('content') ? String(meta.getAttribute('content')).trim() : '';
-    if (custom) return custom.replace(/\/+$/, '');
-    if (typeof window !== 'undefined' && window.location && window.location.protocol &&
-        window.location.protocol.indexOf('http') === 0) {
-      return '/api/hub_dashboard';
-    }
+    if (custom) return custom.replace(/\/+$/, '') + path;
+    if (hubApiEnabled()) return path;
     return '';
   }
 
-  function fetchWithTimeout(url, ms) {
+  function fetchWithTimeout(url, ms, acceptPartial) {
     return new Promise(function (resolve, reject) {
       var done = false;
       var tid = setTimeout(function () {
@@ -144,8 +159,10 @@
         .then(function (r) {
           return r.json().then(function (j) {
             if (!r.ok) {
-              if (j && j.top10 && j.top10.length) return j;
-              throw new Error('hub_dashboard_' + r.status);
+              if (acceptPartial && j && ((j.sectors && Object.keys(j.sectors).length) || (j.top10 && j.top10.length))) {
+                return j;
+              }
+              throw new Error('hub_api_' + r.status);
             }
             return j;
           });
@@ -165,15 +182,61 @@
     });
   }
 
-  function fetchDashboardWithRetry(url, ms, retriesLeft) {
-    return fetchWithTimeout(url, ms).catch(function (err) {
+  function fetchWithRetry(url, ms, retriesLeft, acceptPartial) {
+    return fetchWithTimeout(url, ms, acceptPartial).catch(function (err) {
       if (retriesLeft <= 0) throw err;
       return new Promise(function (resolve) {
         setTimeout(resolve, HUB_API_RETRY_DELAY_MS);
       }).then(function () {
-        return fetchDashboardWithRetry(url, ms, retriesLeft - 1);
+        return fetchWithRetry(url, ms, retriesLeft - 1, acceptPartial);
       });
     });
+  }
+
+  function readSwr() {
+    try {
+      var raw = sessionStorage.getItem(SWR_KEY);
+      if (!raw) return null;
+      var d = JSON.parse(raw);
+      if (!d || !d.t || Date.now() - d.t > SWR_TTL_MS) return null;
+      return d;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function writeSwr() {
+    try {
+      sessionStorage.setItem(SWR_KEY, JSON.stringify({
+        t: Date.now(),
+        sectors: dashboardData.sectors || {},
+        top10: dashboardData.top10 || [],
+        regularSession: dashboardData.regularSession,
+      }));
+    } catch (e) { /* ignore */ }
+  }
+
+  function localSectorStats() {
+    var out = {};
+    if (!hubData) return out;
+    var totalMcap = 0;
+    SECTOR_ORDER.forEach(function (sid) {
+      var block = hubData.sectors[sid];
+      if (!block) return;
+      totalMcap += block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
+    });
+    SECTOR_ORDER.forEach(function (sid) {
+      var block = hubData.sectors[sid];
+      if (!block) return;
+      var sectorMcap = block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
+      out[sid] = {
+        mcapWon: sectorMcap,
+        weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
+        listingCount: block.companies.length,
+        yoyReturnPct: null,
+      };
+    });
+    return out;
   }
 
   function loadFx() {
@@ -203,7 +266,11 @@
     return sign + n.toFixed(2) + '%';
   }
 
-  function sparklineSvg(pct) {
+  function sparklineSvg(pct, loading) {
+    if (loading) {
+      return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
+        '<polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg>';
+    }
     var up = pct != null && pct >= 0;
     var color = pct == null ? '#8b949e' : up ? '#3fb950' : '#f85149';
     var pts = up
@@ -232,26 +299,35 @@
     if (!wrap || !hubData) return;
     var labels = t(lang);
     var ql = '?lang=' + encodeURIComponent(lang);
+    var local = localSectorStats();
     var sectors = dashboardData && dashboardData.sectors ? dashboardData.sectors : {};
     var cards = SECTOR_ORDER.map(function (sid) {
       var block = hubData.sectors[sid];
       if (!block) return '';
       var meta = block.meta || {};
       var label = lang === 'en' ? meta.en : meta.ko;
-      var pulse = sectors[sid] || {};
+      var pulse = sectors[sid] || local[sid] || {};
       var retPct = pulse.yoyReturnPct != null ? pulse.yoyReturnPct : null;
       var sectorMcap = pulse.mcapWon != null ? pulse.mcapWon :
         block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
-      var weightPct = pulse.weightPct != null ? pulse.weightPct : 0;
+      var weightPct = pulse.weightPct != null ? pulse.weightPct : (local[sid] ? local[sid].weightPct : 0);
+      var isLoading = sectorsLoading && retPct == null;
       var cls = 'hub-pulse-card-ret is-flat';
-      if (retPct != null) cls = retPct > 0 ? 'hub-pulse-card-ret is-up' : retPct < 0 ? 'hub-pulse-card-ret is-down' : 'hub-pulse-card-ret is-flat';
+      var retText;
+      if (isLoading) {
+        cls = 'hub-pulse-card-ret is-loading';
+        retText = labels.pulseLoading;
+      } else {
+        if (retPct != null) cls = retPct > 0 ? 'hub-pulse-card-ret is-up' : retPct < 0 ? 'hub-pulse-card-ret is-down' : 'hub-pulse-card-ret is-flat';
+        retText = formatPct(retPct, lang);
+      }
       var href = (meta.map || 'index.html') + ql;
       var countLabel = (pulse.listingCount != null ? pulse.listingCount : block.companies.length) +
         (lang === 'en' ? '' : '\uAC1C');
       return '<a class="hub-pulse-card" href="' + href + '">' +
         '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">' + (meta.icon || '') + '</span><span>' + label + '</span></div>' +
-        '<div class="' + cls + '">' + formatPct(retPct, lang) + '</div>' +
-        sparklineSvg(retPct) +
+        '<div class="' + cls + '">' + retText + '</div>' +
+        sparklineSvg(retPct, isLoading) +
         '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
         '<div class="hub-pulse-mcap-val">' + formatMcapWithWeight(sectorMcap, weightPct, lang) + '</div>' +
         '<div class="hub-pulse-count">' + countLabel + '</div>' +
@@ -260,11 +336,18 @@
 
     wrap.innerHTML = '<div class="hub-pulse-cards">' + cards + '</div>';
 
-    var sess = document.getElementById('hub-pulse-session');
-    if (sess) {
-      if (dashboardData && dashboardData.regularSession === true) sess.textContent = labels.sessionLive;
-      else if (dashboardData && dashboardData.regularSession === false) sess.textContent = labels.sessionClosed;
-      else sess.textContent = '';
+    var statusWrap = document.getElementById('hub-pulse-status');
+    if (statusWrap) {
+      var parts = [];
+      if (sectorsLoading) {
+        parts.push('<span class="hub-pulse-loading-badge">' + labels.pulseStatusLoading + '</span>');
+      }
+      if (dashboardData && dashboardData.regularSession === true) {
+        parts.push('<span class="hub-pulse-session">' + labels.sessionLive + '</span>');
+      } else if (dashboardData && dashboardData.regularSession === false) {
+        parts.push('<span class="hub-pulse-session">' + labels.sessionClosed + '</span>');
+      }
+      statusWrap.innerHTML = parts.join('');
     }
   }
 
@@ -276,7 +359,7 @@
     var ranked = dashboardData && dashboardData.top10 ? dashboardData.top10 : [];
 
     if (!ranked.length) {
-      var msg = quotesLoading ? labels.loading : labels.quotesFailed;
+      var msg = top10Loading ? labels.loading : labels.quotesFailed;
       list.innerHTML = '<li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">' + msg + '</li>';
       return;
     }
@@ -332,30 +415,73 @@
     set('hub-top-sub', labels.topSub);
   }
 
-  function fetchDashboardAndRender(lang) {
-    var api = hubDashboardUrl();
-    if (!api) {
-      quotesLoading = false;
+  function applySectorsPayload(j) {
+    if (!j || j.error) return;
+    dashboardData.sectors = j.sectors || dashboardData.sectors;
+    if (j.regularSession != null) dashboardData.regularSession = j.regularSession;
+  }
+
+  function applyTop10Payload(j) {
+    if (!j || j.error) return;
+    dashboardData.top10 = j.top10 || dashboardData.top10;
+    if (j.regularSession != null) dashboardData.regularSession = j.regularSession;
+  }
+
+  function fetchSectors(lang) {
+    var url = hubApiUrl('/api/hub_sectors');
+    if (!url) {
+      sectorsLoading = false;
       renderPulse(lang);
+      return Promise.resolve();
+    }
+    sectorsLoading = true;
+    sectorsFailed = false;
+    renderPulse(lang);
+    return fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
+      .then(function (j) {
+        if (j && j.error) throw new Error(j.error);
+        applySectorsPayload(j);
+      })
+      .catch(function () {
+        sectorsFailed = true;
+      })
+      .then(function () {
+        sectorsLoading = false;
+        renderPulse(lang);
+      });
+  }
+
+  function fetchTop10(lang) {
+    var url = hubApiUrl('/api/hub_top10');
+    if (!url) {
+      top10Loading = false;
       renderTop10(lang);
       return Promise.resolve();
     }
-
-    quotesLoading = true;
-    return fetchDashboardWithRetry(api, HUB_API_TIMEOUT_MS, HUB_API_RETRIES)
+    top10Loading = true;
+    top10Failed = false;
+    renderTop10(lang);
+    return fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
-        dashboardData = j;
-        quotesLoading = false;
-        renderPulse(lang);
-        renderTop10(lang);
+        applyTop10Payload(j);
       })
       .catch(function () {
-        quotesLoading = false;
-        dashboardData = null;
-        renderPulse(lang);
+        top10Failed = true;
+      })
+      .then(function () {
+        top10Loading = false;
+        if (dashboardData.top10 && dashboardData.top10.length) writeSwr();
         renderTop10(lang);
       });
+  }
+
+  function fetchDashboardAndRender(lang) {
+    return Promise.all([fetchSectors(lang), fetchTop10(lang)]).then(function () {
+      if (!sectorsFailed || !top10Failed) writeSwr();
+      renderPulse(lang);
+      renderTop10(lang);
+    });
   }
 
   function init(lang) {
@@ -363,10 +489,19 @@
     lang = pageLang(lang);
     Promise.all([loadHubIndex(), loadFx()])
       .then(function () {
+        var swr = readSwr();
+        if (swr) {
+          dashboardData.sectors = swr.sectors || {};
+          dashboardData.top10 = swr.top10 || [];
+          dashboardData.regularSession = swr.regularSession;
+        }
         renderLabels(lang);
         enhanceCards(lang);
         renderPulse(lang);
-        quotesLoading = true;
+        renderTop10(lang);
+        sectorsLoading = true;
+        top10Loading = true;
+        renderPulse(lang);
         renderTop10(lang);
         return fetchDashboardAndRender(lang);
       })

@@ -12,7 +12,7 @@ import {
   mergeNaverIntoQuote,
 } from '../functions/lib/naver_sise_quotes.mjs';
 import { isKrxRegularSession, naverRefreshMs } from '../functions/lib/krx_session.mjs';
-import { buildHubDashboard } from '../functions/lib/hub_dashboard_core.mjs';
+import { buildHubDashboard, buildHubSectors, buildHubTop10 } from '../functions/lib/hub_dashboard_core.mjs';
 
 const PORT = Number(process.env.PORT) || 8788;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -144,12 +144,42 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+  if (req.method === 'GET' && url.pathname === '/api/hub_sectors') {
+    try {
+      const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
+      const hubIndex = JSON.parse(raw);
+      const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : null;
+      const payload = await buildHubSectors(hubIndex, env);
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify(payload));
+    } catch (e) {
+      res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'hub_sectors_failed', message: String(e.message || e) }));
+    }
+    return;
+  }
+  if (req.method === 'GET' && url.pathname === '/api/hub_top10') {
+    try {
+      const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
+      const hubIndex = JSON.parse(raw);
+      const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : null;
+      const payload = await buildHubTop10(hubIndex, env);
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify(payload));
+    } catch (e) {
+      res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'hub_top10_failed', message: String(e.message || e) }));
+    }
+    return;
+  }
   res.writeHead(404);
   res.end('Not Found');
 });
 
 server.listen(PORT, () => {
   console.log(`Quotes dev server http://127.0.0.1:${PORT}/api/quotes?codes=005930`);
+  console.log(`Hub sectors  http://127.0.0.1:${PORT}/api/hub_sectors`);
+  console.log(`Hub top10    http://127.0.0.1:${PORT}/api/hub_top10`);
   console.log(`Hub dashboard http://127.0.0.1:${PORT}/api/hub_dashboard`);
   console.log(`Cache file: ${CACHE_FILE}`);
 });

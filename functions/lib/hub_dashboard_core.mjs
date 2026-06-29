@@ -3,7 +3,8 @@
  */
 
 import { getCachedNaverQuotes } from './naver_quote_store.mjs';
-import { getAuthKey, mergeKrxYoy } from './krx_yoy.mjs';
+import { getAuthKey, mergeKrxYoyHub } from './krx_yoy.mjs';
+import { krxSessionInfo } from './krx_session.mjs';
 
 export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
 
@@ -140,26 +141,60 @@ function buildTop10(hubIndex, items) {
  * @param {object} hubIndex — parsed data/hub_index.json
  * @param {object|null} env — Cloudflare env (KRX key)
  */
-export async function buildHubDashboard(hubIndex, env) {
+export async function buildHubSectors(hubIndex, env) {
+  const codes = collectUniqueCodes(hubIndex);
+  const authKey = getAuthKey(env);
+  const session = krxSessionInfo();
+  const yoyItems = await mergeKrxYoyHub(codes, authKey, 6);
+
+  return {
+    asOf: new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    regularSession: session.regular,
+    source: authKey ? 'krx-yoy' : 'hub_index',
+    krxConfigured: !!authKey,
+    sectors: buildSectors(hubIndex, yoyItems),
+  };
+}
+
+/**
+ * @param {object} hubIndex
+ * @param {object|null} env
+ */
+export async function buildHubTop10(hubIndex, env) {
+  void env;
   const codes = collectUniqueCodes(hubIndex);
   const cached = await getCachedNaverQuotes(codes, {
     concurrency: QUOTE_CONCURRENCY,
     maxFetches: 45,
   });
-  const top10 = buildTop10(hubIndex, cached.items);
-
-  const authKey = getAuthKey(env);
-  const items = await mergeKrxYoy(codes, cached.items, authKey, true);
 
   return {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
     regularSession: cached.regularSession,
-    source: authKey ? 'naver-sise-cache+krx-yoy' : 'naver-sise-cache',
+    source: 'naver-sise-cache',
     cacheHits: cached.cacheHits,
     naverFetched: cached.fetched,
-    sectors: buildSectors(hubIndex, items),
-    top10,
+    top10: buildTop10(hubIndex, cached.items),
+  };
+}
+
+export async function buildHubDashboard(hubIndex, env) {
+  const [sectorsPayload, top10Payload] = await Promise.all([
+    buildHubSectors(hubIndex, env),
+    buildHubTop10(hubIndex, env),
+  ]);
+
+  return {
+    asOf: new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    regularSession: top10Payload.regularSession,
+    source: sectorsPayload.krxConfigured ? 'naver-sise-cache+krx-yoy' : 'naver-sise-cache',
+    cacheHits: top10Payload.cacheHits,
+    naverFetched: top10Payload.naverFetched,
+    sectors: sectorsPayload.sectors,
+    top10: top10Payload.top10,
   };
 }
 

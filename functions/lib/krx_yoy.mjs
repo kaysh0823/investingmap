@@ -198,3 +198,41 @@ export async function mergeKrxYoyFull(codes, items, authKey) {
     return items;
   }
 }
+
+/**
+ * Warm KRX history in bounded batches (for hub_sectors without blocking full 252-day fetch).
+ * @param {string} authKey
+ * @param {number} [maxBatches]
+ * @returns {Promise<Map|null>}
+ */
+export async function ensureKrxYoyAcc(authKey, maxBatches = 6) {
+  if (!authKey) return null;
+  if (histCache && Date.now() - histCache.t < HIST_CACHE_MS) {
+    return histCache.acc;
+  }
+  let batches = 0;
+  while (batches < maxBatches) {
+    await warmYoy(authKey);
+    batches += 1;
+    if (histCache && !histWarm) return histCache.acc;
+  }
+  return histCache ? histCache.acc : (histWarm ? histWarm.acc : null);
+}
+
+export async function mergeKrxYoyHub(codes, authKey, maxBatches = 6) {
+  if (!authKey) return {};
+  try {
+    const acc = await ensureKrxYoyAcc(authKey, maxBatches);
+    if (!acc) return {};
+    const out = {};
+    for (const code of codes) {
+      const yoy = yoyFromAcc(acc, code);
+      if (yoy != null) {
+        out[code] = { yoyReturnPct: yoy };
+      }
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
