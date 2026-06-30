@@ -18,6 +18,16 @@ const PORT = Number(process.env.PORT) || 8788;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_FILE = path.join(__dirname, '..', 'data', '.naver_quotes_cache.json');
 const HUB_INDEX_FILE = path.join(__dirname, '..', 'data', 'hub_index.json');
+const HUB_SNAPSHOT_FILE = path.join(__dirname, '..', 'data', 'hub_quote_snapshot.json');
+
+async function loadHubSnapshotFile() {
+  try {
+    const raw = await fs.readFile(HUB_SNAPSHOT_FILE, 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
 
 let fileCache = null;
 let fileCacheLoaded = false;
@@ -135,7 +145,8 @@ const server = http.createServer(async (req, res) => {
       const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
       const hubIndex = JSON.parse(raw);
       const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : null;
-      const payload = await buildHubDashboard(hubIndex, env);
+      const snapshot = await loadHubSnapshotFile();
+      const payload = await buildHubDashboard(hubIndex, env, null, { snapshot });
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify(payload));
     } catch (e) {
@@ -163,7 +174,8 @@ const server = http.createServer(async (req, res) => {
       const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
       const hubIndex = JSON.parse(raw);
       const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : null;
-      const payload = await buildHubTop10(hubIndex, env);
+      const snapshot = await loadHubSnapshotFile();
+      const payload = await buildHubTop10(hubIndex, env, null, { snapshot });
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify(payload));
     } catch (e) {

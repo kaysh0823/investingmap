@@ -38,51 +38,44 @@ function shouldHideQuote(q) {
 }
 
 function collectUniqueCodes(hubIndex) {
-  const codes = [];
-  const seen = new Set();
-  for (const sid of SECTOR_ORDER) {
-    const block = hubIndex.sectors && hubIndex.sectors[sid];
-    if (!block || !block.companies) continue;
-    for (const c of block.companies) {
-      const k = normalizeTicker(c.ticker);
-      if (!k || seen.has(k)) continue;
-      seen.add(k);
-      codes.push(k);
-    }
-  }
-  return codes;
+  return listHubCompanies(hubIndex)
+    .map((c) => normalizeTicker(c.ticker))
+    .filter(Boolean);
 }
 
-function collectUniqueCodesRoundRobin(hubIndex) {
-  const perSector = SECTOR_ORDER.map((sid) => {
-    const block = hubIndex.sectors && hubIndex.sectors[sid];
-    if (!block || !block.companies) return [];
-    const seen = new Set();
-    const out = [];
-    for (const c of block.companies) {
-      const k = normalizeTicker(c.ticker);
-      if (!k || seen.has(k)) continue;
-      seen.add(k);
-      out.push(k);
-    }
-    return out;
-  });
+function mergeQuoteFields(base, overlay) {
+  if (!overlay) return base;
+  const out = base ? { ...base } : {};
+  if (overlay.last != null && overlay.last > 0) out.last = overlay.last;
+  if (overlay.high52w != null && overlay.high52w > 0) out.high52w = overlay.high52w;
+  if (overlay.low52w != null && overlay.low52w > 0) out.low52w = overlay.low52w;
+  return Object.keys(out).length ? out : null;
+}
 
-  const seen = new Set();
-  const codes = [];
-  for (let i = 0; ; i++) {
-    let added = false;
-    for (const list of perSector) {
-      if (i >= list.length) continue;
-      const k = list[i];
-      if (seen.has(k)) continue;
-      seen.add(k);
-      codes.push(k);
-      added = true;
-    }
-    if (!added) break;
-  }
-  return codes;
+function buildTop10(hubIndex, quoteByTicker) {
+  const ranked = listHubCompanies(hubIndex)
+    .map((c) => {
+      const key = normalizeTicker(c.ticker);
+      const q = key ? quoteByTicker[key] : null;
+      if (shouldHideQuote(q)) return null;
+      const positionPct = calcQuotePosition(q.last, q.high52w, q.low52w);
+      if (positionPct == null) return null;
+      return {
+        ticker: c.ticker,
+        name: c.name,
+        nameEn: c.nameEn,
+        sectorId: c.sectorId,
+        mapPath: c.mapPath,
+        positionPct,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.positionPct - a.positionPct);
+
+  return {
+    top10: ranked.slice(0, 10),
+    quotesRanked: ranked.length,
+  };
 }
 
 function uniqueCompaniesForTop10(hubIndex) {
@@ -107,11 +100,17 @@ function uniqueCompaniesForTop10(hubIndex) {
   return [...byKey.values()];
 }
 
-function quoteNeedsFetch(q) {
-  if (!q) return true;
-  if (q.last == null || q.high52w == null || q.low52w == null) return true;
-  if (q.last === 0 || q.high52w === 0 || q.low52w === 0) return true;
-  return false;
+/** @param {object} hubIndex */
+export function listHubCompanies(hubIndex) {
+  return uniqueCompaniesForTop10(hubIndex);
+}
+
+function countQuotesWithPosition(quoteByTicker) {
+  let n = 0;
+  for (const q of Object.values(quoteByTicker)) {
+    if (!shouldHideQuote(q) && calcQuotePosition(q.last, q.high52w, q.low52w) != null) n++;
+  }
+  return n;
 }
 
 export function countTop10Sectors(top10) {
@@ -211,28 +210,6 @@ function buildSectors(hubIndex, snapshots) {
   return sectors;
 }
 
-function buildTop10(hubIndex, items) {
-  return uniqueCompaniesForTop10(hubIndex)
-    .map((c) => {
-      const key = normalizeTicker(c.ticker);
-      const q = key ? items[key] : null;
-      if (shouldHideQuote(q)) return null;
-      const positionPct = calcQuotePosition(q.last, q.high52w, q.low52w);
-      if (positionPct == null) return null;
-      return {
-        ticker: c.ticker,
-        name: c.name,
-        nameEn: c.nameEn,
-        sectorId: c.sectorId,
-        mapPath: c.mapPath,
-        positionPct,
-      };
-    })
-    .filter(Boolean)
-    .sort((a, b) => b.positionPct - a.positionPct)
-    .slice(0, 10);
-}
-
 /**
  * @param {object} hubIndex — parsed data/hub_index.json
  * @param {object|null} env — Cloudflare env (KRX key)
@@ -260,45 +237,57 @@ export async function buildHubSectors(hubIndex, env) {
 /**
  * @param {object} hubIndex
  * @param {object|null} env
+ * @param {Request|null} [request]
+ * @param {{ snapshot?: object|null }} [opts]
  */
-export async function buildHubTop10(hubIndex, env) {
+export async function buildHubTop10(hubIndex, env, request, opts) {
   void env;
-  const codes = collectUniqueCodesRoundRobin(hubIndex);
+  const codes = collectUniqueCodes(hubIndex);
+  const snapshot = (opts && opts.snapshot !== undefined)
+    ? opts.snapshot
+    : (request ? await loadHubQuoteSnapshotFromRequest(request, env) : null);
+  const snapshotQuotes = snapshot && snapshot.quotes ? snapshot.quotes : {};
+
+  const quoteByTicker = {};
+  for (const code of codes) {
+    const base = snapshotQuotes[code] || null;
+    quoteByTicker[code] = base ? { ...base } : null;
+  }
 
   const cached = await getCachedNaverQuotes(codes, {
     concurrency: QUOTE_CONCURRENCY,
     maxFetches: 0,
   });
-  const items = { ...cached.items };
-  let cacheHits = cached.cacheHits;
-  let fetched = cached.fetched;
 
-  const missing = codes.filter((k) => quoteNeedsFetch(items[k]));
-  if (missing.length > 0) {
-    const refreshed = await getCachedNaverQuotes(missing, {
-      concurrency: QUOTE_CONCURRENCY,
-      maxFetches: 45,
-    });
-    Object.assign(items, refreshed.items);
-    cacheHits += refreshed.cacheHits;
-    fetched += refreshed.fetched;
+  for (const code of codes) {
+    const merged = mergeQuoteFields(quoteByTicker[code], cached.items[code]);
+    if (merged) quoteByTicker[code] = merged;
   }
+
+  const quotesTotal = codes.length;
+  const quotesRanked = countQuotesWithPosition(quoteByTicker);
+  const { top10 } = buildTop10(hubIndex, quoteByTicker);
 
   return {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
+    snapshotBuiltAt: snapshot ? snapshot.builtAt || null : null,
     regularSession: cached.regularSession,
-    source: 'naver-sise-cache',
-    cacheHits,
-    naverFetched: fetched,
-    top10: buildTop10(hubIndex, items),
+    source: snapshot ? 'hub_quote_snapshot+naver-cache' : 'naver-sise-cache',
+    quotesTotal,
+    quotesRanked,
+    coveragePct: quotesTotal > 0 ? Math.round((quotesRanked / quotesTotal) * 1000) / 10 : 0,
+    cacheHits: cached.cacheHits,
+    naverFetched: cached.fetched,
+    top10,
   };
 }
 
-export async function buildHubDashboard(hubIndex, env) {
+export async function buildHubDashboard(hubIndex, env, request, opts) {
+  const topOpts = opts && opts.snapshot !== undefined ? { snapshot: opts.snapshot } : undefined;
   const [sectorsPayload, top10Payload] = await Promise.all([
     buildHubSectors(hubIndex, env),
-    buildHubTop10(hubIndex, env),
+    buildHubTop10(hubIndex, env, request, topOpts),
   ]);
 
   return {
@@ -323,4 +312,26 @@ export async function loadHubIndexFromRequest(request, env) {
   }
   if (!res.ok) throw new Error('hub_index_unavailable');
   return res.json();
+}
+
+export async function loadHubQuoteSnapshotFromRequest(request, env) {
+  const url = new URL('/data/hub_quote_snapshot.json', request.url);
+  let res;
+  if (env && env.ASSETS) {
+    res = await env.ASSETS.fetch(new Request(url));
+  } else {
+    res = await fetch(url.toString(), { cf: { cacheTtl: 300 } });
+  }
+  if (!res.ok) return null;
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export function hubTop10Cacheable(payload) {
+  if (!payload || !payload.top10 || payload.top10.length < 10) return false;
+  if ((payload.coveragePct || 0) < 85) return false;
+  return countTop10Sectors(payload.top10) >= 2;
 }

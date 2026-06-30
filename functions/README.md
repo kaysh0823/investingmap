@@ -46,7 +46,7 @@ Returns JSON compatible with `js/live_quotes.js`:
 ## Hub dashboard
 
 `GET /api/hub_sectors` — sector mcap-sum returns for 1M (~21 sessions), 3M, 6M, 1Y; sequential KRX day fetches, cached 6h.  
-`GET /api/hub_top10` — top-10 price position vs 52-week range (Naver).  
+`GET /api/hub_top10` — top-10 price position vs 52-week range across all hub-listed tickers (`data/hub_quote_snapshot.json` + Naver cache overlay). Rebuild snapshot: `node scripts/build_hub_quote_snapshot.mjs` (also in `rebuild_site.mjs`).  
 `GET /api/hub_dashboard` — combined response (legacy).
 
 Used by `js/hub_dashboard.js` on `index.html` (parallel `/api/hub_sectors` + `/api/hub_top10`).

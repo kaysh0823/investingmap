@@ -41,7 +41,7 @@ export async function onRequest(context) {
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubDashboard(hubIndex, env);
+    const payload = await buildHubDashboard(hubIndex, env, request);
     const maxAge = session.regular ? 300 : 1800;
     const response = new Response(JSON.stringify(payload), {
       headers: {
