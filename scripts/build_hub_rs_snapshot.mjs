@@ -38,8 +38,8 @@ async function main() {
       console.warn('KRX_AUTH_KEY missing — keeping existing hub_rs_snapshot.json');
       process.exit(0);
     }
-    console.error('KRX_AUTH_KEY required (.dev.vars or env) to create hub_rs_snapshot.json');
-    process.exit(1);
+    console.warn('KRX_AUTH_KEY missing — skip hub_rs_snapshot.json (runtime /api/hub_rs_snapshot will build)');
+    process.exit(0);
   }
 
   console.log('Building KRX RS snapshot (20/50/120 trading days)…');
