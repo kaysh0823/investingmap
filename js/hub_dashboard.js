@@ -93,6 +93,22 @@
     return I18N[lang] || I18N.ko;
   }
 
+  function hubTop10CompanyHref(row, lang) {
+    var mapPath = row.mapPath || 'index.html';
+    if (global.InvestingMapTabState && InvestingMapTabState.buildMapTableTickerUrl) {
+      return InvestingMapTabState.buildMapTableTickerUrl(mapPath, row.ticker, lang);
+    }
+    try {
+      var u = new URL(mapPath, window.location.href);
+      u.searchParams.set('lang', lang);
+      u.searchParams.set('tab', 'table');
+      if (row.ticker) u.searchParams.set('ticker', String(row.ticker).trim());
+      return u.pathname + u.search + u.hash;
+    } catch (e) {
+      return mapPath + '?lang=' + encodeURIComponent(lang) + '&tab=table&ticker=' + encodeURIComponent(row.ticker || '');
+    }
+  }
+
   function injectStyles() {
     if (document.getElementById('im-hub-dashboard-css-v7')) return;
     var css =
@@ -449,7 +465,6 @@
     var list = document.getElementById('hub-top-position-list');
     if (!list) return;
     var labels = t(lang);
-    var ql = '?lang=' + encodeURIComponent(lang);
     var ranked = dashboardData && dashboardData.top10 ? dashboardData.top10 : [];
 
     if (!ranked.length) {
@@ -462,7 +477,7 @@
       var name = lang === 'en' ? (row.nameEn || row.name) : row.name;
       var sectorMeta = hubData.sectors[row.sectorId] && hubData.sectors[row.sectorId].meta;
       var sectorLabel = sectorMeta ? (lang === 'en' ? sectorMeta.en : sectorMeta.ko) : '';
-      var href = (row.mapPath || 'index.html') + ql;
+      var href = hubTop10CompanyHref(row, lang);
       return '<li><a class="hub-top-item" href="' + href + '">' +
         '<div class="hub-top-row">' +
         '<div><div class="hub-top-name">' + name + '</div>' +
@@ -478,7 +493,6 @@
     var list = document.getElementById('hub-top-rs-list');
     if (!list) return;
     var labels = t(lang);
-    var ql = '?lang=' + encodeURIComponent(lang);
     var ranked = dashboardData && dashboardData.rsTop10 ? dashboardData.rsTop10 : [];
 
     if (!ranked.length) {
@@ -491,7 +505,7 @@
       var name = lang === 'en' ? (row.nameEn || row.name) : row.name;
       var sectorMeta = hubData && hubData.sectors[row.sectorId] && hubData.sectors[row.sectorId].meta;
       var sectorLabel = sectorMeta ? (lang === 'en' ? sectorMeta.en : sectorMeta.ko) : '';
-      var href = (row.mapPath || 'index.html') + ql;
+      var href = hubTop10CompanyHref(row, lang);
       return '<li><a class="hub-top-item" href="' + href + '">' +
         '<div class="hub-top-row">' +
         '<div><div class="hub-top-name">' + name + '</div>' +
