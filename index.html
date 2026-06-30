@@ -904,6 +904,7 @@
       </a>
     </div>
       </div>
+      <div class="hub-side-panels">
       <aside class="hub-side-panel" id="hub-top-position" aria-labelledby="hub-top-title">
         <h3 id="hub-top-title">Top 10 price position</h3>
         <p class="hub-side-sub" id="hub-top-sub">Last vs 52-week range — all industries</p>
@@ -911,6 +912,14 @@
           <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading quotes…</li>
         </ol>
       </aside>
+      <aside class="hub-side-panel" id="hub-top-rs" aria-labelledby="hub-rs-title">
+        <h3 id="hub-rs-title">RS Top 10</h3>
+        <p class="hub-side-sub" id="hub-rs-sub">Full KRX · avg of 20/50/120-day return percentiles</p>
+        <ol class="hub-top-list" id="hub-top-rs-list">
+          <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
+        </ol>
+      </aside>
+      </div>
     </div>
 
     <section class="hub-intro" id="hub-principles" aria-labelledby="hub-principles-summary">
@@ -1206,7 +1215,7 @@ document.title = lang === 'en'
 
     applyLang();
   </script>
-  <script src="js/hub_dashboard.js?v=12"></script>
+  <script src="js/hub_dashboard.js?v=13"></script>
   <script src="js/desktop_sidebar_nav.js"></script>
   <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>

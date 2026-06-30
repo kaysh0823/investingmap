@@ -122,7 +122,9 @@
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
       var thpos = document.getElementById('th-position');
+      var thrs = document.getElementById('th-rs');
       if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));
+      if (thrs) thrs.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.rsHeaderLabel) ? InvestingMapLiveQuotes.rsHeaderLabel(lang, t) : (t.thRs || 'RS');
       document.getElementById('th-market').textContent = t.thMarket;
       const thM = document.getElementById('th-mcap');
       if (thM) thM.textContent = t.thMcap;
@@ -260,7 +262,7 @@
       });
       if (sortKey) {
         data.sort(function (a, b) {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
             var av = a[sortKey];
             var bv = b[sortKey];
             var na = av == null || !Number.isFinite(av);
@@ -311,6 +313,7 @@
           '<td class="quote-cell">' + qr.hi + '</td>' +
           '<td class="quote-cell">' + qr.lo + '</td>' +
           '<td class="quote-cell">' + ((qr && (qr.position != null ? qr.position : qr.yoy)) || '\u2014') + '</td>' +
+          '<td class="quote-cell">' + (qr.rs || '\u2014') + '</td>' +
           '<td class="mcap-cell">' + mcapCell + '</td>' +
           '<td class="fin-cell">' + fmtFinRatio(c.per) + '</td>' +
           '<td class="fin-cell">' + fmtFinRatio(c.pbr) + '</td>' +
@@ -339,7 +342,7 @@
     function syncSortHeader() {
       document.querySelectorAll('thead th').forEach(th => th.className = '');
       if (!sortKey) return;
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
       const idx = keyMap[sortKey];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -350,7 +353,7 @@
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, mcapWon: 6, per: 7, pbr: 8, market: 9, chain: 10 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');

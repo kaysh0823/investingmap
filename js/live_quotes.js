@@ -7,6 +7,59 @@
   var CHUNK_SIZE = 18;
   var POSITION_FALLBACK_KO = '주가 위치';
   var POSITION_FALLBACK_EN = 'Price Position';
+  var RS_FALLBACK = 'RS';
+  var rsSnapshot = null;
+  var rsSnapshotPromise = null;
+
+  function rsSnapshotUrl() {
+    var apiBase = getApiBase();
+    if (apiBase) {
+      var path = apiBase.replace(/\/quotes\/?$/i, '/hub_rs_snapshot');
+      if (path === apiBase) {
+        path = apiBase.replace(/\/?$/, '') + '/hub_rs_snapshot';
+      }
+      return quotesRequestUrl(path, '');
+    }
+    var origin = (typeof window !== 'undefined' && window.location && window.location.origin)
+      ? window.location.origin
+      : '';
+    return origin + '/api/hub_rs_snapshot';
+  }
+
+  function loadRsSnapshot() {
+    if (rsSnapshot) return Promise.resolve(rsSnapshot);
+    if (!rsSnapshotPromise) {
+      rsSnapshotPromise = fetch(rsSnapshotUrl(), { cache: 'default', credentials: 'same-origin' })
+        .then(function (r) {
+          if (!r.ok) return { quotes: {} };
+          return r.json();
+        })
+        .then(function (j) {
+          rsSnapshot = j && j.quotes ? j : { quotes: {} };
+          return rsSnapshot;
+        })
+        .catch(function () {
+          rsSnapshot = { quotes: {} };
+          return rsSnapshot;
+        });
+    }
+    return rsSnapshotPromise;
+  }
+
+  function mergeRsIntoCompanies(companies, snap) {
+    if (!companies) return;
+    var quotes = (snap && snap.quotes) || {};
+    for (var i = 0; i < companies.length; i++) {
+      var c = companies[i];
+      var key = normalizeTicker(c.ticker);
+      if (!key) {
+        c.rs = null;
+        continue;
+      }
+      var row = quotes[key];
+      c.rs = row && typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
+    }
+  }
 
   function getApiBase() {
     try {
@@ -128,6 +181,26 @@
     return '<span style="' + positionColorStyle(n) + '">' + text + '</span>';
   }
 
+  function formatRs(n) {
+    if (n == null || !isFinite(n)) return '\u2014';
+    return n.toFixed(1);
+  }
+
+  function rsColorStyle(n) {
+    if (n == null || !isFinite(n)) return '';
+    if (n >= 80) return 'color:#059669;font-weight:700';
+    if (n >= 60) return 'color:#22c55e;font-weight:600';
+    if (n >= 40) return 'color:#facc15';
+    return 'color:#fca5a5';
+  }
+
+  function formatRsHtml(c) {
+    var n = c && typeof c.rs === 'number' ? c.rs : null;
+    var text = formatRs(n);
+    if (text === '\u2014') return text;
+    return '<span style="' + rsColorStyle(n) + '">' + text + '</span>';
+  }
+
   function formatQuotesRow(c, lang) {
     var posHtml = formatPositionHtml(c);
     return {
@@ -135,17 +208,23 @@
       hi: formatWon(c.quoteHi52, lang),
       lo: formatWon(c.quoteLo52, lang),
       position: posHtml,
+      rs: formatRsHtml(c),
       yoy: posHtml,
     };
   }
 
   function emptyQuotesRow() {
-    return { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014', yoy: '\u2014' };
+    return { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014', rs: '\u2014', yoy: '\u2014' };
   }
 
   function positionHeaderLabel(lang, t) {
     if (t && t.thPosition) return t.thPosition;
     return lang === 'en' ? POSITION_FALLBACK_EN : POSITION_FALLBACK_KO;
+  }
+
+  function rsHeaderLabel(lang, t) {
+    if (t && t.thRs) return t.thRs;
+    return RS_FALLBACK;
   }
 
   function fetchJson(url) {
@@ -226,9 +305,12 @@
         running = false;
         return;
       }
-      fetchAllCodes(base, codes)
-        .then(function (j) {
+      Promise.all([fetchAllCodes(base, codes), loadRsSnapshot()])
+        .then(function (results) {
+          var j = results[0];
+          var snap = results[1];
           mergeCompanies(getCompanies(), j.items || {});
+          mergeRsIntoCompanies(getCompanies(), snap);
           try {
             onAsOf(j.asOf || '', { regularSession: j.regularSession });
           } catch (e1) {}
@@ -245,6 +327,10 @@
     }
 
     run();
+    loadRsSnapshot().then(function (snap) {
+      mergeRsIntoCompanies(getCompanies(), snap);
+      if (renderTable) renderTable();
+    });
     return setInterval(run, pollMs);
   }
 
@@ -259,6 +345,11 @@
     formatWon: formatWon,
     formatPosition: formatPosition,
     formatPositionHtml: formatPositionHtml,
+    formatRs: formatRs,
+    formatRsHtml: formatRsHtml,
+    rsHeaderLabel: rsHeaderLabel,
+    loadRsSnapshot: loadRsSnapshot,
+    mergeRsIntoCompanies: mergeRsIntoCompanies,
     positionHeaderLabel: positionHeaderLabel,
     emptyQuotesRow: emptyQuotesRow,
     formatQuotesRow: formatQuotesRow,

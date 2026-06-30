@@ -4,6 +4,7 @@
 
 import { getCachedNaverQuotes } from './naver_quote_store.mjs';
 import { getAuthKey, fetchHubSectorMcapSnapshots } from './krx_yoy.mjs';
+import { buildKrxRsSnapshot } from './krx_rs.mjs';
 import { krxSessionInfo } from './krx_session.mjs';
 
 export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
@@ -334,4 +335,88 @@ export function hubTop10Cacheable(payload) {
   if (!payload || !payload.top10 || payload.top10.length < 10) return false;
   if ((payload.coveragePct || 0) < 85) return false;
   return countTop10Sectors(payload.top10) >= 2;
+}
+
+export async function loadHubRsSnapshotFromRequest(request, env) {
+  const url = new URL('/data/hub_rs_snapshot.json', request.url);
+  let res;
+  if (env && env.ASSETS) {
+    res = await env.ASSETS.fetch(new Request(url));
+  } else {
+    res = await fetch(url.toString(), { cf: { cacheTtl: 300 } });
+  }
+  if (!res.ok) return null;
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export function buildHubRsTop10(hubIndex, rsSnapshot) {
+  const quotes = rsSnapshot && rsSnapshot.quotes ? rsSnapshot.quotes : {};
+  return listHubCompanies(hubIndex)
+    .map((c) => {
+      const key = normalizeTicker(c.ticker);
+      const q = key ? quotes[key] : null;
+      if (!q || q.rs == null) return null;
+      return {
+        ticker: c.ticker,
+        name: c.name,
+        nameEn: c.nameEn,
+        sectorId: c.sectorId,
+        mapPath: c.mapPath,
+        rs: q.rs,
+        rs20: q.rs20,
+        rs50: q.rs50,
+        rs120: q.rs120,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.rs - a.rs)
+    .slice(0, 10);
+}
+
+/**
+ * @param {object} hubIndex
+ * @param {object|null} env
+ * @param {Request|null} [request]
+ * @param {{ snapshot?: object|null }} [opts]
+ */
+export async function buildHubRsTop10Payload(hubIndex, env, request, opts) {
+  let snapshot = (opts && opts.snapshot !== undefined)
+    ? opts.snapshot
+    : (request ? await loadHubRsSnapshotFromRequest(request, env) : null);
+
+  if ((!snapshot || !snapshot.quotes || !Object.keys(snapshot.quotes).length) && env) {
+    const authKey = getAuthKey(env);
+    if (authKey) {
+      const live = await buildKrxRsSnapshot(authKey);
+      if (live && live.quotes) snapshot = live;
+    }
+  }
+
+  const companies = listHubCompanies(hubIndex);
+  const quotes = snapshot && snapshot.quotes ? snapshot.quotes : {};
+  let quotesRanked = 0;
+  for (const c of companies) {
+    const key = normalizeTicker(c.ticker);
+    if (key && quotes[key] && quotes[key].rs != null) quotesRanked += 1;
+  }
+  return {
+    asOf: new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    snapshotBuiltAt: snapshot ? snapshot.builtAt || null : null,
+    source: snapshot ? 'hub_rs_snapshot' : 'missing',
+    quotesTotal: companies.length,
+    quotesRanked,
+    coveragePct: companies.length > 0
+      ? Math.round((quotesRanked / companies.length) * 1000) / 10
+      : 0,
+    top10: buildHubRsTop10(hubIndex, snapshot),
+  };
+}
+
+export function hubRsTop10Cacheable(payload) {
+  return !!(payload && payload.top10 && payload.top10.length >= 10 && (payload.coveragePct || 0) >= 85);
 }

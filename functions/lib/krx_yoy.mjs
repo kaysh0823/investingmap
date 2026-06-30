@@ -341,3 +341,5 @@ export async function mergeKrxYoyHub(codes, authKey, maxBatches = 6) {
     return {};
   }
 }
+
+export { tradingDates, fetchMarketDay };
