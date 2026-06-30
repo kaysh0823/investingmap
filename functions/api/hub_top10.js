@@ -3,7 +3,7 @@
  * Top-10 price position vs 52-week range (Naver only).
  */
 
-import { buildHubTop10, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
+import { buildHubTop10, countTop10Sectors, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   corsHeaders,
@@ -11,7 +11,7 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_PATH = '/api/hub_top10/cache/v1';
+const CACHE_PATH = '/api/hub_top10/cache/v2';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -49,7 +49,7 @@ export async function onRequest(context) {
         'X-Hub-Cache': 'MISS',
       },
     });
-    if (!nocache && payload.top10 && payload.top10.length > 0) {
+    if (!nocache && payload.top10 && payload.top10.length > 0 && countTop10Sectors(payload.top10) >= 2) {
       putHubCache(context, CACHE_PATH, url.origin, response);
     }
     return response;

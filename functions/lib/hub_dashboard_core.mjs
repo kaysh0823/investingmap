@@ -53,6 +53,75 @@ function collectUniqueCodes(hubIndex) {
   return codes;
 }
 
+function collectUniqueCodesRoundRobin(hubIndex) {
+  const perSector = SECTOR_ORDER.map((sid) => {
+    const block = hubIndex.sectors && hubIndex.sectors[sid];
+    if (!block || !block.companies) return [];
+    const seen = new Set();
+    const out = [];
+    for (const c of block.companies) {
+      const k = normalizeTicker(c.ticker);
+      if (!k || seen.has(k)) continue;
+      seen.add(k);
+      out.push(k);
+    }
+    return out;
+  });
+
+  const seen = new Set();
+  const codes = [];
+  for (let i = 0; ; i++) {
+    let added = false;
+    for (const list of perSector) {
+      if (i >= list.length) continue;
+      const k = list[i];
+      if (seen.has(k)) continue;
+      seen.add(k);
+      codes.push(k);
+      added = true;
+    }
+    if (!added) break;
+  }
+  return codes;
+}
+
+function uniqueCompaniesForTop10(hubIndex) {
+  const byKey = new Map();
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors && hubIndex.sectors[sid];
+    if (!block || !block.companies) continue;
+    const mapPath = block.meta && block.meta.map ? block.meta.map : 'index.html';
+    for (const c of block.companies) {
+      const key = normalizeTicker(c.ticker);
+      if (!key || byKey.has(key)) continue;
+      byKey.set(key, {
+        ticker: c.ticker,
+        name: c.name || '',
+        nameEn: c.nameEn || c.name || '',
+        mcapWon: c.mcapWon || 0,
+        sectorId: sid,
+        mapPath,
+      });
+    }
+  }
+  return [...byKey.values()];
+}
+
+function quoteNeedsFetch(q) {
+  if (!q) return true;
+  if (q.last == null || q.high52w == null || q.low52w == null) return true;
+  if (q.last === 0 || q.high52w === 0 || q.low52w === 0) return true;
+  return false;
+}
+
+export function countTop10Sectors(top10) {
+  const s = new Set();
+  for (const row of top10 || []) {
+    if (row && row.sectorId) s.add(row.sectorId);
+  }
+  return s.size;
+}
+
 function flattenCompanies(hubIndex) {
   const out = [];
   for (const sid of SECTOR_ORDER) {
@@ -143,7 +212,7 @@ function buildSectors(hubIndex, snapshots) {
 }
 
 function buildTop10(hubIndex, items) {
-  return flattenCompanies(hubIndex)
+  return uniqueCompaniesForTop10(hubIndex)
     .map((c) => {
       const key = normalizeTicker(c.ticker);
       const q = key ? items[key] : null;
@@ -194,20 +263,35 @@ export async function buildHubSectors(hubIndex, env) {
  */
 export async function buildHubTop10(hubIndex, env) {
   void env;
-  const codes = collectUniqueCodes(hubIndex);
+  const codes = collectUniqueCodesRoundRobin(hubIndex);
+
   const cached = await getCachedNaverQuotes(codes, {
     concurrency: QUOTE_CONCURRENCY,
-    maxFetches: 45,
+    maxFetches: 0,
   });
+  const items = { ...cached.items };
+  let cacheHits = cached.cacheHits;
+  let fetched = cached.fetched;
+
+  const missing = codes.filter((k) => quoteNeedsFetch(items[k]));
+  if (missing.length > 0) {
+    const refreshed = await getCachedNaverQuotes(missing, {
+      concurrency: QUOTE_CONCURRENCY,
+      maxFetches: 45,
+    });
+    Object.assign(items, refreshed.items);
+    cacheHits += refreshed.cacheHits;
+    fetched += refreshed.fetched;
+  }
 
   return {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
     regularSession: cached.regularSession,
     source: 'naver-sise-cache',
-    cacheHits: cached.cacheHits,
-    naverFetched: cached.fetched,
-    top10: buildTop10(hubIndex, cached.items),
+    cacheHits,
+    naverFetched: fetched,
+    top10: buildTop10(hubIndex, items),
   };
 }
 
