@@ -262,7 +262,7 @@
       });
       if (sortKey) {
         data.sort(function (a, b) {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs' || sortKey === 'rs') {
             var av = a[sortKey];
             var bv = b[sortKey];
             var na = av == null || !Number.isFinite(av);
