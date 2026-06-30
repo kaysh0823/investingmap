@@ -6,10 +6,12 @@
 
   var SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
   var PULSE_HORIZONS = [
-    { retKey: 'yoyReturnPct', labelKey: 'pulseRow1y', compact: false },
-    { retKey: 'return6mPct', labelKey: 'pulseRow6m', compact: true },
-    { retKey: 'return3mPct', labelKey: 'pulseRow3m', compact: true },
+    { retKey: 'yoyReturnPct', labelKey: 'pulseRow1y' },
+    { retKey: 'return6mPct', labelKey: 'pulseRow6m' },
+    { retKey: 'return3mPct', labelKey: 'pulseRow3m' },
   ];
+  var pulseHorizonKey = 'yoyReturnPct';
+  var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon';
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
@@ -83,7 +85,7 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v5')) return;
+    if (document.getElementById('im-hub-dashboard-css-v6')) return;
     var css =
       '.hub-sector-pulse{margin-bottom:22px}' +
       '.hub-pulse-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;margin-bottom:12px}' +
@@ -93,15 +95,12 @@
       '.hub-pulse-session{font-size:11px;font-weight:600;color:var(--accent);padding:4px 10px;border-radius:12px;background:color-mix(in srgb,var(--accent) 12%,var(--surface2));border:1px solid color-mix(in srgb,var(--accent) 30%,var(--border))}' +
       '.hub-pulse-loading-badge{font-size:11px;font-weight:600;color:var(--text-muted);padding:4px 10px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);animation:hub-pulse-blink 1.2s ease-in-out infinite}' +
       '@keyframes hub-pulse-blink{0%,100%{opacity:1}50%{opacity:.45}}' +
-      '.hub-pulse-rows{display:flex;flex-direction:column;gap:14px}' +
-      '.hub-pulse-row{display:flex;flex-direction:column;gap:8px}' +
-      '.hub-pulse-row-label{font-size:12px;font-weight:700;color:var(--text-muted);letter-spacing:.03em}' +
+      '.hub-pulse-toolbar{margin-bottom:10px}' +
+      '.hub-pulse-tabs{display:flex;flex-wrap:wrap;gap:6px}' +
+      '.hub-pulse-tab{font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer;font-family:inherit;line-height:1.2;transition:border-color .15s,background .15s,color .15s}' +
+      '.hub-pulse-tab:hover:not(.is-active){border-color:color-mix(in srgb,var(--text-muted) 50%,var(--border));color:var(--text)}' +
+      '.hub-pulse-tab.is-active{background:color-mix(in srgb,var(--accent) 14%,var(--surface2));border-color:var(--accent);color:var(--accent)}' +
       '.hub-pulse-cards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}' +
-      '.hub-pulse-cards.is-compact .hub-pulse-card{padding:10px 8px 9px;gap:4px}' +
-      '.hub-pulse-cards.is-compact .hub-pulse-card-ret{font-size:16px}' +
-      '.hub-pulse-cards.is-compact .hub-pulse-card-sector{font-size:10px}' +
-      '.hub-pulse-cards.is-compact .hub-pulse-card-sector .hub-pulse-icon{font-size:16px}' +
-      '.hub-pulse-cards.is-compact .hub-pulse-spark{max-width:56px;height:18px}' +
       '.hub-pulse-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;min-width:0;transition:border-color .15s,box-shadow .15s}' +
       '.hub-pulse-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.12)}' +
       '.hub-pulse-card-sector{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.02em;line-height:1.2;word-break:keep-all}' +
@@ -133,9 +132,9 @@
       '.hub-card-keyplayers{font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4;word-break:keep-all}' +
       '.hub-card-keyplayers strong{color:var(--text);font-weight:600}' +
       '@media (max-width:1200px){.hub-pulse-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}' +
-      '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}.hub-pulse-cards.is-compact .hub-pulse-card{flex:0 0 108px}}';
+      '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}}';
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v5';
+    el.id = 'im-hub-dashboard-css-v6';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -317,7 +316,47 @@
     return 'is-low';
   }
 
-  function buildPulseCards(lang, sectors, local, retKey, compact) {
+  function readPulseHorizon() {
+    try {
+      var k = sessionStorage.getItem(PULSE_HORIZON_KEY);
+      if (k && PULSE_HORIZONS.some(function (h) { return h.retKey === k; })) {
+        pulseHorizonKey = k;
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  function savePulseHorizon(key) {
+    pulseHorizonKey = key;
+    try { sessionStorage.setItem(PULSE_HORIZON_KEY, key); } catch (e) { /* ignore */ }
+  }
+
+  function buildPulseTabs(lang) {
+    var labels = t(lang);
+    return '<div class="hub-pulse-toolbar">' +
+      '<div class="hub-pulse-tabs" role="tablist" aria-label="' + labels.pulseTitle + '">' +
+      PULSE_HORIZONS.map(function (h) {
+        var active = h.retKey === pulseHorizonKey;
+        return '<button type="button" class="hub-pulse-tab' + (active ? ' is-active' : '') + '"' +
+          ' role="tab" aria-selected="' + (active ? 'true' : 'false') + '"' +
+          ' data-horizon="' + h.retKey + '">' + labels[h.labelKey] + '</button>';
+      }).join('') +
+      '</div></div>';
+  }
+
+  function bindPulseTabs(wrap, lang) {
+    if (!wrap) return;
+    var tabs = wrap.querySelectorAll('.hub-pulse-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].addEventListener('click', function () {
+        var key = this.getAttribute('data-horizon');
+        if (!key || key === pulseHorizonKey) return;
+        savePulseHorizon(key);
+        renderPulse(lang);
+      });
+    }
+  }
+
+  function buildPulseCards(lang, sectors, local, retKey) {
     var labels = t(lang);
     var ql = '?lang=' + encodeURIComponent(lang);
     return SECTOR_ORDER.map(function (sid) {
@@ -343,7 +382,7 @@
       var href = (meta.map || 'index.html') + ql;
       var countLabel = (pulse.listingCount != null ? pulse.listingCount : block.companies.length) +
         (lang === 'en' ? '' : '\uAC1C');
-      var mcapBlock = compact ? '' :
+      var mcapBlock =
         '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
         '<div class="hub-pulse-mcap-val">' + formatMcapWithWeight(sectorMcap, weightPct, lang) + '</div>' +
         '<div class="hub-pulse-count">' + countLabel + '</div>';
@@ -362,16 +401,13 @@
     var labels = t(lang);
     var local = localSectorStats();
     var sectors = dashboardData && dashboardData.sectors ? dashboardData.sectors : {};
-    var rowsHtml = PULSE_HORIZONS.map(function (h) {
-      var cards = buildPulseCards(lang, sectors, local, h.retKey, h.compact);
-      var gridCls = 'hub-pulse-cards' + (h.compact ? ' is-compact' : '');
-      return '<div class="hub-pulse-row">' +
-        '<div class="hub-pulse-row-label">' + labels[h.labelKey] + '</div>' +
-        '<div class="' + gridCls + '">' + cards + '</div>' +
-        '</div>';
-    }).join('');
+    var cards = buildPulseCards(lang, sectors, local, pulseHorizonKey);
 
-    wrap.innerHTML = '<div class="hub-pulse-rows">' + rowsHtml + '</div>';
+    wrap.innerHTML =
+      buildPulseTabs(lang) +
+      '<div class="hub-pulse-cards" role="tabpanel">' + cards + '</div>';
+
+    bindPulseTabs(wrap, lang);
 
     var statusWrap = document.getElementById('hub-pulse-status');
     if (statusWrap) {
@@ -529,6 +565,7 @@
   function init(lang) {
     injectStyles();
     lang = pageLang(lang);
+    readPulseHorizon();
     Promise.all([loadHubIndex(), loadFx()])
       .then(function () {
         var swr = readSwr();
@@ -556,6 +593,7 @@
 
   function onLangChange(lang) {
     lang = pageLang(lang);
+    readPulseHorizon();
     renderLabels(lang);
     enhanceCards(lang);
     renderPulse(lang);
