@@ -110,6 +110,7 @@ function buildSectors(hubIndex, snapshots) {
   }
 
   const mcapNow = snapshots && snapshots.mcapNow;
+  const mcapPast1m = snapshots && snapshots.mcapPast1m;
   const mcapPast1y = snapshots && snapshots.mcapPast1y;
   const mcapPast6m = snapshots && snapshots.mcapPast6m;
   const mcapPast3m = snapshots && snapshots.mcapPast3m;
@@ -121,14 +122,17 @@ function buildSectors(hubIndex, snapshots) {
     const companies = block.companies || [];
     const sectorMcap = companies.reduce((s, c) => s + (c.mcapWon || 0), 0);
     sectors[sid] = {
-      yoyReturnPct: (mcapNow && mcapPast1y)
-        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast1y)
+      return1mPct: (mcapNow && mcapPast1m)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast1m)
+        : null,
+      return3mPct: (mcapNow && mcapPast3m)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast3m)
         : null,
       return6mPct: (mcapNow && mcapPast6m)
         ? sectorReturnMcapRatio(companies, mcapNow, mcapPast6m)
         : null,
-      return3mPct: (mcapNow && mcapPast3m)
-        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast3m)
+      yoyReturnPct: (mcapNow && mcapPast1y)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast1y)
         : null,
       mcapWon: sectorMcap,
       weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
@@ -176,9 +180,10 @@ export async function buildHubSectors(hubIndex, env) {
     source: snapshots ? 'krx-mcap-ratio' : 'hub_index',
     krxConfigured: !!authKey,
     mcapRecentDd: snapshots ? snapshots.recentDd : null,
-    mcapPast1yDd: snapshots ? snapshots.past1yDd : null,
-    mcapPast6mDd: snapshots ? snapshots.past6mDd : null,
+    mcapPast1mDd: snapshots ? snapshots.past1mDd : null,
     mcapPast3mDd: snapshots ? snapshots.past3mDd : null,
+    mcapPast6mDd: snapshots ? snapshots.past6mDd : null,
+    mcapPast1yDd: snapshots ? snapshots.past1yDd : null,
     sectors: buildSectors(hubIndex, snapshots),
   };
 }

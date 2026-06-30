@@ -19,6 +19,7 @@ const KOSDAQ_DAILY = '/sto/ksq_bydd_trd';
 const HIST_CACHE_MS = 6 * 60 * 60 * 1000;
 const HIST_TRADING_DAYS = 252;
 const HIST_CALENDAR_SCAN = 400;
+const HIST_TRADING_DAYS_1M = 21;
 const HIST_TRADING_DAYS_3M = 63;
 const HIST_TRADING_DAYS_6M = 126;
 
@@ -143,7 +144,7 @@ async function fetchMcapMapWithFallback(authKey, dates, minSize) {
 
 function snapshotMapsReady(snapshots) {
   if (!snapshots || !snapshots.mcapNow || snapshots.mcapNow.size < 20) return false;
-  return ['mcapPast1y', 'mcapPast6m', 'mcapPast3m'].every(
+  return ['mcapPast1m', 'mcapPast3m', 'mcapPast6m', 'mcapPast1y'].every(
     (k) => snapshots[k] && snapshots[k].size >= 20,
   );
 }
@@ -152,7 +153,7 @@ let mcapSnapshotsCache = null;
 const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
 
 /**
- * Recent + 3M / 6M / 1Y trading-day-ago mcap maps (sequential KRX calls, cached 6h).
+ * Recent + 1M / 3M / 6M / 1Y trading-day-ago mcap maps (sequential KRX calls, cached 6h).
  */
 export async function fetchHubSectorMcapSnapshots(authKey) {
   if (!authKey) return null;
@@ -166,24 +167,28 @@ export async function fetchHubSectorMcapSnapshots(authKey) {
   const idx1y = Math.min(HIST_TRADING_DAYS - 1, dates.length - 1);
   const idx6m = Math.min(HIST_TRADING_DAYS_6M - 1, dates.length - 1);
   const idx3m = Math.min(HIST_TRADING_DAYS_3M - 1, dates.length - 1);
+  const idx1m = Math.min(HIST_TRADING_DAYS_1M - 1, dates.length - 1);
   const window = 12;
 
   const recent = await fetchMcapMapWithFallback(authKey, dates.slice(0, window));
   if (!recent.mcap.size) return null;
 
-  const past1y = await fetchMcapMapWithFallback(authKey, dates.slice(idx1y, idx1y + window));
-  const past6m = await fetchMcapMapWithFallback(authKey, dates.slice(idx6m, idx6m + window));
+  const past1m = await fetchMcapMapWithFallback(authKey, dates.slice(idx1m, idx1m + window));
   const past3m = await fetchMcapMapWithFallback(authKey, dates.slice(idx3m, idx3m + window));
+  const past6m = await fetchMcapMapWithFallback(authKey, dates.slice(idx6m, idx6m + window));
+  const past1y = await fetchMcapMapWithFallback(authKey, dates.slice(idx1y, idx1y + window));
 
   const snapshots = {
     mcapNow: recent.mcap,
-    mcapPast1y: past1y.mcap,
-    mcapPast6m: past6m.mcap,
+    mcapPast1m: past1m.mcap,
     mcapPast3m: past3m.mcap,
+    mcapPast6m: past6m.mcap,
+    mcapPast1y: past1y.mcap,
     recentDd: recent.basDd,
-    past1yDd: past1y.basDd,
-    past6mDd: past6m.basDd,
+    past1mDd: past1m.basDd,
     past3mDd: past3m.basDd,
+    past6mDd: past6m.basDd,
+    past1yDd: past1y.basDd,
   };
 
   if (snapshotMapsReady(snapshots)) {

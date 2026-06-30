@@ -6,16 +6,17 @@
 
   var SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
   var PULSE_HORIZONS = [
-    { retKey: 'yoyReturnPct', labelKey: 'pulseRow1y' },
-    { retKey: 'return6mPct', labelKey: 'pulseRow6m' },
+    { retKey: 'return1mPct', labelKey: 'pulseRow1m' },
     { retKey: 'return3mPct', labelKey: 'pulseRow3m' },
+    { retKey: 'return6mPct', labelKey: 'pulseRow6m' },
+    { retKey: 'yoyReturnPct', labelKey: 'pulseRow1y' },
   ];
-  var pulseHorizonKey = 'yoyReturnPct';
-  var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon';
+  var pulseHorizonKey = 'return1mPct';
+  var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon-v2';
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v3';
+  var SWR_KEY = 'im-hub-dashboard-v4';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], regularSession: null };
@@ -28,7 +29,8 @@
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
-      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1년·6개월·3개월',
+      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1·3·6개월·1년',
+      pulseRow1m: '1개월',
       pulseRow1y: '1년',
       pulseRow6m: '6개월',
       pulseRow3m: '3개월',
@@ -51,7 +53,8 @@
     },
     en: {
       pulseTitle: 'Sector performance',
-      pulseSub: 'Mcap-sum return (recent ÷ past mcap) — 1Y, 6M, 3M',
+      pulseSub: 'Mcap-sum return (recent ÷ past mcap) — 1M, 3M, 6M, 1Y',
+      pulseRow1m: '1 month',
       pulseRow1y: '1 year',
       pulseRow6m: '6 months',
       pulseRow3m: '3 months',
@@ -163,7 +166,7 @@
     var base = custom ? custom.replace(/\/+$/, '') : (hubApiEnabled() ? '' : '');
     if (!base && !hubApiEnabled()) return '';
     var sep = path.indexOf('?') >= 0 ? '&' : '?';
-    var bust = sep + '_v=3';
+    var bust = sep + '_v=4';
     return (base || '') + path + bust;
   }
 
@@ -254,6 +257,7 @@
         weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
         listingCount: block.companies.length,
         yoyReturnPct: null,
+        return1mPct: null,
         return6mPct: null,
         return3mPct: null,
       };
@@ -515,7 +519,8 @@
         if (j && j.error) throw new Error(j.error);
         applySectorsPayload(j);
         var ok = j.sectors && Object.values(j.sectors).some(function (s) {
-          return s && s.return6mPct != null && s.return3mPct != null;
+          return s && s.return1mPct != null && s.return3mPct != null
+            && s.return6mPct != null && s.yoyReturnPct != null;
         });
         if (!ok) throw new Error('hub_sectors_incomplete');
         writeSwr();

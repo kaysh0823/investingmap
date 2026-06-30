@@ -13,7 +13,7 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_PATH = '/api/hub_sectors/cache/v2';
+const CACHE_PATH = '/api/hub_sectors/cache/v3';
 
 export async function onRequest(context) {
   const { request, env } = context;
