@@ -12,6 +12,13 @@
   var rsSnapshotPromise = null;
 
   function rsSnapshotUrl() {
+    var origin = (typeof window !== 'undefined' && window.location && window.location.origin)
+      ? window.location.origin
+      : '';
+    return origin + '/data/hub_rs_snapshot.json';
+  }
+
+  function rsSnapshotApiUrl() {
     var apiBase = getApiBase();
     if (apiBase) {
       var path = apiBase.replace(/\/quotes\/?$/i, '/hub_rs_snapshot');
@@ -31,12 +38,20 @@
     if (!rsSnapshotPromise) {
       rsSnapshotPromise = fetch(rsSnapshotUrl(), { cache: 'default', credentials: 'same-origin' })
         .then(function (r) {
-          if (!r.ok) return { quotes: {} };
-          return r.json();
+          if (r.ok) return r.json();
+          return null;
         })
         .then(function (j) {
-          rsSnapshot = j && j.quotes ? j : { quotes: {} };
-          return rsSnapshot;
+          if (j && j.quotes && Object.keys(j.quotes).length) {
+            rsSnapshot = j;
+            return rsSnapshot;
+          }
+          return fetch(rsSnapshotApiUrl(), { cache: 'default', credentials: 'same-origin' })
+            .then(function (r2) { return r2.ok ? r2.json() : { quotes: {} }; })
+            .then(function (j2) {
+              rsSnapshot = j2 && j2.quotes ? j2 : { quotes: {} };
+              return rsSnapshot;
+            });
         })
         .catch(function () {
           rsSnapshot = { quotes: {} };
