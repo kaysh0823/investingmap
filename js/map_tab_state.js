@@ -6,7 +6,6 @@
   'use strict';
 
   var VALID = { heatmap: 1, table: 1, graph: 1 };
-  var pendingFocusTicker = null;
   var focusStyleInjected = false;
 
   function injectFocusStyle() {
@@ -14,7 +13,8 @@
     focusStyleInjected = true;
     var css =
       '#table-body tr.im-row-focus td{background:color-mix(in srgb,var(--accent) 14%,var(--surface2))!important}' +
-      '#table-body tr.im-row-focus td:first-child .company-name{color:var(--accent)}';
+      '#table-body tr.im-row-focus td:first-child .company-name{color:var(--accent)}' +
+      '#table-cards [data-ticker].im-row-focus{outline:2px solid var(--accent);outline-offset:2px}';
     var el = document.createElement('style');
     el.id = 'im-map-ticker-focus-css';
     el.textContent = css;
@@ -30,6 +30,11 @@
     }
   }
 
+  function isTableTabActive() {
+    var tableEl = document.getElementById('tab-table');
+    return tableEl && tableEl.classList.contains('active');
+  }
+
   function getTab() {
     try {
       var sp = new URLSearchParams(window.location.search);
@@ -37,8 +42,7 @@
       var q = sp.get('tab');
       if (q && VALID[q]) return q;
     } catch (e) {}
-    var tableEl = document.getElementById('tab-table');
-    if (tableEl && tableEl.classList.contains('active')) return 'table';
+    if (isTableTabActive()) return 'table';
     var graphEl = document.getElementById('tab-graph');
     if (graphEl && graphEl.classList.contains('active')) return 'graph';
     var heatEl = document.getElementById('tab-heatmap');
@@ -76,48 +80,73 @@
     }
   }
 
-  function scrollToTicker(ticker) {
+  function clearRowFocus() {
+    document.querySelectorAll('#table-body tr.im-row-focus').forEach(function (r) {
+      r.classList.remove('im-row-focus');
+    });
+    document.querySelectorAll('#table-cards [data-ticker].im-row-focus').forEach(function (c) {
+      c.classList.remove('im-row-focus');
+    });
+  }
+
+  function findTickerElement(ticker) {
+    if (!ticker) return null;
+    var mobile = global.InvestingMapMobileTable && global.InvestingMapMobileTable.isMobile
+      && global.InvestingMapMobileTable.isMobile();
+    if (mobile) {
+      return document.querySelector('#table-cards [data-ticker="' + ticker + '"]')
+        || document.querySelector('#table-body tr[data-ticker="' + ticker + '"]');
+    }
+    return document.querySelector('#table-body tr[data-ticker="' + ticker + '"]');
+  }
+
+  function scrollToTicker(ticker, opts) {
     if (!ticker) return false;
+    opts = opts || {};
     injectFocusStyle();
-    if (global.InvestingMapMobileTable && global.InvestingMapMobileTable.scrollToTicker) {
+    var el = findTickerElement(ticker);
+    if (!el) return false;
+
+    clearRowFocus();
+    if (global.InvestingMapMobileTable && global.InvestingMapMobileTable.scrollToTicker && el.closest('#table-cards')) {
       global.InvestingMapMobileTable.scrollToTicker(ticker);
-      var card = document.querySelector('#table-cards [data-ticker="' + ticker + '"]');
-      if (card) card.classList.add('im-row-focus');
-      return true;
+    } else {
+      el.scrollIntoView({ block: 'center', behavior: opts.instant ? 'auto' : 'smooth' });
     }
-    var row = document.querySelector('#table-body tr[data-ticker="' + ticker + '"]');
-    if (row) {
-      row.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      row.classList.add('im-row-focus');
+    el.classList.add('im-row-focus');
+    if (!opts.keepHighlight) {
       setTimeout(function () {
-        row.classList.remove('im-row-focus');
+        el.classList.remove('im-row-focus');
       }, 2500);
-      return true;
     }
-    return false;
+    return true;
+  }
+
+  /** Re-scroll after table re-render (e.g. quotePosition sort) while ?ticker= is set. */
+  function focusTickerAfterTableRender() {
+    var ticker = getFocusTicker();
+    if (!ticker || !isTableTabActive()) return;
+    requestAnimationFrame(function () {
+      scrollToTicker(ticker);
+    });
   }
 
   function applyInitialTickerFocus() {
     var ticker = getFocusTicker();
     if (!ticker) return;
-    pendingFocusTicker = ticker;
     var attempts = 0;
     function tryScroll() {
-      if (!pendingFocusTicker) return;
-      if (scrollToTicker(pendingFocusTicker)) {
-        pendingFocusTicker = null;
-        return;
-      }
+      ticker = getFocusTicker();
+      if (!ticker) return;
+      if (scrollToTicker(ticker)) return;
       attempts += 1;
       if (attempts < 40) setTimeout(tryScroll, 150);
-      else pendingFocusTicker = null;
     }
     setTimeout(tryScroll, 80);
   }
 
   function focusTickerIfPending() {
-    if (!pendingFocusTicker) return;
-    if (scrollToTicker(pendingFocusTicker)) pendingFocusTicker = null;
+    focusTickerAfterTableRender();
   }
 
   function applyInitialTab(switchTab) {
@@ -157,6 +186,7 @@
     applyInitialTab: applyInitialTab,
     scrollToTicker: scrollToTicker,
     focusTickerIfPending: focusTickerIfPending,
+    focusTickerAfterTableRender: focusTickerAfterTableRender,
     buildMapTableTickerUrl: buildMapTableTickerUrl,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

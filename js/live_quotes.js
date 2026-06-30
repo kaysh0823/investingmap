@@ -330,7 +330,9 @@
             onAsOf(j.asOf || '', { regularSession: j.regularSession });
           } catch (e1) {}
           if (renderTable) renderTable();
-          if (global.InvestingMapTabState && InvestingMapTabState.focusTickerIfPending) {
+          if (global.InvestingMapTabState && InvestingMapTabState.focusTickerAfterTableRender) {
+            InvestingMapTabState.focusTickerAfterTableRender();
+          } else if (global.InvestingMapTabState && InvestingMapTabState.focusTickerIfPending) {
             InvestingMapTabState.focusTickerIfPending();
           }
         })
@@ -348,7 +350,9 @@
     loadRsSnapshot().then(function (snap) {
       mergeRsIntoCompanies(getCompanies(), snap);
       if (renderTable) renderTable();
-      if (global.InvestingMapTabState && InvestingMapTabState.focusTickerIfPending) {
+      if (global.InvestingMapTabState && InvestingMapTabState.focusTickerAfterTableRender) {
+        InvestingMapTabState.focusTickerAfterTableRender();
+      } else if (global.InvestingMapTabState && InvestingMapTabState.focusTickerIfPending) {
         InvestingMapTabState.focusTickerIfPending();
       }
     });
