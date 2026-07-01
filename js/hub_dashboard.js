@@ -28,6 +28,28 @@
   var rsTop10Failed = false;
   var fxRate = 1400;
 
+  /** Value-chain / keyword chips shown below representative stocks on hub cards. */
+  var HUB_CARD_TAGS = {
+    ko: {
+      semi: ['설계', '파운드리', '메모리', '소재', '장비', '기판', '패키징'],
+      energy: ['신재생', '2차전지', '태양광', '풍력', '원자력', '전력기기', 'ESS', '수소', '연료전지', '전력·가스'],
+      ship: ['조선소', '엔진', '철강', '조선기자재', '해양', '해운', '방산 해양'],
+      defense: ['군용 항공', '미사일·C4ISR', '육상무기', '해군·함정', '우주·위성', '민항'],
+      kculture: ['라면·식품', '여행·항공', '뷰티', '드라마·웹툰', '스트리밍 IP', 'K-pop'],
+      bio: ['신약', 'CDMO', '바이오시밀러', '의료기기', '진단'],
+      robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
+    },
+    en: {
+      semi: ['Design', 'Foundry', 'Memory', 'Materials', 'Equipment', 'Substrates', 'Packaging'],
+      energy: ['Renewables', 'Batteries', 'Solar', 'Wind', 'Nuclear', 'Grid gear', 'ESS', 'Hydrogen', 'Fuel cells', 'Utilities'],
+      ship: ['Yards', 'Engines', 'Steel', 'Marine equipment', 'Offshore', 'Shipping', 'Naval'],
+      defense: ['Military aviation', 'Missiles & C4ISR', 'Land systems', 'Naval', 'Space & satellites', 'Civil aviation'],
+      kculture: ['Food', 'Travel & airlines', 'Beauty', 'Drama & webtoon', 'Streaming IP', 'K-pop'],
+      bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
+      robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
+    },
+  };
+
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
@@ -155,8 +177,9 @@
       '.hub-top-pos.is-high{color:#3fb950}' +
       '.hub-top-pos.is-mid{color:#facc15}' +
       '.hub-top-pos.is-low{color:#fca5a5}' +
-      '.hub-card-keyplayers{font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4;word-break:keep-all}' +
+      '.hub-card-keyplayers{font-size:11px;color:var(--text-muted);margin-top:6px;margin-bottom:0;line-height:1.4;word-break:keep-all}' +
       '.hub-card-keyplayers strong{color:var(--text);font-weight:600}' +
+      '.hub-card-tags{margin-top:8px;margin-bottom:12px}' +
       '@media (max-width:1200px){.hub-pulse-cards{grid-template-columns:repeat(4,minmax(0,1fr))}.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panels{grid-template-columns:1fr 1fr}}' +
       '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panels{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}}';
     var el = document.createElement('style');
@@ -517,6 +540,17 @@
     }).join('');
   }
 
+  function renderCardTags(sid, lang) {
+    var pack = HUB_CARD_TAGS[lang] || HUB_CARD_TAGS.ko;
+    var tags = pack[sid] || [];
+    var tagsEl = document.getElementById('card-' + sid + '-tags');
+    if (!tagsEl) return;
+    tagsEl.innerHTML = tags.map(function (tag) {
+      return '<span class="hub-tag">' + tag + '</span>';
+    }).join('');
+    tagsEl.setAttribute('aria-hidden', tags.length ? 'false' : 'true');
+  }
+
   function enhanceCards(lang) {
     if (!hubData) return;
     var labels = t(lang);
@@ -530,6 +564,7 @@
       if (el) {
         el.innerHTML = '<strong>' + labels.keyPlayers + ':</strong> ' + top.join(', ');
       }
+      renderCardTags(sid, lang);
       var badge = document.getElementById('card-' + sid + '-badge');
       if (badge) {
         var n = block.companies.length;
@@ -707,6 +742,10 @@
     init: init,
     refresh: onLangChange,
     loadHubIndex: loadHubIndex,
+    renderHubCardTags: function (lang) {
+      lang = pageLang(lang);
+      SECTOR_ORDER.forEach(function (sid) { renderCardTags(sid, lang); });
+    },
   };
 
   if (document.getElementById('hub-sector-pulse')) {

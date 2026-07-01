@@ -22,6 +22,7 @@ run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
 run('node scripts/build_hub_index.mjs', 'hub index JSON');
 run('node scripts/build_hub_quote_snapshot.mjs', 'hub quote snapshot (Top 10)');
 run('node scripts/build_hub_rs_snapshot.mjs', 'hub RS snapshot (optional)');
+run('node scripts/prerender_seo.mjs', 'SEO prerender tables + sitemap');
 run('node scripts/patch_desktop_sidebar.mjs', 'desktop left sidebar');
 run('node scripts/patch_map_nav_filters.mjs', 'desktop sector nav, filters, tab state');
 run('node scripts/patch_tab_heatmap_i18n.mjs', 'tabHeatmap i18n');
