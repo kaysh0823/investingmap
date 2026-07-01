@@ -130,10 +130,10 @@
     if (stylesInjected) return;
     stylesInjected = true;
     var css =
-      '#map-editorial:not(.map-editorial-ready) #map-editorial-body{display:none}' +
+      'section#map-editorial.geo-summary.map-editorial-collapsible{max-width:none;margin-left:0;margin-right:0;width:100%}' +
       '#map-editorial.map-editorial-collapsible{padding:6px 28px 10px}' +
       '.map-editorial-details{margin:0}' +
-      '.map-editorial-summary{font-size:15px;font-weight:700;color:var(--text);cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;user-select:none;padding:6px 0;margin:0}' +
+      '.map-editorial-summary{font-size:15px;font-weight:700;color:var(--text);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:flex-start;gap:8px;user-select:none;padding:6px 0;margin:0;text-align:left}' +
       '.map-editorial-summary::-webkit-details-marker{display:none}' +
       '.map-editorial-summary::before{content:"\\25B8";font-size:11px;color:var(--accent);transition:transform .2s ease;flex-shrink:0}' +
       '.map-editorial-details[open] .map-editorial-summary::before{transform:rotate(90deg)}' +
@@ -141,11 +141,32 @@
       '.map-editorial-body{padding-top:4px;font-size:13px;line-height:1.55;color:var(--text-muted)}' +
       '.map-editorial-body p{margin:0 0 10px}' +
       '.map-editorial-body p:last-child{margin-bottom:0}' +
-      '.map-editorial-body a{color:var(--accent)}';
+      '.map-editorial-body a{color:var(--accent)}' +
+      '.map-editorial-body .map-editorial-seo{margin:0;padding:0;border:none}' +
+      '.map-editorial-body .map-editorial-seo-title{font-size:14px;font-weight:700;color:var(--text);margin:14px 0 8px}' +
+      '.map-editorial-body .map-editorial-dynamic+.map-editorial-seo .map-editorial-seo-title{margin-top:14px}' +
+      '.map-editorial-body .im-seo-keywords,.map-editorial-body .im-seo-snapshot-note{font-size:12px;opacity:.9}' +
+      '.map-editorial-body p[hidden],.map-editorial-body h2[hidden]{display:none}';
     var el = document.createElement('style');
     el.id = 'map-editorial-collapsible-css';
     el.textContent = css;
     document.head.appendChild(el);
+  }
+
+  function detachSeoBlock(root) {
+    if (!root) return null;
+    var seo = root.querySelector('#im-seo-body');
+    if (!seo || !seo.parentNode) return null;
+    return seo.parentNode.removeChild(seo);
+  }
+
+  function syncSeoLang(seoEl, lang) {
+    if (!seoEl) return;
+    var nodes = seoEl.querySelectorAll('[lang="ko"], [lang="en"]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      el.hidden = el.getAttribute('lang') !== lang;
+    }
   }
 
   function ensureCollapsible(section) {
@@ -200,11 +221,17 @@
     var bodyEl = document.getElementById('map-editorial-body');
     if (titleEl) titleEl.textContent = SECTION_TITLE[lang] || SECTION_TITLE.ko;
     if (bodyEl) {
-      bodyEl.innerHTML = block.paragraphs
+      var seoBlock = detachSeoBlock(bodyEl) || detachSeoBlock(section);
+      var editorialHtml = block.paragraphs
         .map(function (p) {
           return '<p>' + p + '</p>';
         })
         .join('');
+      bodyEl.innerHTML = '<div class="map-editorial-dynamic">' + editorialHtml + '</div>';
+      if (seoBlock) {
+        bodyEl.appendChild(seoBlock);
+        syncSeoLang(seoBlock, lang);
+      }
     }
     section.setAttribute('lang', lang);
     section.classList.add('map-editorial-ready');

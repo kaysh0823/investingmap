@@ -1958,19 +1958,43 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
-    .im-seo-body {
+    .map-editorial-body .map-editorial-seo { margin: 0; padding: 0; border: none }
+    .map-editorial-body .map-editorial-seo-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 14px 0 8px
+    }
+    .map-editorial-body .map-editorial-seo-title:first-child { margin-top: 0 }
+    .map-editorial-body .im-seo-body-p { margin: 0 0 10px }
+    .map-editorial-body .im-seo-keywords,
+    .map-editorial-body .im-seo-snapshot-note { font-size: 12px; margin: 0 0 8px; opacity: .9 }
+    .map-editorial-body p[hidden], .map-editorial-body h2[hidden] { display: none }
+    .im-seo-snapshot-note { font-size: 12px; opacity: .85 }
+    .im-seo-related {
       max-width: 960px;
       margin: 0 auto;
-      padding: 12px 28px 16px;
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border)
+      padding: 20px 28px 28px;
+      font-size: 13px;
+      border-top: 1px solid var(--border)
     }
-    .im-seo-body h2 { font-size: 16px; color: var(--text); margin: 0 0 10px }
-    .im-seo-body p { margin: 0 0 10px }
-    .im-seo-body p[hidden], .im-seo-body h2[hidden] { display: none }
-    .im-seo-snapshot-note { font-size: 12px; opacity: .85 }
+    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
+    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
+    .im-seo-related-list a { color: var(--accent); text-decoration: none }
+    .im-seo-related-list a:hover { text-decoration: underline }
+
+    .im-seo-related {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 28px 28px;
+      font-size: 13px;
+      border-top: 1px solid var(--border)
+    }
+    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
+    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
+    .im-seo-related-list a { color: var(--accent); text-decoration: none }
+    .im-seo-related-list a:hover { text-decoration: underline }
+
     .im-seo-related {
       max-width: 960px;
       margin: 0 auto;
@@ -2019,22 +2043,22 @@
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
     <details class="map-editorial-details">
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
-      <div id="map-editorial-body" class="map-editorial-body"></div>
-    </details>
-  </section>
-<!-- investingmap-seo-body-start -->
-  <section class="im-seo-body" id="im-seo-body" aria-labelledby="im-seo-body-title">
-    <h2 id="im-seo-body-title" lang="ko">반도체 밸류체인과 코스피·코스닥 반도체 관련주</h2>
-    <h2 id="im-seo-body-title-en" lang="en" hidden>Korean semiconductor value chain &amp; listed stocks</h2>
+      <div id="map-editorial-body" class="map-editorial-body">
+      <!-- investingmap-seo-body-start -->
+      <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
+    <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">반도체 밸류체인과 코스피·코스닥 반도체 관련주</h2>
+    <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean semiconductor value chain &amp; listed stocks</h2>
     <p lang="ko" class="im-seo-body-p">본 페이지는 KOSPI·KOSDAQ 상장 반도체 관련주를 설계·팹리스·파운드리·메모리(IDM)·소재·장비·기판·패키징·테스트 등 밸류체인 축으로 분류한 투자 지도입니다. 삼성전자, SK하이닉스를 비롯한 국내 반도체 종목의 KRX 시가총액·PER·PBR과 52주 주가 위치를 표에서 확인하고, NVIDIA·Apple·TSMC 등 글로벌 거래처·동종 peer 관계를 참고용 그래프로 연결했습니다. 반도체 밸류체인을 한눈에 비교하려는 국내외 투자자를 위해 정리했으며, 시총 3천억원 이상 편집 분류 종목만 포함합니다. 아래 표의 시세·시총은 빌드 시점 스냅샷이며, 영업일에는 실시간 갱신됩니다.</p>
     <p lang="en" class="im-seo-body-p" hidden>This map classifies KOSPI and KOSDAQ semiconductor stocks across design, fabless, foundry, memory (IDM), materials, equipment, substrates, and packaging &amp; test. Compare KRX market cap, PER, PBR, and 52-week price position for names including Samsung Electronics and SK hynix, with illustrative links to global customers and peers such as NVIDIA, Apple, and TSMC. Listed names meet a KRW 300 billion market-cap editorial floor. Quote and cap fields below are build-time snapshots; live values refresh on trading days.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 반도체 관련주, 반도체 밸류체인, 코스피 반도체, 코스닥 반도체, HBM, 파운드리</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean semiconductor stocks, Korea semiconductor value chain, KOSPI semiconductors</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-06-30 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-06-30.</p>
+  </div>
+      <!-- investingmap-seo-body-end -->
+      </div>
+    </details>
   </section>
-<!-- investingmap-seo-body-end -->
-
-  <div class="tabs">
+<div class="tabs">
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 시총 히트맵</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>

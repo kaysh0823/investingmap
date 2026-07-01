@@ -1708,19 +1708,43 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
-    .im-seo-body {
+    .map-editorial-body .map-editorial-seo { margin: 0; padding: 0; border: none }
+    .map-editorial-body .map-editorial-seo-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 14px 0 8px
+    }
+    .map-editorial-body .map-editorial-seo-title:first-child { margin-top: 0 }
+    .map-editorial-body .im-seo-body-p { margin: 0 0 10px }
+    .map-editorial-body .im-seo-keywords,
+    .map-editorial-body .im-seo-snapshot-note { font-size: 12px; margin: 0 0 8px; opacity: .9 }
+    .map-editorial-body p[hidden], .map-editorial-body h2[hidden] { display: none }
+    .im-seo-snapshot-note { font-size: 12px; opacity: .85 }
+    .im-seo-related {
       max-width: 960px;
       margin: 0 auto;
-      padding: 12px 28px 16px;
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border)
+      padding: 20px 28px 28px;
+      font-size: 13px;
+      border-top: 1px solid var(--border)
     }
-    .im-seo-body h2 { font-size: 16px; color: var(--text); margin: 0 0 10px }
-    .im-seo-body p { margin: 0 0 10px }
-    .im-seo-body p[hidden], .im-seo-body h2[hidden] { display: none }
-    .im-seo-snapshot-note { font-size: 12px; opacity: .85 }
+    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
+    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
+    .im-seo-related-list a { color: var(--accent); text-decoration: none }
+    .im-seo-related-list a:hover { text-decoration: underline }
+
+    .im-seo-related {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 28px 28px;
+      font-size: 13px;
+      border-top: 1px solid var(--border)
+    }
+    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
+    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
+    .im-seo-related-list a { color: var(--accent); text-decoration: none }
+    .im-seo-related-list a:hover { text-decoration: underline }
+
     .im-seo-related {
       max-width: 960px;
       margin: 0 auto;
@@ -1769,22 +1793,22 @@
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
     <details class="map-editorial-details">
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
-      <div id="map-editorial-body" class="map-editorial-body"></div>
-    </details>
-  </section>
-<!-- investingmap-seo-body-start -->
-  <section class="im-seo-body" id="im-seo-body" aria-labelledby="im-seo-body-title">
-    <h2 id="im-seo-body-title" lang="ko">K컬처·식품·뷰티·미디어 상장 종목 지도</h2>
-    <h2 id="im-seo-body-title-en" lang="en" hidden>K-culture, food, beauty &amp; media stocks</h2>
+      <div id="map-editorial-body" class="map-editorial-body">
+      <!-- investingmap-seo-body-start -->
+      <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
+    <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">K컬처·식품·뷰티·미디어 상장 종목 지도</h2>
+    <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>K-culture, food, beauty &amp; media stocks</h2>
     <p lang="ko" class="im-seo-body-p">라면·가공식품, 여행·항공·레저, 화장품·뷰티, 드라마·웹툰·스트리밍 IP, K-pop 레이블 등 K컬처 수출 테마별 KOSPI·KOSDAQ 상장사를 키워드 중심으로 분류합니다. 삼양식품, 하이브, NAVER, 아모레퍼시픽 등 K-culture stocks의 시가총액·PER·PBR과 글로벌 수출·플랫폼 연계 예시를 표와 그래프로 제공합니다. 불닭볶음면, BTS, K드라마 등 검색 수요와 연결된 국내 상장주를 탐색하는 출발점으로 활용할 수 있습니다.</p>
     <p lang="en" class="im-seo-body-p" hidden>Groups listed names by K-culture export themes—ramen and food, travel and airlines, beauty, drama and webtoon IP, streaming, and K-pop labels. Explore K-culture stocks including Samyang Foods, HYBE, NAVER, and Amorepacific with KRX metrics and illustrative global demand links tied to keywords like Buldak ramen, BTS, and K-drama.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-06-30 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-06-30.</p>
+  </div>
+      <!-- investingmap-seo-body-end -->
+      </div>
+    </details>
   </section>
-<!-- investingmap-seo-body-end -->
-
-  <div class="tabs">
+<div class="tabs">
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 시총 히트맵</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>

@@ -214,6 +214,54 @@
       max-width: min(920px, 100%)
     }
 
+    .hub-lead-details {
+      margin: 0;
+      max-width: min(920px, 100%)
+    }
+
+    .hub-lead-summary {
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none
+    }
+
+    .hub-lead-summary::-webkit-details-marker {
+      display: none
+    }
+
+    .hub-lead-summary::before {
+      content: "▸";
+      font-size: 11px;
+      color: var(--accent);
+      transition: transform .2s ease;
+      flex-shrink: 0
+    }
+
+    .hub-lead-details[open] .hub-lead-summary::before {
+      transform: rotate(90deg)
+    }
+
+    .hub-lead-details[open] .hub-lead-summary {
+      margin-bottom: 4px
+    }
+
+    .hub-lead-details>#hdr-subtitle {
+      margin-top: 0
+    }
+
+    @media (min-width:769px) {
+      .hub-lead-details>summary {
+        display: none
+      }
+    }
+
     .hub-main {
       max-width: 920px;
       margin: 0 auto;
@@ -821,8 +869,12 @@
     </div>
     <div class="hub-hero">
       <h1 id="hdr-title">Investing Map</h1>
-      <p id="hdr-subtitle">Hub for seven Korean industry maps: listed companies, value chains, KRX data, and relationship
-        networks.</p>
+      <details class="hub-lead-details" id="hub-lead-details">
+        <summary class="hub-lead-summary" id="hub-lead-summary">사이트 소개</summary>
+        <p id="hdr-subtitle">Hub for seven Korean industry maps: listed companies, value chains, KRX data, and relationship
+          networks.</p>
+      </details>
+      <script>!function(){var d=document.getElementById('hub-lead-details');if(d&&matchMedia('(min-width:769px)').matches)d.open=!0}();</script>
     </div>
   </header>
 
@@ -994,6 +1046,7 @@
   </footer>
   <script src="js/map_tab_state.js?v=3"></script>
   <script src="js/hub_dashboard.js?v=15"></script>
+  <script src="js/im_collapsible.js"></script>
 <script>
     const T = {
       ko: {
@@ -1010,6 +1063,7 @@
         energyMapLine: '82개 상장사 · 2차전지·신재생·원자력·전력기기 · ESS·유틸리티',
         kcultureMapLine: '55개 상장사 · 식품·여행·뷰티·IP·K-pop · 글로벌 수출 테마',
         introTitle: '한국 상장사 산업 지도 허브',
+        introLeadSummary: '사이트 소개',
         introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 산업별로 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
         introHMethod: '데이터·편집 원칙',
         introLi1: '정량 데이터(시총·PER·PBR·시세)는 KRX 등 공개 출처를 기준일에 맞춰 반영합니다.',
@@ -1060,6 +1114,7 @@
         energyMapLine: '82 listings · batteries, renewables, nuclear, grid gear · ESS & utilities',
         kcultureMapLine: '55 listings · food, travel, beauty, IP, K-pop · export theme links',
         introTitle: 'Korea listed-equity industry map hub',
+        introLeadSummary: 'About this site',
         introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ names through value-chain lenses. Seven sector maps combine sortable tables, market cap, PER, PBR, 52-week price position, and relationship graphs—each with sector-specific editorial guides and cited sources.',
         introHMethod: 'Data & editorial principles',
         introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
@@ -1152,6 +1207,9 @@
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + ql;
       document.getElementById('hdr-title').textContent = t.introTitle;
       document.getElementById('hdr-subtitle').textContent = t.introP1;
+      var leadSummary = document.getElementById('hub-lead-summary');
+      if (leadSummary) leadSummary.textContent = t.introLeadSummary;
+      if (window.InvestingMapCollapsible) InvestingMapCollapsible.syncHubLead();
       var overviewHeading = document.getElementById('hub-overview-heading');
       if (overviewHeading) overviewHeading.textContent = t.overviewHeading;
       var brandLink = document.getElementById('hub-brand-link');

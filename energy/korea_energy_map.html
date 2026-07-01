@@ -1867,19 +1867,43 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
-    .im-seo-body {
+    .map-editorial-body .map-editorial-seo { margin: 0; padding: 0; border: none }
+    .map-editorial-body .map-editorial-seo-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 14px 0 8px
+    }
+    .map-editorial-body .map-editorial-seo-title:first-child { margin-top: 0 }
+    .map-editorial-body .im-seo-body-p { margin: 0 0 10px }
+    .map-editorial-body .im-seo-keywords,
+    .map-editorial-body .im-seo-snapshot-note { font-size: 12px; margin: 0 0 8px; opacity: .9 }
+    .map-editorial-body p[hidden], .map-editorial-body h2[hidden] { display: none }
+    .im-seo-snapshot-note { font-size: 12px; opacity: .85 }
+    .im-seo-related {
       max-width: 960px;
       margin: 0 auto;
-      padding: 12px 28px 16px;
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border)
+      padding: 20px 28px 28px;
+      font-size: 13px;
+      border-top: 1px solid var(--border)
     }
-    .im-seo-body h2 { font-size: 16px; color: var(--text); margin: 0 0 10px }
-    .im-seo-body p { margin: 0 0 10px }
-    .im-seo-body p[hidden], .im-seo-body h2[hidden] { display: none }
-    .im-seo-snapshot-note { font-size: 12px; opacity: .85 }
+    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
+    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
+    .im-seo-related-list a { color: var(--accent); text-decoration: none }
+    .im-seo-related-list a:hover { text-decoration: underline }
+
+    .im-seo-related {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 28px 28px;
+      font-size: 13px;
+      border-top: 1px solid var(--border)
+    }
+    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
+    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
+    .im-seo-related-list a { color: var(--accent); text-decoration: none }
+    .im-seo-related-list a:hover { text-decoration: underline }
+
     .im-seo-related {
       max-width: 960px;
       margin: 0 auto;
@@ -1928,22 +1952,22 @@
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
     <details class="map-editorial-details">
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
-      <div id="map-editorial-body" class="map-editorial-body"></div>
-    </details>
-  </section>
-<!-- investingmap-seo-body-start -->
-  <section class="im-seo-body" id="im-seo-body" aria-labelledby="im-seo-body-title">
-    <h2 id="im-seo-body-title" lang="ko">에너지·2차전지·전력기기 밸류체인과 상장 종목</h2>
-    <h2 id="im-seo-body-title-en" lang="en" hidden>Korean energy, battery &amp; power-equipment stocks</h2>
+      <div id="map-editorial-body" class="map-editorial-body">
+      <!-- investingmap-seo-body-start -->
+      <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
+    <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">에너지·2차전지·전력기기 밸류체인과 상장 종목</h2>
+    <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean energy, battery &amp; power-equipment stocks</h2>
     <p lang="ko" class="im-seo-body-p">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 유틸리티까지 에너지·파워플랜트 밸류체인에 속한 KOSPI·KOSDAQ 상장사를 정리합니다. LG에너지솔루션, 삼성SDI, 두산에너빌리티, 한국전력 등 2차전지·발전·송전·EPC·소재 종목의 시가총액·PER·PBR과 밸류체인 태그를 표로 제공하고, CATL·Tesla·Siemens Energy 등 글로벌 참고 관계를 연결합니다. 에너지 전환·전력 수요·원자재 가격 민감도가 큰 섹터이므로 공시·정책 변화를 함께 확인하시기 바랍니다.</p>
     <p lang="en" class="im-seo-body-p" hidden>Covers KOSPI/KOSDAQ names across renewables, batteries, solar, wind, nuclear, grid equipment, ESS, hydrogen, fuel cells, and utilities. The table lists market cap, PER, PBR, and value-chain tags for battery, power, and EPC leaders including LG Energy Solution, Samsung SDI, Doosan Enerbility, and KEPCO, with reference links to global peers. Energy transition policy and commodity prices move quickly—cross-check filings and official data.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-06-30 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-06-30.</p>
+  </div>
+      <!-- investingmap-seo-body-end -->
+      </div>
+    </details>
   </section>
-<!-- investingmap-seo-body-end -->
-
-  <div class="tabs">
+<div class="tabs">
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 시총 히트맵</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
