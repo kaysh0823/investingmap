@@ -114,7 +114,7 @@
   <title>한국 로봇·피지컬AI 산업 투자 지도 / Korea Robotics Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-  <script src="../js/live_quotes.js?v=4"></script>
+  <script src="../js/live_quotes.js?v=5"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=3"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1345,8 +1345,8 @@
     <h1 id="hdr-title">🇰🇷 한국 로봇·피지컬AI 산업 투자 지도</h1>
     <p id="hdr-subtitle">국내 상장 산업로봇·자동화·물류·지역AI 벨류와 글로벌 장비·SW 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>47</span>개 상장기업</div>
-      <div class="badge" id="badge-market">KOSPI <span>4</span>사 · KOSDAQ <span>43</span>사</div>
+      <div class="badge" id="badge-total">Total <span>20</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>3</span> · KOSDAQ <span>17</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1389,7 +1389,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">47</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">20</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1799,195 +1799,6 @@
         semType: '공정장비·자동화', semTypeEn: '공정장비·자동화',
         products: '공정장비·자동화 — 로봇·자동화', productsEn: '공정장비·자동화 — 공정장비·자동화 robotics and automation',
         revenue: '0.50조원', mcapWon: 501652970450, per: 30.96, pbr: 1.72, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_curexo_inc', name: '큐렉소', nameEn: 'CUREXO, INC.', ticker: '060280', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '수술로봇', semTypeEn: '수술로봇',
-        products: '수술로봇 — 로봇·자동화', productsEn: '수술로봇 — 수술로봇 robotics and automation',
-        revenue: '0.45조원', mcapWon: 453857690000, per: 164.18, pbr: 4.7, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_sbb_tech_co_ltd', name: '에스비비테크', nameEn: 'SBB TECH Co., Ltd.', ticker: '389500', market: 'KOSDAQ', chain: '정밀·센서·비전',
-        semType: '정밀 감속기', semTypeEn: '정밀 감속기',
-        products: '정밀 감속기 — 로봇 핵심 부품', productsEn: '정밀 감속기 — core robot components',
-        revenue: '0.42조원', mcapWon: 417133347200, per: null, pbr: 31.71, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ti_robot', name: '티이엠씨', nameEn: 'TEMC Co., Ltd.', ticker: '425040', market: 'KOSDAQ', chain: '물류·무인주행',
-        semType: '자율주행·물류로봇', semTypeEn: 'Autonomous mobile robots',
-        products: 'AMR, 창고자동화', productsEn: 'AMR, warehouse automation',
-        revenue: '0.41조원', mcapWon: 414668830800, per: 25.56, pbr: 2.06, revTier: 1, partners: ['amazon', 'intel']
-      },
-
-      {
-        id: 'robot_union_semiconductor_equi', name: '유니셈', nameEn: 'UNION SEMICONDUCTOR EQUIPMENT&MATERIALS', ticker: '036200', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '반도체 자동화·장비', semTypeEn: '반도체 자동화·장비',
-        products: '반도체 자동화·장비 — 로봇·자동화', productsEn: '반도체 자동화·장비 — 반도체 자동화·장비 robotics and automation',
-        revenue: '0.38조원', mcapWon: 382382860810, per: 40.89, pbr: 1.51, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_t_robotics_co_ltd', name: '티로보틱스', nameEn: 'T-Robotics co., Ltd.', ticker: '117730', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '산업용·협동로봇', semTypeEn: 'Industrial & Collaborative Robots',
-        products: '산업용·협동로봇 및 자동화 솔루션', productsEn: 'Industrial and collaborative robots with automation solutions',
-        revenue: '0.38조원', mcapWon: 375816996380, per: null, pbr: 7.23, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_unitest_inc', name: '유니테스트', nameEn: 'UniTest Inc.', ticker: '086390', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '검사 자동화', semTypeEn: '검사 자동화',
-        products: '검사 자동화 — 로봇·자동화', productsEn: '검사 자동화 — 검사 자동화 robotics and automation',
-        revenue: '0.35조원', mcapWon: 350403809080, per: null, pbr: 3.47, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_cmes_robotics', name: '씨메스로보틱스', nameEn: 'CMES Robotics', ticker: '475400', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '물류·팔레타이징 로봇', semTypeEn: 'Logistics & Palletizing Robots',
-        products: '물류·팔레타이징·공장 자동화 로봇 시스템', productsEn: 'Logistics, palletizing and factory automation robot systems',
-        revenue: '0.31조원', mcapWon: 309772233700, per: null, pbr: 5.23, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_hb_technology_co_ltd', name: 'HB테크놀러지', nameEn: 'HB Technology CO.,LTD.', ticker: '078150', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '검사 자동화', semTypeEn: '검사 자동화',
-        products: '검사 자동화 — 로봇·자동화', productsEn: '검사 자동화 — 검사 자동화 robotics and automation',
-        revenue: '0.27조원', mcapWon: 271657633880, per: 9.16, pbr: 0.91, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_smec_co_ltd', name: '스맥', nameEn: 'SMEC CO.,LTD', ticker: '099440', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '공작기계·자동화', semTypeEn: '공작기계·자동화',
-        products: '공작기계·자동화 — 로봇·자동화', productsEn: '공작기계·자동화 — 공작기계·자동화 robotics and automation',
-        revenue: '0.22조원', mcapWon: 224179549290, per: null, pbr: 2.29, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_everybot_inc', name: '에브리봇', nameEn: 'EVERYBOT Inc.', ticker: '270660', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '가정·서비스로봇', semTypeEn: 'Consumer & Service Robots',
-        products: '청소·서비스 등 가정용·상업용 로봇', productsEn: 'Cleaning and service robots for home and commercial use',
-        revenue: '0.20조원', mcapWon: 204191480470, per: null, pbr: 3.28, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_samick_thk', name: '삼익THK', nameEn: 'SAMICK THK', ticker: '004380', market: 'KOSPI', chain: '산업자동화·장비',
-        semType: 'LM 가이드·감속기', semTypeEn: 'Linear Motion & Reducers',
-        products: 'LM 가이드·볼스크류·감속기 등 로봇·FA 핵심부품', productsEn: 'LM guides, ball screws and reducers for robots and factory automation',
-        revenue: '0.19조원', mcapWon: 185886000000, per: null, pbr: 1.18, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_raon_robotics', name: '라온로보틱스', nameEn: 'RAON ROBOTICS', ticker: '232680', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '반도체/디스플레이 이송 로봇', semTypeEn: '반도체/디스플레이 이송 로봇',
-        products: '반도체/디스플레이 이송 로봇 — 로봇·자동화', productsEn: '반도체/디스플레이 이송 로봇 — 반도체/디스플레이 이송 로봇 robotics and automation',
-        revenue: '0.18조원', mcapWon: 180505160790, per: 44.23, pbr: 4.57, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_knr_systems_inc', name: '케이엔알시스템', nameEn: 'KNR SYSTEMS Inc.', ticker: '199430', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '물류·AMR·스택커', semTypeEn: 'Logistics AMR & Stackers',
-        products: 'AMR·물류 스택커·창고 자동화 장비', productsEn: 'AMRs, logistics stackers and warehouse automation equipment',
-        revenue: '0.17조원', mcapWon: 174627153810, per: null, pbr: 7.53, revTier: 1, partners: []
-      },
-
-      {
-        id: 'rs_auto', name: '알에스오토메이션', nameEn: 'RS Automation Co., Ltd.', ticker: '140670', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: 'FA·스마트팩토리', semTypeEn: 'Factory automation',
-        products: 'PLC, HMI, 인버터', productsEn: 'PLC, HMI, inverters',
-        revenue: '0.17조원', mcapWon: 171283465600, per: null, pbr: 2.92, revTier: 1, partners: ['siemens', 'mitsubishi_e']
-      },
-
-      {
-        id: 'piai', name: '피아이이', nameEn: 'PIE CO., LTD.', ticker: '452450', market: 'KOSDAQ', chain: '정밀·센서·비전',
-        semType: '비전·영상처리', semTypeEn: 'Vision & inspection',
-        products: '소프트웨어 비전, AOI', productsEn: 'Machine vision, AOI SW',
-        revenue: '0.17조원', mcapWon: 168253095000, per: null, pbr: 2.98, revTier: 1, partners: ['keyence', 'cognex']
-      },
-
-      {
-        id: 'robot_naintech_co_ltd', name: '나인테크', nameEn: 'Naintech. CO.,LTD.', ticker: '267320', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '공정 자동화·장비', semTypeEn: '공정 자동화·장비',
-        products: '공정 자동화·장비 — 로봇·자동화', productsEn: '공정 자동화·장비 — 공정 자동화·장비 robotics and automation',
-        revenue: '0.15조원', mcapWon: 151002225850, per: null, pbr: 1.64, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_woorim_power_train_solut', name: '우림피티에스', nameEn: 'WOORIM POWER TRAIN SOLUTION', ticker: '101170', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '로봇 감속기·동력전달', semTypeEn: 'Robot Reducers & Power Transmission',
-        products: '로봇·산업용 감속기·동력전달 부품', productsEn: 'Reducers and power transmission parts for robots and industry',
-        revenue: '0.13조원', mcapWon: 132705000000, per: 54.31, pbr: 1.57, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_ajinextek_co_ltd', name: '아진엑스텍', nameEn: 'AJINEXTEK Co., Ltd.', ticker: '059120', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '로봇·FA 모션제어', semTypeEn: 'Robot & FA Motion Control',
-        products: '서보·모션제어·로봇 구동 모듈', productsEn: 'Servo, motion control and robot drive modules',
-        revenue: '0.13조원', mcapWon: 130367669920, per: 154.78, pbr: 3.16, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_rorze_systems_corporatio', name: '로체시스템즈', nameEn: 'RORZE SYSTEMS CORPORATION', ticker: '071280', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '이송 자동화', semTypeEn: '이송 자동화',
-        products: '이송 자동화 — 로봇·자동화', productsEn: '이송 자동화 — 이송 자동화 robotics and automation',
-        revenue: '0.12조원', mcapWon: 115183420590, per: 9.17, pbr: 0.84, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_roborobo_co_ltd', name: '로보로보', nameEn: 'RoboRobo Co., Ltd.', ticker: '215100', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '교육용 로봇', semTypeEn: '교육용 로봇',
-        products: '교육용 로봇 — 로봇·자동화', productsEn: '교육용 로봇 — 교육용 로봇 robotics and automation',
-        revenue: '0.11조원', mcapWon: 109474682520, per: null, pbr: 3.66, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_mds_tech', name: 'MDS테크', nameEn: 'MDS Tech', ticker: '086960', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '임베디드·로봇 SW', semTypeEn: '임베디드·로봇 SW',
-        products: '임베디드·로봇 SW — 로봇·FA 제어 SW', productsEn: '임베디드·로봇 SW — robot and FA control software',
-        revenue: '0.11조원', mcapWon: 108025277670, per: 11.66, pbr: 0.71, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_meerecompany_incorporate', name: '미래컴퍼니', nameEn: 'meerecompany Incorporated', ticker: '049950', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '수술로봇·디스플레이 장비', semTypeEn: '수술로봇·디스플레이 장비',
-        products: '수술로봇·디스플레이 장비 — 로봇·자동화', productsEn: '수술로봇·디스플레이 장비 — 수술로봇·디스플레이 장비 robotics and automation',
-        revenue: '0.11조원', mcapWon: 107490005960, per: null, pbr: 0.95, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_kpf', name: '케이피에프', nameEn: 'KPF', ticker: '024880', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '로봇·자동화 SI', semTypeEn: 'Robot & Automation SI',
-        products: '공장·물류 자동화·로봇 시스템 통합', productsEn: 'Factory and logistics automation and robot system integration',
-        revenue: '0.09조원', mcapWon: 87707979900, per: 4.35, pbr: 0.32, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_sp_systems_co_ltd', name: '에스피시스템스', nameEn: 'SP SYSTEMS CO.,LTD.', ticker: '317830', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '산업자동화·로봇시스템', semTypeEn: '산업자동화·로봇시스템',
-        products: '산업자동화·로봇시스템 — 로봇·자동화', productsEn: '산업자동화·로봇시스템 — 산업자동화·로봇시스템 robotics and automation',
-        revenue: '0.07조원', mcapWon: 74770296920, per: null, pbr: 1.39, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_tpc_robotics', name: 'TPC로보틱스', nameEn: 'TPC Robotics', ticker: '048770', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '물류·피킹 로봇', semTypeEn: 'Logistics & Picking Robots',
-        products: '물류·피킹·이송 로봇 및 자동화', productsEn: 'Logistics, picking and transport robots',
-        revenue: '0.07조원', mcapWon: 67344381390, per: null, pbr: 1.85, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_seoam_machinery_industry', name: '서암기계공업', nameEn: 'SEOAM MACHINERY INDUSTRY CO., LTD.', ticker: '100660', market: 'KOSDAQ', chain: '정밀·센서·비전',
-        semType: '감속기·기어', semTypeEn: '감속기·기어',
-        products: '감속기·기어 — 로봇 핵심 부품', productsEn: '감속기·기어 — core robot components',
-        revenue: '0.04조원', mcapWon: 42966000000, per: 35.89, pbr: 0.64, revTier: 1, partners: []
-      },
-
-      {
-        id: 'robot_shindo_eng_lab_ltd', name: '신도기연', nameEn: 'Shindo Eng. Lab., Ltd.', ticker: '290520', market: 'KOSDAQ', chain: '산업자동화·장비',
-        semType: '디스플레이/2차전지 장비', semTypeEn: '디스플레이/2차전지 장비',
-        products: '디스플레이/2차전지 장비 — 로봇·자동화', productsEn: '디스플레이/2차전지 장비 — 디스플레이/2차전지 장비 robotics and automation',
-        revenue: '0.03조원', mcapWon: 30409152058, per: 16.75, pbr: 0.51, revTier: 1, partners: []
       }
 
     ];

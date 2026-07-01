@@ -16,6 +16,7 @@ function run(cmd, label) {
 
 run('node scripts/verify_map_companies.mjs', 'verify map company arrays');
 run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry maps');
+run('node scripts/filter_mcap_floor.mjs', 'mcap floor 5천억원');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
 run('node scripts/build_hub_index.mjs', 'hub index JSON');

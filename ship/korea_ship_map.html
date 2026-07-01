@@ -114,7 +114,7 @@
   <title>한국 조선·조선기자재 산업 투자 지도 / Korea Shipbuilding Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-  <script src="../js/live_quotes.js?v=4"></script>
+  <script src="../js/live_quotes.js?v=5"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=3"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1345,8 +1345,8 @@
     <h1 id="hdr-title">🇰🇷 한국 조선·조선기자재 산업 투자 지도</h1>
     <p id="hdr-subtitle">국내 상장 조선·해양·기자재 · 벨류체인 · 글로벌 수주·에너지 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>49</span>개 상장기업</div>
-      <div class="badge" id="badge-market">KOSPI <span>29</span>사 · KOSDAQ <span>20</span>사</div>
+      <div class="badge" id="badge-total">Total <span>30</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>25</span> · KOSDAQ <span>5</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1389,7 +1389,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">49</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">30</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1870,139 +1870,6 @@
         semType: '선박 블록·기자재', semTypeEn: '선박 블록·기자재',
         products: '선박 블록·기자재 — 조선·해양 관련', productsEn: '선박 블록·기자재 — 선박 블록·기자재 for shipbuilding and marine',
         revenue: '0.50조원', mcapWon: 501055567810, per: 23.36, pbr: 1.98, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_inhwa_precision_co_ltd', name: '인화정공', nameEn: 'Inhwa Precision Co., Ltd', ticker: '101930', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '선박엔진 부품', semTypeEn: '선박엔진 부품',
-        products: '선박엔진 부품 — 선박용 기자재·엔진', productsEn: '선박엔진 부품 — marine equipment and engines',
-        revenue: '0.42조원', mcapWon: 416402978200, per: 16.31, pbr: 1.22, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_hy_lok_corporation', name: '하이록코리아', nameEn: 'HY-LOK CORPORATION', ticker: '013030', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '계장용 피팅·밸브', semTypeEn: '계장용 피팅·밸브',
-        products: '계장용 피팅·밸브 — 선박용 기자재·엔진', productsEn: '계장용 피팅·밸브 — marine equipment and engines',
-        revenue: '0.40조원', mcapWon: 403647339200, per: 8.15, pbr: 0.89, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_seah_steel_corporation', name: '세아제강', nameEn: 'SeAH Steel Corporation', ticker: '306200', market: 'KOSPI', chain: '해양플랜트',
-        semType: '강관·해양플랜트 소재', semTypeEn: '강관·해양플랜트 소재',
-        products: '강관·해양플랜트 소재 — 해양플랜트·FPSO', productsEn: '강관·해양플랜트 소재 — offshore plants and FPSO',
-        revenue: '0.40조원', mcapWon: 400485560000, per: 13.18, pbr: 0.35, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_hanla_ims_co_ltd', name: '한라IMS', nameEn: 'HANLA IMS Co., LTD', ticker: '092460', market: 'KOSDAQ', chain: '해운물류',
-        semType: '선박평형수·계측', semTypeEn: '선박평형수·계측',
-        products: '선박평형수·계측 — 조선·해양 관련', productsEn: '선박평형수·계측 — 선박평형수·계측 for shipbuilding and marine',
-        revenue: '0.32조원', mcapWon: 316015789600, per: 12.22, pbr: 1.59, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_cape_industries_ltd', name: '케이프', nameEn: 'CAPE INDUSTRIES LTD.', ticker: '064820', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '실린더라이너·엔진부품', semTypeEn: '실린더라이너·엔진부품',
-        products: '실린더라이너·엔진부품 — 선박용 기자재·엔진', productsEn: '실린더라이너·엔진부품 — marine equipment and engines',
-        revenue: '0.32조원', mcapWon: 315699999450, per: 5.09, pbr: 1.05, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_oriental_precision_engin', name: '오리엔탈정공', nameEn: 'ORIENTAL PRECISION & ENGINEERING CO.,LTD', ticker: '014940', market: 'KOSDAQ', chain: '해운물류',
-        semType: '선박 상부구조물', semTypeEn: '선박 상부구조물',
-        products: '선박 상부구조물 — 조선·해양 관련', productsEn: '선박 상부구조물 — 선박 상부구조물 for shipbuilding and marine',
-        revenue: '0.25조원', mcapWon: 249743662280, per: 13.05, pbr: 1.99, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_bumhan_fuel_cell_co_ltd', name: '범한퓨얼셀', nameEn: 'Bumhan Fuel Cell Co., Ltd.', ticker: '382900', market: 'KOSDAQ', chain: '해운물류',
-        semType: '잠수함 연료전지·친환경 선박', semTypeEn: '잠수함 연료전지·친환경 선박',
-        products: '잠수함 연료전지·친환경 선박 — 조선·해양 관련', productsEn: '잠수함 연료전지·친환경 선박 — 잠수함 연료전지·친환경 선박 for shipbuilding and marine',
-        revenue: '0.24조원', mcapWon: 237861150000, per: 146.76, pbr: 1.44, revTier: 1, partners: []
-      },
-
-      {
-        id: 'kss', name: 'KSS해운', nameEn: 'KSS LINE', ticker: '044450', market: 'KOSPI', chain: '조선기자재',
-        semType: '선박용 강재 가공', semTypeEn: 'Marine metal components',
-        products: '선체 강재, 해양 구조물', productsEn: 'Hull steel processing, offshore steel',
-        revenue: '0.23조원', mcapWon: 227165059200, per: 6.08, pbr: 0.41, revTier: 1, partners: [{ id: 'hd_hhi', edgeLabel: '선체·해양강재 가공 납품', edgeLabelEn: 'Hull / offshore steel to HHI', weight: 0.2 }, { id: 'shi', edgeLabel: '선체강재 납품', edgeLabelEn: 'Hull steel to SHI', weight: 0.22 }, { id: 'hwo', edgeLabel: '함정·상선 강재', edgeLabelEn: 'Naval & commercial steel', weight: 0.18 }]
-      },
-
-      {
-        id: 'ship_dayang_electric_co_ltd', name: '대양전기공업', nameEn: 'DAYANG ELECTRIC CO.,LTD', ticker: '108380', market: 'KOSDAQ', chain: '해운물류',
-        semType: '선박 조명·전자장비', semTypeEn: '선박 조명·전자장비',
-        products: '선박 조명·전자장비 — 조선·해양 관련', productsEn: '선박 조명·전자장비 — 선박 조명·전자장비 for shipbuilding and marine',
-        revenue: '0.19조원', mcapWon: 185319240210, per: 7.23, pbr: 0.67, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_bmt_co_ltd', name: '비엠티', nameEn: 'BMT Co.,Ltd.', ticker: '086670', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '피팅·밸브', semTypeEn: '피팅·밸브',
-        products: '피팅·밸브 — 선박용 기자재·엔진', productsEn: '피팅·밸브 — marine equipment and engines',
-        revenue: '0.17조원', mcapWon: 165464502950, per: 8.08, pbr: 1.11, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_ksp_co_ltd', name: '케이에스피', nameEn: 'KSP CO., LTD', ticker: '073010', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '엔진밸브·형단조', semTypeEn: '엔진밸브·형단조',
-        products: '엔진밸브·형단조 — 선박용 기자재·엔진', productsEn: '엔진밸브·형단조 — marine equipment and engines',
-        revenue: '0.15조원', mcapWon: 145693281250, per: 22.1, pbr: 1.75, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_il_seung', name: '일승', nameEn: 'IL SEUNG', ticker: '333430', market: 'KOSDAQ', chain: '해운물류',
-        semType: '선박 환경장비', semTypeEn: '선박 환경장비',
-        products: '선박 환경장비 — 조선·해양 관련', productsEn: '선박 환경장비 — 선박 환경장비 for shipbuilding and marine',
-        revenue: '0.12조원', mcapWon: 120295214505, per: 16.11, pbr: 2.62, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_samyoung_m_tek_co_ltd', name: '삼영엠텍', nameEn: 'SAMYOUNG M-TEK CO. LTD.', ticker: '054540', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '선박엔진 구조재·기계부품', semTypeEn: '선박엔진 구조재·기계부품',
-        products: '선박엔진 구조재·기계부품 — 선박용 기자재·엔진', productsEn: '선박엔진 구조재·기계부품 — marine equipment and engines',
-        revenue: '0.12조원', mcapWon: 115310000000, per: 13.32, pbr: 1.44, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_stx', name: 'STX', nameEn: 'STX', ticker: '011810', market: 'KOSPI', chain: '조선기자재',
-        semType: '조선·해양플랜트', semTypeEn: 'Shipbuilding & Offshore Plants',
-        products: 'LNG선·해양플랜트·특수선 (구 STX조선)', productsEn: 'LNG carriers, offshore plants and specialty vessels (legacy STX)',
-        revenue: '0.11조원', mcapWon: 109493282310, per: null, pbr: null, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_hankuk_steel_wire_co_ltd', name: '한국선재', nameEn: 'HANKUK STEEL WIRE CO., LTD.', ticker: '025550', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '조선용 강재·특수강', semTypeEn: 'Shipbuilding Steel',
-        products: '조선용 강판·특수강·파이프', productsEn: 'Steel plate, specialty steel and pipes for shipbuilding',
-        revenue: '0.07조원', mcapWon: 67612110600, per: 203.85, pbr: 0.52, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_finebesteel', name: '화인베스틸', nameEn: 'FINEBESTEEL', ticker: '133820', market: 'KOSPI', chain: '조선기자재',
-        semType: '조선용 형강', semTypeEn: '조선용 형강',
-        products: '조선용 형강 — 조선·해양 관련', productsEn: '조선용 형강 — 조선용 형강 for shipbuilding and marine',
-        revenue: '0.04조원', mcapWon: 40083662160, per: null, pbr: 0.8, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_ks_industry', name: 'KS인더스트리', nameEn: 'KS Industry', ticker: '101000', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '조선기자재', semTypeEn: '조선기자재',
-        products: '조선기자재 — 선박용 기자재·엔진', productsEn: '조선기자재 — marine equipment and engines',
-        revenue: '0.02조원', mcapWon: 22318416724, per: null, pbr: 0.55, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_s_w_corporation', name: '에스앤더블류', nameEn: 'S&W Corporation', ticker: '103230', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '선박엔진 부품', semTypeEn: '선박엔진 부품',
-        products: '선박엔진 부품 — 선박용 기자재·엔진', productsEn: '선박엔진 부품 — marine equipment and engines',
-        revenue: '0.02조원', mcapWon: 20556000000, per: 5.66, pbr: 0.38, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_studio_samick_co_ltd', name: '스튜디오삼익', nameEn: 'Studio Samick Co.,Ltd.', ticker: '415380', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '조선·해양 설계·엔지니어링', semTypeEn: 'Naval Architecture & Marine Engineering',
-        products: '선박·해양플랜트 설계·엔지니어링 서비스', productsEn: 'Ship and offshore plant design and engineering services',
-        revenue: '0.02조원', mcapWon: 20299837650, per: 7.27, pbr: 0.56, revTier: 1, partners: []
       }
 
     ];

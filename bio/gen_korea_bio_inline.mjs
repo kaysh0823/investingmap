@@ -13,6 +13,7 @@ import { dirname, join } from 'path';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs';
 import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from '../lib/krx_data_sources.mjs';
 import { enrichBioCompanies } from '../lib/company_field_enrich.mjs';
+import { filterCompaniesByMcap, passesMcapFloor } from '../lib/mcap_policy.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -126,6 +127,7 @@ function flattenCompanies(bioSectors, nameEnMap) {
       }
 
       const mcapWon = ticker === 'UNLISTED' ? null : (MKT_CAP_KRW[ticker] ?? null);
+      if (ticker !== 'UNLISTED' && !passesMcapFloor({ mcapWon: mcapWon || 0 })) continue;
       const market = ticker === 'UNLISTED' ? '\uBE44\uC0C1\uC7A5' : (KOSPI_TICKERS.has(ticker) ? 'KOSPI' : 'KOSDAQ');
       const entry = {
         id: `bio_${list.length}`,
@@ -168,6 +170,7 @@ function mergeCpListAdditions(list, byKey, nameEnMap, meta3557) {
     if (!ticker || byKey.has(ticker)) continue;
     const row = krx.get(ticker);
     const mcapWon = row ? row.mcap : 0;
+    if (!passesMcapFloor({ mcapWon })) continue;
     const market = row ? row.market : 'KOSDAQ';
     const entry = {
       id: `bio_${list.length}`,
@@ -255,6 +258,12 @@ for (const c of koreanCompanies) {
 mergeListedEnglishIntoCompanies(koreanCompanies, meta3557);
 mergePerPbrIntoCompanies(koreanCompanies, loadPerPbrMap(dataDir));
 enrichBioCompanies(koreanCompanies, join(__dirname, '..', '..', 'cp_list'));
+{
+  const kept = filterCompaniesByMcap(koreanCompanies);
+  koreanCompanies.length = 0;
+  koreanCompanies.push(...kept);
+  koreanCompanies.forEach((c, i) => { c.id = `bio_${i}`; });
+}
 const globalCompanies = collectGlobals(bioSectors);
 const CHAIN_COLORS = Object.fromEntries(bioSectors.map(s => [s.sector, s.color]));
 const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC', il: '#FDE047', dk: '#5EEAD4' };

@@ -4,6 +4,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -33,17 +34,19 @@ function extractCompanies(content) {
   // eslint-disable-next-line no-new-func
   const arr = new Function(`return ${m[1]}`)();
   if (!Array.isArray(arr)) throw new Error('koreanCompanies is not an array');
-  return arr
-    .filter((c) => c && c.ticker && c.ticker !== 'UNLISTED')
-    .map((c) => ({
-      ticker: String(c.ticker).trim(),
-      name: c.name || '',
-      nameEn: c.nameEn || c.name || '',
-      market: c.market || '',
-      mcapWon: typeof c.mcapWon === 'number' && c.mcapWon > 0 ? c.mcapWon : 0,
-      sectorId: c.sector || c.id || '',
-    }))
-    .filter((c) => c.mcapWon > 0);
+  return filterCompaniesByMcap(
+    arr
+      .filter((c) => c && c.ticker && c.ticker !== 'UNLISTED')
+      .map((c) => ({
+        ticker: String(c.ticker).trim(),
+        name: c.name || '',
+        nameEn: c.nameEn || c.name || '',
+        market: c.market || '',
+        mcapWon: typeof c.mcapWon === 'number' && c.mcapWon > 0 ? c.mcapWon : 0,
+        sectorId: c.sector || c.id || '',
+      }))
+      .filter((c) => c.mcapWon > 0),
+  );
 }
 
 function main() {

@@ -131,10 +131,14 @@
     return calcQuotePosition(c.quoteLast, c.quoteHi52, c.quoteLo52);
   }
 
-  /** Hide table rows when KRX quotes merged with a zero last / 52w high / 52w low. */
+  /** Hide table rows when KRX quotes merged with a zero last / 52w high / 52w low, or below mcap floor. */
   function shouldHideFromTable(c) {
     if (!c) return false;
-    return c.quoteLast === 0 || c.quoteHi52 === 0 || c.quoteLo52 === 0;
+    if (c.quoteLast === 0 || c.quoteHi52 === 0 || c.quoteLo52 === 0) return true;
+    if (global.InvestingMapMcapFmt && InvestingMapMcapFmt.passesMcapFloor && !InvestingMapMcapFmt.passesMcapFloor(c)) {
+      return true;
+    }
+    return false;
   }
 
   function mergeCompanies(companies, items) {

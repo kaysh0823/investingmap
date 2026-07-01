@@ -28,6 +28,7 @@ import {
   loadListedEnglish3557Map,
   mergeListedEnglishIntoCompanies,
 } from '../lib/krx_data_sources.mjs';
+import { passesMcapFloor, filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -36,6 +37,7 @@ const cpListDir = process.argv[2] || join(root, '..', 'cp_list');
 function makeStub(ticker, entry, industryKey, chains, krx, meta3557, idPrefix) {
   const row = krx.get(ticker);
   if (!row) return null;
+  if (!passesMcapFloor({ mcapWon: row.mcap })) return null;
 
   const chain = inferChain(entry.subSector, industryKey, chains);
   const nameEn = meta3557.get(ticker)?.nameEn || entry.nameKo || row.name;
@@ -183,7 +185,9 @@ function mergeIndustryMap(existing, cpTickers, industryKey, chains, krx, meta355
     added++;
   }
 
-  const merged = [...byTicker.values()].sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
+  const merged = filterCompaniesByMcap([...byTicker.values()]).sort(
+    (a, b) => (b.mcapWon || 0) - (a.mcapWon || 0),
+  );
   return { merged, added, skipped };
 }
 
@@ -276,6 +280,7 @@ function main() {
         bioSkipped++;
         continue;
       }
+      if (!passesMcapFloor({ mcapWon: krx.get(ticker)?.mcap })) continue;
       const chain = inferChain(entry.subSector, 'bio', bioChains);
       bioAdditions.push({
         ticker,

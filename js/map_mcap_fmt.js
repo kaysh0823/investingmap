@@ -29,5 +29,12 @@
     fmtMcapKoJo: fmtMcapKoJo,
     isWholeJoMcap: isWholeJoMcap,
     shouldApplyLiveMcap: shouldApplyLiveMcap,
+    MIN_MCAP_WON: 500000000000,
+    passesMcapFloor: function (c) {
+      if (!c) return false;
+      var mcap = c.mcapWon;
+      if (mcap == null || !Number.isFinite(Number(mcap)) || Number(mcap) <= 0) return false;
+      return Number(mcap) >= 500000000000;
+    },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

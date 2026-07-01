@@ -114,7 +114,7 @@
   <title>한국 방위·우주·항공 산업 투자 지도 / Korea Defense & Space Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-  <script src="../js/live_quotes.js?v=4"></script>
+  <script src="../js/live_quotes.js?v=5"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=3"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1374,8 +1374,8 @@
     <h1 id="hdr-title">🇰🇷 한국 방위·우주·항공 산업 투자 지도</h1>
     <p id="hdr-subtitle">항공기·엔진, 미사일·레이더·C4ISR, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사·글로벌 참고 네트워크</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>44</span>개 상장기업</div>
-      <div class="badge" id="badge-market">KOSPI <span>26</span>사 · KOSDAQ <span>18</span>사</div>
+      <div class="badge" id="badge-total">Total <span>26</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>23</span> · KOSDAQ <span>3</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1418,7 +1418,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">44</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">26</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1869,132 +1869,6 @@
         semType: '풍산그룹 지주', semTypeEn: '풍산그룹 지주',
         products: '풍산그룹 지주 — 방위·항공우주', productsEn: '풍산그룹 지주 — 풍산그룹 지주 defense and aerospace',
         revenue: '0.54조원', mcapWon: 537764991600, per: 6.92, pbr: 0.44, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_firstec', name: '퍼스텍', nameEn: 'FIRSTEC', ticker: '010820', market: 'KOSPI', chain: '육상무기·차량·탄약',
-        semType: '방산 전자·광학', semTypeEn: 'Defense Electronics & Optics',
-        products: '군용 광학·전자·통신 장비', productsEn: 'Military optics, electronics and communication equipment',
-        revenue: '0.38조원', mcapWon: 380421116400, per: 25.74, pbr: 4.61, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_cape_industries_ltd', name: '케이프', nameEn: 'CAPE INDUSTRIES LTD.', ticker: '064820', market: 'KOSDAQ', chain: '항공기·엔진·MRO',
-        semType: '엔진부품·선박 기자재', semTypeEn: '엔진부품·선박 기자재',
-        products: '엔진부품·선박 기자재 — 항공기·엔진·MRO', productsEn: '엔진부품·선박 기자재 — aircraft, engines and MRO',
-        revenue: '0.32조원', mcapWon: 315699999450, per: 5.09, pbr: 1.05, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_kencoa_aerospace_corpora', name: '켄코아에어로스페이스', nameEn: 'Kencoa Aerospace Corporation', ticker: '274090', market: 'KOSDAQ', chain: '항공기·엔진·MRO',
-        semType: '항공우주 부품', semTypeEn: '항공우주 부품',
-        products: '항공우주 부품 — 항공기·엔진·MRO', productsEn: '항공우주 부품 — aircraft, engines and MRO',
-        revenue: '0.29조원', mcapWon: 285126084900, per: null, pbr: 1.69, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_megatouch_co_ltd', name: '메가터치', nameEn: 'Megatouch Co., Ltd', ticker: '446540', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산·항공 MRO', semTypeEn: 'Defense & Aviation MRO',
-        products: '항공·방산 부품 MRO·정비·개조', productsEn: 'Aviation and defense parts MRO, maintenance and modification',
-        revenue: '0.24조원', mcapWon: 240193456860, per: null, pbr: 3.28, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_bumhan_fuel_cell_co_ltd', name: '범한퓨얼셀', nameEn: 'Bumhan Fuel Cell Co., Ltd.', ticker: '382900', market: 'KOSDAQ', chain: '해군·함정·조선방산',
-        semType: '잠수함 연료전지', semTypeEn: '잠수함 연료전지',
-        products: '잠수함 연료전지 — 방위·항공우주', productsEn: '잠수함 연료전지 — 잠수함 연료전지 defense and aerospace',
-        revenue: '0.24조원', mcapWon: 237861150000, per: 146.76, pbr: 1.44, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_ace_technologies_corp', name: '에이스테크', nameEn: 'Ace Technologies Corp.', ticker: '088800', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '통신장비·방산 통신', semTypeEn: '통신장비·방산 통신',
-        products: '통신장비·방산 통신 — 방위·항공우주', productsEn: '통신장비·방산 통신 — 통신장비·방산 통신 defense and aerospace',
-        revenue: '0.21조원', mcapWon: 205755032650, per: null, pbr: 2.98, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_dayang_electric_co_ltd', name: '대양전기공업', nameEn: 'DAYANG ELECTRIC CO.,LTD', ticker: '108380', market: 'KOSDAQ', chain: '해군·함정·조선방산',
-        semType: '함정 전장·조명', semTypeEn: '함정 전장·조명',
-        products: '함정 전장·조명 — 함정·해군 방산', productsEn: '함정 전장·조명 — naval combat systems',
-        revenue: '0.19조원', mcapWon: 185319240210, per: 7.23, pbr: 0.67, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_genohco_inc', name: '제노코', nameEn: 'Genohco, Inc', ticker: '361390', market: 'KOSDAQ', chain: '우주·위성·민항',
-        semType: '위성통신·방산부품', semTypeEn: '위성통신·방산부품',
-        products: '위성통신·방산부품 — 위성·우주·발사체', productsEn: '위성통신·방산부품 — satellites, space and launch systems',
-        revenue: '0.17조원', mcapWon: 169120937970, per: null, pbr: 2.95, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_ksp_co_ltd', name: '케이에스피', nameEn: 'KSP CO., LTD', ticker: '073010', market: 'KOSDAQ', chain: '항공기·엔진·MRO',
-        semType: '엔진밸브·형단조', semTypeEn: '엔진밸브·형단조',
-        products: '엔진밸브·형단조 — 항공기·엔진·MRO', productsEn: '엔진밸브·형단조 — aircraft, engines and MRO',
-        revenue: '0.15조원', mcapWon: 145693281250, per: 22.1, pbr: 1.75, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_samyoung_m_tek_co_ltd', name: '삼영엠텍', nameEn: 'SAMYOUNG M-TEK CO. LTD.', ticker: '054540', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산/조선 단조부품', semTypeEn: '방산/조선 단조부품',
-        products: '방산/조선 단조부품 — 방위·항공우주', productsEn: '방산/조선 단조부품 — 방산/조선 단조부품 defense and aerospace',
-        revenue: '0.12조원', mcapWon: 115310000000, per: 13.32, pbr: 1.44, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_victek_co_ltd', name: '빅텍', nameEn: 'VICTEK. Co., Ltd.', ticker: '065450', market: 'KOSDAQ', chain: '미사일·레이더·C4ISR',
-        semType: '전자전·전원공급장치', semTypeEn: '전자전·전원공급장치',
-        products: '전자전·전원공급장치 — 미사일·레이더·C4ISR', productsEn: '전자전·전원공급장치 — missiles, radar and C4ISR',
-        revenue: '0.10조원', mcapWon: 102202957395, per: 22.5, pbr: 1.64, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_huneedtechnologies', name: '휴니드', nameEn: 'HuneedTechnologies', ticker: '005870', market: 'KOSPI', chain: '항공기·엔진·MRO',
-        semType: '전술통신·항공전자', semTypeEn: '전술통신·항공전자',
-        products: '전술통신·항공전자 — 항공기·엔진·MRO', productsEn: '전술통신·항공전자 — aircraft, engines and MRO',
-        revenue: '0.08조원', mcapWon: 79049684000, per: null, pbr: 0.45, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_hanilforgingindustrial', name: '한일단조', nameEn: 'HanilForgingIndustrial', ticker: '024740', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산 단조·특수금속', semTypeEn: 'Defense Forging & Specialty Metals',
-        products: '무기·항공용 단조품·특수금속 부품', productsEn: 'Forged and specialty metal parts for weapons and aviation',
-        revenue: '0.08조원', mcapWon: 76650124170, per: 51.78, pbr: 0.55, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_cots_technology_co_ltd', name: '코츠테크놀로지', nameEn: 'COTS Technology Co., Ltd.', ticker: '448710', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산 전자·테스트', semTypeEn: 'Defense Electronics & Test',
-        products: '방산 전자·RF·테스트·계측 솔루션', productsEn: 'Defense electronics, RF and test/measurement solutions',
-        revenue: '0.07조원', mcapWon: 72514206240, per: 8.43, pbr: 1.16, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_wave_electronics_co_ltd', name: '웨이브일렉트로', nameEn: 'Wave Electronics Co., Ltd.', ticker: '095270', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산 통신·RF', semTypeEn: '방산 통신·RF',
-        products: '방산 통신·RF — 방위·항공우주', productsEn: '방산 통신·RF — 방산 통신·RF defense and aerospace',
-        revenue: '0.06조원', mcapWon: 60364105200, per: 36.21, pbr: 0.99, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_kishin_corporation', name: '기신정기', nameEn: 'KISHIN CORPORATION', ticker: '092440', market: 'KOSPI', chain: '육상무기·차량·탄약',
-        semType: '통신·방산 장비', semTypeEn: '통신·방산 장비',
-        products: '통신·방산 장비 — 방위·항공우주', productsEn: '통신·방산 장비 — 통신·방산 장비 defense and aerospace',
-        revenue: '0.06조원', mcapWon: 57202800000, per: 18.31, pbr: 0.23, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_formetal_co_ltd', name: '포메탈', nameEn: 'FORMETAL CO., LTD', ticker: '119500', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산 금속·정밀가공', semTypeEn: 'Defense Metal Processing',
-        products: '방산·항공용 금속 가공·정밀 부품', productsEn: 'Precision metal parts for defense and aerospace',
-        revenue: '0.04조원', mcapWon: 35719404480, per: 16.57, pbr: 0.7, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_speco', name: '스페코', nameEn: 'Speco', ticker: '013810', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산·산업 플랜트', semTypeEn: 'Defense & Industrial Plants',
-        products: '방산·화학·산업 플랜트 EPC·설비', productsEn: 'EPC and equipment for defense, chemical and industrial plants',
-        revenue: '0.03조원', mcapWon: 28079880520, per: null, pbr: 0.63, revTier: 1, partners: []
       }
 
     ];

@@ -6,6 +6,7 @@ import { getCachedNaverQuotes } from './naver_quote_store.mjs';
 import { getAuthKey, fetchHubSectorMcapSnapshots } from './krx_yoy.mjs';
 import { buildKrxRsSnapshot } from './krx_rs.mjs';
 import { krxSessionInfo } from './krx_session.mjs';
+import { passesMcapFloor } from '../../lib/mcap_policy.mjs';
 
 export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
 
@@ -129,6 +130,7 @@ function flattenCompanies(hubIndex) {
     if (!block || !block.companies) continue;
     const mapPath = block.meta && block.meta.map ? block.meta.map : 'index.html';
     for (const c of block.companies) {
+      if (!passesMcapFloor(c)) continue;
       out.push({
         ticker: c.ticker,
         name: c.name || '',
