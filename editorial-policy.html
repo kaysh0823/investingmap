@@ -138,6 +138,13 @@
       <li>DART 전자공시·사업보고서 (투자 판단 전 사용자 확인 권장)</li>
       <li>네이버 금융 USD/KRW (영문 시총 환산 참고)</li>
     </ul>
+    <h2>데이터 편집 원칙</h2>
+    <ul>
+      <li><strong>시총 하한</strong>: KRX 기준 시가총액 <strong>3천억원(300,000,000,000원) 미만</strong> KOSPI·KOSDAQ 상장사는 산업 지도, 허브 기업 목록, Top10·RS Top10 집계 대상에서 제외합니다.</li>
+      <li>하한은 빌드 시 <code>lib/mcap_policy.mjs</code>의 <code>MIN_MCAP_WON</code>과 <code>scripts/filter_mcap_floor.mjs</code>로 지도·허브 인덱스에 반영됩니다.</li>
+      <li>영업일 시세 갱신 후 시총이 하한 아래로 내려가면 기업 표에서도 해당 행을 숨길 수 있습니다.</li>
+      <li>산업 분류(cp_list)에 새 종목을 넣을 때도 동일한 시총 하한을 적용합니다.</li>
+    </ul>
     <h2>갱신·검증 주기는 어떻게 되나요?</h2>
     <p>정량 데이터는 CSV 갱신 시 페이지 기준일을 업데이트합니다. 시세 필드는 영업일 /api/quotes 갱신을 따릅니다. 핵심 페이지는 연 1회 이상 출처·분류·면책 문구를 재검토합니다.</p>
     <h2>투자 권유에 해당하나요?</h2>
@@ -154,6 +161,13 @@
       <li>KRX market data (data/ CSV series)</li>
       <li>DART electronic disclosures (users should confirm before investing)</li>
       <li>Naver Finance USD/KRW for English market-cap conversion</li>
+    </ul>
+    <h2>Data editing principles</h2>
+    <ul>
+      <li><strong>Market-cap floor</strong>: KOSPI and KOSDAQ listings below <strong>KRW 300 billion</strong> (300,000,000,000 won) on KRX market cap are excluded from industry maps, the hub company list, and Top 10 / RS Top 10 rankings.</li>
+      <li>The floor is applied at build time via <code>lib/mcap_policy.mjs</code> (<code>MIN_MCAP_WON</code>) and <code>scripts/filter_mcap_floor.mjs</code>.</li>
+      <li>After live quote updates, rows may be hidden if market cap falls below the floor.</li>
+      <li>New tickers added to industry lists (cp_list) must meet the same floor.</li>
     </ul>
     <h2>Update and review cadence</h2>
     <p>Quantitative fields update when CSVs refresh and the on-page as-of date changes. Quote fields follow /api/quotes on trading days. Core pages undergo source and disclaimer review at least annually.</p>

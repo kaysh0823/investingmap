@@ -1,5 +1,5 @@
 /**
- * Remove companies below MIN_MCAP_WON (5천억원) from industry maps and bio inline data.
+ * Remove companies below MIN_MCAP_WON (3천억원) from industry maps and bio inline data.
  */
 import fs from 'fs';
 import path from 'path';
@@ -117,7 +117,7 @@ function patchIndexHubCounts(hubLines) {
 }
 
 function main() {
-  console.log(`Applying market-cap floor: ${MIN_MCAP_WON.toLocaleString('ko-KR')} won (5천억원)`);
+  console.log(`Applying market-cap floor: ${MIN_MCAP_WON.toLocaleString('ko-KR')} won (3천억원)`);
   const counts = {};
   for (const rel of HTML_MAPS) {
     const key = rel.split('/')[0];

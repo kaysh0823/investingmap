@@ -4,6 +4,7 @@
 (function (global) {
   'use strict';
 
+  var MIN_MCAP_WON = 300000000000;
   var JO = 1e12;
   var EOK_100 = 1e10; // 0.01 jo = 100억원
 
@@ -29,12 +30,12 @@
     fmtMcapKoJo: fmtMcapKoJo,
     isWholeJoMcap: isWholeJoMcap,
     shouldApplyLiveMcap: shouldApplyLiveMcap,
-    MIN_MCAP_WON: 500000000000,
+    MIN_MCAP_WON: MIN_MCAP_WON,
     passesMcapFloor: function (c) {
       if (!c) return false;
       var mcap = c.mcapWon;
       if (mcap == null || !Number.isFinite(Number(mcap)) || Number(mcap) <= 0) return false;
-      return Number(mcap) >= 500000000000;
+      return Number(mcap) >= MIN_MCAP_WON;
     },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

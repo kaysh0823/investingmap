@@ -163,6 +163,10 @@ const FAQS_KO = [
     a: 'Investing Map은 KOSPI·KOSDAQ 상장사를 산업별로 분류한 인터랙티브 지도입니다. 각 페이지에서 KRX 기준 시가총액·PER·PBR, 밸류체인 태그, 정렬·필터 가능한 기업 표, 관계형 그래프를 한국어·영어로 볼 수 있습니다.',
   },
   {
+    q: '어떤 종목이 지도·허브에 포함되나요?',
+    a: 'KOSPI·KOSDAQ 상장사 중 KRX 기준 시가총액 3천억원(300,000,000,000원) 이상이며, 해당 산업 cp_list·편집 분류에 포함된 종목만 산업 지도·허브·Top10에 노출됩니다. 자세한 편집 원칙은 편집·검증 정책 페이지를 참고하세요.',
+  },
+  {
     q: '시가총액·PER·PBR 데이터는 어디서 가져오나요?',
     a: '시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일(예: 2026년 6월 15일)에 맞춥니다. PER·PBR도 동일 CSV 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 KRX OPEN API·네이버 시세 캐시로 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다.',
   },
@@ -183,6 +187,7 @@ const FAQS_KO = [
 const FAQS_EN = FAQS_KO.map((f, i) => ({
   q: [
     'What does Investing Map provide?',
+    'Which stocks appear on maps and the hub?',
     'Where do market cap, PER, and PBR come from?',
     'How is English market cap converted?',
     'Are relationship graphs official filing data?',
@@ -190,6 +195,7 @@ const FAQS_EN = FAQS_KO.map((f, i) => ({
   ][i],
   a: [
     'Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed names. Each page shows KRX-based market cap, PER, PBR, value-chain tags, a sortable company table, and a relationship graph in Korean and English.',
+    'Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 300 billion (300,000,000,000 won) that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.',
     'Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page (e.g. 15 June 2026). Last price and 52-week high/low refresh via /api/quotes (KRX OPEN API and Naver cache) and may show — when delayed or closed.',
     'English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot stored in data/fx_usdkrw.json from Naver Finance.',
     'Graph edges for customers, peers, and keywords are editorial reference networks from public information—not a substitute for DART filings or annual reports.',
@@ -215,6 +221,13 @@ const pages = [
       <li>DART 전자공시·사업보고서 (투자 판단 전 사용자 확인 권장)</li>
       <li>네이버 금융 USD/KRW (영문 시총 환산 참고)</li>
     </ul>
+    <h2>데이터 편집 원칙</h2>
+    <ul>
+      <li><strong>시총 하한</strong>: KRX 기준 시가총액 <strong>3천억원(300,000,000,000원) 미만</strong> KOSPI·KOSDAQ 상장사는 산업 지도, 허브 기업 목록, Top10·RS Top10 집계 대상에서 제외합니다.</li>
+      <li>하한은 빌드 시 <code>lib/mcap_policy.mjs</code>의 <code>MIN_MCAP_WON</code>과 <code>scripts/filter_mcap_floor.mjs</code>로 지도·허브 인덱스에 반영됩니다.</li>
+      <li>영업일 시세 갱신 후 시총이 하한 아래로 내려가면 기업 표에서도 해당 행을 숨길 수 있습니다.</li>
+      <li>산업 분류(cp_list)에 새 종목을 넣을 때도 동일한 시총 하한을 적용합니다.</li>
+    </ul>
     <h2>갱신·검증 주기는 어떻게 되나요?</h2>
     <p>정량 데이터는 CSV 갱신 시 페이지 기준일을 업데이트합니다. 시세 필드는 영업일 /api/quotes 갱신을 따릅니다. 핵심 페이지는 연 1회 이상 출처·분류·면책 문구를 재검토합니다.</p>
     <h2>투자 권유에 해당하나요?</h2>
@@ -229,6 +242,13 @@ const pages = [
       <li>KRX market data (data/ CSV series)</li>
       <li>DART electronic disclosures (users should confirm before investing)</li>
       <li>Naver Finance USD/KRW for English market-cap conversion</li>
+    </ul>
+    <h2>Data editing principles</h2>
+    <ul>
+      <li><strong>Market-cap floor</strong>: KOSPI and KOSDAQ listings below <strong>KRW 300 billion</strong> (300,000,000,000 won) on KRX market cap are excluded from industry maps, the hub company list, and Top 10 / RS Top 10 rankings.</li>
+      <li>The floor is applied at build time via <code>lib/mcap_policy.mjs</code> (<code>MIN_MCAP_WON</code>) and <code>scripts/filter_mcap_floor.mjs</code>.</li>
+      <li>After live quote updates, rows may be hidden if market cap falls below the floor.</li>
+      <li>New tickers added to industry lists (cp_list) must meet the same floor.</li>
     </ul>
     <h2>Update and review cadence</h2>
     <p>Quantitative fields update when CSVs refresh and the on-page as-of date changes. Quote fields follow /api/quotes on trading days. Core pages undergo source and disclaimer review at least annually.</p>
