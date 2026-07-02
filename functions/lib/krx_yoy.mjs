@@ -129,9 +129,21 @@ async function fetchMcapMapForDate(authKey, basDd) {
   return mcapMapFromMarketDay(byCode);
 }
 
-async function fetchMcapMapWithFallback(authKey, dates, minSize) {
+const MCAP_FALLBACK_WINDOW = 5;
+
+function orderMcapDates(dates, hintDd) {
+  const ordered = [];
+  if (hintDd) ordered.push(hintDd);
+  for (const d of dates) {
+    if (!ordered.includes(d)) ordered.push(d);
+  }
+  return ordered;
+}
+
+async function fetchMcapMapWithFallback(authKey, dates, minSize, hintDd) {
   const min = minSize || 20;
-  for (const basDd of dates) {
+  const slice = dates.slice(0, MCAP_FALLBACK_WINDOW);
+  for (const basDd of orderMcapDates(slice, hintDd)) {
     try {
       const mcap = await fetchMcapMapForDate(authKey, basDd);
       if (mcap.size >= min) return { mcap, basDd };
@@ -172,7 +184,7 @@ let mcapSnapshotsCache = null;
 const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
 
 /**
- * Recent + requested past mcap maps (sequential KRX calls, cached 6h, merge partial fetches).
+ * Recent + requested past mcap maps (parallel KRX day fetches, cached 6h, merge partial fetches).
  * @param {string} authKey
  * @param {{ horizons?: string[] }} [opts] — default all: 1m, 3m, 6m, 1y
  */
@@ -190,13 +202,15 @@ export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
   }
 
   const dates = tradingDates(HIST_TRADING_DAYS);
-  const window = 12;
+  const tasks = [];
 
   if (!snapshots.mcapNow || snapshots.mcapNow.size < 20) {
-    const recent = await fetchMcapMapWithFallback(authKey, dates.slice(0, window));
-    if (!recent.mcap.size) return null;
-    snapshots.mcapNow = recent.mcap;
-    snapshots.recentDd = recent.basDd;
+    tasks.push({
+      mcapKey: 'mcapNow',
+      ddKey: 'recentDd',
+      dates: dates.slice(0, MCAP_FALLBACK_WINDOW),
+      hint: snapshots.recentDd,
+    });
   }
 
   for (const h of horizons) {
@@ -205,10 +219,27 @@ export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
     const [mcapKey, ddKey, tradingDays] = def;
     if (pastMapReady(snapshots, mcapKey)) continue;
     const idx = Math.min(tradingDays - 1, dates.length - 1);
-    const past = await fetchMcapMapWithFallback(authKey, dates.slice(idx, idx + window));
-    snapshots[mcapKey] = past.mcap;
-    snapshots[ddKey] = past.basDd;
+    tasks.push({
+      mcapKey,
+      ddKey,
+      dates: dates.slice(idx, idx + MCAP_FALLBACK_WINDOW),
+      hint: snapshots[ddKey],
+    });
   }
+
+  if (tasks.length) {
+    const results = await Promise.all(
+      tasks.map((t) => fetchMcapMapWithFallback(authKey, t.dates, 20, t.hint)),
+    );
+    for (let i = 0; i < tasks.length; i++) {
+      const t = tasks[i];
+      const past = results[i];
+      snapshots[t.mcapKey] = past.mcap;
+      snapshots[t.ddKey] = past.basDd;
+    }
+  }
+
+  if (!snapshots.mcapNow || snapshots.mcapNow.size < 20) return null;
 
   if (snapshots.mcapNow && snapshots.mcapNow.size >= 20) {
     mcapSnapshotsCache = { t: now, snapshots: { ...snapshots } };

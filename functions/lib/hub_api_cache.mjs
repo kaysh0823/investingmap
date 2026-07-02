@@ -28,6 +28,34 @@ export function putHubCache(context, cachePath, origin, response) {
   }
 }
 
+/** Long-lived edge copy for stale-while-revalidate on cold KRX misses. */
+export function putHubStaleCache(context, cachePath, origin, body, extraHeaders = {}) {
+  try {
+    const cache = caches.default;
+    const cacheReq = new Request(new URL(cachePath, origin).toString());
+    const staleRes = new Response(body, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
+        ...extraHeaders,
+      },
+    });
+    context.waitUntil(cache.put(cacheReq, staleRes));
+  } catch {
+    /* ignore */
+  }
+}
+
+export async function readHubCacheJson(cachePath, origin) {
+  const hit = await readHubCache(cachePath, origin);
+  if (!hit) return null;
+  try {
+    return await hit.json();
+  } catch {
+    return null;
+  }
+}
+
 export const HORIZON_RET_KEY = {
   '1m': 'return1mPct',
   '3m': 'return3mPct',

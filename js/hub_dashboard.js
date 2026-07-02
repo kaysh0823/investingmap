@@ -16,7 +16,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v8';
+  var SWR_KEY = 'im-hub-dashboard-v9';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null };
@@ -188,6 +188,15 @@
     document.head.appendChild(el);
   }
 
+  function loadHubSectorReturns() {
+    return fetch('data/hub_sector_returns.json', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (j && j.sectors) mergeSectorsPayload(j, { onlyMissing: true });
+      })
+      .catch(function () {});
+  }
+
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
     return fetch('data/hub_index.json', { cache: 'no-store' })
@@ -212,7 +221,7 @@
     var base = custom ? custom.replace(/\/+$/, '') : (hubApiEnabled() ? '' : '');
     if (!base && !hubApiEnabled()) return '';
     var sep = path.indexOf('?') >= 0 ? '&' : '?';
-    var bust = sep + '_v=5';
+    var bust = sep + '_v=6';
     return (base || '') + path + bust;
   }
 
@@ -418,8 +427,9 @@
     });
   }
 
-  function mergeSectorsPayload(j) {
+  function mergeSectorsPayload(j, opts) {
     if (!j || j.error) return;
+    var onlyMissing = opts && opts.onlyMissing;
     var incoming = j.sectors || {};
     var base = dashboardData.sectors || {};
     var keys = ['return1mPct', 'return3mPct', 'return6mPct', 'yoyReturnPct', 'mcapWon', 'weightPct', 'listingCount'];
@@ -430,6 +440,7 @@
       var tgt = base[sid];
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i];
+        if (onlyMissing && tgt[k] != null && isFinite(tgt[k])) continue;
         if (inc[k] != null) tgt[k] = inc[k];
       }
     }
@@ -509,7 +520,7 @@
     var statusWrap = document.getElementById('hub-pulse-status');
     if (statusWrap) {
       var parts = [];
-      if (sectorsLoadingHorizon) {
+      if (sectorsLoadingHorizon && !hasHorizonData(sectorsLoadingHorizon)) {
         parts.push('<span class="hub-pulse-loading-badge">' + labels.pulseStatusLoading + '</span>');
       }
       if (dashboardData && dashboardData.regularSession === true) {
@@ -726,8 +737,9 @@
       });
   }
 
-  function fetchDashboardAndRender(lang) {
-    return Promise.all([fetchSectors(lang), fetchTop10(lang), fetchRsTop10(lang)]).then(function () {
+  function fetchDashboardAndRender(lang, sectorPromise) {
+    var sectors = sectorPromise || fetchSectors(lang);
+    return Promise.all([sectors, fetchTop10(lang), fetchRsTop10(lang)]).then(function () {
       if (pulseHorizonKey !== 'return1mPct' && !hasHorizonData(pulseHorizonKey)) {
         return fetchSectorsHorizon(lang, pulseHorizonKey);
       }
@@ -743,27 +755,26 @@
     injectStyles();
     lang = pageLang(lang);
     readPulseHorizon();
-    Promise.all([loadHubIndex(), loadFx()])
+    var swr = readSwr();
+    if (swr) {
+      dashboardData.sectors = swr.sectors || {};
+      dashboardData.top10 = swr.top10 || [];
+      dashboardData.rsTop10 = swr.rsTop10 || [];
+      dashboardData.regularSession = swr.regularSession;
+    }
+    var liveSector1m = fetchSectorsHorizon(lang, 'return1mPct');
+    Promise.all([loadHubIndex(), loadFx(), loadHubSectorReturns()])
       .then(function () {
-        var swr = readSwr();
-        if (swr) {
-          dashboardData.sectors = swr.sectors || {};
-          dashboardData.top10 = swr.top10 || [];
-          dashboardData.rsTop10 = swr.rsTop10 || [];
-          dashboardData.regularSession = swr.regularSession;
-        }
         renderLabels(lang);
         enhanceCards(lang);
         renderPulse(lang);
         renderTop10(lang);
         renderRsTop10(lang);
-        sectorsLoadingHorizon = 'return1mPct';
         top10Loading = true;
         rsTop10Loading = true;
-        renderPulse(lang);
         renderTop10(lang);
         renderRsTop10(lang);
-        return fetchDashboardAndRender(lang);
+        return fetchDashboardAndRender(lang, liveSector1m);
       })
       .catch(function (err) {
         if (typeof console !== 'undefined' && console.warn) {
