@@ -12,6 +12,7 @@
     { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC704', en: 'Defense' },
     { id: 'robot', path: 'robot/korea_robot_map.html', icon: '\uD83E\uDD16', ko: '\uB85C\uBD07', en: 'Robot' },
     { id: 'energy', path: 'energy/korea_energy_map.html', icon: '\u26A1', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
+    { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', en: 'Power' },
     { id: 'kculture', path: 'kculture/korea_kculture_map.html', icon: '\uD83C\uDFAC', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },
   ];
 
@@ -30,7 +31,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(semiconductor|bio|ship|defense|robot|energy|kculture)\//i.test(path)) return '../';
+    if (/\/(semiconductor|bio|ship|defense|robot|energy|powergrid|kculture)\//i.test(path)) return '../';
     return '';
   }
 
@@ -42,6 +43,7 @@
     if (path.indexOf('/defense/') !== -1) return 'defense';
     if (path.indexOf('/robot/') !== -1) return 'robot';
     if (path.indexOf('/energy/') !== -1) return 'energy';
+    if (path.indexOf('/powergrid/') !== -1) return 'powergrid';
     if (path.indexOf('/kculture/') !== -1) return 'kculture';
     if (path === '/' || /\/index\.html$/.test(path)) return 'home';
     return '';

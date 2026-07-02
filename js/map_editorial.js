@@ -93,30 +93,46 @@
     energy: {
       ko: {
         paragraphs: [
-          '신재생, 2차전지·ESS, 태양광·풍력, 원자력·발전설비, 수소·연료전지, 전력·가스 유틸리티까지 에너지·파워플랜트 밸류체인 전반의 상장사를 다룹니다. 배터리 셀·소재·전력기기·EPC·발전사가 한 지도에서 연결되어 정책·원자재·전력 수요 변화의 수혜 축을 비교할 수 있습니다.',
-          '2차전지는 전기차·ESS 수요와 원자재(리튬·니켈) 가격, 전력기기는 북미·중동 송전 투자 사이클의 영향을 받습니다. 원자력·가스·유틸리티는 규제와 요금 체계가 밸류에이션에 큰 변수입니다. 각 기업의 세부 유형·제품 열에서 사업 mix를 확인하세요.',
-          '에너지 전환 정책은 빠르게 변합니다. 최신 사업보고서와 산업부·전력거래소 자료로 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>에서 갱신 주기를 확인하세요.',
+          '2차전지·ESS·배터리·태양광·풍력 밸류체인에 속한 상장사를 다룹니다. 셀·소재·모듈·풍력 타워·태양광 EPC 등 신재생·배터리 수요 축을 한 지도에서 비교할 수 있습니다.',
+          '2차전지는 전기차·ESS 수요와 원자재(리튬·니켈) 가격에 민감합니다. 태양광·풍력은 정책·PPA·설비 투자 사이클의 영향을 받습니다. 각 기업의 세부 유형·제품 열에서 사업 mix를 확인하세요.',
+          '에너지 전환 정책은 빠르게 변합니다. 최신 사업보고서와 산업부 자료로 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>에서 갱신 주기를 확인하세요.',
         ],
       },
       en: {
         paragraphs: [
-          'Covers listed companies across the energy and power-plant value chain—renewables, batteries and ESS, solar and wind, nuclear and power equipment, hydrogen and fuel cells, and power and gas utilities. Battery cells, materials, grid gear, EPC, and generators are linked on one map so you can compare who benefits from policy, commodity, and power-demand shifts.',
-          'Batteries track EV and ESS demand and commodity prices (lithium, nickel); power equipment follows grid-investment cycles in North America and the Middle East. Nuclear, gas, and utilities are heavily driven by regulation and tariff frameworks. Check business mix in each company’s segment and product columns.',
-          'Energy-transition policy changes quickly. Cross-check latest annual reports and Ministry of Trade, Industry and Energy and Korea Power Exchange data; see update cadence in our <a href="../editorial-policy.html">editorial policy</a>.',
+          'Covers listed companies across lithium-ion batteries, ESS, solar PV, and wind power. Compare cells, materials, modules, and wind-tower names on one map.',
+          'Batteries track EV and ESS demand and commodity prices (lithium, nickel); solar and wind follow policy and project-investment cycles. Check business mix in each company’s segment and product columns.',
+          'Energy-transition policy changes quickly. Cross-check latest annual reports and Ministry data; see update cadence in our <a href="../editorial-policy.html">editorial policy</a>.',
+        ],
+      },
+    },
+    powergrid: {
+      ko: {
+        paragraphs: [
+          '전력설비·송배전·발전설비 밸류체인에 속한 상장사를 다룹니다. 변압기·개폐기·케이블·발전 EPC·원전 기자재·전력·가스 유틸리티가 한 지도에서 연결됩니다.',
+          '전력기기는 북미·중동 송전 투자 사이클과 전력 수요에 민감합니다. 발전·원전은 규제와 수주가 밸류에이션에 큰 변수입니다. 표의 세부 유형·제품 열에서 사업 mix를 확인하세요.',
+          '전력 정책·요금 체계는 빠르게 변합니다. 공시와 한국전력거래소 자료로 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.',
+        ],
+      },
+      en: {
+        paragraphs: [
+          'Covers listed companies in power equipment, transmission & distribution, and generation OEM—including transformers, switchgear, cables, EPC, and utilities.',
+          'Grid gear tracks transmission-investment cycles; generation and nuclear names are driven by regulation and order books. Check segment and product columns for business mix.',
+          'Power policy and tariff frameworks change quickly. Cross-check filings and Korea Power Exchange data; see our <a href="../editorial-policy.html">editorial policy</a>.',
         ],
       },
     },
     kculture: {
       ko: {
         paragraphs: [
-          '라면·가공식품, 여행·항공, 화장품·뷰티, 드라마·웹툰·플랫폼, K-pop 엔터 등 K컬처 수출 테마별 상장사를 묶습니다. 불닭볶음면, BTS, K드라마 같은 키워드 중심 글로벌 수요와 연결된 종목을 찾을 때 출발점으로 쓸 수 있습니다.',
+          '라면·가공식품, 여행·항공, 화장품·뷰티, 게임, 패션, 쇼핑·유통, 드라마·웹툰·플랫폼, K-pop 엔터 등 K컬처 수출 테마별 상장사를 묶습니다. 불닭볶음면, BTS, K드라마 같은 키워드 중심 글로벌 수요와 연결된 종목을 찾을 때 출발점으로 쓸 수 있습니다.',
           'K컬처주는 환율, 중국·동남아 규제, 플랫폼 효과, 아티스트 이슈 등 비재무 요인이 크습니다. 표의 재무 지표는 참고용이며, 엔터·식품·화장품은 계절성·일회성 이벤트가 실적에 영향을 줄 수 있습니다. 그래프의 글로벌 링크는 수출·동종업종 등 예시입니다.',
           '투자 유의 사항은 <a href="../disclaimer.html">면책 고지</a>, 사이트 소개는 <a href="../about.html">소개</a> 페이지를 참고하세요.',
         ],
       },
       en: {
         paragraphs: [
-          'Listed names are grouped by K-culture export themes—ramen and packaged food, travel and airlines, cosmetics and beauty, drama, webtoon and platforms, and K-pop labels. Use it as a starting point when exploring names tied to global demand around keywords such as Buldak ramen, BTS, or K-drama.',
+          'Listed names are grouped by K-culture export themes—ramen and packaged food, travel and airlines, cosmetics and beauty, games, fashion, retail, drama and webtoon platforms, and K-pop labels. Use it as a starting point when exploring names tied to global demand around keywords such as Buldak ramen, BTS, or K-drama.',
           'K-culture stocks are driven heavily by non-financial factors—FX, China and Southeast Asia regulation, platform effects, and artist news. Table metrics are for reference; entertainment, food, and beauty names can see earnings swings from seasonality and one-off events. Global links in the graph illustrate exports and peer-group examples.',
           'For investment cautions see our <a href="../disclaimer.html">disclaimer</a>; for site overview see <a href="../about.html">about</a>.',
         ],

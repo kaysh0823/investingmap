@@ -1,5 +1,5 @@
 /**
- * Merges cp_list/*.md universe into all seven industry map pages.
+ * Merges cp_list/*.md universe into all eight industry map pages.
  * Preserves existing company metadata; adds new KRX-listed tickers with stub fields.
  *
  * Usage: node scripts/apply_cp_list_to_maps.mjs [cp_list_dir]
@@ -161,6 +161,13 @@ const HTML_MAPS = [
     badgeEn: 'listings',
   },
   {
+    key: 'powergrid',
+    path: 'powergrid/korea_powergrid_map.html',
+    idPrefix: 'powergrid',
+    badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
+    badgeEn: 'listings',
+  },
+  {
     key: 'kculture',
     path: 'kculture/korea_kculture_map.html',
     idPrefix: 'kc',
@@ -314,6 +321,7 @@ function main() {
     defense: results.defense?.after,
     robot: results.robot?.after,
     energy: results.energy?.after,
+    powergrid: results.powergrid?.after,
     kculture: results.kculture?.after,
   };
 
@@ -340,6 +348,10 @@ function main() {
   if (hubLines.energy) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 2차전지/, `${hubLines.energy}개 상장사 · 2차전지`);
     indexHtml = indexHtml.replace(/\d+ listings · batteries/, `${hubLines.energy} listings · batteries`);
+  }
+  if (hubLines.powergrid) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 전력설비/, `${hubLines.powergrid}개 상장사 · 전력설비`);
+    indexHtml = indexHtml.replace(/\d+ listings · power equipment/, `${hubLines.powergrid} listings · power equipment`);
   }
   if (hubLines.kculture) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 식품/, `${hubLines.kculture}개 상장사 · 식품`);

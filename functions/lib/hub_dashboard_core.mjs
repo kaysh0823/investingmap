@@ -12,7 +12,7 @@ import { calcQuotePosition } from '../../lib/quote_position.mjs';
 
 export { calcQuotePosition };
 
-export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
+export const SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kculture', 'bio', 'robot'];
 
 const QUOTE_CONCURRENCY = 24;
 

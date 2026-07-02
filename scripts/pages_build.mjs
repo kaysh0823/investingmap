@@ -31,6 +31,7 @@ const ROOT_DIRS = [
   'ship',
   'defense',
   'energy',
+  'powergrid',
   'kculture',
 ];
 

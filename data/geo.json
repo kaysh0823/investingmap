@@ -87,18 +87,26 @@
     },
     "energy": {
       "path": "/energy/korea_energy_map.html",
-      "title": { "ko": "한국 에너지/파워플랜트 투자 지도", "en": "Korea Energy & Power Plant Map" },
+      "title": { "ko": "한국 에너지 투자 지도", "en": "Korea Energy Map" },
       "summary": {
-        "ko": "신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 관련 상장사와 글로벌 참고 관계를 정리합니다.",
-        "en": "Listed Korean energy and power-plant names across renewables, batteries, nuclear, grid equipment, ESS, hydrogen, and utilities with global reference links."
+        "ko": "2차전지·ESS·배터리·태양광·풍력 관련 상장사와 글로벌 참고 관계를 정리합니다.",
+        "en": "Listed Korean battery, ESS, solar, and wind names with global reference links."
+      }
+    },
+    "powergrid": {
+      "path": "/powergrid/korea_powergrid_map.html",
+      "title": { "ko": "한국 전력설비 투자 지도", "en": "Korea Power Grid Equipment Map" },
+      "summary": {
+        "ko": "전력설비·송배전·발전설비 관련 상장사와 글로벌 참고 관계를 정리합니다.",
+        "en": "Listed Korean power equipment, T&D, and generation OEM names with global reference links."
       }
     },
     "kculture": {
       "path": "/kculture/korea_kculture_map.html",
       "title": { "ko": "한국 K컬처 산업 투자 지도", "en": "Korea K-Culture Industry Map" },
       "summary": {
-        "ko": "라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
-        "en": "KRX data and keyword-driven global link examples for listed Korean names in ramen/food, travel, beauty, drama/webtoon/media, and K-pop."
+        "ko": "라면·식품, 여행·레저, 화장품, 게임, 패션, 쇼핑·유통, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
+        "en": "KRX data and keyword-driven global link examples for listed Korean names in ramen/food, travel, beauty, games, fashion, retail, drama/webtoon/media, and K-pop."
       }
     }
   }

@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
+  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kculture', 'bio', 'robot'];
   var PULSE_HORIZONS = [
     { retKey: 'return1mPct', labelKey: 'pulseRow1m' },
     { retKey: 'return3mPct', labelKey: 'pulseRow3m' },
@@ -32,19 +32,21 @@
   var HUB_CARD_TAGS = {
     ko: {
       semi: ['설계', '파운드리', '메모리', '소재', '장비', '기판', '패키징'],
-      energy: ['신재생', '2차전지', '태양광', '풍력', '원자력', '전력기기', 'ESS', '수소', '연료전지', '전력·가스'],
+      energy: ['2차전지', 'ESS', '배터리', '태양광', '풍력'],
+      powergrid: ['변압기', '개폐기', '송배전', '케이블', '발전설비', '원자력'],
       ship: ['조선소', '엔진', '철강', '조선기자재', '해양', '해운', '방산 해양'],
       defense: ['군용 항공', '미사일·C4ISR', '육상무기', '해군·함정', '우주·위성', '민항'],
-      kculture: ['라면·식품', '여행·항공', '뷰티', '드라마·웹툰', '스트리밍 IP', 'K-pop'],
+      kculture: ['라면·식품', '여행·항공', '뷰티', '게임', '패션', '쇼핑·유통', '드라마·웹툰', 'K-pop'],
       bio: ['신약', 'CDMO', '바이오시밀러', '의료기기', '진단'],
       robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
     },
     en: {
       semi: ['Design', 'Foundry', 'Memory', 'Materials', 'Equipment', 'Substrates', 'Packaging'],
-      energy: ['Renewables', 'Batteries', 'Solar', 'Wind', 'Nuclear', 'Grid gear', 'ESS', 'Hydrogen', 'Fuel cells', 'Utilities'],
+      energy: ['Li-ion', 'ESS', 'Batteries', 'Solar', 'Wind'],
+      powergrid: ['Transformers', 'Switchgear', 'T&D', 'Cables', 'Generation', 'Nuclear'],
       ship: ['Yards', 'Engines', 'Steel', 'Marine equipment', 'Offshore', 'Shipping', 'Naval'],
       defense: ['Military aviation', 'Missiles & C4ISR', 'Land systems', 'Naval', 'Space & satellites', 'Civil aviation'],
-      kculture: ['Food', 'Travel & airlines', 'Beauty', 'Drama & webtoon', 'Streaming IP', 'K-pop'],
+      kculture: ['Food', 'Travel & airlines', 'Beauty', 'Games', 'Fashion', 'Retail', 'Drama & webtoon', 'K-pop'],
       bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
     },
@@ -147,7 +149,7 @@
       '.hub-pulse-tab{font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer;font-family:inherit;line-height:1.2;transition:border-color .15s,background .15s,color .15s}' +
       '.hub-pulse-tab:hover:not(.is-active){border-color:color-mix(in srgb,var(--text-muted) 50%,var(--border));color:var(--text)}' +
       '.hub-pulse-tab.is-active{background:color-mix(in srgb,var(--accent) 14%,var(--surface2));border-color:var(--accent);color:var(--accent)}' +
-      '.hub-pulse-cards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}' +
+      '.hub-pulse-cards{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}' +
       '.hub-pulse-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;min-width:0;transition:border-color .15s,box-shadow .15s}' +
       '.hub-pulse-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.12)}' +
       '.hub-pulse-card-sector{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.02em;line-height:1.2;word-break:keep-all}' +

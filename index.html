@@ -26,7 +26,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta name="description" content="Hub for seven Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks for semiconductor, bio, shipbuilding, defense, robotics, energy, and K-culture.">
+  <meta name="description" content="Hub for eight Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks for semiconductor, bio, shipbuilding, defense, robotics, energy, power grid equipment, and K-culture.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://investing-kr.com/">
   <link rel="alternate" hreflang="ko-KR" href="https://investing-kr.com/?lang=ko">
@@ -38,17 +38,17 @@
   <meta property="og:locale:alternate" content="ko_KR">
   <meta property="og:url" content="https://investing-kr.com/">
   <meta property="og:title" content="Investing Map — Korea industry maps hub">
-  <meta property="og:description" content="Hub for seven Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
+  <meta property="og:description" content="Hub for eight Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Investing Map — Korea industry maps hub">
-  <meta name="twitter:description" content="Hub for seven Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
+  <meta name="twitter:description" content="Hub for eight Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Investing Map",
     "url": "https://investing-kr.com/",
-    "description": "Interactive maps of Korean listed companies across semiconductor, bio, shipbuilding, defense, robotics, energy, and K-culture industries.",
+    "description": "Interactive maps of Korean listed companies across semiconductor, bio, shipbuilding, defense, robotics, energy, power grid equipment, and K-culture industries.",
     "inLanguage": ["ko", "en"]
   }
   </script>
@@ -871,7 +871,7 @@
       <h1 id="hdr-title">Investing Map</h1>
       <details class="hub-lead-details" id="hub-lead-details">
         <summary class="hub-lead-summary" id="hub-lead-summary">사이트 소개</summary>
-        <p id="hdr-subtitle">Hub for seven Korean industry maps: listed companies, value chains, KRX data, and relationship
+        <p id="hdr-subtitle">Hub for eight Korean industry maps: listed companies, value chains, KRX data, and relationship
           networks.</p>
       </details>
       <script>!function(){var d=document.getElementById('hub-lead-details');if(d&&matchMedia('(min-width:769px)').matches)d.open=!0}();</script>
@@ -910,14 +910,26 @@
       <a class="hub-card" id="hub-link-energy" href="energy/korea_energy_map.html">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">⚡</span>
-          <span class="hub-card-badge" id="card-energy-badge">116 LISTINGS</span>
+          <span class="hub-card-badge" id="card-energy-badge">64 LISTINGS</span>
         </div>
-        <h2 id="card-energy-title">한국 에너지/파워플랜트 투자 지도</h2>
-        <p class="hub-card-lead" id="card-energy-lead">신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계</p>
+        <h2 id="card-energy-title">한국 에너지 투자 지도</h2>
+        <p class="hub-card-lead" id="card-energy-lead">2차전지·ESS·배터리·태양광·풍력 밸류체인과 글로벌 장비·소재 참고 관계</p>
         <p class="hub-card-keyplayers" id="card-energy-keyplayers"></p>
         <div class="hub-card-tags" id="card-energy-tags"></div>
         <p class="hub-card-map" id="card-energy-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-energy-cta">Open map →</span>
+      </a>
+      <a class="hub-card" id="hub-link-powergrid" href="powergrid/korea_powergrid_map.html">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🔌</span>
+          <span class="hub-card-badge" id="card-powergrid-badge">17 LISTINGS</span>
+        </div>
+        <h2 id="card-powergrid-title">한국 전력설비 투자 지도</h2>
+        <p class="hub-card-lead" id="card-powergrid-lead">전력설비·송배전·발전설비 밸류체인과 글로벌 장비·EPC 참고 관계</p>
+        <p class="hub-card-keyplayers" id="card-powergrid-keyplayers"></p>
+        <div class="hub-card-tags" id="card-powergrid-tags"></div>
+        <p class="hub-card-map" id="card-powergrid-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-powergrid-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-ship" href="ship/korea_ship_map.html">
         <div class="hub-card-head">
@@ -1051,7 +1063,7 @@
     const T = {
       ko: {
         title: 'Investing Map',
-        subtitle: '반도체·바이오·조선·해양·방위/우주/항공·로봇/피지컬AI·에너지·K컬처 한국 산업 지도로, 상장사·밸류체인·KRX 데이터·관계 네트워크',
+        subtitle: '반도체·바이오·조선·해양·방위/우주/항공·로봇/피지컬AI·에너지·전력설비·K컬처 한국 산업 지도로, 상장사·밸류체인·KRX 데이터·관계 네트워크',
         langFlag: '🇺🇸',
         langText: 'English',
         cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
@@ -1060,11 +1072,12 @@
         shipMapLine: '35개 상장사 · 조선소·기자재·해운 · 수주·해외 yard 참고 링크',
         defenseMapLine: '28개 상장사 · 항공·미사일·육상·해군·우주 · 수출·프로그램 참고',
         robotMapLine: '26개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
-        energyMapLine: '82개 상장사 · 2차전지·신재생·원자력·전력기기 · ESS·유틸리티',
-        kcultureMapLine: '55개 상장사 · 식품·여행·뷰티·IP·K-pop · 글로벌 수출 테마',
+        energyMapLine: '64개 상장사 · 2차전지·ESS·배터리·태양광·풍력',
+        powergridMapLine: '17개 상장사 · 전력설비·송배전·발전설비',
+        kcultureMapLine: '57개 상장사 · 식품·여행·뷰티·게임·패션·유통·IP·K-pop',
         introTitle: '한국 상장사 산업 지도 허브',
         introLeadSummary: '사이트 소개',
-        introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 산업별로 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
+        introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 8개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
         introHMethod: '데이터·편집 원칙',
         introLi1: '정량 데이터(시총·PER·PBR·시세)는 KRX 등 공개 출처를 기준일에 맞춰 반영합니다.',
         introLi2: '벨류체인 분류·글로벌 거래처·peer 링크는 공시·보도를 바탕으로 작성한 참고 자료입니다.',
@@ -1093,16 +1106,19 @@
         kcultureTitle: '한국 K컬처 산업 투자 지도',
         kcultureLead: '라면·가공식품, 여행·항공·레저, 화장품, 드라마·웹툰·스트리밍 IP, K팝 레이블 등 상장 한국 주식과 글로벌 연계 예시',
         kcultureCta: '지도 열기 →',
-        energyTitle: '한국 에너지/파워플랜트 투자 지도',
-        energyLead: '신재생·2차전지·태양광·풍력·원자력·전력기기·ESS·수소·연료전지·전력·가스 등 에너지/파워플랜트 밸류체인과 글로벌 장비·소재 참고 관계',
+        energyTitle: '한국 에너지 투자 지도',
+        energyLead: '2차전지·ESS·배터리·태양광·풍력 밸류체인과 글로벌 장비·소재 참고 관계',
         energyCta: '지도 열기 →',
+        powergridTitle: '한국 전력설비 투자 지도',
+        powergridLead: '전력설비·송배전·발전설비 밸류체인과 글로벌 장비·EPC 참고 관계',
+        powergridCta: '지도 열기 →',
         foot: '각 지도 페이지에서 표·그래프·언어(한/영)·다크·라이트 테마를 사용할 수 있습니다.',
         overviewHeading: '산업 개요',
         copyright: '© 2026 Investing Map'
       },
       en: {
         title: 'Investing Map',
-        subtitle: 'Hub for seven Korean industry maps: listed companies, value chains, KRX data, and relationship networks.',
+        subtitle: 'Hub for eight Korean industry maps: listed companies, value chains, KRX data, and relationship networks.',
         langFlag: '🇰🇷',
         langText: '한국어',
         cardMapLine: 'Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.',
@@ -1111,11 +1127,12 @@
         shipMapLine: '35 listings · yards, marine equipment, shipping · order & yard reference links',
         defenseMapLine: '28 listings · aviation, missiles, land, naval, space · export program refs',
         robotMapLine: '26 listings · FA, AMR, cobots, motion · physical-AI links',
-        energyMapLine: '82 listings · batteries, renewables, nuclear, grid gear · ESS & utilities',
-        kcultureMapLine: '55 listings · food, travel, beauty, IP, K-pop · export theme links',
+        energyMapLine: '64 listings · batteries, ESS, solar, wind',
+        powergridMapLine: '17 listings · power equipment, T&D, generation',
+        kcultureMapLine: '57 listings · food, travel, beauty, games, fashion, retail, IP, K-pop',
         introTitle: 'Korea listed-equity industry map hub',
         introLeadSummary: 'About this site',
-        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ names through value-chain lenses. Seven sector maps combine sortable tables, market cap, PER, PBR, 52-week price position, and relationship graphs—each with sector-specific editorial guides and cited sources.',
+        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ names through value-chain lenses. Eight sector maps combine sortable tables, market cap, PER, PBR, 52-week price position, and relationship graphs—each with sector-specific editorial guides and cited sources.',
         introHMethod: 'Data & editorial principles',
         introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
         introLi2: 'Chain tags and global links are editorial reference networks from filings and public sources.',
@@ -1144,9 +1161,12 @@
         kcultureTitle: 'Korea K-Culture Industry Map',
         kcultureLead: 'Ramen and packaged food, travel and airlines, beauty, drama·webtoon·streaming IP, and K-pop labels—listed Korean equities with illustrative global links.',
         kcultureCta: 'Open map →',
-        energyTitle: 'Korea Energy & Power Plant Map',
-        energyLead: 'Renewables, batteries, solar, wind, nuclear, power equipment, ESS, hydrogen, fuel cells, and utilities—listed Korean energy & power-plant names with illustrative global links.',
+        energyTitle: 'Korea Energy Map',
+        energyLead: 'Lithium-ion batteries, ESS, solar, wind, and battery materials—listed Korean names with illustrative global links.',
         energyCta: 'Open map →',
+        powergridTitle: 'Korea Power Grid Equipment Map',
+        powergridLead: 'Power equipment, T&D, and generation OEM—transformers, cables, nuclear and gas turbines with global peer links.',
+        powergridCta: 'Open map →',
         foot: 'On each map: table & graph, Korean/English, and dark/light theme.',
         overviewHeading: 'Industry overview',
         copyright: '© 2026 Investing Map'
@@ -1205,6 +1225,7 @@
       document.getElementById('hub-link-robot').href = 'robot/korea_robot_map.html' + ql;
       document.getElementById('hub-link-kculture').href = 'kculture/korea_kculture_map.html' + ql;
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + ql;
+      document.getElementById('hub-link-powergrid').href = 'powergrid/korea_powergrid_map.html' + ql;
       document.getElementById('hdr-title').textContent = t.introTitle;
       document.getElementById('hdr-subtitle').textContent = t.introP1;
       var leadSummary = document.getElementById('hub-lead-summary');
@@ -1238,6 +1259,9 @@
       document.getElementById('card-energy-title').textContent = t.energyTitle;
       document.getElementById('card-energy-lead').textContent = t.energyLead;
       document.getElementById('card-energy-cta').textContent = t.energyCta;
+      document.getElementById('card-powergrid-title').textContent = t.powergridTitle;
+      document.getElementById('card-powergrid-lead').textContent = t.powergridLead;
+      document.getElementById('card-powergrid-cta').textContent = t.powergridCta;
       const qlNav = '?lang=' + encodeURIComponent(lang);
       document.getElementById('hub-principles-label').textContent = t.introHMethod;
       const li = document.getElementById('hub-intro-list');
