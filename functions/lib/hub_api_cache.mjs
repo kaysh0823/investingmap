@@ -28,9 +28,36 @@ export function putHubCache(context, cachePath, origin, response) {
   }
 }
 
+export const HORIZON_RET_KEY = {
+  '1m': 'return1mPct',
+  '3m': 'return3mPct',
+  '6m': 'return6mPct',
+  '1y': 'yoyReturnPct',
+};
+
+/** @param {string|null|undefined} h */
+export function normalizeSectorHorizon(h) {
+  const raw = String(h || '1m').trim().toLowerCase();
+  if (raw === '1m' || raw === 'return1mpct') return '1m';
+  if (raw === '3m' || raw === 'return3mpct') return '3m';
+  if (raw === '6m' || raw === 'return6mpct') return '6m';
+  if (raw === '1y' || raw === 'yoy' || raw === 'yoyreturnpct') return '1y';
+  return '1m';
+}
+
+export function hasSectorHorizon(sectors, horizon) {
+  if (!sectors || typeof sectors !== 'object') return false;
+  const retKey = HORIZON_RET_KEY[normalizeSectorHorizon(horizon)];
+  if (!retKey) return false;
+  return Object.values(sectors).some((s) => {
+    if (!s) return false;
+    return typeof s[retKey] === 'number' && Number.isFinite(s[retKey]);
+  });
+}
+
 export function hasSectorYoy(sectors) {
   if (!sectors || typeof sectors !== 'object') return false;
-  const keys = ['return1mPct', 'return3mPct', 'return6mPct', 'yoyReturnPct'];
+  const keys = Object.values(HORIZON_RET_KEY);
   return Object.values(sectors).some((s) => {
     if (!s) return false;
     return keys.every((k) => typeof s[k] === 'number' && Number.isFinite(s[k]));

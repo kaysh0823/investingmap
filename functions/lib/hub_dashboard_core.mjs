@@ -4,6 +4,7 @@
 
 import { getCachedNaverQuotes } from './naver_quote_store.mjs';
 import { getAuthKey, fetchHubSectorMcapSnapshots } from './krx_yoy.mjs';
+import { normalizeSectorHorizon } from './hub_api_cache.mjs';
 import { buildKrxRsSnapshot } from './krx_rs.mjs';
 import { krxSessionInfo } from './krx_session.mjs';
 import { passesMcapFloor } from '../../lib/mcap_policy.mjs';
@@ -209,15 +210,18 @@ function buildSectors(hubIndex, snapshots) {
  * @param {object} hubIndex — parsed data/hub_index.json
  * @param {object|null} env — Cloudflare env (KRX key)
  */
-export async function buildHubSectors(hubIndex, env) {
+export async function buildHubSectors(hubIndex, env, opts = {}) {
   const authKey = getAuthKey(env);
   const session = krxSessionInfo();
-  const snapshots = authKey ? await fetchHubSectorMcapSnapshots(authKey) : null;
+  const horizon = opts.horizon != null ? normalizeSectorHorizon(opts.horizon) : null;
+  const horizons = horizon ? [horizon] : ['1m', '3m', '6m', '1y'];
+  const snapshots = authKey ? await fetchHubSectorMcapSnapshots(authKey, { horizons }) : null;
 
   return {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
     regularSession: session.regular,
+    horizon: horizon || 'all',
     source: snapshots ? 'krx-mcap-ratio' : 'hub_index',
     krxConfigured: !!authKey,
     mcapRecentDd: snapshots ? snapshots.recentDd : null,

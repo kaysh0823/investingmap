@@ -8,12 +8,13 @@ import { getAuthKey } from '../lib/krx_yoy.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   corsHeaders,
-  hasSectorYoy,
+  hasSectorHorizon,
+  normalizeSectorHorizon,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_PATH = '/api/hub_sectors/cache/v3';
+const CACHE_VERSION = '/api/hub_sectors/cache/v4';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -28,6 +29,8 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const session = krxSessionInfo();
   const nocache = url.searchParams.get('nocache') === '1';
+  const horizon = normalizeSectorHorizon(url.searchParams.get('horizon'));
+  const CACHE_PATH = `${CACHE_VERSION}/${horizon}`;
 
   if (!nocache) {
     const hit = await readHubCache(CACHE_PATH, url.origin);
@@ -41,7 +44,7 @@ export async function onRequest(context) {
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubSectors(hubIndex, env);
+    const payload = await buildHubSectors(hubIndex, env, { horizon });
     const maxAge = session.regular ? 300 : 1800;
     const response = new Response(JSON.stringify(payload), {
       headers: {
@@ -49,9 +52,10 @@ export async function onRequest(context) {
         'Content-Type': 'application/json; charset=utf-8',
         'Cache-Control': `public, max-age=${maxAge}`,
         'X-Hub-Cache': 'MISS',
+        'X-Hub-Horizon': horizon,
       },
     });
-    if (!nocache && hasSectorYoy(payload.sectors)) {
+    if (!nocache && hasSectorHorizon(payload.sectors, horizon)) {
       putHubCache(context, CACHE_PATH, url.origin, response);
     }
     return response;

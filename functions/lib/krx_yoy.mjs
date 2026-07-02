@@ -142,57 +142,76 @@ async function fetchMcapMapWithFallback(authKey, dates, minSize) {
   return { mcap: new Map(), basDd: null };
 }
 
-function snapshotMapsReady(snapshots) {
-  if (!snapshots || !snapshots.mcapNow || snapshots.mcapNow.size < 20) return false;
-  return ['mcapPast1m', 'mcapPast3m', 'mcapPast6m', 'mcapPast1y'].every(
-    (k) => snapshots[k] && snapshots[k].size >= 20,
-  );
+const HORIZON_PAST_KEYS = {
+  '1m': ['mcapPast1m', 'past1mDd', HIST_TRADING_DAYS_1M],
+  '3m': ['mcapPast3m', 'past3mDd', HIST_TRADING_DAYS_3M],
+  '6m': ['mcapPast6m', 'past6mDd', HIST_TRADING_DAYS_6M],
+  '1y': ['mcapPast1y', 'past1yDd', HIST_TRADING_DAYS],
+};
+
+function emptyMcapSnapshots() {
+  return {
+    mcapNow: null,
+    mcapPast1m: null,
+    mcapPast3m: null,
+    mcapPast6m: null,
+    mcapPast1y: null,
+    recentDd: null,
+    past1mDd: null,
+    past3mDd: null,
+    past6mDd: null,
+    past1yDd: null,
+  };
+}
+
+function pastMapReady(snapshots, mcapKey) {
+  return !!(snapshots && snapshots[mcapKey] && snapshots[mcapKey].size >= 20);
 }
 
 let mcapSnapshotsCache = null;
 const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
 
 /**
- * Recent + 1M / 3M / 6M / 1Y trading-day-ago mcap maps (sequential KRX calls, cached 6h).
+ * Recent + requested past mcap maps (sequential KRX calls, cached 6h, merge partial fetches).
+ * @param {string} authKey
+ * @param {{ horizons?: string[] }} [opts] — default all: 1m, 3m, 6m, 1y
  */
-export async function fetchHubSectorMcapSnapshots(authKey) {
+export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
   if (!authKey) return null;
+  const allHorizons = ['1m', '3m', '6m', '1y'];
+  const horizons = Array.isArray(opts.horizons) && opts.horizons.length
+    ? opts.horizons
+    : allHorizons;
+
   const now = Date.now();
+  let snapshots = emptyMcapSnapshots();
   if (mcapSnapshotsCache && now - mcapSnapshotsCache.t < MCAP_PAIR_CACHE_MS) {
-    const cached = mcapSnapshotsCache.snapshots;
-    if (snapshotMapsReady(cached)) return cached;
+    snapshots = { ...mcapSnapshotsCache.snapshots };
   }
 
   const dates = tradingDates(HIST_TRADING_DAYS);
-  const idx1y = Math.min(HIST_TRADING_DAYS - 1, dates.length - 1);
-  const idx6m = Math.min(HIST_TRADING_DAYS_6M - 1, dates.length - 1);
-  const idx3m = Math.min(HIST_TRADING_DAYS_3M - 1, dates.length - 1);
-  const idx1m = Math.min(HIST_TRADING_DAYS_1M - 1, dates.length - 1);
   const window = 12;
 
-  const recent = await fetchMcapMapWithFallback(authKey, dates.slice(0, window));
-  if (!recent.mcap.size) return null;
+  if (!snapshots.mcapNow || snapshots.mcapNow.size < 20) {
+    const recent = await fetchMcapMapWithFallback(authKey, dates.slice(0, window));
+    if (!recent.mcap.size) return null;
+    snapshots.mcapNow = recent.mcap;
+    snapshots.recentDd = recent.basDd;
+  }
 
-  const past1m = await fetchMcapMapWithFallback(authKey, dates.slice(idx1m, idx1m + window));
-  const past3m = await fetchMcapMapWithFallback(authKey, dates.slice(idx3m, idx3m + window));
-  const past6m = await fetchMcapMapWithFallback(authKey, dates.slice(idx6m, idx6m + window));
-  const past1y = await fetchMcapMapWithFallback(authKey, dates.slice(idx1y, idx1y + window));
+  for (const h of horizons) {
+    const def = HORIZON_PAST_KEYS[h];
+    if (!def) continue;
+    const [mcapKey, ddKey, tradingDays] = def;
+    if (pastMapReady(snapshots, mcapKey)) continue;
+    const idx = Math.min(tradingDays - 1, dates.length - 1);
+    const past = await fetchMcapMapWithFallback(authKey, dates.slice(idx, idx + window));
+    snapshots[mcapKey] = past.mcap;
+    snapshots[ddKey] = past.basDd;
+  }
 
-  const snapshots = {
-    mcapNow: recent.mcap,
-    mcapPast1m: past1m.mcap,
-    mcapPast3m: past3m.mcap,
-    mcapPast6m: past6m.mcap,
-    mcapPast1y: past1y.mcap,
-    recentDd: recent.basDd,
-    past1mDd: past1m.basDd,
-    past3mDd: past3m.basDd,
-    past6mDd: past6m.basDd,
-    past1yDd: past1y.basDd,
-  };
-
-  if (snapshotMapsReady(snapshots)) {
-    mcapSnapshotsCache = { t: now, snapshots };
+  if (snapshots.mcapNow && snapshots.mcapNow.size >= 20) {
+    mcapSnapshotsCache = { t: now, snapshots: { ...snapshots } };
   }
   return snapshots;
 }

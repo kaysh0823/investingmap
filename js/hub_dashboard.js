@@ -16,11 +16,11 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v7';
+  var SWR_KEY = 'im-hub-dashboard-v8';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null };
-  var sectorsLoading = false;
+  var sectorsLoadingHorizon = null;
   var top10Loading = false;
   var rsTop10Loading = false;
   var sectorsFailed = false;
@@ -212,7 +212,7 @@
     var base = custom ? custom.replace(/\/+$/, '') : (hubApiEnabled() ? '' : '');
     if (!base && !hubApiEnabled()) return '';
     var sep = path.indexOf('?') >= 0 ? '&' : '?';
-    var bust = sep + '_v=4';
+    var bust = sep + '_v=5';
     return (base || '') + path + bust;
   }
 
@@ -403,6 +403,40 @@
       '</div></div>';
   }
 
+  function retKeyToHorizonParam(retKey) {
+    if (retKey === 'return3mPct') return '3m';
+    if (retKey === 'return6mPct') return '6m';
+    if (retKey === 'yoyReturnPct') return '1y';
+    return '1m';
+  }
+
+  function hasHorizonData(retKey) {
+    var sectors = dashboardData.sectors || {};
+    return Object.keys(sectors).some(function (sid) {
+      var s = sectors[sid];
+      return s && s[retKey] != null && isFinite(s[retKey]);
+    });
+  }
+
+  function mergeSectorsPayload(j) {
+    if (!j || j.error) return;
+    var incoming = j.sectors || {};
+    var base = dashboardData.sectors || {};
+    var keys = ['return1mPct', 'return3mPct', 'return6mPct', 'yoyReturnPct', 'mcapWon', 'weightPct', 'listingCount'];
+    for (var sid in incoming) {
+      if (!incoming.hasOwnProperty(sid)) continue;
+      if (!base[sid]) base[sid] = {};
+      var inc = incoming[sid];
+      var tgt = base[sid];
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i];
+        if (inc[k] != null) tgt[k] = inc[k];
+      }
+    }
+    dashboardData.sectors = base;
+    if (j.regularSession != null) dashboardData.regularSession = j.regularSession;
+  }
+
   function bindPulseTabs(wrap, lang) {
     if (!wrap) return;
     var tabs = wrap.querySelectorAll('.hub-pulse-tab');
@@ -412,6 +446,9 @@
         if (!key || key === pulseHorizonKey) return;
         savePulseHorizon(key);
         renderPulse(lang);
+        if (!hasHorizonData(key)) {
+          fetchSectorsHorizon(lang, key);
+        }
       });
     }
   }
@@ -429,7 +466,7 @@
       var sectorMcap = pulse.mcapWon != null ? pulse.mcapWon :
         block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
       var weightPct = pulse.weightPct != null ? pulse.weightPct : (local[sid] ? local[sid].weightPct : 0);
-      var isLoading = sectorsLoading && retPct == null;
+      var isLoading = sectorsLoadingHorizon === retKey && retPct == null;
       var cls = 'hub-pulse-card-ret is-flat';
       var retText;
       if (isLoading) {
@@ -472,7 +509,7 @@
     var statusWrap = document.getElementById('hub-pulse-status');
     if (statusWrap) {
       var parts = [];
-      if (sectorsLoading) {
+      if (sectorsLoadingHorizon) {
         parts.push('<span class="hub-pulse-loading-badge">' + labels.pulseStatusLoading + '</span>');
       }
       if (dashboardData && dashboardData.regularSession === true) {
@@ -590,9 +627,42 @@
   }
 
   function applySectorsPayload(j) {
-    if (!j || j.error) return;
-    dashboardData.sectors = j.sectors || dashboardData.sectors;
-    if (j.regularSession != null) dashboardData.regularSession = j.regularSession;
+    mergeSectorsPayload(j);
+  }
+
+  function fetchSectorsHorizon(lang, retKey) {
+    if (sectorsLoadingHorizon === retKey) return Promise.resolve();
+    var horizonParam = retKeyToHorizonParam(retKey);
+    var url = hubApiUrl('/api/hub_sectors?horizon=' + encodeURIComponent(horizonParam));
+    if (!url) {
+      if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
+      renderPulse(lang);
+      return Promise.resolve();
+    }
+    sectorsLoadingHorizon = retKey;
+    sectorsFailed = false;
+    renderPulse(lang);
+    return fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
+      .then(function (j) {
+        if (j && j.error) throw new Error(j.error);
+        mergeSectorsPayload(j);
+        var ok = j.sectors && Object.values(j.sectors).some(function (s) {
+          return s && s[retKey] != null && isFinite(s[retKey]);
+        });
+        if (!ok) throw new Error('hub_sectors_incomplete_' + horizonParam);
+        writeSwr();
+      })
+      .catch(function () {
+        sectorsFailed = true;
+      })
+      .then(function () {
+        if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
+        renderPulse(lang);
+      });
+  }
+
+  function fetchSectors(lang) {
+    return fetchSectorsHorizon(lang, 'return1mPct');
   }
 
   function applyTop10Payload(j) {
@@ -631,36 +701,6 @@
       });
   }
 
-  function fetchSectors(lang) {
-    var url = hubApiUrl('/api/hub_sectors');
-    if (!url) {
-      sectorsLoading = false;
-      renderPulse(lang);
-      return Promise.resolve();
-    }
-    sectorsLoading = true;
-    sectorsFailed = false;
-    renderPulse(lang);
-    return fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
-      .then(function (j) {
-        if (j && j.error) throw new Error(j.error);
-        applySectorsPayload(j);
-        var ok = j.sectors && Object.values(j.sectors).some(function (s) {
-          return s && s.return1mPct != null && s.return3mPct != null
-            && s.return6mPct != null && s.yoyReturnPct != null;
-        });
-        if (!ok) throw new Error('hub_sectors_incomplete');
-        writeSwr();
-      })
-      .catch(function () {
-        sectorsFailed = true;
-      })
-      .then(function () {
-        sectorsLoading = false;
-        renderPulse(lang);
-      });
-  }
-
   function fetchTop10(lang) {
     var url = hubApiUrl('/api/hub_top10');
     if (!url) {
@@ -688,6 +728,10 @@
 
   function fetchDashboardAndRender(lang) {
     return Promise.all([fetchSectors(lang), fetchTop10(lang), fetchRsTop10(lang)]).then(function () {
+      if (pulseHorizonKey !== 'return1mPct' && !hasHorizonData(pulseHorizonKey)) {
+        return fetchSectorsHorizon(lang, pulseHorizonKey);
+      }
+    }).then(function () {
       if (!sectorsFailed || !top10Failed || !rsTop10Failed) writeSwr();
       renderPulse(lang);
       renderTop10(lang);
@@ -713,7 +757,7 @@
         renderPulse(lang);
         renderTop10(lang);
         renderRsTop10(lang);
-        sectorsLoading = true;
+        sectorsLoadingHorizon = 'return1mPct';
         top10Loading = true;
         rsTop10Loading = true;
         renderPulse(lang);

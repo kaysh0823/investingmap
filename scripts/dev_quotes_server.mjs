@@ -170,7 +170,8 @@ const server = http.createServer(async (req, res) => {
       const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
       const hubIndex = JSON.parse(raw);
       const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : null;
-      const payload = await buildHubSectors(hubIndex, env);
+      const horizon = url.searchParams.get('horizon') || '1m';
+      const payload = await buildHubSectors(hubIndex, env, { horizon });
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify(payload));
     } catch (e) {
