@@ -65,6 +65,11 @@
       else u.searchParams.set('tab', tab);
       history.replaceState(null, '', u.pathname + u.search + u.hash);
     } catch (e2) {}
+    try {
+      if (global.matchMedia && global.matchMedia('(max-width: 768px)').matches) {
+        global.scrollTo(0, 0);
+      }
+    } catch (e3) {}
   }
 
   function appendToNavUrl(href) {

@@ -359,13 +359,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="../js/live_quotes.js?v=5"></script>
   <script src="../js/map_i18n.js"></script>
-  <script src="../js/map_tab_state.js?v=3"></script>
+  <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js"></script>
   <script src="../js/map_mobile_table.js"></script>
-  <script src="../js/map_mobile_ux.js"></script>
+  <script src="../js/map_mobile_ux.js?v=2"></script>
 <style>
     :root {
       --bg: #0d1117;
@@ -1099,13 +1099,7 @@
         min-height: 280px;
         overflow: hidden
       }
-
-      body.im-tab-table #tab-table.tab-content.active {
-        height: calc(100dvh - 108px);
-        min-height: 240px
-      }
-
-      #tab-table .table-container {
+#tab-table .table-container {
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -1145,24 +1139,7 @@
       #tab-table .note {
         display: none
       }
-
-      body.im-tab-table .header {
-        padding: 8px 12px 6px
-      }
-
-      body.im-tab-table .header h1 {
-        font-size: 15px;
-        line-height: 1.2;
-        margin: 0
-      }
-
-      body.im-tab-table #hdr-subtitle,
-      body.im-tab-table .header-meta,
-      body.im-tab-table .quotes-asof-hidden {
-        display: none
-      }
-
-      body.im-tab-table thead th {
+body.im-tab-table thead th {
         padding: 6px 5px;
         font-size: 8px
       }

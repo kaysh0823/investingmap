@@ -84,11 +84,6 @@ const MOBILE_V2_CSS = `
         overflow: hidden
       }
 
-      body.im-tab-table #tab-table.tab-content.active {
-        height: calc(100dvh - 108px);
-        min-height: 240px
-      }
-
       #tab-table .table-container {
         flex: 1;
         display: flex;
@@ -130,23 +125,6 @@ const MOBILE_V2_CSS = `
         display: none
       }
 
-      body.im-tab-table .header {
-        padding: 8px 12px 6px
-      }
-
-      body.im-tab-table .header h1 {
-        font-size: 15px;
-        line-height: 1.2;
-        margin: 0
-      }
-
-      body.im-tab-table #hdr-subtitle,
-      body.im-tab-table .header-meta,
-      body.im-tab-table .data-asof,
-      body.im-tab-table .quotes-asof {
-        display: none
-      }
-
       body.im-tab-table thead th {
         padding: 6px 5px;
         font-size: 8px
@@ -179,6 +157,18 @@ const MOBILE_V2_CSS = `
 const SWITCH_TAB_HOOK = "document.body.classList.toggle('im-tab-table', tab === 'table');";
 const INIT_TAB_HOOK =
   "document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));";
+
+function stripImTabHeaderCollapse(html) {
+  html = html.replace(
+    /\n\s*body\.im-tab-table #tab-table\.tab-content\.active \{\s*\n\s*height: calc\(100dvh - 108px\);\s*\n\s*min-height: 240px\s*\n\s*\}\s*/g,
+    '\n',
+  );
+  html = html.replace(
+    /\n\s*body\.im-tab-table \.header \{\s*\n\s*padding: 8px 12px 6px\s*\n\s*\}\s*\n\s*body\.im-tab-table \.header h1 \{[\s\S]*?margin: 0\s*\n\s*\}\s*\n\s*body\.im-tab-table #hdr-subtitle,[\s\S]*?display: none\s*\n\s*\}\s*/g,
+    '\n',
+  );
+  return html;
+}
 
 function stripOldMobileCss(html) {
   html = html.replace(
@@ -234,6 +224,7 @@ function patchFile(rel) {
   let html = fs.readFileSync(abs, 'utf8');
 
   html = stripOldMobileCss(html);
+  html = stripImTabHeaderCollapse(html);
   html = html.replace(/border-collapse:\s*collapse/g, 'border-collapse: separate;\n      border-spacing: 0');
 
   if (!html.includes(`${MARKER_V2} — base`)) {

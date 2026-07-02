@@ -7,6 +7,9 @@ import { getAuthKey, fetchHubSectorMcapSnapshots } from './krx_yoy.mjs';
 import { buildKrxRsSnapshot } from './krx_rs.mjs';
 import { krxSessionInfo } from './krx_session.mjs';
 import { passesMcapFloor } from '../../lib/mcap_policy.mjs';
+import { calcQuotePosition } from '../../lib/quote_position.mjs';
+
+export { calcQuotePosition };
 
 export const SECTOR_ORDER = ['semi', 'energy', 'ship', 'defense', 'kculture', 'bio', 'robot'];
 
@@ -21,17 +24,6 @@ export function normalizeTicker(ticker) {
   if (/^[0-9]+$/.test(alnum)) return alnum.padStart(6, '0');
   if (alnum.length === 6) return alnum;
   return null;
-}
-
-export function calcQuotePosition(last, hi, lo) {
-  if (last == null || hi == null || lo == null) return null;
-  if (!Number.isFinite(last) || !Number.isFinite(hi) || !Number.isFinite(lo)) return null;
-  if (last >= hi) return 100;
-  if (last <= lo) return 0;
-  const span = hi - lo;
-  if (span <= 0) return null;
-  const pct = ((last - lo) / span) * 100;
-  return pct < 0 ? 0 : pct > 100 ? 100 : pct;
 }
 
 function shouldHideQuote(q) {
@@ -259,7 +251,6 @@ export async function buildHubTop10(hubIndex, env, request, opts) {
 
   const cached = await getCachedNaverQuotes(codes, {
     concurrency: QUOTE_CONCURRENCY,
-    maxFetches: 0,
   });
 
   for (const code of codes) {

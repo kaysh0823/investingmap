@@ -46,6 +46,9 @@
       '.tab-btn.active{border-bottom-color:var(--accent)}' +
       '.header h1{word-break:keep-all;line-height:1.3;padding-right:0}' +
       '.header p{word-break:keep-all;line-height:1.5}' +
+      'body.im-tab-table .header{padding:14px 14px 16px!important}' +
+      'body.im-tab-table .header h1{font-size:18px!important;line-height:1.25!important;margin:0!important}' +
+      'body.im-tab-table #hdr-subtitle,body.im-tab-table .header-meta{display:block!important}' +
       '.heatmap-meta{word-break:keep-all;line-height:1.45}' +
       '.graph-hint{white-space:normal;word-break:keep-all;line-height:1.4}' +
       '.filter-label{white-space:nowrap}' +
