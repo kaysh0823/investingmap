@@ -1,5 +1,5 @@
 /**
- * Global mobile bottom nav: Home + 7 industry maps (all pages).
+ * Global mobile bottom nav: Home + 8 industry maps (all pages).
  */
 (function (global) {
   'use strict';
@@ -7,13 +7,13 @@
   var ITEMS = [
     { id: 'home', path: 'index.html', icon: '\u2302', ko: '\uD648', en: 'Home' },
     { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: '\uD83D\uDCA0', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
-    { id: 'bio', path: 'bio/korea_bio_map.html', icon: '\uD83E\uDDEC', ko: '\uBC14\uC774\uC624', en: 'Bio' },
+    { id: 'energy', path: 'energy/korea_energy_map.html', icon: '\u26A1', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
+    { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', koShort: '\uC804\uB825', en: 'Power', enShort: 'Grid' },
     { id: 'ship', path: 'ship/korea_ship_map.html', icon: '\u2693', ko: '\uC870\uC120', en: 'Ship' },
     { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC704', en: 'Defense' },
+    { id: 'kculture', path: 'kculture/korea_kculture_map.html', icon: '\uD83C\uDFAC', ko: 'K\uCEEC\uCC98', en: 'K-Culture', koShort: 'K\uCEEC\uCC98', enShort: 'K-Culture' },
+    { id: 'bio', path: 'bio/korea_bio_map.html', icon: '\uD83E\uDDEC', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: 'robot/korea_robot_map.html', icon: '\uD83E\uDD16', ko: '\uB85C\uBD07', en: 'Robot' },
-    { id: 'energy', path: 'energy/korea_energy_map.html', icon: '\u26A1', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
-    { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', en: 'Power' },
-    { id: 'kculture', path: 'kculture/korea_kculture_map.html', icon: '\uD83C\uDFAC', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },
   ];
 
   function pageLang(lang) {
@@ -49,16 +49,21 @@
     return '';
   }
 
+  function navLabel(item, lang) {
+    if (lang === 'en') return item.enShort || item.en;
+    return item.koShort || item.ko;
+  }
+
   function injectStyles() {
     if (document.getElementById('im-global-bottom-nav-css')) return;
     var css =
       '.im-global-bottom-nav{display:none}' +
       '@media (max-width:768px){' +
       'body.im-has-bottom-nav{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px))!important}' +
-      '.im-global-bottom-nav{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:120;background:color-mix(in srgb,var(--surface) 94%,transparent);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:6px 2px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 20px rgba(0,0,0,.15)}' +
-      '.im-bottom-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 2px;text-decoration:none;color:var(--text-muted);font-size:9px;font-weight:600;border-radius:8px;min-height:44px;min-width:0;text-align:center;line-height:1.2;word-break:keep-all}' +
-      '.im-bottom-tab-icon{font-size:16px;line-height:1}' +
-      '.im-bottom-tab-icon--home{font-size:21px;line-height:1}' +
+      '.im-global-bottom-nav{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:120;background:color-mix(in srgb,var(--surface) 94%,transparent);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:6px 1px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 20px rgba(0,0,0,.15)}' +
+      '.im-bottom-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 1px;text-decoration:none;color:var(--text-muted);font-size:8px;font-weight:600;border-radius:8px;min-height:44px;min-width:0;text-align:center;line-height:1.15;word-break:keep-all}' +
+      '.im-bottom-tab-icon{font-size:15px;line-height:1}' +
+      '.im-bottom-tab-icon--home{font-size:19px;line-height:1}' +
       '.im-bottom-tab-label{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
       '.im-bottom-tab.is-active{color:var(--accent)}' +
       '.im-bottom-tab:active{background:var(--surface2)}' +
@@ -89,7 +94,7 @@
       if (item.id !== 'home' && global.InvestingMapTabState && InvestingMapTabState.appendToNavUrl) {
         href = InvestingMapTabState.appendToNavUrl(href);
       }
-      var label = l === 'en' ? item.en : item.ko;
+      var label = navLabel(item, l);
       var cls = 'im-bottom-tab' + (item.id === active ? ' is-active' : '');
       var iconCls = 'im-bottom-tab-icon' + (item.id === 'home' ? ' im-bottom-tab-icon--home' : '');
       return '<a class="' + cls + '" href="' + href + '">' +

@@ -120,6 +120,11 @@
     var container = opts.container;
     if (!container || typeof d3 === 'undefined') return;
     var companies = opts.companies || [];
+    if (opts.excludeTickers && opts.excludeTickers.length) {
+      var skip = {};
+      opts.excludeTickers.forEach(function (t) { skip[t] = true; });
+      companies = companies.filter(function (c) { return !skip[c.ticker]; });
+    }
     var chainColors = opts.chainColors || {};
     var lang = opts.lang || 'ko';
     var formatMcap = opts.formatMcap || function (c) { return c.mcapWon ? String(c.mcapWon) : '—'; };

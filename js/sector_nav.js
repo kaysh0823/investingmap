@@ -6,13 +6,13 @@
 
   var SECTORS = [
     { id: 'semi', path: '../semiconductor/korea_semiconductor_map.html', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
-    { id: 'bio', path: '../bio/korea_bio_map.html', ko: '\uBC14\uC774\uC624', en: 'Bio' },
+    { id: 'energy', path: '../energy/korea_energy_map.html', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
+    { id: 'powergrid', path: '../powergrid/korea_powergrid_map.html', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Grid', koShort: '\uC804\uB825', enShort: 'Grid' },
     { id: 'ship', path: '../ship/korea_ship_map.html', ko: '\uC870\uC120', en: 'Ship' },
     { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC704', en: 'Defense' },
-    { id: 'robot', path: '../robot/korea_robot_map.html', ko: '\uB85C\uBD07', en: 'Robot' },
     { id: 'kculture', path: '../kculture/korea_kculture_map.html', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },
-    { id: 'energy', path: '../energy/korea_energy_map.html', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
-    { id: 'powergrid', path: '../powergrid/korea_powergrid_map.html', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Grid' },
+    { id: 'bio', path: '../bio/korea_bio_map.html', ko: '\uBC14\uC774\uC624', en: 'Bio' },
+    { id: 'robot', path: '../robot/korea_robot_map.html', ko: '\uB85C\uBD07', en: 'Robot' },
   ];
 
   function navLabel(s, lang, mobile) {
