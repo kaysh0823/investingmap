@@ -53,6 +53,7 @@
       '.graph-hint{white-space:normal;word-break:keep-all;line-height:1.4}' +
       '.filter-label{white-space:nowrap}' +
       '.result-count{white-space:nowrap}' +
+      '.im-seo-related{display:none!important}' +
       '}';
     var el = document.createElement('style');
     el.id = 'im-mobile-ux-css';

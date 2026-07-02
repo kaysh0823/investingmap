@@ -1,5 +1,5 @@
 /**
- * Mobile: company table → card list (no horizontal scroll).
+ * Mobile: company table → compact card list (no horizontal scroll).
  */
 (function (global) {
   'use strict';
@@ -26,23 +26,27 @@
       '.im-mobile-cards{display:none!important}' +
       '}' +
       '.im-mobile-cards{display:none;padding:4px 0 12px}' +
-      '.im-stock-card{margin:0 0 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden}' +
+      '.im-stock-card{margin:0 0 6px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden}' +
       '.im-stock-card.im-card-flash{outline:2px solid var(--accent);outline-offset:1px}' +
-      '.im-stock-card-head{padding:12px 14px;background:var(--surface2);border-bottom:1px solid var(--border)}' +
-      '.im-stock-card-head .company-name{font-size:15px;font-weight:700;color:var(--text);line-height:1.35}' +
-      '.im-stock-card-head .company-name-sub{font-size:11px;color:var(--text-muted);margin-top:2px;font-weight:400}' +
-      '.im-stock-card-meta{margin-top:6px;font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;align-items:center;gap:6px}' +
-      '.im-stock-card-meta .ticker{font-family:monospace;color:var(--accent);font-weight:600}' +
-      '.im-stock-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}' +
-      '.im-metric{padding:10px 12px;background:var(--surface);display:flex;flex-direction:column;gap:4px;min-width:0}' +
-      '.im-metric-lbl{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px}' +
-      '.im-metric-val{font-size:14px;font-weight:600;color:var(--text);word-break:break-all}' +
-      '.im-stock-card-extra{padding:10px 14px 12px;font-size:12px;color:var(--text-muted);line-height:1.55;display:flex;flex-direction:column;gap:8px}' +
-      '.im-extra-row{display:flex;flex-direction:column;gap:3px}' +
-      '.im-extra-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;color:var(--text-muted)}' +
-      '.im-extra-val{color:var(--text);font-size:12px}' +
-      '.im-extra-val .partner-tag,.im-extra-val .chain-tag{font-size:11px;margin:2px 4px 2px 0}' +
-      '.im-metric-val .quote-cell{display:inline}' +
+      '.im-row{display:flex;align-items:center;border-bottom:1px solid var(--border);min-width:0}' +
+      '.im-row:last-child{border-bottom:none}' +
+      '.im-row-head{align-items:flex-start;justify-content:space-between;gap:8px;padding:10px 12px;background:var(--surface2)}' +
+      '.im-row-name{flex:1;min-width:0}' +
+      '.im-row-name .company-name{font-size:15px;font-weight:700;color:var(--text);line-height:1.35}' +
+      '.im-row-name .company-name-sub{font-size:11px;color:var(--text-muted);margin-top:2px;font-weight:400;line-height:1.3}' +
+      '.im-row-meta{flex-shrink:0;text-align:right;font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px;line-height:1.4}' +
+      '.im-row-meta .ticker{font-family:monospace;color:var(--accent);font-weight:600}' +
+      '.im-row-2col{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}' +
+      '.im-kv{display:flex;align-items:baseline;justify-content:space-between;gap:6px;min-width:0;padding:8px 10px}' +
+      '.im-row-2col .im-kv{border-right:1px solid var(--border)}' +
+      '.im-row-2col .im-kv:last-child{border-right:none}' +
+      '.im-kv-lbl{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}' +
+      '.im-kv-val{font-size:14px;font-weight:600;color:var(--text);text-align:right;min-width:0;word-break:break-word}' +
+      '.im-kv-val .quote-cell{display:inline}' +
+      '.im-row-kv{align-items:flex-start;justify-content:space-between;gap:8px;padding:8px 12px}' +
+      '.im-row-kv .im-kv-lbl{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;flex-shrink:0;max-width:38%}' +
+      '.im-row-kv .im-kv-val{font-size:12px;font-weight:400;color:var(--text);text-align:right;flex:1;min-width:0;line-height:1.45}' +
+      '.im-row-kv .im-kv-val .partner-tag,.im-row-kv .im-kv-val .chain-tag{font-size:11px;margin:2px 0 2px 4px}' +
       '@media (max-width:768px){.im-mobile-cards{display:block}}';
     var el = document.createElement('style');
     el.id = 'im-mobile-table-css';
@@ -86,6 +90,31 @@
     return root;
   }
 
+  function kvCell(lbl, val) {
+    return (
+      '<div class="im-kv"><span class="im-kv-lbl">' +
+      lbl +
+      '</span><span class="im-kv-val">' +
+      (val || '—') +
+      '</span></div>'
+    );
+  }
+
+  function row2col(left, right) {
+    return '<div class="im-row im-row-2col">' + left + right + '</div>';
+  }
+
+  function rowKv(lbl, val) {
+    if (!val || val === '—') return '';
+    return (
+      '<div class="im-row im-row-kv"><span class="im-kv-lbl">' +
+      lbl +
+      '</span><span class="im-kv-val">' +
+      val +
+      '</span></div>'
+    );
+  }
+
   function buildCard(tr, map) {
     var ticker = tr.getAttribute('data-ticker') || cellText(tr, map, 'th-ticker');
     var nameBlock = cellHtml(tr, map, 'th-name');
@@ -118,89 +147,27 @@
     var meta = tickerSpan || ticker;
     if (marketBlock) meta += ' · ' + marketBlock;
 
-    var extras = '';
-    if (hi || lo) {
-      extras +=
-        '<div class="im-extra-row"><span class="im-extra-lbl">' +
-        lblHi +
-        ' / ' +
-        lblLo +
-        '</span><span class="im-extra-val">' +
-        (hi || '—') +
-        ' · ' +
-        (lo || '—') +
-        '</span></div>';
-    }
-    if (chain) {
-      extras +=
-        '<div class="im-extra-row"><span class="im-extra-lbl">' +
-        lblChain +
-        '</span><span class="im-extra-val">' +
-        chain +
-        '</span></div>';
-    }
-    if (sem && sem !== '—') {
-      extras +=
-        '<div class="im-extra-row"><span class="im-extra-lbl">' +
-        lblSem +
-        '</span><span class="im-extra-val">' +
-        sem +
-        '</span></div>';
-    }
-    if (products && products !== '—') {
-      extras +=
-        '<div class="im-extra-row"><span class="im-extra-lbl">' +
-        lblProd +
-        '</span><span class="im-extra-val">' +
-        products +
-        '</span></div>';
-    }
-    if (partners) {
-      extras +=
-        '<div class="im-extra-row"><span class="im-extra-lbl">' +
-        lblPart +
-        '</span><span class="im-extra-val">' +
-        partners +
-        '</span></div>';
-    }
+    var hiLoLbl = lblHi + ' / ' + lblLo;
+    var hiLoVal = (hi || '—') + ' · ' + (lo || '—');
 
     return (
       '<article class="im-stock-card" data-ticker="' +
       (ticker || '') +
       '">' +
-      '<header class="im-stock-card-head">' +
+      '<div class="im-row im-row-head">' +
+      '<div class="im-row-name">' +
       nameBlock +
-      '<div class="im-stock-card-meta">' +
-      meta +
-      '</div></header>' +
-      '<div class="im-stock-card-grid">' +
-      '<div class="im-metric"><span class="im-metric-lbl">' +
-      lblLast +
-      '</span><span class="im-metric-val">' +
-      (last || '—') +
-      '</span></div>' +
-      '<div class="im-metric"><span class="im-metric-lbl">' +
-      lblMcap +
-      '</span><span class="im-metric-val">' +
-      (mcap || '—') +
-      '</span></div>' +
-      '<div class="im-metric"><span class="im-metric-lbl">' +
-      lblPer +
-      '</span><span class="im-metric-val">' +
-      (per || '—') +
-      '</span></div>' +
-      '<div class="im-metric"><span class="im-metric-lbl">' +
-      lblPbr +
-      '</span><span class="im-metric-val">' +
-      (pbr || '—') +
-      '</span></div>' +
-      '<div class="im-metric" style="grid-column:1/-1"><span class="im-metric-lbl">' +
-      lblPos +
-      '</span><span class="im-metric-val">' +
-      (pos || '—') +
-      '</span></div>' +
       '</div>' +
-      (extras ? '<div class="im-stock-card-extra">' + extras + '</div>' : '') +
+      '<div class="im-row-meta">' +
+      meta +
+      '</div></div>' +
+      row2col(kvCell(lblLast, last), kvCell(lblMcap, mcap)) +
+      row2col(kvCell(lblPer, per), kvCell(lblPbr, pbr)) +
+      row2col(kvCell(lblPos, pos), kvCell(hiLoLbl, hiLoVal)) +
+      rowKv(lblChain, chain) +
+      rowKv(lblSem, sem) +
+      rowKv(lblProd, products) +
+      rowKv(lblPart, partners) +
       '</article>'
     );
   }
