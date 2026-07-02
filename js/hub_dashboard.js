@@ -191,7 +191,7 @@
   }
 
   function loadHubSectorReturns() {
-    return fetch('data/hub_sector_returns.json', { cache: 'default' })
+    return fetch('data/hub_sector_returns.json?v=16', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j && j.sectors) mergeSectorsPayload(j, { onlyMissing: true });
@@ -201,7 +201,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json', { cache: 'no-store' })
+    return fetch('data/hub_index.json?v=16', { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();
