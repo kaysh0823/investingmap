@@ -47,6 +47,12 @@
       '.im-row-kv .im-kv-lbl{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;flex-shrink:0;max-width:38%}' +
       '.im-row-kv .im-kv-val{font-size:12px;font-weight:400;color:var(--text);text-align:right;flex:1;min-width:0;line-height:1.45}' +
       '.im-row-kv .im-kv-val .partner-tag,.im-row-kv .im-kv-val .chain-tag{font-size:11px;margin:2px 0 2px 4px}' +
+      '.im-row-split .im-split-col{display:flex;flex-direction:column;gap:4px;padding:8px 10px;min-width:0;border-right:1px solid var(--border)}' +
+      '.im-row-split .im-split-col:last-child{border-right:none}' +
+      '.im-split-line{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px;min-width:0;width:100%}' +
+      '.im-split-lbl{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;line-height:1.35}' +
+      '.im-split-val{font-size:14px;font-weight:600;color:var(--text);line-height:1.35}' +
+      '.im-split-sep{color:var(--text-muted);font-weight:400;font-size:12px;margin:0 1px}' +
       '@media (max-width:768px){.im-mobile-cards{display:block}}';
     var el = document.createElement('style');
     el.id = 'im-mobile-table-css';
@@ -104,6 +110,36 @@
     return '<div class="im-row im-row-2col">' + left + right + '</div>';
   }
 
+  function splitPair(a, b) {
+    return (
+      '<span>' +
+      (a || '—') +
+      '</span><span class="im-split-sep">/</span><span>' +
+      (b || '—') +
+      '</span>'
+    );
+  }
+
+  function rowPosRsHiLo(lblPos, lblRs, pos, rs, lblHi, lblLo, hi, lo) {
+    var left =
+      '<div class="im-split-col">' +
+      '<div class="im-split-line im-split-lbl">' +
+      splitPair(lblPos, lblRs) +
+      '</div>' +
+      '<div class="im-split-line im-split-val">' +
+      splitPair(pos, rs) +
+      '</div></div>';
+    var right =
+      '<div class="im-split-col">' +
+      '<div class="im-split-line im-split-lbl">' +
+      splitPair(lblHi, lblLo) +
+      '</div>' +
+      '<div class="im-split-line im-split-val">' +
+      splitPair(hi, lo) +
+      '</div></div>';
+    return '<div class="im-row im-row-2col im-row-split">' + left + right + '</div>';
+  }
+
   function rowKv(lbl, val) {
     if (!val || val === '—') return '';
     return (
@@ -125,8 +161,9 @@
     var per = cellHtml(tr, map, 'th-per');
     var pbr = cellHtml(tr, map, 'th-pbr');
     var pos = cellHtml(tr, map, 'th-position');
-    var hi = cellText(tr, map, 'th-52hi');
-    var lo = cellText(tr, map, 'th-52lo');
+    var rs = cellHtml(tr, map, 'th-rs');
+    var hi = cellHtml(tr, map, 'th-52hi');
+    var lo = cellHtml(tr, map, 'th-52lo');
     var chain = cellHtml(tr, map, 'th-chain');
     var sem = cellHtml(tr, map, 'th-semtype');
     var products = cellHtml(tr, map, 'th-products');
@@ -143,12 +180,10 @@
     var lblPer = (document.getElementById('th-per') || {}).textContent || 'PER';
     var lblPbr = (document.getElementById('th-pbr') || {}).textContent || 'PBR';
     var lblPos = (document.getElementById('th-position') || {}).textContent || '';
+    var lblRs = (document.getElementById('th-rs') || {}).textContent || 'RS';
 
     var meta = tickerSpan || ticker;
     if (marketBlock) meta += ' · ' + marketBlock;
-
-    var hiLoLbl = lblHi + ' / ' + lblLo;
-    var hiLoVal = (hi || '—') + ' · ' + (lo || '—');
 
     return (
       '<article class="im-stock-card" data-ticker="' +
@@ -163,7 +198,7 @@
       '</div></div>' +
       row2col(kvCell(lblLast, last), kvCell(lblMcap, mcap)) +
       row2col(kvCell(lblPer, per), kvCell(lblPbr, pbr)) +
-      row2col(kvCell(lblPos, pos), kvCell(hiLoLbl, hiLoVal)) +
+      rowPosRsHiLo(lblPos, lblRs, pos, rs, lblHi, lblLo, hi, lo) +
       rowKv(lblChain, chain) +
       rowKv(lblSem, sem) +
       rowKv(lblProd, products) +
