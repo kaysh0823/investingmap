@@ -14,6 +14,8 @@ const MAPS = [
   'defense/korea_defense_map.html',
   'robot/korea_robot_map.html',
   'energy/korea_energy_map.html',
+  'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
   'kculture/korea_kculture_map.html',
 ];
 

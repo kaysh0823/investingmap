@@ -101,6 +101,14 @@
         "en": "Listed Korean power equipment, T&D, and generation OEM names with global reference links."
       }
     },
+    "finance": {
+      "path": "/finance/korea_finance_map.html",
+      "title": { "ko": "한국 금융 투자 지도", "en": "Korea Finance Map" },
+      "summary": {
+        "ko": "은행·증권·보험·카드·캐피탈 등 국내 상장 금융사의 KRX 데이터와 글로벌 peer 참고 관계를 정리합니다.",
+        "en": "KRX metrics and illustrative global peer links for listed Korean banks, securities, insurers, and card/capital names."
+      }
+    },
     "kculture": {
       "path": "/kculture/korea_kculture_map.html",
       "title": { "ko": "한국 K컬처 산업 투자 지도", "en": "Korea K-Culture Industry Map" },

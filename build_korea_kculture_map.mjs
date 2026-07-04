@@ -189,18 +189,6 @@ const SEED = [
     partners: ['boeing', 'airbus'],
   },
   {
-    id: 'korean_air',
-    name: '\uB300\uD55C\uD56D\uACF5',
-    nameEn: 'Korean Air',
-    ticker: '003490',
-    chain: S.C2,
-    semType: 'FSC\u00B7\uAE00\uB85C\uBC8C\uB124\uD2B8\uC6CC\uD06C',
-    semTypeEn: 'Full-service global network',
-    products: '\uC5EC\uAC1D\u00B7\uD654\uBB3C\u00B7MICE',
-    productsEn: 'Passenger, cargo, MICE',
-    partners: ['boeing', 'airbus', 'delta'],
-  },
-  {
     id: 'amore',
     name: '\uC544\uBAA8\uB808\uD37C\uC2DC\uD53D',
     nameEn: 'Amorepacific',

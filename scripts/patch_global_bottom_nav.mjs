@@ -15,6 +15,7 @@ const MAP_FILES = [
   'robot/korea_robot_map.html',
   'energy/korea_energy_map.html',
   'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
   'kculture/korea_kculture_map.html',
 ];
 

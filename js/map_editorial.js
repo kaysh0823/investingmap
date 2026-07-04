@@ -122,6 +122,22 @@
         ],
       },
     },
+    finance: {
+      ko: {
+        paragraphs: [
+          '은행·금융지주, 증권·자산운용, 생명·손해보험, 카드·캐피탈 등 국내 상장 금융사를 밸류체인별로 정리합니다. KB금융·신한지주·삼성생명·미래에셋증권 등 대표 종목의 시가총액·PER·PBR과 글로벌 peer 참고 관계를 한 페이지에서 비교할 수 있습니다.',
+          '금융주는 기준금리·규제·신용 사이클·자본비율에 민감합니다. 표의 세부 유형·주요 사업 열에서 은행·증권·보험·카드 mix를 확인하세요.',
+          '본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 공시와 금융감독원·한국은행 자료를 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.',
+        ],
+      },
+      en: {
+        paragraphs: [
+          'Maps listed Korean banks and holdings, securities and asset managers, life and P&C insurers, and card/capital names. Compare KRX metrics and illustrative global peer links for KB Financial, Shinhan, Samsung Life, Mirae Asset Securities, and peers.',
+          'Financial stocks track policy rates, regulation, credit cycles, and capital ratios. Use segment and product columns for business mix.',
+          'Informational only—not investment advice. Cross-check filings and official data; see our <a href="../editorial-policy.html">editorial policy</a>.',
+        ],
+      },
+    },
     kculture: {
       ko: {
         paragraphs: [

@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kculture', 'bio', 'robot'];
+  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kculture', 'bio', 'robot', 'finance'];
   var PULSE_HORIZONS = [
     { retKey: 'return1mPct', labelKey: 'pulseRow1m' },
     { retKey: 'return3mPct', labelKey: 'pulseRow3m' },
@@ -39,6 +39,7 @@
       kculture: ['라면·식품', '여행·항공', '뷰티', '게임', '패션', '쇼핑·유통', '드라마·웹툰', 'K-pop'],
       bio: ['신약', 'CDMO', '바이오시밀러', '의료기기', '진단'],
       robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
+      finance: ['은행', '증권', '보험', '카드', '캐피탈'],
     },
     en: {
       semi: ['Design', 'Foundry', 'Memory', 'Materials', 'Equipment', 'Substrates', 'Packaging'],
@@ -49,6 +50,7 @@
       kculture: ['Food', 'Travel & airlines', 'Beauty', 'Games', 'Fashion', 'Retail', 'Drama & webtoon', 'K-pop'],
       bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
+      finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Capital'],
     },
   };
 
@@ -149,7 +151,7 @@
       '.hub-pulse-tab{font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer;font-family:inherit;line-height:1.2;transition:border-color .15s,background .15s,color .15s}' +
       '.hub-pulse-tab:hover:not(.is-active){border-color:color-mix(in srgb,var(--text-muted) 50%,var(--border));color:var(--text)}' +
       '.hub-pulse-tab.is-active{background:color-mix(in srgb,var(--accent) 14%,var(--surface2));border-color:var(--accent);color:var(--accent)}' +
-      '.hub-pulse-cards{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px}' +
+      '.hub-pulse-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}' +
       '.hub-pulse-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;min-width:0;transition:border-color .15s,box-shadow .15s}' +
       '.hub-pulse-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.12)}' +
       '.hub-pulse-card-sector{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.02em;line-height:1.2;word-break:keep-all}' +
@@ -182,7 +184,7 @@
       '.hub-card-keyplayers{font-size:11px;color:var(--text-muted);margin-top:6px;margin-bottom:0;line-height:1.4;word-break:keep-all}' +
       '.hub-card-keyplayers strong{color:var(--text);font-weight:600}' +
       '.hub-card-tags{margin-top:8px;margin-bottom:12px}' +
-      '@media (max-width:1200px){.hub-pulse-cards{grid-template-columns:repeat(4,minmax(0,1fr))}.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panels{grid-template-columns:1fr 1fr}}' +
+      '@media (max-width:1200px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panels{grid-template-columns:1fr 1fr}}' +
       '@media (max-width:768px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panels{grid-template-columns:1fr}.hub-side-panel{position:static}.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}.hub-pulse-card{flex:0 0 132px;scroll-snap-align:start}}';
     var el = document.createElement('style');
     el.id = 'im-hub-dashboard-css-v7';

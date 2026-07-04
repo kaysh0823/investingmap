@@ -14,6 +14,7 @@ import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs'
 import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from '../lib/krx_data_sources.mjs';
 import { enrichBioCompanies } from '../lib/company_field_enrich.mjs';
 import { filterCompaniesByMcap, passesMcapFloor } from '../lib/mcap_policy.mjs';
+import { allowedInSector, filterCompaniesForSector } from '../lib/sector_exclusive.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -168,6 +169,7 @@ function mergeCpListAdditions(list, byKey, nameEnMap, meta3557) {
   for (const a of additions) {
     const ticker = a.ticker;
     if (!ticker || byKey.has(ticker)) continue;
+    if (!allowedInSector(ticker, 'bio')) continue;
     const row = krx.get(ticker);
     const mcapWon = row ? row.mcap : 0;
     if (!passesMcapFloor({ mcapWon })) continue;
@@ -259,7 +261,7 @@ mergeListedEnglishIntoCompanies(koreanCompanies, meta3557);
 mergePerPbrIntoCompanies(koreanCompanies, loadPerPbrMap(dataDir));
 enrichBioCompanies(koreanCompanies, join(__dirname, '..', '..', 'cp_list'));
 {
-  const kept = filterCompaniesByMcap(koreanCompanies);
+  const kept = filterCompaniesForSector(filterCompaniesByMcap(koreanCompanies), 'bio');
   koreanCompanies.length = 0;
   koreanCompanies.push(...kept);
   koreanCompanies.forEach((c, i) => { c.id = `bio_${i}`; });

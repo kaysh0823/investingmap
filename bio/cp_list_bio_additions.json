@@ -96,14 +96,6 @@
     "level": "core"
   },
   {
-    "ticker": "285130",
-    "name": "SK케미칼",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "제약·그린케미칼",
-    "level": "adjacent"
-  },
-  {
     "ticker": "003850",
     "name": "보령",
     "chain": "합성신약 / 제네릭",
@@ -181,14 +173,6 @@
     "chain": "체외진단 (IVD)",
     "sectorId": "diagnostics",
     "subSector": "혈당측정·진단",
-    "level": "core"
-  },
-  {
-    "ticker": "060280",
-    "name": "큐렉소",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "의료로봇·정형외과",
     "level": "core"
   },
   {

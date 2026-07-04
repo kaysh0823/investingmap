@@ -1,5 +1,5 @@
 /**
- * Desktop left sidebar: Hub + 8 industry maps (persistent on map pages).
+ * Desktop left sidebar: Hub + industry maps (persistent on map pages).
  */
 (function (global) {
   'use strict';
@@ -16,6 +16,7 @@
     { id: 'kculture', path: 'kculture/korea_kculture_map.html', icon: '\uD83C\uDFAC', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },
     { id: 'bio', path: 'bio/korea_bio_map.html', icon: '\uD83E\uDDEC', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: 'robot/korea_robot_map.html', icon: '\uD83E\uDD16', ko: '\uB85C\uBD07', en: 'Robot' },
+    { id: 'finance', path: 'finance/korea_finance_map.html', icon: '\uD83C\uDFE6', ko: '\uAE08\uC735', en: 'Finance' },
   ];
 
   function pageLang(lang) {
@@ -33,7 +34,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(semiconductor|bio|ship|defense|robot|energy|powergrid|kculture)\//i.test(path)) return '../';
+    if (/\/(semiconductor|bio|ship|defense|robot|energy|powergrid|kculture|finance)\//i.test(path)) return '../';
     return '';
   }
 
@@ -47,6 +48,7 @@
     if (path.indexOf('/energy/') !== -1) return 'energy';
     if (path.indexOf('/powergrid/') !== -1) return 'powergrid';
     if (path.indexOf('/kculture/') !== -1) return 'kculture';
+    if (path.indexOf('/finance/') !== -1) return 'finance';
     if (path === '/' || /\/index\.html$/.test(path)) return 'home';
     return '';
   }

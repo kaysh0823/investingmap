@@ -21,6 +21,7 @@ const HTML_MAPS = [
   'robot/korea_robot_map.html',
   'energy/korea_energy_map.html',
   'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
   'kculture/korea_kculture_map.html',
 ];
 
@@ -113,6 +114,10 @@ function patchIndexHubCounts(hubLines) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 전력설비/, `${hubLines.powergrid}개 상장사 · 전력설비`);
     indexHtml = indexHtml.replace(/\d+ listings · power equipment/, `${hubLines.powergrid} listings · power equipment`);
   }
+  if (hubLines.finance) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 은행/, `${hubLines.finance}개 상장사 · 은행`);
+    indexHtml = indexHtml.replace(/\d+ listings · banks/, `${hubLines.finance} listings · banks`);
+  }
   if (hubLines.kculture) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 식품/, `${hubLines.kculture}개 상장사 · 식품`);
     indexHtml = indexHtml.replace(/\d+ listings · food/, `${hubLines.kculture} listings · food`);
@@ -133,6 +138,7 @@ function main() {
       robot: 'robot',
       energy: 'energy',
       powergrid: 'powergrid',
+      finance: 'finance',
       kculture: 'kculture',
     }[key];
     const r = filterHtmlMap(rel);

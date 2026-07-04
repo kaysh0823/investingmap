@@ -29,6 +29,7 @@ import {
   mergeListedEnglishIntoCompanies,
 } from '../lib/krx_data_sources.mjs';
 import { passesMcapFloor, filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
+import { allowedInSector, filterCompaniesForSector } from '../lib/sector_exclusive.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -168,6 +169,13 @@ const HTML_MAPS = [
     badgeEn: 'listings',
   },
   {
+    key: 'finance',
+    path: 'finance/korea_finance_map.html',
+    idPrefix: 'finance',
+    badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
+    badgeEn: 'listings',
+  },
+  {
     key: 'kculture',
     path: 'kculture/korea_kculture_map.html',
     idPrefix: 'kc',
@@ -177,11 +185,14 @@ const HTML_MAPS = [
 ];
 
 function mergeIndustryMap(existing, cpTickers, industryKey, chains, krx, meta3557, idPrefix) {
-  const byTicker = new Map(existing.map((c) => [c.ticker, c]));
+  const byTicker = new Map(
+    filterCompaniesForSector(existing, industryKey).map((c) => [c.ticker, c]),
+  );
   let added = 0;
   let skipped = 0;
 
   for (const [ticker, entry] of cpTickers) {
+    if (!allowedInSector(ticker, industryKey)) continue;
     if (byTicker.has(ticker)) continue;
     const stub = makeStub(ticker, entry, industryKey, chains, krx, meta3557, idPrefix);
     if (!stub) {
@@ -282,6 +293,7 @@ function main() {
   let bioSkipped = 0;
   if (bioCp) {
     for (const [ticker, entry] of bioCp) {
+      if (!allowedInSector(ticker, 'bio')) continue;
       if (jsxTickers.has(ticker)) continue;
       if (!krx.has(ticker)) {
         bioSkipped++;
@@ -322,6 +334,7 @@ function main() {
     robot: results.robot?.after,
     energy: results.energy?.after,
     powergrid: results.powergrid?.after,
+    finance: results.finance?.after,
     kculture: results.kculture?.after,
   };
 
@@ -352,6 +365,10 @@ function main() {
   if (hubLines.powergrid) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 전력설비/, `${hubLines.powergrid}개 상장사 · 전력설비`);
     indexHtml = indexHtml.replace(/\d+ listings · power equipment/, `${hubLines.powergrid} listings · power equipment`);
+  }
+  if (hubLines.finance) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 은행/, `${hubLines.finance}개 상장사 · 은행`);
+    indexHtml = indexHtml.replace(/\d+ listings · banks/, `${hubLines.finance} listings · banks`);
   }
   if (hubLines.kculture) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 식품/, `${hubLines.kculture}개 상장사 · 식품`);

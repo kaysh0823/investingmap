@@ -207,18 +207,6 @@ const SEED = [
     partners: ['amazon', 'google'],
   },
   {
-    id: 'eotech',
-    name: '\uC774\uC624\uD14C\uD06C\uB2C8\uC2A4',
-    nameEn: 'EO Technics',
-    ticker: '039030',
-    chain: S.H5,
-    semType: '\uB808\uC774\uC800\u00B7\uBBF8\uC138\uC870\uC81C',
-    semTypeEn: 'Laser processing',
-    products: '\uB808\uC774\uC800 \uC6E8\uC774\uBE0C, \uC804\uC790\uBD80\uD488',
-    productsEn: 'Laser welding, microfabrication',
-    partners: ['keyence', 'nvidia'],
-  },
-  {
     id: 'piai',
     name: '\uD53C\uC544\uC774\uC774',
     nameEn: 'PIA',
