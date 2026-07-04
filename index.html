@@ -943,6 +943,18 @@
         <p class="hub-card-map" id="card-finance-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-finance-cta">Open map →</span>
       </a>
+      <a class="hub-card" id="hub-link-construction" href="construction/korea_construction_map.html">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🏗️</span>
+          <span class="hub-card-badge" id="card-construction-badge">12 LISTINGS</span>
+        </div>
+        <h2 id="card-construction-title">한국 건설 투자 지도</h2>
+        <p class="hub-card-lead" id="card-construction-lead">종합건설·주택·디벨로퍼·건설기계 밸류체인과 글로벌 peer 참고 관계</p>
+        <p class="hub-card-keyplayers" id="card-construction-keyplayers"></p>
+        <div class="hub-card-tags" id="card-construction-tags"></div>
+        <p class="hub-card-map" id="card-construction-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-construction-cta">Open map →</span>
+      </a>
       <a class="hub-card" id="hub-link-ship" href="ship/korea_ship_map.html">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">⚓</span>
@@ -1069,13 +1081,13 @@
     <p class="im-trust-copy" id="tf-copyright">© 2026 Investing Map</p>
   </footer>
   <script src="js/map_tab_state.js?v=3"></script>
-  <script src="js/hub_dashboard.js?v=19"></script>
+  <script src="js/hub_dashboard.js?v=20"></script>
   <script src="js/im_collapsible.js"></script>
 <script>
     const T = {
       ko: {
         title: 'Investing Map',
-        subtitle: '반도체·바이오·조선·해양·방위/우주/항공·로봇/피지컬AI·에너지·전력설비·금융·K컬처 한국 산업 지도로, 상장사·밸류체인·KRX 데이터·관계 네트워크',
+        subtitle: '반도체·바이오·조선·해양·방위/우주/항공·로봇/피지컬AI·에너지·전력설비·금융·건설·K컬처 한국 산업 지도로, 상장사·밸류체인·KRX 데이터·관계 네트워크',
         langFlag: '🇺🇸',
         langText: 'English',
         cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
@@ -1087,10 +1099,11 @@
         energyMapLine: '64개 상장사 · 2차전지·ESS·배터리·태양광·풍력',
         powergridMapLine: '17개 상장사 · 전력설비·송배전·발전설비',
         financeMapLine: '31개 상장사 · 은행·증권·보험·카드·캐피탈',
+        constructionMapLine: '12개 상장사 · 종합건설·주택·디벨로퍼·건설기계',
         kcultureMapLine: '57개 상장사 · 식품·여행·뷰티·게임·패션·유통·IP·K-pop',
         introTitle: '한국 상장사 산업 지도 허브',
         introLeadSummary: '사이트 소개',
-        introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 9개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
+        introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 10개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
         introHMethod: '데이터·편집 원칙',
         introLi1: '정량 데이터(시총·PER·PBR·시세)는 KRX 등 공개 출처를 기준일에 맞춰 반영합니다.',
         introLi2: '벨류체인 분류·글로벌 거래처·peer 링크는 공시·보도를 바탕으로 작성한 참고 자료입니다.',
@@ -1128,13 +1141,16 @@
         financeTitle: '한국 금융 투자 지도',
         financeLead: '은행·증권·보험·카드·캐피탈 밸류체인과 글로벌 peer 참고 관계',
         financeCta: '지도 열기 →',
+        constructionTitle: '한국 건설 투자 지도',
+        constructionLead: '종합건설·주택·디벨로퍼·건설기계 밸류체인과 글로벌 peer 참고 관계',
+        constructionCta: '지도 열기 →',
         foot: '각 지도 페이지에서 표·그래프·언어(한/영)·다크·라이트 테마를 사용할 수 있습니다.',
         overviewHeading: '산업 개요',
         copyright: '© 2026 Investing Map'
       },
       en: {
         title: 'Investing Map',
-        subtitle: 'Hub for nine Korean industry maps: listed companies, value chains, KRX data, and relationship networks.',
+        subtitle: 'Hub for ten Korean industry maps: listed companies, value chains, KRX data, and relationship networks.',
         langFlag: '🇰🇷',
         langText: '한국어',
         cardMapLine: 'Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.',
@@ -1146,10 +1162,11 @@
         energyMapLine: '64 listings · batteries, ESS, solar, wind',
         powergridMapLine: '17 listings · power equipment, T&D, generation',
         financeMapLine: '31 listings · banks, securities, insurance, cards & capital',
+        constructionMapLine: '12 listings · contractors, housing, developers, equipment',
         kcultureMapLine: '57 listings · food, travel, beauty, games, fashion, retail, IP, K-pop',
         introTitle: 'Korea listed-equity industry map hub',
         introLeadSummary: 'About this site',
-        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ names through value-chain lenses. Nine sector maps combine sortable tables, market cap, PER, PBR, 52-week price position, and relationship graphs—each with sector-specific editorial guides and cited sources.',
+        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ names through value-chain lenses. Ten sector maps combine sortable tables, market cap, PER, PBR, 52-week price position, and relationship graphs—each with sector-specific editorial guides and cited sources.',
         introHMethod: 'Data & editorial principles',
         introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
         introLi2: 'Chain tags and global links are editorial reference networks from filings and public sources.',
@@ -1187,6 +1204,9 @@
         financeTitle: 'Korea Finance Map',
         financeLead: 'Banks, securities, insurance, cards and capital—listed Korean financials with global peer links.',
         financeCta: 'Open map →',
+        constructionTitle: 'Korea Construction Map',
+        constructionLead: 'General contractors, housing developers, and construction equipment—listed Korean names with global peer links.',
+        constructionCta: 'Open map →',
         foot: 'On each map: table & graph, Korean/English, and dark/light theme.',
         overviewHeading: 'Industry overview',
         copyright: '© 2026 Investing Map'
@@ -1247,6 +1267,7 @@
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + ql;
       document.getElementById('hub-link-powergrid').href = 'powergrid/korea_powergrid_map.html' + ql;
       document.getElementById('hub-link-finance').href = 'finance/korea_finance_map.html' + ql;
+      document.getElementById('hub-link-construction').href = 'construction/korea_construction_map.html' + ql;
       document.getElementById('hdr-title').textContent = t.introTitle;
       document.getElementById('hdr-subtitle').textContent = t.introP1;
       var leadSummary = document.getElementById('hub-lead-summary');
@@ -1286,6 +1307,9 @@
       document.getElementById('card-finance-title').textContent = t.financeTitle;
       document.getElementById('card-finance-lead').textContent = t.financeLead;
       document.getElementById('card-finance-cta').textContent = t.financeCta;
+      document.getElementById('card-construction-title').textContent = t.constructionTitle;
+      document.getElementById('card-construction-lead').textContent = t.constructionLead;
+      document.getElementById('card-construction-cta').textContent = t.constructionCta;
       const qlNav = '?lang=' + encodeURIComponent(lang);
       document.getElementById('hub-principles-label').textContent = t.introHMethod;
       const li = document.getElementById('hub-intro-list');

@@ -22,6 +22,7 @@ const HTML_MAPS = [
   { key: 'energy', path: 'energy/korea_energy_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'powergrid', path: 'powergrid/korea_powergrid_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'finance', path: 'finance/korea_finance_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'construction', path: 'construction/korea_construction_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'kculture', path: 'kculture/korea_kculture_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
 ];
 

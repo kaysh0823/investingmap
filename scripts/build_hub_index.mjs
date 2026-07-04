@@ -18,6 +18,7 @@ const MAPS = [
   ['energy', 'energy/korea_energy_map.html'],
   ['powergrid', 'powergrid/korea_powergrid_map.html'],
   ['finance', 'finance/korea_finance_map.html'],
+  ['construction', 'construction/korea_construction_map.html'],
 ];
 
 const SECTOR_META = {
@@ -30,6 +31,7 @@ const SECTOR_META = {
   energy: { ko: '에너지', en: 'Energy', icon: '\u26A1', map: 'energy/korea_energy_map.html' },
   powergrid: { ko: '전력설비', en: 'Power Grid', icon: '\uD83D\uDD0C', map: 'powergrid/korea_powergrid_map.html' },
   finance: { ko: '금융', en: 'Finance', icon: '\uD83C\uDFE6', map: 'finance/korea_finance_map.html' },
+  construction: { ko: '건설', en: 'Construction', icon: '\uD83C\uDFD7\uFE0F', map: 'construction/korea_construction_map.html' },
 };
 
 function extractCompanies(content) {

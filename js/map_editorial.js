@@ -138,6 +138,23 @@
         ],
       },
     },
+    construction: {
+      ko: {
+        paragraphs: [
+          '종합건설, 주택·디벨로퍼, 건설기계, 건설 지주 등 국내 상장 건설사를 밸류체인별로 정리합니다. 삼성물산·현대건설·대우건설·DL이앤씨·GS건설 등 대표 종목의 시가총액·PER·PBR과 글로벌 EPC·장비 peer 참고 관계를 한 페이지에서 비교할 수 있습니다.',
+          '건설주는 수주·분양·원자재·금리에 민감합니다. 표의 세부 유형·주요 사업 열에서 건축·토목·플랜트·주택 mix를 확인하세요.',
+          '본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 공시와 국토교통부·한국부동산원 자료를 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.',
+        ],
+      },
+      en: {
+        paragraphs: [
+          'Maps listed Korean general contractors, housing developers, construction equipment makers, and related holdings. Compare KRX metrics and illustrative global EPC and equipment peer links for Samsung C&T, Hyundai E&C, Daewoo E&C, DL E&C, GS E&C, and peers.',
+          'Construction stocks track orders, housing sales, materials, and rates. Use segment and product columns for business mix.',
+          'Informational only—not investment advice. Cross-check filings and official data; see our <a href="../editorial-policy.html">editorial policy</a>.',
+        ],
+      },
+    },
+
     kculture: {
       ko: {
         paragraphs: [

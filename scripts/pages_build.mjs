@@ -33,6 +33,7 @@ const ROOT_DIRS = [
   'energy',
   'powergrid',
   'finance',
+  'construction',
   'kculture',
 ];
 

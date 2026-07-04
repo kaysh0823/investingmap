@@ -23,6 +23,7 @@ const HTML_MAPS = [
   { key: 'energy', path: 'energy/korea_energy_map.html' },
   { key: 'powergrid', path: 'powergrid/korea_powergrid_map.html' },
   { key: 'finance', path: 'finance/korea_finance_map.html' },
+  { key: 'construction', path: 'construction/korea_construction_map.html' },
   { key: 'kculture', path: 'kculture/korea_kculture_map.html' },
 ];
 

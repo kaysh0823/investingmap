@@ -109,6 +109,14 @@
         "en": "KRX metrics and illustrative global peer links for listed Korean banks, securities, insurers, and card/capital names."
       }
     },
+    "construction": {
+      "path": "/construction/korea_construction_map.html",
+      "title": { "ko": "한국 건설 투자 지도", "en": "Korea Construction Map" },
+      "summary": {
+        "ko": "종합건설·주택·디벨로퍼·건설기계 등 국내 상장 건설사의 KRX 데이터와 글로벌 peer 참고 관계를 정리합니다.",
+        "en": "KRX metrics and illustrative global peer links for listed Korean contractors, housing developers, and construction equipment names."
+      }
+    },
     "kculture": {
       "path": "/kculture/korea_kculture_map.html",
       "title": { "ko": "한국 K컬처 산업 투자 지도", "en": "Korea K-Culture Industry Map" },

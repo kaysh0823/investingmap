@@ -176,6 +176,13 @@ const HTML_MAPS = [
     badgeEn: 'listings',
   },
   {
+    key: 'construction',
+    path: 'construction/korea_construction_map.html',
+    idPrefix: 'construction',
+    badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
+    badgeEn: 'listings',
+  },
+  {
     key: 'kculture',
     path: 'kculture/korea_kculture_map.html',
     idPrefix: 'kc',
@@ -335,6 +342,7 @@ function main() {
     energy: results.energy?.after,
     powergrid: results.powergrid?.after,
     finance: results.finance?.after,
+    construction: results.construction?.after,
     kculture: results.kculture?.after,
   };
 
@@ -369,6 +377,10 @@ function main() {
   if (hubLines.finance) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 은행/, `${hubLines.finance}개 상장사 · 은행`);
     indexHtml = indexHtml.replace(/\d+ listings · banks/, `${hubLines.finance} listings · banks`);
+  }
+  if (hubLines.construction) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 종합건설/, `${hubLines.construction}개 상장사 · 종합건설`);
+    indexHtml = indexHtml.replace(/\d+ listings · contractors/, `${hubLines.construction} listings · contractors`);
   }
   if (hubLines.kculture) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 식품/, `${hubLines.kculture}개 상장사 · 식품`);

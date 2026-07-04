@@ -14,6 +14,7 @@
     { id: 'bio', path: '../bio/korea_bio_map.html', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: '../robot/korea_robot_map.html', ko: '\uB85C\uBD07', en: 'Robot' },
     { id: 'finance', path: '../finance/korea_finance_map.html', ko: '\uAE08\uC735', en: 'Finance' },
+    { id: 'construction', path: '../construction/korea_construction_map.html', ko: '\uAC74\uC124', en: 'Construction' },
   ];
 
   function navLabel(s, lang, mobile) {

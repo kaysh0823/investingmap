@@ -46,16 +46,25 @@
     };
   }
 
+  var lastTapTicker = null;
+  var outsideTapBound = false;
+
+  function isMobileHeatmap() {
+    return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:768px)').matches;
+  }
+
   function injectTooltipStyles() {
     if (document.getElementById('im-hm-tooltip-css')) return;
     var el = document.createElement('style');
     el.id = 'im-hm-tooltip-css';
     el.textContent =
       '.im-hm-tooltip{position:fixed;z-index:9999;pointer-events:none;' +
-      'padding:6px 10px;border-radius:6px;font-size:12px;font-weight:600;line-height:1.4;' +
-      'background:var(--surface2,#21262d);color:var(--text,#e6edf3);' +
+      'padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;line-height:1.4;' +
+      'white-space:pre-line;background:var(--surface2,#21262d);color:var(--text,#e6edf3);' +
       'border:1px solid var(--border,#30363d);box-shadow:0 4px 14px rgba(0,0,0,.35);' +
-      'max-width:360px;display:none}';
+      'max-width:min(360px,86vw);display:none}' +
+      '.im-hm-tooltip .im-hm-tt-name{display:block;font-size:13px;font-weight:700;color:var(--text,#e6edf3)}' +
+      '.im-hm-tooltip .im-hm-tt-mcap{display:block;margin-top:2px;font-size:12px;font-weight:600;color:var(--text-muted,#8b949e)}';
     document.head.appendChild(el);
   }
 
@@ -72,23 +81,34 @@
     return tt;
   }
 
-  function showTooltip(text, ev) {
+  function tooltipLabel(company, lang, formatMcap) {
+    var nm = displayName(company, lang);
+    var mcap = formatMcap(company);
+    return { name: nm, mcap: mcap || '—' };
+  }
+
+  function showTooltip(company, lang, formatMcap, ev) {
     var tt = getTooltip();
-    tt.textContent = text;
+    var label = tooltipLabel(company, lang, formatMcap);
+    tt.innerHTML =
+      '<span class="im-hm-tt-name"></span><span class="im-hm-tt-mcap"></span>';
+    tt.querySelector('.im-hm-tt-name').textContent = label.name;
+    tt.querySelector('.im-hm-tt-mcap').textContent = label.mcap;
     tt.style.display = 'block';
     moveTooltip(ev);
   }
 
   function moveTooltip(ev) {
     var tt = document.getElementById('im-hm-tooltip');
-    if (!tt || tt.style.display === 'none') return;
+    if (!tt || tt.style.display === 'none' || !ev) return;
     var pad = 12;
-    var x = ev.clientX + pad;
-    var y = ev.clientY - pad;
+    var x = (ev.clientX != null ? ev.clientX : 0) + pad;
+    var y = (ev.clientY != null ? ev.clientY : 0) - pad;
     var rect = tt.getBoundingClientRect();
-    if (x + rect.width > window.innerWidth - 8) x = ev.clientX - rect.width - pad;
-    if (y + rect.height > window.innerHeight - 8) y = ev.clientY - rect.height - pad;
+    if (x + rect.width > window.innerWidth - 8) x = (ev.clientX != null ? ev.clientX : 0) - rect.width - pad;
+    if (y + rect.height > window.innerHeight - 8) y = (ev.clientY != null ? ev.clientY : 0) - rect.height - pad;
     if (y < 8) y = 8;
+    if (x < 8) x = 8;
     tt.style.left = x + 'px';
     tt.style.top = y + 'px';
   }
@@ -96,6 +116,24 @@
   function hideTooltip() {
     var tt = document.getElementById('im-hm-tooltip');
     if (tt) tt.style.display = 'none';
+    lastTapTicker = null;
+  }
+
+  function bindOutsideTap() {
+    if (outsideTapBound) return;
+    outsideTapBound = true;
+    document.addEventListener(
+      'pointerdown',
+      function (ev) {
+        if (!isMobileHeatmap()) return;
+        var tt = document.getElementById('im-hm-tooltip');
+        if (!tt || tt.style.display === 'none') return;
+        var tile = ev.target && ev.target.closest ? ev.target.closest('.hm-tile') : null;
+        if (tile && tile.getAttribute('data-ticker')) return;
+        hideTooltip();
+      },
+      true,
+    );
   }
 
   function renderLegend(el, chains, chainColors, lang, chainLabelFn) {
@@ -132,6 +170,7 @@
 
     container.innerHTML = '';
     hideTooltip();
+    bindOutsideTap();
     var w = container.clientWidth || 800;
     var h = container.clientHeight || 480;
     if (w < 200) w = 800;
@@ -217,7 +256,8 @@
       var nm = displayName(leaf, lang);
       var mcap = formatMcap(leaf);
       g.attr('data-company-name', nm);
-      g.attr('aria-label', nm + ' (' + (leaf.ticker || '') + ')');
+      g.attr('data-ticker', leaf.ticker || '');
+      g.attr('aria-label', nm + ' · ' + mcap + ' (' + (leaf.ticker || '') + ')');
 
       if (tw > 56 && th > 36) {
         g.append('text')
@@ -236,18 +276,41 @@
       }
     });
 
-    nodes.filter(function (d) { return d.depth === 2 && d.data.company; })
+    nodes
+      .filter(function (d) {
+        return d.depth === 2 && d.data.company;
+      })
+      .style('cursor', 'pointer')
       .on('mouseenter', function (ev, d) {
-        showTooltip(displayName(d.data.company, lang), ev);
+        if (isMobileHeatmap()) return;
+        showTooltip(d.data.company, lang, formatMcap, ev);
       })
       .on('mousemove', function (ev) {
+        if (isMobileHeatmap()) return;
         moveTooltip(ev);
       })
-      .on('mouseleave', hideTooltip)
-      .on('click', function (ev, d) {
+      .on('mouseleave', function () {
+        if (isMobileHeatmap()) return;
         hideTooltip();
-        if (!opts.onSelect) return;
-        opts.onSelect(d.data.company);
+      })
+      .on('click', function (ev, d) {
+        var company = d.data.company;
+        if (!company) return;
+        if (isMobileHeatmap()) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          var ticker = company.ticker || '';
+          if (lastTapTicker && lastTapTicker === ticker) {
+            hideTooltip();
+            if (opts.onSelect) opts.onSelect(company);
+            return;
+          }
+          lastTapTicker = ticker;
+          showTooltip(company, lang, formatMcap, ev);
+          return;
+        }
+        hideTooltip();
+        if (opts.onSelect) opts.onSelect(company);
       });
   }
 
