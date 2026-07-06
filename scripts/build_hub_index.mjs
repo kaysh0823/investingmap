@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
+import { kstYmdDash } from '../functions/lib/krx_session.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -29,7 +30,7 @@ const SECTOR_META = {
   robot: { ko: '로봇', en: 'Robot', icon: '\uD83E\uDD16', map: 'robot/korea_robot_map.html' },
   kculture: { ko: 'K컬처', en: 'K-Culture', icon: '\uD83C\uDFAC', map: 'kculture/korea_kculture_map.html' },
   energy: { ko: '에너지', en: 'Energy', icon: '\u26A1', map: 'energy/korea_energy_map.html' },
-  powergrid: { ko: '전력설비', en: 'Power Grid', icon: '\uD83D\uDD0C', map: 'powergrid/korea_powergrid_map.html' },
+  powergrid: { ko: '전력설비', en: 'Power Equip.', icon: '\uD83D\uDD0C', map: 'powergrid/korea_powergrid_map.html' },
   finance: { ko: '금융', en: 'Finance', icon: '\uD83C\uDFE6', map: 'finance/korea_finance_map.html' },
   construction: { ko: '건설', en: 'Construction', icon: '\uD83C\uDFD7\uFE0F', map: 'construction/korea_construction_map.html' },
 };
@@ -67,7 +68,7 @@ function main() {
   }
 
   const out = {
-    builtAt: new Date().toISOString().slice(0, 10),
+    builtAt: kstYmdDash(),
     sectors,
   };
   const outPath = path.join(ROOT, 'data', 'hub_index.json');

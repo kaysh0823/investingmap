@@ -217,6 +217,7 @@
       document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: lang === 'en' ? PAGE.descEn : PAGE.descKo });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
+      if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncTheme();
     }

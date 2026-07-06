@@ -42,11 +42,20 @@
     return koVal != null && koVal !== '' ? koVal : '\u2014';
   }
 
+  function chainDisplayLabel(chainKey, t) {
+    if (!chainKey || chainKey === 'all') return (t && t.allFilter) || chainKey || '';
+    if (!t) return chainKey;
+    return (t.chainFilter && t.chainFilter[chainKey])
+      || (t.chainLabel && t.chainLabel[chainKey])
+      || chainKey;
+  }
+
   global.InvestingMapI18n = {
     entityName: entityName,
     marketLabel: marketLabel,
     marketCssClass: marketCssClass,
     marketChipLabel: marketChipLabel,
-    field: field
+    field: field,
+    chainDisplayLabel: chainDisplayLabel,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

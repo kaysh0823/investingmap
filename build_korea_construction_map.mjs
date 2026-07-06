@@ -150,7 +150,7 @@ function buildT(n, kospi, kosdaq) {
     },
     en: {
       title: '🇰🇷 Korea Construction Map',
-      subtitle: 'Listed Korean contractors, housing developers, and construction equipment with global peer links',
+      subtitle: 'Listed Korean contractors, housing developers, and construction equipment with global peer relationships',
       badgeTotal: `<span>${n}</span> listings`,
       badgeMarket: `KOSPI <span>${kospi}</span> · KOSDAQ <span>${kosdaq}</span>`,
       dataAsof: 'Data as of: June 12, 2026',
@@ -161,7 +161,7 @@ function buildT(n, kospi, kosdaq) {
       thLast: 'Last',
       th52High: '52W High',
       th52Lo: '52W Low',
-      thPosition: 'Price Position',
+      thPosition: '52W Range',
       thRs: 'RS',
       langFlag: '🇰🇷',
       langText: '한국어',
@@ -180,7 +180,7 @@ function buildT(n, kospi, kosdaq) {
       thSemType: 'Segment',
       thProducts: 'Products / services',
       thPartners: 'Global peers',
-      note: '⚠ Public information only. Market cap and segment follow KRX disclosures as of the date shown above. Value chain labels are editorial groupings. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).',
+      note: '⚠ Public information only. Market cap and segment follow KRX disclosures as of the date shown above. Value chain labels are editorial groupings. English table shows market cap in USD billions (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).',
       sbKorean: 'Korean listed (value chain)',
       sbGlobal: 'Global construction peers',
       sbSize: 'Node size',
@@ -199,7 +199,7 @@ function buildT(n, kospi, kosdaq) {
       ttProducts: 'Products',
       ttRevenue: 'Market cap',
       ttPartners: 'Partners',
-      ttSuppliers: 'Korean cos.',
+      ttSuppliers: 'Korean companies',
       ttCountry: 'Country',
       ttSector: 'Field',
       ttTags: 'Multi-axis',
@@ -266,8 +266,8 @@ function main() {
   html = html.replace(/한국 전력설비 투자 지도/g, '한국 건설 투자 지도');
   html = html.replace(/Korea Power Grid Equipment Map/g, 'Korea Construction Map');
   html = html.replace(/전력설비·송배전·발전설비/g, '종합건설·주택·디벨로퍼·건설기계');
-  html = html.replace(/Power equipment, T&amp;D, and generation OEM/g, 'General contractors, housing developers, and construction equipment');
-  html = html.replace(/Power equipment, T&D, and generation OEM/g, 'General contractors, housing developers, and construction equipment');
+  html = html.replace(/Power equipment, T&amp;D, and power generation equipment/g, 'General contractors, housing developers, and construction equipment');
+  html = html.replace(/Power equipment, T&D, and power generation equipment/g, 'General contractors, housing developers, and construction equipment');
 
   html = html.replace(/<title>[^<]*<\/title>/, '<title>한국 건설 투자 지도 / Korea Construction Map</title>');
 

@@ -3,7 +3,8 @@
  * Universe: all KOSPI + KOSDAQ listings from KRX daily API.
  */
 
-import { getAuthKey, fetchMarketDay, tradingDates } from './krx_yoy.mjs';
+import { getAuthKey, fetchMarketDay, tradingDates, pastDatesFromAnchor, recentDateCandidates } from './krx_yoy.mjs';
+import { kstYmdDash } from './krx_session.mjs';
 
 export { getAuthKey };
 
@@ -11,6 +12,14 @@ const RS_PERIODS = [
   { key: 'rs20', days: 20 },
   { key: 'rs50', days: 50 },
   { key: 'rs120', days: 120 },
+];
+
+const RETURN_PERIODS = [
+  { field: 'chg1dPct', days: 1 },
+  { field: 'ret1mPct', days: 21 },
+  { field: 'ret3mPct', days: 63 },
+  { field: 'ret6mPct', days: 126 },
+  { field: 'ret1yPct', days: 252 },
 ];
 
 const DATE_FALLBACK_WINDOW = 12;
@@ -25,22 +34,40 @@ function closeFromRow(row) {
   return parseNum(row && row.TDD_CLSPRC);
 }
 
-async function fetchCloseMapWithFallback(authKey, dates, minSize) {
+function mcapFromRow(row) {
+  const cl = parseNum(row && row.TDD_CLSPRC);
+  const shrs = parseNum(row && row.LIST_SHRS);
+  if (cl != null && shrs != null && cl > 0 && shrs > 0) return cl * shrs;
+  const direct = parseNum(row && row.MKTCAP);
+  if (direct != null && direct > 0) return direct;
+  return null;
+}
+
+async function fetchDayMapsWithFallback(authKey, dates, minSize, maxBasDd) {
   const min = minSize || 100;
   for (const basDd of dates) {
+    if (maxBasDd && basDd >= maxBasDd) continue;
     try {
       const byCode = await fetchMarketDay(authKey, basDd);
       const closes = new Map();
+      const mcaps = new Map();
       for (const [code, row] of byCode) {
         const cl = closeFromRow(row);
         if (cl != null && cl > 0) closes.set(code, cl);
+        const mcap = mcapFromRow(row);
+        if (mcap != null && mcap > 0) mcaps.set(code, mcap);
       }
-      if (closes.size >= min) return { closes, basDd };
+      if (closes.size >= min) return { closes, mcaps, basDd };
     } catch {
       /* try next */
     }
   }
-  return { closes: new Map(), basDd: null };
+  return { closes: new Map(), mcaps: new Map(), basDd: null };
+}
+
+async function fetchCloseMapWithFallback(authKey, dates, minSize, maxBasDd) {
+  const snap = await fetchDayMapsWithFallback(authKey, dates, minSize, maxBasDd);
+  return { closes: snap.closes, basDd: snap.basDd };
 }
 
 function periodReturn(closeNow, closePast) {
@@ -78,25 +105,51 @@ export function percentileRanks(items) {
 export async function buildKrxRsSnapshot(authKey) {
   if (!authKey) return null;
 
-  const dates = tradingDates(130);
-  const recent = await fetchCloseMapWithFallback(authKey, dates.slice(0, DATE_FALLBACK_WINDOW));
-  if (!recent.closes.size) return null;
+  const dates = tradingDates(260);
+  const recent = await fetchDayMapsWithFallback(
+    authKey,
+    recentDateCandidates(dates).slice(0, DATE_FALLBACK_WINDOW),
+  );
+  if (!recent.closes.size || !recent.basDd) return null;
+
+  const past1dDates = pastDatesFromAnchor(recent.basDd, dates, 1, DATE_FALLBACK_WINDOW);
+  const past1dSnap = await fetchDayMapsWithFallback(
+    authKey,
+    past1dDates,
+    100,
+    recent.basDd,
+  );
 
   const pastMaps = {};
   const pastDds = {};
   for (const { key, days } of RS_PERIODS) {
-    const idx = Math.min(days - 1, dates.length - 1);
+    const pastDates = pastDatesFromAnchor(recent.basDd, dates, days - 1, DATE_FALLBACK_WINDOW);
     const snap = await fetchCloseMapWithFallback(
       authKey,
-      dates.slice(idx, idx + DATE_FALLBACK_WINDOW),
+      pastDates,
       100,
+      recent.basDd,
     );
     pastMaps[key] = snap.closes;
     pastDds[key] = snap.basDd;
   }
 
+  const returnPastMaps = {};
+  const returnPastDds = {};
+  for (const { field, days } of RETURN_PERIODS) {
+    const pastDates = pastDatesFromAnchor(recent.basDd, dates, days, DATE_FALLBACK_WINDOW);
+    const snap = await fetchCloseMapWithFallback(
+      authKey,
+      pastDates,
+      100,
+      recent.basDd,
+    );
+    returnPastMaps[field] = snap.closes;
+    returnPastDds[field] = snap.basDd;
+  }
+
   const codes = new Set(recent.closes.keys());
-  for (const map of Object.values(pastMaps)) {
+  for (const map of Object.values(returnPastMaps)) {
     for (const code of map.keys()) codes.add(code);
   }
 
@@ -132,6 +185,14 @@ export async function buildKrxRsSnapshot(authKey) {
     const ret20 = periodReturn(now, pastMaps.rs20.get(code));
     const ret50 = periodReturn(now, pastMaps.rs50.get(code));
     const ret120 = periodReturn(now, pastMaps.rs120.get(code));
+    const retFields = {};
+    for (const { field } of RETURN_PERIODS) {
+      const pastClose = returnPastMaps[field].get(code);
+      const ret = periodReturn(now, pastClose);
+      retFields[field] = ret != null ? Math.round(ret * 100) / 100 : null;
+    }
+    const refMcap = recent.mcaps.get(code);
+    const past1dMcap = past1dSnap.mcaps.get(code);
     quotes[code] = {
       rs,
       rs20: Math.round(rs20 * 10) / 10,
@@ -140,17 +201,22 @@ export async function buildKrxRsSnapshot(authKey) {
       ret20: ret20 != null ? Math.round(ret20 * 100) / 100 : null,
       ret50: ret50 != null ? Math.round(ret50 * 100) / 100 : null,
       ret120: ret120 != null ? Math.round(ret120 * 100) / 100 : null,
+      refClose: now,
+      refMcap: refMcap != null ? refMcap : null,
+      past1dMcap: past1dMcap != null ? past1dMcap : null,
+      ...retFields,
     };
     ok += 1;
   }
 
   return {
-    builtAt: new Date().toISOString().slice(0, 10),
+    builtAt: kstYmdDash(),
     asOf: new Date().toISOString(),
     source: 'krx-rs-percentile',
     universe: codes.size,
     quotesOk: ok,
     recentDd: recent.basDd,
+    past1dDd: past1dSnap.basDd || returnPastDds.chg1dPct,
     past20Dd: pastDds.rs20,
     past50Dd: pastDds.rs50,
     past120Dd: pastDds.rs120,

@@ -197,6 +197,15 @@
       meta +
       '</div></div>' +
       row2col(kvCell(lblLast, last), kvCell(lblMcap, mcap)) +
+      row2col(
+        kvCell((document.getElementById('th-chg1d') || {}).textContent || 'Day', cellHtml(tr, map, 'th-chg1d')),
+        kvCell((document.getElementById('th-ret1m') || {}).textContent || '1M', cellHtml(tr, map, 'th-ret1m'))
+      ) +
+      row2col(
+        kvCell((document.getElementById('th-ret3m') || {}).textContent || '3M', cellHtml(tr, map, 'th-ret3m')),
+        kvCell((document.getElementById('th-ret6m') || {}).textContent || '6M', cellHtml(tr, map, 'th-ret6m'))
+      ) +
+      rowKv((document.getElementById('th-ret1y') || {}).textContent || '1Y', cellHtml(tr, map, 'th-ret1y')) +
       row2col(kvCell(lblPer, per), kvCell(lblPbr, pbr)) +
       rowPosRsHiLo(lblPos, lblRs, pos, rs, lblHi, lblLo, hi, lo) +
       rowKv(lblChain, chain) +

@@ -1,36 +1,76 @@
 /** KRX regular session: Mon–Fri 09:00–15:30 Asia/Seoul (no holiday calendar). */
 
-const SESSION_OPEN = 9 * 60;
-const SESSION_CLOSE = 15 * 60 + 30;
+const KST_TZ = 'Asia/Seoul';
+const WEEKDAY_MAP = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+export const SESSION_OPEN = 9 * 60;
+export const SESSION_CLOSE = 15 * 60 + 30;
+
+/**
+ * @param {Date} [now]
+ * @returns {{ year: number, month: number, day: number, weekday: number, hour: number, minute: number }}
+ */
+export function kstDateParts(now = new Date()) {
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: KST_TZ,
+    weekday: 'short',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+  const parts = fmt.formatToParts(now);
+  const get = (type) => parts.find((p) => p.type === type)?.value || '';
+  const weekdayStr = get('weekday');
+  return {
+    year: parseInt(get('year'), 10),
+    month: parseInt(get('month'), 10),
+    day: parseInt(get('day'), 10),
+    weekday: WEEKDAY_MAP[weekdayStr] ?? 0,
+    hour: parseInt(get('hour'), 10),
+    minute: parseInt(get('minute'), 10),
+  };
+}
+
+/** @param {Date} [now] @returns {string} YYYYMMDD in KST */
+export function kstYmd(now = new Date()) {
+  const p = kstDateParts(now);
+  const m = String(p.month).padStart(2, '0');
+  const d = String(p.day).padStart(2, '0');
+  return `${p.year}${m}${d}`;
+}
+
+/** @param {Date} [now] @returns {string} YYYY-MM-DD in KST */
+export function kstYmdDash(now = new Date()) {
+  const p = kstDateParts(now);
+  const m = String(p.month).padStart(2, '0');
+  const d = String(p.day).padStart(2, '0');
+  return `${p.year}-${m}-${d}`;
+}
+
+/** @param {Date} [now] @returns {number} 0=Sun … 6=Sat in KST */
+export function kstWeekday(now = new Date()) {
+  return kstDateParts(now).weekday;
+}
 
 /**
  * @param {Date} [now]
  * @returns {{ regular: boolean, kst: { weekday: number, minutes: number, iso: string } }}
  */
 export function krxSessionInfo(now = new Date()) {
-  const fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Asia/Seoul',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  });
-  const parts = fmt.formatToParts(now);
-  const weekdayStr = parts.find((p) => p.type === 'weekday')?.value || '';
-  const hour = parseInt(parts.find((p) => p.type === 'hour')?.value || '0', 10);
-  const minute = parseInt(parts.find((p) => p.type === 'minute')?.value || '0', 10);
-  const weekdayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-  const weekday = weekdayMap[weekdayStr] ?? 0;
-  const minutes = hour * 60 + minute;
+  const p = kstDateParts(now);
+  const minutes = p.hour * 60 + p.minute;
   const regular =
-    weekday >= 1 &&
-    weekday <= 5 &&
+    p.weekday >= 1 &&
+    p.weekday <= 5 &&
     minutes >= SESSION_OPEN &&
     minutes < SESSION_CLOSE;
   return {
     regular,
     kst: {
-      weekday,
+      weekday: p.weekday,
       minutes,
       iso: now.toISOString(),
     },

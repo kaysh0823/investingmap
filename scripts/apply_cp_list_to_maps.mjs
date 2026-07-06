@@ -27,6 +27,7 @@ import {
   loadMergedKrxMap,
   loadListedEnglish3557Map,
   mergeListedEnglishIntoCompanies,
+  formatListedEnglishName,
 } from '../lib/krx_data_sources.mjs';
 import { passesMcapFloor, filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
 import { allowedInSector, filterCompaniesForSector } from '../lib/sector_exclusive.mjs';
@@ -41,7 +42,8 @@ function makeStub(ticker, entry, industryKey, chains, krx, meta3557, idPrefix) {
   if (!passesMcapFloor({ mcapWon: row.mcap })) return null;
 
   const chain = inferChain(entry.subSector, industryKey, chains);
-  const nameEn = meta3557.get(ticker)?.nameEn || entry.nameKo || row.name;
+  const rawNameEn = meta3557.get(ticker)?.nameEn || entry.nameKo || row.name;
+  const nameEn = formatListedEnglishName(rawNameEn);
   const sub = entry.subSector || '—';
   const id = slugId(ticker, nameEn, idPrefix);
 
@@ -85,7 +87,10 @@ function applyKrxFields(companies, krx, meta3557) {
       if (row.name) c.name = row.name;
     }
     const meta = meta3557?.get(c.ticker);
-    if (meta?.nameEn) c.nameEn = meta.nameEn;
+    if (meta?.nameEn) {
+      const curated = c.nameEn && /\s/.test(c.nameEn) && c.nameEn !== meta.nameEn;
+      if (!curated) c.nameEn = formatListedEnglishName(meta.nameEn);
+    }
     if (meta?.nameKo && (!c.name || c.name.includes('\uFFFD'))) c.name = meta.nameKo;
     if (c.market === 'KOSPI') kospi++;
     else if (c.market === 'KOSDAQ') kosdaq++;

@@ -513,7 +513,7 @@ function buildT(n, kospi, kosdaq) {
     en: {
       title: '\uD83C\uDDF0\uD83C\uDDF7 Korea K-Culture Industry Map',
       subtitle:
-        'Listed Korean names in ramen & food, travel, beauty, drama/webtoon/media, and K-pop, with illustrative global links',
+        'Listed Korean names in ramen & food, travel, beauty, drama/webtoon/media, and K-pop, with illustrative global relationships',
       badgeTotal: `<span>${n}</span> listed companies`,
       badgeMarket: `KOSPI <span>${kospi}</span> \u00B7 KOSDAQ <span>${kosdaq}</span>`,
       dataAsof: 'Data as of: June 12, 2026',
@@ -535,8 +535,8 @@ function buildT(n, kospi, kosdaq) {
       thChain: 'Value chain',
       thSemType: 'Segment',
       thProducts: 'Products / services',
-      thPartners: 'Global reference links',
-      note: '\u26A0 Public information only. Tickers and reference links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).',
+      thPartners: 'Global reference relationships',
+      note: '\u26A0 Public information only. Tickers and reference relationships are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in USD billions (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).',
       sbKorean: 'Korean listed (value chain)',
       sbGlobal: 'Global media, travel & distribution',
       sbSize: 'Node size',
@@ -556,7 +556,7 @@ function buildT(n, kospi, kosdaq) {
       ttProducts: 'Products',
       ttRevenue: 'Market cap',
       ttPartners: 'Reference',
-      ttSuppliers: 'Korean cos.',
+      ttSuppliers: 'Korean companies',
       ttCountry: 'Country',
       ttSector: 'Field',
       ttTags: 'Multi-axis',

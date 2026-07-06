@@ -57,6 +57,7 @@ export async function readHubCacheJson(cachePath, origin) {
 }
 
 export const HORIZON_RET_KEY = {
+  '1d': 'return1dPct',
   '1m': 'return1mPct',
   '3m': 'return3mPct',
   '6m': 'return6mPct',
@@ -66,6 +67,7 @@ export const HORIZON_RET_KEY = {
 /** @param {string|null|undefined} h */
 export function normalizeSectorHorizon(h) {
   const raw = String(h || '1m').trim().toLowerCase();
+  if (raw === '1d' || raw === 'return1dpct') return '1d';
   if (raw === '1m' || raw === 'return1mpct') return '1m';
   if (raw === '3m' || raw === 'return3mpct') return '3m';
   if (raw === '6m' || raw === 'return6mpct') return '6m';

@@ -174,6 +174,7 @@ function buildSectors(hubIndex, snapshots) {
   }
 
   const mcapNow = snapshots && snapshots.mcapNow;
+  const mcapPast1d = snapshots && snapshots.mcapPast1d;
   const mcapPast1m = snapshots && snapshots.mcapPast1m;
   const mcapPast1y = snapshots && snapshots.mcapPast1y;
   const mcapPast6m = snapshots && snapshots.mcapPast6m;
@@ -186,6 +187,9 @@ function buildSectors(hubIndex, snapshots) {
     const companies = block.companies || [];
     const sectorMcap = companies.reduce((s, c) => s + (c.mcapWon || 0), 0);
     sectors[sid] = {
+      return1dPct: (mcapNow && mcapPast1d)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast1d)
+        : null,
       return1mPct: (mcapNow && mcapPast1m)
         ? sectorReturnMcapRatio(companies, mcapNow, mcapPast1m)
         : null,
@@ -214,7 +218,7 @@ export async function buildHubSectors(hubIndex, env, opts = {}) {
   const authKey = getAuthKey(env);
   const session = krxSessionInfo();
   const horizon = opts.horizon != null ? normalizeSectorHorizon(opts.horizon) : null;
-  const horizons = horizon ? [horizon] : ['1m', '3m', '6m', '1y'];
+  const horizons = horizon ? [horizon] : ['1d', '1m', '3m', '6m', '1y'];
   const snapshots = authKey ? await fetchHubSectorMcapSnapshots(authKey, { horizons }) : null;
 
   return {
@@ -225,6 +229,7 @@ export async function buildHubSectors(hubIndex, env, opts = {}) {
     source: snapshots ? 'krx-mcap-ratio' : 'hub_index',
     krxConfigured: !!authKey,
     mcapRecentDd: snapshots ? snapshots.recentDd : null,
+    mcapPast1dDd: snapshots ? snapshots.past1dDd : null,
     mcapPast1mDd: snapshots ? snapshots.past1mDd : null,
     mcapPast3mDd: snapshots ? snapshots.past3mDd : null,
     mcapPast6mDd: snapshots ? snapshots.past6mDd : null,

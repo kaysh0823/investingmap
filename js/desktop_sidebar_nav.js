@@ -10,7 +10,7 @@
     { id: 'home', path: 'index.html', icon: '\u2302', ko: '\uD5C8\uBE0C', en: 'Hub' },
     { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: '\uD83D\uDCA0', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
     { id: 'energy', path: 'energy/korea_energy_map.html', icon: '\u26A1', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
-    { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Grid' },
+    { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Equip.' },
     { id: 'ship', path: 'ship/korea_ship_map.html', icon: '\u2693', ko: '\uC870\uC120', en: 'Ship' },
     { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC704', en: 'Defense' },
     { id: 'kculture', path: 'kculture/korea_kculture_map.html', icon: '\uD83C\uDFAC', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },

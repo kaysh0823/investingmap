@@ -21,8 +21,8 @@
       en: {
         paragraphs: [
           'This content groups listed Korean semiconductor companies on KOSPI and KOSDAQ by value-chain segment—IDM, fabless, foundry, materials, equipment, substrates, and packaging & test—for side-by-side comparison. It is not a flat ticker list: each company’s process role and illustrative global customer and peer links are connected on one screen.',
-          'The table shows market cap, PER, and PBR based on KRX disclosures, plus 52-week price range (price position). The relationship graph is a reference network classified from public news, annual reports, and analyst reports; it does not replace official contracts or ownership. In English mode, market cap is shown in billions USD; in Korean mode, in jo (兆) of won.',
-          'Semiconductors are sensitive to exports, capex, and memory cycles. Use this page as a starting point to understand industry structure; we do not take responsibility for buy or sell decisions. See our <a href="../editorial-policy.html">editorial policy</a> for update cadence and verification.',
+          'The table shows market cap, PER, and PBR based on KRX disclosures, plus position within the 52-week range. The relationship graph is a reference network classified from public news, annual reports, and analyst reports; it does not replace official contracts or ownership. In English mode, market cap is shown in USD billions; in Korean mode, in trillions of won.',
+          'Semiconductors are sensitive to exports, capex, and memory cycles. Use this page as a starting point to understand industry structure; we do not provide buy or sell recommendations. See our <a href="../editorial-policy.html">editorial policy</a> for update cadence and verification.',
         ],
       },
     },
@@ -36,8 +36,8 @@
       },
       en: {
         paragraphs: [
-          'Listed Korean bio and pharma names are grouped by sector—biosimilars, novel drugs, CDMO, devices, diagnostics—with illustrative tech-transfer and pairing links to global big pharma and platform companies. Clinical stage and pipeline notes are summarized in each company’s theme column; check the latest stage in filings before investing.',
-          'Market cap and valuation metrics follow KRX data as of the date shown at the top of the page. Unlisted affiliates or SPAC structures may be omitted from the table. Solid and dashed lines in the graph are editorial markers for pairing types, not legal proof of license agreements.',
+          'Listed Korean bio and pharma companies are grouped by sector—biosimilars, novel drugs, CDMO, devices, diagnostics—with illustrative licensing and partnership relationships to global big pharma and platform companies. Clinical stage and pipeline notes are summarized in each company’s theme column; check the latest stage in filings before investing.',
+          'Market cap and valuation metrics follow KRX data as of the date shown at the top of the page. Unlisted affiliates or SPAC structures may be omitted from the table. Solid and dashed lines in the graph are editorial markers for partnership types, not legal proof of license agreements.',
           'Biotech carries high clinical and regulatory risk. This content is for information only—to help you see domestic industry structure and global links at a glance—and is not investment advice. See our <a href="../disclaimer.html">disclaimer</a> for details.',
         ],
       },
@@ -53,7 +53,7 @@
       en: {
         paragraphs: [
           'Listed companies across the shipbuilding and marine value chain—yards, engines and marine equipment, steel and welding, offshore, shipping, and defense-marine—are grouped on one map. Order backlog and vessel-mix themes are reflected in company notes; verify real-time order disclosures separately.',
-          'Shipbuilding is sensitive to LNG and container-ship cycles, FX, and raw-material prices. Price position in the table shows where the last price sits within the 52-week range as a percentage, useful for comparing peers. Reference links to global yard and shipping peers are shown as gray and solid lines in the graph.',
+          'Shipbuilding is sensitive to LNG and container-ship cycles, FX, and raw-material prices. The 52-week range column shows where the last price sits within the 52-week high/low as a percentage, useful for comparing peers. Reference relationships to global yard and shipping peers are shown as gray and solid lines in the graph.',
           'Classification rules and data sources are described in our <a href="../editorial-policy.html">editorial policy</a>.',
         ],
       },
@@ -68,8 +68,8 @@
       },
       en: {
         paragraphs: [
-          'Listed domestic companies and suppliers are organized by defense and aviation value chain—aircraft and engines, missiles and radar, land systems, naval ships, space and satellites, and civil aviation. Export programs and overseas order themes in Europe and the Middle East appear as reference links in the graph; classified details and contract terms are reflected only within public disclosure.',
-          'Defense stocks are volatile around government budgets, export approvals, and geopolitical events. Do not value names on PER and PBR alone—cross-check Defense Acquisition Program Administration and DART contract filings. This content is for information only, not a securities recommendation.',
+          'Listed domestic companies and suppliers are organized by defense and aviation value chain—aircraft and engines, missiles and radar, land systems, naval ships, space and satellites, and civil aviation. Export programs and overseas order themes in Europe and the Middle East appear as reference relationships in the graph; classified details and contract terms are reflected only within public disclosure.',
+          'Defense stocks are volatile around government budgets, export approvals, and geopolitical events. Do not value companies based solely on PER and PBR—cross-check Defense Acquisition Program Administration and DART contract filings. This content is for information only, not investment advice.',
           'FAQ and data limitations are covered in our <a href="../faq.html">FAQ</a>.',
         ],
       },
@@ -84,7 +84,7 @@
       },
       en: {
         paragraphs: [
-          'Listed names in the robotics and automation ecosystem—factory automation, logistics AMRs, cobots, reducers and servos, vision and sensing, physical-AI software—are classified by sector. Large chaebol affiliates and startup IPOs sit side by side, so compare market cap and KOSPI vs KOSDAQ segment together.',
+          'Listed companies in the robotics and automation ecosystem—factory automation, logistics AMRs, cobots, reducers and servos, vision and sensing, Physical AI software—are classified by sector. Large chaebol affiliates and startup IPOs sit side by side, so compare market cap and KOSPI vs KOSDAQ segment together.',
           'Robotics tracks equipment-investment cycles, manufacturing PMI, and capex at major auto and electronics groups. The graph shows illustrative ties to domestic and overseas equipment makers, integrators, and global robot OEMs; actual delivery mix follows filings.',
           'For editorial policy and related information, see our <a href="../authors.html">editorial & data team</a> page.',
         ],
@@ -100,7 +100,7 @@
       },
       en: {
         paragraphs: [
-          'Covers listed companies across lithium-ion batteries, ESS, solar PV, and wind power. Compare cells, materials, modules, and wind-tower names on one map.',
+          'This map covers listed companies across lithium-ion batteries, ESS, solar PV, and wind power. Compare cells, materials, modules, and wind-tower companies on one map.',
           'Batteries track EV and ESS demand and commodity prices (lithium, nickel); solar and wind follow policy and project-investment cycles. Check business mix in each company’s segment and product columns.',
           'Energy-transition policy changes quickly. Cross-check latest annual reports and Ministry data; see update cadence in our <a href="../editorial-policy.html">editorial policy</a>.',
         ],
@@ -116,8 +116,8 @@
       },
       en: {
         paragraphs: [
-          'Covers listed companies in power equipment, transmission & distribution, and generation OEM—including transformers, switchgear, cables, EPC, and utilities.',
-          'Grid gear tracks transmission-investment cycles; generation and nuclear names are driven by regulation and order books. Check segment and product columns for business mix.',
+          'This map covers listed companies in power equipment, transmission & distribution, and power generation equipment—including transformers, switchgear, cables, EPC, and utilities.',
+          'Grid equipment makers track transmission-investment cycles; generation and nuclear companies are driven by regulation and order books. Check segment and product columns for business mix.',
           'Power policy and tariff frameworks change quickly. Cross-check filings and Korea Power Exchange data; see our <a href="../editorial-policy.html">editorial policy</a>.',
         ],
       },
@@ -132,7 +132,7 @@
       },
       en: {
         paragraphs: [
-          'Maps listed Korean banks and holdings, securities and asset managers, life and P&C insurers, and card/capital names. Compare KRX metrics and illustrative global peer links for KB Financial, Shinhan, Samsung Life, Mirae Asset Securities, and peers.',
+          'This map covers listed Korean banks and holdings, securities and asset managers, life and P&C insurers, and card and consumer-finance companies. Compare KRX metrics and illustrative global peer relationships for KB Financial, Shinhan, Samsung Life, Mirae Asset Securities, and peers.',
           'Financial stocks track policy rates, regulation, credit cycles, and capital ratios. Use segment and product columns for business mix.',
           'Informational only—not investment advice. Cross-check filings and official data; see our <a href="../editorial-policy.html">editorial policy</a>.',
         ],
@@ -148,7 +148,7 @@
       },
       en: {
         paragraphs: [
-          'Maps listed Korean general contractors, housing developers, construction equipment makers, and related holdings. Compare KRX metrics and illustrative global EPC and equipment peer links for Samsung C&T, Hyundai E&C, Daewoo E&C, DL E&C, GS E&C, and peers.',
+          'This map covers listed Korean general contractors, housing developers, construction equipment makers, and related holdings. Compare KRX metrics and illustrative global EPC and equipment peer relationships for Samsung C&T, Hyundai E&C, Daewoo E&C, DL E&C, GS E&C, and peers.',
           'Construction stocks track orders, housing sales, materials, and rates. Use segment and product columns for business mix.',
           'Informational only—not investment advice. Cross-check filings and official data; see our <a href="../editorial-policy.html">editorial policy</a>.',
         ],
@@ -165,8 +165,8 @@
       },
       en: {
         paragraphs: [
-          'Listed names are grouped by K-culture export themes—ramen and packaged food, travel and airlines, cosmetics and beauty, games, fashion, retail, drama and webtoon platforms, and K-pop labels. Use it as a starting point when exploring names tied to global demand around keywords such as Buldak ramen, BTS, or K-drama.',
-          'K-culture stocks are driven heavily by non-financial factors—FX, China and Southeast Asia regulation, platform effects, and artist news. Table metrics are for reference; entertainment, food, and beauty names can see earnings swings from seasonality and one-off events. Global links in the graph illustrate exports and peer-group examples.',
+          'Listed companies are grouped by K-culture export themes—ramen and packaged food, travel and airlines, cosmetics and beauty, games, fashion, retail, drama and webtoon platforms, and K-pop labels. Use it as a starting point when exploring companies tied to global demand around themes such as Buldak ramen, BTS, or K-drama.',
+          'K-culture stocks are driven heavily by non-financial factors—FX, China and Southeast Asia regulation, platform effects, and artist news. Table metrics are for reference; entertainment, food, and beauty companies can see earnings swings from seasonality and one-off events. Global relationships in the graph illustrate exports and peer-group examples.',
           'For investment cautions see our <a href="../disclaimer.html">disclaimer</a>; for site overview see <a href="../about.html">about</a>.',
         ],
       },

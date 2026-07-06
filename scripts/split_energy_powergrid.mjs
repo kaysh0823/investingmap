@@ -68,7 +68,7 @@ function companiesBlock(companies) {
   return `    const koreanCompanies = [\n${companies.map((c) => serializeCompany(c)).join('\n\n')}\n    ];`;
 }
 
-function patchChainsInHtml(html, chains, chainLabelsKo, chainLabelsEn, chainFilterEn) {
+function patchChainsInHtml(html, chains, chainLabelsKo, chainLabelsEn, chainFilterKo, chainFilterEn) {
   const chainList = chains.map((c) => `'${c}'`).join(', ');
   let out = html.replace(
     /const chains = \['all', [^\]]+\];/,
@@ -79,15 +79,47 @@ function patchChainsInHtml(html, chains, chainLabelsKo, chainLabelsEn, chainFilt
     `const chains = [${chainList}];`,
   );
 
-  const labelBlock = chains.map((c) => `            "${c}": "${chainLabelsEn[c] || c}"`).join(',\n');
-  out = out.replace(/"chainLabel": \{[\s\S]*?\n        \},/, `"chainLabel": {\n${labelBlock}\n        },`);
+  const koLabelBlock = chains.map((c) => `            "${c}": "${chainLabelsKo[c] || c}"`).join(',\n');
+  out = out.replace(
+    /"ko": \{[\s\S]*?"chainLabel": \{[\s\S]*?\n        \},/,
+    (m) => m.replace(/"chainLabel": \{[\s\S]*?\n        \},/, `"chainLabel": {\n${koLabelBlock}\n        },`),
+  );
 
-  const filterBlock = chains.map((c) => `            "${c}": "${chainFilterEn[c] || c}"`).join(',\n');
-  out = out.replace(/"chainFilter": \{[\s\S]*?\n        \},/, `"chainFilter": {\n${filterBlock}\n        },`);
+  const enLabelBlock = chains.map((c) => `            "${c}": "${chainLabelsEn[c] || c}"`).join(',\n');
+  out = out.replace(
+    /"en": \{[\s\S]*?"chainLabel": \{[\s\S]*?\n        \},/,
+    (m) => m.replace(/"chainLabel": \{[\s\S]*?\n        \},/, `"chainLabel": {\n${enLabelBlock}\n        },`),
+  );
+
+  const koFilterBlock = chains.map((c) => `            "${c}": "${chainFilterKo[c] || c}"`).join(',\n');
+  out = out.replace(
+    /"ko": \{[\s\S]*?"chainFilter": \{[\s\S]*?\n        \},/,
+    (m) => m.replace(/"chainFilter": \{[\s\S]*?\n        \},/, `"chainFilter": {\n${koFilterBlock}\n        },`),
+  );
+
+  const enFilterBlock = chains.map((c) => `            "${c}": "${chainFilterEn[c] || c}"`).join(',\n');
+  out = out.replace(
+    /"en": \{[\s\S]*?"chainFilter": \{[\s\S]*?\n        \},/,
+    (m) => m.replace(/"chainFilter": \{[\s\S]*?\n        \},/, `"chainFilter": {\n${enFilterBlock}\n        },`),
+  );
 
   return out;
 }
 
+const ENERGY_CHAIN_KO = {
+  '2차전지': '2차전지·리튬이온',
+  ESS: 'ESS·에너지저장',
+  배터리: '배터리 팩·BMS',
+  태양광: '태양광',
+  풍력: '풍력',
+};
+const ENERGY_FILTER_KO = {
+  '2차전지': '2차전지',
+  ESS: 'ESS',
+  배터리: '배터리',
+  태양광: '태양광',
+  풍력: '풍력',
+};
 const ENERGY_CHAIN_EN = {
   '2차전지': 'Lithium-ion batteries',
   ESS: 'Energy storage systems',
@@ -101,6 +133,16 @@ const ENERGY_FILTER_EN = {
   배터리: 'Battery',
   태양광: 'Solar',
   풍력: 'Wind',
+};
+const POWER_CHAIN_KO = {
+  전력설비: '전력설비·배전반',
+  송배전: '송배전·케이블',
+  발전설비: '발전·원자력 설비',
+};
+const POWER_FILTER_KO = {
+  전력설비: '전력설비',
+  송배전: '송배전',
+  발전설비: '발전설비',
 };
 const POWER_CHAIN_EN = {
   전력설비: 'Switchgear & transformers',
@@ -136,7 +178,7 @@ function main() {
     /const koreanCompanies\s*=\s*\[[\s\S]*?\n    \];/,
     companiesBlock(energyCos),
   );
-  energyHtml = patchChainsInHtml(energyHtml, ENERGY_CHAINS, {}, ENERGY_CHAIN_EN, ENERGY_FILTER_EN);
+  energyHtml = patchChainsInHtml(energyHtml, ENERGY_CHAINS, ENERGY_CHAIN_KO, ENERGY_CHAIN_EN, ENERGY_FILTER_KO, ENERGY_FILTER_EN);
   energyHtml = energyHtml
     .replace(/에너지\/파워플랜트/g, '에너지')
     .replace(/Energy & Power Plant/g, 'Energy')
@@ -160,7 +202,7 @@ function main() {
     /const koreanCompanies\s*=\s*\[[\s\S]*?\n    \];/,
     companiesBlock(powerCos),
   );
-  powerHtml = patchChainsInHtml(powerHtml, POWER_CHAINS, {}, POWER_CHAIN_EN, POWER_FILTER_EN);
+  powerHtml = patchChainsInHtml(powerHtml, POWER_CHAINS, POWER_CHAIN_KO, POWER_CHAIN_EN, POWER_FILTER_KO, POWER_FILTER_EN);
 
   fs.writeFileSync(ENERGY_HTML, energyHtml, 'utf8');
   fs.writeFileSync(POWER_HTML, powerHtml, 'utf8');

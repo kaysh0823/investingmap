@@ -483,7 +483,8 @@
   <title>한국 K컬처 산업 투자 지도 / Korea K-Culture Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-  <script src="../js/live_quotes.js?v=5"></script>
+    <script src="../js/return_live.js?v=1"></script>
+<script src="../js/live_quotes.js?v=5"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1769,8 +1770,8 @@ body.im-tab-table thead th {
     <h1 id="hdr-title">🇰🇷 한국 K컬처 산업 투자 지도</h1>
     <p id="hdr-subtitle">라면·식품, 여행·레저, 화장품, 드라마·웹툰·미디어, K-pop 관련 상장사·글로벌 참고 네트워크</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>55</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>37</span> · KOSDAQ <span>18</span></div>
+      <div class="badge" id="badge-total">Total <span>56</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>38</span> · KOSDAQ <span>18</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1782,10 +1783,10 @@ body.im-tab-table thead th {
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">K컬처·식품·뷰티·미디어 상장 종목 지도</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>K-culture, food, beauty &amp; media stocks</h2>
     <p lang="ko" class="im-seo-body-p">라면·가공식품, 여행·항공·레저, 화장품·뷰티, 드라마·웹툰·스트리밍 IP, K-pop 레이블 등 K컬처 수출 테마별 KOSPI·KOSDAQ 상장사를 키워드 중심으로 분류합니다. 삼양식품, 하이브, NAVER, 아모레퍼시픽 등 K-culture stocks의 시가총액·PER·PBR과 글로벌 수출·플랫폼 연계 예시를 표와 그래프로 제공합니다. 불닭볶음면, BTS, K드라마 등 검색 수요와 연결된 국내 상장주를 탐색하는 출발점으로 활용할 수 있습니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Groups listed names by K-culture export themes—ramen and food, travel and airlines, beauty, drama and webtoon IP, streaming, and K-pop labels. Explore K-culture stocks including Samyang Foods, HYBE, NAVER, and Amorepacific with KRX metrics and illustrative global demand links tied to keywords like Buldak ramen, BTS, and K-drama.</p>
+    <p lang="en" class="im-seo-body-p" hidden>This map groups listed companies by K-culture export themes—ramen and food, travel and airlines, beauty, drama and webtoon IP, streaming, and K-pop labels. Explore K-culture stocks including Samyang Foods, HYBE, NAVER, and Amorepacific with KRX metrics and illustrative global demand relationships tied to themes such as Buldak ramen, BTS, and K-drama.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-06-30 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-06-30.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-06 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-06.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1834,6 +1835,11 @@ body.im-tab-table thead th {
               <th id="th-name" onclick="sortTable('name')">기업명</th>
               <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
+              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">전일대비</th>
+              <th id="th-ret1m" class="ret-col" onclick="sortTable('ret1mPct')">1개월</th>
+              <th id="th-ret3m" class="ret-col" onclick="sortTable('ret3mPct')">3개월</th>
+              <th id="th-ret6m" class="ret-col" onclick="sortTable('ret6mPct')">6개월</th>
+              <th id="th-ret1y" class="ret-col" onclick="sortTable('ret1yPct')">1년</th>
               <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
               <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
               <th id="th-position" onclick="sortTable('quotePosition')">주가 위치</th>
@@ -1851,13 +1857,13 @@ body.im-tab-table thead th {
           <tbody id="table-body">
 <!-- investingmap-seo-prerender-start -->
           <tr data-ticker="035420">
-      <td><div class="company-name">NAVER</div></td>
+      <td><div class="company-name">NAVER</div><div class="company-name-sub">Naver</div></td>
       <td><span class="ticker">035420</span></td>
-      <td class="quote-cell">199,000</td>
+      <td class="quote-cell">196,600</td>
       <td class="quote-cell">304,000</td>
       <td class="quote-cell">190,300</td>
-      <td class="quote-cell">7.7%</td>
-      <td class="quote-cell">44.8</td>
+      <td class="quote-cell">5.5%</td>
+      <td class="quote-cell">41.3</td>
       <td class="mcap-cell">38.75조원</td>
       <td class="fin-cell">18.99</td>
       <td class="fin-cell">1.34</td>
@@ -1870,11 +1876,11 @@ body.im-tab-table thead th {
           <tr data-ticker="035720">
       <td><div class="company-name">카카오</div><div class="company-name-sub">Kakao</div></td>
       <td><span class="ticker">035720</span></td>
-      <td class="quote-cell">34,550</td>
+      <td class="quote-cell">35,600</td>
       <td class="quote-cell">69,700</td>
       <td class="quote-cell">32,250</td>
-      <td class="quote-cell">6.1%</td>
-      <td class="quote-cell">31.3</td>
+      <td class="quote-cell">8.9%</td>
+      <td class="quote-cell">32.1</td>
       <td class="mcap-cell">18.33조원</td>
       <td class="fin-cell">37.12</td>
       <td class="fin-cell">1.62</td>
@@ -1885,13 +1891,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="278470">
-      <td><div class="company-name">에이피알</div><div class="company-name-sub">APR</div></td>
+      <td><div class="company-name">에이피알</div><div class="company-name-sub">Apr</div></td>
       <td><span class="ticker">278470</span></td>
-      <td class="quote-cell">385,500</td>
+      <td class="quote-cell">378,500</td>
       <td class="quote-cell">473,000</td>
       <td class="quote-cell">133,900</td>
-      <td class="quote-cell">74.2%</td>
-      <td class="quote-cell">74.9</td>
+      <td class="quote-cell">72.1%</td>
+      <td class="quote-cell">67.3</td>
       <td class="mcap-cell">14.75조원</td>
       <td class="fin-cell">50.74</td>
       <td class="fin-cell">33.08</td>
@@ -1902,13 +1908,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">Estée Lauder, LVMH</div></td>
     </tr>
           <tr data-ticker="259960">
-      <td><div class="company-name">크래프톤</div><div class="company-name-sub">KRAFTON</div></td>
+      <td><div class="company-name">크래프톤</div><div class="company-name-sub">Krafton</div></td>
       <td><span class="ticker">259960</span></td>
-      <td class="quote-cell">236,000</td>
-      <td class="quote-cell">372,000</td>
+      <td class="quote-cell">234,500</td>
+      <td class="quote-cell">367,500</td>
       <td class="quote-cell">199,300</td>
-      <td class="quote-cell">21.3%</td>
-      <td class="quote-cell">55.1</td>
+      <td class="quote-cell">20.9%</td>
+      <td class="quote-cell">61.3</td>
       <td class="mcap-cell">10.93조원</td>
       <td class="fin-cell">14.40</td>
       <td class="fin-cell">1.50</td>
@@ -1919,13 +1925,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="352820">
-      <td><div class="company-name">하이브</div><div class="company-name-sub">HYBE</div></td>
+      <td><div class="company-name">하이브</div><div class="company-name-sub">Hybe</div></td>
       <td><span class="ticker">352820</span></td>
-      <td class="quote-cell">192,100</td>
+      <td class="quote-cell">215,000</td>
       <td class="quote-cell">405,500</td>
       <td class="quote-cell">174,600</td>
-      <td class="quote-cell">7.6%</td>
-      <td class="quote-cell">38.7</td>
+      <td class="quote-cell">17.5%</td>
+      <td class="quote-cell">46.5</td>
       <td class="mcap-cell">9.70조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">2.94</td>
@@ -1936,13 +1942,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">Spotify, YouTube (Google), Universal Music Group</div></td>
     </tr>
           <tr data-ticker="003230">
-      <td><div class="company-name">삼양식품</div><div class="company-name-sub">SamyangFoods</div></td>
+      <td><div class="company-name">삼양식품</div><div class="company-name-sub">Samyang Foods</div></td>
       <td><span class="ticker">003230</span></td>
-      <td class="quote-cell">1,119,000</td>
+      <td class="quote-cell">1,098,000</td>
       <td class="quote-cell">1,665,000</td>
       <td class="quote-cell">981,000</td>
-      <td class="quote-cell">20.2%</td>
-      <td class="quote-cell">73.8</td>
+      <td class="quote-cell">17.1%</td>
+      <td class="quote-cell">65.7</td>
       <td class="mcap-cell">8.63조원</td>
       <td class="fin-cell">21.95</td>
       <td class="fin-cell">6.87</td>
@@ -1955,13 +1961,13 @@ body.im-tab-table thead th {
           <tr data-ticker="004170">
       <td><div class="company-name">신세계</div><div class="company-name-sub">Shinsegae Co.,Ltd</div></td>
       <td><span class="ticker">004170</span></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">94.3</td>
+      <td class="quote-cell">690,000</td>
+      <td class="quote-cell">792,000</td>
+      <td class="quote-cell">160,800</td>
+      <td class="quote-cell">83.8%</td>
+      <td class="quote-cell">93.6</td>
       <td class="mcap-cell">6.56조원</td>
-      <td class="fin-cell">17.14</td>
+      <td class="fin-cell">437.11</td>
       <td class="fin-cell">1.37</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">쇼핑/유통</span></td>
@@ -1972,11 +1978,11 @@ body.im-tab-table thead th {
           <tr data-ticker="090430">
       <td><div class="company-name">아모레퍼시픽</div><div class="company-name-sub">AMOREPACIFIC CORPORATION</div></td>
       <td><span class="ticker">090430</span></td>
-      <td class="quote-cell">105,700</td>
+      <td class="quote-cell">121,400</td>
       <td class="quote-cell">169,000</td>
       <td class="quote-cell">94,000</td>
-      <td class="quote-cell">15.6%</td>
-      <td class="quote-cell">68.7</td>
+      <td class="quote-cell">36.5%</td>
+      <td class="quote-cell">73.8</td>
       <td class="mcap-cell">6.55조원</td>
       <td class="fin-cell">32.79</td>
       <td class="fin-cell">1.42</td>
@@ -1987,13 +1993,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">LVMH, Estée Lauder, 한류 수요 흐름(참고)</div></td>
     </tr>
           <tr data-ticker="036570">
-      <td><div class="company-name">NC</div></td>
+      <td><div class="company-name">NC</div><div class="company-name-sub">Nc</div></td>
       <td><span class="ticker">036570</span></td>
-      <td class="quote-cell">257,500</td>
+      <td class="quote-cell">252,500</td>
       <td class="quote-cell">343,500</td>
       <td class="quote-cell">176,100</td>
-      <td class="quote-cell">48.6%</td>
-      <td class="quote-cell">66.6</td>
+      <td class="quote-cell">45.6%</td>
+      <td class="quote-cell">74.3</td>
       <td class="mcap-cell">5.67조원</td>
       <td class="fin-cell">14.71</td>
       <td class="fin-cell">1.52</td>
@@ -2006,13 +2012,13 @@ body.im-tab-table thead th {
           <tr data-ticker="023530">
       <td><div class="company-name">롯데쇼핑</div><div class="company-name-sub">LOTTE SHOPPING CO., LTD.</div></td>
       <td><span class="ticker">023530</span></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">88.0</td>
+      <td class="quote-cell">172,900</td>
+      <td class="quote-cell">211,000</td>
+      <td class="quote-cell">62,700</td>
+      <td class="quote-cell">74.3%</td>
+      <td class="quote-cell">75.1</td>
       <td class="mcap-cell">5.53조원</td>
-      <td class="fin-cell">14.28</td>
+      <td class="fin-cell">107.24</td>
       <td class="fin-cell">0.36</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">쇼핑/유통</span></td>
@@ -2021,13 +2027,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="271560">
-      <td><div class="company-name">오리온</div><div class="company-name-sub">ORION</div></td>
+      <td><div class="company-name">오리온</div><div class="company-name-sub">Orion</div></td>
       <td><span class="ticker">271560</span></td>
-      <td class="quote-cell">131,900</td>
+      <td class="quote-cell">136,900</td>
       <td class="quote-cell">150,100</td>
       <td class="quote-cell">99,000</td>
-      <td class="quote-cell">64.4%</td>
-      <td class="quote-cell">84.6</td>
+      <td class="quote-cell">74.2%</td>
+      <td class="quote-cell">80.8</td>
       <td class="mcap-cell">5.36조원</td>
       <td class="fin-cell">14.00</td>
       <td class="fin-cell">1.41</td>
@@ -2040,13 +2046,13 @@ body.im-tab-table thead th {
           <tr data-ticker="069960">
       <td><div class="company-name">현대백화점</div><div class="company-name-sub">HYUNDAI DEPARTMENT STORE CO.,LTD</div></td>
       <td><span class="ticker">069960</span></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">95.1</td>
+      <td class="quote-cell">176,500</td>
+      <td class="quote-cell">222,000</td>
+      <td class="quote-cell">67,900</td>
+      <td class="quote-cell">70.5%</td>
+      <td class="quote-cell">91.1</td>
       <td class="mcap-cell">3.82조원</td>
-      <td class="fin-cell">13.33</td>
+      <td class="fin-cell">18.52</td>
       <td class="fin-cell">0.84</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">쇼핑/유통</span></td>
@@ -2057,11 +2063,11 @@ body.im-tab-table thead th {
           <tr data-ticker="051900">
       <td><div class="company-name">LG생활건강</div><div class="company-name-sub">LG H&amp;H</div></td>
       <td><span class="ticker">051900</span></td>
-      <td class="quote-cell">229,500</td>
+      <td class="quote-cell">247,500</td>
       <td class="quote-cell">346,500</td>
       <td class="quote-cell">210,000</td>
-      <td class="quote-cell">14.3%</td>
-      <td class="quote-cell">63.1</td>
+      <td class="quote-cell">27.5%</td>
+      <td class="quote-cell">70.5</td>
       <td class="mcap-cell">3.70조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.74</td>
@@ -2074,11 +2080,11 @@ body.im-tab-table thead th {
           <tr data-ticker="111770">
       <td><div class="company-name">영원무역</div><div class="company-name-sub">Youngone Corporation</div></td>
       <td><span class="ticker">111770</span></td>
-      <td class="quote-cell">72,600</td>
+      <td class="quote-cell">83,800</td>
       <td class="quote-cell">103,200</td>
       <td class="quote-cell">54,900</td>
-      <td class="quote-cell">36.6%</td>
-      <td class="quote-cell">58.8</td>
+      <td class="quote-cell">59.8%</td>
+      <td class="quote-cell">82.9</td>
       <td class="mcap-cell">3.67조원</td>
       <td class="fin-cell">7.17</td>
       <td class="fin-cell">0.86</td>
@@ -2091,11 +2097,11 @@ body.im-tab-table thead th {
           <tr data-ticker="251270">
       <td><div class="company-name">넷마블</div><div class="company-name-sub">Netmarble Corporation</div></td>
       <td><span class="ticker">251270</span></td>
-      <td class="quote-cell">37,350</td>
+      <td class="quote-cell">38,300</td>
       <td class="quote-cell">69,000</td>
       <td class="quote-cell">34,450</td>
-      <td class="quote-cell">8.4%</td>
-      <td class="quote-cell">38.7</td>
+      <td class="quote-cell">11.1%</td>
+      <td class="quote-cell">43.4</td>
       <td class="mcap-cell">3.48조원</td>
       <td class="fin-cell">15.46</td>
       <td class="fin-cell">0.64</td>
@@ -2106,13 +2112,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="383220">
-      <td><div class="company-name">F&amp;F</div></td>
+      <td><div class="company-name">F&amp;F</div><div class="company-name-sub">F&amp;f</div></td>
       <td><span class="ticker">383220</span></td>
-      <td class="quote-cell">77,200</td>
+      <td class="quote-cell">79,000</td>
       <td class="quote-cell">89,000</td>
       <td class="quote-cell">58,000</td>
-      <td class="quote-cell">61.9%</td>
-      <td class="quote-cell">88.5</td>
+      <td class="quote-cell">67.7%</td>
+      <td class="quote-cell">86.9</td>
       <td class="mcap-cell">3.29조원</td>
       <td class="fin-cell">8.10</td>
       <td class="fin-cell">1.71</td>
@@ -2125,11 +2131,11 @@ body.im-tab-table thead th {
           <tr data-ticker="097950">
       <td><div class="company-name">CJ제일제당</div><div class="company-name-sub">CJ CheilJedang Corp</div></td>
       <td><span class="ticker">097950</span></td>
-      <td class="quote-cell">185,100</td>
-      <td class="quote-cell">270,000</td>
+      <td class="quote-cell">199,100</td>
+      <td class="quote-cell">266,500</td>
       <td class="quote-cell">172,600</td>
-      <td class="quote-cell">12.8%</td>
-      <td class="quote-cell">58.7</td>
+      <td class="quote-cell">28.2%</td>
+      <td class="quote-cell">62.2</td>
       <td class="mcap-cell">2.99조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.45</td>
@@ -2142,11 +2148,11 @@ body.im-tab-table thead th {
           <tr data-ticker="214150">
       <td><div class="company-name">클래시스</div><div class="company-name-sub">CLASSYS Inc.</div></td>
       <td><span class="ticker">214150</span></td>
-      <td class="quote-cell">46,600</td>
+      <td class="quote-cell">45,400</td>
       <td class="quote-cell">77,600</td>
       <td class="quote-cell">40,150</td>
-      <td class="quote-cell">17.2%</td>
-      <td class="quote-cell">69.1</td>
+      <td class="quote-cell">14%</td>
+      <td class="quote-cell">60.9</td>
       <td class="mcap-cell">2.87조원</td>
       <td class="fin-cell">21.79</td>
       <td class="fin-cell">5.18</td>
@@ -2159,11 +2165,11 @@ body.im-tab-table thead th {
           <tr data-ticker="263750">
       <td><div class="company-name">펄어비스</div><div class="company-name-sub">PearlAbyss Corp.</div></td>
       <td><span class="ticker">263750</span></td>
-      <td class="quote-cell">36,200</td>
+      <td class="quote-cell">36,400</td>
       <td class="quote-cell">77,400</td>
       <td class="quote-cell">29,000</td>
-      <td class="quote-cell">14.9%</td>
-      <td class="quote-cell">41.7</td>
+      <td class="quote-cell">15.3%</td>
+      <td class="quote-cell">40.3</td>
       <td class="mcap-cell">2.64조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">3.16</td>
@@ -2176,11 +2182,11 @@ body.im-tab-table thead th {
           <tr data-ticker="139480">
       <td><div class="company-name">이마트</div><div class="company-name-sub">E-MART Co., Ltd.</div></td>
       <td><span class="ticker">139480</span></td>
-      <td class="quote-cell">82,400</td>
+      <td class="quote-cell">85,100</td>
       <td class="quote-cell">136,400</td>
       <td class="quote-cell">70,300</td>
-      <td class="quote-cell">18.3%</td>
-      <td class="quote-cell">58.2</td>
+      <td class="quote-cell">22.4%</td>
+      <td class="quote-cell">58.3</td>
       <td class="mcap-cell">2.44조원</td>
       <td class="fin-cell">17.43</td>
       <td class="fin-cell">0.22</td>
@@ -2193,11 +2199,11 @@ body.im-tab-table thead th {
           <tr data-ticker="483650">
       <td><div class="company-name">달바글로벌</div><div class="company-name-sub">d'Alba Global</div></td>
       <td><span class="ticker">483650</span></td>
-      <td class="quote-cell">231,500</td>
+      <td class="quote-cell">218,000</td>
       <td class="quote-cell">274,500</td>
       <td class="quote-cell">116,200</td>
-      <td class="quote-cell">72.8%</td>
-      <td class="quote-cell">91.1</td>
+      <td class="quote-cell">64.3%</td>
+      <td class="quote-cell">84.9</td>
       <td class="mcap-cell">2.42조원</td>
       <td class="fin-cell">29.38</td>
       <td class="fin-cell">12.09</td>
@@ -2210,11 +2216,11 @@ body.im-tab-table thead th {
           <tr data-ticker="004370">
       <td><div class="company-name">농심</div><div class="company-name-sub">Nongshim</div></td>
       <td><span class="ticker">004370</span></td>
-      <td class="quote-cell">335,500</td>
+      <td class="quote-cell">352,500</td>
       <td class="quote-cell">579,000</td>
       <td class="quote-cell">319,000</td>
-      <td class="quote-cell">6.3%</td>
-      <td class="quote-cell">53.3</td>
+      <td class="quote-cell">12.9%</td>
+      <td class="quote-cell">58.5</td>
       <td class="mcap-cell">2.30조원</td>
       <td class="fin-cell">12.87</td>
       <td class="fin-cell">0.78</td>
@@ -2227,11 +2233,11 @@ body.im-tab-table thead th {
           <tr data-ticker="257720">
       <td><div class="company-name">실리콘투</div><div class="company-name-sub">SILICON 2 Co.,Ltd.</div></td>
       <td><span class="ticker">257720</span></td>
-      <td class="quote-cell">31,650</td>
-      <td class="quote-cell">63,100</td>
+      <td class="quote-cell">37,300</td>
+      <td class="quote-cell">57,100</td>
       <td class="quote-cell">29,850</td>
-      <td class="quote-cell">5.4%</td>
-      <td class="quote-cell">37.5</td>
+      <td class="quote-cell">27.3%</td>
+      <td class="quote-cell">64.7</td>
       <td class="mcap-cell">2.27조원</td>
       <td class="fin-cell">12.57</td>
       <td class="fin-cell">4.97</td>
@@ -2244,11 +2250,11 @@ body.im-tab-table thead th {
           <tr data-ticker="081660">
       <td><div class="company-name">미스토홀딩스</div><div class="company-name-sub">Misto Holdings Corporation</div></td>
       <td><span class="ticker">081660</span></td>
-      <td class="quote-cell">41,450</td>
+      <td class="quote-cell">45,700</td>
       <td class="quote-cell">55,800</td>
       <td class="quote-cell">35,400</td>
-      <td class="quote-cell">29.7%</td>
-      <td class="quote-cell">80.6</td>
+      <td class="quote-cell">50.5%</td>
+      <td class="quote-cell">86.7</td>
       <td class="mcap-cell">2.27조원</td>
       <td class="fin-cell">10.53</td>
       <td class="fin-cell">1.17</td>
@@ -2259,13 +2265,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="008770">
-      <td><div class="company-name">호텔신라</div><div class="company-name-sub">HotelShilla</div></td>
+      <td><div class="company-name">호텔신라</div><div class="company-name-sub">Hotel Shilla</div></td>
       <td><span class="ticker">008770</span></td>
-      <td class="quote-cell">47,150</td>
+      <td class="quote-cell">51,100</td>
       <td class="quote-cell">70,300</td>
       <td class="quote-cell">39,700</td>
-      <td class="quote-cell">24.3%</td>
-      <td class="quote-cell">62.6</td>
+      <td class="quote-cell">37.3%</td>
+      <td class="quote-cell">55.5</td>
       <td class="mcap-cell">2.18조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.90</td>
@@ -2278,11 +2284,11 @@ body.im-tab-table thead th {
           <tr data-ticker="007070">
       <td><div class="company-name">GS리테일</div><div class="company-name-sub">GS Retail</div></td>
       <td><span class="ticker">007070</span></td>
-      <td class="quote-cell">23,500</td>
+      <td class="quote-cell">24,950</td>
       <td class="quote-cell">29,950</td>
       <td class="quote-cell">15,610</td>
-      <td class="quote-cell">55%</td>
-      <td class="quote-cell">79.3</td>
+      <td class="quote-cell">65.1%</td>
+      <td class="quote-cell">86.4</td>
       <td class="mcap-cell">2.05조원</td>
       <td class="fin-cell">47.21</td>
       <td class="fin-cell">0.62</td>
@@ -2295,11 +2301,11 @@ body.im-tab-table thead th {
           <tr data-ticker="161890">
       <td><div class="company-name">한국콜마</div><div class="company-name-sub">KOLMAR KOREA</div></td>
       <td><span class="ticker">161890</span></td>
-      <td class="quote-cell">99,500</td>
-      <td class="quote-cell">110,700</td>
+      <td class="quote-cell">116,300</td>
+      <td class="quote-cell">123,000</td>
       <td class="quote-cell">60,600</td>
-      <td class="quote-cell">77.6%</td>
-      <td class="quote-cell">91.6</td>
+      <td class="quote-cell">89.3%</td>
+      <td class="quote-cell">93.7</td>
       <td class="mcap-cell">2.04조원</td>
       <td class="fin-cell">16.30</td>
       <td class="fin-cell">2.24</td>
@@ -2312,11 +2318,11 @@ body.im-tab-table thead th {
           <tr data-ticker="035900">
       <td><div class="company-name">JYP Ent.</div><div class="company-name-sub">JYP Entertainment Corporation</div></td>
       <td><span class="ticker">035900</span></td>
-      <td class="quote-cell">51,400</td>
+      <td class="quote-cell">53,900</td>
       <td class="quote-cell">88,500</td>
       <td class="quote-cell">46,950</td>
-      <td class="quote-cell">10.7%</td>
-      <td class="quote-cell">54.4</td>
+      <td class="quote-cell">16.7%</td>
+      <td class="quote-cell">55.2</td>
       <td class="mcap-cell">1.99조원</td>
       <td class="fin-cell">11.54</td>
       <td class="fin-cell">2.98</td>
@@ -2329,11 +2335,11 @@ body.im-tab-table thead th {
           <tr data-ticker="041510">
       <td><div class="company-name">에스엠</div><div class="company-name-sub">SM ENTERTAINMENT CO., Ltd.</div></td>
       <td><span class="ticker">041510</span></td>
-      <td class="quote-cell">70,800</td>
+      <td class="quote-cell">77,200</td>
       <td class="quote-cell">155,100</td>
       <td class="quote-cell">65,600</td>
-      <td class="quote-cell">5.8%</td>
-      <td class="quote-cell">46.5</td>
+      <td class="quote-cell">13%</td>
+      <td class="quote-cell">53.9</td>
       <td class="mcap-cell">1.91조원</td>
       <td class="fin-cell">5.51</td>
       <td class="fin-cell">1.91</td>
@@ -2346,11 +2352,11 @@ body.im-tab-table thead th {
           <tr data-ticker="192820">
       <td><div class="company-name">코스맥스</div><div class="company-name-sub">COSMAX, INC.</div></td>
       <td><span class="ticker">192820</span></td>
-      <td class="quote-cell">154,900</td>
-      <td class="quote-cell">285,000</td>
+      <td class="quote-cell">178,000</td>
+      <td class="quote-cell">270,000</td>
       <td class="quote-cell">141,000</td>
-      <td class="quote-cell">9.7%</td>
-      <td class="quote-cell">49.9</td>
+      <td class="quote-cell">28.7%</td>
+      <td class="quote-cell">61.4</td>
       <td class="mcap-cell">1.91조원</td>
       <td class="fin-cell">15.54</td>
       <td class="fin-cell">3.43</td>
@@ -2363,11 +2369,11 @@ body.im-tab-table thead th {
           <tr data-ticker="462870">
       <td><div class="company-name">시프트업</div><div class="company-name-sub">SHIFT UP</div></td>
       <td><span class="ticker">462870</span></td>
-      <td class="quote-cell">32,900</td>
-      <td class="quote-cell">49,300</td>
+      <td class="quote-cell">34,850</td>
+      <td class="quote-cell">45,850</td>
       <td class="quote-cell">27,500</td>
-      <td class="quote-cell">24.8%</td>
-      <td class="quote-cell">76.6</td>
+      <td class="quote-cell">40.1%</td>
+      <td class="quote-cell">81.3</td>
       <td class="mcap-cell">1.89조원</td>
       <td class="fin-cell">9.76</td>
       <td class="fin-cell">2.02</td>
@@ -2380,11 +2386,11 @@ body.im-tab-table thead th {
           <tr data-ticker="002790">
       <td><div class="company-name">아모레퍼시픽홀딩스</div><div class="company-name-sub">AMOREPACIFIC Holdings</div></td>
       <td><span class="ticker">002790</span></td>
-      <td class="quote-cell">21,800</td>
+      <td class="quote-cell">24,350</td>
       <td class="quote-cell">35,950</td>
       <td class="quote-cell">19,950</td>
-      <td class="quote-cell">11.6%</td>
-      <td class="quote-cell">66.2</td>
+      <td class="quote-cell">27.5%</td>
+      <td class="quote-cell">68.2</td>
       <td class="mcap-cell">1.88조원</td>
       <td class="fin-cell">18.11</td>
       <td class="fin-cell">0.64</td>
@@ -2395,13 +2401,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="192080">
-      <td><div class="company-name">더블유게임즈</div><div class="company-name-sub">DoubleUGames</div></td>
+      <td><div class="company-name">더블유게임즈</div><div class="company-name-sub">Double UGames</div></td>
       <td><span class="ticker">192080</span></td>
-      <td class="quote-cell">63,700</td>
+      <td class="quote-cell">65,100</td>
       <td class="quote-cell">76,500</td>
       <td class="quote-cell">47,000</td>
-      <td class="quote-cell">56.6%</td>
-      <td class="quote-cell">73.6</td>
+      <td class="quote-cell">61.4%</td>
+      <td class="quote-cell">70.2</td>
       <td class="mcap-cell">1.50조원</td>
       <td class="fin-cell">10.68</td>
       <td class="fin-cell">1.15</td>
@@ -2414,11 +2420,11 @@ body.im-tab-table thead th {
           <tr data-ticker="032350">
       <td><div class="company-name">롯데관광개발</div><div class="company-name-sub">LOTTE TOUR DEVELOPMENT CO., LTD</div></td>
       <td><span class="ticker">032350</span></td>
-      <td class="quote-cell">14,270</td>
+      <td class="quote-cell">15,330</td>
       <td class="quote-cell">27,700</td>
       <td class="quote-cell">14,080</td>
-      <td class="quote-cell">1.4%</td>
-      <td class="quote-cell">32.9</td>
+      <td class="quote-cell">9.2%</td>
+      <td class="quote-cell">31.1</td>
       <td class="mcap-cell">1.42조원</td>
       <td class="fin-cell">50.06</td>
       <td class="fin-cell">3.81</td>
@@ -2429,13 +2435,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">Marriott, Disney</div></td>
     </tr>
           <tr data-ticker="007310">
-      <td><div class="company-name">오뚜기</div><div class="company-name-sub">OTOKI</div></td>
+      <td><div class="company-name">오뚜기</div><div class="company-name-sub">Otoki</div></td>
       <td><span class="ticker">007310</span></td>
-      <td class="quote-cell">303,000</td>
+      <td class="quote-cell">317,000</td>
       <td class="quote-cell">470,000</td>
       <td class="quote-cell">290,500</td>
-      <td class="quote-cell">7%</td>
-      <td class="quote-cell">54.6</td>
+      <td class="quote-cell">14.8%</td>
+      <td class="quote-cell">61.6</td>
       <td class="mcap-cell">1.32조원</td>
       <td class="fin-cell">16.25</td>
       <td class="fin-cell">0.55</td>
@@ -2446,13 +2452,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">Nestlé</div></td>
     </tr>
           <tr data-ticker="181710">
-      <td><div class="company-name">NHN</div></td>
+      <td><div class="company-name">NHN</div><div class="company-name-sub">Nhn</div></td>
       <td><span class="ticker">181710</span></td>
-      <td class="quote-cell">35,200</td>
+      <td class="quote-cell">37,000</td>
       <td class="quote-cell">64,900</td>
       <td class="quote-cell">24,650</td>
-      <td class="quote-cell">26.2%</td>
-      <td class="quote-cell">52.9</td>
+      <td class="quote-cell">30.7%</td>
+      <td class="quote-cell">57.7</td>
       <td class="mcap-cell">1.30조원</td>
       <td class="fin-cell">38.91</td>
       <td class="fin-cell">0.84</td>
@@ -2465,11 +2471,11 @@ body.im-tab-table thead th {
           <tr data-ticker="280360">
       <td><div class="company-name">롯데웰푸드</div><div class="company-name-sub">LOTTE WELLFOOD</div></td>
       <td><span class="ticker">280360</span></td>
-      <td class="quote-cell">95,300</td>
+      <td class="quote-cell">104,200</td>
       <td class="quote-cell">136,400</td>
       <td class="quote-cell">90,000</td>
-      <td class="quote-cell">11.4%</td>
-      <td class="quote-cell">54.9</td>
+      <td class="quote-cell">30.6%</td>
+      <td class="quote-cell">61.3</td>
       <td class="mcap-cell">1.00조원</td>
       <td class="fin-cell">13.25</td>
       <td class="fin-cell">0.44</td>
@@ -2482,11 +2488,11 @@ body.im-tab-table thead th {
           <tr data-ticker="122870">
       <td><div class="company-name">와이지엔터테인먼트</div><div class="company-name-sub">YG Entertainment Inc.</div></td>
       <td><span class="ticker">122870</span></td>
-      <td class="quote-cell">41,650</td>
+      <td class="quote-cell">43,550</td>
       <td class="quote-cell">109,800</td>
       <td class="quote-cell">38,800</td>
-      <td class="quote-cell">4%</td>
-      <td class="quote-cell">54.9</td>
+      <td class="quote-cell">6.7%</td>
+      <td class="quote-cell">50.1</td>
       <td class="mcap-cell">0.86조원</td>
       <td class="fin-cell">23.07</td>
       <td class="fin-cell">1.66</td>
@@ -2499,11 +2505,11 @@ body.im-tab-table thead th {
           <tr data-ticker="035760">
       <td><div class="company-name">CJ ENM</div><div class="company-name-sub">CJ ENM CO., Ltd.</div></td>
       <td><span class="ticker">035760</span></td>
-      <td class="quote-cell">31,800</td>
+      <td class="quote-cell">31,950</td>
       <td class="quote-cell">82,300</td>
       <td class="quote-cell">30,050</td>
-      <td class="quote-cell">3.3%</td>
-      <td class="quote-cell">20.2</td>
+      <td class="quote-cell">3.6%</td>
+      <td class="quote-cell">17.9</td>
       <td class="mcap-cell">0.84조원</td>
       <td class="fin-cell">26.79</td>
       <td class="fin-cell">0.28</td>
@@ -2516,11 +2522,11 @@ body.im-tab-table thead th {
           <tr data-ticker="293490">
       <td><div class="company-name">카카오게임즈</div><div class="company-name-sub">Kakao Games Corp.</div></td>
       <td><span class="ticker">293490</span></td>
-      <td class="quote-cell">7,760</td>
-      <td class="quote-cell">19,670</td>
+      <td class="quote-cell">7,720</td>
+      <td class="quote-cell">18,830</td>
       <td class="quote-cell">6,780</td>
-      <td class="quote-cell">7.6%</td>
-      <td class="quote-cell">17.5</td>
+      <td class="quote-cell">7.8%</td>
+      <td class="quote-cell">26.1</td>
       <td class="mcap-cell">0.80조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.67</td>
@@ -2533,11 +2539,11 @@ body.im-tab-table thead th {
           <tr data-ticker="253450">
       <td><div class="company-name">스튜디오드래곤</div><div class="company-name-sub">Studio Dragon Corporation</div></td>
       <td><span class="ticker">253450</span></td>
-      <td class="quote-cell">21,300</td>
+      <td class="quote-cell">21,850</td>
       <td class="quote-cell">51,600</td>
       <td class="quote-cell">19,610</td>
-      <td class="quote-cell">5.3%</td>
-      <td class="quote-cell">20.5</td>
+      <td class="quote-cell">7%</td>
+      <td class="quote-cell">24.3</td>
       <td class="mcap-cell">0.76조원</td>
       <td class="fin-cell">73.47</td>
       <td class="fin-cell">0.95</td>
@@ -2550,11 +2556,11 @@ body.im-tab-table thead th {
           <tr data-ticker="079160">
       <td><div class="company-name">CJ CGV</div></td>
       <td><span class="ticker">079160</span></td>
-      <td class="quote-cell">4,355</td>
+      <td class="quote-cell">4,530</td>
       <td class="quote-cell">6,660</td>
-      <td class="quote-cell">4,250</td>
-      <td class="quote-cell">4.4%</td>
-      <td class="quote-cell">63.5</td>
+      <td class="quote-cell">4,210</td>
+      <td class="quote-cell">13.1%</td>
+      <td class="quote-cell">61.1</td>
       <td class="mcap-cell">0.75조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.31</td>
@@ -2567,11 +2573,11 @@ body.im-tab-table thead th {
           <tr data-ticker="241710">
       <td><div class="company-name">코스메카코리아</div><div class="company-name-sub">COSMECCA KOREA CO.,LTD.</div></td>
       <td><span class="ticker">241710</span></td>
-      <td class="quote-cell">69,000</td>
+      <td class="quote-cell">82,600</td>
       <td class="quote-cell">106,400</td>
       <td class="quote-cell">54,300</td>
-      <td class="quote-cell">28.2%</td>
-      <td class="quote-cell">71.2</td>
+      <td class="quote-cell">54.3%</td>
+      <td class="quote-cell">85.6</td>
       <td class="mcap-cell">0.73조원</td>
       <td class="fin-cell">16.17</td>
       <td class="fin-cell">2.91</td>
@@ -2582,13 +2588,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="093050">
-      <td><div class="company-name">LF</div></td>
+      <td><div class="company-name">LF</div><div class="company-name-sub">Lf</div></td>
       <td><span class="ticker">093050</span></td>
-      <td class="quote-cell">22,200</td>
+      <td class="quote-cell">23,850</td>
       <td class="quote-cell">26,450</td>
       <td class="quote-cell">17,010</td>
-      <td class="quote-cell">55%</td>
-      <td class="quote-cell">80.3</td>
+      <td class="quote-cell">72.5%</td>
+      <td class="quote-cell">84.1</td>
       <td class="mcap-cell">0.69조원</td>
       <td class="fin-cell">6.45</td>
       <td class="fin-cell">0.38</td>
@@ -2601,11 +2607,11 @@ body.im-tab-table thead th {
           <tr data-ticker="225570">
       <td><div class="company-name">넥슨게임즈</div><div class="company-name-sub">NEXON Games</div></td>
       <td><span class="ticker">225570</span></td>
-      <td class="quote-cell">8,640</td>
-      <td class="quote-cell">15,500</td>
+      <td class="quote-cell">8,740</td>
+      <td class="quote-cell">15,420</td>
       <td class="quote-cell">7,860</td>
-      <td class="quote-cell">10.2%</td>
-      <td class="quote-cell">31.9</td>
+      <td class="quote-cell">11.6%</td>
+      <td class="quote-cell">37.7</td>
       <td class="mcap-cell">0.64조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">2.40</td>
@@ -2618,11 +2624,11 @@ body.im-tab-table thead th {
           <tr data-ticker="005180">
       <td><div class="company-name">빙그레</div><div class="company-name-sub">Binggrae</div></td>
       <td><span class="ticker">005180</span></td>
-      <td class="quote-cell">64,100</td>
+      <td class="quote-cell">65,500</td>
       <td class="quote-cell">95,900</td>
       <td class="quote-cell">61,500</td>
-      <td class="quote-cell">7.6%</td>
-      <td class="quote-cell">64.6</td>
+      <td class="quote-cell">11.6%</td>
+      <td class="quote-cell">58.9</td>
       <td class="mcap-cell">0.63조원</td>
       <td class="fin-cell">10.88</td>
       <td class="fin-cell">0.81</td>
@@ -2635,11 +2641,11 @@ body.im-tab-table thead th {
           <tr data-ticker="112040">
       <td><div class="company-name">위메이드</div><div class="company-name-sub">Wemade Co., Ltd.</div></td>
       <td><span class="ticker">112040</span></td>
-      <td class="quote-cell">19,330</td>
+      <td class="quote-cell">19,800</td>
       <td class="quote-cell">34,850</td>
       <td class="quote-cell">14,020</td>
-      <td class="quote-cell">25.5%</td>
-      <td class="quote-cell">36.3</td>
+      <td class="quote-cell">27.7%</td>
+      <td class="quote-cell">60.2</td>
       <td class="mcap-cell">0.61조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.49</td>
@@ -2652,11 +2658,11 @@ body.im-tab-table thead th {
           <tr data-ticker="376300">
       <td><div class="company-name">디어유</div><div class="company-name-sub">DEAR U Co.,Ltd.</div></td>
       <td><span class="ticker">376300</span></td>
-      <td class="quote-cell">21,150</td>
+      <td class="quote-cell">22,200</td>
       <td class="quote-cell">62,300</td>
       <td class="quote-cell">19,220</td>
-      <td class="quote-cell">4.5%</td>
-      <td class="quote-cell">40.6</td>
+      <td class="quote-cell">6.9%</td>
+      <td class="quote-cell">38.5</td>
       <td class="mcap-cell">0.56조원</td>
       <td class="fin-cell">30.13</td>
       <td class="fin-cell">2.67</td>
@@ -2669,11 +2675,11 @@ body.im-tab-table thead th {
           <tr data-ticker="039130">
       <td><div class="company-name">하나투어</div><div class="company-name-sub">HANATOUR SERVICE</div></td>
       <td><span class="ticker">039130</span></td>
-      <td class="quote-cell">31,400</td>
+      <td class="quote-cell">32,900</td>
       <td class="quote-cell">58,600</td>
       <td class="quote-cell">30,550</td>
-      <td class="quote-cell">3%</td>
-      <td class="quote-cell">46.3</td>
+      <td class="quote-cell">8.4%</td>
+      <td class="quote-cell">44.8</td>
       <td class="mcap-cell">0.55조원</td>
       <td class="fin-cell">17.34</td>
       <td class="fin-cell">3.65</td>
@@ -2684,13 +2690,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">Booking.com, Marriott, 한류 수요 흐름(참고)</div></td>
     </tr>
           <tr data-ticker="020000">
-      <td><div class="company-name">한섬</div><div class="company-name-sub">HandsomeCorporation</div></td>
+      <td><div class="company-name">한섬</div><div class="company-name-sub">Handsome Corporation</div></td>
       <td><span class="ticker">020000</span></td>
-      <td class="quote-cell">20,950</td>
+      <td class="quote-cell">22,850</td>
       <td class="quote-cell">28,750</td>
       <td class="quote-cell">14,180</td>
-      <td class="quote-cell">46.5%</td>
-      <td class="quote-cell">74.6</td>
+      <td class="quote-cell">59.5%</td>
+      <td class="quote-cell">68.0</td>
       <td class="mcap-cell">0.49조원</td>
       <td class="fin-cell">10.50</td>
       <td class="fin-cell">0.34</td>
@@ -2703,11 +2709,11 @@ body.im-tab-table thead th {
           <tr data-ticker="145990">
       <td><div class="company-name">삼양사</div><div class="company-name-sub">Samyang Corporation</div></td>
       <td><span class="ticker">145990</span></td>
-      <td class="quote-cell">43,800</td>
+      <td class="quote-cell">46,300</td>
       <td class="quote-cell">59,600</td>
       <td class="quote-cell">40,750</td>
-      <td class="quote-cell">16.2%</td>
-      <td class="quote-cell">76.1</td>
+      <td class="quote-cell">29.4%</td>
+      <td class="quote-cell">77.9</td>
       <td class="mcap-cell">0.45조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.28</td>
@@ -2718,13 +2724,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="018290">
-      <td><div class="company-name">브이티</div><div class="company-name-sub">VT</div></td>
+      <td><div class="company-name">브이티</div><div class="company-name-sub">Vt</div></td>
       <td><span class="ticker">018290</span></td>
-      <td class="quote-cell">11,530</td>
+      <td class="quote-cell">11,890</td>
       <td class="quote-cell">39,350</td>
       <td class="quote-cell">10,540</td>
-      <td class="quote-cell">3.4%</td>
-      <td class="quote-cell">56.0</td>
+      <td class="quote-cell">4.7%</td>
+      <td class="quote-cell">40.9</td>
       <td class="mcap-cell">0.45조원</td>
       <td class="fin-cell">7.45</td>
       <td class="fin-cell">1.84</td>
@@ -2735,13 +2741,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="095660">
-      <td><div class="company-name">네오위즈</div><div class="company-name-sub">NEOWIZ</div></td>
+      <td><div class="company-name">네오위즈</div><div class="company-name-sub">Neowiz</div></td>
       <td><span class="ticker">095660</span></td>
-      <td class="quote-cell">17,460</td>
+      <td class="quote-cell">18,410</td>
       <td class="quote-cell">31,550</td>
       <td class="quote-cell">16,100</td>
-      <td class="quote-cell">8.8%</td>
-      <td class="quote-cell">43.7</td>
+      <td class="quote-cell">15%</td>
+      <td class="quote-cell">45.8</td>
       <td class="mcap-cell">0.43조원</td>
       <td class="fin-cell">7.84</td>
       <td class="fin-cell">0.74</td>
@@ -2754,11 +2760,11 @@ body.im-tab-table thead th {
           <tr data-ticker="069080">
       <td><div class="company-name">웹젠</div><div class="company-name-sub">Webzen Inc.</div></td>
       <td><span class="ticker">069080</span></td>
-      <td class="quote-cell">11,560</td>
+      <td class="quote-cell">11,470</td>
       <td class="quote-cell">18,010</td>
       <td class="quote-cell">9,530</td>
-      <td class="quote-cell">23.9%</td>
-      <td class="quote-cell">79.8</td>
+      <td class="quote-cell">22.9%</td>
+      <td class="quote-cell">78.5</td>
       <td class="mcap-cell">0.34조원</td>
       <td class="fin-cell">13.25</td>
       <td class="fin-cell">0.46</td>
@@ -2771,11 +2777,11 @@ body.im-tab-table thead th {
           <tr data-ticker="078340">
       <td><div class="company-name">컴투스</div><div class="company-name-sub">Com2uS Corporation</div></td>
       <td><span class="ticker">078340</span></td>
-      <td class="quote-cell">26,050</td>
+      <td class="quote-cell">26,150</td>
       <td class="quote-cell">42,450</td>
       <td class="quote-cell">22,450</td>
-      <td class="quote-cell">18%</td>
-      <td class="quote-cell">54.7</td>
+      <td class="quote-cell">18.5%</td>
+      <td class="quote-cell">61.0</td>
       <td class="mcap-cell">0.31조원</td>
       <td class="fin-cell">7.97</td>
       <td class="fin-cell">0.29</td>
@@ -2788,10 +2794,10 @@ body.im-tab-table thead th {
           <tr data-ticker="136480">
       <td><div class="company-name">하림</div><div class="company-name-sub">HARIM Co., Ltd.</div></td>
       <td><span class="ticker">136480</span></td>
-      <td class="quote-cell">2,660</td>
+      <td class="quote-cell">2,735</td>
       <td class="quote-cell">3,565</td>
       <td class="quote-cell">2,560</td>
-      <td class="quote-cell">10%</td>
+      <td class="quote-cell">17.4%</td>
       <td class="quote-cell">59.1</td>
       <td class="mcap-cell">0.30조원</td>
       <td class="fin-cell">7.85</td>
@@ -2906,6 +2912,11 @@ body.im-tab-table thead th {
         "thTicker": "종목코드",
 
         "thLast": "현재가",
+        "thChg1d": "전일대비",
+        "thRet1m": "1개월",
+        "thRet3m": "3개월",
+        "thRet6m": "6개월",
+        "thRet1y": "1년",
         "th52High": "52주 최고",
         "th52Lo": "52주 최저",
         "thPosition": "주가 위치",
@@ -2972,7 +2983,7 @@ body.im-tab-table thead th {
     },
     "en": {
         "title": "🇰🇷 Korea K-Culture Industry Map",
-        "subtitle": "Listed Korean names in ramen & food, travel, beauty, drama/webtoon/media, and K-pop, with illustrative global links",
+        "subtitle": "Listed Korean names in ramen & food, travel, beauty, drama/webtoon/media, and K-pop, with illustrative global relationships",
         "badgeTotal": "<span>25</span> listed companies",
         "badgeMarket": "KOSPI <span>17</span> · KOSDAQ <span>8</span>",
         "dataAsof": "Data as of: June 12, 2026",
@@ -2991,6 +3002,11 @@ body.im-tab-table thead th {
         "thTicker": "Ticker",
 
         "thLast": "Last",
+        "thChg1d": "Day",
+        "thRet1m": "1M",
+        "thRet3m": "3M",
+        "thRet6m": "6M",
+        "thRet1y": "1Y",
         "th52High": "52W high",
         "th52Lo": "52W low",
         "thPosition": "Price vs range",
@@ -3002,8 +3018,8 @@ body.im-tab-table thead th {
         "thChain": "Value chain",
         "thSemType": "Segment",
         "thProducts": "Products / services",
-        "thPartners": "Global reference links",
-        "note": "⚠ Public information only. Tickers and reference links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).",
+        "thPartners": "Global reference relationships",
+        "note": "⚠ Public information only. Tickers and reference relationships are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows market cap in USD billions (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).",
         "sbKorean": "Korean listed (value chain)",
         "sbGlobal": "Global media, travel & distribution",
         "sbSize": "Node size",
@@ -3048,7 +3064,7 @@ body.im-tab-table thead th {
         "ttProducts": "Products",
         "ttRevenue": "Market cap",
         "ttPartners": "Reference",
-        "ttSuppliers": "Korean cos.",
+        "ttSuppliers": "Korean companies",
         "ttCountry": "Country",
         "ttSector": "Field",
         "ttTags": "Multi-axis",
@@ -3062,7 +3078,7 @@ body.im-tab-table thead th {
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
-        id: 'naver', name: 'NAVER', nameEn: 'NAVER', ticker: '035420', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        id: 'naver', name: 'NAVER', nameEn: 'Naver', ticker: '035420', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
         semType: '웹툰·디지털컨텐츠', semTypeEn: 'Webtoon & digital content',
         products: '네이버 웹툰, 시리즈', productsEn: 'NAVER Webtoon, Series',
         revenue: '38.75조원', mcapWon: 38747822672000, per: 18.99, pbr: 1.34, revTier: 3, partners: ['netflix', 'tencent', 'youtube']
@@ -3070,34 +3086,34 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_kakao', name: '카카오', nameEn: 'Kakao', ticker: '035720', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
-        semType: '웹툰·음악·콘텐츠 플랫폼', semTypeEn: '웹툰·음악·콘텐츠 플랫폼',
-        products: '웹툰·음악·콘텐츠 플랫폼 — 콘텐츠·미디어', productsEn: '웹툰·음악·콘텐츠 플랫폼 — content and media',
+        semType: '웹툰·음악·콘텐츠 플랫폼', semTypeEn: '—',
+        products: '웹툰·음악·콘텐츠 플랫폼 — 콘텐츠·미디어', productsEn: 'K-culture products and services',
         revenue: '18.33조원', mcapWon: 18333229157000, per: 37.12, pbr: 1.62, revTier: 3, partners: []
       },
 
       {
-        id: 'apr', name: '에이피알', nameEn: 'APR', ticker: '278470', market: 'KOSPI', chain: '화장품·뷰티케어',
+        id: 'apr', name: '에이피알', nameEn: 'Apr', ticker: '278470', market: 'KOSPI', chain: '화장품·뷰티케어',
         semType: '의료미용·RF 미여듀링', semTypeEn: 'Med-aesthetic devices & RF microneedling',
         products: '엔터티브, 엘어티브, 글로벌 K-뷰티', productsEn: 'Intensive, Airjet; global K-beauty device exports',
         revenue: '14.75조원', mcapWon: 14750633070000, per: 50.74, pbr: 33.08, revTier: 2, partners: ['estee', 'lvmh']
       },
 
       {
-        id: 'kc_krafton', name: '크래프톤', nameEn: 'KRAFTON', ticker: '259960', market: 'KOSPI', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        id: 'kc_krafton', name: '크래프톤', nameEn: 'Krafton', ticker: '259960', market: 'KOSPI', chain: '게임',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '10.93조원', mcapWon: 10934467341000, per: 14.4, pbr: 1.5, revTier: 2, partners: []
       },
 
       {
-        id: 'hybe', name: '하이브', nameEn: 'HYBE', ticker: '352820', market: 'KOSPI', chain: 'K-pop·엔터테인먼트',
+        id: 'hybe', name: '하이브', nameEn: 'Hybe', ticker: '352820', market: 'KOSPI', chain: 'K-pop·엔터테인먼트',
         semType: 'K-pop·글로벌랜드', semTypeEn: 'K-pop & global fandom',
         products: 'BTS, SEVENTEEN, NewJeans', productsEn: 'BTS, SEVENTEEN, NewJeans',
         revenue: '9.70조원', mcapWon: 9698006025000, per: null, pbr: 2.94, revTier: 2, partners: ['spotify', 'youtube', 'umg']
       },
 
       {
-        id: 'samyang', name: '삼양식품', nameEn: 'SamyangFoods', ticker: '003230', market: 'KOSPI', chain: '음식·라면·식품',
+        id: 'samyang', name: '삼양식품', nameEn: 'Samyang Foods', ticker: '003230', market: 'KOSPI', chain: '음식·라면·식품',
         semType: '라면·스낵·수출', semTypeEn: 'Noodles, snacks, export',
         products: '불닭볶음면, 화이트식품', productsEn: 'Buldak line, overseas brands',
         revenue: '8.63조원', mcapWon: 8625302175000, per: 21.95, pbr: 6.87, revTier: 2, partners: ['nestle', 'pepsico']
@@ -3107,7 +3123,7 @@ body.im-tab-table thead th {
         id: 'kc_shinsegae_co_ltd', name: '신세계', nameEn: 'Shinsegae Co.,Ltd', ticker: '004170', market: 'KOSPI', chain: '쇼핑/유통',
         semType: '백화점·이마트·스타필드', semTypeEn: 'Department stores, Emart affiliate & Starfield',
         products: '신세계백화점·스타필드·이마트 지분', productsEn: 'Shinsegae Dept., Starfield malls, Emart stake',
-        revenue: '6.56조원', mcapWon: 6564400795000, per: 17.14, pbr: 1.37, revTier: 2, partners: []
+        revenue: '6.56조원', mcapWon: 6564400795000, per: 437.11, pbr: 1.37, revTier: 2, partners: []
       },
 
       {
@@ -3118,9 +3134,9 @@ body.im-tab-table thead th {
       },
 
       {
-        id: 'kc_nc', name: 'NC', nameEn: 'NC', ticker: '036570', market: 'KOSPI', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        id: 'kc_nc', name: 'NC', nameEn: 'Nc', ticker: '036570', market: 'KOSPI', chain: '게임',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '5.67조원', mcapWon: 5666077786000, per: 14.71, pbr: 1.52, revTier: 2, partners: []
       },
 
@@ -3128,13 +3144,13 @@ body.im-tab-table thead th {
         id: 'kc_lotte_shopping_co_ltd', name: '롯데쇼핑', nameEn: 'LOTTE SHOPPING CO., LTD.', ticker: '023530', market: 'KOSPI', chain: '쇼핑/유통',
         semType: '백화점·아울렛·면세', semTypeEn: 'Department stores, outlets & duty-free',
         products: '롯데백화점·롯데아울렛·면세', productsEn: 'Lotte Department Store, outlets, duty-free',
-        revenue: '5.53조원', mcapWon: 5533280478000, per: 14.28, pbr: 0.36, revTier: 2, partners: []
+        revenue: '5.53조원', mcapWon: 5533280478000, per: 107.24, pbr: 0.36, revTier: 2, partners: []
       },
 
       {
-        id: 'kc_orion', name: '오리온', nameEn: 'ORION', ticker: '271560', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: 'K-푸드·제과', semTypeEn: 'K-푸드·제과',
-        products: 'K-푸드·제과 — K-푸드·F&B', productsEn: 'K-푸드·제과 — K-food and F&B',
+        id: 'kc_orion', name: '오리온', nameEn: 'Orion', ticker: '271560', market: 'KOSPI', chain: '음식·라면·식품',
+        semType: 'K-푸드·제과', semTypeEn: '—',
+        products: 'K-푸드·제과 — K-푸드·F&B', productsEn: 'K-culture products and services',
         revenue: '5.36조원', mcapWon: 5357145886000, per: 14, pbr: 1.41, revTier: 2, partners: []
       },
 
@@ -3142,7 +3158,7 @@ body.im-tab-table thead th {
         id: 'kc_hyundai_department_store', name: '현대백화점', nameEn: 'HYUNDAI DEPARTMENT STORE CO.,LTD', ticker: '069960', market: 'KOSPI', chain: '쇼핑/유통',
         semType: '백화점·아울렛', semTypeEn: 'Department stores & outlets',
         products: '현대백화점·현대아울렛', productsEn: 'Hyundai Department Store & outlets',
-        revenue: '3.82조원', mcapWon: 3823458897600, per: 13.33, pbr: 0.84, revTier: 2, partners: []
+        revenue: '3.82조원', mcapWon: 3823458897600, per: 18.52, pbr: 0.84, revTier: 2, partners: []
       },
 
       {
@@ -3154,22 +3170,22 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_youngone_corporation', name: '영원무역', nameEn: 'Youngone Corporation', ticker: '111770', market: 'KOSPI', chain: '패션',
-        semType: '의류 OEM·아웃도어', semTypeEn: '의류 OEM·아웃도어',
-        products: '의류 OEM·아웃도어 — K-컬처', productsEn: '의류 OEM·아웃도어 — 의류 OEM·아웃도어 K-culture',
+        semType: '의류 OEM·아웃도어', semTypeEn: '—',
+        products: '의류 OEM·아웃도어 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '3.67조원', mcapWon: 3673420697200, per: 7.17, pbr: 0.86, revTier: 2, partners: []
       },
 
       {
         id: 'kc_netmarble_corporation', name: '넷마블', nameEn: 'Netmarble Corporation', ticker: '251270', market: 'KOSPI', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '3.48조원', mcapWon: 3478122538950, per: 15.46, pbr: 0.64, revTier: 2, partners: []
       },
 
       {
-        id: 'kc_f_f', name: 'F&F', nameEn: 'F&F', ticker: '383220', market: 'KOSPI', chain: '패션',
-        semType: '패션·라이선스 브랜드', semTypeEn: '패션·라이선스 브랜드',
-        products: '패션·라이선스 브랜드 — K-컬처', productsEn: '패션·라이선스 브랜드 — 패션·라이선스 브랜드 K-culture',
+        id: 'kc_f_f', name: 'F&F', nameEn: 'F&f', ticker: '383220', market: 'KOSPI', chain: '패션',
+        semType: '패션·라이선스 브랜드', semTypeEn: '—',
+        products: '패션·라이선스 브랜드 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '3.29조원', mcapWon: 3290577742500, per: 8.1, pbr: 1.71, revTier: 2, partners: []
       },
 
@@ -3189,15 +3205,15 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_pearlabyss_corp', name: '펄어비스', nameEn: 'PearlAbyss Corp.', ticker: '263750', market: 'KOSDAQ', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '2.64조원', mcapWon: 2643799233250, per: null, pbr: 3.16, revTier: 2, partners: []
       },
 
       {
         id: 'kc_e_mart_co_ltd', name: '이마트', nameEn: 'E-MART Co., Ltd.', ticker: '139480', market: 'KOSPI', chain: '쇼핑/유통',
-        semType: '유통·K-소비', semTypeEn: '유통·K-소비',
-        products: '유통·K-소비 — K-컬처', productsEn: '유통·K-소비 — 유통·K-소비 K-culture',
+        semType: '유통·K-소비', semTypeEn: '—',
+        products: '유통·K-소비 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '2.44조원', mcapWon: 2444989563400, per: 17.43, pbr: 0.22, revTier: 2, partners: []
       },
 
@@ -3217,29 +3233,29 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_silicon_2_co_ltd', name: '실리콘투', nameEn: 'SILICON 2 Co.,Ltd.', ticker: '257720', market: 'KOSDAQ', chain: '화장품·뷰티케어',
-        semType: 'K-뷰티 역직구·유통', semTypeEn: 'K-뷰티 역직구·유통',
-        products: 'K-뷰티 역직구·유통 — K-뷰티·화장품', productsEn: 'K-뷰티 역직구·유통 — K-beauty and cosmetics',
+        semType: 'K-뷰티 역직구·유통', semTypeEn: '—',
+        products: 'K-뷰티 역직구·유통 — K-뷰티·화장품', productsEn: 'K-culture products and services',
         revenue: '2.27조원', mcapWon: 2272217131800, per: 12.57, pbr: 4.97, revTier: 2, partners: []
       },
 
       {
         id: 'kc_misto_holdings_corporati', name: '미스토홀딩스', nameEn: 'Misto Holdings Corporation', ticker: '081660', market: 'KOSPI', chain: '패션',
-        semType: '패션·스포츠 브랜드', semTypeEn: '패션·스포츠 브랜드',
-        products: '패션·스포츠 브랜드 — K-컬처', productsEn: '패션·스포츠 브랜드 — 패션·스포츠 브랜드 K-culture',
+        semType: '패션·스포츠 브랜드', semTypeEn: '—',
+        products: '패션·스포츠 브랜드 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '2.27조원', mcapWon: 2269676160000, per: 10.53, pbr: 1.17, revTier: 2, partners: []
       },
 
       {
-        id: 'kc_hotelshilla', name: '호텔신라', nameEn: 'HotelShilla', ticker: '008770', market: 'KOSPI', chain: '여행·레저·항공',
-        semType: '면세·관광', semTypeEn: '면세·관광',
-        products: '면세·관광 — 여행·레저·항공', productsEn: '면세·관광 — travel, leisure and aviation',
+        id: 'kc_hotelshilla', name: '호텔신라', nameEn: 'Hotel Shilla', ticker: '008770', market: 'KOSPI', chain: '여행·레저·항공',
+        semType: '면세·관광', semTypeEn: '—',
+        products: '면세·관광 — 여행·레저·항공', productsEn: 'K-culture products and services',
         revenue: '2.18조원', mcapWon: 2178270715500, per: null, pbr: 1.9, revTier: 2, partners: []
       },
 
       {
         id: 'kc_gs_retail', name: 'GS리테일', nameEn: 'GS Retail', ticker: '007070', market: 'KOSPI', chain: '쇼핑/유통',
-        semType: '편의점·K-소비', semTypeEn: '편의점·K-소비',
-        products: '편의점·K-소비 — K-컬처', productsEn: '편의점·K-소비 — 편의점·K-소비 K-culture',
+        semType: '편의점·K-소비', semTypeEn: '—',
+        products: '편의점·K-소비 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '2.05조원', mcapWon: 2052562038250, per: 47.21, pbr: 0.62, revTier: 2, partners: []
       },
 
@@ -3266,8 +3282,8 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_cosmax_inc', name: '코스맥스', nameEn: 'COSMAX, INC.', ticker: '192820', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: '화장품 ODM', semTypeEn: '화장품 ODM',
-        products: '화장품 ODM — K-뷰티·화장품', productsEn: '화장품 ODM — K-beauty and cosmetics',
+        semType: '화장품 ODM', semTypeEn: '—',
+        products: '화장품 ODM — K-뷰티·화장품', productsEn: 'K-culture products and services',
         revenue: '1.91조원', mcapWon: 1913527217400, per: 15.54, pbr: 3.43, revTier: 2, partners: []
       },
 
@@ -3280,15 +3296,15 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_amorepacific_holdings', name: '아모레퍼시픽홀딩스', nameEn: 'AMOREPACIFIC Holdings', ticker: '002790', market: 'KOSPI', chain: '화장품·뷰티케어',
-        semType: 'K-뷰티 지주', semTypeEn: 'K-뷰티 지주',
-        products: 'K-뷰티 지주 — K-뷰티·화장품', productsEn: 'K-뷰티 지주 — K-beauty and cosmetics',
+        semType: 'K-뷰티 지주', semTypeEn: '—',
+        products: 'K-뷰티 지주 — K-뷰티·화장품', productsEn: 'K-culture products and services',
         revenue: '1.88조원', mcapWon: 1884694137000, per: 18.11, pbr: 0.64, revTier: 2, partners: []
       },
 
       {
-        id: 'kc_doubleugames', name: '더블유게임즈', nameEn: 'DoubleUGames', ticker: '192080', market: 'KOSPI', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        id: 'kc_doubleugames', name: '더블유게임즈', nameEn: 'Double UGames', ticker: '192080', market: 'KOSPI', chain: '게임',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '1.50조원', mcapWon: 1503316228000, per: 10.68, pbr: 1.15, revTier: 2, partners: []
       },
 
@@ -3300,14 +3316,14 @@ body.im-tab-table thead th {
       },
 
       {
-        id: 'ottogi', name: '오뚜기', nameEn: 'OTOKI', ticker: '007310', market: 'KOSPI', chain: '음식·라면·식품',
+        id: 'ottogi', name: '오뚜기', nameEn: 'Otoki', ticker: '007310', market: 'KOSPI', chain: '음식·라면·식품',
         semType: '식품·조미식', semTypeEn: 'Packaged foods & condiments',
         products: '즉석식품, 커리·스프', productsEn: 'Ready meals, curry, soup',
         revenue: '1.32조원', mcapWon: 1320579985000, per: 16.25, pbr: 0.55, revTier: 2, partners: ['nestle']
       },
 
       {
-        id: 'nhn', name: 'NHN', nameEn: 'NHN', ticker: '181710', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
+        id: 'nhn', name: 'NHN', nameEn: 'Nhn', ticker: '181710', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
         semType: '웹툰·게임·클라우드', semTypeEn: 'Webtoon, games & cloud',
         products: '컴토즈, 웹툰 플랫폼', productsEn: 'Comics, webtoon platform',
         revenue: '1.30조원', mcapWon: 1303574932200, per: 38.91, pbr: 0.84, revTier: 2, partners: ['tencent', 'youtube']
@@ -3315,8 +3331,8 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_lotte_wellfood', name: '롯데웰푸드', nameEn: 'LOTTE WELLFOOD', ticker: '280360', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: 'K-푸드·제과', semTypeEn: 'K-푸드·제과',
-        products: 'K-푸드·제과 — K-푸드·F&B', productsEn: 'K-푸드·제과 — K-food and F&B',
+        semType: 'K-푸드·제과', semTypeEn: '—',
+        products: 'K-푸드·제과 — K-푸드·F&B', productsEn: 'K-culture products and services',
         revenue: '1.00조원', mcapWon: 996855364200, per: 13.25, pbr: 0.44, revTier: 1, partners: []
       },
 
@@ -3350,50 +3366,50 @@ body.im-tab-table thead th {
 
       {
         id: 'kc_cj_cgv', name: 'CJ CGV', nameEn: 'CJ CGV', ticker: '079160', market: 'KOSPI', chain: '드라마·미디어·웹툰·컨텐츠',
-        semType: '영화관·영화 유통', semTypeEn: '영화관·영화 유통',
-        products: '영화관·영화 유통 — 콘텐츠·미디어', productsEn: '영화관·영화 유통 — content and media',
+        semType: '영화관·영화 유통', semTypeEn: '—',
+        products: '영화관·영화 유통 — 콘텐츠·미디어', productsEn: 'K-culture products and services',
         revenue: '0.75조원', mcapWon: 745948644425, per: null, pbr: 1.31, revTier: 1, partners: []
       },
 
       {
         id: 'kc_cosmecca_korea_co_ltd', name: '코스메카코리아', nameEn: 'COSMECCA KOREA CO.,LTD.', ticker: '241710', market: 'KOSDAQ', chain: '화장품·뷰티케어',
-        semType: '화장품 ODM', semTypeEn: '화장품 ODM',
-        products: '화장품 ODM — K-뷰티·화장품', productsEn: '화장품 ODM — K-beauty and cosmetics',
+        semType: '화장품 ODM', semTypeEn: '—',
+        products: '화장품 ODM — K-뷰티·화장품', productsEn: 'K-culture products and services',
         revenue: '0.73조원', mcapWon: 734784000000, per: 16.17, pbr: 2.91, revTier: 1, partners: []
       },
 
       {
-        id: 'kc_lf', name: 'LF', nameEn: 'LF', ticker: '093050', market: 'KOSPI', chain: '패션',
-        semType: '패션', semTypeEn: '패션',
-        products: '패션 — K-컬처', productsEn: '패션 — 패션 K-culture',
+        id: 'kc_lf', name: 'LF', nameEn: 'Lf', ticker: '093050', market: 'KOSPI', chain: '패션',
+        semType: '패션', semTypeEn: '—',
+        products: '패션 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '0.69조원', mcapWon: 687140000000, per: 6.45, pbr: 0.38, revTier: 1, partners: []
       },
 
       {
         id: 'kc_nexon_games', name: '넥슨게임즈', nameEn: 'NEXON Games', ticker: '225570', market: 'KOSDAQ', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '0.64조원', mcapWon: 640160891280, per: null, pbr: 2.4, revTier: 1, partners: []
       },
 
       {
         id: 'kc_binggrae', name: '빙그레', nameEn: 'Binggrae', ticker: '005180', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: 'K-푸드·빙과/유제품', semTypeEn: 'K-푸드·빙과/유제품',
-        products: 'K-푸드·빙과/유제품 — K-컬처', productsEn: 'K-푸드·빙과/유제품 — K-푸드·빙과/유제품 K-culture',
+        semType: 'K-푸드·빙과/유제품', semTypeEn: '—',
+        products: 'K-푸드·빙과/유제품 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '0.63조원', mcapWon: 634001720400, per: 10.88, pbr: 0.81, revTier: 1, partners: []
       },
 
       {
         id: 'kc_wemade_co_ltd', name: '위메이드', nameEn: 'Wemade Co., Ltd.', ticker: '112040', market: 'KOSDAQ', chain: '게임',
-        semType: '게임·블록체인 게임', semTypeEn: '게임·블록체인 게임',
-        products: '게임·블록체인 게임 — 게임·IP', productsEn: '게임·블록체인 게임 — games and IP',
+        semType: '게임·블록체인 게임', semTypeEn: '—',
+        products: '게임·블록체인 게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '0.61조원', mcapWon: 609035785020, per: null, pbr: 1.49, revTier: 1, partners: []
       },
 
       {
         id: 'kc_dear_u_co_ltd', name: '디어유', nameEn: 'DEAR U Co.,Ltd.', ticker: '376300', market: 'KOSDAQ', chain: '드라마·미디어·웹툰·컨텐츠',
-        semType: '팬덤 플랫폼', semTypeEn: '팬덤 플랫폼',
-        products: '팬덤 플랫폼 — K-컬처', productsEn: '팬덤 플랫폼 — 팬덤 플랫폼 K-culture',
+        semType: '팬덤 플랫폼', semTypeEn: '—',
+        products: '팬덤 플랫폼 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '0.56조원', mcapWon: 561413301900, per: 30.13, pbr: 2.67, revTier: 1, partners: []
       },
 
@@ -3405,51 +3421,51 @@ body.im-tab-table thead th {
       },
 
       {
-        id: 'kc_handsomecorporation', name: '한섬', nameEn: 'HandsomeCorporation', ticker: '020000', market: 'KOSPI', chain: '패션',
-        semType: '패션', semTypeEn: '패션',
-        products: '패션 — K-컬처', productsEn: '패션 — 패션 K-culture',
+        id: 'kc_handsomecorporation', name: '한섬', nameEn: 'Handsome Corporation', ticker: '020000', market: 'KOSPI', chain: '패션',
+        semType: '패션', semTypeEn: '—',
+        products: '패션 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '0.49조원', mcapWon: 485380064400, per: 10.5, pbr: 0.34, revTier: 1, partners: []
       },
 
       {
         id: 'kc_samyang_corporation', name: '삼양사', nameEn: 'Samyang Corporation', ticker: '145990', market: 'KOSPI', chain: '음식·라면·식품',
-        semType: '식품소재·K-푸드', semTypeEn: '식품소재·K-푸드',
-        products: '식품소재·K-푸드 — K-푸드·F&B', productsEn: '식품소재·K-푸드 — K-food and F&B',
+        semType: '식품소재·K-푸드', semTypeEn: '—',
+        products: '식품소재·K-푸드 — K-푸드·F&B', productsEn: 'K-culture products and services',
         revenue: '0.45조원', mcapWon: 454307428450, per: null, pbr: 0.28, revTier: 1, partners: []
       },
 
       {
-        id: 'kc_vt', name: '브이티', nameEn: 'VT', ticker: '018290', market: 'KOSDAQ', chain: '화장품·뷰티케어',
-        semType: 'K-뷰티 브랜드', semTypeEn: 'K-뷰티 브랜드',
-        products: 'K-뷰티 브랜드 — K-뷰티·화장품', productsEn: 'K-뷰티 브랜드 — K-beauty and cosmetics',
+        id: 'kc_vt', name: '브이티', nameEn: 'Vt', ticker: '018290', market: 'KOSDAQ', chain: '화장품·뷰티케어',
+        semType: 'K-뷰티 브랜드', semTypeEn: '—',
+        products: 'K-뷰티 브랜드 — K-뷰티·화장품', productsEn: 'K-culture products and services',
         revenue: '0.45조원', mcapWon: 450050873440, per: 7.45, pbr: 1.84, revTier: 1, partners: []
       },
 
       {
-        id: 'kc_neowiz', name: '네오위즈', nameEn: 'NEOWIZ', ticker: '095660', market: 'KOSDAQ', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        id: 'kc_neowiz', name: '네오위즈', nameEn: 'Neowiz', ticker: '095660', market: 'KOSDAQ', chain: '게임',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '0.43조원', mcapWon: 427969159020, per: 7.84, pbr: 0.74, revTier: 1, partners: []
       },
 
       {
         id: 'kc_webzen_inc', name: '웹젠', nameEn: 'Webzen Inc.', ticker: '069080', market: 'KOSDAQ', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '0.34조원', mcapWon: 338154999000, per: 13.25, pbr: 0.46, revTier: 1, partners: []
       },
 
       {
         id: 'kc_com2us_corporation', name: '컴투스', nameEn: 'Com2uS Corporation', ticker: '078340', market: 'KOSDAQ', chain: '게임',
-        semType: '게임', semTypeEn: '게임',
-        products: '게임 — 게임·IP', productsEn: '게임 — games and IP',
+        semType: '게임', semTypeEn: '—',
+        products: '게임 — 게임·IP', productsEn: 'K-culture products and services',
         revenue: '0.31조원', mcapWon: 307723915850, per: 7.97, pbr: 0.29, revTier: 1, partners: []
       },
 
       {
         id: 'kc_harim_co_ltd', name: '하림', nameEn: 'HARIM Co., Ltd.', ticker: '136480', market: 'KOSDAQ', chain: '음식·라면·식품',
-        semType: 'K-푸드·육가공', semTypeEn: 'K-푸드·육가공',
-        products: 'K-푸드·육가공 — K-컬처', productsEn: 'K-푸드·육가공 — K-푸드·육가공 K-culture',
+        semType: 'K-푸드·육가공', semTypeEn: '—',
+        products: 'K-푸드·육가공 — K-컬처', productsEn: 'K-culture products and services',
         revenue: '0.30조원', mcapWon: 302697650700, per: 7.85, pbr: 0.93, revTier: 1, partners: []
       }
 
@@ -3473,7 +3489,7 @@ body.im-tab-table thead th {
       { id: 'airbus', name: 'Airbus', nameEn: 'Airbus', country: '유럽/Europe', region: 'eu', sector: 'Aircraft' },
       { id: 'delta', name: 'Delta Air Lines', nameEn: 'Delta Air Lines', country: '미국/USA', region: 'us', sector: 'Airline alliance' },
       { id: 'tencent', name: 'Tencent', nameEn: 'Tencent', country: '중국/China', region: 'cn', sector: 'Digital content' },
-      { id: 'hwave_flow', name: '한류 수요 흐름(참고)', nameEn: '한류 수요 흐름(참고)', country: '테마/Korea', region: 'kr', sector: 'Cross-sector K-demand (illus.)' }
+      { id: 'hwave_flow', name: '한류 수요 흐름(참고)', nameEn: 'K-wave demand flow (reference)', country: '테마/Korea', region: 'kr', sector: 'Cross-sector K-demand (illus.)' }
     ];
 
 
@@ -3571,14 +3587,24 @@ body.im-tab-table thead th {
       document.getElementById('th-name').textContent = t.thName;
       document.getElementById('th-ticker').textContent = t.thTicker;
       var thLast = document.getElementById('th-last');
+      var thChg1d = document.getElementById('th-chg1d');
+      var thRet1m = document.getElementById('th-ret1m');
+      var thRet3m = document.getElementById('th-ret3m');
+      var thRet6m = document.getElementById('th-ret6m');
+      var thRet1y = document.getElementById('th-ret1y');
       if (thLast) thLast.textContent = t.thLast;
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? 'Day' : '전일대비');
+      if (thRet1m) thRet1m.textContent = t.thRet1m || (lang === 'en' ? '1M' : '1개월');
+      if (thRet3m) thRet3m.textContent = t.thRet3m || (lang === 'en' ? '3M' : '3개월');
+      if (thRet6m) thRet6m.textContent = t.thRet6m || (lang === 'en' ? '6M' : '6개월');
+      if (thRet1y) thRet1y.textContent = t.thRet1y || (lang === 'en' ? '1Y' : '1년');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
       var thpos = document.getElementById('th-position');
       var thrs = document.getElementById('th-rs');
-      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));
+      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? '52W Range' : '주가 위치'));
       if (thrs) thrs.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.rsHeaderLabel) ? InvestingMapLiveQuotes.rsHeaderLabel(lang, t) : (t.thRs || 'RS');
       const thMcap = document.getElementById('th-mcap');
       if (thMcap) thMcap.textContent = t.thMcap;
@@ -3601,7 +3627,7 @@ body.im-tab-table thead th {
       document.getElementById('graph-hint-text').textContent = t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
-      if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
+      if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
       if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       // Rebuild dynamic UI
@@ -3623,7 +3649,7 @@ body.im-tab-table thead th {
       const container = document.getElementById('chain-chips');
       const chains = ['all', '음식·라면·식품', '여행·레저·항공', '화장품·뷰티케어', '게임', '패션', '쇼핑/유통', '드라마·미디어·웹툰·컨텐츠', 'K-pop·엔터테인먼트'];
       container.innerHTML = chains.map(ch => {
-        const label = ch === 'all' ? t.allFilter : (t.chainFilter[ch] || ch);
+        const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
         const color = CHAIN_COLORS[ch];
         const style = isActive ? `background:${color || '#4FC3F7'};color:#0d1117;border-color:transparent;` : '';
@@ -3651,7 +3677,7 @@ body.im-tab-table thead th {
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
-      ${t.chainLabel[ch] || ch}
+      ${(window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainLabel[ch] || ch)}
     </div>`
       ).join('');
       // Region legend
@@ -3708,7 +3734,7 @@ body.im-tab-table thead th {
       });
       if (sortKey) {
         data.sort((a, b) => {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret1mPct' || sortKey === 'ret3mPct' || sortKey === 'ret6mPct' || sortKey === 'ret1yPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
             const av = a[sortKey];
             const bv = b[sortKey];
             const na = av == null || !Number.isFinite(av);
@@ -3730,7 +3756,7 @@ body.im-tab-table thead th {
       const countEl = document.getElementById('show-count');
       if (countEl) countEl.textContent = data.length;
 
-      const chainLabel = (ch) => lang === 'ko' ? (t.chainFilter[ch] || ch) : (t.chainFilter[ch] || ch);
+      const chainLabel = (ch) => (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || t.chainLabel[ch] || ch);
       const semTypeField = t.fieldSemType;
       const productsField = t.fieldProducts;
 
@@ -3758,6 +3784,11 @@ body.im-tab-table thead th {
       <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
+      <td class="quote-cell ret-cell">${qr.chg1d || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret1m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret3m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret6m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret1y || '—'}</td>
       <td class="quote-cell">${qr.hi}</td>
       <td class="quote-cell">${qr.lo}</td>
       <td class="quote-cell">${(qr && (qr.position != null ? qr.position : qr.yoy)) || '—'}</td>
@@ -3790,7 +3821,7 @@ body.im-tab-table thead th {
     function syncSortHeader() {
       document.querySelectorAll('thead th').forEach(th => th.className = '');
       if (!sortKey) return;
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[sortKey];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -3801,7 +3832,7 @@ body.im-tab-table thead th {
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -4095,6 +4126,7 @@ body.im-tab-table thead th {
         chainColors: CHAIN_COLORS,
         lang: lang,
         formatMcap: fmtMcapTableCell,
+        chainLabel: function (ch) { return (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, T[lang]) : ch; },
         onSelect: function (c) {
           resetTableFilters();
           switchTab('table', document.getElementById('tab-btn-table'));
@@ -4172,14 +4204,14 @@ body.im-tab-table thead th {
     <nav aria-label="Related industry maps">
       <ul class="im-seo-related-list">
       <li><a href="../semiconductor/korea_semiconductor_map.html">한국 반도체 산업 투자 지도</a> · <a href="../semiconductor/korea_semiconductor_map.html?lang=en" hreflang="en">Korea Semiconductor Investment Map</a></li>
-      <li><a href="../energy/korea_energy_map.html">한국 에너지 투자 지도</a> · <a href="../energy/korea_energy_map.html?lang=en" hreflang="en">Korea Energy Map</a></li>
-      <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Grid Equipment Map</a></li>
+      <li><a href="../energy/korea_energy_map.html">한국 에너지 투자 지도</a> · <a href="../energy/korea_energy_map.html?lang=en" hreflang="en">Korea Energy Sector Stocks Map</a></li>
+      <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Equipment Map</a></li>
       <li><a href="../ship/korea_ship_map.html">한국 조선·조선기자재 산업 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Marine Equipment Map</a></li>
       <li><a href="../defense/korea_defense_map.html">한국 방위·우주·항공 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense, Space &amp; Aviation Map</a></li>
       <li><a href="../bio/korea_bio_map.html">한국 바이오 산업 투자 지도</a> · <a href="../bio/korea_bio_map.html?lang=en" hreflang="en">Korea Bio Industry Investment Map</a></li>
       <li><a href="../robot/korea_robot_map.html">한국 로봇/피지컬AI 산업 투자 지도</a> · <a href="../robot/korea_robot_map.html?lang=en" hreflang="en">Korea Robot / Physical AI Industry Map</a></li>
-      <li><a href="../finance/korea_finance_map.html">한국 금융 투자 지도</a> · <a href="../finance/korea_finance_map.html?lang=en" hreflang="en">Korea Finance Map</a></li>
-      <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Map</a></li>
+      <li><a href="../finance/korea_finance_map.html">한국 금융 투자 지도</a> · <a href="../finance/korea_finance_map.html?lang=en" hreflang="en">Korea Listed Financials Map</a></li>
+      <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Sector Map</a></li>
       </ul>
     </nav>
   </section>

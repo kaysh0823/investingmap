@@ -231,7 +231,7 @@ function buildT(bioSectors, koreanCompanies) {
     },
     en: {
       ...raw.en,
-      badgeTotal: `<span>${total}</span> company mappings`,
+      badgeTotal: `<span>${total}</span> companies`,
       badgeMarket: `KOSPI <span>${kospi}</span> \u00B7 KOSDAQ <span>${kosdaq}</span>`,
       chainLabel: chainLabelEn,
       chainFilter: chainFilterEn

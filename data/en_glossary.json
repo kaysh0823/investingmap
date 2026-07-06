@@ -1,0 +1,53 @@
+{
+  "ui": {
+    "pricePosition": "52W Range",
+    "pricePositionLong": "position within the 52-week range",
+    "listedCompanies": "listed companies",
+    "listedStocks": "listed stocks",
+    "mappings": "companies",
+    "listings": "companies",
+    "keyPlayers": "Key companies",
+    "mcapUsd": "USD billions (two decimals)",
+    "mcapUsdNote": "English table shows market cap in USD billions (two decimals)",
+    "mcapWon": "trillions of won",
+    "mcapWonNote": "Korean table uses market cap in trillions of won, two decimal places",
+    "illustrativeLinks": "illustrative relationships",
+    "pairing": "licensing & partnerships",
+    "pairingNetwork": "global licensing & partnership network",
+    "notInvestmentAdvice": "Not investment advice; you are responsible for your own decisions.",
+    "disclaimerBuySell": "we do not provide buy or sell recommendations",
+    "valueChainTags": "value-chain categories",
+    "physicalAi": "Physical AI",
+    "powerEquipment": "Power Equipment",
+    "consumerFinance": "consumer & corporate finance"
+  },
+  "seo": {
+    "mapsPrefix": "This map covers",
+    "coversPrefix": "This map covers",
+    "groupsPrefix": "This map groups",
+    "classifiesPrefix": "This map classifies",
+    "editorialFloor": "minimum market cap of KRW 300 billion (editorial threshold)",
+    "financeTitle": "Korea Listed Financials Map",
+    "energyTitle": "Korea Energy Sector Stocks Map",
+    "constructionTitle": "Korea Construction Sector Map"
+  },
+  "forbiddenPatterns": [
+    "price position",
+    "Price Position",
+    "listed names",
+    "pairing links",
+    "big-pharma pairing",
+    "billions USD",
+    "jo \\(兆\\) of won",
+    "Korean cos\\.",
+    "mappings ·"
+  ],
+  "nameAliases": {
+    "DOOSAN ENERBILITY": "Doosan Enerbility",
+    "DOOSANENERBILITY": "Doosan Enerbility",
+    "KoreaElectricPower": "Korea Electric Power Corp.",
+    "SamsungElectronics": "Samsung Electronics",
+    "SamsungHeavyIndustries": "Samsung Heavy Industries",
+    "INDUSTRIALBANKOFKOREA": "Industrial Bank of Korea"
+  }
+}

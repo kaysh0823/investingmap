@@ -327,7 +327,8 @@
   <title>한국 조선·조선기자재 산업 투자 지도 / Korea Shipbuilding Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-  <script src="../js/live_quotes.js?v=5"></script>
+    <script src="../js/return_live.js?v=1"></script>
+<script src="../js/live_quotes.js?v=5"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1584,8 +1585,8 @@ body.im-tab-table thead th {
     <h1 id="hdr-title">🇰🇷 한국 조선·조선기자재 산업 투자 지도</h1>
     <p id="hdr-subtitle">국내 상장 조선·해양·기자재 · 벨류체인 · 글로벌 수주·에너지 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>35</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>26</span> · KOSDAQ <span>9</span></div>
+      <div class="badge" id="badge-total">Total <span>30</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>21</span> · KOSDAQ <span>9</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1597,10 +1598,10 @@ body.im-tab-table thead th {
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">조선·조선기자재·해운 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean shipbuilding &amp; marine equipment stocks</h2>
     <p lang="ko" class="im-seo-body-p">조선소·엔진·철강·조선기자재·해양플랜트·해운·방산 해양 등 조선·해양 클러스터 상장사를 밸류체인별로 분류합니다. HD현대중공업, 한화오션, HMM 등 국내 조선·해운 관련주의 KRX 시가총액·PER·PBR과 수주·선종 민감 테마를 표와 관계 그래프로 제공합니다. Korean shipbuilding stocks와 marine equipment names를 LNG선·컨선 사이클 관점에서 비교하려는 투자자용 참고 자료이며, 수주 공시는 별도 확인이 필요합니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Maps listed Korean yards, engines, steel, marine equipment, offshore, shipping, and naval-marine names by value chain. Compare KRX metrics and order-cycle themes for HD Hyundai Heavy Industries, Hanwha Ocean, HMM, and peers—useful for investors tracking Korean shipbuilding stocks and marine equipment suppliers. Verify latest order disclosures separately; graph links are illustrative.</p>
+    <p lang="en" class="im-seo-body-p" hidden>This map groups listed Korean yards, engines, steel, marine equipment, offshore, shipping, and naval-marine companies by value chain. Compare KRX metrics and order-cycle themes for HD Hyundai Heavy Industries, Hanwha Ocean, HMM, and peers—useful for investors tracking Korean shipbuilding stocks and marine equipment suppliers. Verify latest order disclosures separately; graph relationships are illustrative.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-06-30 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-06-30.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-06 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-06.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1649,6 +1650,11 @@ body.im-tab-table thead th {
               <th id="th-name" onclick="sortTable('name')">기업명</th>
               <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
+              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">전일대비</th>
+              <th id="th-ret1m" class="ret-col" onclick="sortTable('ret1mPct')">1개월</th>
+              <th id="th-ret3m" class="ret-col" onclick="sortTable('ret3mPct')">3개월</th>
+              <th id="th-ret6m" class="ret-col" onclick="sortTable('ret6mPct')">6개월</th>
+              <th id="th-ret1y" class="ret-col" onclick="sortTable('ret1yPct')">1년</th>
               <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
               <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
               <th id="th-position" onclick="sortTable('quotePosition')">주가 위치</th>
@@ -1668,11 +1674,11 @@ body.im-tab-table thead th {
           <tr data-ticker="329180">
       <td><div class="company-name">HD현대중공업</div><div class="company-name-sub">HD HYUNDAI HEAVY INDUSTRIES</div></td>
       <td><span class="ticker">329180</span></td>
-      <td class="quote-cell">592,000</td>
+      <td class="quote-cell">583,000</td>
       <td class="quote-cell">765,000</td>
-      <td class="quote-cell">370,000</td>
-      <td class="quote-cell">56.2%</td>
-      <td class="quote-cell">61.7</td>
+      <td class="quote-cell">370,500</td>
+      <td class="quote-cell">53.9%</td>
+      <td class="quote-cell">57.5</td>
       <td class="mcap-cell">68.22조원</td>
       <td class="fin-cell">41.40</td>
       <td class="fin-cell">7.30</td>
@@ -1685,11 +1691,11 @@ body.im-tab-table thead th {
           <tr data-ticker="042660">
       <td><div class="company-name">한화오션</div><div class="company-name-sub">Hanwha Ocean</div></td>
       <td><span class="ticker">042660</span></td>
-      <td class="quote-cell">100,300</td>
+      <td class="quote-cell">116,100</td>
       <td class="quote-cell">154,800</td>
       <td class="quote-cell">71,500</td>
-      <td class="quote-cell">34.6%</td>
-      <td class="quote-cell">43.9</td>
+      <td class="quote-cell">53.5%</td>
+      <td class="quote-cell">57.7</td>
       <td class="mcap-cell">34.53조원</td>
       <td class="fin-cell">28.13</td>
       <td class="fin-cell">5.60</td>
@@ -1702,11 +1708,11 @@ body.im-tab-table thead th {
           <tr data-ticker="009540">
       <td><div class="company-name">HD한국조선해양</div><div class="company-name-sub">HD KOREA SHIPBUILDING &amp; OFFSHORE ENGINEERING</div></td>
       <td><span class="ticker">009540</span></td>
-      <td class="quote-cell">350,000</td>
+      <td class="quote-cell">365,000</td>
       <td class="quote-cell">494,500</td>
-      <td class="quote-cell">304,500</td>
-      <td class="quote-cell">23.9%</td>
-      <td class="quote-cell">54.1</td>
+      <td class="quote-cell">305,000</td>
+      <td class="quote-cell">31.7%</td>
+      <td class="quote-cell">52.9</td>
       <td class="mcap-cell">28.17조원</td>
       <td class="fin-cell">12.98</td>
       <td class="fin-cell">2.12</td>
@@ -1717,13 +1723,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">Maersk, MODEC, Technip Energies, Shell</div></td>
     </tr>
           <tr data-ticker="010140">
-      <td><div class="company-name">삼성중공업</div><div class="company-name-sub">SamsungHeavyIndustries</div></td>
+      <td><div class="company-name">삼성중공업</div><div class="company-name-sub">Samsung Heavy Industries</div></td>
       <td><span class="ticker">010140</span></td>
-      <td class="quote-cell">23,300</td>
+      <td class="quote-cell">23,700</td>
       <td class="quote-cell">35,350</td>
       <td class="quote-cell">15,610</td>
-      <td class="quote-cell">39%</td>
-      <td class="quote-cell">38.6</td>
+      <td class="quote-cell">41%</td>
+      <td class="quote-cell">37.7</td>
       <td class="mcap-cell">23.67조원</td>
       <td class="fin-cell">42.10</td>
       <td class="fin-cell">5.54</td>
@@ -1736,11 +1742,11 @@ body.im-tab-table thead th {
           <tr data-ticker="267250">
       <td><div class="company-name">HD현대</div><div class="company-name-sub">HD HYUNDAI</div></td>
       <td><span class="ticker">267250</span></td>
-      <td class="quote-cell">199,500</td>
+      <td class="quote-cell">209,000</td>
       <td class="quote-cell">333,000</td>
       <td class="quote-cell">117,600</td>
-      <td class="quote-cell">38%</td>
-      <td class="quote-cell">32.9</td>
+      <td class="quote-cell">42.4%</td>
+      <td class="quote-cell">37.3</td>
       <td class="mcap-cell">19.27조원</td>
       <td class="fin-cell">17.91</td>
       <td class="fin-cell">1.70</td>
@@ -1751,13 +1757,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="011200">
-      <td><div class="company-name">HMM</div></td>
+      <td><div class="company-name">HMM</div><div class="company-name-sub">Hmm</div></td>
       <td><span class="ticker">011200</span></td>
-      <td class="quote-cell">18,610</td>
+      <td class="quote-cell">19,380</td>
       <td class="quote-cell">26,250</td>
       <td class="quote-cell">17,910</td>
-      <td class="quote-cell">8.4%</td>
-      <td class="quote-cell">70.2</td>
+      <td class="quote-cell">17.6%</td>
+      <td class="quote-cell">69.3</td>
       <td class="mcap-cell">18.91조원</td>
       <td class="fin-cell">10.28</td>
       <td class="fin-cell">0.71</td>
@@ -1770,11 +1776,11 @@ body.im-tab-table thead th {
           <tr data-ticker="443060">
       <td><div class="company-name">HD현대마린솔루션</div><div class="company-name-sub">HD HYUNDAI MARINE SOLUTION CO., LTD</div></td>
       <td><span class="ticker">443060</span></td>
-      <td class="quote-cell">224,500</td>
+      <td class="quote-cell">208,000</td>
       <td class="quote-cell">287,000</td>
       <td class="quote-cell">158,000</td>
-      <td class="quote-cell">51.6%</td>
-      <td class="quote-cell">82.3</td>
+      <td class="quote-cell">38.8%</td>
+      <td class="quote-cell">72.0</td>
       <td class="mcap-cell">11.10조원</td>
       <td class="fin-cell">41.16</td>
       <td class="fin-cell">13.45</td>
@@ -1787,11 +1793,11 @@ body.im-tab-table thead th {
           <tr data-ticker="047050">
       <td><div class="company-name">포스코인터내셔널</div><div class="company-name-sub">POSCO INTERNATIONAL</div></td>
       <td><span class="ticker">047050</span></td>
-      <td class="quote-cell">49,150</td>
+      <td class="quote-cell">50,000</td>
       <td class="quote-cell">91,200</td>
       <td class="quote-cell">44,850</td>
-      <td class="quote-cell">9.3%</td>
-      <td class="quote-cell">37.7</td>
+      <td class="quote-cell">11.1%</td>
+      <td class="quote-cell">28.7</td>
       <td class="mcap-cell">10.45조원</td>
       <td class="fin-cell">16.49</td>
       <td class="fin-cell">1.51</td>
@@ -1804,11 +1810,11 @@ body.im-tab-table thead th {
           <tr data-ticker="004020">
       <td><div class="company-name">현대제철</div><div class="company-name-sub">HYUNDAI STEEL</div></td>
       <td><span class="ticker">004020</span></td>
-      <td class="quote-cell">28,100</td>
+      <td class="quote-cell">28,400</td>
       <td class="quote-cell">50,400</td>
       <td class="quote-cell">25,600</td>
-      <td class="quote-cell">10.1%</td>
-      <td class="quote-cell">35.6</td>
+      <td class="quote-cell">11.3%</td>
+      <td class="quote-cell">35.1</td>
       <td class="mcap-cell">4.66조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.24</td>
@@ -1821,11 +1827,11 @@ body.im-tab-table thead th {
           <tr data-ticker="082740">
       <td><div class="company-name">한화엔진</div><div class="company-name-sub">Hanwha Engine</div></td>
       <td><span class="ticker">082740</span></td>
-      <td class="quote-cell">51,000</td>
+      <td class="quote-cell">52,900</td>
       <td class="quote-cell">94,400</td>
       <td class="quote-cell">24,650</td>
-      <td class="quote-cell">37.8%</td>
-      <td class="quote-cell">50.5</td>
+      <td class="quote-cell">40.5%</td>
+      <td class="quote-cell">54.9</td>
       <td class="mcap-cell">4.50조원</td>
       <td class="fin-cell">26.03</td>
       <td class="fin-cell">8.09</td>
@@ -1836,13 +1842,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">Rolls-Royce MTU, BAE Systems, hd_hhi, hwo</div></td>
     </tr>
           <tr data-ticker="028670">
-      <td><div class="company-name">팬오션</div><div class="company-name-sub">PanOcean</div></td>
+      <td><div class="company-name">팬오션</div><div class="company-name-sub">Pan Ocean</div></td>
       <td><span class="ticker">028670</span></td>
-      <td class="quote-cell">4,735</td>
+      <td class="quote-cell">4,940</td>
       <td class="quote-cell">6,600</td>
       <td class="quote-cell">3,485</td>
-      <td class="quote-cell">40.1%</td>
-      <td class="quote-cell">68.0</td>
+      <td class="quote-cell">46.7%</td>
+      <td class="quote-cell">66.4</td>
       <td class="mcap-cell">2.77조원</td>
       <td class="fin-cell">9.20</td>
       <td class="fin-cell">0.48</td>
@@ -1855,11 +1861,11 @@ body.im-tab-table thead th {
           <tr data-ticker="071970">
       <td><div class="company-name">HD현대마린엔진</div><div class="company-name-sub">HD-Hyundai Marine Engine</div></td>
       <td><span class="ticker">071970</span></td>
-      <td class="quote-cell">58,600</td>
+      <td class="quote-cell">63,200</td>
       <td class="quote-cell">118,200</td>
-      <td class="quote-cell">41,100</td>
-      <td class="quote-cell">22.7%</td>
-      <td class="quote-cell">25.4</td>
+      <td class="quote-cell">41,450</td>
+      <td class="quote-cell">28.3%</td>
+      <td class="quote-cell">45.1</td>
       <td class="mcap-cell">2.24조원</td>
       <td class="fin-cell">13.56</td>
       <td class="fin-cell">4.58</td>
@@ -1872,11 +1878,11 @@ body.im-tab-table thead th {
           <tr data-ticker="097230">
       <td><div class="company-name">HJ중공업</div><div class="company-name-sub">HJ SHIPBUILDING &amp; CONSTRUCTION</div></td>
       <td><span class="ticker">097230</span></td>
-      <td class="quote-cell">20,150</td>
+      <td class="quote-cell">19,040</td>
       <td class="quote-cell">34,350</td>
-      <td class="quote-cell">6,950</td>
-      <td class="quote-cell">48.2%</td>
-      <td class="quote-cell">54.1</td>
+      <td class="quote-cell">7,030</td>
+      <td class="quote-cell">44%</td>
+      <td class="quote-cell">38.6</td>
       <td class="mcap-cell">1.95조원</td>
       <td class="fin-cell">37.89</td>
       <td class="fin-cell">2.91</td>
@@ -1889,11 +1895,11 @@ body.im-tab-table thead th {
           <tr data-ticker="001430">
       <td><div class="company-name">세아베스틸지주</div><div class="company-name-sub">SeAH Besteel Holdings Corporation</div></td>
       <td><span class="ticker">001430</span></td>
-      <td class="quote-cell">34,800</td>
+      <td class="quote-cell">32,450</td>
       <td class="quote-cell">92,500</td>
       <td class="quote-cell">23,050</td>
-      <td class="quote-cell">16.9%</td>
-      <td class="quote-cell">7.0</td>
+      <td class="quote-cell">13.5%</td>
+      <td class="quote-cell">4.5</td>
       <td class="mcap-cell">1.71조원</td>
       <td class="fin-cell">30.50</td>
       <td class="fin-cell">0.88</td>
@@ -1904,13 +1910,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="017960">
-      <td><div class="company-name">한국카본</div><div class="company-name-sub">HankukCarbon</div></td>
+      <td><div class="company-name">한국카본</div><div class="company-name-sub">Hankuk Carbon</div></td>
       <td><span class="ticker">017960</span></td>
-      <td class="quote-cell">26,700</td>
+      <td class="quote-cell">25,550</td>
       <td class="quote-cell">54,100</td>
       <td class="quote-cell">22,200</td>
-      <td class="quote-cell">14.1%</td>
-      <td class="quote-cell">26.2</td>
+      <td class="quote-cell">10.5%</td>
+      <td class="quote-cell">20.3</td>
       <td class="mcap-cell">1.64조원</td>
       <td class="fin-cell">15.54</td>
       <td class="fin-cell">2.76</td>
@@ -1921,13 +1927,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="077970">
-      <td><div class="company-name">STX엔진</div><div class="company-name-sub">STXEngineCo.,Ltd</div></td>
+      <td><div class="company-name">STX엔진</div><div class="company-name-sub">STXEngine Co.,Ltd</div></td>
       <td><span class="ticker">077970</span></td>
-      <td class="quote-cell">29,300</td>
+      <td class="quote-cell">29,000</td>
       <td class="quote-cell">67,700</td>
       <td class="quote-cell">19,910</td>
-      <td class="quote-cell">19.6%</td>
-      <td class="quote-cell">28.0</td>
+      <td class="quote-cell">19%</td>
+      <td class="quote-cell">26.6</td>
       <td class="mcap-cell">1.30조원</td>
       <td class="fin-cell">18.01</td>
       <td class="fin-cell">3.78</td>
@@ -1940,11 +1946,11 @@ body.im-tab-table thead th {
           <tr data-ticker="100090">
       <td><div class="company-name">SK오션플랜트</div><div class="company-name-sub">SKoceanplant</div></td>
       <td><span class="ticker">100090</span></td>
-      <td class="quote-cell">15,130</td>
+      <td class="quote-cell">15,120</td>
       <td class="quote-cell">31,600</td>
       <td class="quote-cell">13,930</td>
-      <td class="quote-cell">6.8%</td>
-      <td class="quote-cell">41.2</td>
+      <td class="quote-cell">6.7%</td>
+      <td class="quote-cell">50.7</td>
       <td class="mcap-cell">0.98조원</td>
       <td class="fin-cell">25.06</td>
       <td class="fin-cell">1.20</td>
@@ -1957,11 +1963,11 @@ body.im-tab-table thead th {
           <tr data-ticker="075580">
       <td><div class="company-name">세진중공업</div><div class="company-name-sub">SEJIN HEAVY INDUSTRIES CO., LTD.</div></td>
       <td><span class="ticker">075580</span></td>
-      <td class="quote-cell">13,210</td>
+      <td class="quote-cell">13,320</td>
       <td class="quote-cell">27,400</td>
       <td class="quote-cell">10,280</td>
-      <td class="quote-cell">17.1%</td>
-      <td class="quote-cell">42.3</td>
+      <td class="quote-cell">17.8%</td>
+      <td class="quote-cell">42.8</td>
       <td class="mcap-cell">0.84조원</td>
       <td class="fin-cell">16.49</td>
       <td class="fin-cell">3.66</td>
@@ -1974,11 +1980,11 @@ body.im-tab-table thead th {
           <tr data-ticker="014620">
       <td><div class="company-name">성광벤드</div><div class="company-name-sub">SUNG KWANG BEND CO., LTD.</div></td>
       <td><span class="ticker">014620</span></td>
-      <td class="quote-cell">27,900</td>
+      <td class="quote-cell">26,800</td>
       <td class="quote-cell">53,300</td>
       <td class="quote-cell">24,850</td>
-      <td class="quote-cell">10.7%</td>
-      <td class="quote-cell">57.9</td>
+      <td class="quote-cell">6.9%</td>
+      <td class="quote-cell">45.2</td>
       <td class="mcap-cell">0.80조원</td>
       <td class="fin-cell">23.17</td>
       <td class="fin-cell">1.45</td>
@@ -1991,11 +1997,11 @@ body.im-tab-table thead th {
           <tr data-ticker="023160">
       <td><div class="company-name">태광</div><div class="company-name-sub">T. K. CORPORATION</div></td>
       <td><span class="ticker">023160</span></td>
-      <td class="quote-cell">24,650</td>
+      <td class="quote-cell">24,000</td>
       <td class="quote-cell">51,300</td>
       <td class="quote-cell">18,660</td>
-      <td class="quote-cell">18.4%</td>
-      <td class="quote-cell">45.2</td>
+      <td class="quote-cell">16.4%</td>
+      <td class="quote-cell">33.1</td>
       <td class="mcap-cell">0.77조원</td>
       <td class="fin-cell">11.99</td>
       <td class="fin-cell">1.23</td>
@@ -2008,11 +2014,11 @@ body.im-tab-table thead th {
           <tr data-ticker="100840">
       <td><div class="company-name">SNT에너지</div><div class="company-name-sub">SNTEnergy Co.,Ltd.</div></td>
       <td><span class="ticker">100840</span></td>
-      <td class="quote-cell">28,250</td>
+      <td class="quote-cell">26,550</td>
       <td class="quote-cell">67,900</td>
       <td class="quote-cell">25,100</td>
-      <td class="quote-cell">7.4%</td>
-      <td class="quote-cell">22.0</td>
+      <td class="quote-cell">3.4%</td>
+      <td class="quote-cell">17.3</td>
       <td class="mcap-cell">0.69조원</td>
       <td class="fin-cell">7.87</td>
       <td class="fin-cell">1.82</td>
@@ -2023,13 +2029,13 @@ body.im-tab-table thead th {
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="005880">
-      <td><div class="company-name">대한해운</div><div class="company-name-sub">KoreaLine</div></td>
+      <td><div class="company-name">대한해운</div><div class="company-name-sub">Korea Line</div></td>
       <td><span class="ticker">005880</span></td>
-      <td class="quote-cell">1,853</td>
+      <td class="quote-cell">1,921</td>
       <td class="quote-cell">3,385</td>
-      <td class="quote-cell">1,632</td>
-      <td class="quote-cell">12.6%</td>
-      <td class="quote-cell">56.6</td>
+      <td class="quote-cell">1,639</td>
+      <td class="quote-cell">16.2%</td>
+      <td class="quote-cell">51.6</td>
       <td class="mcap-cell">0.65조원</td>
       <td class="fin-cell">3.62</td>
       <td class="fin-cell">0.30</td>
@@ -2042,11 +2048,11 @@ body.im-tab-table thead th {
           <tr data-ticker="044490">
       <td><div class="company-name">태웅</div><div class="company-name-sub">TAEWOONG CO., LTD.</div></td>
       <td><span class="ticker">044490</span></td>
-      <td class="quote-cell">29,950</td>
+      <td class="quote-cell">27,700</td>
       <td class="quote-cell">61,300</td>
       <td class="quote-cell">22,550</td>
-      <td class="quote-cell">19.1%</td>
-      <td class="quote-cell">55.0</td>
+      <td class="quote-cell">13.3%</td>
+      <td class="quote-cell">40.2</td>
       <td class="mcap-cell">0.65조원</td>
       <td class="fin-cell">119.19</td>
       <td class="fin-cell">1.06</td>
@@ -2059,11 +2065,11 @@ body.im-tab-table thead th {
           <tr data-ticker="033500">
       <td><div class="company-name">동성화인텍</div><div class="company-name-sub">DONGSUNG FINETEC CO., Ltd</div></td>
       <td><span class="ticker">033500</span></td>
-      <td class="quote-cell">17,360</td>
+      <td class="quote-cell">17,520</td>
       <td class="quote-cell">34,300</td>
       <td class="quote-cell">15,990</td>
-      <td class="quote-cell">7.5%</td>
-      <td class="quote-cell">35.8</td>
+      <td class="quote-cell">8.4%</td>
+      <td class="quote-cell">33.8</td>
       <td class="mcap-cell">0.56조원</td>
       <td class="fin-cell">9.98</td>
       <td class="fin-cell">2.16</td>
@@ -2076,11 +2082,11 @@ body.im-tab-table thead th {
           <tr data-ticker="460930">
       <td><div class="company-name">현대힘스</div><div class="company-name-sub">HYUNDAI HYMS CO., LTD.</div></td>
       <td><span class="ticker">460930</span></td>
-      <td class="quote-cell">12,080</td>
+      <td class="quote-cell">12,400</td>
       <td class="quote-cell">33,450</td>
       <td class="quote-cell">11,240</td>
-      <td class="quote-cell">3.8%</td>
-      <td class="quote-cell">21.6</td>
+      <td class="quote-cell">5.2%</td>
+      <td class="quote-cell">27.7</td>
       <td class="mcap-cell">0.50조원</td>
       <td class="fin-cell">23.36</td>
       <td class="fin-cell">1.98</td>
@@ -2093,11 +2099,11 @@ body.im-tab-table thead th {
           <tr data-ticker="101930">
       <td><div class="company-name">인화정공</div><div class="company-name-sub">Inhwa Precision Co., Ltd</div></td>
       <td><span class="ticker">101930</span></td>
-      <td class="quote-cell">7,440</td>
+      <td class="quote-cell">7,430</td>
       <td class="quote-cell">17,000</td>
       <td class="quote-cell">6,190</td>
-      <td class="quote-cell">11.6%</td>
-      <td class="quote-cell">7.4</td>
+      <td class="quote-cell">11.5%</td>
+      <td class="quote-cell">12.3</td>
       <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">16.31</td>
       <td class="fin-cell">1.22</td>
@@ -2110,11 +2116,11 @@ body.im-tab-table thead th {
           <tr data-ticker="013030">
       <td><div class="company-name">하이록코리아</div><div class="company-name-sub">HY-LOK CORPORATION</div></td>
       <td><span class="ticker">013030</span></td>
-      <td class="quote-cell">31,550</td>
+      <td class="quote-cell">31,450</td>
       <td class="quote-cell">48,100</td>
       <td class="quote-cell">28,250</td>
-      <td class="quote-cell">16.6%</td>
-      <td class="quote-cell">52.6</td>
+      <td class="quote-cell">16.1%</td>
+      <td class="quote-cell">53.0</td>
       <td class="mcap-cell">0.40조원</td>
       <td class="fin-cell">8.15</td>
       <td class="fin-cell">0.89</td>
@@ -2127,11 +2133,11 @@ body.im-tab-table thead th {
           <tr data-ticker="306200">
       <td><div class="company-name">세아제강</div><div class="company-name-sub">SeAH Steel Corporation</div></td>
       <td><span class="ticker">306200</span></td>
-      <td class="quote-cell">124,900</td>
+      <td class="quote-cell">127,500</td>
       <td class="quote-cell">189,000</td>
       <td class="quote-cell">112,000</td>
-      <td class="quote-cell">16.8%</td>
-      <td class="quote-cell">64.4</td>
+      <td class="quote-cell">20.1%</td>
+      <td class="quote-cell">48.9</td>
       <td class="mcap-cell">0.40조원</td>
       <td class="fin-cell">13.18</td>
       <td class="fin-cell">0.35</td>
@@ -2144,11 +2150,11 @@ body.im-tab-table thead th {
           <tr data-ticker="092460">
       <td><div class="company-name">한라IMS</div><div class="company-name-sub">HANLA IMS Co., LTD</div></td>
       <td><span class="ticker">092460</span></td>
-      <td class="quote-cell">15,160</td>
+      <td class="quote-cell">15,420</td>
       <td class="quote-cell">22,150</td>
-      <td class="quote-cell">8,250</td>
-      <td class="quote-cell">49.7%</td>
-      <td class="quote-cell">48.2</td>
+      <td class="quote-cell">8,540</td>
+      <td class="quote-cell">50.6%</td>
+      <td class="quote-cell">38.7</td>
       <td class="mcap-cell">0.32조원</td>
       <td class="fin-cell">12.22</td>
       <td class="fin-cell">1.59</td>
@@ -2161,11 +2167,11 @@ body.im-tab-table thead th {
           <tr data-ticker="064820">
       <td><div class="company-name">케이프</div><div class="company-name-sub">CAPE INDUSTRIES LTD.</div></td>
       <td><span class="ticker">064820</span></td>
-      <td class="quote-cell">8,860</td>
+      <td class="quote-cell">9,030</td>
       <td class="quote-cell">17,500</td>
-      <td class="quote-cell">5,930</td>
-      <td class="quote-cell">25.3%</td>
-      <td class="quote-cell">28.3</td>
+      <td class="quote-cell">5,940</td>
+      <td class="quote-cell">26.7%</td>
+      <td class="quote-cell">27.4</td>
       <td class="mcap-cell">0.32조원</td>
       <td class="fin-cell">5.09</td>
       <td class="fin-cell">1.05</td>
@@ -2278,6 +2284,11 @@ body.im-tab-table thead th {
         "thName": "기업명",
         "thTicker": "종목코드",
         "thLast": "현재가",
+        "thChg1d": "전일대비",
+        "thRet1m": "1개월",
+        "thRet3m": "3개월",
+        "thRet6m": "6개월",
+        "thRet1y": "1년",
         "th52High": "52주 최고",
         "th52Lo": "52주 최저",
         "thPosition": "주가 위치",
@@ -2358,9 +2369,14 @@ body.im-tab-table thead th {
         "thName": "Company",
         "thTicker": "Ticker",
         "thLast": "Last",
+        "thChg1d": "Day",
+        "thRet1m": "1M",
+        "thRet3m": "3M",
+        "thRet6m": "6M",
+        "thRet1y": "1Y",
         "th52High": "52W High",
         "th52Lo": "52W Low",
-        "thPosition": "Price Position",
+        "thPosition": "52W Range",
         "thRs": "RS",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
@@ -2370,7 +2386,7 @@ body.im-tab-table thead th {
         "thSemType": "Segment",
         "thProducts": "Products / services",
         "thPartners": "Global customers",
-        "note": "⚠ Public information only. Market cap and segment follow KRX disclosures as of the date shown above. Value chain labels are editorial groupings. English table shows market cap in billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).",
+        "note": "⚠ Public information only. Market cap and segment follow KRX disclosures as of the date shown above. Value chain labels are editorial groupings. English table shows market cap in USD billions (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative).",
         "sbKorean": "Korean listed (value chain)",
         "sbGlobal": "Global shipping & energy",
         "sbSize": "Node size",
@@ -2411,7 +2427,7 @@ body.im-tab-table thead th {
         "ttProducts": "Products",
         "ttRevenue": "Market cap",
         "ttPartners": "Partners",
-        "ttSuppliers": "Korean cos.",
+        "ttSuppliers": "Korean companies",
         "ttCountry": "Country",
         "ttSector": "Field",
         "ttTags": "Multi-axis",
@@ -2446,7 +2462,7 @@ body.im-tab-table thead th {
       },
 
       {
-        id: 'shi', name: '삼성중공업', nameEn: 'SamsungHeavyIndustries', ticker: '010140', market: 'KOSPI', chain: '종합조선',
+        id: 'shi', name: '삼성중공업', nameEn: 'Samsung Heavy Industries', ticker: '010140', market: 'KOSPI', chain: '종합조선',
         semType: 'LNG·크루즈·부유식', semTypeEn: 'LNG carriers, cruise, floating units',
         products: 'LNGC, FLNG, 시추선, 상선', productsEn: 'LNGC, FLNG, drillships, merchant newbuilds',
         revenue: '23.67조원', mcapWon: 23672000000000, per: 42.1, pbr: 5.54, revTier: 3, partners: ['shell', 'total', 'carnival', 'wartsila', { id: 'theme_lng', edgeLabel: 'LNGC·FLNG 중심', edgeLabelEn: 'LNG-heavy backlog', weight: 0.1, kind: 'theme' }, { id: 'theme_green', edgeLabel: '암모니아·메탄온 선종', edgeLabelEn: 'Ammonia / methanol newbuilds', weight: 0.04, kind: 'theme' }]
@@ -2460,7 +2476,7 @@ body.im-tab-table thead th {
       },
 
       {
-        id: 'hmm', name: 'HMM', nameEn: 'HMM', ticker: '011200', market: 'KOSPI', chain: '해운물류',
+        id: 'hmm', name: 'HMM', nameEn: 'Hmm', ticker: '011200', market: 'KOSPI', chain: '해운물류',
         semType: '컨테이너 해운', semTypeEn: 'Container liner',
         products: '글로벌 노선, 친환경 선대', productsEn: 'Global liner ops, eco fleet renewal',
         revenue: '18.91조원', mcapWon: 18911921298500, per: 10.28, pbr: 0.71, revTier: 3, partners: ['maersk', 'msc', 'cma_cgm']
@@ -2468,8 +2484,8 @@ body.im-tab-table thead th {
 
       {
         id: 'ship_hd_hyundai_marine_soluti', name: 'HD현대마린솔루션', nameEn: 'HD HYUNDAI MARINE SOLUTION CO., LTD', ticker: '443060', market: 'KOSPI', chain: '해운물류',
-        semType: '선박 A/S·친환경 개조', semTypeEn: '선박 A/S·친환경 개조',
-        products: '선박 A/S·친환경 개조 — 조선·해양 관련', productsEn: '선박 A/S·친환경 개조 — 선박 A/S·친환경 개조 for shipbuilding and marine',
+        semType: '선박 A/S·친환경 개조', semTypeEn: '—',
+        products: '선박 A/S·친환경 개조 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '11.10조원', mcapWon: 11096281350000, per: 41.16, pbr: 13.45, revTier: 2, partners: []
       },
 
@@ -2495,7 +2511,7 @@ body.im-tab-table thead th {
       },
 
       {
-        id: 'pan', name: '팬오션', nameEn: 'PanOcean', ticker: '028670', market: 'KOSPI', chain: '해운물류',
+        id: 'pan', name: '팬오션', nameEn: 'Pan Ocean', ticker: '028670', market: 'KOSPI', chain: '해운물류',
         semType: '벌크·다목적', semTypeEn: 'Bulk & multipurpose shipping',
         products: '벌크, 탹커, PCTC', productsEn: 'Bulkers, tankers, PCTC',
         revenue: '2.77조원', mcapWon: 2774415767280, per: 9.2, pbr: 0.48, revTier: 2, partners: ['vale', 'bhp']
@@ -2503,8 +2519,8 @@ body.im-tab-table thead th {
 
       {
         id: 'ship_hd_hyundai_marine_engine', name: 'HD현대마린엔진', nameEn: 'HD-Hyundai Marine Engine', ticker: '071970', market: 'KOSPI', chain: '조선기자재',
-        semType: '선박엔진·기자재', semTypeEn: '선박엔진·기자재',
-        products: '선박엔진·기자재 — 선박용 기자재·엔진', productsEn: '선박엔진·기자재 — marine equipment and engines',
+        semType: '선박엔진·기자재', semTypeEn: '—',
+        products: '선박엔진·기자재 — 선박용 기자재·엔진', productsEn: 'Shipbuilding and marine products and services',
         revenue: '2.24조원', mcapWon: 2238818670000, per: 13.56, pbr: 4.58, revTier: 2, partners: []
       },
 
@@ -2517,20 +2533,20 @@ body.im-tab-table thead th {
 
       {
         id: 'ship_seah_besteel_holdings_co', name: '세아베스틸지주', nameEn: 'SeAH Besteel Holdings Corporation', ticker: '001430', market: 'KOSPI', chain: '방산해양',
-        semType: '특수강·방산/조선 소재', semTypeEn: '특수강·방산/조선 소재',
-        products: '특수강·방산/조선 소재 — 군함·방산 해양', productsEn: '특수강·방산/조선 소재 — naval and defense marine systems',
+        semType: '특수강·방산/조선 소재', semTypeEn: '—',
+        products: '특수강·방산/조선 소재 — 군함·방산 해양', productsEn: 'Shipbuilding and marine products and services',
         revenue: '1.71조원', mcapWon: 1714209288200, per: 30.5, pbr: 0.88, revTier: 2, partners: []
       },
 
       {
-        id: 'ship_hankukcarbon', name: '한국카본', nameEn: 'HankukCarbon', ticker: '017960', market: 'KOSPI', chain: '조선기자재',
-        semType: 'LNG 보냉재', semTypeEn: 'LNG 보냉재',
-        products: 'LNG 보냉재 — 조선·해양 관련', productsEn: 'LNG 보냉재 — LNG 보냉재 for shipbuilding and marine',
+        id: 'ship_hankukcarbon', name: '한국카본', nameEn: 'Hankuk Carbon', ticker: '017960', market: 'KOSPI', chain: '조선기자재',
+        semType: 'LNG 보냉재', semTypeEn: '—',
+        products: 'LNG 보냉재 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '1.64조원', mcapWon: 1640728430500, per: 15.54, pbr: 2.76, revTier: 2, partners: []
       },
 
       {
-        id: 'stxe', name: 'STX엔진', nameEn: 'STXEngineCo.,Ltd', ticker: '077970', market: 'KOSPI', chain: '조선기자재',
+        id: 'stxe', name: 'STX엔진', nameEn: 'STXEngine Co.,Ltd', ticker: '077970', market: 'KOSPI', chain: '조선기자재',
         semType: '선박용 엔진·발전', semTypeEn: 'Marine diesel & gas engines',
         products: '메인엔진, 발전기', productsEn: 'Marine main engines, Gensets',
         revenue: '1.30조원', mcapWon: 1296782434900, per: 18.01, pbr: 3.78, revTier: 2, partners: ['man_es', 'wartsila', { id: 'hd_hhi', edgeLabel: '메인엔진·부조선 납품', edgeLabelEn: 'Main engine & gen to HHI', weight: 0.26 }, { id: 'shi', edgeLabel: 'LNGC·상선 엔진 납품', edgeLabelEn: 'Engines to SHI newbuilds', weight: 0.24 }, { id: 'hwo', edgeLabel: '해군·상선 추진', edgeLabelEn: 'Naval / merchant engines', weight: 0.2 }]
@@ -2545,34 +2561,34 @@ body.im-tab-table thead th {
 
       {
         id: 'ship_sejin_heavy_industries_c', name: '세진중공업', nameEn: 'SEJIN HEAVY INDUSTRIES CO., LTD.', ticker: '075580', market: 'KOSPI', chain: '해운물류',
-        semType: '선박 블록·LPG 탱크', semTypeEn: '선박 블록·LPG 탱크',
-        products: '선박 블록·LPG 탱크 — 조선·해양 관련', productsEn: '선박 블록·LPG 탱크 — 선박 블록·LPG 탱크 for shipbuilding and marine',
+        semType: '선박 블록·LPG 탱크', semTypeEn: '—',
+        products: '선박 블록·LPG 탱크 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.84조원', mcapWon: 835118508640, per: 16.49, pbr: 3.66, revTier: 1, partners: []
       },
 
       {
         id: 'ship_sung_kwang_bend_co_ltd', name: '성광벤드', nameEn: 'SUNG KWANG BEND CO., LTD.', ticker: '014620', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '피팅·밸브', semTypeEn: '피팅·밸브',
-        products: '피팅·밸브 — 선박용 기자재·엔진', productsEn: '피팅·밸브 — marine equipment and engines',
+        semType: '피팅·밸브', semTypeEn: '—',
+        products: '피팅·밸브 — 선박용 기자재·엔진', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.80조원', mcapWon: 798048788200, per: 23.17, pbr: 1.45, revTier: 1, partners: []
       },
 
       {
         id: 'ship_t_k_corporation', name: '태광', nameEn: 'T. K. CORPORATION', ticker: '023160', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '피팅·밸브', semTypeEn: '피팅·밸브',
-        products: '피팅·밸브 — 선박용 기자재·엔진', productsEn: '피팅·밸브 — marine equipment and engines',
+        semType: '피팅·밸브', semTypeEn: '—',
+        products: '피팅·밸브 — 선박용 기자재·엔진', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.77조원', mcapWon: 765670363200, per: 11.99, pbr: 1.23, revTier: 1, partners: []
       },
 
       {
         id: 'ship_sntenergy_co_ltd', name: 'SNT에너지', nameEn: 'SNTEnergy Co.,Ltd.', ticker: '100840', market: 'KOSPI', chain: '조선기자재',
-        semType: '열교환기·HRSG', semTypeEn: '열교환기·HRSG',
-        products: '열교환기·HRSG — 조선·해양 관련', productsEn: '열교환기·HRSG — 열교환기·HRSG for shipbuilding and marine',
+        semType: '열교환기·HRSG', semTypeEn: '—',
+        products: '열교환기·HRSG — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.69조원', mcapWon: 694874308800, per: 7.87, pbr: 1.82, revTier: 1, partners: []
       },
 
       {
-        id: 'kline', name: '대한해운', nameEn: 'KoreaLine', ticker: '005880', market: 'KOSPI', chain: '해운물류',
+        id: 'kline', name: '대한해운', nameEn: 'Korea Line', ticker: '005880', market: 'KOSPI', chain: '해운물류',
         semType: '벌크·프로젝트', semTypeEn: 'Bulk & project cargo',
         products: '건화물·프로젝트 물류', productsEn: 'Dry bulk and project logistics',
         revenue: '0.65조원', mcapWon: 653563363500, per: 3.62, pbr: 0.3, revTier: 1, partners: ['vale', 'rio_tinto']
@@ -2580,57 +2596,57 @@ body.im-tab-table thead th {
 
       {
         id: 'ship_taewoong_co_ltd', name: '태웅', nameEn: 'TAEWOONG CO., LTD.', ticker: '044490', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '단조품·플랜지', semTypeEn: '단조품·플랜지',
-        products: '단조품·플랜지 — 조선·해양 관련', productsEn: '단조품·플랜지 — 단조품·플랜지 for shipbuilding and marine',
+        semType: '단조품·플랜지', semTypeEn: '—',
+        products: '단조품·플랜지 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.65조원', mcapWon: 646238406300, per: 119.19, pbr: 1.06, revTier: 1, partners: []
       },
 
       {
         id: 'ship_dongsung_finetec_co_ltd', name: '동성화인텍', nameEn: 'DONGSUNG FINETEC CO., Ltd', ticker: '033500', market: 'KOSDAQ', chain: '조선기자재',
-        semType: 'LNG 보냉재', semTypeEn: 'LNG 보냉재',
-        products: 'LNG 보냉재 — 조선·해양 관련', productsEn: 'LNG 보냉재 — LNG 보냉재 for shipbuilding and marine',
+        semType: 'LNG 보냉재', semTypeEn: '—',
+        products: 'LNG 보냉재 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.56조원', mcapWon: 559603958040, per: 9.98, pbr: 2.16, revTier: 1, partners: []
       },
 
       {
         id: 'ship_hyundai_hyms_co_ltd', name: '현대힘스', nameEn: 'HYUNDAI HYMS CO., LTD.', ticker: '460930', market: 'KOSDAQ', chain: '해운물류',
-        semType: '선박 블록·기자재', semTypeEn: '선박 블록·기자재',
-        products: '선박 블록·기자재 — 조선·해양 관련', productsEn: '선박 블록·기자재 — 선박 블록·기자재 for shipbuilding and marine',
+        semType: '선박 블록·기자재', semTypeEn: '—',
+        products: '선박 블록·기자재 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.50조원', mcapWon: 501055567810, per: 23.36, pbr: 1.98, revTier: 1, partners: []
       },
 
       {
         id: 'ship_inhwa_precision_co_ltd', name: '인화정공', nameEn: 'Inhwa Precision Co., Ltd', ticker: '101930', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '선박엔진 부품', semTypeEn: '선박엔진 부품',
-        products: '선박엔진 부품 — 선박용 기자재·엔진', productsEn: '선박엔진 부품 — marine equipment and engines',
+        semType: '선박엔진 부품', semTypeEn: '—',
+        products: '선박엔진 부품 — 선박용 기자재·엔진', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.42조원', mcapWon: 416402978200, per: 16.31, pbr: 1.22, revTier: 1, partners: []
       },
 
       {
         id: 'ship_hy_lok_corporation', name: '하이록코리아', nameEn: 'HY-LOK CORPORATION', ticker: '013030', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '계장용 피팅·밸브', semTypeEn: '계장용 피팅·밸브',
-        products: '계장용 피팅·밸브 — 선박용 기자재·엔진', productsEn: '계장용 피팅·밸브 — marine equipment and engines',
+        semType: '계장용 피팅·밸브', semTypeEn: '—',
+        products: '계장용 피팅·밸브 — 선박용 기자재·엔진', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.40조원', mcapWon: 403647339200, per: 8.15, pbr: 0.89, revTier: 1, partners: []
       },
 
       {
         id: 'ship_seah_steel_corporation', name: '세아제강', nameEn: 'SeAH Steel Corporation', ticker: '306200', market: 'KOSPI', chain: '해양플랜트',
-        semType: '강관·해양플랜트 소재', semTypeEn: '강관·해양플랜트 소재',
-        products: '강관·해양플랜트 소재 — 해양플랜트·FPSO', productsEn: '강관·해양플랜트 소재 — offshore plants and FPSO',
+        semType: '강관·해양플랜트 소재', semTypeEn: '—',
+        products: '강관·해양플랜트 소재 — 해양플랜트·FPSO', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.40조원', mcapWon: 400485560000, per: 13.18, pbr: 0.35, revTier: 1, partners: []
       },
 
       {
         id: 'ship_hanla_ims_co_ltd', name: '한라IMS', nameEn: 'HANLA IMS Co., LTD', ticker: '092460', market: 'KOSDAQ', chain: '해운물류',
-        semType: '선박평형수·계측', semTypeEn: '선박평형수·계측',
-        products: '선박평형수·계측 — 조선·해양 관련', productsEn: '선박평형수·계측 — 선박평형수·계측 for shipbuilding and marine',
+        semType: '선박평형수·계측', semTypeEn: '—',
+        products: '선박평형수·계측 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.32조원', mcapWon: 316015789600, per: 12.22, pbr: 1.59, revTier: 1, partners: []
       },
 
       {
         id: 'ship_cape_industries_ltd', name: '케이프', nameEn: 'CAPE INDUSTRIES LTD.', ticker: '064820', market: 'KOSDAQ', chain: '조선기자재',
-        semType: '실린더라이너·엔진부품', semTypeEn: '실린더라이너·엔진부품',
-        products: '실린더라이너·엔진부품 — 선박용 기자재·엔진', productsEn: '실린더라이너·엔진부품 — marine equipment and engines',
+        semType: '실린더라이너·엔진부품', semTypeEn: '—',
+        products: '실린더라이너·엔진부품 — 선박용 기자재·엔진', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.32조원', mcapWon: 315699999450, per: 5.09, pbr: 1.05, revTier: 1, partners: []
       }
 
@@ -2754,14 +2770,24 @@ body.im-tab-table thead th {
       document.getElementById('th-name').textContent = t.thName;
       document.getElementById('th-ticker').textContent = t.thTicker;
       var thLast = document.getElementById('th-last');
+      var thChg1d = document.getElementById('th-chg1d');
+      var thRet1m = document.getElementById('th-ret1m');
+      var thRet3m = document.getElementById('th-ret3m');
+      var thRet6m = document.getElementById('th-ret6m');
+      var thRet1y = document.getElementById('th-ret1y');
       if (thLast) thLast.textContent = t.thLast;
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? 'Day' : '전일대비');
+      if (thRet1m) thRet1m.textContent = t.thRet1m || (lang === 'en' ? '1M' : '1개월');
+      if (thRet3m) thRet3m.textContent = t.thRet3m || (lang === 'en' ? '3M' : '3개월');
+      if (thRet6m) thRet6m.textContent = t.thRet6m || (lang === 'en' ? '6M' : '6개월');
+      if (thRet1y) thRet1y.textContent = t.thRet1y || (lang === 'en' ? '1Y' : '1년');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
       var thpos = document.getElementById('th-position');
       var thrs = document.getElementById('th-rs');
-      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));
+      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? '52W Range' : '주가 위치'));
       if (thrs) thrs.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.rsHeaderLabel) ? InvestingMapLiveQuotes.rsHeaderLabel(lang, t) : (t.thRs || 'RS');
       const thMcap = document.getElementById('th-mcap');
       if (thMcap) thMcap.textContent = t.thMcap;
@@ -2784,7 +2810,7 @@ body.im-tab-table thead th {
       document.getElementById('graph-hint-text').textContent = t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
-      if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
+      if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
       if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       // Rebuild dynamic UI
@@ -2806,7 +2832,7 @@ body.im-tab-table thead th {
       const container = document.getElementById('chain-chips');
       const chains = ['all', '종합조선', '조선기자재', '해양플랜트', '해운물류', '방산해양', '철강소재'];
       container.innerHTML = chains.map(ch => {
-        const label = ch === 'all' ? t.allFilter : (t.chainFilter[ch] || ch);
+        const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
         const color = CHAIN_COLORS[ch];
         const style = isActive ? `background:${color || '#4FC3F7'};color:#0d1117;border-color:transparent;` : '';
@@ -2834,7 +2860,7 @@ body.im-tab-table thead th {
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
-      ${t.chainLabel[ch] || ch}
+      ${(window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainLabel[ch] || ch)}
     </div>`
       ).join('');
       // Region legend
@@ -2891,7 +2917,7 @@ body.im-tab-table thead th {
       });
       if (sortKey) {
         data.sort((a, b) => {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret1mPct' || sortKey === 'ret3mPct' || sortKey === 'ret6mPct' || sortKey === 'ret1yPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
             const av = a[sortKey];
             const bv = b[sortKey];
             const na = av == null || !Number.isFinite(av);
@@ -2913,7 +2939,7 @@ body.im-tab-table thead th {
       const countEl = document.getElementById('show-count');
       if (countEl) countEl.textContent = data.length;
 
-      const chainLabel = (ch) => lang === 'ko' ? (t.chainFilter[ch] || ch) : (t.chainFilter[ch] || ch);
+      const chainLabel = (ch) => (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || t.chainLabel[ch] || ch);
       const semTypeField = t.fieldSemType;
       const productsField = t.fieldProducts;
 
@@ -2941,6 +2967,11 @@ body.im-tab-table thead th {
       <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
+      <td class="quote-cell ret-cell">${qr.chg1d || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret1m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret3m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret6m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret1y || '—'}</td>
       <td class="quote-cell">${qr.hi}</td>
       <td class="quote-cell">${qr.lo}</td>
       <td class="quote-cell">${(qr && (qr.position != null ? qr.position : qr.yoy)) || '—'}</td>
@@ -2973,7 +3004,7 @@ body.im-tab-table thead th {
     function syncSortHeader() {
       document.querySelectorAll('thead th').forEach(th => th.className = '');
       if (!sortKey) return;
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[sortKey];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -2984,7 +3015,7 @@ body.im-tab-table thead th {
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -3278,6 +3309,7 @@ body.im-tab-table thead th {
         chainColors: CHAIN_COLORS,
         lang: lang,
         formatMcap: fmtMcapTableCell,
+        chainLabel: function (ch) { return (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, T[lang]) : ch; },
         onSelect: function (c) {
           resetTableFilters();
           switchTab('table', document.getElementById('tab-btn-table'));
@@ -3355,14 +3387,14 @@ body.im-tab-table thead th {
     <nav aria-label="Related industry maps">
       <ul class="im-seo-related-list">
       <li><a href="../semiconductor/korea_semiconductor_map.html">한국 반도체 산업 투자 지도</a> · <a href="../semiconductor/korea_semiconductor_map.html?lang=en" hreflang="en">Korea Semiconductor Investment Map</a></li>
-      <li><a href="../energy/korea_energy_map.html">한국 에너지 투자 지도</a> · <a href="../energy/korea_energy_map.html?lang=en" hreflang="en">Korea Energy Map</a></li>
-      <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Grid Equipment Map</a></li>
+      <li><a href="../energy/korea_energy_map.html">한국 에너지 투자 지도</a> · <a href="../energy/korea_energy_map.html?lang=en" hreflang="en">Korea Energy Sector Stocks Map</a></li>
+      <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Equipment Map</a></li>
       <li><a href="../defense/korea_defense_map.html">한국 방위·우주·항공 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense, Space &amp; Aviation Map</a></li>
       <li><a href="../kculture/korea_kculture_map.html">한국 K컬처 산업 투자 지도</a> · <a href="../kculture/korea_kculture_map.html?lang=en" hreflang="en">Korea K-Culture Industry Map</a></li>
       <li><a href="../bio/korea_bio_map.html">한국 바이오 산업 투자 지도</a> · <a href="../bio/korea_bio_map.html?lang=en" hreflang="en">Korea Bio Industry Investment Map</a></li>
       <li><a href="../robot/korea_robot_map.html">한국 로봇/피지컬AI 산업 투자 지도</a> · <a href="../robot/korea_robot_map.html?lang=en" hreflang="en">Korea Robot / Physical AI Industry Map</a></li>
-      <li><a href="../finance/korea_finance_map.html">한국 금융 투자 지도</a> · <a href="../finance/korea_finance_map.html?lang=en" hreflang="en">Korea Finance Map</a></li>
-      <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Map</a></li>
+      <li><a href="../finance/korea_finance_map.html">한국 금융 투자 지도</a> · <a href="../finance/korea_finance_map.html?lang=en" hreflang="en">Korea Listed Financials Map</a></li>
+      <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Sector Map</a></li>
       </ul>
     </nav>
   </section>

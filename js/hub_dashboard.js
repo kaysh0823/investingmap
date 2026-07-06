@@ -1,11 +1,12 @@
 /**
- * Hub dashboard: sector pulse (mcap-weighted return), top-10 price position, card stats.
+ * Hub dashboard: sector pulse (mcap-weighted return), top-10 52-week range, card stats.
  */
 (function (global) {
   'use strict';
 
   var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kculture', 'bio', 'robot', 'finance', 'construction'];
   var PULSE_HORIZONS = [
+    { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return1mPct', labelKey: 'pulseRow1m' },
     { retKey: 'return3mPct', labelKey: 'pulseRow3m' },
     { retKey: 'return6mPct', labelKey: 'pulseRow6m' },
@@ -27,6 +28,11 @@
   var top10Failed = false;
   var rsTop10Failed = false;
   var fxRate = 1400;
+  var rsSnapshot = null;
+  var hubSectorReturnsMeta = { mcapRecentDd: null };
+  var liveSector1dTimer = null;
+  var LIVE_SECTOR1D_POLL_MS = 5 * 60 * 1000;
+  var QUOTES_CHUNK = 18;
 
   /** Value-chain / keyword chips shown below representative stocks on hub cards. */
   var HUB_CARD_TAGS = {
@@ -51,7 +57,7 @@
       kculture: ['Food', 'Travel & airlines', 'Beauty', 'Games', 'Fashion', 'Retail', 'Drama & webtoon', 'K-pop'],
       bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
-      finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Capital'],
+      finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Consumer finance'],
       construction: ['Contractors', 'Housing', 'Developers', 'Equipment'],
     },
   };
@@ -59,7 +65,8 @@
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
-      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1·3·6개월·1년',
+      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1일·1·3·6개월·1년',
+      pulseRow1d: '1일',
       pulseRow1m: '1개월',
       pulseRow1y: '1년',
       pulseRow6m: '6개월',
@@ -85,27 +92,28 @@
     },
     en: {
       pulseTitle: 'Sector performance',
-      pulseSub: 'Mcap-sum return (recent ÷ past mcap) — 1M, 3M, 6M, 1Y',
+      pulseSub: 'Market-cap-weighted return (recent ÷ past cap) — 1D, 1M, 3M, 6M, 1Y',
+      pulseRow1d: '1 day',
       pulseRow1m: '1 month',
       pulseRow1y: '1 year',
       pulseRow6m: '6 months',
       pulseRow3m: '3 months',
       pulseColSector: 'Sector',
       pulseColReturn: '1Y return',
-      pulseMcapLabel: 'Total mcap (weight)',
-      pulseColCount: 'Listings',
+      pulseMcapLabel: 'Total market cap (weight)',
+      pulseColCount: 'Companies',
       pulseLoading: 'Loading…',
       pulseStatusLoading: 'Calculating…',
-      topTitle: 'Top 10 price position',
-      topSub: 'Last vs 52-week range — all industries',
+      topTitle: 'Top 10 — 52-week range',
+      topSub: 'Current price vs 52-week high/low — all sectors',
       rsTopTitle: 'RS Top 10',
       rsTopSub: 'Full KRX · avg of 20/50/120-day return percentiles',
       topViewAll: 'Browse maps',
       loading: 'Loading quotes…',
       quotesFailed: 'Could not load quotes.',
       noData: '—',
-      companies: ' listings',
-      keyPlayers: 'Key names',
+      companies: ' companies',
+      keyPlayers: 'Key companies',
       sessionLive: 'Live',
       sessionClosed: 'Closed',
     },
@@ -198,9 +206,131 @@
     return fetch('data/hub_sector_returns.json?v=16', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
-        if (j && j.sectors) mergeSectorsPayload(j, { onlyMissing: true });
+        if (j) {
+          hubSectorReturnsMeta.mcapRecentDd = j.mcapRecentDd || null;
+          if (j.sectors) mergeSectorsPayload(j, { onlyMissing: true });
+        }
       })
       .catch(function () {});
+  }
+
+  function loadRsSnapshotHub() {
+    if (rsSnapshot) return Promise.resolve(rsSnapshot);
+    return fetch('data/hub_rs_snapshot.json?v=1', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        rsSnapshot = j;
+        return j;
+      })
+      .catch(function () { return null; });
+  }
+
+  function hubQuotesApiBase() {
+    var LQ = global.InvestingMapLiveQuotes;
+    if (LQ && LQ.getApiBase) return LQ.getApiBase();
+    if (typeof window !== 'undefined' && window.location && window.location.protocol &&
+        window.location.protocol.indexOf('http') === 0) {
+      return '/api/quotes';
+    }
+    return '';
+  }
+
+  function hubQuotesRequestUrl(base, query) {
+    var q = query.charAt(0) === '?' ? query : '?' + query;
+    if (/^https?:\/\//i.test(base)) return base.replace(/\/+$/, '') + q;
+    var origin = (typeof window !== 'undefined' && window.location && window.location.origin)
+      ? window.location.origin : '';
+    var path = base.charAt(0) === '/' ? base : '/' + base;
+    return origin + path.replace(/\/+$/, '') + q;
+  }
+
+  function listAllHubTickers() {
+    var RL = global.InvestingMapReturnLive;
+    var norm = RL && RL.normalizeTicker ? RL.normalizeTicker : function (t) { return t; };
+    var codes = [];
+    var seen = {};
+    if (!hubData) return codes;
+    SECTOR_ORDER.forEach(function (sid) {
+      var block = hubData.sectors[sid];
+      if (!block) return;
+      block.companies.forEach(function (c) {
+        var k = norm(c.ticker);
+        if (!k || seen[k]) return;
+        seen[k] = 1;
+        codes.push(k);
+      });
+    });
+    return codes;
+  }
+
+  function fetchHubLiveQuotes() {
+    var base = hubQuotesApiBase();
+    var codes = listAllHubTickers();
+    if (!base || !codes.length) return Promise.resolve({});
+    var merged = {};
+    var chain = Promise.resolve();
+    for (var i = 0; i < codes.length; i += QUOTES_CHUNK) {
+      (function (chunk) {
+        chain = chain.then(function () {
+          var q = 'codes=' + chunk.map(encodeURIComponent).join(',');
+          return fetch(hubQuotesRequestUrl(base, q), { cache: 'no-store', credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.json() : {}; })
+            .then(function (j) {
+              var items = (j && j.items) || {};
+              for (var k in items) {
+                if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
+              }
+              if (j && j.regularSession != null) dashboardData.regularSession = j.regularSession;
+            });
+        });
+      })(codes.slice(i, i + QUOTES_CHUNK));
+    }
+    return chain.then(function () { return merged; });
+  }
+
+  function applyLiveSector1d(quoteItems, snap) {
+    var RL = global.InvestingMapReturnLive;
+    if (!RL || !hubData || !snap || !quoteItems) return;
+    var recentDd = snap.recentDd || hubSectorReturnsMeta.mcapRecentDd;
+    if (!RL.isRecentDdStale(recentDd)) return;
+    var pastMap = RL.past1dMcapMapFromSnap(snap);
+    var snapQuotes = snap.quotes || {};
+    SECTOR_ORDER.forEach(function (sid) {
+      var block = hubData.sectors[sid];
+      if (!block) return;
+      var ret = RL.sectorReturnMcapRatio(block.companies, function (key) {
+        var row = snapQuotes[key];
+        var q = quoteItems[key];
+        if (!row || !q || q.last == null) return null;
+        return RL.calcLiveMcapWon(row.refMcap, q.last, row.refClose);
+      }, pastMap);
+      if (ret != null && isFinite(ret)) {
+        if (!dashboardData.sectors[sid]) dashboardData.sectors[sid] = {};
+        dashboardData.sectors[sid].return1dPct = ret;
+      }
+    });
+  }
+
+  function refreshLiveSector1d(lang) {
+    var RL = global.InvestingMapReturnLive;
+    if (!RL) return Promise.resolve();
+    return loadRsSnapshotHub().then(function (snap) {
+      if (!snap) return;
+      var recentDd = snap.recentDd || hubSectorReturnsMeta.mcapRecentDd;
+      if (!RL.isRecentDdStale(recentDd)) return;
+      return fetchHubLiveQuotes().then(function (items) {
+        applyLiveSector1d(items, snap);
+        renderPulse(lang);
+        writeSwr();
+      });
+    });
+  }
+
+  function startLiveSector1dPoll(lang) {
+    if (liveSector1dTimer) clearInterval(liveSector1dTimer);
+    liveSector1dTimer = setInterval(function () {
+      if (pulseHorizonKey === 'return1dPct') refreshLiveSector1d(lang);
+    }, LIVE_SECTOR1D_POLL_MS);
   }
 
   function loadHubIndex() {
@@ -319,6 +449,7 @@
         weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
         listingCount: block.companies.length,
         yoyReturnPct: null,
+        return1dPct: null,
         return1mPct: null,
         return6mPct: null,
         return3mPct: null,
@@ -419,6 +550,7 @@
   }
 
   function retKeyToHorizonParam(retKey) {
+    if (retKey === 'return1dPct') return '1d';
     if (retKey === 'return3mPct') return '3m';
     if (retKey === 'return6mPct') return '6m';
     if (retKey === 'yoyReturnPct') return '1y';
@@ -438,7 +570,7 @@
     var onlyMissing = opts && opts.onlyMissing;
     var incoming = j.sectors || {};
     var base = dashboardData.sectors || {};
-    var keys = ['return1mPct', 'return3mPct', 'return6mPct', 'yoyReturnPct', 'mcapWon', 'weightPct', 'listingCount'];
+    var keys = ['return1dPct', 'return1mPct', 'return3mPct', 'return6mPct', 'yoyReturnPct', 'mcapWon', 'weightPct', 'listingCount'];
     for (var sid in incoming) {
       if (!incoming.hasOwnProperty(sid)) continue;
       if (!base[sid]) base[sid] = {};
@@ -463,6 +595,7 @@
         if (!key || key === pulseHorizonKey) return;
         savePulseHorizon(key);
         renderPulse(lang);
+        if (key === 'return1dPct') refreshLiveSector1d(lang);
         if (!hasHorizonData(key)) {
           fetchSectorsHorizon(lang, key);
         }
@@ -754,6 +887,9 @@
       renderPulse(lang);
       renderTop10(lang);
       renderRsTop10(lang);
+      return refreshLiveSector1d(lang);
+    }).then(function () {
+      startLiveSector1dPoll(lang);
     });
   }
 

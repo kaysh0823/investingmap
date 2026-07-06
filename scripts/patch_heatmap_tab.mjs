@@ -145,7 +145,8 @@ const RENDER_HEATMAP_FN = RESET_TABLE_FILTERS_FN + `
         companies: koreanCompanies,
         chainColors: CHAIN_COLORS,
         lang: lang,
-        formatMcap: fmtMcapTableCell,` + HEATMAP_ON_SELECT + `
+        formatMcap: fmtMcapTableCell,
+        chainLabel: function (ch) { return (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, T[lang]) : ch; },` + HEATMAP_ON_SELECT + `
       });
       el.querySelectorAll('.hm-tile').forEach(function (g) {
         if (g.querySelector('.hm-name')) g.setAttribute('data-leaf', '1');

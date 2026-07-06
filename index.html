@@ -883,7 +883,7 @@
       <div class="hub-pulse-head">
         <div>
           <h2 id="hub-pulse-title">Sector performance</h2>
-          <p id="hub-pulse-sub">Market-cap weighted 1Y return (KRX listed names)</p>
+          <p id="hub-pulse-sub">Market-cap-weighted return (KRX listed companies)</p>
         </div>
         <span class="hub-pulse-head-status" id="hub-pulse-status" aria-live="polite"></span>
       </div>
@@ -1001,7 +1001,7 @@
         </div>
         <h2 id="card-bio-title">Korea Bio Industry Investment Map</h2>
         <p class="hub-card-lead" id="card-bio-lead">Bio and pharma: drug R&amp;D, CDMO, biosimilars, devices, and
-          diagnostics linked to global big-pharma pairings.</p>
+          diagnostics linked to global big-pharma licensing and partnerships.</p>
         <p class="hub-card-keyplayers" id="card-bio-keyplayers"></p>
         <div class="hub-card-tags" id="card-bio-tags"></div>
         <p class="hub-card-map" id="card-bio-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
@@ -1024,7 +1024,7 @@
       </div>
       <div class="hub-side-panels">
       <aside class="hub-side-panel" id="hub-top-position" aria-labelledby="hub-top-title">
-        <h3 id="hub-top-title">Top 10 price position</h3>
+        <h3 id="hub-top-title">Top 10 — 52-week range</h3>
         <p class="hub-side-sub" id="hub-top-sub">Last vs 52-week range — all industries</p>
         <ol class="hub-top-list" id="hub-top-position-list">
           <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading quotes…</li>
@@ -1081,7 +1081,8 @@
     <p class="im-trust-copy" id="tf-copyright">© 2026 Investing Map</p>
   </footer>
   <script src="js/map_tab_state.js?v=3"></script>
-  <script src="js/hub_dashboard.js?v=20"></script>
+    <script src="js/return_live.js?v=1"></script>
+  <script src="js/hub_dashboard.js?v=21"></script>
   <script src="js/im_collapsible.js"></script>
 <script>
     const T = {
@@ -1091,16 +1092,16 @@
         langFlag: '🇺🇸',
         langText: 'English',
         cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
-        semiMapLine: '92개 상장사 · IDM·팹리스·파운드리·소재·장비 · 글로벌 거래처·peer 그래프',
-        bioMapLine: '75개 매핑 · 바이오시밀러·신약·CDMO · 글로벌 페어링 네트워크',
-        shipMapLine: '35개 상장사 · 조선소·기자재·해운 · 수주·해외 yard 참고 링크',
-        defenseMapLine: '28개 상장사 · 항공·미사일·육상·해군·우주 · 수출·프로그램 참고',
-        robotMapLine: '26개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
-        energyMapLine: '64개 상장사 · 2차전지·ESS·배터리·태양광·풍력',
+        semiMapLine: '90개 상장사 · IDM·팹리스·파운드리·소재·장비 · 글로벌 거래처·peer 그래프',
+        bioMapLine: '72개 매핑 · 바이오시밀러·신약·CDMO · 글로벌 페어링 네트워크',
+        shipMapLine: '30개 상장사 · 조선소·기자재·해운 · 수주·해외 yard 참고 링크',
+        defenseMapLine: '18개 상장사 · 항공·미사일·육상·해군·우주 · 수출·프로그램 참고',
+        robotMapLine: '20개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
+        energyMapLine: '74개 상장사 · 2차전지·ESS·배터리·태양광·풍력',
         powergridMapLine: '17개 상장사 · 전력설비·송배전·발전설비',
         financeMapLine: '31개 상장사 · 은행·증권·보험·카드·캐피탈',
         constructionMapLine: '12개 상장사 · 종합건설·주택·디벨로퍼·건설기계',
-        kcultureMapLine: '57개 상장사 · 식품·여행·뷰티·게임·패션·유통·IP·K-pop',
+        kcultureMapLine: '56개 상장사 · 식품·여행·뷰티·게임·패션·유통·IP·K-pop',
         introTitle: '한국 상장사 산업 지도 허브',
         introLeadSummary: '사이트 소개',
         introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 10개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
@@ -1154,23 +1155,23 @@
         langFlag: '🇰🇷',
         langText: '한국어',
         cardMapLine: 'Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.',
-        semiMapLine: '92 listings · IDM, fabless, foundry, materials, equipment · customer & peer graph',
-        bioMapLine: '75 mappings · biosimilars, novel drugs, CDMO · global pairing network',
-        shipMapLine: '35 listings · yards, marine equipment, shipping · order & yard reference links',
-        defenseMapLine: '28 listings · aviation, missiles, land, naval, space · export program refs',
-        robotMapLine: '26 listings · FA, AMR, cobots, motion · physical-AI links',
-        energyMapLine: '64 listings · batteries, ESS, solar, wind',
-        powergridMapLine: '17 listings · power equipment, T&D, generation',
-        financeMapLine: '31 listings · banks, securities, insurance, cards & capital',
-        constructionMapLine: '12 listings · contractors, housing, developers, equipment',
-        kcultureMapLine: '57 listings · food, travel, beauty, games, fashion, retail, IP, K-pop',
-        introTitle: 'Korea listed-equity industry map hub',
+        semiMapLine: '90 companies · IDM, fabless, foundry, materials, equipment · customer & peer graph',
+        bioMapLine: '72 companies · biosimilars, novel drugs, CDMO · global licensing & partnership network',
+        shipMapLine: '30 companies · yards, marine equipment, shipping · order & shipyard reference links',
+        defenseMapLine: '18 companies · aviation, missiles, land, naval, space · export program references',
+        robotMapLine: '20 companies · FA, AMR, cobots, motion · Physical AI relationships',
+        energyMapLine: '74 companies · batteries, ESS, solar, wind',
+        powergridMapLine: '17 companies · power equipment, T&D, generation',
+        financeMapLine: '31 companies · banks, securities, insurance, cards & consumer finance',
+        constructionMapLine: '12 companies · contractors, housing, developers, equipment',
+        kcultureMapLine: '56 companies · food, travel, beauty, games, fashion, retail, IP, K-pop',
+        introTitle: 'Hub for Korean listed-industry maps',
         introLeadSummary: 'About this site',
-        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ names through value-chain lenses. Ten sector maps combine sortable tables, market cap, PER, PBR, 52-week price position, and relationship graphs—each with sector-specific editorial guides and cited sources.',
+        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ companies through value-chain lenses. Ten sector maps combine sortable tables, market cap, PER, PBR, 52-week range, and relationship graphs—each with sector-specific editorial guides and cited sources.',
         introHMethod: 'Data & editorial principles',
         introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
-        introLi2: 'Chain tags and global links are editorial reference networks from filings and public sources.',
-        introLi3: 'Not investment advice; you are responsible for decisions.',
+        introLi2: 'Chain tags and global relationships are editorial reference networks from filings and public sources.',
+        introLi3: 'Not investment advice; you are responsible for your own decisions.',
         introP2: 'Pick an industry card above. See About, FAQ, Privacy, and Disclaimer via the links below.',
         linkAbout: 'About',
         linkEditorial: 'Editorial policy',
@@ -1181,31 +1182,31 @@
         semiLead: 'Semiconductors: design, foundry, memory, materials, equipment, substrates, and packaging across the electronics supply chain.',
         semiCta: 'Open map →',
         bioTitle: 'Korea Bio Industry Investment Map',
-        bioLead: 'Bio and pharma: drug R&D, CDMO, biosimilars, devices, and diagnostics linked to global big-pharma pairings.',
+        bioLead: 'Bio and pharma: drug R&D, CDMO, biosimilars, devices, and diagnostics linked to global big-pharma licensing and partnerships.',
         bioCta: 'Open map →',
         shipTitle: 'Korea Shipbuilding & Marine Equipment Map',
-        shipLead: 'Shipbuilding and marine: yards, engines, steel, equipment, offshore, shipping, and adjacent defense-at-sea clusters.',
+        shipLead: 'Shipbuilding and marine: yards, engines, steel, equipment, offshore, shipping, and adjacent naval defense clusters.',
         shipCta: 'Open map →',
         defenseTitle: 'Korea Defense, Space & Aviation Map',
-        defenseLead: 'Military aircraft and engines, missiles and C4ISR, land systems and ammunition, naval shipbuilding, satellites and civil aviation—Korean listed primes with illustrative global links.',
+        defenseLead: 'Military aircraft and engines, missiles and C4ISR, land systems and ammunition, naval shipbuilding, satellites and civil aviation—major Korean defense contractors with illustrative global relationships.',
         defenseCta: 'Open map →',
         robotTitle: 'Korea Robot / Physical AI Industry Map',
-        robotLead: 'Robotics and physical AI: factory automation, logistics AMRs, cobots, sensing, motion control, and human-scale systems.',
+        robotLead: 'Robotics and Physical AI: factory automation, logistics AMRs, cobots, sensing, motion control, and human-scale systems.',
         robotCta: 'Open map →',
         kcultureTitle: 'Korea K-Culture Industry Map',
-        kcultureLead: 'Ramen and packaged food, travel and airlines, beauty, drama·webtoon·streaming IP, and K-pop labels—listed Korean equities with illustrative global links.',
+        kcultureLead: 'Ramen and packaged food, travel and airlines, beauty, drama, webtoon and streaming IP, and K-pop labels—listed Korean equities with illustrative global relationships.',
         kcultureCta: 'Open map →',
-        energyTitle: 'Korea Energy Map',
-        energyLead: 'Lithium-ion batteries, ESS, solar, wind, and battery materials—listed Korean names with illustrative global links.',
+        energyTitle: 'Korea Energy Sector Stocks Map',
+        energyLead: 'Lithium-ion batteries, ESS, solar, wind, and battery materials—listed Korean companies with illustrative global relationships.',
         energyCta: 'Open map →',
-        powergridTitle: 'Korea Power Grid Equipment Map',
-        powergridLead: 'Power equipment, T&D, and generation OEM—transformers, cables, nuclear and gas turbines with global peer links.',
+        powergridTitle: 'Korea Power Equipment Map',
+        powergridLead: 'Power equipment, T&D, and generation—transformers, cables, nuclear and gas turbines with global peer relationships.',
         powergridCta: 'Open map →',
-        financeTitle: 'Korea Finance Map',
-        financeLead: 'Banks, securities, insurance, cards and capital—listed Korean financials with global peer links.',
+        financeTitle: 'Korea Listed Financials Map',
+        financeLead: 'Banks, securities, insurance, cards and consumer finance—listed Korean financials with global peer relationships.',
         financeCta: 'Open map →',
-        constructionTitle: 'Korea Construction Map',
-        constructionLead: 'General contractors, housing developers, and construction equipment—listed Korean names with global peer links.',
+        constructionTitle: 'Korea Construction Sector Map',
+        constructionLead: 'General contractors, housing developers, and construction equipment—listed Korean companies with global peer relationships.',
         constructionCta: 'Open map →',
         foot: 'On each map: table & graph, Korean/English, and dark/light theme.',
         overviewHeading: 'Industry overview',

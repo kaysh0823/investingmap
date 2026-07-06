@@ -3,6 +3,7 @@
  */
 
 import { emptyQuote } from './naver_sise_quotes.mjs';
+import { krxSessionInfo, kstYmd, kstDateParts } from './krx_session.mjs';
 
 const KRX_ENV_KEY_NAMES = [
   'KRX OPEN API 인증키',
@@ -58,24 +59,57 @@ function shortCodeFromRow(row) {
   return null;
 }
 
-function formatYmd(d) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}${m}${day}`;
+function formatYmdFromParts(p) {
+  const m = String(p.month).padStart(2, '0');
+  const d = String(p.day).padStart(2, '0');
+  return `${p.year}${m}${d}`;
 }
 
-function tradingDates(count) {
+/** Weekday calendar dates in KST (newest first); holidays resolved via KRX fetch fallback. */
+function tradingDates(count, now = new Date()) {
   const out = [];
-  const now = new Date();
   for (let i = 0; out.length < count && i < HIST_CALENDAR_SCAN; i++) {
-    const dt = new Date(now);
-    dt.setDate(dt.getDate() - i);
-    const dow = dt.getDay();
-    if (dow === 0 || dow === 6) continue;
-    out.push(formatYmd(dt));
+    const dt = new Date(now.getTime() - i * 86400000);
+    const parts = kstDateParts(dt);
+    if (parts.weekday === 0 || parts.weekday === 6) continue;
+    out.push(formatYmdFromParts(parts));
   }
   return out;
+}
+
+/**
+ * Recent-close candidates: skip today's basDd before KRX session close (15:30 KST).
+ * @param {string[]} dates — tradingDates() list (newest first)
+ * @param {Date} [now]
+ */
+function recentDateCandidates(dates, now = new Date()) {
+  const today = kstYmd(now);
+  const { kst } = krxSessionInfo(now);
+  const beforeClose = kst.weekday >= 1 && kst.weekday <= 5 && kst.minutes < (15 * 60 + 30);
+  const skipToday = beforeClose && dates[0] === today;
+  return dates.slice(skipToday ? 1 : 0);
+}
+
+/**
+ * Candidate basDd list for a past snapshot, anchored on the resolved recent trading day.
+ * Weekends are skipped in `dates`; holidays are handled by KRX fetch fallback on the slice.
+ * @param {string} anchorDd — resolved recent trading day (YYYYMMDD)
+ * @param {string[]} dates — tradingDates() list (newest first)
+ * @param {number} tradingDaysAgo — 1 = previous session, 21 = ~1 month, etc.
+ * @param {number} [window]
+ */
+function pastDatesFromAnchor(anchorDd, dates, tradingDaysAgo, window = MCAP_FALLBACK_WINDOW) {
+  if (!anchorDd || tradingDaysAgo < 1 || !dates.length) return [];
+  const anchorIdx = dates.indexOf(anchorDd);
+  if (anchorIdx < 0) {
+    const before = dates.filter((d) => d < anchorDd);
+    const idx = Math.min(tradingDaysAgo - 1, before.length - 1);
+    if (idx < 0) return [];
+    return before.slice(idx, idx + window);
+  }
+  const startIdx = anchorIdx + tradingDaysAgo;
+  if (startIdx >= dates.length) return [];
+  return dates.slice(startIdx, startIdx + window);
 }
 
 async function krxDaily(authKey, endpoint, basDd) {
@@ -140,10 +174,12 @@ function orderMcapDates(dates, hintDd) {
   return ordered;
 }
 
-async function fetchMcapMapWithFallback(authKey, dates, minSize, hintDd) {
+async function fetchMcapMapWithFallback(authKey, dates, minSize, hintDd, maxBasDd) {
   const min = minSize || 20;
   const slice = dates.slice(0, MCAP_FALLBACK_WINDOW);
-  for (const basDd of orderMcapDates(slice, hintDd)) {
+  const safeHint = hintDd && (!maxBasDd || hintDd < maxBasDd) ? hintDd : null;
+  for (const basDd of orderMcapDates(slice, safeHint)) {
+    if (maxBasDd && basDd >= maxBasDd) continue;
     try {
       const mcap = await fetchMcapMapForDate(authKey, basDd);
       if (mcap.size >= min) return { mcap, basDd };
@@ -155,6 +191,7 @@ async function fetchMcapMapWithFallback(authKey, dates, minSize, hintDd) {
 }
 
 const HORIZON_PAST_KEYS = {
+  '1d': ['mcapPast1d', 'past1dDd', 1],
   '1m': ['mcapPast1m', 'past1mDd', HIST_TRADING_DAYS_1M],
   '3m': ['mcapPast3m', 'past3mDd', HIST_TRADING_DAYS_3M],
   '6m': ['mcapPast6m', 'past6mDd', HIST_TRADING_DAYS_6M],
@@ -164,11 +201,13 @@ const HORIZON_PAST_KEYS = {
 function emptyMcapSnapshots() {
   return {
     mcapNow: null,
+    mcapPast1d: null,
     mcapPast1m: null,
     mcapPast3m: null,
     mcapPast6m: null,
     mcapPast1y: null,
     recentDd: null,
+    past1dDd: null,
     past1mDd: null,
     past3mDd: null,
     past6mDd: null,
@@ -190,7 +229,7 @@ const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
  */
 export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
   if (!authKey) return null;
-  const allHorizons = ['1m', '3m', '6m', '1y'];
+  const allHorizons = ['1d', '1m', '3m', '6m', '1y'];
   const horizons = Array.isArray(opts.horizons) && opts.horizons.length
     ? opts.horizons
     : allHorizons;
@@ -202,44 +241,54 @@ export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
   }
 
   const dates = tradingDates(HIST_TRADING_DAYS);
-  const tasks = [];
 
   if (!snapshots.mcapNow || snapshots.mcapNow.size < 20) {
-    tasks.push({
-      mcapKey: 'mcapNow',
-      ddKey: 'recentDd',
-      dates: dates.slice(0, MCAP_FALLBACK_WINDOW),
-      hint: snapshots.recentDd,
-    });
+    const recent = await fetchMcapMapWithFallback(
+      authKey,
+      recentDateCandidates(dates).slice(0, MCAP_FALLBACK_WINDOW),
+      20,
+      snapshots.recentDd,
+    );
+    snapshots.mcapNow = recent.mcap;
+    snapshots.recentDd = recent.basDd;
   }
 
+  if (!snapshots.mcapNow || snapshots.mcapNow.size < 20) return null;
+
+  const pastTasks = [];
   for (const h of horizons) {
     const def = HORIZON_PAST_KEYS[h];
     if (!def) continue;
-    const [mcapKey, ddKey, tradingDays] = def;
+    const [mcapKey, ddKey, tradingDaysAgo] = def;
     if (pastMapReady(snapshots, mcapKey)) continue;
-    const idx = Math.min(tradingDays - 1, dates.length - 1);
-    tasks.push({
+    const pastDates = pastDatesFromAnchor(snapshots.recentDd, dates, tradingDaysAgo);
+    if (!pastDates.length) continue;
+    pastTasks.push({
       mcapKey,
       ddKey,
-      dates: dates.slice(idx, idx + MCAP_FALLBACK_WINDOW),
+      dates: pastDates,
       hint: snapshots[ddKey],
     });
   }
 
-  if (tasks.length) {
+  if (pastTasks.length) {
     const results = await Promise.all(
-      tasks.map((t) => fetchMcapMapWithFallback(authKey, t.dates, 20, t.hint)),
+      pastTasks.map((t) => fetchMcapMapWithFallback(
+        authKey,
+        t.dates,
+        20,
+        t.hint,
+        snapshots.recentDd,
+      )),
     );
-    for (let i = 0; i < tasks.length; i++) {
-      const t = tasks[i];
+    for (let i = 0; i < pastTasks.length; i++) {
+      const t = pastTasks[i];
       const past = results[i];
+      if (past.basDd && past.basDd >= snapshots.recentDd) continue;
       snapshots[t.mcapKey] = past.mcap;
       snapshots[t.ddKey] = past.basDd;
     }
   }
-
-  if (!snapshots.mcapNow || snapshots.mcapNow.size < 20) return null;
 
   if (snapshots.mcapNow && snapshots.mcapNow.size >= 20) {
     mcapSnapshotsCache = { t: now, snapshots: { ...snapshots } };
@@ -392,4 +441,4 @@ export async function mergeKrxYoyHub(codes, authKey, maxBatches = 6) {
   }
 }
 
-export { tradingDates, fetchMarketDay };
+export { tradingDates, fetchMarketDay, pastDatesFromAnchor, recentDateCandidates };

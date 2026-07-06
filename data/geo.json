@@ -58,7 +58,7 @@
       "title": { "ko": "한국 바이오 산업 투자 지도", "en": "Korea Bio Industry Investment Map" },
       "summary": {
         "ko": "국내 바이오·제약 상장사의 KRX 정량 데이터, 신약·CDMO·바이오시밀러·의료기기 분류, 기술이전·글로벌 빅파마 페어링 관계를 제공합니다.",
-        "en": "KRX metrics, therapeutic and CDMO segments, and technology-transfer / big-pharma pairing networks for listed Korean bio and pharma names."
+        "en": "KRX metrics, therapeutic and CDMO segments, and technology-transfer and big-pharma licensing & partnership networks for listed Korean bio and pharma companies."
       }
     },
     "ship": {
@@ -66,7 +66,7 @@
       "title": { "ko": "한국 조선·조선기자재 산업 투자 지도", "en": "Korea Shipbuilding & Marine Equipment Map" },
       "summary": {
         "ko": "조선소·엔진·철강·조선기자재·해양·해운 등 상장사의 KRX 데이터와 밸류체인, 글로벌 거래·수주 관계를 정리합니다.",
-        "en": "KRX data, value-chain tags, and illustrative global order and customer links for listed Korean shipbuilding and marine equipment names."
+        "en": "KRX data, value-chain categories, and illustrative global order and customer relationships for listed Korean shipbuilding and marine equipment companies."
       }
     },
     "defense": {
@@ -74,7 +74,7 @@
       "title": { "ko": "한국 방위·우주·항공 산업 투자 지도", "en": "Korea Defense, Space & Aviation Map" },
       "summary": {
         "ko": "항공기·미사일·육상무기·해군·우주·민항 관련 상장 방산·항공 기업의 KRX 지표와 글로벌 참고 네트워크를 제공합니다.",
-        "en": "KRX metrics and illustrative global reference networks for listed Korean defense, space, and aviation primes."
+        "en": "KRX metrics and illustrative global reference networks for listed Korean defense, space, and aviation companies."
       }
     },
     "robot": {
@@ -82,39 +82,39 @@
       "title": { "ko": "한국 로봇·피지컬AI 산업 투자 지도", "en": "Korea Robot / Physical AI Industry Map" },
       "summary": {
         "ko": "산업로봇·자동화·물류 AMR·협동로봇·센싱·모션 제어·피지컬AI 상장사의 KRX 데이터와 밸류체인, 글로벌 장비·SW 관계를 제공합니다.",
-        "en": "KRX data, automation value chains, and global equipment/software links for listed Korean robotics and physical-AI names."
+        "en": "KRX data, automation value chains, and global equipment and software relationships for listed Korean robotics and Physical AI companies."
       }
     },
     "energy": {
       "path": "/energy/korea_energy_map.html",
-      "title": { "ko": "한국 에너지 투자 지도", "en": "Korea Energy Map" },
+      "title": { "ko": "한국 에너지 투자 지도", "en": "Korea Energy Sector Stocks Map" },
       "summary": {
         "ko": "2차전지·ESS·배터리·태양광·풍력 관련 상장사와 글로벌 참고 관계를 정리합니다.",
-        "en": "Listed Korean battery, ESS, solar, and wind names with global reference links."
+        "en": "Listed Korean battery, ESS, solar, and wind companies with illustrative global relationships."
       }
     },
     "powergrid": {
       "path": "/powergrid/korea_powergrid_map.html",
-      "title": { "ko": "한국 전력설비 투자 지도", "en": "Korea Power Grid Equipment Map" },
+      "title": { "ko": "한국 전력설비 투자 지도", "en": "Korea Power Equipment Map" },
       "summary": {
         "ko": "전력설비·송배전·발전설비 관련 상장사와 글로벌 참고 관계를 정리합니다.",
-        "en": "Listed Korean power equipment, T&D, and generation OEM names with global reference links."
+        "en": "Listed Korean power equipment, T&D, and power generation companies with illustrative global relationships."
       }
     },
     "finance": {
       "path": "/finance/korea_finance_map.html",
-      "title": { "ko": "한국 금융 투자 지도", "en": "Korea Finance Map" },
+      "title": { "ko": "한국 금융 투자 지도", "en": "Korea Listed Financials Map" },
       "summary": {
         "ko": "은행·증권·보험·카드·캐피탈 등 국내 상장 금융사의 KRX 데이터와 글로벌 peer 참고 관계를 정리합니다.",
-        "en": "KRX metrics and illustrative global peer links for listed Korean banks, securities, insurers, and card/capital names."
+        "en": "KRX metrics and illustrative global peer relationships for listed Korean banks, securities, insurers, and card and consumer-finance companies."
       }
     },
     "construction": {
       "path": "/construction/korea_construction_map.html",
-      "title": { "ko": "한국 건설 투자 지도", "en": "Korea Construction Map" },
+      "title": { "ko": "한국 건설 투자 지도", "en": "Korea Construction Sector Map" },
       "summary": {
         "ko": "종합건설·주택·디벨로퍼·건설기계 등 국내 상장 건설사의 KRX 데이터와 글로벌 peer 참고 관계를 정리합니다.",
-        "en": "KRX metrics and illustrative global peer links for listed Korean contractors, housing developers, and construction equipment names."
+        "en": "KRX metrics and illustrative global peer relationships for listed Korean contractors, housing developers, and construction equipment companies."
       }
     },
     "kculture": {
@@ -122,7 +122,7 @@
       "title": { "ko": "한국 K컬처 산업 투자 지도", "en": "Korea K-Culture Industry Map" },
       "summary": {
         "ko": "라면·식품, 여행·레저, 화장품, 게임, 패션, 쇼핑·유통, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
-        "en": "KRX data and keyword-driven global link examples for listed Korean names in ramen/food, travel, beauty, games, fashion, retail, drama/webtoon/media, and K-pop."
+        "en": "KRX data and theme-driven examples of global exposure for listed Korean companies in ramen/food, travel, beauty, games, fashion, retail, drama/webtoon/media, and K-pop."
       }
     }
   }

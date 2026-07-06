@@ -6,7 +6,7 @@
 
   var CHUNK_SIZE = 18;
   var POSITION_FALLBACK_KO = '주가 위치';
-  var POSITION_FALLBACK_EN = 'Price Position';
+  var POSITION_FALLBACK_EN = '52W Range';
   var RS_FALLBACK = 'RS';
   var rsSnapshot = null;
   var rsSnapshotPromise = null;
@@ -69,10 +69,34 @@
       var key = normalizeTicker(c.ticker);
       if (!key) {
         c.rs = null;
+        c.chg1dPct = c.ret1mPct = c.ret3mPct = c.ret6mPct = c.ret1yPct = null;
         continue;
       }
       var row = quotes[key];
       c.rs = row && typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
+      c.chg1dPct = row && typeof row.chg1dPct === 'number' && isFinite(row.chg1dPct) ? row.chg1dPct : null;
+      c.ret1mPct = row && typeof row.ret1mPct === 'number' && isFinite(row.ret1mPct) ? row.ret1mPct : null;
+      c.ret3mPct = row && typeof row.ret3mPct === 'number' && isFinite(row.ret3mPct) ? row.ret3mPct : null;
+      c.ret6mPct = row && typeof row.ret6mPct === 'number' && isFinite(row.ret6mPct) ? row.ret6mPct : null;
+      c.ret1yPct = row && typeof row.ret1yPct === 'number' && isFinite(row.ret1yPct) ? row.ret1yPct : null;
+    }
+  }
+
+  /** When KRX recentDd < KST today, override chg1dPct with live last vs refClose. */
+  function applyLiveReturns(companies, snap) {
+    var RL = global.InvestingMapReturnLive;
+    if (!RL || !companies || !snap) return;
+    if (!RL.isRecentDdStale(snap.recentDd)) return;
+    var quotes = snap.quotes || {};
+    for (var i = 0; i < companies.length; i++) {
+      var c = companies[i];
+      var key = normalizeTicker(c.ticker);
+      if (!key || c.quoteLast == null) continue;
+      var row = quotes[key];
+      var refClose = row && row.refClose;
+      if (refClose == null || refClose <= 0) continue;
+      var live = RL.calcLiveChg1dPct(c.quoteLast, refClose);
+      if (live != null) c.chg1dPct = live;
     }
   }
 
@@ -200,6 +224,26 @@
     return '<span style="' + positionColorStyle(n) + '">' + text + '</span>';
   }
 
+  function returnColorStyle(n) {
+    if (n == null || !isFinite(n)) return '';
+    if (n > 0) return 'color:#3fb950;font-weight:600';
+    if (n < 0) return 'color:#f85149;font-weight:600';
+    return 'color:var(--text-muted)';
+  }
+
+  function formatReturnPct(n) {
+    if (n == null || !isFinite(n)) return '\u2014';
+    var sign = n > 0 ? '+' : '';
+    var text = sign + n.toFixed(2) + '%';
+    return '<span style="' + returnColorStyle(n) + '">' + text + '</span>';
+  }
+
+  function formatReturnPctPlain(n) {
+    if (n == null || !isFinite(n)) return '\u2014';
+    var sign = n > 0 ? '+' : '';
+    return sign + n.toFixed(2) + '%';
+  }
+
   function formatRs(n) {
     if (n == null || !isFinite(n)) return '\u2014';
     return n.toFixed(1);
@@ -224,6 +268,11 @@
     var posHtml = formatPositionHtml(c);
     return {
       last: formatWon(c.quoteLast, lang),
+      chg1d: formatReturnPct(c.chg1dPct),
+      ret1m: formatReturnPct(c.ret1mPct),
+      ret3m: formatReturnPct(c.ret3mPct),
+      ret6m: formatReturnPct(c.ret6mPct),
+      ret1y: formatReturnPct(c.ret1yPct),
       hi: formatWon(c.quoteHi52, lang),
       lo: formatWon(c.quoteLo52, lang),
       position: posHtml,
@@ -233,7 +282,10 @@
   }
 
   function emptyQuotesRow() {
-    return { last: '\u2014', hi: '\u2014', lo: '\u2014', position: '\u2014', rs: '\u2014', yoy: '\u2014' };
+    return {
+      last: '\u2014', chg1d: '\u2014', ret1m: '\u2014', ret3m: '\u2014', ret6m: '\u2014', ret1y: '\u2014',
+      hi: '\u2014', lo: '\u2014', position: '\u2014', rs: '\u2014', yoy: '\u2014',
+    };
   }
 
   function positionHeaderLabel(lang, t) {
@@ -330,6 +382,7 @@
           var snap = results[1];
           mergeCompanies(getCompanies(), j.items || {});
           mergeRsIntoCompanies(getCompanies(), snap);
+          applyLiveReturns(getCompanies(), snap);
           try {
             onAsOf(j.asOf || '', { regularSession: j.regularSession });
           } catch (e1) {}
@@ -353,6 +406,7 @@
     run();
     loadRsSnapshot().then(function (snap) {
       mergeRsIntoCompanies(getCompanies(), snap);
+      applyLiveReturns(getCompanies(), snap);
       if (renderTable) renderTable();
       if (global.InvestingMapTabState && InvestingMapTabState.focusTickerAfterTableRender) {
         InvestingMapTabState.focusTickerAfterTableRender();
@@ -374,11 +428,14 @@
     formatWon: formatWon,
     formatPosition: formatPosition,
     formatPositionHtml: formatPositionHtml,
+    formatReturnPct: formatReturnPct,
+    formatReturnPctPlain: formatReturnPctPlain,
     formatRs: formatRs,
     formatRsHtml: formatRsHtml,
     rsHeaderLabel: rsHeaderLabel,
     loadRsSnapshot: loadRsSnapshot,
     mergeRsIntoCompanies: mergeRsIntoCompanies,
+    applyLiveReturns: applyLiveReturns,
     positionHeaderLabel: positionHeaderLabel,
     emptyQuotesRow: emptyQuotesRow,
     formatQuotesRow: formatQuotesRow,

@@ -249,7 +249,8 @@
   <title>한국 전력설비 투자 지도 / Korea Power Grid Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-  <script src="../js/live_quotes.js?v=5"></script>
+    <script src="../js/return_live.js?v=1"></script>
+<script src="../js/live_quotes.js?v=5"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1532,8 +1533,8 @@ body.im-tab-table thead th {
     <h1 id="hdr-title">🇰🇷 한국 전력설비 투자 지도</h1>
     <p id="hdr-subtitle">전력설비·송배전·발전설비 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>82</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>69</span> · KOSDAQ <span>13</span></div>
+      <div class="badge" id="badge-total">Total <span>17</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>14</span> · KOSDAQ <span>3</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1545,10 +1546,10 @@ body.im-tab-table thead th {
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">전력설비·송배전·발전설비 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean power equipment &amp; grid stocks</h2>
     <p lang="ko" class="im-seo-body-p">전력설비·송배전·발전설비 밸류체인에 속한 KOSPI·KOSDAQ 상장사를 정리합니다. HD현대일렉트릭, LS ELECTRIC, 두산에너빌리티, 한국전력 등 변압기·케이블·발전·원전 기자재 종목의 시가총액·PER·PBR과 밸류체인 태그를 표로 제공하고, Siemens Energy·GE Vernova 등 글로벌 참고 관계를 연결합니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Covers listed names in power equipment, transmission &amp; distribution, and generation OEM. Compare KRX metrics and value-chain tags for HD Hyundai Electric, LS Electric, Doosan Enerbility, and KEPCO, with illustrative global equipment links.</p>
+    <p lang="en" class="im-seo-body-p" hidden>This map covers listed companies in power equipment, transmission &amp; distribution, and power generation equipment. Compare KRX metrics and value-chain categories for HD Hyundai Electric, LS Electric, Doosan Enerbility, and KEPCO, with illustrative global equipment relationships.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-06-30 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-06-30.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-06 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-06.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1597,6 +1598,11 @@ body.im-tab-table thead th {
               <th id="th-name" onclick="sortTable('name')">기업명</th>
               <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
+              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">전일대비</th>
+              <th id="th-ret1m" class="ret-col" onclick="sortTable('ret1mPct')">1개월</th>
+              <th id="th-ret3m" class="ret-col" onclick="sortTable('ret3mPct')">3개월</th>
+              <th id="th-ret6m" class="ret-col" onclick="sortTable('ret6mPct')">6개월</th>
+              <th id="th-ret1y" class="ret-col" onclick="sortTable('ret1yPct')">1년</th>
               <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
               <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
               <th id="th-position" onclick="sortTable('quotePosition')">주가 위치</th>
@@ -1616,11 +1622,11 @@ body.im-tab-table thead th {
           <tr data-ticker="034020">
       <td><div class="company-name">두산에너빌리티</div><div class="company-name-sub">DOOSAN ENERBILITY</div></td>
       <td><span class="ticker">034020</span></td>
-      <td class="quote-cell">86,800</td>
+      <td class="quote-cell">85,500</td>
       <td class="quote-cell">139,200</td>
       <td class="quote-cell">51,100</td>
-      <td class="quote-cell">40.5%</td>
-      <td class="quote-cell">49.0</td>
+      <td class="quote-cell">39%</td>
+      <td class="quote-cell">45.0</td>
       <td class="mcap-cell">59.64조원</td>
       <td class="fin-cell">705.30</td>
       <td class="fin-cell">7.66</td>
@@ -1633,11 +1639,11 @@ body.im-tab-table thead th {
           <tr data-ticker="267260">
       <td><div class="company-name">HD현대일렉트릭</div><div class="company-name-sub">HD HYUNDAI ELECTRIC</div></td>
       <td><span class="ticker">267260</span></td>
-      <td class="quote-cell">972,000</td>
+      <td class="quote-cell">929,000</td>
       <td class="quote-cell">1,430,000</td>
       <td class="quote-cell">418,000</td>
-      <td class="quote-cell">54.7%</td>
-      <td class="quote-cell">65.2</td>
+      <td class="quote-cell">50.5%</td>
+      <td class="quote-cell">65.9</td>
       <td class="mcap-cell">40.73조원</td>
       <td class="fin-cell">55.52</td>
       <td class="fin-cell">20.05</td>
@@ -1650,11 +1656,11 @@ body.im-tab-table thead th {
           <tr data-ticker="010120">
       <td><div class="company-name">LS ELECTRIC</div></td>
       <td><span class="ticker">010120</span></td>
-      <td class="quote-cell">238,000</td>
+      <td class="quote-cell">218,500</td>
       <td class="quote-cell">335,000</td>
       <td class="quote-cell">50,600</td>
-      <td class="quote-cell">65.9%</td>
-      <td class="quote-cell">50.1</td>
+      <td class="quote-cell">59%</td>
+      <td class="quote-cell">53.7</td>
       <td class="mcap-cell">33.38조원</td>
       <td class="fin-cell">115.34</td>
       <td class="fin-cell">15.98</td>
@@ -1667,11 +1673,11 @@ body.im-tab-table thead th {
           <tr data-ticker="298040">
       <td><div class="company-name">효성중공업</div><div class="company-name-sub">HYOSUNG HEAVY INDUSTRIES</div></td>
       <td><span class="ticker">298040</span></td>
-      <td class="quote-cell">3,438,000</td>
+      <td class="quote-cell">3,117,000</td>
       <td class="quote-cell">4,742,000</td>
       <td class="quote-cell">860,000</td>
-      <td class="quote-cell">66.4%</td>
-      <td class="quote-cell">77.7</td>
+      <td class="quote-cell">58.1%</td>
+      <td class="quote-cell">68.2</td>
       <td class="mcap-cell">31.48조원</td>
       <td class="fin-cell">60.47</td>
       <td class="fin-cell">13.37</td>
@@ -1684,11 +1690,11 @@ body.im-tab-table thead th {
           <tr data-ticker="015760">
       <td><div class="company-name">한국전력</div><div class="company-name-sub">KoreaElectricPower</div></td>
       <td><span class="ticker">015760</span></td>
-      <td class="quote-cell">37,000</td>
+      <td class="quote-cell">39,150</td>
       <td class="quote-cell">69,500</td>
       <td class="quote-cell">34,100</td>
-      <td class="quote-cell">8.2%</td>
-      <td class="quote-cell">54.8</td>
+      <td class="quote-cell">14.3%</td>
+      <td class="quote-cell">56.3</td>
       <td class="mcap-cell">24.17조원</td>
       <td class="fin-cell">2.83</td>
       <td class="fin-cell">0.50</td>
@@ -1701,11 +1707,11 @@ body.im-tab-table thead th {
           <tr data-ticker="001440">
       <td><div class="company-name">대한전선</div><div class="company-name-sub">Taihan Cable &amp; Solution</div></td>
       <td><span class="ticker">001440</span></td>
-      <td class="quote-cell">33,900</td>
+      <td class="quote-cell">32,250</td>
       <td class="quote-cell">75,900</td>
       <td class="quote-cell">14,740</td>
-      <td class="quote-cell">31.3%</td>
-      <td class="quote-cell">57.9</td>
+      <td class="quote-cell">28.6%</td>
+      <td class="quote-cell">49.6</td>
       <td class="mcap-cell">7.42조원</td>
       <td class="fin-cell">83.55</td>
       <td class="fin-cell">4.39</td>
@@ -1718,11 +1724,11 @@ body.im-tab-table thead th {
           <tr data-ticker="062040">
       <td><div class="company-name">산일전기</div><div class="company-name-sub">SANIL ELECTRIC</div></td>
       <td><span class="ticker">062040</span></td>
-      <td class="quote-cell">238,500</td>
+      <td class="quote-cell">207,000</td>
       <td class="quote-cell">341,000</td>
       <td class="quote-cell">81,000</td>
-      <td class="quote-cell">60.6%</td>
-      <td class="quote-cell">84.4</td>
+      <td class="quote-cell">48.5%</td>
+      <td class="quote-cell">77.4</td>
       <td class="mcap-cell">7.09조원</td>
       <td class="fin-cell">47.24</td>
       <td class="fin-cell">12.01</td>
@@ -1735,11 +1741,11 @@ body.im-tab-table thead th {
           <tr data-ticker="052690">
       <td><div class="company-name">한전기술</div><div class="company-name-sub">KEPCO Engineering &amp; Construction</div></td>
       <td><span class="ticker">052690</span></td>
-      <td class="quote-cell">107,900</td>
+      <td class="quote-cell">106,900</td>
       <td class="quote-cell">198,000</td>
       <td class="quote-cell">80,300</td>
-      <td class="quote-cell">23.4%</td>
-      <td class="quote-cell">37.9</td>
+      <td class="quote-cell">22.6%</td>
+      <td class="quote-cell">25.6</td>
       <td class="mcap-cell">5.78조원</td>
       <td class="fin-cell">67.42</td>
       <td class="fin-cell">9.21</td>
@@ -1752,11 +1758,11 @@ body.im-tab-table thead th {
           <tr data-ticker="103590">
       <td><div class="company-name">일진전기</div><div class="company-name-sub">ILJIN ELECTRIC</div></td>
       <td><span class="ticker">103590</span></td>
-      <td class="quote-cell">76,300</td>
+      <td class="quote-cell">71,700</td>
       <td class="quote-cell">147,900</td>
       <td class="quote-cell">33,500</td>
-      <td class="quote-cell">37.4%</td>
-      <td class="quote-cell">56.5</td>
+      <td class="quote-cell">33.4%</td>
+      <td class="quote-cell">56.1</td>
       <td class="mcap-cell">3.90조원</td>
       <td class="fin-cell">37.54</td>
       <td class="fin-cell">6.63</td>
@@ -1769,11 +1775,11 @@ body.im-tab-table thead th {
           <tr data-ticker="036460">
       <td><div class="company-name">한국가스공사</div><div class="company-name-sub">KoreaGasCorporation</div></td>
       <td><span class="ticker">036460</span></td>
-      <td class="quote-cell">31,950</td>
-      <td class="quote-cell">49,350</td>
+      <td class="quote-cell">33,150</td>
+      <td class="quote-cell">46,800</td>
       <td class="quote-cell">31,150</td>
-      <td class="quote-cell">4.4%</td>
-      <td class="quote-cell">58.9</td>
+      <td class="quote-cell">12.8%</td>
+      <td class="quote-cell">55.7</td>
       <td class="mcap-cell">3.34조원</td>
       <td class="fin-cell">24.74</td>
       <td class="fin-cell">0.29</td>
@@ -1786,11 +1792,11 @@ body.im-tab-table thead th {
           <tr data-ticker="051600">
       <td><div class="company-name">한전KPS</div><div class="company-name-sub">KEPCO Plant Service &amp; Engineering</div></td>
       <td><span class="ticker">051600</span></td>
-      <td class="quote-cell">44,300</td>
+      <td class="quote-cell">45,350</td>
       <td class="quote-cell">69,000</td>
       <td class="quote-cell">42,350</td>
-      <td class="quote-cell">7.3%</td>
-      <td class="quote-cell">47.8</td>
+      <td class="quote-cell">11.3%</td>
+      <td class="quote-cell">42.2</td>
       <td class="mcap-cell">2.88조원</td>
       <td class="fin-cell">23.14</td>
       <td class="fin-cell">2.14</td>
@@ -1803,11 +1809,11 @@ body.im-tab-table thead th {
           <tr data-ticker="083650">
       <td><div class="company-name">비에이치아이</div><div class="company-name-sub">BHI Co., LTD.</div></td>
       <td><span class="ticker">083650</span></td>
-      <td class="quote-cell">54,600</td>
+      <td class="quote-cell">51,800</td>
       <td class="quote-cell">114,200</td>
       <td class="quote-cell">34,550</td>
-      <td class="quote-cell">25.2%</td>
-      <td class="quote-cell">31.6</td>
+      <td class="quote-cell">21.7%</td>
+      <td class="quote-cell">29.0</td>
       <td class="mcap-cell">2.49조원</td>
       <td class="fin-cell">38.25</td>
       <td class="fin-cell">14.04</td>
@@ -1820,11 +1826,11 @@ body.im-tab-table thead th {
           <tr data-ticker="033100">
       <td><div class="company-name">제룡전기</div><div class="company-name-sub">CHERYONG ELECTRIC CO.,LTD.</div></td>
       <td><span class="ticker">033100</span></td>
-      <td class="quote-cell">51,200</td>
+      <td class="quote-cell">49,750</td>
       <td class="quote-cell">93,800</td>
       <td class="quote-cell">31,850</td>
-      <td class="quote-cell">31.2%</td>
-      <td class="quote-cell">60.9</td>
+      <td class="quote-cell">28.9%</td>
+      <td class="quote-cell">79.4</td>
       <td class="mcap-cell">0.83조원</td>
       <td class="fin-cell">14.17</td>
       <td class="fin-cell">3.48</td>
@@ -1837,11 +1843,11 @@ body.im-tab-table thead th {
           <tr data-ticker="071320">
       <td><div class="company-name">지역난방공사</div><div class="company-name-sub">Korea District Heating</div></td>
       <td><span class="ticker">071320</span></td>
-      <td class="quote-cell">64,600</td>
+      <td class="quote-cell">68,200</td>
       <td class="quote-cell">116,700</td>
       <td class="quote-cell">63,700</td>
-      <td class="quote-cell">1.7%</td>
-      <td class="quote-cell">54.1</td>
+      <td class="quote-cell">8.5%</td>
+      <td class="quote-cell">51.6</td>
       <td class="mcap-cell">0.83조원</td>
       <td class="fin-cell">2.54</td>
       <td class="fin-cell">0.36</td>
@@ -1854,11 +1860,11 @@ body.im-tab-table thead th {
           <tr data-ticker="130660">
       <td><div class="company-name">한전산업</div><div class="company-name-sub">Korea Electric Power Industrial Development</div></td>
       <td><span class="ticker">130660</span></td>
-      <td class="quote-cell">11,620</td>
+      <td class="quote-cell">11,590</td>
       <td class="quote-cell">27,800</td>
       <td class="quote-cell">10,150</td>
-      <td class="quote-cell">8.3%</td>
-      <td class="quote-cell">47.0</td>
+      <td class="quote-cell">8.2%</td>
+      <td class="quote-cell">38.5</td>
       <td class="mcap-cell">0.44조원</td>
       <td class="fin-cell">108.08</td>
       <td class="fin-cell">4.27</td>
@@ -1871,11 +1877,11 @@ body.im-tab-table thead th {
           <tr data-ticker="006910">
       <td><div class="company-name">보성파워텍</div><div class="company-name-sub">BOSUNG POWER TECHNOLOGY CO., LTD.</div></td>
       <td><span class="ticker">006910</span></td>
-      <td class="quote-cell">7,290</td>
+      <td class="quote-cell">7,280</td>
       <td class="quote-cell">18,200</td>
       <td class="quote-cell">2,995</td>
       <td class="quote-cell">28.2%</td>
-      <td class="quote-cell">46.3</td>
+      <td class="quote-cell">38.6</td>
       <td class="mcap-cell">0.41조원</td>
       <td class="fin-cell">19.93</td>
       <td class="fin-cell">3.67</td>
@@ -1888,11 +1894,11 @@ body.im-tab-table thead th {
           <tr data-ticker="105840">
       <td><div class="company-name">우진</div><div class="company-name-sub">WOOJIN INC</div></td>
       <td><span class="ticker">105840</span></td>
-      <td class="quote-cell">16,000</td>
+      <td class="quote-cell">15,800</td>
       <td class="quote-cell">31,700</td>
       <td class="quote-cell">9,270</td>
-      <td class="quote-cell">30%</td>
-      <td class="quote-cell">31.2</td>
+      <td class="quote-cell">29.1%</td>
+      <td class="quote-cell">25.2</td>
       <td class="mcap-cell">0.36조원</td>
       <td class="fin-cell">40.98</td>
       <td class="fin-cell">1.84</td>
@@ -2005,6 +2011,11 @@ body.im-tab-table thead th {
         "thName": "기업명",
         "thTicker": "종목코드",
         "thLast": "현재가",
+        "thChg1d": "전일대비",
+        "thRet1m": "1개월",
+        "thRet3m": "3개월",
+        "thRet6m": "6개월",
+        "thRet1y": "1년",
         "th52High": "52주 최고",
         "th52Lo": "52주 최저",
         "thPosition": "주가 위치",
@@ -2024,14 +2035,14 @@ body.im-tab-table thead th {
         "sbSize": "노드 크기",
         "sbHow": "조작 방법",
         "chainLabel": {
-            "전력설비": "Switchgear & transformers",
-            "송배전": "T&D · cables · utilities",
-            "발전설비": "Generation & nuclear OEM"
+            "전력설비": "전력설비·배전반",
+            "송배전": "송배전·케이블",
+            "발전설비": "발전·원자력 설비"
         },
         "chainFilter": {
-            "전력설비": "Grid gear",
-            "송배전": "T&D",
-            "발전설비": "Generation"
+            "전력설비": "전력설비",
+            "송배전": "송배전",
+            "발전설비": "발전설비"
         },
         "allFilter": "전체",
         "kosp": "KOSPI",
@@ -2062,7 +2073,7 @@ body.im-tab-table thead th {
     },
     "en": {
         "title": "🇰🇷 Korea Power Grid Map",
-        "subtitle": "Power equipment, transmission & distribution, and generation OEM — listed Korean names with illustrative global links",
+        "subtitle": "Power equipment, transmission & distribution, and power generation equipment — listed Korean names with illustrative global relationships",
         "badgeTotal": "<span>42</span> listed companies",
         "badgeMarket": "KOSPI <span>28</span> · KOSDAQ <span>14</span>",
         "dataAsof": "Data as of: June 15, 2026",
@@ -2080,9 +2091,14 @@ body.im-tab-table thead th {
         "thName": "Company",
         "thTicker": "Ticker",
         "thLast": "Last",
+        "thChg1d": "Day",
+        "thRet1m": "1M",
+        "thRet3m": "3M",
+        "thRet6m": "6M",
+        "thRet1y": "1Y",
         "th52High": "52W High",
         "th52Lo": "52W Low",
-        "thPosition": "Price Position",
+        "thPosition": "52W Range",
         "thRs": "RS",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
@@ -2091,28 +2107,22 @@ body.im-tab-table thead th {
         "thChain": "Value chain",
         "thSemType": "Segment",
         "thProducts": "Products / services",
-        "thPartners": "Global reference links",
-        "note": "⚠ Public information only. Tickers and links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows billions USD (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and price position refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.",
+        "thPartners": "Global reference relationships",
+        "note": "⚠ Public information only. Tickers and links are editorial groupings, not official filings. Market cap follows KRX as of the date shown. English table shows USD billions (two decimals) using the USD/KRW spot from Naver Finance (data/fx_usdkrw.json, illustrative). Last price, 52-week high/low, and 52-week range refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.",
         "sbKorean": "Korean listed (value chain)",
         "sbGlobal": "Peer links",
-        "peerNetworkDesc": "Solid/dashed edges show equipment, OEM and equity-style ties; domestic peer ladder by market cap; thin gray = global peer links within the same segment.",
+        "peerNetworkDesc": "Solid/dashed edges show equipment, OEM and equity-style ties; domestic peer ladder by market cap; thin gray = global peer relationships within the same segment.",
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
-            "ESS·배터리": "ESS & lithium batteries",
-            "전력설비·송배전": "Transformers, switchgear, cable",
-            "태양광·풍력": "Solar, wind, EPC",
-            "원자력·발전설비": "Nuclear equipment & power OEM",
-            "수소·연료전지": "Fuel cells & hydrogen infra",
-            "전력·가스": "Utilities & gas distribution"
+            "전력설비": "Switchgear & transformers",
+            "송배전": "T&D · cables · utilities",
+            "발전설비": "Generation & nuclear equipment"
         },
         "chainFilter": {
-            "ESS·배터리": "ESS & battery",
-            "전력설비·송배전": "Power equip.",
-            "태양광·풍력": "Solar & wind",
-            "원자력·발전설비": "Nuclear",
-            "수소·연료전지": "H₂ & FC",
-            "전력·가스": "Utility"
+            "전력설비": "Power equipment",
+            "송배전": "T&D",
+            "발전설비": "Generation"
         },
         "allFilter": "All",
         "kosp": "KOSPI",
@@ -2127,14 +2137,14 @@ body.im-tab-table thead th {
             "gb": "UK"
         },
         "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T",
-        "howDesc": "• Click node: highlight peers & global links\n• Drag / scroll / background click to reset\n• Gray dashes: global peer grouping",
+        "howDesc": "• Click node: highlight peers & global relationships\n• Drag / scroll / background click to reset\n• Gray dashes: global peer grouping",
         "graphHint": "Click a node to highlight linked customers, peers, and global-peer edges",
         "ttChain": "Chain",
         "ttSemType": "Segment",
         "ttProducts": "Products",
         "ttRevenue": "Market cap",
         "ttPartners": "Reference",
-        "ttSuppliers": "Korean cos.",
+        "ttSuppliers": "Korean companies",
         "ttCountry": "Country",
         "ttSector": "Field",
         "ttTags": "Multi-axis",
@@ -2151,104 +2161,104 @@ body.im-tab-table thead th {
         id: 'doosan_e', name: '두산에너빌리티', nameEn: 'DOOSAN ENERBILITY', ticker: '034020', market: 'KOSPI', chain: '발전설비',
         semType: '원전 기자재·가스터빈', semTypeEn: 'Nuclear island & gas turbines',
         products: 'SMR 연료·기자재, GT', productsEn: 'SMR components, heavy-duty GT',
-        revenue: '59.64조원', mcapWon: 59636242692600, per: 705.3, pbr: 7.66, revTier: 3, partners: ["ge_vernova","mitsubishi_heavy","orano"]
+        revenue: '59.64조원', mcapWon: 59636242692600, per: 705.3, pbr: 7.66, revTier: 3, partners: ['ge_vernova', 'mitsubishi_heavy', 'orano']
       },
 
       {
         id: 'hdelec', name: 'HD현대일렉트릭', nameEn: 'HD HYUNDAI ELECTRIC', ticker: '267260', market: 'KOSPI', chain: '전력설비',
         semType: '변압기·개폐기', semTypeEn: 'Transformers & switchgear',
         products: '초고압 변압기, HVDC', productsEn: 'Ultra-HV transformers, HVDC',
-        revenue: '40.73조원', mcapWon: 40733262550000, per: 55.52, pbr: 20.05, revTier: 3, partners: ["siemens_energy","ge_vernova","schneider_e"]
+        revenue: '40.73조원', mcapWon: 40733262550000, per: 55.52, pbr: 20.05, revTier: 3, partners: ['siemens_energy', 'ge_vernova', 'schneider_e']
       },
 
       {
         id: 'lselec', name: 'LS ELECTRIC', nameEn: 'LS ELECTRIC', ticker: '010120', market: 'KOSPI', chain: '전력설비',
         semType: '전력기기·자동화', semTypeEn: 'Power apparatus & automation',
         products: '저압·고압 개폐기, 스마트그리드', productsEn: 'LV/HV switchgear, smart grid',
-        revenue: '33.38조원', mcapWon: 33375000000000, per: 115.34, pbr: 15.98, revTier: 3, partners: ["abb","schneider_e","siemens_energy"]
+        revenue: '33.38조원', mcapWon: 33375000000000, per: 115.34, pbr: 15.98, revTier: 3, partners: ['abb', 'schneider_e', 'siemens_energy']
       },
 
       {
         id: 'hsheavy', name: '효성중공업', nameEn: 'HYOSUNG HEAVY INDUSTRIES', ticker: '298040', market: 'KOSPI', chain: '전력설비',
         semType: '변압기·ESS PCS', semTypeEn: 'Transformers & PCS',
         products: '초고압 변압기, STATCOM', productsEn: 'EHV transformers, FACTS',
-        revenue: '31.48조원', mcapWon: 31479674048000, per: 60.47, pbr: 13.37, revTier: 3, partners: ["ge_vernova","siemens_energy"]
+        revenue: '31.48조원', mcapWon: 31479674048000, per: 60.47, pbr: 13.37, revTier: 3, partners: ['ge_vernova', 'siemens_energy']
       },
 
       {
         id: 'kepco', name: '한국전력', nameEn: 'KoreaElectricPower', ticker: '015760', market: 'KOSPI', chain: '발전설비',
         semType: '송배전·발전 유틸', semTypeEn: 'Transmission & generation utility',
         products: '국가 전력망, 재생 연계', productsEn: 'National grid, renewables integration',
-        revenue: '24.17조원', mcapWon: 24169947499050, per: 2.83, pbr: 0.5, revTier: 3, partners: ["ge_vernova","siemens_energy","vestas"]
+        revenue: '24.17조원', mcapWon: 24169947499050, per: 2.83, pbr: 0.5, revTier: 3, partners: ['ge_vernova', 'siemens_energy', 'vestas']
       },
 
       {
         id: 'taihan', name: '대한전선', nameEn: 'Taihan Cable & Solution', ticker: '001440', market: 'KOSPI', chain: '발전설비',
         semType: '초고압·해저 케이블', semTypeEn: 'Extra-HV & submarine cable',
         products: '송전·배전 케이블, HVDC', productsEn: 'Transmission/distribution cable, HVDC',
-        revenue: '7.42조원', mcapWon: 7418319758600, per: 83.55, pbr: 4.39, revTier: 2, partners: ["siemens_energy","ge_vernova"]
+        revenue: '7.42조원', mcapWon: 7418319758600, per: 83.55, pbr: 4.39, revTier: 2, partners: ['siemens_energy', 'ge_vernova']
       },
 
       {
         id: 'sanil', name: '산일전기', nameEn: 'SANIL ELECTRIC', ticker: '062040', market: 'KOSPI', chain: '송배전',
         semType: '전력케이블·변전설비', semTypeEn: 'Power cable & substation equipment',
         products: '초고압·특수 케이블, 변압기·개폐기', productsEn: 'EHV & specialty cable, transformers & switchgear',
-        revenue: '7.09조원', mcapWon: 7087569275000, per: 47.24, pbr: 12.01, revTier: 2, partners: ["siemens_energy","ge_vernova"]
+        revenue: '7.09조원', mcapWon: 7087569275000, per: 47.24, pbr: 12.01, revTier: 2, partners: ['siemens_energy', 'ge_vernova']
       },
 
       {
         id: 'kento', name: '한전기술', nameEn: 'KEPCO Engineering & Construction', ticker: '052690', market: 'KOSPI', chain: '발전설비',
         semType: '발전 EPC·O&M', semTypeEn: 'Power EPC & O&M',
         products: '원전·화력 정비·해외 EPC', productsEn: 'Nuclear/thermal O&M, overseas EPC',
-        revenue: '5.78조원', mcapWon: 5782686000000, per: 67.42, pbr: 9.21, revTier: 2, partners: ["ge_vernova","mitsubishi_heavy",{"id":"kepco","edgeLabel":"한전 계열 수주","edgeLabelEn":"KEPCO-linked projects","weight":0.25,"kind":"theme"}]
+        revenue: '5.78조원', mcapWon: 5782686000000, per: 67.42, pbr: 9.21, revTier: 2, partners: ['ge_vernova', 'mitsubishi_heavy', { id: 'kepco', edgeLabel: '한전 계열 수주', edgeLabelEn: 'KEPCO-linked projects', weight: 0.25, kind: 'theme' }]
       },
 
       {
         id: 'iljin_el', name: '일진전기', nameEn: 'ILJIN ELECTRIC', ticker: '103590', market: 'KOSPI', chain: '송배전',
         semType: '전력케이블·전기자재', semTypeEn: 'Power cable & electrical parts',
         products: '고압 케이블, 전력기기', productsEn: 'HV cable, power apparatus',
-        revenue: '3.90조원', mcapWon: 3900664902000, per: 37.54, pbr: 6.63, revTier: 2, partners: ["siemens_energy","ge_vernova"]
+        revenue: '3.90조원', mcapWon: 3900664902000, per: 37.54, pbr: 6.63, revTier: 2, partners: ['siemens_energy', 'ge_vernova']
       },
 
       {
         id: 'kogas', name: '한국가스공사', nameEn: 'KoreaGasCorporation', ticker: '036460', market: 'KOSPI', chain: '발전설비',
         semType: 'LNG 수입·배관', semTypeEn: 'LNG imports & pipelines',
         products: '도시가스·LNG', productsEn: 'City gas, LNG terminals',
-        revenue: '3.34조원', mcapWon: 3341730600000, per: 24.74, pbr: 0.29, revTier: 2, partners: ["schneider_e",{"id":"kepco","edgeLabel":"복합에너지 수요","edgeLabelEn":"Integrated energy demand","weight":0.08,"kind":"theme"}]
+        revenue: '3.34조원', mcapWon: 3341730600000, per: 24.74, pbr: 0.29, revTier: 2, partners: ['schneider_e', { id: 'kepco', edgeLabel: '복합에너지 수요', edgeLabelEn: 'Integrated energy demand', weight: 0.08, kind: 'theme' }]
       },
 
       {
         id: 'kepco_kps', name: '한전KPS', nameEn: 'KEPCO Plant Service & Engineering', ticker: '051600', market: 'KOSPI', chain: '발전설비',
         semType: '발전설비 정비·O&M', semTypeEn: 'Power-plant maintenance & O&M',
         products: '원전·화력·신재생 O&M', productsEn: 'Nuclear, thermal & renewable O&M',
-        revenue: '2.88조원', mcapWon: 2875500000000, per: 23.14, pbr: 2.14, revTier: 2, partners: ["ge_vernova",{"id":"kepco","edgeLabel":"한전 계열","edgeLabelEn":"KEPCO affiliate","weight":0.35,"kind":"backing"}]
+        revenue: '2.88조원', mcapWon: 2875500000000, per: 23.14, pbr: 2.14, revTier: 2, partners: ['ge_vernova', { id: 'kepco', edgeLabel: '한전 계열', edgeLabelEn: 'KEPCO affiliate', weight: 0.35, kind: 'backing' }]
       },
 
       {
         id: 'bhi', name: '비에이치아이', nameEn: 'BHI Co., LTD.', ticker: '083650', market: 'KOSDAQ', chain: '발전설비',
         semType: '밸브·계측', semTypeEn: 'Valves & instrumentation',
         products: '원전·화력 밸브', productsEn: 'Nuclear/thermal valves',
-        revenue: '2.49조원', mcapWon: 2494116625000, per: 38.25, pbr: 14.04, revTier: 2, partners: ["ge_vernova","orano"]
+        revenue: '2.49조원', mcapWon: 2494116625000, per: 38.25, pbr: 14.04, revTier: 2, partners: ['ge_vernova', 'orano']
       },
 
       {
         id: 'jeryong', name: '제룡전기', nameEn: 'CHERYONG ELECTRIC CO.,LTD.', ticker: '033100', market: 'KOSDAQ', chain: '송배전',
         semType: '변압기·차단기', semTypeEn: 'Transformers & breakers',
         products: '수배전반·변압기', productsEn: 'Switchgear & transformers',
-        revenue: '0.83조원', mcapWon: 832032786200, per: 14.17, pbr: 3.48, revTier: 1, partners: ["schneider_e","abb"]
+        revenue: '0.83조원', mcapWon: 832032786200, per: 14.17, pbr: 3.48, revTier: 1, partners: ['schneider_e', 'abb']
       },
 
       {
         id: 'energy_korea_district_heating', name: '지역난방공사', nameEn: 'Korea District Heating', ticker: '071320', market: 'KOSPI', chain: '발전설비',
-        semType: '집단에너지', semTypeEn: '집단에너지',
-        products: '집단에너지 — 에너지·전력', productsEn: '집단에너지 — 집단에너지 energy and power',
+        semType: '집단에너지', semTypeEn: '—',
+        products: '집단에너지 — 에너지·전력', productsEn: 'Power equipment and services',
         revenue: '0.83조원', mcapWon: 827880196000, per: 2.54, pbr: 0.36, revTier: 1, partners: []
       },
 
       {
         id: 'energy_korea_electric_power_ind', name: '한전산업', nameEn: 'Korea Electric Power Industrial Development', ticker: '130660', market: 'KOSPI', chain: '발전설비',
-        semType: '발전 운전·정비', semTypeEn: '발전 운전·정비',
-        products: '발전 운전·정비 — 에너지·전력', productsEn: '발전 운전·정비 — 발전 운전·정비 energy and power',
+        semType: '발전 운전·정비', semTypeEn: '—',
+        products: '발전 운전·정비 — 에너지·전력', productsEn: 'Power equipment and services',
         revenue: '0.44조원', mcapWon: 440426000000, per: 108.08, pbr: 4.27, revTier: 1, partners: []
       },
 
@@ -2261,10 +2271,11 @@ body.im-tab-table thead th {
 
       {
         id: 'energy_woojin_inc', name: '우진', nameEn: 'WOOJIN INC', ticker: '105840', market: 'KOSPI', chain: '발전설비',
-        semType: '원전 계측기', semTypeEn: '원전 계측기',
-        products: '원전 계측기 — 원전·발전설비', productsEn: '원전 계측기 — nuclear and power generation equipment',
+        semType: '원전 계측기', semTypeEn: '—',
+        products: '원전 계측기 — 원전·발전설비', productsEn: 'Power equipment and services',
         revenue: '0.36조원', mcapWon: 364971896900, per: 40.98, pbr: 1.84, revTier: 1, partners: []
-      },
+      }
+
     ];
     const globalCompanies = [
       { id: 'catl', name: 'CATL', nameEn: 'CATL', country: '중국/China', region: 'cn', sector: 'Battery cells & ESS' },
@@ -2382,14 +2393,24 @@ body.im-tab-table thead th {
       document.getElementById('th-name').textContent = t.thName;
       document.getElementById('th-ticker').textContent = t.thTicker;
       var thLast = document.getElementById('th-last');
+      var thChg1d = document.getElementById('th-chg1d');
+      var thRet1m = document.getElementById('th-ret1m');
+      var thRet3m = document.getElementById('th-ret3m');
+      var thRet6m = document.getElementById('th-ret6m');
+      var thRet1y = document.getElementById('th-ret1y');
       if (thLast) thLast.textContent = t.thLast;
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? 'Day' : '전일대비');
+      if (thRet1m) thRet1m.textContent = t.thRet1m || (lang === 'en' ? '1M' : '1개월');
+      if (thRet3m) thRet3m.textContent = t.thRet3m || (lang === 'en' ? '3M' : '3개월');
+      if (thRet6m) thRet6m.textContent = t.thRet6m || (lang === 'en' ? '6M' : '6개월');
+      if (thRet1y) thRet1y.textContent = t.thRet1y || (lang === 'en' ? '1Y' : '1년');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
       var thpos = document.getElementById('th-position');
       var thrs = document.getElementById('th-rs');
-      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));
+      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? '52W Range' : '주가 위치'));
       if (thrs) thrs.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.rsHeaderLabel) ? InvestingMapLiveQuotes.rsHeaderLabel(lang, t) : (t.thRs || 'RS');
       const thMcap = document.getElementById('th-mcap');
       if (thMcap) thMcap.textContent = t.thMcap;
@@ -2412,7 +2433,7 @@ body.im-tab-table thead th {
       document.getElementById('graph-hint-text').textContent = t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
-      if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
+      if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
       if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       // Rebuild dynamic UI
@@ -2434,7 +2455,7 @@ body.im-tab-table thead th {
       const container = document.getElementById('chain-chips');
       const chains = ['all', '전력설비', '송배전', '발전설비'];
       container.innerHTML = chains.map(ch => {
-        const label = ch === 'all' ? t.allFilter : (t.chainFilter[ch] || ch);
+        const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
         const color = CHAIN_COLORS[ch];
         const style = isActive ? `background:${color || '#4FC3F7'};color:#0d1117;border-color:transparent;` : '';
@@ -2462,7 +2483,7 @@ body.im-tab-table thead th {
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
-      ${t.chainLabel[ch] || ch}
+      ${(window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainLabel[ch] || ch)}
     </div>`
       ).join('');
       // Peer network legend
@@ -2519,7 +2540,7 @@ body.im-tab-table thead th {
       });
       if (sortKey) {
         data.sort((a, b) => {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret1mPct' || sortKey === 'ret3mPct' || sortKey === 'ret6mPct' || sortKey === 'ret1yPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
             const av = a[sortKey];
             const bv = b[sortKey];
             const na = av == null || !Number.isFinite(av);
@@ -2541,7 +2562,7 @@ body.im-tab-table thead th {
       const countEl = document.getElementById('show-count');
       if (countEl) countEl.textContent = data.length;
 
-      const chainLabel = (ch) => lang === 'ko' ? (t.chainFilter[ch] || ch) : (t.chainFilter[ch] || ch);
+      const chainLabel = (ch) => (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || t.chainLabel[ch] || ch);
       const semTypeField = t.fieldSemType;
       const productsField = t.fieldProducts;
 
@@ -2569,6 +2590,11 @@ body.im-tab-table thead th {
       <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
+      <td class="quote-cell ret-cell">${qr.chg1d || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret1m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret3m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret6m || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret1y || '—'}</td>
       <td class="quote-cell">${qr.hi}</td>
       <td class="quote-cell">${qr.lo}</td>
       <td class="quote-cell">${(qr && (qr.position != null ? qr.position : qr.yoy)) || '—'}</td>
@@ -2601,7 +2627,7 @@ body.im-tab-table thead th {
     function syncSortHeader() {
       document.querySelectorAll('thead th').forEach(th => th.className = '');
       if (!sortKey) return;
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[sortKey];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -2612,7 +2638,7 @@ body.im-tab-table thead th {
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -2632,7 +2658,7 @@ body.im-tab-table thead th {
       const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
       const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
       const isGlobalId = (id) => globalCompanies.some(g => g.id === id);
-      const ANGLE = { 'ESS·배터리': 0, '전력설비·송배전': 60, '태양광·풍력': 120, '원자력·발전설비': 180, '수소·연료전지': 240, '전력·가스': 300 };
+      const ANGLE = { '전력설비': 0, '송배전': 120, '발전설비': 240 };
 
       const nodes = [];
       const nodeIndex = {};
@@ -2907,6 +2933,7 @@ body.im-tab-table thead th {
         chainColors: CHAIN_COLORS,
         lang: lang,
         formatMcap: fmtMcapTableCell,
+        chainLabel: function (ch) { return (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, T[lang]) : ch; },
         onSelect: function (c) {
           resetTableFilters();
           switchTab('table', document.getElementById('tab-btn-table'));
@@ -2984,14 +3011,14 @@ body.im-tab-table thead th {
     <nav aria-label="Related industry maps">
       <ul class="im-seo-related-list">
       <li><a href="../semiconductor/korea_semiconductor_map.html">한국 반도체 산업 투자 지도</a> · <a href="../semiconductor/korea_semiconductor_map.html?lang=en" hreflang="en">Korea Semiconductor Investment Map</a></li>
-      <li><a href="../energy/korea_energy_map.html">한국 에너지 투자 지도</a> · <a href="../energy/korea_energy_map.html?lang=en" hreflang="en">Korea Energy Map</a></li>
+      <li><a href="../energy/korea_energy_map.html">한국 에너지 투자 지도</a> · <a href="../energy/korea_energy_map.html?lang=en" hreflang="en">Korea Energy Sector Stocks Map</a></li>
       <li><a href="../ship/korea_ship_map.html">한국 조선·조선기자재 산업 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Marine Equipment Map</a></li>
       <li><a href="../defense/korea_defense_map.html">한국 방위·우주·항공 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense, Space &amp; Aviation Map</a></li>
       <li><a href="../kculture/korea_kculture_map.html">한국 K컬처 산업 투자 지도</a> · <a href="../kculture/korea_kculture_map.html?lang=en" hreflang="en">Korea K-Culture Industry Map</a></li>
       <li><a href="../bio/korea_bio_map.html">한국 바이오 산업 투자 지도</a> · <a href="../bio/korea_bio_map.html?lang=en" hreflang="en">Korea Bio Industry Investment Map</a></li>
       <li><a href="../robot/korea_robot_map.html">한국 로봇/피지컬AI 산업 투자 지도</a> · <a href="../robot/korea_robot_map.html?lang=en" hreflang="en">Korea Robot / Physical AI Industry Map</a></li>
-      <li><a href="../finance/korea_finance_map.html">한국 금융 투자 지도</a> · <a href="../finance/korea_finance_map.html?lang=en" hreflang="en">Korea Finance Map</a></li>
-      <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Map</a></li>
+      <li><a href="../finance/korea_finance_map.html">한국 금융 투자 지도</a> · <a href="../finance/korea_finance_map.html?lang=en" hreflang="en">Korea Listed Financials Map</a></li>
+      <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Sector Map</a></li>
       </ul>
     </nav>
   </section>

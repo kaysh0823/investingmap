@@ -244,20 +244,27 @@
   function syncTabs() {
     var lang = pageLang();
     var short = TAB_SHORT[lang] || TAB_SHORT.ko;
-    var mobile = isMobile();
+    if (!isMobile()) return;
     ['tab-btn-heatmap', 'tab-btn-table', 'tab-btn-graph'].forEach(function (id) {
       var el = document.getElementById(id);
       if (!el) return;
-      var current = el.innerHTML;
       var shortLabel = short[id];
-      if (!mobile) {
-        el.innerHTML = el.dataset.fullLabel || current;
-        el.dataset.fullLabel = el.innerHTML;
-        return;
+      if (!shortLabel) return;
+      var current = el.innerHTML;
+      if (current !== shortLabel) {
+        if (!el.dataset.fullLabel) el.dataset.fullLabel = current;
+        el.innerHTML = shortLabel;
       }
-      if (shortLabel && current !== shortLabel) el.dataset.fullLabel = current;
-      el.innerHTML = shortLabel || el.dataset.fullLabel || current;
     });
+  }
+
+  /** Call from map applyLang() after tab labels are set (mobile short labels only). */
+  function notifyLangApplied() {
+    ['tab-btn-heatmap', 'tab-btn-table', 'tab-btn-graph'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) delete el.dataset.fullLabel;
+    });
+    syncTabs();
   }
 
   function syncAll() {
@@ -285,6 +292,7 @@
     isMobile: isMobile,
     syncTabs: syncTabs,
     syncAll: syncAll,
+    notifyLangApplied: notifyLangApplied,
     closeSubtitleTip: closeSubtitleTip,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

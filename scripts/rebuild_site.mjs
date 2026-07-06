@@ -16,6 +16,7 @@ function run(cmd, label) {
 
 run('node scripts/verify_map_companies.mjs', 'verify map company arrays');
 run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry maps');
+run('node scripts/enrich_company_fields.mjs', 'enrich semType/products (all maps)');
 run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
@@ -31,4 +32,5 @@ run('node scripts/patch_editorial_collapsible_html.mjs', 'editorial collapsible 
 run('node scripts/fix_mcap_script_order.mjs', 'mcap fmt + script order');
 run('node bio/gen_korea_bio_inline.mjs', 'bio inline.js');
 run('node scripts/patch_rs_column.mjs', 'RS table column');
+run('node scripts/patch_return_columns.mjs', 'return % columns');
 console.log('\nOK rebuild_site');

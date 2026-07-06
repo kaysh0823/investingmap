@@ -116,14 +116,24 @@
       document.getElementById('th-name').textContent = t.thName;
       document.getElementById('th-ticker').textContent = t.thTicker;
       var thLast = document.getElementById('th-last');
+      var thChg1d = document.getElementById('th-chg1d');
+      var thRet1m = document.getElementById('th-ret1m');
+      var thRet3m = document.getElementById('th-ret3m');
+      var thRet6m = document.getElementById('th-ret6m');
+      var thRet1y = document.getElementById('th-ret1y');
       if (thLast) thLast.textContent = t.thLast;
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? 'Day' : '전일대비');
+      if (thRet1m) thRet1m.textContent = t.thRet1m || (lang === 'en' ? '1M' : '1개월');
+      if (thRet3m) thRet3m.textContent = t.thRet3m || (lang === 'en' ? '3M' : '3개월');
+      if (thRet6m) thRet6m.textContent = t.thRet6m || (lang === 'en' ? '6M' : '6개월');
+      if (thRet1y) thRet1y.textContent = t.thRet1y || (lang === 'en' ? '1Y' : '1년');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
       if (th52lo) th52lo.textContent = t.th52Lo;
       var thpos = document.getElementById('th-position');
       var thrs = document.getElementById('th-rs');
-      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));
+      if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? '52W Range' : '주가 위치'));
       if (thrs) thrs.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.rsHeaderLabel) ? InvestingMapLiveQuotes.rsHeaderLabel(lang, t) : (t.thRs || 'RS');
       document.getElementById('th-market').textContent = t.thMarket;
       const thM = document.getElementById('th-mcap');
@@ -146,7 +156,7 @@
       document.getElementById('graph-hint-text').textContent = t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
-      if (window.InvestingMapMobileUx) InvestingMapMobileUx.syncAll();
+      if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
       if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       buildChainChips();
@@ -169,7 +179,7 @@
       const container = document.getElementById('chain-chips');
       const chains = ['all'].concat(SECTOR_ORDER);
       container.innerHTML = chains.map(ch => {
-        const label = ch === 'all' ? t.allFilter : (t.chainFilter[ch] || ch);
+        const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
         const color = CHAIN_COLORS[ch];
         const style = isActive ? 'background:' + (color || '#58a6ff') + ';color:#0d1117;border-color:transparent;' : '';
@@ -198,7 +208,7 @@
       chainContainer.innerHTML = chains.map(ch =>
         '<div class="legend-item" onclick="toggleChainHighlight(\'' + escAttr(ch) + '\')">' +
         '<div class="legend-dot" style="background:' + (CHAIN_COLORS[ch] || '#888') + '"></div>' +
-        (t.chainLabel[ch] || ch) +
+        ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainLabel[ch] || ch)) +
         '</div>'
       ).join('');
       const regionContainer = document.getElementById('sb-region-legend');
@@ -262,7 +272,7 @@
       });
       if (sortKey) {
         data.sort(function (a, b) {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs' || sortKey === 'rs' || sortKey === 'rs') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret1mPct' || sortKey === 'ret3mPct' || sortKey === 'ret6mPct' || sortKey === 'ret1yPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
             var av = a[sortKey];
             var bv = b[sortKey];
             var na = av == null || !Number.isFinite(av);
@@ -283,7 +293,7 @@
       }
       const countEl = document.getElementById('show-count');
       if (countEl) countEl.textContent = data.length;
-      const chainLabel = (ch) => t.chainFilter[ch] || ch;
+      const chainLabel = (ch) => (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || t.chainLabel[ch] || ch);
       const semTypeField = t.fieldSemType;
       const productsField = t.fieldProducts;
       const tbody = document.getElementById('table-body');
@@ -310,6 +320,11 @@
           '<td><div class="company-name">' + displayName + '</div>' + subNameHtml + '</td>' +
           '<td><span class="ticker">' + c.ticker + '</span></td>' +
           '<td class="quote-cell">' + qr.last + '</td>' +
+          '<td class="quote-cell ret-cell">' + (qr.chg1d || '\u2014') + '</td>' +
+          '<td class="quote-cell ret-cell">' + (qr.ret1m || '\u2014') + '</td>' +
+          '<td class="quote-cell ret-cell">' + (qr.ret3m || '\u2014') + '</td>' +
+          '<td class="quote-cell ret-cell">' + (qr.ret6m || '\u2014') + '</td>' +
+          '<td class="quote-cell ret-cell">' + (qr.ret1y || '\u2014') + '</td>' +
           '<td class="quote-cell">' + qr.hi + '</td>' +
           '<td class="quote-cell">' + qr.lo + '</td>' +
           '<td class="quote-cell">' + ((qr && (qr.position != null ? qr.position : qr.yoy)) || '\u2014') + '</td>' +
@@ -342,7 +357,7 @@
     function syncSortHeader() {
       document.querySelectorAll('thead th').forEach(th => th.className = '');
       if (!sortKey) return;
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[sortKey];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -353,7 +368,7 @@
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret1mPct: 4, ret3mPct: 5, ret6mPct: 6, ret1yPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -642,7 +657,9 @@
         chainColors: CHAIN_COLORS,
         lang: lang,
         chainLabel: function (ch) {
-          return (tHm.chainFilter && tHm.chainFilter[ch]) || (tHm.chainLabel && tHm.chainLabel[ch]) || ch;
+          return (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel)
+            ? InvestingMapI18n.chainDisplayLabel(ch, T[lang])
+            : ((tHm.chainFilter && tHm.chainFilter[ch]) || (tHm.chainLabel && tHm.chainLabel[ch]) || ch);
         },
         formatMcap: fmtMcapTableCell,
         onSelect: function (c) {

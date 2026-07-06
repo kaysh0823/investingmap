@@ -29,3 +29,32 @@
 - 한국거래소(KRX) 전자공시·시세 데이터 (data/ CSV, 기준일 표기)
 - 네이버 금융 USD/KRW 환율 (영문 시총 환산 참고)
 - DART 전자공시 (기업 공시 확인 권장)
+
+---
+
+# Investing Map (English)
+
+> Investing Map is an industry-map platform for domestic and international investors covering Korean listed companies.
+> It provides KRX market cap, PER, PBR, value-chain categories, and domestic/global peer relationships
+> across ten interactive sector maps in Korean and English.
+
+## Industry maps (core content)
+- [Korea Semiconductor Investment Map](https://investing-kr.com/semiconductor/korea_semiconductor_map.html): Listed semiconductor companies, KRX data, value chains, customer and peer relationships
+- [Korea Bio Industry Investment Map](https://investing-kr.com/bio/korea_bio_map.html): Listed bio and pharma, licensing & partnerships with global big pharma
+- [Korea Shipbuilding & Marine Equipment Map](https://investing-kr.com/ship/korea_ship_map.html): Shipbuilding and marine value chain, order and customer relationships
+- [Korea Defense, Space & Aviation Map](https://investing-kr.com/defense/korea_defense_map.html): Defense and aerospace listed companies with global reference networks
+- [Korea Robot / Physical AI Industry Map](https://investing-kr.com/robot/korea_robot_map.html): Factory automation, robotics, and Physical AI value chains
+- [Korea Energy Sector Stocks Map](https://investing-kr.com/energy/korea_energy_map.html): Batteries, ESS, solar, and wind value chains
+- [Korea Power Equipment Map](https://investing-kr.com/powergrid/korea_powergrid_map.html): Power equipment, T&D, and generation value chains
+- [Korea Listed Financials Map](https://investing-kr.com/finance/korea_finance_map.html): Banks, securities, insurance, cards, and consumer finance
+- [Korea Construction Sector Map](https://investing-kr.com/construction/korea_construction_map.html): Contractors, housing, developers, and equipment
+- [Korea K-Culture Industry Map](https://investing-kr.com/kculture/korea_kculture_map.html): Food, travel, beauty, games, fashion, retail, media IP, and K-pop themes
+
+## Hub
+- [Investing Map Hub](https://investing-kr.com/): Entry point for all ten sector maps, language and theme toggle
+
+## Trust / policies
+- [Editorial policy](https://investing-kr.com/editorial-policy.html): Data sources, update cadence, verification process
+- [Disclaimer](https://investing-kr.com/disclaimer.html): Informational only, not investment advice
+- [Editorial & data team](https://investing-kr.com/authors.html): Content and data verification
+- [FAQ](https://investing-kr.com/faq.html): Market cap sources, FX, PER/PBR, reading relationship graphs

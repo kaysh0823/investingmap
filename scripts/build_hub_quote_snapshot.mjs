@@ -11,6 +11,7 @@ import {
   listHubCompanies,
   normalizeTicker,
 } from '../functions/lib/hub_dashboard_core.mjs';
+import { kstYmdDash } from '../functions/lib/krx_session.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CONCURRENCY = 10;
@@ -91,7 +92,7 @@ async function main() {
     .sort((a, b) => b.positionPct - a.positionPct);
 
   const out = {
-    builtAt: new Date().toISOString().slice(0, 10),
+    builtAt: kstYmdDash(),
     asOf: new Date().toISOString(),
     source: 'naver-sise-build',
     quotesTotal: codes.length,

@@ -45,7 +45,7 @@ const APPLY_LANG_THPOS_RS =
   `${APPLY_LANG_THPOS}\n      var thrs = document.getElementById('th-rs');`;
 
 const APPLY_LANG_SET =
-  "if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? 'Price Position' : '주가 위치'));";
+  "if (thpos) thpos.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.positionHeaderLabel) ? InvestingMapLiveQuotes.positionHeaderLabel(lang, t) : (t.thPosition || (lang === 'en' ? '52W Range' : '주가 위치'));";
 const APPLY_LANG_SET_RS =
   `${APPLY_LANG_SET}\n      if (thrs) thrs.textContent = (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.rsHeaderLabel) ? InvestingMapLiveQuotes.rsHeaderLabel(lang, t) : (t.thRs || 'RS');`;
 
@@ -61,12 +61,12 @@ function patchThRsTranslations(html) {
       '"thPosition": "주가 위치",\n        "thRs": "RS",',
     );
     h = h.replace(
-      /thPosition:\s*'Price Position',/g,
-      "thPosition: 'Price Position', thRs: 'RS',",
+      /thPosition:\s*'52W Range',/g,
+      "thPosition: '52W Range', thRs: 'RS',",
     );
     h = h.replace(
-      /"thPosition":\s*"Price Position",/g,
-      '"thPosition": "Price Position",\n        "thRs": "RS",',
+      /"thPosition":\s*"52W Range",/g,
+      '"thPosition": "52W Range",\n        "thRs": "RS",',
     );
     h = h.replace(
       /"thPosition":\s*"Price vs range",/g,
