@@ -268,7 +268,7 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=1"></script>
-<script src="../js/live_quotes.js?v=5"></script>
+<script src="../js/live_quotes.js?v=6"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
@@ -1590,11 +1590,11 @@ body.im-tab-table thead th {
               <th id="th-name" onclick="sortTable('name')">기업명</th>
               <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
-              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">1일</th>
-              <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20일</th>
-              <th id="th-ret50d" class="ret-col" onclick="sortTable('ret50dPct')">50일</th>
-              <th id="th-ret120d" class="ret-col" onclick="sortTable('ret120dPct')">120일</th>
-              <th id="th-ret250d" class="ret-col" onclick="sortTable('ret250dPct')">250일</th>
+              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">1D(1일)</th>
+              <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20D(1개월)</th>
+              <th id="th-ret50d" class="ret-col" onclick="sortTable('ret50dPct')">50D(3개월)</th>
+              <th id="th-ret120d" class="ret-col" onclick="sortTable('ret120dPct')">120D(6개월)</th>
+              <th id="th-ret250d" class="ret-col" onclick="sortTable('ret250dPct')">250D(1년)</th>
               <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
               <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
               <th id="th-position" onclick="sortTable('quotePosition')">주가 위치</th>
@@ -1615,10 +1615,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">현대모비스</div><div class="company-name-sub">Hyundai Mobis</div></td>
       <td><span class="ticker">012330</span></td>
       <td class="quote-cell">515,000</td>
+      <td class="quote-cell ret-cell">+0.41%</td>
+      <td class="quote-cell ret-cell">-29.12%</td>
+      <td class="quote-cell ret-cell">+16.92%</td>
+      <td class="quote-cell ret-cell">+14.62%</td>
+      <td class="quote-cell ret-cell">+63.04%</td>
       <td class="quote-cell">822,000</td>
       <td class="quote-cell">279,000</td>
       <td class="quote-cell">43.5%</td>
-      <td class="quote-cell">62.7</td>
+      <td class="quote-cell">59.6</td>
       <td class="mcap-cell">55.07조원</td>
       <td class="fin-cell">14.86</td>
       <td class="fin-cell">1.10</td>
@@ -1632,10 +1637,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">현대오토에버</div><div class="company-name-sub">Hyundai Autoever</div></td>
       <td><span class="ticker">307950</span></td>
       <td class="quote-cell">494,500</td>
+      <td class="quote-cell ret-cell">-0.79%</td>
+      <td class="quote-cell ret-cell">-39.59%</td>
+      <td class="quote-cell ret-cell">+17.58%</td>
+      <td class="quote-cell ret-cell">+5.98%</td>
+      <td class="quote-cell ret-cell">+208.30%</td>
       <td class="quote-cell">1,066,000</td>
       <td class="quote-cell">146,100</td>
       <td class="quote-cell">37.9%</td>
-      <td class="quote-cell">57.6</td>
+      <td class="quote-cell">55.3</td>
       <td class="mcap-cell">18.76조원</td>
       <td class="fin-cell">102.80</td>
       <td class="fin-cell">10.15</td>
@@ -1649,10 +1659,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">레인보우로보틱스</div><div class="company-name-sub">Rainbow Robotics</div></td>
       <td><span class="ticker">277810</span></td>
       <td class="quote-cell">480,000</td>
+      <td class="quote-cell ret-cell">+1.55%</td>
+      <td class="quote-cell ret-cell">-26.27%</td>
+      <td class="quote-cell ret-cell">-19.53%</td>
+      <td class="quote-cell ret-cell">-0.10%</td>
+      <td class="quote-cell ret-cell">+79.74%</td>
       <td class="quote-cell">979,000</td>
       <td class="quote-cell">249,500</td>
       <td class="quote-cell">31.6%</td>
-      <td class="quote-cell">40.7</td>
+      <td class="quote-cell">40.1</td>
       <td class="mcap-cell">12.11조원</td>
       <td class="fin-cell">8547.95</td>
       <td class="fin-cell">90.45</td>
@@ -1666,10 +1681,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">두산로보틱스</div><div class="company-name-sub">Doosan Robotics</div></td>
       <td><span class="ticker">454910</span></td>
       <td class="quote-cell">82,500</td>
+      <td class="quote-cell ret-cell">+1.56%</td>
+      <td class="quote-cell ret-cell">-39.70%</td>
+      <td class="quote-cell ret-cell">-10.10%</td>
+      <td class="quote-cell ret-cell">-6.42%</td>
+      <td class="quote-cell ret-cell">+37.56%</td>
       <td class="quote-cell">170,000</td>
       <td class="quote-cell">57,400</td>
       <td class="quote-cell">22.3%</td>
-      <td class="quote-cell">33.9</td>
+      <td class="quote-cell">34.6</td>
       <td class="mcap-cell">7.16조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">20.53</td>
@@ -1683,10 +1703,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">로보티즈</div><div class="company-name-sub">Robotis</div></td>
       <td><span class="ticker">108490</span></td>
       <td class="quote-cell">225,500</td>
+      <td class="quote-cell ret-cell">+0.22%</td>
+      <td class="quote-cell ret-cell">-29.02%</td>
+      <td class="quote-cell ret-cell">-22.22%</td>
+      <td class="quote-cell ret-cell">-11.65%</td>
+      <td class="quote-cell ret-cell">+176.09%</td>
       <td class="quote-cell">464,000</td>
       <td class="quote-cell">63,688</td>
       <td class="quote-cell">40.4%</td>
-      <td class="quote-cell">34.4</td>
+      <td class="quote-cell">28.6</td>
       <td class="mcap-cell">4.84조원</td>
       <td class="fin-cell">857.14</td>
       <td class="fin-cell">15.20</td>
@@ -1700,10 +1725,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">현대무벡스</div><div class="company-name-sub">HYUNDAI MOVEX</div></td>
       <td><span class="ticker">319400</span></td>
       <td class="quote-cell">22,800</td>
+      <td class="quote-cell ret-cell">-1.48%</td>
+      <td class="quote-cell ret-cell">-29.76%</td>
+      <td class="quote-cell ret-cell">-23.77%</td>
+      <td class="quote-cell ret-cell">-19.83%</td>
+      <td class="quote-cell ret-cell">+374.01%</td>
       <td class="quote-cell">50,400</td>
       <td class="quote-cell">4,310</td>
       <td class="quote-cell">40.1%</td>
-      <td class="quote-cell">22.2</td>
+      <td class="quote-cell">24.1</td>
       <td class="mcap-cell">4.36조원</td>
       <td class="fin-cell">380.10</td>
       <td class="fin-cell">26.91</td>
@@ -1717,10 +1747,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">원익홀딩스</div><div class="company-name-sub">WONIK HOLDINGS CO.,LTD.</div></td>
       <td><span class="ticker">030530</span></td>
       <td class="quote-cell">18,760</td>
+      <td class="quote-cell ret-cell">+2.59%</td>
+      <td class="quote-cell ret-cell">-20.75%</td>
+      <td class="quote-cell ret-cell">-40.28%</td>
+      <td class="quote-cell ret-cell">-55.25%</td>
+      <td class="quote-cell ret-cell">+225.13%</td>
       <td class="quote-cell">50,600</td>
       <td class="quote-cell">5,590</td>
       <td class="quote-cell">29.3%</td>
-      <td class="quote-cell">8.8</td>
+      <td class="quote-cell">13.6</td>
       <td class="mcap-cell">2.39조원</td>
       <td class="fin-cell">86.35</td>
       <td class="fin-cell">2.37</td>
@@ -1734,10 +1769,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">에스피지</div><div class="company-name-sub">SPG CO., LTD</div></td>
       <td><span class="ticker">058610</span></td>
       <td class="quote-cell">75,900</td>
+      <td class="quote-cell ret-cell">+3.65%</td>
+      <td class="quote-cell ret-cell">-26.04%</td>
+      <td class="quote-cell ret-cell">-35.49%</td>
+      <td class="quote-cell ret-cell">-16.99%</td>
+      <td class="quote-cell ret-cell">+189.43%</td>
       <td class="quote-cell">165,700</td>
       <td class="quote-cell">22,500</td>
       <td class="quote-cell">37.3%</td>
-      <td class="quote-cell">20.6</td>
+      <td class="quote-cell">17.8</td>
       <td class="mcap-cell">2.10조원</td>
       <td class="fin-cell">229.85</td>
       <td class="fin-cell">8.14</td>
@@ -1751,6 +1791,11 @@ body.im-tab-table thead th {
       <td><div class="company-name">휴림로봇</div><div class="company-name-sub">Hyulim ROBOT Co.,Ltd.</div></td>
       <td><span class="ticker">090710</span></td>
       <td class="quote-cell">7,280</td>
+      <td class="quote-cell ret-cell">+0.82%</td>
+      <td class="quote-cell ret-cell">-27.41%</td>
+      <td class="quote-cell ret-cell">-44.23%</td>
+      <td class="quote-cell ret-cell">-42.31%</td>
+      <td class="quote-cell ret-cell">+138.39%</td>
       <td class="quote-cell">26,600</td>
       <td class="quote-cell">2,320</td>
       <td class="quote-cell">20.4%</td>
@@ -1768,10 +1813,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">LS머트리얼즈</div><div class="company-name-sub">LS Materials Co.,Ltd.</div></td>
       <td><span class="ticker">417200</span></td>
       <td class="quote-cell">13,540</td>
+      <td class="quote-cell ret-cell">-0.62%</td>
+      <td class="quote-cell ret-cell">-19.38%</td>
+      <td class="quote-cell ret-cell">-47.10%</td>
+      <td class="quote-cell ret-cell">+12.69%</td>
+      <td class="quote-cell ret-cell">+35.12%</td>
       <td class="quote-cell">32,725</td>
       <td class="quote-cell">9,160</td>
       <td class="quote-cell">18.6%</td>
-      <td class="quote-cell">38.9</td>
+      <td class="quote-cell">38.5</td>
       <td class="mcap-cell">1.12조원</td>
       <td class="fin-cell">2766.67</td>
       <td class="fin-cell">6.07</td>
@@ -1785,10 +1835,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">로보스타</div><div class="company-name-sub">Robostar Co.,Ltd.</div></td>
       <td><span class="ticker">090360</span></td>
       <td class="quote-cell">76,400</td>
+      <td class="quote-cell ret-cell">-1.38%</td>
+      <td class="quote-cell ret-cell">-46.79%</td>
+      <td class="quote-cell ret-cell">+20.12%</td>
+      <td class="quote-cell ret-cell">-1.01%</td>
+      <td class="quote-cell ret-cell">+183.96%</td>
       <td class="quote-cell">171,600</td>
       <td class="quote-cell">24,950</td>
       <td class="quote-cell">35.1%</td>
-      <td class="quote-cell">49.0</td>
+      <td class="quote-cell">48.4</td>
       <td class="mcap-cell">1.10조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">12.71</td>
@@ -1802,10 +1857,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">유일로보틱스</div><div class="company-name-sub">Yuilrobotics. co., Ltd</div></td>
       <td><span class="ticker">388720</span></td>
       <td class="quote-cell">72,500</td>
+      <td class="quote-cell ret-cell">+3.24%</td>
+      <td class="quote-cell ret-cell">-24.32%</td>
+      <td class="quote-cell ret-cell">-27.84%</td>
+      <td class="quote-cell ret-cell">-21.44%</td>
+      <td class="quote-cell ret-cell">-4.76%</td>
       <td class="quote-cell">155,000</td>
       <td class="quote-cell">60,500</td>
       <td class="quote-cell">12.7%</td>
-      <td class="quote-cell">27.9</td>
+      <td class="quote-cell">25.2</td>
       <td class="mcap-cell">0.98조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.89</td>
@@ -1819,10 +1879,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">에스에프에이</div><div class="company-name-sub">SFA Engineering Corporation</div></td>
       <td><span class="ticker">056190</span></td>
       <td class="quote-cell">22,600</td>
+      <td class="quote-cell ret-cell">+4.05%</td>
+      <td class="quote-cell ret-cell">-9.59%</td>
+      <td class="quote-cell ret-cell">-29.57%</td>
+      <td class="quote-cell ret-cell">-1.91%</td>
+      <td class="quote-cell ret-cell">-6.29%</td>
       <td class="quote-cell">36,500</td>
       <td class="quote-cell">20,175</td>
       <td class="quote-cell">14.9%</td>
-      <td class="quote-cell">49.4</td>
+      <td class="quote-cell">52.7</td>
       <td class="mcap-cell">0.96조원</td>
       <td class="fin-cell">13.94</td>
       <td class="fin-cell">0.83</td>
@@ -1836,10 +1901,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">클로봇</div><div class="company-name-sub">CLOBOT Co., Ltd</div></td>
       <td><span class="ticker">466100</span></td>
       <td class="quote-cell">27,000</td>
+      <td class="quote-cell ret-cell">+1.56%</td>
+      <td class="quote-cell ret-cell">-32.06%</td>
+      <td class="quote-cell ret-cell">-39.23%</td>
+      <td class="quote-cell ret-cell">-56.19%</td>
+      <td class="quote-cell ret-cell">+48.98%</td>
       <td class="quote-cell">77,953</td>
       <td class="quote-cell">15,098</td>
       <td class="quote-cell">18.9%</td>
-      <td class="quote-cell">11.7</td>
+      <td class="quote-cell">8.5</td>
       <td class="mcap-cell">0.93조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">15.09</td>
@@ -1853,10 +1923,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">유진로봇</div><div class="company-name-sub">Yujin Robot Co., Ltd.</div></td>
       <td><span class="ticker">056080</span></td>
       <td class="quote-cell">13,600</td>
+      <td class="quote-cell ret-cell">-2.54%</td>
+      <td class="quote-cell ret-cell">-30.77%</td>
+      <td class="quote-cell ret-cell">-48.05%</td>
+      <td class="quote-cell ret-cell">-47.44%</td>
+      <td class="quote-cell ret-cell">+24.01%</td>
       <td class="quote-cell">49,450</td>
       <td class="quote-cell">9,650</td>
       <td class="quote-cell">9.9%</td>
-      <td class="quote-cell">5.4</td>
+      <td class="quote-cell">5.7</td>
       <td class="mcap-cell">0.73조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">25.51</td>
@@ -1870,10 +1945,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">뉴로메카</div><div class="company-name-sub">Neuromeka Co., Ltd.</div></td>
       <td><span class="ticker">348340</span></td>
       <td class="quote-cell">34,250</td>
+      <td class="quote-cell ret-cell">+3.18%</td>
+      <td class="quote-cell ret-cell">-26.84%</td>
+      <td class="quote-cell ret-cell">-48.93%</td>
+      <td class="quote-cell ret-cell">-50.35%</td>
+      <td class="quote-cell ret-cell">+53.22%</td>
       <td class="quote-cell">132,453</td>
       <td class="quote-cell">19,048</td>
       <td class="quote-cell">13.4%</td>
-      <td class="quote-cell">8.5</td>
+      <td class="quote-cell">7.9</td>
       <td class="mcap-cell">0.61조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">40.88</td>
@@ -1887,10 +1967,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">큐렉소</div><div class="company-name-sub">CUREXO, INC.</div></td>
       <td><span class="ticker">060280</span></td>
       <td class="quote-cell">8,700</td>
+      <td class="quote-cell ret-cell">+1.73%</td>
+      <td class="quote-cell ret-cell">-18.99%</td>
+      <td class="quote-cell ret-cell">-47.81%</td>
+      <td class="quote-cell ret-cell">-35.92%</td>
+      <td class="quote-cell ret-cell">-2.65%</td>
       <td class="quote-cell">22,550</td>
       <td class="quote-cell">7,880</td>
       <td class="quote-cell">5.6%</td>
-      <td class="quote-cell">16.1</td>
+      <td class="quote-cell">16.4</td>
       <td class="mcap-cell">0.45조원</td>
       <td class="fin-cell">164.18</td>
       <td class="fin-cell">4.70</td>
@@ -1904,10 +1989,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">에스비비테크</div><div class="company-name-sub">SBB TECH Co., Ltd.</div></td>
       <td><span class="ticker">389500</span></td>
       <td class="quote-cell">38,300</td>
+      <td class="quote-cell ret-cell">-0.38%</td>
+      <td class="quote-cell ret-cell">-35.47%</td>
+      <td class="quote-cell ret-cell">-39.95%</td>
+      <td class="quote-cell ret-cell">-29.11%</td>
+      <td class="quote-cell ret-cell">+84.12%</td>
       <td class="quote-cell">115,000</td>
       <td class="quote-cell">18,600</td>
       <td class="quote-cell">20.4%</td>
-      <td class="quote-cell">9.4</td>
+      <td class="quote-cell">11.0</td>
       <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">31.71</td>
@@ -1921,10 +2011,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">티로보틱스</div><div class="company-name-sub">T-Robotics co., Ltd.</div></td>
       <td><span class="ticker">117730</span></td>
       <td class="quote-cell">13,160</td>
+      <td class="quote-cell ret-cell">+1.44%</td>
+      <td class="quote-cell ret-cell">-20.33%</td>
+      <td class="quote-cell ret-cell">-34.02%</td>
+      <td class="quote-cell ret-cell">-39.55%</td>
+      <td class="quote-cell ret-cell">+13.32%</td>
       <td class="quote-cell">30,900</td>
       <td class="quote-cell">9,820</td>
       <td class="quote-cell">15.8%</td>
-      <td class="quote-cell">16.0</td>
+      <td class="quote-cell">18.4</td>
       <td class="mcap-cell">0.38조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">7.23</td>
@@ -1938,10 +2033,15 @@ body.im-tab-table thead th {
       <td><div class="company-name">씨메스로보틱스</div><div class="company-name-sub">CMES Robotics</div></td>
       <td><span class="ticker">475400</span></td>
       <td class="quote-cell">17,480</td>
+      <td class="quote-cell ret-cell">+0.34%</td>
+      <td class="quote-cell ret-cell">-32.78%</td>
+      <td class="quote-cell ret-cell">-43.60%</td>
+      <td class="quote-cell ret-cell">-50.47%</td>
+      <td class="quote-cell ret-cell">-20.71%</td>
       <td class="quote-cell">46,950</td>
       <td class="quote-cell">16,610</td>
       <td class="quote-cell">2.9%</td>
-      <td class="quote-cell">7.5</td>
+      <td class="quote-cell">8.4</td>
       <td class="mcap-cell">0.31조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">5.23</td>
@@ -2054,11 +2154,11 @@ body.im-tab-table thead th {
         "thName": "기업명",
         "thTicker": "종목코드",
         "thLast": "현재가",
-        "thChg1d": "1일",
-        "thRet20d": "20일",
-        "thRet50d": "50일",
-        "thRet120d": "120일",
-        "thRet250d": "250일",
+        "thChg1d": "1D(1일)",
+        "thRet20d": "20D(1개월)",
+        "thRet50d": "50D(3개월)",
+        "thRet120d": "120D(6개월)",
+        "thRet250d": "250D(1년)",
         "th52High": "52주 최고",
         "th52Lo": "52주 최저",
         "thPosition": "주가 위치",
@@ -2470,11 +2570,11 @@ body.im-tab-table thead th {
       var thRet120d = document.getElementById('th-ret120d');
       var thRet250d = document.getElementById('th-ret250d');
       if (thLast) thLast.textContent = t.thLast;
-      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D' : '1일');
-      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D' : '20일');
-      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D' : '50일');
-      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D' : '120일');
-      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D' : '250일');
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D (1 day)' : '1D(1일)');
+      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D (1M)' : '20D(1개월)');
+      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D (3M)' : '50D(3개월)');
+      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D (6M)' : '120D(6개월)');
+      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D (1Y)' : '250D(1년)');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
@@ -3037,9 +3137,7 @@ body.im-tab-table thead th {
       if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
-      applyLang();
-      if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
-        InvestingMapLiveQuotes.start({
+      var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); },
           onAsOf: function (iso, meta) {
@@ -3055,7 +3153,14 @@ body.im-tab-table thead th {
             imQuotesAsOf = '';
             updateQuotesAsofDisplay();
           }
-        });
+        };
+      if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.bootMapQuotes) {
+        InvestingMapLiveQuotes.bootMapQuotes(imQuoteOpts).then(function () { applyLang(); });
+      } else {
+        applyLang();
+        if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
+          InvestingMapLiveQuotes.start(imQuoteOpts);
+        }
       }
     });
   </script>

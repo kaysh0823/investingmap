@@ -7,13 +7,13 @@
   var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kculture', 'bio', 'robot', 'finance', 'construction'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
-    { retKey: 'return1mPct', labelKey: 'pulseRow1m' },
-    { retKey: 'return3mPct', labelKey: 'pulseRow3m' },
-    { retKey: 'return6mPct', labelKey: 'pulseRow6m' },
-    { retKey: 'yoyReturnPct', labelKey: 'pulseRow1y' },
+    { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
+    { retKey: 'return50dPct', labelKey: 'pulseRow50d' },
+    { retKey: 'return120dPct', labelKey: 'pulseRow120d' },
+    { retKey: 'return250dPct', labelKey: 'pulseRow250d' },
   ];
-  var pulseHorizonKey = 'return1mPct';
-  var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon-v2';
+  var pulseHorizonKey = 'return20dPct';
+  var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon-v3';
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
@@ -65,12 +65,12 @@
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
-      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1일·1·3·6개월·1년',
-      pulseRow1d: '1일',
-      pulseRow1m: '1개월',
-      pulseRow1y: '1년',
-      pulseRow6m: '6개월',
-      pulseRow3m: '3개월',
+      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1D·20D·50D·120D·250D',
+      pulseRow1d: '1D(1일)',
+      pulseRow20d: '20D(1개월)',
+      pulseRow50d: '50D(3개월)',
+      pulseRow120d: '120D(6개월)',
+      pulseRow250d: '250D(1년)',
       pulseColSector: '섹터',
       pulseColReturn: '1년 수익률',
       pulseMcapLabel: '시가총액 합산(비중)',
@@ -92,12 +92,12 @@
     },
     en: {
       pulseTitle: 'Sector performance',
-      pulseSub: 'Market-cap-weighted return (recent ÷ past cap) — 1D, 1M, 3M, 6M, 1Y',
-      pulseRow1d: '1 day',
-      pulseRow1m: '1 month',
-      pulseRow1y: '1 year',
-      pulseRow6m: '6 months',
-      pulseRow3m: '3 months',
+      pulseSub: 'Market-cap-weighted return (recent ÷ past cap) — 1D, 20D, 50D, 120D, 250D',
+      pulseRow1d: '1D (1 day)',
+      pulseRow20d: '20D (1M)',
+      pulseRow50d: '50D (3M)',
+      pulseRow120d: '120D (6M)',
+      pulseRow250d: '250D (1Y)',
       pulseColSector: 'Sector',
       pulseColReturn: '1Y return',
       pulseMcapLabel: 'Total market cap (weight)',
@@ -203,7 +203,7 @@
   }
 
   function loadHubSectorReturns() {
-    return fetch('data/hub_sector_returns.json?v=16', { cache: 'default' })
+    return fetch('data/hub_sector_returns.json?v=17', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j) {
@@ -448,11 +448,11 @@
         mcapWon: sectorMcap,
         weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
         listingCount: block.companies.length,
-        yoyReturnPct: null,
         return1dPct: null,
-        return1mPct: null,
-        return6mPct: null,
-        return3mPct: null,
+        return20dPct: null,
+        return50dPct: null,
+        return120dPct: null,
+        return250dPct: null,
       };
     });
     return out;
@@ -522,9 +522,22 @@
     return positionClass(n);
   }
 
+  function migrateSectorHorizonKeys(sector) {
+    if (!sector) return sector;
+    if (sector.return20dPct == null && sector.return1mPct != null) sector.return20dPct = sector.return1mPct;
+    if (sector.return50dPct == null && sector.return3mPct != null) sector.return50dPct = sector.return3mPct;
+    if (sector.return120dPct == null && sector.return6mPct != null) sector.return120dPct = sector.return6mPct;
+    if (sector.return250dPct == null && sector.yoyReturnPct != null) sector.return250dPct = sector.yoyReturnPct;
+    return sector;
+  }
+
   function readPulseHorizon() {
     try {
       var k = sessionStorage.getItem(PULSE_HORIZON_KEY);
+      if (k === 'return1mPct') k = 'return20dPct';
+      if (k === 'return3mPct') k = 'return50dPct';
+      if (k === 'return6mPct') k = 'return120dPct';
+      if (k === 'yoyReturnPct') k = 'return250dPct';
       if (k && PULSE_HORIZONS.some(function (h) { return h.retKey === k; })) {
         pulseHorizonKey = k;
       }
@@ -551,10 +564,10 @@
 
   function retKeyToHorizonParam(retKey) {
     if (retKey === 'return1dPct') return '1d';
-    if (retKey === 'return3mPct') return '3m';
-    if (retKey === 'return6mPct') return '6m';
-    if (retKey === 'yoyReturnPct') return '1y';
-    return '1m';
+    if (retKey === 'return50dPct') return '50d';
+    if (retKey === 'return120dPct') return '120d';
+    if (retKey === 'return250dPct') return '250d';
+    return '20d';
   }
 
   function hasHorizonData(retKey) {
@@ -570,11 +583,11 @@
     var onlyMissing = opts && opts.onlyMissing;
     var incoming = j.sectors || {};
     var base = dashboardData.sectors || {};
-    var keys = ['return1dPct', 'return1mPct', 'return3mPct', 'return6mPct', 'yoyReturnPct', 'mcapWon', 'weightPct', 'listingCount'];
+    var keys = ['return1dPct', 'return20dPct', 'return50dPct', 'return120dPct', 'return250dPct', 'mcapWon', 'weightPct', 'listingCount'];
     for (var sid in incoming) {
       if (!incoming.hasOwnProperty(sid)) continue;
       if (!base[sid]) base[sid] = {};
-      var inc = incoming[sid];
+      var inc = migrateSectorHorizonKeys(incoming[sid]);
       var tgt = base[sid];
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i];
@@ -812,7 +825,7 @@
   }
 
   function fetchSectors(lang) {
-    return fetchSectorsHorizon(lang, 'return1mPct');
+    return fetchSectorsHorizon(lang, 'return20dPct');
   }
 
   function applyTop10Payload(j) {
@@ -879,7 +892,7 @@
   function fetchDashboardAndRender(lang, sectorPromise) {
     var sectors = sectorPromise || fetchSectors(lang);
     return Promise.all([sectors, fetchTop10(lang), fetchRsTop10(lang)]).then(function () {
-      if (pulseHorizonKey !== 'return1mPct' && !hasHorizonData(pulseHorizonKey)) {
+      if (pulseHorizonKey !== 'return20dPct' && !hasHorizonData(pulseHorizonKey)) {
         return fetchSectorsHorizon(lang, pulseHorizonKey);
       }
     }).then(function () {
@@ -904,7 +917,7 @@
       dashboardData.rsTop10 = swr.rsTop10 || [];
       dashboardData.regularSession = swr.regularSession;
     }
-    var liveSector1m = fetchSectorsHorizon(lang, 'return1mPct');
+    var liveSector20d = fetchSectorsHorizon(lang, 'return20dPct');
     Promise.all([loadHubIndex(), loadFx(), loadHubSectorReturns()])
       .then(function () {
         renderLabels(lang);
@@ -916,7 +929,7 @@
         rsTop10Loading = true;
         renderTop10(lang);
         renderRsTop10(lang);
-        return fetchDashboardAndRender(lang, liveSector1m);
+        return fetchDashboardAndRender(lang, liveSector20d);
       })
       .catch(function (err) {
         if (typeof console !== 'undefined' && console.warn) {

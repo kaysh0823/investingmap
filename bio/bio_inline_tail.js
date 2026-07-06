@@ -122,11 +122,11 @@
       var thRet120d = document.getElementById('th-ret120d');
       var thRet250d = document.getElementById('th-ret250d');
       if (thLast) thLast.textContent = t.thLast;
-      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D' : '1일');
-      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D' : '20일');
-      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D' : '50일');
-      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D' : '120일');
-      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D' : '250일');
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D (1 day)' : '1D(1일)');
+      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D (1M)' : '20D(1개월)');
+      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D (3M)' : '50D(3개월)');
+      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D (6M)' : '120D(6개월)');
+      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D (1Y)' : '250D(1년)');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
@@ -692,12 +692,7 @@
       if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
-      try { applyLang(); } catch (e) {
-        console.error('applyLang failed', e);
-        try { renderTable(); } catch (e2) { console.error('renderTable failed', e2); }
-      }
-      if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
-        InvestingMapLiveQuotes.start({
+      var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); },
           onAsOf: function (iso, meta) {
@@ -715,6 +710,13 @@
             renderTable();
             if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap();
           }
-        });
+        };
+      if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.bootMapQuotes) {
+        InvestingMapLiveQuotes.bootMapQuotes(imQuoteOpts).then(function () { applyLang(); });
+      } else {
+        applyLang();
+        if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
+          InvestingMapLiveQuotes.start(imQuoteOpts);
+        }
       }
     });

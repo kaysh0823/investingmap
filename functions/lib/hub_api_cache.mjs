@@ -58,21 +58,25 @@ export async function readHubCacheJson(cachePath, origin) {
 
 export const HORIZON_RET_KEY = {
   '1d': 'return1dPct',
-  '1m': 'return1mPct',
-  '3m': 'return3mPct',
-  '6m': 'return6mPct',
-  '1y': 'yoyReturnPct',
+  '20d': 'return20dPct',
+  '50d': 'return50dPct',
+  '120d': 'return120dPct',
+  '250d': 'return250dPct',
+  '1m': 'return20dPct',
+  '3m': 'return50dPct',
+  '6m': 'return120dPct',
+  '1y': 'return250dPct',
 };
 
 /** @param {string|null|undefined} h */
 export function normalizeSectorHorizon(h) {
-  const raw = String(h || '1m').trim().toLowerCase();
+  const raw = String(h || '20d').trim().toLowerCase();
   if (raw === '1d' || raw === 'return1dpct') return '1d';
-  if (raw === '1m' || raw === 'return1mpct') return '1m';
-  if (raw === '3m' || raw === 'return3mpct') return '3m';
-  if (raw === '6m' || raw === 'return6mpct') return '6m';
-  if (raw === '1y' || raw === 'yoy' || raw === 'yoyreturnpct') return '1y';
-  return '1m';
+  if (raw === '20d' || raw === 'return20dpct' || raw === '1m' || raw === 'return1mpct') return '20d';
+  if (raw === '50d' || raw === 'return50dpct' || raw === '3m' || raw === 'return3mpct') return '50d';
+  if (raw === '120d' || raw === 'return120dpct' || raw === '6m' || raw === 'return6mpct') return '120d';
+  if (raw === '250d' || raw === 'return250dpct' || raw === '1y' || raw === 'yoy' || raw === 'yoyreturnpct') return '250d';
+  return '20d';
 }
 
 export function hasSectorHorizon(sectors, horizon) {

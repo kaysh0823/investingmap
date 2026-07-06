@@ -61,6 +61,17 @@
     return rsSnapshotPromise;
   }
 
+  function pickRetPct(row, newKey, oldKey) {
+    if (!row) return null;
+    var v = row[newKey];
+    if (typeof v === 'number' && isFinite(v)) return v;
+    if (oldKey) {
+      var legacy = row[oldKey];
+      if (typeof legacy === 'number' && isFinite(legacy)) return legacy;
+    }
+    return null;
+  }
+
   function mergeRsIntoCompanies(companies, snap) {
     if (!companies) return;
     var quotes = (snap && snap.quotes) || {};
@@ -74,11 +85,11 @@
       }
       var row = quotes[key];
       c.rs = row && typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
-      c.chg1dPct = row && typeof row.chg1dPct === 'number' && isFinite(row.chg1dPct) ? row.chg1dPct : null;
-      c.ret20dPct = row && typeof row.ret20dPct === 'number' && isFinite(row.ret20dPct) ? row.ret20dPct : null;
-      c.ret50dPct = row && typeof row.ret50dPct === 'number' && isFinite(row.ret50dPct) ? row.ret50dPct : null;
-      c.ret120dPct = row && typeof row.ret120dPct === 'number' && isFinite(row.ret120dPct) ? row.ret120dPct : null;
-      c.ret250dPct = row && typeof row.ret250dPct === 'number' && isFinite(row.ret250dPct) ? row.ret250dPct : null;
+      c.chg1dPct = pickRetPct(row, 'chg1dPct');
+      c.ret20dPct = pickRetPct(row, 'ret20dPct', 'ret1mPct');
+      c.ret50dPct = pickRetPct(row, 'ret50dPct', 'ret3mPct');
+      c.ret120dPct = pickRetPct(row, 'ret120dPct', 'ret6mPct');
+      c.ret250dPct = pickRetPct(row, 'ret250dPct', 'ret1yPct');
     }
   }
 
@@ -346,15 +357,47 @@
     });
   }
 
+  function focusTickerAfterRender() {
+    if (global.InvestingMapTabState && InvestingMapTabState.focusTickerAfterTableRender) {
+      InvestingMapTabState.focusTickerAfterTableRender();
+    } else if (global.InvestingMapTabState && InvestingMapTabState.focusTickerIfPending) {
+      InvestingMapTabState.focusTickerIfPending();
+    }
+  }
+
+  function hydrateRsSnapshot(opts) {
+    var getCompanies = opts && opts.getCompanies;
+    var renderTable = opts && opts.renderTable;
+    return loadRsSnapshot().then(function (snap) {
+      if (getCompanies) {
+        mergeRsIntoCompanies(getCompanies(), snap);
+        applyLiveReturns(getCompanies(), snap);
+      }
+      if (renderTable) renderTable();
+      focusTickerAfterRender();
+      return snap;
+    });
+  }
+
+  function bootMapQuotes(opts) {
+    return hydrateRsSnapshot(opts).then(function () {
+      return start(opts);
+    });
+  }
+
   function start(opts) {
     var base = (opts && opts.baseUrl != null && opts.baseUrl !== '') ? String(opts.baseUrl).replace(/\/+$/, '') : getApiBase();
-    if (!base) return null;
     var getCompanies = opts.getCompanies;
     var renderTable = opts.renderTable;
     var pollMs = (opts && opts.pollMs) || 300000;
     var onAsOf = opts.onAsOf || function () {};
     var onError = opts.onError || function () {};
     var running = false;
+
+    if (!base) {
+      hydrateRsSnapshot(opts);
+      return null;
+    }
 
     function run() {
       if (running) return;
@@ -387,16 +430,13 @@
             onAsOf(j.asOf || '', { regularSession: j.regularSession });
           } catch (e1) {}
           if (renderTable) renderTable();
-          if (global.InvestingMapTabState && InvestingMapTabState.focusTickerAfterTableRender) {
-            InvestingMapTabState.focusTickerAfterTableRender();
-          } else if (global.InvestingMapTabState && InvestingMapTabState.focusTickerIfPending) {
-            InvestingMapTabState.focusTickerIfPending();
-          }
+          focusTickerAfterRender();
         })
         .catch(function (err) {
           try {
             onError(err || new Error('quotes fetch failed'));
           } catch (e2) {}
+          return hydrateRsSnapshot(opts);
         })
         .then(function () {
           running = false;
@@ -404,16 +444,6 @@
     }
 
     run();
-    loadRsSnapshot().then(function (snap) {
-      mergeRsIntoCompanies(getCompanies(), snap);
-      applyLiveReturns(getCompanies(), snap);
-      if (renderTable) renderTable();
-      if (global.InvestingMapTabState && InvestingMapTabState.focusTickerAfterTableRender) {
-        InvestingMapTabState.focusTickerAfterTableRender();
-      } else if (global.InvestingMapTabState && InvestingMapTabState.focusTickerIfPending) {
-        InvestingMapTabState.focusTickerIfPending();
-      }
-    });
     return setInterval(run, pollMs);
   }
 
@@ -421,6 +451,8 @@
     getApiBase: getApiBase,
     formatQuotesAsofDisplay: formatQuotesAsofDisplay,
     start: start,
+    bootMapQuotes: bootMapQuotes,
+    hydrateRsSnapshot: hydrateRsSnapshot,
     mergeCompanies: mergeCompanies,
     shouldHideFromTable: shouldHideFromTable,
     calcQuotePosition: calcQuotePosition,

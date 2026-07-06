@@ -57,16 +57,16 @@ async function main() {
     source: payload.source,
     mcapRecentDd: payload.mcapRecentDd,
     mcapPast1dDd: payload.mcapPast1dDd,
-    mcapPast1mDd: payload.mcapPast1mDd,
-    mcapPast3mDd: payload.mcapPast3mDd,
-    mcapPast6mDd: payload.mcapPast6mDd,
-    mcapPast1yDd: payload.mcapPast1yDd,
+    mcapPast20dDd: payload.mcapPast20dDd,
+    mcapPast50dDd: payload.mcapPast50dDd,
+    mcapPast120dDd: payload.mcapPast120dDd,
+    mcapPast250dDd: payload.mcapPast250dDd,
     sectors: payload.sectors,
   };
 
   fs.writeFileSync(outPath, `${JSON.stringify(out)}\n`, 'utf8');
   const sample = Object.entries(out.sectors).slice(0, 2)
-    .map(([sid, s]) => `${sid} 1M=${s.return1mPct?.toFixed(2)}%`)
+    .map(([sid, s]) => `${sid} 20D=${s.return20dPct?.toFixed(2)}%`)
     .join(', ');
   console.log(`OK ${outPath} — ${Object.keys(out.sectors).length} sectors (${sample}…)`);
 }

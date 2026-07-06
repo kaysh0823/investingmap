@@ -16,7 +16,7 @@ import {
   readHubCacheJson,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v5';
+const CACHE_VERSION = '/api/hub_sectors/cache/v6';
 
 function cachePaths(horizon) {
   const base = `${CACHE_VERSION}/${horizon}`;

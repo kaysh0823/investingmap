@@ -24,11 +24,11 @@ const TARGETS = [
 
 const TH_LAST = '<th id="th-last" onclick="sortTable(\'quoteLast\')">현재가</th>';
 const TH_RET_BLOCK = `${TH_LAST}
-              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">1일</th>
-              <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20일</th>
-              <th id="th-ret50d" class="ret-col" onclick="sortTable('ret50dPct')">50일</th>
-              <th id="th-ret120d" class="ret-col" onclick="sortTable('ret120dPct')">120일</th>
-              <th id="th-ret250d" class="ret-col" onclick="sortTable('ret250dPct')">250일</th>`;
+              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">1D(1일)</th>
+              <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20D(1개월)</th>
+              <th id="th-ret50d" class="ret-col" onclick="sortTable('ret50dPct')">50D(3개월)</th>
+              <th id="th-ret120d" class="ret-col" onclick="sortTable('ret120dPct')">120D(6개월)</th>
+              <th id="th-ret250d" class="ret-col" onclick="sortTable('ret250dPct')">250D(1년)</th>`;
 
 const ROW_LAST_CELL = '<td class="quote-cell">${qr.last}</td>';
 const ROW_RET_CELLS = `<td class="quote-cell">\${qr.last}</td>
@@ -57,11 +57,11 @@ const APPLY_TH_RET = `${APPLY_TH_LAST}
 
 const APPLY_SET_LAST = 'if (thLast) thLast.textContent = t.thLast;';
 const APPLY_SET_RET = `${APPLY_SET_LAST}
-      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D' : '1일');
-      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D' : '20일');
-      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D' : '50일');
-      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D' : '120일');
-      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D' : '250일');`;
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D (1 day)' : '1D(1일)');
+      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D (1M)' : '20D(1개월)');
+      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D (3M)' : '50D(3개월)');
+      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D (6M)' : '120D(6개월)');
+      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D (1Y)' : '250D(1년)');`;
 
 const RET_CSS = `
     .ret-col { font-size: 11px; white-space: nowrap; }
@@ -73,11 +73,11 @@ function patchTranslations(html) {
   if (!h.includes('thChg1d')) {
     h = h.replace(
       /thLast:\s*'현재가',/g,
-      "thLast: '현재가', thChg1d: '1일', thRet20d: '20일', thRet50d: '50일', thRet120d: '120일', thRet250d: '250일',",
+      "thLast: '현재가', thChg1d: '1D(1일)', thRet20d: '20D(1개월)', thRet50d: '50D(3개월)', thRet120d: '120D(6개월)', thRet250d: '250D(1년)',",
     );
     h = h.replace(
       /"thLast":\s*"현재가",/g,
-      '"thLast": "현재가",\n        "thChg1d": "1일",\n        "thRet20d": "20일",\n        "thRet50d": "50일",\n        "thRet120d": "120일",\n        "thRet250d": "250일",',
+      '"thLast": "현재가",\n        "thChg1d": "1D(1일)",\n        "thRet20d": "20D(1개월)",\n        "thRet50d": "50D(3개월)",\n        "thRet120d": "120D(6개월)",\n        "thRet250d": "250D(1년)",',
     );
     h = h.replace(
       /thLast:\s*'Last',/g,

@@ -20,9 +20,10 @@ const KOSDAQ_DAILY = '/sto/ksq_bydd_trd';
 const HIST_CACHE_MS = 6 * 60 * 60 * 1000;
 const HIST_TRADING_DAYS = 252;
 const HIST_CALENDAR_SCAN = 400;
-const HIST_TRADING_DAYS_1M = 21;
-const HIST_TRADING_DAYS_3M = 63;
-const HIST_TRADING_DAYS_6M = 126;
+const HIST_TRADING_DAYS_20D = 20;
+const HIST_TRADING_DAYS_50D = 50;
+const HIST_TRADING_DAYS_120D = 120;
+const HIST_TRADING_DAYS_250D = 250;
 
 let histCache = null;
 let histWarm = null;
@@ -192,26 +193,31 @@ async function fetchMcapMapWithFallback(authKey, dates, minSize, hintDd, maxBasD
 
 const HORIZON_PAST_KEYS = {
   '1d': ['mcapPast1d', 'past1dDd', 1],
-  '1m': ['mcapPast1m', 'past1mDd', HIST_TRADING_DAYS_1M],
-  '3m': ['mcapPast3m', 'past3mDd', HIST_TRADING_DAYS_3M],
-  '6m': ['mcapPast6m', 'past6mDd', HIST_TRADING_DAYS_6M],
-  '1y': ['mcapPast1y', 'past1yDd', HIST_TRADING_DAYS],
+  '20d': ['mcapPast20d', 'past20dDd', HIST_TRADING_DAYS_20D],
+  '50d': ['mcapPast50d', 'past50dDd', HIST_TRADING_DAYS_50D],
+  '120d': ['mcapPast120d', 'past120dDd', HIST_TRADING_DAYS_120D],
+  '250d': ['mcapPast250d', 'past250dDd', HIST_TRADING_DAYS_250D],
+  // legacy API aliases
+  '1m': ['mcapPast20d', 'past20dDd', HIST_TRADING_DAYS_20D],
+  '3m': ['mcapPast50d', 'past50dDd', HIST_TRADING_DAYS_50D],
+  '6m': ['mcapPast120d', 'past120dDd', HIST_TRADING_DAYS_120D],
+  '1y': ['mcapPast250d', 'past250dDd', HIST_TRADING_DAYS_250D],
 };
 
 function emptyMcapSnapshots() {
   return {
     mcapNow: null,
     mcapPast1d: null,
-    mcapPast1m: null,
-    mcapPast3m: null,
-    mcapPast6m: null,
-    mcapPast1y: null,
+    mcapPast20d: null,
+    mcapPast50d: null,
+    mcapPast120d: null,
+    mcapPast250d: null,
     recentDd: null,
     past1dDd: null,
-    past1mDd: null,
-    past3mDd: null,
-    past6mDd: null,
-    past1yDd: null,
+    past20dDd: null,
+    past50dDd: null,
+    past120dDd: null,
+    past250dDd: null,
   };
 }
 
@@ -229,7 +235,7 @@ const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
  */
 export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
   if (!authKey) return null;
-  const allHorizons = ['1d', '1m', '3m', '6m', '1y'];
+  const allHorizons = ['1d', '20d', '50d', '120d', '250d'];
   const horizons = Array.isArray(opts.horizons) && opts.horizons.length
     ? opts.horizons
     : allHorizons;
