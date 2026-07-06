@@ -69,16 +69,16 @@
       var key = normalizeTicker(c.ticker);
       if (!key) {
         c.rs = null;
-        c.chg1dPct = c.ret1mPct = c.ret3mPct = c.ret6mPct = c.ret1yPct = null;
+        c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret250dPct = null;
         continue;
       }
       var row = quotes[key];
       c.rs = row && typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
       c.chg1dPct = row && typeof row.chg1dPct === 'number' && isFinite(row.chg1dPct) ? row.chg1dPct : null;
-      c.ret1mPct = row && typeof row.ret1mPct === 'number' && isFinite(row.ret1mPct) ? row.ret1mPct : null;
-      c.ret3mPct = row && typeof row.ret3mPct === 'number' && isFinite(row.ret3mPct) ? row.ret3mPct : null;
-      c.ret6mPct = row && typeof row.ret6mPct === 'number' && isFinite(row.ret6mPct) ? row.ret6mPct : null;
-      c.ret1yPct = row && typeof row.ret1yPct === 'number' && isFinite(row.ret1yPct) ? row.ret1yPct : null;
+      c.ret20dPct = row && typeof row.ret20dPct === 'number' && isFinite(row.ret20dPct) ? row.ret20dPct : null;
+      c.ret50dPct = row && typeof row.ret50dPct === 'number' && isFinite(row.ret50dPct) ? row.ret50dPct : null;
+      c.ret120dPct = row && typeof row.ret120dPct === 'number' && isFinite(row.ret120dPct) ? row.ret120dPct : null;
+      c.ret250dPct = row && typeof row.ret250dPct === 'number' && isFinite(row.ret250dPct) ? row.ret250dPct : null;
     }
   }
 
@@ -269,10 +269,10 @@
     return {
       last: formatWon(c.quoteLast, lang),
       chg1d: formatReturnPct(c.chg1dPct),
-      ret1m: formatReturnPct(c.ret1mPct),
-      ret3m: formatReturnPct(c.ret3mPct),
-      ret6m: formatReturnPct(c.ret6mPct),
-      ret1y: formatReturnPct(c.ret1yPct),
+      ret20d: formatReturnPct(c.ret20dPct),
+      ret50d: formatReturnPct(c.ret50dPct),
+      ret120d: formatReturnPct(c.ret120dPct),
+      ret250d: formatReturnPct(c.ret250dPct),
       hi: formatWon(c.quoteHi52, lang),
       lo: formatWon(c.quoteLo52, lang),
       position: posHtml,
@@ -283,7 +283,7 @@
 
   function emptyQuotesRow() {
     return {
-      last: '\u2014', chg1d: '\u2014', ret1m: '\u2014', ret3m: '\u2014', ret6m: '\u2014', ret1y: '\u2014',
+      last: '\u2014', chg1d: '\u2014', ret20d: '\u2014', ret50d: '\u2014', ret120d: '\u2014', ret250d: '\u2014',
       hi: '\u2014', lo: '\u2014', position: '\u2014', rs: '\u2014', yoy: '\u2014',
     };
   }

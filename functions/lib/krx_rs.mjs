@@ -16,10 +16,10 @@ const RS_PERIODS = [
 
 const RETURN_PERIODS = [
   { field: 'chg1dPct', days: 1 },
-  { field: 'ret1mPct', days: 21 },
-  { field: 'ret3mPct', days: 63 },
-  { field: 'ret6mPct', days: 126 },
-  { field: 'ret1yPct', days: 252 },
+  { field: 'ret20dPct', days: 20 },
+  { field: 'ret50dPct', days: 50 },
+  { field: 'ret120dPct', days: 120 },
+  { field: 'ret250dPct', days: 250 },
 ];
 
 const DATE_FALLBACK_WINDOW = 12;
