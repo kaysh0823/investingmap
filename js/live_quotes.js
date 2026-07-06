@@ -93,11 +93,11 @@
     }
   }
 
-  /** When KRX recentDd < KST today, override chg1dPct with live last vs refClose. */
+  /** Naver last for 1D only; 20D+ stay on KRX snapshot. */
   function applyLiveReturns(companies, snap) {
     var RL = global.InvestingMapReturnLive;
     if (!RL || !companies || !snap) return;
-    if (!RL.isRecentDdStale(snap.recentDd)) return;
+    if (!RL.shouldUseLive1dReturns(snap.recentDd)) return;
     var quotes = snap.quotes || {};
     for (var i = 0; i < companies.length; i++) {
       var c = companies[i];

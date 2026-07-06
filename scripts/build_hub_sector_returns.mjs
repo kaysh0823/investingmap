@@ -56,6 +56,7 @@ async function main() {
     asOf: payload.asOf,
     source: payload.source,
     mcapRecentDd: payload.mcapRecentDd,
+    effectiveAnchorDd: payload.effectiveAnchorDd,
     mcapPast1dDd: payload.mcapPast1dDd,
     mcapPast20dDd: payload.mcapPast20dDd,
     mcapPast50dDd: payload.mcapPast50dDd,

@@ -6,7 +6,7 @@ import { getCachedNaverQuotes } from './naver_quote_store.mjs';
 import { getAuthKey, fetchHubSectorMcapSnapshots } from './krx_yoy.mjs';
 import { normalizeSectorHorizon } from './hub_api_cache.mjs';
 import { buildKrxRsSnapshot } from './krx_rs.mjs';
-import { krxSessionInfo } from './krx_session.mjs';
+import { krxSessionInfo, kstAnchorYmd } from './krx_session.mjs';
 import { passesMcapFloor } from '../../lib/mcap_policy.mjs';
 import { calcQuotePosition } from '../../lib/quote_position.mjs';
 
@@ -229,6 +229,7 @@ export async function buildHubSectors(hubIndex, env, opts = {}) {
     source: snapshots ? 'krx-mcap-ratio' : 'hub_index',
     krxConfigured: !!authKey,
     mcapRecentDd: snapshots ? snapshots.recentDd : null,
+    effectiveAnchorDd: kstAnchorYmd(),
     mcapPast1dDd: snapshots ? snapshots.past1dDd : null,
     mcapPast20dDd: snapshots ? snapshots.past20dDd : null,
     mcapPast50dDd: snapshots ? snapshots.past50dDd : null,

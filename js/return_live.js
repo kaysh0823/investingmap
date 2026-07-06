@@ -13,6 +13,10 @@
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
     });
     var parts = fmt.formatToParts(now);
     function get(type) {
@@ -21,11 +25,24 @@
       }
       return '';
     }
+    var wdMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
     return {
       year: parseInt(get('year'), 10),
       month: parseInt(get('month'), 10),
       day: parseInt(get('day'), 10),
+      weekday: wdMap[get('weekday')] != null ? wdMap[get('weekday')] : 0,
+      hour: parseInt(get('hour'), 10),
+      minute: parseInt(get('minute'), 10),
     };
+  }
+
+  var SESSION_OPEN = 9 * 60;
+  var SESSION_CLOSE = 15 * 60 + 30;
+
+  function isKrxRegularSession(now) {
+    var p = kstDateParts(now);
+    var minutes = p.hour * 60 + p.minute;
+    return p.weekday >= 1 && p.weekday <= 5 && minutes >= SESSION_OPEN && minutes <= SESSION_CLOSE;
   }
 
   function kstYmd(now) {
@@ -35,9 +52,30 @@
     return '' + p.year + m + d;
   }
 
+  function kstAnchorYmd(now) {
+    var p = kstDateParts(now);
+    if (p.weekday >= 1 && p.weekday <= 5) return kstYmd(now);
+    for (var i = 1; i <= 7; i++) {
+      var dt = new Date(now.getTime() - i * 86400000);
+      var wd = kstDateParts(dt).weekday;
+      if (wd >= 1 && wd <= 5) return kstYmd(dt);
+    }
+    return kstYmd(now);
+  }
+
+  function ymdToDash(ymd) {
+    if (!ymd || ymd.length !== 8) return ymd || '';
+    return ymd.slice(0, 4) + '-' + ymd.slice(4, 6) + '-' + ymd.slice(6, 8);
+  }
+
   function isRecentDdStale(recentDd, now) {
     if (!recentDd || typeof recentDd !== 'string') return false;
-    return recentDd < kstYmd(now);
+    return recentDd < kstAnchorYmd(now);
+  }
+
+  function shouldUseLive1dReturns(recentDd, now) {
+    if (!recentDd || typeof recentDd !== 'string') return true;
+    return recentDd <= kstAnchorYmd(now);
   }
 
   function calcReturnPct(now, past) {
@@ -49,6 +87,22 @@
   function calcLiveChg1dPct(liveLast, refClose) {
     var ret = calcReturnPct(liveLast, refClose);
     return ret != null ? Math.round(ret * 100) / 100 : null;
+  }
+
+  function calcLiveRetFromSnapPct(liveLast, refClose, snapRetPct) {
+    if (snapRetPct == null || !isFinite(snapRetPct)) return null;
+    if (refClose == null || refClose <= 0 || liveLast == null) return null;
+    var pastClose = refClose / (1 + snapRetPct / 100);
+    var ret = calcReturnPct(liveLast, pastClose);
+    return ret != null ? Math.round(ret * 100) / 100 : null;
+  }
+
+  function pastMcapFromSnapRet(refMcap, snapRetPct) {
+    if (refMcap == null || snapRetPct == null) return null;
+    if (!isFinite(refMcap) || !isFinite(snapRetPct) || refMcap <= 0) return null;
+    var denom = 1 + snapRetPct / 100;
+    if (denom <= 0) return null;
+    return refMcap / denom;
   }
 
   function calcLiveMcapWon(refMcap, liveLast, refClose) {
@@ -102,14 +156,34 @@
     return out;
   }
 
+  function pastMcapMapFromSnapRet(snap, retField) {
+    var out = new Map();
+    var quotes = (snap && snap.quotes) || {};
+    for (var code in quotes) {
+      if (!Object.prototype.hasOwnProperty.call(quotes, code)) continue;
+      var row = quotes[code];
+      var past = pastMcapFromSnapRet(row && row.refMcap, row && row[retField]);
+      if (past != null && past > 0) out.set(code, past);
+    }
+    return out;
+  }
+
   global.InvestingMapReturnLive = {
     kstYmd: kstYmd,
+    kstAnchorYmd: kstAnchorYmd,
+    ymdToDash: ymdToDash,
+    isKrxRegularSession: isKrxRegularSession,
+    isKrxRegularSession: isKrxRegularSession,
     isRecentDdStale: isRecentDdStale,
+    shouldUseLive1dReturns: shouldUseLive1dReturns,
     calcReturnPct: calcReturnPct,
     calcLiveChg1dPct: calcLiveChg1dPct,
+    calcLiveRetFromSnapPct: calcLiveRetFromSnapPct,
+    pastMcapFromSnapRet: pastMcapFromSnapRet,
     calcLiveMcapWon: calcLiveMcapWon,
     normalizeTicker: normalizeTicker,
     sectorReturnMcapRatio: sectorReturnMcapRatio,
     past1dMcapMapFromSnap: past1dMcapMapFromSnap,
+    pastMcapMapFromSnapRet: pastMcapMapFromSnapRet,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

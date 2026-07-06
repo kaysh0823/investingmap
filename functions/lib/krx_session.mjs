@@ -56,6 +56,29 @@ export function kstWeekday(now = new Date()) {
 }
 
 /**
+ * UI / live-return anchor: KST calendar today on weekdays, else latest weekday.
+ * (Public holidays without a calendar still resolve via KRX lag + live quotes.)
+ * @param {Date} [now]
+ * @returns {string} YYYYMMDD
+ */
+export function kstAnchorYmd(now = new Date()) {
+  const p = kstDateParts(now);
+  if (p.weekday >= 1 && p.weekday <= 5) return kstYmd(now);
+  for (let i = 1; i <= 7; i++) {
+    const dt = new Date(now.getTime() - i * 86400000);
+    const wd = kstDateParts(dt).weekday;
+    if (wd >= 1 && wd <= 5) return kstYmd(dt);
+  }
+  return kstYmd(now);
+}
+
+/** @param {string} ymd YYYYMMDD */
+export function ymdToDash(ymd) {
+  if (!ymd || ymd.length !== 8) return ymd || '';
+  return `${ymd.slice(0, 4)}-${ymd.slice(4, 6)}-${ymd.slice(6, 8)}`;
+}
+
+/**
  * @param {Date} [now]
  * @returns {{ regular: boolean, kst: { weekday: number, minutes: number, iso: string } }}
  */
@@ -66,7 +89,7 @@ export function krxSessionInfo(now = new Date()) {
     p.weekday >= 1 &&
     p.weekday <= 5 &&
     minutes >= SESSION_OPEN &&
-    minutes < SESSION_CLOSE;
+    minutes <= SESSION_CLOSE;
   return {
     regular,
     kst: {

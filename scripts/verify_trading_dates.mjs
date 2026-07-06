@@ -1,7 +1,7 @@
 /**
  * KST trading-date helpers — smoke tests for timezone / session edge cases.
  */
-import { kstYmd, kstWeekday } from '../functions/lib/krx_session.mjs';
+import { kstYmd, kstWeekday, kstAnchorYmd } from '../functions/lib/krx_session.mjs';
 import { tradingDates, recentDateCandidates } from '../functions/lib/krx_yoy.mjs';
 
 function assert(cond, msg) {
@@ -10,6 +10,10 @@ function assert(cond, msg) {
 
 function kst(iso) {
   return new Date(iso);
+}
+
+function isRecentDdStale(recentDd, now) {
+  return recentDd < kstAnchorYmd(now);
 }
 
 const cases = [
@@ -39,6 +43,7 @@ const cases = [
       assert(kstWeekday(this.now) === 0, 'weekday Sun');
       assert(dates[0] === '20260703', 'dates[0] is Fri (Sun skipped)');
       assert(recent[0] === '20260703', 'recent same as dates[0]');
+      assert(kstAnchorYmd(this.now) === '20260703', 'anchor Fri on weekend');
     },
   },
   {
@@ -47,6 +52,15 @@ const cases = [
     check(dates) {
       assert(kstWeekday(this.now) === 1, 'KST weekday is Mon not UTC Sun');
       assert(dates[0] === '20260706', 'dates[0] is Mon in KST');
+    },
+  },
+  {
+    name: 'Tue 7/7 10:00 KST — anchor is today, Jul3 KRX stale',
+    now: kst('2026-07-07T10:00:00+09:00'),
+    check() {
+      assert(kstWeekday(this.now) === 2, 'weekday Tue');
+      assert(kstAnchorYmd(this.now) === '20260707', 'anchor Tue 7/7');
+      assert(isRecentDdStale('20260703', this.now) === true, 'Jul3 stale vs Jul7');
     },
   },
 ];

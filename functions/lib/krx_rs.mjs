@@ -4,7 +4,7 @@
  */
 
 import { getAuthKey, fetchMarketDay, tradingDates, pastDatesFromAnchor, recentDateCandidates } from './krx_yoy.mjs';
-import { kstYmdDash } from './krx_session.mjs';
+import { kstYmdDash, kstAnchorYmd } from './krx_session.mjs';
 
 export { getAuthKey };
 
@@ -216,6 +216,7 @@ export async function buildKrxRsSnapshot(authKey) {
     universe: codes.size,
     quotesOk: ok,
     recentDd: recent.basDd,
+    anchorDd: kstAnchorYmd(),
     past1dDd: past1dSnap.basDd || returnPastDds.chg1dPct,
     past20Dd: pastDds.rs20,
     past50Dd: pastDds.rs50,

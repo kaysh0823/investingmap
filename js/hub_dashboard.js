@@ -29,9 +29,11 @@
   var rsTop10Failed = false;
   var fxRate = 1400;
   var rsSnapshot = null;
-  var hubSectorReturnsMeta = { mcapRecentDd: null };
-  var liveSector1dTimer = null;
-  var LIVE_SECTOR1D_POLL_MS = 5 * 60 * 1000;
+  var hubSectorReturnsMeta = { mcapRecentDd: null, effectiveAnchorDd: null };
+  var liveSectorPollTimer = null;
+  var LIVE_SECTOR_POLL_MS = 5 * 60 * 1000;
+
+  var SECTOR_LIVE_1D = { retKey: 'return1dPct', pastMap: 'past1d' };
   var QUOTES_CHUNK = 18;
 
   /** Value-chain / keyword chips shown below representative stocks on hub cards. */
@@ -208,6 +210,7 @@
       .then(function (j) {
         if (j) {
           hubSectorReturnsMeta.mcapRecentDd = j.mcapRecentDd || null;
+          hubSectorReturnsMeta.effectiveAnchorDd = j.effectiveAnchorDd || null;
           if (j.sectors) mergeSectorsPayload(j, { onlyMissing: true });
         }
       })
@@ -288,16 +291,17 @@
     return chain.then(function () { return merged; });
   }
 
-  function applyLiveSector1d(quoteItems, snap) {
+  function applyLiveSectorReturns(quoteItems, snap) {
     var RL = global.InvestingMapReturnLive;
     if (!RL || !hubData || !snap || !quoteItems) return;
     var recentDd = snap.recentDd || hubSectorReturnsMeta.mcapRecentDd;
-    if (!RL.isRecentDdStale(recentDd)) return;
-    var pastMap = RL.past1dMcapMapFromSnap(snap);
+    if (!RL.shouldUseLive1dReturns(recentDd)) return;
     var snapQuotes = snap.quotes || {};
+    var pastMap = RL.past1dMcapMapFromSnap(snap);
     SECTOR_ORDER.forEach(function (sid) {
       var block = hubData.sectors[sid];
       if (!block) return;
+      if (!dashboardData.sectors[sid]) dashboardData.sectors[sid] = {};
       var ret = RL.sectorReturnMcapRatio(block.companies, function (key) {
         var row = snapQuotes[key];
         var q = quoteItems[key];
@@ -305,32 +309,32 @@
         return RL.calcLiveMcapWon(row.refMcap, q.last, row.refClose);
       }, pastMap);
       if (ret != null && isFinite(ret)) {
-        if (!dashboardData.sectors[sid]) dashboardData.sectors[sid] = {};
-        dashboardData.sectors[sid].return1dPct = ret;
+        dashboardData.sectors[sid][SECTOR_LIVE_1D.retKey] = ret;
       }
     });
   }
 
-  function refreshLiveSector1d(lang) {
+  function refreshLiveSectorReturns(lang) {
     var RL = global.InvestingMapReturnLive;
     if (!RL) return Promise.resolve();
     return loadRsSnapshotHub().then(function (snap) {
       if (!snap) return;
       var recentDd = snap.recentDd || hubSectorReturnsMeta.mcapRecentDd;
-      if (!RL.isRecentDdStale(recentDd)) return;
+      if (!RL.shouldUseLive1dReturns(recentDd)) return;
       return fetchHubLiveQuotes().then(function (items) {
-        applyLiveSector1d(items, snap);
+        applyLiveSectorReturns(items, snap);
+        renderLabels(lang);
         renderPulse(lang);
         writeSwr();
       });
     });
   }
 
-  function startLiveSector1dPoll(lang) {
-    if (liveSector1dTimer) clearInterval(liveSector1dTimer);
-    liveSector1dTimer = setInterval(function () {
-      if (pulseHorizonKey === 'return1dPct') refreshLiveSector1d(lang);
-    }, LIVE_SECTOR1D_POLL_MS);
+  function startLiveSectorPoll(lang) {
+    if (liveSectorPollTimer) clearInterval(liveSectorPollTimer);
+    liveSectorPollTimer = setInterval(function () {
+      refreshLiveSectorReturns(lang);
+    }, LIVE_SECTOR_POLL_MS);
   }
 
   function loadHubIndex() {
@@ -608,7 +612,7 @@
         if (!key || key === pulseHorizonKey) return;
         savePulseHorizon(key);
         renderPulse(lang);
-        if (key === 'return1dPct') refreshLiveSector1d(lang);
+        refreshLiveSectorReturns(lang);
         if (!hasHorizonData(key)) {
           fetchSectorsHorizon(lang, key);
         }
@@ -775,6 +779,20 @@
     });
   }
 
+  function pulseSubText(lang) {
+    var labels = t(lang);
+    var RL = global.InvestingMapReturnLive;
+    var recentDd = hubSectorReturnsMeta.mcapRecentDd;
+    if (!RL || !recentDd || !RL.shouldUseLive1dReturns(recentDd)) return labels.pulseSub;
+    var anchor = RL.ymdToDash(RL.kstAnchorYmd());
+    var naverNote = RL.isKrxRegularSession && RL.isKrxRegularSession()
+      ? (lang === 'en' ? '1D live' : '1D 실시간')
+      : (lang === 'en' ? '1D Naver' : '1D 네이버');
+    return lang === 'en'
+      ? labels.pulseSub + ' · As of ' + anchor + ' (' + naverNote + ')'
+      : labels.pulseSub + ' · 기준 ' + anchor + ' (' + naverNote + ')';
+  }
+
   function renderLabels(lang) {
     var labels = t(lang);
     var set = function (id, text) {
@@ -782,7 +800,7 @@
       if (el) el.textContent = text;
     };
     set('hub-pulse-title', labels.pulseTitle);
-    set('hub-pulse-sub', labels.pulseSub);
+    set('hub-pulse-sub', pulseSubText(lang));
     set('hub-top-title', labels.topTitle);
     set('hub-top-sub', labels.topSub);
     set('hub-rs-title', labels.rsTopTitle);
@@ -900,9 +918,9 @@
       renderPulse(lang);
       renderTop10(lang);
       renderRsTop10(lang);
-      return refreshLiveSector1d(lang);
+      return refreshLiveSectorReturns(lang);
     }).then(function () {
-      startLiveSector1dPoll(lang);
+      startLiveSectorPoll(lang);
     });
   }
 
