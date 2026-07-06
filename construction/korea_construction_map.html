@@ -1568,11 +1568,11 @@ body.im-tab-table thead th {
               <th id="th-name" onclick="sortTable('name')">기업명</th>
               <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
-              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">1D(1일)</th>
-              <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20D(1개월)</th>
-              <th id="th-ret50d" class="ret-col" onclick="sortTable('ret50dPct')">50D(3개월)</th>
-              <th id="th-ret120d" class="ret-col" onclick="sortTable('ret120dPct')">120D(6개월)</th>
-              <th id="th-ret250d" class="ret-col" onclick="sortTable('ret250dPct')">250D(1년)</th>
+              <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">1일</th>
+              <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20일</th>
+              <th id="th-ret50d" class="ret-col" onclick="sortTable('ret50dPct')">50일</th>
+              <th id="th-ret120d" class="ret-col" onclick="sortTable('ret120dPct')">120일</th>
+              <th id="th-ret250d" class="ret-col" onclick="sortTable('ret250dPct')">250일</th>
               <th id="th-52hi" onclick="sortTable('quoteHi52')">52주 최고</th>
               <th id="th-52lo" onclick="sortTable('quoteLo52')">52주 최저</th>
               <th id="th-position" onclick="sortTable('quotePosition')">주가 위치</th>
@@ -1947,11 +1947,11 @@ body.im-tab-table thead th {
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크",
         "thLast": "현재가",
-        "thChg1d": "1D(1일)",
-        "thRet20d": "20D(1개월)",
-        "thRet50d": "50D(3개월)",
-        "thRet120d": "120D(6개월)",
-        "thRet250d": "250D(1년)",
+        "thChg1d": "1일",
+        "thRet20d": "20일",
+        "thRet50d": "50일",
+        "thRet120d": "120일",
+        "thRet250d": "250일",
         "th52High": "52주 최고",
         "th52Lo": "52주 최저",
         "thPosition": "주가 위치",
@@ -2302,11 +2302,11 @@ body.im-tab-table thead th {
       var thRet120d = document.getElementById('th-ret120d');
       var thRet250d = document.getElementById('th-ret250d');
       if (thLast) thLast.textContent = t.thLast;
-      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D (1 day)' : '1D(1일)');
-      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D (1M)' : '20D(1개월)');
-      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D (3M)' : '50D(3개월)');
-      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D (6M)' : '120D(6개월)');
-      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D (1Y)' : '250D(1년)');
+      if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D' : '1일');
+      if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D' : '20일');
+      if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D' : '50일');
+      if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D' : '120일');
+      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D' : '250일');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
