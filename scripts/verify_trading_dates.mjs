@@ -63,6 +63,15 @@ const cases = [
       assert(isRecentDdStale('20260703', this.now) === true, 'Jul3 stale vs Jul7');
     },
   },
+  {
+    name: 'Fri 7/10 00:30 KST — recent candidate is Thu 7/9 (skip Fri before close)',
+    now: kst('2026-07-10T00:30:00+09:00'),
+    check(dates, recent) {
+      assert(kstYmd(this.now) === '20260710', 'today Fri 7/10');
+      assert(recent[0] === '20260709', 'recent first is Thu 7/9');
+      assert(recent[1] === '20260708', 'fallback Thu→Wed');
+    },
+  },
 ];
 
 let failed = 0;

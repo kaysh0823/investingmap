@@ -12,6 +12,7 @@ import {
   pastMcapFromSnapRet,
   sectorReturnMcapRatio,
   past1dMcapMapFromSnap,
+  refMcapMapFromSnap,
   pastMcapMapFromSnapRet,
 } from '../lib/return_live.mjs';
 import { isKrxRegularSession } from '../functions/lib/krx_session.mjs';
@@ -59,7 +60,6 @@ assert(pastMcapFromSnapRet(100e12, 10) === 100e12 / 1.1, 'past mcap from snap re
 const pastMap = past1dMcapMapFromSnap({
   quotes: {
     '005930': { past1dMcap: 400e12, refMcap: 410e12, refClose: 70000 },
-    '000660': { past1dMcap: 100e12, refMcap: 105e12, refClose: 200000 },
   },
 });
 assert(pastMap.get('005930') === 400e12, 'past1d mcap map');
@@ -83,15 +83,36 @@ const snapQuotes = {
   '005930': { refMcap: 410e12, refClose: 70000 },
   '000660': { refMcap: 105e12, refClose: 200000 },
 };
+const refPastMap = refMcapMapFromSnap({
+  quotes: {
+    '005930': { past1dMcap: 400e12, refMcap: 410e12, refClose: 70000 },
+    '000660': { past1dMcap: 100e12, refMcap: 105e12, refClose: 200000 },
+  },
+});
+assert(refPastMap.get('005930') === 410e12, 'ref mcap map');
 
 const ret = sectorReturnMcapRatio(companies, function (key) {
   const row = snapQuotes[key];
   const q = liveItems[key];
   if (!row || !q) return null;
   return calcLiveMcapWon(row.refMcap, q.last, row.refClose);
-}, pastMap);
+}, refPastMap);
 
 assert(ret != null && isFinite(ret), 'sector live 1d computed');
-assert(Math.abs(ret - (((410e12 * 1.05 + 105e12 * 1.05) / (400e12 + 100e12)) - 1) * 100) < 0.01, 'sector ratio math');
+assert(Math.abs(ret - 5) < 0.01, 'sector live 1d vs ref mcap = 5%');
 
-console.log('All live return checks passed (ret=' + ret.toFixed(4) + '%).');
+const past20Map = pastMcapMapFromSnapRet({
+  quotes: {
+    '005930': { refMcap: 410e12, ret20dPct: 0 },
+    '000660': { refMcap: 105e12, ret20dPct: 0 },
+  },
+}, 'ret20dPct');
+const ret20 = sectorReturnMcapRatio(companies, function (key) {
+  const row = snapQuotes[key];
+  const q = liveItems[key];
+  if (!row || !q) return null;
+  return calcLiveMcapWon(row.refMcap, q.last, row.refClose);
+}, past20Map);
+assert(ret20 != null && Math.abs(ret20 - 5) < 0.01, 'sector live 20d vs snap ret past = 5%');
+
+console.log('All live return checks passed (1d=' + ret.toFixed(4) + '%, 20d=' + ret20.toFixed(4) + '%).');

@@ -156,6 +156,19 @@
     return out;
   }
 
+  function refMcapMapFromSnap(snap) {
+    var out = new Map();
+    var quotes = (snap && snap.quotes) || {};
+    for (var code in quotes) {
+      if (!Object.prototype.hasOwnProperty.call(quotes, code)) continue;
+      var row = quotes[code];
+      if (row && typeof row.refMcap === 'number' && row.refMcap > 0) {
+        out.set(code, row.refMcap);
+      }
+    }
+    return out;
+  }
+
   function pastMcapMapFromSnapRet(snap, retField) {
     var out = new Map();
     var quotes = (snap && snap.quotes) || {};
@@ -184,6 +197,7 @@
     normalizeTicker: normalizeTicker,
     sectorReturnMcapRatio: sectorReturnMcapRatio,
     past1dMcapMapFromSnap: past1dMcapMapFromSnap,
+    refMcapMapFromSnap: refMcapMapFromSnap,
     pastMcapMapFromSnapRet: pastMcapMapFromSnapRet,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

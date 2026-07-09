@@ -12,7 +12,7 @@
     { retKey: 'return120dPct', labelKey: 'pulseRow120d' },
     { retKey: 'return250dPct', labelKey: 'pulseRow250d' },
   ];
-  var pulseHorizonKey = 'return20dPct';
+  var pulseHorizonKey = 'return1dPct';
   var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon-v3';
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
@@ -33,7 +33,13 @@
   var liveSectorPollTimer = null;
   var LIVE_SECTOR_POLL_MS = 5 * 60 * 1000;
 
-  var SECTOR_LIVE_1D = { retKey: 'return1dPct', pastMap: 'past1d' };
+  var SECTOR_LIVE_HORIZONS = [
+    { retKey: 'return1dPct', useRefPast: true },
+    { retKey: 'return20dPct', snapRetField: 'ret20dPct' },
+    { retKey: 'return50dPct', snapRetField: 'ret50dPct' },
+    { retKey: 'return120dPct', snapRetField: 'ret120dPct' },
+    { retKey: 'return250dPct', snapRetField: 'ret250dPct' },
+  ];
   var QUOTES_CHUNK = 18;
 
   /** Value-chain / keyword chips shown below representative stocks on hub cards. */
@@ -296,21 +302,31 @@
     if (!RL || !hubData || !snap || !quoteItems) return;
     var recentDd = snap.recentDd || hubSectorReturnsMeta.mcapRecentDd;
     if (!RL.shouldUseLive1dReturns(recentDd)) return;
+    var stale = RL.isRecentDdStale(recentDd);
     var snapQuotes = snap.quotes || {};
-    var pastMap = RL.past1dMcapMapFromSnap(snap);
+
+    function mcapNowFn(key) {
+      var row = snapQuotes[key];
+      var q = quoteItems[key];
+      if (!row || !q || q.last == null) return null;
+      return RL.calcLiveMcapWon(row.refMcap, q.last, row.refClose);
+    }
+
     SECTOR_ORDER.forEach(function (sid) {
       var block = hubData.sectors[sid];
       if (!block) return;
       if (!dashboardData.sectors[sid]) dashboardData.sectors[sid] = {};
-      var ret = RL.sectorReturnMcapRatio(block.companies, function (key) {
-        var row = snapQuotes[key];
-        var q = quoteItems[key];
-        if (!row || !q || q.last == null) return null;
-        return RL.calcLiveMcapWon(row.refMcap, q.last, row.refClose);
-      }, pastMap);
-      if (ret != null && isFinite(ret)) {
-        dashboardData.sectors[sid][SECTOR_LIVE_1D.retKey] = ret;
-      }
+
+      SECTOR_LIVE_HORIZONS.forEach(function (h) {
+        if (h.retKey !== 'return1dPct' && !stale) return;
+        var pastMap = h.useRefPast
+          ? RL.refMcapMapFromSnap(snap)
+          : RL.pastMcapMapFromSnapRet(snap, h.snapRetField);
+        var ret = RL.sectorReturnMcapRatio(block.companies, mcapNowFn, pastMap);
+        if (ret != null && isFinite(ret)) {
+          dashboardData.sectors[sid][h.retKey] = ret;
+        }
+      });
     });
   }
 
@@ -784,6 +800,11 @@
     var RL = global.InvestingMapReturnLive;
     var recentDd = hubSectorReturnsMeta.mcapRecentDd;
     if (!RL || !recentDd || !RL.shouldUseLive1dReturns(recentDd)) return labels.pulseSub;
+    if (RL.isRecentDdStale(recentDd)) {
+      return lang === 'en'
+        ? labels.pulseSub + ' · Recent leg: Naver quotes (KRX daily data lag)'
+        : labels.pulseSub + ' · 최근일: 네이버 시세 (KRX 일별 반영 지연)';
+    }
     var anchor = RL.ymdToDash(RL.kstAnchorYmd());
     var naverNote = RL.isKrxRegularSession && RL.isKrxRegularSession()
       ? (lang === 'en' ? '1D live' : '1D 실시간')
@@ -832,6 +853,7 @@
         });
         if (!ok) throw new Error('hub_sectors_incomplete_' + horizonParam);
         writeSwr();
+        return refreshLiveSectorReturns(lang);
       })
       .catch(function () {
         sectorsFailed = true;
@@ -843,7 +865,7 @@
   }
 
   function fetchSectors(lang) {
-    return fetchSectorsHorizon(lang, 'return20dPct');
+    return fetchSectorsHorizon(lang, pulseHorizonKey);
   }
 
   function applyTop10Payload(j) {
@@ -910,7 +932,7 @@
   function fetchDashboardAndRender(lang, sectorPromise) {
     var sectors = sectorPromise || fetchSectors(lang);
     return Promise.all([sectors, fetchTop10(lang), fetchRsTop10(lang)]).then(function () {
-      if (pulseHorizonKey !== 'return20dPct' && !hasHorizonData(pulseHorizonKey)) {
+      if (!hasHorizonData(pulseHorizonKey)) {
         return fetchSectorsHorizon(lang, pulseHorizonKey);
       }
     }).then(function () {
@@ -935,7 +957,7 @@
       dashboardData.rsTop10 = swr.rsTop10 || [];
       dashboardData.regularSession = swr.regularSession;
     }
-    var liveSector20d = fetchSectorsHorizon(lang, 'return20dPct');
+    var sectorFetch = fetchSectorsHorizon(lang, pulseHorizonKey);
     Promise.all([loadHubIndex(), loadFx(), loadHubSectorReturns()])
       .then(function () {
         renderLabels(lang);
@@ -947,7 +969,7 @@
         rsTop10Loading = true;
         renderTop10(lang);
         renderRsTop10(lang);
-        return fetchDashboardAndRender(lang, liveSector20d);
+        return fetchDashboardAndRender(lang, sectorFetch);
       })
       .catch(function (err) {
         if (typeof console !== 'undefined' && console.warn) {

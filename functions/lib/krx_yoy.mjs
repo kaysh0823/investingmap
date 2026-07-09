@@ -241,19 +241,25 @@ export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
     : allHorizons;
 
   const now = Date.now();
+  const dates = tradingDates(HIST_TRADING_DAYS);
+  const expectedRecentDd = recentDateCandidates(dates)[0] || dates[0];
+
   let snapshots = emptyMcapSnapshots();
   if (mcapSnapshotsCache && now - mcapSnapshotsCache.t < MCAP_PAIR_CACHE_MS) {
-    snapshots = { ...mcapSnapshotsCache.snapshots };
+    const cachedRecent = mcapSnapshotsCache.snapshots.recentDd;
+    if (cachedRecent && expectedRecentDd && cachedRecent < expectedRecentDd) {
+      mcapSnapshotsCache = null;
+    } else {
+      snapshots = { ...mcapSnapshotsCache.snapshots };
+    }
   }
-
-  const dates = tradingDates(HIST_TRADING_DAYS);
 
   if (!snapshots.mcapNow || snapshots.mcapNow.size < 20) {
     const recent = await fetchMcapMapWithFallback(
       authKey,
       recentDateCandidates(dates).slice(0, MCAP_FALLBACK_WINDOW),
       20,
-      snapshots.recentDd,
+      expectedRecentDd,
     );
     snapshots.mcapNow = recent.mcap;
     snapshots.recentDd = recent.basDd;
