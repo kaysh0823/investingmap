@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -184,7 +184,7 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
   </footer>
-  <script src="js/global_bottom_nav.js?v=4"></script>
+  <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>
   <script>
     const PAGE = {"titleKo":"편집·검증 정책","titleEn":"Editorial & verification policy","descKo":"Investing Map 콘텐츠 작성, 데이터 출처 확인, 갱신 주기를 설명합니다.","descEn":"How Investing Map sources, verifies, and updates industry map content."};
@@ -235,7 +235,6 @@
       document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: lang === 'en' ? PAGE.descEn : PAGE.descKo });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
-      if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncTheme();
     }

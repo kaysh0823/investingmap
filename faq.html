@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -191,10 +191,10 @@
 <div class="faq-item"><h2>데이터는 얼마나 자주 갱신되나요?</h2><p>KRX 정량 데이터(시총·PER·PBR)는 주기적으로 CSV를 갱신하며 페이지 기준일을 업데이트합니다. 실시간 시세 필드는 영업일 기준으로 /api/quotes 폴링 주기에 따라 반영됩니다. 고트래픽 페이지는 연 1회 이상 편집·검증 정책에 따라 출처를 재확인합니다.</p></div>
   </main>
   <main class="trust-main" id="trust-body-en" lang="en" hidden>
-<div class="faq-item"><h2>What does Investing Map provide?</h2><p>Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed companies. Each page shows KRX-based market cap, PER, PBR, value-chain categories, a sortable company table, and a relationship graph in Korean and English.</p></div>
+<div class="faq-item"><h2>What does Investing Map provide?</h2><p>Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed names. Each page shows KRX-based market cap, PER, PBR, value-chain tags, a sortable company table, and a relationship graph in Korean and English.</p></div>
 <div class="faq-item"><h2>Which stocks appear on maps and the hub?</h2><p>Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 300 billion (300,000,000,000 won) that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.</p></div>
 <div class="faq-item"><h2>Where do market cap, PER, and PBR come from?</h2><p>Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page (e.g. 15 June 2026). Last price and 52-week high/low refresh via /api/quotes (KRX OPEN API and Naver cache) and may show — when delayed or closed.</p></div>
-<div class="faq-item"><h2>How is English market cap converted?</h2><p>English market cap is an illustrative figure in USD billions (two decimals) using the USD/KRW spot stored in data/fx_usdkrw.json from Naver Finance.</p></div>
+<div class="faq-item"><h2>How is English market cap converted?</h2><p>English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot stored in data/fx_usdkrw.json from Naver Finance.</p></div>
 <div class="faq-item"><h2>Are relationship graphs official filing data?</h2><p>Graph edges for customers, peers, and keywords are editorial reference networks from public information—not a substitute for DART filings or annual reports.</p></div>
 <div class="faq-item"><h2>How often is data updated?</h2><p>KRX quantitative fields are updated when CSVs are refreshed and the page as-of date changes. Quote fields follow /api/quotes polling on trading days. High-traffic pages are source-checked at least annually per our editorial policy.</p></div>
   </main>
@@ -208,7 +208,7 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
   </footer>
-  <script src="js/global_bottom_nav.js?v=4"></script>
+  <script src="js/global_bottom_nav.js"></script>
   <script src="js/geo_footer.js"></script>
   <script>
     const PAGE = {"titleKo":"자주 묻는 질문","titleEn":"Frequently asked questions","descKo":"Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.","descEn":"FAQ on Investing Map data sources, FX conversion, and reading the relationship graphs."};
@@ -259,7 +259,6 @@
       document.title = (lang === 'en' ? PAGE.titleEn : PAGE.titleKo) + ' | Investing Map';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: lang === 'en' ? PAGE.descEn : PAGE.descKo });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
-      if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
       syncTheme();
     }
