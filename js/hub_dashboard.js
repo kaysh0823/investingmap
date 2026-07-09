@@ -22,6 +22,7 @@
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null };
   var sectorsLoadingHorizon = null;
+  var sectorsBootstrapping = false;
   var top10Loading = false;
   var rsTop10Loading = false;
   var sectorsFailed = false;
@@ -649,7 +650,7 @@
       var sectorMcap = pulse.mcapWon != null ? pulse.mcapWon :
         block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
       var weightPct = pulse.weightPct != null ? pulse.weightPct : (local[sid] ? local[sid].weightPct : 0);
-      var isLoading = sectorsLoadingHorizon === retKey && retPct == null;
+      var isLoading = sectorsBootstrapping || (sectorsLoadingHorizon === retKey && retPct == null);
       var cls = 'hub-pulse-card-ret is-flat';
       var retText;
       if (isLoading) {
@@ -692,7 +693,7 @@
     var statusWrap = document.getElementById('hub-pulse-status');
     if (statusWrap) {
       var parts = [];
-      if (sectorsLoadingHorizon && !hasHorizonData(sectorsLoadingHorizon)) {
+      if (sectorsBootstrapping || (sectorsLoadingHorizon && !hasHorizonData(sectorsLoadingHorizon))) {
         parts.push('<span class="hub-pulse-loading-badge">' + labels.pulseStatusLoading + '</span>');
       }
       if (dashboardData && dashboardData.regularSession === true) {
@@ -937,11 +938,13 @@
       }
     }).then(function () {
       if (!sectorsFailed || !top10Failed || !rsTop10Failed) writeSwr();
+      return refreshLiveSectorReturns(lang);
+    }).then(function () {
+      sectorsBootstrapping = false;
+      if (sectorsLoadingHorizon === pulseHorizonKey) sectorsLoadingHorizon = null;
       renderPulse(lang);
       renderTop10(lang);
       renderRsTop10(lang);
-      return refreshLiveSectorReturns(lang);
-    }).then(function () {
       startLiveSectorPoll(lang);
     });
   }
@@ -950,9 +953,10 @@
     injectStyles();
     lang = pageLang(lang);
     readPulseHorizon();
+    sectorsBootstrapping = true;
+    sectorsLoadingHorizon = pulseHorizonKey;
     var swr = readSwr();
     if (swr) {
-      dashboardData.sectors = swr.sectors || {};
       dashboardData.top10 = swr.top10 || [];
       dashboardData.rsTop10 = swr.rsTop10 || [];
       dashboardData.regularSession = swr.regularSession;
