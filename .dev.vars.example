@@ -1,3 +1,7 @@
 # Local Pages Functions dev — copy to .dev.vars (gitignored)
 # Cloudflare Production secret name: KRX OPEN API 인증키 (or KRX_AUTH_KEY)
 KRX OPEN API 인증키=
+
+# Supabase (Pages Function read-only; service role key is for GitHub Actions only)
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-anon-public-key
