@@ -72,6 +72,60 @@
     return null;
   }
 
+  function applyRsFieldsFromRow(c, row) {
+    if (!row) {
+      c.rs = null;
+      c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret250dPct = null;
+      return;
+    }
+    c.rs = typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
+    c.chg1dPct = pickRetPct(row, 'chg1dPct');
+    c.ret20dPct = pickRetPct(row, 'ret20dPct', 'ret1mPct');
+    c.ret50dPct = pickRetPct(row, 'ret50dPct', 'ret3mPct');
+    c.ret120dPct = pickRetPct(row, 'ret120dPct', 'ret6mPct');
+    c.ret250dPct = pickRetPct(row, 'ret250dPct', 'ret1yPct');
+  }
+
+  function applyRsFieldsFromRowIfPresent(c, row) {
+    if (!row) return;
+    if (typeof row.rs === 'number' && isFinite(row.rs)) c.rs = row.rs;
+    var v;
+    v = pickRetPct(row, 'chg1dPct');
+    if (v != null) c.chg1dPct = v;
+    v = pickRetPct(row, 'ret20dPct', 'ret1mPct');
+    if (v != null) c.ret20dPct = v;
+    v = pickRetPct(row, 'ret50dPct', 'ret3mPct');
+    if (v != null) c.ret50dPct = v;
+    v = pickRetPct(row, 'ret120dPct', 'ret6mPct');
+    if (v != null) c.ret120dPct = v;
+    v = pickRetPct(row, 'ret250dPct', 'ret1yPct');
+    if (v != null) c.ret250dPct = v;
+  }
+
+  function quoteItemHasRsReturns(q) {
+    if (!q) return false;
+    if (typeof q.rs === 'number' && isFinite(q.rs)) return true;
+    if (pickRetPct(q, 'chg1dPct') != null) return true;
+    if (pickRetPct(q, 'ret20dPct', 'ret1mPct') != null) return true;
+    if (pickRetPct(q, 'ret50dPct', 'ret3mPct') != null) return true;
+    if (pickRetPct(q, 'ret120dPct', 'ret6mPct') != null) return true;
+    if (pickRetPct(q, 'ret250dPct', 'ret1yPct') != null) return true;
+    return false;
+  }
+
+  /** True when /api/quotes already carries RS + horizon returns (e.g. Supabase path). */
+  function quotesResponseHasRsReturns(j) {
+    if (!j) return false;
+    if (j.source === 'supabase') return true;
+    var items = j.items || {};
+    for (var k in items) {
+      if (Object.prototype.hasOwnProperty.call(items, k) && quoteItemHasRsReturns(items[k])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function mergeRsIntoCompanies(companies, snap) {
     if (!companies) return;
     var quotes = (snap && snap.quotes) || {};
@@ -83,13 +137,7 @@
         c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret250dPct = null;
         continue;
       }
-      var row = quotes[key];
-      c.rs = row && typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
-      c.chg1dPct = pickRetPct(row, 'chg1dPct');
-      c.ret20dPct = pickRetPct(row, 'ret20dPct', 'ret1mPct');
-      c.ret50dPct = pickRetPct(row, 'ret50dPct', 'ret3mPct');
-      c.ret120dPct = pickRetPct(row, 'ret120dPct', 'ret6mPct');
-      c.ret250dPct = pickRetPct(row, 'ret250dPct', 'ret1yPct');
+      applyRsFieldsFromRow(c, quotes[key]);
     }
   }
 
@@ -202,6 +250,7 @@
       }
       if (typeof q.per === 'number' && isFinite(q.per)) c.per = q.per;
       if (typeof q.pbr === 'number' && isFinite(q.pbr)) c.pbr = q.pbr;
+      applyRsFieldsFromRowIfPresent(c, q);
     }
   }
 
@@ -336,6 +385,7 @@
     var merged = {};
     var asOf = '';
     var regularSession = null;
+    var source = '';
     var chain = Promise.resolve();
     for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
       (function (chunk) {
@@ -345,6 +395,7 @@
         }).then(function (j) {
           if (j && j.asOf) asOf = j.asOf;
           if (j && j.regularSession != null) regularSession = j.regularSession;
+          if (j && j.source) source = j.source;
           var items = (j && j.items) || {};
           for (var k in items) {
             if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
@@ -353,7 +404,7 @@
       })(codes.slice(i, i + CHUNK_SIZE));
     }
     return chain.then(function () {
-      return { asOf: asOf, items: merged, regularSession: regularSession };
+      return { asOf: asOf, items: merged, regularSession: regularSession, source: source };
     });
   }
 
@@ -380,9 +431,7 @@
   }
 
   function bootMapQuotes(opts) {
-    return hydrateRsSnapshot(opts).then(function () {
-      return start(opts);
-    });
+    return start(opts);
   }
 
   function start(opts) {
@@ -419,18 +468,23 @@
         running = false;
         return;
       }
-      Promise.all([fetchAllCodes(base, codes), loadRsSnapshot()])
-        .then(function (results) {
-          var j = results[0];
-          var snap = results[1];
+      fetchAllCodes(base, codes)
+        .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
-          mergeRsIntoCompanies(getCompanies(), snap);
-          applyLiveReturns(getCompanies(), snap);
-          try {
-            onAsOf(j.asOf || '', { regularSession: j.regularSession });
-          } catch (e1) {}
-          if (renderTable) renderTable();
-          focusTickerAfterRender();
+          var snapPromise = quotesResponseHasRsReturns(j)
+            ? Promise.resolve(null)
+            : loadRsSnapshot();
+          return snapPromise.then(function (snap) {
+            if (snap) {
+              mergeRsIntoCompanies(getCompanies(), snap);
+              applyLiveReturns(getCompanies(), snap);
+            }
+            try {
+              onAsOf(j.asOf || '', { regularSession: j.regularSession });
+            } catch (e1) {}
+            if (renderTable) renderTable();
+            focusTickerAfterRender();
+          });
         })
         .catch(function (err) {
           try {
