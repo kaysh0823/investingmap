@@ -14,9 +14,6 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    defaults:
-      run:
-        working-directory: investingmap
 
     steps:
       - name: Checkout
