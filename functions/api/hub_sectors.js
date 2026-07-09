@@ -1,9 +1,10 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_sectors
- * Sector mcap-weighted return (KRX only — no Naver).
+ * Sector mcap-weighted return.
+ * Primary: Supabase sector_returns. Fallback: KRX mcap-ratio (hub_dashboard_core).
  */
 
-import { buildHubSectors, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
+import { buildHubSectors, buildHubSectorsFromSupabaseRows, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { getAuthKey } from '../lib/krx_yoy.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
@@ -15,6 +16,10 @@ import {
   readHubCache,
   readHubCacheJson,
 } from '../lib/hub_api_cache.mjs';
+import {
+  fetchSupabaseJson,
+  getSupabaseConfig,
+} from '../lib/supabase_hub.mjs';
 
 const CACHE_VERSION = '/api/hub_sectors/cache/v6';
 
@@ -33,7 +38,24 @@ function sectorResponseHeaders(ch, horizon, cacheTag, maxAge) {
   };
 }
 
+async function buildSectorPayloadFromSupabase(request, env, horizon) {
+  const config = getSupabaseConfig(env);
+  if (!config) return null;
+  const rows = await fetchSupabaseJson(config, 'sector_returns?select=*');
+  if (!rows.length) return null;
+  const hubIndex = await loadHubIndexFromRequest(request, env);
+  const payload = buildHubSectorsFromSupabaseRows(hubIndex, rows, env, { horizon });
+  if (!hasSectorHorizon(payload.sectors, horizon)) return null;
+  return payload;
+}
+
 async function buildSectorPayload(request, env, horizon) {
+  try {
+    const supabase = await buildSectorPayloadFromSupabase(request, env, horizon);
+    if (supabase) return supabase;
+  } catch {
+    /* fall through to legacy KRX path */
+  }
   const hubIndex = await loadHubIndexFromRequest(request, env);
   return buildHubSectors(hubIndex, env, { horizon });
 }

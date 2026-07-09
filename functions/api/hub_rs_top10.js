@@ -1,9 +1,11 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_rs_top10
- * Top-10 Relative Strength (KRX 20/50/120-day percentile average).
+ * Top-10 Relative Strength.
+ * Primary: Supabase stock_quotes_latest (rs desc). Fallback: hub_rs_snapshot / KRX live.
  */
 
 import {
+  buildHubRsTop10FromSupabaseRows,
   buildHubRsTop10Payload,
   hubRsTop10Cacheable,
   loadHubIndexFromRequest,
@@ -14,8 +16,38 @@ import {
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
+import {
+  fetchSupabaseJson,
+  getSupabaseConfig,
+} from '../lib/supabase_hub.mjs';
 
 const CACHE_PATH = '/api/hub_rs_top10/cache/v1';
+
+async function buildRsTop10FromSupabase(hubIndex, config) {
+  const rows = await fetchSupabaseJson(
+    config,
+    'stock_quotes_latest?select=ticker,rs,as_of&order=rs.desc.nullslast&limit=10',
+  );
+  if (!rows.length) return null;
+  const payload = buildHubRsTop10FromSupabaseRows(hubIndex, rows, { source: 'supabase' });
+  if (!payload.top10 || !payload.top10.length) return null;
+  return payload;
+}
+
+async function buildRsTop10Payload(request, env) {
+  const config = getSupabaseConfig(env);
+  if (config) {
+    try {
+      const hubIndex = await loadHubIndexFromRequest(request, env);
+      const supabase = await buildRsTop10FromSupabase(hubIndex, config);
+      if (supabase) return supabase;
+    } catch {
+      /* fall through to legacy path */
+    }
+  }
+  const hubIndex = await loadHubIndexFromRequest(request, env);
+  return buildHubRsTop10Payload(hubIndex, env, request);
+}
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -42,8 +74,7 @@ export async function onRequest(context) {
   }
 
   try {
-    const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubRsTop10Payload(hubIndex, env, request);
+    const payload = await buildRsTop10Payload(request, env);
     const maxAge = session.regular ? 300 : 1800;
     const response = new Response(JSON.stringify(payload), {
       headers: {

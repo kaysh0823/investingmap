@@ -9,6 +9,7 @@ import { buildKrxRsSnapshot } from './krx_rs.mjs';
 import { krxSessionInfo, kstAnchorYmd } from './krx_session.mjs';
 import { passesMcapFloor } from '../../lib/mcap_policy.mjs';
 import { calcQuotePosition } from '../../lib/quote_position.mjs';
+import { numOrNull } from './supabase_hub.mjs';
 
 export { calcQuotePosition };
 
@@ -70,6 +71,132 @@ function buildTop10(hubIndex, quoteByTicker) {
   return {
     top10: ranked.slice(0, 10),
     quotesRanked: ranked.length,
+  };
+}
+
+/** Build hub_top10 payload from a pre-filled quote map (e.g. Supabase stock_quotes_latest). */
+export function buildHubTop10PayloadFromQuoteMap(hubIndex, quoteByTicker, opts = {}) {
+  const codes = new Set(
+    listHubCompanies(hubIndex).map((c) => normalizeTicker(c.ticker)).filter(Boolean),
+  );
+  const quotesTotal = codes.size;
+  const quotesRanked = countQuotesWithPosition(quoteByTicker);
+  const { top10 } = buildTop10(hubIndex, quoteByTicker);
+  return {
+    asOf: opts.asOf || new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    snapshotBuiltAt: opts.snapshotBuiltAt ?? null,
+    regularSession: opts.regularSession ?? null,
+    source: opts.source || 'supabase',
+    quotesTotal,
+    quotesRanked,
+    coveragePct: quotesTotal > 0 ? Math.round((quotesRanked / quotesTotal) * 1000) / 10 : 0,
+    cacheHits: opts.cacheHits ?? 0,
+    naverFetched: opts.naverFetched ?? 0,
+    top10,
+  };
+}
+
+/** Build hub_rs_top10 rows from Supabase stock_quotes_latest (rs ordered). */
+export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
+  const byTicker = new Map();
+  for (const c of listHubCompanies(hubIndex)) {
+    const key = normalizeTicker(c.ticker);
+    if (key) byTicker.set(key, c);
+  }
+  const top10 = [];
+  let asOf = opts.asOf || null;
+  for (const row of rows) {
+    const key = normalizeTicker(row.ticker);
+    const c = key ? byTicker.get(key) : null;
+    const rs = numOrNull(row.rs);
+    if (!c || rs == null) continue;
+    if (row.as_of && !asOf) asOf = row.as_of;
+    top10.push({
+      ticker: c.ticker,
+      name: c.name,
+      nameEn: c.nameEn,
+      sectorId: c.sectorId,
+      mapPath: c.mapPath,
+      rs,
+      rs20: numOrNull(row.rs20),
+      rs50: numOrNull(row.rs50),
+      rs120: numOrNull(row.rs120),
+    });
+    if (top10.length >= 10) break;
+  }
+  const companies = listHubCompanies(hubIndex);
+  let quotesRanked = 0;
+  for (const c of companies) {
+    const key = normalizeTicker(c.ticker);
+    if (!key) continue;
+    const match = rows.find((r) => normalizeTicker(r.ticker) === key);
+    if (match && numOrNull(match.rs) != null) quotesRanked += 1;
+  }
+  return {
+    asOf: asOf || new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    snapshotBuiltAt: null,
+    source: opts.source || 'supabase',
+    quotesTotal: companies.length,
+    quotesRanked,
+    coveragePct: companies.length > 0
+      ? Math.round((quotesRanked / companies.length) * 1000) / 10
+      : 0,
+    top10,
+  };
+}
+
+/** Map sector_returns rows + hub_index into hub_sectors payload shape. */
+export function buildHubSectorsFromSupabaseRows(hubIndex, rows, env, opts = {}) {
+  const session = krxSessionInfo();
+  const horizon = opts.horizon != null ? normalizeSectorHorizon(opts.horizon) : null;
+  const rowById = new Map();
+  for (const row of rows) {
+    if (row && row.sector_id) rowById.set(row.sector_id, row);
+  }
+
+  let totalMcap = 0;
+  for (const c of flattenCompanies(hubIndex)) {
+    totalMcap += c.mcapWon || 0;
+  }
+
+  const sectors = {};
+  let updatedAt = null;
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors && hubIndex.sectors[sid];
+    if (!block) continue;
+    const companies = block.companies || [];
+    const sectorMcap = companies.reduce((s, c) => s + (c.mcapWon || 0), 0);
+    const row = rowById.get(sid);
+    if (row && row.updated_at && !updatedAt) updatedAt = row.updated_at;
+    sectors[sid] = {
+      return1dPct: null,
+      return20dPct: row ? numOrNull(row.ret_20d_pct) : null,
+      return50dPct: row ? numOrNull(row.ret_50d_pct) : null,
+      return120dPct: row ? numOrNull(row.ret_120d_pct) : null,
+      return250dPct: row ? numOrNull(row.ret_250d_pct) : null,
+      mcapWon: sectorMcap,
+      weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
+      listingCount: companies.length,
+    };
+  }
+
+  return {
+    asOf: updatedAt || new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    regularSession: session.regular,
+    horizon: horizon || 'all',
+    source: 'supabase',
+    krxConfigured: !!getAuthKey(env),
+    mcapRecentDd: null,
+    effectiveAnchorDd: kstAnchorYmd(),
+    mcapPast1dDd: null,
+    mcapPast20dDd: null,
+    mcapPast50dDd: null,
+    mcapPast120dDd: null,
+    mcapPast250dDd: null,
+    sectors,
   };
 }
 

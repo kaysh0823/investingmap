@@ -1,17 +1,82 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_top10
- * Top-10 price position vs 52-week range (Naver only).
+ * Top-10 price position vs 52-week range.
+ * Primary: Supabase stock_quotes_latest. Fallback: Naver + hub_quote_snapshot.
  */
 
-import { buildHubTop10, hubTop10Cacheable, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
+import {
+  buildHubTop10,
+  buildHubTop10PayloadFromQuoteMap,
+  hubTop10Cacheable,
+  listHubCompanies,
+  loadHubIndexFromRequest,
+  normalizeTicker,
+} from '../lib/hub_dashboard_core.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   corsHeaders,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
+import {
+  fetchSupabaseJson,
+  getSupabaseConfig,
+  numOrNull,
+} from '../lib/supabase_hub.mjs';
 
 const CACHE_PATH = '/api/hub_top10/cache/v4';
+
+async function buildHubTop10FromSupabase(hubIndex, config, session) {
+  const rows = await fetchSupabaseJson(
+    config,
+    'stock_quotes_latest?select=ticker,last,high_52w,low_52w,as_of,regular_session&limit=1000',
+  );
+  if (!rows.length) return null;
+
+  const hubCodes = new Set(
+    listHubCompanies(hubIndex).map((c) => normalizeTicker(c.ticker)).filter(Boolean),
+  );
+  const quoteByTicker = {};
+  let asOf = null;
+  let regularSession = null;
+
+  for (const row of rows) {
+    const key = normalizeTicker(row.ticker);
+    if (!key || !hubCodes.has(key)) continue;
+    quoteByTicker[key] = {
+      last: numOrNull(row.last),
+      high52w: numOrNull(row.high_52w),
+      low52w: numOrNull(row.low_52w),
+    };
+    if (row.as_of && !asOf) asOf = row.as_of;
+    if (row.regular_session != null && regularSession == null) {
+      regularSession = !!row.regular_session;
+    }
+  }
+
+  const payload = buildHubTop10PayloadFromQuoteMap(hubIndex, quoteByTicker, {
+    asOf: asOf || new Date().toISOString(),
+    regularSession: regularSession != null ? regularSession : session.regular,
+    source: 'supabase',
+  });
+  if (!payload.top10 || !payload.top10.length) return null;
+  return payload;
+}
+
+async function buildTop10Payload(request, env, session) {
+  const config = getSupabaseConfig(env);
+  if (config) {
+    try {
+      const hubIndex = await loadHubIndexFromRequest(request, env);
+      const supabase = await buildHubTop10FromSupabase(hubIndex, config, session);
+      if (supabase) return supabase;
+    } catch {
+      /* fall through to legacy path */
+    }
+  }
+  const hubIndex = await loadHubIndexFromRequest(request, env);
+  return buildHubTop10(hubIndex, env, request);
+}
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -38,8 +103,7 @@ export async function onRequest(context) {
   }
 
   try {
-    const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubTop10(hubIndex, env, request);
+    const payload = await buildTop10Payload(request, env, session);
     const maxAge = session.regular ? 300 : 1800;
     const response = new Response(JSON.stringify(payload), {
       headers: {
