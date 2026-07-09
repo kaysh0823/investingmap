@@ -1,0 +1,40 @@
+name: Sync quotes to Supabase
+
+on:
+  schedule:
+    # KST 09:00–14:50 (UTC 00:00–05:50), every 10 min, Mon–Fri
+    - cron: '*/10 0-5 * * 1-5'
+    # KST 15:00–15:30 (UTC 06:00–06:30), every 10 min — stops before 06:40 UTC (15:40 KST)
+    - cron: '0,10,20,30 6 * * 1-5'
+    # KST 16:00 (UTC 07:00), Mon–Fri — post-close final snapshot
+    - cron: '0 7 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Sync hub quotes to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
+        run: node scripts/sync_quotes_to_supabase.mjs
