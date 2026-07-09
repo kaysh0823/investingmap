@@ -2,5 +2,12 @@
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
 
+/data/*.json
+  Cache-Control: public, max-age=300, stale-while-revalidate=60
+
+/js/*.js
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.js
   Content-Type: application/javascript; charset=utf-8

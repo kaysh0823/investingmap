@@ -339,7 +339,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=16', { cache: 'no-store' })
+    return fetch('data/hub_index.json?v=16')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();

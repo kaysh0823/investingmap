@@ -1,8 +1,8 @@
 {
   "site": {
     "name": "Investing Map",
-    "url": "https://investing-kr.com",
-    "logo": "https://investing-kr.com/favicon.svg",
+    "url": "https://www.investingmap.kr",
+    "logo": "https://www.investingmap.kr/favicon.svg",
     "description": {
       "ko": "한국 KOSPI·KOSDAQ 상장사 산업 지도: 시가총액·PER·PBR, 밸류체인, 국내외 거래처·글로벌 피어 관계",
       "en": "Korean listed-company industry maps: KRX market cap, PER, PBR, value chains, and relationship networks"

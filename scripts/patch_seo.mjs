@@ -5,9 +5,9 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { BASE } from './geo_lib.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const BASE = 'https://investing-kr.com';
 const MARKER = 'investingmap-seo';
 
 const PAGES = [

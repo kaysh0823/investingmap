@@ -5,25 +5,25 @@
 > 산업별 인터랙티브 지도로 제공하며, 한국어·영어를 지원합니다.
 
 ## 산업 투자 지도 (핵심 콘텐츠)
-- [한국 반도체 산업 투자 지도](https://investing-kr.com/semiconductor/korea_semiconductor_map.html): 상장 반도체 기업 KRX 데이터, 밸류체인, 국내외 거래처·글로벌 피어 그룹
-- [한국 바이오 산업 투자 지도](https://investing-kr.com/bio/korea_bio_map.html): 제약·바이오 상장사, 기술이전·글로벌 빅파마 페어링, peer 네트워크
-- [한국 조선·조선기자재 산업 투자 지도](https://investing-kr.com/ship/korea_ship_map.html): 조선·해양·기자재 밸류체인, 글로벌 거래·수주 관계
-- [한국 방위·우주·항공 산업 투자 지도](https://investing-kr.com/defense/korea_defense_map.html): 방산·항공·우주 상장사 KRX 데이터, 글로벌 참고 네트워크
-- [한국 로봇·피지컬AI 산업 투자 지도](https://investing-kr.com/robot/korea_robot_map.html): 산업로봇·자동화·피지컬AI 밸류체인, 글로벌 장비·SW 관계
-- [한국 에너지 투자 지도](https://investing-kr.com/energy/korea_energy_map.html): 2차전지·ESS·배터리·태양광·풍력 밸류체인
-- [한국 전력설비 투자 지도](https://investing-kr.com/powergrid/korea_powergrid_map.html): 전력설비·송배전·발전설비 밸류체인
-- [한국 금융 투자 지도](https://investing-kr.com/finance/korea_finance_map.html): 은행·증권·보험·카드·캐피탈 밸류체인
-- [한국 건설 투자 지도](https://investing-kr.com/construction/korea_construction_map.html): 종합건설·주택·디벨로퍼·건설기계 밸류체인
-- [한국 K컬처 산업 투자 지도](https://investing-kr.com/kculture/korea_kculture_map.html): 라면·식품, 여행·레저, 화장품, 드라마·웹툰·K-pop 관련 상장사
+- [한국 반도체 산업 투자 지도](https://www.investingmap.kr/semiconductor/korea_semiconductor_map.html): 상장 반도체 기업 KRX 데이터, 밸류체인, 국내외 거래처·글로벌 피어 그룹
+- [한국 바이오 산업 투자 지도](https://www.investingmap.kr/bio/korea_bio_map.html): 제약·바이오 상장사, 기술이전·글로벌 빅파마 페어링, peer 네트워크
+- [한국 조선·조선기자재 산업 투자 지도](https://www.investingmap.kr/ship/korea_ship_map.html): 조선·해양·기자재 밸류체인, 글로벌 거래·수주 관계
+- [한국 방위·우주·항공 산업 투자 지도](https://www.investingmap.kr/defense/korea_defense_map.html): 방산·항공·우주 상장사 KRX 데이터, 글로벌 참고 네트워크
+- [한국 로봇·피지컬AI 산업 투자 지도](https://www.investingmap.kr/robot/korea_robot_map.html): 산업로봇·자동화·피지컬AI 밸류체인, 글로벌 장비·SW 관계
+- [한국 에너지 투자 지도](https://www.investingmap.kr/energy/korea_energy_map.html): 2차전지·ESS·배터리·태양광·풍력 밸류체인
+- [한국 전력설비 투자 지도](https://www.investingmap.kr/powergrid/korea_powergrid_map.html): 전력설비·송배전·발전설비 밸류체인
+- [한국 금융 투자 지도](https://www.investingmap.kr/finance/korea_finance_map.html): 은행·증권·보험·카드·캐피탈 밸류체인
+- [한국 건설 투자 지도](https://www.investingmap.kr/construction/korea_construction_map.html): 종합건설·주택·디벨로퍼·건설기계 밸류체인
+- [한국 K컬처 산업 투자 지도](https://www.investingmap.kr/kculture/korea_kculture_map.html): 라면·식품, 여행·레저, 화장품, 드라마·웹툰·K-pop 관련 상장사
 
 ## 허브
-- [Investing Map 허브](https://investing-kr.com/): 열 가지 산업 지도 진입점, 언어·테마 전환
+- [Investing Map 허브](https://www.investingmap.kr/): 열 가지 산업 지도 진입점, 언어·테마 전환
 
 ## 신뢰성 / 회사 정보
-- [편집·검증 정책](https://investing-kr.com/editorial-policy.html): 데이터 출처, 갱신 주기, 편집·검증 프로세스
-- [투자 유의 / 면책 고지](https://investing-kr.com/disclaimer.html): 정보 제공 목적, 투자 권유·자문 아님, 데이터 한계
-- [편집·데이터 팀](https://investing-kr.com/authors.html): 콘텐츠 제작·데이터 검증 담당
-- [자주 묻는 질문](https://investing-kr.com/faq.html): 시가총액 출처, 환율·PER·PBR, 관계 지도 해석 방법
+- [편집·검증 정책](https://www.investingmap.kr/editorial-policy.html): 데이터 출처, 갱신 주기, 편집·검증 프로세스
+- [투자 유의 / 면책 고지](https://www.investingmap.kr/disclaimer.html): 정보 제공 목적, 투자 권유·자문 아님, 데이터 한계
+- [편집·데이터 팀](https://www.investingmap.kr/authors.html): 콘텐츠 제작·데이터 검증 담당
+- [자주 묻는 질문](https://www.investingmap.kr/faq.html): 시가총액 출처, 환율·PER·PBR, 관계 지도 해석 방법
 
 ## 데이터 출처 (1차)
 - 한국거래소(KRX) 전자공시·시세 데이터 (data/ CSV, 기준일 표기)
@@ -39,22 +39,22 @@
 > across ten interactive sector maps in Korean and English.
 
 ## Industry maps (core content)
-- [Korea Semiconductor Investment Map](https://investing-kr.com/semiconductor/korea_semiconductor_map.html): Listed semiconductor companies, KRX data, value chains, customer and peer relationships
-- [Korea Bio Industry Investment Map](https://investing-kr.com/bio/korea_bio_map.html): Listed bio and pharma, licensing & partnerships with global big pharma
-- [Korea Shipbuilding & Marine Equipment Map](https://investing-kr.com/ship/korea_ship_map.html): Shipbuilding and marine value chain, order and customer relationships
-- [Korea Defense, Space & Aviation Map](https://investing-kr.com/defense/korea_defense_map.html): Defense and aerospace listed companies with global reference networks
-- [Korea Robot / Physical AI Industry Map](https://investing-kr.com/robot/korea_robot_map.html): Factory automation, robotics, and Physical AI value chains
-- [Korea Energy Sector Stocks Map](https://investing-kr.com/energy/korea_energy_map.html): Batteries, ESS, solar, and wind value chains
-- [Korea Power Equipment Map](https://investing-kr.com/powergrid/korea_powergrid_map.html): Power equipment, T&D, and generation value chains
-- [Korea Listed Financials Map](https://investing-kr.com/finance/korea_finance_map.html): Banks, securities, insurance, cards, and consumer finance
-- [Korea Construction Sector Map](https://investing-kr.com/construction/korea_construction_map.html): Contractors, housing, developers, and equipment
-- [Korea K-Culture Industry Map](https://investing-kr.com/kculture/korea_kculture_map.html): Food, travel, beauty, games, fashion, retail, media IP, and K-pop themes
+- [Korea Semiconductor Investment Map](https://www.investingmap.kr/semiconductor/korea_semiconductor_map.html): Listed semiconductor companies, KRX data, value chains, customer and peer relationships
+- [Korea Bio Industry Investment Map](https://www.investingmap.kr/bio/korea_bio_map.html): Listed bio and pharma, licensing & partnerships with global big pharma
+- [Korea Shipbuilding & Marine Equipment Map](https://www.investingmap.kr/ship/korea_ship_map.html): Shipbuilding and marine value chain, order and customer relationships
+- [Korea Defense, Space & Aviation Map](https://www.investingmap.kr/defense/korea_defense_map.html): Defense and aerospace listed companies with global reference networks
+- [Korea Robot / Physical AI Industry Map](https://www.investingmap.kr/robot/korea_robot_map.html): Factory automation, robotics, and Physical AI value chains
+- [Korea Energy Sector Stocks Map](https://www.investingmap.kr/energy/korea_energy_map.html): Batteries, ESS, solar, and wind value chains
+- [Korea Power Equipment Map](https://www.investingmap.kr/powergrid/korea_powergrid_map.html): Power equipment, T&D, and generation value chains
+- [Korea Listed Financials Map](https://www.investingmap.kr/finance/korea_finance_map.html): Banks, securities, insurance, cards, and consumer finance
+- [Korea Construction Sector Map](https://www.investingmap.kr/construction/korea_construction_map.html): Contractors, housing, developers, and equipment
+- [Korea K-Culture Industry Map](https://www.investingmap.kr/kculture/korea_kculture_map.html): Food, travel, beauty, games, fashion, retail, media IP, and K-pop themes
 
 ## Hub
-- [Investing Map Hub](https://investing-kr.com/): Entry point for all ten sector maps, language and theme toggle
+- [Investing Map Hub](https://www.investingmap.kr/): Entry point for all ten sector maps, language and theme toggle
 
 ## Trust / policies
-- [Editorial policy](https://investing-kr.com/editorial-policy.html): Data sources, update cadence, verification process
-- [Disclaimer](https://investing-kr.com/disclaimer.html): Informational only, not investment advice
-- [Editorial & data team](https://investing-kr.com/authors.html): Content and data verification
-- [FAQ](https://investing-kr.com/faq.html): Market cap sources, FX, PER/PBR, reading relationship graphs
+- [Editorial policy](https://www.investingmap.kr/editorial-policy.html): Data sources, update cadence, verification process
+- [Disclaimer](https://www.investingmap.kr/disclaimer.html): Informational only, not investment advice
+- [Editorial & data team](https://www.investingmap.kr/authors.html): Content and data verification
+- [FAQ](https://www.investingmap.kr/faq.html): Market cap sources, FX, PER/PBR, reading relationship graphs
