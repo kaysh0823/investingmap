@@ -176,18 +176,6 @@ const SEED = [
     productsEn: 'Satellite buses, SIIS EO services',
     partners: ['airbus', 'nasa', 'spacex'],
   },
-  {
-    id: 'korean_air',
-    name: '\uB300\uD55C\uD56D\uACF5',
-    nameEn: 'Korean Air',
-    ticker: '003490',
-    chain: S.D5,
-    semType: '\uBBFC\uC6A9\uD56D\uACF5\u00B7\uD654\uBB3C\u00B7MRO',
-    semTypeEn: 'Passenger & cargo, MRO ecosystem',
-    products: '\uC7A5\uAC70\uB9AC \uB124\uD2B8\uC6CC\uD06C, \uAE30\uCCB4 MRO',
-    productsEn: 'Global network, airframe & engine MRO',
-    partners: ['boeing', 'airbus', 'rtx'],
-  },
 ];
 
 const GLOBALS = [
@@ -254,7 +242,7 @@ function buildT(n, kospi, kosdaq) {
   const cfe = chainFilterEn();
   return {
     ko: {
-      title: '\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC704\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4',
+      title: '\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4',
       subtitle:
         '\uD56D\uACF5\uAE30\u00B7\uC5D4\uC9C4, \uBBF8\uC0AC\uC77C\u00B7\uB808\uC774\uB354, \uC721\uC0C1\uBB34\uAE30, \uD574\uAD70\u00B7\uD568\uC815, \uC6B0\uC8FC\u00B7\uC704\uC131\u00B7\uBBFC\uD56D \uAD00\uB828 \uC0C1\uC7A5\uC0AC\u00B7\uAE00\uB85C\uBC8C \uCC38\uACE0 \uB124\uD2B8\uC6CC\uD06C',
       badgeTotal: `\uCD1D <span>${n}</span>\uAC1C \uC0C1\uC7A5\uC0AC`,
@@ -281,7 +269,7 @@ function buildT(n, kospi, kosdaq) {
       thPartners: '\uAE00\uB85C\uBC8C \uCC38\uACE0 \uAD00\uACC4',
       note: '\u26A0 \uC885\uBAA9\uCF54\uB4DC\u00B7\uCC38\uACE0 \uAD00\uACC4\uB294 \uC5D0\uB514\uD130\uB9AC\uC5BC \uADF8\uB8F9\uC774\uBA70 \uACF5\uC2DD \uC815\uBCF4\uAC00 \uC544\uB2D9\uB2C8\uB2E4. \uC2DC\uAC00\uCD1D\uC561\u00B7\uC2DC\uC7A5\uC740 \uC0C1\uB2E8 \uAE30\uC900\uC77C\uC758 KRX \uACF5\uC2DC\uC5D0 \uB9DE\uCD94\uC5C8\uC73C\uBA70, \uD55C\uAD6D\uC5B4 \uC5F4\uC740 \uC2DC\uCD1D\uC744 \uC870(\u5146)\uC6D0 \uB2E8\uC704\uB85C \uC18C\uC218 \uB458\uC9F8 \uC790\uB9AC\uAE4C\uC9C0 \uD45C\uC2DC\uD569\uB2C8\uB2E4. \uC601\uBB38 \uC5F4\uC740 \uB124\uC774\uBC84 \uAE08\uC735 USD/KRW \uACE0\uC2DC \uD658\uC728(data/fx_usdkrw.json)\uC744 \uC801\uC6A9\uD574 B(\uC2ED\uC5B5 \uB2EC\uB7EC) \uB2E8\uC704\uB85C \uC18C\uC218 \uB458\uC9F8 \uC790\uB9AC\uAE4C\uC9C0 \uD658\uC0B0\uD55C \uCC38\uACE0\uCE58\uC785\uB2C8\uB2E4.',
       sbKorean: '\uAD6D\uB0B4 \uC0C1\uC7A5 (\uBCA8\uB958\uCCB4\uC778)',
-      sbGlobal: '\uAE00\uB85C\uBC8C \uBC29\uC704\u00B7\uD56D\uACF5\u00B7\uC6B0\uC8FC',
+      sbGlobal: '\uAE00\uB85C\uBC8C \uBC29\uC0B0\u00B7\uD56D\uACF5\u00B7\uC6B0\uC8FC',
       sbSize: '\uB178\uB4DC \uD06C\uAE30',
       sbHow: '\uC870\uC791 \uBC29\uBC95',
       chainLabel: clk,
@@ -457,7 +445,7 @@ function main() {
   let html = fs.readFileSync(join(__dirname, 'semiconductor', 'korea_semiconductor_map.html'), 'utf8');
 
   const titlePage =
-    '\uD55C\uAD6D \uBC29\uC704\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4 / Korea Defense & Space Map';
+    '\uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4 / Korea Defense & Space Map';
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${titlePage}</title>`);
 
   html = html.replace(
@@ -534,7 +522,7 @@ function main() {
 
   html = html.replace(
     /<h1 id="hdr-title">[^<]+<\/h1>/,
-    '<h1 id="hdr-title">\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC704\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4</h1>',
+    '<h1 id="hdr-title">\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4</h1>',
   );
   html = html.replace(
     /<p id="hdr-subtitle">[^<]+<\/p>/,

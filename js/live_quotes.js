@@ -444,17 +444,16 @@
     var running = false;
 
     if (!base) {
-      hydrateRsSnapshot(opts);
-      return null;
+      return hydrateRsSnapshot(opts);
     }
 
     function run() {
-      if (running) return;
+      if (running) return Promise.resolve(null);
       running = true;
       var companies = getCompanies();
       if (!companies || !companies.length) {
         running = false;
-        return;
+        return Promise.resolve(null);
       }
       var codes = [];
       var seen = {};
@@ -466,9 +465,9 @@
       }
       if (!codes.length) {
         running = false;
-        return;
+        return Promise.resolve(null);
       }
-      fetchAllCodes(base, codes)
+      return fetchAllCodes(base, codes)
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
           var snapPromise = quotesResponseHasRsReturns(j)
@@ -484,6 +483,7 @@
             } catch (e1) {}
             if (renderTable) renderTable();
             focusTickerAfterRender();
+            return j;
           });
         })
         .catch(function (err) {
@@ -492,13 +492,17 @@
           } catch (e2) {}
           return hydrateRsSnapshot(opts);
         })
-        .then(function () {
+        .then(function (result) {
           running = false;
+          return result;
         });
     }
 
-    run();
-    return setInterval(run, pollMs);
+    var first = run();
+    setInterval(function () {
+      run();
+    }, pollMs);
+    return first;
   }
 
   global.InvestingMapLiveQuotes = {

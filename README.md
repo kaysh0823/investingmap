@@ -17,7 +17,7 @@
 | `semiconductor/` | 반도체 지도 `korea_semiconductor_map.html` (다른 지도 빌드의 템플릿 원본) |
 | `bio/` | 바이오 지도 HTML + `korea_bio_map.inline.js`, JSON/번역, `gen_korea_bio_inline.mjs` 등 |
 | `ship/` | 조선·해양 지도 |
-| `defense/` | 방위·우주·항공 지도 |
+| `defense/` | 방산·우주·항공 지도 |
 | `robot/` | 로봇·피지컬AI 지도 |
 | `energy/` | 에너지 산업 지도 |
 | `kculture/` | K컬처 지도 |

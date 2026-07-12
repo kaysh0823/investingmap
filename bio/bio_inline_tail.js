@@ -711,12 +711,10 @@
             if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap();
           }
         };
+      applyLang();
       if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.bootMapQuotes) {
-        InvestingMapLiveQuotes.bootMapQuotes(imQuoteOpts).then(function () { applyLang(); });
-      } else {
-        applyLang();
-        if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
-          InvestingMapLiveQuotes.start(imQuoteOpts);
-        }
+        Promise.resolve(InvestingMapLiveQuotes.bootMapQuotes(imQuoteOpts)).catch(function () {});
+      } else if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
+        InvestingMapLiveQuotes.start(imQuoteOpts);
       }
     });

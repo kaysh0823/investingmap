@@ -9,7 +9,7 @@
     { id: 'energy', path: '../energy/korea_energy_map.html', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
     { id: 'powergrid', path: '../powergrid/korea_powergrid_map.html', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Equip.', koShort: '\uC804\uB825', enShort: 'Power' },
     { id: 'ship', path: '../ship/korea_ship_map.html', ko: '\uC870\uC120', en: 'Ship' },
-    { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC704', en: 'Defense' },
+    { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC0B0', en: 'Defense' },
     { id: 'kculture', path: '../kculture/korea_kculture_map.html', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },
     { id: 'bio', path: '../bio/korea_bio_map.html', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: '../robot/korea_robot_map.html', ko: '\uB85C\uBD07', en: 'Robot' },

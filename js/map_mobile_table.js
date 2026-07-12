@@ -1,6 +1,6 @@
 /**
  * Mobile: company table → compact card list (no horizontal scroll).
- * Cards collapse to a summary; tap header to expand details (mobile only).
+ * Cards collapse to a summary; tap summary to expand details (mobile only).
  */
 (function (global) {
   'use strict';
@@ -46,9 +46,10 @@
       '.im-row-meta{flex-shrink:0;text-align:right;font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px;line-height:1.4}' +
       '.im-row-meta .ticker{font-family:monospace;color:var(--accent);font-weight:600}' +
       '.im-row-2col{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}' +
+      '.im-row-mcap-pos{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}' +
       '.im-kv{display:flex;align-items:baseline;justify-content:space-between;gap:6px;min-width:0;padding:8px 10px}' +
-      '.im-row-2col .im-kv{border-right:1px solid var(--border)}' +
-      '.im-row-2col .im-kv:last-child{border-right:none}' +
+      '.im-row-2col .im-kv,.im-row-mcap-pos .im-kv{border-right:1px solid var(--border)}' +
+      '.im-row-2col .im-kv:last-child,.im-row-mcap-pos .im-kv:last-child{border-right:none}' +
       '.im-kv-lbl{font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}' +
       '.im-kv-val{font-size:14px;font-weight:600;color:var(--text);text-align:right;min-width:0;word-break:break-word}' +
       '.im-kv-val .quote-cell{display:inline}' +
@@ -119,6 +120,10 @@
     return '<div class="im-row im-row-2col">' + left + right + '</div>';
   }
 
+  function rowMcapPos(left, right) {
+    return '<div class="im-row im-row-mcap-pos">' + left + right + '</div>';
+  }
+
   function splitPair(a, b) {
     return (
       '<span>' +
@@ -129,24 +134,34 @@
     );
   }
 
-  function rowPosRsHiLo(lblPos, lblRs, pos, rs, lblHi, lblLo, hi, lo) {
-    var left =
-      '<div class="im-split-col">' +
-      '<div class="im-split-line im-split-lbl">' +
+  function kvPosRs(lblPos, lblRs, pos, rs) {
+    return (
+      '<div class="im-kv"><span class="im-kv-lbl">' +
       splitPair(lblPos, lblRs) +
-      '</div>' +
-      '<div class="im-split-line im-split-val">' +
+      '</span><span class="im-kv-val">' +
       splitPair(pos, rs) +
-      '</div></div>';
-    var right =
+      '</span></div>'
+    );
+  }
+
+  function rowHiLo(lblHi, lblLo, hi, lo) {
+    return (
+      '<div class="im-row im-row-2col im-row-split">' +
       '<div class="im-split-col">' +
       '<div class="im-split-line im-split-lbl">' +
-      splitPair(lblHi, lblLo) +
+      (lblHi || '52W Hi') +
       '</div>' +
       '<div class="im-split-line im-split-val">' +
-      splitPair(hi, lo) +
-      '</div></div>';
-    return '<div class="im-row im-row-2col im-row-split">' + left + right + '</div>';
+      (hi || '—') +
+      '</div></div>' +
+      '<div class="im-split-col">' +
+      '<div class="im-split-line im-split-lbl">' +
+      (lblLo || '52W Lo') +
+      '</div>' +
+      '<div class="im-split-line im-split-val">' +
+      (lo || '—') +
+      '</div></div></div>'
+    );
   }
 
   function rowKv(lbl, val) {
@@ -272,11 +287,7 @@
       '<span class="im-card-chevron" aria-hidden="true">▼</span>' +
       '</div>' +
       row2col(kvCell(lblLast, last), kvCell(lbl1d, cellHtml(tr, map, 'th-chg1d'))) +
-      '<div class="im-row im-row-kv"><span class="im-kv-lbl">' +
-      lblMcap +
-      '</span><span class="im-kv-val">' +
-      (mcap || '—') +
-      '</span></div>' +
+      rowMcapPos(kvCell(lblMcap, mcap), kvPosRs(lblPos, lblRs, pos, rs)) +
       '</div>';
 
     var detail =
@@ -292,7 +303,7 @@
         kvCell(thLabel('th-ret250d', '250D'), cellHtml(tr, map, 'th-ret250d'))
       ) +
       row2col(kvCell(lblPer, per), kvCell(lblPbr, pbr)) +
-      rowPosRsHiLo(lblPos, lblRs, pos, rs, lblHi, lblLo, hi, lo) +
+      rowHiLo(lblHi, lblLo, hi, lo) +
       rowKv(lblChain, chain) +
       rowKv(lblSem, sem) +
       rowKv(lblProd, products) +

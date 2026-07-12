@@ -688,14 +688,14 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=1"></script>
-<script src="../js/live_quotes.js?v=6"></script>
+<script src="../js/live_quotes.js?v=7"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
-  <script src="../js/map_mobile_table.js?v=4"></script>
+  <script src="../js/map_mobile_table.js?v=5"></script>
   <script src="../js/map_mobile_ux.js?v=7"></script>
 <style>
     :root {
@@ -5699,13 +5699,11 @@ body.im-tab-table thead th {
             updateQuotesAsofDisplay();
           }
         };
+      applyLang();
       if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.bootMapQuotes) {
-        InvestingMapLiveQuotes.bootMapQuotes(imQuoteOpts).then(function () { applyLang(); });
-      } else {
-        applyLang();
-        if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
-          InvestingMapLiveQuotes.start(imQuoteOpts);
-        }
+        Promise.resolve(InvestingMapLiveQuotes.bootMapQuotes(imQuoteOpts)).catch(function () {});
+      } else if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
+        InvestingMapLiveQuotes.start(imQuoteOpts);
       }
     });
   </script>
@@ -5733,7 +5731,7 @@ body.im-tab-table thead th {
       <li><a href="../energy/korea_energy_map.html">한국 에너지 투자 지도</a> · <a href="../energy/korea_energy_map.html?lang=en" hreflang="en">Korea Energy Sector Stocks Map</a></li>
       <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Equipment Map</a></li>
       <li><a href="../ship/korea_ship_map.html">한국 조선·조선기자재 산업 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Marine Equipment Map</a></li>
-      <li><a href="../defense/korea_defense_map.html">한국 방위·우주·항공 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense, Space &amp; Aviation Map</a></li>
+      <li><a href="../defense/korea_defense_map.html">한국 방산·우주·항공 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense, Space &amp; Aviation Map</a></li>
       <li><a href="../kculture/korea_kculture_map.html">한국 K컬처 산업 투자 지도</a> · <a href="../kculture/korea_kculture_map.html?lang=en" hreflang="en">Korea K-Culture Industry Map</a></li>
       <li><a href="../bio/korea_bio_map.html">한국 바이오 산업 투자 지도</a> · <a href="../bio/korea_bio_map.html?lang=en" hreflang="en">Korea Bio Industry Investment Map</a></li>
       <li><a href="../robot/korea_robot_map.html">한국 로봇/피지컬AI 산업 투자 지도</a> · <a href="../robot/korea_robot_map.html?lang=en" hreflang="en">Korea Robot / Physical AI Industry Map</a></li>
