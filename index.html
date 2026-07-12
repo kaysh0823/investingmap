@@ -1009,18 +1009,29 @@
         <p class="hub-card-map" id="card-defense-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-defense-cta">Open map →</span>
       </a>
-      <a class="hub-card" id="hub-link-kculture" href="kculture/korea_kculture_map.html?tab=table">
+      <a class="hub-card" id="hub-link-kconsume" href="kconsume/korea_kconsume_map.html?tab=table">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🛒</span>
+          <span class="hub-card-badge" id="card-kconsume-badge">33 LISTINGS</span>
+        </div>
+        <h2 id="card-kconsume-title">Korea K-Consume / Retail Map</h2>
+        <p class="hub-card-lead" id="card-kconsume-lead">Beauty, fashion, food &amp; ramen, shopping/retail, and travel—listed Korean consumer names with illustrative global links.</p>
+        <p class="hub-card-keyplayers" id="card-kconsume-keyplayers"></p>
+        <div class="hub-card-tags" id="card-kconsume-tags"></div>
+        <p class="hub-card-map" id="card-kconsume-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-kconsume-cta">Open map →</span>
+      </a>
+      <a class="hub-card" id="hub-link-kcontent" href="kcontent/korea_kcontent_map.html?tab=table">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">🎬</span>
-          <span class="hub-card-badge" id="card-kculture-badge">95 LISTINGS</span>
+          <span class="hub-card-badge" id="card-kcontent-badge">23 LISTINGS</span>
         </div>
-        <h2 id="card-kculture-title">Korea K-Culture Industry Map</h2>
-        <p class="hub-card-lead" id="card-kculture-lead">Ramen &amp; packaged food, travel and airlines, beauty brands,
-          drama·webtoon·streaming IP, and K-pop labels—listed Korean equities with illustrative global links.</p>
-        <p class="hub-card-keyplayers" id="card-kculture-keyplayers"></p>
-        <div class="hub-card-tags" id="card-kculture-tags"></div>
-        <p class="hub-card-map" id="card-kculture-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-kculture-cta">Open map →</span>
+        <h2 id="card-kcontent-title">Korea K-Content Industry Map</h2>
+        <p class="hub-card-lead" id="card-kcontent-lead">Games, drama·webtoon·streaming IP, and K-pop labels—listed Korean content equities with illustrative global links.</p>
+        <p class="hub-card-keyplayers" id="card-kcontent-keyplayers"></p>
+        <div class="hub-card-tags" id="card-kcontent-tags"></div>
+        <p class="hub-card-map" id="card-kcontent-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-kcontent-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-bio" href="bio/korea_bio_map.html?tab=table">
         <div class="hub-card-head">
@@ -1116,7 +1127,7 @@
     const T = {
       ko: {
         title: 'Investing Map',
-        subtitle: '반도체·바이오·조선·해양·방산/우주/항공·로봇/피지컬AI·에너지·전력설비·금융·건설·K컬처 한국 산업 지도로, 상장사·밸류체인·KRX 데이터·관계 네트워크',
+        subtitle: '반도체·바이오·조선·해양·방산/우주/항공·로봇/피지컬AI·에너지·전력설비·금융·건설·K-소비/유통·K-콘텐츠 한국 산업 지도로, 상장사·밸류체인·KRX 데이터·관계 네트워크',
         langFlag: '🇺🇸',
         langText: 'English',
         cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
@@ -1129,7 +1140,8 @@
         powergridMapLine: '17개 상장사 · 전력설비·송배전·발전설비',
         financeMapLine: '31개 상장사 · 은행·증권·보험·카드·캐피탈',
         constructionMapLine: '12개 상장사 · 종합건설·주택·디벨로퍼·건설기계',
-        kcultureMapLine: '56개 상장사 · 식품·여행·뷰티·게임·패션·유통·IP·K-pop',
+        kconsumeMapLine: '33개 상장사 · 화장품·패션·식품·유통·여행',
+        kcontentMapLine: '23개 상장사 · 게임·드라마·웹툰·K-pop',
         introTitle: '한국 상장사 산업 지도 허브',
         introLeadSummary: '사이트 소개',
         introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 10개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
@@ -1158,9 +1170,12 @@
         robotTitle: '한국 로봇/피지컬AI 산업 투자 지도',
         robotLead: '공장자동화·물류 AMR·협동로봇·센싱·모션 제어·피지컬AI까지 로봇·자동화 생태계',
         robotCta: '지도 열기 →',
-        kcultureTitle: '한국 K컬처 산업 투자 지도',
-        kcultureLead: '라면·가공식품, 여행·항공·레저, 화장품, 드라마·웹툰·스트리밍 IP, K팝 레이블 등 상장 한국 주식과 글로벌 연계 예시',
-        kcultureCta: '지도 열기 →',
+        kconsumeTitle: '한국 K-소비/유통 투자 지도',
+        kconsumeLead: '화장품·패션·식품·라면·쇼핑·유통·여행 관련 상장 한국 주식과 글로벌 연계 예시',
+        kconsumeCta: '지도 열기 →',
+        kcontentTitle: '한국 K-콘텐츠 투자 지도',
+        kcontentLead: '게임·드라마·웹툰·스트리밍 IP·K-pop 레이블 등 상장 한국 콘텐츠 주식과 글로벌 연계 예시',
+        kcontentCta: '지도 열기 →',
         energyTitle: '한국 에너지 투자 지도',
         energyLead: '2차전지·ESS·배터리·태양광·풍력 밸류체인과 글로벌 장비·소재 참고 관계',
         energyCta: '지도 열기 →',
@@ -1192,7 +1207,8 @@
         powergridMapLine: '17 companies · power equipment, T&D, generation',
         financeMapLine: '31 companies · banks, securities, insurance, cards & consumer finance',
         constructionMapLine: '12 companies · contractors, housing, developers, equipment',
-        kcultureMapLine: '56 companies · food, travel, beauty, games, fashion, retail, IP, K-pop',
+        kconsumeMapLine: '33 companies · beauty, fashion, food, retail, travel',
+        kcontentMapLine: '23 companies · games, drama, webtoon, K-pop',
         introTitle: 'Hub for Korean listed-industry maps',
         introLeadSummary: 'About this site',
         introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ companies through value-chain lenses. Ten sector maps combine sortable tables, market cap, PER, PBR, 52-week range, and relationship graphs—each with sector-specific editorial guides and cited sources.',
@@ -1221,9 +1237,12 @@
         robotTitle: 'Korea Robot / Physical AI Industry Map',
         robotLead: 'Robotics and Physical AI: factory automation, logistics AMRs, cobots, sensing, motion control, and human-scale systems.',
         robotCta: 'Open map →',
-        kcultureTitle: 'Korea K-Culture Industry Map',
-        kcultureLead: 'Ramen and packaged food, travel and airlines, beauty, drama, webtoon and streaming IP, and K-pop labels—listed Korean equities with illustrative global relationships.',
-        kcultureCta: 'Open map →',
+        kconsumeTitle: 'Korea K-Consume / Retail Map',
+        kconsumeLead: 'Beauty, fashion, food and ramen, shopping/retail, and travel—listed Korean equities with illustrative global relationships.',
+        kconsumeCta: 'Open map →',
+        kcontentTitle: 'Korea K-Content Industry Map',
+        kcontentLead: 'Games, drama, webtoon and streaming IP, and K-pop labels—listed Korean content equities with illustrative global relationships.',
+        kcontentCta: 'Open map →',
         energyTitle: 'Korea Energy Sector Stocks Map',
         energyLead: 'Lithium-ion batteries, ESS, solar, wind, and battery materials—listed Korean companies with illustrative global relationships.',
         energyCta: 'Open map →',
@@ -1293,7 +1312,8 @@
       document.getElementById('hub-link-ship').href = 'ship/korea_ship_map.html' + mapQl;
       document.getElementById('hub-link-defense').href = 'defense/korea_defense_map.html' + mapQl;
       document.getElementById('hub-link-robot').href = 'robot/korea_robot_map.html' + mapQl;
-      document.getElementById('hub-link-kculture').href = 'kculture/korea_kculture_map.html' + mapQl;
+      document.getElementById('hub-link-kconsume').href = 'kconsume/korea_kconsume_map.html' + mapQl;
+      document.getElementById('hub-link-kcontent').href = 'kcontent/korea_kcontent_map.html' + mapQl;
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + mapQl;
       document.getElementById('hub-link-powergrid').href = 'powergrid/korea_powergrid_map.html' + mapQl;
       document.getElementById('hub-link-finance').href = 'finance/korea_finance_map.html' + mapQl;
@@ -1325,9 +1345,12 @@
       document.getElementById('card-robot-title').textContent = t.robotTitle;
       document.getElementById('card-robot-lead').textContent = t.robotLead;
       document.getElementById('card-robot-cta').textContent = t.robotCta;
-      document.getElementById('card-kculture-title').textContent = t.kcultureTitle;
-      document.getElementById('card-kculture-lead').textContent = t.kcultureLead;
-      document.getElementById('card-kculture-cta').textContent = t.kcultureCta;
+      document.getElementById('card-kconsume-title').textContent = t.kconsumeTitle;
+      document.getElementById('card-kconsume-lead').textContent = t.kconsumeLead;
+      document.getElementById('card-kconsume-cta').textContent = t.kconsumeCta;
+      document.getElementById('card-kcontent-title').textContent = t.kcontentTitle;
+      document.getElementById('card-kcontent-lead').textContent = t.kcontentLead;
+      document.getElementById('card-kcontent-cta').textContent = t.kcontentCta;
       document.getElementById('card-energy-title').textContent = t.energyTitle;
       document.getElementById('card-energy-lead').textContent = t.energyLead;
       document.getElementById('card-energy-cta').textContent = t.energyCta;

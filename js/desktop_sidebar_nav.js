@@ -13,7 +13,8 @@
     { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Equip.' },
     { id: 'ship', path: 'ship/korea_ship_map.html', icon: '\u2693', ko: '\uC870\uC120', en: 'Ship' },
     { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC0B0', en: 'Defense' },
-    { id: 'kculture', path: 'kculture/korea_kculture_map.html', icon: '\uD83C\uDFAC', ko: 'K\uCEEC\uCC98', en: 'K-Culture' },
+        { id: 'kconsume', path: 'kconsume/korea_kconsume_map.html', icon: '\uD83D\uDED2', ko: 'K-\uC18C\uBE44/\uC720\uD1B5', en: 'K-Consume' },
+    { id: 'kcontent', path: 'kcontent/korea_kcontent_map.html', icon: '\uD83C\uDFAC', ko: 'K-\uCF58\uD150\uCE20', en: 'K-Content' },
     { id: 'bio', path: 'bio/korea_bio_map.html', icon: '\uD83E\uDDEC', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: 'robot/korea_robot_map.html', icon: '\uD83E\uDD16', ko: '\uB85C\uBD07', en: 'Robot' },
     { id: 'finance', path: 'finance/korea_finance_map.html', icon: '\uD83C\uDFE6', ko: '\uAE08\uC735', en: 'Finance' },
@@ -35,7 +36,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(semiconductor|bio|ship|defense|robot|energy|powergrid|kculture|finance|construction)\//i.test(path)) return '../';
+    if (/\/(semiconductor|bio|ship|defense|robot|energy|powergrid|kculture|kconsume|kcontent|finance|construction)\//i.test(path)) return '../';
     return '';
   }
 
@@ -48,7 +49,9 @@
     if (path.indexOf('/robot/') !== -1) return 'robot';
     if (path.indexOf('/energy/') !== -1) return 'energy';
     if (path.indexOf('/powergrid/') !== -1) return 'powergrid';
-    if (path.indexOf('/kculture/') !== -1) return 'kculture';
+    if (path.indexOf('/kconsume/') !== -1) return 'kconsume';
+    if (path.indexOf('/kcontent/') !== -1) return 'kcontent';
+    if (path.indexOf('/kculture/') !== -1) return 'kconsume';
     if (path.indexOf('/finance/') !== -1) return 'finance';
     if (path.indexOf('/construction/') !== -1) return 'construction';
     if (path === '/' || /\/index\.html$/.test(path)) return 'home';

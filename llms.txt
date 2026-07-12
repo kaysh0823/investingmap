@@ -14,7 +14,8 @@
 - [한국 전력설비 투자 지도](https://www.investingmap.kr/powergrid/korea_powergrid_map.html): 전력설비·송배전·발전설비 밸류체인
 - [한국 금융 투자 지도](https://www.investingmap.kr/finance/korea_finance_map.html): 은행·증권·보험·카드·캐피탈 밸류체인
 - [한국 건설 투자 지도](https://www.investingmap.kr/construction/korea_construction_map.html): 종합건설·주택·디벨로퍼·건설기계 밸류체인
-- [한국 K컬처 산업 투자 지도](https://www.investingmap.kr/kculture/korea_kculture_map.html): 라면·식품, 여행·레저, 화장품, 드라마·웹툰·K-pop 관련 상장사
+- [한국 K-소비/유통 투자 지도](https://www.investingmap.kr/kconsume/korea_kconsume_map.html): 화장품·패션·식품·유통·여행 관련 상장사
+- [한국 K-콘텐츠 투자 지도](https://www.investingmap.kr/kcontent/korea_kcontent_map.html): 게임·드라마·웹툰·K-pop 관련 상장사
 
 ## 허브
 - [Investing Map 허브](https://www.investingmap.kr/): 열 가지 산업 지도 진입점, 언어·테마 전환
@@ -48,7 +49,8 @@
 - [Korea Power Equipment Map](https://www.investingmap.kr/powergrid/korea_powergrid_map.html): Power equipment, T&D, and generation value chains
 - [Korea Listed Financials Map](https://www.investingmap.kr/finance/korea_finance_map.html): Banks, securities, insurance, cards, and consumer finance
 - [Korea Construction Sector Map](https://www.investingmap.kr/construction/korea_construction_map.html): Contractors, housing, developers, and equipment
-- [Korea K-Culture Industry Map](https://www.investingmap.kr/kculture/korea_kculture_map.html): Food, travel, beauty, games, fashion, retail, media IP, and K-pop themes
+- [Korea K-Consume / Retail Map](https://www.investingmap.kr/kconsume/korea_kconsume_map.html): Beauty, fashion, food, retail, and travel themes
+- [Korea K-Content Industry Map](https://www.investingmap.kr/kcontent/korea_kcontent_map.html): Games, drama/webtoon/media, and K-pop themes
 
 ## Hub
 - [Investing Map Hub](https://www.investingmap.kr/): Entry point for all ten sector maps, language and theme toggle

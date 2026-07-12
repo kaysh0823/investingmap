@@ -117,12 +117,20 @@
         "en": "KRX metrics and illustrative global peer relationships for listed Korean contractors, housing developers, and construction equipment companies."
       }
     },
-    "kculture": {
-      "path": "/kculture/korea_kculture_map.html",
-      "title": { "ko": "한국 K컬처 산업 투자 지도", "en": "Korea K-Culture Industry Map" },
+    "kconsume": {
+      "path": "/kconsume/korea_kconsume_map.html",
+      "title": { "ko": "한국 K-소비/유통 투자 지도", "en": "Korea K-Consume / Retail Map" },
       "summary": {
-        "ko": "라면·식품, 여행·레저, 화장품, 게임, 패션, 쇼핑·유통, 드라마·웹툰·미디어, K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
-        "en": "KRX data and theme-driven examples of global exposure for listed Korean companies in ramen/food, travel, beauty, games, fashion, retail, drama/webtoon/media, and K-pop."
+        "ko": "화장품·패션·식품·라면·쇼핑·유통·여행 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.",
+        "en": "KRX data and illustrative global links for listed Korean beauty, fashion, food, retail, and travel companies."
+      }
+    },
+    "kcontent": {
+      "path": "/kcontent/korea_kcontent_map.html",
+      "title": { "ko": "한국 K-콘텐츠 투자 지도", "en": "Korea K-Content Industry Map" },
+      "summary": {
+        "ko": "게임·드라마·웹툰·미디어·K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
+        "en": "KRX data and theme-driven global exposure examples for listed Korean games, drama/webtoon/media, and K-pop companies."
       }
     }
   }

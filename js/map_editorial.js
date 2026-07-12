@@ -171,6 +171,40 @@
         ],
       },
     },
+
+    kconsume: {
+      ko: {
+        paragraphs: [
+          '화장품·뷰티, 패션, 식품·라면, 쇼핑·유통, 여행·레저 등 K-소비/유통 테마 상장사를 묶습니다. 아모레퍼시픽, 삼양식품, 신세계 등 소비재·유통 종목을 밸류체인별로 비교할 때 출발점으로 쓸 수 있습니다.',
+          '소비·유통주는 환율, 중국·동남아 수요, 채널 경쟁, 원가·판촉 사이클의 영향을 크게 받습니다. 표의 재무 지표는 참고용이며, 화장품·식품은 계절성·일회성 이벤트가 실적에 영향을 줄 수 있습니다.',
+          '투자 유의 사항은 <a href="../disclaimer.html">면책 고지</a>, 사이트 소개는 <a href="../about.html">소개</a> 페이지를 참고하세요.',
+        ],
+      },
+      en: {
+        paragraphs: [
+          'Listed companies are grouped by K-consume themes—beauty, fashion, food and ramen, retail, and travel. Use it as a starting point when comparing Amorepacific, Samyang Foods, Shinsegae, and peers.',
+          'Consumer and retail stocks are sensitive to FX, China and Southeast Asia demand, channel competition, and cost/promotion cycles. Table metrics are for reference; beauty and food names can swing with seasonality and one-off events.',
+          'For investment cautions see our <a href="../disclaimer.html">disclaimer</a>; for site overview see <a href="../about.html">about</a>.',
+        ],
+      },
+    },
+
+    kcontent: {
+      ko: {
+        paragraphs: [
+          '게임, 드라마·웹툰·미디어, K-pop 엔터 등 K-콘텐츠 테마 상장사를 묶습니다. 하이브, NAVER, 크래프톤 등 IP·플랫폼·엔터 종목을 탐색할 때 출발점으로 쓸 수 있습니다.',
+          '콘텐츠주는 플랫폼 효과, 아티스트·타이틀 이슈, 중국·글로벌 규제 등 비재무 요인이 큽니다. 표의 재무 지표는 참고용이며, 엔터·게임은 일회성 이벤트와 히트작 여부가 실적에 큰 영향을 줄 수 있습니다.',
+          '투자 유의 사항은 <a href="../disclaimer.html">면책 고지</a>, 사이트 소개는 <a href="../about.html">소개</a> 페이지를 참고하세요.',
+        ],
+      },
+      en: {
+        paragraphs: [
+          'Listed companies are grouped by K-content themes—games, drama/webtoon/media, and K-pop entertainment. Use it as a starting point when exploring HYBE, NAVER, Krafton, and peers.',
+          'Content stocks are driven heavily by platform effects, artist and title news, and China/global regulation. Table metrics are for reference; entertainment and games can swing sharply with hit titles and one-off events.',
+          'For investment cautions see our <a href="../disclaimer.html">disclaimer</a>; for site overview see <a href="../about.html">about</a>.',
+        ],
+      },
+    },
   };
 
   var stylesInjected = false;

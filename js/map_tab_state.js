@@ -73,16 +73,38 @@
     } catch (e3) {}
   }
 
+  function isIndustryMapPage() {
+    try {
+      var path = (window.location.pathname || '').replace(/\\/g, '/');
+      return /\/(semiconductor|bio|ship|defense|robot|energy|powergrid|kculture|kconsume|kcontent|finance|construction)\//i.test(
+        path
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
   function appendToNavUrl(href) {
-    var tab = getTab();
-    if (!tab || tab === 'table') return href;
     try {
       var u = new URL(href, window.location.href);
-      u.searchParams.set('tab', tab);
+      if (!isIndustryMapPage()) {
+        // Hub (and non-map pages): always open company list.
+        u.searchParams.set('tab', 'table');
+        return u.pathname + u.search + u.hash;
+      }
+      var tab = getTab();
+      if (!tab || tab === 'table') u.searchParams.delete('tab');
+      else u.searchParams.set('tab', tab);
       return u.pathname + u.search + u.hash;
     } catch (e) {
-      var sep = href.indexOf('?') >= 0 ? '&' : '?';
-      return href + sep + 'tab=' + encodeURIComponent(tab);
+      if (!isIndustryMapPage()) {
+        var sep = href.indexOf('?') >= 0 ? '&' : '?';
+        return href + sep + 'tab=table';
+      }
+      var tab2 = getTab();
+      if (!tab2 || tab2 === 'table') return href;
+      var sep2 = href.indexOf('?') >= 0 ? '&' : '?';
+      return href + sep2 + 'tab=' + encodeURIComponent(tab2);
     }
   }
 

@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kculture', 'bio', 'robot', 'finance', 'construction'];
+  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'finance', 'construction'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
@@ -17,7 +17,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v9';
+  var SWR_KEY = 'im-hub-dashboard-v10';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null };
@@ -51,7 +51,8 @@
       powergrid: ['변압기', '개폐기', '송배전', '케이블', '발전설비', '원자력'],
       ship: ['조선소', '엔진', '철강', '조선기자재', '해양', '해운', '방산 해양'],
       defense: ['군용 항공', '미사일·C4ISR', '육상무기', '해군·함정', '우주·위성', '민항'],
-      kculture: ['라면·식품', '여행·항공', '뷰티', '게임', '패션', '쇼핑·유통', '드라마·웹툰', 'K-pop'],
+      kconsume: ['라면·식품', '여행·항공', '뷰티', '패션', '쇼핑·유통'],
+      kcontent: ['게임', '드라마·웹툰', 'K-pop'],
       bio: ['신약', 'CDMO', '바이오시밀러', '의료기기', '진단'],
       robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
       finance: ['은행', '증권', '보험', '카드', '캐피탈'],
@@ -63,7 +64,8 @@
       powergrid: ['Transformers', 'Switchgear', 'T&D', 'Cables', 'Generation', 'Nuclear'],
       ship: ['Yards', 'Engines', 'Steel', 'Marine equipment', 'Offshore', 'Shipping', 'Naval'],
       defense: ['Military aviation', 'Missiles & C4ISR', 'Land systems', 'Naval', 'Space & satellites', 'Civil aviation'],
-      kculture: ['Food', 'Travel & airlines', 'Beauty', 'Games', 'Fashion', 'Retail', 'Drama & webtoon', 'K-pop'],
+      kconsume: ['Food', 'Travel', 'Beauty', 'Fashion', 'Retail'],
+      kcontent: ['Games', 'Drama & webtoon', 'K-pop'],
       bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
       finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Consumer finance'],
@@ -212,7 +214,7 @@
   }
 
   function loadHubSectorReturns() {
-    return fetch('data/hub_sector_returns.json?v=17', { cache: 'default' })
+    return fetch('data/hub_sector_returns.json?v=18', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j) {
@@ -356,7 +358,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=16')
+    return fetch('data/hub_index.json?v=17')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();
@@ -637,10 +639,23 @@
     }
   }
 
+  function pulseSectorOrder(sectors, local, retKey) {
+    return SECTOR_ORDER.filter(function (sid) {
+      return hubData && hubData.sectors && hubData.sectors[sid];
+    }).slice().sort(function (a, b) {
+      var ra = (sectors[a] || local[a] || {})[retKey];
+      var rb = (sectors[b] || local[b] || {})[retKey];
+      if (ra == null && rb == null) return 0;
+      if (ra == null) return 1;
+      if (rb == null) return -1;
+      return rb - ra;
+    });
+  }
+
   function buildPulseCards(lang, sectors, local, retKey) {
     var labels = t(lang);
     var ql = '?lang=' + encodeURIComponent(lang);
-    return SECTOR_ORDER.map(function (sid) {
+    return pulseSectorOrder(sectors, local, retKey).map(function (sid) {
       var block = hubData.sectors[sid];
       if (!block) return '';
       var meta = block.meta || {};
@@ -661,7 +676,8 @@
         retText = formatPct(retPct, lang);
       }
       var href = (meta.map || 'index.html') + ql + '&tab=table';
-      var countLabel = (pulse.listingCount != null ? pulse.listingCount : block.companies.length) +
+      // Always use hub_index company count (snapshot listingCount goes stale after universe prunes).
+      var countLabel = (block.companies ? block.companies.length : 0) +
         (lang === 'en' ? '' : '\uAC1C');
       var mcapBlock =
         '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
