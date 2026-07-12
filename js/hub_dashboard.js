@@ -660,7 +660,7 @@
         if (retPct != null) cls = retPct > 0 ? 'hub-pulse-card-ret is-up' : retPct < 0 ? 'hub-pulse-card-ret is-down' : 'hub-pulse-card-ret is-flat';
         retText = formatPct(retPct, lang);
       }
-      var href = (meta.map || 'index.html') + ql;
+      var href = (meta.map || 'index.html') + ql + '&tab=table';
       var countLabel = (pulse.listingCount != null ? pulse.listingCount : block.companies.length) +
         (lang === 'en' ? '' : '\uAC1C');
       var mcapBlock =

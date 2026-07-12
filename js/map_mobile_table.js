@@ -1,5 +1,6 @@
 /**
  * Mobile: company table → compact card list (no horizontal scroll).
+ * Cards collapse to a summary; tap header to expand details (mobile only).
  */
 (function (global) {
   'use strict';
@@ -21,8 +22,16 @@
       '.geo-summary.map-editorial-collapsible{padding-left:14px!important;padding-right:14px!important}' +
       '.filter-bar{flex-wrap:wrap;max-width:100%}' +
       '.header,.table-container{max-width:100%;overflow-x:hidden}' +
-      '}' +
-      '@media (min-width:769px){' +
+      '.im-stock-card .im-card-summary{display:block}' +
+      '.im-stock-card .im-card-detail{max-height:0;overflow:hidden;transition:max-height .28s ease}' +
+      '.im-stock-card .im-card-toggle{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}' +
+      '.im-stock-card .im-card-toggle:focus{outline:2px solid var(--accent);outline-offset:-2px}' +
+      '.im-stock-card .im-card-toggle:focus:not(:focus-visible){outline:none}' +
+      '.im-stock-card .im-card-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}' +
+      '.im-stock-card .im-card-chevron{flex-shrink:0;width:1.1em;height:1.1em;margin-top:3px;margin-left:4px;color:var(--text-muted);transition:transform .28s ease;display:inline-flex;align-items:center;justify-content:center;font-size:12px;line-height:1}' +
+      '.im-stock-card.is-expanded .im-card-chevron{transform:rotate(180deg)}' +
+      '.im-stock-card .im-row-head{align-items:flex-start;justify-content:space-between;gap:8px;padding:10px 12px;background:var(--surface2)}' +
+      '}' +      '@media (min-width:769px){' +
       '.im-mobile-cards{display:none!important}' +
       '}' +
       '.im-mobile-cards{display:none;padding:4px 0 12px}' +
@@ -151,8 +160,71 @@
     );
   }
 
+  function thLabel(id, fallback) {
+    return (document.getElementById(id) || {}).textContent || fallback || '';
+  }
+
+  function collectExpandedTickers(root) {
+    var out = new Set();
+    if (!root) return out;
+    var cards = root.querySelectorAll('.im-stock-card.is-expanded[data-ticker]');
+    for (var i = 0; i < cards.length; i++) {
+      var t = cards[i].getAttribute('data-ticker');
+      if (t) out.add(t);
+    }
+    return out;
+  }
+
+  function setCardExpanded(card, expanded) {
+    if (!card) return;
+    var toggle = card.querySelector('.im-card-toggle');
+    var detail = card.querySelector('.im-card-detail');
+    card.classList.toggle('is-expanded', !!expanded);
+    if (toggle) toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    if (!detail) return;
+    if (expanded) {
+      detail.style.maxHeight = detail.scrollHeight + 'px';
+    } else {
+      if (!detail.style.maxHeight || detail.style.maxHeight === '0px') {
+        detail.style.maxHeight = '0px';
+      } else {
+        detail.style.maxHeight = detail.scrollHeight + 'px';
+        // Force reflow so collapse animates from current height.
+        void detail.offsetHeight;
+        detail.style.maxHeight = '0px';
+      }
+    }
+  }
+
+  function toggleCard(card) {
+    if (!card) return;
+    setCardExpanded(card, !card.classList.contains('is-expanded'));
+  }
+
+  function bindCardInteractions(root) {
+    if (!root || root.getAttribute('data-im-accordion-bound') === '1') return;
+    root.setAttribute('data-im-accordion-bound', '1');
+
+    root.addEventListener('click', function (e) {
+      var toggle = e.target.closest && e.target.closest('.im-card-toggle');
+      if (!toggle || !root.contains(toggle)) return;
+      e.preventDefault();
+      toggleCard(toggle.closest('.im-stock-card'));
+    });
+
+    root.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var toggle = e.target.closest && e.target.closest('.im-card-toggle');
+      if (!toggle || !root.contains(toggle)) return;
+      e.preventDefault();
+      toggleCard(toggle.closest('.im-stock-card'));
+    });
+  }
+
   function buildCard(tr, map) {
     var ticker = tr.getAttribute('data-ticker') || cellText(tr, map, 'th-ticker');
+    var safeTicker = String(ticker || '').replace(/"/g, '');
+    var detailId = 'im-card-detail-' + (safeTicker || 'x');
     var nameBlock = cellHtml(tr, map, 'th-name');
     var marketBlock = cellHtml(tr, map, 'th-market');
     var tickerSpan = cellHtml(tr, map, 'th-ticker');
@@ -169,25 +241,26 @@
     var products = cellHtml(tr, map, 'th-products');
     var partners = cellHtml(tr, map, 'th-partners');
 
-    var lblChain = (document.getElementById('th-chain') || {}).textContent || '';
-    var lblSem = (document.getElementById('th-semtype') || {}).textContent || '';
-    var lblProd = (document.getElementById('th-products') || {}).textContent || '';
-    var lblPart = (document.getElementById('th-partners') || {}).textContent || '';
-    var lblHi = (document.getElementById('th-52hi') || {}).textContent || '52W Hi';
-    var lblLo = (document.getElementById('th-52lo') || {}).textContent || '52W Lo';
-    var lblLast = (document.getElementById('th-last') || {}).textContent || '';
-    var lblMcap = (document.getElementById('th-mcap') || {}).textContent || '';
-    var lblPer = (document.getElementById('th-per') || {}).textContent || 'PER';
-    var lblPbr = (document.getElementById('th-pbr') || {}).textContent || 'PBR';
-    var lblPos = (document.getElementById('th-position') || {}).textContent || '';
-    var lblRs = (document.getElementById('th-rs') || {}).textContent || 'RS';
+    var lblChain = thLabel('th-chain', '');
+    var lblSem = thLabel('th-semtype', '');
+    var lblProd = thLabel('th-products', '');
+    var lblPart = thLabel('th-partners', '');
+    var lblHi = thLabel('th-52hi', '52W Hi');
+    var lblLo = thLabel('th-52lo', '52W Lo');
+    var lblLast = thLabel('th-last', '');
+    var lblMcap = thLabel('th-mcap', '');
+    var lblPer = thLabel('th-per', 'PER');
+    var lblPbr = thLabel('th-pbr', 'PBR');
+    var lblPos = thLabel('th-position', '');
+    var lblRs = thLabel('th-rs', 'RS');
+    var lbl1d = thLabel('th-chg1d', '1D');
 
     var meta = tickerSpan || ticker;
     if (marketBlock) meta += ' · ' + marketBlock;
 
-    return (
-      '<article class="im-stock-card" data-ticker="' +
-      (ticker || '') +
+    var summary =
+      '<div class="im-card-summary im-card-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="' +
+      detailId +
       '">' +
       '<div class="im-row im-row-head">' +
       '<div class="im-row-name">' +
@@ -195,23 +268,43 @@
       '</div>' +
       '<div class="im-row-meta">' +
       meta +
-      '</div></div>' +
-      row2col(kvCell(lblLast, last), kvCell(lblMcap, mcap)) +
+      '</div>' +
+      '<span class="im-card-chevron" aria-hidden="true">▼</span>' +
+      '</div>' +
+      row2col(kvCell(lblLast, last), kvCell(lbl1d, cellHtml(tr, map, 'th-chg1d'))) +
+      '<div class="im-row im-row-kv"><span class="im-kv-lbl">' +
+      lblMcap +
+      '</span><span class="im-kv-val">' +
+      (mcap || '—') +
+      '</span></div>' +
+      '</div>';
+
+    var detail =
+      '<div class="im-card-detail" id="' +
+      detailId +
+      '" style="max-height:0px">' +
       row2col(
-        kvCell((document.getElementById('th-chg1d') || {}).textContent || '1D', cellHtml(tr, map, 'th-chg1d')),
-        kvCell((document.getElementById('th-ret20d') || {}).textContent || '20D', cellHtml(tr, map, 'th-ret20d'))
+        kvCell(thLabel('th-ret20d', '20D'), cellHtml(tr, map, 'th-ret20d')),
+        kvCell(thLabel('th-ret50d', '50D'), cellHtml(tr, map, 'th-ret50d'))
       ) +
       row2col(
-        kvCell((document.getElementById('th-ret50d') || {}).textContent || '50D', cellHtml(tr, map, 'th-ret50d')),
-        kvCell((document.getElementById('th-ret120d') || {}).textContent || '120D', cellHtml(tr, map, 'th-ret120d'))
+        kvCell(thLabel('th-ret120d', '120D'), cellHtml(tr, map, 'th-ret120d')),
+        kvCell(thLabel('th-ret250d', '250D'), cellHtml(tr, map, 'th-ret250d'))
       ) +
-      rowKv((document.getElementById('th-ret250d') || {}).textContent || '250D', cellHtml(tr, map, 'th-ret250d')) +
       row2col(kvCell(lblPer, per), kvCell(lblPbr, pbr)) +
       rowPosRsHiLo(lblPos, lblRs, pos, rs, lblHi, lblLo, hi, lo) +
       rowKv(lblChain, chain) +
       rowKv(lblSem, sem) +
       rowKv(lblProd, products) +
       rowKv(lblPart, partners) +
+      '</div>';
+
+    return (
+      '<article class="im-stock-card" data-ticker="' +
+      safeTicker +
+      '">' +
+      summary +
+      detail +
       '</article>'
     );
   }
@@ -223,11 +316,20 @@
     if (root) root.style.display = mobile ? 'block' : 'none';
   }
 
+  function restoreExpanded(root, expandedTickers) {
+    if (!root || !expandedTickers || !expandedTickers.size) return;
+    expandedTickers.forEach(function (ticker) {
+      var card = root.querySelector('.im-stock-card[data-ticker="' + ticker + '"]');
+      if (card) setCardExpanded(card, true);
+    });
+  }
+
   function sync(table) {
     if (!table) return;
     injectStyles();
     var root = ensureCardsRoot(table);
     if (!root) return;
+    var expandedTickers = collectExpandedTickers(root);
     var map = colMapFromTable(table);
     var rows = table.querySelectorAll('#table-body tr');
     var html = '';
@@ -235,6 +337,8 @@
       html += buildCard(rows[i], map);
     }
     root.innerHTML = html;
+    bindCardInteractions(root);
+    restoreExpanded(root, expandedTickers);
     applyVisibility(table);
   }
 
@@ -248,6 +352,9 @@
       el = document.querySelector('#table-body tr[data-ticker="' + ticker + '"]');
     }
     if (el) {
+      if (mobile && el.classList.contains('im-stock-card')) {
+        setCardExpanded(el, true);
+      }
       el.scrollIntoView({ block: 'center', behavior: 'smooth' });
       el.classList.add('im-card-flash');
       setTimeout(function () {
@@ -256,16 +363,20 @@
     }
   }
 
+  function onViewportChange() {
+    var table = document.getElementById('main-table');
+    if (table) applyVisibility(table);
+    if (!(mql && mql.matches)) return;
+    var expanded = document.querySelectorAll('#table-cards .im-stock-card.is-expanded');
+    for (var i = 0; i < expanded.length; i++) {
+      setCardExpanded(expanded[i], true);
+    }
+  }
+
   if (mql && mql.addEventListener) {
-    mql.addEventListener('change', function () {
-      var table = document.getElementById('main-table');
-      if (table) applyVisibility(table);
-    });
+    mql.addEventListener('change', onViewportChange);
   } else if (mql && mql.addListener) {
-    mql.addListener(function () {
-      var table = document.getElementById('main-table');
-      if (table) applyVisibility(table);
-    });
+    mql.addListener(onViewportChange);
   }
 
   injectStyles();
