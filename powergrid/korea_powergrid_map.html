@@ -255,6 +255,7 @@
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
+<script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=5"></script>
@@ -1538,17 +1539,21 @@ body.im-tab-table thead th {
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
-    <details class="map-editorial-details">
+    <details class="map-editorial-details" open>
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
       <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">전력설비·송배전·발전설비 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean power equipment &amp; grid stocks</h2>
-    <p lang="ko" class="im-seo-body-p">전력설비·송배전·발전설비 밸류체인에 속한 KOSPI·KOSDAQ 상장사를 정리합니다. HD현대일렉트릭, LS ELECTRIC, 두산에너빌리티, 한국전력 등 변압기·케이블·발전·원전 기자재 종목의 시가총액·PER·PBR과 밸류체인 태그를 표로 제공하고, Siemens Energy·GE Vernova 등 글로벌 참고 관계를 연결합니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map covers listed companies in power equipment, transmission &amp; distribution, and power generation equipment. Compare KRX metrics and value-chain categories for HD Hyundai Electric, LS Electric, Doosan Enerbility, and KEPCO, with illustrative global equipment relationships.</p>
-    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
-    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
+    <p lang="ko" class="im-seo-body-p">전력설비·송배전·발전설비 밸류체인에 속한 상장사를 다룹니다. 변압기·개폐기·케이블·발전 EPC·원전 기자재·전력·가스 유틸리티가 한 지도에서 연결됩니다.</p>
+    <p lang="ko" class="im-seo-body-p">전력기기는 북미·중동 송전 투자 사이클과 전력 수요에 민감합니다. 발전·원전은 규제와 수주가 밸류에이션에 큰 변수입니다. 표의 세부 유형·제품 열에서 사업 mix를 확인하세요.</p>
+    <p lang="ko" class="im-seo-body-p">전력 정책·요금 체계는 빠르게 변합니다. 공시와 한국전력거래소 자료로 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p" hidden>This map covers listed companies in power equipment, transmission &amp; distribution, and power generation equipment—including transformers, switchgear, cables, EPC, and utilities.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Grid equipment makers track transmission-investment cycles; generation and nuclear companies are driven by regulation and order books. Check segment and product columns for business mix.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Power policy and tariff frameworks change quickly. Cross-check filings and Korea Power Exchange data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 전력설비, 송배전, 변압기, 원전 기자재</p>
+    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean power equipment, T&amp;D, transformers</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-13 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-13.</p>
   </div>
       <!-- investingmap-seo-body-end -->

@@ -339,6 +339,7 @@
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
+<script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=5"></script>
@@ -1622,17 +1623,21 @@ body.im-tab-table thead th {
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
-    <details class="map-editorial-details">
+    <details class="map-editorial-details" open>
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
       <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">은행·증권·보험·카드 등 금융 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean listed financials — banks, securities &amp; insurance</h2>
-    <p lang="ko" class="im-seo-body-p">은행·금융지주, 증권·자산운용, 생명·손해보험, 카드·캐피탈 등 국내 상장 금융사를 밸류체인별로 정리합니다. KB금융, 신한지주, 삼성생명, 미래에셋증권 등 Korean financial stocks의 KRX 시가총액·PER·PBR과 글로벌 peer 참고 관계를 제공합니다. 금리·규제·신용 사이클에 민감한 섹터이며, 본 페이지는 정보 제공 목적이며 투자 권유가 아닙니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map covers listed Korean banks and holdings, securities and asset managers, life and P&amp;C insurers, and card and consumer-finance companies. Compare KRX metrics and illustrative global peer relationships for KB Financial, Shinhan, Samsung Life, Mirae Asset Securities, and other Korean financial stocks. Rates, regulation, and credit cycles drive the sector; informational only, not investment advice.</p>
-    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
-    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
+    <p lang="ko" class="im-seo-body-p">은행·금융지주, 증권·자산운용, 생명·손해보험, 카드·캐피탈 등 국내 상장 금융사를 밸류체인별로 정리합니다. KB금융·신한지주·삼성생명·미래에셋증권 등 대표 종목의 시가총액·PER·PBR과 글로벌 peer 참고 관계를 한 페이지에서 비교할 수 있습니다.</p>
+    <p lang="ko" class="im-seo-body-p">금융주는 기준금리·규제·신용 사이클·자본비율에 민감합니다. 표의 세부 유형·주요 사업 열에서 은행·증권·보험·카드 mix를 확인하세요.</p>
+    <p lang="ko" class="im-seo-body-p">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 공시와 금융감독원·한국은행 자료를 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p" hidden>This map covers listed Korean banks and holdings, securities and asset managers, life and P&amp;C insurers, and card and consumer-finance companies. Compare KRX metrics and illustrative global peer relationships for KB Financial, Shinhan, Samsung Life, Mirae Asset Securities, and peers.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Financial stocks track policy rates, regulation, credit cycles, and capital ratios. Use segment and product columns for business mix.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Informational only—not investment advice. Cross-check filings and official data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 금융주, 은행, 증권, 보험, 카드</p>
+    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean financial stocks, banks, securities, insurance</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-13 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-13.</p>
   </div>
       <!-- investingmap-seo-body-end -->

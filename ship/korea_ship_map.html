@@ -333,6 +333,7 @@
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
+<script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=5"></script>
@@ -1648,17 +1649,21 @@ body.im-tab-table thead th {
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
-    <details class="map-editorial-details">
+    <details class="map-editorial-details" open>
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
       <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">조선·조선기자재·해운 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean shipbuilding &amp; marine equipment stocks</h2>
-    <p lang="ko" class="im-seo-body-p">조선소·엔진·철강·조선기자재·해양플랜트·해운·방산 해양 등 조선·해양 클러스터 상장사를 밸류체인별로 분류합니다. HD현대중공업, 한화오션, HMM 등 국내 조선·해운 관련주의 KRX 시가총액·PER·PBR과 수주·선종 민감 테마를 표와 관계 그래프로 제공합니다. Korean shipbuilding stocks와 marine equipment names를 LNG선·컨선 사이클 관점에서 비교하려는 투자자용 참고 자료이며, 수주 공시는 별도 확인이 필요합니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map groups listed Korean yards, engines, steel, marine equipment, offshore, shipping, and naval-marine companies by value chain. Compare KRX metrics and order-cycle themes for HD Hyundai Heavy Industries, Hanwha Ocean, HMM, and peers—useful for investors tracking Korean shipbuilding stocks and marine equipment suppliers. Verify latest order disclosures separately; graph relationships are illustrative.</p>
-    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
-    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
+    <p lang="ko" class="im-seo-body-p">조선소, 엔진·기자재, 철강·용접, 해양플랜트, 해운, 방산 해양 등 조선·해양 밸류체인에 속한 상장사를 묶어 보여 줍니다. 수주 잔량·선종 mix는 각 기업 설명에 반영하되, 실시간 수주 공시는 별도로 확인해야 합니다.</p>
+    <p lang="ko" class="im-seo-body-p">조선은 LNG선·컨테이너선 사이클과 환율, 원자재 가격에 민감합니다. 표의 주가 위치는 52주 구간 대비 현재가를 백분율로 나타내며, 동종 업체 간 상대적 위치 비교에 유용합니다. 글로벌 조선·해운 peer와의 참고 관계는 그래프에서 회색·실선으로 구분됩니다.</p>
+    <p lang="ko" class="im-seo-body-p">편집 분류 기준과 데이터 출처는 <a href="../editorial-policy.html">편집·검증 정책</a>에 정리되어 있습니다.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Listed companies across the shipbuilding and marine value chain—yards, engines and marine equipment, steel and welding, offshore, shipping, and defense-marine—are grouped on one map. Order backlog and vessel-mix themes are reflected in company notes; verify real-time order disclosures separately.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Shipbuilding is sensitive to LNG and container-ship cycles, FX, and raw-material prices. The 52-week range column shows where the last price sits within the 52-week high/low as a percentage, useful for comparing peers. Reference relationships to global yard and shipping peers are shown as gray and solid lines in the graph.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Classification rules and data sources are described in our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 조선 관련주, 조선기자재, LNG선, 해운</p>
+    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean shipbuilding stocks, marine equipment, LNG carriers</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-13 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-13.</p>
   </div>
       <!-- investingmap-seo-body-end -->

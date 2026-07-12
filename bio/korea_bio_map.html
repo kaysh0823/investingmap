@@ -585,6 +585,7 @@
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
+<script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=5"></script>
@@ -1857,17 +1858,21 @@ body.im-tab-table thead th {
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
-    <details class="map-editorial-details">
+    <details class="map-editorial-details" open>
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
       <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">바이오·제약 밸류체인과 코스닥·코스피 바이오주</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean biotech &amp; pharma listed stocks</h2>
-    <p lang="ko" class="im-seo-body-p">신약·CDMO·바이오시밀러·의료기기·진단(IVD) 등 섹터별 국내 상장 바이오·제약사를 분류합니다. 삼성바이오로직스, 셀트리온, 알테오젠 등 바이오 관련주의 KRX 시가총액·PER·PBR과 글로벌 빅파마·기술이전 페어링 참고 관계를 한 페이지에서 비교할 수 있습니다. 임상 단계·파이프라인은 공시 기준으로 최신 정보를 확인하시고, 그래프 연결은 편집 분류용 참고 네트워크입니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map classifies listed Korean bio and pharma companies by novel drugs, CDMO, biosimilars, devices, and diagnostics (IVD). Compare KRX metrics and illustrative big-pharma licensing and partnership relationships for Samsung Biologics, Celltrion, Alteogen, and other Korean biotech stocks. Confirm clinical stages in filings; graph edges are editorial reference networks.</p>
-    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
-    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
+    <p lang="ko" class="im-seo-body-p">바이오시밀러, 신약·CDMO, 의료기기, 진단 등 섹터별로 국내 상장 바이오·제약사를 분류하고, 글로벌 빅파마·플랫폼 기업과의 기술이전·페어링 관계를 참고용으로 연결합니다. 임상 단계·파이프라인은 각 기업의 핵심 테마 열에 요약되어 있으며, 투자 전 공시 등을 통해 최신 단계를 확인하시기 바랍니다.</p>
+    <p lang="ko" class="im-seo-body-p">시가총액·밸류에이션 지표는 페이지 상단 기준일의 KRX 데이터를 따릅니다. 비상장 계열사나 SPAC 구조는 표에 포함되지 않을 수 있습니다. 그래프의 실선·점선은 페어링 유형을 구분하는 편집 표기이며, 라이선스 계약의 법적 효력을 의미하지 않습니다.</p>
+    <p lang="ko" class="im-seo-body-p">바이오는 임상 실패·규제 리스크가 큰 섹터입니다. 본 컨텐츠는 국내 산업 지형과 글로벌 연결을 한눈에 파악하기 위한 정보 제공 자료에 불과하며, 투자 권유가 아닙니다. 자세한 면책은 <a href="../disclaimer.html">면책 고지</a>를 읽어 주세요.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Listed Korean bio and pharma companies are grouped by sector—biosimilars, novel drugs, CDMO, devices, diagnostics—with illustrative licensing and partnership relationships to global big pharma and platform companies. Clinical stage and pipeline notes are summarized in each company’s theme column; check the latest stage in filings before investing.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Market cap and valuation metrics follow KRX data as of the date shown at the top of the page. Unlisted affiliates or SPAC structures may be omitted from the table. Solid and dashed lines in the graph are editorial markers for partnership types, not legal proof of license agreements.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Biotech carries high clinical and regulatory risk. This content is for information only—to help you see domestic industry structure and global links at a glance—and is not investment advice. See our <a href="../disclaimer.html">disclaimer</a> for details.</p>
+    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 바이오 관련주, CDMO, 바이오시밀러, 신약</p>
+    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean biotech stocks, CDMO, biosimilars</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-13 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-13.</p>
   </div>
       <!-- investingmap-seo-body-end -->

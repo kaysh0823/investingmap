@@ -11,7 +11,7 @@ const OLD =
   </section>`;
 const NEW =
   `<section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
-    <details class="map-editorial-details">
+    <details class="map-editorial-details" open>
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
       <div id="map-editorial-body" class="map-editorial-body"></div>
     </details>

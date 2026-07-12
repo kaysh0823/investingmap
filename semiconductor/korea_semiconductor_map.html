@@ -693,6 +693,7 @@
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
+<script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=5"></script>
@@ -2095,15 +2096,19 @@ body.im-tab-table thead th {
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
-    <details class="map-editorial-details">
+    <details class="map-editorial-details" open>
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
       <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">반도체 밸류체인과 코스피·코스닥 반도체 관련주</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean semiconductor value chain &amp; listed stocks</h2>
-    <p lang="ko" class="im-seo-body-p">본 페이지는 KOSPI·KOSDAQ 상장 반도체 관련주를 설계·팹리스·파운드리·메모리(IDM)·소재·장비·기판·패키징·테스트 등 밸류체인 축으로 분류한 투자 지도입니다. 삼성전자, SK하이닉스를 비롯한 국내 반도체 종목의 KRX 시가총액·PER·PBR과 52주 주가 위치를 표에서 확인하고, NVIDIA·Apple·TSMC 등 글로벌 거래처·동종 peer 관계를 참고용 그래프로 연결했습니다. 반도체 밸류체인을 한눈에 비교하려는 국내외 투자자를 위해 정리했으며, 시총 3천억원 이상 편집 분류 종목만 포함합니다. 아래 표의 시세·시총은 빌드 시점 스냅샷이며, 영업일에는 실시간 갱신됩니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map classifies KOSPI and KOSDAQ semiconductor stocks across design, fabless, foundry, memory (IDM), materials, equipment, substrates, and packaging &amp; test. Compare KRX market cap, PER, PBR, and 52-week range for companies including Samsung Electronics and SK hynix, with illustrative relationships to global customers and peers such as NVIDIA, Apple, and TSMC. Listed companies meet a minimum market cap of KRW 300 billion (editorial threshold). Quote and cap fields below are build-time snapshots; live values refresh on trading days.</p>
+    <p lang="ko" class="im-seo-body-p">KOSPI·KOSDAQ에 상장된 국내 반도체 기업을 IDM, 팹리스, 파운드리, 소재, 장비, 기판, 패키징·테스트 등 벨류체인 축으로 묶어 비교할 수 있게 만든 콘텐츠입니다. 단순 종목 나열이 아니라, 각 기업이 어느 공정·역할에 속하는지와 글로벌 거래처·동종 peer가 한 화면에서 연결되도록 구성했습니다.</p>
+    <p lang="ko" class="im-seo-body-p">표에서는 KRX 공시 기준 시가총액·PER·PBR과 52주 가격 구간(주가 위치)을 함께 볼 수 있습니다. 관계 그래프는 공개 보도·사업보고서·애널리스트 보고서를 바탕으로 분류한 참고 네트워크이며, 공식 계약이나 지분 관계를 대체하지 않습니다. 해외 투자자를 위해 영문 모드에서는 시총을 USD 환산(Billion)으로, 한국어 모드에서는 조(兆)원 단위로 표시합니다.</p>
+    <p lang="ko" class="im-seo-body-p">반도체는 수출·설비투자·메모리 사이클에 민감합니다. 본 페이지는 산업 구조를 파악하는 출발점으로 활용하고, 매수·매도 판단은 책임지지 않습니다. 데이터 갱신 주기와 검증 절차는 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하십시오.</p>
+    <p lang="en" class="im-seo-body-p" hidden>This content groups listed Korean semiconductor companies on KOSPI and KOSDAQ by value-chain segment—IDM, fabless, foundry, materials, equipment, substrates, and packaging &amp; test—for side-by-side comparison. It is not a flat ticker list: each company’s process role and illustrative global customer and peer links are connected on one screen.</p>
+    <p lang="en" class="im-seo-body-p" hidden>The table shows market cap, PER, and PBR based on KRX disclosures, plus position within the 52-week range. The relationship graph is a reference network classified from public news, annual reports, and analyst reports; it does not replace official contracts or ownership. In English mode, market cap is shown in USD billions; in Korean mode, in trillions of won.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Semiconductors are sensitive to exports, capex, and memory cycles. Use this page as a starting point to understand industry structure; we do not provide buy or sell recommendations. See our <a href="../editorial-policy.html">editorial policy</a> for update cadence and verification.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 반도체 관련주, 반도체 밸류체인, 코스피 반도체, 코스닥 반도체, HBM, 파운드리</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean semiconductor stocks, Korea semiconductor value chain, KOSPI semiconductors</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-13 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-13.</p>

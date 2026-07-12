@@ -5,6 +5,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 import { geo, BASE, root } from './geo_lib.mjs';
 import { SECTOR_ROUTES } from '../lib/seo_sector_copy.mjs';
 import {
@@ -106,6 +107,9 @@ function patchIndex(lastmod) {
 }
 
 function main() {
+  // Keep browser editorial data in sync with lib/sector_editorial.mjs
+  execSync('node scripts/emit_sector_editorial_js.mjs', { cwd: ROOT, stdio: 'inherit' });
+
   const snapshots = loadSnapshots(ROOT);
   const lastmod = readLastmod();
   console.log(`SEO prerender — quote snapshot: ${snapshots.builtAt}, hub lastmod: ${lastmod}`);

@@ -291,6 +291,7 @@
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js"></script>
   <script src="../js/map_filter_ux.js"></script>
+<script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=5"></script>
@@ -1635,17 +1636,21 @@ body.im-tab-table thead th {
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
-    <details class="map-editorial-details">
+    <details class="map-editorial-details" open>
       <summary class="map-editorial-summary" id="map-editorial-title">섹터 설명</summary>
       <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">K-콘텐츠 상장 종목 지도</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>K-content, games, media &amp; K-pop stocks</h2>
-    <p lang="ko" class="im-seo-body-p">게임, 드라마·웹툰·미디어, K-pop 엔터 등 K-콘텐츠 테마별 KOSPI·KOSDAQ 상장사를 분류합니다. 하이브, NAVER, 크래프톤 등 IP·플랫폼·엔터주의 시가총액·PER·PBR과 글로벌 연계 예시를 표와 그래프로 제공합니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map groups listed companies by K-content themes—games, drama/webtoon/media, and K-pop entertainment. Explore content stocks including HYBE, NAVER, and Krafton with KRX metrics and illustrative global relationships.</p>
-    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> </p>
-    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> </p>
+    <p lang="ko" class="im-seo-body-p">게임, 드라마·웹툰·미디어, K-pop 엔터 등 K-콘텐츠 테마 상장사를 묶습니다. 하이브, NAVER, 크래프톤 등 IP·플랫폼·엔터 종목을 탐색할 때 출발점으로 쓸 수 있습니다.</p>
+    <p lang="ko" class="im-seo-body-p">콘텐츠주는 플랫폼 효과, 아티스트·타이틀 이슈, 중국·글로벌 규제 등 비재무 요인이 큽니다. 표의 재무 지표는 참고용이며, 엔터·게임은 일회성 이벤트와 히트작 여부가 실적에 큰 영향을 줄 수 있습니다.</p>
+    <p lang="ko" class="im-seo-body-p">투자 유의 사항은 <a href="../disclaimer.html">면책 고지</a>, 사이트 소개는 <a href="../about.html">소개</a> 페이지를 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Listed companies are grouped by K-content themes—games, drama/webtoon/media, and K-pop entertainment. Use it as a starting point when exploring HYBE, NAVER, Krafton, and peers.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Content stocks are driven heavily by platform effects, artist and title news, and China/global regulation. Table metrics are for reference; entertainment and games can swing sharply with hit titles and one-off events.</p>
+    <p lang="en" class="im-seo-body-p" hidden>For investment cautions see our <a href="../disclaimer.html">disclaimer</a>; for site overview see <a href="../about.html">about</a>.</p>
+    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> K-콘텐츠, 게임, 웹툰, K-pop, 엔터</p>
+    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> K-content, games, webtoon, K-pop stocks</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-07-13 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-07-13.</p>
   </div>
       <!-- investingmap-seo-body-end -->
