@@ -833,8 +833,10 @@
     mergeSectorsPayload(j);
   }
 
+  var sectorFetchInFlight = {};
+
   function fetchSectorsHorizon(lang, retKey) {
-    if (sectorsLoadingHorizon === retKey) return Promise.resolve();
+    if (sectorFetchInFlight[retKey]) return sectorFetchInFlight[retKey];
     var horizonParam = retKeyToHorizonParam(retKey);
     var url = hubApiUrl('/api/hub_sectors?horizon=' + encodeURIComponent(horizonParam));
     if (!url) {
@@ -845,7 +847,7 @@
     sectorsLoadingHorizon = retKey;
     sectorsFailed = false;
     renderPulse(lang);
-    return fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
+    sectorFetchInFlight[retKey] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
         mergeSectorsPayload(j);
@@ -854,15 +856,16 @@
         });
         if (!ok) throw new Error('hub_sectors_incomplete_' + horizonParam);
         writeSwr();
-        return refreshLiveSectorReturns(lang);
       })
       .catch(function () {
         sectorsFailed = true;
       })
       .then(function () {
+        delete sectorFetchInFlight[retKey];
         if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
         renderPulse(lang);
       });
+    return sectorFetchInFlight[retKey];
   }
 
   function fetchSectors(lang) {
@@ -938,14 +941,17 @@
       }
     }).then(function () {
       if (!sectorsFailed || !top10Failed || !rsTop10Failed) writeSwr();
-      return refreshLiveSectorReturns(lang);
-    }).then(function () {
       sectorsBootstrapping = false;
       if (sectorsLoadingHorizon === pulseHorizonKey) sectorsLoadingHorizon = null;
       renderPulse(lang);
       renderTop10(lang);
       renderRsTop10(lang);
-      startLiveSectorPoll(lang);
+      // Live Naver overlay is best-effort — do not block first paint of API data.
+      refreshLiveSectorReturns(lang).then(function () {
+        startLiveSectorPoll(lang);
+      }).catch(function () {
+        startLiveSectorPoll(lang);
+      });
     });
   }
 
@@ -954,14 +960,14 @@
     lang = pageLang(lang);
     readPulseHorizon();
     sectorsBootstrapping = true;
-    sectorsLoadingHorizon = pulseHorizonKey;
+    top10Loading = true;
+    rsTop10Loading = true;
     var swr = readSwr();
     if (swr) {
       dashboardData.top10 = swr.top10 || [];
       dashboardData.rsTop10 = swr.rsTop10 || [];
       dashboardData.regularSession = swr.regularSession;
     }
-    var sectorFetch = fetchSectorsHorizon(lang, pulseHorizonKey);
     Promise.all([loadHubIndex(), loadFx(), loadHubSectorReturns()])
       .then(function () {
         renderLabels(lang);
@@ -969,16 +975,19 @@
         renderPulse(lang);
         renderTop10(lang);
         renderRsTop10(lang);
-        top10Loading = true;
-        rsTop10Loading = true;
-        renderTop10(lang);
-        renderRsTop10(lang);
+        var sectorFetch = fetchSectorsHorizon(lang, pulseHorizonKey);
         return fetchDashboardAndRender(lang, sectorFetch);
       })
       .catch(function (err) {
+        sectorsBootstrapping = false;
+        top10Loading = false;
+        rsTop10Loading = false;
         if (typeof console !== 'undefined' && console.warn) {
           console.warn('[hub_dashboard] init failed', err);
         }
+        renderPulse(lang);
+        renderTop10(lang);
+        renderRsTop10(lang);
       });
   }
 
@@ -987,6 +996,8 @@
     readPulseHorizon();
     renderLabels(lang);
     enhanceCards(lang);
+    // Avoid flashing "Could not load" before hubData / first fetch finishes.
+    if (!hubData && sectorsBootstrapping) return;
     renderPulse(lang);
     renderTop10(lang);
     renderRsTop10(lang);
