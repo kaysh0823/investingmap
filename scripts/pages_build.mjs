@@ -35,6 +35,8 @@ const ROOT_DIRS = [
   'finance',
   'construction',
   'kculture',
+  'kconsume',
+  'kcontent',
 ];
 
 fs.rmSync(out, { recursive: true, force: true });

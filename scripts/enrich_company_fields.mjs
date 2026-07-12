@@ -24,7 +24,8 @@ const HTML_MAPS = [
   { key: 'powergrid', path: 'powergrid/korea_powergrid_map.html' },
   { key: 'finance', path: 'finance/korea_finance_map.html' },
   { key: 'construction', path: 'construction/korea_construction_map.html' },
-  { key: 'kculture', path: 'kculture/korea_kculture_map.html' },
+  { key: 'kconsume', path: 'kconsume/korea_kconsume_map.html' },
+  { key: 'kcontent', path: 'kcontent/korea_kcontent_map.html' },
 ];
 
 function countEmpty(companies) {

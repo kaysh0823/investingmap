@@ -188,13 +188,14 @@ const HTML_MAPS = [
     badgeEn: 'listings',
   },
   {
-    key: 'kculture',
-    path: 'kculture/korea_kculture_map.html',
-    idPrefix: 'kc',
+    key: 'kcontent',
+    path: 'kcontent/korea_kcontent_map.html',
+    idPrefix: 'kct',
     badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
     badgeEn: 'listings',
   },
 ];
+// Note: kconsume is curated on the map page (not auto-merged from cp_list K-culture blob).
 
 function mergeIndustryMap(existing, cpTickers, industryKey, chains, krx, meta3557, idPrefix) {
   const byTicker = new Map(
@@ -348,7 +349,8 @@ function main() {
     powergrid: results.powergrid?.after,
     finance: results.finance?.after,
     construction: results.construction?.after,
-    kculture: results.kculture?.after,
+    kconsume: results.kconsume?.after,
+    kcontent: results.kcontent?.after,
   };
 
   if (hubLines.semi) {
@@ -387,9 +389,13 @@ function main() {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 종합건설/, `${hubLines.construction}개 상장사 · 종합건설`);
     indexHtml = indexHtml.replace(/\d+ listings · contractors/, `${hubLines.construction} listings · contractors`);
   }
-  if (hubLines.kculture) {
-    indexHtml = indexHtml.replace(/\d+개 상장사 · 식품/, `${hubLines.kculture}개 상장사 · 식품`);
-    indexHtml = indexHtml.replace(/\d+ listings · food/, `${hubLines.kculture} listings · food`);
+  if (hubLines.kconsume) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 화장품/, `${hubLines.kconsume}개 상장사 · 화장품`);
+    indexHtml = indexHtml.replace(/\d+ companies · beauty/, `${hubLines.kconsume} companies · beauty`);
+  }
+  if (hubLines.kcontent) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 게임/, `${hubLines.kcontent}개 상장사 · 게임`);
+    indexHtml = indexHtml.replace(/\d+ companies · games/, `${hubLines.kcontent} companies · games`);
   }
   fs.writeFileSync(indexPath, indexHtml, 'utf8');
   console.log('index.html hub counts updated');

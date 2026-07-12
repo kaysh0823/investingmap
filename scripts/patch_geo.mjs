@@ -24,7 +24,8 @@ const MAP_FILES = [
   { file: 'defense/korea_defense_map.html', key: 'defense' },
   { file: 'robot/korea_robot_map.html', key: 'robot' },
   { file: 'energy/korea_energy_map.html', key: 'energy' },
-  { file: 'kculture/korea_kculture_map.html', key: 'kculture' },
+  { file: 'kconsume/korea_kconsume_map.html', key: 'kconsume' },
+  { file: 'kcontent/korea_kcontent_map.html', key: 'kcontent' },
 ];
 
 function geoSummaryBlock(key) {

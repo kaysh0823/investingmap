@@ -23,7 +23,8 @@ const files = [
   'defense/korea_defense_map.html',
   'robot/korea_robot_map.html',
   'energy/korea_energy_map.html',
-  'kculture/korea_kculture_map.html',
+  'kconsume/korea_kconsume_map.html',
+  'kcontent/korea_kcontent_map.html',
   'bio/korea_bio_map.html',
 ];
 

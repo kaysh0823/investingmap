@@ -23,7 +23,8 @@ const HTML_MAPS = [
   'powergrid/korea_powergrid_map.html',
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
-  'kculture/korea_kculture_map.html',
+  'kconsume/korea_kconsume_map.html',
+  'kcontent/korea_kcontent_map.html',
 ];
 
 function countMarkets(companies) {
@@ -123,9 +124,13 @@ function patchIndexHubCounts(hubLines) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 종합건설/, `${hubLines.construction}개 상장사 · 종합건설`);
     indexHtml = indexHtml.replace(/\d+ listings · contractors/, `${hubLines.construction} listings · contractors`);
   }
-  if (hubLines.kculture) {
-    indexHtml = indexHtml.replace(/\d+개 상장사 · 식품/, `${hubLines.kculture}개 상장사 · 식품`);
-    indexHtml = indexHtml.replace(/\d+ listings · food/, `${hubLines.kculture} listings · food`);
+  if (hubLines.kconsume) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 화장품/, `${hubLines.kconsume}개 상장사 · 화장품`);
+    indexHtml = indexHtml.replace(/\d+ companies · beauty/, `${hubLines.kconsume} companies · beauty`);
+  }
+  if (hubLines.kcontent) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 게임/, `${hubLines.kcontent}개 상장사 · 게임`);
+    indexHtml = indexHtml.replace(/\d+ companies · games/, `${hubLines.kcontent} companies · games`);
   }
   fs.writeFileSync(indexPath, indexHtml, 'utf8');
   console.log('index.html hub counts updated');
@@ -145,7 +150,8 @@ function main() {
       powergrid: 'powergrid',
       finance: 'finance',
       construction: 'construction',
-      kculture: 'kculture',
+      kconsume: 'kconsume',
+      kcontent: 'kcontent',
     }[key];
     const r = filterHtmlMap(rel);
     if (sectorKey) counts[sectorKey] = r.after;

@@ -12,7 +12,10 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-const DEFENSE_REMOVE = new Set(['000270', '003490']); // 기아, 대한항공
+const DEFENSE_KEEP = new Set([
+  '012450', '064350', '272210', '079550', '047810', '000880', '082920', '011210',
+  '103140', '003570', '099320', '036530', '064960', '214430', '005810', '010820',
+]);
 
 const ENERGY_KEEP = new Set([
   '373220', '006400', '051910', '096770', '003670', '247540', '086520', '011790',
@@ -83,7 +86,7 @@ function filterMap(rel, keepFn, label) {
 
 filterMap(
   'defense/korea_defense_map.html',
-  (c) => !DEFENSE_REMOVE.has(pad(c.ticker)),
+  (c) => DEFENSE_KEEP.has(pad(c.ticker)),
   'defense',
 );
 
@@ -99,7 +102,8 @@ for (const rel of [
   'construction/korea_construction_map.html',
   'energy/korea_energy_map.html',
   'finance/korea_finance_map.html',
-  'kculture/korea_kculture_map.html',
+  'kconsume/korea_kconsume_map.html',
+  'kcontent/korea_kcontent_map.html',
   'powergrid/korea_powergrid_map.html',
   'robot/korea_robot_map.html',
   'semiconductor/korea_semiconductor_map.html',
@@ -147,4 +151,18 @@ for (const rel of ['js/sector_nav.js', 'js/global_bottom_nav.js', 'js/desktop_si
 }
 
 execSync('node scripts/build_hub_index.mjs', { cwd: ROOT, stdio: 'inherit' });
+
+{
+  const indexPath = path.join(ROOT, 'index.html');
+  let indexHtml = fs.readFileSync(indexPath, 'utf8');
+  const defenseN = DEFENSE_KEEP.size;
+  const energyN = ENERGY_KEEP.size;
+  indexHtml = indexHtml.replace(/\d+개 상장사 · 항공/, `${defenseN}개 상장사 · 항공`);
+  indexHtml = indexHtml.replace(/\d+ companies · aviation/, `${defenseN} companies · aviation`);
+  indexHtml = indexHtml.replace(/\d+개 상장사 · 2차전지/, `${energyN}개 상장사 · 2차전지`);
+  indexHtml = indexHtml.replace(/\d+ companies · batteries/, `${energyN} companies · batteries`);
+  fs.writeFileSync(indexPath, indexHtml, 'utf8');
+  console.log(`index.html hub counts: defense=${defenseN}, energy=${energyN}`);
+}
+
 console.log('Done.');
