@@ -106,6 +106,18 @@ async function loadKrxQuotes(authKey) {
 }
 
 function toSupabaseRow(ticker, naver, krx, asOf, regularSession) {
+  let chg1d = null;
+  if (naver?.chg1dPct != null && Number.isFinite(naver.chg1dPct)) {
+    chg1d = naver.chg1dPct;
+  } else if (naver?.last != null && naver?.prevClose > 0) {
+    chg1d = Math.round(((naver.last / naver.prevClose) - 1) * 10000) / 100;
+  } else if (naver?.last != null && krx?.refClose > 0 && regularSession) {
+    // Intraday: recompute vs latest KRX reference close when Naver prev is missing.
+    chg1d = Math.round(((naver.last / krx.refClose) - 1) * 10000) / 100;
+  } else {
+    chg1d = krx?.chg1dPct ?? null;
+  }
+
   return {
     ticker,
     last: naver?.last ?? null,
@@ -114,7 +126,7 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession) {
     mcap_won: naver?.mcapWon ?? null,
     per: naver?.per ?? null,
     pbr: naver?.pbr ?? null,
-    chg_1d_pct: krx?.chg1dPct ?? null,
+    chg_1d_pct: chg1d,
     ret_20d_pct: krx?.ret20dPct ?? null,
     ret_50d_pct: krx?.ret50dPct ?? null,
     ret_120d_pct: krx?.ret120dPct ?? null,

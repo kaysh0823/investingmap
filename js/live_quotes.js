@@ -146,13 +146,21 @@
     var RL = global.InvestingMapReturnLive;
     if (!RL || !companies || !snap) return;
     if (!RL.shouldUseLive1dReturns(snap.recentDd)) return;
+    var snapStale = RL.isRecentDdStale(snap.recentDd);
     var quotes = snap.quotes || {};
     for (var i = 0; i < companies.length; i++) {
       var c = companies[i];
       var key = normalizeTicker(c.ticker);
       if (!key || c.quoteLast == null) continue;
       var row = quotes[key];
-      var refClose = row && row.refClose;
+      var refClose = null;
+      if (typeof c.quotePrevClose === 'number' && c.quotePrevClose > 0) {
+        refClose = c.quotePrevClose;
+      } else if (row && row.refClose != null && row.refClose > 0) {
+        // When KRX recentDd lags, keep API/Naver chg1dPct instead of multi-day span vs old refClose.
+        if (snapStale && c.chg1dPct != null) continue;
+        refClose = row.refClose;
+      }
       if (refClose == null || refClose <= 0) continue;
       var live = RL.calcLiveChg1dPct(c.quoteLast, refClose);
       if (live != null) c.chg1dPct = live;
@@ -239,6 +247,7 @@
         continue;
       }
       c.quoteLast = typeof q.last === 'number' && isFinite(q.last) ? q.last : null;
+      c.quotePrevClose = typeof q.prevClose === 'number' && isFinite(q.prevClose) ? q.prevClose : null;
       c.quoteHi52 = typeof q.high52w === 'number' && isFinite(q.high52w) ? q.high52w : null;
       c.quoteLo52 = typeof q.low52w === 'number' && isFinite(q.low52w) ? q.low52w : null;
       c.quotePosition = calcQuotePosition(c.quoteLast, c.quoteHi52, c.quoteLo52);
@@ -470,14 +479,13 @@
       return fetchAllCodes(base, codes)
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
-          var snapPromise = quotesResponseHasRsReturns(j)
-            ? Promise.resolve(null)
-            : loadRsSnapshot();
-          return snapPromise.then(function (snap) {
-            if (snap) {
+          // Always load RS snap for multi-horizon fallback + live 1D vs refClose.
+          // Supabase chg1dPct can lag KRX close-to-close while `last` is Naver intraday.
+          return loadRsSnapshot().then(function (snap) {
+            if (snap && !quotesResponseHasRsReturns(j)) {
               mergeRsIntoCompanies(getCompanies(), snap);
-              applyLiveReturns(getCompanies(), snap);
             }
+            if (snap) applyLiveReturns(getCompanies(), snap);
             try {
               onAsOf(j.asOf || '', { regularSession: j.regularSession });
             } catch (e1) {}

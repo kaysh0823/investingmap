@@ -89,11 +89,20 @@ function parsePerPbr(html) {
 
 /**
  * @param {string} html
- * @returns {{ last: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, per: number|null, pbr: number|null }}
+ * @returns {{ last: number|null, prevClose: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, per: number|null, pbr: number|null, chg1dPct: number|null }}
  */
 export function parseNaverSiseHtml(html) {
   if (!html || typeof html !== 'string') {
-    return { last: null, high52w: null, low52w: null, mcapWon: null, per: null, pbr: null };
+    return {
+      last: null,
+      prevClose: null,
+      high52w: null,
+      low52w: null,
+      mcapWon: null,
+      per: null,
+      pbr: null,
+      chg1dPct: null,
+    };
   }
 
   let last = null;
@@ -102,6 +111,24 @@ export function parseNaverSiseHtml(html) {
   if (last == null) {
     const todayM = html.match(/class="no_today"[^>]*>[\s\S]*?<span[^>]*class="blind"[^>]*>([^<]+)<\/span>/);
     if (todayM) last = parseKoreanNumber(todayM[1]);
+  }
+
+  let prevClose = null;
+  const prevM =
+    html.match(/전일가[\s\S]{0,220}?>([0-9,]{2,})/) ||
+    html.match(/전일가[\s\S]{0,220}?([0-9,]{3,})/);
+  if (prevM) prevClose = parseKoreanNumber(prevM[1]);
+
+  let chg1dPct = null;
+  const rateM =
+    html.match(/id="_rate"[^>]*>\s*([+-]?[\d.]+)\s*%?/) ||
+    html.match(/등락률[\s\S]{0,120}?([+-]?[\d.]+)\s*%/);
+  if (rateM) {
+    const n = parseFloat(String(rateM[1]).replace(/,/g, ''));
+    if (Number.isFinite(n)) chg1dPct = n;
+  }
+  if (chg1dPct == null && last != null && prevClose != null && prevClose > 0) {
+    chg1dPct = Math.round(((last / prevClose) - 1) * 10000) / 100;
   }
 
   let high52w = null;
@@ -128,7 +155,7 @@ export function parseNaverSiseHtml(html) {
   const { per, pbr } = parsePerPbr(html);
   const mcapWon = parseMarketCapWon(html);
 
-  return { last, high52w, low52w, mcapWon, per, pbr };
+  return { last, prevClose, high52w, low52w, mcapWon, per, pbr, chg1dPct };
 }
 
 export async function fetchNaverSiseQuote(code, init) {
@@ -152,11 +179,13 @@ export async function fetchNaverSiseQuote(code, init) {
 export function parseNaverMobileIntegration(json) {
   const out = {
     last: null,
+    prevClose: null,
     high52w: null,
     low52w: null,
     mcapWon: null,
     per: null,
     pbr: null,
+    chg1dPct: null,
   };
   if (!json || typeof json !== 'object') return out;
 
@@ -172,13 +201,22 @@ export function parseNaverMobileIntegration(json) {
   if (byCode.lowPriceOf52Weeks) out.low52w = parseKoreanNumber(byCode.lowPriceOf52Weeks);
   if (byCode.per) out.per = parseKoreanNumber(byCode.per);
   if (byCode.pbr) out.pbr = parseKoreanNumber(byCode.pbr);
+  if (byCode.lastClosePrice) out.prevClose = parseKoreanNumber(byCode.lastClosePrice);
+  if (byCode.changeRate) {
+    const n = parseFloat(String(byCode.changeRate).replace(/,/g, '').replace(/%/g, ''));
+    if (Number.isFinite(n)) out.chg1dPct = n;
+  }
 
   const dt = json.dealTrendInfos;
   if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
+    // Recent session close — use as last only when PC sise is unavailable (preferNaverLast merge).
     out.last = parseKoreanNumber(dt[0].closePrice);
   }
   if (out.last == null && byCode.lastClosePrice) {
     out.last = parseKoreanNumber(byCode.lastClosePrice);
+  }
+  if (out.chg1dPct == null && out.last != null && out.prevClose != null && out.prevClose > 0) {
+    out.chg1dPct = Math.round(((out.last / out.prevClose) - 1) * 10000) / 100;
   }
   return out;
 }
@@ -222,6 +260,8 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   const preferFundamentals = opts && opts.preferNaverFundamentals;
   const out = { ...quote };
   if (naver.last != null && (preferLast || out.last == null)) out.last = naver.last;
+  if (naver.prevClose != null && (preferLast || out.prevClose == null)) out.prevClose = naver.prevClose;
+  if (naver.chg1dPct != null && (preferLast || out.chg1dPct == null)) out.chg1dPct = naver.chg1dPct;
   if (naver.high52w != null && (preferLast || out.high52w == null)) out.high52w = naver.high52w;
   if (naver.low52w != null && (preferLast || out.low52w == null)) out.low52w = naver.low52w;
   if (naver.mcapWon != null) {
@@ -237,17 +277,27 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   }
   if (naver.per != null && (preferFundamentals || out.per == null)) out.per = naver.per;
   if (naver.pbr != null && (preferFundamentals || out.pbr == null)) out.pbr = naver.pbr;
+  if (
+    (out.chg1dPct == null || preferLast) &&
+    out.last != null &&
+    out.prevClose != null &&
+    out.prevClose > 0
+  ) {
+    out.chg1dPct = Math.round(((out.last / out.prevClose) - 1) * 10000) / 100;
+  }
   return out;
 }
 
 export function emptyQuote() {
   return {
     last: null,
+    prevClose: null,
     high52w: null,
     low52w: null,
     mcapWon: null,
     per: null,
     pbr: null,
+    chg1dPct: null,
     yoyReturnPct: null,
   };
 }
