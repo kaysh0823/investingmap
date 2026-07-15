@@ -1,6 +1,8 @@
 name: Sync quotes to Supabase
 
 on:
+  # Backup only — GitHub schedule cron is heavily throttled (often 1–3h gaps).
+  # Prefer external cron → repository_dispatch for ~10 min cadence during the session.
   schedule:
     # KST 09:00–14:50 (UTC 00:00–05:50), every 10 min, Mon–Fri
     - cron: '*/10 0-5 * * 1-5'
@@ -8,6 +10,8 @@ on:
     - cron: '0,10,20,30 6 * * 1-5'
     # KST 16:00 (UTC 07:00), Mon–Fri — post-close final snapshot
     - cron: '0 7 * * 1-5'
+  repository_dispatch:
+    types: [sync-quotes]
   workflow_dispatch:
 
 jobs:

@@ -57,6 +57,49 @@ node scripts/update_fx_from_naver.mjs
 
 로컬: `functions/README.md` · 레거시 Worker: `worker/quotes/`
 
+## Quotes sync (GitHub Actions + 외부 크론)
+
+워크플로: `.github/workflows/sync-quotes.yml` → `scripts/sync_quotes_to_supabase.mjs`  
+(네이버 시세 + KRX 기간수익률 → Supabase `stock_quotes_latest` / `sector_returns`)
+
+GitHub `schedule` cron(`*/10`)은 **스로틀링**되어 실제로는 1~3시간 간격으로만 돌 수 있습니다. 워크플로의 schedule은 **백업용**으로 유지하고, 장중 10분 간격은 외부 크론 → `repository_dispatch`를 권장합니다.
+
+### 1) GitHub fine-grained PAT
+
+1. GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens
+2. Repository access: 이 저장소만
+3. Permissions → Repository permissions → **Contents: Read and write**
+4. 생성된 토큰을 cron-job.org 등에서만 보관 (repo secrets에 넣지 않아도 됨)
+
+### 2) cron-job.org에서 10분마다 dispatch
+
+- **URL:** `POST https://api.github.com/repos/kaysh0823/investingmap/dispatches`
+- **Headers:**
+  - `Authorization: Bearer <fine-grained PAT>`
+  - `Accept: application/vnd.github+json`
+  - `Content-Type: application/json` (권장)
+- **Body:**
+
+```json
+{"event_type":"sync-quotes"}
+```
+
+`event_type`은 워크플로의 `repository_dispatch.types`와 같아야 합니다 (`sync-quotes`).
+
+### 3) 장중만 호출하는 스케줄 예시 (KST)
+
+정규장 **평일 09:00–15:40**에만 10분 간격으로 호출합니다. cron-job.org는 **Timezone = Asia/Seoul**을 쓰는 것을 권장합니다.
+
+| 구간 (KST) | cron-job.org 표현 예시 | 비고 |
+|------------|------------------------|------|
+| 09:00–14:50 | `*/10 9-14 * * 1-5` | 매시 00,10,…,50분 |
+| 15:00–15:40 | `0,10,20,30,40 15 * * 1-5` | 15:40까지 (장후 직후 여유) |
+
+한 개의 잡으로 합치기 어렵다면 위처럼 **두 잡**을 만들고 URL·헤더·바디는 동일하게 둡니다.  
+장후 최종 스냅샷은 GitHub schedule의 `0 7 * * 1-5`(KST 16:00) 백업이 커버합니다.
+
+수동 실행: Actions → **Sync quotes to Supabase** → Run workflow, 또는 동일 `dispatches` POST.
+
 ## 서브경로 배포
 
 사이트가 `https://example.com/maps/` 아래에만 올라가도, **`maps/` 폴더 안에 이 구조를 그대로 두면** 상대 경로가 유지됩니다. (루트 도메인 전체가 이 프로젝트인 경우도 동일합니다.)
