@@ -171,7 +171,7 @@ export function buildHubSectorsFromSupabaseRows(hubIndex, rows, env, opts = {}) 
     const row = rowById.get(sid);
     if (row && row.updated_at && !updatedAt) updatedAt = row.updated_at;
     sectors[sid] = {
-      return1dPct: null,
+      return1dPct: row ? numOrNull(row.ret_1d_pct) : null,
       return20dPct: row ? numOrNull(row.ret_20d_pct) : null,
       return50dPct: row ? numOrNull(row.ret_50d_pct) : null,
       return120dPct: row ? numOrNull(row.ret_120d_pct) : null,

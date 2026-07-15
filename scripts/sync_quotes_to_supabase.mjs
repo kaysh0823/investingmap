@@ -21,7 +21,14 @@ const NAVER_DELAY_MS = 80;
 const UPSERT_BATCH_SIZE = 40;
 const SUPABASE_MAX_RETRIES = 1;
 
-const SECTOR_RET_FIELDS = ['ret_20d_pct', 'ret_50d_pct', 'ret_120d_pct', 'ret_250d_pct'];
+/** out column on sector_returns ← source field on stock quote rows */
+const SECTOR_RET_FIELDS = [
+  { out: 'ret_1d_pct', src: 'chg_1d_pct' },
+  { out: 'ret_20d_pct', src: 'ret_20d_pct' },
+  { out: 'ret_50d_pct', src: 'ret_50d_pct' },
+  { out: 'ret_120d_pct', src: 'ret_120d_pct' },
+  { out: 'ret_250d_pct', src: 'ret_250d_pct' },
+];
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -224,8 +231,8 @@ function buildSectorReturnRows(hubIndex, quoteRowsByTicker, updatedAt) {
       members.push(q);
     }
     const row = { sector_id: sid, updated_at: updatedAt };
-    for (const col of SECTOR_RET_FIELDS) {
-      row[col] = mcapWeightedReturn(members, col);
+    for (const { out, src } of SECTOR_RET_FIELDS) {
+      row[out] = mcapWeightedReturn(members, src);
     }
     rows.push(row);
   }
@@ -283,7 +290,7 @@ async function main() {
   console.log(`Upserting ${sectorRows.length} sector_returns rows…`);
   const sectorResult = await upsertSectorReturns(sectorRows, supabaseUrl, serviceKey);
   for (const r of sectorRows) {
-    const vals = SECTOR_RET_FIELDS.map((col) => `${col}=${r[col] == null ? 'null' : r[col]}`).join(' ');
+    const vals = SECTOR_RET_FIELDS.map((f) => `${f.out}=${r[f.out] == null ? 'null' : r[f.out]}`).join(' ');
     console.log(`  ${r.sector_id}: ${vals}`);
   }
 

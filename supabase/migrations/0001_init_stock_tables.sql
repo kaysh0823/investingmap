@@ -31,6 +31,7 @@ create index on stock_price_history (trade_date);
 -- 섹터별 시총가중 수익률 (허브 대시보드용, hub_sector_returns.json 대체)
 create table sector_returns (
   sector_id     text primary key,
+  ret_1d_pct    numeric,
   ret_20d_pct   numeric,
   ret_50d_pct   numeric,
   ret_120d_pct  numeric,
