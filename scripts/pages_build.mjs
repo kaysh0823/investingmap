@@ -23,6 +23,7 @@ const ROOT_FILES = [
   'faq.html',
 ];
 const ROOT_DIRS = [
+  // Entire trees (recursive). `js/` must stay whole-tree so hub/map clients never ship a stale dist/js.
   'js',
   'data',
   'bio',
