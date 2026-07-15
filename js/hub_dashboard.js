@@ -531,7 +531,7 @@
   }
 
   function loadFx() {
-    return fetch('data/fx_usdkrw.json', { cache: 'no-store' })
+    return fetch('/api/fx', { cache: 'no-store' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j && typeof j.rate === 'number' && j.rate > 0) fxRate = j.rate;

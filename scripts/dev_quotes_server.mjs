@@ -221,6 +221,25 @@ const server = http.createServer(async (req, res) => {
     }
     return;
   }
+  if (req.method === 'GET' && url.pathname === '/api/fx') {
+    try {
+      const { fetchUsdKrwFromNaver, buildFxPayload } = await import('../functions/lib/naver_fx.mjs');
+      let payload;
+      try {
+        payload = await fetchUsdKrwFromNaver();
+      } catch {
+        const raw = await fs.readFile(path.join(__dirname, '..', 'data', 'fx_usdkrw.json'), 'utf8');
+        const j = JSON.parse(raw);
+        payload = buildFxPayload(j.rate, j.asOf || null);
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify(payload));
+    } catch (e) {
+      res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'fx_failed', message: String(e.message || e) }));
+    }
+    return;
+  }
   res.writeHead(404);
   res.end('Not Found');
 });

@@ -7,8 +7,8 @@
   <meta name="description" content="Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.investingmap.kr/faq.html">
-  <link rel="alternate" hreflang="ko-KR" href="https://www.investingmap.kr/faq.html?lang=ko">
-  <link rel="alternate" hreflang="en-US" href="https://www.investingmap.kr/faq.html?lang=en">
+  <link rel="alternate" hreflang="ko" href="https://www.investingmap.kr/faq.html?lang=ko">
+  <link rel="alternate" hreflang="en" href="https://www.investingmap.kr/faq.html?lang=en">
   <link rel="alternate" hreflang="x-default" href="https://www.investingmap.kr/faq.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Investing Map">
@@ -116,7 +116,7 @@
         "name": "영문 시가총액은 어떻게 환산하나요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW"
+          "text": "영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(/api/fx, 캐시·정적 폴백)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW"
         }
       },
       {
@@ -186,7 +186,7 @@
 <div class="faq-item"><h2>Investing Map은 무엇을 제공하나요?</h2><p>Investing Map은 KOSPI·KOSDAQ 상장사를 산업별로 분류한 인터랙티브 지도입니다. 각 페이지에서 KRX 기준 시가총액·PER·PBR, 밸류체인 태그, 정렬·필터 가능한 기업 표, 관계형 그래프를 한국어·영어로 볼 수 있습니다.</p></div>
 <div class="faq-item"><h2>어떤 종목이 지도·허브에 포함되나요?</h2><p>KOSPI·KOSDAQ 상장사 중 KRX 기준 시가총액 3천억원(300,000,000,000원) 이상이며, 해당 산업 cp_list·편집 분류에 포함된 종목만 산업 지도·허브·Top10에 노출됩니다. 자세한 편집 원칙은 편집·검증 정책 페이지를 참고하세요.</p></div>
 <div class="faq-item"><h2>시가총액·PER·PBR 데이터는 어디서 가져오나요?</h2><p>시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일(예: 2026년 6월 15일)에 맞춥니다. PER·PBR도 동일 CSV 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 KRX OPEN API·네이버 시세 캐시로 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다.</p></div>
-<div class="faq-item"><h2>영문 시가총액은 어떻게 환산하나요?</h2><p>영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW</p></div>
+<div class="faq-item"><h2>영문 시가총액은 어떻게 환산하나요?</h2><p>영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(/api/fx, 캐시·정적 폴백)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW</p></div>
 <div class="faq-item"><h2>관계 지도(그래프)는 공시 데이터인가요?</h2><p>관계 그래프의 거래처·피어·키워드 연결은 공개 정보와 편집 분류를 바탕으로 한 참고용 네트워크입니다. 공식 공시·계약 관계를 대체하지 않으며, 투자 판단 전 DART 전자공시와 사업보고서에서 최신 정보를 확인해야 합니다.</p></div>
 <div class="faq-item"><h2>데이터는 얼마나 자주 갱신되나요?</h2><p>KRX 정량 데이터(시총·PER·PBR)는 주기적으로 CSV를 갱신하며 페이지 기준일을 업데이트합니다. 실시간 시세 필드는 영업일 기준으로 /api/quotes 폴링 주기에 따라 반영됩니다. 고트래픽 페이지는 연 1회 이상 편집·검증 정책에 따라 출처를 재확인합니다.</p></div>
   </main>
@@ -194,7 +194,7 @@
 <div class="faq-item"><h2>What does Investing Map provide?</h2><p>Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed names. Each page shows KRX-based market cap, PER, PBR, value-chain tags, a sortable company table, and a relationship graph in Korean and English.</p></div>
 <div class="faq-item"><h2>Which stocks appear on maps and the hub?</h2><p>Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 300 billion (300,000,000,000 won) that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.</p></div>
 <div class="faq-item"><h2>Where do market cap, PER, and PBR come from?</h2><p>Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page (e.g. 15 June 2026). Last price and 52-week high/low refresh via /api/quotes (KRX OPEN API and Naver cache) and may show — when delayed or closed.</p></div>
-<div class="faq-item"><h2>How is English market cap converted?</h2><p>English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot stored in data/fx_usdkrw.json from Naver Finance.</p></div>
+<div class="faq-item"><h2>How is English market cap converted?</h2><p>English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot from /api/fx (Naver Finance, with static fallback).</p></div>
 <div class="faq-item"><h2>Are relationship graphs official filing data?</h2><p>Graph edges for customers, peers, and keywords are editorial reference networks from public information—not a substitute for DART filings or annual reports.</p></div>
 <div class="faq-item"><h2>How often is data updated?</h2><p>KRX quantitative fields are updated when CSVs are refreshed and the page as-of date changes. Quote fields follow /api/quotes polling on trading days. High-traffic pages are source-checked at least annually per our editorial policy.</p></div>
   </main>

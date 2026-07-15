@@ -38,7 +38,7 @@
 
     let imKrwPerUsd = 1400;
     function loadFx() {
-      return fetch('../data/fx_usdkrw.json', { cache: 'no-store' })
+      return fetch('/api/fx', { cache: 'no-store' })
         .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('fx')); })
         .then(function (j) {
           if (j && typeof j.rate === 'number' && j.rate > 500 && j.rate < 5000) imKrwPerUsd = j.rate;

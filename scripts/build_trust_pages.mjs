@@ -172,7 +172,7 @@ const FAQS_KO = [
   },
   {
     q: '영문 시가총액은 어떻게 환산하나요?',
-    a: '영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(data/fx_usdkrw.json)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW',
+    a: '영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(/api/fx, 캐시·정적 폴백)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW',
   },
   {
     q: '관계 지도(그래프)는 공시 데이터인가요?',
@@ -197,7 +197,7 @@ const FAQS_EN = FAQS_KO.map((f, i) => ({
     'Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed names. Each page shows KRX-based market cap, PER, PBR, value-chain tags, a sortable company table, and a relationship graph in Korean and English.',
     'Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 300 billion (300,000,000,000 won) that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.',
     'Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page (e.g. 15 June 2026). Last price and 52-week high/low refresh via /api/quotes (KRX OPEN API and Naver cache) and may show — when delayed or closed.',
-    'English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot stored in data/fx_usdkrw.json from Naver Finance.',
+    'English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot from /api/fx (Naver Finance, with static fallback).',
     'Graph edges for customers, peers, and keywords are editorial reference networks from public information—not a substitute for DART filings or annual reports.',
     'KRX quantitative fields are updated when CSVs are refreshed and the page as-of date changes. Quote fields follow /api/quotes polling on trading days. High-traffic pages are source-checked at least annually per our editorial policy.',
   ][i],

@@ -48,7 +48,8 @@ Returns JSON compatible with `js/live_quotes.js`:
 `GET /api/hub_sectors` — sector mcap-sum returns for 1M (~21 sessions), 3M, 6M, 1Y; sequential KRX day fetches, cached 6h.  
 `GET /api/hub_top10` — top-10 price position vs 52-week range (`data/hub_quote_snapshot.json` + Naver cache).  
 `GET /api/hub_rs_top10` — top-10 Relative Strength (KRX 20/50/120-day percentile average, full market). Snapshot: `data/hub_rs_snapshot.json` via `node scripts/build_hub_rs_snapshot.mjs`.  
-`GET /api/hub_dashboard` — combined response (legacy).
+`GET /api/hub_dashboard` — combined response (legacy).  
+`GET /api/fx` — USD/KRW from Naver Finance (`FX_USDKRW`), shape of `data/fx_usdkrw.json`, Cache API 1h; fallback last cache then static file.
 
 Used by `js/hub_dashboard.js` on `index.html` (parallel `/api/hub_sectors` + `/api/hub_top10` + `/api/hub_rs_top10`).
 
