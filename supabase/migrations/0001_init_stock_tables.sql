@@ -2,6 +2,7 @@
 create table stock_quotes_latest (
   ticker           text primary key,
   last             numeric,
+  prev_close       numeric,
   high_52w         numeric,
   low_52w          numeric,
   mcap_won         numeric,

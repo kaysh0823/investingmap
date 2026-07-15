@@ -126,6 +126,37 @@
     return false;
   }
 
+  function quoteItemHasPrevClose(q) {
+    return !!(q && typeof q.prevClose === 'number' && isFinite(q.prevClose) && q.prevClose > 0);
+  }
+
+  function quoteItemHasHorizonReturns(q) {
+    if (!q) return false;
+    if (pickRetPct(q, 'ret20dPct', 'ret1mPct') != null) return true;
+    if (pickRetPct(q, 'ret50dPct', 'ret3mPct') != null) return true;
+    if (pickRetPct(q, 'ret120dPct', 'ret6mPct') != null) return true;
+    if (pickRetPct(q, 'ret250dPct', 'ret1yPct') != null) return true;
+    return false;
+  }
+
+  /**
+   * Skip 689KB hub_rs_snapshot when quotes already have prevClose (live 1D)
+   * and multi-horizon returns (fallback columns).
+   */
+  function quotesResponseCanSkipRsSnapshot(j) {
+    var items = (j && j.items) || {};
+    var hasPrev = false;
+    var hasHorizon = false;
+    for (var k in items) {
+      if (!Object.prototype.hasOwnProperty.call(items, k)) continue;
+      var q = items[k];
+      if (quoteItemHasPrevClose(q)) hasPrev = true;
+      if (quoteItemHasHorizonReturns(q)) hasHorizon = true;
+      if (hasPrev && hasHorizon) return true;
+    }
+    return false;
+  }
+
   function mergeRsIntoCompanies(companies, snap) {
     if (!companies) return;
     var quotes = (snap && snap.quotes) || {};
@@ -141,10 +172,11 @@
     }
   }
 
-  /** Naver last for 1D only; 20D+ stay on KRX snapshot. */
+  /** Naver last for 1D only; 20D+ stay on KRX snapshot (or quotes API fields). */
   function applyLiveReturns(companies, snap) {
     var RL = global.InvestingMapReturnLive;
-    if (!RL || !companies || !snap) return;
+    if (!RL || !companies) return;
+    snap = snap || { quotes: {} };
     if (!RL.shouldUseLive1dReturns(snap.recentDd)) return;
     var snapStale = RL.isRecentDdStale(snap.recentDd);
     var quotes = snap.quotes || {};
@@ -505,19 +537,25 @@
       return fetchAllCodes(base, codes)
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
-          // Always load RS snap for multi-horizon fallback + live 1D vs refClose.
-          // Supabase chg1dPct can lag KRX close-to-close while `last` is Naver intraday.
-          return loadRsSnapshot().then(function (snap) {
-            if (snap && !quotesResponseHasRsReturns(j)) {
-              mergeRsIntoCompanies(getCompanies(), snap);
-            }
-            if (snap) applyLiveReturns(getCompanies(), snap);
+          function finishQuotes() {
             try {
               onAsOf(j.asOf || '', { regularSession: j.regularSession });
             } catch (e1) {}
             if (renderTable) renderTable();
             focusTickerAfterRender();
             return j;
+          }
+          // Prefer quotes prevClose + horizon returns; only fetch 689KB RS snap as fallback.
+          if (quotesResponseCanSkipRsSnapshot(j)) {
+            applyLiveReturns(getCompanies(), null);
+            return finishQuotes();
+          }
+          return loadRsSnapshot().then(function (snap) {
+            if (snap && !quotesResponseHasRsReturns(j)) {
+              mergeRsIntoCompanies(getCompanies(), snap);
+            }
+            if (snap) applyLiveReturns(getCompanies(), snap);
+            return finishQuotes();
           });
         })
         .catch(function (err) {

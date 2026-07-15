@@ -46,6 +46,7 @@ function numOrNull(v) {
 function mapSupabaseRow(row) {
   return {
     last: numOrNull(row.last),
+    prevClose: numOrNull(row.prev_close),
     high52w: numOrNull(row.high_52w),
     low52w: numOrNull(row.low_52w),
     mcapWon: numOrNull(row.mcap_won),

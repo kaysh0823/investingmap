@@ -132,9 +132,17 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession) {
     chg1d = krx?.chg1dPct ?? null;
   }
 
+  let prevClose = null;
+  if (naver?.prevClose != null && Number.isFinite(naver.prevClose) && naver.prevClose > 0) {
+    prevClose = naver.prevClose;
+  } else if (krx?.refClose != null && Number.isFinite(krx.refClose) && krx.refClose > 0) {
+    prevClose = krx.refClose;
+  }
+
   return {
     ticker,
     last: naver?.last ?? null,
+    prev_close: prevClose,
     high_52w: naver?.high52w ?? null,
     low_52w: naver?.low52w ?? null,
     mcap_won: naver?.mcapWon ?? null,
