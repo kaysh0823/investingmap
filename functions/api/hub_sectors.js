@@ -21,7 +21,10 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v6';
+const CACHE_VERSION = '/api/hub_sectors/cache/v7';
+
+/** Reject Supabase rows if newest updated_at is older than this (covers weekend + holiday buffer). */
+const SECTOR_RETURNS_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
 
 function cachePaths(horizon) {
   const base = `${CACHE_VERSION}/${horizon}`;
@@ -38,11 +41,25 @@ function sectorResponseHeaders(ch, horizon, cacheTag, maxAge) {
   };
 }
 
+/** @returns {boolean} true when data is too old → fall through to KRX */
+function isSectorReturnsStale(rows, now = new Date()) {
+  let newest = null;
+  for (const row of rows || []) {
+    if (!row || row.updated_at == null) continue;
+    const t = Date.parse(row.updated_at);
+    if (!Number.isFinite(t)) continue;
+    if (newest == null || t > newest) newest = t;
+  }
+  if (newest == null) return true;
+  return now.getTime() - newest > SECTOR_RETURNS_MAX_AGE_MS;
+}
+
 async function buildSectorPayloadFromSupabase(request, env, horizon) {
   const config = getSupabaseConfig(env);
   if (!config) return null;
   const rows = await fetchSupabaseJson(config, 'sector_returns?select=*');
   if (!rows.length) return null;
+  if (isSectorReturnsStale(rows)) return null;
   const hubIndex = await loadHubIndexFromRequest(request, env);
   const payload = buildHubSectorsFromSupabaseRows(hubIndex, rows, env, { horizon });
   if (!hasSectorHorizon(payload.sectors, horizon)) return null;

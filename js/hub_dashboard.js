@@ -17,10 +17,10 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v10';
+  var SWR_KEY = 'im-hub-dashboard-v11';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
-  var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null };
+  var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null, asOf: null };
   var sectorsLoadingHorizon = null;
   var sectorsBootstrapping = false;
   var top10Loading = false;
@@ -98,7 +98,7 @@
       noData: '—',
       companies: '개 상장사',
       keyPlayers: '대표 종목',
-      sessionLive: '실시간',
+      sessionLive: '10분 지연',
       sessionClosed: '장마감',
     },
     en: {
@@ -125,7 +125,7 @@
       noData: '—',
       companies: ' companies',
       keyPlayers: 'Key companies',
-      sessionLive: 'Live',
+      sessionLive: '~10m delayed',
       sessionClosed: 'Closed',
     },
   };
@@ -304,11 +304,48 @@
                 if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
               }
               if (j && j.regularSession != null) dashboardData.regularSession = j.regularSession;
+              if (j && j.asOf) dashboardData.asOf = j.asOf;
             });
         });
       })(codes.slice(i, i + QUOTES_CHUNK));
     }
     return chain.then(function () { return merged; });
+  }
+
+  function formatAsOfYmdKst(asOf) {
+    if (!asOf) return '';
+    var d = new Date(asOf);
+    if (!isFinite(d.getTime())) return '';
+    try {
+      var parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).formatToParts(d);
+      var y = '';
+      var m = '';
+      var day = '';
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].type === 'year') y = parts[i].value;
+        if (parts[i].type === 'month') m = parts[i].value;
+        if (parts[i].type === 'day') day = parts[i].value;
+      }
+      if (y && m && day) return y + '-' + m + '-' + day;
+    } catch (e) {}
+    return '';
+  }
+
+  function formatSessionStatus(lang) {
+    var labels = t(lang);
+    if (dashboardData && dashboardData.regularSession === true) {
+      return labels.sessionLive;
+    }
+    if (dashboardData && dashboardData.regularSession === false) {
+      var ymd = formatAsOfYmdKst(dashboardData.asOf);
+      return ymd ? labels.sessionClosed + ' · ' + ymd : labels.sessionClosed;
+    }
+    return '';
   }
 
   function applyLiveSectorReturns(quoteItems, snap) {
@@ -461,6 +498,7 @@
         top10: dashboardData.top10 || [],
         rsTop10: dashboardData.rsTop10 || [],
         regularSession: dashboardData.regularSession,
+        asOf: dashboardData.asOf,
       }));
     } catch (e) { /* ignore */ }
   }
@@ -631,6 +669,7 @@
     }
     dashboardData.sectors = base;
     if (j.regularSession != null) dashboardData.regularSession = j.regularSession;
+    if (j.asOf) dashboardData.asOf = j.asOf;
   }
 
   function bindPulseTabs(wrap, lang) {
@@ -723,10 +762,9 @@
       if (sectorsBootstrapping || (sectorsLoadingHorizon && !hasHorizonData(sectorsLoadingHorizon))) {
         parts.push('<span class="hub-pulse-loading-badge">' + labels.pulseStatusLoading + '</span>');
       }
-      if (dashboardData && dashboardData.regularSession === true) {
-        parts.push('<span class="hub-pulse-session">' + labels.sessionLive + '</span>');
-      } else if (dashboardData && dashboardData.regularSession === false) {
-        parts.push('<span class="hub-pulse-session">' + labels.sessionClosed + '</span>');
+      var sessionText = formatSessionStatus(lang);
+      if (sessionText) {
+        parts.push('<span class="hub-pulse-session">' + sessionText + '</span>');
       }
       statusWrap.innerHTML = parts.join('');
     }
@@ -835,7 +873,7 @@
     }
     var anchor = RL.ymdToDash(RL.kstAnchorYmd());
     var naverNote = RL.isKrxRegularSession && RL.isKrxRegularSession()
-      ? (lang === 'en' ? '1D live' : '1D 실시간')
+      ? (lang === 'en' ? '1D (~10m delayed)' : '1D 10분 지연')
       : (lang === 'en' ? '1D Naver' : '1D 네이버');
     return lang === 'en'
       ? labels.pulseSub + ' · As of ' + anchor + ' (' + naverNote + ')'
@@ -903,6 +941,7 @@
     if (!j || j.error) return;
     dashboardData.top10 = j.top10 || dashboardData.top10;
     if (j.regularSession != null) dashboardData.regularSession = j.regularSession;
+    if (j.asOf) dashboardData.asOf = j.asOf;
   }
 
   function applyRsTop10Payload(j) {
@@ -994,6 +1033,7 @@
       dashboardData.top10 = swr.top10 || [];
       dashboardData.rsTop10 = swr.rsTop10 || [];
       dashboardData.regularSession = swr.regularSession;
+      if (swr.asOf) dashboardData.asOf = swr.asOf;
     }
     Promise.all([loadHubIndex(), loadFx(), loadHubSectorReturns()])
       .then(function () {

@@ -380,12 +380,38 @@
       });
   }
 
+  function formatAsOfYmdKst(asOf) {
+    if (!asOf) return '';
+    var d = new Date(asOf);
+    if (!isFinite(d.getTime())) return '';
+    try {
+      var parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).formatToParts(d);
+      var y = '';
+      var m = '';
+      var day = '';
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].type === 'year') y = parts[i].value;
+        if (parts[i].type === 'month') m = parts[i].value;
+        if (parts[i].type === 'day') day = parts[i].value;
+      }
+      if (y && m && day) return y + '-' + m + '-' + day;
+    } catch (e) {}
+    return '';
+  }
+
   function formatQuotesAsofDisplay(asOf, regularSession, lang) {
+    var ymd = formatAsOfYmdKst(asOf);
     if (regularSession === false) {
-      return lang === 'en' ? 'Closed' : '\uC7A5\uB9C8\uAC10';
+      var closed = lang === 'en' ? 'Closed' : '\uC7A5\uB9C8\uAC10';
+      return ymd ? closed + ' \u00B7 ' + ymd : closed;
     }
     if (regularSession === true || asOf) {
-      return lang === 'en' ? 'Live' : '\uC2E4\uC2DC\uAC04';
+      return lang === 'en' ? '~10m delayed' : '10\uBD84 \uC9C0\uC5F0';
     }
     return '';
   }

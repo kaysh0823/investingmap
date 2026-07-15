@@ -1,5 +1,6 @@
 /**
- * Sync hub-listed tickers: Naver quotes + KRX returns/RS → Supabase stock_quotes_latest.
+ * Sync hub-listed tickers: Naver quotes + KRX returns/RS → Supabase stock_quotes_latest,
+ * then mcap-weighted sector returns → sector_returns.
  * Reuses functions/lib collectors; safe to run locally or in GitHub Actions.
  */
 import fs from 'fs';
@@ -8,13 +9,19 @@ import { fileURLToPath } from 'url';
 import { fetchNaverQuote } from '../functions/lib/naver_sise_quotes.mjs';
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
 import { isKrxRegularSession } from '../functions/lib/krx_session.mjs';
-import { listHubCompanies, normalizeTicker } from '../functions/lib/hub_dashboard_core.mjs';
+import {
+  SECTOR_ORDER,
+  listHubCompanies,
+  normalizeTicker,
+} from '../functions/lib/hub_dashboard_core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAVER_CONCURRENCY = 4;
 const NAVER_DELAY_MS = 80;
 const UPSERT_BATCH_SIZE = 40;
 const SUPABASE_MAX_RETRIES = 1;
+
+const SECTOR_RET_FIELDS = ['ret_20d_pct', 'ret_50d_pct', 'ret_120d_pct', 'ret_250d_pct'];
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -137,8 +144,8 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession) {
   };
 }
 
-async function upsertBatch(rows, supabaseUrl, serviceKey, attempt = 0) {
-  const res = await fetch(`${supabaseUrl}/rest/v1/stock_quotes_latest`, {
+async function upsertBatch(table, rows, supabaseUrl, serviceKey, attempt = 0) {
+  const res = await fetch(`${supabaseUrl}/rest/v1/${table}`, {
     method: 'POST',
     headers: {
       apikey: serviceKey,
@@ -154,7 +161,7 @@ async function upsertBatch(rows, supabaseUrl, serviceKey, attempt = 0) {
   const body = await res.text();
   if (attempt < SUPABASE_MAX_RETRIES) {
     await sleep(1000);
-    return upsertBatch(rows, supabaseUrl, serviceKey, attempt + 1);
+    return upsertBatch(table, rows, supabaseUrl, serviceKey, attempt + 1);
   }
   return { ok: false, status: res.status, body };
 }
@@ -165,7 +172,7 @@ async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
 
   for (let i = 0; i < rows.length; i += UPSERT_BATCH_SIZE) {
     const batch = rows.slice(i, i + UPSERT_BATCH_SIZE);
-    const result = await upsertBatch(batch, supabaseUrl, serviceKey);
+    const result = await upsertBatch('stock_quotes_latest', batch, supabaseUrl, serviceKey);
     if (result.ok) {
       upserted.push(...batch.map((r) => r.ticker));
     } else {
@@ -181,6 +188,57 @@ async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
 
   process.stdout.write('\n');
   return { upserted, failed };
+}
+
+/** mcap-weighted mean of retPct; skips null ret or non-positive mcap. */
+function mcapWeightedReturn(members, retKey) {
+  let wSum = 0;
+  let mSum = 0;
+  for (const m of members) {
+    const ret = m[retKey];
+    const mcap = m.mcap_won;
+    if (ret == null || !Number.isFinite(ret)) continue;
+    if (mcap == null || !Number.isFinite(mcap) || mcap <= 0) continue;
+    wSum += ret * mcap;
+    mSum += mcap;
+  }
+  if (mSum <= 0) return null;
+  return Math.round((wSum / mSum) * 100) / 100;
+}
+
+/**
+ * Build sector_returns rows from hub_index sector membership + freshly synced quote rows.
+ * Uses each sector's own company list (not cross-sector unique).
+ */
+function buildSectorReturnRows(hubIndex, quoteRowsByTicker, updatedAt) {
+  const rows = [];
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors && hubIndex.sectors[sid];
+    if (!block) continue;
+    const members = [];
+    for (const c of block.companies || []) {
+      const key = normalizeTicker(c.ticker);
+      if (!key) continue;
+      const q = quoteRowsByTicker.get(key);
+      if (!q) continue;
+      members.push(q);
+    }
+    const row = { sector_id: sid, updated_at: updatedAt };
+    for (const col of SECTOR_RET_FIELDS) {
+      row[col] = mcapWeightedReturn(members, col);
+    }
+    rows.push(row);
+  }
+  return rows;
+}
+
+async function upsertSectorReturns(rows, supabaseUrl, serviceKey) {
+  if (!rows.length) return { upserted: 0, failed: 0, body: null };
+  const result = await upsertBatch('sector_returns', rows, supabaseUrl, serviceKey);
+  if (result.ok) return { upserted: rows.length, failed: 0, body: null };
+  console.error(`\n  sector_returns upsert failed (${result.status})`);
+  if (result.body) console.error(`  ${result.body.slice(0, 300)}`);
+  return { upserted: 0, failed: rows.length, body: result.body };
 }
 
 async function main() {
@@ -220,6 +278,15 @@ async function main() {
   console.log(`Upserting ${rows.length} rows…`);
   const upsertResult = await upsertToSupabase(rows, supabaseUrl, serviceKey);
 
+  const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));
+  const sectorRows = buildSectorReturnRows(hubIndex, quoteByTicker, asOf);
+  console.log(`Upserting ${sectorRows.length} sector_returns rows…`);
+  const sectorResult = await upsertSectorReturns(sectorRows, supabaseUrl, serviceKey);
+  for (const r of sectorRows) {
+    const vals = SECTOR_RET_FIELDS.map((col) => `${col}=${r[col] == null ? 'null' : r[col]}`).join(' ');
+    console.log(`  ${r.sector_id}: ${vals}`);
+  }
+
   const elapsedSec = ((Date.now() - started) / 1000).toFixed(1);
   const naverFailedUnique = [...new Set(naverResult.failed)];
   const upsertFailedUnique = [...new Set(upsertResult.failed)];
@@ -231,6 +298,8 @@ async function main() {
   console.log(`krx matched:       ${tickers.filter((t) => krxResult.quotes[t]).length}`);
   console.log(`supabase upserted: ${upsertResult.upserted.length}`);
   console.log(`supabase failed:   ${upsertFailedUnique.length}`);
+  console.log(`sector upserted:   ${sectorResult.upserted}`);
+  console.log(`sector failed:     ${sectorResult.failed}`);
   console.log(`elapsed:           ${elapsedSec}s`);
 
   if (naverFailedUnique.length) {
@@ -238,6 +307,9 @@ async function main() {
   }
   if (upsertFailedUnique.length) {
     console.log(`supabase failed tickers: ${upsertFailedUnique.join(', ')}`);
+    process.exit(1);
+  }
+  if (sectorResult.failed) {
     process.exit(1);
   }
 }
