@@ -10,6 +10,8 @@
 - [한국 조선·조선기자재 산업 투자 지도](https://www.investingmap.kr/ship/korea_ship_map.html): 조선·해양·기자재 밸류체인, 글로벌 거래·수주 관계
 - [한국 방산·우주·항공 산업 투자 지도](https://www.investingmap.kr/defense/korea_defense_map.html): 방산·항공·우주 상장사 KRX 데이터, 글로벌 참고 네트워크
 - [한국 로봇·피지컬AI 산업 투자 지도](https://www.investingmap.kr/robot/korea_robot_map.html): 산업로봇·자동화·피지컬AI 밸류체인, 글로벌 장비·SW 관계
+- [한국 자동차 투자 지도](https://www.investingmap.kr/auto/korea_auto_map.html): 완성차·부품·타이어·전장/ADAS 밸류체인
+- [한국 의료·미용기기 투자 지도](https://www.investingmap.kr/medtech/korea_medtech_map.html): 진단·IVD·임플란트·미용기기·의료장비 밸류체인
 - [한국 에너지 투자 지도](https://www.investingmap.kr/energy/korea_energy_map.html): 2차전지·ESS·배터리·태양광·풍력 밸류체인
 - [한국 전력설비 투자 지도](https://www.investingmap.kr/powergrid/korea_powergrid_map.html): 전력설비·송배전·발전설비 밸류체인
 - [한국 금융 투자 지도](https://www.investingmap.kr/finance/korea_finance_map.html): 은행·증권·보험·카드·캐피탈 밸류체인
@@ -45,6 +47,8 @@
 - [Korea Shipbuilding & Marine Equipment Map](https://www.investingmap.kr/ship/korea_ship_map.html): Shipbuilding and marine value chain, order and customer relationships
 - [Korea Defense, Space & Aviation Map](https://www.investingmap.kr/defense/korea_defense_map.html): Defense and aerospace listed companies with global reference networks
 - [Korea Robot / Physical AI Industry Map](https://www.investingmap.kr/robot/korea_robot_map.html): Factory automation, robotics, and Physical AI value chains
+- [Korea Auto Industry Map](https://www.investingmap.kr/auto/korea_auto_map.html): OEMs, parts, tires, and electronics/ADAS
+- [Korea MedTech Map](https://www.investingmap.kr/medtech/korea_medtech_map.html): Diagnostics, implants, aesthetic devices, and medical equipment
 - [Korea Energy Sector Stocks Map](https://www.investingmap.kr/energy/korea_energy_map.html): Batteries, ESS, solar, and wind value chains
 - [Korea Power Equipment Map](https://www.investingmap.kr/powergrid/korea_powergrid_map.html): Power equipment, T&D, and generation value chains
 - [Korea Listed Financials Map](https://www.investingmap.kr/finance/korea_finance_map.html): Banks, securities, insurance, cards, and consumer finance

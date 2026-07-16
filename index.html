@@ -26,7 +26,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta name="description" content="Hub for ten Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks for semiconductor, energy, power grid, finance, construction, shipbuilding, defense, K-culture, bio, and robotics.">
+  <meta name="description" content="Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks for semiconductor, energy, power grid, finance, construction, shipbuilding, defense, K-culture, bio, robotics, auto, and medtech.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.investingmap.kr/">
   <link rel="alternate" hreflang="ko-KR" href="https://www.investingmap.kr/?lang=ko">
@@ -38,10 +38,10 @@
   <meta property="og:locale:alternate" content="ko_KR">
   <meta property="og:url" content="https://www.investingmap.kr/">
   <meta property="og:title" content="Investing Map — Korea industry maps hub">
-  <meta property="og:description" content="Hub for ten Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
+  <meta property="og:description" content="Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Investing Map — Korea industry maps hub">
-  <meta name="twitter:description" content="Hub for ten Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
+  <meta name="twitter:description" content="Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -902,6 +902,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
 
@@ -937,7 +966,7 @@
       <h1 id="hdr-title">Investing Map</h1>
       <details class="hub-lead-details" id="hub-lead-details">
         <summary class="hub-lead-summary" id="hub-lead-summary">사이트 소개</summary>
-        <p id="hdr-subtitle">Hub for ten Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.</p>
+        <p id="hdr-subtitle">Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.</p>
       </details>
       <script>!function(){var d=document.getElementById('hub-lead-details');if(d&&matchMedia('(min-width:769px)').matches)d.open=!0}();</script>
     </div>
@@ -1096,6 +1125,30 @@
         <p class="hub-card-map" id="card-robot-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-robot-cta">Open map →</span>
       </a>
+      <a class="hub-card" id="hub-link-auto" href="auto/korea_auto_map.html?tab=table">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🚗</span>
+          <span class="hub-card-badge" id="card-auto-badge">21 LISTINGS</span>
+        </div>
+        <h2 id="card-auto-title">한국 자동차 투자 지도</h2>
+        <p class="hub-card-lead" id="card-auto-lead">완성차·부품·타이어·전장/ADAS 밸류체인과 글로벌 peer 참고 관계</p>
+        <p class="hub-card-keyplayers" id="card-auto-keyplayers"></p>
+        <div class="hub-card-tags" id="card-auto-tags"></div>
+        <p class="hub-card-map" id="card-auto-map">21개 상장사 · 완성차·부품·타이어·전장</p>
+        <span class="hub-card-cta" id="card-auto-cta">지도 열기 →</span>
+      </a>
+      <a class="hub-card" id="hub-link-medtech" href="medtech/korea_medtech_map.html?tab=table">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🩺</span>
+          <span class="hub-card-badge" id="card-medtech-badge">8 LISTINGS</span>
+        </div>
+        <h2 id="card-medtech-title">한국 의료·미용기기 투자 지도</h2>
+        <p class="hub-card-lead" id="card-medtech-lead">진단·IVD·임플란트·미용기기·의료장비 밸류체인과 글로벌 peer 참고 관계</p>
+        <p class="hub-card-keyplayers" id="card-medtech-keyplayers"></p>
+        <div class="hub-card-tags" id="card-medtech-tags"></div>
+        <p class="hub-card-map" id="card-medtech-map">8개 상장사 · 진단·임플란트·미용기기·장비</p>
+        <span class="hub-card-cta" id="card-medtech-cta">지도 열기 →</span>
+      </a>
     </div>
       </div>
       <div class="hub-side-panels">
@@ -1158,7 +1211,7 @@
   </footer>
   <script src="js/map_tab_state.js?v=5"></script>
     <script src="js/return_live.js?v=1"></script>
-  <script src="js/hub_dashboard.js?v=28"></script>
+  <script src="js/hub_dashboard.js?v=29"></script>
   <script src="js/im_collapsible.js"></script>
 <script>
     const T = {
@@ -1169,10 +1222,12 @@
         langText: 'English',
         cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
         semiMapLine: '90개 상장사 · IDM·팹리스·파운드리·소재·장비 · 글로벌 거래처·peer 그래프',
-        bioMapLine: '72개 매핑 · 바이오시밀러·신약·CDMO · 글로벌 페어링 네트워크',
+        bioMapLine: '67개 매핑 · 바이오시밀러·신약·CDMO · 글로벌 페어링 네트워크',
         shipMapLine: '30개 상장사 · 조선소·기자재·해운 · 수주·해외 yard 참고 링크',
         defenseMapLine: '16개 상장사 · 항공·미사일·육상·해군·우주 · 수출·프로그램 참고',
-        robotMapLine: '20개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
+        robotMapLine: '17개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
+        autoMapLine: '21개 상장사 · 완성차·부품·타이어·전장',
+        medtechMapLine: '8개 상장사 · 진단·임플란트·미용기기·장비',
         energyMapLine: '35개 상장사 · 2차전지·ESS·배터리·태양광·풍력',
         powergridMapLine: '17개 상장사 · 전력설비·송배전·발전설비',
         financeMapLine: '31개 상장사 · 은행·증권·보험·카드·캐피탈',
@@ -1181,7 +1236,7 @@
         kcontentMapLine: '23개 상장사 · 게임·드라마·웹툰·K-pop',
         introTitle: '한국 상장사 산업 지도 허브',
         introLeadSummary: '사이트 소개',
-        introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 10개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
+        introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 12개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
         introHMethod: '데이터·편집 원칙',
         introLi1: '정량 데이터(시총·PER·PBR·시세)는 KRX 등 공개 출처를 기준일에 맞춰 반영합니다.',
         introLi2: '벨류체인 분류·글로벌 거래처·peer 링크는 공시·보도를 바탕으로 작성한 참고 자료입니다.',
@@ -1207,6 +1262,12 @@
         robotTitle: '한국 로봇/피지컬AI 산업 투자 지도',
         robotLead: '공장자동화·물류 AMR·협동로봇·센싱·모션 제어·피지컬AI까지 로봇·자동화 생태계',
         robotCta: '지도 열기 →',
+        autoTitle: '한국 자동차 투자 지도',
+        autoLead: '완성차·부품·타이어·전장/ADAS 밸류체인과 글로벌 peer 참고 관계',
+        autoCta: '지도 열기 →',
+        medtechTitle: '한국 의료·미용기기 투자 지도',
+        medtechLead: '진단·IVD·임플란트·미용기기·의료장비 밸류체인과 글로벌 peer 참고 관계',
+        medtechCta: '지도 열기 →',
         kconsumeTitle: '한국 K-소비/유통 투자 지도',
         kconsumeLead: '화장품·패션·식품·라면·쇼핑·유통·여행 관련 상장 한국 주식과 글로벌 연계 예시',
         kconsumeCta: '지도 열기 →',
@@ -1231,7 +1292,7 @@
       },
       en: {
         title: 'Investing Map',
-        subtitle: 'Hub for ten Korean industry maps: listed companies, value chains, KRX data, and relationship networks.',
+        subtitle: 'Hub for twelve Korean industry maps: listed companies, value chains, KRX data, and relationship networks.',
         langFlag: '🇰🇷',
         langText: '한국어',
         cardMapLine: 'Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.',
@@ -1240,6 +1301,8 @@
         shipMapLine: '30 companies · yards, marine equipment, shipping · order & shipyard reference links',
         defenseMapLine: '16 companies · aviation, missiles, land, naval, space · export program references',
         robotMapLine: '20 companies · FA, AMR, cobots, motion · Physical AI relationships',
+        autoMapLine: '21 listings · OEM, parts, tires, electronics',
+        medtechMapLine: '8 listings · Diagnostics, implants, aesthetic, equipment',
         energyMapLine: '35 companies · batteries, ESS, solar, wind',
         powergridMapLine: '17 companies · power equipment, T&D, generation',
         financeMapLine: '31 companies · banks, securities, insurance, cards & consumer finance',
@@ -1248,7 +1311,7 @@
         kcontentMapLine: '23 companies · games, drama, webtoon, K-pop',
         introTitle: 'Hub for Korean listed-industry maps',
         introLeadSummary: 'About this site',
-        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ companies through value-chain lenses. Ten sector maps combine sortable tables, market cap, PER, PBR, 52-week range, and relationship graphs—each with sector-specific editorial guides and cited sources.',
+        introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ companies through value-chain lenses. Twelve sector maps combine sortable tables, market cap, PER, PBR, 52-week range, and relationship graphs—each with sector-specific editorial guides and cited sources.',
         introHMethod: 'Data & editorial principles',
         introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
         introLi2: 'Chain tags and global relationships are editorial reference networks from filings and public sources.',
@@ -1274,6 +1337,12 @@
         robotTitle: 'Korea Robot / Physical AI Industry Map',
         robotLead: 'Robotics and Physical AI: factory automation, logistics AMRs, cobots, sensing, motion control, and human-scale systems.',
         robotCta: 'Open map →',
+        autoTitle: 'Korea Auto Industry Map',
+        autoLead: 'OEMs, parts, tires, and electronics/ADAS with global peer relationships',
+        autoCta: 'Open map →',
+        medtechTitle: 'Korea MedTech Map',
+        medtechLead: 'Diagnostics, implants, aesthetic devices, and medical equipment with global peer relationships',
+        medtechCta: 'Open map →',
         kconsumeTitle: 'Korea K-Consume / Retail Map',
         kconsumeLead: 'Beauty, fashion, food and ramen, shopping/retail, and travel—listed Korean equities with illustrative global relationships.',
         kconsumeCta: 'Open map →',
@@ -1349,6 +1418,8 @@
       document.getElementById('hub-link-ship').href = 'ship/korea_ship_map.html' + mapQl;
       document.getElementById('hub-link-defense').href = 'defense/korea_defense_map.html' + mapQl;
       document.getElementById('hub-link-robot').href = 'robot/korea_robot_map.html' + mapQl;
+      document.getElementById('hub-link-auto').href = 'auto/korea_auto_map.html' + mapQl;
+      document.getElementById('hub-link-medtech').href = 'medtech/korea_medtech_map.html' + mapQl;
       document.getElementById('hub-link-kconsume').href = 'kconsume/korea_kconsume_map.html' + mapQl;
       document.getElementById('hub-link-kcontent').href = 'kcontent/korea_kcontent_map.html' + mapQl;
       document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + mapQl;
@@ -1382,6 +1453,12 @@
       document.getElementById('card-robot-title').textContent = t.robotTitle;
       document.getElementById('card-robot-lead').textContent = t.robotLead;
       document.getElementById('card-robot-cta').textContent = t.robotCta;
+      document.getElementById('card-auto-title').textContent = t.autoTitle;
+      document.getElementById('card-auto-lead').textContent = t.autoLead;
+      document.getElementById('card-auto-cta').textContent = t.autoCta;
+      document.getElementById('card-medtech-title').textContent = t.medtechTitle;
+      document.getElementById('card-medtech-lead').textContent = t.medtechLead;
+      document.getElementById('card-medtech-cta').textContent = t.medtechCta;
       document.getElementById('card-kconsume-title').textContent = t.kconsumeTitle;
       document.getElementById('card-kconsume-lead').textContent = t.kconsumeLead;
       document.getElementById('card-kconsume-cta').textContent = t.kconsumeCta;
@@ -1433,8 +1510,8 @@ document.title = lang === 'en'
 
     applyLang();
   </script>
-  <script src="js/desktop_sidebar_nav.js?v=5"></script>
-  <script src="js/global_bottom_nav.js?v=4"></script>
+  <script src="js/desktop_sidebar_nav.js?v=6"></script>
+  <script src="js/global_bottom_nav.js?v=6"></script>
   <script src="js/geo_footer.js"></script>
 </body>
 

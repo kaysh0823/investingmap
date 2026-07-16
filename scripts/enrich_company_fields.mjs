@@ -20,6 +20,8 @@ const HTML_MAPS = [
   { key: 'ship', path: 'ship/korea_ship_map.html' },
   { key: 'defense', path: 'defense/korea_defense_map.html' },
   { key: 'robot', path: 'robot/korea_robot_map.html' },
+  { key: 'auto', path: 'auto/korea_auto_map.html' },
+  { key: 'medtech', path: 'medtech/korea_medtech_map.html' },
   { key: 'energy', path: 'energy/korea_energy_map.html' },
   { key: 'powergrid', path: 'powergrid/korea_powergrid_map.html' },
   { key: 'finance', path: 'finance/korea_finance_map.html' },

@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'finance', 'construction'];
+  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
@@ -55,6 +55,8 @@
       kcontent: ['게임', '드라마·웹툰', 'K-pop'],
       bio: ['신약', 'CDMO', '바이오시밀러', '의료기기', '진단'],
       robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
+      auto: ['완성차', '부품', '타이어', '전장'],
+      medtech: ['진단', '임플란트', '미용기기', '의료장비'],
       finance: ['은행', '증권', '보험', '카드', '캐피탈'],
       construction: ['종합건설', '주택', '디벨로퍼', '건설기계'],
     },
@@ -68,6 +70,8 @@
       kcontent: ['Games', 'Drama & webtoon', 'K-pop'],
       bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
+      auto: ['OEMs', 'Parts', 'Tires', 'Electronics'],
+      medtech: ['Diagnostics', 'Implants', 'Aesthetic', 'Equipment'],
       finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Consumer finance'],
       construction: ['Contractors', 'Housing', 'Developers', 'Equipment'],
     },

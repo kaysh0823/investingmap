@@ -160,6 +160,20 @@ const HTML_MAPS = [
     badgeEn: 'listings',
   },
   {
+    key: 'auto',
+    path: 'auto/korea_auto_map.html',
+    idPrefix: 'auto',
+    badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
+    badgeEn: 'listings',
+  },
+  {
+    key: 'medtech',
+    path: 'medtech/korea_medtech_map.html',
+    idPrefix: 'medtech',
+    badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
+    badgeEn: 'listings',
+  },
+  {
     key: 'energy',
     path: 'energy/korea_energy_map.html',
     idPrefix: 'energy',
@@ -345,6 +359,8 @@ function main() {
     ship: results.ship?.after,
     defense: results.defense?.after,
     robot: results.robot?.after,
+    auto: results.auto?.after,
+    medtech: results.medtech?.after,
     energy: results.energy?.after,
     powergrid: results.powergrid?.after,
     finance: results.finance?.after,
@@ -372,6 +388,14 @@ function main() {
   if (hubLines.robot) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · FA/, `${hubLines.robot}개 상장사 · FA`);
     indexHtml = indexHtml.replace(/\d+ listings · FA, AMR/, `${hubLines.robot} listings · FA, AMR`);
+  }
+  if (hubLines.auto) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 완성차/, `${hubLines.auto}개 상장사 · 완성차`);
+    indexHtml = indexHtml.replace(/\d+ listings · OEM/, `${hubLines.auto} listings · OEM`);
+  }
+  if (hubLines.medtech) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 진단/, `${hubLines.medtech}개 상장사 · 진단`);
+    indexHtml = indexHtml.replace(/\d+ listings · Diagnostics/, `${hubLines.medtech} listings · Diagnostics`);
   }
   if (hubLines.energy) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 2차전지/, `${hubLines.energy}개 상장사 · 2차전지`);

@@ -16,6 +16,8 @@ const MAP_FILES = [
   'ship/korea_ship_map.html',
   'defense/korea_defense_map.html',
   'robot/korea_robot_map.html',
+  'auto/korea_auto_map.html',
+  'medtech/korea_medtech_map.html',
   'energy/korea_energy_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',

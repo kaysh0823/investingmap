@@ -42,6 +42,8 @@ const MAP_FILES = [
   'kculture/korea_kculture_map.html',
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
+  'auto/korea_auto_map.html',
+  'medtech/korea_medtech_map.html',
   'bio/bio_inline_tail.js',
   'bio/korea_bio_map.inline.js',
 ];

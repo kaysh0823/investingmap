@@ -17,6 +17,8 @@
     { id: 'kcontent', path: 'kcontent/korea_kcontent_map.html', icon: '\uD83C\uDFAC', ko: 'K-\uCF58\uD150\uCE20', en: 'K-Content' },
     { id: 'bio', path: 'bio/korea_bio_map.html', icon: '\uD83E\uDDEC', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: 'robot/korea_robot_map.html', icon: '\uD83E\uDD16', ko: '\uB85C\uBD07', en: 'Robot' },
+    { id: 'auto', path: 'auto/korea_auto_map.html', icon: '\uD83D\uDE97', ko: '\uC790\uB3D9\uCC28', en: 'Auto' },
+    { id: 'medtech', path: 'medtech/korea_medtech_map.html', icon: '\uD83E\uDE7A', ko: '\uC758\uB8CC\uAE30\uAE30', en: 'MedTech' },
     { id: 'finance', path: 'finance/korea_finance_map.html', icon: '\uD83C\uDFE6', ko: '\uAE08\uC735', en: 'Finance' },
     { id: 'construction', path: 'construction/korea_construction_map.html', icon: '\uD83C\uDFD7\uFE0F', ko: '\uAC74\uC124', en: 'Construction' },
   ];
@@ -36,7 +38,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(semiconductor|bio|ship|defense|robot|energy|powergrid|kculture|kconsume|kcontent|finance|construction)\//i.test(path)) return '../';
+    if (/\/(semiconductor|bio|ship|defense|robot|auto|medtech|energy|powergrid|kculture|kconsume|kcontent|finance|construction)\//i.test(path)) return '../';
     return '';
   }
 
@@ -47,6 +49,8 @@
     if (path.indexOf('/ship/') !== -1) return 'ship';
     if (path.indexOf('/defense/') !== -1) return 'defense';
     if (path.indexOf('/robot/') !== -1) return 'robot';
+    if (path.indexOf('/auto/') !== -1) return 'auto';
+    if (path.indexOf('/medtech/') !== -1) return 'medtech';
     if (path.indexOf('/energy/') !== -1) return 'energy';
     if (path.indexOf('/powergrid/') !== -1) return 'powergrid';
     if (path.indexOf('/kconsume/') !== -1) return 'kconsume';

@@ -22,6 +22,8 @@ const MAPS = [
   'kcontent/korea_kcontent_map.html',
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
+  'auto/korea_auto_map.html',
+  'medtech/korea_medtech_map.html',
 ];
 
 const CHAIN_LABEL_OLD =

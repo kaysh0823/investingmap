@@ -85,6 +85,22 @@
         "en": "KRX data, automation value chains, and global equipment and software relationships for listed Korean robotics and Physical AI companies."
       }
     },
+    "auto": {
+      "path": "/auto/korea_auto_map.html",
+      "title": { "ko": "한국 자동차 투자 지도", "en": "Korea Auto Industry Map" },
+      "summary": {
+        "ko": "완성차·부품·타이어·전장/ADAS 관련 상장사의 KRX 데이터와 글로벌 OEM·부품 peer 참고 관계를 정리합니다.",
+        "en": "KRX metrics and illustrative global OEM and parts peer relationships for listed Korean auto OEMs, parts, tires, and electronics/ADAS companies."
+      }
+    },
+    "medtech": {
+      "path": "/medtech/korea_medtech_map.html",
+      "title": { "ko": "한국 의료·미용기기 투자 지도", "en": "Korea MedTech Map" },
+      "summary": {
+        "ko": "진단·IVD·임플란트·미용기기·의료장비 관련 상장사의 KRX 데이터와 글로벌 peer 참고 관계를 정리합니다.",
+        "en": "KRX metrics and illustrative global peer relationships for listed Korean diagnostics, implants, aesthetic devices, and medical equipment companies."
+      }
+    },
     "energy": {
       "path": "/energy/korea_energy_map.html",
       "title": { "ko": "한국 에너지 투자 지도", "en": "Korea Energy Sector Stocks Map" },

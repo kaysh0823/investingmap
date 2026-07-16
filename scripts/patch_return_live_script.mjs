@@ -16,6 +16,8 @@ const TARGETS = [
   { file: 'robot/korea_robot_map.html', insert: '../js/return_live.js?v=1', before: '../js/live_quotes.js' },
   { file: 'finance/korea_finance_map.html', insert: '../js/return_live.js?v=1', before: '../js/live_quotes.js' },
   { file: 'construction/korea_construction_map.html', insert: '../js/return_live.js?v=1', before: '../js/live_quotes.js' },
+  { file: 'auto/korea_auto_map.html', insert: '../js/return_live.js?v=1', before: '../js/live_quotes.js' },
+  { file: 'medtech/korea_medtech_map.html', insert: '../js/return_live.js?v=1', before: '../js/live_quotes.js' },
   { file: 'bio/korea_bio_map.html', insert: '../js/return_live.js?v=1', before: '../js/live_quotes.js' },
 ];
 

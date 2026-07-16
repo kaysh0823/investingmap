@@ -17,6 +17,8 @@ const MAP_FILES = [
   'powergrid/korea_powergrid_map.html',
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
+  'auto/korea_auto_map.html',
+  'medtech/korea_medtech_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',
 ];

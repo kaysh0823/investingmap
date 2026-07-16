@@ -13,7 +13,7 @@ import { numOrNull } from './supabase_hub.mjs';
 
 export { calcQuotePosition };
 
-export const SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'finance', 'construction'];
+export const SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
 
 const QUOTE_CONCURRENCY = 24;
 

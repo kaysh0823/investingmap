@@ -184,14 +184,6 @@
     "level": "core"
   },
   {
-    "ticker": "145720",
-    "name": "덴티움",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "치과 임플란트",
-    "level": "core"
-  },
-  {
     "ticker": "067630",
     "name": "HLB생명과학",
     "chain": "의료기기 / 디지털헬스",
@@ -206,14 +198,6 @@
     "sectorId": "smallmol",
     "subSector": "",
     "level": ""
-  },
-  {
-    "ticker": "389650",
-    "name": "넥스트바이오메디컬",
-    "chain": "의료기기 / 디지털헬스",
-    "sectorId": "medtech",
-    "subSector": "내시경 지혈재·의료기기",
-    "level": "core"
   },
   {
     "ticker": "243070",

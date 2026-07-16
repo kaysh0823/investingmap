@@ -2,6 +2,7 @@
  * Re-apply data + UI patches (cp_list, heatmap i18n, editorial, mcap fmt, bio inline).
  * Run before npm run build on deploy.
  */
+import fs from 'fs';
 import { execSync } from 'child_process';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -14,6 +15,17 @@ function run(cmd, label) {
   execSync(cmd, { cwd: root, stdio: 'inherit' });
 }
 
+function ensureMapBuilder(relHtml, builderCmd, label) {
+  const fp = join(root, relHtml);
+  if (fs.existsSync(fp)) {
+    console.log('\n==>', label, '(exists, skip)');
+    return;
+  }
+  run(builderCmd, label);
+}
+
+ensureMapBuilder('auto/korea_auto_map.html', 'node build_korea_auto_map.mjs', 'build auto map');
+ensureMapBuilder('medtech/korea_medtech_map.html', 'node build_korea_medtech_map.mjs', 'build medtech map');
 run('node scripts/verify_map_companies.mjs', 'verify map company arrays');
 run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry maps');
 run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy curated universe');

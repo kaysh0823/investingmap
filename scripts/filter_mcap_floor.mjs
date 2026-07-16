@@ -23,6 +23,8 @@ const HTML_MAPS = [
   'powergrid/korea_powergrid_map.html',
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
+  'auto/korea_auto_map.html',
+  'medtech/korea_medtech_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',
 ];
@@ -108,6 +110,14 @@ function patchIndexHubCounts(hubLines) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · FA/, `${hubLines.robot}개 상장사 · FA`);
     indexHtml = indexHtml.replace(/\d+ listings · FA, AMR/, `${hubLines.robot} listings · FA, AMR`);
   }
+  if (hubLines.auto) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 완성차/, `${hubLines.auto}개 상장사 · 완성차`);
+    indexHtml = indexHtml.replace(/\d+ listings · OEM/, `${hubLines.auto} listings · OEM`);
+  }
+  if (hubLines.medtech) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 진단/, `${hubLines.medtech}개 상장사 · 진단`);
+    indexHtml = indexHtml.replace(/\d+ listings · Diagnostics/, `${hubLines.medtech} listings · Diagnostics`);
+  }
   if (hubLines.energy) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 2차전지/, `${hubLines.energy}개 상장사 · 2차전지`);
     indexHtml = indexHtml.replace(/\d+ listings · batteries/, `${hubLines.energy} listings · batteries`);
@@ -146,6 +156,8 @@ function main() {
       ship: 'ship',
       defense: 'defense',
       robot: 'robot',
+      auto: 'auto',
+      medtech: 'medtech',
       energy: 'energy',
       powergrid: 'powergrid',
       finance: 'finance',

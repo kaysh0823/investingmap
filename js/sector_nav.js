@@ -14,6 +14,8 @@
     { id: 'kcontent', path: '../kcontent/korea_kcontent_map.html', ko: 'K-\uCF58\uD150\uCE20', en: 'K-Content' },
     { id: 'bio', path: '../bio/korea_bio_map.html', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: '../robot/korea_robot_map.html', ko: '\uB85C\uBD07', en: 'Robot' },
+    { id: 'auto', path: '../auto/korea_auto_map.html', ko: '\uC790\uB3D9\uCC28', en: 'Auto' },
+    { id: 'medtech', path: '../medtech/korea_medtech_map.html', ko: '\uC758\uB8CC\uAE30\uAE30', en: 'MedTech' },
     { id: 'finance', path: '../finance/korea_finance_map.html', ko: '\uAE08\uC735', en: 'Finance' },
     { id: 'construction', path: '../construction/korea_construction_map.html', ko: '\uAC74\uC124', en: 'Construction' },
   ];
