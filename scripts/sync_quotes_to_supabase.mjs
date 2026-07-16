@@ -1,6 +1,6 @@
 /**
  * Sync hub-listed tickers: Naver quotes + KRX returns/RS → Supabase stock_quotes_latest,
- * then mcap-weighted sector returns → sector_returns.
+ * then past-mcap-weighted sector returns → sector_returns.
  * Reuses functions/lib collectors; safe to run locally or in GitHub Actions.
  */
 import fs from 'fs';
@@ -205,20 +205,26 @@ async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
   return { upserted, failed };
 }
 
-/** mcap-weighted mean of retPct; skips null ret or non-positive mcap. */
+/**
+ * Past-mcap-weighted sector return (matches hub UI: recent ÷ past cap).
+ * mcapPast ≈ mcap_won / (1 + ret/100); return = (Σ mcap_now / Σ mcapPast − 1) × 100.
+ * Skips null ret, null/non-positive mcap, or 1+ret/100 <= 0.
+ */
 function mcapWeightedReturn(members, retKey) {
-  let wSum = 0;
-  let mSum = 0;
+  let sumNow = 0;
+  let sumPast = 0;
   for (const m of members) {
     const ret = m[retKey];
     const mcap = m.mcap_won;
     if (ret == null || !Number.isFinite(ret)) continue;
     if (mcap == null || !Number.isFinite(mcap) || mcap <= 0) continue;
-    wSum += ret * mcap;
-    mSum += mcap;
+    const growth = 1 + ret / 100;
+    if (!(growth > 0)) continue;
+    sumNow += mcap;
+    sumPast += mcap / growth;
   }
-  if (mSum <= 0) return null;
-  return Math.round((wSum / mSum) * 100) / 100;
+  if (sumPast <= 0) return null;
+  return Math.round((sumNow / sumPast - 1) * 100 * 100) / 100;
 }
 
 /**
