@@ -74,9 +74,22 @@ ${items}
 }
 
 function stripPrerenderRows(html, keepTickers) {
-  return html.replace(/<tr data-ticker="([^"]+)">[\s\S]*?<\/tr>/g, (full, t) =>
+  const start = '<!-- investingmap-seo-prerender-start -->';
+  const end = '<!-- investingmap-seo-prerender-end -->';
+  const i0 = html.indexOf(start);
+  const i1 = html.indexOf(end);
+  if (i0 === -1 || i1 === -1 || i1 <= i0) {
+    return html.replace(/<tr data-ticker="([^"]+)">[\s\S]*?<\/tr>/g, (full, t) =>
+      keepTickers.has(String(t).padStart(6, '0')) ? full : '',
+    );
+  }
+  const head = html.slice(0, i0 + start.length);
+  const body = html.slice(i0 + start.length, i1);
+  const tail = html.slice(i1);
+  const stripped = body.replace(/<tr data-ticker="([^"]+)">[\s\S]*?<\/tr>/g, (full, t) =>
     keepTickers.has(String(t).padStart(6, '0')) ? full : '',
   );
+  return head + stripped + tail;
 }
 
 function patchMapHtml(html, opts) {
@@ -156,7 +169,11 @@ function writeSector(folder, file, companies, chains, colors, titles) {
   const outPath = path.join(ROOT, folder, file);
   fs.writeFileSync(outPath, html, 'utf8');
   // verify
-  const check = extractCompaniesFromHtml(fs.readFileSync(outPath, 'utf8'));
+  const written = fs.readFileSync(outPath, 'utf8');
+  if (!/return `<tr data-ticker="\$\{c\.ticker\}">/.test(written)) {
+    throw new Error(`${folder}: renderTable row template missing (check stripPrerenderRows scope)`);
+  }
+  const check = extractCompaniesFromHtml(written);
   console.log(`OK ${folder}: ${check.length} companies (expected ${companies.length})`);
   if (check.length !== companies.length) {
     throw new Error(`${folder} company count mismatch`);

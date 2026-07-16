@@ -2968,7 +2968,28 @@ body.im-tab-table thead th {
         const mktClass = I18n ? I18n.marketCssClass(c.market) : c.market.toLowerCase();
         const chainDisplay = chainLabel(c.chain);
         const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '—', hi: '—', lo: '—', position: '—' };
-        return ``;
+        return `<tr data-ticker="${c.ticker}">
+      <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
+      <td><span class="ticker">${c.ticker}</span></td>
+      <td class="quote-cell">${qr.last}</td>
+      <td class="quote-cell ret-cell">${qr.chg1d || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret20d || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret50d || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret120d || '—'}</td>
+      <td class="quote-cell ret-cell">${qr.ret250d || '—'}</td>
+      <td class="quote-cell">${qr.hi}</td>
+      <td class="quote-cell">${qr.lo}</td>
+      <td class="quote-cell">${(qr && (qr.position != null ? qr.position : qr.yoy)) || '—'}</td>
+      <td class="quote-cell">${qr.rs || '—'}</td>
+      <td class="mcap-cell">${fmtMcapTableCell(c)}</td>
+      <td class="fin-cell">${fmtFinRatio(c.per)}</td>
+      <td class="fin-cell">${fmtFinRatio(c.pbr)}</td>
+      <td><span class="market-badge ${mktClass}">${mktLabel}</span></td>
+      <td><span class="chain-tag" style="${getChainStyle(c.chain)}">${chainDisplay}</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">${semTypeDisplay}</td>
+      <td class="products-cell">${productsDisplay}</td>
+      <td><div class="partners-list">${partnerHtml}</div></td>
+    </tr>`;
       }).join('');
     if (window.InvestingMapMobileTable) InvestingMapMobileTable.sync(document.getElementById('main-table'));
     }

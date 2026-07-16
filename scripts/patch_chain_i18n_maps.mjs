@@ -18,6 +18,8 @@ const MAPS = [
   'energy/korea_energy_map.html',
   'powergrid/korea_powergrid_map.html',
   'kculture/korea_kculture_map.html',
+  'kconsume/korea_kconsume_map.html',
+  'kcontent/korea_kcontent_map.html',
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
 ];
