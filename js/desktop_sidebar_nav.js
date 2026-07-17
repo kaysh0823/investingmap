@@ -1,5 +1,7 @@
 /**
  * Desktop left sidebar: Hub + industry maps (persistent on map pages).
+ * Sector list: battery/renewable/nuclear (ex-energy), kconsume/kcontent/cosmetics (ex-kculture), auto, medtech.
+ * Bump ?v= when ITEMS change (see scripts/patch_desktop_sidebar.mjs DESKTOP_SIDEBAR_NAV_V).
  */
 (function (global) {
   'use strict';

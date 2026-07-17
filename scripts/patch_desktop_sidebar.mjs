@@ -1,11 +1,13 @@
 /**
  * Desktop left sidebar on hub, map pages, and trust pages.
+ * Bump DESKTOP_SIDEBAR_NAV_V when ITEMS in js/desktop_sidebar_nav.js change.
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const DESKTOP_SIDEBAR_NAV_V = 7;
 
 const MAP_FILES = [
   'semiconductor/korea_semiconductor_map.html',
@@ -36,11 +38,22 @@ const ROOT_PAGES = [
   'faq.html',
 ];
 
+function versionedSrc(relPath) {
+  return `${relPath}?v=${DESKTOP_SIDEBAR_NAV_V}`;
+}
+
+function bumpSidebarVersion(html) {
+  return html.replace(
+    /desktop_sidebar_nav\.js(?:\?v=\d+)?/g,
+    `desktop_sidebar_nav.js?v=${DESKTOP_SIDEBAR_NAV_V}`,
+  );
+}
+
 function addScript(html, src) {
-  if (html.includes('desktop_sidebar_nav.js')) return html;
+  if (html.includes('desktop_sidebar_nav.js')) return bumpSidebarVersion(html);
   if (html.includes('global_bottom_nav.js')) {
     return html.replace(
-      /<script src="([^"]*global_bottom_nav\.js)"><\/script>/,
+      /<script src="([^"]*global_bottom_nav\.js[^"]*)"><\/script>/,
       `<script src="${src}"></script>\n  <script src="$1"></script>`,
     );
   }
@@ -85,7 +98,7 @@ function patchFile(rel, scriptSrc) {
   }
 }
 
-for (const rel of MAP_FILES) patchFile(rel, '../js/desktop_sidebar_nav.js');
-for (const rel of ROOT_PAGES) patchFile(rel, 'js/desktop_sidebar_nav.js');
+for (const rel of MAP_FILES) patchFile(rel, versionedSrc('../js/desktop_sidebar_nav.js'));
+for (const rel of ROOT_PAGES) patchFile(rel, versionedSrc('js/desktop_sidebar_nav.js'));
 
-console.log('OK patch_desktop_sidebar');
+console.log(`OK patch_desktop_sidebar v=${DESKTOP_SIDEBAR_NAV_V}`);
