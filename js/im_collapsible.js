@@ -23,12 +23,17 @@
     });
   }
 
+  var RANK_TOGGLES = [
+    ['hub-rs-toggle', 'hub-top-rs-body'],
+    ['hub-top-toggle', 'hub-top-position-body'],
+    ['hub-mcap-toggle', 'hub-top-mcap-body'],
+    ['hub-gain5d-toggle', 'hub-top-gain5d-body'],
+    ['hub-loss5d-toggle', 'hub-top-loss5d-body'],
+  ];
+
   function syncRankDefaults() {
     var desktop = window.matchMedia(MQ_DESKTOP).matches;
-    [
-      ['hub-rs-toggle', 'hub-top-rs-body'],
-      ['hub-top-toggle', 'hub-top-position-body'],
-    ].forEach(function (pair) {
+    RANK_TOGGLES.forEach(function (pair) {
       var btn = document.getElementById(pair[0]);
       var panel = document.getElementById(pair[1]);
       if (!btn || !panel) return;
@@ -52,14 +57,12 @@
     setExpanded(titleBtn, leadPanel, false);
     bindToggle(titleBtn, leadPanel);
 
-    var rsBtn = document.getElementById('hub-rs-toggle');
-    var rsBody = document.getElementById('hub-top-rs-body');
-    var topBtn = document.getElementById('hub-top-toggle');
-    var topBody = document.getElementById('hub-top-position-body');
-    bindToggle(rsBtn, rsBody);
-    bindToggle(topBtn, topBody);
-    markUserToggle(rsBtn);
-    markUserToggle(topBtn);
+    RANK_TOGGLES.forEach(function (pair) {
+      var btn = document.getElementById(pair[0]);
+      var body = document.getElementById(pair[1]);
+      bindToggle(btn, body);
+      markUserToggle(btn);
+    });
     syncRankDefaults();
 
     var mq = window.matchMedia(MQ_DESKTOP);

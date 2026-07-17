@@ -153,6 +153,7 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession, marketClosed) {
     per: naver?.per ?? null,
     pbr: naver?.pbr ?? null,
     chg_1d_pct: chg1d,
+    ret_5d_pct: krx?.ret5dPct ?? null,
     ret_20d_pct: krx?.ret20dPct ?? null,
     ret_50d_pct: krx?.ret50dPct ?? null,
     ret_120d_pct: krx?.ret120dPct ?? null,

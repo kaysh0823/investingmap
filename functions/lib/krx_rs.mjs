@@ -16,6 +16,7 @@ const RS_PERIODS = [
 
 const RETURN_PERIODS = [
   { field: 'chg1dPct', days: 1 },
+  { field: 'ret5dPct', days: 5 },
   { field: 'ret20dPct', days: 20 },
   { field: 'ret50dPct', days: 50 },
   { field: 'ret120dPct', days: 120 },

@@ -53,6 +53,7 @@ function mapSupabaseRow(row) {
     per: numOrNull(row.per),
     pbr: numOrNull(row.pbr),
     chg1dPct: numOrNull(row.chg_1d_pct),
+    ret5dPct: numOrNull(row.ret_5d_pct),
     ret20dPct: numOrNull(row.ret_20d_pct),
     ret50dPct: numOrNull(row.ret_50d_pct),
     ret120dPct: numOrNull(row.ret_120d_pct),

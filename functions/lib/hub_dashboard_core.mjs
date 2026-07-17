@@ -164,6 +164,96 @@ export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
   };
 }
 
+/** Hub movers row shape (shared by mcap / 5d gainers / 5d losers lists). */
+function moverRow(company, mcapWon, ret5dPct) {
+  return {
+    ticker: company.ticker,
+    name: company.name,
+    nameEn: company.nameEn,
+    sectorId: company.sectorId,
+    mapPath: company.mapPath,
+    mcapWon: mcapWon != null ? mcapWon : (company.mcapWon || 0),
+    ret5dPct: ret5dPct != null ? ret5dPct : null,
+  };
+}
+
+/**
+ * Build hub_movers payload (mcap Top10 + 5-day gainers/losers) from
+ * Supabase stock_quotes_latest rows joined with hub_index membership.
+ */
+export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
+  const companies = listHubCompanies(hubIndex);
+  const byTicker = new Map();
+  for (const c of companies) {
+    const key = normalizeTicker(c.ticker);
+    if (key) byTicker.set(key, c);
+  }
+
+  const rowByTicker = new Map();
+  let asOf = opts.asOf || null;
+  for (const row of rows || []) {
+    const key = normalizeTicker(row.ticker);
+    if (!key || !byTicker.has(key)) continue;
+    rowByTicker.set(key, row);
+    if (row.as_of && !asOf) asOf = row.as_of;
+  }
+
+  const enriched = companies.map((c) => {
+    const key = normalizeTicker(c.ticker);
+    const row = key ? rowByTicker.get(key) : null;
+    const mcapWon = row && numOrNull(row.mcap_won) != null ? numOrNull(row.mcap_won) : (c.mcapWon || 0);
+    const ret5dPct = row ? numOrNull(row.ret_5d_pct) : null;
+    return moverRow(c, mcapWon, ret5dPct);
+  });
+
+  const mcapTop10 = enriched
+    .filter((r) => r.mcapWon != null && r.mcapWon > 0)
+    .sort((a, b) => b.mcapWon - a.mcapWon)
+    .slice(0, 10);
+
+  const withRet = enriched.filter((r) => r.ret5dPct != null && Number.isFinite(r.ret5dPct));
+  const gainers5dTop10 = withRet.slice().sort((a, b) => b.ret5dPct - a.ret5dPct).slice(0, 10);
+  const losers5dTop10 = withRet.slice().sort((a, b) => a.ret5dPct - b.ret5dPct).slice(0, 10);
+
+  return {
+    asOf: asOf || new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    source: opts.source || 'supabase',
+    quotesTotal: companies.length,
+    ret5dRanked: withRet.length,
+    mcapTop10,
+    gainers5dTop10,
+    losers5dTop10,
+  };
+}
+
+/** Fallback: mcap Top10 straight from hub_index; 5d lists empty (needs Supabase). */
+export function buildHubMoversFallback(hubIndex, opts = {}) {
+  const companies = listHubCompanies(hubIndex);
+  const mcapTop10 = companies
+    .map((c) => moverRow(c, c.mcapWon || 0, null))
+    .filter((r) => r.mcapWon != null && r.mcapWon > 0)
+    .sort((a, b) => b.mcapWon - a.mcapWon)
+    .slice(0, 10);
+  return {
+    asOf: new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    source: opts.source || 'hub_index',
+    quotesTotal: companies.length,
+    ret5dRanked: 0,
+    mcapTop10,
+    gainers5dTop10: [],
+    losers5dTop10: [],
+  };
+}
+
+export function hubMoversCacheable(payload) {
+  if (!payload) return false;
+  if (!payload.mcapTop10 || payload.mcapTop10.length < 10) return false;
+  // Only cache once the 5-day lists are populated (Supabase-backed).
+  return (payload.gainers5dTop10 || []).length >= 10 && (payload.losers5dTop10 || []).length >= 10;
+}
+
 /** Map sector_returns rows + hub_index into hub_sectors payload shape. */
 export function buildHubSectorsFromSupabaseRows(hubIndex, rows, env, opts = {}) {
   const session = krxSessionInfo();

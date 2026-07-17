@@ -9,6 +9,7 @@ create table stock_quotes_latest (
   per              numeric,
   pbr              numeric,
   chg_1d_pct       numeric,
+  ret_5d_pct       numeric,
   ret_20d_pct      numeric,
   ret_50d_pct      numeric,
   ret_120d_pct     numeric,
