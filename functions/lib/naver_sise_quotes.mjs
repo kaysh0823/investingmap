@@ -88,8 +88,54 @@ function parsePerPbr(html) {
 }
 
 /**
+ * Parse the Naver sise header date marker.
+ * Closed:  <em class="date">2026.07.16 <span>기준(KRX 장마감)</span></em>
+ * Live:    the same <em class="date"> shows a clock time + "실시간" while trading.
+ *
  * @param {string} html
- * @returns {{ last: number|null, prevClose: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, per: number|null, pbr: number|null, chg1dPct: number|null }}
+ * @returns {{ tradeDate: string|null, marketClosed: boolean|null }}
+ *   tradeDate is 'YYYY-MM-DD' in KST; marketClosed is true when the page says
+ *   "장마감", false when it shows a live/실시간 marker, null when undetectable.
+ */
+export function parseNaverTradeMeta(html) {
+  if (!html || typeof html !== 'string') return { tradeDate: null, marketClosed: null };
+  const dateBlockM = html.match(/<em class="date">([\s\S]*?)<\/em>/);
+  const inner = dateBlockM ? dateBlockM[1] : '';
+  const scope = inner || html;
+
+  let tradeDate = null;
+  const dM = scope.match(/(\d{4})\.(\d{2})\.(\d{2})/);
+  if (dM) tradeDate = `${dM[1]}-${dM[2]}-${dM[3]}`;
+
+  let marketClosed = null;
+  if (/장\s*마\s*감/.test(scope)) marketClosed = true;
+  else if (/실시간|장중/.test(scope)) marketClosed = false;
+
+  return { tradeDate, marketClosed };
+}
+
+/**
+ * Decide whether "today" (KST) is a non-trading day using Naver's own trade marker.
+ * Catches holidays the static clock check misses: the wall clock says regular
+ * session, but Naver's latest trade date is in the past or the page says 장마감.
+ *
+ * @param {{ clockRegular: boolean, tradeDate: string|null, marketClosed: boolean|null, todayYmdDash: string }} args
+ * @returns {{ regularSession: boolean, marketClosed: boolean, tradeDate: string|null }}
+ */
+export function resolveNaverSession({ clockRegular, tradeDate, marketClosed, todayYmdDash }) {
+  const closedByMarker = marketClosed === true;
+  const staleTradeDate = !!(tradeDate && todayYmdDash && tradeDate < todayYmdDash);
+  const closedToday = closedByMarker || staleTradeDate;
+  return {
+    regularSession: !!clockRegular && !closedToday,
+    marketClosed: closedToday || !clockRegular,
+    tradeDate: tradeDate || null,
+  };
+}
+
+/**
+ * @param {string} html
+ * @returns {{ last: number|null, prevClose: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, per: number|null, pbr: number|null, chg1dPct: number|null, tradeDate: string|null, marketClosed: boolean|null }}
  */
 export function parseNaverSiseHtml(html) {
   if (!html || typeof html !== 'string') {
@@ -102,6 +148,8 @@ export function parseNaverSiseHtml(html) {
       per: null,
       pbr: null,
       chg1dPct: null,
+      tradeDate: null,
+      marketClosed: null,
     };
   }
 
@@ -154,8 +202,9 @@ export function parseNaverSiseHtml(html) {
 
   const { per, pbr } = parsePerPbr(html);
   const mcapWon = parseMarketCapWon(html);
+  const { tradeDate, marketClosed } = parseNaverTradeMeta(html);
 
-  return { last, prevClose, high52w, low52w, mcapWon, per, pbr, chg1dPct };
+  return { last, prevClose, high52w, low52w, mcapWon, per, pbr, chg1dPct, tradeDate, marketClosed };
 }
 
 export async function fetchNaverSiseQuote(code, init) {
@@ -186,6 +235,8 @@ export function parseNaverMobileIntegration(json) {
     per: null,
     pbr: null,
     chg1dPct: null,
+    tradeDate: null,
+    marketClosed: null,
   };
   if (!json || typeof json !== 'object') return out;
 
@@ -277,6 +328,10 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   }
   if (naver.per != null && (preferFundamentals || out.per == null)) out.per = naver.per;
   if (naver.pbr != null && (preferFundamentals || out.pbr == null)) out.pbr = naver.pbr;
+  // Trade marker: PC sise is authoritative; prefer any non-null so the session
+  // decision survives whichever source resolved.
+  if (naver.tradeDate != null && (preferLast || out.tradeDate == null)) out.tradeDate = naver.tradeDate;
+  if (naver.marketClosed != null && (preferLast || out.marketClosed == null)) out.marketClosed = naver.marketClosed;
   if (
     (out.chg1dPct == null || preferLast) &&
     out.last != null &&
@@ -299,5 +354,7 @@ export function emptyQuote() {
     pbr: null,
     chg1dPct: null,
     yoyReturnPct: null,
+    tradeDate: null,
+    marketClosed: null,
   };
 }

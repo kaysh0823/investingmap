@@ -6,9 +6,9 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { fetchNaverQuote } from '../functions/lib/naver_sise_quotes.mjs';
+import { fetchNaverQuote, resolveNaverSession } from '../functions/lib/naver_sise_quotes.mjs';
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
-import { isKrxRegularSession, isKrxTradingDay, kstYmdDash } from '../functions/lib/krx_session.mjs';
+import { isKrxClockRegularSession, kstWeekday, kstYmdDash } from '../functions/lib/krx_session.mjs';
 import {
   SECTOR_ORDER,
   listHubCompanies,
@@ -119,12 +119,12 @@ async function loadKrxQuotes(authKey) {
   return { quotes: snapshot.quotes, ok: snapshot.quotesOk || 0 };
 }
 
-function toSupabaseRow(ticker, naver, krx, asOf, regularSession, tradingDay) {
+function toSupabaseRow(ticker, naver, krx, asOf, regularSession, marketClosed) {
   let chg1d = null;
-  if (!tradingDay) {
-    // Non-trading day (weekend/KRX holiday): Naver reports 0% because there is
-    // no session, so use KRX close-to-close of the last two trading days.
-    chg1d = krx?.chg1dPct ?? null;
+  if (marketClosed) {
+    // Market closed (holiday / after-hours / weekend): use KRX last-two-session
+    // close-to-close; fall back to Naver's last-session change if KRX is missing.
+    chg1d = krx?.chg1dPct ?? (Number.isFinite(naver?.chg1dPct) ? naver.chg1dPct : null);
   } else if (naver?.chg1dPct != null && Number.isFinite(naver.chg1dPct)) {
     chg1d = naver.chg1dPct;
   } else if (naver?.last != null && naver?.prevClose > 0) {
@@ -266,23 +266,46 @@ async function upsertSectorReturns(rows, supabaseUrl, serviceKey) {
   return { upserted: 0, failed: rows.length, body: result.body };
 }
 
+/**
+ * Consensus trade marker across all fetched Naver quotes.
+ * Uses the most common tradeDate and the majority marketClosed among quotes on
+ * that date, so one flaky page cannot flip the whole run's session flag.
+ * @param {Record<string, {tradeDate?: string|null, marketClosed?: boolean|null}>} quotes
+ */
+function deriveNaverTradeConsensus(quotes) {
+  const dateCounts = new Map();
+  for (const q of Object.values(quotes)) {
+    if (q && q.tradeDate) dateCounts.set(q.tradeDate, (dateCounts.get(q.tradeDate) || 0) + 1);
+  }
+  let tradeDate = null;
+  let best = 0;
+  for (const [d, n] of dateCounts) {
+    if (n > best) { best = n; tradeDate = d; }
+  }
+
+  let closedVotes = 0;
+  let openVotes = 0;
+  for (const q of Object.values(quotes)) {
+    if (!q || q.tradeDate !== tradeDate) continue;
+    if (q.marketClosed === true) closedVotes += 1;
+    else if (q.marketClosed === false) openVotes += 1;
+  }
+  let marketClosed = null;
+  if (closedVotes || openVotes) marketClosed = closedVotes >= openVotes;
+
+  return { tradeDate, marketClosed };
+}
+
+/** ISO timestamp anchored to a trade date's KST close (15:30). */
+function tradeDateToAsOf(tradeDate) {
+  if (!tradeDate) return new Date().toISOString();
+  const d = new Date(`${tradeDate}T15:30:00+09:00`);
+  return Number.isFinite(d.getTime()) ? d.toISOString() : new Date().toISOString();
+}
+
 async function main() {
   const started = Date.now();
   const force = process.argv.includes('--force');
-  const tradingDay = isKrxTradingDay();
-
-  if (!tradingDay && !force) {
-    console.log(
-      `Non-trading day in KST (${kstYmdDash()}: weekend or KRX holiday) — skipping sync. Use --force to run anyway.`,
-    );
-    process.exit(0);
-  }
-  if (!tradingDay && force) {
-    console.log(
-      `Non-trading day in KST (${kstYmdDash()}) — forced run; chg_1d will use KRX close-to-close.`,
-    );
-  }
-
   const env = loadEnv();
   const supabaseUrl = (env.SUPABASE_URL || '').replace(/\/$/, '');
   const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -293,17 +316,43 @@ async function main() {
     process.exit(1);
   }
 
+  // Weekends can never have a session; skip without a network round-trip.
+  // Holidays are detected from Naver's own marker below (no hardcoded calendar).
+  const weekday = kstWeekday();
+  const todayYmdDash = kstYmdDash();
+  if ((weekday === 0 || weekday === 6) && !force) {
+    console.log(`Skip sync: ${todayYmdDash} is a weekend (KST). Pass --force to run anyway.`);
+    process.exit(0);
+  }
+
   const hubPath = path.join(ROOT, 'data', 'hub_index.json');
   const hubIndex = JSON.parse(fs.readFileSync(hubPath, 'utf8'));
   const tickers = loadHubTickers(hubIndex);
-  const asOf = new Date().toISOString();
-  const regularSession = isKrxRegularSession();
+  const clockRegular = isKrxClockRegularSession();
 
   console.log(`Sync ${tickers.length} hub tickers → Supabase`);
-  console.log(`  kst=${kstYmdDash()} tradingDay=${tradingDay} regularSession=${regularSession}${force ? ' --force' : ''}`);
+  console.log(`  kst=${todayYmdDash} clockRegular=${clockRegular}${force ? ' --force' : ''}`);
 
   const naverResult = await fetchNaverQuotes(tickers);
   const krxResult = await loadKrxQuotes(authKey);
+
+  // Naver's page marker is the source of truth for holiday detection.
+  const consensus = deriveNaverTradeConsensus(naverResult.quotes);
+  const session = resolveNaverSession({
+    clockRegular,
+    tradeDate: consensus.tradeDate,
+    marketClosed: consensus.marketClosed,
+    todayYmdDash,
+  });
+  const regularSession = session.regularSession;
+  const asOf = session.regularSession ? new Date().toISOString() : tradeDateToAsOf(session.tradeDate);
+  console.log(
+    `  naverTradeDate=${consensus.tradeDate || 'n/a'} naverMarketClosed=${consensus.marketClosed} ` +
+    `→ regularSession=${regularSession} asOf=${asOf}`,
+  );
+  if (clockRegular && !regularSession) {
+    console.log('  (clock says session, but Naver marker indicates non-trading day → holiday)');
+  }
 
   const rows = tickers.map((ticker) =>
     toSupabaseRow(
@@ -312,7 +361,7 @@ async function main() {
       krxResult.quotes[ticker],
       asOf,
       regularSession,
-      tradingDay,
+      session.marketClosed,
     ),
   );
 

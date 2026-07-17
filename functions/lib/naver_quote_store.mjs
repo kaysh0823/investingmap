@@ -8,8 +8,37 @@ import {
   fetchNaverQuote,
   emptyQuote,
   mergeNaverIntoQuote,
+  resolveNaverSession,
 } from './naver_sise_quotes.mjs';
-import { isKrxRegularSession, naverRefreshMs } from './krx_session.mjs';
+import { isKrxClockRegularSession, kstYmdDash, naverRefreshMs } from './krx_session.mjs';
+
+/**
+ * Session flag from Naver trade markers across cached quotes (holiday-aware
+ * without a hardcoded calendar). Falls back to the wall clock when no marker
+ * is available (e.g. all entries served from an old cache).
+ * @param {Record<string, {tradeDate?: string|null, marketClosed?: boolean|null}>} items
+ */
+export function resolveSessionFromItems(items) {
+  const clockRegular = isKrxClockRegularSession();
+  const dateCounts = new Map();
+  for (const q of Object.values(items || {})) {
+    if (q && q.tradeDate) dateCounts.set(q.tradeDate, (dateCounts.get(q.tradeDate) || 0) + 1);
+  }
+  let tradeDate = null;
+  let best = 0;
+  for (const [d, n] of dateCounts) {
+    if (n > best) { best = n; tradeDate = d; }
+  }
+  let closedVotes = 0;
+  let openVotes = 0;
+  for (const q of Object.values(items || {})) {
+    if (!q || q.tradeDate !== tradeDate) continue;
+    if (q.marketClosed === true) closedVotes += 1;
+    else if (q.marketClosed === false) openVotes += 1;
+  }
+  const marketClosed = closedVotes || openVotes ? closedVotes >= openVotes : null;
+  return resolveNaverSession({ clockRegular, tradeDate, marketClosed, todayYmdDash: kstYmdDash() });
+}
 
 const CACHE_ORIGIN = 'https://investingmap-internal.invalid/naver-quotes/v1';
 const memory = new Map();
@@ -132,11 +161,14 @@ export async function getCachedNaverQuotes(codes, opts) {
     }
   }
 
+  const session = resolveSessionFromItems(items);
   return {
     items,
     cacheHits,
     fetched,
-    regularSession: isKrxRegularSession(),
+    regularSession: session.regularSession,
+    marketClosed: session.marketClosed,
+    tradeDate: session.tradeDate,
   };
 }
 
