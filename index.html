@@ -261,14 +261,25 @@
       margin-top: 10px
     }
 
+    .hub-dashboard-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(400px, 520px);
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 24px
+    }
+
     .hub-rank-panels {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 22px
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      min-width: 0;
+      margin-bottom: 0
     }
 
     .hub-rank-panel {
+      position: sticky;
+      top: 16px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -340,6 +351,20 @@
       display: flex;
       flex-direction: column;
       gap: 10px
+    }
+
+    @media (max-width:1200px) {
+      .hub-dashboard-row {
+        grid-template-columns: 1fr
+      }
+
+      .hub-rank-panels {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .hub-rank-panel {
+        position: static
+      }
     }
 
     .hub-main {
@@ -763,6 +788,31 @@
         padding: 16px 14px 24px
       }
 
+      /* Mobile only: Sector pulse → RS/Top10 → industry cards */
+      .hub-dashboard-row {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 22px
+      }
+
+      .hub-rank-panels {
+        order: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        grid-template-columns: none
+      }
+
+      .hub-dashboard-main {
+        order: 2;
+        margin-bottom: 0
+      }
+
+      .hub-rank-panel {
+        position: static
+      }
+
       .hub-grid {
         grid-template-columns: 1fr;
         gap: 12px
@@ -1094,33 +1144,7 @@
       <div id="hub-sector-pulse-body"></div>
     </section>
 
-    <div class="hub-rank-panels" id="hub-rank-panels">
-      <section class="hub-rank-panel" id="hub-top-rs" aria-labelledby="hub-rs-title">
-        <button type="button" class="hub-rank-toggle" id="hub-rs-toggle" aria-expanded="false" aria-controls="hub-top-rs-body">
-          <h2 id="hub-rs-title">RS Top 10</h2>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-rs-body" class="hub-rank-body is-collapsed">
-          <p class="hub-side-sub" id="hub-rs-sub">Full KRX · avg of 20/50/120-day return percentiles</p>
-          <ol class="hub-top-list" id="hub-top-rs-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-          </ol>
-        </div>
-      </section>
-      <section class="hub-rank-panel" id="hub-top-position" aria-labelledby="hub-top-title">
-        <button type="button" class="hub-rank-toggle" id="hub-top-toggle" aria-expanded="false" aria-controls="hub-top-position-body">
-          <h2 id="hub-top-title">Top 10 — 52-week range</h2>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-position-body" class="hub-rank-body is-collapsed">
-          <p class="hub-side-sub" id="hub-top-sub">Last vs 52-week range — all industries</p>
-          <ol class="hub-top-list" id="hub-top-position-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading quotes…</li>
-          </ol>
-        </div>
-      </section>
-    </div>
-
+    <div class="hub-dashboard-row" id="hub-dashboard-row">
     <div class="hub-dashboard-main">
         <h2 class="hub-overview-heading" id="hub-overview-heading">Industry overview</h2>
         <div class="hub-grid">
@@ -1288,6 +1312,34 @@
     </div>
     </div>
 
+    <div class="hub-rank-panels" id="hub-rank-panels">
+      <section class="hub-rank-panel" id="hub-top-rs" aria-labelledby="hub-rs-title">
+        <button type="button" class="hub-rank-toggle" id="hub-rs-toggle" aria-expanded="false" aria-controls="hub-top-rs-body">
+          <h2 id="hub-rs-title">RS Top 10</h2>
+          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="hub-top-rs-body" class="hub-rank-body is-collapsed">
+          <p class="hub-side-sub" id="hub-rs-sub">Full KRX · avg of 20/50/120-day return percentiles</p>
+          <ol class="hub-top-list" id="hub-top-rs-list">
+            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
+          </ol>
+        </div>
+      </section>
+      <section class="hub-rank-panel" id="hub-top-position" aria-labelledby="hub-top-title">
+        <button type="button" class="hub-rank-toggle" id="hub-top-toggle" aria-expanded="false" aria-controls="hub-top-position-body">
+          <h2 id="hub-top-title">Top 10 — 52-week range</h2>
+          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="hub-top-position-body" class="hub-rank-body is-collapsed">
+          <p class="hub-side-sub" id="hub-top-sub">Last vs 52-week range — all industries</p>
+          <ol class="hub-top-list" id="hub-top-position-list">
+            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading quotes…</li>
+          </ol>
+        </div>
+      </section>
+    </div>
+    </div>
+
     <section class="hub-intro" id="hub-principles" aria-labelledby="hub-principles-summary">
       <details class="hub-principles-details">
         <summary class="hub-principles-summary" id="hub-principles-summary">
@@ -1330,7 +1382,7 @@
   </footer>
   <script src="js/map_tab_state.js?v=5"></script>
     <script src="js/return_live.js?v=2"></script>
-  <script src="js/hub_dashboard.js?v=31"></script>
+  <script src="js/hub_dashboard.js?v=32"></script>
   <script src="js/im_collapsible.js?v=2"></script>
 <script>
     const T = {

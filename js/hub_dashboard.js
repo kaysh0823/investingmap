@@ -168,8 +168,9 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v10')) return;
-    var oldCss = document.getElementById('im-hub-dashboard-css-v9')
+    if (document.getElementById('im-hub-dashboard-css-v11')) return;
+    var oldCss = document.getElementById('im-hub-dashboard-css-v10')
+      || document.getElementById('im-hub-dashboard-css-v9')
       || document.getElementById('im-hub-dashboard-css-v8')
       || document.getElementById('im-hub-dashboard-css-v7');
     if (oldCss) oldCss.remove();
@@ -201,7 +202,11 @@
       '.hub-pulse-mcap-label{font-size:9px;font-weight:600;color:var(--text-muted);letter-spacing:.02em;line-height:1.2}' +
       '.hub-pulse-mcap-val{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;word-break:keep-all}' +
       '.hub-pulse-count{font-size:10px;color:var(--text-muted)}' +
-      '.hub-dashboard-main{margin-bottom:24px}' +
+      /* Desktop: industry cards | Top10 side panels (original). Mobile order swap in @media. */ +
+      '.hub-dashboard-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(400px,520px);gap:20px;align-items:start;margin-bottom:24px}' +
+      '.hub-dashboard-main{margin-bottom:0;min-width:0}' +
+      '.hub-rank-panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;min-width:0;margin-bottom:0}' +
+      '.hub-rank-panel{position:sticky;top:16px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 4px 6px;min-width:0}' +
       '.hub-top-item{display:block;text-decoration:none;color:inherit;padding:10px 10px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);transition:border-color .15s,background .15s}' +
       '.hub-top-item:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface2))}' +
       '.hub-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}' +
@@ -220,7 +225,12 @@
       '.hub-skel-bar{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--border) 25%,color-mix(in srgb,var(--border) 40%,var(--surface2)) 50%,var(--border) 75%);background-size:200% 100%;animation:hub-skel-shimmer 1.4s ease-in-out infinite}' +
       '.hub-skel-bar-sm{width:38%;height:9px}' +
       '@keyframes hub-skel-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}' +
+      '@media (max-width:1200px){.hub-dashboard-row{grid-template-columns:1fr}.hub-rank-panels{grid-template-columns:1fr 1fr}.hub-rank-panel{position:static}}' +
       '@media (max-width:768px){' +
+      '.hub-dashboard-row{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}' +
+      '.hub-rank-panels{order:1;display:flex;flex-direction:column;gap:10px}' +
+      '.hub-dashboard-main{order:2}' +
+      '.hub-rank-panel{position:static}' +
       '.hub-pulse-tabs{flex-wrap:nowrap;gap:4px;width:100%}' +
       '.hub-pulse-tab{flex:1 1 0;min-width:0;padding:5px 4px;font-size:10px;white-space:nowrap;text-align:center}' +
       '.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}' +
@@ -228,7 +238,7 @@
       '}'
     ;
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v10';
+    el.id = 'im-hub-dashboard-css-v11';
     el.textContent = css;
     document.head.appendChild(el);
   }
