@@ -1,5 +1,5 @@
 /**
- * Unit tests for lib/return_live.mjs
+ * Unit tests for lib/return_live.mjs + KRX holiday session gates
  */
 import {
   calcLiveChg1dPct,
@@ -15,7 +15,12 @@ import {
   refMcapMapFromSnap,
   pastMcapMapFromSnapRet,
 } from '../lib/return_live.mjs';
-import { isKrxRegularSession } from '../functions/lib/krx_session.mjs';
+import {
+  isKrxHoliday,
+  isKrxRegularSession,
+  isKrxTradingDay,
+  krxSessionInfo,
+} from '../functions/lib/krx_session.mjs';
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg);
@@ -45,14 +50,25 @@ assert(shouldUseLive1dReturns('20260703', tueClose) === true, '1D Naver at 15:30
 
 const tueAfter = new Date('2026-07-07T15:31:00+09:00');
 assert(isKrxRegularSession(tueAfter) === false, '15:31 off session');
-assert(shouldUseLive1dReturns('20260703', tueAfter) === true, '1D Naver off-hours after 15:31');
+assert(shouldUseLive1dReturns('20260703', tueAfter) === true, '1D Naver off-hours after 15:31 on trading day');
 
 const tuePre = new Date('2026-07-07T08:59:00+09:00');
 assert(isKrxRegularSession(tuePre) === false, 'before 09:00 off session');
-assert(shouldUseLive1dReturns('20260703', tuePre) === true, '1D Naver before 09:00');
+assert(shouldUseLive1dReturns('20260703', tuePre) === true, '1D Naver before 09:00 on trading day');
 
 const sun = new Date('2026-07-05T12:00:00+09:00');
 assert(kstAnchorYmd(sun) === '20260703', 'anchor Sun → Fri 7/3');
+assert(isKrxTradingDay(sun) === false, 'Sun not trading day');
+assert(shouldUseLive1dReturns('20260703', sun) === false, 'no live 1D overlay on weekend');
+
+const holiday = new Date('2026-07-17T10:00:00+09:00');
+assert(isKrxHoliday(holiday) === true, '2026-07-17 is KRX holiday');
+assert(isKrxTradingDay(holiday) === false, 'holiday not trading day');
+assert(isKrxRegularSession(holiday) === false, 'holiday not regular session');
+assert(krxSessionInfo(holiday).regular === false, 'session info regular=false on holiday');
+assert(krxSessionInfo(holiday).holiday === true, 'session info holiday=true');
+assert(kstAnchorYmd(holiday) === '20260716', 'holiday anchor → prior trading day Thu 7/16');
+assert(shouldUseLive1dReturns('20260716', holiday) === false, 'no live 1D overlay on holiday');
 
 assert(calcLiveRetFromSnapPct(110000, 100000, 5) === 15.5, '20d live from snap 5% ref');
 assert(pastMcapFromSnapRet(100e12, 10) === 100e12 / 1.1, 'past mcap from snap ret');

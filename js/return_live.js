@@ -1,10 +1,28 @@
 /**
  * Live return helpers (browser) — see lib/return_live.mjs
+ * Keep KRX_HOLIDAYS in sync with functions/lib/krx_session.mjs
  */
 (function (global) {
   'use strict';
 
   var KST_TZ = 'Asia/Seoul';
+  // Mirror of functions/lib/krx_session.mjs — update both when KRX publishes next year.
+  // Official: https://open.krx.co.kr/contents/MKD/01/0110/01100305/MKD01100305.jsp
+  var KRX_HOLIDAYS = {
+    '2026-01-01': 1, '2026-02-16': 1, '2026-02-17': 1, '2026-02-18': 1,
+    '2026-03-02': 1, '2026-05-01': 1, '2026-05-05': 1, '2026-05-25': 1,
+    '2026-06-03': 1, '2026-06-06': 1, '2026-07-17': 1, '2026-08-15': 1,
+    '2026-08-17': 1, '2026-09-24': 1, '2026-09-25': 1, '2026-09-26': 1,
+    '2026-10-03': 1, '2026-10-05': 1, '2026-10-09': 1, '2026-12-25': 1,
+    '2026-12-31': 1,
+    '2027-01-01': 1, '2027-02-06': 1, '2027-02-07': 1, '2027-02-08': 1,
+    '2027-02-09': 1, '2027-03-01': 1, '2027-05-01': 1, '2027-05-03': 1,
+    '2027-05-05': 1, '2027-05-13': 1, '2027-06-06': 1, '2027-07-17': 1,
+    '2027-07-19': 1, '2027-08-15': 1, '2027-08-16': 1, '2027-09-14': 1,
+    '2027-09-15': 1, '2027-09-16': 1, '2027-10-03': 1, '2027-10-04': 1,
+    '2027-10-09': 1, '2027-10-11': 1, '2027-12-25': 1, '2027-12-27': 1,
+    '2027-12-31': 1,
+  };
 
   function kstDateParts(now) {
     now = now || new Date();
@@ -39,12 +57,6 @@
   var SESSION_OPEN = 9 * 60;
   var SESSION_CLOSE = 15 * 60 + 30;
 
-  function isKrxRegularSession(now) {
-    var p = kstDateParts(now);
-    var minutes = p.hour * 60 + p.minute;
-    return p.weekday >= 1 && p.weekday <= 5 && minutes >= SESSION_OPEN && minutes <= SESSION_CLOSE;
-  }
-
   function kstYmd(now) {
     var p = kstDateParts(now);
     var m = String(p.month).padStart(2, '0');
@@ -52,13 +64,36 @@
     return '' + p.year + m + d;
   }
 
-  function kstAnchorYmd(now) {
+  function kstYmdDash(now) {
     var p = kstDateParts(now);
-    if (p.weekday >= 1 && p.weekday <= 5) return kstYmd(now);
-    for (var i = 1; i <= 7; i++) {
+    var m = String(p.month).padStart(2, '0');
+    var d = String(p.day).padStart(2, '0');
+    return p.year + '-' + m + '-' + d;
+  }
+
+  function isKrxHoliday(now) {
+    return !!KRX_HOLIDAYS[kstYmdDash(now)];
+  }
+
+  function isKrxTradingDay(now) {
+    var p = kstDateParts(now);
+    if (p.weekday < 1 || p.weekday > 5) return false;
+    return !isKrxHoliday(now);
+  }
+
+  function isKrxRegularSession(now) {
+    var p = kstDateParts(now);
+    var minutes = p.hour * 60 + p.minute;
+    return !isKrxHoliday(now) &&
+      p.weekday >= 1 && p.weekday <= 5 &&
+      minutes >= SESSION_OPEN && minutes <= SESSION_CLOSE;
+  }
+
+  function kstAnchorYmd(now) {
+    now = now || new Date();
+    for (var i = 0; i <= 14; i++) {
       var dt = new Date(now.getTime() - i * 86400000);
-      var wd = kstDateParts(dt).weekday;
-      if (wd >= 1 && wd <= 5) return kstYmd(dt);
+      if (isKrxTradingDay(dt)) return kstYmd(dt);
     }
     return kstYmd(now);
   }
@@ -74,6 +109,8 @@
   }
 
   function shouldUseLive1dReturns(recentDd, now) {
+    now = now || new Date();
+    if (!isKrxTradingDay(now)) return false;
     if (!recentDd || typeof recentDd !== 'string') return true;
     return recentDd <= kstAnchorYmd(now);
   }
@@ -185,7 +222,8 @@
     kstYmd: kstYmd,
     kstAnchorYmd: kstAnchorYmd,
     ymdToDash: ymdToDash,
-    isKrxRegularSession: isKrxRegularSession,
+    isKrxHoliday: isKrxHoliday,
+    isKrxTradingDay: isKrxTradingDay,
     isKrxRegularSession: isKrxRegularSession,
     isRecentDdStale: isRecentDdStale,
     shouldUseLive1dReturns: shouldUseLive1dReturns,

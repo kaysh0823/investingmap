@@ -8,7 +8,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { fetchNaverQuote } from '../functions/lib/naver_sise_quotes.mjs';
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
-import { isKrxRegularSession } from '../functions/lib/krx_session.mjs';
+import { isKrxRegularSession, isKrxTradingDay, kstYmdDash } from '../functions/lib/krx_session.mjs';
 import {
   SECTOR_ORDER,
   listHubCompanies,
@@ -119,9 +119,13 @@ async function loadKrxQuotes(authKey) {
   return { quotes: snapshot.quotes, ok: snapshot.quotesOk || 0 };
 }
 
-function toSupabaseRow(ticker, naver, krx, asOf, regularSession) {
+function toSupabaseRow(ticker, naver, krx, asOf, regularSession, tradingDay) {
   let chg1d = null;
-  if (naver?.chg1dPct != null && Number.isFinite(naver.chg1dPct)) {
+  if (!tradingDay) {
+    // Non-trading day (weekend/KRX holiday): Naver reports 0% because there is
+    // no session, so use KRX close-to-close of the last two trading days.
+    chg1d = krx?.chg1dPct ?? null;
+  } else if (naver?.chg1dPct != null && Number.isFinite(naver.chg1dPct)) {
     chg1d = naver.chg1dPct;
   } else if (naver?.last != null && naver?.prevClose > 0) {
     chg1d = Math.round(((naver.last / naver.prevClose) - 1) * 10000) / 100;
@@ -264,6 +268,21 @@ async function upsertSectorReturns(rows, supabaseUrl, serviceKey) {
 
 async function main() {
   const started = Date.now();
+  const force = process.argv.includes('--force');
+  const tradingDay = isKrxTradingDay();
+
+  if (!tradingDay && !force) {
+    console.log(
+      `Non-trading day in KST (${kstYmdDash()}: weekend or KRX holiday) — skipping sync. Use --force to run anyway.`,
+    );
+    process.exit(0);
+  }
+  if (!tradingDay && force) {
+    console.log(
+      `Non-trading day in KST (${kstYmdDash()}) — forced run; chg_1d will use KRX close-to-close.`,
+    );
+  }
+
   const env = loadEnv();
   const supabaseUrl = (env.SUPABASE_URL || '').replace(/\/$/, '');
   const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -281,7 +300,7 @@ async function main() {
   const regularSession = isKrxRegularSession();
 
   console.log(`Sync ${tickers.length} hub tickers → Supabase`);
-  console.log(`  regularSession=${regularSession}`);
+  console.log(`  kst=${kstYmdDash()} tradingDay=${tradingDay} regularSession=${regularSession}${force ? ' --force' : ''}`);
 
   const naverResult = await fetchNaverQuotes(tickers);
   const krxResult = await loadKrxQuotes(authKey);
@@ -293,6 +312,7 @@ async function main() {
       krxResult.quotes[ticker],
       asOf,
       regularSession,
+      tradingDay,
     ),
   );
 
