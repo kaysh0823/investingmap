@@ -189,7 +189,6 @@ const bioData = [
     description: "분자진단, 면역진단, 현장진단(POCT) 등",
     domestic: [
       { name: "씨젠", ticker: "096530", note: "다중 분자진단 플랫폼, 코로나 수혜 후 전환", mcap: "중형" },
-      { name: "에스디바이오센서", ticker: "137310", note: "면역·현장진단 글로벌 공급", mcap: "중형" },
       { name: "수젠텍", ticker: "253840", note: "면역진단키트", mcap: "소형" },
       { name: "바디텍메드", ticker: "206640", note: "POCT 진단장비", mcap: "소형" },
     ],
@@ -209,7 +208,6 @@ const bioData = [
     description: "의료AI, 임플란트, 로봇수술, 웨어러블 등",
     domestic: [
       { name: "휴젤", ticker: "145020", note: "보툴렉스·더채움 K-뷰티 대표, 美시장 고농도제형 3상 '26 착수·'43년 독점 전략", mcap: "대형" },
-      { name: "파마리서치", ticker: "214450", note: "리쥬란(PDRN) 스킨부스터, 글로벌 미용시장 고성장·美 진출 가속", mcap: "대형" },
       { name: "클래시스", ticker: "214150", note: "슈링크·볼뉴머 미용의료기기", mcap: "대형" },
       { name: "루닛", ticker: "328130", note: "AI 영상진단(흉부CT·유방) FDA 승인", mcap: "중형" },
       { name: "뷰노", ticker: "338220", note: "AI 의료영상·ECG 분석", mcap: "소형" },

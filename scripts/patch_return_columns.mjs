@@ -14,6 +14,7 @@ const TARGETS = [
   'defense/korea_defense_map.html',
   'robot/korea_robot_map.html',
   'kconsume/korea_kconsume_map.html',
+  'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
   'battery/korea_battery_map.html',
   'renewable/korea_renewable_map.html',

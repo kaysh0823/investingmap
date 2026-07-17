@@ -95,10 +95,10 @@
     },
     "medtech": {
       "path": "/medtech/korea_medtech_map.html",
-      "title": { "ko": "한국 의료·미용기기 투자 지도", "en": "Korea MedTech Map" },
+      "title": { "ko": "한국 의료기기/헬스케어 투자 지도", "en": "Korea MedTech / Healthcare Map" },
       "summary": {
-        "ko": "진단·IVD·임플란트·미용기기·의료장비 관련 상장사의 KRX 데이터와 글로벌 peer 참고 관계를 정리합니다.",
-        "en": "KRX metrics and illustrative global peer relationships for listed Korean diagnostics, implants, aesthetic devices, and medical equipment companies."
+        "ko": "진단·IVD·임플란트·의료장비 등 의료기기/헬스케어 관련 상장사의 KRX 데이터와 글로벌 peer 참고 관계를 정리합니다.",
+        "en": "KRX metrics and illustrative global peer relationships for listed Korean medtech/healthcare companies across diagnostics, implants, and equipment."
       }
     },
     "energy": {
@@ -161,8 +161,16 @@
       "path": "/kconsume/korea_kconsume_map.html",
       "title": { "ko": "한국 K-소비/유통 투자 지도", "en": "Korea K-Consume / Retail Map" },
       "summary": {
-        "ko": "화장품·패션·식품·라면·쇼핑·유통·여행 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.",
-        "en": "KRX data and illustrative global links for listed Korean beauty, fashion, food, retail, and travel companies."
+        "ko": "패션·식품·라면·쇼핑·유통·여행 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.",
+        "en": "KRX data and illustrative global links for listed Korean fashion, food, retail, and travel companies."
+      }
+    },
+    "cosmetics": {
+      "path": "/cosmetics/korea_cosmetics_map.html",
+      "title": { "ko": "한국 화장품/미용기기 투자 지도", "en": "Korea Cosmetics / Aesthetic Devices Map" },
+      "summary": {
+        "ko": "화장품 브랜드·ODM/OEM·미용기기·유통 채널 관련 상장사의 KRX 데이터와 글로벌 참고 관계를 정리합니다.",
+        "en": "KRX data and illustrative global relationships for listed Korean cosmetics brands, ODM/OEM, aesthetic devices, and channel companies."
       }
     },
     "kcontent": {

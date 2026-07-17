@@ -25,6 +25,7 @@ const MAP_FILES = [
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
   'kconsume/korea_kconsume_map.html',
+  'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
 ];
 

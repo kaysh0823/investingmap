@@ -44,11 +44,11 @@ const SEED = [
   { id: 'seegene', name: '씨젠', nameEn: 'Seegene', ticker: '096530', chain: S.DX, semType: '분자진단·IVD', semTypeEn: 'Molecular diagnostics / IVD', products: '분자진단 키트·플랫폼', productsEn: 'Molecular diagnostic kits & platforms', partners: ['roche', 'abbott', 'siemens_health'] },
   { id: 'lunit', name: '루닛', nameEn: 'Lunit', ticker: '328130', chain: S.DX, semType: '의료AI·영상진단', semTypeEn: 'Medical AI / imaging', products: '흉부·유방 영상 AI', productsEn: 'Chest & breast imaging AI', partners: ['ge_health', 'philips', 'siemens_health'] },
   { id: 'inbody', name: '인바디', nameEn: 'InBody', ticker: '041830', chain: S.DX, semType: '체성분·측정', semTypeEn: 'Body composition & measurement', products: '체성분 분석기', productsEn: 'Body composition analyzers', partners: ['ge_health', 'philips'] },
+  { id: 'sd_biosensor', name: '에스디바이오센서', nameEn: 'SD Biosensor', ticker: '137310', chain: S.DX, semType: '분자·면역·POCT', semTypeEn: 'Molecular / immunoassay / POCT', products: '면역·현장진단', productsEn: 'Immunoassay & point-of-care diagnostics', partners: ['roche', 'abbott'] },
+  { id: 'isens', name: '아이센스', nameEn: 'i-SENS', ticker: '099190', chain: S.DX, semType: '혈당측정·진단', semTypeEn: 'Blood glucose diagnostics', products: '혈당측정·진단', productsEn: 'Blood glucose monitoring', partners: ['roche', 'abbott'] },
+  { id: 'genomictree', name: '지노믹트리', nameEn: 'Genomictree', ticker: '228760', chain: S.DX, semType: '분자진단·암진단', semTypeEn: 'Molecular / cancer diagnostics', products: '분자진단·암진단', productsEn: 'Molecular cancer diagnostics', partners: ['roche', 'illumina'] },
 
   { id: 'dentium', name: '덴티움', nameEn: 'Dentium', ticker: '145720', chain: S.IMP, semType: '치과 임플란트', semTypeEn: 'Dental implants', products: '임플란트·어버트먼트', productsEn: 'Implants & abutments', partners: ['straumann', 'dentsply', 'zimmer'] },
-
-  { id: 'classys', name: '클래시스', nameEn: 'Classys', ticker: '214150', chain: S.AES, semType: '미용 의료기기', semTypeEn: 'Aesthetic medical devices', products: 'HIFU·RF 장비', productsEn: 'HIFU & RF devices', partners: ['allergan', 'cynosure', 'syneron'] },
-  { id: 'wontech', name: '원텍', nameEn: 'Won Tech', ticker: '336570', chain: S.AES, semType: '레이저·미용기기', semTypeEn: 'Laser & aesthetic devices', products: '레이저·에너지 기반 미용기기', productsEn: 'Laser & energy-based aesthetic devices', partners: ['cynosure', 'syneron', 'cutera'] },
 
   { id: 'curexo', name: '큐렉소', nameEn: 'Curexo', ticker: '060280', chain: S.EQ, semType: '수술로봇·정형', semTypeEn: 'Surgical robots / ortho', products: '정형외과 수술로봇', productsEn: 'Orthopedic surgical robots', partners: ['intuitive', 'stryker', 'medtronic'] },
   { id: 'nextbio', name: '넥스트바이오메디컬', nameEn: 'Next Biomedical', ticker: '389650', chain: S.EQ, semType: '내시경·지혈재', semTypeEn: 'Endoscopy / hemostats', products: '내시경 지혈재·의료소재', productsEn: 'Endoscopic hemostats & materials', partners: ['boston_sci', 'medtronic', 'olympus'] },
@@ -95,8 +95,8 @@ function buildT(n, kospi, kosdaq) {
   }
   return {
     ko: {
-      title: '🇰🇷 한국 의료·미용기기 투자 지도',
-      subtitle: '진단·IVD·임플란트·미용기기·의료장비 등 국내 상장 의료기기와 글로벌 peer 참고 관계',
+      title: '🇰🇷 한국 의료기기/헬스케어 투자 지도',
+      subtitle: '진단·IVD·임플란트·미용기기·의료장비 등 국내 상장 미용/의료기기와 글로벌 peer 참고 관계',
       badgeTotal: `총 <span>${n}</span>개 상장사`,
       badgeMarket: `KOSPI <span>${kospi}</span>사 · KOSDAQ <span>${kosdaq}</span>사`,
       dataAsof: '데이터 기준일: 2026-06-12',
@@ -153,7 +153,7 @@ function buildT(n, kospi, kosdaq) {
       fieldProducts: 'products',
     },
     en: {
-      title: '🇰🇷 Korea MedTech Map',
+      title: '🇰🇷 Korea MedTech / Healthcare Map',
       subtitle: 'Listed Korean diagnostics, implants, aesthetic devices, and medical equipment with global peer relationships',
       badgeTotal: `<span>${n}</span> listings`,
       badgeMarket: `KOSPI <span>${kospi}</span> · KOSDAQ <span>${kosdaq}</span>`,
@@ -267,13 +267,13 @@ function main() {
   html = html.replace(/powergrid\/korea_powergrid_map/g, 'medtech/korea_medtech_map');
   html = html.replace(/\/powergrid\//g, '/medtech/');
   html = html.replace(/data-sector="powergrid"/g, 'data-sector="medtech"');
-  html = html.replace(/한국 전력설비 투자 지도/g, '한국 의료·미용기기 투자 지도');
-  html = html.replace(/Korea Power Grid Equipment Map/g, 'Korea MedTech Map');
-  html = html.replace(/전력설비·송배전·발전설비/g, '진단·임플란트·미용기기·의료장비');
-  html = html.replace(/Power equipment, T&amp;D, and power generation equipment/g, 'Diagnostics, implants, aesthetic devices, and medical equipment');
-  html = html.replace(/Power equipment, T&D, and power generation equipment/g, 'Diagnostics, implants, aesthetic devices, and medical equipment');
+  html = html.replace(/한국 전력설비 투자 지도/g, '한국 의료기기/헬스케어 투자 지도');
+  html = html.replace(/Korea Power Grid Equipment Map/g, 'Korea MedTech / Healthcare Map');
+  html = html.replace(/전력설비·송배전·발전설비/g, '진단·임플란트·의료장비');
+  html = html.replace(/Power equipment, T&amp;D, and power generation equipment/g, 'Diagnostics, implants, and medical equipment');
+  html = html.replace(/Power equipment, T&D, and power generation equipment/g, 'Diagnostics, implants, and medical equipment');
 
-  html = html.replace(/<title>[^<]*<\/title>/, '<title>한국 의료·미용기기 투자 지도 / Korea MedTech Map</title>');
+  html = html.replace(/<title>[^<]*<\/title>/, '<title>한국 의료기기/헬스케어 투자 지도 / Korea MedTech / Healthcare Map</title>');
 
   html = html.replace(
     /const CHAIN_COLORS = \{[\s\S]*?\};/,
@@ -331,7 +331,7 @@ function main() {
 
   html = html.replace(
     /<h1 id="hdr-title">[^<]+<\/h1>/,
-    '<h1 id="hdr-title">🇰🇷 한국 의료·미용기기 투자 지도</h1>',
+    '<h1 id="hdr-title">🇰🇷 한국 의료기기/헬스케어 투자 지도</h1>',
   );
   html = html.replace(
     /<p id="hdr-subtitle">[^<]+<\/p>/,

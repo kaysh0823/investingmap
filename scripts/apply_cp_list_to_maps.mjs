@@ -409,8 +409,12 @@ function main() {
     indexHtml = indexHtml.replace(/\d+ listings · contractors/, `${hubLines.construction} listings · contractors`);
   }
   if (hubLines.kconsume) {
-    indexHtml = indexHtml.replace(/\d+개 상장사 · 화장품/, `${hubLines.kconsume}개 상장사 · 화장품`);
-    indexHtml = indexHtml.replace(/\d+ companies · beauty/, `${hubLines.kconsume} companies · beauty`);
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 패션/, `${hubLines.kconsume}개 상장사 · 패션`);
+    indexHtml = indexHtml.replace(/\d+ companies · fashion/, `${hubLines.kconsume} companies · fashion`);
+  }
+  if (hubLines.cosmetics) {
+    indexHtml = indexHtml.replace(/\d+개 상장사 · 브랜드/, `${hubLines.cosmetics}개 상장사 · 브랜드`);
+    indexHtml = indexHtml.replace(/\d+ listings · brands/, `${hubLines.cosmetics} listings · brands`);
   }
   if (hubLines.kcontent) {
     indexHtml = indexHtml.replace(/\d+개 상장사 · 게임/, `${hubLines.kcontent}개 상장사 · 게임`);

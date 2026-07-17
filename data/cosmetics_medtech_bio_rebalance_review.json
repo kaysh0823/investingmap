@@ -1,0 +1,130 @@
+{
+  "cosmetics": [
+    {
+      "ticker": "278470",
+      "name": "에이피알",
+      "chain": "브랜드"
+    },
+    {
+      "ticker": "090430",
+      "name": "아모레퍼시픽",
+      "chain": "브랜드"
+    },
+    {
+      "ticker": "051900",
+      "name": "LG생활건강",
+      "chain": "브랜드"
+    },
+    {
+      "ticker": "214450",
+      "name": "파마리서치",
+      "chain": "미용기기"
+    },
+    {
+      "ticker": "214150",
+      "name": "클래시스",
+      "chain": "미용기기"
+    },
+    {
+      "ticker": "483650",
+      "name": "달바글로벌",
+      "chain": "브랜드"
+    },
+    {
+      "ticker": "257720",
+      "name": "실리콘투",
+      "chain": "유통·채널"
+    },
+    {
+      "ticker": "161890",
+      "name": "한국콜마",
+      "chain": "ODM·OEM"
+    },
+    {
+      "ticker": "192820",
+      "name": "코스맥스",
+      "chain": "ODM·OEM"
+    },
+    {
+      "ticker": "002790",
+      "name": "아모레퍼시픽홀딩스",
+      "chain": "브랜드"
+    },
+    {
+      "ticker": "241710",
+      "name": "코스메카코리아",
+      "chain": "ODM·OEM"
+    },
+    {
+      "ticker": "336570",
+      "name": "원텍",
+      "chain": "미용기기"
+    },
+    {
+      "ticker": "018290",
+      "name": "브이티",
+      "chain": "브랜드"
+    }
+  ],
+  "medtech": [
+    {
+      "ticker": "096530",
+      "name": "씨젠",
+      "chain": "진단·IVD"
+    },
+    {
+      "ticker": "328130",
+      "name": "루닛",
+      "chain": "진단·IVD"
+    },
+    {
+      "ticker": "137310",
+      "name": "에스디바이오센서",
+      "chain": "진단·IVD"
+    },
+    {
+      "ticker": "041830",
+      "name": "인바디",
+      "chain": "진단·IVD"
+    },
+    {
+      "ticker": "099190",
+      "name": "아이센스",
+      "chain": "진단·IVD"
+    },
+    {
+      "ticker": "060280",
+      "name": "큐렉소",
+      "chain": "의료장비·수술"
+    },
+    {
+      "ticker": "145720",
+      "name": "덴티움",
+      "chain": "임플란트·치과"
+    },
+    {
+      "ticker": "389650",
+      "name": "넥스트바이오메디컬",
+      "chain": "의료장비·수술"
+    },
+    {
+      "ticker": "228760",
+      "name": "지노믹트리",
+      "chain": "진단·IVD"
+    }
+  ],
+  "movedToCosmetics": [
+    "214150",
+    "214450",
+    "336570"
+  ],
+  "movedToMedtech": [
+    "137310",
+    "099190",
+    "228760"
+  ],
+  "displayNames": {
+    "cosmetics": "한국 화장품/미용기기 투자 지도",
+    "medtech": "한국 의료기기/헬스케어 투자 지도"
+  }
+}

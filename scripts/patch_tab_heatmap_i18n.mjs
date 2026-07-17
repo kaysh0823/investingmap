@@ -17,6 +17,7 @@ const MAPS = [
   'renewable/korea_renewable_map.html',
   'nuclear/korea_nuclear_map.html',
   'kconsume/korea_kconsume_map.html',
+  'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
 ];
 

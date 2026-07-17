@@ -29,6 +29,7 @@ const HTML_MAPS = [
   { key: 'finance', path: 'finance/korea_finance_map.html' },
   { key: 'construction', path: 'construction/korea_construction_map.html' },
   { key: 'kconsume', path: 'kconsume/korea_kconsume_map.html' },
+  { key: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html' },
   { key: 'kcontent', path: 'kcontent/korea_kcontent_map.html' },
 ];
 

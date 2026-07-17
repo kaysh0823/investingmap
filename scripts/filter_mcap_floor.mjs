@@ -28,6 +28,7 @@ const HTML_MAPS = [
   'auto/korea_auto_map.html',
   'medtech/korea_medtech_map.html',
   'kconsume/korea_kconsume_map.html',
+  'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
 ];
 
@@ -145,8 +146,13 @@ function patchIndexHubCounts(hubLines) {
     indexHtml = indexHtml.replace(/\d+ listings \u00b7 contractors/, `${hubLines.construction} listings \u00b7 contractors`);
   }
   if (hubLines.kconsume) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud654\uc7a5\ud488/, `${hubLines.kconsume}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud654\uc7a5\ud488`);
-    indexHtml = indexHtml.replace(/\d+ companies \u00b7 beauty/, `${hubLines.kconsume} companies \u00b7 beauty`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud328\uc158/, `${hubLines.kconsume}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud328\uc158`);
+    indexHtml = indexHtml.replace(/\d+ companies \u00b7 beauty/, `${hubLines.kconsume} companies \u00b7 fashion`);
+    indexHtml = indexHtml.replace(/\d+ companies \u00b7 fashion/, `${hubLines.kconsume} companies \u00b7 fashion`);
+  }
+  if (hubLines.cosmetics) {
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ube0c\ub79c\ub4dc/, `${hubLines.cosmetics}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ube0c\ub79c\ub4dc`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 brands/, `${hubLines.cosmetics} listings \u00b7 brands`);
   }
   if (hubLines.kcontent) {
     indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uac8c\uc784/, `${hubLines.kcontent}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uac8c\uc784`);
@@ -175,6 +181,7 @@ function main() {
       finance: 'finance',
       construction: 'construction',
       kconsume: 'kconsume',
+      cosmetics: 'cosmetics',
       kcontent: 'kcontent',
     }[key];
     const r = filterHtmlMap(rel);

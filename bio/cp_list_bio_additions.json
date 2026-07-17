@@ -168,14 +168,6 @@
     "level": ""
   },
   {
-    "ticker": "099190",
-    "name": "아이센스",
-    "chain": "체외진단 (IVD)",
-    "sectorId": "diagnostics",
-    "subSector": "혈당측정·진단",
-    "level": "core"
-  },
-  {
     "ticker": "003000",
     "name": "부광약품",
     "chain": "합성신약 / 제네릭",
@@ -230,14 +222,6 @@
     "sectorId": "medtech",
     "subSector": "제약·헬스케어",
     "level": "adjacent"
-  },
-  {
-    "ticker": "228760",
-    "name": "지노믹트리",
-    "chain": "체외진단 (IVD)",
-    "sectorId": "diagnostics",
-    "subSector": "분자진단·암진단",
-    "level": "core"
   },
   {
     "ticker": "314930",

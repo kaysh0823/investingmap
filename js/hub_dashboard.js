@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
+  var SECTOR_ORDER = ['semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
@@ -17,7 +17,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v14';
+  var SWR_KEY = 'im-hub-dashboard-v15';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null, asOf: null };
@@ -60,12 +60,13 @@
       powergrid: ['변압기', '개폐기', '송배전', '케이블', '발전설비', '원자력'],
       ship: ['조선소', '엔진', '철강', '조선기자재', '해양', '해운', '방산 해양'],
       defense: ['군용 항공', '미사일·C4ISR', '육상무기', '해군·함정', '우주·위성', '민항'],
-      kconsume: ['라면·식품', '여행·항공', '뷰티', '패션', '쇼핑·유통'],
+      kconsume: ['라면·식품', '여행·항공', '패션', '쇼핑·유통'],
+      cosmetics: ['브랜드', 'ODM', '미용기기', '유통·채널'],
       kcontent: ['게임', '드라마·웹툰', 'K-pop'],
       bio: ['신약', 'CDMO', '바이오시밀러', '의료기기', '진단'],
       robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
       auto: ['완성차', '부품', '타이어', '전장'],
-      medtech: ['진단', '임플란트', '미용기기', '의료장비'],
+      medtech: ['진단', '임플란트', '의료장비', '헬스케어'],
       finance: ['은행', '증권', '보험', '카드', '캐피탈'],
       construction: ['종합건설', '주택', '디벨로퍼', '건설기계'],
     },
@@ -77,12 +78,13 @@
       powergrid: ['Transformers', 'Switchgear', 'T&D', 'Cables', 'Generation', 'Nuclear'],
       ship: ['Yards', 'Engines', 'Steel', 'Marine equipment', 'Offshore', 'Shipping', 'Naval'],
       defense: ['Military aviation', 'Missiles & C4ISR', 'Land systems', 'Naval', 'Space & satellites', 'Civil aviation'],
-      kconsume: ['Food', 'Travel', 'Beauty', 'Fashion', 'Retail'],
+      kconsume: ['Food', 'Travel', 'Fashion', 'Retail'],
+      cosmetics: ['Brands', 'ODM', 'Aesthetic', 'Channels'],
       kcontent: ['Games', 'Drama & webtoon', 'K-pop'],
       bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
       auto: ['OEMs', 'Parts', 'Tires', 'Electronics'],
-      medtech: ['Diagnostics', 'Implants', 'Aesthetic', 'Equipment'],
+      medtech: ['Diagnostics', 'Implants', 'Equipment', 'Healthcare'],
       finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Consumer finance'],
       construction: ['Contractors', 'Housing', 'Developers', 'Equipment'],
     },
@@ -248,7 +250,7 @@
   }
 
   function loadHubSectorReturns() {
-    return fetch('data/hub_sector_returns.json?v=20', { cache: 'default' })
+    return fetch('data/hub_sector_returns.json?v=21', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j) {
@@ -430,7 +432,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=19')
+    return fetch('data/hub_index.json?v=20')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();

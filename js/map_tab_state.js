@@ -76,7 +76,7 @@
   function isIndustryMapPage() {
     try {
       var path = (window.location.pathname || '').replace(/\\/g, '/');
-      return /\/(semiconductor|bio|ship|defense|robot|energy|battery|renewable|nuclear|powergrid|kculture|kconsume|kcontent|finance|construction)\//i.test(
+      return /\/(semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction)\//i.test(
         path
       );
     } catch (e) {

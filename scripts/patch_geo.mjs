@@ -32,6 +32,7 @@ const MAP_FILES = [
   { file: 'nuclear/korea_nuclear_map.html', key: 'nuclear' },
   { file: 'powergrid/korea_powergrid_map.html', key: 'powergrid' },
   { file: 'kconsume/korea_kconsume_map.html', key: 'kconsume' },
+  { file: 'cosmetics/korea_cosmetics_map.html', key: 'cosmetics' },
   { file: 'kcontent/korea_kcontent_map.html', key: 'kcontent' },
 ];
 
