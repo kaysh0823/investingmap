@@ -19,6 +19,9 @@ const MAP_FILES = [
   'auto/korea_auto_map.html',
   'medtech/korea_medtech_map.html',
   'energy/korea_energy_map.html',
+  'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
+  'construction/korea_construction_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',
 ];
@@ -79,20 +82,19 @@ const MOBILE_V2_CSS = `
         border-bottom: 1px solid var(--border)
       }
 
+      /* Natural page scroll: no fixed viewport height / inner Y scroll */
       #tab-table.tab-content.active {
-        display: flex;
-        flex-direction: column;
-        height: calc(100dvh - 200px);
-        min-height: 280px;
-        overflow: hidden
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible
       }
 
       #tab-table .table-container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+        display: block;
+        height: auto;
         min-height: 0;
-        overflow: hidden;
+        overflow: visible;
         padding-bottom: 8px
       }
 
@@ -114,13 +116,54 @@ const MOBILE_V2_CSS = `
         gap: 6px
       }
 
-      #tab-table .tbl-wrap {
+      /* Value-chain chips: single row + horizontal scroll */
+      #tab-table .filter-row-chain {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-width: 0;
+        width: 100%
+      }
+
+      #tab-table .filter-row-chain .filter-label {
+        flex-shrink: 0
+      }
+
+      #tab-table .filter-row-chain #chain-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        align-items: center;
+        min-width: 0;
         flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none
+      }
+
+      #tab-table .filter-row-chain #chain-chips::-webkit-scrollbar {
+        display: none
+      }
+
+      #tab-table .filter-row-chain .filter-chip {
+        flex-shrink: 0
+      }
+
+      #tab-table .search-box {
+        padding: 5px 10px;
+        font-size: 12px;
+        min-height: 0;
+        height: auto
+      }
+
+      #tab-table .tbl-wrap {
+        flex: none;
         min-height: 0;
         max-height: none;
         max-width: 100%;
-        overflow: auto;
-        overscroll-behavior: contain;
+        overflow-x: auto;
+        overflow-y: visible;
         -webkit-overflow-scrolling: touch
       }
 
@@ -198,10 +241,46 @@ function stripOldMobileCss(html) {
 }
 
 function injectMobileV2Css(html) {
-  if (html.includes(`${MARKER_V2} — mobile layout`)) return html;
-  return html.replace(
+  // Drop every mobile-layout block through the company-name rules that follow the marker.
+  // Use a line-based scan so duplicate/legacy formatting cannot leave stale height:calc rules.
+  const lines = html.split('\n');
+  const out = [];
+  let i = 0;
+  while (i < lines.length) {
+    if (/\/\* investingmap-mobile-table-v2 — mobile layout \*\//.test(lines[i])) {
+      // Skip until after the compact company-name rule that ends this block.
+      let j = i + 1;
+      let seenCompany = false;
+      while (j < lines.length) {
+        if (/body\.im-tab-table tbody td:first-child \.company-name/.test(lines[j])) {
+          seenCompany = true;
+        }
+        if (seenCompany && /^\s*\}\s*$/.test(lines[j])) {
+          j += 1;
+          // Skip trailing blank lines belonging to the block.
+          while (j < lines.length && lines[j].trim() === '') j += 1;
+          break;
+        }
+        // Safety: stop before the next major mobile header section.
+        if (j > i + 5 && /^\s*\.header \{\s*$/.test(lines[j])) break;
+        j += 1;
+      }
+      i = j;
+      continue;
+    }
+    out.push(lines[i]);
+    i += 1;
+  }
+  html = out.join('\n');
+
+  const injected = html.replace(
     /(\.table-container \{\s*\n\s*padding: 10px 12px\s*\})/,
-    `$1${MOBILE_V2_CSS}`
+    `$1${MOBILE_V2_CSS}`,
+  );
+  if (injected !== html) return injected;
+  return html.replace(
+    /(\.table-container \{\s*\n\s*padding: 10px 12px\s*\n\s*\})/,
+    `$1${MOBILE_V2_CSS}`,
   );
 }
 
@@ -222,6 +301,12 @@ function patchInitTabClassSource(src) {
   );
 }
 
+function patchScriptVersions(html) {
+  return html
+    .replace(/map_mobile_table\.js(\?v=\d+)?/g, 'map_mobile_table.js?v=6')
+    .replace(/map_mobile_ux\.js(\?v=\d+)?/g, 'map_mobile_ux.js?v=8');
+}
+
 function patchFile(rel) {
   const abs = path.join(root, rel);
   let html = fs.readFileSync(abs, 'utf8');
@@ -238,6 +323,7 @@ function patchFile(rel) {
   }
 
   html = injectMobileV2Css(html);
+  html = patchScriptVersions(html);
 
   html = patchSwitchTabSource(html);
   html = patchInitTabClassSource(html);

@@ -146,11 +146,11 @@ function patchIndexHubCopy(html) {
 
 function patchAboutCopy(html) {
   return html.replace(
-    /<strong>여덟 개 산업<\/strong>|<strong>열 개 산업<\/strong>/,
-    '<strong>열한 개 산업</strong>',
+    /<strong>여덟 개 산업<\/strong>/,
+    '<strong>열 개 산업</strong>',
   ).replace(
-    /반도체, 바이오, 조선·해양, 방산·우주·항공, 로봇·피지컬AI, 에너지, 전력설비, K컬처 등|반도체, 에너지, 전력설비, 금융, 건설, 조선·해양, 방산·우주·항공, K컬처, 바이오, 로봇·피지컬AI 등/,
-    '반도체, 에너지, 전력설비, 금융, 건설, 조선·해양, 방산·우주·항공, K-소비/유통, K-콘텐츠, 바이오, 로봇·피지컬AI 등',
+    /반도체, 바이오, 조선·해양, 방산·우주·항공, 로봇·피지컬AI, 에너지, 전력설비, K컬처 등/,
+    '반도체, 에너지, 전력설비, 금융, 건설, 조선·해양, 방산·우주·항공, K컬처, 바이오, 로봇·피지컬AI 등',
   );
 }
 

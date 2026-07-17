@@ -1,12 +1,13 @@
 /**
- * Mobile layout fixes: hub-style topbar, tab labels, header toolbar, subtitle tooltip.
+ * Mobile layout fixes: hub-style topbar, tab labels, h1 sector-description toggle.
+ * Collapsed editorial stays in the DOM (CSS display:none) for SEO.
  */
 (function (global) {
   'use strict';
 
   var MQ = '(max-width: 768px)';
   var mql = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(MQ) : null;
-  var subtitleEnhanced = false;
+  var titleToggleReady = false;
   var topbarReady = false;
 
   var TAB_SHORT = {
@@ -20,11 +21,6 @@
       'tab-btn-table': '📋 List',
       'tab-btn-graph': '🌐 Network',
     },
-  };
-
-  var TIP_LABEL = {
-    ko: '페이지 설명',
-    en: 'Page description',
   };
 
   var BRAND_NAME = 'Investing Map';
@@ -46,31 +42,6 @@
   function hubIndexHref() {
     var lang = pageLang();
     return '../index.html?lang=' + encodeURIComponent(lang);
-  }
-
-  function closeSubtitleTip() {
-    var tip = document.getElementById('hdr-subtitle-tip');
-    var btn = document.getElementById('hdr-info-btn');
-    if (tip) tip.hidden = true;
-    if (btn) btn.setAttribute('aria-expanded', 'false');
-  }
-
-  function openSubtitleTip() {
-    var sub = document.getElementById('hdr-subtitle');
-    var tip = document.getElementById('hdr-subtitle-tip');
-    var btn = document.getElementById('hdr-info-btn');
-    if (!sub || !tip || !btn) return;
-    tip.textContent = sub.textContent || '';
-    tip.hidden = false;
-    btn.setAttribute('aria-expanded', 'true');
-  }
-
-  function toggleSubtitleTip(e) {
-    if (e) e.stopPropagation();
-    var tip = document.getElementById('hdr-subtitle-tip');
-    if (!tip) return;
-    if (tip.hidden) openSubtitleTip();
-    else closeSubtitleTip();
   }
 
   function reorderHeaderActions(actions) {
@@ -119,60 +90,102 @@
     document.body.classList.toggle('im-map-topbar-active', isMobile());
   }
 
-  function enhanceSubtitleTooltip() {
+  function setEditorialExpanded(btn, panel, expanded) {
+    if (!btn || !panel) return;
+    btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    if (expanded) panel.classList.remove('is-collapsed');
+    else panel.classList.add('is-collapsed');
+  }
+
+  function ensureTitleToggleButton() {
+    var existing = document.getElementById('map-title-toggle');
+    if (existing) return existing;
+
     var h1 = document.getElementById('hdr-title');
-    var sub = document.getElementById('hdr-subtitle');
-    if (!h1 || !sub) return;
+    if (!h1 || !h1.parentNode) return null;
 
-    if (!subtitleEnhanced) {
-      subtitleEnhanced = true;
-      var wrap = document.createElement('div');
-      wrap.id = 'hdr-title-wrap';
-      wrap.className = 'hdr-title-wrap';
-      h1.parentNode.insertBefore(wrap, h1);
-      wrap.appendChild(h1);
+    // Unwrap legacy hdr-title-wrap / info button if present.
+    var wrap = document.getElementById('hdr-title-wrap');
+    if (wrap && wrap.contains(h1)) {
+      var parent = wrap.parentNode;
+      parent.insertBefore(h1, wrap);
+      wrap.remove();
+    }
 
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.id = 'hdr-info-btn';
-      btn.className = 'hdr-info-btn';
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-controls', 'hdr-subtitle-tip');
-      var lang = pageLang();
-      btn.setAttribute('aria-label', (TIP_LABEL[lang] || TIP_LABEL.ko) + ' (!)');
-      btn.innerHTML = '<span class="hdr-info-glyph" aria-hidden="true">!</span>';
-      btn.addEventListener('click', toggleSubtitleTip);
-      wrap.appendChild(btn);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'map-title-toggle';
+    btn.id = 'map-title-toggle';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', 'map-editorial-panel');
+    h1.parentNode.insertBefore(btn, h1);
+    btn.appendChild(h1);
 
-      var tip = document.createElement('div');
-      tip.id = 'hdr-subtitle-tip';
-      tip.className = 'hdr-subtitle-tip';
-      tip.setAttribute('role', 'tooltip');
-      tip.hidden = true;
-      tip.addEventListener('click', function (ev) {
-        ev.stopPropagation();
-      });
-      wrap.appendChild(tip);
+    var chevron = document.createElement('span');
+    chevron.className = 'map-title-chevron';
+    chevron.setAttribute('aria-hidden', 'true');
+    chevron.textContent = '▾';
+    btn.appendChild(chevron);
+    return btn;
+  }
 
-      document.addEventListener('click', closeSubtitleTip);
-      document.addEventListener('keydown', function (ev) {
-        if (ev.key === 'Escape') closeSubtitleTip();
+  function ensureEditorialPanel() {
+    var panel = document.getElementById('map-editorial-panel');
+    if (panel) return panel;
+
+    var details = document.querySelector('#map-editorial details.map-editorial-details');
+    var body = document.getElementById('map-editorial-body');
+    var section = document.getElementById('map-editorial');
+    if (!section || !body) return null;
+
+    panel = document.createElement('div');
+    panel.id = 'map-editorial-panel';
+    panel.className = 'map-editorial-panel is-collapsed';
+    panel.setAttribute('role', 'region');
+    panel.setAttribute('aria-labelledby', 'map-editorial-title');
+
+    var title = document.getElementById('map-editorial-title');
+    if (!title || title.tagName === 'SUMMARY') {
+      var sr = document.createElement('span');
+      sr.id = 'map-editorial-title';
+      sr.className = 'map-editorial-title-sr';
+      sr.textContent = (title && title.textContent) || '섹터 설명';
+      panel.appendChild(sr);
+    } else {
+      panel.appendChild(title);
+    }
+
+    panel.appendChild(body);
+    if (details) {
+      details.parentNode.insertBefore(panel, details);
+      details.remove();
+    } else {
+      section.appendChild(panel);
+    }
+    return panel;
+  }
+
+  function setupMapTitleToggle() {
+    var btn = ensureTitleToggleButton();
+    var panel = ensureEditorialPanel();
+    if (!btn || !panel) return;
+
+    if (!titleToggleReady) {
+      titleToggleReady = true;
+      setEditorialExpanded(btn, panel, false);
+      btn.addEventListener('click', function () {
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        setEditorialExpanded(btn, panel, !open);
       });
     }
 
-    var langBtn = document.getElementById('hdr-info-btn');
-    if (langBtn) {
-      var lang = pageLang();
-      langBtn.setAttribute('aria-label', (TIP_LABEL[lang] || TIP_LABEL.ko) + ' (!)');
-    }
-
+    // Keep subtitle compact on mobile (content still in DOM).
     document.body.classList.toggle('im-mobile-hdr-compact', isMobile());
-    if (!isMobile()) closeSubtitleTip();
   }
 
   function injectStyles() {
-    var styleId = 'im-mobile-ux-css-v7';
-    ['im-mobile-ux-css-v6', 'im-mobile-ux-css-v5', 'im-mobile-ux-css-v4', 'im-mobile-ux-css'].forEach(function (id) {
+    var styleId = 'im-mobile-ux-css-v8';
+    ['im-mobile-ux-css-v7', 'im-mobile-ux-css-v6', 'im-mobile-ux-css-v5', 'im-mobile-ux-css-v4', 'im-mobile-ux-css'].forEach(function (id) {
       var old = document.getElementById(id);
       if (old) old.remove();
     });
@@ -183,13 +196,13 @@
       '.hub-topbar.im-map-topbar .hub-brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);min-width:0}' +
       '.hub-topbar.im-map-topbar .hub-brand-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#1f6feb,#58a6ff);flex-shrink:0;box-shadow:0 2px 8px rgba(88,166,255,.25)}' +
       '.hub-topbar.im-map-topbar .hub-brand-name{font-size:15px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}' +
-      '.hdr-title-wrap{display:flex;align-items:flex-start;gap:6px;position:relative;min-width:0}' +
-      '.hdr-title-wrap h1{flex:1;min-width:0;margin:0}' +
-      '.hdr-info-btn{display:none;flex-shrink:0;align-items:center;justify-content:center;width:22px;height:22px;margin-top:2px;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--surface2);color:var(--text-muted);font-size:12px;font-weight:700;line-height:1;cursor:pointer;transition:border-color .15s,color .15s}' +
-      '.hdr-info-btn:hover,.hdr-info-btn[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}' +
-      '.hdr-info-glyph{display:block;line-height:1}' +
-      '.hdr-subtitle-tip{display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:60;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-muted);font-size:12px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.22)}' +
-      '.hdr-subtitle-tip:not([hidden]){display:block}' +
+      '.map-title-toggle{display:flex;align-items:flex-start;gap:6px;width:100%;margin:0;padding:0;border:none;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}' +
+      '.map-title-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}' +
+      '.map-title-toggle h1{flex:1;min-width:0;margin:0}' +
+      '.map-title-chevron{flex-shrink:0;margin-top:.35em;font-size:.7em;line-height:1;color:var(--text-muted);transition:transform .15s ease}' +
+      '.map-title-toggle[aria-expanded="true"] .map-title-chevron{transform:rotate(180deg)}' +
+      '.map-editorial-panel.is-collapsed{display:none}' +
+      '.map-editorial-title-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}' +
       '@media (min-width:769px){' +
       '.header>.im-map-topbar{border:none;padding:0;margin:0;background:transparent}' +
       '.im-map-topbar .hub-brand{display:none!important}' +
@@ -207,9 +220,8 @@
       'body.im-map-topbar-active .lang-toggle #lang-toggle-text{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}' +
       'body.im-map-topbar-active .lang-toggle .flag{margin-right:0!important;font-size:15px;line-height:1}' +
       'body.im-map-topbar-active .lang-toggle{min-width:32px;justify-content:center}' +
-      'body.im-mobile-hdr-compact .hdr-info-btn{display:inline-flex;width:20px;height:20px;margin-top:1px;font-size:11px}' +
       'body.im-mobile-hdr-compact #hdr-subtitle{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}' +
-      'body.im-map-topbar-active .header h1,body.im-map-topbar-active .hdr-title-wrap,body.im-map-topbar-active .header-meta{padding-left:12px!important;padding-right:12px!important}' +
+      'body.im-map-topbar-active .header h1,body.im-map-topbar-active .map-title-toggle,body.im-map-topbar-active .header-meta{padding-left:12px!important;padding-right:12px!important}' +
       'body.im-map-topbar-active .header h1{font-size:15px!important;line-height:1.2!important;padding-top:4px!important;padding-bottom:0!important;margin:0!important}' +
       'body.im-map-topbar-active .header-meta{display:flex!important;flex-wrap:wrap!important;margin-top:0!important;gap:4px!important;padding-top:2px!important;padding-bottom:0!important}' +
       'body.im-map-topbar-active .header .badge{font-size:10px!important;padding:1px 8px!important;line-height:1.3!important}' +
@@ -217,10 +229,18 @@
       '.tab-btn{flex:unset!important;min-width:0!important;padding:8px 4px!important;font-size:11px!important;line-height:1.25!important;white-space:normal!important;word-break:keep-all!important;text-align:center!important;min-height:40px;display:flex;align-items:center;justify-content:center;border-bottom:2px solid transparent;margin:0!important}' +
       '.tab-btn.active{border-bottom-color:var(--accent)}' +
       '#map-editorial.map-editorial-collapsible,.geo-summary.map-editorial-collapsible{padding:0 12px 2px!important;margin:0!important}' +
-      '.map-editorial-summary{font-size:11px!important;padding:2px 0!important;gap:4px!important;min-height:0!important}' +
-      '.map-editorial-summary::before{font-size:8px!important}' +
       '.map-editorial-body{font-size:12px!important;line-height:1.4!important;padding-top:2px!important}' +
       '.map-editorial-body p{margin:0 0 6px!important}' +
+      /* Chips / search / table natural scroll (mobile only) */
+      '#tab-table.tab-content.active{display:block!important;height:auto!important;min-height:0!important;overflow:visible!important}' +
+      '#tab-table .table-container{display:block!important;height:auto!important;min-height:0!important;overflow:visible!important}' +
+      '#tab-table .filter-row-chain{flex-wrap:nowrap!important;align-items:center;min-width:0;width:100%}' +
+      '#tab-table .filter-row-chain .filter-label{flex-shrink:0}' +
+      '#tab-table .filter-row-chain #chain-chips{display:flex!important;flex-wrap:nowrap!important;gap:6px;align-items:center;min-width:0;flex:1;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}' +
+      '#tab-table .filter-row-chain #chain-chips::-webkit-scrollbar{display:none}' +
+      '#tab-table .filter-row-chain .filter-chip{flex-shrink:0}' +
+      '#tab-table .search-box{padding:5px 10px!important;font-size:12px!important;min-height:0!important;height:auto!important}' +
+      '#tab-table .tbl-wrap{flex:none!important;max-height:none!important;overflow-x:auto!important;overflow-y:visible!important}' +
       '.heatmap-meta{word-break:keep-all;line-height:1.45}' +
       '.graph-hint{white-space:normal;word-break:keep-all;line-height:1.4}' +
       '.filter-label{white-space:nowrap}' +
@@ -270,7 +290,7 @@
   function syncAll() {
     injectStyles();
     setupMapTopbar();
-    enhanceSubtitleTooltip();
+    setupMapTitleToggle();
     syncTabs();
   }
 
@@ -293,6 +313,5 @@
     syncTabs: syncTabs,
     syncAll: syncAll,
     notifyLangApplied: notifyLangApplied,
-    closeSubtitleTip: closeSubtitleTip,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

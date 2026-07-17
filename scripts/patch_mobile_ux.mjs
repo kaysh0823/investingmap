@@ -16,6 +16,9 @@ const MAP_FILES = [
   'auto/korea_auto_map.html',
   'medtech/korea_medtech_map.html',
   'energy/korea_energy_map.html',
+  'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
+  'construction/korea_construction_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',
 ];
@@ -57,11 +60,20 @@ function patchApplyLangHook(html) {
 }
 
 function patchScriptTag(html) {
-  if (html.includes('map_mobile_ux.js')) return html;
-  return html.replace(
-    /<script src="\.\.\/js\/map_mobile_table\.js"><\/script>\s*/,
-    '<script src="../js/map_mobile_table.js"></script>\n  <script src="../js/map_mobile_ux.js"></script>\n',
-  );
+  // Always bump mobile UX cache-buster; ensure script present.
+  if (html.includes('map_mobile_ux.js')) {
+    return html.replace(
+      /map_mobile_ux\.js(\?v=\d+)?/g,
+      'map_mobile_ux.js?v=8',
+    );
+  }
+  if (html.includes('map_mobile_table.js')) {
+    return html.replace(
+      /<script src="\.\.\/js\/map_mobile_table\.js(\?v=\d+)?"><\/script>\s*/,
+      '<script src="../js/map_mobile_table.js?v=6"></script>\n  <script src="../js/map_mobile_ux.js?v=8"></script>\n',
+    );
+  }
+  return html;
 }
 
 function patchMobileTabsCss(html) {
