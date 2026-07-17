@@ -1,3 +1,4 @@
+/* investingmap-cross-sector-v1 */
     function imInitialLang(fallback) {
       try {
         const q = new URLSearchParams(window.location.search).get('lang');
@@ -317,7 +318,7 @@
         const mktClass = I18n ? I18n.marketCssClass(c.market) : (c.market === '비상장' ? 'unlisted' : c.market.toLowerCase());
         const mktLabel = I18n ? I18n.marketLabel(c.market, lang) : c.market;
         return '<tr data-ticker="' + c.ticker + '">' +
-          '<td><div class="company-name">' + displayName + '</div>' + subNameHtml + '</td>' +
+          '<td>' + ((window.InvestingMapCrossSector && InvestingMapCrossSector.nameCellHtml(c, displayName, subNameHtml, lang)) || ('<div class="company-name">' + displayName + '</div>' + subNameHtml)) + '</td>' +
           '<td><span class="ticker">' + c.ticker + '</span></td>' +
           '<td class="quote-cell">' + qr.last + '</td>' +
           '<td class="quote-cell ret-cell">' + (qr.chg1d || '\u2014') + '</td>' +

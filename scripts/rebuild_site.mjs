@@ -32,11 +32,13 @@ run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy cura
 run('node scripts/split_energy_clean_sectors.mjs', 'split energy into battery/renewable/nuclear');
 run('node scripts/split_kconsume_cosmetics.mjs', 'split cosmetics from kconsume + Pharmaresearch→medtech');
 run('node scripts/rebalance_cosmetics_medtech_bio.mjs', 'cosmetics aesthetic + bio IVD → medtech rebalance');
+run('node scripts/apply_cross_sector_memberships.mjs', 'cross-sector memberships (bio+cosmetics)');
 run('node scripts/enrich_company_fields.mjs', 'enrich semType/products (all maps)');
 run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
-run('node scripts/build_hub_index.mjs', 'hub index JSON');
+run('node bio/gen_korea_bio_inline.mjs', 'bio inline.js');
+run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
 run('node scripts/build_hub_quote_snapshot.mjs', 'hub quote snapshot (Top 10)');
 run('node scripts/build_hub_rs_snapshot.mjs', 'hub RS snapshot (optional)');
 run('node scripts/build_hub_sector_returns.mjs', 'hub sector returns (optional)');
@@ -46,7 +48,7 @@ run('node scripts/patch_map_nav_filters.mjs', 'desktop sector nav, filters, tab 
 run('node scripts/patch_tab_heatmap_i18n.mjs', 'tabHeatmap i18n');
 run('node scripts/patch_editorial_collapsible_html.mjs', 'editorial collapsible HTML');
 run('node scripts/fix_mcap_script_order.mjs', 'mcap fmt + script order');
-run('node bio/gen_korea_bio_inline.mjs', 'bio inline.js');
 run('node scripts/patch_rs_column.mjs', 'RS table column');
 run('node scripts/patch_return_columns.mjs', 'return % columns');
+run('node scripts/patch_cross_sector_ui.mjs', 'cross-sector table badges (final)');
 console.log('\nOK rebuild_site');

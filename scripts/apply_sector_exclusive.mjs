@@ -1,5 +1,7 @@
 /**
- * Enforce one-sector-only tickers across industry maps (HTML + bio sources).
+ * Enforce sector membership policy across industry maps (HTML + bio sources).
+ * - SECTOR_EXCLUSIVE: single-home tickers removed from other sectors
+ * - SECTOR_CROSS: tickers allowed only in listed sectors (multi-home)
  * Usage: node scripts/apply_sector_exclusive.mjs
  */
 import fs from 'fs';

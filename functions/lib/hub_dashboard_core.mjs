@@ -28,6 +28,23 @@ export function normalizeTicker(ticker) {
   return null;
 }
 
+/** Sum mcap once per ticker (dedupe cross-listed names for hub weight denominator). */
+export function uniqueHubMcapTotal(hubIndex) {
+  const byTicker = new Map();
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors && hubIndex.sectors[sid];
+    if (!block || !block.companies) continue;
+    for (const c of block.companies) {
+      const key = normalizeTicker(c.ticker);
+      if (!key) continue;
+      if (!byTicker.has(key)) byTicker.set(key, c.mcapWon || 0);
+    }
+  }
+  let total = 0;
+  for (const m of byTicker.values()) total += m;
+  return total;
+}
+
 function shouldHideQuote(q) {
   if (!q) return true;
   return q.last === 0 || q.high52w === 0 || q.low52w === 0;
@@ -156,10 +173,7 @@ export function buildHubSectorsFromSupabaseRows(hubIndex, rows, env, opts = {}) 
     if (row && row.sector_id) rowById.set(row.sector_id, row);
   }
 
-  let totalMcap = 0;
-  for (const c of flattenCompanies(hubIndex)) {
-    totalMcap += c.mcapWon || 0;
-  }
+  const totalMcap = uniqueHubMcapTotal(hubIndex);
 
   const sectors = {};
   let updatedAt = null;
@@ -295,10 +309,7 @@ function sectorReturnMcapRatio(companies, mcapNow, mcapPast) {
 }
 
 function buildSectors(hubIndex, snapshots) {
-  let totalMcap = 0;
-  for (const c of flattenCompanies(hubIndex)) {
-    totalMcap += c.mcapWon || 0;
-  }
+  const totalMcap = uniqueHubMcapTotal(hubIndex);
 
   const mcapNow = snapshots && snapshots.mcapNow;
   const mcapPast1d = snapshots && snapshots.mcapPast1d;

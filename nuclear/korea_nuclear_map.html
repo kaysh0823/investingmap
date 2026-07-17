@@ -2,6 +2,7 @@
 <html lang="ko">
 
 <head>
+  <!-- investingmap-cross-sector-v1 -->
   <!-- Google Tag Manager -->
   <script>(function (w, d, s, l, i) {
       w[l] = w[l] || []; w[l].push({
@@ -192,6 +193,7 @@
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=10"></script>
   <script src="../js/map_i18n.js"></script>
+  <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js?v=2"></script>
   <script src="../js/map_filter_ux.js"></script>
@@ -1042,6 +1044,7 @@
         font-size: 11px;
         line-height: 1.25
       }
+
 
 
 
@@ -2411,7 +2414,7 @@
         const chainDisplay = chainLabel(c.chain);
         const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '—', hi: '—', lo: '—', position: '—' };
         return `<tr data-ticker="${c.ticker}">
-      <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
+      <td>${(window.InvestingMapCrossSector && InvestingMapCrossSector.nameCellHtml(c, displayName, subNameHtml, lang)) || (`<div class="company-name">${displayName}</div>${subNameHtml}`)}</td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
       <td class="quote-cell ret-cell">${qr.chg1d || '—'}</td>

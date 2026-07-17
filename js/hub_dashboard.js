@@ -547,12 +547,17 @@
   function localSectorStats() {
     var out = {};
     if (!hubData) return out;
-    var totalMcap = 0;
+    var byTicker = {};
     SECTOR_ORDER.forEach(function (sid) {
       var block = hubData.sectors[sid];
       if (!block) return;
-      totalMcap += block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
+      block.companies.forEach(function (c) {
+        var t = c.ticker;
+        if (t && !byTicker[t]) byTicker[t] = c.mcapWon || 0;
+      });
     });
+    var totalMcap = 0;
+    Object.keys(byTicker).forEach(function (t) { totalMcap += byTicker[t]; });
     SECTOR_ORDER.forEach(function (sid) {
       var block = hubData.sectors[sid];
       if (!block) return;

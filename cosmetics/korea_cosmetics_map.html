@@ -2,6 +2,7 @@
 <html lang="ko">
 
 <head>
+  <!-- investingmap-cross-sector-v1 -->
   <!-- Google Tag Manager -->
   <script>(function (w, d, s, l, i) {
       w[l] = w[l] || []; w[l].push({
@@ -137,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 화장품/미용기기 투자 지도",
     "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html",
-    "numberOfItems": 13,
+    "numberOfItems": 15,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -154,66 +155,78 @@
       {
         "@type": "ListItem",
         "position": 3,
+        "name": "케어젠 (214370, KOSDAQ)",
+        "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-214370"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
         "name": "LG생활건강 (051900, KOSPI)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-051900"
       },
       {
         "@type": "ListItem",
-        "position": 4,
+        "position": 5,
+        "name": "휴젤 (145020, KOSDAQ)",
+        "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-145020"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
         "name": "파마리서치 (214450, KOSDAQ)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-214450"
       },
       {
         "@type": "ListItem",
-        "position": 5,
+        "position": 7,
         "name": "클래시스 (214150, KOSDAQ)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-214150"
       },
       {
         "@type": "ListItem",
-        "position": 6,
+        "position": 8,
         "name": "달바글로벌 (483650, KOSPI)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-483650"
       },
       {
         "@type": "ListItem",
-        "position": 7,
+        "position": 9,
         "name": "실리콘투 (257720, KOSDAQ)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-257720"
       },
       {
         "@type": "ListItem",
-        "position": 8,
+        "position": 10,
         "name": "한국콜마 (161890, KOSPI)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-161890"
       },
       {
         "@type": "ListItem",
-        "position": 9,
+        "position": 11,
         "name": "코스맥스 (192820, KOSPI)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-192820"
       },
       {
         "@type": "ListItem",
-        "position": 10,
+        "position": 12,
         "name": "아모레퍼시픽홀딩스 (002790, KOSPI)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-002790"
       },
       {
         "@type": "ListItem",
-        "position": 11,
+        "position": 13,
         "name": "코스메카코리아 (241710, KOSDAQ)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-241710"
       },
       {
         "@type": "ListItem",
-        "position": 12,
+        "position": 14,
         "name": "원텍 (336570, KOSDAQ)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-336570"
       },
       {
         "@type": "ListItem",
-        "position": 13,
+        "position": 15,
         "name": "브이티 (018290, KOSDAQ)",
         "url": "https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html#ticker-018290"
       }
@@ -228,6 +241,7 @@
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=10"></script>
   <script src="../js/map_i18n.js"></script>
+  <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
   <script src="../js/sector_nav.js?v=2"></script>
   <script src="../js/map_filter_ux.js"></script>
@@ -1092,6 +1106,7 @@
 
 
 
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1648,8 +1663,8 @@
     </button>
     <p id="hdr-subtitle">브랜드·ODM/OEM·미용기기·유통·채널 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>13</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>7</span> · KOSDAQ <span>6</span></div>
+      <div class="badge" id="badge-total">Total <span>15</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>7</span> · KOSDAQ <span>8</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1707,7 +1722,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">13</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">15</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1782,6 +1797,28 @@
       <td class="products-cell">브랜드 — 화장품 브랜드</td>
       <td><div class="partners-list">—</div></td>
     </tr>
+          <tr data-ticker="214370">
+      <td><div class="company-name">케어젠</div><div class="company-name-sub">Caregen Co.,LTD.</div></td>
+      <td><span class="ticker">214370</span></td>
+      <td class="quote-cell">61,700</td>
+      <td class="quote-cell ret-cell">-3.59%</td>
+      <td class="quote-cell ret-cell">-11.73%</td>
+      <td class="quote-cell ret-cell">-36.85%</td>
+      <td class="quote-cell ret-cell">-48.32%</td>
+      <td class="quote-cell ret-cell">+24.02%</td>
+      <td class="quote-cell">153,800</td>
+      <td class="quote-cell">44,400</td>
+      <td class="quote-cell">15.8%</td>
+      <td class="quote-cell">26.0</td>
+      <td class="mcap-cell">4.02조원</td>
+      <td class="fin-cell">182.00</td>
+      <td class="fin-cell">17.20</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">미용기기</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">펩타이드·헬스케어</td>
+      <td class="products-cell">펩타이드 기반 미용·헬스케어</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
           <tr data-ticker="051900">
       <td><div class="company-name">LG생활건강</div><div class="company-name-sub">LG H&amp;H</div></td>
       <td><span class="ticker">051900</span></td>
@@ -1803,6 +1840,28 @@
       <td style="font-size:12px;color:var(--text-muted)">브랜드</td>
       <td class="products-cell">브랜드 — 화장품 브랜드</td>
       <td><div class="partners-list">—</div></td>
+    </tr>
+          <tr data-ticker="145020">
+      <td><div class="company-name">휴젤</div><div class="company-name-sub">Hugel, Inc.</div></td>
+      <td><span class="ticker">145020</span></td>
+      <td class="quote-cell">239,500</td>
+      <td class="quote-cell ret-cell">+2.57%</td>
+      <td class="quote-cell ret-cell">-4.58%</td>
+      <td class="quote-cell ret-cell">-7.71%</td>
+      <td class="quote-cell ret-cell">-16.98%</td>
+      <td class="quote-cell ret-cell">-28.93%</td>
+      <td class="quote-cell">369,000</td>
+      <td class="quote-cell">208,500</td>
+      <td class="quote-cell">19.3%</td>
+      <td class="quote-cell">62.8</td>
+      <td class="mcap-cell">3.01조원</td>
+      <td class="fin-cell">18.72</td>
+      <td class="fin-cell">2.78</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">미용기기</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">보툴리눔·필러 K-뷰티</td>
+      <td class="products-cell">보툴렉스·더채움 K-뷰티 대표, 美시장 고농도제형 3상 '26 착수</td>
+      <td><div class="partners-list">glob_isrg, glob_mdt, glob_syk, glob_veev</div></td>
     </tr>
           <tr data-ticker="214450">
       <td><div class="company-name">파마리서치</div><div class="company-name-sub">Pharma Research</div></td>
@@ -2300,10 +2359,26 @@
       },
 
       {
+        id: 'cos_214370', name: '케어젠', nameEn: 'Caregen Co.,LTD.', ticker: '214370', market: 'KOSDAQ', chain: '미용기기',
+        semType: '펩타이드·헬스케어', semTypeEn: 'Peptide aesthetics',
+        products: '펩타이드 기반 미용·헬스케어', productsEn: 'Peptide-based aesthetics and healthcare',
+        crossSectors: [{"sectorId":"bio","labelKo":"바이오","labelEn":"Bio","shortKo":"바이오","shortEn":"Bio","map":"bio/korea_bio_map.html"}],
+        revenue: '4.02조원', mcapWon: 4017882000000, per: 182, pbr: 17.2, revTier: 2, partners: []
+      },
+
+      {
         id: 'cos_051900', name: 'LG생활건강', nameEn: 'LG H&H', ticker: '051900', market: 'KOSPI', chain: '브랜드',
         semType: '브랜드', semTypeEn: '—',
         products: '브랜드 — 화장품 브랜드', productsEn: 'Cosmetics and K-beauty products and services',
         revenue: '3.70조원', mcapWon: 3700485404000, per: null, pbr: 0.74, revTier: 2, partners: []
+      },
+
+      {
+        id: 'cos_145020', name: '휴젤', nameEn: 'Hugel, Inc.', ticker: '145020', market: 'KOSDAQ', chain: '미용기기',
+        semType: '보툴리눔·필러 K-뷰티', semTypeEn: 'Botulinum & filler aesthetics',
+        products: '보툴렉스·더채움 K-뷰티 대표, 美시장 고농도제형 3상 \'26 착수', productsEn: 'Botulax & The Chaeum — K-beauty aesthetics leader',
+        crossSectors: [{"sectorId":"bio","labelKo":"바이오","labelEn":"Bio","shortKo":"바이오","shortEn":"Bio","map":"bio/korea_bio_map.html"}],
+        revenue: '3.01조원', mcapWon: 3008336068500, per: 18.72, pbr: 2.78, revTier: 2, partners: ['glob_isrg', 'glob_mdt', 'glob_syk', 'glob_veev']
       },
 
       {
@@ -2693,7 +2768,7 @@
         const chainDisplay = chainLabel(c.chain);
         const qr = (window.InvestingMapLiveQuotes && (InvestingMapLiveQuotes.formatQuotesRow(c, lang) || InvestingMapLiveQuotes.emptyQuotesRow())) || { last: '—', hi: '—', lo: '—', position: '—' };
         return `<tr data-ticker="${c.ticker}">
-      <td><div class="company-name">${displayName}</div>${subNameHtml}</td>
+      <td>${(window.InvestingMapCrossSector && InvestingMapCrossSector.nameCellHtml(c, displayName, subNameHtml, lang)) || (`<div class="company-name">${displayName}</div>${subNameHtml}`)}</td>
       <td><span class="ticker">${c.ticker}</span></td>
       <td class="quote-cell">${qr.last}</td>
       <td class="quote-cell ret-cell">${qr.chg1d || '—'}</td>
