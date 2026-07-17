@@ -26,7 +26,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta name="description" content="Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks for semiconductor, energy, power grid, finance, construction, shipbuilding, defense, K-culture, bio, robotics, auto, and medtech.">
+  <meta name="description" content="Twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks for semiconductor, energy, power grid, finance, construction, shipbuilding, defense, K-culture, bio, robotics, auto, and medtech.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.investingmap.kr/">
   <link rel="alternate" hreflang="ko-KR" href="https://www.investingmap.kr/?lang=ko">
@@ -37,11 +37,11 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="ko_KR">
   <meta property="og:url" content="https://www.investingmap.kr/">
-  <meta property="og:title" content="Investing Map — Korea industry maps hub">
-  <meta property="og:description" content="Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
+  <meta property="og:title" content="Investing Map — Korea listed industry maps">
+  <meta property="og:description" content="Twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Investing Map — Korea industry maps hub">
-  <meta name="twitter:description" content="Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
+  <meta name="twitter:title" content="Investing Map — Korea listed industry maps">
+  <meta name="twitter:description" content="Twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -74,7 +74,7 @@
   }
   </script>
 
-  <title>Investing Map — Korea industry maps hub</title>
+  <title>Investing Map — Korea listed industry maps</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <style>
     :root {
@@ -203,7 +203,8 @@
       font-weight: 700;
       letter-spacing: -.4px;
       max-width: min(920px, 100%);
-      line-height: 1.25
+      line-height: 1.25;
+      margin: 0
     }
 
     .site-header p {
@@ -214,52 +215,131 @@
       max-width: min(920px, 100%)
     }
 
-    .hub-lead-details {
+    .hub-title-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: min(920px, 100%);
       margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    .hub-title-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 6px
+    }
+
+    .hub-title-chevron {
+      flex-shrink: 0;
+      font-size: 13px;
+      line-height: 1;
+      color: var(--text-muted);
+      transition: transform .2s ease
+    }
+
+    .hub-title-toggle[aria-expanded="true"] .hub-title-chevron {
+      transform: rotate(180deg)
+    }
+
+    .hub-lead-panel {
       max-width: min(920px, 100%)
     }
 
-    .hub-lead-summary {
-      margin-top: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      user-select: none
-    }
-
-    .hub-lead-summary::-webkit-details-marker {
+    .hub-lead-panel.is-collapsed {
       display: none
     }
 
-    .hub-lead-summary::before {
-      content: "▸";
+    .hub-lead-panel>#hdr-subtitle {
+      margin-top: 10px
+    }
+
+    .hub-rank-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 22px
+    }
+
+    .hub-rank-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 4px 4px 6px;
+      min-width: 0
+    }
+
+    .hub-rank-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      margin: 0;
+      padding: 12px 12px 10px;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 10px
+    }
+
+    .hub-rank-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px
+    }
+
+    .hub-rank-toggle h2 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3
+    }
+
+    .hub-rank-chevron {
+      flex-shrink: 0;
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: transform .2s ease
+    }
+
+    .hub-rank-toggle[aria-expanded="true"] .hub-rank-chevron {
+      transform: rotate(180deg)
+    }
+
+    .hub-rank-body {
+      padding: 0 12px 12px
+    }
+
+    .hub-rank-body.is-collapsed {
+      display: none
+    }
+
+    .hub-rank-body .hub-side-sub {
       font-size: 11px;
-      color: var(--accent);
-      transition: transform .2s ease;
-      flex-shrink: 0
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0 0 12px
     }
 
-    .hub-lead-details[open] .hub-lead-summary::before {
-      transform: rotate(90deg)
-    }
-
-    .hub-lead-details[open] .hub-lead-summary {
-      margin-bottom: 4px
-    }
-
-    .hub-lead-details>#hdr-subtitle {
-      margin-top: 0
-    }
-
-    @media (min-width:769px) {
-      .hub-lead-details>summary {
-        display: none
-      }
+    .hub-top-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
     }
 
     .hub-main {
@@ -963,12 +1043,13 @@
       </div>
     </div>
     <div class="hub-hero">
-      <h1 id="hdr-title">Investing Map</h1>
-      <details class="hub-lead-details" id="hub-lead-details">
-        <summary class="hub-lead-summary" id="hub-lead-summary">사이트 소개</summary>
-        <p id="hdr-subtitle">Hub for twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.</p>
-      </details>
-      <script>!function(){var d=document.getElementById('hub-lead-details');if(d&&matchMedia('(min-width:769px)').matches)d.open=!0}();</script>
+      <button type="button" class="hub-title-toggle" id="hub-title-toggle" aria-expanded="false" aria-controls="hub-lead-panel">
+        <h1 id="hdr-title">Korea listed industry maps</h1>
+        <span class="hub-title-chevron" aria-hidden="true">▾</span>
+      </button>
+      <div id="hub-lead-panel" class="hub-lead-panel is-collapsed">
+        <p id="hdr-subtitle">Twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.</p>
+      </div>
     </div>
   </header>
 
@@ -984,8 +1065,34 @@
       <div id="hub-sector-pulse-body"></div>
     </section>
 
-    <div class="hub-dashboard-row">
-      <div class="hub-dashboard-main">
+    <div class="hub-rank-panels" id="hub-rank-panels">
+      <section class="hub-rank-panel" id="hub-top-rs" aria-labelledby="hub-rs-title">
+        <button type="button" class="hub-rank-toggle" id="hub-rs-toggle" aria-expanded="false" aria-controls="hub-top-rs-body">
+          <h2 id="hub-rs-title">RS Top 10</h2>
+          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="hub-top-rs-body" class="hub-rank-body is-collapsed">
+          <p class="hub-side-sub" id="hub-rs-sub">Full KRX · avg of 20/50/120-day return percentiles</p>
+          <ol class="hub-top-list" id="hub-top-rs-list">
+            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
+          </ol>
+        </div>
+      </section>
+      <section class="hub-rank-panel" id="hub-top-position" aria-labelledby="hub-top-title">
+        <button type="button" class="hub-rank-toggle" id="hub-top-toggle" aria-expanded="false" aria-controls="hub-top-position-body">
+          <h2 id="hub-top-title">Top 10 — 52-week range</h2>
+          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="hub-top-position-body" class="hub-rank-body is-collapsed">
+          <p class="hub-side-sub" id="hub-top-sub">Last vs 52-week range — all industries</p>
+          <ol class="hub-top-list" id="hub-top-position-list">
+            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading quotes…</li>
+          </ol>
+        </div>
+      </section>
+    </div>
+
+    <div class="hub-dashboard-main">
         <h2 class="hub-overview-heading" id="hub-overview-heading">Industry overview</h2>
         <div class="hub-grid">
       <a class="hub-card" id="hub-link-semi" href="semiconductor/korea_semiconductor_map.html?tab=table">
@@ -1150,23 +1257,6 @@
         <span class="hub-card-cta" id="card-medtech-cta">지도 열기 →</span>
       </a>
     </div>
-      </div>
-      <div class="hub-side-panels">
-      <aside class="hub-side-panel" id="hub-top-position" aria-labelledby="hub-top-title">
-        <h3 id="hub-top-title">Top 10 — 52-week range</h3>
-        <p class="hub-side-sub" id="hub-top-sub">Last vs 52-week range — all industries</p>
-        <ol class="hub-top-list" id="hub-top-position-list">
-          <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading quotes…</li>
-        </ol>
-      </aside>
-      <aside class="hub-side-panel" id="hub-top-rs" aria-labelledby="hub-rs-title">
-        <h3 id="hub-rs-title">RS Top 10</h3>
-        <p class="hub-side-sub" id="hub-rs-sub">Full KRX · avg of 20/50/120-day return percentiles</p>
-        <ol class="hub-top-list" id="hub-top-rs-list">
-          <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-        </ol>
-      </aside>
-      </div>
     </div>
 
     <section class="hub-intro" id="hub-principles" aria-labelledby="hub-principles-summary">
@@ -1211,8 +1301,8 @@
   </footer>
   <script src="js/map_tab_state.js?v=5"></script>
     <script src="js/return_live.js?v=2"></script>
-  <script src="js/hub_dashboard.js?v=30"></script>
-  <script src="js/im_collapsible.js"></script>
+  <script src="js/hub_dashboard.js?v=31"></script>
+  <script src="js/im_collapsible.js?v=2"></script>
 <script>
     const T = {
       ko: {
@@ -1234,8 +1324,7 @@
         constructionMapLine: '12개 상장사 · 종합건설·주택·디벨로퍼·건설기계',
         kconsumeMapLine: '33개 상장사 · 화장품·패션·식품·유통·여행',
         kcontentMapLine: '23개 상장사 · 게임·드라마·웹툰·K-pop',
-        introTitle: '한국 상장사 산업 지도 허브',
-        introLeadSummary: '사이트 소개',
+        introTitle: '한국 상장사 산업 지도',
         introP1: 'Investing Map은 국내·해외 투자자가 KOSPI·KOSDAQ 상장사를 산업 밸류체인 관점에서 이해하도록 돕는 정보 사이트입니다. 12개 산업 지도에서 기업 표, 시가총액·PER·PBR·52주 내 가격 위치, 관계형 그래프를 제공하며, 각 지도 페이지마다 해당 섹터 해설과 데이터 출처를 명시합니다.',
         introHMethod: '데이터·편집 원칙',
         introLi1: '정량 데이터(시총·PER·PBR·시세)는 KRX 등 공개 출처를 기준일에 맞춰 반영합니다.',
@@ -1309,8 +1398,7 @@
         constructionMapLine: '12 companies · contractors, housing, developers, equipment',
         kconsumeMapLine: '33 companies · beauty, fashion, food, retail, travel',
         kcontentMapLine: '23 companies · games, drama, webtoon, K-pop',
-        introTitle: 'Hub for Korean listed-industry maps',
-        introLeadSummary: 'About this site',
+        introTitle: 'Korea listed industry maps',
         introP1: 'Investing Map helps domestic and international investors understand KOSPI/KOSDAQ companies through value-chain lenses. Twelve sector maps combine sortable tables, market cap, PER, PBR, 52-week range, and relationship graphs—each with sector-specific editorial guides and cited sources.',
         introHMethod: 'Data & editorial principles',
         introLi1: 'Quantitative fields (cap, PER, PBR, quotes) follow KRX and Naver Finance as of the date shown.',
@@ -1428,9 +1516,6 @@
       document.getElementById('hub-link-construction').href = 'construction/korea_construction_map.html' + mapQl;
       document.getElementById('hdr-title').textContent = t.introTitle;
       document.getElementById('hdr-subtitle').textContent = t.introP1;
-      var leadSummary = document.getElementById('hub-lead-summary');
-      if (leadSummary) leadSummary.textContent = t.introLeadSummary;
-      if (window.InvestingMapCollapsible) InvestingMapCollapsible.syncHubLead();
       var overviewHeading = document.getElementById('hub-overview-heading');
       if (overviewHeading) overviewHeading.textContent = t.overviewHeading;
       var brandLink = document.getElementById('hub-brand-link');
@@ -1495,8 +1580,8 @@
       document.getElementById('hub-foot').textContent = t.foot;
       document.getElementById('tf-copyright').textContent = t.copyright;
 document.title = lang === 'en'
-        ? 'Investing Map — Korea industry maps hub'
-        : 'Investing Map — 한국 산업 투자 지도 허브';
+        ? 'Investing Map — Korea listed industry maps'
+        : 'Investing Map — 한국 상장사 산업 지도';
       if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: document.title, description: t.introP1 });
       if (window.InvestingMapGeoFooter) InvestingMapGeoFooter.apply(lang);
       if (window.InvestingMapHubDashboard) {
