@@ -189,8 +189,9 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v12')) return;
-    var oldCss = document.getElementById('im-hub-dashboard-css-v11')
+    if (document.getElementById('im-hub-dashboard-css-v13')) return;
+    var oldCss = document.getElementById('im-hub-dashboard-css-v12')
+      || document.getElementById('im-hub-dashboard-css-v11')
       || document.getElementById('im-hub-dashboard-css-v10')
       || document.getElementById('im-hub-dashboard-css-v9')
       || document.getElementById('im-hub-dashboard-css-v8')
@@ -254,10 +255,10 @@
       '@keyframes hub-skel-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}' +
       '@media (max-width:1200px){.hub-dashboard-row{grid-template-columns:1fr}.hub-rank-panels{grid-template-columns:1fr 1fr}.hub-rank-panel{position:static}}' +
       '@media (max-width:768px){' +
-      '.hub-dashboard-row{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}' +
-      '.hub-rank-panels{order:1;display:flex;flex-direction:column;gap:10px;align-items:stretch}' +
-      '.hub-dashboard-main{order:2}' +
-      '.hub-rank-panel{position:static;width:100%;box-sizing:border-box}' +
+      '.hub-dashboard-row{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-bottom:22px;width:100%}' +
+      '.hub-rank-panels{order:1;display:flex;flex-direction:column;gap:10px;align-items:stretch;width:100%;max-width:none;min-width:0}' +
+      '.hub-dashboard-main{order:2;width:100%;min-width:0}' +
+      '.hub-rank-panel{position:static;width:100%;max-width:none;box-sizing:border-box}' +
       '.hub-rank-toggle{width:100%;align-items:flex-start}' +
       '.hub-pulse-tabs{flex-wrap:nowrap;gap:4px;width:100%}' +
       '.hub-pulse-tab{flex:1 1 0;min-width:0;padding:5px 4px;font-size:10px;white-space:nowrap;text-align:center}' +
@@ -266,7 +267,7 @@
       '}'
     ;
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v12';
+    el.id = 'im-hub-dashboard-css-v13';
     el.textContent = css;
     document.head.appendChild(el);
   }
