@@ -6,7 +6,9 @@
 
   var SECTORS = [
     { id: 'semi', path: '../semiconductor/korea_semiconductor_map.html', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
-    { id: 'energy', path: '../energy/korea_energy_map.html', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
+    { id: 'battery', path: '../battery/korea_battery_map.html', ko: '2\uCC28\uC804\uC9C0', en: 'Battery' },
+    { id: 'renewable', path: '../renewable/korea_renewable_map.html', ko: '\uC2E0\uC7AC\uC0DD', en: 'Renewable', koShort: '\uC2E0\uC7AC\uC0DD', enShort: 'Renew' },
+    { id: 'nuclear', path: '../nuclear/korea_nuclear_map.html', ko: '\uC6D0\uC804', en: 'Nuclear' },
     { id: 'powergrid', path: '../powergrid/korea_powergrid_map.html', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Equip.', koShort: '\uC804\uB825', enShort: 'Power' },
     { id: 'ship', path: '../ship/korea_ship_map.html', ko: '\uC870\uC120', en: 'Ship' },
     { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC0B0', en: 'Defense' },

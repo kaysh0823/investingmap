@@ -173,13 +173,8 @@ const HTML_MAPS = [
     badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
     badgeEn: 'listings',
   },
-  {
-    key: 'energy',
-    path: 'energy/korea_energy_map.html',
-    idPrefix: 'energy',
-    badgeKo: '\uC0C1\uC7A5\uAE30\uC5C5',
-    badgeEn: 'listings',
-  },
+  // Legacy /energy/ is an explainer page. Energy cp_list candidates are merged
+  // by scripts/split_energy_clean_sectors.mjs into battery/ESS/renewable/nuclear.
   {
     key: 'powergrid',
     path: 'powergrid/korea_powergrid_map.html',

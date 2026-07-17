@@ -1,5 +1,7 @@
 /**
- * Safely prune defense/energy company universes and rename 방위 → 방산.
+ * Safely prune defense company universe and rename 방위 → 방산.
+ * Energy is split later by scripts/split_energy_clean_sectors.mjs, so do not
+ * prune its cp_list-expanded source here.
  */
 import fs from 'fs';
 import path from 'path';
@@ -15,14 +17,6 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFENSE_KEEP = new Set([
   '012450', '064350', '272210', '079550', '047810', '000880', '082920', '011210',
   '103140', '003570', '099320', '036530', '064960', '214430', '005810', '010820',
-]);
-
-const ENERGY_KEEP = new Set([
-  '373220', '006400', '051910', '096770', '003670', '247540', '086520', '011790',
-  '009830', '052690', '010060', '066970', '336260', '450080', '020150', '093370',
-  '112610', '322000', '361610', '005070', '475150', '137400', '456040', '336370',
-  '348370', '126340', '025540', '121600', '001570', '278280', '271940', '393890',
-  '105840', '011930', '005420',
 ]);
 
 function pad(t) {
@@ -77,7 +71,6 @@ function filterMap(rel, keepFn, label) {
   html = removeRowsAndListItems(html, removed);
   if (rel.startsWith('defense')) html = renameBangwi(html);
   fs.writeFileSync(p, html, 'utf8');
-  // verify parse
   const check = extractCompaniesFromHtml(fs.readFileSync(p, 'utf8'));
   if (check.length !== after.length) {
     throw new Error(`${label} verify failed: ${check.length} != ${after.length}`);
@@ -90,17 +83,13 @@ filterMap(
   'defense',
 );
 
-filterMap(
-  'energy/korea_energy_map.html',
-  (c) => ENERGY_KEEP.has(pad(c.ticker)),
-  'energy',
-);
-
-// Ensure 방산 rename on other maps' footers / copy (idempotent)
 for (const rel of [
   'bio/korea_bio_map.html',
   'construction/korea_construction_map.html',
   'energy/korea_energy_map.html',
+  'battery/korea_battery_map.html',
+  'renewable/korea_renewable_map.html',
+  'nuclear/korea_nuclear_map.html',
   'finance/korea_finance_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',
@@ -156,13 +145,10 @@ execSync('node scripts/build_hub_index.mjs', { cwd: ROOT, stdio: 'inherit' });
   const indexPath = path.join(ROOT, 'index.html');
   let indexHtml = fs.readFileSync(indexPath, 'utf8');
   const defenseN = DEFENSE_KEEP.size;
-  const energyN = ENERGY_KEEP.size;
   indexHtml = indexHtml.replace(/\d+개 상장사 · 항공/, `${defenseN}개 상장사 · 항공`);
   indexHtml = indexHtml.replace(/\d+ companies · aviation/, `${defenseN} companies · aviation`);
-  indexHtml = indexHtml.replace(/\d+개 상장사 · 2차전지/, `${energyN}개 상장사 · 2차전지`);
-  indexHtml = indexHtml.replace(/\d+ companies · batteries/, `${energyN} companies · batteries`);
   fs.writeFileSync(indexPath, indexHtml, 'utf8');
-  console.log(`index.html hub counts: defense=${defenseN}, energy=${energyN}`);
+  console.log(`index.html hub counts: defense=${defenseN}`);
 }
 
 console.log('Done.');

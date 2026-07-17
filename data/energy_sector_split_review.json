@@ -1,0 +1,380 @@
+[
+  {
+    "ticker": "373220",
+    "name": "LG에너지솔루션",
+    "sector": "battery",
+    "chain": "셀",
+    "origin": "battery",
+    "basis": "2차전지·ESS",
+    "mcapWon": 93600000000000
+  },
+  {
+    "ticker": "006400",
+    "name": "삼성SDI",
+    "sector": "battery",
+    "chain": "셀",
+    "origin": "battery",
+    "basis": "2차전지·ESS",
+    "mcapWon": 43435600670000
+  },
+  {
+    "ticker": "051910",
+    "name": "LG화학",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "석유화학·배터리소재",
+    "mcapWon": 24354358335000
+  },
+  {
+    "ticker": "096770",
+    "name": "SK이노베이션",
+    "sector": "battery",
+    "chain": "셀",
+    "origin": "battery",
+    "basis": "정유·석유화학·배터리",
+    "mcapWon": 17936500806800
+  },
+  {
+    "ticker": "003670",
+    "name": "포스코퓨처엠",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "양극재·음극재",
+    "mcapWon": 17735876268000
+  },
+  {
+    "ticker": "247540",
+    "name": "에코프로비엠",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "양극재",
+    "mcapWon": 16631173780000
+  },
+  {
+    "ticker": "086520",
+    "name": "에코프로",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "배터리소재 지주",
+    "mcapWon": 15709300786400
+  },
+  {
+    "ticker": "011790",
+    "name": "SKC",
+    "sector": "battery",
+    "chain": "부품",
+    "origin": "battery",
+    "basis": "첨단소재·화학",
+    "mcapWon": 6958641209400
+  },
+  {
+    "ticker": "066970",
+    "name": "엘앤에프",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "양극재",
+    "mcapWon": 5436104362000
+  },
+  {
+    "ticker": "336260",
+    "name": "두산퓨얼셀",
+    "sector": "battery",
+    "chain": "ESS",
+    "origin": "battery",
+    "basis": "연료전지",
+    "mcapWon": 4787591370600
+  },
+  {
+    "ticker": "450080",
+    "name": "에코프로머티",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "전구체·양극재 소재",
+    "mcapWon": 3959513992000
+  },
+  {
+    "ticker": "020150",
+    "name": "롯데에너지머티리얼즈",
+    "sector": "battery",
+    "chain": "부품",
+    "origin": "battery",
+    "basis": "전지용 동박",
+    "mcapWon": 2958648659500
+  },
+  {
+    "ticker": "093370",
+    "name": "후성",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "LiFSI·냉매·특수가스",
+    "mcapWon": 2038923823300
+  },
+  {
+    "ticker": "078600",
+    "name": "대주전자재료",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "소재",
+    "mcapWon": 1887888613600
+  },
+  {
+    "ticker": "361610",
+    "name": "SK아이이테크놀로지",
+    "sector": "battery",
+    "chain": "부품",
+    "origin": "battery",
+    "basis": "분리막·전고체 인터페이스",
+    "mcapWon": 1522057931000
+  },
+  {
+    "ticker": "005070",
+    "name": "코스모신소재",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "양극재·기능성필름",
+    "mcapWon": 1496316423550
+  },
+  {
+    "ticker": "137400",
+    "name": "피엔티",
+    "sector": "battery",
+    "chain": "장비",
+    "origin": "battery",
+    "basis": "2차전지·ESS 설비",
+    "mcapWon": 986718821200
+  },
+  {
+    "ticker": "336370",
+    "name": "솔루스첨단소재",
+    "sector": "battery",
+    "chain": "부품",
+    "origin": "battery",
+    "basis": "2차전지 소재",
+    "mcapWon": 856651596800
+  },
+  {
+    "ticker": "348370",
+    "name": "엔켐",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "2차전지 전해액",
+    "mcapWon": 765789205350
+  },
+  {
+    "ticker": "126340",
+    "name": "비나텍",
+    "sector": "battery",
+    "chain": "ESS",
+    "origin": "battery",
+    "basis": "수소연료전지·슈퍼커패시터",
+    "mcapWon": 758251718400
+  },
+  {
+    "ticker": "121600",
+    "name": "나노신소재",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "CNT 도전재·배터리소재",
+    "mcapWon": 707037970700
+  },
+  {
+    "ticker": "001570",
+    "name": "금양",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "2차전지·화학 발포제",
+    "mcapWon": 633275240400
+  },
+  {
+    "ticker": "278280",
+    "name": "천보",
+    "sector": "battery",
+    "chain": "부품",
+    "origin": "battery",
+    "basis": "전해질·첨가제",
+    "mcapWon": 521366213750
+  },
+  {
+    "ticker": "005420",
+    "name": "코스모화학",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "황산코발트·이산화티타늄",
+    "mcapWon": 498154717160
+  },
+  {
+    "ticker": "393890",
+    "name": "더블유씨피",
+    "sector": "battery",
+    "chain": "부품",
+    "origin": "battery",
+    "basis": "태양광·신재생",
+    "mcapWon": 445037343600
+  },
+  {
+    "ticker": "034020",
+    "name": "두산에너빌리티",
+    "sector": "nuclear",
+    "chain": "원자로·주기기",
+    "origin": "nuclear",
+    "basis": "원전·발전설비",
+    "mcapWon": 59636242692600
+  },
+  {
+    "ticker": "052690",
+    "name": "한전기술",
+    "sector": "nuclear",
+    "chain": "설계·EPC",
+    "origin": "nuclear",
+    "basis": "원전·발전 설계",
+    "mcapWon": 5782686000000
+  },
+  {
+    "ticker": "051600",
+    "name": "한전KPS",
+    "sector": "nuclear",
+    "chain": "운영·정비",
+    "origin": "nuclear",
+    "basis": "발전 정비",
+    "mcapWon": 2875500000000
+  },
+  {
+    "ticker": "083650",
+    "name": "비에이치아이",
+    "sector": "nuclear",
+    "chain": "계측·보조기기",
+    "origin": "nuclear",
+    "basis": "발전 보일러·HRSG",
+    "mcapWon": 2494116625000
+  },
+  {
+    "ticker": "130660",
+    "name": "한전산업",
+    "sector": "nuclear",
+    "chain": "운영·정비",
+    "origin": "nuclear",
+    "basis": "발전 운전·정비",
+    "mcapWon": 440426000000
+  },
+  {
+    "ticker": "006910",
+    "name": "보성파워텍",
+    "sector": "nuclear",
+    "chain": "계측·보조기기",
+    "origin": "nuclear",
+    "basis": "전력·변압기",
+    "mcapWon": 406303644480
+  },
+  {
+    "ticker": "105840",
+    "name": "우진",
+    "sector": "nuclear",
+    "chain": "계측·보조기기",
+    "origin": "nuclear",
+    "basis": "원전 계측기",
+    "mcapWon": 364971896900
+  },
+  {
+    "ticker": "009830",
+    "name": "한화솔루션",
+    "sector": "renewable",
+    "chain": "신재생 운영",
+    "origin": "renewable",
+    "basis": "태양광·케미칼",
+    "mcapWon": 6360023832000
+  },
+  {
+    "ticker": "010060",
+    "name": "OCI홀딩스",
+    "sector": "renewable",
+    "chain": "태양광",
+    "origin": "renewable",
+    "basis": "태양광 폴리실리콘 지주",
+    "mcapWon": 5601069600000
+  },
+  {
+    "ticker": "018670",
+    "name": "SK가스",
+    "sector": "renewable",
+    "chain": "수소",
+    "origin": "renewable",
+    "basis": "LPG·수소",
+    "mcapWon": 2055108168000
+  },
+  {
+    "ticker": "112610",
+    "name": "씨에스윈드",
+    "sector": "renewable",
+    "chain": "풍력",
+    "origin": "renewable",
+    "basis": "풍력 타워",
+    "mcapWon": 1750113224500
+  },
+  {
+    "ticker": "322000",
+    "name": "HD현대에너지솔루션",
+    "sector": "renewable",
+    "chain": "태양광",
+    "origin": "renewable",
+    "basis": "태양광 모듈",
+    "mcapWon": 1685600000000
+  },
+  {
+    "ticker": "475150",
+    "name": "SK이터닉스",
+    "sector": "renewable",
+    "chain": "풍력",
+    "origin": "renewable",
+    "basis": "신재생 EPC·운영",
+    "mcapWon": 1464881172000
+  },
+  {
+    "ticker": "456040",
+    "name": "OCI",
+    "sector": "renewable",
+    "chain": "태양광",
+    "origin": "renewable",
+    "basis": "화학·태양광소재",
+    "mcapWon": 942697723500
+  },
+  {
+    "ticker": "025540",
+    "name": "한국단자",
+    "sector": "renewable",
+    "chain": "태양광",
+    "origin": "renewable",
+    "basis": "태양광 구조물·금속",
+    "mcapWon": 737383500000
+  },
+  {
+    "ticker": "271940",
+    "name": "일진하이솔루스",
+    "sector": "renewable",
+    "chain": "수소",
+    "origin": "renewable",
+    "basis": "2차전지·소재",
+    "mcapWon": 490591196900
+  },
+  {
+    "ticker": "011930",
+    "name": "신성이엔지",
+    "sector": "renewable",
+    "chain": "태양광",
+    "origin": "renewable",
+    "basis": "전력·플랜트 설비",
+    "mcapWon": 429193392750
+  }
+]

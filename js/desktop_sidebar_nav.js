@@ -9,7 +9,9 @@
   var ITEMS = [
     { id: 'home', path: 'index.html', icon: '\u2302', ko: '\uD5C8\uBE0C', en: 'Hub' },
     { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: '\uD83D\uDCA0', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
-    { id: 'energy', path: 'energy/korea_energy_map.html', icon: '\u26A1', ko: '\uC5D0\uB108\uC9C0', en: 'Energy' },
+    { id: 'battery', path: 'battery/korea_battery_map.html', icon: '\uD83D\uDD0B', ko: '2\uCC28\uC804\uC9C0', en: 'Battery' },
+    { id: 'renewable', path: 'renewable/korea_renewable_map.html', icon: '\uD83C\uDF31', ko: '\uC2E0\uC7AC\uC0DD', en: 'Renewable' },
+    { id: 'nuclear', path: 'nuclear/korea_nuclear_map.html', icon: '\u269B', ko: '\uC6D0\uC804', en: 'Nuclear' },
     { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Equip.' },
     { id: 'ship', path: 'ship/korea_ship_map.html', icon: '\u2693', ko: '\uC870\uC120', en: 'Ship' },
     { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC0B0', en: 'Defense' },
@@ -38,7 +40,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(semiconductor|bio|ship|defense|robot|auto|medtech|energy|powergrid|kculture|kconsume|kcontent|finance|construction)\//i.test(path)) return '../';
+    if (/\/(semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|ess|renewable|nuclear|powergrid|kculture|kconsume|kcontent|finance|construction)\//i.test(path)) return '../';
     return '';
   }
 
@@ -51,7 +53,11 @@
     if (path.indexOf('/robot/') !== -1) return 'robot';
     if (path.indexOf('/auto/') !== -1) return 'auto';
     if (path.indexOf('/medtech/') !== -1) return 'medtech';
-    if (path.indexOf('/energy/') !== -1) return 'energy';
+    if (path.indexOf('/battery/') !== -1) return 'battery';
+    if (path.indexOf('/ess/') !== -1) return 'battery';
+    if (path.indexOf('/renewable/') !== -1) return 'renewable';
+    if (path.indexOf('/nuclear/') !== -1) return 'nuclear';
+    if (path.indexOf('/energy/') !== -1) return 'battery';
     if (path.indexOf('/powergrid/') !== -1) return 'powergrid';
     if (path.indexOf('/kconsume/') !== -1) return 'kconsume';
     if (path.indexOf('/kcontent/') !== -1) return 'kcontent';

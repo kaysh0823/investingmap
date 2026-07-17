@@ -17,7 +17,9 @@ const TARGETS = [
   'medtech/korea_medtech_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',
-  'energy/korea_energy_map.html',
+  'battery/korea_battery_map.html',
+  'renewable/korea_renewable_map.html',
+  'nuclear/korea_nuclear_map.html',
   'bio/korea_bio_map.inline.js',
   'bio/bio_inline_tail.js',
 ];

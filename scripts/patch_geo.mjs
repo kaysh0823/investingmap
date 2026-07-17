@@ -27,8 +27,10 @@ const MAP_FILES = [
   { file: 'medtech/korea_medtech_map.html', key: 'medtech' },
   { file: 'finance/korea_finance_map.html', key: 'finance' },
   { file: 'construction/korea_construction_map.html', key: 'construction' },
+  { file: 'battery/korea_battery_map.html', key: 'battery' },
+  { file: 'renewable/korea_renewable_map.html', key: 'renewable' },
+  { file: 'nuclear/korea_nuclear_map.html', key: 'nuclear' },
   { file: 'powergrid/korea_powergrid_map.html', key: 'powergrid' },
-  { file: 'energy/korea_energy_map.html', key: 'energy' },
   { file: 'kconsume/korea_kconsume_map.html', key: 'kconsume' },
   { file: 'kcontent/korea_kcontent_map.html', key: 'kcontent' },
 ];

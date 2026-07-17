@@ -109,6 +109,30 @@
         "en": "Listed Korean battery, ESS, solar, and wind companies with illustrative global relationships."
       }
     },
+    "battery": {
+      "path": "/battery/korea_battery_map.html",
+      "title": { "ko": "한국 2차전지·배터리 투자 지도", "en": "Korea Battery Value Chain Map" },
+      "summary": {
+        "ko": "2차전지 셀·소재·장비·부품·ESS 관련 상장사의 KRX 데이터와 글로벌 참고 관계를 정리합니다.",
+        "en": "KRX data and illustrative global relationships for listed Korean battery cell, material, equipment, parts, and ESS companies."
+      }
+    },
+    "renewable": {
+      "path": "/renewable/korea_renewable_map.html",
+      "title": { "ko": "한국 신재생에너지 투자 지도", "en": "Korea Renewable Energy Map" },
+      "summary": {
+        "ko": "태양광·풍력·수소·신재생 운영 관련 상장사의 KRX 데이터와 글로벌 참고 관계를 정리합니다.",
+        "en": "KRX data and illustrative global relationships for listed Korean solar, wind, hydrogen, and renewable operators."
+      }
+    },
+    "nuclear": {
+      "path": "/nuclear/korea_nuclear_map.html",
+      "title": { "ko": "한국 원전 투자 지도", "en": "Korea Nuclear Power Map" },
+      "summary": {
+        "ko": "원자로·원전 기자재·운영·정비·SMR 관련 상장사의 KRX 데이터와 글로벌 참고 관계를 정리합니다.",
+        "en": "KRX data and illustrative global relationships for listed Korean nuclear reactor, component, O&M, and SMR-related companies."
+      }
+    },
     "powergrid": {
       "path": "/powergrid/korea_powergrid_map.html",
       "title": { "ko": "한국 전력설비 투자 지도", "en": "Korea Power Equipment Map" },

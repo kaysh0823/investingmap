@@ -15,7 +15,9 @@ const MAP_FILES = [
   'robot/korea_robot_map.html',
   'auto/korea_auto_map.html',
   'medtech/korea_medtech_map.html',
-  'energy/korea_energy_map.html',
+  'battery/korea_battery_map.html',
+  'renewable/korea_renewable_map.html',
+  'nuclear/korea_nuclear_map.html',
   'kconsume/korea_kconsume_map.html',
   'kcontent/korea_kcontent_map.html',
 ];

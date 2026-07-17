@@ -1088,6 +1088,93 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
+
+
 
 
 
@@ -1127,7 +1214,7 @@
         <span class="hub-title-chevron" aria-hidden="true">▾</span>
       </button>
       <div id="hub-lead-panel" class="hub-lead-panel is-collapsed">
-        <p id="hdr-subtitle">Twelve Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.</p>
+        <p id="hdr-subtitle">Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.</p>
       </div>
     </div>
   </header>
@@ -1161,22 +1248,46 @@
         <p class="hub-card-map" id="card-semi-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
         <span class="hub-card-cta" id="card-semi-cta">Open map →</span>
       </a>
-      <a class="hub-card" id="hub-link-energy" href="energy/korea_energy_map.html?tab=table">
+      <a class="hub-card" id="hub-link-battery" href="battery/korea_battery_map.html?tab=table">
         <div class="hub-card-head">
-          <span class="hub-card-icon" aria-hidden="true">⚡</span>
-          <span class="hub-card-badge" id="card-energy-badge">35 LISTINGS</span>
+          <span class="hub-card-icon" aria-hidden="true">🔋</span>
+          <span class="hub-card-badge" id="card-battery-badge">25 LISTINGS</span>
         </div>
-        <h2 id="card-energy-title">한국 에너지 투자 지도</h2>
-        <p class="hub-card-lead" id="card-energy-lead">2차전지·ESS·배터리·태양광·풍력 밸류체인과 글로벌 장비·소재 참고 관계</p>
-        <p class="hub-card-keyplayers" id="card-energy-keyplayers"></p>
-        <div class="hub-card-tags" id="card-energy-tags"></div>
-        <p class="hub-card-map" id="card-energy-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
-        <span class="hub-card-cta" id="card-energy-cta">Open map →</span>
+        <h2 id="card-battery-title">한국 2차전지·배터리 투자 지도</h2>
+        <p class="hub-card-lead" id="card-battery-lead">셀·소재·장비·부품·ESS 밸류체인과 글로벌 배터리 peer 참고 관계</p>
+        <p class="hub-card-keyplayers" id="card-battery-keyplayers"></p>
+        <div class="hub-card-tags" id="card-battery-tags"></div>
+        <p class="hub-card-map" id="card-battery-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-battery-cta">Open map →</span>
+      </a>
+      <a class="hub-card" id="hub-link-renewable" href="renewable/korea_renewable_map.html?tab=table">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🌱</span>
+          <span class="hub-card-badge" id="card-renewable-badge">10 LISTINGS</span>
+        </div>
+        <h2 id="card-renewable-title">한국 신재생에너지 투자 지도</h2>
+        <p class="hub-card-lead" id="card-renewable-lead">태양광·풍력·수소·신재생 운영 밸류체인</p>
+        <p class="hub-card-keyplayers" id="card-renewable-keyplayers"></p>
+        <div class="hub-card-tags" id="card-renewable-tags"></div>
+        <p class="hub-card-map" id="card-renewable-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-renewable-cta">Open map →</span>
+      </a>
+      <a class="hub-card" id="hub-link-nuclear" href="nuclear/korea_nuclear_map.html?tab=table">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">⚛</span>
+          <span class="hub-card-badge" id="card-nuclear-badge">7 LISTINGS</span>
+        </div>
+        <h2 id="card-nuclear-title">한국 원전 투자 지도</h2>
+        <p class="hub-card-lead" id="card-nuclear-lead">원자로·기자재·운영·정비·SMR 밸류체인</p>
+        <p class="hub-card-keyplayers" id="card-nuclear-keyplayers"></p>
+        <div class="hub-card-tags" id="card-nuclear-tags"></div>
+        <p class="hub-card-map" id="card-nuclear-map">Each map: value-chain tags, KRX market cap, a sortable company table, and an interactive relationship graph.</p>
+        <span class="hub-card-cta" id="card-nuclear-cta">Open map →</span>
       </a>
       <a class="hub-card" id="hub-link-powergrid" href="powergrid/korea_powergrid_map.html?tab=table">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">🔌</span>
-          <span class="hub-card-badge" id="card-powergrid-badge">17 LISTINGS</span>
+          <span class="hub-card-badge" id="card-powergrid-badge">10 LISTINGS</span>
         </div>
         <h2 id="card-powergrid-title">한국 전력설비 투자 지도</h2>
         <p class="hub-card-lead" id="card-powergrid-lead">전력설비·송배전·발전설비 밸류체인과 글로벌 장비·EPC 참고 관계</p>
@@ -1399,8 +1510,10 @@
         robotMapLine: '17개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
         autoMapLine: '21개 상장사 · 완성차·부품·타이어·전장',
         medtechMapLine: '8개 상장사 · 진단·임플란트·미용기기·장비',
-        energyMapLine: '35개 상장사 · 2차전지·ESS·배터리·태양광·풍력',
-        powergridMapLine: '17개 상장사 · 전력설비·송배전·발전설비',
+        batteryMapLine: '25개 상장사 · 2차전지 셀·소재·장비·부품·ESS',
+        renewableMapLine: '10개 상장사 · 태양광·풍력·수소',
+        nuclearMapLine: '7개 상장사 · 원전·SMR·정비',
+        powergridMapLine: '10개 상장사 · 전력설비·송배전·발전설비',
         financeMapLine: '31개 상장사 · 은행·증권·보험·카드·캐피탈',
         constructionMapLine: '12개 상장사 · 종합건설·주택·디벨로퍼·건설기계',
         kconsumeMapLine: '33개 상장사 · 화장품·패션·식품·유통·여행',
@@ -1444,9 +1557,15 @@
         kcontentTitle: '한국 K-콘텐츠 투자 지도',
         kcontentLead: '게임·드라마·웹툰·스트리밍 IP·K-pop 레이블 등 상장 한국 콘텐츠 주식과 글로벌 연계 예시',
         kcontentCta: '지도 열기 →',
-        energyTitle: '한국 에너지 투자 지도',
-        energyLead: '2차전지·ESS·배터리·태양광·풍력 밸류체인과 글로벌 장비·소재 참고 관계',
-        energyCta: '지도 열기 →',
+        batteryTitle: '한국 2차전지·배터리 투자 지도',
+        batteryLead: '셀·소재·장비·부품·ESS 밸류체인과 글로벌 배터리 peer 참고 관계',
+        batteryCta: '지도 열기 →',
+        renewableTitle: '한국 신재생에너지 투자 지도',
+        renewableLead: '태양광·풍력·수소·신재생 운영 밸류체인',
+        renewableCta: '지도 열기 →',
+        nuclearTitle: '한국 원전 투자 지도',
+        nuclearLead: '원자로·기자재·운영·정비·SMR 밸류체인',
+        nuclearCta: '지도 열기 →',
         powergridTitle: '한국 전력설비 투자 지도',
         powergridLead: '전력설비·송배전·발전설비 밸류체인과 글로벌 장비·EPC 참고 관계',
         powergridCta: '지도 열기 →',
@@ -1473,8 +1592,10 @@
         robotMapLine: '20 companies · FA, AMR, cobots, motion · Physical AI relationships',
         autoMapLine: '21 listings · OEM, parts, tires, electronics',
         medtechMapLine: '8 listings · Diagnostics, implants, aesthetic, equipment',
-        energyMapLine: '35 companies · batteries, ESS, solar, wind',
-        powergridMapLine: '17 companies · power equipment, T&D, generation',
+        batteryMapLine: '25 listings · cells, materials, equipment, parts, ESS',
+        renewableMapLine: '10 listings · solar, wind, hydrogen',
+        nuclearMapLine: '7 listings · nuclear, SMR, O&M',
+        powergridMapLine: '10 companies · power equipment, T&D, generation',
         financeMapLine: '31 companies · banks, securities, insurance, cards & consumer finance',
         constructionMapLine: '12 companies · contractors, housing, developers, equipment',
         kconsumeMapLine: '33 companies · beauty, fashion, food, retail, travel',
@@ -1518,9 +1639,15 @@
         kcontentTitle: 'Korea K-Content Industry Map',
         kcontentLead: 'Games, drama, webtoon and streaming IP, and K-pop labels—listed Korean content equities with illustrative global relationships.',
         kcontentCta: 'Open map →',
-        energyTitle: 'Korea Energy Sector Stocks Map',
-        energyLead: 'Lithium-ion batteries, ESS, solar, wind, and battery materials—listed Korean companies with illustrative global relationships.',
-        energyCta: 'Open map →',
+        batteryTitle: 'Korea Battery Value Chain Map',
+        batteryLead: 'Battery cells, materials, equipment, parts, and ESS with illustrative global peer relationships.',
+        batteryCta: 'Open map →',
+        renewableTitle: 'Korea Renewable Energy Map',
+        renewableLead: 'Solar, wind, hydrogen, and renewable project operators.',
+        renewableCta: 'Open map →',
+        nuclearTitle: 'Korea Nuclear Power Map',
+        nuclearLead: 'Reactors, components, operations, maintenance, and SMR value chains.',
+        nuclearCta: 'Open map →',
         powergridTitle: 'Korea Power Equipment Map',
         powergridLead: 'Power equipment, T&D, and generation—transformers, cables, nuclear and gas turbines with global peer relationships.',
         powergridCta: 'Open map →',
@@ -1591,7 +1718,9 @@
       document.getElementById('hub-link-medtech').href = 'medtech/korea_medtech_map.html' + mapQl;
       document.getElementById('hub-link-kconsume').href = 'kconsume/korea_kconsume_map.html' + mapQl;
       document.getElementById('hub-link-kcontent').href = 'kcontent/korea_kcontent_map.html' + mapQl;
-      document.getElementById('hub-link-energy').href = 'energy/korea_energy_map.html' + mapQl;
+      document.getElementById('hub-link-battery').href = 'battery/korea_battery_map.html' + mapQl;
+      document.getElementById('hub-link-renewable').href = 'renewable/korea_renewable_map.html' + mapQl;
+      document.getElementById('hub-link-nuclear').href = 'nuclear/korea_nuclear_map.html' + mapQl;
       document.getElementById('hub-link-powergrid').href = 'powergrid/korea_powergrid_map.html' + mapQl;
       document.getElementById('hub-link-finance').href = 'finance/korea_finance_map.html' + mapQl;
       document.getElementById('hub-link-construction').href = 'construction/korea_construction_map.html' + mapQl;
@@ -1631,9 +1760,15 @@
       document.getElementById('card-kcontent-title').textContent = t.kcontentTitle;
       document.getElementById('card-kcontent-lead').textContent = t.kcontentLead;
       document.getElementById('card-kcontent-cta').textContent = t.kcontentCta;
-      document.getElementById('card-energy-title').textContent = t.energyTitle;
-      document.getElementById('card-energy-lead').textContent = t.energyLead;
-      document.getElementById('card-energy-cta').textContent = t.energyCta;
+      document.getElementById('card-battery-title').textContent = t.batteryTitle;
+      document.getElementById('card-battery-lead').textContent = t.batteryLead;
+      document.getElementById('card-battery-cta').textContent = t.batteryCta;
+      document.getElementById('card-renewable-title').textContent = t.renewableTitle;
+      document.getElementById('card-renewable-lead').textContent = t.renewableLead;
+      document.getElementById('card-renewable-cta').textContent = t.renewableCta;
+      document.getElementById('card-nuclear-title').textContent = t.nuclearTitle;
+      document.getElementById('card-nuclear-lead').textContent = t.nuclearLead;
+      document.getElementById('card-nuclear-cta').textContent = t.nuclearCta;
       document.getElementById('card-powergrid-title').textContent = t.powergridTitle;
       document.getElementById('card-powergrid-lead').textContent = t.powergridLead;
       document.getElementById('card-powergrid-cta').textContent = t.powergridCta;

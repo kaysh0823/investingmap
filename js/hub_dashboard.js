@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['semi', 'energy', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
+  var SECTOR_ORDER = ['semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
@@ -17,7 +17,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v12';
+  var SWR_KEY = 'im-hub-dashboard-v14';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null, asOf: null };
@@ -54,7 +54,9 @@
   var HUB_CARD_TAGS = {
     ko: {
       semi: ['설계', '파운드리', '메모리', '소재', '장비', '기판', '패키징'],
-      energy: ['2차전지', 'ESS', '배터리', '태양광', '풍력'],
+      battery: ['셀', '소재', '장비', '부품', 'ESS'],
+      renewable: ['태양광', '풍력', '수소', '운영'],
+      nuclear: ['원자로', 'SMR', '기자재', '정비'],
       powergrid: ['변압기', '개폐기', '송배전', '케이블', '발전설비', '원자력'],
       ship: ['조선소', '엔진', '철강', '조선기자재', '해양', '해운', '방산 해양'],
       defense: ['군용 항공', '미사일·C4ISR', '육상무기', '해군·함정', '우주·위성', '민항'],
@@ -69,7 +71,9 @@
     },
     en: {
       semi: ['Design', 'Foundry', 'Memory', 'Materials', 'Equipment', 'Substrates', 'Packaging'],
-      energy: ['Li-ion', 'ESS', 'Batteries', 'Solar', 'Wind'],
+      battery: ['Cells', 'Materials', 'Equipment', 'Parts', 'ESS'],
+      renewable: ['Solar', 'Wind', 'Hydrogen', 'Operators'],
+      nuclear: ['Reactors', 'SMR', 'Components', 'O&M'],
       powergrid: ['Transformers', 'Switchgear', 'T&D', 'Cables', 'Generation', 'Nuclear'],
       ship: ['Yards', 'Engines', 'Steel', 'Marine equipment', 'Offshore', 'Shipping', 'Naval'],
       defense: ['Military aviation', 'Missiles & C4ISR', 'Land systems', 'Naval', 'Space & satellites', 'Civil aviation'],
@@ -244,7 +248,7 @@
   }
 
   function loadHubSectorReturns() {
-    return fetch('data/hub_sector_returns.json?v=18', { cache: 'default' })
+    return fetch('data/hub_sector_returns.json?v=20', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j) {
@@ -426,7 +430,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=17')
+    return fetch('data/hub_index.json?v=19')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();
