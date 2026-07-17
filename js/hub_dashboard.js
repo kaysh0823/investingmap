@@ -17,7 +17,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v11';
+  var SWR_KEY = 'im-hub-dashboard-v12';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], regularSession: null, asOf: null };
@@ -28,6 +28,13 @@
   var sectorsFailed = false;
   var top10Failed = false;
   var rsTop10Failed = false;
+  // Anti-flash gates: numbers stay hidden (skeleton) until a fresh API response
+  // arrived, or the cached data is provably the same data version (same KST
+  // anchor trading day, market closed).
+  var sectorsReady = false;
+  var top10Ready = false;
+  var rsTop10Ready = false;
+  var swrHold = null;
   var fxRate = 1400;
   var rsSnapshot = null;
   var hubSectorReturnsMeta = { mcapRecentDd: null, effectiveAnchorDd: null };
@@ -161,8 +168,8 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v8')) return;
-    var oldCss = document.getElementById('im-hub-dashboard-css-v7');
+    if (document.getElementById('im-hub-dashboard-css-v9')) return;
+    var oldCss = document.getElementById('im-hub-dashboard-css-v8') || document.getElementById('im-hub-dashboard-css-v7');
     if (oldCss) oldCss.remove();
     var css =
       '.hub-sector-pulse{margin-bottom:22px}' +
@@ -211,6 +218,11 @@
       '.hub-card-keyplayers{font-size:11px;color:var(--text-muted);margin-top:6px;margin-bottom:0;line-height:1.4;word-break:keep-all}' +
       '.hub-card-keyplayers strong{color:var(--text);font-weight:600}' +
       '.hub-card-tags{margin-top:8px;margin-bottom:12px}' +
+      '.hub-pulse-skel{display:inline-block;width:56px;height:16px;border-radius:6px;vertical-align:middle;background:linear-gradient(90deg,var(--border) 25%,color-mix(in srgb,var(--border) 40%,var(--surface2)) 50%,var(--border) 75%);background-size:200% 100%;animation:hub-skel-shimmer 1.4s ease-in-out infinite}' +
+      '.hub-top-skel{display:flex;flex-direction:column;gap:7px;padding:14px 10px;border-radius:10px;border:1px solid var(--border);background:var(--surface2)}' +
+      '.hub-skel-bar{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--border) 25%,color-mix(in srgb,var(--border) 40%,var(--surface2)) 50%,var(--border) 75%);background-size:200% 100%;animation:hub-skel-shimmer 1.4s ease-in-out infinite}' +
+      '.hub-skel-bar-sm{width:38%;height:9px}' +
+      '@keyframes hub-skel-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}' +
       '@media (max-width:1200px){.hub-dashboard-row{grid-template-columns:1fr}.hub-side-panels{grid-template-columns:1fr 1fr}}' +
       '@media (max-width:768px){' +
       '.hub-dashboard-row{grid-template-columns:1fr}' +
@@ -223,7 +235,7 @@
       '}'
     ;
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v8';
+    el.id = 'im-hub-dashboard-css-v9';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -394,6 +406,7 @@
       if (!RL.shouldUseLive1dReturns(recentDd)) return;
       return fetchHubLiveQuotes().then(function (items) {
         applyLiveSectorReturns(items, snap);
+        sectorsReady = true;
         renderLabels(lang);
         renderPulse(lang);
         writeSwr();
@@ -492,6 +505,21 @@
     } catch (e) {
       return null;
     }
+  }
+
+  /**
+   * The cache is the same data version as a fresh fetch only when the market
+   * was closed at save time and the cache belongs to the same KST anchor
+   * trading day (quotes cannot have moved in between). Otherwise the cache
+   * must not be painted before the fresh response.
+   */
+  function swrIsCurrentVersion(swr) {
+    var RL = global.InvestingMapReturnLive;
+    if (!swr || swr.regularSession !== false || !swr.asOf) return false;
+    if (!RL || !RL.kstAnchorYmd || RL.isKrxRegularSession(new Date())) return false;
+    var saved = new Date(swr.asOf);
+    if (!isFinite(saved.getTime())) return false;
+    return RL.kstAnchorYmd(saved) === RL.kstAnchorYmd(new Date());
   }
 
   function writeSwr() {
@@ -719,12 +747,12 @@
       var sectorMcap = pulse.mcapWon != null ? pulse.mcapWon :
         block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
       var weightPct = pulse.weightPct != null ? pulse.weightPct : (local[sid] ? local[sid].weightPct : 0);
-      var isLoading = sectorsBootstrapping || (sectorsLoadingHorizon === retKey && retPct == null);
+      var isLoading = !sectorsReady || (sectorsLoadingHorizon === retKey && retPct == null);
       var cls = 'hub-pulse-card-ret is-flat';
       var retText;
       if (isLoading) {
         cls = 'hub-pulse-card-ret is-loading';
-        retText = labels.pulseLoading;
+        retText = '<span class="hub-pulse-skel" aria-label="' + labels.pulseLoading + '"></span>';
       } else {
         if (retPct != null) cls = retPct > 0 ? 'hub-pulse-card-ret is-up' : retPct < 0 ? 'hub-pulse-card-ret is-down' : 'hub-pulse-card-ret is-flat';
         retText = formatPct(retPct, lang);
@@ -774,12 +802,26 @@
     }
   }
 
+  function skeletonListHtml(n) {
+    var out = '';
+    for (var i = 0; i < n; i++) {
+      out += '<li class="hub-top-skel" aria-hidden="true">' +
+        '<span class="hub-skel-bar" style="width:' + (52 + ((i * 17) % 38)) + '%"></span>' +
+        '<span class="hub-skel-bar hub-skel-bar-sm"></span></li>';
+    }
+    return out;
+  }
+
   function renderTop10(lang) {
     var list = document.getElementById('hub-top-position-list');
     if (!list) return;
     var labels = t(lang);
     var ranked = dashboardData && dashboardData.top10 ? dashboardData.top10 : [];
 
+    if (!top10Ready) {
+      list.innerHTML = skeletonListHtml(10);
+      return;
+    }
     if (!ranked.length) {
       var msg = top10Loading ? labels.loading : labels.quotesFailed;
       list.innerHTML = '<li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">' + msg + '</li>';
@@ -808,6 +850,10 @@
     var labels = t(lang);
     var ranked = dashboardData && dashboardData.rsTop10 ? dashboardData.rsTop10 : [];
 
+    if (!rsTop10Ready) {
+      list.innerHTML = skeletonListHtml(10);
+      return;
+    }
     if (!ranked.length) {
       var msg = rsTop10Loading ? labels.loading : labels.quotesFailed;
       list.innerHTML = '<li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">' + msg + '</li>';
@@ -910,6 +956,7 @@
     var url = hubApiUrl('/api/hub_sectors?horizon=' + encodeURIComponent(horizonParam));
     if (!url) {
       if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
+      sectorsReady = true;
       renderPulse(lang);
       return Promise.resolve();
     }
@@ -920,6 +967,7 @@
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
         mergeSectorsPayload(j);
+        sectorsReady = true;
         var ok = j.sectors && Object.values(j.sectors).some(function (s) {
           return s && s[retKey] != null && isFinite(s[retKey]);
         });
@@ -928,6 +976,8 @@
       })
       .catch(function () {
         sectorsFailed = true;
+        // Fresh fetch failed — fall back to bundled/cached values instead of an endless skeleton.
+        sectorsReady = true;
       })
       .then(function () {
         delete sectorFetchInFlight[retKey];
@@ -957,6 +1007,7 @@
     var url = hubApiUrl('/api/hub_rs_top10');
     if (!url) {
       rsTop10Loading = false;
+      rsTop10Ready = true;
       renderRsTop10(lang);
       return Promise.resolve();
     }
@@ -970,10 +1021,14 @@
       })
       .catch(function () {
         rsTop10Failed = true;
+        if (!(dashboardData.rsTop10 && dashboardData.rsTop10.length) && swrHold && swrHold.rsTop10 && swrHold.rsTop10.length) {
+          dashboardData.rsTop10 = swrHold.rsTop10;
+        }
       })
       .then(function () {
         rsTop10Loading = false;
-        if (dashboardData.rsTop10 && dashboardData.rsTop10.length) writeSwr();
+        rsTop10Ready = true;
+        if (!rsTop10Failed && dashboardData.rsTop10 && dashboardData.rsTop10.length) writeSwr();
         renderRsTop10(lang);
       });
   }
@@ -982,6 +1037,7 @@
     var url = hubApiUrl('/api/hub_top10');
     if (!url) {
       top10Loading = false;
+      top10Ready = true;
       renderTop10(lang);
       return Promise.resolve();
     }
@@ -995,10 +1051,14 @@
       })
       .catch(function () {
         top10Failed = true;
+        if (!(dashboardData.top10 && dashboardData.top10.length) && swrHold && swrHold.top10 && swrHold.top10.length) {
+          dashboardData.top10 = swrHold.top10;
+        }
       })
       .then(function () {
         top10Loading = false;
-        if (dashboardData.top10 && dashboardData.top10.length) writeSwr();
+        top10Ready = true;
+        if (!top10Failed && dashboardData.top10 && dashboardData.top10.length) writeSwr();
         renderTop10(lang);
       });
   }
@@ -1010,7 +1070,7 @@
         return fetchSectorsHorizon(lang, pulseHorizonKey);
       }
     }).then(function () {
-      if (!sectorsFailed || !top10Failed || !rsTop10Failed) writeSwr();
+      if (!sectorsFailed && !top10Failed && !rsTop10Failed) writeSwr();
       sectorsBootstrapping = false;
       if (sectorsLoadingHorizon === pulseHorizonKey) sectorsLoadingHorizon = null;
       renderPulse(lang);
@@ -1034,10 +1094,21 @@
     rsTop10Loading = true;
     var swr = readSwr();
     if (swr) {
-      dashboardData.top10 = swr.top10 || [];
-      dashboardData.rsTop10 = swr.rsTop10 || [];
-      dashboardData.regularSession = swr.regularSession;
-      if (swr.asOf) dashboardData.asOf = swr.asOf;
+      if (swrIsCurrentVersion(swr)) {
+        // Same data version as a fresh fetch would return — safe to paint immediately.
+        dashboardData.sectors = swr.sectors || {};
+        dashboardData.top10 = swr.top10 || [];
+        dashboardData.rsTop10 = swr.rsTop10 || [];
+        dashboardData.regularSession = swr.regularSession;
+        if (swr.asOf) dashboardData.asOf = swr.asOf;
+        sectorsReady = Object.keys(dashboardData.sectors).length > 0;
+        top10Ready = dashboardData.top10.length > 0;
+        rsTop10Ready = dashboardData.rsTop10.length > 0;
+      } else {
+        // Different (or unknown) data version — keep skeletons until the fresh
+        // response lands; use only as a fallback if the fetch fails.
+        swrHold = swr;
+      }
     }
     Promise.all([loadHubIndex(), loadFx(), loadHubSectorReturns()])
       .then(function () {
@@ -1053,6 +1124,9 @@
         sectorsBootstrapping = false;
         top10Loading = false;
         rsTop10Loading = false;
+        sectorsReady = true;
+        top10Ready = true;
+        rsTop10Ready = true;
         if (typeof console !== 'undefined' && console.warn) {
           console.warn('[hub_dashboard] init failed', err);
         }
