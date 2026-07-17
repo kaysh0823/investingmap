@@ -213,6 +213,8 @@
       '.hub-dashboard-main{margin-bottom:0;min-width:0}' +
       '.hub-rank-panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;min-width:0;margin-bottom:0}' +
       '.hub-rank-panel{position:sticky;top:16px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 4px 6px;min-width:0}' +
+      '.hub-rank-toggle-inner{display:flex;flex-direction:column;gap:2px;min-width:0}' +
+      '.hub-rank-toggle-sub{margin:0;font-size:11px;font-weight:400;color:var(--text-muted);line-height:1.4;white-space:normal;text-align:left}' +
       '.hub-top-item{display:block;text-decoration:none;color:inherit;padding:10px 10px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);transition:border-color .15s,background .15s}' +
       '.hub-top-item:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface2))}' +
       '.hub-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}' +
@@ -234,9 +236,10 @@
       '@media (max-width:1200px){.hub-dashboard-row{grid-template-columns:1fr}.hub-rank-panels{grid-template-columns:1fr 1fr}.hub-rank-panel{position:static}}' +
       '@media (max-width:768px){' +
       '.hub-dashboard-row{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}' +
-      '.hub-rank-panels{order:1;display:flex;flex-direction:column;gap:10px}' +
+      '.hub-rank-panels{order:1;display:flex;flex-direction:column;gap:10px;align-items:stretch}' +
       '.hub-dashboard-main{order:2}' +
-      '.hub-rank-panel{position:static}' +
+      '.hub-rank-panel{position:static;width:100%;box-sizing:border-box}' +
+      '.hub-rank-toggle{width:100%;align-items:flex-start}' +
       '.hub-pulse-tabs{flex-wrap:nowrap;gap:4px;width:100%}' +
       '.hub-pulse-tab{flex:1 1 0;min-width:0;padding:5px 4px;font-size:10px;white-space:nowrap;text-align:center}' +
       '.hub-pulse-cards{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}' +

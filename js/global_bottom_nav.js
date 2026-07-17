@@ -1,5 +1,7 @@
 /**
  * Global mobile bottom nav: Home + industry maps (all pages).
+ * Sector list: battery/renewable/nuclear (ex-energy), kconsume/kcontent/cosmetics (ex-kculture), auto, medtech.
+ * Bump ?v= when ITEMS change (see scripts/patch_global_bottom_nav.mjs GLOBAL_BOTTOM_NAV_V).
  */
 (function (global) {
   'use strict';

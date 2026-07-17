@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const GLOBAL_BOTTOM_NAV_V = 7;
 
 const MAP_FILES = [
   'semiconductor/korea_semiconductor_map.html',
@@ -36,8 +37,19 @@ const ROOT_PAGES = [
   'faq.html',
 ];
 
+function versionedSrc(relPath) {
+  return `${relPath}?v=${GLOBAL_BOTTOM_NAV_V}`;
+}
+
+function bumpGlobalNavVersion(html) {
+  return html.replace(
+    /global_bottom_nav\.js(?:\?v=\d+)?/g,
+    `global_bottom_nav.js?v=${GLOBAL_BOTTOM_NAV_V}`,
+  );
+}
+
 function addGlobalNavScript(html, src) {
-  if (html.includes('global_bottom_nav.js')) return html;
+  if (html.includes('global_bottom_nav.js')) return bumpGlobalNavVersion(html);
   if (html.includes('geo_footer.js')) {
     return html.replace(
       /<script src="([^"]*geo_footer\.js)"><\/script>/,
@@ -61,7 +73,7 @@ function patchMapFile(rel) {
   const fp = path.join(ROOT, rel);
   if (!fs.existsSync(fp)) return;
   let html = fs.readFileSync(fp, 'utf8');
-  html = addGlobalNavScript(html, '../js/global_bottom_nav.js');
+  html = addGlobalNavScript(html, versionedSrc('../js/global_bottom_nav.js'));
   if (!html.includes('InvestingMapGlobalBottomNav.render')) {
     const hook = '      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);\n';
     if (html.includes('InvestingMapMobileUx.syncAll')) {
@@ -80,7 +92,7 @@ function patchRootFile(rel) {
   if (!fs.existsSync(fp)) return;
   let html = fs.readFileSync(fp, 'utf8');
   html = patchApplyLangRoot(html);
-  html = addGlobalNavScript(html, 'js/global_bottom_nav.js');
+  html = addGlobalNavScript(html, versionedSrc('js/global_bottom_nav.js'));
   fs.writeFileSync(fp, html);
   console.log('patched root bottom nav:', rel);
 }

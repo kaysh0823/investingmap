@@ -140,7 +140,7 @@ function patchMapFile(rel) {
   if (!html.includes('global_bottom_nav.js')) {
     html = html.replace(
       /<script src="([^"]*geo_footer\.js)"><\/script>/,
-      '<script src="../js/global_bottom_nav.js"></script>\n  <script src="$1"></script>',
+      '<script src="../js/global_bottom_nav.js?v=7"></script>\n  <script src="$1"></script>',
     );
   }
   fs.writeFileSync(fp, html);
