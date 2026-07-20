@@ -34,6 +34,10 @@
   // arrived, or the cached data is provably the same data version (same KST
   // anchor trading day, market closed).
   var sectorsReady = false;
+  // True after /api/hub_sectors has been attempted at least once (success or
+  // fallback). Live Naver overlay must not run before this, or it can paint
+  // client-computed 1D ahead of the authoritative merge and cause a flicker.
+  var sectorsAuthFetched = false;
   var top10Ready = false;
   var rsTop10Ready = false;
   var moversReady = false;
@@ -273,6 +277,8 @@
   }
 
   function loadHubSectorReturns() {
+    // Static fallback only — /api/hub_sectors merge (non-onlyMissing) overwrites
+    // these values when the fresh fetch succeeds.
     return fetch('data/hub_sector_returns.json?v=21', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
@@ -432,13 +438,24 @@
   function refreshLiveSectorReturns(lang) {
     var RL = global.InvestingMapReturnLive;
     if (!RL) return Promise.resolve();
+    // Never be the first paint: wait for authoritative /api/hub_sectors (or its
+    // explicit fallback) so client-side 1D from hub_rs_snapshot + /api/quotes
+    // cannot flash ahead of the API value.
+    if (!sectorsReady || !sectorsAuthFetched) return Promise.resolve();
+    // After close / weekend / holiday: hub_sectors (or static fallback) is final.
+    // shouldUseLive1dReturns only excludes non-trading days, so also skip when
+    // the session is closed or the KRX clock is outside regular hours.
+    if (dashboardData.regularSession === false) return Promise.resolve();
+    if (RL.isKrxRegularSession && !RL.isKrxRegularSession()) return Promise.resolve();
     return loadRsSnapshotHub().then(function (snap) {
       if (!snap) return;
       var recentDd = snap.recentDd || hubSectorReturnsMeta.mcapRecentDd;
       if (!RL.shouldUseLive1dReturns(recentDd)) return;
+      if (dashboardData.regularSession === false) return;
       return fetchHubLiveQuotes().then(function (items) {
+        if (!sectorsReady || !sectorsAuthFetched) return;
+        if (dashboardData.regularSession === false) return;
         applyLiveSectorReturns(items, snap);
-        sectorsReady = true;
         renderLabels(lang);
         renderPulse(lang);
         writeSwr();
@@ -770,9 +787,12 @@
         if (!key || key === pulseHorizonKey) return;
         savePulseHorizon(key);
         renderPulse(lang);
-        refreshLiveSectorReturns(lang);
         if (!hasHorizonData(key)) {
-          fetchSectorsHorizon(lang, key);
+          fetchSectorsHorizon(lang, key).then(function () {
+            refreshLiveSectorReturns(lang);
+          });
+        } else {
+          refreshLiveSectorReturns(lang);
         }
       });
     }
@@ -1078,6 +1098,7 @@
     if (!url) {
       if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
       sectorsReady = true;
+      sectorsAuthFetched = true;
       renderPulse(lang);
       return Promise.resolve();
     }
@@ -1087,6 +1108,7 @@
     sectorFetchInFlight[retKey] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
+        // Fresh API wins over static hub_sector_returns.json (onlyMissing merge).
         mergeSectorsPayload(j);
         sectorsReady = true;
         var ok = j.sectors && Object.values(j.sectors).some(function (s) {
@@ -1101,6 +1123,7 @@
         sectorsReady = true;
       })
       .then(function () {
+        sectorsAuthFetched = true;
         delete sectorFetchInFlight[retKey];
         if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
         renderPulse(lang);
@@ -1232,6 +1255,7 @@
 
   function fetchDashboardAndRender(lang, sectorPromise) {
     var sectors = sectorPromise || fetchSectors(lang);
+    // Authoritative sector merge must finish before live overlay / poll starts.
     return Promise.all([sectors, fetchTop10(lang), fetchRsTop10(lang), fetchMovers(lang)]).then(function () {
       if (!hasHorizonData(pulseHorizonKey)) {
         return fetchSectorsHorizon(lang, pulseHorizonKey);
@@ -1240,12 +1264,13 @@
       if (!sectorsFailed && !top10Failed && !rsTop10Failed && !moversFailed) writeSwr();
       sectorsBootstrapping = false;
       if (sectorsLoadingHorizon === pulseHorizonKey) sectorsLoadingHorizon = null;
+      // First numeric paint: API (or static/SWR fallback). Live overlay may
+      // refine 1D afterward only during regular session.
       renderPulse(lang);
       renderTop10(lang);
       renderRsTop10(lang);
       renderMovers(lang);
-      // Live Naver overlay is best-effort — do not block first paint of API data.
-      refreshLiveSectorReturns(lang).then(function () {
+      return refreshLiveSectorReturns(lang).then(function () {
         startLiveSectorPoll(lang);
       }).catch(function () {
         startLiveSectorPoll(lang);
@@ -1300,6 +1325,7 @@
         rsTop10Loading = false;
         moversLoading = false;
         sectorsReady = true;
+        sectorsAuthFetched = true;
         top10Ready = true;
         rsTop10Ready = true;
         moversReady = true;
