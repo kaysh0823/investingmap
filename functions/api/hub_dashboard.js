@@ -7,13 +7,15 @@ import { buildHubDashboard, loadHubIndexFromRequest } from '../lib/hub_dashboard
 import { getAuthKey } from '../lib/krx_yoy.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
+  anchoredCachePath,
   corsHeaders,
   hasSectorYoy,
+  hubEdgeMaxAge,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const HUB_CACHE_PATH = '/api/hub_dashboard/cache/v2';
+const HUB_CACHE_BASE = '/api/hub_dashboard/cache/v3';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -28,9 +30,10 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const session = krxSessionInfo();
   const nocache = url.searchParams.get('nocache') === '1';
+  const cachePath = anchoredCachePath(HUB_CACHE_BASE);
 
   if (!nocache) {
-    const hit = await readHubCache(HUB_CACHE_PATH, url.origin);
+    const hit = await readHubCache(cachePath, url.origin);
     if (hit) {
       const headers = new Headers(hit.headers);
       for (const [k, v] of Object.entries(ch)) headers.set(k, v);
@@ -42,7 +45,7 @@ export async function onRequest(context) {
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
     const payload = await buildHubDashboard(hubIndex, env, request);
-    const maxAge = session.regular ? 300 : 1800;
+    const maxAge = hubEdgeMaxAge();
     const response = new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
@@ -52,7 +55,7 @@ export async function onRequest(context) {
       },
     });
     if (!nocache && payload.top10 && payload.top10.length > 0 && hasSectorYoy(payload.sectors)) {
-      putHubCache(context, HUB_CACHE_PATH, url.origin, response);
+      putHubCache(context, cachePath, url.origin, response);
     }
     return response;
   } catch (e) {

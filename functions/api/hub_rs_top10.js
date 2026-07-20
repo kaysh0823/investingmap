@@ -12,7 +12,9 @@ import {
 } from '../lib/hub_dashboard_core.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
+  anchoredCachePath,
   corsHeaders,
+  hubEdgeMaxAge,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
@@ -21,7 +23,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_PATH = '/api/hub_rs_top10/cache/v1';
+const CACHE_BASE = '/api/hub_rs_top10/cache/v2';
 
 async function buildRsTop10FromSupabase(hubIndex, config) {
   const rows = await fetchSupabaseJson(
@@ -62,9 +64,10 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const session = krxSessionInfo();
   const nocache = url.searchParams.get('nocache') === '1';
+  const cachePath = anchoredCachePath(CACHE_BASE);
 
   if (!nocache) {
-    const hit = await readHubCache(CACHE_PATH, url.origin);
+    const hit = await readHubCache(cachePath, url.origin);
     if (hit) {
       const headers = new Headers(hit.headers);
       for (const [k, v] of Object.entries(ch)) headers.set(k, v);
@@ -75,7 +78,7 @@ export async function onRequest(context) {
 
   try {
     const payload = await buildRsTop10Payload(request, env);
-    const maxAge = session.regular ? 300 : 1800;
+    const maxAge = hubEdgeMaxAge();
     const response = new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
@@ -85,7 +88,7 @@ export async function onRequest(context) {
       },
     });
     if (!nocache && hubRsTop10Cacheable(payload)) {
-      putHubCache(context, CACHE_PATH, url.origin, response);
+      putHubCache(context, cachePath, url.origin, response);
     }
     return response;
   } catch (e) {

@@ -1,3 +1,5 @@
+import { kstAnchorYmd, edgeCacheMaxAgeSeconds } from './krx_session.mjs';
+
 export function corsHeaders(request) {
   const origin = request.headers.get('Origin') || '';
   return {
@@ -6,6 +8,16 @@ export function corsHeaders(request) {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
   };
+}
+
+/** Cache API path scoped to the current KST trading-day anchor. */
+export function anchoredCachePath(basePath, now = new Date()) {
+  const base = String(basePath || '').replace(/\/+$/, '');
+  return `${base}/${kstAnchorYmd(now)}`;
+}
+
+export function hubEdgeMaxAge(now = new Date()) {
+  return edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 1800 });
 }
 
 export async function readHubCache(cachePath, origin) {
@@ -28,15 +40,16 @@ export function putHubCache(context, cachePath, origin, response) {
   }
 }
 
-/** Long-lived edge copy for stale-while-revalidate on cold KRX misses. */
+/** Long-lived edge copy for stale-while-revalidate on cold KRX misses (same trading day only). */
 export function putHubStaleCache(context, cachePath, origin, body, extraHeaders = {}) {
   try {
     const cache = caches.default;
     const cacheReq = new Request(new URL(cachePath, origin).toString());
+    const maxAge = edgeCacheMaxAgeSeconds(undefined, { closedMax: 86400 });
     const staleRes = new Response(body, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
+        'Cache-Control': `public, max-age=${maxAge}, stale-while-revalidate=${Math.min(604800, maxAge * 6)}`,
         ...extraHeaders,
       },
     });

@@ -6,10 +6,12 @@
 
 import { buildHubSectors, buildHubSectorsFromSupabaseRows, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { getAuthKey } from '../lib/krx_yoy.mjs';
-import { krxSessionInfo } from '../lib/krx_session.mjs';
+import { krxSessionInfo, kstAnchorYmd } from '../lib/krx_session.mjs';
 import {
+  anchoredCachePath,
   corsHeaders,
   hasSectorHorizon,
+  hubEdgeMaxAge,
   normalizeSectorHorizon,
   putHubCache,
   putHubStaleCache,
@@ -21,23 +23,25 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v8';
+const CACHE_VERSION = '/api/hub_sectors/cache/v9';
 
 /** Reject Supabase rows if newest updated_at is older than this (covers weekend + holiday buffer). */
 const SECTOR_RETURNS_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
 
-function cachePaths(horizon) {
-  const base = `${CACHE_VERSION}/${horizon}`;
-  return { fresh: base, stale: `${base}/stale` };
+function cachePaths(horizon, now = new Date()) {
+  const dayBase = anchoredCachePath(CACHE_VERSION, now);
+  const base = `${dayBase}/${horizon}`;
+  return { fresh: base, stale: `${base}/stale`, anchor: kstAnchorYmd(now) };
 }
 
-function sectorResponseHeaders(ch, horizon, cacheTag, maxAge) {
+function sectorResponseHeaders(ch, horizon, cacheTag, maxAge, anchor) {
   return {
     ...ch,
     'Content-Type': 'application/json; charset=utf-8',
     'Cache-Control': `public, max-age=${maxAge}, stale-while-revalidate=${maxAge * 6}`,
     'X-Hub-Cache': cacheTag,
     'X-Hub-Horizon': horizon,
+    'X-Hub-Anchor': anchor,
   };
 }
 
@@ -78,19 +82,19 @@ async function buildSectorPayload(request, env, horizon) {
 }
 
 async function respondWithPayload(context, request, ch, horizon, payload, cacheTag, nocache) {
-  const session = krxSessionInfo();
-  const maxAge = session.regular ? 300 : 1800;
+  const maxAge = hubEdgeMaxAge();
   const url = new URL(request.url);
-  const { fresh, stale } = cachePaths(horizon);
+  const { fresh, stale, anchor } = cachePaths(horizon);
   const body = JSON.stringify(payload);
   const response = new Response(body, {
-    headers: sectorResponseHeaders(ch, horizon, cacheTag, maxAge),
+    headers: sectorResponseHeaders(ch, horizon, cacheTag, maxAge, anchor),
   });
   if (!nocache && hasSectorHorizon(payload.sectors, horizon)) {
     putHubCache(context, fresh, url.origin, response);
     putHubStaleCache(context, stale, url.origin, body, {
       'X-Hub-Horizon': horizon,
       'X-Hub-Cache': 'STORED',
+      'X-Hub-Anchor': anchor,
     });
   }
   return response;
@@ -98,26 +102,27 @@ async function respondWithPayload(context, request, ch, horizon, payload, cacheT
 
 async function revalidateInBackground(context, request, env, horizon, ch) {
   const url = new URL(request.url);
-  const { fresh, stale } = cachePaths(horizon);
+  const { fresh, stale, anchor } = cachePaths(horizon);
   try {
     const payload = await buildSectorPayload(request, env, horizon);
     if (!hasSectorHorizon(payload.sectors, horizon)) return;
-    const session = krxSessionInfo();
-    const maxAge = session.regular ? 300 : 1800;
+    const maxAge = hubEdgeMaxAge();
     const body = JSON.stringify(payload);
     const response = new Response(body, {
-      headers: sectorResponseHeaders(ch, horizon, 'REVALIDATED', maxAge),
+      headers: sectorResponseHeaders(ch, horizon, 'REVALIDATED', maxAge, anchor),
     });
     const cache = caches.default;
     await cache.put(new Request(new URL(fresh, url.origin).toString()), response.clone());
+    const staleMax = Math.max(60, Math.min(86400, maxAge * 48));
     await cache.put(
       new Request(new URL(stale, url.origin).toString()),
       new Response(body, {
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',
+          'Cache-Control': `public, max-age=${staleMax}, stale-while-revalidate=${Math.min(604800, staleMax * 6)}`,
           'X-Hub-Horizon': horizon,
           'X-Hub-Cache': 'STORED',
+          'X-Hub-Anchor': anchor,
         },
       }),
     );
@@ -140,7 +145,7 @@ export async function onRequest(context) {
   const session = krxSessionInfo();
   const nocache = url.searchParams.get('nocache') === '1';
   const horizon = normalizeSectorHorizon(url.searchParams.get('horizon'));
-  const { fresh, stale } = cachePaths(horizon);
+  const { fresh, stale, anchor } = cachePaths(horizon);
 
   if (!nocache) {
     const hit = await readHubCache(fresh, url.origin);
@@ -148,6 +153,7 @@ export async function onRequest(context) {
       const headers = new Headers(hit.headers);
       for (const [k, v] of Object.entries(ch)) headers.set(k, v);
       headers.set('X-Hub-Cache', 'HIT');
+      headers.set('X-Hub-Anchor', anchor);
       return new Response(hit.body, { status: hit.status, headers });
     }
   }
@@ -156,9 +162,9 @@ export async function onRequest(context) {
     const stalePayload = await readHubCacheJson(stale, url.origin);
     if (stalePayload && hasSectorHorizon(stalePayload.sectors, horizon)) {
       context.waitUntil(revalidateInBackground(context, request, env, horizon, ch));
-      const maxAge = session.regular ? 300 : 1800;
+      const maxAge = hubEdgeMaxAge();
       return new Response(JSON.stringify(stalePayload), {
-        headers: sectorResponseHeaders(ch, horizon, 'STALE', maxAge),
+        headers: sectorResponseHeaders(ch, horizon, 'STALE', maxAge, anchor),
       });
     }
   }

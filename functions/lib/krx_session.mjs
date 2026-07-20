@@ -105,6 +105,53 @@ export function isKrxRegularSession(now) {
 }
 
 /**
+ * Seconds until the next KRX regular open (weekday 09:00 KST), strictly after `now`.
+ * Used so closed-session edge caches expire before the next trading day starts.
+ * @param {Date} [now]
+ * @returns {number}
+ */
+export function secondsUntilNextSessionOpen(now = new Date()) {
+  for (let i = 0; i <= 8; i++) {
+    const probe = new Date(now.getTime() + i * 86400000);
+    const p = kstDateParts(probe);
+    if (p.weekday < 1 || p.weekday > 5) continue;
+    const ymd = `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`;
+    const openMs = new Date(`${ymd}T09:00:00+09:00`).getTime();
+    if (openMs > now.getTime()) {
+      return Math.max(1, Math.ceil((openMs - now.getTime()) / 1000));
+    }
+  }
+  return 3600;
+}
+
+/**
+ * Cloudflare / browser Cache-Control max-age for market data.
+ * Regular session: short TTL. Closed: never outlive the next 09:00 KST open
+ * (optionally capped via closedMax for hub Cache API entries).
+ * @param {Date} [now]
+ * @param {{ regularMax?: number, closedMax?: number|null }} [opts]
+ */
+export function edgeCacheMaxAgeSeconds(now = new Date(), opts = {}) {
+  const regularMax = opts.regularMax != null ? opts.regularMax : 300;
+  const closedMax = Object.prototype.hasOwnProperty.call(opts, 'closedMax') ? opts.closedMax : null;
+  if (krxSessionInfo(now).regular) return regularMax;
+  const untilOpen = secondsUntilNextSessionOpen(now);
+  if (closedMax == null) return Math.max(60, untilOpen);
+  return Math.max(60, Math.min(closedMax, untilOpen));
+}
+
+/**
+ * Append KST trading-day anchor to a Cache API path so a new weekday never
+ * reuses the previous day's edge entry.
+ * @param {string} basePath
+ * @param {Date} [now]
+ */
+export function tradingDayCachePath(basePath, now = new Date()) {
+  const base = String(basePath || '').replace(/\/+$/, '');
+  return `${base}/${kstAnchorYmd(now)}`;
+}
+
+/**
  * Pure wall-clock session check: KST weekday within 09:00–15:30, ignoring the
  * holiday calendar. Used where Naver's own trade marker is the source of truth
  * for holiday detection (so the calendar can never go stale).

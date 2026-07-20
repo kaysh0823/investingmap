@@ -6,13 +6,15 @@
 import { buildKrxRsSnapshot } from '../lib/krx_rs.mjs';
 import { getAuthKey } from '../lib/krx_yoy.mjs';
 import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
+import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 import {
+  anchoredCachePath,
   corsHeaders,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_PATH = '/api/hub_rs_snapshot/cache/v1';
+const CACHE_BASE = '/api/hub_rs_snapshot/cache/v2';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -26,9 +28,10 @@ export async function onRequest(context) {
 
   const url = new URL(request.url);
   const nocache = url.searchParams.get('nocache') === '1';
+  const cachePath = anchoredCachePath(CACHE_BASE);
 
   if (!nocache) {
-    const hit = await readHubCache(CACHE_PATH, url.origin);
+    const hit = await readHubCache(cachePath, url.origin);
     if (hit) {
       const headers = new Headers(hit.headers);
       for (const [k, v] of Object.entries(ch)) headers.set(k, v);
@@ -44,16 +47,17 @@ export async function onRequest(context) {
       if (authKey) snapshot = await buildKrxRsSnapshot(authKey);
     }
     const payload = snapshot || { quotes: {}, source: 'missing' };
+    const maxAge = edgeCacheMaxAgeSeconds(undefined, { regularMax: 21600, closedMax: 21600 });
     const response = new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
         'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': 'public, max-age=21600',
+        'Cache-Control': `public, max-age=${maxAge}`,
         'X-Hub-Cache': 'MISS',
       },
     });
     if (!nocache && payload.quotes && Object.keys(payload.quotes).length > 500) {
-      putHubCache(context, CACHE_PATH, url.origin, response);
+      putHubCache(context, cachePath, url.origin, response);
     }
     return response;
   } catch (e) {

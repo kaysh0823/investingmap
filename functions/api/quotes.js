@@ -6,7 +6,7 @@
  */
 
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
-import { krxSessionInfo } from '../lib/krx_session.mjs';
+import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 
 function normalizeTicker(t) {
@@ -174,7 +174,9 @@ export async function onRequest(context) {
       };
     }
 
-    const maxAge = session.regular ? 300 : 86400;
+    // Closed session: expire by next KRX 09:00 so a long max-age cannot hide
+    // the next trading day's Supabase sync behind yesterday's CDN entry.
+    const maxAge = edgeCacheMaxAgeSeconds();
     return new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
