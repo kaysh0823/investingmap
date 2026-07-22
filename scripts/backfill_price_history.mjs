@@ -1,6 +1,7 @@
 /**
- * Backfill stock_price_history: KRX 252 trading days × full KOSPI/KOSDAQ universe → Supabase.
+ * Backfill stock_price_history: KRX trading days × full KOSPI/KOSDAQ universe → Supabase.
  * Reuses tradingDates + fetchMarketDay from functions/lib/krx_yoy.mjs.
+ * Usage: node scripts/backfill_price_history.mjs [--days=260]
  */
 import fs from 'fs';
 import path from 'path';
@@ -8,7 +9,7 @@ import { fileURLToPath } from 'url';
 import { tradingDates, fetchMarketDay } from '../functions/lib/krx_yoy.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const HIST_TRADING_DAYS = 252;
+const HIST_TRADING_DAYS = 260;
 const KRX_DELAY_MS = 200;
 const KRX_MAX_RETRIES = 2;
 const UPSERT_BATCH_SIZE = 500;
@@ -136,10 +137,14 @@ async function main() {
     process.exit(1);
   }
 
-  const dates = tradingDates(HIST_TRADING_DAYS).reverse();
+  const daysArg = process.argv.find((a) => a.startsWith('--days='));
+  const days = daysArg ? Math.max(1, parseInt(daysArg.split('=')[1], 10) || HIST_TRADING_DAYS) : HIST_TRADING_DAYS;
+
+  const dates = tradingDates(days).reverse();
   console.log(`Backfill ${dates.length} trading days → stock_price_history`);
 
   const failedDates = [];
+  const emptyDates = [];
   let datesOk = 0;
   let totalRows = 0;
 
@@ -151,14 +156,15 @@ async function main() {
 
     const fetched = await fetchMarketDayWithRetry(authKey, basDd);
     if (!fetched.ok) {
-      failedDates.push(basDd);
-      console.error(`\n  KRX failed ${basDd}: ${fetched.error?.message || fetched.error}`);
+      // Empty/holiday responses are expected; only hard-fail on upsert errors.
+      emptyDates.push(basDd);
+      console.error(`\n  KRX empty/skip ${basDd}: ${fetched.error?.message || fetched.error}`);
       continue;
     }
 
     const rows = rowsFromMarketDay(fetched.byCode, tradeDate);
     if (!rows.length) {
-      failedDates.push(basDd);
+      emptyDates.push(basDd);
       console.error(`\n  no rows for ${basDd}`);
       continue;
     }
@@ -183,10 +189,14 @@ async function main() {
   console.log('\n=== backfill_price_history summary ===');
   console.log(`dates scheduled:   ${dates.length}`);
   console.log(`dates processed:   ${datesOk}`);
+  console.log(`dates empty/skip:  ${emptyDates.length}`);
   console.log(`dates failed:      ${failedDates.length}`);
   console.log(`total rows upsert: ${totalRows}`);
   console.log(`elapsed:           ${elapsedSec}s`);
 
+  if (emptyDates.length) {
+    console.log(`empty/skip dates: ${emptyDates.join(', ')}`);
+  }
   if (failedDates.length) {
     console.log(`failed dates: ${failedDates.join(', ')}`);
     process.exit(1);
