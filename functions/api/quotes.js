@@ -50,6 +50,7 @@ function mapSupabaseRow(row) {
     high52w: numOrNull(row.high_52w),
     low52w: numOrNull(row.low_52w),
     mcapWon: numOrNull(row.mcap_won),
+    turnoverWon: numOrNull(row.turnover_won),
     per: numOrNull(row.per),
     pbr: numOrNull(row.pbr),
     chg1dPct: numOrNull(row.chg_1d_pct),

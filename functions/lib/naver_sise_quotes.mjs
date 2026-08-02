@@ -67,6 +67,38 @@ function parseMarketCapWon(html) {
   return null;
 }
 
+/**
+ * 당일 거래대금 (원). PC 시세는 보통 '백만' 단위 숫자를 씀.
+ * @param {string} html
+ * @returns {number|null}
+ */
+function parseTurnoverWon(html) {
+  if (!html || typeof html !== 'string') return null;
+  // Header: 거래대금 14,769,098백만
+  const millionM =
+    html.match(/거래대금\s*([\d,]+)\s*백만/) ||
+    html.match(/거래대금[\s\S]{0,80}?([\d,]+)\s*백만/);
+  if (millionM) {
+    const n = parseKoreanNumber(millionM[1]);
+    if (n != null && n > 0) return n * 1e6;
+  }
+  // Table blind span (same million unit as caption 거래대금)
+  const blindM = html.match(
+    /거래대금<\/span>\s*<em[^>]*>\s*<span class="blind">([\d,]+)<\/span>/,
+  );
+  if (blindM) {
+    const n = parseKoreanNumber(blindM[1]);
+    if (n != null && n > 0) return n * 1e6;
+  }
+  // Fallback: 조/억 Korean text next to 거래대금
+  const koreanM = html.match(/거래대금[\s\S]{0,80}?([\d,.조억\s]+)/);
+  if (koreanM) {
+    const fromKorean = parseMarketCapKoreanText(koreanM[1]);
+    if (fromKorean != null) return fromKorean;
+  }
+  return null;
+}
+
 function mcapWonPrecision(won) {
   if (won == null || !Number.isFinite(won)) return 0;
   if (won >= 1e12 && won % 1e12 === 0) return 1;
@@ -135,7 +167,7 @@ export function resolveNaverSession({ clockRegular, tradeDate, marketClosed, tod
 
 /**
  * @param {string} html
- * @returns {{ last: number|null, prevClose: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, per: number|null, pbr: number|null, chg1dPct: number|null, tradeDate: string|null, marketClosed: boolean|null }}
+ * @returns {{ last: number|null, prevClose: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, turnoverWon: number|null, per: number|null, pbr: number|null, chg1dPct: number|null, tradeDate: string|null, marketClosed: boolean|null }}
  */
 export function parseNaverSiseHtml(html) {
   if (!html || typeof html !== 'string') {
@@ -145,6 +177,7 @@ export function parseNaverSiseHtml(html) {
       high52w: null,
       low52w: null,
       mcapWon: null,
+      turnoverWon: null,
       per: null,
       pbr: null,
       chg1dPct: null,
@@ -202,9 +235,22 @@ export function parseNaverSiseHtml(html) {
 
   const { per, pbr } = parsePerPbr(html);
   const mcapWon = parseMarketCapWon(html);
+  const turnoverWon = parseTurnoverWon(html);
   const { tradeDate, marketClosed } = parseNaverTradeMeta(html);
 
-  return { last, prevClose, high52w, low52w, mcapWon, per, pbr, chg1dPct, tradeDate, marketClosed };
+  return {
+    last,
+    prevClose,
+    high52w,
+    low52w,
+    mcapWon,
+    turnoverWon,
+    per,
+    pbr,
+    chg1dPct,
+    tradeDate,
+    marketClosed,
+  };
 }
 
 export async function fetchNaverSiseQuote(code, init) {
@@ -232,6 +278,7 @@ export function parseNaverMobileIntegration(json) {
     high52w: null,
     low52w: null,
     mcapWon: null,
+    turnoverWon: null,
     per: null,
     pbr: null,
     chg1dPct: null,
@@ -248,6 +295,9 @@ export function parseNaverMobileIntegration(json) {
     }
   }
   if (byCode.marketValue) out.mcapWon = parseMarketCapKoreanText(byCode.marketValue);
+  if (byCode.accumulatedTradingValue) {
+    out.turnoverWon = parseMarketCapKoreanText(byCode.accumulatedTradingValue);
+  }
   if (byCode.highPriceOf52Weeks) out.high52w = parseKoreanNumber(byCode.highPriceOf52Weeks);
   if (byCode.lowPriceOf52Weeks) out.low52w = parseKoreanNumber(byCode.lowPriceOf52Weeks);
   if (byCode.per) out.per = parseKoreanNumber(byCode.per);
@@ -326,6 +376,9 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
       out.mcapWon = naver.mcapWon;
     }
   }
+  if (naver.turnoverWon != null && (preferLast || out.turnoverWon == null)) {
+    out.turnoverWon = naver.turnoverWon;
+  }
   if (naver.per != null && (preferFundamentals || out.per == null)) out.per = naver.per;
   if (naver.pbr != null && (preferFundamentals || out.pbr == null)) out.pbr = naver.pbr;
   // Trade marker: PC sise is authoritative; prefer any non-null so the session
@@ -350,6 +403,7 @@ export function emptyQuote() {
     high52w: null,
     low52w: null,
     mcapWon: null,
+    turnoverWon: null,
     per: null,
     pbr: null,
     chg1dPct: null,

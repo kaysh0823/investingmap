@@ -165,6 +165,7 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed) 
     high_52w: naver?.high52w ?? null,
     low_52w: naver?.low52w ?? null,
     mcap_won: naver?.mcapWon ?? null,
+    turnover_won: naver?.turnoverWon ?? null,
     per: naver?.per ?? null,
     pbr: naver?.pbr ?? null,
     chg_1d_pct: chg1d,

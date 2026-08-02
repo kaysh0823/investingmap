@@ -6,6 +6,7 @@ create table stock_quotes_latest (
   high_52w         numeric,
   low_52w          numeric,
   mcap_won         numeric,
+  turnover_won     numeric,
   per              numeric,
   pbr              numeric,
   chg_1d_pct       numeric,
