@@ -591,6 +591,202 @@ async function upsertSectorReturns(rows, supabaseUrl, serviceKey) {
   return { upserted: 0, failed: rows.length, body: result.body };
 }
 
+function sectorSumNow(hubIndex, sectorId, quoteByTicker) {
+  const block = hubIndex.sectors && hubIndex.sectors[sectorId];
+  if (!block) return null;
+  let sum = 0;
+  let n = 0;
+  for (const c of block.companies || []) {
+    const key = normalizeTicker(c.ticker);
+    if (!key) continue;
+    const q = quoteByTicker.get(key);
+    const mcap = q && q.mcap_won;
+    if (mcap == null || !Number.isFinite(mcap) || mcap <= 0) continue;
+    sum += mcap;
+    n += 1;
+  }
+  return n > 0 ? sum : null;
+}
+
+function sectorSumFromHistory(hubIndex, sectorId, mcapByTicker) {
+  if (!mcapByTicker || !mcapByTicker.size) return null;
+  const block = hubIndex.sectors && hubIndex.sectors[sectorId];
+  if (!block) return null;
+  let sum = 0;
+  let n = 0;
+  for (const c of block.companies || []) {
+    const key = normalizeTicker(c.ticker);
+    if (!key) continue;
+    const mcap = mcapByTicker.get(key);
+    if (mcap == null || !Number.isFinite(mcap) || mcap <= 0) continue;
+    sum += mcap;
+    n += 1;
+  }
+  return n > 0 ? sum : null;
+}
+
+async function loadIntradaySectorIds(supabaseUrl, serviceKey, tradeDateDash) {
+  const seen = new Set();
+  let offset = 0;
+  const pageSize = 1000;
+  for (;;) {
+    const url =
+      `${supabaseUrl}/rest/v1/sector_intraday_snapshots` +
+      `?trade_date=eq.${encodeURIComponent(tradeDateDash)}` +
+      `&select=sector_id&limit=${pageSize}&offset=${offset}`;
+    const res = await fetch(url, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      return { ok: false, status: res.status, body, ids: seen };
+    }
+    const rows = await res.json();
+    if (!Array.isArray(rows) || !rows.length) break;
+    for (const row of rows) {
+      if (row && row.sector_id) seen.add(row.sector_id);
+    }
+    if (rows.length < pageSize) break;
+    offset += pageSize;
+  }
+  return { ok: true, ids: seen };
+}
+
+async function insertIntradaySnapshots(rows, supabaseUrl, serviceKey) {
+  if (!rows.length) return { ok: true, upserted: 0 };
+  const res = await fetch(`${supabaseUrl}/rest/v1/sector_intraday_snapshots`, {
+    method: 'POST',
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      'Content-Type': 'application/json',
+      Prefer: 'resolution=merge-duplicates, on_conflict=sector_id,ts',
+    },
+    body: JSON.stringify(rows),
+  });
+  if (res.ok) return { ok: true, upserted: rows.length };
+  const body = await res.text();
+  return { ok: false, upserted: 0, status: res.status, body };
+}
+
+async function pruneIntradaySnapshots(supabaseUrl, serviceKey, keepDates) {
+  const keep = [...new Set((keepDates || []).filter(Boolean))];
+  if (keep.length < 1) return { ok: true };
+  const url =
+    `${supabaseUrl}/rest/v1/sector_intraday_snapshots` +
+    `?trade_date=not.in.(${keep.map((d) => encodeURIComponent(d)).join(',')})`;
+  const res = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      Prefer: 'return=minimal',
+    },
+  });
+  if (res.ok) return { ok: true };
+  const body = await res.text();
+  return { ok: false, status: res.status, body };
+}
+
+/**
+ * Regular-session only: seed 0% baseline from previous close sum, append live sumNow,
+ * keep today + previous trading day snapshots.
+ */
+async function syncSectorIntradaySnapshots({
+  hubIndex,
+  quoteByTicker,
+  historyByDate,
+  tradeDateDash,
+  supabaseUrl,
+  serviceKey,
+  now = new Date(),
+}) {
+  if (!tradeDateDash) {
+    console.log('  sector intraday snapshots: skip (no trade date)');
+    return { seeded: 0, appended: 0, pruned: false };
+  }
+
+  const dates = tradingDates(10, now);
+  const todayDd = dashToBasDd(tradeDateDash);
+  let prevDash = null;
+  const idx = dates.indexOf(todayDd);
+  if (idx >= 0 && idx + 1 < dates.length) prevDash = basDdToDash(dates[idx + 1]);
+  else if (dates.length) {
+    const before = dates.filter((d) => d < todayDd);
+    if (before.length) prevDash = basDdToDash(before[0]);
+  }
+
+  let prevMap = prevDash ? historyByDate.get(prevDash) : null;
+  if (prevDash && (!prevMap || prevMap.size < 50)) {
+    const loaded = await loadHistoryMcapByDates(supabaseUrl, serviceKey, [prevDash]);
+    prevMap = loaded.get(prevDash) || new Map();
+    if (prevMap.size) historyByDate.set(prevDash, prevMap);
+  }
+
+  const existing = await loadIntradaySectorIds(supabaseUrl, serviceKey, tradeDateDash);
+  if (!existing.ok) {
+    console.warn(
+      `  sector intraday snapshots: table missing or fetch failed (${existing.status}): ` +
+      `${(existing.body || '').slice(0, 160)}`,
+    );
+    return { seeded: 0, appended: 0, pruned: false, missingTable: true };
+  }
+
+  const seedTs = `${tradeDateDash}T09:00:00+09:00`;
+  const liveTs = now.toISOString();
+  const rows = [];
+  let seeded = 0;
+  let appended = 0;
+
+  for (const sid of SECTOR_ORDER) {
+    const sumNow = sectorSumNow(hubIndex, sid, quoteByTicker);
+    if (sumNow == null) continue;
+
+    if (!existing.ids.has(sid) && prevMap) {
+      const seedSum = sectorSumFromHistory(hubIndex, sid, prevMap);
+      if (seedSum != null) {
+        rows.push({
+          sector_id: sid,
+          ts: seedTs,
+          mcap_sum: seedSum,
+          trade_date: tradeDateDash,
+        });
+        seeded += 1;
+      }
+    }
+    rows.push({
+      sector_id: sid,
+      ts: liveTs,
+      mcap_sum: sumNow,
+      trade_date: tradeDateDash,
+    });
+    appended += 1;
+  }
+
+  if (rows.length) {
+    const result = await insertIntradaySnapshots(rows, supabaseUrl, serviceKey);
+    if (!result.ok) {
+      console.error(
+        `  sector intraday insert failed (${result.status}): ${(result.body || '').slice(0, 200)}`,
+      );
+      return { seeded: 0, appended: 0, pruned: false, failed: true };
+    }
+  }
+
+  const keep = [tradeDateDash];
+  if (prevDash) keep.push(prevDash);
+  const prune = await pruneIntradaySnapshots(supabaseUrl, serviceKey, keep);
+  if (!prune.ok) {
+    console.warn(`  sector intraday prune failed (${prune.status}): ${(prune.body || '').slice(0, 160)}`);
+  }
+
+  console.log(
+    `  sector intraday snapshots: seeded=${seeded} appended=${appended}` +
+    ` trade_date=${tradeDateDash} prev=${prevDash || 'n/a'} prune=${prune.ok ? 'ok' : 'fail'}`,
+  );
+  return { seeded, appended, pruned: !!prune.ok };
+}
+
 /**
  * Consensus trade marker across all fetched Naver quotes.
  * Uses the most common tradeDate and the majority marketClosed among quotes on
@@ -718,6 +914,20 @@ async function main() {
   for (const r of sectorRows) {
     const vals = SECTOR_HORIZONS.map((f) => `${f.out}=${r[f.out] == null ? 'null' : r[f.out]}`).join(' ');
     console.log(`  ${r.sector_id}: ${vals}`);
+  }
+
+  if (regularSession) {
+    await syncSectorIntradaySnapshots({
+      hubIndex,
+      quoteByTicker,
+      historyByDate: historyCtx.historyByDate,
+      tradeDateDash: consensus.tradeDate || todayYmdDash,
+      supabaseUrl,
+      serviceKey,
+      now: new Date(),
+    });
+  } else {
+    console.log('  sector intraday snapshots: skip (not regular session)');
   }
 
   const elapsedSec = ((Date.now() - started) / 1000).toFixed(1);

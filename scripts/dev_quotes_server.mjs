@@ -13,6 +13,7 @@ import {
 } from '../functions/lib/naver_sise_quotes.mjs';
 import { isKrxRegularSession, naverRefreshMs } from '../functions/lib/krx_session.mjs';
 import { buildHubDashboard, buildHubSectors, buildHubTop10, buildHubRsTop10Payload } from '../functions/lib/hub_dashboard_core.mjs';
+import { buildHubSectorTrendPayload } from '../functions/lib/hub_sector_trend.mjs';
 
 const PORT = Number(process.env.PORT) || 8788;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -177,6 +178,30 @@ const server = http.createServer(async (req, res) => {
     } catch (e) {
       res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({ error: 'hub_sectors_failed', message: String(e.message || e) }));
+    }
+    return;
+  }
+  if (req.method === 'GET' && url.pathname === '/api/hub_sector_trend') {
+    try {
+      const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
+      const hubIndex = JSON.parse(raw);
+      const horizon = url.searchParams.get('horizon') || '20d';
+      const env = {
+        ...(process.env.SUPABASE_URL ? { SUPABASE_URL: process.env.SUPABASE_URL } : {}),
+        ...(process.env.SUPABASE_ANON_KEY ? { SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY } : {}),
+      };
+      const payload = await buildHubSectorTrendPayload(hubIndex, env, horizon);
+      const body = {
+        ...payload.trends,
+        horizon: payload.horizon,
+        asOf: payload.asOf,
+        tradeDate: payload.tradeDate,
+      };
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify(body));
+    } catch (e) {
+      res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'hub_sector_trend_failed', message: String(e.message || e) }));
     }
     return;
   }

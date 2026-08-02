@@ -38,6 +38,10 @@
   // fallback). Live Naver overlay must not run before this, or it can paint
   // client-computed 1D ahead of the authoritative merge and cause a flicker.
   var sectorsAuthFetched = false;
+  // horizon param → { sectorId: [{t,v}, ...] }
+  var trendByHorizon = {};
+  var trendsLoadingHorizon = null;
+  var trendFetchInFlight = {};
   var top10Ready = false;
   var rsTop10Ready = false;
   var moversReady = false;
@@ -342,7 +346,13 @@
       stopHubSectorPoll();
       return Promise.resolve();
     }
-    return fetchSectorsHorizon(lang, pulseHorizonKey, { bust: true, quiet: true }).then(function () {
+    var tasks = [fetchSectorsHorizon(lang, pulseHorizonKey, { bust: true, quiet: true })];
+    // 1D sparkline accumulates intraday snapshots — refresh with sector poll.
+    if (pulseHorizonKey === 'return1dPct') {
+      delete trendByHorizon['1d'];
+      tasks.push(fetchTrends(lang, 'return1dPct', { bust: true, quiet: true }));
+    }
+    return Promise.all(tasks).then(function () {
       if (!shouldPollHubSectors()) stopHubSectorPoll();
     });
   }
@@ -548,18 +558,40 @@
     return 'is-flat';
   }
 
-  function sparklineSvg(pct, loading) {
-    if (loading) {
-      return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
-        '<polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg>';
+  function sparklineSvg(series, pct, loading) {
+    var placeholder =
+      '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
+      '<polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg>';
+    if (loading || !series || series.length < 2) return placeholder;
+    var vals = [];
+    for (var i = 0; i < series.length; i++) {
+      var v = series[i] && series[i].v;
+      if (v == null || !isFinite(v)) continue;
+      vals.push(v);
     }
-    var up = pct != null && pct >= 0;
-    var color = pct == null ? '#8b949e' : up ? '#3fb950' : '#f85149';
-    var pts = up
-      ? '2,18 10,14 18,16 26,10 34,12 42,6 50,8 54,4'
-      : '2,6 10,10 18,8 26,14 34,12 42,16 50,14 54,18';
+    if (vals.length < 2) return placeholder;
+    var min = vals[0];
+    var max = vals[0];
+    for (var j = 1; j < vals.length; j++) {
+      if (vals[j] < min) min = vals[j];
+      if (vals[j] > max) max = vals[j];
+    }
+    var span = max - min;
+    if (!(span > 0)) span = 1;
+    var w = 56;
+    var h = 22;
+    var pad = 2;
+    var pts = [];
+    for (var k = 0; k < vals.length; k++) {
+      var x = pad + (k / (vals.length - 1)) * (w - 2 * pad);
+      var y = pad + (1 - (vals[k] - min) / span) * (h - 2 * pad);
+      pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+    }
+    var end = vals[vals.length - 1];
+    var colorBasis = pct != null && isFinite(pct) ? pct : end;
+    var color = colorBasis == null ? '#8b949e' : colorBasis >= 0 ? '#3fb950' : '#f85149';
     return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
-      '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts + '"/></svg>';
+      '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts.join(' ') + '"/></svg>';
   }
 
   function formatPosition(n) {
@@ -663,6 +695,51 @@
     if (j.asOf) dashboardData.asOf = j.asOf;
   }
 
+  function extractTrendMap(j) {
+    if (!j || j.error) return {};
+    if (j.trends && typeof j.trends === 'object') return j.trends;
+    var meta = { horizon: 1, asOf: 1, tradeDate: 1, regularSession: 1, error: 1, message: 1 };
+    var out = {};
+    for (var k in j) {
+      if (!Object.prototype.hasOwnProperty.call(j, k) || meta[k]) continue;
+      if (Array.isArray(j[k])) out[k] = j[k];
+    }
+    return out;
+  }
+
+  function hasTrendData(retKey) {
+    var h = retKeyToHorizonParam(retKey);
+    var map = trendByHorizon[h];
+    if (!map) return false;
+    return Object.keys(map).some(function (sid) {
+      return map[sid] && map[sid].length >= 2;
+    });
+  }
+
+  function fetchTrends(lang, retKey, opts) {
+    opts = opts || {};
+    var horizonParam = retKeyToHorizonParam(retKey);
+    if (trendFetchInFlight[horizonParam]) return trendFetchInFlight[horizonParam];
+    var url = hubApiUrl('/api/hub_sector_trend?horizon=' + encodeURIComponent(horizonParam));
+    if (!url) return Promise.resolve();
+    if (opts.bust) url += '&_t=' + Date.now();
+    if (!opts.quiet) trendsLoadingHorizon = horizonParam;
+    trendFetchInFlight[horizonParam] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
+      .then(function (j) {
+        if (j && j.error) throw new Error(j.error);
+        trendByHorizon[horizonParam] = extractTrendMap(j);
+      })
+      .catch(function () {
+        if (!trendByHorizon[horizonParam]) trendByHorizon[horizonParam] = {};
+      })
+      .then(function () {
+        delete trendFetchInFlight[horizonParam];
+        if (trendsLoadingHorizon === horizonParam) trendsLoadingHorizon = null;
+        renderPulse(lang);
+      });
+    return trendFetchInFlight[horizonParam];
+  }
+
   function bindPulseTabs(wrap, lang) {
     if (!wrap) return;
     var tabs = wrap.querySelectorAll('.hub-pulse-tab');
@@ -674,6 +751,11 @@
         renderPulse(lang);
         if (!hasHorizonData(key)) {
           fetchSectorsHorizon(lang, key);
+        }
+        if (!hasTrendData(key)) {
+          fetchTrends(lang, key);
+        } else {
+          renderPulse(lang);
         }
       });
     }
@@ -706,6 +788,9 @@
         block.companies.reduce(function (s, c) { return s + (c.mcapWon || 0); }, 0);
       var weightPct = pulse.weightPct != null ? pulse.weightPct : (local[sid] ? local[sid].weightPct : 0);
       var isLoading = !sectorsReady || (sectorsLoadingHorizon === retKey && retPct == null);
+      var horizonParam = retKeyToHorizonParam(retKey);
+      var series = (trendByHorizon[horizonParam] || {})[sid] || null;
+      var sparkLoading = isLoading || (trendsLoadingHorizon === horizonParam && !(series && series.length >= 2));
       var cls = 'hub-pulse-card-ret is-flat';
       var retText;
       if (isLoading) {
@@ -726,7 +811,7 @@
       return '<a class="hub-pulse-card" href="' + href + '">' +
         '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">' + (meta.icon || '') + '</span><span>' + label + '</span></div>' +
         '<div class="' + cls + '">' + retText + '</div>' +
-        sparklineSvg(retPct, isLoading) +
+        sparklineSvg(series, retPct, sparkLoading) +
         mcapBlock +
         '</a>';
     }).join('');
@@ -1126,7 +1211,8 @@
 
   function fetchDashboardAndRender(lang, sectorPromise) {
     var sectors = sectorPromise || fetchSectors(lang);
-    return Promise.all([sectors, fetchTop10(lang), fetchRsTop10(lang), fetchMovers(lang)]).then(function () {
+    var trends = fetchTrends(lang, pulseHorizonKey);
+    return Promise.all([sectors, trends, fetchTop10(lang), fetchRsTop10(lang), fetchMovers(lang)]).then(function () {
       if (!hasHorizonData(pulseHorizonKey)) {
         return fetchSectorsHorizon(lang, pulseHorizonKey);
       }
