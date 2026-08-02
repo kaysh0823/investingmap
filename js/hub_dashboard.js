@@ -126,6 +126,8 @@
       keyPlayers: '대표 종목',
       sessionLive: '10분 지연',
       sessionClosed: '장마감',
+      rankNew: 'NEW',
+      rankFlat: '-',
     },
     en: {
       pulseTitle: 'Sector performance',
@@ -161,6 +163,8 @@
       keyPlayers: 'Key companies',
       sessionLive: '~10m delayed',
       sessionClosed: 'Closed',
+      rankNew: 'NEW',
+      rankFlat: '-',
     },
   };
 
@@ -191,8 +195,9 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v15')) return;
-    var oldCss = document.getElementById('im-hub-dashboard-css-v14')
+    if (document.getElementById('im-hub-dashboard-css-v16')) return;
+    var oldCss = document.getElementById('im-hub-dashboard-css-v15')
+      || document.getElementById('im-hub-dashboard-css-v14')
       || document.getElementById('im-hub-dashboard-css-v13')
       || document.getElementById('im-hub-dashboard-css-v12')
       || document.getElementById('im-hub-dashboard-css-v11')
@@ -239,6 +244,13 @@
       '.hub-top-item{display:block;text-decoration:none;color:inherit;padding:6px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);transition:border-color .15s,background .15s}' +
       '.hub-top-item:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface2))}' +
       '.hub-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:4px}' +
+      '.hub-top-rank{flex-shrink:0;width:1.15em;font-size:10px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--text-muted);line-height:1.35;text-align:right}' +
+      '.hub-top-delta{flex-shrink:0;min-width:1.6em;font-size:9px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.35;text-align:center}' +
+      '.hub-top-delta.is-up{color:#3fb950}' +
+      '.hub-top-delta.is-down{color:#f85149}' +
+      '.hub-top-delta.is-new{color:var(--accent)}' +
+      '.hub-top-delta.is-flat{color:var(--text-muted)}' +
+      '.hub-top-meta{flex:1;min-width:0}' +
       '.hub-top-name{font-size:11px;font-weight:700;color:var(--text);line-height:1.2;word-break:keep-all}' +
       '.hub-top-ticker{font-size:9px;color:var(--text-muted);margin-top:2px;font-family:ui-monospace,monospace}' +
       '.hub-top-sector{font-size:8px;font-weight:600;color:var(--accent);margin-top:2px}' +
@@ -272,7 +284,7 @@
       '}'
     ;
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v15';
+    el.id = 'im-hub-dashboard-css-v16';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -568,6 +580,28 @@
     if (n == null || !isFinite(n)) return I18N[lang].noData;
     var sign = n > 0 ? '+' : '';
     return sign + n.toFixed(2) + '%';
+  }
+
+  /** rankDelta: number | 'NEW' | null → { text, cls } */
+  function formatRankDelta(delta, lang) {
+    var labels = t(lang);
+    if (delta === 'NEW' || delta === 'new') {
+      return { text: labels.rankNew || 'NEW', cls: 'is-new' };
+    }
+    if (delta == null || delta === '' || !isFinite(delta)) {
+      return { text: labels.rankFlat || '-', cls: 'is-flat' };
+    }
+    var n = Number(delta);
+    if (n === 0) return { text: labels.rankFlat || '-', cls: 'is-flat' };
+    if (n > 0) return { text: '\u25B2' + n, cls: 'is-up' };
+    return { text: '\u25BC' + Math.abs(n), cls: 'is-down' };
+  }
+
+  function rankBadgeHtml(row, lang) {
+    var rank = row && row.rank != null && isFinite(row.rank) ? String(row.rank) : '';
+    var delta = formatRankDelta(row && row.rankDelta, lang);
+    return '<span class="hub-top-rank" aria-hidden="true">' + (rank || '–') + '</span>' +
+      '<span class="hub-top-delta ' + delta.cls + '">' + delta.text + '</span>';
   }
 
   function returnClass(n) {
@@ -897,7 +931,8 @@
       var href = hubTop10CompanyHref(row, lang);
       return '<li><a class="hub-top-item" href="' + href + '">' +
         '<div class="hub-top-row">' +
-        '<div><div class="hub-top-name">' + name + '</div>' +
+        rankBadgeHtml(row, lang) +
+        '<div class="hub-top-meta"><div class="hub-top-name">' + name + '</div>' +
         '<div class="hub-top-ticker">' + row.ticker + '</div>' +
         (sectorLabel ? '<div class="hub-top-sector">' + sectorLabel + '</div>' : '') +
         '</div>' +
@@ -929,7 +964,8 @@
       var href = hubTop10CompanyHref(row, lang);
       return '<li><a class="hub-top-item" href="' + href + '">' +
         '<div class="hub-top-row">' +
-        '<div><div class="hub-top-name">' + name + '</div>' +
+        rankBadgeHtml(row, lang) +
+        '<div class="hub-top-meta"><div class="hub-top-name">' + name + '</div>' +
         '<div class="hub-top-ticker">' + row.ticker + '</div>' +
         (sectorLabel ? '<div class="hub-top-sector">' + sectorLabel + '</div>' : '') +
         '</div>' +
@@ -960,7 +996,8 @@
       var val = valueFn(row);
       return '<li><a class="hub-top-item" href="' + href + '">' +
         '<div class="hub-top-row">' +
-        '<div><div class="hub-top-name">' + name + '</div>' +
+        rankBadgeHtml(row, lang) +
+        '<div class="hub-top-meta"><div class="hub-top-name">' + name + '</div>' +
         '<div class="hub-top-ticker">' + row.ticker + '</div>' +
         (sectorLabel ? '<div class="hub-top-sector">' + sectorLabel + '</div>' : '') +
         '</div>' +

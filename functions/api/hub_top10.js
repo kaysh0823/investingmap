@@ -12,6 +12,7 @@ import {
   loadHubIndexFromRequest,
   normalizeTicker,
 } from '../lib/hub_dashboard_core.mjs';
+import { enrichTopRowsWithRankDelta } from '../lib/hub_rank_daily.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   anchoredCachePath,
@@ -26,7 +27,7 @@ import {
   numOrNull,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_top10/cache/v5';
+const CACHE_BASE = '/api/hub_top10/cache/v6';
 
 async function buildHubTop10FromSupabase(hubIndex, config, session) {
   const rows = await fetchSupabaseJson(
@@ -62,6 +63,7 @@ async function buildHubTop10FromSupabase(hubIndex, config, session) {
     source: 'supabase',
   });
   if (!payload.top10 || !payload.top10.length) return null;
+  payload.top10 = await enrichTopRowsWithRankDelta(config, 'position', payload.top10, payload.asOf);
   return payload;
 }
 
@@ -77,7 +79,11 @@ async function buildTop10Payload(request, env, session) {
     }
   }
   const hubIndex = await loadHubIndexFromRequest(request, env);
-  return buildHubTop10(hubIndex, env, request);
+  const legacy = await buildHubTop10(hubIndex, env, request);
+  if (legacy && legacy.top10) {
+    legacy.top10 = await enrichTopRowsWithRankDelta(config, 'position', legacy.top10, legacy.asOf);
+  }
+  return legacy;
 }
 
 export async function onRequest(context) {

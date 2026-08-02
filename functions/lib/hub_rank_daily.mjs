@@ -1,0 +1,258 @@
+/**
+ * Hub daily rank snapshots + Top10 rank/rankDelta enrichment.
+ * Metrics: mcap | rs | position | turnover | gain1d | gain5d
+ * rankDelta = prevRank - todayRank (positive = rose). No prev → 'NEW'.
+ */
+
+import { calcQuotePosition } from '../../lib/quote_position.mjs';
+import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
+import { listHubCompanies, normalizeTicker } from './hub_dashboard_core.mjs';
+
+export const HUB_RANK_METRICS = Object.freeze([
+  'mcap',
+  'rs',
+  'position',
+  'turnover',
+  'gain1d',
+  'gain5d',
+]);
+
+/**
+ * @param {string|null|undefined} isoOrDash
+ * @returns {string|null} YYYY-MM-DD in KST when given ISO, else dash date as-is
+ */
+export function toTradeDateDash(isoOrDash) {
+  if (!isoOrDash || typeof isoOrDash !== 'string') return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(isoOrDash)) return isoOrDash;
+  const d = new Date(isoOrDash);
+  if (!Number.isFinite(d.getTime())) return null;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(d);
+  const y = parts.find((p) => p.type === 'year')?.value;
+  const m = parts.find((p) => p.type === 'month')?.value;
+  const day = parts.find((p) => p.type === 'day')?.value;
+  if (!y || !m || !day) return null;
+  return `${y}-${m}-${day}`;
+}
+
+/**
+ * Rank entries by value descending (null/non-finite excluded). Dense 1..N.
+ * @param {{ ticker: string, value: number|null }[]} entries
+ * @returns {{ ticker: string, rank: number, value: number }[]}
+ */
+export function rankByValueDesc(entries) {
+  const sorted = (entries || [])
+    .filter((e) => e && e.ticker && e.value != null && Number.isFinite(e.value))
+    .slice()
+    .sort((a, b) => b.value - a.value);
+  return sorted.map((e, i) => ({
+    ticker: normalizeTicker(e.ticker) || e.ticker,
+    rank: i + 1,
+    value: e.value,
+  }));
+}
+
+/**
+ * Build full hub_rank_daily rows for all 6 metrics from stock_quotes_latest-shaped rows.
+ * @param {object} hubIndex
+ * @param {object[]} quoteRows supabase row shape (ticker, mcap_won, rs, …)
+ * @param {string} tradeDateDash YYYY-MM-DD
+ */
+export function buildHubRankDailyRows(hubIndex, quoteRows, tradeDateDash) {
+  const companies = listHubCompanies(hubIndex);
+  const hubSet = new Set(
+    companies.map((c) => normalizeTicker(c.ticker)).filter(Boolean),
+  );
+  const byTicker = new Map();
+  for (const row of quoteRows || []) {
+    const key = normalizeTicker(row.ticker);
+    if (!key || !hubSet.has(key)) continue;
+    byTicker.set(key, row);
+  }
+
+  const mcapEntries = [];
+  const rsEntries = [];
+  const positionEntries = [];
+  const turnoverEntries = [];
+  const gain1dEntries = [];
+  const gain5dEntries = [];
+
+  for (const key of hubSet) {
+    const row = byTicker.get(key);
+    if (!row) continue;
+    const mcap = numOrNull(row.mcap_won);
+    if (mcap != null && mcap > 0) mcapEntries.push({ ticker: key, value: mcap });
+
+    const rs = numOrNull(row.rs);
+    if (rs != null) rsEntries.push({ ticker: key, value: rs });
+
+    const last = numOrNull(row.last);
+    const high = numOrNull(row.high_52w);
+    const low = numOrNull(row.low_52w);
+    const pos = calcQuotePosition(last, high, low);
+    if (pos != null) positionEntries.push({ ticker: key, value: pos });
+
+    const turnover = numOrNull(row.turnover_won);
+    if (turnover != null && turnover > 0) turnoverEntries.push({ ticker: key, value: turnover });
+
+    const chg1d = numOrNull(row.chg_1d_pct);
+    if (chg1d != null) gain1dEntries.push({ ticker: key, value: chg1d });
+
+    const ret5d = numOrNull(row.ret_5d_pct);
+    if (ret5d != null) gain5dEntries.push({ ticker: key, value: ret5d });
+  }
+
+  const packs = [
+    ['mcap', mcapEntries],
+    ['rs', rsEntries],
+    ['position', positionEntries],
+    ['turnover', turnoverEntries],
+    ['gain1d', gain1dEntries],
+    ['gain5d', gain5dEntries],
+  ];
+
+  const out = [];
+  for (const [metric, entries] of packs) {
+    for (const r of rankByValueDesc(entries)) {
+      out.push({
+        metric,
+        ticker: r.ticker,
+        trade_date: tradeDateDash,
+        rank: r.rank,
+        value: r.value,
+      });
+    }
+  }
+  return out;
+}
+
+/**
+ * @param {number|null|undefined} todayRank
+ * @param {number|null|undefined} prevRank
+ * @returns {number|'NEW'}
+ */
+export function computeRankDelta(todayRank, prevRank) {
+  if (todayRank == null || !Number.isFinite(todayRank)) return 'NEW';
+  if (prevRank == null || !Number.isFinite(prevRank)) return 'NEW';
+  return prevRank - todayRank;
+}
+
+/**
+ * Attach rank (1-based list position) + rankDelta from previous hub_rank_daily map.
+ * @param {object[]} rows Top10-like rows with ticker
+ * @param {Map<string, number>|null|undefined} prevRankByTicker
+ */
+export function attachListRanks(rows, prevRankByTicker) {
+  const prev = prevRankByTicker || new Map();
+  return (rows || []).map((row, i) => {
+    const rank = i + 1;
+    const key = normalizeTicker(row.ticker) || row.ticker;
+    const prevRank = prev.has(key) ? prev.get(key) : null;
+    return {
+      ...row,
+      rank,
+      rankDelta: computeRankDelta(rank, prevRank),
+    };
+  });
+}
+
+/**
+ * Prefer stored today's ranks when present; else list index.
+ * @param {object[]} rows
+ * @param {Map<string, number>|null} todayRankByTicker
+ * @param {Map<string, number>|null} prevRankByTicker
+ */
+export function attachStoredOrListRanks(rows, todayRankByTicker, prevRankByTicker) {
+  const today = todayRankByTicker || new Map();
+  const prev = prevRankByTicker || new Map();
+  return (rows || []).map((row, i) => {
+    const key = normalizeTicker(row.ticker) || row.ticker;
+    const rank = today.has(key) ? today.get(key) : i + 1;
+    const prevRank = prev.has(key) ? prev.get(key) : null;
+    return {
+      ...row,
+      rank,
+      rankDelta: computeRankDelta(rank, prevRank),
+    };
+  });
+}
+
+/**
+ * Latest trade_date in hub_rank_daily strictly before `beforeDash`.
+ * @param {{ url: string, anonKey: string }} config
+ * @param {string} beforeDash
+ * @returns {Promise<string|null>}
+ */
+export async function fetchPrevRankTradeDate(config, beforeDash) {
+  if (!config || !beforeDash) return null;
+  const q =
+    `hub_rank_daily?select=trade_date` +
+    `&trade_date=lt.${encodeURIComponent(beforeDash)}` +
+    `&order=trade_date.desc&limit=1`;
+  const rows = await fetchSupabaseJson(config, q);
+  if (!rows.length || !rows[0].trade_date) return null;
+  return String(rows[0].trade_date).slice(0, 10);
+}
+
+/**
+ * @param {{ url: string, anonKey: string }} config
+ * @param {string} metric
+ * @param {string} tradeDateDash
+ * @param {string[]} tickers
+ * @returns {Promise<Map<string, number>>}
+ */
+export async function fetchRanksForTickers(config, metric, tradeDateDash, tickers) {
+  const map = new Map();
+  const codes = [...new Set((tickers || []).map((t) => normalizeTicker(t)).filter(Boolean))];
+  if (!config || !metric || !tradeDateDash || !codes.length) return map;
+
+  const chunk = 80;
+  for (let i = 0; i < codes.length; i += chunk) {
+    const part = codes.slice(i, i + chunk);
+    const q =
+      `hub_rank_daily?select=ticker,rank` +
+      `&metric=eq.${encodeURIComponent(metric)}` +
+      `&trade_date=eq.${encodeURIComponent(tradeDateDash)}` +
+      `&ticker=in.(${part.join(',')})`;
+    const rows = await fetchSupabaseJson(config, q);
+    for (const row of rows) {
+      const key = normalizeTicker(row.ticker);
+      const rank = numOrNull(row.rank);
+      if (key && rank != null) map.set(key, rank);
+    }
+  }
+  return map;
+}
+
+/**
+ * Enrich Top10-like rows for one metric with rank + rankDelta.
+ * @param {{ url: string, anonKey: string }|null} config
+ * @param {string} metric
+ * @param {object[]} rows
+ * @param {string|null} asOfOrTradeDate
+ */
+export async function enrichTopRowsWithRankDelta(config, metric, rows, asOfOrTradeDate) {
+  if (!rows || !rows.length) return rows || [];
+  if (!config) return attachListRanks(rows, null);
+
+  const todayDash = toTradeDateDash(asOfOrTradeDate) || toTradeDateDash(new Date().toISOString());
+  const tickers = rows.map((r) => r.ticker);
+  let todayMap = new Map();
+  let prevMap = new Map();
+  try {
+    if (todayDash) {
+      todayMap = await fetchRanksForTickers(config, metric, todayDash, tickers);
+      const prevDate = await fetchPrevRankTradeDate(config, todayDash);
+      if (prevDate) {
+        prevMap = await fetchRanksForTickers(config, metric, prevDate, tickers);
+      }
+    }
+  } catch {
+    /* keep list ranks / NEW */
+  }
+  return attachStoredOrListRanks(rows, todayMap.size ? todayMap : null, prevMap);
+}

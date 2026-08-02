@@ -1,7 +1,7 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_movers
- * Hub-listed movers: mcap / RS companion panels — market-cap, 1d gainers,
- * turnover, 5d gainers Top 10. Primary: Supabase. Fallback: hub_index (mcap).
+ * Hub-listed movers: mcap / 1d gainers / turnover / 5d gainers Top 10.
+ * Primary: Supabase. Fallback: hub_index (mcap). Includes rank + rankDelta.
  */
 
 import {
@@ -10,6 +10,7 @@ import {
   hubMoversCacheable,
   loadHubIndexFromRequest,
 } from '../lib/hub_dashboard_core.mjs';
+import { enrichTopRowsWithRankDelta } from '../lib/hub_rank_daily.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   anchoredCachePath,
@@ -23,7 +24,25 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_movers/cache/v3';
+const CACHE_BASE = '/api/hub_movers/cache/v4';
+
+async function enrichMoversRanks(payload, config) {
+  if (!payload) return payload;
+  const asOf = payload.asOf || null;
+  const [mcapTop10, gainers1dTop10, turnoverTop10, gainers5dTop10] = await Promise.all([
+    enrichTopRowsWithRankDelta(config, 'mcap', payload.mcapTop10 || [], asOf),
+    enrichTopRowsWithRankDelta(config, 'gain1d', payload.gainers1dTop10 || [], asOf),
+    enrichTopRowsWithRankDelta(config, 'turnover', payload.turnoverTop10 || [], asOf),
+    enrichTopRowsWithRankDelta(config, 'gain5d', payload.gainers5dTop10 || [], asOf),
+  ]);
+  return {
+    ...payload,
+    mcapTop10,
+    gainers1dTop10,
+    turnoverTop10,
+    gainers5dTop10,
+  };
+}
 
 async function buildMoversFromSupabase(hubIndex, config) {
   const rows = await fetchSupabaseJson(
@@ -33,7 +52,7 @@ async function buildMoversFromSupabase(hubIndex, config) {
   if (!rows.length) return null;
   const payload = buildHubMoversFromSupabaseRows(hubIndex, rows, { source: 'supabase' });
   if (!payload.mcapTop10 || !payload.mcapTop10.length) return null;
-  return payload;
+  return enrichMoversRanks(payload, config);
 }
 
 async function buildMoversPayload(request, env) {
@@ -47,7 +66,7 @@ async function buildMoversPayload(request, env) {
       /* fall through to fallback */
     }
   }
-  return buildHubMoversFallback(hubIndex);
+  return enrichMoversRanks(buildHubMoversFallback(hubIndex), null);
 }
 
 export async function onRequest(context) {

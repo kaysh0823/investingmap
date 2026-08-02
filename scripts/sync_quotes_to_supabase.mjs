@@ -23,6 +23,7 @@ import {
   buildSectorMcapDailyRows,
   upsertSectorMcapDaily,
 } from './lib/sector_mcap_daily.mjs';
+import { buildHubRankDailyRows } from '../functions/lib/hub_rank_daily.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAVER_CONCURRENCY = 4;
@@ -587,6 +588,30 @@ async function prepareSectorHistoryContext(supabaseUrl, serviceKey, now = new Da
 /**
  * Upsert sector_returns rows (PK = sector_id).
  */
+async function upsertHubRankDaily(rows, supabaseUrl, serviceKey) {
+  if (!rows.length) return { ok: true, upserted: 0 };
+  let upserted = 0;
+  for (let i = 0; i < rows.length; i += HISTORY_UPSERT_BATCH) {
+    const batch = rows.slice(i, i + HISTORY_UPSERT_BATCH);
+    const res = await fetch(`${supabaseUrl}/rest/v1/hub_rank_daily`, {
+      method: 'POST',
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'resolution=merge-duplicates, on_conflict=metric,ticker,trade_date',
+      },
+      body: JSON.stringify(batch),
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      return { ok: false, upserted, status: res.status, body };
+    }
+    upserted += batch.length;
+  }
+  return { ok: true, upserted };
+}
+
 async function upsertSectorReturns(rows, supabaseUrl, serviceKey) {
   if (!rows.length) return { upserted: 0, failed: 0, body: null };
   const result = await upsertBatch('sector_returns', rows, supabaseUrl, serviceKey);
@@ -921,8 +946,18 @@ async function main() {
         `  sector_mcap_daily upsert failed (${dailyResult.status}): ${(dailyResult.body || '').slice(0, 200)}`,
       );
     }
+
+    const rankRows = buildHubRankDailyRows(hubIndex, rows, consensus.tradeDate);
+    const rankResult = await upsertHubRankDaily(rankRows, supabaseUrl, serviceKey);
+    if (rankResult.ok) {
+      console.log(`  hub_rank_daily upsert ${rankResult.upserted} rows for ${consensus.tradeDate}`);
+    } else {
+      console.error(
+        `  hub_rank_daily upsert failed (${rankResult.status}): ${(rankResult.body || '').slice(0, 200)}`,
+      );
+    }
   } else {
-    console.log('  sector_mcap_daily: skip (session not closed)');
+    console.log('  sector_mcap_daily / hub_rank_daily: skip (session not closed)');
   }
 
   const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));

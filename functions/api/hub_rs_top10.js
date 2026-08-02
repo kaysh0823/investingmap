@@ -12,6 +12,7 @@ import {
   listHubCompanies,
   normalizeTicker,
 } from '../lib/hub_dashboard_core.mjs';
+import { enrichTopRowsWithRankDelta } from '../lib/hub_rank_daily.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   anchoredCachePath,
@@ -26,7 +27,7 @@ import {
   numOrNull,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_rs_top10/cache/v3';
+const CACHE_BASE = '/api/hub_rs_top10/cache/v4';
 
 /**
  * Load hub-listed rows with non-null rs (ranked). Must not use a tiny global
@@ -65,6 +66,7 @@ async function buildRsTop10FromSupabase(hubIndex, config) {
   if (!rows.length) return null;
   const payload = buildHubRsTop10FromSupabaseRows(hubIndex, rows, { source: 'supabase' });
   if (!payload.top10 || !payload.top10.length) return null;
+  payload.top10 = await enrichTopRowsWithRankDelta(config, 'rs', payload.top10, payload.asOf);
   return payload;
 }
 
@@ -80,7 +82,11 @@ async function buildRsTop10Payload(request, env) {
     }
   }
   const hubIndex = await loadHubIndexFromRequest(request, env);
-  return buildHubRsTop10Payload(hubIndex, env, request);
+  const legacy = await buildHubRsTop10Payload(hubIndex, env, request);
+  if (legacy && legacy.top10) {
+    legacy.top10 = await enrichTopRowsWithRankDelta(config, 'rs', legacy.top10, legacy.asOf);
+  }
+  return legacy;
 }
 
 export async function onRequest(context) {
