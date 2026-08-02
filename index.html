@@ -263,23 +263,27 @@
 
     .hub-dashboard-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(400px, 520px);
+      grid-template-columns: 1fr;
       gap: 20px;
       align-items: start;
       margin-bottom: 24px
     }
 
+    .hub-dashboard-main {
+      min-width: 0;
+      margin-bottom: 0
+    }
+
     .hub-rank-panels {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
       min-width: 0;
       margin-bottom: 0
     }
 
     .hub-rank-panel {
-      position: sticky;
-      top: 16px;
+      position: static;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -291,10 +295,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
       margin: 0;
-      padding: 12px 12px 10px;
+      padding: 10px 8px 8px;
       border: 0;
       background: transparent;
       color: inherit;
@@ -319,24 +323,26 @@
 
     .hub-rank-toggle h2 {
       margin: 0;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--text);
-      line-height: 1.3
+      line-height: 1.3;
+      word-break: keep-all
     }
 
     .hub-rank-toggle-sub {
       margin: 0;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 400;
       color: var(--text-muted);
-      line-height: 1.4;
-      white-space: normal
+      line-height: 1.35;
+      white-space: normal;
+      word-break: keep-all
     }
 
     .hub-rank-chevron {
       flex-shrink: 0;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
       transition: transform .2s ease
     }
@@ -346,7 +352,7 @@
     }
 
     .hub-rank-body {
-      padding: 0 12px 12px
+      padding: 0 8px 8px
     }
 
     .hub-rank-body.is-collapsed {
@@ -354,10 +360,10 @@
     }
 
     .hub-rank-body .hub-side-sub {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
-      line-height: 1.45;
-      margin: 0 0 12px
+      line-height: 1.4;
+      margin: 0 0 8px
     }
 
     .hub-top-list {
@@ -366,20 +372,91 @@
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px
+      gap: 6px
     }
 
-    @media (max-width:1200px) {
+    @media (min-width:769px) {
       .hub-dashboard-row {
-        grid-template-columns: 1fr
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px
       }
 
       .hub-rank-panels {
-        grid-template-columns: 1fr 1fr
+        order: 1;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px
+      }
+
+      .hub-dashboard-main {
+        order: 2
       }
 
       .hub-rank-panel {
         position: static
+      }
+
+      .hub-top-item {
+        padding: 8px;
+        border-radius: 8px
+      }
+
+      .hub-top-row {
+        gap: 6px
+      }
+
+      .hub-top-name {
+        font-size: 12px;
+        line-height: 1.25
+      }
+
+      .hub-top-ticker {
+        font-size: 10px
+      }
+
+      .hub-top-sector {
+        font-size: 9px;
+        margin-top: 3px
+      }
+
+      .hub-top-pos {
+        font-size: 12px
+      }
+    }
+
+    @media (max-width:1200px) and (min-width:769px) {
+      .hub-rank-panels {
+        gap: 8px
+      }
+
+      .hub-rank-toggle {
+        padding: 8px 6px 6px;
+        gap: 6px
+      }
+
+      .hub-rank-toggle h2 {
+        font-size: 12px
+      }
+
+      .hub-rank-toggle-sub {
+        font-size: 9px
+      }
+
+      .hub-rank-body {
+        padding: 0 6px 6px
+      }
+
+      .hub-top-item {
+        padding: 7px 6px
+      }
+
+      .hub-top-name {
+        font-size: 11px
+      }
+
+      .hub-top-pos {
+        font-size: 11px
       }
     }
 
@@ -1814,7 +1891,7 @@
   </footer>
   <script src="js/map_tab_state.js?v=5"></script>
     <script src="js/return_live.js?v=2"></script>
-  <script src="js/hub_dashboard.js?v=39"></script>
+  <script src="js/hub_dashboard.js?v=40"></script>
   <script src="js/im_collapsible.js?v=3"></script>
 <script>
     const T = {
