@@ -279,7 +279,8 @@
       grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 8px;
       min-width: 0;
-      margin-bottom: 0
+      margin-bottom: 0;
+      align-items: start
     }
 
     .hub-rank-panel {
@@ -352,18 +353,15 @@
     }
 
     .hub-rank-body {
-      padding: 0 6px 6px;
-      max-height: min(52vh, 520px);
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch
+      padding: 0 6px 6px
     }
 
     .hub-rank-body.is-collapsed {
-      display: none;
-      max-height: none;
-      overflow: visible
+      display: none
     }
+
+    /* Desktop default open / mobile default closed via JS (data-user-toggled respects toggle).
+       CSS only hides when .is-collapsed is set — no max-height internal scroll. */
 
     .hub-rank-body .hub-side-sub {
       font-size: 10px;
@@ -392,7 +390,8 @@
         order: 1;
         display: grid;
         grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 8px
+        gap: 8px;
+        align-items: start
       }
 
       .hub-dashboard-main {
@@ -1636,6 +1635,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
 
@@ -2040,8 +2068,8 @@
   </footer>
   <script src="js/map_tab_state.js?v=5"></script>
     <script src="js/return_live.js?v=2"></script>
-  <script src="js/hub_dashboard.js?v=43"></script>
-  <script src="js/im_collapsible.js?v=5"></script>
+  <script src="js/hub_dashboard.js?v=44"></script>
+  <script src="js/im_collapsible.js?v=6"></script>
 <script>
     const T = {
       ko: {

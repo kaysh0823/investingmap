@@ -1,12 +1,15 @@
 /**
  * Hub daily rank snapshots + Top20 rank/rankDelta enrichment.
  * Metrics: mcap | rs | position | turnover | gain1d | gain5d
- * rankDelta = prevRank - todayRank (positive = rose). No prev → 'NEW'.
+ *
+ * API `rank` / `rankDelta` are **list positions** (1..HUB_TOP_N), not full-universe
+ * hub_rank_daily ranks. Full-universe rows stay in Supabase for internal use.
+ * rankDelta = prevListRank - todayListRank (positive = rose). Outside Top N yesterday → 'NEW'.
  */
 
 import { calcQuotePosition } from '../../lib/quote_position.mjs';
 import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
-import { listHubCompanies, normalizeTicker } from './hub_dashboard_core.mjs';
+import { HUB_TOP_N, listHubCompanies, normalizeTicker } from './hub_dashboard_core.mjs';
 
 export const HUB_RANK_METRICS = Object.freeze([
   'mcap',
@@ -142,12 +145,12 @@ export function computeRankDelta(todayRank, prevRank) {
 }
 
 /**
- * Attach rank (1-based list position) + rankDelta from previous hub_rank_daily map.
- * @param {object[]} rows Top10-like rows with ticker
- * @param {Map<string, number>|null|undefined} prevRankByTicker
+ * Attach list-position rank (1-based) + rankDelta vs previous **list** ranks.
+ * @param {object[]} rows TopN-like rows with ticker (already sorted)
+ * @param {Map<string, number>|null|undefined} prevListRankByTicker ticker → yesterday list pos (1..N)
  */
-export function attachListRanks(rows, prevRankByTicker) {
-  const prev = prevRankByTicker || new Map();
+export function attachListRanks(rows, prevListRankByTicker) {
+  const prev = prevListRankByTicker || new Map();
   return (rows || []).map((row, i) => {
     const rank = i + 1;
     const key = normalizeTicker(row.ticker) || row.ticker;
@@ -161,10 +164,26 @@ export function attachListRanks(rows, prevRankByTicker) {
 }
 
 /**
- * Prefer stored today's ranks when present; else list index.
- * @param {object[]} rows
- * @param {Map<string, number>|null} todayRankByTicker
- * @param {Map<string, number>|null} prevRankByTicker
+ * Keep only ranks that were inside the displayed Top N list (1..HUB_TOP_N).
+ * Full-universe ranks above N mean "not on yesterday's list" → excluded → NEW.
+ * @param {Map<string, number>|null|undefined} rankByTicker
+ * @param {number} [topN]
+ * @returns {Map<string, number>}
+ */
+export function toListRankMap(rankByTicker, topN = HUB_TOP_N) {
+  const out = new Map();
+  if (!rankByTicker) return out;
+  for (const [key, rank] of rankByTicker) {
+    if (rank != null && Number.isFinite(rank) && rank >= 1 && rank <= topN) {
+      out.set(key, rank);
+    }
+  }
+  return out;
+}
+
+/**
+ * @deprecated Prefer attachListRanks + toListRankMap. Kept for callers that still
+ * want full-universe today ranks (not used for hub TopN API responses).
  */
 export function attachStoredOrListRanks(rows, todayRankByTicker, prevRankByTicker) {
   const today = todayRankByTicker || new Map();
@@ -246,10 +265,12 @@ export async function fetchRanksForTickers(config, metric, tradeDateDash, ticker
 }
 
 /**
- * Enrich Top10-like rows for one metric with rank + rankDelta.
- * Today = max(trade_date) in hub_rank_daily (not calendar/asOf).
- * Prev = max(trade_date) strictly before today. No prev → rankDelta 'NEW'.
- * Always attaches at least list-position rank even if Supabase lookup fails.
+ * Enrich TopN rows with list-position `rank` (1..N) + list-based `rankDelta`.
+ * Does **not** overwrite rank with full-universe hub_rank_daily ranks.
+ *
+ * Prev list rank = hub_rank_daily.rank on the prior trade_date when that rank
+ * was ≤ HUB_TOP_N (same as yesterday's TopN list index). Outside TopN → 'NEW'.
+ * Anchor: max(trade_date) in hub_rank_daily (not calendar/asOf).
  *
  * @param {{ url: string, anonKey: string }|null} config
  * @param {string} metric
@@ -259,7 +280,7 @@ export async function fetchRanksForTickers(config, metric, tradeDateDash, ticker
 export async function enrichTopRowsWithRankDelta(config, metric, rows, _asOfOrTradeDate) {
   if (!rows || !rows.length) return rows || [];
 
-  // Baseline: list order ranks so callers never see bare rows without rank.
+  // Always expose continuous list ranks 1..N in the API response.
   let out = attachListRanks(rows, null);
   if (!config) return out;
 
@@ -270,25 +291,13 @@ export async function enrichTopRowsWithRankDelta(config, metric, rows, _asOfOrTr
       console.warn(`[hub_rank] ${metric}: no hub_rank_daily rows; using list ranks + NEW`);
       return out;
     }
-    const [todayMap, prevDate] = await Promise.all([
-      fetchRanksForTickers(config, metric, latestDash, tickers),
-      fetchPrevRankTradeDate(config, latestDash, metric),
-    ]);
-    let prevMap = new Map();
+    const prevDate = await fetchPrevRankTradeDate(config, latestDash, metric);
+    let prevListMap = new Map();
     if (prevDate) {
-      prevMap = await fetchRanksForTickers(config, metric, prevDate, tickers);
+      const prevUniverse = await fetchRanksForTickers(config, metric, prevDate, tickers);
+      prevListMap = toListRankMap(prevUniverse, HUB_TOP_N);
     }
-    out = attachStoredOrListRanks(
-      rows,
-      todayMap.size ? todayMap : null,
-      prevMap,
-    );
-    // Guarantee rank/rankDelta keys even if maps were empty.
-    out = out.map((row, i) => ({
-      ...row,
-      rank: row.rank != null && Number.isFinite(row.rank) ? row.rank : i + 1,
-      rankDelta: row.rankDelta != null ? row.rankDelta : 'NEW',
-    }));
+    out = attachListRanks(rows, prevListMap);
   } catch (err) {
     console.warn(
       `[hub_rank] ${metric}: enrich failed → list ranks + NEW:`,

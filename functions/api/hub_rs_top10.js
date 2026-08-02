@@ -27,7 +27,7 @@ import {
   numOrNull,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_rs_top10/cache/v6';
+const CACHE_BASE = '/api/hub_rs_top10/cache/v7';
 
 async function withRankDelta(config, metric, rows, asOf) {
   try {

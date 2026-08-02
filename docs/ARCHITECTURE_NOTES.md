@@ -124,7 +124,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
   - 정규화(%) 방식, 끝점이 카드 수익률과 일치
 - **Top20 6개 패널** (순서: 시총 → RS → 주가위치 → 당일거래대금 → 당일상승률 → 5일상승률)
   - API: `/api/hub_movers`(mcap/turnover/gain1d/gain5d), `/api/hub_rs_top10`, `/api/hub_top10`(position)
-  - 각 항목에 `rank`(1~10) + `rankDelta`(▲n/▼n/NEW/-). `hub_rank_daily`의 최신 거래일 기준
+  - 각 항목에 `rank`(리스트 순번 1~20) + `rankDelta`(전일 동일 리스트 순번 대비 ▲n/▼n/NEW/-). `hub_rank_daily` 전종목 순위는 내부 저장용이며 API `rank`에는 쓰지 않음.
   - 데스크탑: 6열 1행 / 모바일: 세로 스택
   - **주의**: rank 조회는 고정 캘린더 날짜가 아니라 **테이블의 max(trade_date)** 기준
 

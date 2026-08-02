@@ -33,13 +33,14 @@
   ];
 
   function syncRankDefaults() {
+    var desktop = window.matchMedia(MQ_DESKTOP).matches;
     RANK_TOGGLES.forEach(function (pair) {
       var btn = document.getElementById(pair[0]);
       var panel = document.getElementById(pair[1]);
       if (!btn || !panel) return;
-      // Top20 lists: default collapsed on desktop + mobile (unless user already toggled).
+      // Desktop default open; mobile default collapsed. Skip if user already toggled.
       if (btn.getAttribute('data-user-toggled') === '1') return;
-      setExpanded(btn, panel, false);
+      setExpanded(btn, panel, desktop);
     });
   }
 

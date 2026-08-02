@@ -24,7 +24,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_movers/cache/v6';
+const CACHE_BASE = '/api/hub_movers/cache/v7';
 
 async function enrichMoversRanks(payload, config) {
   if (!payload) return payload;
