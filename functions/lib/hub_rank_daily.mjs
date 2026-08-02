@@ -182,17 +182,34 @@ export function attachStoredOrListRanks(rows, todayRankByTicker, prevRankByTicke
 }
 
 /**
+ * Latest trade_date in hub_rank_daily (optionally for one metric).
+ * @param {{ url: string, anonKey: string }} config
+ * @param {string|null} [metric]
+ * @returns {Promise<string|null>}
+ */
+export async function fetchLatestRankTradeDate(config, metric = null) {
+  if (!config) return null;
+  let q = `hub_rank_daily?select=trade_date&order=trade_date.desc&limit=1`;
+  if (metric) q += `&metric=eq.${encodeURIComponent(metric)}`;
+  const rows = await fetchSupabaseJson(config, q);
+  if (!rows.length || !rows[0].trade_date) return null;
+  return String(rows[0].trade_date).slice(0, 10);
+}
+
+/**
  * Latest trade_date in hub_rank_daily strictly before `beforeDash`.
  * @param {{ url: string, anonKey: string }} config
  * @param {string} beforeDash
+ * @param {string|null} [metric]
  * @returns {Promise<string|null>}
  */
-export async function fetchPrevRankTradeDate(config, beforeDash) {
+export async function fetchPrevRankTradeDate(config, beforeDash, metric = null) {
   if (!config || !beforeDash) return null;
-  const q =
+  let q =
     `hub_rank_daily?select=trade_date` +
     `&trade_date=lt.${encodeURIComponent(beforeDash)}` +
     `&order=trade_date.desc&limit=1`;
+  if (metric) q += `&metric=eq.${encodeURIComponent(metric)}`;
   const rows = await fetchSupabaseJson(config, q);
   if (!rows.length || !rows[0].trade_date) return null;
   return String(rows[0].trade_date).slice(0, 10);
@@ -230,29 +247,54 @@ export async function fetchRanksForTickers(config, metric, tradeDateDash, ticker
 
 /**
  * Enrich Top10-like rows for one metric with rank + rankDelta.
+ * Today = max(trade_date) in hub_rank_daily (not calendar/asOf).
+ * Prev = max(trade_date) strictly before today. No prev → rankDelta 'NEW'.
+ * Always attaches at least list-position rank even if Supabase lookup fails.
+ *
  * @param {{ url: string, anonKey: string }|null} config
  * @param {string} metric
  * @param {object[]} rows
- * @param {string|null} asOfOrTradeDate
+ * @param {string|null} [_asOfOrTradeDate] ignored for anchor (kept for call-site compat)
  */
-export async function enrichTopRowsWithRankDelta(config, metric, rows, asOfOrTradeDate) {
+export async function enrichTopRowsWithRankDelta(config, metric, rows, _asOfOrTradeDate) {
   if (!rows || !rows.length) return rows || [];
-  if (!config) return attachListRanks(rows, null);
 
-  const todayDash = toTradeDateDash(asOfOrTradeDate) || toTradeDateDash(new Date().toISOString());
+  // Baseline: list order ranks so callers never see bare rows without rank.
+  let out = attachListRanks(rows, null);
+  if (!config) return out;
+
   const tickers = rows.map((r) => r.ticker);
-  let todayMap = new Map();
-  let prevMap = new Map();
   try {
-    if (todayDash) {
-      todayMap = await fetchRanksForTickers(config, metric, todayDash, tickers);
-      const prevDate = await fetchPrevRankTradeDate(config, todayDash);
-      if (prevDate) {
-        prevMap = await fetchRanksForTickers(config, metric, prevDate, tickers);
-      }
+    const latestDash = await fetchLatestRankTradeDate(config, metric);
+    if (!latestDash) {
+      console.warn(`[hub_rank] ${metric}: no hub_rank_daily rows; using list ranks + NEW`);
+      return out;
     }
-  } catch {
-    /* keep list ranks / NEW */
+    const [todayMap, prevDate] = await Promise.all([
+      fetchRanksForTickers(config, metric, latestDash, tickers),
+      fetchPrevRankTradeDate(config, latestDash, metric),
+    ]);
+    let prevMap = new Map();
+    if (prevDate) {
+      prevMap = await fetchRanksForTickers(config, metric, prevDate, tickers);
+    }
+    out = attachStoredOrListRanks(
+      rows,
+      todayMap.size ? todayMap : null,
+      prevMap,
+    );
+    // Guarantee rank/rankDelta keys even if maps were empty.
+    out = out.map((row, i) => ({
+      ...row,
+      rank: row.rank != null && Number.isFinite(row.rank) ? row.rank : i + 1,
+      rankDelta: row.rankDelta != null ? row.rankDelta : 'NEW',
+    }));
+  } catch (err) {
+    console.warn(
+      `[hub_rank] ${metric}: enrich failed → list ranks + NEW:`,
+      err && err.message ? err.message : err,
+    );
+    out = attachListRanks(rows, null);
   }
-  return attachStoredOrListRanks(rows, todayMap.size ? todayMap : null, prevMap);
+  return out;
 }

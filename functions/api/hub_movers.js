@@ -10,7 +10,7 @@ import {
   hubMoversCacheable,
   loadHubIndexFromRequest,
 } from '../lib/hub_dashboard_core.mjs';
-import { enrichTopRowsWithRankDelta } from '../lib/hub_rank_daily.mjs';
+import { enrichTopRowsWithRankDelta, attachListRanks } from '../lib/hub_rank_daily.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   anchoredCachePath,
@@ -24,24 +24,38 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_movers/cache/v4';
+const CACHE_BASE = '/api/hub_movers/cache/v5';
 
 async function enrichMoversRanks(payload, config) {
   if (!payload) return payload;
-  const asOf = payload.asOf || null;
-  const [mcapTop10, gainers1dTop10, turnoverTop10, gainers5dTop10] = await Promise.all([
-    enrichTopRowsWithRankDelta(config, 'mcap', payload.mcapTop10 || [], asOf),
-    enrichTopRowsWithRankDelta(config, 'gain1d', payload.gainers1dTop10 || [], asOf),
-    enrichTopRowsWithRankDelta(config, 'turnover', payload.turnoverTop10 || [], asOf),
-    enrichTopRowsWithRankDelta(config, 'gain5d', payload.gainers5dTop10 || [], asOf),
-  ]);
-  return {
-    ...payload,
-    mcapTop10,
-    gainers1dTop10,
-    turnoverTop10,
-    gainers5dTop10,
-  };
+  try {
+    const [mcapTop10, gainers1dTop10, turnoverTop10, gainers5dTop10] = await Promise.all([
+      enrichTopRowsWithRankDelta(config, 'mcap', payload.mcapTop10 || [], payload.asOf),
+      enrichTopRowsWithRankDelta(config, 'gain1d', payload.gainers1dTop10 || [], payload.asOf),
+      enrichTopRowsWithRankDelta(config, 'turnover', payload.turnoverTop10 || [], payload.asOf),
+      enrichTopRowsWithRankDelta(config, 'gain5d', payload.gainers5dTop10 || [], payload.asOf),
+    ]);
+    return {
+      ...payload,
+      mcapTop10,
+      gainers1dTop10,
+      turnoverTop10,
+      gainers5dTop10,
+    };
+  } catch (err) {
+    console.warn(
+      '[hub_movers] enrichMoversRanks failed:',
+      err && err.message ? err.message : err,
+    );
+    // Still attach list ranks so clients always see rank/rankDelta.
+    return {
+      ...payload,
+      mcapTop10: attachListRanks(payload.mcapTop10 || [], null),
+      gainers1dTop10: attachListRanks(payload.gainers1dTop10 || [], null),
+      turnoverTop10: attachListRanks(payload.turnoverTop10 || [], null),
+      gainers5dTop10: attachListRanks(payload.gainers5dTop10 || [], null),
+    };
+  }
 }
 
 async function buildMoversFromSupabase(hubIndex, config) {
@@ -62,11 +76,15 @@ async function buildMoversPayload(request, env) {
     try {
       const supabase = await buildMoversFromSupabase(hubIndex, config);
       if (supabase) return supabase;
-    } catch {
-      /* fall through to fallback */
+    } catch (err) {
+      console.warn(
+        '[hub_movers] supabase path failed:',
+        err && err.message ? err.message : err,
+      );
     }
   }
-  return enrichMoversRanks(buildHubMoversFallback(hubIndex), null);
+  // Fallback still enrich from hub_rank_daily when config is available.
+  return enrichMoversRanks(buildHubMoversFallback(hubIndex), config);
 }
 
 export async function onRequest(context) {
