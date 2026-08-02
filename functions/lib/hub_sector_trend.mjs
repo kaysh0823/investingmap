@@ -1,12 +1,12 @@
 /**
- * Hub sector sparkline series: normalized mcap-sum return from history (20D+)
- * or intraday snapshots (1D).
+ * Hub sector sparkline series: normalized mcap-sum return from sector_mcap_daily
+ * (20D+) or sector_intraday_snapshots (1D).
  */
-import { SECTOR_ORDER, normalizeTicker } from './hub_dashboard_core.mjs';
+import { SECTOR_ORDER } from './hub_dashboard_core.mjs';
 import { tradingDates, pastDatesFromAnchor } from './krx_yoy.mjs';
 import { kstYmd, kstYmdDash } from './krx_session.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
-import { normalizeSectorHorizon } from './hub_api_cache.mjs';
+import { normalizeSectorHorizon, HORIZON_RET_KEY } from './hub_api_cache.mjs';
 
 export const TREND_LOOKBACK_DAYS = {
   '20d': 20,
@@ -16,6 +16,13 @@ export const TREND_LOOKBACK_DAYS = {
 };
 
 export const SPARKLINE_MAX_POINTS = 30;
+
+const HORIZON_RET_COL = {
+  '20d': 'ret_20d_pct',
+  '50d': 'ret_50d_pct',
+  '120d': 'ret_120d_pct',
+  '250d': 'ret_250d_pct',
+};
 
 function basDdToDash(basDd) {
   if (!basDd || basDd.length !== 8) return basDd || '';
@@ -87,7 +94,6 @@ export function chronoDatesForHorizon(horizon, now = new Date()) {
   const h = normalizeSectorHorizon(horizon);
   const days = TREND_LOOKBACK_DAYS[h];
   if (!days) return { chrono: [], startCandidates: [], endDash: '' };
-  // Need enough weekdays for lookback + holiday fallback window.
   const dates = tradingDates(Math.max(days + 60, 120), now);
   if (!dates.length) return { chrono: [], startCandidates: [], endDash: '' };
   const today = kstYmd(now);
@@ -111,151 +117,134 @@ export function chronoDatesForHorizon(horizon, now = new Date()) {
   };
 }
 
-function sectorMemberTickers(hubIndex, sectorId) {
-  const block = hubIndex && hubIndex.sectors && hubIndex.sectors[sectorId];
-  if (!block) return [];
-  const out = [];
-  const seen = new Set();
-  for (const c of block.companies || []) {
-    const t = normalizeTicker(c.ticker);
-    if (!t || seen.has(t)) continue;
-    seen.add(t);
-    out.push(t);
-  }
-  return out;
-}
-
-function sumMcapForTickers(tickers, mcapByTicker) {
-  let sum = 0;
-  let n = 0;
-  for (const t of tickers) {
-    const m = mcapByTicker.get(t);
-    if (m == null || !Number.isFinite(m) || m <= 0) continue;
-    sum += m;
-    n += 1;
-  }
-  return n > 0 ? sum : null;
-}
-
 /**
- * Paginated history fetch for specific trade dates.
- * @returns {Map<string, Map<string, number>>} tradeDate → ticker → mcap
+ * One range query: sector_mcap_daily for [fromDash, toDash].
+ * @returns {Map<string, Map<string, number>>} sectorId → tradeDate → mcap_sum
  */
-export async function loadHistoryMcapByDates(config, tradeDatesDash) {
-  const out = new Map();
-  for (const d of tradeDatesDash) out.set(d, new Map());
-  if (!config || !tradeDatesDash.length) return out;
+export async function loadSectorMcapDailyRange(config, fromDash, toDash) {
+  const bySector = new Map();
+  for (const sid of SECTOR_ORDER) bySector.set(sid, new Map());
+  if (!config || !fromDash || !toDash) return bySector;
 
-  const pageSize = 1000;
-  for (const d of tradeDatesDash) {
-    let offset = 0;
-    for (;;) {
-      const path =
-        `stock_price_history?trade_date=eq.${encodeURIComponent(d)}` +
-        `&select=ticker,mcap_won&mcap_won=gt.0&limit=${pageSize}&offset=${offset}`;
-      const rows = await fetchSupabaseJson(config, path);
-      if (!rows.length) break;
-      const map = out.get(d);
-      for (const row of rows) {
-        const t = normalizeTicker(row.ticker);
-        const m = numOrNull(row.mcap_won);
-        if (t && m != null && m > 0) map.set(t, m);
-      }
-      if (rows.length < pageSize) break;
-      offset += pageSize;
-    }
-  }
-  return out;
-}
-
-async function loadQuoteMcapMap(config) {
-  const map = new Map();
-  if (!config) return map;
   const pageSize = 1000;
   let offset = 0;
   for (;;) {
-    const rows = await fetchSupabaseJson(
-      config,
-      `stock_quotes_latest?select=ticker,mcap_won&mcap_won=gt.0&limit=${pageSize}&offset=${offset}`,
-    );
+    const path =
+      `sector_mcap_daily?trade_date=gte.${encodeURIComponent(fromDash)}` +
+      `&trade_date=lte.${encodeURIComponent(toDash)}` +
+      `&select=sector_id,trade_date,mcap_sum&order=trade_date.asc` +
+      `&limit=${pageSize}&offset=${offset}`;
+    let rows;
+    try {
+      rows = await fetchSupabaseJson(config, path);
+    } catch {
+      return bySector;
+    }
     if (!rows.length) break;
     for (const row of rows) {
-      const t = normalizeTicker(row.ticker);
-      const m = numOrNull(row.mcap_won);
-      if (t && m != null && m > 0) map.set(t, m);
+      const sid = row.sector_id;
+      const d = row.trade_date;
+      const m = numOrNull(row.mcap_sum);
+      if (!sid || !d || m == null || m <= 0) continue;
+      if (!bySector.has(sid)) bySector.set(sid, new Map());
+      bySector.get(sid).set(d, m);
     }
     if (rows.length < pageSize) break;
     offset += pageSize;
   }
+  return bySector;
+}
+
+async function loadSectorReturnMap(config) {
+  const map = new Map();
+  if (!config) return map;
+  try {
+    const rows = await fetchSupabaseJson(config, 'sector_returns?select=*');
+    for (const row of rows || []) {
+      if (row && row.sector_id) map.set(row.sector_id, row);
+    }
+  } catch {
+    /* optional alignment */
+  }
   return map;
 }
 
-/** First candidate date with enough history rows (skips holidays / thin days). */
-function pickStartDate(startCandidates, historyByDate, minRows = 50) {
+/** First candidate date that has a sector mcap row for most sectors. */
+function pickStartDate(startCandidates, bySector, minSectors = 8) {
   for (const d of startCandidates || []) {
-    const map = historyByDate.get(d);
-    if (map && map.size >= minRows) return d;
+    let n = 0;
+    for (const sid of SECTOR_ORDER) {
+      const m = bySector.get(sid)?.get(d);
+      if (m != null && m > 0) n += 1;
+    }
+    if (n >= minSectors) return d;
   }
   for (const d of startCandidates || []) {
-    const map = historyByDate.get(d);
-    if (map && map.size > 0) return d;
+    for (const sid of SECTOR_ORDER) {
+      const m = bySector.get(sid)?.get(d);
+      if (m != null && m > 0) return d;
+    }
   }
   return startCandidates && startCandidates[0] ? startCandidates[0] : null;
 }
 
 /**
- * Build daily normalized trend map for one horizon (not 1d).
- * @returns {Record<string, {t:string,v:number}[]>}
+ * Build normalized sparkline series from pre-aggregated sector_mcap_daily.
+ * Last point is aligned to sector_returns so the card % and sparkline end match
+ * (pair-exclude returns vs full-sum daily path can otherwise drift).
  */
-export function buildDailyTrendsFromMaps(hubIndex, historyByDate, sampleDates, quoteMcapByTicker, startDate) {
+export function buildDailyTrendsFromSectorDaily(bySector, sampleDates, startDate, sectorReturns, horizon) {
   const trends = {};
   if (!sampleDates.length || !startDate) return trends;
-  const endDate = sampleDates[sampleDates.length - 1];
-  const startMap = historyByDate.get(startDate) || new Map();
-  if (!startMap.size) return trends;
-
-  // Ensure start is first point even if sampling skipped it.
-  const dates = sampleDates[0] === startDate ? sampleDates.slice() : [startDate, ...sampleDates.filter((d) => d > startDate)];
+  const retCol = HORIZON_RET_COL[normalizeSectorHorizon(horizon)];
+  const dates = sampleDates[0] === startDate
+    ? sampleDates.slice()
+    : [startDate, ...sampleDates.filter((d) => d > startDate)];
 
   for (const sid of SECTOR_ORDER) {
-    const members = sectorMemberTickers(hubIndex, sid);
-    if (!members.length) continue;
-
-    const paired = members.filter((t) => {
-      const past = startMap.get(t);
-      const now = quoteMcapByTicker.get(t);
-      return past != null && past > 0 && now != null && now > 0;
-    });
-    if (!paired.length) continue;
-
+    const dayMap = bySector.get(sid);
+    if (!dayMap || !dayMap.size) continue;
     const rows = [];
     for (const d of dates) {
-      const dayMap = historyByDate.get(d) || new Map();
-      let sum;
-      if (d === endDate) {
-        sum = sumMcapForTickers(paired, quoteMcapByTicker);
-      } else {
-        sum = sumMcapForTickers(paired, dayMap);
-      }
-      if (sum == null) continue;
-      rows.push({ t: d, mcap: sum });
+      const m = dayMap.get(d);
+      if (m == null || !(m > 0)) continue;
+      rows.push({ t: d, mcap: m });
     }
-    const series = normalizeMcapSeries(rows);
-    if (series.length >= 2) trends[sid] = series;
+    let series = normalizeMcapSeries(rows);
+    if (series.length < 2) continue;
+    series = downsamplePoints(series, SPARKLINE_MAX_POINTS);
+    if (series.length < 2) continue;
+
+    // Lock endpoint to the same value the hub card shows.
+    if (retCol && sectorReturns) {
+      const card = numOrNull(sectorReturns.get(sid)?.[retCol]);
+      if (card != null) {
+        series[series.length - 1] = { ...series[series.length - 1], v: card };
+      }
+    }
+    trends[sid] = series;
   }
   return trends;
 }
 
-export async function buildDailyHorizonTrends(hubIndex, config, horizon, now = new Date()) {
+export async function buildDailyHorizonTrends(_hubIndex, config, horizon, now = new Date()) {
   const { chrono, startCandidates, endDash } = chronoDatesForHorizon(horizon, now);
   if (chrono.length < 2 && startCandidates.length < 1) return {};
-  const sampleDates = sampleChronoDates(chrono.length >= 2 ? chrono : [startCandidates[0], endDash].filter(Boolean), SPARKLINE_MAX_POINTS);
-  const fetchDates = [...new Set([...sampleDates, ...startCandidates])];
-  const historyByDate = await loadHistoryMcapByDates(config, fetchDates);
-  const startDate = pickStartDate(startCandidates, historyByDate);
+
+  const sampleDates = sampleChronoDates(
+    chrono.length >= 2 ? chrono : [startCandidates[0], endDash].filter(Boolean),
+    SPARKLINE_MAX_POINTS,
+  );
+  const fromDash = [...startCandidates, ...sampleDates].filter(Boolean).sort()[0];
+  const toDash = sampleDates[sampleDates.length - 1] || endDash;
+  if (!fromDash || !toDash) return {};
+
+  const bySector = await loadSectorMcapDailyRange(config, fromDash, toDash);
+  const startDate = pickStartDate(startCandidates, bySector);
   if (!startDate) return {};
-  const quoteMcapByTicker = await loadQuoteMcapMap(config);
-  return buildDailyTrendsFromMaps(hubIndex, historyByDate, sampleDates, quoteMcapByTicker, startDate);
+
+  const sectorReturns = await loadSectorReturnMap(config);
+  return buildDailyTrendsFromSectorDaily(bySector, sampleDates, startDate, sectorReturns, horizon);
 }
 
 /**
@@ -323,4 +312,4 @@ export async function buildHubSectorTrendPayload(hubIndex, env, horizon, now = n
   return { horizon: h, asOf, tradeDate, trends };
 }
 
-export { dashToBasDd, basDdToDash };
+export { dashToBasDd, basDdToDash, HORIZON_RET_KEY };

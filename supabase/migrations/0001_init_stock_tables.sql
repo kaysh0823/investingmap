@@ -54,12 +54,24 @@ create index if not exists sector_intraday_snapshots_trade_date_idx
 create index if not exists sector_intraday_snapshots_sector_trade_idx
   on sector_intraday_snapshots (sector_id, trade_date, ts);
 
+-- Pre-aggregated sector mcap by trade date for hub sparkline trends (20D–250D).
+create table if not exists sector_mcap_daily (
+  sector_id   text not null,
+  trade_date  date not null,
+  mcap_sum    numeric not null,
+  primary key (sector_id, trade_date)
+);
+create index if not exists sector_mcap_daily_trade_date_idx
+  on sector_mcap_daily (trade_date);
+
 alter table stock_quotes_latest enable row level security;
 alter table stock_price_history enable row level security;
 alter table sector_returns enable row level security;
 alter table sector_intraday_snapshots enable row level security;
+alter table sector_mcap_daily enable row level security;
 
 create policy "public read" on stock_quotes_latest for select using (true);
 create policy "public read" on stock_price_history for select using (true);
 create policy "public read" on sector_returns for select using (true);
 create policy "public read" on sector_intraday_snapshots for select using (true);
+create policy "public read" on sector_mcap_daily for select using (true);

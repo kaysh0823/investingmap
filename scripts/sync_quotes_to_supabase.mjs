@@ -19,6 +19,10 @@ import {
   listHubCompanies,
   normalizeTicker,
 } from '../functions/lib/hub_dashboard_core.mjs';
+import {
+  buildSectorMcapDailyRows,
+  upsertSectorMcapDaily,
+} from './lib/sector_mcap_daily.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAVER_CONCURRENCY = 4;
@@ -904,6 +908,21 @@ async function main() {
     serviceKey,
     consensus.tradeDate || todayYmdDash,
   );
+
+  // Session close: persist today's sector mcap sums for multi-day sparklines.
+  if (session.marketClosed === true && consensus.tradeDate) {
+    const mcapRows = buildSectorMcapDailyRows(hubIndex, new Map(rows.map((r) => [r.ticker, r.mcap_won])), consensus.tradeDate);
+    const dailyResult = await upsertSectorMcapDaily(mcapRows, supabaseUrl, serviceKey);
+    if (dailyResult.ok) {
+      console.log(`  sector_mcap_daily upsert ${dailyResult.upserted} rows for ${consensus.tradeDate}`);
+    } else {
+      console.error(
+        `  sector_mcap_daily upsert failed (${dailyResult.status}): ${(dailyResult.body || '').slice(0, 200)}`,
+      );
+    }
+  } else {
+    console.log('  sector_mcap_daily: skip (session not closed)');
+  }
 
   const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));
   const historyCtx = await prepareSectorHistoryContext(supabaseUrl, serviceKey);
