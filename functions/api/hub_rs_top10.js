@@ -1,7 +1,7 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_rs_top10
  * Top-10 Relative Strength.
- * Primary: Supabase stock_quotes_latest (rs desc). Fallback: hub_rs_snapshot / KRX live.
+ * Primary: Supabase stock_quotes_latest (rs desc, hub-filtered). Fallback: hub_rs_snapshot / KRX live.
  */
 
 import {
@@ -9,6 +9,8 @@ import {
   buildHubRsTop10Payload,
   hubRsTop10Cacheable,
   loadHubIndexFromRequest,
+  listHubCompanies,
+  normalizeTicker,
 } from '../lib/hub_dashboard_core.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
@@ -21,15 +23,45 @@ import {
 import {
   fetchSupabaseJson,
   getSupabaseConfig,
+  numOrNull,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_rs_top10/cache/v2';
+const CACHE_BASE = '/api/hub_rs_top10/cache/v3';
+
+/**
+ * Load hub-listed rows with non-null rs (ranked). Must not use a tiny global
+ * limit — non-hub tickers in stock_quotes_latest would crowd out hub Top10.
+ */
+async function loadHubRsRows(hubIndex, config) {
+  const hubSet = new Set(
+    listHubCompanies(hubIndex)
+      .map((c) => normalizeTicker(c.ticker))
+      .filter(Boolean),
+  );
+  const hubRows = [];
+  const pageSize = 1000;
+  let offset = 0;
+  for (;;) {
+    const rows = await fetchSupabaseJson(
+      config,
+      `stock_quotes_latest?select=ticker,rs,as_of` +
+        `&rs=not.is.null&order=rs.desc&limit=${pageSize}&offset=${offset}`,
+    );
+    if (!rows.length) break;
+    for (const row of rows) {
+      const t = normalizeTicker(row.ticker);
+      if (t && hubSet.has(t) && numOrNull(row.rs) != null) hubRows.push(row);
+    }
+    if (rows.length < pageSize) break;
+    offset += pageSize;
+    if (offset > 8000) break;
+  }
+  hubRows.sort((a, b) => (numOrNull(b.rs) || -Infinity) - (numOrNull(a.rs) || -Infinity));
+  return hubRows;
+}
 
 async function buildRsTop10FromSupabase(hubIndex, config) {
-  const rows = await fetchSupabaseJson(
-    config,
-    'stock_quotes_latest?select=ticker,rs,as_of&order=rs.desc.nullslast&limit=10',
-  );
+  const rows = await loadHubRsRows(hubIndex, config);
   if (!rows.length) return null;
   const payload = buildHubRsTop10FromSupabaseRows(hubIndex, rows, { source: 'supabase' });
   if (!payload.top10 || !payload.top10.length) return null;

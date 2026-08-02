@@ -114,42 +114,55 @@ export function buildHubTop10PayloadFromQuoteMap(hubIndex, quoteByTicker, opts =
   };
 }
 
-/** Build hub_rs_top10 rows from Supabase stock_quotes_latest (rs ordered). */
+/** Build hub_rs_top10 rows from Supabase stock_quotes_latest (rs ordered).
+ * `rows` should be hub-filtered (or a pool large enough that hub Top10 is complete);
+ * coverage is counted only among hub listings present in `rows` with non-null rs.
+ */
 export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
   const byTicker = new Map();
   for (const c of listHubCompanies(hubIndex)) {
     const key = normalizeTicker(c.ticker);
     if (key) byTicker.set(key, c);
   }
-  const top10 = [];
+  const rsByTicker = new Map();
   let asOf = opts.asOf || null;
-  for (const row of rows) {
+  for (const row of rows || []) {
     const key = normalizeTicker(row.ticker);
-    const c = key ? byTicker.get(key) : null;
+    if (!key || !byTicker.has(key)) continue;
     const rs = numOrNull(row.rs);
-    if (!c || rs == null) continue;
+    if (rs == null) continue;
     if (row.as_of && !asOf) asOf = row.as_of;
-    top10.push({
-      ticker: c.ticker,
-      name: c.name,
-      nameEn: c.nameEn,
-      sectorId: c.sectorId,
-      mapPath: c.mapPath,
-      rs,
-      rs20: numOrNull(row.rs20),
-      rs50: numOrNull(row.rs50),
-      rs120: numOrNull(row.rs120),
-    });
-    if (top10.length >= 10) break;
+    // Keep highest rs if duplicates appear.
+    const prev = rsByTicker.get(key);
+    if (!prev || rs > prev.rs) {
+      rsByTicker.set(key, {
+        rs,
+        rs20: numOrNull(row.rs20),
+        rs50: numOrNull(row.rs50),
+        rs120: numOrNull(row.rs120),
+      });
+    }
   }
+
+  const ranked = [...rsByTicker.entries()]
+    .map(([key, q]) => {
+      const c = byTicker.get(key);
+      return {
+        ticker: c.ticker,
+        name: c.name,
+        nameEn: c.nameEn,
+        sectorId: c.sectorId,
+        mapPath: c.mapPath,
+        rs: q.rs,
+        rs20: q.rs20,
+        rs50: q.rs50,
+        rs120: q.rs120,
+      };
+    })
+    .sort((a, b) => b.rs - a.rs);
+
   const companies = listHubCompanies(hubIndex);
-  let quotesRanked = 0;
-  for (const c of companies) {
-    const key = normalizeTicker(c.ticker);
-    if (!key) continue;
-    const match = rows.find((r) => normalizeTicker(r.ticker) === key);
-    if (match && numOrNull(match.rs) != null) quotesRanked += 1;
-  }
+  const quotesRanked = ranked.length;
   return {
     asOf: asOf || new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
@@ -160,7 +173,7 @@ export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
     coveragePct: companies.length > 0
       ? Math.round((quotesRanked / companies.length) * 1000) / 10
       : 0,
-    top10,
+    top10: ranked.slice(0, 10),
   };
 }
 
