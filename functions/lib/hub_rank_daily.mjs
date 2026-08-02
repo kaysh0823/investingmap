@@ -1,5 +1,5 @@
 /**
- * Hub daily rank snapshots + Top10 rank/rankDelta enrichment.
+ * Hub daily rank snapshots + Top20 rank/rankDelta enrichment.
  * Metrics: mcap | rs | position | turnover | gain1d | gain5d
  * rankDelta = prevRank - todayRank (positive = rose). No prev → 'NEW'.
  */

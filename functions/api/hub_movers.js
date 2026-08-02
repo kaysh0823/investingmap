@@ -1,6 +1,6 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_movers
- * Hub-listed movers: mcap / 1d gainers / turnover / 5d gainers Top 10.
+ * Hub-listed movers: mcap / 1d gainers / turnover / 5d gainers Top 20.
  * Primary: Supabase. Fallback: hub_index (mcap). Includes rank + rankDelta.
  */
 
@@ -24,7 +24,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_movers/cache/v5';
+const CACHE_BASE = '/api/hub_movers/cache/v6';
 
 async function enrichMoversRanks(payload, config) {
   if (!payload) return payload;

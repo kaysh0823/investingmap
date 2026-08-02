@@ -106,17 +106,17 @@
       pulseColCount: '종목 수',
       pulseLoading: '로딩중…',
       pulseStatusLoading: '계산 중…',
-      topTitle: '주가 위치 Top 10',
+      topTitle: '주가 위치 Top 20',
       topSub: '52주 구간 대비 현재가 — 전 산업 상장사',
-      rsTopTitle: 'RS Top 10',
+      rsTopTitle: 'RS Top 20',
       rsTopSub: 'KRX 전종목 · 20·50·120일 수익률 백분위 평균',
-      mcapTopTitle: '시총 Top 10',
+      mcapTopTitle: '시총 Top 20',
       mcapTopSub: '허브 수록 종목 · KRX 시가총액 기준',
-      turnoverTopTitle: '당일 거래대금 Top 10',
+      turnoverTopTitle: '당일 거래대금 Top 20',
       turnoverTopSub: '허브 수록 종목 · 당일 거래대금 기준',
-      gain1dTopTitle: '당일 상승률 Top 10',
+      gain1dTopTitle: '당일 상승률 Top 20',
       gain1dTopSub: '허브 수록 종목 · 당일 등락률 기준',
-      gain5dTopTitle: '5일 상승률 Top 10',
+      gain5dTopTitle: '5일 상승률 Top 20',
       gain5dTopSub: '허브 수록 종목 · 5거래일 수익률 기준',
       topViewAll: '지도에서 더 보기',
       loading: '시세 불러오는 중…',
@@ -143,17 +143,17 @@
       pulseColCount: 'Companies',
       pulseLoading: 'Loading…',
       pulseStatusLoading: 'Calculating…',
-      topTitle: 'Top 10 — 52-week range',
+      topTitle: 'Top 20 — 52-week range',
       topSub: 'Current price vs 52-week high/low — all sectors',
-      rsTopTitle: 'RS Top 10',
+      rsTopTitle: 'RS Top 20',
       rsTopSub: 'Full KRX · avg of 20/50/120-day return percentiles',
-      mcapTopTitle: 'Market cap Top 10',
+      mcapTopTitle: 'Market cap Top 20',
       mcapTopSub: 'Hub-listed names · by KRX market cap',
-      turnoverTopTitle: 'Turnover Top 10',
+      turnoverTopTitle: 'Turnover Top 20',
       turnoverTopSub: 'Hub-listed names · by session trading value',
-      gain1dTopTitle: '1-day gainers Top 10',
+      gain1dTopTitle: '1-day gainers Top 20',
       gain1dTopSub: 'Hub-listed names · by daily % change',
-      gain5dTopTitle: '5-day gainers Top 10',
+      gain5dTopTitle: '5-day gainers Top 20',
       gain5dTopSub: 'Hub-listed names · by 5-trading-day return',
       topViewAll: 'Browse maps',
       loading: 'Loading quotes…',
@@ -234,7 +234,7 @@
       '.hub-pulse-mcap-label{font-size:9px;font-weight:600;color:var(--text-muted);letter-spacing:.02em;line-height:1.2}' +
       '.hub-pulse-mcap-val{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;word-break:keep-all}' +
       '.hub-pulse-count{font-size:10px;color:var(--text-muted)}' +
-      /* Desktop: Top10 6-col row above industry cards. Mobile order swap in @media. */ +
+      /* Desktop: Top20 6-col row above industry cards. Mobile order swap in @media. */ +
       '.hub-dashboard-row{display:grid;grid-template-columns:1fr;gap:20px;align-items:start;margin-bottom:24px}' +
       '.hub-dashboard-main{margin-bottom:0;min-width:0}' +
       '.hub-rank-panels{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;min-width:0;margin-bottom:0}' +
@@ -915,7 +915,7 @@
     var ranked = dashboardData && dashboardData.top10 ? dashboardData.top10 : [];
 
     if (!top10Ready) {
-      list.innerHTML = skeletonListHtml(10);
+      list.innerHTML = skeletonListHtml(20);
       return;
     }
     if (!ranked.length) {
@@ -948,7 +948,7 @@
     var ranked = dashboardData && dashboardData.rsTop10 ? dashboardData.rsTop10 : [];
 
     if (!rsTop10Ready) {
-      list.innerHTML = skeletonListHtml(10);
+      list.innerHTML = skeletonListHtml(20);
       return;
     }
     if (!ranked.length) {
@@ -980,7 +980,7 @@
     var labels = t(lang);
     ranked = ranked || [];
     if (!ready) {
-      list.innerHTML = skeletonListHtml(10);
+      list.innerHTML = skeletonListHtml(20);
       return;
     }
     if (!ranked.length) {

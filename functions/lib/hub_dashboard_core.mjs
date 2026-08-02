@@ -15,6 +15,9 @@ export { calcQuotePosition };
 
 export const SECTOR_ORDER = ['semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
 
+/** Hub ranking panel list length (mcap / RS / position / turnover / 1d / 5d). */
+export const HUB_TOP_N = 20;
+
 const QUOTE_CONCURRENCY = 24;
 
 export function normalizeTicker(ticker) {
@@ -86,7 +89,7 @@ function buildTop10(hubIndex, quoteByTicker) {
     .sort((a, b) => b.positionPct - a.positionPct);
 
   return {
-    top10: ranked.slice(0, 10),
+    top10: ranked.slice(0, HUB_TOP_N),
     quotesRanked: ranked.length,
   };
 }
@@ -115,7 +118,7 @@ export function buildHubTop10PayloadFromQuoteMap(hubIndex, quoteByTicker, opts =
 }
 
 /** Build hub_rs_top10 rows from Supabase stock_quotes_latest (rs ordered).
- * `rows` should be hub-filtered (or a pool large enough that hub Top10 is complete);
+ * `rows` should be hub-filtered (or a pool large enough that hub Top N is complete);
  * coverage is counted only among hub listings present in `rows` with non-null rs.
  */
 export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
@@ -173,11 +176,9 @@ export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
     coveragePct: companies.length > 0
       ? Math.round((quotesRanked / companies.length) * 1000) / 10
       : 0,
-    top10: ranked.slice(0, 10),
+    top10: ranked.slice(0, HUB_TOP_N),
   };
 }
-
-/** Hub movers row shape (mcap / 1d / 5d / turnover lists). */
 function moverRow(company, fields = {}) {
   return {
     ticker: company.ticker,
@@ -193,7 +194,7 @@ function moverRow(company, fields = {}) {
 }
 
 /**
- * Build hub_movers payload (mcap / 1d gainers / turnover / 5d gainers Top10)
+ * Build hub_movers payload (mcap / 1d gainers / turnover / 5d gainers Top N)
  * from Supabase stock_quotes_latest rows joined with hub_index membership.
  */
 export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
@@ -228,16 +229,16 @@ export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
   const mcapTop10 = enriched
     .filter((r) => r.mcapWon != null && r.mcapWon > 0)
     .sort((a, b) => b.mcapWon - a.mcapWon)
-    .slice(0, 10);
+    .slice(0, HUB_TOP_N);
 
   const withChg1d = enriched.filter((r) => r.chg1dPct != null && Number.isFinite(r.chg1dPct));
-  const gainers1dTop10 = withChg1d.slice().sort((a, b) => b.chg1dPct - a.chg1dPct).slice(0, 10);
+  const gainers1dTop10 = withChg1d.slice().sort((a, b) => b.chg1dPct - a.chg1dPct).slice(0, HUB_TOP_N);
 
   const withTurnover = enriched.filter((r) => r.turnoverWon != null && Number.isFinite(r.turnoverWon) && r.turnoverWon > 0);
-  const turnoverTop10 = withTurnover.slice().sort((a, b) => b.turnoverWon - a.turnoverWon).slice(0, 10);
+  const turnoverTop10 = withTurnover.slice().sort((a, b) => b.turnoverWon - a.turnoverWon).slice(0, HUB_TOP_N);
 
   const withRet5d = enriched.filter((r) => r.ret5dPct != null && Number.isFinite(r.ret5dPct));
-  const gainers5dTop10 = withRet5d.slice().sort((a, b) => b.ret5dPct - a.ret5dPct).slice(0, 10);
+  const gainers5dTop10 = withRet5d.slice().sort((a, b) => b.ret5dPct - a.ret5dPct).slice(0, HUB_TOP_N);
 
   return {
     asOf: asOf || new Date().toISOString(),
@@ -254,14 +255,14 @@ export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
   };
 }
 
-/** Fallback: mcap Top10 straight from hub_index; other lists empty (needs Supabase). */
+/** Fallback: mcap Top N straight from hub_index; other lists empty (needs Supabase). */
 export function buildHubMoversFallback(hubIndex, opts = {}) {
   const companies = listHubCompanies(hubIndex);
   const mcapTop10 = companies
     .map((c) => moverRow(c, { mcapWon: c.mcapWon || 0 }))
     .filter((r) => r.mcapWon != null && r.mcapWon > 0)
     .sort((a, b) => b.mcapWon - a.mcapWon)
-    .slice(0, 10);
+    .slice(0, HUB_TOP_N);
   return {
     asOf: new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
@@ -279,12 +280,12 @@ export function buildHubMoversFallback(hubIndex, opts = {}) {
 
 export function hubMoversCacheable(payload) {
   if (!payload) return false;
-  if (!payload.mcapTop10 || payload.mcapTop10.length < 10) return false;
+  if (!payload.mcapTop10 || payload.mcapTop10.length < HUB_TOP_N) return false;
   // Cache once Supabase-backed lists are populated.
   return (
-    (payload.gainers5dTop10 || []).length >= 10 &&
-    (payload.gainers1dTop10 || []).length >= 10 &&
-    (payload.turnoverTop10 || []).length >= 10
+    (payload.gainers5dTop10 || []).length >= HUB_TOP_N &&
+    (payload.gainers1dTop10 || []).length >= HUB_TOP_N &&
+    (payload.turnoverTop10 || []).length >= HUB_TOP_N
   );
 }
 
@@ -597,7 +598,7 @@ export async function loadHubQuoteSnapshotFromRequest(request, env) {
 }
 
 export function hubTop10Cacheable(payload) {
-  if (!payload || !payload.top10 || payload.top10.length < 10) return false;
+  if (!payload || !payload.top10 || payload.top10.length < HUB_TOP_N) return false;
   if ((payload.coveragePct || 0) < 85) return false;
   return countTop10Sectors(payload.top10) >= 2;
 }
@@ -639,7 +640,7 @@ export function buildHubRsTop10(hubIndex, rsSnapshot) {
     })
     .filter(Boolean)
     .sort((a, b) => b.rs - a.rs)
-    .slice(0, 10);
+    .slice(0, HUB_TOP_N);
 }
 
 /**
@@ -683,5 +684,5 @@ export async function buildHubRsTop10Payload(hubIndex, env, request, opts) {
 }
 
 export function hubRsTop10Cacheable(payload) {
-  return !!(payload && payload.top10 && payload.top10.length >= 10 && (payload.coveragePct || 0) >= 85);
+  return !!(payload && payload.top10 && payload.top10.length >= HUB_TOP_N && (payload.coveragePct || 0) >= 85);
 }
