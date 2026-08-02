@@ -3,3 +3,5 @@ wrangler.toml
 .wrangler/
 dist/
 data/.naver_quotes_cache.json
+node_modules/
+.claude/
