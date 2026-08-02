@@ -177,22 +177,24 @@ export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
   };
 }
 
-/** Hub movers row shape (shared by mcap / 5d gainers / 5d losers lists). */
-function moverRow(company, mcapWon, ret5dPct) {
+/** Hub movers row shape (mcap / 1d / 5d / turnover lists). */
+function moverRow(company, fields = {}) {
   return {
     ticker: company.ticker,
     name: company.name,
     nameEn: company.nameEn,
     sectorId: company.sectorId,
     mapPath: company.mapPath,
-    mcapWon: mcapWon != null ? mcapWon : (company.mcapWon || 0),
-    ret5dPct: ret5dPct != null ? ret5dPct : null,
+    mcapWon: fields.mcapWon != null ? fields.mcapWon : (company.mcapWon || 0),
+    chg1dPct: fields.chg1dPct != null ? fields.chg1dPct : null,
+    ret5dPct: fields.ret5dPct != null ? fields.ret5dPct : null,
+    turnoverWon: fields.turnoverWon != null ? fields.turnoverWon : null,
   };
 }
 
 /**
- * Build hub_movers payload (mcap Top10 + 5-day gainers/losers) from
- * Supabase stock_quotes_latest rows joined with hub_index membership.
+ * Build hub_movers payload (mcap / 1d gainers / turnover / 5d gainers Top10)
+ * from Supabase stock_quotes_latest rows joined with hub_index membership.
  */
 export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
   const companies = listHubCompanies(hubIndex);
@@ -215,8 +217,12 @@ export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
     const key = normalizeTicker(c.ticker);
     const row = key ? rowByTicker.get(key) : null;
     const mcapWon = row && numOrNull(row.mcap_won) != null ? numOrNull(row.mcap_won) : (c.mcapWon || 0);
-    const ret5dPct = row ? numOrNull(row.ret_5d_pct) : null;
-    return moverRow(c, mcapWon, ret5dPct);
+    return moverRow(c, {
+      mcapWon,
+      chg1dPct: row ? numOrNull(row.chg_1d_pct) : null,
+      ret5dPct: row ? numOrNull(row.ret_5d_pct) : null,
+      turnoverWon: row ? numOrNull(row.turnover_won) : null,
+    });
   });
 
   const mcapTop10 = enriched
@@ -224,27 +230,35 @@ export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
     .sort((a, b) => b.mcapWon - a.mcapWon)
     .slice(0, 10);
 
-  const withRet = enriched.filter((r) => r.ret5dPct != null && Number.isFinite(r.ret5dPct));
-  const gainers5dTop10 = withRet.slice().sort((a, b) => b.ret5dPct - a.ret5dPct).slice(0, 10);
-  const losers5dTop10 = withRet.slice().sort((a, b) => a.ret5dPct - b.ret5dPct).slice(0, 10);
+  const withChg1d = enriched.filter((r) => r.chg1dPct != null && Number.isFinite(r.chg1dPct));
+  const gainers1dTop10 = withChg1d.slice().sort((a, b) => b.chg1dPct - a.chg1dPct).slice(0, 10);
+
+  const withTurnover = enriched.filter((r) => r.turnoverWon != null && Number.isFinite(r.turnoverWon) && r.turnoverWon > 0);
+  const turnoverTop10 = withTurnover.slice().sort((a, b) => b.turnoverWon - a.turnoverWon).slice(0, 10);
+
+  const withRet5d = enriched.filter((r) => r.ret5dPct != null && Number.isFinite(r.ret5dPct));
+  const gainers5dTop10 = withRet5d.slice().sort((a, b) => b.ret5dPct - a.ret5dPct).slice(0, 10);
 
   return {
     asOf: asOf || new Date().toISOString(),
     builtAt: hubIndex.builtAt || null,
     source: opts.source || 'supabase',
     quotesTotal: companies.length,
-    ret5dRanked: withRet.length,
+    chg1dRanked: withChg1d.length,
+    turnoverRanked: withTurnover.length,
+    ret5dRanked: withRet5d.length,
     mcapTop10,
+    gainers1dTop10,
+    turnoverTop10,
     gainers5dTop10,
-    losers5dTop10,
   };
 }
 
-/** Fallback: mcap Top10 straight from hub_index; 5d lists empty (needs Supabase). */
+/** Fallback: mcap Top10 straight from hub_index; other lists empty (needs Supabase). */
 export function buildHubMoversFallback(hubIndex, opts = {}) {
   const companies = listHubCompanies(hubIndex);
   const mcapTop10 = companies
-    .map((c) => moverRow(c, c.mcapWon || 0, null))
+    .map((c) => moverRow(c, { mcapWon: c.mcapWon || 0 }))
     .filter((r) => r.mcapWon != null && r.mcapWon > 0)
     .sort((a, b) => b.mcapWon - a.mcapWon)
     .slice(0, 10);
@@ -253,18 +267,25 @@ export function buildHubMoversFallback(hubIndex, opts = {}) {
     builtAt: hubIndex.builtAt || null,
     source: opts.source || 'hub_index',
     quotesTotal: companies.length,
+    chg1dRanked: 0,
+    turnoverRanked: 0,
     ret5dRanked: 0,
     mcapTop10,
+    gainers1dTop10: [],
+    turnoverTop10: [],
     gainers5dTop10: [],
-    losers5dTop10: [],
   };
 }
 
 export function hubMoversCacheable(payload) {
   if (!payload) return false;
   if (!payload.mcapTop10 || payload.mcapTop10.length < 10) return false;
-  // Only cache once the 5-day lists are populated (Supabase-backed).
-  return (payload.gainers5dTop10 || []).length >= 10 && (payload.losers5dTop10 || []).length >= 10;
+  // Cache once Supabase-backed lists are populated.
+  return (
+    (payload.gainers5dTop10 || []).length >= 10 &&
+    (payload.gainers1dTop10 || []).length >= 10 &&
+    (payload.turnoverTop10 || []).length >= 10
+  );
 }
 
 /** Map sector_returns rows + hub_index into hub_sectors payload shape. */

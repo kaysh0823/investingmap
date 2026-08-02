@@ -24,11 +24,12 @@
   }
 
   var RANK_TOGGLES = [
+    ['hub-mcap-toggle', 'hub-top-mcap-body'],
     ['hub-rs-toggle', 'hub-top-rs-body'],
     ['hub-top-toggle', 'hub-top-position-body'],
-    ['hub-mcap-toggle', 'hub-top-mcap-body'],
+    ['hub-turnover-toggle', 'hub-top-turnover-body'],
+    ['hub-gain1d-toggle', 'hub-top-gain1d-body'],
     ['hub-gain5d-toggle', 'hub-top-gain5d-body'],
-    ['hub-loss5d-toggle', 'hub-top-loss5d-body'],
   ];
 
   function syncRankDefaults() {

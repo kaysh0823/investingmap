@@ -17,10 +17,10 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v16';
+  var SWR_KEY = 'im-hub-dashboard-v17';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
-  var dashboardData = { sectors: {}, top10: [], rsTop10: [], mcapTop10: [], gainers5dTop10: [], losers5dTop10: [], regularSession: null, asOf: null };
+  var dashboardData = { sectors: {}, top10: [], rsTop10: [], mcapTop10: [], gainers1dTop10: [], turnoverTop10: [], gainers5dTop10: [], regularSession: null, asOf: null };
   var sectorsLoadingHorizon = null;
   var sectorsBootstrapping = false;
   var top10Loading = false;
@@ -112,10 +112,12 @@
       rsTopSub: 'KRX 전종목 · 20·50·120일 수익률 백분위 평균',
       mcapTopTitle: '시총 Top 10',
       mcapTopSub: '허브 수록 종목 · KRX 시가총액 기준',
+      turnoverTopTitle: '당일 거래대금 Top 10',
+      turnoverTopSub: '허브 수록 종목 · 당일 거래대금 기준',
+      gain1dTopTitle: '당일 상승률 Top 10',
+      gain1dTopSub: '허브 수록 종목 · 당일 등락률 기준',
       gain5dTopTitle: '5일 상승률 Top 10',
       gain5dTopSub: '허브 수록 종목 · 5거래일 수익률 기준',
-      loss5dTopTitle: '5일 하락률 Top 10',
-      loss5dTopSub: '허브 수록 종목 · 5거래일 수익률 기준',
       topViewAll: '지도에서 더 보기',
       loading: '시세 불러오는 중…',
       quotesFailed: '시세를 불러오지 못했습니다.',
@@ -145,10 +147,12 @@
       rsTopSub: 'Full KRX · avg of 20/50/120-day return percentiles',
       mcapTopTitle: 'Market cap Top 10',
       mcapTopSub: 'Hub-listed names · by KRX market cap',
+      turnoverTopTitle: 'Turnover Top 10',
+      turnoverTopSub: 'Hub-listed names · by session trading value',
+      gain1dTopTitle: '1-day gainers Top 10',
+      gain1dTopSub: 'Hub-listed names · by daily % change',
       gain5dTopTitle: '5-day gainers Top 10',
       gain5dTopSub: 'Hub-listed names · by 5-trading-day return',
-      loss5dTopTitle: '5-day losers Top 10',
-      loss5dTopSub: 'Hub-listed names · by 5-trading-day return',
       topViewAll: 'Browse maps',
       loading: 'Loading quotes…',
       quotesFailed: 'Could not load quotes.',
@@ -187,8 +191,10 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v13')) return;
-    var oldCss = document.getElementById('im-hub-dashboard-css-v12')
+    if (document.getElementById('im-hub-dashboard-css-v15')) return;
+    var oldCss = document.getElementById('im-hub-dashboard-css-v14')
+      || document.getElementById('im-hub-dashboard-css-v13')
+      || document.getElementById('im-hub-dashboard-css-v12')
       || document.getElementById('im-hub-dashboard-css-v11')
       || document.getElementById('im-hub-dashboard-css-v10')
       || document.getElementById('im-hub-dashboard-css-v9')
@@ -223,20 +229,20 @@
       '.hub-pulse-mcap-label{font-size:9px;font-weight:600;color:var(--text-muted);letter-spacing:.02em;line-height:1.2}' +
       '.hub-pulse-mcap-val{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;word-break:keep-all}' +
       '.hub-pulse-count{font-size:10px;color:var(--text-muted)}' +
-      /* Desktop: Top10 5-col row above industry cards. Mobile order swap in @media. */ +
+      /* Desktop: Top10 6-col row above industry cards. Mobile order swap in @media. */ +
       '.hub-dashboard-row{display:grid;grid-template-columns:1fr;gap:20px;align-items:start;margin-bottom:24px}' +
       '.hub-dashboard-main{margin-bottom:0;min-width:0}' +
-      '.hub-rank-panels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;min-width:0;margin-bottom:0}' +
-      '.hub-rank-panel{position:static;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 4px 6px;min-width:0}' +
+      '.hub-rank-panels{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;min-width:0;margin-bottom:0}' +
+      '.hub-rank-panel{position:static;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:3px 3px 5px;min-width:0}' +
       '.hub-rank-toggle-inner{display:flex;flex-direction:column;gap:2px;min-width:0}' +
-      '.hub-rank-toggle-sub{margin:0;font-size:10px;font-weight:400;color:var(--text-muted);line-height:1.35;white-space:normal;text-align:left;word-break:keep-all}' +
-      '.hub-top-item{display:block;text-decoration:none;color:inherit;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);transition:border-color .15s,background .15s}' +
+      '.hub-rank-toggle-sub{margin:0;font-size:9px;font-weight:400;color:var(--text-muted);line-height:1.3;white-space:normal;text-align:left;word-break:keep-all}' +
+      '.hub-top-item{display:block;text-decoration:none;color:inherit;padding:6px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);transition:border-color .15s,background .15s}' +
       '.hub-top-item:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface2))}' +
-      '.hub-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}' +
-      '.hub-top-name{font-size:12px;font-weight:700;color:var(--text);line-height:1.25;word-break:keep-all}' +
-      '.hub-top-ticker{font-size:10px;color:var(--text-muted);margin-top:2px;font-family:ui-monospace,monospace}' +
-      '.hub-top-sector{font-size:9px;font-weight:600;color:var(--accent);margin-top:3px}' +
-      '.hub-top-pos{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;flex-shrink:0}' +
+      '.hub-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:4px}' +
+      '.hub-top-name{font-size:11px;font-weight:700;color:var(--text);line-height:1.2;word-break:keep-all}' +
+      '.hub-top-ticker{font-size:9px;color:var(--text-muted);margin-top:2px;font-family:ui-monospace,monospace}' +
+      '.hub-top-sector{font-size:8px;font-weight:600;color:var(--accent);margin-top:2px}' +
+      '.hub-top-pos{font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;flex-shrink:0}' +
       '.hub-top-pos.is-high{color:#3fb950}' +
       '.hub-top-pos.is-mid{color:#facc15}' +
       '.hub-top-pos.is-low{color:#fca5a5}' +
@@ -251,8 +257,8 @@
       '.hub-skel-bar{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--border) 25%,color-mix(in srgb,var(--border) 40%,var(--surface2)) 50%,var(--border) 75%);background-size:200% 100%;animation:hub-skel-shimmer 1.4s ease-in-out infinite}' +
       '.hub-skel-bar-sm{width:38%;height:9px}' +
       '@keyframes hub-skel-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}' +
-      '@media (min-width:769px){.hub-dashboard-row{display:grid;grid-template-columns:1fr;gap:20px}.hub-rank-panels{order:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.hub-dashboard-main{order:2}.hub-rank-panel{position:static}}' +
-      '@media (max-width:1200px) and (min-width:769px){.hub-rank-panels{gap:8px}.hub-top-name{font-size:11px}.hub-top-pos{font-size:11px}}' +
+      '@media (min-width:769px){.hub-dashboard-row{display:grid;grid-template-columns:1fr;gap:20px}.hub-rank-panels{order:1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.hub-dashboard-main{order:2}.hub-rank-panel{position:static}}' +
+      '@media (max-width:1200px) and (min-width:769px){.hub-rank-panels{gap:6px}.hub-top-name{font-size:10px}.hub-top-pos{font-size:10px}}' +
       '@media (max-width:768px){' +
       '.hub-dashboard-row{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-bottom:22px;width:100%}' +
       '.hub-rank-panels{order:1;display:flex;flex-direction:column;gap:10px;align-items:stretch;width:100%;max-width:none;min-width:0}' +
@@ -266,7 +272,7 @@
       '}'
     ;
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v14';
+    el.id = 'im-hub-dashboard-css-v15';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -475,8 +481,9 @@
         top10: dashboardData.top10 || [],
         rsTop10: dashboardData.rsTop10 || [],
         mcapTop10: dashboardData.mcapTop10 || [],
+        gainers1dTop10: dashboardData.gainers1dTop10 || [],
+        turnoverTop10: dashboardData.turnoverTop10 || [],
         gainers5dTop10: dashboardData.gainers5dTop10 || [],
-        losers5dTop10: dashboardData.losers5dTop10 || [],
         regularSession: dashboardData.regularSession,
         asOf: dashboardData.asOf,
       }));
@@ -544,6 +551,17 @@
     }
     var trimmed = Math.round(won / 1e10) * 1e10;
     return (trimmed / 1e12).toFixed(2) + '\uC870\uC6D0';
+  }
+
+  /** Daily turnover: KO 조원/억원, EN USD billions. */
+  function formatTurnoverValue(won, lang) {
+    if (won == null || !isFinite(won) || won <= 0) return I18N[lang].noData;
+    if (lang === 'en') {
+      var rate = fxRate > 0 ? fxRate : 1400;
+      return ((won / rate) / 1e9).toFixed(2) + 'B';
+    }
+    if (won >= 1e12) return (won / 1e12).toFixed(2) + '\uC870\uC6D0';
+    return (won / 1e8).toFixed(0) + '\uC5B5\uC6D0';
   }
 
   function formatPct(n, lang) {
@@ -958,6 +976,20 @@
     });
   }
 
+  function renderTurnoverTop10(lang) {
+    var ranked = dashboardData && dashboardData.turnoverTop10 ? dashboardData.turnoverTop10 : [];
+    renderMoverList('hub-top-turnover-list', ranked, moversReady, moversLoading, lang, function (row) {
+      return { text: formatTurnoverValue(row.turnoverWon, lang), cls: '' };
+    });
+  }
+
+  function renderGain1dTop10(lang) {
+    var ranked = dashboardData && dashboardData.gainers1dTop10 ? dashboardData.gainers1dTop10 : [];
+    renderMoverList('hub-top-gain1d-list', ranked, moversReady, moversLoading, lang, function (row) {
+      return { text: formatPct(row.chg1dPct, lang), cls: returnClass(row.chg1dPct) };
+    });
+  }
+
   function renderGain5dTop10(lang) {
     var ranked = dashboardData && dashboardData.gainers5dTop10 ? dashboardData.gainers5dTop10 : [];
     renderMoverList('hub-top-gain5d-list', ranked, moversReady, moversLoading, lang, function (row) {
@@ -965,17 +997,11 @@
     });
   }
 
-  function renderLoss5dTop10(lang) {
-    var ranked = dashboardData && dashboardData.losers5dTop10 ? dashboardData.losers5dTop10 : [];
-    renderMoverList('hub-top-loss5d-list', ranked, moversReady, moversLoading, lang, function (row) {
-      return { text: formatPct(row.ret5dPct, lang), cls: returnClass(row.ret5dPct) };
-    });
-  }
-
   function renderMovers(lang) {
     renderMcapTop10(lang);
+    renderTurnoverTop10(lang);
+    renderGain1dTop10(lang);
     renderGain5dTop10(lang);
-    renderLoss5dTop10(lang);
   }
 
   function renderCardTags(sid, lang) {
@@ -1031,10 +1057,12 @@
     set('hub-rs-sub', labels.rsTopSub);
     set('hub-mcap-title', labels.mcapTopTitle);
     set('hub-mcap-sub', labels.mcapTopSub);
+    set('hub-turnover-title', labels.turnoverTopTitle);
+    set('hub-turnover-sub', labels.turnoverTopSub);
+    set('hub-gain1d-title', labels.gain1dTopTitle);
+    set('hub-gain1d-sub', labels.gain1dTopSub);
     set('hub-gain5d-title', labels.gain5dTopTitle);
     set('hub-gain5d-sub', labels.gain5dTopSub);
-    set('hub-loss5d-title', labels.loss5dTopTitle);
-    set('hub-loss5d-sub', labels.loss5dTopSub);
   }
 
   function applySectorsPayload(j) {
@@ -1107,8 +1135,9 @@
   function applyMoversPayload(j) {
     if (!j || j.error) return;
     if (j.mcapTop10) dashboardData.mcapTop10 = j.mcapTop10;
+    if (j.gainers1dTop10) dashboardData.gainers1dTop10 = j.gainers1dTop10;
+    if (j.turnoverTop10) dashboardData.turnoverTop10 = j.turnoverTop10;
     if (j.gainers5dTop10) dashboardData.gainers5dTop10 = j.gainers5dTop10;
-    if (j.losers5dTop10) dashboardData.losers5dTop10 = j.losers5dTop10;
     if (j.asOf) dashboardData.asOf = j.asOf;
   }
 
@@ -1134,11 +1163,14 @@
           if (!(dashboardData.mcapTop10 && dashboardData.mcapTop10.length) && swrHold.mcapTop10 && swrHold.mcapTop10.length) {
             dashboardData.mcapTop10 = swrHold.mcapTop10;
           }
+          if (!(dashboardData.gainers1dTop10 && dashboardData.gainers1dTop10.length) && swrHold.gainers1dTop10 && swrHold.gainers1dTop10.length) {
+            dashboardData.gainers1dTop10 = swrHold.gainers1dTop10;
+          }
+          if (!(dashboardData.turnoverTop10 && dashboardData.turnoverTop10.length) && swrHold.turnoverTop10 && swrHold.turnoverTop10.length) {
+            dashboardData.turnoverTop10 = swrHold.turnoverTop10;
+          }
           if (!(dashboardData.gainers5dTop10 && dashboardData.gainers5dTop10.length) && swrHold.gainers5dTop10 && swrHold.gainers5dTop10.length) {
             dashboardData.gainers5dTop10 = swrHold.gainers5dTop10;
-          }
-          if (!(dashboardData.losers5dTop10 && dashboardData.losers5dTop10.length) && swrHold.losers5dTop10 && swrHold.losers5dTop10.length) {
-            dashboardData.losers5dTop10 = swrHold.losers5dTop10;
           }
         }
       })
@@ -1246,8 +1278,9 @@
         dashboardData.top10 = swr.top10 || [];
         dashboardData.rsTop10 = swr.rsTop10 || [];
         dashboardData.mcapTop10 = swr.mcapTop10 || [];
+        dashboardData.gainers1dTop10 = swr.gainers1dTop10 || [];
+        dashboardData.turnoverTop10 = swr.turnoverTop10 || [];
         dashboardData.gainers5dTop10 = swr.gainers5dTop10 || [];
-        dashboardData.losers5dTop10 = swr.losers5dTop10 || [];
         dashboardData.regularSession = swr.regularSession;
         if (swr.asOf) dashboardData.asOf = swr.asOf;
         sectorsReady = Object.keys(dashboardData.sectors).length > 0;

@@ -1,7 +1,7 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_movers
- * Hub-listed movers: market-cap Top 10 + 5-day gainers/losers Top 10.
- * Primary: Supabase stock_quotes_latest. Fallback: hub_index (mcap only).
+ * Hub-listed movers: mcap / RS companion panels — market-cap, 1d gainers,
+ * turnover, 5d gainers Top 10. Primary: Supabase. Fallback: hub_index (mcap).
  */
 
 import {
@@ -23,12 +23,12 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_movers/cache/v2';
+const CACHE_BASE = '/api/hub_movers/cache/v3';
 
 async function buildMoversFromSupabase(hubIndex, config) {
   const rows = await fetchSupabaseJson(
     config,
-    'stock_quotes_latest?select=ticker,mcap_won,ret_5d_pct,as_of&limit=2000',
+    'stock_quotes_latest?select=ticker,mcap_won,chg_1d_pct,ret_5d_pct,turnover_won,as_of&limit=2000',
   );
   if (!rows.length) return null;
   const payload = buildHubMoversFromSupabaseRows(hubIndex, rows, { source: 'supabase' });
@@ -98,8 +98,9 @@ export async function onRequest(context) {
         asOf: new Date().toISOString(),
         regularSession: session.regular,
         mcapTop10: [],
+        gainers1dTop10: [],
+        turnoverTop10: [],
         gainers5dTop10: [],
-        losers5dTop10: [],
       }),
       { status: 502, headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },
     );
