@@ -150,6 +150,23 @@ function mcapFromRow(row) {
   return null;
 }
 
+/**
+ * Map one KRX daily row → stock_price_history fields (OHLC + volume + mcap).
+ * @returns {{ open: number|null, high: number|null, low: number|null, close: number, volume: number|null, mcap_won: number|null }|null}
+ */
+export function historyFieldsFromKrxRow(row) {
+  const close = parseNum(row && row.TDD_CLSPRC);
+  if (close == null || close <= 0) return null;
+  return {
+    open: parseNum(row.TDD_OPNPRC),
+    high: parseNum(row.TDD_HGPRC),
+    low: parseNum(row.TDD_LWPRC),
+    close,
+    volume: parseNum(row.ACC_TRDVOL),
+    mcap_won: mcapFromRow(row),
+  };
+}
+
 function mcapMapFromMarketDay(byCode) {
   const out = new Map();
   for (const [code, row] of byCode) {

@@ -6,7 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { tradingDates, fetchMarketDay } from '../functions/lib/krx_yoy.mjs';
+import { tradingDates, fetchMarketDay, historyFieldsFromKrxRow } from '../functions/lib/krx_yoy.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HIST_TRADING_DAYS = 260;
@@ -42,15 +42,6 @@ function parseNum(v) {
   return Number.isFinite(n) ? n : null;
 }
 
-function mcapFromRow(row) {
-  const cl = parseNum(row.TDD_CLSPRC);
-  const shrs = parseNum(row.LIST_SHRS);
-  if (cl != null && shrs != null && cl > 0 && shrs > 0) return cl * shrs;
-  const direct = parseNum(row.MKTCAP);
-  if (direct != null && direct > 0) return direct;
-  return null;
-}
-
 function basDdToTradeDate(basDd) {
   return `${basDd.slice(0, 4)}-${basDd.slice(4, 6)}-${basDd.slice(6, 8)}`;
 }
@@ -58,13 +49,17 @@ function basDdToTradeDate(basDd) {
 function rowsFromMarketDay(byCode, tradeDate) {
   const rows = [];
   for (const [ticker, row] of byCode) {
-    const close = parseNum(row.TDD_CLSPRC);
-    if (close == null || close <= 0) continue;
+    const fields = historyFieldsFromKrxRow(row);
+    if (!fields) continue;
     rows.push({
       ticker,
       trade_date: tradeDate,
-      close,
-      mcap_won: mcapFromRow(row),
+      open: fields.open,
+      high: fields.high,
+      low: fields.low,
+      close: fields.close,
+      volume: fields.volume,
+      mcap_won: fields.mcap_won,
     });
   }
   return rows;

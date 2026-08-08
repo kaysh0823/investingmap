@@ -13,6 +13,7 @@ import {
   tradingDates,
   pastDatesFromAnchor,
   fetchMarketDay,
+  historyFieldsFromKrxRow,
 } from '../functions/lib/krx_yoy.mjs';
 import {
   SECTOR_ORDER,
@@ -348,13 +349,14 @@ async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
   return { upserted, failed: 0 };
 }
 
-/** Persist session close mcaps into history when the market is closed. */
+/** Persist session close OHLC into history when the market is closed (prefer KRX day). */
 async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed, supabaseUrl, serviceKey, authKey) {
   if (!marketClosed || !tradeDateDash) return { upserted: 0, skipped: true };
-  // Avoid writing a synthetic "close" on KRX holidays (Naver may still stamp today).
+
+  let byCode = null;
   if (authKey) {
     try {
-      const byCode = await fetchMarketDay(authKey, dashToBasDd(tradeDateDash));
+      byCode = await fetchMarketDay(authKey, dashToBasDd(tradeDateDash));
       if (!byCode || byCode.size === 0) {
         console.log(`  history session close skip ${tradeDateDash}: empty KRX day`);
         return { upserted: 0, skipped: true };
@@ -363,9 +365,26 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
       console.warn(`  history session close KRX check failed: ${e.message || e}`);
     }
   }
+
   const rows = [];
   for (const q of quoteRows) {
     if (!q || !q.ticker) continue;
+    const krx = byCode ? byCode.get(q.ticker) : null;
+    const fields = krx ? historyFieldsFromKrxRow(krx) : null;
+    if (fields) {
+      rows.push({
+        ticker: q.ticker,
+        trade_date: tradeDateDash,
+        open: fields.open,
+        high: fields.high,
+        low: fields.low,
+        close: fields.close,
+        volume: fields.volume,
+        mcap_won: fields.mcap_won ?? q.mcap_won ?? null,
+      });
+      continue;
+    }
+    // Fallback: Naver last + mcap only (OHLC null until next KRX catch-up).
     if (q.last == null || !Number.isFinite(q.last) || q.last <= 0) continue;
     if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
     rows.push({
@@ -419,13 +438,17 @@ async function fillMissingHistoryDays(authKey, supabaseUrl, serviceKey, throughT
       const tradeDate = basDdToDash(basDd);
       const rows = [];
       for (const [ticker, row] of byCode) {
-        const close = parseNum(row.TDD_CLSPRC);
-        if (close == null || close <= 0) continue;
+        const fields = historyFieldsFromKrxRow(row);
+        if (!fields) continue;
         rows.push({
           ticker,
           trade_date: tradeDate,
-          close,
-          mcap_won: mcapFromKrxRow(row),
+          open: fields.open,
+          high: fields.high,
+          low: fields.low,
+          close: fields.close,
+          volume: fields.volume,
+          mcap_won: fields.mcap_won,
         });
       }
       if (!rows.length) continue;

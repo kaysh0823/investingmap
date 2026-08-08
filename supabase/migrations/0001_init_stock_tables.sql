@@ -22,11 +22,15 @@ create table stock_quotes_latest (
   updated_at       timestamptz not null default now()
 );
 
--- 일별 종가 히스토리 (RS/기간수익률 계산 + 향후 차트용)
+-- 일별 OHLC 히스토리 (RS/기간수익률 + 캔들차트용)
 create table stock_price_history (
   ticker      text not null,
   trade_date  date not null,
+  open        numeric,
+  high        numeric,
+  low         numeric,
   close       numeric not null,
+  volume      numeric,
   mcap_won    numeric,
   primary key (ticker, trade_date)
 );
