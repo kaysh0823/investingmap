@@ -46,10 +46,16 @@ const APPLY_WITH_SPARK = `${APPLY_AFTER_TICKER}
       if (thSpark) thSpark.textContent = t.thSpark || (lang === 'en' ? 'Chart' : '차트');`;
 
 const SPARK_CSS = `
+    .quote-spark { display: block; width: 56px; height: 22px; flex-shrink: 0; }
     .spark-cell { width: 64px; padding: 4px 6px; vertical-align: middle; }
     .spark-cell .quote-spark { display: block; width: 56px; height: 22px; }
+    .im-card-spark { display: inline-flex; align-items: center; justify-content: flex-end; flex: 0 0 auto; margin: 0; line-height: 0; }
+    .im-card-spark .quote-spark { display: block; width: 56px; height: 22px; }
     #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
 `;
+
+const SPARK_CSS_OLD_SCOPED =
+  '.spark-cell .quote-spark { display: block; width: 56px; height: 22px; }';
 
 function patchTranslations(html) {
   let h = html;
@@ -148,7 +154,12 @@ function patchFile(rel) {
     html = html.replace(APPLY_AFTER_TICKER, APPLY_WITH_SPARK);
   }
 
-  if (!html.includes('.spark-cell {') && html.includes('</style>')) {
+  if (html.includes(SPARK_CSS_OLD_SCOPED) && !html.includes('.im-card-spark .quote-spark')) {
+    html = html.replace(
+      /    \.spark-cell \{ width: 64px; padding: 4px 6px; vertical-align: middle; \}\s*\r?\n    \.spark-cell \.quote-spark \{ display: block; width: 56px; height: 22px; \}\s*\r?\n    #th-spark \{ cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; \}/,
+      SPARK_CSS.trim(),
+    );
+  } else if (!html.includes('.spark-cell {') && html.includes('</style>')) {
     html = html.replace(/\r?\n  <\/style>\r?\n/, `${SPARK_CSS}\n  </style>\n`);
   }
 
@@ -166,8 +177,8 @@ const HTML_MAPS = TARGETS.filter((r) => r.endsWith('.html'));
 for (const rel of HTML_MAPS) {
   const fp = path.join(ROOT, rel);
   let html = fs.readFileSync(fp, 'utf8');
-  let next = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=11');
-  next = next.replace(/map_mobile_table\.js\?v=\d+/g, 'map_mobile_table.js?v=7');
+  let next = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=12');
+  next = next.replace(/map_mobile_table\.js\?v=\d+/g, 'map_mobile_table.js?v=8');
   if (next !== html) {
     fs.writeFileSync(fp, next, 'utf8');
     console.log('bumped script ?v=', rel);

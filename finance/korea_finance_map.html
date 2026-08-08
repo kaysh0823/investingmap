@@ -335,7 +335,7 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=11"></script>
+<script src="../js/live_quotes.js?v=12"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
@@ -344,7 +344,7 @@
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
-  <script src="../js/map_mobile_table.js?v=7"></script>
+  <script src="../js/map_mobile_table.js?v=8"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
 <style>
     :root {
@@ -1220,6 +1220,8 @@
 
 
 
+
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1691,8 +1693,11 @@
 
 
 
+.quote-spark { display: block; width: 56px; height: 22px; flex-shrink: 0; }
     .spark-cell { width: 64px; padding: 4px 6px; vertical-align: middle; }
     .spark-cell .quote-spark { display: block; width: 56px; height: 22px; }
+    .im-card-spark { display: inline-flex; align-items: center; justify-content: flex-end; flex: 0 0 auto; margin: 0; line-height: 0; }
+    .im-card-spark .quote-spark { display: block; width: 56px; height: 22px; }
     #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
 
   </style>

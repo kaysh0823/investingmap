@@ -306,7 +306,7 @@ function patchInitTabClassSource(src) {
 
 function patchScriptVersions(html) {
   return html
-    .replace(/map_mobile_table\.js(\?v=\d+)?/g, 'map_mobile_table.js?v=6')
+    .replace(/map_mobile_table\.js(\?v=\d+)?/g, 'map_mobile_table.js?v=8')
     .replace(/map_mobile_ux\.js(\?v=\d+)?/g, 'map_mobile_ux.js?v=8');
 }
 
