@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v4 + /api/ticker_ohlc.
- * Stacked panels (price / volume / BBW% / DISP%) with synced timeScale + crosshair.
+ * Stacked panels (price / volume / MACD / BBW%·DISP%) with synced timeScale + crosshair.
  */
 (function (global) {
   'use strict';
@@ -17,7 +17,11 @@
   var MA_VOL = 20;
   var BB_PERIOD = 20;
   var BB_MULT = 2;
-  var NORM_WINDOW = 120;
+  /** Trailing min/max window for BBW% and DISP% normalization (not MA periods). */
+  var NORM_WINDOW = 125;
+  var MACD_FAST = 12;
+  var MACD_SLOW = 26;
+  var MACD_SIGNAL = 9;
 
   var I18N = {
     ko: {
@@ -38,11 +42,14 @@
       vma20: 'VMA20',
       bbw: 'BBW%',
       disp: '이격도%',
+      macd: 'MACD',
+      macdSignal: 'Signal',
+      macdHist: 'Hist',
       chartLabel: '일봉 차트',
       panePrice: '가격',
       paneVol: '거래량',
-      paneBbw: 'BBW%',
-      paneDisp: '이격도%',
+      paneMacd: 'MACD',
+      paneNorm: 'BBW% · 이격도% (125일)',
     },
     en: {
       close: 'Close',
@@ -62,11 +69,14 @@
       vma20: 'VMA20',
       bbw: 'BBW%',
       disp: 'DISP%',
+      macd: 'MACD',
+      macdSignal: 'Signal',
+      macdHist: 'Hist',
       chartLabel: 'Daily chart',
       panePrice: 'Price',
       paneVol: 'Volume',
-      paneBbw: 'BBW%',
-      paneDisp: 'DISP%',
+      paneMacd: 'MACD',
+      paneNorm: 'BBW% · DISP% (125d)',
     },
   };
 
@@ -211,6 +221,59 @@
     return out;
   }
 
+  /**
+   * Trailing EMA (SMA-seeded). Gaps reset the seed; warmup left as null.
+   */
+  function ema(values, period) {
+    var out = new Array(values.length);
+    var k = 2 / (period + 1);
+    var seedSum = 0;
+    var seedCount = 0;
+    var prev = null;
+    for (var i = 0; i < values.length; i++) {
+      out[i] = null;
+      var v = values[i];
+      if (v == null || !isFinite(v)) {
+        seedSum = 0;
+        seedCount = 0;
+        prev = null;
+        continue;
+      }
+      if (prev == null) {
+        seedSum += v;
+        seedCount += 1;
+        if (seedCount === period) {
+          prev = seedSum / period;
+          out[i] = prev;
+        }
+      } else {
+        prev = (v - prev) * k + prev;
+        out[i] = prev;
+      }
+    }
+    return out;
+  }
+
+  /** MACD = EMA12−EMA26, Signal = EMA9(MACD), Hist = MACD−Signal. */
+  function macd(closes, fastPeriod, slowPeriod, signalPeriod) {
+    var emaFast = ema(closes, fastPeriod);
+    var emaSlow = ema(closes, slowPeriod);
+    var line = new Array(closes.length);
+    for (var i = 0; i < closes.length; i++) {
+      line[i] = null;
+      if (emaFast[i] == null || emaSlow[i] == null) continue;
+      line[i] = emaFast[i] - emaSlow[i];
+    }
+    var signal = ema(line, signalPeriod);
+    var hist = new Array(closes.length);
+    for (var j = 0; j < closes.length; j++) {
+      hist[j] = null;
+      if (line[j] == null || signal[j] == null) continue;
+      hist[j] = line[j] - signal[j];
+    }
+    return { line: line, signal: signal, hist: hist };
+  }
+
   /* ---------- i18n / misc ---------- */
 
   function t() {
@@ -315,14 +378,14 @@
       '.im-candle-ranges{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
       '.im-candle-range{border:0;background:transparent;color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer}' +
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
-      '.im-candle-tip{flex:1;min-width:140px;max-height:2.8em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.4}' +
+      '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
       '.im-candle-body{position:relative;flex:1 1 auto;min-height:0;padding:6px 8px 8px;display:flex;flex-direction:column;overflow:hidden}' +
       '.im-candle-stack{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;height:100%;width:100%;gap:0;overflow:hidden}' +
       '.im-candle-pane{position:relative;min-height:0;width:100%;overflow:hidden;box-sizing:border-box}' +
-      '.im-candle-pane-price{flex:0 0 50%}' +
+      '.im-candle-pane-price{flex:0 0 46%}' +
       '.im-candle-pane-vol{flex:0 0 16%}' +
-      '.im-candle-pane-bbw{flex:0 0 17%}' +
-      '.im-candle-pane-disp{flex:0 0 17%}' +
+      '.im-candle-pane-macd{flex:0 0 20%}' +
+      '.im-candle-pane-norm{flex:0 0 18%}' +
       '.im-candle-pane-label{position:absolute;top:4px;left:8px;z-index:2;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);pointer-events:none}' +
       '.im-candle-pane-chart{width:100%;height:100%;min-height:0}' +
       '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
@@ -331,7 +394,7 @@
       '@media (max-width:768px){' +
       '.im-candle-root{padding:0;align-items:stretch}' +
       '.im-candle-dialog{width:100%;height:100dvh;max-width:100%;max-height:100dvh;border-radius:0;border:0}' +
-      '.im-candle-tip{font-size:10px;max-height:3.2em}' +
+      '.im-candle-tip{font-size:10px;max-height:4em}' +
       '}';
     var el = document.getElementById('im-candle-modal-css');
     if (!el) {
@@ -355,7 +418,10 @@
     var root = document.getElementById('im-candle-root');
     if (
       root &&
-      (!document.getElementById('im-candle-stack') || !document.getElementById('im-candle-disp'))
+      (!document.getElementById('im-candle-stack') ||
+        !document.getElementById('im-candle-macd') ||
+        !document.getElementById('im-candle-norm') ||
+        document.getElementById('im-candle-disp'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
       root = null;
@@ -383,8 +449,8 @@
       '<div class="im-candle-stack" id="im-candle-stack" role="img">' +
       '<div class="im-candle-pane im-candle-pane-price"><span class="im-candle-pane-label" data-pane="price"></span><div class="im-candle-pane-chart" id="im-candle-price"></div></div>' +
       '<div class="im-candle-pane im-candle-pane-vol"><span class="im-candle-pane-label" data-pane="vol"></span><div class="im-candle-pane-chart" id="im-candle-vol"></div></div>' +
-      '<div class="im-candle-pane im-candle-pane-bbw"><span class="im-candle-pane-label" data-pane="bbw"></span><div class="im-candle-pane-chart" id="im-candle-bbw"></div></div>' +
-      '<div class="im-candle-pane im-candle-pane-disp"><span class="im-candle-pane-label" data-pane="disp"></span><div class="im-candle-pane-chart" id="im-candle-disp"></div></div>' +
+      '<div class="im-candle-pane im-candle-pane-macd"><span class="im-candle-pane-label" data-pane="macd"></span><div class="im-candle-pane-chart" id="im-candle-macd"></div></div>' +
+      '<div class="im-candle-pane im-candle-pane-norm"><span class="im-candle-pane-label" data-pane="norm"></span><div class="im-candle-pane-chart" id="im-candle-norm"></div></div>' +
       '</div>' +
       '<div class="im-candle-status" id="im-candle-status"></div>' +
       '</div></div>';
@@ -411,8 +477,8 @@
     var map = {
       price: labels.panePrice,
       vol: labels.paneVol,
-      bbw: labels.paneBbw,
-      disp: labels.paneDisp,
+      macd: labels.paneMacd,
+      norm: labels.paneNorm,
     };
     var nodes = root.querySelectorAll('[data-pane]');
     for (var i = 0; i < nodes.length; i++) {
@@ -483,6 +549,7 @@
     var bbwPct = trailingMinMaxNorm(bb.width, NORM_WINDOW);
     var disparity = disparityFromMa(closes, ma50);
     var dispPct = trailingMinMaxNorm(disparity, NORM_WINDOW);
+    var macdPack = macd(closes, MACD_FAST, MACD_SLOW, MACD_SIGNAL);
 
     var displayN = DISPLAY_DAYS[range] || DISPLAY_DAYS['1y'];
     var start = Math.max(0, fullBars.length - displayN);
@@ -492,6 +559,9 @@
     var maLine = [];
     var volumes = [];
     var vmaLine = [];
+    var macdLine = [];
+    var macdSignalLine = [];
+    var macdHist = [];
     var bbwLine = [];
     var dispLine = [];
     var byTime = Object.create(null);
@@ -507,6 +577,19 @@
       if (ma50[i] != null && isFinite(ma50[i])) ma50Line.push({ time: b.t, value: ma50[i] });
       if (ma120[i] != null && isFinite(ma120[i])) maLine.push({ time: b.t, value: ma120[i] });
       if (vma20[i] != null && isFinite(vma20[i])) vmaLine.push({ time: b.t, value: vma20[i] });
+      if (macdPack.hist[i] != null && isFinite(macdPack.hist[i])) {
+        macdHist.push({
+          time: b.t,
+          value: macdPack.hist[i],
+          color: macdPack.hist[i] >= 0 ? 'rgba(63,185,80,0.65)' : 'rgba(248,81,73,0.65)',
+        });
+      }
+      if (macdPack.line[i] != null && isFinite(macdPack.line[i])) {
+        macdLine.push({ time: b.t, value: macdPack.line[i] });
+      }
+      if (macdPack.signal[i] != null && isFinite(macdPack.signal[i])) {
+        macdSignalLine.push({ time: b.t, value: macdPack.signal[i] });
+      }
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
       byTime[b.t] = {
@@ -518,6 +601,9 @@
         ma50: ma50[i],
         ma120: ma120[i],
         vma20: vma20[i],
+        macd: macdPack.line[i],
+        macdSignal: macdPack.signal[i],
+        macdHist: macdPack.hist[i],
         bbw: bbwPct[i],
         disp: dispPct[i],
       };
@@ -529,6 +615,9 @@
       maLine: maLine,
       volumes: volumes,
       vmaLine: vmaLine,
+      macdLine: macdLine,
+      macdSignalLine: macdSignalLine,
+      macdHist: macdHist,
       bbwLine: bbwLine,
       dispLine: dispLine,
       byTime: byTime,
@@ -578,6 +667,18 @@
       labels.vma20 +
       ' ' +
       fmtVol(b.vma20) +
+      ' · ' +
+      labels.macd +
+      ' ' +
+      fmtNum(b.macd, 2) +
+      ' ' +
+      labels.macdSignal +
+      ' ' +
+      fmtNum(b.macdSignal, 2) +
+      ' ' +
+      labels.macdHist +
+      ' ' +
+      fmtNum(b.macdHist, 2) +
       ' · ' +
       labels.bbw +
       ' ' +
@@ -690,8 +791,8 @@
           var price = null;
           if (k === 0 && tipBar) price = tipBar.c;
           else if (k === 1 && tipBar) price = tipBar.v;
-          else if (k === 2 && tipBar) price = tipBar.bbw;
-          else if (k === 3 && tipBar) price = tipBar.disp;
+          else if (k === 2 && tipBar) price = tipBar.macd;
+          else if (k === 3 && tipBar) price = tipBar.bbw;
           if (price != null && isFinite(price)) {
             charts[k].setCrosshairPosition(price, time, series);
           }
@@ -713,13 +814,13 @@
     destroyCharts();
     var priceEl = document.getElementById('im-candle-price');
     var volEl = document.getElementById('im-candle-vol');
-    var bbwEl = document.getElementById('im-candle-bbw');
-    var dispEl = document.getElementById('im-candle-disp');
-    if (!priceEl || !volEl || !bbwEl || !dispEl) return;
+    var macdEl = document.getElementById('im-candle-macd');
+    var normEl = document.getElementById('im-candle-norm');
+    if (!priceEl || !volEl || !macdEl || !normEl) return;
     priceEl.innerHTML = '';
     volEl.innerHTML = '';
-    bbwEl.innerHTML = '';
-    dispEl.innerHTML = '';
+    macdEl.innerHTML = '';
+    normEl.innerHTML = '';
 
     var colors = themeColors();
     var priceChart = makeChart(LWC, priceEl, colors, {
@@ -731,11 +832,11 @@
       scaleMargins: { top: 0.12, bottom: 0.08 },
       timeVisible: false,
     });
-    var bbwChart = makeChart(LWC, bbwEl, colors, {
+    var macdChart = makeChart(LWC, macdEl, colors, {
       scaleMargins: { top: 0.12, bottom: 0.12 },
       timeVisible: false,
     });
-    var dispChart = makeChart(LWC, dispEl, colors, {
+    var normChart = makeChart(LWC, normEl, colors, {
       scaleMargins: { top: 0.12, bottom: 0.12 },
       timeVisible: true,
     });
@@ -782,7 +883,30 @@
     });
     vmaSeries.setData(data.vmaLine);
 
-    var bbwSeries = bbwChart.addLineSeries({
+    var macdHistSeries = macdChart.addHistogramSeries({
+      priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
+    });
+    macdHistSeries.setData(data.macdHist);
+
+    var macdLineSeries = macdChart.addLineSeries({
+      color: '#58a6ff',
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      title: 'MACD',
+    });
+    macdLineSeries.setData(data.macdLine);
+
+    var macdSignalSeries = macdChart.addLineSeries({
+      color: '#f778ba',
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      title: 'Signal',
+    });
+    macdSignalSeries.setData(data.macdSignalLine);
+
+    var bbwSeries = normChart.addLineSeries({
       color: '#f0883e',
       lineWidth: 2,
       priceLineVisible: false,
@@ -791,8 +915,8 @@
     });
     bbwSeries.setData(data.bbwLine);
 
-    var dispSeries = dispChart.addLineSeries({
-      color: '#a371f7',
+    var dispSeries = normChart.addLineSeries({
+      color: '#39c5cf',
       lineWidth: 2,
       priceLineVisible: false,
       lastValueVisible: true,
@@ -802,11 +926,11 @@
 
     priceChart.timeScale().applyOptions({ visible: false });
     volChart.timeScale().applyOptions({ visible: false });
-    bbwChart.timeScale().applyOptions({ visible: false });
-    dispChart.timeScale().applyOptions({ visible: true, borderVisible: true });
+    macdChart.timeScale().applyOptions({ visible: false });
+    normChart.timeScale().applyOptions({ visible: true, borderVisible: true });
 
-    var charts = [priceChart, volChart, bbwChart, dispChart];
-    var primarySeries = [candle, volSeries, bbwSeries, dispSeries];
+    var charts = [priceChart, volChart, macdChart, normChart];
+    var primarySeries = [candle, volSeries, macdLineSeries, bbwSeries];
     wireSync(charts, primarySeries);
 
     priceChart.timeScale().fitContent();
@@ -814,8 +938,8 @@
       var lr = priceChart.timeScale().getVisibleLogicalRange();
       if (lr) {
         volChart.timeScale().setVisibleLogicalRange(lr);
-        bbwChart.timeScale().setVisibleLogicalRange(lr);
-        dispChart.timeScale().setVisibleLogicalRange(lr);
+        macdChart.timeScale().setVisibleLogicalRange(lr);
+        normChart.timeScale().setVisibleLogicalRange(lr);
       }
     } catch (e) {}
 
@@ -826,6 +950,9 @@
       ma: maSeries,
       vol: volSeries,
       vma: vmaSeries,
+      macdHist: macdHistSeries,
+      macd: macdLineSeries,
+      macdSignal: macdSignalSeries,
       bbw: bbwSeries,
       disp: dispSeries,
     };
@@ -852,7 +979,7 @@
 
   function resizeCharts() {
     if (!state.charts) return;
-    var ids = ['im-candle-price', 'im-candle-vol', 'im-candle-bbw', 'im-candle-disp'];
+    var ids = ['im-candle-price', 'im-candle-vol', 'im-candle-macd', 'im-candle-norm'];
     for (var i = 0; i < state.charts.length; i++) {
       var el = document.getElementById(ids[i]);
       if (!el) continue;
@@ -1074,11 +1201,14 @@
     applyLang: applyLang,
     _indicators: {
       sma: sma,
+      ema: ema,
       stddev: stddev,
       bollinger: bollinger,
       trailingMinMaxNorm: trailingMinMaxNorm,
       bandwidthPercentile: bandwidthPercentile,
       disparityFromMa: disparityFromMa,
+      macd: macd,
+      NORM_WINDOW: NORM_WINDOW,
     },
   };
 })(typeof window !== 'undefined' ? window : globalThis);
