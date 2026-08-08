@@ -224,18 +224,20 @@
     root.setAttribute('data-im-accordion-bound', '1');
 
     root.addEventListener('click', function (e) {
-      var toggle = e.target.closest && e.target.closest('.im-card-toggle');
-      if (!toggle || !root.contains(toggle)) return;
+      if (e.target.closest && e.target.closest('.im-cross-sector-badge, a[href]')) return;
+      // Accordion expands via chevron only — name/spark/summary open candle modal.
+      var chevron = e.target.closest && e.target.closest('.im-card-chevron');
+      if (!chevron || !root.contains(chevron)) return;
       e.preventDefault();
-      toggleCard(toggle.closest('.im-stock-card'));
+      toggleCard(chevron.closest('.im-stock-card'));
     });
 
     root.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter' && e.key !== ' ') return;
-      var toggle = e.target.closest && e.target.closest('.im-card-toggle');
-      if (!toggle || !root.contains(toggle)) return;
+      var chevron = e.target.closest && e.target.closest('.im-card-chevron');
+      if (!chevron || !root.contains(chevron)) return;
       e.preventDefault();
-      toggleCard(toggle.closest('.im-stock-card'));
+      toggleCard(chevron.closest('.im-stock-card'));
     });
   }
 
@@ -289,7 +291,7 @@
       '<div class="im-row-meta">' +
       meta +
       '</div>' +
-      '<span class="im-card-chevron" aria-hidden="true">▼</span>' +
+      '<span class="im-card-chevron" role="button" tabindex="0" aria-label="Expand" aria-hidden="false">▼</span>' +
       '</div>' +
       row2col(kvCell(lblLast, last), kvCell(lbl1d, cellHtml(tr, map, 'th-chg1d'))) +
       rowMcapPos(kvCell(lblMcap, mcap), kvPosRs(lblPos, lblRs, pos, rs)) +

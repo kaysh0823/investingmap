@@ -73,7 +73,7 @@ function patchScriptTag(html) {
   if (html.includes('map_mobile_table.js')) {
     return html.replace(
       /<script src="\.\.\/js\/map_mobile_table\.js(\?v=\d+)?"><\/script>\s*/,
-      '<script src="../js/map_mobile_table.js?v=8"></script>\n  <script src="../js/map_mobile_ux.js?v=8"></script>\n',
+      '<script src="../js/map_mobile_table.js?v=9"></script>\n  <script src="../js/map_mobile_ux.js?v=8"></script>\n',
     );
   }
   return html;

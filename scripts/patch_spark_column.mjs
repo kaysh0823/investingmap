@@ -178,7 +178,7 @@ for (const rel of HTML_MAPS) {
   const fp = path.join(ROOT, rel);
   let html = fs.readFileSync(fp, 'utf8');
   let next = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=12');
-  next = next.replace(/map_mobile_table\.js\?v=\d+/g, 'map_mobile_table.js?v=8');
+  next = next.replace(/map_mobile_table\.js\?v=\d+/g, 'map_mobile_table.js?v=9');
   if (next !== html) {
     fs.writeFileSync(fp, next, 'utf8');
     console.log('bumped script ?v=', rel);

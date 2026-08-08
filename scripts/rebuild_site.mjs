@@ -51,5 +51,6 @@ run('node scripts/fix_mcap_script_order.mjs', 'mcap fmt + script order');
 run('node scripts/patch_rs_column.mjs', 'RS table column');
 run('node scripts/patch_return_columns.mjs', 'return % columns');
 run('node scripts/patch_spark_column.mjs', 'spark chart column');
+run('node scripts/patch_candle_modal.mjs', 'candle chart modal');
 run('node scripts/patch_cross_sector_ui.mjs', 'cross-sector table badges (final)');
 console.log('\nOK rebuild_site');
