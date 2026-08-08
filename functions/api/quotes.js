@@ -60,7 +60,27 @@ function mapSupabaseRow(row) {
     ret120dPct: numOrNull(row.ret_120d_pct),
     ret200dPct: numOrNull(row.ret_200d_pct),
     rs: numOrNull(row.rs),
+    spark20: parseSpark20(row.spark20),
   };
+}
+
+function parseSpark20(v) {
+  if (v == null) return null;
+  let arr = v;
+  if (typeof v === 'string') {
+    try {
+      arr = JSON.parse(v);
+    } catch {
+      return null;
+    }
+  }
+  if (!Array.isArray(arr) || !arr.length) return null;
+  const out = [];
+  for (const x of arr) {
+    const n = numOrNull(x);
+    if (n != null) out.push(n);
+  }
+  return out.length ? out : null;
 }
 
 async function fetchQuotesFromSupabase(codes, config) {

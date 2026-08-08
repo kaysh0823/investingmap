@@ -17,6 +17,7 @@ create table stock_quotes_latest (
   ret_200d_pct     numeric,
   ret_250d_pct     numeric,
   rs               numeric,
+  spark20          jsonb,
   as_of            timestamptz,
   regular_session  boolean,
   updated_at       timestamptz not null default now()

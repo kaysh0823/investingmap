@@ -49,6 +49,8 @@ Returns JSON compatible with `js/live_quotes.js`:
 `GET /api/hub_top10` — top-20 price position vs 52-week range (`data/hub_quote_snapshot.json` + Naver cache).  
 `GET /api/hub_rs_top10` — top-20 Relative Strength (KRX 20/50/120-day percentile average, full market). Snapshot: `data/hub_rs_snapshot.json` via `node scripts/build_hub_rs_snapshot.mjs`.  
 `GET /api/hub_movers` — top-20 hub-listed movers (mcap / turnover / 1d gainers / 5d gainers). Field names keep `*Top10` suffixes.  
+`GET /api/ticker_ohlc?code=005930&range=1y` — daily OHLC+volume bars (`{t,o,h,l,c,v}[]` in `bars`). `range=3m|6m|1y` (50/120/200 trading days).  
+`GET /api/quotes` — includes `spark20` (last 20 closes) from `stock_quotes_latest` for table mini-sparks.  
 `GET /api/hub_dashboard` — combined response (legacy).  
 `GET /api/fx` — USD/KRW from Naver Finance (`FX_USDKRW`), shape of `data/fx_usdkrw.json`, Cache API 1h; fallback last cache then static file.
 

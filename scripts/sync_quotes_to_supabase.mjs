@@ -390,7 +390,11 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
     rows.push({
       ticker: q.ticker,
       trade_date: tradeDateDash,
+      open: null,
+      high: null,
+      low: null,
       close: q.last,
+      volume: null,
       mcap_won: q.mcap_won,
     });
   }
@@ -463,6 +467,97 @@ async function fillMissingHistoryDays(authKey, supabaseUrl, serviceKey, throughT
   }
   if (filled) process.stdout.write('\n');
   return { filled };
+}
+
+/**
+ * Load last N closes per ticker from stock_price_history (oldest→newest arrays).
+ * @param {string[]} tickers
+ * @param {string} supabaseUrl
+ * @param {string} serviceKey
+ * @param {number} [n=20]
+ * @returns {Promise<Map<string, number[]>>}
+ */
+async function loadSparkClosesByTicker(tickers, supabaseUrl, serviceKey, n = 20) {
+  const out = new Map();
+  if (!tickers.length) return out;
+
+  // Newest-first calendar trading days; need ≥n sessions after weekends/holidays.
+  const lookback = Math.max(n + 10, 30);
+  const dates = tradingDates(lookback);
+  const oldestBas = dates[dates.length - 1];
+  const sinceDash = basDdToDash(oldestBas);
+
+  const byTicker = new Map();
+  const chunk = 80;
+  for (let i = 0; i < tickers.length; i += chunk) {
+    const part = tickers.slice(i, i + chunk);
+    let offset = 0;
+    const pageSize = 1000;
+    for (;;) {
+      const url =
+        `${supabaseUrl}/rest/v1/stock_price_history` +
+        `?ticker=in.(${part.join(',')})` +
+        `&trade_date=gte.${sinceDash}` +
+        `&select=ticker,trade_date,close&order=trade_date.asc` +
+        `&limit=${pageSize}&offset=${offset}`;
+      const res = await fetch(url, {
+        headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+      });
+      if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        console.error(`  spark20 history fetch failed: ${res.status} ${body.slice(0, 160)}`);
+        break;
+      }
+      const rows = await res.json();
+      if (!Array.isArray(rows) || !rows.length) break;
+      for (const row of rows) {
+        const t = normalizeTicker(row.ticker);
+        const c = Number(row.close);
+        if (!t || !Number.isFinite(c) || c <= 0) continue;
+        if (!byTicker.has(t)) byTicker.set(t, []);
+        byTicker.get(t).push({ d: String(row.trade_date).slice(0, 10), c });
+      }
+      if (rows.length < pageSize) break;
+      offset += pageSize;
+    }
+  }
+
+  for (const [t, pts] of byTicker) {
+    // Dedup by date ascending (keep last close if duplicates).
+    pts.sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : 0));
+    const dedup = [];
+    for (const p of pts) {
+      if (dedup.length && dedup[dedup.length - 1].d === p.d) {
+        dedup[dedup.length - 1].c = p.c;
+      } else {
+        dedup.push(p);
+      }
+    }
+    const closes = dedup.map((p) => p.c);
+    if (closes.length >= 2) {
+      out.set(t, closes.slice(-n));
+    }
+  }
+  return out;
+}
+
+/** Attach spark20 (last 20 closes) onto quote rows and upsert. */
+async function upsertSpark20ForTickers(tickers, rows, supabaseUrl, serviceKey) {
+  const sparkMap = await loadSparkClosesByTicker(tickers, supabaseUrl, serviceKey, 20);
+  let attached = 0;
+  for (const row of rows) {
+    const spark20 = sparkMap.get(row.ticker);
+    if (!spark20 || spark20.length < 2) continue;
+    row.spark20 = spark20;
+    attached += 1;
+  }
+  if (!attached) {
+    console.log('  spark20: no series to upsert');
+    return { upserted: 0 };
+  }
+  const result = await upsertToSupabase(rows, supabaseUrl, serviceKey);
+  console.log(`  spark20: attached ${attached}, upserted ${result.upserted.length}`);
+  return { upserted: result.upserted.length };
 }
 
 /**
@@ -957,6 +1052,7 @@ async function main() {
     serviceKey,
     consensus.tradeDate || todayYmdDash,
   );
+  await upsertSpark20ForTickers(tickers, rows, supabaseUrl, serviceKey);
 
   // Session close: persist today's sector mcap sums for multi-day sparklines.
   if (session.marketClosed === true && consensus.tradeDate) {

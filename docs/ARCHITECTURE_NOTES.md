@@ -54,7 +54,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 | `stock_price_history` | 종목 일별 OHLC·거래량·시총(260거래일, 캔들용) | `backfill_price_history.mjs` + sync |
 | `hub_rank_daily` | 6개 metric 일별 순위(순위 변동 계산용) | sync 장마감 |
 
-마이그레이션: `supabase/migrations/0001~0009`. **적용은 Supabase SQL Editor에서 수동**.
+마이그레이션: `supabase/migrations/0001~0011`. **적용은 Supabase SQL Editor에서 수동**.
 새 컬럼/테이블은 반드시 **마이그레이션 먼저 적용 → 커밋·푸시** 순서
 (안 하면 다음 sync가 400으로 전체 실패).
 
@@ -156,7 +156,8 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 
 | 엔드포인트 | 용도 |
 |---|---|
-| `/api/quotes?codes=...` | 종목 시세(지도 페이지 폴링) |
+| `/api/quotes?codes=...` | 종목 시세(지도 페이지 폴링, `spark20` 미니 스파크) |
+| `/api/ticker_ohlc?code=&range=` | 종목 일봉 OHLC+거래량 (`3m`/`6m`/`1y`) |
 | `/api/hub_sectors?horizon=1d` | 섹터 퍼포먼스 |
 | `/api/hub_sector_trend?horizon=20d` | 섹터 스파크라인 시계열 |
 | `/api/hub_movers` | 시총/거래대금/당일상승/5일상승 Top20 |
