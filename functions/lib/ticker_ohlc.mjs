@@ -13,12 +13,27 @@ export const OHLC_RANGE_DAYS = Object.freeze({
   '1y': 200,
 });
 
+/** Bars fetched beyond display window so MA120 / BBW(120) warm up. */
+export const OHLC_INDICATOR_WARMUP = 140;
+/** Absolute floor for OHLC history fetch (display + warmup). */
+export const OHLC_FETCH_MIN = 320;
+
 export function normalizeOhlcRange(raw) {
   const s = String(raw || '1y').trim().toLowerCase();
   if (s === '3m' || s === '3mo' || s === '50d') return '3m';
   if (s === '6m' || s === '6mo' || s === '120d') return '6m';
   if (s === '1y' || s === '12m' || s === '200d' || s === 'yoy') return '1y';
   return '1y';
+}
+
+/**
+ * @param {string} rangeToken
+ * @returns {number}
+ */
+export function ohlcFetchLimit(rangeToken) {
+  const range = normalizeOhlcRange(rangeToken);
+  const display = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
+  return Math.max(display + OHLC_INDICATOR_WARMUP, OHLC_FETCH_MIN);
 }
 
 /**
@@ -47,7 +62,8 @@ export function historyRowToBar(row) {
  */
 export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
   const range = normalizeOhlcRange(rangeToken);
-  const limit = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
+  const displayDays = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
+  const limit = ohlcFetchLimit(range);
   const q =
     `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}` +
     `&select=trade_date,open,high,low,close,volume` +
@@ -58,7 +74,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
     const bar = historyRowToBar(rows[i]);
     if (bar) bars.push(bar);
   }
-  return { code: ticker, range, bars };
+  return { code: ticker, range, displayDays, bars };
 }
 
 /**
@@ -67,9 +83,11 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
  * @param {string} [rangeToken]
  */
 export function emptyTickerOhlcPayload(code, rangeToken = '1y') {
+  const range = normalizeOhlcRange(rangeToken);
   return {
     code: code || null,
-    range: normalizeOhlcRange(rangeToken),
+    range,
+    displayDays: OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'],
     bars: [],
   };
 }
