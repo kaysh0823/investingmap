@@ -45,6 +45,8 @@
       '.im-row-name .company-name-sub{font-size:11px;color:var(--text-muted);margin-top:2px;font-weight:400;line-height:1.3}' +
       '.im-row-meta{flex-shrink:0;text-align:right;font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:4px;line-height:1.4}' +
       '.im-row-meta .ticker{font-family:monospace;color:var(--accent);font-weight:600}' +
+      '.im-row-meta .quote-spark{display:block;width:56px;height:22px;margin:4px 0 0 auto}' +
+      '.im-card-spark{display:block;margin-top:4px}' +
       '.im-row-2col{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}' +
       '.im-row-mcap-pos{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}' +
       '.im-kv{display:flex;align-items:baseline;justify-content:space-between;gap:6px;min-width:0;padding:8px 10px}' +
@@ -243,6 +245,7 @@
     var nameBlock = cellHtml(tr, map, 'th-name');
     var marketBlock = cellHtml(tr, map, 'th-market');
     var tickerSpan = cellHtml(tr, map, 'th-ticker');
+    var spark = cellHtml(tr, map, 'th-spark');
     var last = cellHtml(tr, map, 'th-last');
     var mcap = cellHtml(tr, map, 'th-mcap');
     var per = cellHtml(tr, map, 'th-per');
@@ -272,6 +275,7 @@
 
     var meta = tickerSpan || ticker;
     if (marketBlock) meta += ' · ' + marketBlock;
+    if (spark) meta += '<span class="im-card-spark">' + spark + '</span>';
 
     var summary =
       '<div class="im-card-summary im-card-toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="' +

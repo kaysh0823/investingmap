@@ -209,7 +209,7 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=10"></script>
+<script src="../js/live_quotes.js?v=11"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=4"></script>
@@ -218,7 +218,7 @@
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=2"></script>
-  <script src="../js/map_mobile_table.js?v=6"></script>
+  <script src="../js/map_mobile_table.js?v=7"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
 <style>
     :root {
@@ -1092,6 +1092,7 @@
 
 
 
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1592,6 +1593,10 @@
 
 
 
+    .spark-cell { width: 64px; padding: 4px 6px; vertical-align: middle; }
+    .spark-cell .quote-spark { display: block; width: 56px; height: 22px; }
+    #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
+
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
@@ -1687,6 +1692,7 @@
             <tr>
               <th id="th-name" onclick="sortTable('name')">기업명</th>
               <th id="th-ticker" onclick="sortTable('ticker')">종목코드</th>
+              <th id="th-spark">차트</th>
               <th id="th-last" onclick="sortTable('quoteLast')">현재가</th>
               <th id="th-chg1d" class="ret-col" onclick="sortTable('chg1dPct')">1일</th>
               <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20일</th>
@@ -1712,6 +1718,7 @@
           <tr data-ticker="009830">
       <td><div class="company-name">한화솔루션</div><div class="company-name-sub">HANWHA SOLUTIONS</div></td>
       <td><span class="ticker">009830</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">33,900</td>
       <td class="quote-cell ret-cell">+11.51%</td>
       <td class="quote-cell ret-cell">+6.27%</td>
@@ -1734,6 +1741,7 @@
           <tr data-ticker="010060">
       <td><div class="company-name">OCI홀딩스</div><div class="company-name-sub">OCI Holdings Company Ltd.</div></td>
       <td><span class="ticker">010060</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">272,500</td>
       <td class="quote-cell ret-cell">+11.68%</td>
       <td class="quote-cell ret-cell">+37.77%</td>
@@ -1756,6 +1764,7 @@
           <tr data-ticker="018670">
       <td><div class="company-name">SK가스</div><div class="company-name-sub">SKGas</div></td>
       <td><span class="ticker">018670</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">228,000</td>
       <td class="quote-cell ret-cell">+3.64%</td>
       <td class="quote-cell ret-cell">+5.31%</td>
@@ -1778,6 +1787,7 @@
           <tr data-ticker="112610">
       <td><div class="company-name">씨에스윈드</div><div class="company-name-sub">CS Wind Corporation</div></td>
       <td><span class="ticker">112610</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">43,850</td>
       <td class="quote-cell ret-cell">+3.79%</td>
       <td class="quote-cell ret-cell">+10.04%</td>
@@ -1800,6 +1810,7 @@
           <tr data-ticker="322000">
       <td><div class="company-name">HD현대에너지솔루션</div><div class="company-name-sub">HD HYUNDAI ENERGY SOLUTIONS CO.,LTD.</div></td>
       <td><span class="ticker">322000</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">127,800</td>
       <td class="quote-cell ret-cell">-4.63%</td>
       <td class="quote-cell ret-cell">+12.11%</td>
@@ -1822,6 +1833,7 @@
           <tr data-ticker="475150">
       <td><div class="company-name">SK이터닉스</div><div class="company-name-sub">SK eternix</div></td>
       <td><span class="ticker">475150</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">50,500</td>
       <td class="quote-cell ret-cell">-8.18%</td>
       <td class="quote-cell ret-cell">+17.85%</td>
@@ -1844,6 +1856,7 @@
           <tr data-ticker="456040">
       <td><div class="company-name">OCI</div><div class="company-name-sub">Oci</div></td>
       <td><span class="ticker">456040</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">77,400</td>
       <td class="quote-cell ret-cell">+0.78%</td>
       <td class="quote-cell ret-cell">-13.42%</td>
@@ -1866,6 +1879,7 @@
           <tr data-ticker="025540">
       <td><div class="company-name">한국단자</div><div class="company-name-sub">Korea Electric Terminal</div></td>
       <td><span class="ticker">025540</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">62,700</td>
       <td class="quote-cell ret-cell">-0.63%</td>
       <td class="quote-cell ret-cell">-5.43%</td>
@@ -1888,6 +1902,7 @@
           <tr data-ticker="271940">
       <td><div class="company-name">일진하이솔루스</div><div class="company-name-sub">ILJIN HYSOLUS</div></td>
       <td><span class="ticker">271940</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">10,670</td>
       <td class="quote-cell ret-cell">+1.14%</td>
       <td class="quote-cell ret-cell">+3.59%</td>
@@ -1910,6 +1925,7 @@
           <tr data-ticker="011930">
       <td><div class="company-name">신성이엔지</div><div class="company-name-sub">SHINSUNG E&amp;G</div></td>
       <td><span class="ticker">011930</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">15,140</td>
       <td class="quote-cell ret-cell">-5.32%</td>
       <td class="quote-cell ret-cell">-12.74%</td>
@@ -2031,6 +2047,7 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
+        "thSpark": "차트",
         "thLast": "현재가",
         "thChg1d": "1일",
         "thRet20d": "20일",
@@ -2113,6 +2130,7 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
+        "thSpark": "Chart",
         "thLast": "Last",
         "thChg1d": "Day",
         "thRet20d": "1M",
@@ -2368,6 +2386,8 @@
       document.getElementById('result-label').innerHTML = t.resultLabel + '<span id="show-count"></span>' + t.resultUnit;
       document.getElementById('th-name').textContent = t.thName;
       document.getElementById('th-ticker').textContent = t.thTicker;
+      var thSpark = document.getElementById('th-spark');
+      if (thSpark) thSpark.textContent = t.thSpark || (lang === 'en' ? 'Chart' : '차트');
       var thLast = document.getElementById('th-last');
       var thChg1d = document.getElementById('th-chg1d');
       var thRet20d = document.getElementById('th-ret20d');
@@ -2565,6 +2585,7 @@
         return `<tr data-ticker="${c.ticker}">
       <td>${(window.InvestingMapCrossSector && InvestingMapCrossSector.nameCellHtml(c, displayName, subNameHtml, lang)) || (`<div class="company-name">${displayName}</div>${subNameHtml}`)}</td>
       <td><span class="ticker">${c.ticker}</span></td>
+      <td class="spark-cell">${qr.spark || '—'}</td>
       <td class="quote-cell">${qr.last}</td>
       <td class="quote-cell ret-cell">${qr.chg1d || '—'}</td>
       <td class="quote-cell ret-cell">${qr.ret20d || '—'}</td>
@@ -2603,7 +2624,7 @@
     function syncSortHeader() {
       document.querySelectorAll('thead th').forEach(th => th.className = '');
       if (!sortKey) return;
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret200dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 3, chg1dPct: 4, ret20dPct: 5, ret50dPct: 6, ret120dPct: 7, ret200dPct: 8, quoteHi52: 9, quoteLo52: 10, quotePosition: 11, rs: 12, mcapWon: 13, per: 14, pbr: 15, market: 16, chain: 17 };
       const idx = keyMap[sortKey];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -2614,7 +2635,7 @@
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret200dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 3, chg1dPct: 4, ret20dPct: 5, ret50dPct: 6, ret120dPct: 7, ret200dPct: 8, quoteHi52: 9, quoteLo52: 10, quotePosition: 11, rs: 12, mcapWon: 13, per: 14, pbr: 15, market: 16, chain: 17 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');

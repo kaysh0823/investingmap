@@ -291,6 +291,11 @@
       }
       if (typeof q.per === 'number' && isFinite(q.per)) c.per = q.per;
       if (typeof q.pbr === 'number' && isFinite(q.pbr)) c.pbr = q.pbr;
+      if (Array.isArray(q.spark20) && q.spark20.length >= 2) {
+        c.spark20 = q.spark20;
+      } else {
+        c.spark20 = null;
+      }
       applyRsFieldsFromRowIfPresent(c, q);
     }
   }
@@ -365,10 +370,48 @@
     return '<span style="' + rsColorStyle(n) + '">' + text + '</span>';
   }
 
+  function formatSpark20Svg(closes) {
+    var placeholder =
+      '<svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true">' +
+      '<polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg>';
+    if (!closes || !closes.length || closes.length < 2) return placeholder;
+    var vals = [];
+    for (var i = 0; i < closes.length; i++) {
+      var n = typeof closes[i] === 'number' ? closes[i] : Number(closes[i]);
+      if (!isFinite(n)) continue;
+      vals.push(n);
+    }
+    if (vals.length < 2) return placeholder;
+    var min = vals[0];
+    var max = vals[0];
+    for (var j = 1; j < vals.length; j++) {
+      if (vals[j] < min) min = vals[j];
+      if (vals[j] > max) max = vals[j];
+    }
+    var span = max - min;
+    if (!(span > 0)) span = 1;
+    var w = 56;
+    var h = 22;
+    var pad = 2;
+    var pts = [];
+    for (var k = 0; k < vals.length; k++) {
+      var x = pad + (k / (vals.length - 1)) * (w - 2 * pad);
+      var y = pad + (1 - (vals[k] - min) / span) * (h - 2 * pad);
+      pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+    }
+    var delta = vals[vals.length - 1] - vals[0];
+    var color = delta > 0 ? '#3fb950' : delta < 0 ? '#f85149' : '#8b949e';
+    return (
+      '<svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true">' +
+      '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts.join(' ') + '"/></svg>'
+    );
+  }
+
   function formatQuotesRow(c, lang) {
     var posHtml = formatPositionHtml(c);
     return {
       last: formatWon(c.quoteLast, lang),
+      spark: formatSpark20Svg(c && c.spark20),
       chg1d: formatReturnPct(c.chg1dPct),
       ret20d: formatReturnPct(c.ret20dPct),
       ret50d: formatReturnPct(c.ret50dPct),
@@ -384,7 +427,9 @@
 
   function emptyQuotesRow() {
     return {
-      last: '\u2014', chg1d: '\u2014', ret20d: '\u2014', ret50d: '\u2014', ret120d: '\u2014', ret200d: '\u2014',
+      last: '\u2014',
+      spark: formatSpark20Svg(null),
+      chg1d: '\u2014', ret20d: '\u2014', ret50d: '\u2014', ret120d: '\u2014', ret200d: '\u2014',
       hi: '\u2014', lo: '\u2014', position: '\u2014', rs: '\u2014', yoy: '\u2014',
     };
   }
@@ -601,5 +646,6 @@
     positionHeaderLabel: positionHeaderLabel,
     emptyQuotesRow: emptyQuotesRow,
     formatQuotesRow: formatQuotesRow,
+    formatSpark20Svg: formatSpark20Svg,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
