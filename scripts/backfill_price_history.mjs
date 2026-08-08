@@ -1,7 +1,7 @@
 /**
  * Backfill stock_price_history: KRX trading days × full KOSPI/KOSDAQ universe → Supabase.
  * Reuses tradingDates + fetchMarketDay from functions/lib/krx_yoy.mjs.
- * Usage: node scripts/backfill_price_history.mjs [--days=260]
+ * Usage: node scripts/backfill_price_history.mjs [--days=500]
  */
 import fs from 'fs';
 import path from 'path';
@@ -9,7 +9,8 @@ import { fileURLToPath } from 'url';
 import { tradingDates, fetchMarketDay, historyFieldsFromKrxRow } from '../functions/lib/krx_yoy.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const HIST_TRADING_DAYS = 260;
+/** Default ~2y of sessions for candle MA120 / BBW warmup beyond 1Y display. */
+const HIST_TRADING_DAYS = 500;
 const KRX_DELAY_MS = 200;
 const KRX_MAX_RETRIES = 2;
 const UPSERT_BATCH_SIZE = 500;

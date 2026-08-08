@@ -266,34 +266,36 @@
       '.im-candle-root{position:fixed;inset:0;z-index:12000;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box}' +
       '.im-candle-root.is-open{display:flex}' +
       '.im-candle-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55)}' +
-      '.im-candle-dialog{position:relative;z-index:1;width:min(960px,100%);max-height:min(94vh,900px);display:flex;flex-direction:column;background:var(--surface,#161b22);color:var(--text,#e6edf3);border:1px solid var(--border,#30363d);border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.45);overflow:hidden}' +
-      '.im-candle-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px 10px;border-bottom:1px solid var(--border,#30363d);flex-shrink:0}' +
+      '.im-candle-dialog{position:relative;z-index:1;box-sizing:border-box;' +
+      'width:min(1000px,92vw);height:min(760px,88vh);max-width:92vw;max-height:88vh;' +
+      'display:flex;flex-direction:column;background:var(--surface,#161b22);color:var(--text,#e6edf3);' +
+      'border:1px solid var(--border,#30363d);border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.45);overflow:hidden}' +
+      '.im-candle-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 16px 8px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
       '.im-candle-titles{min-width:0;flex:1}' +
       '.im-candle-title{margin:0;font-size:17px;font-weight:700;line-height:1.3;word-break:keep-all}' +
       '.im-candle-sub{margin:4px 0 0;font-size:12px;color:var(--text-muted,#8b949e);font-family:ui-monospace,monospace}' +
       '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer}' +
       '.im-candle-close:hover,.im-candle-close:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
-      '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border,#30363d);flex-shrink:0}' +
+      '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
       '.im-candle-ranges{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
       '.im-candle-range{border:0;background:transparent;color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer}' +
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
-      '.im-candle-tip{flex:1;min-width:160px;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.45}' +
-      '.im-candle-body{position:relative;flex:1;min-height:360px;padding:6px 8px 10px;display:flex;flex-direction:column;min-height:0}' +
-      '.im-candle-stack{display:flex;flex-direction:column;flex:1;min-height:0;gap:2px;height:100%}' +
-      '.im-candle-pane{position:relative;min-height:0;width:100%}' +
-      '.im-candle-pane-price{flex:6 1 0}' +
-      '.im-candle-pane-vol{flex:2 1 0}' +
-      '.im-candle-pane-bbw{flex:2 1 0}' +
+      '.im-candle-tip{flex:1;min-width:140px;max-height:2.8em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.4}' +
+      '.im-candle-body{position:relative;flex:1 1 auto;min-height:0;padding:6px 8px 8px;display:flex;flex-direction:column;overflow:hidden}' +
+      '.im-candle-stack{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;height:100%;width:100%;gap:0;overflow:hidden}' +
+      '.im-candle-pane{position:relative;min-height:0;width:100%;overflow:hidden;box-sizing:border-box}' +
+      '.im-candle-pane-price{flex:0 0 60%}' +
+      '.im-candle-pane-vol{flex:0 0 20%}' +
+      '.im-candle-pane-bbw{flex:0 0 20%}' +
       '.im-candle-pane-label{position:absolute;top:4px;left:8px;z-index:2;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);pointer-events:none}' +
-      '.im-candle-pane-chart{width:100%;height:100%}' +
+      '.im-candle-pane-chart{width:100%;height:100%;min-height:0}' +
       '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
       '.im-candle-status.is-on{display:flex}' +
       'body.im-candle-open{overflow:hidden}' +
       '@media (max-width:768px){' +
       '.im-candle-root{padding:0;align-items:stretch}' +
-      '.im-candle-dialog{width:100%;max-height:none;height:100%;border-radius:0;border:0}' +
-      '.im-candle-body{flex:1;min-height:0}' +
-      '.im-candle-tip{font-size:10px}' +
+      '.im-candle-dialog{width:100%;height:100dvh;max-width:100%;max-height:100dvh;border-radius:0;border:0}' +
+      '.im-candle-tip{font-size:10px;max-height:3.2em}' +
       '}';
     var el = document.getElementById('im-candle-modal-css');
     if (!el) {
@@ -302,6 +304,14 @@
       document.head.appendChild(el);
     }
     el.textContent = css;
+  }
+
+  function afterLayout(cb) {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        cb();
+      });
+    });
   }
 
   function ensureDom() {
@@ -534,9 +544,11 @@
   }
 
   function makeChart(LWC, container, colors, opts) {
+    var w = Math.max(container.clientWidth || 0, 120);
+    var h = Math.max(container.clientHeight || 0, 48);
     return LWC.createChart(container, {
-      width: container.clientWidth || 600,
-      height: Math.max(container.clientHeight || 80, 60),
+      width: w,
+      height: h,
       layout: {
         background: { type: 'solid', color: colors.bg },
         textColor: colors.muted,
@@ -714,13 +726,22 @@
     state.barsByTime = data.byTime;
 
     var stack = document.getElementById('im-candle-stack');
+    if (state.resizeObs) {
+      try {
+        state.resizeObs.disconnect();
+      } catch (eRo) {}
+      state.resizeObs = null;
+    }
     if (stack && typeof ResizeObserver !== 'undefined') {
       state.resizeObs = new ResizeObserver(function () {
         resizeCharts();
       });
       state.resizeObs.observe(stack);
+      var body = document.querySelector('.im-candle-body');
+      if (body) state.resizeObs.observe(body);
     }
     resizeCharts();
+    afterLayout(resizeCharts);
   }
 
   function resizeCharts() {
@@ -729,11 +750,14 @@
     for (var i = 0; i < state.charts.length; i++) {
       var el = document.getElementById(ids[i]);
       if (!el) continue;
+      var w = Math.max(el.clientWidth || 0, 80);
+      var h = Math.max(el.clientHeight || 0, 40);
       try {
-        state.charts[i].applyOptions({
-          width: el.clientWidth,
-          height: Math.max(el.clientHeight || 60, 48),
-        });
+        if (typeof state.charts[i].resize === 'function') {
+          state.charts[i].resize(w, h);
+        } else {
+          state.charts[i].applyOptions({ width: w, height: h });
+        }
       } catch (e) {}
     }
   }
@@ -743,6 +767,7 @@
     var token = ++state.fetchToken;
     setStatus(labels.loading, true);
     updateTip(null);
+    destroyCharts();
 
     return loadLwc()
       .then(function (LWC) {
@@ -768,7 +793,15 @@
           return;
         }
         setStatus('', false);
-        createCharts(pack.LWC, data);
+        // Wait until modal flex layout assigns real pane pixel heights.
+        afterLayout(function () {
+          if (token !== state.fetchToken || !state.open) return;
+          createCharts(pack.LWC, data);
+          afterLayout(function () {
+            if (token !== state.fetchToken || !state.open) return;
+            resizeCharts();
+          });
+        });
       })
       .catch(function () {
         if (token !== state.fetchToken || !state.open) return;
@@ -820,7 +853,7 @@
     setTimeout(function () {
       var dialog = root.querySelector('.im-candle-dialog');
       if (dialog) dialog.focus();
-      resizeCharts();
+      afterLayout(resizeCharts);
     }, 0);
   }
 

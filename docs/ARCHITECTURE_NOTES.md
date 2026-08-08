@@ -51,7 +51,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 | `sector_returns` | 섹터별 기간 수익률(1D/20D/50D/120D/200D) | sync (과거 시총 가중) |
 | `sector_mcap_daily` | 섹터 일별 합산 시총(스파크라인 20D+용) | backfill + sync 장마감 |
 | `sector_intraday_snapshots` | 1D 스파크라인용 일중 섹터 시총 스냅샷 | sync 정규장에만 append |
-| `stock_price_history` | 종목 일별 OHLC·거래량·시총(260거래일, 캔들용) | `backfill_price_history.mjs` + sync |
+| `stock_price_history` | 종목 일별 OHLC·거래량·시총(≥500거래일 권장, 캔들·지표 워밍업) | `backfill_price_history.mjs --days=500` + sync |
 | `hub_rank_daily` | 6개 metric 일별 순위(순위 변동 계산용) | sync 장마감 |
 
 마이그레이션: `supabase/migrations/0001~0011`. **적용은 Supabase SQL Editor에서 수동**.
@@ -147,7 +147,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 - [ ] 매년 말: (휴장 감지는 자동이지만) KRX 특이 휴장 확인
 - [ ] 토큰 만료: cron-job.org의 GitHub PAT (2027-07-13 만료) 갱신
 - [ ] `hub_rank_daily` 테이블 비대 시: 오래된 행(7일 이전) 정리 로직 추가 검토
-- [ ] `stock_price_history` 깊이: 200D 지표/스파크라인이 정상이려면 260거래일 유지
+- [ ] `stock_price_history` 깊이: 캔들 MA120·BBW120 + 1Y 표시를 위해 ≥500거래일 유지 (`backfill_price_history.mjs --days=500`)
 - [ ] 후속 개선: 장중 섹터 수익률 분모를 실제 과거 시총으로(5장 참고)
 
 ---

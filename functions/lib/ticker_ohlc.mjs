@@ -13,10 +13,10 @@ export const OHLC_RANGE_DAYS = Object.freeze({
   '1y': 200,
 });
 
-/** Bars fetched beyond display window so MA120 / BBW(120) warm up. */
-export const OHLC_INDICATOR_WARMUP = 140;
-/** Absolute floor for OHLC history fetch (display + warmup). */
-export const OHLC_FETCH_MIN = 320;
+/** Bars fetched beyond display window so MA120 / BBW(120) fill the left edge. */
+export const OHLC_INDICATOR_WARMUP = 240;
+/** Absolute floor for OHLC history fetch (e.g. 1Y 200 + warmup 240). */
+export const OHLC_FETCH_MIN = 440;
 
 export function normalizeOhlcRange(raw) {
   const s = String(raw || '1y').trim().toLowerCase();
