@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v4 + /api/ticker_ohlc.
- * Stacked panels (price / volume / BBW%) with synced timeScale + crosshair.
+ * Stacked panels (price / volume / BBW% / DISP%) with synced timeScale + crosshair.
  */
 (function (global) {
   'use strict';
@@ -12,11 +12,12 @@
   var RANGES = ['3m', '6m', '1y'];
   var DEFAULT_RANGE = '1y';
   var DISPLAY_DAYS = { '3m': 50, '6m': 120, '1y': 200 };
+  var MA_FAST = 50;
   var MA_PRICE = 120;
   var MA_VOL = 20;
   var BB_PERIOD = 20;
   var BB_MULT = 2;
-  var BBW_NORM_WINDOW = 120;
+  var NORM_WINDOW = 120;
 
   var I18N = {
     ko: {
@@ -32,13 +33,16 @@
       low: '저가',
       closePx: '종가',
       volume: '거래량',
+      ma50: 'MA50',
       ma120: 'MA120',
       vma20: 'VMA20',
       bbw: 'BBW%',
+      disp: '이격도%',
       chartLabel: '일봉 차트',
       panePrice: '가격',
       paneVol: '거래량',
       paneBbw: 'BBW%',
+      paneDisp: '이격도%',
     },
     en: {
       close: 'Close',
@@ -53,13 +57,16 @@
       low: 'Low',
       closePx: 'Close',
       volume: 'Volume',
+      ma50: 'MA50',
       ma120: 'MA120',
       vma20: 'VMA20',
       bbw: 'BBW%',
+      disp: 'DISP%',
       chartLabel: 'Daily chart',
       panePrice: 'Price',
       paneVol: 'Volume',
       paneBbw: 'BBW%',
+      paneDisp: 'DISP%',
     },
   };
 
@@ -149,40 +156,57 @@
   }
 
   /**
-   * Normalize Bollinger bandwidth to 0..100 with a PAST-only trailing window.
-   * At each i: use width[i-window+1 .. i] (never i+1..). Future bars are forbidden.
-   * BBW%_i = (width_i - min) / (max - min) * 100. Requires `window` finite widths in range.
+   * Normalize a series to 0..100 with a PAST-only trailing window (shared by BBW% / DISP%).
+   * At each i: use values[i-window+1 .. i] (never future bars).
+   * pct_i = (values_i - min) / (max - min) * 100. Requires `window` finite values in range.
    */
-  function bandwidthPercentile(widths, window) {
-    var out = new Array(widths.length);
+  function trailingMinMaxNorm(values, window) {
+    var out = new Array(values.length);
     var wLen = window | 0;
     if (wLen < 2) {
-      for (var z = 0; z < widths.length; z++) out[z] = null;
+      for (var z = 0; z < values.length; z++) out[z] = null;
       return out;
     }
-    for (var i = 0; i < widths.length; i++) {
+    for (var i = 0; i < values.length; i++) {
       out[i] = null;
-      var cur = widths[i];
+      var cur = values[i];
       if (cur == null || !isFinite(cur)) continue;
       var from = i - wLen + 1;
-      if (from < 0) continue; // need a full trailing window ending at i
-      var minW = Infinity;
-      var maxW = -Infinity;
+      if (from < 0) continue;
+      var minV = Infinity;
+      var maxV = -Infinity;
       var n = 0;
       for (var j = from; j <= i; j++) {
-        var w = widths[j];
-        if (w == null || !isFinite(w)) continue;
+        var v = values[j];
+        if (v == null || !isFinite(v)) continue;
         n += 1;
-        if (w < minW) minW = w;
-        if (w > maxW) maxW = w;
+        if (v < minV) minV = v;
+        if (v > maxV) maxV = v;
       }
-      // Strict: every slot in [from..i] must contribute (no forward fill / no future peek).
       if (n !== wLen) continue;
-      if (!(maxW > minW)) {
+      if (!(maxV > minV)) {
         out[i] = 50;
         continue;
       }
-      out[i] = ((cur - minW) / (maxW - minW)) * 100;
+      out[i] = ((cur - minV) / (maxV - minV)) * 100;
+    }
+    return out;
+  }
+
+  /** @deprecated alias — prefer trailingMinMaxNorm */
+  function bandwidthPercentile(widths, window) {
+    return trailingMinMaxNorm(widths, window);
+  }
+
+  /** Close / MA50 × 100 (null until MA50 is ready). */
+  function disparityFromMa(closes, ma) {
+    var out = new Array(closes.length);
+    for (var i = 0; i < closes.length; i++) {
+      out[i] = null;
+      var c = closes[i];
+      var m = ma[i];
+      if (c == null || !isFinite(c) || m == null || !isFinite(m) || !(m > 0)) continue;
+      out[i] = (c / m) * 100;
     }
     return out;
   }
@@ -295,9 +319,10 @@
       '.im-candle-body{position:relative;flex:1 1 auto;min-height:0;padding:6px 8px 8px;display:flex;flex-direction:column;overflow:hidden}' +
       '.im-candle-stack{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;height:100%;width:100%;gap:0;overflow:hidden}' +
       '.im-candle-pane{position:relative;min-height:0;width:100%;overflow:hidden;box-sizing:border-box}' +
-      '.im-candle-pane-price{flex:0 0 60%}' +
-      '.im-candle-pane-vol{flex:0 0 20%}' +
-      '.im-candle-pane-bbw{flex:0 0 20%}' +
+      '.im-candle-pane-price{flex:0 0 50%}' +
+      '.im-candle-pane-vol{flex:0 0 16%}' +
+      '.im-candle-pane-bbw{flex:0 0 17%}' +
+      '.im-candle-pane-disp{flex:0 0 17%}' +
       '.im-candle-pane-label{position:absolute;top:4px;left:8px;z-index:2;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);pointer-events:none}' +
       '.im-candle-pane-chart{width:100%;height:100%;min-height:0}' +
       '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
@@ -328,7 +353,10 @@
   function ensureDom() {
     injectCss();
     var root = document.getElementById('im-candle-root');
-    if (root && !document.getElementById('im-candle-stack')) {
+    if (
+      root &&
+      (!document.getElementById('im-candle-stack') || !document.getElementById('im-candle-disp'))
+    ) {
       root.parentNode && root.parentNode.removeChild(root);
       root = null;
     }
@@ -356,6 +384,7 @@
       '<div class="im-candle-pane im-candle-pane-price"><span class="im-candle-pane-label" data-pane="price"></span><div class="im-candle-pane-chart" id="im-candle-price"></div></div>' +
       '<div class="im-candle-pane im-candle-pane-vol"><span class="im-candle-pane-label" data-pane="vol"></span><div class="im-candle-pane-chart" id="im-candle-vol"></div></div>' +
       '<div class="im-candle-pane im-candle-pane-bbw"><span class="im-candle-pane-label" data-pane="bbw"></span><div class="im-candle-pane-chart" id="im-candle-bbw"></div></div>' +
+      '<div class="im-candle-pane im-candle-pane-disp"><span class="im-candle-pane-label" data-pane="disp"></span><div class="im-candle-pane-chart" id="im-candle-disp"></div></div>' +
       '</div>' +
       '<div class="im-candle-status" id="im-candle-status"></div>' +
       '</div></div>';
@@ -379,7 +408,12 @@
     var labels = t();
     var root = document.getElementById('im-candle-stack');
     if (!root) return;
-    var map = { price: labels.panePrice, vol: labels.paneVol, bbw: labels.paneBbw };
+    var map = {
+      price: labels.panePrice,
+      vol: labels.paneVol,
+      bbw: labels.paneBbw,
+      disp: labels.paneDisp,
+    };
     var nodes = root.querySelectorAll('[data-pane]');
     for (var i = 0; i < nodes.length; i++) {
       var key = nodes[i].getAttribute('data-pane');
@@ -442,19 +476,24 @@
     var vols = fullBars.map(function (b) {
       return b.v;
     });
+    var ma50 = sma(closes, MA_FAST);
     var ma120 = sma(closes, MA_PRICE);
     var vma20 = sma(vols, MA_VOL);
     var bb = bollinger(closes, BB_PERIOD, BB_MULT);
-    var bbwPct = bandwidthPercentile(bb.width, BBW_NORM_WINDOW);
+    var bbwPct = trailingMinMaxNorm(bb.width, NORM_WINDOW);
+    var disparity = disparityFromMa(closes, ma50);
+    var dispPct = trailingMinMaxNorm(disparity, NORM_WINDOW);
 
     var displayN = DISPLAY_DAYS[range] || DISPLAY_DAYS['1y'];
     var start = Math.max(0, fullBars.length - displayN);
 
     var candles = [];
+    var ma50Line = [];
     var maLine = [];
     var volumes = [];
     var vmaLine = [];
     var bbwLine = [];
+    var dispLine = [];
     var byTime = Object.create(null);
 
     for (var i = start; i < fullBars.length; i++) {
@@ -465,27 +504,33 @@
         value: b.v,
         color: b.c >= b.o ? 'rgba(63,185,80,0.55)' : 'rgba(248,81,73,0.55)',
       });
+      if (ma50[i] != null && isFinite(ma50[i])) ma50Line.push({ time: b.t, value: ma50[i] });
       if (ma120[i] != null && isFinite(ma120[i])) maLine.push({ time: b.t, value: ma120[i] });
       if (vma20[i] != null && isFinite(vma20[i])) vmaLine.push({ time: b.t, value: vma20[i] });
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
+      if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
       byTime[b.t] = {
         o: b.o,
         h: b.h,
         l: b.l,
         c: b.c,
         v: b.v,
+        ma50: ma50[i],
         ma120: ma120[i],
         vma20: vma20[i],
         bbw: bbwPct[i],
+        disp: dispPct[i],
       };
     }
 
     return {
       candles: candles,
+      ma50Line: ma50Line,
       maLine: maLine,
       volumes: volumes,
       vmaLine: vmaLine,
       bbwLine: bbwLine,
+      dispLine: dispLine,
       byTime: byTime,
     };
   }
@@ -522,6 +567,10 @@
       ' ' +
       fmtVol(b.v) +
       ' · ' +
+      labels.ma50 +
+      ' ' +
+      fmtPrice(b.ma50) +
+      ' · ' +
       labels.ma120 +
       ' ' +
       fmtPrice(b.ma120) +
@@ -532,7 +581,11 @@
       ' · ' +
       labels.bbw +
       ' ' +
-      fmtNum(b.bbw, 1);
+      fmtNum(b.bbw, 1) +
+      ' · ' +
+      labels.disp +
+      ' ' +
+      fmtNum(b.disp, 1);
   }
 
   function destroyCharts() {
@@ -557,6 +610,12 @@
   function makeChart(LWC, container, colors, opts) {
     var w = Math.max(container.clientWidth || 0, 120);
     var h = Math.max(container.clientHeight || 0, 48);
+    var mode =
+      opts && opts.logScale && LWC.PriceScaleMode
+        ? LWC.PriceScaleMode.Logarithmic
+        : LWC.PriceScaleMode
+          ? LWC.PriceScaleMode.Normal
+          : 0;
     return LWC.createChart(container, {
       width: w,
       height: h,
@@ -572,6 +631,7 @@
       crosshair: { mode: LWC.CrosshairMode ? LWC.CrosshairMode.Normal : 1 },
       rightPriceScale: {
         borderColor: colors.border,
+        mode: mode,
         scaleMargins: opts && opts.scaleMargins ? opts.scaleMargins : { top: 0.08, bottom: 0.08 },
       },
       timeScale: {
@@ -631,6 +691,7 @@
           if (k === 0 && tipBar) price = tipBar.c;
           else if (k === 1 && tipBar) price = tipBar.v;
           else if (k === 2 && tipBar) price = tipBar.bbw;
+          else if (k === 3 && tipBar) price = tipBar.disp;
           if (price != null && isFinite(price)) {
             charts[k].setCrosshairPosition(price, time, series);
           }
@@ -653,21 +714,28 @@
     var priceEl = document.getElementById('im-candle-price');
     var volEl = document.getElementById('im-candle-vol');
     var bbwEl = document.getElementById('im-candle-bbw');
-    if (!priceEl || !volEl || !bbwEl) return;
+    var dispEl = document.getElementById('im-candle-disp');
+    if (!priceEl || !volEl || !bbwEl || !dispEl) return;
     priceEl.innerHTML = '';
     volEl.innerHTML = '';
     bbwEl.innerHTML = '';
+    dispEl.innerHTML = '';
 
     var colors = themeColors();
     var priceChart = makeChart(LWC, priceEl, colors, {
       scaleMargins: { top: 0.06, bottom: 0.1 },
       timeVisible: false,
+      logScale: true,
     });
     var volChart = makeChart(LWC, volEl, colors, {
       scaleMargins: { top: 0.12, bottom: 0.08 },
       timeVisible: false,
     });
     var bbwChart = makeChart(LWC, bbwEl, colors, {
+      scaleMargins: { top: 0.12, bottom: 0.12 },
+      timeVisible: false,
+    });
+    var dispChart = makeChart(LWC, dispEl, colors, {
       scaleMargins: { top: 0.12, bottom: 0.12 },
       timeVisible: true,
     });
@@ -680,6 +748,15 @@
       wickDownColor: '#f85149',
     });
     candle.setData(data.candles);
+
+    var ma50Series = priceChart.addLineSeries({
+      color: '#e3b341',
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      title: 'MA50',
+    });
+    ma50Series.setData(data.ma50Line);
 
     var maSeries = priceChart.addLineSeries({
       color: '#58a6ff',
@@ -714,13 +791,22 @@
     });
     bbwSeries.setData(data.bbwLine);
 
-    // Hide time labels on upper panes
+    var dispSeries = dispChart.addLineSeries({
+      color: '#a371f7',
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      title: 'DISP%',
+    });
+    dispSeries.setData(data.dispLine);
+
     priceChart.timeScale().applyOptions({ visible: false });
     volChart.timeScale().applyOptions({ visible: false });
-    bbwChart.timeScale().applyOptions({ visible: true, borderVisible: true });
+    bbwChart.timeScale().applyOptions({ visible: false });
+    dispChart.timeScale().applyOptions({ visible: true, borderVisible: true });
 
-    var charts = [priceChart, volChart, bbwChart];
-    var primarySeries = [candle, volSeries, bbwSeries];
+    var charts = [priceChart, volChart, bbwChart, dispChart];
+    var primarySeries = [candle, volSeries, bbwSeries, dispSeries];
     wireSync(charts, primarySeries);
 
     priceChart.timeScale().fitContent();
@@ -729,11 +815,20 @@
       if (lr) {
         volChart.timeScale().setVisibleLogicalRange(lr);
         bbwChart.timeScale().setVisibleLogicalRange(lr);
+        dispChart.timeScale().setVisibleLogicalRange(lr);
       }
     } catch (e) {}
 
     state.charts = charts;
-    state.seriesRefs = { candle: candle, ma: maSeries, vol: volSeries, vma: vmaSeries, bbw: bbwSeries };
+    state.seriesRefs = {
+      candle: candle,
+      ma50: ma50Series,
+      ma: maSeries,
+      vol: volSeries,
+      vma: vmaSeries,
+      bbw: bbwSeries,
+      disp: dispSeries,
+    };
     state.barsByTime = data.byTime;
 
     var stack = document.getElementById('im-candle-stack');
@@ -757,7 +852,7 @@
 
   function resizeCharts() {
     if (!state.charts) return;
-    var ids = ['im-candle-price', 'im-candle-vol', 'im-candle-bbw'];
+    var ids = ['im-candle-price', 'im-candle-vol', 'im-candle-bbw', 'im-candle-disp'];
     for (var i = 0; i < state.charts.length; i++) {
       var el = document.getElementById(ids[i]);
       if (!el) continue;
@@ -981,7 +1076,9 @@
       sma: sma,
       stddev: stddev,
       bollinger: bollinger,
+      trailingMinMaxNorm: trailingMinMaxNorm,
       bandwidthPercentile: bandwidthPercentile,
+      disparityFromMa: disparityFromMa,
     },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

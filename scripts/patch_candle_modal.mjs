@@ -6,7 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 5;
+const SCRIPT_V = 6;
 
 const MAP_FILES = [
   'semiconductor/korea_semiconductor_map.html',
