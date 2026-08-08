@@ -38,7 +38,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
   - PAT(fine-grained, Contents read-write)는 cron-job.org에만 보관
 - **수집 소스**
   - 현재가·52주·시총·PER/PBR·거래대금·전일종가 → 네이버 (`functions/lib/naver_sise_quotes.mjs`)
-  - 5D/20D/50D/120D/250D 수익률·RS → KRX OPEN API (`functions/lib/krx_rs.mjs`, `krx_yoy.mjs`)
+  - 5D/20D/50D/120D/200D 수익률·RS → KRX OPEN API (`functions/lib/krx_rs.mjs`, `krx_yoy.mjs`)
 - **로컬 실행**: `.dev.vars`에 키. 비거래일엔 조기 종료되므로 강제 실행은 `--force`
 
 ---
@@ -48,13 +48,13 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 | 테이블 | 내용 | 채우는 주체 |
 |---|---|---|
 | `stock_quotes_latest` | 종목별 최신 스냅샷(가격·시총·거래대금·수익률·RS 등) | sync 매 실행 upsert |
-| `sector_returns` | 섹터별 기간 수익률(1D/20D/50D/120D/250D) | sync (과거 시총 가중) |
+| `sector_returns` | 섹터별 기간 수익률(1D/20D/50D/120D/200D) | sync (과거 시총 가중) |
 | `sector_mcap_daily` | 섹터 일별 합산 시총(스파크라인 20D+용) | backfill + sync 장마감 |
 | `sector_intraday_snapshots` | 1D 스파크라인용 일중 섹터 시총 스냅샷 | sync 정규장에만 append |
 | `stock_price_history` | 종목 일별 종가·시총(260거래일) | `backfill_price_history.mjs` |
 | `hub_rank_daily` | 6개 metric 일별 순위(순위 변동 계산용) | sync 장마감 |
 
-마이그레이션: `supabase/migrations/0001~0008`. **적용은 Supabase SQL Editor에서 수동**.
+마이그레이션: `supabase/migrations/0001~0009`. **적용은 Supabase SQL Editor에서 수동**.
 새 컬럼/테이블은 반드시 **마이그레이션 먼저 적용 → 커밋·푸시** 순서
 (안 하면 다음 sync가 400으로 전체 실패).
 
@@ -147,7 +147,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 - [ ] 매년 말: (휴장 감지는 자동이지만) KRX 특이 휴장 확인
 - [ ] 토큰 만료: cron-job.org의 GitHub PAT (2027-07-13 만료) 갱신
 - [ ] `hub_rank_daily` 테이블 비대 시: 오래된 행(7일 이전) 정리 로직 추가 검토
-- [ ] `stock_price_history` 깊이: 250D 지표/스파크라인이 정상이려면 260거래일 유지
+- [ ] `stock_price_history` 깊이: 200D 지표/스파크라인이 정상이려면 260거래일 유지
 - [ ] 후속 개선: 장중 섹터 수익률 분모를 실제 과거 시총으로(5장 참고)
 
 ---

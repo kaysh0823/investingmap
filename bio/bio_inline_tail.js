@@ -121,13 +121,13 @@
       var thRet20d = document.getElementById('th-ret20d');
       var thRet50d = document.getElementById('th-ret50d');
       var thRet120d = document.getElementById('th-ret120d');
-      var thRet250d = document.getElementById('th-ret250d');
+      var thRet200d = document.getElementById('th-ret200d');
       if (thLast) thLast.textContent = t.thLast;
       if (thChg1d) thChg1d.textContent = t.thChg1d || (lang === 'en' ? '1D' : '1일');
       if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D' : '20일');
       if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D' : '50일');
       if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D' : '120일');
-      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D' : '250일');
+      if (thRet200d) thRet200d.textContent = t.thRet200d || (lang === 'en' ? '200D' : '200일');
       var th52hi = document.getElementById('th-52hi');
       if (th52hi) th52hi.textContent = t.th52High;
       var th52lo = document.getElementById('th-52lo');
@@ -273,7 +273,7 @@
       });
       if (sortKey) {
         data.sort(function (a, b) {
-          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret20dPct' || sortKey === 'ret50dPct' || sortKey === 'ret120dPct' || sortKey === 'ret250dPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
+          if (sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret20dPct' || sortKey === 'ret50dPct' || sortKey === 'ret120dPct' || sortKey === 'ret200dPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs') {
             var av = a[sortKey];
             var bv = b[sortKey];
             var na = av == null || !Number.isFinite(av);
@@ -325,7 +325,7 @@
           '<td class="quote-cell ret-cell">' + (qr.ret20d || '\u2014') + '</td>' +
           '<td class="quote-cell ret-cell">' + (qr.ret50d || '\u2014') + '</td>' +
           '<td class="quote-cell ret-cell">' + (qr.ret120d || '\u2014') + '</td>' +
-          '<td class="quote-cell ret-cell">' + (qr.ret250d || '\u2014') + '</td>' +
+          '<td class="quote-cell ret-cell">' + (qr.ret200d || '\u2014') + '</td>' +
           '<td class="quote-cell">' + qr.hi + '</td>' +
           '<td class="quote-cell">' + qr.lo + '</td>' +
           '<td class="quote-cell">' + ((qr && (qr.position != null ? qr.position : qr.yoy)) || '\u2014') + '</td>' +
@@ -358,7 +358,7 @@
     function syncSortHeader() {
       document.querySelectorAll('thead th').forEach(th => th.className = '');
       if (!sortKey) return;
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret250dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret200dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[sortKey];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');
@@ -369,7 +369,7 @@
     function sortTable(key) {
       if (sortKey === key) sortDir *= -1; else { sortKey = key; sortDir = 1; }
       document.querySelectorAll('thead th').forEach(th => th.className = '');
-      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret250dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
+      const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret200dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };
       const idx = keyMap[key];
       if (idx !== undefined) {
         const ths = document.querySelectorAll('thead th');

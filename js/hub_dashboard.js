@@ -10,10 +10,10 @@
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
     { retKey: 'return50dPct', labelKey: 'pulseRow50d' },
     { retKey: 'return120dPct', labelKey: 'pulseRow120d' },
-    { retKey: 'return250dPct', labelKey: 'pulseRow250d' },
+    { retKey: 'return200dPct', labelKey: 'pulseRow200d' },
   ];
   var pulseHorizonKey = 'return1dPct';
-  var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon-v3';
+  var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon-v4';
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
@@ -94,14 +94,14 @@
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
-      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1D·20D·50D·120D·250D',
-      pulseRow1d: '1D(1일)',
-      pulseRow20d: '20D(1개월)',
-      pulseRow50d: '50D(3개월)',
-      pulseRow120d: '120D(6개월)',
-      pulseRow250d: '250D(1년)',
+      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1D·20D·50D·120D·200D',
+      pulseRow1d: '1D',
+      pulseRow20d: '20D',
+      pulseRow50d: '50D',
+      pulseRow120d: '120D',
+      pulseRow200d: '200D',
       pulseColSector: '섹터',
-      pulseColReturn: '1년 수익률',
+      pulseColReturn: '수익률',
       pulseMcapLabel: '시가총액 합산(비중)',
       pulseColCount: '종목 수',
       pulseLoading: '로딩중…',
@@ -131,14 +131,14 @@
     },
     en: {
       pulseTitle: 'Sector performance',
-      pulseSub: 'Market-cap-weighted return (recent ÷ past cap) — 1D, 20D, 50D, 120D, 250D',
-      pulseRow1d: '1D (1 day)',
-      pulseRow20d: '20D (1M)',
-      pulseRow50d: '50D (3M)',
-      pulseRow120d: '120D (6M)',
-      pulseRow250d: '250D (1Y)',
+      pulseSub: 'Market-cap-weighted return (recent ÷ past cap) — 1D, 20D, 50D, 120D, 200D',
+      pulseRow1d: '1D',
+      pulseRow20d: '20D',
+      pulseRow50d: '50D',
+      pulseRow120d: '120D',
+      pulseRow200d: '200D',
       pulseColSector: 'Sector',
-      pulseColReturn: '1Y return',
+      pulseColReturn: 'Return',
       pulseMcapLabel: 'Total market cap (weight)',
       pulseColCount: 'Companies',
       pulseLoading: 'Loading…',
@@ -528,7 +528,7 @@
         return20dPct: null,
         return50dPct: null,
         return120dPct: null,
-        return250dPct: null,
+        return200dPct: null,
       };
     });
     return out;
@@ -675,7 +675,7 @@
     if (sector.return20dPct == null && sector.return1mPct != null) sector.return20dPct = sector.return1mPct;
     if (sector.return50dPct == null && sector.return3mPct != null) sector.return50dPct = sector.return3mPct;
     if (sector.return120dPct == null && sector.return6mPct != null) sector.return120dPct = sector.return6mPct;
-    if (sector.return250dPct == null && sector.yoyReturnPct != null) sector.return250dPct = sector.yoyReturnPct;
+    if (sector.return200dPct == null && sector.yoyReturnPct != null) sector.return200dPct = sector.yoyReturnPct;
     return sector;
   }
 
@@ -685,7 +685,8 @@
       if (k === 'return1mPct') k = 'return20dPct';
       if (k === 'return3mPct') k = 'return50dPct';
       if (k === 'return6mPct') k = 'return120dPct';
-      if (k === 'yoyReturnPct') k = 'return250dPct';
+      if (k === 'yoyReturnPct') k = 'return200dPct';
+      if (k === 'return250dPct') k = 'return200dPct';
       if (k && PULSE_HORIZONS.some(function (h) { return h.retKey === k; })) {
         pulseHorizonKey = k;
       }
@@ -714,7 +715,7 @@
     if (retKey === 'return1dPct') return '1d';
     if (retKey === 'return50dPct') return '50d';
     if (retKey === 'return120dPct') return '120d';
-    if (retKey === 'return250dPct') return '250d';
+    if (retKey === 'return200dPct' || retKey === 'return250dPct') return '200d';
     return '20d';
   }
 
@@ -731,7 +732,7 @@
     var onlyMissing = opts && opts.onlyMissing;
     var incoming = j.sectors || {};
     var base = dashboardData.sectors || {};
-    var keys = ['return1dPct', 'return20dPct', 'return50dPct', 'return120dPct', 'return250dPct', 'mcapWon', 'weightPct', 'listingCount'];
+    var keys = ['return1dPct', 'return20dPct', 'return50dPct', 'return120dPct', 'return200dPct', 'mcapWon', 'weightPct', 'listingCount'];
     for (var sid in incoming) {
       if (!incoming.hasOwnProperty(sid)) continue;
       if (!base[sid]) base[sid] = {};

@@ -15,7 +15,7 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const HUB_CACHE_BASE = '/api/hub_dashboard/cache/v3';
+const HUB_CACHE_BASE = '/api/hub_dashboard/cache/v4';
 
 export async function onRequest(context) {
   const { request, env } = context;

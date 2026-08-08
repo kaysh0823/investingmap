@@ -15,7 +15,7 @@ import {
 } from '../lib/hub_api_cache.mjs';
 import { buildHubSectorTrendPayload } from '../lib/hub_sector_trend.mjs';
 
-const CACHE_VERSION = '/api/hub_sector_trend/cache/v2';
+const CACHE_VERSION = '/api/hub_sector_trend/cache/v3';
 
 function trendMaxAge(horizon, now = new Date()) {
   if (normalizeSectorHorizon(horizon) === '1d') {

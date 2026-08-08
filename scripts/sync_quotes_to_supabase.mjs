@@ -44,7 +44,7 @@ const SECTOR_HORIZONS = [
   { out: 'ret_20d_pct', days: 20, fallbackSrc: 'ret_20d_pct' },
   { out: 'ret_50d_pct', days: 50, fallbackSrc: 'ret_50d_pct' },
   { out: 'ret_120d_pct', days: 120, fallbackSrc: 'ret_120d_pct' },
-  { out: 'ret_250d_pct', days: 250, fallbackSrc: 'ret_250d_pct' },
+  { out: 'ret_200d_pct', days: 200, fallbackSrc: 'ret_200d_pct' },
 ];
 
 /** @deprecated kept for inverse fallback alias */
@@ -174,7 +174,7 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed) 
     ret_20d_pct: krx?.ret20dPct ?? null,
     ret_50d_pct: krx?.ret50dPct ?? null,
     ret_120d_pct: krx?.ret120dPct ?? null,
-    ret_250d_pct: krx?.ret250dPct ?? null,
+    ret_200d_pct: krx?.ret200dPct ?? null,
     rs: krx?.rs ?? null,
     as_of: asOf,
     regular_session: regularSession,

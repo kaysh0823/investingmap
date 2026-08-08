@@ -314,7 +314,7 @@ export function buildHubSectorsFromSupabaseRows(hubIndex, rows, env, opts = {}) 
       return20dPct: row ? numOrNull(row.ret_20d_pct) : null,
       return50dPct: row ? numOrNull(row.ret_50d_pct) : null,
       return120dPct: row ? numOrNull(row.ret_120d_pct) : null,
-      return250dPct: row ? numOrNull(row.ret_250d_pct) : null,
+      return200dPct: row ? numOrNull(row.ret_200d_pct) : null,
       mcapWon: sectorMcap,
       weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
       listingCount: companies.length,
@@ -334,7 +334,7 @@ export function buildHubSectorsFromSupabaseRows(hubIndex, rows, env, opts = {}) 
     mcapPast20dDd: null,
     mcapPast50dDd: null,
     mcapPast120dDd: null,
-    mcapPast250dDd: null,
+    mcapPast200dDd: null,
     sectors,
   };
 }
@@ -441,7 +441,7 @@ function buildSectors(hubIndex, snapshots) {
   const mcapPast20d = snapshots && snapshots.mcapPast20d;
   const mcapPast50d = snapshots && snapshots.mcapPast50d;
   const mcapPast120d = snapshots && snapshots.mcapPast120d;
-  const mcapPast250d = snapshots && snapshots.mcapPast250d;
+  const mcapPast200d = snapshots && snapshots.mcapPast200d;
 
   const sectors = {};
   for (const sid of SECTOR_ORDER) {
@@ -462,8 +462,8 @@ function buildSectors(hubIndex, snapshots) {
       return120dPct: (mcapNow && mcapPast120d)
         ? sectorReturnMcapRatio(companies, mcapNow, mcapPast120d)
         : null,
-      return250dPct: (mcapNow && mcapPast250d)
-        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast250d)
+      return200dPct: (mcapNow && mcapPast200d)
+        ? sectorReturnMcapRatio(companies, mcapNow, mcapPast200d)
         : null,
       mcapWon: sectorMcap,
       weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
@@ -481,7 +481,7 @@ export async function buildHubSectors(hubIndex, env, opts = {}) {
   const authKey = getAuthKey(env);
   const session = krxSessionInfo();
   const horizon = opts.horizon != null ? normalizeSectorHorizon(opts.horizon) : null;
-  const horizons = horizon ? [horizon] : ['1d', '20d', '50d', '120d', '250d'];
+  const horizons = horizon ? [horizon] : ['1d', '20d', '50d', '120d', '200d'];
   const snapshots = authKey ? await fetchHubSectorMcapSnapshots(authKey, { horizons }) : null;
 
   return {
@@ -497,7 +497,7 @@ export async function buildHubSectors(hubIndex, env, opts = {}) {
     mcapPast20dDd: snapshots ? snapshots.past20dDd : null,
     mcapPast50dDd: snapshots ? snapshots.past50dDd : null,
     mcapPast120dDd: snapshots ? snapshots.past120dDd : null,
-    mcapPast250dDd: snapshots ? snapshots.past250dDd : null,
+    mcapPast200dDd: snapshots ? snapshots.past200dDd : null,
     sectors: buildSectors(hubIndex, snapshots),
   };
 }

@@ -23,7 +23,7 @@ const HIST_CALENDAR_SCAN = 400;
 const HIST_TRADING_DAYS_20D = 20;
 const HIST_TRADING_DAYS_50D = 50;
 const HIST_TRADING_DAYS_120D = 120;
-const HIST_TRADING_DAYS_250D = 250;
+const HIST_TRADING_DAYS_200D = 200;
 
 let histCache = null;
 let histWarm = null;
@@ -196,12 +196,13 @@ const HORIZON_PAST_KEYS = {
   '20d': ['mcapPast20d', 'past20dDd', HIST_TRADING_DAYS_20D],
   '50d': ['mcapPast50d', 'past50dDd', HIST_TRADING_DAYS_50D],
   '120d': ['mcapPast120d', 'past120dDd', HIST_TRADING_DAYS_120D],
-  '250d': ['mcapPast250d', 'past250dDd', HIST_TRADING_DAYS_250D],
-  // legacy API aliases
+  '200d': ['mcapPast200d', 'past200dDd', HIST_TRADING_DAYS_200D],
+  // legacy API aliases → 200d lookback
   '1m': ['mcapPast20d', 'past20dDd', HIST_TRADING_DAYS_20D],
   '3m': ['mcapPast50d', 'past50dDd', HIST_TRADING_DAYS_50D],
   '6m': ['mcapPast120d', 'past120dDd', HIST_TRADING_DAYS_120D],
-  '1y': ['mcapPast250d', 'past250dDd', HIST_TRADING_DAYS_250D],
+  '1y': ['mcapPast200d', 'past200dDd', HIST_TRADING_DAYS_200D],
+  '250d': ['mcapPast200d', 'past200dDd', HIST_TRADING_DAYS_200D],
 };
 
 function emptyMcapSnapshots() {
@@ -211,13 +212,13 @@ function emptyMcapSnapshots() {
     mcapPast20d: null,
     mcapPast50d: null,
     mcapPast120d: null,
-    mcapPast250d: null,
+    mcapPast200d: null,
     recentDd: null,
     past1dDd: null,
     past20dDd: null,
     past50dDd: null,
     past120dDd: null,
-    past250dDd: null,
+    past200dDd: null,
   };
 }
 
@@ -235,7 +236,7 @@ const MCAP_PAIR_CACHE_MS = 6 * 60 * 60 * 1000;
  */
 export async function fetchHubSectorMcapSnapshots(authKey, opts = {}) {
   if (!authKey) return null;
-  const allHorizons = ['1d', '20d', '50d', '120d', '250d'];
+  const allHorizons = ['1d', '20d', '50d', '120d', '200d'];
   const horizons = Array.isArray(opts.horizons) && opts.horizons.length
     ? opts.horizons
     : allHorizons;

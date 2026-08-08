@@ -20,7 +20,7 @@ const RETURN_PERIODS = [
   { field: 'ret20dPct', days: 20 },
   { field: 'ret50dPct', days: 50 },
   { field: 'ret120dPct', days: 120 },
-  { field: 'ret250dPct', days: 250 },
+  { field: 'ret200dPct', days: 200 },
 ];
 
 const DATE_FALLBACK_WINDOW = 12;

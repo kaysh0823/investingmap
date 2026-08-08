@@ -1,5 +1,5 @@
 /**
- * Compare hub_sector_trend endpoints vs sector_returns card % for 20d/50d/120d/250d.
+ * Compare hub_sector_trend endpoints vs sector_returns card % for 20d/50d/120d/200d.
  * Usage: node scripts/verify_sector_trend.mjs
  */
 import fs from 'fs';
@@ -9,12 +9,12 @@ import { buildHubSectorTrendPayload } from '../functions/lib/hub_sector_trend.mj
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from '../functions/lib/supabase_hub.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const HORIZONS = ['20d', '50d', '120d', '250d'];
+const HORIZONS = ['20d', '50d', '120d', '200d'];
 const RET_COL = {
   '20d': 'ret_20d_pct',
   '50d': 'ret_50d_pct',
   '120d': 'ret_120d_pct',
-  '250d': 'ret_250d_pct',
+  '200d': 'ret_200d_pct',
 };
 
 function loadEnv() {

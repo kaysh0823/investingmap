@@ -32,7 +32,7 @@ const KEYS = [
   ['return20dPct', '20일(~1M)', 'mcapPast20dDd'],
   ['return50dPct', '50일(~3M)', 'mcapPast50dDd'],
   ['return120dPct', '120일(~6M)', 'mcapPast120dDd'],
-  ['return250dPct', '250일(~1Y)', 'mcapPast250dDd'],
+  ['return200dPct', '250일(~1Y)', 'mcapPast200dDd'],
 ];
 
 async function main() {
@@ -48,7 +48,7 @@ async function main() {
     past20d: cached.mcapPast20dDd,
     past50d: cached.mcapPast50dDd,
     past120d: cached.mcapPast120dDd,
-    past250d: cached.mcapPast250dDd,
+    past200d: cached.mcapPast200dDd,
   });
 
   if (!authKey) {
@@ -60,7 +60,7 @@ async function main() {
         '20d': s.return20dPct?.toFixed(2),
         '50d': s.return50dPct?.toFixed(2),
         '120d': s.return120dPct?.toFixed(2),
-        '250d': s.return250dPct?.toFixed(2),
+        '200d': s.return200dPct?.toFixed(2),
       });
     }
     return;
@@ -93,7 +93,7 @@ async function main() {
     past20d: live.mcapPast20dDd,
     past50d: live.mcapPast50dDd,
     past120d: live.mcapPast120dDd,
-    past250d: live.mcapPast250dDd,
+    past200d: live.mcapPast200dDd,
   });
 
   if (maxDiff < 0.05) {

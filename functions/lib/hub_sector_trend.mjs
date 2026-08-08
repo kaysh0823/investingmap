@@ -12,7 +12,7 @@ export const TREND_LOOKBACK_DAYS = {
   '20d': 20,
   '50d': 50,
   '120d': 120,
-  '250d': 250,
+  '200d': 200,
 };
 
 export const SPARKLINE_MAX_POINTS = 30;
@@ -21,7 +21,7 @@ const HORIZON_RET_COL = {
   '20d': 'ret_20d_pct',
   '50d': 'ret_50d_pct',
   '120d': 'ret_120d_pct',
-  '250d': 'ret_250d_pct',
+  '200d': 'ret_200d_pct',
 };
 
 function basDdToDash(basDd) {

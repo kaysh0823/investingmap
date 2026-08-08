@@ -14,6 +14,7 @@ create table stock_quotes_latest (
   ret_20d_pct      numeric,
   ret_50d_pct      numeric,
   ret_120d_pct     numeric,
+  ret_200d_pct     numeric,
   ret_250d_pct     numeric,
   rs               numeric,
   as_of            timestamptz,
@@ -38,6 +39,7 @@ create table sector_returns (
   ret_20d_pct   numeric,
   ret_50d_pct   numeric,
   ret_120d_pct  numeric,
+  ret_200d_pct  numeric,
   ret_250d_pct  numeric,
   updated_at    timestamptz not null default now()
 );
@@ -55,7 +57,7 @@ create index if not exists sector_intraday_snapshots_trade_date_idx
 create index if not exists sector_intraday_snapshots_sector_trade_idx
   on sector_intraday_snapshots (sector_id, trade_date, ts);
 
--- Pre-aggregated sector mcap by trade date for hub sparkline trends (20D–250D).
+-- Pre-aggregated sector mcap by trade date for hub sparkline trends (20D–200D).
 create table if not exists sector_mcap_daily (
   sector_id   text not null,
   trade_date  date not null,

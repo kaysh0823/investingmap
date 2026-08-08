@@ -80,7 +80,7 @@ async function main() {
   const hub = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/hub_index.json'), 'utf8'));
 
   const quotes = await fetchJson(
-    `${u}/rest/v1/stock_quotes_latest?select=ticker,mcap_won,chg_1d_pct,ret_20d_pct,ret_250d_pct,regular_session&limit=2000`,
+    `${u}/rest/v1/stock_quotes_latest?select=ticker,mcap_won,chg_1d_pct,ret_20d_pct,ret_200d_pct,regular_session&limit=2000`,
     h,
   );
   const byTicker = new Map(quotes.map((q) => [normalizeTicker(q.ticker), q]));
@@ -138,14 +138,14 @@ async function main() {
 
   // Spot-check hub_sectors if reachable
   try {
-    for (const hz of ['1d', '20d', '250d']) {
+    for (const hz of ['1d', '20d', '200d']) {
       const r = await fetch(`https://www.investingmap.kr/api/hub_sectors?horizon=${hz}&nocache=1`, {
         signal: AbortSignal.timeout(60000),
       });
       const j = await r.json();
       console.log(`hub_sectors ${hz}`, {
         asOf: j.asOf,
-        semi: j.sectors?.semi?.[`return${hz === '1d' ? '1d' : hz === '20d' ? '20d' : '250d'}Pct`],
+        semi: j.sectors?.semi?.[`return${hz === '1d' ? '1d' : hz === '20d' ? '20d' : '200d'}Pct`],
         n: Object.keys(j.sectors || {}).length,
       });
     }

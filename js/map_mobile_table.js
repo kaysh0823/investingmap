@@ -300,7 +300,7 @@
       ) +
       row2col(
         kvCell(thLabel('th-ret120d', '120D'), cellHtml(tr, map, 'th-ret120d')),
-        kvCell(thLabel('th-ret250d', '250D'), cellHtml(tr, map, 'th-ret250d'))
+        kvCell(thLabel('th-ret200d', '200D'), cellHtml(tr, map, 'th-ret200d'))
       ) +
       row2col(kvCell(lblPer, per), kvCell(lblPbr, pbr)) +
       rowHiLo(lblHi, lblLo, hi, lo) +

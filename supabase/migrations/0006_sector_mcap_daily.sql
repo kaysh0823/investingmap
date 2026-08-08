@@ -1,4 +1,4 @@
--- Pre-aggregated sector mcap by trade date for hub sparkline trends (20D–250D).
+-- Pre-aggregated sector mcap by trade date for hub sparkline trends (20D–200D).
 create table if not exists sector_mcap_daily (
   sector_id   text not null,
   trade_date  date not null,

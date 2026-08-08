@@ -34,7 +34,7 @@ const TH_RET_BLOCK = `${TH_LAST}
               <th id="th-ret20d" class="ret-col" onclick="sortTable('ret20dPct')">20일</th>
               <th id="th-ret50d" class="ret-col" onclick="sortTable('ret50dPct')">50일</th>
               <th id="th-ret120d" class="ret-col" onclick="sortTable('ret120dPct')">120일</th>
-              <th id="th-ret250d" class="ret-col" onclick="sortTable('ret250dPct')">250일</th>`;
+              <th id="th-ret200d" class="ret-col" onclick="sortTable('ret200dPct')">200일</th>`;
 
 const ROW_LAST_CELL = '<td class="quote-cell">${qr.last}</td>';
 const ROW_RET_CELLS = `<td class="quote-cell">\${qr.last}</td>
@@ -42,16 +42,16 @@ const ROW_RET_CELLS = `<td class="quote-cell">\${qr.last}</td>
       <td class="quote-cell ret-cell">\${qr.ret20d || '—'}</td>
       <td class="quote-cell ret-cell">\${qr.ret50d || '—'}</td>
       <td class="quote-cell ret-cell">\${qr.ret120d || '—'}</td>
-      <td class="quote-cell ret-cell">\${qr.ret250d || '—'}</td>`;
+      <td class="quote-cell ret-cell">\${qr.ret200d || '—'}</td>`;
 
 const BIO_ROW_LAST = "'<td class=\"quote-cell\">' + qr.last + '</td>' +";
-const BIO_ROW_RET_BLOCK = "'<td class=\"quote-cell\">' + qr.last + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.chg1d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret20d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret50d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret120d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret250d || '\\u2014') + '</td>' +";
+const BIO_ROW_RET_BLOCK = "'<td class=\"quote-cell\">' + qr.last + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.chg1d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret20d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret50d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret120d || '\\u2014') + '</td>' +\n          '<td class=\"quote-cell ret-cell\">' + (qr.ret200d || '\\u2014') + '</td>' +";
 
 const KEYMAP_OLD = 'const keyMap = { name: 0, ticker: 1, quoteLast: 2, quoteHi52: 3, quoteLo52: 4, quotePosition: 5, rs: 6, mcapWon: 7, per: 8, pbr: 9, market: 10, chain: 11 };';
-const KEYMAP_NEW = "const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret250dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };";
+const KEYMAP_NEW = "const keyMap = { name: 0, ticker: 1, quoteLast: 2, chg1dPct: 3, ret20dPct: 4, ret50dPct: 5, ret120dPct: 6, ret200dPct: 7, quoteHi52: 8, quoteLo52: 9, quotePosition: 10, rs: 11, mcapWon: 12, per: 13, pbr: 14, market: 15, chain: 16 };";
 
 const SORT_NUM_OLD = "sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs'";
-const SORT_NUM_NEW = "sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret20dPct' || sortKey === 'ret50dPct' || sortKey === 'ret120dPct' || sortKey === 'ret250dPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs'";
+const SORT_NUM_NEW = "sortKey === 'mcapWon' || sortKey === 'per' || sortKey === 'pbr' || sortKey === 'quoteLast' || sortKey === 'chg1dPct' || sortKey === 'ret20dPct' || sortKey === 'ret50dPct' || sortKey === 'ret120dPct' || sortKey === 'ret200dPct' || sortKey === 'quoteHi52' || sortKey === 'quoteLo52' || sortKey === 'quotePosition' || sortKey === 'rs'";
 
 const APPLY_TH_LAST = "var thLast = document.getElementById('th-last');";
 const APPLY_TH_RET = `${APPLY_TH_LAST}
@@ -59,7 +59,7 @@ const APPLY_TH_RET = `${APPLY_TH_LAST}
       var thRet20d = document.getElementById('th-ret20d');
       var thRet50d = document.getElementById('th-ret50d');
       var thRet120d = document.getElementById('th-ret120d');
-      var thRet250d = document.getElementById('th-ret250d');`;
+      var thRet200d = document.getElementById('th-ret200d');`;
 
 const APPLY_SET_LAST = 'if (thLast) thLast.textContent = t.thLast;';
 const APPLY_SET_RET = `${APPLY_SET_LAST}
@@ -67,7 +67,7 @@ const APPLY_SET_RET = `${APPLY_SET_LAST}
       if (thRet20d) thRet20d.textContent = t.thRet20d || (lang === 'en' ? '20D' : '20일');
       if (thRet50d) thRet50d.textContent = t.thRet50d || (lang === 'en' ? '50D' : '50일');
       if (thRet120d) thRet120d.textContent = t.thRet120d || (lang === 'en' ? '120D' : '120일');
-      if (thRet250d) thRet250d.textContent = t.thRet250d || (lang === 'en' ? '250D' : '250일');`;
+      if (thRet200d) thRet200d.textContent = t.thRet200d || (lang === 'en' ? '200D' : '200일');`;
 
 const RET_CSS = `
     .ret-col { font-size: 11px; white-space: nowrap; }
@@ -79,19 +79,19 @@ function patchTranslations(html) {
   if (!h.includes('thChg1d')) {
     h = h.replace(
       /thLast:\s*'현재가',/g,
-      "thLast: '현재가', thChg1d: '1일', thRet20d: '20일', thRet50d: '50일', thRet120d: '120일', thRet250d: '250일',",
+      "thLast: '현재가', thChg1d: '1일', thRet20d: '20일', thRet50d: '50일', thRet120d: '120일', thRet200d: '200일',",
     );
     h = h.replace(
       /"thLast":\s*"현재가",/g,
-      '"thLast": "현재가",\n        "thChg1d": "1일",\n        "thRet20d": "20일",\n        "thRet50d": "50일",\n        "thRet120d": "120일",\n        "thRet250d": "250일",',
+      '"thLast": "현재가",\n        "thChg1d": "1일",\n        "thRet20d": "20일",\n        "thRet50d": "50일",\n        "thRet120d": "120일",\n        "thRet200d": "200일",',
     );
     h = h.replace(
       /thLast:\s*'Last',/g,
-      "thLast: 'Last', thChg1d: '1D', thRet20d: '20D', thRet50d: '50D', thRet120d: '120D', thRet250d: '250D',",
+      "thLast: 'Last', thChg1d: '1D', thRet20d: '20D', thRet50d: '50D', thRet120d: '120D', thRet200d: '200D',",
     );
     h = h.replace(
       /"thLast":\s*"Last",/g,
-      '"thLast": "Last",\n        "thChg1d": "Day",\n        "thRet20d": "1M",\n        "thRet50d": "3M",\n        "thRet120d": "6M",\n        "thRet250d": "1Y",',
+      '"thLast": "Last",\n        "thChg1d": "Day",\n        "thRet20d": "1M",\n        "thRet50d": "3M",\n        "thRet120d": "6M",\n        "thRet200d": "200D",',
     );
   }
   return h;

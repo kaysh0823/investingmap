@@ -75,7 +75,7 @@
   function applyRsFieldsFromRow(c, row) {
     if (!row) {
       c.rs = null;
-      c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret250dPct = null;
+      c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
       return;
     }
     c.rs = typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
@@ -83,7 +83,7 @@
     c.ret20dPct = pickRetPct(row, 'ret20dPct', 'ret1mPct');
     c.ret50dPct = pickRetPct(row, 'ret50dPct', 'ret3mPct');
     c.ret120dPct = pickRetPct(row, 'ret120dPct', 'ret6mPct');
-    c.ret250dPct = pickRetPct(row, 'ret250dPct', 'ret1yPct');
+    c.ret200dPct = pickRetPct(row, 'ret200dPct', 'ret250dPct', 'ret1yPct');
   }
 
   function applyRsFieldsFromRowIfPresent(c, row) {
@@ -98,8 +98,8 @@
     if (v != null) c.ret50dPct = v;
     v = pickRetPct(row, 'ret120dPct', 'ret6mPct');
     if (v != null) c.ret120dPct = v;
-    v = pickRetPct(row, 'ret250dPct', 'ret1yPct');
-    if (v != null) c.ret250dPct = v;
+    v = pickRetPct(row, 'ret200dPct', 'ret1yPct');
+    if (v != null) c.ret200dPct = v;
   }
 
   function quoteItemHasRsReturns(q) {
@@ -109,7 +109,7 @@
     if (pickRetPct(q, 'ret20dPct', 'ret1mPct') != null) return true;
     if (pickRetPct(q, 'ret50dPct', 'ret3mPct') != null) return true;
     if (pickRetPct(q, 'ret120dPct', 'ret6mPct') != null) return true;
-    if (pickRetPct(q, 'ret250dPct', 'ret1yPct') != null) return true;
+    if (pickRetPct(q, 'ret200dPct', 'ret1yPct') != null) return true;
     return false;
   }
 
@@ -135,7 +135,7 @@
     if (pickRetPct(q, 'ret20dPct', 'ret1mPct') != null) return true;
     if (pickRetPct(q, 'ret50dPct', 'ret3mPct') != null) return true;
     if (pickRetPct(q, 'ret120dPct', 'ret6mPct') != null) return true;
-    if (pickRetPct(q, 'ret250dPct', 'ret1yPct') != null) return true;
+    if (pickRetPct(q, 'ret200dPct', 'ret1yPct') != null) return true;
     return false;
   }
 
@@ -165,7 +165,7 @@
       var key = normalizeTicker(c.ticker);
       if (!key) {
         c.rs = null;
-        c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret250dPct = null;
+        c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
         continue;
       }
       applyRsFieldsFromRow(c, quotes[key]);
@@ -373,7 +373,7 @@
       ret20d: formatReturnPct(c.ret20dPct),
       ret50d: formatReturnPct(c.ret50dPct),
       ret120d: formatReturnPct(c.ret120dPct),
-      ret250d: formatReturnPct(c.ret250dPct),
+      ret200d: formatReturnPct(c.ret200dPct),
       hi: formatWon(c.quoteHi52, lang),
       lo: formatWon(c.quoteLo52, lang),
       position: posHtml,
@@ -384,7 +384,7 @@
 
   function emptyQuotesRow() {
     return {
-      last: '\u2014', chg1d: '\u2014', ret20d: '\u2014', ret50d: '\u2014', ret120d: '\u2014', ret250d: '\u2014',
+      last: '\u2014', chg1d: '\u2014', ret20d: '\u2014', ret50d: '\u2014', ret120d: '\u2014', ret200d: '\u2014',
       hi: '\u2014', lo: '\u2014', position: '\u2014', rs: '\u2014', yoy: '\u2014',
     };
   }

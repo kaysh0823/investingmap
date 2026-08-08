@@ -58,7 +58,7 @@ function mapSupabaseRow(row) {
     ret20dPct: numOrNull(row.ret_20d_pct),
     ret50dPct: numOrNull(row.ret_50d_pct),
     ret120dPct: numOrNull(row.ret_120d_pct),
-    ret250dPct: numOrNull(row.ret_250d_pct),
+    ret200dPct: numOrNull(row.ret_200d_pct),
     rs: numOrNull(row.rs),
   };
 }

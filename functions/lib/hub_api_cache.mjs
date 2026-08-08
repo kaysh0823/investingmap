@@ -74,11 +74,12 @@ export const HORIZON_RET_KEY = {
   '20d': 'return20dPct',
   '50d': 'return50dPct',
   '120d': 'return120dPct',
-  '250d': 'return250dPct',
+  '200d': 'return200dPct',
   '1m': 'return20dPct',
   '3m': 'return50dPct',
   '6m': 'return120dPct',
-  '1y': 'return250dPct',
+  '1y': 'return200dPct',
+  '250d': 'return200dPct',
 };
 
 /** @param {string|null|undefined} h */
@@ -88,7 +89,17 @@ export function normalizeSectorHorizon(h) {
   if (raw === '20d' || raw === 'return20dpct' || raw === '1m' || raw === 'return1mpct') return '20d';
   if (raw === '50d' || raw === 'return50dpct' || raw === '3m' || raw === 'return3mpct') return '50d';
   if (raw === '120d' || raw === 'return120dpct' || raw === '6m' || raw === 'return6mpct') return '120d';
-  if (raw === '250d' || raw === 'return250dpct' || raw === '1y' || raw === 'yoy' || raw === 'yoyreturnpct') return '250d';
+  if (
+    raw === '200d' ||
+    raw === 'return200dpct' ||
+    raw === '250d' ||
+    raw === 'return250dpct' ||
+    raw === '1y' ||
+    raw === 'yoy' ||
+    raw === 'yoyreturnpct'
+  ) {
+    return '200d';
+  }
   return '20d';
 }
 

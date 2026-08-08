@@ -61,7 +61,7 @@ async function main() {
     mcapPast20dDd: payload.mcapPast20dDd,
     mcapPast50dDd: payload.mcapPast50dDd,
     mcapPast120dDd: payload.mcapPast120dDd,
-    mcapPast250dDd: payload.mcapPast250dDd,
+    mcapPast200dDd: payload.mcapPast200dDd,
     sectors: payload.sectors,
   };
 
