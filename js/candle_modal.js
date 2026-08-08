@@ -473,11 +473,33 @@
     state.ticker = null;
   }
 
+  function isNavigationalLink(el) {
+    if (!el || !el.closest) return false;
+    var a = el.closest('a[href]');
+    if (!a) return false;
+    // Cross-sector badges and other explicit nav chips — let the browser navigate.
+    if (a.classList.contains('im-cross-sector-badge')) return true;
+    if (a.closest('.im-seo-related, .im-seo-body-p, .global-bottom-nav, .desktop-sidebar, .filter-bar, .tabs, header, footer, nav')) {
+      return true;
+    }
+    // Anchor inside a company table row / mobile card: usually the name/stock link —
+    // intercept for candle modal (keep href for SEO/fallback; preventDefault on open).
+    if (a.closest('#table-body tr[data-ticker], #table-cards .im-stock-card[data-ticker]')) {
+      return false;
+    }
+    return true;
+  }
+
   function shouldIgnoreTarget(el) {
     if (!el || !el.closest) return true;
-    if (el.closest('a, button, input, select, textarea, label')) return true;
-    if (el.closest('.im-cross-sector-badge, .im-card-chevron, thead, .filter-bar, .tabs')) return true;
-    if (el.closest('#im-candle-root')) return true;
+    if (el.closest('.im-card-chevron, thead, .filter-bar, .tabs, #im-candle-root')) return true;
+    if (el.closest('button:not(.im-candle-range), input, select, textarea, label')) {
+      // Form controls outside open targets
+      if (!el.closest('#table-body tr[data-ticker], #table-cards .im-stock-card[data-ticker]')) return true;
+      // Rare controls inside a row — don't treat as candle trigger
+      return true;
+    }
+    if (isNavigationalLink(el)) return true;
     return false;
   }
 
@@ -485,9 +507,8 @@
     if (shouldIgnoreTarget(e.target)) return null;
     var card = e.target.closest('#table-cards .im-stock-card[data-ticker]');
     if (card) {
-      // Card summary / name / spark — open chart (chevron ignored above)
       if (
-        e.target.closest('.im-card-toggle, .im-row-name, .im-card-spark, .quote-spark, .company-name')
+        e.target.closest('.im-card-toggle, .im-row-name, .im-card-spark, .quote-spark, .company-name, .company-name-wrap')
       ) {
         return card.getAttribute('data-ticker');
       }
@@ -501,9 +522,11 @@
   function onDocClick(e) {
     var ticker = tickerFromEvent(e);
     if (!ticker) return;
+    // Block default for name/stock <a href> inside the row; keep href for SEO/fallback.
     e.preventDefault();
     e.stopPropagation();
-    var nameEl = e.target.closest('[data-ticker]') && e.target.closest('[data-ticker]').querySelector('.company-name');
+    var host = e.target.closest('[data-ticker]');
+    var nameEl = host && host.querySelector('.company-name');
     open({ ticker: ticker, name: nameEl ? nameEl.textContent.trim() : '' });
   }
 
