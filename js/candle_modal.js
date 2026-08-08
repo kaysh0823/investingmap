@@ -149,29 +149,40 @@
   }
 
   /**
-   * Normalize Bollinger bandwidth over a trailing window to 0..100.
-   * BBW%_i = (width_i - min_w) / (max_w - min_w) * 100 on [i-window+1, i].
+   * Normalize Bollinger bandwidth to 0..100 with a PAST-only trailing window.
+   * At each i: use width[i-window+1 .. i] (never i+1..). Future bars are forbidden.
+   * BBW%_i = (width_i - min) / (max - min) * 100. Requires `window` finite widths in range.
    */
   function bandwidthPercentile(widths, window) {
     var out = new Array(widths.length);
+    var wLen = window | 0;
+    if (wLen < 2) {
+      for (var z = 0; z < widths.length; z++) out[z] = null;
+      return out;
+    }
     for (var i = 0; i < widths.length; i++) {
       out[i] = null;
-      if (widths[i] == null || !isFinite(widths[i]) || i < window - 1) continue;
+      var cur = widths[i];
+      if (cur == null || !isFinite(cur)) continue;
+      var from = i - wLen + 1;
+      if (from < 0) continue; // need a full trailing window ending at i
       var minW = Infinity;
       var maxW = -Infinity;
       var n = 0;
-      for (var j = i - window + 1; j <= i; j++) {
+      for (var j = from; j <= i; j++) {
         var w = widths[j];
         if (w == null || !isFinite(w)) continue;
         n += 1;
         if (w < minW) minW = w;
         if (w > maxW) maxW = w;
       }
-      if (n < window || !(maxW > minW)) {
-        out[i] = n === window && maxW === minW ? 50 : null;
+      // Strict: every slot in [from..i] must contribute (no forward fill / no future peek).
+      if (n !== wLen) continue;
+      if (!(maxW > minW)) {
+        out[i] = 50;
         continue;
       }
-      out[i] = ((widths[i] - minW) / (maxW - minW)) * 100;
+      out[i] = ((cur - minW) / (maxW - minW)) * 100;
     }
     return out;
   }

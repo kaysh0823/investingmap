@@ -137,7 +137,12 @@ async function main() {
   const days = daysArg ? Math.max(1, parseInt(daysArg.split('=')[1], 10) || HIST_TRADING_DAYS) : HIST_TRADING_DAYS;
 
   const dates = tradingDates(days).reverse();
-  console.log(`Backfill ${dates.length} trading days → stock_price_history`);
+  console.log(`Backfill request --days=${days} → ${dates.length} weekday slots → stock_price_history`);
+  if (dates.length < days) {
+    console.warn(
+      `Warning: only ${dates.length}/${days} weekday dates generated (calendar scan capped). Check tradingDates.`,
+    );
+  }
 
   const failedDates = [];
   const emptyDates = [];

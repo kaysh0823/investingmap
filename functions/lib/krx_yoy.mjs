@@ -19,6 +19,7 @@ const KOSPI_DAILY = '/sto/stk_bydd_trd';
 const KOSDAQ_DAILY = '/sto/ksq_bydd_trd';
 const HIST_CACHE_MS = 6 * 60 * 60 * 1000;
 const HIST_TRADING_DAYS = 252;
+/** Baseline calendar-day scan for short lookbacks (~1y weekdays). Longer counts expand dynamically. */
 const HIST_CALENDAR_SCAN = 400;
 const HIST_TRADING_DAYS_20D = 20;
 const HIST_TRADING_DAYS_50D = 50;
@@ -66,10 +67,17 @@ function formatYmdFromParts(p) {
   return `${p.year}${m}${d}`;
 }
 
-/** Weekday calendar dates in KST (newest first); holidays resolved via KRX fetch fallback. */
+/**
+ * Weekday calendar dates in KST (newest first); holidays resolved via KRX fetch fallback.
+ * Calendar scan grows with `count` so callers like backfill --days=500 get ~500 weekdays,
+ * not capped at HIST_CALENDAR_SCAN (~285 weekdays in 400 calendar days).
+ */
 function tradingDates(count, now = new Date()) {
   const out = [];
-  for (let i = 0; out.length < count && i < HIST_CALENDAR_SCAN; i++) {
+  const n = Math.max(0, Math.floor(Number(count)) || 0);
+  // Weekdays ≈ count*7/5; *3 calendar days leaves room for weekends + holidays.
+  const calendarCap = Math.max(HIST_CALENDAR_SCAN, n * 3);
+  for (let i = 0; out.length < n && i < calendarCap; i++) {
     const dt = new Date(now.getTime() - i * 86400000);
     const parts = kstDateParts(dt);
     if (parts.weekday === 0 || parts.weekday === 6) continue;
