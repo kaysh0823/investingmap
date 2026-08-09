@@ -50,6 +50,7 @@
       paneVol: '거래량',
       paneMacd: 'MACD',
       paneNorm: 'BBW% · 이격도% (125일)',
+      liveSession: '장중(현재가)',
     },
     en: {
       close: 'Close',
@@ -77,6 +78,7 @@
       paneVol: 'Volume',
       paneMacd: 'MACD',
       paneNorm: 'BBW% · DISP% (125d)',
+      liveSession: 'Live (last)',
     },
   };
 
@@ -94,6 +96,8 @@
     lwcPromise: null,
     lastFocus: null,
     resizeObs: null,
+    liveOverlay: false,
+    liveBarTime: null,
   };
 
   /* ---------- indicator utils ---------- */
@@ -321,6 +325,120 @@
       '&range=' +
       encodeURIComponent(range)
     );
+  }
+
+  function quotesApiUrl(code) {
+    var origin =
+      global.location && global.location.protocol && global.location.protocol.indexOf('http') === 0
+        ? global.location.origin
+        : '';
+    return origin + '/api/quotes?codes=' + encodeURIComponent(code);
+  }
+
+  /** ISO / timestamp → Asia/Seoul YYYY-MM-DD (quotes asOf → trade date). */
+  function asOfToTradeDate(asOf) {
+    if (!asOf) return '';
+    var d = new Date(asOf);
+    if (!isFinite(d.getTime())) {
+      var s = String(asOf).slice(0, 10);
+      return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : '';
+    }
+    try {
+      var parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }).formatToParts(d);
+      var y = '';
+      var m = '';
+      var day = '';
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].type === 'year') y = parts[i].value;
+        if (parts[i].type === 'month') m = parts[i].value;
+        if (parts[i].type === 'day') day = parts[i].value;
+      }
+      if (y && m && day) return y + '-' + m + '-' + day;
+    } catch (e) {}
+    return '';
+  }
+
+  /**
+   * Overlay /api/quotes last onto the newest OHLC bar while the regular session is open.
+   * Same trade day → patch c/h/l; newer trade day → append a synthetic bar.
+   */
+  function applyLiveQuoteToBars(bars, quotesJson, code) {
+    if (!bars || !bars.length || !quotesJson) {
+      return { bars: bars, live: false, liveTime: null };
+    }
+    // Settled session: keep confirmed closes.
+    if (quotesJson.regularSession === false) {
+      return { bars: bars, live: false, liveTime: null };
+    }
+    if (quotesJson.regularSession !== true) {
+      return { bars: bars, live: false, liveTime: null };
+    }
+
+    var tick = String(code || '')
+      .replace(/\D/g, '')
+      .padStart(6, '0')
+      .slice(-6);
+    var items = quotesJson.items || {};
+    var item = items[tick] || items[code] || null;
+    if (!item) return { bars: bars, live: false, liveTime: null };
+
+    var last = typeof item.last === 'number' ? item.last : Number(item.last);
+    if (!isFinite(last) || last <= 0) return { bars: bars, live: false, liveTime: null };
+
+    var qDate = asOfToTradeDate(quotesJson.asOf);
+    if (!qDate) return { bars: bars, live: false, liveTime: null };
+
+    var out = bars.slice();
+    var lastBar = out[out.length - 1];
+    var lastT = lastBar.t;
+
+    if (qDate === lastT) {
+      var high = lastBar.h != null && isFinite(lastBar.h) ? Math.max(lastBar.h, last) : last;
+      var low = lastBar.l != null && isFinite(lastBar.l) ? Math.min(lastBar.l, last) : last;
+      out[out.length - 1] = {
+        t: lastBar.t,
+        o: lastBar.o,
+        h: high,
+        l: low,
+        c: last,
+        v: lastBar.v,
+        live: true,
+      };
+      return { bars: out, live: true, liveTime: lastT };
+    }
+
+    if (qDate > lastT) {
+      var prev =
+        item.prevClose != null && isFinite(Number(item.prevClose)) && Number(item.prevClose) > 0
+          ? Number(item.prevClose)
+          : last;
+      out.push({
+        t: qDate,
+        o: prev,
+        h: Math.max(prev, last),
+        l: Math.min(prev, last),
+        c: last,
+        v: 0,
+        live: true,
+      });
+      return { bars: out, live: true, liveTime: qDate };
+    }
+
+    return { bars: bars, live: false, liveTime: null };
+  }
+
+  function updateSubtitle() {
+    var labels = t();
+    var sub = document.getElementById('im-candle-sub');
+    if (!sub || !state.ticker) return;
+    var text = state.ticker + ' · ' + labels.chartLabel;
+    if (state.liveOverlay) text += ' · ' + labels.liveSession;
+    sub.textContent = text;
   }
 
   function loadLwc() {
@@ -606,6 +724,7 @@
         macdHist: macdPack.hist[i],
         bbw: bbwPct[i],
         disp: dispPct[i],
+        live: !!b.live,
       };
     }
 
@@ -687,6 +806,7 @@
       labels.disp +
       ' ' +
       fmtNum(b.disp, 1);
+    if (b.live) tip.textContent += ' · ' + labels.liveSession;
   }
 
   function destroyCharts() {
@@ -1001,14 +1121,26 @@
     setStatus(labels.loading, true);
     updateTip(null);
     destroyCharts();
+    state.liveOverlay = false;
+    state.liveBarTime = null;
+    updateSubtitle();
 
     return loadLwc()
       .then(function (LWC) {
-        return fetch(ohlcApiUrl(code, range), { credentials: 'omit' }).then(function (res) {
+        var ohlcP = fetch(ohlcApiUrl(code, range), { credentials: 'omit' }).then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
-          return res.json().then(function (json) {
-            return { LWC: LWC, json: json };
+          return res.json();
+        });
+        var quotesP = fetch(quotesApiUrl(code), { credentials: 'omit' })
+          .then(function (res) {
+            if (!res.ok) return null;
+            return res.json();
+          })
+          .catch(function () {
+            return null;
           });
+        return Promise.all([ohlcP, quotesP]).then(function (pair) {
+          return { LWC: LWC, json: pair[0], quotes: pair[1] };
         });
       })
       .then(function (pack) {
@@ -1019,6 +1151,12 @@
           setStatus(labels.empty, true);
           return;
         }
+        var overlaid = applyLiveQuoteToBars(fullBars, pack.quotes, code);
+        fullBars = overlaid.bars;
+        state.liveOverlay = !!overlaid.live;
+        state.liveBarTime = overlaid.liveTime || null;
+        updateSubtitle();
+
         var data = buildPanelData(fullBars, range);
         if (!data.candles.length) {
           destroyCharts();
@@ -1076,7 +1214,9 @@
     document.body.classList.add('im-candle-open');
 
     document.getElementById('im-candle-title').textContent = state.name || ticker;
-    document.getElementById('im-candle-sub').textContent = ticker + ' · ' + labels.chartLabel;
+    state.liveOverlay = false;
+    state.liveBarTime = null;
+    updateSubtitle();
     document.getElementById('im-candle-close').setAttribute('aria-label', labels.close);
     syncRangeButtons();
     syncPaneLabels();
@@ -1103,6 +1243,8 @@
     document.body.classList.remove('im-candle-open');
     setStatus('', false);
     updateTip(null);
+    state.liveOverlay = false;
+    state.liveBarTime = null;
     if (state.lastFocus && state.lastFocus.focus) {
       try {
         state.lastFocus.focus();
@@ -1180,8 +1322,7 @@
     var labels = t();
     var closeBtn = document.getElementById('im-candle-close');
     if (closeBtn) closeBtn.setAttribute('aria-label', labels.close);
-    var sub = document.getElementById('im-candle-sub');
-    if (sub && state.ticker) sub.textContent = state.ticker + ' · ' + labels.chartLabel;
+    updateSubtitle();
     syncRangeButtons();
     syncPaneLabels();
   }
@@ -1208,6 +1349,8 @@
       bandwidthPercentile: bandwidthPercentile,
       disparityFromMa: disparityFromMa,
       macd: macd,
+      applyLiveQuoteToBars: applyLiveQuoteToBars,
+      asOfToTradeDate: asOfToTradeDate,
       NORM_WINDOW: NORM_WINDOW,
     },
   };
