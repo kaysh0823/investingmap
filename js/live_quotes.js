@@ -75,11 +75,12 @@
   function applyRsFieldsFromRow(c, row) {
     if (!row) {
       c.rs = null;
-      c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
+      c.chg1dPct = c.ret5dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
       return;
     }
     c.rs = typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
     c.chg1dPct = pickRetPct(row, 'chg1dPct');
+    c.ret5dPct = pickRetPct(row, 'ret5dPct');
     c.ret20dPct = pickRetPct(row, 'ret20dPct', 'ret1mPct');
     c.ret50dPct = pickRetPct(row, 'ret50dPct', 'ret3mPct');
     c.ret120dPct = pickRetPct(row, 'ret120dPct', 'ret6mPct');
@@ -92,6 +93,8 @@
     var v;
     v = pickRetPct(row, 'chg1dPct');
     if (v != null) c.chg1dPct = v;
+    v = pickRetPct(row, 'ret5dPct');
+    if (v != null) c.ret5dPct = v;
     v = pickRetPct(row, 'ret20dPct', 'ret1mPct');
     if (v != null) c.ret20dPct = v;
     v = pickRetPct(row, 'ret50dPct', 'ret3mPct');
@@ -106,6 +109,7 @@
     if (!q) return false;
     if (typeof q.rs === 'number' && isFinite(q.rs)) return true;
     if (pickRetPct(q, 'chg1dPct') != null) return true;
+    if (pickRetPct(q, 'ret5dPct') != null) return true;
     if (pickRetPct(q, 'ret20dPct', 'ret1mPct') != null) return true;
     if (pickRetPct(q, 'ret50dPct', 'ret3mPct') != null) return true;
     if (pickRetPct(q, 'ret120dPct', 'ret6mPct') != null) return true;
@@ -165,7 +169,7 @@
       var key = normalizeTicker(c.ticker);
       if (!key) {
         c.rs = null;
-        c.chg1dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
+        c.chg1dPct = c.ret5dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
         continue;
       }
       applyRsFieldsFromRow(c, quotes[key]);

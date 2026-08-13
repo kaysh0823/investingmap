@@ -1,12 +1,17 @@
 /**
  * Market-cap treemap heatmap for industry map pages (d3.treemap).
- * Tile size = mcap; tile color = 1-day return (chg1dPct), finviz-style red↔green.
+ * Tile size = mcap; tile color/label = selected return horizon (finviz-style).
  */
 (function (global) {
   'use strict';
 
-  var CHG_CLIP = 3;
-  var CHG_DOMAIN = [-3, -2, -1, 0, 1, 2, 3];
+  var HORIZONS = [
+    { id: '1d', field: 'chg1dPct', clip: 3, ko: '당일', en: '1D' },
+    { id: '5d', field: 'ret5dPct', clip: 10, ko: '5일', en: '5D' },
+    { id: '20d', field: 'ret20dPct', clip: 20, ko: '20일', en: '20D' },
+    { id: '50d', field: 'ret50dPct', clip: 30, ko: '50일', en: '50D' },
+    { id: '120d', field: 'ret120dPct', clip: 50, ko: '120일', en: '120D' },
+  ];
   var CHG_RANGE = ['#c62828', '#9a3b3b', '#7a4a4a', '#414554', '#4a7a4a', '#3d8b40', '#2e7d32'];
   var NEUTRAL = '#414554';
   var TEXT_LIGHT = '#f0f3f6';
@@ -17,30 +22,37 @@
   var lastTapTicker = null;
   var outsideTapBound = false;
   var lastLayoutKey = '';
-  var chgColorScale = null;
+  var selectedHorizon = '1d';
+  var lastOpts = null;
+  var resizeObs = null;
+  var resizeTimer = null;
+  var observedEl = null;
 
-  function getChgScale() {
-    if (chgColorScale) return chgColorScale;
-    if (typeof d3 !== 'undefined' && d3.scaleLinear) {
-      chgColorScale = d3
-        .scaleLinear()
-        .domain(CHG_DOMAIN)
-        .range(CHG_RANGE)
-        .clamp(true);
-      if (typeof d3.interpolateRgb === 'function') {
-        chgColorScale.interpolate(d3.interpolateRgb);
-      }
-      return chgColorScale;
+  function horizonById(id) {
+    for (var i = 0; i < HORIZONS.length; i++) {
+      if (HORIZONS[i].id === id) return HORIZONS[i];
     }
-    chgColorScale = function (v) {
-      return chgFillManual(v);
-    };
-    return chgColorScale;
+    return HORIZONS[0];
   }
 
-  function chgFillManual(pct) {
-    var x = Math.max(-CHG_CLIP, Math.min(CHG_CLIP, pct));
-    var t = (x + CHG_CLIP) / (2 * CHG_CLIP);
+  function currentHorizon() {
+    return horizonById(selectedHorizon);
+  }
+
+  function companyReturn(company, hz) {
+    if (!company) return null;
+    var v = company[hz.field];
+    if (v == null || !isFinite(v)) return null;
+    return v;
+  }
+
+  function domainForClip(clip) {
+    return [-clip, (-clip * 2) / 3, -clip / 3, 0, clip / 3, (clip * 2) / 3, clip];
+  }
+
+  function chgFillManual(pct, clip) {
+    var x = Math.max(-clip, Math.min(clip, pct));
+    var t = (x + clip) / (2 * clip);
     var pos = t * (CHG_RANGE.length - 1);
     var i = Math.floor(pos);
     var f = pos - i;
@@ -50,10 +62,21 @@
     return d3.rgb(a.r + (b.r - a.r) * f, a.g + (b.g - a.g) * f, a.b + (b.b - a.b) * f).formatHex();
   }
 
-  function chgFill(company) {
-    var pct = company && company.chg1dPct;
-    if (pct == null || !isFinite(pct)) return NEUTRAL;
-    return getChgScale()(pct);
+  function makeScale(clip) {
+    if (typeof d3 !== 'undefined' && d3.scaleLinear) {
+      var sc = d3.scaleLinear().domain(domainForClip(clip)).range(CHG_RANGE).clamp(true);
+      if (typeof d3.interpolateRgb === 'function') sc.interpolate(d3.interpolateRgb);
+      return sc;
+    }
+    return function (v) {
+      return chgFillManual(v, clip);
+    };
+  }
+
+  function chgFill(company, hz) {
+    var pct = companyReturn(company, hz || currentHorizon());
+    if (pct == null) return NEUTRAL;
+    return makeScale((hz || currentHorizon()).clip)(pct);
   }
 
   function relativeLuminance(col) {
@@ -70,13 +93,24 @@
     return {
       name: light ? TEXT_DARK : TEXT_LIGHT,
       mcap: light ? TEXT_MUTED_DARK : TEXT_MUTED_LIGHT,
+      chg: light ? TEXT_DARK : TEXT_LIGHT,
     };
   }
 
   function formatChg(pct) {
     if (pct == null || !isFinite(pct)) return '—';
-    var sign = pct > 0 ? '+' : '';
-    return sign + Number(pct).toFixed(2) + '%';
+    var abs = Math.abs(pct).toFixed(1);
+    if (pct > 0) return '+' + abs + '%';
+    if (pct < 0) return '\u2212' + abs + '%';
+    return '0.0%';
+  }
+
+  function formatTick(n) {
+    var rounded = Math.round(n);
+    var val = Math.abs(n - rounded) < 0.05 ? rounded : Math.round(n * 10) / 10;
+    if (val > 0) return '+' + val + '%';
+    if (val < 0) return '\u2212' + Math.abs(val) + '%';
+    return '0%';
   }
 
   function displayName(c, lang) {
@@ -130,14 +164,24 @@
     return lang + '#' + w + 'x' + h + '#' + parts.join('|');
   }
 
+  function measureBox(el) {
+    var rect = el.getBoundingClientRect();
+    var w = Math.max(0, Math.floor(rect.width || el.clientWidth || 0));
+    var h = Math.max(0, Math.floor(rect.height || el.clientHeight || 0));
+    return { w: w, h: h };
+  }
+
   function isMobileHeatmap() {
     return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:768px)').matches;
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hm-tooltip-css')) return;
-    var el = document.createElement('style');
-    el.id = 'im-hm-tooltip-css';
+    var el = document.getElementById('im-hm-tooltip-css');
+    if (!el) {
+      el = document.createElement('style');
+      el.id = 'im-hm-tooltip-css';
+      document.head.appendChild(el);
+    }
     el.textContent =
       '.im-hm-tooltip{position:fixed;z-index:9999;pointer-events:none;' +
       'padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;line-height:1.4;' +
@@ -146,12 +190,20 @@
       'max-width:min(360px,86vw);display:none}' +
       '.im-hm-tooltip .im-hm-tt-name{display:block;font-size:13px;font-weight:700;color:var(--text,#e6edf3)}' +
       '.im-hm-tooltip .im-hm-tt-mcap,.im-hm-tooltip .im-hm-tt-chg{display:block;margin-top:2px;font-size:12px;font-weight:600;color:var(--text-muted,#8b949e)}' +
+      '.hm-horizon-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;align-items:center}' +
+      '.hm-horizon-tab{padding:6px 12px;border-radius:16px;border:1px solid var(--border,#30363d);' +
+      'background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;cursor:pointer}' +
+      '.hm-horizon-tab:hover{border-color:var(--accent,#58a6ff);color:var(--text,#e6edf3)}' +
+      '.hm-horizon-tab[aria-pressed="true"]{border-color:var(--accent,#58a6ff);' +
+      'background:color-mix(in srgb, var(--accent,#58a6ff) 14%, var(--surface2,#21262d));color:var(--accent,#58a6ff)}' +
+      '#heatmap-root{position:relative}' +
+      '#heatmap-root svg.im-hm-svg{position:absolute;inset:0;width:100%;height:100%;display:block}' +
       '.hm-legend-scale{display:flex;flex-direction:column;gap:6px;width:min(420px,100%);margin-top:4px}' +
       '.hm-legend-title{font-size:12px;font-weight:700;color:var(--text-muted,#8b949e)}' +
       '.hm-legend-bar{height:10px;border-radius:4px;border:1px solid var(--border,#30363d);' +
       'background:linear-gradient(to right,#c62828 0%,#9a3b3b 16.6%,#7a4a4a 33.3%,#414554 50%,#4a7a4a 66.6%,#3d8b40 83.3%,#2e7d32 100%)}' +
-      '.hm-legend-ticks{display:flex;justify-content:space-between;font-size:11px;font-variant-numeric:tabular-nums;color:var(--text-muted,#8b949e)}';
-    document.head.appendChild(el);
+      '.hm-legend-ticks{display:flex;justify-content:space-between;font-size:11px;font-variant-numeric:tabular-nums;color:var(--text-muted,#8b949e)}' +
+      'text.hm-chg,text.hm-name,text.hm-mcap{pointer-events:none;font-variant-numeric:tabular-nums}';
   }
 
   function getTooltip() {
@@ -168,15 +220,17 @@
   }
 
   function showTooltip(company, lang, formatMcap, ev) {
+    var hz = currentHorizon();
     var tt = getTooltip();
     var nm = displayName(company, lang);
     var mcap = formatMcap(company) || '—';
-    var chg = formatChg(company.chg1dPct);
+    var chg = formatChg(companyReturn(company, hz));
+    var hzLabel = lang === 'en' ? hz.en : hz.ko;
     tt.innerHTML =
       '<span class="im-hm-tt-name"></span><span class="im-hm-tt-mcap"></span><span class="im-hm-tt-chg"></span>';
     tt.querySelector('.im-hm-tt-name').textContent = nm;
     tt.querySelector('.im-hm-tt-mcap').textContent = mcap;
-    tt.querySelector('.im-hm-tt-chg').textContent = (lang === 'en' ? '1D ' : '1일 ') + chg;
+    tt.querySelector('.im-hm-tt-chg').textContent = hzLabel + ' ' + chg;
     tt.style.display = 'block';
     moveTooltip(ev);
   }
@@ -222,8 +276,12 @@
   function renderLegend(el, lang) {
     if (!el) return;
     injectStyles();
-    var title = lang === 'en' ? '1-day return (size = market cap)' : '당일 등락률 (칸 크기 = 시가총액)';
-    var ticks = ['−3%', '−2%', '−1%', '0%', '+1%', '+2%', '+3%'];
+    var hz = currentHorizon();
+    var title =
+      lang === 'en'
+        ? hz.en + ' return (tile size = market cap)'
+        : hz.ko + ' 수익률 (칸 크기 = 시가총액)';
+    var ticks = domainForClip(hz.clip).map(formatTick);
     el.innerHTML =
       '<div class="hm-legend-scale">' +
       '<div class="hm-legend-title">' +
@@ -241,8 +299,54 @@
       '</div></div>';
   }
 
+  function syncHorizonTabs(lang) {
+    var bar = document.getElementById('hm-horizon-tabs');
+    if (!bar) return;
+    var btns = bar.querySelectorAll('[data-hm-horizon]');
+    for (var i = 0; i < btns.length; i++) {
+      var id = btns[i].getAttribute('data-hm-horizon');
+      var hz = horizonById(id);
+      btns[i].textContent = lang === 'en' ? hz.en : hz.ko;
+      btns[i].setAttribute('aria-pressed', id === selectedHorizon ? 'true' : 'false');
+    }
+  }
+
+  function ensureHorizonTabs(container, lang) {
+    var wrap = container.parentNode;
+    if (!wrap) return;
+    var bar = document.getElementById('hm-horizon-tabs');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'hm-horizon-tabs';
+      bar.className = 'hm-horizon-tabs';
+      bar.setAttribute('role', 'tablist');
+      wrap.insertBefore(bar, container);
+      bar.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-hm-horizon]');
+        if (!btn) return;
+        var id = btn.getAttribute('data-hm-horizon');
+        if (!id || id === selectedHorizon) return;
+        selectedHorizon = id;
+        if (lastOpts) render(lastOpts);
+      });
+    }
+    bar.innerHTML = HORIZONS.map(function (hz) {
+      return (
+        '<button type="button" class="hm-horizon-tab" role="tab" data-hm-horizon="' +
+        hz.id +
+        '" aria-pressed="' +
+        (hz.id === selectedHorizon ? 'true' : 'false') +
+        '">' +
+        (lang === 'en' ? hz.en : hz.ko) +
+        '</button>'
+      );
+    }).join('');
+  }
+
   function paintLeaf(g, company) {
-    var fill = chgFill(company);
+    var hz = currentHorizon();
+    var pct = companyReturn(company, hz);
+    var fill = chgFill(company, hz);
     var ink = textColorsForFill(fill);
     var rect = g.select('rect');
     if (!rect.empty()) rect.attr('fill', fill);
@@ -250,6 +354,11 @@
     if (!name.empty()) name.attr('fill', ink.name);
     var mcap = g.select('text.hm-mcap');
     if (!mcap.empty()) mcap.attr('fill', ink.mcap);
+    var chg = g.select('text.hm-chg');
+    if (!chg.empty()) {
+      chg.attr('fill', ink.chg);
+      chg.text(formatChg(pct));
+    }
   }
 
   function recolorLeaves(container, companies) {
@@ -269,10 +378,29 @@
       });
   }
 
+  function observeContainer(el) {
+    if (typeof ResizeObserver === 'undefined') return;
+    if (observedEl === el && resizeObs) return;
+    if (resizeObs) {
+      try {
+        resizeObs.disconnect();
+      } catch (e) {}
+    }
+    observedEl = el;
+    resizeObs = new ResizeObserver(function () {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (lastOpts) render(lastOpts);
+      }, 40);
+    });
+    resizeObs.observe(el);
+  }
+
   function render(opts) {
     opts = opts || {};
     var container = opts.container;
     if (!container || typeof d3 === 'undefined') return;
+    lastOpts = opts;
     var companies = opts.companies || [];
     if (opts.excludeTickers && opts.excludeTickers.length) {
       var skip = {};
@@ -293,13 +421,17 @@
 
     injectStyles();
     bindOutsideTap();
-    var w = container.clientWidth || 800;
-    var h = container.clientHeight || 480;
-    if (w < 200) w = 800;
-    if (h < 200) h = 480;
-
+    ensureHorizonTabs(container, lang);
+    syncHorizonTabs(lang);
+    observeContainer(container);
     renderLegend(opts.legend, lang);
 
+    var box = measureBox(container);
+    var w = box.w;
+    var h = box.h;
+    if (w < 40 || h < 40) return;
+
+    var hz = currentHorizon();
     var key = layoutKey(companies, w, h, lang);
     if (key === lastLayoutKey && container.querySelector('svg.im-hm-svg')) {
       recolorLeaves(container, companies);
@@ -327,11 +459,11 @@
 
     d3.treemap()
       .size([w, h])
-      .paddingOuter(6)
+      .paddingOuter(2)
       .paddingTop(function (d) {
-        return d.depth === 1 ? 22 : 2;
+        return d.depth === 1 ? 20 : 1;
       })
-      .paddingInner(2)
+      .paddingInner(1)
       .round(true)(root);
 
     var svg = d3
@@ -340,13 +472,16 @@
       .attr('class', 'im-hm-svg')
       .attr('width', w)
       .attr('height', h)
-      .attr('viewBox', '0 0 ' + w + ' ' + h);
+      .attr('viewBox', '0 0 ' + w + ' ' + h)
+      .attr('preserveAspectRatio', 'none');
 
     var nodes = svg
       .selectAll('g')
-      .data(root.descendants().filter(function (d) {
-        return d.depth > 0;
-      }))
+      .data(
+        root.descendants().filter(function (d) {
+          return d.depth > 0;
+        }),
+      )
       .join('g')
       .attr('class', 'hm-tile')
       .attr('transform', function (d) {
@@ -380,7 +515,8 @@
 
       if (!leaf) return;
 
-      var fill = chgFill(leaf);
+      var pct = companyReturn(leaf, hz);
+      var fill = chgFill(leaf, hz);
       var ink = textColorsForFill(fill);
       g.append('rect')
         .attr('width', Math.max(0, tw))
@@ -392,12 +528,15 @@
 
       var nm = displayName(leaf, lang);
       var mcap = formatMcap(leaf);
+      var chgTxt = formatChg(pct);
       g.attr('data-company-name', nm);
       g.attr('data-ticker', leaf.ticker || '');
       g.attr('data-leaf', '1');
-      g.attr('aria-label', nm + ' · ' + mcap + ' · ' + formatChg(leaf.chg1dPct) + ' (' + (leaf.ticker || '') + ')');
+      g.attr('aria-label', nm + ' · ' + mcap + ' · ' + chgTxt + ' (' + (leaf.ticker || '') + ')');
 
-      if (tw > 56 && th > 36) {
+      var showAll = tw > 72 && th > 64;
+      var showNameChg = !showAll && tw > 56 && th > 40;
+      if (showAll || showNameChg) {
         g.append('text')
           .attr('class', 'hm-name')
           .attr('x', 6)
@@ -405,13 +544,26 @@
           .attr('fill', ink.name)
           .text(nm.length > Math.floor(tw / 7) ? nm.slice(0, Math.max(4, Math.floor(tw / 7) - 1)) + '…' : nm);
       }
-      if (tw > 48 && th > 52) {
+      if (showAll) {
         g.append('text')
           .attr('class', 'hm-mcap')
           .attr('x', 6)
           .attr('y', 30)
           .attr('fill', ink.mcap)
           .text(mcap);
+        g.append('text')
+          .attr('class', 'hm-chg')
+          .attr('x', 6)
+          .attr('y', 44)
+          .attr('fill', ink.chg)
+          .text(chgTxt);
+      } else if (showNameChg) {
+        g.append('text')
+          .attr('class', 'hm-chg')
+          .attr('x', 6)
+          .attr('y', 30)
+          .attr('fill', ink.chg)
+          .text(chgTxt);
       }
     });
 
@@ -458,9 +610,13 @@
   global.InvestingMapHeatmap = {
     render: render,
     recolor: function (opts) {
-      opts = opts || {};
+      opts = opts || lastOpts || {};
       if (opts.legend) renderLegend(opts.legend, opts.lang || 'ko');
       if (opts.container) recolorLeaves(opts.container, opts.companies || []);
+    },
+    setHorizon: function (id) {
+      selectedHorizon = id || '1d';
+      if (lastOpts) render(lastOpts);
     },
     chgFill: chgFill,
   };
