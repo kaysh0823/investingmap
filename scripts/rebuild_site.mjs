@@ -46,6 +46,7 @@ run('node scripts/prerender_seo.mjs', 'SEO prerender tables + sitemap');
 run('node scripts/patch_desktop_sidebar.mjs', 'desktop left sidebar');
 run('node scripts/patch_map_nav_filters.mjs', 'desktop sector nav, filters, tab state');
 run('node scripts/patch_tab_heatmap_i18n.mjs', 'tabHeatmap i18n');
+run('node scripts/patch_heatmap_chg.mjs', 'heatmap 1D return colors');
 run('node scripts/patch_editorial_collapsible_html.mjs', 'editorial collapsible HTML');
 run('node scripts/fix_mcap_script_order.mjs', 'mcap fmt + script order');
 run('node scripts/patch_rs_column.mjs', 'RS table column');

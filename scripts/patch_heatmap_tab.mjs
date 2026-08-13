@@ -203,7 +203,7 @@ function patchMap(rel) {
     );
     c = c.replace(
       "tabGraph: '🌐",
-      "heatmapHint: '시가총액 기준',\n        tabGraph: '🌐"
+      "heatmapHint: '칸 크기 = 시가총액 · 색 = 당일 등락률',\n        tabGraph: '🌐"
     );
     c = c.replace(
       "tabTable: '📋 Company List",
@@ -212,7 +212,7 @@ function patchMap(rel) {
     c = c.replace(
       /tabGraph: '🌐[^']*',\n        langFlag: '🇰🇷'/,
       (m) =>
-        "heatmapHint: 'Tile size = market cap (KRX) · color = value chain / sector',\n        " +
+        "heatmapHint: 'Tile size = market cap · color = 1-day return',\n        " +
         m.replace("langFlag: '🇰🇷'", "langFlag: '🇰🇷'")
     );
     if (!c.includes('heatmapHint:')) {

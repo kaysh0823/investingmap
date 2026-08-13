@@ -22,9 +22,9 @@ const MAPS = [
 ];
 
 const KO_INSERT =
-  '"tabHeatmap": "🔥 시총 히트맵",\n        "heatmapHint": "시가총액 기준",\n        ';
+  '"tabHeatmap": "🔥 시총 히트맵",\n        "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",\n        ';
 const EN_INSERT =
-  '"tabHeatmap": "🔥 Market cap heatmap",\n        "heatmapHint": "By market cap",\n        ';
+  '"tabHeatmap": "🔥 Market cap heatmap",\n        "heatmapHint": "Tile size = market cap · color = 1-day return",\n        ';
 
 const TAB_FALLBACK =
   "document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Market cap heatmap' : '🔥 시총 히트맵');";
@@ -64,8 +64,8 @@ for (const lang of ['ko', 'en']) {
     bioTr[lang].tabHeatmap = lang === 'ko' ? '🔥 시총 히트맵' : '🔥 Market cap heatmap';
     bioTr[lang].heatmapHint =
       lang === 'ko'
-        ? '시가총액 기준'
-        : 'By market cap';
+        ? '칸 크기 = 시가총액 · 색 = 당일 등락률'
+        : 'Tile size = market cap · color = 1-day return';
   }
 }
 fs.writeFileSync(bioTrPath, JSON.stringify(bioTr, null, 2) + '\n', 'utf8');
