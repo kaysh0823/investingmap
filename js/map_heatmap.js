@@ -1,23 +1,29 @@
 /**
  * Market-cap treemap heatmap for industry map pages (d3.treemap).
- * Tile size = mcap; tile color/label = selected return horizon (finviz-style).
+ * Tile size = compressed mcap (sqrt + floor); color/label = return horizon.
  */
 (function (global) {
   'use strict';
 
   var HORIZONS = [
-    { id: '1d', field: 'chg1dPct', clip: 3, ko: '당일', en: '1D' },
-    { id: '5d', field: 'ret5dPct', clip: 10, ko: '5일', en: '5D' },
-    { id: '20d', field: 'ret20dPct', clip: 20, ko: '20일', en: '20D' },
-    { id: '50d', field: 'ret50dPct', clip: 30, ko: '50일', en: '50D' },
-    { id: '120d', field: 'ret120dPct', clip: 50, ko: '120일', en: '120D' },
+    { id: '1d', field: 'chg1dPct', clip: 2.5, ko: '당일', en: '1D' },
+    { id: '5d', field: 'ret5dPct', clip: 8, ko: '5일', en: '5D' },
+    { id: '20d', field: 'ret20dPct', clip: 15, ko: '20일', en: '20D' },
+    { id: '50d', field: 'ret50dPct', clip: 25, ko: '50일', en: '50D' },
+    { id: '120d', field: 'ret120dPct', clip: 40, ko: '120일', en: '120D' },
   ];
-  var CHG_RANGE = ['#c62828', '#9a3b3b', '#7a4a4a', '#414554', '#4a7a4a', '#3d8b40', '#2e7d32'];
-  var NEUTRAL = '#414554';
+  /* Strong red ↔ dark neutral ↔ strong green (high chroma ends, dark mid). */
+  var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
+  var NEUTRAL = '#2a2e38';
   var TEXT_LIGHT = '#f0f3f6';
   var TEXT_DARK = '#161b22';
   var TEXT_MUTED_LIGHT = 'rgba(240,243,246,0.78)';
   var TEXT_MUTED_DARK = 'rgba(22,27,34,0.72)';
+  /** Contrast curve exponent (<1 → small moves saturate faster). */
+  var CONTRAST_EXP = 0.55;
+  /** Floor vs largest sqrt(mcap): keeps tiny caps clickable. */
+  var MIN_SIZE_FRAC = 0.045;
+  var SIZE_POWER = 0.5;
 
   var lastTapTicker = null;
   var outsideTapBound = false;
@@ -27,6 +33,7 @@
   var resizeObs = null;
   var resizeTimer = null;
   var observedEl = null;
+  var pendingSizeRetry = null;
 
   function horizonById(id) {
     for (var i = 0; i < HORIZONS.length; i++) {
@@ -50,9 +57,17 @@
     return [-clip, (-clip * 2) / 3, -clip / 3, 0, clip / 3, (clip * 2) / 3, clip];
   }
 
+  /** Map pct into clip domain with steeper near-zero contrast. */
+  function contrastPct(pct, clip) {
+    if (pct == null || !isFinite(pct) || !clip) return 0;
+    var x = Math.max(-clip, Math.min(clip, pct)) / clip;
+    var y = (x < 0 ? -1 : 1) * Math.pow(Math.abs(x), CONTRAST_EXP);
+    return y * clip;
+  }
+
   function chgFillManual(pct, clip) {
-    var x = Math.max(-clip, Math.min(clip, pct));
-    var t = (x + clip) / (2 * clip);
+    var mapped = contrastPct(pct, clip);
+    var t = (mapped + clip) / (2 * clip);
     var pos = t * (CHG_RANGE.length - 1);
     var i = Math.floor(pos);
     var f = pos - i;
@@ -66,7 +81,9 @@
     if (typeof d3 !== 'undefined' && d3.scaleLinear) {
       var sc = d3.scaleLinear().domain(domainForClip(clip)).range(CHG_RANGE).clamp(true);
       if (typeof d3.interpolateRgb === 'function') sc.interpolate(d3.interpolateRgb);
-      return sc;
+      return function (v) {
+        return sc(contrastPct(v, clip));
+      };
     }
     return function (v) {
       return chgFillManual(v, clip);
@@ -80,7 +97,7 @@
   }
 
   function relativeLuminance(col) {
-    var rgb = typeof d3 !== 'undefined' && d3.rgb ? d3.rgb(col) : { r: 65, g: 69, b: 84 };
+    var rgb = typeof d3 !== 'undefined' && d3.rgb ? d3.rgb(col) : { r: 42, g: 46, b: 56 };
     function lin(c) {
       c = c / 255;
       return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
@@ -118,12 +135,22 @@
     return c.name || c.nameKo || c.ticker || '';
   }
 
+  function sizeValue(mcapWon, maxSqrt) {
+    var m = Math.max(mcapWon || 0, 0);
+    var v = Math.pow(m, SIZE_POWER);
+    var floor = maxSqrt > 0 ? maxSqrt * MIN_SIZE_FRAC : 1;
+    return Math.max(v, floor, 1);
+  }
+
   function buildHierarchy(companies) {
     var byChain = {};
+    var maxSqrt = 0;
     (companies || []).forEach(function (c) {
       var ch = c.chain || '—';
       if (!byChain[ch]) byChain[ch] = [];
       byChain[ch].push(c);
+      var s = Math.pow(Math.max(c.mcapWon || 0, 0), SIZE_POWER);
+      if (s > maxSqrt) maxSqrt = s;
     });
     var chains = Object.keys(byChain).sort(function (a, b) {
       var sumA = 0;
@@ -142,14 +169,19 @@
         return {
           name: ch,
           chain: ch,
-          children: byChain[ch].map(function (c) {
-            return {
-              name: displayName(c, 'ko'),
-              company: c,
-              chain: ch,
-              value: Math.max(c.mcapWon || 0, 1),
-            };
-          }),
+          children: byChain[ch]
+            .slice()
+            .sort(function (a, b) {
+              return (b.mcapWon || 0) - (a.mcapWon || 0);
+            })
+            .map(function (c) {
+              return {
+                name: displayName(c, 'ko'),
+                company: c,
+                chain: ch,
+                value: sizeValue(c.mcapWon, maxSqrt),
+              };
+            }),
         };
       }),
     };
@@ -161,7 +193,7 @@
         return (c.ticker || '') + ':' + Math.round(c.mcapWon || 0) + ':' + (c.chain || '');
       })
       .sort();
-    return lang + '#' + w + 'x' + h + '#' + parts.join('|');
+    return lang + '#' + w + 'x' + h + '#sq' + SIZE_POWER + '#' + parts.join('|');
   }
 
   function measureBox(el) {
@@ -190,9 +222,11 @@
       'max-width:min(360px,86vw);display:none}' +
       '.im-hm-tooltip .im-hm-tt-name{display:block;font-size:13px;font-weight:700;color:var(--text,#e6edf3)}' +
       '.im-hm-tooltip .im-hm-tt-mcap,.im-hm-tooltip .im-hm-tt-chg{display:block;margin-top:2px;font-size:12px;font-weight:600;color:var(--text-muted,#8b949e)}' +
-      '.hm-horizon-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;align-items:center}' +
+      '.hm-horizon-tabs{display:flex!important;visibility:visible!important;opacity:1!important;' +
+      'flex-wrap:wrap;gap:6px;margin:0 0 12px;align-items:center;position:relative;z-index:2}' +
       '.hm-horizon-tab{padding:6px 12px;border-radius:16px;border:1px solid var(--border,#30363d);' +
-      'background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;cursor:pointer}' +
+      'background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;cursor:pointer;' +
+      '-webkit-appearance:none;appearance:none;min-height:32px;line-height:1.2}' +
       '.hm-horizon-tab:hover{border-color:var(--accent,#58a6ff);color:var(--text,#e6edf3)}' +
       '.hm-horizon-tab[aria-pressed="true"]{border-color:var(--accent,#58a6ff);' +
       'background:color-mix(in srgb, var(--accent,#58a6ff) 14%, var(--surface2,#21262d));color:var(--accent,#58a6ff)}' +
@@ -201,9 +235,21 @@
       '.hm-legend-scale{display:flex;flex-direction:column;gap:6px;width:min(420px,100%);margin-top:4px}' +
       '.hm-legend-title{font-size:12px;font-weight:700;color:var(--text-muted,#8b949e)}' +
       '.hm-legend-bar{height:10px;border-radius:4px;border:1px solid var(--border,#30363d);' +
-      'background:linear-gradient(to right,#c62828 0%,#9a3b3b 16.6%,#7a4a4a 33.3%,#414554 50%,#4a7a4a 66.6%,#3d8b40 83.3%,#2e7d32 100%)}' +
+      'background:linear-gradient(to right,#c62828 0%,#e53935 16.6%,#8e3a3a 33.3%,#2a2e38 50%,#2e7d32 66.6%,#43a047 83.3%,#00c853 100%)}' +
       '.hm-legend-ticks{display:flex;justify-content:space-between;font-size:11px;font-variant-numeric:tabular-nums;color:var(--text-muted,#8b949e)}' +
-      'text.hm-chg,text.hm-name,text.hm-mcap{pointer-events:none;font-variant-numeric:tabular-nums}';
+      'text.hm-chg,text.hm-name,text.hm-mcap{pointer-events:none;font-variant-numeric:tabular-nums;' +
+      'font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}' +
+      'text.hm-chg{font-weight:700}' +
+      'text.hm-name{font-weight:600}' +
+      '@media (max-width:768px){' +
+      '.hm-horizon-tabs{display:flex!important;gap:5px;margin:0 0 10px;width:100%}' +
+      '.hm-horizon-tab{flex:1 1 auto;min-width:calc(20% - 4px);padding:8px 6px;font-size:11px;min-height:36px;' +
+      'text-align:center;touch-action:manipulation}' +
+      '#heatmap-root{min-height:min(52vh,480px)!important;height:min(58vh,560px)!important}' +
+      '.hm-legend-scale{width:100%}' +
+      '.hm-legend-title{font-size:11px}' +
+      '.hm-legend-ticks{font-size:10px}' +
+      '}';
   }
 
   function getTooltip() {
@@ -267,6 +313,8 @@
         if (!tt || tt.style.display === 'none') return;
         var tile = ev.target && ev.target.closest ? ev.target.closest('.hm-tile') : null;
         if (tile && tile.getAttribute('data-ticker')) return;
+        var tab = ev.target && ev.target.closest ? ev.target.closest('.hm-horizon-tab') : null;
+        if (tab) return;
         hideTooltip();
       },
       true,
@@ -279,8 +327,8 @@
     var hz = currentHorizon();
     var title =
       lang === 'en'
-        ? hz.en + ' return (tile size = market cap)'
-        : hz.ko + ' 수익률 (칸 크기 = 시가총액)';
+        ? hz.en + ' return (tile size ≈ market cap)'
+        : hz.ko + ' 수익률 (칸 크기 ≈ 시가총액)';
     var ticks = domainForClip(hz.clip).map(formatTick);
     el.innerHTML =
       '<div class="hm-legend-scale">' +
@@ -320,7 +368,7 @@
       bar.id = 'hm-horizon-tabs';
       bar.className = 'hm-horizon-tabs';
       bar.setAttribute('role', 'tablist');
-      wrap.insertBefore(bar, container);
+      bar.setAttribute('aria-label', lang === 'en' ? 'Return horizon' : '수익률 기간');
       bar.addEventListener('click', function (e) {
         var btn = e.target.closest('[data-hm-horizon]');
         if (!btn) return;
@@ -330,6 +378,12 @@
         if (lastOpts) render(lastOpts);
       });
     }
+    /* Always keep tabs immediately before #heatmap-root (visible on mobile). */
+    if (bar.parentNode !== wrap || bar.nextSibling !== container) {
+      wrap.insertBefore(bar, container);
+    }
+    bar.hidden = false;
+    bar.style.display = 'flex';
     bar.innerHTML = HORIZONS.map(function (hz) {
       return (
         '<button type="button" class="hm-horizon-tab" role="tab" data-hm-horizon="' +
@@ -396,6 +450,25 @@
     resizeObs.observe(el);
   }
 
+  function scheduleSizeRetry() {
+    if (pendingSizeRetry) clearTimeout(pendingSizeRetry);
+    pendingSizeRetry = setTimeout(function () {
+      pendingSizeRetry = null;
+      if (lastOpts) render(lastOpts);
+    }, 120);
+  }
+
+  function labelPlan(tw, th, mobile) {
+    /* Prefer return %; omit name/mcap when tight (esp. mobile). */
+    var showChg = tw >= (mobile ? 26 : 34) && th >= (mobile ? 12 : 16);
+    var showName = showChg && tw >= (mobile ? 52 : 56) && th >= (mobile ? 28 : 40);
+    var showMcap = showName && tw >= 72 && th >= (mobile ? 52 : 64);
+    var chgFs = Math.max(8, Math.min(mobile ? 11 : 12, Math.floor(Math.min(tw / 4.2, th / (showName ? 3.2 : 1.6)))));
+    var nameFs = Math.max(8, Math.min(mobile ? 10 : 11, Math.floor(Math.min(tw / 7, 12))));
+    var mcapFs = Math.max(8, Math.min(10, nameFs - 1));
+    return { showChg: showChg, showName: showName, showMcap: showMcap, chgFs: chgFs, nameFs: nameFs, mcapFs: mcapFs };
+  }
+
   function render(opts) {
     opts = opts || {};
     var container = opts.container;
@@ -418,6 +491,7 @@
         return c.mcapWon ? String(c.mcapWon) : '—';
       };
     var chainLabelFn = opts.chainLabel;
+    var mobile = isMobileHeatmap();
 
     injectStyles();
     bindOutsideTap();
@@ -429,7 +503,10 @@
     var box = measureBox(container);
     var w = box.w;
     var h = box.h;
-    if (w < 40 || h < 40) return;
+    if (w < 40 || h < 40) {
+      scheduleSizeRetry();
+      return;
+    }
 
     var hz = currentHorizon();
     var key = layoutKey(companies, w, h, lang);
@@ -461,7 +538,7 @@
       .size([w, h])
       .paddingOuter(2)
       .paddingTop(function (d) {
-        return d.depth === 1 ? 20 : 1;
+        return d.depth === 1 ? 18 : 1;
       })
       .paddingInner(1)
       .round(true)(root);
@@ -508,6 +585,7 @@
             .attr('class', 'hm-chain-label')
             .attr('x', 6)
             .attr('y', 14)
+            .attr('font-size', mobile ? 10 : 11)
             .text(lbl);
         }
         return;
@@ -534,34 +612,38 @@
       g.attr('data-leaf', '1');
       g.attr('aria-label', nm + ' · ' + mcap + ' · ' + chgTxt + ' (' + (leaf.ticker || '') + ')');
 
-      var showAll = tw > 72 && th > 64;
-      var showNameChg = !showAll && tw > 56 && th > 40;
-      if (showAll || showNameChg) {
+      var plan = labelPlan(tw, th, mobile);
+      var padX = Math.max(2, Math.min(6, Math.floor(tw / 20)));
+      var y = Math.max(plan.chgFs + 1, Math.min(th - 2, plan.chgFs + (mobile ? 1 : 2)));
+
+      if (plan.showName) {
         g.append('text')
           .attr('class', 'hm-name')
-          .attr('x', 6)
-          .attr('y', 16)
+          .attr('x', padX)
+          .attr('y', y)
+          .attr('font-size', plan.nameFs)
           .attr('fill', ink.name)
-          .text(nm.length > Math.floor(tw / 7) ? nm.slice(0, Math.max(4, Math.floor(tw / 7) - 1)) + '…' : nm);
+          .text(nm.length > Math.floor(tw / (plan.nameFs * 0.62)) ? nm.slice(0, Math.max(3, Math.floor(tw / (plan.nameFs * 0.62)) - 1)) + '…' : nm);
+        y += plan.nameFs + 2;
       }
-      if (showAll) {
+      if (plan.showMcap) {
         g.append('text')
           .attr('class', 'hm-mcap')
-          .attr('x', 6)
-          .attr('y', 30)
+          .attr('x', padX)
+          .attr('y', y)
+          .attr('font-size', plan.mcapFs)
           .attr('fill', ink.mcap)
           .text(mcap);
+        y += plan.mcapFs + 2;
+      }
+      if (plan.showChg) {
+        /* % first when name omitted: center-ish in tiny tiles */
+        var chgY = plan.showName || plan.showMcap ? y : Math.min(th - 2, Math.max(plan.chgFs + 1, Math.round(th * 0.55 + plan.chgFs * 0.2)));
         g.append('text')
           .attr('class', 'hm-chg')
-          .attr('x', 6)
-          .attr('y', 44)
-          .attr('fill', ink.chg)
-          .text(chgTxt);
-      } else if (showNameChg) {
-        g.append('text')
-          .attr('class', 'hm-chg')
-          .attr('x', 6)
-          .attr('y', 30)
+          .attr('x', padX)
+          .attr('y', chgY)
+          .attr('font-size', plan.chgFs)
           .attr('fill', ink.chg)
           .text(chgTxt);
       }
