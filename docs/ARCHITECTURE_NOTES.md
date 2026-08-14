@@ -143,6 +143,7 @@ IT·소프트웨어(software) · 지주회사(holdings) · 통신(telecom)
 - **줄바꿈**: `.gitattributes`에 `* text=auto eol=lf` (CRLF diff 오염 방지)
 - **배포**: Cloudflare Pages. 푸시 → 자동 배포(1~3분). `/functions`는 repo 루트에서 서빙됨
 - **환경 차이 주의**: 빌드 검증 스크립트(`verify_*`, `npm run verify:reorg`)는 프로덕션 빌드 체인에서 분리하고 로컬/CI에서만 실행. `cp_list` 등 로컬 전용 데이터에 빌드가 의존하면 안 되며, 없을 때 커밋된 fallback(예: `bio/cp_list_bio_additions.json`)으로 동일 결과를 보장한다.
+- **CSS 패치 정규식 주의**: `patch_*.mjs`에서 `마커 → 다음 앵커`까지 잘라내는 정규식은 앵커가 멀리 있으면 그 사이 CSS를 통째로 삭제한다(bigchip에서 히트맵·trust·spark CSS가 사라져 `#heatmap-root` 높이가 0이 된 사례). 마커는 최대한 구체적으로 지정하고, 지도별 추가 CSS는 기존 앵커 패턴(`@media(max-width:768px)` 등)과 겹치지 않게 작성한다. 공용 UI 모듈은 페이지 CSS가 없어도 동작하도록 자체 크기 보장을 둔다.
 
 ---
 

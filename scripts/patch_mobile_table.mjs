@@ -230,8 +230,11 @@ function stripOldMobileCss(html) {
     new RegExp(`\\s*/\\* ${MARKER_V1}[^*]*\\*/[\\s\\S]*?(?=\\n\\s*@media\\(max-width:768px\\))`, 'g'),
     ''
   );
+  // Only the "— base" block sits directly before the mobile media query. Matching the
+  // generic marker would swallow every later rule (heatmap, trust footer, spark) on pages
+  // that carry another `@media(max-width:768px)` further down the stylesheet.
   html = html.replace(
-    new RegExp(`\\s*/\\* ${MARKER_V2}[\\s\\S]*?(?=\\n\\s*@media\\(max-width:768px\\))`, 'g'),
+    new RegExp(`\\s*/\\* ${MARKER_V2} — base \\*/[\\s\\S]*?(?=\\n\\s*@media\\(max-width:768px\\))`, 'g'),
     ''
   );
   html = html.replace(

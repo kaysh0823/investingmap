@@ -231,7 +231,7 @@
       '.hm-horizon-tab:hover{border-color:var(--accent,#58a6ff);color:var(--text,#e6edf3)}' +
       '.hm-horizon-tab[aria-pressed="true"]{border-color:var(--accent,#58a6ff);' +
       'background:color-mix(in srgb, var(--accent,#58a6ff) 14%, var(--surface2,#21262d));color:var(--accent,#58a6ff)}' +
-      '#heatmap-root{position:relative}' +
+      '#heatmap-root{position:relative;width:100%;min-height:420px;height:min(62vh,640px)}' +
       '#heatmap-root svg.im-hm-svg{position:absolute;inset:0;width:100%;height:100%;display:block}' +
       '.hm-legend-scale{display:flex;flex-direction:column;gap:6px;width:min(420px,100%);margin-top:4px}' +
       '.hm-legend-title{font-size:12px;font-weight:700;color:var(--text-muted,#8b949e)}' +
@@ -571,6 +571,13 @@
     var box = measureBox(container);
     var w = box.w;
     var h = box.h;
+    if (w >= 40 && h < 40) {
+      /* Page stylesheet may not size the container; enforce a usable height. */
+      container.style.minHeight = '420px';
+      box = measureBox(container);
+      w = box.w;
+      h = box.h;
+    }
     if (w < 40 || h < 40) {
       scheduleSizeRetry();
       return;

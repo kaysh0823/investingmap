@@ -12,6 +12,11 @@ const krx = loadMergedKrxMap(join(ROOT, 'data'));
 const hubIds = new Map(BIGCHIP_CONFIG.companies.map((c) => [c.ticker, c.id]));
 const relationNodes = new Map();
 const rolePriority = { supplier: 3, customer: 2, peer: 1 };
+const ROLE_SECTOR = {
+  supplier: 'Upstream supplier',
+  peer: 'Global peer',
+  customer: 'Downstream customer',
+};
 const countryMeta = {
   KR: { countryLabel: '한국/Korea', region: 'kr' },
   US: { countryLabel: '미국/USA', region: 'us' },
@@ -70,7 +75,7 @@ for (const hub of relations.hubs) {
         country: meta.countryLabel,
         countryCode: relation.country,
         region: meta.region,
-        sector: role,
+        sector: ROLE_SECTOR[primaryRole],
         primaryRole,
         ticker: relation.ticker || '',
         market: row?.market || '',
@@ -89,37 +94,29 @@ BIGCHIP_CONFIG.subtitleEn = 'Supplier, global-peer and customer relationships ce
 BIGCHIP_CONFIG.translations = {
   ko: {
     thPartners: '공급사·peer·고객',
-    sbKorean: '관계 유형',
-    sbGlobal: '관계 유형·국가 필터',
-    peerNetworkDesc: '삼성전자·SK하이닉스를 중앙 허브로 두고 후방 공급사, peer, 전방 고객을 구역과 엣지 색으로 구분합니다.',
-    graphHint: '공개자료 기반 공급망·고객·peer 관계입니다. “보도” 관계는 공식 계약 확인과 구분해 표시합니다.',
+    sbGlobal: '공급사·peer·고객',
+    peerNetworkDesc: '삼성전자·SK하이닉스와 후방 공급사, 글로벌 peer, 전방 고객의 공개자료 기반 관계입니다.',
+    graphHint: '공개자료 기반 공급망·고객·peer 관계이며 계약 조건을 의미하지 않습니다. “보도” 관계는 공식 확인 건과 구분해 표시합니다.',
     ttPartners: '관계',
     ttSuppliers: '연결 허브',
     relationSupplier: '후방 공급사',
     relationPeer: '글로벌 peer',
     relationCustomer: '전방 고객',
-    countryFilter: '국가',
-    allCountries: '전체',
     reportedEvidence: '보도',
     confirmedEvidence: '확인',
-    openTicker: '다시 클릭하면 반도체 지도에서 종목 열기',
   },
   en: {
     thPartners: 'Suppliers, peers & customers',
-    sbKorean: 'Relationship types',
-    sbGlobal: 'Relationship type & country',
-    peerNetworkDesc: 'Samsung Electronics and SK hynix are central hubs; suppliers, peers and customers occupy separate zones with role-colored edges.',
-    graphHint: 'Public-source supply-chain, customer and peer relationships. Reported relationships are distinguished from confirmed disclosures.',
+    sbGlobal: 'Suppliers, peers & customers',
+    peerNetworkDesc: 'Public-source relationships between Samsung Electronics, SK hynix and their suppliers, global peers and customers.',
+    graphHint: 'Public-source supply-chain, customer and peer relationships; they do not assert contract terms. Reported links are distinguished from confirmed disclosures.',
     ttPartners: 'Relationships',
     ttSuppliers: 'Connected hubs',
-    relationSupplier: 'Upstream suppliers',
-    relationPeer: 'Global peers',
-    relationCustomer: 'Downstream customers',
-    countryFilter: 'Country',
-    allCountries: 'All',
+    relationSupplier: 'Upstream supplier',
+    relationPeer: 'Global peer',
+    relationCustomer: 'Downstream customer',
     reportedEvidence: 'Reported',
     confirmedEvidence: 'Confirmed',
-    openTicker: 'Click again to open this ticker in the semiconductor map',
   },
 };
 

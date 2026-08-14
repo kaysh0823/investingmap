@@ -44,16 +44,19 @@ for (const ticker of domestic) {
   check(semi.includes(`ticker: '${ticker}'`), `semi map missing domestic relation ticker ${ticker}`);
   check(html.includes(`ticker=${ticker}`), `bigchip deep link missing ${ticker}`);
 }
-check(html.includes('bigchip-zones'), 'three-zone graph renderer missing');
-check(html.includes('setBigchipCountry'), 'country filter missing');
-check(html.includes('bigchipGrid'), 'fixed grid layout missing');
-check(html.includes('bigchipCurve'), 'curved edge renderer missing');
+check(html.includes('#heatmap-root {'), 'heatmap container CSS missing (treemap would collapse to 0 height)');
+check(html.includes('REGION_COLORS[d.region]'), 'standard sector graph renderer missing');
+check(!html.includes('bigchip-zones'), 'legacy three-zone graph renderer still present');
 check(html.includes('bigchip-relation-tags'), 'compact relation tags missing');
 check(html.includes('../js/map_i18n.js?v=3'), 'map_i18n cache-bust version missing');
-check(html.includes('../js/map_heatmap.js?v=8'), 'map_heatmap cache-bust version missing');
+check(html.includes('../js/map_heatmap.js?v=9'), 'map_heatmap cache-bust version missing');
 check(heatmap.includes('renderSmallCards'), 'small-sector heatmap fallback missing');
+check(heatmap.includes("min-height:420px;height:min(62vh,640px)"), 'heatmap self-sizing fallback missing');
 check(edges.length >= 100, `expected at least 100 relation edges, got ${edges.length}`);
-check(!html.includes('>${t.peerNetworkDesc}</div>'), 'legacy undefined-prone legend template remains');
+check(
+  (html.match(/"peerNetworkDesc": "[^"]+"/g) || []).length === 2,
+  'peerNetworkDesc translation missing for ko/en (legend would render undefined)',
+);
 check(!html.includes('undefined</div>'), 'rendered undefined legend value remains');
 for (const match of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
   const attrs = match[1] || '';
