@@ -862,7 +862,7 @@
         if (retPct != null) cls = retPct > 0 ? 'hub-pulse-card-ret is-up' : retPct < 0 ? 'hub-pulse-card-ret is-down' : 'hub-pulse-card-ret is-flat';
         retText = formatPct(retPct, lang);
       }
-      var href = (meta.map || 'index.html') + ql + '&tab=table';
+      var href = (meta.map || 'index.html') + ql + '&tab=heatmap';
       // Always use hub_index company count (snapshot listingCount goes stale after universe prunes).
       var countLabel = (block.companies ? block.companies.length : 0) +
         (lang === 'en' ? '' : '\uAC1C');

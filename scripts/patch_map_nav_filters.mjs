@@ -19,6 +19,9 @@ const MAP_FILES = [
   'battery/korea_battery_map.html',
   'renewable/korea_renewable_map.html',
   'nuclear/korea_nuclear_map.html',
+  'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
+  'construction/korea_construction_map.html',
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
@@ -59,6 +62,7 @@ function ensureHeadScripts(html) {
       '<script src="../js/sector_nav.js"></script>\n  <script src="../js/map_filter_ux.js"></script>\n',
     );
   }
+  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=6');
   return html;
 }
 

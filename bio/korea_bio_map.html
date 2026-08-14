@@ -530,12 +530,12 @@
 <script src="../js/live_quotes.js?v=13"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
-  <script src="../js/map_tab_state.js?v=4"></script>
+  <script src="../js/map_tab_state.js?v=6"></script>
   <script src="../js/sector_nav.js?v=2"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=6"></script>
+  <script src="../js/map_heatmap.js?v=7"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=8"></script>
@@ -1422,6 +1422,7 @@
 
 
 
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1925,7 +1926,7 @@
   </div>
   </section>
 <div class="tabs">
-    <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 시총 히트맵</button>
+    <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 섹터·페어링 네트워크</button>
   </div>
@@ -1933,7 +1934,7 @@
   <div id="tab-heatmap" class="tab-content active">
     <div class="heatmap-wrap">
       <p class="heatmap-meta" id="heatmap-hint">시가총액 기준</p>
-      <div id="heatmap-root" role="img" aria-label="Market cap heatmap"></div>
+      <div id="heatmap-root" role="img" aria-label="Sector heatmap"></div>
       <div class="hm-legend" id="heatmap-legend"></div>
     </div>
   </div>

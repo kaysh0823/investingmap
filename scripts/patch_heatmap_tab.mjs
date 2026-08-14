@@ -96,7 +96,7 @@ const TABS_OLD = `  <div class="tabs">
     <button id="tab-btn-table" class="tab-btn active" onclick="switchTab('table',this)">`;
 
 const TABS_NEW = `  <div class="tabs">
-    <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 시총 히트맵</button>
+    <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">`;
 
 const HEATMAP_TAB_BLOCK = `
@@ -104,7 +104,7 @@ const HEATMAP_TAB_BLOCK = `
   <div id="tab-heatmap" class="tab-content active">
     <div class="heatmap-wrap">
       <p class="heatmap-meta" id="heatmap-hint">시가총액 기준</p>
-      <div id="heatmap-root" role="img" aria-label="Market cap heatmap"></div>
+      <div id="heatmap-root" role="img" aria-label="Sector heatmap"></div>
       <div class="hm-legend" id="heatmap-legend"></div>
     </div>
   </div>
@@ -172,7 +172,7 @@ function patchMap(rel) {
       );
       c = c.replace(
         /(<div class="tabs">)/,
-        `$1\n    <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 시총 히트맵</button>`
+        `$1\n    <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>`
       );
     }
 
@@ -199,7 +199,7 @@ function patchMap(rel) {
   if (!c.includes('tabHeatmap:')) {
     c = c.replace(
       "tabTable: '📋 기업 목록 &amp; 필터',",
-      "tabHeatmap: '🔥 시총 히트맵',\n        tabTable: '📋 기업 목록 &amp; 필터',"
+      "tabHeatmap: '🔥 섹터 히트맵',\n        tabTable: '📋 기업 목록 &amp; 필터',"
     );
     c = c.replace(
       "tabGraph: '🌐",
@@ -207,7 +207,7 @@ function patchMap(rel) {
     );
     c = c.replace(
       "tabTable: '📋 Company List",
-      "tabHeatmap: '🔥 Market cap heatmap',\n        tabTable: '📋 Company List"
+      "tabHeatmap: '🔥 Sector heatmap',\n        tabTable: '📋 Company List"
     );
     c = c.replace(
       /tabGraph: '🌐[^']*',\n        langFlag: '🇰🇷'/,
@@ -218,7 +218,7 @@ function patchMap(rel) {
     if (!c.includes('heatmapHint:')) {
       c = c.replace(
         /(en: \{[\s\S]*?tabTable:[^\n]+\n)/,
-        "$1        tabHeatmap: '🔥 Market cap heatmap',\n        heatmapHint: 'Tile size = market cap (KRX) · color = value chain',\n"
+        "$1        tabHeatmap: '🔥 Sector heatmap',\n        heatmapHint: 'Tile size = market cap (KRX) · color = value chain',\n"
       );
     }
   }

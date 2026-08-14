@@ -9,6 +9,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 const MAPS = [
   'bigchip/korea_bigchip_map.html',
+  'semiconductor/korea_semiconductor_map.html',
+  'bio/korea_bio_map.html',
   'ship/korea_ship_map.html',
   'defense/korea_defense_map.html',
   'robot/korea_robot_map.html',
@@ -17,6 +19,9 @@ const MAPS = [
   'battery/korea_battery_map.html',
   'renewable/korea_renewable_map.html',
   'nuclear/korea_nuclear_map.html',
+  'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
+  'construction/korea_construction_map.html',
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
@@ -26,17 +31,17 @@ const MAPS = [
 ];
 
 const KO_INSERT =
-  '"tabHeatmap": "🔥 시총 히트맵",\n        "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",\n        ';
+  '"tabHeatmap": "🔥 섹터 히트맵",\n        "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",\n        ';
 const EN_INSERT =
-  '"tabHeatmap": "🔥 Market cap heatmap",\n        "heatmapHint": "Tile size = market cap · color = 1-day return",\n        ';
+  '"tabHeatmap": "🔥 Sector heatmap",\n        "heatmapHint": "Tile size = market cap · color = 1-day return",\n        ';
 
 const TAB_FALLBACK =
-  "document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Market cap heatmap' : '🔥 시총 히트맵');";
+  "document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Sector heatmap' : '🔥 섹터 히트맵');";
 
 for (const rel of MAPS) {
   const p = join(root, rel);
   let c = fs.readFileSync(p, 'utf8');
-  if (!c.includes('"tabHeatmap":')) {
+  if (!/["']tabHeatmap["']\s*:/.test(c)) {
     let pass = 0;
     c = c.replace(/("dataAsof": "[^"]+",\r?\n        )"tabTable":/g, (m, prefix) => {
       pass++;
@@ -44,6 +49,11 @@ for (const rel of MAPS) {
     });
     if (pass < 2) console.warn('tabHeatmap insert incomplete:', rel, 'passes=', pass);
   }
+  c = c
+    .replace(/🔥 시총 히트맵/g, '🔥 섹터 히트맵')
+    .replace(/🔥 Market-cap heatmap/g, '🔥 Sector heatmap')
+    .replace(/🔥 Market cap heatmap/g, '🔥 Sector heatmap')
+    .replace(/aria-label="Market cap heatmap"/g, 'aria-label="Sector heatmap"');
   c = c.replace(
     /document\.getElementById\('tab-btn-heatmap'\)\.innerHTML = t\.tabHeatmap;/g,
     TAB_FALLBACK,
@@ -52,36 +62,28 @@ for (const rel of MAPS) {
   console.log('patched', rel);
 }
 
-const semiPath = join(root, 'semiconductor/korea_semiconductor_map.html');
-let semi = fs.readFileSync(semiPath, 'utf8');
-semi = semi.replace(
-  /document\.getElementById\('tab-btn-heatmap'\)\.innerHTML = t\.tabHeatmap;/g,
-  TAB_FALLBACK,
-);
-fs.writeFileSync(semiPath, semi, 'utf8');
-console.log('patched semiconductor fallback');
-
 const bioTrPath = join(root, 'bio', 'bio_translations.json');
 const bioTr = JSON.parse(fs.readFileSync(bioTrPath, 'utf8'));
 for (const lang of ['ko', 'en']) {
-  if (!bioTr[lang].tabHeatmap) {
-    bioTr[lang].tabHeatmap = lang === 'ko' ? '🔥 시총 히트맵' : '🔥 Market cap heatmap';
-    bioTr[lang].heatmapHint =
-      lang === 'ko'
-        ? '칸 크기 = 시가총액 · 색 = 당일 등락률'
-        : 'Tile size = market cap · color = 1-day return';
-  }
+  bioTr[lang].tabHeatmap = lang === 'ko' ? '🔥 섹터 히트맵' : '🔥 Sector heatmap';
+  bioTr[lang].heatmapHint =
+    lang === 'ko'
+      ? '칸 크기 = 시가총액 · 색 = 당일 등락률'
+      : 'Tile size = market cap · color = 1-day return';
 }
 fs.writeFileSync(bioTrPath, JSON.stringify(bioTr, null, 2) + '\n', 'utf8');
 console.log('patched bio_translations.json');
 
-for (const rel of ['bio/bio_inline_tail.js']) {
+for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
   const p = join(root, rel);
   let c = fs.readFileSync(p, 'utf8');
   c = c.replace(
     /document\.getElementById\('tab-btn-heatmap'\)\.innerHTML = t\.tabHeatmap;/g,
     TAB_FALLBACK,
-  );
+  )
+    .replace(/🔥 시총 히트맵/g, '🔥 섹터 히트맵')
+    .replace(/🔥 Market-cap heatmap/g, '🔥 Sector heatmap')
+    .replace(/🔥 Market cap heatmap/g, '🔥 Sector heatmap');
   fs.writeFileSync(p, c, 'utf8');
   console.log('patched', rel);
 }
