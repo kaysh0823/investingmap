@@ -18,9 +18,26 @@ const countryMeta = {
   TW: { countryLabel: '대만/Taiwan', region: 'tw' },
   JP: { countryLabel: '일본/Japan', region: 'jp' },
   NL: { countryLabel: '네덜란드/Netherlands', region: 'eu' },
+  DE: { countryLabel: '독일/Germany', region: 'eu' },
+  FR: { countryLabel: '프랑스/France', region: 'eu' },
   CN: { countryLabel: '중국/China', region: 'cn' },
   EU: { countryLabel: '유럽/Europe', region: 'eu' },
 };
+
+if (relations.expansion) {
+  const catalog = new Map((relations.expansion.nodes || []).map((node) => [node.id, node]));
+  for (const edge of relations.expansion.edges || []) {
+    const hub = relations.hubs.find((item) => item.ticker === edge.hub);
+    const node = catalog.get(edge.node);
+    const plural = `${edge.role}s`;
+    if (!hub) throw new Error(`bigchip expansion hub missing: ${edge.hub}`);
+    if (!node) throw new Error(`bigchip expansion node missing: ${edge.node}`);
+    if (!['suppliers', 'customers', 'peers'].includes(plural)) {
+      throw new Error(`bigchip expansion role invalid: ${edge.role}`);
+    }
+    hub[plural].push({ ...node, ...edge, id: node.id });
+  }
+}
 
 for (const seed of BIGCHIP_CONFIG.companies) seed.partners = [];
 

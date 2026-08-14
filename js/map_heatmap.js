@@ -34,6 +34,7 @@
   var resizeTimer = null;
   var observedEl = null;
   var pendingSizeRetry = null;
+  var visibilityBound = false;
 
   function horizonById(id) {
     for (var i = 0; i < HORIZONS.length; i++) {
@@ -448,6 +449,15 @@
       }, 40);
     });
     resizeObs.observe(el);
+    if (!visibilityBound && typeof document !== 'undefined') {
+      visibilityBound = true;
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && lastOpts) requestAnimationFrame(function () { render(lastOpts); });
+      });
+      window.addEventListener('pageshow', function () {
+        if (lastOpts) requestAnimationFrame(function () { render(lastOpts); });
+      });
+    }
   }
 
   function scheduleSizeRetry() {
@@ -467,6 +477,64 @@
     var nameFs = Math.max(8, Math.min(mobile ? 10 : 11, Math.floor(Math.min(tw / 7, 12))));
     var mcapFs = Math.max(8, Math.min(10, nameFs - 1));
     return { showChg: showChg, showName: showName, showMcap: showMcap, chgFs: chgFs, nameFs: nameFs, mcapFs: mcapFs };
+  }
+
+  function renderSmallCards(container, companies, w, h, lang, formatMcap, opts) {
+    var hz = currentHorizon();
+    var sorted = companies.slice().sort(function (a, b) { return (b.mcapWon || 0) - (a.mcapWon || 0); });
+    var total = sorted.reduce(function (sum, c) { return sum + Math.max(Number(c.mcapWon) || 0, 1); }, 0);
+    var gap = 6;
+    var usable = Math.max(1, w - gap * (sorted.length - 1));
+    var x = 0;
+    var svg = d3.select(container).append('svg').attr('class', 'im-hm-svg')
+      .attr('width', w).attr('height', h).attr('viewBox', '0 0 ' + w + ' ' + h)
+      .attr('preserveAspectRatio', 'none');
+    var cards = sorted.map(function (c, i) {
+      var raw = usable * Math.max(Number(c.mcapWon) || 0, 1) / total;
+      var cw = i === sorted.length - 1 ? w - x : Math.max(usable * 0.22, raw);
+      var item = { company: c, x: x, w: Math.min(cw, w - x) };
+      x += item.w + gap;
+      return item;
+    });
+    if (cards.length > 1 && x - gap > w) {
+      var scale = usable / cards.reduce(function (sum, item) { return sum + item.w; }, 0);
+      x = 0;
+      cards.forEach(function (item) { item.w *= scale; item.x = x; x += item.w + gap; });
+    }
+    var node = svg.selectAll('g').data(cards).join('g')
+      .attr('class', 'hm-tile hm-small-card').attr('data-leaf', '1')
+      .attr('data-ticker', function (d) { return d.company.ticker || ''; })
+      .attr('transform', function (d) { return 'translate(' + d.x + ',0)'; })
+      .style('cursor', 'pointer');
+    node.each(function (d) {
+      var c = d.company;
+      var fill = chgFill(c, hz);
+      var ink = textColorsForFill(fill);
+      var nm = displayName(c, lang);
+      var mcap = formatMcap(c);
+      var pct = formatChg(companyReturn(c, hz));
+      var g = d3.select(this);
+      g.attr('aria-label', nm + ' · ' + mcap + ' · ' + pct);
+      g.append('rect').attr('width', Math.max(0, d.w)).attr('height', h).attr('rx', 8)
+        .attr('fill', fill).attr('stroke', 'rgba(0,0,0,.22)');
+      g.append('text').attr('class', 'hm-name').attr('x', 16).attr('y', Math.max(34, h * 0.38))
+        .attr('font-size', Math.max(14, Math.min(22, d.w / 12))).attr('fill', ink.name).text(nm);
+      g.append('text').attr('class', 'hm-mcap').attr('x', 16).attr('y', Math.max(56, h * 0.38 + 25))
+        .attr('font-size', 12).attr('fill', ink.mcap).text(mcap);
+      g.append('text').attr('class', 'hm-chg').attr('x', 16).attr('y', Math.max(82, h * 0.38 + 55))
+        .attr('font-size', Math.max(18, Math.min(28, d.w / 9))).attr('fill', ink.chg).text(pct);
+    });
+    node.on('mouseenter', function (ev, d) { if (!isMobileHeatmap()) showTooltip(d.company, lang, formatMcap, ev); })
+      .on('mousemove', function (ev) { if (!isMobileHeatmap()) moveTooltip(ev); })
+      .on('mouseleave', function () { if (!isMobileHeatmap()) hideTooltip(); })
+      .on('click', function (ev, d) {
+        if (isMobileHeatmap() && lastTapTicker !== d.company.ticker) {
+          ev.preventDefault(); ev.stopPropagation(); lastTapTicker = d.company.ticker;
+          showTooltip(d.company, lang, formatMcap, ev); return;
+        }
+        hideTooltip();
+        if (opts.onSelect) opts.onSelect(d.company);
+      });
   }
 
   function render(opts) {
@@ -522,6 +590,11 @@
     if (!data.children || !data.children.length) {
       container.textContent = lang === 'en' ? 'No market cap data.' : '시가총액 데이터가 없습니다.';
       lastLayoutKey = '';
+      return;
+    }
+    if (companies.length <= 3) {
+      renderSmallCards(container, companies, w, h, lang, formatMcap, opts);
+      lastLayoutKey = key;
       return;
     }
 

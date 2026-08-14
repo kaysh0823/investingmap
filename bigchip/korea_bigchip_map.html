@@ -162,14 +162,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=13"></script>
-  <script src="../js/map_i18n.js?v=2"></script>
+  <script src="../js/map_i18n.js?v=3"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=8"></script>
   <script src="../js/sector_nav.js?v=6"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=7"></script>
+  <script src="../js/map_heatmap.js?v=8"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=8"></script>
@@ -1016,7 +1016,7 @@
         line-height: 1.25
       }
 
-    @media(max-width:768px){.bigchip-country-chip{padding:5px 8px;font-size:10px}.bigchip-zone-label{font-size:10px}}
+    @media(max-width:768px){.bigchip-country-chip{padding:5px 8px;font-size:10px}.bigchip-zone-label{font-size:10px}#th-partners,.bigchip-relations-cell{width:180px;max-width:180px}.bigchip-relation-tags{max-width:180px}}
 
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
@@ -1437,14 +1437,14 @@
         id: 'samsung_electronics', name: '삼성전자', nameEn: 'Samsung Electronics', ticker: '005930', market: 'KOSPI', chain: '종합반도체',
         semType: '메모리·시스템LSI·파운드리', semTypeEn: 'Memory, system LSI & foundry',
         products: 'DRAM·NAND·모바일AP·파운드리', productsEn: 'DRAM, NAND, mobile APs, foundry',
-        revenue: '1885.42조원', mcapWon: 1885424851080000, per: 48.83, pbr: 5.04, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 노광장비·공동 R&D', edgeLabelEn: 'EUV lithography equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'applied_materials', edgeLabel: '반도체 공정장비·공동 R&D', edgeLabelEn: 'Semiconductor process equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-samsung-electronics-will-join-new' }, { id: 'lam_research', edgeLabel: '식각·세정 장비', edgeLabelEn: 'Etch and cleaning equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'kla', edgeLabel: '공정제어·수율관리 장비', edgeLabelEn: 'Process control and yield management equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.kla.com/sec-filings/all-sec-filings/xbrl_doc_only/4189' }, { id: 'tokyo_electron', edgeLabel: '코터·디벨로퍼·식각·증착 장비', edgeLabelEn: 'Coat/develop, etch and deposition equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'wonik_ips', edgeLabel: '증착·반도체 공정장비', edgeLabelEn: 'Deposition and semiconductor process equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'dongjin_semichem', edgeLabel: '포토레지스트·공정 화학재료', edgeLabelEn: 'Photoresist and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'soulbrain', edgeLabel: 'DS 화학재료·식각액', edgeLabelEn: 'DS chemicals and etchants', kind: 'supplier', evidence: 'confirmed', source: 'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf' }, { id: 'sk_specialty', edgeLabel: 'NF3·WF6 등 반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases including NF3 and WF6', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/kor/pdf/2023_SK%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC%EC%A6%88_%EC%A7%80%EC%86%8D%EA%B0%80%EB%8A%A5%EA%B2%BD%EC%98%81%EB%B3%B4%EA%B3%A0%EC%84%9C_Eng.pdf' }, { id: 'apple', edgeLabel: '미국 생산 칩의 Apple 제품 공급', edgeLabelEn: 'US-made chips supplied for Apple products', kind: 'customer', evidence: 'confirmed', source: 'https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/' }, { id: 'nvidia', edgeLabel: 'HBM4·SOCAMM 공급 및 AI 플랫폼 협업', edgeLabelEn: 'HBM4 and SOCAMM supply and AI-platform collaboration', kind: 'customer', evidence: 'confirmed', source: 'https://news.samsung.com/global/samsung-unveils-hbm4e-showcasing-comprehensive-ai-solutions-nvidia-partnership-and-vision-at-nvidia-gtc-2026' }, { id: 'google', edgeLabel: 'Broadcom 경유 TPU용 HBM 공급 보도', edgeLabelEn: 'Reported HBM supply for Google TPUs via Broadcom', kind: 'customer', evidence: 'reported', source: 'https://www.trendforce.com/news/2025/12/01/news-samsung-reportedly-supplies-60-of-google-tpu-hbm3e-set-to-remain-primary-supplier-in-2026/' }, { id: 'sk_hynix', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'tsmc', edgeLabel: '첨단 파운드리 경쟁', edgeLabelEn: 'Advanced-foundry competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'intel', edgeLabel: 'IDM·첨단 공정 경쟁', edgeLabelEn: 'IDM and advanced-process competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }]
+        revenue: '1885.42조원', mcapWon: 1885424851080000, per: 48.83, pbr: 5.04, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 노광장비·공동 R&D', edgeLabelEn: 'EUV lithography equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'applied_materials', edgeLabel: '반도체 공정장비·공동 R&D', edgeLabelEn: 'Semiconductor process equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-samsung-electronics-will-join-new' }, { id: 'lam_research', edgeLabel: '식각·세정 장비', edgeLabelEn: 'Etch and cleaning equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'kla', edgeLabel: '공정제어·수율관리 장비', edgeLabelEn: 'Process control and yield management equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.kla.com/sec-filings/all-sec-filings/xbrl_doc_only/4189' }, { id: 'tokyo_electron', edgeLabel: '코터·디벨로퍼·식각·증착 장비', edgeLabelEn: 'Coat/develop, etch and deposition equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'wonik_ips', edgeLabel: '증착·반도체 공정장비', edgeLabelEn: 'Deposition and semiconductor process equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'dongjin_semichem', edgeLabel: '포토레지스트·공정 화학재료', edgeLabelEn: 'Photoresist and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'soulbrain', edgeLabel: 'DS 화학재료·식각액', edgeLabelEn: 'DS chemicals and etchants', kind: 'supplier', evidence: 'confirmed', source: 'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf' }, { id: 'sk_specialty', edgeLabel: 'NF3·WF6 등 반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases including NF3 and WF6', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/kor/pdf/2023_SK%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC%EC%A6%88_%EC%A7%80%EC%86%8D%EA%B0%80%EB%8A%A5%EA%B2%BD%EC%98%81%EB%B3%B4%EA%B3%A0%EC%84%9C_Eng.pdf' }, { id: 'hansol_chemical', edgeLabel: '초고순도 과산화수소·박막 전구체', edgeLabelEn: 'Ultra-high-purity hydrogen peroxide and thin-film precursors', kind: 'supplier', evidence: 'confirmed', source: 'https://m.kisrating.com/fileDown.do?fileName=rs20250617-32.pdf&gubun=2&menuCd=R8' }, { id: 'enf_technology', edgeLabel: '식각액·신너·박리액·현상액·세정액', edgeLabelEn: 'Etchants, thinner, stripper, developer and cleaners', kind: 'supplier', evidence: 'confirmed', source: 'https://www.theworldfolio.com/interviews/enf-technology-expert-electronic-materials-suppliers-eye-global-growth/5976/' }, { id: 'wonik_materials', edgeLabel: '초고순도 반도체 특수가스', edgeLabelEn: 'Ultra-high-purity semiconductor specialty gases', kind: 'supplier', evidence: 'likely', source: 'https://wimco.co.kr/en/company/history' }, { id: 'hana_materials', edgeLabel: '식각용 Si·SiC 링·전극; OEM 경유 포함', edgeLabelEn: 'Si and SiC etch rings/electrodes, including OEM channels', kind: 'supplier', evidence: 'confirmed', source: 'https://hanamts.com/wp-content/uploads/2023/08/esg_report_en.pdf' }, { id: 'tck', edgeLabel: 'CVD-SiC 포커스링; OEM 경유', edgeLabelEn: 'CVD-SiC focus rings via equipment OEMs', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-ir/20240530%ED%8B%B0%EC%94%A8%EC%BC%80%EC%9D%B4_%EC%BD%94%EC%8A%A4%EB%8B%A5_%EA%B8%80%EB%A1%9C%EB%B2%8C_%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8_%EC%97%91%EC%8A%A4%ED%8F%AC_%EC%B0%B8%EA%B0%80.pdf' }, { id: 'wonik_qnc', edgeLabel: '쿼츠웨어·세라믹·부품 세정/코팅', edgeLabelEn: 'Quartzware, ceramics and parts cleaning/coating', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/001011/20250317004257/11011.htm' }, { id: 'comico', edgeLabel: '장비 부품 정밀세정·코팅·재생', edgeLabelEn: 'Precision cleaning, coating and refurbishment of equipment parts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/000858/20250814002520/11012.htm' }, { id: 'worldex', edgeLabel: '식각용 실리콘 전극·쿼츠·세라믹', edgeLabelEn: 'Silicon electrodes, quartz and ceramic etch consumables', kind: 'supplier', evidence: 'confirmed', source: 'https://www.thelec.kr/news/articleView.html?idxno=44159' }, { id: 'temc', edgeLabel: '네온·엑시머 레이저·희귀/특수가스', edgeLabelEn: 'Neon, excimer-laser and specialty gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.thelec.kr/news/articleView.html?idxno=19154' }, { id: 'sns_tech', edgeLabel: 'DUV 블랭크마스크; EUV는 평가 단계', edgeLabelEn: 'DUV blank masks; EUV remains under evaluation', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/000236/20250317001294/11011.htm' }, { id: 'psk', edgeLabel: 'PR strip·세정·bevel etch', edgeLabelEn: 'Photoresist strip, cleaning and bevel etch', kind: 'supplier', evidence: 'likely', source: 'https://kind.krx.co.kr/external/2026/03/23/000046/20260323000129/11011.htm' }, { id: 'tes', edgeLabel: 'PECVD·기상 식각/세정 장비', edgeLabelEn: 'PECVD and gas-phase etch/clean equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.bloter.net/news/articleView.html?idxno=629201' }, { id: 'eugene_tech', edgeLabel: 'LPCVD·플라즈마 처리·ALD', edgeLabelEn: 'LPCVD, plasma treatment and ALD', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2024/08/13/001042/20240813002835/11012.htm' }, { id: 'kc_tech', edgeLabel: '반도체 장비; CMP·세정 포트폴리오', edgeLabelEn: 'Semiconductor equipment; CMP and cleaning portfolio', kind: 'supplier', evidence: 'confirmed', source: 'https://www.digitaltoday.co.kr/news/articleView.html?idxno=692432' }, { id: 'hpsp', edgeLabel: '고압 수소/중수소 어닐링; NAND 중심', edgeLabelEn: 'High-pressure hydrogen/deuterium annealing, mainly NAND', kind: 'supplier', evidence: 'confirmed', source: 'https://marketinsight.hankyung.com/article/2025071351421' }, { id: 'eo_technics', edgeLabel: 'DRAM 레이저 어닐링·HBM grooving', edgeLabelEn: 'DRAM laser annealing and HBM grooving', kind: 'supplier', evidence: 'confirmed', source: 'https://v.daum.net/v/20251118143613858' }, { id: 'park_systems', edgeLabel: 'AFM·WLI 계측; 일부 공급 확인', edgeLabelEn: 'AFM and WLI metrology; partial supply reported', kind: 'supplier', evidence: 'likely', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=414681' }, { id: 'techwing', edgeLabel: 'HBM Cube Prober', edgeLabelEn: 'HBM Cube Prober', kind: 'supplier', evidence: 'confirmed', source: 'https://www.etoday.co.kr/news/view/2594407' }, { id: 'isc', edgeLabel: 'HBM 테스트 소켓·burn-in', edgeLabelEn: 'HBM test sockets and burn-in solutions', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=419017' }, { id: 'daeduck_electronics', edgeLabel: 'DDR·GDDR 메모리 패키지 기판', edgeLabelEn: 'DDR and GDDR memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://dealsite.co.kr/articles/154591' }, { id: 'simmtech', edgeLabel: '메모리 모듈 PCB·패키지 기판', edgeLabelEn: 'Memory-module PCBs and package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://www.simmtech.com/upload/media/file/639032761440475136.pdf' }, { id: 'haesung_ds', edgeLabel: '메모리 패키지 기판', edgeLabelEn: 'Memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/05/15/002857/20250515006693/11013.htm' }, { id: 'tlb', edgeLabel: '메모리 모듈·SSD PCB', edgeLabelEn: 'Memory-module and SSD PCBs', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/20/001007/20250320004328/11011.htm' }, { id: 'hana_micron', edgeLabel: '패키징·테스트·모듈 장기 계약', edgeLabelEn: 'Long-term packaging, test and module contracts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/002412/20250814007359/11012.htm' }, { id: 'sfa_semicon', edgeLabel: '메모리/비메모리 패키징·테스트', edgeLabelEn: 'Memory and non-memory packaging and test', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2026/03/23/001039/20260323004733/11011.htm' }, { id: 'doosan_tesna', edgeLabel: '시스템반도체 wafer test', edgeLabelEn: 'System-semiconductor wafer testing', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-report/250526_%EB%91%90%EC%82%B0%ED%85%8C%EC%8A%A4%EB%82%98%28%EA%B8%80%EC%84%B8%29.pdf' }, { id: 'lb_semicon', edgeLabel: 'DDI bumping·wafer test·패키징', edgeLabelEn: 'DDI bumping, wafer test and packaging', kind: 'supplier', evidence: 'confirmed', source: 'https://www.thelec.kr/news/articleView.html?idxno=35442' }, { id: 'gaonchips', edgeLabel: 'SAFE DSP·2/5nm physical design', edgeLabelEn: 'SAFE DSP and 2/5nm physical design', kind: 'supplier', evidence: 'confirmed', source: 'https://www.gaonchips.com/en/sub/news/view.php?idx=296' }, { id: 'adtechnology', edgeLabel: 'SAFE DSP·ASIC 설계/양산 지원', edgeLabelEn: 'SAFE DSP, ASIC design and production support', kind: 'supplier', evidence: 'confirmed', source: 'https://www.asiae.co.kr/en/print.htm?idxno=2020102709064767539' }, { id: 'nepes', edgeLabel: 'WLP/FOWLP·bumping; 근거 갱신 필요', edgeLabelEn: 'WLP/FOWLP and bumping; older named evidence', kind: 'supplier', evidence: 'likely', source: 'https://www.nepes.co.kr/kr/ir/ir_news.php?bgu=view&idx=770' }, { id: 'shin_etsu', edgeLabel: '실리콘 웨이퍼·리소그래피 소재', edgeLabelEn: 'Silicon wafers and lithography materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.shinetsu.co.jp/en/news/news-release/shin-etsu-presented-with-an-excellent-supplier-award-from-samsung-electronics-for-best-in-value/' }, { id: 'sumco', edgeLabel: '300mm 실리콘 웨이퍼', edgeLabelEn: '300mm silicon wafers', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sumcosi.com/english/corporate/evaluation.html' }, { id: 'merck_emd', edgeLabel: '박막·가스·평탄화·패터닝 소재', edgeLabelEn: 'Thin-film, gas, planarization and patterning materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.asiae.co.kr/en/article/2025022015232338530' }, { id: 'dupont', edgeLabel: 'CMP pad·전자재료', edgeLabelEn: 'CMP pads and electronic materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.dupont.com/news/dupont-earns-best-partner-award-for-innovation-from-samsung.html' }, { id: 'air_liquide', edgeLabel: '고순도 산업가스', edgeLabelEn: 'High-purity industrial gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.airliquide.com/group/press-releases-news/2026-01-13/closing-dig-airgas-acquisition-air-liquide-becomes-industrial-gas-leader-dynamic-south-korean-market' }, { id: 'apple', edgeLabel: '미국 생산 칩의 Apple 제품 공급', edgeLabelEn: 'US-made chips supplied for Apple products', kind: 'customer', evidence: 'confirmed', source: 'https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/' }, { id: 'nvidia', edgeLabel: 'HBM4·SOCAMM 공급 및 AI 플랫폼 협업', edgeLabelEn: 'HBM4 and SOCAMM supply and AI-platform collaboration', kind: 'customer', evidence: 'confirmed', source: 'https://news.samsung.com/global/samsung-unveils-hbm4e-showcasing-comprehensive-ai-solutions-nvidia-partnership-and-vision-at-nvidia-gtc-2026' }, { id: 'google', edgeLabel: 'Broadcom 경유 TPU용 HBM 공급 보도', edgeLabelEn: 'Reported HBM supply for Google TPUs via Broadcom', kind: 'customer', evidence: 'reported', source: 'https://www.trendforce.com/news/2025/12/01/news-samsung-reportedly-supplies-60-of-google-tpu-hbm3e-set-to-remain-primary-supplier-in-2026/' }, { id: 'amd', edgeLabel: 'MI455X HBM4·MI350 계열 HBM3E', edgeLabelEn: 'HBM4 for MI455X and HBM3E for MI350-series', kind: 'customer', evidence: 'confirmed', source: 'https://news.samsungsemiconductor.com/global/samsung-and-amd-expand-strategic-collaboration-on-next-generation-ai-memory-solutions/' }, { id: 'qualcomm', edgeLabel: '10/7nm EUV foundry 관계; historical', edgeLabelEn: '10/7nm EUV foundry relationship; historical', kind: 'customer', evidence: 'likely', source: 'https://investor.qualcomm.com/news-events/press-releases/news-details/2018/Samsung-Electronics-and-Qualcomm-Expand-Foundry-Cooperation-on-EUV-Process-Technology-02-21-2018/default.aspx' }, { id: 'tesla', edgeLabel: 'AI6 foundry 계약', edgeLabelEn: 'AI6 foundry contract', kind: 'customer', evidence: 'confirmed', source: 'https://www.reuters.com/business/tesla-samsung-165-billion-supply-deal-may-spur-chipmakers-us-contract-business-2025-07-28/' }, { id: 'sk_hynix', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'tsmc', edgeLabel: '첨단 파운드리 경쟁', edgeLabelEn: 'Advanced-foundry competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'intel', edgeLabel: 'IDM·첨단 공정 경쟁', edgeLabelEn: 'IDM and advanced-process competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }, { id: 'globalfoundries', edgeLabel: '파운드리 peer', edgeLabelEn: 'Foundry peer', kind: 'peer', evidence: 'confirmed', source: 'https://www.trendforce.com/presscenter/news/20260312-12965.html' }, { id: 'sandisk', edgeLabel: 'NAND·flash/storage peer', edgeLabelEn: 'NAND, flash and storage peer', kind: 'peer', evidence: 'confirmed', source: 'https://investor.sandisk.com/static-files/342a38e2-e204-4f50-ad22-3e3a28e2f6ff' }, { id: 'ymtc', edgeLabel: 'NAND peer', edgeLabelEn: 'NAND peer', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }, { id: 'cxmt', edgeLabel: 'DRAM peer; HBM 동급 아님', edgeLabelEn: 'DRAM peer; not equivalent in advanced HBM', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }]
       },
 
       {
         id: 'sk_hynix', name: 'SK하이닉스', nameEn: 'SK hynix', ticker: '000660', market: 'KOSPI', chain: 'HBM·메모리',
         semType: '메모리·AI 반도체', semTypeEn: 'Memory & AI semiconductors',
         products: 'HBM·DRAM·NAND', productsEn: 'HBM, DRAM, NAND',
-        revenue: '1532.31조원', mcapWon: 1532310084750000, per: 34.65, pbr: 12.52, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 장비 장기 구매', edgeLabelEn: 'Long-term EUV equipment purchases', kind: 'supplier', evidence: 'confirmed', source: 'https://en.yna.co.kr/view/AEN20260324006600320' }, { id: 'applied_materials', edgeLabel: 'DRAM·HBM 장기 공정 R&D', edgeLabelEn: 'Long-term DRAM and HBM process R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-sk-hynix-announce-long-term-rd-partnership' }, { id: 'lam_research', edgeLabel: 'EUV dry resist 공정 장비·기술', edgeLabelEn: 'EUV dry-resist process equipment and technology', kind: 'supplier', evidence: 'confirmed', source: 'https://newsroom.lamresearch.com/2022-06-14-Lam-Research-Teams-Up-with-SK-hynix-to-Enhance-DRAM-Production-Cost-Efficiency-with-Breakthrough-Dry-Resist-EUV-Technology' }, { id: 'hanmi_semiconductor', edgeLabel: 'HBM용 TC 본더 반복 수주', edgeLabelEn: 'Repeated orders for HBM TC bonders', kind: 'supplier', evidence: 'confirmed', source: 'https://www.hanmisemi.com/en/news/new_view3.html' }, { id: 'jusung_engineering', edgeLabel: 'DRAM용 high-k ALD 장비 공급 보도', edgeLabelEn: 'Reported supply of high-k ALD tools for DRAM', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=2672' }, { id: 'dongjin_semichem', edgeLabel: 'HBM CMP 슬러리·공정재료 공급 보도', edgeLabelEn: 'Reported HBM CMP slurry and process-material supply', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=4751' }, { id: 'soulbrain', edgeLabel: '고순도 불화수소·공정 화학재료', edgeLabelEn: 'High-purity hydrogen fluoride and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://sg.finance.yahoo.com/news/south-korean-firm-boost-output-091907734.html' }, { id: 'sk_specialty', edgeLabel: '반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/eng/pdf/ir3/23/%5BSK_Specialty%5DAudit_Report_2023.pdf' }, { id: 'tsmc', edgeLabel: 'HBM4 base die·CoWoS 기술/파운드리 파트너', edgeLabelEn: 'HBM4 base-die and CoWoS technology/foundry partner', kind: 'supplier', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/' }, { id: 'nvidia', edgeLabel: 'H100용 HBM3 및 후속 HBM 공급', edgeLabelEn: 'HBM3 for H100 and subsequent HBM supply', kind: 'customer', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-to-supply-industrys-first-hbm3-dram-to-nvidia/' }, { id: 'apple', edgeLabel: '고객사로 공개; 제품·규모는 비공개', edgeLabelEn: 'Disclosed as a client; product and volume not disclosed', kind: 'customer', evidence: 'confirmed', source: 'https://www.reuters.com/technology/sk-hynix-q3-profit-plunges-economic-downturn-hurts-chip-demand-2022-10-25/' }, { id: 'microsoft', edgeLabel: 'Maia용 HBM·AI 메모리 협력 보도', edgeLabelEn: 'Reported HBM for Maia and AI-memory collaboration', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/global-big-tech-ai-partnership-ms/' }, { id: 'google', edgeLabel: 'TPU용 HBM3E 공급 보도', edgeLabelEn: 'Reported HBM3E supply for Google TPUs', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/' }, { id: 'samsung_electronics', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }]
+        revenue: '1532.31조원', mcapWon: 1532310084750000, per: 34.65, pbr: 12.52, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 장비 장기 구매', edgeLabelEn: 'Long-term EUV equipment purchases', kind: 'supplier', evidence: 'confirmed', source: 'https://en.yna.co.kr/view/AEN20260324006600320' }, { id: 'applied_materials', edgeLabel: 'DRAM·HBM 장기 공정 R&D', edgeLabelEn: 'Long-term DRAM and HBM process R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-sk-hynix-announce-long-term-rd-partnership' }, { id: 'lam_research', edgeLabel: 'EUV dry resist 공정 장비·기술', edgeLabelEn: 'EUV dry-resist process equipment and technology', kind: 'supplier', evidence: 'confirmed', source: 'https://newsroom.lamresearch.com/2022-06-14-Lam-Research-Teams-Up-with-SK-hynix-to-Enhance-DRAM-Production-Cost-Efficiency-with-Breakthrough-Dry-Resist-EUV-Technology' }, { id: 'hanmi_semiconductor', edgeLabel: 'HBM용 TC 본더 반복 수주', edgeLabelEn: 'Repeated orders for HBM TC bonders', kind: 'supplier', evidence: 'confirmed', source: 'https://www.hanmisemi.com/en/news/new_view3.html' }, { id: 'jusung_engineering', edgeLabel: 'DRAM용 high-k ALD 장비 공급 보도', edgeLabelEn: 'Reported supply of high-k ALD tools for DRAM', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=2672' }, { id: 'dongjin_semichem', edgeLabel: 'HBM CMP 슬러리·공정재료 공급 보도', edgeLabelEn: 'Reported HBM CMP slurry and process-material supply', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=4751' }, { id: 'soulbrain', edgeLabel: '고순도 불화수소·공정 화학재료', edgeLabelEn: 'High-purity hydrogen fluoride and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://sg.finance.yahoo.com/news/south-korean-firm-boost-output-091907734.html' }, { id: 'sk_specialty', edgeLabel: '반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/eng/pdf/ir3/23/%5BSK_Specialty%5DAudit_Report_2023.pdf' }, { id: 'tsmc', edgeLabel: 'HBM4 base die·CoWoS 기술/파운드리 파트너', edgeLabelEn: 'HBM4 base-die and CoWoS technology/foundry partner', kind: 'supplier', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/' }, { id: 'hansol_chemical', edgeLabel: '초고순도 과산화수소·박막 전구체', edgeLabelEn: 'Ultra-high-purity hydrogen peroxide and thin-film precursors', kind: 'supplier', evidence: 'confirmed', source: 'https://m.kisrating.com/fileDown.do?fileName=rs20250617-32.pdf&gubun=2&menuCd=R8' }, { id: 'enf_technology', edgeLabel: '식각액·신너·박리액·현상액·세정액', edgeLabelEn: 'Etchants, thinner, stripper, developer and cleaners', kind: 'supplier', evidence: 'confirmed', source: 'https://www.theworldfolio.com/interviews/enf-technology-expert-electronic-materials-suppliers-eye-global-growth/5976/' }, { id: 'wonik_materials', edgeLabel: '초고순도 반도체 특수가스', edgeLabelEn: 'Ultra-high-purity semiconductor specialty gases', kind: 'supplier', evidence: 'likely', source: 'https://wimco.co.kr/en/company/history' }, { id: 'hana_materials', edgeLabel: '식각용 Si·SiC 링·전극; 현재 관계 likely', edgeLabelEn: 'Si and SiC etch rings/electrodes; current relationship likely', kind: 'supplier', evidence: 'likely', source: 'https://hanamts.com/wp-content/uploads/2023/08/esg_report_en.pdf' }, { id: 'tck', edgeLabel: 'CVD-SiC 포커스링; OEM 경유', edgeLabelEn: 'CVD-SiC focus rings via equipment OEMs', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-ir/20240530%ED%8B%B0%EC%94%A8%EC%BC%80%EC%9D%B4_%EC%BD%94%EC%8A%A4%EB%8B%A5_%EA%B8%80%EB%A1%9C%EB%B2%8C_%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8_%EC%97%91%EC%8A%A4%ED%8F%AC_%EC%B0%B8%EA%B0%80.pdf' }, { id: 'wonik_qnc', edgeLabel: '쿼츠웨어·세라믹·부품 세정/코팅', edgeLabelEn: 'Quartzware, ceramics and parts cleaning/coating', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/001011/20250317004257/11011.htm' }, { id: 'comico', edgeLabel: '장비 부품 정밀세정·코팅·재생', edgeLabelEn: 'Precision cleaning, coating and refurbishment of equipment parts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/000858/20250814002520/11012.htm' }, { id: 'worldex', edgeLabel: '식각용 실리콘 전극·쿼츠·세라믹', edgeLabelEn: 'Silicon electrodes, quartz and ceramic etch consumables', kind: 'supplier', evidence: 'confirmed', source: 'https://www.thelec.kr/news/articleView.html?idxno=44159' }, { id: 'temc', edgeLabel: '네온·엑시머 레이저·희귀/특수가스', edgeLabelEn: 'Neon, excimer-laser and specialty gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.thelec.kr/news/articleView.html?idxno=19154' }, { id: 'sns_tech', edgeLabel: 'DUV 블랭크마스크', edgeLabelEn: 'DUV blank masks', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/000236/20250317001294/11011.htm' }, { id: 'psk', edgeLabel: 'PR strip·세정·bevel etch', edgeLabelEn: 'Photoresist strip, cleaning and bevel etch', kind: 'supplier', evidence: 'likely', source: 'https://kind.krx.co.kr/external/2026/03/23/000046/20260323000129/11011.htm' }, { id: 'tes', edgeLabel: 'PECVD·기상 식각/세정 장비', edgeLabelEn: 'PECVD and gas-phase etch/clean equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.digitaltoday.co.kr/news/articleView.html?idxno=672263' }, { id: 'eugene_tech', edgeLabel: 'LPCVD·플라즈마 처리·ALD', edgeLabelEn: 'LPCVD, plasma treatment and ALD', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2024/08/13/001042/20240813002835/11012.htm' }, { id: 'kc_tech', edgeLabel: '반도체 장비; CMP·세정 포트폴리오', edgeLabelEn: 'Semiconductor equipment; CMP and cleaning portfolio', kind: 'supplier', evidence: 'confirmed', source: 'https://www.datatooza.com/article/20260310123042851052ef3d94aa_80' }, { id: 'hpsp', edgeLabel: '고압 수소/중수소 어닐링; NAND 중심', edgeLabelEn: 'High-pressure hydrogen/deuterium annealing, mainly NAND', kind: 'supplier', evidence: 'confirmed', source: 'https://marketinsight.hankyung.com/article/2025071351421' }, { id: 'park_systems', edgeLabel: 'AFM·WLI 계측', edgeLabelEn: 'AFM and WLI metrology', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=414681' }, { id: 'techwing', edgeLabel: 'HBM Cube Prober', edgeLabelEn: 'HBM Cube Prober', kind: 'supplier', evidence: 'confirmed', source: 'https://www.etoday.co.kr/news/view/2594407' }, { id: 'isc', edgeLabel: 'HBM 테스트 소켓·burn-in', edgeLabelEn: 'HBM test sockets and burn-in solutions', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=419017' }, { id: 'daeduck_electronics', edgeLabel: 'DDR·GDDR 메모리 패키지 기판', edgeLabelEn: 'DDR and GDDR memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://dealsite.co.kr/articles/154591' }, { id: 'simmtech', edgeLabel: '메모리 모듈 PCB·패키지 기판', edgeLabelEn: 'Memory-module PCBs and package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://www.simmtech.com/upload/media/file/639032761440475136.pdf' }, { id: 'haesung_ds', edgeLabel: '메모리 패키지 기판', edgeLabelEn: 'Memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/05/15/002857/20250515006693/11013.htm' }, { id: 'tlb', edgeLabel: '메모리 모듈·SSD PCB', edgeLabelEn: 'Memory-module and SSD PCBs', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/20/001007/20250320004328/11011.htm' }, { id: 'hana_micron', edgeLabel: '패키징·테스트·모듈 장기 계약', edgeLabelEn: 'Long-term packaging, test and module contracts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/002412/20250814007359/11012.htm' }, { id: 'sfa_semicon', edgeLabel: '메모리/비메모리 패키징·테스트', edgeLabelEn: 'Memory and non-memory packaging and test', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2026/03/23/001039/20260323004733/11011.htm' }, { id: 'doosan_tesna', edgeLabel: 'DP 사업부 경유 테스트 관계', edgeLabelEn: 'Testing relationship through the DP operation', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-report/250526_%EB%91%90%EC%82%B0%ED%85%8C%EC%8A%A4%EB%82%98%28%EA%B8%80%EC%84%B8%29.pdf' }, { id: 'shin_etsu', edgeLabel: '실리콘 웨이퍼 주요 공급원 보도', edgeLabelEn: 'Reported major silicon-wafer source', kind: 'supplier', evidence: 'likely', source: 'https://www.trendforce.com/news/2025/09/02/news-memory-giant-fragile-link-koreas-reliance-on-japan-in-hbm-supply-chain/' }, { id: 'merck_emd', edgeLabel: '박막·가스·평탄화·패터닝 소재', edgeLabelEn: 'Thin-film, gas, planarization and patterning materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.asiae.co.kr/en/article/2025022015232338530' }, { id: 'qnity', edgeLabel: 'CMP pad 장기 공급 계약', edgeLabelEn: 'Long-term CMP-pad supply agreement', kind: 'supplier', evidence: 'confirmed', source: 'https://www.qnityelectronics.com/news/qnity-and-sk-hynix-sign-long-term-cmp-pad-supply-agreement-at-se.html' }, { id: 'air_liquide', edgeLabel: '고순도 산업가스', edgeLabelEn: 'High-purity industrial gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.airliquide.com/group/press-releases-news/2026-01-13/closing-dig-airgas-acquisition-air-liquide-becomes-industrial-gas-leader-dynamic-south-korean-market' }, { id: 'nvidia', edgeLabel: 'H100용 HBM3 및 후속 HBM 공급', edgeLabelEn: 'HBM3 for H100 and subsequent HBM supply', kind: 'customer', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-to-supply-industrys-first-hbm3-dram-to-nvidia/' }, { id: 'apple', edgeLabel: '고객사로 공개; 제품·규모는 비공개', edgeLabelEn: 'Disclosed as a client; product and volume not disclosed', kind: 'customer', evidence: 'confirmed', source: 'https://www.reuters.com/technology/sk-hynix-q3-profit-plunges-economic-downturn-hurts-chip-demand-2022-10-25/' }, { id: 'microsoft', edgeLabel: 'Maia용 HBM·AI 메모리 협력 보도', edgeLabelEn: 'Reported HBM for Maia and AI-memory collaboration', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/global-big-tech-ai-partnership-ms/' }, { id: 'google', edgeLabel: 'TPU용 HBM3E 공급 보도', edgeLabelEn: 'Reported HBM3E supply for Google TPUs', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/' }, { id: 'amazon_aws', edgeLabel: '자체 ASIC용 HBM 잠재/신흥 고객', edgeLabelEn: 'Emerging HBM customer for proprietary ASICs', kind: 'customer', evidence: 'likely', source: 'https://news.skhynix.com/en/exploring-the-ai-ecosystem-how-sk-hynixs-industry-leading-memory-fuels-ai-innovation/' }, { id: 'meta', edgeLabel: '기업용 SSD·서버 DRAM 공급', edgeLabelEn: 'Enterprise SSD and server-DRAM supply', kind: 'customer', evidence: 'confirmed', source: 'https://news.skhynix.com/en/global-big-tech-ai-partnership-meta/' }, { id: 'samsung_electronics', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }, { id: 'sandisk', edgeLabel: 'NAND·flash/storage peer', edgeLabelEn: 'NAND, flash and storage peer', kind: 'peer', evidence: 'confirmed', source: 'https://investor.sandisk.com/static-files/342a38e2-e204-4f50-ad22-3e3a28e2f6ff' }, { id: 'ymtc', edgeLabel: 'NAND peer', edgeLabelEn: 'NAND peer', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }, { id: 'cxmt', edgeLabel: 'DRAM peer; HBM 동급 아님', edgeLabelEn: 'DRAM peer; not equivalent in advanced HBM', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }]
       }
 
     ];
@@ -1458,16 +1458,61 @@
       { id: 'dongjin_semichem', name: '동진쎄미켐', nameEn: 'Dongjin Semichem', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '005290', market: 'KOSDAQ', mcapWon: 3007237434000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=005290' },
       { id: 'soulbrain', name: '솔브레인', nameEn: 'Soulbrain', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '357780', market: 'KOSDAQ', mcapWon: 3434236889000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=357780' },
       { id: 'sk_specialty', name: 'SK스페셜티', nameEn: 'SK Specialty', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier' },
+      { id: 'hansol_chemical', name: '한솔케미칼', nameEn: 'Hansol Chemical', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '014680', market: 'KOSPI', mcapWon: 3212080087500, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=014680' },
+      { id: 'enf_technology', name: '이엔에프테크놀로지', nameEn: 'ENF Technology', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '102710', market: 'KOSDAQ', mcapWon: 742967472000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=102710' },
+      { id: 'wonik_materials', name: '원익머트리얼즈', nameEn: 'Wonik Materials', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '104830', market: 'KOSDAQ', mcapWon: 600140800000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=104830' },
+      { id: 'hana_materials', name: '하나머티리얼즈', nameEn: 'Hana Materials', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '166090', market: 'KOSDAQ', mcapWon: 1445747969400, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=166090' },
+      { id: 'tck', name: '티씨케이', nameEn: 'TCK', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '064760', market: 'KOSDAQ', mcapWon: 3242030640000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=064760' },
+      { id: 'wonik_qnc', name: '원익QnC', nameEn: 'Wonik QnC', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '074600', market: 'KOSDAQ', mcapWon: 1108039200000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=074600' },
+      { id: 'comico', name: '코미코', nameEn: 'KoMiCo', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '183300', market: 'KOSDAQ', mcapWon: 1306539431600, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=183300' },
+      { id: 'worldex', name: '월덱스', nameEn: 'Worldex', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '101160', market: 'KOSDAQ', mcapWon: 454052307500, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=101160' },
+      { id: 'temc', name: '티이엠씨', nameEn: 'TEMC', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '425040', market: 'KOSDAQ', mcapWon: 414668830800, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=425040' },
+      { id: 'sns_tech', name: '에스앤에스텍', nameEn: 'S&S Tech', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '101490', market: 'KOSDAQ', mcapWon: 1363298768100, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=101490' },
+      { id: 'psk', name: '피에스케이', nameEn: 'PSK', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '319660', market: 'KOSDAQ', mcapWon: 4921444708600, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=319660' },
+      { id: 'tes', name: '테스', nameEn: 'TES', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '095610', market: 'KOSDAQ', mcapWon: 3527392000000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=095610' },
+      { id: 'eugene_tech', name: '유진테크', nameEn: 'Eugene Technology', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '084370', market: 'KOSDAQ', mcapWon: 4493835836200, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=084370' },
+      { id: 'kc_tech', name: '케이씨텍', nameEn: 'KC Tech', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '281820', market: 'KOSPI', mcapWon: 1724463373100, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=281820' },
+      { id: 'hpsp', name: 'HPSP', nameEn: 'HPSP', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '403870', market: 'KOSDAQ', mcapWon: 5884450000000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=403870' },
+      { id: 'eo_technics', name: '이오테크닉스', nameEn: 'EO Technics', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '039030', market: 'KOSDAQ', mcapWon: 7539564600000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=039030' },
+      { id: 'park_systems', name: '파크시스템스', nameEn: 'Park Systems', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '140860', market: 'KOSDAQ', mcapWon: 2377338225500, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=140860' },
+      { id: 'techwing', name: '테크윙', nameEn: 'Techwing', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '089030', market: 'KOSDAQ', mcapWon: 2419603018500, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=089030' },
+      { id: 'isc', name: 'ISC', nameEn: 'ISC', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '095340', market: 'KOSDAQ', mcapWon: 4875323340000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=095340' },
+      { id: 'daeduck_electronics', name: '대덕전자', nameEn: 'Daeduck Electronics', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '353200', market: 'KOSPI', mcapWon: 8163676010000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=353200' },
+      { id: 'simmtech', name: '심텍', nameEn: 'Simmtech', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '222800', market: 'KOSDAQ', mcapWon: 4874057423100, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=222800' },
+      { id: 'haesung_ds', name: '해성디에스', nameEn: 'Haesung DS', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '195870', market: 'KOSPI', mcapWon: 1334500000000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=195870' },
+      { id: 'tlb', name: '티엘비', nameEn: 'TLB', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '356860', market: 'KOSDAQ', mcapWon: 985229526000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=356860' },
+      { id: 'hana_micron', name: '하나마이크론', nameEn: 'Hana Micron', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '067310', market: 'KOSDAQ', mcapWon: 3253423862700, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=067310' },
+      { id: 'sfa_semicon', name: 'SFA반도체', nameEn: 'SFA Semicon', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '036540', market: 'KOSDAQ', mcapWon: 1193981799780, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=036540' },
+      { id: 'doosan_tesna', name: '두산테스나', nameEn: 'Doosan Tesna', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '131970', market: 'KOSDAQ', mcapWon: 3382266650000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=131970' },
+      { id: 'lb_semicon', name: 'LB세미콘', nameEn: 'LB Semicon', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '061970', market: 'KOSDAQ', mcapWon: 307259101740, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=061970' },
+      { id: 'gaonchips', name: '가온칩스', nameEn: 'Gaonchips', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '399720', market: 'KOSDAQ', mcapWon: 680733530000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=399720' },
+      { id: 'adtechnology', name: '에이디테크놀로지', nameEn: 'ADTechnology', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '200710', market: 'KOSDAQ', mcapWon: 543865082800, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=200710' },
+      { id: 'nepes', name: '네패스', nameEn: 'Nepes', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '033640', market: 'KOSDAQ', mcapWon: 752882945300, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=033640' },
+      { id: 'shin_etsu', name: '신에츠화학', nameEn: 'Shin-Etsu Chemical', country: '일본/Japan', region: 'jp', sector: 'supplier', countryCode: 'JP', primaryRole: 'supplier' },
+      { id: 'sumco', name: 'SUMCO', nameEn: 'SUMCO', country: '일본/Japan', region: 'jp', sector: 'supplier', countryCode: 'JP', primaryRole: 'supplier' },
+      { id: 'merck_emd', name: '머크/EMD Electronics', nameEn: 'Merck / EMD Electronics', country: '독일/Germany', region: 'eu', sector: 'supplier', countryCode: 'DE', primaryRole: 'supplier' },
+      { id: 'dupont', name: 'DuPont', nameEn: 'DuPont', country: '미국/USA', region: 'us', sector: 'supplier', countryCode: 'US', primaryRole: 'supplier' },
+      { id: 'air_liquide', name: 'Air Liquide/DIG Airgas', nameEn: 'Air Liquide / DIG Airgas', country: '프랑스/France', region: 'eu', sector: 'supplier', countryCode: 'FR', primaryRole: 'supplier' },
       { id: 'apple', name: 'Apple', nameEn: 'Apple', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
       { id: 'nvidia', name: 'NVIDIA', nameEn: 'NVIDIA', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
       { id: 'google', name: 'Google', nameEn: 'Google', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'amd', name: 'AMD', nameEn: 'AMD', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'qualcomm', name: 'Qualcomm', nameEn: 'Qualcomm', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'tesla', name: 'Tesla', nameEn: 'Tesla', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
       { id: 'tsmc', name: 'TSMC', nameEn: 'TSMC', country: '대만/Taiwan', region: 'tw', sector: 'supplier', countryCode: 'TW', primaryRole: 'supplier' },
       { id: 'intel', name: 'Intel', nameEn: 'Intel', country: '미국/USA', region: 'us', sector: 'peer', countryCode: 'US', primaryRole: 'peer' },
       { id: 'micron', name: 'Micron', nameEn: 'Micron', country: '미국/USA', region: 'us', sector: 'peer', countryCode: 'US', primaryRole: 'peer' },
       { id: 'kioxia', name: 'Kioxia', nameEn: 'Kioxia', country: '일본/Japan', region: 'jp', sector: 'peer', countryCode: 'JP', primaryRole: 'peer' },
+      { id: 'globalfoundries', name: 'GlobalFoundries', nameEn: 'GlobalFoundries', country: '미국/USA', region: 'us', sector: 'peer', countryCode: 'US', primaryRole: 'peer' },
+      { id: 'sandisk', name: 'Sandisk', nameEn: 'Sandisk', country: '미국/USA', region: 'us', sector: 'peer', countryCode: 'US', primaryRole: 'peer' },
+      { id: 'ymtc', name: 'YMTC', nameEn: 'YMTC', country: '중국/China', region: 'cn', sector: 'peer', countryCode: 'CN', primaryRole: 'peer' },
+      { id: 'cxmt', name: 'CXMT', nameEn: 'CXMT', country: '중국/China', region: 'cn', sector: 'peer', countryCode: 'CN', primaryRole: 'peer' },
       { id: 'hanmi_semiconductor', name: '한미반도체', nameEn: 'Hanmi Semiconductor', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '042700', market: 'KOSPI', mcapWon: 34407704200000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=042700' },
       { id: 'jusung_engineering', name: '주성엔지니어링', nameEn: 'Jusung Engineering', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '036930', market: 'KOSDAQ', mcapWon: 10737138951000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=036930' },
-      { id: 'microsoft', name: 'Microsoft', nameEn: 'Microsoft', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' }
+      { id: 'qnity', name: 'Qnity', nameEn: 'Qnity', country: '미국/USA', region: 'us', sector: 'supplier', countryCode: 'US', primaryRole: 'supplier' },
+      { id: 'microsoft', name: 'Microsoft', nameEn: 'Microsoft', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'amazon_aws', name: 'Amazon AWS', nameEn: 'Amazon AWS', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'meta', name: 'Meta', nameEn: 'Meta', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' }
     ];
 
 
@@ -1663,7 +1708,7 @@
         </div>`
       ).join('');
       const countryCodes = [...new Set(globalCompanies.map((x) => x.countryCode).filter(Boolean))];
-      const labels = { KR: lang === 'en' ? 'Korea' : '한국', US: lang === 'en' ? 'USA' : '미국', TW: lang === 'en' ? 'Taiwan' : '대만', JP: lang === 'en' ? 'Japan' : '일본', NL: lang === 'en' ? 'Netherlands' : '네덜란드', CN: lang === 'en' ? 'China' : '중국', EU: lang === 'en' ? 'Europe' : '유럽' };
+      const labels = { KR: lang === 'en' ? 'Korea' : '한국', US: lang === 'en' ? 'USA' : '미국', TW: lang === 'en' ? 'Taiwan' : '대만', JP: lang === 'en' ? 'Japan' : '일본', NL: lang === 'en' ? 'Netherlands' : '네덜란드', DE: lang === 'en' ? 'Germany' : '독일', FR: lang === 'en' ? 'France' : '프랑스', CN: lang === 'en' ? 'China' : '중국', EU: lang === 'en' ? 'Europe' : '유럽' };
       const regionContainer = document.getElementById('sb-region-legend');
       const buttons = ['all', ...countryCodes].map((code) =>
         `<button type="button" class="bigchip-country-chip${activeCountry === code ? ' active' : ''}" onclick="setBigchipCountry('${code}')">${code === 'all' ? t.allCountries : (labels[code] || code)}</button>`
@@ -1701,6 +1746,27 @@
     }
     function companyLinksTo(c, gid) {
       return (c.partners || []).some(p => partnerRef(p).id === gid);
+    }
+
+    function bigchipEscape(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    }
+    function bigchipRelationTags(c) {
+      const maxVisible = 8;
+      const dots = { KR: '#58a6ff', US: '#f0a44b', TW: '#4fc3a1', JP: '#d78ee8', NL: '#7fb7ff', CN: '#ef6b73', DE: '#f3c969', FR: '#8fb7ff', EU: '#a8b3c7' };
+      const tags = (c.partners || []).slice(0, maxVisible).map((p) => {
+        const pr = bigchipPartnerRef(p);
+        const rel = globalCompanies.find((x) => x.id === pr.id) || {};
+        const info = getPartnerInfo(pr.id);
+        const role = bigchipRole(pr.kind);
+        const note = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
+        const evidence = pr.evidence === 'confirmed' ? T[lang].confirmedEvidence : T[lang].reportedEvidence;
+        const title = [info.name, note, evidence].filter(Boolean).join(' · ');
+        return `<span class="bigchip-relation-tag ${role}" title="${bigchipEscape(title)}"><span class="bigchip-country-dot" style="--country-dot:${dots[rel.countryCode] || '#8b949e'}"></span><span class="bigchip-relation-name">${bigchipEscape(info.name)}</span></span>`;
+      });
+      const hidden = Math.max(0, (c.partners || []).length - maxVisible);
+      if (hidden) tags.push(`<span class="bigchip-relation-tag more" title="${hidden} more">+${hidden}</span>`);
+      return tags.join('');
     }
 
     function renderTable() {
@@ -1745,14 +1811,7 @@
 
       const tbody = document.getElementById('table-body');
       tbody.innerHTML = data.map(c => {
-        const partnerHtml = c.partners.slice(0, 6).map(p => {
-          const pr = partnerRef(p);
-          const info = getPartnerInfo(pr.id);
-          const elbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
-          const wpart = (pr.weight != null && Number.isFinite(pr.weight)) ? ` · ~${Math.round(pr.weight * 100)}%` : '';
-          const hint = (elbl || wpart) ? `<span class="partner-edge-hint">${elbl || ''}${wpart}</span>` : '';
-          return `<span class="partner-tag ${info.region}">${info.name}${hint}</span>`;
-        }).join('') + (c.partners.length > 6 ? `<span class="partner-tag">+${c.partners.length - 6}</span>` : '');
+        const partnerHtml = bigchipRelationTags(c);
         const displayName = lang === 'en' ? (c.nameEn || c.name) : (c.name || c.nameEn);
         const subNameRaw = lang === 'en' ? (c.name || '') : (c.nameEn || '');
         const subNameHtml = subNameRaw && subNameRaw !== displayName ? `<div class="company-name-sub">${subNameRaw}</div>` : '';
@@ -1784,7 +1843,7 @@
       <td><span class="chain-tag" style="${getChainStyle(c.chain)}">${chainDisplay}</span></td>
       <td style="font-size:12px;color:var(--text-muted)">${semTypeDisplay}</td>
       <td class="products-cell">${productsDisplay}</td>
-      <td><div class="partners-list">${partnerHtml}</div></td>
+      <td class="bigchip-relations-cell"><div class="bigchip-relation-tags">${partnerHtml}</div></td>
     </tr>`;
       }).join('');
     if (window.InvestingMapMobileTable) InvestingMapMobileTable.sync(document.getElementById('main-table'));
@@ -1832,7 +1891,7 @@
 
     let activeCountry = 'all', highlightedRole = null;
     const BIGCHIP_ROLE_COLORS = { supplier: '#58a6ff', peer: '#8b949e', customer: '#f0a44b' };
-    const BIGCHIP_COUNTRY_COLORS = { KR: '#58a6ff', US: '#f0a44b', TW: '#4fc3a1', JP: '#d78ee8', NL: '#7fb7ff', CN: '#ef6b73', EU: '#a8b3c7' };
+    const BIGCHIP_COUNTRY_COLORS = { KR: '#58a6ff', US: '#f0a44b', TW: '#4fc3a1', JP: '#d78ee8', NL: '#7fb7ff', CN: '#ef6b73', DE: '#f3c969', FR: '#8fb7ff', EU: '#a8b3c7' };
 
     function bigchipPartnerRef(p) {
       const base = partnerRef(p);
@@ -1855,112 +1914,146 @@
       highlightedRole = role;
       selectedNode = null;
       svgEl.selectAll('.node').classed('node-dim', (d) => d.type === 'relation' && d.role !== role);
-      svgEl.selectAll('line').attr('stroke-opacity', (d) => d.role === role ? 0.9 : 0.04)
-        .attr('stroke-width', (d) => d.role === role ? 2.8 : 0.7);
+      svgEl.selectAll('.bigchip-link').attr('stroke-opacity', (d) => d.role === role ? 0.9 : 0.025)
+        .attr('stroke-width', (d) => d.role === role ? 2 : 0.45);
     }
     function openBigchipTicker(d) {
       if (!d || !d.targetUrl) return;
       const sep = d.targetUrl.includes('?') ? '&' : '?';
       window.location.href = d.targetUrl + sep + 'lang=' + encodeURIComponent(lang);
     }
+    function bigchipGrid(items, box) {
+      if (!items.length) return;
+      const aspect = Math.max(.4, box.w / Math.max(box.h, 1));
+      const cols = Math.max(1, Math.ceil(Math.sqrt(items.length * aspect)));
+      const rows = Math.ceil(items.length / cols);
+      items.forEach((item, i) => {
+        const col = i % cols, row = Math.floor(i / cols);
+        item.x = box.x + box.w * (col + .5) / cols;
+        item.y = box.y + box.h * (row + .55) / rows;
+      });
+    }
+    function bigchipCurve(d, mobile) {
+      const sx = d.source.x, sy = d.source.y, tx = d.target.x, ty = d.target.y;
+      if (mobile) {
+        const my = (sy + ty) / 2;
+        return `M${sx},${sy} C${sx},${my} ${tx},${my} ${tx},${ty}`;
+      }
+      const mx = (sx + tx) / 2;
+      return `M${sx},${sy} C${mx},${sy} ${mx},${ty} ${tx},${ty}`;
+    }
 
     function buildGraph() {
       const container = document.getElementById('graph-svg');
-      const W = container.clientWidth || 900, H = container.clientHeight || 700;
+      const mobile = (container.clientWidth || 900) < 720;
+      if (mobile) container.style.height = '1180px';
+      else container.style.height = '';
+      const W = container.clientWidth || 900;
+      const H = mobile ? 1180 : Math.max(container.clientHeight || 700, 760);
       if (simulation) simulation.stop();
+      simulation = null;
       const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
       const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
-      const nodes = [];
-      const nodeIds = new Set();
-      const roleById = new Map();
-      const roleRank = { supplier: 3, customer: 2, peer: 1 };
+      const nodes = [], nodeIds = new Set(), rolesById = new Map();
 
       koreanCompanies.forEach((c, i) => {
         nodes.push({
-          id: c.id, label: c.name, labelEn: c.nameEn, type: 'hub', chain: c.chain,
+          id: c.id, relationId: c.id, label: c.name, labelEn: c.nameEn, type: 'hub', chain: c.chain,
           ticker: c.ticker, market: c.market, semType: c.semType, semTypeEn: c.semTypeEn,
           products: c.products, productsEn: c.productsEn, revenue: c.revenue, mcapWon: c.mcapWon,
           revTier: c.revTier, data: c, tags: c.tags || [], r: c.revTier === 3 ? 25 : 21, hubIndex: i
         });
         nodeIds.add(c.id);
         (c.partners || []).forEach((p) => {
-          const pr = bigchipPartnerRef(p);
-          const role = bigchipRole(pr.kind);
-          if (!roleById.has(pr.id) || roleRank[role] > roleRank[roleById.get(pr.id)]) roleById.set(pr.id, role);
+          const pr = bigchipPartnerRef(p), role = bigchipRole(pr.kind);
+          if (!rolesById.has(pr.id)) rolesById.set(pr.id, new Set());
+          rolesById.get(pr.id).add(role);
         });
       });
 
       globalCompanies.forEach((rel) => {
-        if (!roleById.has(rel.id)) return;
+        const roles = rolesById.get(rel.id);
+        if (!roles) return;
         if (activeCountry !== 'all' && rel.countryCode !== activeCountry) return;
-        const role = roleById.get(rel.id);
-        const cap = Number(rel.mcapWon) || 0;
-        nodes.push({
-          id: rel.id, label: rel.name, labelEn: rel.nameEn || rel.name, type: 'relation',
-          role, country: rel.country, countryCode: rel.countryCode, region: rel.region,
-          sector: rel.sector, ticker: rel.ticker || '', market: rel.market || '',
-          mcapWon: cap, targetUrl: rel.targetUrl || '',
-          r: rel.ticker ? (cap >= 15e12 ? 17 : cap >= 1e12 ? 13 : 10) : 9,
-          data: rel
+        roles.forEach((role) => {
+          const cap = Number(rel.mcapWon) || 0;
+          const id = rel.id + '__' + role;
+          nodes.push({
+            id, relationId: rel.id, label: rel.name, labelEn: rel.nameEn || rel.name, type: 'relation',
+            role, country: rel.country, countryCode: rel.countryCode, region: rel.region,
+            sector: rel.sector, ticker: rel.ticker || '', market: rel.market || '',
+            mcapWon: cap, targetUrl: rel.targetUrl || '',
+            r: rel.ticker ? (cap >= 15e12 ? 15 : cap >= 1e12 ? 12 : 9) : 8,
+            data: rel
+          });
+          nodeIds.add(id);
         });
-        nodeIds.add(rel.id);
       });
 
-      const links = [];
-      const linkKeys = new Set();
+      const links = [], linkKeys = new Set();
       koreanCompanies.forEach((c) => (c.partners || []).forEach((p) => {
-        const pr = bigchipPartnerRef(p);
-        if (!nodeIds.has(pr.id)) return;
-        const role = bigchipRole(pr.kind);
-        const key = role === 'peer' ? [c.id, pr.id].sort().join('|') + '|peer' : c.id + '|' + pr.id + '|' + role;
+        const pr = bigchipPartnerRef(p), role = bigchipRole(pr.kind);
+        const roleTarget = pr.id + '__' + role;
+        const target = nodeIds.has(roleTarget) ? roleTarget : pr.id;
+        if (!nodeIds.has(target)) return;
+        const key = c.id + '|' + target + '|' + role;
         if (linkKeys.has(key)) return;
         linkKeys.add(key);
         links.push({
-          source: c.id, target: pr.id, role, kind: role, evidence: pr.evidence,
+          source: c.id, target, role, kind: role, evidence: pr.evidence,
           sourceUrl: pr.source, edgeLabel: pr.edgeLabel, edgeLabelEn: pr.edgeLabelEn,
-          baseStrokeW: pr.evidence === 'reported' ? 1.5 : 2
+          baseStrokeW: pr.evidence === 'confirmed' ? 1.15 : .8
         });
       }));
 
+      const byId = new Map(nodes.map((n) => [n.id, n]));
+      links.forEach((link) => { link.source = byId.get(link.source); link.target = byId.get(link.target); });
+      const roleNodes = (role) => nodes.filter((n) => n.type === 'relation' && n.role === role);
+      let zones;
+      if (mobile) {
+        zones = [
+          { role: 'supplier', x: 8, y: 36, w: W - 16, h: H * .38 },
+          { role: 'peer', x: 8, y: H * .53, w: W - 16, h: H * .17 },
+          { role: 'customer', x: 8, y: H * .73, w: W - 16, h: H * .25 }
+        ];
+        nodes.filter((n) => n.type === 'hub').forEach((n, i) => { n.x = W * (.32 + i * .36); n.y = H * .475; });
+      } else {
+        zones = [
+          { role: 'supplier', x: 8, y: 36, w: W * .36, h: H - 48 },
+          { role: 'peer', x: W * .55, y: 36, w: W * .18, h: H - 48 },
+          { role: 'customer', x: W * .75, y: 36, w: W * .24 - 8, h: H - 48 }
+        ];
+        nodes.filter((n) => n.type === 'hub').forEach((n, i) => { n.x = W * .455; n.y = H * (.43 + i * .14); });
+      }
+      zones.forEach((zone) => bigchipGrid(roleNodes(zone.role), { x: zone.x + 10, y: zone.y + 24, w: zone.w - 20, h: zone.h - 34 }));
+
       const d3svg = d3.select('#graph-svg');
       d3svg.selectAll('*').remove();
+      d3svg.attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'xMidYMin meet');
       svgEl = d3svg;
-      zoomBehavior = d3.zoom().scaleExtent([0.25, 4]).on('zoom', (e) => g.attr('transform', e.transform));
+      zoomBehavior = d3.zoom().scaleExtent([0.35, 4]).on('zoom', (e) => g.attr('transform', e.transform));
       d3svg.call(zoomBehavior);
       d3svg.on('click', (e) => { if (e.target === d3svg.node() || e.target.tagName === 'svg') resetSelection(); });
       g = d3svg.append('g');
 
-      const zones = [
-        { role: 'supplier', x: 0, w: W / 3 },
-        { role: 'peer', x: W / 3, w: W / 3 },
-        { role: 'customer', x: W * 2 / 3, w: W / 3 }
-      ];
       const zone = g.append('g').attr('class', 'bigchip-zones').selectAll('g').data(zones).join('g');
-      zone.append('rect').attr('x', (d) => d.x + 5).attr('y', 8).attr('width', (d) => d.w - 10).attr('height', H - 16)
-        .attr('rx', 14).attr('fill', (d) => bigchipRoleColor(d.role)).attr('fill-opacity', 0.035)
-        .attr('stroke', (d) => bigchipRoleColor(d.role)).attr('stroke-opacity', 0.18).attr('stroke-dasharray', '4 6');
-      zone.append('text').attr('class', 'bigchip-zone-label').attr('x', (d) => d.x + d.w / 2).attr('y', 30)
+      zone.append('rect').attr('x', (d) => d.x).attr('y', (d) => d.y).attr('width', (d) => d.w).attr('height', (d) => d.h)
+        .attr('rx', 14).attr('fill', (d) => bigchipRoleColor(d.role)).attr('fill-opacity', .035)
+        .attr('stroke', (d) => bigchipRoleColor(d.role)).attr('stroke-opacity', .2);
+      zone.append('text').attr('class', 'bigchip-zone-label').attr('x', (d) => d.x + d.w / 2).attr('y', (d) => d.y + 19)
         .attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', (d) => bigchipRoleColor(d.role))
         .text((d) => T[lang]['relation' + d.role.charAt(0).toUpperCase() + d.role.slice(1)] || d.role);
 
-      simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id((d) => d.id).distance((d) => d.role === 'peer' ? 105 : 130).strength(0.34))
-        .force('charge', d3.forceManyBody().strength((d) => d.type === 'hub' ? -420 : -115))
-        .force('collide', d3.forceCollide((d) => d.r + 14))
-        .force('x', d3.forceX((d) => {
-          if (d.type === 'hub') return W / 2;
-          return d.role === 'supplier' ? W * 0.18 : d.role === 'customer' ? W * 0.82 : W * 0.5;
-        }).strength((d) => d.type === 'hub' ? 0.35 : 0.16))
-        .force('y', d3.forceY((d) => d.type === 'hub' ? H / 2 + (d.hubIndex ? 52 : -52) : H / 2).strength(0.1));
-
-      const link = g.append('g').selectAll('line').data(links).join('line')
+      const link = g.append('g').selectAll('path').data(links).join('path')
+        .attr('class', 'bigchip-link').attr('d', (d) => bigchipCurve(d, mobile))
         .attr('stroke', (d) => bigchipRoleColor(d.role))
-        .attr('stroke-opacity', (d) => d.evidence === 'reported' ? 0.5 : 0.68)
+        .attr('stroke-opacity', (d) => d.evidence === 'confirmed' ? .42 : .24)
         .attr('stroke-width', (d) => d.baseStrokeW)
-        .attr('stroke-dasharray', (d) => d.evidence === 'reported' ? '5 4' : null);
+        .attr('stroke-dasharray', (d) => d.role === 'peer' ? '4 4' : (d.evidence === 'confirmed' ? null : '3 4'));
 
       const node = g.append('g').selectAll('g').data(nodes).join('g')
         .attr('class', (d) => `node node-${d.type}`).attr('cursor', 'pointer')
+        .attr('transform', (d) => `translate(${d.x},${d.y})`)
         .on('mouseover', (e, d) => showTooltip(e, d))
         .on('mouseout', () => hideTooltip())
         .on('click', (e, d) => {
@@ -1968,37 +2061,31 @@
           if (d.type === 'relation' && d.ticker && selectedNode === d.id) { openBigchipTicker(d); return; }
           selectNode(d, node, link);
         })
-        .on('dblclick', (e, d) => { if (d.type === 'relation' && d.ticker) { e.preventDefault(); openBigchipTicker(d); } })
-        .call(d3.drag()
-          .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-          .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
-          .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+        .on('dblclick', (e, d) => { if (d.type === 'relation' && d.ticker) { e.preventDefault(); openBigchipTicker(d); } });
 
       node.filter((d) => d.type === 'hub').append('circle')
         .attr('r', (d) => d.r).attr('fill', (d) => CHAIN_COLORS[d.chain] || '#888')
-        .attr('fill-opacity', 0.95).attr('stroke', graphStroke).attr('stroke-width', 2.2);
+        .attr('fill-opacity', .96).attr('stroke', graphStroke).attr('stroke-width', 2.2);
       node.filter((d) => d.type === 'relation' && d.role === 'supplier').append('polygon')
         .attr('points', (d) => `0,${-d.r} ${d.r},${d.r} ${-d.r},${d.r}`)
-        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.4);
+        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.2);
       node.filter((d) => d.type === 'relation' && d.role === 'peer').append('polygon')
         .attr('points', (d) => `0,${-d.r} ${d.r},0 0,${d.r} ${-d.r},0`)
-        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.4);
+        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.2);
       node.filter((d) => d.type === 'relation' && d.role === 'customer').append('rect')
         .attr('x', (d) => -d.r).attr('y', (d) => -d.r).attr('width', (d) => d.r * 2).attr('height', (d) => d.r * 2).attr('rx', 3)
-        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.4);
-      node.append('text').text((d) => lang === 'en' ? (d.labelEn || d.label) : d.label)
-        .attr('text-anchor', 'middle').attr('dy', (d) => d.r + 13)
-        .attr('font-size', (d) => d.type === 'hub' ? 12 : 9).attr('font-weight', (d) => d.type === 'hub' ? 700 : 500)
+        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.2);
+      node.append('text').text((d) => {
+        const label = lang === 'en' ? (d.labelEn || d.label) : d.label;
+        const max = d.type === 'hub' ? 20 : (mobile ? 11 : 14);
+        return label.length > max ? label.slice(0, max - 1) + '…' : label;
+      }).attr('text-anchor', 'middle').attr('dy', (d) => d.r + 11)
+        .attr('font-size', (d) => d.type === 'hub' ? 12 : 8).attr('font-weight', (d) => d.type === 'hub' ? 700 : 500)
         .attr('fill', graphLabel).attr('pointer-events', 'none');
 
-      simulation.on('tick', () => {
-        link.attr('x1', (d) => d.source.x).attr('y1', (d) => d.source.y)
-          .attr('x2', (d) => d.target.x).attr('y2', (d) => d.target.y);
-        node.attr('transform', (d) => `translate(${Math.max(25, Math.min(W - 25, d.x))},${Math.max(45, Math.min(H - 25, d.y))})`);
-      });
       selectedNode = null;
       highlightedRole = null;
-      setTimeout(() => { d3svg.transition().duration(450).call(zoomBehavior.transform, d3.zoomIdentity.translate(W * 0.03, H * 0.03).scale(0.94)); }, 700);
+      d3svg.call(zoomBehavior.transform, d3.zoomIdentity);
     }
 
         function selectNode(d, node, link) {
@@ -2023,10 +2110,10 @@
       selectedNode = null; highlightedChain = null; highlightedRole = null;
       if (!svgEl) return;
       svgEl.selectAll('.node').classed('node-dim', false);
-      svgEl.selectAll('line')
-        .attr('stroke-opacity', (d) => d.evidence === 'reported' ? 0.5 : 0.68)
-        .attr('stroke-width', (d) => d.baseStrokeW || 2)
-        .attr('stroke-dasharray', (d) => d.evidence === 'reported' ? '5 4' : null)
+      svgEl.selectAll('.bigchip-link')
+        .attr('stroke-opacity', (d) => d.evidence === 'confirmed' ? 0.42 : 0.24)
+        .attr('stroke-width', (d) => d.baseStrokeW || 1)
+        .attr('stroke-dasharray', (d) => d.role === 'peer' ? '4 4' : (d.evidence === 'confirmed' ? null : '3 4'))
         .attr('stroke', (d) => bigchipRoleColor(d.role));
     }
 
@@ -2038,7 +2125,7 @@
       const linkedIds = new Set(chainIds);
       koreanCompanies.filter(c => c.chain === chain).forEach(c => (c.partners || []).forEach(p => linkedIds.add(partnerRef(p).id)));
       svgEl.selectAll('.node').classed('node-dim', d => !linkedIds.has(d.id));
-      svgEl.selectAll('line').attr('stroke-opacity', l => chainIds.has(l.source.id || l.source) ? 0.75 : 0.03)
+      svgEl.selectAll('.bigchip-link').attr('stroke-opacity', l => chainIds.has(l.source.id || l.source) ? 0.75 : 0.03)
         .attr('stroke-width', l => {
           const base = l.baseStrokeW || 1.2;
           return chainIds.has(l.source.id || l.source) ? Math.max(2, base * 1.7) : Math.max(0.55, base * 0.55);
@@ -2077,9 +2164,9 @@
         const related = [];
         koreanCompanies.forEach((c) => (c.partners || []).forEach((p) => {
           const pr = bigchipPartnerRef(p);
-          if (pr.id !== d.id) return;
+          if (pr.id !== (d.relationId || d.id)) return;
           const note = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
-          const evidence = pr.evidence === 'reported' ? t.reportedEvidence : t.confirmedEvidence;
+          const evidence = pr.evidence === 'confirmed' ? t.confirmedEvidence : t.reportedEvidence;
           related.push((lang === 'en' ? c.nameEn : c.name) + ' — ' + note + ' (' + evidence + ')');
         }));
         if (related.length) html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSuppliers}</span><span class="tooltip-val">${related.join('<br>')}</span></div>`;
