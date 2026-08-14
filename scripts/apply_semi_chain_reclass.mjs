@@ -112,14 +112,21 @@ function patchUi(html) {
   const filterEn =
     '{ 전공정: \'Front-end\', 후공정: \'Back-end\', IDM: \'IDM\', 팹리스: \'Fabless\', 파운드리: \'Foundry\', 소재: \'Materials\', \'전공정 장비\': \'FE equipment\', \'후공정 장비\': \'BE equipment\', \'부품/기판\': \'Components/Sub\', \'패키징/테스트\': \'Packaging/Test\', \'반도체 유통\': \'Distribution\' }';
 
-  // ko / en 두 블록을 모두 갱신해야 하므로 /g 필수.
-  out = out.replace(/chainLabel: \{ 전공정:[\s\S]*?패키징\/테스트': '[^']+' \}/g, (m) =>
-    m.includes('Front-end') ? `chainLabel: ${labelEn}` : `chainLabel: ${labelKo}`,
-  );
-  out = out.replace(/chainFilter: \{ 전공정:[\s\S]*?패키징\/테스트': '[^']+' \}/g, (m) =>
-    m.includes('Front-end') || m.includes("Back-end'") ? `chainFilter: ${filterEn}` : `chainFilter: ${filterKo}`,
-  );
+  // T.ko / T.en 순서로 각각 한 번씩만 교체한다. 사전은 한 줄짜리 리터럴이므로
+  // 줄·중괄호를 넘지 않는 패턴을 써야 재실행 시 다음 블록을 삼키지 않는다.
+  out = replaceDicts(out, 'chainLabel', [labelKo, labelEn]);
+  out = replaceDicts(out, 'chainFilter', [filterKo, filterEn]);
   return out;
+}
+
+function replaceDicts(html, field, [koLiteral, enLiteral]) {
+  const re = new RegExp(`${field}: \\{[^{}\\n]*\\}`, 'g');
+  const found = html.match(re) || [];
+  if (found.length !== 2) {
+    throw new Error(`${field}: expected 2 dictionaries (ko, en), found ${found.length}`);
+  }
+  let seen = 0;
+  return html.replace(re, () => `${field}: ${seen++ === 0 ? koLiteral : enLiteral}`);
 }
 
 /** SEO 프리렌더 표(정적 tbody)의 벨류체인·반도체유형·주요제품 셀을 종목별로 갱신한다. */
