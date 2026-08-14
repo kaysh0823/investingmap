@@ -16,7 +16,7 @@ const S = {
   YARD: '\uC885\uD569\uC870\uC120',
   ENGINE: '\uC5D4\uC9C4',
   OUTFIT: '\uC758\uC7A5/\uBC30\uAD00',
-  EQUIP: '\uAE30\uD0C0 \uAE30\uC790\uC7AC',
+  EQUIP: '\uC120\uCCB4\u00B7\uBCF4\uB0C9\u00B7\uAD6C\uC870\uC7AC',
   OFFSHORE: '\uC11C\uBE44\uC2A4\u00B7\uD574\uC591\uD50C\uB79C\uD2B8',
   SHIPPING: '\uD574\uC6B4\uBB3C\uB958',
 };
@@ -298,7 +298,7 @@ function chainLabelKo() {
     [S.YARD]: '\uC885\uD569 \uC870\uC120',
     [S.ENGINE]: '\uC120\uBC15 \uC5D4\uC9C4\u00B7\uCD94\uC9C4',
     [S.OUTFIT]: '\uC758\uC7A5\u00B7\uBC30\uAD00\u00B7\uD53C\uD305',
-    [S.EQUIP]: '\uAE30\uD0C0 \uC870\uC120 \uAE30\uC790\uC7AC',
+    [S.EQUIP]: '\uC120\uCCB4\u00B7\uBCF4\uB0C9\u00B7\uAD6C\uC870\uC7AC',
     [S.OFFSHORE]: '\uC11C\uBE44\uC2A4\u00B7\uAC1C\uC870\u00B7\uD574\uC591\uD50C\uB79C\uD2B8',
     [S.SHIPPING]: '\uD574\uC6B4\uBB3C\uB958',
   };
@@ -309,7 +309,7 @@ function chainLabelEn() {
     [S.YARD]: 'Integrated shipbuilding',
     [S.ENGINE]: 'Marine engines & propulsion',
     [S.OUTFIT]: 'Outfitting, piping & fittings',
-    [S.EQUIP]: 'Other marine equipment',
+    [S.EQUIP]: 'Hull, insulation & structural materials',
     [S.OFFSHORE]: 'Services, retrofit & offshore plant',
     [S.SHIPPING]: 'Shipping & logistics',
   };
@@ -320,7 +320,7 @@ function chainFilterKo() {
     [S.YARD]: '\uC870\uC120\uC0AC',
     [S.ENGINE]: '\uC5D4\uC9C4',
     [S.OUTFIT]: '\uC758\uC7A5\u00B7\uBC30\uAD00',
-    [S.EQUIP]: '\uAE30\uD0C0 \uAE30\uC790\uC7AC',
+    [S.EQUIP]: '\uC120\uCCB4\u00B7\uBCF4\uB0C9\u00B7\uAD6C\uC870\uC7AC',
     [S.OFFSHORE]: '\uC11C\uBE44\uC2A4\u00B7\uD574\uC591',
     [S.SHIPPING]: '\uD574\uC6B4',
   };
@@ -331,7 +331,7 @@ function chainFilterEn() {
     [S.YARD]: 'Shipyards',
     [S.ENGINE]: 'Engines',
     [S.OUTFIT]: 'Outfitting',
-    [S.EQUIP]: 'Other equipment',
+    [S.EQUIP]: 'Hull & materials',
     [S.OFFSHORE]: 'Services & offshore',
     [S.SHIPPING]: 'Shipping',
   };

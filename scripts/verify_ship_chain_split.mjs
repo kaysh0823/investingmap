@@ -14,12 +14,12 @@ const HTML = fs.readFileSync(join(ROOT, 'ship', 'korea_ship_map.html'), 'utf8');
 const EXPECTED = {
   종합조선: 5,
   엔진: 5,
-  '의장/배관': 3,
-  '기타 기자재': 6,
+  '의장/배관': 4,
+  '선체·보냉·구조재': 5,
   '서비스·해양플랜트': 3,
   해운물류: 3,
 };
-const RETIRED = ['조선기자재', '해양플랜트', '방산해양', '철강소재'];
+const RETIRED = ['조선기자재', '기타 기자재', '해양플랜트', '방산해양', '철강소재'];
 const failures = [];
 
 function check(condition, message) {
@@ -67,7 +67,7 @@ check(rows.length === 25, `prerender rows: expected 25, got ${rows.length}`);
 const byTicker = new Map(companies.map((c) => [c.ticker, c.chain]));
 for (const [ticker, chain] of rows) check(byTicker.get(ticker) === chain, `prerender ${ticker}: ${chain} != ${byTicker.get(ticker)}`);
 
-for (const sample of ['선박엔진', '피팅·밸브', '해양플랜트', 'LNG 보냉재', '해운물류']) {
+for (const sample of ['선박엔진', '피팅·밸브', '선박평형수 계측', '해양플랜트', 'LNG 보냉재', '해운물류']) {
   const inferred = inferChain(sample, 'ship', colorKeys);
   check(!RETIRED.includes(inferred), `inferChain('${sample}') returned retired ${inferred}`);
 }

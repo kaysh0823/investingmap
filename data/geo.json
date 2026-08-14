@@ -65,7 +65,7 @@
       "path": "/bio/korea_bio_map.html",
       "title": { "ko": "한국 바이오 산업 투자 지도", "en": "Korea Bio Industry Investment Map" },
       "summary": {
-        "ko": "국내 바이오·제약 상장사의 KRX 정량 데이터, 신약·CDMO·바이오시밀러·의료기기 분류, 기술이전·글로벌 빅파마 페어링 관계를 제공합니다.",
+        "ko": "국내 바이오·제약 상장사의 KRX 정량 데이터, 신약·CDMO·바이오시밀러 분류, 기술이전·글로벌 빅파마 페어링 관계를 제공합니다.",
         "en": "KRX metrics, therapeutic and CDMO segments, and technology-transfer and big-pharma licensing & partnership networks for listed Korean bio and pharma companies."
       }
     },
@@ -145,7 +145,7 @@
       "path": "/powergrid/korea_powergrid_map.html",
       "title": { "ko": "한국 전력설비 투자 지도", "en": "Korea Power Equipment Map" },
       "summary": {
-        "ko": "전력설비·송배전·발전설비 관련 상장사와 글로벌 참고 관계를 정리합니다.",
+        "ko": "전력설비·송배전·전선·케이블·발전설비 관련 상장사와 글로벌 참고 관계를 정리합니다.",
         "en": "Listed Korean power equipment, T&D, and power generation companies with illustrative global relationships."
       }
     },

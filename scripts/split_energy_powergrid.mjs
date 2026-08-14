@@ -17,7 +17,7 @@ const POWER_EXTRA_TICKERS = new Set([
 ]);
 
 const ENERGY_CHAINS = ['2차전지', 'ESS', '배터리', '태양광', '풍력'];
-const POWER_CHAINS = ['전력설비', '송배전', '발전설비'];
+const POWER_CHAINS = ['전력설비', '송배전', '전선·케이블', '발전설비'];
 
 function extractCompanies(html) {
   const m = html.match(/const koreanCompanies\s*=\s*(\[[\s\S]*?\n    \]);/);
@@ -35,7 +35,9 @@ function powerChain(c) {
   const text = `${c.name} ${c.semType || ''} ${c.products || ''}`;
   if (c.chain === '원자력·발전설비') return '발전설비';
   if (/한국전력|한전|발전|원자|터빈|EPC|O&M|가스공사|지역난방|파워텍/.test(text)) return '발전설비';
-  if (/케이블|전선|송배전|송전|배전|전력망|LNG|배관/.test(text)) return '송배전';
+  if (/해저케이블.*(?:시공|유지보수)/.test(text)) return '송배전';
+  if (/케이블|전선/.test(text)) return '전선·케이블';
+  if (/송배전|송전|배전|전력망|LNG|배관/.test(text)) return '송배전';
   return '전력설비';
 }
 
@@ -136,22 +138,26 @@ const ENERGY_FILTER_EN = {
 };
 const POWER_CHAIN_KO = {
   전력설비: '전력설비·배전반',
-  송배전: '송배전·케이블',
-  발전설비: '발전·원자력 설비',
+  송배전: '송배전 장비·전력망',
+  '전선·케이블': '전선·케이블',
+  발전설비: '발전·에너지 설비',
 };
 const POWER_FILTER_KO = {
   전력설비: '전력설비',
   송배전: '송배전',
+  '전선·케이블': '전선·케이블',
   발전설비: '발전설비',
 };
 const POWER_CHAIN_EN = {
   전력설비: 'Switchgear & transformers',
-  송배전: 'T&D · cables · utilities',
-  발전설비: 'Generation & nuclear OEM',
+  송배전: 'T&D equipment & grid services',
+  '전선·케이블': 'Wire & cable',
+  발전설비: 'Generation & energy equipment',
 };
 const POWER_FILTER_EN = {
   전력설비: 'Grid gear',
   송배전: 'T&D',
+  '전선·케이블': 'Wire & cable',
   발전설비: 'Generation',
 };
 
@@ -195,8 +201,8 @@ function main() {
     .replace(/data-sector="energy"/g, 'data-sector="powergrid"')
     .replace(/에너지/g, '전력설비')
     .replace(/Energy/g, 'Power Grid')
-    .replace(/2차전지·ESS·배터리·태양광·풍력/g, '전력설비·송배전·발전설비')
-    .replace(/Lithium-ion batteries, ESS, solar, wind, and battery materials/g, 'Power equipment, transmission & distribution, and generation OEM');
+    .replace(/2차전지·ESS·배터리·태양광·풍력/g, '전력설비·송배전·전선·케이블·발전설비')
+    .replace(/Lithium-ion batteries, ESS, solar, wind, and battery materials/g, 'Power equipment, transmission & distribution, wire & cable, and generation equipment');
 
   powerHtml = powerHtml.replace(
     /const koreanCompanies\s*=\s*\[[\s\S]*?\n    \];/,

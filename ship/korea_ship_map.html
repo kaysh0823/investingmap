@@ -1203,6 +1203,7 @@
 
 
 
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1728,7 +1729,7 @@
     <p lang="en" class="im-seo-body-p" hidden>Classification rules and data sources are described in our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 조선 관련주, 조선기자재, LNG선, 해운</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean shipbuilding stocks, marine equipment, LNG carriers</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-14 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-14.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-15 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-15.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -2047,7 +2048,7 @@
       <td class="fin-cell">15.54</td>
       <td class="fin-cell">2.76</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">기타 기자재</span></td>
+      <td><span class="chain-tag">선체·보냉·구조재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">LNG 보냉재</td>
       <td class="products-cell">LNG 보냉재 — 조선·해양 관련</td>
       <td><div class="partners-list">—</div></td>
@@ -2116,7 +2117,7 @@
       <td class="fin-cell">16.49</td>
       <td class="fin-cell">3.66</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">기타 기자재</span></td>
+      <td><span class="chain-tag">선체·보냉·구조재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">선박 블록·LPG 탱크</td>
       <td class="products-cell">선박 블록·LPG 탱크 — 조선·해양 관련</td>
       <td><div class="partners-list">—</div></td>
@@ -2231,7 +2232,7 @@
       <td class="fin-cell">119.19</td>
       <td class="fin-cell">1.06</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타 기자재</span></td>
+      <td><span class="chain-tag">선체·보냉·구조재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">단조품·플랜지</td>
       <td class="products-cell">단조품·플랜지 — 조선·해양 관련</td>
       <td><div class="partners-list">—</div></td>
@@ -2254,7 +2255,7 @@
       <td class="fin-cell">9.98</td>
       <td class="fin-cell">2.16</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타 기자재</span></td>
+      <td><span class="chain-tag">선체·보냉·구조재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">LNG 보냉재</td>
       <td class="products-cell">LNG 보냉재 — 조선·해양 관련</td>
       <td><div class="partners-list">—</div></td>
@@ -2277,7 +2278,7 @@
       <td class="fin-cell">23.36</td>
       <td class="fin-cell">1.98</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타 기자재</span></td>
+      <td><span class="chain-tag">선체·보냉·구조재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">선박 블록·기자재</td>
       <td class="products-cell">선박 블록·기자재 — 조선·해양 관련</td>
       <td><div class="partners-list">—</div></td>
@@ -2346,7 +2347,7 @@
       <td class="fin-cell">12.22</td>
       <td class="fin-cell">1.59</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타 기자재</span></td>
+      <td><span class="chain-tag">의장/배관</span></td>
       <td style="font-size:12px;color:var(--text-muted)">선박평형수·계측</td>
       <td class="products-cell">선박평형수·계측 — 조선·해양 관련</td>
       <td><div class="partners-list">—</div></td>
@@ -2450,7 +2451,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"종합조선":"#4FC3F7","엔진":"#66BB6A","의장/배관":"#26C6DA","기타 기자재":"#FFCA28","서비스·해양플랜트":"#FFA726","해운물류":"#EF5350"};
+    const CHAIN_COLORS = {"종합조선":"#4FC3F7","엔진":"#66BB6A","의장/배관":"#26C6DA","선체·보냉·구조재":"#FFCA28","서비스·해양플랜트":"#FFA726","해운물류":"#EF5350"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2504,7 +2505,7 @@
             "종합조선": "종합 조선",
             "엔진": "선박 엔진·추진",
             "의장/배관": "의장·배관·피팅",
-            "기타 기자재": "기타 조선 기자재",
+            "선체·보냉·구조재": "선체·보냉·구조재",
             "서비스·해양플랜트": "서비스·개조·해양플랜트",
             "해운물류": "해운물류"
         },
@@ -2512,7 +2513,7 @@
             "종합조선": "조선사",
             "엔진": "엔진",
             "의장/배관": "의장·배관",
-            "기타 기자재": "기타 기자재",
+            "선체·보냉·구조재": "선체·보냉·구조재",
             "서비스·해양플랜트": "서비스·해양",
             "해운물류": "해운"
         },
@@ -2590,7 +2591,7 @@
             "종합조선": "Integrated shipbuilding",
             "엔진": "Marine engines & propulsion",
             "의장/배관": "Outfitting, piping & fittings",
-            "기타 기자재": "Other marine equipment",
+            "선체·보냉·구조재": "Hull, insulation & structural materials",
             "서비스·해양플랜트": "Services, retrofit & offshore plant",
             "해운물류": "Shipping & logistics"
         },
@@ -2598,7 +2599,7 @@
             "종합조선": "Shipyards",
             "엔진": "Engines",
             "의장/배관": "Outfitting",
-            "기타 기자재": "Other equipment",
+            "선체·보냉·구조재": "Hull & materials",
             "서비스·해양플랜트": "Services & offshore",
             "해운물류": "Shipping"
         },
@@ -2706,7 +2707,7 @@
       },
 
       {
-        id: 'ship_hankukcarbon', name: '한국카본', nameEn: 'Hankuk Carbon', ticker: '017960', market: 'KOSPI', chain: '기타 기자재',
+        id: 'ship_hankukcarbon', name: '한국카본', nameEn: 'Hankuk Carbon', ticker: '017960', market: 'KOSPI', chain: '선체·보냉·구조재',
         semType: 'LNG 보냉재', semTypeEn: '—',
         products: 'LNG 보냉재 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '1.64조원', mcapWon: 1640728430500, per: 15.54, pbr: 2.76, revTier: 2, partners: []
@@ -2727,7 +2728,7 @@
       },
 
       {
-        id: 'ship_sejin_heavy_industries_c', name: '세진중공업', nameEn: 'SEJIN HEAVY INDUSTRIES CO., LTD.', ticker: '075580', market: 'KOSPI', chain: '기타 기자재',
+        id: 'ship_sejin_heavy_industries_c', name: '세진중공업', nameEn: 'SEJIN HEAVY INDUSTRIES CO., LTD.', ticker: '075580', market: 'KOSPI', chain: '선체·보냉·구조재',
         semType: '선박 블록·LPG 탱크', semTypeEn: '—',
         products: '선박 블록·LPG 탱크 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.84조원', mcapWon: 835118508640, per: 16.49, pbr: 3.66, revTier: 1, partners: []
@@ -2762,21 +2763,21 @@
       },
 
       {
-        id: 'ship_taewoong_co_ltd', name: '태웅', nameEn: 'TAEWOONG CO., LTD.', ticker: '044490', market: 'KOSDAQ', chain: '기타 기자재',
+        id: 'ship_taewoong_co_ltd', name: '태웅', nameEn: 'TAEWOONG CO., LTD.', ticker: '044490', market: 'KOSDAQ', chain: '선체·보냉·구조재',
         semType: '단조품·플랜지', semTypeEn: '—',
         products: '단조품·플랜지 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.65조원', mcapWon: 646238406300, per: 119.19, pbr: 1.06, revTier: 1, partners: []
       },
 
       {
-        id: 'ship_dongsung_finetec_co_ltd', name: '동성화인텍', nameEn: 'DONGSUNG FINETEC CO., Ltd', ticker: '033500', market: 'KOSDAQ', chain: '기타 기자재',
+        id: 'ship_dongsung_finetec_co_ltd', name: '동성화인텍', nameEn: 'DONGSUNG FINETEC CO., Ltd', ticker: '033500', market: 'KOSDAQ', chain: '선체·보냉·구조재',
         semType: 'LNG 보냉재', semTypeEn: '—',
         products: 'LNG 보냉재 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.56조원', mcapWon: 559603958040, per: 9.98, pbr: 2.16, revTier: 1, partners: []
       },
 
       {
-        id: 'ship_hyundai_hyms_co_ltd', name: '현대힘스', nameEn: 'HYUNDAI HYMS CO., LTD.', ticker: '460930', market: 'KOSDAQ', chain: '기타 기자재',
+        id: 'ship_hyundai_hyms_co_ltd', name: '현대힘스', nameEn: 'HYUNDAI HYMS CO., LTD.', ticker: '460930', market: 'KOSDAQ', chain: '선체·보냉·구조재',
         semType: '선박 블록·기자재', semTypeEn: '—',
         products: '선박 블록·기자재 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.50조원', mcapWon: 501055567810, per: 23.36, pbr: 1.98, revTier: 1, partners: []
@@ -2797,7 +2798,7 @@
       },
 
       {
-        id: 'ship_hanla_ims_co_ltd', name: '한라IMS', nameEn: 'HANLA IMS Co., LTD', ticker: '092460', market: 'KOSDAQ', chain: '기타 기자재',
+        id: 'ship_hanla_ims_co_ltd', name: '한라IMS', nameEn: 'HANLA IMS Co., LTD', ticker: '092460', market: 'KOSDAQ', chain: '의장/배관',
         semType: '선박평형수·계측', semTypeEn: '—',
         products: '선박평형수·계측 — 조선·해양 관련', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.32조원', mcapWon: 316015789600, per: 12.22, pbr: 1.59, revTier: 1, partners: []
@@ -2992,7 +2993,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '종합조선', '엔진', '의장/배관', '기타 기자재', '서비스·해양플랜트', '해운물류'];
+      const chains = ['all', '종합조선', '엔진', '의장/배관', '선체·보냉·구조재', '서비스·해양플랜트', '해운물류'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
@@ -3018,7 +3019,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['종합조선', '엔진', '의장/배관', '기타 기자재', '서비스·해양플랜트', '해운물류'];
+      const chains = ['종합조선', '엔진', '의장/배관', '선체·보냉·구조재', '서비스·해양플랜트', '해운물류'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -3297,11 +3298,11 @@
         .force('center', d3.forceCenter(W / 2, H / 2))
         .force('collide', d3.forceCollide(d => d.r + 8))
         .force('x', d3.forceX(d => {
-          if (d.type === 'korean') { const a = { '종합조선': 0, '엔진': 60, '의장/배관': 120, '기타 기자재': 180, '서비스·해양플랜트': 240, '해운물류': 300 }[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
+          if (d.type === 'korean') { const a = { '종합조선': 0, '엔진': 60, '의장/배관': 120, '선체·보냉·구조재': 180, '서비스·해양플랜트': 240, '해운물류': 300 }[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
           return W / 2;
         }).strength(0.055))
         .force('y', d3.forceY(d => {
-          if (d.type === 'korean') { const a = { '종합조선': 0, '엔진': 60, '의장/배관': 120, '기타 기자재': 180, '서비스·해양플랜트': 240, '해운물류': 300 }[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
+          if (d.type === 'korean') { const a = { '종합조선': 0, '엔진': 60, '의장/배관': 120, '선체·보냉·구조재': 180, '서비스·해양플랜트': 240, '해운물류': 300 }[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
           return H / 2;
         }).strength(0.055));
 

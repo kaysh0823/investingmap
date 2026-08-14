@@ -47,6 +47,7 @@ const SEED = [
   { id: 'sd_biosensor', name: '에스디바이오센서', nameEn: 'SD Biosensor', ticker: '137310', chain: S.DX, semType: '분자·면역·POCT', semTypeEn: 'Molecular / immunoassay / POCT', products: '면역·현장진단', productsEn: 'Immunoassay & point-of-care diagnostics', partners: ['roche', 'abbott'] },
   { id: 'isens', name: '아이센스', nameEn: 'i-SENS', ticker: '099190', chain: S.DX, semType: '혈당측정·진단', semTypeEn: 'Blood glucose diagnostics', products: '혈당측정·진단', productsEn: 'Blood glucose monitoring', partners: ['roche', 'abbott'] },
   { id: 'genomictree', name: '지노믹트리', nameEn: 'Genomictree', ticker: '228760', chain: S.DX, semType: '분자진단·암진단', semTypeEn: 'Molecular / cancer diagnostics', products: '분자진단·암진단', productsEn: 'Molecular cancer diagnostics', partners: ['roche', 'illumina'] },
+  { id: 'hlb_life_science', name: 'HLB생명과학', nameEn: 'HLB Life Science', ticker: '067630', chain: S.DX, semType: '체외진단·의료소모품', semTypeEn: 'IVD and medical consumables', products: '진단기기 구성품·주사기·정형외과 의료기기', productsEn: 'Diagnostic components, syringes and orthopedic devices', partners: ['roche', 'abbott'] },
 
   { id: 'dentium', name: '덴티움', nameEn: 'Dentium', ticker: '145720', chain: S.IMP, semType: '치과 임플란트', semTypeEn: 'Dental implants', products: '임플란트·어버트먼트', productsEn: 'Implants & abutments', partners: ['straumann', 'dentsply', 'zimmer'] },
 

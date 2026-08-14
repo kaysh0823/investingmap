@@ -179,49 +179,6 @@ const bioData = [
       { name: "Merck & Co", ticker: "MRK", flag: "🇺🇸", note: "키트루다+가다실+라제브리오 등" },
     ],
   },
-  {
-    id: "diagnostics",
-    sector: "체외진단 (IVD)",
-    sectorEn: "In-Vitro Diagnostics",
-    icon: "🔎",
-    color: "#CA8A04",
-    bg: "rgba(202,138,4,0.08)",
-    description: "분자진단, 면역진단, 현장진단(POCT) 등",
-    domestic: [
-      { name: "씨젠", ticker: "096530", note: "다중 분자진단 플랫폼, 코로나 수혜 후 전환", mcap: "중형" },
-      { name: "수젠텍", ticker: "253840", note: "면역진단키트", mcap: "소형" },
-      { name: "바디텍메드", ticker: "206640", note: "POCT 진단장비", mcap: "소형" },
-    ],
-    global: [
-      { name: "Roche Diagnostics", ticker: "ROG", flag: "🇨🇭", note: "IVD 글로벌 1위" },
-      { name: "Abbott", ticker: "ABT", flag: "🇺🇸", note: "면역·분자진단 + POC" },
-      { name: "Danaher", ticker: "DHR", flag: "🇺🇸", note: "생명과학장비·진단 플랫폼" },
-    ],
-  },
-  {
-    id: "medtech",
-    sector: "의료기기 / 디지털헬스",
-    sectorEn: "MedTech & Digital Health",
-    icon: "🏥",
-    color: "#16A34A",
-    bg: "rgba(22,163,74,0.08)",
-    description: "의료AI, 임플란트, 로봇수술, 웨어러블 등",
-    domestic: [
-      { name: "클래시스", ticker: "214150", note: "슈링크·볼뉴머 미용의료기기", mcap: "대형" },
-      { name: "루닛", ticker: "328130", note: "AI 영상진단(흉부CT·유방) FDA 승인", mcap: "중형" },
-      { name: "뷰노", ticker: "338220", note: "AI 의료영상·ECG 분석", mcap: "소형" },
-      { name: "인바디", ticker: "041830", note: "체성분분석기 글로벌 1위", mcap: "중형" },
-      { name: "오스템임플란트", ticker: "비상장", note: "치과임플란트 — MBK 인수 후 상폐", mcap: "비상장" },
-      { name: "레이", ticker: "228670", note: "3D 디지털 덴티스트리", mcap: "소형" },
-      { name: "미래컴퍼니", ticker: "049950", note: "수술로봇 Revo-i", mcap: "소형" },
-    ],
-    global: [
-      { name: "Intuitive Surgical", ticker: "ISRG", flag: "🇺🇸", note: "다빈치 수술로봇 독점" },
-      { name: "Medtronic", ticker: "MDT", flag: "🇮🇪", note: "의료기기 글로벌 1위" },
-      { name: "Stryker", ticker: "SYK", flag: "🇺🇸", note: "정형외과·수술 장비" },
-      { name: "Veeva Systems", ticker: "VEEV", flag: "🇺🇸", note: "생명과학 클라우드 SaaS" },
-    ],
-  },
 ];
 
 const sizeColors = {
@@ -359,7 +316,7 @@ export default function BioMap() {
         {filtered
           .filter((s) => {
             if (tab === "치료제") return ["biosimilar", "antibody_adc", "immuno_onc", "obesity", "cell_gene", "smallmol", "platform"].includes(s.id);
-            if (tab === "인프라") return ["cdmo", "diagnostics", "medtech"].includes(s.id);
+            if (tab === "인프라") return s.id === "cdmo";
             return true;
           })
           .map((sector, idx) => {

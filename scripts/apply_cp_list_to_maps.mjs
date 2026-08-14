@@ -309,8 +309,6 @@ function main() {
     '세포 · 유전자치료제',
     '플랫폼 기술',
     '합성신약 / 제네릭',
-    '체외진단 (IVD)',
-    '의료기기 / 디지털헬스',
   ];
   const bioAdditions = [];
   let bioSkipped = 0;

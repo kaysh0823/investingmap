@@ -1,6 +1,6 @@
 /**
  * Ensures approved sector additions exist before cp_list merging:
- * cable names in powergrid and Intellian in defense.
+ * cable names in powergrid and approved space-sector names in defense.
  */
 import fs from 'fs';
 import { dirname, join } from 'path';
@@ -27,7 +27,7 @@ const MAPS = {
         ticker: '000500',
         name: '가온전선',
         nameEn: 'Gaon Cable',
-        chain: '송배전',
+        chain: '전선·케이블',
         semType: '전력·통신 케이블',
         semTypeEn: 'Power and communications cables',
         products: '전력·통신 케이블',
@@ -37,7 +37,7 @@ const MAPS = {
         ticker: '006340',
         name: '대원전선',
         nameEn: 'Daewon Cable',
-        chain: '송배전',
+        chain: '전선·케이블',
         semType: '전선·케이블',
         semTypeEn: 'Wire and cable',
         products: '전력·통신·산업용 전선',
@@ -47,7 +47,7 @@ const MAPS = {
         ticker: '060370',
         name: 'LS마린솔루션',
         nameEn: 'LS Marine Solution',
-        chain: '송배전',
+        chain: '전선·케이블',
         semType: '해저케이블 시공·유지보수',
         semTypeEn: 'Subsea cable installation and maintenance',
         products: '해저 전력·통신 케이블 시공·유지보수',
@@ -77,6 +77,16 @@ const MAPS = {
         semTypeEn: 'Satellite communications antennas',
         products: '해상·육상용 위성안테나·게이트웨이',
         productsEn: 'Maritime and land satellite antennas and gateways',
+      },
+      {
+        ticker: '347700',
+        name: '스피어',
+        nameEn: 'Sphere Corporation',
+        chain: '우주·위성·민항',
+        semType: '우주항공 특수합금 SCM',
+        semTypeEn: 'Aerospace specialty-alloy supply-chain management',
+        products: '우주발사체용 특수합금 공급망 관리',
+        productsEn: 'Specialty-alloy supply-chain management for space launch vehicles',
       },
     ],
   },
@@ -110,7 +120,7 @@ function upsertMap(sector, config) {
   }
 
   if (sector === 'defense') {
-    for (const ticker of ['099320', '214430']) {
+    for (const ticker of ['099320', '214430', '347700']) {
       const company = byTicker.get(ticker);
       const forced = chainOverride(sector, ticker);
       if (company && forced) company.chain = forced;

@@ -32,14 +32,6 @@
     "level": ""
   },
   {
-    "ticker": "347700",
-    "name": "스피어",
-    "chain": "의료기기 / 디지털헬스",
-    "sectorId": "medtech",
-    "subSector": "디지털헬스케어",
-    "level": "adjacent"
-  },
-  {
     "ticker": "039200",
     "name": "오스코텍",
     "chain": "합성신약 / 제네릭",
@@ -82,8 +74,8 @@
   {
     "ticker": "086450",
     "name": "동국제약",
-    "chain": "의료기기 / 디지털헬스",
-    "sectorId": "medtech",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
     "subSector": "제약·헬스케어",
     "level": "core"
   },
@@ -168,14 +160,6 @@
     "level": "core"
   },
   {
-    "ticker": "067630",
-    "name": "HLB생명과학",
-    "chain": "의료기기 / 디지털헬스",
-    "sectorId": "medtech",
-    "subSector": "바이오·헬스케어",
-    "level": "adjacent"
-  },
-  {
     "ticker": "047920",
     "name": "HLB제약",
     "chain": "합성신약 / 제네릭",
@@ -210,8 +194,8 @@
   {
     "ticker": "009290",
     "name": "광동제약",
-    "chain": "의료기기 / 디지털헬스",
-    "sectorId": "medtech",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
     "subSector": "제약·헬스케어",
     "level": "adjacent"
   },

@@ -44,12 +44,16 @@ run('node scripts/apply_sector_exclusive.mjs', 'enforce single-sector ownership'
 run('node scripts/apply_cross_sector_memberships.mjs', 'verify no active cross-sector memberships');
 run('node scripts/enrich_company_fields.mjs', 'enrich semType/products (all maps)');
 run('node scripts/apply_semi_chain_reclass.mjs', 'semiconductor chain split persistence');
+run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');
 run('node scripts/apply_ship_chain_reclass.mjs', 'ship chain split persistence');
 run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
 run('node bio/gen_korea_bio_inline.mjs', 'bio inline.js');
 run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
+run('node scripts/verify_powergrid_chain_split.mjs', 'verify powergrid cable split');
+run('node scripts/verify_ship_chain_split.mjs', 'verify ship chain split');
+run('node scripts/verify_sector_chain_reorg.mjs', 'verify sector-chain ownership and counts');
 run('node scripts/build_hub_quote_snapshot.mjs', 'hub quote snapshot (Top 10)');
 run('node scripts/build_hub_rs_snapshot.mjs', 'hub RS snapshot (optional)');
 run('node scripts/build_hub_sector_returns.mjs', 'hub sector returns (optional)');

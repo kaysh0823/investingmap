@@ -1,7 +1,7 @@
 /**
  * Confirmed rebalance:
  * A) medtech → cosmetics (미용기기): 214150, 214450, 336570
- * B) bio → medtech (진단·IVD): 137310, 099190, 228760
+ * B) bio → medtech (진단·IVD): 137310, 099190, 228760, 067630
  * Display: cosmetics=화장품/미용기기, medtech=의료기기/헬스케어
  */
 import fs from 'fs';
@@ -29,7 +29,7 @@ const BIO_INLINE = path.join(ROOT, 'bio', 'korea_bio_map.inline.js');
 const BIO_ADDITIONS = path.join(ROOT, 'bio', 'cp_list_bio_additions.json');
 
 const TO_COSMETICS = new Set(['214150', '214450', '336570']);
-const TO_MEDTECH = new Set(['137310', '099190', '228760']);
+const TO_MEDTECH = new Set(['137310', '099190', '228760', '067630']);
 
 const COS_CHAINS = ['브랜드', 'ODM·OEM', '원료', '용기', '유통·채널', '미용기기'];
 const COS_COLORS = {
@@ -256,6 +256,16 @@ const BIO_TO_MT_META = {
     productsEn: 'Molecular cancer diagnostics',
     partners: ['roche', 'illumina'],
   },
+  '067630': {
+    id: 'hlb_life_science',
+    name: 'HLB생명과학',
+    nameEn: 'HLB Life Science',
+    semType: '체외진단·의료소모품',
+    semTypeEn: 'IVD and medical consumables',
+    products: '진단기기 구성품·주사기·정형외과 의료기기',
+    productsEn: 'Diagnostic components, syringes and orthopedic devices',
+    partners: ['roche', 'abbott'],
+  },
 };
 
 function writeCosmetics(cosHtml, companies) {
@@ -330,6 +340,13 @@ function patchMedtechBuilder() {
   { id: 'sd_biosensor', name: '에스디바이오센서', nameEn: 'SD Biosensor', ticker: '137310', chain: S.DX, semType: '분자·면역·POCT', semTypeEn: 'Molecular / immunoassay / POCT', products: '면역·현장진단', productsEn: 'Immunoassay & point-of-care diagnostics', partners: ['roche', 'abbott'] },
   { id: 'isens', name: '아이센스', nameEn: 'i-SENS', ticker: '099190', chain: S.DX, semType: '혈당측정·진단', semTypeEn: 'Blood glucose diagnostics', products: '혈당측정·진단', productsEn: 'Blood glucose monitoring', partners: ['roche', 'abbott'] },
   { id: 'genomictree', name: '지노믹트리', nameEn: 'Genomictree', ticker: '228760', chain: S.DX, semType: '분자진단·암진단', semTypeEn: 'Molecular / cancer diagnostics', products: '분자진단·암진단', productsEn: 'Molecular cancer diagnostics', partners: ['roche', 'illumina'] },`,
+    );
+  }
+  if (!src.includes("'067630'")) {
+    src = src.replace(
+      /\{ id: 'genomictree'[\s\S]*?partners: \[[^\]]+\] \},/,
+      (m) => `${m}
+  { id: 'hlb_life_science', name: 'HLB생명과학', nameEn: 'HLB Life Science', ticker: '067630', chain: S.DX, semType: '체외진단·의료소모품', semTypeEn: 'IVD and medical consumables', products: '진단기기 구성품·주사기·정형외과 의료기기', productsEn: 'Diagnostic components, syringes and orthopedic devices', partners: ['roche', 'abbott'] },`,
     );
   }
   src = src.replace(/한국 미용\/의료기기 투자 지도/g, '한국 의료기기/헬스케어 투자 지도');

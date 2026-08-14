@@ -16,7 +16,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const DEFENSE_KEEP = new Set([
   '012450', '064350', '272210', '079550', '047810', '000880', '082920', '011210',
-  '103140', '003570', '099320', '064960', '214430', '010820', '189300',
+  '103140', '003570', '099320', '064960', '214430', '010820', '189300', '347700',
 ]);
 
 function pad(t) {
@@ -144,9 +144,15 @@ execSync('node scripts/build_hub_index.mjs', { cwd: ROOT, stdio: 'inherit' });
 {
   const indexPath = path.join(ROOT, 'index.html');
   let indexHtml = fs.readFileSync(indexPath, 'utf8');
-  const defenseN = DEFENSE_KEEP.size;
+  const defenseN = extractCompaniesFromHtml(
+    fs.readFileSync(path.join(ROOT, 'defense', 'korea_defense_map.html'), 'utf8'),
+  ).length;
   indexHtml = indexHtml.replace(/\d+개 상장사 · 항공/, `${defenseN}개 상장사 · 항공`);
   indexHtml = indexHtml.replace(/\d+ companies · aviation/, `${defenseN} companies · aviation`);
+  indexHtml = indexHtml.replace(
+    /id="card-defense-badge">\d+ LISTINGS/,
+    `id="card-defense-badge">${defenseN} LISTINGS`,
+  );
   fs.writeFileSync(indexPath, indexHtml, 'utf8');
   console.log(`index.html hub counts: defense=${defenseN}`);
 }

@@ -200,6 +200,18 @@ const SEED = [
     productsEn: 'Infrared imaging sensors and electro-optical components',
     partners: [],
   },
+  {
+    id: 'sphere',
+    name: '스피어',
+    nameEn: 'Sphere Corporation',
+    ticker: '347700',
+    chain: S.D5,
+    semType: '우주항공 특수합금 SCM',
+    semTypeEn: 'Aerospace specialty-alloy supply-chain management',
+    products: '우주발사체용 특수합금 공급망 관리',
+    productsEn: 'Specialty-alloy supply-chain management for space launch vehicles',
+    partners: ['spacex'],
+  },
 ];
 
 const GLOBALS = [
