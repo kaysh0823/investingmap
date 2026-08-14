@@ -162,7 +162,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=13"></script>
-  <script src="../js/map_i18n.js"></script>
+  <script src="../js/map_i18n.js?v=2"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=8"></script>
   <script src="../js/sector_nav.js?v=6"></script>
@@ -1016,535 +1016,7 @@
         line-height: 1.25
       }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      .header {
-        padding: 14px 14px 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px
-      }
-
-      .header-actions {
-        position: static;
-        max-width: none;
-        width: 100%;
-        justify-content: flex-start;
-        order: -1;
-        margin: 0;
-        row-gap: 6px
-      }
-
-      .header-actions .data-asof {
-        order: 10;
-        flex-basis: 100%;
-        text-align: left;
-        white-space: normal;
-        font-size: 10px
-      }
-
-      .header h1 {
-        font-size: 18px;
-        line-height: 1.25;
-        padding-right: 0
-      }
-
-      .header p {
-        font-size: 12px
-      }
-
-      .header-meta {
-        margin-top: 4px;
-        gap: 8px
-      }
-
-      .tabs {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        padding: 0;
-        overflow: visible;
-        gap: 0
-      }
-
-      .tab-btn {
-        padding: 10px 6px;
-        font-size: 11px;
-        white-space: normal;
-        word-break: keep-all;
-        line-height: 1.35;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center
-      }
-
-      .filter-bar {
-        gap: 8px
-      }
-
-      .filter-divider {
-        display: none
-      }
-
-      .search-box {
-        width: 100%;
-        min-width: 0;
-        flex: 1 1 100%
-      }
-
-      .result-count {
-        margin-left: 0;
-        flex: 1 1 100%
-      }
-
-
-      thead th {
-        white-space: normal;
-        padding: 8px 7px;
-        font-size: 9px;
-        letter-spacing: .2px;
-        line-height: 1.25;
-        vertical-align: bottom
-      }
-
-      td {
-        padding: 8px 7px;
-        font-size: 12px
-      }
-
-      .products-cell {
-        max-width: none
-      }
-
-      .lang-toggle {
-        padding: 6px 10px;
-        font-size: 11px
-      }
-
-      .theme-toggle {
-        padding: 6px 10px;
-        font-size: 14px
-      }
-}
-    .geo-summary {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 8px 28px 14px;
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border)
-    }
-
-    
-    .geo-summary h2 {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0 0 8px
-    }
-
-    .geo-summary p {
-      margin: 0 0 10px
-    }
-
-    .geo-summary a {
-      color: var(--accent)
-    }
-
-    .geo-summary p {
-      margin: 0
-    }
-
-    .geo-summary p[hidden] {
-      display: none
-    }
-
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-
-
-    .heatmap-wrap {
-      padding: 20px 28px 28px;
-      max-width: 1400px;
-      margin: 0 auto
-    }
-
-    .heatmap-meta {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 12px
-    }
-
-    #heatmap-root {
-      width: 100%;
-      min-height: 420px;
-      height: min(62vh, 640px);
-      position: relative;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden
-    }
-
-    #heatmap-root svg {
-      width: 100%;
-      height: 100%;
-      display: block
-    }
-
-    .hm-tile {
-      cursor: default
-    }
-
-    .hm-tile[data-leaf="1"] {
-      cursor: pointer
-    }
-
-    .hm-tile[data-leaf="1"]:hover rect {
-      stroke: var(--accent);
-      stroke-width: 2
-    }
-
-    .hm-chain-label {
-      font-size: 11px;
-      font-weight: 700;
-      fill: var(--text);
-      pointer-events: none
-    }
-
-    .hm-name,
-    .hm-mcap {
-      pointer-events: none
-    }
-
-    .hm-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 16px;
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--text-muted)
-    }
-
-    .hm-legend span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px
-    }
-
-    .hm-legend i {
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
-      display: inline-block;
-      flex-shrink: 0
-    }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-    .map-editorial-body .map-editorial-seo { margin: 0; padding: 0; border: none }
-    .map-editorial-body .map-editorial-seo-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 14px 0 8px
-    }
-    .map-editorial-body .map-editorial-seo-title:first-child { margin-top: 0 }
-    .map-editorial-body .im-seo-body-p { margin: 0 0 10px }
-    .map-editorial-body .im-seo-keywords,
-    .map-editorial-body .im-seo-snapshot-note { font-size: 12px; margin: 0 0 8px; opacity: .9 }
-    .map-editorial-body p[hidden], .map-editorial-body h2[hidden] { display: none }
-    .im-seo-snapshot-note { font-size: 12px; opacity: .85 }
-    .im-seo-related {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px 28px 28px;
-      font-size: 13px;
-      border-top: 1px solid var(--border)
-    }
-    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
-    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
-    .im-seo-related-list a { color: var(--accent); text-decoration: none }
-    .im-seo-related-list a:hover { text-decoration: underline }
-
-    .im-seo-related {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px 28px 28px;
-      font-size: 13px;
-      border-top: 1px solid var(--border)
-    }
-    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
-    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
-    .im-seo-related-list a { color: var(--accent); text-decoration: none }
-    .im-seo-related-list a:hover { text-decoration: underline }
-
-    .im-seo-related {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 20px 28px 28px;
-      font-size: 13px;
-      border-top: 1px solid var(--border)
-    }
-    .im-seo-related h2 { font-size: 15px; margin: 0 0 12px; color: var(--text) }
-    .im-seo-related-list { margin: 0; padding-left: 1.2rem; line-height: 1.8 }
-    .im-seo-related-list a { color: var(--accent); text-decoration: none }
-    .im-seo-related-list a:hover { text-decoration: underline }
-    .im-trust-footer {
-      border-top: 1px solid var(--border);
-      padding: 20px 28px 28px;
-      margin-top: 24px;
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.55
-    }
-
-    .im-trust-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 18px;
-      margin-bottom: 12px
-    }
-
-    .im-trust-nav a {
-      color: var(--accent);
-      text-decoration: none
-    }
-
-    .im-trust-nav a:hover {
-      text-decoration: underline
-    }
-
-    .im-trust-disclaimer {
-      max-width: 720px
-    }
-
-
-
-
-
-
-
-.quote-spark { display: block; width: 56px; height: 22px; flex-shrink: 0; }
-    .spark-cell { width: 64px; padding: 4px 6px; vertical-align: middle; }
-    .spark-cell .quote-spark { display: block; width: 56px; height: 22px; }
-    .im-card-spark { display: inline-flex; align-items: center; justify-content: flex-end; flex: 0 0 auto; margin: 0; line-height: 0; }
-    .im-card-spark .quote-spark { display: block; width: 56px; height: 22px; }
-    #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
+    @media(max-width:768px){.bigchip-country-chip{padding:5px 8px;font-size:10px}.bigchip-zone-label{font-size:10px}}
 
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
@@ -1571,7 +1043,7 @@
       <h1 id="hdr-title">🇰🇷 한국 삼성전자/하이닉스 투자 지도</h1>
       <span class="map-title-chevron" aria-hidden="true">▾</span>
     </button>
-    <p id="hdr-subtitle">삼성전자와 SK하이닉스의 메모리·시스템반도체 사업 및 글로벌 peer 비교</p>
+    <p id="hdr-subtitle">삼성전자·SK하이닉스 중심의 후방 공급사, 글로벌 peer, 전방 고객 관계</p>
     <div class="header-meta">
       <div class="badge" id="badge-total">Total <span>2</span> listed companies</div>
       <div class="badge" id="badge-market">KOSPI <span>2</span> · KOSDAQ <span>0</span></div>
@@ -1685,7 +1157,7 @@
       <td><span class="chain-tag">종합반도체</span></td>
       <td style="font-size:12px;color:var(--text-muted)">메모리·시스템LSI·파운드리</td>
       <td class="products-cell">DRAM·NAND·모바일AP·파운드리</td>
-      <td><div class="partners-list">Micron, Intel, TSMC</div></td>
+      <td><div class="partners-list">ASML, Applied Materials, Lam Research, KLA, 도쿄일렉트론, 원익IPS</div></td>
     </tr>
           <tr data-ticker="000660">
       <td><div class="company-name">SK하이닉스</div><div class="company-name-sub">SK hynix</div></td>
@@ -1708,7 +1180,7 @@
       <td><span class="chain-tag">HBM·메모리</span></td>
       <td style="font-size:12px;color:var(--text-muted)">메모리·AI 반도체</td>
       <td class="products-cell">HBM·DRAM·NAND</td>
-      <td><div class="partners-list">Micron</div></td>
+      <td><div class="partners-list">ASML, Applied Materials, Lam Research, 한미반도체, 주성엔지니어링, 동진쎄미켐</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
           </tbody>
@@ -1795,7 +1267,7 @@
     const T = {
     "ko": {
         "title": "🇰🇷 한국 삼성전자/하이닉스 투자 지도",
-        "subtitle": "삼성전자와 SK하이닉스의 메모리·시스템반도체 사업 및 글로벌 peer 비교",
+        "subtitle": "삼성전자·SK하이닉스 중심의 후방 공급사, 글로벌 peer, 전방 고객 관계",
         "badgeTotal": "총 <span>2</span>개 상장사",
         "badgeMarket": "KOSPI <span>2</span>사 · KOSDAQ <span>0</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 15일",
@@ -1824,9 +1296,10 @@
         "thChain": "밸류체인",
         "thSemType": "세부 유형",
         "thProducts": "주요 사업",
-        "thPartners": "글로벌 peer",
-        "sbKorean": "국내 상장 (밸류체인)",
-        "sbGlobal": "글로벌 peer",
+        "thPartners": "공급사·peer·고객",
+        "sbKorean": "관계 유형",
+        "sbGlobal": "관계 유형·국가 필터",
+        "peerNetworkDesc": "삼성전자·SK하이닉스를 중앙 허브로 두고 후방 공급사, peer, 전방 고객을 구역과 엣지 색으로 구분합니다.",
         "sbSize": "노드 크기",
         "sbHow": "조작법",
         "chainLabel": {
@@ -1851,23 +1324,31 @@
         },
         "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◇ 글로벌 peer",
         "howDesc": "• 노드 클릭: 관계 강조\n• 드래그: 이동\n• 스크롤: 확대/축소\n• 빈 칸: 선택 해제\n• 범례: 그룹 하이라이트",
-        "graphHint": "국내 밸류체인과 글로벌 동종업체의 참고 연결이며 계약 관계를 의미하지 않습니다.",
+        "graphHint": "공개자료 기반 공급망·고객·peer 관계입니다. “보도” 관계는 공식 계약 확인과 구분해 표시합니다.",
         "ttChain": "밸류체인",
         "ttSemType": "세부",
         "ttProducts": "사업",
         "ttRevenue": "시가총액",
-        "ttPartners": "글로벌 peer",
-        "ttSuppliers": "국내 기업",
+        "ttPartners": "관계",
+        "ttSuppliers": "연결 허브",
         "ttCountry": "국가",
         "ttSector": "분야",
         "ttTags": "복수 축",
         "fieldSemType": "semType",
         "fieldProducts": "products",
-        "note": "⚠ 본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 시가총액·PER·PBR·시장 구분은 KRX 데이터 기준이고 밸류체인 및 글로벌 연결은 공개 자료를 바탕으로 한 편집 분류입니다. 한국어 시총은 조원, 영문 시총은 네이버 금융 USD/KRW 환율(/api/fx)을 적용한 USD Billion 단위로 소수 둘째 자리까지 표시합니다."
+        "note": "⚠ 본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 시가총액·PER·PBR·시장 구분은 KRX 데이터 기준이고 밸류체인 및 글로벌 연결은 공개 자료를 바탕으로 한 편집 분류입니다. 한국어 시총은 조원, 영문 시총은 네이버 금융 USD/KRW 환율(/api/fx)을 적용한 USD Billion 단위로 소수 둘째 자리까지 표시합니다.",
+        "relationSupplier": "후방 공급사",
+        "relationPeer": "글로벌 peer",
+        "relationCustomer": "전방 고객",
+        "countryFilter": "국가",
+        "allCountries": "전체",
+        "reportedEvidence": "보도",
+        "confirmedEvidence": "확인",
+        "openTicker": "다시 클릭하면 반도체 지도에서 종목 열기"
     },
     "en": {
         "title": "🇰🇷 Korea Samsung/SK hynix Map",
-        "subtitle": "Samsung Electronics and SK hynix across memory, system chips and global peer references",
+        "subtitle": "Supplier, global-peer and customer relationships centered on Samsung Electronics and SK hynix",
         "badgeTotal": "<span>2</span> listings",
         "badgeMarket": "KOSPI <span>2</span> · KOSDAQ <span>0</span>",
         "dataAsof": "Data as of: June 15, 2026",
@@ -1896,9 +1377,10 @@
         "thChain": "Value chain",
         "thSemType": "Segment",
         "thProducts": "Products / services",
-        "thPartners": "Global peers",
-        "sbKorean": "Korean listed (value chain)",
-        "sbGlobal": "Global peers",
+        "thPartners": "Suppliers, peers & customers",
+        "sbKorean": "Relationship types",
+        "sbGlobal": "Relationship type & country",
+        "peerNetworkDesc": "Samsung Electronics and SK hynix are central hubs; suppliers, peers and customers occupy separate zones with role-colored edges.",
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
@@ -1923,19 +1405,27 @@
         },
         "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◇ Global peers",
         "howDesc": "• Click: highlight\n• Drag\n• Scroll: zoom\n• Background: clear\n• Legend: group",
-        "graphHint": "Illustrative domestic value-chain and global peer links; they do not assert contractual relationships.",
+        "graphHint": "Public-source supply-chain, customer and peer relationships. Reported relationships are distinguished from confirmed disclosures.",
         "ttChain": "Chain",
         "ttSemType": "Segment",
         "ttProducts": "Products",
         "ttRevenue": "Market cap",
-        "ttPartners": "Global peers",
-        "ttSuppliers": "Korean companies",
+        "ttPartners": "Relationships",
+        "ttSuppliers": "Connected hubs",
         "ttCountry": "Country",
         "ttSector": "Field",
         "ttTags": "Multi-axis",
         "fieldSemType": "semTypeEn",
         "fieldProducts": "productsEn",
-        "note": "⚠ Informational only—not investment advice. Market cap, PER, PBR and market classification follow KRX data. Value-chain and global-peer links are editorial classifications based on public information. English market cap uses the Naver Finance USD/KRW rate (/api/fx) and is shown in USD billions to two decimals."
+        "note": "⚠ Informational only—not investment advice. Market cap, PER, PBR and market classification follow KRX data. Value-chain and global-peer links are editorial classifications based on public information. English market cap uses the Naver Finance USD/KRW rate (/api/fx) and is shown in USD billions to two decimals.",
+        "relationSupplier": "Upstream suppliers",
+        "relationPeer": "Global peers",
+        "relationCustomer": "Downstream customers",
+        "countryFilter": "Country",
+        "allCountries": "All",
+        "reportedEvidence": "Reported",
+        "confirmedEvidence": "Confirmed",
+        "openTicker": "Click again to open this ticker in the semiconductor map"
     }
 };
 
@@ -1947,21 +1437,37 @@
         id: 'samsung_electronics', name: '삼성전자', nameEn: 'Samsung Electronics', ticker: '005930', market: 'KOSPI', chain: '종합반도체',
         semType: '메모리·시스템LSI·파운드리', semTypeEn: 'Memory, system LSI & foundry',
         products: 'DRAM·NAND·모바일AP·파운드리', productsEn: 'DRAM, NAND, mobile APs, foundry',
-        revenue: '1885.42조원', mcapWon: 1885424851080000, per: 48.83, pbr: 5.04, revTier: 3, partners: ['micron', 'intel', 'tsmc']
+        revenue: '1885.42조원', mcapWon: 1885424851080000, per: 48.83, pbr: 5.04, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 노광장비·공동 R&D', edgeLabelEn: 'EUV lithography equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'applied_materials', edgeLabel: '반도체 공정장비·공동 R&D', edgeLabelEn: 'Semiconductor process equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-samsung-electronics-will-join-new' }, { id: 'lam_research', edgeLabel: '식각·세정 장비', edgeLabelEn: 'Etch and cleaning equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'kla', edgeLabel: '공정제어·수율관리 장비', edgeLabelEn: 'Process control and yield management equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.kla.com/sec-filings/all-sec-filings/xbrl_doc_only/4189' }, { id: 'tokyo_electron', edgeLabel: '코터·디벨로퍼·식각·증착 장비', edgeLabelEn: 'Coat/develop, etch and deposition equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'wonik_ips', edgeLabel: '증착·반도체 공정장비', edgeLabelEn: 'Deposition and semiconductor process equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'dongjin_semichem', edgeLabel: '포토레지스트·공정 화학재료', edgeLabelEn: 'Photoresist and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'soulbrain', edgeLabel: 'DS 화학재료·식각액', edgeLabelEn: 'DS chemicals and etchants', kind: 'supplier', evidence: 'confirmed', source: 'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf' }, { id: 'sk_specialty', edgeLabel: 'NF3·WF6 등 반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases including NF3 and WF6', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/kor/pdf/2023_SK%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC%EC%A6%88_%EC%A7%80%EC%86%8D%EA%B0%80%EB%8A%A5%EA%B2%BD%EC%98%81%EB%B3%B4%EA%B3%A0%EC%84%9C_Eng.pdf' }, { id: 'apple', edgeLabel: '미국 생산 칩의 Apple 제품 공급', edgeLabelEn: 'US-made chips supplied for Apple products', kind: 'customer', evidence: 'confirmed', source: 'https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/' }, { id: 'nvidia', edgeLabel: 'HBM4·SOCAMM 공급 및 AI 플랫폼 협업', edgeLabelEn: 'HBM4 and SOCAMM supply and AI-platform collaboration', kind: 'customer', evidence: 'confirmed', source: 'https://news.samsung.com/global/samsung-unveils-hbm4e-showcasing-comprehensive-ai-solutions-nvidia-partnership-and-vision-at-nvidia-gtc-2026' }, { id: 'google', edgeLabel: 'Broadcom 경유 TPU용 HBM 공급 보도', edgeLabelEn: 'Reported HBM supply for Google TPUs via Broadcom', kind: 'customer', evidence: 'reported', source: 'https://www.trendforce.com/news/2025/12/01/news-samsung-reportedly-supplies-60-of-google-tpu-hbm3e-set-to-remain-primary-supplier-in-2026/' }, { id: 'sk_hynix', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'tsmc', edgeLabel: '첨단 파운드리 경쟁', edgeLabelEn: 'Advanced-foundry competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'intel', edgeLabel: 'IDM·첨단 공정 경쟁', edgeLabelEn: 'IDM and advanced-process competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }]
       },
 
       {
         id: 'sk_hynix', name: 'SK하이닉스', nameEn: 'SK hynix', ticker: '000660', market: 'KOSPI', chain: 'HBM·메모리',
         semType: '메모리·AI 반도체', semTypeEn: 'Memory & AI semiconductors',
         products: 'HBM·DRAM·NAND', productsEn: 'HBM, DRAM, NAND',
-        revenue: '1532.31조원', mcapWon: 1532310084750000, per: 34.65, pbr: 12.52, revTier: 3, partners: ['micron']
+        revenue: '1532.31조원', mcapWon: 1532310084750000, per: 34.65, pbr: 12.52, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 장비 장기 구매', edgeLabelEn: 'Long-term EUV equipment purchases', kind: 'supplier', evidence: 'confirmed', source: 'https://en.yna.co.kr/view/AEN20260324006600320' }, { id: 'applied_materials', edgeLabel: 'DRAM·HBM 장기 공정 R&D', edgeLabelEn: 'Long-term DRAM and HBM process R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-sk-hynix-announce-long-term-rd-partnership' }, { id: 'lam_research', edgeLabel: 'EUV dry resist 공정 장비·기술', edgeLabelEn: 'EUV dry-resist process equipment and technology', kind: 'supplier', evidence: 'confirmed', source: 'https://newsroom.lamresearch.com/2022-06-14-Lam-Research-Teams-Up-with-SK-hynix-to-Enhance-DRAM-Production-Cost-Efficiency-with-Breakthrough-Dry-Resist-EUV-Technology' }, { id: 'hanmi_semiconductor', edgeLabel: 'HBM용 TC 본더 반복 수주', edgeLabelEn: 'Repeated orders for HBM TC bonders', kind: 'supplier', evidence: 'confirmed', source: 'https://www.hanmisemi.com/en/news/new_view3.html' }, { id: 'jusung_engineering', edgeLabel: 'DRAM용 high-k ALD 장비 공급 보도', edgeLabelEn: 'Reported supply of high-k ALD tools for DRAM', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=2672' }, { id: 'dongjin_semichem', edgeLabel: 'HBM CMP 슬러리·공정재료 공급 보도', edgeLabelEn: 'Reported HBM CMP slurry and process-material supply', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=4751' }, { id: 'soulbrain', edgeLabel: '고순도 불화수소·공정 화학재료', edgeLabelEn: 'High-purity hydrogen fluoride and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://sg.finance.yahoo.com/news/south-korean-firm-boost-output-091907734.html' }, { id: 'sk_specialty', edgeLabel: '반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/eng/pdf/ir3/23/%5BSK_Specialty%5DAudit_Report_2023.pdf' }, { id: 'tsmc', edgeLabel: 'HBM4 base die·CoWoS 기술/파운드리 파트너', edgeLabelEn: 'HBM4 base-die and CoWoS technology/foundry partner', kind: 'supplier', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/' }, { id: 'nvidia', edgeLabel: 'H100용 HBM3 및 후속 HBM 공급', edgeLabelEn: 'HBM3 for H100 and subsequent HBM supply', kind: 'customer', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-to-supply-industrys-first-hbm3-dram-to-nvidia/' }, { id: 'apple', edgeLabel: '고객사로 공개; 제품·규모는 비공개', edgeLabelEn: 'Disclosed as a client; product and volume not disclosed', kind: 'customer', evidence: 'confirmed', source: 'https://www.reuters.com/technology/sk-hynix-q3-profit-plunges-economic-downturn-hurts-chip-demand-2022-10-25/' }, { id: 'microsoft', edgeLabel: 'Maia용 HBM·AI 메모리 협력 보도', edgeLabelEn: 'Reported HBM for Maia and AI-memory collaboration', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/global-big-tech-ai-partnership-ms/' }, { id: 'google', edgeLabel: 'TPU용 HBM3E 공급 보도', edgeLabelEn: 'Reported HBM3E supply for Google TPUs', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/' }, { id: 'samsung_electronics', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }]
       }
 
     ];
     const globalCompanies = [
-      { id: 'tsmc', name: 'TSMC', nameEn: 'TSMC', country: '대만/Taiwan', region: 'tw', sector: 'Foundry peer' },
-      { id: 'micron', name: 'Micron', nameEn: 'Micron', country: '미국/USA', region: 'us', sector: 'Memory peer' },
-      { id: 'intel', name: 'Intel', nameEn: 'Intel', country: '미국/USA', region: 'us', sector: 'IDM peer' }
+      { id: 'asml', name: 'ASML', nameEn: 'ASML', country: '네덜란드/Netherlands', region: 'eu', sector: 'supplier', countryCode: 'NL', primaryRole: 'supplier' },
+      { id: 'applied_materials', name: 'Applied Materials', nameEn: 'Applied Materials', country: '미국/USA', region: 'us', sector: 'supplier', countryCode: 'US', primaryRole: 'supplier' },
+      { id: 'lam_research', name: 'Lam Research', nameEn: 'Lam Research', country: '미국/USA', region: 'us', sector: 'supplier', countryCode: 'US', primaryRole: 'supplier' },
+      { id: 'kla', name: 'KLA', nameEn: 'KLA', country: '미국/USA', region: 'us', sector: 'supplier', countryCode: 'US', primaryRole: 'supplier' },
+      { id: 'tokyo_electron', name: '도쿄일렉트론', nameEn: 'Tokyo Electron', country: '일본/Japan', region: 'jp', sector: 'supplier', countryCode: 'JP', primaryRole: 'supplier' },
+      { id: 'wonik_ips', name: '원익IPS', nameEn: 'WONIK IPS', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '240810', market: 'KOSDAQ', mcapWon: 8997079053300, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=240810' },
+      { id: 'dongjin_semichem', name: '동진쎄미켐', nameEn: 'Dongjin Semichem', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '005290', market: 'KOSDAQ', mcapWon: 3007237434000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=005290' },
+      { id: 'soulbrain', name: '솔브레인', nameEn: 'Soulbrain', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '357780', market: 'KOSDAQ', mcapWon: 3434236889000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=357780' },
+      { id: 'sk_specialty', name: 'SK스페셜티', nameEn: 'SK Specialty', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier' },
+      { id: 'apple', name: 'Apple', nameEn: 'Apple', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'nvidia', name: 'NVIDIA', nameEn: 'NVIDIA', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'google', name: 'Google', nameEn: 'Google', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' },
+      { id: 'tsmc', name: 'TSMC', nameEn: 'TSMC', country: '대만/Taiwan', region: 'tw', sector: 'supplier', countryCode: 'TW', primaryRole: 'supplier' },
+      { id: 'intel', name: 'Intel', nameEn: 'Intel', country: '미국/USA', region: 'us', sector: 'peer', countryCode: 'US', primaryRole: 'peer' },
+      { id: 'micron', name: 'Micron', nameEn: 'Micron', country: '미국/USA', region: 'us', sector: 'peer', countryCode: 'US', primaryRole: 'peer' },
+      { id: 'kioxia', name: 'Kioxia', nameEn: 'Kioxia', country: '일본/Japan', region: 'jp', sector: 'peer', countryCode: 'JP', primaryRole: 'peer' },
+      { id: 'hanmi_semiconductor', name: '한미반도체', nameEn: 'Hanmi Semiconductor', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '042700', market: 'KOSPI', mcapWon: 34407704200000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=042700' },
+      { id: 'jusung_engineering', name: '주성엔지니어링', nameEn: 'Jusung Engineering', country: '한국/Korea', region: 'kr', sector: 'supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '036930', market: 'KOSDAQ', mcapWon: 10737138951000, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=036930' },
+      { id: 'microsoft', name: 'Microsoft', nameEn: 'Microsoft', country: '미국/USA', region: 'us', sector: 'customer', countryCode: 'US', primaryRole: 'customer' }
     ];
 
 
@@ -2145,28 +1651,31 @@
 
     function buildSidebarLegend() {
       const t = T[lang];
-      // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['종합반도체', 'HBM·메모리'];
-      chainContainer.innerHTML = chains.map(ch =>
-        `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
-      <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
-      ${(window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainLabel[ch] || ch)}
-    </div>`
+      const roles = [
+        ['supplier', t.relationSupplier, '#58a6ff'],
+        ['peer', t.relationPeer, '#8b949e'],
+        ['customer', t.relationCustomer, '#f0a44b']
+      ];
+      chainContainer.innerHTML = roles.map(([role, label, color]) =>
+        `<div class="legend-item" onclick="highlightBigchipRole('${role}')">
+          <span class="bigchip-role-mark ${role}" style="color:${color}"></span>${label}
+        </div>`
       ).join('');
-      // Peer network legend
+      const countryCodes = [...new Set(globalCompanies.map((x) => x.countryCode).filter(Boolean))];
+      const labels = { KR: lang === 'en' ? 'Korea' : '한국', US: lang === 'en' ? 'USA' : '미국', TW: lang === 'en' ? 'Taiwan' : '대만', JP: lang === 'en' ? 'Japan' : '일본', NL: lang === 'en' ? 'Netherlands' : '네덜란드', CN: lang === 'en' ? 'China' : '중국', EU: lang === 'en' ? 'Europe' : '유럽' };
       const regionContainer = document.getElementById('sb-region-legend');
-      const regions = ['us', 'tw', 'cn', 'eu', 'kr', 'jp', 'gb'];
-      const regionHtml = regions.map(r =>
-        `<div class="legend-item">
-      <div class="legend-diamond" style="background:${REGION_COLORS[r]}"></div>
-      ${t.regionLabel[r]}
-    </div>`
+      const buttons = ['all', ...countryCodes].map((code) =>
+        `<button type="button" class="bigchip-country-chip${activeCountry === code ? ' active' : ''}" onclick="setBigchipCountry('${code}')">${code === 'all' ? t.allCountries : (labels[code] || code)}</button>`
       ).join('');
-      regionContainer.innerHTML = regionHtml + `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7">${t.peerNetworkDesc}</div>`;
+      regionContainer.innerHTML =
+        `<div style="font-size:11px;color:var(--text-muted)">${t.countryFilter}</div><div class="bigchip-country-chips">${buttons}</div>` +
+        `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7">${t.peerNetworkDesc || ''}</div>`;
+      if (svgEl) {
+        svgEl.selectAll('.bigchip-zone-label').text((d) => t['relation' + d.charAt(0).toUpperCase() + d.slice(1)] || d);
+      }
     }
 
-    // ═══════════════════════════════════════════════════════
     // TABLE
     // ═══════════════════════════════════════════════════════
     function getChainStyle(chain) {
@@ -2321,164 +1830,178 @@
     // ═══════════════════════════════════════════════════════
     let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;
 
+    let activeCountry = 'all', highlightedRole = null;
+    const BIGCHIP_ROLE_COLORS = { supplier: '#58a6ff', peer: '#8b949e', customer: '#f0a44b' };
+    const BIGCHIP_COUNTRY_COLORS = { KR: '#58a6ff', US: '#f0a44b', TW: '#4fc3a1', JP: '#d78ee8', NL: '#7fb7ff', CN: '#ef6b73', EU: '#a8b3c7' };
+
+    function bigchipPartnerRef(p) {
+      const base = partnerRef(p);
+      return { ...base, evidence: (p && typeof p === 'object' && p.evidence) || 'confirmed', source: (p && typeof p === 'object' && p.source) || '' };
+    }
+    function bigchipRole(kind) {
+      return kind === 'supplier' || kind === 'customer' || kind === 'peer' ? kind : 'peer';
+    }
+    function bigchipRoleColor(role) { return BIGCHIP_ROLE_COLORS[role] || BIGCHIP_ROLE_COLORS.peer; }
+    function bigchipCountryColor(code) { return BIGCHIP_COUNTRY_COLORS[code] || '#a8b3c7'; }
+    function setBigchipCountry(code) {
+      activeCountry = code || 'all';
+      selectedNode = null;
+      buildSidebarLegend();
+      buildGraph();
+    }
+    function highlightBigchipRole(role) {
+      if (!svgEl) return;
+      if (highlightedRole === role) { resetSelection(); return; }
+      highlightedRole = role;
+      selectedNode = null;
+      svgEl.selectAll('.node').classed('node-dim', (d) => d.type === 'relation' && d.role !== role);
+      svgEl.selectAll('line').attr('stroke-opacity', (d) => d.role === role ? 0.9 : 0.04)
+        .attr('stroke-width', (d) => d.role === role ? 2.8 : 0.7);
+    }
+    function openBigchipTicker(d) {
+      if (!d || !d.targetUrl) return;
+      const sep = d.targetUrl.includes('?') ? '&' : '?';
+      window.location.href = d.targetUrl + sep + 'lang=' + encodeURIComponent(lang);
+    }
+
     function buildGraph() {
       const container = document.getElementById('graph-svg');
       const W = container.clientWidth || 900, H = container.clientHeight || 700;
+      if (simulation) simulation.stop();
       const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
       const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
-      const isGlobalId = (id) => globalCompanies.some(g => g.id === id);
-      const ANGLE = { '종합반도체': 0, 'HBM·메모리': 180 };
-
       const nodes = [];
-      const nodeIndex = {};
-      koreanCompanies.forEach(c => {
-        const tags = (c.tags && c.tags.length) ? c.tags : [];
+      const nodeIds = new Set();
+      const roleById = new Map();
+      const roleRank = { supplier: 3, customer: 2, peer: 1 };
+
+      koreanCompanies.forEach((c, i) => {
         nodes.push({
-          id: c.id, label: c.name, labelEn: c.nameEn, type: 'korean', chain: c.chain,
+          id: c.id, label: c.name, labelEn: c.nameEn, type: 'hub', chain: c.chain,
           ticker: c.ticker, market: c.market, semType: c.semType, semTypeEn: c.semTypeEn,
           products: c.products, productsEn: c.productsEn, revenue: c.revenue, mcapWon: c.mcapWon,
-          revTier: c.revTier, data: c, tags,
-          r: c.revTier === 3 ? 18 : c.revTier === 2 ? 13 : 9
+          revTier: c.revTier, data: c, tags: c.tags || [], r: c.revTier === 3 ? 25 : 21, hubIndex: i
         });
-        nodeIndex[c.id] = nodes.length - 1;
+        nodeIds.add(c.id);
+        (c.partners || []).forEach((p) => {
+          const pr = bigchipPartnerRef(p);
+          const role = bigchipRole(pr.kind);
+          if (!roleById.has(pr.id) || roleRank[role] > roleRank[roleById.get(pr.id)]) roleById.set(pr.id, role);
+        });
       });
-      const usedGlobal = new Set();
-      koreanCompanies.forEach(c => (c.partners || []).forEach(p => usedGlobal.add(partnerRef(p).id)));
-      globalCompanies.filter(g => usedGlobal.has(g.id)).forEach(g => {
+
+      globalCompanies.forEach((rel) => {
+        if (!roleById.has(rel.id)) return;
+        if (activeCountry !== 'all' && rel.countryCode !== activeCountry) return;
+        const role = roleById.get(rel.id);
+        const cap = Number(rel.mcapWon) || 0;
         nodes.push({
-          id: g.id,
-          label: g.name,
-          labelEn: g.nameEn != null && g.nameEn !== '' ? g.nameEn : g.name,
-          type: 'global',
-          region: g.region,
-          sector: g.sector,
-          country: g.country,
-          r: 7,
+          id: rel.id, label: rel.name, labelEn: rel.nameEn || rel.name, type: 'relation',
+          role, country: rel.country, countryCode: rel.countryCode, region: rel.region,
+          sector: rel.sector, ticker: rel.ticker || '', market: rel.market || '',
+          mcapWon: cap, targetUrl: rel.targetUrl || '',
+          r: rel.ticker ? (cap >= 15e12 ? 17 : cap >= 1e12 ? 13 : 10) : 9,
+          data: rel
         });
-        nodeIndex[g.id] = nodes.length - 1;
+        nodeIds.add(rel.id);
       });
 
       const links = [];
-      const byChain = d3.group(koreanCompanies, d => d.chain);
-      for (const [ch, arr] of byChain) {
-        const sorted = [...arr].sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
-        for (let i = 0; i < sorted.length - 1; i++) {
-          links.push({
-            source: sorted[i].id,
-            target: sorted[i + 1].id,
-            sourceChain: ch,
-            kind: 'peer',
-            baseStrokeW: 1.15
-          });
-        }
-        const gids = [];
-        arr.forEach(c => (c.partners || []).forEach(p => {
-          const pid = partnerRef(p).id;
-          if (isGlobalId(pid)) gids.push(pid);
-        }));
-        const uniq = [...new Set(gids)].sort();
-        for (let i = 0; i < uniq.length - 1; i++) {
-          if (nodeIndex[uniq[i]] === undefined || nodeIndex[uniq[i + 1]] === undefined) continue;
-          links.push({
-            source: uniq[i],
-            target: uniq[i + 1],
-            sourceChain: ch,
-            kind: 'globalPeer',
-            baseStrokeW: 0.75
-          });
-        }
-      }
-      koreanCompanies.forEach(c => {
-        (c.partners || []).forEach(p => {
-          const pr = partnerRef(p);
-          const pid = pr.id;
-          if (nodeIndex[pid] === undefined) return;
-          const w = pr.weight;
-          const strokeW = (w != null && Number.isFinite(w))
-            ? Math.max(0.9, 0.85 + w * 4.2)
-            : (pr.kind === 'backing' ? 1.0 : (pr.kind === 'theme' || pr.kind === 'export' ? 1.05 : 1.2));
-          links.push({
-            source: c.id, target: pid, sourceChain: c.chain,
-            edgeLabel: pr.edgeLabel, edgeLabelEn: pr.edgeLabelEn, weight: pr.weight, kind: pr.kind,
-            baseStrokeW: strokeW
-          });
+      const linkKeys = new Set();
+      koreanCompanies.forEach((c) => (c.partners || []).forEach((p) => {
+        const pr = bigchipPartnerRef(p);
+        if (!nodeIds.has(pr.id)) return;
+        const role = bigchipRole(pr.kind);
+        const key = role === 'peer' ? [c.id, pr.id].sort().join('|') + '|peer' : c.id + '|' + pr.id + '|' + role;
+        if (linkKeys.has(key)) return;
+        linkKeys.add(key);
+        links.push({
+          source: c.id, target: pr.id, role, kind: role, evidence: pr.evidence,
+          sourceUrl: pr.source, edgeLabel: pr.edgeLabel, edgeLabelEn: pr.edgeLabelEn,
+          baseStrokeW: pr.evidence === 'reported' ? 1.5 : 2
         });
-      });
+      }));
 
       const d3svg = d3.select('#graph-svg');
       d3svg.selectAll('*').remove();
       svgEl = d3svg;
-      zoomBehavior = d3.zoom().scaleExtent([0.15, 4]).on('zoom', e => g.attr('transform', e.transform));
+      zoomBehavior = d3.zoom().scaleExtent([0.25, 4]).on('zoom', (e) => g.attr('transform', e.transform));
       d3svg.call(zoomBehavior);
       d3svg.on('click', (e) => { if (e.target === d3svg.node() || e.target.tagName === 'svg') resetSelection(); });
       g = d3svg.append('g');
 
+      const zones = [
+        { role: 'supplier', x: 0, w: W / 3 },
+        { role: 'peer', x: W / 3, w: W / 3 },
+        { role: 'customer', x: W * 2 / 3, w: W / 3 }
+      ];
+      const zone = g.append('g').attr('class', 'bigchip-zones').selectAll('g').data(zones).join('g');
+      zone.append('rect').attr('x', (d) => d.x + 5).attr('y', 8).attr('width', (d) => d.w - 10).attr('height', H - 16)
+        .attr('rx', 14).attr('fill', (d) => bigchipRoleColor(d.role)).attr('fill-opacity', 0.035)
+        .attr('stroke', (d) => bigchipRoleColor(d.role)).attr('stroke-opacity', 0.18).attr('stroke-dasharray', '4 6');
+      zone.append('text').attr('class', 'bigchip-zone-label').attr('x', (d) => d.x + d.w / 2).attr('y', 30)
+        .attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', (d) => bigchipRoleColor(d.role))
+        .text((d) => T[lang]['relation' + d.role.charAt(0).toUpperCase() + d.role.slice(1)] || d.role);
+
       simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id(d => d.id)
-          .distance(d => {
-            if (d.kind === 'globalPeer') return 70;
-            const S = d.source, T = d.target;
-            const sk = S.type || 'korean', tk = T.type || 'korean';
-            if (sk === 'korean' && tk === 'korean') return d.kind === 'peer' ? 52 : 62;
-            return 128;
-          })
-          .strength(d => (d.kind === 'globalPeer' ? 0.14 : (d.kind === 'peer' ? 0.36 : 0.28))))
-        .force('charge', d3.forceManyBody().strength(d => d.type === 'korean' ? -200 : -95))
-        .force('center', d3.forceCenter(W / 2, H / 2))
-        .force('collide', d3.forceCollide(d => d.r + 8))
-        .force('x', d3.forceX(d => {
-          if (d.type === 'korean') { const a = ANGLE[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
-          return W / 2;
-        }).strength(0.055))
-        .force('y', d3.forceY(d => {
-          if (d.type === 'korean') { const a = ANGLE[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
-          return H / 2;
-        }).strength(0.055));
+        .force('link', d3.forceLink(links).id((d) => d.id).distance((d) => d.role === 'peer' ? 105 : 130).strength(0.34))
+        .force('charge', d3.forceManyBody().strength((d) => d.type === 'hub' ? -420 : -115))
+        .force('collide', d3.forceCollide((d) => d.r + 14))
+        .force('x', d3.forceX((d) => {
+          if (d.type === 'hub') return W / 2;
+          return d.role === 'supplier' ? W * 0.18 : d.role === 'customer' ? W * 0.82 : W * 0.5;
+        }).strength((d) => d.type === 'hub' ? 0.35 : 0.16))
+        .force('y', d3.forceY((d) => d.type === 'hub' ? H / 2 + (d.hubIndex ? 52 : -52) : H / 2).strength(0.1));
 
       const link = g.append('g').selectAll('line').data(links).join('line')
-        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'))
-        .attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22)
-        .attr('stroke-width', d => d.baseStrokeW || 1.2)
-        .attr('stroke-dasharray', d => {
-          if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'peer') return null;
-          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
-        });
+        .attr('stroke', (d) => bigchipRoleColor(d.role))
+        .attr('stroke-opacity', (d) => d.evidence === 'reported' ? 0.5 : 0.68)
+        .attr('stroke-width', (d) => d.baseStrokeW)
+        .attr('stroke-dasharray', (d) => d.evidence === 'reported' ? '5 4' : null);
 
       const node = g.append('g').selectAll('g').data(nodes).join('g')
-        .attr('class', d => `node node-${d.type}`).attr('cursor', 'pointer')
+        .attr('class', (d) => `node node-${d.type}`).attr('cursor', 'pointer')
         .on('mouseover', (e, d) => showTooltip(e, d))
         .on('mouseout', () => hideTooltip())
-        .on('click', (e, d) => { e.stopPropagation(); selectNode(d, node, link); })
+        .on('click', (e, d) => {
+          e.stopPropagation();
+          if (d.type === 'relation' && d.ticker && selectedNode === d.id) { openBigchipTicker(d); return; }
+          selectNode(d, node, link);
+        })
+        .on('dblclick', (e, d) => { if (d.type === 'relation' && d.ticker) { e.preventDefault(); openBigchipTicker(d); } })
         .call(d3.drag()
           .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
           .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
           .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
 
-      node.filter(d => d.type === 'korean').append('circle')
-        .attr('r', d => d.r).attr('fill', d => CHAIN_COLORS[d.chain] || '#888')
-        .attr('fill-opacity', 0.85).attr('stroke', graphStroke).attr('stroke-width', 1.5);
-
-      node.filter(d => d.type === 'global').append('polygon')
-        .attr('points', d => { const r = d.r + 2; return `0,${-r} ${r},0 0,${r} ${-r},0`; })
-        .attr('fill', d => REGION_COLORS[d.region] || '#888').attr('fill-opacity', 0.8)
-        .attr('stroke', graphStroke).attr('stroke-width', 1.2);
-
-      node.filter(d => d.r >= 9 || d.type === 'global').append('text')
-        .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label))
-        .attr('text-anchor', 'middle').attr('dy', d => d.r + 11)
-        .attr('font-size', d => d.type === 'korean' ? (d.r >= 13 ? 11 : 9) : 9)
+      node.filter((d) => d.type === 'hub').append('circle')
+        .attr('r', (d) => d.r).attr('fill', (d) => CHAIN_COLORS[d.chain] || '#888')
+        .attr('fill-opacity', 0.95).attr('stroke', graphStroke).attr('stroke-width', 2.2);
+      node.filter((d) => d.type === 'relation' && d.role === 'supplier').append('polygon')
+        .attr('points', (d) => `0,${-d.r} ${d.r},${d.r} ${-d.r},${d.r}`)
+        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.4);
+      node.filter((d) => d.type === 'relation' && d.role === 'peer').append('polygon')
+        .attr('points', (d) => `0,${-d.r} ${d.r},0 0,${d.r} ${-d.r},0`)
+        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.4);
+      node.filter((d) => d.type === 'relation' && d.role === 'customer').append('rect')
+        .attr('x', (d) => -d.r).attr('y', (d) => -d.r).attr('width', (d) => d.r * 2).attr('height', (d) => d.r * 2).attr('rx', 3)
+        .attr('fill', (d) => bigchipCountryColor(d.countryCode)).attr('stroke', graphStroke).attr('stroke-width', 1.4);
+      node.append('text').text((d) => lang === 'en' ? (d.labelEn || d.label) : d.label)
+        .attr('text-anchor', 'middle').attr('dy', (d) => d.r + 13)
+        .attr('font-size', (d) => d.type === 'hub' ? 12 : 9).attr('font-weight', (d) => d.type === 'hub' ? 700 : 500)
         .attr('fill', graphLabel).attr('pointer-events', 'none');
 
       simulation.on('tick', () => {
-        link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-          .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-        node.attr('transform', d => `translate(${d.x},${d.y})`);
+        link.attr('x1', (d) => d.source.x).attr('y1', (d) => d.source.y)
+          .attr('x2', (d) => d.target.x).attr('y2', (d) => d.target.y);
+        node.attr('transform', (d) => `translate(${Math.max(25, Math.min(W - 25, d.x))},${Math.max(45, Math.min(H - 25, d.y))})`);
       });
-      setTimeout(() => { svgEl.transition().duration(600).call(zoomBehavior.transform, d3.zoomIdentity.translate(W * 0.05, H * 0.05).scale(0.88)); }, 1200);
+      selectedNode = null;
+      highlightedRole = null;
+      setTimeout(() => { d3svg.transition().duration(450).call(zoomBehavior.transform, d3.zoomIdentity.translate(W * 0.03, H * 0.03).scale(0.94)); }, 700);
     }
 
-    function selectNode(d, node, link) {
+        function selectNode(d, node, link) {
       if (selectedNode === d.id) { resetSelection(); return; }
       selectedNode = d.id;
       const connected = new Set([d.id]);
@@ -2497,19 +2020,17 @@
     }
 
     function resetSelection() {
-      selectedNode = null; highlightedChain = null;
+      selectedNode = null; highlightedChain = null; highlightedRole = null;
       if (!svgEl) return;
       svgEl.selectAll('.node').classed('node-dim', false);
-      svgEl.selectAll('line').attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22).attr('stroke-width', d => d.baseStrokeW || 1.2)
-        .attr('stroke-dasharray', d => {
-          if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'peer') return null;
-          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
-        })
-        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'));
+      svgEl.selectAll('line')
+        .attr('stroke-opacity', (d) => d.evidence === 'reported' ? 0.5 : 0.68)
+        .attr('stroke-width', (d) => d.baseStrokeW || 2)
+        .attr('stroke-dasharray', (d) => d.evidence === 'reported' ? '5 4' : null)
+        .attr('stroke', (d) => bigchipRoleColor(d.role));
     }
 
-    function toggleChainHighlight(chain) {
+        function toggleChainHighlight(chain) {
       if (!svgEl) return;
       if (highlightedChain === chain) { resetSelection(); return; }
       highlightedChain = chain;
@@ -2527,51 +2048,51 @@
     function showTooltip(e, d) {
       const tt = document.getElementById('graph-tooltip');
       const t = T[lang];
-      const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : (REGION_COLORS[d.region] || '#888');
       const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
+      const color = d.type === 'hub' ? (CHAIN_COLORS[d.chain] || '#888') : bigchipCountryColor(d.countryCode);
       let html = `<div class="tooltip-name" style="color:${color}">${displayName}</div>`;
-      if (d.type === 'korean') {
-        const chainDisplay = t.chainFilter[d.chain] || d.chain;
-        const I18nTt = window.InvestingMapI18n;
-        const semTypeDisplay = I18nTt ? I18nTt.field(d, 'semType', 'semTypeEn', lang) : (lang === 'en' ? (d.semTypeEn || '—') : (d.semType || '—'));
-        const productsDisplay = I18nTt ? I18nTt.field(d, 'products', 'productsEn', lang) : (lang === 'en' ? (d.productsEn || '—') : (d.products || '—'));
-        const mktTt = I18nTt ? I18nTt.marketLabel(d.market, lang) : d.market;
-        const subTt = lang === 'en' ? (d.label || '') : (d.labelEn || '');
-        const subPart = subTt && subTt !== displayName ? subTt + ' · ' : '';
-        html += `<div class="tooltip-meta">${subPart}${d.ticker} · ${mktTt}</div>`;
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttChain}</span><span class="tooltip-val">${chainDisplay}</span></div>`;
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSemType}</span><span class="tooltip-val">${semTypeDisplay}</span></div>`;
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttProducts}</span><span class="tooltip-val">${productsDisplay}</span></div>`;
-        const capStr = lang === 'en' ? fmtMcapUsdBillion(d.mcapWon) : fmtMcapKoJo(d.mcapWon);
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttRevenue}</span><span class="tooltip-val">${capStr}</span></div>`;
-        if (d.tags && d.tags.length) {
-          const tagStr = d.tags.map(x => (typeof x === 'string') ? x : ((lang === 'en' && x.en) ? x.en : (x.ko || x))).join(', ');
-          html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttTags}</span><span class="tooltip-val">${tagStr}</span></div>`;
+      if (d.type === 'hub') {
+        const cap = lang === 'en' ? fmtMcapUsdBillion(d.mcapWon) : fmtMcapKoJo(d.mcapWon);
+        html += `<div class="tooltip-meta">${d.ticker} · ${d.market}</div>`;
+        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttRevenue}</span><span class="tooltip-val">${cap}</span></div>`;
+        const grouped = { supplier: [], peer: [], customer: [] };
+        (d.data.partners || []).forEach((p) => {
+          const pr = bigchipPartnerRef(p);
+          const info = getPartnerInfo(pr.id);
+          const note = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
+          grouped[bigchipRole(pr.kind)].push(info.name + (note ? ' — ' + note : ''));
+        });
+        for (const role of ['supplier', 'peer', 'customer']) {
+          if (!grouped[role].length) continue;
+          const key = 'relation' + role.charAt(0).toUpperCase() + role.slice(1);
+          html += `<div class="tooltip-row"><span class="tooltip-label">${t[key]}</span><span class="tooltip-val">${grouped[role].slice(0, 5).join(', ')}${grouped[role].length > 5 ? '…' : ''}</span></div>`;
         }
-        const pNames = d.data.partners.slice(0, 6).map(p => {
-          const pr = partnerRef(p);
-          const nm = getPartnerInfo(pr.id).name;
-          const lbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
-          let s = nm;
-          if (lbl) s += ` — ${lbl}`;
-          if (pr.weight != null && Number.isFinite(pr.weight)) s += ` (~${Math.round(pr.weight * 100)}%)`;
-          return s;
-        }).join(', ');
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttPartners}</span><span class="tooltip-val">${pNames}${d.data.partners.length > 6 ? '…' : ''}</span></div>`;
       } else {
-        html += `<div class="tooltip-meta">${d.country} · ${d.sector}</div>`;
-        const suppliers = koreanCompanies.filter(c => companyLinksTo(c, d.id));
-        if (suppliers.length) {
-          const names = suppliers.slice(0, 4).map(s => lang === 'en' ? s.nameEn : s.name).join(', ');
-          html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSuppliers}</span><span class="tooltip-val">${names}${suppliers.length > 4 ? '…' : ''}</span></div>`;
+        const roleKey = 'relation' + d.role.charAt(0).toUpperCase() + d.role.slice(1);
+        html += `<div class="tooltip-meta">${d.country} · ${t[roleKey]}</div>`;
+        if (d.ticker) {
+          const cap = lang === 'en' ? fmtMcapUsdBillion(d.mcapWon) : fmtMcapKoJo(d.mcapWon);
+          html += `<div class="tooltip-row"><span class="tooltip-label">Ticker</span><span class="tooltip-val">${d.ticker} · ${cap}</span></div>`;
         }
+        const related = [];
+        koreanCompanies.forEach((c) => (c.partners || []).forEach((p) => {
+          const pr = bigchipPartnerRef(p);
+          if (pr.id !== d.id) return;
+          const note = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
+          const evidence = pr.evidence === 'reported' ? t.reportedEvidence : t.confirmedEvidence;
+          related.push((lang === 'en' ? c.nameEn : c.name) + ' — ' + note + ' (' + evidence + ')');
+        }));
+        if (related.length) html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSuppliers}</span><span class="tooltip-val">${related.join('<br>')}</span></div>`;
+        if (d.ticker) html += `<div style="margin-top:8px;color:var(--accent);font-size:11px">${t.openTicker}</div>`;
       }
-      tt.innerHTML = html; tt.style.display = 'block';
+      tt.innerHTML = html;
+      tt.style.display = 'block';
       const rect = svgEl.node().getBoundingClientRect();
       tt.style.left = (e.pageX - rect.left - window.scrollX + 14) + 'px';
       tt.style.top = (e.pageY - rect.top - window.scrollY - 10) + 'px';
     }
-    function hideTooltip() { document.getElementById('graph-tooltip').style.display = 'none'; }
+
+        function hideTooltip() { document.getElementById('graph-tooltip').style.display = 'none'; }
     function resetZoom() { const svgNode = svgEl.node(); svgEl.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity.translate(svgNode.clientWidth * 0.05, svgNode.clientHeight * 0.05).scale(0.88)); }
     function zoomIn() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 1.3); }
     function zoomOut() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 0.77); }

@@ -1,4 +1,110 @@
+import fs from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { buildCuratedSectorMap } from './lib/build_curated_sector_map.mjs';
 import { BIGCHIP_CONFIG } from './lib/curated_sector_configs.mjs';
+import { loadMergedKrxMap } from './lib/krx_data_sources.mjs';
+import { applyBigchipRelationNetwork } from './scripts/apply_bigchip_relation_network.mjs';
+
+const ROOT = dirname(fileURLToPath(import.meta.url));
+const relations = JSON.parse(fs.readFileSync(join(ROOT, 'data', 'bigchip_relations.json'), 'utf8'));
+const krx = loadMergedKrxMap(join(ROOT, 'data'));
+const hubIds = new Map(BIGCHIP_CONFIG.companies.map((c) => [c.ticker, c.id]));
+const relationNodes = new Map();
+const rolePriority = { supplier: 3, customer: 2, peer: 1 };
+const countryMeta = {
+  KR: { countryLabel: '한국/Korea', region: 'kr' },
+  US: { countryLabel: '미국/USA', region: 'us' },
+  TW: { countryLabel: '대만/Taiwan', region: 'tw' },
+  JP: { countryLabel: '일본/Japan', region: 'jp' },
+  NL: { countryLabel: '네덜란드/Netherlands', region: 'eu' },
+  CN: { countryLabel: '중국/China', region: 'cn' },
+  EU: { countryLabel: '유럽/Europe', region: 'eu' },
+};
+
+for (const seed of BIGCHIP_CONFIG.companies) seed.partners = [];
+
+for (const hub of relations.hubs) {
+  const seed = BIGCHIP_CONFIG.companies.find((c) => c.ticker === hub.ticker);
+  if (!seed) throw new Error(`bigchip relation hub missing from config: ${hub.ticker}`);
+  for (const [plural, role] of [['suppliers', 'supplier'], ['customers', 'customer'], ['peers', 'peer']]) {
+    for (const relation of hub[plural] || []) {
+      const targetId = hubIds.get(relation.ticker) || relation.id;
+      seed.partners.push({
+        id: targetId,
+        edgeLabel: relation.note,
+        edgeLabelEn: relation.noteEn,
+        kind: role,
+        evidence: relation.evidence,
+        source: relation.source,
+      });
+      if (hubIds.has(relation.ticker)) continue;
+      const meta = countryMeta[relation.country] || { countryLabel: relation.country, region: 'eu' };
+      const row = relation.ticker ? krx.get(relation.ticker) : null;
+      const existing = relationNodes.get(relation.id);
+      const primaryRole = !existing || rolePriority[role] > rolePriority[existing.primaryRole]
+        ? role
+        : existing.primaryRole;
+      relationNodes.set(relation.id, {
+        ...(existing || {}),
+        id: relation.id,
+        name: relation.name,
+        nameEn: relation.nameEn || relation.name,
+        country: meta.countryLabel,
+        countryCode: relation.country,
+        region: meta.region,
+        sector: role,
+        primaryRole,
+        ticker: relation.ticker || '',
+        market: row?.market || '',
+        mcapWon: row?.mcap || 0,
+        targetUrl: relation.ticker
+          ? `../semiconductor/korea_semiconductor_map.html?tab=table&ticker=${relation.ticker}`
+          : '',
+      });
+    }
+  }
+}
+
+BIGCHIP_CONFIG.globals = [...relationNodes.values()];
+BIGCHIP_CONFIG.subtitleKo = '삼성전자·SK하이닉스 중심의 후방 공급사, 글로벌 peer, 전방 고객 관계';
+BIGCHIP_CONFIG.subtitleEn = 'Supplier, global-peer and customer relationships centered on Samsung Electronics and SK hynix';
+BIGCHIP_CONFIG.translations = {
+  ko: {
+    thPartners: '공급사·peer·고객',
+    sbKorean: '관계 유형',
+    sbGlobal: '관계 유형·국가 필터',
+    peerNetworkDesc: '삼성전자·SK하이닉스를 중앙 허브로 두고 후방 공급사, peer, 전방 고객을 구역과 엣지 색으로 구분합니다.',
+    graphHint: '공개자료 기반 공급망·고객·peer 관계입니다. “보도” 관계는 공식 계약 확인과 구분해 표시합니다.',
+    ttPartners: '관계',
+    ttSuppliers: '연결 허브',
+    relationSupplier: '후방 공급사',
+    relationPeer: '글로벌 peer',
+    relationCustomer: '전방 고객',
+    countryFilter: '국가',
+    allCountries: '전체',
+    reportedEvidence: '보도',
+    confirmedEvidence: '확인',
+    openTicker: '다시 클릭하면 반도체 지도에서 종목 열기',
+  },
+  en: {
+    thPartners: 'Suppliers, peers & customers',
+    sbKorean: 'Relationship types',
+    sbGlobal: 'Relationship type & country',
+    peerNetworkDesc: 'Samsung Electronics and SK hynix are central hubs; suppliers, peers and customers occupy separate zones with role-colored edges.',
+    graphHint: 'Public-source supply-chain, customer and peer relationships. Reported relationships are distinguished from confirmed disclosures.',
+    ttPartners: 'Relationships',
+    ttSuppliers: 'Connected hubs',
+    relationSupplier: 'Upstream suppliers',
+    relationPeer: 'Global peers',
+    relationCustomer: 'Downstream customers',
+    countryFilter: 'Country',
+    allCountries: 'All',
+    reportedEvidence: 'Reported',
+    confirmedEvidence: 'Confirmed',
+    openTicker: 'Click again to open this ticker in the semiconductor map',
+  },
+};
 
 buildCuratedSectorMap(BIGCHIP_CONFIG);
+applyBigchipRelationNetwork();

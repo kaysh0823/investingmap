@@ -1,0 +1,362 @@
+{
+  "asOf": "2026-08-15",
+  "hubs": [
+    {
+      "ticker": "005930",
+      "suppliers": [
+        {
+          "id": "asml",
+          "name": "ASML",
+          "nameEn": "ASML",
+          "country": "NL",
+          "note": "EUV 노광장비·공동 R&D",
+          "noteEn": "EUV lithography equipment and joint R&D",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+        },
+        {
+          "id": "applied_materials",
+          "name": "Applied Materials",
+          "nameEn": "Applied Materials",
+          "country": "US",
+          "note": "반도체 공정장비·공동 R&D",
+          "noteEn": "Semiconductor process equipment and joint R&D",
+          "evidence": "confirmed",
+          "source": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-samsung-electronics-will-join-new"
+        },
+        {
+          "id": "lam_research",
+          "name": "Lam Research",
+          "nameEn": "Lam Research",
+          "country": "US",
+          "note": "식각·세정 장비",
+          "noteEn": "Etch and cleaning equipment",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+        },
+        {
+          "id": "kla",
+          "name": "KLA",
+          "nameEn": "KLA",
+          "country": "US",
+          "note": "공정제어·수율관리 장비",
+          "noteEn": "Process control and yield management equipment",
+          "evidence": "confirmed",
+          "source": "https://ir.kla.com/sec-filings/all-sec-filings/xbrl_doc_only/4189"
+        },
+        {
+          "id": "tokyo_electron",
+          "name": "도쿄일렉트론",
+          "nameEn": "Tokyo Electron",
+          "country": "JP",
+          "note": "코터·디벨로퍼·식각·증착 장비",
+          "noteEn": "Coat/develop, etch and deposition equipment",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+        },
+        {
+          "id": "wonik_ips",
+          "name": "원익IPS",
+          "nameEn": "WONIK IPS",
+          "country": "KR",
+          "ticker": "240810",
+          "note": "증착·반도체 공정장비",
+          "noteEn": "Deposition and semiconductor process equipment",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+        },
+        {
+          "id": "dongjin_semichem",
+          "name": "동진쎄미켐",
+          "nameEn": "Dongjin Semichem",
+          "country": "KR",
+          "ticker": "005290",
+          "note": "포토레지스트·공정 화학재료",
+          "noteEn": "Photoresist and process chemicals",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+        },
+        {
+          "id": "soulbrain",
+          "name": "솔브레인",
+          "nameEn": "Soulbrain",
+          "country": "KR",
+          "ticker": "357780",
+          "note": "DS 화학재료·식각액",
+          "noteEn": "DS chemicals and etchants",
+          "evidence": "confirmed",
+          "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf"
+        },
+        {
+          "id": "sk_specialty",
+          "name": "SK스페셜티",
+          "nameEn": "SK Specialty",
+          "country": "KR",
+          "note": "NF3·WF6 등 반도체 특수가스",
+          "noteEn": "Semiconductor specialty gases including NF3 and WF6",
+          "evidence": "confirmed",
+          "source": "https://www.skspecialty.com/new/kor/pdf/2023_SK%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC%EC%A6%88_%EC%A7%80%EC%86%8D%EA%B0%80%EB%8A%A5%EA%B2%BD%EC%98%81%EB%B3%B4%EA%B3%A0%EC%84%9C_Eng.pdf"
+        }
+      ],
+      "customers": [
+        {
+          "id": "apple",
+          "name": "Apple",
+          "nameEn": "Apple",
+          "country": "US",
+          "note": "미국 생산 칩의 Apple 제품 공급",
+          "noteEn": "US-made chips supplied for Apple products",
+          "evidence": "confirmed",
+          "source": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/"
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "nameEn": "NVIDIA",
+          "country": "US",
+          "note": "HBM4·SOCAMM 공급 및 AI 플랫폼 협업",
+          "noteEn": "HBM4 and SOCAMM supply and AI-platform collaboration",
+          "evidence": "confirmed",
+          "source": "https://news.samsung.com/global/samsung-unveils-hbm4e-showcasing-comprehensive-ai-solutions-nvidia-partnership-and-vision-at-nvidia-gtc-2026"
+        },
+        {
+          "id": "google",
+          "name": "Google",
+          "nameEn": "Google",
+          "country": "US",
+          "note": "Broadcom 경유 TPU용 HBM 공급 보도",
+          "noteEn": "Reported HBM supply for Google TPUs via Broadcom",
+          "evidence": "reported",
+          "source": "https://www.trendforce.com/news/2025/12/01/news-samsung-reportedly-supplies-60-of-google-tpu-hbm3e-set-to-remain-primary-supplier-in-2026/"
+        }
+      ],
+      "peers": [
+        {
+          "id": "sk_hynix",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "ticker": "000660",
+          "note": "DRAM·HBM·NAND 경쟁",
+          "noteEn": "DRAM, HBM and NAND competitor",
+          "evidence": "confirmed",
+          "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm"
+        },
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "첨단 파운드리 경쟁",
+          "noteEn": "Advanced-foundry competitor",
+          "evidence": "confirmed",
+          "source": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+        },
+        {
+          "id": "intel",
+          "name": "Intel",
+          "nameEn": "Intel",
+          "country": "US",
+          "note": "IDM·첨단 공정 경쟁",
+          "noteEn": "IDM and advanced-process competitor",
+          "evidence": "confirmed",
+          "source": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm"
+        },
+        {
+          "id": "micron",
+          "name": "Micron",
+          "nameEn": "Micron",
+          "country": "US",
+          "note": "DRAM·HBM·NAND 경쟁",
+          "noteEn": "DRAM, HBM and NAND competitor",
+          "evidence": "confirmed",
+          "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm"
+        },
+        {
+          "id": "kioxia",
+          "name": "Kioxia",
+          "nameEn": "Kioxia",
+          "country": "JP",
+          "note": "NAND 경쟁",
+          "noteEn": "NAND competitor",
+          "evidence": "confirmed",
+          "source": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf"
+        }
+      ]
+    },
+    {
+      "ticker": "000660",
+      "suppliers": [
+        {
+          "id": "asml",
+          "name": "ASML",
+          "nameEn": "ASML",
+          "country": "NL",
+          "note": "EUV 장비 장기 구매",
+          "noteEn": "Long-term EUV equipment purchases",
+          "evidence": "confirmed",
+          "source": "https://en.yna.co.kr/view/AEN20260324006600320"
+        },
+        {
+          "id": "applied_materials",
+          "name": "Applied Materials",
+          "nameEn": "Applied Materials",
+          "country": "US",
+          "note": "DRAM·HBM 장기 공정 R&D",
+          "noteEn": "Long-term DRAM and HBM process R&D",
+          "evidence": "confirmed",
+          "source": "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-sk-hynix-announce-long-term-rd-partnership"
+        },
+        {
+          "id": "lam_research",
+          "name": "Lam Research",
+          "nameEn": "Lam Research",
+          "country": "US",
+          "note": "EUV dry resist 공정 장비·기술",
+          "noteEn": "EUV dry-resist process equipment and technology",
+          "evidence": "confirmed",
+          "source": "https://newsroom.lamresearch.com/2022-06-14-Lam-Research-Teams-Up-with-SK-hynix-to-Enhance-DRAM-Production-Cost-Efficiency-with-Breakthrough-Dry-Resist-EUV-Technology"
+        },
+        {
+          "id": "hanmi_semiconductor",
+          "name": "한미반도체",
+          "nameEn": "Hanmi Semiconductor",
+          "country": "KR",
+          "ticker": "042700",
+          "note": "HBM용 TC 본더 반복 수주",
+          "noteEn": "Repeated orders for HBM TC bonders",
+          "evidence": "confirmed",
+          "source": "https://www.hanmisemi.com/en/news/new_view3.html"
+        },
+        {
+          "id": "jusung_engineering",
+          "name": "주성엔지니어링",
+          "nameEn": "Jusung Engineering",
+          "country": "KR",
+          "ticker": "036930",
+          "note": "DRAM용 high-k ALD 장비 공급 보도",
+          "noteEn": "Reported supply of high-k ALD tools for DRAM",
+          "evidence": "reported",
+          "source": "https://www.thelec.net/news/articleView.html?idxno=2672"
+        },
+        {
+          "id": "dongjin_semichem",
+          "name": "동진쎄미켐",
+          "nameEn": "Dongjin Semichem",
+          "country": "KR",
+          "ticker": "005290",
+          "note": "HBM CMP 슬러리·공정재료 공급 보도",
+          "noteEn": "Reported HBM CMP slurry and process-material supply",
+          "evidence": "reported",
+          "source": "https://www.thelec.net/news/articleView.html?idxno=4751"
+        },
+        {
+          "id": "soulbrain",
+          "name": "솔브레인",
+          "nameEn": "Soulbrain",
+          "country": "KR",
+          "ticker": "357780",
+          "note": "고순도 불화수소·공정 화학재료",
+          "noteEn": "High-purity hydrogen fluoride and process chemicals",
+          "evidence": "confirmed",
+          "source": "https://sg.finance.yahoo.com/news/south-korean-firm-boost-output-091907734.html"
+        },
+        {
+          "id": "sk_specialty",
+          "name": "SK스페셜티",
+          "nameEn": "SK Specialty",
+          "country": "KR",
+          "note": "반도체 특수가스",
+          "noteEn": "Semiconductor specialty gases",
+          "evidence": "confirmed",
+          "source": "https://www.skspecialty.com/new/eng/pdf/ir3/23/%5BSK_Specialty%5DAudit_Report_2023.pdf"
+        },
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "HBM4 base die·CoWoS 기술/파운드리 파트너",
+          "noteEn": "HBM4 base-die and CoWoS technology/foundry partner",
+          "evidence": "confirmed",
+          "source": "https://news.skhynix.com/en/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/"
+        }
+      ],
+      "customers": [
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "nameEn": "NVIDIA",
+          "country": "US",
+          "note": "H100용 HBM3 및 후속 HBM 공급",
+          "noteEn": "HBM3 for H100 and subsequent HBM supply",
+          "evidence": "confirmed",
+          "source": "https://news.skhynix.com/en/sk-hynix-to-supply-industrys-first-hbm3-dram-to-nvidia/"
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "nameEn": "Apple",
+          "country": "US",
+          "note": "고객사로 공개; 제품·규모는 비공개",
+          "noteEn": "Disclosed as a client; product and volume not disclosed",
+          "evidence": "confirmed",
+          "source": "https://www.reuters.com/technology/sk-hynix-q3-profit-plunges-economic-downturn-hurts-chip-demand-2022-10-25/"
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "nameEn": "Microsoft",
+          "country": "US",
+          "note": "Maia용 HBM·AI 메모리 협력 보도",
+          "noteEn": "Reported HBM for Maia and AI-memory collaboration",
+          "evidence": "reported",
+          "source": "https://news.skhynix.com/en/global-big-tech-ai-partnership-ms/"
+        },
+        {
+          "id": "google",
+          "name": "Google",
+          "nameEn": "Google",
+          "country": "US",
+          "note": "TPU용 HBM3E 공급 보도",
+          "noteEn": "Reported HBM3E supply for Google TPUs",
+          "evidence": "reported",
+          "source": "https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/"
+        }
+      ],
+      "peers": [
+        {
+          "id": "samsung_electronics",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "ticker": "005930",
+          "note": "DRAM·HBM·NAND 경쟁",
+          "noteEn": "DRAM, HBM and NAND competitor",
+          "evidence": "confirmed",
+          "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm"
+        },
+        {
+          "id": "micron",
+          "name": "Micron",
+          "nameEn": "Micron",
+          "country": "US",
+          "note": "DRAM·HBM·NAND 경쟁",
+          "noteEn": "DRAM, HBM and NAND competitor",
+          "evidence": "confirmed",
+          "source": "https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm"
+        },
+        {
+          "id": "kioxia",
+          "name": "Kioxia",
+          "nameEn": "Kioxia",
+          "country": "JP",
+          "note": "NAND 경쟁",
+          "noteEn": "NAND competitor",
+          "evidence": "confirmed",
+          "source": "https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf"
+        }
+      ]
+    }
+  ]
+}
