@@ -29,6 +29,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
 ];
 
 const CANDLE_TAG = `<script src="../js/candle_modal.js?v=${SCRIPT_V}"></script>`;

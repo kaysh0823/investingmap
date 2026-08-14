@@ -8,13 +8,15 @@
 
   var ITEMS = [
     { id: 'home', path: 'index.html', icon: '\u2302', ko: '\uD648', en: 'Home' },
-    { id: 'bigchip', path: 'bigchip/korea_bigchip_map.html', icon: '\uD83C\uDFC6', ko: '\uBC18\uB3C4\uCCB4 \uB300\uD615\uC8FC', en: 'Chip Leaders', koShort: '\uB300\uD615\uBC18\uB3C4\uCCB4', enShort: 'Leaders' },
+    { id: 'bigchip', path: 'bigchip/korea_bigchip_map.html', icon: '\uD83C\uDFC6', ko: '\uC0BC\uC131\uC804\uC790/\uD558\uC774\uB2C9\uC2A4', en: 'Samsung/SK hynix', koShort: '\uC0BC\uC131/\uD558\uC774\uB2C9\uC2A4', enShort: 'Samsung' },
     { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: '\uD83D\uDCA0', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
+    { id: 'elec', path: 'elec/korea_elec_map.html', icon: '\uD83D\uDCA1', ko: '\uC804\uAE30\u00B7\uC804\uC790', en: 'Electronics', koShort: '\uC804\uAE30\uC804\uC790', enShort: 'Elec' },
     { id: 'battery', path: 'battery/korea_battery_map.html', icon: '\uD83D\uDD0B', ko: '2\uCC28\uC804\uC9C0', en: 'Battery', koShort: '\uBC30\uD130\uB9AC', enShort: 'Battery' },
     { id: 'renewable', path: 'renewable/korea_renewable_map.html', icon: '\uD83C\uDF31', ko: '\uC2E0\uC7AC\uC0DD', en: 'Renewable', koShort: '\uC2E0\uC7AC\uC0DD', enShort: 'Renew' },
     { id: 'nuclear', path: 'nuclear/korea_nuclear_map.html', icon: '\u269B', ko: '\uC6D0\uC804', en: 'Nuclear' },
     { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', koShort: '\uC804\uB825', en: 'Power Equip.', enShort: 'Power' },
     { id: 'ship', path: 'ship/korea_ship_map.html', icon: '\u2693', ko: '\uC870\uC120', en: 'Ship' },
+    { id: 'metal', path: 'metal/korea_metal_map.html', icon: '\u2699\uFE0F', ko: '\uCCA0\uAC15\u00B7\uAE08\uC18D\u00B7\uAE30\uACC4', en: 'Metals', koShort: '\uCCA0\uAC15\uAE30\uACC4', enShort: 'Metal' },
     { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC0B0', en: 'Defense' },
     { id: 'kconsume', path: 'kconsume/korea_kconsume_map.html', icon: '\uD83D\uDED2', ko: 'K-\uC18C\uBE44/\uC720\uD1B5', en: 'K-Consume', koShort: 'K-\uC18C\uBE44', enShort: 'Consume' },
     { id: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html', icon: '\uD83D\uDC84', ko: '\uD654\uC7A5\uD488/\uBBF8\uC6A9\uAE30\uAE30', en: 'Cosmetics', koShort: '\uD654\uC7A5\uD488', enShort: 'Cosme' },
@@ -45,7 +47,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|ess|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom)\//i.test(path)) return '../';
+    if (/\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|ess|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom|elec|metal)\//i.test(path)) return '../';
     return '';
   }
 
@@ -74,6 +76,8 @@
     if (path.indexOf('/software/') !== -1) return 'software';
     if (path.indexOf('/holdings/') !== -1) return 'holdings';
     if (path.indexOf('/telecom/') !== -1) return 'telecom';
+    if (path.indexOf('/elec/') !== -1) return 'elec';
+    if (path.indexOf('/metal/') !== -1) return 'metal';
     if (path === '/' || /\/index\.html$/.test(path)) return 'home';
     return '';
   }
@@ -121,8 +125,15 @@
     var qs = '?lang=' + encodeURIComponent(l);
     nav.innerHTML = ITEMS.map(function (item) {
       var href = prefix + item.path + qs;
-      if (item.id !== 'home' && global.InvestingMapTabState && InvestingMapTabState.appendToNavUrl) {
-        href = InvestingMapTabState.appendToNavUrl(href);
+      if (item.id !== 'home') {
+        try {
+          var u = new URL(href, window.location.href);
+          u.searchParams.set('tab', 'heatmap');
+          href = u.pathname + u.search + u.hash;
+        } catch (e) {
+          var sep = href.indexOf('?') >= 0 ? '&' : '?';
+          href = href + sep + 'tab=heatmap';
+        }
       }
       var label = navLabel(item, l);
       var cls = 'im-bottom-tab' + (item.id === active ? ' is-active' : '');

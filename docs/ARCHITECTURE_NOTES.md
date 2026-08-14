@@ -60,20 +60,23 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 
 ---
 
-## 4. 섹터 구조 (20개)
+## 4. 섹터 구조 (22개)
 
 `SECTOR_ORDER` 기준. `data/hub_index.json`이 섹터→종목 매핑의 소스.
 
-반도체 대형주(bigchip) · 반도체(semi) · 2차전지/배터리(battery, ESS 체인 포함) · 신재생(renewable) ·
-원전(nuclear) · 전력설비(powergrid) · 조선(ship) · 방산(defense) · K-소비/유통(kconsume) ·
+삼성전자/하이닉스(bigchip) · 반도체(semi) · 전기·전자(elec) · 2차전지/배터리(battery, ESS 체인 포함) · 신재생(renewable) ·
+원전(nuclear) · 전력설비(powergrid) · 조선(ship) · 철강·금속·기계(metal) · 방산(defense) · K-소비/유통(kconsume) ·
 화장품/미용기기(cosmetics) · K-콘텐츠(kcontent) · 바이오(bio) · 로봇(robot) ·
 자동차(auto) · 의료기기/헬스케어(medtech) · 금융(finance) · 건설(construction) ·
 IT·소프트웨어(software) · 지주회사(holdings) · 통신(telecom)
 
 - `energy`는 배터리/신재생/원전으로 분할됐고, `/energy/`는 안내 랜딩 페이지로 유지(301 대신)
 - `ess`는 별도 섹터가 아니라 battery의 밸류체인 체인으로 흡수
-- 복수 섹터 소속: `SECTOR_CROSS`(휴젤·케어젠 = bio+cosmetics).
-  `crossIndex` 역인덱스로 지도에 `+섹터` 배지 표시. **일반 종목은 단일 섹터 원칙 유지**
+- 복수 섹터 소속: `lib/sector_exclusive.mjs`의 `SECTOR_CROSS`에 **명시적으로 등록된 종목만** 허용.
+  현재는 휴젤·케어젠(`145020`/`214370` = bio+cosmetics)뿐.
+  `hub_index.crossIndex`는 지도에 실제로 중복 등장한 티커의 역인덱스이며, `SECTOR_CROSS`와
+  어긋나면 잔재(오등록)로 보고 단일 소속으로 정리한다. 지도 UI의 `+섹터` 배지도 이 역인덱스를 씀.
+  **일반 종목은 단일 섹터 원칙 유지** (`SECTOR_EXCLUSIVE`로 홈 고정).
 - 섹터 개편/종목 이동은 항상 Cursor가 만든 분류표를 **사람이 검토 후 확정**
 
 ---

@@ -13,7 +13,7 @@ import { numOrNull } from './supabase_hub.mjs';
 
 export { calcQuotePosition };
 
-export const SECTOR_ORDER = ['bigchip', 'semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction', 'software', 'holdings', 'telecom'];
+export const SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'metal', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction', 'software', 'holdings', 'telecom'];
 
 /** Hub ranking panel list length (mcap / RS / position / turnover / 1d / 5d). */
 export const HUB_TOP_N = 20;

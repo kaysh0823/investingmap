@@ -28,6 +28,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
 ];
 
 const HINT_KO_OLD = /타일 크기 = 시가총액\(KRX 기준\) · 색상 = (?:벨류체인\/섹터|섹터) 분류/g;

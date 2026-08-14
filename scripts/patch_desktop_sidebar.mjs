@@ -7,7 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const DESKTOP_SIDEBAR_NAV_V = 8;
+export const DESKTOP_SIDEBAR_NAV_V = 10;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -30,6 +30,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
 ];
 
 const ROOT_PAGES = [

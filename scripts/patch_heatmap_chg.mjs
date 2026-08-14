@@ -29,6 +29,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
 ];
 
 const HINT_KO = '칸 크기 = 시가총액 · 색 = 당일 등락률';

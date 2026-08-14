@@ -20,6 +20,8 @@ const maps = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
 ];
 
 const NEW_FMT_BODY = `function fmtMcapKoJo(won) {

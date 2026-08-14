@@ -185,18 +185,6 @@ const SEED = [
     partners: ['caterpillar', 'volvo_ce'],
   },
   {
-    id: 'ti_robot',
-    name: '\uD2F0\uB85C\uBCF4\uD2F1\uC2A4',
-    nameEn: 'Tirobotics',
-    ticker: '425040',
-    chain: S.H4,
-    semType: '\uC790\uC728\uC8FC\uD589\u00B7\uBB3C\uB958\uB85C\uBD07',
-    semTypeEn: 'Autonomous mobile robots',
-    products: 'AMR, \uCC3D\uACE0\uC790\uB3D9\uD654',
-    productsEn: 'AMR, warehouse automation',
-    partners: ['amazon', 'intel'],
-  },
-  {
     id: 'yujin',
     name: '\uC720\uC9C4\uB85C\uBD07',
     nameEn: 'Yujin Robot',

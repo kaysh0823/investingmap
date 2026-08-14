@@ -76,7 +76,7 @@
   function isIndustryMapPage() {
     try {
       var path = (window.location.pathname || '').replace(/\\/g, '/');
-      return /\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom)\//i.test(
+      return /\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom|elec|metal)\//i.test(
         path
       );
     } catch (e) {
@@ -88,8 +88,8 @@
     try {
       var u = new URL(href, window.location.href);
       if (!isIndustryMapPage()) {
-        // Hub (and non-map pages): always open company list.
-        u.searchParams.set('tab', 'table');
+        // Hub and non-map pages: open the sector heatmap, matching hub cards.
+        u.searchParams.set('tab', 'heatmap');
         return u.pathname + u.search + u.hash;
       }
       var tab = getTab();
@@ -99,7 +99,7 @@
     } catch (e) {
       if (!isIndustryMapPage()) {
         var sep = href.indexOf('?') >= 0 ? '&' : '?';
-        return href + sep + 'tab=table';
+        return href + sep + 'tab=heatmap';
       }
       var tab2 = getTab();
       if (!tab2 || tab2 === 'table') return href;

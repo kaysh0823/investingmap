@@ -31,6 +31,8 @@ run('node build_korea_bigchip_map.mjs', 'build chip leaders map');
 run('node build_korea_software_map.mjs', 'build IT & software map');
 run('node build_korea_holdings_map.mjs', 'build holdings map');
 run('node build_korea_telecom_map.mjs', 'build telecom map');
+run('node build_korea_elec_map.mjs', 'build electrical & electronics map');
+run('node build_korea_metal_map.mjs', 'build steel, metals & machinery map');
 run('node scripts/verify_map_companies.mjs', 'verify map company arrays');
 run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry maps');
 run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy curated universe');

@@ -28,6 +28,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
 ];
 
 const FILTER_BAR_OLD =
@@ -62,7 +64,8 @@ function ensureHeadScripts(html) {
       '<script src="../js/sector_nav.js"></script>\n  <script src="../js/map_filter_ux.js"></script>\n',
     );
   }
-  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=6');
+  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=8');
+  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=4');
   return html;
 }
 

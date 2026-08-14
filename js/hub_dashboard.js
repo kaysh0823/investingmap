@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['bigchip', 'semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction', 'software', 'holdings', 'telecom'];
+  var SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'metal', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction', 'software', 'holdings', 'telecom'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
@@ -17,7 +17,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v17';
+  var SWR_KEY = 'im-hub-dashboard-v18';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, top10: [], rsTop10: [], mcapTop10: [], gainers1dTop10: [], turnoverTop10: [], gainers5dTop10: [], regularSession: null, asOf: null };
@@ -74,6 +74,8 @@
       software: ['플랫폼·AI', 'SI·클라우드', '기업SW·SaaS', '보안'],
       holdings: ['순수지주·투자', '사업지주', '소비·서비스', '산업재'],
       telecom: ['통신서비스', '무선장비', '광통신', '위성통신'],
+      elec: ['가전', '디스플레이', '카메라·모듈', '전자부품', '전선'],
+      metal: ['철강', '비철', '트레이딩', '산업기계'],
     },
     en: {
       bigchip: ['Samsung Electronics', 'SK hynix', 'HBM', 'Memory'],
@@ -96,6 +98,8 @@
       software: ['Platforms & AI', 'IT services & cloud', 'Enterprise SW', 'Security'],
       holdings: ['Investment', 'Operating', 'Consumer & service', 'Industrial'],
       telecom: ['Services', 'Wireless', 'Optical', 'Satellite'],
+      elec: ['Appliances', 'Display', 'Modules', 'Components', 'Cables'],
+      metal: ['Steel', 'Nonferrous', 'Trading', 'Machinery'],
     },
   };
 
@@ -394,7 +398,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=20')
+    return fetch('data/hub_index.json?v=22')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();

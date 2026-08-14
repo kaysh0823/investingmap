@@ -27,6 +27,8 @@ const TARGETS = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
   'auto/korea_auto_map.html',
   'medtech/korea_medtech_map.html',
   'bio/korea_bio_map.inline.js',

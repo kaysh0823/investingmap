@@ -23,7 +23,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v10';
+const CACHE_VERSION = '/api/hub_sectors/cache/v11';
 
 /** Reject Supabase rows if newest updated_at is older than this (covers weekend + holiday buffer). */
 const SECTOR_RETURNS_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;

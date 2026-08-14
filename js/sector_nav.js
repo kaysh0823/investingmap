@@ -5,13 +5,15 @@
   'use strict';
 
   var SECTORS = [
-    { id: 'bigchip', path: '../bigchip/korea_bigchip_map.html', ko: '\uBC18\uB3C4\uCCB4 \uB300\uD615\uC8FC', en: 'Chip Leaders' },
+    { id: 'bigchip', path: '../bigchip/korea_bigchip_map.html', ko: '\uC0BC\uC131\uC804\uC790/\uD558\uC774\uB2C9\uC2A4', en: 'Samsung/SK hynix' },
     { id: 'semi', path: '../semiconductor/korea_semiconductor_map.html', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
+    { id: 'elec', path: '../elec/korea_elec_map.html', ko: '\uC804\uAE30\u00B7\uC804\uC790', en: 'Electronics' },
     { id: 'battery', path: '../battery/korea_battery_map.html', ko: '2\uCC28\uC804\uC9C0', en: 'Battery' },
     { id: 'renewable', path: '../renewable/korea_renewable_map.html', ko: '\uC2E0\uC7AC\uC0DD', en: 'Renewable', koShort: '\uC2E0\uC7AC\uC0DD', enShort: 'Renew' },
     { id: 'nuclear', path: '../nuclear/korea_nuclear_map.html', ko: '\uC6D0\uC804', en: 'Nuclear' },
     { id: 'powergrid', path: '../powergrid/korea_powergrid_map.html', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Equip.', koShort: '\uC804\uB825', enShort: 'Power' },
     { id: 'ship', path: '../ship/korea_ship_map.html', ko: '\uC870\uC120', en: 'Ship' },
+    { id: 'metal', path: '../metal/korea_metal_map.html', ko: '\uCCA0\uAC15\u00B7\uAE08\uC18D\u00B7\uAE30\uACC4', en: 'Metals' },
     { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC0B0', en: 'Defense' },
         { id: 'kconsume', path: '../kconsume/korea_kconsume_map.html', ko: 'K-\uC18C\uBE44/\uC720\uD1B5', en: 'K-Consume' },
     { id: 'cosmetics', path: '../cosmetics/korea_cosmetics_map.html', ko: '\uD654\uC7A5\uD488/\uBBF8\uC6A9\uAE30\uAE30', en: 'Cosmetics', koShort: '\uD654\uC7A5\uD488', enShort: 'Cosme' },
@@ -49,10 +51,14 @@
 
   function sectorHref(path, qs) {
     var href = path + qs;
-    if (global.InvestingMapTabState && InvestingMapTabState.appendToNavUrl) {
-      href = InvestingMapTabState.appendToNavUrl(href);
+    try {
+      var u = new URL(href, window.location.href);
+      u.searchParams.set('tab', 'heatmap');
+      return u.pathname + u.search + u.hash;
+    } catch (e) {
+      var sep = href.indexOf('?') >= 0 ? '&' : '?';
+      return href + sep + 'tab=heatmap';
     }
-    return href;
   }
 
   function render(currentId, lang, mobile) {
