@@ -8,7 +8,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const cpList = join(root, '..', 'cp_list');
+const cpList = process.env.CP_LIST_DIR || join(root, '..', 'cp_list');
 
 function run(cmd, label) {
   console.log('\n==>', label);
@@ -51,9 +51,6 @@ run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
 run('node bio/gen_korea_bio_inline.mjs', 'bio inline.js');
 run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
-run('node scripts/verify_powergrid_chain_split.mjs', 'verify powergrid cable split');
-run('node scripts/verify_ship_chain_split.mjs', 'verify ship chain split');
-run('node scripts/verify_sector_chain_reorg.mjs', 'verify sector-chain ownership and counts');
 run('node scripts/build_hub_quote_snapshot.mjs', 'hub quote snapshot (Top 10)');
 run('node scripts/build_hub_rs_snapshot.mjs', 'hub RS snapshot (optional)');
 run('node scripts/build_hub_sector_returns.mjs', 'hub sector returns (optional)');

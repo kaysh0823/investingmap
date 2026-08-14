@@ -310,7 +310,8 @@ function main() {
     '플랫폼 기술',
     '합성신약 / 제네릭',
   ];
-  const bioAdditions = [];
+  const bioAddPath = join(root, 'bio', 'cp_list_bio_additions.json');
+  let bioAdditions = [];
   let bioSkipped = 0;
   if (bioCp) {
     for (const [ticker, entry] of bioCp) {
@@ -332,11 +333,17 @@ function main() {
       });
     }
     bioAdditions.sort((a, b) => (krx.get(b.ticker)?.mcap || 0) - (krx.get(a.ticker)?.mcap || 0));
+    fs.writeFileSync(bioAddPath, JSON.stringify(bioAdditions, null, 2) + '\n', 'utf8');
+    console.log(`bio/cp_list_bio_additions.json: ${bioAdditions.length} new (skipped ${bioSkipped} not-in-KRX)`);
+  } else {
+    if (!fs.existsSync(bioAddPath)) {
+      throw new Error('cp_list is unavailable and committed bio/cp_list_bio_additions.json is missing');
+    }
+    bioAdditions = JSON.parse(fs.readFileSync(bioAddPath, 'utf8'));
+    console.warn(
+      `No bio cp_list data; preserving ${bioAdditions.length} committed additions from bio/cp_list_bio_additions.json`,
+    );
   }
-
-  const bioAddPath = join(root, 'bio', 'cp_list_bio_additions.json');
-  fs.writeFileSync(bioAddPath, JSON.stringify(bioAdditions, null, 2) + '\n', 'utf8');
-  console.log(`bio/cp_list_bio_additions.json: ${bioAdditions.length} new (skipped ${bioSkipped} not-in-KRX)`);
 
   execSync('node bio/gen_korea_bio_inline.mjs', { cwd: root, stdio: 'inherit' });
 
