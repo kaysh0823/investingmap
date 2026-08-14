@@ -5,6 +5,7 @@
   'use strict';
 
   var SECTORS = [
+    { id: 'bigchip', path: '../bigchip/korea_bigchip_map.html', ko: '\uBC18\uB3C4\uCCB4 \uB300\uD615\uC8FC', en: 'Chip Leaders' },
     { id: 'semi', path: '../semiconductor/korea_semiconductor_map.html', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
     { id: 'battery', path: '../battery/korea_battery_map.html', ko: '2\uCC28\uC804\uC9C0', en: 'Battery' },
     { id: 'renewable', path: '../renewable/korea_renewable_map.html', ko: '\uC2E0\uC7AC\uC0DD', en: 'Renewable', koShort: '\uC2E0\uC7AC\uC0DD', enShort: 'Renew' },
@@ -21,6 +22,9 @@
     { id: 'medtech', path: '../medtech/korea_medtech_map.html', ko: '\uC758\uB8CC\uAE30\uAE30/\uD5EC\uC2A4\uCF00\uC5B4', en: 'MedTech', koShort: '\uC758\uB8CC\uAE30\uAE30', enShort: 'Med' },
     { id: 'finance', path: '../finance/korea_finance_map.html', ko: '\uAE08\uC735', en: 'Finance' },
     { id: 'construction', path: '../construction/korea_construction_map.html', ko: '\uAC74\uC124', en: 'Construction' },
+    { id: 'software', path: '../software/korea_software_map.html', ko: 'IT\u00B7\uC18C\uD504\uD2B8\uC6E8\uC5B4', en: 'IT & Software' },
+    { id: 'holdings', path: '../holdings/korea_holdings_map.html', ko: '\uC9C0\uC8FC\uD68C\uC0AC', en: 'Holdings' },
+    { id: 'telecom', path: '../telecom/korea_telecom_map.html', ko: '\uD1B5\uC2E0', en: 'Telecom' },
   ];
 
   function navLabel(s, lang, mobile) {

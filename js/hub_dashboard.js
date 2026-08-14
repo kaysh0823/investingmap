@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction'];
+  var SECTOR_ORDER = ['bigchip', 'semi', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction', 'software', 'holdings', 'telecom'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
@@ -54,6 +54,7 @@
   /** Value-chain / keyword chips shown below representative stocks on hub cards. */
   var HUB_CARD_TAGS = {
     ko: {
+      bigchip: ['삼성전자', 'SK하이닉스', 'HBM', '메모리'],
       semi: ['설계', '파운드리', '메모리', '소재', '장비', '기판', '패키징'],
       battery: ['셀', '소재', '장비', '부품', 'ESS'],
       renewable: ['태양광', '풍력', '수소', '운영'],
@@ -70,8 +71,12 @@
       medtech: ['진단', '임플란트', '의료장비', '헬스케어'],
       finance: ['은행', '증권', '보험', '카드', '캐피탈'],
       construction: ['종합건설', '주택', '디벨로퍼', '건설기계'],
+      software: ['플랫폼·AI', 'SI·클라우드', '기업SW·SaaS', '보안'],
+      holdings: ['순수지주·투자', '사업지주', '소비·서비스', '산업재'],
+      telecom: ['통신서비스', '무선장비', '광통신', '위성통신'],
     },
     en: {
+      bigchip: ['Samsung Electronics', 'SK hynix', 'HBM', 'Memory'],
       semi: ['Design', 'Foundry', 'Memory', 'Materials', 'Equipment', 'Substrates', 'Packaging'],
       battery: ['Cells', 'Materials', 'Equipment', 'Parts', 'ESS'],
       renewable: ['Solar', 'Wind', 'Hydrogen', 'Operators'],
@@ -88,6 +93,9 @@
       medtech: ['Diagnostics', 'Implants', 'Equipment', 'Healthcare'],
       finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Consumer finance'],
       construction: ['Contractors', 'Housing', 'Developers', 'Equipment'],
+      software: ['Platforms & AI', 'IT services & cloud', 'Enterprise SW', 'Security'],
+      holdings: ['Investment', 'Operating', 'Consumer & service', 'Industrial'],
+      telecom: ['Services', 'Wireless', 'Optical', 'Satellite'],
     },
   };
 

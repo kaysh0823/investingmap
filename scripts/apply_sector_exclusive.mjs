@@ -17,15 +17,25 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
 const HTML_MAPS = [
+  { key: 'bigchip', path: 'bigchip/korea_bigchip_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'semi', path: 'semiconductor/korea_semiconductor_map.html', badgeKo: '상장기업', badgeEn: 'listed companies' },
   { key: 'ship', path: 'ship/korea_ship_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'defense', path: 'defense/korea_defense_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'robot', path: 'robot/korea_robot_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
-  { key: 'energy', path: 'energy/korea_energy_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'battery', path: 'battery/korea_battery_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'renewable', path: 'renewable/korea_renewable_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'nuclear', path: 'nuclear/korea_nuclear_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'powergrid', path: 'powergrid/korea_powergrid_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'finance', path: 'finance/korea_finance_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'construction', path: 'construction/korea_construction_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
-  { key: 'kculture', path: 'kculture/korea_kculture_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'kconsume', path: 'kconsume/korea_kconsume_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'kcontent', path: 'kcontent/korea_kcontent_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'auto', path: 'auto/korea_auto_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'medtech', path: 'medtech/korea_medtech_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'software', path: 'software/korea_software_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'holdings', path: 'holdings/korea_holdings_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'telecom', path: 'telecom/korea_telecom_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
 ];
 
 function patchMapBadges(html, n, kospi, kosdaq, badgeKo, badgeEn) {

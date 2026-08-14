@@ -9,6 +9,7 @@ import { extractCompaniesFromHtml } from '../lib/map_company_serialize.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const MAPS = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'ship/korea_ship_map.html',
   'defense/korea_defense_map.html',
@@ -24,6 +25,9 @@ const MAPS = [
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
 ];
 
 let failed = false;

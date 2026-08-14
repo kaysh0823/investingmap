@@ -9,6 +9,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SCRIPT_V = 8;
 
 const MAP_FILES = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'bio/korea_bio_map.html',
   'ship/korea_ship_map.html',
@@ -25,6 +26,9 @@ const MAP_FILES = [
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
 ];
 
 const CANDLE_TAG = `<script src="../js/candle_modal.js?v=${SCRIPT_V}"></script>`;

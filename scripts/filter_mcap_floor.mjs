@@ -15,6 +15,7 @@ import { filterCompaniesByMcap, MIN_MCAP_WON } from '../lib/mcap_policy.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const HTML_MAPS = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'ship/korea_ship_map.html',
   'defense/korea_defense_map.html',
@@ -30,6 +31,9 @@ const HTML_MAPS = [
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
 ];
 
 function countMarkets(companies) {

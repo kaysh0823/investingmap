@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const TARGETS = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'bio/korea_bio_map.html',
   'ship/korea_ship_map.html',
@@ -21,6 +22,9 @@ const TARGETS = [
   'battery/korea_battery_map.html',
   'renewable/korea_renewable_map.html',
   'nuclear/korea_nuclear_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
   'bio/korea_bio_map.inline.js',
   'bio/bio_inline_tail.js',
 ];

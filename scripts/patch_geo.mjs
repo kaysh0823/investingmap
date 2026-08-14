@@ -18,6 +18,7 @@ import {
 
 const MARKER = 'investingmap-geo';
 const MAP_FILES = [
+  { file: 'bigchip/korea_bigchip_map.html', key: 'bigchip' },
   { file: 'semiconductor/korea_semiconductor_map.html', key: 'semiconductor' },
   { file: 'bio/korea_bio_map.html', key: 'bio' },
   { file: 'ship/korea_ship_map.html', key: 'ship' },
@@ -27,6 +28,9 @@ const MAP_FILES = [
   { file: 'medtech/korea_medtech_map.html', key: 'medtech' },
   { file: 'finance/korea_finance_map.html', key: 'finance' },
   { file: 'construction/korea_construction_map.html', key: 'construction' },
+  { file: 'software/korea_software_map.html', key: 'software' },
+  { file: 'holdings/korea_holdings_map.html', key: 'holdings' },
+  { file: 'telecom/korea_telecom_map.html', key: 'telecom' },
   { file: 'battery/korea_battery_map.html', key: 'battery' },
   { file: 'renewable/korea_renewable_map.html', key: 'renewable' },
   { file: 'nuclear/korea_nuclear_map.html', key: 'nuclear' },

@@ -46,9 +46,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "한국 로봇·피지컬AI 산업 투자 지도",
-    "description": "국내 상장 산업로봇·자동화·물류·피지컬AI 기업의 KRX 시가총액·PER·PBR, 밸류체인과 글로벌 장비·SW 관계 지도.",
-    "url": "https://www.investingmap.kr/robot/korea_robot_map.html",
+    "name": "한국 반도체 산업 투자 지도",
+    "description": "국내 상장 반도체 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·동종 peer·글로벌 피어 그룹 관계 지도.",
+    "url": "https://www.investingmap.kr/semiconductor/korea_semiconductor_map.html",
     "inLanguage": ["ko", "en"],
     "isPartOf": {
       "@type": "WebSite",
@@ -63,9 +63,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "한국 로봇·피지컬AI 산업 투자 지도",
-    "description": "산업로봇·자동화·물류 AMR·협동로봇·센싱·모션 제어·피지컬AI 상장사의 KRX 데이터와 밸류체인, 글로벌 장비·SW 관계를 제공합니다.",
-    "url": "https://www.investingmap.kr/robot/korea_robot_map.html",
+    "name": "한국 반도체 산업 투자 지도",
+    "description": "국내 상장 반도체 64개사의 KRX 시가총액·PER·PBR, 설계·파운드리·메모리·소재·장비·패키징 밸류체인, 국내외 거래처·글로벌 피어 관계를 한 페이지에서 비교할 수 있습니다.",
+    "url": "https://www.investingmap.kr/semiconductor/korea_semiconductor_map.html",
     "inLanguage": [
       "ko",
       "en"
@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 로봇·피지컬AI 산업 투자 지도",
     "url": "https://www.investingmap.kr/robot/korea_robot_map.html",
-    "numberOfItems": 17,
+    "numberOfItems": 19,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -227,18 +227,30 @@
       {
         "@type": "ListItem",
         "position": 15,
+        "name": "한라캐스트 (125490, KOSDAQ)",
+        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-125490"
+      },
+      {
+        "@type": "ListItem",
+        "position": 16,
         "name": "에스비비테크 (389500, KOSDAQ)",
         "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-389500"
       },
       {
         "@type": "ListItem",
-        "position": 16,
+        "position": 17,
+        "name": "티이엠씨 (425040, KOSDAQ)",
+        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-425040"
+      },
+      {
+        "@type": "ListItem",
+        "position": 18,
         "name": "티로보틱스 (117730, KOSDAQ)",
         "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-117730"
       },
       {
         "@type": "ListItem",
-        "position": 17,
+        "position": 19,
         "name": "씨메스로보틱스 (475400, KOSDAQ)",
         "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-475400"
       }
@@ -1144,6 +1156,8 @@
 
 
 
+
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1314,6 +1328,64 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
+
 
     .heatmap-wrap {
       padding: 20px 28px 28px;
@@ -1325,6 +1397,36 @@
       font-size: 13px;
       color: var(--text-muted);
       margin-bottom: 12px
+    }
+
+    .heatmap-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px
+    }
+
+    .heatmap-filter-chip {
+      padding: 6px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s
+    }
+
+    .heatmap-filter-chip:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .heatmap-filter-chip.active {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 14%, var(--surface2));
+      color: var(--accent)
     }
 
     #heatmap-root {
@@ -1607,6 +1709,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
 
@@ -1628,7 +1759,7 @@
     crossorigin="anonymous"></script>
 </head>
 
-<body data-sector="robot">
+<body data-sector="semi">
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSNNTKF2" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -1649,8 +1780,8 @@
     </button>
     <p id="hdr-subtitle">국내 상장 산업로봇·자동화·물류·지역AI 벨류와 글로벌 장비·SW 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>17</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>1</span> · KOSDAQ <span>16</span></div>
+      <div class="badge" id="badge-total">Total <span>19</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>1</span> · KOSDAQ <span>18</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1684,6 +1815,10 @@
   <div id="tab-heatmap" class="tab-content active">
     <div class="heatmap-wrap">
       <p class="heatmap-meta" id="heatmap-hint">시가총액 기준</p>
+      <div class="heatmap-filters" id="heatmap-filters" role="group" aria-label="히트맵 제외 필터">
+        <button type="button" class="heatmap-filter-chip" id="hm-ex-samsung" data-ticker="005930">삼성전자 제외</button>
+        <button type="button" class="heatmap-filter-chip" id="hm-ex-hynix" data-ticker="000660">SK하이닉스 제외</button>
+      </div>
       <div id="heatmap-root" role="img" aria-label="Market cap heatmap"></div>
       <div class="hm-legend" id="heatmap-legend"></div>
     </div>
@@ -1708,7 +1843,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">17</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">19</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1744,16 +1879,16 @@
       <td><div class="company-name">레인보우로보틱스</div><div class="company-name-sub">Rainbow Robotics</div></td>
       <td><span class="ticker">277810</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">497,000</td>
-      <td class="quote-cell ret-cell">+2.08%</td>
-      <td class="quote-cell ret-cell">+13.95%</td>
-      <td class="quote-cell ret-cell">-35.78%</td>
-      <td class="quote-cell ret-cell">-37.82%</td>
-      <td class="quote-cell ret-cell">+6.99%</td>
+      <td class="quote-cell">501,000</td>
+      <td class="quote-cell ret-cell">+1.43%</td>
+      <td class="quote-cell ret-cell">+25.19%</td>
+      <td class="quote-cell ret-cell">-30.39%</td>
+      <td class="quote-cell ret-cell">-43.52%</td>
+      <td class="quote-cell ret-cell">+18.76%</td>
       <td class="quote-cell">979,000</td>
       <td class="quote-cell">249,500</td>
-      <td class="quote-cell">33.9%</td>
-      <td class="quote-cell">38.0</td>
+      <td class="quote-cell">34.5%</td>
+      <td class="quote-cell">39.6</td>
       <td class="mcap-cell">12.11조원</td>
       <td class="fin-cell">8547.95</td>
       <td class="fin-cell">90.45</td>
@@ -1767,16 +1902,16 @@
       <td><div class="company-name">두산로보틱스</div><div class="company-name-sub">Doosan Robotics</div></td>
       <td><span class="ticker">454910</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">78,000</td>
-      <td class="quote-cell ret-cell">+2.97%</td>
-      <td class="quote-cell ret-cell">+8.07%</td>
-      <td class="quote-cell ret-cell">-54.23%</td>
-      <td class="quote-cell ret-cell">-28.89%</td>
-      <td class="quote-cell ret-cell">-6.27%</td>
+      <td class="quote-cell">79,200</td>
+      <td class="quote-cell ret-cell">+2.23%</td>
+      <td class="quote-cell ret-cell">+16.42%</td>
+      <td class="quote-cell ret-cell">-50.60%</td>
+      <td class="quote-cell ret-cell">-29.35%</td>
+      <td class="quote-cell ret-cell">-1.52%</td>
       <td class="quote-cell">170,000</td>
       <td class="quote-cell">54,200</td>
-      <td class="quote-cell">20.6%</td>
-      <td class="quote-cell">36.7</td>
+      <td class="quote-cell">21.6%</td>
+      <td class="quote-cell">40.6</td>
       <td class="mcap-cell">7.16조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">20.53</td>
@@ -1790,16 +1925,16 @@
       <td><div class="company-name">로보티즈</div><div class="company-name-sub">Robotis</div></td>
       <td><span class="ticker">108490</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">261,000</td>
-      <td class="quote-cell ret-cell">+1.64%</td>
-      <td class="quote-cell ret-cell">+11.24%</td>
-      <td class="quote-cell ret-cell">-38.89%</td>
-      <td class="quote-cell ret-cell">-14.06%</td>
-      <td class="quote-cell ret-cell">+2.06%</td>
+      <td class="quote-cell">280,000</td>
+      <td class="quote-cell ret-cell">+5.45%</td>
+      <td class="quote-cell ret-cell">+30.57%</td>
+      <td class="quote-cell ret-cell">-24.02%</td>
+      <td class="quote-cell ret-cell">-11.97%</td>
+      <td class="quote-cell ret-cell">+20.83%</td>
       <td class="quote-cell">464,000</td>
       <td class="quote-cell">73,036</td>
-      <td class="quote-cell">48.1%</td>
-      <td class="quote-cell">52.7</td>
+      <td class="quote-cell">52.9%</td>
+      <td class="quote-cell">60.1</td>
       <td class="mcap-cell">4.84조원</td>
       <td class="fin-cell">857.14</td>
       <td class="fin-cell">15.20</td>
@@ -1813,16 +1948,16 @@
       <td><div class="company-name">현대무벡스</div><div class="company-name-sub">HYUNDAI MOVEX</div></td>
       <td><span class="ticker">319400</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">25,300</td>
-      <td class="quote-cell ret-cell">+2.03%</td>
-      <td class="quote-cell ret-cell">+17.02%</td>
-      <td class="quote-cell ret-cell">-32.25%</td>
-      <td class="quote-cell ret-cell">-29.40%</td>
-      <td class="quote-cell ret-cell">+160.91%</td>
+      <td class="quote-cell">28,000</td>
+      <td class="quote-cell ret-cell">+0.80%</td>
+      <td class="quote-cell ret-cell">+31.63%</td>
+      <td class="quote-cell ret-cell">-27.71%</td>
+      <td class="quote-cell ret-cell">-25.81%</td>
+      <td class="quote-cell ret-cell">+177.72%</td>
       <td class="quote-cell">50,400</td>
       <td class="quote-cell">4,310</td>
-      <td class="quote-cell">45.5%</td>
-      <td class="quote-cell">48.3</td>
+      <td class="quote-cell">51.4%</td>
+      <td class="quote-cell">48.7</td>
       <td class="mcap-cell">4.36조원</td>
       <td class="fin-cell">380.10</td>
       <td class="fin-cell">26.91</td>
@@ -1836,16 +1971,16 @@
       <td><div class="company-name">원익홀딩스</div><div class="company-name-sub">WONIK HOLDINGS CO.,LTD.</div></td>
       <td><span class="ticker">030530</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">20,800</td>
-      <td class="quote-cell ret-cell">-0.99%</td>
-      <td class="quote-cell ret-cell">+8.18%</td>
-      <td class="quote-cell ret-cell">-21.64%</td>
-      <td class="quote-cell ret-cell">-45.31%</td>
-      <td class="quote-cell ret-cell">-37.58%</td>
+      <td class="quote-cell">21,000</td>
+      <td class="quote-cell ret-cell">+3.48%</td>
+      <td class="quote-cell ret-cell">+23.88%</td>
+      <td class="quote-cell ret-cell">-21.51%</td>
+      <td class="quote-cell ret-cell">-42.78%</td>
+      <td class="quote-cell ret-cell">-32.03%</td>
       <td class="quote-cell">50,600</td>
       <td class="quote-cell">5,590</td>
-      <td class="quote-cell">33.8%</td>
-      <td class="quote-cell">39.0</td>
+      <td class="quote-cell">34.2%</td>
+      <td class="quote-cell">46.2</td>
       <td class="mcap-cell">2.39조원</td>
       <td class="fin-cell">86.35</td>
       <td class="fin-cell">2.37</td>
@@ -1859,16 +1994,16 @@
       <td><div class="company-name">에스피지</div><div class="company-name-sub">SPG CO., LTD</div></td>
       <td><span class="ticker">058610</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">112,200</td>
-      <td class="quote-cell ret-cell">-1.58%</td>
-      <td class="quote-cell ret-cell">+58.92%</td>
-      <td class="quote-cell ret-cell">-9.30%</td>
-      <td class="quote-cell ret-cell">-23.83%</td>
-      <td class="quote-cell ret-cell">+237.44%</td>
+      <td class="quote-cell">118,600</td>
+      <td class="quote-cell ret-cell">0.00%</td>
+      <td class="quote-cell ret-cell">+70.00%</td>
+      <td class="quote-cell ret-cell">+0.63%</td>
+      <td class="quote-cell ret-cell">-26.04%</td>
+      <td class="quote-cell ret-cell">+247.91%</td>
       <td class="quote-cell">165,700</td>
       <td class="quote-cell">22,500</td>
-      <td class="quote-cell">62.6%</td>
-      <td class="quote-cell">68.6</td>
+      <td class="quote-cell">67.1%</td>
+      <td class="quote-cell">74.9</td>
       <td class="mcap-cell">2.10조원</td>
       <td class="fin-cell">229.85</td>
       <td class="fin-cell">8.14</td>
@@ -1882,16 +2017,16 @@
       <td><div class="company-name">휴림로봇</div><div class="company-name-sub">Hyulim ROBOT Co.,Ltd.</div></td>
       <td><span class="ticker">090710</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">7,720</td>
-      <td class="quote-cell ret-cell">+1.34%</td>
-      <td class="quote-cell ret-cell">+8.96%</td>
-      <td class="quote-cell ret-cell">-31.08%</td>
-      <td class="quote-cell ret-cell">-50.52%</td>
-      <td class="quote-cell ret-cell">+2.17%</td>
+      <td class="quote-cell">7,470</td>
+      <td class="quote-cell ret-cell">+2.39%</td>
+      <td class="quote-cell ret-cell">+20.81%</td>
+      <td class="quote-cell ret-cell">-26.05%</td>
+      <td class="quote-cell ret-cell">-48.67%</td>
+      <td class="quote-cell ret-cell">+11.40%</td>
       <td class="quote-cell">26,600</td>
       <td class="quote-cell">2,340</td>
-      <td class="quote-cell">22.2%</td>
-      <td class="quote-cell">35.8</td>
+      <td class="quote-cell">21.1%</td>
+      <td class="quote-cell">37.8</td>
       <td class="mcap-cell">1.40조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.98</td>
@@ -1902,19 +2037,19 @@
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="417200">
-      <td><div class="company-name">LS머트리얼즈</div><div class="company-name-sub">LS Materials Co.,Ltd.</div></td>
+      <td><div class="company-name">LS머트리얼즈</div><div class="company-name-sub">LS Mtron / smart factory</div></td>
       <td><span class="ticker">417200</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">12,510</td>
-      <td class="quote-cell ret-cell">+1.40%</td>
-      <td class="quote-cell ret-cell">-0.40%</td>
-      <td class="quote-cell ret-cell">-35.14%</td>
-      <td class="quote-cell ret-cell">-31.35%</td>
-      <td class="quote-cell ret-cell">-17.83%</td>
+      <td class="quote-cell">12,420</td>
+      <td class="quote-cell ret-cell">+1.30%</td>
+      <td class="quote-cell ret-cell">+8.69%</td>
+      <td class="quote-cell ret-cell">-35.81%</td>
+      <td class="quote-cell ret-cell">-30.15%</td>
+      <td class="quote-cell ret-cell">-8.49%</td>
       <td class="quote-cell">32,725</td>
       <td class="quote-cell">8,700</td>
-      <td class="quote-cell">15.9%</td>
-      <td class="quote-cell">31.6</td>
+      <td class="quote-cell">15.5%</td>
+      <td class="quote-cell">36.2</td>
       <td class="mcap-cell">1.12조원</td>
       <td class="fin-cell">2766.67</td>
       <td class="fin-cell">6.07</td>
@@ -1928,12 +2063,12 @@
       <td><div class="company-name">로보스타</div><div class="company-name-sub">Robostar Co.,Ltd.</div></td>
       <td><span class="ticker">090360</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">86,000</td>
-      <td class="quote-cell ret-cell">+2.91%</td>
-      <td class="quote-cell ret-cell">+26.57%</td>
-      <td class="quote-cell ret-cell">-46.60%</td>
-      <td class="quote-cell ret-cell">+8.72%</td>
-      <td class="quote-cell ret-cell">-4.61%</td>
+      <td class="quote-cell">85,900</td>
+      <td class="quote-cell ret-cell">+1.42%</td>
+      <td class="quote-cell ret-cell">+40.52%</td>
+      <td class="quote-cell ret-cell">-38.22%</td>
+      <td class="quote-cell ret-cell">+6.97%</td>
+      <td class="quote-cell ret-cell">+7.23%</td>
       <td class="quote-cell">171,600</td>
       <td class="quote-cell">24,950</td>
       <td class="quote-cell">41.6%</td>
@@ -1951,16 +2086,16 @@
       <td><div class="company-name">유일로보틱스</div><div class="company-name-sub">Yuilrobotics. co., Ltd</div></td>
       <td><span class="ticker">388720</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">72,600</td>
-      <td class="quote-cell ret-cell">+2.11%</td>
-      <td class="quote-cell ret-cell">+15.06%</td>
-      <td class="quote-cell ret-cell">-33.27%</td>
-      <td class="quote-cell ret-cell">-42.43%</td>
-      <td class="quote-cell ret-cell">-16.26%</td>
+      <td class="quote-cell">74,100</td>
+      <td class="quote-cell ret-cell">0.00%</td>
+      <td class="quote-cell ret-cell">+18.63%</td>
+      <td class="quote-cell ret-cell">-27.11%</td>
+      <td class="quote-cell ret-cell">-42.47%</td>
+      <td class="quote-cell ret-cell">-12.00%</td>
       <td class="quote-cell">155,000</td>
       <td class="quote-cell">53,800</td>
-      <td class="quote-cell">18.6%</td>
-      <td class="quote-cell">38.3</td>
+      <td class="quote-cell">20.1%</td>
+      <td class="quote-cell">40.1</td>
       <td class="mcap-cell">0.98조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.89</td>
@@ -1974,16 +2109,16 @@
       <td><div class="company-name">에스에프에이</div><div class="company-name-sub">SFA Engineering Corporation</div></td>
       <td><span class="ticker">056190</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">24,300</td>
-      <td class="quote-cell ret-cell">+3.31%</td>
-      <td class="quote-cell ret-cell">+6.85%</td>
-      <td class="quote-cell ret-cell">-12.03%</td>
-      <td class="quote-cell ret-cell">-32.86%</td>
-      <td class="quote-cell ret-cell">-3.51%</td>
+      <td class="quote-cell">25,550</td>
+      <td class="quote-cell ret-cell">+3.85%</td>
+      <td class="quote-cell ret-cell">+17.39%</td>
+      <td class="quote-cell ret-cell">-11.80%</td>
+      <td class="quote-cell ret-cell">-31.84%</td>
+      <td class="quote-cell ret-cell">+0.21%</td>
       <td class="quote-cell">36,500</td>
       <td class="quote-cell">16,850</td>
-      <td class="quote-cell">37.9%</td>
-      <td class="quote-cell">44.6</td>
+      <td class="quote-cell">44.3%</td>
+      <td class="quote-cell">56.4</td>
       <td class="mcap-cell">0.96조원</td>
       <td class="fin-cell">13.94</td>
       <td class="fin-cell">0.83</td>
@@ -1997,16 +2132,16 @@
       <td><div class="company-name">클로봇</div><div class="company-name-sub">CLOBOT Co., Ltd</div></td>
       <td><span class="ticker">466100</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">28,750</td>
-      <td class="quote-cell ret-cell">-5.64%</td>
-      <td class="quote-cell ret-cell">+16.73%</td>
-      <td class="quote-cell ret-cell">-38.19%</td>
-      <td class="quote-cell ret-cell">-59.86%</td>
-      <td class="quote-cell ret-cell">-29.74%</td>
+      <td class="quote-cell">32,700</td>
+      <td class="quote-cell ret-cell">-1.88%</td>
+      <td class="quote-cell ret-cell">+22.86%</td>
+      <td class="quote-cell ret-cell">-38.11%</td>
+      <td class="quote-cell ret-cell">-60.34%</td>
+      <td class="quote-cell ret-cell">-24.14%</td>
       <td class="quote-cell">77,953</td>
       <td class="quote-cell">15,098</td>
-      <td class="quote-cell">21.7%</td>
-      <td class="quote-cell">33.9</td>
+      <td class="quote-cell">28%</td>
+      <td class="quote-cell">33.1</td>
       <td class="mcap-cell">0.93조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">15.09</td>
@@ -2017,19 +2152,19 @@
       <td><div class="partners-list">Amazon Robotics, Google DeepMind</div></td>
     </tr>
           <tr data-ticker="056080">
-      <td><div class="company-name">유진로봇</div><div class="company-name-sub">Yujin Robot Co., Ltd.</div></td>
+      <td><div class="company-name">유진로봇</div><div class="company-name-sub">Yujin Robot</div></td>
       <td><span class="ticker">056080</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">13,590</td>
-      <td class="quote-cell ret-cell">+0.83%</td>
-      <td class="quote-cell ret-cell">+5.63%</td>
-      <td class="quote-cell ret-cell">-36.32%</td>
-      <td class="quote-cell ret-cell">-63.98%</td>
-      <td class="quote-cell ret-cell">+0.53%</td>
+      <td class="quote-cell">14,000</td>
+      <td class="quote-cell ret-cell">+2.10%</td>
+      <td class="quote-cell ret-cell">+13.44%</td>
+      <td class="quote-cell ret-cell">-34.35%</td>
+      <td class="quote-cell ret-cell">-62.41%</td>
+      <td class="quote-cell ret-cell">+10.85%</td>
       <td class="quote-cell">49,450</td>
       <td class="quote-cell">9,250</td>
-      <td class="quote-cell">10.8%</td>
-      <td class="quote-cell">27.0</td>
+      <td class="quote-cell">11.8%</td>
+      <td class="quote-cell">29.8</td>
       <td class="mcap-cell">0.73조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">25.51</td>
@@ -2043,16 +2178,16 @@
       <td><div class="company-name">뉴로메카</div><div class="company-name-sub">Neuromeka Co., Ltd.</div></td>
       <td><span class="ticker">348340</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">21,400</td>
-      <td class="quote-cell ret-cell">-0.48%</td>
-      <td class="quote-cell ret-cell">-35.02%</td>
-      <td class="quote-cell ret-cell">-61.85%</td>
-      <td class="quote-cell ret-cell">-75.91%</td>
-      <td class="quote-cell ret-cell">-33.97%</td>
+      <td class="quote-cell">23,600</td>
+      <td class="quote-cell ret-cell">+3.88%</td>
+      <td class="quote-cell ret-cell">-29.61%</td>
+      <td class="quote-cell ret-cell">-57.37%</td>
+      <td class="quote-cell ret-cell">-73.35%</td>
+      <td class="quote-cell ret-cell">-29.49%</td>
       <td class="quote-cell">88,302</td>
       <td class="quote-cell">12,698</td>
-      <td class="quote-cell">11.5%</td>
-      <td class="quote-cell">1.0</td>
+      <td class="quote-cell">14.4%</td>
+      <td class="quote-cell">1.1</td>
       <td class="mcap-cell">0.61조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">40.88</td>
@@ -2062,20 +2197,43 @@
       <td class="products-cell">협동로봇 — 협동·산업용 로봇</td>
       <td><div class="partners-list">—</div></td>
     </tr>
+          <tr data-ticker="125490">
+      <td><div class="company-name">한라캐스트</div><div class="company-name-sub">Halla Cast</div></td>
+      <td><span class="ticker">125490</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">12,590</td>
+      <td class="quote-cell ret-cell">+21.28%</td>
+      <td class="quote-cell ret-cell">+41.38%</td>
+      <td class="quote-cell ret-cell">-16.05%</td>
+      <td class="quote-cell ret-cell">-39.16%</td>
+      <td class="quote-cell ret-cell">+5.66%</td>
+      <td class="quote-cell">25,350</td>
+      <td class="quote-cell">4,355</td>
+      <td class="quote-cell">39.2%</td>
+      <td class="quote-cell">52.2</td>
+      <td class="mcap-cell">0.50조원</td>
+      <td class="fin-cell">106.48</td>
+      <td class="fin-cell">4.71</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">정밀·센서·비전</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">로봇·자동차용 정밀 다이캐스팅</td>
+      <td class="products-cell">로봇 구조·열관리 부품, 자율주행·전장 하우징</td>
+      <td><div class="partners-list">Keyence, Cognex</div></td>
+    </tr>
           <tr data-ticker="389500">
       <td><div class="company-name">에스비비테크</div><div class="company-name-sub">SBB TECH Co., Ltd.</div></td>
       <td><span class="ticker">389500</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">40,200</td>
-      <td class="quote-cell ret-cell">+6.43%</td>
-      <td class="quote-cell ret-cell">+14.92%</td>
-      <td class="quote-cell ret-cell">-40.61%</td>
-      <td class="quote-cell ret-cell">-41.85%</td>
-      <td class="quote-cell ret-cell">+54.67%</td>
+      <td class="quote-cell">41,100</td>
+      <td class="quote-cell ret-cell">+3.34%</td>
+      <td class="quote-cell ret-cell">+28.43%</td>
+      <td class="quote-cell ret-cell">-37.29%</td>
+      <td class="quote-cell ret-cell">-36.69%</td>
+      <td class="quote-cell ret-cell">+60.80%</td>
       <td class="quote-cell">115,000</td>
       <td class="quote-cell">18,600</td>
-      <td class="quote-cell">22.4%</td>
-      <td class="quote-cell">38.4</td>
+      <td class="quote-cell">23.3%</td>
+      <td class="quote-cell">41.2</td>
       <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">31.71</td>
@@ -2085,20 +2243,43 @@
       <td class="products-cell">정밀 감속기 — 로봇 핵심 부품</td>
       <td><div class="partners-list">—</div></td>
     </tr>
+          <tr data-ticker="425040">
+      <td><div class="company-name">티이엠씨</div><div class="company-name-sub">TEMC Co., Ltd.</div></td>
+      <td><span class="ticker">425040</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">10,030</td>
+      <td class="quote-cell ret-cell">+1.73%</td>
+      <td class="quote-cell ret-cell">+4.72%</td>
+      <td class="quote-cell ret-cell">-50.72%</td>
+      <td class="quote-cell ret-cell">+1.53%</td>
+      <td class="quote-cell ret-cell">+13.54%</td>
+      <td class="quote-cell">30,300</td>
+      <td class="quote-cell">6,300</td>
+      <td class="quote-cell">15.5%</td>
+      <td class="quote-cell">44.3</td>
+      <td class="mcap-cell">0.41조원</td>
+      <td class="fin-cell">25.56</td>
+      <td class="fin-cell">2.06</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">물류·무인주행</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">자율주행·물류로봇</td>
+      <td class="products-cell">AMR, 창고자동화</td>
+      <td><div class="partners-list">Amazon Robotics, Intel</div></td>
+    </tr>
           <tr data-ticker="117730">
       <td><div class="company-name">티로보틱스</div><div class="company-name-sub">T-Robotics co., Ltd.</div></td>
       <td><span class="ticker">117730</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">14,670</td>
-      <td class="quote-cell ret-cell">+0.20%</td>
-      <td class="quote-cell ret-cell">+26.44%</td>
-      <td class="quote-cell ret-cell">-16.97%</td>
-      <td class="quote-cell ret-cell">-41.43%</td>
-      <td class="quote-cell ret-cell">-32.12%</td>
+      <td class="quote-cell">14,940</td>
+      <td class="quote-cell ret-cell">-0.41%</td>
+      <td class="quote-cell ret-cell">+33.36%</td>
+      <td class="quote-cell ret-cell">-17.82%</td>
+      <td class="quote-cell ret-cell">-40.24%</td>
+      <td class="quote-cell ret-cell">-23.31%</td>
       <td class="quote-cell">30,900</td>
       <td class="quote-cell">9,800</td>
-      <td class="quote-cell">23.1%</td>
-      <td class="quote-cell">47.0</td>
+      <td class="quote-cell">24.4%</td>
+      <td class="quote-cell">48.5</td>
       <td class="mcap-cell">0.38조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">7.23</td>
@@ -2112,16 +2293,16 @@
       <td><div class="company-name">씨메스로보틱스</div><div class="company-name-sub">CMES Robotics</div></td>
       <td><span class="ticker">475400</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">20,700</td>
-      <td class="quote-cell ret-cell">-0.73%</td>
-      <td class="quote-cell ret-cell">+27.11%</td>
-      <td class="quote-cell ret-cell">-28.01%</td>
-      <td class="quote-cell ret-cell">-47.48%</td>
-      <td class="quote-cell ret-cell">-38.67%</td>
+      <td class="quote-cell">21,550</td>
+      <td class="quote-cell ret-cell">+1.97%</td>
+      <td class="quote-cell ret-cell">+34.33%</td>
+      <td class="quote-cell ret-cell">-24.86%</td>
+      <td class="quote-cell ret-cell">-45.02%</td>
+      <td class="quote-cell ret-cell">-32.57%</td>
       <td class="quote-cell">46,950</td>
       <td class="quote-cell">13,420</td>
-      <td class="quote-cell">21.7%</td>
-      <td class="quote-cell">40.2</td>
+      <td class="quote-cell">24.2%</td>
+      <td class="quote-cell">41.8</td>
       <td class="mcap-cell">0.31조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">5.23</td>
@@ -2208,6 +2389,14 @@
     }
 
     const CHAIN_COLORS = {"휴머노이드·모바일":"#4FC3F7","협동·업무용로봇":"#66BB6A","산업자동화·장비":"#FFA726","물류·무인주행":"#EF5350","정밀·센서·비전":"#AB47BC","지능제어·물리AI":"#26C6DA"};
+    const FE_CHAINS = ['IDM', '팹리스', '파운드리', '소재', '장비'];
+    const BE_CHAINS = ['부품/기판', '패키징/테스트'];
+    function chainMatchesFilter(companyChain, filter) {
+      if (filter === 'all') return true;
+      if (filter === '전공정') return FE_CHAINS.includes(companyChain);
+      if (filter === '후공정') return BE_CHAINS.includes(companyChain);
+      return companyChain === filter;
+    }
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2217,8 +2406,8 @@
     "ko": {
         "title": "🇰🇷 한국 로봇 · 피지컬AI 산업 투자 지도",
         "subtitle": "국내 상장 산업로봇·자동화·물류·지역AI 벨류와 글로벌 장비·SW 관계",
-        "badgeTotal": "총 <span>12</span>개 상장사",
-        "badgeMarket": "KOSPI <span>1</span>사 · KOSDAQ <span>11</span>사",
+        "badgeTotal": "총 <span>10</span>개 상장사",
+        "badgeMarket": "KOSPI <span>1</span>사 · KOSDAQ <span>9</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 12일",
         "tabHeatmap": "🔥 시총 히트맵",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
@@ -2233,17 +2422,6 @@
         "resultUnit": "개",
         "thName": "기업명",
         "thTicker": "종목코드",
-        "thSpark": "차트",
-        "thLast": "현재가",
-        "thChg1d": "1일",
-        "thRet20d": "20일",
-        "thRet50d": "50일",
-        "thRet120d": "120일",
-        "thRet200d": "200일",
-        "th52High": "52주 최고",
-        "th52Lo": "52주 최저",
-        "thPosition": "주가 위치",
-        "thRs": "RS",
         "thMcap": "시가총액",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -2303,8 +2481,8 @@
     "en": {
         "title": "🇰🇷 Korea Robotics & Physical AI Map",
         "subtitle": "Listed Korean robotics, factory automation, logistics tech & physical-AI software links",
-        "badgeTotal": "<span>12</span> listed companies",
-        "badgeMarket": "KOSPI <span>1</span> · KOSDAQ <span>11</span>",
+        "badgeTotal": "<span>10</span> listed companies",
+        "badgeMarket": "KOSPI <span>1</span> · KOSDAQ <span>9</span>",
         "dataAsof": "Data as of: June 12, 2026",
         "tabHeatmap": "🔥 Market cap heatmap",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
@@ -2319,17 +2497,6 @@
         "resultUnit": "",
         "thName": "Company",
         "thTicker": "Ticker",
-        "thSpark": "Chart",
-        "thLast": "Last",
-        "thChg1d": "Day",
-        "thRet20d": "1M",
-        "thRet50d": "3M",
-        "thRet120d": "6M",
-        "thRet200d": "200D",
-        "th52High": "52W High",
-        "th52Lo": "52W Low",
-        "thPosition": "52W Range",
-        "thRs": "RS",
         "thMcap": "Market cap (~$B)",
         "thPer": "PER",
         "thPbr": "PBR",
@@ -2442,7 +2609,7 @@
       },
 
       {
-        id: 'ls_m', name: 'LS머트리얼즈', nameEn: 'LS Materials Co.,Ltd.', ticker: '417200', market: 'KOSDAQ', chain: '산업자동화·장비',
+        id: 'ls_m', name: 'LS머트리얼즈', nameEn: 'LS Mtron / smart factory', ticker: '417200', market: 'KOSDAQ', chain: '산업자동화·장비',
         semType: '지역접귀·자동화소프트', semTypeEn: 'Smart factory & drives',
         products: 'PLC, 서보모터, 자동화소프트', productsEn: 'PLC, servo motors, factory SW',
         revenue: '1.12조원', mcapWon: 1123034139400, per: 2766.67, pbr: 6.07, revTier: 2, partners: ['siemens', 'abb']
@@ -2477,7 +2644,7 @@
       },
 
       {
-        id: 'yujin', name: '유진로봇', nameEn: 'Yujin Robot Co., Ltd.', ticker: '056080', market: 'KOSDAQ', chain: '정밀·센서·비전',
+        id: 'yujin', name: '유진로봇', nameEn: 'Yujin Robot', ticker: '056080', market: 'KOSDAQ', chain: '정밀·센서·비전',
         semType: '청소·서비스로봇', semTypeEn: 'Cleaning & service robots',
         products: 'iClebo 등 가정·상업청소', productsEn: 'iClebo line, vacuum robots',
         revenue: '0.73조원', mcapWon: 732987450080, per: null, pbr: 25.51, revTier: 1, partners: ['amazon', 'google']
@@ -2491,10 +2658,25 @@
       },
 
       {
+        id: 'halla_cast', name: '한라캐스트', nameEn: 'Halla Cast', ticker: '125490', market: 'KOSDAQ', chain: '정밀·센서·비전',
+        semType: '로봇·자동차용 정밀 다이캐스팅', semTypeEn: 'Precision die casting for robotics & automotive electronics',
+        products: '로봇 구조·열관리 부품, 자율주행·전장 하우징', productsEn: 'Robot structural and thermal-management parts; ADAS and electronics housings',
+        revenue: '0.50조원', mcapWon: 497527057760, per: 106.48, pbr: 4.71, revTier: 1, partners: ['keyence', 'cognex']
+      },
+
+      {
         id: 'robot_sbb_tech_co_ltd', name: '에스비비테크', nameEn: 'SBB TECH Co., Ltd.', ticker: '389500', market: 'KOSDAQ', chain: '정밀·센서·비전',
         semType: '정밀 감속기', semTypeEn: '—',
         products: '정밀 감속기 — 로봇 핵심 부품', productsEn: 'Robotics and automation products and services',
         revenue: '0.42조원', mcapWon: 417133347200, per: null, pbr: 31.71, revTier: 1, partners: []
+      },
+
+      {
+        id: 'ti_robot', name: '티이엠씨', nameEn: 'TEMC Co., Ltd.', ticker: '425040', market: 'KOSDAQ', chain: '물류·무인주행',
+        semType: '자율주행·물류로봇', semTypeEn: 'Autonomous mobile robots',
+        products: 'AMR, 창고자동화', productsEn: 'AMR, warehouse automation',
+        crossSectors: [{"sectorId":"semi","labelKo":"반도체","labelEn":"Semi","shortKo":"반도체","shortEn":"Semi","map":"semiconductor/korea_semiconductor_map.html"}],
+        revenue: '0.41조원', mcapWon: 414668830800, per: 25.56, pbr: 2.06, revTier: 1, partners: ['amazon', 'intel']
       },
 
       {
@@ -2526,8 +2708,8 @@
       { id: 'mitsubishi_e', name: 'Mitsubishi Electric', nameEn: 'Mitsubishi Electric', country: '일본/Japan', region: 'jp', sector: 'FA equipment' },
       { id: 'caterpillar', name: 'Caterpillar', nameEn: 'Caterpillar', country: '미국/USA', region: 'us', sector: 'Heavy equipment' },
       { id: 'volvo_ce', name: 'Volvo CE', nameEn: 'Volvo CE', country: '스위스/Sweden', region: 'eu', sector: 'Construction equipment' },
-      { id: 'doosan_grp', name: '두산그룹', nameEn: 'Doosan Group', country: '한국/Korea', region: 'kr', sector: 'Captive / backing (illus.)' },
-      { id: 'samsung_eco', name: '삼성 역량', nameEn: 'Samsung capabilities', country: '한국/Korea', region: 'kr', sector: 'Strategic partner (illus.)' }
+      { id: 'doosan_grp', name: '두산그룹', nameEn: '두산그룹', country: '한국/Korea', region: 'kr', sector: 'Captive / backing (illus.)' },
+      { id: 'samsung_eco', name: '삼성 역량', nameEn: '삼성 역량', country: '한국/Korea', region: 'kr', sector: 'Strategic partner (illus.)' }
     ];
 
 
@@ -2615,6 +2797,7 @@
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
+      syncHeatmapFilterLabels();
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
@@ -2764,7 +2947,7 @@
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
         if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.shouldHideFromTable && InvestingMapLiveQuotes.shouldHideFromTable(c)) return false;
-        if (currentChain !== 'all' && c.chain !== currentChain) return false;
+        if (currentChain !== 'all' && !chainMatchesFilter(c.chain, currentChain)) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
           const s = searchTerm.toLowerCase();
@@ -2844,7 +3027,7 @@
       <td><div class="partners-list">${partnerHtml}</div></td>
     </tr>`;
       }).join('');
-    if (window.InvestingMapMobileTable) InvestingMapMobileTable.sync(document.getElementById('main-table'));
+      if (window.InvestingMapMobileTable) InvestingMapMobileTable.sync(document.getElementById('main-table'));
     }
 
     function setChainFilter(chain, el) {
@@ -3156,6 +3339,50 @@
       renderTable();
     }
 
+    var hmExcludeTickers = { '005930': false, '000660': false };
+
+    function heatmapExcludeList() {
+      return Object.keys(hmExcludeTickers).filter(function (t) { return hmExcludeTickers[t]; });
+    }
+
+    function heatmapCompanies() {
+      var skip = heatmapExcludeList();
+      if (!skip.length) return koreanCompanies;
+      var set = {};
+      skip.forEach(function (t) { set[t] = true; });
+      return koreanCompanies.filter(function (c) { return !set[c.ticker]; });
+    }
+
+    function syncHeatmapFilterLabels() {
+      var t = T[lang] || T.ko;
+      var grp = document.getElementById('heatmap-filters');
+      if (grp) grp.setAttribute('aria-label', lang === 'en' ? 'Heatmap exclude filters' : '히트맵 제외 필터');
+      var btnSam = document.getElementById('hm-ex-samsung');
+      var btnHyn = document.getElementById('hm-ex-hynix');
+      if (btnSam && t.hmExcludeSamsung) {
+        btnSam.textContent = t.hmExcludeSamsung;
+        btnSam.classList.toggle('active', hmExcludeTickers['005930']);
+      }
+      if (btnHyn && t.hmExcludeHynix) {
+        btnHyn.textContent = t.hmExcludeHynix;
+        btnHyn.classList.toggle('active', hmExcludeTickers['000660']);
+      }
+    }
+
+    function bindHeatmapFilters() {
+      [['hm-ex-samsung', '005930'], ['hm-ex-hynix', '000660']].forEach(function (pair) {
+        var btn = document.getElementById(pair[0]);
+        if (!btn || btn.dataset.bound) return;
+        btn.dataset.bound = '1';
+        btn.addEventListener('click', function () {
+          hmExcludeTickers[pair[1]] = !hmExcludeTickers[pair[1]];
+          btn.classList.toggle('active', hmExcludeTickers[pair[1]]);
+          renderHeatmap();
+        });
+      });
+      syncHeatmapFilterLabels();
+    }
+
     function renderHeatmap() {
       if (!window.InvestingMapHeatmap) return;
       var el = document.getElementById('heatmap-root');
@@ -3163,7 +3390,7 @@
       InvestingMapHeatmap.render({
         container: el,
         legend: document.getElementById('heatmap-legend'),
-        companies: koreanCompanies,
+        companies: heatmapCompanies(),
         chainColors: CHAIN_COLORS,
         lang: lang,
         formatMcap: fmtMcapTableCell,
@@ -3201,6 +3428,7 @@
       if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
+      bindHeatmapFilters();
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); },
@@ -3239,14 +3467,15 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
   </footer>
-  <script src="../js/desktop_sidebar_nav.js?v=7"></script>
-  <script src="../js/global_bottom_nav.js?v=7"></script>
+  <script src="../js/desktop_sidebar_nav.js?v=8"></script>
+  <script src="../js/global_bottom_nav.js?v=8"></script>
   <script src="../js/geo_footer.js"></script>
 <!-- investingmap-seo-related-start -->
   <section class="im-seo-related" id="im-seo-related" aria-labelledby="im-seo-related-title">
     <h2 id="im-seo-related-title">관련 산업 지도 / Related industry maps</h2>
     <nav aria-label="Related industry maps">
       <ul class="im-seo-related-list">
+      <li><a href="../bigchip/korea_bigchip_map.html">한국 반도체 대형주 투자 지도</a> · <a href="../bigchip/korea_bigchip_map.html?lang=en" hreflang="en">Korea Chip Leaders Map</a></li>
       <li><a href="../semiconductor/korea_semiconductor_map.html">한국 반도체 산업 투자 지도</a> · <a href="../semiconductor/korea_semiconductor_map.html?lang=en" hreflang="en">Korea Semiconductor Investment Map</a></li>
       <li><a href="../battery/korea_battery_map.html">한국 2차전지·배터리 투자 지도</a> · <a href="../battery/korea_battery_map.html?lang=en" hreflang="en">Korea Battery Value Chain Map</a></li>
       <li><a href="../renewable/korea_renewable_map.html">한국 신재생에너지 투자 지도</a> · <a href="../renewable/korea_renewable_map.html?lang=en" hreflang="en">Korea Renewable Energy Map</a></li>
@@ -3262,6 +3491,9 @@
       <li><a href="../medtech/korea_medtech_map.html">한국 의료기기/헬스케어 투자 지도</a> · <a href="../medtech/korea_medtech_map.html?lang=en" hreflang="en">Korea MedTech / Healthcare Map</a></li>
       <li><a href="../finance/korea_finance_map.html">한국 금융 투자 지도</a> · <a href="../finance/korea_finance_map.html?lang=en" hreflang="en">Korea Listed Financials Map</a></li>
       <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Sector Map</a></li>
+      <li><a href="../software/korea_software_map.html">한국 IT·소프트웨어 투자 지도</a> · <a href="../software/korea_software_map.html?lang=en" hreflang="en">Korea IT &amp; Software Map</a></li>
+      <li><a href="../holdings/korea_holdings_map.html">한국 지주회사 투자 지도</a> · <a href="../holdings/korea_holdings_map.html?lang=en" hreflang="en">Korea Holdings Map</a></li>
+      <li><a href="../telecom/korea_telecom_map.html">한국 통신 투자 지도</a> · <a href="../telecom/korea_telecom_map.html?lang=en" hreflang="en">Korea Telecom Map</a></li>
       </ul>
     </nav>
   </section>

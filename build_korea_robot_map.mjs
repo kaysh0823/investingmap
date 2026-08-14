@@ -8,6 +8,8 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from './lib/krx_per_pbr.mjs';
 import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from './lib/krx_data_sources.mjs';
+import { passesMcapFloor } from './lib/mcap_policy.mjs';
+import { patchKoreanCompaniesHtml } from './lib/map_company_serialize.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -216,6 +218,18 @@ const SEED = [
     semTypeEn: 'Vision & inspection',
     products: '\uC18C\uD504\uD2B8\uC6E8\uC5B4 \uBE44\uC804, AOI',
     productsEn: 'Machine vision, AOI SW',
+    partners: ['keyence', 'cognex'],
+  },
+  {
+    id: 'halla_cast',
+    name: '\uD55C\uB77C\uCE90\uC2A4\uD2B8',
+    nameEn: 'Halla Cast',
+    ticker: '125490',
+    chain: S.H5,
+    semType: '\uB85C\uBD07\u00B7\uC790\uB3D9\uCC28\uC6A9 \uC815\uBC00 \uB2E4\uC774\uCE90\uC2A4\uD305',
+    semTypeEn: 'Precision die casting for robotics & automotive electronics',
+    products: '\uB85C\uBD07 \uAD6C\uC870\u00B7\uC5F4\uAD00\uB9AC \uBD80\uD488, \uC790\uC728\uC8FC\uD589\u00B7\uC804\uC7A5 \uD558\uC6B0\uC9D5',
+    productsEn: 'Robot structural and thermal-management parts; ADAS and electronics housings',
     partners: ['keyence', 'cognex'],
   },
 ];
@@ -475,7 +489,7 @@ function main() {
       partners: s.partners,
       tags: s.tags || [],
     };
-  });
+  }).filter((c) => passesMcapFloor({ mcapWon: c.mcapWon || 0 }));
 
   mergePerPbrIntoCompanies(companies, loadPerPbrMap(join(__dirname, 'data')));
   mergeListedEnglishIntoCompanies(companies, loadListedEnglish3557Map(join(__dirname, 'data')));
@@ -532,7 +546,13 @@ function main() {
     html = html.replace(semiChainsAll, shipChainsAll);
     html = html.replace(semiChainsNoAll, shipChainsNoAll);
   } else if (!html.includes(shipChainsAll)) {
-    throw new Error('robot map: chains lines not found');
+    let allReplaced = false;
+    html = html.replace(/const chains = \['all', [^\]]+\];/, () => {
+      allReplaced = true;
+      return shipChainsAll;
+    });
+    html = html.replace(/const chains = \[(?!'all')[^\]]+\];/, shipChainsNoAll);
+    if (!allReplaced) throw new Error('robot map: chains lines not found');
   }
 
   html = html.replace(
@@ -542,10 +562,7 @@ function main() {
 
   html = html.replace(/const T = \{[\s\S]*?\n    \};/, `const T = ${JSON.stringify(T, null, 4)};`);
 
-  html = html.replace(
-    /const koreanCompanies = \[[\s\S]*?\n    \];\r?\n\r?\n    const globalCompanies/,
-    `const koreanCompanies = ${serializeCompanies(companies)};\n\n    const globalCompanies`,
-  );
+  html = patchKoreanCompaniesHtml(html, companies);
 
   html = html.replace(
     /const globalCompanies = \[[\s\S]*?\n    \];/,

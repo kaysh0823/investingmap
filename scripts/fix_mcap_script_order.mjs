@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const maps = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'ship/korea_ship_map.html',
   'defense/korea_defense_map.html',
@@ -16,6 +17,9 @@ const maps = [
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
   'bio/korea_bio_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
 ];
 
 const NEW_FMT_BODY = `function fmtMcapKoJo(won) {

@@ -9,6 +9,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = 'investingmap-cross-sector-v1';
 
 const TARGETS = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'bio/korea_bio_map.html',
   'ship/korea_ship_map.html',
@@ -23,6 +24,9 @@ const TARGETS = [
   'powergrid/korea_powergrid_map.html',
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
   'auto/korea_auto_map.html',
   'medtech/korea_medtech_map.html',
   'bio/korea_bio_map.inline.js',

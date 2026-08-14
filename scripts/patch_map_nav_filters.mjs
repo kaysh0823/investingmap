@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const MAP_FILES = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'bio/korea_bio_map.html',
   'ship/korea_ship_map.html',
@@ -21,6 +22,9 @@ const MAP_FILES = [
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
 ];
 
 const FILTER_BAR_OLD =
@@ -140,7 +144,7 @@ function patchMapFile(rel) {
   if (!html.includes('global_bottom_nav.js')) {
     html = html.replace(
       /<script src="([^"]*geo_footer\.js)"><\/script>/,
-      '<script src="../js/global_bottom_nav.js?v=7"></script>\n  <script src="$1"></script>',
+      '<script src="../js/global_bottom_nav.js?v=8"></script>\n  <script src="$1"></script>',
     );
   }
   fs.writeFileSync(fp, html);

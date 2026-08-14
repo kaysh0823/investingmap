@@ -26,12 +26,18 @@ function ensureMapBuilder(relHtml, builderCmd, label) {
 
 ensureMapBuilder('auto/korea_auto_map.html', 'node build_korea_auto_map.mjs', 'build auto map');
 ensureMapBuilder('medtech/korea_medtech_map.html', 'node build_korea_medtech_map.mjs', 'build medtech map');
+run('node build_korea_robot_map.mjs', 'rebuild robot map');
+run('node build_korea_bigchip_map.mjs', 'build chip leaders map');
+run('node build_korea_software_map.mjs', 'build IT & software map');
+run('node build_korea_holdings_map.mjs', 'build holdings map');
+run('node build_korea_telecom_map.mjs', 'build telecom map');
 run('node scripts/verify_map_companies.mjs', 'verify map company arrays');
 run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry maps');
 run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy curated universe');
 run('node scripts/split_energy_clean_sectors.mjs', 'split energy into battery/renewable/nuclear');
 run('node scripts/split_kconsume_cosmetics.mjs', 'split cosmetics from kconsume + Pharmaresearch→medtech');
 run('node scripts/rebalance_cosmetics_medtech_bio.mjs', 'cosmetics aesthetic + bio IVD → medtech rebalance');
+run('node scripts/apply_sector_exclusive.mjs', 'enforce single-sector ownership');
 run('node scripts/apply_cross_sector_memberships.mjs', 'cross-sector memberships (bio+cosmetics)');
 run('node scripts/enrich_company_fields.mjs', 'enrich semType/products (all maps)');
 run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');

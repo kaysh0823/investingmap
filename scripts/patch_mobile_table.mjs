@@ -11,6 +11,7 @@ const MARKER_V1 = 'investingmap-mobile-table';
 const MARKER_V2 = 'investingmap-mobile-table-v2';
 
 const MAP_FILES = [
+  'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'bio/korea_bio_map.html',
   'ship/korea_ship_map.html',
@@ -27,6 +28,9 @@ const MAP_FILES = [
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
 ];
 
 const STICKY_BASE_CSS = `

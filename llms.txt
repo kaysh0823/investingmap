@@ -5,6 +5,7 @@
 > 산업별 인터랙티브 지도로 제공하며, 한국어·영어를 지원합니다.
 
 ## 산업 투자 지도 (핵심 콘텐츠)
+- [한국 반도체 대형주 투자 지도](https://www.investingmap.kr/bigchip/korea_bigchip_map.html): 삼성전자·SK하이닉스 등 반도체 대형주 KRX 데이터, 밸류체인, 글로벌 피어 그룹
 - [한국 반도체 산업 투자 지도](https://www.investingmap.kr/semiconductor/korea_semiconductor_map.html): 상장 반도체 기업 KRX 데이터, 밸류체인, 국내외 거래처·글로벌 피어 그룹
 - [한국 바이오 산업 투자 지도](https://www.investingmap.kr/bio/korea_bio_map.html): 제약·바이오 상장사, 기술이전·글로벌 빅파마 페어링, peer 네트워크
 - [한국 조선·조선기자재 산업 투자 지도](https://www.investingmap.kr/ship/korea_ship_map.html): 조선·해양·기자재 밸류체인, 글로벌 거래·수주 관계
@@ -21,9 +22,12 @@
 - [한국 K-소비/유통 투자 지도](https://www.investingmap.kr/kconsume/korea_kconsume_map.html): 패션·식품·유통·여행 관련 상장사
 - [한국 화장품/미용기기 투자 지도](https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html): 브랜드·ODM/OEM·미용기기·유통·채널 밸류체인
 - [한국 K-콘텐츠 투자 지도](https://www.investingmap.kr/kcontent/korea_kcontent_map.html): 게임·드라마·웹툰·K-pop 관련 상장사
+- [한국 IT·소프트웨어 투자 지도](https://www.investingmap.kr/software/korea_software_map.html): 플랫폼·클라우드·SaaS·보안 상장사, 밸류체인
+- [한국 지주회사 투자 지도](https://www.investingmap.kr/holdings/korea_holdings_map.html): 상장 지주회사와 그룹 포트폴리오
+- [한국 통신 투자 지도](https://www.investingmap.kr/telecom/korea_telecom_map.html): 통신서비스·무선장비·광통신·위성통신 상장사
 
 ## 허브
-- [Investing Map 허브](https://www.investingmap.kr/): 16개 산업 지도 진입점, 언어·테마 전환
+- [Investing Map 허브](https://www.investingmap.kr/): 20개 산업 지도 진입점, 언어·테마 전환
 
 ## 신뢰성 / 회사 정보
 - [편집·검증 정책](https://www.investingmap.kr/editorial-policy.html): 데이터 출처, 갱신 주기, 편집·검증 프로세스
@@ -42,9 +46,10 @@
 
 > Investing Map is an industry-map platform for domestic and international investors covering Korean listed companies.
 > It provides KRX market cap, PER, PBR, value-chain categories, and domestic/global peer relationships
-> across sixteen interactive sector maps in Korean and English.
+> across twenty interactive sector maps in Korean and English.
 
 ## Industry maps (core content)
+- [Korea Chip Leaders Map](https://www.investingmap.kr/bigchip/korea_bigchip_map.html): Samsung Electronics, SK hynix and other chip leaders, KRX data, value chains, global peers
 - [Korea Semiconductor Investment Map](https://www.investingmap.kr/semiconductor/korea_semiconductor_map.html): Listed semiconductor companies, KRX data, value chains, customer and peer relationships
 - [Korea Bio Industry Investment Map](https://www.investingmap.kr/bio/korea_bio_map.html): Listed bio and pharma, licensing & partnerships with global big pharma
 - [Korea Shipbuilding & Marine Equipment Map](https://www.investingmap.kr/ship/korea_ship_map.html): Shipbuilding and marine value chain, order and customer relationships
@@ -61,9 +66,12 @@
 - [Korea K-Consume / Retail Map](https://www.investingmap.kr/kconsume/korea_kconsume_map.html): Fashion, food, retail, and travel themes
 - [Korea Cosmetics / Aesthetic Devices Map](https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html): Brands, ODM/OEM, aesthetic devices, and channels
 - [Korea K-Content Industry Map](https://www.investingmap.kr/kcontent/korea_kcontent_map.html): Games, drama/webtoon/media, and K-pop themes
+- [Korea IT & Software Map](https://www.investingmap.kr/software/korea_software_map.html): Platforms, cloud, SaaS, and cybersecurity listed companies
+- [Korea Holdings Map](https://www.investingmap.kr/holdings/korea_holdings_map.html): Listed holding companies and group portfolios
+- [Korea Telecom Map](https://www.investingmap.kr/telecom/korea_telecom_map.html): Telecom services, wireless equipment, optical and satellite communications
 
 ## Hub
-- [Investing Map Hub](https://www.investingmap.kr/): Entry point for all sixteen sector maps, language and theme toggle
+- [Investing Map Hub](https://www.investingmap.kr/): Entry point for all twenty sector maps, language and theme toggle
 
 ## Trust / policies
 - [Editorial policy](https://www.investingmap.kr/editorial-policy.html): Data sources, update cadence, verification process
