@@ -48,7 +48,16 @@ check(html.includes('#heatmap-root {'), 'heatmap container CSS missing (treemap 
 check(html.includes('REGION_COLORS[d.region]'), 'standard sector graph renderer missing');
 check(!html.includes('bigchip-zones'), 'legacy three-zone graph renderer still present');
 check(html.includes('bigchip-relation-tags'), 'compact relation tags missing');
-check(html.includes('../js/map_i18n.js?v=3'), 'map_i18n cache-bust version missing');
+check(html.includes('bigchipFilterState'), 'interactive filter state missing');
+check(html.includes("chains: new Set(), regions: new Set(), roles: new Set()"), 'multi-select filter groups missing');
+check(html.includes('toggleBigchipFilter'), 'filter toggle handler missing');
+check(html.includes('resetBigchipFilters'), 'filter reset handler missing');
+check(html.includes('applyBigchipGraphFilters'), 'graph filter renderer missing');
+check(html.includes("supplier: '#58a6ff'"), 'supplier blue edge color missing');
+check(html.includes("customer: '#f0a44b'"), 'customer orange edge color missing');
+check(html.includes("peer: '#8b949e'"), 'peer gray edge color missing');
+check(html.includes("bigchipLinkRole(link) === 'peer' ? '4 4'"), 'peer dashed edge style missing');
+check(html.includes('../js/map_i18n.js?v=4'), 'map_i18n cache-bust version missing');
 check(html.includes('../js/map_heatmap.js?v=9'), 'map_heatmap cache-bust version missing');
 check(heatmap.includes('renderSmallCards'), 'small-sector heatmap fallback missing');
 check(heatmap.includes("min-height:420px;height:min(62vh,640px)"), 'heatmap self-sizing fallback missing');
