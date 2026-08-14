@@ -81,7 +81,7 @@
       "path": "/defense/korea_defense_map.html",
       "title": { "ko": "한국 방산·우주·항공 산업 투자 지도", "en": "Korea Defense, Space & Aviation Map" },
       "summary": {
-        "ko": "항공기·미사일·육상무기·해군·우주·민항 관련 상장 방산·항공 기업의 KRX 지표와 글로벌 참고 네트워크를 제공합니다.",
+        "ko": "항공기·미사일·육상무기·해군·우주·민항 관련 상장 방산·우주·항공 기업의 KRX 지표와 글로벌 참고 네트워크를 제공합니다.",
         "en": "KRX metrics and illustrative global reference networks for listed Korean defense, space, and aviation companies."
       }
     },

@@ -97,8 +97,8 @@ ${bodyEn}
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
   </footer>
-  <script src="js/desktop_sidebar_nav.js?v=10"></script>
-  <script src="js/global_bottom_nav.js?v=10"></script>
+  <script src="js/desktop_sidebar_nav.js?v=11"></script>
+  <script src="js/global_bottom_nav.js?v=11"></script>
   <script src="js/geo_footer.js"></script>
   <script>
     const PAGE = ${JSON.stringify({ titleKo, titleEn, descKo, descEn, i18nKey })};

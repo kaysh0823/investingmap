@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 IT·소프트웨어 투자 지도",
     "url": "https://www.investingmap.kr/software/korea_software_map.html",
-    "numberOfItems": 13,
+    "numberOfItems": 14,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -191,30 +191,36 @@
       {
         "@type": "ListItem",
         "position": 9,
+        "name": "케이아이엔엑스 (093320, KOSDAQ)",
+        "url": "https://www.investingmap.kr/software/korea_software_map.html#ticker-093320"
+      },
+      {
+        "@type": "ListItem",
+        "position": 10,
         "name": "한글과컴퓨터 (030520, KOSDAQ)",
         "url": "https://www.investingmap.kr/software/korea_software_map.html#ticker-030520"
       },
       {
         "@type": "ListItem",
-        "position": 10,
+        "position": 11,
         "name": "카페24 (042000, KOSDAQ)",
         "url": "https://www.investingmap.kr/software/korea_software_map.html#ticker-042000"
       },
       {
         "@type": "ListItem",
-        "position": 11,
+        "position": 12,
         "name": "가비아 (079940, KOSDAQ)",
         "url": "https://www.investingmap.kr/software/korea_software_map.html#ticker-079940"
       },
       {
         "@type": "ListItem",
-        "position": 12,
+        "position": 13,
         "name": "드림시큐리티 (203650, KOSDAQ)",
         "url": "https://www.investingmap.kr/software/korea_software_map.html#ticker-203650"
       },
       {
         "@type": "ListItem",
-        "position": 13,
+        "position": 14,
         "name": "롯데이노베이트 (286940, KOSPI)",
         "url": "https://www.investingmap.kr/software/korea_software_map.html#ticker-286940"
       }
@@ -231,7 +237,7 @@
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=8"></script>
-  <script src="../js/sector_nav.js?v=4"></script>
+  <script src="../js/sector_nav.js?v=6"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
@@ -1127,6 +1133,7 @@
 
 
 
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1632,8 +1639,8 @@
     </button>
     <p id="hdr-subtitle">플랫폼·AI, SI·클라우드, 기업SW·SaaS, 보안 관련 국내 상장사와 글로벌 peer</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>13</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>8</span> · KOSDAQ <span>5</span></div>
+      <div class="badge" id="badge-total">Total <span>14</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>8</span> · KOSDAQ <span>6</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1691,7 +1698,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">13</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">14</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1907,6 +1914,29 @@
       <td class="products-cell">백신·EDR·침해대응·보안관제</td>
       <td><div class="partners-list">Palo Alto Networks</div></td>
     </tr>
+          <tr data-ticker="093320">
+      <td><div class="company-name">케이아이엔엑스</div><div class="company-name-sub">KINX, Inc.</div></td>
+      <td><span class="ticker">093320</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">150,000</td>
+      <td class="quote-cell ret-cell">-3.63%</td>
+      <td class="quote-cell ret-cell">+9.52%</td>
+      <td class="quote-cell ret-cell">+29.98%</td>
+      <td class="quote-cell ret-cell">+24.66%</td>
+      <td class="quote-cell ret-cell">+60.37%</td>
+      <td class="quote-cell">163,700</td>
+      <td class="quote-cell">79,600</td>
+      <td class="quote-cell">83.7%</td>
+      <td class="quote-cell">82.5</td>
+      <td class="mcap-cell">0.61조원</td>
+      <td class="fin-cell">35.42</td>
+      <td class="fin-cell">2.97</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">SI·클라우드</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">인터넷 인프라·IDC</td>
+      <td class="products-cell">IX·IDC·클라우드·CDN</td>
+      <td><div class="partners-list">Microsoft</div></td>
+    </tr>
           <tr data-ticker="030520">
       <td><div class="company-name">한글과컴퓨터</div><div class="company-name-sub">HANCOM INC.</div></td>
       <td><span class="ticker">030520</span></td>
@@ -2108,8 +2138,8 @@
     "ko": {
         "title": "🇰🇷 한국 IT·소프트웨어 투자 지도",
         "subtitle": "플랫폼·AI, SI·클라우드, 기업SW·SaaS, 보안 관련 국내 상장사와 글로벌 peer",
-        "badgeTotal": "총 <span>13</span>개 상장사",
-        "badgeMarket": "KOSPI <span>8</span>사 · KOSDAQ <span>5</span>사",
+        "badgeTotal": "총 <span>14</span>개 상장사",
+        "badgeMarket": "KOSPI <span>8</span>사 · KOSDAQ <span>6</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 15일",
         "tabHeatmap": "🔥 섹터 히트맵",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
@@ -2184,8 +2214,8 @@
     "en": {
         "title": "🇰🇷 Korea IT & Software Map",
         "subtitle": "Listed Korean platforms, AI, IT services, cloud, enterprise software, SaaS and cybersecurity peers",
-        "badgeTotal": "<span>13</span> listings",
-        "badgeMarket": "KOSPI <span>8</span> · KOSDAQ <span>5</span>",
+        "badgeTotal": "<span>14</span> listings",
+        "badgeMarket": "KOSPI <span>8</span> · KOSDAQ <span>6</span>",
         "dataAsof": "Data as of: June 15, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
@@ -2317,6 +2347,13 @@
         semType: '엔드포인트·네트워크 보안', semTypeEn: 'Endpoint & network security',
         products: '백신·EDR·침해대응·보안관제', productsEn: 'Antivirus, EDR, incident response, managed security',
         revenue: '0.64조원', mcapWon: 637548793800, per: 10.03, pbr: 1.38, revTier: 1, partners: ['paloalto']
+      },
+
+      {
+        id: 'kinx', name: '케이아이엔엑스', nameEn: 'KINX, Inc.', ticker: '093320', market: 'KOSDAQ', chain: 'SI·클라우드',
+        semType: '인터넷 인프라·IDC', semTypeEn: 'Internet infrastructure & data centers',
+        products: 'IX·IDC·클라우드·CDN', productsEn: 'Internet exchange, data centers, cloud and CDN',
+        revenue: '0.61조원', mcapWon: 610976000000, per: 35.42, pbr: 2.97, revTier: 1, partners: ['microsoft']
       },
 
       {
@@ -3074,8 +3111,8 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
   </footer>
-  <script src="../js/desktop_sidebar_nav.js?v=10"></script>
-  <script src="../js/global_bottom_nav.js?v=10"></script>
+  <script src="../js/desktop_sidebar_nav.js?v=11"></script>
+  <script src="../js/global_bottom_nav.js?v=11"></script>
   <script src="../js/geo_footer.js"></script>
 <!-- investingmap-seo-related-start -->
   <section class="im-seo-related" id="im-seo-related" aria-labelledby="im-seo-related-title">

@@ -57,6 +57,7 @@ const SEED = [
   { id: 'hwashin', name: '화신', nameEn: 'Hwashin', ticker: '010690', chain: S.PARTS, semType: '샤시·현가', semTypeEn: 'Chassis & suspension', products: '현가·샤시부품', productsEn: 'Suspension, chassis', partners: ['zf', 'continental'] },
   { id: 'daewon', name: '대원강업', nameEn: 'Daewon Kangup', ticker: '000430', chain: S.PARTS, semType: '스프링·현가', semTypeEn: 'Springs & suspension', products: '스프링·현가부품', productsEn: 'Springs, suspension parts', partners: ['zf', 'bosch'] },
   { id: 'snt_motive', name: 'SNT모티브', nameEn: 'SNT Motiv', ticker: '064960', chain: S.PARTS, semType: '모터·구동', semTypeEn: 'Motors & drivetrain', products: '모터·구동부품', productsEn: 'Motors, drivetrain parts', partners: ['denso', 'bosch'] },
+  { id: 'korea_electric_terminal', name: '한국단자공업', nameEn: 'Korea Electric Terminal', ticker: '025540', chain: S.PARTS, semType: '자동차 커넥터·전장부품', semTypeEn: 'Automotive connectors & electronics', products: '자동차용 커넥터·전장부품', productsEn: 'Automotive connectors and electrical components', partners: ['bosch', 'denso'] },
 
   { id: 'hankook_tire', name: '한국타이어앤테크놀로지', nameEn: 'Hankook Tire & Technology', ticker: '161390', chain: S.TIRE, semType: '타이어', semTypeEn: 'Tires', products: '승용·상용 타이어', productsEn: 'Passenger & commercial tires', partners: ['michelin', 'bridgestone', 'goodyear'] },
   { id: 'kumho_tire', name: '금호타이어', nameEn: 'Kumho Tire', ticker: '073240', chain: S.TIRE, semType: '타이어', semTypeEn: 'Tires', products: '승용·상용 타이어', productsEn: 'Passenger & commercial tires', partners: ['michelin', 'bridgestone'] },

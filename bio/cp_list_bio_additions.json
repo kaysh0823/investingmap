@@ -1,13 +1,5 @@
 [
   {
-    "ticker": "214370",
-    "name": "케어젠",
-    "chain": "의료기기 / 디지털헬스",
-    "sectorId": "medtech",
-    "subSector": "펩타이드·헬스케어",
-    "level": "core"
-  },
-  {
     "ticker": "290650",
     "name": "엘앤씨바이오",
     "chain": "합성신약 / 제네릭",

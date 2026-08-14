@@ -24,7 +24,7 @@ function ensureMapBuilder(relHtml, builderCmd, label) {
   run(builderCmd, label);
 }
 
-ensureMapBuilder('auto/korea_auto_map.html', 'node build_korea_auto_map.mjs', 'build auto map');
+run('node build_korea_auto_map.mjs', 'rebuild auto map');
 ensureMapBuilder('medtech/korea_medtech_map.html', 'node build_korea_medtech_map.mjs', 'build medtech map');
 run('node build_korea_robot_map.mjs', 'rebuild robot map');
 run('node build_korea_bigchip_map.mjs', 'build chip leaders map');
@@ -40,8 +40,9 @@ run('node scripts/split_energy_clean_sectors.mjs', 'split energy into battery/re
 run('node scripts/split_kconsume_cosmetics.mjs', 'split cosmetics from kconsume + Pharmaresearch→medtech');
 run('node scripts/rebalance_cosmetics_medtech_bio.mjs', 'cosmetics aesthetic + bio IVD → medtech rebalance');
 run('node scripts/apply_sector_exclusive.mjs', 'enforce single-sector ownership');
-run('node scripts/apply_cross_sector_memberships.mjs', 'cross-sector memberships (bio+cosmetics)');
+run('node scripts/apply_cross_sector_memberships.mjs', 'verify no active cross-sector memberships');
 run('node scripts/enrich_company_fields.mjs', 'enrich semType/products (all maps)');
+run('node scripts/apply_semi_chain_reclass.mjs', 'semiconductor chain split persistence');
 run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');

@@ -207,7 +207,6 @@ const bioData = [
     bg: "rgba(22,163,74,0.08)",
     description: "의료AI, 임플란트, 로봇수술, 웨어러블 등",
     domestic: [
-      { name: "휴젤", ticker: "145020", note: "보툴렉스·더채움 K-뷰티 대표, 美시장 고농도제형 3상 '26 착수·'43년 독점 전략", mcap: "대형" },
       { name: "클래시스", ticker: "214150", note: "슈링크·볼뉴머 미용의료기기", mcap: "대형" },
       { name: "루닛", ticker: "328130", note: "AI 영상진단(흉부CT·유방) FDA 승인", mcap: "중형" },
       { name: "뷰노", ticker: "338220", note: "AI 의료영상·ECG 분석", mcap: "소형" },

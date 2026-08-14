@@ -1859,6 +1859,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
 
@@ -2165,7 +2194,7 @@
         <p class="hub-card-lead" id="card-auto-lead">완성차·부품·타이어·전장/ADAS 밸류체인과 글로벌 peer 참고 관계</p>
         <p class="hub-card-keyplayers" id="card-auto-keyplayers"></p>
         <div class="hub-card-tags" id="card-auto-tags"></div>
-        <p class="hub-card-map" id="card-auto-map">21개 상장사 · 완성차·부품·타이어·전장</p>
+        <p class="hub-card-map" id="card-auto-map">22개 상장사 · 완성차·부품·타이어·전장</p>
         <span class="hub-card-cta" id="card-auto-cta">지도 열기 →</span>
       </a>
       <a class="hub-card" id="hub-link-medtech" href="medtech/korea_medtech_map.html?tab=heatmap">
@@ -2313,7 +2342,7 @@
   </footer>
   <script src="js/map_tab_state.js?v=8"></script>
     <script src="js/return_live.js?v=2"></script>
-  <script src="js/hub_dashboard.js?v=48"></script>
+  <script src="js/hub_dashboard.js?v=50"></script>
   <script src="js/im_collapsible.js?v=6"></script>
 <script>
     const T = {
@@ -2324,10 +2353,10 @@
         langText: 'English',
         cardMapLine: '각 지도 공통: 밸류체인 분류 · KRX 시가총액 · 정렬·필터 가능한 기업 표 · 관계형 그래프.',
         semiMapLine: '85개 상장사 · IDM·팹리스·파운드리·소재·장비 · 글로벌 거래처·peer 그래프',
-        bioMapLine: '63개 매핑 · 바이오시밀러·신약·CDMO · 글로벌 페어링 네트워크',
-        shipMapLine: '26개 상장사 · 조선소·기자재·해운 · 수주·해외 yard 참고 링크',
-        defenseMapLine: '13개 상장사 · 항공·미사일·육상·해군·우주 · 수출·프로그램 참고',
-        robotMapLine: '18개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
+        bioMapLine: '61개 매핑 · 바이오시밀러·신약·CDMO · 글로벌 페어링 네트워크',
+        shipMapLine: '25개 상장사 · 조선소·기자재·해운 · 수주·해외 yard 참고 링크',
+        defenseMapLine: '11개 상장사 · 항공·미사일·육상·해군·우주 · 수출·프로그램 참고',
+        robotMapLine: '17개 상장사 · FA·AMR·협동로봇·모션 · 피지컬AI 연계',
         autoMapLine: '21개 상장사 · 완성차·부품·타이어·전장',
         medtechMapLine: '9개 상장사 · 진단·임플란트·의료장비',
         batteryMapLine: '24개 상장사 · 2차전지 셀·소재·장비·부품·ESS',
@@ -2361,7 +2390,7 @@
         shipLead: '조선소·엔진·철강·조선기자재·해양·해운·방산 해양 등 조선·해양 산업 클러스터',
         shipCta: '지도 열기 →',
         defenseTitle: '한국 방산·우주·항공 산업 투자 지도',
-        defenseLead: '군용 항공기·엔진, 미사일·레이더·C4ISR, 육상무기·탄약, 해군·함정, 우주·위성·민항 등 상장 주요 방산·항공 클러스터와 글로벌 참고 관계',
+        defenseLead: '군용 항공기·엔진, 미사일·레이더·C4ISR, 육상무기·탄약, 해군·함정, 우주·위성·민항 등 상장 주요 방산·우주·항공 클러스터와 글로벌 참고 관계',
         defenseCta: '지도 열기 →',
         robotTitle: '한국 로봇/피지컬AI 산업 투자 지도',
         robotLead: '공장자동화·물류 AMR·협동로봇·센싱·모션 제어·피지컬AI까지 로봇·자동화 생태계',
@@ -2430,9 +2459,9 @@
         semiMapLine: '90 companies · IDM, fabless, foundry, materials, equipment · customer & peer graph',
         bioMapLine: '72 companies · biosimilars, novel drugs, CDMO · global licensing & partnership network',
         shipMapLine: '30 companies · yards, marine equipment, shipping · order & shipyard reference links',
-        defenseMapLine: '16 companies · aviation, missiles, land, naval, space · export program references',
+        defenseMapLine: '14 companies · aviation, missiles, land, naval, space · export program references',
         robotMapLine: '20 companies · FA, AMR, cobots, motion · Physical AI relationships',
-        autoMapLine: '21 listings · OEM, parts, tires, electronics',
+        autoMapLine: '22 listings · OEM, parts, tires, electronics',
         medtechMapLine: '9 listings · Diagnostics, implants, equipment',
         batteryMapLine: '24 listings · cells, materials, equipment, parts, ESS',
         renewableMapLine: '10 listings · solar, wind, hydrogen',
@@ -2690,8 +2719,8 @@ document.title = lang === 'en'
 
     applyLang();
   </script>
-  <script src="js/desktop_sidebar_nav.js?v=10"></script>
-  <script src="js/global_bottom_nav.js?v=10"></script>
+  <script src="js/desktop_sidebar_nav.js?v=11"></script>
+  <script src="js/global_bottom_nav.js?v=11"></script>
   <script src="js/geo_footer.js"></script>
 </body>
 

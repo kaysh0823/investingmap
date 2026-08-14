@@ -21,6 +21,7 @@ import {
   countKoreanTickersInHtml,
 } from '../lib/map_company_serialize.mjs';
 import { inferChain, bioSectorIdForChain } from '../lib/cp_list_chain_infer.mjs';
+import { chainOverride } from '../lib/chain_overrides.mjs';
 import { enrichCompanyList } from '../lib/company_field_enrich.mjs';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from '../lib/krx_per_pbr.mjs';
 import {
@@ -41,7 +42,7 @@ function makeStub(ticker, entry, industryKey, chains, krx, meta3557, idPrefix) {
   if (!row) return null;
   if (!passesMcapFloor({ mcapWon: row.mcap })) return null;
 
-  const chain = inferChain(entry.subSector, industryKey, chains);
+  const chain = chainOverride(industryKey, ticker) || inferChain(entry.subSector, industryKey, chains);
   const rawNameEn = meta3557.get(ticker)?.nameEn || entry.nameKo || row.name;
   const nameEn = formatListedEnglishName(rawNameEn);
   const sub = entry.subSector || '—';

@@ -367,5 +367,14 @@
     "origin": "renewable",
     "basis": "전력·플랜트 설비",
     "mcapWon": 429193392750
+  },
+  {
+    "ticker": "119850",
+    "name": "지엔씨에너지",
+    "sector": "renewable",
+    "chain": "신재생 운영",
+    "origin": "forced",
+    "basis": "신재생 운영",
+    "mcapWon": 361875998000
   }
 ]

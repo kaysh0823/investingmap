@@ -100,7 +100,7 @@ const FORCE = {
     '348370', '121600', '001570', '278280', '005420', '393890',
     '336260', '126340',
   ]),
-  renewable: new Set(['009830', '010060', '112610', '322000', '475150', '456040', '025540', '271940', '011930']),
+  renewable: new Set(['009830', '010060', '112610', '322000', '475150', '456040', '119850', '271940', '011930']),
   nuclear: new Set(['034020', '052690', '051600', '083650', '105840', '006910', '130660']),
 };
 
@@ -364,6 +364,14 @@ function main() {
     if (candidates.has(ticker)) continue;
     const stub = makeStub(ticker, entry, krx, meta3557, perPbr);
     if (stub) candidates.set(ticker, { c: stub, origin: 'cp_list', entry });
+  }
+  for (const [sid, tickers] of Object.entries(FORCE)) {
+    for (const ticker of tickers) {
+      if (candidates.has(ticker)) continue;
+      const entry = { nameKo: krx.get(ticker)?.name || ticker, subSector: sid === 'renewable' ? '신재생 운영' : '' };
+      const stub = makeStub(ticker, entry, krx, meta3557, perPbr);
+      if (stub) candidates.set(ticker, { c: stub, origin: 'forced', entry });
+    }
   }
 
   const bySector = { battery: [], renewable: [], nuclear: [] };

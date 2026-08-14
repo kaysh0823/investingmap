@@ -6,7 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const GLOBAL_BOTTOM_NAV_V = 10;
+export const GLOBAL_BOTTOM_NAV_V = 11;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',

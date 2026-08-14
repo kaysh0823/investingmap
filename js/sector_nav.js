@@ -14,7 +14,7 @@
     { id: 'powergrid', path: '../powergrid/korea_powergrid_map.html', ko: '\uC804\uB825\uC124\uBE44', en: 'Power Equip.', koShort: '\uC804\uB825', enShort: 'Power' },
     { id: 'ship', path: '../ship/korea_ship_map.html', ko: '\uC870\uC120', en: 'Ship' },
     { id: 'metal', path: '../metal/korea_metal_map.html', ko: '\uCCA0\uAC15\u00B7\uAE08\uC18D\u00B7\uAE30\uACC4', en: 'Metals' },
-    { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC0B0', en: 'Defense' },
+    { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC0B0/\uC6B0\uC8FC/\uD56D\uACF5', en: 'Defense, Space & Aviation' },
         { id: 'kconsume', path: '../kconsume/korea_kconsume_map.html', ko: 'K-\uC18C\uBE44/\uC720\uD1B5', en: 'K-Consume' },
     { id: 'cosmetics', path: '../cosmetics/korea_cosmetics_map.html', ko: '\uD654\uC7A5\uD488/\uBBF8\uC6A9\uAE30\uAE30', en: 'Cosmetics', koShort: '\uD654\uC7A5\uD488', enShort: 'Cosme' },
     { id: 'kcontent', path: '../kcontent/korea_kcontent_map.html', ko: 'K-\uCF58\uD150\uCE20', en: 'K-Content' },

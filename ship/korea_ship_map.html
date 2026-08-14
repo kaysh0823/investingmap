@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 조선·조선기자재 산업 투자 지도",
     "url": "https://www.investingmap.kr/ship/korea_ship_map.html",
-    "numberOfItems": 26,
+    "numberOfItems": 25,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -281,18 +281,12 @@
       {
         "@type": "ListItem",
         "position": 24,
-        "name": "세아제강 (306200, KOSPI)",
-        "url": "https://www.investingmap.kr/ship/korea_ship_map.html#ticker-306200"
-      },
-      {
-        "@type": "ListItem",
-        "position": 25,
         "name": "한라IMS (092460, KOSDAQ)",
         "url": "https://www.investingmap.kr/ship/korea_ship_map.html#ticker-092460"
       },
       {
         "@type": "ListItem",
-        "position": 26,
+        "position": 25,
         "name": "케이프 (064820, KOSDAQ)",
         "url": "https://www.investingmap.kr/ship/korea_ship_map.html#ticker-064820"
       }
@@ -309,7 +303,7 @@
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=8"></script>
-  <script src="../js/sector_nav.js?v=4"></script>
+  <script src="../js/sector_nav.js?v=6"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
@@ -1205,6 +1199,7 @@
 
 
 
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1710,8 +1705,8 @@
     </button>
     <p id="hdr-subtitle">국내 상장 조선·해양·기자재 · 벨류체인 · 글로벌 수주·에너지 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>26</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>17</span> · KOSDAQ <span>9</span></div>
+      <div class="badge" id="badge-total">Total <span>25</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>16</span> · KOSDAQ <span>9</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1769,7 +1764,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">26</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">25</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2330,29 +2325,6 @@
       <td class="products-cell">계장용 피팅·밸브 — 선박용 기자재·엔진</td>
       <td><div class="partners-list">—</div></td>
     </tr>
-          <tr data-ticker="306200">
-      <td><div class="company-name">세아제강</div><div class="company-name-sub">SeAH Steel Corporation</div></td>
-      <td><span class="ticker">306200</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">132,800</td>
-      <td class="quote-cell ret-cell">-0.82%</td>
-      <td class="quote-cell ret-cell">+5.30%</td>
-      <td class="quote-cell ret-cell">-3.34%</td>
-      <td class="quote-cell ret-cell">-0.08%</td>
-      <td class="quote-cell ret-cell">+6.48%</td>
-      <td class="quote-cell">189,000</td>
-      <td class="quote-cell">112,000</td>
-      <td class="quote-cell">27%</td>
-      <td class="quote-cell">63.0</td>
-      <td class="mcap-cell">0.40조원</td>
-      <td class="fin-cell">13.18</td>
-      <td class="fin-cell">0.35</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">해양플랜트</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">강관·해양플랜트 소재</td>
-      <td class="products-cell">강관·해양플랜트 소재 — 해양플랜트·FPSO</td>
-      <td><div class="partners-list">—</div></td>
-    </tr>
           <tr data-ticker="092460">
       <td><div class="company-name">한라IMS</div><div class="company-name-sub">HANLA IMS Co., LTD</div></td>
       <td><span class="ticker">092460</span></td>
@@ -2819,13 +2791,6 @@
         semType: '계장용 피팅·밸브', semTypeEn: '—',
         products: '계장용 피팅·밸브 — 선박용 기자재·엔진', productsEn: 'Shipbuilding and marine products and services',
         revenue: '0.40조원', mcapWon: 403647339200, per: 8.15, pbr: 0.89, revTier: 1, partners: []
-      },
-
-      {
-        id: 'ship_seah_steel_corporation', name: '세아제강', nameEn: 'SeAH Steel Corporation', ticker: '306200', market: 'KOSPI', chain: '해양플랜트',
-        semType: '강관·해양플랜트 소재', semTypeEn: '—',
-        products: '강관·해양플랜트 소재 — 해양플랜트·FPSO', productsEn: 'Shipbuilding and marine products and services',
-        revenue: '0.40조원', mcapWon: 400485560000, per: 13.18, pbr: 0.35, revTier: 1, partners: []
       },
 
       {
@@ -3576,8 +3541,8 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
   </footer>
-  <script src="../js/desktop_sidebar_nav.js?v=10"></script>
-  <script src="../js/global_bottom_nav.js?v=10"></script>
+  <script src="../js/desktop_sidebar_nav.js?v=11"></script>
+  <script src="../js/global_bottom_nav.js?v=11"></script>
   <script src="../js/geo_footer.js"></script>
 <!-- investingmap-seo-related-start -->
   <section class="im-seo-related" id="im-seo-related" aria-labelledby="im-seo-related-title">

@@ -12,22 +12,88 @@
     "productsEn": "Machine vision and AI-based semiconductor and display inspection systems"
   },
   "101490": {
-    "semType": "CMP 패드·엔지니어링 플라스틱",
-    "semTypeEn": "CMP Pads & Engineered Plastics",
-    "products": "CMP 패드, 엔지니어링 플라스틱 등 반도체·디스플레이 공정 부품",
-    "productsEn": "CMP pads and engineered plastic components for semiconductor and display processes"
+    "semType": "블랭크마스크·EUV 펠리클",
+    "semTypeEn": "Blank masks & EUV pellicles",
+    "products": "포토마스크 블랭크·EUV 펠리클 등 리소그래피 소재",
+    "productsEn": "Photomask blanks and EUV pellicles for lithography"
   },
   "213420": {
-    "semType": "OLED·반도체 공정장비",
-    "semTypeEn": "OLED & Semiconductor Process Equipment",
-    "products": "OLED·디스플레이 증착·공정 장비, 반도체 전후공정 설비",
-    "productsEn": "OLED/display deposition equipment and semiconductor process tools"
+    "semType": "OLED 유기발광소재",
+    "semTypeEn": "OLED emissive materials",
+    "products": "OLED 발광·정공수송 유기소재",
+    "productsEn": "OLED emissive and hole-transport organic materials"
   },
   "053610": {
-    "semType": "반도체·LCD 공정장비",
-    "semTypeEn": "Semiconductor & LCD Process Equipment",
-    "products": "세정·건조·코팅 등 LCD·반도체 공정 장비",
-    "productsEn": "Cleaning, drying and coating equipment for LCD and semiconductor fabs"
+    "semType": "패키징 디스펜서·다이본더",
+    "semTypeEn": "Packaging dispensers & die bonders",
+    "products": "디스펜서·다이본더·레이저 솔더링 등 후공정 패키징 장비",
+    "productsEn": "Dispensers, die bonders and laser soldering packaging tools"
+  },
+  "356860": {
+    "semType": "메모리 모듈·SSD PCB",
+    "semTypeEn": "Memory module & SSD PCB",
+    "products": "DRAM 모듈·SSD·서버용 고다층 PCB",
+    "productsEn": "High-layer-count PCBs for DRAM modules, SSDs and servers",
+    "byIndustry": {
+      "semi": {
+        "chain": "부품/기판"
+      }
+    }
+  },
+  "086390": {
+    "semType": "메모리 테스트·번인 장비",
+    "semTypeEn": "Memory test & burn-in systems",
+    "products": "DRAM·낸드 번인 테스터 등 메모리 검사 솔루션",
+    "productsEn": "DRAM and NAND burn-in testers and memory test solutions",
+    "byIndustry": {
+      "semi": {
+        "chain": "패키징/테스트"
+      }
+    }
+  },
+  "254490": {
+    "semType": "반도체 소자 유통",
+    "semTypeEn": "Semiconductor device distribution",
+    "products": "메모리·시스템반도체 등 반도체 소자 유통",
+    "productsEn": "Distribution of memory and system semiconductor devices",
+    "byIndustry": {
+      "semi": {
+        "chain": "반도체 유통"
+      }
+    }
+  },
+  "031980": {
+    "semType": "후공정 디스컴·리플로우 장비",
+    "semTypeEn": "Back-end descum & reflow equipment",
+    "products": "범프 디스컴·리플로우 등 패키징 공정 장비",
+    "productsEn": "Bump descum and reflow tools for advanced packaging",
+    "byIndustry": {
+      "semi": {
+        "chain": "후공정 장비"
+      }
+    }
+  },
+  "089890": {
+    "semType": "레이저 후공정 장비",
+    "semTypeEn": "Laser back-end equipment",
+    "products": "레이저 리플로우·솔더볼 어태치 등 HBM 패키징 장비",
+    "productsEn": "Laser reflow and solder-ball attach tools for HBM packaging",
+    "byIndustry": {
+      "semi": {
+        "chain": "후공정 장비"
+      }
+    }
+  },
+  "061970": {
+    "semType": "범핑·패키징·테스트 (OSAT)",
+    "semTypeEn": "Bumping, packaging & test (OSAT)",
+    "products": "DDI 범핑·패키징·웨이퍼 테스트 등 OSAT 서비스",
+    "productsEn": "DDI bumping, packaging and wafer test OSAT services",
+    "byIndustry": {
+      "semi": {
+        "chain": "패키징/테스트"
+      }
+    }
   },
   "046890": {
     "semType": "LED·VCSEL",
@@ -36,40 +102,40 @@
     "productsEn": "Wicop/SunLike LEDs, VCSELs and advanced optoelectronic semiconductors"
   },
   "348210": {
-    "semType": "노광·검사장비",
-    "semTypeEn": "Lithography & Inspection Equipment",
-    "products": "반도체·디스플레이 노광(리놀) 및 검사 장비",
-    "productsEn": "Lithography (rinse) and inspection equipment for semiconductors and displays"
+    "semType": "웨이퍼 결함 검사장비",
+    "semTypeEn": "Wafer defect inspection",
+    "products": "반도체 웨이퍼 패턴 결함 검사 장비",
+    "productsEn": "Wafer pattern defect inspection equipment"
   },
   "122640": {
-    "semType": "반도체·LCD 테스트장비",
-    "semTypeEn": "Semiconductor & LCD Test Equipment",
-    "products": "LCD·반도체 패널·모듈 테스트·핸들러 장비",
-    "productsEn": "LCD and semiconductor panel/module test and handler equipment"
+    "semType": "고압 어닐·열처리 장비",
+    "semTypeEn": "High-pressure anneal & thermal equipment",
+    "products": "고압 수소 어닐링·산화·퍼니스 등 전공정 열처리 장비",
+    "productsEn": "High-pressure hydrogen anneal, oxidation and furnace tools"
   },
   "160980": {
-    "semType": "스핀들·공작기계 부품",
-    "semTypeEn": "Spindles & Machine Tool Components",
-    "products": "고속 스핀들·감속기 등 정밀 공작기계·장비 부품",
-    "productsEn": "High-speed spindles and precision machine tool components"
+    "semType": "웨이퍼 이송·EFEM",
+    "semTypeEn": "Wafer handling & EFEM",
+    "products": "웨이퍼 이송 로봇·EFEM·로드포트",
+    "productsEn": "Wafer transfer robots, EFEM and load ports"
   },
   "101160": {
-    "semType": "엔지니어링 플라스틱",
-    "semTypeEn": "Engineered Plastics",
-    "products": "반도체·전자용 엔지니어링 플라스틱·정밀 부품",
-    "productsEn": "Engineered plastics and precision parts for electronics and semiconductors"
+    "semType": "실리콘·쿼츠 공정 소모부품",
+    "semTypeEn": "Silicon & quartz process consumables",
+    "products": "식각장비용 실리콘·쿼츠·세라믹 소모부품",
+    "productsEn": "Silicon, quartz and ceramic consumables for etch tools"
   },
   "425040": {
-    "semType": "반도체·디스플레이 공정장비",
-    "semTypeEn": "Semiconductor & Display Process Equipment",
-    "products": "반도체·디스플레이 전후공정 장비·부품",
-    "productsEn": "Front-end and back-end equipment for semiconductors and displays"
+    "semType": "반도체 특수가스",
+    "semTypeEn": "Specialty gases",
+    "products": "반도체 공정용 특수가스",
+    "productsEn": "Specialty gases for semiconductor processes"
   },
   "079370": {
-    "semType": "반도체·디스플레이 테스트장비",
-    "semTypeEn": "Semiconductor & Display Test Equipment",
-    "products": "반도체·디스플레이 테스트·검사 장비",
-    "productsEn": "Semiconductor and display test and inspection systems"
+    "semType": "웨이퍼 세정장비",
+    "semTypeEn": "Wafer cleaning equipment",
+    "products": "습식 세정·웨이퍼 공정 자동화 장비",
+    "productsEn": "Wet cleaning and wafer process automation equipment"
   },
   "267260": {
     "byIndustry": {

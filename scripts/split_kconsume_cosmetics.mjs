@@ -28,7 +28,7 @@ const BIO_JSX = path.join(ROOT, 'bio', 'biomap.jsx');
 const COSMETICS_BRAND = new Set(['278470', '090430', '051900', '483650', '002790', '018290']);
 const COSMETICS_ODM = new Set(['161890', '192820', '241710']);
 const COSMETICS_CHANNEL = new Set(['257720']);
-const COSMETICS_AESTHETIC = new Set(['214150', '214450', '336570']); // Classys, Pharmaresearch, Wontech
+const COSMETICS_AESTHETIC = new Set(['214150', '214450', '336570', '145020', '214370']); // Classys, Pharmaresearch, Wontech, Hugel, Caregen
 const COSMETICS_ALL = new Set([...COSMETICS_BRAND, ...COSMETICS_ODM, ...COSMETICS_CHANNEL, ...COSMETICS_AESTHETIC]);
 const DROP_FROM_KCONSUME = new Set([...COSMETICS_ALL]); // beauty + aesthetic (Classys never returns to kconsume)
 const PHARMARESEARCH = '214450';
@@ -43,13 +43,14 @@ const COSMETICS_META = {
   subtitleEn: 'Brands, ODM/OEM, ingredients, packaging, and channels — listed companies and reference relationships',
   descriptionKo: '화장품 브랜드·ODM/OEM·원료·용기·유통 채널 관련 상장사와 글로벌 참고 관계를 정리합니다.',
   descriptionEn: 'Listed Korean cosmetics brands, ODM/OEM, ingredients, packaging, and channel companies with illustrative global relationships.',
-  allChains: ['브랜드', 'ODM·OEM', '원료', '용기', '유통·채널'],
+  allChains: ['브랜드', 'ODM·OEM', '원료', '용기', '유통·채널', '미용기기'],
   colors: {
     '브랜드': '#F48FB1',
     'ODM·OEM': '#CE93D8',
     '원료': '#80CBC4',
     '용기': '#FFCC80',
     '유통·채널': '#81D4FA',
+    '미용기기': '#EF9A9A',
   },
   chainLabelKo: {
     '브랜드': '브랜드',
@@ -57,6 +58,7 @@ const COSMETICS_META = {
     '원료': '원료',
     '용기': '용기',
     '유통·채널': '유통·채널',
+    '미용기기': '미용기기·에스테틱',
   },
   chainLabelEn: {
     '브랜드': 'Brands',
@@ -64,6 +66,7 @@ const COSMETICS_META = {
     '원료': 'Ingredients',
     '용기': 'Packaging',
     '유통·채널': 'Channels & distribution',
+    '미용기기': 'Aesthetic devices & products',
   },
 };
 

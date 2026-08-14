@@ -9,7 +9,7 @@
 - [한국 반도체 산업 투자 지도](https://www.investingmap.kr/semiconductor/korea_semiconductor_map.html): 상장 반도체 기업 KRX 데이터, 밸류체인, 국내외 거래처·글로벌 피어 그룹
 - [한국 바이오 산업 투자 지도](https://www.investingmap.kr/bio/korea_bio_map.html): 제약·바이오 상장사, 기술이전·글로벌 빅파마 페어링, peer 네트워크
 - [한국 조선·조선기자재 산업 투자 지도](https://www.investingmap.kr/ship/korea_ship_map.html): 조선·해양·기자재 밸류체인, 글로벌 거래·수주 관계
-- [한국 방산·우주·항공 산업 투자 지도](https://www.investingmap.kr/defense/korea_defense_map.html): 방산·항공·우주 상장사 KRX 데이터, 글로벌 참고 네트워크
+- [한국 방산·우주·항공 산업 투자 지도](https://www.investingmap.kr/defense/korea_defense_map.html): 방산·우주·항공 상장사 KRX 데이터, 글로벌 참고 네트워크
 - [한국 로봇·피지컬AI 산업 투자 지도](https://www.investingmap.kr/robot/korea_robot_map.html): 산업로봇·자동화·피지컬AI 밸류체인, 글로벌 장비·SW 관계
 - [한국 자동차 투자 지도](https://www.investingmap.kr/auto/korea_auto_map.html): 완성차·부품·타이어·전장/ADAS 밸류체인
 - [한국 의료기기/헬스케어 투자 지도](https://www.investingmap.kr/medtech/korea_medtech_map.html): 진단·IVD·임플란트·의료장비 밸류체인
