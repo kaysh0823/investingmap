@@ -142,6 +142,7 @@ IT·소프트웨어(software) · 지주회사(holdings) · 통신(telecom)
 - **캐시버스팅**: JS 수정 시 참조하는 HTML의 `?v=` 반드시 bump (`_headers`가 `/js/*.js` 1년 immutable)
 - **줄바꿈**: `.gitattributes`에 `* text=auto eol=lf` (CRLF diff 오염 방지)
 - **배포**: Cloudflare Pages. 푸시 → 자동 배포(1~3분). `/functions`는 repo 루트에서 서빙됨
+- **환경 차이 주의**: 빌드 검증 스크립트(`verify_*`, `npm run verify:reorg`)는 프로덕션 빌드 체인에서 분리하고 로컬/CI에서만 실행. `cp_list` 등 로컬 전용 데이터에 빌드가 의존하면 안 되며, 없을 때 커밋된 fallback(예: `bio/cp_list_bio_additions.json`)으로 동일 결과를 보장한다.
 
 ---
 
