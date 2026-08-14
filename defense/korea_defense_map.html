@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 방산·우주·항공 산업 투자 지도",
     "url": "https://www.investingmap.kr/defense/korea_defense_map.html",
-    "numberOfItems": 11,
+    "numberOfItems": 12,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -197,12 +197,18 @@
       {
         "@type": "ListItem",
         "position": 10,
+        "name": "인텔리안테크 (189300, KOSDAQ)",
+        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-189300"
+      },
+      {
+        "@type": "ListItem",
+        "position": 11,
         "name": "아이쓰리시스템 (214430, KOSDAQ)",
         "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-214430"
       },
       {
         "@type": "ListItem",
-        "position": 11,
+        "position": 12,
         "name": "퍼스텍 (010820, KOSPI)",
         "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-010820"
       }
@@ -1116,6 +1122,9 @@
 
 
 
+
+
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1650,8 +1659,8 @@
     </button>
     <p id="hdr-subtitle">항공기·엔진, 미사일·레이더·C4ISR, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사·글로벌 참고 네트워크</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>11</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>8</span> · KOSDAQ <span>3</span></div>
+      <div class="badge" id="badge-total">Total <span>12</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>8</span> · KOSDAQ <span>4</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1709,7 +1718,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">11</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">12</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1948,6 +1957,29 @@
       <td class="products-cell">위성 설계·제조, SIIS 영상</td>
       <td><div class="partners-list">Airbus, NASA, SpaceX</div></td>
     </tr>
+          <tr data-ticker="189300">
+      <td><div class="company-name">인텔리안테크</div><div class="company-name-sub">Intellian Technologies</div></td>
+      <td><span class="ticker">189300</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">79,000</td>
+      <td class="quote-cell ret-cell">+1.31%</td>
+      <td class="quote-cell ret-cell">+23.37%</td>
+      <td class="quote-cell ret-cell">-36.39%</td>
+      <td class="quote-cell ret-cell">-35.92%</td>
+      <td class="quote-cell ret-cell">+85.65%</td>
+      <td class="quote-cell">180,200</td>
+      <td class="quote-cell">39,000</td>
+      <td class="quote-cell">28.3%</td>
+      <td class="quote-cell">40.6</td>
+      <td class="mcap-cell">1.13조원</td>
+      <td class="fin-cell">144.75</td>
+      <td class="fin-cell">4.02</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">우주·위성·민항</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">위성통신 안테나</td>
+      <td class="products-cell">해상·육상용 위성안테나·게이트웨이</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
           <tr data-ticker="214430">
       <td><div class="company-name">아이쓰리시스템</div><div class="company-name-sub">i3system, Ind.</div></td>
       <td><span class="ticker">214430</span></td>
@@ -1966,7 +1998,7 @@
       <td class="fin-cell">27.85</td>
       <td class="fin-cell">3.87</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">육상무기·차량·탄약</span></td>
+      <td><span class="chain-tag">우주·위성·민항</span></td>
       <td style="font-size:12px;color:var(--text-muted)">적외선 영상센서</td>
       <td class="products-cell">적외선 영상센서 — 방산·항공우주</td>
       <td><div class="partners-list">—</div></td>
@@ -2316,7 +2348,14 @@
       },
 
       {
-        id: 'def_i3system_ind', name: '아이쓰리시스템', nameEn: 'i3system, Ind.', ticker: '214430', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
+        id: 'defense_intellian_technologies', name: '인텔리안테크', nameEn: 'Intellian Technologies', ticker: '189300', market: 'KOSDAQ', chain: '우주·위성·민항',
+        semType: '위성통신 안테나', semTypeEn: 'Satellite communications antennas',
+        products: '해상·육상용 위성안테나·게이트웨이', productsEn: 'Maritime and land satellite antennas and gateways',
+        revenue: '1.13조원', mcapWon: 1125289685600, per: 144.75, pbr: 4.02, revTier: 2, partners: []
+      },
+
+      {
+        id: 'def_i3system_ind', name: '아이쓰리시스템', nameEn: 'i3system, Ind.', ticker: '214430', market: 'KOSDAQ', chain: '우주·위성·민항',
         semType: '적외선 영상센서', semTypeEn: '—',
         products: '적외선 영상센서 — 방산·항공우주', productsEn: 'Defense and aerospace products and services',
         revenue: '0.54조원', mcapWon: 540733910000, per: 27.85, pbr: 3.87, revTier: 1, partners: []

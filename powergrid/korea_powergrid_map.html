@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 전력설비 투자 지도",
     "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html",
-    "numberOfItems": 10,
+    "numberOfItems": 14,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -179,26 +179,50 @@
       {
         "@type": "ListItem",
         "position": 7,
+        "name": "가온전선 (000500, KOSPI)",
+        "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-000500"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
         "name": "일진전기 (103590, KOSPI)",
         "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-103590"
       },
       {
         "@type": "ListItem",
-        "position": 8,
+        "position": 9,
         "name": "한국가스공사 (036460, KOSPI)",
         "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-036460"
       },
       {
         "@type": "ListItem",
-        "position": 9,
+        "position": 10,
+        "name": "LS에코에너지 (229640, KOSPI)",
+        "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-229640"
+      },
+      {
+        "@type": "ListItem",
+        "position": 11,
+        "name": "LS마린솔루션 (060370, KOSDAQ)",
+        "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-060370"
+      },
+      {
+        "@type": "ListItem",
+        "position": 12,
         "name": "제룡전기 (033100, KOSDAQ)",
         "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-033100"
       },
       {
         "@type": "ListItem",
-        "position": 10,
+        "position": 13,
         "name": "지역난방공사 (071320, KOSPI)",
         "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-071320"
+      },
+      {
+        "@type": "ListItem",
+        "position": 14,
+        "name": "대원전선 (006340, KOSPI)",
+        "url": "https://www.investingmap.kr/powergrid/korea_powergrid_map.html#ticker-006340"
       }
     ]
   }
@@ -1110,6 +1134,9 @@
 
 
 
+
+
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1615,8 +1642,8 @@
     </button>
     <p id="hdr-subtitle">전력설비·송배전·발전설비 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>10</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>9</span> · KOSDAQ <span>1</span></div>
+      <div class="badge" id="badge-total">Total <span>14</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>12</span> · KOSDAQ <span>2</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1674,7 +1701,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">10</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">14</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1844,6 +1871,29 @@
       <td class="products-cell">초고압·특수 케이블, 변압기·개폐기</td>
       <td><div class="partners-list">Siemens Power Grid, GE Vernova</div></td>
     </tr>
+          <tr data-ticker="000500">
+      <td><div class="company-name">가온전선</div><div class="company-name-sub">Gaoncable</div></td>
+      <td><span class="ticker">000500</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">167,100</td>
+      <td class="quote-cell ret-cell">+3.09%</td>
+      <td class="quote-cell ret-cell">-15.10%</td>
+      <td class="quote-cell ret-cell">-50.66%</td>
+      <td class="quote-cell ret-cell">+42.49%</td>
+      <td class="quote-cell ret-cell">+104.16%</td>
+      <td class="quote-cell">352,860</td>
+      <td class="quote-cell">29,229</td>
+      <td class="quote-cell">42.6%</td>
+      <td class="quote-cell">31.9</td>
+      <td class="mcap-cell">4.17조원</td>
+      <td class="fin-cell">81.11</td>
+      <td class="fin-cell">8.62</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">송배전</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">전력·통신 케이블</td>
+      <td class="products-cell">전력·통신 케이블</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
           <tr data-ticker="103590">
       <td><div class="company-name">일진전기</div><div class="company-name-sub">ILJIN ELECTRIC</div></td>
       <td><span class="ticker">103590</span></td>
@@ -1890,6 +1940,52 @@
       <td class="products-cell">도시가스·LNG</td>
       <td><div class="partners-list">슈나이더 일렉트릭, kepco</div></td>
     </tr>
+          <tr data-ticker="229640">
+      <td><div class="company-name">LS에코에너지</div><div class="company-name-sub">LS Eco Energy</div></td>
+      <td><span class="ticker">229640</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">48,300</td>
+      <td class="quote-cell ret-cell">-0.41%</td>
+      <td class="quote-cell ret-cell">+11.85%</td>
+      <td class="quote-cell ret-cell">-23.93%</td>
+      <td class="quote-cell ret-cell">+7.48%</td>
+      <td class="quote-cell ret-cell">+13.29%</td>
+      <td class="quote-cell">109,800</td>
+      <td class="quote-cell">32,000</td>
+      <td class="quote-cell">21%</td>
+      <td class="quote-cell">58.1</td>
+      <td class="mcap-cell">1.89조원</td>
+      <td class="fin-cell">44.41</td>
+      <td class="fin-cell">8.93</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">송배전</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">전력·통신 케이블</td>
+      <td class="products-cell">초고압·배전·통신 케이블</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
+          <tr data-ticker="060370">
+      <td><div class="company-name">LS마린솔루션</div><div class="company-name-sub">LS Marine Solution</div></td>
+      <td><span class="ticker">060370</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">32,500</td>
+      <td class="quote-cell ret-cell">+5.57%</td>
+      <td class="quote-cell ret-cell">+27.24%</td>
+      <td class="quote-cell ret-cell">+7.23%</td>
+      <td class="quote-cell ret-cell">+4.28%</td>
+      <td class="quote-cell ret-cell">+25.83%</td>
+      <td class="quote-cell">51,600</td>
+      <td class="quote-cell">21,650</td>
+      <td class="quote-cell">36.2%</td>
+      <td class="quote-cell">86.0</td>
+      <td class="mcap-cell">1.58조원</td>
+      <td class="fin-cell">140.93</td>
+      <td class="fin-cell">2.46</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">송배전</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">해저케이블 시공·유지보수</td>
+      <td class="products-cell">해저 전력·통신 케이블 시공·유지보수</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
           <tr data-ticker="033100">
       <td><div class="company-name">제룡전기</div><div class="company-name-sub">CHERYONG ELECTRIC CO.,LTD.</div></td>
       <td><span class="ticker">033100</span></td>
@@ -1934,6 +2030,29 @@
       <td><span class="chain-tag">발전설비</span></td>
       <td style="font-size:12px;color:var(--text-muted)">집단에너지</td>
       <td class="products-cell">집단에너지 — 에너지·전력</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
+          <tr data-ticker="006340">
+      <td><div class="company-name">대원전선</div><div class="company-name-sub">Daewon Cable</div></td>
+      <td><span class="ticker">006340</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">14,710</td>
+      <td class="quote-cell ret-cell">-5.74%</td>
+      <td class="quote-cell ret-cell">+23.55%</td>
+      <td class="quote-cell ret-cell">+35.76%</td>
+      <td class="quote-cell ret-cell">+135.73%</td>
+      <td class="quote-cell ret-cell">+288.43%</td>
+      <td class="quote-cell">20,300</td>
+      <td class="quote-cell">2,765</td>
+      <td class="quote-cell">68.1%</td>
+      <td class="quote-cell">93.1</td>
+      <td class="mcap-cell">0.82조원</td>
+      <td class="fin-cell">92.65</td>
+      <td class="fin-cell">6.86</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">송배전</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">전선·케이블</td>
+      <td class="products-cell">전력·통신·산업용 전선</td>
       <td><div class="partners-list">—</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
@@ -2230,6 +2349,13 @@
       },
 
       {
+        id: 'powergrid_gaon_cable', name: '가온전선', nameEn: 'Gaoncable', ticker: '000500', market: 'KOSPI', chain: '송배전',
+        semType: '전력·통신 케이블', semTypeEn: 'Power and communications cables',
+        products: '전력·통신 케이블', productsEn: 'Power and communications cables',
+        revenue: '4.17조원', mcapWon: 4168864980000, per: 81.11, pbr: 8.62, revTier: 2, partners: []
+      },
+
+      {
         id: 'iljin_el', name: '일진전기', nameEn: 'ILJIN ELECTRIC', ticker: '103590', market: 'KOSPI', chain: '송배전',
         semType: '전력케이블·전기자재', semTypeEn: 'Power cable & electrical parts',
         products: '고압 케이블, 전력기기', productsEn: 'HV cable, power apparatus',
@@ -2244,6 +2370,20 @@
       },
 
       {
+        id: 'powergrid_ls_eco_energy', name: 'LS에코에너지', nameEn: 'LS Eco Energy', ticker: '229640', market: 'KOSPI', chain: '송배전',
+        semType: '전력·통신 케이블', semTypeEn: 'Power and communications cables',
+        products: '초고압·배전·통신 케이블', productsEn: 'High-voltage, distribution and communications cables',
+        revenue: '1.89조원', mcapWon: 1886492546400, per: 44.41, pbr: 8.93, revTier: 2, partners: []
+      },
+
+      {
+        id: 'powergrid_ls_marine_solution', name: 'LS마린솔루션', nameEn: 'LS Marine Solution', ticker: '060370', market: 'KOSDAQ', chain: '송배전',
+        semType: '해저케이블 시공·유지보수', semTypeEn: 'Subsea cable installation and maintenance',
+        products: '해저 전력·통신 케이블 시공·유지보수', productsEn: 'Subsea power and communications cable installation and maintenance',
+        revenue: '1.58조원', mcapWon: 1582837276200, per: 140.93, pbr: 2.46, revTier: 2, partners: []
+      },
+
+      {
         id: 'jeryong', name: '제룡전기', nameEn: 'CHERYONG ELECTRIC CO.,LTD.', ticker: '033100', market: 'KOSDAQ', chain: '송배전',
         semType: '변압기·차단기', semTypeEn: 'Transformers & breakers',
         products: '수배전반·변압기', productsEn: 'Switchgear & transformers',
@@ -2255,6 +2395,13 @@
         semType: '집단에너지', semTypeEn: '—',
         products: '집단에너지 — 에너지·전력', productsEn: 'Power equipment and services',
         revenue: '0.83조원', mcapWon: 827880196000, per: 2.54, pbr: 0.36, revTier: 1, partners: []
+      },
+
+      {
+        id: 'powergrid_daewon_cable', name: '대원전선', nameEn: 'Daewon Cable', ticker: '006340', market: 'KOSPI', chain: '송배전',
+        semType: '전선·케이블', semTypeEn: 'Wire and cable',
+        products: '전력·통신·산업용 전선', productsEn: 'Power, communications and industrial cables',
+        revenue: '0.82조원', mcapWon: 820998935520, per: 92.65, pbr: 6.86, revTier: 1, partners: []
       }
 
     ];

@@ -33,6 +33,7 @@ run('node build_korea_holdings_map.mjs', 'build holdings map');
 run('node build_korea_telecom_map.mjs', 'build telecom map');
 run('node build_korea_elec_map.mjs', 'build electrical & electronics map');
 run('node build_korea_metal_map.mjs', 'build steel, metals & machinery map');
+run('node scripts/apply_curated_sector_moves.mjs', 'apply approved powergrid/defense moves');
 run('node scripts/verify_map_companies.mjs', 'verify map company arrays');
 run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry maps');
 run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy curated universe');
@@ -43,6 +44,7 @@ run('node scripts/apply_sector_exclusive.mjs', 'enforce single-sector ownership'
 run('node scripts/apply_cross_sector_memberships.mjs', 'verify no active cross-sector memberships');
 run('node scripts/enrich_company_fields.mjs', 'enrich semType/products (all maps)');
 run('node scripts/apply_semi_chain_reclass.mjs', 'semiconductor chain split persistence');
+run('node scripts/apply_ship_chain_reclass.mjs', 'ship chain split persistence');
 run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');

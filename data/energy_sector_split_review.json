@@ -342,15 +342,6 @@
     "mcapWon": 942697723500
   },
   {
-    "ticker": "025540",
-    "name": "한국단자",
-    "sector": "renewable",
-    "chain": "태양광",
-    "origin": "renewable",
-    "basis": "태양광 구조물·금속",
-    "mcapWon": 737383500000
-  },
-  {
     "ticker": "271940",
     "name": "일진하이솔루스",
     "sector": "renewable",
@@ -373,7 +364,7 @@
     "name": "지엔씨에너지",
     "sector": "renewable",
     "chain": "신재생 운영",
-    "origin": "forced",
+    "origin": "renewable",
     "basis": "신재생 운영",
     "mcapWon": 361875998000
   }

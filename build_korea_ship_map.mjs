@@ -14,31 +14,31 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const S = {
   YARD: '\uC885\uD569\uC870\uC120',
-  EQUIP: '\uC870\uC120\uAE30\uC790\uC7AC',
-  OFFSHORE: '\uD574\uC591\uD50C\uB79C\uD2B8',
+  ENGINE: '\uC5D4\uC9C4',
+  OUTFIT: '\uC758\uC7A5/\uBC30\uAD00',
+  EQUIP: '\uAE30\uD0C0 \uAE30\uC790\uC7AC',
+  OFFSHORE: '\uC11C\uBE44\uC2A4\u00B7\uD574\uC591\uD50C\uB79C\uD2B8',
   SHIPPING: '\uD574\uC6B4\uBB3C\uB958',
-  DEFENSE: '\uBC29\uC0B0\uD574\uC591',
-  STEEL: '\uCCA0\uAC15\uC18C\uC7AC',
 };
 
-const SECTOR_ORDER = [S.YARD, S.EQUIP, S.OFFSHORE, S.SHIPPING, S.DEFENSE, S.STEEL];
+const SECTOR_ORDER = [S.YARD, S.ENGINE, S.OUTFIT, S.EQUIP, S.OFFSHORE, S.SHIPPING];
 
 const CHAIN_COLORS = {
   [S.YARD]: '#4FC3F7',
   [S.EQUIP]: '#66BB6A',
+  [S.ENGINE]: '#26C6DA',
+  [S.OUTFIT]: '#FFCA28',
   [S.OFFSHORE]: '#FFA726',
   [S.SHIPPING]: '#EF5350',
-  [S.DEFENSE]: '#AB47BC',
-  [S.STEEL]: '#26C6DA',
 };
 
 const CHAIN_ANGLE = {
   [S.YARD]: 0,
-  [S.EQUIP]: 60,
-  [S.OFFSHORE]: 120,
-  [S.SHIPPING]: 180,
-  [S.DEFENSE]: 240,
-  [S.STEEL]: 300,
+  [S.ENGINE]: 60,
+  [S.OUTFIT]: 120,
+  [S.EQUIP]: 180,
+  [S.OFFSHORE]: 240,
+  [S.SHIPPING]: 300,
 };
 
 function loadKrx() {
@@ -172,7 +172,7 @@ const SEED = [
     name: 'STX\uC5D4\uC9C4',
     nameEn: 'STX Engine',
     ticker: '077970',
-    chain: S.EQUIP,
+    chain: S.ENGINE,
     semType: '\uC120\uBC15\uC6A9 \uC5D4\uC9C4\u00B7\uBC1C\uC804',
     semTypeEn: 'Marine diesel & gas engines',
     products: '\uBA54\uC778\uC5D4\uC9C4, \uBC1C\uC804\uAE30',
@@ -189,7 +189,7 @@ const SEED = [
     name: '\uD55C\uD654\uC5D4\uC9C4',
     nameEn: 'Hanwha Engine',
     ticker: '082740',
-    chain: S.EQUIP,
+    chain: S.ENGINE,
     semType: '\uAC00\uC2A4\uD130\uBE48\u00B7\uCD94\uC9C4',
     semTypeEn: 'Aero & marine propulsion',
     products: '\uAC00\uC2A4\uD130\uBE48, \uD568\uC815 \uCD94\uC9C4',
@@ -241,7 +241,7 @@ const SEED = [
     name: '\uD604\uB300\uC81C\uCCA0',
     nameEn: 'Hyundai Steel',
     ticker: '004020',
-    chain: S.STEEL,
+    chain: S.EQUIP,
     semType: '\uC120\uBC15\uC6A9 \uD6C4\uD310',
     semTypeEn: 'Steel plate for shipbuilding',
     products: '\uB450\uAEF4\uC6B4 \uC120\uCCB4\uC6A9 \uAC15\uD310',
@@ -257,7 +257,7 @@ const SEED = [
     name: '\uD3EC\uC2A4\uCF54\uC778\uD130\uB0B4\uC154\uB110',
     nameEn: 'POSCO International',
     ticker: '047050',
-    chain: S.STEEL,
+    chain: S.EQUIP,
     semType: '\uCCA0\uAC15\u00B7\uC5D0\uB108\uC9C0 \uD2B8\uB808\uC774\uB529',
     semTypeEn: 'Steel & energy trading',
     products: '\uC870\uC120\uAC15\uC7AC \uACF5\uAE09, LNG \uD2B8\uB808\uC774\uB529',
@@ -295,45 +295,45 @@ const GLOBALS = [
 
 function chainLabelKo() {
   return {
-    [S.YARD]: '\uC885\uD569 \uC870\uC120 (3\uB300 \uC870\uC120)',
-    [S.EQUIP]: '\uC870\uC120\uAE30\uC790\uC7AC\u00B7\uC5D4\uC9C4',
-    [S.OFFSHORE]: '\uD574\uC591\u00B7\uC5D0\uB108\uC9C0 \uD50C\uB79C\uD2B8',
+    [S.YARD]: '\uC885\uD569 \uC870\uC120',
+    [S.ENGINE]: '\uC120\uBC15 \uC5D4\uC9C4\u00B7\uCD94\uC9C4',
+    [S.OUTFIT]: '\uC758\uC7A5\u00B7\uBC30\uAD00\u00B7\uD53C\uD305',
+    [S.EQUIP]: '\uAE30\uD0C0 \uC870\uC120 \uAE30\uC790\uC7AC',
+    [S.OFFSHORE]: '\uC11C\uBE44\uC2A4\u00B7\uAC1C\uC870\u00B7\uD574\uC591\uD50C\uB79C\uD2B8',
     [S.SHIPPING]: '\uD574\uC6B4\uBB3C\uB958',
-    [S.DEFENSE]: '\uBC29\uC0B0\u00B7\uD574\uAD70\u00B7\uD568\uC815',
-    [S.STEEL]: '\uCCA0\uAC15\u00B7\uC18C\uC7AC',
   };
 }
 
 function chainLabelEn() {
   return {
     [S.YARD]: 'Integrated shipbuilding',
-    [S.EQUIP]: 'Marine equipment & engines',
-    [S.OFFSHORE]: 'Offshore & energy plant',
+    [S.ENGINE]: 'Marine engines & propulsion',
+    [S.OUTFIT]: 'Outfitting, piping & fittings',
+    [S.EQUIP]: 'Other marine equipment',
+    [S.OFFSHORE]: 'Services, retrofit & offshore plant',
     [S.SHIPPING]: 'Shipping & logistics',
-    [S.DEFENSE]: 'Defense & naval systems',
-    [S.STEEL]: 'Steel & materials',
   };
 }
 
 function chainFilterKo() {
   return {
     [S.YARD]: '\uC870\uC120\uC0AC',
-    [S.EQUIP]: '\uAE30\uC790\uC7AC',
-    [S.OFFSHORE]: '\uD574\uC591\uD50C\uB79C\uD2B8',
+    [S.ENGINE]: '\uC5D4\uC9C4',
+    [S.OUTFIT]: '\uC758\uC7A5\u00B7\uBC30\uAD00',
+    [S.EQUIP]: '\uAE30\uD0C0 \uAE30\uC790\uC7AC',
+    [S.OFFSHORE]: '\uC11C\uBE44\uC2A4\u00B7\uD574\uC591',
     [S.SHIPPING]: '\uD574\uC6B4',
-    [S.DEFENSE]: '\uBC29\uC0B0',
-    [S.STEEL]: '\uCCA0\uAC15',
   };
 }
 
 function chainFilterEn() {
   return {
     [S.YARD]: 'Shipyards',
-    [S.EQUIP]: 'Equipment',
-    [S.OFFSHORE]: 'Offshore',
+    [S.ENGINE]: 'Engines',
+    [S.OUTFIT]: 'Outfitting',
+    [S.EQUIP]: 'Other equipment',
+    [S.OFFSHORE]: 'Services & offshore',
     [S.SHIPPING]: 'Shipping',
-    [S.DEFENSE]: 'Defense',
-    [S.STEEL]: 'Steel',
   };
 }
 
@@ -561,8 +561,7 @@ function main() {
   );
 
   const semiAngleNeedle =
-    '{ IDM: 0, \uD339\uB9AC\uC2A4: 60, \uD30C\uC6B4\uB4DC\uB9AC: 120, \uC18C\uC7AC: 180, \uC7A5\uBE44: 240, ' +
-    "'\uBD80\uD488/\uAE30\uD310': 300, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 330 }";
+    "{ \uD339\uB9AC\uC2A4: 0, \uD30C\uC6B4\uB4DC\uB9AC: 45, \uC18C\uC7AC: 90, '\uC804\uACF5\uC815 \uC7A5\uBE44': 135, '\uD6C4\uACF5\uC815 \uC7A5\uBE44': 180, '\uBD80\uD488/\uAE30\uD310': 225, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 270, '\uBC18\uB3C4\uCCB4 \uC720\uD1B5': 315 }";
   const semiAngleRe = new RegExp(reEsc(semiAngleNeedle), 'g');
   const shipAngle = shipAngleLiteral();
   const angleMatches = html.match(semiAngleRe);
@@ -577,9 +576,9 @@ function main() {
   }
 
   const semiChainsAll =
-    "const chains = ['all', 'IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
+    "const chains = ['all', '\uC804\uACF5\uC815', '\uD6C4\uACF5\uC815', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
   const semiChainsNoAll =
-    "const chains = ['IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
+    "const chains = ['\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
   const shipChainsAll = `const chains = ['all', ${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
   const shipChainsNoAll = `const chains = [${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
 
@@ -587,7 +586,13 @@ function main() {
     html = html.replace(semiChainsAll, shipChainsAll);
     html = html.replace(semiChainsNoAll, shipChainsNoAll);
   } else if (!html.includes(shipChainsAll)) {
-    throw new Error('chains lines not found');
+    let allReplaced = false;
+    html = html.replace(/const chains = \['all'[, ][^\]]+\];/, () => {
+      allReplaced = true;
+      return shipChainsAll;
+    });
+    html = html.replace(/const chains = \[(?!'all')[^\]]+\];/, shipChainsNoAll);
+    if (!allReplaced) throw new Error('chains lines not found');
   }
 
   html = html.replace(

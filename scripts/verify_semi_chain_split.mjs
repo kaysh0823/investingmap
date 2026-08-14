@@ -26,11 +26,10 @@ const EXPECTED_COUNTS = {
   '패키징/테스트': 13,
   팹리스: 10,
   파운드리: 1,
-  IDM: 1,
   '반도체 유통': 1,
 };
 
-const RETIRED_CHAINS = ['장비', '후공정'];
+const RETIRED_CHAINS = ['장비', '후공정', 'IDM'];
 const LEAF_CHAINS = Object.keys(EXPECTED_COUNTS);
 const AGGREGATE_CHAINS = ['전공정', '후공정'];
 
@@ -58,7 +57,7 @@ const html = fs.readFileSync(HTML_PATH, 'utf8');
 
 // 1) koreanCompanies
 const companies = extractCompaniesFromHtml(html);
-check(companies.length === 85, `koreanCompanies: expected 85 companies, got ${companies.length}`);
+check(companies.length === 84, `koreanCompanies: expected 84 companies, got ${companies.length}`);
 const companyCounts = countChains(companies.map((c) => c.chain));
 compareCounts('koreanCompanies', companyCounts);
 
@@ -68,7 +67,7 @@ const rowChains = [...block.matchAll(/<tr data-ticker="(\d{6})">([\s\S]*?)<\/tr>
   const m = body.match(/<span class="chain-tag">([^<]*)<\/span>/);
   return [ticker, m ? m[1] : 'NONE'];
 });
-check(rowChains.length === 85, `prerender table: expected 85 rows, got ${rowChains.length}`);
+check(rowChains.length === 84, `prerender table: expected 84 rows, got ${rowChains.length}`);
 compareCounts('prerender table', countChains(rowChains.map(([, chain]) => chain)));
 const byTicker = new Map(companies.map((c) => [c.ticker, c.chain]));
 for (const [ticker, chain] of rowChains) {
@@ -146,7 +145,7 @@ for (const c of companies) {
 
 // 5) inference must never produce retired chains
 const availableChains = chainColorKeys;
-for (const sub of ['전공정 장비', '후공정 장비', '반도체 유통·메모리', '메모리 모듈 PCB', '메모리 검사장비', '패키징·OSAT', '—']) {
+for (const sub of ['IDM', '종합반도체', '전공정 장비', '후공정 장비', '반도체 유통·메모리', '메모리 모듈 PCB', '메모리 검사장비', '패키징·OSAT', '—']) {
   const inferred = inferChain(sub, 'semi', availableChains);
   check(!RETIRED_CHAINS.includes(inferred), `inferChain('${sub}') returned retired chain: ${inferred}`);
 }

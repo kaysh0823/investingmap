@@ -16,7 +16,6 @@ const FIELD_OVERRIDES_PATH = join(ROOT, 'data', 'ticker_field_overrides.json');
 const CHAIN_COLORS = {
   전공정: '#1E88E5',
   후공정: '#43A047',
-  IDM: '#4FC3F7',
   팹리스: '#66BB6A',
   파운드리: '#FFA726',
   소재: '#EF5350',
@@ -27,11 +26,11 @@ const CHAIN_COLORS = {
   '반도체 유통': '#8D6E63',
 };
 
-const FE_CHAINS = ['IDM', '팹리스', '파운드리', '소재', '전공정 장비'];
+const FE_CHAINS = ['팹리스', '파운드리', '소재', '전공정 장비'];
 const BE_CHAINS = ['부품/기판', '패키징/테스트', '후공정 장비', '반도체 유통'];
-const CHIP_CHAINS = ['all', '전공정', '후공정', 'IDM', '팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
-const LEGEND_CHAINS = ['IDM', '팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
-const ANGLE = "{ IDM: 0, 팹리스: 40, 파운드리: 80, 소재: 120, '전공정 장비': 160, '후공정 장비': 200, '부품/기판': 240, '패키징/테스트': 280, '반도체 유통': 320 }";
+const CHIP_CHAINS = ['all', '전공정', '후공정', '팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+const LEGEND_CHAINS = ['팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+const ANGLE = "{ 팹리스: 0, 파운드리: 45, 소재: 90, '전공정 장비': 135, '후공정 장비': 180, '부품/기판': 225, '패키징/테스트': 270, '반도체 유통': 315 }";
 
 /**
  * 재분류 과정에서 벨류체인과 어긋난 semType/products를 바로잡을 종목.
@@ -50,7 +49,6 @@ const EXPECTED_COUNTS = {
   '패키징/테스트': 13,
   팹리스: 10,
   파운드리: 1,
-  IDM: 1,
   '반도체 유통': 1,
 };
 
@@ -95,22 +93,22 @@ function patchUi(html) {
     `const chains = ${toJs(CHIP_CHAINS)};`,
   );
   out = out.replace(
-    /const chains = \['IDM'[, ][^\]]+\];/,
+    /const chains = \[(?:'IDM'|'팹리스')[, ][^\]]+\];/,
     `const chains = ${toJs(LEGEND_CHAINS)};`,
   );
   out = out.replace(
-    /\{ IDM: 0, 팹리스: \d+, 파운드리: \d+, 소재: \d+, (?:장비|'전공정 장비'): \d+, '부품\/기판': \d+, '패키징\/테스트': \d+(?:, '반도체 유통': \d+)? \}/g,
+    /\{ (?:IDM: \d+, )?팹리스: \d+, 파운드리: \d+, 소재: \d+, '전공정 장비': \d+, '후공정 장비': \d+, '부품\/기판': \d+, '패키징\/테스트': \d+, '반도체 유통': \d+ \}/g,
     ANGLE,
   );
 
   const labelKo =
-    '{ 전공정: \'전공정 (설계·제조·소재·장비)\', 후공정: \'후공정 (부품·기판·패키징·테스트)\', IDM: \'IDM (메모리·종합)\', 팹리스: \'팹리스 (설계)\', 파운드리: \'파운드리 (위탁제조)\', 소재: \'소재·공정부품\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'반도체 유통\' }';
+    '{ 전공정: \'전공정 (설계·제조·소재·장비)\', 후공정: \'후공정 (부품·기판·패키징·테스트)\', 팹리스: \'팹리스 (설계)\', 파운드리: \'파운드리 (위탁제조)\', 소재: \'소재·공정부품\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'반도체 유통\' }';
   const filterKo =
-    '{ 전공정: \'전공정\', 후공정: \'후공정\', IDM: \'IDM\', 팹리스: \'팹리스\', 파운드리: \'파운드리\', 소재: \'소재\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'유통\' }';
+    '{ 전공정: \'전공정\', 후공정: \'후공정\', 팹리스: \'팹리스\', 파운드리: \'파운드리\', 소재: \'소재\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'유통\' }';
   const labelEn =
-    '{ 전공정: \'Front-end (design, fab, materials, equipment)\', 후공정: \'Back-end (components, substrate, packaging, test)\', IDM: \'IDM (Memory·Integrated)\', 팹리스: \'Fabless (Design)\', 파운드리: \'Foundry\', 소재: \'Materials & Parts\', \'전공정 장비\': \'Front-end equipment\', \'후공정 장비\': \'Back-end equipment\', \'부품/기판\': \'Components/Substrate\', \'패키징/테스트\': \'Packaging & Test\', \'반도체 유통\': \'Semiconductor distribution\' }';
+    '{ 전공정: \'Front-end (design, fab, materials, equipment)\', 후공정: \'Back-end (components, substrate, packaging, test)\', 팹리스: \'Fabless (Design)\', 파운드리: \'Foundry\', 소재: \'Materials & Parts\', \'전공정 장비\': \'Front-end equipment\', \'후공정 장비\': \'Back-end equipment\', \'부품/기판\': \'Components/Substrate\', \'패키징/테스트\': \'Packaging & Test\', \'반도체 유통\': \'Semiconductor distribution\' }';
   const filterEn =
-    '{ 전공정: \'Front-end\', 후공정: \'Back-end\', IDM: \'IDM\', 팹리스: \'Fabless\', 파운드리: \'Foundry\', 소재: \'Materials\', \'전공정 장비\': \'FE equipment\', \'후공정 장비\': \'BE equipment\', \'부품/기판\': \'Components/Sub\', \'패키징/테스트\': \'Packaging/Test\', \'반도체 유통\': \'Distribution\' }';
+    '{ 전공정: \'Front-end\', 후공정: \'Back-end\', 팹리스: \'Fabless\', 파운드리: \'Foundry\', 소재: \'Materials\', \'전공정 장비\': \'FE equipment\', \'후공정 장비\': \'BE equipment\', \'부품/기판\': \'Components/Sub\', \'패키징/테스트\': \'Packaging/Test\', \'반도체 유통\': \'Distribution\' }';
 
   // T.ko / T.en 순서로 각각 한 번씩만 교체한다. 사전은 한 줄짜리 리터럴이므로
   // 줄·중괄호를 넘지 않는 패턴을 써야 재실행 시 다음 블록을 삼키지 않는다.
@@ -141,7 +139,7 @@ function patchPrerenderRows(html, companies) {
     /<tr data-ticker="(\d{6})">[\s\S]*?<\/tr>/g,
     (row, ticker) => {
       const c = byTicker.get(ticker);
-      if (!c) return row;
+      if (!c) return '';
       let next = row.replace(
         /<td><span class="chain-tag">[^<]*<\/span><\/td>/,
         `<td><span class="chain-tag">${escHtml(c.chain)}</span></td>`,
@@ -183,7 +181,7 @@ function main() {
     if (meta) Object.assign(c, meta);
     counts[c.chain] = (counts[c.chain] || 0) + 1;
   }
-  const stale = companies.filter((c) => c.chain === '장비' || c.chain === '후공정');
+  const stale = companies.filter((c) => c.chain === '장비' || c.chain === '후공정' || c.chain === 'IDM');
   if (stale.length) {
     throw new Error(`stale chains remain: ${stale.map((c) => c.ticker + ':' + c.chain).join(', ')}`);
   }

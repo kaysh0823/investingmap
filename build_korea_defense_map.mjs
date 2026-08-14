@@ -176,6 +176,30 @@ const SEED = [
     productsEn: 'Satellite buses, SIIS EO services',
     partners: ['airbus', 'nasa', 'spacex'],
   },
+  {
+    id: 'intellian',
+    name: '\uC778\uD154\uB9AC\uC548\uD14C\uD06C',
+    nameEn: 'Intellian Technologies',
+    ticker: '189300',
+    chain: S.D5,
+    semType: '\uC704\uC131\uD1B5\uC2E0 \uC548\uD14C\uB098',
+    semTypeEn: 'Satellite communications antennas',
+    products: '\uD574\uC0C1\u00B7\uC721\uC0C1\uC6A9 \uC704\uC131\uC548\uD14C\uB098\u00B7\uAC8C\uC774\uD2B8\uC6E8\uC774',
+    productsEn: 'Maritime and land satellite antennas and gateways',
+    partners: [],
+  },
+  {
+    id: 'i3system',
+    name: '\uC544\uC774\uC4F0\uB9AC\uC2DC\uC2A4\uD15C',
+    nameEn: 'i3system',
+    ticker: '214430',
+    chain: S.D5,
+    semType: '\uC801\uC678\uC120 \uC601\uC0C1\uC13C\uC11C',
+    semTypeEn: 'Infrared imaging sensors',
+    products: '\uC801\uC678\uC120 \uC601\uC0C1\uC13C\uC11C\u00B7\uC804\uC790\uAD11\uD559 \uBD80\uD488',
+    productsEn: 'Infrared imaging sensors and electro-optical components',
+    partners: [],
+  },
 ];
 
 const GLOBALS = [
@@ -459,8 +483,7 @@ function main() {
   );
 
   const semiAngleNeedle =
-    '{ IDM: 0, \uD339\uB9AC\uC2A4: 60, \uD30C\uC6B4\uB4DC\uB9AC: 120, \uC18C\uC7AC: 180, \uC7A5\uBE44: 240, ' +
-    "'\uBD80\uD488/\uAE30\uD310': 300, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 330 }";
+    "{ \uD339\uB9AC\uC2A4: 0, \uD30C\uC6B4\uB4DC\uB9AC: 45, \uC18C\uC7AC: 90, '\uC804\uACF5\uC815 \uC7A5\uBE44': 135, '\uD6C4\uACF5\uC815 \uC7A5\uBE44': 180, '\uBD80\uD488/\uAE30\uD310': 225, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 270, '\uBC18\uB3C4\uCCB4 \uC720\uD1B5': 315 }";
   const semiAngleRe = new RegExp(reEsc(semiAngleNeedle), 'g');
   const defAngle = defenseAngleLiteral();
   const angleMatches = html.match(semiAngleRe);
@@ -475,9 +498,9 @@ function main() {
   }
 
   const semiChainsAll =
-    "const chains = ['all', 'IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
+    "const chains = ['all', '\uC804\uACF5\uC815', '\uD6C4\uACF5\uC815', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
   const semiChainsNoAll =
-    "const chains = ['IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
+    "const chains = ['\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
   const defChainsAll = `const chains = ['all', ${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
   const defChainsNoAll = `const chains = [${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
 
@@ -485,7 +508,13 @@ function main() {
     html = html.replace(semiChainsAll, defChainsAll);
     html = html.replace(semiChainsNoAll, defChainsNoAll);
   } else if (!html.includes(defChainsAll)) {
-    throw new Error('defense map: chains lines not found');
+    let allReplaced = false;
+    html = html.replace(/const chains = \['all'[, ][^\]]+\];/, () => {
+      allReplaced = true;
+      return defChainsAll;
+    });
+    html = html.replace(/const chains = \[(?!'all')[^\]]+\];/, defChainsNoAll);
+    if (!allReplaced) throw new Error('defense map: chains lines not found');
   }
 
   html = html.replace(

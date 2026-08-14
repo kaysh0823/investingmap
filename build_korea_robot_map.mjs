@@ -605,7 +605,7 @@ function main() {
   );
 
   const semiAngleNeedle =
-    "{ IDM: 0, \uD339\uB9AC\uC2A4: 40, \uD30C\uC6B4\uB4DC\uB9AC: 80, \uC18C\uC7AC: 120, '\uC804\uACF5\uC815 \uC7A5\uBE44': 160, '\uD6C4\uACF5\uC815 \uC7A5\uBE44': 200, '\uBD80\uD488/\uAE30\uD310': 240, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 280, '\uBC18\uB3C4\uCCB4 \uC720\uD1B5': 320 }";
+    "{ \uD339\uB9AC\uC2A4: 0, \uD30C\uC6B4\uB4DC\uB9AC: 45, \uC18C\uC7AC: 90, '\uC804\uACF5\uC815 \uC7A5\uBE44': 135, '\uD6C4\uACF5\uC815 \uC7A5\uBE44': 180, '\uBD80\uD488/\uAE30\uD310': 225, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 270, '\uBC18\uB3C4\uCCB4 \uC720\uD1B5': 315 }";
   const semiAngleRe = new RegExp(reEsc(semiAngleNeedle), 'g');
   const robotAngle = robotAngleLiteral();
   const angleMatches = html.match(semiAngleRe);
@@ -620,9 +620,9 @@ function main() {
   }
 
   const semiChainsAll =
-    "const chains = ['all', 'IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
+    "const chains = ['all', '\uC804\uACF5\uC815', '\uD6C4\uACF5\uC815', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
   const semiChainsNoAll =
-    "const chains = ['IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
+    "const chains = ['\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
   const shipChainsAll = `const chains = ['all', ${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
   const shipChainsNoAll = `const chains = [${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
 

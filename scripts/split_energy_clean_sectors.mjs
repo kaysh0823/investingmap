@@ -25,6 +25,7 @@ import {
 } from '../lib/krx_data_sources.mjs';
 import { loadPerPbrMap } from '../lib/krx_per_pbr.mjs';
 import { passesMcapFloor, filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
+import { exclusiveSector } from '../lib/sector_exclusive.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CP_LIST_DIR = path.resolve(ROOT, '..', 'cp_list');
@@ -103,6 +104,9 @@ const FORCE = {
   renewable: new Set(['009830', '010060', '112610', '322000', '475150', '456040', '119850', '271940', '011930']),
   nuclear: new Set(['034020', '052690', '051600', '083650', '105840', '006910', '130660']),
 };
+// Keep the previously confirmed renewable universe stable; SK케미칼 is not one
+// of the sector's approved operating names even if it appears in a stale source.
+const SUCCESSOR_DROP = new Set(['285130']);
 
 const CHAIN_FORCE = {
   battery: {
@@ -126,6 +130,9 @@ function sourceText(c, entry) {
 
 function sectorForCompany(c, entry, origin) {
   const ticker = String(c.ticker || '').padStart(6, '0');
+  if (SUCCESSOR_DROP.has(ticker)) return null;
+  const exclusive = exclusiveSector(ticker);
+  if (exclusive === 'powergrid') return null;
   for (const [sid, set] of Object.entries(FORCE)) {
     if (set.has(ticker)) return sid;
   }
