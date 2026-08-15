@@ -1,13 +1,14 @@
 /**
- * Map company candle modal: lightweight-charts v4 + /api/ticker_ohlc.
- * Stacked panels (price / volume / MACD / BBW%·DISP% / ATR%) with synced axes.
+ * Map company candle modal: lightweight-charts v5 + /api/ticker_ohlc.
+ * One chart, five native panes (price / volume / MACD / BBW%·DISP% / ATR%).
+ * The panes share a single time scale, so their x axes align by construction.
  */
 (function (global) {
   'use strict';
 
   /** lightweight-charts is not on cdnjs; jsDelivr serves the npm standalone build. */
   var LWC_SRC =
-    'https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
+    'https://cdn.jsdelivr.net/npm/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';
 
   var RANGES = ['3m', '6m', '1y', '3y', '5y'];
   var INTERVALS = ['daily', 'weekly'];
@@ -17,21 +18,7 @@
     weekly: { '3m': 13, '6m': 26, '1y': 52, '3y': 156, '5y': 260 },
   };
   var RIGHT_OFFSET_BARS = 7;
-  var PRICE_SCALE_MIN_WIDTH = 84;
-  /** Re-apply passes after a render, in case a late webfont swap changes metrics. */
-  var AXIS_ALIGN_DELAYS_MS = [0, 150, 400];
   var AXIS_FONT_SIZE = 11;
-  /** lightweight-charts' own default; measuring with it keeps our math in step. */
-  var AXIS_FONT_FAMILY =
-    "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif";
-  /**
-   * Non-text part of a v4 price axis: border(1) + tick(5) + inner/outer padding
-   * (fontSize/12*5 each) + label offset(5). See PriceAxisWidget.optimalWidth.
-   */
-  var AXIS_CHROME_PX = 1 + 5 + (AXIS_FONT_SIZE / 12) * 5 * 2 + 5;
-  var AXIS_SAFETY_PX = 2;
-  var AXIS_FALLBACK_TEXT_PX = 34;
-  /** Kept in step with the scaleMargins passed to each pane in createCharts. */
   var PANE_MARGINS = {
     price: { top: 0.06, bottom: 0.1 },
     vol: { top: 0.12, bottom: 0.08 },
@@ -39,6 +26,16 @@
     norm: { top: 0.12, bottom: 0.12 },
     atr: { top: 0.12, bottom: 0.12 },
   };
+  /** Pane order and relative heights; index doubles as the v5 pane index. */
+  var PANES = [
+    { key: 'price', stretch: 40 },
+    { key: 'vol', stretch: 13 },
+    { key: 'macd', stretch: 16 },
+    { key: 'norm', stretch: 16 },
+    { key: 'atr', stretch: 15 },
+  ];
+  /** lightweight-charts draws a 1px separator between panes. */
+  var PANE_SEPARATOR_PX = 1;
   var MA_FAST = 50;
   var MA_PRICE = 120;
   var MA_VOL = 20;
@@ -137,19 +134,15 @@
       daily: DEFAULT_RANGE_BY_INTERVAL.daily,
       weekly: DEFAULT_RANGE_BY_INTERVAL.weekly,
     },
-    charts: null,
+    chart: null,
     seriesRefs: null,
     barsByTime: null,
-    syncingRange: false,
-    syncingCross: false,
     fetchToken: 0,
     lwcPromise: null,
     lastFocus: null,
     resizeObs: null,
     liveOverlay: false,
     liveBarTime: null,
-    axisAlignTimers: [],
-    alignedPriceScaleWidth: PRICE_SCALE_MIN_WIDTH,
     panelData: null,
   };
 
@@ -636,15 +629,10 @@
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
       '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
       '.im-candle-body{position:relative;flex:1 1 auto;min-height:0;padding:6px 8px 8px;display:flex;flex-direction:column;overflow:hidden}' +
-      '.im-candle-stack{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;height:100%;width:100%;gap:0;overflow:hidden}' +
-      '.im-candle-pane{position:relative;min-height:0;width:100%;overflow:hidden;box-sizing:border-box}' +
-      '.im-candle-pane-price{flex:0 0 40%}' +
-      '.im-candle-pane-vol{flex:0 0 13%}' +
-      '.im-candle-pane-macd{flex:0 0 16%}' +
-      '.im-candle-pane-norm{flex:0 0 16%}' +
-      '.im-candle-pane-atr{flex:0 0 15%}' +
-      '.im-candle-pane-label{position:absolute;top:4px;left:8px;z-index:2;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);pointer-events:none}' +
-      '.im-candle-pane-chart{width:100%;height:100%;min-height:0}' +
+      '.im-candle-stack{position:relative;flex:1 1 auto;min-height:0;height:100%;width:100%;overflow:hidden}' +
+      '.im-candle-chart{width:100%;height:100%;min-height:0}' +
+      '.im-candle-pane-labels{position:absolute;inset:0;z-index:2;pointer-events:none}' +
+      '.im-candle-pane-label{position:absolute;left:8px;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);white-space:nowrap}' +
       '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
       '.im-candle-status.is-on{display:flex}' +
       'body.im-candle-open{overflow:hidden}' +
@@ -676,11 +664,10 @@
     if (
       root &&
       (!document.getElementById('im-candle-stack') ||
-        !document.getElementById('im-candle-macd') ||
-        !document.getElementById('im-candle-norm') ||
-        !document.getElementById('im-candle-atr') ||
+        !document.getElementById('im-candle-chart') ||
+        !document.getElementById('im-candle-pane-labels') ||
         !document.getElementById('im-candle-intervals') ||
-        document.getElementById('im-candle-disp'))
+        document.getElementById('im-candle-price'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
       root = null;
@@ -707,11 +694,12 @@
       '</div>' +
       '<div class="im-candle-body">' +
       '<div class="im-candle-stack" id="im-candle-stack" role="img">' +
-      '<div class="im-candle-pane im-candle-pane-price"><span class="im-candle-pane-label" data-pane="price"></span><div class="im-candle-pane-chart" id="im-candle-price"></div></div>' +
-      '<div class="im-candle-pane im-candle-pane-vol"><span class="im-candle-pane-label" data-pane="vol"></span><div class="im-candle-pane-chart" id="im-candle-vol"></div></div>' +
-      '<div class="im-candle-pane im-candle-pane-macd"><span class="im-candle-pane-label" data-pane="macd"></span><div class="im-candle-pane-chart" id="im-candle-macd"></div></div>' +
-      '<div class="im-candle-pane im-candle-pane-norm"><span class="im-candle-pane-label" data-pane="norm"></span><div class="im-candle-pane-chart" id="im-candle-norm"></div></div>' +
-      '<div class="im-candle-pane im-candle-pane-atr"><span class="im-candle-pane-label" data-pane="atr"></span><div class="im-candle-pane-chart" id="im-candle-atr"></div></div>' +
+      '<div class="im-candle-chart" id="im-candle-chart"></div>' +
+      '<div class="im-candle-pane-labels" id="im-candle-pane-labels">' +
+      PANES.map(function (pane) {
+        return '<span class="im-candle-pane-label" data-pane="' + pane.key + '"></span>';
+      }).join('') +
+      '</div>' +
       '</div>' +
       '<div class="im-candle-status" id="im-candle-status"></div>' +
       '</div></div>';
@@ -1042,45 +1030,35 @@
   }
 
   function destroyCharts() {
-    clearAxisAlignTimers();
     if (state.resizeObs) {
       try {
         state.resizeObs.disconnect();
       } catch (e) {}
       state.resizeObs = null;
     }
-    if (state.charts) {
-      for (var i = 0; i < state.charts.length; i++) {
-        try {
-          state.charts[i].remove();
-        } catch (e2) {}
-      }
+    if (state.chart) {
+      try {
+        state.chart.remove();
+      } catch (e2) {}
     }
-    state.charts = null;
+    state.chart = null;
     state.seriesRefs = null;
     state.barsByTime = null;
     state.panelData = null;
-    state.alignedPriceScaleWidth = PRICE_SCALE_MIN_WIDTH;
   }
 
-  function makeChart(LWC, container, colors, opts) {
-    var w = Math.max(container.clientWidth || 0, 120);
-    var h = Math.max(container.clientHeight || 0, 48);
-    var mode =
-      opts && opts.logScale && LWC.PriceScaleMode
-        ? LWC.PriceScaleMode.Logarithmic
-        : LWC.PriceScaleMode
-          ? LWC.PriceScaleMode.Normal
-          : 0;
+  function makeChart(LWC, container, colors) {
     return LWC.createChart(container, {
-      width: w,
-      height: h,
+      width: Math.max(container.clientWidth || 0, 120),
+      height: Math.max(container.clientHeight || 0, 240),
+      autoSize: true,
       layout: {
         background: { type: 'solid', color: colors.bg },
         textColor: colors.muted,
-        // Pinned so computeAxisWidth measures with exactly the axis font.
         fontSize: AXIS_FONT_SIZE,
-        fontFamily: AXIS_FONT_FAMILY,
+        attributionLogo: false,
+        // Panes are sized from the data, not dragged, so the handles only add noise.
+        panes: { enableResize: false, separatorColor: colors.border },
       },
       grid: {
         vertLines: { color: colors.border },
@@ -1088,265 +1066,139 @@
       },
       crosshair: { mode: LWC.CrosshairMode ? LWC.CrosshairMode.Normal : 1 },
       rightPriceScale: {
+        visible: true,
         borderColor: colors.border,
-        mode: mode,
-        minimumWidth: PRICE_SCALE_MIN_WIDTH,
         alignLabels: true,
-        scaleMargins: opts && opts.scaleMargins ? opts.scaleMargins : { top: 0.08, bottom: 0.08 },
       },
       timeScale: {
         borderColor: colors.border,
         rightOffset: RIGHT_OFFSET_BARS,
-        timeVisible: !!(opts && opts.timeVisible),
-        visible: opts && opts.timeVisible !== false ? true : true,
+        timeVisible: false,
       },
       handleScroll: true,
       handleScale: true,
     });
   }
 
-  function wireSync(charts, seriesByChart) {
-    function onRange(sourceIdx, range) {
-      if (state.syncingRange || !range) return;
-      state.syncingRange = true;
-      for (var i = 0; i < charts.length; i++) {
-        if (i === sourceIdx) continue;
-        try {
-          charts[i].timeScale().setVisibleLogicalRange(range);
-        } catch (e) {}
+  /**
+   * Pane labels live in an overlay because a v5 pane is a table row we should not
+   * inject into. Pane heights come from the chart, so the overlay tracks whatever
+   * stretch factors and resizes the chart settles on.
+   */
+  function syncPaneLabelPositions() {
+    var layer = document.getElementById('im-candle-pane-labels');
+    if (!layer || !state.chart) return;
+    var nodes = layer.querySelectorAll('[data-pane]');
+    var offset = 0;
+    for (var i = 0; i < nodes.length; i++) {
+      var height = 0;
+      try {
+        height = (state.chart.paneSize(i) || {}).height || 0;
+      } catch (e) {
+        height = 0;
       }
-      state.syncingRange = false;
-    }
-
-    for (var i = 0; i < charts.length; i++) {
-      (function (idx) {
-        charts[idx].timeScale().subscribeVisibleLogicalRangeChange(function (range) {
-          onRange(idx, range);
-        });
-      })(i);
-    }
-
-    function syncCross(sourceIdx, param) {
-      if (state.syncingCross) return;
-      state.syncingCross = true;
-      var time = param && param.time ? param.time : null;
-      if (!time) {
-        updateTip(null);
-        for (var j = 0; j < charts.length; j++) {
-          if (j === sourceIdx) continue;
-          try {
-            charts[j].clearCrosshairPosition();
-          } catch (e) {}
-        }
-        state.syncingCross = false;
-        return;
-      }
-      updateTip(String(time));
-      for (var k = 0; k < charts.length; k++) {
-        if (k === sourceIdx) continue;
-        var series = seriesByChart[k];
-        if (!series) continue;
-        try {
-          var tipBar = state.barsByTime && state.barsByTime[String(time)];
-          var price = null;
-          if (k === 0 && tipBar) price = tipBar.c;
-          else if (k === 1 && tipBar) price = tipBar.v;
-          else if (k === 2 && tipBar) price = tipBar.macd;
-          else if (k === 3 && tipBar) price = tipBar.bbw;
-          else if (k === 4 && tipBar) price = tipBar.atr;
-          if (price != null && isFinite(price)) {
-            charts[k].setCrosshairPosition(price, time, series);
-          }
-        } catch (e3) {}
-      }
-      state.syncingCross = false;
-    }
-
-    for (var c = 0; c < charts.length; c++) {
-      (function (idx) {
-        charts[idx].subscribeCrosshairMove(function (param) {
-          syncCross(idx, param);
-        });
-      })(c);
+      nodes[i].style.top = offset + 4 + 'px';
+      nodes[i].style.display = height > 26 ? 'block' : 'none';
+      offset += height + PANE_SEPARATOR_PX;
     }
   }
 
+  var PANE_INDEX = { price: 0, vol: 1, macd: 2, norm: 3, atr: 4 };
+
   function createCharts(LWC, data) {
     destroyCharts();
-    var priceEl = document.getElementById('im-candle-price');
-    var volEl = document.getElementById('im-candle-vol');
-    var macdEl = document.getElementById('im-candle-macd');
-    var normEl = document.getElementById('im-candle-norm');
-    var atrEl = document.getElementById('im-candle-atr');
-    if (!priceEl || !volEl || !macdEl || !normEl || !atrEl) return;
-    priceEl.innerHTML = '';
-    volEl.innerHTML = '';
-    macdEl.innerHTML = '';
-    normEl.innerHTML = '';
-    atrEl.innerHTML = '';
+    var host = document.getElementById('im-candle-chart');
+    if (!host) return;
+    host.innerHTML = '';
 
     state.panelData = data;
     var colors = themeColors();
-    var priceChart = makeChart(LWC, priceEl, colors, {
-      scaleMargins: PANE_MARGINS.price,
-      timeVisible: false,
-      logScale: true,
-    });
-    var volChart = makeChart(LWC, volEl, colors, {
-      scaleMargins: PANE_MARGINS.vol,
-      timeVisible: false,
-    });
-    var macdChart = makeChart(LWC, macdEl, colors, {
-      scaleMargins: PANE_MARGINS.macd,
-      timeVisible: false,
-    });
-    var normChart = makeChart(LWC, normEl, colors, {
-      scaleMargins: PANE_MARGINS.norm,
-      timeVisible: false,
-    });
-    var atrChart = makeChart(LWC, atrEl, colors, {
-      scaleMargins: PANE_MARGINS.atr,
-      timeVisible: true,
-    });
+    var chart = makeChart(LWC, host, colors);
 
-    var candle = priceChart.addCandlestickSeries({
-      upColor: '#3fb950',
-      downColor: '#f85149',
-      borderVisible: false,
-      wickUpColor: '#3fb950',
-      wickDownColor: '#f85149',
-    });
+    function addLine(paneKey, options) {
+      return chart.addSeries(
+        LWC.LineSeries,
+        Object.assign({ lineWidth: 2, priceLineVisible: false, lastValueVisible: true }, options),
+        PANE_INDEX[paneKey],
+      );
+    }
+
+    var candle = chart.addSeries(
+      LWC.CandlestickSeries,
+      {
+        upColor: '#3fb950',
+        downColor: '#f85149',
+        borderVisible: false,
+        wickUpColor: '#3fb950',
+        wickDownColor: '#f85149',
+      },
+      PANE_INDEX.price,
+    );
     candle.setData(data.candles);
 
     var closeSeries = null;
     if (data.closeLine && data.closeLine.length) {
-      closeSeries = priceChart.addLineSeries({
-        color: '#58a6ff',
-        lineWidth: 2,
-        priceLineVisible: false,
-        lastValueVisible: true,
-        title: t().closePx,
-      });
+      closeSeries = addLine('price', { color: '#58a6ff', title: t().closePx });
       closeSeries.setData(data.closeLine);
     }
 
-    var ma50Series = priceChart.addLineSeries({
-      color: '#e3b341',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
-      title: 'MA50',
-    });
+    var ma50Series = addLine('price', { color: '#e3b341', title: 'MA50' });
     ma50Series.setData(data.ma50Line);
 
-    var maSeries = priceChart.addLineSeries({
-      color: '#58a6ff',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
-      title: 'MA120',
-    });
+    var maSeries = addLine('price', { color: '#58a6ff', title: 'MA120' });
     maSeries.setData(data.maLine);
 
-    var volSeries = volChart.addHistogramSeries({
-      priceFormat: { type: 'volume' },
-      color: 'rgba(63,185,80,0.55)',
-    });
+    var volSeries = chart.addSeries(
+      LWC.HistogramSeries,
+      { priceFormat: { type: 'volume' }, color: 'rgba(63,185,80,0.55)' },
+      PANE_INDEX.vol,
+    );
     volSeries.setData(data.volumes);
 
-    var vmaSeries = volChart.addLineSeries({
-      color: '#d2a8ff',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
-      title: 'VMA20',
-    });
+    var vmaSeries = addLine('vol', { color: '#d2a8ff', title: 'VMA20' });
     vmaSeries.setData(data.vmaLine);
 
-    var macdHistSeries = macdChart.addHistogramSeries({
-      priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
-    });
+    var macdHistSeries = chart.addSeries(
+      LWC.HistogramSeries,
+      { priceFormat: { type: 'price', precision: 2, minMove: 0.01 } },
+      PANE_INDEX.macd,
+    );
     macdHistSeries.setData(data.macdHist);
 
-    var macdLineSeries = macdChart.addLineSeries({
-      color: '#58a6ff',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
-      title: 'MACD',
-    });
+    var macdLineSeries = addLine('macd', { color: '#58a6ff', title: 'MACD' });
     macdLineSeries.setData(data.macdLine);
 
-    var macdSignalSeries = macdChart.addLineSeries({
-      color: '#f778ba',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
-      title: 'Signal',
-    });
+    var macdSignalSeries = addLine('macd', { color: '#f778ba', title: 'Signal' });
     macdSignalSeries.setData(data.macdSignalLine);
 
-    var bbwSeries = normChart.addLineSeries({
-      color: '#f0883e',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
-      title: 'BBW%',
-    });
+    var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW%' });
     bbwSeries.setData(data.bbwLine);
 
-    var dispSeries = normChart.addLineSeries({
-      color: '#39c5cf',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
-      title: 'DISP%',
-    });
+    var dispSeries = addLine('norm', { color: '#39c5cf', title: 'DISP%' });
     dispSeries.setData(data.dispLine);
 
-    var atrSeries = atrChart.addLineSeries({
+    var atrSeries = addLine('atr', {
       color: '#a371f7',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
       priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
       title: 'ATR(3)/Close%',
     });
     atrSeries.setData(data.atrLine);
 
-    var atrSignalSeries = atrChart.addLineSeries({
+    var atrSignalSeries = addLine('atr', {
       color: '#e3b341',
-      lineWidth: 2,
-      priceLineVisible: false,
-      lastValueVisible: true,
       priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
       title: 'EMA9',
     });
     atrSignalSeries.setData(data.atrSignalLine);
 
-    priceChart.timeScale().applyOptions({ visible: false });
-    volChart.timeScale().applyOptions({ visible: false });
-    macdChart.timeScale().applyOptions({ visible: false });
-    normChart.timeScale().applyOptions({ visible: false });
-    atrChart.timeScale().applyOptions({ visible: true, borderVisible: true });
+    applyPaneLayout(LWC, chart);
 
-    var charts = [priceChart, volChart, macdChart, normChart, atrChart];
-    var priceAnchor = data.candles.length ? candle : closeSeries || candle;
-    var primarySeries = [priceAnchor, volSeries, macdLineSeries, bbwSeries, atrSeries];
-    wireSync(charts, primarySeries);
+    chart.subscribeCrosshairMove(function (param) {
+      updateTip(param && param.time ? String(param.time) : null);
+    });
+    chart.timeScale().fitContent();
 
-    priceChart.timeScale().fitContent();
-    try {
-      var lr = priceChart.timeScale().getVisibleLogicalRange();
-      if (lr) {
-        volChart.timeScale().setVisibleLogicalRange(lr);
-        macdChart.timeScale().setVisibleLogicalRange(lr);
-        normChart.timeScale().setVisibleLogicalRange(lr);
-        atrChart.timeScale().setVisibleLogicalRange(lr);
-      }
-    } catch (e) {}
-
-    state.charts = charts;
+    state.chart = chart;
     state.seriesRefs = {
       candle: candle,
       close: closeSeries,
@@ -1364,264 +1216,61 @@
     };
     state.barsByTime = data.byTime;
 
+    observeResize();
+    resizeCharts();
+    afterLayout(resizeCharts);
+  }
+
+  /** Give each pane its share of the height and its own right-scale margins. */
+  function applyPaneLayout(LWC, chart) {
+    var panes = [];
+    try {
+      panes = chart.panes() || [];
+    } catch (e) {}
+    for (var i = 0; i < PANES.length && i < panes.length; i++) {
+      var spec = PANES[i];
+      try {
+        panes[i].setStretchFactor(spec.stretch);
+      } catch (eStretch) {}
+      var scaleOptions = { scaleMargins: PANE_MARGINS[spec.key] };
+      if (spec.key === 'price' && LWC.PriceScaleMode) {
+        scaleOptions.mode = LWC.PriceScaleMode.Logarithmic;
+      }
+      try {
+        panes[i].priceScale('right').applyOptions(scaleOptions);
+      } catch (eScale) {}
+    }
+  }
+
+  function observeResize() {
     var stack = document.getElementById('im-candle-stack');
     if (state.resizeObs) {
       try {
         state.resizeObs.disconnect();
-      } catch (eRo) {}
+      } catch (e) {}
       state.resizeObs = null;
     }
-    if (stack && typeof ResizeObserver !== 'undefined') {
-      state.resizeObs = new ResizeObserver(function () {
-        resizeCharts();
-      });
-      state.resizeObs.observe(stack);
-      var body = document.querySelector('.im-candle-body');
-      if (body) state.resizeObs.observe(body);
-    }
-    resizeCharts();
-    afterLayout(function () {
-      resizeCharts();
-      scheduleAxisAlignment();
+    if (!stack || typeof ResizeObserver === 'undefined') return;
+    // Deferred, because repositioning the labels inside the callback would dirty
+    // layout again and trip the "ResizeObserver loop" warning.
+    state.resizeObs = new ResizeObserver(function () {
+      requestAnimationFrame(resizeCharts);
     });
-  }
-
-  function priceScaleOf(chart) {
-    try {
-      var scale = chart && chart.priceScale ? chart.priceScale('right') : null;
-      return scale && typeof scale.applyOptions === 'function' ? scale : null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function setPriceScaleWidth(charts, width) {
-    for (var i = 0; i < charts.length; i++) {
-      var scale = priceScaleOf(charts[i]);
-      if (!scale) continue;
-      try {
-        scale.applyOptions({ minimumWidth: width });
-      } catch (e) {}
-    }
-  }
-
-  function axisMeasureContext() {
-    if (state.axisMeasureCtx !== undefined) return state.axisMeasureCtx;
-    var ctx = null;
-    try {
-      ctx = document.createElement('canvas').getContext('2d');
-    } catch (e) {
-      ctx = null;
-    }
-    if (ctx) ctx.font = AXIS_FONT_SIZE + 'px ' + AXIS_FONT_FAMILY;
-    state.axisMeasureCtx = ctx;
-    return ctx;
-  }
-
-  /**
-   * lightweight-charts caches label metrics with digits 2-9 folded to '0'.
-   * Folding every digit matches that and never under-measures, since '0' is the
-   * widest digit in the proportional fonts we render with.
-   */
-  function measureAxisText(text) {
-    var folded = String(text).replace(/[0-9]/g, '0');
-    var ctx = axisMeasureContext();
-    if (!ctx) return folded.length * AXIS_FONT_SIZE * 0.62;
-    return ctx.measureText(folded).width;
-  }
-
-  /** Mirrors lightweight-charts' PriceFormatter (precision 2, unicode minus). */
-  function formatAxisPrice(value) {
-    return (value < 0 ? '\u2212' : '') + Math.abs(value).toFixed(2);
-  }
-
-  function formatAxisVolumeNumber(value) {
-    var rounded = Math.round(value * 100) / 100;
-    var res =
-      rounded >= 1e-15 && rounded < 1
-        ? rounded.toFixed(2).replace(/\.?0+$/, '')
-        : String(rounded);
-    return res.replace(/(\.[1-9]*)0+$/, function (all, keep) {
-      return keep;
-    });
-  }
-
-  /** Mirrors lightweight-charts' VolumeFormatter (precision 2). */
-  function formatAxisVolume(value) {
-    var sign = value < 0 ? '-' : '';
-    var vol = Math.abs(value);
-    if (vol < 995) return sign + formatAxisVolumeNumber(vol);
-    if (vol < 999995) return sign + formatAxisVolumeNumber(vol / 1000) + 'K';
-    if (vol < 999999995) {
-      return sign + formatAxisVolumeNumber((1000 * Math.round(vol / 1000)) / 1e6) + 'M';
-    }
-    return sign + formatAxisVolumeNumber((1e6 * Math.round(vol / 1e6)) / 1e9) + 'B';
-  }
-
-  function seriesBounds(lists) {
-    var lo = Infinity;
-    var hi = -Infinity;
-    for (var i = 0; i < lists.length; i++) {
-      var list = lists[i];
-      if (!list) continue;
-      for (var j = 0; j < list.length; j++) {
-        var point = list[j];
-        var candidates = point.value != null ? [point.value] : [point.high, point.low];
-        for (var k = 0; k < candidates.length; k++) {
-          var n = Number(candidates[k]);
-          if (!isFinite(n)) continue;
-          if (n < lo) lo = n;
-          if (n > hi) hi = n;
-        }
-      }
-    }
-    return lo <= hi ? [lo, hi] : null;
-  }
-
-  /**
-   * The axis prints labels for the whole visible price range, which extends past
-   * the data by the pane's scale margins. Reproduce that extrapolation so the
-   * widest label we plan for is the widest label the axis can actually draw.
-   */
-  function axisValueRange(bounds, margins, logScale) {
-    var lo = bounds[0];
-    var hi = bounds[1];
-    var usable = Math.max(1 - margins.top - margins.bottom, 0.1);
-    if (logScale && lo > 0 && hi > lo) {
-      var ratio = hi / lo;
-      return [lo / Math.pow(ratio, margins.bottom / usable), hi * Math.pow(ratio, margins.top / usable)];
-    }
-    var span = hi - lo || Math.abs(hi) || 1;
-    return [lo - span * (margins.bottom / usable), hi + span * (margins.top / usable)];
-  }
-
-  function axisPanelSpecs(data) {
-    return [
-      {
-        series: [data.candles, data.closeLine, data.ma50Line, data.maLine],
-        format: formatAxisPrice,
-        margins: PANE_MARGINS.price,
-        logScale: true,
-      },
-      { series: [data.volumes, data.vmaLine], format: formatAxisVolume, margins: PANE_MARGINS.vol },
-      {
-        series: [data.macdHist, data.macdLine, data.macdSignalLine],
-        format: formatAxisPrice,
-        margins: PANE_MARGINS.macd,
-      },
-      { series: [data.bbwLine, data.dispLine], format: formatAxisPrice, margins: PANE_MARGINS.norm },
-      {
-        series: [data.atrLine, data.atrSignalLine],
-        format: formatAxisPrice,
-        margins: PANE_MARGINS.atr,
-      },
-    ];
-  }
-
-  /**
-   * Derive the shared axis width from the data instead of measuring rendered
-   * scales. lightweight-charts only widens an axis after painting its labels, so
-   * any measurement races the paint; the widest label, on the other hand, is
-   * known up front. Every pane then sits at max(itsOptimalWidth, minimumWidth),
-   * and because this value covers the widest pane, that is one identical width.
-   */
-  function computeAxisWidth(data) {
-    var panels = axisPanelSpecs(data || {});
-    var widest = 0;
-    for (var i = 0; i < panels.length; i++) {
-      var panel = panels[i];
-      var bounds = seriesBounds(panel.series);
-      if (!bounds) continue;
-      var range = axisValueRange(bounds, panel.margins, panel.logScale);
-      var labels = [
-        panel.format(range[0]),
-        panel.format(range[1]),
-        panel.format(Math.floor(range[0])),
-        panel.format(Math.ceil(range[1])),
-      ];
-      for (var j = 0; j < labels.length; j++) {
-        widest = Math.max(widest, measureAxisText(labels[j]));
-      }
-    }
-    var width = Math.ceil(AXIS_CHROME_PX + AXIS_SAFETY_PX + (widest || AXIS_FALLBACK_TEXT_PX));
-    width += width % 2; // lightweight-charts rounds scale widths up to an even value
-    return Math.max(width, PRICE_SCALE_MIN_WIDTH);
-  }
-
-  /**
-   * The computed width already covers the widest label each pane can print.
-   * Measuring the laid-out scales on top can only ever reveal a wider
-   * requirement, so it backstops the model. Because nothing here ever lowers the
-   * width, this cannot reintroduce the shrink/grow race that measuring alone hit.
-   */
-  function alignPriceScaleWidths(chartsOverride) {
-    var charts = chartsOverride || state.charts;
-    if (!charts || !charts.length) return state.alignedPriceScaleWidth;
-    var width = Math.max(computeAxisWidth(state.panelData), state.alignedPriceScaleWidth);
-    for (var i = 0; i < charts.length; i++) {
-      var scale = priceScaleOf(charts[i]);
-      if (!scale || typeof scale.width !== 'function') continue;
-      var measured = Number(scale.width());
-      if (isFinite(measured)) width = Math.max(width, Math.ceil(measured));
-    }
-    width += width % 2;
-    setPriceScaleWidth(charts, width);
-    state.alignedPriceScaleWidth = width;
-    return width;
-  }
-
-  /** Dev helper: every pane should report the same number. */
-  function debugAxisWidths() {
-    var charts = state.charts || [];
-    var widths = [];
-    for (var i = 0; i < charts.length; i++) {
-      var scale = priceScaleOf(charts[i]);
-      widths.push(scale && typeof scale.width === 'function' ? scale.width() : null);
-    }
-    return { applied: state.alignedPriceScaleWidth, widths: widths };
-  }
-
-  function clearAxisAlignTimers() {
-    for (var i = 0; i < state.axisAlignTimers.length; i++) {
-      clearTimeout(state.axisAlignTimers[i]);
-    }
-    state.axisAlignTimers = [];
-  }
-
-  function scheduleAxisAlignment() {
-    var charts = state.charts;
-    if (!charts || !charts.length) return;
-    clearAxisAlignTimers();
-    alignPriceScaleWidths(charts);
-    for (var i = 0; i < AXIS_ALIGN_DELAYS_MS.length; i++) {
-      (function (delay) {
-        state.axisAlignTimers.push(
-          setTimeout(function () {
-            if (state.charts !== charts) return;
-            alignPriceScaleWidths(charts);
-          }, delay),
-        );
-      })(AXIS_ALIGN_DELAYS_MS[i]);
-    }
+    state.resizeObs.observe(stack);
+    var body = document.querySelector('.im-candle-body');
+    if (body) state.resizeObs.observe(body);
   }
 
   function resizeCharts() {
-    if (!state.charts) return;
-    var ids = ['im-candle-price', 'im-candle-vol', 'im-candle-macd', 'im-candle-norm', 'im-candle-atr'];
-    for (var i = 0; i < state.charts.length; i++) {
-      var el = document.getElementById(ids[i]);
-      if (!el) continue;
-      var w = Math.max(el.clientWidth || 0, 80);
-      var h = Math.max(el.clientHeight || 0, 40);
+    var chart = state.chart;
+    if (!chart) return;
+    var host = document.getElementById('im-candle-chart');
+    if (host && !chart.autoSizeActive()) {
       try {
-        if (typeof state.charts[i].resize === 'function') {
-          state.charts[i].resize(w, h);
-        } else {
-          state.charts[i].applyOptions({ width: w, height: h });
-        }
+        chart.resize(Math.max(host.clientWidth || 0, 120), Math.max(host.clientHeight || 0, 200));
       } catch (e) {}
     }
-    scheduleAxisAlignment();
+    syncPaneLabelPositions();
   }
 
   function loadAndRender(code, range) {
@@ -1867,11 +1516,9 @@
     _ui: {
       defaultRangeByInterval: DEFAULT_RANGE_BY_INTERVAL,
       rangeForInterval: rangeForInterval,
-      alignPriceScaleWidths: alignPriceScaleWidths,
-      computeAxisWidth: computeAxisWidth,
-      formatAxisPrice: formatAxisPrice,
-      formatAxisVolume: formatAxisVolume,
-      debugAxisWidths: debugAxisWidths,
+      panes: PANES,
+      paneIndex: PANE_INDEX,
+      paneMargins: PANE_MARGINS,
     },
     _indicators: {
       sma: sma,

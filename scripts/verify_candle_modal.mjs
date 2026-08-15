@@ -34,75 +34,55 @@ const ui = context.InvestingMapCandleModal?._ui;
 assert.ok(ui, 'candle UI test exports missing');
 assert.equal(ui.rangeForInterval('daily'), '1y', 'daily default range');
 assert.equal(ui.rangeForInterval('weekly'), '5y', 'weekly default range');
-assert.match(
-  source,
-  /function scheduleAxisAlignment\(\)/,
-  'axis re-alignment scheduler missing',
+// The five panels are panes of one v5 chart. That is what makes their x axes
+// line up, so guard both the version we load and the single-chart structure.
+assert.match(source, /lightweight-charts@5[\d.]*\/dist\//, 'must load the v5 standalone build');
+for (const removed of [
+  'addCandlestickSeries',
+  'addLineSeries',
+  'addHistogramSeries',
+  'subscribeVisibleLogicalRangeChange',
+  'scheduleAxisAlignment',
+  'minimumWidth',
+]) {
+  assert.ok(!source.includes(removed), `v4-only API left behind: ${removed}`);
+}
+assert.equal(source.match(/createChart\(/g)?.length, 1, 'exactly one chart is created');
+const paneKeys = ui.panes.map((pane) => pane.key);
+assert.equal(paneKeys.join(','), 'price,vol,macd,norm,atr', 'pane order');
+paneKeys.forEach((key, index) => {
+  assert.equal(ui.paneIndex[key], index, `pane index for ${key}`);
+});
+assert.ok(
+  ui.panes.every((pane) => pane.stretch > 0) && ui.panes[0].stretch > ui.panes[1].stretch,
+  'the price pane is the tallest',
 );
-assert.match(
-  source,
-  /AXIS_ALIGN_DELAYS_MS = \[0, 150, 400\]/,
-  'delayed axis re-apply passes missing',
+assert.ok(
+  ui.panes.every((pane) => ui.paneMargins[pane.key]),
+  'every pane declares its own scale margins',
 );
-for (const caller of ['createCharts', 'resizeCharts']) {
+for (const [type, pane] of [
+  ['CandlestickSeries', 'PANE_INDEX.price'],
+  ['HistogramSeries', 'PANE_INDEX.vol'],
+  ['HistogramSeries', 'PANE_INDEX.macd'],
+]) {
   assert.ok(
-    new RegExp(`function ${caller}\\([\\s\\S]*?scheduleAxisAlignment\\(\\)`).test(source),
-    `${caller} must re-align the price scales`,
+    new RegExp(`LWC\\.${type},[\\s\\S]{0,240}?${pane.replace('.', '\\.')},`).test(source),
+    `${type} must be added to ${pane}`,
   );
 }
-
-// The axis formatters have to match lightweight-charts exactly, or the width we
-// reserve will not be the width it needs.
-assert.equal(ui.formatAxisPrice(-12853.44), '\u221212853.44', 'MACD label uses a unicode minus');
-assert.equal(ui.formatAxisPrice(400000), '400000.00', 'price label keeps two decimals');
-assert.equal(ui.formatAxisVolume(12345678), '12.35M', 'volume label matches VolumeFormatter');
-assert.equal(ui.formatAxisVolume(842), '842', 'small volumes stay unscaled');
-
-function panelWithPrices(high, low) {
-  return {
-    candles: [{ high, low }],
-    closeLine: [],
-    ma50Line: [{ value: low }],
-    maLine: [{ value: high }],
-    volumes: [{ value: 120000 }],
-    vmaLine: [{ value: 100000 }],
-    macdHist: [{ value: -12.5 }],
-    macdLine: [{ value: 8.25 }],
-    macdSignalLine: [{ value: 7.5 }],
-    bbwLine: [{ value: 42.5 }],
-    dispLine: [{ value: 61.25 }],
-    atrLine: [{ value: 3.75 }],
-    atrSignalLine: [{ value: 4.1 }],
-  };
-}
-const wideAxis = ui.computeAxisWidth(panelWithPrices(1200000, 900000));
-const narrowAxis = ui.computeAxisWidth(panelWithPrices(9800, 7400));
-assert.ok(wideAxis > narrowAxis, 'a seven-digit price axis reserves more width than a four-digit one');
-assert.ok(wideAxis % 2 === 0, 'axis width is rounded up to an even value');
-assert.equal(narrowAxis, 84, 'short labels fall back to the baseline minimum');
-
-// Whatever the panels hold, every chart must end up with one identical width,
-// and a pane that reports a wider laid-out scale has to pull the others with it.
-const appliedWidths = [];
-const mockCharts = [84, 118, 84, 84, 84].map((measured) => ({
-  priceScale() {
-    return {
-      width() {
-        return measured;
-      },
-      applyOptions(options) {
-        appliedWidths.push(options.minimumWidth);
-      },
-    };
-  },
-}));
-const shared = ui.alignPriceScaleWidths(mockCharts);
-assert.equal(shared, 118, 'a wider laid-out scale raises the shared width');
-assert.deepEqual(
-  appliedWidths,
-  [shared, shared, shared, shared, shared],
-  'all panels share one price-scale width',
+assert.match(
+  source,
+  /panes\[i\]\.setStretchFactor\(spec\.stretch\)/,
+  'pane heights come from the stretch factors',
 );
+assert.match(
+  source,
+  /panes\[i\]\.priceScale\('right'\)\.applyOptions\(scaleOptions\)/,
+  'each pane keeps its own right price scale',
+);
+assert.match(source, /rightOffset: RIGHT_OFFSET_BARS/, 'right margin retained');
+assert.match(source, /PriceScaleMode\.Logarithmic/, 'price pane stays on a log scale');
 
 const daily = [
   { t: '2025-12-29', o: 10, h: 12, l: 8, c: 10, v: 100 },
