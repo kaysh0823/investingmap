@@ -82,6 +82,11 @@ assert.match(
   'each pane keeps its own right price scale',
 );
 assert.match(source, /rightOffset: RIGHT_OFFSET_BARS/, 'right margin retained');
+assert.match(
+  source,
+  /toUpperCase\(\)\.replace\(\/\[\^0-9A-Z\]\/g, ''\)/,
+  'alphanumeric KRX short codes must survive normalization',
+);
 assert.match(source, /PriceScaleMode\.Logarithmic/, 'price pane stays on a log scale');
 
 const daily = [

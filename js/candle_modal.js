@@ -1359,7 +1359,9 @@
   }
 
   function open(opts) {
-    var ticker = opts && opts.ticker ? String(opts.ticker).replace(/\D/g, '') : '';
+    // Some KRX short codes carry letters (0009K0, 0126Z0), so digits-only
+    // stripping would silently request a different company.
+    var ticker = opts && opts.ticker ? String(opts.ticker).toUpperCase().replace(/[^0-9A-Z]/g, '') : '';
     if (!ticker || ticker.length < 5) return;
     ensureDom();
     var labels = t();
