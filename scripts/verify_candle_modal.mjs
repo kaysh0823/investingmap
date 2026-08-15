@@ -40,6 +40,11 @@ assert.match(
   /function scheduleAxisAlignment\(\)/,
   'axis re-alignment scheduler missing',
 );
+assert.match(
+  source,
+  /AXIS_ALIGN_DELAYS_MS = \[0, 150, 400\]/,
+  'delayed axis re-measure passes missing',
+);
 for (const caller of ['createCharts', 'resizeCharts']) {
   assert.ok(
     new RegExp(`function ${caller}\\([\\s\\S]*?scheduleAxisAlignment\\(\\)`).test(source),
@@ -78,13 +83,19 @@ assert.deepEqual(
 
 const closeOnlyBars = indicators.normalizeBars([
   { t: '2026-07-22', o: null, h: null, l: null, c: 30000, v: null },
-  { t: '2026-07-31', o: null, h: null, l: null, c: 28000, v: null },
+  // Suspended sessions arrive as 0 placeholders and must never plunge a candle.
+  { t: '2026-07-31', o: 0, h: 0, l: 0, c: 28000, v: 0 },
   { t: '2026-08-07', o: 27000, h: 27500, l: 26000, c: 27250, v: 1200 },
 ]);
 assert.equal(
   closeOnlyBars.map((bar) => bar.closeOnly).join(','),
   'true,true,false',
-  'close-only bars are flagged',
+  'null and zero OHLC bars are both flagged as close-only',
+);
+assert.equal(
+  closeOnlyBars.map((bar) => `${bar.o}/${bar.h}/${bar.l}`).join(' '),
+  '30000/30000/30000 28000/28000/28000 27000/27500/26000',
+  'zero placeholders fall back to the carried close',
 );
 const shortPanel = indicators.buildPanelData(closeOnlyBars, '5y', 'daily');
 assert.equal(shortPanel.barCount, 3, 'short history keeps every available bar');

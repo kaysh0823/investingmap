@@ -18,6 +18,8 @@
   };
   var RIGHT_OFFSET_BARS = 7;
   var PRICE_SCALE_MIN_WIDTH = 84;
+  /** Re-measure passes after a render; long ranges paint their wide labels late. */
+  var AXIS_ALIGN_DELAYS_MS = [0, 150, 400];
   var MA_FAST = 50;
   var MA_PRICE = 120;
   var MA_VOL = 20;
@@ -128,7 +130,7 @@
     liveOverlay: false,
     liveBarTime: null,
     aligningPriceScales: false,
-    axisAlignPending: false,
+    axisAlignTimers: [],
     alignedPriceScaleWidth: PRICE_SCALE_MIN_WIDTH,
   };
 
@@ -805,6 +807,12 @@
 
   /* ---------- series build ---------- */
 
+  function isTradedPrice(value) {
+    if (value == null) return false;
+    var n = Number(value);
+    return isFinite(n) && n > 0;
+  }
+
   function normalizeBars(rawBars) {
     var bars = [];
     for (var i = 0; i < rawBars.length; i++) {
@@ -812,9 +820,10 @@
       if (!b || !b.t) continue;
       var c = typeof b.c === 'number' ? b.c : Number(b.c);
       if (!isFinite(c) || c <= 0) continue;
-      var hasOpen = b.o != null && isFinite(Number(b.o));
-      var hasHigh = b.h != null && isFinite(Number(b.h));
-      var hasLow = b.l != null && isFinite(Number(b.l));
+      // Suspended sessions arrive as null or as 0 placeholders; both mean "no trade".
+      var hasOpen = isTradedPrice(b.o);
+      var hasHigh = isTradedPrice(b.h);
+      var hasLow = isTradedPrice(b.l);
       var o = hasOpen ? Number(b.o) : c;
       var h = hasHigh ? Number(b.h) : Math.max(o, c);
       var l = hasLow ? Number(b.l) : Math.min(o, c);
@@ -1014,6 +1023,7 @@
   }
 
   function destroyCharts() {
+    clearAxisAlignTimers();
     if (state.resizeObs) {
       try {
         state.resizeObs.disconnect();
@@ -1031,7 +1041,6 @@
     state.seriesRefs = null;
     state.barsByTime = null;
     state.aligningPriceScales = false;
-    state.axisAlignPending = false;
     state.alignedPriceScaleWidth = PRICE_SCALE_MIN_WIDTH;
   }
 
@@ -1401,28 +1410,37 @@
     return width;
   }
 
+  function clearAxisAlignTimers() {
+    for (var i = 0; i < state.axisAlignTimers.length; i++) {
+      clearTimeout(state.axisAlignTimers[i]);
+    }
+    state.axisAlignTimers = [];
+  }
+
   /**
-   * Label widths change with range, interval and ticker (5Y prices are wider than
-   * ATR%), so drop back to the baseline first and let lightweight-charts lay the
-   * axes out again before unifying every pane to the widest natural width.
+   * Label widths change with range, interval and ticker (a 5Y price axis is far
+   * wider than ATR%), and lightweight-charts only widens the axis once the new
+   * series has been painted. Drop back to the baseline, then re-measure across
+   * several frames so late label growth still ends up unified.
    */
   function scheduleAxisAlignment() {
     var charts = state.charts;
-    if (!charts || !charts.length || state.axisAlignPending) return;
-    state.axisAlignPending = true;
+    if (!charts || !charts.length) return;
+    clearAxisAlignTimers();
     setPriceScaleWidth(charts, PRICE_SCALE_MIN_WIDTH);
-    afterLayout(function () {
-      if (state.charts !== charts) {
-        state.axisAlignPending = false;
-        return;
-      }
-      alignPriceScaleWidths(charts);
-      afterLayout(function () {
-        state.axisAlignPending = false;
-        if (state.charts !== charts) return;
-        alignPriceScaleWidths(charts);
-      });
-    });
+    for (var i = 0; i < AXIS_ALIGN_DELAYS_MS.length; i++) {
+      (function (delay) {
+        state.axisAlignTimers.push(
+          setTimeout(function () {
+            if (state.charts !== charts) return;
+            afterLayout(function () {
+              if (state.charts !== charts) return;
+              alignPriceScaleWidths(charts);
+            });
+          }, delay),
+        );
+      })(AXIS_ALIGN_DELAYS_MS[i]);
+    }
   }
 
   function resizeCharts() {

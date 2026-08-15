@@ -1,13 +1,14 @@
 /**
  * Audit/repair stock_price_history against KRX for the current hub universe.
- * A row counts as covered only when it carries full OHLC + volume, so
- * close-only rows left by the Naver fallback are reported and repaired too.
+ * A row counts as covered only when every field matches the KRX candle, so
+ * close-only rows and 0 placeholders are both reported and repaired.
  *
  * Usage:
  *   node scripts/audit_history_coverage.mjs --date=2026-08-14
  *   node scripts/audit_history_coverage.mjs --date=2026-08-14 --repair
  *   node scripts/audit_history_coverage.mjs --date=2026-08-14 --from=2025-11-01 \
  *     --tickers=0009K0,0126Z0 --repair
+ *   node scripts/audit_history_coverage.mjs --scan-zero [--repair]
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -86,11 +87,28 @@ async function supabaseSelect(url, key, query) {
   return rows;
 }
 
-/** Only rows with a full candle count as covered; close-only rows are repairable. */
-function isComplete(row) {
+/** Cheap pre-check used before spending a KRX request: null or 0 placeholders. */
+function looksComplete(row) {
   if (!row) return false;
-  return ['open', 'high', 'low', 'close', 'volume'].every(
-    (field) => row[field] != null && Number.isFinite(Number(row[field])),
+  if (row.close == null || !(Number(row.close) > 0)) return false;
+  if (row.volume == null || !Number.isFinite(Number(row.volume))) return false;
+  return ['open', 'high', 'low'].every((field) => Number(row[field]) > 0);
+}
+
+function sameValue(stored, expected) {
+  if (expected == null) return stored == null;
+  if (stored == null) return false;
+  return Number(stored) === Number(expected);
+}
+
+/**
+ * A row is covered only when it matches the KRX candle field for field. This
+ * catches both close-only rows and 0 placeholders written for suspended days.
+ */
+function matchesKrx(row, fields) {
+  if (!row || !fields) return false;
+  return ['open', 'high', 'low', 'close', 'volume'].every((field) =>
+    sameValue(row[field], fields[field]),
   );
 }
 
@@ -175,13 +193,16 @@ async function auditDate({ url, readKey, serviceKey, authKey, date, names, repai
     fetchMarketDay(authKey, basDd(date)),
   ]);
   const tradable = expected.filter((ticker) => historyRow(ticker, date, krxByTicker.get(ticker)));
-  const incomplete = tradable.filter((ticker) => !isComplete(dbByTicker.get(ticker)));
+  const incomplete = tradable.filter(
+    (ticker) =>
+      !matchesKrx(dbByTicker.get(ticker), historyFieldsFromKrxRow(krxByTicker.get(ticker))),
+  );
   const untraded = expected.filter((ticker) => !tradable.includes(ticker));
 
   console.log(`history coverage ${date}`);
   console.log(`hub tickers:     ${expected.length}`);
   console.log(`KRX-traded hub:  ${tradable.length}`);
-  console.log(`full OHLC in DB: ${tradable.length - incomplete.length}/${tradable.length}`);
+  console.log(`matches KRX:     ${tradable.length - incomplete.length}/${tradable.length}`);
   if (incomplete.length) console.log(`needs repair:    ${label(incomplete, names)}`);
   if (untraded.length) console.log(`no KRX row:      ${label(untraded, names)}`);
 
@@ -190,9 +211,69 @@ async function auditDate({ url, readKey, serviceKey, authKey, date, names, repai
   const rows = incomplete.map((ticker) => historyRow(ticker, date, krxByTicker.get(ticker)));
   console.log(`repaired:        ${await upsertRows(url, serviceKey, rows)}`);
   const after = await fetchDbRowsForDate(url, readKey, date);
-  const remaining = tradable.filter((ticker) => !isComplete(after.get(ticker)));
+  const remaining = tradable.filter(
+    (ticker) => !matchesKrx(after.get(ticker), historyFieldsFromKrxRow(krxByTicker.get(ticker))),
+  );
   console.log(`remaining:       ${remaining.length}`);
   return remaining.length;
+}
+
+async function clearZeroPrices(url, serviceKey, filter) {
+  const res = await fetch(`${url}/rest/v1/stock_price_history?${filter}`, {
+    method: 'PATCH',
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=minimal',
+    },
+    body: JSON.stringify({ open: null, high: null, low: null }),
+  });
+  if (!res.ok) throw new Error(`zero clear failed ${res.status}: ${await res.text()}`);
+}
+
+/**
+ * Find every stored bar that carries a 0 placeholder in open/high/low.
+ * Scanned in ticker batches so each query rides the (ticker, trade_date) key
+ * instead of timing out on a full-table predicate.
+ */
+async function scanZeroBars({ url, readKey, serviceKey, names, repair }) {
+  const universe = [...names.keys()].sort();
+  const rows = [];
+  const batchSize = 40;
+  for (let i = 0; i < universe.length; i += batchSize) {
+    const batch = universe.slice(i, i + batchSize);
+    const filter =
+      `ticker=in.(${batch.join(',')})&or=(open.lte.0,high.lte.0,low.lte.0)`;
+    rows.push(
+      ...(await supabaseSelect(
+        url,
+        readKey,
+        `${filter}&select=ticker,trade_date,open,high,low,close,volume&order=ticker.asc,trade_date.asc`,
+      )),
+    );
+    // KRX itself reports 0 for suspended sessions; rewrite them as "unknown".
+    if (repair) await clearZeroPrices(url, serviceKey, filter);
+    process.stdout.write(
+      `\r  scanned ${Math.min(i + batchSize, universe.length)}/${universe.length}`,
+    );
+  }
+  process.stdout.write('\n');
+  console.log(`zero-placeholder bars: ${rows.length}${repair ? ' (cleared)' : ''}`);
+  const byTicker = new Map();
+  for (const row of rows) {
+    const ticker = normalizeTicker(row.ticker);
+    if (!byTicker.has(ticker)) byTicker.set(ticker, []);
+    byTicker.get(ticker).push(String(row.trade_date).slice(0, 10));
+  }
+  for (const [ticker, dates] of [...byTicker].sort((a, b) => b[1].length - a[1].length)) {
+    const hub = names.has(ticker) ? '' : ' (non-hub)';
+    console.log(
+      `  ${ticker}(${names.get(ticker) || '?'})${hub}: ${dates.length} bar(s) ` +
+        `${dates[0]}…${dates[dates.length - 1]}`,
+    );
+  }
+  return rows.length;
 }
 
 async function auditRange({
@@ -215,10 +296,15 @@ async function auditRange({
   let stillMissing = 0;
   for (const date of dates) {
     const rowsByTicker = existing.get(date) || new Map();
-    const pending = tickers.filter((ticker) => !isComplete(rowsByTicker.get(ticker)));
-    if (!pending.length) continue;
+    // Without the KRX candle in hand, only obviously broken rows justify a fetch.
+    const suspect = tickers.filter((ticker) => !looksComplete(rowsByTicker.get(ticker)));
+    if (!suspect.length) continue;
     const krxByTicker = await fetchMarketDay(authKey, basDd(date));
-    const rows = pending
+    const rows = suspect
+      .filter(
+        (ticker) =>
+          !matchesKrx(rowsByTicker.get(ticker), historyFieldsFromKrxRow(krxByTicker.get(ticker))),
+      )
       .map((ticker) => historyRow(ticker, date, krxByTicker.get(ticker)))
       .filter(Boolean);
     if (!rows.length) continue;
@@ -240,7 +326,7 @@ async function auditRange({
     let last = '';
     for (const date of dates) {
       const row = (after.get(date) || new Map()).get(ticker);
-      if (!isComplete(row)) continue;
+      if (!looksComplete(row)) continue;
       complete += 1;
       if (!first) first = date;
       last = date;
@@ -252,7 +338,8 @@ async function auditRange({
 
 async function main() {
   const env = loadEnv();
-  const date = isoDateArg('date', true);
+  const scanZero = process.argv.includes('--scan-zero');
+  const date = isoDateArg('date', !scanZero);
   const from = isoDateArg('from', false);
   const repair = process.argv.includes('--repair');
   const tickers = argValue('tickers')
@@ -264,12 +351,17 @@ async function main() {
   const readKey = env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_ANON_KEY || '';
   const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY || '';
   const authKey = env.KRX_AUTH_KEY || '';
-  if (!url || !readKey || !authKey) {
+  if (!url || !readKey || (!authKey && !scanZero)) {
     throw new Error('SUPABASE_URL, Supabase key, and KRX_AUTH_KEY are required');
   }
   if (repair && !serviceKey) throw new Error('SUPABASE_SERVICE_ROLE_KEY is required for --repair');
 
   const names = hubUniverse();
+  if (scanZero) {
+    const found = await scanZeroBars({ url, readKey, serviceKey, names, repair });
+    if (found && !repair) process.exitCode = 2;
+    return;
+  }
   const outstanding =
     from && tickers.length
       ? await auditRange({
