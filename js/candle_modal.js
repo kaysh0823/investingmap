@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v4 + /api/ticker_ohlc.
- * Stacked panels (price / volume / MACD / BBW%·DISP%) with synced timeScale + crosshair.
+ * Stacked panels (price / volume / MACD / BBW%·DISP% / ATR%) with synced axes.
  */
 (function (global) {
   'use strict';
@@ -9,9 +9,15 @@
   var LWC_SRC =
     'https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
 
-  var RANGES = ['3m', '6m', '1y'];
+  var RANGES = ['3m', '6m', '1y', '3y', '5y'];
   var DEFAULT_RANGE = '1y';
-  var DISPLAY_DAYS = { '3m': 50, '6m': 120, '1y': 200 };
+  var INTERVALS = ['daily', 'weekly'];
+  var DISPLAY_BARS = {
+    daily: { '3m': 50, '6m': 120, '1y': 200, '3y': 750, '5y': 1250 },
+    weekly: { '3m': 13, '6m': 26, '1y': 52, '3y': 156, '5y': 260 },
+  };
+  var RIGHT_OFFSET_BARS = 7;
+  var PRICE_SCALE_MIN_WIDTH = 84;
   var MA_FAST = 50;
   var MA_PRICE = 120;
   var MA_VOL = 20;
@@ -22,6 +28,8 @@
   var MACD_FAST = 12;
   var MACD_SLOW = 26;
   var MACD_SIGNAL = 9;
+  var ATR_PERIOD = 3;
+  var ATR_SIGNAL = 9;
 
   var I18N = {
     ko: {
@@ -32,6 +40,10 @@
       range3m: '3M',
       range6m: '6M',
       range1y: '1Y',
+      range3y: '3Y',
+      range5y: '5Y',
+      daily: '일봉',
+      weekly: '주봉',
       open: '시가',
       high: '고가',
       low: '저가',
@@ -45,11 +57,15 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
+      atr: 'ATR(3)/종가%',
+      atrSignal: 'ATR EMA9',
       chartLabel: '일봉 차트',
+      weeklyChartLabel: '주봉 차트',
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
       paneNorm: 'BBW% · 이격도% (125일)',
+      paneAtr: 'ATR(3)/종가% · EMA9',
       liveSession: '장중(현재가)',
     },
     en: {
@@ -60,6 +76,10 @@
       range3m: '3M',
       range6m: '6M',
       range1y: '1Y',
+      range3y: '3Y',
+      range5y: '5Y',
+      daily: 'Daily',
+      weekly: 'Weekly',
       open: 'Open',
       high: 'High',
       low: 'Low',
@@ -73,11 +93,15 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
+      atr: 'ATR(3)/Close%',
+      atrSignal: 'ATR EMA9',
       chartLabel: 'Daily chart',
+      weeklyChartLabel: 'Weekly chart',
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
       paneNorm: 'BBW% · DISP% (125d)',
+      paneAtr: 'ATR(3)/Close% · EMA9',
       liveSession: 'Live (last)',
     },
   };
@@ -87,6 +111,7 @@
     ticker: null,
     name: '',
     range: DEFAULT_RANGE,
+    interval: 'daily',
     charts: null,
     seriesRefs: null,
     barsByTime: null,
@@ -278,6 +303,79 @@
     return { line: line, signal: signal, hist: hist };
   }
 
+  /** ATR(period) / close × 100 with a trailing SMA of True Range and EMA signal. */
+  function atrPercent(bars, period, signalPeriod) {
+    var tr = new Array(bars.length);
+    for (var i = 0; i < bars.length; i++) {
+      var bar = bars[i];
+      var prevClose = i > 0 ? bars[i - 1].c : null;
+      var range = bar.h - bar.l;
+      if (prevClose != null && isFinite(prevClose)) {
+        range = Math.max(range, Math.abs(bar.h - prevClose), Math.abs(bar.l - prevClose));
+      }
+      tr[i] = isFinite(range) ? range : null;
+    }
+    var atr = sma(tr, period);
+    var pct = new Array(bars.length);
+    for (var j = 0; j < bars.length; j++) {
+      pct[j] =
+        atr[j] != null && isFinite(atr[j]) && bars[j].c > 0
+          ? (atr[j] / bars[j].c) * 100
+          : null;
+    }
+    return { value: pct, signal: ema(pct, signalPeriod), tr: tr };
+  }
+
+  function isoWeekKey(isoDate) {
+    var parts = String(isoDate || '').split('-');
+    if (parts.length !== 3) return String(isoDate || '');
+    var date = new Date(Date.UTC(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])));
+    if (!isFinite(date.getTime())) return String(isoDate || '');
+    var day = date.getUTCDay() || 7;
+    date.setUTCDate(date.getUTCDate() + 4 - day);
+    var yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    var week = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+    return date.getUTCFullYear() + '-W' + String(week).padStart(2, '0');
+  }
+
+  /** Aggregate normalized daily bars into ISO weeks, timestamped by each week's last session. */
+  function aggregateWeeklyBars(dailyBars) {
+    var out = [];
+    var current = null;
+    for (var i = 0; i < dailyBars.length; i++) {
+      var bar = dailyBars[i];
+      var key = isoWeekKey(bar.t);
+      if (!current || current.key !== key) {
+        if (current) {
+          delete current.key;
+          out.push(current);
+        }
+        current = {
+          key: key,
+          t: bar.t,
+          o: bar.o,
+          h: bar.h,
+          l: bar.l,
+          c: bar.c,
+          v: Number(bar.v) || 0,
+          live: !!bar.live,
+        };
+      } else {
+        current.t = bar.t;
+        current.h = Math.max(current.h, bar.h);
+        current.l = Math.min(current.l, bar.l);
+        current.c = bar.c;
+        current.v += Number(bar.v) || 0;
+        current.live = current.live || !!bar.live;
+      }
+    }
+    if (current) {
+      delete current.key;
+      out.push(current);
+    }
+    return out;
+  }
+
   /* ---------- i18n / misc ---------- */
 
   function t() {
@@ -436,7 +534,10 @@
     var labels = t();
     var sub = document.getElementById('im-candle-sub');
     if (!sub || !state.ticker) return;
-    var text = state.ticker + ' · ' + labels.chartLabel;
+    var text =
+      state.ticker +
+      ' · ' +
+      (state.interval === 'weekly' ? labels.weeklyChartLabel : labels.chartLabel);
     if (state.liveOverlay) text += ' · ' + labels.liveSession;
     sub.textContent = text;
   }
@@ -493,17 +594,18 @@
       '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer}' +
       '.im-candle-close:hover,.im-candle-close:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
       '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
-      '.im-candle-ranges{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
+      '.im-candle-ranges,.im-candle-intervals{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
       '.im-candle-range{border:0;background:transparent;color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer}' +
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
       '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
       '.im-candle-body{position:relative;flex:1 1 auto;min-height:0;padding:6px 8px 8px;display:flex;flex-direction:column;overflow:hidden}' +
       '.im-candle-stack{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;height:100%;width:100%;gap:0;overflow:hidden}' +
       '.im-candle-pane{position:relative;min-height:0;width:100%;overflow:hidden;box-sizing:border-box}' +
-      '.im-candle-pane-price{flex:0 0 46%}' +
-      '.im-candle-pane-vol{flex:0 0 16%}' +
-      '.im-candle-pane-macd{flex:0 0 20%}' +
-      '.im-candle-pane-norm{flex:0 0 18%}' +
+      '.im-candle-pane-price{flex:0 0 40%}' +
+      '.im-candle-pane-vol{flex:0 0 13%}' +
+      '.im-candle-pane-macd{flex:0 0 16%}' +
+      '.im-candle-pane-norm{flex:0 0 16%}' +
+      '.im-candle-pane-atr{flex:0 0 15%}' +
       '.im-candle-pane-label{position:absolute;top:4px;left:8px;z-index:2;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);pointer-events:none}' +
       '.im-candle-pane-chart{width:100%;height:100%;min-height:0}' +
       '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
@@ -539,6 +641,8 @@
       (!document.getElementById('im-candle-stack') ||
         !document.getElementById('im-candle-macd') ||
         !document.getElementById('im-candle-norm') ||
+        !document.getElementById('im-candle-atr') ||
+        !document.getElementById('im-candle-intervals') ||
         document.getElementById('im-candle-disp'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
@@ -561,6 +665,7 @@
       '</div>' +
       '<div class="im-candle-toolbar">' +
       '<div class="im-candle-ranges" role="group" id="im-candle-ranges"></div>' +
+      '<div class="im-candle-intervals" role="group" id="im-candle-intervals"></div>' +
       '<div class="im-candle-tip" id="im-candle-tip" aria-live="polite"></div>' +
       '</div>' +
       '<div class="im-candle-body">' +
@@ -569,6 +674,7 @@
       '<div class="im-candle-pane im-candle-pane-vol"><span class="im-candle-pane-label" data-pane="vol"></span><div class="im-candle-pane-chart" id="im-candle-vol"></div></div>' +
       '<div class="im-candle-pane im-candle-pane-macd"><span class="im-candle-pane-label" data-pane="macd"></span><div class="im-candle-pane-chart" id="im-candle-macd"></div></div>' +
       '<div class="im-candle-pane im-candle-pane-norm"><span class="im-candle-pane-label" data-pane="norm"></span><div class="im-candle-pane-chart" id="im-candle-norm"></div></div>' +
+      '<div class="im-candle-pane im-candle-pane-atr"><span class="im-candle-pane-label" data-pane="atr"></span><div class="im-candle-pane-chart" id="im-candle-atr"></div></div>' +
       '</div>' +
       '<div class="im-candle-status" id="im-candle-status"></div>' +
       '</div></div>';
@@ -585,6 +691,22 @@
       syncRangeButtons();
       if (state.ticker) loadAndRender(state.ticker, state.range);
     });
+    root.querySelector('#im-candle-intervals').addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-interval]');
+      if (!btn) return;
+      var interval = btn.getAttribute('data-interval');
+      if (INTERVALS.indexOf(interval) < 0 || interval === state.interval) return;
+      state.interval = interval;
+      syncIntervalButtons();
+      updateSubtitle();
+      document
+        .getElementById('im-candle-stack')
+        .setAttribute(
+          'aria-label',
+          interval === 'weekly' ? t().weeklyChartLabel : t().chartLabel,
+        );
+      if (state.ticker) loadAndRender(state.ticker, state.range);
+    });
     return root;
   }
 
@@ -597,6 +719,7 @@
       vol: labels.paneVol,
       macd: labels.paneMacd,
       norm: labels.paneNorm,
+      atr: labels.paneAtr,
     };
     var nodes = root.querySelectorAll('[data-pane]');
     for (var i = 0; i < nodes.length; i++) {
@@ -613,7 +736,16 @@
     for (var i = 0; i < RANGES.length; i++) {
       var r = RANGES[i];
       var pressed = r === state.range ? 'true' : 'false';
-      var lab = r === '3m' ? labels.range3m : r === '6m' ? labels.range6m : labels.range1y;
+      var lab =
+        r === '3m'
+          ? labels.range3m
+          : r === '6m'
+            ? labels.range6m
+            : r === '3y'
+              ? labels.range3y
+              : r === '5y'
+                ? labels.range5y
+                : labels.range1y;
       html +=
         '<button type="button" class="im-candle-range" data-range="' +
         r +
@@ -621,6 +753,25 @@
         pressed +
         '">' +
         lab +
+        '</button>';
+    }
+    wrap.innerHTML = html;
+  }
+
+  function syncIntervalButtons() {
+    var wrap = document.getElementById('im-candle-intervals');
+    if (!wrap) return;
+    var labels = t();
+    var html = '';
+    for (var i = 0; i < INTERVALS.length; i++) {
+      var interval = INTERVALS[i];
+      html +=
+        '<button type="button" class="im-candle-range" data-interval="' +
+        interval +
+        '" aria-pressed="' +
+        (interval === state.interval ? 'true' : 'false') +
+        '">' +
+        (interval === 'weekly' ? labels.weekly : labels.daily) +
         '</button>';
     }
     wrap.innerHTML = html;
@@ -653,7 +804,7 @@
     return bars;
   }
 
-  function buildPanelData(fullBars, range) {
+  function buildPanelData(fullBars, range, interval) {
     var closes = fullBars.map(function (b) {
       return b.c;
     });
@@ -668,8 +819,10 @@
     var disparity = disparityFromMa(closes, ma50);
     var dispPct = trailingMinMaxNorm(disparity, NORM_WINDOW);
     var macdPack = macd(closes, MACD_FAST, MACD_SLOW, MACD_SIGNAL);
+    var atrPack = atrPercent(fullBars, ATR_PERIOD, ATR_SIGNAL);
 
-    var displayN = DISPLAY_DAYS[range] || DISPLAY_DAYS['1y'];
+    var displayMap = DISPLAY_BARS[interval] || DISPLAY_BARS.daily;
+    var displayN = displayMap[range] || displayMap['1y'];
     var start = Math.max(0, fullBars.length - displayN);
 
     var candles = [];
@@ -682,6 +835,8 @@
     var macdHist = [];
     var bbwLine = [];
     var dispLine = [];
+    var atrLine = [];
+    var atrSignalLine = [];
     var byTime = Object.create(null);
 
     for (var i = start; i < fullBars.length; i++) {
@@ -710,6 +865,12 @@
       }
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
+      if (atrPack.value[i] != null && isFinite(atrPack.value[i])) {
+        atrLine.push({ time: b.t, value: atrPack.value[i] });
+      }
+      if (atrPack.signal[i] != null && isFinite(atrPack.signal[i])) {
+        atrSignalLine.push({ time: b.t, value: atrPack.signal[i] });
+      }
       byTime[b.t] = {
         o: b.o,
         h: b.h,
@@ -724,6 +885,8 @@
         macdHist: macdPack.hist[i],
         bbw: bbwPct[i],
         disp: dispPct[i],
+        atr: atrPack.value[i],
+        atrSignal: atrPack.signal[i],
         live: !!b.live,
       };
     }
@@ -739,6 +902,8 @@
       macdHist: macdHist,
       bbwLine: bbwLine,
       dispLine: dispLine,
+      atrLine: atrLine,
+      atrSignalLine: atrSignalLine,
       byTime: byTime,
     };
   }
@@ -805,7 +970,15 @@
       ' · ' +
       labels.disp +
       ' ' +
-      fmtNum(b.disp, 1);
+      fmtNum(b.disp, 1) +
+      ' · ' +
+      labels.atr +
+      ' ' +
+      fmtNum(b.atr, 2) +
+      ' ' +
+      labels.atrSignal +
+      ' ' +
+      fmtNum(b.atrSignal, 2);
     if (b.live) tip.textContent += ' · ' + labels.liveSession;
   }
 
@@ -853,10 +1026,13 @@
       rightPriceScale: {
         borderColor: colors.border,
         mode: mode,
+        minimumWidth: PRICE_SCALE_MIN_WIDTH,
+        alignLabels: true,
         scaleMargins: opts && opts.scaleMargins ? opts.scaleMargins : { top: 0.08, bottom: 0.08 },
       },
       timeScale: {
         borderColor: colors.border,
+        rightOffset: RIGHT_OFFSET_BARS,
         timeVisible: !!(opts && opts.timeVisible),
         visible: opts && opts.timeVisible !== false ? true : true,
       },
@@ -913,6 +1089,7 @@
           else if (k === 1 && tipBar) price = tipBar.v;
           else if (k === 2 && tipBar) price = tipBar.macd;
           else if (k === 3 && tipBar) price = tipBar.bbw;
+          else if (k === 4 && tipBar) price = tipBar.atr;
           if (price != null && isFinite(price)) {
             charts[k].setCrosshairPosition(price, time, series);
           }
@@ -936,11 +1113,13 @@
     var volEl = document.getElementById('im-candle-vol');
     var macdEl = document.getElementById('im-candle-macd');
     var normEl = document.getElementById('im-candle-norm');
-    if (!priceEl || !volEl || !macdEl || !normEl) return;
+    var atrEl = document.getElementById('im-candle-atr');
+    if (!priceEl || !volEl || !macdEl || !normEl || !atrEl) return;
     priceEl.innerHTML = '';
     volEl.innerHTML = '';
     macdEl.innerHTML = '';
     normEl.innerHTML = '';
+    atrEl.innerHTML = '';
 
     var colors = themeColors();
     var priceChart = makeChart(LWC, priceEl, colors, {
@@ -957,6 +1136,10 @@
       timeVisible: false,
     });
     var normChart = makeChart(LWC, normEl, colors, {
+      scaleMargins: { top: 0.12, bottom: 0.12 },
+      timeVisible: false,
+    });
+    var atrChart = makeChart(LWC, atrEl, colors, {
       scaleMargins: { top: 0.12, bottom: 0.12 },
       timeVisible: true,
     });
@@ -1044,13 +1227,34 @@
     });
     dispSeries.setData(data.dispLine);
 
+    var atrSeries = atrChart.addLineSeries({
+      color: '#a371f7',
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
+      title: 'ATR(3)/Close%',
+    });
+    atrSeries.setData(data.atrLine);
+
+    var atrSignalSeries = atrChart.addLineSeries({
+      color: '#e3b341',
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
+      title: 'EMA9',
+    });
+    atrSignalSeries.setData(data.atrSignalLine);
+
     priceChart.timeScale().applyOptions({ visible: false });
     volChart.timeScale().applyOptions({ visible: false });
     macdChart.timeScale().applyOptions({ visible: false });
-    normChart.timeScale().applyOptions({ visible: true, borderVisible: true });
+    normChart.timeScale().applyOptions({ visible: false });
+    atrChart.timeScale().applyOptions({ visible: true, borderVisible: true });
 
-    var charts = [priceChart, volChart, macdChart, normChart];
-    var primarySeries = [candle, volSeries, macdLineSeries, bbwSeries];
+    var charts = [priceChart, volChart, macdChart, normChart, atrChart];
+    var primarySeries = [candle, volSeries, macdLineSeries, bbwSeries, atrSeries];
     wireSync(charts, primarySeries);
 
     priceChart.timeScale().fitContent();
@@ -1060,6 +1264,7 @@
         volChart.timeScale().setVisibleLogicalRange(lr);
         macdChart.timeScale().setVisibleLogicalRange(lr);
         normChart.timeScale().setVisibleLogicalRange(lr);
+        atrChart.timeScale().setVisibleLogicalRange(lr);
       }
     } catch (e) {}
 
@@ -1075,6 +1280,8 @@
       macdSignal: macdSignalSeries,
       bbw: bbwSeries,
       disp: dispSeries,
+      atr: atrSeries,
+      atrSignal: atrSignalSeries,
     };
     state.barsByTime = data.byTime;
 
@@ -1099,7 +1306,7 @@
 
   function resizeCharts() {
     if (!state.charts) return;
-    var ids = ['im-candle-price', 'im-candle-vol', 'im-candle-macd', 'im-candle-norm'];
+    var ids = ['im-candle-price', 'im-candle-vol', 'im-candle-macd', 'im-candle-norm', 'im-candle-atr'];
     for (var i = 0; i < state.charts.length; i++) {
       var el = document.getElementById(ids[i]);
       if (!el) continue;
@@ -1127,7 +1334,10 @@
 
     return loadLwc()
       .then(function (LWC) {
-        var ohlcP = fetch(ohlcApiUrl(code, range), { credentials: 'omit' }).then(function (res) {
+        // Weekly MA120 and 125-bar normalization need substantially more than one year
+        // of daily source bars, regardless of the selected display range.
+        var requestRange = state.interval === 'weekly' ? '5y' : range;
+        var ohlcP = fetch(ohlcApiUrl(code, requestRange), { credentials: 'omit' }).then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
           return res.json();
         });
@@ -1157,7 +1367,8 @@
         state.liveBarTime = overlaid.liveTime || null;
         updateSubtitle();
 
-        var data = buildPanelData(fullBars, range);
+        if (state.interval === 'weekly') fullBars = aggregateWeeklyBars(fullBars);
+        var data = buildPanelData(fullBars, range, state.interval);
         if (!data.candles.length) {
           destroyCharts();
           setStatus(labels.empty, true);
@@ -1207,6 +1418,8 @@
     state.name = resolveName(ticker, opts && opts.name);
     state.range =
       opts && opts.range && RANGES.indexOf(opts.range) >= 0 ? opts.range : DEFAULT_RANGE;
+    state.interval =
+      opts && opts.interval && INTERVALS.indexOf(opts.interval) >= 0 ? opts.interval : 'daily';
 
     var root = document.getElementById('im-candle-root');
     root.removeAttribute('hidden');
@@ -1219,8 +1432,14 @@
     updateSubtitle();
     document.getElementById('im-candle-close').setAttribute('aria-label', labels.close);
     syncRangeButtons();
+    syncIntervalButtons();
     syncPaneLabels();
-    document.getElementById('im-candle-stack').setAttribute('aria-label', labels.chartLabel);
+    document
+      .getElementById('im-candle-stack')
+      .setAttribute(
+        'aria-label',
+        state.interval === 'weekly' ? labels.weeklyChartLabel : labels.chartLabel,
+      );
 
     loadAndRender(ticker, state.range);
     setTimeout(function () {
@@ -1324,6 +1543,7 @@
     if (closeBtn) closeBtn.setAttribute('aria-label', labels.close);
     updateSubtitle();
     syncRangeButtons();
+    syncIntervalButtons();
     syncPaneLabels();
   }
 
@@ -1349,6 +1569,9 @@
       bandwidthPercentile: bandwidthPercentile,
       disparityFromMa: disparityFromMa,
       macd: macd,
+      atrPercent: atrPercent,
+      aggregateWeeklyBars: aggregateWeeklyBars,
+      isoWeekKey: isoWeekKey,
       applyLiveQuoteToBars: applyLiveQuoteToBars,
       asOfToTradeDate: asOfToTradeDate,
       NORM_WINDOW: NORM_WINDOW,

@@ -11,6 +11,8 @@ export const OHLC_RANGE_DAYS = Object.freeze({
   '3m': 50,
   '6m': 120,
   '1y': 200,
+  '3y': 750,
+  '5y': 1250,
 });
 
 /** Bars fetched beyond display window so MA120 / BBW·DISP(125) fill the left edge. */
@@ -23,6 +25,8 @@ export function normalizeOhlcRange(raw) {
   if (s === '3m' || s === '3mo' || s === '50d') return '3m';
   if (s === '6m' || s === '6mo' || s === '120d') return '6m';
   if (s === '1y' || s === '12m' || s === '200d' || s === 'yoy') return '1y';
+  if (s === '3y' || s === '36m' || s === '750d') return '3y';
+  if (s === '5y' || s === '60m' || s === '1250d') return '5y';
   return '1y';
 }
 
@@ -58,17 +62,26 @@ export function historyRowToBar(row) {
 /**
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker normalized 6-char
- * @param {string} rangeToken 3m|6m|1y
+ * @param {string} rangeToken 3m|6m|1y|3y|5y
  */
 export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
   const range = normalizeOhlcRange(rangeToken);
   const displayDays = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
   const limit = ohlcFetchLimit(range);
-  const q =
-    `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}` +
-    `&select=trade_date,open,high,low,close,volume` +
-    `&order=trade_date.desc&limit=${limit}`;
-  const rows = await fetchSupabaseJson(config, q);
+  // PostgREST projects commonly cap one response at 1,000 rows. Page long ranges
+  // explicitly so 5Y is not silently truncated while keeping the compact OHLC fields.
+  const pageSize = 1000;
+  const rows = [];
+  for (let offset = 0; offset < limit; offset += pageSize) {
+    const requested = Math.min(pageSize, limit - offset);
+    const q =
+      `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}` +
+      `&select=trade_date,open,high,low,close,volume` +
+      `&order=trade_date.desc&limit=${requested}&offset=${offset}`;
+    const page = await fetchSupabaseJson(config, q);
+    rows.push(...page);
+    if (page.length < requested) break;
+  }
   const bars = [];
   for (let i = rows.length - 1; i >= 0; i--) {
     const bar = historyRowToBar(rows[i]);
