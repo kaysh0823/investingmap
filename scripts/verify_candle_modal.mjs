@@ -30,6 +30,31 @@ new vm.Script(source, { filename: 'candle_modal.js' }).runInContext(context);
 
 const indicators = context.InvestingMapCandleModal?._indicators;
 assert.ok(indicators, 'indicator test exports missing');
+const ui = context.InvestingMapCandleModal?._ui;
+assert.ok(ui, 'candle UI test exports missing');
+assert.equal(ui.rangeForInterval('daily'), '1y', 'daily default range');
+assert.equal(ui.rangeForInterval('weekly'), '5y', 'weekly default range');
+assert.match(source, /scale\.width\(\)/, 'price-scale width measurement missing');
+assert.match(
+  source,
+  /applyOptions\(\{ minimumWidth: width \}\)/,
+  'shared maximum price-scale width application missing',
+);
+const appliedWidths = [];
+const mockCharts = [84, 117, 96].map((width) => ({
+  priceScale() {
+    return {
+      width() {
+        return width;
+      },
+      applyOptions(options) {
+        appliedWidths.push(options.minimumWidth);
+      },
+    };
+  },
+}));
+ui.alignPriceScaleWidths(mockCharts);
+assert.deepEqual(appliedWidths, [117, 117, 117], 'all panels use the widest price scale');
 
 const daily = [
   { t: '2025-12-29', o: 10, h: 12, l: 8, c: 10, v: 100 },

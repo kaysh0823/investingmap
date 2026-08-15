@@ -337,16 +337,97 @@ async function upsertHistoryBatch(rows, supabaseUrl, serviceKey, attempt = 0) {
 
 async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
   let upserted = 0;
+  let failed = 0;
   for (let i = 0; i < rows.length; i += HISTORY_UPSERT_BATCH) {
     const batch = rows.slice(i, i + HISTORY_UPSERT_BATCH);
     const result = await upsertHistoryBatch(batch, supabaseUrl, serviceKey);
     if (!result.ok) {
       console.error(`  history upsert failed: ${(result.body || '').slice(0, 200)}`);
-      return { upserted, failed: rows.length - upserted };
+      failed += batch.length;
+      continue;
     }
     upserted += batch.length;
   }
-  return { upserted, failed: 0 };
+  return { upserted, failed };
+}
+
+function historyRowFromKrx(ticker, tradeDate, krxRow) {
+  const fields = historyFieldsFromKrxRow(krxRow);
+  if (!fields) return null;
+  return {
+    ticker,
+    trade_date: tradeDate,
+    open: fields.open,
+    high: fields.high,
+    low: fields.low,
+    close: fields.close,
+    volume: fields.volume,
+    mcap_won: fields.mcap_won,
+  };
+}
+
+async function fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, tradeDate) {
+  const found = new Set();
+  const pageSize = 1000;
+  for (let offset = 0; ; offset += pageSize) {
+    const url =
+      `${supabaseUrl}/rest/v1/stock_price_history?trade_date=eq.${tradeDate}` +
+      `&select=ticker&limit=${pageSize}&offset=${offset}`;
+    const res = await fetch(url, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    });
+    if (!res.ok) {
+      throw new Error(`history coverage fetch ${res.status}: ${(await res.text()).slice(0, 160)}`);
+    }
+    const page = await res.json();
+    for (const row of page) {
+      const ticker = normalizeTicker(row?.ticker);
+      if (ticker) found.add(ticker);
+    }
+    if (page.length < pageSize) break;
+  }
+  return found;
+}
+
+/**
+ * Verify every hub ticker that has a KRX row exists for the session. A suspended
+ * or not-yet-listed security has no KRX row and must not receive a synthetic bar.
+ */
+async function repairHistoryCoverageForDate(
+  expectedTickers,
+  tradeDate,
+  byCode,
+  supabaseUrl,
+  serviceKey,
+) {
+  if (!byCode || !byCode.size) return { expected: 0, repaired: 0, missing: [] };
+  const expectedRows = new Map();
+  for (const ticker of expectedTickers) {
+    const row = historyRowFromKrx(ticker, tradeDate, byCode.get(ticker));
+    if (row) expectedRows.set(ticker, row);
+  }
+  const existing = await fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, tradeDate);
+  let missing = [...expectedRows.keys()].filter((ticker) => !existing.has(ticker));
+  let repaired = 0;
+  if (missing.length) {
+    console.warn(`  history coverage ${tradeDate}: repairing ${missing.length} hub ticker(s)`);
+    const result = await upsertHistoryRows(
+      missing.map((ticker) => expectedRows.get(ticker)),
+      supabaseUrl,
+      serviceKey,
+    );
+    repaired = result.upserted;
+    const after = await fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, tradeDate);
+    missing = [...expectedRows.keys()].filter((ticker) => !after.has(ticker));
+  }
+  console.log(
+    `  history coverage ${tradeDate}: ${expectedRows.size - missing.length}/${expectedRows.size}` +
+      (repaired ? ` (repaired ${repaired})` : ''),
+  );
+  if (missing.length) {
+    throw new Error(`history coverage incomplete ${tradeDate}: ${missing.join(',')}`);
+  }
+  return { expected: expectedRows.size, repaired, missing };
 }
 
 /** Persist session close OHLC into history when the market is closed (prefer KRX day). */
@@ -384,6 +465,9 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
       });
       continue;
     }
+    // A successful KRX day intentionally omits suspended/not-yet-listed names.
+    // Do not invent a candle for the consensus date from a stale Naver quote.
+    if (byCode) continue;
     // Fallback: Naver last + mcap only (OHLC null until next KRX catch-up).
     if (q.last == null || !Number.isFinite(q.last) || q.last <= 0) continue;
     if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
@@ -401,7 +485,14 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
   if (!rows.length) return { upserted: 0, skipped: false };
   const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
   console.log(`  history session close ${tradeDateDash}: upserted ${result.upserted}`);
-  return result;
+  const coverage = await repairHistoryCoverageForDate(
+    quoteRows.map((row) => row.ticker),
+    tradeDateDash,
+    byCode,
+    supabaseUrl,
+    serviceKey,
+  );
+  return { ...result, coverage };
 }
 
 async function fetchHistoryMaxTradeDate(supabaseUrl, serviceKey, sampleTicker = '005930') {
@@ -420,7 +511,13 @@ async function fetchHistoryMaxTradeDate(supabaseUrl, serviceKey, sampleTicker = 
  * Fill KRX calendar gaps between last history date and the session trade date
  * so sector past-mcaps stay current without a full backfill.
  */
-async function fillMissingHistoryDays(authKey, supabaseUrl, serviceKey, throughTradeDateDash) {
+async function fillMissingHistoryDays(
+  authKey,
+  supabaseUrl,
+  serviceKey,
+  throughTradeDateDash,
+  expectedTickers,
+) {
   if (!authKey || !throughTradeDateDash) return { filled: 0 };
   const maxDash = await fetchHistoryMaxTradeDate(supabaseUrl, serviceKey);
   const throughBas = dashToBasDd(throughTradeDateDash);
@@ -458,6 +555,13 @@ async function fillMissingHistoryDays(authKey, supabaseUrl, serviceKey, throughT
       if (!rows.length) continue;
       const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
       if (result.failed) continue;
+      await repairHistoryCoverageForDate(
+        expectedTickers,
+        tradeDate,
+        byCode,
+        supabaseUrl,
+        serviceKey,
+      );
       filled += 1;
       process.stdout.write(`\r  history catch-up ${filled}/${missing.length} ${tradeDate}`);
       await sleep(150);
@@ -1051,6 +1155,7 @@ async function main() {
     supabaseUrl,
     serviceKey,
     consensus.tradeDate || todayYmdDash,
+    tickers,
   );
   await upsertSpark20ForTickers(tickers, rows, supabaseUrl, serviceKey);
 

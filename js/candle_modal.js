@@ -10,8 +10,8 @@
     'https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
 
   var RANGES = ['3m', '6m', '1y', '3y', '5y'];
-  var DEFAULT_RANGE = '1y';
   var INTERVALS = ['daily', 'weekly'];
+  var DEFAULT_RANGE_BY_INTERVAL = { daily: '1y', weekly: '5y' };
   var DISPLAY_BARS = {
     daily: { '3m': 50, '6m': 120, '1y': 200, '3y': 750, '5y': 1250 },
     weekly: { '3m': 13, '6m': 26, '1y': 52, '3y': 156, '5y': 260 },
@@ -110,8 +110,12 @@
     open: false,
     ticker: null,
     name: '',
-    range: DEFAULT_RANGE,
+    range: DEFAULT_RANGE_BY_INTERVAL.daily,
     interval: 'daily',
+    rangeByInterval: {
+      daily: DEFAULT_RANGE_BY_INTERVAL.daily,
+      weekly: DEFAULT_RANGE_BY_INTERVAL.weekly,
+    },
     charts: null,
     seriesRefs: null,
     barsByTime: null,
@@ -123,6 +127,8 @@
     resizeObs: null,
     liveOverlay: false,
     liveBarTime: null,
+    aligningPriceScales: false,
+    alignedPriceScaleWidth: PRICE_SCALE_MIN_WIDTH,
   };
 
   /* ---------- indicator utils ---------- */
@@ -411,6 +417,11 @@
     });
   }
 
+  function rangeForInterval(interval) {
+    var key = INTERVALS.indexOf(interval) >= 0 ? interval : 'daily';
+    return state.rangeByInterval[key] || DEFAULT_RANGE_BY_INTERVAL[key];
+  }
+
   function ohlcApiUrl(code, range) {
     var origin =
       global.location && global.location.protocol && global.location.protocol.indexOf('http') === 0
@@ -688,6 +699,7 @@
       var range = btn.getAttribute('data-range');
       if (!range || range === state.range) return;
       state.range = range;
+      state.rangeByInterval[state.interval] = range;
       syncRangeButtons();
       if (state.ticker) loadAndRender(state.ticker, state.range);
     });
@@ -697,6 +709,8 @@
       var interval = btn.getAttribute('data-interval');
       if (INTERVALS.indexOf(interval) < 0 || interval === state.interval) return;
       state.interval = interval;
+      state.range = rangeForInterval(interval);
+      syncRangeButtons();
       syncIntervalButtons();
       updateSubtitle();
       document
@@ -999,6 +1013,8 @@
     state.charts = null;
     state.seriesRefs = null;
     state.barsByTime = null;
+    state.aligningPriceScales = false;
+    state.alignedPriceScaleWidth = PRICE_SCALE_MIN_WIDTH;
   }
 
   function makeChart(LWC, container, colors, opts) {
@@ -1301,7 +1317,40 @@
       if (body) state.resizeObs.observe(body);
     }
     resizeCharts();
-    afterLayout(resizeCharts);
+    afterLayout(function () {
+      resizeCharts();
+      alignPriceScaleWidths();
+    });
+  }
+
+  /**
+   * lightweight-charts has a minimum width but no max/fixed-width option.
+   * Measure each rendered right scale, then raise every panel's minimum to the
+   * widest actual scale. This produces one shared plot width for all values.
+   */
+  function alignPriceScaleWidths(chartsOverride) {
+    var charts = chartsOverride || state.charts;
+    if (!charts || state.aligningPriceScales) return;
+    state.aligningPriceScales = true;
+    try {
+      var width = PRICE_SCALE_MIN_WIDTH;
+      for (var i = 0; i < charts.length; i++) {
+        var scale = charts[i].priceScale('right');
+        if (!scale || typeof scale.width !== 'function') continue;
+        var measured = Number(scale.width());
+        if (isFinite(measured)) width = Math.max(width, Math.ceil(measured));
+      }
+      if (width !== state.alignedPriceScaleWidth) {
+        state.alignedPriceScaleWidth = width;
+        for (var j = 0; j < charts.length; j++) {
+          charts[j].priceScale('right').applyOptions({ minimumWidth: width });
+        }
+      }
+    } catch (e) {
+      // Keep the baseline minimumWidth on older lightweight-charts builds.
+    } finally {
+      state.aligningPriceScales = false;
+    }
   }
 
   function resizeCharts() {
@@ -1320,6 +1369,7 @@
         }
       } catch (e) {}
     }
+    requestAnimationFrame(alignPriceScaleWidths);
   }
 
   function loadAndRender(code, range) {
@@ -1416,10 +1466,12 @@
     state.open = true;
     state.ticker = ticker;
     state.name = resolveName(ticker, opts && opts.name);
-    state.range =
-      opts && opts.range && RANGES.indexOf(opts.range) >= 0 ? opts.range : DEFAULT_RANGE;
     state.interval =
       opts && opts.interval && INTERVALS.indexOf(opts.interval) >= 0 ? opts.interval : 'daily';
+    if (opts && opts.range && RANGES.indexOf(opts.range) >= 0) {
+      state.rangeByInterval[state.interval] = opts.range;
+    }
+    state.range = rangeForInterval(state.interval);
 
     var root = document.getElementById('im-candle-root');
     root.removeAttribute('hidden');
@@ -1560,6 +1612,11 @@
     open: open,
     close: close,
     applyLang: applyLang,
+    _ui: {
+      defaultRangeByInterval: DEFAULT_RANGE_BY_INTERVAL,
+      rangeForInterval: rangeForInterval,
+      alignPriceScaleWidths: alignPriceScaleWidths,
+    },
     _indicators: {
       sma: sma,
       ema: ema,
