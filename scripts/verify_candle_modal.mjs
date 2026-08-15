@@ -34,7 +34,6 @@ const ui = context.InvestingMapCandleModal?._ui;
 assert.ok(ui, 'candle UI test exports missing');
 assert.equal(ui.rangeForInterval('daily'), '1y', 'daily default range');
 assert.equal(ui.rangeForInterval('weekly'), '5y', 'weekly default range');
-assert.match(source, /scale\.width\(\)/, 'price-scale width measurement missing');
 assert.match(
   source,
   /function scheduleAxisAlignment\(\)/,
@@ -43,7 +42,7 @@ assert.match(
 assert.match(
   source,
   /AXIS_ALIGN_DELAYS_MS = \[0, 150, 400\]/,
-  'delayed axis re-measure passes missing',
+  'delayed axis re-apply passes missing',
 );
 for (const caller of ['createCharts', 'resizeCharts']) {
   assert.ok(
@@ -51,12 +50,45 @@ for (const caller of ['createCharts', 'resizeCharts']) {
     `${caller} must re-align the price scales`,
   );
 }
+
+// The axis formatters have to match lightweight-charts exactly, or the width we
+// reserve will not be the width it needs.
+assert.equal(ui.formatAxisPrice(-12853.44), '\u221212853.44', 'MACD label uses a unicode minus');
+assert.equal(ui.formatAxisPrice(400000), '400000.00', 'price label keeps two decimals');
+assert.equal(ui.formatAxisVolume(12345678), '12.35M', 'volume label matches VolumeFormatter');
+assert.equal(ui.formatAxisVolume(842), '842', 'small volumes stay unscaled');
+
+function panelWithPrices(high, low) {
+  return {
+    candles: [{ high, low }],
+    closeLine: [],
+    ma50Line: [{ value: low }],
+    maLine: [{ value: high }],
+    volumes: [{ value: 120000 }],
+    vmaLine: [{ value: 100000 }],
+    macdHist: [{ value: -12.5 }],
+    macdLine: [{ value: 8.25 }],
+    macdSignalLine: [{ value: 7.5 }],
+    bbwLine: [{ value: 42.5 }],
+    dispLine: [{ value: 61.25 }],
+    atrLine: [{ value: 3.75 }],
+    atrSignalLine: [{ value: 4.1 }],
+  };
+}
+const wideAxis = ui.computeAxisWidth(panelWithPrices(1200000, 900000));
+const narrowAxis = ui.computeAxisWidth(panelWithPrices(9800, 7400));
+assert.ok(wideAxis > narrowAxis, 'a seven-digit price axis reserves more width than a four-digit one');
+assert.ok(wideAxis % 2 === 0, 'axis width is rounded up to an even value');
+assert.equal(narrowAxis, 84, 'short labels fall back to the baseline minimum');
+
+// Whatever the panels hold, every chart must end up with one identical width,
+// and a pane that reports a wider laid-out scale has to pull the others with it.
 const appliedWidths = [];
-const mockCharts = [84, 117, 96].map((width) => ({
+const mockCharts = [84, 118, 84, 84, 84].map((measured) => ({
   priceScale() {
     return {
       width() {
-        return width;
+        return measured;
       },
       applyOptions(options) {
         appliedWidths.push(options.minimumWidth);
@@ -64,8 +96,13 @@ const mockCharts = [84, 117, 96].map((width) => ({
     };
   },
 }));
-ui.alignPriceScaleWidths(mockCharts);
-assert.deepEqual(appliedWidths, [117, 117, 117], 'all panels use the widest price scale');
+const shared = ui.alignPriceScaleWidths(mockCharts);
+assert.equal(shared, 118, 'a wider laid-out scale raises the shared width');
+assert.deepEqual(
+  appliedWidths,
+  [shared, shared, shared, shared, shared],
+  'all panels share one price-scale width',
+);
 
 const daily = [
   { t: '2025-12-29', o: 10, h: 12, l: 8, c: 10, v: 100 },

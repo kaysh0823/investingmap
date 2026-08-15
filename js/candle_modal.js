@@ -18,8 +18,27 @@
   };
   var RIGHT_OFFSET_BARS = 7;
   var PRICE_SCALE_MIN_WIDTH = 84;
-  /** Re-measure passes after a render; long ranges paint their wide labels late. */
+  /** Re-apply passes after a render, in case a late webfont swap changes metrics. */
   var AXIS_ALIGN_DELAYS_MS = [0, 150, 400];
+  var AXIS_FONT_SIZE = 11;
+  /** lightweight-charts' own default; measuring with it keeps our math in step. */
+  var AXIS_FONT_FAMILY =
+    "-apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif";
+  /**
+   * Non-text part of a v4 price axis: border(1) + tick(5) + inner/outer padding
+   * (fontSize/12*5 each) + label offset(5). See PriceAxisWidget.optimalWidth.
+   */
+  var AXIS_CHROME_PX = 1 + 5 + (AXIS_FONT_SIZE / 12) * 5 * 2 + 5;
+  var AXIS_SAFETY_PX = 2;
+  var AXIS_FALLBACK_TEXT_PX = 34;
+  /** Kept in step with the scaleMargins passed to each pane in createCharts. */
+  var PANE_MARGINS = {
+    price: { top: 0.06, bottom: 0.1 },
+    vol: { top: 0.12, bottom: 0.08 },
+    macd: { top: 0.12, bottom: 0.12 },
+    norm: { top: 0.12, bottom: 0.12 },
+    atr: { top: 0.12, bottom: 0.12 },
+  };
   var MA_FAST = 50;
   var MA_PRICE = 120;
   var MA_VOL = 20;
@@ -129,9 +148,9 @@
     resizeObs: null,
     liveOverlay: false,
     liveBarTime: null,
-    aligningPriceScales: false,
     axisAlignTimers: [],
     alignedPriceScaleWidth: PRICE_SCALE_MIN_WIDTH,
+    panelData: null,
   };
 
   /* ---------- indicator utils ---------- */
@@ -1040,7 +1059,7 @@
     state.charts = null;
     state.seriesRefs = null;
     state.barsByTime = null;
-    state.aligningPriceScales = false;
+    state.panelData = null;
     state.alignedPriceScaleWidth = PRICE_SCALE_MIN_WIDTH;
   }
 
@@ -1059,7 +1078,9 @@
       layout: {
         background: { type: 'solid', color: colors.bg },
         textColor: colors.muted,
-        fontSize: 11,
+        // Pinned so computeAxisWidth measures with exactly the axis font.
+        fontSize: AXIS_FONT_SIZE,
+        fontFamily: AXIS_FONT_FAMILY,
       },
       grid: {
         vertLines: { color: colors.border },
@@ -1164,26 +1185,27 @@
     normEl.innerHTML = '';
     atrEl.innerHTML = '';
 
+    state.panelData = data;
     var colors = themeColors();
     var priceChart = makeChart(LWC, priceEl, colors, {
-      scaleMargins: { top: 0.06, bottom: 0.1 },
+      scaleMargins: PANE_MARGINS.price,
       timeVisible: false,
       logScale: true,
     });
     var volChart = makeChart(LWC, volEl, colors, {
-      scaleMargins: { top: 0.12, bottom: 0.08 },
+      scaleMargins: PANE_MARGINS.vol,
       timeVisible: false,
     });
     var macdChart = makeChart(LWC, macdEl, colors, {
-      scaleMargins: { top: 0.12, bottom: 0.12 },
+      scaleMargins: PANE_MARGINS.macd,
       timeVisible: false,
     });
     var normChart = makeChart(LWC, normEl, colors, {
-      scaleMargins: { top: 0.12, bottom: 0.12 },
+      scaleMargins: PANE_MARGINS.norm,
       timeVisible: false,
     });
     var atrChart = makeChart(LWC, atrEl, colors, {
-      scaleMargins: { top: 0.12, bottom: 0.12 },
+      scaleMargins: PANE_MARGINS.atr,
       timeVisible: true,
     });
 
@@ -1383,31 +1405,180 @@
     }
   }
 
+  function axisMeasureContext() {
+    if (state.axisMeasureCtx !== undefined) return state.axisMeasureCtx;
+    var ctx = null;
+    try {
+      ctx = document.createElement('canvas').getContext('2d');
+    } catch (e) {
+      ctx = null;
+    }
+    if (ctx) ctx.font = AXIS_FONT_SIZE + 'px ' + AXIS_FONT_FAMILY;
+    state.axisMeasureCtx = ctx;
+    return ctx;
+  }
+
   /**
-   * lightweight-charts has a minimum width but no max/fixed-width option.
-   * Measure each rendered right scale, then raise every panel's minimum to the
-   * widest actual scale. This produces one shared plot width for all values.
+   * lightweight-charts caches label metrics with digits 2-9 folded to '0'.
+   * Folding every digit matches that and never under-measures, since '0' is the
+   * widest digit in the proportional fonts we render with.
+   */
+  function measureAxisText(text) {
+    var folded = String(text).replace(/[0-9]/g, '0');
+    var ctx = axisMeasureContext();
+    if (!ctx) return folded.length * AXIS_FONT_SIZE * 0.62;
+    return ctx.measureText(folded).width;
+  }
+
+  /** Mirrors lightweight-charts' PriceFormatter (precision 2, unicode minus). */
+  function formatAxisPrice(value) {
+    return (value < 0 ? '\u2212' : '') + Math.abs(value).toFixed(2);
+  }
+
+  function formatAxisVolumeNumber(value) {
+    var rounded = Math.round(value * 100) / 100;
+    var res =
+      rounded >= 1e-15 && rounded < 1
+        ? rounded.toFixed(2).replace(/\.?0+$/, '')
+        : String(rounded);
+    return res.replace(/(\.[1-9]*)0+$/, function (all, keep) {
+      return keep;
+    });
+  }
+
+  /** Mirrors lightweight-charts' VolumeFormatter (precision 2). */
+  function formatAxisVolume(value) {
+    var sign = value < 0 ? '-' : '';
+    var vol = Math.abs(value);
+    if (vol < 995) return sign + formatAxisVolumeNumber(vol);
+    if (vol < 999995) return sign + formatAxisVolumeNumber(vol / 1000) + 'K';
+    if (vol < 999999995) {
+      return sign + formatAxisVolumeNumber((1000 * Math.round(vol / 1000)) / 1e6) + 'M';
+    }
+    return sign + formatAxisVolumeNumber((1e6 * Math.round(vol / 1e6)) / 1e9) + 'B';
+  }
+
+  function seriesBounds(lists) {
+    var lo = Infinity;
+    var hi = -Infinity;
+    for (var i = 0; i < lists.length; i++) {
+      var list = lists[i];
+      if (!list) continue;
+      for (var j = 0; j < list.length; j++) {
+        var point = list[j];
+        var candidates = point.value != null ? [point.value] : [point.high, point.low];
+        for (var k = 0; k < candidates.length; k++) {
+          var n = Number(candidates[k]);
+          if (!isFinite(n)) continue;
+          if (n < lo) lo = n;
+          if (n > hi) hi = n;
+        }
+      }
+    }
+    return lo <= hi ? [lo, hi] : null;
+  }
+
+  /**
+   * The axis prints labels for the whole visible price range, which extends past
+   * the data by the pane's scale margins. Reproduce that extrapolation so the
+   * widest label we plan for is the widest label the axis can actually draw.
+   */
+  function axisValueRange(bounds, margins, logScale) {
+    var lo = bounds[0];
+    var hi = bounds[1];
+    var usable = Math.max(1 - margins.top - margins.bottom, 0.1);
+    if (logScale && lo > 0 && hi > lo) {
+      var ratio = hi / lo;
+      return [lo / Math.pow(ratio, margins.bottom / usable), hi * Math.pow(ratio, margins.top / usable)];
+    }
+    var span = hi - lo || Math.abs(hi) || 1;
+    return [lo - span * (margins.bottom / usable), hi + span * (margins.top / usable)];
+  }
+
+  function axisPanelSpecs(data) {
+    return [
+      {
+        series: [data.candles, data.closeLine, data.ma50Line, data.maLine],
+        format: formatAxisPrice,
+        margins: PANE_MARGINS.price,
+        logScale: true,
+      },
+      { series: [data.volumes, data.vmaLine], format: formatAxisVolume, margins: PANE_MARGINS.vol },
+      {
+        series: [data.macdHist, data.macdLine, data.macdSignalLine],
+        format: formatAxisPrice,
+        margins: PANE_MARGINS.macd,
+      },
+      { series: [data.bbwLine, data.dispLine], format: formatAxisPrice, margins: PANE_MARGINS.norm },
+      {
+        series: [data.atrLine, data.atrSignalLine],
+        format: formatAxisPrice,
+        margins: PANE_MARGINS.atr,
+      },
+    ];
+  }
+
+  /**
+   * Derive the shared axis width from the data instead of measuring rendered
+   * scales. lightweight-charts only widens an axis after painting its labels, so
+   * any measurement races the paint; the widest label, on the other hand, is
+   * known up front. Every pane then sits at max(itsOptimalWidth, minimumWidth),
+   * and because this value covers the widest pane, that is one identical width.
+   */
+  function computeAxisWidth(data) {
+    var panels = axisPanelSpecs(data || {});
+    var widest = 0;
+    for (var i = 0; i < panels.length; i++) {
+      var panel = panels[i];
+      var bounds = seriesBounds(panel.series);
+      if (!bounds) continue;
+      var range = axisValueRange(bounds, panel.margins, panel.logScale);
+      var labels = [
+        panel.format(range[0]),
+        panel.format(range[1]),
+        panel.format(Math.floor(range[0])),
+        panel.format(Math.ceil(range[1])),
+      ];
+      for (var j = 0; j < labels.length; j++) {
+        widest = Math.max(widest, measureAxisText(labels[j]));
+      }
+    }
+    var width = Math.ceil(AXIS_CHROME_PX + AXIS_SAFETY_PX + (widest || AXIS_FALLBACK_TEXT_PX));
+    width += width % 2; // lightweight-charts rounds scale widths up to an even value
+    return Math.max(width, PRICE_SCALE_MIN_WIDTH);
+  }
+
+  /**
+   * The computed width already covers the widest label each pane can print.
+   * Measuring the laid-out scales on top can only ever reveal a wider
+   * requirement, so it backstops the model. Because nothing here ever lowers the
+   * width, this cannot reintroduce the shrink/grow race that measuring alone hit.
    */
   function alignPriceScaleWidths(chartsOverride) {
     var charts = chartsOverride || state.charts;
-    if (!charts || !charts.length || state.aligningPriceScales) {
-      return state.alignedPriceScaleWidth;
+    if (!charts || !charts.length) return state.alignedPriceScaleWidth;
+    var width = Math.max(computeAxisWidth(state.panelData), state.alignedPriceScaleWidth);
+    for (var i = 0; i < charts.length; i++) {
+      var scale = priceScaleOf(charts[i]);
+      if (!scale || typeof scale.width !== 'function') continue;
+      var measured = Number(scale.width());
+      if (isFinite(measured)) width = Math.max(width, Math.ceil(measured));
     }
-    state.aligningPriceScales = true;
-    var width = PRICE_SCALE_MIN_WIDTH;
-    try {
-      for (var i = 0; i < charts.length; i++) {
-        var scale = priceScaleOf(charts[i]);
-        if (!scale || typeof scale.width !== 'function') continue;
-        var measured = Number(scale.width());
-        if (isFinite(measured)) width = Math.max(width, Math.ceil(measured));
-      }
-      setPriceScaleWidth(charts, width);
-      state.alignedPriceScaleWidth = width;
-    } finally {
-      state.aligningPriceScales = false;
-    }
+    width += width % 2;
+    setPriceScaleWidth(charts, width);
+    state.alignedPriceScaleWidth = width;
     return width;
+  }
+
+  /** Dev helper: every pane should report the same number. */
+  function debugAxisWidths() {
+    var charts = state.charts || [];
+    var widths = [];
+    for (var i = 0; i < charts.length; i++) {
+      var scale = priceScaleOf(charts[i]);
+      widths.push(scale && typeof scale.width === 'function' ? scale.width() : null);
+    }
+    return { applied: state.alignedPriceScaleWidth, widths: widths };
   }
 
   function clearAxisAlignTimers() {
@@ -1417,26 +1588,17 @@
     state.axisAlignTimers = [];
   }
 
-  /**
-   * Label widths change with range, interval and ticker (a 5Y price axis is far
-   * wider than ATR%), and lightweight-charts only widens the axis once the new
-   * series has been painted. Drop back to the baseline, then re-measure across
-   * several frames so late label growth still ends up unified.
-   */
   function scheduleAxisAlignment() {
     var charts = state.charts;
     if (!charts || !charts.length) return;
     clearAxisAlignTimers();
-    setPriceScaleWidth(charts, PRICE_SCALE_MIN_WIDTH);
+    alignPriceScaleWidths(charts);
     for (var i = 0; i < AXIS_ALIGN_DELAYS_MS.length; i++) {
       (function (delay) {
         state.axisAlignTimers.push(
           setTimeout(function () {
             if (state.charts !== charts) return;
-            afterLayout(function () {
-              if (state.charts !== charts) return;
-              alignPriceScaleWidths(charts);
-            });
+            alignPriceScaleWidths(charts);
           }, delay),
         );
       })(AXIS_ALIGN_DELAYS_MS[i]);
@@ -1706,6 +1868,10 @@
       defaultRangeByInterval: DEFAULT_RANGE_BY_INTERVAL,
       rangeForInterval: rangeForInterval,
       alignPriceScaleWidths: alignPriceScaleWidths,
+      computeAxisWidth: computeAxisWidth,
+      formatAxisPrice: formatAxisPrice,
+      formatAxisVolume: formatAxisVolume,
+      debugAxisWidths: debugAxisWidths,
     },
     _indicators: {
       sma: sma,
