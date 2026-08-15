@@ -128,6 +128,7 @@
     liveOverlay: false,
     liveBarTime: null,
     aligningPriceScales: false,
+    axisAlignPending: false,
     alignedPriceScaleWidth: PRICE_SCALE_MIN_WIDTH,
   };
 
@@ -365,6 +366,7 @@
           c: bar.c,
           v: Number(bar.v) || 0,
           live: !!bar.live,
+          closeOnly: !!bar.closeOnly,
         };
       } else {
         current.t = bar.t;
@@ -373,6 +375,7 @@
         current.c = bar.c;
         current.v += Number(bar.v) || 0;
         current.live = current.live || !!bar.live;
+        current.closeOnly = current.closeOnly && !!bar.closeOnly;
       }
     }
     if (current) {
@@ -488,8 +491,10 @@
       return { bars: bars, live: false, liveTime: null };
     }
 
+    // Newer KRX codes contain letters (0009K0), so keep alphanumerics, not digits only.
     var tick = String(code || '')
-      .replace(/\D/g, '')
+      .toUpperCase()
+      .replace(/[^0-9A-Z]/g, '')
       .padStart(6, '0')
       .slice(-6);
     var items = quotesJson.items || {};
@@ -807,13 +812,18 @@
       if (!b || !b.t) continue;
       var c = typeof b.c === 'number' ? b.c : Number(b.c);
       if (!isFinite(c) || c <= 0) continue;
-      var o = b.o != null && isFinite(Number(b.o)) ? Number(b.o) : c;
-      var h = b.h != null && isFinite(Number(b.h)) ? Number(b.h) : Math.max(o, c);
-      var l = b.l != null && isFinite(Number(b.l)) ? Number(b.l) : Math.min(o, c);
+      var hasOpen = b.o != null && isFinite(Number(b.o));
+      var hasHigh = b.h != null && isFinite(Number(b.h));
+      var hasLow = b.l != null && isFinite(Number(b.l));
+      var o = hasOpen ? Number(b.o) : c;
+      var h = hasHigh ? Number(b.h) : Math.max(o, c);
+      var l = hasLow ? Number(b.l) : Math.min(o, c);
       var v = b.v != null && isFinite(Number(b.v)) ? Number(b.v) : 0;
       if (h < Math.max(o, c)) h = Math.max(o, c);
       if (l > Math.min(o, c)) l = Math.min(o, c);
-      bars.push({ t: b.t, o: o, h: h, l: l, c: c, v: v });
+      // Newly listed names can arrive with close only; those render as a line.
+      var closeOnly = !hasOpen && !hasHigh && !hasLow;
+      bars.push({ t: b.t, o: o, h: h, l: l, c: c, v: v, closeOnly: closeOnly });
     }
     return bars;
   }
@@ -840,6 +850,8 @@
     var start = Math.max(0, fullBars.length - displayN);
 
     var candles = [];
+    var closeLine = [];
+    var closeOnlyCount = 0;
     var ma50Line = [];
     var maLine = [];
     var volumes = [];
@@ -855,7 +867,9 @@
 
     for (var i = start; i < fullBars.length; i++) {
       var b = fullBars[i];
-      candles.push({ time: b.t, open: b.o, high: b.h, low: b.l, close: b.c });
+      closeLine.push({ time: b.t, value: b.c });
+      if (b.closeOnly) closeOnlyCount += 1;
+      else candles.push({ time: b.t, open: b.o, high: b.h, low: b.l, close: b.c });
       volumes.push({
         time: b.t,
         value: b.v,
@@ -907,6 +921,9 @@
 
     return {
       candles: candles,
+      // Drawn whenever any bar lacks OHLC so the price pane still shows a series.
+      closeLine: closeOnlyCount ? closeLine : [],
+      barCount: closeLine.length,
       ma50Line: ma50Line,
       maLine: maLine,
       volumes: volumes,
@@ -1014,6 +1031,7 @@
     state.seriesRefs = null;
     state.barsByTime = null;
     state.aligningPriceScales = false;
+    state.axisAlignPending = false;
     state.alignedPriceScaleWidth = PRICE_SCALE_MIN_WIDTH;
   }
 
@@ -1169,6 +1187,18 @@
     });
     candle.setData(data.candles);
 
+    var closeSeries = null;
+    if (data.closeLine && data.closeLine.length) {
+      closeSeries = priceChart.addLineSeries({
+        color: '#58a6ff',
+        lineWidth: 2,
+        priceLineVisible: false,
+        lastValueVisible: true,
+        title: t().closePx,
+      });
+      closeSeries.setData(data.closeLine);
+    }
+
     var ma50Series = priceChart.addLineSeries({
       color: '#e3b341',
       lineWidth: 2,
@@ -1270,7 +1300,8 @@
     atrChart.timeScale().applyOptions({ visible: true, borderVisible: true });
 
     var charts = [priceChart, volChart, macdChart, normChart, atrChart];
-    var primarySeries = [candle, volSeries, macdLineSeries, bbwSeries, atrSeries];
+    var priceAnchor = data.candles.length ? candle : closeSeries || candle;
+    var primarySeries = [priceAnchor, volSeries, macdLineSeries, bbwSeries, atrSeries];
     wireSync(charts, primarySeries);
 
     priceChart.timeScale().fitContent();
@@ -1287,6 +1318,7 @@
     state.charts = charts;
     state.seriesRefs = {
       candle: candle,
+      close: closeSeries,
       ma50: ma50Series,
       ma: maSeries,
       vol: volSeries,
@@ -1319,8 +1351,27 @@
     resizeCharts();
     afterLayout(function () {
       resizeCharts();
-      alignPriceScaleWidths();
+      scheduleAxisAlignment();
     });
+  }
+
+  function priceScaleOf(chart) {
+    try {
+      var scale = chart && chart.priceScale ? chart.priceScale('right') : null;
+      return scale && typeof scale.applyOptions === 'function' ? scale : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setPriceScaleWidth(charts, width) {
+    for (var i = 0; i < charts.length; i++) {
+      var scale = priceScaleOf(charts[i]);
+      if (!scale) continue;
+      try {
+        scale.applyOptions({ minimumWidth: width });
+      } catch (e) {}
+    }
   }
 
   /**
@@ -1330,27 +1381,48 @@
    */
   function alignPriceScaleWidths(chartsOverride) {
     var charts = chartsOverride || state.charts;
-    if (!charts || state.aligningPriceScales) return;
+    if (!charts || !charts.length || state.aligningPriceScales) {
+      return state.alignedPriceScaleWidth;
+    }
     state.aligningPriceScales = true;
+    var width = PRICE_SCALE_MIN_WIDTH;
     try {
-      var width = PRICE_SCALE_MIN_WIDTH;
       for (var i = 0; i < charts.length; i++) {
-        var scale = charts[i].priceScale('right');
+        var scale = priceScaleOf(charts[i]);
         if (!scale || typeof scale.width !== 'function') continue;
         var measured = Number(scale.width());
         if (isFinite(measured)) width = Math.max(width, Math.ceil(measured));
       }
-      if (width !== state.alignedPriceScaleWidth) {
-        state.alignedPriceScaleWidth = width;
-        for (var j = 0; j < charts.length; j++) {
-          charts[j].priceScale('right').applyOptions({ minimumWidth: width });
-        }
-      }
-    } catch (e) {
-      // Keep the baseline minimumWidth on older lightweight-charts builds.
+      setPriceScaleWidth(charts, width);
+      state.alignedPriceScaleWidth = width;
     } finally {
       state.aligningPriceScales = false;
     }
+    return width;
+  }
+
+  /**
+   * Label widths change with range, interval and ticker (5Y prices are wider than
+   * ATR%), so drop back to the baseline first and let lightweight-charts lay the
+   * axes out again before unifying every pane to the widest natural width.
+   */
+  function scheduleAxisAlignment() {
+    var charts = state.charts;
+    if (!charts || !charts.length || state.axisAlignPending) return;
+    state.axisAlignPending = true;
+    setPriceScaleWidth(charts, PRICE_SCALE_MIN_WIDTH);
+    afterLayout(function () {
+      if (state.charts !== charts) {
+        state.axisAlignPending = false;
+        return;
+      }
+      alignPriceScaleWidths(charts);
+      afterLayout(function () {
+        state.axisAlignPending = false;
+        if (state.charts !== charts) return;
+        alignPriceScaleWidths(charts);
+      });
+    });
   }
 
   function resizeCharts() {
@@ -1369,7 +1441,7 @@
         }
       } catch (e) {}
     }
-    requestAnimationFrame(alignPriceScaleWidths);
+    scheduleAxisAlignment();
   }
 
   function loadAndRender(code, range) {
@@ -1419,7 +1491,7 @@
 
         if (state.interval === 'weekly') fullBars = aggregateWeeklyBars(fullBars);
         var data = buildPanelData(fullBars, range, state.interval);
-        if (!data.candles.length) {
+        if (!data.barCount) {
           destroyCharts();
           setStatus(labels.empty, true);
           return;
@@ -1629,6 +1701,8 @@
       atrPercent: atrPercent,
       aggregateWeeklyBars: aggregateWeeklyBars,
       isoWeekKey: isoWeekKey,
+      normalizeBars: normalizeBars,
+      buildPanelData: buildPanelData,
       applyLiveQuoteToBars: applyLiveQuoteToBars,
       asOfToTradeDate: asOfToTradeDate,
       NORM_WINDOW: NORM_WINDOW,

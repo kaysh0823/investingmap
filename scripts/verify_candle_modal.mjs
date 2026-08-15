@@ -37,9 +37,15 @@ assert.equal(ui.rangeForInterval('weekly'), '5y', 'weekly default range');
 assert.match(source, /scale\.width\(\)/, 'price-scale width measurement missing');
 assert.match(
   source,
-  /applyOptions\(\{ minimumWidth: width \}\)/,
-  'shared maximum price-scale width application missing',
+  /function scheduleAxisAlignment\(\)/,
+  'axis re-alignment scheduler missing',
 );
+for (const caller of ['createCharts', 'resizeCharts']) {
+  assert.ok(
+    new RegExp(`function ${caller}\\([\\s\\S]*?scheduleAxisAlignment\\(\\)`).test(source),
+    `${caller} must re-align the price scales`,
+  );
+}
 const appliedWidths = [];
 const mockCharts = [84, 117, 96].map((width) => ({
   priceScale() {
@@ -66,9 +72,32 @@ const weekly = indicators.aggregateWeeklyBars(daily);
 assert.equal(weekly.length, 2, 'ISO weekly aggregation count');
 assert.deepEqual(
   JSON.parse(JSON.stringify(weekly[0])),
-  { t: '2026-01-02', o: 10, h: 15, l: 8, c: 14, v: 450, live: false },
+  { t: '2026-01-02', o: 10, h: 15, l: 8, c: 14, v: 450, live: false, closeOnly: false },
   'weekly OHLCV aggregation',
 );
+
+const closeOnlyBars = indicators.normalizeBars([
+  { t: '2026-07-22', o: null, h: null, l: null, c: 30000, v: null },
+  { t: '2026-07-31', o: null, h: null, l: null, c: 28000, v: null },
+  { t: '2026-08-07', o: 27000, h: 27500, l: 26000, c: 27250, v: 1200 },
+]);
+assert.equal(
+  closeOnlyBars.map((bar) => bar.closeOnly).join(','),
+  'true,true,false',
+  'close-only bars are flagged',
+);
+const shortPanel = indicators.buildPanelData(closeOnlyBars, '5y', 'daily');
+assert.equal(shortPanel.barCount, 3, 'short history keeps every available bar');
+assert.equal(shortPanel.candles.length, 1, 'only full-OHLC bars become candles');
+assert.equal(shortPanel.closeLine.length, 3, 'close-only history falls back to a line');
+assert.equal(shortPanel.ma50Line.length, 0, 'indicators are skipped while data is insufficient');
+
+const fullPanel = indicators.buildPanelData(
+  indicators.normalizeBars(daily),
+  '5y',
+  'daily',
+);
+assert.equal(fullPanel.closeLine.length, 0, 'complete OHLC history renders candles only');
 
 const atrBars = [];
 for (let i = 0; i < 11; i++) {

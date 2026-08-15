@@ -50,13 +50,19 @@ function parseNum(v) {
   return Number.isFinite(n) ? n : null;
 }
 
+/** KRX short codes are 6 chars and may contain letters (e.g. 0009K0, 0126Z0). */
+const SHORT_CODE_RE = /^[0-9A-Z]{6}$/;
+
 function shortCodeFromRow(row) {
   const srt = row && row.ISU_SRT_CD;
-  if (srt && /^\d{6}$/.test(String(srt).trim())) return String(srt).trim();
+  if (srt) {
+    const s = String(srt).trim().toUpperCase();
+    if (SHORT_CODE_RE.test(s)) return s;
+  }
   const cd = row && row.ISU_CD;
   if (!cd) return null;
-  const s = String(cd).trim();
-  if (/^\d{6}$/.test(s)) return s;
+  const s = String(cd).trim().toUpperCase();
+  if (SHORT_CODE_RE.test(s)) return s;
   if (s.length >= 9 && s.startsWith('KR')) return s.substring(3, 9);
   return null;
 }
