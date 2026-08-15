@@ -36,6 +36,8 @@
   ];
   /** lightweight-charts draws a 1px separator between panes. */
   var PANE_SEPARATOR_PX = 1;
+  var MA_SHORT = 5;
+  var MA_MEDIUM = 20;
   var MA_FAST = 50;
   var MA_PRICE = 120;
   var MA_VOL = 20;
@@ -67,6 +69,8 @@
       low: '저가',
       closePx: '종가',
       volume: '거래량',
+      ma5: 'MA5',
+      ma20: 'MA20',
       ma50: 'MA50',
       ma120: 'MA120',
       vma20: 'VMA20',
@@ -103,6 +107,8 @@
       low: 'Low',
       closePx: 'Close',
       volume: 'Volume',
+      ma5: 'MA5',
+      ma20: 'MA20',
       ma50: 'MA50',
       ma120: 'MA120',
       vma20: 'VMA20',
@@ -851,6 +857,8 @@
     var vols = fullBars.map(function (b) {
       return b.v;
     });
+    var ma5 = sma(closes, MA_SHORT);
+    var ma20 = sma(closes, MA_MEDIUM);
     var ma50 = sma(closes, MA_FAST);
     var ma120 = sma(closes, MA_PRICE);
     var vma20 = sma(vols, MA_VOL);
@@ -868,6 +876,8 @@
     var candles = [];
     var closeLine = [];
     var closeOnlyCount = 0;
+    var ma5Line = [];
+    var ma20Line = [];
     var ma50Line = [];
     var maLine = [];
     var volumes = [];
@@ -891,6 +901,8 @@
         value: b.v,
         color: b.c >= b.o ? 'rgba(63,185,80,0.55)' : 'rgba(248,81,73,0.55)',
       });
+      if (ma5[i] != null && isFinite(ma5[i])) ma5Line.push({ time: b.t, value: ma5[i] });
+      if (ma20[i] != null && isFinite(ma20[i])) ma20Line.push({ time: b.t, value: ma20[i] });
       if (ma50[i] != null && isFinite(ma50[i])) ma50Line.push({ time: b.t, value: ma50[i] });
       if (ma120[i] != null && isFinite(ma120[i])) maLine.push({ time: b.t, value: ma120[i] });
       if (vma20[i] != null && isFinite(vma20[i])) vmaLine.push({ time: b.t, value: vma20[i] });
@@ -921,6 +933,8 @@
         l: b.l,
         c: b.c,
         v: b.v,
+        ma5: ma5[i],
+        ma20: ma20[i],
         ma50: ma50[i],
         ma120: ma120[i],
         vma20: vma20[i],
@@ -940,6 +954,8 @@
       // Drawn whenever any bar lacks OHLC so the price pane still shows a series.
       closeLine: closeOnlyCount ? closeLine : [],
       barCount: closeLine.length,
+      ma5Line: ma5Line,
+      ma20Line: ma20Line,
       ma50Line: ma50Line,
       maLine: maLine,
       volumes: volumes,
@@ -986,6 +1002,14 @@
       labels.volume +
       ' ' +
       fmtVol(b.v) +
+      ' · ' +
+      labels.ma5 +
+      ' ' +
+      fmtPrice(b.ma5) +
+      ' · ' +
+      labels.ma20 +
+      ' ' +
+      fmtPrice(b.ma20) +
       ' · ' +
       labels.ma50 +
       ' ' +
@@ -1142,6 +1166,20 @@
       closeSeries.setData(data.closeLine);
     }
 
+    var ma5Series = addLine('price', {
+      color: '#ff7b72',
+      title: 'MA5',
+      lastValueVisible: false,
+    });
+    ma5Series.setData(data.ma5Line);
+
+    var ma20Series = addLine('price', {
+      color: '#3fb950',
+      title: 'MA20',
+      lastValueVisible: false,
+    });
+    ma20Series.setData(data.ma20Line);
+
     var ma50Series = addLine('price', { color: '#e3b341', title: 'MA50' });
     ma50Series.setData(data.ma50Line);
 
@@ -1202,6 +1240,8 @@
     state.seriesRefs = {
       candle: candle,
       close: closeSeries,
+      ma5: ma5Series,
+      ma20: ma20Series,
       ma50: ma50Series,
       ma: maSeries,
       vol: volSeries,

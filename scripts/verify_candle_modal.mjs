@@ -82,6 +82,35 @@ assert.match(
   'each pane keeps its own right price scale',
 );
 assert.match(source, /rightOffset: RIGHT_OFFSET_BARS/, 'right margin retained');
+for (const [name, color, dataKey] of [
+  ['MA5', '#ff7b72', 'ma5Line'],
+  ['MA20', '#3fb950', 'ma20Line'],
+]) {
+  assert.ok(source.includes(`title: '${name}'`), `${name} price-pane series exists`);
+  assert.ok(source.includes(`color: '${color}'`), `${name} uses the requested color`);
+  assert.ok(source.includes(`setData(data.${dataKey})`), `${name} receives calculated data`);
+}
+const maSeriesOrder = ['MA5', 'MA20', 'MA50', 'MA120'].map((name) =>
+  source.indexOf(`title: '${name}'`),
+);
+assert.ok(
+  maSeriesOrder.every((offset, index) => offset >= 0 && (!index || offset > maSeriesOrder[index - 1])),
+  'price-pane moving averages are added in 5, 20, 50, 120 order',
+);
+for (const key of ['ma5', 'ma20']) {
+  assert.ok(source.includes(`${key}: '${key.toUpperCase()}'`), `${key} i18n label exists`);
+  assert.ok(source.includes(`fmtPrice(b.${key})`), `${key} appears in the crosshair header`);
+}
+assert.match(
+  source,
+  /title: 'MA5',[\s\S]{0,80}lastValueVisible: false/,
+  'MA5 last-value tag is hidden',
+);
+assert.match(
+  source,
+  /title: 'MA20',[\s\S]{0,80}lastValueVisible: false/,
+  'MA20 last-value tag is hidden',
+);
 assert.match(
   source,
   /toUpperCase\(\)\.replace\(\/\[\^0-9A-Z\]\/g, ''\)/,
@@ -123,6 +152,8 @@ const shortPanel = indicators.buildPanelData(closeOnlyBars, '5y', 'daily');
 assert.equal(shortPanel.barCount, 3, 'short history keeps every available bar');
 assert.equal(shortPanel.candles.length, 1, 'only full-OHLC bars become candles');
 assert.equal(shortPanel.closeLine.length, 3, 'close-only history falls back to a line');
+assert.equal(shortPanel.ma5Line.length, 0, 'MA5 is skipped while fewer than five bars exist');
+assert.equal(shortPanel.ma20Line.length, 0, 'MA20 is skipped while fewer than twenty bars exist');
 assert.equal(shortPanel.ma50Line.length, 0, 'indicators are skipped while data is insufficient');
 
 const fullPanel = indicators.buildPanelData(
@@ -131,6 +162,24 @@ const fullPanel = indicators.buildPanelData(
   'daily',
 );
 assert.equal(fullPanel.closeLine.length, 0, 'complete OHLC history renders candles only');
+assert.equal(fullPanel.ma5Line.length, 0, 'four bars are insufficient for MA5');
+
+const maPanelBars = [];
+for (let i = 0; i < 20; i++) {
+  maPanelBars.push({
+    t: `2026-02-${String(i + 1).padStart(2, '0')}`,
+    o: i + 1,
+    h: i + 2,
+    l: i,
+    c: i + 1,
+    v: 100,
+  });
+}
+const maPanel = indicators.buildPanelData(indicators.normalizeBars(maPanelBars), '5y', 'daily');
+assert.equal(maPanel.ma5Line.length, 16, 'MA5 starts on the fifth bar');
+assert.equal(maPanel.ma20Line.length, 1, 'MA20 starts on the twentieth bar');
+assert.equal(maPanel.byTime['2026-02-20'].ma5, 18, 'MA5 crosshair value');
+assert.equal(maPanel.byTime['2026-02-20'].ma20, 10.5, 'MA20 crosshair value');
 
 const atrBars = [];
 for (let i = 0; i < 11; i++) {
