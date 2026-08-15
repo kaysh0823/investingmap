@@ -1,7 +1,9 @@
 /**
  * Backfill stock_price_history: KRX trading days × full KOSPI/KOSDAQ universe → Supabase.
  * Reuses tradingDates + fetchMarketDay from functions/lib/krx_yoy.mjs.
- * Usage: node scripts/backfill_price_history.mjs [--days=500]
+ * Usage: node scripts/backfill_price_history.mjs [--days=1250] [--probe-only]
+ * Default: target ~5Y (1,250 sessions), falling back to ~3Y (750) when KRX
+ * does not expose the older probe window.
  */
 import fs from 'fs';
 import path from 'path';
@@ -9,11 +11,16 @@ import { fileURLToPath } from 'url';
 import { tradingDates, fetchMarketDay, historyFieldsFromKrxRow } from '../functions/lib/krx_yoy.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-/** Default ~2y of sessions for candle MA120 / BBW warmup beyond 1Y display. */
-const HIST_TRADING_DAYS = 500;
+const HIST_TRADING_DAYS_5Y = 1250;
+const HIST_TRADING_DAYS_3Y = 750;
+const CANDIDATE_BUFFER = 1.12;
+const PROBE_WINDOW = 8;
+const ANCHOR_TICKER = '005930';
 const KRX_DELAY_MS = 200;
 const KRX_MAX_RETRIES = 2;
-const UPSERT_BATCH_SIZE = 500;
+/** One KRX market day is currently ~2,700 rows; keep it to one REST upsert. */
+const UPSERT_BATCH_SIZE = 3000;
+const UPSERT_DELAY_MS = 0;
 const UPSERT_MAX_RETRIES = 2;
 
 function sleep(ms) {
@@ -112,9 +119,53 @@ async function upsertDayRows(rows, supabaseUrl, serviceKey) {
       return { ok: false, inserted, error: result.body };
     }
     inserted += batch.length;
-    if (i + UPSERT_BATCH_SIZE < rows.length) await sleep(KRX_DELAY_MS);
+    if (i + UPSERT_BATCH_SIZE < rows.length) await sleep(UPSERT_DELAY_MS);
   }
   return { ok: true, inserted };
+}
+
+async function fetchExistingAnchorDates(supabaseUrl, serviceKey) {
+  const dates = [];
+  const pageSize = 1000;
+  for (let offset = 0; offset < HIST_TRADING_DAYS_5Y + 250; offset += pageSize) {
+    const url =
+      `${supabaseUrl}/rest/v1/stock_price_history?ticker=eq.${ANCHOR_TICKER}` +
+      `&select=trade_date&order=trade_date.desc&limit=${pageSize}&offset=${offset}`;
+    const res = await fetch(url, {
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+      },
+    });
+    if (!res.ok) {
+      throw new Error(`existing_history_fetch_failed:${res.status}:${(await res.text()).slice(0, 160)}`);
+    }
+    const page = await res.json();
+    for (const row of page) {
+      if (row?.trade_date) dates.push(String(row.trade_date).slice(0, 10));
+    }
+    if (page.length < pageSize) break;
+  }
+  return dates;
+}
+
+async function probeHistoryDepth(authKey, targetDays) {
+  const probeCandidates = tradingDates(Math.ceil(targetDays * 1.06) + PROBE_WINDOW);
+  const start = Math.min(probeCandidates.length - PROBE_WINDOW, Math.ceil(targetDays * 1.04));
+  const sample = probeCandidates.slice(Math.max(0, start), Math.max(0, start) + PROBE_WINDOW);
+  for (const basDd of sample) {
+    const fetched = await fetchMarketDayWithRetry(authKey, basDd);
+    if (fetched.ok) {
+      return { ok: true, basDd, rows: fetched.byCode.size, sample };
+    }
+  }
+  return { ok: false, basDd: null, rows: 0, sample };
+}
+
+function historyTier(days) {
+  if (days >= HIST_TRADING_DAYS_5Y) return '5Y';
+  if (days >= HIST_TRADING_DAYS_3Y) return '3Y';
+  return '<3Y';
 }
 
 async function main() {
@@ -134,15 +185,40 @@ async function main() {
   }
 
   const daysArg = process.argv.find((a) => a.startsWith('--days='));
-  const days = daysArg ? Math.max(1, parseInt(daysArg.split('=')[1], 10) || HIST_TRADING_DAYS) : HIST_TRADING_DAYS;
+  const explicitDays = daysArg ? Math.max(1, parseInt(daysArg.split('=')[1], 10) || 0) : 0;
+  const probeOnly = process.argv.includes('--probe-only');
+  let targetDays = explicitDays || HIST_TRADING_DAYS_5Y;
 
-  const dates = tradingDates(days).reverse();
-  console.log(`Backfill request --days=${days} → ${dates.length} weekday slots → stock_price_history`);
-  if (dates.length < days) {
-    console.warn(
-      `Warning: only ${dates.length}/${days} weekday dates generated (calendar scan capped). Check tradingDates.`,
-    );
+  if (!explicitDays) {
+    console.log(`Probing KRX history for ~5Y (${HIST_TRADING_DAYS_5Y} sessions)...`);
+    const probe5y = await probeHistoryDepth(authKey, HIST_TRADING_DAYS_5Y);
+    if (probe5y.ok) {
+      console.log(`  5Y probe OK: ${probe5y.basDd} (${probe5y.rows} rows)`);
+    } else {
+      console.warn(`  5Y probe unavailable: ${probe5y.sample.join(', ')}`);
+      console.log(`Probing KRX history for ~3Y (${HIST_TRADING_DAYS_3Y} sessions)...`);
+      const probe3y = await probeHistoryDepth(authKey, HIST_TRADING_DAYS_3Y);
+      if (!probe3y.ok) {
+        throw new Error(`KRX history unavailable at both 5Y and 3Y probe windows`);
+      }
+      targetDays = HIST_TRADING_DAYS_3Y;
+      console.warn(`  Falling back to 3Y; probe OK: ${probe3y.basDd} (${probe3y.rows} rows)`);
+    }
   }
+
+  if (probeOnly) {
+    console.log(`Probe result: target=${targetDays} sessions (${historyTier(targetDays)})`);
+    return;
+  }
+
+  const existingDates = await fetchExistingAnchorDates(supabaseUrl, serviceKey);
+  const acquired = new Set(existingDates);
+  const candidateCount = Math.ceil(targetDays * CANDIDATE_BUFFER) + 30;
+  const dates = tradingDates(candidateCount);
+  console.log(
+    `Backfill target=${targetDays} sessions (${historyTier(targetDays)}), ` +
+      `existing ${ANCHOR_TICKER} sessions=${existingDates.length}, candidates=${dates.length}`,
+  );
 
   const failedDates = [];
   const emptyDates = [];
@@ -152,6 +228,10 @@ async function main() {
   for (let i = 0; i < dates.length; i++) {
     const basDd = dates[i];
     const tradeDate = basDdToTradeDate(basDd);
+    if (acquired.has(tradeDate)) {
+      if (acquired.size >= targetDays) break;
+      continue;
+    }
 
     if (i > 0) await sleep(KRX_DELAY_MS);
 
@@ -159,7 +239,9 @@ async function main() {
     if (!fetched.ok) {
       // Empty/holiday responses are expected; only hard-fail on upsert errors.
       emptyDates.push(basDd);
-      console.error(`\n  KRX empty/skip ${basDd}: ${fetched.error?.message || fetched.error}`);
+      if (emptyDates.length <= 5 || emptyDates.length % 25 === 0) {
+        console.warn(`\n  KRX empty/skip ${basDd}: ${fetched.error?.message || fetched.error}`);
+      }
       continue;
     }
 
@@ -179,9 +261,12 @@ async function main() {
 
     datesOk += 1;
     totalRows += upserted.inserted;
+    acquired.add(tradeDate);
     process.stdout.write(
-      `\r  ${i + 1}/${dates.length} ${tradeDate} — ${upserted.inserted} rows (total ${totalRows})`,
+      `\r  acquired ${acquired.size}/${targetDays} · candidate ${i + 1}/${dates.length} ` +
+        `${tradeDate} — ${upserted.inserted} rows (upsert total ${totalRows})`,
     );
+    if (acquired.size >= targetDays) break;
   }
 
   process.stdout.write('\n');
@@ -193,13 +278,23 @@ async function main() {
   console.log(`dates empty/skip:  ${emptyDates.length}`);
   console.log(`dates failed:      ${failedDates.length}`);
   console.log(`total rows upsert: ${totalRows}`);
+  console.log(`actual sessions:   ${acquired.size} (${historyTier(acquired.size)})`);
+  const sortedAcquired = [...acquired].sort();
+  console.log(`history span:      ${sortedAcquired[0] || '—'} → ${sortedAcquired.at(-1) || '—'}`);
   console.log(`elapsed:           ${elapsedSec}s`);
 
   if (emptyDates.length) {
-    console.log(`empty/skip dates: ${emptyDates.join(', ')}`);
+    console.log(
+      `empty/skip sample: ${emptyDates.slice(0, 12).join(', ')}` +
+        (emptyDates.length > 12 ? ` … +${emptyDates.length - 12}` : ''),
+    );
   }
   if (failedDates.length) {
     console.log(`failed dates: ${failedDates.join(', ')}`);
+    process.exit(1);
+  }
+  if (acquired.size < Math.min(targetDays, HIST_TRADING_DAYS_3Y)) {
+    console.error(`Backfill did not reach the 3Y floor (${HIST_TRADING_DAYS_3Y} sessions)`);
     process.exit(1);
   }
 }

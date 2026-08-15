@@ -19,7 +19,7 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_BASE = '/api/ticker_ohlc/cache/v4';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v5';
 
 function jsonResponse(ch, body, maxAge) {
   return new Response(JSON.stringify(body), {
