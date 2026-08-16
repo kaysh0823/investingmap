@@ -275,11 +275,13 @@
       var key = normalizeTicker(c.ticker);
       if (!key) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
+        c.turnoverWon = null;
         continue;
       }
       var q = items[key];
       if (!q) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
+        c.turnoverWon = null;
         continue;
       }
       c.quoteLast = typeof q.last === 'number' && isFinite(q.last) ? q.last : null;
@@ -287,6 +289,10 @@
       c.quoteHi52 = typeof q.high52w === 'number' && isFinite(q.high52w) ? q.high52w : null;
       c.quoteLo52 = typeof q.low52w === 'number' && isFinite(q.low52w) ? q.low52w : null;
       c.quotePosition = calcQuotePosition(c.quoteLast, c.quoteHi52, c.quoteLo52);
+      c.turnoverWon =
+        typeof q.turnoverWon === 'number' && isFinite(q.turnoverWon) && q.turnoverWon >= 0
+          ? q.turnoverWon
+          : null;
       if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) {
         var mcapFmt = global.InvestingMapMcapFmt;
         if (!mcapFmt || mcapFmt.shouldApplyLiveMcap(c.mcapWon, q.mcapWon)) {

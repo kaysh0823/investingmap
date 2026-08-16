@@ -1,12 +1,12 @@
 /**
- * Preserve table / heatmap / graph tab when switching industry via nav links.
+ * Preserve table / heatmap / momentum / graph tab when switching industry via nav links.
  * Hub sector cards use ?tab=heatmap; ticker deep links use ?tab=table.
  * ?tab=table&ticker=005930 — open company list and scroll to the row.
  */
 (function (global) {
   'use strict';
 
-  var VALID = { heatmap: 1, table: 1, graph: 1 };
+  var VALID = { heatmap: 1, momentum: 1, table: 1, graph: 1 };
   var focusStyleInjected = false;
 
   function injectFocusStyle() {
@@ -50,6 +50,8 @@
     if (isTableTabActive()) return 'table';
     var graphEl = document.getElementById('tab-graph');
     if (graphEl && graphEl.classList.contains('active')) return 'graph';
+    var momentumEl = document.getElementById('tab-momentum');
+    if (momentumEl && momentumEl.classList.contains('active')) return 'momentum';
     var heatEl = document.getElementById('tab-heatmap');
     if (heatEl && heatEl.classList.contains('active')) return 'heatmap';
     return 'table';

@@ -69,7 +69,20 @@
     "ttSector": "분야",
     "ttTags": "복수 축",
     "fieldSemType": "semType",
-    "fieldProducts": "products"
+    "fieldProducts": "products",
+    "tabMomentum": "📊 모멘텀 매트릭스",
+    "momentumHint": "RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률",
+    "momentumAxisRs": "RS",
+    "momentumAxisPosition": "주가 위치",
+    "momentumLeader": "주도(강세)",
+    "momentumPullback": "되돌림주의",
+    "momentumEmerging": "신규부상",
+    "momentumLagging": "소외",
+    "momentumTurnover": "당일 거래대금",
+    "momentumChange": "당일 등락률",
+    "momentumPosition": "주가 위치",
+    "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
+    "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금"
   },
   "en": {
     "title": "🇰🇷 Korea Bio Industry Investment Map",
@@ -141,6 +154,19 @@
     "ttSector": "Field",
     "ttTags": "Multi-axis",
     "fieldSemType": "semTypeEn",
-    "fieldProducts": "productsEn"
+    "fieldProducts": "productsEn",
+    "tabMomentum": "📊 Momentum matrix",
+    "momentumHint": "RS × 52W position · size = daily turnover · color = 1-day return",
+    "momentumAxisRs": "RS",
+    "momentumAxisPosition": "52W price position",
+    "momentumLeader": "Leading (strong)",
+    "momentumPullback": "Pullback risk",
+    "momentumEmerging": "Emerging",
+    "momentumLagging": "Lagging",
+    "momentumTurnover": "Daily turnover",
+    "momentumChange": "1-day return",
+    "momentumPosition": "Price position",
+    "momentumNoData": "No companies have RS, price-position and turnover data.",
+    "momentumLegend": "Color = 1-day return · size = daily turnover"
   }
 }

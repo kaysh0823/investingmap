@@ -7,6 +7,7 @@
     "fix:canonical": "node scripts/fix_canonical_domain.mjs",
     "verify:bigchip": "node scripts/verify_bigchip_relation_network.mjs",
     "verify:candle": "node scripts/verify_candle_modal.mjs",
+    "verify:momentum": "node scripts/verify_momentum.mjs",
     "verify:reorg": "node scripts/verify_powergrid_chain_split.mjs && node scripts/verify_ship_chain_split.mjs && node scripts/verify_sector_chain_reorg.mjs",
     "verify:tickers": "node scripts/verify_tickers.mjs",
     "verify:dist": "node scripts/verify_dist_js.mjs",

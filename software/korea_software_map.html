@@ -227,15 +227,16 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=13"></script>
+<script src="../js/live_quotes.js?v=14"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
-  <script src="../js/map_tab_state.js?v=8"></script>
+  <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=6"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=9"></script>
+  <script src="../js/map_heatmap.js?v=10"></script>
+  <script src="../js/map_momentum.js?v=1"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=16"></script>
@@ -1153,6 +1154,7 @@
 
 
 
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1678,7 +1680,7 @@
     <p lang="en" class="im-seo-body-p" hidden>Platform regulation, data protection, labor costs, and AI-infrastructure spending can move earnings. This content is informational and not investment advice; cross-check current DART filings and company IR and read our <a href="../disclaimer.html">disclaimer</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> IT 소프트웨어 관련주, AI 플랫폼, 클라우드, SaaS, 보안</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean software stocks, AI platforms, cloud, SaaS, cybersecurity</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-15 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-15.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-17.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1686,6 +1688,7 @@
   </section>
 <div class="tabs">
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
+    <button id="tab-btn-momentum" class="tab-btn" onclick="switchTab('momentum',this)">📊 모멘텀 매트릭스</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
@@ -1697,6 +1700,16 @@
       <div class="hm-legend" id="heatmap-legend"></div>
     </div>
   </div>
+  <!-- MOMENTUM TAB -->
+  <div id="tab-momentum" class="tab-content">
+    <div class="momentum-wrap">
+      <p class="momentum-meta" id="momentum-hint">RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률</p>
+      <div id="momentum-root" role="img" aria-label="Momentum matrix"></div>
+      <div id="momentum-legend"></div>
+    </div>
+  </div>
+
+
 
 
 
@@ -1754,15 +1767,15 @@
       <td><span class="ticker">035420</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">228,000</td>
-      <td class="quote-cell ret-cell">+0.66%</td>
-      <td class="quote-cell ret-cell">+20.00%</td>
-      <td class="quote-cell ret-cell">-10.76%</td>
-      <td class="quote-cell ret-cell">-10.41%</td>
-      <td class="quote-cell ret-cell">-12.31%</td>
+      <td class="quote-cell ret-cell">+5.10%</td>
+      <td class="quote-cell ret-cell">+19.21%</td>
+      <td class="quote-cell ret-cell">-15.33%</td>
+      <td class="quote-cell ret-cell">-13.05%</td>
+      <td class="quote-cell ret-cell">-14.20%</td>
       <td class="quote-cell">304,000</td>
       <td class="quote-cell">181,100</td>
       <td class="quote-cell">38.2%</td>
-      <td class="quote-cell">52.6</td>
+      <td class="quote-cell">61.3</td>
       <td class="mcap-cell">38.75조원</td>
       <td class="fin-cell">18.99</td>
       <td class="fin-cell">1.34</td>
@@ -1777,15 +1790,15 @@
       <td><span class="ticker">018260</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">243,500</td>
-      <td class="quote-cell ret-cell">+2.74%</td>
-      <td class="quote-cell ret-cell">+22.18%</td>
-      <td class="quote-cell ret-cell">-3.56%</td>
-      <td class="quote-cell ret-cell">+24.87%</td>
-      <td class="quote-cell ret-cell">+44.25%</td>
+      <td class="quote-cell ret-cell">+0.64%</td>
+      <td class="quote-cell ret-cell">+18.92%</td>
+      <td class="quote-cell ret-cell">-11.57%</td>
+      <td class="quote-cell ret-cell">+23.89%</td>
+      <td class="quote-cell ret-cell">+36.99%</td>
       <td class="quote-cell">388,500</td>
       <td class="quote-cell">143,700</td>
       <td class="quote-cell">40.8%</td>
-      <td class="quote-cell">78.8</td>
+      <td class="quote-cell">73.2</td>
       <td class="mcap-cell">18.34조원</td>
       <td class="fin-cell">24.14</td>
       <td class="fin-cell">1.85</td>
@@ -1800,15 +1813,15 @@
       <td><span class="ticker">035720</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">40,000</td>
-      <td class="quote-cell ret-cell">-0.25%</td>
-      <td class="quote-cell ret-cell">+11.42%</td>
-      <td class="quote-cell ret-cell">-0.62%</td>
-      <td class="quote-cell ret-cell">-35.79%</td>
-      <td class="quote-cell ret-cell">-36.31%</td>
+      <td class="quote-cell ret-cell">+1.39%</td>
+      <td class="quote-cell ret-cell">+11.70%</td>
+      <td class="quote-cell ret-cell">-4.52%</td>
+      <td class="quote-cell ret-cell">-34.69%</td>
+      <td class="quote-cell ret-cell">-33.94%</td>
       <td class="quote-cell">69,700</td>
       <td class="quote-cell">32,250</td>
       <td class="quote-cell">20.7%</td>
-      <td class="quote-cell">49.6</td>
+      <td class="quote-cell">53.0</td>
       <td class="mcap-cell">18.33조원</td>
       <td class="fin-cell">37.12</td>
       <td class="fin-cell">1.62</td>
@@ -1823,15 +1836,15 @@
       <td><span class="ticker">064400</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">79,900</td>
-      <td class="quote-cell ret-cell">+1.91%</td>
-      <td class="quote-cell ret-cell">+22.92%</td>
-      <td class="quote-cell ret-cell">-32.00%</td>
-      <td class="quote-cell ret-cell">+7.25%</td>
-      <td class="quote-cell ret-cell">+44.22%</td>
+      <td class="quote-cell ret-cell">+1.42%</td>
+      <td class="quote-cell ret-cell">+20.62%</td>
+      <td class="quote-cell ret-cell">-37.97%</td>
+      <td class="quote-cell ret-cell">+5.52%</td>
+      <td class="quote-cell ret-cell">+37.06%</td>
       <td class="quote-cell">153,300</td>
       <td class="quote-cell">54,100</td>
       <td class="quote-cell">26%</td>
-      <td class="quote-cell">59.7</td>
+      <td class="quote-cell">58.4</td>
       <td class="mcap-cell">8.99조원</td>
       <td class="fin-cell">20.40</td>
       <td class="fin-cell">3.07</td>
@@ -1846,15 +1859,15 @@
       <td><span class="ticker">022100</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">21,750</td>
-      <td class="quote-cell ret-cell">-0.23%</td>
-      <td class="quote-cell ret-cell">+16.75%</td>
-      <td class="quote-cell ret-cell">-25.51%</td>
-      <td class="quote-cell ret-cell">-44.66%</td>
-      <td class="quote-cell ret-cell">-14.37%</td>
+      <td class="quote-cell ret-cell">+2.83%</td>
+      <td class="quote-cell ret-cell">+17.02%</td>
+      <td class="quote-cell ret-cell">-31.87%</td>
+      <td class="quote-cell ret-cell">-44.32%</td>
+      <td class="quote-cell ret-cell">-17.42%</td>
       <td class="quote-cell">45,600</td>
       <td class="quote-cell">16,510</td>
       <td class="quote-cell">18%</td>
-      <td class="quote-cell">37.8</td>
+      <td class="quote-cell">36.4</td>
       <td class="mcap-cell">4.25조원</td>
       <td class="fin-cell">81.49</td>
       <td class="fin-cell">7.45</td>
@@ -1869,15 +1882,15 @@
       <td><span class="ticker">181710</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">74,700</td>
-      <td class="quote-cell ret-cell">+11.99%</td>
-      <td class="quote-cell ret-cell">+99.73%</td>
-      <td class="quote-cell ret-cell">+52.29%</td>
-      <td class="quote-cell ret-cell">+97.10%</td>
-      <td class="quote-cell ret-cell">+161.65%</td>
+      <td class="quote-cell ret-cell">+8.81%</td>
+      <td class="quote-cell ret-cell">+78.34%</td>
+      <td class="quote-cell ret-cell">+42.22%</td>
+      <td class="quote-cell ret-cell">+71.47%</td>
+      <td class="quote-cell ret-cell">+128.82%</td>
       <td class="quote-cell">76,200</td>
       <td class="quote-cell">24,650</td>
       <td class="quote-cell">97.1%</td>
-      <td class="quote-cell">95.9</td>
+      <td class="quote-cell">95.0</td>
       <td class="mcap-cell">1.30조원</td>
       <td class="fin-cell">38.91</td>
       <td class="fin-cell">0.84</td>
@@ -1892,15 +1905,15 @@
       <td><span class="ticker">053800</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">59,300</td>
-      <td class="quote-cell ret-cell">-1.98%</td>
-      <td class="quote-cell ret-cell">+13.17%</td>
-      <td class="quote-cell ret-cell">+1.19%</td>
-      <td class="quote-cell ret-cell">-9.05%</td>
-      <td class="quote-cell ret-cell">-1.82%</td>
+      <td class="quote-cell ret-cell">-3.66%</td>
+      <td class="quote-cell ret-cell">+15.46%</td>
+      <td class="quote-cell ret-cell">+1.00%</td>
+      <td class="quote-cell ret-cell">-6.49%</td>
+      <td class="quote-cell ret-cell">-0.17%</td>
       <td class="quote-cell">75,000</td>
       <td class="quote-cell">50,800</td>
       <td class="quote-cell">35.1%</td>
-      <td class="quote-cell">64.1</td>
+      <td class="quote-cell">74.2</td>
       <td class="mcap-cell">0.64조원</td>
       <td class="fin-cell">10.03</td>
       <td class="fin-cell">1.38</td>
@@ -1915,15 +1928,15 @@
       <td><span class="ticker">093320</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">150,000</td>
-      <td class="quote-cell ret-cell">+2.67%</td>
-      <td class="quote-cell ret-cell">+12.44%</td>
-      <td class="quote-cell ret-cell">+32.28%</td>
-      <td class="quote-cell ret-cell">+25.63%</td>
-      <td class="quote-cell ret-cell">+63.93%</td>
+      <td class="quote-cell ret-cell">-3.63%</td>
+      <td class="quote-cell ret-cell">+9.52%</td>
+      <td class="quote-cell ret-cell">+29.98%</td>
+      <td class="quote-cell ret-cell">+24.66%</td>
+      <td class="quote-cell ret-cell">+60.37%</td>
       <td class="quote-cell">163,700</td>
       <td class="quote-cell">79,600</td>
       <td class="quote-cell">83.7%</td>
-      <td class="quote-cell">82.4</td>
+      <td class="quote-cell">82.8</td>
       <td class="mcap-cell">0.61조원</td>
       <td class="fin-cell">35.42</td>
       <td class="fin-cell">2.97</td>
@@ -1938,15 +1951,15 @@
       <td><span class="ticker">030520</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">18,590</td>
-      <td class="quote-cell ret-cell">+1.53%</td>
-      <td class="quote-cell ret-cell">+12.26%</td>
-      <td class="quote-cell ret-cell">-3.33%</td>
-      <td class="quote-cell ret-cell">-18.29%</td>
-      <td class="quote-cell ret-cell">-21.56%</td>
+      <td class="quote-cell ret-cell">-1.98%</td>
+      <td class="quote-cell ret-cell">+10.57%</td>
+      <td class="quote-cell ret-cell">-6.44%</td>
+      <td class="quote-cell ret-cell">-20.39%</td>
+      <td class="quote-cell ret-cell">-24.34%</td>
       <td class="quote-cell">27,800</td>
       <td class="quote-cell">14,800</td>
       <td class="quote-cell">29.2%</td>
-      <td class="quote-cell">60.7</td>
+      <td class="quote-cell">56.6</td>
       <td class="mcap-cell">0.48조원</td>
       <td class="fin-cell">13.95</td>
       <td class="fin-cell">1.30</td>
@@ -1961,15 +1974,15 @@
       <td><span class="ticker">042000</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">17,840</td>
-      <td class="quote-cell ret-cell">-1.22%</td>
-      <td class="quote-cell ret-cell">+10.60%</td>
-      <td class="quote-cell ret-cell">-7.37%</td>
-      <td class="quote-cell ret-cell">-46.18%</td>
-      <td class="quote-cell ret-cell">-43.90%</td>
+      <td class="quote-cell ret-cell">-0.39%</td>
+      <td class="quote-cell ret-cell">+11.97%</td>
+      <td class="quote-cell ret-cell">-13.38%</td>
+      <td class="quote-cell ret-cell">-44.52%</td>
+      <td class="quote-cell ret-cell">-47.65%</td>
       <td class="quote-cell">43,950</td>
       <td class="quote-cell">15,010</td>
       <td class="quote-cell">9.8%</td>
-      <td class="quote-cell">40.4</td>
+      <td class="quote-cell">44.4</td>
       <td class="mcap-cell">0.46조원</td>
       <td class="fin-cell">11.76</td>
       <td class="fin-cell">1.73</td>
@@ -1984,15 +1997,15 @@
       <td><span class="ticker">079940</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">44,800</td>
-      <td class="quote-cell ret-cell">+1.01%</td>
-      <td class="quote-cell ret-cell">+32.15%</td>
-      <td class="quote-cell ret-cell">+44.98%</td>
-      <td class="quote-cell ret-cell">+40.44%</td>
-      <td class="quote-cell ret-cell">+67.79%</td>
+      <td class="quote-cell ret-cell">+2.66%</td>
+      <td class="quote-cell ret-cell">+30.83%</td>
+      <td class="quote-cell ret-cell">+39.69%</td>
+      <td class="quote-cell ret-cell">+47.83%</td>
+      <td class="quote-cell ret-cell">+61.27%</td>
       <td class="quote-cell">47,900</td>
       <td class="quote-cell">22,250</td>
       <td class="quote-cell">87.9%</td>
-      <td class="quote-cell">70.2</td>
+      <td class="quote-cell">92.9</td>
       <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">25.53</td>
       <td class="fin-cell">2.32</td>
@@ -2007,15 +2020,15 @@
       <td><span class="ticker">203650</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">2,180</td>
-      <td class="quote-cell ret-cell">+2.35%</td>
-      <td class="quote-cell ret-cell">+5.57%</td>
-      <td class="quote-cell ret-cell">-29.34%</td>
-      <td class="quote-cell ret-cell">+32.93%</td>
-      <td class="quote-cell ret-cell">-39.86%</td>
+      <td class="quote-cell ret-cell">+0.71%</td>
+      <td class="quote-cell ret-cell">+3.15%</td>
+      <td class="quote-cell ret-cell">-33.85%</td>
+      <td class="quote-cell ret-cell">+29.88%</td>
+      <td class="quote-cell ret-cell">-42.51%</td>
       <td class="quote-cell">4,810</td>
       <td class="quote-cell">1,400</td>
       <td class="quote-cell">22.9%</td>
-      <td class="quote-cell">52.1</td>
+      <td class="quote-cell">47.2</td>
       <td class="mcap-cell">0.30조원</td>
       <td class="fin-cell">34.37</td>
       <td class="fin-cell">2.40</td>
@@ -2030,15 +2043,15 @@
       <td><span class="ticker">286940</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">19,050</td>
-      <td class="quote-cell ret-cell">+1.06%</td>
-      <td class="quote-cell ret-cell">+11.47%</td>
-      <td class="quote-cell ret-cell">-10.56%</td>
-      <td class="quote-cell ret-cell">-19.79%</td>
-      <td class="quote-cell ret-cell">-5.22%</td>
+      <td class="quote-cell ret-cell">-1.31%</td>
+      <td class="quote-cell ret-cell">+10.30%</td>
+      <td class="quote-cell ret-cell">-16.96%</td>
+      <td class="quote-cell ret-cell">-22.11%</td>
+      <td class="quote-cell ret-cell">-7.82%</td>
       <td class="quote-cell">25,400</td>
       <td class="quote-cell">15,260</td>
       <td class="quote-cell">37.4%</td>
-      <td class="quote-cell">52.1</td>
+      <td class="quote-cell">50.7</td>
       <td class="mcap-cell">0.30조원</td>
       <td class="fin-cell">30.21</td>
       <td class="fin-cell">0.70</td>
@@ -2138,6 +2151,19 @@
         "badgeMarket": "KOSPI <span>7</span>사 · KOSDAQ <span>6</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 15일",
         "tabHeatmap": "🔥 섹터 히트맵",
+        "tabMomentum": "📊 모멘텀 매트릭스",
+        "momentumHint": "RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률",
+        "momentumAxisRs": "RS",
+        "momentumAxisPosition": "주가 위치",
+        "momentumLeader": "주도(강세)",
+        "momentumPullback": "되돌림주의",
+        "momentumEmerging": "신규부상",
+        "momentumLagging": "소외",
+        "momentumTurnover": "당일 거래대금",
+        "momentumChange": "당일 등락률",
+        "momentumPosition": "주가 위치",
+        "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
+        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크",
@@ -2215,6 +2241,19 @@
         "badgeMarket": "KOSPI <span>7</span> · KOSDAQ <span>6</span>",
         "dataAsof": "Data as of: June 15, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
+        "tabMomentum": "📊 Momentum matrix",
+        "momentumHint": "RS × 52W position · size = daily turnover · color = 1-day return",
+        "momentumAxisRs": "RS",
+        "momentumAxisPosition": "52W price position",
+        "momentumLeader": "Leading (strong)",
+        "momentumPullback": "Pullback risk",
+        "momentumEmerging": "Emerging",
+        "momentumLagging": "Lagging",
+        "momentumTurnover": "Daily turnover",
+        "momentumChange": "1-day return",
+        "momentumPosition": "Price position",
+        "momentumNoData": "No companies have RS, price-position and turnover data.",
+        "momentumLegend": "Color = 1-day return · size = daily turnover",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
         "tabGraph": "🌐 Relationship network",
@@ -2474,6 +2513,10 @@
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
             document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Sector heatmap' : '🔥 섹터 히트맵');
+      var momentumBtn = document.getElementById('tab-btn-momentum');
+      if (momentumBtn) momentumBtn.innerHTML = t.tabMomentum || (lang === 'en' ? '📊 Momentum matrix' : '📊 모멘텀 매트릭스');
+      var momentumHint = document.getElementById('momentum-hint');
+      if (momentumHint) momentumHint.textContent = t.momentumHint || (lang === 'en' ? 'RS × 52W position · size = daily turnover · color = 1-day return' : 'RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률');
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
@@ -2537,7 +2580,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum();
       syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
@@ -3046,6 +3089,41 @@
       });
     }
 
+    function renderMomentum() {
+      if (!window.InvestingMapMomentum) return;
+      var el = document.getElementById('momentum-root');
+      if (!el) return;
+      var mt = T[lang] || {};
+      InvestingMapMomentum.render({
+        container: el,
+        legend: document.getElementById('momentum-legend'),
+        companies: koreanCompanies,
+        lang: lang,
+        labels: {
+          xAxis: mt.momentumAxisRs,
+          yAxis: mt.momentumAxisPosition,
+          leader: mt.momentumLeader,
+          pullback: mt.momentumPullback,
+          emerging: mt.momentumEmerging,
+          lagging: mt.momentumLagging,
+          turnover: mt.momentumTurnover,
+          change: mt.momentumChange,
+          position: mt.momentumPosition,
+          noData: mt.momentumNoData,
+          legend: mt.momentumLegend
+        },
+        onSelect: function (c) {
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
+        }
+      });
+    }
+
+
+
     function switchTab(tab, btn) {
       document.body.classList.toggle('im-tab-table', tab === 'table');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -3053,6 +3131,7 @@
       document.getElementById('tab-' + tab).classList.add('active');
       if (btn) btn.classList.add('active');
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
+      if (tab === 'momentum') setTimeout(renderMomentum, 40);
       if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
     }
@@ -3064,9 +3143,10 @@
       if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
+      if (document.getElementById('tab-momentum')?.classList.contains('active')) setTimeout(renderMomentum, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
-          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); },
+          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); },
           onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';

@@ -781,5 +781,8 @@
       if (lastOpts) render(lastOpts);
     },
     chgFill: chgFill,
+    colorForChange: function (pct) {
+      return makeScale(HORIZONS[0].clip)(pct);
+    },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

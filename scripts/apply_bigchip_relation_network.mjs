@@ -337,7 +337,7 @@ export function applyBigchipRelationNetwork() {
   let html = fs.readFileSync(HTML_PATH, 'utf8');
   html = html.replace('</style>', `${CSS}\n  </style>`);
   html = html.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=4"');
-  html = html.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=9"');
+  html = html.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=10"');
   html = replaceBetween(html, 'function buildSidebarLegend() {', '// TABLE', LEGEND);
   html = replaceBetween(html, 'let simulation, svgEl, g, zoomBehavior', '    function showTooltip(', GRAPH);
   html = html.replace('function renderTable() {', `${TABLE_HELPER.trim()}\n\n    function renderTable() {`);
