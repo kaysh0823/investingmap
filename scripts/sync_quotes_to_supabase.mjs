@@ -24,6 +24,7 @@ import {
   buildSectorMcapDailyRows,
   upsertSectorMcapDaily,
 } from './lib/sector_mcap_daily.mjs';
+import { computeMomentumBounds } from './lib/momentum_bounds.mjs';
 import { buildHubRankDailyRows } from '../functions/lib/hub_rank_daily.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -226,6 +227,22 @@ async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
 
   process.stdout.write('\n');
   return { upserted, failed };
+}
+
+async function verifyMomentumSchema(supabaseUrl, serviceKey) {
+  const columns = 'high_120d,low_120d,high_50d,low_50d,bb_upper,bb_lower';
+  const url =
+    `${supabaseUrl}/rest/v1/stock_quotes_latest?select=${columns}&limit=1`;
+  const res = await fetch(url, {
+    headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+  });
+  if (res.ok) return;
+  const body = await res.text().catch(() => '');
+  throw new Error(
+    `Supabase momentum schema unavailable (${res.status}). ` +
+      `Apply supabase/migrations/0012_stock_quotes_momentum_bounds.sql first. ` +
+      body.slice(0, 180),
+  );
 }
 
 /**
@@ -574,19 +591,15 @@ async function fillMissingHistoryDays(
 }
 
 /**
- * Load last N closes per ticker from stock_price_history (oldest→newest arrays).
- * @param {string[]} tickers
- * @param {string} supabaseUrl
- * @param {string} serviceKey
- * @param {number} [n=20]
- * @returns {Promise<Map<string, number[]>>}
+ * Load recent OHLC history per ticker (oldest→newest).
+ * One paginated pass feeds both spark20 and momentum boundaries.
  */
-async function loadSparkClosesByTicker(tickers, supabaseUrl, serviceKey, n = 20) {
+async function loadRecentHistoryBarsByTicker(tickers, supabaseUrl, serviceKey, n = 120) {
   const out = new Map();
   if (!tickers.length) return out;
 
   // Newest-first calendar trading days; need ≥n sessions after weekends/holidays.
-  const lookback = Math.max(n + 10, 30);
+  const lookback = Math.max(n + 30, 150);
   const dates = tradingDates(lookback);
   const oldestBas = dates[dates.length - 1];
   const sinceDash = basDdToDash(oldestBas);
@@ -602,14 +615,14 @@ async function loadSparkClosesByTicker(tickers, supabaseUrl, serviceKey, n = 20)
         `${supabaseUrl}/rest/v1/stock_price_history` +
         `?ticker=in.(${part.join(',')})` +
         `&trade_date=gte.${sinceDash}` +
-        `&select=ticker,trade_date,close&order=trade_date.asc` +
+        `&select=ticker,trade_date,high,low,close&order=ticker.asc,trade_date.asc` +
         `&limit=${pageSize}&offset=${offset}`;
       const res = await fetch(url, {
         headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
       });
       if (!res.ok) {
         const body = await res.text().catch(() => '');
-        console.error(`  spark20 history fetch failed: ${res.status} ${body.slice(0, 160)}`);
+        console.error(`  momentum history fetch failed: ${res.status} ${body.slice(0, 160)}`);
         break;
       }
       const rows = await res.json();
@@ -619,7 +632,14 @@ async function loadSparkClosesByTicker(tickers, supabaseUrl, serviceKey, n = 20)
         const c = Number(row.close);
         if (!t || !Number.isFinite(c) || c <= 0) continue;
         if (!byTicker.has(t)) byTicker.set(t, []);
-        byTicker.get(t).push({ d: String(row.trade_date).slice(0, 10), c });
+        const high = Number(row.high);
+        const low = Number(row.low);
+        byTicker.get(t).push({
+          d: String(row.trade_date).slice(0, 10),
+          close: c,
+          high: Number.isFinite(high) && high > 0 ? high : null,
+          low: Number.isFinite(low) && low > 0 ? low : null,
+        });
       }
       if (rows.length < pageSize) break;
       offset += pageSize;
@@ -627,41 +647,75 @@ async function loadSparkClosesByTicker(tickers, supabaseUrl, serviceKey, n = 20)
   }
 
   for (const [t, pts] of byTicker) {
-    // Dedup by date ascending (keep last close if duplicates).
+    // Dedup by date ascending (keep the final row if duplicates).
     pts.sort((a, b) => (a.d < b.d ? -1 : a.d > b.d ? 1 : 0));
     const dedup = [];
     for (const p of pts) {
       if (dedup.length && dedup[dedup.length - 1].d === p.d) {
-        dedup[dedup.length - 1].c = p.c;
+        dedup[dedup.length - 1] = p;
       } else {
         dedup.push(p);
       }
     }
-    const closes = dedup.map((p) => p.c);
-    if (closes.length >= 2) {
-      out.set(t, closes.slice(-n));
-    }
+    if (dedup.length >= 2) out.set(t, dedup.slice(-n));
   }
   return out;
 }
 
-/** Attach spark20 (last 20 closes) onto quote rows and upsert. */
-async function upsertSpark20ForTickers(tickers, rows, supabaseUrl, serviceKey) {
-  const sparkMap = await loadSparkClosesByTicker(tickers, supabaseUrl, serviceKey, 20);
-  let attached = 0;
+/** Attach spark20 plus rolling range/Bollinger boundaries, then upsert once. */
+async function upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, serviceKey) {
+  const historyMap = await loadRecentHistoryBarsByTicker(
+    tickers,
+    supabaseUrl,
+    serviceKey,
+    120,
+  );
+  let sparkAttached = 0;
+  let range120Attached = 0;
+  let range50Attached = 0;
+  let bbAttached = 0;
   for (const row of rows) {
-    const spark20 = sparkMap.get(row.ticker);
-    if (!spark20 || spark20.length < 2) continue;
-    row.spark20 = spark20;
-    attached += 1;
+    const bars = historyMap.get(row.ticker) || [];
+    const completeBars = bars.filter(
+      (bar) =>
+        Number.isFinite(bar.high) &&
+        bar.high > 0 &&
+        Number.isFinite(bar.low) &&
+        bar.low > 0 &&
+        Number.isFinite(bar.close) &&
+        bar.close > 0 &&
+        bar.high >= bar.low,
+    );
+    const closes = completeBars.map((bar) => bar.close);
+    row.spark20 = closes.length >= 2 ? closes.slice(-20) : null;
+    const bounds = computeMomentumBounds(completeBars);
+    row.high_120d = bounds.high_120d;
+    row.low_120d = bounds.low_120d;
+    row.high_50d = bounds.high_50d;
+    row.low_50d = bounds.low_50d;
+    row.bb_upper = bounds.bb_upper;
+    row.bb_lower = bounds.bb_lower;
+    if (row.spark20) sparkAttached += 1;
+    if (bounds.high_120d != null) range120Attached += 1;
+    if (bounds.high_50d != null) range50Attached += 1;
+    if (bounds.bb_upper != null) bbAttached += 1;
   }
-  if (!attached) {
-    console.log('  spark20: no series to upsert');
-    return { upserted: 0 };
+  if (!historyMap.size) {
+    console.log('  history indicators: no series to upsert');
+    return { upserted: 0, sparkAttached, range120Attached, range50Attached, bbAttached };
   }
   const result = await upsertToSupabase(rows, supabaseUrl, serviceKey);
-  console.log(`  spark20: attached ${attached}, upserted ${result.upserted.length}`);
-  return { upserted: result.upserted.length };
+  console.log(
+    `  history indicators: spark20=${sparkAttached} range120=${range120Attached} ` +
+      `range50=${range50Attached} bb20=${bbAttached}, upserted=${result.upserted.length}`,
+  );
+  return {
+    upserted: result.upserted.length,
+    sparkAttached,
+    range120Attached,
+    range50Attached,
+    bbAttached,
+  };
 }
 
 /**
@@ -1088,6 +1142,7 @@ async function main() {
     console.error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are required');
     process.exit(1);
   }
+  await verifyMomentumSchema(supabaseUrl, serviceKey);
 
   // Weekends can never have a session; skip without a network round-trip.
   // Holidays are detected from Naver's own marker below (no hardcoded calendar).
@@ -1157,7 +1212,7 @@ async function main() {
     consensus.tradeDate || todayYmdDash,
     tickers,
   );
-  await upsertSpark20ForTickers(tickers, rows, supabaseUrl, serviceKey);
+  await upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, serviceKey);
 
   // Session close: persist today's sector mcap sums for multi-day sparklines.
   if (session.marketClosed === true && consensus.tradeDate) {

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
+import { computeMomentumBounds } from './lib/momentum_bounds.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = fs.readFileSync(path.join(ROOT, 'js', 'map_momentum.js'), 'utf8');
@@ -14,45 +15,69 @@ new vm.Script(source, { filename: 'map_momentum.js' }).runInContext(context);
 const momentum = context.InvestingMapMomentum;
 assert.ok(momentum, 'momentum module export missing');
 assert.equal(
-  momentum.pricePosition({ quoteLast: 75, quoteHi52: 100, quoteLo52: 50 }),
+  momentum.pricePosition({ quoteLast: 75, high120d: 100, low120d: 50 }, '120d'),
   50,
-  '52-week price position',
+  '120-day price position',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 120, quoteHi52: 100, quoteLo52: 50 }),
+  momentum.pricePosition({ quoteLast: 120, high50d: 100, low50d: 50 }, '50d'),
   100,
-  'price position clamps high',
+  '50-day price position clamps high',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 20, quoteHi52: 100, quoteLo52: 50 }),
+  momentum.pricePosition({ quoteLast: 20, high120d: 100, low120d: 50 }, '120d'),
   0,
   'price position clamps low',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 50, quoteHi52: 50, quoteLo52: 50 }),
+  momentum.pricePosition({ quoteLast: 50, high120d: 50, low120d: 50 }, '120d'),
   null,
-  'flat 52-week range is excluded',
+  'flat rolling range is excluded',
+);
+assert.equal(
+  momentum.rawPosition({ quoteLast: 125, bbUpper: 100, bbLower: 50 }, 'bb'),
+  150,
+  '%b tooltip retains out-of-band value',
+);
+assert.equal(
+  momentum.pricePosition({ quoteLast: 125, bbUpper: 100, bbLower: 50 }, 'bb'),
+  100,
+  '%b plot clamps out-of-band value',
 );
 
 const complete = momentum.datum({
   ticker: '005930',
   rs: 67.5,
   quoteLast: 75,
-  quoteHi52: 100,
-  quoteLo52: 50,
+  high120d: 100,
+  low120d: 50,
   turnoverWon: 123_000_000_000,
   chg1dPct: 1.25,
-});
+}, '120d');
 assert.equal(complete.rs, 67.5);
 assert.equal(complete.position, 50);
 assert.equal(complete.turnover, 123_000_000_000);
 for (const missing of [
-  { rs: null, quoteLast: 75, quoteHi52: 100, quoteLo52: 50, turnoverWon: 1 },
-  { rs: 50, quoteLast: null, quoteHi52: 100, quoteLo52: 50, turnoverWon: 1 },
-  { rs: 50, quoteLast: 75, quoteHi52: 100, quoteLo52: 50, turnoverWon: null },
+  { rs: null, quoteLast: 75, high120d: 100, low120d: 50, turnoverWon: 1 },
+  { rs: 50, quoteLast: null, high120d: 100, low120d: 50, turnoverWon: 1 },
+  { rs: 50, quoteLast: 75, high120d: 100, low120d: 50, turnoverWon: null },
 ]) {
-  assert.equal(momentum.datum(missing), null, 'incomplete bubble is skipped');
+  assert.equal(momentum.datum(missing, '120d'), null, 'incomplete bubble is skipped');
 }
+
+const history = Array.from({ length: 120 }, (_, i) => ({
+  high: i + 11,
+  low: i + 1,
+  close: i + 6,
+}));
+const bounds = computeMomentumBounds(history);
+assert.equal(bounds.high_120d, 130);
+assert.equal(bounds.low_120d, 1);
+assert.equal(bounds.high_50d, 130);
+assert.equal(bounds.low_50d, 71);
+assert.ok(bounds.bb_upper > bounds.bb_lower, 'Bollinger boundaries');
+assert.equal(computeMomentumBounds(history.slice(-49)).high_50d, null);
+assert.equal(computeMomentumBounds(history.slice(-19)).bb_upper, null);
 
 for (const marker of [
   'd3.scaleSqrt()',
@@ -60,6 +85,9 @@ for (const marker of [
   "x(50)",
   "y(50)",
   'InvestingMapHeatmap.colorForChange',
+  "selectedYMode = '120d'",
+  'data-mm-mode',
+  'rawPosition',
   'ResizeObserver',
   "min-height:420px",
 ]) {
@@ -90,7 +118,7 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=1',
+    '../js/map_momentum.js?v=2',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",
@@ -123,6 +151,28 @@ assert.ok(
   liveQuotes.includes('c.turnoverWon =') && liveQuotes.includes('q.turnoverWon'),
   'quotes turnover must be copied to company objects',
 );
+for (const field of ['high120d', 'low120d', 'high50d', 'low50d', 'bbUpper', 'bbLower']) {
+  assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
+}
+assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '3'"), 'quotes API cache key version');
+const quotesApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
+for (const field of ['high120d', 'low120d', 'high50d', 'low50d', 'bbUpper', 'bbLower']) {
+  assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
+}
+assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v3'"), 'quotes response cache version');
+const migration = fs.readFileSync(
+  path.join(ROOT, 'supabase', 'migrations', '0012_stock_quotes_momentum_bounds.sql'),
+  'utf8',
+);
+for (const column of ['high_120d', 'low_120d', 'high_50d', 'low_50d', 'bb_upper', 'bb_lower']) {
+  assert.ok(migration.includes(column), `migration column missing: ${column}`);
+}
+const syncSource = fs.readFileSync(
+  path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'),
+  'utf8',
+);
+assert.ok(syncSource.includes('computeMomentumBounds'), 'sync momentum calculation missing');
+assert.ok(syncSource.includes('verifyMomentumSchema'), 'sync schema guard missing');
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(/momentum:\s*1/.test(tabState), 'momentum tab state must persist');
 

@@ -1,5 +1,5 @@
 /**
- * RS × 52-week price-position bubble matrix for sector map pages.
+ * RS × rolling price-position bubble matrix for sector map pages.
  * x = RS, y = price position, radius = daily turnover, color = 1D return.
  */
 (function (global) {
@@ -10,6 +10,7 @@
   var observedEl = null;
   var resizeTimer = null;
   var visibilityBound = false;
+  var selectedYMode = '120d';
   var CHG_CLIP = 2.5;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var CONTRAST_EXP = 0.55;
@@ -17,7 +18,13 @@
   var COPY = {
     ko: {
       xAxis: 'RS',
-      yAxis: '주가 위치',
+      yAxis: '120일 위치',
+      mode120d: '120일',
+      mode50d: '50일',
+      modeBb: '%b',
+      y120d: '120일 위치',
+      y50d: '50일 위치',
+      yBb: '%b (볼린저밴드)',
       leader: '주도(강세)',
       pullback: '되돌림주의',
       emerging: '신규부상',
@@ -30,7 +37,13 @@
     },
     en: {
       xAxis: 'RS',
-      yAxis: '52W price position',
+      yAxis: '120D position',
+      mode120d: '120D',
+      mode50d: '50D',
+      modeBb: '%b',
+      y120d: '120D position',
+      y50d: '50D position',
+      yBb: '%b (Bollinger Band)',
       leader: 'Leading (strong)',
       pullback: 'Pullback risk',
       emerging: 'Emerging',
@@ -51,29 +64,37 @@
     return Math.max(0, Math.min(100, value));
   }
 
-  function pricePosition(company) {
-    if (!company) return null;
-    var last = company.quoteLast;
-    var high = company.quoteHi52;
-    var low = company.quoteLo52;
-    if (!isFiniteNumber(last) || !isFiniteNumber(high) || !isFiniteNumber(low) || high <= low) return null;
-    return clamp100(((last - low) / (high - low)) * 100);
+  function normalizeYMode(mode) {
+    return mode === '50d' || mode === 'bb' ? mode : '120d';
   }
 
-  function datum(company) {
+  function pricePosition(company, mode) {
+    if (!company) return null;
+    mode = normalizeYMode(mode || selectedYMode);
+    var last = company.quoteLast;
+    var high = mode === '50d' ? company.high50d : mode === 'bb' ? company.bbUpper : company.high120d;
+    var low = mode === '50d' ? company.low50d : mode === 'bb' ? company.bbLower : company.low120d;
+    if (!isFiniteNumber(last) || !isFiniteNumber(high) || !isFiniteNumber(low) || high <= low) return null;
+    var raw = ((last - low) / (high - low)) * 100;
+    return { raw: raw, plot: clamp100(raw), mode: mode };
+  }
+
+  function datum(company, mode) {
     if (!company || !isFiniteNumber(company.rs) || !isFiniteNumber(company.turnoverWon)) return null;
-    var position = pricePosition(company);
+    var position = pricePosition(company, mode);
     if (position == null) return null;
     return {
       company: company,
       rs: clamp100(company.rs),
-      position: position,
+      position: position.plot,
+      rawPosition: position.raw,
+      yMode: position.mode,
       turnover: Math.max(0, company.turnoverWon),
       change: isFiniteNumber(company.chg1dPct) ? company.chg1dPct : null,
     };
   }
 
-  function labelsFor(opts) {
+  function labelsFor(opts, mode) {
     var lang = opts.lang === 'en' ? 'en' : 'ko';
     var base = COPY[lang];
     var supplied = opts.labels || {};
@@ -81,6 +102,9 @@
     Object.keys(base).forEach(function (key) {
       out[key] = supplied[key] || base[key];
     });
+    mode = normalizeYMode(mode || selectedYMode);
+    out.yAxis = mode === '50d' ? out.y50d : mode === 'bb' ? out.yBb : out.y120d;
+    out.position = out.yAxis;
     return out;
   }
 
@@ -149,6 +173,12 @@
     style.textContent =
       '.momentum-wrap{padding:20px 28px 28px;max-width:1400px;margin:0 auto}' +
       '.momentum-meta{margin:0 0 12px;color:var(--text-muted,#8b949e);font-size:13px}' +
+      '.mm-mode-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;align-items:center}' +
+      '.mm-mode-tab{padding:6px 12px;min-height:32px;border-radius:16px;border:1px solid var(--border,#30363d);' +
+      'background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;cursor:pointer}' +
+      '.mm-mode-tab:hover{border-color:var(--accent,#58a6ff);color:var(--text,#e6edf3)}' +
+      '.mm-mode-tab[aria-selected="true"]{border-color:var(--accent,#58a6ff);color:var(--accent,#58a6ff);' +
+      'background:color-mix(in srgb,var(--accent,#58a6ff) 14%,var(--surface2,#21262d))}' +
       '#momentum-root{position:relative;width:100%;min-height:420px;height:min(62vh,640px);' +
       'background:var(--surface,#161b22);border:1px solid var(--border,#30363d);border-radius:10px;overflow:hidden}' +
       '#momentum-root svg{display:block;width:100%;height:100%}' +
@@ -165,6 +195,7 @@
       '.im-mm-size{display:inline-flex;align-items:flex-end;gap:4px;height:22px}' +
       '.im-mm-size i{display:block;border:1px solid var(--text-muted,#8b949e);border-radius:50%}' +
       '@media(max-width:768px){.momentum-wrap{padding:14px 12px 20px}.momentum-meta{font-size:12px}' +
+      '.mm-mode-tab{flex:1 1 0;padding:8px 6px;min-height:36px;font-size:11px}' +
       '#momentum-root{min-height:min(52vh,480px)!important;height:min(58vh,560px)!important}' +
       '.im-mm-legend{font-size:11px}}';
   }
@@ -197,7 +228,7 @@
 
   function showTooltip(item, opts, event) {
     var lang = opts.lang === 'en' ? 'en' : 'ko';
-    var labels = labelsFor(opts);
+    var labels = labelsFor(opts, item.yMode);
     var el = tooltip();
     el.innerHTML = '';
     var name = document.createElement('strong');
@@ -205,7 +236,7 @@
     el.appendChild(name);
     [
       labels.xAxis + ' ' + item.rs.toFixed(1),
-      labels.position + ' ' + formatPct(item.position, 1),
+      labels.position + ' ' + formatPct(item.yMode === 'bb' ? item.rawPosition : item.position, 1),
       labels.turnover + ' ' + formatTurnover(item.turnover, lang),
       labels.change + ' ' + formatPct(item.change, 2),
     ].forEach(function (text) {
@@ -222,9 +253,54 @@
     if (el) el.style.display = 'none';
   }
 
+  function ensureModeTabs(container, opts) {
+    var wrap = container.parentNode;
+    if (!wrap) return;
+    var labels = labelsFor(opts, selectedYMode);
+    var tabs = wrap.querySelector('#mm-mode-tabs');
+    if (!tabs) {
+      tabs = document.createElement('div');
+      tabs.id = 'mm-mode-tabs';
+      tabs.className = 'mm-mode-tabs';
+      tabs.setAttribute('role', 'tablist');
+      tabs.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-mm-mode]');
+        if (!button) return;
+        var next = normalizeYMode(button.getAttribute('data-mm-mode'));
+        if (next === selectedYMode) return;
+        selectedYMode = next;
+        if (lastOpts) render(lastOpts);
+      });
+    }
+    tabs.setAttribute(
+      'aria-label',
+      opts.lang === 'en' ? 'Momentum vertical axis' : '모멘텀 세로축',
+    );
+    tabs.innerHTML = [
+      { id: '120d', text: labels.mode120d },
+      { id: '50d', text: labels.mode50d },
+      { id: 'bb', text: labels.modeBb },
+    ]
+      .map(function (mode) {
+        return (
+          '<button type="button" class="mm-mode-tab" role="tab" data-mm-mode="' +
+          mode.id +
+          '" aria-selected="' +
+          (mode.id === selectedYMode ? 'true' : 'false') +
+          '">' +
+          mode.text +
+          '</button>'
+        );
+      })
+      .join('');
+    if (tabs.parentNode !== wrap || tabs.nextSibling !== container) {
+      wrap.insertBefore(tabs, container);
+    }
+  }
+
   function renderLegend(el, opts) {
     if (!el) return;
-    var labels = labelsFor(opts);
+    var labels = labelsFor(opts, selectedYMode);
     el.className = 'im-mm-legend';
     el.innerHTML =
       '<div class="im-mm-legend-row"><span>' +
@@ -268,6 +344,7 @@
     lastOpts = opts;
     injectStyles();
     observeContainer(container);
+    ensureModeTabs(container, opts);
     renderLegend(opts.legend, opts);
 
     if (!container.style.minHeight) container.style.minHeight = '420px';
@@ -281,12 +358,12 @@
     }
 
     var items = (opts.companies || [])
-      .map(datum)
+      .map(function (company) { return datum(company, selectedYMode); })
       .filter(function (item) { return !!item; });
     container.innerHTML = '';
     hideTooltip();
 
-    var labels = labelsFor(opts);
+    var labels = labelsFor(opts, selectedYMode);
     if (!items.length) {
       var empty = document.createElement('div');
       empty.style.cssText =
@@ -452,8 +529,22 @@
 
   global.InvestingMapMomentum = {
     render: render,
-    pricePosition: pricePosition,
+    pricePosition: function (company, mode) {
+      var value = pricePosition(company, mode);
+      return value ? value.plot : null;
+    },
+    rawPosition: function (company, mode) {
+      var value = pricePosition(company, mode);
+      return value ? value.raw : null;
+    },
     datum: datum,
     colorForChange: bubbleColor,
+    setYMode: function (mode) {
+      selectedYMode = normalizeYMode(mode);
+      if (lastOpts) render(lastOpts);
+    },
+    getYMode: function () {
+      return selectedYMode;
+    },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

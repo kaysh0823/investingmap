@@ -3,6 +3,7 @@
  */
 (function (global) {
   'use strict';
+  var QUOTES_API_VERSION = '3';
 
   var CHUNK_SIZE = 18;
   var POSITION_FALLBACK_KO = '주가 위치';
@@ -276,12 +277,14 @@
       if (!key) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         c.turnoverWon = null;
+        c.high120d = c.low120d = c.high50d = c.low50d = c.bbUpper = c.bbLower = null;
         continue;
       }
       var q = items[key];
       if (!q) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         c.turnoverWon = null;
+        c.high120d = c.low120d = c.high50d = c.low50d = c.bbUpper = c.bbLower = null;
         continue;
       }
       c.quoteLast = typeof q.last === 'number' && isFinite(q.last) ? q.last : null;
@@ -293,6 +296,12 @@
         typeof q.turnoverWon === 'number' && isFinite(q.turnoverWon) && q.turnoverWon >= 0
           ? q.turnoverWon
           : null;
+      c.high120d = typeof q.high120d === 'number' && isFinite(q.high120d) ? q.high120d : null;
+      c.low120d = typeof q.low120d === 'number' && isFinite(q.low120d) ? q.low120d : null;
+      c.high50d = typeof q.high50d === 'number' && isFinite(q.high50d) ? q.high50d : null;
+      c.low50d = typeof q.low50d === 'number' && isFinite(q.low50d) ? q.low50d : null;
+      c.bbUpper = typeof q.bbUpper === 'number' && isFinite(q.bbUpper) ? q.bbUpper : null;
+      c.bbLower = typeof q.bbLower === 'number' && isFinite(q.bbLower) ? q.bbLower : null;
       if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) {
         var mcapFmt = global.InvestingMapMcapFmt;
         if (!mcapFmt || mcapFmt.shouldApplyLiveMcap(c.mcapWon, q.mcapWon)) {
@@ -512,7 +521,7 @@
     for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
       (function (chunk) {
         chain = chain.then(function () {
-          var q = 'codes=' + chunk.map(encodeURIComponent).join(',');
+          var q = 'codes=' + chunk.map(encodeURIComponent).join(',') + '&v=' + QUOTES_API_VERSION;
           return fetchJson(quotesRequestUrl(base, q));
         }).then(function (j) {
           if (j && j.asOf) asOf = j.asOf;

@@ -38,7 +38,7 @@ const HINT_EN = 'Tile size = market cap · color = 1-day return';
 
 function patchHtml(html) {
   html = html.replace(/map_heatmap\.js(\?v=\d+)?/g, `map_heatmap.js?v=${SCRIPT_V}`);
-  html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=14');
+  html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=15');
   html = html.replace(/heatmapHint:\s*'시가총액 기준'/g, `heatmapHint: '${HINT_KO}'`);
   html = html.replace(/heatmapHint:\s*'By market cap'/g, `heatmapHint: '${HINT_EN}'`);
   html = html.replace(/"heatmapHint":\s*"시가총액 기준"/g, `"heatmapHint": "${HINT_KO}"`);

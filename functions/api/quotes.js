@@ -9,6 +9,8 @@ import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
 import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 
+const QUOTES_CACHE_VERSION = 'v3';
+
 function normalizeTicker(t) {
   if (t == null || t === '') return null;
   const s = String(t).trim().toUpperCase();
@@ -49,6 +51,12 @@ function mapSupabaseRow(row) {
     prevClose: numOrNull(row.prev_close),
     high52w: numOrNull(row.high_52w),
     low52w: numOrNull(row.low_52w),
+    high120d: numOrNull(row.high_120d),
+    low120d: numOrNull(row.low_120d),
+    high50d: numOrNull(row.high_50d),
+    low50d: numOrNull(row.low_50d),
+    bbUpper: numOrNull(row.bb_upper),
+    bbLower: numOrNull(row.bb_lower),
     mcapWon: numOrNull(row.mcap_won),
     turnoverWon: numOrNull(row.turnover_won),
     per: numOrNull(row.per),
@@ -203,6 +211,7 @@ export async function onRequest(context) {
         ...ch,
         'Content-Type': 'application/json; charset=utf-8',
         'Cache-Control': `public, max-age=${maxAge}`,
+        'X-InvestingMap-Quotes-Version': QUOTES_CACHE_VERSION,
       },
     });
   } catch (e) {
