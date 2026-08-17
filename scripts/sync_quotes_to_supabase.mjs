@@ -26,6 +26,11 @@ import {
 } from './lib/sector_mcap_daily.mjs';
 import { computeMomentumBounds } from './lib/momentum_bounds.mjs';
 import { buildHubRankDailyRows } from '../functions/lib/hub_rank_daily.mjs';
+import { fetchKrxMarketIndexDay } from '../functions/lib/krx_index.mjs';
+import {
+  fetchNaverMarketIndices,
+  MARKET_INDEX_CODES,
+} from '../functions/lib/naver_index.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAVER_CONCURRENCY = 4;
@@ -1130,6 +1135,112 @@ function tradeDateToAsOf(tradeDate) {
   return Number.isFinite(d.getTime()) ? d.toISOString() : new Date().toISOString();
 }
 
+function validIndexNumber(value) {
+  return Number.isFinite(value) && value > 0 ? value : null;
+}
+
+async function upsertMarketIndexRows(table, rows, supabaseUrl, serviceKey, conflict) {
+  const clean = (rows || []).filter((row) => {
+    if (!MARKET_INDEX_CODES.includes(row.index_code)) return false;
+    if (table === 'market_index_daily') {
+      return !!row.trade_date && validIndexNumber(row.close) != null;
+    }
+    return (
+      !!row.captured_at &&
+      !!row.trade_date &&
+      validIndexNumber(row.value) != null &&
+      validIndexNumber(row.prev_close) != null
+    );
+  });
+  if (!clean.length) return 0;
+  const response = await fetch(
+    `${supabaseUrl}/rest/v1/${table}?on_conflict=${encodeURIComponent(conflict)}`,
+    {
+      method: 'POST',
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'resolution=merge-duplicates,return=minimal',
+      },
+      body: JSON.stringify(clean),
+    },
+  );
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`${table} upsert: ${response.status} ${body.slice(0, 180)}`);
+  }
+  return clean.length;
+}
+
+/** Market-index failures are intentionally isolated from the stock quote sync. */
+async function syncMarketIndices({
+  env,
+  authKey,
+  session,
+  tradeDateDash,
+  supabaseUrl,
+  serviceKey,
+}) {
+  try {
+    if (session.regularSession) {
+      const capturedAt = new Date().toISOString();
+      const result = await fetchNaverMarketIndices();
+      for (const message of result.errors) console.warn(`  market index: ${message}`);
+      const rows = result.rows
+        .filter((row) => row.tradeDate === tradeDateDash)
+        .map((row) => ({
+          captured_at: capturedAt,
+          trade_date: row.tradeDate,
+          index_code: row.code,
+          value: row.value,
+          prev_close: row.prevClose,
+        }));
+      const count = await upsertMarketIndexRows(
+        'market_index_intraday',
+        rows,
+        supabaseUrl,
+        serviceKey,
+        'index_code,captured_at',
+      );
+      console.log(`  market_index_intraday append ${count}/${MARKET_INDEX_CODES.length}`);
+      return;
+    }
+
+    if (session.marketClosed === true && tradeDateDash) {
+      const basDd = tradeDateDash.replace(/-/g, '');
+      let day;
+      try {
+        day = await fetchKrxMarketIndexDay(authKey || env, basDd);
+      } catch (error) {
+        console.warn(`  KRX market index close failed: ${error.message || error}`);
+        const fallback = await fetchNaverMarketIndices();
+        day = Object.fromEntries(
+          fallback.rows
+            .filter((row) => row.tradeDate === tradeDateDash)
+            .map((row) => [row.code, { date: row.tradeDate, close: row.value }]),
+        );
+        for (const message of fallback.errors) console.warn(`  market index: ${message}`);
+      }
+      const rows = MARKET_INDEX_CODES.map((code) => ({
+        trade_date: day?.[code]?.date || tradeDateDash,
+        index_code: code,
+        close: validIndexNumber(day?.[code]?.close),
+      }));
+      const count = await upsertMarketIndexRows(
+        'market_index_daily',
+        rows,
+        supabaseUrl,
+        serviceKey,
+        'trade_date,index_code',
+      );
+      console.log(`  market_index_daily upsert ${count}/${MARKET_INDEX_CODES.length} for ${tradeDateDash}`);
+    }
+  } catch (error) {
+    console.error(`  market index sync isolated failure: ${error.message || error}`);
+  }
+}
+
 async function main() {
   const started = Date.now();
   const force = process.argv.includes('--force');
@@ -1263,6 +1374,15 @@ async function main() {
   } else {
     console.log('  sector intraday snapshots: skip (not regular session)');
   }
+
+  await syncMarketIndices({
+    env,
+    authKey,
+    session,
+    tradeDateDash: consensus.tradeDate || todayYmdDash,
+    supabaseUrl,
+    serviceKey,
+  });
 
   const elapsedSec = ((Date.now() - started) / 1000).toFixed(1);
   const naverFailedUnique = [...new Set(naverResult.failed)];
