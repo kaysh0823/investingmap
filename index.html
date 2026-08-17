@@ -1915,6 +1915,35 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
+    .im-trust-footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 28px 28px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55
+    }
+
+    .im-trust-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 12px
+    }
+
+    .im-trust-nav a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .im-trust-nav a:hover {
+      text-decoration: underline
+    }
+
+    .im-trust-disclaimer {
+      max-width: 720px
+    }
+
 
 
 
@@ -1993,6 +2022,28 @@
         <span class="hub-pulse-head-status" id="hub-pulse-status" aria-live="polite"></span>
       </div>
       <div id="hub-sector-pulse-body"></div>
+    </section>
+
+    <section id="hub-sector-trend" class="hub-trend" aria-labelledby="hub-trend-title">
+      <div class="hub-trend-head">
+        <div>
+          <h2 id="hub-trend-title">Sector trend</h2>
+          <p id="hub-trend-sub">Sector market cap and KOSPI/KOSDAQ, rebased to 100</p>
+        </div>
+        <div class="hub-trend-tabs" role="tablist" aria-label="Trend period">
+          <button type="button" class="hub-trend-tab" data-horizon="1d" role="tab" aria-selected="false">1D</button>
+          <button type="button" class="hub-trend-tab is-active" data-horizon="20d" role="tab" aria-selected="true">20D</button>
+          <button type="button" class="hub-trend-tab" data-horizon="50d" role="tab" aria-selected="false">50D</button>
+          <button type="button" class="hub-trend-tab" data-horizon="120d" role="tab" aria-selected="false">120D</button>
+          <button type="button" class="hub-trend-tab" data-horizon="200d" role="tab" aria-selected="false">200D</button>
+        </div>
+      </div>
+      <div class="hub-trend-chart-wrap">
+        <div id="hub-trend-chart"></div>
+        <div id="hub-trend-status" class="hub-trend-status" role="status" aria-live="polite">Loading trend data…</div>
+        <div id="hub-trend-tooltip" class="hub-trend-tooltip" hidden></div>
+      </div>
+      <div id="hub-trend-legend" class="hub-trend-legend"></div>
     </section>
 
     <div class="hub-dashboard-row" id="hub-dashboard-row">
@@ -2372,6 +2423,8 @@
   <script src="js/map_tab_state.js?v=8"></script>
     <script src="js/return_live.js?v=2"></script>
   <script src="js/hub_dashboard.js?v=50"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="js/hub_trend_chart.js?v=1"></script>
   <script src="js/im_collapsible.js?v=6"></script>
 <script>
     const T = {
@@ -2475,6 +2528,8 @@
         metalTitle: '한국 철강·금속·기계 투자 지도',
         metalLead: '철강, 비철금속, 트레이딩, 산업기계',
         metalCta: '지도 열기 →',
+        trendTitle: '섹터 변동 추이',
+        trendSub: '섹터 시가총액과 코스피·코스닥을 기간 시작=100으로 비교',
         foot: '각 지도 페이지에서 표·그래프·언어(한/영)·다크·라이트 테마를 사용할 수 있습니다.',
         overviewHeading: '산업 개요',
         copyright: '© 2026 Investing Map'
@@ -2579,6 +2634,8 @@
         metalTitle: 'Korea Steel, Metals & Machinery Map',
         metalLead: 'Steel operators, nonferrous metals, trading, and industrial machinery.',
         metalCta: 'Open map →',
+        trendTitle: 'Sector trend',
+        trendSub: 'Sector market cap and KOSPI/KOSDAQ, rebased to 100 at the period start',
         foot: 'On each map: table & graph, Korean/English, and dark/light theme.',
         overviewHeading: 'Industry overview',
         copyright: '© 2026 Investing Map'
@@ -2657,6 +2714,10 @@
       document.getElementById('hdr-subtitle').textContent = t.introP1;
       var overviewHeading = document.getElementById('hub-overview-heading');
       if (overviewHeading) overviewHeading.textContent = t.overviewHeading;
+      var trendTitle = document.getElementById('hub-trend-title');
+      var trendSub = document.getElementById('hub-trend-sub');
+      if (trendTitle) trendTitle.textContent = t.trendTitle;
+      if (trendSub) trendSub.textContent = t.trendSub;
       var brandLink = document.getElementById('hub-brand-link');
       if (brandLink) brandLink.href = 'index.html' + ql;
       document.getElementById('hub-brand-name').textContent = t.title;
@@ -2740,6 +2801,10 @@ document.title = lang === 'en'
       if (window.InvestingMapHubDashboard) {
         if (InvestingMapHubDashboard.renderHubCardTags) InvestingMapHubDashboard.renderHubCardTags(lang);
         InvestingMapHubDashboard.refresh(lang);
+      }
+      if (window.InvestingMapHubTrendChart) {
+        InvestingMapHubTrendChart.setLang(lang);
+        InvestingMapHubTrendChart.init({ lang: lang, horizon: '20d' });
       }
       if (window.InvestingMapDesktopSidebar) InvestingMapDesktopSidebar.render(lang);
       if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);
