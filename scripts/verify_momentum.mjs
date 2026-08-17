@@ -16,9 +16,9 @@ const momentum = context.InvestingMapMomentum;
 assert.ok(momentum, 'momentum module export missing');
 assert.equal(momentum.getYMode(), '50d', 'BOX is the default y-axis mode');
 assert.equal(
-  momentum.pricePosition({ quoteLast: 75, high120d: 100, low120d: 50 }, '120d'),
+  momentum.pricePosition({ quoteLast: 75, high50d: 100, low50d: 50 }, '50d'),
   50,
-  '120-day price position',
+  '50-day price position',
 );
 assert.equal(
   momentum.pricePosition({ quoteLast: 120, high50d: 100, low50d: 50 }, '50d'),
@@ -26,14 +26,19 @@ assert.equal(
   '50-day price position clamps high',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 20, high120d: 100, low120d: 50 }, '120d'),
+  momentum.pricePosition({ quoteLast: 20, high50d: 100, low50d: 50 }, '50d'),
   0,
   'price position clamps low',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 50, high120d: 50, low120d: 50 }, '120d'),
+  momentum.pricePosition({ quoteLast: 50, high50d: 50, low50d: 50 }, '50d'),
   null,
   'flat rolling range is excluded',
+);
+assert.equal(
+  momentum.pricePosition({ quoteLast: 75, high50d: 100, low50d: 50 }, '120d'),
+  50,
+  'legacy 120d mode falls back to 50d',
 );
 assert.equal(
   momentum.rawPosition({ quoteLast: 125, bbUpper: 100, bbLower: 50 }, 'bb'),
@@ -50,20 +55,20 @@ const complete = momentum.datum({
   ticker: '005930',
   rs: 67.5,
   quoteLast: 75,
-  high120d: 100,
-  low120d: 50,
+  high50d: 100,
+  low50d: 50,
   turnoverWon: 123_000_000_000,
   chg1dPct: 1.25,
-}, '120d');
+}, '50d');
 assert.equal(complete.rs, 67.5);
 assert.equal(complete.position, 50);
 assert.equal(complete.turnover, 123_000_000_000);
 for (const missing of [
-  { rs: null, quoteLast: 75, high120d: 100, low120d: 50, turnoverWon: 1 },
-  { rs: 50, quoteLast: null, high120d: 100, low120d: 50, turnoverWon: 1 },
-  { rs: 50, quoteLast: 75, high120d: 100, low120d: 50, turnoverWon: null },
+  { rs: null, quoteLast: 75, high50d: 100, low50d: 50, turnoverWon: 1 },
+  { rs: 50, quoteLast: null, high50d: 100, low50d: 50, turnoverWon: 1 },
+  { rs: 50, quoteLast: 75, high50d: 100, low50d: 50, turnoverWon: null },
 ]) {
-  assert.equal(momentum.datum(missing, '120d'), null, 'incomplete bubble is skipped');
+  assert.equal(momentum.datum(missing, '50d'), null, 'incomplete bubble is skipped');
 }
 
 const history = Array.from({ length: 120 }, (_, i) => ({
@@ -87,12 +92,13 @@ for (const marker of [
   "y(50)",
   'InvestingMapHeatmap.colorForChange',
   "selectedYMode = '50d'",
-  "mode120d: '120D BOX'",
   "mode50d: '50D BOX'",
   "modeBb: '50D %b'",
-  "y120d: '120D BOX'",
   "y50d: '50D BOX'",
   "yBb: '50D %b'",
+  "mode === '50d' || mode === 'bb' ? mode : '50d'",
+  "id: '50d'",
+  "id: 'bb'",
   'data-mm-mode',
   'rawPosition',
   'bubbleLabelText',
@@ -106,6 +112,9 @@ for (const marker of [
 ]) {
   assert.ok(source.includes(marker), `momentum renderer marker missing: ${marker}`);
 }
+assert.ok(!source.includes("id: '120d'"), '120d mode tab must be removed');
+assert.ok(!source.includes('mode120d'), '120d mode labels must be removed');
+assert.ok(!/\bhigh120d\b/.test(source), '120d price-position branch must be removed');
 
 const mapFiles = fs
   .readdirSync(ROOT, { withFileTypes: true })
@@ -131,7 +140,7 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=5',
+    '../js/map_momentum.js?v=6',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",

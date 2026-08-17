@@ -18,11 +18,9 @@
   var COPY = {
     ko: {
       xAxis: 'RS',
-      yAxis: '120D BOX',
-      mode120d: '120D BOX',
+      yAxis: '50D BOX',
       mode50d: '50D BOX',
       modeBb: '50D %b',
-      y120d: '120D BOX',
       y50d: '50D BOX',
       yBb: '50D %b',
       leader: '주도(강세)',
@@ -37,11 +35,9 @@
     },
     en: {
       xAxis: 'RS',
-      yAxis: '120D BOX',
-      mode120d: '120D BOX',
+      yAxis: '50D BOX',
       mode50d: '50D BOX',
       modeBb: '50D %b',
-      y120d: '120D BOX',
       y50d: '50D BOX',
       yBb: '50D %b',
       leader: 'Leading (strong)',
@@ -65,15 +61,15 @@
   }
 
   function normalizeYMode(mode) {
-    return mode === '50d' || mode === 'bb' ? mode : '120d';
+    return mode === '50d' || mode === 'bb' ? mode : '50d';
   }
 
   function pricePosition(company, mode) {
     if (!company) return null;
     mode = normalizeYMode(mode || selectedYMode);
     var last = company.quoteLast;
-    var high = mode === '50d' ? company.high50d : mode === 'bb' ? company.bbUpper : company.high120d;
-    var low = mode === '50d' ? company.low50d : mode === 'bb' ? company.bbLower : company.low120d;
+    var high = mode === 'bb' ? company.bbUpper : company.high50d;
+    var low = mode === 'bb' ? company.bbLower : company.low50d;
     if (!isFiniteNumber(last) || !isFiniteNumber(high) || !isFiniteNumber(low) || high <= low) return null;
     var raw = ((last - low) / (high - low)) * 100;
     return { raw: raw, plot: clamp100(raw), mode: mode };
@@ -103,7 +99,7 @@
       out[key] = supplied[key] || base[key];
     });
     mode = normalizeYMode(mode || selectedYMode);
-    out.yAxis = mode === '50d' ? out.y50d : mode === 'bb' ? out.yBb : out.y120d;
+    out.yAxis = mode === 'bb' ? out.yBb : out.y50d;
     out.position = out.yAxis;
     return out;
   }
@@ -287,7 +283,6 @@
       opts.lang === 'en' ? 'Momentum vertical axis' : '모멘텀 세로축',
     );
     tabs.innerHTML = [
-      { id: '120d', text: labels.mode120d },
       { id: '50d', text: labels.mode50d },
       { id: 'bb', text: labels.modeBb },
     ]
