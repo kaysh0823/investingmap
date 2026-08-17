@@ -86,20 +86,16 @@ function patchScriptTag(html) {
 }
 
 function patchMobileTabsCss(html) {
-  return html.replace(
-    /\.tabs \{\s*\n\s*padding: 0 12px;\s*\n\s*overflow-x: auto;[\s\S]*?flex-wrap: nowrap\s*\n\s*\}/,
-    `.tabs {
+  const tabsCss = `.tabs {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         padding: 0;
         overflow: visible;
         gap: 0
-      }`,
-  ).replace(
-    /\.tab-btn \{\s*\n\s*padding: 10px 12px;\s*\n\s*font-size: 12px;\s*\n\s*flex-shrink: 0\s*\n\s*\}/,
-    `.tab-btn {
-        padding: 10px 6px;
-        font-size: 11px;
+      }`;
+  const tabBtnCss = `.tab-btn {
+        padding: 10px 3px;
+        font-size: 10px;
         white-space: normal;
         word-break: keep-all;
         line-height: 1.35;
@@ -107,8 +103,24 @@ function patchMobileTabsCss(html) {
         display: flex;
         align-items: center;
         justify-content: center
-      }`,
-  );
+      }`;
+  return html
+    .replace(
+      /\.tabs \{\s*\n\s*padding: 0 12px;\s*\n\s*overflow-x: auto;[\s\S]*?flex-wrap: nowrap\s*\n\s*\}/,
+      tabsCss,
+    )
+    .replace(
+      /\.tabs \{\s*\n\s*display: grid;\s*\n\s*grid-template-columns: repeat\([34], minmax\(0, 1fr\)\);[\s\S]*?gap: 0\s*\n\s*\}/,
+      tabsCss,
+    )
+    .replace(
+      /\.tab-btn \{\s*\n\s*padding: 10px 12px;\s*\n\s*font-size: 12px;\s*\n\s*flex-shrink: 0\s*\n\s*\}/,
+      tabBtnCss,
+    )
+    .replace(
+      /\.tab-btn \{\s*\n\s*padding: 10px [36]px;\s*\n\s*font-size: 1[01]px;[\s\S]*?justify-content: center\s*\n\s*\}/,
+      tabBtnCss,
+    );
 }
 
 function patchFile(rel) {
