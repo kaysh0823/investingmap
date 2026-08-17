@@ -114,6 +114,16 @@
       : company.name || company.nameKo || company.ticker || '';
   }
 
+  function bubbleLabelText(company, lang, radius) {
+    var name = displayName(company, lang);
+    var fontSize = Math.max(8, Math.min(12, radius * 0.5));
+    var maxChars = Math.floor((radius * 2) / (fontSize * 0.62));
+    if (name.length > maxChars) {
+      name = name.slice(0, Math.max(1, maxChars - 1)) + '…';
+    }
+    return { text: name, fontSize: fontSize };
+  }
+
   function formatPct(value, digits) {
     if (!isFiniteNumber(value)) return '—';
     var sign = value > 0 ? '+' : value < 0 ? '\u2212' : '';
@@ -383,8 +393,8 @@
     var x = d3.scaleLinear().domain([0, 100]).range([0, innerW]);
     var y = d3.scaleLinear().domain([0, 100]).range([innerH, 0]);
     var maxTurnover = d3.max(items, function (item) { return item.turnover; }) || 1;
-    var maxRadius = Math.max(12, Math.min(mobile ? 24 : 32, Math.sqrt((innerW * innerH) / items.length) * 0.24));
-    var radius = d3.scaleSqrt().domain([0, maxTurnover]).range([5, maxRadius]);
+    var maxRadius = Math.max(12, Math.min(mobile ? 30 : 42, Math.sqrt((innerW * innerH) / items.length) * 0.3));
+    var radius = d3.scaleSqrt().domain([0, maxTurnover]).range([7, maxRadius]);
 
     items.forEach(function (item) {
       item.radius = radius(item.turnover);
@@ -502,15 +512,22 @@
         );
       });
     nodes
-      .filter(function (item) { return item.radius >= 11; })
+      .filter(function (item) { return item.radius >= 14; })
       .append('text')
       .attr('text-anchor', 'middle')
       .attr('dy', '.35em')
       .attr('fill', '#f0f3f6')
-      .attr('font-size', function (item) { return Math.max(8, Math.min(11, item.radius * 0.65)); })
+      .attr('stroke', 'rgba(0,0,0,.55)')
+      .attr('stroke-width', 2)
+      .style('paint-order', 'stroke')
+      .attr('font-size', function (item) {
+        return bubbleLabelText(item.company, opts.lang, item.radius).fontSize;
+      })
       .attr('font-weight', 700)
       .attr('pointer-events', 'none')
-      .text(function (item) { return item.company.ticker || ''; });
+      .text(function (item) {
+        return bubbleLabelText(item.company, opts.lang, item.radius).text;
+      });
 
     nodes
       .on('mouseenter', function (event, item) { showTooltip(item, opts, event); })
