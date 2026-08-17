@@ -707,7 +707,7 @@ async function upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, ser
   const result = await upsertToSupabase(rows, supabaseUrl, serviceKey);
   console.log(
     `  history indicators: spark20=${sparkAttached} range120=${range120Attached} ` +
-      `range50=${range50Attached} bb20=${bbAttached}, upserted=${result.upserted.length}`,
+      `range50=${range50Attached} bb50=${bbAttached}, upserted=${result.upserted.length}`,
   );
   return {
     upserted: result.upserted.length,

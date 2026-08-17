@@ -14,6 +14,7 @@ new vm.Script(source, { filename: 'map_momentum.js' }).runInContext(context);
 
 const momentum = context.InvestingMapMomentum;
 assert.ok(momentum, 'momentum module export missing');
+assert.equal(momentum.getYMode(), '50d', 'BOX is the default y-axis mode');
 assert.equal(
   momentum.pricePosition({ quoteLast: 75, high120d: 100, low120d: 50 }, '120d'),
   50,
@@ -77,7 +78,7 @@ assert.equal(bounds.high_50d, 130);
 assert.equal(bounds.low_50d, 71);
 assert.ok(bounds.bb_upper > bounds.bb_lower, 'Bollinger boundaries');
 assert.equal(computeMomentumBounds(history.slice(-49)).high_50d, null);
-assert.equal(computeMomentumBounds(history.slice(-19)).bb_upper, null);
+assert.equal(computeMomentumBounds(history.slice(-49)).bb_upper, null);
 
 for (const marker of [
   'd3.scaleSqrt()',
@@ -85,7 +86,10 @@ for (const marker of [
   "x(50)",
   "y(50)",
   'InvestingMapHeatmap.colorForChange',
-  "selectedYMode = '120d'",
+  "selectedYMode = '50d'",
+  "mode50d: 'BOX'",
+  "y50d: 'BOX (50일 박스권 위치)'",
+  "y50d: 'BOX (50D range)'",
   'data-mm-mode',
   'rawPosition',
   'ResizeObserver',
@@ -118,7 +122,7 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=2',
+    '../js/map_momentum.js?v=3',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",

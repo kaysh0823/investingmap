@@ -36,8 +36,8 @@ export function computeMomentumBounds(historyBars) {
   const range50 = rangeFor(50);
   let bbUpper = null;
   let bbLower = null;
-  if (bars.length >= 20) {
-    const closes = bars.slice(-20).map((bar) => bar.close);
+  if (bars.length >= 50) {
+    const closes = bars.slice(-50).map((bar) => bar.close);
     const mean = closes.reduce((sum, close) => sum + close, 0) / closes.length;
     const variance =
       closes.reduce((sum, close) => sum + (close - mean) ** 2, 0) / closes.length;

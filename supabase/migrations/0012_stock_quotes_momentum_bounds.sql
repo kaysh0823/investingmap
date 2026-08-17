@@ -18,6 +18,6 @@ COMMENT ON COLUMN public.stock_quotes_latest.high_50d IS
 COMMENT ON COLUMN public.stock_quotes_latest.low_50d IS
   'Minimum daily low over the latest 50 complete history bars';
 COMMENT ON COLUMN public.stock_quotes_latest.bb_upper IS
-  'Latest 20-close SMA plus two population standard deviations';
+  'Latest 50-close SMA plus two population standard deviations';
 COMMENT ON COLUMN public.stock_quotes_latest.bb_lower IS
-  'Latest 20-close SMA minus two population standard deviations';
+  'Latest 50-close SMA minus two population standard deviations';

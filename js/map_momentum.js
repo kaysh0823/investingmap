@@ -10,7 +10,7 @@
   var observedEl = null;
   var resizeTimer = null;
   var visibilityBound = false;
-  var selectedYMode = '120d';
+  var selectedYMode = '50d';
   var CHG_CLIP = 2.5;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var CONTRAST_EXP = 0.55;
@@ -20,11 +20,11 @@
       xAxis: 'RS',
       yAxis: '120일 위치',
       mode120d: '120일',
-      mode50d: '50일',
+      mode50d: 'BOX',
       modeBb: '%b',
       y120d: '120일 위치',
-      y50d: '50일 위치',
-      yBb: '%b (볼린저밴드)',
+      y50d: 'BOX (50일 박스권 위치)',
+      yBb: '%b (볼린저 50일)',
       leader: '주도(강세)',
       pullback: '되돌림주의',
       emerging: '신규부상',
@@ -39,11 +39,11 @@
       xAxis: 'RS',
       yAxis: '120D position',
       mode120d: '120D',
-      mode50d: '50D',
+      mode50d: 'BOX',
       modeBb: '%b',
       y120d: '120D position',
-      y50d: '50D position',
-      yBb: '%b (Bollinger Band)',
+      y50d: 'BOX (50D range)',
+      yBb: '%b (50D Bollinger Band)',
       leader: 'Leading (strong)',
       pullback: 'Pullback risk',
       emerging: 'Emerging',
