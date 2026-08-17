@@ -8,6 +8,9 @@ import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.
 export const TREND_MAX_POINTS = 200;
 const DAILY_LOOKBACK = { '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
 const INDEX_CODES = ['KOSPI', 'KOSDAQ'];
+const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
+
+export const TREND_INDEX_CODES = INDEX_CODES;
 
 export function downsampleTrend(points, maxPoints = TREND_MAX_POINTS) {
   if (!Array.isArray(points) || points.length <= maxPoints) return points ? points.slice() : [];
@@ -39,9 +42,18 @@ export function rebaseTo100(rows, valueKey = 'value', baseValue = null) {
 async function safeFetch(config, query) {
   try {
     return await fetchSupabaseJson(config, query);
-  } catch {
+  } catch (error) {
+    console.warn(`hub_trend fetch failed [${query.split('?')[0]}]: ${error?.message || error}`);
     return [];
   }
+}
+
+function logIndexSeries(scope, indexRows, entries, valueKey) {
+  const fetched = INDEX_CODES.map(
+    (code) => `${code}=${indexRows.filter((row) => row.index_code === code && numOrNull(row[valueKey]) != null).length}`,
+  ).join(' ');
+  const series = entries.map((entry) => `${entry.code}=${entry.series.length}`).join(' ');
+  console.log(`hub_trend ${scope} index rows: ${fetched} | series: ${series}`);
 }
 
 async function safeFetchPaged(config, query, pageSize = 1000) {
@@ -84,7 +96,8 @@ async function buildDailyPayload(config, hubIndex, horizon) {
   const window = DAILY_LOOKBACK[horizon] || 20;
   const indexRows = await safeFetch(
     config,
-    `market_index_daily?select=trade_date,index_code,close&order=trade_date.desc&limit=${(window + 30) * 2}`,
+    `market_index_daily?${INDEX_FILTER}&select=trade_date,index_code,close` +
+      `&order=trade_date.desc&limit=${(window + 40) * INDEX_CODES.length}`,
   );
   let dates = latestDates(indexRows, window + 1);
   if (!dates.length) {
@@ -119,6 +132,7 @@ async function buildDailyPayload(config, hubIndex, horizon) {
       .sort((a, b) => a.t.localeCompare(b.t));
     return { ...entry, series: downsampleTrend(rebaseTo100(rows)) };
   });
+  logIndexSeries(horizon, indexRows, payload.indices, 'close');
   return payload;
 }
 
@@ -135,6 +149,30 @@ async function resolveLatestIntradayDate(config) {
   return sectorRows[0]?.trade_date || null;
 }
 
+/**
+ * Before the first intraday capture of a session the intraday table is empty.
+ * Fall back to the last two daily closes so the 1d chart still has an index line.
+ */
+async function dailyCloseFallback(config, codes) {
+  if (!codes.length) return new Map();
+  const rows = await safeFetch(
+    config,
+    `market_index_daily?${INDEX_FILTER}&select=trade_date,index_code,close` +
+      `&order=trade_date.desc&limit=${codes.length * 4}`,
+  );
+  const out = new Map();
+  for (const code of codes) {
+    const own = rows
+      .filter((row) => row.index_code === code && numOrNull(row.close) > 0)
+      .sort((a, b) => String(b.trade_date).localeCompare(String(a.trade_date)));
+    const last = numOrNull(own[0]?.close);
+    const prev = numOrNull(own[1]?.close);
+    if (last == null || prev == null || prev <= 0) continue;
+    out.set(code, { date: own[0].trade_date, last, prev });
+  }
+  return out;
+}
+
 async function buildIntradayPayload(config, hubIndex) {
   const payload = emptyPayload(hubIndex, '1d');
   const tradeDate = await resolveLatestIntradayDate(config);
@@ -147,10 +185,14 @@ async function buildIntradayPayload(config, hubIndex) {
     ),
     safeFetch(
       config,
-      `market_index_intraday?trade_date=eq.${encodeURIComponent(tradeDate)}` +
+      `market_index_intraday?trade_date=eq.${encodeURIComponent(tradeDate)}&${INDEX_FILTER}` +
         '&select=index_code,captured_at,value,prev_close&order=captured_at.asc&limit=1000',
     ),
   ]);
+  const missingCodes = INDEX_CODES.filter(
+    (code) => !indexRows.some((row) => row.index_code === code && numOrNull(row.value) != null),
+  );
+  const fallback = await dailyCloseFallback(config, missingCodes);
 
   payload.sectors = payload.sectors.map((entry) => {
     const rows = sectorRows
@@ -161,16 +203,22 @@ async function buildIntradayPayload(config, hubIndex) {
   payload.indices = payload.indices.map((entry) => {
     const own = indexRows.filter((row) => row.index_code === entry.code);
     const prevClose = own.map((row) => numOrNull(row.prev_close)).find((value) => value > 0);
-    if (!own.length || prevClose == null) return entry;
+    if (own.length && prevClose != null) {
+      const rows = [
+        { t: `${tradeDate}T09:00:00+09:00`, value: prevClose },
+        ...own.map((row) => ({ t: row.captured_at, value: numOrNull(row.value) })),
+      ];
+      return { ...entry, series: downsampleTrend(rebaseTo100(rows, 'value', prevClose)) };
+    }
+    const daily = fallback.get(entry.code);
+    if (!daily) return entry;
     const rows = [
-      { t: `${tradeDate}T09:00:00+09:00`, value: prevClose },
-      ...own.map((row) => ({ t: row.captured_at, value: numOrNull(row.value) })),
+      { t: `${daily.date}T09:00:00+09:00`, value: daily.prev },
+      { t: `${daily.date}T15:30:00+09:00`, value: daily.last },
     ];
-    return {
-      ...entry,
-      series: downsampleTrend(rebaseTo100(rows, 'value', prevClose)),
-    };
+    return { ...entry, series: rebaseTo100(rows, 'value', daily.prev) };
   });
+  logIndexSeries('1d', indexRows, payload.indices, 'value');
   return payload;
 }
 

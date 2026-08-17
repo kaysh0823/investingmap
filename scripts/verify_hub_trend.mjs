@@ -3,12 +3,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  buildHubTrendPayload,
   downsampleTrend,
   rebaseTo100,
+  TREND_INDEX_CODES,
   TREND_MAX_POINTS,
 } from '../functions/lib/hub_trend.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const DAILY_HORIZONS = ['20d', '50d', '120d', '200d'];
 
 const rebased = rebaseTo100([
   { t: 'a', value: 200 },
@@ -25,9 +28,139 @@ assert.equal(sampled.length, TREND_MAX_POINTS);
 assert.deepEqual(sampled[0], long[0]);
 assert.deepEqual(sampled.at(-1), long.at(-1));
 
+// --- payload fixtures -------------------------------------------------------
+
+function makeDates(count) {
+  const out = [];
+  const cursor = new Date(Date.UTC(2025, 0, 1));
+  for (let i = 0; i < count; i++) {
+    out.push(cursor.toISOString().slice(0, 10));
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+  return out;
+}
+
+const DATES = makeDates(260);
+const LAST_DATE = DATES.at(-1);
+const SECTORS = ['semi', 'bio'];
+
+function fixtures({ intraday }) {
+  const marketIndexDaily = [];
+  const sectorMcapDaily = [];
+  DATES.forEach((date, i) => {
+    for (const code of TREND_INDEX_CODES) {
+      marketIndexDaily.push({ trade_date: date, index_code: code, close: 2000 + i });
+    }
+    for (const sector of SECTORS) {
+      sectorMcapDaily.push({ trade_date: date, sector_id: sector, mcap_sum: 1e12 + i * 1e9 });
+    }
+  });
+  const sectorIntradaySnapshots = [0, 1, 2].map((i) => ({
+    trade_date: LAST_DATE,
+    ts: `${LAST_DATE}T0${i}:00:00+00:00`,
+    sector_id: 'semi',
+    mcap_sum: 1e12 + i * 1e9,
+  }));
+  const marketIndexIntraday = intraday
+    ? TREND_INDEX_CODES.flatMap((code) =>
+        [0, 1].map((i) => ({
+          trade_date: LAST_DATE,
+          captured_at: `${LAST_DATE}T0${i}:30:00+00:00`,
+          index_code: code,
+          value: 2500 + i,
+          prev_close: 2490,
+        })),
+      )
+    : [];
+  return {
+    market_index_daily: marketIndexDaily,
+    sector_mcap_daily: sectorMcapDaily,
+    sector_intraday_snapshots: sectorIntradaySnapshots,
+    market_index_intraday: marketIndexIntraday,
+  };
+}
+
+function applyQuery(rows, params) {
+  let out = rows.slice();
+  for (const [key, raw] of params.entries()) {
+    if (['select', 'order', 'limit', 'offset'].includes(key)) continue;
+    const [op, ...rest] = raw.split('.');
+    const value = rest.join('.');
+    if (op === 'eq') out = out.filter((row) => String(row[key]) === value);
+    else if (op === 'gte') out = out.filter((row) => String(row[key]) >= value);
+    else if (op === 'lte') out = out.filter((row) => String(row[key]) <= value);
+    else if (op === 'in') {
+      const set = new Set(value.replace(/^\(|\)$/g, '').split(','));
+      out = out.filter((row) => set.has(String(row[key])));
+    }
+  }
+  const order = params.get('order');
+  if (order) {
+    const [field, dir] = order.split('.');
+    out.sort((a, b) => String(a[field]).localeCompare(String(b[field])) * (dir === 'desc' ? -1 : 1));
+  }
+  const offset = Number(params.get('offset') || 0);
+  const limit = Number(params.get('limit') || 0);
+  out = out.slice(offset);
+  if (limit > 0) out = out.slice(0, limit);
+  return out;
+}
+
+function installFetch(tables) {
+  globalThis.fetch = async (input) => {
+    const url = new URL(String(input));
+    const table = url.pathname.replace(/^.*\/rest\/v1\//, '');
+    const rows = applyQuery(tables[table] || [], url.searchParams);
+    return new Response(JSON.stringify(rows), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  };
+}
+
+const ENV = { SUPABASE_URL: 'https://fixture.supabase.co', SUPABASE_ANON_KEY: 'fixture-key' };
+const HUB_INDEX = { sectors: { semi: { meta: { ko: '반도체' } } } };
+
+function assertIndices(payload, horizon, { expectPoints = true } = {}) {
+  assert.ok(Array.isArray(payload.indices), `${horizon}: indices array missing`);
+  const codes = payload.indices.map((entry) => entry.code);
+  for (const code of TREND_INDEX_CODES) {
+    assert.ok(codes.includes(code), `${horizon}: ${code} missing from indices`);
+  }
+  if (!expectPoints) return;
+  for (const entry of payload.indices) {
+    assert.ok(entry.series.length > 0, `${horizon}: ${entry.code} series is empty`);
+    assert.equal(entry.series[0].v, 100, `${horizon}: ${entry.code} first point is not 100`);
+  }
+}
+
+const originalFetch = globalThis.fetch;
+try {
+  installFetch(fixtures({ intraday: true }));
+  for (const horizon of DAILY_HORIZONS) {
+    const payload = await buildHubTrendPayload(HUB_INDEX, ENV, horizon);
+    assert.equal(payload.horizon, horizon);
+    assert.equal(payload.base, 100);
+    assert.ok(payload.sectors.length > 0, `${horizon}: sectors missing`);
+    assertIndices(payload, horizon);
+  }
+
+  const intraday = await buildHubTrendPayload(HUB_INDEX, ENV, '1d');
+  assertIndices(intraday, '1d');
+
+  // No intraday captures yet: indices keep their shape and fall back to daily closes.
+  installFetch(fixtures({ intraday: false }));
+  const fallback = await buildHubTrendPayload(HUB_INDEX, ENV, '1d');
+  assertIndices(fallback, '1d (daily fallback)');
+} finally {
+  globalThis.fetch = originalFetch;
+}
+
+// --- source markers ---------------------------------------------------------
+
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v1'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v2'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -43,8 +176,24 @@ for (const marker of [
   'sector_mcap_daily?',
   'sector_intraday_snapshots?',
   'base: 100',
+  'logIndexSeries',
 ]) {
   assert.ok(core.includes(marker), `hub trend core marker missing: ${marker}`);
 }
 
-console.log('verify:hub-trend OK — base-100 normalization, endpoint sampling, and sources');
+// --- optional live check: node scripts/verify_hub_trend.mjs --live=<origin> ---
+
+const liveArg = process.argv.slice(2).find((value) => value.startsWith('--live'));
+if (liveArg) {
+  const origin = liveArg.includes('=') ? liveArg.split('=')[1] : 'https://www.investingmap.kr';
+  for (const horizon of DAILY_HORIZONS) {
+    const response = await originalFetch(`${origin}/api/hub_trend?horizon=${horizon}&nocache=1`);
+    assert.ok(response.ok, `live ${horizon}: HTTP ${response.status}`);
+    assertIndices(await response.json(), `live ${horizon}`);
+  }
+  console.log(`verify:hub-trend live OK — ${origin}`);
+}
+
+console.log(
+  'verify:hub-trend OK — base-100 normalization, endpoint sampling, sources, KOSPI/KOSDAQ indices',
+);

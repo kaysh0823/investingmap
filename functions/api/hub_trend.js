@@ -13,7 +13,7 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v1';
+const CACHE_VERSION = '/api/hub_trend/cache/v2';
 
 function maxAge(horizon, now = new Date()) {
   return normalizeSectorHorizon(horizon) === '1d'
