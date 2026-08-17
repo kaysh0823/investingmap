@@ -74,22 +74,29 @@ export async function fetchNaverMarketIndices() {
 /** Historical close fallback when the KRX index service is not authorized. */
 export async function fetchNaverMarketIndexHistory(code, days) {
   if (!MARKET_INDEX_CODES.includes(code)) throw new Error(`Unsupported market index: ${code}`);
-  const pageSize = Math.max(2, Math.min(1000, Number(days) || 260));
-  const response = await fetch(
-    `${NAVER_INDEX_BASE}/${code}/price?pageSize=${pageSize}&page=1`,
-    {
-      headers: {
-        Accept: 'application/json',
-        'User-Agent': 'Mozilla/5.0 (compatible; InvestingMap/1.0)',
+  const target = Math.max(2, Number(days) || 260);
+  const pageSize = 60;
+  const collected = [];
+  for (let page = 1; collected.length < target; page++) {
+    const response = await fetch(
+      `${NAVER_INDEX_BASE}/${code}/price?pageSize=${pageSize}&page=${page}`,
+      {
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': 'Mozilla/5.0 (compatible; InvestingMap/1.0)',
+        },
       },
-    },
-  );
-  if (!response.ok) throw new Error(`Naver index history ${code}: ${response.status}`);
-  const rows = await response.json();
-  if (!Array.isArray(rows)) return [];
-  return rows
+    );
+    if (!response.ok) throw new Error(`Naver index history ${code}: ${response.status}`);
+    const rows = await response.json();
+    if (!Array.isArray(rows) || !rows.length) break;
+    collected.push(...rows);
+    if (rows.length < pageSize) break;
+  }
+  return collected
     .map((row) => ({ date: tradeDate(row?.localTradedAt), close: numOrNull(row?.closePrice) }))
     .filter((row) => row.date && row.close != null)
+    .filter((row, index, list) => list.findIndex((other) => other.date === row.date) === index)
     .sort((a, b) => a.date.localeCompare(b.date))
-    .slice(-pageSize);
+    .slice(-target);
 }
