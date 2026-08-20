@@ -87,6 +87,60 @@
     return item.koShort || item.ko;
   }
 
+  function currentMapTab() {
+    try {
+      if (global.InvestingMapTabState && typeof global.InvestingMapTabState.getTab === 'function') {
+        var t = global.InvestingMapTabState.getTab();
+        if (t === 'heatmap' || t === 'momentum' || t === 'graph' || t === 'table') return t;
+      }
+    } catch (e) {}
+    try {
+      var s = localStorage.getItem('im_map_tab');
+      if (s === 'heatmap' || s === 'momentum' || s === 'graph' || s === 'table') return s;
+    } catch (e2) {}
+    return 'table';
+  }
+
+  /** Preserve current map tab across sector hops; never forward ticker. */
+  function applyMapTabToHref(href) {
+    var tab = currentMapTab();
+    try {
+      var u = new URL(href, window.location.href);
+      u.searchParams.delete('ticker');
+      if (tab === 'table') u.searchParams.delete('tab');
+      else u.searchParams.set('tab', tab);
+      return u.pathname + u.search + u.hash;
+    } catch (e) {
+      var cleaned = String(href || '').replace(/([?&])ticker=[^&]*/g, '$1').replace(/[?&]$/, '');
+      if (tab === 'table') {
+        return cleaned.replace(/([?&])tab=(heatmap|momentum|graph|table)\b/g, '$1').replace(/[?&]$/, '');
+      }
+      try {
+        var u2 = new URL(cleaned, window.location.href);
+        u2.searchParams.set('tab', tab);
+        return u2.pathname + u2.search + u2.hash;
+      } catch (e2) {
+        var sep = cleaned.indexOf('?') >= 0 ? '&' : '?';
+        return cleaned + sep + 'tab=' + encodeURIComponent(tab);
+      }
+    }
+  }
+
+  function bindTabPreserve(nav) {
+    if (!nav || nav.getAttribute('data-im-tab-preserve') === '1') return;
+    nav.setAttribute('data-im-tab-preserve', '1');
+    function onNav(ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest('a.im-bottom-tab') : null;
+      if (!a || !nav.contains(a)) return;
+      var href = a.getAttribute('href') || '';
+      if (!href || /(?:^|\/)index\.html(?:\?|$)/.test(href)) return;
+      var next = applyMapTabToHref(href);
+      if (next && next !== href) a.setAttribute('href', next);
+    }
+    nav.addEventListener('pointerdown', onNav, true);
+    nav.addEventListener('click', onNav, true);
+  }
+
   function injectStyles() {
     if (document.getElementById('im-global-bottom-nav-css')) return;
     var css =
@@ -125,16 +179,7 @@
     var qs = '?lang=' + encodeURIComponent(l);
     nav.innerHTML = ITEMS.map(function (item) {
       var href = prefix + item.path + qs;
-      if (item.id !== 'home') {
-        try {
-          var u = new URL(href, window.location.href);
-          u.searchParams.set('tab', 'heatmap');
-          href = u.pathname + u.search + u.hash;
-        } catch (e) {
-          var sep = href.indexOf('?') >= 0 ? '&' : '?';
-          href = href + sep + 'tab=heatmap';
-        }
-      }
+      if (item.id !== 'home') href = applyMapTabToHref(href);
       var label = navLabel(item, l);
       var cls = 'im-bottom-tab' + (item.id === active ? ' is-active' : '');
       var iconCls = 'im-bottom-tab-icon' + (item.id === 'home' ? ' im-bottom-tab-icon--home' : '');
@@ -142,6 +187,7 @@
         '<span class="' + iconCls + '" aria-hidden="true">' + item.icon + '</span>' +
         '<span class="im-bottom-tab-label">' + label + '</span></a>';
     }).join('');
+    bindTabPreserve(nav);
   }
 
   function init() {

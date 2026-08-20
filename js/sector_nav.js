@@ -49,16 +49,63 @@
     document.head.appendChild(el);
   }
 
-  function sectorHref(path, qs) {
-    var href = path + qs;
+  function currentMapTab() {
+    try {
+      if (global.InvestingMapTabState && typeof global.InvestingMapTabState.getTab === 'function') {
+        var t = global.InvestingMapTabState.getTab();
+        if (t === 'heatmap' || t === 'momentum' || t === 'graph' || t === 'table') return t;
+      }
+    } catch (e) {}
+    try {
+      var s = localStorage.getItem('im_map_tab');
+      if (s === 'heatmap' || s === 'momentum' || s === 'graph' || s === 'table') return s;
+    } catch (e2) {}
+    return 'table';
+  }
+
+  /** Preserve current map tab across sector hops; never forward ticker. */
+  function applyMapTabToHref(href) {
+    var tab = currentMapTab();
     try {
       var u = new URL(href, window.location.href);
-      u.searchParams.set('tab', 'heatmap');
+      u.searchParams.delete('ticker');
+      if (tab === 'table') u.searchParams.delete('tab');
+      else u.searchParams.set('tab', tab);
       return u.pathname + u.search + u.hash;
     } catch (e) {
-      var sep = href.indexOf('?') >= 0 ? '&' : '?';
-      return href + sep + 'tab=heatmap';
+      var cleaned = String(href || '').replace(/([?&])ticker=[^&]*/g, '$1').replace(/[?&]$/, '');
+      if (tab === 'table') {
+        return cleaned.replace(/([?&])tab=(heatmap|momentum|graph|table)\b/g, '$1').replace(/[?&]$/, '');
+      }
+      try {
+        var u2 = new URL(cleaned, window.location.href);
+        u2.searchParams.set('tab', tab);
+        return u2.pathname + u2.search + u2.hash;
+      } catch (e2) {
+        var sep = cleaned.indexOf('?') >= 0 ? '&' : '?';
+        return cleaned + sep + 'tab=' + encodeURIComponent(tab);
+      }
     }
+  }
+
+  function sectorHref(path, qs) {
+    return applyMapTabToHref(path + qs);
+  }
+
+  function bindTabPreserve(nav) {
+    if (!nav || nav.getAttribute('data-im-tab-preserve') === '1') return;
+    nav.setAttribute('data-im-tab-preserve', '1');
+    function onNav(ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest('a') : null;
+      if (!a || !nav.contains(a)) return;
+      if (a.classList && a.classList.contains('hub-back')) return;
+      var href = a.getAttribute('href') || '';
+      if (!href || href.charAt(0) === '#' || /(?:^|\/)index\.html(?:\?|$)/.test(href)) return;
+      var next = applyMapTabToHref(href);
+      if (next && next !== href) a.setAttribute('href', next);
+    }
+    nav.addEventListener('pointerdown', onNav, true);
+    nav.addEventListener('click', onNav, true);
   }
 
   function render(currentId, lang, mobile) {
@@ -80,6 +127,7 @@
       }
       return '<a href="' + sectorHref(s.path, qs) + '" title="' + label + '">' + label + '</a>';
     }).join('');
+    bindTabPreserve(nav);
   }
 
   global.InvestingMapSectorNav = {

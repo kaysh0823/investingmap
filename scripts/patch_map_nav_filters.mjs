@@ -65,7 +65,7 @@ function ensureHeadScripts(html) {
     );
   }
   html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=8');
-  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=6');
+  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=7');
   return html;
 }
 

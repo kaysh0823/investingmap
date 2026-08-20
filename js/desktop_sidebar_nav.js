@@ -89,17 +89,72 @@
     return item.koShort || item.ko;
   }
 
+  function currentMapTab() {
+    try {
+      if (global.InvestingMapTabState && typeof global.InvestingMapTabState.getTab === 'function') {
+        var t = global.InvestingMapTabState.getTab();
+        if (t === 'heatmap' || t === 'momentum' || t === 'graph' || t === 'table') return t;
+      }
+    } catch (e) {}
+    try {
+      var s = localStorage.getItem('im_map_tab');
+      if (s === 'heatmap' || s === 'momentum' || s === 'graph' || s === 'table') return s;
+    } catch (e2) {}
+    return 'table';
+  }
+
+  /** Preserve current map tab across sector hops; never forward ticker. */
+  function applyMapTabToHref(href) {
+    var tab = currentMapTab();
+    try {
+      var u = new URL(href, window.location.href);
+      u.searchParams.delete('ticker');
+      if (tab === 'table') u.searchParams.delete('tab');
+      else u.searchParams.set('tab', tab);
+      return u.pathname + u.search + u.hash;
+    } catch (e) {
+      var cleaned = String(href || '').replace(/([?&])ticker=[^&]*/g, '$1').replace(/[?&]$/, '');
+      if (tab === 'table') {
+        return cleaned.replace(/([?&])tab=(heatmap|momentum|graph|table)\b/g, '$1').replace(/[?&]$/, '');
+      }
+      try {
+        var u2 = new URL(cleaned, window.location.href);
+        u2.searchParams.set('tab', tab);
+        return u2.pathname + u2.search + u2.hash;
+      } catch (e2) {
+        var sep = cleaned.indexOf('?') >= 0 ? '&' : '?';
+        return cleaned + sep + 'tab=' + encodeURIComponent(tab);
+      }
+    }
+  }
+
   function itemHref(item, prefix, qs) {
     var href = prefix + item.path + qs;
     if (item.id === 'home') return href;
-    try {
-      var u = new URL(href, window.location.href);
-      u.searchParams.set('tab', 'heatmap');
-      return u.pathname + u.search + u.hash;
-    } catch (e) {
-      var sep = href.indexOf('?') >= 0 ? '&' : '?';
-      return href + sep + 'tab=heatmap';
+    return applyMapTabToHref(href);
+  }
+
+  function isSectorMapLink(anchor) {
+    if (!anchor || anchor.tagName !== 'A') return false;
+    if (anchor.classList && anchor.classList.contains('im-side-brand')) return false;
+    var href = anchor.getAttribute('href') || '';
+    if (!href || href.charAt(0) === '#') return false;
+    if (/(?:^|\/)index\.html(?:\?|$)/.test(href)) return false;
+    return true;
+  }
+
+  function bindTabPreserve(root) {
+    if (!root || root.getAttribute('data-im-tab-preserve') === '1') return;
+    root.setAttribute('data-im-tab-preserve', '1');
+    function onNav(ev) {
+      var a = ev.target && ev.target.closest ? ev.target.closest('a.im-side-link') : null;
+      if (!a || !root.contains(a) || !isSectorMapLink(a)) return;
+      var href = a.getAttribute('href') || '';
+      var next = applyMapTabToHref(href);
+      if (next && next !== href) a.setAttribute('href', next);
     }
+    root.addEventListener('pointerdown', onNav, true);
+    root.addEventListener('click', onNav, true);
   }
 
   function injectStyles() {
@@ -169,6 +224,7 @@
       '<span class="im-side-brand-mark" aria-hidden="true"></span>' +
       '<span class="im-side-brand-name">' + brandName + '</span></a>' +
       '<nav class="im-side-nav">' + links + '</nav>';
+    bindTabPreserve(aside);
   }
 
   function init() {

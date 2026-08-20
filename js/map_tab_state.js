@@ -1,6 +1,6 @@
 /**
  * Preserve table / heatmap / momentum / graph tab when switching industry via nav links.
- * Hub sector cards use ?tab=heatmap; ticker deep links use ?tab=table.
+ * Sector nav links carry the current tab (?tab= omitted for table default).
  * ?tab=table&ticker=005930 — open company list and scroll to the row.
  */
 (function (global) {
