@@ -48,6 +48,37 @@ export function uniqueHubMcapTotal(hubIndex) {
   return total;
 }
 
+/**
+ * Per-sector mcap sum over current hub_index members (deduped tickers).
+ * When mcapByTicker is provided (e.g. stock_quotes_latest), prefer live mcap;
+ * otherwise fall back to hub_index company.mcapWon (same as hub_sectors cards).
+ * @param {object} hubIndex
+ * @param {Map<string, number>|null} [mcapByTicker]
+ * @returns {Map<string, number>} sectorId → mcap sum
+ */
+export function sectorMcapSums(hubIndex, mcapByTicker = null) {
+  const out = new Map();
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors && hubIndex.sectors[sid];
+    if (!block) continue;
+    let sum = 0;
+    let n = 0;
+    const seen = new Set();
+    for (const c of block.companies || []) {
+      const t = normalizeTicker(c.ticker);
+      if (!t || seen.has(t)) continue;
+      seen.add(t);
+      let m = mcapByTicker ? numOrNull(mcapByTicker.get(t)) : null;
+      if (m == null || !(m > 0)) m = numOrNull(c.mcapWon);
+      if (m == null || !(m > 0)) continue;
+      sum += m;
+      n += 1;
+    }
+    if (n > 0 && sum > 0) out.set(sid, sum);
+  }
+  return out;
+}
+
 function shouldHideQuote(q) {
   if (!q) return true;
   return q.last === 0 || q.high52w === 0 || q.low52w === 0;

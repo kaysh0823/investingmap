@@ -6,6 +6,7 @@ import {
   buildHubTrendPayload,
   downsampleTrend,
   rebaseTo100,
+  applyLiveDailyTip,
   TREND_INDEX_CODES,
   TREND_MAX_POINTS,
 } from '../functions/lib/hub_trend.mjs';
@@ -20,6 +21,21 @@ const rebased = rebaseTo100([
 assert.deepEqual(rebased, [
   { t: 'a', v: 100 },
   { t: 'b', v: 105 },
+]);
+
+const tipped = applyLiveDailyTip(
+  [
+    { t: '2026-08-19', value: 100 },
+    { t: '2026-08-20', value: 110 },
+  ],
+  '2026-08-20',
+  120,
+);
+assert.deepEqual(tipped.at(-1), { t: '2026-08-20', value: 120 });
+const appended = applyLiveDailyTip([{ t: '2026-08-19', value: 100 }], '2026-08-20', 105);
+assert.deepEqual(appended, [
+  { t: '2026-08-19', value: 100 },
+  { t: '2026-08-20', value: 105 },
 ]);
 
 const long = Array.from({ length: 260 }, (_, index) => ({ t: String(index), v: index }));
@@ -160,7 +176,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v2'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v3'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -175,6 +191,8 @@ for (const marker of [
   'market_index_intraday?',
   'sector_mcap_daily?',
   'sector_intraday_snapshots?',
+  'stock_quotes_latest?',
+  'applyLiveDailyTip',
   'base: 100',
   'logIndexSeries',
 ]) {

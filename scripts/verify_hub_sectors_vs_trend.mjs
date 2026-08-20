@@ -51,15 +51,26 @@ function assertSectorHasAllHorizons(sid, row, label) {
 }
 
 const apiSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sectors.js'), 'utf8');
-assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v13'"), 'hub_sectors cache v13');
+assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v14'"), 'hub_sectors cache v14');
 assert.ok(apiSrc.includes('buildAllHorizonReturnsBySector'), 'hub_sectors fills all horizons');
 assert.ok(apiSrc.includes('hasAllHorizons'), 'hub_sectors requires all horizons');
 assert.ok(apiSrc.includes('sector_mcap_trend'), 'hub_sectors source tag');
+
+const trendApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
+assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v3'"), 'hub_trend cache v3');
+assert.ok(trendApi.includes('regularMax: 600'), 'hub_trend daily regular TTL ~10m');
+
+const sparkApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sector_trend.js'), 'utf8');
+assert.ok(sparkApi.includes("CACHE_VERSION = '/api/hub_sector_trend/cache/v6'"), 'hub_sector_trend cache v6');
 
 const trendSrc = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_trend.mjs'), 'utf8');
 assert.ok(trendSrc.includes('returnPctFromRebasedSeries'), 'shared return extractor');
 assert.ok(trendSrc.includes('buildAllHorizonReturnsBySector'), 'all-horizon builder');
 assert.ok(trendSrc.includes('buildSectorReturnRowsFromTrend'), 'sync row builder');
+assert.ok(trendSrc.includes('applyLiveDailyTip'), 'regular-session live tip');
+assert.ok(trendSrc.includes('stock_quotes_latest'), 'live tip from quotes');
+assert.ok(trendSrc.includes('market_index_intraday'), 'live index tip');
+assert.ok(trendSrc.includes('sectorMcapSums'), 'shared sector mcap sum');
 
 const syncSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'), 'utf8');
 assert.ok(syncSrc.includes('buildSectorReturnRowsFromTrend'), 'sync writes trend-aligned returns');

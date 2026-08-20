@@ -13,9 +13,10 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v2';
+const CACHE_VERSION = '/api/hub_trend/cache/v3';
 
 function maxAge(horizon, now = new Date()) {
+  // Regular: ~10m aligns with quote sync cadence so live 20d+ tips stay fresh.
   return normalizeSectorHorizon(horizon) === '1d'
     ? edgeCacheMaxAgeSeconds(now, { regularMax: 60, closedMax: 300 })
     : edgeCacheMaxAgeSeconds(now, { regularMax: 600, closedMax: 3600 });

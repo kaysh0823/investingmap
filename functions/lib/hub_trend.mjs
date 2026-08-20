@@ -1,8 +1,9 @@
 /**
  * Hub comparison trend: sector mcap indices plus KOSPI/KOSDAQ, rebased to 100.
  */
-import { SECTOR_ORDER } from './hub_dashboard_core.mjs';
+import { SECTOR_ORDER, normalizeTicker, sectorMcapSums } from './hub_dashboard_core.mjs';
 import { normalizeSectorHorizon } from './hub_api_cache.mjs';
+import { krxSessionInfo, kstYmdDash } from './krx_session.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 
 export const TREND_MAX_POINTS = 200;
@@ -174,7 +175,54 @@ function latestDates(rows, count) {
     .slice(-count);
 }
 
-async function buildDailyPayload(config, hubIndex, horizon) {
+/** Append or overwrite today's tip on a daily {t,value} series. */
+export function applyLiveDailyTip(rows, todayDash, liveValue) {
+  const value = numOrNull(liveValue);
+  if (!todayDash || value == null || !(value > 0)) return rows ? rows.slice() : [];
+  const out = (rows || []).filter((row) => row && row.t && numOrNull(row.value) > 0);
+  if (out.length && out[out.length - 1].t === todayDash) {
+    out[out.length - 1] = { t: todayDash, value };
+  } else {
+    out.push({ t: todayDash, value });
+  }
+  return out;
+}
+
+async function loadLiveQuoteMcapByTicker(config) {
+  const map = new Map();
+  const rows = await safeFetchPaged(
+    config,
+    'stock_quotes_latest?select=ticker,mcap_won&mcap_won=gt.0&order=ticker.asc',
+  );
+  for (const row of rows) {
+    const t = normalizeTicker(row.ticker);
+    const m = numOrNull(row.mcap_won);
+    if (!t || m == null || !(m > 0)) continue;
+    map.set(t, m);
+  }
+  return map;
+}
+
+/** Latest market_index_intraday value per index for a trade date. */
+async function loadLiveIndexTips(config, tradeDateDash) {
+  const out = new Map();
+  if (!tradeDateDash) return out;
+  const rows = await safeFetch(
+    config,
+    `market_index_intraday?trade_date=eq.${encodeURIComponent(tradeDateDash)}&${INDEX_FILTER}` +
+      '&select=index_code,captured_at,value&order=captured_at.desc&limit=50',
+  );
+  for (const row of rows) {
+    const code = row.index_code;
+    if (!code || out.has(code)) continue;
+    const v = numOrNull(row.value);
+    if (v == null || !(v > 0)) continue;
+    out.set(code, v);
+  }
+  return out;
+}
+
+async function buildDailyPayload(config, hubIndex, horizon, now = new Date()) {
   const payload = emptyPayload(hubIndex, horizon);
   const window = DAILY_LOOKBACK[horizon] || 20;
   const indexRows = await safeFetch(
@@ -202,17 +250,36 @@ async function buildDailyPayload(config, hubIndex, horizon) {
   );
   const dateSet = new Set(dates);
 
+  const session = krxSessionInfo(now);
+  const todayDash = kstYmdDash(now);
+  let liveSectorSums = null;
+  let liveIndexTips = null;
+  if (session.regular) {
+    const [quotes, indexTips] = await Promise.all([
+      loadLiveQuoteMcapByTicker(config),
+      loadLiveIndexTips(config, todayDash),
+    ]);
+    if (quotes.size) liveSectorSums = sectorMcapSums(hubIndex, quotes);
+    if (indexTips.size) liveIndexTips = indexTips;
+  }
+
   payload.sectors = payload.sectors.map((entry) => {
-    const rows = sectorRows
+    let rows = sectorRows
       .filter((row) => row.sector_id === entry.sector && dateSet.has(row.trade_date))
       .map((row) => ({ t: row.trade_date, value: numOrNull(row.mcap_sum) }));
+    if (liveSectorSums) {
+      rows = applyLiveDailyTip(rows, todayDash, liveSectorSums.get(entry.sector));
+    }
     return { ...entry, series: downsampleTrend(rebaseTo100(rows)) };
   });
   payload.indices = payload.indices.map((entry) => {
-    const rows = indexRows
+    let rows = indexRows
       .filter((row) => row.index_code === entry.code && dateSet.has(row.trade_date))
       .map((row) => ({ t: row.trade_date, value: numOrNull(row.close) }))
       .sort((a, b) => a.t.localeCompare(b.t));
+    if (liveIndexTips) {
+      rows = applyLiveDailyTip(rows, todayDash, liveIndexTips.get(entry.code));
+    }
     return { ...entry, series: downsampleTrend(rebaseTo100(rows)) };
   });
   logIndexSeries(horizon, indexRows, payload.indices, 'close');
@@ -305,11 +372,11 @@ async function buildIntradayPayload(config, hubIndex) {
   return payload;
 }
 
-export async function buildHubTrendPayload(hubIndex, env, requestedHorizon) {
+export async function buildHubTrendPayload(hubIndex, env, requestedHorizon, now = new Date()) {
   const horizon = normalizeSectorHorizon(requestedHorizon);
   const config = getSupabaseConfig(env);
   if (!config) return emptyPayload(hubIndex, horizon);
   return horizon === '1d'
     ? buildIntradayPayload(config, hubIndex)
-    : buildDailyPayload(config, hubIndex, horizon);
+    : buildDailyPayload(config, hubIndex, horizon, now);
 }

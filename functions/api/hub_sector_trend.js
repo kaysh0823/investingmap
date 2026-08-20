@@ -15,12 +15,13 @@ import {
 } from '../lib/hub_api_cache.mjs';
 import { buildHubSectorTrendPayload } from '../lib/hub_sector_trend.mjs';
 
-const CACHE_VERSION = '/api/hub_sector_trend/cache/v5';
+const CACHE_VERSION = '/api/hub_sector_trend/cache/v6';
 
 function trendMaxAge(horizon, now = new Date()) {
   if (normalizeSectorHorizon(horizon) === '1d') {
     return edgeCacheMaxAgeSeconds(now, { regularMax: 60, closedMax: 300 });
   }
+  // Same ~10m regular TTL as /api/hub_trend daily (live tip freshness).
   return edgeCacheMaxAgeSeconds(now, { regularMax: 600, closedMax: 3600 });
 }
 

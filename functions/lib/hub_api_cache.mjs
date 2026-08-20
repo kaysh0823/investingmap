@@ -17,6 +17,7 @@ export function anchoredCachePath(basePath, now = new Date()) {
 }
 
 export function hubEdgeMaxAge(now = new Date()) {
+  // Hub sectors/movers: 5m regular (≤ sync cadence); closed capped to next open.
   return edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 1800 });
 }
 
