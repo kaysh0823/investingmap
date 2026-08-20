@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const root = process.cwd();
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
 const MAPS = [
   'semiconductor/korea_semiconductor_map.html',
@@ -110,6 +112,46 @@ const HEATMAP_TAB_BLOCK = `
   </div>
 
 `;
+
+/**
+ * Remove Samsung/Hynix heatmap exclude chips from generated maps (idempotent).
+ * Match by id=heatmap-filters (attribute order-agnostic) so semi/robot/etc.
+ * markup variants are stripped the same way as bigchip.
+ */
+export function stripHeatmapExcludeFilters(src) {
+  let c = String(src);
+  // Whole exclude-chip container — id is the stable marker across page variants.
+  c = c.replace(
+    /\r?\n?[ \t]*<div\b[^>]*\bid\s*=\s*["']heatmap-filters["'][^>]*>[\s\S]*?<\/div>/gi,
+    '',
+  );
+  // Legacy class-only markup (no id) — still strip if present.
+  c = c.replace(
+    /\r?\n?[ \t]*<div\b[^>]*\bclass\s*=\s*["'][^"']*\bheatmap-filters\b[^"']*["'][^>]*>[\s\S]*?<\/div>/gi,
+    '',
+  );
+  // Orphan chip buttons if the wrapper was already gone / partially patched.
+  c = c.replace(
+    /\r?\n?[ \t]*<button\b[^>]*\bid\s*=\s*["']hm-ex-(?:samsung|hynix)["'][^>]*>[\s\S]*?<\/button>/gi,
+    '',
+  );
+  // CSS rules (multi-line or single-line brace blocks).
+  c = c.replace(/\r?\n[ \t]*\.heatmap-filters\s*\{[\s\S]*?\}/g, '');
+  c = c.replace(/\r?\n[ \t]*\.heatmap-filter-chip(?:[:.][\w-]+)?\s*\{[\s\S]*?\}/g, '');
+  c = c.replace(
+    /\r?\n[ \t]*var hmExcludeTickers = \{[\s\S]*?\r?\n[ \t]*function renderHeatmap\(/g,
+    '\n\n    function renderHeatmap(',
+  );
+  c = c.replace(/companies:\s*heatmapCompanies\(\)/g, 'companies: koreanCompanies');
+  c = c.replace(/\r?\n[ \t]*excludeTickers:\s*[^,\n]+,?/g, '');
+  c = c.replace(/\r?\n[ \t]*bindHeatmapFilters\(\);/g, '');
+  c = c.replace(/\r?\n[ \t]*syncHeatmapFilterLabels\(\);/g, '');
+  c = c.replace(/\r?\n[ \t]*hmExcludeSamsung:\s*'[^']*',?/g, '');
+  c = c.replace(/\r?\n[ \t]*hmExcludeHynix:\s*'[^']*',?/g, '');
+  c = c.replace(/\r?\n[ \t]*"hmExcludeSamsung"\s*:\s*"[^"]*",?/g, '');
+  c = c.replace(/\r?\n[ \t]*"hmExcludeHynix"\s*:\s*"[^"]*",?/g, '');
+  return c;
+}
 
 const RESET_TABLE_FILTERS_FN = `
     function resetTableFilters() {
@@ -270,8 +312,6 @@ function patchMap(rel) {
   console.log('patched:', rel);
 }
 
-for (const rel of MAPS) patchMap(rel);
-
 function fixHeatmapFile(rel) {
   const fp = path.join(root, rel);
   if (!fs.existsSync(fp)) return;
@@ -330,8 +370,7 @@ function fixHeatmapFile(rel) {
   }
 }
 
-for (const rel of MAPS) fixHeatmapFile(rel);
-
+if (isMain) {
 const bioTail = path.join(root, 'bio/bio_inline_tail.js');
 if (fs.existsSync(bioTail)) {
   let bc = fs.readFileSync(bioTail, 'utf8');
@@ -409,4 +448,47 @@ if (fs.existsSync(bioTail)) {
     fs.writeFileSync(bioTail, bc);
     console.log('fixed: bio/bio_inline_tail.js');
   }
+}
+}
+
+function discoverMapHtml() {
+  const out = [];
+  for (const ent of fs.readdirSync(root, { withFileTypes: true })) {
+    if (!ent.isDirectory() || ent.name === 'dist' || ent.name.startsWith('.')) continue;
+    const dir = path.join(root, ent.name);
+    let names;
+    try {
+      names = fs.readdirSync(dir);
+    } catch {
+      continue;
+    }
+    for (const name of names) {
+      if (/^korea_.+_map\.html$/i.test(name)) out.push(path.join(ent.name, name));
+    }
+  }
+  return out.sort();
+}
+
+export function stripHeatmapExcludeFiltersFromMaps() {
+  for (const rel of [
+    ...discoverMapHtml(),
+    'bio/bio_inline_tail.js',
+    'bio/korea_bio_map.inline.js',
+    'bio/bio_translations.json',
+  ]) {
+    const fp = path.join(root, rel);
+    if (!fs.existsSync(fp)) continue;
+    const prev = fs.readFileSync(fp, 'utf8');
+    const next = stripHeatmapExcludeFilters(prev);
+    if (next !== prev) {
+      fs.writeFileSync(fp, next);
+      console.log('stripped heatmap exclude chips:', rel);
+    }
+  }
+}
+
+if (isMain) {
+  for (const rel of MAPS) patchMap(rel);
+  for (const rel of MAPS) fixHeatmapFile(rel);
+  stripHeatmapExcludeFiltersFromMaps();
 }

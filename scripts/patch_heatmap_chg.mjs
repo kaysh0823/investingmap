@@ -4,9 +4,10 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { stripHeatmapExcludeFilters, stripHeatmapExcludeFiltersFromMaps } from './patch_heatmap_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 10;
+const SCRIPT_V = 12;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -37,6 +38,7 @@ const HINT_KO = '칸 크기 = 시가총액 · 색 = 당일 등락률';
 const HINT_EN = 'Tile size = market cap · color = 1-day return';
 
 function patchHtml(html) {
+  html = stripHeatmapExcludeFilters(html);
   html = html.replace(/map_heatmap\.js(\?v=\d+)?/g, `map_heatmap.js?v=${SCRIPT_V}`);
   html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=15');
   html = html.replace(/heatmapHint:\s*'시가총액 기준'/g, `heatmapHint: '${HINT_KO}'`);
@@ -61,10 +63,19 @@ for (const rel of MAP_FILES) {
 const bioTrPath = path.join(ROOT, 'bio', 'bio_translations.json');
 if (fs.existsSync(bioTrPath)) {
   const bioTr = JSON.parse(fs.readFileSync(bioTrPath, 'utf8'));
-  if (bioTr.ko) bioTr.ko.heatmapHint = HINT_KO;
-  if (bioTr.en) bioTr.en.heatmapHint = HINT_EN;
+  if (bioTr.ko) {
+    bioTr.ko.heatmapHint = HINT_KO;
+    delete bioTr.ko.hmExcludeSamsung;
+    delete bioTr.ko.hmExcludeHynix;
+  }
+  if (bioTr.en) {
+    bioTr.en.heatmapHint = HINT_EN;
+    delete bioTr.en.hmExcludeSamsung;
+    delete bioTr.en.hmExcludeHynix;
+  }
   fs.writeFileSync(bioTrPath, JSON.stringify(bioTr, null, 2) + '\n', 'utf8');
   console.log('patched bio/bio_translations.json');
 }
 
+stripHeatmapExcludeFiltersFromMaps();
 console.log('OK patch_heatmap_chg v=' + SCRIPT_V);
