@@ -546,7 +546,8 @@
 
     if (qDate > lastT) {
       // Quotes-only bar until history appends the day.
-      // Prefer session OHLCV from quotes when present; otherwise close-only.
+      // Prefer session OHLCV from quotes when present; otherwise close-only
+      // (line/marker — never a flat O=H=L=C candle after hours).
       var qOpen =
         item.open != null && isFinite(Number(item.open)) && Number(item.open) > 0
           ? Number(item.open)
@@ -562,7 +563,7 @@
       var qVol =
         item.volume != null && isFinite(Number(item.volume)) && Number(item.volume) >= 0
           ? Number(item.volume)
-          : 0;
+          : null;
       if (qOpen != null && qHigh != null && qLow != null) {
         out.push({
           t: qDate,
@@ -570,10 +571,16 @@
           h: Math.max(qHigh, last),
           l: Math.min(qLow, last),
           c: last,
-          v: qVol,
-          live: true,
+          v: qVol != null ? qVol : 0,
+          live: inSession,
         });
-      } else if (inSession) {
+        return {
+          bars: out,
+          live: inSession,
+          liveTime: inSession ? qDate : null,
+        };
+      }
+      if (inSession) {
         var prev =
           item.prevClose != null && isFinite(Number(item.prevClose)) && Number(item.prevClose) > 0
             ? Number(item.prevClose)
@@ -584,22 +591,23 @@
           h: Math.max(prev, last),
           l: Math.min(prev, last),
           c: last,
-          v: qVol,
+          v: qVol != null ? qVol : 0,
           live: true,
         });
-      } else {
-        out.push({
-          t: qDate,
-          o: last,
-          h: last,
-          l: last,
-          c: last,
-          v: qVol,
-          live: true,
-          closeOnly: true,
-        });
+        return { bars: out, live: true, liveTime: qDate };
       }
-      return { bars: out, live: true, liveTime: qDate };
+      // After hours, quotes last only: close line — do not claim "live session".
+      out.push({
+        t: qDate,
+        o: last,
+        h: last,
+        l: last,
+        c: last,
+        v: qVol != null ? qVol : 0,
+        live: false,
+        closeOnly: true,
+      });
+      return { bars: out, live: false, liveTime: null };
     }
 
     return { bars: bars, live: false, liveTime: null };

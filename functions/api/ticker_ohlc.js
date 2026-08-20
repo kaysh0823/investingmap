@@ -6,6 +6,7 @@
 
 import {
   emptyTickerOhlcPayload,
+  fetchLatestHistorySignature,
   fetchTickerOhlcBars,
   getSupabaseConfig,
   normalizeOhlcRange,
@@ -14,12 +15,18 @@ import {
 import {
   anchoredCachePath,
   corsHeaders,
-  hubEdgeMaxAge,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
+import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 
-const CACHE_BASE = '/api/ticker_ohlc/cache/v11';
+/** Bump when payload shape / invalidation rules change. */
+const CACHE_BASE = '/api/ticker_ohlc/cache/v12';
+
+/** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
+function ohlcEdgeMaxAge(now = new Date()) {
+  return edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 600 });
+}
 
 function jsonResponse(ch, body, maxAge) {
   return new Response(JSON.stringify(body), {
@@ -44,22 +51,34 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const code = normalizeTicker(url.searchParams.get('code') || url.searchParams.get('ticker'));
   const range = normalizeOhlcRange(url.searchParams.get('range'));
-  const maxAge = hubEdgeMaxAge();
+  const maxAge = ohlcEdgeMaxAge();
 
   if (!code) {
     return jsonResponse(ch, emptyTickerOhlcPayload(null, range), maxAge);
   }
 
-  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}`;
+  const config = getSupabaseConfig(env);
+  let lastSig = 'none';
+  if (config) {
+    try {
+      lastSig = await fetchLatestHistorySignature(config, code);
+    } catch {
+      lastSig = 'none';
+    }
+  }
+
+  // Signature in the key invalidates when the last history bar appears or changes
+  // (e.g. missing session day → close-only → full OHLCV) within the same KST day.
+  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${lastSig}`;
   const hit = await readHubCache(cachePath, url.origin);
   if (hit) {
     const headers = new Headers(hit.headers);
     Object.entries(ch).forEach(([k, v]) => headers.set(k, v));
     headers.set('X-Cache', 'HIT');
+    headers.set('X-OHLC-Sig', lastSig);
     return new Response(hit.body, { status: hit.status, headers });
   }
 
-  const config = getSupabaseConfig(env);
   let payload = emptyTickerOhlcPayload(code, range);
   if (config) {
     try {
@@ -74,6 +93,7 @@ export async function onRequest(context) {
   }
 
   const response = jsonResponse(ch, payload, maxAge);
+  response.headers.set('X-OHLC-Sig', lastSig);
   if (payload.bars && payload.bars.length) {
     putHubCache(context, cachePath, url.origin, response);
   }

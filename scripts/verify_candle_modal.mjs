@@ -257,11 +257,12 @@ try {
     },
     '000660',
   );
-  assert.equal(afterHours.live, true, 'after-hours append when quotes date is newer');
+  assert.equal(afterHours.live, false, 'after-hours close-only is not live session');
   assert.equal(afterHours.bars.length, 2);
   assert.equal(afterHours.bars[1].t, '2026-08-20');
   assert.equal(afterHours.bars[1].c, 1691000);
   assert.equal(afterHours.bars[1].closeOnly, true);
+  assert.equal(afterHours.liveTime, null);
 
   const afterHoursOhlcv = indicators.applyLiveQuoteToBars(
     bars,
@@ -281,7 +282,7 @@ try {
     },
     '000660',
   );
-  assert.equal(afterHoursOhlcv.live, true);
+  assert.equal(afterHoursOhlcv.live, false, 'after-hours OHLCV append is not live session');
   assert.equal(afterHoursOhlcv.bars[1].o, 1598000);
   assert.equal(afterHoursOhlcv.bars[1].h, 1721000);
   assert.equal(afterHoursOhlcv.bars[1].l, 1576000);

@@ -88,6 +88,32 @@ export function historyRowToBar(row) {
 }
 
 /**
+ * Lightweight last-bar fingerprint for Cache API invalidation when the same
+ * trading-day window gains a new session bar or upgrades close-only → OHLCV.
+ * @param {{ url: string, anonKey: string }} config
+ * @param {string} ticker normalized 6-char
+ * @returns {Promise<string>} e.g. 20260820-c271000-v26093355 | none
+ */
+export async function fetchLatestHistorySignature(config, ticker) {
+  const q =
+    `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}` +
+    `&select=trade_date,close,volume&order=trade_date.desc&limit=1`;
+  try {
+    const rows = await fetchSupabaseJson(config, q);
+    const row = Array.isArray(rows) && rows[0] ? rows[0] : null;
+    if (!row || !row.trade_date) return 'none';
+    const t = String(row.trade_date).slice(0, 10).replace(/-/g, '');
+    const c = numOrNull(row.close);
+    const v = numOrNull(row.volume);
+    const cPart = c != null ? String(Math.round(c)) : 'x';
+    const vPart = v != null ? String(Math.round(v)) : 'x';
+    return `${t}-c${cPart}-v${vPart}`;
+  } catch {
+    return 'none';
+  }
+}
+
+/**
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker normalized 6-char
  * @param {string} rangeToken 3m|6m|1y|3y|5y
