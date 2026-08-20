@@ -246,4 +246,50 @@ try {
   globalThis.fetch = originalFetch;
 }
 
+{
+  const bars = [{ t: '2026-08-19', o: 1, h: 2, l: 1, c: 1500000, v: 10 }];
+  const afterHours = indicators.applyLiveQuoteToBars(
+    bars,
+    {
+      asOf: '2026-08-20T06:30:00.000Z',
+      regularSession: false,
+      items: { '000660': { last: 1691000, prevClose: 1500000 } },
+    },
+    '000660',
+  );
+  assert.equal(afterHours.live, true, 'after-hours append when quotes date is newer');
+  assert.equal(afterHours.bars.length, 2);
+  assert.equal(afterHours.bars[1].t, '2026-08-20');
+  assert.equal(afterHours.bars[1].c, 1691000);
+  assert.equal(afterHours.bars[1].closeOnly, true);
+
+  const settledSameDay = indicators.applyLiveQuoteToBars(
+    [
+      ...bars,
+      { t: '2026-08-20', o: 1510, h: 1700, l: 1500, c: 1691000, v: 99 },
+    ],
+    {
+      asOf: '2026-08-20T06:30:00.000Z',
+      regularSession: false,
+      items: { '000660': { last: 1691000, prevClose: 1500000 } },
+    },
+    '000660',
+  );
+  assert.equal(settledSameDay.live, false, 'do not overwrite settled same-day OHLC after close');
+  assert.equal(settledSameDay.bars[1].o, 1510);
+
+  const livePatch = indicators.applyLiveQuoteToBars(
+    [{ t: '2026-08-20', o: 1500, h: 1600, l: 1490, c: 1550, v: 1 }],
+    {
+      asOf: '2026-08-20T02:00:00.000Z',
+      regularSession: true,
+      items: { '000660': { last: 1691000, prevClose: 1500000 } },
+    },
+    '000660',
+  );
+  assert.equal(livePatch.live, true);
+  assert.equal(livePatch.bars[0].c, 1691000);
+  assert.equal(livePatch.bars[0].h, 1691000);
+}
+
 console.log('verify:candle OK — weekly OHLCV, ATR%, 3Y/5Y weekly-warmup pagination');

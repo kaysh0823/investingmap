@@ -496,18 +496,13 @@
   }
 
   /**
-   * Overlay /api/quotes last onto the newest OHLC bar while the regular session is open.
-   * Same trade day → patch c/h/l; newer trade day → append a synthetic bar.
+   * Overlay /api/quotes last onto OHLC bars.
+   * - Same trade day + regular session → patch c/h/l (live intraday).
+   * - Quotes trade date newer than last history bar → append (session or after hours).
+     After close this keeps today's bar until stock_price_history catches up.
    */
   function applyLiveQuoteToBars(bars, quotesJson, code) {
     if (!bars || !bars.length || !quotesJson) {
-      return { bars: bars, live: false, liveTime: null };
-    }
-    // Settled session: keep confirmed closes.
-    if (quotesJson.regularSession === false) {
-      return { bars: bars, live: false, liveTime: null };
-    }
-    if (quotesJson.regularSession !== true) {
       return { bars: bars, live: false, liveTime: null };
     }
 
@@ -527,11 +522,14 @@
     var qDate = asOfToTradeDate(quotesJson.asOf);
     if (!qDate) return { bars: bars, live: false, liveTime: null };
 
+    var inSession = quotesJson.regularSession === true;
     var out = bars.slice();
     var lastBar = out[out.length - 1];
     var lastT = lastBar.t;
 
     if (qDate === lastT) {
+      // Do not overwrite settled history OHLC after the session ends.
+      if (!inSession) return { bars: bars, live: false, liveTime: null };
       var high = lastBar.h != null && isFinite(lastBar.h) ? Math.max(lastBar.h, last) : last;
       var low = lastBar.l != null && isFinite(lastBar.l) ? Math.min(lastBar.l, last) : last;
       out[out.length - 1] = {
@@ -547,19 +545,33 @@
     }
 
     if (qDate > lastT) {
-      var prev =
-        item.prevClose != null && isFinite(Number(item.prevClose)) && Number(item.prevClose) > 0
-          ? Number(item.prevClose)
-          : last;
-      out.push({
-        t: qDate,
-        o: prev,
-        h: Math.max(prev, last),
-        l: Math.min(prev, last),
-        c: last,
-        v: 0,
-        live: true,
-      });
+      // Quotes-only bar until history appends the day (close-based after hours).
+      if (inSession) {
+        var prev =
+          item.prevClose != null && isFinite(Number(item.prevClose)) && Number(item.prevClose) > 0
+            ? Number(item.prevClose)
+            : last;
+        out.push({
+          t: qDate,
+          o: prev,
+          h: Math.max(prev, last),
+          l: Math.min(prev, last),
+          c: last,
+          v: 0,
+          live: true,
+        });
+      } else {
+        out.push({
+          t: qDate,
+          o: last,
+          h: last,
+          l: last,
+          c: last,
+          v: 0,
+          live: true,
+          closeOnly: true,
+        });
+      }
       return { bars: out, live: true, liveTime: qDate };
     }
 

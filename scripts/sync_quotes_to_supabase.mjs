@@ -403,19 +403,25 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
   if (authKey) {
     try {
       byCode = await fetchMarketDay(authKey, dashToBasDd(tradeDateDash));
+      // Empty KRX day right after close is common — fall through to Naver close-only
+      // so candles still get today's bar; later syncs overwrite with full KRX OHLC.
       if (!byCode || byCode.size === 0) {
-        console.log(`  history session close skip ${tradeDateDash}: empty KRX day`);
-        return { upserted: 0, skipped: true };
+        console.log(
+          `  history session close ${tradeDateDash}: KRX day empty/not ready → Naver close fallback`,
+        );
+        byCode = null;
       }
     } catch (e) {
       console.warn(`  history session close KRX check failed: ${e.message || e}`);
+      byCode = null;
     }
   }
 
+  const krxReady = !!(byCode && byCode.size > 0);
   const rows = [];
   for (const q of quoteRows) {
     if (!q || !q.ticker) continue;
-    const krx = byCode ? byCode.get(q.ticker) : null;
+    const krx = krxReady ? byCode.get(q.ticker) : null;
     const fields = krx ? historyFieldsFromKrxRow(krx) : null;
     if (fields) {
       rows.push({
@@ -432,7 +438,7 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
     }
     // A successful KRX day intentionally omits suspended/not-yet-listed names.
     // Do not invent a candle for the consensus date from a stale Naver quote.
-    if (byCode) continue;
+    if (krxReady) continue;
     // Fallback: Naver last + mcap only (OHLC null until next KRX catch-up).
     if (q.last == null || !Number.isFinite(q.last) || q.last <= 0) continue;
     if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
@@ -449,14 +455,19 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
   }
   if (!rows.length) return { upserted: 0, skipped: false };
   const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
-  console.log(`  history session close ${tradeDateDash}: upserted ${result.upserted}`);
-  const coverage = await repairHistoryCoverageForDate(
-    quoteRows.map((row) => row.ticker),
-    tradeDateDash,
-    byCode,
-    supabaseUrl,
-    serviceKey,
+  console.log(
+    `  history session close ${tradeDateDash}: upserted ${result.upserted}` +
+      (krxReady ? ' (KRX)' : ' (Naver close)'),
   );
+  const coverage = krxReady
+    ? await repairHistoryCoverageForDate(
+        quoteRows.map((row) => row.ticker),
+        tradeDateDash,
+        byCode,
+        supabaseUrl,
+        serviceKey,
+      )
+    : null;
   return { ...result, coverage };
 }
 
