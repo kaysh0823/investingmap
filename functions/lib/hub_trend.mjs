@@ -85,19 +85,41 @@ export async function buildSectorReturnsForHorizon(hubIndex, env, requestedHoriz
 /**
  * sector_returns upsert rows: one row per sector, all horizons filled from trend sources.
  */
-export async function buildSectorReturnRowsFromTrend(hubIndex, env, updatedAt = new Date().toISOString()) {
-  const bySector = new Map();
-  for (const horizon of TREND_HORIZONS) {
-    const { returns } = await buildSectorReturnsForHorizon(hubIndex, env, horizon);
-    const col = TREND_RET_COL[horizon];
+export async function buildAllHorizonReturnsBySector(hubIndex, env) {
+  const settled = await Promise.all(
+    TREND_HORIZONS.map(async (horizon) => {
+      const { returns } = await buildSectorReturnsForHorizon(hubIndex, env, horizon);
+      return { horizon, returns };
+    }),
+  );
+  const bySector = {};
+  for (const sid of SECTOR_ORDER) bySector[sid] = {};
+  for (const { horizon, returns } of settled) {
+    const key = TREND_RET_KEY[horizon];
     for (const sid of SECTOR_ORDER) {
-      if (!bySector.has(sid)) {
-        bySector.set(sid, { sector_id: sid, updated_at: updatedAt });
-      }
-      bySector.get(sid)[col] = returns[sid] != null ? returns[sid] : null;
+      bySector[sid][key] = returns[sid] != null ? returns[sid] : null;
     }
   }
-  return [...bySector.values()];
+  return bySector;
+}
+
+/**
+ * sector_returns upsert rows: one row per sector, all horizons filled from trend sources.
+ */
+export async function buildSectorReturnRowsFromTrend(hubIndex, env, updatedAt = new Date().toISOString()) {
+  const bySector = await buildAllHorizonReturnsBySector(hubIndex, env);
+  return SECTOR_ORDER.filter((sid) => bySector[sid]).map((sid) => {
+    const rets = bySector[sid];
+    return {
+      sector_id: sid,
+      updated_at: updatedAt,
+      ret_1d_pct: rets.return1dPct,
+      ret_20d_pct: rets.return20dPct,
+      ret_50d_pct: rets.return50dPct,
+      ret_120d_pct: rets.return120dPct,
+      ret_200d_pct: rets.return200dPct,
+    };
+  });
 }
 
 async function safeFetch(config, query) {

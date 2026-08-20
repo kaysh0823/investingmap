@@ -26,7 +26,8 @@ import {
   readHubCacheJson,
 } from '../lib/hub_api_cache.mjs';
 import {
-  buildSectorReturnsForHorizon,
+  buildAllHorizonReturnsBySector,
+  TREND_HORIZONS,
   TREND_RET_KEY,
 } from '../lib/hub_trend.mjs';
 import {
@@ -34,7 +35,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v12';
+const CACHE_VERSION = '/api/hub_sectors/cache/v13';
 
 /** Reject Supabase rows if newest updated_at is older than this (covers weekend + holiday buffer). */
 const SECTOR_RETURNS_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
@@ -69,32 +70,30 @@ function isSectorReturnsStale(rows, now = new Date()) {
   return now.getTime() - newest > SECTOR_RETURNS_MAX_AGE_MS;
 }
 
-function emptySectorReturns() {
-  return {
-    return1dPct: null,
-    return20dPct: null,
-    return50dPct: null,
-    return120dPct: null,
-    return200dPct: null,
-  };
+/** True when every TREND horizon has at least one finite sector return. */
+function hasAllHorizons(sectors) {
+  return TREND_HORIZONS.every((h) => hasSectorHorizon(sectors, h));
 }
 
 /**
- * Primary path: same mcap series + anchors as /api/hub_trend → card = end−100.
+ * Primary path: fill ALL return{1d,20d,50d,120d,200d}Pct in one payload
+ * (same mcap series as /api/hub_trend) so the hub can fetch once and switch tabs.
  */
 async function buildSectorPayloadFromTrend(request, env, horizon) {
   const config = getSupabaseConfig(env);
   if (!config) return null;
   const hubIndex = await loadHubIndexFromRequest(request, env);
-  const { returns } = await buildSectorReturnsForHorizon(hubIndex, env, horizon);
-  const retKey = TREND_RET_KEY[horizon];
-  if (!retKey) return null;
+  const bySector = await buildAllHorizonReturnsBySector(hubIndex, env);
 
-  let filled = 0;
+  let filledCells = 0;
   for (const sid of SECTOR_ORDER) {
-    if (returns[sid] != null) filled += 1;
+    const rets = bySector[sid] || {};
+    for (const h of TREND_HORIZONS) {
+      if (rets[TREND_RET_KEY[h]] != null) filledCells += 1;
+    }
   }
-  if (filled < 3) return null;
+  // Need broad coverage across horizons (≈22 sectors × 5), not a single tab.
+  if (filledCells < SECTOR_ORDER.length) return null;
 
   const session = krxSessionInfo();
   const totalMcap = uniqueHubMcapTotal(hubIndex);
@@ -104,15 +103,20 @@ async function buildSectorPayloadFromTrend(request, env, horizon) {
     if (!block) continue;
     const companies = block.companies || [];
     const sectorMcap = companies.reduce((s, c) => s + (c.mcapWon || 0), 0);
-    const row = { ...emptySectorReturns() };
-    row[retKey] = returns[sid] != null ? returns[sid] : null;
+    const rets = bySector[sid] || {};
     sectors[sid] = {
-      ...row,
+      return1dPct: rets.return1dPct ?? null,
+      return20dPct: rets.return20dPct ?? null,
+      return50dPct: rets.return50dPct ?? null,
+      return120dPct: rets.return120dPct ?? null,
+      return200dPct: rets.return200dPct ?? null,
       mcapWon: sectorMcap,
       weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
       listingCount: companies.length,
     };
   }
+
+  if (!hasAllHorizons(sectors)) return null;
 
   return {
     asOf: new Date().toISOString(),
