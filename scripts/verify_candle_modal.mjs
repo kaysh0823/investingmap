@@ -82,35 +82,49 @@ assert.match(
   'each pane keeps its own right price scale',
 );
 assert.match(source, /rightOffset: RIGHT_OFFSET_BARS/, 'right margin retained');
-for (const [name, color, dataKey] of [
-  ['MA5', '#ff7b72', 'ma5Line'],
-  ['MA20', '#3fb950', 'ma20Line'],
-]) {
-  assert.ok(source.includes(`title: '${name}'`), `${name} price-pane series exists`);
-  assert.ok(source.includes(`color: '${color}'`), `${name} uses the requested color`);
-  assert.ok(source.includes(`setData(data.${dataKey})`), `${name} receives calculated data`);
+assert.deepEqual(
+  Array.from(indicators.priceMaPeriods('daily')),
+  [5, 20, 50, 120],
+  'daily price MA periods',
+);
+assert.deepEqual(
+  Array.from(indicators.priceMaPeriods('weekly')),
+  [4, 13, 26, 52],
+  'weekly price MA periods are 4/13/26/52',
+);
+assert.equal(indicators.DISP_MA_PERIOD, 50, 'disparity keeps a fixed 50-bar SMA');
+assert.equal(indicators.maLabel(13), 'MA13', 'MA labels are period-dynamic');
+assert.ok(source.includes('function maLabel(period)'), 'maLabel helper exists');
+assert.ok(source.includes('title: maLabel(maPeriods[0])'), 'fast MA series title is dynamic');
+assert.ok(source.includes('title: maLabel(maPeriods[1])'), 'second MA series title is dynamic');
+assert.ok(source.includes('title: maLabel(maPeriods[2])'), 'third MA series title is dynamic');
+assert.ok(source.includes('title: maLabel(maPeriods[3])'), 'slow MA series title is dynamic');
+assert.deepEqual(
+  Array.from(indicators.PRICE_MA_SPECS.map((s) => s.color)),
+  ['#ff7b72', '#3fb950', '#e3b341', '#58a6ff'],
+  'price MA color order unchanged',
+);
+for (const dataKey of ['ma5Line', 'ma20Line', 'ma50Line', 'maLine']) {
+  assert.ok(source.includes(`setData(data.${dataKey})`), `${dataKey} receives calculated data`);
 }
-const maSeriesOrder = ['MA5', 'MA20', 'MA50', 'MA120'].map((name) =>
-  source.indexOf(`title: '${name}'`),
+assert.match(
+  source,
+  /PRICE_MA_SPECS\[0\]\.color[\s\S]{0,120}lastValueVisible: !PRICE_MA_SPECS\[0\]\.hideLast/,
+  'fast MA last-value tag is hidden via hideLast',
 );
-assert.ok(
-  maSeriesOrder.every((offset, index) => offset >= 0 && (!index || offset > maSeriesOrder[index - 1])),
-  'price-pane moving averages are added in 5, 20, 50, 120 order',
+assert.match(
+  source,
+  /PRICE_MA_SPECS\[1\]\.color[\s\S]{0,120}lastValueVisible: !PRICE_MA_SPECS\[1\]\.hideLast/,
+  'second MA last-value tag is hidden via hideLast',
 );
-for (const key of ['ma5', 'ma20']) {
-  assert.ok(source.includes(`${key}: '${key.toUpperCase()}'`), `${key} i18n label exists`);
+for (const key of ['ma5', 'ma20', 'ma50', 'ma120']) {
   assert.ok(source.includes(`fmtPrice(b.${key})`), `${key} appears in the crosshair header`);
 }
-assert.match(
-  source,
-  /title: 'MA5',[\s\S]{0,80}lastValueVisible: false/,
-  'MA5 last-value tag is hidden',
-);
-assert.match(
-  source,
-  /title: 'MA20',[\s\S]{0,80}lastValueVisible: false/,
-  'MA20 last-value tag is hidden',
-);
+assert.ok(source.includes('maLabel(periods[0])'), 'crosshair uses dynamic MA labels');
+assert.ok(!/\bma5: 'MA5'/.test(source), 'i18n no longer hardcodes MA5');
+assert.ok(!/\bma20: 'MA20'/.test(source), 'i18n no longer hardcodes MA20');
+assert.ok(!/\bma50: 'MA50'/.test(source), 'i18n no longer hardcodes MA50');
+assert.ok(!/\bma120: 'MA120'/.test(source), 'i18n no longer hardcodes MA120');
 assert.match(
   source,
   /toUpperCase\(\)\.replace\(\/\[\^0-9A-Z\]\/g, ''\)/,
@@ -176,10 +190,43 @@ for (let i = 0; i < 20; i++) {
   });
 }
 const maPanel = indicators.buildPanelData(indicators.normalizeBars(maPanelBars), '5y', 'daily');
+assert.deepEqual(Array.from(maPanel.maPeriods), [5, 20, 50, 120], 'daily panel exposes MA periods');
 assert.equal(maPanel.ma5Line.length, 16, 'MA5 starts on the fifth bar');
 assert.equal(maPanel.ma20Line.length, 1, 'MA20 starts on the twentieth bar');
 assert.equal(maPanel.byTime['2026-02-20'].ma5, 18, 'MA5 crosshair value');
 assert.equal(maPanel.byTime['2026-02-20'].ma20, 10.5, 'MA20 crosshair value');
+
+const weeklyMaBars = [];
+for (let i = 0; i < 52; i++) {
+  const d = new Date(Date.UTC(2025, 0, 3 + i * 7));
+  weeklyMaBars.push({
+    t: d.toISOString().slice(0, 10),
+    o: i + 1,
+    h: i + 2,
+    l: i,
+    c: i + 1,
+    v: 100,
+  });
+}
+const weeklyMaPanel = indicators.buildPanelData(
+  indicators.normalizeBars(weeklyMaBars),
+  '5y',
+  'weekly',
+);
+assert.deepEqual(
+  Array.from(weeklyMaPanel.maPeriods),
+  [4, 13, 26, 52],
+  '주봉 전환 시 MA 4/13/26/52',
+);
+assert.equal(weeklyMaPanel.ma5Line.length, 49, 'weekly MA4 starts on the 4th bar');
+assert.equal(weeklyMaPanel.ma20Line.length, 40, 'weekly MA13 starts on the 13th bar');
+assert.equal(weeklyMaPanel.ma50Line.length, 27, 'weekly MA26 starts on the 26th bar');
+assert.equal(weeklyMaPanel.maLine.length, 1, 'weekly MA52 starts on the 52nd bar');
+assert.equal(
+  weeklyMaPanel.byTime[weeklyMaBars[51].t].ma5,
+  (49 + 50 + 51 + 52) / 4,
+  'weekly MA4 crosshair uses 4-bar SMA',
+);
 
 const atrBars = [];
 for (let i = 0; i < 11; i++) {

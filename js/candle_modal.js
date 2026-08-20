@@ -36,10 +36,18 @@
   ];
   /** lightweight-charts draws a 1px separator between panes. */
   var PANE_SEPARATOR_PX = 1;
-  var MA_SHORT = 5;
-  var MA_MEDIUM = 20;
-  var MA_FAST = 50;
-  var MA_PRICE = 120;
+  /**
+   * Price-pane SMA set: daily 5/20/50/120, weekly 4/13/26/52 (same color order).
+   * Slot ids keep crosshair/byTime keys stable (ma5…ma120 name the slot, not the period).
+   */
+  var PRICE_MA_SPECS = [
+    { daily: 5, weekly: 4, color: '#ff7b72', slot: 'ma5', hideLast: true },
+    { daily: 20, weekly: 13, color: '#3fb950', slot: 'ma20', hideLast: true },
+    { daily: 50, weekly: 26, color: '#e3b341', slot: 'ma50', hideLast: false },
+    { daily: 120, weekly: 52, color: '#58a6ff', slot: 'ma120', hideLast: false },
+  ];
+  /** Disparity% stays on a fixed 50-bar SMA of the active series (not the weekly MA26 slot). */
+  var DISP_MA_PERIOD = 50;
   var MA_VOL = 20;
   var BB_PERIOD = 20;
   var BB_MULT = 2;
@@ -50,6 +58,17 @@
   var MACD_SIGNAL = 9;
   var ATR_PERIOD = 3;
   var ATR_SIGNAL = 9;
+
+  function priceMaPeriods(interval) {
+    var weekly = interval === 'weekly';
+    return PRICE_MA_SPECS.map(function (spec) {
+      return weekly ? spec.weekly : spec.daily;
+    });
+  }
+
+  function maLabel(period) {
+    return 'MA' + period;
+  }
 
   var I18N = {
     ko: {
@@ -69,10 +88,6 @@
       low: '저가',
       closePx: '종가',
       volume: '거래량',
-      ma5: 'MA5',
-      ma20: 'MA20',
-      ma50: 'MA50',
-      ma120: 'MA120',
       vma20: 'VMA20',
       bbw: 'BBW%',
       disp: '이격도%',
@@ -107,10 +122,6 @@
       low: 'Low',
       closePx: 'Close',
       volume: 'Volume',
-      ma5: 'MA5',
-      ma20: 'MA20',
-      ma50: 'MA50',
-      ma120: 'MA120',
       vma20: 'VMA20',
       bbw: 'BBW%',
       disp: 'DISP%',
@@ -904,14 +915,16 @@
     var vols = fullBars.map(function (b) {
       return b.v;
     });
-    var ma5 = sma(closes, MA_SHORT);
-    var ma20 = sma(closes, MA_MEDIUM);
-    var ma50 = sma(closes, MA_FAST);
-    var ma120 = sma(closes, MA_PRICE);
+    var periods = priceMaPeriods(interval);
+    var ma5 = sma(closes, periods[0]);
+    var ma20 = sma(closes, periods[1]);
+    var ma50 = sma(closes, periods[2]);
+    var ma120 = sma(closes, periods[3]);
     var vma20 = sma(vols, MA_VOL);
     var bb = bollinger(closes, BB_PERIOD, BB_MULT);
     var bbwPct = trailingMinMaxNorm(bb.width, NORM_WINDOW);
-    var disparity = disparityFromMa(closes, ma50);
+    var disparityMa = sma(closes, DISP_MA_PERIOD);
+    var disparity = disparityFromMa(closes, disparityMa);
     var dispPct = trailingMinMaxNorm(disparity, NORM_WINDOW);
     var macdPack = macd(closes, MACD_FAST, MACD_SLOW, MACD_SIGNAL);
     var atrPack = atrPercent(fullBars, ATR_PERIOD, ATR_SIGNAL);
@@ -1001,6 +1014,7 @@
       // Drawn whenever any bar lacks OHLC so the price pane still shows a series.
       closeLine: closeOnlyCount ? closeLine : [],
       barCount: closeLine.length,
+      maPeriods: periods,
       ma5Line: ma5Line,
       ma20Line: ma20Line,
       ma50Line: ma50Line,
@@ -1027,6 +1041,8 @@
       return;
     }
     var b = state.barsByTime[time];
+    var periods =
+      (state.panelData && state.panelData.maPeriods) || priceMaPeriods(state.interval);
     tip.textContent =
       time +
       ' · ' +
@@ -1050,19 +1066,19 @@
       ' ' +
       fmtVol(b.v) +
       ' · ' +
-      labels.ma5 +
+      maLabel(periods[0]) +
       ' ' +
       fmtPrice(b.ma5) +
       ' · ' +
-      labels.ma20 +
+      maLabel(periods[1]) +
       ' ' +
       fmtPrice(b.ma20) +
       ' · ' +
-      labels.ma50 +
+      maLabel(periods[2]) +
       ' ' +
       fmtPrice(b.ma50) +
       ' · ' +
-      labels.ma120 +
+      maLabel(periods[3]) +
       ' ' +
       fmtPrice(b.ma120) +
       ' · ' +
@@ -1213,24 +1229,31 @@
       closeSeries.setData(data.closeLine);
     }
 
+    var maPeriods = data.maPeriods || priceMaPeriods(state.interval);
     var ma5Series = addLine('price', {
-      color: '#ff7b72',
-      title: 'MA5',
-      lastValueVisible: false,
+      color: PRICE_MA_SPECS[0].color,
+      title: maLabel(maPeriods[0]),
+      lastValueVisible: !PRICE_MA_SPECS[0].hideLast,
     });
     ma5Series.setData(data.ma5Line);
 
     var ma20Series = addLine('price', {
-      color: '#3fb950',
-      title: 'MA20',
-      lastValueVisible: false,
+      color: PRICE_MA_SPECS[1].color,
+      title: maLabel(maPeriods[1]),
+      lastValueVisible: !PRICE_MA_SPECS[1].hideLast,
     });
     ma20Series.setData(data.ma20Line);
 
-    var ma50Series = addLine('price', { color: '#e3b341', title: 'MA50' });
+    var ma50Series = addLine('price', {
+      color: PRICE_MA_SPECS[2].color,
+      title: maLabel(maPeriods[2]),
+    });
     ma50Series.setData(data.ma50Line);
 
-    var maSeries = addLine('price', { color: '#58a6ff', title: 'MA120' });
+    var maSeries = addLine('price', {
+      color: PRICE_MA_SPECS[3].color,
+      title: maLabel(maPeriods[3]),
+    });
     maSeries.setData(data.maLine);
 
     var volSeries = chart.addSeries(
@@ -1625,6 +1648,10 @@
       buildPanelData: buildPanelData,
       applyLiveQuoteToBars: applyLiveQuoteToBars,
       asOfToTradeDate: asOfToTradeDate,
+      priceMaPeriods: priceMaPeriods,
+      maLabel: maLabel,
+      PRICE_MA_SPECS: PRICE_MA_SPECS,
+      DISP_MA_PERIOD: DISP_MA_PERIOD,
       NORM_WINDOW: NORM_WINDOW,
     },
   };
