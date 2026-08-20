@@ -48,7 +48,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 | 테이블 | 내용 | 채우는 주체 |
 |---|---|---|
 | `stock_quotes_latest` | 종목별 최신 스냅샷(가격·시총·거래대금·수익률·RS 등) | sync 매 실행 upsert |
-| `sector_returns` | 섹터별 기간 수익률(1D/20D/50D/120D/200D) | sync (과거 시총 가중) |
+| `sector_returns` | 섹터별 기간 수익률(1D/20D/50D/120D/200D) — hub_trend와 동일 합산시총 | sync (trend 미러) |
 | `sector_mcap_daily` | 섹터 일별 합산 시총(스파크라인 20D+용) | backfill + sync 장마감 |
 | `sector_intraday_snapshots` | 1D 스파크라인용 일중 섹터 시총 스냅샷 | sync 정규장에만 append |
 | `stock_price_history` | 종목 일별 OHLC·거래량·시총(≥500거래일 권장, 캔들·지표 워밍업) | `backfill_price_history.mjs --days=500` + sync |
@@ -82,16 +82,21 @@ IT·소프트웨어(software) · 지주회사(holdings) · 통신(telecom)
 
 ## 5. 섹터 퍼포먼스 계산 (중요)
 
-- **정의**: `(Σ 현재 시총 / Σ 기준일 시총 − 1) × 100` (시총 합산 수익률)
-- **구현**: `scripts/sync_quotes_to_supabase.mjs`의 `mcapWeightedReturn`
-- **장마감**: 정확함(현재가=종가).
-- **장중 미해결 이슈**: 과거 시총을 `mcap_won/(1+ret)`로 **역산**하기 때문에,
-  장중(현재가≠최근종가)엔 분모가 왜곡돼 실제 "현재 합산시총/기준일 합산시총"과 다름.
-  → 후속 개선안: 분모를 `stock_price_history`의 실제 과거 거래일 시총에서 조회.
-  (프롬프트 초안은 세션 로그 참고. 아직 미적용)
-- **프론트 라이브 오버레이 제거됨**: 과거엔 `hub_dashboard.js`가 낡은
-  `hub_rs_snapshot.json`으로 1D를 재계산해 API값을 덮어써서 값이 깜빡였음.
-  이제 `/api/hub_sectors` 단일 소스만 사용, 장중엔 5분마다 재fetch.
+- **정의**: `(Σ 현재 합산시총 / Σ 기준일 합산시총 − 1) × 100`
+- **단일 소스**: `/api/hub_sectors`와 `/api/hub_trend`가 **같은 시리즈**를 쓴다.
+  - 20D/50D/120D/200D → `sector_mcap_daily` (거래일 앵커는 hub_trend와 동일)
+  - 1D → `sector_intraday_snapshots` (전일종가 시총 seed → 장중 합산)
+  - 카드 값 = 변동추이 끝점 − 100 (`returnPctFromRebasedSeries`)
+- **구현**:
+  - 시리즈/앵커: `functions/lib/hub_trend.mjs`
+  - 카드 API: `functions/api/hub_sectors.js` (source=`sector_mcap_trend`)
+  - DB 미러: `scripts/sync_quotes_to_supabase.mjs`가 동일 빌더로 `sector_returns` upsert
+- **§5 과거시총 역산 왜곡**: 해소됨. `mcap_won/(1+ret)` 역산·종목 pair-exclude
+  가중치는 카드/sync 경로에서 제거했다. (구 `mcapWeightedReturnInverse` 폐기)
+- **커버리지**: 기준일 `sector_mcap_daily`에 현재 구성종목 시총이 빠지면 분모가 작아져
+  수익률이 부풀려진다 → `scripts/verify_sector_mcap_coverage.mjs` (+ `--fix`로 재upsert)
+  및 `backfill_sector_mcap_daily.mjs`.
+- **프론트**: `/api/hub_sectors` 단일 소스, 장중 5분 재fetch. 라이브 오버레이 없음.
 
 ---
 
@@ -123,8 +128,8 @@ IT·소프트웨어(software) · 지주회사(holdings) · 통신(telecom)
   (`sectorsReady` / `sectorsAuthFetched`)
 - **스파크라인**: 실제 추이. `/api/hub_sector_trend`
   - 20D+ → `sector_mcap_daily`(미리 계산). 무거운 실시간 집계는 Function 한도 초과로 금지
-  - 1D → `sector_intraday_snapshots`(장중 누적, 첫날은 점선 placeholder)
-  - 정규화(%) 방식, 끝점이 카드 수익률과 일치
+  - 1D → `sector_intraday_snapshots`(장중 누적)
+  - 끝점 = 카드 수익률 = hub_trend 끝−100 (동일 합산시총 경로)
 - **Top20 6개 패널** (순서: 시총 → RS → 주가위치 → 당일거래대금 → 당일상승률 → 5일상승률)
   - API: `/api/hub_movers`(mcap/turnover/gain1d/gain5d), `/api/hub_rs_top10`, `/api/hub_top10`(position)
   - 각 항목에 `rank`(리스트 순번 1~20) + `rankDelta`(전일 동일 리스트 순번 대비 ▲n/▼n/NEW/-). `hub_rank_daily` 전종목 순위는 내부 저장용이며 API `rank`에는 쓰지 않음.
@@ -153,7 +158,8 @@ IT·소프트웨어(software) · 지주회사(holdings) · 통신(telecom)
 - [ ] 토큰 만료: cron-job.org의 GitHub PAT (2027-07-13 만료) 갱신
 - [ ] `hub_rank_daily` 테이블 비대 시: 오래된 행(7일 이전) 정리 로직 추가 검토
 - [ ] `stock_price_history` 깊이: 캔들 MA120·BBW120 + 1Y 표시를 위해 ≥500거래일 유지 (`backfill_price_history.mjs --days=500`)
-- [ ] 후속 개선: 장중 섹터 수익률 분모를 실제 과거 시총으로(5장 참고)
+- [ ] 섹터 합산시총 커버리지: `verify_sector_mcap_coverage.mjs` (기준일 구성종목 누락 시 `--fix`)
+- [ ] 카드↔변동추이: `verify_hub_sectors_vs_trend.mjs` (필요 시 `--live=`)
 
 ---
 

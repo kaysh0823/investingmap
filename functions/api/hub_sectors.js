@@ -1,10 +1,17 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_sectors
- * Sector mcap-weighted return.
- * Primary: Supabase sector_returns. Fallback: KRX mcap-ratio (hub_dashboard_core).
+ * Sector mcap-sum return — same sources/anchors as /api/hub_trend
+ * (sector_mcap_daily / sector_intraday_snapshots → end−100).
+ * Fallback: sector_returns table, then KRX mcap-ratio.
  */
 
-import { buildHubSectors, buildHubSectorsFromSupabaseRows, loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
+import {
+  buildHubSectors,
+  buildHubSectorsFromSupabaseRows,
+  loadHubIndexFromRequest,
+  SECTOR_ORDER,
+  uniqueHubMcapTotal,
+} from '../lib/hub_dashboard_core.mjs';
 import { getAuthKey } from '../lib/krx_yoy.mjs';
 import { krxSessionInfo, kstAnchorYmd } from '../lib/krx_session.mjs';
 import {
@@ -19,11 +26,15 @@ import {
   readHubCacheJson,
 } from '../lib/hub_api_cache.mjs';
 import {
+  buildSectorReturnsForHorizon,
+  TREND_RET_KEY,
+} from '../lib/hub_trend.mjs';
+import {
   fetchSupabaseJson,
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v11';
+const CACHE_VERSION = '/api/hub_sectors/cache/v12';
 
 /** Reject Supabase rows if newest updated_at is older than this (covers weekend + holiday buffer). */
 const SECTOR_RETURNS_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
@@ -58,6 +69,69 @@ function isSectorReturnsStale(rows, now = new Date()) {
   return now.getTime() - newest > SECTOR_RETURNS_MAX_AGE_MS;
 }
 
+function emptySectorReturns() {
+  return {
+    return1dPct: null,
+    return20dPct: null,
+    return50dPct: null,
+    return120dPct: null,
+    return200dPct: null,
+  };
+}
+
+/**
+ * Primary path: same mcap series + anchors as /api/hub_trend → card = end−100.
+ */
+async function buildSectorPayloadFromTrend(request, env, horizon) {
+  const config = getSupabaseConfig(env);
+  if (!config) return null;
+  const hubIndex = await loadHubIndexFromRequest(request, env);
+  const { returns } = await buildSectorReturnsForHorizon(hubIndex, env, horizon);
+  const retKey = TREND_RET_KEY[horizon];
+  if (!retKey) return null;
+
+  let filled = 0;
+  for (const sid of SECTOR_ORDER) {
+    if (returns[sid] != null) filled += 1;
+  }
+  if (filled < 3) return null;
+
+  const session = krxSessionInfo();
+  const totalMcap = uniqueHubMcapTotal(hubIndex);
+  const sectors = {};
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors && hubIndex.sectors[sid];
+    if (!block) continue;
+    const companies = block.companies || [];
+    const sectorMcap = companies.reduce((s, c) => s + (c.mcapWon || 0), 0);
+    const row = { ...emptySectorReturns() };
+    row[retKey] = returns[sid] != null ? returns[sid] : null;
+    sectors[sid] = {
+      ...row,
+      mcapWon: sectorMcap,
+      weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
+      listingCount: companies.length,
+    };
+  }
+
+  return {
+    asOf: new Date().toISOString(),
+    builtAt: hubIndex.builtAt || null,
+    regularSession: session.regular,
+    horizon,
+    source: 'sector_mcap_trend',
+    krxConfigured: !!getAuthKey(env),
+    mcapRecentDd: null,
+    effectiveAnchorDd: kstAnchorYmd(),
+    mcapPast1dDd: null,
+    mcapPast20dDd: null,
+    mcapPast50dDd: null,
+    mcapPast120dDd: null,
+    mcapPast200dDd: null,
+    sectors,
+  };
+}
+
 async function buildSectorPayloadFromSupabase(request, env, horizon) {
   const config = getSupabaseConfig(env);
   if (!config) return null;
@@ -71,6 +145,12 @@ async function buildSectorPayloadFromSupabase(request, env, horizon) {
 }
 
 async function buildSectorPayload(request, env, horizon) {
+  try {
+    const fromTrend = await buildSectorPayloadFromTrend(request, env, horizon);
+    if (fromTrend && hasSectorHorizon(fromTrend.sectors, horizon)) return fromTrend;
+  } catch {
+    /* fall through */
+  }
   try {
     const supabase = await buildSectorPayloadFromSupabase(request, env, horizon);
     if (supabase) return supabase;

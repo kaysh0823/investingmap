@@ -39,6 +39,67 @@ export function rebaseTo100(rows, valueKey = 'value', baseValue = null) {
   }));
 }
 
+/** Card % = last rebased point − 100 (2dp). Same series hub_trend charts use. */
+export function returnPctFromRebasedSeries(series) {
+  if (!Array.isArray(series) || !series.length) return null;
+  const last = series[series.length - 1];
+  const v = numOrNull(last?.v);
+  if (v == null) return null;
+  return Math.round((v - 100) * 100) / 100;
+}
+
+export const TREND_HORIZONS = ['1d', '20d', '50d', '120d', '200d'];
+
+export const TREND_RET_COL = {
+  '1d': 'ret_1d_pct',
+  '20d': 'ret_20d_pct',
+  '50d': 'ret_50d_pct',
+  '120d': 'ret_120d_pct',
+  '200d': 'ret_200d_pct',
+};
+
+export const TREND_RET_KEY = {
+  '1d': 'return1dPct',
+  '20d': 'return20dPct',
+  '50d': 'return50dPct',
+  '120d': 'return120dPct',
+  '200d': 'return200dPct',
+};
+
+/**
+ * Per-sector return % for one horizon, derived from the same payload as /api/hub_trend.
+ * @returns {Promise<{ horizon: string, returns: Record<string, number|null>, seriesBySector: Record<string, object[]> }>}
+ */
+export async function buildSectorReturnsForHorizon(hubIndex, env, requestedHorizon) {
+  const payload = await buildHubTrendPayload(hubIndex, env, requestedHorizon);
+  const returns = {};
+  const seriesBySector = {};
+  for (const entry of payload.sectors || []) {
+    if (!entry?.sector) continue;
+    seriesBySector[entry.sector] = entry.series || [];
+    returns[entry.sector] = returnPctFromRebasedSeries(entry.series);
+  }
+  return { horizon: payload.horizon, returns, seriesBySector };
+}
+
+/**
+ * sector_returns upsert rows: one row per sector, all horizons filled from trend sources.
+ */
+export async function buildSectorReturnRowsFromTrend(hubIndex, env, updatedAt = new Date().toISOString()) {
+  const bySector = new Map();
+  for (const horizon of TREND_HORIZONS) {
+    const { returns } = await buildSectorReturnsForHorizon(hubIndex, env, horizon);
+    const col = TREND_RET_COL[horizon];
+    for (const sid of SECTOR_ORDER) {
+      if (!bySector.has(sid)) {
+        bySector.set(sid, { sector_id: sid, updated_at: updatedAt });
+      }
+      bySector.get(sid)[col] = returns[sid] != null ? returns[sid] : null;
+    }
+  }
+  return [...bySector.values()];
+}
+
 async function safeFetch(config, query) {
   try {
     return await fetchSupabaseJson(config, query);

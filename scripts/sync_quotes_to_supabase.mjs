@@ -1,7 +1,7 @@
 /**
  * Sync hub-listed tickers: Naver quotes + KRX returns/RS → Supabase stock_quotes_latest,
- * then past-mcap-weighted sector returns → sector_returns.
- * Reuses functions/lib collectors; safe to run locally or in GitHub Actions.
+ * then sector_mcap_daily / intraday-aligned sector returns → sector_returns
+ * (same sources as /api/hub_trend so card % == trend end − 100).
  */
 import fs from 'fs';
 import path from 'path';
@@ -31,6 +31,7 @@ import {
   fetchNaverMarketIndices,
   MARKET_INDEX_CODES,
 } from '../functions/lib/naver_index.mjs';
+import { buildSectorReturnRowsFromTrend } from '../functions/lib/hub_trend.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAVER_CONCURRENCY = 4;
@@ -39,23 +40,17 @@ const UPSERT_BATCH_SIZE = 40;
 const HISTORY_UPSERT_BATCH = 500;
 const SUPABASE_MAX_RETRIES = 1;
 const PAST_DATE_FALLBACK_WINDOW = 12;
-/** Minimum paired share of members-with-now-mcap before falling back to inverse. */
-const HISTORY_COVERAGE_MIN = 0.5;
 
 /**
- * Sector horizon columns ↔ KRX return lookback days (same as krx_rs RETURN_PERIODS)
- * and inverse-method fallback source fields on quote rows.
+ * Sector horizon columns (synced from hub_trend mcap series).
  */
 const SECTOR_HORIZONS = [
-  { out: 'ret_1d_pct', days: 1, fallbackSrc: 'chg_1d_pct' },
-  { out: 'ret_20d_pct', days: 20, fallbackSrc: 'ret_20d_pct' },
-  { out: 'ret_50d_pct', days: 50, fallbackSrc: 'ret_50d_pct' },
-  { out: 'ret_120d_pct', days: 120, fallbackSrc: 'ret_120d_pct' },
-  { out: 'ret_200d_pct', days: 200, fallbackSrc: 'ret_200d_pct' },
+  { out: 'ret_1d_pct', days: 1 },
+  { out: 'ret_20d_pct', days: 20 },
+  { out: 'ret_50d_pct', days: 50 },
+  { out: 'ret_120d_pct', days: 120 },
+  { out: 'ret_200d_pct', days: 200 },
 ];
-
-/** @deprecated kept for inverse fallback alias */
-const SECTOR_RET_FIELDS = SECTOR_HORIZONS.map((h) => ({ out: h.out, src: h.fallbackSrc }));
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -248,58 +243,6 @@ async function verifyMomentumSchema(supabaseUrl, serviceKey) {
       `Apply supabase/migrations/0012_stock_quotes_momentum_bounds.sql first. ` +
       body.slice(0, 180),
   );
-}
-
-/**
- * Inverse past-mcap estimate (legacy). Used only when history coverage is too thin.
- * mcapPast ≈ mcap_won / (1 + ret/100); return = (Σ mcap_now / Σ mcapPast − 1) × 100.
- */
-function mcapWeightedReturnInverse(members, retKey) {
-  let sumNow = 0;
-  let sumPast = 0;
-  for (const m of members) {
-    const ret = m[retKey];
-    const mcap = m.mcap_won;
-    if (ret == null || !Number.isFinite(ret)) continue;
-    if (mcap == null || !Number.isFinite(mcap) || mcap <= 0) continue;
-    const growth = 1 + ret / 100;
-    if (!(growth > 0)) continue;
-    sumNow += mcap;
-    sumPast += mcap / growth;
-  }
-  if (sumPast <= 0) return null;
-  return Math.round((sumNow / sumPast - 1) * 100 * 100) / 100;
-}
-
-/**
- * Actual past-mcap weighted return: sumNow / sumPast − 1.
- * Pair-exclude: ticker needs both current and past mcap or it drops from both sides.
- */
-function mcapWeightedReturnFromHistory(members, pastMcapByTicker) {
-  let sumNow = 0;
-  let sumPast = 0;
-  let paired = 0;
-  let withNow = 0;
-  for (const m of members) {
-    const now = m.mcap_won;
-    if (now == null || !Number.isFinite(now) || now <= 0) continue;
-    withNow += 1;
-    const past = pastMcapByTicker.get(m.ticker);
-    if (past == null || !Number.isFinite(past) || past <= 0) continue;
-    sumNow += now;
-    sumPast += past;
-    paired += 1;
-  }
-  if (sumPast <= 0 || paired === 0) {
-    return { ret: null, paired, withNow, sumNow: 0, sumPast: 0 };
-  }
-  return {
-    ret: Math.round((sumNow / sumPast - 1) * 10000) / 100,
-    paired,
-    withNow,
-    sumNow,
-    sumPast,
-  };
 }
 
 function basDdToDash(basDd) {
@@ -772,98 +715,23 @@ function pickPastMcap(ticker, candidateDatesDash, historyByDate) {
   return null;
 }
 
-/**
- * Build sector_returns using actual past mcaps from stock_price_history.
- * Falls back to inverse method per-horizon when history coverage is thin.
- */
-async function buildSectorReturnRows(hubIndex, quoteRowsByTicker, updatedAt, historyCtx) {
-  const {
-    historyByDate,
-    horizonCandidates,
-    supabaseUrl,
-    serviceKey,
-  } = historyCtx;
-
-  const rows = [];
-  const stats = [];
-
-  for (const sid of SECTOR_ORDER) {
-    const block = hubIndex.sectors && hubIndex.sectors[sid];
-    if (!block) continue;
-    const members = [];
-    for (const c of block.companies || []) {
-      const key = normalizeTicker(c.ticker);
-      if (!key) continue;
-      const q = quoteRowsByTicker.get(key);
-      if (!q) continue;
-      members.push(q);
-    }
-    const row = { sector_id: sid, updated_at: updatedAt };
-    for (const h of SECTOR_HORIZONS) {
-      const candidates = horizonCandidates[h.out] || [];
-      const pastByTicker = new Map();
-      for (const m of members) {
-        const past = pickPastMcap(m.ticker, candidates, historyByDate);
-        if (past != null) pastByTicker.set(m.ticker, past);
-      }
-      const hist = mcapWeightedReturnFromHistory(members, pastByTicker);
-      const coverage = hist.withNow > 0 ? hist.paired / hist.withNow : 0;
-      if (hist.ret != null && coverage >= HISTORY_COVERAGE_MIN) {
-        row[h.out] = hist.ret;
-        stats.push({ sid, horizon: h.out, method: 'history', paired: hist.paired, coverage });
-      } else {
-        const fb = mcapWeightedReturnInverse(members, h.fallbackSrc);
-        row[h.out] = fb;
-        stats.push({
-          sid,
-          horizon: h.out,
-          method: 'inverse-fallback',
-          paired: hist.paired,
-          coverage,
-          reason: hist.ret == null ? 'empty-past' : 'low-coverage',
-        });
-      }
-    }
-    rows.push(row);
-  }
-
-  const fallbacks = stats.filter((s) => s.method === 'inverse-fallback');
-  if (fallbacks.length) {
-    console.warn(
-      `  sector history fallback on ${fallbacks.length} cell(s), e.g. ` +
-      fallbacks.slice(0, 5).map((s) => `${s.sid}/${s.horizon}(${s.reason},cov=${(s.coverage * 100).toFixed(0)}%)`).join(', '),
-    );
-  } else {
-    console.log(`  sector returns: history mcap for all ${SECTOR_ORDER.length}×${SECTOR_HORIZONS.length} cells`);
-  }
-
-  // unused but keep signature flexible for tests
-  void supabaseUrl;
-  void serviceKey;
-
-  return { rows, stats };
-}
-
+/** Load recent history mcaps for intraday seed (prev session) — not used for card returns. */
 async function prepareSectorHistoryContext(supabaseUrl, serviceKey, now = new Date()) {
-  const dates = tradingDates(260, now);
+  const dates = tradingDates(10, now);
   const anchorDd = sectorReturnAnchorDd(now);
-  const horizonCandidates = {};
   const allDash = new Set();
-  for (const h of SECTOR_HORIZONS) {
-    const basList = pastDatesFromAnchor(anchorDd, dates, h.days, PAST_DATE_FALLBACK_WINDOW);
-    const dashList = basList.map(basDdToDash);
-    horizonCandidates[h.out] = dashList;
-    for (const d of dashList) allDash.add(d);
-  }
+  // Prev session + a few fallbacks for intraday 09:00 seed.
+  const basList = pastDatesFromAnchor(anchorDd, dates, 1, PAST_DATE_FALLBACK_WINDOW);
+  for (const d of basList.map(basDdToDash)) allDash.add(d);
   console.log(
-    `  sector past anchors: anchor=${anchorDd} dates=${[...allDash].sort().join(',')}`,
+    `  sector intraday anchors: anchor=${anchorDd} dates=${[...allDash].sort().join(',')}`,
   );
   const historyByDate = await loadHistoryMcapByDates(supabaseUrl, serviceKey, [...allDash]);
   for (const d of allDash) {
     const n = historyByDate.get(d)?.size || 0;
     if (n < 50) console.warn(`  history thin for ${d}: ${n} mcap rows`);
   }
-  return { historyByDate, horizonCandidates, anchorDd, supabaseUrl, serviceKey };
+  return { historyByDate, horizonCandidates: {}, anchorDd, supabaseUrl, serviceKey };
 }
 
 /**
@@ -1352,14 +1220,6 @@ async function main() {
 
   const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));
   const historyCtx = await prepareSectorHistoryContext(supabaseUrl, serviceKey);
-  const sectorBuilt = await buildSectorReturnRows(hubIndex, quoteByTicker, asOf, historyCtx);
-  const sectorRows = sectorBuilt.rows;
-  console.log(`Upserting ${sectorRows.length} sector_returns rows…`);
-  const sectorResult = await upsertSectorReturns(sectorRows, supabaseUrl, serviceKey);
-  for (const r of sectorRows) {
-    const vals = SECTOR_HORIZONS.map((f) => `${f.out}=${r[f.out] == null ? 'null' : r[f.out]}`).join(' ');
-    console.log(`  ${r.sector_id}: ${vals}`);
-  }
 
   if (regularSession) {
     await syncSectorIntradaySnapshots({
@@ -1373,6 +1233,20 @@ async function main() {
     });
   } else {
     console.log('  sector intraday snapshots: skip (not regular session)');
+  }
+
+  // sector_returns AFTER intraday/daily upserts so 1d & 20d+ share hub_trend series.
+  const trendEnv = {
+    SUPABASE_URL: supabaseUrl,
+    SUPABASE_ANON_KEY: env.SUPABASE_ANON_KEY || serviceKey,
+  };
+  console.log('Building sector_returns from hub_trend mcap series…');
+  const sectorRows = await buildSectorReturnRowsFromTrend(hubIndex, trendEnv, asOf);
+  console.log(`Upserting ${sectorRows.length} sector_returns rows…`);
+  const sectorResult = await upsertSectorReturns(sectorRows, supabaseUrl, serviceKey);
+  for (const r of sectorRows) {
+    const vals = SECTOR_HORIZONS.map((f) => `${f.out}=${r[f.out] == null ? 'null' : r[f.out]}`).join(' ');
+    console.log(`  ${r.sector_id}: ${vals}`);
   }
 
   await syncMarketIndices({
