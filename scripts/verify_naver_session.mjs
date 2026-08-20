@@ -5,6 +5,7 @@
 import {
   parseNaverTradeMeta,
   parseNaverSiseHtml,
+  parseNaverMobileIntegration,
   resolveNaverSession,
 } from '../functions/lib/naver_sise_quotes.mjs';
 
@@ -18,6 +19,13 @@ const CLOSED_HTML = `
     <em class="date">2026.07.16 <span>기준(KRX 장마감)</span></em>
   </span>
   <em class="realtime"><span class="blind">실시간</span></em>
+  <dd>전일가 247,500</dd>
+  <dd>시가 257,000</dd>
+  <dd>고가 273,000</dd>
+  <dd>상한가 321,500</dd>
+  <dd>저가 252,500</dd>
+  <dd>하한가 173,500</dd>
+  <dd>거래량 26,093,355</dd>
 `;
 
 const LIVE_HTML = `
@@ -41,10 +49,30 @@ const none = parseNaverTradeMeta(NO_MARKER_HTML);
 assert(none.tradeDate === null, `no-marker tradeDate: ${none.tradeDate}`);
 assert(none.marketClosed === null, `no-marker marketClosed: ${none.marketClosed}`);
 
-// parseNaverSiseHtml surfaces the same markers
+// parseNaverSiseHtml surfaces the same markers + session OHLCV
 const parsed = parseNaverSiseHtml(CLOSED_HTML);
 assert(parsed.tradeDate === '2026-07-16', 'sise tradeDate');
 assert(parsed.marketClosed === true, 'sise marketClosed');
+assert(parsed.open === 257000, `sise open: ${parsed.open}`);
+assert(parsed.high === 273000, `sise high: ${parsed.high}`);
+assert(parsed.low === 252500, `sise low: ${parsed.low}`);
+assert(parsed.volume === 26093355, `sise volume: ${parsed.volume}`);
+
+const mobile = parseNaverMobileIntegration({
+  totalInfos: [
+    { code: 'openPrice', value: '1,598,000' },
+    { code: 'highPrice', value: '1,721,000' },
+    { code: 'lowPrice', value: '1,576,000' },
+    { code: 'accumulatedTradingVolume', value: '9,397,942' },
+    { code: 'lastClosePrice', value: '1,500,000' },
+  ],
+  dealTrendInfos: [{ closePrice: '1,691,000', accumulatedTradingVolume: '5,452,849' }],
+});
+assert(mobile.open === 1598000, `mobile open: ${mobile.open}`);
+assert(mobile.high === 1721000, `mobile high: ${mobile.high}`);
+assert(mobile.low === 1576000, `mobile low: ${mobile.low}`);
+assert(mobile.volume === 9397942, `mobile volume: ${mobile.volume}`);
+assert(mobile.last === 1691000, `mobile last: ${mobile.last}`);
 
 // ── resolveNaverSession decision matrix ──
 // Holiday: wall clock says session, but Naver marker says 장마감 → not regular.

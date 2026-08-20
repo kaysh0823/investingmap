@@ -263,6 +263,31 @@ try {
   assert.equal(afterHours.bars[1].c, 1691000);
   assert.equal(afterHours.bars[1].closeOnly, true);
 
+  const afterHoursOhlcv = indicators.applyLiveQuoteToBars(
+    bars,
+    {
+      asOf: '2026-08-20T06:30:00.000Z',
+      regularSession: false,
+      items: {
+        '000660': {
+          last: 1691000,
+          prevClose: 1500000,
+          open: 1598000,
+          high: 1721000,
+          low: 1576000,
+          volume: 9397942,
+        },
+      },
+    },
+    '000660',
+  );
+  assert.equal(afterHoursOhlcv.live, true);
+  assert.equal(afterHoursOhlcv.bars[1].o, 1598000);
+  assert.equal(afterHoursOhlcv.bars[1].h, 1721000);
+  assert.equal(afterHoursOhlcv.bars[1].l, 1576000);
+  assert.equal(afterHoursOhlcv.bars[1].v, 9397942);
+  assert.equal(afterHoursOhlcv.bars[1].closeOnly, undefined);
+
   const settledSameDay = indicators.applyLiveQuoteToBars(
     [
       ...bars,

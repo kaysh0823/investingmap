@@ -180,7 +180,25 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed) 
     rs: krx?.rs ?? null,
     as_of: asOf,
     regular_session: regularSession,
+    // In-memory only — stripped before stock_quotes_latest upsert; used for
+    // session-close history when KRX day OHLC is not published yet.
+    _sessionOpen: naver?.open ?? null,
+    _sessionHigh: naver?.high ?? null,
+    _sessionLow: naver?.low ?? null,
+    _sessionVolume: naver?.volume ?? null,
   };
+}
+
+function stripSessionOhlcvFields(row) {
+  if (!row || typeof row !== 'object') return row;
+  const {
+    _sessionOpen,
+    _sessionHigh,
+    _sessionLow,
+    _sessionVolume,
+    ...rest
+  } = row;
+  return rest;
 }
 
 async function upsertBatch(table, rows, supabaseUrl, serviceKey, attempt = 0) {
@@ -210,7 +228,7 @@ async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
   const failed = [];
 
   for (let i = 0; i < rows.length; i += UPSERT_BATCH_SIZE) {
-    const batch = rows.slice(i, i + UPSERT_BATCH_SIZE);
+    const batch = rows.slice(i, i + UPSERT_BATCH_SIZE).map(stripSessionOhlcvFields);
     const result = await upsertBatch('stock_quotes_latest', batch, supabaseUrl, serviceKey);
     if (result.ok) {
       upserted.push(...batch.map((r) => r.ticker));
@@ -403,11 +421,11 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
   if (authKey) {
     try {
       byCode = await fetchMarketDay(authKey, dashToBasDd(tradeDateDash));
-      // Empty KRX day right after close is common — fall through to Naver close-only
-      // so candles still get today's bar; later syncs overwrite with full KRX OHLC.
+      // Empty KRX day right after close is common — fall through to Naver OHLCV
+      // so candles keep a real body/volume; later syncs overwrite with full KRX OHLC.
       if (!byCode || byCode.size === 0) {
         console.log(
-          `  history session close ${tradeDateDash}: KRX day empty/not ready → Naver close fallback`,
+          `  history session close ${tradeDateDash}: KRX day empty/not ready → Naver OHLCV fallback`,
         );
         byCode = null;
       }
@@ -439,25 +457,44 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
     // A successful KRX day intentionally omits suspended/not-yet-listed names.
     // Do not invent a candle for the consensus date from a stale Naver quote.
     if (krxReady) continue;
-    // Fallback: Naver last + mcap only (OHLC null until next KRX catch-up).
+    // Fallback: Naver session OHLCV (open/high/low/volume + last as close).
     if (q.last == null || !Number.isFinite(q.last) || q.last <= 0) continue;
     if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
+    const open =
+      q._sessionOpen != null && Number.isFinite(q._sessionOpen) && q._sessionOpen > 0
+        ? q._sessionOpen
+        : null;
+    const high =
+      q._sessionHigh != null && Number.isFinite(q._sessionHigh) && q._sessionHigh > 0
+        ? q._sessionHigh
+        : null;
+    const low =
+      q._sessionLow != null && Number.isFinite(q._sessionLow) && q._sessionLow > 0
+        ? q._sessionLow
+        : null;
+    const volume =
+      q._sessionVolume != null && Number.isFinite(q._sessionVolume) && q._sessionVolume >= 0
+        ? q._sessionVolume
+        : null;
     rows.push({
       ticker: q.ticker,
       trade_date: tradeDateDash,
-      open: null,
-      high: null,
-      low: null,
+      open,
+      high,
+      low,
       close: q.last,
-      volume: null,
+      volume,
       mcap_won: q.mcap_won,
     });
   }
   if (!rows.length) return { upserted: 0, skipped: false };
   const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
+  const withOhlcv = rows.filter(
+    (r) => r.open != null && r.high != null && r.low != null && r.volume != null,
+  ).length;
   console.log(
     `  history session close ${tradeDateDash}: upserted ${result.upserted}` +
-      (krxReady ? ' (KRX)' : ' (Naver close)'),
+      (krxReady ? ' (KRX)' : ` (Naver OHLCV ${withOhlcv}/${rows.length})`),
   );
   const coverage = krxReady
     ? await repairHistoryCoverageForDate(

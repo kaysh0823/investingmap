@@ -120,6 +120,49 @@ function parsePerPbr(html) {
 }
 
 /**
+ * Session day OHLCV from PC sise header (<dd>시가…</dd>) or table ids.
+ * @param {string} html
+ * @returns {{ open: number|null, high: number|null, low: number|null, volume: number|null }}
+ */
+function parseSessionOhlcv(html) {
+  const out = { open: null, high: null, low: null, volume: null };
+  if (!html || typeof html !== 'string') return out;
+
+  const ddPack = html.match(
+    /<dd>시가\s*([\d,]+)<\/dd>[\s\S]*?<dd>고가\s*([\d,]+)<\/dd>[\s\S]*?<dd>저가\s*([\d,]+)<\/dd>[\s\S]*?<dd>거래량\s*([\d,]+)<\/dd>/,
+  );
+  if (ddPack) {
+    out.open = parseKoreanNumber(ddPack[1]);
+    out.high = parseKoreanNumber(ddPack[2]);
+    out.low = parseKoreanNumber(ddPack[3]);
+    out.volume = parseKoreanNumber(ddPack[4]);
+  }
+
+  const openM =
+    html.match(/id="_n_open"[^>]*>([^<]+)/) ||
+    html.match(/id="_open"[^>]*>([^<]+)/) ||
+    html.match(/>시가<\/[^>]*>[\s\S]{0,120}?<span[^>]*class="tah p11"[^>]*>([0-9,]+)/);
+  const highM =
+    html.match(/id="_n_high"[^>]*>([^<]+)/) ||
+    html.match(/id="_high"[^>]*>([^<]+)/) ||
+    html.match(/>고가<\/[^>]*>[\s\S]{0,120}?<span[^>]*class="tah p11"[^>]*>([0-9,]+)/);
+  const lowM =
+    html.match(/id="_n_low"[^>]*>([^<]+)/) ||
+    html.match(/id="_low"[^>]*>([^<]+)/) ||
+    html.match(/>저가<\/[^>]*>[\s\S]{0,120}?<span[^>]*class="tah p11"[^>]*>([0-9,]+)/);
+  const volM =
+    html.match(/id="_quant"[^>]*>([^<]+)/) ||
+    html.match(/id="_volume"[^>]*>([^<]+)/) ||
+    html.match(/>거래량<\/[^>]*>[\s\S]{0,120}?<span[^>]*class="tah p11"[^>]*>([0-9,]+)/);
+
+  if (out.open == null && openM) out.open = parseKoreanNumber(openM[1]);
+  if (out.high == null && highM) out.high = parseKoreanNumber(highM[1]);
+  if (out.low == null && lowM) out.low = parseKoreanNumber(lowM[1]);
+  if (out.volume == null && volM) out.volume = parseKoreanNumber(volM[1]);
+  return out;
+}
+
+/**
  * Parse the Naver sise header date marker.
  * Closed:  <em class="date">2026.07.16 <span>기준(KRX 장마감)</span></em>
  * Live:    the same <em class="date"> shows a clock time + "실시간" while trading.
@@ -167,13 +210,17 @@ export function resolveNaverSession({ clockRegular, tradeDate, marketClosed, tod
 
 /**
  * @param {string} html
- * @returns {{ last: number|null, prevClose: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, turnoverWon: number|null, per: number|null, pbr: number|null, chg1dPct: number|null, tradeDate: string|null, marketClosed: boolean|null }}
+ * @returns {{ last: number|null, prevClose: number|null, open: number|null, high: number|null, low: number|null, volume: number|null, high52w: number|null, low52w: number|null, mcapWon: number|null, turnoverWon: number|null, per: number|null, pbr: number|null, chg1dPct: number|null, tradeDate: string|null, marketClosed: boolean|null }}
  */
 export function parseNaverSiseHtml(html) {
   if (!html || typeof html !== 'string') {
     return {
       last: null,
       prevClose: null,
+      open: null,
+      high: null,
+      low: null,
+      volume: null,
       high52w: null,
       low52w: null,
       mcapWon: null,
@@ -233,6 +280,7 @@ export function parseNaverSiseHtml(html) {
     if (low52w == null) low52w = fromRows.low52w;
   }
 
+  const session = parseSessionOhlcv(html);
   const { per, pbr } = parsePerPbr(html);
   const mcapWon = parseMarketCapWon(html);
   const turnoverWon = parseTurnoverWon(html);
@@ -241,6 +289,10 @@ export function parseNaverSiseHtml(html) {
   return {
     last,
     prevClose,
+    open: session.open,
+    high: session.high,
+    low: session.low,
+    volume: session.volume,
     high52w,
     low52w,
     mcapWon,
@@ -275,6 +327,10 @@ export function parseNaverMobileIntegration(json) {
   const out = {
     last: null,
     prevClose: null,
+    open: null,
+    high: null,
+    low: null,
+    volume: null,
     high52w: null,
     low52w: null,
     mcapWon: null,
@@ -298,6 +354,12 @@ export function parseNaverMobileIntegration(json) {
   if (byCode.accumulatedTradingValue) {
     out.turnoverWon = parseMarketCapKoreanText(byCode.accumulatedTradingValue);
   }
+  if (byCode.openPrice) out.open = parseKoreanNumber(byCode.openPrice);
+  if (byCode.highPrice) out.high = parseKoreanNumber(byCode.highPrice);
+  if (byCode.lowPrice) out.low = parseKoreanNumber(byCode.lowPrice);
+  if (byCode.accumulatedTradingVolume) {
+    out.volume = parseKoreanNumber(byCode.accumulatedTradingVolume);
+  }
   if (byCode.highPriceOf52Weeks) out.high52w = parseKoreanNumber(byCode.highPriceOf52Weeks);
   if (byCode.lowPriceOf52Weeks) out.low52w = parseKoreanNumber(byCode.lowPriceOf52Weeks);
   if (byCode.per) out.per = parseKoreanNumber(byCode.per);
@@ -312,6 +374,9 @@ export function parseNaverMobileIntegration(json) {
   if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
     // Recent session close — use as last only when PC sise is unavailable (preferNaverLast merge).
     out.last = parseKoreanNumber(dt[0].closePrice);
+    if (out.volume == null && dt[0].accumulatedTradingVolume != null) {
+      out.volume = parseKoreanNumber(dt[0].accumulatedTradingVolume);
+    }
   }
   if (out.last == null && byCode.lastClosePrice) {
     out.last = parseKoreanNumber(byCode.lastClosePrice);
@@ -362,6 +427,10 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   const out = { ...quote };
   if (naver.last != null && (preferLast || out.last == null)) out.last = naver.last;
   if (naver.prevClose != null && (preferLast || out.prevClose == null)) out.prevClose = naver.prevClose;
+  if (naver.open != null && (preferLast || out.open == null)) out.open = naver.open;
+  if (naver.high != null && (preferLast || out.high == null)) out.high = naver.high;
+  if (naver.low != null && (preferLast || out.low == null)) out.low = naver.low;
+  if (naver.volume != null && (preferLast || out.volume == null)) out.volume = naver.volume;
   if (naver.chg1dPct != null && (preferLast || out.chg1dPct == null)) out.chg1dPct = naver.chg1dPct;
   if (naver.high52w != null && (preferLast || out.high52w == null)) out.high52w = naver.high52w;
   if (naver.low52w != null && (preferLast || out.low52w == null)) out.low52w = naver.low52w;
@@ -400,6 +469,10 @@ export function emptyQuote() {
   return {
     last: null,
     prevClose: null,
+    open: null,
+    high: null,
+    low: null,
+    volume: null,
     high52w: null,
     low52w: null,
     mcapWon: null,
