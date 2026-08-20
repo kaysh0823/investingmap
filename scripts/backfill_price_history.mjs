@@ -1,9 +1,10 @@
 /**
  * Backfill stock_price_history: KRX trading days × full KOSPI/KOSDAQ universe → Supabase.
  * Reuses tradingDates + fetchMarketDay from functions/lib/krx_yoy.mjs.
- * Usage: node scripts/backfill_price_history.mjs [--days=1250] [--probe-only]
- * Default: target ~5Y (1,250 sessions), falling back to ~3Y (750) when KRX
- * does not expose the older probe window.
+ * Usage: node scripts/backfill_price_history.mjs [--days=2200] [--probe-only]
+ * Default: ~9Y (2,200 sessions) so candle weekly 5Y has 260 display weeks +
+ * 125w BBW/DISP norm + 50w MA50 (이격도) seed. Falls back to 5Y / 3Y when KRX
+ * does not expose older windows.
  */
 import fs from 'fs';
 import path from 'path';
@@ -11,6 +12,8 @@ import { fileURLToPath } from 'url';
 import { tradingDates, fetchMarketDay, historyFieldsFromKrxRow } from '../functions/lib/krx_yoy.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+/** Weekly 5Y (260+125+50)w × ~5 ≈ 2,175 → round up for holidays/gaps. */
+const HIST_TRADING_DAYS_8Y = 2200;
 const HIST_TRADING_DAYS_5Y = 1250;
 const HIST_TRADING_DAYS_3Y = 750;
 const CANDIDATE_BUFFER = 1.12;
@@ -163,6 +166,7 @@ async function probeHistoryDepth(authKey, targetDays) {
 }
 
 function historyTier(days) {
+  if (days >= HIST_TRADING_DAYS_8Y) return '9Y';
   if (days >= HIST_TRADING_DAYS_5Y) return '5Y';
   if (days >= HIST_TRADING_DAYS_3Y) return '3Y';
   return '<3Y';
@@ -187,22 +191,30 @@ async function main() {
   const daysArg = process.argv.find((a) => a.startsWith('--days='));
   const explicitDays = daysArg ? Math.max(1, parseInt(daysArg.split('=')[1], 10) || 0) : 0;
   const probeOnly = process.argv.includes('--probe-only');
-  let targetDays = explicitDays || HIST_TRADING_DAYS_5Y;
+  let targetDays = explicitDays || HIST_TRADING_DAYS_8Y;
 
   if (!explicitDays) {
-    console.log(`Probing KRX history for ~5Y (${HIST_TRADING_DAYS_5Y} sessions)...`);
-    const probe5y = await probeHistoryDepth(authKey, HIST_TRADING_DAYS_5Y);
-    if (probe5y.ok) {
-      console.log(`  5Y probe OK: ${probe5y.basDd} (${probe5y.rows} rows)`);
+    console.log(`Probing KRX history for ~9Y (${HIST_TRADING_DAYS_8Y} sessions)...`);
+    const probe8y = await probeHistoryDepth(authKey, HIST_TRADING_DAYS_8Y);
+    if (probe8y.ok) {
+      console.log(`  9Y probe OK: ${probe8y.basDd} (${probe8y.rows} rows)`);
     } else {
-      console.warn(`  5Y probe unavailable: ${probe5y.sample.join(', ')}`);
-      console.log(`Probing KRX history for ~3Y (${HIST_TRADING_DAYS_3Y} sessions)...`);
-      const probe3y = await probeHistoryDepth(authKey, HIST_TRADING_DAYS_3Y);
-      if (!probe3y.ok) {
-        throw new Error(`KRX history unavailable at both 5Y and 3Y probe windows`);
+      console.warn(`  9Y probe unavailable: ${probe8y.sample.join(', ')}`);
+      console.log(`Probing KRX history for ~5Y (${HIST_TRADING_DAYS_5Y} sessions)...`);
+      const probe5y = await probeHistoryDepth(authKey, HIST_TRADING_DAYS_5Y);
+      if (probe5y.ok) {
+        targetDays = HIST_TRADING_DAYS_5Y;
+        console.warn(`  Falling back to 5Y; probe OK: ${probe5y.basDd} (${probe5y.rows} rows)`);
+      } else {
+        console.warn(`  5Y probe unavailable: ${probe5y.sample.join(', ')}`);
+        console.log(`Probing KRX history for ~3Y (${HIST_TRADING_DAYS_3Y} sessions)...`);
+        const probe3y = await probeHistoryDepth(authKey, HIST_TRADING_DAYS_3Y);
+        if (!probe3y.ok) {
+          throw new Error(`KRX history unavailable at 9Y, 5Y, and 3Y probe windows`);
+        }
+        targetDays = HIST_TRADING_DAYS_3Y;
+        console.warn(`  Falling back to 3Y; probe OK: ${probe3y.basDd} (${probe3y.rows} rows)`);
       }
-      targetDays = HIST_TRADING_DAYS_3Y;
-      console.warn(`  Falling back to 3Y; probe OK: ${probe3y.basDd} (${probe3y.rows} rows)`);
     }
   }
 

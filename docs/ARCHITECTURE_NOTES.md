@@ -51,7 +51,7 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
 | `sector_returns` | 섹터별 기간 수익률(1D/20D/50D/120D/200D) — hub_trend와 동일 합산시총 | sync (trend 미러) |
 | `sector_mcap_daily` | 섹터 일별 합산 시총(스파크라인 20D+용) | backfill + sync 장마감 |
 | `sector_intraday_snapshots` | 1D 스파크라인용 일중 섹터 시총 스냅샷 | sync 정규장에만 append |
-| `stock_price_history` | 종목 일별 OHLC·거래량·시총(≥500거래일 권장, 캔들·지표 워밍업) | `backfill_price_history.mjs --days=500` + sync |
+| `stock_price_history` | 종목 일별 OHLC·거래량·시총(≥2200거래일≈9Y 권장: 주봉5Y+125주 정규화+MA50 이격도) | `backfill_price_history.mjs` + sync |
 | `hub_rank_daily` | 6개 metric 일별 순위(순위 변동 계산용) | sync 장마감 |
 
 마이그레이션: `supabase/migrations/0001~0011`. **적용은 Supabase SQL Editor에서 수동**.
@@ -157,7 +157,7 @@ IT·소프트웨어(software) · 지주회사(holdings) · 통신(telecom)
 - [ ] 매년 말: (휴장 감지는 자동이지만) KRX 특이 휴장 확인
 - [ ] 토큰 만료: cron-job.org의 GitHub PAT (2027-07-13 만료) 갱신
 - [ ] `hub_rank_daily` 테이블 비대 시: 오래된 행(7일 이전) 정리 로직 추가 검토
-- [ ] `stock_price_history` 깊이: 캔들 MA120·BBW120 + 1Y 표시를 위해 ≥500거래일 유지 (`backfill_price_history.mjs --days=500`)
+- [ ] `stock_price_history` 깊이: 캔들 주봉5Y + BBW%/이격도%(125주 정규화+MA50)를 위해 ≥2200거래일 유지 (`backfill_price_history.mjs`, 기본 ~9Y)
 - [ ] 섹터 합산시총 커버리지: `verify_sector_mcap_coverage.mjs` (기준일 구성종목 누락 시 `--fix`)
 - [ ] 카드↔변동추이: `verify_hub_sectors_vs_trend.mjs` (필요 시 `--live=`)
 

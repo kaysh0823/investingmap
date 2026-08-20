@@ -1,12 +1,14 @@
 /**
  * Ticker daily OHLC series from stock_price_history.
  * Ranges map to trading-day lookbacks (aligned with hub horizons).
+ * Fetch window includes indicator warmup so daily BBW%/DISP% (125 bars) and
+ * weekly aggregation (125w norm + 50w MA50 ≈ 875 sessions) can fill the left edge.
  */
 
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 import { normalizeTicker } from './hub_dashboard_core.mjs';
 
-/** @type {Record<string, number>} */
+/** Display bars by range (daily chart). */
 export const OHLC_RANGE_DAYS = Object.freeze({
   '3m': 50,
   '6m': 120,
@@ -15,7 +17,25 @@ export const OHLC_RANGE_DAYS = Object.freeze({
   '5y': 1250,
 });
 
-/** Bars fetched beyond display window so MA120 / BBW·DISP(125) fill the left edge. */
+/** Weekly display weeks (matches candle_modal DISPLAY_BARS.weekly). */
+export const OHLC_WEEKLY_DISPLAY = Object.freeze({
+  '3m': 13,
+  '6m': 26,
+  '1y': 52,
+  '3y': 156,
+  '5y': 260,
+});
+
+/** Trailing min/max window for BBW% / DISP% (bars or weeks depending on interval). */
+export const OHLC_NORM_WINDOW = 125;
+/**
+ * Bars/weeks needed before NORM_WINDOW for 이격도% (MA50 seed).
+ * Left-edge DISP% needs MA50 + 125-norm contiguous non-null values.
+ */
+export const OHLC_DISP_SEED = 50;
+/** Approx trading days per calendar week (KRX). */
+export const OHLC_DAYS_PER_WEEK = 5;
+/** Extra daily bars for MA120 / daily 125-bar norm on short ranges. */
 export const OHLC_INDICATOR_WARMUP = 240;
 /** Absolute floor for OHLC history fetch (e.g. 1Y 200 + warmup 240). */
 export const OHLC_FETCH_MIN = 440;
@@ -31,13 +51,21 @@ export function normalizeOhlcRange(raw) {
 }
 
 /**
+ * Daily rows to fetch for a range token.
+ * Long ranges must cover weekly
+ * (display + 125w norm + 50w MA50 for 이격도) × ~5 sessions so the client can
+ * aggregate weeks and still fill BBW%/DISP% at the left edge of the display window.
  * @param {string} rangeToken
  * @returns {number}
  */
 export function ohlcFetchLimit(rangeToken) {
   const range = normalizeOhlcRange(rangeToken);
   const display = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
-  return Math.max(display + OHLC_INDICATOR_WARMUP, OHLC_FETCH_MIN);
+  const dailyNeed = display + OHLC_INDICATOR_WARMUP;
+  const weeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];
+  const weeklyNeed =
+    (weeks + OHLC_NORM_WINDOW + OHLC_DISP_SEED) * OHLC_DAYS_PER_WEEK;
+  return Math.max(dailyNeed, weeklyNeed, OHLC_FETCH_MIN);
 }
 
 /**
@@ -69,7 +97,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
   const displayDays = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
   const limit = ohlcFetchLimit(range);
   // PostgREST projects commonly cap one response at 1,000 rows. Page long ranges
-  // explicitly so 5Y is not silently truncated while keeping the compact OHLC fields.
+  // explicitly so 5Y+warmup is not silently truncated.
   const pageSize = 1000;
   const rows = [];
   for (let offset = 0; offset < limit; offset += pageSize) {

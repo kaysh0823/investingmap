@@ -201,8 +201,9 @@ assert.ok(Number.isFinite(atr.signal[10]), 'ATR EMA9 first value');
 
 assert.equal(normalizeOhlcRange('3y'), '3y');
 assert.equal(normalizeOhlcRange('5y'), '5y');
-assert.equal(ohlcFetchLimit('3y'), 990);
-assert.equal(ohlcFetchLimit('5y'), 1490);
+assert.equal(ohlcFetchLimit('3y'), 1655, '3Y covers weekly 156+125+50 weeks');
+assert.equal(ohlcFetchLimit('5y'), 2175, '5Y covers weekly 260+125+50 weeks');
+assert.equal(ohlcFetchLimit('1y'), 1135, '1Y covers weekly 52+125+50 weeks');
 
 const originalFetch = globalThis.fetch;
 const requests = [];
@@ -211,11 +212,11 @@ globalThis.fetch = async (url) => {
   const parsed = new URL(url);
   const offset = Number(parsed.searchParams.get('offset') || 0);
   const limit = Number(parsed.searchParams.get('limit') || 0);
-  const available = Math.max(0, 1250 - offset);
+  const available = Math.max(0, 2175 - offset);
   const count = Math.min(limit, available);
   const rows = [];
   for (let i = 0; i < count; i++) {
-    const n = 1250 - (offset + i);
+    const n = 2175 - (offset + i);
     rows.push({
       trade_date: `2020-01-${String((n % 28) + 1).padStart(2, '0')}`,
       open: n,
@@ -236,12 +237,13 @@ try {
     '005930',
     '5y',
   );
-  assert.equal(requests.length, 2, '5Y PostgREST pagination');
-  assert.equal(payload.bars.length, 1250, '5Y returns all available bars');
+  assert.equal(requests.length, 3, '5Y+warmup PostgREST pagination');
+  assert.equal(payload.bars.length, 2175, '5Y returns display+weekly-warmup bars');
   assert.match(requests[0], /limit=1000&offset=0/);
-  assert.match(requests[1], /limit=490&offset=1000/);
+  assert.match(requests[1], /limit=1000&offset=1000/);
+  assert.match(requests[2], /limit=175&offset=2000/);
 } finally {
   globalThis.fetch = originalFetch;
 }
 
-console.log('verify:candle OK — weekly OHLCV, ATR%, 3Y/5Y pagination');
+console.log('verify:candle OK — weekly OHLCV, ATR%, 3Y/5Y weekly-warmup pagination');
