@@ -57,14 +57,24 @@ check(html.includes("supplier: '#58a6ff'"), 'supplier blue edge color missing');
 check(html.includes("customer: '#f0a44b'"), 'customer orange edge color missing');
 check(html.includes("peer: '#8b949e'"), 'peer gray edge color missing');
 check(html.includes("bigchipLinkRole(link) === 'peer' ? '4 4'"), 'peer dashed edge style missing');
-check(html.includes('../js/map_i18n.js?v=5'), 'map_i18n cache-bust version missing');
+check(html.includes('../js/map_i18n.js?v=6'), 'map_i18n cache-bust version missing');
 check(html.includes('../js/map_heatmap.js?v=12'), 'map_heatmap cache-bust version missing');
 check(html.includes('"sbKorean": "밸류체인"'), 'ko sidebar label should be 밸류체인');
 check(html.includes('"sbKorean": "Value chain"'), 'en sidebar label should be Value chain');
 check(html.includes('id="sb-korean">밸류체인</div>'), 'sidebar title markup should say 밸류체인');
 check(html.includes('BIGCHIP_CHAIN_ORDER'), 'value-chain order constant missing');
+check(html.includes('BIGCHIP_NEUTRAL_COLOR'), 'neutral chain color constant missing');
 check(html.includes('bigchipPresentChains'), 'present-chain legend helper missing');
-check(html.includes("'IDM/종합반도체'"), 'IDM/종합반도체 chain missing');
+check(html.includes("c.chain !== 'IDM/종합반도체'"), 'IDM chip must be excluded from present-chain legend');
+check(html.includes('bigchipNodeFill'), 'node fill helper missing');
+check(html.includes('bigchipIsDomesticPartner'), 'domestic partner detector missing');
+check(html.includes('isHub: true'), 'hub nodes should keep hub styling');
+check(
+  html.includes('Every node keeps a name label') || html.includes('node.append(\'text\')') || /node\.append\('text'\)/.test(html),
+  '전 노드 이름 라벨 존재: text labels must not be gated on radius',
+);
+check(!/node\.filter\(\(item\) => item\.r >= 9/.test(html), 'radius-gated labels must be removed');
+check(html.includes("'IDM/종합반도체'"), 'IDM/종합반도체 chain color retained for hubs');
 check(html.includes("'전공정 장비'"), '전공정 장비 chain color missing');
 check(html.includes("'후공정 장비'"), '후공정 장비 chain color missing');
 check(html.includes("'패키징/테스트'"), '패키징/테스트 chain color missing');
@@ -73,11 +83,15 @@ check(html.includes("'팹리스'"), '팹리스 chain color missing');
 check(html.includes("'소재'"), '소재 chain color missing');
 check(!html.includes("'종합반도체':"), 'legacy 종합반도체 chain key should be removed');
 check(!html.includes("'HBM·메모리'"), 'legacy HBM·메모리 chain key should be removed');
-check(html.includes('company.ticker && company.chain'), 'domestic ticker nodes should use value-chain styling');
 check(
   /chain: '[^']+'/.test(html) && html.includes("ticker: '014680'") && html.includes("chain: '소재'"),
   'domestic expansion ticker should carry semi chain (e.g. 한솔케미칼=소재)',
 );
+for (const node of relations.expansion?.nodes || []) {
+  check(!!node.name, `expansion node ${node.id} missing name`);
+  check(html.includes(`name: '${node.name.replace(/'/g, "\\'")}'`) || html.includes(`name: "${node.name}"`) || html.includes(node.name),
+    `generated HTML missing relations name for ${node.id}`);
+}
 check(heatmap.includes('renderSmallCards'), 'small-sector heatmap fallback missing');
 check(heatmap.includes("min-height:420px;height:min(62vh,640px)"), 'heatmap self-sizing fallback missing');
 check(edges.length >= 100, `expected at least 100 relation edges, got ${edges.length}`);

@@ -73,12 +73,26 @@ function bigchipEscape(value) {
     }
     function bigchipPresentChains() {
       const present = new Set();
-      koreanCompanies.forEach((c) => { if (c.chain) present.add(c.chain); });
-      globalCompanies.forEach((c) => { if (c.ticker && c.chain) present.add(c.chain); });
+      // Hub IDM is kept for node color but omitted from filter chips.
+      koreanCompanies.forEach((c) => {
+        if (c.chain && c.chain !== 'IDM/종합반도체') present.add(c.chain);
+      });
+      globalCompanies.forEach((c) => {
+        if (c.ticker && c.chain && c.chain !== 'IDM/종합반도체') present.add(c.chain);
+      });
       const order = (typeof BIGCHIP_CHAIN_ORDER !== 'undefined' && BIGCHIP_CHAIN_ORDER.length)
         ? BIGCHIP_CHAIN_ORDER
         : Object.keys(CHAIN_COLORS);
-      return order.filter((ch) => present.has(ch));
+      return order.filter((ch) => ch !== 'IDM/종합반도체' && present.has(ch));
+    }
+    function bigchipNodeFill(item) {
+      if (item.type === 'global') return REGION_COLORS[item.region] || '#888';
+      if (item.chain && CHAIN_COLORS[item.chain]) return CHAIN_COLORS[item.chain];
+      return (typeof BIGCHIP_NEUTRAL_COLOR !== 'undefined' ? BIGCHIP_NEUTRAL_COLOR : '#8b949e');
+    }
+    function bigchipIsDomesticPartner(company) {
+      // Listed tickers (and KR partners without a ticker) use value-chain circles, not country diamonds.
+      return !!(company.ticker || company.countryCode === 'KR');
     }
     function bigchipRelationTags(c) {
       const maxVisible = 8;
@@ -249,7 +263,7 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
           id: company.id, label: company.name, labelEn: company.nameEn, type: 'korean', chain: company.chain,
           ticker: company.ticker, market: company.market, semType: company.semType, semTypeEn: company.semTypeEn,
           products: company.products, productsEn: company.productsEn, revenue: company.revenue, mcapWon: company.mcapWon,
-          revTier: company.revTier, data: company, tags: company.tags || [],
+          revTier: company.revTier, data: company, tags: company.tags || [], isHub: true,
           r: company.revTier === 3 ? 18 : company.revTier === 2 ? 13 : 9
         });
         nodeIndex[company.id] = nodes.length - 1;
@@ -257,14 +271,14 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
       const usedGlobal = new Set();
       koreanCompanies.forEach((company) => (company.partners || []).forEach((partner) => usedGlobal.add(partnerRef(partner).id)));
       globalCompanies.filter((company) => usedGlobal.has(company.id)).forEach((company) => {
-        // Domestic listed partners use the semi value-chain palette (circles), not country diamonds.
-        if (company.ticker && company.chain) {
+        // Names always come from relations-built globalCompanies; chain is optional for color.
+        if (bigchipIsDomesticPartner(company)) {
           nodes.push({
             id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'korean',
-            chain: company.chain, ticker: company.ticker, market: company.market || '',
+            chain: company.chain || '', ticker: company.ticker || '', market: company.market || '',
             region: company.region, countryCode: company.countryCode, sector: company.sector,
             country: company.country, targetUrl: company.targetUrl || '', mcapWon: company.mcapWon || 0,
-            revTier: company.revTier || 1,
+            revTier: company.revTier || 1, isHub: false,
             r: company.revTier === 3 ? 14 : company.revTier === 2 ? 11 : 8
           });
         } else {
@@ -302,19 +316,21 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
         .force('center', d3.forceCenter(W / 2, H / 2))
         .force('collide', d3.forceCollide((node) => node.r + 8))
         .force('x', d3.forceX((node) => {
+          if (node.isHub) return W / 2;
           if (node.type === 'korean') {
             const angle = ANGLE[node.chain] || 0;
             return W / 2 + Math.cos(angle * Math.PI / 180) * 145;
           }
           return W / 2;
-        }).strength(0.055))
+        }).strength((node) => node.isHub ? 0.12 : 0.055))
         .force('y', d3.forceY((node) => {
+          if (node.isHub) return H / 2;
           if (node.type === 'korean') {
             const angle = ANGLE[node.chain] || 0;
             return H / 2 + Math.sin(angle * Math.PI / 180) * 145;
           }
           return H / 2;
-        }).strength(0.055));
+        }).strength((node) => node.isHub ? 0.12 : 0.055));
 
       const link = g.append('g').selectAll('line').data(links).join('line');
       const node = g.append('g').selectAll('g').data(nodes).join('g')
@@ -333,16 +349,18 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
           .on('drag', (event, item) => { item.fx = event.x; item.fy = event.y; })
           .on('end', (event, item) => { if (!event.active) simulation.alphaTarget(0); item.fx = null; item.fy = null; }));
       node.filter((item) => item.type === 'korean').append('circle')
-        .attr('r', (item) => item.r).attr('fill', (item) => CHAIN_COLORS[item.chain] || '#888')
-        .attr('fill-opacity', 0.85).attr('stroke', graphStroke).attr('stroke-width', 1.5);
+        .attr('r', (item) => item.r).attr('fill', (item) => bigchipNodeFill(item))
+        .attr('fill-opacity', 0.85).attr('stroke', graphStroke)
+        .attr('stroke-width', (item) => item.isHub ? 2.4 : 1.5);
       node.filter((item) => item.type === 'global').append('polygon')
         .attr('points', (item) => { const r = item.r + 2; return \`0,\${-r} \${r},0 0,\${r} \${-r},0\`; })
-        .attr('fill', (item) => REGION_COLORS[item.region] || '#888').attr('fill-opacity', 0.8)
+        .attr('fill', (item) => bigchipNodeFill(item)).attr('fill-opacity', 0.8)
         .attr('stroke', graphStroke).attr('stroke-width', 1.2);
-      node.filter((item) => item.r >= 9 || item.type === 'global').append('text')
+      // Every node keeps a name label (relations JSON names); do not gate on radius.
+      node.append('text')
         .text((item) => lang === 'en' ? (item.labelEn || item.label) : item.label)
         .attr('text-anchor', 'middle').attr('dy', (item) => item.r + 11)
-        .attr('font-size', (item) => item.type === 'korean' ? (item.r >= 13 ? 11 : 9) : 9)
+        .attr('font-size', (item) => item.type === 'korean' ? (item.isHub || item.r >= 13 ? 11 : 9) : 9)
         .attr('fill', graphLabel).attr('pointer-events', 'none');
       simulation.on('tick', () => {
         link.attr('x1', (item) => item.source.x).attr('y1', (item) => item.source.y)
@@ -389,11 +407,11 @@ export function applyBigchipRelationNetwork(options = {}) {
   const chainOrder = options.chainOrder || SEMI_VALUE_CHAIN_ORDER;
   let html = fs.readFileSync(HTML_PATH, 'utf8');
   html = html.replace('</style>', `${CSS}\n  </style>`);
-  html = html.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=5"');
+  html = html.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=6"');
   html = html.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=12"');
   html = html.replace(
     /const CHAIN_COLORS = \{[\s\S]*?\};/,
-    (block) => `${block}\n    const BIGCHIP_CHAIN_ORDER = ${JSON.stringify(chainOrder)};`,
+    (block) => `${block}\n    const BIGCHIP_CHAIN_ORDER = ${JSON.stringify(chainOrder)};\n    const BIGCHIP_NEUTRAL_COLOR = '#8b949e';`,
   );
   html = html.replace(
     /<div class="sidebar-title" id="sb-korean">[^<]*<\/div>/,

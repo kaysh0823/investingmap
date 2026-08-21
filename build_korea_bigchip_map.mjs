@@ -54,11 +54,8 @@ function loadSemiChainByTicker() {
 function resolveDomesticChain(ticker, semiChains) {
   if (!ticker) return '';
   if (HUB_CHAIN_BY_TICKER[ticker]) return HUB_CHAIN_BY_TICKER[ticker];
-  const chain = semiChains.get(ticker);
-  if (!chain) {
-    throw new Error(`bigchip domestic ticker missing semi chain: ${ticker}`);
-  }
-  return chain;
+  // Name always comes from relations JSON; chain/color is optional semi lookup.
+  return semiChains.get(ticker) || '';
 }
 
 const semiChains = loadSemiChainByTicker();
