@@ -17,6 +17,7 @@ const CHAIN_COLORS = {
   전공정: '#1E88E5',
   후공정: '#43A047',
   팹리스: '#66BB6A',
+  디자인하우스: '#00897B',
   파운드리: '#FFA726',
   소재: '#EF5350',
   '전공정 장비': '#AB47BC',
@@ -26,11 +27,12 @@ const CHAIN_COLORS = {
   '반도체 유통': '#8D6E63',
 };
 
-const FE_CHAINS = ['팹리스', '파운드리', '소재', '전공정 장비'];
+const FE_CHAINS = ['팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비'];
 const BE_CHAINS = ['부품/기판', '패키징/테스트', '후공정 장비', '반도체 유통'];
-const CHIP_CHAINS = ['all', '전공정', '후공정', '팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
-const LEGEND_CHAINS = ['팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
-const ANGLE = "{ 팹리스: 0, 파운드리: 45, 소재: 90, '전공정 장비': 135, '후공정 장비': 180, '부품/기판': 225, '패키징/테스트': 270, '반도체 유통': 315 }";
+const CHIP_CHAINS = ['all', '전공정', '후공정', '팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+const LEGEND_CHAINS = ['팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+const ANGLE =
+  "{ 팹리스: 0, '디자인하우스': 40, 파운드리: 80, 소재: 120, '전공정 장비': 160, '후공정 장비': 200, '부품/기판': 240, '패키징/테스트': 280, '반도체 유통': 320 }";
 
 /**
  * 재분류 과정에서 벨류체인과 어긋난 semType/products를 바로잡을 종목.
@@ -47,7 +49,8 @@ const EXPECTED_COUNTS = {
   소재: 22,
   '부품/기판': 11,
   '패키징/테스트': 13,
-  팹리스: 10,
+  팹리스: 8,
+  디자인하우스: 2,
   파운드리: 1,
   '반도체 유통': 1,
 };
@@ -97,23 +100,25 @@ function patchUi(html) {
     `const chains = ${toJs(LEGEND_CHAINS)};`,
   );
   out = out.replace(
-    /\{ (?:IDM: \d+, )?팹리스: \d+, 파운드리: \d+, 소재: \d+, '전공정 장비': \d+, '후공정 장비': \d+, '부품\/기판': \d+, '패키징\/테스트': \d+, '반도체 유통': \d+ \}/g,
+    /\{ (?:IDM: \d+, )?(?:팹리스: \d+, )?(?:'디자인하우스': \d+, )?파운드리: \d+, 소재: \d+, '전공정 장비': \d+, '후공정 장비': \d+, '부품\/기판': \d+, '패키징\/테스트': \d+, '반도체 유통': \d+ \}/g,
     ANGLE,
   );
 
   const labelKo =
-    '{ 전공정: \'전공정 (설계·제조·소재·장비)\', 후공정: \'후공정 (부품·기판·패키징·테스트)\', 팹리스: \'팹리스 (설계)\', 파운드리: \'파운드리 (위탁제조)\', 소재: \'소재·공정부품\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'반도체 유통\' }';
+    '{ 전공정: \'전공정 (설계·제조·소재·장비)\', 후공정: \'후공정 (부품·기판·패키징·테스트)\', 팹리스: \'팹리스 (설계)\', 디자인하우스: \'디자인하우스\', 파운드리: \'파운드리 (위탁제조)\', 소재: \'소재·공정부품\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'반도체 유통\' }';
   const filterKo =
-    '{ 전공정: \'전공정\', 후공정: \'후공정\', 팹리스: \'팹리스\', 파운드리: \'파운드리\', 소재: \'소재\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'유통\' }';
+    '{ 전공정: \'전공정\', 후공정: \'후공정\', 팹리스: \'팹리스\', 디자인하우스: \'디자인하우스\', 파운드리: \'파운드리\', 소재: \'소재\', \'전공정 장비\': \'전공정 장비\', \'후공정 장비\': \'후공정 장비\', \'부품/기판\': \'부품·기판\', \'패키징/테스트\': \'패키징·테스트\', \'반도체 유통\': \'유통\' }';
   const labelEn =
-    '{ 전공정: \'Front-end (design, fab, materials, equipment)\', 후공정: \'Back-end (components, substrate, packaging, test)\', 팹리스: \'Fabless (Design)\', 파운드리: \'Foundry\', 소재: \'Materials & Parts\', \'전공정 장비\': \'Front-end equipment\', \'후공정 장비\': \'Back-end equipment\', \'부품/기판\': \'Components/Substrate\', \'패키징/테스트\': \'Packaging & Test\', \'반도체 유통\': \'Semiconductor distribution\' }';
+    '{ 전공정: \'Front-end (design, fab, materials, equipment)\', 후공정: \'Back-end (components, substrate, packaging, test)\', 팹리스: \'Fabless (Design)\', 디자인하우스: \'Design house\', 파운드리: \'Foundry\', 소재: \'Materials & Parts\', \'전공정 장비\': \'Front-end equipment\', \'후공정 장비\': \'Back-end equipment\', \'부품/기판\': \'Components/Substrate\', \'패키징/테스트\': \'Packaging & Test\', \'반도체 유통\': \'Semiconductor distribution\' }';
   const filterEn =
-    '{ 전공정: \'Front-end\', 후공정: \'Back-end\', 팹리스: \'Fabless\', 파운드리: \'Foundry\', 소재: \'Materials\', \'전공정 장비\': \'FE equipment\', \'후공정 장비\': \'BE equipment\', \'부품/기판\': \'Components/Sub\', \'패키징/테스트\': \'Packaging/Test\', \'반도체 유통\': \'Distribution\' }';
+    '{ 전공정: \'Front-end\', 후공정: \'Back-end\', 팹리스: \'Fabless\', 디자인하우스: \'Design house\', 파운드리: \'Foundry\', 소재: \'Materials\', \'전공정 장비\': \'FE equipment\', \'후공정 장비\': \'BE equipment\', \'부품/기판\': \'Components/Sub\', \'패키징/테스트\': \'Packaging/Test\', \'반도체 유통\': \'Distribution\' }';
 
   // T.ko / T.en 순서로 각각 한 번씩만 교체한다. 사전은 한 줄짜리 리터럴이므로
   // 줄·중괄호를 넘지 않는 패턴을 써야 재실행 시 다음 블록을 삼키지 않는다.
   out = replaceDicts(out, 'chainLabel', [labelKo, labelEn]);
   out = replaceDicts(out, 'chainFilter', [filterKo, filterEn]);
+  out = out.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=7"');
+  out = out.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=13"');
   return out;
 }
 

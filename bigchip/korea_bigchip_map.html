@@ -234,14 +234,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=15"></script>
-  <script src="../js/map_i18n.js?v=6"></script>
+  <script src="../js/map_i18n.js?v=7"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=8"></script>
   <script src="../js/sector_nav.js?v=7"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=12"></script>
+  <script src="../js/map_heatmap.js?v=13"></script>
   <script src="../js/map_momentum.js?v=6"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
@@ -2221,8 +2221,8 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"IDM/종합반도체":"#42A5F5","팹리스":"#66BB6A","파운드리":"#FFA726","소재":"#EF5350","전공정 장비":"#AB47BC","후공정 장비":"#8E24AA","부품/기판":"#26C6DA","패키징/테스트":"#FFCA28","반도체 유통":"#8D6E63"};
-    const BIGCHIP_CHAIN_ORDER = ["IDM/종합반도체","팹리스","파운드리","소재","전공정 장비","후공정 장비","부품/기판","패키징/테스트","반도체 유통"];
+    const CHAIN_COLORS = {"IDM/종합반도체":"#42A5F5","팹리스":"#66BB6A","디자인하우스":"#00897B","파운드리":"#FFA726","소재":"#EF5350","전공정 장비":"#AB47BC","후공정 장비":"#8E24AA","부품/기판":"#26C6DA","패키징/테스트":"#FFCA28","반도체 유통":"#8D6E63"};
+    const BIGCHIP_CHAIN_ORDER = ["IDM/종합반도체","팹리스","디자인하우스","파운드리","소재","전공정 장비","후공정 장비","부품/기판","패키징/테스트","반도체 유통"];
     const BIGCHIP_NEUTRAL_COLOR = '#8b949e';
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
@@ -2270,6 +2270,7 @@
         "chainLabel": {
             "IDM/종합반도체": "IDM/종합반도체",
             "팹리스": "팹리스 (설계)",
+            "디자인하우스": "디자인하우스",
             "파운드리": "파운드리 (위탁제조)",
             "소재": "소재·공정부품",
             "전공정 장비": "전공정 장비",
@@ -2281,6 +2282,7 @@
         "chainFilter": {
             "IDM/종합반도체": "IDM",
             "팹리스": "팹리스",
+            "디자인하우스": "디자인하우스",
             "파운드리": "파운드리",
             "소재": "소재",
             "전공정 장비": "전공정 장비",
@@ -2367,6 +2369,7 @@
         "chainLabel": {
             "IDM/종합반도체": "IDM",
             "팹리스": "Fabless (Design)",
+            "디자인하우스": "Design house",
             "파운드리": "Foundry",
             "소재": "Materials & Parts",
             "전공정 장비": "Front-end equipment",
@@ -2378,6 +2381,7 @@
         "chainFilter": {
             "IDM/종합반도체": "IDM",
             "팹리스": "Fabless",
+            "디자인하우스": "Design house",
             "파운드리": "Foundry",
             "소재": "Materials",
             "전공정 장비": "FE equipment",
@@ -2482,8 +2486,8 @@
       { id: 'sfa_semicon', name: 'SFA반도체', nameEn: 'SFA Semicon', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '036540', market: 'KOSDAQ', chain: '패키징/테스트', mcapWon: 1193981799780, revTier: 2, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=036540' },
       { id: 'doosan_tesna', name: '두산테스나', nameEn: 'Doosan Tesna', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '131970', market: 'KOSDAQ', chain: '패키징/테스트', mcapWon: 3382266650000, revTier: 2, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=131970' },
       { id: 'lb_semicon', name: 'LB세미콘', nameEn: 'LB Semicon', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '061970', market: 'KOSDAQ', chain: '패키징/테스트', mcapWon: 307259101740, revTier: 1, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=061970' },
-      { id: 'gaonchips', name: '가온칩스', nameEn: 'Gaonchips', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '399720', market: 'KOSDAQ', chain: '팹리스', mcapWon: 680733530000, revTier: 1, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=399720' },
-      { id: 'adtechnology', name: '에이디테크놀로지', nameEn: 'ADTechnology', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '200710', market: 'KOSDAQ', chain: '팹리스', mcapWon: 543865082800, revTier: 1, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=200710' },
+      { id: 'gaonchips', name: '가온칩스', nameEn: 'Gaonchips', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '399720', market: 'KOSDAQ', chain: '디자인하우스', mcapWon: 680733530000, revTier: 1, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=399720' },
+      { id: 'adtechnology', name: '에이디테크놀로지', nameEn: 'ADTechnology', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '200710', market: 'KOSDAQ', chain: '디자인하우스', mcapWon: 543865082800, revTier: 1, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=200710' },
       { id: 'nepes', name: '네패스', nameEn: 'Nepes', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', primaryRole: 'supplier', ticker: '033640', market: 'KOSDAQ', chain: '패키징/테스트', mcapWon: 752882945300, revTier: 1, targetUrl: '../semiconductor/korea_semiconductor_map.html?tab=table&ticker=033640' },
       { id: 'shin_etsu', name: '신에츠화학', nameEn: 'Shin-Etsu Chemical', country: '일본/Japan', region: 'jp', sector: 'Upstream supplier', countryCode: 'JP', primaryRole: 'supplier', revTier: 1 },
       { id: 'sumco', name: 'SUMCO', nameEn: 'SUMCO', country: '일본/Japan', region: 'jp', sector: 'Upstream supplier', countryCode: 'JP', primaryRole: 'supplier', revTier: 1 },

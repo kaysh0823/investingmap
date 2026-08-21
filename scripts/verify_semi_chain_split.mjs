@@ -24,7 +24,8 @@ const EXPECTED_COUNTS = {
   소재: 22,
   '부품/기판': 11,
   '패키징/테스트': 13,
-  팹리스: 10,
+  팹리스: 8,
+  디자인하우스: 2,
   파운드리: 1,
   '반도체 유통': 1,
 };
@@ -72,6 +73,13 @@ compareCounts('prerender table', countChains(rowChains.map(([, chain]) => chain)
 const byTicker = new Map(companies.map((c) => [c.ticker, c.chain]));
 for (const [ticker, chain] of rowChains) {
   check(byTicker.get(ticker) === chain, `prerender table: ${ticker} shows ${chain}, data says ${byTicker.get(ticker)}`);
+}
+for (const [ticker, chain] of [['399720', '디자인하우스'], ['200710', '디자인하우스']]) {
+  check(byTicker.get(ticker) === chain, `${ticker} should be ${chain}, got ${byTicker.get(ticker)}`);
+  check(
+    companies.filter((c) => c.chain === '팹리스').every((c) => c.ticker !== ticker),
+    `${ticker} must not remain under 팹리스`,
+  );
 }
 
 // 3) chain UI definitions

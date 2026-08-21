@@ -407,8 +407,8 @@ export function applyBigchipRelationNetwork(options = {}) {
   const chainOrder = options.chainOrder || SEMI_VALUE_CHAIN_ORDER;
   let html = fs.readFileSync(HTML_PATH, 'utf8');
   html = html.replace('</style>', `${CSS}\n  </style>`);
-  html = html.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=6"');
-  html = html.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=12"');
+  html = html.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=7"');
+  html = html.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=13"');
   html = html.replace(
     /const CHAIN_COLORS = \{[\s\S]*?\};/,
     (block) => `${block}\n    const BIGCHIP_CHAIN_ORDER = ${JSON.stringify(chainOrder)};\n    const BIGCHIP_NEUTRAL_COLOR = '#8b949e';`,

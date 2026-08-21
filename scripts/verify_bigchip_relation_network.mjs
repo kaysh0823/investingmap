@@ -57,8 +57,8 @@ check(html.includes("supplier: '#58a6ff'"), 'supplier blue edge color missing');
 check(html.includes("customer: '#f0a44b'"), 'customer orange edge color missing');
 check(html.includes("peer: '#8b949e'"), 'peer gray edge color missing');
 check(html.includes("bigchipLinkRole(link) === 'peer' ? '4 4'"), 'peer dashed edge style missing');
-check(html.includes('../js/map_i18n.js?v=6'), 'map_i18n cache-bust version missing');
-check(html.includes('../js/map_heatmap.js?v=12'), 'map_heatmap cache-bust version missing');
+check(html.includes('../js/map_i18n.js?v=7'), 'map_i18n cache-bust version missing');
+check(html.includes('../js/map_heatmap.js?v=13'), 'map_heatmap cache-bust version missing');
 check(html.includes('"sbKorean": "밸류체인"'), 'ko sidebar label should be 밸류체인');
 check(html.includes('"sbKorean": "Value chain"'), 'en sidebar label should be Value chain');
 check(html.includes('id="sb-korean">밸류체인</div>'), 'sidebar title markup should say 밸류체인');
@@ -79,7 +79,17 @@ check(html.includes("'전공정 장비'"), '전공정 장비 chain color missing
 check(html.includes("'후공정 장비'"), '후공정 장비 chain color missing');
 check(html.includes("'패키징/테스트'"), '패키징/테스트 chain color missing');
 check(html.includes("'부품/기판'"), '부품/기판 chain color missing');
-check(html.includes("'팹리스'"), '팹리스 chain color missing');
+check(html.includes('"팹리스"'), '팹리스 chain color missing');
+check(html.includes('"디자인하우스"'), '디자인하우스 chain color missing');
+check(html.includes("chain: '디자인하우스'"), '디자인하우스 nodes missing from bigchip graph');
+check(
+  /ticker: '399720', market: '[^']*', chain: '디자인하우스'/.test(html),
+  '가온칩스(399720) should be 디자인하우스 on bigchip',
+);
+check(
+  /ticker: '200710', market: '[^']*', chain: '디자인하우스'/.test(html),
+  '에이디테크놀로지(200710) should be 디자인하우스 on bigchip',
+);
 check(html.includes("'소재'"), '소재 chain color missing');
 check(!html.includes("'종합반도체':"), 'legacy 종합반도체 chain key should be removed');
 check(!html.includes("'HBM·메모리'"), 'legacy HBM·메모리 chain key should be removed');

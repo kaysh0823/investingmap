@@ -654,14 +654,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=15"></script>
-  <script src="../js/map_i18n.js"></script>
+  <script src="../js/map_i18n.js?v=7"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=8"></script>
   <script src="../js/sector_nav.js?v=7"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=12"></script>
+  <script src="../js/map_heatmap.js?v=13"></script>
   <script src="../js/map_momentum.js?v=6"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
@@ -3551,7 +3551,7 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">12.20</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">팹리스</span></td>
+      <td><span class="chain-tag">디자인하우스</span></td>
       <td style="font-size:12px;color:var(--text-muted)">AI반도체 (설계 플랫폼)</td>
       <td class="products-cell">AI칩 설계 플랫폼, 고속 SerDes IP</td>
       <td><div class="partners-list">삼성전자(↑IDM), TSMC</div></td>
@@ -3827,7 +3827,7 @@
       <td class="fin-cell">145.32</td>
       <td class="fin-cell">3.86</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">팹리스</span></td>
+      <td><span class="chain-tag">디자인하우스</span></td>
       <td style="font-size:12px;color:var(--text-muted)">시스템반도체 (커스텀설계 서비스)</td>
       <td class="products-cell">커스텀 IC 설계 서비스 (턴키), AI반도체</td>
       <td><div class="partners-list">삼성전자(↑IDM), SK하이닉스(↑IDM), TSMC</div></td>
@@ -4299,8 +4299,8 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"전공정":"#1E88E5","후공정":"#43A047","팹리스":"#66BB6A","파운드리":"#FFA726","소재":"#EF5350","전공정 장비":"#AB47BC","후공정 장비":"#8E24AA","부품/기판":"#26C6DA","패키징/테스트":"#FFCA28","반도체 유통":"#8D6E63"};
-    const FE_CHAINS = ["팹리스","파운드리","소재","전공정 장비"];
+    const CHAIN_COLORS = {"전공정":"#1E88E5","후공정":"#43A047","팹리스":"#66BB6A","디자인하우스":"#00897B","파운드리":"#FFA726","소재":"#EF5350","전공정 장비":"#AB47BC","후공정 장비":"#8E24AA","부품/기판":"#26C6DA","패키징/테스트":"#FFCA28","반도체 유통":"#8D6E63"};
+    const FE_CHAINS = ["팹리스","디자인하우스","파운드리","소재","전공정 장비"];
     const BE_CHAINS = ["부품/기판","패키징/테스트","후공정 장비","반도체 유통"];
     function chainMatchesFilter(companyChain, filter) {
       if (filter === 'all') return true;
@@ -4360,8 +4360,8 @@
         sbKorean: '국내 상장 (벨류체인)', sbGlobal: '글로벌 거래처·지역',
         peerNetworkDesc: '실선 굵게=국내외 거래·납품, 같은 벨류체인 내 국내 시총 순 peer, 점선=지분·테마. 회색 가는 선=같은 벨류체인에서 함께 등장하는 글로벌 피어 그룹.',
         sbSize: '노드 크기 기준', sbHow: '조작 방법',
-        chainLabel: { 전공정: '전공정 (설계·제조·소재·장비)', 후공정: '후공정 (부품·기판·패키징·테스트)', 팹리스: '팹리스 (설계)', 파운드리: '파운드리 (위탁제조)', 소재: '소재·공정부품', '전공정 장비': '전공정 장비', '후공정 장비': '후공정 장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트', '반도체 유통': '반도체 유통' },
-        chainFilter: { 전공정: '전공정', 후공정: '후공정', 팹리스: '팹리스', 파운드리: '파운드리', 소재: '소재', '전공정 장비': '전공정 장비', '후공정 장비': '후공정 장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트', '반도체 유통': '유통' },
+        chainLabel: { 전공정: '전공정 (설계·제조·소재·장비)', 후공정: '후공정 (부품·기판·패키징·테스트)', 팹리스: '팹리스 (설계)', 디자인하우스: '디자인하우스', 파운드리: '파운드리 (위탁제조)', 소재: '소재·공정부품', '전공정 장비': '전공정 장비', '후공정 장비': '후공정 장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트', '반도체 유통': '반도체 유통' },
+        chainFilter: { 전공정: '전공정', 후공정: '후공정', 팹리스: '팹리스', 디자인하우스: '디자인하우스', 파운드리: '파운드리', 소재: '소재', '전공정 장비': '전공정 장비', '후공정 장비': '후공정 장비', '부품/기판': '부품·기판', '패키징/테스트': '패키징·테스트', '반도체 유통': '유통' },
         allFilter: '전체', kosp: 'KOSPI', kosdaq: 'KOSDAQ',
         regionLabel: { us: '미국', tw: '대만', cn: '중국', eu: '유럽', kr: '한국(비상장)' },
         sizeDesc: '대형: 시가총액 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◆ 글로벌 거래처(◇)',
@@ -4418,8 +4418,8 @@
         sbKorean: 'Korean Listed (Value Chain)', sbGlobal: 'Global customers · region',
         peerNetworkDesc: 'Bold solid = trade/supply; same-segment domestic peer ladder by market cap; dashed = equity/theme. Thin gray = global peer relationships within the same segment.',
         sbSize: 'Node Size', sbHow: 'How to Use',
-        chainLabel: { 전공정: 'Front-end (design, fab, materials, equipment)', 후공정: 'Back-end (components, substrate, packaging, test)', 팹리스: 'Fabless (Design)', 파운드리: 'Foundry', 소재: 'Materials & Parts', '전공정 장비': 'Front-end equipment', '후공정 장비': 'Back-end equipment', '부품/기판': 'Components/Substrate', '패키징/테스트': 'Packaging & Test', '반도체 유통': 'Semiconductor distribution' },
-        chainFilter: { 전공정: 'Front-end', 후공정: 'Back-end', 팹리스: 'Fabless', 파운드리: 'Foundry', 소재: 'Materials', '전공정 장비': 'FE equipment', '후공정 장비': 'BE equipment', '부품/기판': 'Components/Sub', '패키징/테스트': 'Packaging/Test', '반도체 유통': 'Distribution' },
+        chainLabel: { 전공정: 'Front-end (design, fab, materials, equipment)', 후공정: 'Back-end (components, substrate, packaging, test)', 팹리스: 'Fabless (Design)', 디자인하우스: 'Design house', 파운드리: 'Foundry', 소재: 'Materials & Parts', '전공정 장비': 'Front-end equipment', '후공정 장비': 'Back-end equipment', '부품/기판': 'Components/Substrate', '패키징/테스트': 'Packaging & Test', '반도체 유통': 'Semiconductor distribution' },
+        chainFilter: { 전공정: 'Front-end', 후공정: 'Back-end', 팹리스: 'Fabless', 디자인하우스: 'Design house', 파운드리: 'Foundry', 소재: 'Materials', '전공정 장비': 'FE equipment', '후공정 장비': 'BE equipment', '부품/기판': 'Components/Sub', '패키징/테스트': 'Packaging/Test', '반도체 유통': 'Distribution' },
         allFilter: 'All', kosp: 'KOSPI', kosdaq: 'KOSDAQ',
         regionLabel: { us: 'USA', tw: 'Taiwan', cn: 'China', eu: 'Europe', kr: 'Korea (non-listed)' },
         sizeDesc: 'Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◆ Global counterparties (◇)',
@@ -4815,7 +4815,7 @@
       },
 
       {
-        id: 'gaonchips', name: '가온칩스', nameEn: 'GAONCHIPS CO., LTD.', ticker: '399720', market: 'KOSDAQ', chain: '팹리스',
+        id: 'gaonchips', name: '가온칩스', nameEn: 'GAONCHIPS CO., LTD.', ticker: '399720', market: 'KOSDAQ', chain: '디자인하우스',
         semType: 'AI반도체 (설계 플랫폼)', semTypeEn: 'AI Semiconductor (Design Platform)',
         products: 'AI칩 설계 플랫폼, 고속 SerDes IP', productsEn: 'AI Chip Design Platform, High-Speed SerDes IP',
         revenue: '0.68조원', mcapWon: 680733530000, per: null, pbr: 12.2, revTier: 1, partners: ['samsung_d', 'tsmc']
@@ -4899,7 +4899,7 @@
       },
 
       {
-        id: 'adtech', name: '에이디테크놀로지', nameEn: 'ADTechnology Co., Ltd.', ticker: '200710', market: 'KOSDAQ', chain: '팹리스',
+        id: 'adtech', name: '에이디테크놀로지', nameEn: 'ADTechnology Co., Ltd.', ticker: '200710', market: 'KOSDAQ', chain: '디자인하우스',
         semType: '시스템반도체 (커스텀설계 서비스)', semTypeEn: 'System IC (Custom Design Service)',
         products: '커스텀 IC 설계 서비스 (턴키), AI반도체', productsEn: 'Custom IC Design Service (Turnkey), AI Semiconductor',
         revenue: '0.54조원', mcapWon: 543865082800, per: 145.32, pbr: 3.86, revTier: 1, partners: ['samsung_d', 'skhynix_d', 'tsmc']
@@ -5227,7 +5227,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '전공정', '후공정', '팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+      const chains = ['all', '전공정', '후공정', '팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
@@ -5253,7 +5253,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['팹리스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+      const chains = ['팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -5532,11 +5532,11 @@
         .force('center', d3.forceCenter(W / 2, H / 2))
         .force('collide', d3.forceCollide(d => d.r + 8))
         .force('x', d3.forceX(d => {
-          if (d.type === 'korean') { const a = { 팹리스: 0, 파운드리: 45, 소재: 90, '전공정 장비': 135, '후공정 장비': 180, '부품/기판': 225, '패키징/테스트': 270, '반도체 유통': 315 }[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
+          if (d.type === 'korean') { const a = { 팹리스: 0, '디자인하우스': 40, 파운드리: 80, 소재: 120, '전공정 장비': 160, '후공정 장비': 200, '부품/기판': 240, '패키징/테스트': 280, '반도체 유통': 320 }[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
           return W / 2;
         }).strength(0.055))
         .force('y', d3.forceY(d => {
-          if (d.type === 'korean') { const a = { 팹리스: 0, 파운드리: 45, 소재: 90, '전공정 장비': 135, '후공정 장비': 180, '부품/기판': 225, '패키징/테스트': 270, '반도체 유통': 315 }[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
+          if (d.type === 'korean') { const a = { 팹리스: 0, '디자인하우스': 40, 파운드리: 80, 소재: 120, '전공정 장비': 160, '후공정 장비': 200, '부품/기판': 240, '패키징/테스트': 280, '반도체 유통': 320 }[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
           return H / 2;
         }).strength(0.055));
 
