@@ -3,36 +3,35 @@
  * plus confirmed non-equipment rehomes. Rebuild-safe via data/chain_overrides.json.
  */
 import fs from 'fs';
-import { dirname, join } from 'path';
+import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { extractCompaniesFromHtml, patchKoreanCompaniesHtml } from '../lib/map_company_serialize.mjs';
 import { chainOverride } from '../lib/chain_overrides.mjs';
 import { escHtml, PRERENDER_START, PRERENDER_END } from '../lib/seo_prerender_lib.mjs';
+import {
+  ANGLE,
+  CHIP_CHAINS,
+  LEGEND_CHAINS,
+  SEMI_BE_CHAINS as BE_CHAINS,
+  SEMI_CHAIN_COLORS as CHAIN_COLORS,
+  SEMI_FE_CHAINS as FE_CHAINS,
+  toJsChainList,
+} from '../lib/semi_chain_ui.mjs';
+
+export {
+  ANGLE,
+  CHIP_CHAINS,
+  LEGEND_CHAINS,
+  toJsChainList,
+} from '../lib/semi_chain_ui.mjs';
+export {
+  semiChainsAllSource,
+  semiChainsNoAllSource,
+} from '../lib/semi_chain_ui.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HTML_PATH = join(ROOT, 'semiconductor', 'korea_semiconductor_map.html');
 const FIELD_OVERRIDES_PATH = join(ROOT, 'data', 'ticker_field_overrides.json');
-
-const CHAIN_COLORS = {
-  전공정: '#1E88E5',
-  후공정: '#43A047',
-  팹리스: '#66BB6A',
-  디자인하우스: '#00897B',
-  파운드리: '#FFA726',
-  소재: '#EF5350',
-  '전공정 장비': '#AB47BC',
-  '후공정 장비': '#8E24AA',
-  '부품/기판': '#26C6DA',
-  '패키징/테스트': '#FFCA28',
-  '반도체 유통': '#8D6E63',
-};
-
-const FE_CHAINS = ['팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비'];
-const BE_CHAINS = ['부품/기판', '패키징/테스트', '후공정 장비', '반도체 유통'];
-const CHIP_CHAINS = ['all', '전공정', '후공정', '팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
-const LEGEND_CHAINS = ['팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
-const ANGLE =
-  "{ 팹리스: 0, '디자인하우스': 40, 파운드리: 80, 소재: 120, '전공정 장비': 160, '후공정 장비': 200, '부품/기판': 240, '패키징/테스트': 280, '반도체 유통': 320 }";
 
 /**
  * 재분류 과정에서 벨류체인과 어긋난 semType/products를 바로잡을 종목.
@@ -76,7 +75,7 @@ function loadMetaFixes() {
   return out;
 }
 
-const toJs = (arr) => `[${arr.map((c) => `'${c}'`).join(', ')}]`;
+const toJs = toJsChainList;
 
 function patchUi(html) {
   let out = html.replace(
@@ -200,4 +199,6 @@ function main() {
   console.log(`prerender rows patched: ${prerender.patched}`);
 }
 
-main();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main();
+}

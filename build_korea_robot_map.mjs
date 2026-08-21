@@ -10,6 +10,11 @@ import { loadPerPbrMap, mergePerPbrIntoCompanies } from './lib/krx_per_pbr.mjs';
 import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from './lib/krx_data_sources.mjs';
 import { passesMcapFloor } from './lib/mcap_policy.mjs';
 import { patchKoreanCompaniesHtml } from './lib/map_company_serialize.mjs';
+import {
+  ANGLE as SEMI_ANGLE_LITERAL,
+  semiChainsAllSource,
+  semiChainsNoAllSource,
+} from './scripts/apply_semi_chain_reclass.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -604,8 +609,7 @@ function main() {
     "const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };",
   );
 
-  const semiAngleNeedle =
-    "{ \uD339\uB9AC\uC2A4: 0, \uD30C\uC6B4\uB4DC\uB9AC: 45, \uC18C\uC7AC: 90, '\uC804\uACF5\uC815 \uC7A5\uBE44': 135, '\uD6C4\uACF5\uC815 \uC7A5\uBE44': 180, '\uBD80\uD488/\uAE30\uD310': 225, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 270, '\uBC18\uB3C4\uCCB4 \uC720\uD1B5': 315 }";
+  const semiAngleNeedle = SEMI_ANGLE_LITERAL;
   const semiAngleRe = new RegExp(reEsc(semiAngleNeedle), 'g');
   const robotAngle = robotAngleLiteral();
   const angleMatches = html.match(semiAngleRe);
@@ -619,10 +623,8 @@ function main() {
     }
   }
 
-  const semiChainsAll =
-    "const chains = ['all', '\uC804\uACF5\uC815', '\uD6C4\uACF5\uC815', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
-  const semiChainsNoAll =
-    "const chains = ['\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC804\uACF5\uC815 \uC7A5\uBE44', '\uD6C4\uACF5\uC815 \uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8', '\uBC18\uB3C4\uCCB4 \uC720\uD1B5'];";
+  const semiChainsAll = semiChainsAllSource();
+  const semiChainsNoAll = semiChainsNoAllSource();
   const shipChainsAll = `const chains = ['all', ${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
   const shipChainsNoAll = `const chains = [${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
 

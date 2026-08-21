@@ -8,6 +8,11 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from './lib/krx_per_pbr.mjs';
 import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from './lib/krx_data_sources.mjs';
+import {
+  ANGLE as SEMI_ANGLE_LITERAL,
+  semiChainsAllSource,
+  semiChainsNoAllSource,
+} from './scripts/apply_semi_chain_reclass.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -665,9 +670,7 @@ function main() {
     "const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };",
   );
 
-  const semiAngleNeedle =
-    '{ IDM: 0, \uD339\uB9AC\uC2A4: 60, \uD30C\uC6B4\uB4DC\uB9AC: 120, \uC18C\uC7AC: 180, \uC7A5\uBE44: 240, ' +
-    "'\uBD80\uD488/\uAE30\uD310': 300, '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8': 330 }";
+  const semiAngleNeedle = SEMI_ANGLE_LITERAL;
   const semiAngleRe = new RegExp(reEsc(semiAngleNeedle), 'g');
   const kcAngle = kcultureAngleLiteral();
   const angleMatches = html.match(semiAngleRe);
@@ -681,10 +684,8 @@ function main() {
     }
   }
 
-  const semiChainsAll =
-    "const chains = ['all', 'IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
-  const semiChainsNoAll =
-    "const chains = ['IDM', '\uD339\uB9AC\uC2A4', '\uD30C\uC6B4\uB4DC\uB9AC', '\uC18C\uC7AC', '\uC7A5\uBE44', '\uBD80\uD488/\uAE30\uD310', '\uD328\uD0A4\uC9D5/\uD14C\uC2A4\uD2B8'];";
+  const semiChainsAll = semiChainsAllSource();
+  const semiChainsNoAll = semiChainsNoAllSource();
   const kcChainsAll = `const chains = ['all', ${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
   const kcChainsNoAll = `const chains = [${SECTOR_ORDER.map((c) => `'${c}'`).join(', ')}];`;
 
@@ -692,7 +693,13 @@ function main() {
     html = html.replace(semiChainsAll, kcChainsAll);
     html = html.replace(semiChainsNoAll, kcChainsNoAll);
   } else if (!html.includes(kcChainsAll)) {
-    throw new Error('kculture map: chains lines not found');
+    let allReplaced = false;
+    html = html.replace(/const chains = \['all'[, ][^\]]+\];/, () => {
+      allReplaced = true;
+      return kcChainsAll;
+    });
+    html = html.replace(/const chains = \[(?!'all')[^\]]+\];/, kcChainsNoAll);
+    if (!allReplaced) throw new Error('kculture map: chains lines not found');
   }
 
   html = html.replace(
