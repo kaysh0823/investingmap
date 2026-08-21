@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { SEMI_VALUE_CHAIN_ORDER } from '../lib/curated_sector_configs.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HTML_PATH = join(ROOT, 'bigchip', 'korea_bigchip_map.html');
@@ -70,6 +71,15 @@ function bigchipEscape(value) {
     function bigchipRole(kind) {
       return kind === 'supplier' || kind === 'customer' || kind === 'peer' ? kind : 'peer';
     }
+    function bigchipPresentChains() {
+      const present = new Set();
+      koreanCompanies.forEach((c) => { if (c.chain) present.add(c.chain); });
+      globalCompanies.forEach((c) => { if (c.ticker && c.chain) present.add(c.chain); });
+      const order = (typeof BIGCHIP_CHAIN_ORDER !== 'undefined' && BIGCHIP_CHAIN_ORDER.length)
+        ? BIGCHIP_CHAIN_ORDER
+        : Object.keys(CHAIN_COLORS);
+      return order.filter((ch) => present.has(ch));
+    }
     function bigchipRelationTags(c) {
       const maxVisible = 8;
       const dots = { KR: '#58a6ff', US: '#f0a44b', TW: '#4fc3a1', JP: '#d78ee8', NL: '#7fb7ff', CN: '#ef6b73', DE: '#f3c969', FR: '#8fb7ff', EU: '#a8b3c7' };
@@ -99,7 +109,7 @@ const LEGEND = `
 function buildSidebarLegend() {
       const t = T[lang];
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['종합반도체', 'HBM·메모리'];
+      const chains = bigchipPresentChains();
       chainContainer.innerHTML = '<div class="bigchip-filter-list">' + chains.map((ch) => {
         const active = bigchipFilterState.chains.has(ch);
         const label = (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel)
@@ -147,10 +157,20 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
       return link.kind === 'supplier' || link.kind === 'customer' || link.kind === 'peer' ? link.kind : 'peer';
     }
     function bigchipLinkVisible(link) {
+      const source = link.source && typeof link.source === 'object' ? link.source : null;
       const target = link.target && typeof link.target === 'object' ? link.target : null;
-      if (bigchipFilterState.chains.size && !bigchipFilterState.chains.has(link.sourceChain)) return false;
+      if (bigchipFilterState.chains.size) {
+        const hit = [];
+        if (source && source.chain) hit.push(source.chain);
+        else if (link.sourceChain) hit.push(link.sourceChain);
+        if (target && target.type === 'korean' && target.chain) hit.push(target.chain);
+        if (!hit.some((ch) => bigchipFilterState.chains.has(ch))) return false;
+      }
       if (bigchipFilterState.roles.size && !bigchipFilterState.roles.has(bigchipLinkRole(link))) return false;
-      if (bigchipFilterState.regions.size && (!target || !bigchipFilterState.regions.has(target.region))) return false;
+      if (bigchipFilterState.regions.size) {
+        // Country filter applies to foreign (diamond) endpoints only.
+        if (target && target.type === 'global' && !bigchipFilterState.regions.has(target.region)) return false;
+      }
       return true;
     }
     function toggleBigchipFilter(group, value) {
@@ -218,7 +238,11 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
       if (simulation) simulation.stop();
       const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
       const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
-      const ANGLE = { '종합반도체': 0, 'HBM·메모리': 180 };
+      const presentChains = bigchipPresentChains();
+      const ANGLE = {};
+      presentChains.forEach((ch, i) => {
+        ANGLE[ch] = presentChains.length ? Math.round((360 / presentChains.length) * i) : 0;
+      });
       const nodes = [], nodeIndex = {};
       koreanCompanies.forEach((company) => {
         nodes.push({
@@ -233,11 +257,23 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
       const usedGlobal = new Set();
       koreanCompanies.forEach((company) => (company.partners || []).forEach((partner) => usedGlobal.add(partnerRef(partner).id)));
       globalCompanies.filter((company) => usedGlobal.has(company.id)).forEach((company) => {
-        nodes.push({
-          id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'global',
-          region: company.region, countryCode: company.countryCode, sector: company.sector, country: company.country,
-          ticker: company.ticker || '', targetUrl: company.targetUrl || '', r: 7
-        });
+        // Domestic listed partners use the semi value-chain palette (circles), not country diamonds.
+        if (company.ticker && company.chain) {
+          nodes.push({
+            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'korean',
+            chain: company.chain, ticker: company.ticker, market: company.market || '',
+            region: company.region, countryCode: company.countryCode, sector: company.sector,
+            country: company.country, targetUrl: company.targetUrl || '', mcapWon: company.mcapWon || 0,
+            revTier: company.revTier || 1,
+            r: company.revTier === 3 ? 14 : company.revTier === 2 ? 11 : 8
+          });
+        } else {
+          nodes.push({
+            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'global',
+            region: company.region, countryCode: company.countryCode, sector: company.sector, country: company.country,
+            ticker: company.ticker || '', targetUrl: company.targetUrl || '', r: 7
+          });
+        }
         nodeIndex[company.id] = nodes.length - 1;
       });
       const links = [];
@@ -287,7 +323,7 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
         .on('mouseout', () => hideTooltip())
         .on('click', (event, item) => { event.stopPropagation(); selectNode(item, node, link); })
         .on('dblclick', (event, item) => {
-          if (item.type === 'global' && item.targetUrl) {
+          if (item.targetUrl) {
             event.preventDefault();
             window.location.href = item.targetUrl + '&lang=' + encodeURIComponent(lang);
           }
@@ -333,13 +369,39 @@ let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = 
     }
 `;
 
-export function applyBigchipRelationNetwork() {
+const CHAIN_CHIPS = `
+function buildChainChips() {
+      const t = T[lang];
+      const container = document.getElementById('chain-chips');
+      const hubChains = [...new Set(koreanCompanies.map((c) => c.chain).filter(Boolean))];
+      const chains = ['all', ...hubChains];
+      container.innerHTML = chains.map(ch => {
+        const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
+        const isActive = currentChain === ch;
+        const color = CHAIN_COLORS[ch];
+        const style = isActive ? \`background:\${color || '#4FC3F7'};color:#0d1117;border-color:transparent;\` : '';
+        return \`<div class="filter-chip\${isActive ? ' active' : ''}" style="\${style}" data-filter-chain="\${ch}" onclick="setChainFilter('\${ch}',this)">\${label}</div>\`;
+      }).join('');
+    }
+`;
+
+export function applyBigchipRelationNetwork(options = {}) {
+  const chainOrder = options.chainOrder || SEMI_VALUE_CHAIN_ORDER;
   let html = fs.readFileSync(HTML_PATH, 'utf8');
   html = html.replace('</style>', `${CSS}\n  </style>`);
-  html = html.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=4"');
+  html = html.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=5"');
   html = html.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=12"');
+  html = html.replace(
+    /const CHAIN_COLORS = \{[\s\S]*?\};/,
+    (block) => `${block}\n    const BIGCHIP_CHAIN_ORDER = ${JSON.stringify(chainOrder)};`,
+  );
+  html = html.replace(
+    /<div class="sidebar-title" id="sb-korean">[^<]*<\/div>/,
+    '<div class="sidebar-title" id="sb-korean">밸류체인</div>',
+  );
   html = replaceBetween(html, 'function buildSidebarLegend() {', '// TABLE', LEGEND);
   html = replaceBetween(html, 'let simulation, svgEl, g, zoomBehavior', '    function showTooltip(', GRAPH);
+  html = replaceBetween(html, 'function buildChainChips() {', '    function buildMarketChips()', CHAIN_CHIPS);
   html = html.replace('function renderTable() {', `${TABLE_HELPER.trim()}\n\n    function renderTable() {`);
   const tagged = html.replace(
     /const partnerHtml = c\.partners\.slice\(0, 6\)[\s\S]*?\(c\.partners\.length > 6 \? `<span class="partner-tag">\+\$\{c\.partners\.length - 6\}<\/span>` : ''\);/,

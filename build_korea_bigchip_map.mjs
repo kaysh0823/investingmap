@@ -2,8 +2,12 @@ import fs from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { buildCuratedSectorMap } from './lib/build_curated_sector_map.mjs';
-import { BIGCHIP_CONFIG } from './lib/curated_sector_configs.mjs';
+import {
+  BIGCHIP_CONFIG,
+  SEMI_VALUE_CHAIN_ORDER,
+} from './lib/curated_sector_configs.mjs';
 import { loadMergedKrxMap } from './lib/krx_data_sources.mjs';
+import { mcapTier } from './lib/map_company_serialize.mjs';
 import { applyBigchipRelationNetwork } from './scripts/apply_bigchip_relation_network.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
@@ -28,6 +32,36 @@ const countryMeta = {
   CN: { countryLabel: '중국/China', region: 'cn' },
   EU: { countryLabel: '유럽/Europe', region: 'eu' },
 };
+
+/** Hubs are exclusive to bigchip; source labels normalize into the semi taxonomy. */
+const HUB_CHAIN_BY_TICKER = {
+  '005930': 'IDM/종합반도체',
+  // Source classification "메모리[HBM]" → IDM/종합반도체 (memory IDM).
+  '000660': 'IDM/종합반도체',
+};
+
+function loadSemiChainByTicker() {
+  const html = fs.readFileSync(join(ROOT, 'semiconductor', 'korea_semiconductor_map.html'), 'utf8');
+  const map = new Map();
+  const re = /ticker: '([^']+)', market: '[^']*', chain: '([^']+)'/g;
+  let match;
+  while ((match = re.exec(html))) {
+    map.set(match[1], match[2]);
+  }
+  return map;
+}
+
+function resolveDomesticChain(ticker, semiChains) {
+  if (!ticker) return '';
+  if (HUB_CHAIN_BY_TICKER[ticker]) return HUB_CHAIN_BY_TICKER[ticker];
+  const chain = semiChains.get(ticker);
+  if (!chain) {
+    throw new Error(`bigchip domestic ticker missing semi chain: ${ticker}`);
+  }
+  return chain;
+}
+
+const semiChains = loadSemiChainByTicker();
 
 if (relations.expansion) {
   const catalog = new Map((relations.expansion.nodes || []).map((node) => [node.id, node]));
@@ -67,6 +101,8 @@ for (const hub of relations.hubs) {
       const primaryRole = !existing || rolePriority[role] > rolePriority[existing.primaryRole]
         ? role
         : existing.primaryRole;
+      const chain = relation.ticker ? resolveDomesticChain(relation.ticker, semiChains) : '';
+      const mcapWon = row?.mcap || existing?.mcapWon || 0;
       relationNodes.set(relation.id, {
         ...(existing || {}),
         id: relation.id,
@@ -79,7 +115,9 @@ for (const hub of relations.hubs) {
         primaryRole,
         ticker: relation.ticker || '',
         market: row?.market || '',
-        mcapWon: row?.mcap || 0,
+        chain,
+        mcapWon,
+        revTier: mcapWon ? mcapTier(mcapWon) : 1,
         targetUrl: relation.ticker
           ? `../semiconductor/korea_semiconductor_map.html?tab=table&ticker=${relation.ticker}`
           : '',
@@ -94,8 +132,9 @@ BIGCHIP_CONFIG.subtitleEn = 'Supplier, global-peer and customer relationships ce
 BIGCHIP_CONFIG.translations = {
   ko: {
     thPartners: '공급사·peer·고객',
+    sbKorean: '밸류체인',
     sbGlobal: '공급사·peer·고객',
-    peerNetworkDesc: '삼성전자·SK하이닉스와 후방 공급사, 글로벌 peer, 전방 고객의 공개자료 기반 관계입니다.',
+    peerNetworkDesc: '삼성전자·SK하이닉스와 후방 공급사, 글로벌 peer, 전방 고객의 공개자료 기반 관계입니다. 국내 상장 노드는 반도체 섹터 밸류체인 분류로 색을 둡니다.',
     graphHint: '공개자료 기반 공급망·고객·peer 관계이며 계약 조건을 의미하지 않습니다. “보도” 관계는 공식 확인 건과 구분해 표시합니다.',
     ttPartners: '관계',
     ttSuppliers: '연결 허브',
@@ -112,8 +151,9 @@ BIGCHIP_CONFIG.translations = {
   },
   en: {
     thPartners: 'Suppliers, peers & customers',
+    sbKorean: 'Value chain',
     sbGlobal: 'Suppliers, peers & customers',
-    peerNetworkDesc: 'Public-source relationships between Samsung Electronics, SK hynix and their suppliers, global peers and customers.',
+    peerNetworkDesc: 'Public-source relationships between Samsung Electronics, SK hynix and their suppliers, global peers and customers. Domestic listed nodes use the semiconductor value-chain palette.',
     graphHint: 'Public-source supply-chain, customer and peer relationships; they do not assert contract terms. Reported links are distinguished from confirmed disclosures.',
     ttPartners: 'Relationships',
     ttSuppliers: 'Connected hubs',
@@ -131,4 +171,4 @@ BIGCHIP_CONFIG.translations = {
 };
 
 buildCuratedSectorMap(BIGCHIP_CONFIG);
-applyBigchipRelationNetwork();
+applyBigchipRelationNetwork({ chainOrder: SEMI_VALUE_CHAIN_ORDER });
