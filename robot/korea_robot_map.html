@@ -252,9 +252,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=15"></script>
-  <script src="../js/map_i18n.js"></script>
+  <script src="../js/map_i18n.js?v=8"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
-  <script src="../js/map_tab_state.js?v=8"></script>
+  <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=7"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -1191,6 +1191,8 @@
 
 
 
+
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1760,6 +1762,49 @@
     .im-card-spark .quote-spark { display: block; width: 56px; height: 22px; }
     #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
 
+  
+    /* curated relation tags (bigchip-compatible class names) */
+    #th-partners{width:230px;max-width:230px}
+    .bigchip-relations-cell{width:230px;max-width:230px;white-space:normal}
+    .bigchip-relation-tags{display:flex;flex-wrap:wrap;gap:3px;max-width:230px;max-height:52px;overflow:hidden}
+    .bigchip-relation-tag{display:inline-flex;align-items:center;gap:4px;max-width:106px;padding:2px 6px;border:1px solid var(--border);border-radius:999px;font-size:10px;line-height:16px;color:var(--text-muted);background:var(--surface2);text-decoration:none}
+    a.bigchip-relation-tag:hover{border-color:var(--accent);color:var(--accent)}
+    .bigchip-relation-tag.supplier{border-color:rgba(88,166,255,.42)}
+    .bigchip-relation-tag.peer{border-color:rgba(139,148,158,.42)}
+    .bigchip-relation-tag.customer{border-color:rgba(240,164,75,.48)}
+    .bigchip-relation-tag.more{font-weight:700;color:var(--text)}
+    .bigchip-country-dot{width:6px;height:6px;border-radius:50%;flex:none;background:var(--country-dot,#8b949e)}
+    .bigchip-relation-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bigchip-filter-group{margin-top:10px}
+    .bigchip-filter-label{margin-bottom:5px;font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em}
+    .bigchip-filter-list{display:flex;flex-wrap:wrap;gap:5px}
+    .bigchip-filter-btn{display:inline-flex;align-items:center;gap:5px;min-height:27px;padding:4px 7px;border:1px solid var(--border);border-radius:7px;background:var(--surface2);color:var(--text-muted);font:inherit;font-size:10px;cursor:pointer}
+    .bigchip-filter-btn:hover{border-color:var(--accent);color:var(--text)}
+    .bigchip-filter-btn.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 15%,var(--surface2));color:var(--accent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent)}
+    .bigchip-filter-btn.reset{width:100%;justify-content:center;margin-top:9px;color:var(--text)}
+    .bigchip-filter-btn.reset:disabled{opacity:.45;cursor:default;border-color:var(--border)}
+    .bigchip-edge-swatch{display:inline-block;width:19px;height:0;border-top:2px solid var(--edge-color)}
+    .bigchip-edge-swatch.peer{border-top-style:dashed}
+    .bigchip-filter-dot{width:8px;height:8px;border-radius:50%;background:var(--filter-color,#8b949e);flex:none}
+    .bigchip-filter-diamond{width:8px;height:8px;background:var(--filter-color,#8b949e);transform:rotate(45deg);flex:none}
+    .bigchip-filter-summary{margin-top:8px;font-size:10px;color:var(--accent);line-height:1.45}
+    @media (max-width: 768px) {
+      #th-partners,
+      .bigchip-relations-cell {
+        width: 176px;
+        max-width: 176px
+      }
+
+      .bigchip-relation-tags {
+        max-width: 176px
+      }
+
+      .bigchip-filter-btn {
+        min-height: 32px;
+        padding: 6px 8px
+      }
+    }
+
   </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
@@ -1807,7 +1852,7 @@
     <p lang="en" class="im-seo-body-p" hidden>For editorial policy and related information, see our <a href="../authors.html">editorial &amp; data team</a> page.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 로봇 관련주, 피지컬AI, AMR, 협동로봇</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean robotics stocks, Physical AI, AMR, cobots</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-20 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-20.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-22 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-22.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1893,16 +1938,16 @@
       <td><div class="company-name">레인보우로보틱스</div><div class="company-name-sub">Rainbow Robotics</div></td>
       <td><span class="ticker">277810</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">471,500</td>
-      <td class="quote-cell ret-cell">-1.60%</td>
-      <td class="quote-cell ret-cell">-3.34%</td>
-      <td class="quote-cell ret-cell">-22.66%</td>
-      <td class="quote-cell ret-cell">-34.30%</td>
-      <td class="quote-cell ret-cell">+17.39%</td>
+      <td class="quote-cell">454,000</td>
+      <td class="quote-cell ret-cell">+1.95%</td>
+      <td class="quote-cell ret-cell">-7.19%</td>
+      <td class="quote-cell ret-cell">-22.07%</td>
+      <td class="quote-cell ret-cell">-43.67%</td>
+      <td class="quote-cell ret-cell">+17.43%</td>
       <td class="quote-cell">979,000</td>
-      <td class="quote-cell">253,000</td>
-      <td class="quote-cell">30.1%</td>
-      <td class="quote-cell">13.4</td>
+      <td class="quote-cell">253,500</td>
+      <td class="quote-cell">27.6%</td>
+      <td class="quote-cell">35.7</td>
       <td class="mcap-cell">12.11조원</td>
       <td class="fin-cell">8547.95</td>
       <td class="fin-cell">90.45</td>
@@ -1916,16 +1961,16 @@
       <td><div class="company-name">두산로보틱스</div><div class="company-name-sub">Doosan Robotics</div></td>
       <td><span class="ticker">454910</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">72,300</td>
-      <td class="quote-cell ret-cell">-3.90%</td>
-      <td class="quote-cell ret-cell">+5.77%</td>
-      <td class="quote-cell ret-cell">-32.93%</td>
-      <td class="quote-cell ret-cell">-11.29%</td>
-      <td class="quote-cell ret-cell">-9.49%</td>
+      <td class="quote-cell">70,900</td>
+      <td class="quote-cell ret-cell">+1.12%</td>
+      <td class="quote-cell ret-cell">+3.58%</td>
+      <td class="quote-cell ret-cell">-33.85%</td>
+      <td class="quote-cell ret-cell">-20.20%</td>
+      <td class="quote-cell ret-cell">-10.85%</td>
       <td class="quote-cell">170,000</td>
       <td class="quote-cell">54,200</td>
-      <td class="quote-cell">15.6%</td>
-      <td class="quote-cell">34.7</td>
+      <td class="quote-cell">14.4%</td>
+      <td class="quote-cell">41.6</td>
       <td class="mcap-cell">7.16조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">20.53</td>
@@ -1939,16 +1984,16 @@
       <td><div class="company-name">로보티즈</div><div class="company-name-sub">Robotis</div></td>
       <td><span class="ticker">108490</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">262,500</td>
-      <td class="quote-cell ret-cell">-4.30%</td>
-      <td class="quote-cell ret-cell">+21.64%</td>
-      <td class="quote-cell ret-cell">-2.73%</td>
-      <td class="quote-cell ret-cell">+28.67%</td>
-      <td class="quote-cell ret-cell">+19.20%</td>
+      <td class="quote-cell">254,000</td>
+      <td class="quote-cell ret-cell">-1.69%</td>
+      <td class="quote-cell ret-cell">+21.25%</td>
+      <td class="quote-cell ret-cell">-8.38%</td>
+      <td class="quote-cell ret-cell">+11.70%</td>
+      <td class="quote-cell ret-cell">+13.15%</td>
       <td class="quote-cell">464,000</td>
-      <td class="quote-cell">73,621</td>
-      <td class="quote-cell">48.4%</td>
-      <td class="quote-cell">74.3</td>
+      <td class="quote-cell">73,815</td>
+      <td class="quote-cell">46.2%</td>
+      <td class="quote-cell">65.7</td>
       <td class="mcap-cell">4.84조원</td>
       <td class="fin-cell">857.14</td>
       <td class="fin-cell">15.20</td>
@@ -1962,16 +2007,16 @@
       <td><div class="company-name">현대무벡스</div><div class="company-name-sub">Hyundai Movex</div></td>
       <td><span class="ticker">319400</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">24,000</td>
-      <td class="quote-cell ret-cell">-4.78%</td>
-      <td class="quote-cell ret-cell">+21.14%</td>
-      <td class="quote-cell ret-cell">-32.49%</td>
-      <td class="quote-cell ret-cell">-6.27%</td>
-      <td class="quote-cell ret-cell">+151.84%</td>
+      <td class="quote-cell">22,850</td>
+      <td class="quote-cell ret-cell">+0.42%</td>
+      <td class="quote-cell ret-cell">+11.37%</td>
+      <td class="quote-cell ret-cell">-41.18%</td>
+      <td class="quote-cell ret-cell">-22.46%</td>
+      <td class="quote-cell ret-cell">+156.68%</td>
       <td class="quote-cell">50,400</td>
-      <td class="quote-cell">4,405</td>
-      <td class="quote-cell">42.6%</td>
-      <td class="quote-cell">41.1</td>
+      <td class="quote-cell">4,410</td>
+      <td class="quote-cell">40.1%</td>
+      <td class="quote-cell">43.6</td>
       <td class="mcap-cell">4.36조원</td>
       <td class="fin-cell">380.10</td>
       <td class="fin-cell">26.91</td>
@@ -1985,16 +2030,16 @@
       <td><div class="company-name">에스피지</div><div class="company-name-sub">SPG CO., LTD</div></td>
       <td><span class="ticker">058610</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">103,400</td>
-      <td class="quote-cell ret-cell">-6.02%</td>
-      <td class="quote-cell ret-cell">+22.88%</td>
-      <td class="quote-cell ret-cell">+14.69%</td>
-      <td class="quote-cell ret-cell">-6.37%</td>
-      <td class="quote-cell ret-cell">+225.32%</td>
+      <td class="quote-cell">95,500</td>
+      <td class="quote-cell ret-cell">+1.87%</td>
+      <td class="quote-cell ret-cell">+23.54%</td>
+      <td class="quote-cell ret-cell">+13.13%</td>
+      <td class="quote-cell ret-cell">-18.52%</td>
+      <td class="quote-cell ret-cell">+228.25%</td>
       <td class="quote-cell">165,700</td>
-      <td class="quote-cell">22,950</td>
-      <td class="quote-cell">56.4%</td>
-      <td class="quote-cell">73.2</td>
+      <td class="quote-cell">23,050</td>
+      <td class="quote-cell">50.8%</td>
+      <td class="quote-cell">74.5</td>
       <td class="mcap-cell">2.10조원</td>
       <td class="fin-cell">229.85</td>
       <td class="fin-cell">8.14</td>
@@ -2008,16 +2053,16 @@
       <td><div class="company-name">휴림로봇</div><div class="company-name-sub">Hyulim Robot</div></td>
       <td><span class="ticker">090710</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">6,890</td>
-      <td class="quote-cell ret-cell">-2.99%</td>
-      <td class="quote-cell ret-cell">-1.16%</td>
-      <td class="quote-cell ret-cell">-34.80%</td>
-      <td class="quote-cell ret-cell">-34.49%</td>
-      <td class="quote-cell ret-cell">+15.01%</td>
+      <td class="quote-cell">6,630</td>
+      <td class="quote-cell ret-cell">+1.03%</td>
+      <td class="quote-cell ret-cell">-5.23%</td>
+      <td class="quote-cell ret-cell">-40.29%</td>
+      <td class="quote-cell ret-cell">-46.96%</td>
+      <td class="quote-cell ret-cell">+18.79%</td>
       <td class="quote-cell">26,600</td>
-      <td class="quote-cell">2,370</td>
-      <td class="quote-cell">18.7%</td>
-      <td class="quote-cell">10.0</td>
+      <td class="quote-cell">2,385</td>
+      <td class="quote-cell">17.5%</td>
+      <td class="quote-cell">23.5</td>
       <td class="mcap-cell">1.40조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.98</td>
@@ -2031,16 +2076,16 @@
       <td><div class="company-name">로보스타</div><div class="company-name-sub">Robostar Co.,Ltd.</div></td>
       <td><span class="ticker">090360</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">81,300</td>
-      <td class="quote-cell ret-cell">+0.73%</td>
-      <td class="quote-cell ret-cell">+24.92%</td>
-      <td class="quote-cell ret-cell">-20.17%</td>
-      <td class="quote-cell ret-cell">+40.41%</td>
-      <td class="quote-cell ret-cell">+5.62%</td>
+      <td class="quote-cell">78,200</td>
+      <td class="quote-cell ret-cell">-1.69%</td>
+      <td class="quote-cell ret-cell">+20.62%</td>
+      <td class="quote-cell ret-cell">-23.52%</td>
+      <td class="quote-cell ret-cell">+19.38%</td>
+      <td class="quote-cell ret-cell">+3.96%</td>
       <td class="quote-cell">171,600</td>
       <td class="quote-cell">25,250</td>
-      <td class="quote-cell">38.3%</td>
-      <td class="quote-cell">65.5</td>
+      <td class="quote-cell">36.2%</td>
+      <td class="quote-cell">64.0</td>
       <td class="mcap-cell">1.10조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">12.71</td>
@@ -2054,16 +2099,16 @@
       <td><div class="company-name">유일로보틱스</div><div class="company-name-sub">Yuil Robotics</div></td>
       <td><span class="ticker">388720</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">70,300</td>
-      <td class="quote-cell ret-cell">+0.57%</td>
-      <td class="quote-cell ret-cell">+10.22%</td>
-      <td class="quote-cell ret-cell">-16.35%</td>
-      <td class="quote-cell ret-cell">-23.80%</td>
-      <td class="quote-cell ret-cell">-11.82%</td>
+      <td class="quote-cell">67,500</td>
+      <td class="quote-cell ret-cell">+0.29%</td>
+      <td class="quote-cell ret-cell">+6.68%</td>
+      <td class="quote-cell ret-cell">-15.71%</td>
+      <td class="quote-cell ret-cell">-32.40%</td>
+      <td class="quote-cell ret-cell">-17.87%</td>
       <td class="quote-cell">155,000</td>
       <td class="quote-cell">53,800</td>
-      <td class="quote-cell">16.3%</td>
-      <td class="quote-cell">41.2</td>
+      <td class="quote-cell">13.5%</td>
+      <td class="quote-cell">44.7</td>
       <td class="mcap-cell">0.98조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.89</td>
@@ -2077,16 +2122,16 @@
       <td><div class="company-name">에스에프에이</div><div class="company-name-sub">SFA Engineering</div></td>
       <td><span class="ticker">056190</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">24,950</td>
-      <td class="quote-cell ret-cell">-0.61%</td>
-      <td class="quote-cell ret-cell">+21.45%</td>
-      <td class="quote-cell ret-cell">+0.62%</td>
-      <td class="quote-cell ret-cell">-12.09%</td>
-      <td class="quote-cell ret-cell">+1.04%</td>
+      <td class="quote-cell">23,700</td>
+      <td class="quote-cell ret-cell">+2.46%</td>
+      <td class="quote-cell ret-cell">+17.97%</td>
+      <td class="quote-cell ret-cell">-0.20%</td>
+      <td class="quote-cell ret-cell">-16.83%</td>
+      <td class="quote-cell ret-cell">+2.89%</td>
       <td class="quote-cell">36,500</td>
       <td class="quote-cell">16,850</td>
-      <td class="quote-cell">41.2%</td>
-      <td class="quote-cell">62.7</td>
+      <td class="quote-cell">34.9%</td>
+      <td class="quote-cell">60.9</td>
       <td class="mcap-cell">0.96조원</td>
       <td class="fin-cell">13.94</td>
       <td class="fin-cell">0.83</td>
@@ -2100,16 +2145,16 @@
       <td><div class="company-name">클로봇</div><div class="company-name-sub">CLOBOT Co., Ltd</div></td>
       <td><span class="ticker">466100</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">29,450</td>
-      <td class="quote-cell ret-cell">+0.33%</td>
-      <td class="quote-cell ret-cell">+23.15%</td>
-      <td class="quote-cell ret-cell">-8.46%</td>
-      <td class="quote-cell ret-cell">-39.27%</td>
-      <td class="quote-cell ret-cell">-20.18%</td>
+      <td class="quote-cell">27,150</td>
+      <td class="quote-cell ret-cell">-4.54%</td>
+      <td class="quote-cell ret-cell">+11.98%</td>
+      <td class="quote-cell ret-cell">-18.31%</td>
+      <td class="quote-cell ret-cell">-51.08%</td>
+      <td class="quote-cell ret-cell">-26.28%</td>
       <td class="quote-cell">77,953</td>
       <td class="quote-cell">15,098</td>
-      <td class="quote-cell">22.8%</td>
-      <td class="quote-cell">42.9</td>
+      <td class="quote-cell">19.2%</td>
+      <td class="quote-cell">40.9</td>
       <td class="mcap-cell">0.93조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">15.09</td>
@@ -2123,16 +2168,16 @@
       <td><div class="company-name">하이젠알앤엠</div><div class="company-name-sub">Higen R&amp;M</div></td>
       <td><span class="ticker">160190</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">19,810</td>
-      <td class="quote-cell ret-cell">-5.29%</td>
-      <td class="quote-cell ret-cell">+21.89%</td>
-      <td class="quote-cell ret-cell">-24.53%</td>
-      <td class="quote-cell ret-cell">-61.59%</td>
-      <td class="quote-cell ret-cell">-60.97%</td>
+      <td class="quote-cell">18,250</td>
+      <td class="quote-cell ret-cell">+2.54%</td>
+      <td class="quote-cell ret-cell">+19.05%</td>
+      <td class="quote-cell ret-cell">-23.51%</td>
+      <td class="quote-cell ret-cell">-65.79%</td>
+      <td class="quote-cell ret-cell">-60.85%</td>
       <td class="quote-cell">91,200</td>
       <td class="quote-cell">11,000</td>
-      <td class="quote-cell">11%</td>
-      <td class="quote-cell">35.0</td>
+      <td class="quote-cell">9%</td>
+      <td class="quote-cell">35.2</td>
       <td class="mcap-cell">0.86조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">7.57</td>
@@ -2146,16 +2191,16 @@
       <td><div class="company-name">유진로봇</div><div class="company-name-sub">Yujin Robot</div></td>
       <td><span class="ticker">056080</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">12,740</td>
-      <td class="quote-cell ret-cell">-3.03%</td>
-      <td class="quote-cell ret-cell">+0.64%</td>
-      <td class="quote-cell ret-cell">-30.67%</td>
-      <td class="quote-cell ret-cell">-54.04%</td>
-      <td class="quote-cell ret-cell">+3.56%</td>
+      <td class="quote-cell">12,000</td>
+      <td class="quote-cell ret-cell">+1.92%</td>
+      <td class="quote-cell ret-cell">-1.24%</td>
+      <td class="quote-cell ret-cell">-32.88%</td>
+      <td class="quote-cell ret-cell">-57.88%</td>
+      <td class="quote-cell ret-cell">+4.43%</td>
       <td class="quote-cell">49,450</td>
       <td class="quote-cell">9,250</td>
-      <td class="quote-cell">8.7%</td>
-      <td class="quote-cell">12.4</td>
+      <td class="quote-cell">6.8%</td>
+      <td class="quote-cell">26.3</td>
       <td class="mcap-cell">0.73조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">25.51</td>
@@ -2169,16 +2214,16 @@
       <td><div class="company-name">뉴로메카</div><div class="company-name-sub">Neuromeka Co., Ltd.</div></td>
       <td><span class="ticker">348340</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">20,100</td>
-      <td class="quote-cell ret-cell">-3.76%</td>
-      <td class="quote-cell ret-cell">-32.90%</td>
-      <td class="quote-cell ret-cell">-55.43%</td>
-      <td class="quote-cell ret-cell">-67.92%</td>
-      <td class="quote-cell ret-cell">-26.65%</td>
+      <td class="quote-cell">19,530</td>
+      <td class="quote-cell ret-cell">-1.95%</td>
+      <td class="quote-cell ret-cell">-31.40%</td>
+      <td class="quote-cell ret-cell">-56.16%</td>
+      <td class="quote-cell ret-cell">-71.57%</td>
+      <td class="quote-cell ret-cell">-28.85%</td>
       <td class="quote-cell">88,302</td>
       <td class="quote-cell">12,698</td>
-      <td class="quote-cell">9.8%</td>
-      <td class="quote-cell">1.1</td>
+      <td class="quote-cell">9%</td>
+      <td class="quote-cell">1.2</td>
       <td class="mcap-cell">0.61조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">40.88</td>
@@ -2192,16 +2237,16 @@
       <td><div class="company-name">한라캐스트</div><div class="company-name-sub">Halla Cast</div></td>
       <td><span class="ticker">125490</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">12,020</td>
-      <td class="quote-cell ret-cell">+2.02%</td>
-      <td class="quote-cell ret-cell">+53.68%</td>
-      <td class="quote-cell ret-cell">+3.42%</td>
-      <td class="quote-cell ret-cell">-8.88%</td>
-      <td class="quote-cell ret-cell">+23.82%</td>
+      <td class="quote-cell">11,180</td>
+      <td class="quote-cell ret-cell">-0.74%</td>
+      <td class="quote-cell ret-cell">+46.41%</td>
+      <td class="quote-cell ret-cell">-5.28%</td>
+      <td class="quote-cell ret-cell">-23.92%</td>
+      <td class="quote-cell ret-cell">+23.41%</td>
       <td class="quote-cell">25,350</td>
       <td class="quote-cell">4,355</td>
-      <td class="quote-cell">36.5%</td>
-      <td class="quote-cell">62.4</td>
+      <td class="quote-cell">32.5%</td>
+      <td class="quote-cell">57.4</td>
       <td class="mcap-cell">0.50조원</td>
       <td class="fin-cell">106.48</td>
       <td class="fin-cell">4.71</td>
@@ -2215,16 +2260,16 @@
       <td><div class="company-name">에스비비테크</div><div class="company-name-sub">SBB Tech</div></td>
       <td><span class="ticker">389500</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">37,800</td>
-      <td class="quote-cell ret-cell">-3.99%</td>
-      <td class="quote-cell ret-cell">+9.06%</td>
-      <td class="quote-cell ret-cell">-32.43%</td>
-      <td class="quote-cell ret-cell">-19.18%</td>
-      <td class="quote-cell ret-cell">+49.80%</td>
+      <td class="quote-cell">35,500</td>
+      <td class="quote-cell ret-cell">+1.34%</td>
+      <td class="quote-cell ret-cell">+6.18%</td>
+      <td class="quote-cell ret-cell">-32.14%</td>
+      <td class="quote-cell ret-cell">-28.41%</td>
+      <td class="quote-cell ret-cell">+53.66%</td>
       <td class="quote-cell">115,000</td>
-      <td class="quote-cell">18,800</td>
-      <td class="quote-cell">19.8%</td>
-      <td class="quote-cell">34.0</td>
+      <td class="quote-cell">18,870</td>
+      <td class="quote-cell">17.3%</td>
+      <td class="quote-cell">40.0</td>
       <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">31.71</td>
@@ -2238,16 +2283,16 @@
       <td><div class="company-name">티로보틱스</div><div class="company-name-sub">T-Robotics co., Ltd.</div></td>
       <td><span class="ticker">117730</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">13,650</td>
-      <td class="quote-cell ret-cell">-2.71%</td>
-      <td class="quote-cell ret-cell">+10.82%</td>
-      <td class="quote-cell ret-cell">-12.69%</td>
-      <td class="quote-cell ret-cell">-25.21%</td>
-      <td class="quote-cell ret-cell">-20.35%</td>
+      <td class="quote-cell">12,890</td>
+      <td class="quote-cell ret-cell">+0.22%</td>
+      <td class="quote-cell ret-cell">+5.90%</td>
+      <td class="quote-cell ret-cell">-13.11%</td>
+      <td class="quote-cell ret-cell">-34.84%</td>
+      <td class="quote-cell ret-cell">-19.09%</td>
       <td class="quote-cell">30,900</td>
       <td class="quote-cell">9,800</td>
-      <td class="quote-cell">18.2%</td>
-      <td class="quote-cell">41.0</td>
+      <td class="quote-cell">14.6%</td>
+      <td class="quote-cell">38.0</td>
       <td class="mcap-cell">0.38조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">7.23</td>
@@ -2261,16 +2306,16 @@
       <td><div class="company-name">씨메스로보틱스</div><div class="company-name-sub">CMES Robotics</div></td>
       <td><span class="ticker">475400</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">19,780</td>
-      <td class="quote-cell ret-cell">-1.14%</td>
-      <td class="quote-cell ret-cell">+19.58%</td>
-      <td class="quote-cell ret-cell">-16.96%</td>
-      <td class="quote-cell ret-cell">-27.12%</td>
-      <td class="quote-cell ret-cell">-33.32%</td>
+      <td class="quote-cell">18,340</td>
+      <td class="quote-cell ret-cell">-0.95%</td>
+      <td class="quote-cell ret-cell">+13.87%</td>
+      <td class="quote-cell ret-cell">-19.10%</td>
+      <td class="quote-cell ret-cell">-36.91%</td>
+      <td class="quote-cell ret-cell">-35.99%</td>
       <td class="quote-cell">46,950</td>
       <td class="quote-cell">13,420</td>
-      <td class="quote-cell">19%</td>
-      <td class="quote-cell">43.3</td>
+      <td class="quote-cell">14.7%</td>
+      <td class="quote-cell">42.0</td>
       <td class="mcap-cell">0.31조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">5.23</td>
@@ -2293,7 +2338,7 @@
     <div class="graph-container">
       <div class="graph-sidebar">
         <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-korean">국내 상장 (벨류체인)</div>
+          <div class="sidebar-title" id="sb-korean">밸류체인</div>
           <div id="sb-chain-legend"></div>
         </div>
         <div class="sidebar-section">
@@ -2357,7 +2402,15 @@
     }
 
     const CHAIN_COLORS = {"완성로봇·플랫폼":"#4FC3F7","액추에이터·모터":"#66BB6A","감속기·동력전달":"#FFA726","센서·비전·정밀부품":"#EF5350","제어·모션·로봇SW":"#AB47BC","자동화·SI·물류시스템":"#26C6DA"};
-    const FE_CHAINS = ["팹리스","파운드리","소재","전공정 장비"];
+    const CURATED_RELATION_MODE = 'chainGroup';
+    const BIGCHIP_CHAIN_ORDER = ["팹리스","디자인하우스","파운드리","소재","전공정 장비","후공정 장비","부품/기판","패키징/테스트","반도체 유통"];
+    const CURATED_CHAIN_ORDER = ["팹리스","디자인하우스","파운드리","소재","전공정 장비","후공정 장비","부품/기판","패키징/테스트","반도체 유통"];
+    const BIGCHIP_NEUTRAL_COLOR = '#8b949e';
+    const CURATED_RELATION_HUBS = [];
+    const CURATED_HUB_ANGLE = { '완성로봇·플랫폼': 0, '액추에이터·모터': 60, '감속기·동력전달': 120, '센서·비전·정밀부품': 180, '제어·모션·로봇SW': 240, '자동화·SI·물류시스템': 300 };
+    const CURATED_FALLBACK_ANGLE = { '완성로봇·플랫폼': 0, '액추에이터·모터': 60, '감속기·동력전달': 120, '센서·비전·정밀부품': 180, '제어·모션·로봇SW': 240, '자동화·SI·물류시스템': 300 };
+
+    const FE_CHAINS = ["팹리스","디자인하우스","파운드리","소재","전공정 장비"];
     const BE_CHAINS = ["부품/기판","패키징/테스트","후공정 장비","반도체 유통"];
     function chainMatchesFilter(companyChain, filter) {
       if (filter === 'all') return true;
@@ -2690,8 +2743,6 @@
       { id: 'doosan_grp', name: '두산그룹', nameEn: '두산그룹', country: '한국/Korea', region: 'kr', sector: 'Captive / backing (illus.)' },
       { id: 'samsung_eco', name: '삼성 역량', nameEn: '삼성 역량', country: '한국/Korea', region: 'kr', sector: 'Strategic partner (illus.)' }
     ];
-
-
     // ═══════════════════════════════════════════════════════
     // STATE
     // ═══════════════════════════════════════════════════════
@@ -2876,28 +2927,44 @@
 
     function buildSidebarLegend() {
       const t = T[lang];
-      // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['완성로봇·플랫폼', '액추에이터·모터', '감속기·동력전달', '센서·비전·정밀부품', '제어·모션·로봇SW', '자동화·SI·물류시스템'];
-      chainContainer.innerHTML = chains.map(ch =>
-        `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
-      <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
-      ${(window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainLabel[ch] || ch)}
-    </div>`
-      ).join('');
-      // Region legend
-      const regionContainer = document.getElementById('sb-region-legend');
+      const chains = bigchipPresentChains();
+      chainContainer.innerHTML = '<div class="bigchip-filter-list">' + chains.map((ch) => {
+        const active = bigchipFilterState.chains.has(ch);
+        const label = (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel)
+          ? InvestingMapI18n.chainDisplayLabel(ch, t)
+          : (t.chainLabel[ch] || ch);
+        return `<button type="button" class="bigchip-filter-btn${active ? ' active' : ''}" aria-pressed="${active}" onclick="toggleBigchipFilter('chains','${ch}')"><span class="bigchip-filter-dot" style="--filter-color:${CHAIN_COLORS[ch]}"></span>${label}</button>`;
+      }).join('') + '</div>';
+
       const regions = ['us', 'tw', 'cn', 'eu', 'kr', 'jp', 'gb'];
-      const regionHtml = regions.map(r =>
-        `<div class="legend-item">
-      <div class="legend-diamond" style="background:${REGION_COLORS[r]}"></div>
-      ${t.regionLabel[r]}
-    </div>`
+      const roles = [
+        ['supplier', t.relationSupplier, '#58a6ff'],
+        ['customer', t.relationCustomer, '#f0a44b'],
+        ['peer', t.relationPeer, '#8b949e']
+      ];
+      const roleButtons = roles.map(([role, label, color]) => {
+        const active = bigchipFilterState.roles.has(role);
+        return `<button type="button" class="bigchip-filter-btn${active ? ' active' : ''}" aria-pressed="${active}" onclick="toggleBigchipFilter('roles','${role}')"><span class="bigchip-edge-swatch ${role}" style="--edge-color:${color}"></span>${label}</button>`;
+      }).join('');
+      const countryButtons = regions.map((region) => {
+        const active = bigchipFilterState.regions.has(region);
+        return `<button type="button" class="bigchip-filter-btn${active ? ' active' : ''}" aria-pressed="${active}" onclick="toggleBigchipFilter('regions','${region}')"><span class="bigchip-filter-diamond" style="--filter-color:${REGION_COLORS[region]}"></span>${t.regionLabel[region]}</button>`;
+      }).join('');
+      const edgeLegend = roles.map(([role, label, color]) =>
+        `<div class="legend-item"><span class="bigchip-edge-swatch ${role}" style="--edge-color:${color}"></span>${label}</div>`
       ).join('');
-      regionContainer.innerHTML = regionHtml + `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7">${t.peerNetworkDesc}</div>`;
+      const activeCount = bigchipFilterState.chains.size + bigchipFilterState.roles.size + bigchipFilterState.regions.size;
+      const regionContainer = document.getElementById('sb-region-legend');
+      regionContainer.innerHTML =
+        `<div class="bigchip-filter-group"><div class="bigchip-filter-label">${t.filterRole}</div><div class="bigchip-filter-list">${roleButtons}</div></div>` +
+        `<div class="bigchip-filter-group"><div class="bigchip-filter-label">${t.filterCountry}</div><div class="bigchip-filter-list">${countryButtons}</div></div>` +
+        `<div class="bigchip-filter-group"><div class="bigchip-filter-label">${t.edgeLegend}</div>${edgeLegend}</div>` +
+        `<button type="button" class="bigchip-filter-btn reset" onclick="resetBigchipFilters()" ${activeCount ? '' : 'disabled'}>${t.filterReset}</button>` +
+        (activeCount ? `<div class="bigchip-filter-summary">${t.filterActive}: ${activeCount}</div>` : '') +
+        `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7">${t.peerNetworkDesc}</div>`;
     }
 
-    // ═══════════════════════════════════════════════════════
     // TABLE
     // ═══════════════════════════════════════════════════════
     function getChainStyle(chain) {
@@ -2923,6 +2990,59 @@
     }
     function companyLinksTo(c, gid) {
       return (c.partners || []).some(p => partnerRef(p).id === gid);
+    }
+
+    function bigchipEscape(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    }
+    function bigchipRole(kind) {
+      return kind === 'supplier' || kind === 'customer' || kind === 'peer' ? kind : 'peer';
+    }
+    function bigchipPresentChains() {
+      const present = new Set();
+      const hubs = (typeof CURATED_RELATION_HUBS !== 'undefined' && CURATED_RELATION_HUBS) || [];
+      hubs.forEach((hub) => { if (hub.chain) present.add(hub.chain); });
+      koreanCompanies.forEach((c) => {
+        if (c.chain && c.chain !== 'IDM/종합반도체') present.add(c.chain);
+      });
+      globalCompanies.forEach((c) => {
+        if (c.ticker && c.chain && c.chain !== 'IDM/종합반도체') present.add(c.chain);
+      });
+      const order = (typeof BIGCHIP_CHAIN_ORDER !== 'undefined' && BIGCHIP_CHAIN_ORDER.length)
+        ? BIGCHIP_CHAIN_ORDER
+        : ((typeof CURATED_CHAIN_ORDER !== 'undefined' && CURATED_CHAIN_ORDER.length) ? CURATED_CHAIN_ORDER : Object.keys(CHAIN_COLORS));
+      return order.filter((ch) => ch !== 'IDM/종합반도체' && present.has(ch));
+    }
+    function bigchipNodeFill(item) {
+      if (item.type === 'global') return REGION_COLORS[item.region] || '#888';
+      if (item.chain && CHAIN_COLORS[item.chain]) return CHAIN_COLORS[item.chain];
+      return (typeof BIGCHIP_NEUTRAL_COLOR !== 'undefined' ? BIGCHIP_NEUTRAL_COLOR : '#8b949e');
+    }
+    function bigchipIsDomesticPartner(company) {
+      return !!(company.ticker || company.countryCode === 'KR' || company.isKR);
+    }
+    function bigchipRelationTags(c) {
+      const maxVisible = 8;
+      const dots = { KR: '#58a6ff', US: '#f0a44b', TW: '#4fc3a1', JP: '#d78ee8', NL: '#7fb7ff', CN: '#ef6b73', DE: '#f3c969', FR: '#8fb7ff', SG: '#5eead4', GB: '#a5b4fc', EU: '#a8b3c7' };
+      const t = T[lang];
+      const roleLabel = { supplier: t.relationSupplier, peer: t.relationPeer, customer: t.relationCustomer };
+      const tags = (c.partners || []).slice(0, maxVisible).map((p) => {
+        const pr = partnerRef(p);
+        const rel = globalCompanies.find((x) => x.id === pr.id) || {};
+        const info = getPartnerInfo(pr.id);
+        const role = bigchipRole(pr.kind);
+        const note = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
+        const evidence = (p && p.evidence === 'reported') ? t.reportedEvidence : t.confirmedEvidence;
+        const title = [info.name, roleLabel[role], note, evidence].filter(Boolean).join(' · ');
+        const dot = `<span class="bigchip-country-dot" style="--country-dot:${dots[rel.countryCode] || '#8b949e'}"></span><span class="bigchip-relation-name">${bigchipEscape(info.name)}</span>`;
+        if (rel.targetUrl) {
+          return `<a class="bigchip-relation-tag ${role}" href="${bigchipEscape(rel.targetUrl)}&lang=${lang}" title="${bigchipEscape(title)}">${dot}</a>`;
+        }
+        return `<span class="bigchip-relation-tag ${role}" title="${bigchipEscape(title)}">${dot}</span>`;
+      });
+      const hidden = Math.max(0, (c.partners || []).length - maxVisible);
+      if (hidden) tags.push(`<span class="bigchip-relation-tag more" title="+${hidden}">+${hidden}</span>`);
+      return tags.join('');
     }
 
     function renderTable() {
@@ -3051,210 +3171,337 @@
     // GRAPH
     // ═══════════════════════════════════════════════════════
     let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;
+    const BIGCHIP_EDGE_COLORS = { supplier: '#58a6ff', customer: '#f0a44b', peer: '#8b949e', member: '#484f58' };
+    const bigchipFilterState = { chains: new Set(), regions: new Set(), roles: new Set() };
+    let bigchipGraphNodes = null, bigchipGraphLinks = null;
+
+    function curatedMode() {
+      return (typeof CURATED_RELATION_MODE !== 'undefined' && CURATED_RELATION_MODE) || 'ticker';
+    }
+    function bigchipLinkRole(link) {
+      return link.kind === 'supplier' || link.kind === 'customer' || link.kind === 'peer' ? link.kind : (link.kind === 'member' ? 'member' : 'peer');
+    }
+    function bigchipLinkVisible(link) {
+      if (link.kind === 'member') {
+        if (bigchipFilterState.roles.size) return false;
+        if (bigchipFilterState.chains.size) {
+          const source = link.source && typeof link.source === 'object' ? link.source : null;
+          const target = link.target && typeof link.target === 'object' ? link.target : null;
+          const hit = [];
+          if (source && source.chain) hit.push(source.chain);
+          if (target && target.chain) hit.push(target.chain);
+          if (link.sourceChain) hit.push(link.sourceChain);
+          if (!hit.some((ch) => bigchipFilterState.chains.has(ch))) return false;
+        }
+        return true;
+      }
+      const source = link.source && typeof link.source === 'object' ? link.source : null;
+      const target = link.target && typeof link.target === 'object' ? link.target : null;
+      if (bigchipFilterState.chains.size) {
+        const hit = [];
+        if (source && source.chain) hit.push(source.chain);
+        else if (link.sourceChain) hit.push(link.sourceChain);
+        if (target && target.type === 'korean' && target.chain) hit.push(target.chain);
+        if (!hit.some((ch) => bigchipFilterState.chains.has(ch))) return false;
+      }
+      if (bigchipFilterState.roles.size && !bigchipFilterState.roles.has(bigchipLinkRole(link))) return false;
+      if (bigchipFilterState.regions.size) {
+        if (target && target.type === 'global' && !bigchipFilterState.regions.has(target.region)) return false;
+      }
+      return true;
+    }
+    function toggleBigchipFilter(group, value) {
+      const selected = bigchipFilterState[group];
+      if (!selected) return;
+      if (selected.has(value)) selected.delete(value); else selected.add(value);
+      selectedNode = null;
+      highlightedChain = null;
+      buildSidebarLegend();
+      applyBigchipGraphFilters();
+    }
+    function resetBigchipFilters() {
+      bigchipFilterState.chains.clear();
+      bigchipFilterState.regions.clear();
+      bigchipFilterState.roles.clear();
+      selectedNode = null;
+      highlightedChain = null;
+      buildSidebarLegend();
+      applyBigchipGraphFilters();
+    }
+    function applyBigchipGraphFilters() {
+      if (!svgEl || !bigchipGraphNodes || !bigchipGraphLinks) return;
+      const visibleNodeIds = new Set();
+      bigchipGraphLinks.each((link) => {
+        if (!bigchipLinkVisible(link)) return;
+        visibleNodeIds.add(link.source.id || link.source);
+        visibleNodeIds.add(link.target.id || link.target);
+      });
+      bigchipGraphNodes
+        .classed('node-dim', (node) => {
+          const passes = visibleNodeIds.has(node.id);
+          if (!passes) return true;
+          if (!selectedNode) return false;
+          if (node.id === selectedNode) return false;
+          let connected = false;
+          bigchipGraphLinks.each((link) => {
+            if (!bigchipLinkVisible(link)) return;
+            const s = link.source.id || link.source, target = link.target.id || link.target;
+            if ((s === selectedNode && target === node.id) || (target === selectedNode && s === node.id)) connected = true;
+          });
+          return !connected;
+        })
+        .style('pointer-events', (node) => visibleNodeIds.has(node.id) ? 'auto' : 'none');
+      bigchipGraphLinks
+        .attr('stroke', (link) => BIGCHIP_EDGE_COLORS[bigchipLinkRole(link)] || BIGCHIP_EDGE_COLORS.peer)
+        .attr('stroke-dasharray', (link) => {
+          if (link.kind === 'member') return '2 3';
+          return bigchipLinkRole(link) === 'peer' ? '4 4' : (link.evidence === 'reported' ? '3 4' : null);
+        })
+        .attr('stroke-opacity', (link) => {
+          if (!bigchipLinkVisible(link)) return 0.018;
+          if (link.kind === 'member') return selectedNode ? 0.25 : 0.28;
+          if (!selectedNode) return bigchipLinkRole(link) === 'peer' ? 0.42 : 0.5;
+          const s = link.source.id || link.source, target = link.target.id || link.target;
+          return s === selectedNode || target === selectedNode ? 0.95 : 0.025;
+        })
+        .attr('stroke-width', (link) => {
+          const base = link.baseStrokeW || 1.15;
+          if (!bigchipLinkVisible(link)) return 0.45;
+          if (!selectedNode) return base;
+          const s = link.source.id || link.source, target = link.target.id || link.target;
+          return s === selectedNode || target === selectedNode ? Math.max(2.4, base * 2.1) : 0.5;
+        });
+    }
 
     function buildGraph() {
       const container = document.getElementById('graph-svg');
       const W = container.clientWidth || 900, H = container.clientHeight || 700;
+      if (simulation) simulation.stop();
       const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
       const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
-      const isGlobalId = (id) => globalCompanies.some(g => g.id === id);
-
-      const nodes = [];
-      const nodeIndex = {};
-      koreanCompanies.forEach(c => {
-        const tags = (c.tags && c.tags.length) ? c.tags : [];
-        nodes.push({
-          id: c.id, label: c.name, labelEn: c.nameEn, type: 'korean', chain: c.chain,
-          ticker: c.ticker, market: c.market, semType: c.semType, semTypeEn: c.semTypeEn,
-          products: c.products, productsEn: c.productsEn, revenue: c.revenue, mcapWon: c.mcapWon,
-          revTier: c.revTier, data: c, tags,
-          r: c.revTier === 3 ? 18 : c.revTier === 2 ? 13 : 9
-        });
-        nodeIndex[c.id] = nodes.length - 1;
+      const mode = curatedMode();
+      const hubs = (typeof CURATED_RELATION_HUBS !== 'undefined' && CURATED_RELATION_HUBS) || [];
+      const hubByChain = new Map(hubs.map((hub) => [hub.chain, hub]));
+      const presentChains = bigchipPresentChains();
+      const ANGLE = Object.assign({},
+        (typeof CURATED_FALLBACK_ANGLE !== 'undefined' && CURATED_FALLBACK_ANGLE) || {},
+        (typeof CURATED_HUB_ANGLE !== 'undefined' && CURATED_HUB_ANGLE) || {}
+      );
+      presentChains.forEach((ch, i) => {
+        if (ANGLE[ch] == null) ANGLE[ch] = presentChains.length ? Math.round((360 / presentChains.length) * i) : 0;
       });
-      const usedGlobal = new Set();
-      koreanCompanies.forEach(c => (c.partners || []).forEach(p => usedGlobal.add(partnerRef(p).id)));
-      globalCompanies.filter(g => usedGlobal.has(g.id)).forEach(g => {
-        nodes.push({
-          id: g.id,
-          label: g.name,
-          labelEn: g.nameEn != null && g.nameEn !== '' ? g.nameEn : g.name,
-          type: 'global',
-          region: g.region,
-          sector: g.sector,
-          country: g.country,
-          r: 7,
+      const nodes = [], nodeIndex = {};
+      const hubRadius = mode === 'chainGroup' ? 210 : 0;
+      const memberRadius = mode === 'chainGroup' ? 145 : 145;
+
+      if (mode === 'chainGroup') {
+        hubs.forEach((hub) => {
+          nodes.push({
+            id: hub.id, label: hub.label, labelEn: hub.labelEn || hub.label, type: 'korean',
+            chain: hub.chain, isHub: true, hubKind: 'group', r: 22, revTier: 3
+          });
+          nodeIndex[hub.id] = nodes.length - 1;
         });
-        nodeIndex[g.id] = nodes.length - 1;
+      }
+
+      koreanCompanies.forEach((company) => {
+        const hub = hubByChain.get(company.chain);
+        const isTickerHub = mode === 'ticker';
+        nodes.push({
+          id: company.id, label: company.name, labelEn: company.nameEn, type: 'korean', chain: company.chain,
+          ticker: company.ticker, market: company.market, semType: company.semType, semTypeEn: company.semTypeEn,
+          products: company.products, productsEn: company.productsEn, revenue: company.revenue, mcapWon: company.mcapWon,
+          revTier: company.revTier, data: company, tags: company.tags || [],
+          isHub: isTickerHub, hubId: hub ? hub.id : null, hubKind: isTickerHub ? 'ticker' : null,
+          r: isTickerHub
+            ? (company.revTier === 3 ? 18 : company.revTier === 2 ? 13 : 9)
+            : (company.revTier === 3 ? 14 : company.revTier === 2 ? 11 : 8)
+        });
+        nodeIndex[company.id] = nodes.length - 1;
+      });
+
+      const usedGlobal = new Set();
+      if (mode === 'chainGroup') {
+        hubs.forEach((hub) => (hub.partners || []).forEach((partner) => usedGlobal.add(partnerRef(partner).id)));
+      }
+      koreanCompanies.forEach((company) => (company.partners || []).forEach((partner) => usedGlobal.add(partnerRef(partner).id)));
+      globalCompanies.filter((company) => usedGlobal.has(company.id)).forEach((company) => {
+        if (bigchipIsDomesticPartner(company) && company.ticker) {
+          nodes.push({
+            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'korean',
+            chain: company.chain || '', ticker: company.ticker || '', market: company.market || '',
+            region: company.region, countryCode: company.countryCode, sector: company.sector,
+            country: company.country, targetUrl: company.targetUrl || '', mcapWon: company.mcapWon || 0,
+            revTier: company.revTier || 1, isHub: false,
+            r: company.revTier === 3 ? 14 : company.revTier === 2 ? 11 : 8
+          });
+        } else if (bigchipIsDomesticPartner(company) && !company.ticker) {
+          // KR reference nodes (samsung_d / skhynix_d): country diamond still, but keep circle if chain known
+          nodes.push({
+            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'global',
+            region: company.region || 'kr', countryCode: company.countryCode || 'KR', sector: company.sector,
+            country: company.country, ticker: '', targetUrl: company.targetUrl || '', r: 8
+          });
+        } else {
+          nodes.push({
+            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'global',
+            region: company.region, countryCode: company.countryCode, sector: company.sector, country: company.country,
+            ticker: company.ticker || '', targetUrl: company.targetUrl || '', r: 7
+          });
+        }
+        nodeIndex[company.id] = nodes.length - 1;
       });
 
       const links = [];
-      const byChain = d3.group(koreanCompanies, d => d.chain);
-      for (const [ch, arr] of byChain) {
-        const sorted = [...arr].sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
-        for (let i = 0; i < sorted.length - 1; i++) {
+      if (mode === 'chainGroup') {
+        koreanCompanies.forEach((company) => {
+          const hub = hubByChain.get(company.chain);
+          if (!hub || nodeIndex[hub.id] === undefined) return;
           links.push({
-            source: sorted[i].id,
-            target: sorted[i + 1].id,
-            sourceChain: ch,
-            kind: 'peer',
-            baseStrokeW: 1.15
-          });
-        }
-        const gids = [];
-        arr.forEach(c => (c.partners || []).forEach(p => {
-          const pid = partnerRef(p).id;
-          if (isGlobalId(pid)) gids.push(pid);
-        }));
-        const uniq = [...new Set(gids)].sort();
-        for (let i = 0; i < uniq.length - 1; i++) {
-          if (nodeIndex[uniq[i]] === undefined || nodeIndex[uniq[i + 1]] === undefined) continue;
-          links.push({
-            source: uniq[i],
-            target: uniq[i + 1],
-            sourceChain: ch,
-            kind: 'globalPeer',
-            baseStrokeW: 0.75
-          });
-        }
-      }
-      koreanCompanies.forEach(c => {
-        (c.partners || []).forEach(p => {
-          const pr = partnerRef(p);
-          const pid = pr.id;
-          if (nodeIndex[pid] === undefined) return;
-          const w = pr.weight;
-          const strokeW = (w != null && Number.isFinite(w))
-            ? Math.max(0.9, 0.85 + w * 4.2)
-            : (pr.kind === 'backing' ? 1.0 : (pr.kind === 'theme' || pr.kind === 'export' ? 1.05 : 1.2));
-          links.push({
-            source: c.id, target: pid, sourceChain: c.chain,
-            edgeLabel: pr.edgeLabel, edgeLabelEn: pr.edgeLabelEn, weight: pr.weight, kind: pr.kind,
-            baseStrokeW: strokeW
+            source: company.id, target: hub.id, sourceChain: company.chain,
+            kind: 'member', role: 'member', evidence: 'confirmed', baseStrokeW: 0.7
           });
         });
-      });
+        hubs.forEach((hub) => (hub.partners || []).forEach((partner) => {
+          const relation = partnerRef(partner);
+          if (nodeIndex[relation.id] === undefined) return;
+          links.push({
+            source: hub.id, target: relation.id, sourceChain: hub.chain,
+            edgeLabel: relation.edgeLabel, edgeLabelEn: relation.edgeLabelEn,
+            kind: bigchipRole(relation.kind || relation.role), role: bigchipRole(relation.kind || relation.role),
+            evidence: partner && typeof partner === 'object' ? (partner.evidence || 'confirmed') : 'confirmed',
+            baseStrokeW: partner && partner.evidence === 'reported' ? 0.9 : 1.2
+          });
+        }));
+      } else {
+        koreanCompanies.forEach((company) => (company.partners || []).forEach((partner) => {
+          const relation = partnerRef(partner);
+          if (nodeIndex[relation.id] === undefined) return;
+          links.push({
+            source: company.id, target: relation.id, sourceChain: company.chain,
+            edgeLabel: relation.edgeLabel, edgeLabelEn: relation.edgeLabelEn,
+            kind: bigchipLinkRole(relation), role: bigchipLinkRole(relation),
+            evidence: partner && typeof partner === 'object' ? (partner.evidence || 'confirmed') : 'confirmed',
+            baseStrokeW: partner && partner.evidence === 'reported' ? 0.9 : 1.2
+          });
+        }));
+      }
+      // Non-curated companies keep legacy partner edges when not covered by a hub.
+      if (mode === 'chainGroup') {
+        koreanCompanies.forEach((company) => {
+          if (hubByChain.has(company.chain)) return;
+          (company.partners || []).forEach((partner) => {
+            const relation = partnerRef(partner);
+            if (nodeIndex[relation.id] === undefined) return;
+            const kind = relation.kind === 'supplier' || relation.kind === 'customer' || relation.kind === 'peer'
+              ? relation.kind : 'peer';
+            links.push({
+              source: company.id, target: relation.id, sourceChain: company.chain,
+              edgeLabel: relation.edgeLabel, edgeLabelEn: relation.edgeLabelEn,
+              kind, role: kind, evidence: partner && partner.evidence ? partner.evidence : 'confirmed',
+              baseStrokeW: 1.0
+            });
+          });
+        });
+      }
 
       const d3svg = d3.select('#graph-svg');
       d3svg.selectAll('*').remove();
       svgEl = d3svg;
-      zoomBehavior = d3.zoom().scaleExtent([0.15, 4]).on('zoom', e => g.attr('transform', e.transform));
+      zoomBehavior = d3.zoom().scaleExtent([0.15, 4]).on('zoom', (event) => g.attr('transform', event.transform));
       d3svg.call(zoomBehavior);
-      d3svg.on('click', (e) => { if (e.target === d3svg.node() || e.target.tagName === 'svg') resetSelection(); });
+      d3svg.on('click', (event) => { if (event.target === d3svg.node() || event.target.tagName === 'svg') resetSelection(); });
       g = d3svg.append('g');
-
       simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id(d => d.id)
-          .distance(d => {
-            if (d.kind === 'globalPeer') return 70;
-            const S = d.source, T = d.target;
-            const sk = S.type || 'korean', tk = T.type || 'korean';
-            if (sk === 'korean' && tk === 'korean') return d.kind === 'peer' ? 52 : 62;
-            return 128;
-          })
-          .strength(d => (d.kind === 'globalPeer' ? 0.14 : (d.kind === 'peer' ? 0.36 : 0.28))))
-        .force('charge', d3.forceManyBody().strength(d => d.type === 'korean' ? -200 : -95))
+        .force('link', d3.forceLink(links).id((node) => node.id)
+          .distance((link) => (link.kind === 'member' ? 54 : 128))
+          .strength((link) => (link.kind === 'member' ? 0.45 : 0.28)))
+        .force('charge', d3.forceManyBody().strength((node) => {
+          if (node.isHub && node.hubKind === 'group') return -420;
+          return node.type === 'korean' ? -230 : -90;
+        }))
         .force('center', d3.forceCenter(W / 2, H / 2))
-        .force('collide', d3.forceCollide(d => d.r + 8))
-        .force('x', d3.forceX(d => {
-          if (d.type === 'korean') { const a = { '완성로봇·플랫폼': 0, '액추에이터·모터': 60, '감속기·동력전달': 120, '센서·비전·정밀부품': 180, '제어·모션·로봇SW': 240, '자동화·SI·물류시스템': 300 }[d.chain] || 0; return W / 2 + Math.cos(a * Math.PI / 180) * 190; }
+        .force('collide', d3.forceCollide((node) => node.r + (node.isHub && node.hubKind === 'group' ? 14 : 8)))
+        .force('x', d3.forceX((node) => {
+          if (node.isHub && node.hubKind === 'group') {
+            const angle = ANGLE[node.chain] || 0;
+            return W / 2 + Math.cos(angle * Math.PI / 180) * hubRadius;
+          }
+          if (node.isHub) return W / 2;
+          if (node.type === 'korean') {
+            const angle = ANGLE[node.chain] || 0;
+            return W / 2 + Math.cos(angle * Math.PI / 180) * memberRadius;
+          }
           return W / 2;
-        }).strength(0.055))
-        .force('y', d3.forceY(d => {
-          if (d.type === 'korean') { const a = { '완성로봇·플랫폼': 0, '액추에이터·모터': 60, '감속기·동력전달': 120, '센서·비전·정밀부품': 180, '제어·모션·로봇SW': 240, '자동화·SI·물류시스템': 300 }[d.chain] || 0; return H / 2 + Math.sin(a * Math.PI / 180) * 190; }
+        }).strength((node) => (node.isHub ? 0.14 : 0.055)))
+        .force('y', d3.forceY((node) => {
+          if (node.isHub && node.hubKind === 'group') {
+            const angle = ANGLE[node.chain] || 0;
+            return H / 2 + Math.sin(angle * Math.PI / 180) * hubRadius;
+          }
+          if (node.isHub) return H / 2;
+          if (node.type === 'korean') {
+            const angle = ANGLE[node.chain] || 0;
+            return H / 2 + Math.sin(angle * Math.PI / 180) * memberRadius;
+          }
           return H / 2;
-        }).strength(0.055));
+        }).strength((node) => (node.isHub ? 0.14 : 0.055)));
 
-      const link = g.append('g').selectAll('line').data(links).join('line')
-        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'))
-        .attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22)
-        .attr('stroke-width', d => d.baseStrokeW || 1.2)
-        .attr('stroke-dasharray', d => {
-          if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'peer') return null;
-          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
-        });
-
+      const link = g.append('g').selectAll('line').data(links).join('line');
       const node = g.append('g').selectAll('g').data(nodes).join('g')
-        .attr('class', d => `node node-${d.type}`).attr('cursor', 'pointer')
-        .on('mouseover', (e, d) => showTooltip(e, d))
+        .attr('class', (item) => `node node-${item.type}`).attr('cursor', 'pointer')
+        .on('mouseover', (event, item) => showTooltip(event, item))
         .on('mouseout', () => hideTooltip())
-        .on('click', (e, d) => { e.stopPropagation(); selectNode(d, node, link); })
+        .on('click', (event, item) => { event.stopPropagation(); selectNode(item, node, link); })
+        .on('dblclick', (event, item) => {
+          if (item.targetUrl) {
+            event.preventDefault();
+            window.location.href = item.targetUrl + '&lang=' + encodeURIComponent(lang);
+          }
+        })
         .call(d3.drag()
-          .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-          .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
-          .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
-
-      node.filter(d => d.type === 'korean').append('circle')
-        .attr('r', d => d.r).attr('fill', d => CHAIN_COLORS[d.chain] || '#888')
-        .attr('fill-opacity', 0.85).attr('stroke', graphStroke).attr('stroke-width', 1.5);
-
-      node.filter(d => d.type === 'global').append('polygon')
-        .attr('points', d => { const r = d.r + 2; return `0,${-r} ${r},0 0,${r} ${-r},0`; })
-        .attr('fill', d => REGION_COLORS[d.region] || '#888').attr('fill-opacity', 0.8)
+          .on('start', (event, item) => { if (!event.active) simulation.alphaTarget(0.3).restart(); item.fx = item.x; item.fy = item.y; })
+          .on('drag', (event, item) => { item.fx = event.x; item.fy = event.y; })
+          .on('end', (event, item) => { if (!event.active) simulation.alphaTarget(0); item.fx = null; item.fy = null; }));
+      node.filter((item) => item.type === 'korean').append('circle')
+        .attr('r', (item) => item.r).attr('fill', (item) => bigchipNodeFill(item))
+        .attr('fill-opacity', 0.85).attr('stroke', graphStroke)
+        .attr('stroke-width', (item) => item.isHub ? 2.4 : 1.5);
+      node.filter((item) => item.type === 'global').append('polygon')
+        .attr('points', (item) => { const r = item.r + 2; return `0,${-r} ${r},0 0,${r} ${-r},0`; })
+        .attr('fill', (item) => bigchipNodeFill(item)).attr('fill-opacity', 0.8)
         .attr('stroke', graphStroke).attr('stroke-width', 1.2);
-
-      node.filter(d => d.r >= 9 || d.type === 'global').append('text')
-        .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label))
-        .attr('text-anchor', 'middle').attr('dy', d => d.r + 11)
-        .attr('font-size', d => d.type === 'korean' ? (d.r >= 13 ? 11 : 9) : 9)
+      // Every node keeps a name label (relations JSON names); do not gate on radius.
+      node.append('text')
+        .text((item) => lang === 'en' ? (item.labelEn || item.label) : item.label)
+        .attr('text-anchor', 'middle').attr('dy', (item) => item.r + 11)
+        .attr('font-size', (item) => item.type === 'korean' ? (item.isHub || item.r >= 13 ? 11 : 9) : 9)
         .attr('fill', graphLabel).attr('pointer-events', 'none');
-
       simulation.on('tick', () => {
-        link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-          .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-        node.attr('transform', d => `translate(${d.x},${d.y})`);
+        link.attr('x1', (item) => item.source.x).attr('y1', (item) => item.source.y)
+          .attr('x2', (item) => item.target.x).attr('y2', (item) => item.target.y);
+        node.attr('transform', (item) => `translate(${item.x},${item.y})`);
       });
+      bigchipGraphNodes = node;
+      bigchipGraphLinks = link;
+      applyBigchipGraphFilters();
       setTimeout(() => { svgEl.transition().duration(600).call(zoomBehavior.transform, d3.zoomIdentity.translate(W * 0.05, H * 0.05).scale(0.88)); }, 1200);
     }
 
-    function selectNode(d, node, link) {
-      if (selectedNode === d.id) { resetSelection(); return; }
-      selectedNode = d.id;
-      const connected = new Set([d.id]);
-      link.each(l => {
-        const s = l.source.id || l.source, t = l.target.id || l.target;
-        if (s === d.id || t === d.id) { connected.add(s); connected.add(t); }
-      });
-      node.classed('node-dim', n => !connected.has(n.id));
-      link.attr('stroke-opacity', l => { const s = l.source.id || l.source, t = l.target.id || l.target; return (s === d.id || t === d.id) ? 0.9 : 0.03; })
-        .attr('stroke-width', l => {
-          const s = l.source.id || l.source, t = l.target.id || l.target;
-          const on = (s === d.id || t === d.id);
-          const base = l.baseStrokeW || 1.2;
-          return on ? Math.max(2.4, base * 2.2) : Math.max(0.55, base * 0.55);
-        });
+    function selectNode(item) {
+      selectedNode = selectedNode === item.id ? null : item.id;
+      applyBigchipGraphFilters();
     }
-
     function resetSelection() {
-      selectedNode = null; highlightedChain = null;
-      if (!svgEl) return;
-      svgEl.selectAll('.node').classed('node-dim', false);
-      svgEl.selectAll('line').attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22).attr('stroke-width', d => d.baseStrokeW || 1.2)
-        .attr('stroke-dasharray', d => {
-          if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'peer') return null;
-          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
-        })
-        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'));
+      selectedNode = null;
+      highlightedChain = null;
+      applyBigchipGraphFilters();
     }
-
     function toggleChainHighlight(chain) {
-      if (!svgEl) return;
-      if (highlightedChain === chain) { resetSelection(); return; }
-      highlightedChain = chain;
-      const chainIds = new Set(koreanCompanies.filter(c => c.chain === chain).map(c => c.id));
-      const linkedIds = new Set(chainIds);
-      koreanCompanies.filter(c => c.chain === chain).forEach(c => (c.partners || []).forEach(p => linkedIds.add(partnerRef(p).id)));
-      svgEl.selectAll('.node').classed('node-dim', d => !linkedIds.has(d.id));
-      svgEl.selectAll('line').attr('stroke-opacity', l => chainIds.has(l.source.id || l.source) ? 0.75 : 0.03)
-        .attr('stroke-width', l => {
-          const base = l.baseStrokeW || 1.2;
-          return chainIds.has(l.source.id || l.source) ? Math.max(2, base * 1.7) : Math.max(0.55, base * 0.55);
-        });
+      toggleBigchipFilter('chains', chain);
     }
 
-    function showTooltip(e, d) {
+        function showTooltip(e, d) {
       const tt = document.getElementById('graph-tooltip');
       const t = T[lang];
       const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : (REGION_COLORS[d.region] || '#888');

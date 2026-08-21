@@ -10,9 +10,9 @@ import { fileURLToPath } from 'url';
 import { loadPerPbrMap, mergePerPbrIntoCompanies } from './lib/krx_per_pbr.mjs';
 import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompanies } from './lib/krx_data_sources.mjs';
 import {
-  ANGLE as SEMI_ANGLE_LITERAL,
   semiChainsAllSource,
   semiChainsNoAllSource,
+  retargetSemiCloneAngles,
 } from './scripts/apply_semi_chain_reclass.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -565,19 +565,7 @@ function main() {
     "const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };",
   );
 
-  const semiAngleNeedle = SEMI_ANGLE_LITERAL;
-  const semiAngleRe = new RegExp(reEsc(semiAngleNeedle), 'g');
-  const shipAngle = shipAngleLiteral();
-  const angleMatches = html.match(semiAngleRe);
-  if (angleMatches && angleMatches.length >= 2) {
-    html = html.replace(semiAngleRe, shipAngle);
-  } else {
-    const shipAngleRe = new RegExp(reEsc(shipAngle), 'g');
-    const shipAngleMatches = html.match(shipAngleRe);
-    if (!shipAngleMatches || shipAngleMatches.length < 2) {
-      throw new Error('forceX/Y: expected semiconductor or ship angle snippet');
-    }
-  }
+  html = retargetSemiCloneAngles(html, shipAngleLiteral());
 
   const semiChainsAll = semiChainsAllSource();
   const semiChainsNoAll = semiChainsNoAllSource();

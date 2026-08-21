@@ -12,34 +12,68 @@ function check(condition, message) {
   if (!condition) failures.push(message);
 }
 
-check(relations.hubs.length === 3, `expected 3 B1 hubs, got ${relations.hubs.length}`);
-for (const chain of ['전공정 장비', '후공정 장비', '소재']) {
+const EXPECTED_CHAINS = [
+  '전공정 장비',
+  '후공정 장비',
+  '소재',
+  '파운드리',
+  '팹리스',
+  '디자인하우스',
+];
+const EXPECTED_HUB_IDS = [
+  'front_equip',
+  'back_equip',
+  'materials',
+  'foundry',
+  'fabless',
+  'design_house',
+];
+const MIN_MEMBERS = {
+  '전공정 장비': 10,
+  '후공정 장비': 5,
+  소재: 10,
+  파운드리: 1,
+  팹리스: 5,
+  디자인하우스: 2,
+};
+
+check(relations.hubs.length === 6, `expected 6 hubs, got ${relations.hubs.length}`);
+for (const chain of EXPECTED_CHAINS) {
   check(relations.hubs.some((h) => h.chain === chain), `missing hub chain ${chain}`);
+}
+for (const id of EXPECTED_HUB_IDS) {
+  check(relations.hubs.some((h) => h.id === id), `missing hub id ${id}`);
+  check(
+    html.includes(`id: 'hub_${id}'`) || html.includes(`hub_${id}`),
+    `generated HTML missing hub_${id}`,
+  );
 }
 
 for (const hub of relations.hubs) {
   check(hub.id && hub.label?.ko && hub.label?.en, `hub ${hub.chain} missing id/label`);
-  check(Array.isArray(hub.members) && hub.members.length >= 5, `hub ${hub.chain} needs members (>=5)`);
+  const minMembers = MIN_MEMBERS[hub.chain] ?? 1;
+  check(
+    Array.isArray(hub.members) && hub.members.length >= minMembers,
+    `hub ${hub.chain} needs members (>=${minMembers}), got ${hub.members?.length ?? 0}`,
+  );
   for (const role of ['suppliers', 'customers', 'peers']) {
     check(Array.isArray(hub[role]) && hub[role].length >= 1, `hub ${hub.chain} missing ${role}`);
     for (const edge of hub[role]) {
-      check(!!edge.id && !!edge.name && !!edge.source, `${hub.chain}/${role} edge incomplete`);
+      check(!!edge.id && !!edge.name && !!edge.nameEn, `${hub.chain}/${role} missing name fields`);
+      check(!!edge.country && !!edge.note && !!edge.noteEn, `${hub.chain}/${role} missing country/note`);
+      check(!!edge.source && /^https?:\/\//.test(edge.source), `${hub.chain}/${role} bad source URL`);
       check(edge.evidence === 'confirmed' || edge.evidence === 'reported', `${hub.chain}/${role} bad evidence`);
     }
   }
   for (const m of hub.members) {
+    check(!!m.ticker && !!m.name, `hub ${hub.chain} member incomplete`);
     check(html.includes(`ticker: '${m.ticker}'`), `semi map missing member ${m.ticker}`);
-    check(new RegExp(`ticker: '${m.ticker}'[\\s\\S]*?chain: '${hub.chain.replace('/', '\\/')}'`).test(html)
-      || html.includes(`chain: '${hub.chain}'`), `member ${m.ticker} chain mismatch check`);
   }
 }
 
 check(html.includes("CURATED_RELATION_MODE = 'chainGroup'"), 'chainGroup mode missing');
 check(html.includes('CURATED_RELATION_HUBS'), 'CURATED_RELATION_HUBS missing');
 check(html.includes('CURATED_HUB_ANGLE'), 'CURATED_HUB_ANGLE missing');
-check(html.includes('hub_front_equip') || html.includes("id: 'hub_front_equip'"), 'front_equip hub node missing');
-check(html.includes('hub_back_equip') || html.includes("id: 'hub_back_equip'"), 'back_equip hub node missing');
-check(html.includes('hub_materials') || html.includes("id: 'hub_materials'"), 'materials hub node missing');
 check(html.includes("kind: 'member'"), 'member edges missing');
 check(html.includes("kind: 'supplier'"), 'supplier edges missing');
 check(html.includes("kind: 'customer'"), 'customer edges missing');
@@ -62,6 +96,11 @@ check(
 check(!/node\.filter\(\(item\) => item\.r >= 9/.test(html), 'radius-gated labels must be removed');
 check(html.includes('hubKind === \'group\'') || html.includes('hubKind: \'group\''), 'group hub styling');
 
+// B2a node presence in generated graph globals / hubs
+for (const id of ['globalfoundries', 'umc', 'smic', 'arm', 'synopsys', 'cadence', 'broadcom', 'guc', 'alchip', 'faraday']) {
+  check(html.includes(`id: '${id}'`), `generated HTML missing relation node ${id}`);
+}
+
 for (const match of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)) {
   const attrs = match[1] || '';
   if (/\bsrc\s*=/.test(attrs) || /application\/ld\+json/.test(attrs) || !match[2].trim()) continue;
@@ -78,9 +117,9 @@ const edgeCount = relations.hubs.reduce(
 );
 const memberCount = relations.hubs.reduce((n, h) => n + (h.members?.length || 0), 0);
 
-console.log('Semi relationship network verification (B1)');
-console.log('==========================================');
-console.log('hubs:', relations.hubs.map((h) => h.chain));
+console.log('Semi relationship network verification (B1+B2a)');
+console.log('==============================================');
+console.log('hubs:', relations.hubs.map((h) => `${h.chain}(${h.members?.length || 0})`));
 console.log('members:', memberCount, 'edges:', edgeCount);
 console.log('failures:', failures.length);
 for (const failure of failures) console.log(`  - ${failure}`);

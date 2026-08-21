@@ -628,6 +628,489 @@
           "source": "https://www.entegris.com/"
         }
       ]
+    },
+    {
+      "id": "foundry",
+      "chain": "파운드리",
+      "label": {
+        "ko": "파운드리",
+        "en": "Foundry"
+      },
+      "members": [
+        {
+          "ticker": "000990",
+          "name": "DB하이텍",
+          "nameEn": "DB HiTek Co.,LTD"
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "asml",
+          "name": "ASML",
+          "nameEn": "ASML",
+          "country": "NL",
+          "note": "노광 장비 (파운드리 전공정)",
+          "noteEn": "Lithography tools for foundry front-end",
+          "evidence": "confirmed",
+          "source": "https://www.asml.com/en/products"
+        },
+        {
+          "id": "appmat",
+          "name": "Applied Materials",
+          "nameEn": "Applied Materials",
+          "country": "US",
+          "note": "증착·CMP 등 공정장비",
+          "noteEn": "Deposition, CMP and related process tools",
+          "evidence": "confirmed",
+          "source": "https://www.appliedmaterials.com/us/en/semiconductor.html"
+        },
+        {
+          "id": "lam",
+          "name": "Lam Research",
+          "nameEn": "Lam Research",
+          "country": "US",
+          "note": "식각·세정 장비",
+          "noteEn": "Etch and clean equipment",
+          "evidence": "confirmed",
+          "source": "https://www.lamresearch.com/"
+        },
+        {
+          "id": "tokyo_electron",
+          "name": "도쿄일렉트론",
+          "nameEn": "Tokyo Electron",
+          "country": "JP",
+          "note": "코터·식각·증착 장비",
+          "noteEn": "Coat/develop, etch and deposition tools",
+          "evidence": "confirmed",
+          "source": "https://www.tel.com/product/"
+        },
+        {
+          "id": "kla",
+          "name": "KLA",
+          "nameEn": "KLA",
+          "country": "US",
+          "note": "공정제어·계측 장비",
+          "noteEn": "Process control and metrology",
+          "evidence": "confirmed",
+          "source": "https://www.kla.com/"
+        }
+      ],
+      "customers": [
+        {
+          "id": "qualcomm",
+          "name": "Qualcomm",
+          "nameEn": "Qualcomm",
+          "country": "US",
+          "note": "아날로그·전력 등 특화 파운드리 고객",
+          "noteEn": "Specialty foundry customer (analog/power)",
+          "evidence": "reported",
+          "source": "https://www.dbhitek.com/eng/"
+        },
+        {
+          "id": "ti",
+          "name": "Texas Instruments",
+          "nameEn": "Texas Instruments",
+          "country": "US",
+          "note": "아날로그 반도체 위탁생산 수요",
+          "noteEn": "Analog semiconductor foundry demand",
+          "evidence": "reported",
+          "source": "https://www.ti.com/about-ti/company/ti-at-a-glance.html"
+        },
+        {
+          "id": "renesas",
+          "name": "Renesas",
+          "nameEn": "Renesas",
+          "country": "JP",
+          "note": "MCU·아날로그 파운드리 고객",
+          "noteEn": "MCU and analog foundry customer",
+          "evidence": "reported",
+          "source": "https://www.renesas.com/"
+        },
+        {
+          "id": "onsemi",
+          "name": "onsemi",
+          "nameEn": "onsemi",
+          "country": "US",
+          "note": "전력·센서 파운드리 고객",
+          "noteEn": "Power and sensor foundry customer",
+          "evidence": "reported",
+          "source": "https://www.onsemi.com/"
+        }
+      ],
+      "peers": [
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "글로벌 로직 파운드리 peer",
+          "noteEn": "Global logic foundry peer",
+          "evidence": "confirmed",
+          "source": "https://www.tsmc.com/"
+        },
+        {
+          "id": "globalfoundries",
+          "name": "GlobalFoundries",
+          "nameEn": "GlobalFoundries",
+          "country": "US",
+          "note": "특화·레거시 노드 파운드리 peer",
+          "noteEn": "Specialty and mature-node foundry peer",
+          "evidence": "confirmed",
+          "source": "https://gf.com/"
+        },
+        {
+          "id": "umc",
+          "name": "UMC",
+          "nameEn": "United Microelectronics",
+          "country": "TW",
+          "note": "파운드리 peer",
+          "noteEn": "Foundry peer",
+          "evidence": "confirmed",
+          "source": "https://www.umc.com/"
+        },
+        {
+          "id": "smic",
+          "name": "SMIC",
+          "nameEn": "SMIC",
+          "country": "CN",
+          "note": "중국 파운드리 peer",
+          "noteEn": "China foundry peer",
+          "evidence": "confirmed",
+          "source": "https://www.smics.com/"
+        },
+        {
+          "id": "samsung_d",
+          "name": "삼성전자 파운드리",
+          "nameEn": "Samsung Foundry",
+          "country": "KR",
+          "note": "국내·글로벌 파운드리 peer",
+          "noteEn": "Domestic and global foundry peer",
+          "evidence": "confirmed",
+          "source": "https://semiconductor.samsung.com/foundry/"
+        }
+      ]
+    },
+    {
+      "id": "fabless",
+      "chain": "팹리스",
+      "label": {
+        "ko": "팹리스",
+        "en": "Fabless"
+      },
+      "members": [
+        {
+          "ticker": "440110",
+          "name": "파두",
+          "nameEn": "FADU INC."
+        },
+        {
+          "ticker": "080220",
+          "name": "제주반도체",
+          "nameEn": "Jeju Semiconductor Corp."
+        },
+        {
+          "ticker": "108320",
+          "name": "LX세미콘",
+          "nameEn": "LX Semicon"
+        },
+        {
+          "ticker": "171090",
+          "name": "선익시스템",
+          "nameEn": "SUNIC SYSTEM Co., Ltd."
+        },
+        {
+          "ticker": "094170",
+          "name": "동운아나텍",
+          "nameEn": "DONGWOON ANATECH CO.,LTD."
+        },
+        {
+          "ticker": "253590",
+          "name": "네오셈",
+          "nameEn": "Neosem Inc."
+        },
+        {
+          "ticker": "394280",
+          "name": "오픈엣지테크놀로지",
+          "nameEn": "Openedges Technology, Inc."
+        },
+        {
+          "ticker": "094360",
+          "name": "칩스앤미디어",
+          "nameEn": "Chips&Media, Inc."
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "위탁 제조(파운드리) 후방",
+          "noteEn": "Upstream foundry manufacturing",
+          "evidence": "confirmed",
+          "source": "https://www.tsmc.com/"
+        },
+        {
+          "id": "samsung_d",
+          "name": "삼성전자 파운드리",
+          "nameEn": "Samsung Foundry",
+          "country": "KR",
+          "note": "국내 파운드리 위탁",
+          "noteEn": "Domestic foundry manufacturing",
+          "evidence": "confirmed",
+          "source": "https://semiconductor.samsung.com/foundry/"
+        },
+        {
+          "id": "arm",
+          "name": "Arm",
+          "nameEn": "Arm",
+          "country": "GB",
+          "note": "CPU·IP 라이선스",
+          "noteEn": "CPU and IP licensing",
+          "evidence": "confirmed",
+          "source": "https://www.arm.com/"
+        },
+        {
+          "id": "synopsys",
+          "name": "Synopsys",
+          "nameEn": "Synopsys",
+          "country": "US",
+          "note": "EDA·IP 설계 툴",
+          "noteEn": "EDA tools and design IP",
+          "evidence": "confirmed",
+          "source": "https://www.synopsys.com/"
+        }
+      ],
+      "customers": [
+        {
+          "id": "apple",
+          "name": "Apple",
+          "nameEn": "Apple",
+          "country": "US",
+          "note": "디스플레이·센서 등 세트 고객(일부 팹리스)",
+          "noteEn": "Set OEM customer for display/sensor fabless names",
+          "evidence": "reported",
+          "source": "https://www.apple.com/supplier-responsibility/"
+        },
+        {
+          "id": "aws",
+          "name": "Amazon AWS",
+          "nameEn": "Amazon AWS",
+          "country": "US",
+          "note": "데이터센터·스토리지 칩 수요",
+          "noteEn": "Datacenter and storage chip demand",
+          "evidence": "reported",
+          "source": "https://aws.amazon.com/semiconductors/"
+        },
+        {
+          "id": "google",
+          "name": "Google",
+          "nameEn": "Google",
+          "country": "US",
+          "note": "클라우드·AI 인프라 칩 수요",
+          "noteEn": "Cloud and AI infrastructure chip demand",
+          "evidence": "reported",
+          "source": "https://cloud.google.com/"
+        },
+        {
+          "id": "lgdisplay",
+          "name": "LG디스플레이",
+          "nameEn": "LG Display",
+          "country": "KR",
+          "note": "디스플레이 DDI 고객",
+          "noteEn": "Display driver IC customer",
+          "evidence": "reported",
+          "source": "https://www.lgdisplay.com/"
+        },
+        {
+          "id": "boe",
+          "name": "BOE Technology",
+          "nameEn": "BOE Technology",
+          "country": "CN",
+          "note": "디스플레이 패널 DDI 수요",
+          "noteEn": "Display panel DDI demand",
+          "evidence": "reported",
+          "source": "https://www.boe.com/"
+        }
+      ],
+      "peers": [
+        {
+          "id": "qualcomm",
+          "name": "Qualcomm",
+          "nameEn": "Qualcomm",
+          "country": "US",
+          "note": "모바일 SoC 팹리스 peer",
+          "noteEn": "Mobile SoC fabless peer",
+          "evidence": "confirmed",
+          "source": "https://www.qualcomm.com/"
+        },
+        {
+          "id": "mediatek",
+          "name": "MediaTek",
+          "nameEn": "MediaTek",
+          "country": "TW",
+          "note": "모바일·AP 팹리스 peer",
+          "noteEn": "Mobile AP fabless peer",
+          "evidence": "confirmed",
+          "source": "https://www.mediatek.com/"
+        },
+        {
+          "id": "broadcom",
+          "name": "Broadcom",
+          "nameEn": "Broadcom",
+          "country": "US",
+          "note": "유선·무선 통신 팹리스 peer",
+          "noteEn": "Wired/wireless communications fabless peer",
+          "evidence": "confirmed",
+          "source": "https://www.broadcom.com/"
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "nameEn": "NVIDIA",
+          "country": "US",
+          "note": "GPU·AI 팹리스 peer",
+          "noteEn": "GPU and AI fabless peer",
+          "evidence": "confirmed",
+          "source": "https://www.nvidia.com/"
+        },
+        {
+          "id": "amd",
+          "name": "AMD",
+          "nameEn": "AMD",
+          "country": "US",
+          "note": "CPU·GPU 팹리스 peer",
+          "noteEn": "CPU/GPU fabless peer",
+          "evidence": "confirmed",
+          "source": "https://www.amd.com/"
+        }
+      ]
+    },
+    {
+      "id": "design_house",
+      "chain": "디자인하우스",
+      "label": {
+        "ko": "디자인하우스",
+        "en": "Design house"
+      },
+      "members": [
+        {
+          "ticker": "399720",
+          "name": "가온칩스",
+          "nameEn": "GAONCHIPS CO., LTD."
+        },
+        {
+          "ticker": "200710",
+          "name": "에이디테크놀로지",
+          "nameEn": "ADTechnology Co., Ltd."
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "synopsys",
+          "name": "Synopsys",
+          "nameEn": "Synopsys",
+          "country": "US",
+          "note": "EDA·설계 IP",
+          "noteEn": "EDA and design IP",
+          "evidence": "confirmed",
+          "source": "https://www.synopsys.com/"
+        },
+        {
+          "id": "cadence",
+          "name": "Cadence",
+          "nameEn": "Cadence Design Systems",
+          "country": "US",
+          "note": "EDA 툴체인",
+          "noteEn": "EDA toolchain",
+          "evidence": "confirmed",
+          "source": "https://www.cadence.com/"
+        },
+        {
+          "id": "arm",
+          "name": "Arm",
+          "nameEn": "Arm",
+          "country": "GB",
+          "note": "프로세서 IP",
+          "noteEn": "Processor IP",
+          "evidence": "confirmed",
+          "source": "https://www.arm.com/"
+        },
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "디자인 서비스·PDK 연계 파운드리",
+          "noteEn": "Foundry PDK and design-service linkage",
+          "evidence": "confirmed",
+          "source": "https://www.tsmc.com/english/dedicatedFoundry/services/design_services"
+        },
+        {
+          "id": "samsung_d",
+          "name": "삼성전자 파운드리",
+          "nameEn": "Samsung Foundry",
+          "country": "KR",
+          "note": "디자인하우스·파운드리 협업",
+          "noteEn": "Design-house collaboration with foundry",
+          "evidence": "confirmed",
+          "source": "https://semiconductor.samsung.com/foundry/"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "칩 설계·디자인 서비스 고객",
+          "noteEn": "Chip design and design-service customer",
+          "evidence": "reported",
+          "source": "https://www.gaonchips.com/"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "메모리·로직 관련 디자인 서비스",
+          "noteEn": "Memory/logic-related design services",
+          "evidence": "reported",
+          "source": "https://www.adtechnology.co.kr/"
+        }
+      ],
+      "peers": [
+        {
+          "id": "guc",
+          "name": "GUC",
+          "nameEn": "Global Unichip Corp.",
+          "country": "TW",
+          "note": "디자인서비스(DSP) peer",
+          "noteEn": "Design-service (DSP) peer",
+          "evidence": "confirmed",
+          "source": "https://www.guc.com.tw/"
+        },
+        {
+          "id": "alchip",
+          "name": "Alchip",
+          "nameEn": "Alchip Technologies",
+          "country": "TW",
+          "note": "ASIC 디자인서비스 peer",
+          "noteEn": "ASIC design-service peer",
+          "evidence": "confirmed",
+          "source": "https://www.alchip.com/"
+        },
+        {
+          "id": "faraday",
+          "name": "Faraday",
+          "nameEn": "Faraday Technology",
+          "country": "TW",
+          "note": "ASIC·IP 디자인서비스 peer",
+          "noteEn": "ASIC and IP design-service peer",
+          "evidence": "confirmed",
+          "source": "https://www.faraday-tech.com/"
+        }
+      ]
     }
   ]
 }

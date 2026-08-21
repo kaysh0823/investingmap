@@ -23,6 +23,7 @@ export {
   CHIP_CHAINS,
   LEGEND_CHAINS,
   toJsChainList,
+  retargetSemiCloneAngles,
 } from '../lib/semi_chain_ui.mjs';
 export {
   semiChainsAllSource,

@@ -11,9 +11,9 @@ import { loadMergedKrxMap, loadListedEnglish3557Map, mergeListedEnglishIntoCompa
 import { passesMcapFloor } from './lib/mcap_policy.mjs';
 import { patchKoreanCompaniesHtml } from './lib/map_company_serialize.mjs';
 import {
-  ANGLE as SEMI_ANGLE_LITERAL,
   semiChainsAllSource,
   semiChainsNoAllSource,
+  retargetSemiCloneAngles,
 } from './scripts/apply_semi_chain_reclass.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -609,19 +609,7 @@ function main() {
     "const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };",
   );
 
-  const semiAngleNeedle = SEMI_ANGLE_LITERAL;
-  const semiAngleRe = new RegExp(reEsc(semiAngleNeedle), 'g');
-  const robotAngle = robotAngleLiteral();
-  const angleMatches = html.match(semiAngleRe);
-  if (angleMatches && angleMatches.length >= 2) {
-    html = html.replace(semiAngleRe, robotAngle);
-  } else {
-    const robotAngleRe = new RegExp(reEsc(robotAngle), 'g');
-    const robotAngleMatches = html.match(robotAngleRe);
-    if (!robotAngleMatches || robotAngleMatches.length < 2) {
-      throw new Error('forceX/Y: expected semiconductor or robot angle snippet');
-    }
-  }
+  html = retargetSemiCloneAngles(html, robotAngleLiteral());
 
   const semiChainsAll = semiChainsAllSource();
   const semiChainsNoAll = semiChainsNoAllSource();
