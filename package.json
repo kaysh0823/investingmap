@@ -6,6 +6,7 @@
     "build": "node scripts/rebuild_site.mjs && node scripts/build_trust_pages.mjs && node scripts/patch_geo.mjs && node scripts/patch_mobile_table.mjs && node scripts/patch_candle_modal.mjs && node scripts/patch_heatmap_chg.mjs && node scripts/pages_build.mjs && npm run verify:dist && node scripts/fix_canonical_domain.mjs",
     "fix:canonical": "node scripts/fix_canonical_domain.mjs",
     "verify:bigchip": "node scripts/verify_bigchip_relation_network.mjs",
+    "verify:semi-relations": "node scripts/verify_semi_relation_network.mjs",
     "verify:candle": "node scripts/verify_candle_modal.mjs",
     "verify:hub-trend": "node scripts/verify_hub_trend.mjs",
     "verify:hub-sectors-trend": "node scripts/verify_hub_sectors_vs_trend.mjs",

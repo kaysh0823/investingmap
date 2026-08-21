@@ -44,6 +44,7 @@ run('node scripts/apply_sector_exclusive.mjs', 'enforce single-sector ownership'
 run('node scripts/apply_cross_sector_memberships.mjs', 'verify no active cross-sector memberships');
 run('node scripts/enrich_company_fields.mjs', 'enrich semType/products (all maps)');
 run('node scripts/apply_semi_chain_reclass.mjs', 'semiconductor chain split persistence');
+run('node scripts/apply_semi_relation_network.mjs', 'semiconductor curated relation network');
 run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');
 run('node scripts/apply_ship_chain_reclass.mjs', 'ship chain split persistence');
 run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');
