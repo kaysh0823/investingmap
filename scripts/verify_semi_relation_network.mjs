@@ -19,6 +19,9 @@ const EXPECTED_CHAINS = [
   '파운드리',
   '팹리스',
   '디자인하우스',
+  '부품/기판',
+  '패키징/테스트',
+  '반도체 유통',
 ];
 const EXPECTED_HUB_IDS = [
   'front_equip',
@@ -27,6 +30,9 @@ const EXPECTED_HUB_IDS = [
   'foundry',
   'fabless',
   'design_house',
+  'substrate',
+  'osat',
+  'distribution',
 ];
 const MIN_MEMBERS = {
   '전공정 장비': 10,
@@ -35,9 +41,12 @@ const MIN_MEMBERS = {
   파운드리: 1,
   팹리스: 5,
   디자인하우스: 2,
+  '부품/기판': 8,
+  '패키징/테스트': 8,
+  '반도체 유통': 1,
 };
 
-check(relations.hubs.length === 6, `expected 6 hubs, got ${relations.hubs.length}`);
+check(relations.hubs.length === 9, `expected 9 hubs, got ${relations.hubs.length}`);
 for (const chain of EXPECTED_CHAINS) {
   check(relations.hubs.some((h) => h.chain === chain), `missing hub chain ${chain}`);
 }
@@ -96,8 +105,10 @@ check(
 check(!/node\.filter\(\(item\) => item\.r >= 9/.test(html), 'radius-gated labels must be removed');
 check(html.includes('hubKind === \'group\'') || html.includes('hubKind: \'group\''), 'group hub styling');
 
-// B2a node presence in generated graph globals / hubs
-for (const id of ['globalfoundries', 'umc', 'smic', 'arm', 'synopsys', 'cadence', 'broadcom', 'guc', 'alchip', 'faraday']) {
+for (const id of [
+  'globalfoundries', 'umc', 'smic', 'arm', 'synopsys', 'cadence', 'broadcom', 'guc', 'alchip', 'faraday',
+  'ibiden', 'shinko', 'unimicron', 'ats', 'jcet', 'pti', 'wpg', 'arrow', 'avnet', 'henkel', 'infineon',
+]) {
   check(html.includes(`id: '${id}'`), `generated HTML missing relation node ${id}`);
 }
 
@@ -117,8 +128,8 @@ const edgeCount = relations.hubs.reduce(
 );
 const memberCount = relations.hubs.reduce((n, h) => n + (h.members?.length || 0), 0);
 
-console.log('Semi relationship network verification (B1+B2a)');
-console.log('==============================================');
+console.log('Semi relationship network verification (B1+B2a+B2b)');
+console.log('===================================================');
 console.log('hubs:', relations.hubs.map((h) => `${h.chain}(${h.members?.length || 0})`));
 console.log('members:', memberCount, 'edges:', edgeCount);
 console.log('failures:', failures.length);

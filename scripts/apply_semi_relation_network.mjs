@@ -27,6 +27,7 @@ const COUNTRY_META = {
   CN: { countryLabel: '중국/China', region: 'cn', countryCode: 'CN' },
   SG: { countryLabel: '싱가포르/Singapore', region: 'eu', countryCode: 'SG' },
   GB: { countryLabel: '영국/UK', region: 'gb', countryCode: 'GB' },
+  AT: { countryLabel: '오스트리아/Austria', region: 'eu', countryCode: 'AT' },
   EU: { countryLabel: '유럽/Europe', region: 'eu', countryCode: 'EU' },
 };
 
@@ -54,7 +55,7 @@ const TRANSLATION_PATCHES = {
     sbKorean: '밸류체인',
     sbGlobal: '공급사·peer·고객',
     peerNetworkDesc:
-      '밸류체인 그룹(허브)을 중심으로 국내 멤버, 후방 공급사, 글로벌 peer, 전방 고객을 공개자료 기준으로 연결합니다. 전공정·후공정 장비, 소재, 파운드리, 팹리스, 디자인하우스 그룹을 큐레이션했습니다.',
+      '밸류체인 그룹(허브)을 중심으로 국내 멤버, 후방 공급사, 글로벌 peer, 전방 고객을 공개자료 기준으로 연결합니다. 반도체 전 밸류체인 그룹(장비·소재·파운드리·팹리스·디자인하우스·부품/기판·패키징/테스트·유통)을 큐레이션했습니다.',
     graphHint:
       '공개자료 기반 공급망·고객·peer 관계이며 계약 조건을 의미하지 않습니다. “보도” 관계는 공식 확인 건과 구분해 표시합니다.',
     relationSupplier: '후방 공급사',
@@ -73,7 +74,7 @@ const TRANSLATION_PATCHES = {
     sbKorean: 'Value chain',
     sbGlobal: 'Suppliers, peers & customers',
     peerNetworkDesc:
-      'Value-chain group hubs link domestic members with upstream suppliers, global peers and downstream customers from public sources. Curated groups: front/back-end equipment, materials, foundry, fabless and design house.',
+      'Value-chain group hubs link domestic members with upstream suppliers, global peers and downstream customers from public sources. All semiconductor value-chain groups are curated (equipment, materials, foundry, fabless, design house, substrate, packaging/test, distribution).',
     graphHint:
       'Public-source supply-chain, customer and peer relationships; they do not assert contract terms. Reported links are distinguished from confirmed disclosures.',
     relationSupplier: 'Upstream supplier',
