@@ -39,7 +39,7 @@ const MIN_MEMBERS = {
   '후공정 장비': 5,
   소재: 10,
   파운드리: 1,
-  팹리스: 5,
+  팹리스: 7,
   디자인하우스: 2,
   '부품/기판': 8,
   '패키징/테스트': 8,
@@ -82,6 +82,17 @@ for (const hub of relations.hubs) {
 
 check(html.includes("CURATED_RELATION_MODE = 'chainGroup'"), 'chainGroup mode missing');
 check(html.includes('CURATED_RELATION_HUBS'), 'CURATED_RELATION_HUBS missing');
+check(!html.includes("ticker: '171090'"), '171090 must not remain on semi map HTML');
+const designHub = relations.hubs.find((h) => h.id === 'design_house');
+check(designHub, 'design_house hub missing');
+check(
+  !designHub.customers.some((c) => c.id === 'samsung_d' || c.id === 'skhynix_d'),
+  'design_house customers must not include Samsung Electronics / SK hynix',
+);
+check(
+  designHub.customers.some((c) => c.id === 'fabless_sys_customers'),
+  'design_house customers must include fabless/system-IC customers node',
+);
 check(html.includes('CURATED_HUB_ANGLE'), 'CURATED_HUB_ANGLE missing');
 check(html.includes("kind: 'member'"), 'member edges missing');
 check(html.includes("kind: 'supplier'"), 'supplier edges missing');

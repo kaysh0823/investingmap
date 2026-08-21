@@ -814,11 +814,6 @@
           "nameEn": "LX Semicon"
         },
         {
-          "ticker": "171090",
-          "name": "선익시스템",
-          "nameEn": "SUNIC SYSTEM Co., Ltd."
-        },
-        {
           "ticker": "094170",
           "name": "동운아나텍",
           "nameEn": "DONGWOON ANATECH CO.,LTD."
@@ -1059,24 +1054,14 @@
       ],
       "customers": [
         {
-          "id": "samsung_d",
-          "name": "삼성전자",
-          "nameEn": "Samsung Electronics",
+          "id": "fabless_sys_customers",
+          "name": "팹리스·시스템반도체 고객사",
+          "nameEn": "Fabless / system-IC customers",
           "country": "KR",
-          "note": "칩 설계·디자인 서비스 고객",
-          "noteEn": "Chip design and design-service customer",
+          "note": "삼성 파운드리 DSP로서 팹리스·시스템반도체 설계 대행·ASIC 지원",
+          "noteEn": "As Samsung Foundry DSP: design enablement and ASIC support for fabless / system-IC customers",
           "evidence": "reported",
-          "source": "https://www.gaonchips.com/"
-        },
-        {
-          "id": "skhynix_d",
-          "name": "SK하이닉스",
-          "nameEn": "SK hynix",
-          "country": "KR",
-          "note": "메모리·로직 관련 디자인 서비스",
-          "noteEn": "Memory/logic-related design services",
-          "evidence": "reported",
-          "source": "https://www.adtechnology.co.kr/"
+          "source": "https://www.epnc.co.kr/news/articleView.html?idxno=309270"
         }
       ],
       "peers": [
@@ -1109,6 +1094,26 @@
           "noteEn": "ASIC and IP design-service peer",
           "evidence": "confirmed",
           "source": "https://www.faraday-tech.com/"
+        },
+        {
+          "id": "coasia",
+          "name": "코아시아",
+          "nameEn": "CoAsia",
+          "country": "KR",
+          "note": "국내 디자인서비스(DSP) peer",
+          "noteEn": "Domestic design-service (DSP) peer",
+          "evidence": "reported",
+          "source": "https://www.epnc.co.kr/news/articleView.html?idxno=309270"
+        },
+        {
+          "id": "asicland",
+          "name": "에이직랜드",
+          "nameEn": "ASICLAND",
+          "country": "KR",
+          "note": "국내 디자인서비스(DSP) peer",
+          "noteEn": "Domestic design-service (DSP) peer",
+          "evidence": "reported",
+          "source": "https://www.epnc.co.kr/news/articleView.html?idxno=309270"
         }
       ]
     },

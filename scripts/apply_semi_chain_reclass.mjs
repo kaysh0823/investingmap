@@ -49,7 +49,7 @@ const EXPECTED_COUNTS = {
   소재: 22,
   '부품/기판': 11,
   '패키징/테스트': 13,
-  팹리스: 8,
+  팹리스: 7,
   디자인하우스: 2,
   파운드리: 1,
   '반도체 유통': 1,
@@ -118,7 +118,7 @@ function patchUi(html) {
   out = replaceDicts(out, 'chainLabel', [labelKo, labelEn]);
   out = replaceDicts(out, 'chainFilter', [filterKo, filterEn]);
   out = out.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=7"');
-  out = out.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=13"');
+  out = out.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=14"');
   return out;
 }
 

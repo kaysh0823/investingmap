@@ -24,7 +24,7 @@ const EXPECTED_COUNTS = {
   소재: 22,
   '부품/기판': 11,
   '패키징/테스트': 13,
-  팹리스: 8,
+  팹리스: 7,
   디자인하우스: 2,
   파운드리: 1,
   '반도체 유통': 1,
@@ -58,7 +58,7 @@ const html = fs.readFileSync(HTML_PATH, 'utf8');
 
 // 1) koreanCompanies
 const companies = extractCompaniesFromHtml(html);
-check(companies.length === 84, `koreanCompanies: expected 84 companies, got ${companies.length}`);
+check(companies.length === 83, `koreanCompanies: expected 83 companies, got ${companies.length}`);
 const companyCounts = countChains(companies.map((c) => c.chain));
 compareCounts('koreanCompanies', companyCounts);
 
@@ -68,7 +68,7 @@ const rowChains = [...block.matchAll(/<tr data-ticker="(\d{6})">([\s\S]*?)<\/tr>
   const m = body.match(/<span class="chain-tag">([^<]*)<\/span>/);
   return [ticker, m ? m[1] : 'NONE'];
 });
-check(rowChains.length === 84, `prerender table: expected 84 rows, got ${rowChains.length}`);
+check(rowChains.length === 83, `prerender table: expected 83 rows, got ${rowChains.length}`);
 compareCounts('prerender table', countChains(rowChains.map(([, chain]) => chain)));
 const byTicker = new Map(companies.map((c) => [c.ticker, c.chain]));
 for (const [ticker, chain] of rowChains) {
@@ -81,6 +81,11 @@ for (const [ticker, chain] of [['399720', '디자인하우스'], ['200710', '디
     `${ticker} must not remain under 팹리스`,
   );
 }
+check(!byTicker.has('171090'), '171090 (선익시스템) must not remain on semiconductor map');
+check(
+  companies.every((c) => c.ticker !== '171090'),
+  '171090 must be removed from koreanCompanies',
+);
 
 // 3) chain UI definitions
 const chainColorKeys = extractChainColors(html);
