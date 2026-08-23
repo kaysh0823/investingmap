@@ -435,7 +435,7 @@
     "classificationEdgeCount": 37,
     "businessPartnershipEdgeCount": 0,
     "listedCompanyOwnershipOrphanCount": 25,
-    "classificationOnlyCompanyCount": 13,
+    "classificationOnlyCompanyCount": 25,
     "weakRelationOnlyCompanyCount": 13,
     "confirmedBusinessEdgeCount": 9,
     "reportedBusinessEdgeCount": 12,

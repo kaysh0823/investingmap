@@ -116,6 +116,11 @@ for (const e of owns) {
     check(e.asOf || e.sourceDocumentDate, `${e.id} needs asOf`);
   }
 }
+const ownsSources = new Set(owns.filter((e) => e.status === 'confirmed').map((e) => e.source));
+const ownsInClassOnly = (orphan.details?.classificationOnly || []).filter((id) => ownsSources.has(id));
+check(ownsInClassOnly.length === 0, `confirmed owns sources must not be classificationOnly: ${ownsInClassOnly.join(', ')}`);
+check(orphan.listedCompanyCount === 31, `finance listed 31 (got ${orphan.listedCompanyCount})`);
+check(orphan.classificationOnlyCompanyCount === 25, `finance classificationOnly 25 (got ${orphan.classificationOnlyCompanyCount})`);
 for (const e of edges.filter((x) => x.type === 'group_member')) {
   check(e.stakePct == null, `group_member ${e.id} must not have stakePct`);
 }

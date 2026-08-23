@@ -94,6 +94,7 @@
       "krx:005420",
       "krx:393890"
     ],
+    "groupMembershipOnly": [],
     "weakRelationOnly": [
       "krx:006400",
       "krx:003670",
@@ -114,6 +115,31 @@
       "krx:121600",
       "krx:001570",
       "krx:278280",
+      "krx:005420",
+      "krx:393890"
+    ],
+    "hasPeerButNoBusiness": [
+      "krx:006400",
+      "krx:003670",
+      "krx:247540",
+      "krx:086520",
+      "krx:011790",
+      "krx:066970",
+      "krx:450080",
+      "krx:020150",
+      "krx:093370",
+      "krx:361610"
+    ],
+    "peerOnly": [],
+    "structuralOnly": [
+      "krx:336260",
+      "krx:005070",
+      "krx:137400",
+      "krx:336370",
+      "krx:348370",
+      "krx:126340",
+      "krx:121600",
+      "krx:001570",
       "krx:005420",
       "krx:393890"
     ]

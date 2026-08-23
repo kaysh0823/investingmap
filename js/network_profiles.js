@@ -482,16 +482,48 @@
   "auto": {
     "sectorId": "auto",
     "dataSector": "auto",
-    "model": "automotive_tier",
-    "layout": "layeredSupplyChain",
-    "networkPath": null,
+    "model": "automotive_value_chain_ecosystem",
+    "layout": "automotiveValueChainEcosystem",
+    "networkPath": "../data/networks/auto.json",
     "defaultEdgeTypes": [
-      "supplies_oem",
-      "supplies_component"
+      "member_of",
+      "group_member",
+      "specializes_in",
+      "manufactures",
+      "produces",
+      "exposed_to",
+      "used_in_technology",
+      "owns_stake_in",
+      "supplies_component_to",
+      "supplies_system_to",
+      "supplies_tire_to",
+      "supplies_lighting_to",
+      "supplies_electronics_to",
+      "used_in_vehicle"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "OEM→Tier 1→부품·전장 공급망",
-    "modelDescEn": "OEM → Tier 1 → components supply chain"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "vehicle_oem",
+      "powertrain",
+      "electrification",
+      "thermal_management",
+      "chassis_braking_steering",
+      "body_exterior",
+      "interior",
+      "lighting",
+      "electronics_adas",
+      "tire",
+      "materials",
+      "aftermarket",
+      "end_market"
+    ],
+    "modelDescKo": "완성차·파워트레인·전장·열관리·샤시·차체·타이어 등 자동차 가치사슬. 그룹 소속과 실제 공급·지분을 분리한다.",
+    "modelDescEn": "Automotive value chain from OEMs through powertrain, electronics, thermal, chassis, body and tires. Separates group membership from actual supply and ownership."
   },
   "metal": {
     "sectorId": "metal",

@@ -445,57 +445,6 @@
     function showTooltip() { /* v2 uses detail panel */ }
     function hideTooltip() { }
 
-
-    function showTooltip(e, d) {
-      const tt = document.getElementById('graph-tooltip');
-      const t = T[lang];
-      const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : (REGION_COLORS[d.region] || '#888');
-      const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
-      let html = '<div class="tooltip-name" style="color:' + color + '">' + displayName + '</div>';
-      if (d.type === 'korean') {
-        const chainDisplay = t.chainFilter[d.chain] || d.chain;
-        const I18nTt = window.InvestingMapI18n;
-        const semTypeDisplay = I18nTt ? I18nTt.field(d, 'semType', 'semTypeEn', lang) : (lang === 'en' ? (d.semTypeEn || '\u2014') : (d.semType || '\u2014'));
-        const productsDisplay = I18nTt ? I18nTt.field(d, 'products', 'productsEn', lang) : (lang === 'en' ? (d.productsEn || '\u2014') : (d.products || '\u2014'));
-        const mktTt = I18nTt ? I18nTt.marketLabel(d.market, lang) : d.market;
-        const subTt = lang === 'en' ? (d.label || '') : (d.labelEn || '');
-        const subPart = subTt && subTt !== displayName ? subTt + ' \u00B7 ' : '';
-        html += '<div class="tooltip-meta">' + subPart + d.ticker + ' \u00B7 ' + mktTt + '</div>';
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttChain + '</span><span class="tooltip-val">' + chainDisplay + '</span></div>';
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttSemType + '</span><span class="tooltip-val">' + semTypeDisplay + '</span></div>';
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttProducts + '</span><span class="tooltip-val">' + productsDisplay + '</span></div>';
-        const capStr = lang === 'en' ? fmtMcapUsdBillion(d.mcapWon || 0) : fmtMcapKoJo(d.mcapWon || 0);
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttRevenue + '</span><span class="tooltip-val">' + capStr + '</span></div>';
-        const partners = d.data.partners || [];
-        const pNames = partners.slice(0, 5).map(p => {
-          const pr = partnerRef(p);
-          const nm = getPartnerInfo(pr.id).name;
-          const lbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
-          let s = nm;
-          if (lbl) s += ' — ' + lbl;
-          if (pr.weight != null && Number.isFinite(pr.weight)) s += ' (~' + Math.round(pr.weight * 100) + '%)';
-          return s;
-        }).join(', ');
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttPartners + '</span><span class="tooltip-val">' + pNames + (partners.length > 5 ? '…' : '') + '</span></div>';
-      } else {
-        html += '<div class="tooltip-meta">' + d.country + ' · ' + d.sector + '</div>';
-        const suppliers = koreanCompanies.filter(c => companyLinksTo(c, d.id));
-        if (suppliers.length) {
-          const names = suppliers.slice(0, 4).map(s => lang === 'en' ? s.nameEn : s.name).join(', ');
-          html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttSuppliers + '</span><span class="tooltip-val">' + names + (suppliers.length > 4 ? '…' : '') + '</span></div>';
-        }
-      }
-      tt.innerHTML = html; tt.style.display = 'block';
-      const rect = svgEl.node().getBoundingClientRect();
-      tt.style.left = (e.pageX - rect.left - window.scrollX + 14) + 'px';
-      tt.style.top = (e.pageY - rect.top - window.scrollY - 10) + 'px';
-    }
-    function hideTooltip() { document.getElementById('graph-tooltip').style.display = 'none'; }
-    function resetZoom() { const svgNode = svgEl.node(); svgEl.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity.translate(svgNode.clientWidth * 0.05, svgNode.clientHeight * 0.05).scale(0.82)); }
-    function zoomIn() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 1.3); }
-    function zoomOut() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 0.77); }
-
-
     function resetTableFilters() {
       currentChain = 'all';
       currentMarket = 'all';

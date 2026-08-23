@@ -77,6 +77,9 @@ run('node scripts/migrate_construction_network_phase5a.mjs', 'Phase 5A construct
 run('node scripts/curate_construction_phase5a1.mjs', 'Phase 5A.1 construction evidence/amount/orphan curation');
 run('node scripts/curate_construction_phase5a2.mjs', 'Phase 5A.2 construction DART/KIND primary + legal-party audit');
 run('node scripts/curate_construction_phase5a3.mjs', 'Phase 5A.3 construction claim-scoped evidence closing audit');
+run('node scripts/migrate_auto_network_phase5b.mjs', 'Phase 5B auto automotive value-chain ecosystem');
+run('node scripts/curate_auto_relationships_phase5b1.mjs', 'Phase 5B.1 auto evidence/ownership/supply curation');
+run('node scripts/curate_auto_business_relationships_phase5b2.mjs', 'Phase 5B.2 auto confirmed business relationship curation');
 run('node scripts/emit_network_profiles.mjs', 'network profiles JS');
 run('node scripts/patch_relation_network.mjs', 'relation network v2 UI + renderer');
 run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');

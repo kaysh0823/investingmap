@@ -353,10 +353,25 @@ function patchBioHtml(html) {
   return html;
 }
 
+/** Remove legacy D3 graph helpers left after v2 migration (idempotent). */
+function stripBioLegacyGraphOrphans(js) {
+  const orphanStart = js.indexOf('function showTooltip(e, d)');
+  if (orphanStart < 0) return js;
+  const resetTable = js.indexOf('function resetTableFilters', orphanStart);
+  if (resetTable < 0) return js;
+  return js.slice(0, orphanStart) + js.slice(resetTable);
+}
+
 function patchBioInline() {
   const fp = path.join(root, 'bio', 'bio_inline_tail.js');
   if (!fs.existsSync(fp)) return;
   let js = fs.readFileSync(fp, 'utf8');
+  const stripped = stripBioLegacyGraphOrphans(js);
+  if (stripped !== js) {
+    js = stripped;
+    fs.writeFileSync(fp, js, 'utf8');
+    console.log('OK patch_relation_network bio legacy graph tail stripped');
+  }
   if (js.includes('RelationNetwork v2')) return;
   const markers = ['let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;', '// GRAPH'];
   let start = -1;

@@ -382,14 +382,29 @@
     state.filters._groupMemberIds = ids;
   }
 
+  function resolveNodeFromUrlTicker(nodes, ticker, profileKey) {
+    if (!ticker || !nodes || !nodes.length) return null;
+    var direct = nodes.find(function (x) { return x.ticker === ticker; });
+    if (direct) return direct;
+    if (profileKey === 'bigchip') {
+      return nodes.find(function (x) { return x.id === 'krx:' + ticker; }) || null;
+    }
+    if (profileKey === 'semiconductor') {
+      return nodes.find(function (x) { return x.id === 'anchor:' + ticker; }) || null;
+    }
+    return nodes.find(function (x) { return x.id === 'krx:' + ticker; })
+      || nodes.find(function (x) { return x.id === 'anchor:' + ticker; })
+      || null;
+  }
+
   function applyUrlToState(state) {
     var url = parseUrlState();
     if (url.tab === 'graph' || url.ticker || url.relation || url.anchor) {
       if (url.ticker && state.nodes) {
-        var n = state.nodes.find(function (x) { return x.ticker === url.ticker; });
+        var n = resolveNodeFromUrlTicker(state.nodes, url.ticker, state.profileKey);
         if (n) {
           state.selectedId = n.id;
-          state.selectedTicker = url.ticker;
+          state.selectedTicker = n.ticker || url.ticker;
           state.overviewMode = false;
         }
       }
@@ -673,6 +688,7 @@
     else if (layout === 'nuclearProjectEcosystem') layoutNuclearProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'renewableProjectEcosystem') layoutRenewableProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'constructionProjectEcosystem') layoutConstructionProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'automotiveValueChainEcosystem') layoutAutomotiveValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -796,6 +812,47 @@
         n.fy = H * (0.28 + (idx % 7) * 0.07);
       }
     });
+  }
+
+  function layoutAutomotiveValueChain(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'vehicle_oem', 'powertrain', 'electrification', 'thermal_management',
+      'chassis_braking_steering', 'body_exterior', 'interior', 'lighting',
+      'electronics_adas', 'tire', 'materials', 'aftermarket', 'end_market',
+    ];
+    var laneX = {};
+    laneOrder.forEach(function (lane, i) {
+      laneX[lane] = W * (0.05 + (i / Math.max(1, laneOrder.length - 1)) * 0.9);
+    });
+    var counts = {};
+    nodes.forEach(function (n) {
+      var lane = n.lane || inferAutoLane(n);
+      n.lane = lane;
+      var idx = counts[lane] || 0;
+      counts[lane] = idx + 1;
+      n.fx = laneX[lane] != null ? laneX[lane] : W * 0.5;
+      var isStruct = n.type === 'business_category' || n.type === 'product' || n.type === 'technology'
+        || n.type === 'end_market' || n.type === 'group';
+      var isVehicle = n.type === 'vehicle_model' || n.type === 'vehicle_platform';
+      if (isStruct) {
+        n.fy = H * (n.type === 'business_category' || n.type === 'group' ? 0.12 : 0.86);
+        n.fx = (n.fx || W * 0.5) + ((idx % 3) - 1) * 18;
+      } else if (isVehicle) {
+        n.fy = H * (0.68 + (idx % 3) * 0.06);
+      } else if (n.type === 'global_company') {
+        n.fy = H * (0.78 + (idx % 2) * 0.05);
+      } else {
+        n.fy = H * (0.28 + (idx % 6) * 0.07);
+      }
+    });
+  }
+
+  function inferAutoLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'end_market' || n.type === 'global_company') return 'end_market';
+    if (n.type === 'technology' || n.type === 'product') return 'end_market';
+    if (n.type === 'group') return 'vehicle_oem';
+    return 'materials';
   }
 
   function inferConstructionLane(n) {
@@ -3171,9 +3228,14 @@
 
     loadNetwork(STATE).then(function () {
       initNetworkData(STATE);
+      applyUrlToState(STATE);
       STATE.initialized = true;
       if (STATE.usingLegacy) {
         console.info('[RelationNetwork] legacyFallback=true sector=' + STATE.sectorId);
+      }
+      if (STATE._readyResolve) {
+        STATE._readyResolve(STATE);
+        STATE._readyResolve = null;
       }
     });
 
@@ -3212,6 +3274,18 @@
     STATE = null;
   }
 
+  function whenReady() {
+    if (STATE && STATE.initialized) return Promise.resolve(STATE);
+    return new Promise(function (resolve) {
+      if (STATE && STATE.initialized) {
+        resolve(STATE);
+        return;
+      }
+      if (STATE) STATE._readyResolve = resolve;
+      else resolve(null);
+    });
+  }
+
   global.RelationNetwork = {
     ensureInit: ensureInit,
     onTabHidden: onTabHidden,
@@ -3219,6 +3293,7 @@
     resetView: function () { if (STATE) resetView(STATE); },
     destroy: destroy,
     getState: function () { return STATE; },
+    whenReady: whenReady,
     _diag: function () { return isDiagMode() ? DIAG : null; },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

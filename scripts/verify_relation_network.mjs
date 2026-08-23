@@ -28,6 +28,8 @@ const pilotMaps = {
   powergrid: 'powergrid/korea_powergrid_map.html',
   nuclear: 'nuclear/korea_nuclear_map.html',
   renewable: 'renewable/korea_renewable_map.html',
+  construction: 'construction/korea_construction_map.html',
+  auto: 'auto/korea_auto_map.html',
 };
 
 for (const sector of PILOT_NETWORK_SECTORS) {

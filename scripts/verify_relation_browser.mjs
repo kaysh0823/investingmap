@@ -27,6 +27,7 @@ const PILOT_PAGES = [
   { id: 'nuclear', path: '/nuclear/korea_nuclear_map.html' },
   { id: 'renewable', path: '/renewable/korea_renewable_map.html' },
   { id: 'construction', path: '/construction/korea_construction_map.html' },
+  { id: 'auto', path: '/auto/korea_auto_map.html' },
 ];
 
 const PAGES = QUICK ? PILOT_PAGES : [
@@ -126,8 +127,13 @@ async function testPage(page, pageDef, viewport, lang) {
     failures.push(`robot data-sector=${bodySector}`);
   }
 
-  await page.waitForFunction(() => window.RelationNetwork && window.RelationNetwork.getState(), { timeout: 15000 }).catch(() => {});
-  await page.waitForTimeout(1200);
+  await page.waitForFunction(() => {
+    const rn = window.RelationNetwork;
+    if (!rn) return false;
+    const st = rn.getState();
+    return st && st.initialized;
+  }, { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(400);
 
   const metrics = await page.evaluate(() => {
     const st = window.RelationNetwork && window.RelationNetwork.getState();
@@ -145,7 +151,8 @@ async function testPage(page, pageDef, viewport, lang) {
     };
   });
 
-  if (pageDef.id === 'robot' && !metrics.usingLegacy && metrics.sectorId !== 'robot') {
+  if (!metrics.initialized) failures.push(`${pageDef.id} network not initialized`);
+  if (pageDef.id === 'robot' && metrics.initialized && !metrics.usingLegacy && metrics.sectorId !== 'robot') {
     failures.push('robot not using legacy/robot profile');
   }
   if (pageDef.id !== 'robot' && metrics.usingLegacy) {
@@ -176,17 +183,34 @@ async function testPage(page, pageDef, viewport, lang) {
 async function testUrlState(page) {
   const failures = [];
 
+  async function waitForTickerSelection(page, ticker, timeout = 15000) {
+    await page.waitForFunction(
+      (expected) => {
+        const rn = window.RelationNetwork;
+        if (!rn) return false;
+        const st = rn.getState();
+        if (!st || !st.initialized || !st.nodes || !st.nodes.length) return false;
+        if (!expected) return true;
+        return st.selectedTicker === expected && !!st.selectedId;
+      },
+      ticker,
+      { timeout },
+    ).catch(() => {});
+  }
+
   async function checkSemiTicker(ticker, expectSelected) {
     const url = `${BASE}/semiconductor/korea_semiconductor_map.html?tab=graph&ticker=${ticker}`;
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(url, { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(1500);
+    if (expectSelected) await waitForTickerSelection(page, ticker);
+    else await page.waitForTimeout(1000);
     const state = await page.evaluate(() => {
       const st = window.RelationNetwork && window.RelationNetwork.getState();
-      return { ticker: st && st.selectedTicker, id: st && st.selectedId };
+      return { ticker: st && st.selectedTicker, id: st && st.selectedId, initialized: !!(st && st.initialized) };
     });
     if (expectSelected && state.ticker !== ticker) failures.push(`${ticker}: ticker not restored: ${state.ticker}`);
     if (expectSelected && !state.id) failures.push(`${ticker}: no selectedId`);
+    if (expectSelected && !state.initialized) failures.push(`${ticker}: network not initialized`);
     if (!expectSelected && state.ticker === 'INVALID') failures.push('invalid ticker accepted');
   }
 
@@ -196,13 +220,14 @@ async function testUrlState(page) {
 
   async function checkPageTicker(pagePath, ticker, label) {
     await page.goto(`${BASE}${pagePath}?tab=graph&ticker=${ticker}`, { waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(1200);
+    await waitForTickerSelection(page, ticker);
     const state = await page.evaluate(() => {
       const st = window.RelationNetwork && window.RelationNetwork.getState();
-      return { ticker: st && st.selectedTicker, id: st && st.selectedId };
+      return { ticker: st && st.selectedTicker, id: st && st.selectedId, initialized: !!(st && st.initialized) };
     });
     if (state.ticker !== ticker) failures.push(`${label}: ticker not restored: ${state.ticker}`);
     if (!state.id) failures.push(`${label}: no selectedId`);
+    if (!state.initialized) failures.push(`${label}: network not initialized`);
   }
 
   await checkPageTicker('/holdings/korea_holdings_map.html', '034730', 'holdings SK');
