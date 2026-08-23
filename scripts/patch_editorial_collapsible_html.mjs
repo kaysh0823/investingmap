@@ -133,16 +133,16 @@ function convertDetailsToPanel(html) {
 
 function injectPanelCss(html) {
   if (html.includes(PANEL_CSS_MARKER)) {
-    // Refresh block.
-    html = html.replace(
-      new RegExp(`\\s*/\\* ${PANEL_CSS_MARKER} \\*/[\\s\\S]*?\\.map-editorial-title-sr \\{[\\s\\S]*?\\}\\s*`, 'g'),
-      '',
-    );
+    return html;
+  }
+  const mobileMedia = /@media\s+\(max-width:\s*768px\)\s*\{/;
+  if (mobileMedia.test(html)) {
+    return html.replace(mobileMedia, `${PANEL_CSS.trim()}\n    $&`);
   }
   if (!/(@media\s*\(max-width:\s*768px\))/.test(html)) {
     return html + `\n<style>${PANEL_CSS}</style>\n`;
   }
-  return html.replace(/(@media\s*\(max-width:\s*768px\))/, `${PANEL_CSS}\n    $1`);
+  return html.replace(/(@media\s*\(max-width:\s*768px\))/, `${PANEL_CSS.trim()}\n    $1`);
 }
 
 function wrapH1AsToggle(html) {
@@ -172,11 +172,16 @@ for (const rel of MAP_FILES) {
     continue;
   }
   let html = fs.readFileSync(p, 'utf8');
+  const before = html;
   html = convertDetailsToPanel(html);
   html = wrapH1AsToggle(html);
   html = injectPanelCss(html);
-  fs.writeFileSync(p, html, 'utf8');
-  console.log('patched editorial title-toggle:', rel);
+  if (html !== before) {
+    fs.writeFileSync(p, html, 'utf8');
+    console.log('patched editorial title-toggle:', rel);
+  } else {
+    console.log('unchanged editorial title-toggle:', rel);
+  }
 }
 
 console.log('OK patch_editorial_collapsible_html (title toggle)');

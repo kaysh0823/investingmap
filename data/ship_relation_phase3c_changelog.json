@@ -31,7 +31,7 @@
     "structuralOrphanCount": 0,
     "businessRelationOrphanCount": 25,
     "directRelationshipOrphanCount": 17,
-    "classificationOnlyCompanyCount": 14,
+    "classificationOnlyCompanyCount": 17,
     "weakRelationOnlyCompanyCount": 25
   },
   "changes": [

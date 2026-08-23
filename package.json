@@ -28,6 +28,7 @@
     "verify:tickers": "node scripts/verify_tickers.mjs",
     "verify:heatmap-exclude": "node scripts/verify_heatmap_exclude_chips.mjs",
     "verify:dist": "node scripts/verify_dist_js.mjs && node scripts/verify_heatmap_exclude_chips.mjs",
+    "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
     "pages:build": "node scripts/pages_build.mjs",
     "patch:tickers": "node scripts/patch_tickers_from_krx.mjs",
     "geo": "node scripts/build_trust_pages.mjs && node scripts/patch_geo.mjs",

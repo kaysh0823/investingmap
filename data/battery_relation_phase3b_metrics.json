@@ -6,7 +6,7 @@
   "structuralOrphanCount": 0,
   "businessRelationOrphanCount": 21,
   "directRelationshipOrphanCount": 17,
-  "classificationOnlyCompanyCount": 10,
+  "classificationOnlyCompanyCount": 13,
   "weakRelationOnlyCompanyCount": 21,
   "orphanListedCompanyCount": 0,
   "edgeOriginCounts": {
@@ -80,7 +80,10 @@
       "krx:393890"
     ],
     "classificationOnly": [
+      "krx:006400",
+      "krx:003670",
       "krx:336260",
+      "krx:093370",
       "krx:005070",
       "krx:137400",
       "krx:336370",

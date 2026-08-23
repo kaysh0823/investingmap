@@ -69,6 +69,12 @@ async function fetchQuotes(codes) {
 }
 
 async function main() {
+  const outPath = path.join(ROOT, 'data', 'hub_quote_snapshot.json');
+  if (process.env.REFRESH_HUB_SNAPSHOTS !== '1') {
+    console.log('skip hub_quote_snapshot (deterministic build — use npm run refresh:hub-snapshots)');
+    process.exit(0);
+  }
+
   const hubPath = path.join(ROOT, 'data', 'hub_index.json');
   const hubIndex = JSON.parse(fs.readFileSync(hubPath, 'utf8'));
   const companies = listHubCompanies(hubIndex);
@@ -107,7 +113,6 @@ async function main() {
     })),
   };
 
-  const outPath = path.join(ROOT, 'data', 'hub_quote_snapshot.json');
   fs.writeFileSync(outPath, `${JSON.stringify(out)}\n`, 'utf8');
   console.log(`OK ${outPath} — ${ok}/${codes.length} quotes (${out.coveragePct}%)`);
   if (ranked.length >= 10) {
@@ -116,6 +121,11 @@ async function main() {
 }
 
 main().catch((e) => {
+  const outPath = path.join(ROOT, 'data', 'hub_quote_snapshot.json');
+  if (fs.existsSync(outPath)) {
+    console.warn('hub quote fetch failed — keeping existing snapshot:', e.message || e);
+    process.exit(0);
+  }
   console.error(e);
   process.exit(1);
 });
