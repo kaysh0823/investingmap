@@ -73,6 +73,10 @@ run('node scripts/migrate_nuclear_network_phase4b.mjs', 'Phase 4B nuclear projec
 run('node scripts/curate_nuclear_phase4b1.mjs', 'Phase 4B.1 nuclear project/canonical/role corrections');
 run('node scripts/migrate_renewable_network_phase4c.mjs', 'Phase 4C renewable project value chain');
 run('node scripts/curate_renewable_phase4c1.mjs', 'Phase 4C.1 renewable project qualification/capacity curation');
+run('node scripts/migrate_construction_network_phase5a.mjs', 'Phase 5A construction development/project ecosystem');
+run('node scripts/curate_construction_phase5a1.mjs', 'Phase 5A.1 construction evidence/amount/orphan curation');
+run('node scripts/curate_construction_phase5a2.mjs', 'Phase 5A.2 construction DART/KIND primary + legal-party audit');
+run('node scripts/curate_construction_phase5a3.mjs', 'Phase 5A.3 construction claim-scoped evidence closing audit');
 run('node scripts/emit_network_profiles.mjs', 'network profiles JS');
 run('node scripts/patch_relation_network.mjs', 'relation network v2 UI + renderer');
 run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');

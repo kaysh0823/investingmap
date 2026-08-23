@@ -511,17 +511,33 @@
   "construction": {
     "sectorId": "construction",
     "dataSector": "construction",
-    "model": "project_network",
-    "layout": "projectEcosystem",
-    "networkPath": null,
+    "model": "construction_development_project_ecosystem",
+    "layout": "constructionProjectEcosystem",
+    "networkPath": "../data/networks/construction.json",
     "defaultEdgeTypes": [
       "main_contractor",
-      "subcontractor",
-      "project_owner"
+      "epc_for",
+      "project_owner",
+      "project_developer",
+      "owns_stake_in",
+      "pfv_shareholder",
+      "constructs",
+      "consortium_member",
+      "specializes_in",
+      "manufactures",
+      "operates_brand"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "개발·수주 프로젝트 네트워크",
-    "modelDescEn": "Development & construction project network"
+    "lanes": [
+      "developer_housing",
+      "general_contractor",
+      "plant_infra",
+      "overseas_epc",
+      "machinery",
+      "finance_trust"
+    ],
+    "modelDescKo": "토지·시행·SPC/PFV·금융·설계·시공·분양·준공 및 해외 EPC 생애주기. 총사업비·도급·기업지분·PF를 분리한다.",
+    "modelDescEn": "Land, developer, SPC/PFV, finance, design, contracting, presale, completion and overseas EPC. Separates total project cost, contract value, company share and PF."
   },
   "software": {
     "sectorId": "software",

@@ -62,6 +62,8 @@
       renewableTech: 'all',
       renewableRole: 'all',
       renewableStatus: 'all',
+      constructionRole: 'all',
+      constructionStatus: 'all',
       vesselType: '',
       projectStatus: '',
       projectId: '',
@@ -347,7 +349,11 @@
     if (state.filters.projectStatus) sp.set('projectStatus', state.filters.projectStatus);
     else if (state.filters.renewableStatus && state.filters.renewableStatus !== 'all') {
       sp.set('projectStatus', state.filters.renewableStatus);
+    } else if (state.filters.constructionStatus && state.filters.constructionStatus !== 'all') {
+      sp.set('projectStatus', state.filters.constructionStatus);
     } else sp.delete('projectStatus');
+    if (state.filters.constructionRole && state.filters.constructionRole !== 'all') sp.set('role', state.filters.constructionRole);
+    else if (state.profileKey === 'construction') sp.delete('role');
     if (state.filters.showEnded) sp.set('showEnded', '1');
     else sp.delete('showEnded');
     if (state.filters.showCompleted) sp.set('showCompleted', '1');
@@ -398,23 +404,25 @@
       if (url.role && state.profileKey === 'finance') state.filters.financeRole = url.role;
       if (url.role && state.profileKey === 'nuclear') state.filters.nuclearRole = sanitizeNuclearRole(url.role);
       if (url.role && state.profileKey === 'renewable') state.filters.renewableRole = url.role;
+      if (url.role && state.profileKey === 'construction') state.filters.constructionRole = url.role;
       if (url.technology && state.profileKey === 'renewable') state.filters.renewableTech = url.technology;
       if (url.scope && state.profileKey === 'nuclear') state.filters.nuclearScope = sanitizeNuclearScope(url.scope);
-      if (url.project && (state.profileKey === 'nuclear' || state.profileKey === 'renewable')) state.filters.projectId = url.project;
+      if (url.project && (state.profileKey === 'nuclear' || state.profileKey === 'renewable' || state.profileKey === 'construction')) state.filters.projectId = url.project;
       if (url.reactor && state.profileKey === 'nuclear') state.filters.reactor = url.reactor;
       if (url.group && state.profileKey === 'finance') state.filters.groupId = url.group;
       else if (state.profileKey === 'finance' && !url.group) state.filters.groupId = '';
       if (url.business && state.profileKey === 'finance') state.filters.business = url.business;
       else if (state.profileKey === 'finance' && !url.business) state.filters.business = '';
       if (url.vesselType && state.profileKey === 'ship') state.filters.vesselType = url.vesselType;
-      if (url.projectStatus && (state.profileKey === 'ship' || state.profileKey === 'nuclear' || state.profileKey === 'renewable')) {
+      if (url.projectStatus && (state.profileKey === 'ship' || state.profileKey === 'nuclear' || state.profileKey === 'renewable' || state.profileKey === 'construction')) {
         state.filters.projectStatus = url.projectStatus;
         if (state.profileKey === 'renewable') state.filters.renewableStatus = url.projectStatus;
+        if (state.profileKey === 'construction') state.filters.constructionStatus = url.projectStatus;
       }
       state.filters.showEnded = !!url.showEnded;
       state.filters.showCompleted = !!url.showCompleted;
       state.filters.showHistorical = !!url.showHistorical;
-      if (url.showPeer && (state.profileKey === 'finance' || state.profileKey === 'nuclear' || state.profileKey === 'renewable')) {
+      if (url.showPeer && (state.profileKey === 'finance' || state.profileKey === 'nuclear' || state.profileKey === 'renewable' || state.profileKey === 'construction')) {
         state.filters.showHidden = true;
         state.filters.hidePeer = false;
       }
@@ -664,6 +672,7 @@
     else if (layout === 'gridInfrastructureEcosystem') layoutGridInfrastructure(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'nuclearProjectEcosystem') layoutNuclearProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'renewableProjectEcosystem') layoutRenewableProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'constructionProjectEcosystem') layoutConstructionProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -757,6 +766,46 @@
     if (n.technology === 'hydrogen' || n.lane === 'hydrogen') return 'hydrogen';
     if (n.type === 'renewable_project') return n.technology || 'renewable_operator';
     return 'renewable_operator';
+  }
+
+  function layoutConstructionProjectEcosystem(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'developer_housing', 'general_contractor', 'plant_infra', 'overseas_epc', 'machinery', 'finance_trust',
+    ];
+    var laneX = {};
+    laneOrder.forEach(function (lane, i) {
+      laneX[lane] = W * (0.06 + (i / Math.max(1, laneOrder.length - 1)) * 0.88);
+    });
+    var counts = {};
+    nodes.forEach(function (n) {
+      var lane = n.lane || inferConstructionLane(n);
+      n.lane = lane;
+      var idx = counts[lane] || 0;
+      counts[lane] = idx + 1;
+      n.fx = laneX[lane] != null ? laneX[lane] : W * 0.5;
+      var isStruct = n.type === 'building_type' || n.type === 'infrastructure_type' || n.type === 'equipment_category'
+        || n.type === 'ecosystem' || n.type === 'end_market' || n.type === 'apartment_brand';
+      var isProject = n.type === 'construction_project' || n.type === 'overseas_epc_project'
+        || n.type === 'spc' || n.type === 'pfv' || n.type === 'reit' || n.type === 'consortium' || n.type === 'contract';
+      if (isStruct) {
+        n.fy = H * (n.type === 'ecosystem' || n.type === 'building_type' || n.type === 'infrastructure_type' ? 0.1 : 0.88);
+        n.fx = (n.fx || W * 0.5) + ((idx % 3) - 1) * 22;
+      } else if (isProject) {
+        n.fy = H * (0.66 + (idx % 4) * 0.05);
+      } else {
+        n.fy = H * (0.28 + (idx % 7) * 0.07);
+      }
+    });
+  }
+
+  function inferConstructionLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'overseas_epc_project') return 'overseas_epc';
+    if (n.type === 'equipment_category' || n.role === 'machinery_supplier') return 'machinery';
+    if (n.type === 'pfv' || n.type === 'spc' || n.type === 'reit' || n.role === 'reit_manager') return 'finance_trust';
+    if (n.projectCategory === 'housing' || n.role === 'project_developer') return 'developer_housing';
+    if (n.projectCategory === 'plant' || n.projectCategory === 'infrastructure') return 'plant_infra';
+    return 'general_contractor';
   }
 
   function layoutGridInfrastructure(nodes, edges, W, H, profile) {
@@ -938,6 +987,12 @@
     }
     if (filters.renewableStatus && filters.renewableStatus !== 'all') {
       if (!renewableStatusAllows(e, filters, nodeById)) return false;
+    }
+    if (filters.constructionStatus && filters.constructionStatus !== 'all') {
+      if (!constructionStatusAllows(e, filters, nodeById)) return false;
+    }
+    if (filters.constructionRole && filters.constructionRole !== 'all') {
+      if (!constructionRoleAllows(e, filters, nodeById)) return false;
     }
     if (filters.projectId) {
       var pid = filters.projectId;
@@ -1156,6 +1211,65 @@
     if (f === 'operating') return st === 'operating' || st === 'repowering';
     if (f === 'historical') return st === 'completed' || st === 'cancelled' || st === 'suspended';
     return st === f;
+  }
+
+  function constructionStatusAllows(e, filters, nodeById) {
+    var f = filters.constructionStatus;
+    if (!f || f === 'all') return true;
+    var s = typeof e.source === 'object' ? e.source.id : e.source;
+    var t = typeof e.target === 'object' ? e.target.id : e.target;
+    var sn = nodeById && nodeById[s];
+    var tn = nodeById && nodeById[t];
+    var st = e.projectStatus || (tn && tn.projectStatus) || (sn && sn.projectStatus) || '';
+    if (f === 'contract') return st === 'contract_signed' || st === 'notice_to_proceed' || st === 'financial_close';
+    if (f === 'construction' || f === 'under_construction') {
+      return st === 'under_construction' || st === 'commissioning' || st === 'presale';
+    }
+    if (f === 'presale') return st === 'presale';
+    if (f === 'completed') return st === 'completed' || st === 'operating';
+    if (f === 'preferred_bidder') return st === 'preferred_bidder';
+    return st === f;
+  }
+
+  function constructionRoleAllows(e, filters, nodeById) {
+    var f = filters.constructionRole;
+    if (!f || f === 'all') return true;
+    var s = typeof e.source === 'object' ? e.source.id : e.source;
+    var t = typeof e.target === 'object' ? e.target.id : e.target;
+    var sn = nodeById && nodeById[s];
+    var tn = nodeById && nodeById[t];
+    if (f === 'developer') {
+      return e.type === 'project_developer' || e.type === 'pfv_shareholder' || e.type === 'spc_shareholder'
+        || (sn && sn.lane === 'developer_housing') || (tn && tn.lane === 'developer_housing');
+    }
+    if (f === 'housing') {
+      return (tn && (tn.projectCategory === 'housing' || tn.lane === 'developer_housing'))
+        || e.type === 'operates_brand';
+    }
+    if (f === 'plant') {
+      return (tn && (tn.projectCategory === 'plant' || tn.projectCategory === 'infrastructure'))
+        || (sn && sn.lane === 'plant_infra');
+    }
+    if (f === 'overseas') {
+      return e.type === 'epc_for' || e.type === 'preferred_bidder_for' || e.type === 'consortium_member'
+        || (tn && tn.type === 'overseas_epc_project') || (sn && sn.lane === 'overseas_epc');
+    }
+    if (f === 'machinery') {
+      return e.type === 'manufactures' || e.type === 'supplies_machinery_to'
+        || (sn && sn.lane === 'machinery') || (tn && tn.type === 'equipment_category');
+    }
+    if (f === 'spv') {
+      return e.type === 'owns_stake_in' || e.type === 'pfv_shareholder' || e.type === 'spc_shareholder'
+        || (tn && (tn.type === 'pfv' || tn.type === 'spc' || tn.type === 'reit'));
+    }
+    if (f === 'consortium') return e.type === 'consortium_member' || (tn && tn.type === 'consortium');
+    if (f === 'finance') return e.type === 'finances' || e.type === 'arranges_pf' || e.type === 'guarantees';
+    if (f === 'direct') {
+      return ['main_contractor', 'epc_for', 'project_owner', 'project_developer', 'owns_stake_in',
+        'pfv_shareholder', 'constructs', 'preferred_bidder_for'].indexOf(e.type) >= 0;
+    }
+    if (f === 'peer') return e.type === 'peer' || e.status === 'peer' || e.status === 'reference';
+    return true;
   }
 
   function powergridFilterAllows(e, filters, nodeById) {
@@ -1520,7 +1634,89 @@
       if (target.type === 'nuclear_project' || target.type === 'smr_technology' || target.type === 'consortium'
         || target.type === 'renewable_project' || target.type === 'project_spv'
         || target.type === 'project_portfolio' || target.type === 'supply_contract' || target.type === 'product'
-        || target.type === 'development_pipeline') {
+        || target.type === 'development_pipeline'
+        || target.type === 'construction_project' || target.type === 'overseas_epc_project'
+        || target.type === 'pfv' || target.type === 'spc' || target.type === 'apartment_brand') {
+        if (target.type === 'apartment_brand') {
+          html += '<p class="rn-graph-only-badge">' + (lang === 'en'
+            ? 'Apartment brand — not a contracting party.'
+            : '아파트 브랜드이며 시공·도급계약 당사자가 아닙니다.') + '</p>';
+        }
+        if (target.projectStatus === 'preferred_bidder') {
+          html += '<p class="rn-graph-only-badge">' + (lang === 'en'
+            ? 'Preferred negotiation — may differ from a signed contract.'
+            : '우선협상 단계이며 본계약 체결과 다를 수 있습니다.') + '</p>';
+        }
+        if (target.type === 'pfv' || target.type === 'spc') {
+          html += '<p class="rn-graph-only-badge">' + (lang === 'en'
+            ? 'Project finance vehicle — equity/guarantee amounts are disclosure-based, not realized loss.'
+            : '프로젝트 금융 특수목적법인입니다. 지분·보증은 공시 기준이며 실제 손실을 의미하지 않습니다.') + '</p>';
+        }
+        if (target.companyContractValue != null || target.constructionContractValue != null
+          || target.totalProjectValue != null || target.projectTotalValue != null
+          || target.companyShareValue != null || target.financingAmount != null
+          || target.guaranteeAmount != null || target.convertedValueKRW != null) {
+          const totalPv = target.projectTotalValue != null ? target.projectTotalValue : target.totalProjectValue;
+          if (totalPv != null) {
+            html += '<p>' + (lang === 'en' ? 'Total project value: ' : '총사업비: ')
+              + totalPv + ' ' + (target.currency || '')
+              + (target.valueType ? ' (' + target.valueType + ')' : '') + '</p>';
+          }
+          if (target.constructionContractValue != null) {
+            html += '<p>' + (lang === 'en' ? 'Construction contract (award): ' : '회사 도급액: ')
+              + target.constructionContractValue + ' ' + (target.currency || '') + '</p>';
+          }
+          if (target.companyContractValue != null) {
+            html += '<p>' + (lang === 'en' ? 'Company contract share: ' : '기업 계약지분: ')
+              + target.companyContractValue + ' ' + (target.currency || '')
+              + (target.companyParticipationPct != null ? ' (' + target.companyParticipationPct + '%)' : '') + '</p>';
+          }
+          if (target.companyShareValue != null && target.companyShareValue !== target.companyContractValue) {
+            html += '<p>' + (lang === 'en' ? 'Company attributable value: ' : '회사 귀속액: ')
+              + target.companyShareValue + ' ' + (target.currency || '') + '</p>';
+          }
+          if (target.equityStakePct != null) {
+            html += '<p>' + (lang === 'en' ? 'Equity stake: ' : '지분율: ')
+              + target.equityStakePct + '%</p>';
+          }
+          if (target.financingAmount != null || target.projectFinanceAmount != null) {
+            html += '<p>' + (lang === 'en' ? 'PF / financing (not award): ' : 'PF·금융(수주액 아님): ')
+              + (target.financingAmount != null ? target.financingAmount : target.projectFinanceAmount)
+              + ' ' + (target.currency || '') + '</p>';
+          }
+          if (target.guaranteeAmount != null || target.guaranteedAmount != null) {
+            html += '<p>' + (lang === 'en' ? 'Guarantee (not award): ' : '지급보증(수주액 아님): ')
+              + (target.guaranteeAmount != null ? target.guaranteeAmount : target.guaranteedAmount)
+              + ' ' + (target.currency || '') + '</p>';
+          }
+          if (target.originalCurrency && target.originalContractValue != null) {
+            html += '<p>' + (lang === 'en' ? 'Original currency amount: ' : '원문 통화 금액: ')
+              + target.originalContractValue + ' ' + target.originalCurrency
+              + (target.conversionAsOf ? (lang === 'en' ? ' (FX as of ' : ' (환산기준 ')
+                + target.conversionAsOf + ')' : '') + '</p>';
+          }
+          if (target.convertedValueKRW != null && target.originalCurrency && target.originalCurrency !== 'KRW') {
+            html += '<p>' + (lang === 'en' ? 'Converted KRW: ' : '환산 원화: ')
+              + target.convertedValueKRW + ' KRW'
+              + (target.conversionAsOf ? ' @ ' + target.conversionAsOf : '') + '</p>';
+          }
+        }
+        if (target.counterpartyDisclosure || target.counterpartyStatus) {
+          html += '<p>' + (lang === 'en' ? 'Counterparty disclosure: ' : '상대방 공개 수준: ')
+            + (target.counterpartyDisclosure || target.counterpartyStatus) + '</p>';
+        }
+        if (target.contractStatus) {
+          html += '<p>' + (lang === 'en' ? 'Contract status: ' : '계약 상태: ')
+            + target.contractStatus
+            + (target.contractSigned === true ? (lang === 'en' ? ' (signed)' : ' (체결)')
+              : (target.contractSigned === false ? (lang === 'en' ? ' (not signed)' : ' (미체결)') : ''))
+            + '</p>';
+        }
+        const ev0 = (target.evidence && target.evidence[0]) || null;
+        if (ev0 && (ev0.reviewStatus || target.reviewStatus)) {
+          html += '<p>' + (lang === 'en' ? 'Editorial review: ' : '편집 검토 상태: ')
+            + (ev0.reviewStatus || target.reviewStatus) + '</p>';
+        }
         if (target.type === 'product' || target.type === 'development_pipeline' || target.type === 'project_portfolio') {
           html += '<p class="rn-graph-only-badge">' + (lang === 'en'
             ? (target.type === 'product'
@@ -2423,6 +2619,92 @@
     toolbar.insertBefore(wrap, toolbar.firstChild);
   }
 
+  function ensureConstructionToolbar(state) {
+    var toolbar = document.querySelector('.rn-toolbar');
+    if (!toolbar || state.profileKey !== 'construction') return;
+    if ($('rn-construction-filters')) return;
+    var lang = state.lang;
+    var wrap = document.createElement('div');
+    wrap.id = 'rn-construction-filters';
+    wrap.className = 'rn-construction-filters';
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:6px;width:100%;';
+    function makeRow(id) {
+      var row = document.createElement('div');
+      row.id = id;
+      row.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;-webkit-overflow-scrolling:touch;position:sticky;';
+      return row;
+    }
+    var roleRow = makeRow('rn-construction-role');
+    var statusRow = makeRow('rn-construction-status');
+    [
+      ['all', lang === 'en' ? 'All' : '전체'],
+      ['developer', lang === 'en' ? 'Developer' : '개발'],
+      ['housing', lang === 'en' ? 'Housing' : '주택'],
+      ['plant', lang === 'en' ? 'Plant/infra' : '플랜트'],
+      ['overseas', lang === 'en' ? 'Overseas' : '해외'],
+      ['machinery', lang === 'en' ? 'Machinery' : '기계'],
+      ['spv', 'SPC/PFV'],
+      ['consortium', lang === 'en' ? 'Consortium' : '공동도급'],
+      ['direct', lang === 'en' ? 'Direct' : '직접'],
+      ['peer', 'Peer'],
+    ].forEach(function (row) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rn-chip' + ((state.filters.constructionRole || 'all') === row[0] ? ' active' : '');
+      btn.dataset.role = row[0];
+      btn.textContent = row[1];
+      btn.style.minHeight = '44px';
+      btn.onclick = function () {
+        state.filters.constructionRole = row[0];
+        state.filters.showHidden = row[0] === 'peer';
+        state.filters.hidePeer = row[0] !== 'peer';
+        state.filters.hideInferred = row[0] !== 'peer';
+        state.filters.transactionalOnly = row[0] === 'direct';
+        roleRow.querySelectorAll('.rn-chip').forEach(function (b) {
+          b.classList.toggle('active', b.dataset.role === row[0]);
+        });
+        pushUrlState(state);
+        updateStickyBar(state);
+        renderGraph(state);
+        buildA11yList(state);
+      };
+      roleRow.appendChild(btn);
+    });
+    [
+      ['all', lang === 'en' ? 'All stages' : '전체 상태'],
+      ['preferred_bidder', lang === 'en' ? 'Preferred' : '우선협상'],
+      ['contract', lang === 'en' ? 'Contract' : '계약'],
+      ['construction', lang === 'en' ? 'Building' : '건설'],
+      ['presale', lang === 'en' ? 'Presale' : '분양'],
+      ['completed', lang === 'en' ? 'Done' : '완료'],
+    ].forEach(function (row) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rn-chip' + ((state.filters.constructionStatus || 'all') === row[0] ? ' active' : '');
+      btn.dataset.status = row[0];
+      btn.textContent = row[1];
+      btn.style.minHeight = '44px';
+      btn.onclick = function () {
+        state.filters.constructionStatus = row[0];
+        state.filters.projectStatus = row[0] === 'all' ? '' : row[0];
+        state.filters.showHistorical = row[0] === 'completed';
+        state.filters.showEnded = row[0] === 'completed';
+        state.filters.showHidden = row[0] === 'completed';
+        statusRow.querySelectorAll('.rn-chip').forEach(function (b) {
+          b.classList.toggle('active', b.dataset.status === row[0]);
+        });
+        pushUrlState(state);
+        updateStickyBar(state);
+        renderGraph(state);
+        buildA11yList(state);
+      };
+      statusRow.appendChild(btn);
+    });
+    wrap.appendChild(roleRow);
+    wrap.appendChild(statusRow);
+    toolbar.insertBefore(wrap, toolbar.firstChild);
+  }
+
   function ensurePowergridToolbar(state) {
     var toolbar = document.querySelector('.rn-toolbar');
     if (!toolbar || state.profileKey !== 'powergrid') return;
@@ -2708,6 +2990,7 @@
     ensurePowergridToolbar(state);
     ensureNuclearToolbar(state);
     ensureRenewableToolbar(state);
+    ensureConstructionToolbar(state);
 
     var search = $('rn-search');
     if (search) {
@@ -2829,6 +3112,7 @@
     ensurePowergridToolbar(state);
     ensureNuclearToolbar(state);
     ensureRenewableToolbar(state);
+    ensureConstructionToolbar(state);
     if (state.profile) {
       state.filters._batteryProfile = state.profile;
       state.filters._shipProfile = state.profile;

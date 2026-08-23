@@ -26,6 +26,7 @@ const PILOT_PAGES = [
   { id: 'powergrid', path: '/powergrid/korea_powergrid_map.html' },
   { id: 'nuclear', path: '/nuclear/korea_nuclear_map.html' },
   { id: 'renewable', path: '/renewable/korea_renewable_map.html' },
+  { id: 'construction', path: '/construction/korea_construction_map.html' },
 ];
 
 const PAGES = QUICK ? PILOT_PAGES : [
