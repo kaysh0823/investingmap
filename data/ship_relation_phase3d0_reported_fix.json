@@ -1,0 +1,100 @@
+{
+  "fixedAt": "2026-08-23",
+  "changes": [
+    {
+      "edgeId": "owns-009540-329180",
+      "source": "krx:009540",
+      "target": "krx:329180",
+      "beforeType": "owns",
+      "afterType": "owns",
+      "beforeStatus": "reference",
+      "afterStatus": "reference",
+      "reason": "homepage-only owns → reference"
+    },
+    {
+      "edgeId": "ordered-011200-contract-hmm-hhi",
+      "source": "krx:011200",
+      "target": "contract:hmm-hhi-container-2020s",
+      "beforeType": "ordered",
+      "afterType": "ordered",
+      "beforeStatus": "inferred",
+      "afterStatus": "inferred",
+      "reason": "HMM order without filing → inferred hidden"
+    },
+    {
+      "edgeId": "awarded-contract-hmm-hhi-329180",
+      "source": "contract:hmm-hhi-container-2020s",
+      "target": "krx:329180",
+      "beforeType": "awarded_to",
+      "afterType": "awarded_to",
+      "beforeStatus": "inferred",
+      "afterStatus": "inferred",
+      "reason": "HMM award without filing → inferred hidden"
+    },
+    {
+      "edgeId": "ordered-undisclosed-eu-shi-lng",
+      "source": "counterparty:undisclosed_european_shipowner",
+      "target": "contract:undisclosed-eu-shi-lng",
+      "beforeType": "ordered",
+      "afterType": "ordered",
+      "beforeStatus": "inferred",
+      "afterStatus": "inferred",
+      "reason": "anonymous EU order → inferred hidden"
+    },
+    {
+      "edgeId": "awarded-undisclosed-eu-shi-lng-010140",
+      "source": "contract:undisclosed-eu-shi-lng",
+      "target": "krx:010140",
+      "beforeType": "awarded_to",
+      "afterType": "awarded_to",
+      "beforeStatus": "inferred",
+      "afterStatus": "inferred",
+      "reason": "anonymous EU award → inferred hidden"
+    },
+    {
+      "edgeId": "ordered-shell-shi-historic",
+      "source": "global:shell",
+      "target": "contract:shell-shi-lng-historic",
+      "beforeType": "ordered",
+      "afterType": "ordered",
+      "beforeStatus": "ended",
+      "afterStatus": "ended",
+      "reason": "Shell historic order → ended hidden"
+    },
+    {
+      "edgeId": "awarded-shell-shi-historic-010140",
+      "source": "contract:shell-shi-lng-historic",
+      "target": "krx:010140",
+      "beforeType": "awarded_to",
+      "afterType": "awarded_to",
+      "beforeStatus": "ended",
+      "afterStatus": "ended",
+      "reason": "Shell historic award → ended hidden"
+    },
+    {
+      "edgeId": "awarded-naval-rok-042660",
+      "source": "naval:rok-navy-submarine-program",
+      "target": "krx:042660",
+      "beforeType": "manufactures",
+      "afterType": "manufactures",
+      "beforeStatus": "reference",
+      "afterStatus": "reference",
+      "reason": "naval homepage → manufactures/reference"
+    }
+  ],
+  "after": {
+    "reportedBusiness": 0,
+    "statusCounts": {
+      "reference": 73,
+      "inferred": 9,
+      "ended": 2,
+      "peer": 29
+    },
+    "evidenceFieldCoverage": 0,
+    "directEvidenceCoverage": 0,
+    "primarySourceCoverage": 0,
+    "validateFailures": 0,
+    "validateWarnings": 0,
+    "warnings": []
+  }
+}

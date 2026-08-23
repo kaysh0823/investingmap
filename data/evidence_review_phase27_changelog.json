@@ -1,0 +1,525 @@
+{
+  "reviewedAt": "2026-08-22",
+  "changes": [
+    {
+      "edgeId": "hub-front_equip-samsung_d-customer",
+      "source": "group:front_equip",
+      "target": "anchor:005930",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "삼성 공급사 PDF는 그룹 수준 참고 — 특정 멤버사 거래 아님",
+      "evidenceUrl": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+    },
+    {
+      "edgeId": "hub-back_equip-samsung_d-customer",
+      "source": "group:back_equip",
+      "target": "anchor:005930",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "삼성 공급사 PDF는 그룹 수준 참고 — 특정 멤버사 거래 아님",
+      "evidenceUrl": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+    },
+    {
+      "edgeId": "hub-back_equip-skhynix_d-customer",
+      "source": "group:back_equip",
+      "target": "anchor:000660",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://news.skhynix.com/"
+    },
+    {
+      "edgeId": "hub-back_equip-ase-customer",
+      "source": "group:back_equip",
+      "target": "global:ase",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.aseglobal.com/"
+    },
+    {
+      "edgeId": "hub-back_equip-amkor-customer",
+      "source": "group:back_equip",
+      "target": "global:amkor",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://amkor.com/"
+    },
+    {
+      "edgeId": "hub-materials-samsung_d-customer",
+      "source": "group:materials",
+      "target": "anchor:005930",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "삼성 공급사 PDF는 그룹 수준 참고 — 특정 멤버사 거래 아님",
+      "evidenceUrl": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+    },
+    {
+      "edgeId": "hub-foundry-asml-supplier",
+      "source": "global:asml",
+      "target": "group:foundry",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.asml.com/en/products"
+    },
+    {
+      "edgeId": "hub-foundry-lam-supplier",
+      "source": "global:lam",
+      "target": "group:foundry",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.lamresearch.com/"
+    },
+    {
+      "edgeId": "hub-foundry-tokyo_electron-supplier",
+      "source": "global:tokyo_electron",
+      "target": "group:foundry",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.tel.com/product/"
+    },
+    {
+      "edgeId": "hub-foundry-kla-supplier",
+      "source": "global:kla",
+      "target": "group:foundry",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.kla.com/"
+    },
+    {
+      "edgeId": "hub-foundry-ti-customer",
+      "source": "group:foundry",
+      "target": "global:ti",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.ti.com/about-ti/company/ti-at-a-glance.html"
+    },
+    {
+      "edgeId": "hub-foundry-renesas-customer",
+      "source": "group:foundry",
+      "target": "global:renesas",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.renesas.com/"
+    },
+    {
+      "edgeId": "hub-foundry-onsemi-customer",
+      "source": "group:foundry",
+      "target": "global:onsemi",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.onsemi.com/"
+    },
+    {
+      "edgeId": "hub-fabless-tsmc-supplier",
+      "source": "global:tsmc",
+      "target": "group:fabless",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.tsmc.com/"
+    },
+    {
+      "edgeId": "hub-fabless-samsung_d-supplier",
+      "source": "anchor:005930",
+      "target": "group:fabless",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://semiconductor.samsung.com/foundry/"
+    },
+    {
+      "edgeId": "hub-fabless-arm-supplier",
+      "source": "global:arm",
+      "target": "group:fabless",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.arm.com/"
+    },
+    {
+      "edgeId": "hub-fabless-synopsys-supplier",
+      "source": "global:synopsys",
+      "target": "group:fabless",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.synopsys.com/"
+    },
+    {
+      "edgeId": "hub-fabless-google-customer",
+      "source": "group:fabless",
+      "target": "global:google",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://cloud.google.com/"
+    },
+    {
+      "edgeId": "hub-fabless-lgdisplay-customer",
+      "source": "group:fabless",
+      "target": "global:lgdisplay",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.lgdisplay.com/"
+    },
+    {
+      "edgeId": "hub-fabless-boe-customer",
+      "source": "group:fabless",
+      "target": "global:boe",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.boe.com/"
+    },
+    {
+      "edgeId": "hub-design_house-synopsys-supplier",
+      "source": "global:synopsys",
+      "target": "group:design_house",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.synopsys.com/"
+    },
+    {
+      "edgeId": "hub-design_house-cadence-supplier",
+      "source": "global:cadence",
+      "target": "group:design_house",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.cadence.com/"
+    },
+    {
+      "edgeId": "hub-design_house-arm-supplier",
+      "source": "global:arm",
+      "target": "group:design_house",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.arm.com/"
+    },
+    {
+      "edgeId": "hub-design_house-samsung_d-supplier",
+      "source": "anchor:005930",
+      "target": "group:design_house",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://semiconductor.samsung.com/foundry/"
+    },
+    {
+      "edgeId": "hub-substrate-nan_ya-supplier",
+      "source": "global:nan_ya",
+      "target": "group:substrate",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.npc.com.tw/"
+    },
+    {
+      "edgeId": "hub-substrate-emc_laminate-supplier",
+      "source": "global:emc_laminate",
+      "target": "group:substrate",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.emctw.com/"
+    },
+    {
+      "edgeId": "hub-substrate-dupont-supplier",
+      "source": "global:dupont",
+      "target": "group:substrate",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.dupont.com/electronics-industrial.html"
+    },
+    {
+      "edgeId": "hub-substrate-samsung_d-customer",
+      "source": "group:substrate",
+      "target": "anchor:005930",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "삼성 공급사 PDF는 그룹 수준 참고 — 특정 멤버사 거래 아님",
+      "evidenceUrl": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+    },
+    {
+      "edgeId": "hub-substrate-qualcomm-customer",
+      "source": "group:substrate",
+      "target": "global:qualcomm",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.qualcomm.com/"
+    },
+    {
+      "edgeId": "hub-substrate-micron_eq-customer",
+      "source": "group:substrate",
+      "target": "global:micron_eq",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.micron.com/"
+    },
+    {
+      "edgeId": "hub-substrate-nvidia-customer",
+      "source": "group:substrate",
+      "target": "global:nvidia",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.nvidia.com/"
+    },
+    {
+      "edgeId": "hub-osat-teradyne-supplier",
+      "source": "global:teradyne",
+      "target": "group:osat",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.teradyne.com/"
+    },
+    {
+      "edgeId": "hub-osat-advantest-supplier",
+      "source": "global:advantest",
+      "target": "group:osat",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.advantest.com/"
+    },
+    {
+      "edgeId": "hub-osat-kulicke-supplier",
+      "source": "global:kulicke",
+      "target": "group:osat",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.kns.com/"
+    },
+    {
+      "edgeId": "hub-osat-samsung_d-customer",
+      "source": "group:osat",
+      "target": "anchor:005930",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "삼성 공급사 PDF는 그룹 수준 참고 — 특정 멤버사 거래 아님",
+      "evidenceUrl": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+    },
+    {
+      "edgeId": "hub-osat-skhynix_d-customer",
+      "source": "group:osat",
+      "target": "anchor:000660",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://news.skhynix.com/"
+    },
+    {
+      "edgeId": "hub-osat-qualcomm-customer",
+      "source": "group:osat",
+      "target": "global:qualcomm",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.qualcomm.com/"
+    },
+    {
+      "edgeId": "hub-osat-mediatek-customer",
+      "source": "group:osat",
+      "target": "global:mediatek",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.mediatek.com/"
+    },
+    {
+      "edgeId": "hub-osat-amd-customer",
+      "source": "group:osat",
+      "target": "global:amd",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.amd.com/"
+    },
+    {
+      "edgeId": "hub-distribution-samsung_d-supplier",
+      "source": "anchor:005930",
+      "target": "group:distribution",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://semiconductor.samsung.com/"
+    },
+    {
+      "edgeId": "hub-distribution-micron_eq-supplier",
+      "source": "global:micron_eq",
+      "target": "group:distribution",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.micron.com/"
+    },
+    {
+      "edgeId": "hub-distribution-ti-supplier",
+      "source": "global:ti",
+      "target": "group:distribution",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.ti.com/about-ti/company/ti-at-a-glance.html"
+    },
+    {
+      "edgeId": "hub-distribution-infineon-supplier",
+      "source": "global:infineon",
+      "target": "group:distribution",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.infineon.com/"
+    },
+    {
+      "edgeId": "hub-distribution-samsung_display-customer",
+      "source": "group:distribution",
+      "target": "global:samsung_display",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.samsungdisplay.com/"
+    },
+    {
+      "edgeId": "hub-distribution-lg_elec-customer",
+      "source": "group:distribution",
+      "target": "global:lg_elec",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.lge.co.kr/"
+    },
+    {
+      "edgeId": "hub-distribution-hyundai-customer",
+      "source": "group:distribution",
+      "target": "global:hyundai",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.hyundai.com/"
+    },
+    {
+      "edgeId": "trade-hanmi-hynix-tcbonder-2025",
+      "source": "krx:042700",
+      "target": "anchor:000660",
+      "type": "equipment_for",
+      "before": "reported",
+      "after": "ended",
+      "reason": "DART 원문 확인 — 계약기간 2025.07.01 종료, confirmed 아님(만료)",
+      "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250114800153"
+    },
+    {
+      "edgeId": "controls-sk-sksquare",
+      "source": "krx:034730",
+      "target": "krx:402340",
+      "type": "owns",
+      "before": "reported/controls",
+      "after": "reported/owns",
+      "reason": "지배 미확인 — 최대주주 지분 32.16% owns로 교정",
+      "evidenceUrl": "https://kind.krx.co.kr/external/2024/05/31/000228/20240531000414/99667.htm"
+    },
+    {
+      "edgeId": "prime-kf21-kai",
+      "source": "krx:047810",
+      "target": "program:kf21",
+      "type": "joint_development",
+      "before": "reported/prime_contractor",
+      "after": "reported/joint_development",
+      "reason": "제품 PDF는 개발·생산 사실만 입증 — prime_contractor(체계개발 주관) 별도 공식 문서 필요",
+      "evidenceUrl": "https://www.koreaaero.com/VIRTUAL_EX/PDF/FixedWing/01_Fixed_Wing_KF-21_Boramae.pdf"
+    },
+    {
+      "edgeId": "prime-k9-rotem",
+      "source": "krx:064350",
+      "target": "program:k9",
+      "type": "manufactures",
+      "before": "reported/prime_contractor",
+      "after": "reported/manufactures",
+      "reason": "제품 소개 페이지는 제조·공급 사실만 입증 — prime_contractor 아님, manufactures로 교정",
+      "evidenceUrl": "https://www.hyundai-rotem.co.kr/Kor/Business/Defense/Product/K9"
+    },
+    {
+      "edgeId": "sub-cheongung-lig",
+      "source": "krx:079550",
+      "target": "program:cheongung_ii",
+      "type": "subsystem_supplier",
+      "before": "reported/subsystem_supplier",
+      "after": "reported/subsystem_supplier",
+      "reason": "사업 페이지 — 방공 체계 참여 수준, 계약 문서 미확인",
+      "evidenceUrl": "https://www.lignex1.com/kor/business/air-defense"
+    },
+    {
+      "edgeId": "bio-sk-gsk-covid19",
+      "source": "krx:302440",
+      "target": "global:gsk",
+      "type": "clinical_collaboration",
+      "before": "reported/co_develops",
+      "after": "confirmed/clinical_collaboration",
+      "reason": "GSK 공식 보도자료 원문 확인 — confirmed 승격",
+      "evidenceUrl": "https://us.gsk.com/en-us/media/press-releases/sk-bioscience-and-gsk-start-phase-3-trial-of-adjuvanted-covid-19-vaccine-candidate/"
+    }
+  ]
+}

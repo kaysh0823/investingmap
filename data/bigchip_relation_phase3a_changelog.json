@@ -1,0 +1,1361 @@
+{
+  "migratedAt": "2026-08-22",
+  "sourceEdgeCount": 109,
+  "resultNodeCount": 81,
+  "resultEdgeCount": 140,
+  "statusCounts": {
+    "reported": 91,
+    "reference": 25,
+    "peer": 13,
+    "ended": 1,
+    "inferred": 10
+  },
+  "typeCounts": {
+    "produces": 12,
+    "used_in_market": 13,
+    "exposed_to": 6,
+    "owns": 1,
+    "equipment_for": 26,
+    "material_for": 35,
+    "supplies_to": 15,
+    "peer": 13,
+    "packages_or_tests_for": 18,
+    "competes_with": 1
+  },
+  "changes": [
+    {
+      "edgeId": "produces-005930-product-dram",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-000660-product-dram",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-005930-product-nand",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-000660-product-nand",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-005930-product-hbm",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-000660-product-hbm",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-005930-product-foundry",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-005930-product-system_lsi",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-005930-product-image_sensor",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-005930-product-advanced_packaging",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-000660-product-advanced_packaging",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "produces-000660-product-enterprise_ssd",
+      "beforeType": "(none)",
+      "afterType": "produces",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "공식 제품 영역 — company→product (거래 관계 아님)"
+    },
+    {
+      "edgeId": "usedin-product-hbm-market-ai_accelerator",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-hbm-market-server_datacenter",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-dram-market-server_datacenter",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-dram-market-mobile",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-dram-market-pc",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-nand-market-mobile",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-nand-market-consumer_electronics",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-enterprise_ssd-market-server_datacenter",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-foundry-market-mobile",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-foundry-market-automotive",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-system_lsi-market-mobile",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-image_sensor-market-mobile",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "usedin-product-advanced_packaging-market-ai_accelerator",
+      "beforeType": "(none)",
+      "afterType": "used_in_market",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "제품→수요시장 구조 연결 — 기업 거래 아님"
+    },
+    {
+      "edgeId": "exposed-005930-market-ai_accelerator",
+      "beforeType": "(none)",
+      "afterType": "exposed_to",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "회사→수요시장 노출(특정 고객 아님)"
+    },
+    {
+      "edgeId": "exposed-005930-market-server_datacenter",
+      "beforeType": "(none)",
+      "afterType": "exposed_to",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "회사→수요시장 노출(특정 고객 아님)"
+    },
+    {
+      "edgeId": "exposed-005930-market-mobile",
+      "beforeType": "(none)",
+      "afterType": "exposed_to",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "회사→수요시장 노출(특정 고객 아님)"
+    },
+    {
+      "edgeId": "exposed-000660-market-ai_accelerator",
+      "beforeType": "(none)",
+      "afterType": "exposed_to",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "회사→수요시장 노출(특정 고객 아님)"
+    },
+    {
+      "edgeId": "exposed-000660-market-server_datacenter",
+      "beforeType": "(none)",
+      "afterType": "exposed_to",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "회사→수요시장 노출(특정 고객 아님)"
+    },
+    {
+      "edgeId": "exposed-000660-market-mobile",
+      "beforeType": "(none)",
+      "afterType": "exposed_to",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "reason": "회사→수요시장 노출(특정 고객 아님)"
+    },
+    {
+      "edgeId": "owns-000660-solidigm",
+      "beforeType": "(none)",
+      "afterType": "owns",
+      "beforeStatus": "(none)",
+      "afterStatus": "reported",
+      "reason": "SK하이닉스–Solidigm 공식 인수 보도 — owns (confirmed 게이트 미충족)"
+    },
+    {
+      "edgeId": "equipment_for-005930-asml",
+      "hub": "005930",
+      "partner": "asml",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reference",
+      "reason": "약함·집계 출처 — reference 강등"
+    },
+    {
+      "edgeId": "equipment_for-005930-applied_materials",
+      "hub": "005930",
+      "partner": "applied_materials",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-lam_research",
+      "hub": "005930",
+      "partner": "lam_research",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reference",
+      "reason": "약함·집계 출처 — reference 강등"
+    },
+    {
+      "edgeId": "equipment_for-005930-kla",
+      "hub": "005930",
+      "partner": "kla",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-tokyo_electron",
+      "hub": "005930",
+      "partner": "tokyo_electron",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reference",
+      "reason": "약함·집계 출처 — reference 강등"
+    },
+    {
+      "edgeId": "equipment_for-005930-wonik_ips",
+      "hub": "005930",
+      "partner": "wonik_ips",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reference",
+      "reason": "약함·집계 출처 — reference 강등"
+    },
+    {
+      "edgeId": "material_for-005930-dongjin_semichem",
+      "hub": "005930",
+      "partner": "dongjin_semichem",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reference",
+      "reason": "약함·집계 출처 — reference 강등"
+    },
+    {
+      "edgeId": "material_for-005930-soulbrain",
+      "hub": "005930",
+      "partner": "soulbrain",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-sk_specialty",
+      "hub": "005930",
+      "partner": "sk_specialty",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-005930-apple",
+      "hub": "005930",
+      "partner": "apple",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-005930-nvidia",
+      "hub": "005930",
+      "partner": "nvidia",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-005930-google",
+      "hub": "005930",
+      "partner": "google",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "reported",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "peer-005930-tsmc",
+      "hub": "005930",
+      "partner": "tsmc",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-005930-intel",
+      "hub": "005930",
+      "partner": "intel",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-005930-micron",
+      "hub": "005930",
+      "partner": "micron",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-005930-kioxia",
+      "hub": "005930",
+      "partner": "kioxia",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "equipment_for-000660-asml",
+      "hub": "000660",
+      "partner": "asml",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-applied_materials",
+      "hub": "000660",
+      "partner": "applied_materials",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-lam_research",
+      "hub": "000660",
+      "partner": "lam_research",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-hanmi_semiconductor",
+      "hub": "000660",
+      "partner": "hanmi_semiconductor",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "ended",
+      "reason": "DART TC 본더 계약 종료 — ended"
+    },
+    {
+      "edgeId": "equipment_for-000660-jusung_engineering",
+      "hub": "000660",
+      "partner": "jusung_engineering",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "reported",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-dongjin_semichem",
+      "hub": "000660",
+      "partner": "dongjin_semichem",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "reported",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-soulbrain",
+      "hub": "000660",
+      "partner": "soulbrain",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-sk_specialty",
+      "hub": "000660",
+      "partner": "sk_specialty",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-000660-tsmc",
+      "hub": "000660",
+      "partner": "tsmc",
+      "beforeType": "suppliers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-000660-nvidia",
+      "hub": "000660",
+      "partner": "nvidia",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-000660-apple",
+      "hub": "000660",
+      "partner": "apple",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-000660-microsoft",
+      "hub": "000660",
+      "partner": "microsoft",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "reported",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-000660-google",
+      "hub": "000660",
+      "partner": "google",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "reported",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "peer-000660-micron",
+      "hub": "000660",
+      "partner": "micron",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-000660-kioxia",
+      "hub": "000660",
+      "partner": "kioxia",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "material_for-005930-hansol_chemical",
+      "hub": "005930",
+      "partner": "hansol_chemical",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-enf_technology",
+      "hub": "005930",
+      "partner": "enf_technology",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-wonik_materials",
+      "hub": "005930",
+      "partner": "wonik_materials",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "material_for-005930-hana_materials",
+      "hub": "005930",
+      "partner": "hana_materials",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-tck",
+      "hub": "005930",
+      "partner": "tck",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-wonik_qnc",
+      "hub": "005930",
+      "partner": "wonik_qnc",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-comico",
+      "hub": "005930",
+      "partner": "comico",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-worldex",
+      "hub": "005930",
+      "partner": "worldex",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-temc",
+      "hub": "005930",
+      "partner": "temc",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-sns_tech",
+      "hub": "005930",
+      "partner": "sns_tech",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-psk",
+      "hub": "005930",
+      "partner": "psk",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "equipment_for-005930-tes",
+      "hub": "005930",
+      "partner": "tes",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-eugene_tech",
+      "hub": "005930",
+      "partner": "eugene_tech",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-kc_tech",
+      "hub": "005930",
+      "partner": "kc_tech",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-hpsp",
+      "hub": "005930",
+      "partner": "hpsp",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-eo_technics",
+      "hub": "005930",
+      "partner": "eo_technics",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-005930-park_systems",
+      "hub": "005930",
+      "partner": "park_systems",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "equipment_for-005930-techwing",
+      "hub": "005930",
+      "partner": "techwing",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-isc",
+      "hub": "005930",
+      "partner": "isc",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-daeduck_electronics",
+      "hub": "005930",
+      "partner": "daeduck_electronics",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-simmtech",
+      "hub": "005930",
+      "partner": "simmtech",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-haesung_ds",
+      "hub": "005930",
+      "partner": "haesung_ds",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-tlb",
+      "hub": "005930",
+      "partner": "tlb",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-hana_micron",
+      "hub": "005930",
+      "partner": "hana_micron",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-sfa_semicon",
+      "hub": "005930",
+      "partner": "sfa_semicon",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-doosan_tesna",
+      "hub": "005930",
+      "partner": "doosan_tesna",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-lb_semicon",
+      "hub": "005930",
+      "partner": "lb_semicon",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-005930-gaonchips",
+      "hub": "005930",
+      "partner": "gaonchips",
+      "beforeType": "suppliers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-005930-adtechnology",
+      "hub": "005930",
+      "partner": "adtechnology",
+      "beforeType": "suppliers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-nepes",
+      "hub": "005930",
+      "partner": "nepes",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "material_for-005930-shin_etsu",
+      "hub": "005930",
+      "partner": "shin_etsu",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-sumco",
+      "hub": "005930",
+      "partner": "sumco",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-merck_emd",
+      "hub": "005930",
+      "partner": "merck_emd",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-dupont",
+      "hub": "005930",
+      "partner": "dupont",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-005930-air_liquide",
+      "hub": "005930",
+      "partner": "air_liquide",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-005930-amd",
+      "hub": "005930",
+      "partner": "amd",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-005930-qualcomm",
+      "hub": "005930",
+      "partner": "qualcomm",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "supplies_to-005930-tesla",
+      "hub": "005930",
+      "partner": "tesla",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "peer-005930-globalfoundries",
+      "hub": "005930",
+      "partner": "globalfoundries",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-005930-sandisk",
+      "hub": "005930",
+      "partner": "sandisk",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-005930-ymtc",
+      "hub": "005930",
+      "partner": "ymtc",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-005930-cxmt",
+      "hub": "005930",
+      "partner": "cxmt",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "material_for-000660-hansol_chemical",
+      "hub": "000660",
+      "partner": "hansol_chemical",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-enf_technology",
+      "hub": "000660",
+      "partner": "enf_technology",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-wonik_materials",
+      "hub": "000660",
+      "partner": "wonik_materials",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "material_for-000660-hana_materials",
+      "hub": "000660",
+      "partner": "hana_materials",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "material_for-000660-tck",
+      "hub": "000660",
+      "partner": "tck",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-wonik_qnc",
+      "hub": "000660",
+      "partner": "wonik_qnc",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-comico",
+      "hub": "000660",
+      "partner": "comico",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-worldex",
+      "hub": "000660",
+      "partner": "worldex",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-temc",
+      "hub": "000660",
+      "partner": "temc",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-sns_tech",
+      "hub": "000660",
+      "partner": "sns_tech",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-psk",
+      "hub": "000660",
+      "partner": "psk",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "equipment_for-000660-tes",
+      "hub": "000660",
+      "partner": "tes",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-eugene_tech",
+      "hub": "000660",
+      "partner": "eugene_tech",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-kc_tech",
+      "hub": "000660",
+      "partner": "kc_tech",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-hpsp",
+      "hub": "000660",
+      "partner": "hpsp",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-park_systems",
+      "hub": "000660",
+      "partner": "park_systems",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "equipment_for-000660-techwing",
+      "hub": "000660",
+      "partner": "techwing",
+      "beforeType": "suppliers",
+      "afterType": "equipment_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-isc",
+      "hub": "000660",
+      "partner": "isc",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-daeduck_electronics",
+      "hub": "000660",
+      "partner": "daeduck_electronics",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-simmtech",
+      "hub": "000660",
+      "partner": "simmtech",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-haesung_ds",
+      "hub": "000660",
+      "partner": "haesung_ds",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-tlb",
+      "hub": "000660",
+      "partner": "tlb",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-hana_micron",
+      "hub": "000660",
+      "partner": "hana_micron",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-sfa_semicon",
+      "hub": "000660",
+      "partner": "sfa_semicon",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-doosan_tesna",
+      "hub": "000660",
+      "partner": "doosan_tesna",
+      "beforeType": "suppliers",
+      "afterType": "packages_or_tests_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-shin_etsu",
+      "hub": "000660",
+      "partner": "shin_etsu",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "material_for-000660-merck_emd",
+      "hub": "000660",
+      "partner": "merck_emd",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-qnity",
+      "hub": "000660",
+      "partner": "qnity",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "material_for-000660-air_liquide",
+      "hub": "000660",
+      "partner": "air_liquide",
+      "beforeType": "suppliers",
+      "afterType": "material_for",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "supplies_to-000660-amazon_aws",
+      "hub": "000660",
+      "partner": "amazon_aws",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "likely",
+      "afterStatus": "inferred",
+      "reason": "likely/약한 근거 — inferred"
+    },
+    {
+      "edgeId": "supplies_to-000660-meta",
+      "hub": "000660",
+      "partner": "meta",
+      "beforeType": "customers",
+      "afterType": "supplies_to",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reported",
+      "reason": "레거시 confirmed 자동승격 금지 → reported"
+    },
+    {
+      "edgeId": "peer-000660-sandisk",
+      "hub": "000660",
+      "partner": "sandisk",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-000660-ymtc",
+      "hub": "000660",
+      "partner": "ymtc",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "peer-000660-cxmt",
+      "hub": "000660",
+      "partner": "cxmt",
+      "beforeType": "peers",
+      "afterType": "peer",
+      "beforeStatus": "confirmed",
+      "afterStatus": "peer",
+      "reason": "비교 peer — 기본 숨김"
+    },
+    {
+      "edgeId": "competes-005930-000660",
+      "beforeType": "peer×2",
+      "afterType": "competes_with",
+      "beforeStatus": "confirmed",
+      "afterStatus": "reference",
+      "reason": "양방향 peer 중복 제거 → 단일 competes_with (reference, 기본 숨김)"
+    }
+  ]
+}

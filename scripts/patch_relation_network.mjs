@@ -1,0 +1,403 @@
+/**
+ * Patch industry map HTML: replace inline graph with RelationNetwork module.
+ * Run after apply_semi_relation_network (curated graph is superseded).
+ */
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+const MAP_FILES = [
+  'bigchip/korea_bigchip_map.html',
+  'semiconductor/korea_semiconductor_map.html',
+  'bio/korea_bio_map.html',
+  'ship/korea_ship_map.html',
+  'defense/korea_defense_map.html',
+  'robot/korea_robot_map.html',
+  'auto/korea_auto_map.html',
+  'medtech/korea_medtech_map.html',
+  'battery/korea_battery_map.html',
+  'renewable/korea_renewable_map.html',
+  'nuclear/korea_nuclear_map.html',
+  'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
+  'construction/korea_construction_map.html',
+  'kconsume/korea_kconsume_map.html',
+  'cosmetics/korea_cosmetics_map.html',
+  'kcontent/korea_kcontent_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
+];
+
+const RN_CSS = `
+    /* relation network v2 */
+    .rn-model-desc { margin: 0 0 8px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .rn-sparse-notice { margin: 0 0 8px; padding: 8px 10px; font-size: 12px; line-height: 1.5; color: var(--text-muted); background: var(--surface2); border: 1px dashed var(--border); border-radius: 8px; }
+    .rn-toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; max-width: 100%; overflow-x: auto; }
+    .rn-toolbar input[type="search"] { min-height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text); font: inherit; min-width: 140px; flex: 1; }
+    .rn-chip { min-height: 32px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface2); color: var(--text-muted); font: inherit; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .rn-chip.active { border-color: var(--accent); color: var(--accent); }
+    .rn-sticky-bar { position: sticky; top: 0; z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; }
+    .rn-sticky-bar button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); cursor: pointer; font: inherit; }
+    .rn-detail-panel { position: absolute; right: 12px; top: 12px; z-index: 15; width: min(320px, 92vw); max-height: 60%; overflow: auto; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: 0 8px 24px rgba(0,0,0,.25); font-size: 12px; line-height: 1.6; }
+    .rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
+    .rn-detail-close { position: absolute; top: 8px; right: 10px; min-width: 44px; min-height: 44px; border: none; background: transparent; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+    .rn-graph-only-badge { color: var(--text-muted); font-size: 11px; margin: 0 0 6px; }
+    .rn-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 8px; font-size: 10px; color: var(--text-muted); }
+    .rn-legend-item { white-space: nowrap; }
+    .rn-legend-key { font-weight: 600; color: var(--text); }
+    .rn-evidence { margin: 8px 0 0; padding-left: 18px; }
+    .rn-a11y-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    @media (max-width: 768px) {
+      #tab-graph .graph-main { position: relative; touch-action: pan-y; }
+      #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; touch-action: none; }
+      .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; padding-top: 18px; }
+      .rn-toolbar { max-height: 28svh; overflow-y: auto; }
+      .rn-toolbar .rn-chip { min-height: 44px; }
+      .rn-sticky-bar button { min-height: 44px; }
+      .rn-detail-close { min-width: 44px; min-height: 44px; }
+    }
+`;
+
+const RN_GRAPH_HTML = `
+        <div id="rn-sticky-bar" class="rn-sticky-bar" hidden></div>
+        <p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>
+        <p id="rn-sparse-notice" class="rn-sparse-notice" aria-live="polite"></p>
+        <div id="rn-legend" class="rn-legend" aria-label="Relation line legend"></div>
+        <div class="rn-toolbar" role="toolbar" aria-label="Relation network filters">
+          <input type="search" id="rn-search" placeholder="기업 검색" aria-label="Search company" autocomplete="off" />
+          <label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />확정만</label>
+          <label class="rn-chip"><input type="checkbox" id="rn-filter-peer" style="margin-right:4px" />동종 비교</label>
+          <label class="rn-chip"><input type="checkbox" id="rn-filter-inferred" style="margin-right:4px" />추론·참고</label>
+          <button type="button" class="rn-chip active" id="rn-depth-1">1단계</button>
+          <button type="button" class="rn-chip" id="rn-depth-2">2단계</button>
+          <button type="button" class="rn-chip" onclick="RelationNetwork.resetView()">전체</button>
+        </div>
+        <ul id="rn-a11y-list" class="rn-a11y-list" aria-label="Relation list"></ul>
+        <div id="rn-detail-panel" class="rn-detail-panel" hidden aria-hidden="true"></div>`;
+
+const RN_GRAPH_JS = `
+    // ═══════════════════════════════════════════════════════
+    // GRAPH (RelationNetwork v2)
+    // ═══════════════════════════════════════════════════════
+    let svgEl = null;
+
+    function rnProfileKey() {
+      const ds = document.body.getAttribute('data-sector') || 'powergrid';
+      if (ds === 'semi') return 'semiconductor';
+      return ds;
+    }
+
+    function rnGraphCtx() {
+      return {
+        sectorId: rnProfileKey(),
+        profileKey: rnProfileKey(),
+        lang: lang,
+        T: T,
+        koreanCompanies: koreanCompanies,
+        globalCompanies: globalCompanies,
+        CHAIN_COLORS: CHAIN_COLORS,
+        REGION_COLORS: REGION_COLORS,
+        container: document.getElementById('graph-svg'),
+        networkVersion: 1,
+      };
+    }
+
+    function buildGraph() {
+      if (!window.RelationNetwork) return;
+      RelationNetwork.onTabVisible(rnGraphCtx());
+      svgEl = true;
+    }
+
+    function selectNode() { /* handled by RelationNetwork */ }
+    function resetSelection() { if (window.RelationNetwork) RelationNetwork.resetView(); }
+    function toggleChainHighlight() { /* chain highlight via search/filters in v2 */ }
+
+    function resetZoom() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().duration(400).call(
+        d3.zoom().transform,
+        d3.zoomIdentity.translate(el.clientWidth * 0.05, el.clientHeight * 0.05).scale(0.88)
+      );
+    }
+    function zoomIn() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().call(d3.zoom().scaleBy, 1.35);
+    }
+    function zoomOut() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().call(d3.zoom().scaleBy, 0.74);
+    }
+
+    function showTooltip() { /* v2 uses detail panel */ }
+    function hideTooltip() { }
+`;
+
+const I18N_PATCH_KO = `
+        rnType: '관계 유형', rnStatus: '상태', rnConnections: '연결', rnGoTable: '기업 목록에서 보기', rnResetView: '전체 보기', rnStake: '지분율',`;
+const I18N_PATCH_EN = `
+        rnType: 'Relation type', rnStatus: 'Status', rnConnections: 'Connections', rnGoTable: 'View in company list', rnResetView: 'Show all', rnStake: 'Stake %',`;
+
+function upgradePhase25Ui(html) {
+  let out = html;
+  if (!out.includes('id="rn-legend"')) {
+    out = out.replace(
+      '<p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>',
+      '<p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>\n        <p id="rn-sparse-notice" class="rn-sparse-notice" aria-live="polite"></p>\n        <div id="rn-legend" class="rn-legend" aria-label="Relation line legend"></div>',
+    );
+  }
+  if (!out.includes('id="rn-sparse-notice"') && out.includes('id="rn-model-desc"')) {
+    out = out.replace(
+      '<p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>',
+      '<p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>\n        <p id="rn-sparse-notice" class="rn-sparse-notice" aria-live="polite"></p>',
+    );
+  }
+  if (!out.includes('id="rn-filter-peer"')) {
+    out = out.replace(
+      'id="rn-filter-confirmed"',
+      'id="rn-filter-confirmed"',
+    );
+    out = out.replace(
+      /<label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed"[^/]*\/><\/label>\s*/,
+      '<label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />확정만</label>\n          <label class="rn-chip"><input type="checkbox" id="rn-filter-peer" style="margin-right:4px" />동종 비교</label>\n          <label class="rn-chip"><input type="checkbox" id="rn-filter-inferred" style="margin-right:4px" />추론·참고</label>\n          ',
+    );
+  }
+  if (!out.includes('rnStake')) {
+    out = out.replace("rnResetView: '전체 보기',", "rnResetView: '전체 보기', rnStake: '지분율',");
+    out = out.replace("rnResetView: 'Show all',", "rnResetView: 'Show all', rnStake: 'Stake %',");
+  }
+  if (!out.includes('rn-detail-close') && out.includes('relation network v2')) {
+    out = out.replace('.rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }', `.rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
+    .rn-detail-close { position: absolute; top: 8px; right: 10px; min-width: 44px; min-height: 44px; border: none; background: transparent; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+    .rn-graph-only-badge { color: var(--text-muted); font-size: 11px; margin: 0 0 6px; }
+    .rn-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 8px; font-size: 10px; color: var(--text-muted); }
+    .rn-legend-item { white-space: nowrap; }
+    .rn-legend-key { font-weight: 600; color: var(--text); }`);
+  }
+  out = out.replace(/relation_network\.js(\?v=\d+)?/g, 'relation_network.js?v=2');
+  out = out.replace(/network_profiles\.js(\?v=\d+)?/g, 'network_profiles.js?v=2');
+  return out;
+}
+
+function injectCss(html) {
+  if (html.includes('relation network v2')) return html;
+  return html.replace('</style>', `${RN_CSS}\n  </style>`);
+}
+
+function injectGraphHtml(html) {
+  if (html.includes('id="rn-model-desc"')) return html;
+  return html.replace(
+    '<div class="graph-main">',
+    `<div class="graph-main">${RN_GRAPH_HTML}`,
+  );
+}
+
+function injectScripts(html) {
+  const tags = `
+  <script src="../js/network_profiles.js?v=1"></script>
+  <script src="../js/relation_network_legacy.js?v=1"></script>
+  <script src="../js/relation_network.js?v=1"></script>`;
+  if (html.includes('relation_network.js')) {
+    return html
+      .replace(/network_profiles\.js(\?v=\d+)?/g, 'network_profiles.js?v=1')
+      .replace(/relation_network_legacy\.js(\?v=\d+)?/g, 'relation_network_legacy.js?v=1')
+      .replace(/relation_network\.js(\?v=\d+)?/g, 'relation_network.js?v=1');
+  }
+  return html.replace('</body>', `${tags}\n</body>`);
+}
+
+function replaceGraphBlock(html) {
+  if (html.includes('RelationNetwork v2')) return html;
+  const startMarkers = [
+    '\n    // ═══════════════════════════════════════════════════════\n    // GRAPH',
+    '\n    // GRAPH',
+    'let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;',
+  ];
+  let start = -1;
+  let startMarker = '';
+  for (const m of startMarkers) {
+    const i = html.indexOf(m);
+    if (i >= 0) { start = i; startMarker = m; break; }
+  }
+  if (start < 0) throw new Error('graph block start not found');
+
+  const endMarkers = ['function showTooltip(', '\n    // TABLE', '\n    function renderTable('];
+  let end = -1;
+  for (const m of endMarkers) {
+    const i = html.indexOf(m, start + startMarker.length);
+    if (i >= 0) { end = i; break; }
+  }
+  if (end < 0) throw new Error('graph block end not found');
+
+  return html.slice(0, start) + RN_GRAPH_JS + '\n\n    ' + html.slice(end);
+}
+
+function patchSwitchTab(html) {
+  if (html.includes('RelationNetwork.onTabHidden')) return html;
+  return html.replace(
+    /if \(tab === 'graph'\) setTimeout\(\(\) => \{ if \(!svgEl\) buildGraph\(\); \}, 50\);/,
+    "if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);\n      else if (window.RelationNetwork) RelationNetwork.onTabHidden();",
+  );
+}
+
+function patchI18n(html) {
+  if (html.includes('rnResetView')) return html;
+  let out = html;
+  // Insert into ko block (first graphHint)
+  out = out.replace(
+    /(\s+)(graphHint: ')/,
+    `$1${I18N_PATCH_KO.trim()}\n$1$2`,
+  );
+  // Insert into en block (second graphHint) — only if rn keys not already in en
+  if (!out.includes("rnResetView: 'Show all'")) {
+    const idx = out.indexOf("graphHint:");
+    const second = out.indexOf("graphHint:", idx + 1);
+    if (second > 0) {
+      out = out.slice(0, second) + I18N_PATCH_EN.trim() + '\n        ' + out.slice(second);
+    }
+  }
+  return out;
+}
+
+function stripDuplicateLegacyGraph(html) {
+  if (!html.includes('RelationNetwork v2')) return html;
+  const stub = 'function hideTooltip() { }';
+  const stubIdx = html.indexOf(stub);
+  if (stubIdx < 0) return html;
+  const dup = html.indexOf('function showTooltip(e, d)', stubIdx + stub.length);
+  if (dup < 0) return html;
+  const endMarkers = ['\n    // HEATMAP', '\n    // TABLE', '\n    function renderHeatmap', '\n    function renderTable('];
+  let end = html.length;
+  for (const m of endMarkers) {
+    const i = html.indexOf(m, dup);
+    if (i >= 0 && i < end) end = i;
+  }
+  return html.slice(0, dup) + html.slice(end);
+}
+
+function patchToggleTheme(html) {
+  return html.replace(
+    /if \(typeof svgEl !== 'undefined' && svgEl\) \{\s*\n\s*svgEl\.selectAll\('\*'\)\.remove\(\);\s*\n\s*svgEl = null;\s*\n\s*\}/,
+    "if (typeof svgEl !== 'undefined' && svgEl && svgEl !== true && svgEl.selectAll) {\n        svgEl.selectAll('*').remove();\n        svgEl = null;\n      }",
+  );
+}
+function ensureBigchipFilterStub(html) {
+  if (!html.includes('bigchipFilterState.') || html.includes('const bigchipFilterState')) return html;
+  return html.replace(
+    'function buildSidebarLegend()',
+    `const bigchipFilterState = { chains: new Set(), regions: new Set(), roles: new Set() };
+    function bigchipPresentChains() {
+      return Object.keys(CHAIN_COLORS).filter(function (k) { return k !== 'all'; });
+    }
+    function toggleBigchipFilter() { /* v2 graph uses rn-filter chips */ }
+    function resetBigchipFilters() {
+      bigchipFilterState.chains.clear();
+      bigchipFilterState.regions.clear();
+      bigchipFilterState.roles.clear();
+      buildSidebarLegend();
+    }
+
+    function buildSidebarLegend()`,
+  );
+}
+
+function patchSearchPlaceholder(html) {
+  return html.replace(
+    'id="rn-search" placeholder="기업 검색"',
+    'id="rn-search" placeholder=""',
+  );
+}
+
+function patchFile(rel) {
+  const fp = path.join(root, rel);
+  if (!fs.existsSync(fp)) {
+    console.warn('skip missing', rel);
+    return;
+  }
+  let html = fs.readFileSync(fp, 'utf8');
+  html = injectCss(html);
+  html = injectGraphHtml(html);
+  html = replaceGraphBlock(html);
+  html = stripDuplicateLegacyGraph(html);
+  html = patchToggleTheme(html);
+  html = ensureBigchipFilterStub(html);
+  html = patchSwitchTab(html);
+  html = patchI18n(html);
+  html = upgradePhase25Ui(html);
+  html = injectScripts(html);
+  fs.writeFileSync(fp, html, 'utf8');
+  console.log('OK patch_relation_network', rel);
+}
+
+function patchBioHtml(html) {
+  html = injectCss(html);
+  html = injectGraphHtml(html);
+  html = injectScripts(html.replace(
+    '<script src="korea_bio_map.inline.js"></script>',
+    `<script src="../js/network_profiles.js?v=1"></script>
+  <script src="../js/relation_network_legacy.js?v=1"></script>
+  <script src="../js/relation_network.js?v=1"></script>
+  <script src="korea_bio_map.inline.js"></script>`,
+  ));
+  if (html.includes('relation_network.js')) {
+    // already injected before inline
+    html = html.replace(/<script src="\.\.\/js\/network_profiles\.js[^"]*"><\/script>\s*<script src="\.\.\/js\/relation_network_legacy\.js[^"]*"><\/script>\s*<script src="\.\.\/js\/relation_network\.js[^"]*"><\/script>\s*<script src="\.\.\/js\/network_profiles/g, '<script src="../js/network_profiles');
+  }
+  return html;
+}
+
+function patchBioInline() {
+  const fp = path.join(root, 'bio', 'bio_inline_tail.js');
+  if (!fs.existsSync(fp)) return;
+  let js = fs.readFileSync(fp, 'utf8');
+  if (js.includes('RelationNetwork v2')) return;
+  const markers = ['let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;', '// GRAPH'];
+  let start = -1;
+  let startLen = 0;
+  for (const m of markers) {
+    const i = js.indexOf(m);
+    if (i >= 0) { start = i; startLen = m.length; break; }
+  }
+  if (start < 0) return;
+  const endMarkers = ['function showTooltip(', 'function resetZoom('];
+  let end = -1;
+  for (const m of endMarkers) {
+    const i = js.indexOf(m, start + startLen);
+    if (i >= 0) { end = i; break; }
+  }
+  if (end < 0) return;
+  js = js.slice(0, start) + RN_GRAPH_JS + '\n\n    ' + js.slice(end);
+  js = js.replace(
+    /if \(tab === 'graph'\) setTimeout\(\(\) => \{ if \(!svgEl\) buildGraph\(\); \}, 50\);/,
+    "if (tab === 'graph') setTimeout(function() { buildGraph(); }, 50);\n      else if (window.RelationNetwork) RelationNetwork.onTabHidden();",
+  );
+  fs.writeFileSync(fp, js, 'utf8');
+  console.log('OK patch_relation_network bio_inline_tail.js');
+}
+
+for (const rel of MAP_FILES) {
+  try {
+    if (rel === 'bio/korea_bio_map.html') {
+      const fp = path.join(root, rel);
+      let html = fs.readFileSync(fp, 'utf8');
+      html = patchBioHtml(html);
+      html = upgradePhase25Ui(html);
+      fs.writeFileSync(fp, html, 'utf8');
+      console.log('OK patch_relation_network', rel);
+      continue;
+    }
+    patchFile(rel);
+  } catch (e) {
+    console.error('FAIL', rel, e.message);
+    process.exitCode = 1;
+  }
+}
+patchBioInline();
+console.log('\nOK patch_relation_network');

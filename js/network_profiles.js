@@ -1,0 +1,631 @@
+/** Generated — do not edit. Source: lib/relation_network/profiles.mjs */
+(function (g) { g.NETWORK_PROFILES = {
+  "semiconductor": {
+    "sectorId": "semiconductor",
+    "dataSector": "semi",
+    "model": "supply_chain",
+    "layout": "layeredSupplyChain",
+    "networkPath": "data/networks/semiconductor.json",
+    "defaultEdgeTypes": [
+      "supplies_to",
+      "equipment_for",
+      "material_for",
+      "customer_of",
+      "member_of"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": false,
+      "hideReference": false,
+      "transactionalOnly": false
+    },
+    "modelDescKo": "소재·장비에서 제조·패키징·고객으로 이어지는 공급망",
+    "modelDescEn": "Supply chain from materials & equipment through manufacturing to customers",
+    "layers": [
+      "소재",
+      "전공정 장비",
+      "후공정 장비",
+      "부품/기판",
+      "파운드리",
+      "IDM/종합반도체",
+      "팹리스",
+      "디자인하우스",
+      "패키징/테스트",
+      "반도체 유통"
+    ]
+  },
+  "bigchip": {
+    "sectorId": "bigchip",
+    "dataSector": "bigchip",
+    "model": "dual_anchor_comparison",
+    "layout": "dualAnchor",
+    "networkPath": "data/networks/bigchip.json",
+    "defaultEdgeTypes": [
+      "produces",
+      "exposed_to",
+      "used_in_market",
+      "supplies_to",
+      "equipment_for",
+      "material_for",
+      "packages_or_tests_for",
+      "technology_partnership",
+      "owns",
+      "customer_of",
+      "peer",
+      "competes_with"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false,
+      "showEnded": false
+    },
+    "modelDescKo": "삼성전자·SK하이닉스 양 앵커의 제품·공급·수요 생태계 비교",
+    "modelDescEn": "Dual-anchor comparison of Samsung and SK hynix ecosystems",
+    "anchors": [
+      "005930",
+      "000660"
+    ]
+  },
+  "holdings": {
+    "sectorId": "holdings",
+    "dataSector": "holdings",
+    "model": "ownership_structure",
+    "layout": "ownershipTree",
+    "networkPath": "data/networks/holdings.json",
+    "defaultEdgeTypes": [
+      "controls",
+      "owns",
+      "subsidiary_of",
+      "equity_stake"
+    ],
+    "defaultDepth": 2,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": false,
+      "hideReference": false,
+      "transactionalOnly": false
+    },
+    "modelDescKo": "금융·지주 그룹의 지배·지분 구조",
+    "modelDescEn": "Ownership and control structure of holding groups"
+  },
+  "finance": {
+    "sectorId": "finance",
+    "dataSector": "finance",
+    "model": "financial_group_ecosystem",
+    "layout": "ownershipTree",
+    "networkPath": "data/networks/finance.json",
+    "defaultEdgeTypes": [
+      "owns",
+      "group_member",
+      "member_of",
+      "operates_in",
+      "equity_investment",
+      "strategic_partnership",
+      "peer"
+    ],
+    "defaultDepth": 2,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false,
+      "showEnded": false
+    },
+    "modelDescKo": "금융지주·기업집단·독립 금융사의 소유·소속 구조입니다. 기업집단 소속은 직접 지분관계와 구분됩니다. 고객 관계는 포함하지 않습니다.",
+    "modelDescEn": "Ownership and membership structure of financial holdings, corporate groups, and independent financial firms. Group membership is not direct ownership. Customer relationships are excluded.",
+    "layers": [
+      "은행·금융지주",
+      "증권·자산운용",
+      "보험",
+      "카드·캐피탈",
+      "기타금융"
+    ],
+    "lanes": [
+      "holding",
+      "bank",
+      "securities",
+      "insurance",
+      "card_capital",
+      "group",
+      "independent",
+      "peer"
+    ],
+    "roleAliases": {
+      "financial_holding": "은행·금융지주",
+      "bank": "은행·금융지주",
+      "securities": "증권·자산운용",
+      "asset_manager": "증권·자산운용",
+      "life_insurance": "보험",
+      "nonlife_insurance": "보험",
+      "insurance": "보험",
+      "card": "카드·캐피탈",
+      "capital": "카드·캐피탈",
+      "fintech": "기타금융",
+      "independent": "기타금융"
+    }
+  },
+  "defense": {
+    "sectorId": "defense",
+    "dataSector": "defense",
+    "model": "program_ecosystem",
+    "layout": "projectEcosystem",
+    "networkPath": "data/networks/defense.json",
+    "defaultEdgeTypes": [
+      "prime_contractor",
+      "subsystem_supplier",
+      "component_supplier",
+      "export_contract"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": true,
+      "transactionalOnly": true
+    },
+    "modelDescKo": "무기체계·프로그램별 prime–supplier 네트워크",
+    "modelDescEn": "Prime–supplier network by weapon program"
+  },
+  "ship": {
+    "sectorId": "ship",
+    "dataSector": "ship",
+    "model": "shipbuilding_project_ecosystem",
+    "layout": "projectEcosystem",
+    "networkPath": "data/networks/ship.json",
+    "defaultEdgeTypes": [
+      "ordered",
+      "awarded_to",
+      "built_by",
+      "builds_vessel_type",
+      "exposed_to",
+      "supplies_engine_to",
+      "supplies_steel_to",
+      "supplies_equipment_to",
+      "owns",
+      "maintains",
+      "member_of",
+      "peer"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false,
+      "showEnded": false,
+      "showCompleted": false
+    },
+    "modelDescKo": "선주·수주계약·조선소·엔진·철강·기자재·선급·인도/MRO로 이어지는 프로젝트 중심 조선 생태계입니다. 선종·제품 연결은 개별 수주 계약과 구분됩니다.",
+    "modelDescEn": "Project-centered shipbuilding ecosystem from owners and order contracts through yards, engines, steel, equipment, class, and delivery/MRO. Vessel-type links are not individual contracts.",
+    "layers": [
+      "종합조선",
+      "엔진",
+      "선체·보냉·구조재",
+      "의장/배관",
+      "서비스·해양플랜트",
+      "해운물류"
+    ],
+    "lanes": [
+      "shipowner",
+      "order_contract",
+      "shipyard",
+      "engine_propulsion",
+      "steel_material",
+      "equipment",
+      "electrical_automation",
+      "classification",
+      "delivery_mro"
+    ],
+    "roleAliases": {
+      "shipyard": "종합조선",
+      "engine": "엔진",
+      "steel": "선체·보냉·구조재",
+      "ship_equipment": "의장/배관",
+      "offshore": "서비스·해양플랜트",
+      "shipping": "해운물류",
+      "electrical_automation": "의장/배관",
+      "defense_marine": "종합조선",
+      "mro": "서비스·해양플랜트",
+      "shipowner": "해운물류",
+      "order_contract": "order_contract"
+    }
+  },
+  "bio": {
+    "sectorId": "bio",
+    "dataSector": "bio",
+    "model": "pipeline_licensing",
+    "layout": "assetLicensing",
+    "networkPath": "data/networks/bio.json",
+    "defaultEdgeTypes": [
+      "licensed_out_to",
+      "licensed_in_from",
+      "co_develops",
+      "manufactures_for",
+      "owns_pipeline"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": true,
+      "transactionalOnly": true
+    },
+    "modelDescKo": "파이프라인의 보유·기술이전·공동개발 관계",
+    "modelDescEn": "Pipeline ownership, licensing & co-development"
+  },
+  "battery": {
+    "sectorId": "battery",
+    "dataSector": "battery",
+    "model": "battery_circular_value_chain",
+    "layout": "layeredSupplyChain",
+    "networkPath": "data/networks/battery.json",
+    "defaultEdgeTypes": [
+      "produces",
+      "exposed_to",
+      "supplies_material_to",
+      "supplies_cells_to",
+      "supplies_component_to",
+      "supplies_equipment_to",
+      "owns",
+      "participates_in",
+      "recycling_partnership",
+      "member_of",
+      "peer"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false,
+      "showEnded": false
+    },
+    "modelDescKo": "배터리 소재·장비·셀·수요시장·재활용으로 이어지는 순환형 밸류체인입니다. 제품·시장 연결은 기업 간 실제 거래와 구분됩니다.",
+    "modelDescEn": "Circular battery value chain from materials and equipment through cells to demand markets and recycling. Product/market links are not company trade edges.",
+    "layers": [
+      "소재",
+      "부품",
+      "장비",
+      "셀",
+      "ESS",
+      "수요시장",
+      "재활용"
+    ],
+    "stageAliases": {
+      "raw_material": "소재",
+      "refining": "소재",
+      "cathode": "소재",
+      "anode": "소재",
+      "separator": "부품",
+      "electrolyte": "소재",
+      "copper_foil": "부품",
+      "equipment": "장비",
+      "cell": "셀",
+      "module_pack": "ESS",
+      "ess": "ESS",
+      "automotive": "수요시장",
+      "recycling": "재활용"
+    }
+  },
+  "elec": {
+    "sectorId": "elec",
+    "dataSector": "elec",
+    "model": "component_supply",
+    "layout": "layeredSupplyChain",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "component_supplier",
+      "module_supplier",
+      "customer"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "완제품 중심 부품 공급망",
+    "modelDescEn": "Component supply chain around finished products"
+  },
+  "renewable": {
+    "sectorId": "renewable",
+    "dataSector": "renewable",
+    "model": "renewable_project_value_chain",
+    "layout": "renewableProjectEcosystem",
+    "networkPath": "data/networks/renewable.json",
+    "defaultEdgeTypes": [
+      "member_of",
+      "develops",
+      "manufactures",
+      "used_in_technology",
+      "supports_project_stage",
+      "project_owner",
+      "project_developer",
+      "owns_stake_in",
+      "epc_for",
+      "operates",
+      "maintains",
+      "supplies_module_to",
+      "supplies_structure_to",
+      "supplies_hydrogen_equipment_to",
+      "power_purchase_agreement",
+      "memorandum_with",
+      "consortium_member",
+      "peer",
+      "reference"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false,
+      "showEnded": false,
+      "showHistorical": false
+    },
+    "modelDescKo": "개발·인허가·금융·SPV·EPC·기자재·계통·PPA·운영으로 이어지는 재생에너지 프로젝트 가치사슬. MOU·개발·건설·운영을 구분합니다.",
+    "modelDescEn": "Renewable project value chain from development and permitting through SPV, EPC, equipment, grid, PPA and O&M. Separates MOU, development, construction, and operations.",
+    "lanes": [
+      "solar",
+      "onshore_wind",
+      "offshore_wind",
+      "fuel_cell",
+      "hydrogen",
+      "renewable_operator"
+    ],
+    "scopes": [
+      "solar",
+      "onshore_wind",
+      "offshore_wind",
+      "fuel_cell",
+      "hydrogen",
+      "renewable_operator"
+    ]
+  },
+  "nuclear": {
+    "sectorId": "nuclear",
+    "dataSector": "nuclear",
+    "model": "nuclear_project_lifecycle_ecosystem",
+    "layout": "nuclearProjectEcosystem",
+    "networkPath": "data/networks/nuclear.json",
+    "defaultEdgeTypes": [
+      "member_of",
+      "manufactures",
+      "supports_lifecycle_stage",
+      "exposed_to",
+      "architect_engineer_for",
+      "epc_for",
+      "supplies_nsss_to",
+      "supplies_equipment_to",
+      "maintains",
+      "operates",
+      "memorandum_with",
+      "preferred_bidder_for",
+      "selected_for",
+      "consortium_member",
+      "peer"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false,
+      "showEnded": false,
+      "showHistorical": false
+    },
+    "modelDescKo": "발주·운영·설계·EPC·주기기·정비·SMR로 이어지는 원전 프로젝트 생애주기. MOU·선정·본계약·운영을 구분합니다.",
+    "modelDescEn": "Nuclear project lifecycle from owner/operator through design, EPC, NSSS, O&M and SMR. Separates MOU, selection, contracts, and operations.",
+    "lanes": [
+      "owner_operator",
+      "export_epc_design",
+      "nsss_reactor",
+      "turbine_balance",
+      "construction_ic",
+      "fuel_maintenance",
+      "smr_development",
+      "overseas_project"
+    ],
+    "scopes": [
+      "large_nuclear",
+      "smr",
+      "domestic",
+      "overseas",
+      "om"
+    ]
+  },
+  "powergrid": {
+    "sectorId": "powergrid",
+    "dataSector": "powergrid",
+    "model": "grid_infrastructure_ecosystem",
+    "layout": "gridInfrastructureEcosystem",
+    "networkPath": "data/networks/powergrid.json",
+    "defaultEdgeTypes": [
+      "member_of",
+      "manufactures",
+      "used_in_grid_stage",
+      "exposed_to",
+      "supplies_transformer_to",
+      "supplies_cable_to",
+      "supplies_switchgear_to",
+      "supplies_equipment_to",
+      "awarded_contract",
+      "project_supplier",
+      "epc_for",
+      "peer"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false,
+      "showEnded": false
+    },
+    "modelDescKo": "발전→송전→변전→배전→수요로 이어지는 전력망 인프라 생태계. 설비·단계 구조와 확인된 수주·공급을 구분합니다.",
+    "modelDescEn": "Grid infrastructure ecosystem from generation through T&D to demand. Separates equipment/stage structure from verified awards and supply.",
+    "lanes": [
+      "generation_utility",
+      "transmission_hvdc",
+      "substation_protection",
+      "distribution_power_electronics",
+      "demand_overseas",
+      "epc_services"
+    ],
+    "stages": [
+      "generation",
+      "transmission",
+      "substation",
+      "distribution",
+      "end_use"
+    ]
+  },
+  "auto": {
+    "sectorId": "auto",
+    "dataSector": "auto",
+    "model": "automotive_tier",
+    "layout": "layeredSupplyChain",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "supplies_oem",
+      "supplies_component"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "OEM→Tier 1→부품·전장 공급망",
+    "modelDescEn": "OEM → Tier 1 → components supply chain"
+  },
+  "metal": {
+    "sectorId": "metal",
+    "dataSector": "metal",
+    "model": "materials_demand",
+    "layout": "layeredSupplyChain",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "supplies_material",
+      "customer",
+      "end_market_exposure"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "소재→가공→수요산업",
+    "modelDescEn": "Materials → processing → end markets"
+  },
+  "construction": {
+    "sectorId": "construction",
+    "dataSector": "construction",
+    "model": "project_network",
+    "layout": "projectEcosystem",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "main_contractor",
+      "subcontractor",
+      "project_owner"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "개발·수주 프로젝트 네트워크",
+    "modelDescEn": "Development & construction project network"
+  },
+  "software": {
+    "sectorId": "software",
+    "dataSector": "software",
+    "model": "platform_ecosystem",
+    "layout": "platformEcosystem",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "cloud_partner",
+      "technology_integration",
+      "platform_dependency"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "플랫폼·기술 스택 생태계",
+    "modelDescEn": "Platform & technology stack ecosystem"
+  },
+  "telecom": {
+    "sectorId": "telecom",
+    "dataSector": "telecom",
+    "model": "infra_ecosystem",
+    "layout": "platformEcosystem",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "equipment_supplier",
+      "infrastructure_partner"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "통신 인프라·서비스 생태계",
+    "modelDescEn": "Telecom infrastructure & services ecosystem"
+  },
+  "kconsume": {
+    "sectorId": "kconsume",
+    "dataSector": "kconsume",
+    "model": "brand_channel",
+    "layout": "platformEcosystem",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "brand_owner",
+      "distributes",
+      "sells_through"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "브랜드→제조→채널→지역",
+    "modelDescEn": "Brand → manufacturing → channel → region"
+  },
+  "cosmetics": {
+    "sectorId": "cosmetics",
+    "dataSector": "cosmetics",
+    "model": "brand_odm",
+    "layout": "platformEcosystem",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "odm_for",
+      "oem_for",
+      "supplies_ingredient"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "브랜드–ODM/OEM–원료–채널 생태계",
+    "modelDescEn": "Brand–ODM/OEM–ingredient–channel ecosystem"
+  },
+  "kcontent": {
+    "sectorId": "kcontent",
+    "dataSector": "kcontent",
+    "model": "ip_distribution",
+    "layout": "platformEcosystem",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "owns_ip",
+      "produces",
+      "streams_on",
+      "distributes"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "IP 생성·제작·유통 네트워크",
+    "modelDescEn": "IP creation, production & distribution network"
+  },
+  "medtech": {
+    "sectorId": "medtech",
+    "dataSector": "medtech",
+    "model": "product_distribution",
+    "layout": "assetLicensing",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "manufactures",
+      "distributes",
+      "supplies_to"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "제품·진료영역·유통 네트워크",
+    "modelDescEn": "Product, clinical area & distribution network"
+  },
+  "robot": {
+    "sectorId": "robot",
+    "dataSector": "robot",
+    "model": "tech_stack",
+    "layout": "technologyStack",
+    "networkPath": null,
+    "defaultEdgeTypes": [
+      "component_supplier",
+      "system_integrator",
+      "deployed_at"
+    ],
+    "defaultDepth": 1,
+    "modelDescKo": "기술 스택→통합→적용산업",
+    "modelDescEn": "Technology stack → integration → applications"
+  }
+}; })(typeof window !== 'undefined' ? window : globalThis);

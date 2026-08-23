@@ -1,0 +1,147 @@
+{
+  "asOf": "2026-08-23",
+  "curatedBy": "editorial_manual_review_phase4c1",
+  "entries": [
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "project-portfolio:atlas-energy-park",
+      "previousNodeType": "renewable_project",
+      "nextNodeType": "project_portfolio",
+      "previousEditorialStatus": null,
+      "nextEditorialStatus": null,
+      "previousProjectStatus": "under_construction",
+      "nextProjectStatus": null,
+      "previousCapacityType": "announced",
+      "nextCapacityType": "contracted_supply_volume",
+      "previousCapacityValue": 2800,
+      "nextCapacityValue": 2800,
+      "reason": "Atlas 2.8GW is multi-phase park aggregate / EPC-module scope — not a single owned renewable_project",
+      "evidenceUrls": [
+        "https://us.qcells.com/blog/qcells-shares-atlas-project-largest-solar-and-storage-project/"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "renewable-project:atlas-v-vi",
+      "previousNodeType": null,
+      "nextNodeType": "renewable_project",
+      "previousProjectStatus": null,
+      "nextProjectStatus": "under_construction",
+      "previousCapacityType": null,
+      "nextCapacityType": "project_total",
+      "previousCapacityValue": null,
+      "nextCapacityValue": 372,
+      "reason": "Split identifiable Atlas V/VI phases from 2.8GW portfolio; exact Qcells documentation",
+      "evidenceUrls": [
+        "https://us.qcells.com/blog/qcells-shares-atlas-project-largest-solar-and-storage-project/"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "e-atlas-sce-ppa",
+      "previousNodeType": null,
+      "nextNodeType": "power_purchase_agreement",
+      "previousEditorialStatus": null,
+      "nextEditorialStatus": "reported",
+      "reason": "Exact Qcells disclosure of SCE utility PPA for Atlas V/VI — not portfolio-wide invented PPA",
+      "evidenceUrls": [
+        "https://us.qcells.com/blog/qcells-shares-atlas-project-largest-solar-and-storage-project/"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "product:nexo",
+      "previousNodeType": "renewable_project",
+      "nextNodeType": "product",
+      "previousProjectStatus": "operating",
+      "nextProjectStatus": null,
+      "previousCapacityType": "operating",
+      "nextCapacityType": null,
+      "reason": "NEXO is an FCEV product/market exposure, not a renewable power project",
+      "evidenceUrls": [
+        "https://www.ddaily.co.kr/page/view/2021081311374665760"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "e-iljin-hyundai-h2",
+      "previousNodeType": "supplies_hydrogen_equipment_to",
+      "nextNodeType": "manufactures",
+      "previousEditorialStatus": "reported",
+      "nextEditorialStatus": "reported",
+      "reason": "Retarget to product:nexo; structural product role",
+      "evidenceUrls": [
+        "https://www.ddaily.co.kr/page/view/2021081311374665760"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "development-pipeline:skgas-hydrogen",
+      "previousNodeType": "renewable_project",
+      "nextNodeType": "development_pipeline",
+      "previousProjectStatus": "development",
+      "nextProjectStatus": null,
+      "reason": "No named facility/location/production — demote to development_pipeline; exclude from actual project count",
+      "evidenceUrls": [
+        "https://www.skgas.co.kr/"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "renewable-project:sinan-wi-offshore",
+      "previousProjectStatus": "under_construction",
+      "nextProjectStatus": "under_construction",
+      "previousCapacityType": "under_construction",
+      "nextCapacityType": "project_total",
+      "reason": "Confirmed UC via MCEE press; capacityType=project_total; equity remains reported (10%)",
+      "evidenceUrls": [
+        "https://www.mcee.go.kr/home/web/board/read.do?boardCategoryId=&boardId=1877860&boardMasterId=939&decorator=&maxIndexPages=10&maxPageItems=10&menuId=10598&orgCd=&pagerOffset=0",
+        "https://www.ajunews.com/view/20260716091800318"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "renewable-project:uiseong-hwanghaksan-wind",
+      "previousProjectStatus": "under_construction",
+      "nextProjectStatus": "operating",
+      "previousCapacityType": "under_construction",
+      "nextCapacityType": "project_total",
+      "previousCapacityValue": 99,
+      "nextCapacityValue": 99,
+      "reason": "Commercial operation reported 2026-08-06 — not under_construction",
+      "evidenceUrls": [
+        "https://www.ekn.kr/web/view.php?key=20260806021560183"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "renewable-project:haenam-kosepo-solar",
+      "previousProjectStatus": "preferred_bidder",
+      "nextProjectStatus": "preferred_bidder",
+      "reason": "No signed EPC/NTP found after preferred negotiation — status unchanged",
+      "evidenceUrls": [
+        "https://www.solartodaymag.com/news/articleView.html?idxno=20724"
+      ]
+    },
+    {
+      "asOf": "2026-08-23",
+      "reviewedBy": "editorial_manual_review_phase4c1",
+      "nodeOrEdgeId": "contract:cswind-vestas-tower-2025",
+      "previousNodeType": "contract",
+      "nextNodeType": "supply_contract",
+      "reason": "Explicit supply_contract node type; exclude from uniqueActualProjectCount",
+      "evidenceUrls": [
+        "https://www.digitaltoday.co.kr/news/articleView.html?idxno=607377"
+      ]
+    }
+  ]
+}

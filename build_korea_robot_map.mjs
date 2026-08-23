@@ -554,6 +554,22 @@ function reEsc(s) {
   return s.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
+function stripSemiCuratedArtifacts(html) {
+  const marker = "const CURATED_RELATION_MODE = 'chainGroup';";
+  const start = html.indexOf(marker);
+  if (start < 0) return html;
+  const regionIdx = html.indexOf('const REGION_COLORS =', start);
+  if (regionIdx < 0) return html;
+  const chainIdx = html.lastIndexOf('const CHAIN_COLORS =', start);
+  const chainEnd = html.indexOf('};', chainIdx);
+  if (chainIdx < 0 || chainEnd < 0) return html;
+  const insert =
+    html.slice(0, chainEnd + 3) +
+    '\n\n    function chainMatchesFilter(companyChain, filter) {\n      if (filter === \'all\') return true;\n      return companyChain === filter;\n    }\n\n    ' +
+    html.slice(regionIdx);
+  return insert;
+}
+
 function main() {
   const krx = loadKrx();
   const companies = SEED.map((s, i) => {
@@ -666,6 +682,9 @@ function main() {
     /<p id="hdr-subtitle">[^<]+<\/p>/,
     '<p id="hdr-subtitle">\uAD6D\uB0B4 \uC0C1\uC7A5 \uC0B0\uC5C5\uB85C\uBD07\u00B7\uC790\uB3D9\uD654\u00B7\uBB3C\uB958\u00B7\uC9C0\uC5EDAI \uBCA8\uB958\uC640 \uAE00\uB85C\uBC8C \uC7A5\uBE44\u00B7SW \uAD00\uACC4</p>',
   );
+
+  html = html.replace(/<body data-sector="semi">/, '<body data-sector="robot">');
+  html = stripSemiCuratedArtifacts(html);
 
   fs.writeFileSync(join(__dirname, 'robot', 'korea_robot_map.html'), html, 'utf8');
   console.log('Wrote robot/korea_robot_map.html', 'n=', n, 'kospi', kospi, 'kosdaq', kosdaq);

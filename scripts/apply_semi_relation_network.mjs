@@ -310,19 +310,24 @@ export function applySemiRelationNetwork() {
   const hubsLit = hubsRuntimeLiteral(relations.hubs);
   const hubAngle = hubAngleLiteral(relations.hubs);
 
-  html = applyCuratedRelationPatches(html, {
-    mode: 'chainGroup',
-    chainOrder: SEMI_VALUE_CHAIN_ORDER.filter((c) => c !== 'IDM/종합반도체'),
-    hubsLiteral: hubsLit,
-    hubAngleLiteral: hubAngle,
-    fallbackAngleLiteral: objLiteral(FALLBACK_ANGLE),
-    skipChainChips: true,
-    sidebarTitleKo: '밸류체인',
-    i18nVer: '8',
-    heatmapVer: '14',
-    patchPartnerCell: false,
-  });
-  html = partnerCellPatch(html);
+  const v2Active = html.includes('RelationNetwork v2') || html.includes('relation_network.js');
+  if (!v2Active) {
+    html = applyCuratedRelationPatches(html, {
+      mode: 'chainGroup',
+      chainOrder: SEMI_VALUE_CHAIN_ORDER.filter((c) => c !== 'IDM/종합반도체'),
+      hubsLiteral: hubsLit,
+      hubAngleLiteral: hubAngle,
+      fallbackAngleLiteral: objLiteral(FALLBACK_ANGLE),
+      skipChainChips: true,
+      sidebarTitleKo: '밸류체인',
+      i18nVer: '8',
+      heatmapVer: '14',
+      patchPartnerCell: false,
+    });
+    html = partnerCellPatch(html);
+  } else {
+    console.log('apply_semi_relation_network: skip curated inline graph (RelationNetwork v2 active)');
+  }
 
   html = html.replace(
     /const REGION_COLORS = \{[^}]+\};/,

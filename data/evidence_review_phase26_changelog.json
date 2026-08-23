@@ -1,0 +1,65 @@
+{
+  "reviewedAt": "2026-08-22",
+  "changes": [
+    {
+      "edgeId": "trade-hanmi-hynix-tcbonder-2025",
+      "source": "krx:042700",
+      "target": "anchor:000660",
+      "type": "supplies_to",
+      "before": "(none)",
+      "after": "reported",
+      "reason": "DART 단일판매·공급계약 공시 확인 — confirmed 승격 전 추가 검토 필요",
+      "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250114800153"
+    },
+    {
+      "edgeId": "controls-sk-sksquare",
+      "source": "krx:034730",
+      "target": "krx:402340",
+      "type": "controls",
+      "before": "reported",
+      "after": "reported",
+      "reason": "DART 루트 URL → SK스퀘어 반기보고서로 교체, controls 직접 입증 미완",
+      "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250814002335"
+    },
+    {
+      "edgeId": "prime-kf21-kai",
+      "source": "krx:047810",
+      "target": "program:kf21",
+      "type": "prime_contractor",
+      "before": "reported",
+      "after": "reported",
+      "reason": "URL 교정·직접 입증 미완: KAI 공식 KF-21 보라매 PDF — 체계 개발 주관사 KAI 명시",
+      "evidenceUrl": "https://www.koreaaero.com/VIRTUAL_EX/PDF/FixedWing/01_Fixed_Wing_KF-21_Boramae.pdf"
+    },
+    {
+      "edgeId": "prime-k9-rotem",
+      "source": "krx:064350",
+      "target": "program:k9",
+      "type": "prime_contractor",
+      "before": "reported",
+      "after": "reported",
+      "reason": "URL 교정·직접 입증 미완: 현대로템 K9 제품 페이지 — EN URL 404, KO 페이지로 교체",
+      "evidenceUrl": "https://www.hyundai-rotem.co.kr/Kor/Business/Defense/Product/K9"
+    },
+    {
+      "edgeId": "sub-cheongung-lig",
+      "source": "krx:079550",
+      "target": "program:cheongung_ii",
+      "type": "subsystem_supplier",
+      "before": "reported",
+      "after": "reported",
+      "reason": "URL 교정·직접 입증 미완: LIG넥스원 방공 사업 페이지 — EN URL 404",
+      "evidenceUrl": "https://www.lignex1.com/kor/business/air-defense"
+    },
+    {
+      "edgeId": "bio-sk-gsk-covid19",
+      "source": "krx:302440",
+      "target": "global:gsk",
+      "type": "co_develops",
+      "before": "reported",
+      "after": "reported",
+      "reason": "GSK 공식 보도자료 URL로 교체, co_develops 직접 입증",
+      "evidenceUrl": "https://us.gsk.com/en-us/media/press-releases/sk-bioscience-and-gsk-start-phase-3-trial-of-adjuvanted-covid-19-vaccine-candidate/"
+    }
+  ]
+}

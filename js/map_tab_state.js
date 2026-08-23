@@ -39,9 +39,9 @@
   function getTab() {
     try {
       var sp = new URLSearchParams(window.location.search);
-      if (sp.get('ticker')) return 'table';
       var q = sp.get('tab');
       if (q && VALID[q]) return q;
+      if (sp.get('ticker')) return 'table';
     } catch (e) {}
     try {
       var s = localStorage.getItem('im_map_tab');
@@ -185,7 +185,7 @@
     var btnIds = { table: 'tab-btn-table', graph: 'tab-btn-graph', heatmap: 'tab-btn-heatmap' };
     var btn = document.getElementById(btnIds[tab] || 'tab-btn-table');
     if (btn) switchTab(tab, btn);
-    applyInitialTickerFocus();
+    if (tab === 'table') applyInitialTickerFocus();
   }
 
   function buildMapTableTickerUrl(mapPath, ticker, lang) {

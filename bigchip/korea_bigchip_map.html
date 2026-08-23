@@ -162,7 +162,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
 <script src="../js/live_quotes.js?v=15"></script>
-  <script src="../js/map_i18n.js?v=8"></script>
+  <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=7"></script>
@@ -1105,6 +1105,43 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1584,46 +1621,29 @@
     #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
 
   
-    /* curated relation tags (bigchip-compatible class names) */
-    #th-partners{width:230px;max-width:230px}
-    .bigchip-relations-cell{width:230px;max-width:230px;white-space:normal}
-    .bigchip-relation-tags{display:flex;flex-wrap:wrap;gap:3px;max-width:230px;max-height:52px;overflow:hidden}
-    .bigchip-relation-tag{display:inline-flex;align-items:center;gap:4px;max-width:106px;padding:2px 6px;border:1px solid var(--border);border-radius:999px;font-size:10px;line-height:16px;color:var(--text-muted);background:var(--surface2);text-decoration:none}
-    a.bigchip-relation-tag:hover{border-color:var(--accent);color:var(--accent)}
-    .bigchip-relation-tag.supplier{border-color:rgba(88,166,255,.42)}
-    .bigchip-relation-tag.peer{border-color:rgba(139,148,158,.42)}
-    .bigchip-relation-tag.customer{border-color:rgba(240,164,75,.48)}
-    .bigchip-relation-tag.more{font-weight:700;color:var(--text)}
-    .bigchip-country-dot{width:6px;height:6px;border-radius:50%;flex:none;background:var(--country-dot,#8b949e)}
-    .bigchip-relation-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .bigchip-filter-group{margin-top:10px}
-    .bigchip-filter-label{margin-bottom:5px;font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em}
-    .bigchip-filter-list{display:flex;flex-wrap:wrap;gap:5px}
-    .bigchip-filter-btn{display:inline-flex;align-items:center;gap:5px;min-height:27px;padding:4px 7px;border:1px solid var(--border);border-radius:7px;background:var(--surface2);color:var(--text-muted);font:inherit;font-size:10px;cursor:pointer}
-    .bigchip-filter-btn:hover{border-color:var(--accent);color:var(--text)}
-    .bigchip-filter-btn.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 15%,var(--surface2));color:var(--accent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent)}
-    .bigchip-filter-btn.reset{width:100%;justify-content:center;margin-top:9px;color:var(--text)}
-    .bigchip-filter-btn.reset:disabled{opacity:.45;cursor:default;border-color:var(--border)}
-    .bigchip-edge-swatch{display:inline-block;width:19px;height:0;border-top:2px solid var(--edge-color)}
-    .bigchip-edge-swatch.peer{border-top-style:dashed}
-    .bigchip-filter-dot{width:8px;height:8px;border-radius:50%;background:var(--filter-color,#8b949e);flex:none}
-    .bigchip-filter-diamond{width:8px;height:8px;background:var(--filter-color,#8b949e);transform:rotate(45deg);flex:none}
-    .bigchip-filter-summary{margin-top:8px;font-size:10px;color:var(--accent);line-height:1.45}
+    /* relation network v2 */
+    .rn-model-desc { margin: 0 0 8px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .rn-toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; max-width: 100%; overflow-x: auto; }
+    .rn-toolbar input[type="search"] { min-height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text); font: inherit; min-width: 140px; flex: 1; }
+    .rn-chip { min-height: 32px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface2); color: var(--text-muted); font: inherit; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .rn-chip.active { border-color: var(--accent); color: var(--accent); }
+    .rn-sticky-bar { position: sticky; top: 0; z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; }
+    .rn-sticky-bar button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); cursor: pointer; font: inherit; }
+    .rn-detail-panel { position: absolute; right: 12px; top: 12px; z-index: 15; width: min(320px, 92vw); max-height: 60%; overflow: auto; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: 0 8px 24px rgba(0,0,0,.25); font-size: 12px; line-height: 1.6; }
+    .rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
+    .rn-detail-close { position: absolute; top: 8px; right: 10px; min-width: 44px; min-height: 44px; border: none; background: transparent; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+    .rn-graph-only-badge { color: var(--text-muted); font-size: 11px; margin: 0 0 6px; }
+    .rn-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 8px; font-size: 10px; color: var(--text-muted); }
+    .rn-legend-item { white-space: nowrap; }
+    .rn-legend-key { font-weight: 600; color: var(--text); }
+    .rn-evidence { margin: 8px 0 0; padding-left: 18px; }
+    .rn-a11y-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
     @media (max-width: 768px) {
-      #th-partners,
-      .bigchip-relations-cell {
-        width: 176px;
-        max-width: 176px
-      }
-
-      .bigchip-relation-tags {
-        max-width: 176px
-      }
-
-      .bigchip-filter-btn {
-        min-height: 32px;
-        padding: 6px 8px
-      }
+      #tab-graph .graph-main { position: relative; }
+      #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; }
+      .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; }
+      .rn-toolbar .rn-chip { min-height: 44px; }
+      .rn-sticky-bar button { min-height: 44px; }
     }
 
   </style>
@@ -1673,7 +1693,7 @@
     <p lang="en" class="im-seo-body-p" hidden>This page is informational and is not investment advice. Check Samsung Electronics and SK hynix DART filings and investor-relations material for current capacity, capex, and segment results; see our <a href="../editorial-policy.html">editorial policy</a> for update standards.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 삼성전자, SK하이닉스, HBM, 메모리 반도체</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Samsung Electronics, SK hynix, HBM, memory stocks</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-22 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-22.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-23 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-23.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1760,15 +1780,15 @@
       <td><span class="ticker">005930</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">281,500</td>
-      <td class="quote-cell ret-cell">+9.49%</td>
-      <td class="quote-cell ret-cell">+0.37%</td>
-      <td class="quote-cell ret-cell">-9.36%</td>
-      <td class="quote-cell ret-cell">+41.44%</td>
-      <td class="quote-cell ret-cell">+163.62%</td>
+      <td class="quote-cell ret-cell">+3.87%</td>
+      <td class="quote-cell ret-cell">+12.83%</td>
+      <td class="quote-cell ret-cell">-12.71%</td>
+      <td class="quote-cell ret-cell">+49.57%</td>
+      <td class="quote-cell ret-cell">+189.61%</td>
       <td class="quote-cell">374,500</td>
       <td class="quote-cell">67,500</td>
       <td class="quote-cell">69.7%</td>
-      <td class="quote-cell">62.3</td>
+      <td class="quote-cell">69.1</td>
       <td class="mcap-cell">1885.42조원</td>
       <td class="fin-cell">48.83</td>
       <td class="fin-cell">5.04</td>
@@ -1783,15 +1803,15 @@
       <td><span class="ticker">000660</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
       <td class="quote-cell">1,730,000</td>
-      <td class="quote-cell ret-cell">+12.73%</td>
-      <td class="quote-cell ret-cell">-11.88%</td>
-      <td class="quote-cell ret-cell">-19.51%</td>
-      <td class="quote-cell ret-cell">+79.70%</td>
-      <td class="quote-cell ret-cell">+176.31%</td>
+      <td class="quote-cell ret-cell">+2.31%</td>
+      <td class="quote-cell ret-cell">-1.65%</td>
+      <td class="quote-cell ret-cell">-19.53%</td>
+      <td class="quote-cell ret-cell">+87.23%</td>
+      <td class="quote-cell ret-cell">+208.93%</td>
       <td class="quote-cell">2,987,000</td>
       <td class="quote-cell">245,500</td>
       <td class="quote-cell">54.1%</td>
-      <td class="quote-cell">43.7</td>
+      <td class="quote-cell">45.4</td>
       <td class="mcap-cell">1532.31조원</td>
       <td class="fin-cell">34.65</td>
       <td class="fin-cell">12.52</td>
@@ -1814,7 +1834,7 @@
     <div class="graph-container">
       <div class="graph-sidebar">
         <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-korean">밸류체인</div>
+          <div class="sidebar-title" id="sb-korean">국내 상장 (벨류체인)</div>
           <div id="sb-chain-legend"></div>
         </div>
         <div class="sidebar-section">
@@ -1831,6 +1851,19 @@
         </div>
       </div>
       <div class="graph-main">
+        <div id="rn-sticky-bar" class="rn-sticky-bar" hidden></div>
+        <p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>
+        <p id="rn-sparse-notice" class="rn-sparse-notice" aria-live="polite"></p>
+        <div id="rn-legend" class="rn-legend" aria-label="Relation line legend"></div>
+        <div class="rn-toolbar" role="toolbar" aria-label="Relation network filters">
+          <input type="search" id="rn-search" placeholder="기업 검색" aria-label="Search company" autocomplete="off" />
+          <label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />확정만</label>
+          <button type="button" class="rn-chip" id="rn-depth-1">1단계</button>
+          <button type="button" class="rn-chip" id="rn-depth-2">2단계</button>
+          <button type="button" class="rn-chip" onclick="RelationNetwork.resetView()">전체</button>
+        </div>
+        <ul id="rn-a11y-list" class="rn-a11y-list" aria-label="Relation list"></ul>
+        <div id="rn-detail-panel" class="rn-detail-panel" hidden aria-hidden="true"></div>
         <svg id="graph-svg"></svg>
         <div id="graph-tooltip" class="graph-tooltip" style="display:none"></div>
         <div class="graph-hint" id="graph-hint-text">노드를 클릭하면 peer 연결이 강조됩니다</div>
@@ -1878,10 +1911,6 @@
     }
 
     const CHAIN_COLORS = {"IDM/종합반도체":"#42A5F5","팹리스":"#66BB6A","디자인하우스":"#00897B","파운드리":"#FFA726","소재":"#EF5350","전공정 장비":"#AB47BC","후공정 장비":"#8E24AA","부품/기판":"#26C6DA","패키징/테스트":"#FFCA28","반도체 유통":"#8D6E63"};
-    const CURATED_RELATION_MODE = 'ticker';
-    const BIGCHIP_CHAIN_ORDER = ["IDM/종합반도체","팹리스","디자인하우스","파운드리","소재","전공정 장비","후공정 장비","부품/기판","패키징/테스트","반도체 유통"];
-    const CURATED_CHAIN_ORDER = ["IDM/종합반도체","팹리스","디자인하우스","파운드리","소재","전공정 장비","후공정 장비","부품/기판","패키징/테스트","반도체 유통"];
-    const BIGCHIP_NEUTRAL_COLOR = '#8b949e';
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2249,7 +2278,7 @@
       document.documentElement.setAttribute('data-theme', next);
       try { localStorage.setItem('im_theme', next); } catch (e) { }
       syncThemeToggle();
-      if (typeof svgEl !== 'undefined' && svgEl) {
+      if (typeof svgEl !== 'undefined' && svgEl && svgEl !== true && svgEl.selectAll) {
         svgEl.selectAll('*').remove();
         svgEl = null;
       }
@@ -2361,8 +2390,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const hubChains = [...new Set(koreanCompanies.map((c) => c.chain).filter(Boolean))];
-      const chains = ['all', ...hubChains];
+      const chains = ['all', 'IDM/종합반도체', '팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
@@ -2372,7 +2400,7 @@
       }).join('');
     }
 
-        function buildMarketChips() {
+    function buildMarketChips() {
       const t = T[lang];
       const container = document.getElementById('market-chips');
       const markets = ['all', 'KOSPI', 'KOSDAQ'];
@@ -2386,44 +2414,28 @@
 
     function buildSidebarLegend() {
       const t = T[lang];
+      // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = bigchipPresentChains();
-      chainContainer.innerHTML = '<div class="bigchip-filter-list">' + chains.map((ch) => {
-        const active = bigchipFilterState.chains.has(ch);
-        const label = (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel)
-          ? InvestingMapI18n.chainDisplayLabel(ch, t)
-          : (t.chainLabel[ch] || ch);
-        return `<button type="button" class="bigchip-filter-btn${active ? ' active' : ''}" aria-pressed="${active}" onclick="toggleBigchipFilter('chains','${ch}')"><span class="bigchip-filter-dot" style="--filter-color:${CHAIN_COLORS[ch]}"></span>${label}</button>`;
-      }).join('') + '</div>';
-
-      const regions = ['us', 'tw', 'cn', 'eu', 'kr', 'jp', 'gb'];
-      const roles = [
-        ['supplier', t.relationSupplier, '#58a6ff'],
-        ['customer', t.relationCustomer, '#f0a44b'],
-        ['peer', t.relationPeer, '#8b949e']
-      ];
-      const roleButtons = roles.map(([role, label, color]) => {
-        const active = bigchipFilterState.roles.has(role);
-        return `<button type="button" class="bigchip-filter-btn${active ? ' active' : ''}" aria-pressed="${active}" onclick="toggleBigchipFilter('roles','${role}')"><span class="bigchip-edge-swatch ${role}" style="--edge-color:${color}"></span>${label}</button>`;
-      }).join('');
-      const countryButtons = regions.map((region) => {
-        const active = bigchipFilterState.regions.has(region);
-        return `<button type="button" class="bigchip-filter-btn${active ? ' active' : ''}" aria-pressed="${active}" onclick="toggleBigchipFilter('regions','${region}')"><span class="bigchip-filter-diamond" style="--filter-color:${REGION_COLORS[region]}"></span>${t.regionLabel[region]}</button>`;
-      }).join('');
-      const edgeLegend = roles.map(([role, label, color]) =>
-        `<div class="legend-item"><span class="bigchip-edge-swatch ${role}" style="--edge-color:${color}"></span>${label}</div>`
+      const chains = ['IDM/종합반도체', '팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+      chainContainer.innerHTML = chains.map(ch =>
+        `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
+      <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
+      ${(window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainLabel[ch] || ch)}
+    </div>`
       ).join('');
-      const activeCount = bigchipFilterState.chains.size + bigchipFilterState.roles.size + bigchipFilterState.regions.size;
+      // Peer network legend
       const regionContainer = document.getElementById('sb-region-legend');
-      regionContainer.innerHTML =
-        `<div class="bigchip-filter-group"><div class="bigchip-filter-label">${t.filterRole}</div><div class="bigchip-filter-list">${roleButtons}</div></div>` +
-        `<div class="bigchip-filter-group"><div class="bigchip-filter-label">${t.filterCountry}</div><div class="bigchip-filter-list">${countryButtons}</div></div>` +
-        `<div class="bigchip-filter-group"><div class="bigchip-filter-label">${t.edgeLegend}</div>${edgeLegend}</div>` +
-        `<button type="button" class="bigchip-filter-btn reset" onclick="resetBigchipFilters()" ${activeCount ? '' : 'disabled'}>${t.filterReset}</button>` +
-        (activeCount ? `<div class="bigchip-filter-summary">${t.filterActive}: ${activeCount}</div>` : '') +
-        `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7">${t.peerNetworkDesc}</div>`;
+      const regions = ['us', 'tw', 'cn', 'eu', 'kr', 'jp', 'gb'];
+      const regionHtml = regions.map(r =>
+        `<div class="legend-item">
+      <div class="legend-diamond" style="background:${REGION_COLORS[r]}"></div>
+      ${t.regionLabel[r]}
+    </div>`
+      ).join('');
+      regionContainer.innerHTML = regionHtml + `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7">${t.peerNetworkDesc}</div>`;
     }
 
+    // ═══════════════════════════════════════════════════════
     // TABLE
     // ═══════════════════════════════════════════════════════
     function getChainStyle(chain) {
@@ -2449,59 +2461,6 @@
     }
     function companyLinksTo(c, gid) {
       return (c.partners || []).some(p => partnerRef(p).id === gid);
-    }
-
-    function bigchipEscape(value) {
-      return String(value == null ? '' : value).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-    }
-    function bigchipRole(kind) {
-      return kind === 'supplier' || kind === 'customer' || kind === 'peer' ? kind : 'peer';
-    }
-    function bigchipPresentChains() {
-      const present = new Set();
-      const hubs = (typeof CURATED_RELATION_HUBS !== 'undefined' && CURATED_RELATION_HUBS) || [];
-      hubs.forEach((hub) => { if (hub.chain) present.add(hub.chain); });
-      koreanCompanies.forEach((c) => {
-        if (c.chain && c.chain !== 'IDM/종합반도체') present.add(c.chain);
-      });
-      globalCompanies.forEach((c) => {
-        if (c.ticker && c.chain && c.chain !== 'IDM/종합반도체') present.add(c.chain);
-      });
-      const order = (typeof BIGCHIP_CHAIN_ORDER !== 'undefined' && BIGCHIP_CHAIN_ORDER.length)
-        ? BIGCHIP_CHAIN_ORDER
-        : ((typeof CURATED_CHAIN_ORDER !== 'undefined' && CURATED_CHAIN_ORDER.length) ? CURATED_CHAIN_ORDER : Object.keys(CHAIN_COLORS));
-      return order.filter((ch) => ch !== 'IDM/종합반도체' && present.has(ch));
-    }
-    function bigchipNodeFill(item) {
-      if (item.type === 'global') return REGION_COLORS[item.region] || '#888';
-      if (item.chain && CHAIN_COLORS[item.chain]) return CHAIN_COLORS[item.chain];
-      return (typeof BIGCHIP_NEUTRAL_COLOR !== 'undefined' ? BIGCHIP_NEUTRAL_COLOR : '#8b949e');
-    }
-    function bigchipIsDomesticPartner(company) {
-      return !!(company.ticker || company.countryCode === 'KR' || company.isKR);
-    }
-    function bigchipRelationTags(c) {
-      const maxVisible = 8;
-      const dots = { KR: '#58a6ff', US: '#f0a44b', TW: '#4fc3a1', JP: '#d78ee8', NL: '#7fb7ff', CN: '#ef6b73', DE: '#f3c969', FR: '#8fb7ff', SG: '#5eead4', GB: '#a5b4fc', EU: '#a8b3c7' };
-      const t = T[lang];
-      const roleLabel = { supplier: t.relationSupplier, peer: t.relationPeer, customer: t.relationCustomer };
-      const tags = (c.partners || []).slice(0, maxVisible).map((p) => {
-        const pr = partnerRef(p);
-        const rel = globalCompanies.find((x) => x.id === pr.id) || {};
-        const info = getPartnerInfo(pr.id);
-        const role = bigchipRole(pr.kind);
-        const note = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
-        const evidence = (p && p.evidence === 'reported') ? t.reportedEvidence : t.confirmedEvidence;
-        const title = [info.name, roleLabel[role], note, evidence].filter(Boolean).join(' · ');
-        const dot = `<span class="bigchip-country-dot" style="--country-dot:${dots[rel.countryCode] || '#8b949e'}"></span><span class="bigchip-relation-name">${bigchipEscape(info.name)}</span>`;
-        if (rel.targetUrl) {
-          return `<a class="bigchip-relation-tag ${role}" href="${bigchipEscape(rel.targetUrl)}&lang=${lang}" title="${bigchipEscape(title)}">${dot}</a>`;
-        }
-        return `<span class="bigchip-relation-tag ${role}" title="${bigchipEscape(title)}">${dot}</span>`;
-      });
-      const hidden = Math.max(0, (c.partners || []).length - maxVisible);
-      if (hidden) tags.push(`<span class="bigchip-relation-tag more" title="+${hidden}">+${hidden}</span>`);
-      return tags.join('');
     }
 
     function renderTable() {
@@ -2627,406 +2586,66 @@
     }
 
     // ═══════════════════════════════════════════════════════
-    // GRAPH
     // ═══════════════════════════════════════════════════════
-    let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;
-    const BIGCHIP_EDGE_COLORS = { supplier: '#58a6ff', customer: '#f0a44b', peer: '#8b949e', member: '#484f58' };
-    const bigchipFilterState = { chains: new Set(), regions: new Set(), roles: new Set() };
-    let bigchipGraphNodes = null, bigchipGraphLinks = null;
+    // GRAPH (RelationNetwork v2)
+    // ═══════════════════════════════════════════════════════
+    let svgEl = null;
 
-    function curatedMode() {
-      return (typeof CURATED_RELATION_MODE !== 'undefined' && CURATED_RELATION_MODE) || 'ticker';
+    function rnProfileKey() {
+      const ds = document.body.getAttribute('data-sector') || 'powergrid';
+      if (ds === 'semi') return 'semiconductor';
+      return ds;
     }
-    function bigchipLinkRole(link) {
-      return link.kind === 'supplier' || link.kind === 'customer' || link.kind === 'peer' ? link.kind : (link.kind === 'member' ? 'member' : 'peer');
-    }
-    function bigchipLinkVisible(link) {
-      if (link.kind === 'member') {
-        if (bigchipFilterState.roles.size) return false;
-        if (bigchipFilterState.chains.size) {
-          const source = link.source && typeof link.source === 'object' ? link.source : null;
-          const target = link.target && typeof link.target === 'object' ? link.target : null;
-          const hit = [];
-          if (source && source.chain) hit.push(source.chain);
-          if (target && target.chain) hit.push(target.chain);
-          if (link.sourceChain) hit.push(link.sourceChain);
-          if (!hit.some((ch) => bigchipFilterState.chains.has(ch))) return false;
-        }
-        return true;
-      }
-      const source = link.source && typeof link.source === 'object' ? link.source : null;
-      const target = link.target && typeof link.target === 'object' ? link.target : null;
-      if (bigchipFilterState.chains.size) {
-        const hit = [];
-        if (source && source.chain) hit.push(source.chain);
-        else if (link.sourceChain) hit.push(link.sourceChain);
-        if (target && target.type === 'korean' && target.chain) hit.push(target.chain);
-        if (!hit.some((ch) => bigchipFilterState.chains.has(ch))) return false;
-      }
-      if (bigchipFilterState.roles.size && !bigchipFilterState.roles.has(bigchipLinkRole(link))) return false;
-      if (bigchipFilterState.regions.size) {
-        if (target && target.type === 'global' && !bigchipFilterState.regions.has(target.region)) return false;
-      }
-      return true;
-    }
-    function toggleBigchipFilter(group, value) {
-      const selected = bigchipFilterState[group];
-      if (!selected) return;
-      if (selected.has(value)) selected.delete(value); else selected.add(value);
-      selectedNode = null;
-      highlightedChain = null;
-      buildSidebarLegend();
-      applyBigchipGraphFilters();
-    }
-    function resetBigchipFilters() {
-      bigchipFilterState.chains.clear();
-      bigchipFilterState.regions.clear();
-      bigchipFilterState.roles.clear();
-      selectedNode = null;
-      highlightedChain = null;
-      buildSidebarLegend();
-      applyBigchipGraphFilters();
-    }
-    function applyBigchipGraphFilters() {
-      if (!svgEl || !bigchipGraphNodes || !bigchipGraphLinks) return;
-      const visibleNodeIds = new Set();
-      bigchipGraphLinks.each((link) => {
-        if (!bigchipLinkVisible(link)) return;
-        visibleNodeIds.add(link.source.id || link.source);
-        visibleNodeIds.add(link.target.id || link.target);
-      });
-      bigchipGraphNodes
-        .classed('node-dim', (node) => {
-          const passes = visibleNodeIds.has(node.id);
-          if (!passes) return true;
-          if (!selectedNode) return false;
-          if (node.id === selectedNode) return false;
-          let connected = false;
-          bigchipGraphLinks.each((link) => {
-            if (!bigchipLinkVisible(link)) return;
-            const s = link.source.id || link.source, target = link.target.id || link.target;
-            if ((s === selectedNode && target === node.id) || (target === selectedNode && s === node.id)) connected = true;
-          });
-          return !connected;
-        })
-        .style('pointer-events', (node) => visibleNodeIds.has(node.id) ? 'auto' : 'none');
-      bigchipGraphLinks
-        .attr('stroke', (link) => BIGCHIP_EDGE_COLORS[bigchipLinkRole(link)] || BIGCHIP_EDGE_COLORS.peer)
-        .attr('stroke-dasharray', (link) => {
-          if (link.kind === 'member') return '2 3';
-          return bigchipLinkRole(link) === 'peer' ? '4 4' : (link.evidence === 'reported' ? '3 4' : null);
-        })
-        .attr('stroke-opacity', (link) => {
-          if (!bigchipLinkVisible(link)) return 0.018;
-          if (link.kind === 'member') return selectedNode ? 0.25 : 0.28;
-          if (!selectedNode) return bigchipLinkRole(link) === 'peer' ? 0.42 : 0.5;
-          const s = link.source.id || link.source, target = link.target.id || link.target;
-          return s === selectedNode || target === selectedNode ? 0.95 : 0.025;
-        })
-        .attr('stroke-width', (link) => {
-          const base = link.baseStrokeW || 1.15;
-          if (!bigchipLinkVisible(link)) return 0.45;
-          if (!selectedNode) return base;
-          const s = link.source.id || link.source, target = link.target.id || link.target;
-          return s === selectedNode || target === selectedNode ? Math.max(2.4, base * 2.1) : 0.5;
-        });
+
+    function rnGraphCtx() {
+      return {
+        sectorId: rnProfileKey(),
+        profileKey: rnProfileKey(),
+        lang: lang,
+        T: T,
+        koreanCompanies: koreanCompanies,
+        globalCompanies: globalCompanies,
+        CHAIN_COLORS: CHAIN_COLORS,
+        REGION_COLORS: REGION_COLORS,
+        container: document.getElementById('graph-svg'),
+        networkVersion: 1,
+      };
     }
 
     function buildGraph() {
-      const container = document.getElementById('graph-svg');
-      const W = container.clientWidth || 900, H = container.clientHeight || 700;
-      if (simulation) simulation.stop();
-      const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
-      const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
-      const mode = curatedMode();
-      const hubs = (typeof CURATED_RELATION_HUBS !== 'undefined' && CURATED_RELATION_HUBS) || [];
-      const hubByChain = new Map(hubs.map((hub) => [hub.chain, hub]));
-      const presentChains = bigchipPresentChains();
-      const ANGLE = Object.assign({},
-        (typeof CURATED_FALLBACK_ANGLE !== 'undefined' && CURATED_FALLBACK_ANGLE) || {},
-        (typeof CURATED_HUB_ANGLE !== 'undefined' && CURATED_HUB_ANGLE) || {}
+      if (!window.RelationNetwork) return;
+      RelationNetwork.onTabVisible(rnGraphCtx());
+      svgEl = true;
+    }
+
+    function selectNode() { /* handled by RelationNetwork */ }
+    function resetSelection() { if (window.RelationNetwork) RelationNetwork.resetView(); }
+    function toggleChainHighlight() { /* chain highlight via search/filters in v2 */ }
+
+    function resetZoom() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().duration(400).call(
+        d3.zoom().transform,
+        d3.zoomIdentity.translate(el.clientWidth * 0.05, el.clientHeight * 0.05).scale(0.88)
       );
-      presentChains.forEach((ch, i) => {
-        if (ANGLE[ch] == null) ANGLE[ch] = presentChains.length ? Math.round((360 / presentChains.length) * i) : 0;
-      });
-      const nodes = [], nodeIndex = {};
-      const hubRadius = mode === 'chainGroup' ? 210 : 0;
-      const memberRadius = mode === 'chainGroup' ? 145 : 145;
-
-      if (mode === 'chainGroup') {
-        hubs.forEach((hub) => {
-          nodes.push({
-            id: hub.id, label: hub.label, labelEn: hub.labelEn || hub.label, type: 'korean',
-            chain: hub.chain, isHub: true, hubKind: 'group', r: 22, revTier: 3
-          });
-          nodeIndex[hub.id] = nodes.length - 1;
-        });
-      }
-
-      koreanCompanies.forEach((company) => {
-        const hub = hubByChain.get(company.chain);
-        const isTickerHub = mode === 'ticker';
-        nodes.push({
-          id: company.id, label: company.name, labelEn: company.nameEn, type: 'korean', chain: company.chain,
-          ticker: company.ticker, market: company.market, semType: company.semType, semTypeEn: company.semTypeEn,
-          products: company.products, productsEn: company.productsEn, revenue: company.revenue, mcapWon: company.mcapWon,
-          revTier: company.revTier, data: company, tags: company.tags || [],
-          isHub: isTickerHub, hubId: hub ? hub.id : null, hubKind: isTickerHub ? 'ticker' : null,
-          r: isTickerHub
-            ? (company.revTier === 3 ? 18 : company.revTier === 2 ? 13 : 9)
-            : (company.revTier === 3 ? 14 : company.revTier === 2 ? 11 : 8)
-        });
-        nodeIndex[company.id] = nodes.length - 1;
-      });
-
-      const usedGlobal = new Set();
-      if (mode === 'chainGroup') {
-        hubs.forEach((hub) => (hub.partners || []).forEach((partner) => usedGlobal.add(partnerRef(partner).id)));
-      }
-      koreanCompanies.forEach((company) => (company.partners || []).forEach((partner) => usedGlobal.add(partnerRef(partner).id)));
-      globalCompanies.filter((company) => usedGlobal.has(company.id)).forEach((company) => {
-        if (bigchipIsDomesticPartner(company) && company.ticker) {
-          nodes.push({
-            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'korean',
-            chain: company.chain || '', ticker: company.ticker || '', market: company.market || '',
-            region: company.region, countryCode: company.countryCode, sector: company.sector,
-            country: company.country, targetUrl: company.targetUrl || '', mcapWon: company.mcapWon || 0,
-            revTier: company.revTier || 1, isHub: false,
-            r: company.revTier === 3 ? 14 : company.revTier === 2 ? 11 : 8
-          });
-        } else if (bigchipIsDomesticPartner(company) && !company.ticker) {
-          // KR reference nodes (samsung_d / skhynix_d): country diamond still, but keep circle if chain known
-          nodes.push({
-            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'global',
-            region: company.region || 'kr', countryCode: company.countryCode || 'KR', sector: company.sector,
-            country: company.country, ticker: '', targetUrl: company.targetUrl || '', r: 8
-          });
-        } else {
-          nodes.push({
-            id: company.id, label: company.name, labelEn: company.nameEn || company.name, type: 'global',
-            region: company.region, countryCode: company.countryCode, sector: company.sector, country: company.country,
-            ticker: company.ticker || '', targetUrl: company.targetUrl || '', r: 7
-          });
-        }
-        nodeIndex[company.id] = nodes.length - 1;
-      });
-
-      const links = [];
-      if (mode === 'chainGroup') {
-        koreanCompanies.forEach((company) => {
-          const hub = hubByChain.get(company.chain);
-          if (!hub || nodeIndex[hub.id] === undefined) return;
-          links.push({
-            source: company.id, target: hub.id, sourceChain: company.chain,
-            kind: 'member', role: 'member', evidence: 'confirmed', baseStrokeW: 0.7
-          });
-        });
-        hubs.forEach((hub) => (hub.partners || []).forEach((partner) => {
-          const relation = partnerRef(partner);
-          if (nodeIndex[relation.id] === undefined) return;
-          links.push({
-            source: hub.id, target: relation.id, sourceChain: hub.chain,
-            edgeLabel: relation.edgeLabel, edgeLabelEn: relation.edgeLabelEn,
-            kind: bigchipRole(relation.kind || relation.role), role: bigchipRole(relation.kind || relation.role),
-            evidence: partner && typeof partner === 'object' ? (partner.evidence || 'confirmed') : 'confirmed',
-            baseStrokeW: partner && partner.evidence === 'reported' ? 0.9 : 1.2
-          });
-        }));
-      } else {
-        koreanCompanies.forEach((company) => (company.partners || []).forEach((partner) => {
-          const relation = partnerRef(partner);
-          if (nodeIndex[relation.id] === undefined) return;
-          links.push({
-            source: company.id, target: relation.id, sourceChain: company.chain,
-            edgeLabel: relation.edgeLabel, edgeLabelEn: relation.edgeLabelEn,
-            kind: bigchipLinkRole(relation), role: bigchipLinkRole(relation),
-            evidence: partner && typeof partner === 'object' ? (partner.evidence || 'confirmed') : 'confirmed',
-            baseStrokeW: partner && partner.evidence === 'reported' ? 0.9 : 1.2
-          });
-        }));
-      }
-      // Non-curated companies keep legacy partner edges when not covered by a hub.
-      if (mode === 'chainGroup') {
-        koreanCompanies.forEach((company) => {
-          if (hubByChain.has(company.chain)) return;
-          (company.partners || []).forEach((partner) => {
-            const relation = partnerRef(partner);
-            if (nodeIndex[relation.id] === undefined) return;
-            const kind = relation.kind === 'supplier' || relation.kind === 'customer' || relation.kind === 'peer'
-              ? relation.kind : 'peer';
-            links.push({
-              source: company.id, target: relation.id, sourceChain: company.chain,
-              edgeLabel: relation.edgeLabel, edgeLabelEn: relation.edgeLabelEn,
-              kind, role: kind, evidence: partner && partner.evidence ? partner.evidence : 'confirmed',
-              baseStrokeW: 1.0
-            });
-          });
-        });
-      }
-
-      const d3svg = d3.select('#graph-svg');
-      d3svg.selectAll('*').remove();
-      svgEl = d3svg;
-      zoomBehavior = d3.zoom().scaleExtent([0.15, 4]).on('zoom', (event) => g.attr('transform', event.transform));
-      d3svg.call(zoomBehavior);
-      d3svg.on('click', (event) => { if (event.target === d3svg.node() || event.target.tagName === 'svg') resetSelection(); });
-      g = d3svg.append('g');
-      simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id((node) => node.id)
-          .distance((link) => (link.kind === 'member' ? 54 : 128))
-          .strength((link) => (link.kind === 'member' ? 0.45 : 0.28)))
-        .force('charge', d3.forceManyBody().strength((node) => {
-          if (node.isHub && node.hubKind === 'group') return -420;
-          return node.type === 'korean' ? -230 : -90;
-        }))
-        .force('center', d3.forceCenter(W / 2, H / 2))
-        .force('collide', d3.forceCollide((node) => node.r + (node.isHub && node.hubKind === 'group' ? 14 : 8)))
-        .force('x', d3.forceX((node) => {
-          if (node.isHub && node.hubKind === 'group') {
-            const angle = ANGLE[node.chain] || 0;
-            return W / 2 + Math.cos(angle * Math.PI / 180) * hubRadius;
-          }
-          if (node.isHub) return W / 2;
-          if (node.type === 'korean') {
-            const angle = ANGLE[node.chain] || 0;
-            return W / 2 + Math.cos(angle * Math.PI / 180) * memberRadius;
-          }
-          return W / 2;
-        }).strength((node) => (node.isHub ? 0.14 : 0.055)))
-        .force('y', d3.forceY((node) => {
-          if (node.isHub && node.hubKind === 'group') {
-            const angle = ANGLE[node.chain] || 0;
-            return H / 2 + Math.sin(angle * Math.PI / 180) * hubRadius;
-          }
-          if (node.isHub) return H / 2;
-          if (node.type === 'korean') {
-            const angle = ANGLE[node.chain] || 0;
-            return H / 2 + Math.sin(angle * Math.PI / 180) * memberRadius;
-          }
-          return H / 2;
-        }).strength((node) => (node.isHub ? 0.14 : 0.055)));
-
-      const link = g.append('g').selectAll('line').data(links).join('line');
-      const node = g.append('g').selectAll('g').data(nodes).join('g')
-        .attr('class', (item) => `node node-${item.type}`).attr('cursor', 'pointer')
-        .on('mouseover', (event, item) => showTooltip(event, item))
-        .on('mouseout', () => hideTooltip())
-        .on('click', (event, item) => { event.stopPropagation(); selectNode(item, node, link); })
-        .on('dblclick', (event, item) => {
-          if (item.targetUrl) {
-            event.preventDefault();
-            window.location.href = item.targetUrl + '&lang=' + encodeURIComponent(lang);
-          }
-        })
-        .call(d3.drag()
-          .on('start', (event, item) => { if (!event.active) simulation.alphaTarget(0.3).restart(); item.fx = item.x; item.fy = item.y; })
-          .on('drag', (event, item) => { item.fx = event.x; item.fy = event.y; })
-          .on('end', (event, item) => { if (!event.active) simulation.alphaTarget(0); item.fx = null; item.fy = null; }));
-      node.filter((item) => item.type === 'korean').append('circle')
-        .attr('r', (item) => item.r).attr('fill', (item) => bigchipNodeFill(item))
-        .attr('fill-opacity', 0.85).attr('stroke', graphStroke)
-        .attr('stroke-width', (item) => item.isHub ? 2.4 : 1.5);
-      node.filter((item) => item.type === 'global').append('polygon')
-        .attr('points', (item) => { const r = item.r + 2; return `0,${-r} ${r},0 0,${r} ${-r},0`; })
-        .attr('fill', (item) => bigchipNodeFill(item)).attr('fill-opacity', 0.8)
-        .attr('stroke', graphStroke).attr('stroke-width', 1.2);
-      // Every node keeps a name label (relations JSON names); do not gate on radius.
-      node.append('text')
-        .text((item) => lang === 'en' ? (item.labelEn || item.label) : item.label)
-        .attr('text-anchor', 'middle').attr('dy', (item) => item.r + 11)
-        .attr('font-size', (item) => item.type === 'korean' ? (item.isHub || item.r >= 13 ? 11 : 9) : 9)
-        .attr('fill', graphLabel).attr('pointer-events', 'none');
-      simulation.on('tick', () => {
-        link.attr('x1', (item) => item.source.x).attr('y1', (item) => item.source.y)
-          .attr('x2', (item) => item.target.x).attr('y2', (item) => item.target.y);
-        node.attr('transform', (item) => `translate(${item.x},${item.y})`);
-      });
-      bigchipGraphNodes = node;
-      bigchipGraphLinks = link;
-      applyBigchipGraphFilters();
-      setTimeout(() => { svgEl.transition().duration(600).call(zoomBehavior.transform, d3.zoomIdentity.translate(W * 0.05, H * 0.05).scale(0.88)); }, 1200);
+    }
+    function zoomIn() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().call(d3.zoom().scaleBy, 1.35);
+    }
+    function zoomOut() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().call(d3.zoom().scaleBy, 0.74);
     }
 
-    function selectNode(item) {
-      selectedNode = selectedNode === item.id ? null : item.id;
-      applyBigchipGraphFilters();
-    }
-    function resetSelection() {
-      selectedNode = null;
-      highlightedChain = null;
-      applyBigchipGraphFilters();
-    }
-    function toggleChainHighlight(chain) {
-      toggleBigchipFilter('chains', chain);
-    }
+    function showTooltip() { /* v2 uses detail panel */ }
+    function hideTooltip() { }
 
-        function showTooltip(e, d) {
-      const tt = document.getElementById('graph-tooltip');
-      const t = T[lang];
-      const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : (REGION_COLORS[d.region] || '#888');
-      const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
-      let html = `<div class="tooltip-name" style="color:${color}">${displayName}</div>`;
-      if (d.type === 'korean') {
-        const chainDisplay = t.chainFilter[d.chain] || d.chain;
-        const I18nTt = window.InvestingMapI18n;
-        const semTypeDisplay = I18nTt ? I18nTt.field(d, 'semType', 'semTypeEn', lang) : (lang === 'en' ? (d.semTypeEn || '—') : (d.semType || '—'));
-        const productsDisplay = I18nTt ? I18nTt.field(d, 'products', 'productsEn', lang) : (lang === 'en' ? (d.productsEn || '—') : (d.products || '—'));
-        const mktTt = I18nTt ? I18nTt.marketLabel(d.market, lang) : d.market;
-        const subTt = lang === 'en' ? (d.label || '') : (d.labelEn || '');
-        const subPart = subTt && subTt !== displayName ? subTt + ' · ' : '';
-        html += `<div class="tooltip-meta">${subPart}${d.ticker} · ${mktTt}</div>`;
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttChain}</span><span class="tooltip-val">${chainDisplay}</span></div>`;
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSemType}</span><span class="tooltip-val">${semTypeDisplay}</span></div>`;
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttProducts}</span><span class="tooltip-val">${productsDisplay}</span></div>`;
-        const capStr = lang === 'en' ? fmtMcapUsdBillion(d.mcapWon) : fmtMcapKoJo(d.mcapWon);
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttRevenue}</span><span class="tooltip-val">${capStr}</span></div>`;
-        if (d.tags && d.tags.length) {
-          const tagStr = d.tags.map(x => (typeof x === 'string') ? x : ((lang === 'en' && x.en) ? x.en : (x.ko || x))).join(', ');
-          html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttTags}</span><span class="tooltip-val">${tagStr}</span></div>`;
-        }
-        const pNames = d.data.partners.slice(0, 6).map(p => {
-          const pr = partnerRef(p);
-          const nm = getPartnerInfo(pr.id).name;
-          const lbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
-          let s = nm;
-          if (lbl) s += ` — ${lbl}`;
-          if (pr.weight != null && Number.isFinite(pr.weight)) s += ` (~${Math.round(pr.weight * 100)}%)`;
-          return s;
-        }).join(', ');
-        html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttPartners}</span><span class="tooltip-val">${pNames}${d.data.partners.length > 6 ? '…' : ''}</span></div>`;
-      } else {
-        html += `<div class="tooltip-meta">${d.country} · ${d.sector}</div>`;
-        const suppliers = koreanCompanies.filter(c => companyLinksTo(c, d.id));
-        if (suppliers.length) {
-          const names = suppliers.slice(0, 4).map(s => lang === 'en' ? s.nameEn : s.name).join(', ');
-          html += `<div class="tooltip-row"><span class="tooltip-label">${t.ttSuppliers}</span><span class="tooltip-val">${names}${suppliers.length > 4 ? '…' : ''}</span></div>`;
-        }
-      }
-      tt.innerHTML = html; tt.style.display = 'block';
-      const rect = svgEl.node().getBoundingClientRect();
-      tt.style.left = (e.pageX - rect.left - window.scrollX + 14) + 'px';
-      tt.style.top = (e.pageY - rect.top - window.scrollY - 10) + 'px';
-    }
-    function hideTooltip() { document.getElementById('graph-tooltip').style.display = 'none'; }
-    function resetZoom() { const svgNode = svgEl.node(); svgEl.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity.translate(svgNode.clientWidth * 0.05, svgNode.clientHeight * 0.05).scale(0.88)); }
-    function zoomIn() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 1.3); }
-    function zoomOut() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 0.77); }
 
-    // ═══════════════════════════════════════════════════════
-    // TAB SWITCH
-    // ═══════════════════════════════════════════════════════
-
-    function resetTableFilters() {
-      currentChain = 'all';
-      currentMarket = 'all';
-      searchTerm = '';
-      var inp = document.getElementById('search-input');
-      if (inp) inp.value = '';
-      buildChainChips();
-      buildMarketChips();
-      renderTable();
-    }
-
+    
     function renderHeatmap() {
       if (!window.InvestingMapHeatmap) return;
       var el = document.getElementById('heatmap-root');
@@ -3097,7 +2716,8 @@
       if (btn) btn.classList.add('active');
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
-      if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
+      if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);
+      else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
     }
 
@@ -3180,6 +2800,10 @@
     </nav>
   </section>
 <!-- investingmap-seo-related-end -->
+
+  <script src="../js/network_profiles.js?v=1"></script>
+  <script src="../js/relation_network_legacy.js?v=1"></script>
+  <script src="../js/relation_network.js?v=1"></script>
 </body>
 
 </html>

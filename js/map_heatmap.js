@@ -381,7 +381,11 @@
     }
     /* Always keep tabs immediately before #heatmap-root (visible on mobile). */
     if (bar.parentNode !== wrap || bar.nextSibling !== container) {
-      wrap.insertBefore(bar, container);
+      if (container && wrap.contains(container)) {
+        wrap.insertBefore(bar, container);
+      } else {
+        wrap.appendChild(bar);
+      }
     }
     bar.hidden = false;
     bar.style.display = 'flex';

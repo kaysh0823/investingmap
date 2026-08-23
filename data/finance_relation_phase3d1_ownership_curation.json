@@ -1,0 +1,468 @@
+{
+  "curatedAt": "2026-08-23",
+  "changes": [
+    {
+      "edgeId": "owns-105560-kr-kb_kookmin_bank",
+      "source": "krx:105560",
+      "target": "kr:kb_kookmin_bank",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2025-12-31",
+        "defaultHidden": false
+      },
+      "reason": "KB→Kookmin Bank"
+    },
+    {
+      "edgeId": "owns-105560-kr-kb_securities",
+      "source": "krx:105560",
+      "target": "kr:kb_securities",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2025-12-31",
+        "defaultHidden": false
+      },
+      "reason": "KB→KB Securities"
+    },
+    {
+      "edgeId": "owns-055550-kr-shinhan_bank",
+      "source": "krx:055550",
+      "target": "kr:shinhan_bank",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2024-12-31",
+        "defaultHidden": false
+      },
+      "reason": "Shinhan→Bank"
+    },
+    {
+      "edgeId": "owns-055550-kr-shinhan_investment",
+      "source": "krx:055550",
+      "target": "kr:shinhan_investment",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2024-12-31",
+        "defaultHidden": false
+      },
+      "reason": "Shinhan→Securities"
+    },
+    {
+      "edgeId": "owns-086790-kr-hana_bank",
+      "source": "krx:086790",
+      "target": "kr:hana_bank",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2024-12-31",
+        "defaultHidden": false
+      },
+      "reason": "Hana→Bank"
+    },
+    {
+      "edgeId": "owns-086790-kr-hana_securities",
+      "source": "krx:086790",
+      "target": "kr:hana_securities",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2024-12-31",
+        "defaultHidden": false
+      },
+      "reason": "Hana→Securities"
+    },
+    {
+      "edgeId": "owns-316140-kr-woori_bank",
+      "source": "krx:316140",
+      "target": "kr:woori_bank",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2024-12-31",
+        "defaultHidden": false
+      },
+      "reason": "Woori→Bank"
+    },
+    {
+      "edgeId": "owns-138040-kr-meritz_fire",
+      "source": "krx:138040",
+      "target": "kr:meritz_fire",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2025-12-31",
+        "defaultHidden": false
+      },
+      "reason": "Meritz→Fire"
+    },
+    {
+      "edgeId": "owns-071050-kr-korea_investment_securities",
+      "source": "krx:071050",
+      "target": "kr:korea_investment_securities",
+      "before": {
+        "type": "owns",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "owns",
+        "status": "confirmed",
+        "stakePct": 100,
+        "asOf": "2026-03-31",
+        "defaultHidden": false
+      },
+      "reason": "Korea Investment→KIS"
+    },
+    {
+      "edgeId": "groupmember-032830-group-samsung",
+      "source": "krx:032830",
+      "target": "group:samsung",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 삼성"
+    },
+    {
+      "edgeId": "groupmember-000810-group-samsung",
+      "source": "krx:000810",
+      "target": "group:samsung",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 삼성"
+    },
+    {
+      "edgeId": "groupmember-029780-group-samsung",
+      "source": "krx:029780",
+      "target": "group:samsung",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 삼성"
+    },
+    {
+      "edgeId": "groupmember-016360-group-samsung",
+      "source": "krx:016360",
+      "target": "group:samsung",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 삼성"
+    },
+    {
+      "edgeId": "groupmember-088350-group-hanwha",
+      "source": "krx:088350",
+      "target": "group:hanwha",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 한화"
+    },
+    {
+      "edgeId": "groupmember-000370-group-hanwha",
+      "source": "krx:000370",
+      "target": "group:hanwha",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 한화"
+    },
+    {
+      "edgeId": "groupmember-003530-group-hanwha",
+      "source": "krx:003530",
+      "target": "group:hanwha",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 한화"
+    },
+    {
+      "edgeId": "groupmember-001500-group-hyundai_motor",
+      "source": "krx:001500",
+      "target": "group:hyundai_motor",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 현대자동차"
+    },
+    {
+      "edgeId": "groupmember-005940-group-nonghyup",
+      "source": "krx:005940",
+      "target": "group:nonghyup",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 농협"
+    },
+    {
+      "edgeId": "groupmember-006800-group-mirae_asset",
+      "source": "krx:006800",
+      "target": "group:mirae_asset",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 미래에셋"
+    },
+    {
+      "edgeId": "groupmember-100790-group-mirae_asset",
+      "source": "krx:100790",
+      "target": "group:mirae_asset",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 미래에셋"
+    },
+    {
+      "edgeId": "groupmember-094800-group-mirae_asset",
+      "source": "krx:094800",
+      "target": "group:mirae_asset",
+      "before": {
+        "type": "group_member",
+        "status": "reference",
+        "stakePct": null,
+        "asOf": null,
+        "defaultHidden": false
+      },
+      "after": {
+        "type": "group_member",
+        "status": "reported",
+        "stakePct": null,
+        "asOf": "2025-05-01",
+        "defaultHidden": false
+      },
+      "reason": "group_member 미래에셋"
+    }
+  ],
+  "metrics": {
+    "legacyMigratedEdgeCount": 52,
+    "structuralGeneratedEdgeCount": 37,
+    "manuallyCuratedEdgeCount": 21,
+    "removedEdgeCount": 0,
+    "finalEdgeCount": 110,
+    "ownershipEdgeCount": 9,
+    "ownershipWithStakePctCount": 9,
+    "ownershipPrimarySourceCoverage": 100,
+    "groupMembershipEdgeCount": 12,
+    "classificationEdgeCount": 37,
+    "businessPartnershipEdgeCount": 0,
+    "listedCompanyOwnershipOrphanCount": 25,
+    "classificationOnlyCompanyCount": 0,
+    "weakRelationOnlyCompanyCount": 13,
+    "confirmedBusinessEdgeCount": 9,
+    "reportedBusinessEdgeCount": 12,
+    "confirmedOwnershipEdgeCount": 9,
+    "reportedOwnershipEdgeCount": 0,
+    "inferredOwnershipEdgeCount": 0,
+    "ownershipWithAsOfCount": 9,
+    "ownershipDirectEvidenceCoverage": 100,
+    "directOwnershipCount": 9,
+    "indirectOwnershipCount": 0,
+    "confirmedGroupMembershipCount": 0,
+    "reportedGroupMembershipCount": 12,
+    "groupMembershipPrimarySourceCoverage": 100,
+    "phase3d1CuratedAt": "2026-08-23"
+  },
+  "statusCounts": {
+    "reference": 37,
+    "confirmed": 9,
+    "reported": 12,
+    "peer": 52
+  },
+  "typeCounts": {
+    "member_of": 37,
+    "owns": 9,
+    "group_member": 12,
+    "peer": 52
+  },
+  "validateFailures": [],
+  "validateWarnings": []
+}

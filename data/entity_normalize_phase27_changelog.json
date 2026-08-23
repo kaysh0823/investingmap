@@ -1,0 +1,89 @@
+{
+  "normalizedAt": "2026-08-22",
+  "sectors": {
+    "semiconductor": {
+      "remap": [
+        {
+          "from": "global:samsung_d",
+          "to": "anchor:005930"
+        },
+        {
+          "from": "global:skhynix_d",
+          "to": "anchor:000660"
+        },
+        {
+          "from": "krx:005930",
+          "to": "anchor:005930"
+        },
+        {
+          "from": "krx:000660",
+          "to": "anchor:000660"
+        },
+        {
+          "from": "public:kepco",
+          "to": "krx:015760"
+        },
+        {
+          "from": "operator:khnp",
+          "to": "kr:khnp"
+        }
+      ],
+      "removed": [],
+      "merged": [],
+      "entityIssues": [],
+      "validateFailures": 0,
+      "validateWarnings": 34
+    },
+    "holdings": {
+      "remap": [
+        {
+          "from": "public:kepco",
+          "to": "krx:015760"
+        },
+        {
+          "from": "operator:khnp",
+          "to": "kr:khnp"
+        }
+      ],
+      "removed": [],
+      "merged": [],
+      "entityIssues": [],
+      "validateFailures": 0,
+      "validateWarnings": 1
+    },
+    "defense": {
+      "remap": [
+        {
+          "from": "public:kepco",
+          "to": "krx:015760"
+        },
+        {
+          "from": "operator:khnp",
+          "to": "kr:khnp"
+        }
+      ],
+      "removed": [],
+      "merged": [],
+      "entityIssues": [],
+      "validateFailures": 0,
+      "validateWarnings": 2
+    },
+    "bio": {
+      "remap": [
+        {
+          "from": "public:kepco",
+          "to": "krx:015760"
+        },
+        {
+          "from": "operator:khnp",
+          "to": "kr:khnp"
+        }
+      ],
+      "removed": [],
+      "merged": [],
+      "entityIssues": [],
+      "validateFailures": 0,
+      "validateWarnings": 0
+    }
+  }
+}

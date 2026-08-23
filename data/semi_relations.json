@@ -121,7 +121,9 @@
           "note": "메모리·파운드리 전공정 장비 납품",
           "noteEn": "Front-end tools for memory and foundry lines",
           "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "skhynix_d",
@@ -131,7 +133,9 @@
           "note": "DRAM·HBM 전공정 장비 납품",
           "noteEn": "Front-end tools for DRAM and HBM fabs",
           "evidence": "confirmed",
-          "source": "https://www.skhynix.com/eng/sustainability/supplyChain.do"
+          "source": "https://www.skhynix.com/eng/sustainability/supplyChain.do",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "tsmc",
@@ -297,7 +301,9 @@
           "note": "패키징·테스트·본딩 장비 납품",
           "noteEn": "Packaging, test and bonding equipment",
           "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "skhynix_d",
@@ -307,7 +313,9 @@
           "note": "HBM·패키지 후공정 장비",
           "noteEn": "HBM and package back-end equipment",
           "evidence": "confirmed",
-          "source": "https://news.skhynix.com/"
+          "source": "https://news.skhynix.com/",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "ase",
@@ -543,7 +551,9 @@
           "note": "포토레지스트·식각액·특수가스 등",
           "noteEn": "Photoresist, etchants, specialty gases and more",
           "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "skhynix_d",
@@ -553,7 +563,9 @@
           "note": "메모리 공정 소재·가스",
           "noteEn": "Memory process materials and gases",
           "evidence": "confirmed",
-          "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf"
+          "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "tsmc",
@@ -786,7 +798,9 @@
           "note": "국내·글로벌 파운드리 peer",
           "noteEn": "Domestic and global foundry peer",
           "evidence": "confirmed",
-          "source": "https://semiconductor.samsung.com/foundry/"
+          "source": "https://semiconductor.samsung.com/foundry/",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         }
       ]
     },
@@ -853,7 +867,9 @@
           "note": "국내 파운드리 위탁",
           "noteEn": "Domestic foundry manufacturing",
           "evidence": "confirmed",
-          "source": "https://semiconductor.samsung.com/foundry/"
+          "source": "https://semiconductor.samsung.com/foundry/",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "arm",
@@ -1049,7 +1065,9 @@
           "note": "디자인하우스·파운드리 협업",
           "noteEn": "Design-house collaboration with foundry",
           "evidence": "confirmed",
-          "source": "https://semiconductor.samsung.com/foundry/"
+          "source": "https://semiconductor.samsung.com/foundry/",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         }
       ],
       "customers": [
@@ -1222,7 +1240,9 @@
           "note": "메모리·패키지 기판·소켓 수요",
           "noteEn": "Memory/package substrate and socket demand",
           "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "skhynix_d",
@@ -1232,7 +1252,9 @@
           "note": "HBM·메모리 기판 수요",
           "noteEn": "HBM and memory substrate demand",
           "evidence": "confirmed",
-          "source": "https://www.skhynix.com/eng/sustainability/supplyChain.do"
+          "source": "https://www.skhynix.com/eng/sustainability/supplyChain.do",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "qualcomm",
@@ -1443,7 +1465,9 @@
           "note": "패키징·테스트 OSAT 고객",
           "noteEn": "Packaging and test OSAT customer",
           "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "skhynix_d",
@@ -1453,7 +1477,9 @@
           "note": "HBM·메모리 패키지/테스트",
           "noteEn": "HBM and memory packaging/test",
           "evidence": "confirmed",
-          "source": "https://news.skhynix.com/"
+          "source": "https://news.skhynix.com/",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "qualcomm",
@@ -1552,7 +1578,9 @@
           "note": "메모리·시스템 반도체 공급",
           "noteEn": "Memory and system semiconductor supply",
           "evidence": "confirmed",
-          "source": "https://semiconductor.samsung.com/"
+          "source": "https://semiconductor.samsung.com/",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
         },
         {
           "id": "micron_eq",
