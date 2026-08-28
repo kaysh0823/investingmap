@@ -690,6 +690,7 @@
     else if (layout === 'constructionProjectEcosystem') layoutConstructionProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'automotiveValueChainEcosystem') layoutAutomotiveValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'electronicsValueChainEcosystem') layoutElectronicsValueChain(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'metalsValueChainEcosystem') layoutMetalsValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -882,6 +883,42 @@
         n.fy = H * (0.28 + (idx % 6) * 0.07);
       }
     });
+  }
+
+  function layoutMetalsValueChain(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'raw_material', 'smelting_refining', 'steelmaking', 'nonferrous_metal',
+      'rolling_processing', 'specialty_alloy', 'metal_products', 'recycling',
+      'distribution_trading', 'end_market',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferMetalLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.15 + t * 0.65);
+      });
+    });
+  }
+
+  function inferMetalLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'commodity' || String(n.id || '').startsWith('commodity:')) return 'raw_material';
+    if (n.type === 'end_market' || String(n.id || '').startsWith('end_market:')) return 'end_market';
+    if (n.type === 'cross_sector_anchor') return 'end_market';
+    if (n.type === 'global_company') return 'end_market';
+    if (n.type === 'metal_product') return 'metal_products';
+    if (n.type === 'business_category') return n.lane || 'steelmaking';
+    return 'steelmaking';
   }
 
   function inferElecLane(n) {

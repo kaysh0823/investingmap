@@ -549,17 +549,43 @@
   "metal": {
     "sectorId": "metal",
     "dataSector": "metal",
-    "model": "materials_demand",
-    "layout": "layeredSupplyChain",
-    "networkPath": null,
+    "model": "metals_material_value_chain",
+    "layout": "metalsValueChainEcosystem",
+    "networkPath": "../data/networks/metal.json",
     "defaultEdgeTypes": [
-      "supplies_material",
-      "customer",
-      "end_market_exposure"
+      "member_of",
+      "specializes_in",
+      "produces",
+      "exposed_to_commodity",
+      "used_in_end_market",
+      "cross_sector_reference",
+      "supplies_material_to",
+      "supplies_metal_product_to",
+      "offtake_agreement_with",
+      "owns_stake_in",
+      "owns_facility",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "소재→가공→수요산업",
-    "modelDescEn": "Materials → processing → end markets"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "raw_material",
+      "smelting_refining",
+      "steelmaking",
+      "nonferrous_metal",
+      "rolling_processing",
+      "specialty_alloy",
+      "metal_products",
+      "recycling",
+      "distribution_trading",
+      "end_market"
+    ],
+    "modelDescKo": "철강·비철·트레이딩·금속제품 가치사슬. 원자재 노출·구조 분류와 실제 공급·지분·시설을 분리합니다.",
+    "modelDescEn": "Value chain for steel, nonferrous metals, trading and metal products. Separates commodity exposure and structural classification from verified supply, ownership and facilities."
   },
   "construction": {
     "sectorId": "construction",

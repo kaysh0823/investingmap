@@ -82,6 +82,7 @@ run('node scripts/curate_auto_relationships_phase5b1.mjs', 'Phase 5B.1 auto evid
 run('node scripts/curate_auto_business_relationships_phase5b2.mjs', 'Phase 5B.2 auto confirmed business relationship curation');
 run('node scripts/migrate_elec_network_phase5c.mjs', 'Phase 5C elec electronics value-chain ecosystem');
 run('node scripts/curate_elec_relationships_phase5c1.mjs', 'Phase 5C.1 elec product canonical + cross-sector audit');
+run('node scripts/migrate_metal_network_phase5d.mjs', 'Phase 5D metal metals value-chain ecosystem');
 run('node scripts/emit_network_profiles.mjs', 'network profiles JS');
 run('node scripts/patch_relation_network.mjs', 'relation network v2 UI + renderer');
 run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');
