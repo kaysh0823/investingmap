@@ -314,17 +314,38 @@
   "elec": {
     "sectorId": "elec",
     "dataSector": "elec",
-    "model": "component_supply",
-    "layout": "layeredSupplyChain",
-    "networkPath": null,
+    "model": "electronics_component_value_chain",
+    "layout": "electronicsValueChainEcosystem",
+    "networkPath": "../data/networks/elec.json",
     "defaultEdgeTypes": [
-      "component_supplier",
-      "module_supplier",
-      "customer"
+      "member_of",
+      "specializes_in",
+      "manufactures",
+      "produces",
+      "exposed_to",
+      "used_in_device",
+      "used_in_technology",
+      "cross_sector_reference",
+      "supplies_component_to",
+      "supplies_module_to",
+      "owns_stake_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "완제품 중심 부품 공급망",
-    "modelDescEn": "Component supply chain around finished products"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "home_appliance",
+      "display",
+      "camera_module",
+      "electronic_component",
+      "end_market"
+    ],
+    "modelDescKo": "가전·디스플레이·카메라모듈·전자부품 가치사슬. peer 문자열과 구조 분류를 실제 공급·지분과 분리합니다.",
+    "modelDescEn": "Value chain for appliances, display, camera modules and electronic components. Separates peer labels and structural classification from verified supply and ownership."
   },
   "renewable": {
     "sectorId": "renewable",

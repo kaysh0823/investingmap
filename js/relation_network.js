@@ -689,6 +689,7 @@
     else if (layout === 'renewableProjectEcosystem') layoutRenewableProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'constructionProjectEcosystem') layoutConstructionProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'automotiveValueChainEcosystem') layoutAutomotiveValueChain(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'electronicsValueChainEcosystem') layoutElectronicsValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -853,6 +854,44 @@
     if (n.type === 'technology' || n.type === 'product') return 'end_market';
     if (n.type === 'group') return 'vehicle_oem';
     return 'materials';
+  }
+
+  function layoutElectronicsValueChain(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'home_appliance', 'display', 'camera_module', 'electronic_component', 'end_market',
+    ];
+    var laneX = {};
+    laneOrder.forEach(function (lane, i) {
+      laneX[lane] = W * (0.06 + (i / Math.max(1, laneOrder.length - 1)) * 0.88);
+    });
+    var counts = {};
+    nodes.forEach(function (n) {
+      var lane = n.lane || inferElecLane(n);
+      n.lane = lane;
+      var idx = counts[lane] || 0;
+      counts[lane] = idx + 1;
+      n.fx = laneX[lane] != null ? laneX[lane] : W * 0.5;
+      var isStruct = n.type === 'business_category' || n.type === 'product' || n.type === 'component'
+        || n.type === 'technology' || n.type === 'end_market' || n.type === 'cross_sector_anchor';
+      if (isStruct) {
+        n.fy = H * (n.type === 'business_category' || n.type === 'cross_sector_anchor' ? 0.12 : 0.86);
+        n.fx = (n.fx || W * 0.5) + ((idx % 3) - 1) * 16;
+      } else if (n.type === 'global_company') {
+        n.fy = H * (0.78 + (idx % 2) * 0.05);
+      } else {
+        n.fy = H * (0.28 + (idx % 6) * 0.07);
+      }
+    });
+  }
+
+  function inferElecLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'end_market' || n.type === 'global_company' || n.type === 'cross_sector_anchor') return 'end_market';
+    if (n.type === 'technology' || n.type === 'product' || n.type === 'component') return 'electronic_component';
+    if (n.role === '가전') return 'home_appliance';
+    if (n.role === '디스플레이') return 'display';
+    if (n.role === '카메라·모듈') return 'camera_module';
+    return 'electronic_component';
   }
 
   function inferConstructionLane(n) {
@@ -2173,7 +2212,10 @@
 
   function renderGraph(state) {
     var d3 = global.d3;
-    if (!d3 || !state.container) return;
+    if (!d3 || !state.container) {
+      markFirstRenderComplete(state);
+      return;
+    }
     stopSimulation(state);
     DIAG.renderCount += 1;
     diagLog('renderGraph', { n: DIAG.renderCount, sector: state.sectorId });
@@ -2431,6 +2473,12 @@
     state.nodeSel = node;
     updateLegend(state);
     updateSparseNotice(state, state.simEdges.length);
+    markFirstRenderComplete(state);
+  }
+
+  function markFirstRenderComplete(state) {
+    if (!state || state.firstRenderComplete) return;
+    state.firstRenderComplete = true;
   }
 
   function updateStickyBar(state) {
@@ -3217,6 +3265,9 @@
       selectedTicker: '',
       networkVersion: ctx.networkVersion || 1,
       initialized: false,
+      dataLoaded: false,
+      urlStateApplied: false,
+      firstRenderComplete: false,
       _controlsWired: false,
     };
 
@@ -3227,16 +3278,16 @@
     installPopstate(STATE);
 
     loadNetwork(STATE).then(function () {
+      STATE.dataLoaded = true;
       initNetworkData(STATE);
       applyUrlToState(STATE);
+      STATE.urlStateApplied = true;
       STATE.initialized = true;
       if (STATE.usingLegacy) {
         console.info('[RelationNetwork] legacyFallback=true sector=' + STATE.sectorId);
       }
-      if (STATE._readyResolve) {
-        STATE._readyResolve(STATE);
-        STATE._readyResolve = null;
-      }
+    }).catch(function (err) {
+      console.warn('[RelationNetwork] load failed', STATE.sectorId, err);
     });
 
     if (!STATE._resizeObs && global.ResizeObserver && STATE.container) {
@@ -3275,15 +3326,43 @@
   }
 
   function whenReady() {
-    if (STATE && STATE.initialized) return Promise.resolve(STATE);
-    return new Promise(function (resolve) {
-      if (STATE && STATE.initialized) {
-        resolve(STATE);
-        return;
-      }
-      if (STATE) STATE._readyResolve = resolve;
-      else resolve(null);
+    if (STATE && STATE.initialized && STATE.firstRenderComplete) {
+      return Promise.resolve(STATE);
+    }
+    return new Promise(function (resolve, reject) {
+      var deadline = Date.now() + 60000;
+      (function tick() {
+        if (STATE && STATE.initialized && STATE.firstRenderComplete) {
+          resolve(STATE);
+          return;
+        }
+        if (Date.now() > deadline) {
+          reject(new Error('RelationNetwork whenReady timeout'));
+          return;
+        }
+        global.setTimeout(tick, 20);
+      })();
     });
+  }
+
+  function getReadiness() {
+    if (!STATE) {
+      return {
+        dataLoaded: false,
+        initialized: false,
+        urlStateApplied: false,
+        firstRenderComplete: false,
+        layoutReady: false,
+      };
+    }
+    return {
+      dataLoaded: !!STATE.dataLoaded,
+      initialized: !!STATE.initialized,
+      urlStateApplied: !!STATE.urlStateApplied,
+      firstRenderComplete: !!STATE.firstRenderComplete,
+      layoutReady: !!(STATE.initialized && STATE.firstRenderComplete),
+      sectorId: STATE.sectorId,
+    };
   }
 
   global.RelationNetwork = {
@@ -3293,6 +3372,7 @@
     resetView: function () { if (STATE) resetView(STATE); },
     destroy: destroy,
     getState: function () { return STATE; },
+    getReadiness: getReadiness,
     whenReady: whenReady,
     _diag: function () { return isDiagMode() ? DIAG : null; },
   };

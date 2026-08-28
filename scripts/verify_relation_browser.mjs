@@ -14,6 +14,8 @@ const PORT = Number(process.env.RN_TEST_PORT || 8766);
 const BASE = `http://127.0.0.1:${PORT}`;
 
 const QUICK = process.env.RN_TEST_QUICK === '1';
+const TEST_ONLY = process.env.RN_TEST_ONLY || '';
+const TEST_RUNS = Math.max(1, Number(process.env.RN_TEST_RUNS || 1) || 1);
 const PILOT_PAGES = [
   { id: 'semiconductor', path: '/semiconductor/korea_semiconductor_map.html' },
   { id: 'holdings', path: '/holdings/korea_holdings_map.html' },
@@ -28,12 +30,70 @@ const PILOT_PAGES = [
   { id: 'renewable', path: '/renewable/korea_renewable_map.html' },
   { id: 'construction', path: '/construction/korea_construction_map.html' },
   { id: 'auto', path: '/auto/korea_auto_map.html' },
+  { id: 'elec', path: '/elec/korea_elec_map.html' },
 ];
 
-const PAGES = QUICK ? PILOT_PAGES : [
-  ...PILOT_PAGES,
-  { id: 'robot', path: '/robot/korea_robot_map.html' },
-];
+const PAGES = (() => {
+  const base = QUICK ? PILOT_PAGES : [
+    ...PILOT_PAGES,
+    { id: 'robot', path: '/robot/korea_robot_map.html' },
+  ];
+  if (!TEST_ONLY) return base;
+  return base.filter((p) => p.id === TEST_ONLY);
+})();
+
+async function waitForNetworkReady(page, label, timeoutMs = 20000) {
+  await page.waitForFunction(() => typeof window.RelationNetwork !== 'undefined', { timeout: timeoutMs });
+  const result = await page.evaluate(async (ms) => {
+    const rn = window.RelationNetwork;
+    if (!rn || typeof rn.whenReady !== 'function') {
+      return { ok: false, reason: 'RelationNetwork.whenReady missing' };
+    }
+    const readiness0 = rn.getReadiness ? rn.getReadiness() : {};
+    if (readiness0.layoutReady) {
+      const st = rn.getState();
+      return {
+        ok: true,
+        initialized: true,
+        firstRenderComplete: true,
+        sectorId: st && st.sectorId,
+        readiness: readiness0,
+      };
+    }
+    try {
+      const st = await Promise.race([
+        rn.whenReady(),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('whenReady timeout')), ms)),
+      ]);
+      const readiness = rn.getReadiness ? rn.getReadiness() : {};
+      return {
+        ok: !!(st && st.initialized && st.firstRenderComplete),
+        initialized: !!(st && st.initialized),
+        firstRenderComplete: !!(st && st.firstRenderComplete),
+        sectorId: st && st.sectorId,
+        readiness,
+      };
+    } catch (e) {
+      const readiness = rn.getReadiness ? rn.getReadiness() : {};
+      if (readiness.layoutReady) {
+        const st = rn.getState();
+        return {
+          ok: true,
+          initialized: true,
+          firstRenderComplete: true,
+          sectorId: st && st.sectorId,
+          readiness,
+          recovered: 'layoutReady after whenReady error',
+        };
+      }
+      return { ok: false, reason: String(e), readiness };
+    }
+  }, timeoutMs);
+  if (!result.ok) {
+    throw new Error(`${label}: network not ready (${result.reason || 'unknown'}; readiness=${JSON.stringify(result.readiness || {})})`);
+  }
+  return result;
+}
 
 const VIEWPORTS = QUICK
   ? [{ name: 'desktop', width: 1440, height: 900 }]
@@ -110,13 +170,11 @@ async function testPage(page, pageDef, viewport, lang) {
   page.on('pageerror', (err) => consoleErrors.push(String(err)));
 
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
-  await page.waitForTimeout(800);
 
   const tabGraph = await page.$('#tab-graph.active, #tab-graph[class*="active"]');
   const graphTabBtn = await page.$('#tab-btn-graph');
   if (!tabGraph && graphTabBtn) {
     await graphTabBtn.click();
-    await page.waitForTimeout(600);
   }
 
   const hasGraphSvg = await page.$('#graph-svg');
@@ -127,13 +185,11 @@ async function testPage(page, pageDef, viewport, lang) {
     failures.push(`robot data-sector=${bodySector}`);
   }
 
-  await page.waitForFunction(() => {
-    const rn = window.RelationNetwork;
-    if (!rn) return false;
-    const st = rn.getState();
-    return st && st.initialized;
-  }, { timeout: 15000 }).catch(() => {});
-  await page.waitForTimeout(400);
+  try {
+    await waitForNetworkReady(page, pageDef.id);
+  } catch (e) {
+    failures.push(String(e.message || e));
+  }
 
   const metrics = await page.evaluate(() => {
     const st = window.RelationNetwork && window.RelationNetwork.getState();
@@ -141,6 +197,7 @@ async function testPage(page, pageDef, viewport, lang) {
     const legacySim = typeof simulation !== 'undefined' && simulation;
     return {
       initialized: !!(st && st.initialized),
+      firstRenderComplete: !!(st && st.firstRenderComplete),
       usingLegacy: st && st.usingLegacy,
       sectorId: st && st.sectorId,
       svgCount: document.querySelectorAll('#graph-svg').length,
@@ -152,6 +209,7 @@ async function testPage(page, pageDef, viewport, lang) {
   });
 
   if (!metrics.initialized) failures.push(`${pageDef.id} network not initialized`);
+  if (!metrics.firstRenderComplete) failures.push(`${pageDef.id} first render incomplete`);
   if (pageDef.id === 'robot' && metrics.initialized && !metrics.usingLegacy && metrics.sectorId !== 'robot') {
     failures.push('robot not using legacy/robot profile');
   }
@@ -183,19 +241,20 @@ async function testPage(page, pageDef, viewport, lang) {
 async function testUrlState(page) {
   const failures = [];
 
-  async function waitForTickerSelection(page, ticker, timeout = 15000) {
+  async function waitForTickerSelection(page, ticker, timeout = 20000) {
+    await waitForNetworkReady(page, ticker || 'network', timeout);
+    if (!ticker) return;
     await page.waitForFunction(
       (expected) => {
         const rn = window.RelationNetwork;
         if (!rn) return false;
         const st = rn.getState();
-        if (!st || !st.initialized || !st.nodes || !st.nodes.length) return false;
-        if (!expected) return true;
-        return st.selectedTicker === expected && !!st.selectedId;
+        return st && st.initialized && st.firstRenderComplete
+          && st.selectedTicker === expected && !!st.selectedId;
       },
       ticker,
       { timeout },
-    ).catch(() => {});
+    );
   }
 
   async function checkSemiTicker(ticker, expectSelected) {
@@ -352,14 +411,27 @@ async function testUrlState(page) {
   return failures;
 }
 
-async function main() {
-  console.log('verify:relation-browser');
-  let pw;
-  try {
-    pw = await loadPlaywright();
-  } catch (e) {
-    console.error('SKIP browser QA —', e.message);
-    process.exit(0);
+async function runOnce(pw) {
+  if (TEST_ONLY) {
+    const srv = await startServer();
+    const browser = await pw.chromium.launch({ headless: true });
+    const failures = [];
+    try {
+      for (const vp of VIEWPORTS) {
+        for (const lang of (QUICK ? ['ko'] : ['ko', 'en'])) {
+          const ctx = await browser.newContext();
+          const page = await ctx.newPage();
+          const p = PAGES[0];
+          const f = await testPage(page, p, vp, lang);
+          if (f.length) failures.push(`${p.id}/${vp.name}/${lang}: ${f.join('; ')}`);
+          await ctx.close();
+        }
+      }
+    } finally {
+      await browser.close();
+      srv.close();
+    }
+    return failures;
   }
 
   const srv = await startServer();
@@ -387,10 +459,42 @@ async function main() {
     await browser.close();
     srv.close();
   }
+  return failures;
+}
 
-  console.log('failures:', failures.length);
-  failures.forEach((f) => console.log(' -', f));
-  process.exit(failures.length ? 1 : 0);
+async function main() {
+  console.log('verify:relation-browser');
+  if (TEST_ONLY) console.log('filter:', TEST_ONLY);
+  if (TEST_RUNS > 1) console.log('runs:', TEST_RUNS);
+  let pw;
+  try {
+    pw = await loadPlaywright();
+  } catch (e) {
+    console.error('SKIP browser QA —', e.message);
+    process.exit(0);
+  }
+
+  const allFailures = [];
+  const runResults = [];
+  for (let run = 1; run <= TEST_RUNS; run += 1) {
+    const t0 = Date.now();
+    let failures = [];
+    try {
+      failures = await runOnce(pw);
+    } catch (e) {
+      failures = [String(e.message || e)];
+    }
+    const durationMs = Date.now() - t0;
+    runResults.push({ run, durationMs, failures: failures.length });
+    console.log(`run ${run}/${TEST_RUNS}: failures=${failures.length} duration=${durationMs}ms`);
+    if (failures.length) {
+      failures.forEach((f) => allFailures.push(`run${run}: ${f}`));
+    }
+  }
+
+  console.log('failures:', allFailures.length);
+  allFailures.forEach((f) => console.log(' -', f));
+  process.exit(allFailures.length ? 1 : 0);
 }
 
 main().catch((e) => {

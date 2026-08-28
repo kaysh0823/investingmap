@@ -1,49 +1,37 @@
 {
   "asOf": "2026-08-23",
-  "phase": "5B",
-  "reviewedBy": "editorial_phase5b",
-  "listedCompanyCount": 22,
+  "phase": "5C",
+  "reviewedBy": "editorial_phase5c",
+  "listedCompanyCount": 24,
   "metrics": {
-    "listedCompanyCount": 22,
+    "listedCompanyCount": 24,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 78,
-    "edgeCount": 116,
-    "structuralEdgeCount": 64,
-    "structuralGeneratedEdgeCount": 59,
-    "legacyMigratedEdgeCount": 52,
-    "manuallyCuratedEdgeCount": 5,
+    "nodeCount": 86,
+    "edgeCount": 107,
+    "structuralGeneratedEdgeCount": 78,
+    "legacyMigratedEdgeCount": 25,
+    "manuallyCuratedEdgeCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 52,
+    "peerEdgeCount": 25,
     "supplyRelationshipCount": 0,
     "actualSupplyRelationshipCount": 0,
-    "vehicleFitmentRelationshipCount": 0,
-    "jointDevelopmentCount": 0,
     "ownershipEdgeCount": 0,
-    "jointVentureEdgeCount": 0,
-    "groupMembershipEdgeCount": 5,
-    "electrificationExposedCompanyCount": 4,
-    "electrificationExposureCount": 4,
-    "electrificationStructuralEdgeCount": 6,
-    "iceExposedCompanyCount": 1,
-    "iceExposureCount": 1,
-    "iceStructuralEdgeCount": 2,
-    "hybridExposedCompanyCount": 1,
-    "hybridExposureCount": 1,
-    "hybridStructuralEdgeCount": 1,
-    "businessRelationOrphanCount": 22,
-    "directRelationshipOrphanCount": 22,
-    "directCommercialRelationshipOrphanCount": 22,
-    "confirmedReportedBusinessOrphanCount": 22,
-    "classificationOnlyCompanyCount": 22,
-    "groupMembershipOnlyCompanyCount": 5,
-    "weakRelationOnlyCompanyCount": 22,
-    "hasPeerButNoBusinessCompanyCount": 22,
+    "jointDevelopmentCount": 0,
+    "deviceAdoptionRelationshipCount": 0,
+    "groupMembershipEdgeCount": 0,
+    "crossSectorReferenceCount": 4,
+    "crossSectorReferenceOnlyCompanyCount": 4,
+    "businessRelationOrphanCount": 24,
+    "directRelationshipOrphanCount": 24,
+    "directCommercialRelationshipOrphanCount": 24,
+    "classificationOnlyCompanyCount": 24,
+    "groupMembershipOnlyCompanyCount": 0,
+    "hasPeerButNoBusinessCompanyCount": 24,
     "peerOnlyCompanyCount": 0,
+    "weakRelationOnlyCompanyCount": 24,
     "structuralOnlyCompanyCount": 0,
-    "orphanListedCompanyCount": 0,
-    "structuralOrphanCount": 0,
     "orphanMetricDefinitions": {
       "listedCompanyCount": {
         "denominator": null,
@@ -475,153 +463,147 @@
     "orphanDetails": {
       "structuralOrphans": [],
       "businessRelationOrphans": [
-        "krx:005380",
-        "krx:000270",
-        "krx:012330",
-        "krx:307950",
-        "krx:161390",
-        "krx:018880",
-        "krx:005850",
-        "krx:204320",
-        "krx:000240",
-        "krx:007340",
-        "krx:011210",
-        "krx:073240",
-        "krx:064960",
-        "krx:025540",
-        "krx:002350",
-        "krx:003620",
-        "krx:015750",
-        "krx:009900",
-        "krx:097520",
-        "krx:010690",
-        "krx:200880",
-        "krx:000430"
+        "krx:009150",
+        "krx:066570",
+        "krx:011070",
+        "krx:034220",
+        "krx:021240",
+        "krx:489790",
+        "krx:043260",
+        "krx:001820",
+        "krx:065350",
+        "krx:417200",
+        "krx:204270",
+        "krx:248070",
+        "krx:090460",
+        "krx:171090",
+        "krx:046890",
+        "krx:033240",
+        "krx:077360",
+        "krx:017900",
+        "krx:284740",
+        "krx:004710",
+        "krx:192650",
+        "krx:052710",
+        "krx:065680",
+        "krx:049070"
       ],
       "directRelationshipOrphans": [
-        "krx:005380",
-        "krx:000270",
-        "krx:012330",
-        "krx:307950",
-        "krx:161390",
-        "krx:018880",
-        "krx:005850",
-        "krx:204320",
-        "krx:000240",
-        "krx:007340",
-        "krx:011210",
-        "krx:073240",
-        "krx:064960",
-        "krx:025540",
-        "krx:002350",
-        "krx:003620",
-        "krx:015750",
-        "krx:009900",
-        "krx:097520",
-        "krx:010690",
-        "krx:200880",
-        "krx:000430"
+        "krx:009150",
+        "krx:066570",
+        "krx:011070",
+        "krx:034220",
+        "krx:021240",
+        "krx:489790",
+        "krx:043260",
+        "krx:001820",
+        "krx:065350",
+        "krx:417200",
+        "krx:204270",
+        "krx:248070",
+        "krx:090460",
+        "krx:171090",
+        "krx:046890",
+        "krx:033240",
+        "krx:077360",
+        "krx:017900",
+        "krx:284740",
+        "krx:004710",
+        "krx:192650",
+        "krx:052710",
+        "krx:065680",
+        "krx:049070"
       ],
       "classificationOnly": [
-        "krx:005380",
-        "krx:000270",
-        "krx:012330",
-        "krx:307950",
-        "krx:161390",
-        "krx:018880",
-        "krx:005850",
-        "krx:204320",
-        "krx:000240",
-        "krx:007340",
-        "krx:011210",
-        "krx:073240",
-        "krx:064960",
-        "krx:025540",
-        "krx:002350",
-        "krx:003620",
-        "krx:015750",
-        "krx:009900",
-        "krx:097520",
-        "krx:010690",
-        "krx:200880",
-        "krx:000430"
+        "krx:009150",
+        "krx:066570",
+        "krx:011070",
+        "krx:034220",
+        "krx:021240",
+        "krx:489790",
+        "krx:043260",
+        "krx:001820",
+        "krx:065350",
+        "krx:417200",
+        "krx:204270",
+        "krx:248070",
+        "krx:090460",
+        "krx:171090",
+        "krx:046890",
+        "krx:033240",
+        "krx:077360",
+        "krx:017900",
+        "krx:284740",
+        "krx:004710",
+        "krx:192650",
+        "krx:052710",
+        "krx:065680",
+        "krx:049070"
       ],
-      "groupMembershipOnly": [
-        "krx:005380",
-        "krx:000270",
-        "krx:012330",
-        "krx:307950",
-        "krx:011210"
-      ],
+      "groupMembershipOnly": [],
       "weakRelationOnly": [
-        "krx:005380",
-        "krx:000270",
-        "krx:012330",
-        "krx:307950",
-        "krx:161390",
-        "krx:018880",
-        "krx:005850",
-        "krx:204320",
-        "krx:000240",
-        "krx:007340",
-        "krx:011210",
-        "krx:073240",
-        "krx:064960",
-        "krx:025540",
-        "krx:002350",
-        "krx:003620",
-        "krx:015750",
-        "krx:009900",
-        "krx:097520",
-        "krx:010690",
-        "krx:200880",
-        "krx:000430"
+        "krx:009150",
+        "krx:066570",
+        "krx:011070",
+        "krx:034220",
+        "krx:021240",
+        "krx:489790",
+        "krx:043260",
+        "krx:001820",
+        "krx:065350",
+        "krx:417200",
+        "krx:204270",
+        "krx:248070",
+        "krx:090460",
+        "krx:171090",
+        "krx:046890",
+        "krx:033240",
+        "krx:077360",
+        "krx:017900",
+        "krx:284740",
+        "krx:004710",
+        "krx:192650",
+        "krx:052710",
+        "krx:065680",
+        "krx:049070"
       ],
       "hasPeerButNoBusiness": [
-        "krx:005380",
-        "krx:000270",
-        "krx:012330",
-        "krx:307950",
-        "krx:161390",
-        "krx:018880",
-        "krx:005850",
-        "krx:204320",
-        "krx:000240",
-        "krx:007340",
-        "krx:011210",
-        "krx:073240",
-        "krx:064960",
-        "krx:025540",
-        "krx:002350",
-        "krx:003620",
-        "krx:015750",
-        "krx:009900",
-        "krx:097520",
-        "krx:010690",
-        "krx:200880",
-        "krx:000430"
+        "krx:009150",
+        "krx:066570",
+        "krx:011070",
+        "krx:034220",
+        "krx:021240",
+        "krx:489790",
+        "krx:043260",
+        "krx:001820",
+        "krx:065350",
+        "krx:417200",
+        "krx:204270",
+        "krx:248070",
+        "krx:090460",
+        "krx:171090",
+        "krx:046890",
+        "krx:033240",
+        "krx:077360",
+        "krx:017900",
+        "krx:284740",
+        "krx:004710",
+        "krx:192650",
+        "krx:052710",
+        "krx:065680",
+        "krx:049070"
       ],
       "peerOnly": [],
       "structuralOnly": []
     },
-    "evidenceFieldCoverage": 0.3620689655172414,
-    "businessRelationshipDirectEvidenceCoverage": null,
-    "businessRelationshipPrimarySourceCoverage": null,
-    "supplyRelationshipDirectEvidenceCoverage": null,
-    "supplyRelationshipPrimarySourceCoverage": null,
-    "vehicleFitmentDirectEvidenceCoverage": null,
-    "vehicleFitmentPrimarySourceCoverage": null,
-    "ownershipDirectEvidenceCoverage": null,
-    "ownershipPrimarySourceCoverage": null,
-    "groupMembershipPrimarySourceCoverage": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 42,
-        "denominator": 116,
-        "percentage": 0.3620689655172414,
-        "displayValue": "36.2%",
-        "applicable": true,
-        "reason": null
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_edges"
       },
       "businessRelationshipDirectEvidenceCoverage": {
         "numerator": 0,
@@ -629,7 +611,7 @@
         "percentage": null,
         "displayValue": "N/A",
         "applicable": false,
-        "reason": "no_confirmed_reported_business_edges"
+        "reason": "no_eligible_business_edges"
       },
       "businessRelationshipPrimarySourceCoverage": {
         "numerator": 0,
@@ -637,7 +619,7 @@
         "percentage": null,
         "displayValue": "N/A",
         "applicable": false,
-        "reason": "no_confirmed_reported_business_edges"
+        "reason": "no_eligible_business_edges"
       },
       "supplyDirectEvidenceCoverage": {
         "numerator": 0,
@@ -671,37 +653,21 @@
         "applicable": false,
         "reason": "no_eligible_supply_edges"
       },
-      "fitmentDirectEvidenceCoverage": {
+      "deviceAdoptionDirectEvidenceCoverage": {
         "numerator": 0,
         "denominator": 0,
         "percentage": null,
         "displayValue": "N/A",
         "applicable": false,
-        "reason": "no_eligible_fitment_edges"
+        "reason": "no_eligible_device_adoption_edges"
       },
-      "fitmentPrimarySourceCoverage": {
+      "deviceAdoptionPrimarySourceCoverage": {
         "numerator": 0,
         "denominator": 0,
         "percentage": null,
         "displayValue": "N/A",
         "applicable": false,
-        "reason": "no_eligible_fitment_edges"
-      },
-      "vehicleFitmentDirectEvidenceCoverage": {
-        "numerator": 0,
-        "denominator": 0,
-        "percentage": null,
-        "displayValue": "N/A",
-        "applicable": false,
-        "reason": "no_eligible_fitment_edges"
-      },
-      "vehicleFitmentPrimarySourceCoverage": {
-        "numerator": 0,
-        "denominator": 0,
-        "percentage": null,
-        "displayValue": "N/A",
-        "applicable": false,
-        "reason": "no_eligible_fitment_edges"
+        "reason": "no_eligible_device_adoption_edges"
       },
       "ownershipDirectEvidenceCoverage": {
         "numerator": 0,
@@ -721,830 +687,656 @@
       },
       "groupMembershipPrimarySourceCoverage": {
         "numerator": 0,
-        "denominator": 5,
-        "percentage": 0,
-        "displayValue": "0%",
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_group_membership_edges"
+      },
+      "crossSectorReferenceEvidenceCoverage": {
+        "numerator": 4,
+        "denominator": 4,
+        "percentage": 1,
+        "displayValue": "100%",
         "applicable": true,
         "reason": null
       },
       "metricNotes": {
         "businessRelationshipDenominator": "confirmed + reported business edges only",
         "supplyDenominator": "confirmed + reported supply-type edges only",
-        "fitmentDenominator": "confirmed + reported used_in_vehicle only",
+        "deviceAdoptionDenominator": "confirmed + reported device adoption edges only",
         "ownershipDenominator": "confirmed + reported owns/owns_stake_in only",
         "zeroDenominator": "percentage=null, displayValue=N/A, applicable=false"
       }
     },
-    "phase5bCuratedAt": "2026-08-23",
-    "phase5b1CuratedAt": null,
-    "removedUnsupportedPartnerCount": 1,
-    "demotedLegacyPeerCount": 52
+    "phase5cCuratedAt": "2026-08-23",
+    "removedUnsupportedPartnerCount": 0,
+    "demotedLegacyPeerCount": 25
   },
   "validate": {
     "failures": [],
-    "warnings": []
+    "warnings": [
+      "elec cross_sector_reference cross-sector-077360-sector-semiconductor should set excludesFromBusinessCoverage",
+      "elec cross_sector_reference cross-sector-011070-sector-auto should set excludesFromBusinessCoverage",
+      "elec cross_sector_reference cross-sector-192650-sector-auto should set excludesFromBusinessCoverage",
+      "elec cross_sector_reference cross-sector-049070-sector-auto should set excludesFromBusinessCoverage"
+    ]
   },
+  "crossSectorBoundary": [
+    {
+      "ticker": "077360",
+      "target": "sector:semiconductor",
+      "noteKo": "반도체 패키징 솔더·소재는 semiconductor 섹터 범위. elec에서 공급망 중복 생성하지 않음.",
+      "noteEn": "Semiconductor packaging solder/materials owned by semiconductor sector; no duplicate supply here."
+    },
+    {
+      "ticker": "011070",
+      "target": "sector:auto",
+      "noteKo": "차량용 카메라·전장은 auto 섹터와 겹침. confirmed OEM 공급은 auto에서만 큐레이션.",
+      "noteEn": "Automotive camera/electronics overlap auto sector; confirmed OEM supply curated in auto only."
+    },
+    {
+      "ticker": "192650",
+      "target": "sector:auto",
+      "noteKo": "차량 카메라·생체인증 모듈은 auto 섹터와 겹침.",
+      "noteEn": "Automotive camera/biometric modules overlap auto sector scope."
+    },
+    {
+      "ticker": "049070",
+      "target": "sector:auto",
+      "noteKo": "EMS·자동차 모듈 조립은 auto 섹터와 겹칠 수 있음.",
+      "noteEn": "EMS and automotive module assembly may overlap auto sector."
+    }
+  ],
   "changes": [
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:005380",
-      "target": "group:vehicle_oem"
+      "source": "krx:009150",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "produces",
-      "source": "krx:005380",
-      "target": "product:passenger_vehicle"
+      "source": "krx:009150",
+      "target": "product:mlcc_camera_substrate"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:005380",
-      "target": "technology:electric_drive_unit"
+      "source": "krx:009150",
+      "target": "component:mlcc"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:005380",
-      "target": "technology:hydrogen_fuel_cell"
+      "source": "krx:066570",
+      "target": "group:home_appliance"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:000270",
-      "target": "group:vehicle_oem"
+      "source": "krx:066570",
+      "target": "product:home_appliances_tv_auto"
     },
     {
       "action": "add_structural",
-      "afterType": "produces",
-      "source": "krx:000270",
-      "target": "product:passenger_vehicle"
+      "source": "krx:066570",
+      "target": "component:home_appliances"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:000270",
-      "target": "technology:electric_drive_unit"
+      "source": "krx:066570",
+      "target": "end_market:automotive_electronics"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:000270",
-      "target": "technology:hybrid_powertrain"
+      "source": "krx:011070",
+      "target": "group:camera_module"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:012330",
-      "target": "group:chassis_braking_steering"
+      "source": "krx:011070",
+      "target": "product:camera_module_auto_electronics"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:012330",
-      "target": "product:chassis_module"
+      "source": "krx:011070",
+      "target": "component:smartphone_camera_module"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:012330",
-      "target": "product:automotive_lamp"
+      "source": "krx:011070",
+      "target": "end_market:automotive_electronics"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:012330",
-      "target": "technology:adas"
+      "source": "krx:034220",
+      "target": "group:display"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:307950",
-      "target": "group:electronics_adas"
+      "source": "krx:034220",
+      "target": "product:oled_display_panel"
     },
     {
       "action": "add_structural",
-      "afterType": "produces",
-      "source": "krx:307950",
-      "target": "product:vehicle_software"
+      "source": "krx:034220",
+      "target": "component:oled_panel"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:307950",
-      "target": "technology:software_defined_vehicle"
+      "source": "krx:034220",
+      "target": "end_market:automotive_electronics"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:161390",
-      "target": "group:tire"
+      "source": "krx:021240",
+      "target": "group:home_appliance"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:161390",
-      "target": "product:passenger_tire"
+      "source": "krx:021240",
+      "target": "product:environmental_appliances_rental"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:018880",
-      "target": "group:thermal_management"
+      "source": "krx:021240",
+      "target": "component:water_purifier"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:018880",
-      "target": "product:thermal_hvac"
+      "source": "krx:489790",
+      "target": "group:camera_module"
     },
     {
       "action": "add_structural",
-      "afterType": "used_in_technology",
-      "source": "krx:018880",
-      "target": "technology:thermal_management"
+      "source": "krx:489790",
+      "target": "product:video_security_camera"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:005850",
-      "target": "group:lighting"
+      "source": "krx:489790",
+      "target": "component:cctv"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:005850",
-      "target": "product:automotive_lamp"
+      "source": "krx:043260",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:204320",
-      "target": "group:chassis_braking_steering"
+      "source": "krx:043260",
+      "target": "product:electronic_components_modules"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:204320",
-      "target": "product:steering_system"
+      "source": "krx:043260",
+      "target": "component:electronic_module"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:204320",
-      "target": "product:brake_system"
+      "source": "krx:001820",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:204320",
-      "target": "technology:adas"
+      "source": "krx:001820",
+      "target": "product:mlcc_capacitors"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:000240",
-      "target": "group:tire"
+      "source": "krx:001820",
+      "target": "component:capacitor"
     },
     {
       "action": "add_structural",
-      "afterType": "specializes_in",
-      "source": "krx:000240",
-      "target": "product:tire_holding"
+      "source": "krx:065350",
+      "target": "group:home_appliance"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:007340",
-      "target": "group:materials"
+      "source": "krx:065350",
+      "target": "product:appliance_auto_electronics_mfg"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:007340",
-      "target": "product:battery_pack_component"
+      "source": "krx:065350",
+      "target": "component:electronic_module"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:007340",
-      "target": "technology:battery_pack_component"
+      "source": "krx:417200",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:011210",
-      "target": "group:powertrain"
+      "source": "krx:417200",
+      "target": "product:ultracapacitor_aluminum"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:011210",
-      "target": "product:engine_transmission"
+      "source": "krx:417200",
+      "target": "component:ultracapacitor"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:011210",
-      "target": "technology:internal_combustion_engine"
+      "source": "krx:417200",
+      "target": "end_market:automotive_electronics"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:011210",
-      "target": "technology:transmission"
+      "source": "krx:204270",
+      "target": "group:camera_module"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:073240",
-      "target": "group:tire"
+      "source": "krx:204270",
+      "target": "product:camera_cover_glass"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:073240",
-      "target": "product:passenger_tire"
+      "source": "krx:204270",
+      "target": "component:camera_window_glass"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:064960",
-      "target": "group:electrification"
+      "source": "krx:204270",
+      "target": "end_market:consumer_electronics"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:064960",
-      "target": "product:traction_motor"
+      "source": "krx:248070",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:064960",
-      "target": "technology:electric_drive_unit"
+      "source": "krx:248070",
+      "target": "product:power_module_esl_ems"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:025540",
-      "target": "group:electronics_adas"
+      "source": "krx:248070",
+      "target": "component:power_module"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:025540",
-      "target": "product:auto_connector"
+      "source": "krx:090460",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:002350",
-      "target": "group:tire"
+      "source": "krx:090460",
+      "target": "product:fpcb"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:002350",
-      "target": "product:passenger_tire"
+      "source": "krx:090460",
+      "target": "component:fpcb"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:003620",
-      "target": "group:vehicle_oem"
+      "source": "krx:171090",
+      "target": "group:display"
     },
     {
       "action": "add_structural",
-      "afterType": "produces",
-      "source": "krx:003620",
-      "target": "product:suv_pickup"
+      "source": "krx:171090",
+      "target": "product:oled_deposition_equipment"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:015750",
-      "target": "group:body_exterior"
+      "source": "krx:171090",
+      "target": "component:oled_evaporator"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:015750",
-      "target": "product:bumper_body"
+      "source": "krx:046890",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:009900",
-      "target": "group:body_exterior"
+      "source": "krx:046890",
+      "target": "product:led_vcsel_opto"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:009900",
-      "target": "product:body_press_part"
+      "source": "krx:046890",
+      "target": "component:wicop"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:097520",
-      "target": "group:electronics_adas"
+      "source": "krx:033240",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:097520",
-      "target": "product:auto_camera_module"
+      "source": "krx:033240",
+      "target": "product:vcm_magnetics"
     },
     {
       "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:097520",
-      "target": "technology:adas"
+      "source": "krx:033240",
+      "target": "component:vcm"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:010690",
-      "target": "group:chassis_braking_steering"
+      "source": "krx:077360",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:010690",
-      "target": "product:suspension_chassis"
+      "source": "krx:077360",
+      "target": "product:solder_packaging_materials"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:200880",
-      "target": "group:interior"
+      "source": "krx:077360",
+      "target": "component:solder_ball"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:200880",
-      "target": "product:interior_trim_seat"
+      "source": "krx:017900",
+      "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:000430",
-      "target": "group:chassis_braking_steering"
+      "source": "krx:017900",
+      "target": "product:led_opto_devices"
     },
     {
       "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:000430",
-      "target": "product:spring_suspension"
+      "source": "krx:017900",
+      "target": "component:led"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:284740",
+      "target": "group:home_appliance"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:284740",
+      "target": "product:home_appliance_rental"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:284740",
+      "target": "component:kitchen_appliances"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:004710",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:004710",
+      "target": "product:led_blu_electronic_modules"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:004710",
+      "target": "component:backlight_unit"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:192650",
+      "target": "group:camera_module"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:192650",
+      "target": "product:camera_biometric_modules"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:192650",
+      "target": "component:biometric_module"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:052710",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:052710",
+      "target": "product:motor_antenna_ceramic"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:052710",
+      "target": "component:ceramic_parts"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:065680",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:065680",
+      "target": "product:connectors"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:065680",
+      "target": "component:connector"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "product:electronics_ems_intops"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "component:ems_assembly"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "end_market:automotive_electronics"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:005380",
-      "target": "global:toyota",
-      "defaultHidden": true
+      "source": "krx:009150",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:005380",
-      "target": "global:gm",
-      "defaultHidden": true
+      "source": "krx:066570",
+      "target": "global:sony"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:005380",
-      "target": "global:vw",
-      "defaultHidden": true
+      "source": "krx:066570",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:000270",
-      "target": "global:toyota",
-      "defaultHidden": true
+      "source": "krx:011070",
+      "target": "global:bosch"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:000270",
-      "target": "global:vw",
-      "defaultHidden": true
+      "source": "krx:034220",
+      "target": "global:sony"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:000270",
-      "target": "global:stellantis",
-      "defaultHidden": true
+      "source": "krx:021240",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:012330",
-      "target": "global:bosch",
-      "defaultHidden": true
+      "source": "krx:489790",
+      "target": "global:sony"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:012330",
-      "target": "global:continental",
-      "defaultHidden": true
+      "source": "krx:043260",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:012330",
-      "target": "global:denso",
-      "defaultHidden": true
+      "source": "krx:001820",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:307950",
-      "target": "global:nvidia",
-      "defaultHidden": true
+      "source": "krx:065350",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:307950",
-      "target": "global:bosch",
-      "defaultHidden": true
+      "source": "krx:417200",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:307950",
-      "target": "global:continental",
-      "defaultHidden": true
+      "source": "krx:204270",
+      "target": "global:sony"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:161390",
-      "target": "global:michelin",
-      "defaultHidden": true
+      "source": "krx:248070",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:161390",
-      "target": "global:bridgestone",
-      "defaultHidden": true
+      "source": "krx:090460",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:161390",
-      "target": "global:goodyear",
-      "defaultHidden": true
+      "source": "krx:171090",
+      "target": "global:sony"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:018880",
-      "target": "global:denso",
-      "defaultHidden": true
+      "source": "krx:046890",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:018880",
-      "target": "global:mahindra",
-      "defaultHidden": true
+      "source": "krx:033240",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:018880",
-      "target": "global:vw",
-      "defaultHidden": true
+      "source": "krx:077360",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:005850",
-      "target": "global:bosch",
-      "defaultHidden": true
+      "source": "krx:017900",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:005850",
-      "target": "global:continental",
-      "defaultHidden": true
+      "source": "krx:284740",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:204320",
-      "target": "global:bosch",
-      "defaultHidden": true
+      "source": "krx:004710",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:204320",
-      "target": "global:continental",
-      "defaultHidden": true
+      "source": "krx:192650",
+      "target": "global:bosch"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:204320",
-      "target": "global:zf",
-      "defaultHidden": true
+      "source": "krx:052710",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:000240",
-      "target": "global:michelin",
-      "defaultHidden": true
+      "source": "krx:065680",
+      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:000240",
-      "target": "global:bridgestone",
-      "defaultHidden": true
+      "source": "krx:049070",
+      "target": "global:bosch"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:007340",
-      "target": "global:bosch",
-      "defaultHidden": true
+      "action": "add_cross_sector_reference",
+      "source": "krx:077360",
+      "target": "sector:semiconductor"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:007340",
-      "target": "global:continental",
-      "defaultHidden": true
+      "action": "add_cross_sector_reference",
+      "source": "krx:011070",
+      "target": "sector:auto"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:011210",
-      "target": "global:denso",
-      "defaultHidden": true
+      "action": "add_cross_sector_reference",
+      "source": "krx:192650",
+      "target": "sector:auto"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:011210",
-      "target": "global:bosch",
-      "defaultHidden": true
+      "action": "add_cross_sector_reference",
+      "source": "krx:049070",
+      "target": "sector:auto"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:073240",
-      "target": "global:michelin",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:073240",
-      "target": "global:bridgestone",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:064960",
-      "target": "global:denso",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:064960",
-      "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:025540",
-      "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:025540",
-      "target": "global:denso",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:002350",
-      "target": "global:goodyear",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:002350",
-      "target": "global:bridgestone",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:003620",
-      "target": "global:stellantis",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:003620",
-      "target": "global:gm",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:015750",
-      "target": "global:vw",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:015750",
-      "target": "global:gm",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:009900",
-      "target": "global:toyota",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:009900",
-      "target": "global:gm",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:097520",
-      "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:097520",
-      "target": "global:continental",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:097520",
-      "target": "global:denso",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:010690",
-      "target": "global:zf",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:010690",
-      "target": "global:continental",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:200880",
-      "target": "global:toyota",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:200880",
-      "target": "global:stellantis",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:000430",
-      "target": "global:zf",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:000430",
-      "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "add_group_member",
-      "source": "krx:005380",
-      "target": "group:hyundai_motor_group"
-    },
-    {
-      "action": "add_group_member",
-      "source": "krx:000270",
-      "target": "group:hyundai_motor_group"
-    },
-    {
-      "action": "add_group_member",
-      "source": "krx:012330",
-      "target": "group:hyundai_motor_group"
-    },
-    {
-      "action": "add_group_member",
-      "source": "krx:011210",
-      "target": "group:hyundai_motor_group"
-    },
-    {
-      "action": "add_group_member",
-      "source": "krx:307950",
-      "target": "group:hyundai_motor_group"
-    },
-    {
-      "action": "defer_ownership_pending_dart",
-      "source": "krx:000240",
-      "target": "krx:161390",
-      "reason": "Phase 5B does not invent ownership without opened DART stake disclosure"
+      "action": "defer_business_relationships",
+      "reason": "Phase 5C does not invent supply/ownership/device adoption without DART/KIND/primary evidence"
     }
   ]
 }

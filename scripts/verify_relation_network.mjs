@@ -30,6 +30,7 @@ const pilotMaps = {
   renewable: 'renewable/korea_renewable_map.html',
   construction: 'construction/korea_construction_map.html',
   auto: 'auto/korea_auto_map.html',
+  elec: 'elec/korea_elec_map.html',
 };
 
 for (const sector of PILOT_NETWORK_SECTORS) {

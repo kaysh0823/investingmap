@@ -2516,6 +2516,11 @@
           "operates_brand",
           "used_in_vehicle_segment",
           "located_in_stage",
+          "cross_sector_reference",
+          "used_in_device",
+          "used_in_product_family",
+          "designed_for",
+          "certified_for",
           "group_member",
           "affiliated_with"
         ],
@@ -2564,7 +2569,12 @@
           "specializes_in",
           "operates_brand",
           "used_in_vehicle_segment",
-          "located_in_stage"
+          "located_in_stage",
+          "cross_sector_reference",
+          "used_in_device",
+          "used_in_product_family",
+          "designed_for",
+          "certified_for"
         ],
         "excludedRelationshipTypes": [
           "supplies_material_to",
@@ -2703,6 +2713,11 @@
           "operates_brand",
           "used_in_vehicle_segment",
           "located_in_stage",
+          "cross_sector_reference",
+          "used_in_device",
+          "used_in_product_family",
+          "designed_for",
+          "certified_for",
           "group_member",
           "affiliated_with",
           "peer"
