@@ -1,0 +1,145 @@
+{
+  "phase": "5G",
+  "sector": "medtech",
+  "auditedAt": "2026-08-29",
+  "htmlPath": "medtech/korea_medtech_map.html",
+  "dataSector": "medtech",
+  "listedCompanyCount": 10,
+  "tickers": [
+    {
+      "ticker": "096530",
+      "nameKo": "씨젠",
+      "chain": "진단·IVD",
+      "partners": [
+        "roche",
+        "abbott",
+        "siemens_health"
+      ]
+    },
+    {
+      "ticker": "328130",
+      "nameKo": "루닛",
+      "chain": "진단·IVD",
+      "partners": [
+        "ge_health",
+        "philips",
+        "siemens_health"
+      ]
+    },
+    {
+      "ticker": "137310",
+      "nameKo": "에스디바이오센서",
+      "chain": "진단·IVD",
+      "partners": [
+        "roche",
+        "abbott"
+      ]
+    },
+    {
+      "ticker": "041830",
+      "nameKo": "인바디",
+      "chain": "진단·IVD",
+      "partners": [
+        "ge_health",
+        "philips"
+      ]
+    },
+    {
+      "ticker": "099190",
+      "nameKo": "아이센스",
+      "chain": "진단·IVD",
+      "partners": [
+        "roche",
+        "abbott"
+      ]
+    },
+    {
+      "ticker": "060280",
+      "nameKo": "큐렉소",
+      "chain": "의료장비·수술",
+      "partners": [
+        "intuitive",
+        "stryker",
+        "medtronic"
+      ]
+    },
+    {
+      "ticker": "145720",
+      "nameKo": "덴티움",
+      "chain": "임플란트·치과",
+      "partners": [
+        "straumann",
+        "dentsply",
+        "zimmer"
+      ]
+    },
+    {
+      "ticker": "067630",
+      "nameKo": "HLB생명과학",
+      "chain": "진단·IVD",
+      "partners": [
+        "roche",
+        "abbott"
+      ]
+    },
+    {
+      "ticker": "389650",
+      "nameKo": "넥스트바이오메디컬",
+      "chain": "의료장비·수술",
+      "partners": [
+        "boston_sci",
+        "medtronic",
+        "olympus"
+      ]
+    },
+    {
+      "ticker": "228760",
+      "nameKo": "지노믹트리",
+      "chain": "진단·IVD",
+      "partners": [
+        "roche",
+        "illumina"
+      ]
+    }
+  ],
+  "chainCounts": {
+    "진단·IVD": 7,
+    "의료장비·수술": 2,
+    "임플란트·치과": 1
+  },
+  "partnersTotal": 25,
+  "emptyChains": [
+    "미용기기"
+  ],
+  "profile": {
+    "model": "medical_device_product_regulatory_ecosystem",
+    "layout": "medicalDeviceEcosystem",
+    "networkPath": "../data/networks/medtech.json",
+    "lanes": [
+      "in_vitro_diagnostics",
+      "digital_health_samd",
+      "patient_monitoring",
+      "surgical_device",
+      "dental_device"
+    ]
+  },
+  "network": {
+    "nodeCount": 51,
+    "edgeCount": 60,
+    "legacyFallback": false,
+    "confirmedBusiness": 0,
+    "peerEdges": 25,
+    "deviceCategories": 10,
+    "specialties": 8,
+    "clearanceNodes": 0,
+    "crossSectorRefs": 4
+  },
+  "policyNotes": [
+    "No invented hospital supply or exclusive distribution",
+    "Clearance is regulatory status, not sales contract",
+    "No clearance nodes without verified authority identifiers",
+    "Clinical evidence is not commercial relationship",
+    "Cosmetics aesthetic devices curated separately; empty 미용기기 lane omitted",
+    "cp_list / koreanCompanies count must remain 10"
+  ]
+}

@@ -761,17 +761,38 @@
   "medtech": {
     "sectorId": "medtech",
     "dataSector": "medtech",
-    "model": "product_distribution",
-    "layout": "assetLicensing",
-    "networkPath": null,
+    "model": "medical_device_product_regulatory_ecosystem",
+    "layout": "medicalDeviceEcosystem",
+    "networkPath": "../data/networks/medtech.json",
     "defaultEdgeTypes": [
-      "manufactures",
-      "distributes",
-      "supplies_to"
+      "member_of",
+      "specializes_in",
+      "used_in_specialty",
+      "cross_sector_reference",
+      "approved_or_cleared_by",
+      "registered_in_market",
+      "exposed_to_market",
+      "supplies_device_to",
+      "distributes_for",
+      "installed_at_provider",
+      "owns_stake_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "제품·진료영역·유통 네트워크",
-    "modelDescEn": "Product, clinical area & distribution network"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "in_vitro_diagnostics",
+      "digital_health_samd",
+      "patient_monitoring",
+      "surgical_device",
+      "dental_device"
+    ],
+    "modelDescKo": "의료기기 제품군·진료영역·인허가·유통 생태계. 규제 상태와 실제 공급·설치·유통 계약을 분리합니다.",
+    "modelDescEn": "Medical device product, specialty, regulatory and distribution ecosystem. Separates clearance status from verified supply, installation and distribution contracts."
   },
   "robot": {
     "sectorId": "robot",

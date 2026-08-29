@@ -86,6 +86,7 @@ run('node scripts/migrate_metal_network_phase5d.mjs', 'Phase 5D metal metals val
 run('node scripts/migrate_cosmetics_network_phase5e.mjs', 'Phase 5E cosmetics beauty brand/ODM ecosystem');
 run('node scripts/migrate_kconsume_network_phase5f.mjs', 'Phase 5F kconsume consumer brand/distribution ecosystem');
 run('node scripts/migrate_kcontent_network_phase5f.mjs', 'Phase 5F kcontent IP/production/distribution ecosystem');
+run('node scripts/migrate_medtech_network_phase5g.mjs', 'Phase 5G medtech device/specialty/regulatory ecosystem');
 run('node scripts/emit_network_profiles.mjs', 'network profiles JS');
 run('node scripts/patch_relation_network.mjs', 'relation network v2 UI + renderer');
 run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');

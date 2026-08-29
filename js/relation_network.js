@@ -21,6 +21,8 @@
     project_portfolio: 1, supply_contract: 1, product: 1, development_pipeline: 1, offtaker: 1,
     brand: 1, artist_or_group: 1, creator: 1, content_ip: 1, franchise_ip: 1,
     studio: 1, label: 1, agency: 1, platform: 1, streaming_service: 1,
+    device_category: 1, clinical_specialty: 1, medical_device: 1,
+    regulatory_clearance: 1, indication: 1, software_medical_device: 1,
   };
 
   function isDiagMode() {
@@ -704,6 +706,7 @@
     else if (layout === 'beautyValueChainEcosystem') layoutBeautyValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'consumerBrandDistributionEcosystem') layoutConsumerBrandDistribution(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'contentIpDistributionEcosystem') layoutContentIpDistribution(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'medicalDeviceEcosystem') layoutMedicalDeviceEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -1031,11 +1034,42 @@
     if (n.type === 'artist_or_group' || n.type === 'creator' || n.type === 'label' || n.type === 'agency') return 'label_agency';
     if (n.type === 'studio' || n.type === 'production') return 'production_studio';
     if (n.type === 'content_ip' || n.type === 'franchise_ip') return 'ip_rights';
-    if (n.type === 'broadcaster' || n.type === 'distributor') return 'distributor';
     if (n.type === 'platform' || n.type === 'streaming_service') return 'platform';
-    if (n.type === 'cross_sector_anchor') return 'platform';
-    if (n.type === 'global_company') return 'platform';
-    return 'ip_rights';
+    if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'platform';
+    return 'label_agency';
+  }
+
+  function layoutMedicalDeviceEcosystem(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'in_vitro_diagnostics', 'digital_health_samd', 'patient_monitoring', 'surgical_device', 'dental_device',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferMedtechLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.14 + t * 0.68);
+      });
+    });
+  }
+
+  function inferMedtechLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'software_medical_device') return 'digital_health_samd';
+    if (n.type === 'device_category' || n.type === 'medical_device') return 'in_vitro_diagnostics';
+    if (n.type === 'clinical_specialty' || n.type === 'indication') return 'in_vitro_diagnostics';
+    if (n.type === 'regulatory_clearance' || n.type === 'regulator') return 'in_vitro_diagnostics';
+    if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'in_vitro_diagnostics';
+    return 'in_vitro_diagnostics';
   }
 
   function inferElecLane(n) {

@@ -58,6 +58,7 @@ const PHASE5F_PAGES = [
   { id: 'cosmetics', path: '/cosmetics/korea_cosmetics_map.html' },
   { id: 'kconsume', path: '/kconsume/korea_kconsume_map.html' },
   { id: 'kcontent', path: '/kcontent/korea_kcontent_map.html' },
+  { id: 'medtech', path: '/medtech/korea_medtech_map.html' },
 ];
 
 const PAGES = (() => {
