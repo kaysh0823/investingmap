@@ -712,6 +712,7 @@
     else if (layout === 'medicalDeviceEcosystem') layoutMedicalDeviceEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'softwarePlatformEcosystem') layoutSoftwarePlatformEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'telecomNetworkServiceEcosystem') layoutTelecomNetworkServiceEcosystem(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'roboticsValueChainEcosystem') layoutRoboticsValueChainEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -1142,6 +1143,43 @@
     if (n.type === 'network_generation') return 'network_operator';
     if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'network_operator';
     return 'network_equipment';
+  }
+
+  function layoutRoboticsValueChainEcosystem(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'precision_component', 'actuator_drive', 'robot_software', 'industrial_robot',
+      'collaborative_robot', 'logistics_robot', 'system_integration', 'end_market',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferRobotLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.12 + t * 0.7);
+      });
+    });
+  }
+
+  function inferRobotLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'reducer' || n.type === 'robot_component') return 'precision_component';
+    if (n.type === 'actuator' || n.type === 'motor_drive') return 'actuator_drive';
+    if (n.type === 'sensor' || n.type === 'vision_system') return 'sensor_vision';
+    if (n.type === 'controller') return 'controller';
+    if (n.type === 'robot_software') return 'robot_software';
+    if (n.type === 'application' || n.type === 'end_market') return 'end_market';
+    if (n.type === 'robot_category' || n.type === 'robot_product') return 'industrial_robot';
+    if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'industrial_robot';
+    return 'industrial_robot';
   }
 
   function inferElecLane(n) {

@@ -1,0 +1,92 @@
+{
+  "generatedAt": "2026-08-29T10:19:17.783Z",
+  "note": "Phase 5I targeted only — full matrix not run; pageCreate hang = infrastructure without retry-as-success",
+  "results": [
+    {
+      "id": "robot/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 6712,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "robot/tablet/en",
+      "stage": "done",
+      "elapsedMs": 2550,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "robot/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 2462,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "robot/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2414,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "robot/ticker-url",
+      "stage": "done",
+      "elapsedMs": 2464,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "robot/lane-url",
+      "stage": "done",
+      "elapsedMs": 2486,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "software/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2083,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "telecom/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2059,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "medtech/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2070,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bigchip/000660",
+      "stage": "done",
+      "elapsedMs": 2320,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "construction/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 2297,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bio/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2325,
+      "failures": [],
+      "infrastructureFailure": false
+    }
+  ],
+  "appFailureCount": 0,
+  "infrastructureFailureCount": 0
+}

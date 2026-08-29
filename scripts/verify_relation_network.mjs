@@ -38,6 +38,7 @@ const pilotMaps = {
   medtech: 'medtech/korea_medtech_map.html',
   software: 'software/korea_software_map.html',
   telecom: 'telecom/korea_telecom_map.html',
+  robot: 'robot/korea_robot_map.html',
 };
 
 for (const sector of PILOT_NETWORK_SECTORS) {

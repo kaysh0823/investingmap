@@ -61,6 +61,7 @@ const PHASE5F_PAGES = [
   { id: 'medtech', path: '/medtech/korea_medtech_map.html' },
   { id: 'software', path: '/software/korea_software_map.html' },
   { id: 'telecom', path: '/telecom/korea_telecom_map.html' },
+  { id: 'robot', path: '/robot/korea_robot_map.html' },
 ];
 
 const PAGES = (() => {
@@ -360,10 +361,10 @@ async function testPage(page, pageDef, viewport, lang) {
 
   if (!metrics.initialized) failures.push(`${pageDef.id} network not initialized`);
   if (!metrics.firstRenderComplete) failures.push(`${pageDef.id} first render incomplete`);
-  if (pageDef.id === 'robot' && metrics.initialized && !metrics.usingLegacy && metrics.sectorId !== 'robot') {
-    failures.push('robot not using legacy/robot profile');
+  if (pageDef.id === 'robot' && metrics.initialized && metrics.sectorId !== 'robot') {
+    failures.push('robot sectorId must be robot');
   }
-  if (pageDef.id !== 'robot' && metrics.usingLegacy) {
+  if (metrics.usingLegacy) {
     failures.push('pilot should not use legacy fallback');
   }
   if (metrics.legacySim) failures.push('legacy simulation still active');

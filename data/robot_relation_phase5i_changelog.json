@@ -1,0 +1,788 @@
+{
+  "asOf": "2026-08-29",
+  "phase": "5I",
+  "reviewedBy": "editorial_phase5i",
+  "listedCompanyCount": 17,
+  "nodeCount": 86,
+  "edgeCount": 115,
+  "structuralGenerated": 91,
+  "legacyMigrated": 19,
+  "manuallyCurated": 5,
+  "demotedPeer": 19,
+  "partnerClassCounts": {
+    "peer": 15,
+    "theme_reference": 3,
+    "inferred_customer_supplier": 1,
+    "invalid": 0,
+    "duplicate": 0,
+    "cross_sector_reference": 5
+  },
+  "confirmedBusinessEdgeCount": 0,
+  "metrics": {
+    "listedCompanyCount": 17,
+    "nodeCount": 86,
+    "edgeCount": 115,
+    "nodeCountByType": {
+      "group": 8,
+      "cross_sector_anchor": 5,
+      "listed_company": 17,
+      "robot_product": 12,
+      "robot_category": 15,
+      "application": 10,
+      "actuator": 2,
+      "reducer": 2,
+      "robot_software": 2,
+      "robot_component": 1,
+      "global_company": 12
+    },
+    "robotProductCount": 12,
+    "robotCategoryCount": 15,
+    "componentNodeCount": 1,
+    "reducerNodeCount": 2,
+    "actuatorNodeCount": 2,
+    "sensorNodeCount": 0,
+    "controllerNodeCount": 0,
+    "softwareNodeCount": 2,
+    "applicationNodeCount": 10,
+    "projectNodeCount": 0,
+    "structuralGeneratedEdgeCount": 91,
+    "legacyMigratedEdgeCount": 19,
+    "manuallyCuratedEdgeCount": 5,
+    "confirmedBusinessEdgeCount": 0,
+    "reportedBusinessEdgeCount": 0,
+    "inferredBusinessEdgeCount": 0,
+    "peerEdgeCount": 19,
+    "componentSupplyCount": 0,
+    "robotSupplyCount": 0,
+    "deploymentRelationshipCount": 0,
+    "pilotRelationshipCount": 0,
+    "developmentRelationshipCount": 0,
+    "investmentRelationshipCount": 0,
+    "ownershipEdgeCount": 0,
+    "acquisitionCount": 0,
+    "projectParticipationCount": 0,
+    "crossSectorReferenceCount": 5,
+    "businessRelationOrphanCount": 17,
+    "directCommercialRelationshipOrphanCount": 17,
+    "classificationOnlyCompanyCount": 0,
+    "hasPeerButNoBusinessCompanyCount": 7,
+    "peerOnlyCompanyCount": 0,
+    "zeroDegreeNodeCount": 0,
+    "duplicateSemanticNodeCount": 0,
+    "claimCoverage": {
+      "evidenceFieldCoverage": {
+        "numerator": 69,
+        "denominator": 115,
+        "percentage": 0.6,
+        "displayValue": "60%",
+        "applicable": true,
+        "reason": null
+      },
+      "businessRelationshipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "businessRelationshipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "componentSupplyDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_supply_edges"
+      },
+      "deploymentDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_deployment_edges"
+      },
+      "investmentPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_investment_edges"
+      },
+      "ownershipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_ownership_edges"
+      },
+      "projectRoleDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_project_edges"
+      },
+      "crossSectorReferenceEvidenceCoverage": {
+        "numerator": 5,
+        "denominator": 5,
+        "percentage": 1,
+        "displayValue": "100%",
+        "applicable": true,
+        "reason": null
+      },
+      "metricNotes": {
+        "businessRelationshipDenominator": "confirmed + reported business edges only",
+        "zeroDenominator": "percentage=null, displayValue=N/A, applicable=false",
+        "phase5i": "No invented supply/deploy/invest; legacy partners demoted to peer"
+      }
+    },
+    "removedUnsupportedPartnerCount": 0,
+    "demotedLegacyPeerCount": 19,
+    "legacyPartnerClassCounts": {
+      "peer": 15,
+      "theme_reference": 3,
+      "inferred_customer_supplier": 1,
+      "invalid": 0,
+      "duplicate": 0,
+      "cross_sector_reference": 5
+    }
+  },
+  "validate": {
+    "failures": [],
+    "warnings": []
+  },
+  "crossSectorBoundary": [
+    {
+      "ticker": "277810",
+      "target": "sector:auto",
+      "noteKo": "현대차그룹 투자·모빌리티 테마는 auto 경계. 투자≠완성차 납품계약.",
+      "noteEn": "Hyundai group investment/mobility theme is auto-boundary; investment ≠ OEM supply."
+    },
+    {
+      "ticker": "125490",
+      "target": "sector:auto",
+      "noteKo": "전장·ADAS 하우징은 auto 부품 노출. 로봇 다이캐스팅≠완성차 공급계약.",
+      "noteEn": "ADAS/electronics housings are auto exposure; die-cast capability ≠ auto supply contract."
+    },
+    {
+      "ticker": "117730",
+      "target": "sector:semiconductor",
+      "noteKo": "반도체·디스플레이 이송은 semi fab 노출. 장비 카테고리≠특정 fab 계약.",
+      "noteEn": "Semi/display transfer is fab exposure; category ≠ named fab contract."
+    },
+    {
+      "ticker": "056190",
+      "target": "sector:semiconductor",
+      "noteKo": "반도체·디스플레이 물류장비는 semi 공정 노출. SI 역량≠특정 고객 납품.",
+      "noteEn": "Semi/display logistics equipment is process exposure; SI capability ≠ named supply."
+    },
+    {
+      "ticker": "466100",
+      "target": "sector:software",
+      "noteKo": "관제·자율주행 SW는 robot 구조. 일반 클라우드/AI 플랫폼≠로봇 제품 계약.",
+      "noteEn": "Fleet/nav SW is robot-structure; general cloud/AI platform ≠ robot product contract."
+    }
+  ],
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "277810",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "277810",
+      "target": "robot_product:hubo-platform"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "277810",
+      "target": "robot_category:humanoid"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "277810",
+      "target": "robot_category:dual-arm"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "277810",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "277810",
+      "target": "application:service"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "454910",
+      "lane": "collaborative_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "454910",
+      "target": "robot_product:doosan-cobot-series"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "454910",
+      "target": "robot_category:collaborative"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "454910",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "454910",
+      "target": "application:palletizing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "108490",
+      "lane": "actuator_drive"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "108490",
+      "target": "actuator:dynamixel"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "108490",
+      "target": "robot_product:openmanipulator"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "108490",
+      "target": "robot_category:actuator-module"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "108490",
+      "target": "application:research-education"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "319400",
+      "lane": "system_integration"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "319400",
+      "target": "robot_product:hd-movex-smart-logistics"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "319400",
+      "target": "robot_category:logistics-automation"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "319400",
+      "target": "application:logistics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "058610",
+      "lane": "precision_component"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "058610",
+      "target": "reducer:precision-geared"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "058610",
+      "target": "robot_category:reducer"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "058610",
+      "target": "application:robot-drive-train"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "090710",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "090710",
+      "target": "robot_product:hyulim-industrial-service"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "090710",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "090710",
+      "target": "robot_category:service"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "090710",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "090360",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "090360",
+      "target": "robot_product:robostar-scara-articulated"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "090360",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "090360",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "388720",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "388720",
+      "target": "robot_product:yuil-pick-transfer"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "388720",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "388720",
+      "target": "robot_category:logistics"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "388720",
+      "target": "application:logistics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "056190",
+      "lane": "system_integration"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "056190",
+      "target": "robot_product:sfa-smart-factory-logistics"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "056190",
+      "target": "robot_category:factory-automation"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "056190",
+      "target": "application:semiconductor-display"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "056190",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "466100",
+      "lane": "robot_software"
+    },
+    {
+      "action": "structural_develops",
+      "ticker": "466100",
+      "target": "robot_software:croms"
+    },
+    {
+      "action": "structural_develops",
+      "ticker": "466100",
+      "target": "robot_software:chameleon-nav"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "466100",
+      "target": "robot_category:fleet-software"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "466100",
+      "target": "application:heterogeneous-fleet"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "160190",
+      "lane": "actuator_drive"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "160190",
+      "target": "actuator:higen-servo"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "160190",
+      "target": "robot_category:servo-drive"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "160190",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "056080",
+      "lane": "logistics_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "056080",
+      "target": "robot_product:yujin-iclebo-amr"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "056080",
+      "target": "robot_category:amr"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "056080",
+      "target": "robot_category:service"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "056080",
+      "target": "application:logistics"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "056080",
+      "target": "application:service"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "348340",
+      "lane": "collaborative_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "348340",
+      "target": "robot_product:neuromeka-indy"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "348340",
+      "target": "robot_category:collaborative"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "348340",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "125490",
+      "lane": "precision_component"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "125490",
+      "target": "robot_component:precision-die-cast"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "125490",
+      "target": "robot_category:precision-structure"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "125490",
+      "target": "application:robot-structure"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "125490",
+      "target": "application:automotive-electronics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "389500",
+      "lane": "precision_component"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "389500",
+      "target": "reducer:harmonic"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "389500",
+      "target": "robot_category:reducer"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "389500",
+      "target": "application:robot-drive-train"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "117730",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "117730",
+      "target": "robot_product:t-robotics-transfer-amr"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "117730",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "117730",
+      "target": "robot_category:amr"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "117730",
+      "target": "application:semiconductor-display"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "475400",
+      "lane": "system_integration"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "475400",
+      "target": "robot_product:cmes-pick-palletize"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "475400",
+      "target": "robot_category:vision-si"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "475400",
+      "target": "application:logistics"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "475400",
+      "target": "application:palletizing"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:service"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:palletizing"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:research-education"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:logistics"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:robot-drive-train"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:semiconductor-display"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:heterogeneous-fleet"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:robot-structure"
+    },
+    {
+      "action": "structural_application_hub",
+      "target": "application:automotive-electronics"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:277810",
+      "target": "global:nvidia",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:277810",
+      "target": "global:siemens",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:277810",
+      "target": "global:hyundai_mt",
+      "classTag": "theme_reference"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:277810",
+      "target": "global:samsung_eco",
+      "classTag": "theme_reference"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:454910",
+      "target": "global:nvidia",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:454910",
+      "target": "global:fanuc",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:454910",
+      "target": "global:abb",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:454910",
+      "target": "global:doosan_grp",
+      "classTag": "theme_reference"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:108490",
+      "target": "global:nvidia",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:108490",
+      "target": "global:intel",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:090360",
+      "target": "global:siemens",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:090360",
+      "target": "global:fanuc",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:090360",
+      "target": "krx:454910",
+      "classTag": "inferred_customer_supplier"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:160190",
+      "target": "global:siemens",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:160190",
+      "target": "global:abb",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:056080",
+      "target": "global:amazon",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:056080",
+      "target": "global:google",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:125490",
+      "target": "global:keyence",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:125490",
+      "target": "global:cognex",
+      "classTag": "peer"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:277810",
+      "target": "sector:auto"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:125490",
+      "target": "sector:auto"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:117730",
+      "target": "sector:semiconductor"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:056190",
+      "target": "sector:semiconductor"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:466100",
+      "target": "sector:software"
+    },
+    {
+      "action": "defer_business_relationships",
+      "reason": "Phase 5I does not invent component/robot supply, deployment, MOU-as-commercial, investment-as-customer, or PoC-as-deployment without DART/primary evidence"
+    }
+  ]
+}

@@ -23,6 +23,7 @@
     "verify:medtech": "node scripts/verify_medtech_relation_network.mjs",
     "verify:software": "node scripts/verify_software_relation_network.mjs",
     "verify:telecom": "node scripts/verify_telecom_relation_network.mjs",
+    "verify:robot": "node scripts/verify_robot_relation_network.mjs",
     "verify:semi-relations": "node scripts/verify_semi_relation_network.mjs",
     "verify:relation-network": "node scripts/verify_relation_network.mjs",
     "verify:data-sector-profile": "node scripts/verify_data_sector_profile.mjs",

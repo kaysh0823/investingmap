@@ -836,16 +836,34 @@
   "robot": {
     "sectorId": "robot",
     "dataSector": "robot",
-    "model": "tech_stack",
-    "layout": "technologyStack",
-    "networkPath": null,
+    "model": "robotics_component_system_application_ecosystem",
+    "layout": "roboticsValueChainEcosystem",
+    "networkPath": "../data/networks/robot.json",
     "defaultEdgeTypes": [
-      "component_supplier",
-      "system_integrator",
-      "deployed_at"
+      "member_of",
+      "produces_component",
+      "produces_robot",
+      "member_of_category",
+      "supports_application",
+      "cross_sector_reference",
+      "supplies_component_to",
+      "supplies_robot_to",
+      "deployed_at",
+      "invests_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "기술 스택→통합→적용산업",
-    "modelDescEn": "Technology stack → integration → applications"
+    "lanes": [
+      "precision_component",
+      "actuator_drive",
+      "robot_software",
+      "industrial_robot",
+      "collaborative_robot",
+      "logistics_robot",
+      "system_integration",
+      "end_market"
+    ],
+    "modelDescKo": "로봇 부품·제품·유형·SI·적용산업 생태계. 구조 분류와 실제 공급·도입·투자를 분리합니다.",
+    "modelDescEn": "Robotics component, product, category, SI and end-market ecosystem. Separates structure from verified supply, deployment and investment."
   }
 }; })(typeof window !== 'undefined' ? window : globalThis);
