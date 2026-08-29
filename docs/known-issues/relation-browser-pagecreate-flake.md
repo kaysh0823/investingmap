@@ -66,6 +66,12 @@ Therefore this must **not** be recorded as cosmetics or sector application failu
 
 **Not used:** retry wrapper on failed cases; skipping cases; weakening assertions; blaming cosmetics JSON.
 
+## Phase 6 mitigation (2026-08-29)
+
+Release browser gate runs the **same case matrix** as shards A–D (`npm run verify:relation-browser:release`) with a fresh Chromium process per shard and `RN_TEST_ONLY` cleared. On HEAD `1866428c…` the sharded gate recorded **132/132** with **0** app and **0** infrastructure failures.
+
+This **does not** close the issue for monolithic long Windows runs; prefer shards or CI/Linux for deployment gates. Monolithic `verify:relation-browser` remains available and must not be “passed” via retry.
+
 ---
 
 ## How to reproduce

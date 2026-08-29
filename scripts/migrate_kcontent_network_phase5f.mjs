@@ -333,6 +333,8 @@ for (const cs of CROSS_SECTOR) {
     edgeOrigin: 'structuralGenerated',
     relationClass: 'structural',
     excludesFromBusinessCoverage: true,
+    excludesFromOrphanResolution: true,
+    duplicateBusinessCountExcluded: true,
     defaultHidden: true,
     asOf: AS_OF,
     noteKo: cs.noteKo,

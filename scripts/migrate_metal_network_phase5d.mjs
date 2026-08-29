@@ -357,6 +357,7 @@ for (const ref of CROSS_SECTOR) {
     owningSector: ref.target.replace('sector:', ''),
     excludesFromBusinessCoverage: true,
     duplicateBusinessCountExcluded: true,
+    excludesFromOrphanResolution: true,
   }, { action: 'add_cross_sector_reference', source, target: ref.target })) manuallyCurated += 1;
 }
 

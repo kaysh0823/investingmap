@@ -118,6 +118,7 @@ function reviewSemiconductorWarnings() {
     hanmi.target = hynixId.startsWith('anchor:') ? hynixId : 'anchor:000660';
     hanmi.type = 'equipment_for';
     hanmi.status = 'ended';
+    hanmi.defaultHidden = true;
     hanmi.validTo = '2025-07-01';
     hanmi.labelKo = 'TC 본더(후공정 장비) 공급 — 계약 종료(2025.07.01)';
     hanmi.labelEn = 'TC bonder supply — contract ended (2025-07-01)';

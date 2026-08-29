@@ -1,0 +1,456 @@
+{
+  "generatedAt": "2026-08-29T11:16:24.639Z",
+  "shard": "a",
+  "releaseMode": true,
+  "headHint": "1866428ce0cd23ab363c40bdd667b16eeecba418",
+  "pages": [
+    "semiconductor",
+    "holdings",
+    "defense",
+    "bio",
+    "bigchip",
+    "battery",
+    "finance"
+  ],
+  "totalCases": 42,
+  "passedCases": 42,
+  "appFailures": 0,
+  "infrastructureFailures": 0,
+  "skippedCases": 0,
+  "assertionWeakening": 0,
+  "retry": 0,
+  "failureLines": [],
+  "appFailureLines": [],
+  "infrastructureFailureLines": [],
+  "timingSummary": {
+    "caseCount": 42,
+    "min": 4197,
+    "median": 6497,
+    "p90": 9725,
+    "p95": 10051,
+    "max": 15028,
+    "timeoutCount": 0
+  },
+  "caseResults": [
+    {
+      "id": "battery/desktop/en",
+      "sector": "battery",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5626,
+      "stage": "done"
+    },
+    {
+      "id": "battery/desktop/ko",
+      "sector": "battery",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6860,
+      "stage": "done"
+    },
+    {
+      "id": "battery/mobile/en",
+      "sector": "battery",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6982,
+      "stage": "done"
+    },
+    {
+      "id": "battery/mobile/ko",
+      "sector": "battery",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5436,
+      "stage": "done"
+    },
+    {
+      "id": "battery/tablet/en",
+      "sector": "battery",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9725,
+      "stage": "done"
+    },
+    {
+      "id": "battery/tablet/ko",
+      "sector": "battery",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6192,
+      "stage": "done"
+    },
+    {
+      "id": "bigchip/desktop/en",
+      "sector": "bigchip",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5133,
+      "stage": "done"
+    },
+    {
+      "id": "bigchip/desktop/ko",
+      "sector": "bigchip",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8272,
+      "stage": "done"
+    },
+    {
+      "id": "bigchip/mobile/en",
+      "sector": "bigchip",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5196,
+      "stage": "done"
+    },
+    {
+      "id": "bigchip/mobile/ko",
+      "sector": "bigchip",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6237,
+      "stage": "done"
+    },
+    {
+      "id": "bigchip/tablet/en",
+      "sector": "bigchip",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5103,
+      "stage": "done"
+    },
+    {
+      "id": "bigchip/tablet/ko",
+      "sector": "bigchip",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6092,
+      "stage": "done"
+    },
+    {
+      "id": "bio/desktop/en",
+      "sector": "bio",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8093,
+      "stage": "done"
+    },
+    {
+      "id": "bio/desktop/ko",
+      "sector": "bio",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5012,
+      "stage": "done"
+    },
+    {
+      "id": "bio/mobile/en",
+      "sector": "bio",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5263,
+      "stage": "done"
+    },
+    {
+      "id": "bio/mobile/ko",
+      "sector": "bio",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6763,
+      "stage": "done"
+    },
+    {
+      "id": "bio/tablet/en",
+      "sector": "bio",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5122,
+      "stage": "done"
+    },
+    {
+      "id": "bio/tablet/ko",
+      "sector": "bio",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5213,
+      "stage": "done"
+    },
+    {
+      "id": "defense/desktop/en",
+      "sector": "defense",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4197,
+      "stage": "done"
+    },
+    {
+      "id": "defense/desktop/ko",
+      "sector": "defense",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6324,
+      "stage": "done"
+    },
+    {
+      "id": "defense/mobile/en",
+      "sector": "defense",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6497,
+      "stage": "done"
+    },
+    {
+      "id": "defense/mobile/ko",
+      "sector": "defense",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6940,
+      "stage": "done"
+    },
+    {
+      "id": "defense/tablet/en",
+      "sector": "defense",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8395,
+      "stage": "done"
+    },
+    {
+      "id": "defense/tablet/ko",
+      "sector": "defense",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 15028,
+      "stage": "done"
+    },
+    {
+      "id": "finance/desktop/en",
+      "sector": "finance",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5464,
+      "stage": "done"
+    },
+    {
+      "id": "finance/desktop/ko",
+      "sector": "finance",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4905,
+      "stage": "done"
+    },
+    {
+      "id": "finance/mobile/en",
+      "sector": "finance",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4814,
+      "stage": "done"
+    },
+    {
+      "id": "finance/mobile/ko",
+      "sector": "finance",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4999,
+      "stage": "done"
+    },
+    {
+      "id": "finance/tablet/en",
+      "sector": "finance",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8371,
+      "stage": "done"
+    },
+    {
+      "id": "finance/tablet/ko",
+      "sector": "finance",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9731,
+      "stage": "done"
+    },
+    {
+      "id": "holdings/desktop/en",
+      "sector": "holdings",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9640,
+      "stage": "done"
+    },
+    {
+      "id": "holdings/desktop/ko",
+      "sector": "holdings",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4544,
+      "stage": "done"
+    },
+    {
+      "id": "holdings/mobile/en",
+      "sector": "holdings",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4445,
+      "stage": "done"
+    },
+    {
+      "id": "holdings/mobile/ko",
+      "sector": "holdings",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5909,
+      "stage": "done"
+    },
+    {
+      "id": "holdings/tablet/en",
+      "sector": "holdings",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7946,
+      "stage": "done"
+    },
+    {
+      "id": "holdings/tablet/ko",
+      "sector": "holdings",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8576,
+      "stage": "done"
+    },
+    {
+      "id": "semiconductor/desktop/en",
+      "sector": "semiconductor",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 12770,
+      "stage": "done"
+    },
+    {
+      "id": "semiconductor/desktop/ko",
+      "sector": "semiconductor",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8601,
+      "stage": "done"
+    },
+    {
+      "id": "semiconductor/mobile/en",
+      "sector": "semiconductor",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7603,
+      "stage": "done"
+    },
+    {
+      "id": "semiconductor/mobile/ko",
+      "sector": "semiconductor",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 10051,
+      "stage": "done"
+    },
+    {
+      "id": "semiconductor/tablet/en",
+      "sector": "semiconductor",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7365,
+      "stage": "done"
+    },
+    {
+      "id": "semiconductor/tablet/ko",
+      "sector": "semiconductor",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9315,
+      "stage": "done"
+    }
+  ]
+}

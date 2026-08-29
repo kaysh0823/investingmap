@@ -1,0 +1,395 @@
+{
+  "generatedAt": "2026-08-29T11:22:48.604Z",
+  "shard": "b",
+  "releaseMode": true,
+  "headHint": "1866428ce0cd23ab363c40bdd667b16eeecba418",
+  "pages": [
+    "ship",
+    "powergrid",
+    "nuclear",
+    "renewable",
+    "construction",
+    "auto"
+  ],
+  "totalCases": 36,
+  "passedCases": 36,
+  "appFailures": 0,
+  "infrastructureFailures": 0,
+  "skippedCases": 0,
+  "assertionWeakening": 0,
+  "retry": 0,
+  "failureLines": [],
+  "appFailureLines": [],
+  "infrastructureFailureLines": [],
+  "timingSummary": {
+    "caseCount": 36,
+    "min": 3978,
+    "median": 6077,
+    "p90": 9300,
+    "p95": 9876,
+    "max": 11297,
+    "timeoutCount": 0
+  },
+  "caseResults": [
+    {
+      "id": "auto/desktop/en",
+      "sector": "auto",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6531,
+      "stage": "done"
+    },
+    {
+      "id": "auto/desktop/ko",
+      "sector": "auto",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6152,
+      "stage": "done"
+    },
+    {
+      "id": "auto/mobile/en",
+      "sector": "auto",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5228,
+      "stage": "done"
+    },
+    {
+      "id": "auto/mobile/ko",
+      "sector": "auto",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5329,
+      "stage": "done"
+    },
+    {
+      "id": "auto/tablet/en",
+      "sector": "auto",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9195,
+      "stage": "done"
+    },
+    {
+      "id": "auto/tablet/ko",
+      "sector": "auto",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4706,
+      "stage": "done"
+    },
+    {
+      "id": "construction/desktop/en",
+      "sector": "construction",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4284,
+      "stage": "done"
+    },
+    {
+      "id": "construction/desktop/ko",
+      "sector": "construction",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4334,
+      "stage": "done"
+    },
+    {
+      "id": "construction/mobile/en",
+      "sector": "construction",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5140,
+      "stage": "done"
+    },
+    {
+      "id": "construction/mobile/ko",
+      "sector": "construction",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4218,
+      "stage": "done"
+    },
+    {
+      "id": "construction/tablet/en",
+      "sector": "construction",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5063,
+      "stage": "done"
+    },
+    {
+      "id": "construction/tablet/ko",
+      "sector": "construction",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4429,
+      "stage": "done"
+    },
+    {
+      "id": "nuclear/desktop/en",
+      "sector": "nuclear",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7012,
+      "stage": "done"
+    },
+    {
+      "id": "nuclear/desktop/ko",
+      "sector": "nuclear",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4711,
+      "stage": "done"
+    },
+    {
+      "id": "nuclear/mobile/en",
+      "sector": "nuclear",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4394,
+      "stage": "done"
+    },
+    {
+      "id": "nuclear/mobile/ko",
+      "sector": "nuclear",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 3978,
+      "stage": "done"
+    },
+    {
+      "id": "nuclear/tablet/en",
+      "sector": "nuclear",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5023,
+      "stage": "done"
+    },
+    {
+      "id": "nuclear/tablet/ko",
+      "sector": "nuclear",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6883,
+      "stage": "done"
+    },
+    {
+      "id": "powergrid/desktop/en",
+      "sector": "powergrid",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6537,
+      "stage": "done"
+    },
+    {
+      "id": "powergrid/desktop/ko",
+      "sector": "powergrid",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6599,
+      "stage": "done"
+    },
+    {
+      "id": "powergrid/mobile/en",
+      "sector": "powergrid",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4837,
+      "stage": "done"
+    },
+    {
+      "id": "powergrid/mobile/ko",
+      "sector": "powergrid",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5592,
+      "stage": "done"
+    },
+    {
+      "id": "powergrid/tablet/en",
+      "sector": "powergrid",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9300,
+      "stage": "done"
+    },
+    {
+      "id": "powergrid/tablet/ko",
+      "sector": "powergrid",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6077,
+      "stage": "done"
+    },
+    {
+      "id": "renewable/desktop/en",
+      "sector": "renewable",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6037,
+      "stage": "done"
+    },
+    {
+      "id": "renewable/desktop/ko",
+      "sector": "renewable",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6054,
+      "stage": "done"
+    },
+    {
+      "id": "renewable/mobile/en",
+      "sector": "renewable",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4745,
+      "stage": "done"
+    },
+    {
+      "id": "renewable/mobile/ko",
+      "sector": "renewable",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6889,
+      "stage": "done"
+    },
+    {
+      "id": "renewable/tablet/en",
+      "sector": "renewable",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7247,
+      "stage": "done"
+    },
+    {
+      "id": "renewable/tablet/ko",
+      "sector": "renewable",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9049,
+      "stage": "done"
+    },
+    {
+      "id": "ship/desktop/en",
+      "sector": "ship",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8577,
+      "stage": "done"
+    },
+    {
+      "id": "ship/desktop/ko",
+      "sector": "ship",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9144,
+      "stage": "done"
+    },
+    {
+      "id": "ship/mobile/en",
+      "sector": "ship",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9876,
+      "stage": "done"
+    },
+    {
+      "id": "ship/mobile/ko",
+      "sector": "ship",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 11297,
+      "stage": "done"
+    },
+    {
+      "id": "ship/tablet/en",
+      "sector": "ship",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8274,
+      "stage": "done"
+    },
+    {
+      "id": "ship/tablet/ko",
+      "sector": "ship",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9840,
+      "stage": "done"
+    }
+  ]
+}

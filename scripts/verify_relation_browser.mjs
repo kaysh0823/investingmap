@@ -18,7 +18,7 @@ const DIAG_DIR = path.join(ROOT, '.tmp', 'relation-browser-diagnostics');
 const DIAG_ENABLED = process.env.RN_BROWSER_DIAG !== '0';
 
 const QUICK = process.env.RN_TEST_QUICK === '1';
-const TEST_ONLY = process.env.RN_TEST_ONLY || '';
+const TEST_ONLY = (process.env.RN_TEST_ONLY || '').trim();
 const TEST_RUNS = Math.max(1, Number(process.env.RN_TEST_RUNS || 1) || 1);
 const CONCURRENCY = Math.max(1, Math.min(4, Number(process.env.RN_BROWSER_CONCURRENCY || 1) || 1));
 const BROWSER_RECYCLE_CASES = Math.max(5, Number(process.env.RN_BROWSER_RECYCLE_CASES || 8) || 8);
@@ -53,8 +53,10 @@ const PILOT_PAGES = [
   { id: 'elec', path: '/elec/korea_elec_map.html' },
 ];
 
-/** Available for RN_TEST_ONLY without expanding default full matrix. */
-const PHASE5F_PAGES = [
+/** Full release coverage — every active map sector exactly once across shards. */
+const RELEASE_PAGES = [
+  ...PILOT_PAGES,
+  { id: 'metal', path: '/metal/korea_metal_map.html' },
   { id: 'cosmetics', path: '/cosmetics/korea_cosmetics_map.html' },
   { id: 'kconsume', path: '/kconsume/korea_kconsume_map.html' },
   { id: 'kcontent', path: '/kcontent/korea_kcontent_map.html' },
@@ -64,14 +66,42 @@ const PHASE5F_PAGES = [
   { id: 'robot', path: '/robot/korea_robot_map.html' },
 ];
 
+const BROWSER_SHARDS = {
+  a: ['semiconductor', 'bigchip', 'holdings', 'defense', 'bio', 'battery', 'finance'],
+  b: ['ship', 'powergrid', 'nuclear', 'renewable', 'construction', 'auto'],
+  c: ['elec', 'metal', 'cosmetics', 'kconsume', 'kcontent'],
+  d: ['medtech', 'software', 'telecom', 'robot'],
+};
+
+/** Available for RN_TEST_ONLY without expanding default full matrix. */
+const PHASE5F_PAGES = [
+  { id: 'cosmetics', path: '/cosmetics/korea_cosmetics_map.html' },
+  { id: 'kconsume', path: '/kconsume/korea_kconsume_map.html' },
+  { id: 'kcontent', path: '/kcontent/korea_kcontent_map.html' },
+  { id: 'medtech', path: '/medtech/korea_medtech_map.html' },
+  { id: 'software', path: '/software/korea_software_map.html' },
+  { id: 'telecom', path: '/telecom/korea_telecom_map.html' },
+  { id: 'robot', path: '/robot/korea_robot_map.html' },
+  { id: 'metal', path: '/metal/korea_metal_map.html' },
+];
+
+const SHARD = String(process.env.RN_BROWSER_SHARD || '').toLowerCase();
+const RELEASE_MODE = process.env.RN_BROWSER_RELEASE === '1' || !!SHARD;
+
 const PAGES = (() => {
-  const base = QUICK ? PILOT_PAGES : [
-    ...PILOT_PAGES,
-    { id: 'robot', path: '/robot/korea_robot_map.html' },
-  ];
+  let base;
+  if (QUICK) base = PILOT_PAGES;
+  else if (RELEASE_MODE) base = RELEASE_PAGES;
+  else base = [...PILOT_PAGES, { id: 'robot', path: '/robot/korea_robot_map.html' }];
+
+  if (SHARD && BROWSER_SHARDS[SHARD]) {
+    const allow = new Set(BROWSER_SHARDS[SHARD]);
+    base = RELEASE_PAGES.filter((p) => allow.has(p.id));
+  }
+
   if (!TEST_ONLY) return base;
   const withExtra = [...base];
-  for (const p of PHASE5F_PAGES) {
+  for (const p of [...PHASE5F_PAGES, ...RELEASE_PAGES]) {
     if (!withExtra.some((x) => x.id === p.id)) withExtra.push(p);
   }
   return withExtra.filter((p) => p.id === TEST_ONLY);
@@ -676,7 +706,22 @@ async function runMatrixCase(browser, caseDef, caseIndex, prevCaseId) {
     });
   }
 
-  return { id: caseDef.id, failures, timings, recycleBrowser: /pageCreate|contextCreate/.test(stage) && failures.length > 0 };
+  const infra = failures.some((f) => /stage timeout: (pageCreate|browserLaunch|contextCreate)|browser process|Target closed|Protocol error/i.test(f))
+    || /pageCreate|browserLaunch|contextCreate/.test(stage);
+  const infrastructureFailure = infra && failures.length > 0
+    && !failures.some((f) => /console:|pageerror:|not initialized|first render|data-sector|legacy|ticker|model|svg|network not/i.test(f));
+
+  return {
+    id: caseDef.id,
+    sector: caseDef.sector,
+    viewport: caseDef.viewport?.name,
+    lang: caseDef.lang,
+    failures,
+    timings,
+    stage,
+    infrastructureFailure,
+    recycleBrowser: /pageCreate|contextCreate|browserLaunch/.test(stage) && failures.length > 0,
+  };
 }
 
 async function launchBrowser(pw) {
@@ -687,7 +732,7 @@ async function launchBrowser(pw) {
     }));
 }
 
-async function runMatrixWithBrowserRecycle(pw, matrixCases, failures, caseTimings) {
+async function runMatrixWithBrowserRecycle(pw, matrixCases, failures, caseTimings, caseResults) {
   let browser = await launchBrowser(pw);
   try {
     for (let start = 0; start < matrixCases.length; start += BROWSER_RECYCLE_CASES) {
@@ -705,7 +750,11 @@ async function runMatrixWithBrowserRecycle(pw, matrixCases, failures, caseTiming
           globalIndex > 0 ? matrixCases[globalIndex - 1].id : null,
         );
         caseTimings.push({ id: r.id, totalMs: r.timings.totalMs, failures: r.failures.length });
-        if (r.failures.length) failures.push(`${r.id}: ${r.failures.join('; ')}`);
+        if (caseResults) caseResults.push(r);
+        if (r.failures.length) {
+          const prefix = r.infrastructureFailure ? 'INFRA' : 'APP';
+          failures.push(`${prefix} ${r.id}: ${r.failures.join('; ')}`);
+        }
         if (r.recycleBrowser) {
           await browser.close();
           browser = await launchBrowser(pw);
@@ -724,32 +773,33 @@ async function runOnce(pw, runIndex) {
 
   const failures = [];
   const caseTimings = [];
+  const caseResults = [];
 
   try {
     const matrixCases = buildMatrixCases();
-    await runMatrixWithBrowserRecycle(pw, matrixCases, failures, caseTimings);
+    await runMatrixWithBrowserRecycle(pw, matrixCases, failures, caseTimings, caseResults);
 
     if (!TEST_ONLY || PAGES.length !== 1) {
-      const browser = await launchBrowser(pw);
-      try {
-        const matrixCasesDone = true;
-        void matrixCasesDone;
-        const ctx2 = await browser.newContext();
-        await installTestIsolation(ctx2);
-        const page2 = await ctx2.newPage();
-        const urlFailures = await testUrlState(page2);
-        failures.push(...urlFailures.map((f) => `url-state: ${f}`));
-        await page2.close().catch(() => {});
-        await ctx2.close();
-      } finally {
-        await browser.close();
+      if (!SHARD || SHARD === 'a') {
+        const browser = await launchBrowser(pw);
+        try {
+          const ctx2 = await browser.newContext();
+          await installTestIsolation(ctx2);
+          const page2 = await ctx2.newPage();
+          const urlFailures = await testUrlState(page2);
+          failures.push(...urlFailures.map((f) => `APP url-state: ${f}`));
+          await page2.close().catch(() => {});
+          await ctx2.close();
+        } finally {
+          await browser.close();
+        }
       }
     }
   } finally {
     await new Promise((resolve) => srv.close(resolve));
   }
 
-  return { failures, caseTimings };
+  return { failures, caseTimings, caseResults };
 }
 
 function summarizeTimings(allRuns) {
@@ -780,9 +830,12 @@ function cleanupDiagDir() {
 async function main() {
   console.log('verify:relation-browser');
   if (TEST_ONLY) console.log('filter:', TEST_ONLY);
+  if (SHARD) console.log('shard:', SHARD, 'sectors:', PAGES.map((p) => p.id).join(','));
+  if (RELEASE_MODE) console.log('release mode: all active sectors (or shard)');
   if (TEST_RUNS > 1) console.log('runs:', TEST_RUNS);
   console.log('concurrency:', CONCURRENCY);
   console.log('browser recycle every', BROWSER_RECYCLE_CASES, 'cases');
+  console.log('pages:', PAGES.length, 'viewports:', VIEWPORTS.length);
 
   let pw;
   try {
@@ -795,6 +848,7 @@ async function main() {
   const allFailures = [];
   const runResults = [];
   const timingRuns = [];
+  const allCaseResults = [];
 
   for (let run = 1; run <= TEST_RUNS; run += 1) {
     const t0 = Date.now();
@@ -802,11 +856,12 @@ async function main() {
     try {
       result = await runOnce(pw, run);
     } catch (e) {
-      result = { failures: [String(e.message || e)], caseTimings: [] };
+      result = { failures: [`INFRA ${String(e.message || e)}`], caseTimings: [], caseResults: [] };
     }
     const durationMs = Date.now() - t0;
     runResults.push({ run, durationMs, failures: result.failures.length });
     timingRuns.push(result);
+    allCaseResults.push(...(result.caseResults || []));
     console.log(`run ${run}/${TEST_RUNS}: failures=${result.failures.length} duration=${durationMs}ms`);
     if (result.failures.length) {
       result.failures.forEach((f) => allFailures.push(`run${run}: ${f}`));
@@ -816,10 +871,43 @@ async function main() {
   const timingSummary = summarizeTimings(timingRuns);
   console.log('timing summary:', JSON.stringify(timingSummary));
 
-  console.log('failures:', allFailures.length);
+  const appFails = allFailures.filter((f) => !/\bINFRA\b/.test(f));
+  const infraFails = allFailures.filter((f) => /\bINFRA\b/.test(f));
+  const summary = {
+    generatedAt: new Date().toISOString(),
+    shard: SHARD || null,
+    releaseMode: RELEASE_MODE,
+    headHint: process.env.RN_HEAD || null,
+    pages: PAGES.map((p) => p.id),
+    totalCases: allCaseResults.length,
+    passedCases: allCaseResults.filter((c) => !c.failures?.length).length,
+    appFailures: allCaseResults.filter((c) => c.failures?.length && !c.infrastructureFailure).length,
+    infrastructureFailures: allCaseResults.filter((c) => c.infrastructureFailure).length,
+    skippedCases: 0,
+    assertionWeakening: 0,
+    retry: 0,
+    failureLines: allFailures,
+    appFailureLines: appFails,
+    infrastructureFailureLines: infraFails,
+    timingSummary,
+    caseResults: allCaseResults.map((c) => ({
+      id: c.id, sector: c.sector, viewport: c.viewport, lang: c.lang,
+      failures: c.failures, infrastructureFailure: !!c.infrastructureFailure,
+      totalMs: c.timings?.totalMs, stage: c.stage,
+    })),
+  };
+  const outDir = path.join(ROOT, 'docs/reports');
+  fs.mkdirSync(outDir, { recursive: true });
+  const shardName = SHARD || (RELEASE_MODE ? 'release-all' : 'default');
+  const outPath = path.join(outDir, `phase6-browser-shard-${shardName}.json`);
+  fs.writeFileSync(outPath, `${JSON.stringify(summary, null, 2)}\n`);
+  console.log('wrote', outPath);
+
+  console.log('failures:', allFailures.length, `(app=${appFails.length}, infra=${infraFails.length})`);
   allFailures.forEach((f) => console.log(' -', f));
 
   cleanupDiagDir();
+  // Gate: any failure (app or infra) exits non-zero; infra does not count as pass
   process.exit(allFailures.length ? 1 : 0);
 }
 

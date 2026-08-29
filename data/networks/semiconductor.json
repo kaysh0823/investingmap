@@ -5512,6 +5512,7 @@
       "reviewStatus": "reviewed",
       "reviewedAt": "2026-08-22",
       "reviewedBy": "editorial_manual_review",
+      "defaultHidden": true,
       "validTo": "2025-07-01"
     }
   ],

@@ -3700,7 +3700,8 @@
       ],
       "owningSector": "battery",
       "excludesFromBusinessCoverage": true,
-      "duplicateBusinessCountExcluded": true
+      "duplicateBusinessCountExcluded": true,
+      "excludesFromOrphanResolution": true
     },
     {
       "id": "cross-sector-004020-sector-auto",
@@ -3751,7 +3752,8 @@
       ],
       "owningSector": "auto",
       "excludesFromBusinessCoverage": true,
-      "duplicateBusinessCountExcluded": true
+      "duplicateBusinessCountExcluded": true,
+      "excludesFromOrphanResolution": true
     },
     {
       "id": "cross-sector-306200-sector-ship",
@@ -3802,7 +3804,8 @@
       ],
       "owningSector": "ship",
       "excludesFromBusinessCoverage": true,
-      "duplicateBusinessCountExcluded": true
+      "duplicateBusinessCountExcluded": true,
+      "excludesFromOrphanResolution": true
     },
     {
       "id": "cross-sector-460860-sector-construction",
@@ -3853,7 +3856,8 @@
       ],
       "owningSector": "construction",
       "excludesFromBusinessCoverage": true,
-      "duplicateBusinessCountExcluded": true
+      "duplicateBusinessCountExcluded": true,
+      "excludesFromOrphanResolution": true
     },
     {
       "id": "cross-sector-295310-sector-semiconductor",
@@ -3904,7 +3908,8 @@
       ],
       "owningSector": "semiconductor",
       "excludesFromBusinessCoverage": true,
-      "duplicateBusinessCountExcluded": true
+      "duplicateBusinessCountExcluded": true,
+      "excludesFromOrphanResolution": true
     }
   ],
   "metrics": {
