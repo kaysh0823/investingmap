@@ -53,13 +53,24 @@ const PILOT_PAGES = [
   { id: 'elec', path: '/elec/korea_elec_map.html' },
 ];
 
+/** Available for RN_TEST_ONLY without expanding default full matrix. */
+const PHASE5F_PAGES = [
+  { id: 'cosmetics', path: '/cosmetics/korea_cosmetics_map.html' },
+  { id: 'kconsume', path: '/kconsume/korea_kconsume_map.html' },
+  { id: 'kcontent', path: '/kcontent/korea_kcontent_map.html' },
+];
+
 const PAGES = (() => {
   const base = QUICK ? PILOT_PAGES : [
     ...PILOT_PAGES,
     { id: 'robot', path: '/robot/korea_robot_map.html' },
   ];
   if (!TEST_ONLY) return base;
-  return base.filter((p) => p.id === TEST_ONLY);
+  const withExtra = [...base];
+  for (const p of PHASE5F_PAGES) {
+    if (!withExtra.some((x) => x.id === p.id)) withExtra.push(p);
+  }
+  return withExtra.filter((p) => p.id === TEST_ONLY);
 })();
 
 const VIEWPORTS = QUICK

@@ -650,17 +650,38 @@
   "kconsume": {
     "sectorId": "kconsume",
     "dataSector": "kconsume",
-    "model": "brand_channel",
-    "layout": "platformEcosystem",
-    "networkPath": null,
+    "model": "consumer_brand_distribution_ecosystem",
+    "layout": "consumerBrandDistributionEcosystem",
+    "networkPath": "../data/networks/kconsume.json",
     "defaultEdgeTypes": [
-      "brand_owner",
-      "distributes",
-      "sells_through"
+      "member_of",
+      "specializes_in",
+      "operates_brand",
+      "owns_brand",
+      "licenses_brand",
+      "sold_through_channel",
+      "operates_retail_channel",
+      "exposed_to_market",
+      "cross_sector_reference",
+      "manufactures_for",
+      "distributes_for",
+      "owns_stake_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "브랜드→제조→채널→지역",
-    "modelDescEn": "Brand → manufacturing → channel → region"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "brand_owner",
+      "manufacturing",
+      "retail_channel",
+      "leisure_lifestyle"
+    ],
+    "modelDescKo": "소비재 브랜드·제조·유통·레저 가치사슬. 브랜드·채널 구조 분류와 실제 제조·유통·지분 계약을 분리합니다.",
+    "modelDescEn": "Consumer brand, manufacturing, retail and leisure value chain. Separates brand/channel structural classification from verified manufacturing, distribution and ownership contracts."
   },
   "cosmetics": {
     "sectorId": "cosmetics",
@@ -703,18 +724,39 @@
   "kcontent": {
     "sectorId": "kcontent",
     "dataSector": "kcontent",
-    "model": "ip_distribution",
-    "layout": "platformEcosystem",
-    "networkPath": null,
+    "model": "content_ip_production_distribution_ecosystem",
+    "layout": "contentIpDistributionEcosystem",
+    "networkPath": "../data/networks/kcontent.json",
     "defaultEdgeTypes": [
+      "member_of",
+      "specializes_in",
+      "represents_artist",
+      "manages_artist",
       "owns_ip",
-      "produces",
+      "controls_ip",
+      "produces_content",
+      "cross_sector_reference",
+      "distributes_to",
       "streams_on",
-      "distributes"
+      "co_produces_with",
+      "owns_stake_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "IP 생성·제작·유통 네트워크",
-    "modelDescEn": "IP creation, production & distribution network"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "label_agency",
+      "production_studio",
+      "ip_rights",
+      "distributor",
+      "platform"
+    ],
+    "modelDescKo": "콘텐츠 IP·레이블·제작·배급·플랫폼 생태계. 아티스트 소속·IP 포트폴리오 구조와 실제 전속·배급·독점 계약을 분리합니다.",
+    "modelDescEn": "Content IP, label, production, distribution and platform ecosystem. Separates artist affiliation and IP portfolio structure from verified exclusive, distribution and ownership contracts."
   },
   "medtech": {
     "sectorId": "medtech",

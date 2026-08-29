@@ -18,6 +18,8 @@
     "verify:elec": "node scripts/verify_elec_relation_network.mjs",
     "verify:metal": "node scripts/verify_metal_relation_network.mjs",
     "verify:cosmetics": "node scripts/verify_cosmetics_relation_network.mjs",
+    "verify:kconsume": "node scripts/verify_kconsume_relation_network.mjs",
+    "verify:kcontent": "node scripts/verify_kcontent_relation_network.mjs",
     "verify:semi-relations": "node scripts/verify_semi_relation_network.mjs",
     "verify:relation-network": "node scripts/verify_relation_network.mjs",
     "verify:data-sector-profile": "node scripts/verify_data_sector_profile.mjs",

@@ -19,6 +19,8 @@
     nuclear_project: 1, plant_unit: 1, country: 1, consortium: 1,
     ecosystem: 1, project_stage: 1, renewable_project: 1, project_spv: 1, contract: 1,
     project_portfolio: 1, supply_contract: 1, product: 1, development_pipeline: 1, offtaker: 1,
+    brand: 1, artist_or_group: 1, creator: 1, content_ip: 1, franchise_ip: 1,
+    studio: 1, label: 1, agency: 1, platform: 1, streaming_service: 1,
   };
 
   function isDiagMode() {
@@ -700,6 +702,8 @@
     else if (layout === 'electronicsValueChainEcosystem') layoutElectronicsValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'metalsValueChainEcosystem') layoutMetalsValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'beautyValueChainEcosystem') layoutBeautyValueChain(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'consumerBrandDistributionEcosystem') layoutConsumerBrandDistribution(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'contentIpDistributionEcosystem') layoutContentIpDistribution(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -963,6 +967,75 @@
     if (n.type === 'global_company') return 'beauty_device';
     if (n.type === 'group') return n.lane || 'brand_owner';
     return 'brand_owner';
+  }
+
+  function layoutConsumerBrandDistribution(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'brand_owner', 'manufacturing', 'retail_channel', 'leisure_lifestyle',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferConsumerLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.15 + t * 0.65);
+      });
+    });
+  }
+
+  function inferConsumerLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'brand' || n.type === 'consumer_product') return 'brand_owner';
+    if (n.type === 'retail_channel' || n.type === 'distributor' || n.type === 'ecommerce_platform') return 'retail_channel';
+    if (n.type === 'franchise') return 'retail_channel';
+    if (n.type === 'product_category') return 'brand_owner';
+    if (n.type === 'cross_sector_anchor') return 'brand_owner';
+    if (n.type === 'global_company') return 'brand_owner';
+    return 'brand_owner';
+  }
+
+  function layoutContentIpDistribution(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'label_agency', 'production_studio', 'ip_rights', 'distributor', 'platform',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferContentLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.12 + t * 0.7);
+      });
+    });
+  }
+
+  function inferContentLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'artist_or_group' || n.type === 'creator' || n.type === 'label' || n.type === 'agency') return 'label_agency';
+    if (n.type === 'studio' || n.type === 'production') return 'production_studio';
+    if (n.type === 'content_ip' || n.type === 'franchise_ip') return 'ip_rights';
+    if (n.type === 'broadcaster' || n.type === 'distributor') return 'distributor';
+    if (n.type === 'platform' || n.type === 'streaming_service') return 'platform';
+    if (n.type === 'cross_sector_anchor') return 'platform';
+    if (n.type === 'global_company') return 'platform';
+    return 'ip_rights';
   }
 
   function inferElecLane(n) {

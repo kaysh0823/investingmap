@@ -1,0 +1,144 @@
+{
+  "phase": "5F",
+  "sector": "kcontent",
+  "auditedAt": "2026-08-29",
+  "htmlPath": "kcontent/korea_kcontent_map.html",
+  "dataSector": "kcontent",
+  "listedCompanyCount": 20,
+  "tickers": [
+    {
+      "ticker": "259960",
+      "nameKo": "크래프톤",
+      "chain": "게임"
+    },
+    {
+      "ticker": "352820",
+      "nameKo": "하이브",
+      "chain": "K-pop·엔터테인먼트"
+    },
+    {
+      "ticker": "036570",
+      "nameKo": "NC",
+      "chain": "게임"
+    },
+    {
+      "ticker": "251270",
+      "nameKo": "넷마블",
+      "chain": "게임"
+    },
+    {
+      "ticker": "263750",
+      "nameKo": "펄어비스",
+      "chain": "게임"
+    },
+    {
+      "ticker": "035900",
+      "nameKo": "JYP Ent.",
+      "chain": "K-pop·엔터테인먼트"
+    },
+    {
+      "ticker": "041510",
+      "nameKo": "에스엠",
+      "chain": "K-pop·엔터테인먼트"
+    },
+    {
+      "ticker": "462870",
+      "nameKo": "시프트업",
+      "chain": "게임"
+    },
+    {
+      "ticker": "192080",
+      "nameKo": "더블유게임즈",
+      "chain": "게임"
+    },
+    {
+      "ticker": "122870",
+      "nameKo": "와이지엔터테인먼트",
+      "chain": "K-pop·엔터테인먼트"
+    },
+    {
+      "ticker": "035760",
+      "nameKo": "CJ ENM",
+      "chain": "드라마·미디어·웹툰·컨텐츠"
+    },
+    {
+      "ticker": "293490",
+      "nameKo": "카카오게임즈",
+      "chain": "게임"
+    },
+    {
+      "ticker": "253450",
+      "nameKo": "스튜디오드래곤",
+      "chain": "드라마·미디어·웹툰·컨텐츠"
+    },
+    {
+      "ticker": "079160",
+      "nameKo": "CJ CGV",
+      "chain": "드라마·미디어·웹툰·컨텐츠"
+    },
+    {
+      "ticker": "225570",
+      "nameKo": "넥슨게임즈",
+      "chain": "게임"
+    },
+    {
+      "ticker": "112040",
+      "nameKo": "위메이드",
+      "chain": "게임"
+    },
+    {
+      "ticker": "376300",
+      "nameKo": "디어유",
+      "chain": "드라마·미디어·웹툰·컨텐츠"
+    },
+    {
+      "ticker": "095660",
+      "nameKo": "네오위즈",
+      "chain": "게임"
+    },
+    {
+      "ticker": "069080",
+      "nameKo": "웹젠",
+      "chain": "게임"
+    },
+    {
+      "ticker": "078340",
+      "nameKo": "컴투스",
+      "chain": "게임"
+    }
+  ],
+  "chainCounts": {
+    "게임": 12,
+    "K-pop·엔터테인먼트": 4,
+    "드라마·미디어·웹툰·컨텐츠": 4
+  },
+  "profile": {
+    "model": "content_ip_production_distribution_ecosystem",
+    "layout": "contentIpDistributionEcosystem",
+    "networkPath": "../data/networks/kcontent.json",
+    "lanes": [
+      "label_agency",
+      "production_studio",
+      "ip_rights",
+      "distributor",
+      "platform"
+    ]
+  },
+  "network": {
+    "nodeCount": 56,
+    "edgeCount": 67,
+    "legacyFallback": false,
+    "confirmedBusiness": 0,
+    "peerEdges": 7,
+    "artistNodes": 11,
+    "contentIpNodes": 6,
+    "crossSectorRefs": 3
+  },
+  "policyNotes": [
+    "No fan-list artist expansion",
+    "Platform availability ≠ exclusive distribution",
+    "Producer ≠ automatic IP owner",
+    "Artist exclusive terms unknown → not permanent active",
+    "cp_list HTML count must remain 20"
+  ]
+}

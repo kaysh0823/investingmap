@@ -1,0 +1,358 @@
+{
+  "phase": "5F",
+  "sector": "kcontent",
+  "asOf": "2026-08-29",
+  "listedCompanyCount": 20,
+  "nodeCount": 56,
+  "edgeCount": 67,
+  "structuralGenerated": 60,
+  "legacyMigrated": 7,
+  "manuallyCurated": 3,
+  "removedUnsupported": 0,
+  "demotedPeer": 7,
+  "confirmedBusinessEdgeCount": 0,
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "259960",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_controls_ip",
+      "ticker": "259960",
+      "ip": "content_ip:pubg"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "259960",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "352820",
+      "lane": "label_agency"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "352820",
+      "artist": "artist:bts"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "352820",
+      "artist": "artist:newjeans"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "352820",
+      "artist": "artist:seventeen"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "352820",
+      "category": "content_category:kpop"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "036570",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_controls_ip",
+      "ticker": "036570",
+      "ip": "content_ip:lineage"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "036570",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "251270",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "251270",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "263750",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_controls_ip",
+      "ticker": "263750",
+      "ip": "content_ip:black-desert"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "263750",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "035900",
+      "lane": "label_agency"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "035900",
+      "artist": "artist:twice"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "035900",
+      "artist": "artist:stray-kids"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "035900",
+      "artist": "artist:itzy"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "035900",
+      "category": "content_category:kpop"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "041510",
+      "lane": "label_agency"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "041510",
+      "artist": "artist:aespa"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "041510",
+      "artist": "artist:nct"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "041510",
+      "artist": "artist:exo"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "041510",
+      "category": "content_category:kpop"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "462870",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_controls_ip",
+      "ticker": "462870",
+      "ip": "content_ip:nikke"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "462870",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "192080",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "192080",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "122870",
+      "lane": "label_agency"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "122870",
+      "artist": "artist:blackpink"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "122870",
+      "artist": "artist:treasure"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "122870",
+      "category": "content_category:kpop"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "035760",
+      "lane": "production_studio"
+    },
+    {
+      "action": "structural_controls_ip",
+      "ticker": "035760",
+      "ip": "content_ip:cj-enm-drama-slate"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "035760",
+      "category": "content_category:broadcast-media"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "293490",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "293490",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "253450",
+      "lane": "production_studio"
+    },
+    {
+      "action": "structural_controls_ip",
+      "ticker": "253450",
+      "ip": "content_ip:studio-dragon-drama"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "253450",
+      "category": "content_category:drama"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "079160",
+      "lane": "distributor"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "079160",
+      "category": "content_category:theatrical"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "225570",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "225570",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "112040",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "112040",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "376300",
+      "lane": "platform"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "376300",
+      "category": "content_category:fan-platform"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "095660",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "095660",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "069080",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "069080",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "078340",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "078340",
+      "category": "content_category:game"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "352820",
+      "partner": "spotify",
+      "note": "platform availability ≠ exclusive"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "035900",
+      "partner": "spotify",
+      "note": "platform availability ≠ exclusive"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "041510",
+      "partner": "umg",
+      "note": "label peer / licensing theme"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "122870",
+      "partner": "warner",
+      "note": "label peer / licensing theme"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "035760",
+      "partner": "netflix",
+      "note": "streaming availability ≠ exclusive"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "253450",
+      "partner": "netflix",
+      "note": "streaming availability ≠ exclusive"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "259960",
+      "partner": "tencent",
+      "note": "global game peer"
+    },
+    {
+      "action": "cross_sector_reference",
+      "ticker": "352820",
+      "target": "sector:kconsume"
+    },
+    {
+      "action": "cross_sector_reference",
+      "ticker": "035760",
+      "target": "sector:telecom"
+    },
+    {
+      "action": "cross_sector_reference",
+      "ticker": "376300",
+      "target": "sector:software"
+    }
+  ]
+}
