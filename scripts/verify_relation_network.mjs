@@ -32,6 +32,7 @@ const pilotMaps = {
   auto: 'auto/korea_auto_map.html',
   elec: 'elec/korea_elec_map.html',
   metal: 'metal/korea_metal_map.html',
+  cosmetics: 'cosmetics/korea_cosmetics_map.html',
 };
 
 for (const sector of PILOT_NETWORK_SECTORS) {

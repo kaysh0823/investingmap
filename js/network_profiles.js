@@ -665,17 +665,40 @@
   "cosmetics": {
     "sectorId": "cosmetics",
     "dataSector": "cosmetics",
-    "model": "brand_odm",
-    "layout": "platformEcosystem",
-    "networkPath": null,
+    "model": "beauty_brand_manufacturing_distribution_ecosystem",
+    "layout": "beautyValueChainEcosystem",
+    "networkPath": "../data/networks/cosmetics.json",
     "defaultEdgeTypes": [
-      "odm_for",
-      "oem_for",
-      "supplies_ingredient"
+      "member_of",
+      "specializes_in",
+      "owns_brand",
+      "operates_brand",
+      "licenses_brand",
+      "provides_odm",
+      "provides_oem",
+      "used_in_product_category",
+      "exposed_to_market",
+      "sold_through_channel",
+      "cross_sector_reference",
+      "manufactures_for",
+      "distributes_for",
+      "owns_stake_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "브랜드–ODM/OEM–원료–채널 생태계",
-    "modelDescEn": "Brand–ODM/OEM–ingredient–channel ecosystem"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "brand_owner",
+      "odm_oem",
+      "beauty_device",
+      "distributor"
+    ],
+    "modelDescKo": "브랜드·ODM/OEM·미용기기·유통 가치사슬. 브랜드·시장 노출·구조 분류와 실제 ODM·유통·지분 계약을 분리합니다.",
+    "modelDescEn": "Value chain for brands, ODM/OEM, aesthetic devices and distribution. Separates brand/market structural classification from verified ODM, distribution and ownership contracts."
   },
   "kcontent": {
     "sectorId": "kcontent",

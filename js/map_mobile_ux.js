@@ -80,7 +80,9 @@
         BRAND_NAME +
         '</span>';
 
-      header.insertBefore(topbar, header.firstChild);
+      var ref = header.firstChild;
+      if (ref && ref.parentNode === header) header.insertBefore(topbar, ref);
+      else header.appendChild(topbar);
       topbar.appendChild(brand);
       topbar.appendChild(actions);
     }
@@ -107,8 +109,8 @@
     // Unwrap legacy hdr-title-wrap / info button if present.
     var wrap = document.getElementById('hdr-title-wrap');
     if (wrap && wrap.contains(h1)) {
-      var parent = wrap.parentNode;
-      parent.insertBefore(h1, wrap);
+      var wrapParent = wrap.parentNode;
+      if (wrapParent && wrapParent.contains(h1)) wrapParent.insertBefore(h1, wrap);
       wrap.remove();
     }
 
@@ -118,7 +120,9 @@
     btn.id = 'map-title-toggle';
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', 'map-editorial-panel');
-    h1.parentNode.insertBefore(btn, h1);
+    var h1Parent = h1.parentNode;
+    if (h1Parent && h1Parent.contains(h1)) h1Parent.insertBefore(btn, h1);
+    else if (h1Parent) h1Parent.appendChild(btn);
     btn.appendChild(h1);
 
     var chevron = document.createElement('span');
@@ -156,7 +160,7 @@
     }
 
     panel.appendChild(body);
-    if (details) {
+    if (details && details.parentNode && details.parentNode.contains(details)) {
       details.parentNode.insertBefore(panel, details);
       details.remove();
     } else {

@@ -8,6 +8,7 @@
   var PEER_TYPES = { peer: 1, consortium_member: 1, joint_development: 1, competes_with: 1 };
   var STATE = null;
   var POPSTATE_INSTALLED = false;
+  var LOAD_GEN = 0;
   var DIAG = { initCount: 0, renderCount: 0, popstateCount: 0, resizeObsCount: 0 };
   var ANCHOR_SAMSUNG = 'krx:005930';
   var ANCHOR_HYNIX = 'krx:000660';
@@ -32,6 +33,13 @@
   }
 
   function $(id) { return document.getElementById(id); }
+
+  function prependToToolbar(toolbar, wrap) {
+    if (!toolbar || !wrap || toolbar.contains(wrap)) return;
+    var ref = toolbar.firstChild;
+    if (ref && ref.parentNode === toolbar) toolbar.insertBefore(wrap, ref);
+    else toolbar.appendChild(wrap);
+  }
 
   function defaultViewFilters(profile) {
     var vf = (profile && profile.defaultViewFilters) || {};
@@ -691,6 +699,7 @@
     else if (layout === 'automotiveValueChainEcosystem') layoutAutomotiveValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'electronicsValueChainEcosystem') layoutElectronicsValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'metalsValueChainEcosystem') layoutMetalsValueChain(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'beautyValueChainEcosystem') layoutBeautyValueChain(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -919,6 +928,41 @@
     if (n.type === 'metal_product') return 'metal_products';
     if (n.type === 'business_category') return n.lane || 'steelmaking';
     return 'steelmaking';
+  }
+
+  function layoutBeautyValueChain(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'odm_oem', 'brand_owner', 'beauty_device', 'distributor',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferBeautyLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.15 + t * 0.65);
+      });
+    });
+  }
+
+  function inferBeautyLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'brand') return 'brand_owner';
+    if (n.type === 'manufacturing_service') return 'odm_oem';
+    if (n.type === 'retail_channel' || n.type === 'distributor') return 'distributor';
+    if (n.type === 'beauty_device' || n.type === 'product_category') return 'beauty_device';
+    if (n.type === 'cross_sector_anchor') return 'beauty_device';
+    if (n.type === 'global_company') return 'beauty_device';
+    if (n.type === 'group') return n.lane || 'brand_owner';
+    return 'brand_owner';
   }
 
   function inferElecLane(n) {
@@ -2036,7 +2080,10 @@
   }
 
   function stopSimulation(state) {
-    if (state && state.simulation) { state.simulation.stop(); state.simulation.on('tick', null); }
+    if (!state || !state.simulation) return;
+    state.simulation.stop();
+    state.simulation.on('tick', null);
+    state.simulation = null;
   }
 
   function updateSparseNotice(state, visibleEdgeCount) {
@@ -2640,7 +2687,7 @@
 
     wrap.appendChild(scopeRow);
     wrap.appendChild(roleRow);
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
   }
 
   function ensureRenewableToolbar(state) {
@@ -2758,7 +2805,7 @@
     wrap.appendChild(techRow);
     wrap.appendChild(statusRow);
     wrap.appendChild(roleRow);
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
   }
 
   function ensureConstructionToolbar(state) {
@@ -2844,7 +2891,7 @@
     });
     wrap.appendChild(roleRow);
     wrap.appendChild(statusRow);
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
   }
 
   function ensurePowergridToolbar(state) {
@@ -2898,7 +2945,7 @@
       };
       wrap.appendChild(btn);
     });
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
   }
 
   function ensureFinanceToolbar(state) {
@@ -2949,7 +2996,7 @@
       };
       wrap.appendChild(btn);
     });
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
   }
 
   function ensureShipToolbar(state) {
@@ -3000,7 +3047,7 @@
       };
       wrap.appendChild(btn);
     });
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
   }
 
   function ensureBatteryToolbar(state) {
@@ -3046,7 +3093,7 @@
       };
       wrap.appendChild(btn);
     });
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
   }
 
   function ensureBigchipToolbar(state) {
@@ -3102,7 +3149,7 @@
       };
       wrap.appendChild(btn);
     });
-    toolbar.insertBefore(wrap, toolbar.firstChild);
+    prependToToolbar(toolbar, wrap);
 
     var ended = document.createElement('label');
     ended.className = 'rn-chip';
@@ -3277,8 +3324,17 @@
       return STATE;
     }
 
+    if (STATE && STATE.sectorId === ctx.sectorId && !STATE.initialized) {
+      STATE.lang = ctx.lang;
+      STATE.ctx = ctx;
+      STATE.T = ctx.T;
+      if (ctx.container) STATE.container = ctx.container;
+      return STATE;
+    }
+
     if (STATE && STATE.sectorId !== ctx.sectorId) destroy();
 
+    var loadGen = ++LOAD_GEN;
     var profiles = global.NETWORK_PROFILES || {};
     var profile = profiles[ctx.profileKey] || profiles[ctx.sectorId] || null;
     var filters = defaultViewFilters(profile);
@@ -3306,24 +3362,34 @@
       urlStateApplied: false,
       firstRenderComplete: false,
       _controlsWired: false,
+      _loadGen: loadGen,
+      _initError: null,
     };
 
     DIAG.initCount += 1;
-    diagLog('ensureInit', { n: DIAG.initCount, sector: ctx.sectorId });
+    diagLog('ensureInit', { n: DIAG.initCount, sector: ctx.sectorId, loadGen: loadGen });
 
     wireControls(STATE);
     installPopstate(STATE);
 
     loadNetwork(STATE).then(function () {
-      STATE.dataLoaded = true;
-      initNetworkData(STATE);
-      applyUrlToState(STATE);
-      STATE.urlStateApplied = true;
-      STATE.initialized = true;
-      if (STATE.usingLegacy) {
-        console.info('[RelationNetwork] legacyFallback=true sector=' + STATE.sectorId);
+      if (!STATE || STATE._loadGen !== loadGen) return;
+      try {
+        STATE.dataLoaded = true;
+        initNetworkData(STATE);
+        applyUrlToState(STATE);
+        STATE.urlStateApplied = true;
+        STATE.initialized = true;
+        if (STATE.usingLegacy) {
+          console.info('[RelationNetwork] legacyFallback=true sector=' + STATE.sectorId);
+        }
+      } catch (err) {
+        STATE._initError = err;
+        console.warn('[RelationNetwork] init failed', STATE.sectorId, err);
       }
     }).catch(function (err) {
+      if (!STATE || STATE._loadGen !== loadGen) return;
+      STATE._initError = err;
       console.warn('[RelationNetwork] load failed', STATE.sectorId, err);
     });
 
@@ -3356,19 +3422,35 @@
   }
 
   function destroy() {
+    LOAD_GEN += 1;
     if (STATE && STATE._escHandler) document.removeEventListener('keydown', STATE._escHandler);
     if (STATE && STATE._resizeObs) { STATE._resizeObs.disconnect(); DIAG.resizeObsCount = Math.max(0, DIAG.resizeObsCount - 1); }
     stopSimulation(STATE);
     STATE = null;
   }
 
-  function whenReady() {
+  function getInitializationError() {
+    return STATE && STATE._initError ? STATE._initError : null;
+  }
+
+  function isDestroyed() {
+    return STATE === null;
+  }
+
+  function whenReady(requiredStages) {
+    var err = getInitializationError();
+    if (err) return Promise.reject(err);
     if (STATE && STATE.initialized && STATE.firstRenderComplete) {
       return Promise.resolve(STATE);
     }
     return new Promise(function (resolve, reject) {
       var deadline = Date.now() + 60000;
       (function tick() {
+        var initErr = getInitializationError();
+        if (initErr) {
+          reject(initErr);
+          return;
+        }
         if (STATE && STATE.initialized && STATE.firstRenderComplete) {
           resolve(STATE);
           return;
@@ -3411,6 +3493,8 @@
     getState: function () { return STATE; },
     getReadiness: getReadiness,
     whenReady: whenReady,
+    getInitializationError: getInitializationError,
+    isDestroyed: isDestroyed,
     _diag: function () { return isDiagMode() ? DIAG : null; },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -73,6 +73,8 @@
     var titleEl = document.getElementById('map-editorial-title');
     var bodyEl = document.getElementById('map-editorial-body');
     if (!titleEl || !bodyEl) return;
+    if (document.getElementById('map-editorial-panel')) return;
+    if (!section.contains(titleEl) || !section.contains(bodyEl)) return;
 
     var details = document.createElement('details');
     details.className = 'map-editorial-details';
