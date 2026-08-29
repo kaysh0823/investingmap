@@ -1,0 +1,139 @@
+{
+  "phase": "5H",
+  "sector": "telecom",
+  "auditedAt": "2026-08-29",
+  "htmlPath": "telecom/korea_telecom_map.html",
+  "dataSector": "telecom",
+  "listedCompanyCount": 11,
+  "tickers": [
+    {
+      "ticker": "017670",
+      "nameKo": "SK텔레콤",
+      "chain": "통신서비스",
+      "partners": [
+        "verizon",
+        "deutsche"
+      ]
+    },
+    {
+      "ticker": "030200",
+      "nameKo": "KT",
+      "chain": "통신서비스",
+      "partners": [
+        "verizon",
+        "deutsche"
+      ]
+    },
+    {
+      "ticker": "032640",
+      "nameKo": "LG유플러스",
+      "chain": "통신서비스",
+      "partners": [
+        "verizon",
+        "deutsche"
+      ]
+    },
+    {
+      "ticker": "010170",
+      "nameKo": "대한광통신",
+      "chain": "광통신",
+      "partners": [
+        "ciena"
+      ]
+    },
+    {
+      "ticker": "218410",
+      "nameKo": "RFHIC",
+      "chain": "무선장비",
+      "partners": [
+        "ericsson"
+      ]
+    },
+    {
+      "ticker": "032500",
+      "nameKo": "케이엠더블유",
+      "chain": "무선장비",
+      "partners": [
+        "ericsson"
+      ]
+    },
+    {
+      "ticker": "050890",
+      "nameKo": "쏠리드",
+      "chain": "무선장비",
+      "partners": [
+        "ericsson"
+      ]
+    },
+    {
+      "ticker": "037460",
+      "nameKo": "삼지전자",
+      "chain": "무선장비",
+      "partners": [
+        "ericsson"
+      ]
+    },
+    {
+      "ticker": "138080",
+      "nameKo": "오이솔루션",
+      "chain": "광통신",
+      "partners": [
+        "ciena"
+      ]
+    },
+    {
+      "ticker": "069540",
+      "nameKo": "빛과전자",
+      "chain": "광통신",
+      "partners": [
+        "ciena"
+      ]
+    },
+    {
+      "ticker": "230240",
+      "nameKo": "에치에프알",
+      "chain": "무선장비",
+      "partners": [
+        "ericsson",
+        "ciena"
+      ]
+    }
+  ],
+  "chainCounts": {
+    "통신서비스": 3,
+    "광통신": 3,
+    "무선장비": 5
+  },
+  "partnersTotal": 15,
+  "emptyChains": [
+    "위성통신"
+  ],
+  "profile": {
+    "model": "telecommunications_network_service_ecosystem",
+    "layout": "telecomNetworkServiceEcosystem",
+    "networkPath": "../data/networks/telecom.json",
+    "lanes": [
+      "network_operator",
+      "network_equipment",
+      "optical_wireless_component"
+    ]
+  },
+  "network": {
+    "nodeCount": 35,
+    "edgeCount": 52,
+    "legacyFallback": false,
+    "confirmedBusiness": 0,
+    "peerEdges": 15,
+    "services": 3,
+    "equipment": 5,
+    "licenseNodes": 0,
+    "crossSectorRefs": 4
+  },
+  "policyNotes": [
+    "Spectrum assignment is not company ownership",
+    "No license nodes without official identifiers",
+    "Certification ≠ equipment supply",
+    "Empty 위성통신 lane omitted",
+    "cp_list must remain 11"
+  ]
+}

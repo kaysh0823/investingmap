@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-08-29T09:40:33.379Z",
+  "note": "Phase 5H targeted only — full matrix not run; pageCreate hang = infrastructure without retry-as-success",
+  "results": [
+    {
+      "id": "software/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 10168,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "software/tablet/en",
+      "stage": "done",
+      "elapsedMs": 4236,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "software/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 3942,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "software/mobile/en",
+      "stage": "done",
+      "elapsedMs": 5990,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "telecom/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 2311,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "telecom/tablet/en",
+      "stage": "done",
+      "elapsedMs": 5703,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "telecom/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 8804,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "telecom/mobile/en",
+      "stage": "done",
+      "elapsedMs": 11552,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "medtech/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2996,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "kcontent/mobile/en",
+      "stage": "done",
+      "elapsedMs": 7502,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bigchip/000660",
+      "stage": "done",
+      "elapsedMs": 6763,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "construction/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 2065,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bio/mobile/en",
+      "stage": "done",
+      "elapsedMs": 3432,
+      "failures": [],
+      "infrastructureFailure": false
+    }
+  ],
+  "appFailureCount": 0,
+  "infrastructureFailureCount": 0
+}

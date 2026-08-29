@@ -1,0 +1,518 @@
+{
+  "asOf": "2026-08-29",
+  "phase": "5H",
+  "reviewedBy": "editorial_phase5h",
+  "listedCompanyCount": 13,
+  "nodeCount": 55,
+  "edgeCount": 69,
+  "structuralGenerated": 46,
+  "legacyMigrated": 19,
+  "manuallyCurated": 4,
+  "demotedPeer": 19,
+  "confirmedBusinessEdgeCount": 0,
+  "metrics": {
+    "listedCompanyCount": 13,
+    "nodeCount": 55,
+    "edgeCount": 69,
+    "structuralGeneratedEdgeCount": 46,
+    "legacyMigratedEdgeCount": 19,
+    "manuallyCuratedEdgeCount": 4,
+    "softwareProductCount": 4,
+    "platformNodeCount": 4,
+    "cloudServiceCount": 5,
+    "softwareCategoryCount": 7,
+    "integrationRelationshipCount": 0,
+    "deploymentRelationshipCount": 0,
+    "supplyRelationshipCount": 0,
+    "partnershipCount": 0,
+    "licensingRelationshipCount": 0,
+    "resellerRelationshipCount": 0,
+    "publicContractCount": 0,
+    "ownershipEdgeCount": 0,
+    "acquisitionCount": 0,
+    "crossSectorReferenceCount": 4,
+    "confirmedBusinessEdgeCount": 0,
+    "reportedBusinessEdgeCount": 0,
+    "peerEdgeCount": 19,
+    "businessRelationOrphanCount": 13,
+    "directCommercialRelationshipOrphanCount": 13,
+    "classificationOnlyCompanyCount": 2,
+    "hasPeerButNoBusinessCompanyCount": 13,
+    "peerOnlyCompanyCount": 0,
+    "zeroDegreeNodeCount": 0,
+    "duplicateSemanticNodeCount": 0,
+    "claimCoverage": {
+      "evidenceFieldCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "businessRelationshipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "businessRelationshipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "supplyDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_supply_edges"
+      },
+      "partnershipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_partnership_edges"
+      },
+      "ownershipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_ownership_edges"
+      },
+      "deploymentDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_deployment_edges"
+      },
+      "publicContractPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_public_contracts"
+      },
+      "crossSectorReferenceEvidenceCoverage": {
+        "numerator": 4,
+        "denominator": 4,
+        "percentage": 1,
+        "displayValue": "100%",
+        "applicable": true,
+        "reason": null
+      },
+      "metricNotes": {
+        "businessRelationshipDenominator": "confirmed + reported business edges only",
+        "integrationNotBusiness": "integrates_with is structural, not partnership/business",
+        "zeroDenominator": "percentage=null, displayValue=N/A, applicable=false"
+      }
+    },
+    "nodeCountByType": {
+      "group": 7,
+      "cross_sector_anchor": 4,
+      "listed_company": 13,
+      "platform": 4,
+      "software_category": 7,
+      "customer_industry": 5,
+      "cloud_service": 5,
+      "software_product": 4,
+      "global_company": 6
+    },
+    "removedUnsupportedPartnerCount": 0,
+    "demotedLegacyPeerCount": 19
+  },
+  "validate": {
+    "failures": [],
+    "warnings": []
+  },
+  "crossSectorBoundary": [
+    {
+      "ticker": "035420",
+      "target": "sector:kcontent",
+      "noteKo": "콘텐츠·스트리밍 IP는 kcontent 중심. 플랫폼 노출≠콘텐츠 배급계약.",
+      "noteEn": "Content/streaming IP is kcontent-centric; platform exposure ≠ distribution contract."
+    },
+    {
+      "ticker": "035720",
+      "target": "sector:finance",
+      "noteKo": "핀테크·금융서비스 지분은 finance와 구분. 메신저 플랫폼≠금융 계약.",
+      "noteEn": "Fintech/finance ownership is finance-sector; messenger platform ≠ finance contract."
+    },
+    {
+      "ticker": "018260",
+      "target": "sector:telecom",
+      "noteKo": "통신망·통신서비스는 telecom. 클라우드 SI≠망 공급계약.",
+      "noteEn": "Networks/services are telecom; cloud SI ≠ network supply contract."
+    },
+    {
+      "ticker": "053800",
+      "target": "sector:medtech",
+      "noteKo": "의료 AI·SaMD 인허가는 medtech cross-reference. 일반 보안 SW≠의료기기.",
+      "noteEn": "SaMD clearances are medtech; general security SW ≠ medical device."
+    }
+  ],
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "035420",
+      "lane": "data_ai"
+    },
+    {
+      "action": "structural_operates_platform",
+      "ticker": "035420",
+      "target": "platform:naver-search-ai"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "035420",
+      "target": "software_category:internet-platform"
+    },
+    {
+      "action": "structural_used_in_industry",
+      "ticker": "035420",
+      "target": "industry:consumer-internet"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "018260",
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_offers_cloud_service",
+      "ticker": "018260",
+      "target": "cloud_service:samsung-sds-cloud"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "018260",
+      "target": "software_category:si-cloud"
+    },
+    {
+      "action": "structural_used_in_industry",
+      "ticker": "018260",
+      "target": "industry:enterprise-it"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "035720",
+      "lane": "data_ai"
+    },
+    {
+      "action": "structural_operates_platform",
+      "ticker": "035720",
+      "target": "platform:kakao-messenger"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "035720",
+      "target": "software_category:internet-platform"
+    },
+    {
+      "action": "structural_used_in_industry",
+      "ticker": "035720",
+      "target": "industry:consumer-internet"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "064400",
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_offers_cloud_service",
+      "ticker": "064400",
+      "target": "cloud_service:lg-cns-cloud"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "064400",
+      "target": "software_category:si-cloud"
+    },
+    {
+      "action": "structural_used_in_industry",
+      "ticker": "064400",
+      "target": "industry:enterprise-it"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "022100",
+      "lane": "industrial_software"
+    },
+    {
+      "action": "structural_develops",
+      "ticker": "022100",
+      "target": "software_product:posco-dx-industrial"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "022100",
+      "target": "software_category:industrial-dx"
+    },
+    {
+      "action": "structural_used_in_industry",
+      "ticker": "022100",
+      "target": "industry:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "181710",
+      "lane": "data_ai"
+    },
+    {
+      "action": "structural_operates_platform",
+      "ticker": "181710",
+      "target": "platform:nhn-cloud-game"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "181710",
+      "target": "software_category:internet-platform"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "053800",
+      "lane": "cybersecurity"
+    },
+    {
+      "action": "structural_develops",
+      "ticker": "053800",
+      "target": "software_product:ahnlab-endpoint"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "053800",
+      "target": "software_category:cybersecurity"
+    },
+    {
+      "action": "structural_used_in_industry",
+      "ticker": "053800",
+      "target": "industry:enterprise-security"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "093320",
+      "lane": "cloud_infrastructure"
+    },
+    {
+      "action": "structural_offers_cloud_service",
+      "ticker": "093320",
+      "target": "cloud_service:kinx-ix-cloud"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "093320",
+      "target": "software_category:hosting-cloud"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "030520",
+      "lane": "enterprise_software"
+    },
+    {
+      "action": "structural_develops",
+      "ticker": "030520",
+      "target": "software_product:hancom-office"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "030520",
+      "target": "software_category:productivity-saas"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "042000",
+      "lane": "commerce_platform"
+    },
+    {
+      "action": "structural_operates_platform",
+      "ticker": "042000",
+      "target": "platform:cafe24-commerce"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "042000",
+      "target": "software_category:ecommerce-saas"
+    },
+    {
+      "action": "structural_used_in_industry",
+      "ticker": "042000",
+      "target": "industry:retail-commerce"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "079940",
+      "lane": "cloud_infrastructure"
+    },
+    {
+      "action": "structural_offers_cloud_service",
+      "ticker": "079940",
+      "target": "cloud_service:gabia-hosting"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "079940",
+      "target": "software_category:hosting-cloud"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "203650",
+      "lane": "cybersecurity"
+    },
+    {
+      "action": "structural_develops",
+      "ticker": "203650",
+      "target": "software_product:dream-security-auth"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "203650",
+      "target": "software_category:cybersecurity"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "286940",
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_provides_managed_service",
+      "ticker": "286940",
+      "target": "cloud_service:lotte-innovate-it"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "286940",
+      "target": "software_category:si-cloud"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:035420",
+      "target": "global:google"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:035420",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:018260",
+      "target": "global:accenture"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:018260",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:035720",
+      "target": "global:google"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:064400",
+      "target": "global:accenture"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:064400",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:022100",
+      "target": "global:accenture"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:022100",
+      "target": "global:sap"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:181710",
+      "target": "global:google"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:181710",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:053800",
+      "target": "global:paloalto"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:093320",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:030520",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:042000",
+      "target": "global:shopify"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:079940",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:203650",
+      "target": "global:paloalto"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:286940",
+      "target": "global:accenture"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:286940",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:035420",
+      "target": "sector:kcontent"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:035720",
+      "target": "sector:finance"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:018260",
+      "target": "sector:telecom"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:053800",
+      "target": "sector:medtech"
+    },
+    {
+      "action": "defer_business_relationships",
+      "reason": "Phase 5H does not invent customers from logos, marketplace listings, API integrations as partnerships, or cloud usage as alliances without DART/primary evidence"
+    }
+  ]
+}

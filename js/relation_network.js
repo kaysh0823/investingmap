@@ -23,6 +23,9 @@
     studio: 1, label: 1, agency: 1, platform: 1, streaming_service: 1,
     device_category: 1, clinical_specialty: 1, medical_device: 1,
     regulatory_clearance: 1, indication: 1, software_medical_device: 1,
+    software_product: 1, software_category: 1, cloud_service: 1,
+    customer_industry: 1, telecom_service: 1, network_equipment: 1,
+    network_component: 1, network_generation: 1, spectrum_band: 1,
   };
 
   function isDiagMode() {
@@ -707,6 +710,8 @@
     else if (layout === 'consumerBrandDistributionEcosystem') layoutConsumerBrandDistribution(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'contentIpDistributionEcosystem') layoutContentIpDistribution(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'medicalDeviceEcosystem') layoutMedicalDeviceEcosystem(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'softwarePlatformEcosystem') layoutSoftwarePlatformEcosystem(state.nodes, state.edges, W, H, state.profile);
+    else if (layout === 'telecomNetworkServiceEcosystem') layoutTelecomNetworkServiceEcosystem(state.nodes, state.edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
@@ -1070,6 +1075,73 @@
     if (n.type === 'regulatory_clearance' || n.type === 'regulator') return 'in_vitro_diagnostics';
     if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'in_vitro_diagnostics';
     return 'in_vitro_diagnostics';
+  }
+
+  function layoutSoftwarePlatformEcosystem(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'data_ai', 'managed_service', 'cloud_infrastructure', 'cybersecurity',
+      'enterprise_software', 'commerce_platform', 'industrial_software',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferSoftwareLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.12 + t * 0.7);
+      });
+    });
+  }
+
+  function inferSoftwareLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'platform') return 'data_ai';
+    if (n.type === 'cloud_service') return 'cloud_infrastructure';
+    if (n.type === 'customer_industry') return 'industrial_software';
+    if (n.type === 'software_category' || n.type === 'software_product') return 'enterprise_software';
+    if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'data_ai';
+    return 'managed_service';
+  }
+
+  function layoutTelecomNetworkServiceEcosystem(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'network_operator', 'network_equipment', 'optical_wireless_component',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferTelecomLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.14 + t * 0.68);
+      });
+    });
+  }
+
+  function inferTelecomLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'telecom_service' || n.type === 'network_operator') return 'network_operator';
+    if (n.type === 'network_equipment') return 'network_equipment';
+    if (n.type === 'network_component') return 'optical_wireless_component';
+    if (n.type === 'network_generation') return 'network_operator';
+    if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'network_operator';
+    return 'network_equipment';
   }
 
   function inferElecLane(n) {

@@ -621,31 +621,70 @@
   "software": {
     "sectorId": "software",
     "dataSector": "software",
-    "model": "platform_ecosystem",
-    "layout": "platformEcosystem",
-    "networkPath": null,
+    "model": "software_product_platform_ecosystem",
+    "layout": "softwarePlatformEcosystem",
+    "networkPath": "../data/networks/software.json",
     "defaultEdgeTypes": [
-      "cloud_partner",
-      "technology_integration",
-      "platform_dependency"
+      "member_of",
+      "specializes_in",
+      "operates_platform",
+      "offers_cloud_service",
+      "used_in_industry",
+      "cross_sector_reference",
+      "supplies_software_to",
+      "partners_with",
+      "owns_stake_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "플랫폼·기술 스택 생태계",
-    "modelDescEn": "Platform & technology stack ecosystem"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "data_ai",
+      "managed_service",
+      "cloud_infrastructure",
+      "cybersecurity",
+      "enterprise_software",
+      "commerce_platform",
+      "industrial_software"
+    ],
+    "modelDescKo": "소프트웨어 제품·플랫폼·클라우드·산업 적용 생태계. 기술 연동·산업 노출과 실제 공급·파트너십을 분리합니다.",
+    "modelDescEn": "Software product, platform, cloud and industry ecosystem. Separates integration/industry exposure from verified supply and partnerships."
   },
   "telecom": {
     "sectorId": "telecom",
     "dataSector": "telecom",
-    "model": "infra_ecosystem",
-    "layout": "platformEcosystem",
-    "networkPath": null,
+    "model": "telecommunications_network_service_ecosystem",
+    "layout": "telecomNetworkServiceEcosystem",
+    "networkPath": "../data/networks/telecom.json",
     "defaultEdgeTypes": [
-      "equipment_supplier",
-      "infrastructure_partner"
+      "member_of",
+      "offers_service",
+      "manufactures_equipment",
+      "produces_component",
+      "supports_network_generation",
+      "cross_sector_reference",
+      "supplies_equipment_to",
+      "deploys_network_for",
+      "owns_stake_in",
+      "peer"
     ],
     "defaultDepth": 1,
-    "modelDescKo": "통신 인프라·서비스 생태계",
-    "modelDescEn": "Telecom infrastructure & services ecosystem"
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "network_operator",
+      "network_equipment",
+      "optical_wireless_component"
+    ],
+    "modelDescKo": "통신사·망·장비·광부품 생태계. 주파수 할당·호환 인증과 실제 공급·구축 계약을 분리합니다.",
+    "modelDescEn": "Carrier, network, equipment and optical-component ecosystem. Separates spectrum/certification from verified supply and deployment contracts."
   },
   "kconsume": {
     "sectorId": "kconsume",
