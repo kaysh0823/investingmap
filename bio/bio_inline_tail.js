@@ -386,262 +386,64 @@
       renderTable();
     }
 
-    let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;
+    
+    // ═══════════════════════════════════════════════════════
+    // GRAPH (RelationNetwork v2)
+    // ═══════════════════════════════════════════════════════
+    let svgEl = null;
 
-    function sectorAngle(chain) {
-      const i = SECTOR_ORDER.indexOf(chain);
-      const idx = i < 0 ? 0 : i;
-      return (idx / N_SECTORS) * 2 * Math.PI;
+    function rnProfileKey() {
+      const ds = document.body.getAttribute('data-sector') || 'powergrid';
+      if (ds === 'semi') return 'semiconductor';
+      return ds;
+    }
+
+    function rnGraphCtx() {
+      return {
+        sectorId: rnProfileKey(),
+        profileKey: rnProfileKey(),
+        lang: lang,
+        T: T,
+        koreanCompanies: koreanCompanies,
+        globalCompanies: globalCompanies,
+        CHAIN_COLORS: CHAIN_COLORS,
+        REGION_COLORS: REGION_COLORS,
+        container: document.getElementById('graph-svg'),
+        networkVersion: 1,
+      };
     }
 
     function buildGraph() {
-      const container = document.getElementById('graph-svg');
-      const W = container.clientWidth || 900, H = container.clientHeight || 700;
-      const graphStroke = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-stroke').trim() || '#0d1117'; } catch (e) { return '#0d1117'; } })();
-      const graphLabel = (() => { try { return getComputedStyle(document.documentElement).getPropertyValue('--graph-label').trim() || '#c9d1d9'; } catch (e) { return '#c9d1d9'; } })();
-      const isGlobalId = (id) => globalCompanies.some(g => g.id === id);
-      const graphCompanies = koreanCompanies.filter(c => c.ticker !== 'UNLISTED' && c.mcapWon > 0);
-
-      const nodes = [];
-      const nodeIndex = {};
-      graphCompanies.forEach(c => {
-        nodes.push({
-          id: c.id, label: c.name, labelEn: c.nameEn, type: 'korean', chain: c.chain,
-          ticker: c.ticker, market: c.market, mcapWon: c.mcapWon, semType: c.semType, semTypeEn: c.semTypeEn,
-          products: c.products, productsEn: c.productsEn, revenue: c.revenue,
-          revTier: c.revTier, data: c,
-          r: c.revTier === 3 ? 18 : c.revTier === 2 ? 13 : 9
-        });
-        nodeIndex[c.id] = nodes.length - 1;
-      });
-
-      const usedGlobal = new Set();
-      graphCompanies.forEach(c => (c.partners || []).forEach(p => usedGlobal.add(partnerRef(p).id)));
-      globalCompanies.filter(g => usedGlobal.has(g.id)).forEach(g => {
-        nodes.push({
-          id: g.id,
-          label: g.name,
-          labelEn: g.nameEn != null && g.nameEn !== '' ? g.nameEn : g.name,
-          type: 'global',
-          region: g.region,
-          sector: g.sector,
-          country: g.country,
-          r: 7,
-        });
-        nodeIndex[g.id] = nodes.length - 1;
-      });
-
-      const links = [];
-      const byChain = d3.group(graphCompanies, d => d.chain);
-      for (const [ch, arr] of byChain) {
-        const sorted = arr.slice().sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
-        for (let i = 0; i < sorted.length - 1; i++) {
-          links.push({
-            source: sorted[i].id,
-            target: sorted[i + 1].id,
-            sourceChain: ch,
-            kind: 'peer',
-            baseStrokeW: 1.15
-          });
-        }
-        const gids = [];
-        arr.forEach(c => (c.partners || []).forEach(p => {
-          const pid = partnerRef(p).id;
-          if (isGlobalId(pid)) gids.push(pid);
-        }));
-        const uniq = [...new Set(gids)].sort();
-        for (let i = 0; i < uniq.length - 1; i++) {
-          if (nodeIndex[uniq[i]] === undefined || nodeIndex[uniq[i + 1]] === undefined) continue;
-          links.push({
-            source: uniq[i],
-            target: uniq[i + 1],
-            sourceChain: ch,
-            kind: 'globalPeer',
-            baseStrokeW: 0.75
-          });
-        }
-      }
-
-      graphCompanies.forEach(c => {
-        (c.partners || []).forEach(p => {
-          const pr = partnerRef(p);
-          const pid = pr.id;
-          if (nodeIndex[pid] === undefined) return;
-          const w = pr.weight;
-          const strokeW = (w != null && Number.isFinite(w))
-            ? Math.max(0.9, 0.85 + w * 4.2)
-            : (pr.kind === 'backing' ? 1.0 : (pr.kind === 'theme' || pr.kind === 'export' ? 1.05 : 1.2));
-          links.push({
-            source: c.id, target: pid, sourceChain: c.chain,
-            edgeLabel: pr.edgeLabel, edgeLabelEn: pr.edgeLabelEn, weight: pr.weight, kind: pr.kind,
-            baseStrokeW: strokeW
-          });
-        });
-      });
-
-      const d3svg = d3.select('#graph-svg');
-      d3svg.selectAll('*').remove();
-      svgEl = d3svg;
-      zoomBehavior = d3.zoom().scaleExtent([0.12, 4]).on('zoom', e => g.attr('transform', e.transform));
-      d3svg.call(zoomBehavior);
-      d3svg.on('click', (e) => { if (e.target === d3svg.node() || e.target.tagName === 'svg') resetSelection(); });
-      g = d3svg.append('g');
-      simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id(d => d.id)
-          .distance(d => {
-            if (d.kind === 'globalPeer') return 70;
-            const S = d.source, T = d.target;
-            const sk = S.type || 'korean', tk = T.type || 'korean';
-            if (sk === 'korean' && tk === 'korean') return d.kind === 'peer' ? 52 : 62;
-            return 128;
-          })
-          .strength(d => (d.kind === 'globalPeer' ? 0.14 : (d.kind === 'peer' ? 0.36 : 0.28))))
-        .force('charge', d3.forceManyBody().strength(d => d.type === 'korean' ? -200 : -95))
-        .force('center', d3.forceCenter(W / 2, H / 2))
-        .force('collide', d3.forceCollide(d => d.r + 8))
-        .force('x', d3.forceX(d => {
-          if (d.type === 'global') return W / 2;
-          const a = sectorAngle(d.chain);
-          return W / 2 + Math.cos(a) * 200;
-        }).strength(0.07))
-        .force('y', d3.forceY(d => {
-          if (d.type === 'global') return H / 2;
-          const a = sectorAngle(d.chain);
-          return H / 2 + Math.sin(a) * 200;
-        }).strength(0.07));
-      const link = g.append('g').selectAll('line').data(links).join('line')
-        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'))
-        .attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22)
-        .attr('stroke-width', d => d.baseStrokeW || 1.2)
-        .attr('stroke-dasharray', d => {
-          if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'peer') return null;
-          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
-        });
-      const node = g.append('g').selectAll('g').data(nodes).join('g')
-        .attr('class', d => 'node node-' + d.type).attr('cursor', 'pointer')
-        .on('mouseover', (e, d) => showTooltip(e, d))
-        .on('mouseout', () => hideTooltip())
-        .on('click', (e, d) => { e.stopPropagation(); selectNode(d, node, link); })
-        .call(d3.drag()
-          .on('start', (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-          .on('drag', (e, d) => { d.fx = e.x; d.fy = e.y; })
-          .on('end', (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
-      node.filter(d => d.type === 'korean').append('circle')
-        .attr('r', d => d.r).attr('fill', d => CHAIN_COLORS[d.chain] || '#888')
-        .attr('fill-opacity', 0.85).attr('stroke', graphStroke).attr('stroke-width', 1.5);
-      node.filter(d => d.type === 'global').append('polygon')
-        .attr('points', d => { const r = d.r + 2; return '0,' + (-r) + ' ' + r + ',0 0,' + r + ' ' + (-r) + ',0'; })
-        .attr('fill', d => REGION_COLORS[d.region] || '#888').attr('fill-opacity', 0.8)
-        .attr('stroke', graphStroke).attr('stroke-width', 1.2);
-      node.filter(d => d.r >= 9 || d.type === 'global').append('text')
-        .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label))
-        .attr('text-anchor', 'middle').attr('dy', d => d.r + 11)
-        .attr('font-size', d => d.type === 'korean' ? (d.r >= 13 ? 11 : 9) : 9)
-        .attr('fill', graphLabel).attr('pointer-events', 'none');
-      simulation.on('tick', () => {
-        link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-          .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
-        node.attr('transform', d => 'translate(' + d.x + ',' + d.y + ')');
-      });
-      setTimeout(() => { svgEl.transition().duration(600).call(zoomBehavior.transform, d3.zoomIdentity.translate(W * 0.05, H * 0.05).scale(0.82)); }, 1200);
+      if (!window.RelationNetwork) return;
+      RelationNetwork.onTabVisible(rnGraphCtx());
+      svgEl = true;
     }
 
-    function selectNode(d, node, link) {
-      if (selectedNode === d.id) { resetSelection(); return; }
-      selectedNode = d.id;
-      const connected = new Set([d.id]);
-      link.each(l => {
-        const s = l.source.id || l.source, t = l.target.id || l.target;
-        if (s === d.id || t === d.id) { connected.add(s); connected.add(t); }
-      });
-      node.classed('node-dim', n => !connected.has(n.id));
-      link.attr('stroke-opacity', l => { const s = l.source.id || l.source, t = l.target.id || l.target; return (s === d.id || t === d.id) ? 0.9 : 0.03; })
-        .attr('stroke-width', l => {
-          const s = l.source.id || l.source, t = l.target.id || l.target;
-          const on = (s === d.id || t === d.id);
-          const base = l.baseStrokeW || 1.2;
-          return on ? Math.max(2.4, base * 2.2) : Math.max(0.55, base * 0.55);
-        });
+    function selectNode() { /* handled by RelationNetwork */ }
+    function resetSelection() { if (window.RelationNetwork) RelationNetwork.resetView(); }
+    function toggleChainHighlight() { /* chain highlight via search/filters in v2 */ }
+
+    function resetZoom() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().duration(400).call(
+        d3.zoom().transform,
+        d3.zoomIdentity.translate(el.clientWidth * 0.05, el.clientHeight * 0.05).scale(0.88)
+      );
+    }
+    function zoomIn() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().call(d3.zoom().scaleBy, 1.35);
+    }
+    function zoomOut() {
+      const el = document.getElementById('graph-svg');
+      if (!el || !window.d3) return;
+      d3.select(el).transition().call(d3.zoom().scaleBy, 0.74);
     }
 
-    function resetSelection() {
-      selectedNode = null; highlightedChain = null;
-      if (!svgEl) return;
-      svgEl.selectAll('.node').classed('node-dim', false);
-      svgEl.selectAll('line').attr('stroke-opacity', d => d.kind === 'globalPeer' ? 0.18 : 0.22).attr('stroke-width', d => d.baseStrokeW || 1.2)
-        .attr('stroke-dasharray', d => {
-          if (d.kind === 'globalPeer') return '2 5';
-          if (d.kind === 'peer') return null;
-          return d.kind === 'backing' ? '5 4' : (d.kind === 'theme' || d.kind === 'export' ? '3 5' : null);
-        })
-        .attr('stroke', d => d.kind === 'globalPeer' ? '#8b949e' : (CHAIN_COLORS[d.sourceChain] || '#555'));
-    }
-
-    function toggleChainHighlight(chain) {
-      if (!svgEl) return;
-      if (highlightedChain === chain) { resetSelection(); return; }
-      highlightedChain = chain;
-      const chainIds = new Set(koreanCompanies.filter(c => chainMatches(c, chain)).map(c => c.id));
-      const linkedIds = new Set(chainIds);
-      koreanCompanies.filter(c => chainMatches(c, chain)).forEach(c => (c.partners || []).forEach(p => linkedIds.add(partnerRef(p).id)));
-      svgEl.selectAll('.node').classed('node-dim', d => !linkedIds.has(d.id));
-      svgEl.selectAll('line').attr('stroke-opacity', l => chainIds.has(l.source.id || l.source) ? 0.75 : 0.03)
-        .attr('stroke-width', l => {
-          const base = l.baseStrokeW || 1.2;
-          return chainIds.has(l.source.id || l.source) ? Math.max(2, base * 1.7) : Math.max(0.55, base * 0.55);
-        });
-    }
-
-    function showTooltip(e, d) {
-      const tt = document.getElementById('graph-tooltip');
-      const t = T[lang];
-      const color = d.type === 'korean' ? (CHAIN_COLORS[d.chain] || '#888') : (REGION_COLORS[d.region] || '#888');
-      const displayName = lang === 'en' ? (d.labelEn || d.label) : d.label;
-      let html = '<div class="tooltip-name" style="color:' + color + '">' + displayName + '</div>';
-      if (d.type === 'korean') {
-        const chainDisplay = t.chainFilter[d.chain] || d.chain;
-        const I18nTt = window.InvestingMapI18n;
-        const semTypeDisplay = I18nTt ? I18nTt.field(d, 'semType', 'semTypeEn', lang) : (lang === 'en' ? (d.semTypeEn || '\u2014') : (d.semType || '\u2014'));
-        const productsDisplay = I18nTt ? I18nTt.field(d, 'products', 'productsEn', lang) : (lang === 'en' ? (d.productsEn || '\u2014') : (d.products || '\u2014'));
-        const mktTt = I18nTt ? I18nTt.marketLabel(d.market, lang) : d.market;
-        const subTt = lang === 'en' ? (d.label || '') : (d.labelEn || '');
-        const subPart = subTt && subTt !== displayName ? subTt + ' \u00B7 ' : '';
-        html += '<div class="tooltip-meta">' + subPart + d.ticker + ' \u00B7 ' + mktTt + '</div>';
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttChain + '</span><span class="tooltip-val">' + chainDisplay + '</span></div>';
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttSemType + '</span><span class="tooltip-val">' + semTypeDisplay + '</span></div>';
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttProducts + '</span><span class="tooltip-val">' + productsDisplay + '</span></div>';
-        const capStr = lang === 'en' ? fmtMcapUsdBillion(d.mcapWon || 0) : fmtMcapKoJo(d.mcapWon || 0);
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttRevenue + '</span><span class="tooltip-val">' + capStr + '</span></div>';
-        const partners = d.data.partners || [];
-        const pNames = partners.slice(0, 5).map(p => {
-          const pr = partnerRef(p);
-          const nm = getPartnerInfo(pr.id).name;
-          const lbl = lang === 'en' ? (pr.edgeLabelEn || pr.edgeLabel) : (pr.edgeLabel || pr.edgeLabelEn);
-          let s = nm;
-          if (lbl) s += ' — ' + lbl;
-          if (pr.weight != null && Number.isFinite(pr.weight)) s += ' (~' + Math.round(pr.weight * 100) + '%)';
-          return s;
-        }).join(', ');
-        html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttPartners + '</span><span class="tooltip-val">' + pNames + (partners.length > 5 ? '…' : '') + '</span></div>';
-      } else {
-        html += '<div class="tooltip-meta">' + d.country + ' · ' + d.sector + '</div>';
-        const suppliers = koreanCompanies.filter(c => companyLinksTo(c, d.id));
-        if (suppliers.length) {
-          const names = suppliers.slice(0, 4).map(s => lang === 'en' ? s.nameEn : s.name).join(', ');
-          html += '<div class="tooltip-row"><span class="tooltip-label">' + t.ttSuppliers + '</span><span class="tooltip-val">' + names + (suppliers.length > 4 ? '…' : '') + '</span></div>';
-        }
-      }
-      tt.innerHTML = html; tt.style.display = 'block';
-      const rect = svgEl.node().getBoundingClientRect();
-      tt.style.left = (e.pageX - rect.left - window.scrollX + 14) + 'px';
-      tt.style.top = (e.pageY - rect.top - window.scrollY - 10) + 'px';
-    }
-    function hideTooltip() { document.getElementById('graph-tooltip').style.display = 'none'; }
-    function resetZoom() { const svgNode = svgEl.node(); svgEl.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity.translate(svgNode.clientWidth * 0.05, svgNode.clientHeight * 0.05).scale(0.82)); }
-    function zoomIn() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 1.3); }
-    function zoomOut() { svgEl.transition().duration(300).call(zoomBehavior.scaleBy, 0.77); }
-
+    function showTooltip() { /* v2 uses detail panel */ }
+    function hideTooltip() { }
 
     function resetTableFilters() {
       currentChain = 'all';
@@ -729,7 +531,8 @@
       if (btn) btn.classList.add('active');
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
-      if (tab === 'graph') setTimeout(() => { if (!svgEl) buildGraph(); }, 50);
+      if (tab === 'graph') setTimeout(function() { buildGraph(); }, 50);
+      else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
     }
 

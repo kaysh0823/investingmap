@@ -299,7 +299,11 @@
       })
       .join('');
     if (tabs.parentNode !== wrap || tabs.nextSibling !== container) {
-      wrap.insertBefore(tabs, container);
+      if (container && wrap.contains(container)) {
+        wrap.insertBefore(tabs, container);
+      } else {
+        wrap.appendChild(tabs);
+      }
     }
   }
 

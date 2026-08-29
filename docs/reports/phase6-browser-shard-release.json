@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-08-29T11:30:21.793Z",
+  "head": "1866428ce0cd23ab363c40bdd667b16eeecba418",
+  "note": "Phase 6 sharded release gate — not a monolithic matrix; infra failures block deployment gate",
+  "shards": [
+    {
+      "shard": "a",
+      "exitCode": 0,
+      "durationMs": 411081,
+      "totalCases": 42,
+      "passedCases": 42,
+      "appFailures": 0,
+      "infrastructureFailures": 0,
+      "pages": [
+        "semiconductor",
+        "holdings",
+        "defense",
+        "bio",
+        "bigchip",
+        "battery",
+        "finance"
+      ]
+    },
+    {
+      "shard": "b",
+      "exitCode": 0,
+      "durationMs": 383963,
+      "totalCases": 36,
+      "passedCases": 36,
+      "appFailures": 0,
+      "infrastructureFailures": 0,
+      "pages": [
+        "ship",
+        "powergrid",
+        "nuclear",
+        "renewable",
+        "construction",
+        "auto"
+      ]
+    },
+    {
+      "shard": "c",
+      "exitCode": 0,
+      "durationMs": 215686,
+      "totalCases": 30,
+      "passedCases": 30,
+      "appFailures": 0,
+      "infrastructureFailures": 0,
+      "pages": [
+        "elec",
+        "metal",
+        "cosmetics",
+        "kconsume",
+        "kcontent"
+      ]
+    },
+    {
+      "shard": "d",
+      "exitCode": 0,
+      "durationMs": 237447,
+      "totalCases": 24,
+      "passedCases": 24,
+      "appFailures": 0,
+      "infrastructureFailures": 0,
+      "pages": [
+        "medtech",
+        "software",
+        "telecom",
+        "robot"
+      ]
+    }
+  ],
+  "totals": {
+    "totalCases": 132,
+    "passedCases": 132,
+    "appFailures": 0,
+    "infrastructureFailures": 0,
+    "skippedCases": 0,
+    "retry": 0,
+    "assertionWeakening": 0
+  },
+  "deploymentBrowserGate": true,
+  "prReadyIndependentOfBrowser": true
+}

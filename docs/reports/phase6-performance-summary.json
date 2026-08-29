@@ -1,0 +1,370 @@
+{
+  "generatedAt": "2026-08-29T11:44:08.040Z",
+  "caseCount": 132,
+  "timing": {
+    "min": 3948,
+    "median": 6094,
+    "p90": 9458,
+    "p95": 9876,
+    "max": 15028
+  },
+  "slowestSectorsByMedian": [
+    {
+      "sector": "ship",
+      "n": 6,
+      "median": 9840,
+      "max": 11297,
+      "sum": 57008
+    },
+    {
+      "sector": "semiconductor",
+      "n": 6,
+      "median": 9315,
+      "max": 12770,
+      "sum": 55705
+    },
+    {
+      "sector": "elec",
+      "n": 6,
+      "median": 8730,
+      "max": 8901,
+      "sum": 45008
+    },
+    {
+      "sector": "kcontent",
+      "n": 6,
+      "median": 8031,
+      "max": 9458,
+      "sum": 46248
+    },
+    {
+      "sector": "holdings",
+      "n": 6,
+      "median": 7946,
+      "max": 9640,
+      "sum": 41060
+    }
+  ],
+  "largestJson": [
+    {
+      "sector": "semiconductor",
+      "bytes": 183135,
+      "nodes": 160,
+      "edges": 193
+    },
+    {
+      "sector": "elec",
+      "bytes": 182716,
+      "nodes": 86,
+      "edges": 107
+    },
+    {
+      "sector": "auto",
+      "bytes": 169634,
+      "nodes": 78,
+      "edges": 117
+    },
+    {
+      "sector": "robot",
+      "bytes": 164708,
+      "nodes": 86,
+      "edges": 115
+    },
+    {
+      "sector": "metal",
+      "bytes": 164306,
+      "nodes": 80,
+      "edges": 92
+    }
+  ],
+  "sectors": [
+    {
+      "sector": "ship",
+      "n": 6,
+      "median": 9840,
+      "max": 11297,
+      "sum": 57008
+    },
+    {
+      "sector": "semiconductor",
+      "n": 6,
+      "median": 9315,
+      "max": 12770,
+      "sum": 55705
+    },
+    {
+      "sector": "elec",
+      "n": 6,
+      "median": 8730,
+      "max": 8901,
+      "sum": 45008
+    },
+    {
+      "sector": "kcontent",
+      "n": 6,
+      "median": 8031,
+      "max": 9458,
+      "sum": 46248
+    },
+    {
+      "sector": "holdings",
+      "n": 6,
+      "median": 7946,
+      "max": 9640,
+      "sum": 41060
+    },
+    {
+      "sector": "defense",
+      "n": 6,
+      "median": 6940,
+      "max": 15028,
+      "sum": 47381
+    },
+    {
+      "sector": "renewable",
+      "n": 6,
+      "median": 6889,
+      "max": 9049,
+      "sum": 40021
+    },
+    {
+      "sector": "battery",
+      "n": 6,
+      "median": 6860,
+      "max": 9725,
+      "sum": 40821
+    },
+    {
+      "sector": "powergrid",
+      "n": 6,
+      "median": 6537,
+      "max": 9300,
+      "sum": 38942
+    },
+    {
+      "sector": "kconsume",
+      "n": 6,
+      "median": 6353,
+      "max": 7840,
+      "sum": 37308
+    },
+    {
+      "sector": "medtech",
+      "n": 6,
+      "median": 6321,
+      "max": 8376,
+      "sum": 35514
+    },
+    {
+      "sector": "auto",
+      "n": 6,
+      "median": 6152,
+      "max": 9195,
+      "sum": 37141
+    },
+    {
+      "sector": "telecom",
+      "n": 6,
+      "median": 6094,
+      "max": 10763,
+      "sum": 36708
+    },
+    {
+      "sector": "bigchip",
+      "n": 6,
+      "median": 6092,
+      "max": 8272,
+      "sum": 36033
+    },
+    {
+      "sector": "robot",
+      "n": 6,
+      "median": 6063,
+      "max": 10762,
+      "sum": 41628
+    },
+    {
+      "sector": "cosmetics",
+      "n": 6,
+      "median": 5756,
+      "max": 7155,
+      "sum": 35418
+    },
+    {
+      "sector": "metal",
+      "n": 6,
+      "median": 5556,
+      "max": 6716,
+      "sum": 33981
+    },
+    {
+      "sector": "finance",
+      "n": 6,
+      "median": 5464,
+      "max": 9731,
+      "sum": 38284
+    },
+    {
+      "sector": "bio",
+      "n": 6,
+      "median": 5263,
+      "max": 8093,
+      "sum": 35466
+    },
+    {
+      "sector": "software",
+      "n": 6,
+      "median": 5046,
+      "max": 9837,
+      "sum": 34563
+    },
+    {
+      "sector": "nuclear",
+      "n": 6,
+      "median": 5023,
+      "max": 7012,
+      "sum": 32001
+    },
+    {
+      "sector": "construction",
+      "n": 6,
+      "median": 4429,
+      "max": 5140,
+      "sum": 27468
+    }
+  ],
+  "sizes": [
+    {
+      "sector": "semiconductor",
+      "bytes": 183135,
+      "nodes": 160,
+      "edges": 193
+    },
+    {
+      "sector": "elec",
+      "bytes": 182716,
+      "nodes": 86,
+      "edges": 107
+    },
+    {
+      "sector": "auto",
+      "bytes": 169634,
+      "nodes": 78,
+      "edges": 117
+    },
+    {
+      "sector": "robot",
+      "bytes": 164708,
+      "nodes": 86,
+      "edges": 115
+    },
+    {
+      "sector": "metal",
+      "bytes": 164306,
+      "nodes": 80,
+      "edges": 92
+    },
+    {
+      "sector": "bigchip",
+      "bytes": 158597,
+      "nodes": 81,
+      "edges": 140
+    },
+    {
+      "sector": "construction",
+      "bytes": 138807,
+      "nodes": 44,
+      "edges": 60
+    },
+    {
+      "sector": "renewable",
+      "bytes": 136943,
+      "nodes": 60,
+      "edges": 84
+    },
+    {
+      "sector": "powergrid",
+      "bytes": 135854,
+      "nodes": 67,
+      "edges": 153
+    },
+    {
+      "sector": "finance",
+      "bytes": 119602,
+      "nodes": 72,
+      "edges": 110
+    },
+    {
+      "sector": "cosmetics",
+      "bytes": 114509,
+      "nodes": 54,
+      "edges": 59
+    },
+    {
+      "sector": "nuclear",
+      "bytes": 111829,
+      "nodes": 58,
+      "edges": 68
+    },
+    {
+      "sector": "software",
+      "bytes": 99544,
+      "nodes": 55,
+      "edges": 69
+    },
+    {
+      "sector": "kconsume",
+      "bytes": 95218,
+      "nodes": 65,
+      "edges": 69
+    },
+    {
+      "sector": "ship",
+      "bytes": 93269,
+      "nodes": 71,
+      "edges": 113
+    },
+    {
+      "sector": "kcontent",
+      "bytes": 91874,
+      "nodes": 56,
+      "edges": 67
+    },
+    {
+      "sector": "medtech",
+      "bytes": 88465,
+      "nodes": 51,
+      "edges": 60
+    },
+    {
+      "sector": "battery",
+      "bytes": 75159,
+      "nodes": 52,
+      "edges": 103
+    },
+    {
+      "sector": "telecom",
+      "bytes": 73948,
+      "nodes": 35,
+      "edges": 52
+    },
+    {
+      "sector": "holdings",
+      "bytes": 30847,
+      "nodes": 38,
+      "edges": 36
+    },
+    {
+      "sector": "bio",
+      "bytes": 22827,
+      "nodes": 60,
+      "edges": 1
+    },
+    {
+      "sector": "defense",
+      "bytes": 9454,
+      "nodes": 16,
+      "edges": 3
+    }
+  ]
+}

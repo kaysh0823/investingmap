@@ -9,7 +9,7 @@ import {
   extractCompaniesFromHtml,
   patchKoreanCompaniesHtml,
 } from '../lib/map_company_serialize.mjs';
-import { enrichCompanyList, enrichBioCompanies } from '../lib/company_field_enrich.mjs';
+import { enrichCompanyList } from '../lib/company_field_enrich.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
@@ -63,6 +63,8 @@ function main() {
     );
   }
 
+  // gen_korea_bio_inline already merges cp_list enrichment — do not patch inline.js here
+  // (prior slice(0, dataStart) logic duplicated koreanCompanies when dataStart was -1).
   execSync('node bio/gen_korea_bio_inline.mjs', { cwd: root, stdio: 'inherit' });
 
   const inlinePath = join(root, 'bio', 'korea_bio_map.inline.js');
@@ -70,21 +72,9 @@ function main() {
   const m = inline.match(/const koreanCompanies = (\[[\s\S]*?\]);/);
   if (m) {
     const bioCompanies = JSON.parse(m[1]);
-    const before = countEmpty(bioCompanies);
-    enrichBioCompanies(bioCompanies, cpListDir);
-    const after = countEmpty(bioCompanies);
-    const tail = inline.slice(inline.indexOf('const CHAIN_COLORS'));
-    const head = inline.slice(0, inline.indexOf('const CHAIN_COLORS'));
-    const dataStart = head.indexOf('const koreanCompanies');
-    const prefix = inline.slice(0, dataStart);
-    const mid = `\n    const koreanCompanies = ${JSON.stringify(bioCompanies)};\n`;
-    const restStart = inline.indexOf('const globalCompanies');
-    const rest = inline.slice(restStart);
-    const newInline = prefix + mid + rest;
-    fs.writeFileSync(inlinePath, newInline, 'utf8');
-    summary.bio = { before, after };
+    summary.bio = countEmpty(bioCompanies);
     console.log(
-      `bio: semType ${before.noType}→${after.noType}, products ${before.noProd}→${after.noProd}`,
+      `bio: semType empty=${summary.bio.noType}, products empty=${summary.bio.noProd} (via gen_korea_bio_inline)`,
     );
   }
 

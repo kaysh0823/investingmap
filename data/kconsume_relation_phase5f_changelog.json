@@ -1,0 +1,365 @@
+{
+  "phase": "5F",
+  "sector": "kconsume",
+  "asOf": "2026-08-29",
+  "listedCompanyCount": 22,
+  "nodeCount": 65,
+  "edgeCount": 69,
+  "structuralGenerated": 65,
+  "legacyMigrated": 4,
+  "manuallyCurated": 2,
+  "removedUnsupported": 0,
+  "demotedPeer": 4,
+  "confirmedBusinessEdgeCount": 0,
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "003230",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "003230",
+      "brand": "brand:buldak"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "003230",
+      "brand": "brand:samyang-ramen"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "003230",
+      "category": "consumer_category:instant-noodles"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "004170",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "004170",
+      "category": "consumer_category:department-retail"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "023530",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "023530",
+      "category": "consumer_category:department-retail"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "271560",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "271560",
+      "brand": "brand:chocopie"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "271560",
+      "brand": "brand:market-o"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "271560",
+      "category": "consumer_category:confectionery"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "069960",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "069960",
+      "category": "consumer_category:department-retail"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "111770",
+      "lane": "manufacturing"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "111770",
+      "category": "consumer_category:apparel-oem"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "383220",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "383220",
+      "brand": "brand:mlb"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "383220",
+      "brand": "brand:discovery-expedition"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "383220",
+      "category": "consumer_category:apparel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "097950",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "097950",
+      "brand": "brand:bibigo"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "097950",
+      "brand": "brand:hetbahn"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "097950",
+      "category": "consumer_category:hmr-processed-food"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "139480",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "139480",
+      "category": "consumer_category:hypermarket"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "004370",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "004370",
+      "brand": "brand:shin-ramen"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "004370",
+      "brand": "brand:chapagetti"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "004370",
+      "category": "consumer_category:instant-noodles"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "081660",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "081660",
+      "brand": "brand:mistoholdings-portfolio"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "081660",
+      "category": "consumer_category:apparel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "008770",
+      "lane": "leisure_lifestyle"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "008770",
+      "category": "consumer_category:travel-hospitality"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "007070",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "007070",
+      "category": "consumer_category:convenience-retail"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "032350",
+      "lane": "leisure_lifestyle"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "032350",
+      "category": "consumer_category:travel-hospitality"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "007310",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "007310",
+      "brand": "brand:jin-ramen"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "007310",
+      "brand": "brand:ottogi-ketchup"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "007310",
+      "category": "consumer_category:sauces-condiments"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "280360",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "280360",
+      "brand": "brand:pepero"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "280360",
+      "brand": "brand:ghana-chocolate"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "280360",
+      "category": "consumer_category:confectionery"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "093050",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "093050",
+      "brand": "brand:lf-houses"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "093050",
+      "category": "consumer_category:apparel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "005180",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "005180",
+      "brand": "brand:banana-flavored-milk"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "005180",
+      "brand": "brand:melona"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "005180",
+      "category": "consumer_category:dairy-frozen"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "039130",
+      "lane": "leisure_lifestyle"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "039130",
+      "category": "consumer_category:travel-agency"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "020000",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "020000",
+      "brand": "brand:handsome-houses"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "020000",
+      "category": "consumer_category:apparel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "145990",
+      "lane": "manufacturing"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "145990",
+      "category": "consumer_category:food-ingredients"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "136480",
+      "lane": "manufacturing"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "136480",
+      "category": "consumer_category:poultry-meat"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "003230",
+      "partner": "nestle",
+      "note": "theme/global peer → peer defaultHidden"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "271560",
+      "partner": "pepsico",
+      "note": "theme/global peer → peer defaultHidden"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "139480",
+      "partner": "costco",
+      "note": "retail peer → peer defaultHidden"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "from": "008770",
+      "partner": "marriott",
+      "note": "hospitality peer → peer defaultHidden"
+    },
+    {
+      "action": "cross_sector_reference",
+      "ticker": "097950",
+      "target": "sector:cosmetics"
+    },
+    {
+      "action": "cross_sector_reference",
+      "ticker": "280360",
+      "target": "sector:kcontent"
+    }
+  ]
+}

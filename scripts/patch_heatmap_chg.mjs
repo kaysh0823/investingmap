@@ -55,9 +55,14 @@ function patchHtml(html) {
 for (const rel of MAP_FILES) {
   const fp = path.join(ROOT, rel);
   if (!fs.existsSync(fp)) continue;
-  const next = patchHtml(fs.readFileSync(fp, 'utf8'));
-  fs.writeFileSync(fp, next, 'utf8');
-  console.log('patched', rel);
+  const prev = fs.readFileSync(fp, 'utf8');
+  const next = patchHtml(prev);
+  if (next !== prev) {
+    fs.writeFileSync(fp, next, 'utf8');
+    console.log('patched', rel);
+  } else {
+    console.log('unchanged', rel);
+  }
 }
 
 const bioTrPath = path.join(ROOT, 'bio', 'bio_translations.json');

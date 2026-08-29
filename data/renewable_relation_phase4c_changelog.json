@@ -1,0 +1,406 @@
+{
+  "asOf": "2026-08-23",
+  "entries": [
+    {
+      "legacyEdgeId": "global:catl",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:tesla",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:vw_group",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:bmw",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:gm_ev",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:ge_vernova",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:orano",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:mitsubishi_heavy",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:schneider_e",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "legacyEdgeId": "global:abb",
+      "source": null,
+      "target": null,
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "battery/nuclear/grid leakage or weak renewable fit — drop from renewable graph"
+    },
+    {
+      "source": "krx:009830",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:010060",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:018670",
+      "target": "technology:hydrogen",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:112610",
+      "target": "technology:onshore_wind",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:112610",
+      "target": "technology:offshore_wind",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:322000",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:475150",
+      "target": "technology:offshore_wind",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:475150",
+      "target": "technology:fuel_cell",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:475150",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:456040",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:271940",
+      "target": "technology:hydrogen",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:011930",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:119850",
+      "target": "technology:renewable_operator",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:475150",
+      "target": "spv:sinan-wi-offshore",
+      "afterType": "owns_stake_in",
+      "afterEditorialStatus": "reported",
+      "afterProjectStatus": "under_construction",
+      "reason": "reported SPV stake"
+    },
+    {
+      "source": "krx:018670",
+      "afterType": "project_developer",
+      "afterEditorialStatus": "reference",
+      "afterProjectStatus": "development",
+      "reason": "weak IR exposure — hidden development node"
+    },
+    {
+      "legacyEdgeId": "009830->first_solar",
+      "source": "krx:009830",
+      "target": "global:first_solar",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "009830->enphase",
+      "source": "krx:009830",
+      "target": "global:enphase",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "009830->vestas",
+      "source": "krx:009830",
+      "target": "global:vestas",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "010060->first_solar",
+      "source": "krx:010060",
+      "target": "global:first_solar",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "010060->vestas",
+      "source": "krx:010060",
+      "target": "global:vestas",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "112610->vestas",
+      "source": "krx:112610",
+      "target": "global:vestas",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "112610->siemens_energy",
+      "source": "krx:112610",
+      "target": "global:siemens_energy",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "322000->tesla",
+      "source": "krx:322000",
+      "target": "global:tesla",
+      "beforeType": "peer",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "phase4c_migrate",
+      "reason": "cross-sector or weak renewable peer removed"
+    },
+    {
+      "legacyEdgeId": "322000->enphase",
+      "source": "krx:322000",
+      "target": "global:enphase",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "322000->hdelec",
+      "source": "krx:322000",
+      "target": "org:hd-hyundai",
+      "beforeType": "backing",
+      "afterType": "reference",
+      "afterEditorialStatus": "reference",
+      "reason": "group backing → reference (hidden)"
+    },
+    {
+      "legacyEdgeId": "475150->vestas",
+      "source": "krx:475150",
+      "target": "global:vestas",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "475150->first_solar",
+      "source": "krx:475150",
+      "target": "global:first_solar",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "475150->skinn",
+      "source": "krx:475150",
+      "target": "org:sk",
+      "beforeType": "backing",
+      "afterType": "reference",
+      "afterEditorialStatus": "reference",
+      "reason": "group backing → reference (hidden)"
+    },
+    {
+      "legacyEdgeId": "456040->first_solar",
+      "source": "krx:456040",
+      "target": "global:first_solar",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "456040->vestas",
+      "source": "krx:456040",
+      "target": "global:vestas",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    }
+  ]
+}

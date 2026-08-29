@@ -1,0 +1,531 @@
+{
+  "asOf": "2026-08-29",
+  "phase": "5G",
+  "reviewedBy": "editorial_phase5g",
+  "listedCompanyCount": 10,
+  "nodeCount": 51,
+  "edgeCount": 60,
+  "structuralGenerated": 31,
+  "legacyMigrated": 25,
+  "manuallyCurated": 4,
+  "demotedPeer": 25,
+  "removedUnsupported": 0,
+  "confirmedBusinessEdgeCount": 0,
+  "metrics": {
+    "listedCompanyCount": 10,
+    "nodeCount": 51,
+    "edgeCount": 60,
+    "structuralGeneratedEdgeCount": 31,
+    "legacyMigratedEdgeCount": 25,
+    "manuallyCuratedEdgeCount": 4,
+    "medicalDeviceNodeCount": 0,
+    "deviceCategoryCount": 10,
+    "specialtyNodeCount": 8,
+    "regulatoryClearanceCount": 0,
+    "activeClearanceCount": 0,
+    "withdrawnClearanceCount": 0,
+    "confirmedBusinessEdgeCount": 0,
+    "reportedBusinessEdgeCount": 0,
+    "peerEdgeCount": 25,
+    "supplyRelationshipCount": 0,
+    "installationRelationshipCount": 0,
+    "distributionRelationshipCount": 0,
+    "licensingRelationshipCount": 0,
+    "clinicalCollaborationCount": 0,
+    "ownershipEdgeCount": 0,
+    "jointVentureEdgeCount": 0,
+    "crossSectorReferenceCount": 4,
+    "marketExposureCount": 0,
+    "businessRelationOrphanCount": 10,
+    "directCommercialRelationshipOrphanCount": 10,
+    "classificationOnlyCompanyCount": 0,
+    "hasPeerButNoBusinessCompanyCount": 10,
+    "peerOnlyCompanyCount": 0,
+    "zeroDegreeNodeCount": 0,
+    "duplicateSemanticNodeCount": 0,
+    "claimCoverage": {
+      "evidenceFieldCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "businessRelationshipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "businessRelationshipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "regulatoryEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_regulatory_structural_edges"
+      },
+      "activeClearancePrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_active_clearance_nodes"
+      },
+      "supplyDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_supply_edges"
+      },
+      "installationDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_installation_edges"
+      },
+      "distributionDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_distribution_edges"
+      },
+      "ownershipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_ownership_edges"
+      },
+      "crossSectorReferenceEvidenceCoverage": {
+        "numerator": 4,
+        "denominator": 4,
+        "percentage": 1,
+        "displayValue": "100%",
+        "applicable": true,
+        "reason": null
+      },
+      "metricNotes": {
+        "businessRelationshipDenominator": "confirmed + reported business edges only",
+        "regulatoryDenominator": "approved_or_cleared_by/registered_in_market structural — not business",
+        "zeroDenominator": "percentage=null, displayValue=N/A, applicable=false",
+        "clearanceNotBusiness": "regulatory clearances never count toward business orphan resolution"
+      }
+    },
+    "nodeCountByType": {
+      "group": 5,
+      "cross_sector_anchor": 4,
+      "listed_company": 10,
+      "device_category": 10,
+      "clinical_specialty": 8,
+      "global_company": 14
+    },
+    "removedUnsupportedPartnerCount": 0,
+    "demotedLegacyPeerCount": 25
+  },
+  "validate": {
+    "failures": [],
+    "warnings": []
+  },
+  "crossSectorBoundary": [
+    {
+      "ticker": "328130",
+      "target": "sector:software",
+      "noteKo": "의료 AI·영상 소프트웨어 기술은 software와 교차. 일반 AI 발표≠의료기기 인허가.",
+      "noteEn": "Medical AI/imaging software overlaps software; general AI announcements are not device clearances."
+    },
+    {
+      "ticker": "060280",
+      "target": "sector:robot",
+      "noteKo": "수술로봇은 robot과 교차 가능. 로봇 기술 보유≠의료기기 허가·공급계약.",
+      "noteEn": "Surgical robots may cross-reference robot sector; robot capability ≠ clearance or supply contract."
+    },
+    {
+      "ticker": "096530",
+      "target": "sector:bio",
+      "noteKo": "분자진단은 의약품·백신 임상(bio)과 구분. IVD 의료기기 분류를 신약 파이프라인으로 오인하지 않음.",
+      "noteEn": "Molecular IVD is distinct from drug/vaccine clinical pipelines in bio."
+    },
+    {
+      "ticker": "145720",
+      "target": "sector:cosmetics",
+      "noteKo": "치과 임플란트는 일반 화장품·홈뷰티(cosmetics)와 별개. 에스테틱 의료기기 허가는 medtech 기준.",
+      "noteEn": "Dental implants are separate from cosmetics/home beauty; aesthetic device clearances stay under medtech rules."
+    }
+  ],
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "096530",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "096530",
+      "target": "device_category:molecular-ivd"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "096530",
+      "target": "specialty:laboratory-medicine"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "328130",
+      "lane": "digital_health_samd"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "328130",
+      "target": "device_category:ai-imaging-samd"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "328130",
+      "target": "specialty:radiology"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "137310",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "137310",
+      "target": "device_category:poc-ivd"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "137310",
+      "target": "specialty:laboratory-medicine"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "041830",
+      "lane": "patient_monitoring"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "041830",
+      "target": "device_category:body-composition"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "041830",
+      "target": "specialty:preventive-wellness"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "099190",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "099190",
+      "target": "device_category:glucose-monitoring"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "099190",
+      "target": "specialty:endocrinology"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "060280",
+      "lane": "surgical_device"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "060280",
+      "target": "device_category:surgical-robot"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "060280",
+      "target": "specialty:orthopedics-surgery"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "145720",
+      "lane": "dental_device"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "145720",
+      "target": "device_category:dental-implant"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "145720",
+      "target": "specialty:dentistry"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "067630",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "067630",
+      "target": "device_category:ivd-reagents-distribution"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "067630",
+      "target": "specialty:laboratory-medicine"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "389650",
+      "lane": "surgical_device"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "389650",
+      "target": "device_category:embolization-device"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "389650",
+      "target": "specialty:interventional"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "228760",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "228760",
+      "target": "device_category:cancer-molecular-dx"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "228760",
+      "target": "specialty:laboratory-medicine"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "228760",
+      "target": "specialty:oncology-diagnostics"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:096530",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:096530",
+      "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:096530",
+      "target": "global:siemens_health"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:328130",
+      "target": "global:ge_health"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:328130",
+      "target": "global:philips"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:328130",
+      "target": "global:siemens_health"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:137310",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:137310",
+      "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:041830",
+      "target": "global:ge_health"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:041830",
+      "target": "global:philips"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:099190",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:099190",
+      "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:060280",
+      "target": "global:intuitive"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:060280",
+      "target": "global:stryker"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:060280",
+      "target": "global:medtronic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:145720",
+      "target": "global:straumann"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:145720",
+      "target": "global:dentsply"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:145720",
+      "target": "global:zimmer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:067630",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:067630",
+      "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:389650",
+      "target": "global:boston_sci"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:389650",
+      "target": "global:medtronic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:389650",
+      "target": "global:olympus"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:228760",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:228760",
+      "target": "global:illumina"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:328130",
+      "target": "sector:software"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:060280",
+      "target": "sector:robot"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:096530",
+      "target": "sector:bio"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:145720",
+      "target": "sector:cosmetics"
+    },
+    {
+      "action": "defer_business_and_clearance_relationships",
+      "reason": "Phase 5G does not invent hospital supply, exclusive distribution, OEM, or clearance-as-contract without MFDS/FDA/DART primary evidence. No clearance nodes without verified identifiers."
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "phase": "5H",
+  "sector": "software",
+  "auditedAt": "2026-08-29",
+  "htmlPath": "software/korea_software_map.html",
+  "dataSector": "software",
+  "listedCompanyCount": 13,
+  "tickers": [
+    {
+      "ticker": "035420",
+      "nameKo": "NAVER",
+      "chain": "플랫폼·AI",
+      "partners": [
+        "google",
+        "microsoft"
+      ]
+    },
+    {
+      "ticker": "018260",
+      "nameKo": "삼성에스디에스",
+      "chain": "SI·클라우드",
+      "partners": [
+        "accenture",
+        "microsoft"
+      ]
+    },
+    {
+      "ticker": "035720",
+      "nameKo": "카카오",
+      "chain": "플랫폼·AI",
+      "partners": [
+        "google"
+      ]
+    },
+    {
+      "ticker": "064400",
+      "nameKo": "LG씨엔에스",
+      "chain": "SI·클라우드",
+      "partners": [
+        "accenture",
+        "microsoft"
+      ]
+    },
+    {
+      "ticker": "022100",
+      "nameKo": "포스코DX",
+      "chain": "SI·클라우드",
+      "partners": [
+        "accenture",
+        "sap"
+      ]
+    },
+    {
+      "ticker": "181710",
+      "nameKo": "NHN",
+      "chain": "플랫폼·AI",
+      "partners": [
+        "google",
+        "microsoft"
+      ]
+    },
+    {
+      "ticker": "053800",
+      "nameKo": "안랩",
+      "chain": "보안",
+      "partners": [
+        "paloalto"
+      ]
+    },
+    {
+      "ticker": "093320",
+      "nameKo": "케이아이엔엑스",
+      "chain": "SI·클라우드",
+      "partners": [
+        "microsoft"
+      ]
+    },
+    {
+      "ticker": "030520",
+      "nameKo": "한글과컴퓨터",
+      "chain": "기업SW·SaaS",
+      "partners": [
+        "microsoft"
+      ]
+    },
+    {
+      "ticker": "042000",
+      "nameKo": "카페24",
+      "chain": "기업SW·SaaS",
+      "partners": [
+        "shopify"
+      ]
+    },
+    {
+      "ticker": "079940",
+      "nameKo": "가비아",
+      "chain": "SI·클라우드",
+      "partners": [
+        "microsoft"
+      ]
+    },
+    {
+      "ticker": "203650",
+      "nameKo": "드림시큐리티",
+      "chain": "보안",
+      "partners": [
+        "paloalto"
+      ]
+    },
+    {
+      "ticker": "286940",
+      "nameKo": "롯데이노베이트",
+      "chain": "SI·클라우드",
+      "partners": [
+        "accenture",
+        "microsoft"
+      ]
+    }
+  ],
+  "chainCounts": {
+    "플랫폼·AI": 3,
+    "SI·클라우드": 6,
+    "보안": 2,
+    "기업SW·SaaS": 2
+  },
+  "partnersTotal": 19,
+  "profile": {
+    "model": "software_product_platform_ecosystem",
+    "layout": "softwarePlatformEcosystem",
+    "networkPath": "../data/networks/software.json",
+    "lanes": [
+      "data_ai",
+      "managed_service",
+      "cloud_infrastructure",
+      "cybersecurity",
+      "enterprise_software",
+      "commerce_platform",
+      "industrial_software"
+    ]
+  },
+  "network": {
+    "nodeCount": 55,
+    "edgeCount": 69,
+    "legacyFallback": false,
+    "confirmedBusiness": 0,
+    "peerEdges": 19,
+    "products": 4,
+    "platforms": 4,
+    "crossSectorRefs": 4
+  },
+  "policyNotes": [
+    "No customer logos as active contracts",
+    "API integration ≠ strategic partnership",
+    "Marketplace listing ≠ supply contract",
+    "cp_list must remain 13"
+  ]
+}

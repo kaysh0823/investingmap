@@ -1,0 +1,453 @@
+{
+  "asOf": "2026-08-29",
+  "phase": "5H",
+  "reviewedBy": "editorial_phase5h",
+  "listedCompanyCount": 11,
+  "nodeCount": 35,
+  "edgeCount": 52,
+  "structuralGenerated": 33,
+  "legacyMigrated": 15,
+  "manuallyCurated": 4,
+  "demotedPeer": 15,
+  "confirmedBusinessEdgeCount": 0,
+  "emptyChainsSkipped": [
+    "위성통신"
+  ],
+  "metrics": {
+    "listedCompanyCount": 11,
+    "nodeCount": 35,
+    "edgeCount": 52,
+    "structuralGeneratedEdgeCount": 33,
+    "legacyMigratedEdgeCount": 15,
+    "manuallyCuratedEdgeCount": 4,
+    "operatorNodeCount": 3,
+    "telecomServiceCount": 3,
+    "equipmentNodeCount": 5,
+    "componentNodeCount": 3,
+    "spectrumBandCount": 0,
+    "activeLicenseCount": 0,
+    "infrastructureAssetCount": 0,
+    "datacenterCount": 0,
+    "equipmentSupplyCount": 0,
+    "networkDeploymentCount": 0,
+    "wholesaleNetworkRelationshipCount": 0,
+    "roamingRelationshipCount": 0,
+    "ownershipEdgeCount": 0,
+    "jointVentureEdgeCount": 0,
+    "crossSectorReferenceCount": 4,
+    "confirmedBusinessEdgeCount": 0,
+    "reportedBusinessEdgeCount": 0,
+    "peerEdgeCount": 15,
+    "businessRelationOrphanCount": 11,
+    "directCommercialRelationshipOrphanCount": 11,
+    "classificationOnlyCompanyCount": 0,
+    "hasPeerButNoBusinessCompanyCount": 11,
+    "peerOnlyCompanyCount": 0,
+    "zeroDegreeNodeCount": 0,
+    "duplicateSemanticNodeCount": 0,
+    "claimCoverage": {
+      "evidenceFieldCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "businessRelationshipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "businessRelationshipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "supplyDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_supply_edges"
+      },
+      "partnershipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_partnership_edges"
+      },
+      "ownershipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_ownership_edges"
+      },
+      "equipmentSupplyDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_equipment_supply"
+      },
+      "networkDeploymentDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_deployments"
+      },
+      "activeLicensePrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_active_license_nodes"
+      },
+      "wholesaleNetworkDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_wholesale"
+      },
+      "crossSectorReferenceEvidenceCoverage": {
+        "numerator": 4,
+        "denominator": 4,
+        "percentage": 1,
+        "displayValue": "100%",
+        "applicable": true,
+        "reason": null
+      },
+      "metricNotes": {
+        "businessRelationshipDenominator": "confirmed + reported business edges only",
+        "spectrumNotOwnership": "spectrum assignment is regulatory, not company ownership or business edge",
+        "certificationNotSupply": "network certification/compatibility is not equipment supply",
+        "zeroDenominator": "percentage=null, displayValue=N/A, applicable=false"
+      }
+    },
+    "nodeCountByType": {
+      "group": 3,
+      "cross_sector_anchor": 4,
+      "listed_company": 11,
+      "telecom_service": 3,
+      "network_generation": 2,
+      "network_component": 3,
+      "network_equipment": 5,
+      "global_company": 4
+    },
+    "removedUnsupportedPartnerCount": 0,
+    "demotedLegacyPeerCount": 15
+  },
+  "validate": {
+    "failures": [],
+    "warnings": []
+  },
+  "crossSectorBoundary": [
+    {
+      "ticker": "017670",
+      "target": "sector:software",
+      "noteKo": "플랫폼·클라우드는 software 중심. 통신사 ICT≠소프트웨어 공급계약 자동생성.",
+      "noteEn": "Platform/cloud is software-centric; carrier ICT ≠ auto software supply."
+    },
+    {
+      "ticker": "030200",
+      "target": "sector:kcontent",
+      "noteKo": "콘텐츠 IP·제작은 kcontent. IPTV 노출≠콘텐츠 배급계약.",
+      "noteEn": "Content IP is kcontent; IPTV exposure ≠ distribution contract."
+    },
+    {
+      "ticker": "218410",
+      "target": "sector:semi",
+      "noteKo": "RF/통신 반도체 공급망은 semiconductor. 장비사 peer≠칩 공급 복제.",
+      "noteEn": "RF/comms semiconductors stay in semi; equipment peer ≠ chip supply clone."
+    },
+    {
+      "ticker": "010170",
+      "target": "sector:elec",
+      "noteKo": "전자부품과 광통신 완제품·케이블을 구분. elec 공급망 중복 금지.",
+      "noteEn": "Separate electronic components from optical finished goods; no elec chain clone."
+    }
+  ],
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "017670",
+      "lane": "network_operator"
+    },
+    {
+      "action": "structural_offers_service",
+      "ticker": "017670",
+      "target": "telecom_service:skt-mobile"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "017670",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "030200",
+      "lane": "network_operator"
+    },
+    {
+      "action": "structural_offers_service",
+      "ticker": "030200",
+      "target": "telecom_service:kt-mobile-fixed"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "030200",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "032640",
+      "lane": "network_operator"
+    },
+    {
+      "action": "structural_offers_service",
+      "ticker": "032640",
+      "target": "telecom_service:lgu-mobile"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "032640",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "010170",
+      "lane": "optical_wireless_component"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "010170",
+      "target": "network_component:optical-fiber-cable"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "010170",
+      "target": "network_generation:optical-transport"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "218410",
+      "lane": "network_equipment"
+    },
+    {
+      "action": "structural_manufactures_equipment",
+      "ticker": "218410",
+      "target": "network_equipment:rf-power-amplifier"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "218410",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "032500",
+      "lane": "network_equipment"
+    },
+    {
+      "action": "structural_manufactures_equipment",
+      "ticker": "032500",
+      "target": "network_equipment:base-station-antenna"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "032500",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "050890",
+      "lane": "network_equipment"
+    },
+    {
+      "action": "structural_manufactures_equipment",
+      "ticker": "050890",
+      "target": "network_equipment:das-small-cell"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "050890",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "037460",
+      "lane": "network_equipment"
+    },
+    {
+      "action": "structural_manufactures_equipment",
+      "ticker": "037460",
+      "target": "network_equipment:rf-module"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "037460",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "138080",
+      "lane": "optical_wireless_component"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "138080",
+      "target": "network_component:optical-transceiver"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "138080",
+      "target": "network_generation:optical-transport"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "069540",
+      "lane": "optical_wireless_component"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "069540",
+      "target": "network_component:optical-module"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "069540",
+      "target": "network_generation:optical-transport"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "230240",
+      "lane": "network_equipment"
+    },
+    {
+      "action": "structural_manufactures_equipment",
+      "ticker": "230240",
+      "target": "network_equipment:xhaul-transport"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "230240",
+      "target": "network_generation:5g"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:017670",
+      "target": "global:verizon"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:017670",
+      "target": "global:deutsche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:030200",
+      "target": "global:verizon"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:030200",
+      "target": "global:deutsche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:032640",
+      "target": "global:verizon"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:032640",
+      "target": "global:deutsche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:010170",
+      "target": "global:ciena"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:218410",
+      "target": "global:ericsson"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:032500",
+      "target": "global:ericsson"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:050890",
+      "target": "global:ericsson"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:037460",
+      "target": "global:ericsson"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:138080",
+      "target": "global:ciena"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:069540",
+      "target": "global:ciena"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:230240",
+      "target": "global:ericsson"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:230240",
+      "target": "global:ciena"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:017670",
+      "target": "sector:software"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:030200",
+      "target": "sector:kcontent"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:218410",
+      "target": "sector:semi"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:010170",
+      "target": "sector:elec"
+    },
+    {
+      "action": "defer_business_and_spectrum",
+      "reason": "Phase 5H does not invent equipment supply from compatibility, MVNO wholesale from general facts, or spectrum licenses without official identifiers. Spectrum is not company ownership."
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "asOf": "2026-08-23",
+  "phase": "5E-audit",
+  "sectorId": "cosmetics",
+  "htmlPath": "cosmetics/korea_cosmetics_map.html",
+  "dataSector": "cosmetics",
+  "buildScript": "build_korea_cosmetics_map.mjs → scripts/split_kconsume_cosmetics.mjs",
+  "listedCompanyCount": 15,
+  "byChain": {
+    "브랜드": 6,
+    "미용기기": 5,
+    "유통·채널": 1,
+    "ODM·OEM": 3
+  },
+  "tickers": [
+    {
+      "ticker": "278470",
+      "name": "에이피알",
+      "nameEn": "Apr",
+      "chain": "브랜드",
+      "semType": "브랜드",
+      "products": "브랜드 — 화장품 브랜드",
+      "partners": []
+    },
+    {
+      "ticker": "090430",
+      "name": "아모레퍼시픽",
+      "nameEn": "AMOREPACIFIC CORPORATION",
+      "chain": "브랜드",
+      "semType": "브랜드",
+      "products": "브랜드 — 화장품 브랜드",
+      "partners": []
+    },
+    {
+      "ticker": "214370",
+      "name": "케어젠",
+      "nameEn": "Caregen Co.,LTD.",
+      "chain": "미용기기",
+      "semType": "펩타이드·헬스케어",
+      "products": "펩타이드 기반 미용·헬스케어",
+      "partners": []
+    },
+    {
+      "ticker": "051900",
+      "name": "LG생활건강",
+      "nameEn": "LG H&H",
+      "chain": "브랜드",
+      "semType": "브랜드",
+      "products": "브랜드 — 화장품 브랜드",
+      "partners": []
+    },
+    {
+      "ticker": "145020",
+      "name": "휴젤",
+      "nameEn": "Hugel, Inc.",
+      "chain": "미용기기",
+      "semType": "보툴리눔·필러 K-뷰티",
+      "products": "보툴렉스·더채움 K-뷰티 대표, 美시장 고농도제형 3상 '26 착수",
+      "partners": [
+        "glob_isrg",
+        "glob_mdt",
+        "glob_syk",
+        "glob_veev"
+      ]
+    },
+    {
+      "ticker": "214450",
+      "name": "파마리서치",
+      "nameEn": "Pharma Research",
+      "chain": "미용기기",
+      "semType": "미용기기",
+      "products": "미용기기 — 화장품 용기",
+      "partners": []
+    },
+    {
+      "ticker": "214150",
+      "name": "클래시스",
+      "nameEn": "CLASSYS Inc.",
+      "chain": "미용기기",
+      "semType": "미용 의료기기",
+      "products": "슈링크·볼뉴머 등 에스테틱 HIFU·RF 장비",
+      "partners": []
+    },
+    {
+      "ticker": "483650",
+      "name": "달바글로벌",
+      "nameEn": "d'Alba Global",
+      "chain": "브랜드",
+      "semType": "브랜드",
+      "products": "브랜드 — 화장품 브랜드",
+      "partners": []
+    },
+    {
+      "ticker": "257720",
+      "name": "실리콘투",
+      "nameEn": "SILICON 2 Co.,Ltd.",
+      "chain": "유통·채널",
+      "semType": "유통·채널",
+      "products": "유통·채널 — 화장품 유통·채널",
+      "partners": []
+    },
+    {
+      "ticker": "161890",
+      "name": "한국콜마",
+      "nameEn": "KOLMAR KOREA",
+      "chain": "ODM·OEM",
+      "semType": "ODM·OEM",
+      "products": "ODM·OEM — 화장품 ODM·OEM",
+      "partners": []
+    },
+    {
+      "ticker": "192820",
+      "name": "코스맥스",
+      "nameEn": "COSMAX, INC.",
+      "chain": "ODM·OEM",
+      "semType": "ODM·OEM",
+      "products": "ODM·OEM — 화장품 ODM·OEM",
+      "partners": []
+    },
+    {
+      "ticker": "002790",
+      "name": "아모레퍼시픽홀딩스",
+      "nameEn": "AMOREPACIFIC Holdings",
+      "chain": "브랜드",
+      "semType": "브랜드",
+      "products": "브랜드 — 화장품 브랜드",
+      "partners": []
+    },
+    {
+      "ticker": "241710",
+      "name": "코스메카코리아",
+      "nameEn": "COSMECCA KOREA CO.,LTD.",
+      "chain": "ODM·OEM",
+      "semType": "ODM·OEM",
+      "products": "ODM·OEM — 화장품 ODM·OEM",
+      "partners": []
+    },
+    {
+      "ticker": "336570",
+      "name": "원텍",
+      "nameEn": "Wontech",
+      "chain": "미용기기",
+      "semType": "미용기기",
+      "products": "미용기기 — 화장품 용기",
+      "partners": []
+    },
+    {
+      "ticker": "018290",
+      "name": "브이티",
+      "nameEn": "Vt",
+      "chain": "브랜드",
+      "semType": "브랜드",
+      "products": "브랜드 — 화장품 브랜드",
+      "partners": []
+    }
+  ],
+  "partnerEdgeRefs": 4,
+  "uniquePartnerIds": [
+    "glob_isrg",
+    "glob_mdt",
+    "glob_syk",
+    "glob_veev"
+  ],
+  "stringPeerCount": 4,
+  "urlEvidenceRelationCount": 0,
+  "partnerPairs": [
+    {
+      "ticker": "145020",
+      "name": "휴젤",
+      "partner": "glob_isrg",
+      "chain": "미용기기"
+    },
+    {
+      "ticker": "145020",
+      "name": "휴젤",
+      "partner": "glob_mdt",
+      "chain": "미용기기"
+    },
+    {
+      "ticker": "145020",
+      "name": "휴젤",
+      "partner": "glob_syk",
+      "chain": "미용기기"
+    },
+    {
+      "ticker": "145020",
+      "name": "휴젤",
+      "partner": "glob_veev",
+      "chain": "미용기기"
+    }
+  ],
+  "legacyClassification": {
+    "medtechGlobalPeer": [
+      {
+        "ticker": "145020",
+        "name": "휴젤",
+        "partner": "glob_isrg",
+        "chain": "미용기기"
+      },
+      {
+        "ticker": "145020",
+        "name": "휴젤",
+        "partner": "glob_mdt",
+        "chain": "미용기기"
+      },
+      {
+        "ticker": "145020",
+        "name": "휴젤",
+        "partner": "glob_syk",
+        "chain": "미용기기"
+      },
+      {
+        "ticker": "145020",
+        "name": "휴젤",
+        "partner": "glob_veev",
+        "chain": "미용기기"
+      }
+    ],
+    "invalid": []
+  },
+  "emptyChains": [
+    "원료",
+    "용기"
+  ],
+  "risks": [
+    "partners on Hugel (145020) are glob_* medtech globals — not supply contracts or ODM customers",
+    "globalCompanies array contains kconsume template leftovers (netflix, disney) — not used as partners",
+    "214450 Pharmaresearch primary sector is medtech per split script — cross-sector boundary required",
+    "aesthetic device companies overlap medtech; peptide (214370) overlaps bio",
+    "ODM customer names must not be inferred from industry estimates",
+    "export regions must not become distributes_for or exclusive_distributor_for",
+    "brand legal owner vs operator must be separated (002790 holding vs 090430 operating)",
+    "Amazon/olive young listing must not become strategic partnership edge"
+  ],
+  "networkJsonExists": false,
+  "priorProfile": {
+    "model": "brand_odm",
+    "layout": "platformEcosystem",
+    "networkPath": null,
+    "legacyFallback": true
+  }
+}

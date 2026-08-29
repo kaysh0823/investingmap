@@ -1,0 +1,514 @@
+{
+  "asOf": "2026-08-23",
+  "phase": "5D-audit",
+  "sectorId": "metal",
+  "htmlPath": "metal/korea_metal_map.html",
+  "dataSector": "metal",
+  "buildScript": "scripts/build_korea_metal_map.mjs",
+  "listedCompanyCount": 19,
+  "configCompanyCount": 20,
+  "configNotInHtml": [
+    "009160"
+  ],
+  "htmlNotInConfig": [],
+  "byChain": {
+    "비철": 4,
+    "철강 트레이딩": 1,
+    "산업기계": 3,
+    "철강": 11
+  },
+  "tickers": [
+    {
+      "ticker": "010130",
+      "name": "고려아연",
+      "nameEn": "Korea Zinc",
+      "chain": "비철",
+      "semType": "아연·연·은 제련",
+      "products": "아연·연·은·부산 비철",
+      "partners": [
+        "glencore"
+      ]
+    },
+    {
+      "ticker": "047050",
+      "name": "포스코인터내셔널",
+      "nameEn": "POSCO International",
+      "chain": "철강 트레이딩",
+      "semType": "철강 트레이딩·자원",
+      "products": "철강 무역·에너지·식량 트레이딩",
+      "partners": [
+        "glencore"
+      ]
+    },
+    {
+      "ticker": "241560",
+      "name": "두산밥캣",
+      "nameEn": "Doosan Bobcat",
+      "chain": "산업기계",
+      "semType": "소형 건설기계",
+      "products": "스키드로더·소형 굴착기",
+      "partners": [
+        "caterpillar"
+      ]
+    },
+    {
+      "ticker": "004020",
+      "name": "현대제철",
+      "nameEn": "Hyundai Steel",
+      "chain": "철강",
+      "semType": "일관제철",
+      "products": "열연·냉연·후판·봉형강",
+      "partners": [
+        "nippon_steel",
+        "arcelormittal"
+      ]
+    },
+    {
+      "ticker": "017800",
+      "name": "현대엘리베이터",
+      "nameEn": "Hyundai Elevator",
+      "chain": "산업기계",
+      "semType": "승강기",
+      "products": "엘리베이터·에스컬레이터",
+      "partners": [
+        "caterpillar"
+      ]
+    },
+    {
+      "ticker": "001430",
+      "name": "세아베스틸지주",
+      "nameEn": "SeAH Besteel Holdings",
+      "chain": "철강",
+      "semType": "특수강·단조 사업지주",
+      "products": "특수강·자동차부품·대형단조 계열",
+      "partners": [
+        "nippon_steel"
+      ]
+    },
+    {
+      "ticker": "295310",
+      "name": "에이치브이엠",
+      "nameEn": "HVM CO.,LTD.",
+      "chain": "비철",
+      "semType": "특수합금·첨단금속",
+      "products": "항공·우주·반도체용 고순도 특수금속",
+      "partners": [
+        "glencore"
+      ]
+    },
+    {
+      "ticker": "006110",
+      "name": "삼아알미늄",
+      "nameEn": "Sama Aluminium",
+      "chain": "비철",
+      "semType": "알루미늄 압연",
+      "products": "알루미늄박·포장재·배터리용 압연재",
+      "partners": [
+        "glencore"
+      ]
+    },
+    {
+      "ticker": "000670",
+      "name": "영풍",
+      "nameEn": "Young Poong",
+      "chain": "비철",
+      "semType": "아연 제련",
+      "products": "아연·황산 등 비철금속 제련",
+      "partners": [
+        "glencore"
+      ]
+    },
+    {
+      "ticker": "016380",
+      "name": "KG스틸",
+      "nameEn": "KG Steel",
+      "chain": "철강",
+      "semType": "냉연·도금강판",
+      "products": "냉연·아연도금·컬러강판",
+      "partners": [
+        "nippon_steel"
+      ]
+    },
+    {
+      "ticker": "019210",
+      "name": "와이지-원",
+      "nameEn": "YG-1 CO., LTD",
+      "chain": "산업기계",
+      "semType": "절삭공구",
+      "products": "엔드밀·드릴·탭 등 산업용 절삭공구",
+      "partners": [
+        "caterpillar"
+      ]
+    },
+    {
+      "ticker": "002240",
+      "name": "고려제강",
+      "nameEn": "KISWire",
+      "chain": "철강",
+      "semType": "선재·와이어로프",
+      "products": "선재·와이어로프·비드와이어",
+      "partners": [
+        "nippon_steel"
+      ]
+    },
+    {
+      "ticker": "460860",
+      "name": "동국제강",
+      "nameEn": "Dongkuk Steel",
+      "chain": "철강",
+      "semType": "봉형강·후판",
+      "products": "철근·형강·후판",
+      "partners": [
+        "arcelormittal"
+      ]
+    },
+    {
+      "ticker": "306200",
+      "name": "세아제강",
+      "nameEn": "SeAH Steel",
+      "chain": "철강",
+      "semType": "에너지용 강관",
+      "products": "유정용·송유관·구조용 강관",
+      "partners": [
+        "nippon_steel"
+      ]
+    },
+    {
+      "ticker": "092790",
+      "name": "넥스틸",
+      "nameEn": "Nexteel",
+      "chain": "철강",
+      "semType": "강관",
+      "products": "유정용·산업용 강관",
+      "partners": [
+        "nippon_steel"
+      ]
+    },
+    {
+      "ticker": "002710",
+      "name": "TCC스틸",
+      "nameEn": "TCC Steel",
+      "chain": "철강",
+      "semType": "석도강판",
+      "products": "석도강판·도금강판",
+      "partners": [
+        "nippon_steel"
+      ]
+    },
+    {
+      "ticker": "058430",
+      "name": "포스코스틸리온",
+      "nameEn": "POSCO Steelion",
+      "chain": "철강",
+      "semType": "도금·컬러강판",
+      "products": "아연도금·컬러강판",
+      "partners": [
+        "nippon_steel"
+      ]
+    },
+    {
+      "ticker": "104700",
+      "name": "한국철강",
+      "nameEn": "Hankook Steel",
+      "chain": "철강",
+      "semType": "봉형강",
+      "products": "철근·봉강",
+      "partners": [
+        "arcelormittal"
+      ]
+    },
+    {
+      "ticker": "084010",
+      "name": "대한제강",
+      "nameEn": "Daehan Steel",
+      "chain": "철강",
+      "semType": "철근",
+      "products": "철근·봉형강",
+      "partners": [
+        "arcelormittal"
+      ]
+    }
+  ],
+  "partnerEdgeRefs": 20,
+  "uniquePartnerIds": [
+    "glencore",
+    "caterpillar",
+    "nippon_steel",
+    "arcelormittal"
+  ],
+  "stringPeerCount": 20,
+  "urlEvidenceRelationCount": 0,
+  "globalCompanyCount": 4,
+  "globalIds": [
+    "nippon_steel",
+    "arcelormittal",
+    "glencore",
+    "caterpillar"
+  ],
+  "partnerPairs": [
+    {
+      "ticker": "010130",
+      "name": "고려아연",
+      "partner": "glencore",
+      "chain": "비철"
+    },
+    {
+      "ticker": "047050",
+      "name": "포스코인터내셔널",
+      "partner": "glencore",
+      "chain": "철강 트레이딩"
+    },
+    {
+      "ticker": "241560",
+      "name": "두산밥캣",
+      "partner": "caterpillar",
+      "chain": "산업기계"
+    },
+    {
+      "ticker": "004020",
+      "name": "현대제철",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "004020",
+      "name": "현대제철",
+      "partner": "arcelormittal",
+      "chain": "철강"
+    },
+    {
+      "ticker": "017800",
+      "name": "현대엘리베이터",
+      "partner": "caterpillar",
+      "chain": "산업기계"
+    },
+    {
+      "ticker": "001430",
+      "name": "세아베스틸지주",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "295310",
+      "name": "에이치브이엠",
+      "partner": "glencore",
+      "chain": "비철"
+    },
+    {
+      "ticker": "006110",
+      "name": "삼아알미늄",
+      "partner": "glencore",
+      "chain": "비철"
+    },
+    {
+      "ticker": "000670",
+      "name": "영풍",
+      "partner": "glencore",
+      "chain": "비철"
+    },
+    {
+      "ticker": "016380",
+      "name": "KG스틸",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "019210",
+      "name": "와이지-원",
+      "partner": "caterpillar",
+      "chain": "산업기계"
+    },
+    {
+      "ticker": "002240",
+      "name": "고려제강",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "460860",
+      "name": "동국제강",
+      "partner": "arcelormittal",
+      "chain": "철강"
+    },
+    {
+      "ticker": "306200",
+      "name": "세아제강",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "092790",
+      "name": "넥스틸",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "002710",
+      "name": "TCC스틸",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "058430",
+      "name": "포스코스틸리온",
+      "partner": "nippon_steel",
+      "chain": "철강"
+    },
+    {
+      "ticker": "104700",
+      "name": "한국철강",
+      "partner": "arcelormittal",
+      "chain": "철강"
+    },
+    {
+      "ticker": "084010",
+      "name": "대한제강",
+      "partner": "arcelormittal",
+      "chain": "철강"
+    }
+  ],
+  "legacyClassification": {
+    "peer": [
+      {
+        "ticker": "010130",
+        "name": "고려아연",
+        "partner": "glencore",
+        "chain": "비철"
+      },
+      {
+        "ticker": "047050",
+        "name": "포스코인터내셔널",
+        "partner": "glencore",
+        "chain": "철강 트레이딩"
+      },
+      {
+        "ticker": "241560",
+        "name": "두산밥캣",
+        "partner": "caterpillar",
+        "chain": "산업기계"
+      },
+      {
+        "ticker": "004020",
+        "name": "현대제철",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "004020",
+        "name": "현대제철",
+        "partner": "arcelormittal",
+        "chain": "철강"
+      },
+      {
+        "ticker": "017800",
+        "name": "현대엘리베이터",
+        "partner": "caterpillar",
+        "chain": "산업기계"
+      },
+      {
+        "ticker": "001430",
+        "name": "세아베스틸지주",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "295310",
+        "name": "에이치브이엠",
+        "partner": "glencore",
+        "chain": "비철"
+      },
+      {
+        "ticker": "006110",
+        "name": "삼아알미늄",
+        "partner": "glencore",
+        "chain": "비철"
+      },
+      {
+        "ticker": "000670",
+        "name": "영풍",
+        "partner": "glencore",
+        "chain": "비철"
+      },
+      {
+        "ticker": "016380",
+        "name": "KG스틸",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "019210",
+        "name": "와이지-원",
+        "partner": "caterpillar",
+        "chain": "산업기계"
+      },
+      {
+        "ticker": "002240",
+        "name": "고려제강",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "460860",
+        "name": "동국제강",
+        "partner": "arcelormittal",
+        "chain": "철강"
+      },
+      {
+        "ticker": "306200",
+        "name": "세아제강",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "092790",
+        "name": "넥스틸",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "002710",
+        "name": "TCC스틸",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "058430",
+        "name": "포스코스틸리온",
+        "partner": "nippon_steel",
+        "chain": "철강"
+      },
+      {
+        "ticker": "104700",
+        "name": "한국철강",
+        "partner": "arcelormittal",
+        "chain": "철강"
+      },
+      {
+        "ticker": "084010",
+        "name": "대한제강",
+        "partner": "arcelormittal",
+        "chain": "철강"
+      }
+    ],
+    "invalid": []
+  },
+  "risks": [
+    "partners are string peer labels (nippon_steel/arcelormittal/glencore/caterpillar) — not supply contracts",
+    "no DART/URL evidence on legacy partners",
+    "006110 battery-grade aluminium overlaps battery sector",
+    "004020 automotive steel overlaps auto sector",
+    "306200/092790 pipe products overlap ship sector",
+    "rebar producers overlap construction sector",
+    "295310 semiconductor specialty metals overlap semiconductor sector",
+    "posco_int trading/resources — commodity exposure not supply contracts",
+    "commodity price exposure must not become supplies_material_to",
+    "009160 SIMPAC in METAL_CONFIG but below map mcap floor — not in HTML cp_list"
+  ],
+  "networkJsonExists": false,
+  "priorProfile": {
+    "model": "materials_demand",
+    "layout": "layeredSupplyChain",
+    "networkPath": null,
+    "legacyFallback": true
+  }
+}

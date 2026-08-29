@@ -1,0 +1,152 @@
+{
+  "phase": "5F",
+  "sector": "kconsume",
+  "auditedAt": "2026-08-29",
+  "htmlPath": "kconsume/korea_kconsume_map.html",
+  "dataSector": "kconsume",
+  "listedCompanyCount": 22,
+  "tickers": [
+    {
+      "ticker": "003230",
+      "nameKo": "삼양식품",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "004170",
+      "nameKo": "신세계",
+      "chain": "쇼핑/유통"
+    },
+    {
+      "ticker": "023530",
+      "nameKo": "롯데쇼핑",
+      "chain": "쇼핑/유통"
+    },
+    {
+      "ticker": "271560",
+      "nameKo": "오리온",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "069960",
+      "nameKo": "현대백화점",
+      "chain": "쇼핑/유통"
+    },
+    {
+      "ticker": "111770",
+      "nameKo": "영원무역",
+      "chain": "패션"
+    },
+    {
+      "ticker": "383220",
+      "nameKo": "F&F",
+      "chain": "패션"
+    },
+    {
+      "ticker": "097950",
+      "nameKo": "CJ제일제당",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "139480",
+      "nameKo": "이마트",
+      "chain": "쇼핑/유통"
+    },
+    {
+      "ticker": "004370",
+      "nameKo": "농심",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "081660",
+      "nameKo": "미스토홀딩스",
+      "chain": "패션"
+    },
+    {
+      "ticker": "008770",
+      "nameKo": "호텔신라",
+      "chain": "여행·레저·항공"
+    },
+    {
+      "ticker": "007070",
+      "nameKo": "GS리테일",
+      "chain": "쇼핑/유통"
+    },
+    {
+      "ticker": "032350",
+      "nameKo": "롯데관광개발",
+      "chain": "여행·레저·항공"
+    },
+    {
+      "ticker": "007310",
+      "nameKo": "오뚜기",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "280360",
+      "nameKo": "롯데웰푸드",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "093050",
+      "nameKo": "LF",
+      "chain": "패션"
+    },
+    {
+      "ticker": "005180",
+      "nameKo": "빙그레",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "039130",
+      "nameKo": "하나투어",
+      "chain": "여행·레저·항공"
+    },
+    {
+      "ticker": "020000",
+      "nameKo": "한섬",
+      "chain": "패션"
+    },
+    {
+      "ticker": "145990",
+      "nameKo": "삼양사",
+      "chain": "음식·라면·식품"
+    },
+    {
+      "ticker": "136480",
+      "nameKo": "하림",
+      "chain": "음식·라면·식품"
+    }
+  ],
+  "chainCounts": {
+    "음식·라면·식품": 9,
+    "쇼핑/유통": 5,
+    "패션": 5,
+    "여행·레저·항공": 3
+  },
+  "profile": {
+    "model": "consumer_brand_distribution_ecosystem",
+    "layout": "consumerBrandDistributionEcosystem",
+    "networkPath": "../data/networks/kconsume.json",
+    "lanes": [
+      "brand_owner",
+      "manufacturing",
+      "retail_channel",
+      "leisure_lifestyle"
+    ]
+  },
+  "network": {
+    "nodeCount": 65,
+    "edgeCount": 69,
+    "legacyFallback": false,
+    "confirmedBusiness": 0,
+    "peerEdges": 4,
+    "brandNodes": 19,
+    "crossSectorRefs": 2
+  },
+  "policyNotes": [
+    "No invented retail/export contracts",
+    "Brand homepage does not confirm owns_brand",
+    "Health functional food is not pharmaceutical",
+    "cp_list curated HTML count must remain 22"
+  ]
+}

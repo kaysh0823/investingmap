@@ -228,62 +228,20 @@ function stripImTabHeaderCollapse(html) {
 function stripOldMobileCss(html) {
   html = html.replace(
     new RegExp(`\\s*/\\* ${MARKER_V1}[^*]*\\*/[\\s\\S]*?(?=\\n\\s*@media\\(max-width:768px\\))`, 'g'),
-    ''
+    '',
   );
-  // Only the "— base" block sits directly before the mobile media query. Matching the
-  // generic marker would swallow every later rule (heatmap, trust footer, spark) on pages
-  // that carry another `@media(max-width:768px)` further down the stylesheet.
-  html = html.replace(
-    new RegExp(`\\s*/\\* ${MARKER_V2} — base \\*/[\\s\\S]*?(?=\\n\\s*@media\\(max-width:768px\\))`, 'g'),
-    ''
-  );
-  html = html.replace(
-    /\n      \/\* investingmap-mobile-table-v2 — mobile layout \*\/[\s\S]*?body\.im-tab-table tbody td:first-child \.company-name \{[\s\S]*?line-height: 1\.25\n      \}\n/g,
-    '\n'
-  );
-  html = html.replace(
-    /\n      \/\* investingmap-mobile-table-v2 — mobile layout \*\/[\s\S]*?word-break: keep-all\n      \}\n/g,
-    '\n'
-  );
+  // Do not strip v2 base / mobile-layout here — injectMobileV2Css is idempotent when present.
   html = html.replace(
     /\r?\n      \.tbl-wrap \{\r?\n        max-width: 100%;\r?\n        max-height: min\(72vh[\s\S]*?word-break: keep-all\r?\n      \}\r?\n\r?\n/g,
-    '\n'
+    '\n',
   );
   return html;
 }
 
 function injectMobileV2Css(html) {
-  // Drop every mobile-layout block through the company-name rules that follow the marker.
-  // Use a line-based scan so duplicate/legacy formatting cannot leave stale height:calc rules.
-  const lines = html.split('\n');
-  const out = [];
-  let i = 0;
-  while (i < lines.length) {
-    if (/\/\* investingmap-mobile-table-v2 — mobile layout \*\//.test(lines[i])) {
-      // Skip until after the compact company-name rule that ends this block.
-      let j = i + 1;
-      let seenCompany = false;
-      while (j < lines.length) {
-        if (/body\.im-tab-table tbody td:first-child \.company-name/.test(lines[j])) {
-          seenCompany = true;
-        }
-        if (seenCompany && /^\s*\}\s*$/.test(lines[j])) {
-          j += 1;
-          // Skip trailing blank lines belonging to the block.
-          while (j < lines.length && lines[j].trim() === '') j += 1;
-          break;
-        }
-        // Safety: stop before the next major mobile header section.
-        if (j > i + 5 && /^\s*\.header \{\s*$/.test(lines[j])) break;
-        j += 1;
-      }
-      i = j;
-      continue;
-    }
-    out.push(lines[i]);
-    i += 1;
+  if (html.includes('investingmap-mobile-table-v2 — mobile layout')) {
+    return html;
   }
-  html = out.join('\n');
 
   const injected = html.replace(
     /(\.table-container \{\s*\n\s*padding: 10px 12px\s*\})/,
@@ -322,10 +280,13 @@ function patchScriptVersions(html) {
 function patchFile(rel) {
   const abs = path.join(root, rel);
   let html = fs.readFileSync(abs, 'utf8');
+  const before = html;
 
   html = stripOldMobileCss(html);
   html = stripImTabHeaderCollapse(html);
-  html = html.replace(/border-collapse:\s*collapse/g, 'border-collapse: separate;\n      border-spacing: 0');
+  if (html.includes('border-collapse: collapse')) {
+    html = html.replace(/border-collapse:\s*collapse/g, 'border-collapse: separate;\n      border-spacing: 0');
+  }
 
   if (!html.includes(`${MARKER_V2} — base`)) {
     html = html.replace(/(\s+\.node-dim\s*\{[^}]+\}\s*)(\n\s*@media\(max-width:768px\))/s, `$1${STICKY_BASE_CSS}$2`);
@@ -340,8 +301,12 @@ function patchFile(rel) {
   html = patchSwitchTabSource(html);
   html = patchInitTabClassSource(html);
 
-  fs.writeFileSync(abs, html, 'utf8');
-  console.log('patched:', rel);
+  if (html !== before) {
+    fs.writeFileSync(abs, html, 'utf8');
+    console.log('patched:', rel);
+  } else {
+    console.log('unchanged:', rel);
+  }
 }
 
 for (const rel of MAP_FILES) patchFile(rel);

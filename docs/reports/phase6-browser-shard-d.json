@@ -1,0 +1,273 @@
+{
+  "generatedAt": "2026-08-29T11:30:21.757Z",
+  "shard": "d",
+  "releaseMode": true,
+  "headHint": "1866428ce0cd23ab363c40bdd667b16eeecba418",
+  "pages": [
+    "medtech",
+    "software",
+    "telecom",
+    "robot"
+  ],
+  "totalCases": 24,
+  "passedCases": 24,
+  "appFailures": 0,
+  "infrastructureFailures": 0,
+  "skippedCases": 0,
+  "assertionWeakening": 0,
+  "retry": 0,
+  "failureLines": [],
+  "appFailureLines": [],
+  "infrastructureFailureLines": [],
+  "timingSummary": {
+    "caseCount": 24,
+    "min": 3948,
+    "median": 5536,
+    "p90": 9837,
+    "p95": 10762,
+    "max": 10763,
+    "timeoutCount": 0
+  },
+  "caseResults": [
+    {
+      "id": "medtech/desktop/en",
+      "sector": "medtech",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4431,
+      "stage": "done"
+    },
+    {
+      "id": "medtech/desktop/ko",
+      "sector": "medtech",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4439,
+      "stage": "done"
+    },
+    {
+      "id": "medtech/mobile/en",
+      "sector": "medtech",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6321,
+      "stage": "done"
+    },
+    {
+      "id": "medtech/mobile/ko",
+      "sector": "medtech",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4466,
+      "stage": "done"
+    },
+    {
+      "id": "medtech/tablet/en",
+      "sector": "medtech",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7481,
+      "stage": "done"
+    },
+    {
+      "id": "medtech/tablet/ko",
+      "sector": "medtech",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8376,
+      "stage": "done"
+    },
+    {
+      "id": "robot/desktop/en",
+      "sector": "robot",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9572,
+      "stage": "done"
+    },
+    {
+      "id": "robot/desktop/ko",
+      "sector": "robot",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 10762,
+      "stage": "done"
+    },
+    {
+      "id": "robot/mobile/en",
+      "sector": "robot",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5536,
+      "stage": "done"
+    },
+    {
+      "id": "robot/mobile/ko",
+      "sector": "robot",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4823,
+      "stage": "done"
+    },
+    {
+      "id": "robot/tablet/en",
+      "sector": "robot",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6063,
+      "stage": "done"
+    },
+    {
+      "id": "robot/tablet/ko",
+      "sector": "robot",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4872,
+      "stage": "done"
+    },
+    {
+      "id": "software/desktop/en",
+      "sector": "software",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4813,
+      "stage": "done"
+    },
+    {
+      "id": "software/desktop/ko",
+      "sector": "software",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4322,
+      "stage": "done"
+    },
+    {
+      "id": "software/mobile/en",
+      "sector": "software",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4210,
+      "stage": "done"
+    },
+    {
+      "id": "software/mobile/ko",
+      "sector": "software",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6335,
+      "stage": "done"
+    },
+    {
+      "id": "software/tablet/en",
+      "sector": "software",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9837,
+      "stage": "done"
+    },
+    {
+      "id": "software/tablet/ko",
+      "sector": "software",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5046,
+      "stage": "done"
+    },
+    {
+      "id": "telecom/desktop/en",
+      "sector": "telecom",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5010,
+      "stage": "done"
+    },
+    {
+      "id": "telecom/desktop/ko",
+      "sector": "telecom",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6480,
+      "stage": "done"
+    },
+    {
+      "id": "telecom/mobile/en",
+      "sector": "telecom",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6094,
+      "stage": "done"
+    },
+    {
+      "id": "telecom/mobile/ko",
+      "sector": "telecom",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 3948,
+      "stage": "done"
+    },
+    {
+      "id": "telecom/tablet/en",
+      "sector": "telecom",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 10763,
+      "stage": "done"
+    },
+    {
+      "id": "telecom/tablet/ko",
+      "sector": "telecom",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4413,
+      "stage": "done"
+    }
+  ]
+}

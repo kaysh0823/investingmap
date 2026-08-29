@@ -1,0 +1,346 @@
+{
+  "phase": "5I",
+  "sector": "robot",
+  "auditedAt": "2026-08-29",
+  "htmlPath": "robot/korea_robot_map.html",
+  "dataSector": "robot",
+  "listedCompanyCount": 17,
+  "tickers": [
+    {
+      "ticker": "277810",
+      "nameKo": "레인보우로보틱스",
+      "chain": "완성로봇·플랫폼",
+      "products": "HUBO, 제조용·서비스로봇",
+      "partners": [
+        "nvidia",
+        "siemens",
+        "hyundai_mt",
+        "samsung_eco"
+      ]
+    },
+    {
+      "ticker": "454910",
+      "nameKo": "두산로보틱스",
+      "chain": "완성로봇·플랫폼",
+      "products": "A-, M-, H-시리즈, 팬턴트",
+      "partners": [
+        "nvidia",
+        "fanuc",
+        "abb",
+        "doosan_grp"
+      ]
+    },
+    {
+      "ticker": "108490",
+      "nameKo": "로보티즈",
+      "chain": "액추에이터·모터",
+      "products": "DYNAMIXEL 액추에이터, OPENMANIPULATOR",
+      "partners": [
+        "nvidia",
+        "intel"
+      ]
+    },
+    {
+      "ticker": "319400",
+      "nameKo": "현대무벡스",
+      "chain": "자동화·SI·물류시스템",
+      "products": "스마트물류, 승강장·PSD, 자동화 시스템",
+      "partners": []
+    },
+    {
+      "ticker": "058610",
+      "nameKo": "에스피지",
+      "chain": "감속기·동력전달",
+      "products": "정밀 감속기, AC·DC·BLDC 기어드모터",
+      "partners": []
+    },
+    {
+      "ticker": "090710",
+      "nameKo": "휴림로봇",
+      "chain": "완성로봇·플랫폼",
+      "products": "제조용 로봇, 퍼스널·서비스 로봇",
+      "partners": []
+    },
+    {
+      "ticker": "090360",
+      "nameKo": "로보스타",
+      "chain": "완성로봇·플랫폼",
+      "products": "스카라·수직다관절 로봇, 자동화 시스템",
+      "partners": [
+        "siemens",
+        "fanuc",
+        "doosan_robot"
+      ]
+    },
+    {
+      "ticker": "388720",
+      "nameKo": "유일로보틱스",
+      "chain": "완성로봇·플랫폼",
+      "products": "제조·피킹·이송 로봇 시스템",
+      "partners": []
+    },
+    {
+      "ticker": "056190",
+      "nameKo": "에스에프에이",
+      "chain": "자동화·SI·물류시스템",
+      "products": "스마트팩토리, 반도체·디스플레이 물류장비",
+      "partners": []
+    },
+    {
+      "ticker": "466100",
+      "nameKo": "클로봇",
+      "chain": "제어·모션·로봇SW",
+      "products": "CROMS 로봇 통합관제, CHAMELEON 범용 자율주행",
+      "partners": []
+    },
+    {
+      "ticker": "160190",
+      "nameKo": "하이젠알앤엠",
+      "chain": "액추에이터·모터",
+      "products": "서보모터, 서보드라이브, 로봇 액추에이터",
+      "partners": [
+        "siemens",
+        "abb"
+      ]
+    },
+    {
+      "ticker": "056080",
+      "nameKo": "유진로봇",
+      "chain": "완성로봇·플랫폼",
+      "products": "iClebo, 자율주행 물류로봇",
+      "partners": [
+        "amazon",
+        "google"
+      ]
+    },
+    {
+      "ticker": "348340",
+      "nameKo": "뉴로메카",
+      "chain": "완성로봇·플랫폼",
+      "products": "Indy 협동로봇, 자동화 플랫폼",
+      "partners": []
+    },
+    {
+      "ticker": "125490",
+      "nameKo": "한라캐스트",
+      "chain": "센서·비전·정밀부품",
+      "products": "로봇 구조·열관리 부품, 자율주행·전장 하우징",
+      "partners": [
+        "keyence",
+        "cognex"
+      ]
+    },
+    {
+      "ticker": "389500",
+      "nameKo": "에스비비테크",
+      "chain": "감속기·동력전달",
+      "products": "로봇용 하모닉 감속기, 세라믹 베어링",
+      "partners": []
+    },
+    {
+      "ticker": "117730",
+      "nameKo": "티로보틱스",
+      "chain": "완성로봇·플랫폼",
+      "products": "반도체·디스플레이 이송로봇, AMR",
+      "partners": []
+    },
+    {
+      "ticker": "475400",
+      "nameKo": "씨메스로보틱스",
+      "chain": "자동화·SI·물류시스템",
+      "products": "피킹·팔레타이징·물류 로봇 시스템",
+      "partners": []
+    }
+  ],
+  "chainCounts": {
+    "완성로봇·플랫폼": 8,
+    "액추에이터·모터": 2,
+    "자동화·SI·물류시스템": 3,
+    "감속기·동력전달": 2,
+    "제어·모션·로봇SW": 1,
+    "센서·비전·정밀부품": 1
+  },
+  "partnersTotal": 19,
+  "partnerClassification": [
+    {
+      "ticker": "277810",
+      "partner": "nvidia",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "277810",
+      "partner": "siemens",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "277810",
+      "partner": "hyundai_mt",
+      "kind": null,
+      "classification": "theme/reference",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "277810",
+      "partner": "samsung_eco",
+      "kind": "backing",
+      "classification": "theme/reference",
+      "edgeLabel": "삼성계 연합·지분 참여(참고)"
+    },
+    {
+      "ticker": "454910",
+      "partner": "nvidia",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "454910",
+      "partner": "fanuc",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "454910",
+      "partner": "abb",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "454910",
+      "partner": "doosan_grp",
+      "kind": "backing",
+      "classification": "theme/reference",
+      "edgeLabel": "두산그룹 지분(참고)"
+    },
+    {
+      "ticker": "108490",
+      "partner": "nvidia",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "108490",
+      "partner": "intel",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "090360",
+      "partner": "siemens",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "090360",
+      "partner": "fanuc",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "090360",
+      "partner": "doosan_robot",
+      "kind": null,
+      "classification": "inferred customer/supplier",
+      "edgeLabel": "모션·서보 부품·제어"
+    },
+    {
+      "ticker": "160190",
+      "partner": "siemens",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "160190",
+      "partner": "abb",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "056080",
+      "partner": "amazon",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "056080",
+      "partner": "google",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "125490",
+      "partner": "keyence",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    },
+    {
+      "ticker": "125490",
+      "partner": "cognex",
+      "kind": null,
+      "classification": "peer",
+      "edgeLabel": null
+    }
+  ],
+  "semiProfileLeak": {
+    "bodySemi": false,
+    "dataSectorRobot": true,
+    "semiconductorFooterLink": true,
+    "networkPathWasNull": true,
+    "legacyFallbackWasTrue": true
+  },
+  "profile": {
+    "model": "robotics_component_system_application_ecosystem",
+    "layout": "roboticsValueChainEcosystem",
+    "networkPath": "../data/networks/robot.json",
+    "lanes": [
+      "precision_component",
+      "actuator_drive",
+      "robot_software",
+      "industrial_robot",
+      "collaborative_robot",
+      "logistics_robot",
+      "system_integration",
+      "end_market"
+    ]
+  },
+  "network": {
+    "nodeCount": 86,
+    "edgeCount": 115,
+    "legacyFallback": false,
+    "confirmedBusiness": 0,
+    "peerEdges": 19,
+    "products": 12,
+    "categories": 15,
+    "crossSectorRefs": 5,
+    "partnerClassCounts": {
+      "peer": 15,
+      "theme_reference": 3,
+      "inferred_customer_supplier": 1,
+      "invalid": 0,
+      "duplicate": 0,
+      "cross_sector_reference": 5
+    }
+  },
+  "policyNotes": [
+    "Do not promote legacy partners to confirmed business",
+    "Investment/theme ≠ supply or deployment",
+    "Motion/servo label to cobot OEM is inferred, not confirmed supply",
+    "Empty medical/defense robot lanes omitted",
+    "cp_list must remain 17"
+  ]
+}

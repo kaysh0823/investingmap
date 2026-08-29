@@ -1,0 +1,290 @@
+{
+  "sectorId": "defense",
+  "model": "program_ecosystem",
+  "asOf": "2026-08-22",
+  "nodes": [
+    {
+      "id": "krx:012450",
+      "type": "listed_company",
+      "ticker": "012450",
+      "nameKo": "한화에어로스페이스",
+      "nameEn": "HANWHA AEROSPACE",
+      "market": "KOSPI",
+      "role": "항공기·엔진·MRO",
+      "group": "항공기·엔진·MRO",
+      "mcapWon": 55585346278000,
+      "isListedKorea": true,
+      "legacyId": "hanwha_aero"
+    },
+    {
+      "id": "krx:064350",
+      "type": "listed_company",
+      "ticker": "064350",
+      "nameKo": "현대로템",
+      "nameEn": "HYUNDAI ROTEM",
+      "market": "KOSPI",
+      "role": "육상무기·차량·탄약",
+      "group": "육상무기·차량·탄약",
+      "mcapWon": 22756168090500,
+      "isListedKorea": true,
+      "legacyId": "rotem"
+    },
+    {
+      "id": "krx:272210",
+      "type": "listed_company",
+      "ticker": "272210",
+      "nameKo": "한화시스템",
+      "nameEn": "HANWHA SYSTEMS",
+      "market": "KOSPI",
+      "role": "미사일·레이더·C4ISR",
+      "group": "미사일·레이더·C4ISR",
+      "mcapWon": 18136261344000,
+      "isListedKorea": true,
+      "legacyId": "hanwha_sys"
+    },
+    {
+      "id": "krx:079550",
+      "type": "listed_company",
+      "ticker": "079550",
+      "nameKo": "LIG디펜스앤에어로스페이스",
+      "nameEn": "LIG Defense&Aerospace",
+      "market": "KOSPI",
+      "role": "미사일·레이더·C4ISR",
+      "group": "미사일·레이더·C4ISR",
+      "mcapWon": 16984000000000,
+      "isListedKorea": true,
+      "legacyId": "lig"
+    },
+    {
+      "id": "krx:047810",
+      "type": "listed_company",
+      "ticker": "047810",
+      "nameKo": "한국항공우주",
+      "nameEn": "KOREA AEROSPACE INDUSTRIES",
+      "market": "KOSPI",
+      "role": "항공기·엔진·MRO",
+      "group": "항공기·엔진·MRO",
+      "mcapWon": 13734242576300,
+      "isListedKorea": true,
+      "legacyId": "kai"
+    },
+    {
+      "id": "krx:082920",
+      "type": "listed_company",
+      "ticker": "082920",
+      "nameKo": "비츠로셀",
+      "nameEn": "VITZROCELL Co., Ltd.",
+      "market": "KOSDAQ",
+      "role": "육상무기·차량·탄약",
+      "group": "육상무기·차량·탄약",
+      "mcapWon": 2126421471300,
+      "isListedKorea": true,
+      "legacyId": "def_vitzrocell_co_ltd"
+    },
+    {
+      "id": "krx:103140",
+      "type": "listed_company",
+      "ticker": "103140",
+      "nameKo": "풍산",
+      "nameEn": "POONGSAN CORPORATION",
+      "market": "KOSPI",
+      "role": "육상무기·차량·탄약",
+      "group": "육상무기·차량·탄약",
+      "mcapWon": 2070994144200,
+      "isListedKorea": true,
+      "legacyId": "poongsan"
+    },
+    {
+      "id": "krx:347700",
+      "type": "listed_company",
+      "ticker": "347700",
+      "nameKo": "스피어",
+      "nameEn": "Sphere Corporation",
+      "market": "KOSDAQ",
+      "role": "우주·위성·민항",
+      "group": "우주·위성·민항",
+      "mcapWon": 1891494585400,
+      "isListedKorea": true,
+      "legacyId": "defense_sphere_corporation"
+    },
+    {
+      "id": "krx:003570",
+      "type": "listed_company",
+      "ticker": "003570",
+      "nameKo": "SNT다이내믹스",
+      "nameEn": "SNT DYNAMICS",
+      "market": "KOSPI",
+      "role": "육상무기·차량·탄약",
+      "group": "육상무기·차량·탄약",
+      "mcapWon": 1360035307300,
+      "isListedKorea": true,
+      "legacyId": "def_snt_dynamics"
+    },
+    {
+      "id": "krx:099320",
+      "type": "listed_company",
+      "ticker": "099320",
+      "nameKo": "쎄트렉아이",
+      "nameEn": "Satrec Initiative Co., Ltd.",
+      "market": "KOSDAQ",
+      "role": "우주·위성·민항",
+      "group": "우주·위성·민항",
+      "mcapWon": 1290060548400,
+      "isListedKorea": true,
+      "legacyId": "satrec"
+    },
+    {
+      "id": "krx:189300",
+      "type": "listed_company",
+      "ticker": "189300",
+      "nameKo": "인텔리안테크",
+      "nameEn": "Intellian Technologies",
+      "market": "KOSDAQ",
+      "role": "우주·위성·민항",
+      "group": "우주·위성·민항",
+      "mcapWon": 1125289685600,
+      "isListedKorea": true,
+      "legacyId": "defense_intellian_technologies"
+    },
+    {
+      "id": "krx:214430",
+      "type": "listed_company",
+      "ticker": "214430",
+      "nameKo": "아이쓰리시스템",
+      "nameEn": "i3system, Ind.",
+      "market": "KOSDAQ",
+      "role": "우주·위성·민항",
+      "group": "우주·위성·민항",
+      "mcapWon": 540733910000,
+      "isListedKorea": true,
+      "legacyId": "def_i3system_ind"
+    },
+    {
+      "id": "krx:010820",
+      "type": "listed_company",
+      "ticker": "010820",
+      "nameKo": "퍼스텍",
+      "nameEn": "Firstec",
+      "market": "KOSPI",
+      "role": "육상무기·차량·탄약",
+      "group": "육상무기·차량·탄약",
+      "mcapWon": 380421116400,
+      "isListedKorea": true,
+      "legacyId": "def_firstec"
+    },
+    {
+      "id": "program:kf21",
+      "type": "program",
+      "nameKo": "KF-21 Boramae",
+      "nameEn": "KF-21 Boramae fighter program",
+      "role": "무기체계"
+    },
+    {
+      "id": "program:k9",
+      "type": "program",
+      "nameKo": "K9 자주포",
+      "nameEn": "K9 Thunder self-propelled howitzer",
+      "role": "무기체계"
+    },
+    {
+      "id": "program:cheongung_ii",
+      "type": "program",
+      "nameKo": "천궁-II",
+      "nameEn": "Cheongung II (KM-SAM)",
+      "role": "무기체계"
+    }
+  ],
+  "edges": [
+    {
+      "id": "prime-kf21-kai",
+      "source": "krx:047810",
+      "target": "program:kf21",
+      "type": "joint_development",
+      "direction": "undirected",
+      "status": "reported",
+      "labelKo": "KF-21 Boramae 개발·생산",
+      "labelEn": "KF-21 Boramae development",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": "2026-08-22",
+          "reviewedBy": "phase26_evidence_audit",
+          "accessedAt": "2026-08-22",
+          "sourceType": "official",
+          "title": "KAI KF-21 Boramae product PDF",
+          "url": "https://www.koreaaero.com/VIRTUAL_EX/PDF/FixedWing/01_Fixed_Wing_KF-21_Boramae.pdf",
+          "publishedAt": "2024-01-01",
+          "directEvidence": false,
+          "evidenceSummaryKo": "KAI 공식 KF-21 보라매 PDF — 체계 개발 주관사 KAI 명시",
+          "evidenceSummaryEn": "KAI 공식 KF-21 보라매 PDF — 체계 개발 주관사 KAI 명시",
+          "quotedFactKo": "KAI(047810) KF-21 프로그램 주관",
+          "relationshipSupported": "한국항공우주 KF-21 Boramae 개발·생산 참여(제품 자료)"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-22",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "prime-k9-rotem",
+      "source": "krx:064350",
+      "target": "program:k9",
+      "type": "manufactures",
+      "direction": "source_to_target",
+      "status": "reported",
+      "labelKo": "K9 자주포 제조·공급",
+      "labelEn": "K9 self-propelled howitzer manufacture",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": "2026-08-22",
+          "reviewedBy": "phase26_evidence_audit",
+          "accessedAt": "2026-08-22",
+          "sourceType": "official",
+          "title": "Hyundai Rotem K9 product page (KO)",
+          "url": "https://www.hyundai-rotem.co.kr/Kor/Business/Defense/Product/K9",
+          "publishedAt": "2024-01-01",
+          "directEvidence": false,
+          "evidenceSummaryKo": "현대로템 K9 제품 페이지 — EN URL 404, KO 페이지로 교체",
+          "evidenceSummaryEn": "현대로템 K9 제품 페이지 — EN URL 404, KO 페이지로 교체",
+          "quotedFactKo": "현대로템(064350) K9 체계 관련 (prime 공식 계약 문서 아님)",
+          "relationshipSupported": "현대로템 K9 자주포 제조(제품 페이지)"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-22",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "sub-cheongung-lig",
+      "source": "krx:079550",
+      "target": "program:cheongung_ii",
+      "type": "subsystem_supplier",
+      "direction": "source_to_target",
+      "status": "reported",
+      "labelKo": "천궁·방공 무기체계",
+      "labelEn": "Cheongung air defense systems",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": "2026-08-22",
+          "reviewedBy": "phase26_evidence_audit",
+          "accessedAt": "2026-08-22",
+          "sourceType": "official",
+          "title": "LIG Nex1 air defense (KO)",
+          "url": "https://www.lignex1.com/kor/business/air-defense",
+          "publishedAt": "2024-01-01",
+          "directEvidence": false,
+          "evidenceSummaryKo": "LIG넥스원 방공 사업 페이지 — EN URL 404",
+          "evidenceSummaryEn": "LIG넥스원 방공 사업 페이지 — EN URL 404",
+          "quotedFactKo": "LIG넥스1(079550) 방공 무기체계 사업 (하위체계 공급 직접 입증 미완)",
+          "relationshipSupported": "LIG넥스원 방공·대공 미사일 사업(제품·사업 페이지)"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-22",
+      "reviewStatus": "needs_human_review"
+    }
+  ],
+  "lastReviewedAt": "2026-08-22"
+}

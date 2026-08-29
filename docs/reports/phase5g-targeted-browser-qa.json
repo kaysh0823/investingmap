@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-08-29T09:12:51.530Z",
+  "note": "Phase 5G targeted only — full matrix not run; pageCreate hang = infrastructure failure without retry-as-success",
+  "results": [
+    {
+      "id": "medtech/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 6250,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "medtech/tablet/en",
+      "stage": "done",
+      "elapsedMs": 2357,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "medtech/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 2515,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "medtech/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2198,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "cosmetics/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 2102,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "kcontent/mobile/en",
+      "stage": "done",
+      "elapsedMs": 1974,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bigchip/000660",
+      "stage": "done",
+      "elapsedMs": 2005,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "construction/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 1915,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bio/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2218,
+      "failures": [],
+      "infrastructureFailure": false
+    }
+  ],
+  "appFailureCount": 0,
+  "infrastructureFailureCount": 0
+}

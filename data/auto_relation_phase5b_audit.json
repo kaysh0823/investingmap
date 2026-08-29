@@ -1,0 +1,626 @@
+{
+  "asOf": "2026-08-23",
+  "phase": "5B-audit",
+  "listedCompanyCount": 22,
+  "byChain": {
+    "완성차": 3,
+    "부품": 13,
+    "전장·ADAS": 2,
+    "타이어": 4
+  },
+  "tickers": [
+    {
+      "ticker": "005380",
+      "name": "현대차",
+      "nameEn": "Hyundai Motor",
+      "chain": "완성차",
+      "semType": "완성차·SUV·EV",
+      "products": "승용·상용·전기차·수소",
+      "partners": [
+        "toyota",
+        "gm",
+        "vw"
+      ]
+    },
+    {
+      "ticker": "000270",
+      "name": "기아",
+      "nameEn": "KIA CORPORATION",
+      "chain": "완성차",
+      "semType": "완성차·SUV·EV",
+      "products": "승용·전기차·모빌리티",
+      "partners": [
+        "toyota",
+        "vw",
+        "stellantis"
+      ]
+    },
+    {
+      "ticker": "012330",
+      "name": "현대모비스",
+      "nameEn": "Hyundai Mobis",
+      "chain": "부품",
+      "semType": "모듈·전장·A/S",
+      "products": "샤시·콕핏·램프·전장",
+      "partners": [
+        "bosch",
+        "continental",
+        "denso"
+      ]
+    },
+    {
+      "ticker": "307950",
+      "name": "현대오토에버",
+      "nameEn": "Hyundai AutoEver",
+      "chain": "전장·ADAS",
+      "semType": "차량 SW·IT",
+      "products": "차량 SW·클라우드·모빌리티 IT",
+      "partners": [
+        "nvidia",
+        "bosch",
+        "continental"
+      ]
+    },
+    {
+      "ticker": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "nameEn": "Hankook Tire & Technology",
+      "chain": "타이어",
+      "semType": "타이어",
+      "products": "승용·상용 타이어",
+      "partners": [
+        "michelin",
+        "bridgestone",
+        "goodyear"
+      ]
+    },
+    {
+      "ticker": "018880",
+      "name": "한온시스템",
+      "nameEn": "Hanon Systems",
+      "chain": "부품",
+      "semType": "열관리·공조",
+      "products": "공조·열관리·컴프레서",
+      "partners": [
+        "denso",
+        "mahindra",
+        "vw"
+      ]
+    },
+    {
+      "ticker": "005850",
+      "name": "에스엘",
+      "nameEn": "SL Corporation",
+      "chain": "부품",
+      "semType": "램프·전장부품",
+      "products": "헤드램프·리어램프",
+      "partners": [
+        "bosch",
+        "continental"
+      ]
+    },
+    {
+      "ticker": "204320",
+      "name": "HL만도",
+      "nameEn": "HL Mando",
+      "chain": "부품",
+      "semType": "조향·제동·ADAS",
+      "products": "스티어링·브레이크·ADAS",
+      "partners": [
+        "bosch",
+        "continental",
+        "zf"
+      ]
+    },
+    {
+      "ticker": "000240",
+      "name": "한국앤컴퍼니",
+      "nameEn": "Hankook & Company",
+      "chain": "타이어",
+      "semType": "타이어 지주",
+      "products": "한국타이어 등 계열",
+      "partners": [
+        "michelin",
+        "bridgestone"
+      ]
+    },
+    {
+      "ticker": "007340",
+      "name": "DN오토모티브",
+      "nameEn": "DN Automotive",
+      "chain": "부품",
+      "semType": "배터리·부품",
+      "products": "배터리·부품·소재",
+      "partners": [
+        "bosch",
+        "continental"
+      ]
+    },
+    {
+      "ticker": "011210",
+      "name": "현대위아",
+      "nameEn": "Hyundai Wia",
+      "chain": "부품",
+      "semType": "파워트레인·공작",
+      "products": "엔진·변속기·공작기계",
+      "partners": [
+        "denso",
+        "bosch"
+      ]
+    },
+    {
+      "ticker": "073240",
+      "name": "금호타이어",
+      "nameEn": "Kumho Tire",
+      "chain": "타이어",
+      "semType": "타이어",
+      "products": "승용·상용 타이어",
+      "partners": [
+        "michelin",
+        "bridgestone"
+      ]
+    },
+    {
+      "ticker": "064960",
+      "name": "SNT모티브",
+      "nameEn": "SNT Motiv",
+      "chain": "부품",
+      "semType": "모터·구동",
+      "products": "모터·구동부품",
+      "partners": [
+        "denso",
+        "bosch"
+      ]
+    },
+    {
+      "ticker": "025540",
+      "name": "한국단자",
+      "nameEn": "Korea Electric Terminal",
+      "chain": "부품",
+      "semType": "자동차 커넥터·전장부품",
+      "products": "자동차용 커넥터·전장부품",
+      "partners": [
+        "bosch",
+        "denso"
+      ]
+    },
+    {
+      "ticker": "002350",
+      "name": "넥센타이어",
+      "nameEn": "Nexen Tire",
+      "chain": "타이어",
+      "semType": "타이어",
+      "products": "승용 타이어",
+      "partners": [
+        "goodyear",
+        "bridgestone"
+      ]
+    },
+    {
+      "ticker": "003620",
+      "name": "KG모빌리티",
+      "nameEn": "KG Mobility",
+      "chain": "완성차",
+      "semType": "SUV·픽업",
+      "products": "SUV·픽업트럭",
+      "partners": [
+        "stellantis",
+        "gm"
+      ]
+    },
+    {
+      "ticker": "015750",
+      "name": "성우하이텍",
+      "nameEn": "Sungwoo Hitech",
+      "chain": "부품",
+      "semType": "범퍼·차체",
+      "products": "범퍼·차체부품",
+      "partners": [
+        "vw",
+        "gm"
+      ]
+    },
+    {
+      "ticker": "009900",
+      "name": "명신산업",
+      "nameEn": "Myungshin Industry",
+      "chain": "부품",
+      "semType": "차체·프레스",
+      "products": "차체부품·프레스",
+      "partners": [
+        "toyota",
+        "gm"
+      ]
+    },
+    {
+      "ticker": "097520",
+      "name": "엠씨넥스",
+      "nameEn": "MCNEX Co.,Ltd.",
+      "chain": "전장·ADAS",
+      "semType": "카메라·전장",
+      "products": "차량 카메라·모듈",
+      "partners": [
+        "bosch",
+        "continental",
+        "denso"
+      ]
+    },
+    {
+      "ticker": "010690",
+      "name": "화신",
+      "nameEn": "Hwashin",
+      "chain": "부품",
+      "semType": "샤시·현가",
+      "products": "현가·샤시부품",
+      "partners": [
+        "zf",
+        "continental"
+      ]
+    },
+    {
+      "ticker": "200880",
+      "name": "서연이화",
+      "nameEn": "Seoyon E-Hwa",
+      "chain": "부품",
+      "semType": "내장·시트",
+      "products": "도어트림·시트",
+      "partners": [
+        "toyota",
+        "stellantis"
+      ]
+    },
+    {
+      "ticker": "000430",
+      "name": "대원강업",
+      "nameEn": "Daewon Kangup",
+      "chain": "부품",
+      "semType": "스프링·현가",
+      "products": "스프링·현가부품",
+      "partners": [
+        "zf",
+        "bosch"
+      ]
+    }
+  ],
+  "partnerEdgeRefs": 52,
+  "uniquePartnerIds": [
+    "toyota",
+    "gm",
+    "vw",
+    "stellantis",
+    "bosch",
+    "continental",
+    "denso",
+    "nvidia",
+    "michelin",
+    "bridgestone",
+    "goodyear",
+    "mahindra",
+    "zf"
+  ],
+  "stringPeerCount": 52,
+  "urlEvidenceRelationCount": 0,
+  "globalCompanyCount": 13,
+  "partnerPairs": [
+    {
+      "ticker": "005380",
+      "name": "현대차",
+      "partner": "toyota",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "005380",
+      "name": "현대차",
+      "partner": "gm",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "005380",
+      "name": "현대차",
+      "partner": "vw",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "000270",
+      "name": "기아",
+      "partner": "toyota",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "000270",
+      "name": "기아",
+      "partner": "vw",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "000270",
+      "name": "기아",
+      "partner": "stellantis",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "012330",
+      "name": "현대모비스",
+      "partner": "bosch",
+      "chain": "부품"
+    },
+    {
+      "ticker": "012330",
+      "name": "현대모비스",
+      "partner": "continental",
+      "chain": "부품"
+    },
+    {
+      "ticker": "012330",
+      "name": "현대모비스",
+      "partner": "denso",
+      "chain": "부품"
+    },
+    {
+      "ticker": "307950",
+      "name": "현대오토에버",
+      "partner": "nvidia",
+      "chain": "전장·ADAS"
+    },
+    {
+      "ticker": "307950",
+      "name": "현대오토에버",
+      "partner": "bosch",
+      "chain": "전장·ADAS"
+    },
+    {
+      "ticker": "307950",
+      "name": "현대오토에버",
+      "partner": "continental",
+      "chain": "전장·ADAS"
+    },
+    {
+      "ticker": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "partner": "michelin",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "partner": "bridgestone",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "161390",
+      "name": "한국타이어앤테크놀로지",
+      "partner": "goodyear",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "018880",
+      "name": "한온시스템",
+      "partner": "denso",
+      "chain": "부품"
+    },
+    {
+      "ticker": "018880",
+      "name": "한온시스템",
+      "partner": "mahindra",
+      "chain": "부품"
+    },
+    {
+      "ticker": "018880",
+      "name": "한온시스템",
+      "partner": "vw",
+      "chain": "부품"
+    },
+    {
+      "ticker": "005850",
+      "name": "에스엘",
+      "partner": "bosch",
+      "chain": "부품"
+    },
+    {
+      "ticker": "005850",
+      "name": "에스엘",
+      "partner": "continental",
+      "chain": "부품"
+    },
+    {
+      "ticker": "204320",
+      "name": "HL만도",
+      "partner": "bosch",
+      "chain": "부품"
+    },
+    {
+      "ticker": "204320",
+      "name": "HL만도",
+      "partner": "continental",
+      "chain": "부품"
+    },
+    {
+      "ticker": "204320",
+      "name": "HL만도",
+      "partner": "zf",
+      "chain": "부품"
+    },
+    {
+      "ticker": "000240",
+      "name": "한국앤컴퍼니",
+      "partner": "michelin",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "000240",
+      "name": "한국앤컴퍼니",
+      "partner": "bridgestone",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "007340",
+      "name": "DN오토모티브",
+      "partner": "bosch",
+      "chain": "부품"
+    },
+    {
+      "ticker": "007340",
+      "name": "DN오토모티브",
+      "partner": "continental",
+      "chain": "부품"
+    },
+    {
+      "ticker": "011210",
+      "name": "현대위아",
+      "partner": "denso",
+      "chain": "부품"
+    },
+    {
+      "ticker": "011210",
+      "name": "현대위아",
+      "partner": "bosch",
+      "chain": "부품"
+    },
+    {
+      "ticker": "073240",
+      "name": "금호타이어",
+      "partner": "michelin",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "073240",
+      "name": "금호타이어",
+      "partner": "bridgestone",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "064960",
+      "name": "SNT모티브",
+      "partner": "denso",
+      "chain": "부품"
+    },
+    {
+      "ticker": "064960",
+      "name": "SNT모티브",
+      "partner": "bosch",
+      "chain": "부품"
+    },
+    {
+      "ticker": "025540",
+      "name": "한국단자",
+      "partner": "bosch",
+      "chain": "부품"
+    },
+    {
+      "ticker": "025540",
+      "name": "한국단자",
+      "partner": "denso",
+      "chain": "부품"
+    },
+    {
+      "ticker": "002350",
+      "name": "넥센타이어",
+      "partner": "goodyear",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "002350",
+      "name": "넥센타이어",
+      "partner": "bridgestone",
+      "chain": "타이어"
+    },
+    {
+      "ticker": "003620",
+      "name": "KG모빌리티",
+      "partner": "stellantis",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "003620",
+      "name": "KG모빌리티",
+      "partner": "gm",
+      "chain": "완성차"
+    },
+    {
+      "ticker": "015750",
+      "name": "성우하이텍",
+      "partner": "vw",
+      "chain": "부품"
+    },
+    {
+      "ticker": "015750",
+      "name": "성우하이텍",
+      "partner": "gm",
+      "chain": "부품"
+    },
+    {
+      "ticker": "009900",
+      "name": "명신산업",
+      "partner": "toyota",
+      "chain": "부품"
+    },
+    {
+      "ticker": "009900",
+      "name": "명신산업",
+      "partner": "gm",
+      "chain": "부품"
+    },
+    {
+      "ticker": "097520",
+      "name": "엠씨넥스",
+      "partner": "bosch",
+      "chain": "전장·ADAS"
+    },
+    {
+      "ticker": "097520",
+      "name": "엠씨넥스",
+      "partner": "continental",
+      "chain": "전장·ADAS"
+    },
+    {
+      "ticker": "097520",
+      "name": "엠씨넥스",
+      "partner": "denso",
+      "chain": "전장·ADAS"
+    },
+    {
+      "ticker": "010690",
+      "name": "화신",
+      "partner": "zf",
+      "chain": "부품"
+    },
+    {
+      "ticker": "010690",
+      "name": "화신",
+      "partner": "continental",
+      "chain": "부품"
+    },
+    {
+      "ticker": "200880",
+      "name": "서연이화",
+      "partner": "toyota",
+      "chain": "부품"
+    },
+    {
+      "ticker": "200880",
+      "name": "서연이화",
+      "partner": "stellantis",
+      "chain": "부품"
+    },
+    {
+      "ticker": "000430",
+      "name": "대원강업",
+      "partner": "zf",
+      "chain": "부품"
+    },
+    {
+      "ticker": "000430",
+      "name": "대원강업",
+      "partner": "bosch",
+      "chain": "부품"
+    }
+  ],
+  "risks": [
+    "partners are string peer/theme labels — not supply contracts",
+    "OEM names as partners of OEMs are peer comparisons, not sales",
+    "parts companies partnering Bosch/Continental are peer, not customer",
+    "no DART/URL evidence on legacy partners",
+    "Hyundai group affiliation is not encoded as group_member edges"
+  ],
+  "networkJsonExists": false
+}

@@ -1,0 +1,219 @@
+{
+  "asOf": "2026-08-23",
+  "curatedBy": "editorial_manual_review_phase5a",
+  "entries": [
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "beforeType": "partners_array",
+      "afterType": "peer",
+      "afterEditorialStatus": "peer",
+      "origin": "phase5a_migrate_legacy_peer",
+      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+    },
+    {
+      "asOf": "2026-08-23",
+      "curatedBy": "editorial_manual_review_phase5a",
+      "origin": "phase5a_migrate",
+      "reason": "All legacy partners[] classified as global peer (defaultHidden); no automatic main_contractor from chain label",
+      "removedUnsupported": 0,
+      "legacyPartnerEdges": 20
+    },
+    {
+      "asOf": "2026-08-23",
+      "curatedBy": "editorial_manual_review_phase5a",
+      "nodeOrEdgeId": "epc-project:qatar-dukhan-solar",
+      "afterType": "overseas_epc_project",
+      "afterProjectStatus": "contract_signed",
+      "reason": "Exact DART EPIC disclosure — Samsung C&T overseas plant"
+    },
+    {
+      "asOf": "2026-08-23",
+      "curatedBy": "editorial_manual_review_phase5a",
+      "origin": "phase5a_skip",
+      "reason": "DL Yeongdong Lot1 deferred until exact DART rcp verified; structural specializes_in retained",
+      "ticker": "375500"
+    }
+  ]
+}

@@ -1,0 +1,1271 @@
+{
+  "asOf": "2026-08-23",
+  "phase": "5C.2",
+  "summary": {
+    "phase5cNodeCount": 56,
+    "phase5c1NodeCount": 86,
+    "delta": 30,
+    "addedCount": 41,
+    "removedCount": 11,
+    "retainedCount": 45,
+    "explanation": "30-node increase = 24 unique product + ~15 unique component nodes minus removed shared product:item/component:item and renamed shared slugs (mlcc→mlcc_camera_substrate, etc.)"
+  },
+  "addedNodeIds": [
+    "product:mlcc_camera_substrate",
+    "product:home_appliances_tv_auto",
+    "component:home_appliances",
+    "product:camera_module_auto_electronics",
+    "component:smartphone_camera_module",
+    "product:oled_display_panel",
+    "component:oled_panel",
+    "product:environmental_appliances_rental",
+    "component:water_purifier",
+    "product:video_security_camera",
+    "product:electronic_components_modules",
+    "component:electronic_module",
+    "product:mlcc_capacitors",
+    "component:capacitor",
+    "product:appliance_auto_electronics_mfg",
+    "product:ultracapacitor_aluminum",
+    "component:ultracapacitor",
+    "product:camera_cover_glass",
+    "component:camera_window_glass",
+    "product:power_module_esl_ems",
+    "component:power_module",
+    "component:fpcb",
+    "product:oled_deposition_equipment",
+    "component:oled_evaporator",
+    "product:led_vcsel_opto",
+    "product:vcm_magnetics",
+    "product:solder_packaging_materials",
+    "component:solder_ball",
+    "product:led_opto_devices",
+    "product:home_appliance_rental",
+    "component:kitchen_appliances",
+    "product:led_blu_electronic_modules",
+    "component:backlight_unit",
+    "product:camera_biometric_modules",
+    "component:biometric_module",
+    "product:motor_antenna_ceramic",
+    "component:ceramic_parts",
+    "product:connectors",
+    "component:connector",
+    "product:electronics_ems_intops",
+    "component:ems_assembly"
+  ],
+  "removedNodeIds": [
+    "product:mlcc",
+    "product:item",
+    "component:item",
+    "product:tv",
+    "product:oled",
+    "component:tv",
+    "component:oled",
+    "product:ems",
+    "product:led",
+    "product:led_vcsel",
+    "product:led_blu"
+  ],
+  "retainedNodeIds": [
+    "group:home_appliance",
+    "group:display",
+    "group:camera_module",
+    "group:electronic_component",
+    "sector:semiconductor",
+    "sector:auto",
+    "sector:powergrid",
+    "sector:battery",
+    "end_market:consumer_electronics",
+    "end_market:industrial_electronics",
+    "end_market:automotive_electronics",
+    "krx:009150",
+    "component:mlcc",
+    "krx:066570",
+    "krx:011070",
+    "krx:034220",
+    "krx:021240",
+    "krx:489790",
+    "component:cctv",
+    "krx:043260",
+    "krx:001820",
+    "krx:065350",
+    "krx:417200",
+    "krx:204270",
+    "krx:248070",
+    "krx:090460",
+    "product:fpcb",
+    "krx:171090",
+    "krx:046890",
+    "component:wicop",
+    "krx:033240",
+    "component:vcm",
+    "krx:077360",
+    "krx:017900",
+    "component:led",
+    "krx:284740",
+    "krx:004710",
+    "krx:192650",
+    "krx:052710",
+    "krx:065680",
+    "krx:049070",
+    "global:sony",
+    "global:panasonic",
+    "global:murata",
+    "global:bosch"
+  ],
+  "typeBefore": {
+    "listed_company": 24,
+    "global_company": 4,
+    "business_category": 4,
+    "cross_sector_anchor": 4,
+    "end_market": 3,
+    "product": 9,
+    "component": 8,
+    "total": 56
+  },
+  "typeAfter": {
+    "business_category": 4,
+    "cross_sector_anchor": 4,
+    "end_market": 3,
+    "listed_company": 24,
+    "product": 24,
+    "component": 23,
+    "global_company": 4
+  },
+  "laneAfter": {
+    "home_appliance": 12,
+    "display": 7,
+    "camera_module": 13,
+    "electronic_component": 43,
+    "end_market": 11
+  },
+  "zeroDegreeNodes": [
+    {
+      "id": "sector:powergrid",
+      "type": "cross_sector_anchor",
+      "nameKo": "전력망 섹터",
+      "reason": "boundary placeholder without cross_sector_reference edge yet"
+    },
+    {
+      "id": "sector:battery",
+      "type": "cross_sector_anchor",
+      "nameKo": "배터리 섹터",
+      "reason": "boundary placeholder without cross_sector_reference edge yet"
+    },
+    {
+      "id": "end_market:industrial_electronics",
+      "type": "end_market",
+      "nameKo": "산업·장비 전자",
+      "reason": "end_market anchor not yet linked via exposed_to"
+    }
+  ],
+  "aliasNodes": [],
+  "sharedProducts": [
+    {
+      "id": "component:electronic_module",
+      "tickers": [
+        "043260",
+        "065350"
+      ]
+    }
+  ],
+  "duplicateSemanticLabels": [],
+  "addedNodeDetails": [
+    {
+      "nodeId": "product:mlcc_camera_substrate",
+      "label": "MLCC·카메라모듈·기판",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "009150",
+      "incidentEdges": [
+        "specializes_in:krx:009150"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Samsung Electro-Mechanics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:home_appliances_tv_auto",
+      "label": "가전·TV·전장",
+      "type": "product",
+      "entityRole": "home_appliance",
+      "sourceTicker": "066570",
+      "incidentEdges": [
+        "specializes_in:krx:066570"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LG Electronics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:home_appliances",
+      "label": "생활가전",
+      "type": "component",
+      "entityRole": "home_appliance",
+      "sourceTicker": "066570",
+      "incidentEdges": [
+        "manufactures:krx:066570"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LG Electronics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:camera_module_auto_electronics",
+      "label": "카메라모듈·전장부품",
+      "type": "product",
+      "entityRole": "camera_module",
+      "sourceTicker": "011070",
+      "incidentEdges": [
+        "specializes_in:krx:011070"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LG Innotek semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:smartphone_camera_module",
+      "label": "스마트폰 카메라모듈",
+      "type": "component",
+      "entityRole": "camera_module",
+      "sourceTicker": "011070",
+      "incidentEdges": [
+        "manufactures:krx:011070"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LG Innotek semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:oled_display_panel",
+      "label": "OLED·디스플레이 패널",
+      "type": "product",
+      "entityRole": "display",
+      "sourceTicker": "034220",
+      "incidentEdges": [
+        "specializes_in:krx:034220"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LG Display semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:oled_panel",
+      "label": "OLED 패널",
+      "type": "component",
+      "entityRole": "display",
+      "sourceTicker": "034220",
+      "incidentEdges": [
+        "manufactures:krx:034220"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LG Display semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:environmental_appliances_rental",
+      "label": "환경가전·렌탈",
+      "type": "product",
+      "entityRole": "home_appliance",
+      "sourceTicker": "021240",
+      "incidentEdges": [
+        "specializes_in:krx:021240"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Coway semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:water_purifier",
+      "label": "정수기",
+      "type": "component",
+      "entityRole": "home_appliance",
+      "sourceTicker": "021240",
+      "incidentEdges": [
+        "manufactures:krx:021240"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Coway semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:video_security_camera",
+      "label": "영상보안·카메라",
+      "type": "product",
+      "entityRole": "camera_module",
+      "sourceTicker": "489790",
+      "incidentEdges": [
+        "specializes_in:krx:489790"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Hanwha Vision semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:electronic_components_modules",
+      "label": "전자부품·모듈",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "043260",
+      "incidentEdges": [
+        "specializes_in:krx:043260"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Sungho Electronics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:electronic_module",
+      "label": "전자 모듈",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "065350",
+      "incidentEdges": [
+        "manufactures:krx:043260",
+        "manufactures:krx:065350"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Shinsung Delta Tech semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:mlcc_capacitors",
+      "label": "적층세라믹캐패시터",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "001820",
+      "incidentEdges": [
+        "specializes_in:krx:001820"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Samwha Capacitor semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:capacitor",
+      "label": "콘덴서",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "001820",
+      "incidentEdges": [
+        "manufactures:krx:001820"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Samwha Capacitor semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:appliance_auto_electronics_mfg",
+      "label": "가전·전장 전자제조",
+      "type": "product",
+      "entityRole": "home_appliance",
+      "sourceTicker": "065350",
+      "incidentEdges": [
+        "specializes_in:krx:065350"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Shinsung Delta Tech semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:ultracapacitor_aluminum",
+      "label": "울트라커패시터·알루미늄 부품",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "417200",
+      "incidentEdges": [
+        "specializes_in:krx:417200"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LS Materials semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:ultracapacitor",
+      "label": "울트라커패시터",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "417200",
+      "incidentEdges": [
+        "manufactures:krx:417200"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — LS Materials semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:camera_cover_glass",
+      "label": "카메라 커버글라스",
+      "type": "product",
+      "entityRole": "camera_module",
+      "sourceTicker": "204270",
+      "incidentEdges": [
+        "specializes_in:krx:204270"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — JNTC semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:camera_window_glass",
+      "label": "카메라 윈도글라스",
+      "type": "component",
+      "entityRole": "camera_module",
+      "sourceTicker": "204270",
+      "incidentEdges": [
+        "manufactures:krx:204270"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — JNTC semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:power_module_esl_ems",
+      "label": "파워모듈·ESL·EMS",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "248070",
+      "incidentEdges": [
+        "specializes_in:krx:248070"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — SoluM semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:power_module",
+      "label": "파워모듈",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "248070",
+      "incidentEdges": [
+        "manufactures:krx:248070"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — SoluM semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:fpcb",
+      "label": "연성인쇄회로기판",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "090460",
+      "incidentEdges": [
+        "manufactures:krx:090460"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — BH semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:oled_deposition_equipment",
+      "label": "OLED 증착 장비",
+      "type": "product",
+      "entityRole": "display",
+      "sourceTicker": "171090",
+      "incidentEdges": [
+        "specializes_in:krx:171090"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — SUNIC SYSTEM semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:oled_evaporator",
+      "label": "OLED 증착기",
+      "type": "component",
+      "entityRole": "display",
+      "sourceTicker": "171090",
+      "incidentEdges": [
+        "manufactures:krx:171090"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — SUNIC SYSTEM semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:led_vcsel_opto",
+      "label": "LED·VCSEL 광반도체",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "046890",
+      "incidentEdges": [
+        "specializes_in:krx:046890"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Seoul Semiconductor semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:vcm_magnetics",
+      "label": "카메라 액추에이터·자성",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "033240",
+      "incidentEdges": [
+        "specializes_in:krx:033240"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Jahwa Electronics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:solder_packaging_materials",
+      "label": "반도체 솔더·패키징 소재",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "077360",
+      "incidentEdges": [
+        "specializes_in:krx:077360"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Duksan Hi-Metal semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:solder_ball",
+      "label": "솔더볼",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "077360",
+      "incidentEdges": [
+        "manufactures:krx:077360"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Duksan Hi-Metal semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:led_opto_devices",
+      "label": "LED·광소자",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "017900",
+      "incidentEdges": [
+        "specializes_in:krx:017900"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — KEC Photonics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:home_appliance_rental",
+      "label": "생활가전·렌탈",
+      "type": "product",
+      "entityRole": "home_appliance",
+      "sourceTicker": "284740",
+      "incidentEdges": [
+        "specializes_in:krx:284740"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Cuckoo Homesys semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:kitchen_appliances",
+      "label": "주방가전",
+      "type": "component",
+      "entityRole": "home_appliance",
+      "sourceTicker": "284740",
+      "incidentEdges": [
+        "manufactures:krx:284740"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Cuckoo Homesys semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:led_blu_electronic_modules",
+      "label": "LED BLU·전자모듈",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "004710",
+      "incidentEdges": [
+        "specializes_in:krx:004710"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Hansol Technics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:backlight_unit",
+      "label": "백라이트",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "004710",
+      "incidentEdges": [
+        "manufactures:krx:004710"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Hansol Technics semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:camera_biometric_modules",
+      "label": "카메라·지문 모듈",
+      "type": "product",
+      "entityRole": "camera_module",
+      "sourceTicker": "192650",
+      "incidentEdges": [
+        "specializes_in:krx:192650"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Dreamtech semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:biometric_module",
+      "label": "생체인증 모듈",
+      "type": "component",
+      "entityRole": "camera_module",
+      "sourceTicker": "192650",
+      "incidentEdges": [
+        "manufactures:krx:192650"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Dreamtech semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:motor_antenna_ceramic",
+      "label": "모터·안테나·세라믹",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "052710",
+      "incidentEdges": [
+        "specializes_in:krx:052710"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Amotech semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:ceramic_parts",
+      "label": "세라믹 부품",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "052710",
+      "incidentEdges": [
+        "manufactures:krx:052710"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Amotech semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:connectors",
+      "label": "커넥터",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "065680",
+      "incidentEdges": [
+        "specializes_in:krx:065680"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Woojin Electro-Nite semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:connector",
+      "label": "전자 커넥터",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "065680",
+      "incidentEdges": [
+        "manufactures:krx:065680"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Woojin Electro-Nite semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "product:electronics_ems_intops",
+      "label": "전자기기 EMS",
+      "type": "product",
+      "entityRole": "electronic_component",
+      "sourceTicker": "049070",
+      "incidentEdges": [
+        "specializes_in:krx:049070"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Intops semType/products",
+      "verdict": "retain"
+    },
+    {
+      "nodeId": "component:ems_assembly",
+      "label": "위탁생산·조립",
+      "type": "component",
+      "entityRole": "electronic_component",
+      "sourceTicker": "049070",
+      "incidentEdges": [
+        "manufactures:krx:049070"
+      ],
+      "reason": "Phase 5C.1 canonical product per ticker (replaced shared generic slug)",
+      "replacedGenericNode": true,
+      "isActualProduct": true,
+      "isCategory": false,
+      "provenance": "ELEC_CONFIG — Intops semType/products",
+      "verdict": "retain"
+    }
+  ],
+  "removedNodeDetails": [
+    {
+      "nodeId": "product:mlcc",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "product:item",
+      "reason": "generic forbidden ID consolidated into per-ticker canonical nodes",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "component:item",
+      "reason": "generic forbidden ID consolidated into per-ticker canonical nodes",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "product:tv",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "product:oled",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "component:tv",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "component:oled",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "product:ems",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "product:led",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "product:led_vcsel",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    },
+    {
+      "nodeId": "product:led_blu",
+      "reason": "superseded by canonical rename",
+      "verdict": "removed"
+    }
+  ],
+  "companyProductPolicy": [
+    {
+      "ticker": "009150",
+      "name": "삼성전기",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:mlcc",
+        "component:mlcc"
+      ],
+      "phase5c1ProductIds": [
+        "product:mlcc_camera_substrate",
+        "component:mlcc"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "011070",
+      "name": "LG이노텍",
+      "chain": "카메라·모듈",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item",
+        "end_market:automotive_electronics"
+      ],
+      "phase5c1ProductIds": [
+        "product:camera_module_auto_electronics",
+        "component:smartphone_camera_module",
+        "end_market:automotive_electronics"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "066570",
+      "name": "LG전자",
+      "chain": "가전",
+      "phase5cProductIds": [
+        "product:tv",
+        "component:item",
+        "end_market:automotive_electronics"
+      ],
+      "phase5c1ProductIds": [
+        "product:home_appliances_tv_auto",
+        "component:home_appliances",
+        "end_market:automotive_electronics"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "034220",
+      "name": "LG디스플레이",
+      "chain": "디스플레이",
+      "phase5cProductIds": [
+        "product:oled",
+        "component:tv",
+        "end_market:automotive_electronics"
+      ],
+      "phase5c1ProductIds": [
+        "product:oled_display_panel",
+        "component:oled_panel",
+        "end_market:automotive_electronics"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "171090",
+      "name": "선익시스템",
+      "chain": "디스플레이",
+      "phase5cProductIds": [
+        "product:oled",
+        "component:oled"
+      ],
+      "phase5c1ProductIds": [
+        "product:oled_deposition_equipment",
+        "component:oled_evaporator"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "021240",
+      "name": "코웨이",
+      "chain": "가전",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:environmental_appliances_rental",
+        "component:water_purifier"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "284740",
+      "name": "쿠쿠홈시스",
+      "chain": "가전",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:home_appliance_rental",
+        "component:kitchen_appliances"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "049070",
+      "name": "인탑스",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:ems",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:electronics_ems_intops",
+        "component:ems_assembly",
+        "end_market:automotive_electronics"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "489790",
+      "name": "한화비전",
+      "chain": "카메라·모듈",
+      "phase5cProductIds": [
+        "product:item",
+        "component:cctv"
+      ],
+      "phase5c1ProductIds": [
+        "product:video_security_camera",
+        "component:cctv"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "043260",
+      "name": "성호전자",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:electronic_components_modules",
+        "component:electronic_module"
+      ],
+      "sharedCanonical": true
+    },
+    {
+      "ticker": "001820",
+      "name": "삼화콘덴서",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:mlcc_capacitors",
+        "component:capacitor"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "065350",
+      "name": "신성델타테크",
+      "chain": "가전",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:appliance_auto_electronics_mfg",
+        "component:electronic_module"
+      ],
+      "sharedCanonical": true
+    },
+    {
+      "ticker": "204270",
+      "name": "제이앤티씨",
+      "chain": "카메라·모듈",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item",
+        "end_market:consumer_electronics"
+      ],
+      "phase5c1ProductIds": [
+        "product:camera_cover_glass",
+        "component:camera_window_glass",
+        "end_market:consumer_electronics"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "248070",
+      "name": "솔루엠",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:ems",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:power_module_esl_ems",
+        "component:power_module"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "090460",
+      "name": "비에이치",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:fpcb",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:fpcb",
+        "component:fpcb"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "417200",
+      "name": "LS머트리얼즈",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:ultracapacitor_aluminum",
+        "component:ultracapacitor",
+        "end_market:automotive_electronics"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "033240",
+      "name": "자화전자",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:item",
+        "component:vcm"
+      ],
+      "phase5c1ProductIds": [
+        "product:vcm_magnetics",
+        "component:vcm"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "077360",
+      "name": "덕산하이메탈",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:solder_packaging_materials",
+        "component:solder_ball"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "017900",
+      "name": "광전자",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:led",
+        "component:led"
+      ],
+      "phase5c1ProductIds": [
+        "product:led_opto_devices",
+        "component:led"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "046890",
+      "name": "서울반도체",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:led_vcsel",
+        "component:wicop"
+      ],
+      "phase5c1ProductIds": [
+        "product:led_vcsel_opto",
+        "component:wicop"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "004710",
+      "name": "한솔테크닉스",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:led_blu",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:led_blu_electronic_modules",
+        "component:backlight_unit"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "192650",
+      "name": "드림텍",
+      "chain": "카메라·모듈",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:camera_biometric_modules",
+        "component:biometric_module"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "052710",
+      "name": "아모텍",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:motor_antenna_ceramic",
+        "component:ceramic_parts"
+      ],
+      "sharedCanonical": false
+    },
+    {
+      "ticker": "065680",
+      "name": "우주일렉트로",
+      "chain": "전자부품",
+      "phase5cProductIds": [
+        "product:item",
+        "component:item"
+      ],
+      "phase5c1ProductIds": [
+        "product:connectors",
+        "component:connector"
+      ],
+      "sharedCanonical": false
+    }
+  ],
+  "policyReview": {
+    "perTickerUnique": "24 product nodes — one specializes_in target per listed company; avoids shared product:item",
+    "sharedAllowed": [
+      {
+        "id": "component:electronic_module",
+        "tickers": [
+          "043260",
+          "065350"
+        ]
+      }
+    ],
+    "emsSplit": "248070 power_module_esl_ems vs 049070 electronics_ems_intops — distinct business lines",
+    "electronicModuleShared": "component:electronic_module shared by 043260+065350 — valid shared category",
+    "zeroDegreeAllowed": [
+      {
+        "id": "sector:powergrid",
+        "reason": "boundary placeholder without cross_sector_reference edge yet"
+      },
+      {
+        "id": "sector:battery",
+        "reason": "boundary placeholder without cross_sector_reference edge yet"
+      },
+      {
+        "id": "end_market:industrial_electronics",
+        "reason": "end_market anchor not yet linked via exposed_to"
+      }
+    ]
+  },
+  "integrity": {
+    "forbiddenGenericRemaining": [],
+    "duplicateNodeIds": 0,
+    "selfEdges": 0,
+    "duplicateEdges": 0
+  }
+}

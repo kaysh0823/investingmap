@@ -1,0 +1,334 @@
+{
+  "generatedAt": "2026-08-29T11:26:24.300Z",
+  "shard": "c",
+  "releaseMode": true,
+  "headHint": "1866428ce0cd23ab363c40bdd667b16eeecba418",
+  "pages": [
+    "elec",
+    "metal",
+    "cosmetics",
+    "kconsume",
+    "kcontent"
+  ],
+  "totalCases": 30,
+  "passedCases": 30,
+  "appFailures": 0,
+  "infrastructureFailures": 0,
+  "skippedCases": 0,
+  "assertionWeakening": 0,
+  "retry": 0,
+  "failureLines": [],
+  "appFailureLines": [],
+  "infrastructureFailureLines": [],
+  "timingSummary": {
+    "caseCount": 30,
+    "min": 4917,
+    "median": 6353,
+    "p90": 8901,
+    "p95": 9139,
+    "max": 9458,
+    "timeoutCount": 0
+  },
+  "caseResults": [
+    {
+      "id": "cosmetics/desktop/en",
+      "sector": "cosmetics",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7155,
+      "stage": "done"
+    },
+    {
+      "id": "cosmetics/desktop/ko",
+      "sector": "cosmetics",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5604,
+      "stage": "done"
+    },
+    {
+      "id": "cosmetics/mobile/en",
+      "sector": "cosmetics",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5023,
+      "stage": "done"
+    },
+    {
+      "id": "cosmetics/mobile/ko",
+      "sector": "cosmetics",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5756,
+      "stage": "done"
+    },
+    {
+      "id": "cosmetics/tablet/en",
+      "sector": "cosmetics",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6651,
+      "stage": "done"
+    },
+    {
+      "id": "cosmetics/tablet/ko",
+      "sector": "cosmetics",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5229,
+      "stage": "done"
+    },
+    {
+      "id": "elec/desktop/en",
+      "sector": "elec",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5292,
+      "stage": "done"
+    },
+    {
+      "id": "elec/desktop/ko",
+      "sector": "elec",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5775,
+      "stage": "done"
+    },
+    {
+      "id": "elec/mobile/en",
+      "sector": "elec",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7464,
+      "stage": "done"
+    },
+    {
+      "id": "elec/mobile/ko",
+      "sector": "elec",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8846,
+      "stage": "done"
+    },
+    {
+      "id": "elec/tablet/en",
+      "sector": "elec",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8901,
+      "stage": "done"
+    },
+    {
+      "id": "elec/tablet/ko",
+      "sector": "elec",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8730,
+      "stage": "done"
+    },
+    {
+      "id": "kconsume/desktop/en",
+      "sector": "kconsume",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7840,
+      "stage": "done"
+    },
+    {
+      "id": "kconsume/desktop/ko",
+      "sector": "kconsume",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6353,
+      "stage": "done"
+    },
+    {
+      "id": "kconsume/mobile/en",
+      "sector": "kconsume",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5128,
+      "stage": "done"
+    },
+    {
+      "id": "kconsume/mobile/ko",
+      "sector": "kconsume",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5322,
+      "stage": "done"
+    },
+    {
+      "id": "kconsume/tablet/en",
+      "sector": "kconsume",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4917,
+      "stage": "done"
+    },
+    {
+      "id": "kconsume/tablet/ko",
+      "sector": "kconsume",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7748,
+      "stage": "done"
+    },
+    {
+      "id": "kcontent/desktop/en",
+      "sector": "kcontent",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 7701,
+      "stage": "done"
+    },
+    {
+      "id": "kcontent/desktop/ko",
+      "sector": "kcontent",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9139,
+      "stage": "done"
+    },
+    {
+      "id": "kcontent/mobile/en",
+      "sector": "kcontent",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 9458,
+      "stage": "done"
+    },
+    {
+      "id": "kcontent/mobile/ko",
+      "sector": "kcontent",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6797,
+      "stage": "done"
+    },
+    {
+      "id": "kcontent/tablet/en",
+      "sector": "kcontent",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 8031,
+      "stage": "done"
+    },
+    {
+      "id": "kcontent/tablet/ko",
+      "sector": "kcontent",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5122,
+      "stage": "done"
+    },
+    {
+      "id": "metal/desktop/en",
+      "sector": "metal",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5556,
+      "stage": "done"
+    },
+    {
+      "id": "metal/desktop/ko",
+      "sector": "metal",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5603,
+      "stage": "done"
+    },
+    {
+      "id": "metal/mobile/en",
+      "sector": "metal",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5500,
+      "stage": "done"
+    },
+    {
+      "id": "metal/mobile/ko",
+      "sector": "metal",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5380,
+      "stage": "done"
+    },
+    {
+      "id": "metal/tablet/en",
+      "sector": "metal",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 5226,
+      "stage": "done"
+    },
+    {
+      "id": "metal/tablet/ko",
+      "sector": "metal",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 6716,
+      "stage": "done"
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "asOf": "2026-08-23",
+  "phase": "5C-audit",
+  "sectorId": "elec",
+  "htmlPath": "elec/korea_elec_map.html",
+  "dataSector": "elec",
+  "listedCompanyCount": 24,
+  "byChain": {
+    "전자부품": 14,
+    "가전": 4,
+    "카메라·모듈": 4,
+    "디스플레이": 2
+  },
+  "tickers": [
+    {
+      "ticker": "009150",
+      "name": "삼성전기",
+      "nameEn": "Samsung Electro-Mechanics",
+      "chain": "전자부품",
+      "semType": "MLCC·카메라모듈·기판",
+      "products": "MLCC·카메라모듈·패키지기판",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "066570",
+      "name": "LG전자",
+      "nameEn": "LG Electronics",
+      "chain": "가전",
+      "semType": "가전·TV·전장",
+      "products": "생활가전·TV·전장 부품",
+      "partners": [
+        "sony",
+        "panasonic"
+      ]
+    },
+    {
+      "ticker": "011070",
+      "name": "LG이노텍",
+      "nameEn": "LG Innotek",
+      "chain": "카메라·모듈",
+      "semType": "카메라모듈·전장부품",
+      "products": "스마트폰 카메라모듈·차량용 전장",
+      "partners": [
+        "bosch"
+      ]
+    },
+    {
+      "ticker": "034220",
+      "name": "LG디스플레이",
+      "nameEn": "LG Display",
+      "chain": "디스플레이",
+      "semType": "OLED·디스플레이 패널",
+      "products": "TV·IT·차량용 OLED 패널",
+      "partners": [
+        "sony"
+      ]
+    },
+    {
+      "ticker": "021240",
+      "name": "코웨이",
+      "nameEn": "Coway",
+      "chain": "가전",
+      "semType": "환경가전·렌탈",
+      "products": "정수기·공기청정기·환경가전",
+      "partners": [
+        "panasonic"
+      ]
+    },
+    {
+      "ticker": "489790",
+      "name": "한화비전",
+      "nameEn": "Hanwha Vision",
+      "chain": "카메라·모듈",
+      "semType": "영상보안·카메라",
+      "products": "CCTV·영상보안 솔루션",
+      "partners": [
+        "sony"
+      ]
+    },
+    {
+      "ticker": "043260",
+      "name": "성호전자",
+      "nameEn": "Sungho Electronics",
+      "chain": "전자부품",
+      "semType": "전자부품 제조",
+      "products": "전자부품·모듈",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "001820",
+      "name": "삼화콘덴서",
+      "nameEn": "Samwha Capacitor",
+      "chain": "전자부품",
+      "semType": "적층세라믹캐패시터",
+      "products": "콘덴서·전자부품",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "065350",
+      "name": "신성델타테크",
+      "nameEn": "Shinsung Delta Tech",
+      "chain": "가전",
+      "semType": "가전·전장 전자제조",
+      "products": "가전·전장 모듈 제조",
+      "partners": [
+        "panasonic"
+      ]
+    },
+    {
+      "ticker": "417200",
+      "name": "LS머트리얼즈",
+      "nameEn": "LS Materials",
+      "chain": "전자부품",
+      "semType": "울트라커패시터·알루미늄 부품",
+      "products": "울트라커패시터·전기차용 알루미늄 부품",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "204270",
+      "name": "제이앤티씨",
+      "nameEn": "JNTC CO.,LTD.",
+      "chain": "카메라·모듈",
+      "semType": "카메라 커버글라스",
+      "products": "스마트폰 카메라 윈도글라스",
+      "partners": [
+        "sony"
+      ]
+    },
+    {
+      "ticker": "248070",
+      "name": "솔루엠",
+      "nameEn": "Solum",
+      "chain": "전자부품",
+      "semType": "전자부품 EMS·파워",
+      "products": "파워모듈·전자가격표시기·EMS",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "090460",
+      "name": "비에이치",
+      "nameEn": "Bh",
+      "chain": "전자부품",
+      "semType": "FPCB",
+      "products": "연성인쇄회로기판",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "171090",
+      "name": "선익시스템",
+      "nameEn": "SUNIC SYSTEM Co., Ltd.",
+      "chain": "디스플레이",
+      "semType": "OLED 증착 장비",
+      "products": "OLED 증착기·디스플레이 공정장비",
+      "partners": [
+        "sony"
+      ]
+    },
+    {
+      "ticker": "046890",
+      "name": "서울반도체",
+      "nameEn": "Seoul Semiconductor",
+      "chain": "전자부품",
+      "semType": "LED·VCSEL 광반도체",
+      "products": "Wicop·SunLike LED·VCSEL 등 광전자 부품",
+      "partners": [
+        "panasonic"
+      ]
+    },
+    {
+      "ticker": "033240",
+      "name": "자화전자",
+      "nameEn": "Jahwa Electronics",
+      "chain": "전자부품",
+      "semType": "카메라 액추에이터·자성",
+      "products": "VCM·자성부품",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "077360",
+      "name": "덕산하이메탈",
+      "nameEn": "Duksan Hi-Metal",
+      "chain": "전자부품",
+      "semType": "반도체 솔더·패키징 소재",
+      "products": "솔더볼·패키징 소재",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "017900",
+      "name": "광전자",
+      "nameEn": "Kwangjin / KEC Photonics",
+      "chain": "전자부품",
+      "semType": "LED·광소자",
+      "products": "LED·광전자 소자",
+      "partners": [
+        "panasonic"
+      ]
+    },
+    {
+      "ticker": "284740",
+      "name": "쿠쿠홈시스",
+      "nameEn": "Cuckoo Homesys",
+      "chain": "가전",
+      "semType": "생활가전·렌탈",
+      "products": "정수기·공기청정기·주방가전 렌탈",
+      "partners": [
+        "panasonic"
+      ]
+    },
+    {
+      "ticker": "004710",
+      "name": "한솔테크닉스",
+      "nameEn": "Hansol Technics",
+      "chain": "전자부품",
+      "semType": "LED BLU·전자모듈",
+      "products": "백라이트·전자모듈",
+      "partners": [
+        "panasonic"
+      ]
+    },
+    {
+      "ticker": "192650",
+      "name": "드림텍",
+      "nameEn": "Dreamtech",
+      "chain": "카메라·모듈",
+      "semType": "카메라·지문 모듈",
+      "products": "카메라모듈·생체인증 모듈",
+      "partners": [
+        "bosch"
+      ]
+    },
+    {
+      "ticker": "052710",
+      "name": "아모텍",
+      "nameEn": "Amotech Co., Ltd.",
+      "chain": "전자부품",
+      "semType": "모터·안테나·세라믹",
+      "products": "모터·안테나·세라믹 부품",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "065680",
+      "name": "우주일렉트로",
+      "nameEn": "Woojin Electro-Nite",
+      "chain": "전자부품",
+      "semType": "커넥터",
+      "products": "전자 커넥터·케이블 어셈블리",
+      "partners": [
+        "murata"
+      ]
+    },
+    {
+      "ticker": "049070",
+      "name": "인탑스",
+      "nameEn": "INTOPS CO., LTD.",
+      "chain": "전자부품",
+      "semType": "전자기기 EMS",
+      "products": "전자기기·부품 위탁생산 및 조립",
+      "partners": [
+        "bosch"
+      ]
+    }
+  ],
+  "partnerEdgeRefs": 25,
+  "uniquePartnerIds": [
+    "murata",
+    "sony",
+    "panasonic",
+    "bosch"
+  ],
+  "stringPeerCount": 25,
+  "urlEvidenceRelationCount": 0,
+  "globalCompanyCount": 4,
+  "globalIds": [
+    "sony",
+    "panasonic",
+    "murata",
+    "bosch"
+  ],
+  "partnerPairs": [
+    {
+      "ticker": "009150",
+      "name": "삼성전기",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "066570",
+      "name": "LG전자",
+      "partner": "sony",
+      "chain": "가전"
+    },
+    {
+      "ticker": "066570",
+      "name": "LG전자",
+      "partner": "panasonic",
+      "chain": "가전"
+    },
+    {
+      "ticker": "011070",
+      "name": "LG이노텍",
+      "partner": "bosch",
+      "chain": "카메라·모듈"
+    },
+    {
+      "ticker": "034220",
+      "name": "LG디스플레이",
+      "partner": "sony",
+      "chain": "디스플레이"
+    },
+    {
+      "ticker": "021240",
+      "name": "코웨이",
+      "partner": "panasonic",
+      "chain": "가전"
+    },
+    {
+      "ticker": "489790",
+      "name": "한화비전",
+      "partner": "sony",
+      "chain": "카메라·모듈"
+    },
+    {
+      "ticker": "043260",
+      "name": "성호전자",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "001820",
+      "name": "삼화콘덴서",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "065350",
+      "name": "신성델타테크",
+      "partner": "panasonic",
+      "chain": "가전"
+    },
+    {
+      "ticker": "417200",
+      "name": "LS머트리얼즈",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "204270",
+      "name": "제이앤티씨",
+      "partner": "sony",
+      "chain": "카메라·모듈"
+    },
+    {
+      "ticker": "248070",
+      "name": "솔루엠",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "090460",
+      "name": "비에이치",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "171090",
+      "name": "선익시스템",
+      "partner": "sony",
+      "chain": "디스플레이"
+    },
+    {
+      "ticker": "046890",
+      "name": "서울반도체",
+      "partner": "panasonic",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "033240",
+      "name": "자화전자",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "077360",
+      "name": "덕산하이메탈",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "017900",
+      "name": "광전자",
+      "partner": "panasonic",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "284740",
+      "name": "쿠쿠홈시스",
+      "partner": "panasonic",
+      "chain": "가전"
+    },
+    {
+      "ticker": "004710",
+      "name": "한솔테크닉스",
+      "partner": "panasonic",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "192650",
+      "name": "드림텍",
+      "partner": "bosch",
+      "chain": "카메라·모듈"
+    },
+    {
+      "ticker": "052710",
+      "name": "아모텍",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "065680",
+      "name": "우주일렉트로",
+      "partner": "murata",
+      "chain": "전자부품"
+    },
+    {
+      "ticker": "049070",
+      "name": "인탑스",
+      "partner": "bosch",
+      "chain": "전자부품"
+    }
+  ],
+  "legacyClassification": {
+    "peer": [
+      {
+        "ticker": "009150",
+        "name": "삼성전기",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "066570",
+        "name": "LG전자",
+        "partner": "sony",
+        "chain": "가전"
+      },
+      {
+        "ticker": "066570",
+        "name": "LG전자",
+        "partner": "panasonic",
+        "chain": "가전"
+      },
+      {
+        "ticker": "011070",
+        "name": "LG이노텍",
+        "partner": "bosch",
+        "chain": "카메라·모듈"
+      },
+      {
+        "ticker": "034220",
+        "name": "LG디스플레이",
+        "partner": "sony",
+        "chain": "디스플레이"
+      },
+      {
+        "ticker": "021240",
+        "name": "코웨이",
+        "partner": "panasonic",
+        "chain": "가전"
+      },
+      {
+        "ticker": "489790",
+        "name": "한화비전",
+        "partner": "sony",
+        "chain": "카메라·모듈"
+      },
+      {
+        "ticker": "043260",
+        "name": "성호전자",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "001820",
+        "name": "삼화콘덴서",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "065350",
+        "name": "신성델타테크",
+        "partner": "panasonic",
+        "chain": "가전"
+      },
+      {
+        "ticker": "417200",
+        "name": "LS머트리얼즈",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "204270",
+        "name": "제이앤티씨",
+        "partner": "sony",
+        "chain": "카메라·모듈"
+      },
+      {
+        "ticker": "248070",
+        "name": "솔루엠",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "090460",
+        "name": "비에이치",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "171090",
+        "name": "선익시스템",
+        "partner": "sony",
+        "chain": "디스플레이"
+      },
+      {
+        "ticker": "046890",
+        "name": "서울반도체",
+        "partner": "panasonic",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "033240",
+        "name": "자화전자",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "077360",
+        "name": "덕산하이메탈",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "017900",
+        "name": "광전자",
+        "partner": "panasonic",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "284740",
+        "name": "쿠쿠홈시스",
+        "partner": "panasonic",
+        "chain": "가전"
+      },
+      {
+        "ticker": "004710",
+        "name": "한솔테크닉스",
+        "partner": "panasonic",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "192650",
+        "name": "드림텍",
+        "partner": "bosch",
+        "chain": "카메라·모듈"
+      },
+      {
+        "ticker": "052710",
+        "name": "아모텍",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "065680",
+        "name": "우주일렉트로",
+        "partner": "murata",
+        "chain": "전자부품"
+      },
+      {
+        "ticker": "049070",
+        "name": "인탑스",
+        "partner": "bosch",
+        "chain": "전자부품"
+      }
+    ],
+    "invalid": []
+  },
+  "risks": [
+    "partners are string peer labels (murata/panasonic/sony/bosch) — not supply contracts",
+    "no DART/URL evidence on legacy partners",
+    "077360 semiconductor packaging materials overlap semiconductor sector",
+    "011070/192650/049070 automotive electronics overlap auto sector",
+    "Samsung/LG group affiliates are separate listed entities — do not merge nodes"
+  ],
+  "networkJsonExists": true,
+  "priorProfile": {
+    "model": "component_supply",
+    "layout": "layeredSupplyChain",
+    "networkPath": null,
+    "legacyFallback": true
+  }
+}

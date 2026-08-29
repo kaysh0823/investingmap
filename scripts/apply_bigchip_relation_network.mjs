@@ -13,6 +13,10 @@ const HTML_PATH = join(ROOT, 'bigchip', 'korea_bigchip_map.html');
 export function applyBigchipRelationNetwork(options = {}) {
   const chainOrder = options.chainOrder || SEMI_VALUE_CHAIN_ORDER;
   let html = fs.readFileSync(HTML_PATH, 'utf8');
+  if (html.includes('RelationNetwork v2') || html.includes('relation_network.js')) {
+    console.log('OK apply_bigchip_relation_network (skip — RelationNetwork v2 active)');
+    return;
+  }
   html = applyCuratedRelationPatches(html, {
     mode: 'ticker',
     chainOrder,

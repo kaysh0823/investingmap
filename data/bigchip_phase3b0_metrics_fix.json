@@ -1,0 +1,212 @@
+{
+  "fixedAt": "2026-08-23",
+  "legacyMigratedEdgeCount": 107,
+  "structuralGeneratedEdgeCount": 31,
+  "manuallyCuratedEdgeCount": 2,
+  "deduplicatedEdgeCount": 2,
+  "removedEdgeCount": 0,
+  "finalEdgeCount": 140,
+  "explanation": "140 = 107 legacyMigrated + 31 structuralGenerated + 2 manuallyCurated (not “109 reclassified”)",
+  "reportedEvidenceCategoriesBeforeDemotion": {
+    "homepage_or_product_page": 22,
+    "exact_official_announcement": 19,
+    "other": 7,
+    "exact_reliable_article": 27,
+    "exact_primary_document": 16
+  },
+  "demotions": [
+    {
+      "edgeId": "produces-005930-product-dram",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-000660-product-dram",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-005930-product-nand",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-000660-product-nand",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-005930-product-hbm",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-000660-product-hbm",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-005930-product-foundry",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-005930-product-system_lsi",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-005930-product-image_sensor",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-005930-product-advanced_packaging",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-000660-product-advanced_packaging",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "produces-000660-product-enterprise_ssd",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "produces+product page → reference (not reported trade)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "material_for-000660-soulbrain",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "material_for-005930-hansol_chemical",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "material_for-005930-enf_technology",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "material_for-005930-tck",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "equipment_for-005930-eo_technics",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "packages_or_tests_for-005930-doosan_tesna",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "material_for-000660-hansol_chemical",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "material_for-000660-enf_technology",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "material_for-000660-tck",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    },
+    {
+      "edgeId": "packages_or_tests_for-000660-doosan_tesna",
+      "beforeStatus": "reported",
+      "afterStatus": "reference",
+      "reason": "weak reported demoted (homepage_or_product_page)",
+      "category": "homepage_or_product_page"
+    }
+  ],
+  "solidigmAlignment": [
+    {
+      "edgeId": "owns-000660-solidigm",
+      "beforeStatus": "reported",
+      "afterStatus": "reported",
+      "reason": "directEvidence reviewed metadata aligned; remains reported (not confirmed)"
+    }
+  ],
+  "statusCountsAfter": {
+    "reference": 47,
+    "reported": 69,
+    "peer": 13,
+    "ended": 1,
+    "inferred": 10
+  },
+  "coverageBreakdown": {
+    "denominatorNote": {
+      "aggregateDirectEvidenceCoverage": "confirmed + reported only (ended excluded)",
+      "activeDirectEvidenceCoverage": "all non-ended, non-peer edges with evidence fields considered in denominator? No — DE among active edges that have evidence"
+    },
+    "activeDirectEvidenceCoverage": 1,
+    "allEvidenceBearingEdgesDirectCoverage": 2,
+    "endedDirectEvidenceCoverage": 100,
+    "confirmedReportedDirectCoverage": 1,
+    "counts": {
+      "activeWithEvidence": 106,
+      "activeWithDirect": 1,
+      "allBearing": 107,
+      "allBearingDirect": 2,
+      "ended": 1,
+      "endedDirect": 1,
+      "confirmedReported": 69,
+      "confirmedReportedDirect": 1
+    }
+  },
+  "validate": {
+    "failures": 0,
+    "warnings": 0
+  }
+}

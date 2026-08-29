@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-08-29T08:30:10.603Z",
+  "note": "Phase 5F targeted only — full matrix not run; pageCreate hang recorded as infrastructure failure without retry-as-success",
+  "results": [
+    {
+      "id": "kconsume/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 10411,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "kconsume/mobile/en",
+      "stage": "done",
+      "elapsedMs": 8258,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "kcontent/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 2372,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "kcontent/mobile/en",
+      "stage": "done",
+      "elapsedMs": 11532,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "cosmetics/desktop/ko",
+      "stage": "done",
+      "elapsedMs": 4139,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bigchip/000660",
+      "stage": "done",
+      "elapsedMs": 2126,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "construction/mobile/ko",
+      "stage": "done",
+      "elapsedMs": 2035,
+      "failures": [],
+      "infrastructureFailure": false
+    },
+    {
+      "id": "bio/mobile/en",
+      "stage": "done",
+      "elapsedMs": 2217,
+      "failures": [],
+      "infrastructureFailure": false
+    }
+  ],
+  "appFailureCount": 0,
+  "infrastructureFailureCount": 0
+}

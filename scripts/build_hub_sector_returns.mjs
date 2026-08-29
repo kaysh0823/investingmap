@@ -30,6 +30,10 @@ function loadAuthKey() {
 
 async function main() {
   const outPath = path.join(ROOT, 'data', 'hub_sector_returns.json');
+  if (process.env.REFRESH_HUB_SNAPSHOTS !== '1') {
+    console.log('skip hub_sector_returns (deterministic build — use npm run refresh:hub-snapshots)');
+    process.exit(0);
+  }
   const authKey = loadAuthKey();
   if (!authKey) {
     if (fs.existsSync(outPath)) {
