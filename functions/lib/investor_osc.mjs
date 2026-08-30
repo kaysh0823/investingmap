@@ -13,12 +13,12 @@ export const INVESTOR_OSC_CODES = Object.freeze([
 ]);
 
 const INST_CODE_SET = new Set(INVESTOR_INST_CODES);
-const CUM_WINDOW = 5;
+const CUM_WINDOW = 10;
 const RANGE_WINDOW = 20;
 const EMA_SPAN = 2;
 
 /**
- * Rolling sum; minPeriods defaults to 1 for the 5-day cumulative net.
+ * Rolling sum; minPeriods defaults to 1 for the 10-day cumulative net.
  * @param {number[]} values
  * @param {number} window
  * @param {number} [minPeriods=1]
@@ -99,12 +99,13 @@ function clipOsc(v) {
 
 /**
  * Stochastic-style OSC on a daily net series aligned to trading bars.
+ * Full CUM_WINDOW (10) cumulative net, then RANGE_WINDOW (20) min/max; first OSC ~ bar 29.
  * @param {number[]} netByBar — one value per bar (missing days = 0)
  * @returns {(number|null)[]}
  */
 export function computeInvestorOscSeries(netByBar) {
   if (!netByBar?.length) return [];
-  const cum = rollingSum(netByBar, CUM_WINDOW, 1);
+  const cum = rollingSum(netByBar, CUM_WINDOW, CUM_WINDOW);
   const { lo, hi } = rollingMinMax(cum, RANGE_WINDOW, RANGE_WINDOW);
   const raw = new Array(netByBar.length).fill(null);
   for (let i = 0; i < netByBar.length; i++) {

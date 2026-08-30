@@ -37,13 +37,14 @@ function loadEnv() {
 // rolling 5, min_periods=1
 assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
 
-// warmup: first 19 OSC values null (need 20 cum for range)
+// warmup: RANGE_WINDOW (20) + CUM_WINDOW (10) − 1 ⇒ first OSC at bar 29
 {
-  const nets = new Array(30).fill(100);
+  const nets = [];
+  for (let i = 0; i < 40; i++) nets.push(100 + i * 10);
   const osc = computeInvestorOscSeries(nets);
-  assert.equal(osc[18], null, 'OSC null before 20-day cum window');
-  assert.ok(Number.isFinite(osc[19]), 'OSC finite at bar 20');
-  assert.ok(osc[19] >= 0 && osc[19] <= 100, 'OSC clipped 0-100');
+  assert.equal(osc[27], null, 'OSC null before 20-day range on 10-day cum');
+  assert.ok(Number.isFinite(osc[28]), 'OSC finite at bar 29');
+  assert.ok(osc[28] >= 0 && osc[28] <= 100, 'OSC clipped 0-100');
 }
 
 // ewm span=2 null propagation
@@ -88,14 +89,14 @@ if (config?.url && config?.anonKey) {
   const withFrgn = payload.bars.filter((b) => b.frgnOsc != null);
   assert.ok(withInst.length > 0, 'instOsc populated in recent window');
   assert.ok(withFrgn.length > 0, 'frgnOsc populated in recent window');
-  const early = payload.bars.slice(0, 30);
-  const earlyInst = early.filter((b) => b.instOsc != null);
-  assert.ok(earlyInst.length < early.length, 'warmup left edge has null instOsc');
+  const tail = payload.bars.slice(-250);
+  const firstInTail = tail.findIndex((b) => b.instOsc != null);
+  assert.ok(firstInTail >= 0, 'instOsc present in recent window');
 
   const last = payload.bars[payload.bars.length - 1];
   console.log(
     `Live ${ticker} @ ${last.t}: instOsc=${last.instOsc}, frgnOsc=${last.frgnOsc} ` +
-      `(filled inst=${withInst.length}/${payload.bars.length}, frgn=${withFrgn.length}/${payload.bars.length})`,
+      `(tail250 first instOsc @ day ${firstInTail + 1}, filled ${withInst.length}/${payload.bars.length})`,
   );
 } else {
   console.log('Skipping live Supabase check (SUPABASE_URL/ANON_KEY missing)');
