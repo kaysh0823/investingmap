@@ -37,14 +37,17 @@ function loadEnv() {
 // rolling 5, min_periods=1
 assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
 
-// warmup: RANGE_WINDOW (20) + CUM_WINDOW (10) − 1 ⇒ first OSC at bar 29
+// warmup: RANGE_WINDOW (20) + cumWindow (10) − 1 ⇒ first OSC at bar 29
 {
   const nets = [];
   for (let i = 0; i < 40; i++) nets.push(100 + i * 10);
-  const osc = computeInvestorOscSeries(nets);
-  assert.equal(osc[27], null, 'OSC null before 20-day range on 10-day cum');
-  assert.ok(Number.isFinite(osc[28]), 'OSC finite at bar 29');
-  assert.ok(osc[28] >= 0 && osc[28] <= 100, 'OSC clipped 0-100');
+  const osc10 = computeInvestorOscSeries(nets, 10);
+  assert.equal(osc10[27], null, 'OSC null before 20-day range on 10-day cum');
+  assert.ok(Number.isFinite(osc10[28]), 'OSC finite at bar 29');
+  const osc5 = computeInvestorOscSeries(nets, 5);
+  assert.ok(Number.isFinite(osc5[23]), 'OSC finite at bar 24 on 5-day cum');
+  assert.ok(Number.isFinite(osc5[27]), '5d OSC ready before 10d at bar 28');
+  assert.equal(osc10[27], null, '10d OSC still warming at bar 28');
 }
 
 // ewm span=2 null propagation
@@ -76,7 +79,9 @@ assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
     { trade_date: '2026-08-28', invst_tp_cd: '9000', net_val: 2 },
   ]);
   attachInvestorOscToBars(bars, byDate);
-  assert.ok('instOsc' in bars[0] && 'frgnOsc' in bars[0]);
+  assert.ok('instOsc5' in bars[0] && 'instOsc10' in bars[0] && 'instOsc20' in bars[0]);
+  assert.ok('frgnOsc5' in bars[0] && 'frgnOsc10' in bars[0] && 'frgnOsc20' in bars[0]);
+  assert.equal(bars[1].instOsc, bars[1].instOsc10, 'instOsc aliases instOsc10');
 }
 
 const ticker = process.argv[2] || '005930';
@@ -94,9 +99,12 @@ if (config?.url && config?.anonKey) {
   assert.ok(firstInTail >= 0, 'instOsc present in recent window');
 
   const last = payload.bars[payload.bars.length - 1];
+  assert.ok('instOsc5' in last && 'instOsc10' in last && 'instOsc20' in last);
+  assert.ok('frgnOsc5' in last && 'frgnOsc10' in last && 'frgnOsc20' in last);
+  assert.equal(last.instOsc, last.instOsc10, 'instOsc aliases 10d');
   console.log(
-    `Live ${ticker} @ ${last.t}: instOsc=${last.instOsc}, frgnOsc=${last.frgnOsc} ` +
-      `(tail250 first instOsc @ day ${firstInTail + 1}, filled ${withInst.length}/${payload.bars.length})`,
+    `Live ${ticker} @ ${last.t}: instOsc10=${last.instOsc10}, frgnOsc10=${last.frgnOsc10} ` +
+      `(5d=${last.instOsc5}, 20d=${last.instOsc20}; filled ${withInst.length}/${payload.bars.length})`,
   );
 } else {
   console.log('Skipping live Supabase check (SUPABASE_URL/ANON_KEY missing)');

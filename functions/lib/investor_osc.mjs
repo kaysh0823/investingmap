@@ -11,14 +11,15 @@ export const INVESTOR_OSC_CODES = Object.freeze([
   ...INVESTOR_INST_CODES,
   INVESTOR_FRGN_CODE,
 ]);
+export const INVESTOR_CUM_WINDOWS = Object.freeze([5, 10, 20]);
 
 const INST_CODE_SET = new Set(INVESTOR_INST_CODES);
-const CUM_WINDOW = 10;
+const DEFAULT_CUM_WINDOW = 10;
 const RANGE_WINDOW = 20;
 const EMA_SPAN = 2;
 
 /**
- * Rolling sum; minPeriods defaults to 1 for the 10-day cumulative net.
+ * Rolling sum; minPeriods defaults to 1.
  * @param {number[]} values
  * @param {number} window
  * @param {number} [minPeriods=1]
@@ -99,13 +100,15 @@ function clipOsc(v) {
 
 /**
  * Stochastic-style OSC on a daily net series aligned to trading bars.
- * Full CUM_WINDOW (10) cumulative net, then RANGE_WINDOW (20) min/max; first OSC ~ bar 29.
+ * Full cumWindow cumulative net, then RANGE_WINDOW (20) min/max.
  * @param {number[]} netByBar — one value per bar (missing days = 0)
+ * @param {number} [cumWindow=10] cumulative net window (5, 10, or 20)
  * @returns {(number|null)[]}
  */
-export function computeInvestorOscSeries(netByBar) {
+export function computeInvestorOscSeries(netByBar, cumWindow = DEFAULT_CUM_WINDOW) {
   if (!netByBar?.length) return [];
-  const cum = rollingSum(netByBar, CUM_WINDOW, CUM_WINDOW);
+  const w = Number(cumWindow) || DEFAULT_CUM_WINDOW;
+  const cum = rollingSum(netByBar, w, w);
   const { lo, hi } = rollingMinMax(cum, RANGE_WINDOW, RANGE_WINDOW);
   const raw = new Array(netByBar.length).fill(null);
   for (let i = 0; i < netByBar.length; i++) {
@@ -179,19 +182,39 @@ export async function fetchLatestInvestorNetSignature(config) {
   }
 }
 
+function clearInvestorOscOnBar(bar) {
+  for (const w of INVESTOR_CUM_WINDOWS) {
+    bar[`instOsc${w}`] = null;
+    bar[`frgnOsc${w}`] = null;
+  }
+  bar.instOsc = null;
+  bar.frgnOsc = null;
+}
+
 /**
- * Attach instOsc / frgnOsc to daily OHLC bars (mutates bars).
+ * Attach instOsc5/10/20 and frgnOsc5/10/20 to daily OHLC bars (mutates bars).
+ * instOsc / frgnOsc alias instOsc10 / frgnOsc10.
  * @param {Array<{ t: string }>} bars ascending trade dates
  * @param {Map<string, { inst: number, frgn: number }>} byDate
  */
 export function attachInvestorOscToBars(bars, byDate) {
   const instNet = bars.map((b) => byDate.get(b.t)?.inst ?? 0);
   const frgnNet = bars.map((b) => byDate.get(b.t)?.frgn ?? 0);
-  const instOsc = computeInvestorOscSeries(instNet);
-  const frgnOsc = computeInvestorOscSeries(frgnNet);
+  const byWindow = new Map();
+  for (const w of INVESTOR_CUM_WINDOWS) {
+    byWindow.set(w, {
+      inst: computeInvestorOscSeries(instNet, w),
+      frgn: computeInvestorOscSeries(frgnNet, w),
+    });
+  }
   for (let i = 0; i < bars.length; i++) {
-    bars[i].instOsc = instOsc[i] ?? null;
-    bars[i].frgnOsc = frgnOsc[i] ?? null;
+    for (const w of INVESTOR_CUM_WINDOWS) {
+      const pack = byWindow.get(w);
+      bars[i][`instOsc${w}`] = pack.inst[i] ?? null;
+      bars[i][`frgnOsc${w}`] = pack.frgn[i] ?? null;
+    }
+    bars[i].instOsc = bars[i].instOsc10;
+    bars[i].frgnOsc = bars[i].frgnOsc10;
   }
   return bars;
 }
@@ -214,10 +237,7 @@ export async function loadAndAttachInvestorOsc(config, ticker, bars) {
       '[investor_osc] fetch failed:',
       err && err.message ? err.message : err,
     );
-    for (const bar of bars) {
-      bar.instOsc = null;
-      bar.frgnOsc = null;
-    }
+    for (const bar of bars) clearInvestorOscOnBar(bar);
   }
   return bars;
 }

@@ -205,18 +205,43 @@ for (let i = 0; i < 30; i++) {
     l: 99,
     c: 100,
     v: 1000,
+    instOsc5: i >= 20 ? 30 + i : null,
+    instOsc10: i >= 20 ? 40 + i : null,
+    instOsc20: i >= 20 ? 50 + i : null,
+    frgnOsc5: i >= 20 ? 20 + i : null,
+    frgnOsc10: i >= 20 ? 30 + i : null,
+    frgnOsc20: i >= 20 ? 40 + i : null,
     instOsc: i >= 20 ? 40 + i : null,
     frgnOsc: i >= 20 ? 30 + i : null,
   });
 }
-const investorPanel = indicators.buildPanelData(
+const investorPanel10 = indicators.buildPanelData(
   indicators.normalizeBars(investorBars),
   '1y',
   'daily',
+  10,
 );
-assert.equal(investorPanel.instOscLine.length, 10, 'daily investor instOsc lines skip null warmup');
-assert.equal(investorPanel.frgnOscLine.length, 10, 'daily investor frgnOsc lines skip null warmup');
-assert.equal(investorPanel.byTime['2026-02-21'].instOsc, 60, 'instOsc in crosshair byTime');
+const investorPanel5 = indicators.buildPanelData(
+  indicators.normalizeBars(investorBars),
+  '1y',
+  'daily',
+  5,
+);
+assert.equal(investorPanel10.instOscLine.length, 10, 'daily investor instOsc10 lines skip null warmup');
+assert.equal(investorPanel5.instOscLine.length, 10, 'daily investor instOsc5 lines skip null warmup');
+assert.notEqual(
+  investorPanel5.instOscLine[9].value,
+  investorPanel10.instOscLine[9].value,
+  '5d vs 10d toggle uses different fields',
+);
+assert.equal(investorPanel10.byTime['2026-02-21'].instOsc10, 60, 'instOsc10 in crosshair byTime');
+assert.equal(
+  ui.buildInvestorOscLinesFromByTime(investorPanel10.byTime, 20).instOscLine.length,
+  10,
+  'byTime rebuild for 20d cum',
+);
+assert.match(source, /im-candle-inv-cum/, 'investor cum toggle markup');
+assert.match(source, /im_inv_cum/, 'investor cum localStorage key');
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 0, 'investor pane hidden on weekly');
 
@@ -324,8 +349,8 @@ try {
   const historyRequests = requests.filter((u) => u.includes('stock_price_history'));
   assert.equal(historyRequests.length, 3, '5Y+warmup PostgREST pagination');
   assert.equal(payload.bars.length, 2175, '5Y returns display+weekly-warmup bars');
-  assert.ok('instOsc' in payload.bars[0], 'daily bars include instOsc');
-  assert.ok('frgnOsc' in payload.bars[0], 'daily bars include frgnOsc');
+  assert.ok('instOsc10' in payload.bars[0], 'daily bars include instOsc10');
+  assert.ok('frgnOsc10' in payload.bars[0], 'daily bars include frgnOsc10');
   assert.match(historyRequests[0], /limit=1000&offset=0/);
   assert.match(historyRequests[1], /limit=1000&offset=1000/);
   assert.match(historyRequests[2], /limit=175&offset=2000/);

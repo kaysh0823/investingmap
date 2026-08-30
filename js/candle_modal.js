@@ -61,6 +61,9 @@
   var ATR_PERIOD = 3;
   var ATR_SIGNAL = 9;
   var INVESTOR_OSC_LEVELS = [20, 50, 80];
+  var INVESTOR_CUM_OPTIONS = [5, 10, 20];
+  var INVESTOR_CUM_STORAGE = 'im_inv_cum';
+  var DEFAULT_INVESTOR_CUM = 10;
 
   function paneIndexMap() {
     var map = Object.create(null);
@@ -121,7 +124,7 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
-      paneInvestor: '투자자 OSC · 기관·외국인 (0~100)',
+      paneInvestorTpl: '투자자 OSC · 기관·외국인 · {W}일 (0~100)',
       paneNorm: 'BBW% · 이격도% (125일)',
       paneAtr: 'ATR(3)/종가% · EMA9',
       liveSession: '장중(현재가)',
@@ -158,7 +161,7 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
-      paneInvestor: 'Investor OSC · Inst·Frgn (0-100)',
+      paneInvestorTpl: 'Investor OSC · Inst·Frgn · {W}d (0-100)',
       paneNorm: 'BBW% · DISP% (125d)',
       paneAtr: 'ATR(3)/Close% · EMA9',
       liveSession: 'Live (last)',
@@ -171,6 +174,8 @@
     name: '',
     range: DEFAULT_RANGE_BY_INTERVAL.daily,
     interval: 'daily',
+    investorCum: DEFAULT_INVESTOR_CUM,
+    crosshairTime: null,
     rangeByInterval: {
       daily: DEFAULT_RANGE_BY_INTERVAL.daily,
       weekly: DEFAULT_RANGE_BY_INTERVAL.weekly,
@@ -712,7 +717,7 @@
       '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer}' +
       '.im-candle-close:hover,.im-candle-close:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
       '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
-      '.im-candle-ranges,.im-candle-intervals{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
+      '.im-candle-ranges,.im-candle-intervals,.im-candle-inv-cum{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
       '.im-candle-range{border:0;background:transparent;color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer}' +
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
       '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
@@ -755,6 +760,7 @@
         !document.getElementById('im-candle-chart') ||
         !document.getElementById('im-candle-pane-labels') ||
         !document.getElementById('im-candle-intervals') ||
+        !document.getElementById('im-candle-inv-cum') ||
         document.getElementById('im-candle-price'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
@@ -778,6 +784,7 @@
       '<div class="im-candle-toolbar">' +
       '<div class="im-candle-ranges" role="group" id="im-candle-ranges"></div>' +
       '<div class="im-candle-intervals" role="group" id="im-candle-intervals"></div>' +
+      '<div class="im-candle-inv-cum" role="group" id="im-candle-inv-cum" hidden></div>' +
       '<div class="im-candle-tip" id="im-candle-tip" aria-live="polite"></div>' +
       '</div>' +
       '<div class="im-candle-body">' +
@@ -814,6 +821,7 @@
       state.range = rangeForInterval(interval);
       syncRangeButtons();
       syncIntervalButtons();
+      syncInvestorCumVisibility();
       updateSubtitle();
       document
         .getElementById('im-candle-stack')
@@ -823,7 +831,110 @@
         );
       if (state.ticker) loadAndRender(state.ticker, state.range);
     });
+    root.querySelector('#im-candle-inv-cum').addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-inv-cum]');
+      if (!btn) return;
+      var cum = parseInt(btn.getAttribute('data-inv-cum'), 10);
+      setInvestorCum(cum);
+    });
     return root;
+  }
+
+  function readStoredInvestorCum() {
+    try {
+      var v = parseInt(localStorage.getItem(INVESTOR_CUM_STORAGE), 10);
+      if (INVESTOR_CUM_OPTIONS.indexOf(v) >= 0) return v;
+    } catch (e) {}
+    return DEFAULT_INVESTOR_CUM;
+  }
+
+  function saveInvestorCum(v) {
+    try {
+      localStorage.setItem(INVESTOR_CUM_STORAGE, String(v));
+    } catch (e2) {}
+  }
+
+  function paneInvestorLabel(cum) {
+    return t().paneInvestorTpl.replace('{W}', String(cum != null ? cum : state.investorCum));
+  }
+
+  function investorOscField(prefix, cum) {
+    return prefix + (cum != null ? cum : state.investorCum);
+  }
+
+  function oscNum(v) {
+    return v != null && isFinite(Number(v)) ? Number(v) : null;
+  }
+
+  function copyInvestorOscFields(src, dest) {
+    for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
+      var w = INVESTOR_CUM_OPTIONS[wi];
+      var ik = 'instOsc' + w;
+      var fk = 'frgnOsc' + w;
+      if (ik in src) dest[ik] = oscNum(src[ik]);
+      if (fk in src) dest[fk] = oscNum(src[fk]);
+    }
+    if ('instOsc' in src) dest.instOsc = oscNum(src.instOsc);
+    if ('frgnOsc' in src) dest.frgnOsc = oscNum(src.frgnOsc);
+  }
+
+  function buildInvestorOscLinesFromByTime(byTime, cum) {
+    var instOscLine = [];
+    var frgnOscLine = [];
+    var ik = investorOscField('instOsc', cum);
+    var fk = investorOscField('frgnOsc', cum);
+    var times = Object.keys(byTime).sort();
+    for (var i = 0; i < times.length; i++) {
+      var time = times[i];
+      var row = byTime[time];
+      var iv = row[ik];
+      var fv = row[fk];
+      if (iv != null && isFinite(iv)) instOscLine.push({ time: time, value: iv });
+      if (fv != null && isFinite(fv)) frgnOscLine.push({ time: time, value: fv });
+    }
+    return { instOscLine: instOscLine, frgnOscLine: frgnOscLine };
+  }
+
+  function refreshInvestorOscSeries() {
+    var refs = state.seriesRefs;
+    if (!refs || !refs.instOsc || !refs.frgnOsc || !state.barsByTime) return;
+    var lines = buildInvestorOscLinesFromByTime(state.barsByTime, state.investorCum);
+    refs.instOsc.setData(lines.instOscLine);
+    refs.frgnOsc.setData(lines.frgnOscLine);
+    syncPaneLabels();
+    updateTip(state.crosshairTime);
+  }
+
+  function setInvestorCum(cum) {
+    if (INVESTOR_CUM_OPTIONS.indexOf(cum) < 0 || cum === state.investorCum) return;
+    state.investorCum = cum;
+    saveInvestorCum(cum);
+    syncInvestorCumButtons();
+    refreshInvestorOscSeries();
+  }
+
+  function syncInvestorCumButtons() {
+    var wrap = document.getElementById('im-candle-inv-cum');
+    if (!wrap) return;
+    var html = '';
+    for (var i = 0; i < INVESTOR_CUM_OPTIONS.length; i++) {
+      var cum = INVESTOR_CUM_OPTIONS[i];
+      html +=
+        '<button type="button" class="im-candle-range" data-inv-cum="' +
+        cum +
+        '" aria-pressed="' +
+        (cum === state.investorCum ? 'true' : 'false') +
+        '">' +
+        cum +
+        '</button>';
+    }
+    wrap.innerHTML = html;
+  }
+
+  function syncInvestorCumVisibility() {
+    var wrap = document.getElementById('im-candle-inv-cum');
+    if (!wrap) return;
+    wrap.hidden = state.interval !== 'daily';
   }
 
   function syncPaneLabels() {
@@ -834,7 +945,7 @@
       price: labels.panePrice,
       vol: labels.paneVol,
       macd: labels.paneMacd,
-      investor: labels.paneInvestor,
+      investor: paneInvestorLabel(state.investorCum),
       norm: labels.paneNorm,
       atr: labels.paneAtr,
     };
@@ -929,20 +1040,17 @@
       // Newly listed names can arrive with close only; those render as a line.
       var closeOnly = !hasOpen && !hasHigh && !hasLow;
       var bar = { t: b.t, o: o, h: h, l: l, c: c, v: v, closeOnly: closeOnly };
-      if ('instOsc' in b) {
-        bar.instOsc =
-          b.instOsc != null && isFinite(Number(b.instOsc)) ? Number(b.instOsc) : null;
-      }
-      if ('frgnOsc' in b) {
-        bar.frgnOsc =
-          b.frgnOsc != null && isFinite(Number(b.frgnOsc)) ? Number(b.frgnOsc) : null;
-      }
+      copyInvestorOscFields(b, bar);
       bars.push(bar);
     }
     return bars;
   }
 
-  function buildPanelData(fullBars, range, interval) {
+  function buildPanelData(fullBars, range, interval, investorCum) {
+    var cum =
+      investorCum != null && INVESTOR_CUM_OPTIONS.indexOf(investorCum) >= 0
+        ? investorCum
+        : state.investorCum;
     var closes = fullBars.map(function (b) {
       return b.c;
     });
@@ -1017,12 +1125,10 @@
         macdSignalLine.push({ time: b.t, value: macdPack.signal[i] });
       }
       if (showInvestor) {
-        if (b.instOsc != null && isFinite(b.instOsc)) {
-          instOscLine.push({ time: b.t, value: b.instOsc });
-        }
-        if (b.frgnOsc != null && isFinite(b.frgnOsc)) {
-          frgnOscLine.push({ time: b.t, value: b.frgnOsc });
-        }
+        var iv = oscNum(b[investorOscField('instOsc', cum)]);
+        var fv = oscNum(b[investorOscField('frgnOsc', cum)]);
+        if (iv != null) instOscLine.push({ time: b.t, value: iv });
+        if (fv != null) frgnOscLine.push({ time: b.t, value: fv });
       }
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
@@ -1032,7 +1138,7 @@
       if (atrPack.signal[i] != null && isFinite(atrPack.signal[i])) {
         atrSignalLine.push({ time: b.t, value: atrPack.signal[i] });
       }
-      byTime[b.t] = {
+      var row = {
         o: b.o,
         h: b.h,
         l: b.l,
@@ -1046,14 +1152,25 @@
         macd: macdPack.line[i],
         macdSignal: macdPack.signal[i],
         macdHist: macdPack.hist[i],
-        instOsc: showInvestor && b.instOsc != null && isFinite(b.instOsc) ? b.instOsc : null,
-        frgnOsc: showInvestor && b.frgnOsc != null && isFinite(b.frgnOsc) ? b.frgnOsc : null,
         bbw: bbwPct[i],
         disp: dispPct[i],
         atr: atrPack.value[i],
         atrSignal: atrPack.signal[i],
         live: !!b.live,
       };
+      if (showInvestor) {
+        for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
+          var w = INVESTOR_CUM_OPTIONS[wi];
+          row['instOsc' + w] = oscNum(b['instOsc' + w]);
+          row['frgnOsc' + w] = oscNum(b['frgnOsc' + w]);
+        }
+        row.instOsc = row[investorOscField('instOsc', cum)];
+        row.frgnOsc = row[investorOscField('frgnOsc', cum)];
+      } else {
+        row.instOsc = null;
+        row.frgnOsc = null;
+      }
+      byTime[b.t] = row;
     }
 
     return {
@@ -1082,6 +1199,7 @@
   }
 
   function updateTip(time) {
+    state.crosshairTime = time;
     var tip = document.getElementById('im-candle-tip');
     if (!tip) return;
     var labels = t();
@@ -1147,15 +1265,17 @@
       ' ' +
       fmtNum(b.macdHist, 2);
     if (state.interval === 'daily') {
+      var ik = investorOscField('instOsc', state.investorCum);
+      var fk = investorOscField('frgnOsc', state.investorCum);
       text +=
         ' · ' +
         labels.instOsc +
         ' ' +
-        fmtNum(b.instOsc, 1) +
+        fmtNum(b[ik], 1) +
         ' · ' +
         labels.frgnOsc +
         ' ' +
-        fmtNum(b.frgnOsc, 1);
+        fmtNum(b[fk], 1);
     }
     text +=
       ' · ' +
@@ -1533,7 +1653,7 @@
         updateSubtitle();
 
         if (state.interval === 'weekly') fullBars = aggregateWeeklyBars(fullBars);
-        var data = buildPanelData(fullBars, range, state.interval);
+        var data = buildPanelData(fullBars, range, state.interval, state.investorCum);
         if (!data.barCount) {
           destroyCharts();
           setStatus(labels.empty, true);
@@ -1583,6 +1703,10 @@
     state.open = true;
     state.ticker = ticker;
     state.name = resolveName(ticker, opts && opts.name);
+    state.investorCum = readStoredInvestorCum();
+    if (opts && opts.investorCum && INVESTOR_CUM_OPTIONS.indexOf(opts.investorCum) >= 0) {
+      state.investorCum = opts.investorCum;
+    }
     state.interval =
       opts && opts.interval && INTERVALS.indexOf(opts.interval) >= 0 ? opts.interval : 'daily';
     if (opts && opts.range && RANGES.indexOf(opts.range) >= 0) {
@@ -1602,6 +1726,8 @@
     document.getElementById('im-candle-close').setAttribute('aria-label', labels.close);
     syncRangeButtons();
     syncIntervalButtons();
+    syncInvestorCumButtons();
+    syncInvestorCumVisibility();
     syncPaneLabels();
     document
       .getElementById('im-candle-stack')
@@ -1713,7 +1839,10 @@
     updateSubtitle();
     syncRangeButtons();
     syncIntervalButtons();
+    syncInvestorCumButtons();
+    syncInvestorCumVisibility();
     syncPaneLabels();
+    refreshInvestorOscSeries();
   }
 
   function bind() {
@@ -1736,6 +1865,11 @@
       paneIndex: PANE_INDEX,
       paneMargins: PANE_MARGINS,
       paneStretch: paneStretch,
+      investorCumOptions: INVESTOR_CUM_OPTIONS,
+      readStoredInvestorCum: readStoredInvestorCum,
+      buildInvestorOscLinesFromByTime: buildInvestorOscLinesFromByTime,
+      setInvestorCum: setInvestorCum,
+      paneInvestorLabel: paneInvestorLabel,
     },
     _indicators: {
       sma: sma,
@@ -1751,6 +1885,8 @@
       isoWeekKey: isoWeekKey,
       normalizeBars: normalizeBars,
       buildPanelData: buildPanelData,
+      buildInvestorOscLinesFromByTime: buildInvestorOscLinesFromByTime,
+      investorOscField: investorOscField,
       applyLiveQuoteToBars: applyLiveQuoteToBars,
       asOfToTradeDate: asOfToTradeDate,
       priceMaPeriods: priceMaPeriods,
