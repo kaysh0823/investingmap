@@ -222,17 +222,38 @@ function formatGlobal(g) {
 function patchChainProp(html, prop, extraChains, occurrenceIndex) {
   if (!extraChains || !Object.keys(extraChains).length) return html;
   let n = 0;
-  const re = new RegExp(`"${prop}"\\s*:\\s*\\{([^}]+)\\}`, 'g');
-  return html.replace(re, (full, inner) => {
-    if (n++ !== occurrenceIndex) return full;
+  let searchFrom = 0;
+  while (searchFrom < html.length) {
+    const propIdx = html.indexOf(`"${prop}": {`, searchFrom);
+    if (propIdx < 0) break;
+    const openBrace = html.indexOf('{', propIdx);
+    if (openBrace < 0) break;
+    let depth = 0;
+    let closeBrace = -1;
+    for (let i = openBrace; i < html.length; i++) {
+      const ch = html[i];
+      if (ch === '{') depth++;
+      else if (ch === '}') {
+        depth--;
+        if (depth === 0) {
+          closeBrace = i;
+          break;
+        }
+      }
+    }
+    if (closeBrace < 0) break;
+    searchFrom = closeBrace + 1;
+    if (n++ !== occurrenceIndex) continue;
+    const inner = html.slice(openBrace + 1, closeBrace);
     let next = inner.trimEnd();
     for (const [chain, meta] of Object.entries(extraChains)) {
       if (inner.includes(`"${chain}"`)) continue;
       const label = occurrenceIndex % 2 === 0 ? chain : meta.labelEn;
       next += `,\n            "${chain}": "${label}"`;
     }
-    return `"${prop}": {${next}}`;
-  });
+    return html.slice(0, openBrace + 1) + next + html.slice(closeBrace);
+  }
+  return html;
 }
 
 function patchExtraChains(html, { extraChains, chainOrder, legendFirstChain }) {
@@ -289,11 +310,19 @@ function upsertSector(sectorKey, config) {
     return;
   }
 
+  console.log(`${sectorKey}: upsert cp_list additions from ${config.additions}`);
+
   const htmlPath = join(ROOT, config.path);
   let html = fs.readFileSync(htmlPath, 'utf8');
   const krx = loadMergedKrxMap(join(ROOT, 'data'));
   const perPbr = loadPerPbrMap(join(ROOT, 'data'));
-  const companies = extractCompaniesFromHtml(html);
+  let companies;
+  try {
+    companies = extractCompaniesFromHtml(html);
+  } catch {
+    console.warn(`skip: ${sectorKey} koreanCompanies 없음`);
+    return;
+  }
   const byTicker = new Map(companies.map((c) => [padTicker(c.ticker), c]));
 
   let applied = 0;

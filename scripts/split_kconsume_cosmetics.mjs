@@ -78,24 +78,27 @@ const COSMETICS_META = {
   },
 };
 
-const KCONSUME_CHAINS = ['음식·라면·식품', '패션', '쇼핑/유통', '가구·리빙'];
+const KCONSUME_CHAINS = ['음식·라면·식품', '패션', '쇼핑/유통', '가구·리빙', '물류·상사'];
 const KCONSUME_COLORS = {
   '음식·라면·식품': '#FF8A65',
   '패션': '#AB47BC',
   '쇼핑/유통': '#26A69A',
   '가구·리빙': '#8D6E63',
+  '물류·상사': '#5C6BC0',
 };
 const KCONSUME_LABEL_KO = {
   '음식·라면·식품': '음식·라면·식품',
   '패션': '패션',
   '쇼핑/유통': '쇼핑/유통',
   '가구·리빙': '가구·리빙',
+  '물류·상사': '물류·상사',
 };
 const KCONSUME_LABEL_EN = {
   '음식·라면·식품': 'Food & ramen',
   '패션': 'Fashion',
   '쇼핑/유통': 'Shopping & retail',
   '가구·리빙': 'Furniture & living',
+  '물류·상사': 'Logistics & trading',
 };
 
 function chainForCosmetics(ticker) {
@@ -153,26 +156,39 @@ ${items}
   );
 }
 
+/** Replace chainLabel/chainFilter object body for one T[lang] block (brace-safe). */
+function patchI18nChainProp(html, lang, prop, block) {
+  const langIdx = html.indexOf(`"${lang}":`);
+  if (langIdx < 0) return html;
+  const propIdx = html.indexOf(`"${prop}": {`, langIdx);
+  if (propIdx < 0) return html;
+  const openBrace = html.indexOf('{', propIdx);
+  if (openBrace < 0) return html;
+  let depth = 0;
+  let closeBrace = -1;
+  for (let i = openBrace; i < html.length; i++) {
+    const ch = html[i];
+    if (ch === '{') depth++;
+    else if (ch === '}') {
+      depth--;
+      if (depth === 0) {
+        closeBrace = i;
+        break;
+      }
+    }
+  }
+  if (closeBrace < 0) return html;
+  return html.slice(0, openBrace + 1) + `\n${block}\n        ` + html.slice(closeBrace);
+}
+
 function patchChainLabels(html, chains, labelKo, labelEn) {
-  let out = html;
   const blockKo = chains.map((c) => `            "${c}": "${labelKo[c] || c}"`).join(',\n');
   const blockEn = chains.map((c) => `            "${c}": "${labelEn[c] || c}"`).join(',\n');
-  out = out.replace(
-    /("ko":\s*\{[\s\S]*?"chainLabel":\s*\{)[\s\S]*?(\n\s*\},)/,
-    `$1\n${blockKo}$2`,
-  );
-  out = out.replace(
-    /("ko":\s*\{[\s\S]*?"chainFilter":\s*\{)[\s\S]*?(\n\s*\},)/,
-    `$1\n${blockKo}$2`,
-  );
-  out = out.replace(
-    /("en":\s*\{[\s\S]*?"chainLabel":\s*\{)[\s\S]*?(\n\s*\},)/,
-    `$1\n${blockEn}$2`,
-  );
-  out = out.replace(
-    /("en":\s*\{[\s\S]*?"chainFilter":\s*\{)[\s\S]*?(\n\s*\},)/,
-    `$1\n${blockEn}$2`,
-  );
+  let out = html;
+  for (const prop of ['chainLabel', 'chainFilter']) {
+    out = patchI18nChainProp(out, 'ko', prop, blockKo);
+    out = patchI18nChainProp(out, 'en', prop, blockEn);
+  }
   return out;
 }
 

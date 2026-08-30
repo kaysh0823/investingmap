@@ -13,7 +13,7 @@ import { enrichCompanyList } from '../lib/company_field_enrich.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const cpListDir = process.argv[2] || join(root, '..', 'cp_list');
+const cpListDir = process.argv[2] || join(root, 'cp_list');
 
 const HTML_MAPS = [
   { key: 'semi', path: 'semiconductor/korea_semiconductor_map.html' },

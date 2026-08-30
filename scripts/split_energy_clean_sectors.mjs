@@ -28,7 +28,7 @@ import { passesMcapFloor, filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
 import { exclusiveSector } from '../lib/sector_exclusive.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const CP_LIST_DIR = path.resolve(ROOT, '..', 'cp_list');
+const CP_LIST_DIR = path.resolve(ROOT, 'cp_list');
 const ENERGY_HTML = path.join(ROOT, 'energy', 'korea_energy_map.html');
 const POWERGRID_HTML = path.join(ROOT, 'powergrid', 'korea_powergrid_map.html');
 const SUCCESSOR_HTML = [

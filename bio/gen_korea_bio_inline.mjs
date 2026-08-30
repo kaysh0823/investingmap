@@ -245,7 +245,7 @@ for (const c of koreanCompanies) {
 }
 mergeListedEnglishIntoCompanies(koreanCompanies, meta3557);
 mergePerPbrIntoCompanies(koreanCompanies, loadPerPbrMap(dataDir));
-enrichBioCompanies(koreanCompanies, join(__dirname, '..', '..', 'cp_list'));
+enrichBioCompanies(koreanCompanies, join(__dirname, '..', 'cp_list'));
 {
   const kept = filterCompaniesForSector(filterCompaniesByMcap(koreanCompanies), 'bio');
   koreanCompanies.length = 0;

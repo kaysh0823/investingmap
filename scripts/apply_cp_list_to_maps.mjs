@@ -35,7 +35,7 @@ import { allowedInSector, filterCompaniesForSector } from '../lib/sector_exclusi
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const cpListDir = process.argv[2] || join(root, '..', 'cp_list');
+const cpListDir = process.argv[2] || join(root, 'cp_list');
 
 function makeStub(ticker, entry, industryKey, chains, krx, meta3557, idPrefix) {
   const row = krx.get(ticker);

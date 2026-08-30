@@ -8,7 +8,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const cpList = process.env.CP_LIST_DIR || join(root, '..', 'cp_list');
+const cpList = process.env.CP_LIST_DIR || join(root, 'cp_list');
 
 function run(cmd, label) {
   console.log('\n==>', label);
