@@ -6,11 +6,11 @@
   'use strict';
 
   var HORIZONS = [
-    { id: '1d', field: 'chg1dPct', clip: 2.5, ko: '당일', en: '1D' },
-    { id: '5d', field: 'ret5dPct', clip: 8, ko: '5일', en: '5D' },
+    { id: '1d', field: 'chg1dPct', clip: 15, ko: '당일', en: '1D' },
+    { id: '5d', field: 'ret5dPct', clip: 15, ko: '5일', en: '5D' },
     { id: '20d', field: 'ret20dPct', clip: 15, ko: '20일', en: '20D' },
-    { id: '50d', field: 'ret50dPct', clip: 25, ko: '50일', en: '50D' },
-    { id: '120d', field: 'ret120dPct', clip: 40, ko: '120일', en: '120D' },
+    { id: '50d', field: 'ret50dPct', clip: 15, ko: '50일', en: '50D' },
+    { id: '120d', field: 'ret120dPct', clip: 15, ko: '120일', en: '120D' },
   ];
   /* Strong red ↔ dark neutral ↔ strong green (high chroma ends, dark mid). */
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];

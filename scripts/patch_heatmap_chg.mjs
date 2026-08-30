@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import { stripHeatmapExcludeFilters, stripHeatmapExcludeFiltersFromMaps } from './patch_heatmap_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 14;
+const SCRIPT_V = 15;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',

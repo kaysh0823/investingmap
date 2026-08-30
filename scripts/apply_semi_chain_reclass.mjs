@@ -108,7 +108,7 @@ function patchUi(html) {
   out = replaceDicts(out, 'chainLabel', [labelKo, labelEn]);
   out = replaceDicts(out, 'chainFilter', [filterKo, filterEn]);
   out = out.replace(/\.\.\/js\/map_i18n\.js(?:\?v=\d+)?"/, '../js/map_i18n.js?v=7"');
-  out = out.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=14"');
+  out = out.replace(/\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"/, '../js/map_heatmap.js?v=15"');
   return out;
 }
 
