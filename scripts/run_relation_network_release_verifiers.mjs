@@ -11,6 +11,7 @@ const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const COMMANDS = [
   'verify:relation-network',
   'verify:relation-network-asset-version',
+  'verify:relation-network-readability',
   'verify:semi-relations',
   'verify:bigchip',
   'verify:battery',
