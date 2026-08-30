@@ -375,8 +375,10 @@ async function testPage(page, pageDef, viewport, lang) {
 
   const metrics = await page.evaluate(() => {
     const st = window.RelationNetwork && window.RelationNetwork.getState();
-    const svgs = document.querySelectorAll('#graph-svg svg, #graph-svg');
     const legacySim = typeof simulation !== 'undefined' && simulation;
+    const legacySidebar = document.querySelector('.graph-sidebar');
+    const legacyVisible = legacySidebar && window.getComputedStyle(legacySidebar).display !== 'none';
+    const graphMain = document.querySelector('.rn-graph-main') || document.querySelector('.graph-main');
     return {
       initialized: !!(st && st.initialized),
       firstRenderComplete: !!(st && st.firstRenderComplete),
@@ -386,6 +388,17 @@ async function testPage(page, pageDef, viewport, lang) {
       legacySim: !!legacySim,
       hasV2Panel: !!document.getElementById('rn-detail-panel'),
       hasSparse: !!document.getElementById('rn-sparse-notice'),
+      filterSidebar: !!document.getElementById('rn-filter-sidebar'),
+      filterContent: !!document.getElementById('rn-filter-content'),
+      graphCanvas: !!document.querySelector('.rn-graph-canvas'),
+      toolbarCount: document.querySelectorAll('.rn-toolbar').length,
+      searchCount: document.querySelectorAll('#rn-search').length,
+      topToolbarInGraph: !!document.querySelector('.rn-graph-header .rn-toolbar, .rn-graph-main > .rn-toolbar'),
+      legacySidebarVisible: legacyVisible,
+      drawerToggle: !!document.getElementById('rn-filter-drawer-toggle'),
+      viewportW: window.innerWidth,
+      graphMainW: graphMain ? graphMain.getBoundingClientRect().width : 0,
+      overflowX: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2,
     };
   });
 
@@ -399,6 +412,19 @@ async function testPage(page, pageDef, viewport, lang) {
   }
   if (metrics.legacySim) failures.push('legacy simulation still active');
   if (metrics.svgCount > 1) failures.push('multiple graph-svg containers');
+  if (!metrics.filterSidebar) failures.push(`${pageDef.id} missing rn-filter-sidebar`);
+  if (!metrics.filterContent) failures.push(`${pageDef.id} missing rn-filter-content`);
+  if (!metrics.graphCanvas) failures.push(`${pageDef.id} missing rn-graph-canvas`);
+  if (metrics.toolbarCount !== 1) failures.push(`${pageDef.id} toolbar count=${metrics.toolbarCount} (expected 1)`);
+  if (metrics.searchCount !== 1) failures.push(`${pageDef.id} search input count=${metrics.searchCount} (expected 1)`);
+  if (metrics.topToolbarInGraph) failures.push(`${pageDef.id} duplicate toolbar in graph header`);
+  if (metrics.legacySidebarVisible) failures.push(`${pageDef.id} legacy graph-sidebar still visible`);
+  if (metrics.overflowX) failures.push(`${pageDef.id} horizontal overflow`);
+  if (metrics.viewportW <= 767) {
+    if (!metrics.drawerToggle) failures.push(`${pageDef.id} missing mobile filter drawer toggle`);
+  } else if (metrics.viewportW >= 1024 && metrics.graphMainW < metrics.viewportW * 0.45) {
+    failures.push(`${pageDef.id} graph area too narrow (${Math.round(metrics.graphMainW)}px)`);
+  }
 
   return failures;
 }

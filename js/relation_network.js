@@ -41,6 +41,218 @@
 
   function $(id) { return document.getElementById(id); }
 
+  var WORKSPACE_LAYOUT_READY = false;
+
+  function filterSidebarLabel(lang) {
+    return lang === 'en' ? 'Relation network filters' : '관계 네트워크 필터';
+  }
+
+  function legendHelpLabel(lang) {
+    return lang === 'en' ? 'Legend & help' : '범례·도움말';
+  }
+
+  function filterDrawerLabel(lang) {
+    return lang === 'en' ? 'Filters' : '필터';
+  }
+
+  function moveNode(parent, node, before) {
+    if (!parent || !node || node.parentNode === parent) return;
+    if (before && before.parentNode === parent) parent.insertBefore(node, before);
+    else parent.appendChild(node);
+  }
+
+  function setupWorkspaceLayout(state) {
+    var container = document.querySelector('#tab-graph .graph-container');
+    var graphMain = container && container.querySelector('.graph-main');
+    if (!container || !graphMain) return;
+
+    container.classList.add('rn-workspace');
+    var legacySidebar = container.querySelector('.graph-sidebar');
+    if (legacySidebar) legacySidebar.remove();
+
+    var filterSidebar = $('rn-filter-sidebar');
+    if (!filterSidebar) {
+      filterSidebar = document.createElement('aside');
+      filterSidebar.id = 'rn-filter-sidebar';
+      filterSidebar.className = 'rn-filter-sidebar';
+      filterSidebar.setAttribute('aria-label', filterSidebarLabel(state.lang));
+      var content = document.createElement('div');
+      content.id = 'rn-filter-content';
+      content.className = 'rn-filter-content';
+      filterSidebar.appendChild(content);
+      container.insertBefore(filterSidebar, graphMain);
+    } else {
+      filterSidebar.setAttribute('aria-label', filterSidebarLabel(state.lang));
+    }
+
+    var filterContent = $('rn-filter-content');
+    var toolbar = document.querySelector('.rn-toolbar');
+    if (toolbar && filterContent) moveNode(filterContent, toolbar, filterContent.firstChild);
+
+    var legend = $('rn-legend');
+    var legendHelp = $('rn-legend-help');
+    if (!legendHelp && filterContent) {
+      legendHelp = document.createElement('details');
+      legendHelp.id = 'rn-legend-help';
+      legendHelp.className = 'rn-legend-help';
+      var summary = document.createElement('summary');
+      summary.className = 'rn-legend-help-summary';
+      summary.textContent = legendHelpLabel(state.lang);
+      legendHelp.appendChild(summary);
+      if (legend) legendHelp.appendChild(legend);
+      var staticEl = document.createElement('div');
+      staticEl.id = 'rn-legend-static';
+      staticEl.className = 'rn-legend-static';
+      legendHelp.appendChild(staticEl);
+      filterContent.appendChild(legendHelp);
+    } else if (legendHelp) {
+      var sum = legendHelp.querySelector('.rn-legend-help-summary');
+      if (sum) sum.textContent = legendHelpLabel(state.lang);
+      if (legend && !legendHelp.contains(legend)) {
+        var staticRef = $('rn-legend-static');
+        legendHelp.insertBefore(legend, staticRef || null);
+      }
+    }
+
+    graphMain.classList.add('rn-graph-main');
+    var graphHeader = graphMain.querySelector('.rn-graph-header');
+    if (!graphHeader) {
+      graphHeader = document.createElement('div');
+      graphHeader.className = 'rn-graph-header';
+      graphMain.insertBefore(graphHeader, graphMain.firstChild);
+    }
+    ['rn-sticky-bar', 'rn-model-desc', 'rn-sparse-notice'].forEach(function (id) {
+      var el = $(id);
+      if (el) moveNode(graphHeader, el, null);
+    });
+
+    var drawerToggle = $('rn-filter-drawer-toggle');
+    if (!drawerToggle) {
+      drawerToggle = document.createElement('button');
+      drawerToggle.type = 'button';
+      drawerToggle.id = 'rn-filter-drawer-toggle';
+      drawerToggle.className = 'rn-filter-drawer-toggle';
+      drawerToggle.setAttribute('aria-expanded', 'false');
+      drawerToggle.setAttribute('aria-controls', 'rn-filter-sidebar');
+      graphHeader.insertBefore(drawerToggle, graphHeader.firstChild);
+    }
+    drawerToggle.textContent = filterDrawerLabel(state.lang);
+
+    var graphCanvas = graphMain.querySelector('.rn-graph-canvas');
+    if (!graphCanvas) {
+      graphCanvas = document.createElement('div');
+      graphCanvas.className = 'rn-graph-canvas';
+      graphMain.appendChild(graphCanvas);
+    }
+    ['rn-a11y-list', 'rn-detail-panel', 'graph-svg', 'graph-tooltip', 'graph-hint-text', 'graph-hint'].forEach(function (id) {
+      var el = $(id) || document.getElementById(id);
+      if (!el && id === 'graph-hint') el = document.querySelector('.graph-hint');
+      if (el) moveNode(graphCanvas, el, null);
+    });
+    var graphControls = graphMain.querySelector('.graph-controls');
+    if (graphControls) moveNode(graphCanvas, graphControls, null);
+
+    setupMobileFilterDrawer(state);
+    WORKSPACE_LAYOUT_READY = true;
+  }
+
+  function setupMobileFilterDrawer(state) {
+    var sidebar = $('rn-filter-sidebar');
+    var toggle = $('rn-filter-drawer-toggle');
+    if (!sidebar || !toggle) return;
+
+    var backdrop = $('rn-filter-drawer-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.id = 'rn-filter-drawer-backdrop';
+      backdrop.className = 'rn-filter-drawer-backdrop';
+      backdrop.hidden = true;
+      document.body.appendChild(backdrop);
+    }
+
+    function closeDrawer() {
+      sidebar.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      backdrop.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function openDrawer() {
+      var detail = $('rn-detail-panel');
+      if (detail && !detail.hidden) {
+        detail.hidden = true;
+        detail.setAttribute('aria-hidden', 'true');
+      }
+      sidebar.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      backdrop.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+      var search = $('rn-search');
+      if (search) search.focus();
+    }
+
+    if (!state._drawerWired) {
+      state._drawerWired = true;
+      toggle.addEventListener('click', function () {
+        if (sidebar.classList.contains('is-open')) closeDrawer();
+        else openDrawer();
+      });
+      backdrop.addEventListener('click', closeDrawer);
+      if (!state._drawerEscWired) {
+        state._drawerEscWired = true;
+        document.addEventListener('keydown', function (ev) {
+          if (ev.key !== 'Escape') return;
+          if (sidebar.classList.contains('is-open')) {
+            closeDrawer();
+            toggle.focus();
+          }
+        });
+      }
+    }
+
+    if (global.matchMedia && global.matchMedia('(min-width: 768px)').matches) {
+      closeDrawer();
+    }
+  }
+
+  function collectUsedNodeTypes(state) {
+    var types = {};
+    (state.nodes || []).forEach(function (n) {
+      if (n && n.type) types[n.type] = (types[n.type] || 0) + 1;
+    });
+    return Object.keys(types).sort(function (a, b) { return types[b] - types[a]; }).slice(0, 12);
+  }
+
+  function buildStaticLegendHelp(state) {
+    var el = $('rn-legend-static');
+    if (!el) return;
+    var lang = state.lang;
+    var types = collectUsedNodeTypes(state);
+    var typeLabels = lang === 'en'
+      ? { listed_company: 'Listed company', global_company: 'Global peer', brand: 'Brand', product: 'Product', nuclear_project: 'Project', renewable_project: 'Project', contract: 'Contract' }
+      : { listed_company: '상장사', global_company: '글로벌 peer', brand: '브랜드', product: '제품', nuclear_project: '프로젝트', renewable_project: '프로젝트', contract: '계약' };
+    var typeHtml = types.length
+      ? types.map(function (t) {
+        return '<li>' + (typeLabels[t] || t) + '</li>';
+      }).join('')
+      : '';
+    var controls = lang === 'en'
+      ? 'Drag to pan · scroll to zoom · click a node for details · use filters in this sidebar'
+      : '드래그로 이동 · 스크롤로 확대/축소 · 노드 클릭 시 상세 · 이 사이드바에서 필터 조정';
+    var nodeSize = lang === 'en'
+      ? 'Node size reflects market cap (listed) or editorial weight where applicable.'
+      : '노드 크기는 시가총액(상장사) 또는 편집 가중치를 반영합니다.';
+    el.innerHTML =
+      (typeHtml ? '<p><strong>' + (lang === 'en' ? 'Node types in this map' : '이 지도의 노드 유형') + '</strong></p><ul>' + typeHtml + '</ul>' : '') +
+      '<p><strong>' + (lang === 'en' ? 'Node size' : '노드 크기') + '</strong><br>' + nodeSize + '</p>' +
+      '<p><strong>' + (lang === 'en' ? 'Controls' : '조작') + '</strong><br>' + controls + '</p>';
+  }
+
+  function layoutObserveTarget(state) {
+    var canvas = document.querySelector('.rn-graph-canvas');
+    return canvas || (state.container && state.container.parentElement) || state.container;
+  }
+
   function prependToToolbar(toolbar, wrap) {
     if (!toolbar || !wrap || toolbar.contains(wrap)) return;
     var ref = toolbar.firstChild;
@@ -1926,6 +2138,7 @@
     el.innerHTML = items.map(function (row) {
       return '<span class="rn-legend-item"><span class="rn-legend-key">' + row[0] + '</span> ' + row[1] + '</span>';
     }).join('');
+    buildStaticLegendHelp(state);
   }
 
   function renderDetailPanel(state, target, isEdge) {
@@ -2827,10 +3040,10 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-nuclear-filters';
     wrap.className = 'rn-nuclear-filters';
-    wrap.style.cssText = 'display:flex;flex-direction:column;gap:6px;width:100%;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-stack';
 
     var scopeRow = document.createElement('div');
-    scopeRow.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;-webkit-overflow-scrolling:touch;';
+    scopeRow.className = 'rn-filter-row';
     var scopes = [
       ['all', lang === 'en' ? 'All' : '전체'],
       ['large_nuclear', lang === 'en' ? 'Large nuclear' : '대형 원전'],
@@ -2860,7 +3073,7 @@
     });
 
     var roleRow = document.createElement('div');
-    roleRow.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;-webkit-overflow-scrolling:touch;';
+    roleRow.className = 'rn-filter-row';
     var roles = [
       ['all', lang === 'en' ? 'All roles' : '전체 역할'],
       ['operator', lang === 'en' ? 'Operator' : '운영'],
@@ -2915,12 +3128,12 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-renewable-filters';
     wrap.className = 'rn-renewable-filters';
-    wrap.style.cssText = 'display:flex;flex-direction:column;gap:6px;width:100%;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-stack';
 
     function makeRow(id) {
       var row = document.createElement('div');
       row.id = id;
-      row.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;-webkit-overflow-scrolling:touch;position:sticky;';
+      row.className = 'rn-filter-row';
       return row;
     }
 
@@ -3033,11 +3246,11 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-construction-filters';
     wrap.className = 'rn-construction-filters';
-    wrap.style.cssText = 'display:flex;flex-direction:column;gap:6px;width:100%;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-stack';
     function makeRow(id) {
       var row = document.createElement('div');
       row.id = id;
-      row.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;-webkit-overflow-scrolling:touch;position:sticky;';
+      row.className = 'rn-filter-row';
       return row;
     }
     var roleRow = makeRow('rn-construction-role');
@@ -3119,7 +3332,7 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-powergrid-filters';
     wrap.className = 'rn-powergrid-filters';
-    wrap.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;-webkit-overflow-scrolling:touch;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-row';
     var roles = [
       ['all', lang === 'en' ? 'All' : '전체'],
       ['transmission', lang === 'en' ? 'Transmission' : '송전'],
@@ -3173,7 +3386,7 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-finance-roles';
     wrap.className = 'rn-finance-roles';
-    wrap.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-row';
     var roles = [
       ['all', lang === 'en' ? 'All' : '전체'],
       ['holding', lang === 'en' ? 'Holdings' : '금융지주'],
@@ -3224,7 +3437,7 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-ship-roles';
     wrap.className = 'rn-ship-roles';
-    wrap.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-row';
     var roles = [
       ['all', lang === 'en' ? 'All' : '전체'],
       ['shipyard', lang === 'en' ? 'Yards' : '조선소'],
@@ -3275,7 +3488,7 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-battery-stages';
     wrap.className = 'rn-battery-stages';
-    wrap.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-row';
     var stages = [
       ['all', lang === 'en' ? 'All' : '전체'],
       ['소재', lang === 'en' ? 'Materials' : '원재료·소재'],
@@ -3321,7 +3534,7 @@
     var wrap = document.createElement('div');
     wrap.id = 'rn-bigchip-scopes';
     wrap.className = 'rn-bigchip-scopes';
-    wrap.style.cssText = 'display:flex;flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;padding:2px 0;';
+    wrap.className = (wrap.className ? wrap.className + ' ' : '') + 'rn-filter-row';
     var scopes = [
       ['all', lang === 'en' ? 'All' : '전체'],
       ['skhynix', 'SK hynix'],
@@ -3386,6 +3599,7 @@
   }
 
   function wireControls(state) {
+    setupWorkspaceLayout(state);
     if (state._controlsWired) return;
     state._controlsWired = true;
 
@@ -3496,6 +3710,7 @@
   }
 
   function initNetworkData(state) {
+    setupWorkspaceLayout(state);
     var net = state.network;
     state.nodes = mergeCompanyMeta(net.nodes || [], state.ctx.koreanCompanies, state.ctx.globalCompanies);
     state.edges = (net.edges || []).map(function (e) {
@@ -3611,12 +3826,13 @@
     });
 
     if (!STATE._resizeObs && global.ResizeObserver && STATE.container) {
+      var obsTarget = layoutObserveTarget(STATE);
       STATE._resizeObs = new ResizeObserver(debounce(function () {
         if (STATE.initialized && document.getElementById('tab-graph') && document.getElementById('tab-graph').classList.contains('active')) {
           renderGraph(STATE);
         }
       }, 180));
-      STATE._resizeObs.observe(STATE.container.parentElement || STATE.container);
+      if (obsTarget) STATE._resizeObs.observe(obsTarget);
       DIAG.resizeObsCount += 1;
     }
 
@@ -3635,6 +3851,8 @@
     STATE.lang = ctx.lang;
     STATE.ctx = ctx;
     STATE.T = ctx.T;
+    setupWorkspaceLayout(STATE);
+    setupMobileFilterDrawer(STATE);
     renderGraph(STATE);
   }
 

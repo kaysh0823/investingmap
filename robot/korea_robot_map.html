@@ -1806,29 +1806,175 @@
     }
 
   
-    /* relation network v2 */
+    /* relation network v2 + filter sidebar layout */
+    .rn-workspace.graph-container,
+    .graph-container.rn-workspace {
+      display: grid;
+      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+      height: calc(100vh - 110px);
+      min-height: 420px;
+    }
+    .graph-sidebar { display: none !important; }
+    .rn-filter-sidebar {
+      display: flex;
+      flex-direction: column;
+      min-width: 240px;
+      max-width: 300px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+      z-index: 20;
+    }
+    .rn-filter-content {
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .rn-filter-drawer-toggle {
+      display: none;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 8px 14px;
+      margin: 0 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .rn-filter-drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 24;
+    }
+    .rn-filter-drawer-backdrop.is-open { display: block; }
+    .rn-graph-main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+    }
+    .rn-graph-header { flex: none; padding: 8px 12px 0; }
+    .rn-graph-canvas {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+    .rn-graph-canvas #graph-svg { width: 100%; height: 100%; }
     .rn-model-desc { margin: 0 0 8px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-    .rn-toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; max-width: 100%; overflow-x: auto; }
-    .rn-toolbar input[type="search"] { min-height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text); font: inherit; min-width: 140px; flex: 1; }
-    .rn-chip { min-height: 32px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface2); color: var(--text-muted); font: inherit; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .rn-sparse-notice { margin: 0 0 8px; padding: 8px 10px; font-size: 12px; line-height: 1.5; color: var(--text-muted); background: var(--surface2); border: 1px dashed var(--border); border-radius: 8px; }
+    .rn-toolbar {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      margin: 0;
+      max-width: none;
+      overflow: visible;
+    }
+    .rn-filter-group { display: flex; flex-direction: column; gap: 6px; }
+    .rn-filter-group-title {
+      margin: 0;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .rn-filter-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rn-filter-stack { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .rn-toolbar input[type="search"] {
+      min-height: 40px;
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font: inherit;
+      min-width: 0;
+      flex: none;
+    }
+    .rn-chip {
+      min-height: 36px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.25;
+    }
     .rn-chip.active { border-color: var(--accent); color: var(--accent); }
+    .rn-chip[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
     .rn-sticky-bar { position: sticky; top: 0; z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; }
     .rn-sticky-bar button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); cursor: pointer; font: inherit; }
     .rn-detail-panel { position: absolute; right: 12px; top: 12px; z-index: 15; width: min(320px, 92vw); max-height: 60%; overflow: auto; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: 0 8px 24px rgba(0,0,0,.25); font-size: 12px; line-height: 1.6; }
     .rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
     .rn-detail-close { position: absolute; top: 8px; right: 10px; min-width: 44px; min-height: 44px; border: none; background: transparent; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; }
     .rn-graph-only-badge { color: var(--text-muted); font-size: 11px; margin: 0 0 6px; }
-    .rn-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 8px; font-size: 10px; color: var(--text-muted); }
-    .rn-legend-item { white-space: nowrap; }
+    .rn-legend-help { margin-top: 4px; border-top: 1px solid var(--border); padding-top: 8px; }
+    .rn-legend-help-summary {
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+    .rn-legend-help-summary::-webkit-details-marker { display: none; }
+    .rn-legend { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; font-size: 11px; color: var(--text-muted); }
+    .rn-legend-item { white-space: normal; line-height: 1.45; }
     .rn-legend-key { font-weight: 600; color: var(--text); }
+    .rn-legend-static { font-size: 11px; color: var(--text-muted); line-height: 1.55; }
+    .rn-legend-static dl { margin: 0; }
+    .rn-legend-static dt { font-weight: 600; color: var(--text); margin-top: 6px; }
+    .rn-legend-static dd { margin: 2px 0 0; }
     .rn-evidence { margin: 8px 0 0; padding-left: 18px; }
     .rn-a11y-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-    @media (max-width: 768px) {
-      #tab-graph .graph-main { position: relative; }
-      #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; }
-      .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; }
+    @media (max-width: 1023px) {
+      .rn-workspace.graph-container,
+      .graph-container.rn-workspace { grid-template-columns: minmax(200px, 220px) minmax(0, 1fr); }
+      .rn-filter-sidebar { min-width: 200px; max-width: 220px; }
+    }
+    @media (max-width: 767px) {
+      .rn-workspace.graph-container,
+      .graph-container.rn-workspace { grid-template-columns: 1fr; height: min(70vh, 620px); }
+      .rn-filter-drawer-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .rn-filter-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(92vw, 320px);
+        max-width: none;
+        transform: translateX(-105%);
+        transition: transform .2s ease;
+        box-shadow: 8px 0 24px rgba(0,0,0,.25);
+      }
+      .rn-filter-sidebar.is-open { transform: translateX(0); }
+      #tab-graph .rn-graph-main { position: relative; touch-action: pan-y; }
+      .rn-graph-canvas #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; touch-action: none; }
+      .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; padding-top: 18px; }
       .rn-toolbar .rn-chip { min-height: 44px; }
       .rn-sticky-bar button { min-height: 44px; }
+      .rn-detail-close { min-width: 44px; min-height: 44px; }
+      .rn-legend-help-summary { min-height: 44px; }
     }
     .im-trust-footer {
       border-top: 1px solid var(--border);
@@ -1907,7 +2053,7 @@
     <p lang="en" class="im-seo-body-p" hidden>For editorial policy and related information, see our <a href="../authors.html">editorial &amp; data team</a> page.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 로봇 관련주, 피지컬AI, AMR, 협동로봇</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean robotics stocks, Physical AI, AMR, cobots</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-23 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-23.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-29 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-29.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1993,16 +2139,16 @@
       <td><div class="company-name">레인보우로보틱스</div><div class="company-name-sub">Rainbow Robotics</div></td>
       <td><span class="ticker">277810</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">454,000</td>
-      <td class="quote-cell ret-cell">-3.71%</td>
-      <td class="quote-cell ret-cell">+8.48%</td>
-      <td class="quote-cell ret-cell">-27.24%</td>
-      <td class="quote-cell ret-cell">-45.43%</td>
-      <td class="quote-cell ret-cell">+19.95%</td>
+      <td class="quote-cell">456,000</td>
+      <td class="quote-cell ret-cell">-3.18%</td>
+      <td class="quote-cell ret-cell">+5.31%</td>
+      <td class="quote-cell ret-cell">-22.71%</td>
+      <td class="quote-cell ret-cell">-39.28%</td>
+      <td class="quote-cell ret-cell">+24.76%</td>
       <td class="quote-cell">979,000</td>
-      <td class="quote-cell">253,500</td>
-      <td class="quote-cell">27.6%</td>
-      <td class="quote-cell">28.0</td>
+      <td class="quote-cell">266,500</td>
+      <td class="quote-cell">26.6%</td>
+      <td class="quote-cell">16.9</td>
       <td class="mcap-cell">12.11조원</td>
       <td class="fin-cell">8547.95</td>
       <td class="fin-cell">90.45</td>
@@ -2016,16 +2162,16 @@
       <td><div class="company-name">두산로보틱스</div><div class="company-name-sub">Doosan Robotics</div></td>
       <td><span class="ticker">454910</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">70,900</td>
-      <td class="quote-cell ret-cell">-1.94%</td>
-      <td class="quote-cell ret-cell">+9.58%</td>
-      <td class="quote-cell ret-cell">-35.78%</td>
-      <td class="quote-cell ret-cell">-22.17%</td>
-      <td class="quote-cell ret-cell">-8.75%</td>
+      <td class="quote-cell">71,600</td>
+      <td class="quote-cell ret-cell">-2.05%</td>
+      <td class="quote-cell ret-cell">+16.23%</td>
+      <td class="quote-cell ret-cell">-29.67%</td>
+      <td class="quote-cell ret-cell">-20.00%</td>
+      <td class="quote-cell ret-cell">+0.85%</td>
       <td class="quote-cell">170,000</td>
       <td class="quote-cell">54,200</td>
-      <td class="quote-cell">14.4%</td>
-      <td class="quote-cell">41.9</td>
+      <td class="quote-cell">15%</td>
+      <td class="quote-cell">38.3</td>
       <td class="mcap-cell">7.16조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">20.53</td>
@@ -2039,16 +2185,16 @@
       <td><div class="company-name">로보티즈</div><div class="company-name-sub">Robotis</div></td>
       <td><span class="ticker">108490</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">254,000</td>
-      <td class="quote-cell ret-cell">-3.24%</td>
-      <td class="quote-cell ret-cell">+32.71%</td>
-      <td class="quote-cell ret-cell">-23.03%</td>
-      <td class="quote-cell ret-cell">+1.40%</td>
-      <td class="quote-cell ret-cell">+15.98%</td>
+      <td class="quote-cell">242,000</td>
+      <td class="quote-cell ret-cell">-5.10%</td>
+      <td class="quote-cell ret-cell">+31.66%</td>
+      <td class="quote-cell ret-cell">-15.68%</td>
+      <td class="quote-cell ret-cell">-6.38%</td>
+      <td class="quote-cell ret-cell">+26.17%</td>
       <td class="quote-cell">464,000</td>
-      <td class="quote-cell">73,815</td>
-      <td class="quote-cell">46.2%</td>
-      <td class="quote-cell">65.8</td>
+      <td class="quote-cell">84,138</td>
+      <td class="quote-cell">41.6%</td>
+      <td class="quote-cell">51.0</td>
       <td class="mcap-cell">4.84조원</td>
       <td class="fin-cell">857.14</td>
       <td class="fin-cell">15.20</td>
@@ -2062,16 +2208,16 @@
       <td><div class="company-name">현대무벡스</div><div class="company-name-sub">Hyundai Movex</div></td>
       <td><span class="ticker">319400</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">22,850</td>
-      <td class="quote-cell ret-cell">-4.79%</td>
-      <td class="quote-cell ret-cell">+18.89%</td>
-      <td class="quote-cell ret-cell">-41.63%</td>
-      <td class="quote-cell ret-cell">-28.14%</td>
-      <td class="quote-cell ret-cell">+158.48%</td>
+      <td class="quote-cell">23,750</td>
+      <td class="quote-cell ret-cell">-1.66%</td>
+      <td class="quote-cell ret-cell">+11.50%</td>
+      <td class="quote-cell ret-cell">-26.13%</td>
+      <td class="quote-cell ret-cell">-23.39%</td>
+      <td class="quote-cell ret-cell">+187.18%</td>
       <td class="quote-cell">50,400</td>
-      <td class="quote-cell">4,410</td>
-      <td class="quote-cell">40.1%</td>
-      <td class="quote-cell">36.1</td>
+      <td class="quote-cell">4,655</td>
+      <td class="quote-cell">41.7%</td>
+      <td class="quote-cell">28.7</td>
       <td class="mcap-cell">4.36조원</td>
       <td class="fin-cell">380.10</td>
       <td class="fin-cell">26.91</td>
@@ -2085,16 +2231,16 @@
       <td><div class="company-name">에스피지</div><div class="company-name-sub">SPG CO., LTD</div></td>
       <td><span class="ticker">058610</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">95,500</td>
-      <td class="quote-cell ret-cell">-7.64%</td>
-      <td class="quote-cell ret-cell">+33.38%</td>
-      <td class="quote-cell ret-cell">+0.84%</td>
-      <td class="quote-cell ret-cell">-27.32%</td>
-      <td class="quote-cell ret-cell">+221.55%</td>
+      <td class="quote-cell">92,700</td>
+      <td class="quote-cell ret-cell">-1.59%</td>
+      <td class="quote-cell ret-cell">-2.01%</td>
+      <td class="quote-cell ret-cell">+5.82%</td>
+      <td class="quote-cell ret-cell">-28.86%</td>
+      <td class="quote-cell ret-cell">+101.08%</td>
       <td class="quote-cell">165,700</td>
-      <td class="quote-cell">23,050</td>
-      <td class="quote-cell">50.8%</td>
-      <td class="quote-cell">63.7</td>
+      <td class="quote-cell">25,200</td>
+      <td class="quote-cell">48%</td>
+      <td class="quote-cell">35.4</td>
       <td class="mcap-cell">2.10조원</td>
       <td class="fin-cell">229.85</td>
       <td class="fin-cell">8.14</td>
@@ -2108,16 +2254,16 @@
       <td><div class="company-name">휴림로봇</div><div class="company-name-sub">Hyulim Robot</div></td>
       <td><span class="ticker">090710</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">6,630</td>
-      <td class="quote-cell ret-cell">-3.77%</td>
-      <td class="quote-cell ret-cell">+1.07%</td>
-      <td class="quote-cell ret-cell">-43.48%</td>
-      <td class="quote-cell ret-cell">-48.44%</td>
-      <td class="quote-cell ret-cell">+20.55%</td>
+      <td class="quote-cell">6,650</td>
+      <td class="quote-cell ret-cell">+0.76%</td>
+      <td class="quote-cell ret-cell">+7.43%</td>
+      <td class="quote-cell ret-cell">-34.29%</td>
+      <td class="quote-cell ret-cell">-45.13%</td>
+      <td class="quote-cell ret-cell">+33.67%</td>
       <td class="quote-cell">26,600</td>
-      <td class="quote-cell">2,385</td>
-      <td class="quote-cell">17.5%</td>
-      <td class="quote-cell">17.0</td>
+      <td class="quote-cell">2,505</td>
+      <td class="quote-cell">17.2%</td>
+      <td class="quote-cell">13.5</td>
       <td class="mcap-cell">1.40조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.98</td>
@@ -2131,16 +2277,16 @@
       <td><div class="company-name">로보스타</div><div class="company-name-sub">Robostar Co.,Ltd.</div></td>
       <td><span class="ticker">090360</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">78,200</td>
-      <td class="quote-cell ret-cell">-3.81%</td>
-      <td class="quote-cell ret-cell">+29.04%</td>
-      <td class="quote-cell ret-cell">-30.92%</td>
-      <td class="quote-cell ret-cell">+12.52%</td>
-      <td class="quote-cell ret-cell">+5.53%</td>
+      <td class="quote-cell">77,900</td>
+      <td class="quote-cell ret-cell">-2.50%</td>
+      <td class="quote-cell ret-cell">+26.87%</td>
+      <td class="quote-cell ret-cell">-18.00%</td>
+      <td class="quote-cell ret-cell">+17.85%</td>
+      <td class="quote-cell ret-cell">+22.87%</td>
       <td class="quote-cell">171,600</td>
-      <td class="quote-cell">25,250</td>
-      <td class="quote-cell">36.2%</td>
-      <td class="quote-cell">63.7</td>
+      <td class="quote-cell">27,350</td>
+      <td class="quote-cell">35%</td>
+      <td class="quote-cell">59.3</td>
       <td class="mcap-cell">1.10조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">12.71</td>
@@ -2154,16 +2300,16 @@
       <td><div class="company-name">유일로보틱스</div><div class="company-name-sub">Yuil Robotics</div></td>
       <td><span class="ticker">388720</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">67,500</td>
-      <td class="quote-cell ret-cell">-3.98%</td>
-      <td class="quote-cell ret-cell">+13.07%</td>
-      <td class="quote-cell ret-cell">-19.16%</td>
-      <td class="quote-cell ret-cell">-39.57%</td>
-      <td class="quote-cell ret-cell">-15.94%</td>
+      <td class="quote-cell">67,000</td>
+      <td class="quote-cell ret-cell">-2.05%</td>
+      <td class="quote-cell ret-cell">+7.54%</td>
+      <td class="quote-cell ret-cell">-14.43%</td>
+      <td class="quote-cell ret-cell">-39.96%</td>
+      <td class="quote-cell ret-cell">-10.43%</td>
       <td class="quote-cell">155,000</td>
       <td class="quote-cell">53,800</td>
-      <td class="quote-cell">13.5%</td>
-      <td class="quote-cell">39.2</td>
+      <td class="quote-cell">13%</td>
+      <td class="quote-cell">23.1</td>
       <td class="mcap-cell">0.98조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.89</td>
@@ -2177,16 +2323,16 @@
       <td><div class="company-name">에스에프에이</div><div class="company-name-sub">SFA Engineering</div></td>
       <td><span class="ticker">056190</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">23,700</td>
-      <td class="quote-cell ret-cell">-5.01%</td>
-      <td class="quote-cell ret-cell">+17.33%</td>
-      <td class="quote-cell ret-cell">-11.24%</td>
-      <td class="quote-cell ret-cell">-24.04%</td>
-      <td class="quote-cell ret-cell">+1.72%</td>
+      <td class="quote-cell">23,950</td>
+      <td class="quote-cell ret-cell">-1.44%</td>
+      <td class="quote-cell ret-cell">+19.75%</td>
+      <td class="quote-cell ret-cell">-8.06%</td>
+      <td class="quote-cell ret-cell">-17.13%</td>
+      <td class="quote-cell ret-cell">+15.42%</td>
       <td class="quote-cell">36,500</td>
       <td class="quote-cell">16,850</td>
-      <td class="quote-cell">34.9%</td>
-      <td class="quote-cell">54.9</td>
+      <td class="quote-cell">36.1%</td>
+      <td class="quote-cell">54.4</td>
       <td class="mcap-cell">0.96조원</td>
       <td class="fin-cell">13.94</td>
       <td class="fin-cell">0.83</td>
@@ -2200,16 +2346,16 @@
       <td><div class="company-name">클로봇</div><div class="company-name-sub">CLOBOT Co., Ltd</div></td>
       <td><span class="ticker">466100</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">27,150</td>
-      <td class="quote-cell ret-cell">-7.81%</td>
-      <td class="quote-cell ret-cell">+14.80%</td>
-      <td class="quote-cell ret-cell">-25.51%</td>
-      <td class="quote-cell ret-cell">-55.93%</td>
-      <td class="quote-cell ret-cell">-28.65%</td>
+      <td class="quote-cell">25,600</td>
+      <td class="quote-cell ret-cell">-3.94%</td>
+      <td class="quote-cell ret-cell">+10.34%</td>
+      <td class="quote-cell ret-cell">-23.70%</td>
+      <td class="quote-cell ret-cell">-54.04%</td>
+      <td class="quote-cell ret-cell">-28.39%</td>
       <td class="quote-cell">77,953</td>
-      <td class="quote-cell">15,098</td>
-      <td class="quote-cell">19.2%</td>
-      <td class="quote-cell">32.5</td>
+      <td class="quote-cell">17,636</td>
+      <td class="quote-cell">13.2%</td>
+      <td class="quote-cell">14.1</td>
       <td class="mcap-cell">0.93조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">15.09</td>
@@ -2223,16 +2369,16 @@
       <td><div class="company-name">하이젠알앤엠</div><div class="company-name-sub">Higen R&amp;M</div></td>
       <td><span class="ticker">160190</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">18,250</td>
-      <td class="quote-cell ret-cell">-7.87%</td>
-      <td class="quote-cell ret-cell">+15.36%</td>
-      <td class="quote-cell ret-cell">-34.12%</td>
-      <td class="quote-cell ret-cell">-69.22%</td>
-      <td class="quote-cell ret-cell">-62.37%</td>
+      <td class="quote-cell">18,330</td>
+      <td class="quote-cell ret-cell">-2.08%</td>
+      <td class="quote-cell ret-cell">+31.02%</td>
+      <td class="quote-cell ret-cell">-27.55%</td>
+      <td class="quote-cell ret-cell">-67.84%</td>
+      <td class="quote-cell ret-cell">-59.89%</td>
       <td class="quote-cell">91,200</td>
       <td class="quote-cell">11,000</td>
-      <td class="quote-cell">9%</td>
-      <td class="quote-cell">32.0</td>
+      <td class="quote-cell">9.1%</td>
+      <td class="quote-cell">31.5</td>
       <td class="mcap-cell">0.86조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">7.57</td>
@@ -2246,16 +2392,16 @@
       <td><div class="company-name">유진로봇</div><div class="company-name-sub">Yujin Robot</div></td>
       <td><span class="ticker">056080</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">12,000</td>
-      <td class="quote-cell ret-cell">-5.81%</td>
-      <td class="quote-cell ret-cell">+2.65%</td>
-      <td class="quote-cell ret-cell">-38.59%</td>
-      <td class="quote-cell ret-cell">-62.62%</td>
-      <td class="quote-cell ret-cell">+1.87%</td>
+      <td class="quote-cell">12,150</td>
+      <td class="quote-cell ret-cell">+0.58%</td>
+      <td class="quote-cell ret-cell">+11.47%</td>
+      <td class="quote-cell ret-cell">-30.29%</td>
+      <td class="quote-cell ret-cell">-56.99%</td>
+      <td class="quote-cell ret-cell">+6.77%</td>
       <td class="quote-cell">49,450</td>
       <td class="quote-cell">9,250</td>
-      <td class="quote-cell">6.8%</td>
-      <td class="quote-cell">17.8</td>
+      <td class="quote-cell">7.2%</td>
+      <td class="quote-cell">19.3</td>
       <td class="mcap-cell">0.73조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">25.51</td>
@@ -2269,15 +2415,15 @@
       <td><div class="company-name">뉴로메카</div><div class="company-name-sub">Neuromeka Co., Ltd.</div></td>
       <td><span class="ticker">348340</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">19,530</td>
-      <td class="quote-cell ret-cell">-2.84%</td>
-      <td class="quote-cell ret-cell">-27.13%</td>
-      <td class="quote-cell ret-cell">-60.55%</td>
-      <td class="quote-cell ret-cell">-73.86%</td>
-      <td class="quote-cell ret-cell">-27.53%</td>
+      <td class="quote-cell">18,980</td>
+      <td class="quote-cell ret-cell">-1.61%</td>
+      <td class="quote-cell ret-cell">-27.42%</td>
+      <td class="quote-cell ret-cell">-56.12%</td>
+      <td class="quote-cell ret-cell">-72.61%</td>
+      <td class="quote-cell ret-cell">-32.81%</td>
       <td class="quote-cell">88,302</td>
-      <td class="quote-cell">12,698</td>
-      <td class="quote-cell">9%</td>
+      <td class="quote-cell">13,880</td>
+      <td class="quote-cell">6.9%</td>
       <td class="quote-cell">1.1</td>
       <td class="mcap-cell">0.61조원</td>
       <td class="fin-cell">—</td>
@@ -2292,16 +2438,16 @@
       <td><div class="company-name">한라캐스트</div><div class="company-name-sub">Halla Cast</div></td>
       <td><span class="ticker">125490</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">11,180</td>
-      <td class="quote-cell ret-cell">-6.99%</td>
-      <td class="quote-cell ret-cell">+51.29%</td>
-      <td class="quote-cell ret-cell">-17.98%</td>
-      <td class="quote-cell ret-cell">-29.82%</td>
-      <td class="quote-cell ret-cell">+18.68%</td>
+      <td class="quote-cell">10,250</td>
+      <td class="quote-cell ret-cell">-4.65%</td>
+      <td class="quote-cell ret-cell">+40.60%</td>
+      <td class="quote-cell ret-cell">-2.84%</td>
+      <td class="quote-cell ret-cell">-35.00%</td>
+      <td class="quote-cell ret-cell">+2.09%</td>
       <td class="quote-cell">25,350</td>
       <td class="quote-cell">4,355</td>
-      <td class="quote-cell">32.5%</td>
-      <td class="quote-cell">60.1</td>
+      <td class="quote-cell">28.1%</td>
+      <td class="quote-cell">53.6</td>
       <td class="mcap-cell">0.50조원</td>
       <td class="fin-cell">106.48</td>
       <td class="fin-cell">4.71</td>
@@ -2315,16 +2461,16 @@
       <td><div class="company-name">에스비비테크</div><div class="company-name-sub">SBB Tech</div></td>
       <td><span class="ticker">389500</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">35,500</td>
-      <td class="quote-cell ret-cell">-6.08%</td>
-      <td class="quote-cell ret-cell">+14.15%</td>
-      <td class="quote-cell ret-cell">-43.29%</td>
-      <td class="quote-cell ret-cell">-34.74%</td>
-      <td class="quote-cell ret-cell">+52.03%</td>
+      <td class="quote-cell">37,900</td>
+      <td class="quote-cell ret-cell">-3.19%</td>
+      <td class="quote-cell ret-cell">+24.88%</td>
+      <td class="quote-cell ret-cell">-23.97%</td>
+      <td class="quote-cell ret-cell">-24.95%</td>
+      <td class="quote-cell ret-cell">+22.26%</td>
       <td class="quote-cell">115,000</td>
-      <td class="quote-cell">18,870</td>
-      <td class="quote-cell">17.3%</td>
-      <td class="quote-cell">37.4</td>
+      <td class="quote-cell">19,970</td>
+      <td class="quote-cell">18.9%</td>
+      <td class="quote-cell">41.1</td>
       <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">31.71</td>
@@ -2338,16 +2484,16 @@
       <td><div class="company-name">티로보틱스</div><div class="company-name-sub">T-Robotics co., Ltd.</div></td>
       <td><span class="ticker">117730</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">12,890</td>
-      <td class="quote-cell ret-cell">-5.57%</td>
-      <td class="quote-cell ret-cell">+2.96%</td>
-      <td class="quote-cell ret-cell">-22.63%</td>
-      <td class="quote-cell ret-cell">-40.87%</td>
-      <td class="quote-cell ret-cell">-18.68%</td>
+      <td class="quote-cell">13,050</td>
+      <td class="quote-cell ret-cell">-1.81%</td>
+      <td class="quote-cell ret-cell">+6.01%</td>
+      <td class="quote-cell ret-cell">-13.40%</td>
+      <td class="quote-cell ret-cell">-34.75%</td>
+      <td class="quote-cell ret-cell">-10.92%</td>
       <td class="quote-cell">30,900</td>
       <td class="quote-cell">9,800</td>
-      <td class="quote-cell">14.6%</td>
-      <td class="quote-cell">29.9</td>
+      <td class="quote-cell">15.4%</td>
+      <td class="quote-cell">26.1</td>
       <td class="mcap-cell">0.38조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">7.23</td>
@@ -2361,16 +2507,16 @@
       <td><div class="company-name">씨메스로보틱스</div><div class="company-name-sub">CMES Robotics</div></td>
       <td><span class="ticker">475400</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">18,340</td>
-      <td class="quote-cell ret-cell">-7.28%</td>
-      <td class="quote-cell ret-cell">+16.52%</td>
-      <td class="quote-cell ret-cell">-30.40%</td>
-      <td class="quote-cell ret-cell">-42.24%</td>
-      <td class="quote-cell ret-cell">-36.43%</td>
+      <td class="quote-cell">18,310</td>
+      <td class="quote-cell ret-cell">-1.29%</td>
+      <td class="quote-cell ret-cell">-2.03%</td>
+      <td class="quote-cell ret-cell">-14.64%</td>
+      <td class="quote-cell ret-cell">-56.04%</td>
+      <td class="quote-cell ret-cell">-36.09%</td>
       <td class="quote-cell">46,950</td>
       <td class="quote-cell">13,420</td>
-      <td class="quote-cell">14.7%</td>
-      <td class="quote-cell">38.3</td>
+      <td class="quote-cell">14.6%</td>
+      <td class="quote-cell">12.7</td>
       <td class="mcap-cell">0.31조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">5.23</td>
@@ -2390,25 +2536,10 @@
 
   <!-- GRAPH TAB -->
   <div id="tab-graph" class="tab-content">
-    <div class="graph-container">
-      <div class="graph-sidebar">
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-korean">밸류체인</div>
-          <div id="sb-chain-legend"></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-global">글로벌 파트너</div>
-          <div id="sb-region-legend"></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-size">노드 크기 기준</div>
-          <div id="sb-size-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-how">조작 방법</div>
-          <div id="sb-how-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
-        </div>
-      </div>
+    <div class="graph-container rn-workspace">
+      <aside class="rn-filter-sidebar" id="rn-filter-sidebar" aria-label="Relation network filters">
+        <div class="rn-filter-content" id="rn-filter-content"></div>
+      </aside>
       <div class="graph-main">
         <div id="rn-sticky-bar" class="rn-sticky-bar" hidden></div>
         <p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>
@@ -2933,13 +3064,13 @@
       document.getElementById('th-products').textContent = t.thProducts;
       document.getElementById('th-partners').textContent = t.thPartners;
       document.getElementById('table-note').textContent = t.note;
-      document.getElementById('sb-korean').textContent = t.sbKorean;
-      document.getElementById('sb-global').textContent = t.sbGlobal;
-      document.getElementById('sb-size').textContent = t.sbSize;
-      document.getElementById('sb-how').textContent = t.sbHow;
-      document.getElementById('sb-size-desc').innerHTML = t.sizeDesc.replace(/\n/g, '<br>');
-      document.getElementById('sb-how-desc').innerHTML = t.howDesc.replace(/\n/g, '<br>');
-      document.getElementById('graph-hint-text').textContent = t.graphHint;
+      if(document.getElementById('sb-korean'))document.getElementById('sb-korean').textContent= t.sbKorean;
+      if(document.getElementById('sb-global'))document.getElementById('sb-global').textContent= t.sbGlobal;
+      if(document.getElementById('sb-size'))document.getElementById('sb-size').textContent= t.sbSize;
+      if(document.getElementById('sb-how'))document.getElementById('sb-how').textContent= t.sbHow;
+      if(document.getElementById('sb-size-desc'))if(document.getElementById('sb-size-desc'))document.getElementById('sb-size-desc').innerHTML= t.sizeDesc.replace(/\n/g, '<br>');
+      if(document.getElementById('sb-how-desc'))if(document.getElementById('sb-how-desc'))document.getElementById('sb-how-desc').innerHTML= t.howDesc.replace(/\n/g, '<br>');
+      /* sb-korean guard */ if(document.getElementById('graph-hint-text'))document.getElementById('graph-hint-text').textContent= t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
       if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
@@ -2996,7 +3127,7 @@
       buildSidebarLegend();
     }
 
-    function buildSidebarLegend() {
+    function buildSidebarLegend() { if (!document.getElementById('sb-chain-legend')) return; /* sb-chain-legend guard */
       const t = T[lang];
       const chainContainer = document.getElementById('sb-chain-legend');
       const chains = bigchipPresentChains();
