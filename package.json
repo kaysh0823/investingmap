@@ -53,6 +53,8 @@
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",
     "fetch:krx-mcap": "node scripts/fetch_krx_mcap_csv.mjs",
+    "sync:investor-net": "node scripts/sync_investor_net_to_supabase.mjs",
+    "backfill:investor-net": "node scripts/backfill_investor_net.mjs",
     "audit:mcap-universe": "node scripts/audit_mcap_universe.mjs",
     "verify:quotes-hybrid": "node scripts/verify_quotes_hybrid.mjs",
     "pages:build": "node scripts/pages_build.mjs",
