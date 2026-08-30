@@ -239,11 +239,15 @@
     var controls = lang === 'en'
       ? 'Drag to pan · scroll to zoom · click a node for details · use filters in this sidebar'
       : '드래그로 이동 · 스크롤로 확대/축소 · 노드 클릭 시 상세 · 이 사이드바에서 필터 조정';
+    var labelPolicy = lang === 'en'
+      ? 'Listed names are shown first. Reference/global labels may hide when the view is dense; hover or select a node to see full names and direct relations. Zoom in to reveal more labels. Fit-all may shrink text.'
+      : '종목명은 우선 표시됩니다. 화면이 복잡하면 참고·글로벌 노드 이름은 생략됩니다. 마우스를 올리거나 선택하면 전체 이름과 직접 관계가 표시됩니다. 확대하면 더 많은 라벨을 볼 수 있습니다. 전체 맞춤에서는 글자가 작아질 수 있습니다.';
     var nodeSize = lang === 'en'
       ? 'Node size reflects market cap (listed) or editorial weight where applicable.'
       : '노드 크기는 시가총액(상장사) 또는 편집 가중치를 반영합니다.';
     el.innerHTML =
       (typeHtml ? '<p><strong>' + (lang === 'en' ? 'Node types in this map' : '이 지도의 노드 유형') + '</strong></p><ul>' + typeHtml + '</ul>' : '') +
+      '<p><strong>' + (lang === 'en' ? 'Labels' : '라벨 표시') + '</strong><br>' + labelPolicy + '</p>' +
       '<p><strong>' + (lang === 'en' ? 'Node size' : '노드 크기') + '</strong><br>' + nodeSize + '</p>' +
       '<p><strong>' + (lang === 'en' ? 'Controls' : '조작') + '</strong><br>' + controls + '</p>';
   }
@@ -709,6 +713,332 @@
     return seen;
   }
 
+  var READABILITY = {
+    MIN_ZOOM_DESKTOP: 0.78,
+    MIN_ZOOM_TABLET: 0.82,
+    MIN_ZOOM_MOBILE: 0.92,
+    MIN_ZOOM_FIT_ALL: 0.42,
+    ZOOM_LOW: 0.92,
+    ZOOM_MED: 1.12,
+    ZOOM_HIGH: 1.38,
+    LANE_NODE_SPACING: 34,
+    LANE_MIN_GRAPH_H: 540,
+    FONT_LISTED: 13,
+    FONT_LISTED_MOBILE: 12,
+    FONT_SELECTED: 15,
+    FONT_COUNTERPARTY: 11,
+    FONT_LOW: 10,
+  };
+
+  function isMobileViewport() {
+    return global.innerWidth <= 768;
+  }
+
+  function isTabletViewport() {
+    return global.innerWidth > 768 && global.innerWidth <= 1024;
+  }
+
+  function isMapListedConstituent(n) {
+    return !!(n && n.type === 'listed_company' && n.isMapConstituent !== false);
+  }
+
+  function isAnchorNode(n) {
+    return !!(n && (n.isAnchor || n.type === 'domestic_anchor' || n.id === ANCHOR_SAMSUNG || n.id === ANCHOR_HYNIX));
+  }
+
+  function isGlobalOrReferenceNode(n) {
+    if (!n) return false;
+    if (n.type === 'global_company') return true;
+    if (n.entityRole === 'listed_reference_company') return true;
+    if (n.type === 'listed_company' && n.isMapConstituent === false) return true;
+    return !!STRUCT_NODE[n.type];
+  }
+
+  function nodeDisplayLabel(n, lang, maxLen) {
+    var raw = nodeLabel(n, lang);
+    if (!maxLen || raw.length <= maxLen) return raw;
+    return raw.slice(0, Math.max(1, maxLen - 1)) + '…';
+  }
+
+  function estimateLabelWidth(text, fontSize) {
+    return Math.max(28, String(text || '').length * fontSize * 0.58);
+  }
+
+  function boxesOverlap(x, y, w, h, occupied) {
+    var x2 = x + w;
+    var y2 = y + h;
+    for (var i = 0; i < occupied.length; i++) {
+      var o = occupied[i];
+      if (x2 < o.x1 || x > o.x2 || y2 < o.y1 || y > o.y2) continue;
+      return true;
+    }
+    return false;
+  }
+
+  function getSimNeighborIds(simEdges, nodeId) {
+    var ids = new Set();
+    (simEdges || []).forEach(function (e) {
+      var s = typeof e.source === 'object' ? e.source.id : e.source;
+      var t = typeof e.target === 'object' ? e.target.id : e.target;
+      if (s === nodeId) ids.add(t);
+      if (t === nodeId) ids.add(s);
+    });
+    return ids;
+  }
+
+  function labelPriorityForNode(n, state, neighborOfSelected) {
+    if (!n) return 99;
+    if (state.selectedId === n.id || state.hoveredId === n.id || state.focusedId === n.id) return 1;
+    if (neighborOfSelected && neighborOfSelected.has(n.id)) return 1;
+    if (isMapListedConstituent(n)) return 2;
+    if (n.type === 'listed_company' || n.type === 'domestic_unlisted_company' || n.type === 'major_affiliate') return 2;
+    if (n.type === 'nuclear_project' || n.type === 'renewable_project' || n.type === 'construction_project'
+      || n.type === 'order_contract' || n.type === 'vessel_project' || n.type === 'offshore_project') return 2;
+    if (isAnchorNode(n) || n.type === 'brand' || n.type === 'artist_or_group' || n.type === 'content_ip') return 2;
+    if (STRUCT_NODE[n.type] || n.type === 'product_category') return 3;
+    if (isGlobalOrReferenceNode(n)) return 4;
+    return 3;
+  }
+
+  function labelFontSize(n, state, priority, scale) {
+    var mobile = isMobileViewport();
+    if (priority <= 1) return mobile ? READABILITY.FONT_SELECTED : READABILITY.FONT_SELECTED;
+    if (isMapListedConstituent(n) || n.type === 'listed_company') {
+      return mobile ? READABILITY.FONT_LISTED_MOBILE : READABILITY.FONT_LISTED;
+    }
+    if (priority === 2) return READABILITY.FONT_COUNTERPARTY;
+    return READABILITY.FONT_LOW;
+  }
+
+  function shouldShowLabelByZoom(priority, scale, force) {
+    if (force) return true;
+    if (priority <= 2) return true;
+    if (priority === 3) return scale >= READABILITY.ZOOM_MED;
+    return scale >= READABILITY.ZOOM_HIGH;
+  }
+
+  function getMinZoom(state, mode) {
+    if (mode === 'fit-all') return READABILITY.MIN_ZOOM_FIT_ALL;
+    if (isMobileViewport()) return READABILITY.MIN_ZOOM_MOBILE;
+    if (isTabletViewport()) return READABILITY.MIN_ZOOM_TABLET;
+    return READABILITY.MIN_ZOOM_DESKTOP;
+  }
+
+  function computeExpandedGraphHeight(simNodes, profile, baseH) {
+    var spacing = READABILITY.LANE_NODE_SPACING;
+    var maxLane = 1;
+    var byLane = {};
+    (simNodes || []).forEach(function (n) {
+      var lane = n.lane || n.layer || n.group || n.chain || '_';
+      if (!byLane[lane]) byLane[lane] = 0;
+      byLane[lane] += 1;
+      if (byLane[lane] > maxLane) maxLane = byLane[lane];
+    });
+    var listedCount = (simNodes || []).filter(function (n) { return isMapListedConstituent(n); }).length;
+    var dense = Math.max(maxLane, Math.ceil(listedCount / 4));
+    return Math.max(baseH, READABILITY.LANE_MIN_GRAPH_H, dense * spacing + 160);
+  }
+
+  function pruneOrphanVisibleNodes(visibleNodeIds, visibleEdges, state) {
+    var degree = {};
+    visibleEdges.forEach(function (e) {
+      degree[e.source] = (degree[e.source] || 0) + 1;
+      degree[e.target] = (degree[e.target] || 0) + 1;
+    });
+    var remove = [];
+    visibleNodeIds.forEach(function (id) {
+      if (degree[id]) return;
+      var n = state.nodeById[id];
+      if (!n) { remove.push(id); return; }
+      if (state.selectedId === id) return;
+      if (isMapListedConstituent(n)) return;
+      if (isAnchorNode(n)) return;
+      if (n.type === 'corporate_group' || n.type === 'nuclear_project' || n.type === 'renewable_project') return;
+      if (n.excludedFromLayout) { remove.push(id); return; }
+      remove.push(id);
+    });
+    remove.forEach(function (id) { visibleNodeIds.delete(id); });
+  }
+
+  function computeVisibleGraph(state) {
+    var filters = state.filters;
+    var visibleEdges = state.edges.filter(function (e) { return edgeVisible(e, filters, state.nodeById); });
+    var visibleNodeIds = new Set();
+    visibleEdges.forEach(function (e) {
+      visibleNodeIds.add(e.source);
+      visibleNodeIds.add(e.target);
+    });
+
+    state.nodes.forEach(function (n) {
+      if (isMapListedConstituent(n)) visibleNodeIds.add(n.id);
+    });
+    if (state.selectedId) visibleNodeIds.add(state.selectedId);
+
+    if (state.selectedId) {
+      var conn = getConnectedIds(visibleEdges, state.selectedId, state.depth, function (e) {
+        return edgeVisible(e, filters, state.nodeById);
+      });
+      visibleNodeIds = conn;
+      visibleEdges = visibleEdges.filter(function (e) { return conn.has(e.source) && conn.has(e.target); });
+      visibleNodeIds.add(state.selectedId);
+    } else if (state.profileKey === 'bigchip' || (state.profile && state.profile.layout === 'dualAnchor')) {
+      visibleNodeIds.add(ANCHOR_SAMSUNG);
+      visibleNodeIds.add(ANCHOR_HYNIX);
+      visibleEdges.forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
+      if (global.innerWidth <= 768 && state.filters.bigchipScope === 'samsung') {
+        visibleNodeIds = new Set([ANCHOR_SAMSUNG]);
+        visibleEdges.filter(function (e) { return edgeTouchesAnchor(e, ANCHOR_SAMSUNG); })
+          .forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
+        visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target); });
+      } else if (global.innerWidth <= 768 && (state.filters.bigchipScope === 'skhynix' || state.filters.bigchipScope === '000660')) {
+        visibleNodeIds = new Set([ANCHOR_HYNIX]);
+        visibleEdges.filter(function (e) { return edgeTouchesAnchor(e, ANCHOR_HYNIX); })
+          .forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
+        visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target); });
+      } else if (state.filters.bigchipScope === 'shared') {
+        var toS = new Set();
+        var toH = new Set();
+        state.edges.forEach(function (e) {
+          if (edgeTouchesAnchor(e, ANCHOR_SAMSUNG)) toS.add(e.source === ANCHOR_SAMSUNG ? e.target : e.source);
+          if (edgeTouchesAnchor(e, ANCHOR_HYNIX)) toH.add(e.source === ANCHOR_HYNIX ? e.target : e.source);
+        });
+        visibleNodeIds = new Set([ANCHOR_SAMSUNG, ANCHOR_HYNIX]);
+        toS.forEach(function (id) { if (toH.has(id)) visibleNodeIds.add(id); });
+        visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target); });
+      }
+    } else if (state.overviewMode && isMobileViewport()) {
+      var top = state.nodes.filter(function (n) { return isMapListedConstituent(n); })
+        .sort(function (a, b) { return (b.mcapWon || 0) - (a.mcapWon || 0); }).slice(0, 8);
+      top.forEach(function (n) { visibleNodeIds.add(n.id); });
+      visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) || visibleNodeIds.has(e.target); });
+      visibleEdges.forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
+    } else if (state.overviewMode) {
+      var topDesk = state.nodes.filter(function (n) { return isMapListedConstituent(n); })
+        .sort(function (a, b) { return (b.mcapWon || 0) - (a.mcapWon || 0); });
+      topDesk.forEach(function (n) { visibleNodeIds.add(n.id); });
+    }
+
+    pruneOrphanVisibleNodes(visibleNodeIds, visibleEdges, state);
+
+    var simNodes = state.nodes.filter(function (n) { return visibleNodeIds.has(n.id); }).map(function (n) {
+      return Object.assign({}, n);
+    });
+    var simNodeIds = new Set(simNodes.map(function (n) { return n.id; }));
+    var simEdges = visibleEdges.filter(function (e) {
+      return simNodeIds.has(e.source) && simNodeIds.has(e.target);
+    }).map(function (e) { return Object.assign({}, e); });
+
+    return { visibleEdges: visibleEdges, visibleNodeIds: visibleNodeIds, simNodes: simNodes, simEdges: simEdges };
+  }
+
+  function nodeBounds(nodes, pad) {
+    pad = pad || 40;
+    var x1 = Infinity;
+    var y1 = Infinity;
+    var x2 = -Infinity;
+    var y2 = -Infinity;
+    nodes.forEach(function (n) {
+      if (n.x == null || n.y == null) return;
+      var r = nodeRadius(n) + pad;
+      x1 = Math.min(x1, n.x - r);
+      y1 = Math.min(y1, n.y - r);
+      x2 = Math.max(x2, n.x + r);
+      y2 = Math.max(y2, n.y + r);
+    });
+    if (!Number.isFinite(x1)) return { x1: 0, y1: 0, x2: 100, y2: 100 };
+    return { x1: x1, y1: y1, x2: x2, y2: y2 };
+  }
+
+  function applyGraphTransform(state, mode, animate) {
+    var d3 = global.d3;
+    if (!d3 || !state.svgEl || !state.zoomBehavior || !state.simNodes || !state.simNodes.length) return;
+    mode = mode || state._viewMode || 'initial';
+    var w = state.W;
+    var h = state.container && state.container.clientHeight ? state.container.clientHeight : state.H;
+    var minZoom = getMinZoom(state, mode);
+    var focus = state.simNodes;
+    if ((mode === 'selection' || mode === 'filter') && state.selectedId) {
+      var nb = getSimNeighborIds(state.simEdges, state.selectedId);
+      nb.add(state.selectedId);
+      focus = state.simNodes.filter(function (n) { return nb.has(n.id); });
+      if (!focus.length) focus = state.simNodes.filter(function (n) { return n.id === state.selectedId; });
+    }
+    var b = nodeBounds(focus, 48);
+    var dx = Math.max(1, b.x2 - b.x1);
+    var dy = Math.max(1, b.y2 - b.y1);
+    var cx = (b.x1 + b.x2) / 2;
+    var cy = (b.y1 + b.y2) / 2;
+    var scale = Math.min(1.65, 0.88 / Math.max(dx / w, dy / h));
+    if (mode === 'fit-all') {
+      scale = Math.min(0.95 / Math.max(dx / w, dy / h), minZoom);
+      scale = Math.max(READABILITY.MIN_ZOOM_FIT_ALL, scale);
+    } else {
+      scale = Math.max(minZoom, scale);
+    }
+    var tx = w / 2 - scale * cx;
+    var ty = h / 2 - scale * cy;
+    var t = d3.zoomIdentity.translate(tx, ty).scale(scale);
+    var sel = d3.select(state.container);
+    if (animate) {
+      sel.transition().duration(350).call(state.zoomBehavior.transform, t);
+    } else {
+      sel.call(state.zoomBehavior.transform, t);
+    }
+    state._graphTransform = t;
+    state._viewMode = mode;
+    finalizeGraphLabels(state);
+  }
+
+  function finalizeGraphLabels(state) {
+    if (!state.labelSel || !state.simNodes) return;
+    var d3 = global.d3;
+    var transform = (d3 && state.svgEl) ? d3.zoomTransform(state.svgEl.node()) : { k: 1 };
+    var scale = transform.k || 1;
+    var neighborOfSelected = state.selectedId ? getSimNeighborIds(state.simEdges, state.selectedId) : new Set();
+    var mobile = isMobileViewport();
+    var candidates = state.simNodes.map(function (n) {
+      return { node: n, priority: labelPriorityForNode(n, state, neighborOfSelected) };
+    }).sort(function (a, b) { return a.priority - b.priority; });
+    var occupied = [];
+    var showIds = new Set();
+
+    candidates.forEach(function (c) {
+      var n = c.node;
+      var force = c.priority <= 1;
+      if (!force && mobile && c.priority >= 4) return;
+      if (!shouldShowLabelByZoom(c.priority, scale, force)) return;
+      if (n.x == null || n.y == null) return;
+      var fs = labelFontSize(n, state, c.priority, scale);
+      if (fs < READABILITY.FONT_LOW && !force) return;
+      var maxLen = c.priority >= 4 ? 12 : (c.priority === 2 ? 22 : 18);
+      var text = nodeDisplayLabel(n, state.lang, maxLen);
+      var w = estimateLabelWidth(text, fs);
+      var h = fs * 1.3;
+      var x = n.x - w / 2;
+      var y = n.y + nodeRadius(n) + 5;
+      if (!force && boxesOverlap(x, y, w, h, occupied)) {
+        if (c.priority >= 3) return;
+        if (!isMapListedConstituent(n)) return;
+      }
+      showIds.add(n.id);
+      occupied.push({ x1: x - 2, y1: y - 2, x2: x + w + 2, y2: y + h + 2 });
+    });
+
+    state.labelSel.each(function (d) {
+      var pr = labelPriorityForNode(d, state, neighborOfSelected);
+      var force = pr <= 1;
+      var visible = force || showIds.has(d.id);
+      var fs = labelFontSize(d, state, pr, scale);
+      var el = d3.select(this);
+      el.attr('opacity', visible ? 1 : 0)
+        .attr('display', visible ? null : 'none')
+        .attr('font-size', fs)
+        .classed('rn-label-selected', d.id === state.selectedId || d.id === state.hoveredId)
+        .classed('rn-label-listed', isMapListedConstituent(d))
+        .classed('rn-label-low', pr >= 4);
+    });
+  }
+
   function layoutLayered(nodes, edges, W, H, layers) {
     var layerIndex = {};
     (layers || []).forEach(function (ch, i) { layerIndex[ch] = i; });
@@ -725,22 +1055,31 @@
       var list = byLayer[liStr];
       var li = Number(liStr);
       var layerName = (layers || [])[li] || '';
+      list.sort(function (a, b) {
+        var mc = (b.mcapWon || 0) - (a.mcapWon || 0);
+        if (mc) return mc;
+        return nodeLabel(a, 'ko').localeCompare(nodeLabel(b, 'ko'), 'ko');
+      });
+      var spacing = Math.max(READABILITY.LANE_NODE_SPACING, Math.min(44, (H * 0.55) / Math.max(1, list.length)));
       list.forEach(function (n, i) {
         var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
         n.fx = 70 + (W - 140) * (li / Math.max(1, maxLayer));
         if (layerName === '재활용' || n.type === 'recycling_process') {
           n.fx = 90 + (W - 180) * (1 - t * 0.85);
-          n.fy = H * 0.82 + (i % 3) * 18;
+          n.fy = H * 0.82 + (i % 3) * spacing * 0.55;
         } else if (layerName === '수요시장' || n.type === 'end_market') {
           n.fx = W - 100;
-          n.fy = H * (0.2 + t * 0.55);
+          n.fy = H * (0.18 + t * 0.58);
         } else if (n.type === 'joint_venture') {
           n.fx = 70 + (W - 140) * (layerIndex['셀'] != null ? layerIndex['셀'] / maxLayer : 0.55);
-          n.fy = H * 0.18 + i * 36;
+          n.fy = H * 0.16 + i * spacing;
         } else if (n.type === 'equipment_category' || layerName === '장비') {
-          n.fy = H * 0.14 + t * (H * 0.25);
+          n.fy = H * 0.12 + i * spacing * 0.85;
+        } else if (n.type === 'global_company') {
+          n.fx = (n.fx || W * 0.5) + ((i % 5) - 2) * 36;
+          n.fy = H * 0.72 + Math.floor(i / 5) * spacing;
         } else {
-          n.fy = H * 0.22 + t * (H * 0.5);
+          n.fy = H * 0.18 + i * spacing;
         }
       });
     });
@@ -905,28 +1244,30 @@
 
   function applyInitialLayout(state) {
     var W = state.W, H = state.H;
-    state.nodes.forEach(function (n) { delete n.fx; delete n.fy; });
+    var nodes = state.simNodes || state.nodes;
+    var edges = state.simEdges || state.edges;
+    nodes.forEach(function (n) { delete n.fx; delete n.fy; });
     var layout = (state.profile && state.profile.layout) || 'forceGraph';
-    if (layout === 'layeredSupplyChain') layoutLayered(state.nodes, state.edges, W, H, state.profile.layers);
-    else if (layout === 'ownershipTree') layoutOwnershipTree(state.nodes, state.edges, W, H);
-    else if (layout === 'dualAnchor') layoutDualAnchor(state.nodes, state.edges, W, H, state.profile.anchors);
-    else if (layout === 'projectEcosystem') layoutProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'gridInfrastructureEcosystem') layoutGridInfrastructure(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'nuclearProjectEcosystem') layoutNuclearProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'renewableProjectEcosystem') layoutRenewableProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'constructionProjectEcosystem') layoutConstructionProjectEcosystem(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'automotiveValueChainEcosystem') layoutAutomotiveValueChain(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'electronicsValueChainEcosystem') layoutElectronicsValueChain(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'metalsValueChainEcosystem') layoutMetalsValueChain(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'beautyValueChainEcosystem') layoutBeautyValueChain(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'consumerBrandDistributionEcosystem') layoutConsumerBrandDistribution(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'contentIpDistributionEcosystem') layoutContentIpDistribution(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'medicalDeviceEcosystem') layoutMedicalDeviceEcosystem(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'softwarePlatformEcosystem') layoutSoftwarePlatformEcosystem(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'telecomNetworkServiceEcosystem') layoutTelecomNetworkServiceEcosystem(state.nodes, state.edges, W, H, state.profile);
-    else if (layout === 'roboticsValueChainEcosystem') layoutRoboticsValueChainEcosystem(state.nodes, state.edges, W, H, state.profile);
+    if (layout === 'layeredSupplyChain') layoutLayered(nodes, edges, W, H, state.profile.layers);
+    else if (layout === 'ownershipTree') layoutOwnershipTree(nodes, edges, W, H);
+    else if (layout === 'dualAnchor') layoutDualAnchor(nodes, edges, W, H, state.profile.anchors);
+    else if (layout === 'projectEcosystem') layoutProjectEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'gridInfrastructureEcosystem') layoutGridInfrastructure(nodes, edges, W, H, state.profile);
+    else if (layout === 'nuclearProjectEcosystem') layoutNuclearProjectEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'renewableProjectEcosystem') layoutRenewableProjectEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'constructionProjectEcosystem') layoutConstructionProjectEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'automotiveValueChainEcosystem') layoutAutomotiveValueChain(nodes, edges, W, H, state.profile);
+    else if (layout === 'electronicsValueChainEcosystem') layoutElectronicsValueChain(nodes, edges, W, H, state.profile);
+    else if (layout === 'metalsValueChainEcosystem') layoutMetalsValueChain(nodes, edges, W, H, state.profile);
+    else if (layout === 'beautyValueChainEcosystem') layoutBeautyValueChain(nodes, edges, W, H, state.profile);
+    else if (layout === 'consumerBrandDistributionEcosystem') layoutConsumerBrandDistribution(nodes, edges, W, H, state.profile);
+    else if (layout === 'contentIpDistributionEcosystem') layoutContentIpDistribution(nodes, edges, W, H, state.profile);
+    else if (layout === 'medicalDeviceEcosystem') layoutMedicalDeviceEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'softwarePlatformEcosystem') layoutSoftwarePlatformEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'telecomNetworkServiceEcosystem') layoutTelecomNetworkServiceEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'roboticsValueChainEcosystem') layoutRoboticsValueChainEcosystem(nodes, edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
-      state.nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
+      nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
         n.fx = W / 2; n.fy = 100 + i * 70;
       });
     }
@@ -2734,68 +3075,38 @@
     DIAG.renderCount += 1;
     diagLog('renderGraph', { n: DIAG.renderCount, sector: state.sectorId });
 
+    var renderKey = state.sectorId + '|' + (state.selectedId || '') + '|' + state.depth + '|' + !!state.overviewMode + '|' + JSON.stringify(state.filters);
+    if (state._lastRenderKey != null && state._lastRenderKey !== renderKey) state._forceViewReset = true;
+    state._lastRenderKey = renderKey;
+
     var W = state.container.clientWidth || 900;
-    var H = state.container.clientHeight || (global.innerWidth <= 768 ? Math.round(global.innerHeight * 0.68) : 700);
-    state.W = W; state.H = H;
+    var baseH = state.container.clientHeight || (global.innerWidth <= 768 ? Math.round(global.innerHeight * 0.68) : 700);
+    state.W = W;
 
-    var filters = state.filters;
-    var visibleEdges = state.edges.filter(function (e) { return edgeVisible(e, filters, state.nodeById); });
-    var visibleNodeIds = new Set();
-    visibleEdges.forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
+    var savedTransform = state._graphTransform;
+    var preserveZoom = !!(savedTransform && state._preserveZoomOnResize && !state._forceViewReset);
 
-    if (state.selectedId) {
-      var conn = getConnectedIds(visibleEdges, state.selectedId, state.depth, function (e) { return edgeVisible(e, filters, state.nodeById); });
-      visibleNodeIds = conn;
-      visibleEdges = visibleEdges.filter(function (e) { return conn.has(e.source) && conn.has(e.target); });
-    } else if (state.profileKey === 'bigchip' || (state.profile && state.profile.layout === 'dualAnchor')) {
-      // Dual-anchor overview: always include both anchors + visible neighborhood
-      visibleNodeIds.add(ANCHOR_SAMSUNG);
-      visibleNodeIds.add(ANCHOR_HYNIX);
-      visibleEdges.forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
-      // Mobile single-anchor focus
-      if (global.innerWidth <= 768 && state.filters.bigchipScope === 'samsung') {
-        visibleNodeIds = new Set([ANCHOR_SAMSUNG]);
-        visibleEdges.filter(function (e) { return edgeTouchesAnchor(e, ANCHOR_SAMSUNG); })
-          .forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
-        visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target); });
-      } else if (global.innerWidth <= 768 && (state.filters.bigchipScope === 'skhynix' || state.filters.bigchipScope === '000660')) {
-        visibleNodeIds = new Set([ANCHOR_HYNIX]);
-        visibleEdges.filter(function (e) { return edgeTouchesAnchor(e, ANCHOR_HYNIX); })
-          .forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
-        visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target); });
-      } else if (state.filters.bigchipScope === 'shared') {
-        var toS = new Set(); var toH = new Set();
-        state.edges.forEach(function (e) {
-          if (edgeTouchesAnchor(e, ANCHOR_SAMSUNG)) {
-            toS.add(e.source === ANCHOR_SAMSUNG ? e.target : e.source);
-          }
-          if (edgeTouchesAnchor(e, ANCHOR_HYNIX)) {
-            toH.add(e.source === ANCHOR_HYNIX ? e.target : e.source);
-          }
-        });
-        visibleNodeIds = new Set([ANCHOR_SAMSUNG, ANCHOR_HYNIX]);
-        toS.forEach(function (id) { if (toH.has(id)) visibleNodeIds.add(id); });
-        visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target); });
-      }
-    } else if (state.overviewMode) {
-      var top = state.nodes.filter(function (n) { return n.type === 'listed_company'; })
-        .sort(function (a, b) { return (b.mcapWon || 0) - (a.mcapWon || 0); }).slice(0, 12);
-      top.forEach(function (n) { visibleNodeIds.add(n.id); });
-      visibleEdges = visibleEdges.filter(function (e) { return visibleNodeIds.has(e.source) || visibleNodeIds.has(e.target); });
-      visibleEdges.forEach(function (e) { visibleNodeIds.add(e.source); visibleNodeIds.add(e.target); });
-    }
-
-    state.simNodes = state.nodes.filter(function (n) { return visibleNodeIds.has(n.id); }).map(function (n) { return Object.assign({}, n); });
-    var simNodeIds = new Set(state.simNodes.map(function (n) { return n.id; }));
-    state.simEdges = visibleEdges.filter(function (e) {
-      return simNodeIds.has(e.source) && simNodeIds.has(e.target);
-    }).map(function (e) { return Object.assign({}, e); });
+    var graphPack = computeVisibleGraph(state);
+    state.simNodes = graphPack.simNodes;
+    state.simEdges = graphPack.simEdges;
+    state.layoutH = computeExpandedGraphHeight(state.simNodes, state.profile, baseH);
+    state.H = state.layoutH;
 
     var svg = d3.select(state.container);
     svg.selectAll('*').remove();
-    state.zoomBehavior = d3.zoom().scaleExtent([0.12, 4]).on('zoom', function (ev) { state.g.attr('transform', ev.transform); });
+    var zoomMin = READABILITY.MIN_ZOOM_FIT_ALL;
+    state.zoomBehavior = d3.zoom().scaleExtent([zoomMin, 4]).on('zoom', function (ev) {
+      state._graphTransform = ev.transform;
+      if (state.g) state.g.attr('transform', ev.transform);
+      if (state._labelRaf) return;
+      state._labelRaf = global.requestAnimationFrame(function () {
+        state._labelRaf = 0;
+        finalizeGraphLabels(state);
+      });
+    });
     svg.call(state.zoomBehavior);
     state.g = svg.append('g');
+    state.svgEl = svg;
 
     svg.append('defs').append('marker')
       .attr('id', 'rn-arrow')
@@ -2811,16 +3122,29 @@
 
     buildSimulation(state);
 
-    var link = state.g.append('g').attr('role', 'list').selectAll('line')
+    var neighborSel = state.selectedId ? getSimNeighborIds(state.simEdges, state.selectedId) : new Set();
+
+    var link = state.g.append('g').attr('class', 'rn-edges').attr('role', 'list').selectAll('line')
       .data(state.simEdges).join('line')
       .attr('role', 'listitem')
       .attr('stroke', function (e) { return edgeStrokeStyle(e).stroke; })
       .attr('stroke-opacity', function (e) {
         var st = edgeStrokeStyle(e);
-        if (!state.selectedId) return st.opacity;
-        return Math.min(1, st.opacity + 0.25);
+        if (!state.selectedId && !state.hoveredId) return st.opacity;
+        var s = typeof e.source === 'object' ? e.source.id : e.source;
+        var t = typeof e.target === 'object' ? e.target.id : e.target;
+        var focusId = state.selectedId || state.hoveredId;
+        var touches = s === focusId || t === focusId;
+        if (touches) return Math.min(1, st.opacity + 0.3);
+        return st.opacity * 0.18;
       })
-      .attr('stroke-width', function (e) { return edgeStrokeStyle(e).width; })
+      .attr('stroke-width', function (e) {
+        var w = edgeStrokeStyle(e).width;
+        if (!state.selectedId) return w;
+        var s = typeof e.source === 'object' ? e.source.id : e.source;
+        var t = typeof e.target === 'object' ? e.target.id : e.target;
+        return (s === state.selectedId || t === state.selectedId) ? w + 0.6 : w;
+      })
       .attr('stroke-dasharray', function (e) { return edgeStrokeStyle(e).dash; })
       .attr('marker-end', function (e) {
         if (PEER_TYPES[e.type] || e.status === 'peer' || e.status === 'reference' || e.type === 'member_of') return null;
@@ -2833,15 +3157,21 @@
         renderDetailPanel(state, e, true);
       });
 
-    var node = state.g.append('g').selectAll('g')
+    var node = state.g.append('g').attr('class', 'rn-nodes').selectAll('g')
       .data(state.simNodes).join('g')
-      .attr('class', function (d) { return 'rn-node rn-node-' + d.type; })
+      .attr('class', function (d) {
+        var cls = 'rn-node rn-node-' + d.type;
+        if (d.id === state.selectedId) cls += ' rn-node-selected';
+        if (neighborSel.has(d.id)) cls += ' rn-node-neighbor';
+        return cls;
+      })
       .attr('tabindex', 0)
       .attr('role', 'button')
       .attr('aria-label', function (d) { return nodeLabel(d, state.lang); })
       .style('cursor', 'pointer')
       .on('click', function (ev, d) {
         ev.stopPropagation();
+        state._forceViewReset = true;
         state.selectedId = state.selectedId === d.id ? null : d.id;
         if (d.ticker) state.selectedTicker = d.ticker;
         state.overviewMode = !state.selectedId;
@@ -2851,6 +3181,36 @@
         if (state.selectedId) renderDetailPanel(state, d, false);
         else hideDetailPanel(state);
       })
+      .on('mouseenter', function (ev, d) {
+        state.hoveredId = d.id;
+        finalizeGraphLabels(state);
+        if (state.linkSel) {
+          state.linkSel.attr('stroke-opacity', function (e) {
+            var st = edgeStrokeStyle(e);
+            var s = typeof e.source === 'object' ? e.source.id : e.source;
+            var t = typeof e.target === 'object' ? e.target.id : e.target;
+            var touches = s === d.id || t === d.id;
+            if (touches) return Math.min(1, st.opacity + 0.3);
+            return state.selectedId ? st.opacity * 0.18 : st.opacity * 0.45;
+          });
+        }
+      })
+      .on('mouseleave', function () {
+        state.hoveredId = null;
+        finalizeGraphLabels(state);
+        if (state.linkSel) {
+          state.linkSel.attr('stroke-opacity', function (e) {
+            var st = edgeStrokeStyle(e);
+            if (!state.selectedId) return st.opacity;
+            var s = typeof e.source === 'object' ? e.source.id : e.source;
+            var t = typeof e.target === 'object' ? e.target.id : e.target;
+            var touches = s === state.selectedId || t === state.selectedId;
+            return touches ? Math.min(1, st.opacity + 0.3) : st.opacity * 0.18;
+          });
+        }
+      })
+      .on('focus', function (ev, d) { state.focusedId = d.id; finalizeGraphLabels(state); })
+      .on('blur', function () { state.focusedId = null; finalizeGraphLabels(state); })
       .on('keydown', function (ev, d) {
         if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ev.currentTarget.click(); }
         if (ev.key === 'Escape') { resetView(state); }
@@ -2874,8 +3234,14 @@
         return (state.chainColors && state.chainColors[d.group || d.chain]) || '#58a6ff';
       })
       .attr('fill-opacity', 0.85)
-      .attr('stroke', function (d) { return (d.isAnchor || d.type === 'domestic_anchor') ? '#f0a44b' : 'var(--graph-stroke,#0d1117)'; })
-      .attr('stroke-width', function (d) { return (d.isAnchor || d.type === 'domestic_anchor') ? 2.5 : 1.5; })
+      .attr('stroke', function (d) {
+        if (d.id === state.selectedId) return '#f0a44b';
+        return (d.isAnchor || d.type === 'domestic_anchor') ? '#f0a44b' : 'var(--graph-stroke,#0d1117)';
+      })
+      .attr('stroke-width', function (d) {
+        if (d.id === state.selectedId) return 3;
+        return (d.isAnchor || d.type === 'domestic_anchor') ? 2.5 : 1.5;
+      })
       .attr('stroke-dasharray', function (d) { return d.type === 'domestic_anchor' ? '4 2' : null; });
 
     node.filter(function (d) {
@@ -2959,16 +3325,30 @@
       .attr('fill', '#f0a44b')
       .attr('fill-opacity', 0.75);
 
-    node.append('text')
-      .text(function (d) { return nodeLabel(d, state.lang); })
+    state.labelSel = state.g.append('g').attr('class', 'rn-labels').selectAll('text')
+      .data(state.simNodes).join('text')
+      .text(function (d) { return nodeDisplayLabel(d, state.lang, 22); })
       .attr('text-anchor', 'middle')
-      .attr('dy', function (d) { return nodeRadius(d) + 12; })
-      .attr('font-size', function (d) { return nodeRadius(d) >= 12 ? 10 : 8; })
-      .attr('fill', 'var(--graph-label,#c9d1d9)')
+      .attr('dy', function (d) { return nodeRadius(d) + 14; })
+      .attr('font-size', function (d) {
+        return labelFontSize(d, state, labelPriorityForNode(d, state, neighborSel), 1);
+      })
+      .attr('fill', 'var(--graph-label,#e6edf3)')
+      .attr('stroke', 'var(--graph-label-stroke, rgba(13,17,23,0.88))')
+      .attr('stroke-width', 3)
+      .attr('paint-order', 'stroke fill')
       .attr('pointer-events', 'none')
-      .attr('class', 'rn-label');
+      .attr('class', function (d) {
+        var pr = labelPriorityForNode(d, state, neighborSel);
+        var cls = 'rn-label';
+        if (isMapListedConstituent(d)) cls += ' rn-label-listed';
+        if (pr >= 4) cls += ' rn-label-low';
+        if (d.id === state.selectedId) cls += ' rn-label-selected';
+        return cls;
+      });
 
     var reducedMotion = global.matchMedia && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var layoutSettled = false;
     state.simulation.on('tick', function () {
       link
         .attr('x1', function (d) { return d.source.x; })
@@ -2976,10 +3356,50 @@
         .attr('x2', function (d) { return d.target.x; })
         .attr('y2', function (d) { return d.target.y; });
       node.attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+      state.labelSel
+        .attr('transform', function (d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+    });
+    state.simulation.on('end', function () {
+      if (layoutSettled) return;
+      layoutSettled = true;
+      finalizeGraphLabels(state);
+      if (preserveZoom && savedTransform) {
+        svg.call(state.zoomBehavior.transform, savedTransform);
+        state._graphTransform = savedTransform;
+      } else {
+        var mode = state.selectedId ? 'selection' : (state._viewMode === 'fit-all' ? 'fit-all' : 'filter');
+        applyGraphTransform(state, mode, false);
+      }
+      state._preserveZoomOnResize = true;
+      state._forceViewReset = false;
     });
     if (reducedMotion) {
-      for (var i = 0; i < 30; i++) state.simulation.tick();
+      for (var i = 0; i < 40; i++) state.simulation.tick();
       state.simulation.stop();
+      layoutSettled = true;
+      finalizeGraphLabels(state);
+      if (preserveZoom && savedTransform) {
+        svg.call(state.zoomBehavior.transform, savedTransform);
+        state._graphTransform = savedTransform;
+      } else {
+        var modeRm = state.selectedId ? 'selection' : 'filter';
+        applyGraphTransform(state, modeRm, false);
+      }
+      state._preserveZoomOnResize = true;
+      state._forceViewReset = false;
+    } else {
+      global.setTimeout(function () {
+        if (layoutSettled || !state || state._loadGen !== LOAD_GEN) return;
+        layoutSettled = true;
+        finalizeGraphLabels(state);
+        if (preserveZoom && savedTransform) {
+          svg.call(state.zoomBehavior.transform, savedTransform);
+        } else {
+          applyGraphTransform(state, state.selectedId ? 'selection' : 'filter', false);
+        }
+        state._preserveZoomOnResize = true;
+        state._forceViewReset = false;
+      }, 2500);
     }
 
     state.svgEl = svg;
@@ -3013,11 +3433,35 @@
   function resetView(state) {
     state.selectedId = null;
     state.selectedTicker = '';
+    state.hoveredId = null;
+    state.focusedId = null;
     state.overviewMode = true;
+    state._forceViewReset = true;
     hideDetailPanel(state);
     pushUrlState(state);
     updateStickyBar(state);
     renderGraph(state);
+  }
+
+  function fitAllView(state) {
+    if (!state) return;
+    state._forceViewReset = true;
+    state._viewMode = 'fit-all';
+    renderGraph(state);
+  }
+
+  function fitSelectionView(state) {
+    if (!state || !state.selectedId) return fitFilterView(state);
+    state._forceViewReset = true;
+    state._viewMode = 'selection';
+    applyGraphTransform(state, 'selection', true);
+  }
+
+  function fitFilterView(state) {
+    if (!state) return;
+    state._forceViewReset = true;
+    state._viewMode = 'filter';
+    applyGraphTransform(state, 'filter', true);
   }
 
   function buildA11yList(state) {
@@ -3623,6 +4067,7 @@
             (n.nameEn && n.nameEn.toLowerCase().indexOf(q) >= 0);
         });
         if (hit) {
+          state._forceViewReset = true;
           state.selectedId = hit.id;
           state.selectedTicker = hit.ticker || '';
           state.overviewMode = false;
@@ -3788,6 +4233,11 @@
       overviewMode: !url.ticker,
       selectedId: null,
       selectedTicker: '',
+      hoveredId: null,
+      focusedId: null,
+      _preserveZoomOnResize: false,
+      _forceViewReset: true,
+      _viewMode: 'filter',
       networkVersion: ctx.networkVersion || 1,
       initialized: false,
       dataLoaded: false,
@@ -3924,6 +4374,9 @@
     onTabHidden: onTabHidden,
     onTabVisible: onTabVisible,
     resetView: function () { if (STATE) resetView(STATE); },
+    fitAll: function () { if (STATE) fitAllView(STATE); },
+    fitSelection: function () { if (STATE) fitSelectionView(STATE); },
+    fitFilter: function () { if (STATE) fitFilterView(STATE); },
     destroy: destroy,
     getState: function () { return STATE; },
     getReadiness: getReadiness,

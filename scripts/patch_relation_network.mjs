@@ -105,6 +105,14 @@ const RN_CSS = `
     .rn-graph-canvas #graph-svg { width: 100%; height: 100%; }
     .rn-model-desc { margin: 0 0 8px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
     .rn-sparse-notice { margin: 0 0 8px; padding: 8px 10px; font-size: 12px; line-height: 1.5; color: var(--text-muted); background: var(--surface2); border: 1px dashed var(--border); border-radius: 8px; }
+    .rn-labels .rn-label { font-family: inherit; }
+    .rn-label-listed { font-weight: 600; fill: var(--graph-label, #e6edf3); }
+    .rn-label-selected { font-weight: 700; fill: #fff; stroke-width: 4px; }
+    .rn-label-low { fill: var(--text-muted, #8b949e); }
+    .rn-node-selected circle, .rn-node-selected rect, .rn-node-selected polygon {
+      filter: drop-shadow(0 0 4px rgba(240,164,75,0.55));
+    }
+    .rn-edges line { pointer-events: stroke; }
     .rn-toolbar {
       display: flex;
       flex-direction: column;
@@ -266,6 +274,10 @@ const RN_GRAPH_JS = `
     function toggleChainHighlight() { /* chain highlight via search/filters in v2 */ }
 
     function resetZoom() {
+      if (window.RelationNetwork && RelationNetwork.fitAll) {
+        RelationNetwork.fitAll();
+        return;
+      }
       const el = document.getElementById('graph-svg');
       if (!el || !window.d3) return;
       d3.select(el).transition().duration(400).call(
