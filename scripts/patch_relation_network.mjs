@@ -34,32 +34,175 @@ const MAP_FILES = [
 ];
 
 const RN_CSS = `
-    /* relation network v2 */
+    /* relation network v2 + filter sidebar layout */
+    .rn-workspace.graph-container,
+    .graph-container.rn-workspace {
+      display: grid;
+      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+      height: calc(100vh - 110px);
+      min-height: 420px;
+    }
+    .graph-sidebar { display: none !important; }
+    .rn-filter-sidebar {
+      display: flex;
+      flex-direction: column;
+      min-width: 240px;
+      max-width: 300px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+      z-index: 20;
+    }
+    .rn-filter-content {
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .rn-filter-drawer-toggle {
+      display: none;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 8px 14px;
+      margin: 0 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .rn-filter-drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 24;
+    }
+    .rn-filter-drawer-backdrop.is-open { display: block; }
+    .rn-graph-main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+    }
+    .rn-graph-header { flex: none; padding: 8px 12px 0; }
+    .rn-graph-canvas {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+    .rn-graph-canvas #graph-svg { width: 100%; height: 100%; }
     .rn-model-desc { margin: 0 0 8px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
     .rn-sparse-notice { margin: 0 0 8px; padding: 8px 10px; font-size: 12px; line-height: 1.5; color: var(--text-muted); background: var(--surface2); border: 1px dashed var(--border); border-radius: 8px; }
-    .rn-toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; max-width: 100%; overflow-x: auto; }
-    .rn-toolbar input[type="search"] { min-height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text); font: inherit; min-width: 140px; flex: 1; }
-    .rn-chip { min-height: 32px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface2); color: var(--text-muted); font: inherit; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .rn-toolbar {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      margin: 0;
+      max-width: none;
+      overflow: visible;
+    }
+    .rn-filter-group { display: flex; flex-direction: column; gap: 6px; }
+    .rn-filter-group-title {
+      margin: 0;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .rn-filter-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rn-filter-stack { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .rn-toolbar input[type="search"] {
+      min-height: 40px;
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font: inherit;
+      min-width: 0;
+      flex: none;
+    }
+    .rn-chip {
+      min-height: 36px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.25;
+    }
     .rn-chip.active { border-color: var(--accent); color: var(--accent); }
+    .rn-chip[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
     .rn-sticky-bar { position: sticky; top: 0; z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; }
     .rn-sticky-bar button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); cursor: pointer; font: inherit; }
     .rn-detail-panel { position: absolute; right: 12px; top: 12px; z-index: 15; width: min(320px, 92vw); max-height: 60%; overflow: auto; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: 0 8px 24px rgba(0,0,0,.25); font-size: 12px; line-height: 1.6; }
     .rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
     .rn-detail-close { position: absolute; top: 8px; right: 10px; min-width: 44px; min-height: 44px; border: none; background: transparent; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; }
     .rn-graph-only-badge { color: var(--text-muted); font-size: 11px; margin: 0 0 6px; }
-    .rn-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 8px; font-size: 10px; color: var(--text-muted); }
-    .rn-legend-item { white-space: nowrap; }
+    .rn-legend-help { margin-top: 4px; border-top: 1px solid var(--border); padding-top: 8px; }
+    .rn-legend-help-summary {
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+    .rn-legend-help-summary::-webkit-details-marker { display: none; }
+    .rn-legend { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; font-size: 11px; color: var(--text-muted); }
+    .rn-legend-item { white-space: normal; line-height: 1.45; }
     .rn-legend-key { font-weight: 600; color: var(--text); }
+    .rn-legend-static { font-size: 11px; color: var(--text-muted); line-height: 1.55; }
+    .rn-legend-static dl { margin: 0; }
+    .rn-legend-static dt { font-weight: 600; color: var(--text); margin-top: 6px; }
+    .rn-legend-static dd { margin: 2px 0 0; }
     .rn-evidence { margin: 8px 0 0; padding-left: 18px; }
     .rn-a11y-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-    @media (max-width: 768px) {
-      #tab-graph .graph-main { position: relative; touch-action: pan-y; }
-      #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; touch-action: none; }
+    @media (max-width: 1023px) {
+      .rn-workspace.graph-container,
+      .graph-container.rn-workspace { grid-template-columns: minmax(200px, 220px) minmax(0, 1fr); }
+      .rn-filter-sidebar { min-width: 200px; max-width: 220px; }
+    }
+    @media (max-width: 767px) {
+      .rn-workspace.graph-container,
+      .graph-container.rn-workspace { grid-template-columns: 1fr; height: min(70vh, 620px); }
+      .rn-filter-drawer-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .rn-filter-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(92vw, 320px);
+        max-width: none;
+        transform: translateX(-105%);
+        transition: transform .2s ease;
+        box-shadow: 8px 0 24px rgba(0,0,0,.25);
+      }
+      .rn-filter-sidebar.is-open { transform: translateX(0); }
+      #tab-graph .rn-graph-main { position: relative; touch-action: pan-y; }
+      .rn-graph-canvas #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; touch-action: none; }
       .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; padding-top: 18px; }
-      .rn-toolbar { max-height: 28svh; overflow-y: auto; }
       .rn-toolbar .rn-chip { min-height: 44px; }
       .rn-sticky-bar button { min-height: 44px; }
       .rn-detail-close { min-width: 44px; min-height: 44px; }
+      .rn-legend-help-summary { min-height: 44px; }
     }
 `;
 
@@ -181,13 +324,73 @@ function upgradePhase25Ui(html) {
     .rn-legend-item { white-space: nowrap; }
     .rn-legend-key { font-weight: 600; color: var(--text); }`);
   }
-  out = out.replace(/relation_network\.js(\?v=\d+)?/g, 'relation_network.js?v=2');
+  out = out.replace(/relation_network\.js(\?v=\d+)?/g, 'relation_network.js?v=3');
   out = out.replace(/network_profiles\.js(\?v=\d+)?/g, 'network_profiles.js?v=2');
   return out;
 }
 
+function upgradeFilterSidebarCss(html) {
+  if (html.includes('.rn-filter-sidebar')) return html;
+  if (!html.includes('relation network v2')) return injectCss(html);
+  return html.replace(
+    /\/\* relation network v2[\s\S]*?@media \(max-width: 768px\)[\s\S]*?\}\s*\}/,
+    RN_CSS.trim(),
+  );
+}
+
+function restructureFilterSidebarLayout(html) {
+  if (html.includes('id="rn-filter-sidebar"')) {
+    html = html.replace(/<div id="sb-chain-legend"><\/div>\s*<\/div>\s*<div class="sidebar-section">[\s\S]*?<\/div>\s*<div class="graph-main">/m, '<div class="graph-main">');
+    html = html.replace(/<div class="sidebar-section">[\s\S]*?<div class="graph-main">/m, '<div class="graph-main">');
+    return html;
+  }
+  if (!html.includes('class="graph-container"')) return html;
+
+  html = html.replace(
+    /<div class="graph-sidebar">[\s\S]*<\/div>\s*(?=<div class="graph-main">)/m,
+    '',
+  );
+  html = html.replace('<div class="graph-container">', '<div class="graph-container rn-workspace">');
+  html = html.replace(
+    '<div class="graph-container rn-workspace">',
+    `<div class="graph-container rn-workspace">
+      <aside class="rn-filter-sidebar" id="rn-filter-sidebar" aria-label="Relation network filters">
+        <div class="rn-filter-content" id="rn-filter-content"></div>
+      </aside>`,
+  );
+  return html;
+}
+
+function patchSidebarLegendGuardContent(content) {
+  let out = content;
+  if (!content.includes('sb-chain-legend guard')) {
+    out = out.replace(
+      /function buildSidebarLegend\(\)\s*\{/g,
+      'function buildSidebarLegend() { if (!document.getElementById(\'sb-chain-legend\')) return; /* sb-chain-legend guard */',
+    );
+  }
+  if (!content.includes('sb-korean guard')) {
+    ['sb-size-desc', 'sb-how-desc', 'sb-korean', 'sb-global', 'sb-size', 'sb-how'].forEach(function (id) {
+      const re = new RegExp("document\\.getElementById\\('" + id + "'\\)\\.textContent\\s*=", 'g');
+      out = out.replace(re, "if(document.getElementById('" + id + "'))document.getElementById('" + id + "').textContent=");
+      const re2 = new RegExp("document\\.getElementById\\('" + id + "'\\)\\.innerHTML\\s*=", 'g');
+      out = out.replace(re2, "if(document.getElementById('" + id + "'))document.getElementById('" + id + "').innerHTML=");
+    });
+    out = out.replace(
+      /document\.getElementById\('graph-hint-text'\)\.textContent\s*=/,
+      '/* sb-korean guard */ if(document.getElementById(\'graph-hint-text\'))document.getElementById(\'graph-hint-text\').textContent=',
+    );
+  }
+  return out;
+}
+
+function patchSidebarLegendGuard(html) {
+  return patchSidebarLegendGuardContent(html);
+}
+
 function injectCss(html) {
-  if (html.includes('relation network v2')) return html;
+  if (html.includes('relation network v2') && html.includes('.rn-filter-sidebar')) return html;
+  if (html.includes('relation network v2')) return upgradeFilterSidebarCss(html);
   return html.replace('</style>', `${RN_CSS}\n  </style>`);
 }
 
@@ -323,6 +526,8 @@ function patchFile(rel) {
   }
   let html = fs.readFileSync(fp, 'utf8');
   html = injectCss(html);
+  html = restructureFilterSidebarLayout(html);
+  html = patchSidebarLegendGuard(html);
   html = injectGraphHtml(html);
   html = replaceGraphBlock(html);
   html = stripDuplicateLegacyGraph(html);
@@ -338,6 +543,8 @@ function patchFile(rel) {
 
 function patchBioHtml(html) {
   html = injectCss(html);
+  html = restructureFilterSidebarLayout(html);
+  html = patchSidebarLegendGuard(html);
   html = injectGraphHtml(html);
   html = injectScripts(html.replace(
     '<script src="korea_bio_map.inline.js"></script>',
@@ -363,15 +570,24 @@ function stripBioLegacyGraphOrphans(js) {
 }
 
 function patchBioInline() {
+  const files = ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js'];
+  for (const rel of files) {
+    const fp = path.join(root, rel);
+    if (!fs.existsSync(fp)) continue;
+    let js = fs.readFileSync(fp, 'utf8');
+    const original = js;
+    js = patchSidebarLegendGuardContent(js);
+    const stripped = stripBioLegacyGraphOrphans(js);
+    if (stripped !== js) js = stripped;
+    if (js !== original) {
+      fs.writeFileSync(fp, js, 'utf8');
+      console.log('OK patch_relation_network', rel, 'sidebar guards');
+    }
+  }
+
   const fp = path.join(root, 'bio', 'bio_inline_tail.js');
   if (!fs.existsSync(fp)) return;
   let js = fs.readFileSync(fp, 'utf8');
-  const stripped = stripBioLegacyGraphOrphans(js);
-  if (stripped !== js) {
-    js = stripped;
-    fs.writeFileSync(fp, js, 'utf8');
-    console.log('OK patch_relation_network bio legacy graph tail stripped');
-  }
   if (js.includes('RelationNetwork v2')) return;
   const markers = ['let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;', '// GRAPH'];
   let start = -1;

@@ -842,7 +842,6 @@
     .node-dim {
       opacity: .15
     }
-
     /* investingmap-mobile-table-v2 — base */
     table {
       border-collapse: separate;
@@ -1651,79 +1650,175 @@
     #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
 
   
-    /* relation network v2 */
+    /* relation network v2 + filter sidebar layout */
+    .rn-workspace.graph-container,
+    .graph-container.rn-workspace {
+      display: grid;
+      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+      height: calc(100vh - 110px);
+      min-height: 420px;
+    }
+    .graph-sidebar { display: none !important; }
+    .rn-filter-sidebar {
+      display: flex;
+      flex-direction: column;
+      min-width: 240px;
+      max-width: 300px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+      z-index: 20;
+    }
+    .rn-filter-content {
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .rn-filter-drawer-toggle {
+      display: none;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 8px 14px;
+      margin: 0 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .rn-filter-drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 24;
+    }
+    .rn-filter-drawer-backdrop.is-open { display: block; }
+    .rn-graph-main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+    }
+    .rn-graph-header { flex: none; padding: 8px 12px 0; }
+    .rn-graph-canvas {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+    .rn-graph-canvas #graph-svg { width: 100%; height: 100%; }
     .rn-model-desc { margin: 0 0 8px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-    .rn-toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; max-width: 100%; overflow-x: auto; }
-    .rn-toolbar input[type="search"] { min-height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); color: var(--text); font: inherit; min-width: 140px; flex: 1; }
-    .rn-chip { min-height: 32px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface2); color: var(--text-muted); font: inherit; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .rn-sparse-notice { margin: 0 0 8px; padding: 8px 10px; font-size: 12px; line-height: 1.5; color: var(--text-muted); background: var(--surface2); border: 1px dashed var(--border); border-radius: 8px; }
+    .rn-toolbar {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      margin: 0;
+      max-width: none;
+      overflow: visible;
+    }
+    .rn-filter-group { display: flex; flex-direction: column; gap: 6px; }
+    .rn-filter-group-title {
+      margin: 0;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .rn-filter-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .rn-filter-stack { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .rn-toolbar input[type="search"] {
+      min-height: 40px;
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font: inherit;
+      min-width: 0;
+      flex: none;
+    }
+    .rn-chip {
+      min-height: 36px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.25;
+    }
     .rn-chip.active { border-color: var(--accent); color: var(--accent); }
+    .rn-chip[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
     .rn-sticky-bar { position: sticky; top: 0; z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; }
     .rn-sticky-bar button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); cursor: pointer; font: inherit; }
     .rn-detail-panel { position: absolute; right: 12px; top: 12px; z-index: 15; width: min(320px, 92vw); max-height: 60%; overflow: auto; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: 0 8px 24px rgba(0,0,0,.25); font-size: 12px; line-height: 1.6; }
     .rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
     .rn-detail-close { position: absolute; top: 8px; right: 10px; min-width: 44px; min-height: 44px; border: none; background: transparent; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; }
     .rn-graph-only-badge { color: var(--text-muted); font-size: 11px; margin: 0 0 6px; }
-    .rn-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 0 0 8px; font-size: 10px; color: var(--text-muted); }
-    .rn-legend-item { white-space: nowrap; }
+    .rn-legend-help { margin-top: 4px; border-top: 1px solid var(--border); padding-top: 8px; }
+    .rn-legend-help-summary {
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      list-style: none;
+    }
+    .rn-legend-help-summary::-webkit-details-marker { display: none; }
+    .rn-legend { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; font-size: 11px; color: var(--text-muted); }
+    .rn-legend-item { white-space: normal; line-height: 1.45; }
     .rn-legend-key { font-weight: 600; color: var(--text); }
+    .rn-legend-static { font-size: 11px; color: var(--text-muted); line-height: 1.55; }
+    .rn-legend-static dl { margin: 0; }
+    .rn-legend-static dt { font-weight: 600; color: var(--text); margin-top: 6px; }
+    .rn-legend-static dd { margin: 2px 0 0; }
     .rn-evidence { margin: 8px 0 0; padding-left: 18px; }
     .rn-a11y-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-    /* investingmap-map-title-toggle */
-    .map-title-toggle {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      border: none;
-      background: transparent;
-      color: inherit;
-      text-align: left;
-      cursor: pointer;
-      font: inherit
+    @media (max-width: 1023px) {
+      .rn-workspace.graph-container,
+      .graph-container.rn-workspace { grid-template-columns: minmax(200px, 220px) minmax(0, 1fr); }
+      .rn-filter-sidebar { min-width: 200px; max-width: 220px; }
     }
-    .map-title-toggle:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-      border-radius: 4px
-    }
-    .map-title-toggle h1 {
-      flex: 1;
-      min-width: 0;
-      margin: 0
-    }
-    .map-title-chevron {
-      flex-shrink: 0;
-      margin-top: 0.35em;
-      font-size: 0.7em;
-      line-height: 1;
-      color: var(--text-muted);
-      transition: transform .15s ease
-    }
-    .map-title-toggle[aria-expanded="true"] .map-title-chevron {
-      transform: rotate(180deg)
-    }
-    .map-editorial-panel.is-collapsed {
-      display: none
-    }
-    .map-editorial-title-sr {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0
-    }
-    @media (max-width: 768px) {
-      #tab-graph .graph-main { position: relative; }
-      #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; }
-      .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; }
+    @media (max-width: 767px) {
+      .rn-workspace.graph-container,
+      .graph-container.rn-workspace { grid-template-columns: 1fr; height: min(70vh, 620px); }
+      .rn-filter-drawer-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .rn-filter-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(92vw, 320px);
+        max-width: none;
+        transform: translateX(-105%);
+        transition: transform .2s ease;
+        box-shadow: 8px 0 24px rgba(0,0,0,.25);
+      }
+      .rn-filter-sidebar.is-open { transform: translateX(0); }
+      #tab-graph .rn-graph-main { position: relative; touch-action: pan-y; }
+      .rn-graph-canvas #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; touch-action: none; }
+      .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; padding-top: 18px; }
       .rn-toolbar .rn-chip { min-height: 44px; }
       .rn-sticky-bar button { min-height: 44px; }
+      .rn-detail-close { min-width: 44px; min-height: 44px; }
+      .rn-legend-help-summary { min-height: 44px; }
     }
 
   </style>
@@ -1773,7 +1868,7 @@
     <p lang="en" class="im-seo-body-p" hidden>Nuclear projects involve long contracts and regulatory risk. This content is not investment advice; verify primary sources such as KHNP, ministry releases, and DART filings.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 원전, SMR, 원자로, 원전 기자재, 원전 정비</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean nuclear stocks, SMR, reactors, nuclear components, O&amp;M</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-23 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-23.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-29 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-29.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -1859,16 +1954,16 @@
       <td><div class="company-name">두산에너빌리티</div><div class="company-name-sub">Doosan Enerbility</div></td>
       <td><span class="ticker">034020</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">73,300</td>
-      <td class="quote-cell ret-cell">-3.43%</td>
-      <td class="quote-cell ret-cell">+1.66%</td>
-      <td class="quote-cell ret-cell">-21.27%</td>
-      <td class="quote-cell ret-cell">-25.20%</td>
-      <td class="quote-cell ret-cell">-6.51%</td>
+      <td class="quote-cell">88,200</td>
+      <td class="quote-cell ret-cell">+2.68%</td>
+      <td class="quote-cell ret-cell">+31.45%</td>
+      <td class="quote-cell ret-cell">-9.91%</td>
+      <td class="quote-cell ret-cell">-17.18%</td>
+      <td class="quote-cell ret-cell">+20.66%</td>
       <td class="quote-cell">139,200</td>
       <td class="quote-cell">57,000</td>
-      <td class="quote-cell">19.8%</td>
-      <td class="quote-cell">38.7</td>
+      <td class="quote-cell">38%</td>
+      <td class="quote-cell">57.8</td>
       <td class="mcap-cell">59.64조원</td>
       <td class="fin-cell">705.30</td>
       <td class="fin-cell">7.66</td>
@@ -1882,16 +1977,16 @@
       <td><div class="company-name">한전기술</div><div class="company-name-sub">KEPCO Engineering &amp; Construction</div></td>
       <td><span class="ticker">052690</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">91,500</td>
-      <td class="quote-cell ret-cell">-2.87%</td>
-      <td class="quote-cell ret-cell">-7.67%</td>
-      <td class="quote-cell ret-cell">-39.52%</td>
-      <td class="quote-cell ret-cell">-41.12%</td>
-      <td class="quote-cell ret-cell">-0.54%</td>
+      <td class="quote-cell">122,400</td>
+      <td class="quote-cell ret-cell">-3.09%</td>
+      <td class="quote-cell ret-cell">+37.53%</td>
+      <td class="quote-cell ret-cell">-1.05%</td>
+      <td class="quote-cell ret-cell">-31.12%</td>
+      <td class="quote-cell ret-cell">+37.68%</td>
       <td class="quote-cell">198,000</td>
       <td class="quote-cell">77,100</td>
-      <td class="quote-cell">11.9%</td>
-      <td class="quote-cell">15.5</td>
+      <td class="quote-cell">37.5%</td>
+      <td class="quote-cell">63.7</td>
       <td class="mcap-cell">5.78조원</td>
       <td class="fin-cell">67.42</td>
       <td class="fin-cell">9.21</td>
@@ -1905,16 +2000,16 @@
       <td><div class="company-name">한전KPS</div><div class="company-name-sub">KEPCO Plant Service &amp; Engineering</div></td>
       <td><span class="ticker">051600</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">43,800</td>
-      <td class="quote-cell ret-cell">-2.56%</td>
-      <td class="quote-cell ret-cell">-7.01%</td>
-      <td class="quote-cell ret-cell">-31.46%</td>
-      <td class="quote-cell ret-cell">-20.65%</td>
-      <td class="quote-cell ret-cell">-16.41%</td>
+      <td class="quote-cell">47,050</td>
+      <td class="quote-cell ret-cell">+0.32%</td>
+      <td class="quote-cell ret-cell">+4.67%</td>
+      <td class="quote-cell ret-cell">-5.33%</td>
+      <td class="quote-cell ret-cell">-21.84%</td>
+      <td class="quote-cell ret-cell">-9.87%</td>
       <td class="quote-cell">69,000</td>
       <td class="quote-cell">41,500</td>
-      <td class="quote-cell">8.4%</td>
-      <td class="quote-cell">30.0</td>
+      <td class="quote-cell">20.2%</td>
+      <td class="quote-cell">44.1</td>
       <td class="mcap-cell">2.88조원</td>
       <td class="fin-cell">23.14</td>
       <td class="fin-cell">2.14</td>
@@ -1928,16 +2023,16 @@
       <td><div class="company-name">비에이치아이</div><div class="company-name-sub">BHI Co., LTD.</div></td>
       <td><span class="ticker">083650</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">56,500</td>
-      <td class="quote-cell ret-cell">-5.68%</td>
-      <td class="quote-cell ret-cell">+26.12%</td>
-      <td class="quote-cell ret-cell">-29.90%</td>
-      <td class="quote-cell ret-cell">-40.40%</td>
-      <td class="quote-cell ret-cell">+35.17%</td>
+      <td class="quote-cell">65,400</td>
+      <td class="quote-cell ret-cell">+2.19%</td>
+      <td class="quote-cell ret-cell">+62.28%</td>
+      <td class="quote-cell ret-cell">+6.86%</td>
+      <td class="quote-cell ret-cell">-36.87%</td>
+      <td class="quote-cell ret-cell">+52.45%</td>
       <td class="quote-cell">114,200</td>
       <td class="quote-cell">33,150</td>
-      <td class="quote-cell">28.8%</td>
-      <td class="quote-cell">47.5</td>
+      <td class="quote-cell">39.8%</td>
+      <td class="quote-cell">63.3</td>
       <td class="mcap-cell">2.49조원</td>
       <td class="fin-cell">38.25</td>
       <td class="fin-cell">14.04</td>
@@ -1951,16 +2046,16 @@
       <td><div class="company-name">한전산업</div><div class="company-name-sub">Korea Electric Power Industrial Development</div></td>
       <td><span class="ticker">130660</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">10,880</td>
-      <td class="quote-cell ret-cell">-3.55%</td>
-      <td class="quote-cell ret-cell">-1.89%</td>
-      <td class="quote-cell ret-cell">-19.47%</td>
-      <td class="quote-cell ret-cell">-48.44%</td>
-      <td class="quote-cell ret-cell">-7.72%</td>
+      <td class="quote-cell">12,800</td>
+      <td class="quote-cell ret-cell">-2.07%</td>
+      <td class="quote-cell ret-cell">+24.15%</td>
+      <td class="quote-cell ret-cell">+2.15%</td>
+      <td class="quote-cell ret-cell">-41.42%</td>
+      <td class="quote-cell ret-cell">+14.70%</td>
       <td class="quote-cell">27,800</td>
       <td class="quote-cell">8,810</td>
-      <td class="quote-cell">10.9%</td>
-      <td class="quote-cell">23.1</td>
+      <td class="quote-cell">21%</td>
+      <td class="quote-cell">55.3</td>
       <td class="mcap-cell">0.44조원</td>
       <td class="fin-cell">108.08</td>
       <td class="fin-cell">4.27</td>
@@ -1974,16 +2069,16 @@
       <td><div class="company-name">보성파워텍</div><div class="company-name-sub">BOSUNG POWER TECHNOLOGY CO., LTD.</div></td>
       <td><span class="ticker">006910</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">6,600</td>
-      <td class="quote-cell ret-cell">-5.71%</td>
-      <td class="quote-cell ret-cell">+1.54%</td>
-      <td class="quote-cell ret-cell">-20.19%</td>
-      <td class="quote-cell ret-cell">-32.17%</td>
-      <td class="quote-cell ret-cell">+30.95%</td>
+      <td class="quote-cell">7,490</td>
+      <td class="quote-cell ret-cell">+0.27%</td>
+      <td class="quote-cell ret-cell">+30.26%</td>
+      <td class="quote-cell ret-cell">-6.84%</td>
+      <td class="quote-cell ret-cell">-35.54%</td>
+      <td class="quote-cell ret-cell">+51.62%</td>
       <td class="quote-cell">18,200</td>
-      <td class="quote-cell">3,720</td>
-      <td class="quote-cell">19.9%</td>
-      <td class="quote-cell">36.6</td>
+      <td class="quote-cell">3,750</td>
+      <td class="quote-cell">25.9%</td>
+      <td class="quote-cell">48.2</td>
       <td class="mcap-cell">0.41조원</td>
       <td class="fin-cell">19.93</td>
       <td class="fin-cell">3.67</td>
@@ -1997,16 +2092,16 @@
       <td><div class="company-name">우진</div><div class="company-name-sub">WOOJIN INC</div></td>
       <td><span class="ticker">105840</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">11,910</td>
-      <td class="quote-cell ret-cell">-8.24%</td>
-      <td class="quote-cell ret-cell">-16.24%</td>
-      <td class="quote-cell ret-cell">-34.09%</td>
-      <td class="quote-cell ret-cell">-48.77%</td>
-      <td class="quote-cell ret-cell">-21.07%</td>
+      <td class="quote-cell">14,060</td>
+      <td class="quote-cell ret-cell">+1.96%</td>
+      <td class="quote-cell ret-cell">+6.60%</td>
+      <td class="quote-cell ret-cell">-24.29%</td>
+      <td class="quote-cell ret-cell">-50.23%</td>
+      <td class="quote-cell ret-cell">-0.14%</td>
       <td class="quote-cell">31,700</td>
       <td class="quote-cell">10,330</td>
-      <td class="quote-cell">7.4%</td>
-      <td class="quote-cell">7.6</td>
+      <td class="quote-cell">17.5%</td>
+      <td class="quote-cell">20.8</td>
       <td class="mcap-cell">0.36조원</td>
       <td class="fin-cell">40.98</td>
       <td class="fin-cell">1.84</td>
@@ -2026,25 +2121,10 @@
 
   <!-- GRAPH TAB -->
   <div id="tab-graph" class="tab-content">
-    <div class="graph-container">
-      <div class="graph-sidebar">
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-korean">국내 상장 (벨류체인)</div>
-          <div id="sb-chain-legend"></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-global">글로벌 파트너</div>
-          <div id="sb-region-legend"></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-size">노드 크기 기준</div>
-          <div id="sb-size-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-title" id="sb-how">조작 방법</div>
-          <div id="sb-how-desc" style="font-size:11px;color:var(--text-muted);line-height:1.8"></div>
-        </div>
-      </div>
+    <div class="graph-container rn-workspace">
+      <aside class="rn-filter-sidebar" id="rn-filter-sidebar" aria-label="Relation network filters">
+        <div class="rn-filter-content" id="rn-filter-content"></div>
+      </aside>
       <div class="graph-main">
         <div id="rn-sticky-bar" class="rn-sticky-bar" hidden></div>
         <p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>
@@ -2539,13 +2619,13 @@
       document.getElementById('th-products').textContent = t.thProducts;
       document.getElementById('th-partners').textContent = t.thPartners;
       document.getElementById('table-note').textContent = t.note;
-      document.getElementById('sb-korean').textContent = t.sbKorean;
-      document.getElementById('sb-global').textContent = t.sbGlobal;
-      document.getElementById('sb-size').textContent = t.sbSize;
-      document.getElementById('sb-how').textContent = t.sbHow;
-      document.getElementById('sb-size-desc').innerHTML = t.sizeDesc.replace(/\n/g, '<br>');
-      document.getElementById('sb-how-desc').innerHTML = t.howDesc.replace(/\n/g, '<br>');
-      document.getElementById('graph-hint-text').textContent = t.graphHint;
+      if(document.getElementById('sb-korean'))document.getElementById('sb-korean').textContent= t.sbKorean;
+      if(document.getElementById('sb-global'))document.getElementById('sb-global').textContent= t.sbGlobal;
+      if(document.getElementById('sb-size'))document.getElementById('sb-size').textContent= t.sbSize;
+      if(document.getElementById('sb-how'))document.getElementById('sb-how').textContent= t.sbHow;
+      if(document.getElementById('sb-size-desc'))if(document.getElementById('sb-size-desc'))document.getElementById('sb-size-desc').innerHTML= t.sizeDesc.replace(/\n/g, '<br>');
+      if(document.getElementById('sb-how-desc'))if(document.getElementById('sb-how-desc'))document.getElementById('sb-how-desc').innerHTML= t.howDesc.replace(/\n/g, '<br>');
+      /* sb-korean guard */ if(document.getElementById('graph-hint-text'))document.getElementById('graph-hint-text').textContent= t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
       if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
@@ -2590,7 +2670,7 @@
       }).join('');
     }
 
-    function buildSidebarLegend() {
+    function buildSidebarLegend() { if (!document.getElementById('sb-chain-legend')) return; /* sb-chain-legend guard */
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
