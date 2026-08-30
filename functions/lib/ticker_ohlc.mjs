@@ -7,6 +7,13 @@
 
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 import { normalizeTicker } from './hub_dashboard_core.mjs';
+import {
+  applyPriceAdjustmentsToBars,
+  fetchPriceAdjustments,
+  fetchPriceAdjustmentsSignature,
+} from './price_adjustments.mjs';
+
+export { fetchPriceAdjustmentsSignature };
 
 /** Display bars by range (daily chart). */
 export const OHLC_RANGE_DAYS = Object.freeze({
@@ -141,7 +148,9 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
     const bar = historyRowToBar(rows[i]);
     if (bar) bars.push(bar);
   }
-  return { code: ticker, range, displayDays, bars };
+  const adjustments = await fetchPriceAdjustments(config, ticker);
+  applyPriceAdjustmentsToBars(bars, adjustments);
+  return { code: ticker, range, displayDays, bars, adjusted: adjustments.length > 0 };
 }
 
 /**

@@ -48,6 +48,8 @@
     "verify:heatmap-exclude": "node scripts/verify_heatmap_exclude_chips.mjs",
     "verify:dist": "node scripts/verify_dist_js.mjs && node scripts/verify_heatmap_exclude_chips.mjs",
     "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
+    "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
+    "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",
     "pages:build": "node scripts/pages_build.mjs",
     "patch:tickers": "node scripts/patch_tickers_from_krx.mjs",
     "geo": "node scripts/build_trust_pages.mjs && node scripts/patch_geo.mjs",

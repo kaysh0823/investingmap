@@ -7,6 +7,7 @@
 import {
   emptyTickerOhlcPayload,
   fetchLatestHistorySignature,
+  fetchPriceAdjustmentsSignature,
   fetchTickerOhlcBars,
   getSupabaseConfig,
   normalizeOhlcRange,
@@ -21,7 +22,7 @@ import {
 import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-const CACHE_BASE = '/api/ticker_ohlc/cache/v12';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v13';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {
@@ -59,23 +60,26 @@ export async function onRequest(context) {
 
   const config = getSupabaseConfig(env);
   let lastSig = 'none';
+  let adjSig = 'adj-none';
   if (config) {
     try {
       lastSig = await fetchLatestHistorySignature(config, code);
+      adjSig = await fetchPriceAdjustmentsSignature(config, code);
     } catch {
       lastSig = 'none';
+      adjSig = 'adj-none';
     }
   }
 
-  // Signature in the key invalidates when the last history bar appears or changes
-  // (e.g. missing session day → close-only → full OHLCV) within the same KST day.
-  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${lastSig}`;
+  // Signature invalidates when the last history bar or price_adjustments rows change.
+  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${lastSig}/${adjSig}`;
   const hit = await readHubCache(cachePath, url.origin);
   if (hit) {
     const headers = new Headers(hit.headers);
     Object.entries(ch).forEach(([k, v]) => headers.set(k, v));
     headers.set('X-Cache', 'HIT');
     headers.set('X-OHLC-Sig', lastSig);
+    headers.set('X-OHLC-Adj', adjSig);
     return new Response(hit.body, { status: hit.status, headers });
   }
 
@@ -94,6 +98,7 @@ export async function onRequest(context) {
 
   const response = jsonResponse(ch, payload, maxAge);
   response.headers.set('X-OHLC-Sig', lastSig);
+  response.headers.set('X-OHLC-Adj', adjSig);
   if (payload.bars && payload.bars.length) {
     putHubCache(context, cachePath, url.origin, response);
   }

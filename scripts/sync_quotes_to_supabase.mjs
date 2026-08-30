@@ -32,6 +32,13 @@ import {
   MARKET_INDEX_CODES,
 } from '../functions/lib/naver_index.mjs';
 import { buildSectorReturnRowsFromTrend } from '../functions/lib/hub_trend.mjs';
+import {
+  detectAdjustmentEvent,
+  matchCleanShareRatio,
+  sharesFromHistoryRow,
+  shouldReviewAdjustment,
+  upsertPriceAdjustments,
+} from '../functions/lib/price_adjustments.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAVER_CONCURRENCY = 4;
@@ -415,7 +422,7 @@ async function repairHistoryCoverageForDate(
 
 /** Persist session close OHLC into history when the market is closed (prefer KRX day). */
 async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed, supabaseUrl, serviceKey, authKey) {
-  if (!marketClosed || !tradeDateDash) return { upserted: 0, skipped: true };
+  if (!marketClosed || !tradeDateDash) return { upserted: 0, skipped: true, byCode: null };
 
   let byCode = null;
   if (authKey) {
@@ -487,7 +494,7 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
       mcap_won: q.mcap_won,
     });
   }
-  if (!rows.length) return { upserted: 0, skipped: false };
+  if (!rows.length) return { upserted: 0, skipped: false, byCode: null };
   const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
   const withOhlcv = rows.filter(
     (r) => r.open != null && r.high != null && r.low != null && r.volume != null,
@@ -505,7 +512,7 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
         serviceKey,
       )
     : null;
-  return { ...result, coverage };
+  return { ...result, coverage, byCode: krxReady ? byCode : null };
 }
 
 async function fetchHistoryMaxTradeDate(supabaseUrl, serviceKey, sampleTicker = '005930') {
@@ -584,6 +591,134 @@ async function fillMissingHistoryDays(
   }
   if (filled) process.stdout.write('\n');
   return { filled };
+}
+
+/**
+ * Load one trading day's history rows (close + mcap) for hub tickers.
+ */
+async function loadHistoryRowsForDate(tickers, tradeDateDash, supabaseUrl, serviceKey) {
+  const out = new Map();
+  if (!tradeDateDash || !tickers.length) return out;
+  const chunk = 80;
+  for (let i = 0; i < tickers.length; i += chunk) {
+    const part = tickers.slice(i, i + chunk);
+    const url =
+      `${supabaseUrl}/rest/v1/stock_price_history` +
+      `?ticker=in.(${part.join(',')})` +
+      `&trade_date=eq.${tradeDateDash}` +
+      `&select=ticker,trade_date,close,mcap_won`;
+    const res = await fetch(url, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    });
+    if (!res.ok) continue;
+    const rows = await res.json();
+    for (const row of rows) {
+      const t = normalizeTicker(row?.ticker);
+      if (t) out.set(t, row);
+    }
+  }
+  return out;
+}
+
+/**
+ * Compare today's KRX LIST_SHRS vs prior session history; upsert clean split/merge events.
+ */
+async function detectDailyPriceAdjustments({
+  tickers,
+  tradeDateDash,
+  byCode,
+  supabaseUrl,
+  serviceKey,
+  now = new Date(),
+}) {
+  if (!byCode?.size || !tradeDateDash) return { upserted: 0, reviewed: 0 };
+
+  const dates = tradingDates(10, now);
+  const todayBas = dashToBasDd(tradeDateDash);
+  let prevDash = null;
+  const idx = dates.indexOf(todayBas);
+  if (idx >= 0 && idx + 1 < dates.length) prevDash = basDdToDash(dates[idx + 1]);
+  else {
+    const before = dates.filter((d) => d < todayBas);
+    if (before.length) prevDash = basDdToDash(before[0]);
+  }
+  if (!prevDash) {
+    console.log('  price_adjustments daily: skip (no prior trading day)');
+    return { upserted: 0, reviewed: 0 };
+  }
+
+  const prevRows = await loadHistoryRowsForDate(tickers, prevDash, supabaseUrl, serviceKey);
+  const toUpsert = [];
+  let reviewed = 0;
+
+  for (const ticker of tickers) {
+    const krxRow = byCode.get(ticker);
+    const prev = prevRows.get(ticker);
+    if (!krxRow || !prev) continue;
+
+    const todayShares = parseNum(krxRow.LIST_SHRS);
+    const prevShares = sharesFromHistoryRow(prev);
+    if (todayShares == null || prevShares == null || prevShares <= 0) continue;
+
+    const sharesRatio = todayShares / prevShares;
+    const ev = detectAdjustmentEvent(
+      prev,
+      {
+        trade_date: tradeDateDash,
+        close: parseNum(krxRow.TDD_CLSPRC),
+        list_shrs: todayShares,
+      },
+      ticker,
+      'auto-daily',
+    );
+    if (ev) {
+      toUpsert.push(ev);
+      console.log(
+        `  price_adjustments daily ${ticker} ${ev.effective_date} ratio=${ev.ratio} (${ev.type})`,
+      );
+      continue;
+    }
+
+    if (shouldReviewAdjustment(sharesRatio)) {
+      reviewed += 1;
+      const todayClose = parseNum(krxRow.TDD_CLSPRC);
+      const prevClose = parseNum(prev.close);
+      const closeRatio =
+        todayClose != null && prevClose != null && prevClose > 0
+          ? todayClose / prevClose
+          : null;
+      console.warn(
+        'adj-review',
+        JSON.stringify({
+          ticker,
+          tradeDate: tradeDateDash,
+          prevDate: prevDash,
+          sharesRatio: Math.round(sharesRatio * 10000) / 10000,
+          closeRatio: closeRatio != null ? Math.round(closeRatio * 10000) / 10000 : null,
+          clean: matchCleanShareRatio(sharesRatio),
+          prevShares,
+          todayShares,
+        }),
+      );
+    }
+  }
+
+  if (!toUpsert.length) {
+    console.log(
+      `  price_adjustments daily: 0 new event(s)${reviewed ? `, ${reviewed} adj-review warn(s)` : ''}`,
+    );
+    return { upserted: 0, reviewed };
+  }
+
+  const result = await upsertPriceAdjustments(toUpsert, supabaseUrl, serviceKey);
+  if (!result.ok) {
+    console.warn(
+      `  price_adjustments daily upsert failed (${result.status}): ${(result.body || '').slice(0, 160)}`,
+    );
+    return { upserted: 0, reviewed, failed: true };
+  }
+  console.log(`  price_adjustments daily: upserted ${toUpsert.length}, adj-review ${reviewed}`);
+  return { upserted: toUpsert.length, reviewed };
 }
 
 /**
@@ -1224,7 +1359,7 @@ async function main() {
   const upsertResult = await upsertToSupabase(rows, supabaseUrl, serviceKey);
 
   // Keep stock_price_history current: session close from Naver + KRX gap fill.
-  await upsertSessionCloseHistory(
+  const histResult = await upsertSessionCloseHistory(
     rows,
     consensus.tradeDate,
     session.marketClosed === true,
@@ -1232,6 +1367,15 @@ async function main() {
     serviceKey,
     authKey,
   );
+  if (histResult.byCode?.size && consensus.tradeDate) {
+    await detectDailyPriceAdjustments({
+      tickers,
+      tradeDateDash: consensus.tradeDate,
+      byCode: histResult.byCode,
+      supabaseUrl,
+      serviceKey,
+    });
+  }
   await fillMissingHistoryDays(
     authKey,
     supabaseUrl,
