@@ -57,7 +57,8 @@ for (const c of CASES) {
   await page.waitForTimeout(2500);
 
   const html = await page.content();
-  check(html.includes('relation_network.js?v=3'), `${c.id}: HTML must reference relation_network.js?v=3`);
+  check(html.includes('relation_network.js?v=4'), `${c.id}: HTML must reference relation_network.js?v=4`);
+  check(!html.includes('relation_network.js?v=3'), `${c.id}: stale v=3 script reference`);
   check(!html.includes('relation_network.js?v=2'), `${c.id}: stale v=2 script reference`);
 
   const metrics = await page.evaluate(() => {

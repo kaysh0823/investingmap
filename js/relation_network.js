@@ -5,6 +5,8 @@
 (function (global) {
   'use strict';
 
+  var RN_WIP = true; // 관계망 개발중. 준비되면 false로.
+
   var PEER_TYPES = { peer: 1, consortium_member: 1, joint_development: 1, competes_with: 1 };
   var STATE = null;
   var POPSTATE_INSTALLED = false;
@@ -40,6 +42,19 @@
   }
 
   function $(id) { return document.getElementById(id); }
+
+  function renderWipPlaceholder(lang) {
+    var panel = document.getElementById('tab-graph');
+    if (!panel) return;
+    var ko = (lang !== 'en');
+    panel.innerHTML =
+      '<div class="rn-wip" style="display:flex;align-items:center;justify-content:center;'
+      + 'min-height:320px;padding:48px 24px;text-align:center;color:#8b949e;'
+      + 'font-size:15px;line-height:1.6;">'
+      + (ko ? '🌐 관계 네트워크는 현재 <b>수정 중</b>입니다.<br>더 정확한 밸류체인·거래 관계로 곧 다시 제공할 예정입니다.'
+            : '🌐 The relationship network is <b>under revision</b>.<br>It will return shortly with more accurate value-chain data.')
+      + '</div>';
+  }
 
   var WORKSPACE_LAYOUT_READY = false;
 
@@ -4190,6 +4205,7 @@
   }
 
   function ensureInit(ctx) {
+    if (RN_WIP) { renderWipPlaceholder(ctx && ctx.lang); return STATE; }
     if (STATE && STATE.sectorId === ctx.sectorId && STATE.initialized) {
       STATE.lang = ctx.lang;
       STATE.ctx = ctx;
@@ -4294,6 +4310,7 @@
   }
 
   function onTabVisible(ctx) {
+    if (RN_WIP) { renderWipPlaceholder(ctx && ctx.lang); return; }
     if (!STATE || !STATE.initialized || STATE.sectorId !== ctx.sectorId) {
       ensureInit(ctx);
       return;

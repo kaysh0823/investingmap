@@ -245,7 +245,7 @@ function patchMap(rel) {
     );
     c = c.replace(
       "tabGraph: '🌐",
-      "heatmapHint: '칸 크기 = 시가총액 · 색 = 당일 등락률',\n        tabGraph: '🌐"
+      "heatmapHint: '칸 크기 = 시가총액 · 색 = 당일 등락률',\n        tabGraph: '🌐 관계 네트워크 (수정중)"
     );
     c = c.replace(
       "tabTable: '📋 Company List",
@@ -253,9 +253,9 @@ function patchMap(rel) {
     );
     c = c.replace(
       /tabGraph: '🌐[^']*',\n        langFlag: '🇰🇷'/,
-      (m) =>
-        "heatmapHint: 'Tile size = market cap · color = 1-day return',\n        " +
-        m.replace("langFlag: '🇰🇷'", "langFlag: '🇰🇷'")
+      () =>
+        "heatmapHint: 'Tile size = market cap · color = 1-day return',\n        "
+        + "tabGraph: '🌐 Relationship network (WIP)',\n        langFlag: '🇰🇷'"
     );
     if (!c.includes('heatmapHint:')) {
       c = c.replace(
@@ -307,6 +307,12 @@ function patchMap(rel) {
       "loadFx().then(function () {\n      document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));\n      if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);"
     );
   }
+
+  c = c.replace(/tabGraph: '🌐[^']*'/g, (m) => {
+    if (m.includes('(수정중)') || m.includes('(WIP)')) return m;
+    if (/Relationship|peer map|Peer/i.test(m)) return "tabGraph: '🌐 Relationship network (WIP)'";
+    return "tabGraph: '🌐 관계 네트워크 (수정중)'";
+  });
 
   fs.writeFileSync(fp, c);
   console.log('patched:', rel);

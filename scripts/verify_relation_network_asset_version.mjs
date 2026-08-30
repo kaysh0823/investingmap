@@ -12,8 +12,8 @@ import {
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const EXPECTED = relationNetworkJsRef();
-const STALE = 'relation_network.js?v=2';
-const LEGACY_STALE = 'relation_network.js?v=1';
+const STALE = 'relation_network.js?v=3';
+const LEGACY_STALE = ['relation_network.js?v=1', 'relation_network.js?v=2'];
 
 const ACTIVE_SECTOR_HTML = [
   'bigchip/korea_bigchip_map.html',
@@ -67,14 +67,14 @@ for (const rel of ACTIVE_SECTOR_HTML) {
   if (staleCount > 0) {
     failures.push(`${rel}: stale ${STALE} reference (${staleCount})`);
   }
-  if (html.includes(LEGACY_STALE)) {
-    failures.push(`${rel}: legacy stale ${LEGACY_STALE} reference`);
+  if (html.includes(LEGACY_STALE[0]) || html.includes(LEGACY_STALE[1])) {
+    failures.push(`${rel}: legacy stale relation_network.js?v=1 or v=2 reference`);
   }
 }
 
 // Guard patch source uses the shared constant (no hardcoded stale v=1).
 const patchSrc = fs.readFileSync(path.join(ROOT, 'scripts/patch_relation_network.mjs'), 'utf8');
-if (patchSrc.includes("relation_network.js?v=1") || patchSrc.includes("relation_network.js?v=2")) {
+if (patchSrc.includes("relation_network.js?v=1") || patchSrc.includes("relation_network.js?v=2") || patchSrc.includes("relation_network.js?v=3")) {
   failures.push('scripts/patch_relation_network.mjs: hardcoded stale relation_network.js version');
 }
 if (!patchSrc.includes('relationNetworkJsRef()') && !patchSrc.includes('relationNetworkScriptSrc()')) {
