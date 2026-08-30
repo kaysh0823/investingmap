@@ -5,8 +5,13 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {
+  relationNetworkJsRef,
+  relationNetworkScriptSrc,
+} from '../lib/relation_network/asset_version.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const RN_JS_TAG = relationNetworkJsRef();
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -324,7 +329,7 @@ function upgradePhase25Ui(html) {
     .rn-legend-item { white-space: nowrap; }
     .rn-legend-key { font-weight: 600; color: var(--text); }`);
   }
-  out = out.replace(/relation_network\.js(\?v=\d+)?/g, 'relation_network.js?v=3');
+  out = out.replace(/relation_network\.js(\?v=\d+)?/g, RN_JS_TAG);
   out = out.replace(/network_profiles\.js(\?v=\d+)?/g, 'network_profiles.js?v=2');
   return out;
 }
@@ -406,12 +411,12 @@ function injectScripts(html) {
   const tags = `
   <script src="../js/network_profiles.js?v=1"></script>
   <script src="../js/relation_network_legacy.js?v=1"></script>
-  <script src="../js/relation_network.js?v=1"></script>`;
+  <script src="${relationNetworkScriptSrc()}"></script>`;
   if (html.includes('relation_network.js')) {
     return html
       .replace(/network_profiles\.js(\?v=\d+)?/g, 'network_profiles.js?v=1')
       .replace(/relation_network_legacy\.js(\?v=\d+)?/g, 'relation_network_legacy.js?v=1')
-      .replace(/relation_network\.js(\?v=\d+)?/g, 'relation_network.js?v=1');
+      .replace(/relation_network\.js(\?v=\d+)?/g, RN_JS_TAG);
   }
   return html.replace('</body>', `${tags}\n</body>`);
 }
@@ -550,7 +555,7 @@ function patchBioHtml(html) {
     '<script src="korea_bio_map.inline.js"></script>',
     `<script src="../js/network_profiles.js?v=1"></script>
   <script src="../js/relation_network_legacy.js?v=1"></script>
-  <script src="../js/relation_network.js?v=1"></script>
+  <script src="${relationNetworkScriptSrc()}"></script>
   <script src="korea_bio_map.inline.js"></script>`,
   ));
   if (html.includes('relation_network.js')) {

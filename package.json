@@ -26,6 +26,7 @@
     "verify:robot": "node scripts/verify_robot_relation_network.mjs",
     "verify:semi-relations": "node scripts/verify_semi_relation_network.mjs",
     "verify:relation-network": "node scripts/verify_relation_network.mjs",
+    "verify:relation-network-asset-version": "node scripts/verify_relation_network_asset_version.mjs",
     "verify:data-sector-profile": "node scripts/verify_data_sector_profile.mjs",
     "verify:nav-tab-preserve": "node scripts/verify_nav_tab_preserve.mjs",
     "verify:relation-browser": "node scripts/verify_relation_browser.mjs",
