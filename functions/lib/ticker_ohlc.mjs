@@ -12,8 +12,12 @@ import {
   fetchPriceAdjustments,
   fetchPriceAdjustmentsSignature,
 } from './price_adjustments.mjs';
+import {
+  fetchLatestInvestorNetSignature,
+  loadAndAttachInvestorOsc,
+} from './investor_osc.mjs';
 
-export { fetchPriceAdjustmentsSignature };
+export { fetchLatestInvestorNetSignature, fetchPriceAdjustmentsSignature };
 
 /** Display bars by range (daily chart). */
 export const OHLC_RANGE_DAYS = Object.freeze({
@@ -124,8 +128,10 @@ export async function fetchLatestHistorySignature(config, ticker) {
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker normalized 6-char
  * @param {string} rangeToken 3m|6m|1y|3y|5y
+ * @param {{ interval?: 'daily'|'weekly' }} [options]
  */
-export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
+export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = {}) {
+  const interval = options.interval === 'weekly' ? 'weekly' : 'daily';
   const range = normalizeOhlcRange(rangeToken);
   const displayDays = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
   const limit = ohlcFetchLimit(range);
@@ -150,6 +156,9 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken) {
   }
   const adjustments = await fetchPriceAdjustments(config, ticker);
   applyPriceAdjustmentsToBars(bars, adjustments);
+  if (interval === 'daily' && bars.length) {
+    await loadAndAttachInvestorOsc(config, ticker, bars);
+  }
   return { code: ticker, range, displayDays, bars, adjusted: adjustments.length > 0 };
 }
 

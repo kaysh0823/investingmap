@@ -7,6 +7,7 @@
 import {
   emptyTickerOhlcPayload,
   fetchLatestHistorySignature,
+  fetchLatestInvestorNetSignature,
   fetchPriceAdjustmentsSignature,
   fetchTickerOhlcBars,
   getSupabaseConfig,
@@ -22,7 +23,7 @@ import {
 import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-const CACHE_BASE = '/api/ticker_ohlc/cache/v13';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v14';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {
@@ -61,18 +62,23 @@ export async function onRequest(context) {
   const config = getSupabaseConfig(env);
   let lastSig = 'none';
   let adjSig = 'adj-none';
+  let invSig = 'inv-none';
   if (config) {
     try {
-      lastSig = await fetchLatestHistorySignature(config, code);
-      adjSig = await fetchPriceAdjustmentsSignature(config, code);
+      [lastSig, adjSig, invSig] = await Promise.all([
+        fetchLatestHistorySignature(config, code),
+        fetchPriceAdjustmentsSignature(config, code),
+        fetchLatestInvestorNetSignature(config),
+      ]);
     } catch {
       lastSig = 'none';
       adjSig = 'adj-none';
+      invSig = 'inv-none';
     }
   }
 
-  // Signature invalidates when the last history bar or price_adjustments rows change.
-  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${lastSig}/${adjSig}`;
+  // Signature invalidates when history, price_adjustments, or investor_net max date changes.
+  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${lastSig}/${adjSig}/${invSig}`;
   const hit = await readHubCache(cachePath, url.origin);
   if (hit) {
     const headers = new Headers(hit.headers);
@@ -80,6 +86,7 @@ export async function onRequest(context) {
     headers.set('X-Cache', 'HIT');
     headers.set('X-OHLC-Sig', lastSig);
     headers.set('X-OHLC-Adj', adjSig);
+    headers.set('X-OHLC-Inv', invSig);
     return new Response(hit.body, { status: hit.status, headers });
   }
 
@@ -99,6 +106,7 @@ export async function onRequest(context) {
   const response = jsonResponse(ch, payload, maxAge);
   response.headers.set('X-OHLC-Sig', lastSig);
   response.headers.set('X-OHLC-Adj', adjSig);
+  response.headers.set('X-OHLC-Inv', invSig);
   if (payload.bars && payload.bars.length) {
     putHubCache(context, cachePath, url.origin, response);
   }

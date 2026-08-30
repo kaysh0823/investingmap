@@ -257,6 +257,12 @@ const requests = [];
 globalThis.fetch = async (url) => {
   requests.push(String(url));
   const parsed = new URL(url);
+  if (!String(url).includes('stock_price_history')) {
+    return new Response(JSON.stringify([]), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
   const offset = Number(parsed.searchParams.get('offset') || 0);
   const limit = Number(parsed.searchParams.get('limit') || 0);
   const available = Math.max(0, 2175 - offset);
@@ -284,11 +290,14 @@ try {
     '005930',
     '5y',
   );
-  assert.equal(requests.length, 3, '5Y+warmup PostgREST pagination');
+  const historyRequests = requests.filter((u) => u.includes('stock_price_history'));
+  assert.equal(historyRequests.length, 3, '5Y+warmup PostgREST pagination');
   assert.equal(payload.bars.length, 2175, '5Y returns display+weekly-warmup bars');
-  assert.match(requests[0], /limit=1000&offset=0/);
-  assert.match(requests[1], /limit=1000&offset=1000/);
-  assert.match(requests[2], /limit=175&offset=2000/);
+  assert.ok('instOsc' in payload.bars[0], 'daily bars include instOsc');
+  assert.ok('frgnOsc' in payload.bars[0], 'daily bars include frgnOsc');
+  assert.match(historyRequests[0], /limit=1000&offset=0/);
+  assert.match(historyRequests[1], /limit=1000&offset=1000/);
+  assert.match(historyRequests[2], /limit=175&offset=2000/);
 } finally {
   globalThis.fetch = originalFetch;
 }
