@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v5 + /api/ticker_ohlc.
- * One chart, five native panes (price / volume / MACD / BBW%·DISP% / ATR%).
+ * One chart, six native panes (price / volume / MACD / investor OSC / BBW%·DISP% / ATR%).
  * The panes share a single time scale, so their x axes align by construction.
  */
 (function (global) {
@@ -23,6 +23,7 @@
     price: { top: 0.06, bottom: 0.1 },
     vol: { top: 0.12, bottom: 0.08 },
     macd: { top: 0.12, bottom: 0.12 },
+    investor: { top: 0.12, bottom: 0.12 },
     norm: { top: 0.12, bottom: 0.12 },
     atr: { top: 0.12, bottom: 0.12 },
   };
@@ -31,6 +32,7 @@
     { key: 'price', stretch: 40 },
     { key: 'vol', stretch: 13 },
     { key: 'macd', stretch: 16 },
+    { key: 'investor', stretch: 16 },
     { key: 'norm', stretch: 16 },
     { key: 'atr', stretch: 15 },
   ];
@@ -58,6 +60,22 @@
   var MACD_SIGNAL = 9;
   var ATR_PERIOD = 3;
   var ATR_SIGNAL = 9;
+  var INVESTOR_OSC_LEVELS = [20, 50, 80];
+
+  function paneIndexMap() {
+    var map = Object.create(null);
+    for (var i = 0; i < PANES.length; i++) map[PANES[i].key] = i;
+    return map;
+  }
+
+  var PANE_INDEX = paneIndexMap();
+
+  /** Daily-only panes collapse on weekly (no investor OSC on aggregated weeks). */
+  function paneStretch(spec, interval) {
+    var iv = interval != null ? interval : state.interval;
+    if (iv === 'weekly' && spec.key === 'investor') return 0;
+    return spec.stretch;
+  }
 
   function priceMaPeriods(interval) {
     var weekly = interval === 'weekly';
@@ -94,6 +112,8 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
+      instOsc: '기관',
+      frgnOsc: '외국인',
       atr: 'ATR(3)/종가%',
       atrSignal: 'ATR EMA9',
       chartLabel: '일봉 차트',
@@ -101,6 +121,7 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
+      paneInvestor: '투자자 OSC · 기관·외국인 (0~100)',
       paneNorm: 'BBW% · 이격도% (125일)',
       paneAtr: 'ATR(3)/종가% · EMA9',
       liveSession: '장중(현재가)',
@@ -128,6 +149,8 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
+      instOsc: 'Inst',
+      frgnOsc: 'Frgn',
       atr: 'ATR(3)/Close%',
       atrSignal: 'ATR EMA9',
       chartLabel: 'Daily chart',
@@ -135,6 +158,7 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
+      paneInvestor: 'Investor OSC · Inst·Frgn (0-100)',
       paneNorm: 'BBW% · DISP% (125d)',
       paneAtr: 'ATR(3)/Close% · EMA9',
       liveSession: 'Live (last)',
@@ -810,6 +834,7 @@
       price: labels.panePrice,
       vol: labels.paneVol,
       macd: labels.paneMacd,
+      investor: labels.paneInvestor,
       norm: labels.paneNorm,
       atr: labels.paneAtr,
     };
@@ -903,7 +928,16 @@
       if (l > Math.min(o, c)) l = Math.min(o, c);
       // Newly listed names can arrive with close only; those render as a line.
       var closeOnly = !hasOpen && !hasHigh && !hasLow;
-      bars.push({ t: b.t, o: o, h: h, l: l, c: c, v: v, closeOnly: closeOnly });
+      var bar = { t: b.t, o: o, h: h, l: l, c: c, v: v, closeOnly: closeOnly };
+      if ('instOsc' in b) {
+        bar.instOsc =
+          b.instOsc != null && isFinite(Number(b.instOsc)) ? Number(b.instOsc) : null;
+      }
+      if ('frgnOsc' in b) {
+        bar.frgnOsc =
+          b.frgnOsc != null && isFinite(Number(b.frgnOsc)) ? Number(b.frgnOsc) : null;
+      }
+      bars.push(bar);
     }
     return bars;
   }
@@ -945,11 +979,14 @@
     var macdLine = [];
     var macdSignalLine = [];
     var macdHist = [];
+    var instOscLine = [];
+    var frgnOscLine = [];
     var bbwLine = [];
     var dispLine = [];
     var atrLine = [];
     var atrSignalLine = [];
     var byTime = Object.create(null);
+    var showInvestor = interval === 'daily';
 
     for (var i = start; i < fullBars.length; i++) {
       var b = fullBars[i];
@@ -979,6 +1016,14 @@
       if (macdPack.signal[i] != null && isFinite(macdPack.signal[i])) {
         macdSignalLine.push({ time: b.t, value: macdPack.signal[i] });
       }
+      if (showInvestor) {
+        if (b.instOsc != null && isFinite(b.instOsc)) {
+          instOscLine.push({ time: b.t, value: b.instOsc });
+        }
+        if (b.frgnOsc != null && isFinite(b.frgnOsc)) {
+          frgnOscLine.push({ time: b.t, value: b.frgnOsc });
+        }
+      }
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
       if (atrPack.value[i] != null && isFinite(atrPack.value[i])) {
@@ -1001,6 +1046,8 @@
         macd: macdPack.line[i],
         macdSignal: macdPack.signal[i],
         macdHist: macdPack.hist[i],
+        instOsc: showInvestor && b.instOsc != null && isFinite(b.instOsc) ? b.instOsc : null,
+        frgnOsc: showInvestor && b.frgnOsc != null && isFinite(b.frgnOsc) ? b.frgnOsc : null,
         bbw: bbwPct[i],
         disp: dispPct[i],
         atr: atrPack.value[i],
@@ -1024,6 +1071,8 @@
       macdLine: macdLine,
       macdSignalLine: macdSignalLine,
       macdHist: macdHist,
+      instOscLine: instOscLine,
+      frgnOscLine: frgnOscLine,
       bbwLine: bbwLine,
       dispLine: dispLine,
       atrLine: atrLine,
@@ -1043,7 +1092,7 @@
     var b = state.barsByTime[time];
     var periods =
       (state.panelData && state.panelData.maPeriods) || priceMaPeriods(state.interval);
-    tip.textContent =
+    var text =
       time +
       ' · ' +
       labels.open +
@@ -1096,7 +1145,19 @@
       ' ' +
       labels.macdHist +
       ' ' +
-      fmtNum(b.macdHist, 2) +
+      fmtNum(b.macdHist, 2);
+    if (state.interval === 'daily') {
+      text +=
+        ' · ' +
+        labels.instOsc +
+        ' ' +
+        fmtNum(b.instOsc, 1) +
+        ' · ' +
+        labels.frgnOsc +
+        ' ' +
+        fmtNum(b.frgnOsc, 1);
+    }
+    text +=
       ' · ' +
       labels.bbw +
       ' ' +
@@ -1113,7 +1174,8 @@
       labels.atrSignal +
       ' ' +
       fmtNum(b.atrSignal, 2);
-    if (b.live) tip.textContent += ' · ' + labels.liveSession;
+    if (b.live) text += ' · ' + labels.liveSession;
+    tip.textContent = text;
   }
 
   function destroyCharts() {
@@ -1190,8 +1252,6 @@
     }
   }
 
-  var PANE_INDEX = { price: 0, vol: 1, macd: 2, norm: 3, atr: 4 };
-
   function createCharts(LWC, data) {
     destroyCharts();
     var host = document.getElementById('im-candle-chart');
@@ -1206,6 +1266,29 @@
       return chart.addSeries(
         LWC.LineSeries,
         Object.assign({ lineWidth: 2, priceLineVisible: false, lastValueVisible: true }, options),
+        PANE_INDEX[paneKey],
+      );
+    }
+
+    function addInvestorOscLine(paneKey, options) {
+      return chart.addSeries(
+        LWC.LineSeries,
+        Object.assign(
+          {
+            lineWidth: 2,
+            priceLineVisible: false,
+            lastValueVisible: true,
+            autoscaleInfoProvider: function () {
+              return {
+                priceRange: {
+                  minValue: 0,
+                  maxValue: 100,
+                },
+              };
+            },
+          },
+          options,
+        ),
         PANE_INDEX[paneKey],
       );
     }
@@ -1279,6 +1362,22 @@
     var macdSignalSeries = addLine('macd', { color: '#f778ba', title: 'Signal' });
     macdSignalSeries.setData(data.macdSignalLine);
 
+    var instOscSeries = addInvestorOscLine('investor', { color: '#e3b341', title: t().instOsc });
+    instOscSeries.setData(data.instOscLine || []);
+    for (var li = 0; li < INVESTOR_OSC_LEVELS.length; li++) {
+      instOscSeries.createPriceLine({
+        price: INVESTOR_OSC_LEVELS[li],
+        color: 'rgba(139,148,158,0.35)',
+        lineWidth: 1,
+        lineStyle: 2,
+        axisLabelVisible: false,
+        title: '',
+      });
+    }
+
+    var frgnOscSeries = addInvestorOscLine('investor', { color: '#58a6ff', title: t().frgnOsc });
+    frgnOscSeries.setData(data.frgnOscLine || []);
+
     var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW%' });
     bbwSeries.setData(data.bbwLine);
 
@@ -1319,6 +1418,8 @@
       macdHist: macdHistSeries,
       macd: macdLineSeries,
       macdSignal: macdSignalSeries,
+      instOsc: instOscSeries,
+      frgnOsc: frgnOscSeries,
       bbw: bbwSeries,
       disp: dispSeries,
       atr: atrSeries,
@@ -1340,9 +1441,12 @@
     for (var i = 0; i < PANES.length && i < panes.length; i++) {
       var spec = PANES[i];
       try {
-        panes[i].setStretchFactor(spec.stretch);
+        panes[i].setStretchFactor(paneStretch(spec));
       } catch (eStretch) {}
       var scaleOptions = { scaleMargins: PANE_MARGINS[spec.key] };
+      if (spec.key === 'investor') {
+        scaleOptions.autoScale = false;
+      }
       if (spec.key === 'price' && LWC.PriceScaleMode) {
         scaleOptions.mode = LWC.PriceScaleMode.Logarithmic;
       }
@@ -1631,6 +1735,7 @@
       panes: PANES,
       paneIndex: PANE_INDEX,
       paneMargins: PANE_MARGINS,
+      paneStretch: paneStretch,
     },
     _indicators: {
       sma: sma,

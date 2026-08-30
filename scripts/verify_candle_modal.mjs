@@ -49,7 +49,7 @@ for (const removed of [
 }
 assert.equal(source.match(/createChart\(/g)?.length, 1, 'exactly one chart is created');
 const paneKeys = ui.panes.map((pane) => pane.key);
-assert.equal(paneKeys.join(','), 'price,vol,macd,norm,atr', 'pane order');
+assert.equal(paneKeys.join(','), 'price,vol,macd,investor,norm,atr', 'pane order');
 paneKeys.forEach((key, index) => {
   assert.equal(ui.paneIndex[key], index, `pane index for ${key}`);
 });
@@ -73,7 +73,7 @@ for (const [type, pane] of [
 }
 assert.match(
   source,
-  /panes\[i\]\.setStretchFactor\(spec\.stretch\)/,
+  /panes\[i\]\.setStretchFactor\(paneStretch\(spec\)\)/,
   'pane heights come from the stretch factors',
 );
 assert.match(
@@ -195,6 +195,37 @@ assert.equal(maPanel.ma5Line.length, 16, 'MA5 starts on the fifth bar');
 assert.equal(maPanel.ma20Line.length, 1, 'MA20 starts on the twentieth bar');
 assert.equal(maPanel.byTime['2026-02-20'].ma5, 18, 'MA5 crosshair value');
 assert.equal(maPanel.byTime['2026-02-20'].ma20, 10.5, 'MA20 crosshair value');
+
+const investorBars = [];
+for (let i = 0; i < 30; i++) {
+  investorBars.push({
+    t: `2026-02-${String(i + 1).padStart(2, '0')}`,
+    o: 100,
+    h: 101,
+    l: 99,
+    c: 100,
+    v: 1000,
+    instOsc: i >= 20 ? 40 + i : null,
+    frgnOsc: i >= 20 ? 30 + i : null,
+  });
+}
+const investorPanel = indicators.buildPanelData(
+  indicators.normalizeBars(investorBars),
+  '1y',
+  'daily',
+);
+assert.equal(investorPanel.instOscLine.length, 10, 'daily investor instOsc lines skip null warmup');
+assert.equal(investorPanel.frgnOscLine.length, 10, 'daily investor frgnOsc lines skip null warmup');
+assert.equal(investorPanel.byTime['2026-02-21'].instOsc, 60, 'instOsc in crosshair byTime');
+assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
+assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 0, 'investor pane hidden on weekly');
+
+const weeklyInvestorPanel = indicators.buildPanelData(
+  indicators.normalizeBars(investorBars),
+  '5y',
+  'weekly',
+);
+assert.equal(weeklyInvestorPanel.instOscLine.length, 0, 'weekly investor OSC lines empty');
 
 const weeklyMaBars = [];
 for (let i = 0; i < 52; i++) {
