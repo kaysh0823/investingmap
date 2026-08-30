@@ -4,7 +4,11 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { stripHeatmapExcludeFilters, stripHeatmapExcludeFiltersFromMaps } from './patch_heatmap_tab.mjs';
+import {
+  patchHeatmapOnSelectFromMaps,
+  stripHeatmapExcludeFilters,
+  stripHeatmapExcludeFiltersFromMaps,
+} from './patch_heatmap_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SCRIPT_V = 15;
@@ -85,5 +89,6 @@ if (fs.existsSync(bioTrPath)) {
   console.log('patched bio/bio_translations.json');
 }
 
+patchHeatmapOnSelectFromMaps();
 stripHeatmapExcludeFiltersFromMaps();
 console.log('OK patch_heatmap_chg v=' + SCRIPT_V);

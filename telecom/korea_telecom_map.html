@@ -3101,13 +3101,11 @@
         formatMcap: fmtMcapTableCell,
         chainLabel: function (ch) { return (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, T[lang]) : ch; },
         onSelect: function (c) {
-          resetTableFilters();
-          switchTab('table', document.getElementById('tab-btn-table'));
-          setTimeout(function () {
-            if (window.InvestingMapMobileTable) { InvestingMapMobileTable.scrollToTicker(c.ticker || ''); return; }
-          var row = document.querySelector('#table-body tr[data-ticker="' + (c.ticker || '') + '"]');
-            if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
-          }, 40);
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
         }
       });
       el.querySelectorAll('.hm-tile').forEach(function (g) {

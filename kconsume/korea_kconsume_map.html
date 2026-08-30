@@ -379,8 +379,8 @@
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=14"></script>
-  <script src="../js/map_momentum.js?v=6"></script>
+  <script src="../js/map_heatmap.js?v=15"></script>
+  <script src="../js/map_momentum.js?v=7"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=20"></script>
@@ -3322,24 +3322,6 @@
             "쇼핑/유통": "쇼핑/유통",
             "가구·리빙": "가구·리빙",
             "물류·상사": "물류·상사"},
-        "chainFilter": {
-            "음식·라면·식품": "음식·라면·식품",
-            "패션": "패션",
-            "쇼핑/유통": "쇼핑/유통",
-            "가구·리빙": "가구·리빙",
-            "물류·상사": "물류·상사"},
-        "allFilter": "전체",
-        "kosp": "KOSPI",
-        "kosdaq": "KOSDAQ",
-        "regionLabel": {
-            "us": "미국",
-            "tw": "대만",
-            "cn": "중국",
-            "eu": "유럽",
-            "kr": "한국",
-            "jp": "일본",
-            "gb": "영국"
-        },
         "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◇ 글로벌 참고 관계",
         "howDesc": "• 노드 클릭: 관계 강조\n• 드래그: 이동\n• 스크롤: 확대/축소\n• 빈 건: 선택 해제\n• 범례: 그룹 하이라이트\n• 축: IP→제작(ODM)→유통; 점선=한류 수요 전파(참고)",
         "graphHint": "ODM·브랜드, OTT, K-pop 연결과 한류 수요 테마 노드를 함께 보세요",
@@ -3430,24 +3412,6 @@
             "쇼핑/유통": "Shopping & retail",
             "가구·리빙": "Furniture & living",
             "물류·상사": "Logistics & trading"},
-        "chainFilter": {
-            "음식·라면·식품": "Food & ramen",
-            "패션": "Fashion",
-            "쇼핑/유통": "Shopping & retail",
-            "가구·리빙": "Furniture & living",
-            "물류·상사": "Logistics & trading"},
-        "allFilter": "All",
-        "kosp": "KOSPI",
-        "kosdaq": "KOSDAQ",
-        "regionLabel": {
-            "us": "USA",
-            "tw": "Taiwan",
-            "cn": "China",
-            "eu": "Europe",
-            "kr": "Korea",
-            "jp": "Japan",
-            "gb": "UK"
-        },
         "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◇ Global peers",
         "howDesc": "• Click: highlight\n• Drag\n• Scroll: zoom\n• Background: clear\n• Legend: group\n• Backbone: IP → production (ODM) → distribution; dashed = K-wave spillover",
         "graphHint": "See ODM-to-brand links and the K-demand flow node (illustrative)",
@@ -4192,13 +4156,11 @@
         formatMcap: fmtMcapTableCell,
         chainLabel: function (ch) { return (window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, T[lang]) : ch; },
         onSelect: function (c) {
-          resetTableFilters();
-          switchTab('table', document.getElementById('tab-btn-table'));
-          setTimeout(function () {
-            if (window.InvestingMapMobileTable) { InvestingMapMobileTable.scrollToTicker(c.ticker || ''); return; }
-          var row = document.querySelector('#table-body tr[data-ticker="' + (c.ticker || '') + '"]');
-            if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
-          }, 40);
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
         }
       });
       el.querySelectorAll('.hm-tile').forEach(function (g) {

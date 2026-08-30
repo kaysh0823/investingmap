@@ -153,30 +153,46 @@ export function stripHeatmapExcludeFilters(src) {
   return c;
 }
 
-const RESET_TABLE_FILTERS_FN = `
-    function resetTableFilters() {
-      currentChain = 'all';
-      currentMarket = 'all';
-      searchTerm = '';
-      var inp = document.getElementById('search-input');
-      if (inp) inp.value = '';
-      buildChainChips();
-      buildMarketChips();
-      renderTable();
-    }
-`;
-
 const HEATMAP_ON_SELECT = `
         onSelect: function (c) {
-          resetTableFilters();
-          switchTab('table', document.getElementById('tab-btn-table'));
-          setTimeout(function () {
-            var row = document.querySelector('#table-body tr[data-ticker="' + (c.ticker || '') + '"]');
-            if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
-          }, 40);
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
         }`;
 
-const RENDER_HEATMAP_FN = RESET_TABLE_FILTERS_FN + `
+const HEATMAP_ON_SELECT_CANDLE = HEATMAP_ON_SELECT.trim();
+
+/** Deployed heatmap onSelect: resetTableFilters → table tab → scroll (with mobile helper). */
+const HEATMAP_ON_SELECT_TABLE_CURRENT =
+  /onSelect: function \(c\) \{\r?\n          resetTableFilters\(\);\r?\n          switchTab\('table', document\.getElementById\('tab-btn-table'\)\);\r?\n          setTimeout\(function \(\) \{\r?\n            if \(window\.InvestingMapMobileTable\) \{ InvestingMapMobileTable\.scrollToTicker\(c\.ticker \|\| ''\); return; \}\r?\n          var row = document\.querySelector\('#table-body tr\[data-ticker="' \+ \(c\.ticker \|\| ''\) \+ '"\]'\);\r?\n            if \(row\) row\.scrollIntoView\(\{ block: 'center', behavior: 'smooth' \}\);\r?\n          \}, 40\);\r?\n        \}/;
+
+/** resetTableFilters + table scroll without mobile helper (intermediate patch). */
+const HEATMAP_ON_SELECT_TABLE_RESET =
+  /onSelect: function \(c\) \{\r?\n          resetTableFilters\(\);\r?\n          switchTab\('table', document\.getElementById\('tab-btn-table'\)\);\r?\n          setTimeout\(function \(\) \{\r?\n            var row = document\.querySelector\('#table-body tr\[data-ticker="' \+ \(c\.ticker \|\| ''\) \+ '"\]'\);\r?\n            if \(row\) row\.scrollIntoView\(\{ block: 'center', behavior: 'smooth' \}\);\r?\n          \}, 40\);\r?\n        \}/;
+
+/** Legacy heatmap onSelect: table tab → scroll only. */
+const HEATMAP_ON_SELECT_TABLE_LEGACY =
+  /onSelect: function \(c\) \{\r?\n          switchTab\('table', document\.getElementById\('tab-btn-table'\)\);\r?\n          setTimeout\(function \(\) \{\r?\n            var row = document\.querySelector\('#table-body tr\[data-ticker="' \+ \(c\.ticker \|\| ''\) \+ '"\]'\);\r?\n            if \(row\) row\.scrollIntoView\(\{ block: 'center', behavior: 'smooth' \}\);\r?\n          \}, 40\);\r?\n        \}/;
+
+/** Replace heatmap tile onSelect with candle modal (idempotent). */
+export function patchHeatmapOnSelect(src) {
+  if (!src.includes('InvestingMapHeatmap.render')) return src;
+  const hmBlock = src.match(/InvestingMapHeatmap\.render\(\{[\s\S]*?\n      \}\);/);
+  if (hmBlock && hmBlock[0].includes('InvestingMapCandleModal.open')) return src;
+  let c = src;
+  if (HEATMAP_ON_SELECT_TABLE_CURRENT.test(c)) {
+    c = c.replace(HEATMAP_ON_SELECT_TABLE_CURRENT, HEATMAP_ON_SELECT_CANDLE);
+  } else if (HEATMAP_ON_SELECT_TABLE_RESET.test(c)) {
+    c = c.replace(HEATMAP_ON_SELECT_TABLE_RESET, HEATMAP_ON_SELECT_CANDLE);
+  } else if (HEATMAP_ON_SELECT_TABLE_LEGACY.test(c)) {
+    c = c.replace(HEATMAP_ON_SELECT_TABLE_LEGACY, HEATMAP_ON_SELECT_CANDLE);
+  }
+  return c;
+}
+
+const RENDER_HEATMAP_FN = `
     function renderHeatmap() {
       if (!window.InvestingMapHeatmap) return;
       var el = document.getElementById('heatmap-root');
@@ -356,17 +372,9 @@ function fixHeatmapFile(rel) {
     changed = true;
   }
 
-  if (!c.includes('function resetTableFilters')) {
-    c = c.replace(
-      /\r?\n    function renderHeatmap\(\)/,
-      RESET_TABLE_FILTERS_FN + '\n    function renderHeatmap()'
-    );
-    changed = true;
-  }
-
-  const oldOnSelect = /onSelect: function \(c\) \{\r?\n          switchTab\('table', document\.getElementById\('tab-btn-table'\)\);\r?\n          setTimeout\(function \(\) \{\r?\n            var row = document\.querySelector\('#table-body tr\[data-ticker="' \+ \(c\.ticker \|\| ''\) \+ '"\]'\);\r?\n            if \(row\) row\.scrollIntoView\(\{ block: 'center', behavior: 'smooth' \}\);\r?\n          \}, 40\);\r?\n        \}/;
-  if (oldOnSelect.test(c) && !c.includes('resetTableFilters();')) {
-    c = c.replace(oldOnSelect, HEATMAP_ON_SELECT.trim());
+  const onSelectNext = patchHeatmapOnSelect(c);
+  if (onSelectNext !== c) {
+    c = onSelectNext;
     changed = true;
   }
 
@@ -438,16 +446,9 @@ if (fs.existsSync(bioTail)) {
     );
     bioChanged = true;
   }
-  if (!bc.includes('function resetTableFilters')) {
-    bc = bc.replace(
-      /\r?\n    function renderHeatmap\(\)/,
-      RESET_TABLE_FILTERS_FN + '\n    function renderHeatmap()'
-    );
-    bioChanged = true;
-  }
-  const oldOnSelect = /onSelect: function \(c\) \{\r?\n          switchTab\('table', document\.getElementById\('tab-btn-table'\)\);\r?\n          setTimeout\(function \(\) \{\r?\n            var row = document\.querySelector\('#table-body tr\[data-ticker="' \+ \(c\.ticker \|\| ''\) \+ '"\]'\);\r?\n            if \(row\) row\.scrollIntoView\(\{ block: 'center', behavior: 'smooth' \}\);\r?\n          \}, 40\);\r?\n        \}/;
-  if (oldOnSelect.test(bc) && !bc.includes('resetTableFilters();')) {
-    bc = bc.replace(oldOnSelect, HEATMAP_ON_SELECT.trim());
+  const bcOnSelect = patchHeatmapOnSelect(bc);
+  if (bcOnSelect !== bc) {
+    bc = bcOnSelect;
     bioChanged = true;
   }
   if (bioChanged) {
@@ -475,6 +476,23 @@ function discoverMapHtml() {
   return out.sort();
 }
 
+export function patchHeatmapOnSelectFromMaps() {
+  for (const rel of [
+    ...discoverMapHtml(),
+    'bio/bio_inline_tail.js',
+    'bio/korea_bio_map.inline.js',
+  ]) {
+    const fp = path.join(root, rel);
+    if (!fs.existsSync(fp)) continue;
+    const prev = fs.readFileSync(fp, 'utf8');
+    const next = patchHeatmapOnSelect(prev);
+    if (next !== prev) {
+      fs.writeFileSync(fp, next);
+      console.log('patched heatmap onSelect:', rel);
+    }
+  }
+}
+
 export function stripHeatmapExcludeFiltersFromMaps() {
   for (const rel of [
     ...discoverMapHtml(),
@@ -496,5 +514,6 @@ export function stripHeatmapExcludeFiltersFromMaps() {
 if (isMain) {
   for (const rel of MAPS) patchMap(rel);
   for (const rel of MAPS) fixHeatmapFile(rel);
+  patchHeatmapOnSelectFromMaps();
   stripHeatmapExcludeFiltersFromMaps();
 }
