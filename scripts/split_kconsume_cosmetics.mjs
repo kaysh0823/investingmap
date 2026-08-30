@@ -25,11 +25,18 @@ const KCONSUME_HTML = path.join(ROOT, 'kconsume', 'korea_kconsume_map.html');
 const MEDTECH_HTML = path.join(ROOT, 'medtech', 'korea_medtech_map.html');
 const BIO_JSX = path.join(ROOT, 'bio', 'biomap.jsx');
 
-const COSMETICS_BRAND = new Set(['278470', '090430', '051900', '483650', '002790', '018290']);
-const COSMETICS_ODM = new Set(['161890', '192820', '241710']);
+const COSMETICS_BRAND = new Set(['278470', '090430', '051900', '483650', '002790', '018290', '092730', '078520', '018250']);
+const COSMETICS_ODM = new Set(['161890', '192820', '241710', '003350', '352480']);
+const COSMETICS_PACKAGING = new Set(['251970']);
 const COSMETICS_CHANNEL = new Set(['257720']);
 const COSMETICS_AESTHETIC = new Set(['214150', '214450', '336570', '145020', '214370']); // Classys, Pharmaresearch, Wontech, Hugel, Caregen
-const COSMETICS_ALL = new Set([...COSMETICS_BRAND, ...COSMETICS_ODM, ...COSMETICS_CHANNEL, ...COSMETICS_AESTHETIC]);
+const COSMETICS_ALL = new Set([
+  ...COSMETICS_BRAND,
+  ...COSMETICS_ODM,
+  ...COSMETICS_PACKAGING,
+  ...COSMETICS_CHANNEL,
+  ...COSMETICS_AESTHETIC,
+]);
 const DROP_FROM_KCONSUME = new Set([...COSMETICS_ALL]); // beauty + aesthetic (Classys never returns to kconsume)
 const PHARMARESEARCH = '214450';
 
@@ -93,6 +100,7 @@ const KCONSUME_LABEL_EN = {
 function chainForCosmetics(ticker) {
   if (COSMETICS_BRAND.has(ticker)) return '브랜드';
   if (COSMETICS_ODM.has(ticker)) return 'ODM·OEM';
+  if (COSMETICS_PACKAGING.has(ticker)) return '용기';
   if (COSMETICS_CHANNEL.has(ticker)) return '유통·채널';
   if (COSMETICS_AESTHETIC.has(ticker)) return '미용기기';
   return '브랜드';
@@ -391,6 +399,17 @@ function resolveCosmeticsCompanies(fromKconsume) {
       if (existing.length === COSMETICS_ALL.size) {
         console.log('cosmetics: reusing existing map companies (idempotent)');
         return existing.sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
+      }
+      if (existing.length > 0) {
+        const byTicker = new Map(existing.map((c) => [String(c.ticker).padStart(6, '0'), c]));
+        for (const stub of stubCosmeticsFromKrx()) {
+          if (!byTicker.has(stub.ticker)) byTicker.set(stub.ticker, stub);
+        }
+        const merged = [...byTicker.values()].sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
+        if (merged.length === COSMETICS_ALL.size) {
+          console.log(`cosmetics: merged existing (${existing.length}) + stubs → ${merged.length}`);
+          return merged;
+        }
       }
     } catch (e) {
       console.warn('cosmetics existing parse skipped:', e.message);

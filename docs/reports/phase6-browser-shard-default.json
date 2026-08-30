@@ -1,0 +1,90 @@
+{
+  "generatedAt": "2026-08-30T00:48:53.237Z",
+  "shard": null,
+  "releaseMode": false,
+  "headHint": null,
+  "pages": [
+    "bio"
+  ],
+  "totalCases": 6,
+  "passedCases": 6,
+  "appFailures": 0,
+  "infrastructureFailures": 0,
+  "skippedCases": 0,
+  "assertionWeakening": 0,
+  "retry": 0,
+  "failureLines": [],
+  "appFailureLines": [],
+  "infrastructureFailureLines": [],
+  "timingSummary": {
+    "caseCount": 6,
+    "min": 4335,
+    "median": 4534,
+    "p90": 4554,
+    "p95": 4554,
+    "max": 4554,
+    "timeoutCount": 0
+  },
+  "caseResults": [
+    {
+      "id": "bio/desktop/en",
+      "sector": "bio",
+      "viewport": "desktop",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4554,
+      "stage": "done"
+    },
+    {
+      "id": "bio/desktop/ko",
+      "sector": "bio",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4335,
+      "stage": "done"
+    },
+    {
+      "id": "bio/mobile/en",
+      "sector": "bio",
+      "viewport": "mobile",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4534,
+      "stage": "done"
+    },
+    {
+      "id": "bio/mobile/ko",
+      "sector": "bio",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4534,
+      "stage": "done"
+    },
+    {
+      "id": "bio/tablet/en",
+      "sector": "bio",
+      "viewport": "tablet",
+      "lang": "en",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4383,
+      "stage": "done"
+    },
+    {
+      "id": "bio/tablet/ko",
+      "sector": "bio",
+      "viewport": "tablet",
+      "lang": "ko",
+      "failures": [],
+      "infrastructureFailure": false,
+      "totalMs": 4507,
+      "stage": "done"
+    }
+  ]
+}

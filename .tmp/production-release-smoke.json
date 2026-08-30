@@ -1,0 +1,552 @@
+{
+  "startedAt": "2026-08-29T23:33:57.274Z",
+  "base": "https://www.investingmap.kr",
+  "http": {
+    "https://www.investingmap.kr/": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/",
+      "ms": 337,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bodyLen": 93929
+    },
+    "https://investingmap.kr/": {
+      "status": 200,
+      "finalUrl": "https://investingmap.kr/",
+      "ms": 232,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bodyLen": 93929
+    },
+    "https://investing-kr.com/": {
+      "status": 200,
+      "finalUrl": "https://investing-kr.com/",
+      "ms": 241,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bodyLen": 93929
+    },
+    "https://www.investingmap.kr/robots.txt": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/robots.txt",
+      "ms": 73,
+      "contentType": "text/plain; charset=utf-8",
+      "cacheControl": "public, max-age=14400, must-revalidate",
+      "bodyLen": 1909
+    },
+    "https://www.investingmap.kr/sitemap.xml": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/sitemap.xml",
+      "ms": 258,
+      "contentType": "application/xml",
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "bodyLen": 4812
+    },
+    "https://www.investingmap.kr/data/hub_quote_snapshot.json": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/data/hub_quote_snapshot.json",
+      "ms": 266,
+      "contentType": "application/json",
+      "cacheControl": "public, max-age=300, stale-while-revalidate=60",
+      "bodyLen": 27561
+    },
+    "https://www.investingmap.kr/data/hub_rs_snapshot.json": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/data/hub_rs_snapshot.json",
+      "ms": 395,
+      "contentType": "application/json",
+      "cacheControl": "public, max-age=300, stale-while-revalidate=60",
+      "bodyLen": 738661
+    },
+    "https://www.investingmap.kr/data/hub_sector_returns.json": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/data/hub_sector_returns.json",
+      "ms": 272,
+      "contentType": "application/json",
+      "cacheControl": "public, max-age=300, stale-while-revalidate=60",
+      "bodyLen": 5928
+    },
+    "https://www.investingmap.kr/js/network_profiles.js": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/js/network_profiles.js",
+      "ms": 280,
+      "contentType": "application/javascript; charset=utf-8, application/javascript; charset=utf-8",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "bodyLen": 24933
+    },
+    "https://www.investingmap.kr/js/relation_network.js": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/js/relation_network.js",
+      "ms": 301,
+      "contentType": "application/javascript; charset=utf-8, application/javascript; charset=utf-8",
+      "cacheControl": "public, max-age=31536000, immutable",
+      "bodyLen": 175387
+    },
+    "https://www.investingmap.kr/data/networks/semiconductor.json": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/data/networks/semiconductor.json",
+      "ms": 280,
+      "contentType": "application/json",
+      "cacheControl": "public, max-age=300, stale-while-revalidate=60",
+      "bodyLen": 167085
+    },
+    "https://www.investingmap.kr/data/networks/finance.json": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/data/networks/finance.json",
+      "ms": 265,
+      "contentType": "application/json",
+      "cacheControl": "public, max-age=300, stale-while-revalidate=60",
+      "bodyLen": 110092
+    },
+    "https://www.investingmap.kr/data/networks/construction.json": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/data/networks/construction.json",
+      "ms": 283,
+      "contentType": "application/json",
+      "cacheControl": "public, max-age=300, stale-while-revalidate=60",
+      "bodyLen": 133381
+    },
+    "https://www.investingmap.kr/data/networks/robot.json": {
+      "status": 200,
+      "finalUrl": "https://www.investingmap.kr/data/networks/robot.json",
+      "ms": 276,
+      "contentType": "application/json",
+      "cacheControl": "public, max-age=300, stale-while-revalidate=60",
+      "bodyLen": 153417
+    },
+    "canonical": "https://www.investingmap.kr/"
+  },
+  "data": {
+    "hub_quote_snapshot.json": {
+      "asOf": "2026-08-29T12:06:17.655Z",
+      "keys": [
+        "builtAt",
+        "asOf",
+        "source",
+        "quotesTotal",
+        "quotesOk",
+        "coveragePct",
+        "quotes",
+        "top10Preview"
+      ],
+      "quotesOk": 481,
+      "quotesTotal": 482,
+      "count": 481
+    },
+    "hub_rs_snapshot.json": {
+      "asOf": "2026-08-29T12:06:35.541Z",
+      "keys": [
+        "builtAt",
+        "asOf",
+        "source",
+        "universe",
+        "quotesOk",
+        "recentDd",
+        "anchorDd",
+        "past1dDd",
+        "past20Dd",
+        "past50Dd",
+        "past120Dd",
+        "quotes",
+        "hubTop10Preview"
+      ],
+      "quotesOk": 2731,
+      "count": 2731
+    },
+    "hub_sector_returns.json": {
+      "asOf": "2026-08-29T12:06:39.709Z",
+      "keys": [
+        "builtAt",
+        "asOf",
+        "source",
+        "mcapRecentDd",
+        "effectiveAnchorDd",
+        "mcapPast1dDd",
+        "mcapPast20dDd",
+        "mcapPast50dDd",
+        "mcapPast120dDd",
+        "mcapPast200dDd",
+        "sectors"
+      ],
+      "sectorCount": 22
+    },
+    "networks/semiconductor.json": {
+      "nodes": 160,
+      "edges": 193
+    },
+    "networks/finance.json": {
+      "nodes": 72,
+      "edges": 110
+    },
+    "networks/construction.json": {
+      "nodes": 44,
+      "edges": 60
+    },
+    "networks/robot.json": {
+      "nodes": 86,
+      "edges": 115
+    },
+    "network_profiles": {
+      "hasRobot": true,
+      "hasSoftware": true,
+      "hasTelecom": true,
+      "len": 24933
+    }
+  },
+  "cases": [
+    {
+      "id": "http:https://www.investingmap.kr/",
+      "status": 200,
+      "ms": 337
+    },
+    {
+      "id": "http:https://investingmap.kr/",
+      "status": 200,
+      "ms": 232
+    },
+    {
+      "id": "http:https://investing-kr.com/",
+      "status": 200,
+      "ms": 241
+    },
+    {
+      "id": "http:https://www.investingmap.kr/robots.txt",
+      "status": 200,
+      "ms": 73
+    },
+    {
+      "id": "http:https://www.investingmap.kr/sitemap.xml",
+      "status": 200,
+      "ms": 258
+    },
+    {
+      "id": "http:https://www.investingmap.kr/data/hub_quote_snapshot.json",
+      "status": 200,
+      "ms": 266
+    },
+    {
+      "id": "http:https://www.investingmap.kr/data/hub_rs_snapshot.json",
+      "status": 200,
+      "ms": 395
+    },
+    {
+      "id": "http:https://www.investingmap.kr/data/hub_sector_returns.json",
+      "status": 200,
+      "ms": 272
+    },
+    {
+      "id": "http:https://www.investingmap.kr/js/network_profiles.js",
+      "status": 200,
+      "ms": 280
+    },
+    {
+      "id": "http:https://www.investingmap.kr/js/relation_network.js",
+      "status": 200,
+      "ms": 301
+    },
+    {
+      "id": "http:https://www.investingmap.kr/data/networks/semiconductor.json",
+      "status": 200,
+      "ms": 280
+    },
+    {
+      "id": "http:https://www.investingmap.kr/data/networks/finance.json",
+      "status": 200,
+      "ms": 265
+    },
+    {
+      "id": "http:https://www.investingmap.kr/data/networks/construction.json",
+      "status": 200,
+      "ms": 283
+    },
+    {
+      "id": "http:https://www.investingmap.kr/data/networks/robot.json",
+      "status": 200,
+      "ms": 276
+    },
+    {
+      "id": "canonical",
+      "status": "pass",
+      "href": "https://www.investingmap.kr/"
+    },
+    {
+      "id": "snapshot:hub_quote_snapshot.json",
+      "status": "pass",
+      "asOf": "2026-08-29T12:06:17.655Z"
+    },
+    {
+      "id": "snapshot:hub_rs_snapshot.json",
+      "status": "pass",
+      "asOf": "2026-08-29T12:06:35.541Z"
+    },
+    {
+      "id": "snapshot:hub_sector_returns.json",
+      "status": "pass",
+      "asOf": "2026-08-29T12:06:39.709Z"
+    },
+    {
+      "id": "network:semiconductor.json",
+      "status": "pass",
+      "nodes": 160,
+      "edges": 193
+    },
+    {
+      "id": "network:finance.json",
+      "status": "pass",
+      "nodes": 72,
+      "edges": 110
+    },
+    {
+      "id": "network:construction.json",
+      "status": "pass",
+      "nodes": 44,
+      "edges": 60
+    },
+    {
+      "id": "robot-legacyFallback",
+      "status": "pass"
+    },
+    {
+      "id": "network:robot.json",
+      "status": "pass",
+      "nodes": 86,
+      "edges": 115
+    },
+    {
+      "id": "network_profiles.js",
+      "status": "pass"
+    },
+    {
+      "id": "hub:mobile:ko",
+      "status": "fail",
+      "message": "Error: no price-like text",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "hub:mobile:en",
+      "status": "fail",
+      "message": "Error: no price-like text",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "hub:desktop:ko",
+      "status": "fail",
+      "message": "Error: no price-like text",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "hub:desktop:en",
+      "status": "fail",
+      "message": "Error: no price-like text",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "semi:005930:desktop",
+      "status": "pass",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failedReqs": []
+    },
+    {
+      "id": "semi:000660:desktop",
+      "status": "pass",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failedReqs": []
+    },
+    {
+      "id": "finance:ownership:desktop",
+      "status": "pass",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failedReqs": []
+    },
+    {
+      "id": "construction:mobile:ko",
+      "status": "pass",
+      "viewport": "mobile",
+      "lang": "ko",
+      "failedReqs": []
+    },
+    {
+      "id": "robot:desktop",
+      "status": "pass",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failedReqs": []
+    },
+    {
+      "id": "cosmetics:desktop",
+      "status": "pass",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failedReqs": []
+    },
+    {
+      "id": "software:desktop",
+      "status": "pass",
+      "viewport": "desktop",
+      "lang": "ko",
+      "failedReqs": []
+    }
+  ],
+  "summary": {
+    "pass": 31,
+    "fail": 4,
+    "warn": 0
+  },
+  "browserDetails": [
+    {
+      "id": "hub:mobile:ko",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "hub:mobile:en",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "hub:desktop:ko",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "hub:desktop:en",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "hub": {
+        "hasPrice": false,
+        "hasSector": true,
+        "title": "Investing Map — Korea listed industry maps"
+      },
+      "error": "Error: no price-like text"
+    },
+    {
+      "id": "semi:005930:desktop",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "semi": {
+        "url": "https://www.investingmap.kr/semiconductor/korea_semiconductor_map?ticker=005930&tab=graph",
+        "hasGraph": true,
+        "ticker": "005930"
+      },
+      "bodySample": "Investing Map ⌂ 허브 🏆 삼성전자/하이닉스 💠 반도체 💡 전기·전자 🔋 2차전지 🌱 신재생 ⚛ 원전 🔌 전력설비 ⚓ 조선 ⚙️ 철강·금속·기계 🛰️ 방산/우주/항공 🛒 K-소비/유통 💄 화장품/미용기기 🎬 K-콘텐츠 🧬 바이오 🤖 로봇 🚗 자동차 🩺 의료기기/헬스케어 🏦 금융 🏗️ 건설 💻 IT·소프트웨어 🏢 지주회사 📡 통신 장마감 · 2026-08-28 ☀️ 🇺🇸English 🇰🇷 한국 반도체 산업 투자 지도 ▾ 국내 상장 반도체 · 벨류체인 · 국내외 거래처 + 동종 pe"
+    },
+    {
+      "id": "semi:000660:desktop",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "bodySample": "Investing Map ⌂ 허브 🏆 삼성전자/하이닉스 💠 반도체 💡 전기·전자 🔋 2차전지 🌱 신재생 ⚛ 원전 🔌 전력설비 ⚓ 조선 ⚙️ 철강·금속·기계 🛰️ 방산/우주/항공 🛒 K-소비/유통 💄 화장품/미용기기 🎬 K-콘텐츠 🧬 바이오 🤖 로봇 🚗 자동차 🩺 의료기기/헬스케어 🏦 금융 🏗️ 건설 💻 IT·소프트웨어 🏢 지주회사 📡 통신 장마감 · 2026-08-28 ☀️ 🇺🇸English 🇰🇷 한국 반도체 산업 투자 지도 ▾ 국내 상장 반도체 · 벨류체인 · 국내외 거래처 + 동종 pe"
+    },
+    {
+      "id": "finance:ownership:desktop",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "finance": {
+        "body": "Investing Map\n⌂\n허브\n🏆\n삼성전자/하이닉스\n💠\n반도체\n💡\n전기·전자\n🔋\n2차전지\n🌱\n신재생\n⚛\n원전\n🔌\n전력설비\n⚓\n조선\n⚙️\n철강·금속·기계\n🛰️\n방산/우주/항공\n🛒\nK-소비/유통\n💄\n화장품/미용기기\n🎬\nK-콘텐츠\n🧬\n바이오\n🤖\n로봇\n🚗\n자동차\n🩺\n의료기기/헬스케어\n🏦\n금융\n🏗️\n건설\n💻\nIT·소프트웨어\n🏢\n지주회사\n📡\n통신\n장마감 · 2026-08-28\n☀️\n🇺🇸English\n🇰🇷 한국 금융 투자 지도\n▾\n\n은행·증권·보험·카드·캐피탈 등 국내 상장 금융사와 글로벌 peer 참고 관계\n\n총 31개 상장사\nKOSPI 27사 · KOSDAQ 4사\n🔥 섹터 히트맵\n📊 모멘텀 매트릭스\n📋 기업목록 & 필터\n🌐 관계 네트워크\n\n칸 크기 = 시가총액 · 색 = 당일 등락률\n\n당일\n5일\n20일\n50일\n120일\n은행·금융지주\n보험\n증권·자산운용\n기타금융\n카드·캐피탈\nKB금융\n60.86조원\n+2.1%\n신한지주\n51.50조원\n+0.8%\n",
+        "hasStake": true
+      },
+      "bodySample": "Investing Map ⌂ 허브 🏆 삼성전자/하이닉스 💠 반도체 💡 전기·전자 🔋 2차전지 🌱 신재생 ⚛ 원전 🔌 전력설비 ⚓ 조선 ⚙️ 철강·금속·기계 🛰️ 방산/우주/항공 🛒 K-소비/유통 💄 화장품/미용기기 🎬 K-콘텐츠 🧬 바이오 🤖 로봇 🚗 자동차 🩺 의료기기/헬스케어 🏦 금융 🏗️ 건설 💻 IT·소프트웨어 🏢 지주회사 📡 통신 장마감 · 2026-08-28 ☀️ 🇺🇸English 🇰🇷 한국 금융 투자 지도 ▾ 은행·증권·보험·카드·캐피탈 등 국내 상장 금융사와 글로벌 peer"
+    },
+    {
+      "id": "construction:mobile:ko",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "construction": {
+        "hasProject": false
+      },
+      "bodySample": "Investing Map 장마감 · 2026-08-28 ☀️ 🇺🇸 English 🇰🇷 한국 건설 투자 지도 ▾ 종합건설·주택·디벨로퍼·건설기계 등 국내 상장 건설사와 글로벌 peer 참고 관계 총 12개 상장사 KOSPI 11사 · KOSDAQ 1사 🔥 히트맵 📊 모멘텀 매트릭스 📋 기업목록 🌐 네트워크 칸 크기 = 시가총액 · 색 = 당일 등락률 당일 5일 20일 50일 120일 종합건설 건설기계 주택·디벨로퍼 삼성물산 60.81조원 −0.1% 현대건설 14.35조원 −0.3% 대우건설 8.09조원 −1.6%"
+    },
+    {
+      "id": "robot:desktop",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "robot": {
+        "hasGraph": true,
+        "cfgNetworkPath": "../data/networks/robot.json"
+      },
+      "bodySample": "Investing Map ⌂ 허브 🏆 삼성전자/하이닉스 💠 반도체 💡 전기·전자 🔋 2차전지 🌱 신재생 ⚛ 원전 🔌 전력설비 ⚓ 조선 ⚙️ 철강·금속·기계 🛰️ 방산/우주/항공 🛒 K-소비/유통 💄 화장품/미용기기 🎬 K-콘텐츠 🧬 바이오 🤖 로봇 🚗 자동차 🩺 의료기기/헬스케어 🏦 금융 🏗️ 건설 💻 IT·소프트웨어 🏢 지주회사 📡 통신 장마감 · 2026-08-28 ☀️ 🇺🇸English 🇰🇷 한국 로봇 · 피지컬AI 산업 투자 지도 ▾ 국내 상장 산업로봇·자동화·물류·지역AI 벨류와"
+    },
+    {
+      "id": "cosmetics:desktop",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "cosmetics": {
+        "hasBrand": true
+      },
+      "bodySample": "Investing Map ⌂ 허브 🏆 삼성전자/하이닉스 💠 반도체 💡 전기·전자 🔋 2차전지 🌱 신재생 ⚛ 원전 🔌 전력설비 ⚓ 조선 ⚙️ 철강·금속·기계 🛰️ 방산/우주/항공 🛒 K-소비/유통 💄 화장품/미용기기 🎬 K-콘텐츠 🧬 바이오 🤖 로봇 🚗 자동차 🩺 의료기기/헬스케어 🏦 금융 🏗️ 건설 💻 IT·소프트웨어 🏢 지주회사 📡 통신 장마감 · 2026-08-28 ☀️ 🇺🇸English 🇰🇷 한국 화장품/미용기기 투자 지도 ▾ 브랜드·ODM/OEM·미용기기·유통·채널 — 상장사와 글로"
+    },
+    {
+      "id": "software:desktop",
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedReqs": [],
+      "software": {
+        "hasBrand": false
+      },
+      "bodySample": "Investing Map ⌂ 허브 🏆 삼성전자/하이닉스 💠 반도체 💡 전기·전자 🔋 2차전지 🌱 신재생 ⚛ 원전 🔌 전력설비 ⚓ 조선 ⚙️ 철강·금속·기계 🛰️ 방산/우주/항공 🛒 K-소비/유통 💄 화장품/미용기기 🎬 K-콘텐츠 🧬 바이오 🤖 로봇 🚗 자동차 🩺 의료기기/헬스케어 🏦 금융 🏗️ 건설 💻 IT·소프트웨어 🏢 지주회사 📡 통신 장마감 · 2026-08-28 ☀️ 🇺🇸English 🇰🇷 한국 IT·소프트웨어 투자 지도 ▾ 플랫폼·AI, SI·클라우드, 기업SW·SaaS, 보안 관"
+    }
+  ],
+  "finishedAt": "2026-08-29T23:35:36.120Z"
+}

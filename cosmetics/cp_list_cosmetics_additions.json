@@ -1,0 +1,80 @@
+[
+  {
+    "ticker": "251970",
+    "name": "펌텍코리아",
+    "nameEn": "Pumtech Korea",
+    "chain": "용기",
+    "semType": "용기·부자재",
+    "semTypeEn": "Packaging & components",
+    "products": "디스펜서·펌프·화장품 용기",
+    "productsEn": "Dispensers, pumps and cosmetic packaging",
+    "partners": ["albea", "aptar"],
+    "subSector": "용기·부자재",
+    "level": "core"
+  },
+  {
+    "ticker": "352480",
+    "name": "씨앤씨인터내셔널",
+    "nameEn": "C&C International",
+    "chain": "ODM·OEM",
+    "semType": "색조 ODM",
+    "semTypeEn": "Color cosmetics ODM",
+    "products": "색조화장품 ODM",
+    "productsEn": "Color cosmetics ODM manufacturing",
+    "partners": ["intercos"],
+    "subSector": "색조 ODM",
+    "level": "core"
+  },
+  {
+    "ticker": "003350",
+    "name": "한국화장품제조",
+    "nameEn": "Korea Cosmetics Mfg",
+    "chain": "ODM·OEM",
+    "semType": "ODM",
+    "semTypeEn": "ODM / OEM",
+    "products": "화장품 ODM·OEM",
+    "productsEn": "Cosmetics ODM and OEM",
+    "partners": ["intercos"],
+    "subSector": "ODM",
+    "level": "core"
+  },
+  {
+    "ticker": "092730",
+    "name": "네오팜",
+    "nameEn": "Neopharm",
+    "chain": "브랜드",
+    "semType": "더마 브랜드",
+    "semTypeEn": "Derma beauty brands",
+    "products": "아토팜·제로이드 더마코스메틱",
+    "productsEn": "Atopalm and Zeroid derma cosmetics brands",
+    "partners": ["loreal", "estee", "shiseido"],
+    "subSector": "더마 브랜드",
+    "level": "core"
+  },
+  {
+    "ticker": "078520",
+    "name": "에이블씨엔씨",
+    "nameEn": "Able C&C",
+    "chain": "브랜드",
+    "semType": "브랜드",
+    "semTypeEn": "Beauty brands",
+    "products": "미샤 등 색조·기초 화장품",
+    "productsEn": "Missha and other color and skincare brands",
+    "partners": ["loreal", "estee", "shiseido"],
+    "subSector": "브랜드",
+    "level": "core"
+  },
+  {
+    "ticker": "018250",
+    "name": "애경산업",
+    "nameEn": "Aekyung Industrial",
+    "chain": "브랜드",
+    "semType": "브랜드",
+    "semTypeEn": "Beauty & consumer brands",
+    "products": "AGE20's·루나(화장품) 및 생활용품",
+    "productsEn": "AGE20's, Luna cosmetics and household products",
+    "partners": ["loreal", "estee", "shiseido"],
+    "subSector": "브랜드",
+    "level": "core"
+  }
+]

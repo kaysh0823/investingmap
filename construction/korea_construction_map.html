@@ -2282,7 +2282,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"종합건설":"#42A5F5","주택·디벨로퍼":"#66BB6A","건설기계":"#FFA726","지주·기타":"#78909C"};
+    const CHAIN_COLORS = {"종합건설":"#42A5F5","주택·디벨로퍼":"#66BB6A","건설기계":"#FFA726","지주·기타":"#78909C","종합건설·EPC":"#1E88E5","건자재":"#26A69A","시멘트":"#8D6E63","부동산신탁":"#5C6BC0"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2361,14 +2361,20 @@
             "종합건설": "종합건설",
             "주택·디벨로퍼": "주택·디벨로퍼",
             "건설기계": "건설기계",
-            "지주·기타": "지주·기타"
-        },
+            "지주·기타": "지주·기타",
+            "종합건설·EPC": "종합건설·EPC",
+            "건자재": "건자재",
+            "시멘트": "시멘트",
+            "부동산신탁": "부동산신탁"},
         "chainFilter": {
             "종합건설": "종합건설",
             "주택·디벨로퍼": "주택·디벨로퍼",
             "건설기계": "건설기계",
-            "지주·기타": "지주·기타"
-        },
+            "지주·기타": "지주·기타",
+            "종합건설·EPC": "종합건설·EPC",
+            "건자재": "건자재",
+            "시멘트": "시멘트",
+            "부동산신탁": "부동산신탁"},
         "allFilter": "전체",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -2468,14 +2474,20 @@
             "종합건설": "General contractors",
             "주택·디벨로퍼": "Housing & developers",
             "건설기계": "Construction equipment",
-            "지주·기타": "Holdings & other"
-        },
+            "지주·기타": "Holdings & other",
+            "종합건설·EPC": "General construction & EPC",
+            "건자재": "Building materials",
+            "시멘트": "Cement",
+            "부동산신탁": "Real estate trust"},
         "chainFilter": {
             "종합건설": "General contractors",
             "주택·디벨로퍼": "Housing & developers",
             "건설기계": "Construction equipment",
-            "지주·기타": "Holdings & other"
-        },
+            "지주·기타": "Holdings & other",
+            "종합건설·EPC": "General construction & EPC",
+            "건자재": "Building materials",
+            "시멘트": "Cement",
+            "부동산신탁": "Real estate trust"},
         "allFilter": "All",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -2524,6 +2536,13 @@
       },
 
       {
+        id: 'construction_samsung_e_a', name: '삼성E&A', nameEn: 'Samsung E&A', ticker: '028050', market: 'KOSPI', chain: '종합건설·EPC',
+        semType: '플랜트·EPC', semTypeEn: 'Plant & EPC',
+        products: '플랜트·EPC (구 삼성엔지니어링)', productsEn: 'Plant engineering & EPC (formerly Samsung Engineering)',
+        revenue: '9.33조원', mcapWon: 9329600000000, per: 15.11, pbr: 1.97, revTier: 2, partners: ['bechtel', 'fluor', 'vinci']
+      },
+
+      {
         id: 'daewoo_enc', name: '대우건설', nameEn: 'DaewooEngineering&Construction', ticker: '047040', market: 'KOSPI', chain: '종합건설',
         semType: '종합건설', semTypeEn: 'General contractor',
         products: '건축·토목·플랜트·주택', productsEn: 'Building, civil, plant, housing',
@@ -2535,6 +2554,13 @@
         semType: '건설기계', semTypeEn: 'Construction equipment',
         products: '굴착기·휠로더', productsEn: 'Excavators, wheel loaders',
         revenue: '6.83조원', mcapWon: 6833662512200, per: 25.03, pbr: 1.37, revTier: 2, partners: ['caterpillar', 'komatsu', 'volvo_ce']
+      },
+
+      {
+        id: 'construction_kcc_corp', name: 'KCC', nameEn: 'KCC Corp', ticker: '002380', market: 'KOSPI', chain: '건자재',
+        semType: '건자재·도료·실리콘', semTypeEn: 'Building materials, coatings & silicone',
+        products: '건자재·도료·실리콘', productsEn: 'Building materials, coatings and silicone',
+        revenue: '4.33조원', mcapWon: 4330819584000, per: 2.41, pbr: 0.47, revTier: 2, partners: ['ppg', 'sherwin_williams', 'saint_gobain']
       },
 
       {
@@ -2559,6 +2585,34 @@
       },
 
       {
+        id: 'construction_sampyo_cement', name: '삼표시멘트', nameEn: 'Sampyo Cement', ticker: '038500', market: 'KOSDAQ', chain: '시멘트',
+        semType: '시멘트', semTypeEn: 'Cement',
+        products: '시멘트·레미콘', productsEn: 'Cement and ready-mix concrete',
+        revenue: '1.24조원', mcapWon: 1244275008180, per: 30.34, pbr: 1.57, revTier: 2, partners: ['holcim', 'heidelberg']
+      },
+
+      {
+        id: 'construction_hanil_cement', name: '한일시멘트', nameEn: 'Hanil Cement', ticker: '300720', market: 'KOSPI', chain: '시멘트',
+        semType: '시멘트', semTypeEn: 'Cement',
+        products: '시멘트·레미콘', productsEn: 'Cement and ready-mix concrete',
+        revenue: '1.07조원', mcapWon: 1066405530500, per: 13.67, pbr: 0.57, revTier: 2, partners: ['holcim', 'heidelberg']
+      },
+
+      {
+        id: 'construction_hanssem', name: '한샘', nameEn: 'Hanssem', ticker: '009240', market: 'KOSPI', chain: '건자재',
+        semType: '인테리어·홈퍼니싱', semTypeEn: 'Interior & home furnishing',
+        products: '인테리어·홈퍼니싱', productsEn: 'Interior design and home furnishing',
+        revenue: '0.78조원', mcapWon: 781326409600, per: 11.82, pbr: 1.38, revTier: 1, partners: []
+      },
+
+      {
+        id: 'construction_is_dongseo', name: '아이에스동서', nameEn: 'IS Dongseo', ticker: '010780', market: 'KOSPI', chain: '종합건설·EPC',
+        semType: '건설·건자재', semTypeEn: 'Construction & building materials',
+        products: '건설·건자재', productsEn: 'Construction and building materials',
+        revenue: '0.77조원', mcapWon: 774295934400, per: null, pbr: 0.61, revTier: 1, partners: ['saint_gobain']
+      },
+
+      {
         id: 'seohee', name: '서희건설', nameEn: 'SEOHEE CONSTRUCTION CO., LTD.', ticker: '035890', market: 'KOSDAQ', chain: '주택·디벨로퍼',
         semType: '주택·시공', semTypeEn: 'Housing contractor',
         products: '아파트·재건축', productsEn: 'Apartments, reconstruction',
@@ -2570,6 +2624,27 @@
         semType: '종합건설', semTypeEn: 'General contractor',
         products: '건축·토목·환경', productsEn: 'Building, civil, environment',
         revenue: '0.53조원', mcapWon: 526734438060, per: 9.27, pbr: 0.87, revTier: 1, partners: ['acs']
+      },
+
+      {
+        id: 'construction_dongwha_enterprise', name: '동화기업', nameEn: 'Dongwha Enterprise', ticker: '025900', market: 'KOSDAQ', chain: '건자재',
+        semType: '목질보드·건자재', semTypeEn: 'Wood boards & building materials',
+        products: '목질보드·건자재', productsEn: 'Wood-based panels and building materials',
+        revenue: '0.41조원', mcapWon: 411030727050, per: null, pbr: 0.46, revTier: 1, partners: ['saint_gobain']
+      },
+
+      {
+        id: 'construction_kcc_glass', name: 'KCC글라스', nameEn: 'KCC Glass', ticker: '344820', market: 'KOSPI', chain: '건자재',
+        semType: '판유리·건자재', semTypeEn: 'Flat glass & building materials',
+        products: '판유리·건자재', productsEn: 'Flat glass and building materials',
+        revenue: '0.37조원', mcapWon: 368918827200, per: null, pbr: 0.27, revTier: 1, partners: ['saint_gobain']
+      },
+
+      {
+        id: 'construction_asia_cement', name: '아세아시멘트', nameEn: 'Asia Cement', ticker: '183190', market: 'KOSPI', chain: '시멘트',
+        semType: '시멘트', semTypeEn: 'Cement',
+        products: '시멘트·레미콘', productsEn: 'Cement and ready-mix concrete',
+        revenue: '0.36조원', mcapWon: 363969087160, per: 21.53, pbr: 0.33, revTier: 1, partners: ['holcim', 'heidelberg']
       },
 
       {
@@ -2589,7 +2664,12 @@
       { id: 'hochtief', name: 'Hochtief', nameEn: 'Hochtief', country: '독일/Germany', region: 'eu', sector: 'Construction' },
       { id: 'caterpillar', name: 'Caterpillar', nameEn: 'Caterpillar', country: '미국/USA', region: 'us', sector: 'Construction equipment' },
       { id: 'komatsu', name: 'Komatsu', nameEn: 'Komatsu', country: '일본/Japan', region: 'jp', sector: 'Construction equipment' },
-      { id: 'volvo_ce', name: 'Volvo CE', nameEn: 'Volvo Construction Equipment', country: '스웨덴/Sweden', region: 'eu', sector: 'Construction equipment' }
+      { id: 'volvo_ce', name: 'Volvo CE', nameEn: 'Volvo Construction Equipment', country: '스웨덴/Sweden', region: 'eu', sector: 'Construction equipment' },
+      { id: 'holcim', name: 'Holcim', nameEn: 'Holcim', country: '스위스/Switzerland', region: 'eu', sector: 'Cement' },
+      { id: 'heidelberg', name: 'Heidelberg Materials', nameEn: 'Heidelberg Materials', country: '독일/Germany', region: 'eu', sector: 'Cement' },
+      { id: 'saint_gobain', name: 'Saint-Gobain', nameEn: 'Saint-Gobain', country: '프랑스/France', region: 'eu', sector: 'Building materials' },
+      { id: 'ppg', name: 'PPG Industries', nameEn: 'PPG Industries', country: '미국/USA', region: 'us', sector: 'Coatings' },
+      { id: 'sherwin_williams', name: 'Sherwin-Williams', nameEn: 'Sherwin-Williams', country: '미국/USA', region: 'us', sector: 'Coatings' }
     ];
 
 
@@ -2753,7 +2833,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '종합건설', '주택·디벨로퍼', '건설기계', '지주·기타'];
+      const chains = ['all', '종합건설', '종합건설·EPC', '주택·디벨로퍼', '건설기계', '건자재', '시멘트', '부동산신탁', '지주·기타'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
@@ -2779,7 +2859,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['종합건설', '주택·디벨로퍼', '건설기계', '지주·기타'];
+      const chains = ['종합건설', '종합건설·EPC', '주택·디벨로퍼', '건설기계', '건자재', '시멘트', '부동산신탁', '지주·기타'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>

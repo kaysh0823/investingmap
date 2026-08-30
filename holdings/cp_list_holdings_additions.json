@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "024720",
+    "name": "콜마홀딩스",
+    "nameEn": "Kolmar Holdings",
+    "chain": "소비·서비스 지주",
+    "semType": "화장품 ODM 지주",
+    "semTypeEn": "Cosmetics ODM holding",
+    "products": "한국콜마·화장품 ODM 계열 지주",
+    "productsEn": "Kolmar Korea and cosmetics ODM group holding",
+    "partners": ["ckh"],
+    "subSector": "화장품 ODM 지주",
+    "level": "core"
+  }
+]

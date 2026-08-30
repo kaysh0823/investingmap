@@ -257,8 +257,16 @@
       display: none
     }
 
+    .hub-lead-panel>#hdr-cover-count {
+      margin: 10px 0 0;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--muted, #5a6472);
+      letter-spacing: -.01em
+    }
+
     .hub-lead-panel>#hdr-subtitle {
-      margin-top: 10px
+      margin-top: 8px
     }
 
     .hub-dashboard-row {
@@ -2007,6 +2015,7 @@
         <span class="hub-title-chevron" aria-hidden="true">▾</span>
       </button>
       <div id="hub-lead-panel" class="hub-lead-panel is-collapsed">
+        <p id="hdr-cover-count" class="hub-cover-count" hidden></p>
         <p id="hdr-subtitle">Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.</p>
       </div>
     </div>
@@ -2422,7 +2431,7 @@
   </footer>
   <script src="js/map_tab_state.js?v=8"></script>
     <script src="js/return_live.js?v=2"></script>
-  <script src="js/hub_dashboard.js?v=50"></script>
+  <script src="js/hub_dashboard.js?v=51"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="js/hub_trend_chart.js?v=1"></script>
   <script src="js/im_collapsible.js?v=6"></script>

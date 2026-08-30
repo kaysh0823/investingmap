@@ -7,6 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { kstYmdDash } from '../functions/lib/krx_session.mjs';
 import { buildHubWithCrossSectors } from '../lib/cross_sector_inject.mjs';
+import { listHubCompanies } from '../functions/lib/hub_dashboard_core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -18,8 +19,12 @@ function main() {
   if (injectedMaps) console.log(`crossSectors injected into ${injectedMaps} map(s)`);
   console.log(`cross-listed tickers: ${Object.keys(crossIndex).length}`);
 
+  const totalCompanies = listHubCompanies({ sectors }).length;
+  console.log(`unique hub companies: ${totalCompanies}`);
+
   const out = {
     builtAt: kstYmdDash(),
+    meta: { totalCompanies },
     crossIndex,
     sectors,
   };

@@ -1,0 +1,145 @@
+[
+  {
+    "ticker": "028050",
+    "name": "삼성E&A",
+    "nameEn": "Samsung E&A",
+    "chain": "종합건설·EPC",
+    "semType": "플랜트·EPC",
+    "semTypeEn": "Plant & EPC",
+    "products": "플랜트·EPC (구 삼성엔지니어링)",
+    "productsEn": "Plant engineering & EPC (formerly Samsung Engineering)",
+    "partners": ["bechtel", "fluor", "vinci"]
+  },
+  {
+    "ticker": "002990",
+    "name": "금호건설",
+    "nameEn": "Kumho E&C",
+    "chain": "종합건설·EPC",
+    "semType": "종합건설",
+    "semTypeEn": "General contractor",
+    "products": "건축·토목·주택",
+    "productsEn": "Building, civil, housing",
+    "partners": ["fluor", "vinci"]
+  },
+  {
+    "ticker": "010780",
+    "name": "아이에스동서",
+    "nameEn": "IS Dongseo",
+    "chain": "종합건설·EPC",
+    "semType": "건설·건자재",
+    "semTypeEn": "Construction & building materials",
+    "products": "건설·건자재",
+    "productsEn": "Construction and building materials",
+    "partners": ["saint_gobain"]
+  },
+  {
+    "ticker": "317400",
+    "name": "자이에스앤디",
+    "nameEn": "Xi S&D",
+    "chain": "종합건설·EPC",
+    "semType": "건설·부동산개발",
+    "semTypeEn": "Construction & real estate development",
+    "products": "건설·부동산개발",
+    "productsEn": "Construction and real estate development",
+    "partners": ["vinci"]
+  },
+  {
+    "ticker": "002380",
+    "name": "KCC",
+    "nameEn": "KCC Corp",
+    "chain": "건자재",
+    "semType": "건자재·도료·실리콘",
+    "semTypeEn": "Building materials, coatings & silicone",
+    "products": "건자재·도료·실리콘",
+    "productsEn": "Building materials, coatings and silicone",
+    "partners": ["ppg", "sherwin_williams", "saint_gobain"]
+  },
+  {
+    "ticker": "344820",
+    "name": "KCC글라스",
+    "nameEn": "KCC Glass",
+    "chain": "건자재",
+    "semType": "판유리·건자재",
+    "semTypeEn": "Flat glass & building materials",
+    "products": "판유리·건자재",
+    "productsEn": "Flat glass and building materials",
+    "partners": ["saint_gobain"]
+  },
+  {
+    "ticker": "108670",
+    "name": "LX하우시스",
+    "nameEn": "LX Hausys",
+    "chain": "건자재",
+    "semType": "창호·바닥재",
+    "semTypeEn": "Windows, doors & flooring",
+    "products": "창호·바닥재",
+    "productsEn": "Windows, doors and flooring materials",
+    "partners": ["saint_gobain"]
+  },
+  {
+    "ticker": "025900",
+    "name": "동화기업",
+    "nameEn": "Dongwha Enterprise",
+    "chain": "건자재",
+    "semType": "목질보드·건자재",
+    "semTypeEn": "Wood boards & building materials",
+    "products": "목질보드·건자재",
+    "productsEn": "Wood-based panels and building materials",
+    "partners": ["saint_gobain"]
+  },
+  {
+    "ticker": "009240",
+    "name": "한샘",
+    "nameEn": "Hanssem",
+    "chain": "건자재",
+    "semType": "인테리어·홈퍼니싱",
+    "semTypeEn": "Interior & home furnishing",
+    "products": "인테리어·홈퍼니싱",
+    "productsEn": "Interior design and home furnishing",
+    "partners": []
+  },
+  {
+    "ticker": "300720",
+    "name": "한일시멘트",
+    "nameEn": "Hanil Cement",
+    "chain": "시멘트",
+    "semType": "시멘트",
+    "semTypeEn": "Cement",
+    "products": "시멘트·레미콘",
+    "productsEn": "Cement and ready-mix concrete",
+    "partners": ["holcim", "heidelberg"]
+  },
+  {
+    "ticker": "038500",
+    "name": "삼표시멘트",
+    "nameEn": "Sampyo Cement",
+    "chain": "시멘트",
+    "semType": "시멘트",
+    "semTypeEn": "Cement",
+    "products": "시멘트·레미콘",
+    "productsEn": "Cement and ready-mix concrete",
+    "partners": ["holcim", "heidelberg"]
+  },
+  {
+    "ticker": "183190",
+    "name": "아세아시멘트",
+    "nameEn": "Asia Cement",
+    "chain": "시멘트",
+    "semType": "시멘트",
+    "semTypeEn": "Cement",
+    "products": "시멘트·레미콘",
+    "productsEn": "Cement and ready-mix concrete",
+    "partners": ["holcim", "heidelberg"]
+  },
+  {
+    "ticker": "123890",
+    "name": "한국자산신탁",
+    "nameEn": "Korea Asset Trust",
+    "chain": "부동산신탁",
+    "semType": "부동산신탁",
+    "semTypeEn": "Real estate trust",
+    "products": "부동산신탁·자산관리",
+    "productsEn": "Real estate trust and asset management",
+    "partners": []
+  }
+]

@@ -48,6 +48,7 @@ run(`node scripts/apply_cp_list_to_maps.mjs "${cpList}"`, 'cp_list → industry 
 run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy curated universe');
 run('node scripts/split_energy_clean_sectors.mjs', 'split energy into battery/renewable/nuclear');
 run('node scripts/split_kconsume_cosmetics.mjs', 'split cosmetics from kconsume + Pharmaresearch→medtech');
+run('node scripts/apply_cp_list_sector_additions.mjs', 'cp_list additions → cosmetics/medtech/holdings');
 run('node scripts/rebalance_cosmetics_medtech_bio.mjs', 'cosmetics aesthetic + bio IVD → medtech rebalance');
 run('node scripts/apply_sector_exclusive.mjs', 'enforce single-sector ownership');
 run('node scripts/apply_cross_sector_memberships.mjs', 'verify no active cross-sector memberships');

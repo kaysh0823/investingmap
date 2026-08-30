@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "340570",
+    "name": "티앤엘",
+    "nameEn": "T&L",
+    "chain": "의료장비·수술",
+    "semType": "더마패치·경피전달",
+    "semTypeEn": "Derma patches & transdermal delivery",
+    "products": "마이크로니들·경피흡수 더마패치",
+    "productsEn": "Microneedle and transdermal derma patches",
+    "partners": ["3m", "boston_sci"],
+    "subSector": "더마패치",
+    "level": "core"
+  }
+]

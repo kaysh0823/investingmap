@@ -398,7 +398,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=23')
+    return fetch('data/hub_index.json?v=24')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();
@@ -1093,12 +1093,51 @@
     return t(lang).pulseSub;
   }
 
+  function hubTotalCompanies() {
+    if (!hubData) return null;
+    if (hubData.meta && hubData.meta.totalCompanies != null) {
+      return hubData.meta.totalCompanies;
+    }
+    var seen = {};
+    var n = 0;
+    if (hubData.sectors) {
+      for (var sid in hubData.sectors) {
+        if (!Object.prototype.hasOwnProperty.call(hubData.sectors, sid)) continue;
+        var block = hubData.sectors[sid];
+        if (!block || !block.companies) continue;
+        for (var i = 0; i < block.companies.length; i++) {
+          var tk = String(block.companies[i].ticker || '').trim();
+          if (!tk || seen[tk]) continue;
+          seen[tk] = true;
+          n++;
+        }
+      }
+    }
+    return n || null;
+  }
+
+  function renderCoverCount(lang) {
+    var el = document.getElementById('hdr-cover-count');
+    if (!el) return;
+    var n = hubTotalCompanies();
+    if (n == null) {
+      el.textContent = '';
+      el.hidden = true;
+      return;
+    }
+    el.hidden = false;
+    el.textContent = lang === 'en'
+      ? n + ' listed companies'
+      : 'KOSPI\u00B7KOSDAQ ' + n + '\uAC1C \uC885\uBAA9 \uCEE4\uBC84';
+  }
+
   function renderLabels(lang) {
     var labels = t(lang);
     var set = function (id, text) {
       var el = document.getElementById(id);
       if (el) el.textContent = text;
     };
+    renderCoverCount(lang);
     set('hub-pulse-title', labels.pulseTitle);
     set('hub-pulse-sub', pulseSubText(lang));
     set('hub-top-title', labels.topTitle);

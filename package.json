@@ -50,6 +50,7 @@
     "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",
+    "audit:mcap-universe": "node scripts/audit_mcap_universe.mjs",
     "verify:quotes-hybrid": "node scripts/verify_quotes_hybrid.mjs",
     "pages:build": "node scripts/pages_build.mjs",
     "patch:tickers": "node scripts/patch_tickers_from_krx.mjs",
