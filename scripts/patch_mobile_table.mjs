@@ -1,6 +1,6 @@
 /**
  * Mobile table UX v2: sticky filter bar + header row + company name column.
- * Safe to re-run (upgrades investingmap-mobile-table → v2).
+ * Safe to re-run (upgrades investingmap-mobile-table ??v2).
  */
 import fs from 'fs';
 import path from 'path';
@@ -31,12 +31,14 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
 ];
 
 const STICKY_BASE_CSS = `
-    /* ${MARKER_V2} — base */
+    /* ${MARKER_V2} ??base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -81,7 +83,7 @@ const STICKY_BASE_CSS = `
 `;
 
 const MOBILE_V2_CSS = `
-      /* ${MARKER_V2} — mobile layout */
+      /* ${MARKER_V2} ??mobile layout */
       .tabs {
         position: -webkit-sticky;
         position: sticky;
@@ -230,7 +232,7 @@ function stripOldMobileCss(html) {
     new RegExp(`\\s*/\\* ${MARKER_V1}[^*]*\\*/[\\s\\S]*?(?=\\n\\s*@media\\(max-width:768px\\))`, 'g'),
     '',
   );
-  // Do not strip v2 base / mobile-layout here — injectMobileV2Css is idempotent when present.
+  // Do not strip v2 base / mobile-layout here ??injectMobileV2Css is idempotent when present.
   html = html.replace(
     /\r?\n      \.tbl-wrap \{\r?\n        max-width: 100%;\r?\n        max-height: min\(72vh[\s\S]*?word-break: keep-all\r?\n      \}\r?\n\r?\n/g,
     '\n',
@@ -239,7 +241,7 @@ function stripOldMobileCss(html) {
 }
 
 function injectMobileV2Css(html) {
-  if (html.includes('investingmap-mobile-table-v2 — mobile layout')) {
+  if (html.includes('investingmap-mobile-table-v2 ??mobile layout')) {
     return html;
   }
 
@@ -288,9 +290,9 @@ function patchFile(rel) {
     html = html.replace(/border-collapse:\s*collapse/g, 'border-collapse: separate;\n      border-spacing: 0');
   }
 
-  if (!html.includes(`${MARKER_V2} — base`)) {
+  if (!html.includes(`${MARKER_V2} ??base`)) {
     html = html.replace(/(\s+\.node-dim\s*\{[^}]+\}\s*)(\n\s*@media\(max-width:768px\))/s, `$1${STICKY_BASE_CSS}$2`);
-    if (!html.includes(`${MARKER_V2} — base`)) {
+    if (!html.includes(`${MARKER_V2} ??base`)) {
       html = html.replace(/(\s*@media\(max-width:768px\)\s*\{)/, `${STICKY_BASE_CSS}$1`);
     }
   }

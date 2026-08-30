@@ -1,5 +1,6 @@
 /**
- * Remove companies below MIN_MCAP_WON (3\ucc9c\uc5b5\uc6d0) from industry maps and bio inline data.
+ * Remove companies below MIN_MCAP_WON (3천억원) from industry maps and bio inline data.
+ * Refreshes mcapWon from latest KRX CSV (data_4937_* / data_4848_*) before filtering.
  */
 import fs from 'fs';
 import path from 'path';
@@ -9,10 +10,14 @@ import {
   extractCompaniesFromHtml,
   patchKoreanCompaniesHtml,
   countKoreanTickersInHtml,
+  fmtMcap,
+  mcapTier,
 } from '../lib/map_company_serialize.mjs';
-import { filterCompaniesByMcap, MIN_MCAP_WON } from '../lib/mcap_policy.mjs';
+import { filterCompaniesByMcap, passesMcapFloor, MIN_MCAP_WON } from '../lib/mcap_policy.mjs';
+import { loadMergedKrxMap } from '../lib/krx_data_sources.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const DATA_DIR = path.join(ROOT, 'data');
 
 const HTML_MAPS = [
   'bigchip/korea_bigchip_map.html',
@@ -34,9 +39,84 @@ const HTML_MAPS = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
 ];
+
+function padTicker(t) {
+  return String(t || '').trim().padStart(6, '0');
+}
+
+/** Overlay latest KRX mcap (and display fields) before floor filter. */
+function applyKrxMcapToCompanies(companies, krx) {
+  for (const c of companies) {
+    const ticker = padTicker(c.ticker);
+    if (!ticker || ticker === 'UNLISTED') continue;
+    const r = krx.get(ticker);
+    if (r && r.mcap > 0) {
+      c.mcapWon = r.mcap;
+      c.revenue = fmtMcap(r.mcap);
+      c.revTier = mcapTier(r.mcap);
+      if (r.market) c.market = r.market;
+      if (r.name) c.name = r.name;
+    }
+  }
+  return companies;
+}
+
+function extractGlobalCompaniesFromHtml(html) {
+  const m = html.match(/const globalCompanies = (\[[\s\S]*?\n    \]);/);
+  if (!m) return null;
+  return Function('"use strict"; return ' + m[1])();
+}
+
+function patchGlobalCompaniesHtml(html, globals) {
+  const serialized = JSON.stringify(globals, null, 2).replace(/\n/g, '\n    ');
+  return html.replace(
+    /const globalCompanies = \[[\s\S]*?\n    \];/,
+    `const globalCompanies = ${serialized};`,
+  );
+}
+
+/** bigchip relation map: drop KR-listed globals below floor; prune partner refs. */
+function filterBigchipGlobalCompanies(html, companies, krx) {
+  const globals = extractGlobalCompaniesFromHtml(html);
+  if (!globals) return html;
+
+  const kept = [];
+  const droppedIds = new Set();
+  for (const g of globals) {
+    const ticker = g.ticker ? padTicker(g.ticker) : '';
+    if (ticker) {
+      const r = krx.get(ticker);
+      if (r && r.mcap > 0) {
+        g.mcapWon = r.mcap;
+        g.revTier = mcapTier(r.mcap);
+        if (r.market) g.market = r.market;
+      }
+      if (!passesMcapFloor({ mcapWon: g.mcapWon || r?.mcap || 0 })) {
+        droppedIds.add(g.id);
+        continue;
+      }
+    }
+    kept.push(g);
+  }
+
+  if (droppedIds.size) {
+    for (const c of companies) {
+      if (!Array.isArray(c.partners)) continue;
+      c.partners = c.partners.filter((p) => {
+        const id = typeof p === 'string' ? p : p?.id;
+        return id && !droppedIds.has(id);
+      });
+    }
+    console.log(`  bigchip globals removed (mcap floor): ${[...droppedIds].join(', ')}`);
+  }
+
+  return patchGlobalCompaniesHtml(html, kept);
+}
 
 function countMarkets(companies) {
   let kospi = 0;
@@ -73,27 +153,47 @@ function patchMapBadges(html, n, kospi, kosdaq) {
   return out;
 }
 
-function filterHtmlMap(rel) {
+function filterHtmlMap(rel, krx) {
   const fp = path.join(ROOT, rel);
   let html = fs.readFileSync(fp, 'utf8');
   const before = extractCompaniesFromHtml(html).length;
-  const filtered = filterCompaniesByMcap(extractCompaniesFromHtml(html));
+  const companies = extractCompaniesFromHtml(html);
+  applyKrxMcapToCompanies(companies, krx);
+  const filtered = filterCompaniesByMcap(companies);
   const { kospi, kosdaq } = countMarkets(filtered);
   html = patchKoreanCompaniesHtml(html, filtered);
+  if (rel.startsWith('bigchip/')) {
+    html = filterBigchipGlobalCompanies(html, filtered, krx);
+    html = patchKoreanCompaniesHtml(html, filtered);
+  }
   html = patchMapBadges(html, filtered.length, kospi, kosdaq);
   fs.writeFileSync(fp, html, 'utf8');
   const after = countKoreanTickersInHtml(fs.readFileSync(fp, 'utf8'));
-  console.log(`${rel}: ${before} \u2192 ${after} (floor ${MIN_MCAP_WON / 1e8}\uc5b5)`);
+  console.log(`${rel}: ${before} \u2192 ${after} (floor ${MIN_MCAP_WON / 1e8}\uc5b5, KRX refresh)`);
   return { before, after };
 }
 
-function filterBioInline() {
+function filterBioInline(krx) {
   console.log('bio: regenerating inline with mcap floor\u2026');
   execSync('node bio/gen_korea_bio_inline.mjs', { cwd: ROOT, stdio: 'inherit' });
-  const inline = fs.readFileSync(path.join(ROOT, 'bio/korea_bio_map.inline.js'), 'utf8');
-  const count = (inline.match(/"ticker":/g) || []).length;
-  console.log(`bio/korea_bio_map.inline.js: ${count} companies`);
-  return count;
+  const inlinePath = path.join(ROOT, 'bio/korea_bio_map.inline.js');
+  let inline = fs.readFileSync(inlinePath, 'utf8');
+  const m = inline.match(/const koreanCompanies = (\[[\s\S]*?\]);/);
+  if (!m) throw new Error('bio inline: koreanCompanies block not found');
+  const companies = Function(`"use strict"; return (${m[1]});`)();
+  const before = companies.length;
+  applyKrxMcapToCompanies(companies, krx);
+  const filtered = filterCompaniesByMcap(companies);
+  filtered.forEach((c, i) => {
+    c.id = `bio_${i}`;
+  });
+  inline = inline.replace(
+    /const koreanCompanies = \[[\s\S]*?\];/,
+    `const koreanCompanies = ${JSON.stringify(filtered)};`,
+  );
+  fs.writeFileSync(inlinePath, inline, 'utf8');
+  console.log(`bio/korea_bio_map.inline.js: ${before} \u2192 ${filtered.length} companies (KRX refresh)`);
+  return filtered.length;
 }
 
 function patchIndexHubCounts(hubLines) {
@@ -169,6 +269,7 @@ function patchIndexHubCounts(hubLines) {
 }
 
 function main() {
+  const krx = loadMergedKrxMap(DATA_DIR);
   console.log(`Applying market-cap floor: ${MIN_MCAP_WON.toLocaleString('ko-KR')} won (3\ucc9c\uc5b5\uc6d0)`);
   const counts = {};
   for (const rel of HTML_MAPS) {
@@ -190,10 +291,10 @@ function main() {
       cosmetics: 'cosmetics',
       kcontent: 'kcontent',
     }[key];
-    const r = filterHtmlMap(rel);
+    const r = filterHtmlMap(rel, krx);
     if (sectorKey) counts[sectorKey] = r.after;
   }
-  counts.bio = filterBioInline();
+  counts.bio = filterBioInline(krx);
   execSync('node scripts/build_hub_index.mjs', { cwd: ROOT, stdio: 'inherit' });
   patchIndexHubCounts(counts);
 }

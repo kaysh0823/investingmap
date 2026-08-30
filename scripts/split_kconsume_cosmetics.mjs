@@ -38,6 +38,7 @@ const COSMETICS_ALL = new Set([
   ...COSMETICS_AESTHETIC,
 ]);
 const DROP_FROM_KCONSUME = new Set([...COSMETICS_ALL]); // beauty + aesthetic (Classys never returns to kconsume)
+const TRAVEL_FROM_KCONSUME = new Set(['008770', '032350', '039130']);
 const PHARMARESEARCH = '214450';
 
 const COSMETICS_META = {
@@ -77,24 +78,24 @@ const COSMETICS_META = {
   },
 };
 
-const KCONSUME_CHAINS = ['음식·라면·식품', '여행·레저·항공', '패션', '쇼핑/유통'];
+const KCONSUME_CHAINS = ['음식·라면·식품', '패션', '쇼핑/유통', '가구·리빙'];
 const KCONSUME_COLORS = {
   '음식·라면·식품': '#FF8A65',
-  '여행·레저·항공': '#4FC3F7',
   '패션': '#AB47BC',
   '쇼핑/유통': '#26A69A',
+  '가구·리빙': '#8D6E63',
 };
 const KCONSUME_LABEL_KO = {
   '음식·라면·식품': '음식·라면·식품',
-  '여행·레저·항공': '여행·레저·항공',
   '패션': '패션',
   '쇼핑/유통': '쇼핑/유통',
+  '가구·리빙': '가구·리빙',
 };
 const KCONSUME_LABEL_EN = {
   '음식·라면·식품': 'Food & ramen',
-  '여행·레저·항공': 'Travel, leisure & aviation',
   '패션': 'Fashion',
   '쇼핑/유통': 'Shopping & retail',
+  '가구·리빙': 'Furniture & living',
 };
 
 function chainForCosmetics(ticker) {
@@ -289,24 +290,24 @@ function rewriteKconsume(html, companies) {
   );
   out = out.replace(
     /<meta name="description" content="[^"]*">/,
-    '<meta name="description" content="패션·식품·라면·쇼핑·유통·여행 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.">',
+    '<meta name="description" content="패션·식품·라면·쇼핑·유통·물류 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.">',
   );
   out = out.replace(
     /<meta property="og:description" content="[^"]*">/,
-    '<meta property="og:description" content="패션·식품·라면·쇼핑·유통·여행 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.">',
+    '<meta property="og:description" content="패션·식품·라면·쇼핑·유통·물류 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.">',
   );
   out = out.replace(
     /<meta name="twitter:description" content="[^"]*">/,
-    '<meta name="twitter:description" content="패션·식품·라면·쇼핑·유통·여행 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.">',
+    '<meta name="twitter:description" content="패션·식품·라면·쇼핑·유통·물류 관련 상장사의 KRX 데이터와 글로벌 연계 예시를 제공합니다.">',
   );
   out = out.replace(
     /(<p id="hdr-subtitle">)[^<]*(<\/p>)/,
-    '$1패션·식품·라면·쇼핑·유통·여행 관련 상장사$2',
+    '$1패션·식품·라면·쇼핑·유통·물류 관련 상장사$2',
   );
-  out = out.replace(/"subtitle":\s*"[^"]*"/, '"subtitle": "패션·식품·라면·쇼핑·유통·여행 관련 상장사"');
+  out = out.replace(/"subtitle":\s*"[^"]*"/, '"subtitle": "패션·식품·라면·쇼핑·유통·물류 관련 상장사"');
   out = out.replace(
     /("en":\s*\{[\s\S]*?"subtitle":\s*")[^"]*(")/,
-    '$1Fashion, food, retail, and travel listed companies$2',
+    '$1Fashion, food, retail, logistics and trading listed companies$2',
   );
   fs.writeFileSync(KCONSUME_HTML, out, 'utf8');
   console.log(`OK kconsume: ${companies.length} companies (beauty+Classys removed)`);
@@ -431,6 +432,7 @@ function main() {
 
   const remain = all
     .filter((c) => !DROP_FROM_KCONSUME.has(String(c.ticker).padStart(6, '0')))
+    .filter((c) => !TRAVEL_FROM_KCONSUME.has(String(c.ticker).padStart(6, '0')))
     .sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
 
   if (cosmetics.length !== COSMETICS_ALL.size) {
@@ -458,7 +460,8 @@ function main() {
           mcapWon: c.mcapWon || 0,
         })),
         kconsumeRemain: remain.map((c) => ({ ticker: c.ticker, name: c.name, chain: c.chain })),
-        droppedFromKconsume: ['214150'],
+        droppedFromKconsume: ['214150', ...TRAVEL_FROM_KCONSUME],
+        movedToTravel: [...TRAVEL_FROM_KCONSUME],
         movedBioToMedtech: [PHARMARESEARCH],
       },
       null,

@@ -27,6 +27,8 @@
     { id: 'software', path: '../software/korea_software_map.html', ko: 'IT\u00B7\uC18C\uD504\uD2B8\uC6E8\uC5B4', en: 'IT & Software' },
     { id: 'holdings', path: '../holdings/korea_holdings_map.html', ko: '\uC9C0\uC8FC\uD68C\uC0AC', en: 'Holdings' },
     { id: 'telecom', path: '../telecom/korea_telecom_map.html', ko: '\uD1B5\uC2E0', en: 'Telecom' },
+    { id: 'chemical', path: '../chemical/korea_chemical_map.html', ko: '\uD654\uD559\u00B7\uC815\uC720', en: 'Chemicals' },
+    { id: 'travel', path: '../travel/korea_travel_map.html', ko: '\uC5EC\uD589\u00B7\uD56D\uACF5', en: 'Travel' },
   ];
 
   function navLabel(s, lang, mobile) {

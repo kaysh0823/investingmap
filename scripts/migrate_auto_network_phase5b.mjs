@@ -155,6 +155,10 @@ const GLOBAL_META = {
   goodyear: { nameKo: '굿이어', nameEn: 'Goodyear', country: 'US', region: 'us' },
   nvidia: { nameKo: '엔비디아', nameEn: 'NVIDIA', country: 'US', region: 'us' },
   mahindra: { nameKo: '마힌드라', nameEn: 'Mahindra', country: 'IN', region: 'as' },
+  uber: { nameKo: 'Uber', nameEn: 'Uber', country: 'US', region: 'us' },
+  lyft: { nameKo: 'Lyft', nameEn: 'Lyft', country: 'US', region: 'us' },
+  carvana: { nameKo: 'Carvana', nameEn: 'Carvana', country: 'US', region: 'us' },
+  autonation: { nameKo: 'AutoNation', nameEn: 'AutoNation', country: 'US', region: 'us' },
 };
 
 const HYUNDAI_GROUP_MEMBERS = ['005380', '000270', '012330', '011210', '307950'];

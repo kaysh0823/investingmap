@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "126560",
+    "name": "현대퓨처넷",
+    "nameEn": "Hyundai Futurenet",
+    "chain": "통신서비스",
+    "semType": "디지털사이니지·방송통신",
+    "semTypeEn": "Digital signage & broadcast telecom",
+    "products": "디지털사이니지·미디어·방송통신",
+    "productsEn": "Digital signage, media and broadcast telecom",
+    "partners": ["verizon", "deutsche", "ericsson"],
+    "subSector": "디지털사이니지·방송통신",
+    "level": "core"
+  }
+]

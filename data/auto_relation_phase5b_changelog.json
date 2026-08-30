@@ -6,16 +6,16 @@
   "metrics": {
     "listedCompanyCount": 22,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 78,
+    "nodeCount": 80,
     "edgeCount": 116,
-    "structuralEdgeCount": 64,
-    "structuralGeneratedEdgeCount": 59,
-    "legacyMigratedEdgeCount": 52,
+    "structuralEdgeCount": 62,
+    "structuralGeneratedEdgeCount": 57,
+    "legacyMigratedEdgeCount": 54,
     "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 52,
+    "peerEdgeCount": 54,
     "supplyRelationshipCount": 0,
     "actualSupplyRelationshipCount": 0,
     "vehicleFitmentRelationshipCount": 0,
@@ -481,22 +481,22 @@
         "krx:307950",
         "krx:161390",
         "krx:018880",
+        "krx:007340",
         "krx:005850",
         "krx:204320",
         "krx:000240",
-        "krx:007340",
-        "krx:011210",
         "krx:073240",
+        "krx:011210",
         "krx:064960",
-        "krx:025540",
         "krx:002350",
+        "krx:025540",
         "krx:003620",
         "krx:015750",
+        "krx:403550",
         "krx:009900",
         "krx:097520",
-        "krx:010690",
         "krx:200880",
-        "krx:000430"
+        "krx:381970"
       ],
       "directRelationshipOrphans": [
         "krx:005380",
@@ -505,22 +505,22 @@
         "krx:307950",
         "krx:161390",
         "krx:018880",
+        "krx:007340",
         "krx:005850",
         "krx:204320",
         "krx:000240",
-        "krx:007340",
-        "krx:011210",
         "krx:073240",
+        "krx:011210",
         "krx:064960",
-        "krx:025540",
         "krx:002350",
+        "krx:025540",
         "krx:003620",
         "krx:015750",
+        "krx:403550",
         "krx:009900",
         "krx:097520",
-        "krx:010690",
         "krx:200880",
-        "krx:000430"
+        "krx:381970"
       ],
       "classificationOnly": [
         "krx:005380",
@@ -529,22 +529,22 @@
         "krx:307950",
         "krx:161390",
         "krx:018880",
+        "krx:007340",
         "krx:005850",
         "krx:204320",
         "krx:000240",
-        "krx:007340",
-        "krx:011210",
         "krx:073240",
+        "krx:011210",
         "krx:064960",
-        "krx:025540",
         "krx:002350",
+        "krx:025540",
         "krx:003620",
         "krx:015750",
+        "krx:403550",
         "krx:009900",
         "krx:097520",
-        "krx:010690",
         "krx:200880",
-        "krx:000430"
+        "krx:381970"
       ],
       "groupMembershipOnly": [
         "krx:005380",
@@ -560,22 +560,22 @@
         "krx:307950",
         "krx:161390",
         "krx:018880",
+        "krx:007340",
         "krx:005850",
         "krx:204320",
         "krx:000240",
-        "krx:007340",
-        "krx:011210",
         "krx:073240",
+        "krx:011210",
         "krx:064960",
-        "krx:025540",
         "krx:002350",
+        "krx:025540",
         "krx:003620",
         "krx:015750",
+        "krx:403550",
         "krx:009900",
         "krx:097520",
-        "krx:010690",
         "krx:200880",
-        "krx:000430"
+        "krx:381970"
       ],
       "hasPeerButNoBusiness": [
         "krx:005380",
@@ -584,27 +584,27 @@
         "krx:307950",
         "krx:161390",
         "krx:018880",
+        "krx:007340",
         "krx:005850",
         "krx:204320",
         "krx:000240",
-        "krx:007340",
-        "krx:011210",
         "krx:073240",
+        "krx:011210",
         "krx:064960",
-        "krx:025540",
         "krx:002350",
+        "krx:025540",
         "krx:003620",
         "krx:015750",
+        "krx:403550",
         "krx:009900",
         "krx:097520",
-        "krx:010690",
         "krx:200880",
-        "krx:000430"
+        "krx:381970"
       ],
       "peerOnly": [],
       "structuralOnly": []
     },
-    "evidenceFieldCoverage": 0.3620689655172414,
+    "evidenceFieldCoverage": 0.3448275862068966,
     "businessRelationshipDirectEvidenceCoverage": null,
     "businessRelationshipPrimarySourceCoverage": null,
     "supplyRelationshipDirectEvidenceCoverage": null,
@@ -616,10 +616,10 @@
     "groupMembershipPrimarySourceCoverage": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 42,
+        "numerator": 40,
         "denominator": 116,
-        "percentage": 0.3620689655172414,
-        "displayValue": "36.2%",
+        "percentage": 0.3448275862068966,
+        "displayValue": "34.5%",
         "applicable": true,
         "reason": null
       },
@@ -738,7 +738,7 @@
     "phase5bCuratedAt": "2026-08-23",
     "phase5b1CuratedAt": null,
     "removedUnsupportedPartnerCount": 1,
-    "demotedLegacyPeerCount": 52
+    "demotedLegacyPeerCount": 54
   },
   "validate": {
     "failures": [],
@@ -868,6 +868,24 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
+      "source": "krx:007340",
+      "target": "group:materials"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "manufactures",
+      "source": "krx:007340",
+      "target": "product:battery_pack_component"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "exposed_to",
+      "source": "krx:007340",
+      "target": "technology:battery_pack_component"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
       "source": "krx:005850",
       "target": "group:lighting"
     },
@@ -916,20 +934,14 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
-      "source": "krx:007340",
-      "target": "group:materials"
+      "source": "krx:073240",
+      "target": "group:tire"
     },
     {
       "action": "add_structural",
       "afterType": "manufactures",
-      "source": "krx:007340",
-      "target": "product:battery_pack_component"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "exposed_to",
-      "source": "krx:007340",
-      "target": "technology:battery_pack_component"
+      "source": "krx:073240",
+      "target": "product:passenger_tire"
     },
     {
       "action": "add_structural",
@@ -958,18 +970,6 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
-      "source": "krx:073240",
-      "target": "group:tire"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:073240",
-      "target": "product:passenger_tire"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "member_of",
       "source": "krx:064960",
       "target": "group:electrification"
     },
@@ -988,18 +988,6 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
-      "source": "krx:025540",
-      "target": "group:electronics_adas"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:025540",
-      "target": "product:auto_connector"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "member_of",
       "source": "krx:002350",
       "target": "group:tire"
     },
@@ -1008,6 +996,18 @@
       "afterType": "manufactures",
       "source": "krx:002350",
       "target": "product:passenger_tire"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
+      "source": "krx:025540",
+      "target": "group:electronics_adas"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "manufactures",
+      "source": "krx:025540",
+      "target": "product:auto_connector"
     },
     {
       "action": "add_structural",
@@ -1032,6 +1032,12 @@
       "afterType": "manufactures",
       "source": "krx:015750",
       "target": "product:bumper_body"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
+      "source": "krx:403550",
+      "target": "group:materials"
     },
     {
       "action": "add_structural",
@@ -1066,18 +1072,6 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
-      "source": "krx:010690",
-      "target": "group:chassis_braking_steering"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:010690",
-      "target": "product:suspension_chassis"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "member_of",
       "source": "krx:200880",
       "target": "group:interior"
     },
@@ -1090,14 +1084,8 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
-      "source": "krx:000430",
-      "target": "group:chassis_braking_steering"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "manufactures",
-      "source": "krx:000430",
-      "target": "product:spring_suspension"
+      "source": "krx:381970",
+      "target": "group:materials"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1247,6 +1235,22 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:007340",
+      "target": "global:bosch",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:007340",
+      "target": "global:continental",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:005850",
       "target": "global:bosch",
       "defaultHidden": true
@@ -1303,38 +1307,6 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:007340",
-      "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:007340",
-      "target": "global:continental",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:011210",
-      "target": "global:denso",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:011210",
-      "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
       "source": "krx:073240",
       "target": "global:michelin",
       "defaultHidden": true
@@ -1351,6 +1323,22 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:011210",
+      "target": "global:denso",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:011210",
+      "target": "global:bosch",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:064960",
       "target": "global:denso",
       "defaultHidden": true
@@ -1361,22 +1349,6 @@
       "afterType": "peer",
       "source": "krx:064960",
       "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:025540",
-      "target": "global:bosch",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:025540",
-      "target": "global:denso",
       "defaultHidden": true
     },
     {
@@ -1393,6 +1365,22 @@
       "afterType": "peer",
       "source": "krx:002350",
       "target": "global:bridgestone",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:025540",
+      "target": "global:bosch",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:025540",
+      "target": "global:denso",
       "defaultHidden": true
     },
     {
@@ -1431,6 +1419,30 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:403550",
+      "target": "global:uber",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:403550",
+      "target": "global:lyft",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:403550",
+      "target": "global:toyota",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:009900",
       "target": "global:toyota",
       "defaultHidden": true
@@ -1471,22 +1483,6 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:010690",
-      "target": "global:zf",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:010690",
-      "target": "global:continental",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
       "source": "krx:200880",
       "target": "global:toyota",
       "defaultHidden": true
@@ -1503,16 +1499,24 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:000430",
-      "target": "global:zf",
+      "source": "krx:381970",
+      "target": "global:carvana",
       "defaultHidden": true
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:000430",
-      "target": "global:bosch",
+      "source": "krx:381970",
+      "target": "global:autonation",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:381970",
+      "target": "global:vw",
       "defaultHidden": true
     },
     {

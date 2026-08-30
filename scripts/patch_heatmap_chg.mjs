@@ -30,20 +30,23 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
 ];
 
-const HINT_KO = '칸 크기 = 시가총액 · 색 = 당일 등락률';
-const HINT_EN = 'Tile size = market cap · color = 1-day return';
+const HINT_KO = '\uCE78 \uD06C\uAE30 = \uC2DC\uAC00\uCD1D\uC561 \u00B7 \uC0C9 = \uC77C\uC77C \uB4F1\uB77D\uB960';
+const HINT_EN = 'Tile size = market cap \u00B7 color = 1-day return';
+const HINT_KO_LEGACY = '\uC2DC\uAC00\uCD1D\uC561 \uAE30\uC900';
 
 function patchHtml(html) {
   html = stripHeatmapExcludeFilters(html);
   html = html.replace(/map_heatmap\.js(\?v=\d+)?/g, `map_heatmap.js?v=${SCRIPT_V}`);
   html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=15');
-  html = html.replace(/heatmapHint:\s*'시가총액 기준'/g, `heatmapHint: '${HINT_KO}'`);
+  html = html.replace(new RegExp(`heatmapHint:\\s*'${HINT_KO_LEGACY}'`, 'g'), `heatmapHint: '${HINT_KO}'`);
   html = html.replace(/heatmapHint:\s*'By market cap'/g, `heatmapHint: '${HINT_EN}'`);
-  html = html.replace(/"heatmapHint":\s*"시가총액 기준"/g, `"heatmapHint": "${HINT_KO}"`);
+  html = html.replace(new RegExp(`"heatmapHint":\\s*"${HINT_KO_LEGACY}"`, 'g'), `"heatmapHint": "${HINT_KO}"`);
   html = html.replace(/"heatmapHint":\s*"By market cap"/g, `"heatmapHint": "${HINT_EN}"`);
   html = html.replace(
     /heatmapHint: 'Tile size = market cap \(KRX\) · color = value chain \/ sector'/g,

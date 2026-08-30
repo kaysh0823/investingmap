@@ -1280,6 +1280,8 @@
     else if (layout === 'medicalDeviceEcosystem') layoutMedicalDeviceEcosystem(nodes, edges, W, H, state.profile);
     else if (layout === 'softwarePlatformEcosystem') layoutSoftwarePlatformEcosystem(nodes, edges, W, H, state.profile);
     else if (layout === 'telecomNetworkServiceEcosystem') layoutTelecomNetworkServiceEcosystem(nodes, edges, W, H, state.profile);
+    else if (layout === 'chemicalRefiningValueChainEcosystem') layoutChemicalRefiningValueChain(nodes, edges, W, H, state.profile);
+    else if (layout === 'travelLeisureValueChainEcosystem') layoutTravelLeisureValueChain(nodes, edges, W, H, state.profile);
     else if (layout === 'roboticsValueChainEcosystem') layoutRoboticsValueChainEcosystem(nodes, edges, W, H, state.profile);
     else if (layout === 'assetLicensing' || layout === 'platformEcosystem' || layout === 'technologyStack') {
       nodes.filter(function (n) { return n.type === 'program' || n.type === 'pipeline'; }).forEach(function (n, i) {
@@ -1711,6 +1713,69 @@
     if (n.type === 'network_generation') return 'network_operator';
     if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'network_operator';
     return 'network_equipment';
+  }
+
+  function layoutChemicalRefiningValueChain(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'petrochemical', 'specialty_chemical', 'refining_gas', 'chemical_materials',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferChemicalLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.14 + t * 0.68);
+      });
+    });
+  }
+
+  function inferChemicalLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'refining_product') return 'refining_gas';
+    if (n.type === 'chemical_product') return 'specialty_chemical';
+    if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'petrochemical';
+    if (n.type === 'group') return n.lane || 'petrochemical';
+    return 'petrochemical';
+  }
+
+  function layoutTravelLeisureValueChain(nodes, edges, W, H, profile) {
+    var laneOrder = (profile && profile.lanes) || [
+      'airlines', 'casino', 'hotel_resort', 'travel_duty_free',
+    ];
+    var byLane = {};
+    laneOrder.forEach(function (l) { byLane[l] = []; });
+    nodes.forEach(function (n) {
+      if (n.excludedFromLayout === true) return;
+      var lane = n.lane || inferTravelLane(n);
+      if (!byLane[lane]) byLane[lane] = [];
+      byLane[lane].push(n);
+    });
+    var colW = (W - 120) / Math.max(1, laneOrder.length - 1);
+    laneOrder.forEach(function (lane, li) {
+      var list = byLane[lane] || [];
+      list.forEach(function (n, i) {
+        var t = list.length <= 1 ? 0.5 : i / (list.length - 1);
+        n.fx = 60 + colW * li;
+        n.fy = H * (0.14 + t * 0.68);
+      });
+    });
+  }
+
+  function inferTravelLane(n) {
+    if (n.lane) return n.lane;
+    if (n.type === 'travel_service') return 'travel_duty_free';
+    if (n.type === 'cross_sector_anchor' || n.type === 'global_company') return 'airlines';
+    if (n.type === 'group') return n.lane || 'airlines';
+    return 'airlines';
   }
 
   function layoutRoboticsValueChainEcosystem(nodes, edges, W, H, profile) {

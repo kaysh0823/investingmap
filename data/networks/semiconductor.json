@@ -20,7 +20,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (ALD·CVD)",
       "group": "전공정 장비",
-      "mcapWon": 10737138951000,
+      "mcapWon": 8217862192800,
       "isListedKorea": true
     },
     {
@@ -32,7 +32,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (CVD·ALD)",
       "group": "전공정 장비",
-      "mcapWon": 8997079053300,
+      "mcapWon": 5453221401100,
       "isListedKorea": true
     },
     {
@@ -44,7 +44,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (고압 어닐)",
       "group": "전공정 장비",
-      "mcapWon": 5884450000000,
+      "mcapWon": 4205530000000,
       "isListedKorea": true
     },
     {
@@ -56,7 +56,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (PR Strip)",
       "group": "전공정 장비",
-      "mcapWon": 4921444708600,
+      "mcapWon": 3725119420400,
       "isListedKorea": true
     },
     {
@@ -68,7 +68,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (배치확산)",
       "group": "전공정 장비",
-      "mcapWon": 4493835836200,
+      "mcapWon": 3070749628000,
       "isListedKorea": true
     },
     {
@@ -80,7 +80,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (CVD)",
       "group": "전공정 장비",
-      "mcapWon": 3527392000000,
+      "mcapWon": 2762672000000,
       "isListedKorea": true
     },
     {
@@ -92,7 +92,7 @@
       "market": "KOSDAQ",
       "role": "계측장비 (AFM)",
       "group": "전공정 장비",
-      "mcapWon": 2377338225500,
+      "mcapWon": 1897669099000,
       "isListedKorea": true
     },
     {
@@ -104,31 +104,19 @@
       "market": "KOSPI",
       "role": "CMP·세정장비",
       "group": "전공정 장비",
-      "mcapWon": 1724463373100,
+      "mcapWon": 1320570688700,
       "isListedKorea": true
     },
     {
-      "id": "krx:036810",
+      "id": "krx:083450",
       "type": "listed_company",
-      "ticker": "036810",
-      "nameKo": "에프에스티",
-      "nameEn": "FINE SEMITECH Corp.",
+      "ticker": "083450",
+      "nameKo": "GST",
+      "nameEn": "GST",
       "market": "KOSDAQ",
-      "role": "EUV 소재·장비",
+      "role": "스크러버·칠러",
       "group": "전공정 장비",
-      "mcapWon": 718772994800,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:348210",
-      "type": "listed_company",
-      "ticker": "348210",
-      "nameKo": "넥스틴",
-      "nameEn": "NEXTIN Inc.",
-      "market": "KOSDAQ",
-      "role": "웨이퍼 결함 검사장비",
-      "group": "전공정 장비",
-      "mcapWon": 643288107000,
+      "mcapWon": 817370500000,
       "isListedKorea": true
     },
     {
@@ -140,7 +128,19 @@
       "market": "KOSDAQ",
       "role": "고압 어닐·열처리 장비",
       "group": "전공정 장비",
-      "mcapWon": 641100279600,
+      "mcapWon": 653870015000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:036810",
+      "type": "listed_company",
+      "ticker": "036810",
+      "nameKo": "에프에스티",
+      "nameEn": "FINE SEMITECH Corp.",
+      "market": "KOSDAQ",
+      "role": "EUV 소재·장비",
+      "group": "전공정 장비",
+      "mcapWon": 533667298850,
       "isListedKorea": true
     },
     {
@@ -152,43 +152,31 @@
       "market": "KOSDAQ",
       "role": "반도체 유틸리티·설비",
       "group": "전공정 장비",
-      "mcapWon": 580125000000,
+      "mcapWon": 525875000000,
       "isListedKorea": true
     },
     {
-      "id": "krx:160980",
+      "id": "krx:144960",
       "type": "listed_company",
-      "ticker": "160980",
-      "nameKo": "싸이맥스",
-      "nameEn": "CYMECHS Inc.",
+      "ticker": "144960",
+      "nameKo": "뉴파워프라즈마",
+      "nameEn": "New Power Plasma",
       "market": "KOSDAQ",
-      "role": "웨이퍼 이송·EFEM",
+      "role": "플라즈마 발생장치",
       "group": "전공정 장비",
-      "mcapWon": 507977299500,
+      "mcapWon": 421196895360,
       "isListedKorea": true
     },
     {
-      "id": "krx:039440",
+      "id": "krx:348210",
       "type": "listed_company",
-      "ticker": "039440",
-      "nameKo": "에스티아이",
-      "nameEn": "Systems Technology Incorporated",
+      "ticker": "348210",
+      "nameKo": "넥스틴",
+      "nameEn": "NEXTIN Inc.",
       "market": "KOSDAQ",
-      "role": "CCSS·리플로우 장비",
+      "role": "웨이퍼 결함 검사장비",
       "group": "전공정 장비",
-      "mcapWon": 501652970450,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:036200",
-      "type": "listed_company",
-      "ticker": "036200",
-      "nameKo": "유니셈",
-      "nameEn": "UNION SEMICONDUCTOR EQUIPMENT&MATERIALS",
-      "market": "KOSDAQ",
-      "role": "스크러버·칠러",
-      "group": "전공정 장비",
-      "mcapWon": 382382860810,
+      "mcapWon": 338407261500,
       "isListedKorea": true
     },
     {
@@ -200,7 +188,31 @@
       "market": "KOSDAQ",
       "role": "웨이퍼 세정장비",
       "group": "전공정 장비",
-      "mcapWon": 375925918800,
+      "mcapWon": 319164827100,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:039440",
+      "type": "listed_company",
+      "ticker": "039440",
+      "nameKo": "에스티아이",
+      "nameEn": "Systems Technology Incorporated",
+      "market": "KOSDAQ",
+      "role": "CCSS·리플로우 장비",
+      "group": "전공정 장비",
+      "mcapWon": 312466997050,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:417840",
+      "type": "listed_company",
+      "ticker": "417840",
+      "nameKo": "저스템",
+      "nameEn": "Jstem",
+      "market": "KOSDAQ",
+      "role": "EFEM·웨이퍼 이송(FOUP)",
+      "group": "전공정 장비",
+      "mcapWon": 304620154920,
       "isListedKorea": true
     },
     {
@@ -394,7 +406,7 @@
       "market": "KOSPI",
       "role": "패키징장비 (TC Bonder)",
       "group": "후공정 장비",
-      "mcapWon": 34407704200000,
+      "mcapWon": 20921027900000,
       "isListedKorea": true
     },
     {
@@ -406,7 +418,7 @@
       "market": "KOSDAQ",
       "role": "레이저장비",
       "group": "후공정 장비",
-      "mcapWon": 7539564600000,
+      "mcapWon": 4909340675000,
       "isListedKorea": true
     },
     {
@@ -418,7 +430,7 @@
       "market": "KOSDAQ",
       "role": "후공정 디스컴·리플로우 장비",
       "group": "후공정 장비",
-      "mcapWon": 3283952758500,
+      "mcapWon": 2589643639500,
       "isListedKorea": true
     },
     {
@@ -430,7 +442,7 @@
       "market": "KOSDAQ",
       "role": "계측·검사장비 (3D SPI/AOI)",
       "group": "후공정 장비",
-      "mcapWon": 2687833658250,
+      "mcapWon": 1957460913100,
       "isListedKorea": true
     },
     {
@@ -442,7 +454,31 @@
       "market": "KOSDAQ",
       "role": "반도체·디스플레이 검사장비",
       "group": "후공정 장비",
-      "mcapWon": 1850660668000,
+      "mcapWon": 1391798228400,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:232140",
+      "type": "listed_company",
+      "ticker": "232140",
+      "nameKo": "와이씨",
+      "nameEn": "YIK",
+      "market": "KOSDAQ",
+      "role": "반도체 검사·번인 장비",
+      "group": "후공정 장비",
+      "mcapWon": 931214722500,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:003160",
+      "type": "listed_company",
+      "ticker": "003160",
+      "nameKo": "디아이",
+      "nameEn": "DI Corp",
+      "market": "KOSPI",
+      "role": "번인 테스터",
+      "group": "후공정 장비",
+      "mcapWon": 689105000000,
       "isListedKorea": true
     },
     {
@@ -454,31 +490,7 @@
       "market": "KOSDAQ",
       "role": "패키징 디스펜서·다이본더",
       "group": "후공정 장비",
-      "mcapWon": 803700000000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:089890",
-      "type": "listed_company",
-      "ticker": "089890",
-      "nameKo": "코세스",
-      "nameEn": "KOSES Co.,Ltd",
-      "market": "KOSDAQ",
-      "role": "레이저 후공정 장비",
-      "group": "후공정 장비",
-      "mcapWon": 628570059800,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:168360",
-      "type": "listed_company",
-      "ticker": "168360",
-      "nameKo": "펨트론",
-      "nameEn": "PEMTRON Corporation",
-      "market": "KOSDAQ",
-      "role": "검사장비·SMT/반도체",
-      "group": "후공정 장비",
-      "mcapWon": 560803174400,
+      "mcapWon": 546300000000,
       "isListedKorea": true
     },
     {
@@ -490,7 +502,19 @@
       "market": "KOSDAQ",
       "role": "검사장비 (비전)",
       "group": "후공정 장비",
-      "mcapWon": 545431988800,
+      "mcapWon": 421121285000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:089890",
+      "type": "listed_company",
+      "ticker": "089890",
+      "nameKo": "코세스",
+      "nameEn": "KOSES Co.,Ltd",
+      "market": "KOSDAQ",
+      "role": "레이저 후공정 장비",
+      "group": "후공정 장비",
+      "mcapWon": 389746607000,
       "isListedKorea": true
     },
     {
@@ -502,7 +526,19 @@
       "market": "KOSDAQ",
       "role": "반도체 검사장비",
       "group": "후공정 장비",
-      "mcapWon": 401964547600,
+      "mcapWon": 338015642300,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:110990",
+      "type": "listed_company",
+      "ticker": "110990",
+      "nameKo": "디아이티",
+      "nameEn": "DIT",
+      "market": "KOSDAQ",
+      "role": "레이저 검사장비",
+      "group": "후공정 장비",
+      "mcapWon": 313173000000,
       "isListedKorea": true
     },
     {
@@ -618,18 +654,6 @@
       "group": "소재"
     },
     {
-      "id": "krx:178320",
-      "type": "listed_company",
-      "ticker": "178320",
-      "nameKo": "서진시스템",
-      "nameEn": "SEOJIN SYSTEM CO., LTD",
-      "market": "KOSDAQ",
-      "role": "장비 부품 (알루미늄 챔버)",
-      "group": "소재",
-      "mcapWon": 4778744199700,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:357780",
       "type": "listed_company",
       "ticker": "357780",
@@ -638,7 +662,7 @@
       "market": "KOSDAQ",
       "role": "공정소재 (식각·증착)",
       "group": "소재",
-      "mcapWon": 3434236889000,
+      "mcapWon": 2695273119000,
       "isListedKorea": true
     },
     {
@@ -650,7 +674,19 @@
       "market": "KOSDAQ",
       "role": "공정부품 (SiC Ring)",
       "group": "소재",
-      "mcapWon": 3242030640000,
+      "mcapWon": 2666290716000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:178320",
+      "type": "listed_company",
+      "ticker": "178320",
+      "nameKo": "서진시스템",
+      "nameEn": "SEOJIN SYSTEM CO., LTD",
+      "market": "KOSDAQ",
+      "role": "장비 부품 (알루미늄 챔버)",
+      "group": "소재",
+      "mcapWon": 2479196206150,
       "isListedKorea": true
     },
     {
@@ -662,7 +698,7 @@
       "market": "KOSPI",
       "role": "과산화수소·프리커서 소재",
       "group": "소재",
-      "mcapWon": 3212080087500,
+      "mcapWon": 2191189308000,
       "isListedKorea": true
     },
     {
@@ -674,7 +710,7 @@
       "market": "KOSDAQ",
       "role": "공정소재 (PR·슬러리)",
       "group": "소재",
-      "mcapWon": 3007237434000,
+      "mcapWon": 2161133342400,
       "isListedKorea": true
     },
     {
@@ -686,7 +722,7 @@
       "market": "KOSDAQ",
       "role": "식각 장비",
       "group": "소재",
-      "mcapWon": 2402883515000,
+      "mcapWon": 1526952370000,
       "isListedKorea": true
     },
     {
@@ -698,31 +734,7 @@
       "market": "KOSDAQ",
       "role": "전자재료·실리콘계 소재",
       "group": "소재",
-      "mcapWon": 1887888613600,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:166090",
-      "type": "listed_company",
-      "ticker": "166090",
-      "nameKo": "하나머티리얼즈",
-      "nameEn": "Hana Materials Inc.",
-      "market": "KOSDAQ",
-      "role": "공정부품 (실리콘 전극)",
-      "group": "소재",
-      "mcapWon": 1445747969400,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:101490",
-      "type": "listed_company",
-      "ticker": "101490",
-      "nameKo": "에스앤에스텍",
-      "nameEn": "S&S TECH CORPORATION",
-      "market": "KOSDAQ",
-      "role": "블랭크마스크·EUV 펠리클",
-      "group": "소재",
-      "mcapWon": 1363298768100,
+      "mcapWon": 1441639868400,
       "isListedKorea": true
     },
     {
@@ -734,31 +746,19 @@
       "market": "KOSDAQ",
       "role": "부품 세정·코팅 서비스",
       "group": "소재",
-      "mcapWon": 1306539431600,
+      "mcapWon": 1304627185000,
       "isListedKorea": true
     },
     {
-      "id": "krx:074600",
+      "id": "krx:166090",
       "type": "listed_company",
-      "ticker": "074600",
-      "nameKo": "원익QnC",
-      "nameEn": "WONIK QnC CORPORATION",
+      "ticker": "166090",
+      "nameKo": "하나머티리얼즈",
+      "nameEn": "Hana Materials Inc.",
       "market": "KOSDAQ",
-      "role": "공정부품 (석영·SiC)",
+      "role": "공정부품 (실리콘 전극)",
       "group": "소재",
-      "mcapWon": 1108039200000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:281740",
-      "type": "listed_company",
-      "ticker": "281740",
-      "nameKo": "레이크머티리얼즈",
-      "nameEn": "Lake Materials Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "전구체·유기금속소재",
-      "group": "소재",
-      "mcapWon": 1083896736520,
+      "mcapWon": 1040305652400,
       "isListedKorea": true
     },
     {
@@ -770,7 +770,19 @@
       "market": "KOSDAQ",
       "role": "반도체 소재 지주·자회사",
       "group": "소재",
-      "mcapWon": 992392680400,
+      "mcapWon": 897049168750,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:101490",
+      "type": "listed_company",
+      "ticker": "101490",
+      "nameKo": "에스앤에스텍",
+      "nameEn": "S&S TECH CORPORATION",
+      "market": "KOSDAQ",
+      "role": "블랭크마스크·EUV 펠리클",
+      "group": "소재",
+      "mcapWon": 878997014800,
       "isListedKorea": true
     },
     {
@@ -782,19 +794,31 @@
       "market": "KOSDAQ",
       "role": "OLED 유기발광소재",
       "group": "소재",
-      "mcapWon": 910062710350,
+      "mcapWon": 799563963800,
       "isListedKorea": true
     },
     {
-      "id": "krx:102710",
+      "id": "krx:281740",
       "type": "listed_company",
-      "ticker": "102710",
-      "nameKo": "이엔에프테크놀로지",
-      "nameEn": "ENF Technology Co., Ltd",
+      "ticker": "281740",
+      "nameKo": "레이크머티리얼즈",
+      "nameEn": "Lake Materials Co., Ltd.",
       "market": "KOSDAQ",
-      "role": "공정소재 (세정·슬러리)",
+      "role": "전구체·유기금속소재",
       "group": "소재",
-      "mcapWon": 742967472000,
+      "mcapWon": 787451965040,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:074600",
+      "type": "listed_company",
+      "ticker": "074600",
+      "nameKo": "원익QnC",
+      "nameEn": "WONIK QnC CORPORATION",
+      "market": "KOSDAQ",
+      "role": "공정부품 (석영·SiC)",
+      "group": "소재",
+      "mcapWon": 687431200000,
       "isListedKorea": true
     },
     {
@@ -806,7 +830,19 @@
       "market": "KOSDAQ",
       "role": "세라믹 부품·히터",
       "group": "소재",
-      "mcapWon": 701752338000,
+      "mcapWon": 650624667660,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:102710",
+      "type": "listed_company",
+      "ticker": "102710",
+      "nameKo": "이엔에프테크놀로지",
+      "nameEn": "ENF Technology Co., Ltd",
+      "market": "KOSDAQ",
+      "role": "공정소재 (세정·슬러리)",
+      "group": "소재",
+      "mcapWon": 646524579000,
       "isListedKorea": true
     },
     {
@@ -818,19 +854,7 @@
       "market": "KOSPI",
       "role": "PI필름 (반도체 패키징소재)",
       "group": "소재",
-      "mcapWon": 700386779700,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:104830",
-      "type": "listed_company",
-      "ticker": "104830",
-      "nameKo": "원익머트리얼즈",
-      "nameEn": "WONIK Materials Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "특수가스 (공정가스)",
-      "group": "소재",
-      "mcapWon": 600140800000,
+      "mcapWon": 568531993920,
       "isListedKorea": true
     },
     {
@@ -842,43 +866,43 @@
       "market": "KOSDAQ",
       "role": "실리콘·쿼츠 공정 소모부품",
       "group": "소재",
-      "mcapWon": 454052307500,
+      "mcapWon": 493678690700,
       "isListedKorea": true
     },
     {
-      "id": "krx:425040",
+      "id": "krx:104830",
       "type": "listed_company",
-      "ticker": "425040",
-      "nameKo": "티이엠씨",
-      "nameEn": "TEMC Co., Ltd.",
+      "ticker": "104830",
+      "nameKo": "원익머트리얼즈",
+      "nameEn": "WONIK Materials Co., Ltd.",
       "market": "KOSDAQ",
-      "role": "반도체 특수가스",
+      "role": "특수가스 (공정가스)",
       "group": "소재",
-      "mcapWon": 414668830800,
+      "mcapWon": 416064000000,
       "isListedKorea": true
     },
     {
-      "id": "krx:187870",
+      "id": "krx:241770",
       "type": "listed_company",
-      "ticker": "187870",
-      "nameKo": "디바이스",
-      "nameEn": "Device",
+      "ticker": "241770",
+      "nameKo": "메카로",
+      "nameEn": "Mecaro",
       "market": "KOSDAQ",
-      "role": "세정·OLED/반도체 장비",
+      "role": "전구체 소재",
       "group": "소재",
-      "mcapWon": 324973416000,
+      "mcapWon": 379675840000,
       "isListedKorea": true
     },
     {
-      "id": "krx:272110",
+      "id": "krx:114810",
       "type": "listed_company",
-      "ticker": "272110",
-      "nameKo": "케이엔제이",
-      "nameEn": "KnJ Co., Ltd.",
+      "ticker": "114810",
+      "nameKo": "한솔아이원스",
+      "nameEn": "Hansol iOne",
       "market": "KOSDAQ",
-      "role": "SiC 포커스링·장비",
+      "role": "석영·부품 세정",
       "group": "소재",
-      "mcapWon": 309780247000,
+      "mcapWon": 366424125480,
       "isListedKorea": true
     },
     {
@@ -989,7 +1013,7 @@
       "market": "KOSPI",
       "role": "아날로그 / 전력반도체 파운드리",
       "group": "파운드리",
-      "mcapWon": 7582849688400,
+      "mcapWon": 4085080813200,
       "isListedKorea": true
     },
     {
@@ -1100,7 +1124,7 @@
       "market": "KOSDAQ",
       "role": "스토리지 (SSD 컨트롤러)",
       "group": "팹리스",
-      "mcapWon": 5059779527000,
+      "mcapWon": 3172028009100,
       "isListedKorea": true
     },
     {
@@ -1112,19 +1136,7 @@
       "market": "KOSDAQ",
       "role": "메모리 (SRAM)",
       "group": "팹리스",
-      "mcapWon": 3530390382500,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:108320",
-      "type": "listed_company",
-      "ticker": "108320",
-      "nameKo": "LX세미콘",
-      "nameEn": "LX Semicon",
-      "market": "KOSPI",
-      "role": "디스플레이IC / 전력반도체",
-      "group": "팹리스",
-      "mcapWon": 816467860000,
+      "mcapWon": 2641765291100,
       "isListedKorea": true
     },
     {
@@ -1136,7 +1148,19 @@
       "market": "KOSDAQ",
       "role": "아날로그 (드라이버IC)",
       "group": "팹리스",
-      "mcapWon": 774713128800,
+      "mcapWon": 677481926400,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:108320",
+      "type": "listed_company",
+      "ticker": "108320",
+      "nameKo": "LX세미콘",
+      "nameEn": "LX Semicon",
+      "market": "KOSPI",
+      "role": "디스플레이IC / 전력반도체",
+      "group": "팹리스",
+      "mcapWon": 605031960000,
       "isListedKorea": true
     },
     {
@@ -1148,31 +1172,7 @@
       "market": "KOSDAQ",
       "role": "SSD 검사장비",
       "group": "팹리스",
-      "mcapWon": 613729604360,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:394280",
-      "type": "listed_company",
-      "ticker": "394280",
-      "nameKo": "오픈엣지테크놀로지",
-      "nameEn": "Openedges Technology, Inc.",
-      "market": "KOSDAQ",
-      "role": "AI 반도체 IP",
-      "group": "팹리스",
-      "mcapWon": 388347852200,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:094360",
-      "type": "listed_company",
-      "ticker": "094360",
-      "nameKo": "칩스앤미디어",
-      "nameEn": "Chips&Media, Inc.",
-      "market": "KOSDAQ",
-      "role": "반도체 IP",
-      "group": "팹리스",
-      "mcapWon": 312214105880,
+      "mcapWon": 478173887600,
       "isListedKorea": true
     },
     {
@@ -1335,7 +1335,19 @@
       "market": "KOSDAQ",
       "role": "AI반도체 (설계 플랫폼)",
       "group": "디자인하우스",
-      "mcapWon": 680733530000,
+      "mcapWon": 527718558000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:490470",
+      "type": "listed_company",
+      "ticker": "490470",
+      "nameKo": "세미파이브",
+      "nameEn": "SemiFive",
+      "market": "KOSDAQ",
+      "role": "ASIC 설계 플랫폼",
+      "group": "디자인하우스",
+      "mcapWon": 522630758400,
       "isListedKorea": true
     },
     {
@@ -1347,7 +1359,7 @@
       "market": "KOSDAQ",
       "role": "시스템반도체 (커스텀설계 서비스)",
       "group": "디자인하우스",
-      "mcapWon": 543865082800,
+      "mcapWon": 343281178500,
       "isListedKorea": true
     },
     {
@@ -1458,7 +1470,7 @@
       "market": "KOSPI",
       "role": "고다층 MLB PCB",
       "group": "부품/기판",
-      "mcapWon": 8985288405600,
+      "mcapWon": 8280559903200,
       "isListedKorea": true
     },
     {
@@ -1470,7 +1482,7 @@
       "market": "KOSPI",
       "role": "반도체 기판 (HDI PCB)",
       "group": "부품/기판",
-      "mcapWon": 8163676010000,
+      "mcapWon": 5317261130000,
       "isListedKorea": true
     },
     {
@@ -1482,19 +1494,7 @@
       "market": "KOSDAQ",
       "role": "테스트소켓 (MEMS핀)",
       "group": "부품/기판",
-      "mcapWon": 7964138325000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:095340",
-      "type": "listed_company",
-      "ticker": "095340",
-      "nameKo": "ISC",
-      "nameEn": "ISC Co., LTD.",
-      "market": "KOSDAQ",
-      "role": "테스트소켓 (고무소켓)",
-      "group": "부품/기판",
-      "mcapWon": 4875323340000,
+      "mcapWon": 5090951580000,
       "isListedKorea": true
     },
     {
@@ -1506,7 +1506,19 @@
       "market": "KOSDAQ",
       "role": "반도체 기판 (PCB)",
       "group": "부품/기판",
-      "mcapWon": 4874057423100,
+      "mcapWon": 4663235198400,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:095340",
+      "type": "listed_company",
+      "ticker": "095340",
+      "nameKo": "ISC",
+      "nameEn": "ISC Co., LTD.",
+      "market": "KOSDAQ",
+      "role": "테스트소켓 (고무소켓)",
+      "group": "부품/기판",
+      "mcapWon": 3675569857200,
       "isListedKorea": true
     },
     {
@@ -1518,19 +1530,7 @@
       "market": "KOSPI",
       "role": "반도체 기판 (BGA·FC-BGA)",
       "group": "부품/기판",
-      "mcapWon": 3223264128000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:195870",
-      "type": "listed_company",
-      "ticker": "195870",
-      "nameKo": "해성디에스",
-      "nameEn": "HAESUNG DS",
-      "market": "KOSPI",
-      "role": "리드프레임 / 기판",
-      "group": "부품/기판",
-      "mcapWon": 1334500000000,
+      "mcapWon": 1441355462000,
       "isListedKorea": true
     },
     {
@@ -1542,7 +1542,31 @@
       "market": "KOSDAQ",
       "role": "메모리 모듈·SSD PCB",
       "group": "부품/기판",
-      "mcapWon": 985229526000,
+      "mcapWon": 938569896000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:195870",
+      "type": "listed_company",
+      "ticker": "195870",
+      "nameKo": "해성디에스",
+      "nameEn": "HAESUNG DS",
+      "market": "KOSPI",
+      "role": "리드프레임 / 기판",
+      "group": "부품/기판",
+      "mcapWon": 918000000000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:327260",
+      "type": "listed_company",
+      "ticker": "327260",
+      "nameKo": "RF머트리얼즈",
+      "nameEn": "RFMaterials",
+      "market": "KOSDAQ",
+      "role": "RF 세라믹 패키지·부품",
+      "group": "부품/기판",
+      "mcapWon": 627810481100,
       "isListedKorea": true
     },
     {
@@ -1554,7 +1578,7 @@
       "market": "KOSDAQ",
       "role": "FPCB/OLED/반도체 소재",
       "group": "부품/기판",
-      "mcapWon": 576194010100,
+      "mcapWon": 419684564450,
       "isListedKorea": true
     },
     {
@@ -1566,19 +1590,7 @@
       "market": "KOSDAQ",
       "role": "검사용 PCB",
       "group": "부품/기판",
-      "mcapWon": 496934623000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:091700",
-      "type": "listed_company",
-      "ticker": "091700",
-      "nameKo": "파트론",
-      "nameEn": "PARTRON CO., LTD",
-      "market": "KOSDAQ",
-      "role": "센서·모듈",
-      "group": "부품/기판",
-      "mcapWon": 325500000000,
+      "mcapWon": 392117409000,
       "isListedKorea": true
     },
     {
@@ -1668,15 +1680,15 @@
       "group": "패키징/테스트"
     },
     {
-      "id": "krx:131970",
+      "id": "krx:131290",
       "type": "listed_company",
-      "ticker": "131970",
-      "nameKo": "두산테스나",
-      "nameEn": "DOOSAN TESNA",
+      "ticker": "131290",
+      "nameKo": "티에스이",
+      "nameEn": "TSE CO.,Ltd",
       "market": "KOSDAQ",
-      "role": "비메모리 반도체 테스트",
+      "role": "프로브카드·테스트 인터페이스",
       "group": "패키징/테스트",
-      "mcapWon": 3382266650000,
+      "mcapWon": 2638150816500,
       "isListedKorea": true
     },
     {
@@ -1688,19 +1700,7 @@
       "market": "KOSDAQ",
       "role": "OSAT (패키징·테스트)",
       "group": "패키징/테스트",
-      "mcapWon": 3253423862700,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:131290",
-      "type": "listed_company",
-      "ticker": "131290",
-      "nameKo": "티에스이",
-      "nameEn": "TSE CO.,Ltd",
-      "market": "KOSDAQ",
-      "role": "프로브카드·테스트 인터페이스",
-      "group": "패키징/테스트",
-      "mcapWon": 2992116544500,
+      "mcapWon": 2350452219150,
       "isListedKorea": true
     },
     {
@@ -1712,7 +1712,19 @@
       "market": "KOSDAQ",
       "role": "테스트장비 (핸들러)",
       "group": "패키징/테스트",
-      "mcapWon": 2419603018500,
+      "mcapWon": 1848976885500,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:131970",
+      "type": "listed_company",
+      "ticker": "131970",
+      "nameKo": "두산테스나",
+      "nameEn": "DOOSAN TESNA",
+      "market": "KOSDAQ",
+      "role": "비메모리 반도체 테스트",
+      "group": "패키징/테스트",
+      "mcapWon": 1579035344600,
       "isListedKorea": true
     },
     {
@@ -1724,7 +1736,7 @@
       "market": "KOSDAQ",
       "role": "OSAT (반도체 패키징)",
       "group": "패키징/테스트",
-      "mcapWon": 1193981799780,
+      "mcapWon": 922622299830,
       "isListedKorea": true
     },
     {
@@ -1736,19 +1748,7 @@
       "market": "KOSDAQ",
       "role": "세라믹 STF·프로브카드 부품",
       "group": "패키징/테스트",
-      "mcapWon": 982755948480,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:033640",
-      "type": "listed_company",
-      "ticker": "033640",
-      "nameKo": "네패스",
-      "nameEn": "NEPES Corporation",
-      "market": "KOSDAQ",
-      "role": "WLP / SiP 패키징",
-      "group": "패키징/테스트",
-      "mcapWon": 752882945300,
+      "mcapWon": 836426478210,
       "isListedKorea": true
     },
     {
@@ -1760,31 +1760,19 @@
       "market": "KOSDAQ",
       "role": "테스트 소켓·부품",
       "group": "패키징/테스트",
-      "mcapWon": 705024035100,
+      "mcapWon": 586491097500,
       "isListedKorea": true
     },
     {
-      "id": "krx:033160",
+      "id": "krx:033640",
       "type": "listed_company",
-      "ticker": "033160",
-      "nameKo": "엠케이전자",
-      "nameEn": "MKElectron",
+      "ticker": "033640",
+      "nameKo": "네패스",
+      "nameEn": "NEPES Corporation",
       "market": "KOSDAQ",
-      "role": "본딩와이어·패키징 소재",
+      "role": "WLP / SiP 패키징",
       "group": "패키징/테스트",
-      "mcapWon": 660508921800,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:330860",
-      "type": "listed_company",
-      "ticker": "330860",
-      "nameKo": "네패스아크",
-      "nameEn": "Nepes Ark Corporation",
-      "market": "KOSDAQ",
-      "role": "반도체 테스트",
-      "group": "패키징/테스트",
-      "mcapWon": 615294272500,
+      "mcapWon": 539585326800,
       "isListedKorea": true
     },
     {
@@ -1796,19 +1784,55 @@
       "market": "KOSDAQ",
       "role": "테스트 소켓·커넥터",
       "group": "패키징/테스트",
-      "mcapWon": 396088134900,
+      "mcapWon": 428146386500,
       "isListedKorea": true
     },
     {
-      "id": "krx:086390",
+      "id": "krx:098120",
       "type": "listed_company",
-      "ticker": "086390",
-      "nameKo": "유니테스트",
-      "nameEn": "UniTest Inc.",
+      "ticker": "098120",
+      "nameKo": "마이크로컨텍솔",
+      "nameEn": "Micro Contact Solution Co.,Ltd.",
       "market": "KOSDAQ",
-      "role": "메모리 테스트·번인 장비",
+      "role": "반도체 소켓",
       "group": "패키징/테스트",
-      "mcapWon": 350403809080,
+      "mcapWon": 347889257100,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:332570",
+      "type": "listed_company",
+      "ticker": "332570",
+      "nameKo": "PS일렉트로닉스",
+      "nameEn": "PS Electronics",
+      "market": "KOSDAQ",
+      "role": "반도체 테스트",
+      "group": "패키징/테스트",
+      "mcapWon": 337257484860,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:033160",
+      "type": "listed_company",
+      "ticker": "033160",
+      "nameKo": "엠케이전자",
+      "nameEn": "MKElectron",
+      "market": "KOSDAQ",
+      "role": "본딩와이어·패키징 소재",
+      "group": "패키징/테스트",
+      "mcapWon": 336786966720,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:330860",
+      "type": "listed_company",
+      "ticker": "330860",
+      "nameKo": "네패스아크",
+      "nameEn": "Nepes Ark Corporation",
+      "market": "KOSDAQ",
+      "role": "반도체 테스트",
+      "group": "패키징/테스트",
+      "mcapWon": 320440383500,
       "isListedKorea": true
     },
     {
@@ -1820,7 +1844,7 @@
       "market": "KOSDAQ",
       "role": "범핑·패키징·테스트 (OSAT)",
       "group": "패키징/테스트",
-      "mcapWon": 307259101740,
+      "mcapWon": 305912321190,
       "isListedKorea": true
     },
     {
@@ -1871,15 +1895,15 @@
       "group": "반도체 유통"
     },
     {
-      "id": "krx:254490",
+      "id": "krx:093520",
       "type": "listed_company",
-      "ticker": "254490",
-      "nameKo": "미래반도체",
-      "nameEn": "MIRAI SEMICONDUCTORS CO., LTD.",
+      "ticker": "093520",
+      "nameKo": "매커스",
+      "nameEn": "Makus",
       "market": "KOSDAQ",
-      "role": "반도체 소자 유통",
+      "role": "비메모리 유통·FPGA",
       "group": "반도체 유통",
-      "mcapWon": 370334700000,
+      "mcapWon": 312423221250,
       "isListedKorea": true
     },
     {
@@ -2096,23 +2120,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-front_equip-036810",
-      "source": "krx:036810",
-      "target": "group:front_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "전공정 장비 밸류체인 분류",
-      "labelEn": "Front-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-front_equip-348210",
-      "source": "krx:348210",
+      "id": "member-front_equip-083450",
+      "source": "krx:083450",
       "target": "group:front_equip",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2141,6 +2150,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-front_equip-036810",
+      "source": "krx:036810",
+      "target": "group:front_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "전공정 장비 밸류체인 분류",
+      "labelEn": "Front-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-front_equip-045100",
       "source": "krx:045100",
       "target": "group:front_equip",
@@ -2156,8 +2180,38 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-front_equip-160980",
-      "source": "krx:160980",
+      "id": "member-front_equip-144960",
+      "source": "krx:144960",
+      "target": "group:front_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "전공정 장비 밸류체인 분류",
+      "labelEn": "Front-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-front_equip-348210",
+      "source": "krx:348210",
+      "target": "group:front_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "전공정 장비 밸류체인 분류",
+      "labelEn": "Front-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-front_equip-079370",
+      "source": "krx:079370",
       "target": "group:front_equip",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2186,23 +2240,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-front_equip-036200",
-      "source": "krx:036200",
-      "target": "group:front_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "전공정 장비 밸류체인 분류",
-      "labelEn": "Front-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-front_equip-079370",
-      "source": "krx:079370",
+      "id": "member-front_equip-417840",
+      "source": "krx:417840",
       "target": "group:front_equip",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2522,38 +2561,38 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-back_equip-232140",
+      "source": "krx:232140",
+      "target": "group:back_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "후공정 장비 밸류체인 분류",
+      "labelEn": "Back-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-back_equip-003160",
+      "source": "krx:003160",
+      "target": "group:back_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "후공정 장비 밸류체인 분류",
+      "labelEn": "Back-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-back_equip-053610",
       "source": "krx:053610",
-      "target": "group:back_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "후공정 장비 밸류체인 분류",
-      "labelEn": "Back-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-back_equip-089890",
-      "source": "krx:089890",
-      "target": "group:back_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "후공정 장비 밸류체인 분류",
-      "labelEn": "Back-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-back_equip-168360",
-      "source": "krx:168360",
       "target": "group:back_equip",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2582,8 +2621,38 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-back_equip-089890",
+      "source": "krx:089890",
+      "target": "group:back_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "후공정 장비 밸류체인 분류",
+      "labelEn": "Back-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-back_equip-092870",
       "source": "krx:092870",
+      "target": "group:back_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "후공정 장비 밸류체인 분류",
+      "labelEn": "Back-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-back_equip-110990",
+      "source": "krx:110990",
       "target": "group:back_equip",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2814,21 +2883,6 @@
       "defaultHidden": true
     },
     {
-      "id": "member-materials-178320",
-      "source": "krx:178320",
-      "target": "group:materials",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "소재 밸류체인 분류",
-      "labelEn": "Materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-materials-357780",
       "source": "krx:357780",
       "target": "group:materials",
@@ -2846,6 +2900,21 @@
     {
       "id": "member-materials-064760",
       "source": "krx:064760",
+      "target": "group:materials",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "소재 밸류체인 분류",
+      "labelEn": "Materials value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-materials-178320",
+      "source": "krx:178320",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2919,36 +2988,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-166090",
-      "source": "krx:166090",
-      "target": "group:materials",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "소재 밸류체인 분류",
-      "labelEn": "Materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-materials-101490",
-      "source": "krx:101490",
-      "target": "group:materials",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "소재 밸류체인 분류",
-      "labelEn": "Materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-materials-183300",
       "source": "krx:183300",
       "target": "group:materials",
@@ -2964,23 +3003,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-074600",
-      "source": "krx:074600",
-      "target": "group:materials",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "소재 밸류체인 분류",
-      "labelEn": "Materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-materials-281740",
-      "source": "krx:281740",
+      "id": "member-materials-166090",
+      "source": "krx:166090",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3009,6 +3033,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-materials-101490",
+      "source": "krx:101490",
+      "target": "group:materials",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "소재 밸류체인 분류",
+      "labelEn": "Materials value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-materials-213420",
       "source": "krx:213420",
       "target": "group:materials",
@@ -3024,8 +3063,23 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-102710",
-      "source": "krx:102710",
+      "id": "member-materials-281740",
+      "source": "krx:281740",
+      "target": "group:materials",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "소재 밸류체인 분류",
+      "labelEn": "Materials value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-materials-074600",
+      "source": "krx:074600",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3054,8 +3108,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-178920",
-      "source": "krx:178920",
+      "id": "member-materials-102710",
+      "source": "krx:102710",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3069,8 +3123,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-104830",
-      "source": "krx:104830",
+      "id": "member-materials-178920",
+      "source": "krx:178920",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3099,8 +3153,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-425040",
-      "source": "krx:425040",
+      "id": "member-materials-104830",
+      "source": "krx:104830",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3114,8 +3168,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-187870",
-      "source": "krx:187870",
+      "id": "member-materials-241770",
+      "source": "krx:241770",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3129,8 +3183,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-272110",
-      "source": "krx:272110",
+      "id": "member-materials-114810",
+      "source": "krx:114810",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3695,21 +3749,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-fabless-108320",
-      "source": "krx:108320",
-      "target": "group:fabless",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "팹리스 밸류체인 분류",
-      "labelEn": "Fabless value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-fabless-094170",
       "source": "krx:094170",
       "target": "group:fabless",
@@ -3725,38 +3764,23 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-fabless-108320",
+      "source": "krx:108320",
+      "target": "group:fabless",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "팹리스 밸류체인 분류",
+      "labelEn": "Fabless value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-fabless-253590",
       "source": "krx:253590",
-      "target": "group:fabless",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "팹리스 밸류체인 분류",
-      "labelEn": "Fabless value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-fabless-394280",
-      "source": "krx:394280",
-      "target": "group:fabless",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "팹리스 밸류체인 분류",
-      "labelEn": "Fabless value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-fabless-094360",
-      "source": "krx:094360",
       "target": "group:fabless",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4083,6 +4107,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-design_house-490470",
+      "source": "krx:490470",
+      "target": "group:design_house",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "디자인하우스 밸류체인 분류",
+      "labelEn": "Design house value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-design_house-200710",
       "source": "krx:200710",
       "target": "group:design_house",
@@ -4363,8 +4402,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-substrate-095340",
-      "source": "krx:095340",
+      "id": "member-substrate-222800",
+      "source": "krx:222800",
       "target": "group:substrate",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4378,8 +4417,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-substrate-222800",
-      "source": "krx:222800",
+      "id": "member-substrate-095340",
+      "source": "krx:095340",
       "target": "group:substrate",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4408,6 +4447,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-substrate-356860",
+      "source": "krx:356860",
+      "target": "group:substrate",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "부품/기판 밸류체인 분류",
+      "labelEn": "Components/Substrate value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-substrate-195870",
       "source": "krx:195870",
       "target": "group:substrate",
@@ -4423,8 +4477,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-substrate-356860",
-      "source": "krx:356860",
+      "id": "member-substrate-327260",
+      "source": "krx:327260",
       "target": "group:substrate",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4455,21 +4509,6 @@
     {
       "id": "member-substrate-219130",
       "source": "krx:219130",
-      "target": "group:substrate",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "부품/기판 밸류체인 분류",
-      "labelEn": "Components/Substrate value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-substrate-091700",
-      "source": "krx:091700",
       "target": "group:substrate",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4764,8 +4803,8 @@
       "defaultHidden": true
     },
     {
-      "id": "member-osat-131970",
-      "source": "krx:131970",
+      "id": "member-osat-131290",
+      "source": "krx:131290",
       "target": "group:osat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4794,8 +4833,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-osat-131290",
-      "source": "krx:131290",
+      "id": "member-osat-089030",
+      "source": "krx:089030",
       "target": "group:osat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4809,8 +4848,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-osat-089030",
-      "source": "krx:089030",
+      "id": "member-osat-131970",
+      "source": "krx:131970",
       "target": "group:osat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4854,6 +4893,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-osat-425420",
+      "source": "krx:425420",
+      "target": "group:osat",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "패키징/테스트 밸류체인 분류",
+      "labelEn": "Packaging & Test value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-osat-033640",
       "source": "krx:033640",
       "target": "group:osat",
@@ -4869,8 +4923,38 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-osat-425420",
-      "source": "krx:425420",
+      "id": "member-osat-080580",
+      "source": "krx:080580",
+      "target": "group:osat",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "패키징/테스트 밸류체인 분류",
+      "labelEn": "Packaging & Test value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-osat-098120",
+      "source": "krx:098120",
+      "target": "group:osat",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "패키징/테스트 밸류체인 분류",
+      "labelEn": "Packaging & Test value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-osat-332570",
+      "source": "krx:332570",
       "target": "group:osat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4901,36 +4985,6 @@
     {
       "id": "member-osat-330860",
       "source": "krx:330860",
-      "target": "group:osat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "패키징/테스트 밸류체인 분류",
-      "labelEn": "Packaging & Test value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-osat-080580",
-      "source": "krx:080580",
-      "target": "group:osat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "패키징/테스트 밸류체인 분류",
-      "labelEn": "Packaging & Test value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-osat-086390",
-      "source": "krx:086390",
       "target": "group:osat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -5243,8 +5297,8 @@
       "defaultHidden": true
     },
     {
-      "id": "member-distribution-254490",
-      "source": "krx:254490",
+      "id": "member-distribution-093520",
+      "source": "krx:093520",
       "target": "group:distribution",
       "type": "member_of",
       "direction": "source_to_target",

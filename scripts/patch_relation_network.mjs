@@ -34,6 +34,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
 ];
@@ -225,22 +227,20 @@ const RN_GRAPH_HTML = `
         <p id="rn-sparse-notice" class="rn-sparse-notice" aria-live="polite"></p>
         <div id="rn-legend" class="rn-legend" aria-label="Relation line legend"></div>
         <div class="rn-toolbar" role="toolbar" aria-label="Relation network filters">
-          <input type="search" id="rn-search" placeholder="기업 검색" aria-label="Search company" autocomplete="off" />
-          <label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />확정만</label>
-          <label class="rn-chip"><input type="checkbox" id="rn-filter-peer" style="margin-right:4px" />동종 비교</label>
+          <input type="search" id="rn-search" placeholder="기업 검?? aria-label="Search company" autocomplete="off" />
+          <label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />?�정�?/label>
+          <label class="rn-chip"><input type="checkbox" id="rn-filter-peer" style="margin-right:4px" />?�종 비교</label>
           <label class="rn-chip"><input type="checkbox" id="rn-filter-inferred" style="margin-right:4px" />추론·참고</label>
-          <button type="button" class="rn-chip active" id="rn-depth-1">1단계</button>
-          <button type="button" class="rn-chip" id="rn-depth-2">2단계</button>
-          <button type="button" class="rn-chip" onclick="RelationNetwork.resetView()">전체</button>
+          <button type="button" class="rn-chip active" id="rn-depth-1">1?�계</button>
+          <button type="button" class="rn-chip" id="rn-depth-2">2?�계</button>
+          <button type="button" class="rn-chip" onclick="RelationNetwork.resetView()">?�체</button>
         </div>
         <ul id="rn-a11y-list" class="rn-a11y-list" aria-label="Relation list"></ul>
         <div id="rn-detail-panel" class="rn-detail-panel" hidden aria-hidden="true"></div>`;
 
 const RN_GRAPH_JS = `
-    // ═══════════════════════════════════════════════════════
-    // GRAPH (RelationNetwork v2)
-    // ═══════════════════════════════════════════════════════
-    let svgEl = null;
+    // ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═??    // GRAPH (RelationNetwork v2)
+    // ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═??    let svgEl = null;
 
     function rnProfileKey() {
       const ds = document.body.getAttribute('data-sector') || 'powergrid';
@@ -301,22 +301,22 @@ const RN_GRAPH_JS = `
 `;
 
 const I18N_PATCH_KO = `
-        rnType: '관계 유형', rnStatus: '상태', rnConnections: '연결', rnGoTable: '기업 목록에서 보기', rnResetView: '전체 보기', rnStake: '지분율',`;
+        rnType: '관�??�형', rnStatus: '?�태', rnConnections: '?�결', rnGoTable: '기업 목록?�서 보기', rnResetView: '?�체 보기', rnStake: '지분율',`;
 const I18N_PATCH_EN = `
         rnType: 'Relation type', rnStatus: 'Status', rnConnections: 'Connections', rnGoTable: 'View in company list', rnResetView: 'Show all', rnStake: 'Stake %',`;
 
-const TAB_GRAPH_WIP_KO = '🌐 관계 네트워크 (수정중)';
-const TAB_GRAPH_WIP_EN = '🌐 Relationship network (WIP)';
+const TAB_GRAPH_WIP_KO = '?�� 관�??�트?�크 (?�정�?';
+const TAB_GRAPH_WIP_EN = '?�� Relationship network (WIP)';
 
 function patchTabGraphWip(html) {
   let out = html;
-  out = out.replace(/"tabGraph":\s*"🌐[^"]*"/g, (m) => {
-    if (m.includes('(수정중)') || m.includes('(WIP)')) return m;
+  out = out.replace(/"tabGraph":\s*"?��[^"]*"/g, (m) => {
+    if (m.includes('(?�정�?') || m.includes('(WIP)')) return m;
     if (/Relationship|peer map|Peer/i.test(m)) return `"tabGraph": "${TAB_GRAPH_WIP_EN}"`;
     return `"tabGraph": "${TAB_GRAPH_WIP_KO}"`;
   });
-  out = out.replace(/tabGraph:\s*'🌐[^']*'/g, (m) => {
-    if (m.includes('(수정중)') || m.includes('(WIP)')) return m;
+  out = out.replace(/tabGraph:\s*'?��[^']*'/g, (m) => {
+    if (m.includes('(?�정�?') || m.includes('(WIP)')) return m;
     if (/Relationship|peer map|Peer/i.test(m)) return `tabGraph: '${TAB_GRAPH_WIP_EN}'`;
     return `tabGraph: '${TAB_GRAPH_WIP_KO}'`;
   });
@@ -344,11 +344,11 @@ function upgradePhase25Ui(html) {
     );
     out = out.replace(
       /<label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed"[^/]*\/><\/label>\s*/,
-      '<label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />확정만</label>\n          <label class="rn-chip"><input type="checkbox" id="rn-filter-peer" style="margin-right:4px" />동종 비교</label>\n          <label class="rn-chip"><input type="checkbox" id="rn-filter-inferred" style="margin-right:4px" />추론·참고</label>\n          ',
+      '<label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />?�정�?/label>\n          <label class="rn-chip"><input type="checkbox" id="rn-filter-peer" style="margin-right:4px" />?�종 비교</label>\n          <label class="rn-chip"><input type="checkbox" id="rn-filter-inferred" style="margin-right:4px" />추론·참고</label>\n          ',
     );
   }
   if (!out.includes('rnStake')) {
-    out = out.replace("rnResetView: '전체 보기',", "rnResetView: '전체 보기', rnStake: '지분율',");
+    out = out.replace("rnResetView: '?�체 보기',", "rnResetView: '?�체 보기', rnStake: '지분율',");
     out = out.replace("rnResetView: 'Show all',", "rnResetView: 'Show all', rnStake: 'Stake %',");
   }
   if (!out.includes('rn-detail-close') && out.includes('relation network v2')) {
@@ -455,7 +455,7 @@ function injectScripts(html) {
 function replaceGraphBlock(html) {
   if (html.includes('RelationNetwork v2')) return html;
   const startMarkers = [
-    '\n    // ═══════════════════════════════════════════════════════\n    // GRAPH',
+    '\n    // ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═??n    // GRAPH',
     '\n    // GRAPH',
     'let simulation, svgEl, g, zoomBehavior, selectedNode = null, highlightedChain = null;',
   ];
@@ -494,7 +494,7 @@ function patchI18n(html) {
     /(\s+)(graphHint: ')/,
     `$1${I18N_PATCH_KO.trim()}\n$1$2`,
   );
-  // Insert into en block (second graphHint) — only if rn keys not already in en
+  // Insert into en block (second graphHint) ??only if rn keys not already in en
   if (!out.includes("rnResetView: 'Show all'")) {
     const idx = out.indexOf("graphHint:");
     const second = out.indexOf("graphHint:", idx + 1);
@@ -549,7 +549,7 @@ function ensureBigchipFilterStub(html) {
 
 function patchSearchPlaceholder(html) {
   return html.replace(
-    'id="rn-search" placeholder="기업 검색"',
+    'id="rn-search" placeholder="기업 검??',
     'id="rn-search" placeholder=""',
   );
 }

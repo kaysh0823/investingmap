@@ -2,28 +2,28 @@
   "asOf": "2026-08-23",
   "phase": "5D",
   "reviewedBy": "editorial_phase5d",
-  "listedCompanyCount": 19,
+  "listedCompanyCount": 20,
   "metrics": {
-    "listedCompanyCount": 19,
+    "listedCompanyCount": 20,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 80,
-    "edgeCount": 92,
+    "nodeCount": 75,
+    "edgeCount": 90,
     "nodeCountByType": {
       "business_category": 7,
       "cross_sector_anchor": 6,
       "end_market": 3,
-      "listed_company": 19,
-      "metal_product": 38,
+      "listed_company": 20,
+      "metal_product": 32,
       "commodity": 3,
       "global_company": 4
     },
-    "structuralGeneratedEdgeCount": 67,
-    "legacyMigratedEdgeCount": 20,
+    "structuralGeneratedEdgeCount": 61,
+    "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 20,
+    "peerEdgeCount": 24,
     "supplyRelationshipCount": 0,
     "offtakeAgreementCount": 0,
     "ownershipEdgeCount": 0,
@@ -34,13 +34,13 @@
     "commodityExposureCount": 5,
     "crossSectorReferenceCount": 5,
     "actualSupplyRelationshipCount": 0,
-    "businessRelationOrphanCount": 19,
-    "directCommercialRelationshipOrphanCount": 19,
-    "classificationOnlyCompanyCount": 9,
+    "businessRelationOrphanCount": 20,
+    "directCommercialRelationshipOrphanCount": 20,
+    "classificationOnlyCompanyCount": 11,
     "groupMembershipOnlyCompanyCount": 0,
-    "hasPeerButNoBusinessCompanyCount": 19,
+    "hasPeerButNoBusinessCompanyCount": 20,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 19,
+    "weakRelationOnlyCompanyCount": 20,
     "zeroDegreeNodeCount": 2,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
@@ -125,9 +125,9 @@
       }
     },
     "structuralOrphanCount": 0,
-    "directRelationshipOrphanCount": 19,
+    "directRelationshipOrphanCount": 20,
     "structuralOnlyCompanyCount": 0,
-    "confirmedReportedBusinessOrphanCount": 19,
+    "confirmedReportedBusinessOrphanCount": 20,
     "orphanListedCompanyCount": 0,
     "metricDefinitions": {
       "listedCompanyCount": {
@@ -566,19 +566,20 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:295310",
+        "krx:437730",
         "krx:006110",
         "krx:000670",
+        "krx:001530",
+        "krx:295310",
         "krx:016380",
+        "krx:009520",
         "krx:019210",
-        "krx:002240",
         "krx:460860",
+        "krx:002240",
         "krx:306200",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
         "krx:104700",
-        "krx:084010"
+        "krx:009160",
+        "krx:092790"
       ],
       "directRelationshipOrphans": [
         "krx:010130",
@@ -587,30 +588,33 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:295310",
+        "krx:437730",
         "krx:006110",
         "krx:000670",
+        "krx:001530",
+        "krx:295310",
         "krx:016380",
+        "krx:009520",
         "krx:019210",
-        "krx:002240",
         "krx:460860",
+        "krx:002240",
         "krx:306200",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
         "krx:104700",
-        "krx:084010"
+        "krx:009160",
+        "krx:092790"
       ],
       "classificationOnly": [
         "krx:241560",
         "krx:017800",
         "krx:001430",
+        "krx:437730",
+        "krx:001530",
         "krx:295310",
         "krx:016380",
+        "krx:009520",
         "krx:019210",
         "krx:002240",
-        "krx:002710",
-        "krx:058430"
+        "krx:009160"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -620,19 +624,20 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:295310",
+        "krx:437730",
         "krx:006110",
         "krx:000670",
+        "krx:001530",
+        "krx:295310",
         "krx:016380",
+        "krx:009520",
         "krx:019210",
-        "krx:002240",
         "krx:460860",
+        "krx:002240",
         "krx:306200",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
         "krx:104700",
-        "krx:084010"
+        "krx:009160",
+        "krx:092790"
       ],
       "hasPeerButNoBusiness": [
         "krx:010130",
@@ -641,25 +646,26 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:295310",
+        "krx:437730",
         "krx:006110",
         "krx:000670",
+        "krx:001530",
+        "krx:295310",
         "krx:016380",
+        "krx:009520",
         "krx:019210",
-        "krx:002240",
         "krx:460860",
+        "krx:002240",
         "krx:306200",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
         "krx:104700",
-        "krx:084010"
+        "krx:009160",
+        "krx:092790"
       ],
       "peerOnly": [],
       "structuralOnly": []
     },
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 20
+    "demotedLegacyPeerCount": 24
   },
   "validate": {
     "failures": [],
@@ -820,20 +826,8 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:295310",
-      "target": "group:specialty_alloy"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:295310",
-      "target": "metal_product:specialty_advanced_metals",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:295310",
-      "target": "metal_product:high_purity_specialty_metals",
-      "edgeType": "produces"
+      "source": "krx:437730",
+      "target": "group:metal_products"
     },
     {
       "action": "add_structural",
@@ -883,6 +877,28 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:001530",
+      "target": "group:nonferrous_metal"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:295310",
+      "target": "group:specialty_alloy"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:295310",
+      "target": "metal_product:specialty_advanced_metals",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:295310",
+      "target": "metal_product:high_purity_specialty_metals",
+      "edgeType": "produces"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:016380",
       "target": "group:rolling_processing"
     },
@@ -900,6 +916,11 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:009520",
+      "target": "group:steelmaking"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:019210",
       "target": "group:metal_products"
     },
@@ -913,23 +934,6 @@
       "action": "add_structural",
       "source": "krx:019210",
       "target": "metal_product:end_mills_drills",
-      "edgeType": "produces"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002240",
-      "target": "group:rolling_processing"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002240",
-      "target": "metal_product:wire_rod_rope",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002240",
-      "target": "metal_product:wire_rope",
       "edgeType": "produces"
     },
     {
@@ -957,6 +961,23 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:002240",
+      "target": "group:rolling_processing"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:002240",
+      "target": "metal_product:wire_rod_rope",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:002240",
+      "target": "metal_product:wire_rope",
+      "edgeType": "produces"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:306200",
       "target": "group:metal_products"
     },
@@ -977,63 +998,6 @@
       "source": "krx:306200",
       "target": "end_market:shipbuilding",
       "edgeType": "used_in_end_market"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:092790",
-      "target": "group:metal_products"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:092790",
-      "target": "metal_product:steel_pipe",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:092790",
-      "target": "metal_product:octg_industrial_pipe",
-      "edgeType": "produces"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:092790",
-      "target": "end_market:shipbuilding",
-      "edgeType": "used_in_end_market"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002710",
-      "target": "group:rolling_processing"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002710",
-      "target": "metal_product:tinplate",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002710",
-      "target": "metal_product:coated_tinplate",
-      "edgeType": "produces"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:058430",
-      "target": "group:rolling_processing"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:058430",
-      "target": "metal_product:coated_color_steel",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:058430",
-      "target": "metal_product:color_coated_steel",
-      "edgeType": "produces"
     },
     {
       "action": "add_structural",
@@ -1060,25 +1024,30 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:084010",
-      "target": "group:steelmaking"
+      "source": "krx:009160",
+      "target": "group:metal_products"
     },
     {
       "action": "add_structural",
-      "source": "krx:084010",
-      "target": "metal_product:rebar_long",
+      "source": "krx:092790",
+      "target": "group:metal_products"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:092790",
+      "target": "metal_product:steel_pipe",
       "edgeType": "specializes_in"
     },
     {
       "action": "add_structural",
-      "source": "krx:084010",
-      "target": "metal_product:rebar_sections",
+      "source": "krx:092790",
+      "target": "metal_product:octg_industrial_pipe",
       "edgeType": "produces"
     },
     {
       "action": "add_structural",
-      "source": "krx:084010",
-      "target": "end_market:construction",
+      "source": "krx:092790",
+      "target": "end_market:shipbuilding",
       "edgeType": "used_in_end_market"
     },
     {
@@ -1134,8 +1103,15 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:295310",
-      "target": "global:glencore"
+      "source": "krx:437730",
+      "target": "global:caterpillar"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:437730",
+      "target": "global:nippon_steel"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1155,8 +1131,43 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:001530",
+      "target": "global:glencore"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:001530",
+      "target": "global:arcelormittal"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:295310",
+      "target": "global:glencore"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:016380",
       "target": "global:nippon_steel"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:009520",
+      "target": "global:nippon_steel"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:009520",
+      "target": "global:arcelormittal"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1169,13 +1180,6 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:002240",
-      "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
       "source": "krx:460860",
       "target": "global:arcelormittal"
     },
@@ -1183,28 +1187,14 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:002240",
+      "target": "global:nippon_steel"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:306200",
-      "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:092790",
-      "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:002710",
-      "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:058430",
       "target": "global:nippon_steel"
     },
     {
@@ -1218,8 +1208,15 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:084010",
-      "target": "global:arcelormittal"
+      "source": "krx:009160",
+      "target": "global:caterpillar"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:092790",
+      "target": "global:nippon_steel"
     },
     {
       "action": "add_cross_sector_reference",

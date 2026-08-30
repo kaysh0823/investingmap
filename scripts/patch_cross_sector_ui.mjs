@@ -27,6 +27,8 @@ const TARGETS = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
   'auto/korea_auto_map.html',
@@ -73,7 +75,7 @@ function patchFile(rel) {
   } else if (html.includes(BIO_NAME_OLD)) {
     html = html.replace(BIO_NAME_OLD, BIO_NAME_NEW);
   } else if (!html.includes('InvestingMapCrossSector') && !isBioJs) {
-    // bio/korea_bio_map.html loads inline.js — script tag only
+    // bio/korea_bio_map.html loads inline.js ??script tag only
     if (!html.includes('map_cross_sector.js')) {
       console.warn('WARN name cell pattern not found (script only):', rel);
     }

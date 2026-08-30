@@ -2,24 +2,24 @@
   "asOf": "2026-08-23",
   "phase": "5E",
   "reviewedBy": "editorial_phase5e",
-  "listedCompanyCount": 15,
+  "listedCompanyCount": 21,
   "metrics": {
-    "listedCompanyCount": 15,
+    "listedCompanyCount": 21,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 54,
-    "edgeCount": 59,
+    "nodeCount": 60,
+    "edgeCount": 65,
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 2,
-      "listed_company": 15,
+      "listed_company": 21,
       "brand": 10,
       "product_category": 11,
       "beauty_product": 6,
-      "retail_channel": 1,
       "manufacturing_service": 1,
+      "retail_channel": 1,
       "global_company": 4
     },
-    "structuralGeneratedEdgeCount": 50,
+    "structuralGeneratedEdgeCount": 56,
     "legacyMigratedEdgeCount": 4,
     "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
@@ -40,13 +40,13 @@
     "marketExposureCount": 0,
     "crossSectorReferenceCount": 5,
     "endorsementRelationshipCount": 0,
-    "businessRelationOrphanCount": 15,
-    "directCommercialRelationshipOrphanCount": 15,
-    "classificationOnlyCompanyCount": 0,
+    "businessRelationOrphanCount": 21,
+    "directCommercialRelationshipOrphanCount": 21,
+    "classificationOnlyCompanyCount": 6,
     "groupMembershipOnlyCompanyCount": 0,
     "hasPeerButNoBusinessCompanyCount": 1,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 15,
+    "weakRelationOnlyCompanyCount": 21,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
@@ -140,9 +140,9 @@
       }
     },
     "structuralOrphanCount": 0,
-    "directRelationshipOrphanCount": 15,
-    "structuralOnlyCompanyCount": 0,
-    "confirmedReportedBusinessOrphanCount": 15,
+    "directRelationshipOrphanCount": 21,
+    "structuralOnlyCompanyCount": 6,
+    "confirmedReportedBusinessOrphanCount": 21,
     "orphanListedCompanyCount": 0,
     "metricDefinitions": {
       "listedCompanyCount": {
@@ -577,63 +577,95 @@
       "businessRelationOrphans": [
         "krx:278470",
         "krx:090430",
-        "krx:214370",
-        "krx:051900",
-        "krx:145020",
         "krx:214450",
-        "krx:214150",
-        "krx:483650",
-        "krx:257720",
+        "krx:051900",
         "krx:161890",
+        "krx:257720",
         "krx:192820",
+        "krx:145020",
+        "krx:483650",
+        "krx:214370",
+        "krx:214150",
         "krx:002790",
         "krx:241710",
+        "krx:251970",
+        "krx:018290",
         "krx:336570",
-        "krx:018290"
+        "krx:092730",
+        "krx:078520",
+        "krx:003350",
+        "krx:352480",
+        "krx:018250"
       ],
       "directRelationshipOrphans": [
         "krx:278470",
         "krx:090430",
-        "krx:214370",
-        "krx:051900",
-        "krx:145020",
         "krx:214450",
-        "krx:214150",
-        "krx:483650",
-        "krx:257720",
+        "krx:051900",
         "krx:161890",
+        "krx:257720",
         "krx:192820",
+        "krx:145020",
+        "krx:483650",
+        "krx:214370",
+        "krx:214150",
         "krx:002790",
         "krx:241710",
+        "krx:251970",
+        "krx:018290",
         "krx:336570",
-        "krx:018290"
+        "krx:092730",
+        "krx:078520",
+        "krx:003350",
+        "krx:352480",
+        "krx:018250"
       ],
-      "classificationOnly": [],
+      "classificationOnly": [
+        "krx:251970",
+        "krx:092730",
+        "krx:078520",
+        "krx:003350",
+        "krx:352480",
+        "krx:018250"
+      ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
         "krx:278470",
         "krx:090430",
-        "krx:214370",
-        "krx:051900",
-        "krx:145020",
         "krx:214450",
-        "krx:214150",
-        "krx:483650",
-        "krx:257720",
+        "krx:051900",
         "krx:161890",
+        "krx:257720",
         "krx:192820",
+        "krx:145020",
+        "krx:483650",
+        "krx:214370",
+        "krx:214150",
         "krx:002790",
         "krx:241710",
+        "krx:251970",
+        "krx:018290",
         "krx:336570",
-        "krx:018290"
+        "krx:092730",
+        "krx:078520",
+        "krx:003350",
+        "krx:352480",
+        "krx:018250"
       ],
       "hasPeerButNoBusiness": [
         "krx:145020"
       ],
       "peerOnly": [],
-      "structuralOnly": []
+      "structuralOnly": [
+        "krx:251970",
+        "krx:092730",
+        "krx:078520",
+        "krx:003350",
+        "krx:352480",
+        "krx:018250"
+      ]
     },
-    "removedUnsupportedPartnerCount": 0,
+    "removedUnsupportedPartnerCount": 13,
     "demotedLegacyPeerCount": 4
   },
   "validate": {
@@ -727,19 +759,19 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:214370",
+      "source": "krx:214450",
       "target": "group:beauty_device"
     },
     {
       "action": "add_structural",
-      "source": "krx:214370",
-      "target": "beauty_product:peptide_aesthetics",
+      "source": "krx:214450",
+      "target": "beauty_product:aesthetic_regenerative",
       "edgeType": "specializes_in"
     },
     {
       "action": "add_structural",
-      "source": "krx:214370",
-      "target": "beauty_product:peptide_skincare",
+      "source": "krx:214450",
+      "target": "beauty_product:skin_booster",
       "edgeType": "used_in_product_category"
     },
     {
@@ -773,6 +805,57 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:161890",
+      "target": "group:odm_oem"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:161890",
+      "target": "manufacturing_service:cosmetics_odm",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:161890",
+      "target": "manufacturing_service:cosmetics_odm",
+      "edgeType": "provides_odm"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:257720",
+      "target": "group:distributor"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:257720",
+      "target": "channel:cross_border_distribution",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:257720",
+      "target": "beauty_product:multi_brand_distribution",
+      "edgeType": "used_in_product_category"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:192820",
+      "target": "group:odm_oem"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:192820",
+      "target": "manufacturing_service:cosmetics_odm",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:192820",
+      "target": "manufacturing_service:cosmetics_odm",
+      "edgeType": "provides_odm"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:145020",
       "target": "group:beauty_device"
     },
@@ -786,40 +869,6 @@
       "action": "add_structural",
       "source": "krx:145020",
       "target": "beauty_product:aesthetic_injectables",
-      "edgeType": "used_in_product_category"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214450",
-      "target": "group:beauty_device"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214450",
-      "target": "beauty_product:aesthetic_regenerative",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214450",
-      "target": "beauty_product:skin_booster",
-      "edgeType": "used_in_product_category"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214150",
-      "target": "group:beauty_device"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214150",
-      "target": "beauty_product:hifu_rf_devices",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214150",
-      "target": "beauty_product:aesthetic_energy_devices",
       "edgeType": "used_in_product_category"
     },
     {
@@ -841,54 +890,37 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:257720",
-      "target": "group:distributor"
+      "source": "krx:214370",
+      "target": "group:beauty_device"
     },
     {
       "action": "add_structural",
-      "source": "krx:257720",
-      "target": "channel:cross_border_distribution",
+      "source": "krx:214370",
+      "target": "beauty_product:peptide_aesthetics",
       "edgeType": "specializes_in"
     },
     {
       "action": "add_structural",
-      "source": "krx:257720",
-      "target": "beauty_product:multi_brand_distribution",
+      "source": "krx:214370",
+      "target": "beauty_product:peptide_skincare",
       "edgeType": "used_in_product_category"
     },
     {
       "action": "add_structural",
-      "source": "krx:161890",
-      "target": "group:odm_oem"
+      "source": "krx:214150",
+      "target": "group:beauty_device"
     },
     {
       "action": "add_structural",
-      "source": "krx:161890",
-      "target": "manufacturing_service:cosmetics_odm",
+      "source": "krx:214150",
+      "target": "beauty_product:hifu_rf_devices",
       "edgeType": "specializes_in"
     },
     {
       "action": "add_structural",
-      "source": "krx:161890",
-      "target": "manufacturing_service:cosmetics_odm",
-      "edgeType": "provides_odm"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:192820",
-      "target": "group:odm_oem"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:192820",
-      "target": "manufacturing_service:cosmetics_odm",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:192820",
-      "target": "manufacturing_service:cosmetics_odm",
-      "edgeType": "provides_odm"
+      "source": "krx:214150",
+      "target": "beauty_product:aesthetic_energy_devices",
+      "edgeType": "used_in_product_category"
     },
     {
       "action": "add_structural",
@@ -926,20 +958,8 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:336570",
-      "target": "group:beauty_device"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:336570",
-      "target": "beauty_product:laser_aesthetic_devices",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:336570",
-      "target": "beauty_product:home_clinic_devices",
-      "edgeType": "used_in_product_category"
+      "source": "krx:251970",
+      "target": "group:brand_owner"
     },
     {
       "action": "add_structural",
@@ -957,6 +977,48 @@
       "source": "krx:018290",
       "target": "beauty_product:skincare_color",
       "edgeType": "used_in_product_category"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:336570",
+      "target": "group:beauty_device"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:336570",
+      "target": "beauty_product:laser_aesthetic_devices",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:336570",
+      "target": "beauty_product:home_clinic_devices",
+      "edgeType": "used_in_product_category"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:092730",
+      "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:078520",
+      "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:003350",
+      "target": "group:odm_oem"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:352480",
+      "target": "group:odm_oem"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:018250",
+      "target": "group:brand_owner"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -985,6 +1047,71 @@
       "afterType": "peer",
       "source": "krx:145020",
       "target": "global:glob_veev"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:251970",
+      "partner": "albea"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:251970",
+      "partner": "aptar"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:092730",
+      "partner": "loreal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:092730",
+      "partner": "estee"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:092730",
+      "partner": "shiseido"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:078520",
+      "partner": "loreal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:078520",
+      "partner": "estee"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:078520",
+      "partner": "shiseido"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:003350",
+      "partner": "intercos"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:352480",
+      "partner": "intercos"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:018250",
+      "partner": "loreal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:018250",
+      "partner": "estee"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:018250",
+      "partner": "shiseido"
     },
     {
       "action": "add_cross_sector_reference",

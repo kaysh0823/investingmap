@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 로봇·피지컬AI 산업 투자 지도",
     "url": "https://www.investingmap.kr/robot/korea_robot_map.html",
-    "numberOfItems": 17,
+    "numberOfItems": 16,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -173,14 +173,14 @@
       {
         "@type": "ListItem",
         "position": 6,
-        "name": "휴림로봇 (090710, KOSDAQ)",
-        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-090710"
+        "name": "SFA (056190, KOSDAQ)",
+        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-056190"
       },
       {
         "@type": "ListItem",
         "position": 7,
-        "name": "로보스타 (090360, KOSDAQ)",
-        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-090360"
+        "name": "휴림로봇 (090710, KOSDAQ)",
+        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-090710"
       },
       {
         "@type": "ListItem",
@@ -191,8 +191,8 @@
       {
         "@type": "ListItem",
         "position": 9,
-        "name": "에스에프에이 (056190, KOSDAQ)",
-        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-056190"
+        "name": "로보스타 (090360, KOSDAQ)",
+        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-090360"
       },
       {
         "@type": "ListItem",
@@ -221,26 +221,20 @@
       {
         "@type": "ListItem",
         "position": 14,
+        "name": "코스모로보틱스 (439960, KOSDAQ)",
+        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-439960"
+      },
+      {
+        "@type": "ListItem",
+        "position": 15,
         "name": "한라캐스트 (125490, KOSDAQ)",
         "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-125490"
       },
       {
         "@type": "ListItem",
-        "position": 15,
-        "name": "에스비비테크 (389500, KOSDAQ)",
-        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-389500"
-      },
-      {
-        "@type": "ListItem",
         "position": 16,
-        "name": "티로보틱스 (117730, KOSDAQ)",
-        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-117730"
-      },
-      {
-        "@type": "ListItem",
-        "position": 17,
-        "name": "씨메스로보틱스 (475400, KOSDAQ)",
-        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-475400"
+        "name": "엔젤로보틱스 (455900, KOSDAQ)",
+        "url": "https://www.investingmap.kr/robot/korea_robot_map.html#ticker-455900"
       }
     ]
   }
@@ -903,7 +897,7 @@
       opacity: .15
     }
 
-    /* investingmap-mobile-table-v2 — base */
+    /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -980,6 +974,133 @@
       .table-container {
         padding: 10px 12px
       }
+      /* investingmap-mobile-table-v2 ??mobile layout */
+      .tabs {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      /* Natural page scroll: no fixed viewport height / inner Y scroll */
+      #tab-table.tab-content.active {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible
+      }
+
+      #tab-table .table-container {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding-bottom: 8px
+      }
+
+      body.im-tab-table #tab-table .table-container {
+        padding: 4px 8px 0
+      }
+
+      #tab-table .filter-bar {
+        flex-shrink: 0;
+        z-index: 30;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      body.im-tab-table #tab-table .filter-bar {
+        padding-bottom: 6px;
+        gap: 6px
+      }
+
+      /* Value-chain chips: single row + horizontal scroll */
+      #tab-table .filter-row-chain {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-width: 0;
+        width: 100%
+      }
+
+      #tab-table .filter-row-chain .filter-label {
+        flex-shrink: 0
+      }
+
+      #tab-table .filter-row-chain #chain-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none
+      }
+
+      #tab-table .filter-row-chain #chain-chips::-webkit-scrollbar {
+        display: none
+      }
+
+      #tab-table .filter-row-chain .filter-chip {
+        flex-shrink: 0
+      }
+
+      #tab-table .search-box {
+        padding: 5px 10px;
+        font-size: 12px;
+        min-height: 0;
+        height: auto
+      }
+
+      #tab-table .tbl-wrap {
+        flex: none;
+        min-height: 0;
+        max-height: none;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch
+      }
+
+      #tab-table .note {
+        display: none
+      }
+
+      body.im-tab-table thead th {
+        padding: 6px 5px;
+        font-size: 8px
+      }
+
+      body.im-tab-table td {
+        padding: 5px 5px;
+        font-size: 11px;
+        line-height: 1.3
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 108px;
+        max-width: 132px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
+      body.im-tab-table tbody td:first-child .company-name {
+        font-size: 11px;
+        line-height: 1.25
+      }
+
       /* investingmap-mobile-table-v2 — mobile layout */
       .tabs {
         position: -webkit-sticky;
@@ -2033,8 +2154,8 @@
     </button>
     <p id="hdr-subtitle">국내 상장 산업로봇·자동화·물류·지역AI 벨류와 글로벌 장비·SW 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>17</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>1</span> · KOSDAQ <span>16</span></div>
+      <div class="badge" id="badge-total">Total <span>16</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>1</span> · KOSDAQ <span>15</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -2103,7 +2224,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">17</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">16</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2149,7 +2270,7 @@
       <td class="quote-cell">266,500</td>
       <td class="quote-cell">26.6%</td>
       <td class="quote-cell">16.9</td>
-      <td class="mcap-cell">12.11조원</td>
+      <td class="mcap-cell">8.85조원</td>
       <td class="fin-cell">8547.95</td>
       <td class="fin-cell">90.45</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2172,7 +2293,7 @@
       <td class="quote-cell">54,200</td>
       <td class="quote-cell">15%</td>
       <td class="quote-cell">38.3</td>
-      <td class="mcap-cell">7.16조원</td>
+      <td class="mcap-cell">4.64조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">20.53</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2195,7 +2316,7 @@
       <td class="quote-cell">84,138</td>
       <td class="quote-cell">41.6%</td>
       <td class="quote-cell">51.0</td>
-      <td class="mcap-cell">4.84조원</td>
+      <td class="mcap-cell">3.55조원</td>
       <td class="fin-cell">857.14</td>
       <td class="fin-cell">15.20</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2218,7 +2339,7 @@
       <td class="quote-cell">4,655</td>
       <td class="quote-cell">41.7%</td>
       <td class="quote-cell">28.7</td>
-      <td class="mcap-cell">4.36조원</td>
+      <td class="mcap-cell">2.65조원</td>
       <td class="fin-cell">380.10</td>
       <td class="fin-cell">26.91</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2241,13 +2362,36 @@
       <td class="quote-cell">25,200</td>
       <td class="quote-cell">48%</td>
       <td class="quote-cell">35.4</td>
-      <td class="mcap-cell">2.10조원</td>
+      <td class="mcap-cell">2.06조원</td>
       <td class="fin-cell">229.85</td>
       <td class="fin-cell">8.14</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
       <td><span class="chain-tag">감속기·동력전달</span></td>
       <td style="font-size:12px;color:var(--text-muted)">감속기·기어드모터</td>
       <td class="products-cell">정밀 감속기, AC·DC·BLDC 기어드모터</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
+          <tr data-ticker="056190">
+      <td><div class="company-name">SFA</div><div class="company-name-sub">SFA Engineering</div></td>
+      <td><span class="ticker">056190</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">23,950</td>
+      <td class="quote-cell ret-cell">-1.44%</td>
+      <td class="quote-cell ret-cell">+19.75%</td>
+      <td class="quote-cell ret-cell">-8.06%</td>
+      <td class="quote-cell ret-cell">-17.13%</td>
+      <td class="quote-cell ret-cell">+15.42%</td>
+      <td class="quote-cell">36,500</td>
+      <td class="quote-cell">16,850</td>
+      <td class="quote-cell">36.1%</td>
+      <td class="quote-cell">54.4</td>
+      <td class="mcap-cell">0.86조원</td>
+      <td class="fin-cell">13.94</td>
+      <td class="fin-cell">0.83</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">자동화·SI·물류시스템</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">물류·공정 자동화</td>
+      <td class="products-cell">스마트팩토리, 반도체·디스플레이 물류장비</td>
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="090710">
@@ -2264,13 +2408,36 @@
       <td class="quote-cell">2,505</td>
       <td class="quote-cell">17.2%</td>
       <td class="quote-cell">13.5</td>
-      <td class="mcap-cell">1.40조원</td>
+      <td class="mcap-cell">0.80조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">10.98</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
       <td><span class="chain-tag">완성로봇·플랫폼</span></td>
       <td style="font-size:12px;color:var(--text-muted)">산업용·서비스 로봇</td>
       <td class="products-cell">제조용 로봇, 퍼스널·서비스 로봇</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
+          <tr data-ticker="388720">
+      <td><div class="company-name">유일로보틱스</div><div class="company-name-sub">Yuil Robotics</div></td>
+      <td><span class="ticker">388720</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">67,000</td>
+      <td class="quote-cell ret-cell">-2.05%</td>
+      <td class="quote-cell ret-cell">+7.54%</td>
+      <td class="quote-cell ret-cell">-14.43%</td>
+      <td class="quote-cell ret-cell">-39.96%</td>
+      <td class="quote-cell ret-cell">-10.43%</td>
+      <td class="quote-cell">155,000</td>
+      <td class="quote-cell">53,800</td>
+      <td class="quote-cell">13%</td>
+      <td class="quote-cell">23.1</td>
+      <td class="mcap-cell">0.79조원</td>
+      <td class="fin-cell">—</td>
+      <td class="fin-cell">10.89</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">완성로봇·플랫폼</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">산업용·물류 로봇</td>
+      <td class="products-cell">제조·피킹·이송 로봇 시스템</td>
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="090360">
@@ -2287,7 +2454,7 @@
       <td class="quote-cell">27,350</td>
       <td class="quote-cell">35%</td>
       <td class="quote-cell">59.3</td>
-      <td class="mcap-cell">1.10조원</td>
+      <td class="mcap-cell">0.76조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">12.71</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2295,52 +2462,6 @@
       <td style="font-size:12px;color:var(--text-muted)">산업용 로봇</td>
       <td class="products-cell">스카라·수직다관절 로봇, 자동화 시스템</td>
       <td><div class="partners-list">Siemens, FANUC, doosan_robot</div></td>
-    </tr>
-          <tr data-ticker="388720">
-      <td><div class="company-name">유일로보틱스</div><div class="company-name-sub">Yuil Robotics</div></td>
-      <td><span class="ticker">388720</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">67,000</td>
-      <td class="quote-cell ret-cell">-2.05%</td>
-      <td class="quote-cell ret-cell">+7.54%</td>
-      <td class="quote-cell ret-cell">-14.43%</td>
-      <td class="quote-cell ret-cell">-39.96%</td>
-      <td class="quote-cell ret-cell">-10.43%</td>
-      <td class="quote-cell">155,000</td>
-      <td class="quote-cell">53,800</td>
-      <td class="quote-cell">13%</td>
-      <td class="quote-cell">23.1</td>
-      <td class="mcap-cell">0.98조원</td>
-      <td class="fin-cell">—</td>
-      <td class="fin-cell">10.89</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">완성로봇·플랫폼</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">산업용·물류 로봇</td>
-      <td class="products-cell">제조·피킹·이송 로봇 시스템</td>
-      <td><div class="partners-list">—</div></td>
-    </tr>
-          <tr data-ticker="056190">
-      <td><div class="company-name">에스에프에이</div><div class="company-name-sub">SFA Engineering</div></td>
-      <td><span class="ticker">056190</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">23,950</td>
-      <td class="quote-cell ret-cell">-1.44%</td>
-      <td class="quote-cell ret-cell">+19.75%</td>
-      <td class="quote-cell ret-cell">-8.06%</td>
-      <td class="quote-cell ret-cell">-17.13%</td>
-      <td class="quote-cell ret-cell">+15.42%</td>
-      <td class="quote-cell">36,500</td>
-      <td class="quote-cell">16,850</td>
-      <td class="quote-cell">36.1%</td>
-      <td class="quote-cell">54.4</td>
-      <td class="mcap-cell">0.96조원</td>
-      <td class="fin-cell">13.94</td>
-      <td class="fin-cell">0.83</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">자동화·SI·물류시스템</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">물류·공정 자동화</td>
-      <td class="products-cell">스마트팩토리, 반도체·디스플레이 물류장비</td>
-      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="466100">
       <td><div class="company-name">클로봇</div><div class="company-name-sub">CLOBOT Co., Ltd</div></td>
@@ -2356,7 +2477,7 @@
       <td class="quote-cell">17,636</td>
       <td class="quote-cell">13.2%</td>
       <td class="quote-cell">14.1</td>
-      <td class="mcap-cell">0.93조원</td>
+      <td class="mcap-cell">0.65조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">15.09</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2379,7 +2500,7 @@
       <td class="quote-cell">11,000</td>
       <td class="quote-cell">9.1%</td>
       <td class="quote-cell">31.5</td>
-      <td class="mcap-cell">0.86조원</td>
+      <td class="mcap-cell">0.57조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">7.57</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2402,7 +2523,7 @@
       <td class="quote-cell">9,250</td>
       <td class="quote-cell">7.2%</td>
       <td class="quote-cell">19.3</td>
-      <td class="mcap-cell">0.73조원</td>
+      <td class="mcap-cell">0.46조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">25.51</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2425,7 +2546,7 @@
       <td class="quote-cell">13,880</td>
       <td class="quote-cell">6.9%</td>
       <td class="quote-cell">1.1</td>
-      <td class="mcap-cell">0.61조원</td>
+      <td class="mcap-cell">0.44조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">40.88</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2433,6 +2554,29 @@
       <td style="font-size:12px;color:var(--text-muted)">협동로봇</td>
       <td class="products-cell">Indy 협동로봇, 자동화 플랫폼</td>
       <td><div class="partners-list">—</div></td>
+    </tr>
+          <tr data-ticker="439960">
+      <td><div class="company-name">코스모로보틱스</div><div class="company-name-sub">Cosmo Robotics</div></td>
+      <td><span class="ticker">439960</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">—</td>
+      <td class="quote-cell ret-cell">—</td>
+      <td class="quote-cell ret-cell">—</td>
+      <td class="quote-cell ret-cell">—</td>
+      <td class="quote-cell ret-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="mcap-cell">0.41조원</td>
+      <td class="fin-cell">—</td>
+      <td class="fin-cell">36.89</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">완성로봇·플랫폼</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">산업·서비스 로봇</td>
+      <td class="products-cell">제조·물류·서비스용 로봇, 자동화 플랫폼</td>
+      <td><div class="partners-list">FANUC, ABB, Yaskawa, doosan_robot, rainbow</div></td>
     </tr>
           <tr data-ticker="125490">
       <td><div class="company-name">한라캐스트</div><div class="company-name-sub">Halla Cast</div></td>
@@ -2448,7 +2592,7 @@
       <td class="quote-cell">4,355</td>
       <td class="quote-cell">28.1%</td>
       <td class="quote-cell">53.6</td>
-      <td class="mcap-cell">0.50조원</td>
+      <td class="mcap-cell">0.37조원</td>
       <td class="fin-cell">106.48</td>
       <td class="fin-cell">4.71</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2457,74 +2601,28 @@
       <td class="products-cell">로봇 구조·열관리 부품, 자율주행·전장 하우징</td>
       <td><div class="partners-list">Keyence, Cognex</div></td>
     </tr>
-          <tr data-ticker="389500">
-      <td><div class="company-name">에스비비테크</div><div class="company-name-sub">SBB Tech</div></td>
-      <td><span class="ticker">389500</span></td>
+          <tr data-ticker="455900">
+      <td><div class="company-name">엔젤로보틱스</div><div class="company-name-sub">Angel Robotics</div></td>
+      <td><span class="ticker">455900</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">37,900</td>
-      <td class="quote-cell ret-cell">-3.19%</td>
-      <td class="quote-cell ret-cell">+24.88%</td>
-      <td class="quote-cell ret-cell">-23.97%</td>
-      <td class="quote-cell ret-cell">-24.95%</td>
-      <td class="quote-cell ret-cell">+22.26%</td>
-      <td class="quote-cell">115,000</td>
-      <td class="quote-cell">19,970</td>
-      <td class="quote-cell">18.9%</td>
-      <td class="quote-cell">41.1</td>
-      <td class="mcap-cell">0.42조원</td>
-      <td class="fin-cell">—</td>
-      <td class="fin-cell">31.71</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">감속기·동력전달</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">정밀 감속기</td>
-      <td class="products-cell">로봇용 하모닉 감속기, 세라믹 베어링</td>
-      <td><div class="partners-list">—</div></td>
-    </tr>
-          <tr data-ticker="117730">
-      <td><div class="company-name">티로보틱스</div><div class="company-name-sub">T-Robotics co., Ltd.</div></td>
-      <td><span class="ticker">117730</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">13,050</td>
-      <td class="quote-cell ret-cell">-1.81%</td>
-      <td class="quote-cell ret-cell">+6.01%</td>
-      <td class="quote-cell ret-cell">-13.40%</td>
-      <td class="quote-cell ret-cell">-34.75%</td>
-      <td class="quote-cell ret-cell">-10.92%</td>
-      <td class="quote-cell">30,900</td>
-      <td class="quote-cell">9,800</td>
-      <td class="quote-cell">15.4%</td>
-      <td class="quote-cell">26.1</td>
-      <td class="mcap-cell">0.38조원</td>
-      <td class="fin-cell">—</td>
-      <td class="fin-cell">7.23</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">완성로봇·플랫폼</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">산업용·협동로봇</td>
-      <td class="products-cell">반도체·디스플레이 이송로봇, AMR</td>
-      <td><div class="partners-list">—</div></td>
-    </tr>
-          <tr data-ticker="475400">
-      <td><div class="company-name">씨메스로보틱스</div><div class="company-name-sub">CMES Robotics</div></td>
-      <td><span class="ticker">475400</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">18,310</td>
-      <td class="quote-cell ret-cell">-1.29%</td>
-      <td class="quote-cell ret-cell">-2.03%</td>
-      <td class="quote-cell ret-cell">-14.64%</td>
-      <td class="quote-cell ret-cell">-56.04%</td>
-      <td class="quote-cell ret-cell">-36.09%</td>
-      <td class="quote-cell">46,950</td>
-      <td class="quote-cell">13,420</td>
-      <td class="quote-cell">14.6%</td>
-      <td class="quote-cell">12.7</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">-1.68%</td>
+      <td class="quote-cell ret-cell">+1.49%</td>
+      <td class="quote-cell ret-cell">-8.09%</td>
+      <td class="quote-cell ret-cell">-27.61%</td>
+      <td class="quote-cell ret-cell">-31.14%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">25.2</td>
       <td class="mcap-cell">0.31조원</td>
       <td class="fin-cell">—</td>
-      <td class="fin-cell">5.23</td>
+      <td class="fin-cell">11.71</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">자동화·SI·물류시스템</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">AI비전 로봇 자동화·SI</td>
-      <td class="products-cell">피킹·팔레타이징·물류 로봇 시스템</td>
-      <td><div class="partners-list">—</div></td>
+      <td><span class="chain-tag">완성로봇·플랫폼</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">웨어러블·의료 로봇</td>
+      <td class="products-cell">보행보조·재활 웨어러블, 의료·케어 로봇</td>
+      <td><div class="partners-list">FANUC, ABB, Yaskawa, hyulim_robot</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
           </tbody>
@@ -2617,10 +2715,10 @@
     "ko": {
         "title": "🇰🇷 한국 로봇 · 피지컬AI 산업 투자 지도",
         "subtitle": "국내 상장 산업로봇·자동화·물류·지역AI 벨류와 글로벌 장비·SW 관계",
-        "badgeTotal": "총 <span>17</span>개 상장사",
-        "badgeMarket": "KOSPI <span>1</span>사 · KOSDAQ <span>16</span>사",
+        "badgeTotal": "총 <span>14</span>개 상장사",
+        "badgeMarket": "KOSPI <span>1</span>사 · KOSDAQ <span>13</span>사",
         "dataAsof": "업데이트 기준일: 2026년 6월 12일",
-        "tabHeatmap": "🔥 섹터 히트맵",
+        "tabHeatmap": "🔥 서터 히트맵",
         "tabMomentum": "📊 모멘텀 매트릭스",
         "momentumHint": "RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률",
         "momentumAxisRs": "RS",
@@ -2634,9 +2732,9 @@
         "momentumPosition": "주가 위치",
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
         "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
-        "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
+        "heatmapHint": "칸 크기 = 시가총액 · 색 = 일일 등락률",
         "tabTable": "📋 기업 목록 &amp; 필터",
-        "tabGraph": "🌐 관계 네트워크 (수정중)",
+        "tabGraph": "🌐 관계 네트워크",
         "langFlag": "🇺🇸",
         "langText": "English",
         "flChain": "벨류체인",
@@ -2705,8 +2803,8 @@
     "en": {
         "title": "🇰🇷 Korea Robotics & Physical AI Map",
         "subtitle": "Listed Korean robotics, factory automation, logistics tech & physical-AI software links",
-        "badgeTotal": "<span>17</span> listed companies",
-        "badgeMarket": "KOSPI <span>1</span> · KOSDAQ <span>16</span>",
+        "badgeTotal": "<span>14</span> listed companies",
+        "badgeMarket": "KOSPI <span>1</span> · KOSDAQ <span>13</span>",
         "dataAsof": "Data as of: June 12, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
         "tabMomentum": "📊 Momentum matrix",
@@ -2724,7 +2822,7 @@
         "momentumLegend": "Color = 1-day return · size = daily turnover",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list &amp; filters",
-        "tabGraph": "🌐 Relationship network (WIP)",
+        "tabGraph": "🌐 Relationship network",
         "langFlag": "🇰🇷",
         "langText": "한국어",
         "flChain": "Value chain",
@@ -2800,119 +2898,112 @@
         id: 'rainbow', name: '레인보우로보틱스', nameEn: 'Rainbow Robotics', ticker: '277810', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
         semType: '휴머노이드 및 매니퍼레이터 플랫폼', semTypeEn: 'Humanoid & dual-arm systems',
         products: 'HUBO, 제조용·서비스로봇', productsEn: 'HUBO, manufacturing & service robots',
-        revenue: '12.11조원', mcapWon: 12105511392000, per: 8547.95, pbr: 90.45, revTier: 2, partners: ['nvidia', 'siemens', 'hyundai_mt', { id: 'samsung_eco', edgeLabel: '삼성계 연합·지분 참여(참고)', edgeLabelEn: 'Samsung ecosystem tie (illus.)', weight: 0.15, kind: 'backing' }]
+        revenue: '8.85조원', mcapWon: 8846335248000, per: 8547.95, pbr: 90.45, revTier: 2, partners: ['nvidia', 'siemens', 'hyundai_mt', { id: 'samsung_eco', edgeLabel: '삼성계 연합·지분 참여(참고)', edgeLabelEn: 'Samsung ecosystem tie (illus.)', weight: 0.15, kind: 'backing' }]
       },
 
       {
         id: 'doosan_robot', name: '두산로보틱스', nameEn: 'Doosan Robotics', ticker: '454910', market: 'KOSPI', chain: '완성로봇·플랫폼',
         semType: '협동로봇·업무용', semTypeEn: 'Collaborative robots',
         products: 'A-, M-, H-시리즈, 팬턴트', productsEn: 'A/M/H-series cobots, Palletizing',
-        revenue: '7.16조원', mcapWon: 7156125792000, per: null, pbr: 20.53, revTier: 2, partners: ['nvidia', 'fanuc', 'abb', { id: 'doosan_grp', edgeLabel: '두산그룹 지분(참고)', edgeLabelEn: 'Doosan group backing (illus.)', weight: 0.18, kind: 'backing' }]
+        revenue: '4.64조원', mcapWon: 4641110568000, per: null, pbr: 20.53, revTier: 2, partners: ['nvidia', 'fanuc', 'abb', { id: 'doosan_grp', edgeLabel: '두산그룹 지분(참고)', edgeLabelEn: 'Doosan group backing (illus.)', weight: 0.18, kind: 'backing' }]
       },
 
       {
         id: 'robotis', name: '로보티즈', nameEn: 'Robotis', ticker: '108490', market: 'KOSDAQ', chain: '액추에이터·모터',
         semType: '로봇 액추에이터·모듈', semTypeEn: 'Robot actuators & modules',
         products: 'DYNAMIXEL 액추에이터, OPENMANIPULATOR', productsEn: 'DYNAMIXEL actuators and OPENMANIPULATOR',
-        revenue: '4.84조원', mcapWon: 4836819240000, per: 857.14, pbr: 15.2, revTier: 2, partners: ['nvidia', 'intel']
+        revenue: '3.55조원', mcapWon: 3547968776000, per: 857.14, pbr: 15.2, revTier: 2, partners: ['nvidia', 'intel']
       },
 
       {
         id: 'hd_movex', name: '현대무벡스', nameEn: 'Hyundai Movex', ticker: '319400', market: 'KOSDAQ', chain: '자동화·SI·물류시스템',
         semType: '물류자동화·스마트물류', semTypeEn: 'Logistics automation & smart logistics',
         products: '스마트물류, 승강장·PSD, 자동화 시스템', productsEn: 'Smart logistics, elevators, platform screen doors and automation systems',
-        revenue: '4.36조원', mcapWon: 4360371926850, per: 380.1, pbr: 26.91, revTier: 2, partners: []
+        revenue: '2.65조원', mcapWon: 2645180926250, per: 380.1, pbr: 26.91, revTier: 2, partners: []
       },
 
       {
         id: 'spg', name: '에스피지', nameEn: 'SPG CO., LTD', ticker: '058610', market: 'KOSDAQ', chain: '감속기·동력전달',
         semType: '감속기·기어드모터', semTypeEn: 'Reducers & geared motors',
         products: '정밀 감속기, AC·DC·BLDC 기어드모터', productsEn: 'Precision reducers and AC/DC/BLDC geared motors',
-        revenue: '2.10조원', mcapWon: 2100195992000, per: 229.85, pbr: 8.14, revTier: 2, partners: []
+        revenue: '2.06조원', mcapWon: 2055841272000, per: 229.85, pbr: 8.14, revTier: 2, partners: []
+      },
+
+      {
+        id: 'sfa', name: 'SFA', nameEn: 'SFA Engineering', ticker: '056190', market: 'KOSDAQ', chain: '자동화·SI·물류시스템',
+        semType: '물류·공정 자동화', semTypeEn: 'Logistics & process automation',
+        products: '스마트팩토리, 반도체·디스플레이 물류장비', productsEn: 'Smart factories and semiconductor/display logistics equipment',
+        revenue: '0.86조원', mcapWon: 860014802000, per: 13.94, pbr: 0.83, revTier: 1, partners: []
       },
 
       {
         id: 'hyulim_robot', name: '휴림로봇', nameEn: 'Hyulim Robot', ticker: '090710', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
         semType: '산업용·서비스 로봇', semTypeEn: 'Industrial & service robots',
         products: '제조용 로봇, 퍼스널·서비스 로봇', productsEn: 'Manufacturing, personal and service robots',
-        revenue: '1.40조원', mcapWon: 1401232920810, per: null, pbr: 10.98, revTier: 2, partners: []
-      },
-
-      {
-        id: 'robostar', name: '로보스타', nameEn: 'Robostar Co.,Ltd.', ticker: '090360', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
-        semType: '산업용 로봇', semTypeEn: 'Industrial robots',
-        products: '스카라·수직다관절 로봇, 자동화 시스템', productsEn: 'SCARA and articulated robots, automation systems',
-        revenue: '1.10조원', mcapWon: 1103700000000, per: null, pbr: 12.71, revTier: 2, partners: ['siemens', 'fanuc', { id: 'doosan_robot', edgeLabel: '모션·서보 부품·제어', edgeLabelEn: 'Motion/servo to cobot OEM', weight: 0.14 }]
+        revenue: '0.80조원', mcapWon: 795067542850, per: null, pbr: 10.98, revTier: 1, partners: []
       },
 
       {
         id: 'yuil_robotics', name: '유일로보틱스', nameEn: 'Yuil Robotics', ticker: '388720', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
         semType: '산업용·물류 로봇', semTypeEn: 'Industrial & logistics robots',
         products: '제조·피킹·이송 로봇 시스템', productsEn: 'Manufacturing, picking and transfer robot systems',
-        revenue: '0.98조원', mcapWon: 983742307500, per: null, pbr: 10.89, revTier: 1, partners: []
+        revenue: '0.79조원', mcapWon: 789350115000, per: null, pbr: 10.89, revTier: 1, partners: []
       },
 
       {
-        id: 'sfa', name: '에스에프에이', nameEn: 'SFA Engineering', ticker: '056190', market: 'KOSDAQ', chain: '자동화·SI·물류시스템',
-        semType: '물류·공정 자동화', semTypeEn: 'Logistics & process automation',
-        products: '스마트팩토리, 반도체·디스플레이 물류장비', productsEn: 'Smart factories and semiconductor/display logistics equipment',
-        revenue: '0.96조원', mcapWon: 958763892000, per: 13.94, pbr: 0.83, revTier: 1, partners: []
+        id: 'robostar', name: '로보스타', nameEn: 'Robostar Co.,Ltd.', ticker: '090360', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
+        semType: '산업용 로봇', semTypeEn: 'Industrial robots',
+        products: '스카라·수직다관절 로봇, 자동화 시스템', productsEn: 'SCARA and articulated robots, automation systems',
+        revenue: '0.76조원', mcapWon: 759525000000, per: null, pbr: 12.71, revTier: 1, partners: ['siemens', 'fanuc', { id: 'doosan_robot', edgeLabel: '모션·서보 부품·제어', edgeLabelEn: 'Motion/servo to cobot OEM', weight: 0.14 }]
       },
 
       {
         id: 'clobot', name: '클로봇', nameEn: 'CLOBOT Co., Ltd', ticker: '466100', market: 'KOSDAQ', chain: '제어·모션·로봇SW',
         semType: '이기종 로봇 통합관제·자율주행 SW', semTypeEn: 'Heterogeneous robot orchestration & autonomous navigation software',
         products: 'CROMS 로봇 통합관제, CHAMELEON 범용 자율주행', productsEn: 'CROMS robot orchestration and CHAMELEON autonomous navigation',
-        revenue: '0.93조원', mcapWon: 927989261550, per: null, pbr: 15.09, revTier: 1, partners: []
+        revenue: '0.65조원', mcapWon: 651756518400, per: null, pbr: 15.09, revTier: 1, partners: []
       },
 
       {
         id: 'higen', name: '하이젠알앤엠', nameEn: 'Higen R&M', ticker: '160190', market: 'KOSDAQ', chain: '액추에이터·모터',
         semType: '로봇·산업용 모터·액추에이터', semTypeEn: 'Robot and industrial motors & actuators',
         products: '서보모터, 서보드라이브, 로봇 액추에이터', productsEn: 'Servo motors, servo drives and robot actuators',
-        revenue: '0.86조원', mcapWon: 855597600000, per: null, pbr: 7.57, revTier: 1, partners: ['siemens', 'abb']
+        revenue: '0.57조원', mcapWon: 566177040000, per: null, pbr: 7.57, revTier: 1, partners: ['siemens', 'abb']
       },
 
       {
         id: 'yujin', name: '유진로봇', nameEn: 'Yujin Robot', ticker: '056080', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
         semType: '자율주행·서비스 로봇', semTypeEn: 'Autonomous mobile & service robots',
         products: 'iClebo, 자율주행 물류로봇', productsEn: 'iClebo and autonomous mobile robots',
-        revenue: '0.73조원', mcapWon: 732987450080, per: null, pbr: 25.51, revTier: 1, partners: ['amazon', 'google']
+        revenue: '0.46조원', mcapWon: 464561154900, per: null, pbr: 25.51, revTier: 1, partners: ['amazon', 'google']
       },
 
       {
         id: 'neuromeka', name: '뉴로메카', nameEn: 'Neuromeka Co., Ltd.', ticker: '348340', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
         semType: '협동로봇', semTypeEn: 'Collaborative robots',
         products: 'Indy 협동로봇, 자동화 플랫폼', productsEn: 'Indy cobots and automation platform',
-        revenue: '0.61조원', mcapWon: 614252974500, per: null, pbr: 40.88, revTier: 1, partners: []
+        revenue: '0.44조원', mcapWon: 444291887520, per: null, pbr: 40.88, revTier: 1, partners: []
+      },
+
+      {
+        id: 'robot_cosmo_robotics_co_ltd', name: '코스모로보틱스', nameEn: 'Cosmo Robotics', ticker: '439960', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
+        semType: '산업·서비스 로봇', semTypeEn: 'Industrial and service robots',
+        products: '제조·물류·서비스용 로봇, 자동화 플랫폼', productsEn: 'Manufacturing, logistics and service robots, automation platforms',
+        revenue: '0.41조원', mcapWon: 407579862560, per: null, pbr: 36.89, revTier: 1, partners: ['fanuc', 'abb', 'yaskawa', { id: 'doosan_robot', edgeLabel: '국내 협동로봇 peer', edgeLabelEn: 'Domestic cobot peer', weight: 0.12, kind: 'theme' }, { id: 'rainbow', edgeLabel: '국내 로봇 peer', edgeLabelEn: 'Domestic robot peer', weight: 0.1, kind: 'theme' }]
       },
 
       {
         id: 'halla_cast', name: '한라캐스트', nameEn: 'Halla Cast', ticker: '125490', market: 'KOSDAQ', chain: '센서·비전·정밀부품',
         semType: '로봇·자동차용 정밀 다이캐스팅', semTypeEn: 'Precision die casting for robotics & automotive electronics',
         products: '로봇 구조·열관리 부품, 자율주행·전장 하우징', productsEn: 'Robot structural and thermal-management parts; ADAS and electronics housings',
-        revenue: '0.50조원', mcapWon: 497527057760, per: 106.48, pbr: 4.71, revTier: 1, partners: ['keyence', 'cognex']
+        revenue: '0.37조원', mcapWon: 374149108000, per: 106.48, pbr: 4.71, revTier: 1, partners: ['keyence', 'cognex']
       },
 
       {
-        id: 'sbb_tech', name: '에스비비테크', nameEn: 'SBB Tech', ticker: '389500', market: 'KOSDAQ', chain: '감속기·동력전달',
-        semType: '정밀 감속기', semTypeEn: 'Precision reducers',
-        products: '로봇용 하모닉 감속기, 세라믹 베어링', productsEn: 'Robot harmonic reducers and ceramic bearings',
-        revenue: '0.42조원', mcapWon: 417133347200, per: null, pbr: 31.71, revTier: 1, partners: []
-      },
-
-      {
-        id: 't_robotics', name: '티로보틱스', nameEn: 'T-Robotics co., Ltd.', ticker: '117730', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
-        semType: '산업용·협동로봇', semTypeEn: 'Industrial & collaborative robots',
-        products: '반도체·디스플레이 이송로봇, AMR', productsEn: 'Semiconductor/display transfer robots and AMRs',
-        revenue: '0.38조원', mcapWon: 375816996380, per: null, pbr: 7.23, revTier: 1, partners: []
-      },
-
-      {
-        id: 'cmes', name: '씨메스로보틱스', nameEn: 'CMES Robotics', ticker: '475400', market: 'KOSDAQ', chain: '자동화·SI·물류시스템',
-        semType: 'AI비전 로봇 자동화·SI', semTypeEn: 'AI vision robotics automation & systems integration',
-        products: '피킹·팔레타이징·물류 로봇 시스템', productsEn: 'Picking, palletizing and logistics robot systems',
-        revenue: '0.31조원', mcapWon: 309772233700, per: null, pbr: 5.23, revTier: 1, partners: []
+        id: 'robot_angel_robotics_co_ltd', name: '엔젤로보틱스', nameEn: 'Angel Robotics', ticker: '455900', market: 'KOSDAQ', chain: '완성로봇·플랫폼',
+        semType: '웨어러블·의료 로봇', semTypeEn: 'Wearable and medical robots',
+        products: '보행보조·재활 웨어러블, 의료·케어 로봇', productsEn: 'Gait-assist and rehab wearables, medical and care robots',
+        revenue: '0.31조원', mcapWon: 314786461450, per: null, pbr: 11.71, revTier: 1, partners: ['fanuc', 'abb', 'yaskawa', { id: 'hyulim_robot', edgeLabel: '국내 서비스로봇 peer', edgeLabelEn: 'Domestic service-robot peer', weight: 0.1, kind: 'theme' }]
       }
 
     ];
@@ -2931,7 +3022,8 @@
       { id: 'caterpillar', name: 'Caterpillar', nameEn: 'Caterpillar', country: '미국/USA', region: 'us', sector: 'Heavy equipment' },
       { id: 'volvo_ce', name: 'Volvo CE', nameEn: 'Volvo CE', country: '스위스/Sweden', region: 'eu', sector: 'Construction equipment' },
       { id: 'doosan_grp', name: '두산그룹', nameEn: '두산그룹', country: '한국/Korea', region: 'kr', sector: 'Captive / backing (illus.)' },
-      { id: 'samsung_eco', name: '삼성 역량', nameEn: '삼성 역량', country: '한국/Korea', region: 'kr', sector: 'Strategic partner (illus.)' }
+      { id: 'samsung_eco', name: '삼성 역량', nameEn: '삼성 역량', country: '한국/Korea', region: 'kr', sector: 'Strategic partner (illus.)' },
+      { id: 'yaskawa', name: 'Yaskawa', nameEn: 'Yaskawa Electric', country: '일본/Japan', region: 'jp', sector: 'Industrial robots & drives' }
     ];
     // ═══════════════════════════════════════════════════════
     // STATE
@@ -3578,6 +3670,8 @@
       <li><a href="../software/korea_software_map.html">한국 IT·소프트웨어 투자 지도</a> · <a href="../software/korea_software_map.html?lang=en" hreflang="en">Korea IT &amp; Software Map</a></li>
       <li><a href="../holdings/korea_holdings_map.html">한국 지주회사 투자 지도</a> · <a href="../holdings/korea_holdings_map.html?lang=en" hreflang="en">Korea Holdings Map</a></li>
       <li><a href="../telecom/korea_telecom_map.html">한국 통신 투자 지도</a> · <a href="../telecom/korea_telecom_map.html?lang=en" hreflang="en">Korea Telecom Map</a></li>
+      <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
+      <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
       <li><a href="../metal/korea_metal_map.html">한국 철강·금속·기계 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel, Metals &amp; Machinery Map</a></li>
       </ul>

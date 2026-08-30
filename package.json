@@ -23,6 +23,8 @@
     "verify:medtech": "node scripts/skip_rn_wip_verify.mjs verify:medtech",
     "verify:software": "node scripts/skip_rn_wip_verify.mjs verify:software",
     "verify:telecom": "node scripts/skip_rn_wip_verify.mjs verify:telecom",
+    "verify:chemical": "node scripts/skip_rn_wip_verify.mjs verify:chemical",
+    "verify:travel": "node scripts/skip_rn_wip_verify.mjs verify:travel",
     "verify:robot": "node scripts/skip_rn_wip_verify.mjs verify:robot",
     "verify:semi-relations": "node scripts/skip_rn_wip_verify.mjs verify:semi-relations",
     "verify:relation-network": "node scripts/verify_relation_network.mjs",
@@ -50,11 +52,15 @@
     "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",
+    "fetch:krx-mcap": "node scripts/fetch_krx_mcap_csv.mjs",
     "audit:mcap-universe": "node scripts/audit_mcap_universe.mjs",
     "verify:quotes-hybrid": "node scripts/verify_quotes_hybrid.mjs",
     "pages:build": "node scripts/pages_build.mjs",
     "patch:tickers": "node scripts/patch_tickers_from_krx.mjs",
     "geo": "node scripts/build_trust_pages.mjs && node scripts/patch_geo.mjs",
     "dev:quotes": "node scripts/dev_quotes_server.mjs"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.6.3"
   }
 }

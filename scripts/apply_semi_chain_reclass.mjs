@@ -1,12 +1,14 @@
 /**
  * Persist semiconductor chain split: 장비 → 전공정 장비 / 후공정 장비,
  * plus confirmed non-equipment rehomes. Rebuild-safe via data/chain_overrides.json.
+ * Chain counts are not hardcoded; see lib/chain_reclass_invariants.mjs.
  */
 import fs from 'fs';
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { extractCompaniesFromHtml, patchKoreanCompaniesHtml } from '../lib/map_company_serialize.mjs';
 import { chainOverride } from '../lib/chain_overrides.mjs';
+import { assertChainInvariants, logChainCounts } from '../lib/chain_reclass_invariants.mjs';
 import { escHtml, PRERENDER_START, PRERENDER_END } from '../lib/seo_prerender_lib.mjs';
 import {
   ANGLE,
@@ -42,18 +44,6 @@ const METADATA_FIX_TICKERS = [
   '101490', '213420', '348210', '122640', '160980', '101160', '425040', '079370', '053610',
   '356860', '086390', '254490', '031980', '089890', '061970',
 ];
-
-const EXPECTED_COUNTS = {
-  '전공정 장비': 16,
-  '후공정 장비': 10,
-  소재: 22,
-  '부품/기판': 11,
-  '패키징/테스트': 13,
-  팹리스: 7,
-  디자인하우스: 2,
-  파운드리: 1,
-  '반도체 유통': 1,
-};
 
 const META_FIELDS = ['semType', 'semTypeEn', 'products', 'productsEn'];
 
@@ -164,39 +154,27 @@ function patchPrerenderRows(html, companies) {
   return { html: html.slice(0, i0) + block + html.slice(i1), patched };
 }
 
-function assertCounts(counts) {
-  const diffs = [];
-  for (const chain of new Set([...Object.keys(EXPECTED_COUNTS), ...Object.keys(counts)])) {
-    const got = counts[chain] || 0;
-    const want = EXPECTED_COUNTS[chain] || 0;
-    if (got !== want) diffs.push(`${chain}: expected ${want}, got ${got}`);
-  }
-  if (diffs.length) throw new Error(`chain counts mismatch — ${diffs.join('; ')}`);
-}
-
 function main() {
   let html = fs.readFileSync(HTML_PATH, 'utf8');
   const companies = extractCompaniesFromHtml(html);
   const metaFixes = loadMetaFixes();
-  const counts = {};
   for (const c of companies) {
     const next = chainOverride('semi', c.ticker);
     if (next) c.chain = next;
     const meta = metaFixes[pad(c.ticker)];
     if (meta) Object.assign(c, meta);
-    counts[c.chain] = (counts[c.chain] || 0) + 1;
   }
   const stale = companies.filter((c) => c.chain === '장비' || c.chain === '후공정' || c.chain === 'IDM');
   if (stale.length) {
     throw new Error(`stale chains remain: ${stale.map((c) => c.ticker + ':' + c.chain).join(', ')}`);
   }
-  assertCounts(counts);
+  const counts = assertChainInvariants('semi', companies);
 
   html = patchKoreanCompaniesHtml(html, companies);
   html = patchUi(html);
   const prerender = patchPrerenderRows(html, companies);
   fs.writeFileSync(HTML_PATH, prerender.html, 'utf8');
-  console.log('OK apply_semi_chain_reclass', companies.length, counts);
+  console.log('OK apply_semi_chain_reclass', companies.length, counts, `(${logChainCounts('semi', counts)})`);
   console.log(`prerender rows patched: ${prerender.patched}`);
 }
 

@@ -157,39 +157,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:267260",
-      "target": "group:chain_%EC%A0%84%EB%A0%A5%EC%84%A4%EB%B9%84",
-      "beforeType": null,
-      "afterType": "member_of",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain classification"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:267260",
-      "target": "equipment:power_transformer",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:267260",
-      "target": "equipment:circuit_breaker",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:010120",
       "target": "group:chain_%EC%A0%84%EB%A0%A5%EC%84%A4%EB%B9%84",
       "beforeType": null,
@@ -267,6 +234,39 @@
     },
     {
       "legacyEdgeId": null,
+      "source": "krx:267260",
+      "target": "group:chain_%EC%A0%84%EB%A0%A5%EC%84%A4%EB%B9%84",
+      "beforeType": null,
+      "afterType": "member_of",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "chain classification"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:267260",
+      "target": "equipment:power_transformer",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:267260",
+      "target": "equipment:circuit_breaker",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
       "source": "krx:015760",
       "target": "group:chain_%EB%B0%9C%EC%A0%84%EC%84%A4%EB%B9%84",
       "beforeType": null,
@@ -275,39 +275,6 @@
       "afterStatus": "reference",
       "origin": "structuralGenerated",
       "reason": "chain classification"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:001440",
-      "target": "group:chain_%EC%A0%84%EC%84%A0%C2%B7%EC%BC%80%EC%9D%B4%EB%B8%94",
-      "beforeType": null,
-      "afterType": "member_of",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain classification"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:001440",
-      "target": "equipment:cable",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:001440",
-      "target": "equipment:submarine_cable",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
     },
     {
       "legacyEdgeId": null,
@@ -346,6 +313,39 @@
       "legacyEdgeId": null,
       "source": "krx:000500",
       "target": "equipment:cable",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:001440",
+      "target": "group:chain_%EC%A0%84%EC%84%A0%C2%B7%EC%BC%80%EC%9D%B4%EB%B8%94",
+      "beforeType": null,
+      "afterType": "member_of",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "chain classification"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:001440",
+      "target": "equipment:cable",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:001440",
+      "target": "equipment:submarine_cable",
       "beforeType": null,
       "afterType": "manufactures",
       "beforeStatus": null,
@@ -399,6 +399,28 @@
     },
     {
       "legacyEdgeId": null,
+      "source": "krx:060370",
+      "target": "group:chain_%EC%86%A1%EB%B0%B0%EC%A0%84",
+      "beforeType": null,
+      "afterType": "member_of",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "chain classification"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:060370",
+      "target": "equipment:submarine_cable",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
       "source": "krx:229640",
       "target": "group:chain_%EC%A0%84%EC%84%A0%C2%B7%EC%BC%80%EC%9D%B4%EB%B8%94",
       "beforeType": null,
@@ -432,8 +454,8 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:060370",
-      "target": "group:chain_%EC%86%A1%EB%B0%B0%EC%A0%84",
+      "source": "krx:006340",
+      "target": "group:chain_%EC%A0%84%EC%84%A0%C2%B7%EC%BC%80%EC%9D%B4%EB%B8%94",
       "beforeType": null,
       "afterType": "member_of",
       "beforeStatus": null,
@@ -443,14 +465,25 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:060370",
-      "target": "equipment:submarine_cable",
+      "source": "krx:006340",
+      "target": "equipment:cable",
       "beforeType": null,
       "afterType": "manufactures",
       "beforeStatus": null,
       "afterStatus": "reference",
       "origin": "structuralGenerated",
       "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:071320",
+      "target": "group:chain_%EB%B0%9C%EC%A0%84%EC%84%A4%EB%B9%84",
+      "beforeType": null,
+      "afterType": "member_of",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "chain classification"
     },
     {
       "legacyEdgeId": null,
@@ -484,72 +517,6 @@
       "afterStatus": "reference",
       "origin": "structuralGenerated",
       "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:071320",
-      "target": "group:chain_%EB%B0%9C%EC%A0%84%EC%84%A4%EB%B9%84",
-      "beforeType": null,
-      "afterType": "member_of",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain classification"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:006340",
-      "target": "group:chain_%EC%A0%84%EC%84%A0%C2%B7%EC%BC%80%EC%9D%B4%EB%B8%94",
-      "beforeType": null,
-      "afterType": "member_of",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain classification"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:006340",
-      "target": "equipment:cable",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": "267260-siemens_energy",
-      "source": "krx:267260",
-      "target": "global:siemens_energy",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "legacy partner → peer (default hidden)"
-    },
-    {
-      "legacyEdgeId": "267260-ge_vernova",
-      "source": "krx:267260",
-      "target": "global:ge_vernova",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "legacy partner → peer (default hidden)"
-    },
-    {
-      "legacyEdgeId": "267260-schneider_e",
-      "source": "krx:267260",
-      "target": "global:schneider_e",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "legacy partner → peer (default hidden)"
     },
     {
       "legacyEdgeId": "010120-abb",
@@ -607,6 +574,39 @@
       "reason": "legacy partner → peer (default hidden)"
     },
     {
+      "legacyEdgeId": "267260-siemens_energy",
+      "source": "krx:267260",
+      "target": "global:siemens_energy",
+      "beforeType": "partner",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "legacy partner → peer (default hidden)"
+    },
+    {
+      "legacyEdgeId": "267260-ge_vernova",
+      "source": "krx:267260",
+      "target": "global:ge_vernova",
+      "beforeType": "partner",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "legacy partner → peer (default hidden)"
+    },
+    {
+      "legacyEdgeId": "267260-schneider_e",
+      "source": "krx:267260",
+      "target": "global:schneider_e",
+      "beforeType": "partner",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "legacy partner → peer (default hidden)"
+    },
+    {
       "legacyEdgeId": "015760-ge_vernova",
       "source": "krx:015760",
       "target": "global:ge_vernova",
@@ -640,28 +640,6 @@
       "reason": "non-grid global dropped from powergrid peer set"
     },
     {
-      "legacyEdgeId": "001440-siemens_energy",
-      "source": "krx:001440",
-      "target": "global:siemens_energy",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "legacy partner → peer (default hidden)"
-    },
-    {
-      "legacyEdgeId": "001440-ge_vernova",
-      "source": "krx:001440",
-      "target": "global:ge_vernova",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "legacy partner → peer (default hidden)"
-    },
-    {
       "legacyEdgeId": "062040-siemens_energy",
       "source": "krx:062040",
       "target": "global:siemens_energy",
@@ -675,6 +653,28 @@
     {
       "legacyEdgeId": "062040-ge_vernova",
       "source": "krx:062040",
+      "target": "global:ge_vernova",
+      "beforeType": "partner",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "legacy partner → peer (default hidden)"
+    },
+    {
+      "legacyEdgeId": "001440-siemens_energy",
+      "source": "krx:001440",
+      "target": "global:siemens_energy",
+      "beforeType": "partner",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "legacy partner → peer (default hidden)"
+    },
+    {
+      "legacyEdgeId": "001440-ge_vernova",
+      "source": "krx:001440",
       "target": "global:ge_vernova",
       "beforeType": "partner",
       "afterType": "peer",
@@ -861,12 +861,6 @@
     "listedCount": 14,
     "tickers": [
       {
-        "ticker": "267260",
-        "name": "HD현대일렉트릭",
-        "chain": "전력설비",
-        "partners": 3
-      },
-      {
         "ticker": "010120",
         "name": "LS ELECTRIC",
         "chain": "전력설비",
@@ -879,16 +873,16 @@
         "partners": 2
       },
       {
+        "ticker": "267260",
+        "name": "HD현대일렉트릭",
+        "chain": "전력설비",
+        "partners": 3
+      },
+      {
         "ticker": "015760",
         "name": "한국전력",
         "chain": "발전설비",
         "partners": 3
-      },
-      {
-        "ticker": "001440",
-        "name": "대한전선",
-        "chain": "전선·케이블",
-        "partners": 2
       },
       {
         "ticker": "062040",
@@ -903,6 +897,12 @@
         "partners": 0
       },
       {
+        "ticker": "001440",
+        "name": "대한전선",
+        "chain": "전선·케이블",
+        "partners": 2
+      },
+      {
         "ticker": "103590",
         "name": "일진전기",
         "chain": "송배전",
@@ -915,22 +915,22 @@
         "partners": 2
       },
       {
-        "ticker": "229640",
-        "name": "LS에코에너지",
-        "chain": "전선·케이블",
-        "partners": 0
-      },
-      {
         "ticker": "060370",
         "name": "LS마린솔루션",
         "chain": "송배전",
         "partners": 0
       },
       {
-        "ticker": "033100",
-        "name": "제룡전기",
-        "chain": "송배전",
-        "partners": 2
+        "ticker": "229640",
+        "name": "LS에코에너지",
+        "chain": "전선·케이블",
+        "partners": 0
+      },
+      {
+        "ticker": "006340",
+        "name": "대원전선",
+        "chain": "전선·케이블",
+        "partners": 0
       },
       {
         "ticker": "071320",
@@ -939,10 +939,10 @@
         "partners": 0
       },
       {
-        "ticker": "006340",
-        "name": "대원전선",
-        "chain": "전선·케이블",
-        "partners": 0
+        "ticker": "033100",
+        "name": "제룡전기",
+        "chain": "송배전",
+        "partners": 2
       }
     ],
     "legacyPartnerEdges": 21,

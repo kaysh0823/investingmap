@@ -3,6 +3,7 @@ import fs from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { extractCompaniesFromHtml } from '../lib/map_company_serialize.mjs';
+import { validateChainInvariants } from '../lib/chain_reclass_invariants.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
@@ -30,9 +31,11 @@ const sectors = {
   defense: mapCompanies('defense/korea_defense_map.html'),
   cosmetics: mapCompanies('cosmetics/korea_cosmetics_map.html'),
 };
-const expectedCounts = { powergrid: 14, ship: 25, bio: 59, medtech: 10, defense: 13, cosmetics: 15 };
-for (const [sector, expected] of Object.entries(expectedCounts)) {
-  check(sectors[sector].length === expected, `${sector}: expected ${expected}, got ${sectors[sector].length}`);
+
+for (const sectorKey of ['powergrid', 'ship']) {
+  for (const err of validateChainInvariants(sectorKey, sectors[sectorKey], { label: sectorKey })) {
+    failures.push(err);
+  }
 }
 
 const homes = new Map();

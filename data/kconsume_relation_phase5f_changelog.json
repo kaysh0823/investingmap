@@ -2,16 +2,21 @@
   "phase": "5F",
   "sector": "kconsume",
   "asOf": "2026-08-29",
-  "listedCompanyCount": 22,
-  "nodeCount": 65,
-  "edgeCount": 69,
-  "structuralGenerated": 65,
-  "legacyMigrated": 4,
+  "listedCompanyCount": 37,
+  "nodeCount": 76,
+  "edgeCount": 79,
+  "structuralGenerated": 76,
+  "legacyMigrated": 3,
   "manuallyCurated": 2,
-  "removedUnsupported": 0,
-  "demotedPeer": 4,
+  "removedUnsupported": 1,
+  "demotedPeer": 3,
   "confirmedBusinessEdgeCount": 0,
   "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "086280",
+      "lane": "brand_owner"
+    },
     {
       "action": "structural_member_of",
       "ticker": "003230",
@@ -31,26 +36,6 @@
       "action": "structural_specializes_in",
       "ticker": "003230",
       "category": "consumer_category:instant-noodles"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "004170",
-      "lane": "retail_channel"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "004170",
-      "category": "consumer_category:department-retail"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "023530",
-      "lane": "retail_channel"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "023530",
-      "category": "consumer_category:department-retail"
     },
     {
       "action": "structural_member_of",
@@ -74,12 +59,12 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "069960",
+      "ticker": "004170",
       "lane": "retail_channel"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "069960",
+      "ticker": "004170",
       "category": "consumer_category:department-retail"
     },
     {
@@ -94,23 +79,13 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "383220",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "383220",
-      "brand": "brand:mlb"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "383220",
-      "brand": "brand:discovery-expedition"
+      "ticker": "023530",
+      "lane": "retail_channel"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "383220",
-      "category": "consumer_category:apparel"
+      "ticker": "023530",
+      "category": "consumer_category:department-retail"
     },
     {
       "action": "structural_member_of",
@@ -134,16 +109,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "139480",
-      "lane": "retail_channel"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "139480",
-      "category": "consumer_category:hypermarket"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "004370",
       "lane": "brand_owner"
     },
@@ -164,6 +129,46 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "026960",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "383220",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "383220",
+      "brand": "brand:mlb"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "383220",
+      "brand": "brand:discovery-expedition"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "383220",
+      "category": "consumer_category:apparel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "282330",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "007070",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "007070",
+      "category": "consumer_category:convenience-retail"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "081660",
       "lane": "brand_owner"
     },
@@ -179,33 +184,38 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "008770",
-      "lane": "leisure_lifestyle"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "008770",
-      "category": "consumer_category:travel-hospitality"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "007070",
+      "ticker": "139480",
       "lane": "retail_channel"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "007070",
-      "category": "consumer_category:convenience-retail"
+      "ticker": "139480",
+      "category": "consumer_category:hypermarket"
     },
     {
       "action": "structural_member_of",
-      "ticker": "032350",
-      "lane": "leisure_lifestyle"
+      "ticker": "069960",
+      "lane": "retail_channel"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "032350",
-      "category": "consumer_category:travel-hospitality"
+      "ticker": "069960",
+      "category": "consumer_category:department-retail"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "006040",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "000120",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "001120",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -249,18 +259,18 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "093050",
+      "ticker": "001740",
       "lane": "brand_owner"
     },
     {
-      "action": "structural_operates_brand",
-      "ticker": "093050",
-      "brand": "brand:lf-houses"
+      "action": "structural_member_of",
+      "ticker": "000080",
+      "lane": "brand_owner"
     },
     {
-      "action": "structural_specializes_in",
-      "ticker": "093050",
-      "category": "consumer_category:apparel"
+      "action": "structural_member_of",
+      "ticker": "005300",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -284,13 +294,63 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "039130",
-      "lane": "leisure_lifestyle"
+      "ticker": "093050",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "093050",
+      "brand": "brand:lf-houses"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "039130",
-      "category": "consumer_category:travel-agency"
+      "ticker": "093050",
+      "category": "consumer_category:apparel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "001680",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "453340",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "145990",
+      "lane": "manufacturing"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "145990",
+      "category": "consumer_category:food-ingredients"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "031430",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "017810",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "003800",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "105630",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "005610",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -309,23 +369,18 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "145990",
-      "lane": "manufacturing"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "145990",
-      "category": "consumer_category:food-ingredients"
+      "ticker": "011760",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
-      "ticker": "136480",
-      "lane": "manufacturing"
+      "ticker": "036620",
+      "lane": "brand_owner"
     },
     {
-      "action": "structural_specializes_in",
-      "ticker": "136480",
-      "category": "consumer_category:poultry-meat"
+      "action": "structural_member_of",
+      "ticker": "016800",
+      "lane": "brand_owner"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -346,7 +401,7 @@
       "note": "retail peer → peer defaultHidden"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
+      "action": "removed_unsupported_partner",
       "from": "008770",
       "partner": "marriott",
       "note": "hospitality peer → peer defaultHidden"

@@ -7,20 +7,13 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { extractCompaniesFromHtml, patchKoreanCompaniesHtml } from '../lib/map_company_serialize.mjs';
 import { chainOverride } from '../lib/chain_overrides.mjs';
+import { assertChainInvariants, logChainCounts } from '../lib/chain_reclass_invariants.mjs';
 import { escHtml, PRERENDER_START, PRERENDER_END } from '../lib/seo_prerender_lib.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HTML_PATH = join(ROOT, 'ship', 'korea_ship_map.html');
 
 const CHAINS = ['종합조선', '엔진', '의장/배관', '선체·보냉·구조재', '서비스·해양플랜트', '해운물류'];
-const EXPECTED_COUNTS = {
-  종합조선: 5,
-  엔진: 5,
-  '의장/배관': 4,
-  '선체·보냉·구조재': 5,
-  '서비스·해양플랜트': 3,
-  해운물류: 3,
-};
 const RETIRED_CHAINS = ['조선기자재', '기타 기자재', '해양플랜트', '방산해양', '철강소재'];
 const CHAIN_COLORS = {
   종합조선: '#4FC3F7',
@@ -120,19 +113,6 @@ function patchPrerenderRows(html, companies) {
   return html.slice(0, i0) + block + html.slice(i1);
 }
 
-function assertCounts(companies) {
-  const counts = {};
-  for (const c of companies) counts[c.chain] = (counts[c.chain] || 0) + 1;
-  const diffs = [];
-  for (const chain of new Set([...Object.keys(EXPECTED_COUNTS), ...Object.keys(counts)])) {
-    const got = counts[chain] || 0;
-    const want = EXPECTED_COUNTS[chain] || 0;
-    if (got !== want) diffs.push(`${chain}: expected ${want}, got ${got}`);
-  }
-  if (diffs.length) throw new Error(`ship chain counts mismatch — ${diffs.join('; ')}`);
-  return counts;
-}
-
 let html = fs.readFileSync(HTML_PATH, 'utf8');
 const companies = extractCompaniesFromHtml(html);
 for (const c of companies) {
@@ -141,9 +121,9 @@ for (const c of companies) {
 }
 const stale = companies.filter((c) => RETIRED_CHAINS.includes(c.chain));
 if (stale.length) throw new Error(`retired ship chains remain: ${stale.map((c) => c.ticker).join(', ')}`);
-const counts = assertCounts(companies);
+const counts = assertChainInvariants('ship', companies);
 html = patchKoreanCompaniesHtml(html, companies);
 html = patchUi(html);
 html = patchPrerenderRows(html, companies);
 fs.writeFileSync(HTML_PATH, html, 'utf8');
-console.log('OK apply_ship_chain_reclass', companies.length, counts);
+console.log('OK apply_ship_chain_reclass', companies.length, counts, `(${logChainCounts('ship', counts)})`);

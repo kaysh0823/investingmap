@@ -4,7 +4,7 @@
  *   - bio_translations.json
  *   - bio_ticker_en.json (English display names)
  *   - bio_inline_tail.js (browser UI logic)
- * KRX market cap: data_4937 / data_4848 (2026-06-12) tickers in this script.
+ * KRX market cap: latest data_4937_* / data_4848_* via loadMergedKrxMap.
  * PER / PBR: data_5016_*.csv via ../lib/krx_per_pbr.mjs.
  */
 import fs from 'fs';
@@ -17,27 +17,6 @@ import { filterCompaniesByMcap, passesMcapFloor } from '../lib/mcap_policy.mjs';
 import { allowedInSector, filterCompaniesForSector } from '../lib/sector_exclusive.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const MKT_CAP_KRW = {
-  '068270': 38342571972000, '0126Z0': 11110281378500, '068760': 1904860042800, '950210': 418269238800,
-  '207940': 59946781545000, '302440': 3075496877600, '237690': 2545803036000, '053030': 259512452720,
-  '298380': 5100457879300, '196170': 18058597591000, '141080': 4782908805600, '475830': 1460754767500,
-  '287840': 335740806000, '0009K0': 1759055579200, '424870': 385168975180, '000100': 6148794797200,
-  '028300': 6140438080300, '310210': 3560820088500, '095700': 136849184470, '083790': 68358927798,
-  '314130': 241422579000, '128940': 5265317301000, '087010': 5362990500000, '347850': 3832862862500,
-  '000250': 6134128928000, '950160': 8693918730000, '085660': 1104517410480, '078160': 400278996630,
-  '199800': 402643897750, '011000': 83430508626, '226950': 2338627161600, '185490': 61905050688,
-  '326030': 6883734675000, '069620': 1391547657500, '185750': 977236824000, '006280': 1477178403200,
-  '001060': 629884406500, '009420': 2690392857000, '170900': 359442912050, '096530': 1464939131700,
-  '137310': 863356079300, '253840': 80869656000, '206640': 228061457610,
-  '214450': 3002608272000, '214150': 2867107213050, '328130': 1097887707360, '338220': 130216953900,
-  '041830': 597877116700, '228670': 70692894920, '049950': 107490005960
-};
-
-const KOSPI_TICKERS = new Set([
-  '001060', '302440', '326030', '006280', '069620', '170900', '207940', '0126Z0', '068270', '137310',
-  '000100', '185750', '011000', '950210', '128940', '009420'
-]);
 
 function flagMeta(flag) {
   if (!flag) return { region: 'us', country: 'Global' };
@@ -97,7 +76,7 @@ function normalizeSector(sec) {
   };
 }
 
-function flattenCompanies(bioSectors, nameEnMap) {
+function flattenCompanies(bioSectors, nameEnMap, krx) {
   const list = [];
   const byKey = new Map();
 
@@ -127,9 +106,10 @@ function flattenCompanies(bioSectors, nameEnMap) {
         continue;
       }
 
-      const mcapWon = ticker === 'UNLISTED' ? null : (MKT_CAP_KRW[ticker] ?? null);
+      const row = ticker === 'UNLISTED' ? null : krx.get(ticker);
+      const mcapWon = row?.mcap ?? null;
       if (ticker !== 'UNLISTED' && !passesMcapFloor({ mcapWon: mcapWon || 0 })) continue;
-      const market = ticker === 'UNLISTED' ? '\uBE44\uC0C1\uC7A5' : (KOSPI_TICKERS.has(ticker) ? 'KOSPI' : 'KOSDAQ');
+      const market = ticker === 'UNLISTED' ? '\uBE44\uC0C1\uC7A5' : (row?.market || 'KOSDAQ');
       const entry = {
         id: `bio_${list.length}`,
         name: d.name,
@@ -177,19 +157,19 @@ function mergeCpListAdditions(list, byKey, nameEnMap, meta3557) {
     const entry = {
       id: `bio_${list.length}`,
       name: a.name || row?.name || ticker,
-      nameEn: nameEnMap[ticker] || meta3557?.get(ticker)?.nameEn || a.name || ticker,
+      nameEn: a.nameEn || nameEnMap[ticker] || meta3557?.get(ticker)?.nameEn || a.name || ticker,
       ticker,
       market,
       chain: a.chain || '합성신약 / 제네릭',
       sectorId: a.sectorId || 'smallmol',
-      semType: a.subSector || '—',
-      semTypeEn: a.subSector || '—',
-      products: a.subSector || '—',
-      productsEn: a.subSector || '—',
+      semType: a.semType || a.subSector || '—',
+      semTypeEn: a.semTypeEn || a.subSector || '—',
+      products: a.products || a.subSector || '—',
+      productsEn: a.productsEn || a.subSector || '—',
       revenue: fmtMcap(mcapWon),
       mcapWon: mcapWon || 0,
       revTier: mcapTier(mcapWon),
-      partners: [],
+      partners: a.partners || [],
       extraChains: [],
     };
     list.push(entry);
@@ -244,7 +224,7 @@ const nameEnMap = JSON.parse(fs.readFileSync(join(__dirname, 'bio_ticker_en.json
 const dataDir = join(__dirname, '..', 'data');
 const krxMap = loadMergedKrxMap(dataDir);
 const meta3557 = loadListedEnglish3557Map(dataDir);
-const koreanCompanies = flattenCompanies(bioSectors, nameEnMap);
+const koreanCompanies = flattenCompanies(bioSectors, nameEnMap, krxMap);
 {
   const byKey = new Map();
   for (const c of koreanCompanies) {
@@ -255,6 +235,12 @@ const koreanCompanies = flattenCompanies(bioSectors, nameEnMap);
 }
 for (const c of koreanCompanies) {
   const row = krxMap.get(c.ticker);
+  if (row && row.mcap > 0) {
+    c.mcapWon = row.mcap;
+    c.revenue = fmtMcap(row.mcap);
+    c.revTier = mcapTier(row.mcap);
+    if (row.market) c.market = row.market;
+  }
   if (row?.name) c.name = row.name;
 }
 mergeListedEnglishIntoCompanies(koreanCompanies, meta3557);

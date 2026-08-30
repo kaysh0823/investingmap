@@ -12,9 +12,22 @@
       "market": "KOSPI",
       "role": "항공기·엔진·MRO",
       "group": "항공기·엔진·MRO",
-      "mcapWon": 55585346278000,
+      "mcapWon": 59658854957000,
       "isListedKorea": true,
       "legacyId": "hanwha_aero"
+    },
+    {
+      "id": "krx:079550",
+      "type": "listed_company",
+      "ticker": "079550",
+      "nameKo": "LIG디펜스앤에어로스페이스",
+      "nameEn": "LIG Defense&Aerospace",
+      "market": "KOSPI",
+      "role": "미사일·레이더·C4ISR",
+      "group": "미사일·레이더·C4ISR",
+      "mcapWon": 16148000000000,
+      "isListedKorea": true,
+      "legacyId": "lig"
     },
     {
       "id": "krx:064350",
@@ -25,7 +38,7 @@
       "market": "KOSPI",
       "role": "육상무기·차량·탄약",
       "group": "육상무기·차량·탄약",
-      "mcapWon": 22756168090500,
+      "mcapWon": 15181692956300,
       "isListedKorea": true,
       "legacyId": "rotem"
     },
@@ -38,22 +51,9 @@
       "market": "KOSPI",
       "role": "미사일·레이더·C4ISR",
       "group": "미사일·레이더·C4ISR",
-      "mcapWon": 18136261344000,
+      "mcapWon": 14320089686200,
       "isListedKorea": true,
       "legacyId": "hanwha_sys"
-    },
-    {
-      "id": "krx:079550",
-      "type": "listed_company",
-      "ticker": "079550",
-      "nameKo": "LIG디펜스앤에어로스페이스",
-      "nameEn": "LIG Defense&Aerospace",
-      "market": "KOSPI",
-      "role": "미사일·레이더·C4ISR",
-      "group": "미사일·레이더·C4ISR",
-      "mcapWon": 16984000000000,
-      "isListedKorea": true,
-      "legacyId": "lig"
     },
     {
       "id": "krx:047810",
@@ -64,22 +64,9 @@
       "market": "KOSPI",
       "role": "항공기·엔진·MRO",
       "group": "항공기·엔진·MRO",
-      "mcapWon": 13734242576300,
+      "mcapWon": 12973936741700,
       "isListedKorea": true,
       "legacyId": "kai"
-    },
-    {
-      "id": "krx:082920",
-      "type": "listed_company",
-      "ticker": "082920",
-      "nameKo": "비츠로셀",
-      "nameEn": "VITZROCELL Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "육상무기·차량·탄약",
-      "group": "육상무기·차량·탄약",
-      "mcapWon": 2126421471300,
-      "isListedKorea": true,
-      "legacyId": "def_vitzrocell_co_ltd"
     },
     {
       "id": "krx:103140",
@@ -90,9 +77,22 @@
       "market": "KOSPI",
       "role": "육상무기·차량·탄약",
       "group": "육상무기·차량·탄약",
-      "mcapWon": 2070994144200,
+      "mcapWon": 2421297619200,
       "isListedKorea": true,
       "legacyId": "poongsan"
+    },
+    {
+      "id": "krx:082920",
+      "type": "listed_company",
+      "ticker": "082920",
+      "nameKo": "비츠로셀",
+      "nameEn": "VITZROCELL Co., Ltd.",
+      "market": "KOSDAQ",
+      "role": "육상무기·차량·탄약",
+      "group": "육상무기·차량·탄약",
+      "mcapWon": 1252620486750,
+      "isListedKorea": true,
+      "legacyId": "def_vitzrocell_co_ltd"
     },
     {
       "id": "krx:347700",
@@ -103,7 +103,7 @@
       "market": "KOSDAQ",
       "role": "우주·위성·민항",
       "group": "우주·위성·민항",
-      "mcapWon": 1891494585400,
+      "mcapWon": 1147017804500,
       "isListedKorea": true,
       "legacyId": "defense_sphere_corporation"
     },
@@ -116,7 +116,7 @@
       "market": "KOSPI",
       "role": "육상무기·차량·탄약",
       "group": "육상무기·차량·탄약",
-      "mcapWon": 1360035307300,
+      "mcapWon": 1019195163050,
       "isListedKorea": true,
       "legacyId": "def_snt_dynamics"
     },
@@ -129,7 +129,7 @@
       "market": "KOSDAQ",
       "role": "우주·위성·민항",
       "group": "우주·위성·민항",
-      "mcapWon": 1290060548400,
+      "mcapWon": 815870211000,
       "isListedKorea": true,
       "legacyId": "satrec"
     },
@@ -142,7 +142,7 @@
       "market": "KOSDAQ",
       "role": "우주·위성·민항",
       "group": "우주·위성·민항",
-      "mcapWon": 1125289685600,
+      "mcapWon": 685052308600,
       "isListedKorea": true,
       "legacyId": "defense_intellian_technologies"
     },
@@ -155,22 +155,9 @@
       "market": "KOSDAQ",
       "role": "우주·위성·민항",
       "group": "우주·위성·민항",
-      "mcapWon": 540733910000,
+      "mcapWon": 436971457000,
       "isListedKorea": true,
       "legacyId": "def_i3system_ind"
-    },
-    {
-      "id": "krx:010820",
-      "type": "listed_company",
-      "ticker": "010820",
-      "nameKo": "퍼스텍",
-      "nameEn": "Firstec",
-      "market": "KOSPI",
-      "role": "육상무기·차량·탄약",
-      "group": "육상무기·차량·탄약",
-      "mcapWon": 380421116400,
-      "isListedKorea": true,
-      "legacyId": "def_firstec"
     },
     {
       "id": "program:kf21",

@@ -177,15 +177,6 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
-      "source": "krx:322000",
-      "target": "technology:solar",
-      "beforeType": "legacy_partner",
-      "afterType": "used_in_technology",
-      "afterEditorialStatus": "reference",
-      "origin": "phase4c_structural",
-      "reason": "cp_list/chain → technology structural edge"
-    },
-    {
       "source": "krx:475150",
       "target": "technology:offshore_wind",
       "beforeType": "legacy_partner",
@@ -206,6 +197,24 @@
     {
       "source": "krx:475150",
       "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:322000",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:119850",
+      "target": "technology:renewable_operator",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",
       "afterEditorialStatus": "reference",
@@ -240,8 +249,8 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
-      "source": "krx:119850",
-      "target": "technology:renewable_operator",
+      "source": "krx:018000",
+      "target": "technology:onshore_wind",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",
       "afterEditorialStatus": "reference",
@@ -327,6 +336,33 @@
       "reason": "legacy partner string → hidden peer"
     },
     {
+      "legacyEdgeId": "475150->vestas",
+      "source": "krx:475150",
+      "target": "global:vestas",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "475150->first_solar",
+      "source": "krx:475150",
+      "target": "global:first_solar",
+      "beforeType": "partner_string",
+      "afterType": "peer",
+      "afterEditorialStatus": "reference",
+      "reason": "legacy partner string → hidden peer"
+    },
+    {
+      "legacyEdgeId": "475150->skinn",
+      "source": "krx:475150",
+      "target": "org:sk",
+      "beforeType": "backing",
+      "afterType": "reference",
+      "afterEditorialStatus": "reference",
+      "reason": "group backing → reference (hidden)"
+    },
+    {
       "legacyEdgeId": "322000->tesla",
       "source": "krx:322000",
       "target": "global:tesla",
@@ -352,33 +388,6 @@
       "legacyEdgeId": "322000->hdelec",
       "source": "krx:322000",
       "target": "org:hd-hyundai",
-      "beforeType": "backing",
-      "afterType": "reference",
-      "afterEditorialStatus": "reference",
-      "reason": "group backing → reference (hidden)"
-    },
-    {
-      "legacyEdgeId": "475150->vestas",
-      "source": "krx:475150",
-      "target": "global:vestas",
-      "beforeType": "partner_string",
-      "afterType": "peer",
-      "afterEditorialStatus": "reference",
-      "reason": "legacy partner string → hidden peer"
-    },
-    {
-      "legacyEdgeId": "475150->first_solar",
-      "source": "krx:475150",
-      "target": "global:first_solar",
-      "beforeType": "partner_string",
-      "afterType": "peer",
-      "afterEditorialStatus": "reference",
-      "reason": "legacy partner string → hidden peer"
-    },
-    {
-      "legacyEdgeId": "475150->skinn",
-      "source": "krx:475150",
-      "target": "org:sk",
       "beforeType": "backing",
       "afterType": "reference",
       "afterEditorialStatus": "reference",

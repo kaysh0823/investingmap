@@ -261,7 +261,13 @@ for (const c of companies) {
   }
 }
 
+const referencedGlobals = new Set();
+for (const c of companies) {
+  for (const p of c.partners || []) referencedGlobals.add(p);
+}
+
 for (const [gid, meta] of Object.entries(GLOBAL_META)) {
+  if (!referencedGlobals.has(gid)) continue;
   addNode({
     id: `global:${gid}`,
     type: 'global_company',

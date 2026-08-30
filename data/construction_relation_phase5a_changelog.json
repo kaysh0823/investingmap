@@ -53,11 +53,64 @@
       "reason": "Structural ecosystem membership"
     },
     {
-      "beforeType": "partners_array",
-      "afterType": "peer",
-      "afterEditorialStatus": "peer",
-      "origin": "phase5a_migrate_legacy_peer",
-      "reason": "Demote legacy partners[] to hidden peer — no project award evidence"
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
     },
     {
       "beforeType": "partners_array",

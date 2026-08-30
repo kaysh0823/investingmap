@@ -31,6 +31,8 @@ const MAP_FILES = [
   { file: 'software/korea_software_map.html', key: 'software' },
   { file: 'holdings/korea_holdings_map.html', key: 'holdings' },
   { file: 'telecom/korea_telecom_map.html', key: 'telecom' },
+  { file: 'chemical/korea_chemical_map.html', key: 'chemical' },
+  { file: 'travel/korea_travel_map.html', key: 'travel' },
   { file: 'elec/korea_elec_map.html', key: 'elec' },
   { file: 'metal/korea_metal_map.html', key: 'metal' },
   { file: 'battery/korea_battery_map.html', key: 'battery' },

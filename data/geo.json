@@ -213,6 +213,22 @@
         "en": "KRX metrics and global peers for listed Korean telecom services, wireless, optical, and satellite communications companies."
       }
     },
+    "chemical": {
+      "path": "/chemical/korea_chemical_map.html",
+      "title": { "ko": "한국 화학·정유 투자 지도", "en": "Korea Chemicals & Refining Map" },
+      "summary": {
+        "ko": "석유화학, 정밀·특수화학, 정유·가스, 화학소재 관련 국내 상장사의 KRX 지표와 글로벌 peer를 비교합니다.",
+        "en": "KRX metrics and global peers for listed Korean petrochemical, specialty chemical, refining, gas and materials companies."
+      }
+    },
+    "travel": {
+      "path": "/travel/korea_travel_map.html",
+      "title": { "ko": "한국 여행·레저·항공 투자 지도", "en": "Korea Travel, Leisure & Airlines Map" },
+      "summary": {
+        "ko": "항공, 카지노, 호텔·리조트, 여행·면세 관련 국내 상장사의 KRX 지표와 글로벌 peer를 비교합니다.",
+        "en": "KRX metrics and global peers for listed Korean airlines, casino, hotel and travel companies."
+      }
+    },
     "elec": {
       "path": "/elec/korea_elec_map.html",
       "title": { "ko": "한국 전기·전자 투자 지도", "en": "Korea Electrical & Electronics Map" },

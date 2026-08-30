@@ -1,21 +1,5 @@
 [
   {
-    "ticker": "290650",
-    "name": "엘앤씨바이오",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "인체조직·재생의학",
-    "level": "core"
-  },
-  {
-    "ticker": "007390",
-    "name": "네이처셀",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
-  },
-  {
     "ticker": "008930",
     "name": "한미사이언스",
     "chain": "합성신약 / 제네릭",
@@ -32,19 +16,27 @@
     "level": ""
   },
   {
+    "ticker": "007390",
+    "name": "네이처셀",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "290650",
+    "name": "엘앤씨바이오",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "인체조직·재생의학",
+    "level": "core"
+  },
+  {
     "ticker": "039200",
     "name": "오스코텍",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
     "subSector": "신약개발",
-    "level": "core"
-  },
-  {
-    "ticker": "445680",
-    "name": "큐리옥스바이오시스템즈",
-    "chain": "세포 · 유전자치료제",
-    "sectorId": "cell_gene",
-    "subSector": "세포분석 자동화",
     "level": "core"
   },
   {
@@ -64,20 +56,38 @@
     "level": "adjacent"
   },
   {
-    "ticker": "115180",
-    "name": "큐리언트",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
-  },
-  {
     "ticker": "086450",
     "name": "동국제약",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
     "subSector": "제약·헬스케어",
     "level": "core"
+  },
+  {
+    "ticker": "445680",
+    "name": "큐리옥스바이오시스템즈",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "세포분석 자동화",
+    "level": "core"
+  },
+  {
+    "ticker": "476830",
+    "name": "알지노믹스",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "RNA 치료제",
+    "level": "core",
+    "nameEn": "Alginomics",
+    "semType": "RNA 치료제",
+    "semTypeEn": "RNA therapeutics",
+    "products": "RNAi·RNA 치료제 플랫폼",
+    "productsEn": "RNAi and RNA therapeutic platform",
+    "partners": [
+      "glob_alny",
+      "glob_mrna",
+      "glob_bntx"
+    ]
   },
   {
     "ticker": "003850",
@@ -88,12 +98,30 @@
     "level": "core"
   },
   {
-    "ticker": "102940",
-    "name": "코오롱생명과학",
+    "ticker": "115180",
+    "name": "큐리언트",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
-    "subSector": "바이오·원료의약품",
-    "level": "core"
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "456160",
+    "name": "지투지바이오",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "장기지속형 주사제",
+    "level": "core",
+    "nameEn": "GTGBIO",
+    "semType": "장기지속형 주사제",
+    "semTypeEn": "Long-acting injectable platform",
+    "products": "장기지속형 주사·약물전달",
+    "productsEn": "Long-acting injectable drug delivery",
+    "partners": [
+      "glob_halo",
+      "glob_alny",
+      "glob_mrna"
+    ]
   },
   {
     "ticker": "041960",
@@ -104,28 +132,58 @@
     "level": "core"
   },
   {
-    "ticker": "086900",
-    "name": "메디톡스",
+    "ticker": "317450",
+    "name": "명인제약",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
-    "subSector": "보툴리눔 톡신",
-    "level": "core"
+    "subSector": "정신과 제약",
+    "level": "core",
+    "nameEn": "Myung In Pharm",
+    "semType": "정신과 제약",
+    "semTypeEn": "CNS / psychiatry pharmaceuticals",
+    "products": "정신과·전문의약품",
+    "productsEn": "CNS and specialty pharmaceuticals",
+    "partners": [
+      "glob_pfe",
+      "glob_jnj",
+      "glob_mrk"
+    ]
   },
   {
-    "ticker": "249420",
-    "name": "일동제약",
+    "ticker": "005690",
+    "name": "파미셀",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
+    "subSector": "줄기세포·원료의약",
+    "level": "core",
+    "nameEn": "Pharmicell",
+    "semType": "줄기세포·원료의약",
+    "semTypeEn": "Stem cell & API",
+    "products": "줄기세포치료·원료의약품",
+    "productsEn": "Stem cell therapy and APIs",
+    "partners": [
+      "glob_pfe",
+      "glob_jnj",
+      "glob_mrk"
+    ]
   },
   {
-    "ticker": "174900",
-    "name": "앱클론",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
+    "ticker": "476060",
+    "name": "온코닉테라퓨틱스",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "항암 신약",
+    "level": "core",
+    "nameEn": "Onconic Therapeutics",
+    "semType": "항암 신약",
+    "semTypeEn": "Oncology drug development",
+    "products": "항암·면역치료 신약 파이프라인",
+    "productsEn": "Oncology and immuno-oncology pipeline",
+    "partners": [
+      "glob_mrk",
+      "glob_bmy",
+      "glob_rog"
+    ]
   },
   {
     "ticker": "000640",
@@ -136,6 +194,121 @@
     "level": "adjacent"
   },
   {
+    "ticker": "048410",
+    "name": "현대바이오",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "항바이러스·항암",
+    "level": "core",
+    "nameEn": "Hyundai Bioscience",
+    "semType": "항바이러스·항암",
+    "semTypeEn": "Antiviral & oncology",
+    "products": "항바이러스·항암 치료제",
+    "productsEn": "Antiviral and oncology therapeutics",
+    "partners": [
+      "glob_mrk",
+      "glob_bmy",
+      "glob_rog"
+    ]
+  },
+  {
+    "ticker": "052020",
+    "name": "에스티큐브",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "면역항암",
+    "level": "core",
+    "nameEn": "STCube",
+    "semType": "면역항암",
+    "semTypeEn": "Immuno-oncology",
+    "products": "면역관문·항암 신약",
+    "productsEn": "Immune checkpoint and oncology drugs",
+    "partners": [
+      "glob_mrk",
+      "glob_bmy",
+      "glob_rog"
+    ]
+  },
+  {
+    "ticker": "019170",
+    "name": "신풍제약",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "358570",
+    "name": "지아이이노베이션",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "면역·알레르기 신약",
+    "level": "core",
+    "nameEn": "GI Innovation",
+    "semType": "면역·알레르기 신약",
+    "semTypeEn": "Immunology & allergy therapeutics",
+    "products": "면역·알레르기 질환 신약",
+    "productsEn": "Immunology and allergy drug pipeline",
+    "partners": [
+      "glob_mrk",
+      "glob_bmy",
+      "glob_rog"
+    ]
+  },
+  {
+    "ticker": "174900",
+    "name": "앱클론",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "086900",
+    "name": "메디톡스",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "보툴리눔 톡신",
+    "level": "core"
+  },
+  {
+    "ticker": "397030",
+    "name": "에이프릴바이오",
+    "chain": "항체신약 / ADC",
+    "sectorId": "antibody_adc",
+    "subSector": "항체 플랫폼",
+    "level": "core",
+    "nameEn": "AprilBio",
+    "semType": "항체 플랫폼",
+    "semTypeEn": "Antibody platform",
+    "products": "항체·이중항체 신약 플랫폼",
+    "productsEn": "Antibody and bispecific drug platform",
+    "partners": [
+      "glob_4568t",
+      "glob_abbv",
+      "glob_rog",
+      "glob_azn"
+    ]
+  },
+  {
+    "ticker": "082270",
+    "name": "젬백스",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "알츠하이머·항암",
+    "level": "core",
+    "nameEn": "GemVax",
+    "semType": "알츠하이머·항암",
+    "semTypeEn": "Alzheimer's & oncology",
+    "products": "알츠하이머·항암 신약",
+    "productsEn": "Alzheimer's and oncology therapeutics",
+    "partners": [
+      "glob_pfe",
+      "glob_jnj",
+      "glob_mrk"
+    ]
+  },
+  {
     "ticker": "005250",
     "name": "녹십자홀딩스",
     "chain": "합성신약 / 제네릭",
@@ -144,8 +317,8 @@
     "level": "adjacent"
   },
   {
-    "ticker": "019170",
-    "name": "신풍제약",
+    "ticker": "249420",
+    "name": "일동제약",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
     "subSector": "",
@@ -160,28 +333,97 @@
     "level": "core"
   },
   {
-    "ticker": "047920",
-    "name": "HLB제약",
+    "ticker": "0120G0",
+    "name": "삼양바이오팜",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
+    "subSector": "제약(삼양)",
+    "level": "core",
+    "nameEn": "Samyang Biopharm",
+    "semType": "제약(삼양)",
+    "semTypeEn": "Pharmaceuticals (Samyang)",
+    "products": "전문의약품·제약(삼양그룹)",
+    "productsEn": "Specialty pharma (Samyang group)",
+    "partners": [
+      "glob_pfe",
+      "glob_jnj",
+      "glob_mrk"
+    ]
   },
   {
-    "ticker": "243070",
-    "name": "휴온스",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "제약·미용의료",
-    "level": "core"
+    "ticker": "468530",
+    "name": "프로티나",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "단백질분석·신약",
+    "level": "core",
+    "nameEn": "Proteina",
+    "semType": "단백질분석·신약",
+    "semTypeEn": "Protein analysis & drug discovery",
+    "products": "단백질 상호작용·신약 플랫폼",
+    "productsEn": "Protein interaction and drug discovery platform",
+    "partners": [
+      "glob_halo",
+      "glob_mrna",
+      "glob_bntx",
+      "glob_alny"
+    ]
   },
   {
-    "ticker": "206650",
-    "name": "유바이오로직스",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
+    "ticker": "389470",
+    "name": "인벤티지랩",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "약물전달 플랫폼",
+    "level": "core",
+    "nameEn": "Inventage Lab",
+    "semType": "약물전달 플랫폼",
+    "semTypeEn": "Drug delivery platform",
+    "products": "약물전달·DDS 플랫폼",
+    "productsEn": "Drug delivery system platform",
+    "partners": [
+      "glob_halo",
+      "glob_mrna",
+      "glob_bntx",
+      "glob_alny"
+    ]
+  },
+  {
+    "ticker": "372320",
+    "name": "큐로셀",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "CAR-T",
+    "level": "core",
+    "nameEn": "Curiox Biosystems",
+    "semType": "CAR-T",
+    "semTypeEn": "CAR-T cell therapy",
+    "products": "CAR-T·세포치료 파이프라인",
+    "productsEn": "CAR-T and cell therapy pipeline",
+    "partners": [
+      "glob_gild",
+      "glob_nvs",
+      "glob_crsp",
+      "glob_bmy"
+    ]
+  },
+  {
+    "ticker": "215600",
+    "name": "신라젠",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "항암바이러스",
+    "level": "core",
+    "nameEn": "SillaJen",
+    "semType": "항암바이러스",
+    "semTypeEn": "Oncolytic virus therapy",
+    "products": "온코리틱 바이러스·항암바이러스",
+    "productsEn": "Oncolytic virus therapeutics",
+    "partners": [
+      "glob_mrk",
+      "glob_bmy",
+      "glob_rog"
+    ]
   },
   {
     "ticker": "084110",
@@ -192,19 +434,19 @@
     "level": "adjacent"
   },
   {
+    "ticker": "206650",
+    "name": "유바이오로직스",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
     "ticker": "009290",
     "name": "광동제약",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
     "subSector": "제약·헬스케어",
     "level": "adjacent"
-  },
-  {
-    "ticker": "314930",
-    "name": "바이오다인",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
   }
 ]

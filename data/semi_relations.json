@@ -50,14 +50,9 @@
           "nameEn": "Kctech"
         },
         {
-          "ticker": "036810",
-          "name": "에프에스티",
-          "nameEn": "FINE SEMITECH Corp."
-        },
-        {
-          "ticker": "348210",
-          "name": "넥스틴",
-          "nameEn": "NEXTIN Inc."
+          "ticker": "083450",
+          "name": "GST",
+          "nameEn": "GST"
         },
         {
           "ticker": "122640",
@@ -65,14 +60,29 @@
           "nameEn": "YEST Co.,Ltd."
         },
         {
+          "ticker": "036810",
+          "name": "에프에스티",
+          "nameEn": "FINE SEMITECH Corp."
+        },
+        {
           "ticker": "045100",
           "name": "한양이엔지",
           "nameEn": "HANYANG ENG CO.,LTD."
         },
         {
-          "ticker": "160980",
-          "name": "싸이맥스",
-          "nameEn": "CYMECHS Inc."
+          "ticker": "144960",
+          "name": "뉴파워프라즈마",
+          "nameEn": "New Power Plasma"
+        },
+        {
+          "ticker": "348210",
+          "name": "넥스틴",
+          "nameEn": "NEXTIN Inc."
+        },
+        {
+          "ticker": "079370",
+          "name": "제우스",
+          "nameEn": "ZEUS CO., LTD."
         },
         {
           "ticker": "039440",
@@ -80,14 +90,9 @@
           "nameEn": "Systems Technology Incorporated"
         },
         {
-          "ticker": "036200",
-          "name": "유니셈",
-          "nameEn": "UNION SEMICONDUCTOR EQUIPMENT&MATERIALS"
-        },
-        {
-          "ticker": "079370",
-          "name": "제우스",
-          "nameEn": "ZEUS CO., LTD."
+          "ticker": "417840",
+          "name": "저스템",
+          "nameEn": "Jstem"
         }
       ],
       "suppliers": [
@@ -255,19 +260,19 @@
           "nameEn": "GigaVis Co., Ltd."
         },
         {
+          "ticker": "232140",
+          "name": "와이씨",
+          "nameEn": "YIK"
+        },
+        {
+          "ticker": "003160",
+          "name": "디아이",
+          "nameEn": "DI Corp"
+        },
+        {
           "ticker": "053610",
           "name": "프로텍",
           "nameEn": "PROTEC Co., Ltd."
-        },
-        {
-          "ticker": "089890",
-          "name": "코세스",
-          "nameEn": "KOSES Co.,Ltd"
-        },
-        {
-          "ticker": "168360",
-          "name": "펨트론",
-          "nameEn": "PEMTRON Corporation"
         },
         {
           "ticker": "064290",
@@ -275,9 +280,19 @@
           "nameEn": "INTEKPLUS CO.,LTD"
         },
         {
+          "ticker": "089890",
+          "name": "코세스",
+          "nameEn": "KOSES Co.,Ltd"
+        },
+        {
           "ticker": "092870",
           "name": "엑시콘",
           "nameEn": "Exicon Co., Ltd."
+        },
+        {
+          "ticker": "110990",
+          "name": "디아이티",
+          "nameEn": "DIT"
         }
       ],
       "suppliers": [
@@ -410,11 +425,6 @@
       },
       "members": [
         {
-          "ticker": "178320",
-          "name": "서진시스템",
-          "nameEn": "SEOJIN SYSTEM CO., LTD"
-        },
-        {
           "ticker": "357780",
           "name": "솔브레인",
           "nameEn": "Soulbrain Co., Ltd."
@@ -423,6 +433,11 @@
           "ticker": "064760",
           "name": "티씨케이",
           "nameEn": "TOKAI CARBON KOREA CO., LTD"
+        },
+        {
+          "ticker": "178320",
+          "name": "서진시스템",
+          "nameEn": "SEOJIN SYSTEM CO., LTD"
         },
         {
           "ticker": "014680",
@@ -445,29 +460,14 @@
           "nameEn": "Daejoo Electronic Materials Co., Ltd."
         },
         {
-          "ticker": "166090",
-          "name": "하나머티리얼즈",
-          "nameEn": "Hana Materials Inc."
-        },
-        {
-          "ticker": "101490",
-          "name": "에스앤에스텍",
-          "nameEn": "S&S TECH CORPORATION"
-        },
-        {
           "ticker": "183300",
           "name": "코미코",
           "nameEn": "KoMiCo Ltd."
         },
         {
-          "ticker": "074600",
-          "name": "원익QnC",
-          "nameEn": "WONIK QnC CORPORATION"
-        },
-        {
-          "ticker": "281740",
-          "name": "레이크머티리얼즈",
-          "nameEn": "Lake Materials Co., Ltd."
+          "ticker": "166090",
+          "name": "하나머티리얼즈",
+          "nameEn": "Hana Materials Inc."
         },
         {
           "ticker": "036830",
@@ -475,14 +475,24 @@
           "nameEn": "Soulbrain Holdings Co., Ltd."
         },
         {
+          "ticker": "101490",
+          "name": "에스앤에스텍",
+          "nameEn": "S&S TECH CORPORATION"
+        },
+        {
           "ticker": "213420",
           "name": "덕산네오룩스",
           "nameEn": "DUK SAN NEOLUX CO.,LTD"
         },
         {
-          "ticker": "102710",
-          "name": "이엔에프테크놀로지",
-          "nameEn": "ENF Technology Co., Ltd"
+          "ticker": "281740",
+          "name": "레이크머티리얼즈",
+          "nameEn": "Lake Materials Co., Ltd."
+        },
+        {
+          "ticker": "074600",
+          "name": "원익QnC",
+          "nameEn": "WONIK QnC CORPORATION"
         },
         {
           "ticker": "059090",
@@ -490,14 +500,14 @@
           "nameEn": "MiCo Ltd."
         },
         {
+          "ticker": "102710",
+          "name": "이엔에프테크놀로지",
+          "nameEn": "ENF Technology Co., Ltd"
+        },
+        {
           "ticker": "178920",
           "name": "PI첨단소재",
           "nameEn": "PI Advanced Materials Co., Ltd."
-        },
-        {
-          "ticker": "104830",
-          "name": "원익머트리얼즈",
-          "nameEn": "WONIK Materials Co., Ltd."
         },
         {
           "ticker": "101160",
@@ -505,19 +515,19 @@
           "nameEn": "WORLDEX INDUSTRY & TRADING CO., LTD"
         },
         {
-          "ticker": "425040",
-          "name": "티이엠씨",
-          "nameEn": "TEMC Co., Ltd."
+          "ticker": "104830",
+          "name": "원익머트리얼즈",
+          "nameEn": "WONIK Materials Co., Ltd."
         },
         {
-          "ticker": "187870",
-          "name": "디바이스",
-          "nameEn": "Device"
+          "ticker": "241770",
+          "name": "메카로",
+          "nameEn": "Mecaro"
         },
         {
-          "ticker": "272110",
-          "name": "케이엔제이",
-          "nameEn": "KnJ Co., Ltd."
+          "ticker": "114810",
+          "name": "한솔아이원스",
+          "nameEn": "Hansol iOne"
         }
       ],
       "suppliers": [
@@ -823,29 +833,19 @@
           "nameEn": "Jeju Semiconductor Corp."
         },
         {
-          "ticker": "108320",
-          "name": "LX세미콘",
-          "nameEn": "LX Semicon"
-        },
-        {
           "ticker": "094170",
           "name": "동운아나텍",
           "nameEn": "DONGWOON ANATECH CO.,LTD."
         },
         {
+          "ticker": "108320",
+          "name": "LX세미콘",
+          "nameEn": "LX Semicon"
+        },
+        {
           "ticker": "253590",
           "name": "네오셈",
           "nameEn": "Neosem Inc."
-        },
-        {
-          "ticker": "394280",
-          "name": "오픈엣지테크놀로지",
-          "nameEn": "Openedges Technology, Inc."
-        },
-        {
-          "ticker": "094360",
-          "name": "칩스앤미디어",
-          "nameEn": "Chips&Media, Inc."
         }
       ],
       "suppliers": [
@@ -1011,6 +1011,11 @@
           "nameEn": "GAONCHIPS CO., LTD."
         },
         {
+          "ticker": "490470",
+          "name": "세미파이브",
+          "nameEn": "SemiFive"
+        },
+        {
           "ticker": "200710",
           "name": "에이디테크놀로지",
           "nameEn": "ADTechnology Co., Ltd."
@@ -1159,14 +1164,14 @@
           "nameEn": "LEENO Industrial Inc"
         },
         {
-          "ticker": "095340",
-          "name": "ISC",
-          "nameEn": "ISC Co., LTD."
-        },
-        {
           "ticker": "222800",
           "name": "심텍",
           "nameEn": "SIMMTECH Co., Ltd."
+        },
+        {
+          "ticker": "095340",
+          "name": "ISC",
+          "nameEn": "ISC Co., LTD."
         },
         {
           "ticker": "007810",
@@ -1174,14 +1179,19 @@
           "nameEn": "Korea Circuit"
         },
         {
+          "ticker": "356860",
+          "name": "티엘비",
+          "nameEn": "TLB Co., Ltd."
+        },
+        {
           "ticker": "195870",
           "name": "해성디에스",
           "nameEn": "HAESUNG DS"
         },
         {
-          "ticker": "356860",
-          "name": "티엘비",
-          "nameEn": "TLB Co., Ltd."
+          "ticker": "327260",
+          "name": "RF머트리얼즈",
+          "nameEn": "RFMaterials"
         },
         {
           "ticker": "272290",
@@ -1192,11 +1202,6 @@
           "ticker": "219130",
           "name": "타이거일렉",
           "nameEn": "TigerElec Co.,Ltd."
-        },
-        {
-          "ticker": "091700",
-          "name": "파트론",
-          "nameEn": "PARTRON CO., LTD"
         }
       ],
       "suppliers": [
@@ -1349,9 +1354,9 @@
       },
       "members": [
         {
-          "ticker": "131970",
-          "name": "두산테스나",
-          "nameEn": "DOOSAN TESNA"
+          "ticker": "131290",
+          "name": "티에스이",
+          "nameEn": "TSE CO.,Ltd"
         },
         {
           "ticker": "067310",
@@ -1359,14 +1364,14 @@
           "nameEn": "Hana Micron Inc."
         },
         {
-          "ticker": "131290",
-          "name": "티에스이",
-          "nameEn": "TSE CO.,Ltd"
-        },
-        {
           "ticker": "089030",
           "name": "테크윙",
           "nameEn": "Techwing, Inc."
+        },
+        {
+          "ticker": "131970",
+          "name": "두산테스나",
+          "nameEn": "DOOSAN TESNA"
         },
         {
           "ticker": "036540",
@@ -1379,14 +1384,29 @@
           "nameEn": "SEMCNS Co., Ltd."
         },
         {
+          "ticker": "425420",
+          "name": "티에프이",
+          "nameEn": "TFE Co., Ltd."
+        },
+        {
           "ticker": "033640",
           "name": "네패스",
           "nameEn": "NEPES Corporation"
         },
         {
-          "ticker": "425420",
-          "name": "티에프이",
-          "nameEn": "TFE Co., Ltd."
+          "ticker": "080580",
+          "name": "오킨스전자",
+          "nameEn": "OKins Electronics Co.,Ltd."
+        },
+        {
+          "ticker": "098120",
+          "name": "마이크로컨텍솔",
+          "nameEn": "Micro Contact Solution Co.,Ltd."
+        },
+        {
+          "ticker": "332570",
+          "name": "PS일렉트로닉스",
+          "nameEn": "PS Electronics"
         },
         {
           "ticker": "033160",
@@ -1397,16 +1417,6 @@
           "ticker": "330860",
           "name": "네패스아크",
           "nameEn": "Nepes Ark Corporation"
-        },
-        {
-          "ticker": "080580",
-          "name": "오킨스전자",
-          "nameEn": "OKins Electronics Co.,Ltd."
-        },
-        {
-          "ticker": "086390",
-          "name": "유니테스트",
-          "nameEn": "UniTest Inc."
         },
         {
           "ticker": "061970",
@@ -1564,9 +1574,9 @@
       },
       "members": [
         {
-          "ticker": "254490",
-          "name": "미래반도체",
-          "nameEn": "MIRAI SEMICONDUCTORS CO., LTD."
+          "ticker": "093520",
+          "name": "매커스",
+          "nameEn": "Makus"
         }
       ],
       "suppliers": [

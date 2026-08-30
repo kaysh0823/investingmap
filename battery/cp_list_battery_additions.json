@@ -1,0 +1,41 @@
+[
+  {
+    "ticker": "004490",
+    "name": "세방전지",
+    "nameEn": "Sebang Global Battery",
+    "chain": "셀",
+    "semType": "납축·2차전지",
+    "semTypeEn": "Lead-acid and secondary batteries",
+    "products": "SLI·ESS 납축전지, 산업용·2차전지",
+    "productsEn": "SLI and ESS lead-acid batteries, industrial and secondary cells",
+    "partners": ["catl", "panasonic", { "id": "lges", "edgeLabel": "2차전지·ESS peer", "edgeLabelEn": "Battery & ESS peer", "weight": 0.1, "kind": "theme" }],
+    "subSector": "납축·2차전지",
+    "level": "core"
+  },
+  {
+    "ticker": "365340",
+    "name": "성일하이텍",
+    "nameEn": "SungEel HiTech",
+    "chain": "소재",
+    "semType": "배터리 리사이클링",
+    "semTypeEn": "Battery recycling",
+    "products": "폐배터리·블랙매스 재활용, 전구체·소재 회수",
+    "productsEn": "Spent-battery and black-mass recycling, precursor and material recovery",
+    "partners": ["umicore", "catl", "panasonic", { "id": "posfutu", "edgeLabel": "양극재·리사이클 연계", "edgeLabelEn": "Cathode & recycling link", "weight": 0.15, "kind": "theme" }],
+    "subSector": "배터리 리사이클링",
+    "level": "core"
+  },
+  {
+    "ticker": "107640",
+    "name": "한중엔시에스",
+    "nameEn": "Hanjung NCS",
+    "chain": "부품",
+    "semType": "ESS·배터리 냉각부품",
+    "semTypeEn": "ESS and battery thermal components",
+    "products": "ESS·배터리 냉각·열교환 모듈, HVAC 부품",
+    "productsEn": "ESS and battery cooling and heat-exchange modules, HVAC components",
+    "partners": ["catl", { "id": "lges", "edgeLabel": "ESS·셀 열관리", "edgeLabelEn": "ESS & cell thermal mgmt", "weight": 0.14 }, "schneider_e"],
+    "subSector": "ESS·배터리 냉각부품",
+    "level": "core"
+  }
+]

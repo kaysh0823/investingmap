@@ -311,6 +311,10 @@ function main() {
     '합성신약 / 제네릭',
   ];
   const bioAddPath = join(root, 'bio', 'cp_list_bio_additions.json');
+  const committedBioAdditions = fs.existsSync(bioAddPath)
+    ? JSON.parse(fs.readFileSync(bioAddPath, 'utf8'))
+    : [];
+  const committedBioByTicker = new Map(committedBioAdditions.map((a) => [a.ticker, a]));
   let bioAdditions = [];
   let bioSkipped = 0;
   if (bioCp) {
@@ -323,14 +327,24 @@ function main() {
       }
       if (!passesMcapFloor({ mcapWon: krx.get(ticker)?.mcap })) continue;
       const chain = inferChain(entry.subSector, 'bio', bioChains);
-      bioAdditions.push({
+      const generated = {
         ticker,
         name: krx.get(ticker)?.name || entry.nameKo,
         chain,
         sectorId: bioSectorIdForChain(chain),
         subSector: entry.subSector || '',
         level: entry.level || '',
-      });
+      };
+      const curated = committedBioByTicker.get(ticker);
+      bioAdditions.push(curated ? { ...generated, ...curated, ticker } : generated);
+    }
+    for (const curated of committedBioAdditions) {
+      if (!curated?.ticker || bioAdditions.some((a) => a.ticker === curated.ticker)) continue;
+      if (!allowedInSector(curated.ticker, 'bio')) continue;
+      if (jsxTickers.has(curated.ticker)) continue;
+      if (!krx.has(curated.ticker)) continue;
+      if (!passesMcapFloor({ mcapWon: krx.get(curated.ticker)?.mcap })) continue;
+      bioAdditions.push(curated);
     }
     bioAdditions.sort((a, b) => (krx.get(b.ticker)?.mcap || 0) - (krx.get(a.ticker)?.mcap || 0));
     fs.writeFileSync(bioAddPath, JSON.stringify(bioAdditions, null, 2) + '\n', 'utf8');

@@ -2,24 +2,24 @@
   "asOf": "2026-08-29",
   "phase": "5H",
   "reviewedBy": "editorial_phase5h",
-  "listedCompanyCount": 13,
-  "nodeCount": 55,
-  "edgeCount": 69,
-  "structuralGenerated": 46,
-  "legacyMigrated": 19,
+  "listedCompanyCount": 21,
+  "nodeCount": 61,
+  "edgeCount": 78,
+  "structuralGenerated": 50,
+  "legacyMigrated": 24,
   "manuallyCurated": 4,
-  "demotedPeer": 19,
+  "demotedPeer": 24,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 13,
-    "nodeCount": 55,
-    "edgeCount": 69,
-    "structuralGeneratedEdgeCount": 46,
-    "legacyMigratedEdgeCount": 19,
+    "listedCompanyCount": 21,
+    "nodeCount": 61,
+    "edgeCount": 78,
+    "structuralGeneratedEdgeCount": 50,
+    "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 4,
-    "softwareProductCount": 4,
+    "softwareProductCount": 3,
     "platformNodeCount": 4,
-    "cloudServiceCount": 5,
+    "cloudServiceCount": 4,
     "softwareCategoryCount": 7,
     "integrationRelationshipCount": 0,
     "deploymentRelationshipCount": 0,
@@ -33,11 +33,11 @@
     "crossSectorReferenceCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 19,
-    "businessRelationOrphanCount": 13,
-    "directCommercialRelationshipOrphanCount": 13,
-    "classificationOnlyCompanyCount": 2,
-    "hasPeerButNoBusinessCompanyCount": 13,
+    "peerEdgeCount": 24,
+    "businessRelationOrphanCount": 21,
+    "directCommercialRelationshipOrphanCount": 21,
+    "classificationOnlyCompanyCount": 11,
+    "hasPeerButNoBusinessCompanyCount": 16,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
@@ -123,16 +123,16 @@
     "nodeCountByType": {
       "group": 7,
       "cross_sector_anchor": 4,
-      "listed_company": 13,
+      "listed_company": 21,
       "platform": 4,
       "software_category": 7,
       "customer_industry": 5,
-      "cloud_service": 5,
-      "software_product": 4,
+      "cloud_service": 4,
+      "software_product": 3,
       "global_company": 6
     },
-    "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 19
+    "removedUnsupportedPartnerCount": 25,
+    "demotedLegacyPeerCount": 24
   },
   "validate": {
     "failures": [],
@@ -282,6 +282,26 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "124500",
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "093320",
+      "lane": "cloud_infrastructure"
+    },
+    {
+      "action": "structural_offers_cloud_service",
+      "ticker": "093320",
+      "target": "cloud_service:kinx-ix-cloud"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "093320",
+      "target": "software_category:hosting-cloud"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "053800",
       "lane": "cybersecurity"
     },
@@ -302,18 +322,28 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "093320",
+      "ticker": "060250",
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "079940",
       "lane": "cloud_infrastructure"
     },
     {
       "action": "structural_offers_cloud_service",
-      "ticker": "093320",
-      "target": "cloud_service:kinx-ix-cloud"
+      "ticker": "079940",
+      "target": "cloud_service:gabia-hosting"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "093320",
+      "ticker": "079940",
       "target": "software_category:hosting-cloud"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "052400",
+      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
@@ -329,6 +359,11 @@
       "action": "structural_specializes_in",
       "ticker": "030520",
       "target": "software_category:productivity-saas"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "477850",
+      "lane": "data_ai"
     },
     {
       "action": "structural_member_of",
@@ -352,48 +387,33 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "079940",
-      "lane": "cloud_infrastructure"
-    },
-    {
-      "action": "structural_offers_cloud_service",
-      "ticker": "079940",
-      "target": "cloud_service:gabia-hosting"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "079940",
-      "target": "software_category:hosting-cloud"
+      "ticker": "486990",
+      "lane": "data_ai"
     },
     {
       "action": "structural_member_of",
-      "ticker": "203650",
+      "ticker": "236200",
       "lane": "cybersecurity"
     },
     {
-      "action": "structural_develops",
-      "ticker": "203650",
-      "target": "software_product:dream-security-auth"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "203650",
-      "target": "software_category:cybersecurity"
+      "action": "structural_member_of",
+      "ticker": "356680",
+      "lane": "cybersecurity"
     },
     {
       "action": "structural_member_of",
-      "ticker": "286940",
+      "ticker": "036800",
       "lane": "managed_service"
     },
     {
-      "action": "structural_provides_managed_service",
-      "ticker": "286940",
-      "target": "cloud_service:lotte-innovate-it"
+      "action": "structural_member_of",
+      "ticker": "294570",
+      "lane": "managed_service"
     },
     {
-      "action": "structural_specializes_in",
-      "ticker": "286940",
-      "target": "software_category:si-cloud"
+      "action": "structural_member_of",
+      "ticker": "025770",
+      "lane": "managed_service"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -452,8 +472,24 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:053800",
-      "target": "global:paloalto"
+      "source": "krx:124500",
+      "target": "global:accenture"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:124500",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:124500",
+      "partner": {
+        "id": "samsung_sds",
+        "edgeLabel": "국내 SI peer",
+        "edgeLabelEn": "Domestic SI peer",
+        "weight": 0.1,
+        "kind": "theme"
+      }
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -462,8 +498,85 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
+      "source": "krx:053800",
+      "target": "global:paloalto"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:060250",
+      "partner": "visa"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:060250",
+      "partner": "paypal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:060250",
+      "partner": "mastercard"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:060250",
+      "partner": {
+        "id": "nhn",
+        "edgeLabel": "NHN 계열 PG",
+        "edgeLabelEn": "NHN group PG",
+        "weight": 0.15,
+        "kind": "backing"
+      }
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:079940",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:052400",
+      "partner": "visa"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:052400",
+      "partner": "paypal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:052400",
+      "partner": "mastercard"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
       "source": "krx:030520",
       "target": "global:microsoft"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:477850",
+      "target": "global:google"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:477850",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:477850",
+      "partner": "nvidia"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:477850",
+      "partner": {
+        "id": "naver",
+        "edgeLabel": "국내 AI peer",
+        "edgeLabelEn": "Domestic AI peer",
+        "weight": 0.1,
+        "kind": "theme"
+      }
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -472,23 +585,122 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:079940",
-      "target": "global:microsoft"
+      "source": "krx:486990",
+      "target": "global:google"
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:203650",
+      "source": "krx:486990",
+      "target": "global:microsoft"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:486990",
+      "partner": "nvidia"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:486990",
+      "partner": {
+        "id": "naver",
+        "edgeLabel": "국내 AI peer",
+        "edgeLabelEn": "Domestic AI peer",
+        "weight": 0.08,
+        "kind": "theme"
+      }
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:236200",
       "target": "global:paloalto"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:286940",
-      "target": "global:accenture"
+      "action": "drop_unknown_partner",
+      "source": "krx:236200",
+      "partner": "crowdstrike"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:236200",
+      "partner": {
+        "id": "ahnlab",
+        "edgeLabel": "국내 보안 peer",
+        "edgeLabelEn": "Domestic security peer",
+        "weight": 0.12,
+        "kind": "theme"
+      }
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:286940",
-      "target": "global:microsoft"
+      "source": "krx:356680",
+      "target": "global:paloalto"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:356680",
+      "partner": "fortinet"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:356680",
+      "partner": {
+        "id": "ahnlab",
+        "edgeLabel": "국내 보안 peer",
+        "edgeLabelEn": "Domestic security peer",
+        "weight": 0.1,
+        "kind": "theme"
+      }
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:036800",
+      "partner": "visa"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:036800",
+      "partner": "paypal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:036800",
+      "partner": "mastercard"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:294570",
+      "partner": "visa"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:294570",
+      "partner": "paypal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:294570",
+      "partner": {
+        "id": "kakao",
+        "edgeLabel": "핀테크·API 연계",
+        "edgeLabelEn": "Fintech API link",
+        "weight": 0.1,
+        "kind": "theme"
+      }
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:025770",
+      "partner": "visa"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:025770",
+      "partner": "paypal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:025770",
+      "partner": "mastercard"
     },
     {
       "action": "add_cross_sector_reference",

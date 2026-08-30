@@ -1,0 +1,760 @@
+{
+  "asOf": "2026-08-30",
+  "reviewedBy": "editorial_chemical",
+  "listedCompanyCount": 26,
+  "nodeCount": 95,
+  "edgeCount": 130,
+  "structuralGenerated": 78,
+  "legacyMigrated": 48,
+  "manuallyCurated": 4,
+  "demotedPeer": 48,
+  "metrics": {
+    "listedCompanyCount": 26,
+    "nodeCount": 95,
+    "edgeCount": 130,
+    "structuralGeneratedEdgeCount": 78,
+    "legacyMigratedEdgeCount": 48,
+    "manuallyCuratedEdgeCount": 4,
+    "chemicalProductCount": 52,
+    "chemicalSupplyCount": 0,
+    "refiningRelationshipCount": 0,
+    "ownershipEdgeCount": 0,
+    "crossSectorReferenceCount": 4,
+    "confirmedBusinessEdgeCount": 0,
+    "reportedBusinessEdgeCount": 0,
+    "peerEdgeCount": 48,
+    "businessRelationOrphanCount": 26,
+    "classificationOnlyCompanyCount": 26,
+    "zeroDegreeNodeCount": 0,
+    "claimCoverage": {
+      "businessRelationshipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "supplyDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_supply_edges"
+      },
+      "ownershipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_ownership_edges"
+      },
+      "crossSectorReferenceEvidenceCoverage": {
+        "numerator": 4,
+        "denominator": 4,
+        "percentage": 1,
+        "displayValue": "100%",
+        "applicable": true,
+        "reason": null
+      },
+      "metricNotes": {
+        "businessRelationshipDenominator": "confirmed + reported business edges only",
+        "feedstockExposureNotSupply": "feedstock/commodity exposure is structural, not supply contract",
+        "zeroDenominator": "percentage=null, displayValue=N/A, applicable=false"
+      }
+    },
+    "nodeCountByType": {
+      "group": 4,
+      "cross_sector_anchor": 4,
+      "listed_company": 26,
+      "chemical_product": 52,
+      "global_company": 9
+    },
+    "removedUnsupportedPartnerCount": 0,
+    "demotedLegacyPeerCount": 48
+  },
+  "validate": {
+    "failures": [],
+    "warnings": []
+  },
+  "crossSectorBoundary": [
+    {
+      "ticker": "457190",
+      "target": "sector:battery",
+      "noteKo": "전해액 첨가제는 battery 섹터와 겹침. confirmed 공급은 battery에서만.",
+      "noteEn": "Electrolyte additives overlap battery; confirmed supply curated in battery only."
+    },
+    {
+      "ticker": "298050",
+      "target": "sector:auto",
+      "noteKo": "타이어코드·탄소섬유 적용은 auto와 겹침. OEM 공급은 auto에서만.",
+      "noteEn": "Tire cord and carbon fiber overlap auto; OEM supply curated in auto only."
+    },
+    {
+      "ticker": "014820",
+      "target": "sector:kconsume",
+      "noteKo": "식품·음료 포장 CAN은 kconsume과 겹침. confirmed 유통은 kconsume에서만.",
+      "noteEn": "Food/beverage cans overlap kconsume; confirmed distribution curated there only."
+    },
+    {
+      "ticker": "004690",
+      "target": "sector:powergrid",
+      "noteKo": "도시가스 인프라는 powergrid·에너지와 겹침.",
+      "noteEn": "City-gas infrastructure overlaps powergrid/energy sectors."
+    }
+  ],
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "010950",
+      "lane": "refining_gas"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "010950",
+      "target": "refining_product:refining"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "010950",
+      "target": "refining_product:fuels_aromatics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "011780",
+      "lane": "petrochemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "011780",
+      "target": "chemical_product:synthetic_rubber_phenol"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "011780",
+      "target": "chemical_product:rubber_bpa"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "011170",
+      "lane": "petrochemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "011170",
+      "target": "chemical_product:olefins_basic"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "011170",
+      "target": "chemical_product:ethylene_propylene"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "457190",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "457190",
+      "target": "chemical_product:electrolyte_additive"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "457190",
+      "target": "chemical_product:battery_specialty"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "120110",
+      "lane": "petrochemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "120110",
+      "target": "chemical_product:industrial_materials"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "120110",
+      "target": "chemical_product:aramid_pet"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "298020",
+      "lane": "chemical_materials"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "298020",
+      "target": "chemical_product:spandex"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "298020",
+      "target": "chemical_product:spandex_yarn"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "004000",
+      "lane": "chemical_materials"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "004000",
+      "target": "chemical_product:ammonia_fine"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "004000",
+      "target": "chemical_product:ammonia_meg"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "003240",
+      "lane": "petrochemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "003240",
+      "target": "chemical_product:petrochem_fiber"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "003240",
+      "target": "chemical_product:an_acrylic_pet"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "005090",
+      "lane": "refining_gas"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "005090",
+      "target": "refining_product:cogeneration"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "005090",
+      "target": "refining_product:steam_power"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "298050",
+      "lane": "chemical_materials"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "298050",
+      "target": "chemical_product:tire_cord_cf"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "298050",
+      "target": "chemical_product:cord_cf_ep"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "017940",
+      "lane": "refining_gas"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "017940",
+      "target": "refining_product:lpg"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "017940",
+      "target": "refining_product:lpg_distribution"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "069260",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "069260",
+      "target": "chemical_product:nitric_fine"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "069260",
+      "target": "chemical_product:nitric_an"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "268280",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "268280",
+      "target": "chemical_product:specialty_chem"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "268280",
+      "target": "chemical_product:surfactant_specialty"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "002960",
+      "lane": "refining_gas"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "002960",
+      "target": "refining_product:lubricants"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "002960",
+      "target": "refining_product:lube_products"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "014820",
+      "lane": "chemical_materials"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "014820",
+      "target": "chemical_product:packaging_alu"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "014820",
+      "target": "chemical_product:can_packaging"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "002840",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "002840",
+      "target": "chemical_product:surfactants"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "002840",
+      "target": "chemical_product:cosmetic_surfactant"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "006650",
+      "lane": "petrochemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "006650",
+      "target": "chemical_product:olefins"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "006650",
+      "target": "chemical_product:ethylene_propylene_kpc"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "006380",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "006380",
+      "target": "chemical_product:caprolactam"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "006380",
+      "target": "chemical_product:nylon_capro"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "161000",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "161000",
+      "target": "chemical_product:plasticizer_biodiesel"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "161000",
+      "target": "chemical_product:dop_biodiesel"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "004690",
+      "lane": "refining_gas"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "004690",
+      "target": "refining_product:city_gas"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "004690",
+      "target": "refining_product:gas_supply"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "008730",
+      "lane": "chemical_materials"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "008730",
+      "target": "chemical_product:packaging_film"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "008730",
+      "target": "chemical_product:bopp_cpp"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "002810",
+      "lane": "chemical_materials"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "002810",
+      "target": "chemical_product:chem_trading"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "002810",
+      "target": "chemical_product:plastic_distribution"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "007690",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "007690",
+      "target": "chemical_product:epoxy_resin"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "007690",
+      "target": "chemical_product:epoxy_coating"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "025860",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "025860",
+      "target": "chemical_product:fertilizer"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "025860",
+      "target": "chemical_product:npk_fertilizer"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "005950",
+      "lane": "petrochemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "005950",
+      "target": "chemical_product:petrochem_specialty"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "005950",
+      "target": "chemical_product:sm_abs_phenol"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "017890",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "017890",
+      "target": "chemical_product:ethanol_fine"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "017890",
+      "target": "chemical_product:ethanol_solvent"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:010950",
+      "target": "global:exxonmobil"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:010950",
+      "target": "global:chevron"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:010950",
+      "target": "global:shell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011780",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011780",
+      "target": "global:dow"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011780",
+      "target": "global:sabic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011780",
+      "target": "global:lyondellbasell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011170",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011170",
+      "target": "global:dow"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011170",
+      "target": "global:sabic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:011170",
+      "target": "global:lyondellbasell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:457190",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:457190",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:120110",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:120110",
+      "target": "global:dow"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:298020",
+      "target": "global:toray"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:004000",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:004000",
+      "target": "global:toray"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:003240",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:003240",
+      "target": "global:lyondellbasell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:005090",
+      "target": "global:exxonmobil"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:005090",
+      "target": "global:shell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:298050",
+      "target": "global:toray"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:017940",
+      "target": "global:shell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:017940",
+      "target": "global:chevron"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:069260",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:069260",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:268280",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002960",
+      "target": "global:shell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002960",
+      "target": "global:exxonmobil"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:014820",
+      "target": "global:toray"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002840",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002840",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:006650",
+      "target": "global:sabic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:006650",
+      "target": "global:lyondellbasell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:006380",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:161000",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:004690",
+      "target": "global:shell"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:008730",
+      "target": "global:toray"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002810",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002810",
+      "target": "global:toray"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:007690",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:007690",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:025860",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:005950",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:005950",
+      "target": "global:dow"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:017890",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:017890",
+      "target": "global:basf"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:457190",
+      "target": "sector:battery"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:298050",
+      "target": "sector:auto"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:014820",
+      "target": "sector:kconsume"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:004690",
+      "target": "sector:powergrid"
+    }
+  ]
+}

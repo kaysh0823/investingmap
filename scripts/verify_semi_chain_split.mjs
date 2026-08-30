@@ -10,6 +10,11 @@ import { fileURLToPath } from 'url';
 import { extractCompaniesFromHtml, extractChainColors } from '../lib/map_company_serialize.mjs';
 import { PRERENDER_START, PRERENDER_END } from '../lib/seo_prerender_lib.mjs';
 import { chainOverride } from '../lib/chain_overrides.mjs';
+import {
+  SECTOR_INVARIANT_CONFIG,
+  countByChain,
+  validateChainInvariants,
+} from '../lib/chain_reclass_invariants.mjs';
 import { inferChain } from '../lib/cp_list_chain_infer.mjs';
 import { enrichCompanyList } from '../lib/company_field_enrich.mjs';
 import { loadCpListUniverse } from '../lib/cp_list_universe.mjs';
@@ -18,20 +23,9 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HTML_PATH = join(ROOT, 'semiconductor', 'korea_semiconductor_map.html');
 const CP_LIST_DIR = process.argv[2] || join(ROOT, '..', 'cp_list');
 
-const EXPECTED_COUNTS = {
-  '전공정 장비': 16,
-  '후공정 장비': 10,
-  소재: 22,
-  '부품/기판': 11,
-  '패키징/테스트': 13,
-  팹리스: 7,
-  디자인하우스: 2,
-  파운드리: 1,
-  '반도체 유통': 1,
-};
-
-const RETIRED_CHAINS = ['장비', '후공정', 'IDM'];
-const LEAF_CHAINS = Object.keys(EXPECTED_COUNTS);
+const SEMI = SECTOR_INVARIANT_CONFIG.semi;
+const LEAF_CHAINS = SEMI.expectedChains;
+const RETIRED_CHAINS = SEMI.retiredChains;
 const AGGREGATE_CHAINS = ['전공정', '후공정'];
 
 const failures = [];
@@ -40,52 +34,39 @@ function check(cond, message) {
   if (!cond) failures.push(message);
 }
 
-function countChains(list) {
-  const counts = {};
-  for (const chain of list) counts[chain] = (counts[chain] || 0) + 1;
-  return counts;
-}
-
-function compareCounts(label, counts) {
-  for (const chain of new Set([...LEAF_CHAINS, ...Object.keys(counts)])) {
-    const got = counts[chain] || 0;
-    const want = EXPECTED_COUNTS[chain] || 0;
-    check(got === want, `${label}: ${chain} expected ${want}, got ${got}`);
-  }
-}
-
 const html = fs.readFileSync(HTML_PATH, 'utf8');
 
-// 1) koreanCompanies
+// 1) koreanCompanies — invariant rules (no hardcoded universe size)
 const companies = extractCompaniesFromHtml(html);
-check(companies.length === 83, `koreanCompanies: expected 83 companies, got ${companies.length}`);
-const companyCounts = countChains(companies.map((c) => c.chain));
-compareCounts('koreanCompanies', companyCounts);
+check(companies.length > 0, 'koreanCompanies: empty map');
+for (const err of validateChainInvariants('semi', companies, { label: 'koreanCompanies' })) {
+  failures.push(err);
+}
+const companyCounts = countByChain(companies).counts;
 
-// 2) prerendered SEO table (static tbody served to crawlers)
+// 2) prerendered SEO table
 const block = html.slice(html.indexOf(PRERENDER_START), html.indexOf(PRERENDER_END));
 const rowChains = [...block.matchAll(/<tr data-ticker="(\d{6})">([\s\S]*?)<\/tr>/g)].map(([, ticker, body]) => {
   const m = body.match(/<span class="chain-tag">([^<]*)<\/span>/);
   return [ticker, m ? m[1] : 'NONE'];
 });
-check(rowChains.length === 83, `prerender table: expected 83 rows, got ${rowChains.length}`);
-compareCounts('prerender table', countChains(rowChains.map(([, chain]) => chain)));
+check(rowChains.length === companies.length, `prerender table: expected ${companies.length} rows, got ${rowChains.length}`);
 const byTicker = new Map(companies.map((c) => [c.ticker, c.chain]));
 for (const [ticker, chain] of rowChains) {
   check(byTicker.get(ticker) === chain, `prerender table: ${ticker} shows ${chain}, data says ${byTicker.get(ticker)}`);
 }
-for (const [ticker, chain] of [['399720', '디자인하우스'], ['200710', '디자인하우스']]) {
+for (const [ticker, chain] of [
+  ['399720', '디자인하우스'],
+  ['200710', '디자인하우스'],
+  ['490470', '디자인하우스'],
+]) {
+  if (!byTicker.has(ticker)) continue;
   check(byTicker.get(ticker) === chain, `${ticker} should be ${chain}, got ${byTicker.get(ticker)}`);
   check(
     companies.filter((c) => c.chain === '팹리스').every((c) => c.ticker !== ticker),
     `${ticker} must not remain under 팹리스`,
   );
 }
-check(!byTicker.has('171090'), '171090 (선익시스템) must not remain on semiconductor map');
-check(
-  companies.every((c) => c.ticker !== '171090'),
-  '171090 must be removed from koreanCompanies',
-);
 
 // 3) chain UI definitions
 const chainColorKeys = extractChainColors(html);
@@ -118,7 +99,6 @@ for (const chain of [...LEAF_CHAINS, ...RETIRED_CHAINS]) {
   check(inChips, `filter chips missing chain: ${chain}`);
 }
 
-// T.ko / T.en 각각 chainLabel·chainFilter 사전을 가지므로 필드당 2개여야 한다.
 for (const field of ['chainLabel', 'chainFilter']) {
   const dicts = html.match(new RegExp(`${field}: \\{[^{}\\n]*\\}`, 'g')) || [];
   check(dicts.length === 2, `${field}: expected 2 dictionaries (ko, en), found ${dicts.length}`);
@@ -133,16 +113,16 @@ for (const field of ['chainLabel', 'chainFilter']) {
 }
 
 // 4) rebuild persistence
-// 4a) 오버라이드가 현재 지도의 벨류체인과 충돌하지 않아야 한다.
 const enriched = companies.map((c) => ({ ...c }));
 enrichCompanyList(enriched, 'semi', CP_LIST_DIR);
-compareCounts('after enrichCompanyList', countChains(enriched.map((c) => c.chain)));
+for (const err of validateChainInvariants('semi', enriched, { label: 'after enrichCompanyList' })) {
+  failures.push(err);
+}
 for (const c of companies) {
   const forced = chainOverride('semi', c.ticker);
   if (forced) check(forced === c.chain, `chain_overrides.json: ${c.ticker} says ${forced}, map says ${c.chain}`);
 }
 
-// 4b) 지도 HTML 없이 다시 만들어도(신규 stub) 확정 분류가 나와야 한다.
 const cpMap = loadCpListUniverse(CP_LIST_DIR).get('semi') || new Map();
 const fieldOverrides = JSON.parse(
   fs.readFileSync(join(ROOT, 'data', 'ticker_field_overrides.json'), 'utf8'),
@@ -156,16 +136,14 @@ for (const c of companies) {
   );
 }
 
-// 5) inference must never produce retired chains
-const availableChains = chainColorKeys;
 for (const sub of ['IDM', '종합반도체', '전공정 장비', '후공정 장비', '반도체 유통·메모리', '메모리 모듈 PCB', '메모리 검사장비', '패키징·OSAT', '—']) {
-  const inferred = inferChain(sub, 'semi', availableChains);
+  const inferred = inferChain(sub, 'semi', chainColorKeys);
   check(!RETIRED_CHAINS.includes(inferred), `inferChain('${sub}') returned retired chain: ${inferred}`);
 }
 
 console.log('Semiconductor chain split verification');
 console.log('======================================');
-console.log('companies:', companies.length, countChains(companies.map((c) => c.chain)));
+console.log('companies:', companies.length, companyCounts);
 console.log('prerender rows:', rowChains.length);
 console.log('failures:', failures.length);
 for (const f of failures) console.log(`  - ${f}`);

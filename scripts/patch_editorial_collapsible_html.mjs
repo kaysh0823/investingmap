@@ -26,6 +26,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
 ];
@@ -106,13 +108,13 @@ function convertDetailsToPanel(html) {
     return html.replace(
       detailsRe,
       `<div id="map-editorial-panel" class="map-editorial-panel is-collapsed" role="region" aria-labelledby="map-editorial-title">
-    <span id="map-editorial-title" class="map-editorial-title-sr">섹터 설명</span>
+    <span id="map-editorial-title" class="map-editorial-title-sr">?�터 ?�명</span>
     $1
   </div>`,
     );
   }
 
-  // Legacy plain section → wrap body if present.
+  // Legacy plain section ??wrap body if present.
   const plainRe =
     /<section class="geo-summary" id="map-editorial" aria-labelledby="map-editorial-title">\s*<h2 id="map-editorial-title"><\/h2>\s*<div id="map-editorial-body"><\/div>\s*<\/section>/;
   if (plainRe.test(html)) {
@@ -120,7 +122,7 @@ function convertDetailsToPanel(html) {
       plainRe,
       `<section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
   <div id="map-editorial-panel" class="map-editorial-panel is-collapsed" role="region" aria-labelledby="map-editorial-title">
-    <span id="map-editorial-title" class="map-editorial-title-sr">섹터 설명</span>
+    <span id="map-editorial-title" class="map-editorial-title-sr">?�터 ?�명</span>
     <div id="map-editorial-body" class="map-editorial-body"></div>
   </div>
 </section>`,
@@ -160,7 +162,7 @@ function wrapH1AsToggle(html) {
     h1Re,
     `$1<button type="button" class="map-title-toggle" id="map-title-toggle" aria-expanded="false" aria-controls="map-editorial-panel">
       $2
-      <span class="map-title-chevron" aria-hidden="true">▾</span>
+      <span class="map-title-chevron" aria-hidden="true">??/span>
     </button>`,
   );
 }

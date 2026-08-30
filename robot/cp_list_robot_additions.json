@@ -1,0 +1,28 @@
+[
+  {
+    "ticker": "439960",
+    "name": "코스모로보틱스",
+    "nameEn": "Cosmo Robotics",
+    "chain": "완성로봇·플랫폼",
+    "semType": "산업·서비스 로봇",
+    "semTypeEn": "Industrial and service robots",
+    "products": "제조·물류·서비스용 로봇, 자동화 플랫폼",
+    "productsEn": "Manufacturing, logistics and service robots, automation platforms",
+    "partners": ["fanuc", "abb", "yaskawa", { "id": "doosan_robot", "edgeLabel": "국내 협동로봇 peer", "edgeLabelEn": "Domestic cobot peer", "weight": 0.12, "kind": "theme" }, { "id": "rainbow", "edgeLabel": "국내 로봇 peer", "edgeLabelEn": "Domestic robot peer", "weight": 0.1, "kind": "theme" }],
+    "subSector": "산업·서비스 로봇",
+    "level": "core"
+  },
+  {
+    "ticker": "455900",
+    "name": "엔젤로보틱스",
+    "nameEn": "Angel Robotics",
+    "chain": "완성로봇·플랫폼",
+    "semType": "웨어러블·의료 로봇",
+    "semTypeEn": "Wearable and medical robots",
+    "products": "보행보조·재활 웨어러블, 의료·케어 로봇",
+    "productsEn": "Gait-assist and rehab wearables, medical and care robots",
+    "partners": ["fanuc", "abb", "yaskawa", { "id": "hyulim_robot", "edgeLabel": "국내 서비스로봇 peer", "edgeLabelEn": "Domestic service-robot peer", "weight": 0.1, "kind": "theme" }],
+    "subSector": "웨어러블·의료 로봇",
+    "level": "core"
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "ticker": "030000",
+    "name": "제일기획",
+    "nameEn": "Cheil Worldwide",
+    "chain": "광고",
+    "semType": "광고대행",
+    "semTypeEn": "Advertising agency",
+    "products": "통합 마케팅·미디어·디지털 광고",
+    "productsEn": "Integrated marketing, media and digital advertising",
+    "partners": ["wpp", "omnicom", { "id": "hybe", "edgeLabel": "K-브랜드 캠페인", "edgeLabelEn": "K-brand campaigns", "weight": 0.12, "kind": "theme" }],
+    "subSector": "광고대행",
+    "level": "core"
+  },
+  {
+    "ticker": "214320",
+    "name": "이노션",
+    "nameEn": "Innocean Worldwide",
+    "chain": "광고",
+    "semType": "광고대행",
+    "semTypeEn": "Advertising agency",
+    "products": "현대차 그룹·글로벌 광고·CRM",
+    "productsEn": "Hyundai Motor group and global advertising, CRM",
+    "partners": ["wpp", "omnicom"],
+    "subSector": "광고대행",
+    "level": "core"
+  },
+  {
+    "ticker": "067160",
+    "name": "SOOP",
+    "nameEn": "SOOP",
+    "chain": "드라마·미디어·웹툰·컨텐츠",
+    "semType": "라이브 스트리밍(아프리카TV)",
+    "semTypeEn": "Live streaming (AfreecaTV)",
+    "products": "SOOP·아프리카TV 라이브·e스포츠",
+    "productsEn": "SOOP and AfreecaTV live streaming, e-sports",
+    "partners": ["youtube", "twitch", "netflix", { "id": "cjenm", "edgeLabel": "미디어·콘텐츠 peer", "edgeLabelEn": "Media content peer", "weight": 0.1, "kind": "theme" }],
+    "subSector": "라이브 스트리밍",
+    "level": "core"
+  },
+  {
+    "ticker": "215200",
+    "name": "메가스터디교육",
+    "nameEn": "MegaStudy Education",
+    "chain": "교육",
+    "semType": "교육",
+    "semTypeEn": "Education services",
+    "products": "온·오프라인 입시·어학·평생교육",
+    "productsEn": "Online and offline exam prep, language and lifelong learning",
+    "partners": ["coursera", "youtube", { "id": "hwave_flow", "edgeLabel": "K-콘텐츠 수요(참고)", "edgeLabelEn": "K-content demand (illus.)", "weight": 0.05, "kind": "theme" }],
+    "subSector": "교육",
+    "level": "core"
+  },
+  {
+    "ticker": "101730",
+    "name": "위메이드맥스",
+    "nameEn": "Wemade Max",
+    "chain": "게임",
+    "semType": "게임",
+    "semTypeEn": "Game publishing & development",
+    "products": "PC·모바일 게임 퍼블리싱·개발",
+    "productsEn": "PC and mobile game publishing and development",
+    "partners": ["tencent", { "id": "kc_wemade_co_ltd", "edgeLabel": "위메이드 그룹", "edgeLabelEn": "Wemade group", "weight": 0.2, "kind": "backing" }, { "id": "kc_krafton", "edgeLabel": "국내 게임 peer", "edgeLabelEn": "Domestic game peer", "weight": 0.1, "kind": "theme" }],
+    "subSector": "게임",
+    "level": "core"
+  }
+]

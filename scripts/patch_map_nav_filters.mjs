@@ -28,6 +28,8 @@ const MAP_FILES = [
   'software/korea_software_map.html',
   'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
 ];
@@ -41,7 +43,7 @@ const FILTER_BAR_NEW = `<div class="filter-bar">
           <div id="chain-chips"></div>
         </div>
         <div class="filter-row filter-row-market">
-          <span class="filter-label" id="fl-market-label">시장</span>
+          <span class="filter-label" id="fl-market-label">?�장</span>
           <div id="market-chips"></div>
         </div>
         <div class="filter-row filter-row-tools">`;

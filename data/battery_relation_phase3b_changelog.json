@@ -1,25 +1,25 @@
 {
   "migratedAt": "2026-08-23",
-  "legacyMigratedEdgeCount": 45,
-  "structuralGeneratedEdgeCount": 55,
+  "legacyMigratedEdgeCount": 50,
+  "structuralGeneratedEdgeCount": 58,
   "manuallyCuratedEdgeCount": 5,
-  "removedEdgeCount": 1,
-  "finalEdgeCount": 103,
+  "removedEdgeCount": 6,
+  "finalEdgeCount": 111,
   "statusCounts": {
-    "reference": 69,
+    "reference": 72,
     "reported": 4,
-    "peer": 26,
+    "peer": 31,
     "inferred": 4
   },
   "typeCounts": {
-    "member_of": 24,
+    "member_of": 27,
     "used_in_process": 3,
     "exposed_to": 16,
     "produces": 20,
     "owns": 2,
     "participates_in": 2,
     "manufactures": 1,
-    "peer": 26,
+    "peer": 31,
     "reference": 5,
     "supplies_material_to": 4
   },
@@ -48,17 +48,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:051910",
-      "target": "group:battery_materials",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:096770",
       "target": "group:battery_cell",
       "beforeType": "(none)",
@@ -70,7 +59,7 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:003670",
+      "source": "krx:051910",
       "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
@@ -81,7 +70,7 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:247540",
+      "source": "krx:003670",
       "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
@@ -103,8 +92,8 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:011790",
-      "target": "group:battery_parts",
+      "source": "krx:247540",
+      "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -116,6 +105,17 @@
       "legacyEdgeId": null,
       "source": "krx:066970",
       "target": "group:battery_materials",
+      "beforeType": "(none)",
+      "afterType": "member_of",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "cp_list chain → member_of group"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:011790",
+      "target": "group:battery_parts",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -158,8 +158,8 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:093370",
-      "target": "group:battery_materials",
+      "source": "krx:361610",
+      "target": "group:battery_parts",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -169,8 +169,8 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:361610",
-      "target": "group:battery_parts",
+      "source": "krx:093370",
+      "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -191,6 +191,17 @@
     },
     {
       "legacyEdgeId": null,
+      "source": "krx:004490",
+      "target": "group:battery_cell",
+      "beforeType": "(none)",
+      "afterType": "member_of",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "cp_list chain → member_of group"
+    },
+    {
+      "legacyEdgeId": null,
       "source": "krx:137400",
       "target": "group:battery_equipment",
       "beforeType": "(none)",
@@ -202,8 +213,52 @@
     },
     {
       "legacyEdgeId": null,
+      "source": "krx:001570",
+      "target": "group:battery_materials",
+      "beforeType": "(none)",
+      "afterType": "member_of",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "cp_list chain → member_of group"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:121600",
+      "target": "group:battery_materials",
+      "beforeType": "(none)",
+      "afterType": "member_of",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "cp_list chain → member_of group"
+    },
+    {
+      "legacyEdgeId": null,
       "source": "krx:336370",
       "target": "group:battery_parts",
+      "beforeType": "(none)",
+      "afterType": "member_of",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "cp_list chain → member_of group"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:278280",
+      "target": "group:battery_parts",
+      "beforeType": "(none)",
+      "afterType": "member_of",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "cp_list chain → member_of group"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:365340",
+      "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -235,41 +290,19 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:121600",
-      "target": "group:battery_materials",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:001570",
-      "target": "group:battery_materials",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:278280",
-      "target": "group:battery_parts",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:005420",
       "target": "group:battery_materials",
+      "beforeType": "(none)",
+      "afterType": "member_of",
+      "beforeStatus": "(none)",
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "cp_list chain → member_of group"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:107640",
+      "target": "group:battery_parts",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -773,50 +806,6 @@
       "reason": "CATL string → peer comparison only"
     },
     {
-      "legacyEdgeId": "legacy-051910-catl-peer",
-      "source": "krx:051910",
-      "target": "global:catl",
-      "beforeType": "peer",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "CATL string → peer comparison only"
-    },
-    {
-      "legacyEdgeId": "legacy-051910-tesla-peer",
-      "source": "krx:051910",
-      "target": "market:global_ev_oem",
-      "beforeType": "peer",
-      "afterType": "exposed_to",
-      "beforeStatus": "legacy",
-      "afterStatus": "reference",
-      "origin": "legacyMigrated",
-      "reason": "OEM name without contract URL → market exposure, not supplies_cells_to"
-    },
-    {
-      "legacyEdgeId": "legacy-051910-tesla-peer",
-      "source": "krx:051910",
-      "target": "global:tesla",
-      "beforeType": "peer",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "OEM string partner → peer hidden"
-    },
-    {
-      "legacyEdgeId": "legacy-051910-lges-backing",
-      "source": "krx:051910",
-      "target": "krx:373220",
-      "beforeType": "backing",
-      "afterType": "reference",
-      "beforeStatus": "legacy",
-      "afterStatus": "reference",
-      "origin": "legacyMigrated",
-      "reason": "backing without DART/IR → reference (not reported owns)"
-    },
-    {
       "legacyEdgeId": "legacy-096770-catl-peer",
       "source": "krx:096770",
       "target": "global:catl",
@@ -859,6 +848,50 @@
       "afterStatus": "peer",
       "origin": "legacyMigrated",
       "reason": "theme/peer domestic → peer hidden"
+    },
+    {
+      "legacyEdgeId": "legacy-051910-catl-peer",
+      "source": "krx:051910",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-051910-tesla-peer",
+      "source": "krx:051910",
+      "target": "market:global_ev_oem",
+      "beforeType": "peer",
+      "afterType": "exposed_to",
+      "beforeStatus": "legacy",
+      "afterStatus": "reference",
+      "origin": "legacyMigrated",
+      "reason": "OEM name without contract URL → market exposure, not supplies_cells_to"
+    },
+    {
+      "legacyEdgeId": "legacy-051910-tesla-peer",
+      "source": "krx:051910",
+      "target": "global:tesla",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "OEM string partner → peer hidden"
+    },
+    {
+      "legacyEdgeId": "legacy-051910-lges-backing",
+      "source": "krx:051910",
+      "target": "krx:373220",
+      "beforeType": "backing",
+      "afterType": "reference",
+      "beforeStatus": "legacy",
+      "afterStatus": "reference",
+      "origin": "legacyMigrated",
+      "reason": "backing without DART/IR → reference (not reported owns)"
     },
     {
       "legacyEdgeId": "legacy-003670-catl-peer",
@@ -905,6 +938,28 @@
       "reason": "theme/peer domestic → peer hidden"
     },
     {
+      "legacyEdgeId": "legacy-086520-catl-peer",
+      "source": "krx:086520",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-086520-eprobm-backing",
+      "source": "krx:086520",
+      "target": "krx:247540",
+      "beforeType": "backing",
+      "afterType": "reference",
+      "beforeStatus": "legacy",
+      "afterStatus": "reference",
+      "origin": "legacyMigrated",
+      "reason": "backing without DART/IR → reference (not reported owns)"
+    },
+    {
       "legacyEdgeId": "legacy-247540-catl-peer",
       "source": "krx:247540",
       "target": "global:catl",
@@ -947,50 +1002,6 @@
       "afterStatus": "inferred",
       "origin": "legacyMigrated",
       "reason": "supply label without URL → inferred"
-    },
-    {
-      "legacyEdgeId": "legacy-086520-catl-peer",
-      "source": "krx:086520",
-      "target": "global:catl",
-      "beforeType": "peer",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "CATL string → peer comparison only"
-    },
-    {
-      "legacyEdgeId": "legacy-086520-eprobm-backing",
-      "source": "krx:086520",
-      "target": "krx:247540",
-      "beforeType": "backing",
-      "afterType": "reference",
-      "beforeStatus": "legacy",
-      "afterStatus": "reference",
-      "origin": "legacyMigrated",
-      "reason": "backing without DART/IR → reference (not reported owns)"
-    },
-    {
-      "legacyEdgeId": "legacy-011790-catl-peer",
-      "source": "krx:011790",
-      "target": "global:catl",
-      "beforeType": "peer",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "CATL string → peer comparison only"
-    },
-    {
-      "legacyEdgeId": "legacy-011790-skinn-backing",
-      "source": "krx:011790",
-      "target": "krx:096770",
-      "beforeType": "backing",
-      "afterType": "reference",
-      "beforeStatus": "legacy",
-      "afterStatus": "reference",
-      "origin": "legacyMigrated",
-      "reason": "backing without DART/IR → reference (not reported owns)"
     },
     {
       "legacyEdgeId": "legacy-066970-catl-peer",
@@ -1037,6 +1048,28 @@
       "reason": "supply label without URL → inferred"
     },
     {
+      "legacyEdgeId": "legacy-011790-catl-peer",
+      "source": "krx:011790",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-011790-skinn-backing",
+      "source": "krx:011790",
+      "target": "krx:096770",
+      "beforeType": "backing",
+      "afterType": "reference",
+      "beforeStatus": "legacy",
+      "afterStatus": "reference",
+      "origin": "legacyMigrated",
+      "reason": "backing without DART/IR → reference (not reported owns)"
+    },
+    {
       "legacyEdgeId": "legacy-450080-ecopro-backing",
       "source": "krx:450080",
       "target": "krx:086520",
@@ -1079,28 +1112,6 @@
       "afterStatus": "inferred",
       "origin": "legacyMigrated",
       "reason": "supply label without URL → inferred"
-    },
-    {
-      "legacyEdgeId": "legacy-093370-catl-peer",
-      "source": "krx:093370",
-      "target": "global:catl",
-      "beforeType": "peer",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "CATL string → peer comparison only"
-    },
-    {
-      "legacyEdgeId": "legacy-093370-soulbrain-theme",
-      "source": "krx:093370",
-      "target": "soulbrain",
-      "beforeType": "theme",
-      "afterType": "(removed)",
-      "beforeStatus": "legacy",
-      "afterStatus": "(removed)",
-      "origin": "legacyMigrated",
-      "reason": "unsupported/out-of-sector global partner dropped"
     },
     {
       "legacyEdgeId": "legacy-361610-catl-peer",
@@ -1147,6 +1158,61 @@
       "reason": "backing without DART/IR → reference (not reported owns)"
     },
     {
+      "legacyEdgeId": "legacy-093370-catl-peer",
+      "source": "krx:093370",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-093370-soulbrain-theme",
+      "source": "krx:093370",
+      "target": "soulbrain",
+      "beforeType": "theme",
+      "afterType": "(removed)",
+      "beforeStatus": "legacy",
+      "afterStatus": "(removed)",
+      "origin": "legacyMigrated",
+      "reason": "unsupported/out-of-sector global partner dropped"
+    },
+    {
+      "legacyEdgeId": "legacy-004490-catl-peer",
+      "source": "krx:004490",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-004490-panasonic-peer",
+      "source": "krx:004490",
+      "target": "panasonic",
+      "beforeType": "peer",
+      "afterType": "(removed)",
+      "beforeStatus": "legacy",
+      "afterStatus": "(removed)",
+      "origin": "legacyMigrated",
+      "reason": "unsupported/out-of-sector global partner dropped"
+    },
+    {
+      "legacyEdgeId": "legacy-004490-lges-theme",
+      "source": "krx:004490",
+      "target": "krx:373220",
+      "beforeType": "theme",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "theme/peer domestic → peer hidden"
+    },
+    {
       "legacyEdgeId": "legacy-278280-lges-peer",
       "source": "krx:278280",
       "target": "krx:373220",
@@ -1156,6 +1222,83 @@
       "afterStatus": "inferred",
       "origin": "legacyMigrated",
       "reason": "supply label without URL → inferred"
+    },
+    {
+      "legacyEdgeId": "legacy-365340-umicore-peer",
+      "source": "krx:365340",
+      "target": "umicore",
+      "beforeType": "peer",
+      "afterType": "(removed)",
+      "beforeStatus": "legacy",
+      "afterStatus": "(removed)",
+      "origin": "legacyMigrated",
+      "reason": "unsupported/out-of-sector global partner dropped"
+    },
+    {
+      "legacyEdgeId": "legacy-365340-catl-peer",
+      "source": "krx:365340",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-365340-panasonic-peer",
+      "source": "krx:365340",
+      "target": "panasonic",
+      "beforeType": "peer",
+      "afterType": "(removed)",
+      "beforeStatus": "legacy",
+      "afterStatus": "(removed)",
+      "origin": "legacyMigrated",
+      "reason": "unsupported/out-of-sector global partner dropped"
+    },
+    {
+      "legacyEdgeId": "legacy-365340-posfutu-theme",
+      "source": "krx:365340",
+      "target": "krx:003670",
+      "beforeType": "theme",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "theme/peer domestic → peer hidden"
+    },
+    {
+      "legacyEdgeId": "legacy-107640-catl-peer",
+      "source": "krx:107640",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-107640-lges-peer",
+      "source": "krx:107640",
+      "target": "krx:373220",
+      "beforeType": "peer",
+      "afterType": "(removed)",
+      "beforeStatus": "legacy",
+      "afterStatus": "(removed)",
+      "origin": "legacyMigrated",
+      "reason": "unsupported domestic partner shape"
+    },
+    {
+      "legacyEdgeId": "legacy-107640-schneider_e-peer",
+      "source": "krx:107640",
+      "target": "schneider_e",
+      "beforeType": "peer",
+      "afterType": "(removed)",
+      "beforeStatus": "legacy",
+      "afterStatus": "(removed)",
+      "origin": "legacyMigrated",
+      "reason": "unsupported/out-of-sector global partner dropped"
     },
     {
       "legacyEdgeId": "backing-lgchem-lges",

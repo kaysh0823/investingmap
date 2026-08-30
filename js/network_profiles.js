@@ -686,6 +686,71 @@
     "modelDescKo": "통신사·망·장비·광부품 생태계. 주파수 할당·호환 인증과 실제 공급·구축 계약을 분리합니다.",
     "modelDescEn": "Carrier, network, equipment and optical-component ecosystem. Separates spectrum/certification from verified supply and deployment contracts."
   },
+  "chemical": {
+    "sectorId": "chemical",
+    "dataSector": "chemical",
+    "model": "chemicals_refining_value_chain_ecosystem",
+    "layout": "chemicalRefiningValueChainEcosystem",
+    "networkPath": "../data/networks/chemical.json",
+    "defaultEdgeTypes": [
+      "member_of",
+      "specializes_in",
+      "produces",
+      "exposed_to_feedstock",
+      "cross_sector_reference",
+      "supplies_chemical_to",
+      "operates_refinery",
+      "owns_stake_in",
+      "peer"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "petrochemical",
+      "specialty_chemical",
+      "refining_gas",
+      "chemical_materials"
+    ],
+    "modelDescKo": "석유화학·특수화학·정유·가스·화학소재 가치사슬. 원료 노출·구조 분류와 실제 공급·정유·지분을 분리합니다.",
+    "modelDescEn": "Petrochemical, specialty, refining, gas and materials value chain. Separates feedstock exposure/structure from verified supply, refining and ownership."
+  },
+  "travel": {
+    "sectorId": "travel",
+    "dataSector": "travel",
+    "model": "travel_leisure_airlines_value_chain_ecosystem",
+    "layout": "travelLeisureValueChainEcosystem",
+    "networkPath": "../data/networks/travel.json",
+    "defaultEdgeTypes": [
+      "member_of",
+      "specializes_in",
+      "produces",
+      "operates_service",
+      "cross_sector_reference",
+      "operates_route",
+      "operates_property",
+      "codeshare_with",
+      "owns_stake_in",
+      "peer"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "airlines",
+      "casino",
+      "hotel_resort",
+      "travel_duty_free"
+    ],
+    "modelDescKo": "항공·카지노·호텔·여행사 가치사슬. 서비스·사업 구조 분류와 실제 alliance·카지노·호텔·GDS 계약을 분리합니다.",
+    "modelDescEn": "Airlines, casino, hotel and travel-agency value chain. Separates service/business structure from verified alliance, casino, hotel and GDS contracts."
+  },
   "kconsume": {
     "sectorId": "kconsume",
     "dataSector": "kconsume",

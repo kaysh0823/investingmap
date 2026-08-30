@@ -1,0 +1,402 @@
+{
+  "asOf": "2026-08-30",
+  "reviewedBy": "editorial_travel",
+  "listedCompanyCount": 11,
+  "nodeCount": 49,
+  "edgeCount": 62,
+  "structuralGenerated": 33,
+  "legacyMigrated": 26,
+  "manuallyCurated": 3,
+  "demotedPeer": 26,
+  "metrics": {
+    "listedCompanyCount": 11,
+    "nodeCount": 49,
+    "edgeCount": 62,
+    "structuralGeneratedEdgeCount": 33,
+    "legacyMigratedEdgeCount": 26,
+    "manuallyCuratedEdgeCount": 3,
+    "travelServiceCount": 22,
+    "crossSectorReferenceCount": 3,
+    "confirmedBusinessEdgeCount": 0,
+    "reportedBusinessEdgeCount": 0,
+    "peerEdgeCount": 26,
+    "businessRelationOrphanCount": 11,
+    "classificationOnlyCompanyCount": 11,
+    "zeroDegreeNodeCount": 0,
+    "claimCoverage": {
+      "businessRelationshipDirectEvidenceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_business_edges"
+      },
+      "ownershipPrimarySourceCoverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "percentage": null,
+        "displayValue": "N/A",
+        "applicable": false,
+        "reason": "no_eligible_ownership_edges"
+      },
+      "crossSectorReferenceEvidenceCoverage": {
+        "numerator": 3,
+        "denominator": 3,
+        "percentage": 1,
+        "displayValue": "100%",
+        "applicable": true,
+        "reason": null
+      },
+      "metricNotes": {
+        "businessRelationshipDenominator": "confirmed + reported business edges only",
+        "zeroDenominator": "percentage=null, displayValue=N/A, applicable=false"
+      }
+    },
+    "nodeCountByType": {
+      "group": 4,
+      "cross_sector_anchor": 2,
+      "listed_company": 11,
+      "travel_service": 22,
+      "global_company": 10
+    },
+    "removedUnsupportedPartnerCount": 0,
+    "demotedLegacyPeerCount": 26
+  },
+  "validate": {
+    "failures": [],
+    "warnings": []
+  },
+  "crossSectorBoundary": [
+    {
+      "ticker": "008770",
+      "target": "sector:kconsume",
+      "noteKo": "면세·유통은 kconsume과 겹침. confirmed 유통은 kconsume에서만.",
+      "noteEn": "Duty-free retail overlaps kconsume; confirmed distribution curated there only."
+    },
+    {
+      "ticker": "003490",
+      "target": "sector:holdings",
+      "noteKo": "한진그룹 지주 구조는 holdings와 겹침. 지분은 holdings에서만.",
+      "noteEn": "Hanjin group ownership overlaps holdings; stakes curated there only."
+    },
+    {
+      "ticker": "032350",
+      "target": "sector:holdings",
+      "noteKo": "롯데 계열 지주·리조트는 holdings와 겹침.",
+      "noteEn": "Lotte group ownership overlaps holdings sector."
+    }
+  ],
+  "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "003490",
+      "lane": "airlines"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "003490",
+      "target": "travel_service:network_carrier"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "003490",
+      "target": "travel_service:intl_domestic_air"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "035250",
+      "lane": "casino"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "035250",
+      "target": "casino_property:integrated_resort"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "035250",
+      "target": "casino_property:kangwon_land"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "008770",
+      "lane": "hotel_resort"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "008770",
+      "target": "hotel_property:hotel_duty_free"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "008770",
+      "target": "hotel_property:shilla_hotels"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "020560",
+      "lane": "airlines"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "020560",
+      "target": "travel_service:fsc"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "020560",
+      "target": "travel_service:passenger_cargo"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "032350",
+      "lane": "casino"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "032350",
+      "target": "casino_property:resort_dev"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "032350",
+      "target": "casino_property:dream_tower"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "034230",
+      "lane": "casino"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "034230",
+      "target": "casino_property:foreigner_casino"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "034230",
+      "target": "casino_property:paradise_city"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "114090",
+      "lane": "casino"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "114090",
+      "target": "casino_property:casino_operator"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "114090",
+      "target": "casino_property:seoul_busan_casino"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "025980",
+      "lane": "hotel_resort"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "025980",
+      "target": "hotel_property:resort"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "025980",
+      "target": "hotel_property:ananti_resorts"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "039130",
+      "lane": "travel_duty_free"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "039130",
+      "target": "tour_product:travel_agency"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "039130",
+      "target": "tour_product:outbound_packages"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "089590",
+      "lane": "airlines"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "089590",
+      "target": "travel_service:lcc"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "089590",
+      "target": "travel_service:domestic_short_haul"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "272450",
+      "lane": "airlines"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "272450",
+      "target": "travel_service:lcc_jin"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "272450",
+      "target": "travel_service:domestic_ne_asia"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:003490",
+      "target": "global:delta"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:003490",
+      "target": "global:united"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:003490",
+      "target": "global:singapore_airlines"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:035250",
+      "target": "global:las_vegas_sands"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:035250",
+      "target": "global:mgm"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:035250",
+      "target": "global:galaxy_entertainment"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:008770",
+      "target": "global:marriott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:008770",
+      "target": "global:hilton"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:020560",
+      "target": "global:delta"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:020560",
+      "target": "global:united"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:020560",
+      "target": "global:singapore_airlines"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:032350",
+      "target": "global:las_vegas_sands"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:032350",
+      "target": "global:galaxy_entertainment"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:034230",
+      "target": "global:las_vegas_sands"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:034230",
+      "target": "global:mgm"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:034230",
+      "target": "global:galaxy_entertainment"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:114090",
+      "target": "global:mgm"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:114090",
+      "target": "global:galaxy_entertainment"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:025980",
+      "target": "global:marriott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:025980",
+      "target": "global:hilton"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:039130",
+      "target": "global:booking"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:039130",
+      "target": "global:expedia"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:089590",
+      "target": "global:delta"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:089590",
+      "target": "global:united"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:272450",
+      "target": "global:united"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:272450",
+      "target": "global:singapore_airlines"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:008770",
+      "target": "sector:kconsume"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:003490",
+      "target": "sector:holdings"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:032350",
+      "target": "sector:holdings"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "ticker": "439260",
+    "name": "대한조선",
+    "nameEn": "Daehan Shipbuilding",
+    "chain": "종합조선",
+    "semType": "탱커·벌크선",
+    "semTypeEn": "Tankers and bulk carriers",
+    "products": "VLCC·MR탱커, 벌크선, LPG선",
+    "productsEn": "VLCC and MR tankers, bulk carriers, LPG carriers",
+    "partners": ["maersk", "msc", { "id": "hd_hhi", "edgeLabel": "국내 조선 peer", "edgeLabelEn": "Domestic yard peer", "weight": 0.1, "kind": "theme" }, { "id": "shi", "edgeLabel": "국내 조선 peer", "edgeLabelEn": "Domestic yard peer", "weight": 0.08, "kind": "theme" }, { "id": "hwo", "edgeLabel": "국내 조선 peer", "edgeLabelEn": "Domestic yard peer", "weight": 0.08, "kind": "theme" }],
+    "subSector": "탱커·벌크선",
+    "level": "core"
+  },
+  {
+    "ticker": "003280",
+    "name": "흥아해운",
+    "nameEn": "Heung-A Shipping",
+    "chain": "해운물류",
+    "semType": "컨테이너·벌크 해운",
+    "semTypeEn": "Container and bulk shipping",
+    "products": "아시아·근해 컨테이너, 벌크·다목적선",
+    "productsEn": "Intra-Asia container lines, bulk and multipurpose vessels",
+    "partners": ["maersk", "msc", "cma_cgm", { "id": "hmm", "edgeLabel": "국내 해운 peer", "edgeLabelEn": "Domestic liner peer", "weight": 0.12, "kind": "theme" }],
+    "subSector": "컨테이너·벌크 해운",
+    "level": "core"
+  }
+]

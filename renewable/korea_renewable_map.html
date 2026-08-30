@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 신재생에너지 투자 지도",
     "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html",
-    "numberOfItems": 10,
+    "numberOfItems": 11,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -167,38 +167,44 @@
       {
         "@type": "ListItem",
         "position": 5,
-        "name": "HD현대에너지솔루션 (322000, KOSPI)",
-        "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-322000"
-      },
-      {
-        "@type": "ListItem",
-        "position": 6,
         "name": "SK이터닉스 (475150, KOSPI)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-475150"
       },
       {
         "@type": "ListItem",
+        "position": 6,
+        "name": "HD현대에너지솔루션 (322000, KOSPI)",
+        "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-322000"
+      },
+      {
+        "@type": "ListItem",
         "position": 7,
+        "name": "지엔씨에너지 (119850, KOSDAQ)",
+        "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-119850"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
         "name": "OCI (456040, KOSPI)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-456040"
       },
       {
         "@type": "ListItem",
-        "position": 8,
+        "position": 9,
         "name": "일진하이솔루스 (271940, KOSPI)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-271940"
       },
       {
         "@type": "ListItem",
-        "position": 9,
+        "position": 10,
         "name": "신성이엔지 (011930, KOSPI)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-011930"
       },
       {
         "@type": "ListItem",
-        "position": 10,
-        "name": "지엔씨에너지 (119850, KOSDAQ)",
-        "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-119850"
+        "position": 11,
+        "name": "유니슨 (018000, KOSDAQ)",
+        "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-018000"
       }
     ]
   }
@@ -860,7 +866,7 @@
     .node-dim {
       opacity: .15
     }
-    /* investingmap-mobile-table-v2 — base */
+    /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -937,6 +943,133 @@
       .table-container {
         padding: 10px 12px
       }
+      /* investingmap-mobile-table-v2 ??mobile layout */
+      .tabs {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      /* Natural page scroll: no fixed viewport height / inner Y scroll */
+      #tab-table.tab-content.active {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible
+      }
+
+      #tab-table .table-container {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding-bottom: 8px
+      }
+
+      body.im-tab-table #tab-table .table-container {
+        padding: 4px 8px 0
+      }
+
+      #tab-table .filter-bar {
+        flex-shrink: 0;
+        z-index: 30;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      body.im-tab-table #tab-table .filter-bar {
+        padding-bottom: 6px;
+        gap: 6px
+      }
+
+      /* Value-chain chips: single row + horizontal scroll */
+      #tab-table .filter-row-chain {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-width: 0;
+        width: 100%
+      }
+
+      #tab-table .filter-row-chain .filter-label {
+        flex-shrink: 0
+      }
+
+      #tab-table .filter-row-chain #chain-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none
+      }
+
+      #tab-table .filter-row-chain #chain-chips::-webkit-scrollbar {
+        display: none
+      }
+
+      #tab-table .filter-row-chain .filter-chip {
+        flex-shrink: 0
+      }
+
+      #tab-table .search-box {
+        padding: 5px 10px;
+        font-size: 12px;
+        min-height: 0;
+        height: auto
+      }
+
+      #tab-table .tbl-wrap {
+        flex: none;
+        min-height: 0;
+        max-height: none;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch
+      }
+
+      #tab-table .note {
+        display: none
+      }
+
+      body.im-tab-table thead th {
+        padding: 6px 5px;
+        font-size: 8px
+      }
+
+      body.im-tab-table td {
+        padding: 5px 5px;
+        font-size: 11px;
+        line-height: 1.3
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 108px;
+        max-width: 132px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
+      body.im-tab-table tbody td:first-child .company-name {
+        font-size: 11px;
+        line-height: 1.25
+      }
+
       /* investingmap-mobile-table-v2 — mobile layout */
       .tabs {
         position: -webkit-sticky;
@@ -1894,8 +2027,8 @@
     </button>
     <p id="hdr-subtitle">태양광·풍력·수소·신재생 운영 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>10</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>9</span> · KOSDAQ <span>1</span></div>
+      <div class="badge" id="badge-total">Total <span>11</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>9</span> · KOSDAQ <span>2</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1964,7 +2097,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">10</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">11</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2010,7 +2143,7 @@
       <td class="quote-cell">22,000</td>
       <td class="quote-cell">34.6%</td>
       <td class="quote-cell">50.5</td>
-      <td class="mcap-cell">6.36조원</td>
+      <td class="mcap-cell">7.59조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.70</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2033,7 +2166,7 @@
       <td class="quote-cell">83,400</td>
       <td class="quote-cell">57.8%</td>
       <td class="quote-cell">87.5</td>
-      <td class="mcap-cell">5.60조원</td>
+      <td class="mcap-cell">5.12조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.42</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2056,7 +2189,7 @@
       <td class="quote-cell">196,100</td>
       <td class="quote-cell">32%</td>
       <td class="quote-cell">74.2</td>
-      <td class="mcap-cell">2.06조원</td>
+      <td class="mcap-cell">2.13조원</td>
       <td class="fin-cell">8.48</td>
       <td class="fin-cell">0.68</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2079,7 +2212,7 @@
       <td class="quote-cell">34,500</td>
       <td class="quote-cell">33.2%</td>
       <td class="quote-cell">75.1</td>
-      <td class="mcap-cell">1.75조원</td>
+      <td class="mcap-cell">2.08조원</td>
       <td class="fin-cell">49.58</td>
       <td class="fin-cell">1.49</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2087,29 +2220,6 @@
       <td style="font-size:12px;color:var(--text-muted)">풍력 타워</td>
       <td class="products-cell">해상·육상 타워</td>
       <td><div class="partners-list">Vestas, Siemens Energy</div></td>
-    </tr>
-          <tr data-ticker="322000">
-      <td><div class="company-name">HD현대에너지솔루션</div><div class="company-name-sub">HD HYUNDAI ENERGY SOLUTIONS CO.,LTD.</div></td>
-      <td><span class="ticker">322000</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">136,000</td>
-      <td class="quote-cell ret-cell">-4.23%</td>
-      <td class="quote-cell ret-cell">+21.32%</td>
-      <td class="quote-cell ret-cell">-2.86%</td>
-      <td class="quote-cell ret-cell">+11.38%</td>
-      <td class="quote-cell ret-cell">+164.08%</td>
-      <td class="quote-cell">256,000</td>
-      <td class="quote-cell">42,250</td>
-      <td class="quote-cell">43.9%</td>
-      <td class="quote-cell">66.7</td>
-      <td class="mcap-cell">1.69조원</td>
-      <td class="fin-cell">40.45</td>
-      <td class="fin-cell">4.03</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">태양광</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">ESS·태양광 모듈</td>
-      <td class="products-cell">산업·계통 ESS, 태양광</td>
-      <td><div class="partners-list">Tesla, Enphase, hdelec</div></td>
     </tr>
           <tr data-ticker="475150">
       <td><div class="company-name">SK이터닉스</div><div class="company-name-sub">SK eternix</div></td>
@@ -2125,7 +2235,7 @@
       <td class="quote-cell">17,210</td>
       <td class="quote-cell">54.7%</td>
       <td class="quote-cell">87.3</td>
-      <td class="mcap-cell">1.46조원</td>
+      <td class="mcap-cell">1.90조원</td>
       <td class="fin-cell">47.20</td>
       <td class="fin-cell">5.31</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2133,6 +2243,52 @@
       <td style="font-size:12px;color:var(--text-muted)">신재생 EPC·운영</td>
       <td class="products-cell">태양광·풍력 프로젝트 개발</td>
       <td><div class="partners-list">Vestas, First Solar, skinn</div></td>
+    </tr>
+          <tr data-ticker="322000">
+      <td><div class="company-name">HD현대에너지솔루션</div><div class="company-name-sub">HD HYUNDAI ENERGY SOLUTIONS CO.,LTD.</div></td>
+      <td><span class="ticker">322000</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">136,000</td>
+      <td class="quote-cell ret-cell">-4.23%</td>
+      <td class="quote-cell ret-cell">+21.32%</td>
+      <td class="quote-cell ret-cell">-2.86%</td>
+      <td class="quote-cell ret-cell">+11.38%</td>
+      <td class="quote-cell ret-cell">+164.08%</td>
+      <td class="quote-cell">256,000</td>
+      <td class="quote-cell">42,250</td>
+      <td class="quote-cell">43.9%</td>
+      <td class="quote-cell">66.7</td>
+      <td class="mcap-cell">1.52조원</td>
+      <td class="fin-cell">40.45</td>
+      <td class="fin-cell">4.03</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">태양광</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">ESS·태양광 모듈</td>
+      <td class="products-cell">산업·계통 ESS, 태양광</td>
+      <td><div class="partners-list">Tesla, Enphase, hdelec</div></td>
+    </tr>
+          <tr data-ticker="119850">
+      <td><div class="company-name">지엔씨에너지</div><div class="company-name-sub">GnCenergy Co., Ltd.</div></td>
+      <td><span class="ticker">119850</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">52,200</td>
+      <td class="quote-cell ret-cell">+3.78%</td>
+      <td class="quote-cell ret-cell">+42.62%</td>
+      <td class="quote-cell ret-cell">+140.55%</td>
+      <td class="quote-cell ret-cell">+45.81%</td>
+      <td class="quote-cell ret-cell">+83.80%</td>
+      <td class="quote-cell">58,000</td>
+      <td class="quote-cell">18,350</td>
+      <td class="quote-cell">85.4%</td>
+      <td class="quote-cell">90.7</td>
+      <td class="mcap-cell">0.86조원</td>
+      <td class="fin-cell">8.58</td>
+      <td class="fin-cell">1.63</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">신재생 운영</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">신재생 운영</td>
+      <td class="products-cell">신재생 운영 관련 제품·서비스</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="456040">
       <td><div class="company-name">OCI</div><div class="company-name-sub">Oci</div></td>
@@ -2148,7 +2304,7 @@
       <td class="quote-cell">52,500</td>
       <td class="quote-cell">26.6%</td>
       <td class="quote-cell">53.1</td>
-      <td class="mcap-cell">0.94조원</td>
+      <td class="mcap-cell">0.73조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.84</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2171,7 +2327,7 @@
       <td class="quote-cell">8,000</td>
       <td class="quote-cell">23.5%</td>
       <td class="quote-cell">45.6</td>
-      <td class="mcap-cell">0.49조원</td>
+      <td class="mcap-cell">0.40조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.56</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2194,7 +2350,7 @@
       <td class="quote-cell">11,300</td>
       <td class="quote-cell">14.6%</td>
       <td class="quote-cell">63.7</td>
-      <td class="mcap-cell">0.43조원</td>
+      <td class="mcap-cell">0.34조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.82</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2203,27 +2359,27 @@
       <td class="products-cell">발전·플랜트 전기·기계 설비</td>
       <td><div class="partners-list">—</div></td>
     </tr>
-          <tr data-ticker="119850">
-      <td><div class="company-name">지엔씨에너지</div><div class="company-name-sub">GnCenergy Co., Ltd.</div></td>
-      <td><span class="ticker">119850</span></td>
+          <tr data-ticker="018000">
+      <td><div class="company-name">유니슨</div><div class="company-name-sub">UNISON CO., LTD.</div></td>
+      <td><span class="ticker">018000</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">52,200</td>
-      <td class="quote-cell ret-cell">+3.78%</td>
-      <td class="quote-cell ret-cell">+42.62%</td>
-      <td class="quote-cell ret-cell">+140.55%</td>
-      <td class="quote-cell ret-cell">+45.81%</td>
-      <td class="quote-cell ret-cell">+83.80%</td>
-      <td class="quote-cell">58,000</td>
-      <td class="quote-cell">18,350</td>
-      <td class="quote-cell">85.4%</td>
-      <td class="quote-cell">90.7</td>
-      <td class="mcap-cell">0.36조원</td>
-      <td class="fin-cell">8.58</td>
-      <td class="fin-cell">1.63</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">+6.49%</td>
+      <td class="quote-cell ret-cell">+66.99%</td>
+      <td class="quote-cell ret-cell">+21.52%</td>
+      <td class="quote-cell ret-cell">+2.88%</td>
+      <td class="quote-cell ret-cell">+2.71%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">87.6</td>
+      <td class="mcap-cell">0.32조원</td>
+      <td class="fin-cell">—</td>
+      <td class="fin-cell">2.20</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">신재생 운영</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">신재생 운영</td>
-      <td class="products-cell">신재생 운영 관련 제품·서비스</td>
+      <td><span class="chain-tag">풍력</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">풍력발전</td>
+      <td class="products-cell">풍력발전 관련 제품·서비스</td>
       <td><div class="partners-list">—</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
@@ -2535,70 +2691,77 @@
         id: 'hanwhasol', name: '한화솔루션', nameEn: 'HANWHA SOLUTIONS', ticker: '009830', market: 'KOSPI', chain: '신재생 운영',
         semType: '모듈·필름·케미컬', semTypeEn: 'Solar modules & chemicals',
         products: 'Q-셀 모듈, 태양광 EPC', productsEn: 'Qcells modules, solar EPC',
-        revenue: '6.36조원', mcapWon: 6360023832000, per: null, pbr: 0.7, revTier: 2, partners: ['first_solar', 'enphase', 'vestas']
+        revenue: '7.59조원', mcapWon: 7590123090000, per: null, pbr: 0.7, revTier: 2, partners: ['first_solar', 'enphase', 'vestas']
       },
 
       {
         id: 'oci_holdings', name: 'OCI홀딩스', nameEn: 'OCI Holdings Company Ltd.', ticker: '010060', market: 'KOSPI', chain: '태양광',
         semType: '지주·에너지 투자', semTypeEn: 'Holding & energy investments',
         products: 'OCI 계열 태양광·화학 사업 지주', productsEn: 'Holding co. for OCI group solar & chemical units',
-        revenue: '5.60조원', mcapWon: 5601069600000, per: null, pbr: 1.42, revTier: 2, partners: ['first_solar', 'vestas']
+        revenue: '5.12조원', mcapWon: 5124978684000, per: null, pbr: 1.42, revTier: 2, partners: ['first_solar', 'vestas']
       },
 
       {
         id: 'energy_skgas', name: 'SK가스', nameEn: 'SKGas', ticker: '018670', market: 'KOSPI', chain: '수소',
         semType: 'LPG·수소', semTypeEn: '—',
         products: 'LPG·수소 관련 제품·서비스', productsEn: 'Related products and services',
-        revenue: '2.06조원', mcapWon: 2055108168000, per: 8.48, pbr: 0.68, revTier: 2, partners: []
+        revenue: '2.13조원', mcapWon: 2131926120000, per: 8.48, pbr: 0.68, revTier: 2, partners: []
       },
 
       {
         id: 'cswind', name: '씨에스윈드', nameEn: 'CS Wind Corporation', ticker: '112610', market: 'KOSPI', chain: '풍력',
         semType: '풍력 타워', semTypeEn: 'Wind towers',
         products: '해상·육상 타워', productsEn: 'Onshore/offshore towers',
-        revenue: '1.75조원', mcapWon: 1750113224500, per: 49.58, pbr: 1.49, revTier: 2, partners: ['vestas', 'siemens_energy']
-      },
-
-      {
-        id: 'hd_ess', name: 'HD현대에너지솔루션', nameEn: 'HD HYUNDAI ENERGY SOLUTIONS CO.,LTD.', ticker: '322000', market: 'KOSPI', chain: '태양광',
-        semType: 'ESS·태양광 모듈', semTypeEn: 'ESS & solar modules',
-        products: '산업·계통 ESS, 태양광', productsEn: 'C&I/grid ESS, solar modules',
-        revenue: '1.69조원', mcapWon: 1685600000000, per: 40.45, pbr: 4.03, revTier: 2, partners: ['tesla', 'enphase', { id: 'hdelec', edgeLabel: 'HD현대 계열', edgeLabelEn: 'HD Hyundai group', weight: 0.15, kind: 'backing' }]
+        revenue: '2.08조원', mcapWon: 2083267308200, per: 49.58, pbr: 1.49, revTier: 2, partners: ['vestas', 'siemens_energy']
       },
 
       {
         id: 'sk_eternix', name: 'SK이터닉스', nameEn: 'SK eternix', ticker: '475150', market: 'KOSPI', chain: '풍력',
         semType: '신재생 EPC·운영', semTypeEn: 'Renewable EPC & O&M',
         products: '태양광·풍력 프로젝트 개발', productsEn: 'Solar & wind project development',
-        revenue: '1.46조원', mcapWon: 1464881172000, per: 47.2, pbr: 5.31, revTier: 2, partners: ['vestas', 'first_solar', { id: 'skinn', edgeLabel: 'SK 계열', edgeLabelEn: 'SK group', weight: 0.25, kind: 'backing' }]
+        revenue: '1.90조원', mcapWon: 1900938823200, per: 47.2, pbr: 5.31, revTier: 2, partners: ['vestas', 'first_solar', { id: 'skinn', edgeLabel: 'SK 계열', edgeLabelEn: 'SK group', weight: 0.25, kind: 'backing' }]
       },
 
       {
-        id: 'oci', name: 'OCI', nameEn: 'Oci', ticker: '456040', market: 'KOSPI', chain: '태양광',
-        semType: '폴리실리콘·기초화학', semTypeEn: 'Polysilicon & basic chemicals',
-        products: '태양광급 폴리실리콘, 기초·탄소화학', productsEn: 'Solar-grade polysilicon, basic & carbon chemicals',
-        revenue: '0.94조원', mcapWon: 942697723500, per: null, pbr: 0.84, revTier: 1, partners: ['first_solar', 'vestas']
-      },
-
-      {
-        id: 'energy_iljin_hysolus', name: '일진하이솔루스', nameEn: 'ILJIN HYSOLUS', ticker: '271940', market: 'KOSPI', chain: '수소',
-        semType: '2차전지·소재', semTypeEn: 'Battery Materials',
-        products: '2차전지·전자 소재 (구 일진머티리얼즈)', productsEn: 'Battery and electronic materials (legacy Iljin Materials)',
-        revenue: '0.49조원', mcapWon: 490591196900, per: null, pbr: 1.56, revTier: 1, partners: []
-      },
-
-      {
-        id: 'energy_shinsung_e_g', name: '신성이엔지', nameEn: 'SHINSUNG E&G', ticker: '011930', market: 'KOSPI', chain: '태양광',
-        semType: '전력·플랜트 설비', semTypeEn: 'Power & Plant Equipment',
-        products: '발전·플랜트 전기·기계 설비', productsEn: 'Electrical and mechanical equipment for power plants',
-        revenue: '0.43조원', mcapWon: 429193392750, per: null, pbr: 1.82, revTier: 1, partners: []
+        id: 'hd_ess', name: 'HD현대에너지솔루션', nameEn: 'HD HYUNDAI ENERGY SOLUTIONS CO.,LTD.', ticker: '322000', market: 'KOSPI', chain: '태양광',
+        semType: 'ESS·태양광 모듈', semTypeEn: 'ESS & solar modules',
+        products: '산업·계통 ESS, 태양광', productsEn: 'C&I/grid ESS, solar modules',
+        revenue: '1.52조원', mcapWon: 1523200000000, per: 40.45, pbr: 4.03, revTier: 2, partners: ['tesla', 'enphase', { id: 'hdelec', edgeLabel: 'HD현대 계열', edgeLabelEn: 'HD Hyundai group', weight: 0.15, kind: 'backing' }]
       },
 
       {
         id: 'energy_gncenergy_co_ltd', name: '지엔씨에너지', nameEn: 'GnCenergy Co., Ltd.', ticker: '119850', market: 'KOSDAQ', chain: '신재생 운영',
         semType: '신재생 운영', semTypeEn: '—',
         products: '신재생 운영 관련 제품·서비스', productsEn: 'Related products and services',
-        revenue: '0.36조원', mcapWon: 361875998000, per: 8.58, pbr: 1.63, revTier: 1, partners: []
+        revenue: '0.86조원', mcapWon: 858633049800, per: 8.58, pbr: 1.63, revTier: 1, partners: []
+      },
+
+      {
+        id: 'oci', name: 'OCI', nameEn: 'Oci', ticker: '456040', market: 'KOSPI', chain: '태양광',
+        semType: '폴리실리콘·기초화학', semTypeEn: 'Polysilicon & basic chemicals',
+        products: '태양광급 폴리실리콘, 기초·탄소화학', productsEn: 'Solar-grade polysilicon, basic & carbon chemicals',
+        revenue: '0.73조원', mcapWon: 734104590000, per: null, pbr: 0.84, revTier: 1, partners: ['first_solar', 'vestas']
+      },
+
+      {
+        id: 'energy_iljin_hysolus', name: '일진하이솔루스', nameEn: 'ILJIN HYSOLUS', ticker: '271940', market: 'KOSPI', chain: '수소',
+        semType: '2차전지·소재', semTypeEn: 'Battery Materials',
+        products: '2차전지·전자 소재 (구 일진머티리얼즈)', productsEn: 'Battery and electronic materials (legacy Iljin Materials)',
+        revenue: '0.40조원', mcapWon: 403076409000, per: null, pbr: 1.56, revTier: 1, partners: []
+      },
+
+      {
+        id: 'energy_shinsung_e_g', name: '신성이엔지', nameEn: 'SHINSUNG E&G', ticker: '011930', market: 'KOSPI', chain: '태양광',
+        semType: '전력·플랜트 설비', semTypeEn: 'Power & Plant Equipment',
+        products: '발전·플랜트 전기·기계 설비', productsEn: 'Electrical and mechanical equipment for power plants',
+        revenue: '0.34조원', mcapWon: 343377537620, per: null, pbr: 1.82, revTier: 1, partners: []
+      },
+
+      {
+        id: 'energy_unison_co_ltd', name: '유니슨', nameEn: 'UNISON CO., LTD.', ticker: '018000', market: 'KOSDAQ', chain: '풍력',
+        semType: '풍력발전', semTypeEn: '—',
+        products: '풍력발전 관련 제품·서비스', productsEn: 'Related products and services',
+        revenue: '0.32조원', mcapWon: 315030916776, per: null, pbr: 2.2, revTier: 1, partners: []
       }
 
     ];
@@ -2620,7 +2783,9 @@
       { id: 'schneider_e', name: '슈나이더 일렉트릭', nameEn: 'Schneider Electric', country: '프랑스/France', region: 'eu', sector: 'Grid & automation' },
       { id: 'abb', name: 'ABB', nameEn: 'ABB', country: '스위스/Switzerland', region: 'eu', sector: 'Electrification' },
       { id: 'toyota_ms', name: '도요타', nameEn: 'Toyota Motor', country: '일본/Japan', region: 'jp', sector: 'FC mobility' },
-      { id: 'hyundai_mt', name: '현대차', nameEn: 'Hyundai Motor', country: '한국/Korea', region: 'kr', sector: 'Hydrogen mobility pilot' }
+      { id: 'hyundai_mt', name: '현대차', nameEn: 'Hyundai Motor', country: '한국/Korea', region: 'kr', sector: 'Hydrogen mobility pilot' },
+      { id: 'panasonic', name: 'Panasonic', nameEn: 'Panasonic', country: '일본/Japan', region: 'jp', sector: 'Battery cells & industrial' },
+      { id: 'umicore', name: 'Umicore', nameEn: 'Umicore', country: '벨기에/Belgium', region: 'eu', sector: 'Battery recycling & materials' }
     ];
 
 
@@ -3188,6 +3353,8 @@
       <li><a href="../software/korea_software_map.html">한국 IT·소프트웨어 투자 지도</a> · <a href="../software/korea_software_map.html?lang=en" hreflang="en">Korea IT &amp; Software Map</a></li>
       <li><a href="../holdings/korea_holdings_map.html">한국 지주회사 투자 지도</a> · <a href="../holdings/korea_holdings_map.html?lang=en" hreflang="en">Korea Holdings Map</a></li>
       <li><a href="../telecom/korea_telecom_map.html">한국 통신 투자 지도</a> · <a href="../telecom/korea_telecom_map.html?lang=en" hreflang="en">Korea Telecom Map</a></li>
+      <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
+      <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
       <li><a href="../metal/korea_metal_map.html">한국 철강·금속·기계 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel, Metals &amp; Machinery Map</a></li>
       </ul>

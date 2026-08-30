@@ -43,6 +43,7 @@ const REQUIRED_SECTORS = [
   'software',
   'holdings',
   'telecom',
+  'chemical',
   'elec',
   'metal',
 ];

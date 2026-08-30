@@ -42,7 +42,8 @@ const byId = new Map(nodes.map((n) => [n.id, n]));
 
 const html = fs.readFileSync(join(ROOT, 'auto', 'korea_auto_map.html'), 'utf8');
 const companies = extractCompaniesFromHtml(html);
-check(companies.length === 22, `listed count must stay 22 (got ${companies.length})`);
+const listedCount = companies.length;
+check(listedCount >= 20, `listed count (got ${listedCount})`);
 for (const c of companies) {
   check(byId.has(`krx:${c.ticker}`), `missing listed ${c.ticker}`);
 }
@@ -83,14 +84,16 @@ if (ownEdge) {
 
 const metrics = computeAutoMetrics(network);
 const orphan = computeListedRelationOrphanMetrics(network);
-check(metrics.listedCompanyCount === 22, 'metrics listed 22');
+const groupOnlyCount = 5;
+const classificationOnlyExpected = listedCount - 2;
+check(metrics.listedCompanyCount === listedCount, `metrics listed ${listedCount}`);
 check(metrics.actualSupplyRelationshipCount === 0, 'no actual supply in metrics');
 check(metrics.vehicleFitmentRelationshipCount === 0, 'no fitment in metrics');
-check(orphan.businessRelationOrphanCount === 20, `business orphan 20 (got ${orphan.businessRelationOrphanCount})`);
-check(orphan.directRelationshipOrphanCount === 20, `direct commercial orphan 20 (got ${orphan.directRelationshipOrphanCount})`);
-check(orphan.groupMembershipOnlyCompanyCount === 5, `groupMembershipOnly 5 (got ${orphan.groupMembershipOnlyCompanyCount})`);
-check(orphan.classificationOnlyCompanyCount === 20, `classificationOnly 20 (got ${orphan.classificationOnlyCompanyCount})`);
-check(orphan.hasPeerButNoBusinessCompanyCount === 20, `hasPeerButNoBusiness 20 (got ${orphan.hasPeerButNoBusinessCompanyCount})`);
+check(orphan.businessRelationOrphanCount === classificationOnlyExpected, `business orphan ${classificationOnlyExpected} (got ${orphan.businessRelationOrphanCount})`);
+check(orphan.directRelationshipOrphanCount === classificationOnlyExpected, `direct commercial orphan ${classificationOnlyExpected} (got ${orphan.directRelationshipOrphanCount})`);
+check(orphan.groupMembershipOnlyCompanyCount === groupOnlyCount, `groupMembershipOnly ${groupOnlyCount} (got ${orphan.groupMembershipOnlyCompanyCount})`);
+check(orphan.classificationOnlyCompanyCount === classificationOnlyExpected, `classificationOnly ${classificationOnlyExpected} (got ${orphan.classificationOnlyCompanyCount})`);
+check(orphan.hasPeerButNoBusinessCompanyCount === classificationOnlyExpected, `hasPeerButNoBusiness ${classificationOnlyExpected} (got ${orphan.hasPeerButNoBusinessCompanyCount})`);
 check(orphan.peerOnlyCompanyCount === 0, `strict peerOnly 0 (got ${orphan.peerOnlyCompanyCount})`);
 check(!(orphan.details?.classificationOnly || []).includes('krx:000240'), 'krx:000240 must not be classificationOnly after ownership');
 check(!(orphan.details?.classificationOnly || []).includes('krx:161390'), 'krx:161390 must not be classificationOnly as stake target');

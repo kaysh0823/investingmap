@@ -840,42 +840,42 @@
         "krx:015760",
         "krx:000500",
         "krx:036460",
-        "krx:229640",
         "krx:060370",
-        "krx:033100",
+        "krx:229640",
+        "krx:006340",
         "krx:071320",
-        "krx:006340"
+        "krx:033100"
       ],
       "directRelationshipOrphans": [
         "krx:015760",
         "krx:000500",
         "krx:036460",
-        "krx:229640",
         "krx:060370",
-        "krx:033100",
+        "krx:229640",
+        "krx:006340",
         "krx:071320",
-        "krx:006340"
+        "krx:033100"
       ],
       "classificationOnly": [
         "krx:015760",
         "krx:000500",
         "krx:036460",
-        "krx:229640",
         "krx:060370",
-        "krx:033100",
+        "krx:229640",
+        "krx:006340",
         "krx:071320",
-        "krx:006340"
+        "krx:033100"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
         "krx:015760",
         "krx:000500",
         "krx:036460",
-        "krx:229640",
         "krx:060370",
-        "krx:033100",
+        "krx:229640",
+        "krx:006340",
         "krx:071320",
-        "krx:006340"
+        "krx:033100"
       ],
       "hasPeerButNoBusiness": [
         "krx:015760",
@@ -885,10 +885,10 @@
       "peerOnly": [],
       "structuralOnly": [
         "krx:000500",
-        "krx:229640",
         "krx:060370",
-        "krx:071320",
-        "krx:006340"
+        "krx:229640",
+        "krx:006340",
+        "krx:071320"
       ]
     }
   },

@@ -85,10 +85,10 @@
   "after": {
     "reportedBusiness": 0,
     "statusCounts": {
-      "reference": 73,
+      "reference": 78,
       "inferred": 9,
       "ended": 2,
-      "peer": 29
+      "peer": 34
     },
     "evidenceFieldCoverage": 0,
     "directEvidenceCoverage": 0,

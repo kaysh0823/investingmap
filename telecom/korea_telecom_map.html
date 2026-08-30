@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 통신 투자 지도",
     "url": "https://www.investingmap.kr/telecom/korea_telecom_map.html",
-    "numberOfItems": 11,
+    "numberOfItems": 10,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -191,20 +191,14 @@
       {
         "@type": "ListItem",
         "position": 9,
-        "name": "오이솔루션 (138080, KOSDAQ)",
-        "url": "https://www.investingmap.kr/telecom/korea_telecom_map.html#ticker-138080"
+        "name": "현대퓨처넷 (126560, KOSPI)",
+        "url": "https://www.investingmap.kr/telecom/korea_telecom_map.html#ticker-126560"
       },
       {
         "@type": "ListItem",
         "position": 10,
         "name": "빛과전자 (069540, KOSDAQ)",
         "url": "https://www.investingmap.kr/telecom/korea_telecom_map.html#ticker-069540"
-      },
-      {
-        "@type": "ListItem",
-        "position": 11,
-        "name": "에치에프알 (230240, KOSDAQ)",
-        "url": "https://www.investingmap.kr/telecom/korea_telecom_map.html#ticker-230240"
       }
     ]
   }
@@ -866,7 +860,7 @@
     .node-dim {
       opacity: .15
     }
-    /* investingmap-mobile-table-v2 — base */
+    /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -943,6 +937,133 @@
       .table-container {
         padding: 10px 12px
       }
+      /* investingmap-mobile-table-v2 ??mobile layout */
+      .tabs {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      /* Natural page scroll: no fixed viewport height / inner Y scroll */
+      #tab-table.tab-content.active {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible
+      }
+
+      #tab-table .table-container {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding-bottom: 8px
+      }
+
+      body.im-tab-table #tab-table .table-container {
+        padding: 4px 8px 0
+      }
+
+      #tab-table .filter-bar {
+        flex-shrink: 0;
+        z-index: 30;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      body.im-tab-table #tab-table .filter-bar {
+        padding-bottom: 6px;
+        gap: 6px
+      }
+
+      /* Value-chain chips: single row + horizontal scroll */
+      #tab-table .filter-row-chain {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-width: 0;
+        width: 100%
+      }
+
+      #tab-table .filter-row-chain .filter-label {
+        flex-shrink: 0
+      }
+
+      #tab-table .filter-row-chain #chain-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none
+      }
+
+      #tab-table .filter-row-chain #chain-chips::-webkit-scrollbar {
+        display: none
+      }
+
+      #tab-table .filter-row-chain .filter-chip {
+        flex-shrink: 0
+      }
+
+      #tab-table .search-box {
+        padding: 5px 10px;
+        font-size: 12px;
+        min-height: 0;
+        height: auto
+      }
+
+      #tab-table .tbl-wrap {
+        flex: none;
+        min-height: 0;
+        max-height: none;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch
+      }
+
+      #tab-table .note {
+        display: none
+      }
+
+      body.im-tab-table thead th {
+        padding: 6px 5px;
+        font-size: 8px
+      }
+
+      body.im-tab-table td {
+        padding: 5px 5px;
+        font-size: 11px;
+        line-height: 1.3
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 108px;
+        max-width: 132px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
+      body.im-tab-table tbody td:first-child .company-name {
+        font-size: 11px;
+        line-height: 1.25
+      }
+
       /* investingmap-mobile-table-v2 — mobile layout */
       .tabs {
         position: -webkit-sticky;
@@ -1872,8 +1993,8 @@
     </button>
     <p id="hdr-subtitle">통신서비스, 무선장비, 광통신, 위성통신 관련 국내 상장사와 글로벌 peer</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>11</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>3</span> · KOSDAQ <span>8</span></div>
+      <div class="badge" id="badge-total">Total <span>10</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>4</span> · KOSDAQ <span>6</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1942,7 +2063,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">11</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">10</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1988,7 +2109,7 @@
       <td class="quote-cell">51,400</td>
       <td class="quote-cell">53.6%</td>
       <td class="quote-cell">78.0</td>
-      <td class="mcap-cell">22.12조원</td>
+      <td class="mcap-cell">21.18조원</td>
       <td class="fin-cell">56.44</td>
       <td class="fin-cell">1.71</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2011,7 +2132,7 @@
       <td class="quote-cell">48,100</td>
       <td class="quote-cell">30%</td>
       <td class="quote-cell">55.2</td>
-      <td class="mcap-cell">13.81조원</td>
+      <td class="mcap-cell">13.74조원</td>
       <td class="fin-cell">7.70</td>
       <td class="fin-cell">0.75</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2034,7 +2155,7 @@
       <td class="quote-cell">13,600</td>
       <td class="quote-cell">27.3%</td>
       <td class="quote-cell">53.8</td>
-      <td class="mcap-cell">6.77조원</td>
+      <td class="mcap-cell">6.37조원</td>
       <td class="fin-cell">13.06</td>
       <td class="fin-cell">0.77</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2057,7 +2178,7 @@
       <td class="quote-cell">1,049</td>
       <td class="quote-cell">43.5%</td>
       <td class="quote-cell">72.6</td>
-      <td class="mcap-cell">2.96조원</td>
+      <td class="mcap-cell">2.22조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">39.34</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2080,7 +2201,7 @@
       <td class="quote-cell">24,300</td>
       <td class="quote-cell">21.9%</td>
       <td class="quote-cell">23.8</td>
-      <td class="mcap-cell">2.04조원</td>
+      <td class="mcap-cell">1.24조원</td>
       <td class="fin-cell">68.08</td>
       <td class="fin-cell">5.76</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2103,7 +2224,7 @@
       <td class="quote-cell">11,500</td>
       <td class="quote-cell">11.1%</td>
       <td class="quote-cell">9.5</td>
-      <td class="mcap-cell">1.17조원</td>
+      <td class="mcap-cell">0.62조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">8.61</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2126,7 +2247,7 @@
       <td class="quote-cell">6,090</td>
       <td class="quote-cell">19%</td>
       <td class="quote-cell">19.9</td>
-      <td class="mcap-cell">0.78조원</td>
+      <td class="mcap-cell">0.54조원</td>
       <td class="fin-cell">20.97</td>
       <td class="fin-cell">2.17</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2149,7 +2270,7 @@
       <td class="quote-cell">10,900</td>
       <td class="quote-cell">36.4%</td>
       <td class="quote-cell">34.0</td>
-      <td class="mcap-cell">0.68조원</td>
+      <td class="mcap-cell">0.50조원</td>
       <td class="fin-cell">8.26</td>
       <td class="fin-cell">1.28</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2158,28 +2279,28 @@
       <td class="products-cell">이동통신 중계기·네트워크 장비</td>
       <td><div class="partners-list">Ericsson</div></td>
     </tr>
-          <tr data-ticker="138080">
-      <td><div class="company-name">오이솔루션</div><div class="company-name-sub">OE Solutions</div></td>
-      <td><span class="ticker">138080</span></td>
+          <tr data-ticker="126560">
+      <td><div class="company-name">현대퓨처넷</div><div class="company-name-sub">Hyundai Futurenet</div></td>
+      <td><span class="ticker">126560</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">23,400</td>
-      <td class="quote-cell ret-cell">-6.21%</td>
-      <td class="quote-cell ret-cell">+49.04%</td>
-      <td class="quote-cell ret-cell">-15.22%</td>
-      <td class="quote-cell ret-cell">-34.73%</td>
-      <td class="quote-cell ret-cell">+106.53%</td>
-      <td class="quote-cell">57,900</td>
-      <td class="quote-cell">9,080</td>
-      <td class="quote-cell">29.3%</td>
-      <td class="quote-cell">45.8</td>
-      <td class="mcap-cell">0.40조원</td>
-      <td class="fin-cell">—</td>
-      <td class="fin-cell">5.65</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">광통신</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">광트랜시버</td>
-      <td class="products-cell">무선백홀·데이터센터용 광모듈</td>
-      <td><div class="partners-list">Ciena</div></td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">+1.22%</td>
+      <td class="quote-cell ret-cell">+12.39%</td>
+      <td class="quote-cell ret-cell">+9.60%</td>
+      <td class="quote-cell ret-cell">+1.07%</td>
+      <td class="quote-cell ret-cell">+5.25%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">63.7</td>
+      <td class="mcap-cell">0.36조원</td>
+      <td class="fin-cell">45.29</td>
+      <td class="fin-cell">0.47</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">통신서비스</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">디지털사이니지·방송통신</td>
+      <td class="products-cell">디지털사이니지·미디어·방송통신</td>
+      <td><div class="partners-list">Verizon, Deutsche Telekom, Ericsson</div></td>
     </tr>
           <tr data-ticker="069540">
       <td><div class="company-name">빛과전자</div><div class="company-name-sub">LIGHTRON FIBER-OPTIC DEVICES</div></td>
@@ -2195,7 +2316,7 @@
       <td class="quote-cell">592</td>
       <td class="quote-cell">31.1%</td>
       <td class="quote-cell">85.3</td>
-      <td class="mcap-cell">0.36조원</td>
+      <td class="mcap-cell">0.33조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">3.49</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2203,29 +2324,6 @@
       <td style="font-size:12px;color:var(--text-muted)">광모듈·광부품</td>
       <td class="products-cell">광트랜시버·광통신 부품</td>
       <td><div class="partners-list">Ciena</div></td>
-    </tr>
-          <tr data-ticker="230240">
-      <td><div class="company-name">에치에프알</div><div class="company-name-sub">HFR, Inc.</div></td>
-      <td><span class="ticker">230240</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">12,860</td>
-      <td class="quote-cell ret-cell">-5.86%</td>
-      <td class="quote-cell ret-cell">-10.32%</td>
-      <td class="quote-cell ret-cell">-44.09%</td>
-      <td class="quote-cell ret-cell">-54.96%</td>
-      <td class="quote-cell ret-cell">-12.64%</td>
-      <td class="quote-cell">39,700</td>
-      <td class="quote-cell">11,250</td>
-      <td class="quote-cell">5.7%</td>
-      <td class="quote-cell">4.0</td>
-      <td class="mcap-cell">0.35조원</td>
-      <td class="fin-cell">—</td>
-      <td class="fin-cell">2.40</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">무선장비</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">유무선 액세스 장비</td>
-      <td class="products-cell">5G 프론트홀·특화망·광전송 장비</td>
-      <td><div class="partners-list">Ericsson, Ciena</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
           </tbody>
@@ -2311,9 +2409,9 @@
     "ko": {
         "title": "🇰🇷 한국 통신 투자 지도",
         "subtitle": "통신서비스, 무선장비, 광통신, 위성통신 관련 국내 상장사와 글로벌 peer",
-        "badgeTotal": "총 <span>11</span>개 상장사",
-        "badgeMarket": "KOSPI <span>3</span>사 · KOSDAQ <span>8</span>사",
-        "dataAsof": "업데이트 기준일: 2026년 6월 15일",
+        "badgeTotal": "총 <span>9</span>개 상장사",
+        "badgeMarket": "KOSPI <span>3</span>사 · KOSDAQ <span>6</span>사",
+        "dataAsof": "업데이트 기준일: 2026년 8월 28일",
         "tabHeatmap": "🔥 섹터 히트맵",
         "tabMomentum": "📊 모멘텀 매트릭스",
         "momentumHint": "RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률",
@@ -2328,7 +2426,7 @@
         "momentumPosition": "주가 위치",
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
         "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
-        "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
+        "heatmapHint": "칸 크기 = 시가총액 · 색 = 일일 등락률",
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크 (수정중)",
         "thLast": "현재가",
@@ -2401,9 +2499,9 @@
     "en": {
         "title": "🇰🇷 Korea Telecom Map",
         "subtitle": "Listed Korean telecom services, wireless, optical and satellite communications companies",
-        "badgeTotal": "<span>11</span> listings",
-        "badgeMarket": "KOSPI <span>3</span> · KOSDAQ <span>8</span>",
-        "dataAsof": "Data as of: June 15, 2026",
+        "badgeTotal": "<span>9</span> listings",
+        "badgeMarket": "KOSPI <span>3</span> · KOSDAQ <span>6</span>",
+        "dataAsof": "Data as of: August 28, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
         "tabMomentum": "📊 Momentum matrix",
         "momentumHint": "RS × 52W position · size = daily turnover · color = 1-day return",
@@ -2498,77 +2596,70 @@
         id: 'sk_telecom', name: 'SK텔레콤', nameEn: 'SK Telecom', ticker: '017670', market: 'KOSPI', chain: '통신서비스',
         semType: '이동통신·AI 서비스', semTypeEn: 'Mobile telecom & AI services',
         products: '5G 이동통신·데이터센터·AI 서비스', productsEn: '5G mobile, data centers and AI services',
-        revenue: '22.12조원', mcapWon: 22123375459000, per: 56.44, pbr: 1.71, revTier: 3, partners: ['verizon', 'deutsche']
+        revenue: '21.18조원', mcapWon: 21178299225800, per: 56.44, pbr: 1.71, revTier: 3, partners: ['verizon', 'deutsche']
       },
 
       {
         id: 'kt', name: 'KT', nameEn: 'KTCorporation', ticker: '030200', market: 'KOSPI', chain: '통신서비스',
         semType: '유무선통신·클라우드', semTypeEn: 'Fixed/mobile telecom & cloud',
         products: '5G·초고속인터넷·IDC·클라우드', productsEn: '5G, broadband, data centers and cloud',
-        revenue: '13.81조원', mcapWon: 13810788338000, per: 7.7, pbr: 0.75, revTier: 2, partners: ['verizon', 'deutsche']
+        revenue: '13.74조원', mcapWon: 13735181832500, per: 7.7, pbr: 0.75, revTier: 2, partners: ['verizon', 'deutsche']
       },
 
       {
         id: 'lg_uplus', name: 'LG유플러스', nameEn: 'LG Uplus', ticker: '032640', market: 'KOSPI', chain: '통신서비스',
         semType: '이동통신·미디어', semTypeEn: 'Mobile telecom & media',
         products: '5G·초고속인터넷·IPTV·기업통신', productsEn: '5G, broadband, IPTV and enterprise telecom',
-        revenue: '6.77조원', mcapWon: 6769622325400, per: 13.06, pbr: 0.77, revTier: 2, partners: ['verizon', 'deutsche']
+        revenue: '6.37조원', mcapWon: 6374904534640, per: 13.06, pbr: 0.77, revTier: 2, partners: ['verizon', 'deutsche']
       },
 
       {
         id: 'taihan_fiber', name: '대한광통신', nameEn: 'Taihan Fiberoptics', ticker: '010170', market: 'KOSDAQ', chain: '광통신',
         semType: '광섬유·광케이블', semTypeEn: 'Optical fiber & cable',
         products: '광섬유·광케이블·광통신 소재', productsEn: 'Optical fiber, cable and materials',
-        revenue: '2.96조원', mcapWon: 2960446966400, per: null, pbr: 39.34, revTier: 2, partners: ['ciena']
+        revenue: '2.22조원', mcapWon: 2224999794600, per: null, pbr: 39.34, revTier: 2, partners: ['ciena']
       },
 
       {
         id: 'rfhic', name: 'RFHIC', nameEn: 'RFHIC CORPORATION', ticker: '218410', market: 'KOSDAQ', chain: '무선장비',
         semType: 'GaN RF 전력증폭기', semTypeEn: 'GaN RF power amplifiers',
         products: '통신·방산용 GaN 트랜지스터·증폭기', productsEn: 'GaN transistors and amplifiers for telecom and defense',
-        revenue: '2.04조원', mcapWon: 2044615034000, per: 68.08, pbr: 5.76, revTier: 2, partners: ['ericsson']
+        revenue: '1.24조원', mcapWon: 1243730685600, per: 68.08, pbr: 5.76, revTier: 2, partners: ['ericsson']
       },
 
       {
         id: 'kmw', name: '케이엠더블유', nameEn: 'KMW CO. LTD', ticker: '032500', market: 'KOSDAQ', chain: '무선장비',
         semType: '기지국 RF 장비', semTypeEn: 'Base-station RF equipment',
         products: '안테나·필터·RRH 등 5G 장비', productsEn: 'Antennas, filters, RRH and 5G equipment',
-        revenue: '1.17조원', mcapWon: 1166600532650, per: null, pbr: 8.61, revTier: 2, partners: ['ericsson']
+        revenue: '0.62조원', mcapWon: 618530336660, per: null, pbr: 8.61, revTier: 1, partners: ['ericsson']
       },
 
       {
         id: 'solid', name: '쏠리드', nameEn: 'Solid, Inc.', ticker: '050890', market: 'KOSDAQ', chain: '무선장비',
         semType: '인빌딩·중계기', semTypeEn: 'In-building coverage & repeaters',
         products: 'DAS·중계기·Open RAN 관련 장비', productsEn: 'DAS, repeaters and Open RAN equipment',
-        revenue: '0.78조원', mcapWon: 777076069860, per: 20.97, pbr: 2.17, revTier: 1, partners: ['ericsson']
+        revenue: '0.54조원', mcapWon: 540733152600, per: 20.97, pbr: 2.17, revTier: 1, partners: ['ericsson']
       },
 
       {
         id: 'samji', name: '삼지전자', nameEn: 'Samji Electronics', ticker: '037460', market: 'KOSDAQ', chain: '무선장비',
         semType: '통신장비·중계기', semTypeEn: 'Telecom equipment & repeaters',
         products: '이동통신 중계기·네트워크 장비', productsEn: 'Mobile repeaters and network equipment',
-        revenue: '0.68조원', mcapWon: 678034589100, per: 8.26, pbr: 1.28, revTier: 1, partners: ['ericsson']
+        revenue: '0.50조원', mcapWon: 496083068800, per: 8.26, pbr: 1.28, revTier: 1, partners: ['ericsson']
       },
 
       {
-        id: 'oe_solutions', name: '오이솔루션', nameEn: 'OE Solutions', ticker: '138080', market: 'KOSDAQ', chain: '광통신',
-        semType: '광트랜시버', semTypeEn: 'Optical transceivers',
-        products: '무선백홀·데이터센터용 광모듈', productsEn: 'Optical modules for wireless backhaul and data centers',
-        revenue: '0.40조원', mcapWon: 403514910800, per: null, pbr: 5.65, revTier: 1, partners: ['ciena']
+        id: 'telecom_hyundai_futurenet', name: '현대퓨처넷', nameEn: 'Hyundai Futurenet', ticker: '126560', market: 'KOSPI', chain: '통신서비스',
+        semType: '디지털사이니지·방송통신', semTypeEn: 'Digital signage & broadcast telecom',
+        products: '디지털사이니지·미디어·방송통신', productsEn: 'Digital signage, media and broadcast telecom',
+        revenue: '0.36조원', mcapWon: 361455442400, per: 45.29, pbr: 0.47, revTier: 1, partners: ['verizon', 'deutsche', 'ericsson']
       },
 
       {
         id: 'lighttron', name: '빛과전자', nameEn: 'LIGHTRON FIBER-OPTIC DEVICES', ticker: '069540', market: 'KOSDAQ', chain: '광통신',
         semType: '광모듈·광부품', semTypeEn: 'Optical modules & components',
         products: '광트랜시버·광통신 부품', productsEn: 'Optical transceivers and components',
-        revenue: '0.36조원', mcapWon: 359102173965, per: null, pbr: 3.49, revTier: 1, partners: ['ciena']
-      },
-
-      {
-        id: 'hfr', name: '에치에프알', nameEn: 'HFR, Inc.', ticker: '230240', market: 'KOSDAQ', chain: '무선장비',
-        semType: '유무선 액세스 장비', semTypeEn: 'Fixed and wireless access equipment',
-        products: '5G 프론트홀·특화망·광전송 장비', productsEn: '5G fronthaul, private networks and optical transport',
-        revenue: '0.35조원', mcapWon: 351357600000, per: null, pbr: 2.4, revTier: 1, partners: ['ericsson', 'ciena']
+        revenue: '0.33조원', mcapWon: 330187258210, per: null, pbr: 3.49, revTier: 1, partners: ['ciena']
       }
 
     ];
@@ -3145,6 +3236,8 @@
       <li><a href="../construction/korea_construction_map.html">한국 건설 투자 지도</a> · <a href="../construction/korea_construction_map.html?lang=en" hreflang="en">Korea Construction Sector Map</a></li>
       <li><a href="../software/korea_software_map.html">한국 IT·소프트웨어 투자 지도</a> · <a href="../software/korea_software_map.html?lang=en" hreflang="en">Korea IT &amp; Software Map</a></li>
       <li><a href="../holdings/korea_holdings_map.html">한국 지주회사 투자 지도</a> · <a href="../holdings/korea_holdings_map.html?lang=en" hreflang="en">Korea Holdings Map</a></li>
+      <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
+      <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
       <li><a href="../metal/korea_metal_map.html">한국 철강·금속·기계 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel, Metals &amp; Machinery Map</a></li>
       </ul>

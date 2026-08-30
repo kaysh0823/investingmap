@@ -179,38 +179,38 @@
       {
         "@type": "ListItem",
         "position": 7,
-        "name": "에스엘 (005850, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-005850"
-      },
-      {
-        "@type": "ListItem",
-        "position": 8,
-        "name": "HL만도 (204320, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-204320"
-      },
-      {
-        "@type": "ListItem",
-        "position": 9,
-        "name": "한국앤컴퍼니 (000240, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-000240"
-      },
-      {
-        "@type": "ListItem",
-        "position": 10,
         "name": "DN오토모티브 (007340, KOSPI)",
         "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-007340"
       },
       {
         "@type": "ListItem",
+        "position": 8,
+        "name": "에스엘 (005850, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-005850"
+      },
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "name": "HL만도 (204320, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-204320"
+      },
+      {
+        "@type": "ListItem",
+        "position": 10,
+        "name": "한국앤컴퍼니 (000240, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-000240"
+      },
+      {
+        "@type": "ListItem",
         "position": 11,
-        "name": "현대위아 (011210, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-011210"
+        "name": "금호타이어 (073240, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-073240"
       },
       {
         "@type": "ListItem",
         "position": 12,
-        "name": "금호타이어 (073240, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-073240"
+        "name": "현대위아 (011210, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-011210"
       },
       {
         "@type": "ListItem",
@@ -221,14 +221,14 @@
       {
         "@type": "ListItem",
         "position": 14,
-        "name": "한국단자 (025540, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-025540"
+        "name": "넥센타이어 (002350, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-002350"
       },
       {
         "@type": "ListItem",
         "position": 15,
-        "name": "넥센타이어 (002350, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-002350"
+        "name": "한국단자 (025540, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-025540"
       },
       {
         "@type": "ListItem",
@@ -245,20 +245,20 @@
       {
         "@type": "ListItem",
         "position": 18,
+        "name": "쏘카 (403550, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-403550"
+      },
+      {
+        "@type": "ListItem",
+        "position": 19,
         "name": "명신산업 (009900, KOSPI)",
         "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-009900"
       },
       {
         "@type": "ListItem",
-        "position": 19,
+        "position": 20,
         "name": "엠씨넥스 (097520, KOSPI)",
         "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-097520"
-      },
-      {
-        "@type": "ListItem",
-        "position": 20,
-        "name": "화신 (010690, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-010690"
       },
       {
         "@type": "ListItem",
@@ -269,8 +269,8 @@
       {
         "@type": "ListItem",
         "position": 22,
-        "name": "대원강업 (000430, KOSPI)",
-        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-000430"
+        "name": "케이카 (381970, KOSPI)",
+        "url": "https://www.investingmap.kr/auto/korea_auto_map.html#ticker-381970"
       }
     ]
   }
@@ -932,7 +932,7 @@
     .node-dim {
       opacity: .15
     }
-    /* investingmap-mobile-table-v2 — base */
+    /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -1009,6 +1009,133 @@
       .table-container {
         padding: 10px 12px
       }
+      /* investingmap-mobile-table-v2 ??mobile layout */
+      .tabs {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      /* Natural page scroll: no fixed viewport height / inner Y scroll */
+      #tab-table.tab-content.active {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible
+      }
+
+      #tab-table .table-container {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding-bottom: 8px
+      }
+
+      body.im-tab-table #tab-table .table-container {
+        padding: 4px 8px 0
+      }
+
+      #tab-table .filter-bar {
+        flex-shrink: 0;
+        z-index: 30;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      body.im-tab-table #tab-table .filter-bar {
+        padding-bottom: 6px;
+        gap: 6px
+      }
+
+      /* Value-chain chips: single row + horizontal scroll */
+      #tab-table .filter-row-chain {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-width: 0;
+        width: 100%
+      }
+
+      #tab-table .filter-row-chain .filter-label {
+        flex-shrink: 0
+      }
+
+      #tab-table .filter-row-chain #chain-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none
+      }
+
+      #tab-table .filter-row-chain #chain-chips::-webkit-scrollbar {
+        display: none
+      }
+
+      #tab-table .filter-row-chain .filter-chip {
+        flex-shrink: 0
+      }
+
+      #tab-table .search-box {
+        padding: 5px 10px;
+        font-size: 12px;
+        min-height: 0;
+        height: auto
+      }
+
+      #tab-table .tbl-wrap {
+        flex: none;
+        min-height: 0;
+        max-height: none;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch
+      }
+
+      #tab-table .note {
+        display: none
+      }
+
+      body.im-tab-table thead th {
+        padding: 6px 5px;
+        font-size: 8px
+      }
+
+      body.im-tab-table td {
+        padding: 5px 5px;
+        font-size: 11px;
+        line-height: 1.3
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 108px;
+        max-width: 132px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
+      body.im-tab-table tbody td:first-child .company-name {
+        font-size: 11px;
+        line-height: 1.25
+      }
+
       /* investingmap-mobile-table-v2 — mobile layout */
       .tabs {
         position: -webkit-sticky;
@@ -2054,7 +2181,7 @@
       <td class="quote-cell">212,000</td>
       <td class="quote-cell">32.8%</td>
       <td class="quote-cell">25.0</td>
-      <td class="mcap-cell">124.29조원</td>
+      <td class="mcap-cell">81.80조원</td>
       <td class="fin-cell">16.82</td>
       <td class="fin-cell">1.38</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2077,7 +2204,7 @@
       <td class="quote-cell">100,000</td>
       <td class="quote-cell">24.9%</td>
       <td class="quote-cell">25.2</td>
-      <td class="mcap-cell">65.12조원</td>
+      <td class="mcap-cell">49.97조원</td>
       <td class="fin-cell">8.61</td>
       <td class="fin-cell">1.06</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2100,7 +2227,7 @@
       <td class="quote-cell">283,000</td>
       <td class="quote-cell">31.1%</td>
       <td class="quote-cell">33.6</td>
-      <td class="mcap-cell">55.07조원</td>
+      <td class="mcap-cell">40.46조원</td>
       <td class="fin-cell">14.86</td>
       <td class="fin-cell">1.10</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2123,7 +2250,7 @@
       <td class="quote-cell">147,600</td>
       <td class="quote-cell">29.2%</td>
       <td class="quote-cell">43.4</td>
-      <td class="mcap-cell">18.76조원</td>
+      <td class="mcap-cell">11.41조원</td>
       <td class="fin-cell">102.80</td>
       <td class="fin-cell">10.15</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2146,7 +2273,7 @@
       <td class="quote-cell">37,650</td>
       <td class="quote-cell">70.6%</td>
       <td class="quote-cell">54.5</td>
-      <td class="mcap-cell">8.92조원</td>
+      <td class="mcap-cell">8.23조원</td>
       <td class="fin-cell">8.06</td>
       <td class="fin-cell">0.73</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2169,7 +2296,7 @@
       <td class="quote-cell">2,755</td>
       <td class="quote-cell">23.1%</td>
       <td class="quote-cell">39.9</td>
-      <td class="mcap-cell">4.82조원</td>
+      <td class="mcap-cell">3.58조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.28</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2177,6 +2304,29 @@
       <td style="font-size:12px;color:var(--text-muted)">열관리·공조</td>
       <td class="products-cell">공조·열관리·컴프레서</td>
       <td><div class="partners-list">DENSO, Mahindra, Volkswagen</div></td>
+    </tr>
+          <tr data-ticker="007340">
+      <td><div class="company-name">DN오토모티브</div><div class="company-name-sub">DN Automotive</div></td>
+      <td><span class="ticker">007340</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">47,200</td>
+      <td class="quote-cell ret-cell">+1.72%</td>
+      <td class="quote-cell ret-cell">+16.98%</td>
+      <td class="quote-cell ret-cell">+12.25%</td>
+      <td class="quote-cell ret-cell">+71.01%</td>
+      <td class="quote-cell ret-cell">+103.89%</td>
+      <td class="quote-cell">67,500</td>
+      <td class="quote-cell">21,550</td>
+      <td class="quote-cell">55.8%</td>
+      <td class="quote-cell">81.6</td>
+      <td class="mcap-cell">2.76조원</td>
+      <td class="fin-cell">7.41</td>
+      <td class="fin-cell">1.04</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">부품</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">배터리·부품</td>
+      <td class="products-cell">배터리·부품·소재</td>
+      <td><div class="partners-list">Bosch, Continental</div></td>
     </tr>
           <tr data-ticker="005850">
       <td><div class="company-name">에스엘</div><div class="company-name-sub">SL Corporation</div></td>
@@ -2192,7 +2342,7 @@
       <td class="quote-cell">32,650</td>
       <td class="quote-cell">42.2%</td>
       <td class="quote-cell">25.0</td>
-      <td class="mcap-cell">3.14조원</td>
+      <td class="mcap-cell">2.43조원</td>
       <td class="fin-cell">10.03</td>
       <td class="fin-cell">1.22</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2215,7 +2365,7 @@
       <td class="quote-cell">32,150</td>
       <td class="quote-cell">38.7%</td>
       <td class="quote-cell">48.6</td>
-      <td class="mcap-cell">3.05조원</td>
+      <td class="mcap-cell">2.36조원</td>
       <td class="fin-cell">30.52</td>
       <td class="fin-cell">1.12</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2238,7 +2388,7 @@
       <td class="quote-cell">21,550</td>
       <td class="quote-cell">21.5%</td>
       <td class="quote-cell">48.7</td>
-      <td class="mcap-cell">2.59조원</td>
+      <td class="mcap-cell">2.35조원</td>
       <td class="fin-cell">7.45</td>
       <td class="fin-cell">0.54</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2246,52 +2396,6 @@
       <td style="font-size:12px;color:var(--text-muted)">타이어 지주</td>
       <td class="products-cell">한국타이어 등 계열</td>
       <td><div class="partners-list">Michelin, Bridgestone</div></td>
-    </tr>
-          <tr data-ticker="007340">
-      <td><div class="company-name">DN오토모티브</div><div class="company-name-sub">DN Automotive</div></td>
-      <td><span class="ticker">007340</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">47,200</td>
-      <td class="quote-cell ret-cell">+1.72%</td>
-      <td class="quote-cell ret-cell">+16.98%</td>
-      <td class="quote-cell ret-cell">+12.25%</td>
-      <td class="quote-cell ret-cell">+71.01%</td>
-      <td class="quote-cell ret-cell">+103.89%</td>
-      <td class="quote-cell">67,500</td>
-      <td class="quote-cell">21,550</td>
-      <td class="quote-cell">55.8%</td>
-      <td class="quote-cell">81.6</td>
-      <td class="mcap-cell">2.36조원</td>
-      <td class="fin-cell">7.41</td>
-      <td class="fin-cell">1.04</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">부품</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">배터리·부품</td>
-      <td class="products-cell">배터리·부품·소재</td>
-      <td><div class="partners-list">Bosch, Continental</div></td>
-    </tr>
-          <tr data-ticker="011210">
-      <td><div class="company-name">현대위아</div><div class="company-name-sub">Hyundai Wia</div></td>
-      <td><span class="ticker">011210</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">59,700</td>
-      <td class="quote-cell ret-cell">+0.67%</td>
-      <td class="quote-cell ret-cell">+2.58%</td>
-      <td class="quote-cell ret-cell">-18.11%</td>
-      <td class="quote-cell ret-cell">-28.50%</td>
-      <td class="quote-cell ret-cell">+8.15%</td>
-      <td class="quote-cell">112,600</td>
-      <td class="quote-cell">46,950</td>
-      <td class="quote-cell">19.4%</td>
-      <td class="quote-cell">26.2</td>
-      <td class="mcap-cell">2.09조원</td>
-      <td class="fin-cell">20.69</td>
-      <td class="fin-cell">0.57</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">부품</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">파워트레인·공작</td>
-      <td class="products-cell">엔진·변속기·공작기계</td>
-      <td><div class="partners-list">DENSO, Bosch</div></td>
     </tr>
           <tr data-ticker="073240">
       <td><div class="company-name">금호타이어</div><div class="company-name-sub">Kumho Tire</div></td>
@@ -2307,7 +2411,7 @@
       <td class="quote-cell">4,220</td>
       <td class="quote-cell">67.8%</td>
       <td class="quote-cell">81.1</td>
-      <td class="mcap-cell">1.38조원</td>
+      <td class="mcap-cell">2.11조원</td>
       <td class="fin-cell">3.96</td>
       <td class="fin-cell">0.68</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2315,6 +2419,29 @@
       <td style="font-size:12px;color:var(--text-muted)">타이어</td>
       <td class="products-cell">승용·상용 타이어</td>
       <td><div class="partners-list">Michelin, Bridgestone</div></td>
+    </tr>
+          <tr data-ticker="011210">
+      <td><div class="company-name">현대위아</div><div class="company-name-sub">Hyundai Wia</div></td>
+      <td><span class="ticker">011210</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">59,700</td>
+      <td class="quote-cell ret-cell">+0.67%</td>
+      <td class="quote-cell ret-cell">+2.58%</td>
+      <td class="quote-cell ret-cell">-18.11%</td>
+      <td class="quote-cell ret-cell">-28.50%</td>
+      <td class="quote-cell ret-cell">+8.15%</td>
+      <td class="quote-cell">112,600</td>
+      <td class="quote-cell">46,950</td>
+      <td class="quote-cell">19.4%</td>
+      <td class="quote-cell">26.2</td>
+      <td class="mcap-cell">1.62조원</td>
+      <td class="fin-cell">20.69</td>
+      <td class="fin-cell">0.57</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">부품</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">파워트레인·공작</td>
+      <td class="products-cell">엔진·변속기·공작기계</td>
+      <td><div class="partners-list">DENSO, Bosch</div></td>
     </tr>
           <tr data-ticker="064960">
       <td><div class="company-name">SNT모티브</div><div class="company-name-sub">SNT Motiv</div></td>
@@ -2330,7 +2457,7 @@
       <td class="quote-cell">24,100</td>
       <td class="quote-cell">10.5%</td>
       <td class="quote-cell">27.8</td>
-      <td class="mcap-cell">0.79조원</td>
+      <td class="mcap-cell">0.69조원</td>
       <td class="fin-cell">10.24</td>
       <td class="fin-cell">0.70</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2338,29 +2465,6 @@
       <td style="font-size:12px;color:var(--text-muted)">모터·구동</td>
       <td class="products-cell">모터·구동부품</td>
       <td><div class="partners-list">DENSO, Bosch</div></td>
-    </tr>
-          <tr data-ticker="025540">
-      <td><div class="company-name">한국단자</div><div class="company-name-sub">Korea Electric Terminal</div></td>
-      <td><span class="ticker">025540</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">55,700</td>
-      <td class="quote-cell ret-cell">-0.18%</td>
-      <td class="quote-cell ret-cell">-10.02%</td>
-      <td class="quote-cell ret-cell">-23.59%</td>
-      <td class="quote-cell ret-cell">-23.28%</td>
-      <td class="quote-cell ret-cell">-7.32%</td>
-      <td class="quote-cell">94,000</td>
-      <td class="quote-cell">54,100</td>
-      <td class="quote-cell">4%</td>
-      <td class="quote-cell">20.0</td>
-      <td class="mcap-cell">0.74조원</td>
-      <td class="fin-cell">6.99</td>
-      <td class="fin-cell">0.63</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">부품</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">자동차 커넥터·전장부품</td>
-      <td class="products-cell">자동차용 커넥터·전장부품</td>
-      <td><div class="partners-list">Bosch, DENSO</div></td>
     </tr>
           <tr data-ticker="002350">
       <td><div class="company-name">넥센타이어</div><div class="company-name-sub">Nexen Tire</div></td>
@@ -2376,7 +2480,7 @@
       <td class="quote-cell">5,710</td>
       <td class="quote-cell">18%</td>
       <td class="quote-cell">49.3</td>
-      <td class="mcap-cell">0.72조원</td>
+      <td class="mcap-cell">0.63조원</td>
       <td class="fin-cell">5.05</td>
       <td class="fin-cell">0.37</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2384,6 +2488,29 @@
       <td style="font-size:12px;color:var(--text-muted)">타이어</td>
       <td class="products-cell">승용 타이어</td>
       <td><div class="partners-list">Goodyear, Bridgestone</div></td>
+    </tr>
+          <tr data-ticker="025540">
+      <td><div class="company-name">한국단자</div><div class="company-name-sub">Korea Electric Terminal</div></td>
+      <td><span class="ticker">025540</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">55,700</td>
+      <td class="quote-cell ret-cell">-0.18%</td>
+      <td class="quote-cell ret-cell">-10.02%</td>
+      <td class="quote-cell ret-cell">-23.59%</td>
+      <td class="quote-cell ret-cell">-23.28%</td>
+      <td class="quote-cell ret-cell">-7.32%</td>
+      <td class="quote-cell">94,000</td>
+      <td class="quote-cell">54,100</td>
+      <td class="quote-cell">4%</td>
+      <td class="quote-cell">20.0</td>
+      <td class="mcap-cell">0.56조원</td>
+      <td class="fin-cell">6.99</td>
+      <td class="fin-cell">0.63</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">부품</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">자동차 커넥터·전장부품</td>
+      <td class="products-cell">자동차용 커넥터·전장부품</td>
+      <td><div class="partners-list">Bosch, DENSO</div></td>
     </tr>
           <tr data-ticker="003620">
       <td><div class="company-name">KG모빌리티</div><div class="company-name-sub">KG Mobility</div></td>
@@ -2399,7 +2526,7 @@
       <td class="quote-cell">2,525</td>
       <td class="quote-cell">7.7%</td>
       <td class="quote-cell">28.1</td>
-      <td class="mcap-cell">0.64조원</td>
+      <td class="mcap-cell">0.54조원</td>
       <td class="fin-cell">13.73</td>
       <td class="fin-cell">0.43</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2422,7 +2549,7 @@
       <td class="quote-cell">4,880</td>
       <td class="quote-cell">16.6%</td>
       <td class="quote-cell">32.1</td>
-      <td class="mcap-cell">0.55조원</td>
+      <td class="mcap-cell">0.48조원</td>
       <td class="fin-cell">3.27</td>
       <td class="fin-cell">0.33</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2430,6 +2557,29 @@
       <td style="font-size:12px;color:var(--text-muted)">범퍼·차체</td>
       <td class="products-cell">범퍼·차체부품</td>
       <td><div class="partners-list">Volkswagen, GM</div></td>
+    </tr>
+          <tr data-ticker="403550">
+      <td><div class="company-name">쏘카</div><div class="company-name-sub">Socar</div></td>
+      <td><span class="ticker">403550</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">+1.17%</td>
+      <td class="quote-cell ret-cell">+15.25%</td>
+      <td class="quote-cell ret-cell">-0.88%</td>
+      <td class="quote-cell ret-cell">+0.09%</td>
+      <td class="quote-cell ret-cell">-1.57%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">66.4</td>
+      <td class="mcap-cell">0.43조원</td>
+      <td class="fin-cell">—</td>
+      <td class="fin-cell">2.22</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">모빌리티·유통</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">모빌리티(카셰어링)</td>
+      <td class="products-cell">카셰어링·모빌리티 플랫폼</td>
+      <td><div class="partners-list">Uber, Lyft, Toyota</div></td>
     </tr>
           <tr data-ticker="009900">
       <td><div class="company-name">명신산업</div><div class="company-name-sub">Myungshin Industry</div></td>
@@ -2445,7 +2595,7 @@
       <td class="quote-cell">5,390</td>
       <td class="quote-cell">26.8%</td>
       <td class="quote-cell">54.3</td>
-      <td class="mcap-cell">0.45조원</td>
+      <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">6.54</td>
       <td class="fin-cell">0.59</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2468,7 +2618,7 @@
       <td class="quote-cell">15,600</td>
       <td class="quote-cell">26.9%</td>
       <td class="quote-cell">52.8</td>
-      <td class="mcap-cell">0.37조원</td>
+      <td class="mcap-cell">0.35조원</td>
       <td class="fin-cell">6.76</td>
       <td class="fin-cell">0.89</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2476,29 +2626,6 @@
       <td style="font-size:12px;color:var(--text-muted)">카메라·전장</td>
       <td class="products-cell">차량 카메라·모듈</td>
       <td><div class="partners-list">Bosch, Continental, DENSO</div></td>
-    </tr>
-          <tr data-ticker="010690">
-      <td><div class="company-name">화신</div><div class="company-name-sub">Hwashin</div></td>
-      <td><span class="ticker">010690</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">7,920</td>
-      <td class="quote-cell ret-cell">-1.25%</td>
-      <td class="quote-cell ret-cell">+9.85%</td>
-      <td class="quote-cell ret-cell">-44.73%</td>
-      <td class="quote-cell ret-cell">-37.93%</td>
-      <td class="quote-cell ret-cell">+4.62%</td>
-      <td class="quote-cell">16,720</td>
-      <td class="quote-cell">6,410</td>
-      <td class="quote-cell">14.6%</td>
-      <td class="quote-cell">23.1</td>
-      <td class="mcap-cell">0.36조원</td>
-      <td class="fin-cell">5.38</td>
-      <td class="fin-cell">0.63</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">부품</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">샤시·현가</td>
-      <td class="products-cell">현가·샤시부품</td>
-      <td><div class="partners-list">ZF, Continental</div></td>
     </tr>
           <tr data-ticker="200880">
       <td><div class="company-name">서연이화</div><div class="company-name-sub">Seoyon E-Hwa</div></td>
@@ -2523,28 +2650,28 @@
       <td class="products-cell">도어트림·시트</td>
       <td><div class="partners-list">Toyota, Stellantis</div></td>
     </tr>
-          <tr data-ticker="000430">
-      <td><div class="company-name">대원강업</div><div class="company-name-sub">Daewon Kangup</div></td>
-      <td><span class="ticker">000430</span></td>
+          <tr data-ticker="381970">
+      <td><div class="company-name">케이카</div><div class="company-name-sub">K Car</div></td>
+      <td><span class="ticker">381970</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">4,460</td>
-      <td class="quote-cell ret-cell">+4.69%</td>
-      <td class="quote-cell ret-cell">+24.41%</td>
-      <td class="quote-cell ret-cell">-0.89%</td>
-      <td class="quote-cell ret-cell">+10.81%</td>
-      <td class="quote-cell ret-cell">+18.30%</td>
-      <td class="quote-cell">6,200</td>
-      <td class="quote-cell">3,140</td>
-      <td class="quote-cell">43.1%</td>
-      <td class="quote-cell">77.9</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">+3.22%</td>
+      <td class="quote-cell ret-cell">-13.14%</td>
+      <td class="quote-cell ret-cell">-28.54%</td>
+      <td class="quote-cell ret-cell">-55.14%</td>
+      <td class="quote-cell ret-cell">-58.99%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">6.3</td>
       <td class="mcap-cell">0.31조원</td>
-      <td class="fin-cell">8.62</td>
-      <td class="fin-cell">0.56</td>
+      <td class="fin-cell">9.07</td>
+      <td class="fin-cell">2.08</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">부품</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">스프링·현가</td>
-      <td class="products-cell">스프링·현가부품</td>
-      <td><div class="partners-list">ZF, Bosch</div></td>
+      <td><span class="chain-tag">모빌리티·유통</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">중고차 유통</td>
+      <td class="products-cell">중고차 매매·플랫폼</td>
+      <td><div class="partners-list">Carvana, AutoNation, Volkswagen</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
           </tbody>
@@ -2620,7 +2747,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"완성차":"#42A5F5","부품":"#66BB6A","타이어":"#FFA726","전장·ADAS":"#AB47BC"};
+    const CHAIN_COLORS = {"완성차":"#42A5F5","부품":"#66BB6A","타이어":"#FFA726","전장·ADAS":"#AB47BC","모빌리티·유통":"#26C6DA"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2630,8 +2757,8 @@
     "ko": {
         "title": "🇰🇷 한국 자동차 투자 지도",
         "subtitle": "완성차·부품·타이어·전장/ADAS 등 국내 상장 자동차 밸류체인과 글로벌 peer 참고 관계",
-        "badgeTotal": "총 <span>22</span>개 상장사",
-        "badgeMarket": "KOSPI <span>21</span>사 · KOSDAQ <span>1</span>사",
+        "badgeTotal": "총 <span>20</span>개 상장사",
+        "badgeMarket": "KOSPI <span>19</span>사 · KOSDAQ <span>1</span>사",
         "dataAsof": "데이터 기준일: 2026-06-12",
         "tabHeatmap": "🔥 섹터 히트맵",
         "tabMomentum": "📊 모멘텀 매트릭스",
@@ -2647,9 +2774,9 @@
         "momentumPosition": "주가 위치",
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
         "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
-        "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
+        "heatmapHint": "칸 크기 = 시가총액 · 색 = 일일 등락률",
         "tabTable": "📋 기업목록 & 필터",
-        "tabGraph": "🌐 관계 네트워크 (수정중)",
+        "tabGraph": "🌐 관계 네트워크",
         "thLast": "현재가",
         "th52High": "52주 최고",
         "th52Lo": "52주 최저",
@@ -2681,14 +2808,14 @@
             "완성차": "완성차",
             "부품": "부품",
             "타이어": "타이어",
-            "전장·ADAS": "전장·ADAS"
-        },
+            "전장·ADAS": "전장·ADAS",
+            "모빌리티·유통": "모빌리티·유통"},
         "chainFilter": {
             "완성차": "완성차",
             "부품": "부품",
             "타이어": "타이어",
-            "전장·ADAS": "전장·ADAS"
-        },
+            "전장·ADAS": "전장·ADAS",
+            "모빌리티·유통": "모빌리티·유통"},
         "allFilter": "전체",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -2719,8 +2846,8 @@
     "en": {
         "title": "🇰🇷 Korea Auto Industry Map",
         "subtitle": "Listed Korean OEMs, parts, tires, and electronics/ADAS with global peer relationships",
-        "badgeTotal": "<span>22</span> listings",
-        "badgeMarket": "KOSPI <span>21</span> · KOSDAQ <span>1</span>",
+        "badgeTotal": "<span>20</span> listings",
+        "badgeMarket": "KOSPI <span>19</span> · KOSDAQ <span>1</span>",
         "dataAsof": "Data as of: June 12, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
         "tabMomentum": "📊 Momentum matrix",
@@ -2738,7 +2865,7 @@
         "momentumLegend": "Color = 1-day return · size = daily turnover",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
-        "tabGraph": "🌐 Relationship network (WIP)",
+        "tabGraph": "🌐 Relationship network",
         "thLast": "Last",
         "th52High": "52W High",
         "th52Lo": "52W Low",
@@ -2770,14 +2897,14 @@
             "완성차": "OEMs",
             "부품": "Parts",
             "타이어": "Tires",
-            "전장·ADAS": "Electronics / ADAS"
-        },
+            "전장·ADAS": "Electronics / ADAS",
+            "모빌리티·유통": "Mobility & distribution"},
         "chainFilter": {
             "완성차": "OEMs",
             "부품": "Parts",
             "타이어": "Tires",
-            "전장·ADAS": "Electronics / ADAS"
-        },
+            "전장·ADAS": "Electronics / ADAS",
+            "모빌리티·유통": "Mobility & distribution"},
         "allFilter": "All",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -2815,154 +2942,154 @@
         id: 'hyundai_motor', name: '현대차', nameEn: 'Hyundai Motor', ticker: '005380', market: 'KOSPI', chain: '완성차',
         semType: '완성차·SUV·EV', semTypeEn: 'OEM · SUV & EV',
         products: '승용·상용·전기차·수소', productsEn: 'Passenger, commercial, EV, FCEV',
-        revenue: '124.29조원', mcapWon: 124287963962000, per: 16.82, pbr: 1.38, revTier: 3, partners: ['toyota', 'gm', 'vw']
+        revenue: '81.80조원', mcapWon: 81800727517000, per: 16.82, pbr: 1.38, revTier: 3, partners: ['toyota', 'gm', 'vw']
       },
 
       {
         id: 'kia', name: '기아', nameEn: 'KIA CORPORATION', ticker: '000270', market: 'KOSPI', chain: '완성차',
         semType: '완성차·SUV·EV', semTypeEn: 'OEM · SUV & EV',
         products: '승용·전기차·모빌리티', productsEn: 'Passenger, EV, mobility',
-        revenue: '65.12조원', mcapWon: 65120888066400, per: 8.61, pbr: 1.06, revTier: 3, partners: ['toyota', 'vw', 'stellantis']
+        revenue: '49.97조원', mcapWon: 49972863744000, per: 8.61, pbr: 1.06, revTier: 3, partners: ['toyota', 'vw', 'stellantis']
       },
 
       {
         id: 'mobis', name: '현대모비스', nameEn: 'Hyundai Mobis', ticker: '012330', market: 'KOSPI', chain: '부품',
         semType: '모듈·전장·A/S', semTypeEn: 'Modules, electronics, A/S',
         products: '샤시·콕핏·램프·전장', productsEn: 'Chassis, cockpit, lamps, electronics',
-        revenue: '55.07조원', mcapWon: 55074677881000, per: 14.86, pbr: 1.1, revTier: 3, partners: ['bosch', 'continental', 'denso']
+        revenue: '40.46조원', mcapWon: 40464173542500, per: 14.86, pbr: 1.1, revTier: 3, partners: ['bosch', 'continental', 'denso']
       },
 
       {
         id: 'hyundai_autoever', name: '현대오토에버', nameEn: 'Hyundai AutoEver', ticker: '307950', market: 'KOSPI', chain: '전장·ADAS',
         semType: '차량 SW·IT', semTypeEn: 'Automotive SW & IT',
         products: '차량 SW·클라우드·모빌리티 IT', productsEn: 'Vehicle SW, cloud, mobility IT',
-        revenue: '18.76조원', mcapWon: 18758003688000, per: 102.8, pbr: 10.15, revTier: 3, partners: ['nvidia', 'bosch', 'continental']
+        revenue: '11.41조원', mcapWon: 11408376512000, per: 102.8, pbr: 10.15, revTier: 2, partners: ['nvidia', 'bosch', 'continental']
       },
 
       {
         id: 'hankook_tire', name: '한국타이어앤테크놀로지', nameEn: 'Hankook Tire & Technology', ticker: '161390', market: 'KOSPI', chain: '타이어',
         semType: '타이어', semTypeEn: 'Tires',
         products: '승용·상용 타이어', productsEn: 'Passenger & commercial tires',
-        revenue: '8.92조원', mcapWon: 8919004968000, per: 8.06, pbr: 0.73, revTier: 2, partners: ['michelin', 'bridgestone', 'goodyear']
+        revenue: '8.23조원', mcapWon: 8225304581600, per: 8.06, pbr: 0.73, revTier: 2, partners: ['michelin', 'bridgestone', 'goodyear']
       },
 
       {
         id: 'hanon', name: '한온시스템', nameEn: 'Hanon Systems', ticker: '018880', market: 'KOSPI', chain: '부품',
         semType: '열관리·공조', semTypeEn: 'Thermal & HVAC',
         products: '공조·열관리·컴프레서', productsEn: 'HVAC, thermal, compressors',
-        revenue: '4.82조원', mcapWon: 4823433994400, per: null, pbr: 1.28, revTier: 2, partners: ['denso', 'mahindra', 'vw']
-      },
-
-      {
-        id: 'sl', name: '에스엘', nameEn: 'SL Corporation', ticker: '005850', market: 'KOSPI', chain: '부품',
-        semType: '램프·전장부품', semTypeEn: 'Lamps & electrical parts',
-        products: '헤드램프·리어램프', productsEn: 'Headlamps, rear lamps',
-        revenue: '3.14조원', mcapWon: 3144564804000, per: 10.03, pbr: 1.22, revTier: 2, partners: ['bosch', 'continental']
-      },
-
-      {
-        id: 'hl_mando', name: 'HL만도', nameEn: 'HL Mando', ticker: '204320', market: 'KOSPI', chain: '부품',
-        semType: '조향·제동·ADAS', semTypeEn: 'Steering, braking, ADAS',
-        products: '스티어링·브레이크·ADAS', productsEn: 'Steering, brakes, ADAS',
-        revenue: '3.05조원', mcapWon: 3052212800000, per: 30.52, pbr: 1.12, revTier: 2, partners: ['bosch', 'continental', 'zf']
-      },
-
-      {
-        id: 'hankook_co', name: '한국앤컴퍼니', nameEn: 'Hankook & Company', ticker: '000240', market: 'KOSPI', chain: '타이어',
-        semType: '타이어 지주', semTypeEn: 'Tire holding',
-        products: '한국타이어 등 계열', productsEn: 'Hankook Tire affiliates',
-        revenue: '2.59조원', mcapWon: 2591732052000, per: 7.45, pbr: 0.54, revTier: 2, partners: ['michelin', 'bridgestone']
+        revenue: '3.58조원', mcapWon: 3581656306480, per: null, pbr: 1.28, revTier: 2, partners: ['denso', 'mahindra', 'vw']
       },
 
       {
         id: 'dn_auto', name: 'DN오토모티브', nameEn: 'DN Automotive', ticker: '007340', market: 'KOSPI', chain: '부품',
         semType: '배터리·부품', semTypeEn: 'Battery & auto parts',
         products: '배터리·부품·소재', productsEn: 'Batteries, parts, materials',
-        revenue: '2.36조원', mcapWon: 2357987859500, per: 7.41, pbr: 1.04, revTier: 2, partners: ['bosch', 'continental']
+        revenue: '2.76조원', mcapWon: 2761712828000, per: 7.41, pbr: 1.04, revTier: 2, partners: ['bosch', 'continental']
       },
 
       {
-        id: 'hyundai_wia', name: '현대위아', nameEn: 'Hyundai Wia', ticker: '011210', market: 'KOSPI', chain: '부품',
-        semType: '파워트레인·공작', semTypeEn: 'Powertrain & machinery',
-        products: '엔진·변속기·공작기계', productsEn: 'Engines, transmissions, machine tools',
-        revenue: '2.09조원', mcapWon: 2091301882700, per: 20.69, pbr: 0.57, revTier: 2, partners: ['denso', 'bosch']
+        id: 'sl', name: '에스엘', nameEn: 'SL Corporation', ticker: '005850', market: 'KOSPI', chain: '부품',
+        semType: '램프·전장부품', semTypeEn: 'Lamps & electrical parts',
+        products: '헤드램프·리어램프', productsEn: 'Headlamps, rear lamps',
+        revenue: '2.43조원', mcapWon: 2433902448000, per: 10.03, pbr: 1.22, revTier: 2, partners: ['bosch', 'continental']
+      },
+
+      {
+        id: 'hl_mando', name: 'HL만도', nameEn: 'HL Mando', ticker: '204320', market: 'KOSPI', chain: '부품',
+        semType: '조향·제동·ADAS', semTypeEn: 'Steering, braking, ADAS',
+        products: '스티어링·브레이크·ADAS', productsEn: 'Steering, brakes, ADAS',
+        revenue: '2.36조원', mcapWon: 2361943136000, per: 30.52, pbr: 1.12, revTier: 2, partners: ['bosch', 'continental', 'zf']
+      },
+
+      {
+        id: 'hankook_co', name: '한국앤컴퍼니', nameEn: 'Hankook & Company', ticker: '000240', market: 'KOSPI', chain: '타이어',
+        semType: '타이어 지주', semTypeEn: 'Tire holding',
+        products: '한국타이어 등 계열', productsEn: 'Hankook Tire affiliates',
+        revenue: '2.35조원', mcapWon: 2349647190000, per: 7.45, pbr: 0.54, revTier: 2, partners: ['michelin', 'bridgestone']
       },
 
       {
         id: 'kumho_tire', name: '금호타이어', nameEn: 'Kumho Tire', ticker: '073240', market: 'KOSPI', chain: '타이어',
         semType: '타이어', semTypeEn: 'Tires',
         products: '승용·상용 타이어', productsEn: 'Passenger & commercial tires',
-        revenue: '1.38조원', mcapWon: 1375976774730, per: 3.96, pbr: 0.68, revTier: 2, partners: ['michelin', 'bridgestone']
+        revenue: '2.11조원', mcapWon: 2114235712320, per: 3.96, pbr: 0.68, revTier: 2, partners: ['michelin', 'bridgestone']
+      },
+
+      {
+        id: 'hyundai_wia', name: '현대위아', nameEn: 'Hyundai Wia', ticker: '011210', market: 'KOSPI', chain: '부품',
+        semType: '파워트레인·공작', semTypeEn: 'Powertrain & machinery',
+        products: '엔진·변속기·공작기계', productsEn: 'Engines, transmissions, machine tools',
+        revenue: '1.62조원', mcapWon: 1623546455100, per: 20.69, pbr: 0.57, revTier: 2, partners: ['denso', 'bosch']
       },
 
       {
         id: 'snt_motive', name: 'SNT모티브', nameEn: 'SNT Motiv', ticker: '064960', market: 'KOSPI', chain: '부품',
         semType: '모터·구동', semTypeEn: 'Motors & drivetrain',
         products: '모터·구동부품', productsEn: 'Motors, drivetrain parts',
-        revenue: '0.79조원', mcapWon: 793554132800, per: 10.24, pbr: 0.7, revTier: 1, partners: ['denso', 'bosch']
-      },
-
-      {
-        id: 'korea_electric_terminal', name: '한국단자', nameEn: 'Korea Electric Terminal', ticker: '025540', market: 'KOSPI', chain: '부품',
-        semType: '자동차 커넥터·전장부품', semTypeEn: 'Automotive connectors & electronics',
-        products: '자동차용 커넥터·전장부품', productsEn: 'Automotive connectors and electrical components',
-        revenue: '0.74조원', mcapWon: 737383500000, per: 6.99, pbr: 0.63, revTier: 1, partners: ['bosch', 'denso']
+        revenue: '0.69조원', mcapWon: 686066031200, per: 10.24, pbr: 0.7, revTier: 1, partners: ['denso', 'bosch']
       },
 
       {
         id: 'nexen_tire', name: '넥센타이어', nameEn: 'Nexen Tire', ticker: '002350', market: 'KOSPI', chain: '타이어',
         semType: '타이어', semTypeEn: 'Tires',
         products: '승용 타이어', productsEn: 'Passenger tires',
-        revenue: '0.72조원', mcapWon: 724695647340, per: 5.05, pbr: 0.37, revTier: 1, partners: ['goodyear', 'bridgestone']
+        revenue: '0.63조원', mcapWon: 634841200500, per: 5.05, pbr: 0.37, revTier: 1, partners: ['goodyear', 'bridgestone']
+      },
+
+      {
+        id: 'korea_electric_terminal', name: '한국단자', nameEn: 'Korea Electric Terminal', ticker: '025540', market: 'KOSPI', chain: '부품',
+        semType: '자동차 커넥터·전장부품', semTypeEn: 'Automotive connectors & electronics',
+        products: '자동차용 커넥터·전장부품', productsEn: 'Automotive connectors and electrical components',
+        revenue: '0.56조원', mcapWon: 563405500000, per: 6.99, pbr: 0.63, revTier: 1, partners: ['bosch', 'denso']
       },
 
       {
         id: 'kg_mobility', name: 'KG모빌리티', nameEn: 'KG Mobility', ticker: '003620', market: 'KOSPI', chain: '완성차',
         semType: 'SUV·픽업', semTypeEn: 'SUV & pickup OEM',
         products: 'SUV·픽업트럭', productsEn: 'SUV, pickup trucks',
-        revenue: '0.64조원', mcapWon: 644564094720, per: 13.73, pbr: 0.43, revTier: 1, partners: ['stellantis', 'gm']
+        revenue: '0.54조원', mcapWon: 544388513280, per: 13.73, pbr: 0.43, revTier: 1, partners: ['stellantis', 'gm']
       },
 
       {
         id: 'sungwoo', name: '성우하이텍', nameEn: 'Sungwoo Hitech', ticker: '015750', market: 'KOSDAQ', chain: '부품',
         semType: '범퍼·차체', semTypeEn: 'Bumpers & body',
         products: '범퍼·차체부품', productsEn: 'Bumpers, body parts',
-        revenue: '0.55조원', mcapWon: 552800000000, per: 3.27, pbr: 0.33, revTier: 1, partners: ['vw', 'gm']
+        revenue: '0.48조원', mcapWon: 484800000000, per: 3.27, pbr: 0.33, revTier: 1, partners: ['vw', 'gm']
+      },
+
+      {
+        id: 'auto_socar', name: '쏘카', nameEn: 'Socar', ticker: '403550', market: 'KOSPI', chain: '모빌리티·유통',
+        semType: '모빌리티(카셰어링)', semTypeEn: 'Mobility (car sharing)',
+        products: '카셰어링·모빌리티 플랫폼', productsEn: 'Car-sharing and mobility platform',
+        revenue: '0.43조원', mcapWon: 427203746920, per: null, pbr: 2.22, revTier: 1, partners: ['uber', 'lyft', 'toyota']
       },
 
       {
         id: 'myungsin', name: '명신산업', nameEn: 'Myungshin Industry', ticker: '009900', market: 'KOSPI', chain: '부품',
         semType: '차체·프레스', semTypeEn: 'Body & press parts',
         products: '차체부품·프레스', productsEn: 'Body & press parts',
-        revenue: '0.45조원', mcapWon: 447045533160, per: 6.54, pbr: 0.59, revTier: 1, partners: ['toyota', 'gm']
+        revenue: '0.42조원', mcapWon: 417137557350, per: 6.54, pbr: 0.59, revTier: 1, partners: ['toyota', 'gm']
       },
 
       {
         id: 'mcnex', name: '엠씨넥스', nameEn: 'MCNEX Co.,Ltd.', ticker: '097520', market: 'KOSPI', chain: '전장·ADAS',
         semType: '카메라·전장', semTypeEn: 'Cameras & electronics',
         products: '차량 카메라·모듈', productsEn: 'Automotive cameras & modules',
-        revenue: '0.37조원', mcapWon: 369781875000, per: 6.76, pbr: 0.89, revTier: 1, partners: ['bosch', 'continental', 'denso']
-      },
-
-      {
-        id: 'hwashin', name: '화신', nameEn: 'Hwashin', ticker: '010690', market: 'KOSPI', chain: '부품',
-        semType: '샤시·현가', semTypeEn: 'Chassis & suspension',
-        products: '현가·샤시부품', productsEn: 'Suspension, chassis',
-        revenue: '0.36조원', mcapWon: 360727835300, per: 5.38, pbr: 0.63, revTier: 1, partners: ['zf', 'continental']
+        revenue: '0.35조원', mcapWon: 350640225000, per: 6.76, pbr: 0.89, revTier: 1, partners: ['bosch', 'continental', 'denso']
       },
 
       {
         id: 'seoyon_ehwa', name: '서연이화', nameEn: 'Seoyon E-Hwa', ticker: '200880', market: 'KOSPI', chain: '부품',
         semType: '내장·시트', semTypeEn: 'Interior & seats',
         products: '도어트림·시트', productsEn: 'Door trim, seats',
-        revenue: '0.33조원', mcapWon: 332179490730, per: 5.54, pbr: 0.28, revTier: 1, partners: ['toyota', 'stellantis']
+        revenue: '0.33조원', mcapWon: 328936078290, per: 5.54, pbr: 0.28, revTier: 1, partners: ['toyota', 'stellantis']
       },
 
       {
-        id: 'daewon', name: '대원강업', nameEn: 'Daewon Kangup', ticker: '000430', market: 'KOSPI', chain: '부품',
-        semType: '스프링·현가', semTypeEn: 'Springs & suspension',
-        products: '스프링·현가부품', productsEn: 'Springs, suspension parts',
-        revenue: '0.31조원', mcapWon: 313720000000, per: 8.62, pbr: 0.56, revTier: 1, partners: ['zf', 'bosch']
+        id: 'auto_k_car', name: '케이카', nameEn: 'K Car', ticker: '381970', market: 'KOSPI', chain: '모빌리티·유통',
+        semType: '중고차 유통', semTypeEn: 'Used-car retail',
+        products: '중고차 매매·플랫폼', productsEn: 'Used-car sales and marketplace',
+        revenue: '0.31조원', mcapWon: 312941635680, per: 9.07, pbr: 2.08, revTier: 1, partners: ['carvana', 'autonation', 'vw']
       }
 
     ];
@@ -2979,7 +3106,11 @@
       { id: 'bridgestone', name: 'Bridgestone', nameEn: 'Bridgestone', country: '일본/Japan', region: 'jp', sector: 'Tires' },
       { id: 'goodyear', name: 'Goodyear', nameEn: 'Goodyear', country: '미국/USA', region: 'us', sector: 'Tires' },
       { id: 'nvidia', name: 'NVIDIA', nameEn: 'NVIDIA', country: '미국/USA', region: 'us', sector: 'ADAS compute' },
-      { id: 'mahindra', name: 'Mahindra', nameEn: 'Mahindra', country: '인도/India', region: 'eu', sector: 'OEM / JV peer' }
+      { id: 'mahindra', name: 'Mahindra', nameEn: 'Mahindra', country: '인도/India', region: 'eu', sector: 'OEM / JV peer' },
+      { id: 'uber', name: 'Uber', nameEn: 'Uber', country: '미국/USA', region: 'us', sector: 'Mobility platform' },
+      { id: 'lyft', name: 'Lyft', nameEn: 'Lyft', country: '미국/USA', region: 'us', sector: 'Ride-hailing' },
+      { id: 'carvana', name: 'Carvana', nameEn: 'Carvana', country: '미국/USA', region: 'us', sector: 'Used-car retail' },
+      { id: 'autonation', name: 'AutoNation', nameEn: 'AutoNation', country: '미국/USA', region: 'us', sector: 'Auto retail' }
     ];
 
 
@@ -3143,7 +3274,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '완성차', '부품', '타이어', '전장·ADAS'];
+      const chains = ['all', '완성차', '부품', '타이어', '전장·ADAS', '모빌리티·유통'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = currentChain === ch;
@@ -3547,6 +3678,8 @@
       <li><a href="../software/korea_software_map.html">한국 IT·소프트웨어 투자 지도</a> · <a href="../software/korea_software_map.html?lang=en" hreflang="en">Korea IT &amp; Software Map</a></li>
       <li><a href="../holdings/korea_holdings_map.html">한국 지주회사 투자 지도</a> · <a href="../holdings/korea_holdings_map.html?lang=en" hreflang="en">Korea Holdings Map</a></li>
       <li><a href="../telecom/korea_telecom_map.html">한국 통신 투자 지도</a> · <a href="../telecom/korea_telecom_map.html?lang=en" hreflang="en">Korea Telecom Map</a></li>
+      <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
+      <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
       <li><a href="../metal/korea_metal_map.html">한국 철강·금속·기계 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel, Metals &amp; Machinery Map</a></li>
       </ul>

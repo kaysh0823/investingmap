@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 원전 투자 지도",
     "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html",
-    "numberOfItems": 7,
+    "numberOfItems": 6,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -175,12 +175,6 @@
         "position": 6,
         "name": "보성파워텍 (006910, KOSDAQ)",
         "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-006910"
-      },
-      {
-        "@type": "ListItem",
-        "position": 7,
-        "name": "우진 (105840, KOSPI)",
-        "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-105840"
       }
     ]
   }
@@ -842,7 +836,7 @@
     .node-dim {
       opacity: .15
     }
-    /* investingmap-mobile-table-v2 — base */
+    /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -919,6 +913,133 @@
       .table-container {
         padding: 10px 12px
       }
+      /* investingmap-mobile-table-v2 ??mobile layout */
+      .tabs {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      /* Natural page scroll: no fixed viewport height / inner Y scroll */
+      #tab-table.tab-content.active {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible
+      }
+
+      #tab-table .table-container {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding-bottom: 8px
+      }
+
+      body.im-tab-table #tab-table .table-container {
+        padding: 4px 8px 0
+      }
+
+      #tab-table .filter-bar {
+        flex-shrink: 0;
+        z-index: 30;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      body.im-tab-table #tab-table .filter-bar {
+        padding-bottom: 6px;
+        gap: 6px
+      }
+
+      /* Value-chain chips: single row + horizontal scroll */
+      #tab-table .filter-row-chain {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-width: 0;
+        width: 100%
+      }
+
+      #tab-table .filter-row-chain .filter-label {
+        flex-shrink: 0
+      }
+
+      #tab-table .filter-row-chain #chain-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none
+      }
+
+      #tab-table .filter-row-chain #chain-chips::-webkit-scrollbar {
+        display: none
+      }
+
+      #tab-table .filter-row-chain .filter-chip {
+        flex-shrink: 0
+      }
+
+      #tab-table .search-box {
+        padding: 5px 10px;
+        font-size: 12px;
+        min-height: 0;
+        height: auto
+      }
+
+      #tab-table .tbl-wrap {
+        flex: none;
+        min-height: 0;
+        max-height: none;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch
+      }
+
+      #tab-table .note {
+        display: none
+      }
+
+      body.im-tab-table thead th {
+        padding: 6px 5px;
+        font-size: 8px
+      }
+
+      body.im-tab-table td {
+        padding: 5px 5px;
+        font-size: 11px;
+        line-height: 1.3
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 108px;
+        max-width: 132px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
+      body.im-tab-table tbody td:first-child .company-name {
+        font-size: 11px;
+        line-height: 1.25
+      }
+
       /* investingmap-mobile-table-v2 — mobile layout */
       .tabs {
         position: -webkit-sticky;
@@ -1848,8 +1969,8 @@
     </button>
     <p id="hdr-subtitle">원자로·기자재·운영·정비·SMR — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>7</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>5</span> · KOSDAQ <span>2</span></div>
+      <div class="badge" id="badge-total">Total <span>6</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>4</span> · KOSDAQ <span>2</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1918,7 +2039,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">7</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">6</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -1964,7 +2085,7 @@
       <td class="quote-cell">57,000</td>
       <td class="quote-cell">38%</td>
       <td class="quote-cell">57.8</td>
-      <td class="mcap-cell">59.64조원</td>
+      <td class="mcap-cell">56.50조원</td>
       <td class="fin-cell">705.30</td>
       <td class="fin-cell">7.66</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -1987,7 +2108,7 @@
       <td class="quote-cell">77,100</td>
       <td class="quote-cell">37.5%</td>
       <td class="quote-cell">63.7</td>
-      <td class="mcap-cell">5.78조원</td>
+      <td class="mcap-cell">4.68조원</td>
       <td class="fin-cell">67.42</td>
       <td class="fin-cell">9.21</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2010,7 +2131,7 @@
       <td class="quote-cell">41,500</td>
       <td class="quote-cell">20.2%</td>
       <td class="quote-cell">44.1</td>
-      <td class="mcap-cell">2.88조원</td>
+      <td class="mcap-cell">2.12조원</td>
       <td class="fin-cell">23.14</td>
       <td class="fin-cell">2.14</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2033,7 +2154,7 @@
       <td class="quote-cell">33,150</td>
       <td class="quote-cell">39.8%</td>
       <td class="quote-cell">63.3</td>
-      <td class="mcap-cell">2.49조원</td>
+      <td class="mcap-cell">2.02조원</td>
       <td class="fin-cell">38.25</td>
       <td class="fin-cell">14.04</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2056,7 +2177,7 @@
       <td class="quote-cell">8,810</td>
       <td class="quote-cell">21%</td>
       <td class="quote-cell">55.3</td>
-      <td class="mcap-cell">0.44조원</td>
+      <td class="mcap-cell">0.42조원</td>
       <td class="fin-cell">108.08</td>
       <td class="fin-cell">4.27</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2079,36 +2200,13 @@
       <td class="quote-cell">3,750</td>
       <td class="quote-cell">25.9%</td>
       <td class="quote-cell">48.2</td>
-      <td class="mcap-cell">0.41조원</td>
+      <td class="mcap-cell">0.37조원</td>
       <td class="fin-cell">19.93</td>
       <td class="fin-cell">3.67</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
       <td><span class="chain-tag">계측·보조기기</span></td>
       <td style="font-size:12px;color:var(--text-muted)">전력·변압기</td>
       <td class="products-cell">변압기·전력설비·중전기</td>
-      <td><div class="partners-list">—</div></td>
-    </tr>
-          <tr data-ticker="105840">
-      <td><div class="company-name">우진</div><div class="company-name-sub">WOOJIN INC</div></td>
-      <td><span class="ticker">105840</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">14,060</td>
-      <td class="quote-cell ret-cell">+1.96%</td>
-      <td class="quote-cell ret-cell">+6.60%</td>
-      <td class="quote-cell ret-cell">-24.29%</td>
-      <td class="quote-cell ret-cell">-50.23%</td>
-      <td class="quote-cell ret-cell">-0.14%</td>
-      <td class="quote-cell">31,700</td>
-      <td class="quote-cell">10,330</td>
-      <td class="quote-cell">17.5%</td>
-      <td class="quote-cell">20.8</td>
-      <td class="mcap-cell">0.36조원</td>
-      <td class="fin-cell">40.98</td>
-      <td class="fin-cell">1.84</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">계측·보조기기</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">원전 계측기</td>
-      <td class="products-cell">원전 계측기 — 원전·발전설비</td>
       <td><div class="partners-list">—</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
@@ -2420,49 +2518,42 @@
         id: 'doosan_e', name: '두산에너빌리티', nameEn: 'Doosan Enerbility', ticker: '034020', market: 'KOSPI', chain: '원자로·주기기',
         semType: '원전 기자재·가스터빈', semTypeEn: 'Nuclear island & gas turbines',
         products: 'SMR 연료·기자재, GT', productsEn: 'SMR components, heavy-duty GT',
-        revenue: '59.64조원', mcapWon: 59636242692600, per: 705.3, pbr: 7.66, revTier: 3, partners: ['ge_vernova', 'mitsubishi_heavy', 'orano']
+        revenue: '56.50조원', mcapWon: 56497493077200, per: 705.3, pbr: 7.66, revTier: 3, partners: ['ge_vernova', 'mitsubishi_heavy', 'orano']
       },
 
       {
         id: 'kento', name: '한전기술', nameEn: 'KEPCO Engineering & Construction', ticker: '052690', market: 'KOSPI', chain: '설계·EPC',
         semType: '발전 EPC·O&M', semTypeEn: 'Power EPC & O&M',
         products: '원전·화력 정비·해외 EPC', productsEn: 'Nuclear/thermal O&M, overseas EPC',
-        revenue: '5.78조원', mcapWon: 5782686000000, per: 67.42, pbr: 9.21, revTier: 2, partners: ['ge_vernova', 'mitsubishi_heavy', { id: 'kepco', edgeLabel: '한전 계열 수주', edgeLabelEn: 'KEPCO-linked projects', weight: 0.25, kind: 'theme' }]
+        revenue: '4.68조원', mcapWon: 4678128000000, per: 67.42, pbr: 9.21, revTier: 2, partners: ['ge_vernova', 'mitsubishi_heavy', { id: 'kepco', edgeLabel: '한전 계열 수주', edgeLabelEn: 'KEPCO-linked projects', weight: 0.25, kind: 'theme' }]
       },
 
       {
         id: 'kepco_kps', name: '한전KPS', nameEn: 'KEPCO Plant Service & Engineering', ticker: '051600', market: 'KOSPI', chain: '운영·정비',
         semType: '발전설비 정비·O&M', semTypeEn: 'Power-plant maintenance & O&M',
         products: '원전·화력·신재생 O&M', productsEn: 'Nuclear, thermal & renewable O&M',
-        revenue: '2.88조원', mcapWon: 2875500000000, per: 23.14, pbr: 2.14, revTier: 2, partners: ['ge_vernova', { id: 'kepco', edgeLabel: '한전 계열', edgeLabelEn: 'KEPCO affiliate', weight: 0.35, kind: 'backing' }]
+        revenue: '2.12조원', mcapWon: 2117250000000, per: 23.14, pbr: 2.14, revTier: 2, partners: ['ge_vernova', { id: 'kepco', edgeLabel: '한전 계열', edgeLabelEn: 'KEPCO affiliate', weight: 0.35, kind: 'backing' }]
       },
 
       {
         id: 'bhi', name: '비에이치아이', nameEn: 'BHI Co., LTD.', ticker: '083650', market: 'KOSDAQ', chain: '계측·보조기기',
         semType: '밸브·계측', semTypeEn: 'Valves & instrumentation',
         products: '원전·화력 밸브', productsEn: 'Nuclear/thermal valves',
-        revenue: '2.49조원', mcapWon: 2494116625000, per: 38.25, pbr: 14.04, revTier: 2, partners: ['ge_vernova', 'orano']
+        revenue: '2.02조원', mcapWon: 2023762125000, per: 38.25, pbr: 14.04, revTier: 2, partners: ['ge_vernova', 'orano']
       },
 
       {
         id: 'energy_korea_electric_power_ind', name: '한전산업', nameEn: 'Korea Electric Power Industrial Development', ticker: '130660', market: 'KOSPI', chain: '운영·정비',
         semType: '발전 운전·정비', semTypeEn: '—',
         products: '발전 운전·정비 — 에너지·전력', productsEn: 'Power equipment and services',
-        revenue: '0.44조원', mcapWon: 440426000000, per: 108.08, pbr: 4.27, revTier: 1, partners: []
+        revenue: '0.42조원', mcapWon: 417280000000, per: 108.08, pbr: 4.27, revTier: 1, partners: []
       },
 
       {
         id: 'energy_bosung_power_technology_', name: '보성파워텍', nameEn: 'BOSUNG POWER TECHNOLOGY CO., LTD.', ticker: '006910', market: 'KOSDAQ', chain: '계측·보조기기',
         semType: '전력·변압기', semTypeEn: 'Power & Transformers',
         products: '변압기·전력설비·중전기', productsEn: 'Transformers and heavy electrical power equipment',
-        revenue: '0.41조원', mcapWon: 406303644480, per: 19.93, pbr: 3.67, revTier: 1, partners: []
-      },
-
-      {
-        id: 'energy_woojin_inc', name: '우진', nameEn: 'WOOJIN INC', ticker: '105840', market: 'KOSPI', chain: '계측·보조기기',
-        semType: '원전 계측기', semTypeEn: '—',
-        products: '원전 계측기 — 원전·발전설비', productsEn: 'Power equipment and services',
-        revenue: '0.36조원', mcapWon: 364971896900, per: 40.98, pbr: 1.84, revTier: 1, partners: []
+        revenue: '0.37조원', mcapWon: 367982381760, per: 19.93, pbr: 3.67, revTier: 1, partners: []
       }
 
     ];
@@ -3052,6 +3143,8 @@
       <li><a href="../software/korea_software_map.html">한국 IT·소프트웨어 투자 지도</a> · <a href="../software/korea_software_map.html?lang=en" hreflang="en">Korea IT &amp; Software Map</a></li>
       <li><a href="../holdings/korea_holdings_map.html">한국 지주회사 투자 지도</a> · <a href="../holdings/korea_holdings_map.html?lang=en" hreflang="en">Korea Holdings Map</a></li>
       <li><a href="../telecom/korea_telecom_map.html">한국 통신 투자 지도</a> · <a href="../telecom/korea_telecom_map.html?lang=en" hreflang="en">Korea Telecom Map</a></li>
+      <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
+      <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
       <li><a href="../metal/korea_metal_map.html">한국 철강·금속·기계 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel, Metals &amp; Machinery Map</a></li>
       </ul>

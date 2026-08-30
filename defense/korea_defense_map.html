@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 방산·우주·항공 산업 투자 지도",
     "url": "https://www.investingmap.kr/defense/korea_defense_map.html",
-    "numberOfItems": 13,
+    "numberOfItems": 12,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -149,20 +149,20 @@
       {
         "@type": "ListItem",
         "position": 2,
+        "name": "LIG디펜스앤에어로스페이스 (079550, KOSPI)",
+        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-079550"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
         "name": "현대로템 (064350, KOSPI)",
         "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-064350"
       },
       {
         "@type": "ListItem",
-        "position": 3,
+        "position": 4,
         "name": "한화시스템 (272210, KOSPI)",
         "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-272210"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": "LIG디펜스앤에어로스페이스 (079550, KOSPI)",
-        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-079550"
       },
       {
         "@type": "ListItem",
@@ -173,14 +173,14 @@
       {
         "@type": "ListItem",
         "position": 6,
-        "name": "비츠로셀 (082920, KOSDAQ)",
-        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-082920"
+        "name": "풍산 (103140, KOSPI)",
+        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-103140"
       },
       {
         "@type": "ListItem",
         "position": 7,
-        "name": "풍산 (103140, KOSPI)",
-        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-103140"
+        "name": "비츠로셀 (082920, KOSDAQ)",
+        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-082920"
       },
       {
         "@type": "ListItem",
@@ -211,12 +211,6 @@
         "position": 12,
         "name": "아이쓰리시스템 (214430, KOSDAQ)",
         "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-214430"
-      },
-      {
-        "@type": "ListItem",
-        "position": 13,
-        "name": "퍼스텍 (010820, KOSPI)",
-        "url": "https://www.investingmap.kr/defense/korea_defense_map.html#ticker-010820"
       }
     ]
   }
@@ -878,7 +872,7 @@
     .node-dim {
       opacity: .15
     }
-    /* investingmap-mobile-table-v2 — base */
+    /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
       border-spacing: 0
@@ -955,6 +949,133 @@
       .table-container {
         padding: 10px 12px
       }
+      /* investingmap-mobile-table-v2 ??mobile layout */
+      .tabs {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      /* Natural page scroll: no fixed viewport height / inner Y scroll */
+      #tab-table.tab-content.active {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible
+      }
+
+      #tab-table .table-container {
+        display: block;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        padding-bottom: 8px
+      }
+
+      body.im-tab-table #tab-table .table-container {
+        padding: 4px 8px 0
+      }
+
+      #tab-table .filter-bar {
+        flex-shrink: 0;
+        z-index: 30;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border)
+      }
+
+      body.im-tab-table #tab-table .filter-bar {
+        padding-bottom: 6px;
+        gap: 6px
+      }
+
+      /* Value-chain chips: single row + horizontal scroll */
+      #tab-table .filter-row-chain {
+        flex-wrap: nowrap;
+        align-items: center;
+        min-width: 0;
+        width: 100%
+      }
+
+      #tab-table .filter-row-chain .filter-label {
+        flex-shrink: 0
+      }
+
+      #tab-table .filter-row-chain #chain-chips {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        align-items: center;
+        min-width: 0;
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none
+      }
+
+      #tab-table .filter-row-chain #chain-chips::-webkit-scrollbar {
+        display: none
+      }
+
+      #tab-table .filter-row-chain .filter-chip {
+        flex-shrink: 0
+      }
+
+      #tab-table .search-box {
+        padding: 5px 10px;
+        font-size: 12px;
+        min-height: 0;
+        height: auto
+      }
+
+      #tab-table .tbl-wrap {
+        flex: none;
+        min-height: 0;
+        max-height: none;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch
+      }
+
+      #tab-table .note {
+        display: none
+      }
+
+      body.im-tab-table thead th {
+        padding: 6px 5px;
+        font-size: 8px
+      }
+
+      body.im-tab-table td {
+        padding: 5px 5px;
+        font-size: 11px;
+        line-height: 1.3
+      }
+
+      thead th:first-child,
+      tbody td:first-child {
+        min-width: 108px;
+        max-width: 132px
+      }
+
+      tbody td:first-child .company-name {
+        font-size: 12px;
+        line-height: 1.35;
+        word-break: keep-all
+      }
+
+      body.im-tab-table tbody td:first-child .company-name {
+        font-size: 11px;
+        line-height: 1.25
+      }
+
       /* investingmap-mobile-table-v2 — mobile layout */
       .tabs {
         position: -webkit-sticky;
@@ -1913,8 +2034,8 @@
     </button>
     <p id="hdr-subtitle">항공기·엔진, 미사일·레이더·C4ISR, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사·글로벌 참고 네트워크</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>13</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>8</span> · KOSDAQ <span>5</span></div>
+      <div class="badge" id="badge-total">Total <span>12</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>7</span> · KOSDAQ <span>5</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1983,7 +2104,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">13</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">12</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2029,7 +2150,7 @@
       <td class="quote-cell">783,000</td>
       <td class="quote-cell">42.9%</td>
       <td class="quote-cell">62.8</td>
-      <td class="mcap-cell">55.59조원</td>
+      <td class="mcap-cell">59.66조원</td>
       <td class="fin-cell">37.78</td>
       <td class="fin-cell">5.73</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2037,6 +2158,29 @@
       <td style="font-size:12px;color:var(--text-muted)">엔진·항공기부품·방산</td>
       <td class="products-cell">T-50, FA-50, 엔진·기체</td>
       <td><div class="partners-list">Lockheed Martin, Boeing, Airbus, 프로그램: KF-21, 프로그램: T-50/FA-50</div></td>
+    </tr>
+          <tr data-ticker="079550">
+      <td><div class="company-name">LIG디펜스앤에어로스페이스</div><div class="company-name-sub">LIG Defense&amp;Aerospace</div></td>
+      <td><span class="ticker">079550</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">734,000</td>
+      <td class="quote-cell ret-cell">-1.48%</td>
+      <td class="quote-cell ret-cell">+5.01%</td>
+      <td class="quote-cell ret-cell">-13.85%</td>
+      <td class="quote-cell ret-cell">+1.52%</td>
+      <td class="quote-cell ret-cell">+82.59%</td>
+      <td class="quote-cell">1,118,000</td>
+      <td class="quote-cell">360,000</td>
+      <td class="quote-cell">49.3%</td>
+      <td class="quote-cell">46.5</td>
+      <td class="mcap-cell">16.15조원</td>
+      <td class="fin-cell">66.53</td>
+      <td class="fin-cell">11.79</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">미사일·레이더·C4ISR</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">미사일·핵전장비·영상</td>
+      <td class="products-cell">Chiron, 유도무기, 감시장비</td>
+      <td><div class="partners-list">Lockheed Martin, RTX (Raytheon), Thales, 프로그램: 천궁 II, 프로그램: KF-21, 수출: 폴란드</div></td>
     </tr>
           <tr data-ticker="064350">
       <td><div class="company-name">현대로템</div><div class="company-name-sub">HYUNDAI ROTEM</div></td>
@@ -2052,7 +2196,7 @@
       <td class="quote-cell">113,100</td>
       <td class="quote-cell">15.4%</td>
       <td class="quote-cell">28.7</td>
-      <td class="mcap-cell">22.76조원</td>
+      <td class="mcap-cell">15.18조원</td>
       <td class="fin-cell">29.55</td>
       <td class="fin-cell">7.39</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2075,7 +2219,7 @@
       <td class="quote-cell">44,750</td>
       <td class="quote-cell">22.3%</td>
       <td class="quote-cell">37.6</td>
-      <td class="mcap-cell">18.14조원</td>
+      <td class="mcap-cell">14.32조원</td>
       <td class="fin-cell">74.42</td>
       <td class="fin-cell">3.70</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2083,29 +2227,6 @@
       <td style="font-size:12px;color:var(--text-muted)">해군전자·위성레이더·C4ISR</td>
       <td class="products-cell">해군전자전쟁, 위성·사이버</td>
       <td><div class="partners-list">Northrop Grumman, Thales, Lockheed Martin, 프로그램: 천궁 II, 프로그램: KF-21, 수출: 중동·아타지</div></td>
-    </tr>
-          <tr data-ticker="079550">
-      <td><div class="company-name">LIG디펜스앤에어로스페이스</div><div class="company-name-sub">LIG Defense&amp;Aerospace</div></td>
-      <td><span class="ticker">079550</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">734,000</td>
-      <td class="quote-cell ret-cell">-1.48%</td>
-      <td class="quote-cell ret-cell">+5.01%</td>
-      <td class="quote-cell ret-cell">-13.85%</td>
-      <td class="quote-cell ret-cell">+1.52%</td>
-      <td class="quote-cell ret-cell">+82.59%</td>
-      <td class="quote-cell">1,118,000</td>
-      <td class="quote-cell">360,000</td>
-      <td class="quote-cell">49.3%</td>
-      <td class="quote-cell">46.5</td>
-      <td class="mcap-cell">16.98조원</td>
-      <td class="fin-cell">66.53</td>
-      <td class="fin-cell">11.79</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">미사일·레이더·C4ISR</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">미사일·핵전장비·영상</td>
-      <td class="products-cell">Chiron, 유도무기, 감시장비</td>
-      <td><div class="partners-list">Lockheed Martin, RTX (Raytheon), Thales, 프로그램: 천궁 II, 프로그램: KF-21, 수출: 폴란드</div></td>
     </tr>
           <tr data-ticker="047810">
       <td><div class="company-name">한국항공우주</div><div class="company-name-sub">KOREA AEROSPACE INDUSTRIES</div></td>
@@ -2121,7 +2242,7 @@
       <td class="quote-cell">93,300</td>
       <td class="quote-cell">32.6%</td>
       <td class="quote-cell">35.5</td>
-      <td class="mcap-cell">13.73조원</td>
+      <td class="mcap-cell">12.97조원</td>
       <td class="fin-cell">73.89</td>
       <td class="fin-cell">7.50</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2129,29 +2250,6 @@
       <td style="font-size:12px;color:var(--text-muted)">교육기·무인기·소형기</td>
       <td class="products-cell">T-50, KUH Surion, KF-21 참여</td>
       <td><div class="partners-list">Lockheed Martin, Airbus, Boeing, 프로그램: KF-21, 프로그램: T-50/FA-50</div></td>
-    </tr>
-          <tr data-ticker="082920">
-      <td><div class="company-name">비츠로셀</div><div class="company-name-sub">VITZROCELL Co., Ltd.</div></td>
-      <td><span class="ticker">082920</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">27,750</td>
-      <td class="quote-cell ret-cell">-4.97%</td>
-      <td class="quote-cell ret-cell">+0.91%</td>
-      <td class="quote-cell ret-cell">-36.35%</td>
-      <td class="quote-cell ret-cell">+6.32%</td>
-      <td class="quote-cell ret-cell">+5.71%</td>
-      <td class="quote-cell">67,800</td>
-      <td class="quote-cell">12,591</td>
-      <td class="quote-cell">27.5%</td>
-      <td class="quote-cell">28.8</td>
-      <td class="mcap-cell">2.13조원</td>
-      <td class="fin-cell">37.02</td>
-      <td class="fin-cell">6.38</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">육상무기·차량·탄약</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">방산 전원·ESS</td>
-      <td class="products-cell">군용 전원·ESS·특수 배터리 시스템</td>
-      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="103140">
       <td><div class="company-name">풍산</div><div class="company-name-sub">POONGSAN CORPORATION</div></td>
@@ -2167,7 +2265,7 @@
       <td class="quote-cell">55,200</td>
       <td class="quote-cell">30%</td>
       <td class="quote-cell">76.9</td>
-      <td class="mcap-cell">2.07조원</td>
+      <td class="mcap-cell">2.42조원</td>
       <td class="fin-cell">13.72</td>
       <td class="fin-cell">0.88</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2175,6 +2273,29 @@
       <td style="font-size:12px;color:var(--text-muted)">탄약·함수·방산금속</td>
       <td class="products-cell">포탁·탄약, 방산용 특수금속</td>
       <td><div class="partners-list">RTX (Raytheon), Lockheed Martin</div></td>
+    </tr>
+          <tr data-ticker="082920">
+      <td><div class="company-name">비츠로셀</div><div class="company-name-sub">VITZROCELL Co., Ltd.</div></td>
+      <td><span class="ticker">082920</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">27,750</td>
+      <td class="quote-cell ret-cell">-4.97%</td>
+      <td class="quote-cell ret-cell">+0.91%</td>
+      <td class="quote-cell ret-cell">-36.35%</td>
+      <td class="quote-cell ret-cell">+6.32%</td>
+      <td class="quote-cell ret-cell">+5.71%</td>
+      <td class="quote-cell">67,800</td>
+      <td class="quote-cell">12,591</td>
+      <td class="quote-cell">27.5%</td>
+      <td class="quote-cell">28.8</td>
+      <td class="mcap-cell">1.25조원</td>
+      <td class="fin-cell">37.02</td>
+      <td class="fin-cell">6.38</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">육상무기·차량·탄약</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">방산 전원·ESS</td>
+      <td class="products-cell">군용 전원·ESS·특수 배터리 시스템</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="347700">
       <td><div class="company-name">스피어</div><div class="company-name-sub">Sphere Corporation</div></td>
@@ -2190,7 +2311,7 @@
       <td class="quote-cell">7,050</td>
       <td class="quote-cell">30.2%</td>
       <td class="quote-cell">51.2</td>
-      <td class="mcap-cell">1.89조원</td>
+      <td class="mcap-cell">1.15조원</td>
       <td class="fin-cell">7340.00</td>
       <td class="fin-cell">24.73</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2213,7 +2334,7 @@
       <td class="quote-cell">28,000</td>
       <td class="quote-cell">5.5%</td>
       <td class="quote-cell">16.9</td>
-      <td class="mcap-cell">1.36조원</td>
+      <td class="mcap-cell">1.02조원</td>
       <td class="fin-cell">15.17</td>
       <td class="fin-cell">1.11</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
@@ -2236,7 +2357,7 @@
       <td class="quote-cell">45,650</td>
       <td class="quote-cell">16.2%</td>
       <td class="quote-cell">25.1</td>
-      <td class="mcap-cell">1.29조원</td>
+      <td class="mcap-cell">0.82조원</td>
       <td class="fin-cell">84.38</td>
       <td class="fin-cell">5.18</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2259,7 +2380,7 @@
       <td class="quote-cell">39,000</td>
       <td class="quote-cell">17.6%</td>
       <td class="quote-cell">13.4</td>
-      <td class="mcap-cell">1.13조원</td>
+      <td class="mcap-cell">0.69조원</td>
       <td class="fin-cell">144.75</td>
       <td class="fin-cell">4.02</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
@@ -2282,36 +2403,13 @@
       <td class="quote-cell">49,250</td>
       <td class="quote-cell">11.9%</td>
       <td class="quote-cell">19.0</td>
-      <td class="mcap-cell">0.54조원</td>
+      <td class="mcap-cell">0.44조원</td>
       <td class="fin-cell">27.85</td>
       <td class="fin-cell">3.87</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
       <td><span class="chain-tag">우주·위성·민항</span></td>
       <td style="font-size:12px;color:var(--text-muted)">적외선 영상센서</td>
       <td class="products-cell">적외선 영상센서 — 방산·항공우주</td>
-      <td><div class="partners-list">—</div></td>
-    </tr>
-          <tr data-ticker="010820">
-      <td><div class="company-name">퍼스텍</div><div class="company-name-sub">Firstec</div></td>
-      <td><span class="ticker">010820</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">5,930</td>
-      <td class="quote-cell ret-cell">-0.34%</td>
-      <td class="quote-cell ret-cell">+11.05%</td>
-      <td class="quote-cell ret-cell">-16.95%</td>
-      <td class="quote-cell ret-cell">-18.88%</td>
-      <td class="quote-cell ret-cell">+55.44%</td>
-      <td class="quote-cell">18,730</td>
-      <td class="quote-cell">3,700</td>
-      <td class="quote-cell">14.8%</td>
-      <td class="quote-cell">39.3</td>
-      <td class="mcap-cell">0.38조원</td>
-      <td class="fin-cell">25.74</td>
-      <td class="fin-cell">4.61</td>
-      <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">육상무기·차량·탄약</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">방산 전자·광학</td>
-      <td class="products-cell">군용 광학·전자·통신 장비</td>
       <td><div class="partners-list">—</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
@@ -2625,14 +2723,21 @@
         id: 'hanwha_aero', name: '한화에어로스페이스', nameEn: 'HANWHA AEROSPACE', ticker: '012450', market: 'KOSPI', chain: '항공기·엔진·MRO',
         semType: '엔진·항공기부품·방산', semTypeEn: 'Engines, aerostructures & defense',
         products: 'T-50, FA-50, 엔진·기체', productsEn: 'T-50/FA-50 family, propulsion & structures',
-        revenue: '55.59조원', mcapWon: 55585346278000, per: 37.78, pbr: 5.73, revTier: 3, partners: ['lockheed', 'boeing', 'airbus', { id: 'prog_kf21', edgeLabel: '엔진·기체 참여', edgeLabelEn: 'Propulsion / structures', weight: 0.33 }, { id: 'prog_fa50', edgeLabel: 'T-50/FA-50 엔진', edgeLabelEn: 'T-50 family engines', weight: 0.26 }]
+        revenue: '59.66조원', mcapWon: 59658854957000, per: 37.78, pbr: 5.73, revTier: 3, partners: ['lockheed', 'boeing', 'airbus', { id: 'prog_kf21', edgeLabel: '엔진·기체 참여', edgeLabelEn: 'Propulsion / structures', weight: 0.33 }, { id: 'prog_fa50', edgeLabel: 'T-50/FA-50 엔진', edgeLabelEn: 'T-50 family engines', weight: 0.26 }]
+      },
+
+      {
+        id: 'lig', name: 'LIG디펜스앤에어로스페이스', nameEn: 'LIG Defense&Aerospace', ticker: '079550', market: 'KOSPI', chain: '미사일·레이더·C4ISR',
+        semType: '미사일·핵전장비·영상', semTypeEn: 'Missiles, guided weapons & EO/IR',
+        products: 'Chiron, 유도무기, 감시장비', productsEn: 'MANPADS, guided munitions, surveillance',
+        revenue: '16.15조원', mcapWon: 16148000000000, per: 66.53, pbr: 11.79, revTier: 3, partners: ['lockheed', 'rtx', 'thales', { id: 'prog_cheongung', edgeLabel: '지대공 무장·레이더', edgeLabelEn: 'SAM / radar segment', weight: 0.24 }, { id: 'prog_kf21', edgeLabel: '무장방 패키지', edgeLabelEn: 'KF-21 weapons', weight: 0.18 }, { id: 'exp_poland', edgeLabel: 'K9·주위 수출(참고)', edgeLabelEn: 'Howitzer export (illus.)', weight: 0.12, kind: 'export' }]
       },
 
       {
         id: 'rotem', name: '현대로템', nameEn: 'HYUNDAI ROTEM', ticker: '064350', market: 'KOSPI', chain: '육상무기·차량·탄약',
         semType: '장갑전차·차량·첨도', semTypeEn: 'Armor, rail & defense mobility',
         products: 'K2 장갑전차, 장장전차, 첨도', productsEn: 'K2 MBT, wheeled systems, rolling stock',
-        revenue: '22.76조원', mcapWon: 22756168090500, per: 29.55, pbr: 7.39, revTier: 3, partners: ['bae', 'lockheed']
+        revenue: '15.18조원', mcapWon: 15181692956300, per: 29.55, pbr: 7.39, revTier: 3, partners: ['bae', 'lockheed']
       },
 
       {
@@ -2640,77 +2745,63 @@
         semType: '해군전자·위성레이더·C4ISR', semTypeEn: 'Naval electronics, space radar & C4ISR',
         products: '해군전자전쟁, 위성·사이버', productsEn: 'Combat systems, satellite payloads & cyber',
         tags: ["방산 C4ISR","우주·위성"],
-        revenue: '18.14조원', mcapWon: 18136261344000, per: 74.42, pbr: 3.7, revTier: 3, partners: ['northrop', 'thales', 'lockheed', { id: 'prog_cheongung', edgeLabel: '파이어엘·유도', edgeLabelEn: 'Fire control / guidance', weight: 0.2 }, { id: 'prog_kf21', edgeLabel: 'AESA·전자전', edgeLabelEn: 'AESA & avionics', weight: 0.17 }, { id: 'exp_uae', edgeLabel: '방산·ICT 수출(참고)', edgeLabelEn: 'Defense export (illus.)', weight: 0.09, kind: 'export' }]
-      },
-
-      {
-        id: 'lig', name: 'LIG디펜스앤에어로스페이스', nameEn: 'LIG Defense&Aerospace', ticker: '079550', market: 'KOSPI', chain: '미사일·레이더·C4ISR',
-        semType: '미사일·핵전장비·영상', semTypeEn: 'Missiles, guided weapons & EO/IR',
-        products: 'Chiron, 유도무기, 감시장비', productsEn: 'MANPADS, guided munitions, surveillance',
-        revenue: '16.98조원', mcapWon: 16984000000000, per: 66.53, pbr: 11.79, revTier: 3, partners: ['lockheed', 'rtx', 'thales', { id: 'prog_cheongung', edgeLabel: '지대공 무장·레이더', edgeLabelEn: 'SAM / radar segment', weight: 0.24 }, { id: 'prog_kf21', edgeLabel: '무장방 패키지', edgeLabelEn: 'KF-21 weapons', weight: 0.18 }, { id: 'exp_poland', edgeLabel: 'K9·주위 수출(참고)', edgeLabelEn: 'Howitzer export (illus.)', weight: 0.12, kind: 'export' }]
+        revenue: '14.32조원', mcapWon: 14320089686200, per: 74.42, pbr: 3.7, revTier: 2, partners: ['northrop', 'thales', 'lockheed', { id: 'prog_cheongung', edgeLabel: '파이어엘·유도', edgeLabelEn: 'Fire control / guidance', weight: 0.2 }, { id: 'prog_kf21', edgeLabel: 'AESA·전자전', edgeLabelEn: 'AESA & avionics', weight: 0.17 }, { id: 'exp_uae', edgeLabel: '방산·ICT 수출(참고)', edgeLabelEn: 'Defense export (illus.)', weight: 0.09, kind: 'export' }]
       },
 
       {
         id: 'kai', name: '한국항공우주', nameEn: 'KOREA AEROSPACE INDUSTRIES', ticker: '047810', market: 'KOSPI', chain: '항공기·엔진·MRO',
         semType: '교육기·무인기·소형기', semTypeEn: 'Trainers, helicopters & light jets',
         products: 'T-50, KUH Surion, KF-21 참여', productsEn: 'T-50, Surion, KF-21 program',
-        revenue: '13.73조원', mcapWon: 13734242576300, per: 73.89, pbr: 7.5, revTier: 2, partners: ['lockheed', 'airbus', 'boeing', { id: 'prog_kf21', edgeLabel: '체계종합(참고)', edgeLabelEn: 'KF-21 integrator (illus.)', weight: 0.38 }, { id: 'prog_fa50', edgeLabel: 'T-50/KUH 프로그램', edgeLabelEn: 'T-50 / helicopter programs', weight: 0.22 }]
-      },
-
-      {
-        id: 'def_vitzrocell_co_ltd', name: '비츠로셀', nameEn: 'VITZROCELL Co., Ltd.', ticker: '082920', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
-        semType: '방산 전원·ESS', semTypeEn: 'Defense Power & ESS',
-        products: '군용 전원·ESS·특수 배터리 시스템', productsEn: 'Military power systems, ESS and specialty battery packs',
-        revenue: '2.13조원', mcapWon: 2126421471300, per: 37.02, pbr: 6.38, revTier: 2, partners: []
+        revenue: '12.97조원', mcapWon: 12973936741700, per: 73.89, pbr: 7.5, revTier: 2, partners: ['lockheed', 'airbus', 'boeing', { id: 'prog_kf21', edgeLabel: '체계종합(참고)', edgeLabelEn: 'KF-21 integrator (illus.)', weight: 0.38 }, { id: 'prog_fa50', edgeLabel: 'T-50/KUH 프로그램', edgeLabelEn: 'T-50 / helicopter programs', weight: 0.22 }]
       },
 
       {
         id: 'poongsan', name: '풍산', nameEn: 'POONGSAN CORPORATION', ticker: '103140', market: 'KOSPI', chain: '육상무기·차량·탄약',
         semType: '탄약·함수·방산금속', semTypeEn: 'Ammunition, copper & defense metals',
         products: '포탁·탄약, 방산용 특수금속', productsEn: 'Small/large caliber ammo, specialty alloys',
-        revenue: '2.07조원', mcapWon: 2070994144200, per: 13.72, pbr: 0.88, revTier: 2, partners: ['rtx', 'lockheed']
+        revenue: '2.42조원', mcapWon: 2421297619200, per: 13.72, pbr: 0.88, revTier: 2, partners: ['rtx', 'lockheed']
+      },
+
+      {
+        id: 'def_vitzrocell_co_ltd', name: '비츠로셀', nameEn: 'VITZROCELL Co., Ltd.', ticker: '082920', market: 'KOSDAQ', chain: '육상무기·차량·탄약',
+        semType: '방산 전원·ESS', semTypeEn: 'Defense Power & ESS',
+        products: '군용 전원·ESS·특수 배터리 시스템', productsEn: 'Military power systems, ESS and specialty battery packs',
+        revenue: '1.25조원', mcapWon: 1252620486750, per: 37.02, pbr: 6.38, revTier: 2, partners: []
       },
 
       {
         id: 'defense_sphere_corporation', name: '스피어', nameEn: 'Sphere Corporation', ticker: '347700', market: 'KOSDAQ', chain: '우주·위성·민항',
         semType: '우주항공 특수합금 SCM', semTypeEn: 'Aerospace specialty-alloy supply-chain management',
         products: '우주발사체용 특수합금 공급망 관리', productsEn: 'Specialty-alloy supply-chain management for space launch vehicles',
-        revenue: '1.89조원', mcapWon: 1891494585400, per: 7340, pbr: 24.73, revTier: 2, partners: []
+        revenue: '1.15조원', mcapWon: 1147017804500, per: 7340, pbr: 24.73, revTier: 2, partners: []
       },
 
       {
         id: 'def_snt_dynamics', name: 'SNT다이내믹스', nameEn: 'SNT DYNAMICS', ticker: '003570', market: 'KOSPI', chain: '육상무기·차량·탄약',
         semType: '방산 기계·차량 부품', semTypeEn: 'Defense Mechanical Components',
         products: '방산 차량·무기체계 기계 부품·모듈', productsEn: 'Mechanical modules for defense vehicles and weapon systems',
-        revenue: '1.36조원', mcapWon: 1360035307300, per: 15.17, pbr: 1.11, revTier: 2, partners: []
+        revenue: '1.02조원', mcapWon: 1019195163050, per: 15.17, pbr: 1.11, revTier: 2, partners: []
       },
 
       {
         id: 'satrec', name: '쎄트렉아이', nameEn: 'Satrec Initiative Co., Ltd.', ticker: '099320', market: 'KOSDAQ', chain: '우주·위성·민항',
         semType: '위성·어색·지역정보', semTypeEn: 'Satellites, Earth observation & payloads',
         products: '위성 설계·제조, SIIS 영상', productsEn: 'Satellite buses, SIIS EO services',
-        revenue: '1.29조원', mcapWon: 1290060548400, per: 84.38, pbr: 5.18, revTier: 2, partners: ['airbus', 'nasa', 'spacex']
+        revenue: '0.82조원', mcapWon: 815870211000, per: 84.38, pbr: 5.18, revTier: 1, partners: ['airbus', 'nasa', 'spacex']
       },
 
       {
         id: 'defense_intellian_technologies', name: '인텔리안테크', nameEn: 'Intellian Technologies', ticker: '189300', market: 'KOSDAQ', chain: '우주·위성·민항',
         semType: '위성통신 안테나', semTypeEn: 'Satellite communications antennas',
         products: '해상·육상용 위성안테나·게이트웨이', productsEn: 'Maritime and land satellite antennas and gateways',
-        revenue: '1.13조원', mcapWon: 1125289685600, per: 144.75, pbr: 4.02, revTier: 2, partners: []
+        revenue: '0.69조원', mcapWon: 685052308600, per: 144.75, pbr: 4.02, revTier: 1, partners: []
       },
 
       {
         id: 'def_i3system_ind', name: '아이쓰리시스템', nameEn: 'i3system, Ind.', ticker: '214430', market: 'KOSDAQ', chain: '우주·위성·민항',
         semType: '적외선 영상센서', semTypeEn: '—',
         products: '적외선 영상센서 — 방산·항공우주', productsEn: 'Defense and aerospace products and services',
-        revenue: '0.54조원', mcapWon: 540733910000, per: 27.85, pbr: 3.87, revTier: 1, partners: []
-      },
-
-      {
-        id: 'def_firstec', name: '퍼스텍', nameEn: 'Firstec', ticker: '010820', market: 'KOSPI', chain: '육상무기·차량·탄약',
-        semType: '방산 전자·광학', semTypeEn: 'Defense Electronics & Optics',
-        products: '군용 광학·전자·통신 장비', productsEn: 'Military optics, electronics and communication equipment',
-        revenue: '0.38조원', mcapWon: 380421116400, per: 25.74, pbr: 4.61, revTier: 1, partners: []
+        revenue: '0.44조원', mcapWon: 436971457000, per: 27.85, pbr: 3.87, revTier: 1, partners: []
       }
 
     ];
@@ -3296,6 +3387,8 @@
       <li><a href="../software/korea_software_map.html">한국 IT·소프트웨어 투자 지도</a> · <a href="../software/korea_software_map.html?lang=en" hreflang="en">Korea IT &amp; Software Map</a></li>
       <li><a href="../holdings/korea_holdings_map.html">한국 지주회사 투자 지도</a> · <a href="../holdings/korea_holdings_map.html?lang=en" hreflang="en">Korea Holdings Map</a></li>
       <li><a href="../telecom/korea_telecom_map.html">한국 통신 투자 지도</a> · <a href="../telecom/korea_telecom_map.html?lang=en" hreflang="en">Korea Telecom Map</a></li>
+      <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
+      <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
       <li><a href="../metal/korea_metal_map.html">한국 철강·금속·기계 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel, Metals &amp; Machinery Map</a></li>
       </ul>

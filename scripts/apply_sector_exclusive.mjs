@@ -36,6 +36,8 @@ const HTML_MAPS = [
   { key: 'software', path: 'software/korea_software_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'holdings', path: 'holdings/korea_holdings_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'telecom', path: 'telecom/korea_telecom_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'chemical', path: 'chemical/korea_chemical_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'travel', path: 'travel/korea_travel_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'elec', path: 'elec/korea_elec_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'metal', path: 'metal/korea_metal_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
 ];

@@ -2,10 +2,10 @@
   "phase": "5F",
   "sector": "kcontent",
   "asOf": "2026-08-29",
-  "listedCompanyCount": 20,
-  "nodeCount": 56,
-  "edgeCount": 67,
-  "structuralGenerated": 60,
+  "listedCompanyCount": 25,
+  "nodeCount": 61,
+  "edgeCount": 72,
+  "structuralGenerated": 65,
   "legacyMigrated": 7,
   "manuallyCurated": 3,
   "removedUnsupported": 0,
@@ -79,6 +79,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "030000",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "263750",
       "lane": "ip_rights"
     },
@@ -94,28 +99,18 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "035900",
-      "lane": "label_agency"
+      "ticker": "462870",
+      "lane": "ip_rights"
     },
     {
-      "action": "structural_represents_artist",
-      "ticker": "035900",
-      "artist": "artist:twice"
-    },
-    {
-      "action": "structural_represents_artist",
-      "ticker": "035900",
-      "artist": "artist:stray-kids"
-    },
-    {
-      "action": "structural_represents_artist",
-      "ticker": "035900",
-      "artist": "artist:itzy"
+      "action": "structural_controls_ip",
+      "ticker": "462870",
+      "ip": "content_ip:nikke"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "035900",
-      "category": "content_category:kpop"
+      "ticker": "462870",
+      "category": "content_category:game"
     },
     {
       "action": "structural_member_of",
@@ -144,18 +139,28 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "462870",
-      "lane": "ip_rights"
+      "ticker": "035900",
+      "lane": "label_agency"
     },
     {
-      "action": "structural_controls_ip",
-      "ticker": "462870",
-      "ip": "content_ip:nikke"
+      "action": "structural_represents_artist",
+      "ticker": "035900",
+      "artist": "artist:twice"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "035900",
+      "artist": "artist:stray-kids"
+    },
+    {
+      "action": "structural_represents_artist",
+      "ticker": "035900",
+      "artist": "artist:itzy"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "462870",
-      "category": "content_category:game"
+      "ticker": "035900",
+      "category": "content_category:kpop"
     },
     {
       "action": "structural_member_of",
@@ -166,6 +171,31 @@
       "action": "structural_specializes_in",
       "ticker": "192080",
       "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "079160",
+      "lane": "distributor"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "079160",
+      "category": "content_category:theatrical"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "293490",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "293490",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "214320",
+      "lane": "ip_rights"
     },
     {
       "action": "structural_member_of",
@@ -189,6 +219,16 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "225570",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "225570",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "035760",
       "lane": "production_studio"
     },
@@ -201,16 +241,6 @@
       "action": "structural_specializes_in",
       "ticker": "035760",
       "category": "content_category:broadcast-media"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "293490",
-      "lane": "ip_rights"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "293490",
-      "category": "content_category:game"
     },
     {
       "action": "structural_member_of",
@@ -229,26 +259,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "079160",
-      "lane": "distributor"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "079160",
-      "category": "content_category:theatrical"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "225570",
-      "lane": "ip_rights"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "225570",
-      "category": "content_category:game"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "112040",
       "lane": "ip_rights"
     },
@@ -256,6 +266,11 @@
       "action": "structural_specializes_in",
       "ticker": "112040",
       "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "067160",
+      "lane": "production_studio"
     },
     {
       "action": "structural_member_of",
@@ -269,6 +284,16 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "078340",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "078340",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "095660",
       "lane": "ip_rights"
     },
@@ -279,22 +304,22 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "069080",
+      "ticker": "215200",
       "lane": "ip_rights"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "069080",
-      "category": "content_category:game"
     },
     {
       "action": "structural_member_of",
-      "ticker": "078340",
+      "ticker": "101730",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "069080",
       "lane": "ip_rights"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "078340",
+      "ticker": "069080",
       "category": "content_category:game"
     },
     {

@@ -11,5 +11,70 @@
     "partners": ["3m", "boston_sci"],
     "subSector": "더마패치",
     "level": "core"
+  },
+  {
+    "ticker": "491000",
+    "name": "리브스메드",
+    "nameEn": "LivsMed",
+    "chain": "의료장비·수술",
+    "semType": "수술기구·로봇",
+    "semTypeEn": "Surgical instruments & robotics",
+    "products": "복강경·수술기구·로봇 수술",
+    "productsEn": "Laparoscopic instruments and robotic surgery systems",
+    "partners": ["intuitive", "medtronic", "stryker"],
+    "subSector": "수술기구·로봇",
+    "level": "core"
+  },
+  {
+    "ticker": "458870",
+    "name": "씨어스",
+    "nameEn": "SEERS Technology",
+    "chain": "진단·IVD",
+    "semType": "원격 심전도 모니터링",
+    "semTypeEn": "Remote ECG monitoring",
+    "products": "웨어러블·원격 심전도·헬스케어",
+    "productsEn": "Wearable and remote ECG monitoring",
+    "partners": ["philips", "abbott", "medtronic"],
+    "subSector": "원격 심전도",
+    "level": "core"
+  },
+  {
+    "ticker": "377740",
+    "name": "바이오노트",
+    "nameEn": "BioNote",
+    "chain": "진단·IVD",
+    "semType": "체외진단(IVD)·원료",
+    "semTypeEn": "IVD & diagnostic materials",
+    "products": "진단키트·항원·IVD 원료",
+    "productsEn": "Diagnostic kits, antigens and IVD materials",
+    "partners": ["roche", "abbott", "siemens_health"],
+    "subSector": "체외진단·원료",
+    "level": "core"
+  },
+  {
+    "ticker": "376900",
+    "name": "로킷헬스케어",
+    "nameEn": "Rokit Healthcare",
+    "chain": "의료장비·수술",
+    "semType": "재생의료·바이오프린팅",
+    "semTypeEn": "Regenerative medicine & bioprinting",
+    "products": "3D 바이오프린터·재생의료",
+    "productsEn": "3D bioprinters and regenerative medicine",
+    "partners": ["medtronic", "ge_health", "stryker"],
+    "subSector": "재생의료·바이오프린팅",
+    "level": "core"
+  },
+  {
+    "ticker": "475960",
+    "name": "토모큐브",
+    "nameEn": "Tomocube",
+    "chain": "의료장비·수술",
+    "semType": "홀로그래픽 현미경",
+    "semTypeEn": "Holographic microscopy",
+    "products": "홀로토모그래피·세포·진단 현미경",
+    "productsEn": "Holotomography cell and diagnostic microscopy",
+    "partners": ["olympus", "zeiss", "ge_health"],
+    "subSector": "홀로그래픽 현미경",
+    "level": "core"
   }
 ]

@@ -2,56 +2,56 @@
   "asOf": "2026-08-29",
   "phase": "5I",
   "reviewedBy": "editorial_phase5i",
-  "listedCompanyCount": 17,
-  "nodeCount": 86,
-  "edgeCount": 115,
-  "structuralGenerated": 91,
-  "legacyMigrated": 19,
-  "manuallyCurated": 5,
-  "demotedPeer": 19,
+  "listedCompanyCount": 16,
+  "nodeCount": 81,
+  "edgeCount": 109,
+  "structuralGenerated": 79,
+  "legacyMigrated": 26,
+  "manuallyCurated": 4,
+  "demotedPeer": 26,
   "partnerClassCounts": {
-    "peer": 15,
+    "peer": 21,
     "theme_reference": 3,
-    "inferred_customer_supplier": 1,
-    "invalid": 0,
+    "inferred_customer_supplier": 2,
+    "invalid": 2,
     "duplicate": 0,
-    "cross_sector_reference": 5
+    "cross_sector_reference": 4
   },
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 17,
-    "nodeCount": 86,
-    "edgeCount": 115,
+    "listedCompanyCount": 16,
+    "nodeCount": 81,
+    "edgeCount": 109,
     "nodeCountByType": {
       "group": 8,
       "cross_sector_anchor": 5,
-      "listed_company": 17,
-      "robot_product": 12,
-      "robot_category": 15,
+      "listed_company": 16,
+      "robot_product": 10,
+      "robot_category": 14,
       "application": 10,
       "actuator": 2,
-      "reducer": 2,
+      "reducer": 1,
       "robot_software": 2,
       "robot_component": 1,
       "global_company": 12
     },
-    "robotProductCount": 12,
-    "robotCategoryCount": 15,
+    "robotProductCount": 10,
+    "robotCategoryCount": 14,
     "componentNodeCount": 1,
-    "reducerNodeCount": 2,
+    "reducerNodeCount": 1,
     "actuatorNodeCount": 2,
     "sensorNodeCount": 0,
     "controllerNodeCount": 0,
     "softwareNodeCount": 2,
     "applicationNodeCount": 10,
     "projectNodeCount": 0,
-    "structuralGeneratedEdgeCount": 91,
-    "legacyMigratedEdgeCount": 19,
-    "manuallyCuratedEdgeCount": 5,
+    "structuralGeneratedEdgeCount": 79,
+    "legacyMigratedEdgeCount": 26,
+    "manuallyCuratedEdgeCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 19,
+    "peerEdgeCount": 26,
     "componentSupplyCount": 0,
     "robotSupplyCount": 0,
     "deploymentRelationshipCount": 0,
@@ -61,20 +61,20 @@
     "ownershipEdgeCount": 0,
     "acquisitionCount": 0,
     "projectParticipationCount": 0,
-    "crossSectorReferenceCount": 5,
-    "businessRelationOrphanCount": 17,
-    "directCommercialRelationshipOrphanCount": 17,
-    "classificationOnlyCompanyCount": 0,
-    "hasPeerButNoBusinessCompanyCount": 7,
+    "crossSectorReferenceCount": 4,
+    "businessRelationOrphanCount": 16,
+    "directCommercialRelationshipOrphanCount": 16,
+    "classificationOnlyCompanyCount": 2,
+    "hasPeerButNoBusinessCompanyCount": 10,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 69,
-        "denominator": 115,
-        "percentage": 0.6,
-        "displayValue": "60%",
+        "numerator": 57,
+        "denominator": 109,
+        "percentage": 0.5229357798165137,
+        "displayValue": "52.3%",
         "applicable": true,
         "reason": null
       },
@@ -135,8 +135,8 @@
         "reason": "no_eligible_project_edges"
       },
       "crossSectorReferenceEvidenceCoverage": {
-        "numerator": 5,
-        "denominator": 5,
+        "numerator": 4,
+        "denominator": 4,
         "percentage": 1,
         "displayValue": "100%",
         "applicable": true,
@@ -148,15 +148,15 @@
         "phase5i": "No invented supply/deploy/invest; legacy partners demoted to peer"
       }
     },
-    "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 19,
+    "removedUnsupportedPartnerCount": 2,
+    "demotedLegacyPeerCount": 26,
     "legacyPartnerClassCounts": {
-      "peer": 15,
+      "peer": 21,
       "theme_reference": 3,
-      "inferred_customer_supplier": 1,
-      "invalid": 0,
+      "inferred_customer_supplier": 2,
+      "invalid": 2,
       "duplicate": 0,
-      "cross_sector_reference": 5
+      "cross_sector_reference": 4
     }
   },
   "validate": {
@@ -318,6 +318,31 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "056190",
+      "lane": "system_integration"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "056190",
+      "target": "robot_product:sfa-smart-factory-logistics"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "056190",
+      "target": "robot_category:factory-automation"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "056190",
+      "target": "application:semiconductor-display"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "056190",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "090710",
       "lane": "industrial_robot"
     },
@@ -339,26 +364,6 @@
     {
       "action": "structural_supports_application",
       "ticker": "090710",
-      "target": "application:manufacturing"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "090360",
-      "lane": "industrial_robot"
-    },
-    {
-      "action": "structural_produces_robot",
-      "ticker": "090360",
-      "target": "robot_product:robostar-scara-articulated"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "090360",
-      "target": "robot_category:industrial"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "090360",
       "target": "application:manufacturing"
     },
     {
@@ -388,27 +393,22 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "056190",
-      "lane": "system_integration"
+      "ticker": "090360",
+      "lane": "industrial_robot"
     },
     {
       "action": "structural_produces_robot",
-      "ticker": "056190",
-      "target": "robot_product:sfa-smart-factory-logistics"
+      "ticker": "090360",
+      "target": "robot_product:robostar-scara-articulated"
     },
     {
       "action": "structural_member_of_category",
-      "ticker": "056190",
-      "target": "robot_category:factory-automation"
+      "ticker": "090360",
+      "target": "robot_category:industrial"
     },
     {
       "action": "structural_supports_application",
-      "ticker": "056190",
-      "target": "application:semiconductor-display"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "056190",
+      "ticker": "090360",
       "target": "application:manufacturing"
     },
     {
@@ -508,6 +508,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "439960",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "125490",
       "lane": "precision_component"
     },
@@ -533,73 +538,8 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "389500",
-      "lane": "precision_component"
-    },
-    {
-      "action": "structural_produces_component",
-      "ticker": "389500",
-      "target": "reducer:harmonic"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "389500",
-      "target": "robot_category:reducer"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "389500",
-      "target": "application:robot-drive-train"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "117730",
+      "ticker": "455900",
       "lane": "industrial_robot"
-    },
-    {
-      "action": "structural_produces_robot",
-      "ticker": "117730",
-      "target": "robot_product:t-robotics-transfer-amr"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "117730",
-      "target": "robot_category:industrial"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "117730",
-      "target": "robot_category:amr"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "117730",
-      "target": "application:semiconductor-display"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "475400",
-      "lane": "system_integration"
-    },
-    {
-      "action": "structural_produces_robot",
-      "ticker": "475400",
-      "target": "robot_product:cmes-pick-palletize"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "475400",
-      "target": "robot_category:vision-si"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "475400",
-      "target": "application:logistics"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "475400",
-      "target": "application:palletizing"
     },
     {
       "action": "structural_application_hub",
@@ -745,6 +685,35 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
+      "source": "krx:439960",
+      "target": "global:fanuc",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:439960",
+      "target": "global:abb",
+      "classTag": "peer"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:439960",
+      "partner": "yaskawa"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:439960",
+      "target": "krx:454910",
+      "classTag": "inferred_customer_supplier"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:439960",
+      "target": "krx:277810",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
       "source": "krx:125490",
       "target": "global:keyence",
       "classTag": "peer"
@@ -756,6 +725,29 @@
       "classTag": "peer"
     },
     {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:455900",
+      "target": "global:fanuc",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:455900",
+      "target": "global:abb",
+      "classTag": "peer"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:455900",
+      "partner": "yaskawa"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:455900",
+      "target": "krx:090710",
+      "classTag": "peer"
+    },
+    {
       "action": "add_cross_sector_reference",
       "source": "krx:277810",
       "target": "sector:auto"
@@ -764,11 +756,6 @@
       "action": "add_cross_sector_reference",
       "source": "krx:125490",
       "target": "sector:auto"
-    },
-    {
-      "action": "add_cross_sector_reference",
-      "source": "krx:117730",
-      "target": "sector:semiconductor"
     },
     {
       "action": "add_cross_sector_reference",

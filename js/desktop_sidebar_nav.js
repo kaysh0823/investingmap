@@ -32,6 +32,8 @@
     { id: 'software', path: 'software/korea_software_map.html', icon: '\uD83D\uDCBB', ko: 'IT\u00B7\uC18C\uD504\uD2B8\uC6E8\uC5B4', en: 'IT & Software' },
     { id: 'holdings', path: 'holdings/korea_holdings_map.html', icon: '\uD83C\uDFE2', ko: '\uC9C0\uC8FC\uD68C\uC0AC', en: 'Holdings' },
     { id: 'telecom', path: 'telecom/korea_telecom_map.html', icon: '\uD83D\uDCE1', ko: '\uD1B5\uC2E0', en: 'Telecom' },
+    { id: 'chemical', path: 'chemical/korea_chemical_map.html', icon: '\u2697\uFE0F', ko: '\uD654\uD559\u00B7\uC815\uC720', en: 'Chemicals' },
+    { id: 'travel', path: 'travel/korea_travel_map.html', icon: '\u2708\uFE0F', ko: '\uC5EC\uD589\u00B7\uD56D\uACF5', en: 'Travel' },
   ];
 
   function pageLang(lang) {
@@ -49,7 +51,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|ess|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom|elec|metal)\//i.test(path)) return '../';
+    if (/\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|ess|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom|chemical|travel|elec|metal)\//i.test(path)) return '../';
     return '';
   }
 
@@ -78,6 +80,8 @@
     if (path.indexOf('/software/') !== -1) return 'software';
     if (path.indexOf('/holdings/') !== -1) return 'holdings';
     if (path.indexOf('/telecom/') !== -1) return 'telecom';
+    if (path.indexOf('/chemical/') !== -1) return 'chemical';
+    if (path.indexOf('/travel/') !== -1) return 'travel';
     if (path.indexOf('/elec/') !== -1) return 'elec';
     if (path.indexOf('/metal/') !== -1) return 'metal';
     if (path === '/' || /\/index\.html$/.test(path)) return 'home';

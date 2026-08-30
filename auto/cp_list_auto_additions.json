@@ -1,0 +1,28 @@
+[
+  {
+    "ticker": "403550",
+    "name": "쏘카",
+    "nameEn": "Socar",
+    "chain": "모빌리티·유통",
+    "semType": "모빌리티(카셰어링)",
+    "semTypeEn": "Mobility (car sharing)",
+    "products": "카셰어링·모빌리티 플랫폼",
+    "productsEn": "Car-sharing and mobility platform",
+    "partners": ["uber", "lyft", "toyota"],
+    "subSector": "카셰어링",
+    "level": "core"
+  },
+  {
+    "ticker": "381970",
+    "name": "케이카",
+    "nameEn": "K Car",
+    "chain": "모빌리티·유통",
+    "semType": "중고차 유통",
+    "semTypeEn": "Used-car retail",
+    "products": "중고차 매매·플랫폼",
+    "productsEn": "Used-car sales and marketplace",
+    "partners": ["carvana", "autonation", "vw"],
+    "subSector": "중고차 유통",
+    "level": "core"
+  }
+]
