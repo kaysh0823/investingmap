@@ -176,12 +176,14 @@ assert.ok(
 for (const field of ['high120d', 'low120d', 'high50d', 'low50d', 'bbUpper', 'bbLower']) {
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
-assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '3'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '4'"), 'quotes API cache key version');
 const quotesApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
 for (const field of ['high120d', 'low120d', 'high50d', 'low50d', 'bbUpper', 'bbLower']) {
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
-assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v3'"), 'quotes response cache version');
+assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v4'"), 'quotes response cache version');
+assert.ok(quotesApi.includes("'supabase+naver-live'"), 'hybrid quotes source');
+assert.ok(quotesApi.includes('stale-while-revalidate=120'), 'quotes SWR cache header');
 const migration = fs.readFileSync(
   path.join(ROOT, 'supabase', 'migrations', '0012_stock_quotes_momentum_bounds.sql'),
   'utf8',

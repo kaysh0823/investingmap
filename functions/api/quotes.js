@@ -1,6 +1,6 @@
 /**
  * Cloudflare Pages Function: GET /api/quotes?codes=005930,000660
- * Primary: Supabase stock_quotes_latest (when configured).
+ * Primary: Supabase stock_quotes_latest (derived fields) + Naver live overlay (last/prevClose, regular session).
  * Fallback: Naver Finance crawl (PC sise + mobile integration, cached: 5 min regular / 30 min off-hours).
  * Optional KRX OPEN API on fallback path: 1-year return when warm=1 and secret configured.
  */
@@ -9,7 +9,7 @@ import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
 import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 
-const QUOTES_CACHE_VERSION = 'v3';
+const QUOTES_CACHE_VERSION = 'v4';
 
 function normalizeTicker(t) {
   if (t == null || t === '') return null;
@@ -130,6 +130,45 @@ async function fetchQuotesFromSupabase(codes, config) {
   };
 }
 
+async function fetchNaverLiveOverlay(codes) {
+  return getCachedNaverQuotes(codes, { concurrency: 4 });
+}
+
+/**
+ * Overlay Naver last/prevClose onto Supabase rows; derived fields stay from Supabase.
+ * @param {string[]} codes
+ * @param {Record<string, object>} supabaseItems
+ * @param {Record<string, object>} naverItems
+ */
+function mergeSupabaseWithNaverLive(codes, supabaseItems, naverItems) {
+  const items = {};
+  for (const code of codes) {
+    const base = supabaseItems[code] ? { ...supabaseItems[code] } : {};
+    const naver = naverItems[code];
+    if (naver) {
+      const liveLast = numOrNull(naver.last);
+      if (liveLast != null) {
+        base.last = liveLast;
+        const livePrev = numOrNull(naver.prevClose);
+        if (livePrev != null) base.prevClose = livePrev;
+        if (base.prevClose != null && base.prevClose > 0) {
+          base.chg1dPct = Math.round(((base.last / base.prevClose) - 1) * 10000) / 100;
+        }
+      }
+    }
+    if (Object.keys(base).length) items[code] = base;
+  }
+  return items;
+}
+
+function quotesCacheControl(now = new Date()) {
+  if (krxSessionInfo(now).regular) {
+    return 'public, max-age=300, stale-while-revalidate=120';
+  }
+  const maxAge = edgeCacheMaxAgeSeconds(now);
+  return `public, max-age=${maxAge}`;
+}
+
 async function fetchQuotesFromNaver(codes, authKey, warmHist) {
   const cached = await getCachedNaverQuotes(codes, { concurrency: 4 });
   let items = cached.items;
@@ -182,12 +221,31 @@ export async function onRequest(context) {
     if (supabaseConfig) {
       try {
         const supabase = await fetchQuotesFromSupabase(codes, supabaseConfig);
-        payload = {
-          asOf: supabase.asOf,
-          source: 'supabase',
-          regularSession: supabase.regularSession != null ? supabase.regularSession : session.regular,
-          items: supabase.items,
-        };
+        const regular =
+          supabase.regularSession != null ? supabase.regularSession : session.regular;
+
+        if (regular) {
+          let naverItems = {};
+          try {
+            const naver = await fetchNaverLiveOverlay(codes);
+            naverItems = naver.items || {};
+          } catch {
+            /* Naver failure → Supabase last for all codes */
+          }
+          payload = {
+            asOf: supabase.asOf,
+            source: 'supabase+naver-live',
+            regularSession: regular,
+            items: mergeSupabaseWithNaverLive(codes, supabase.items, naverItems),
+          };
+        } else {
+          payload = {
+            asOf: supabase.asOf,
+            source: 'supabase',
+            regularSession: regular,
+            items: supabase.items,
+          };
+        }
       } catch {
         const naver = await fetchQuotesFromNaver(codes, authKey, warmHist);
         payload = {
@@ -203,14 +261,12 @@ export async function onRequest(context) {
       };
     }
 
-    // Closed session: expire by next KRX 09:00 so a long max-age cannot hide
-    // the next trading day's Supabase sync behind yesterday's CDN entry.
-    const maxAge = edgeCacheMaxAgeSeconds();
+    const cacheControl = quotesCacheControl();
     return new Response(JSON.stringify(payload), {
       headers: {
         ...ch,
         'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': `public, max-age=${maxAge}`,
+        'Cache-Control': cacheControl,
         'X-InvestingMap-Quotes-Version': QUOTES_CACHE_VERSION,
       },
     });

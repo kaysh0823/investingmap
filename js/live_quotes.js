@@ -3,7 +3,7 @@
  */
 (function (global) {
   'use strict';
-  var QUOTES_API_VERSION = '3';
+  var QUOTES_API_VERSION = '4';
 
   var CHUNK_SIZE = 18;
   var POSITION_FALLBACK_KO = '주가 위치';
