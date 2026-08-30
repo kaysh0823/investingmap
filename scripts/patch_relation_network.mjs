@@ -305,6 +305,24 @@ const I18N_PATCH_KO = `
 const I18N_PATCH_EN = `
         rnType: 'Relation type', rnStatus: 'Status', rnConnections: 'Connections', rnGoTable: 'View in company list', rnResetView: 'Show all', rnStake: 'Stake %',`;
 
+const TAB_GRAPH_WIP_KO = '🌐 관계 네트워크 (수정중)';
+const TAB_GRAPH_WIP_EN = '🌐 Relationship network (WIP)';
+
+function patchTabGraphWip(html) {
+  let out = html;
+  out = out.replace(/"tabGraph":\s*"🌐[^"]*"/g, (m) => {
+    if (m.includes('(수정중)') || m.includes('(WIP)')) return m;
+    if (/Relationship|peer map|Peer/i.test(m)) return `"tabGraph": "${TAB_GRAPH_WIP_EN}"`;
+    return `"tabGraph": "${TAB_GRAPH_WIP_KO}"`;
+  });
+  out = out.replace(/tabGraph:\s*'🌐[^']*'/g, (m) => {
+    if (m.includes('(수정중)') || m.includes('(WIP)')) return m;
+    if (/Relationship|peer map|Peer/i.test(m)) return `tabGraph: '${TAB_GRAPH_WIP_EN}'`;
+    return `tabGraph: '${TAB_GRAPH_WIP_KO}'`;
+  });
+  return out;
+}
+
 function upgradePhase25Ui(html) {
   let out = html;
   if (!out.includes('id="rn-legend"')) {
@@ -343,6 +361,7 @@ function upgradePhase25Ui(html) {
   }
   out = out.replace(/relation_network\.js(\?v=\d+)?/g, RN_JS_TAG);
   out = out.replace(/network_profiles\.js(\?v=\d+)?/g, 'network_profiles.js?v=2');
+  out = patchTabGraphWip(out);
   return out;
 }
 
