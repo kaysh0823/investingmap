@@ -38,6 +38,44 @@ export function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+/** Dedupe by ticker before upsert (last row wins). Warn on duplicate/conflicting net_val. */
+export function dedupeInvestorNetByTicker(rows, label = '') {
+  if (!rows.length) return rows;
+  const byTicker = new Map();
+  const dupTickers = [];
+  const conflicts = [];
+
+  for (const r of rows) {
+    const prev = byTicker.get(r.ticker);
+    if (prev) {
+      if (!dupTickers.includes(r.ticker)) dupTickers.push(r.ticker);
+      if (prev.net_val !== r.net_val) {
+        conflicts.push({ ticker: r.ticker, prev: prev.net_val, next: r.net_val });
+      }
+    }
+    byTicker.set(r.ticker, r);
+  }
+
+  if (dupTickers.length) {
+    const sample = dupTickers.slice(0, 8).join(', ');
+    const more = dupTickers.length > 8 ? ` +${dupTickers.length - 8} more` : '';
+    console.warn(
+      `  investor_net duplicate tickers${label ? ` ${label}` : ''}: ${dupTickers.length} (${sample}${more})`,
+    );
+  }
+  for (const c of conflicts.slice(0, 5)) {
+    console.warn(
+      `  investor_net dup net_val mismatch${label ? ` ${label}` : ''} ${c.ticker}: ` +
+        `${c.prev} vs ${c.next} (keeping last)`,
+    );
+  }
+  if (conflicts.length > 5) {
+    console.warn(`  investor_net dup net_val mismatches${label ? ` ${label}` : ''}: +${conflicts.length - 5} more`);
+  }
+
+  return [...byTicker.values()];
+}
+
 export async function resolveLatestTradeYmd(env, now = new Date()) {
   const dates = tradingDates(12, now);
   for (const dayYmd of recentDateCandidates(dates, now).slice(0, 6)) {
@@ -130,8 +168,13 @@ export async function syncInvestorNetDay(dayYmd, supabaseUrl, serviceKey, codes 
       invst_tp_cd: invstTpCd,
       net_val: r.net_val,
     }));
-    totalRows += rows.length;
-    const result = await upsertInvestorNetRows(rows, supabaseUrl, serviceKey);
+    const label = `${tradeDate} invstTpCd=${invstTpCd}`;
+    const deduped = dedupeInvestorNetByTicker(rows, label);
+    if (deduped.length !== rows.length) {
+      console.log(`    deduped ${rows.length} → ${deduped.length}`);
+    }
+    totalRows += deduped.length;
+    const result = await upsertInvestorNetRows(deduped, supabaseUrl, serviceKey);
     upserted += result.upserted;
     failed += result.failed;
     await sleep(350);
