@@ -405,17 +405,15 @@ async function resolveTrendCalendar(config, now = new Date(), liveMap = null) {
   }
 
   const todayDash = kstYmdDash(now);
+  // Only during regular session use today as tDate (live quotes).
+  // Pre-open / closed / holiday: last history session so 1D = prior session's close return
+  // (not 0% from pairing today's empty tip with the same last close as base).
   let tDate = dates[0] || todayDash;
-
   const quotes = liveMap ?? await loadLiveQuoteMcapByTicker(config);
-  if (quotes.size > 0) {
-    if (dates.includes(todayDash)) {
-      tDate = todayDash;
-    } else {
-      tDate = todayDash;
-      dates.unshift(todayDash);
-    }
-  } else {
+  if (krxSessionInfo(now).regular && quotes.size > 0) {
+    tDate = todayDash;
+    if (!dates.includes(todayDash)) dates.unshift(todayDash);
+  } else if (!dates.length) {
     const histLatest = await resolveLatestTradeDateDash(config);
     if (histLatest) tDate = histLatest;
   }

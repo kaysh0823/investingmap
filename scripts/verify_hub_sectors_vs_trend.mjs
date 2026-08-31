@@ -52,13 +52,13 @@ function assertSectorHasMostHorizons(sid, row, label, minFilled = 4) {
 }
 
 const apiSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sectors.js'), 'utf8');
-assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v17'"), 'hub_sectors cache v17');
+assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v19'"), 'hub_sectors cache v19');
 assert.ok(apiSrc.includes('buildAllHorizonReturnsBySector'), 'hub_sectors fills all horizons');
 assert.ok(apiSrc.includes('hasAllHorizons'), 'hub_sectors requires all horizons');
 assert.ok(apiSrc.includes('sector_mcap_trend'), 'hub_sectors source tag');
 
 const trendApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
-assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v4'"), 'hub_trend cache v4');
+assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v5'"), 'hub_trend cache v5');
 assert.ok(trendApi.includes('regularMax: 600'), 'hub_trend daily regular TTL ~10m');
 
 const sparkApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sector_trend.js'), 'utf8');
