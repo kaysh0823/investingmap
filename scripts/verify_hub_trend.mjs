@@ -225,6 +225,8 @@ for (const marker of [
   'sector_intraday_snapshots?',
   'stock_quotes_latest?',
   'fixedMembers',
+  'loadMcapGridForDates',
+  'buildSectorReturnAtHorizon',
   'MIN_FIXED_MEMBERS',
   'applyLiveDailyTip',
   'base: 100',

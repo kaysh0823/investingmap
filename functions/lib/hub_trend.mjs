@@ -16,7 +16,10 @@ const INDEX_CODES = ['KOSPI', 'KOSDAQ'];
 const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
 const MIN_FIXED_MEMBERS = 3;
 const TICKER_BATCH = 80;
+/** Max trade_date values per in.(…) clause (URL + row volume). */
+const DATE_BATCH = 40;
 const CALENDAR_DAYS = 260;
+const CARD_ANCHOR_OFFSETS = [1, 20, 50, 120, 200];
 
 export const TREND_INDEX_CODES = INDEX_CODES;
 
@@ -139,6 +142,15 @@ function windowDatesAsc(dates, anchorIdx, horizonN) {
   return out;
 }
 
+function collectAnchorDates(calendar, horizonNs = CARD_ANCHOR_OFFSETS) {
+  const set = new Set([calendar.tDate]);
+  for (const n of horizonNs) {
+    const idx = calendar.anchorIdx + n;
+    if (idx < calendar.dates.length) set.add(calendar.dates[idx]);
+  }
+  return [...set];
+}
+
 function collectDatesForHorizons(calendar, horizonNs) {
   const set = new Set([calendar.tDate]);
   for (const n of horizonNs) {
@@ -177,6 +189,22 @@ export function trendAnchorMeta(calendar, now = new Date()) {
     mcapPast120dDd: pastDd(120),
     mcapPast200dDd: pastDd(200),
   };
+}
+
+function buildSectorReturnAtHorizon(hubIndex, sectorId, calendar, grid, liveMap, horizonN) {
+  const tickers = sectorTickers(hubIndex, sectorId);
+  const { dates, anchorIdx, tDate } = calendar;
+  const startIdx = anchorIdx + horizonN;
+  if (startIdx >= dates.length) return null;
+
+  const baseDate = dates[startIdx];
+  const members = fixedMembers(tickers, baseDate, tDate, grid, liveMap);
+  if (members.length < minMembersRequired(tickers.length)) return null;
+
+  const baseSum = sumMembersMcap(members, baseDate, grid, null, tDate);
+  const endSum = sumMembersMcap(members, tDate, grid, liveMap, tDate);
+  if (!(baseSum > 0) || !(endSum > 0)) return null;
+  return Math.round(((endSum / baseSum) - 1) * 10000) / 100;
 }
 
 function buildSectorMcapSeries(hubIndex, sectorId, calendar, grid, liveMap, horizonN) {
@@ -240,17 +268,16 @@ export async function buildAllHorizonReturnsBySector(hubIndex, env, now = new Da
   const liveMap = await loadLiveQuoteMcapByTicker(config);
   const calendar = await resolveTrendCalendar(config, now, liveMap);
   const tickers = allHubTickers(hubIndex);
-  const range = mcapGridDateRange(calendar, Object.values(HORIZON_TRADING_DAYS));
-  const grid = range
-    ? await loadMcapGrid(config, tickers, range.from, range.to)
-    : new Map();
+  const anchorDates = collectAnchorDates(calendar);
+  const grid = await loadMcapGridForDates(config, tickers, anchorDates);
 
   for (const horizon of TREND_HORIZONS) {
     const n = HORIZON_TRADING_DAYS[horizon];
     const key = TREND_RET_KEY[horizon];
     for (const sid of SECTOR_ORDER) {
-      const rows = buildSectorMcapSeries(hubIndex, sid, calendar, grid, liveMap, n);
-      bySector[sid][key] = rows ? sectorReturnFromRows(rows) : null;
+      bySector[sid][key] = buildSectorReturnAtHorizon(
+        hubIndex, sid, calendar, grid, liveMap, n,
+      );
     }
   }
   return { bySector, anchors: trendAnchorMeta(calendar, now) };
@@ -355,9 +382,9 @@ async function resolveLatestTradeDateDash(config) {
 }
 
 async function loadDistinctTradeDates(config, limit = CALENDAR_DAYS + 30) {
-  const rows = await safeFetchPaged(
+  const rows = await safeFetch(
     config,
-    'market_index_daily?select=trade_date&order=trade_date.desc',
+    `market_index_daily?select=trade_date&order=trade_date.desc&limit=${Math.max(limit * 2, 400)}`,
   );
   const seen = new Set();
   const out = [];
@@ -401,31 +428,55 @@ async function resolveTrendCalendar(config, now = new Date(), liveMap = null) {
   return { tDate, dates, anchorIdx, todayDash };
 }
 
-/** @param {string} fromDate inclusive YYYY-MM-DD @param {string} toDate inclusive YYYY-MM-DD */
-async function loadMcapGrid(config, tickers, fromDate, toDate) {
-  const grid = new Map();
-  const from = String(fromDate || '').slice(0, 10);
-  const to = String(toDate || '').slice(0, 10);
-  if (!tickers.length || !from || !to) return grid;
+function mergeMcapRowsIntoGrid(grid, rows) {
+  for (const row of rows) {
+    const ticker = normalizeTicker(row.ticker);
+    const date = String(row.trade_date).slice(0, 10);
+    const mcap = numOrNull(row.mcap_won);
+    if (ticker && date && mcap != null && mcap > 0) grid.set(`${ticker}|${date}`, mcap);
+  }
+}
 
-  for (let i = 0; i < tickers.length; i += TICKER_BATCH) {
-    const batch = tickers.slice(i, i + TICKER_BATCH);
-    const tickerFilter = batch.map(encodeURIComponent).join(',');
-    const rows = await safeFetchPaged(
-      config,
-      `stock_price_history?ticker=in.(${tickerFilter})` +
-        `&trade_date=gte.${encodeURIComponent(from)}` +
-        `&trade_date=lte.${encodeURIComponent(to)}` +
-        '&select=ticker,trade_date,mcap_won&order=trade_date.asc',
-    );
-    for (const row of rows) {
-      const ticker = normalizeTicker(row.ticker);
-      const date = String(row.trade_date).slice(0, 10);
-      const mcap = numOrNull(row.mcap_won);
-      if (ticker && date && mcap != null && mcap > 0) grid.set(`${ticker}|${date}`, mcap);
+/** Card path: hub tickers × anchor dates only (typically ≤6 days). */
+async function loadMcapGridForDates(config, tickers, dateDashList) {
+  const grid = new Map();
+  const dates = [...new Set((dateDashList || []).filter(Boolean))];
+  if (!tickers.length || !dates.length) return grid;
+
+  for (let di = 0; di < dates.length; di += DATE_BATCH) {
+    const dateBatch = dates.slice(di, di + DATE_BATCH);
+    const dateFilter = dateBatch.map(encodeURIComponent).join(',');
+    for (let ti = 0; ti < tickers.length; ti += TICKER_BATCH) {
+      const batch = tickers.slice(ti, ti + TICKER_BATCH);
+      const tickerFilter = batch.map(encodeURIComponent).join(',');
+      const rows = await safeFetchPaged(
+        config,
+        `stock_price_history?ticker=in.(${tickerFilter})` +
+          `&trade_date=in.(${dateFilter})` +
+          '&select=ticker,trade_date,mcap_won&order=trade_date.asc',
+      );
+      mergeMcapRowsIntoGrid(grid, rows);
     }
   }
   return grid;
+}
+
+/** Trend series path: gte/lte range with date batches to cap subrequests. */
+async function loadMcapGridForRange(config, tickers, fromDate, toDate) {
+  const from = String(fromDate || '').slice(0, 10);
+  const to = String(toDate || '').slice(0, 10);
+  if (!tickers.length || !from || !to) return new Map();
+
+  const windowDates = await safeFetch(
+    config,
+    `market_index_daily?select=trade_date&trade_date=gte.${encodeURIComponent(from)}` +
+      `&trade_date=lte.${encodeURIComponent(to)}&order=trade_date.asc&limit=400`,
+  );
+  const dates = [...new Set(windowDates.map((row) => String(row.trade_date).slice(0, 10)))].filter(Boolean);
+  if (!dates.length) {
+    return loadMcapGridForDates(config, tickers, [from, to]);
+  }
+  return loadMcapGridForDates(config, tickers, dates);
 }
 
 async function loadLiveQuoteMcapByTicker(config) {
@@ -512,7 +563,7 @@ async function buildDailyPayload(config, hubIndex, horizon, now = new Date()) {
   const liveMap = await loadLiveQuoteMcapByTicker(config);
   const range = mcapGridDateRange(calendar, [horizonN]);
   const grid = range
-    ? await loadMcapGrid(config, tickers, range.from, range.to)
+    ? await loadMcapGridForRange(config, tickers, range.from, range.to)
     : new Map();
 
   payload.sectors = payload.sectors.map((entry) => {
@@ -616,7 +667,7 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
 
   const tickers = allHubTickers(hubIndex);
   const grid = prevDate
-    ? await loadMcapGrid(config, tickers, prevDate, prevDate)
+    ? await loadMcapGridForDates(config, tickers, [prevDate])
     : new Map();
 
   payload.sectors = payload.sectors.map((entry) => {
