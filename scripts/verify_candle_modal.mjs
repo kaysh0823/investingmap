@@ -198,6 +198,7 @@ assert.equal(maPanel.byTime['2026-02-20'].ma20, 10.5, 'MA20 crosshair value');
 
 const investorBars = [];
 for (let i = 0; i < 30; i++) {
+  const base = i >= 20 ? i : null;
   investorBars.push({
     t: `2026-02-${String(i + 1).padStart(2, '0')}`,
     o: 100,
@@ -205,14 +206,26 @@ for (let i = 0; i < 30; i++) {
     l: 99,
     c: 100,
     v: 1000,
-    instOsc5: i >= 20 ? 30 + i : null,
-    instOsc10: i >= 20 ? 40 + i : null,
-    instOsc20: i >= 20 ? 50 + i : null,
-    frgnOsc5: i >= 20 ? 20 + i : null,
-    frgnOsc10: i >= 20 ? 30 + i : null,
-    frgnOsc20: i >= 20 ? 40 + i : null,
-    instOsc: i >= 20 ? 40 + i : null,
-    frgnOsc: i >= 20 ? 30 + i : null,
+    instOsc_5_20: base != null ? 30 + i : null,
+    instOsc_10_20: base != null ? 40 + i : null,
+    instOsc_20_20: base != null ? 50 + i : null,
+    instOsc_5_50: base != null ? 28 + i : null,
+    instOsc_10_50: base != null ? 38 + i : null,
+    instOsc_20_50: base != null ? 48 + i : null,
+    frgnOsc_5_20: base != null ? 20 + i : null,
+    frgnOsc_10_20: base != null ? 30 + i : null,
+    frgnOsc_20_20: base != null ? 40 + i : null,
+    frgnOsc_5_50: base != null ? 18 + i : null,
+    frgnOsc_10_50: base != null ? 28 + i : null,
+    frgnOsc_20_50: base != null ? 38 + i : null,
+    instOsc5: base != null ? 30 + i : null,
+    instOsc10: base != null ? 40 + i : null,
+    instOsc20: base != null ? 50 + i : null,
+    frgnOsc5: base != null ? 20 + i : null,
+    frgnOsc10: base != null ? 30 + i : null,
+    frgnOsc20: base != null ? 40 + i : null,
+    instOsc: base != null ? 40 + i : null,
+    frgnOsc: base != null ? 30 + i : null,
   });
 }
 const investorPanel10 = indicators.buildPanelData(
@@ -220,12 +233,21 @@ const investorPanel10 = indicators.buildPanelData(
   '1y',
   'daily',
   10,
+  20,
 );
 const investorPanel5 = indicators.buildPanelData(
   indicators.normalizeBars(investorBars),
   '1y',
   'daily',
   5,
+  20,
+);
+const investorPanel10p50 = indicators.buildPanelData(
+  indicators.normalizeBars(investorBars),
+  '1y',
+  'daily',
+  10,
+  50,
 );
 assert.equal(investorPanel10.instOscLine.length, 10, 'daily investor instOsc10 lines skip null warmup');
 assert.equal(investorPanel5.instOscLine.length, 10, 'daily investor instOsc5 lines skip null warmup');
@@ -234,14 +256,21 @@ assert.notEqual(
   investorPanel10.instOscLine[9].value,
   '5d vs 10d toggle uses different fields',
 );
-assert.equal(investorPanel10.byTime['2026-02-21'].instOsc10, 60, 'instOsc10 in crosshair byTime');
+assert.notEqual(
+  investorPanel10.instOscLine[9].value,
+  investorPanel10p50.instOscLine[9].value,
+  '20 vs 50 period toggle uses different fields',
+);
+assert.equal(investorPanel10.byTime['2026-02-21'].instOsc_10_20, 60, 'instOsc_10_20 in crosshair byTime');
+assert.equal(investorPanel10p50.byTime['2026-02-21'].instOsc_10_50, 58, 'instOsc_10_50 in crosshair byTime');
 assert.equal(
-  ui.buildInvestorOscLinesFromByTime(investorPanel10.byTime, 20).instOscLine.length,
+  ui.buildInvestorOscLinesFromByTime(investorPanel10.byTime, 20, 20).instOscLine.length,
   10,
-  'byTime rebuild for 20d cum',
+  'byTime rebuild for 20d cum / 20 period',
 );
 assert.match(source, /im-candle-inv-cum/, 'investor cum toggle markup');
-assert.match(source, /im_inv_cum/, 'investor cum localStorage key');
+assert.match(source, /im-candle-inv-period/, 'investor period toggle markup');
+assert.match(source, /im_inv_period/, 'investor period localStorage key');
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 0, 'investor pane hidden on weekly');
 
@@ -351,6 +380,8 @@ try {
   assert.equal(payload.bars.length, 2175, '5Y returns display+weekly-warmup bars');
   assert.ok('instOsc10' in payload.bars[0], 'daily bars include instOsc10');
   assert.ok('frgnOsc10' in payload.bars[0], 'daily bars include frgnOsc10');
+  assert.ok('instOsc_10_20' in payload.bars[0], 'daily bars include instOsc_10_20');
+  assert.ok('instOsc_10_50' in payload.bars[0], 'daily bars include instOsc_10_50');
   assert.match(historyRequests[0], /limit=1000&offset=0/);
   assert.match(historyRequests[1], /limit=1000&offset=1000/);
   assert.match(historyRequests[2], /limit=175&offset=2000/);

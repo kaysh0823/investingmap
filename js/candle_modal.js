@@ -62,8 +62,11 @@
   var ATR_SIGNAL = 9;
   var INVESTOR_OSC_LEVELS = [20, 50, 80];
   var INVESTOR_CUM_OPTIONS = [5, 10, 20];
+  var INVESTOR_PERIOD_OPTIONS = [20, 50];
   var INVESTOR_CUM_STORAGE = 'im_inv_cum';
+  var INVESTOR_PERIOD_STORAGE = 'im_inv_period';
   var DEFAULT_INVESTOR_CUM = 10;
+  var DEFAULT_INVESTOR_PERIOD = 20;
 
   function paneIndexMap() {
     var map = Object.create(null);
@@ -124,7 +127,7 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
-      paneInvestorTpl: '투자자 OSC · 기관·외국인 · {W}일 (0~100)',
+      paneInvestorTpl: '투자자 OSC · 기관·외국인 · 누적 {CUM}일 / 기준 {PER}일 (0~100)',
       paneNorm: 'BBW% · 이격도% (125일)',
       paneAtr: 'ATR(3)/종가% · EMA9',
       liveSession: '장중(현재가)',
@@ -161,7 +164,7 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
-      paneInvestorTpl: 'Investor OSC · Inst·Frgn · {W}d (0-100)',
+      paneInvestorTpl: 'Investor OSC · Inst·Frgn · cum {CUM}d / base {PER}d (0-100)',
       paneNorm: 'BBW% · DISP% (125d)',
       paneAtr: 'ATR(3)/Close% · EMA9',
       liveSession: 'Live (last)',
@@ -175,6 +178,7 @@
     range: DEFAULT_RANGE_BY_INTERVAL.daily,
     interval: 'daily',
     investorCum: DEFAULT_INVESTOR_CUM,
+    investorPeriod: DEFAULT_INVESTOR_PERIOD,
     crosshairTime: null,
     rangeByInterval: {
       daily: DEFAULT_RANGE_BY_INTERVAL.daily,
@@ -717,7 +721,7 @@
       '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer}' +
       '.im-candle-close:hover,.im-candle-close:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
       '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
-      '.im-candle-ranges,.im-candle-intervals,.im-candle-inv-cum{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
+      '.im-candle-ranges,.im-candle-intervals,.im-candle-inv-cum,.im-candle-inv-period{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
       '.im-candle-range{border:0;background:transparent;color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer}' +
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
       '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
@@ -761,6 +765,7 @@
         !document.getElementById('im-candle-pane-labels') ||
         !document.getElementById('im-candle-intervals') ||
         !document.getElementById('im-candle-inv-cum') ||
+        !document.getElementById('im-candle-inv-period') ||
         document.getElementById('im-candle-price'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
@@ -785,6 +790,7 @@
       '<div class="im-candle-ranges" role="group" id="im-candle-ranges"></div>' +
       '<div class="im-candle-intervals" role="group" id="im-candle-intervals"></div>' +
       '<div class="im-candle-inv-cum" role="group" id="im-candle-inv-cum" hidden></div>' +
+      '<div class="im-candle-inv-period" role="group" id="im-candle-inv-period" hidden></div>' +
       '<div class="im-candle-tip" id="im-candle-tip" aria-live="polite"></div>' +
       '</div>' +
       '<div class="im-candle-body">' +
@@ -822,6 +828,7 @@
       syncRangeButtons();
       syncIntervalButtons();
       syncInvestorCumVisibility();
+      syncInvestorPeriodVisibility();
       updateSubtitle();
       document
         .getElementById('im-candle-stack')
@@ -836,6 +843,12 @@
       if (!btn) return;
       var cum = parseInt(btn.getAttribute('data-inv-cum'), 10);
       setInvestorCum(cum);
+    });
+    root.querySelector('#im-candle-inv-period').addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-inv-period]');
+      if (!btn) return;
+      var period = parseInt(btn.getAttribute('data-inv-period'), 10);
+      setInvestorPeriod(period);
     });
     return root;
   }
@@ -854,12 +867,32 @@
     } catch (e2) {}
   }
 
-  function paneInvestorLabel(cum) {
-    return t().paneInvestorTpl.replace('{W}', String(cum != null ? cum : state.investorCum));
+  function readStoredInvestorPeriod() {
+    try {
+      var v = parseInt(localStorage.getItem(INVESTOR_PERIOD_STORAGE), 10);
+      if (INVESTOR_PERIOD_OPTIONS.indexOf(v) >= 0) return v;
+    } catch (e) {}
+    return DEFAULT_INVESTOR_PERIOD;
   }
 
-  function investorOscField(prefix, cum) {
-    return prefix + (cum != null ? cum : state.investorCum);
+  function saveInvestorPeriod(v) {
+    try {
+      localStorage.setItem(INVESTOR_PERIOD_STORAGE, String(v));
+    } catch (e2) {}
+  }
+
+  function paneInvestorLabel(cum, period) {
+    var c = cum != null ? cum : state.investorCum;
+    var p = period != null ? period : state.investorPeriod;
+    return t()
+      .paneInvestorTpl.replace('{CUM}', String(c))
+      .replace('{PER}', String(p));
+  }
+
+  function investorOscField(prefix, cum, period) {
+    var c = cum != null ? cum : state.investorCum;
+    var p = period != null ? period : state.investorPeriod;
+    return prefix + '_' + c + '_' + p;
   }
 
   function oscNum(v) {
@@ -869,20 +902,27 @@
   function copyInvestorOscFields(src, dest) {
     for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
       var w = INVESTOR_CUM_OPTIONS[wi];
-      var ik = 'instOsc' + w;
-      var fk = 'frgnOsc' + w;
-      if (ik in src) dest[ik] = oscNum(src[ik]);
-      if (fk in src) dest[fk] = oscNum(src[fk]);
+      for (var pi = 0; pi < INVESTOR_PERIOD_OPTIONS.length; pi++) {
+        var p = INVESTOR_PERIOD_OPTIONS[pi];
+        var ik = investorOscField('instOsc', w, p);
+        var fk = investorOscField('frgnOsc', w, p);
+        if (ik in src) dest[ik] = oscNum(src[ik]);
+        if (fk in src) dest[fk] = oscNum(src[fk]);
+      }
+      var lk = 'instOsc' + w;
+      var lf = 'frgnOsc' + w;
+      if (lk in src) dest[lk] = oscNum(src[lk]);
+      if (lf in src) dest[lf] = oscNum(src[lf]);
     }
     if ('instOsc' in src) dest.instOsc = oscNum(src.instOsc);
     if ('frgnOsc' in src) dest.frgnOsc = oscNum(src.frgnOsc);
   }
 
-  function buildInvestorOscLinesFromByTime(byTime, cum) {
+  function buildInvestorOscLinesFromByTime(byTime, cum, period) {
     var instOscLine = [];
     var frgnOscLine = [];
-    var ik = investorOscField('instOsc', cum);
-    var fk = investorOscField('frgnOsc', cum);
+    var ik = investorOscField('instOsc', cum, period);
+    var fk = investorOscField('frgnOsc', cum, period);
     var times = Object.keys(byTime).sort();
     for (var i = 0; i < times.length; i++) {
       var time = times[i];
@@ -898,7 +938,11 @@
   function refreshInvestorOscSeries() {
     var refs = state.seriesRefs;
     if (!refs || !refs.instOsc || !refs.frgnOsc || !state.barsByTime) return;
-    var lines = buildInvestorOscLinesFromByTime(state.barsByTime, state.investorCum);
+    var lines = buildInvestorOscLinesFromByTime(
+      state.barsByTime,
+      state.investorCum,
+      state.investorPeriod,
+    );
     refs.instOsc.setData(lines.instOscLine);
     refs.frgnOsc.setData(lines.frgnOscLine);
     syncPaneLabels();
@@ -910,6 +954,14 @@
     state.investorCum = cum;
     saveInvestorCum(cum);
     syncInvestorCumButtons();
+    refreshInvestorOscSeries();
+  }
+
+  function setInvestorPeriod(period) {
+    if (INVESTOR_PERIOD_OPTIONS.indexOf(period) < 0 || period === state.investorPeriod) return;
+    state.investorPeriod = period;
+    saveInvestorPeriod(period);
+    syncInvestorPeriodButtons();
     refreshInvestorOscSeries();
   }
 
@@ -931,8 +983,32 @@
     wrap.innerHTML = html;
   }
 
+  function syncInvestorPeriodButtons() {
+    var wrap = document.getElementById('im-candle-inv-period');
+    if (!wrap) return;
+    var html = '';
+    for (var i = 0; i < INVESTOR_PERIOD_OPTIONS.length; i++) {
+      var period = INVESTOR_PERIOD_OPTIONS[i];
+      html +=
+        '<button type="button" class="im-candle-range" data-inv-period="' +
+        period +
+        '" aria-pressed="' +
+        (period === state.investorPeriod ? 'true' : 'false') +
+        '">' +
+        period +
+        '</button>';
+    }
+    wrap.innerHTML = html;
+  }
+
   function syncInvestorCumVisibility() {
     var wrap = document.getElementById('im-candle-inv-cum');
+    if (!wrap) return;
+    wrap.hidden = state.interval !== 'daily';
+  }
+
+  function syncInvestorPeriodVisibility() {
+    var wrap = document.getElementById('im-candle-inv-period');
     if (!wrap) return;
     wrap.hidden = state.interval !== 'daily';
   }
@@ -945,7 +1021,7 @@
       price: labels.panePrice,
       vol: labels.paneVol,
       macd: labels.paneMacd,
-      investor: paneInvestorLabel(state.investorCum),
+      investor: paneInvestorLabel(state.investorCum, state.investorPeriod),
       norm: labels.paneNorm,
       atr: labels.paneAtr,
     };
@@ -1046,11 +1122,15 @@
     return bars;
   }
 
-  function buildPanelData(fullBars, range, interval, investorCum) {
+  function buildPanelData(fullBars, range, interval, investorCum, investorPeriod) {
     var cum =
       investorCum != null && INVESTOR_CUM_OPTIONS.indexOf(investorCum) >= 0
         ? investorCum
         : state.investorCum;
+    var period =
+      investorPeriod != null && INVESTOR_PERIOD_OPTIONS.indexOf(investorPeriod) >= 0
+        ? investorPeriod
+        : state.investorPeriod;
     var closes = fullBars.map(function (b) {
       return b.c;
     });
@@ -1125,8 +1205,8 @@
         macdSignalLine.push({ time: b.t, value: macdPack.signal[i] });
       }
       if (showInvestor) {
-        var iv = oscNum(b[investorOscField('instOsc', cum)]);
-        var fv = oscNum(b[investorOscField('frgnOsc', cum)]);
+        var iv = oscNum(b[investorOscField('instOsc', cum, period)]);
+        var fv = oscNum(b[investorOscField('frgnOsc', cum, period)]);
         if (iv != null) instOscLine.push({ time: b.t, value: iv });
         if (fv != null) frgnOscLine.push({ time: b.t, value: fv });
       }
@@ -1161,11 +1241,16 @@
       if (showInvestor) {
         for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
           var w = INVESTOR_CUM_OPTIONS[wi];
+          for (var pi = 0; pi < INVESTOR_PERIOD_OPTIONS.length; pi++) {
+            var p = INVESTOR_PERIOD_OPTIONS[pi];
+            row[investorOscField('instOsc', w, p)] = oscNum(b[investorOscField('instOsc', w, p)]);
+            row[investorOscField('frgnOsc', w, p)] = oscNum(b[investorOscField('frgnOsc', w, p)]);
+          }
           row['instOsc' + w] = oscNum(b['instOsc' + w]);
           row['frgnOsc' + w] = oscNum(b['frgnOsc' + w]);
         }
-        row.instOsc = row[investorOscField('instOsc', cum)];
-        row.frgnOsc = row[investorOscField('frgnOsc', cum)];
+        row.instOsc = row[investorOscField('instOsc', cum, period)];
+        row.frgnOsc = row[investorOscField('frgnOsc', cum, period)];
       } else {
         row.instOsc = null;
         row.frgnOsc = null;
@@ -1265,8 +1350,8 @@
       ' ' +
       fmtNum(b.macdHist, 2);
     if (state.interval === 'daily') {
-      var ik = investorOscField('instOsc', state.investorCum);
-      var fk = investorOscField('frgnOsc', state.investorCum);
+      var ik = investorOscField('instOsc', state.investorCum, state.investorPeriod);
+      var fk = investorOscField('frgnOsc', state.investorCum, state.investorPeriod);
       text +=
         ' · ' +
         labels.instOsc +
@@ -1653,7 +1738,13 @@
         updateSubtitle();
 
         if (state.interval === 'weekly') fullBars = aggregateWeeklyBars(fullBars);
-        var data = buildPanelData(fullBars, range, state.interval, state.investorCum);
+        var data = buildPanelData(
+          fullBars,
+          range,
+          state.interval,
+          state.investorCum,
+          state.investorPeriod,
+        );
         if (!data.barCount) {
           destroyCharts();
           setStatus(labels.empty, true);
@@ -1704,8 +1795,12 @@
     state.ticker = ticker;
     state.name = resolveName(ticker, opts && opts.name);
     state.investorCum = readStoredInvestorCum();
+    state.investorPeriod = readStoredInvestorPeriod();
     if (opts && opts.investorCum && INVESTOR_CUM_OPTIONS.indexOf(opts.investorCum) >= 0) {
       state.investorCum = opts.investorCum;
+    }
+    if (opts && opts.investorPeriod && INVESTOR_PERIOD_OPTIONS.indexOf(opts.investorPeriod) >= 0) {
+      state.investorPeriod = opts.investorPeriod;
     }
     state.interval =
       opts && opts.interval && INTERVALS.indexOf(opts.interval) >= 0 ? opts.interval : 'daily';
@@ -1727,7 +1822,9 @@
     syncRangeButtons();
     syncIntervalButtons();
     syncInvestorCumButtons();
+    syncInvestorPeriodButtons();
     syncInvestorCumVisibility();
+    syncInvestorPeriodVisibility();
     syncPaneLabels();
     document
       .getElementById('im-candle-stack')
@@ -1840,7 +1937,9 @@
     syncRangeButtons();
     syncIntervalButtons();
     syncInvestorCumButtons();
+    syncInvestorPeriodButtons();
     syncInvestorCumVisibility();
+    syncInvestorPeriodVisibility();
     syncPaneLabels();
     refreshInvestorOscSeries();
   }
@@ -1866,9 +1965,12 @@
       paneMargins: PANE_MARGINS,
       paneStretch: paneStretch,
       investorCumOptions: INVESTOR_CUM_OPTIONS,
+      investorPeriodOptions: INVESTOR_PERIOD_OPTIONS,
       readStoredInvestorCum: readStoredInvestorCum,
+      readStoredInvestorPeriod: readStoredInvestorPeriod,
       buildInvestorOscLinesFromByTime: buildInvestorOscLinesFromByTime,
       setInvestorCum: setInvestorCum,
+      setInvestorPeriod: setInvestorPeriod,
       paneInvestorLabel: paneInvestorLabel,
     },
     _indicators: {

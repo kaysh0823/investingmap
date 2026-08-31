@@ -11,6 +11,9 @@ import {
   computeInvestorOscSeries,
   ewmSpan,
   groupInvestorNetByDate,
+  investorOscBarKey,
+  INVESTOR_CUM_WINDOWS,
+  INVESTOR_OSC_PERIODS,
   rollingSum,
 } from '../functions/lib/investor_osc.mjs';
 import { fetchTickerOhlcBars, getSupabaseConfig } from '../functions/lib/ticker_ohlc.mjs';
@@ -37,17 +40,30 @@ function loadEnv() {
 // rolling 5, min_periods=1
 assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
 
-// warmup: RANGE_WINDOW (20) + cumWindow (10) − 1 ⇒ first OSC at bar 29
+// warmup: cumWindow + period − 1 ⇒ first OSC at bar index (w + p − 2)
 {
   const nets = [];
   for (let i = 0; i < 40; i++) nets.push(100 + i * 10);
-  const osc10 = computeInvestorOscSeries(nets, 10);
+  const osc10 = computeInvestorOscSeries(nets, 10, 20);
   assert.equal(osc10[27], null, 'OSC null before 20-day range on 10-day cum');
   assert.ok(Number.isFinite(osc10[28]), 'OSC finite at bar 29');
-  const osc5 = computeInvestorOscSeries(nets, 5);
+  const osc5 = computeInvestorOscSeries(nets, 5, 20);
   assert.ok(Number.isFinite(osc5[23]), 'OSC finite at bar 24 on 5-day cum');
   assert.ok(Number.isFinite(osc5[27]), '5d OSC ready before 10d at bar 28');
   assert.equal(osc10[27], null, '10d OSC still warming at bar 28');
+  const osc10p50 = computeInvestorOscSeries(
+    Array.from({ length: 70 }, (_, i) => 100 + (i % 7) * 50),
+    10,
+    50,
+  );
+  assert.equal(osc10p50[57], null, 'period-50 OSC null before warmup');
+  assert.ok(Number.isFinite(osc10p50[58]), 'period-50 OSC finite after warmup');
+  const osc10p20 = computeInvestorOscSeries(
+    Array.from({ length: 70 }, (_, i) => 100 + (i % 7) * 50),
+    10,
+    20,
+  );
+  assert.ok(Number.isFinite(osc10p20[69]) && Number.isFinite(osc10p50[69]), 'both periods on tail bar');
 }
 
 // ewm span=2 null propagation
@@ -82,6 +98,17 @@ assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
   assert.ok('instOsc5' in bars[0] && 'instOsc10' in bars[0] && 'instOsc20' in bars[0]);
   assert.ok('frgnOsc5' in bars[0] && 'frgnOsc10' in bars[0] && 'frgnOsc20' in bars[0]);
   assert.equal(bars[1].instOsc, bars[1].instOsc10, 'instOsc aliases instOsc10');
+  for (const cum of INVESTOR_CUM_WINDOWS) {
+    for (const period of INVESTOR_OSC_PERIODS) {
+      assert.ok(investorOscBarKey('instOsc', cum, period) in bars[0]);
+      assert.ok(investorOscBarKey('frgnOsc', cum, period) in bars[0]);
+    }
+    assert.equal(
+      bars[1][`instOsc${cum}`],
+      bars[1][investorOscBarKey('instOsc', cum, 20)],
+      `instOsc${cum} aliases period-20`,
+    );
+  }
 }
 
 const ticker = process.argv[2] || '005930';
@@ -102,9 +129,15 @@ if (config?.url && config?.anonKey) {
   assert.ok('instOsc5' in last && 'instOsc10' in last && 'instOsc20' in last);
   assert.ok('frgnOsc5' in last && 'frgnOsc10' in last && 'frgnOsc20' in last);
   assert.equal(last.instOsc, last.instOsc10, 'instOsc aliases 10d');
+  for (const cum of [5, 10, 20]) {
+    for (const period of [20, 50]) {
+      assert.ok(investorOscBarKey('instOsc', cum, period) in last, `${cum}/${period} inst field`);
+      assert.ok(investorOscBarKey('frgnOsc', cum, period) in last, `${cum}/${period} frgn field`);
+    }
+  }
   console.log(
-    `Live ${ticker} @ ${last.t}: instOsc10=${last.instOsc10}, frgnOsc10=${last.frgnOsc10} ` +
-      `(5d=${last.instOsc5}, 20d=${last.instOsc20}; filled ${withInst.length}/${payload.bars.length})`,
+    `Live ${ticker} @ ${last.t}: instOsc_10_20=${last.instOsc_10_20}, instOsc_10_50=${last.instOsc_10_50} ` +
+      `(legacy10=${last.instOsc10}; filled ${withInst.length}/${payload.bars.length})`,
   );
 } else {
   console.log('Skipping live Supabase check (SUPABASE_URL/ANON_KEY missing)');

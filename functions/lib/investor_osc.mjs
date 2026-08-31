@@ -12,11 +12,17 @@ export const INVESTOR_OSC_CODES = Object.freeze([
   INVESTOR_FRGN_CODE,
 ]);
 export const INVESTOR_CUM_WINDOWS = Object.freeze([5, 10, 20]);
+export const INVESTOR_OSC_PERIODS = Object.freeze([20, 50]);
 
 const INST_CODE_SET = new Set(INVESTOR_INST_CODES);
 const DEFAULT_CUM_WINDOW = 10;
-const RANGE_WINDOW = 20;
+const DEFAULT_OSC_PERIOD = 20;
 const EMA_SPAN = 2;
+
+/** Bar field name: instOsc_10_20, frgnOsc_5_50, … */
+export function investorOscBarKey(prefix, cum, period) {
+  return `${prefix}_${cum}_${period}`;
+}
 
 /**
  * Rolling sum; minPeriods defaults to 1.
@@ -100,16 +106,22 @@ function clipOsc(v) {
 
 /**
  * Stochastic-style OSC on a daily net series aligned to trading bars.
- * Full cumWindow cumulative net, then RANGE_WINDOW (20) min/max.
+ * Full cumWindow cumulative net, then `period`-bar min/max (default 20).
  * @param {number[]} netByBar — one value per bar (missing days = 0)
  * @param {number} [cumWindow=10] cumulative net window (5, 10, or 20)
+ * @param {number} [period=20] stochastic lookback (20 or 50)
  * @returns {(number|null)[]}
  */
-export function computeInvestorOscSeries(netByBar, cumWindow = DEFAULT_CUM_WINDOW) {
+export function computeInvestorOscSeries(
+  netByBar,
+  cumWindow = DEFAULT_CUM_WINDOW,
+  period = DEFAULT_OSC_PERIOD,
+) {
   if (!netByBar?.length) return [];
   const w = Number(cumWindow) || DEFAULT_CUM_WINDOW;
+  const p = Number(period) || DEFAULT_OSC_PERIOD;
   const cum = rollingSum(netByBar, w, w);
-  const { lo, hi } = rollingMinMax(cum, RANGE_WINDOW, RANGE_WINDOW);
+  const { lo, hi } = rollingMinMax(cum, p, p);
   const raw = new Array(netByBar.length).fill(null);
   for (let i = 0; i < netByBar.length; i++) {
     if (lo[i] == null || hi[i] == null || cum[i] == null) continue;
@@ -183,35 +195,45 @@ export async function fetchLatestInvestorNetSignature(config) {
 }
 
 function clearInvestorOscOnBar(bar) {
-  for (const w of INVESTOR_CUM_WINDOWS) {
-    bar[`instOsc${w}`] = null;
-    bar[`frgnOsc${w}`] = null;
+  for (const cum of INVESTOR_CUM_WINDOWS) {
+    for (const period of INVESTOR_OSC_PERIODS) {
+      bar[investorOscBarKey('instOsc', cum, period)] = null;
+      bar[investorOscBarKey('frgnOsc', cum, period)] = null;
+    }
+    bar[`instOsc${cum}`] = null;
+    bar[`frgnOsc${cum}`] = null;
   }
   bar.instOsc = null;
   bar.frgnOsc = null;
 }
 
 /**
- * Attach instOsc5/10/20 and frgnOsc5/10/20 to daily OHLC bars (mutates bars).
- * instOsc / frgnOsc alias instOsc10 / frgnOsc10.
+ * Attach instOsc_{cum}_{period} and frgnOsc_{cum}_{period} to daily OHLC bars (mutates bars).
+ * Legacy instOsc5/10/20 and instOsc / frgnOsc alias the period-20 combination.
  * @param {Array<{ t: string }>} bars ascending trade dates
  * @param {Map<string, { inst: number, frgn: number }>} byDate
  */
 export function attachInvestorOscToBars(bars, byDate) {
   const instNet = bars.map((b) => byDate.get(b.t)?.inst ?? 0);
   const frgnNet = bars.map((b) => byDate.get(b.t)?.frgn ?? 0);
-  const byWindow = new Map();
-  for (const w of INVESTOR_CUM_WINDOWS) {
-    byWindow.set(w, {
-      inst: computeInvestorOscSeries(instNet, w),
-      frgn: computeInvestorOscSeries(frgnNet, w),
-    });
+  const byCombo = new Map();
+  for (const cum of INVESTOR_CUM_WINDOWS) {
+    for (const period of INVESTOR_OSC_PERIODS) {
+      byCombo.set(`${cum}_${period}`, {
+        inst: computeInvestorOscSeries(instNet, cum, period),
+        frgn: computeInvestorOscSeries(frgnNet, cum, period),
+      });
+    }
   }
   for (let i = 0; i < bars.length; i++) {
-    for (const w of INVESTOR_CUM_WINDOWS) {
-      const pack = byWindow.get(w);
-      bars[i][`instOsc${w}`] = pack.inst[i] ?? null;
-      bars[i][`frgnOsc${w}`] = pack.frgn[i] ?? null;
+    for (const cum of INVESTOR_CUM_WINDOWS) {
+      for (const period of INVESTOR_OSC_PERIODS) {
+        const pack = byCombo.get(`${cum}_${period}`);
+        bars[i][investorOscBarKey('instOsc', cum, period)] = pack.inst[i] ?? null;
+        bars[i][investorOscBarKey('frgnOsc', cum, period)] = pack.frgn[i] ?? null;
+      }
+      bars[i][`instOsc${cum}`] = bars[i][investorOscBarKey('instOsc', cum, 20)];
+      bars[i][`frgnOsc${cum}`] = bars[i][investorOscBarKey('frgnOsc', cum, 20)];
     }
     bars[i].instOsc = bars[i].instOsc10;
     bars[i].frgnOsc = bars[i].frgnOsc10;
