@@ -213,6 +213,24 @@
     var innerHeight = height - margin.top - margin.bottom;
     var allPoints = lines.reduce(function (out, line) { return out.concat(line.series); }, []);
     var xDomain = d3.extent(allPoints, function (point) { return point.t; });
+    if (state.horizon === '1d') {
+      var sessionDay = state.payload && state.payload.tradeDate;
+      if (!sessionDay && allPoints.length) {
+        var kst = new Date(allPoints[0].t.getTime() + 9 * 60 * 60 * 1000);
+        sessionDay =
+          kst.getUTCFullYear() +
+          '-' +
+          String(kst.getUTCMonth() + 1).padStart(2, '0') +
+          '-' +
+          String(kst.getUTCDate()).padStart(2, '0');
+      }
+      if (sessionDay) {
+        xDomain = [
+          new Date(sessionDay + 'T09:00:00+09:00'),
+          new Date(sessionDay + 'T15:30:00+09:00'),
+        ];
+      }
+    }
     if (+xDomain[0] === +xDomain[1]) {
       var padMs = state.horizon === '1d' ? 30 * 60 * 1000 : 24 * 60 * 60 * 1000;
       xDomain = [new Date(+xDomain[0] - padMs), new Date(+xDomain[1] + padMs)];

@@ -12,7 +12,7 @@ for (const marker of [
   'id="hub-trend-chart"',
   'id="hub-trend-legend"',
   'id="hub-trend-tooltip"',
-  'hub_trend_chart.js?v=2',
+  'hub_trend_chart.js?v=3',
   'd3/7.9.0/d3.min.js',
   "InvestingMapHubTrendChart.init({ lang: lang, horizon: '20d' })",
   "trendTitle: '섹터 변동 추이'",
@@ -54,6 +54,9 @@ for (const marker of [
   'MutationObserver',
   '5 * 60 * 1000',
   'global.InvestingMapHubTrendChart',
+  'payload.tradeDate',
+  'T15:30:00+09:00',
+  "state.horizon === '1d'",
 ]) {
   assert.ok(chart.includes(marker), `hub trend chart marker missing: ${marker}`);
 }

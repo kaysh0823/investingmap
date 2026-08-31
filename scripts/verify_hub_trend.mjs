@@ -208,7 +208,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v4'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v6'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -231,6 +231,9 @@ for (const marker of [
   'applyLiveDailyTip',
   'base: 100',
   'logIndexSeries',
+  'sessionOpenIso',
+  'scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash',
+  'payload.tradeDate = tradeDateDash',
 ]) {
   assert.ok(core.includes(marker), `hub trend core marker missing: ${marker}`);
 }

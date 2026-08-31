@@ -5,7 +5,7 @@
  */
 import { SECTOR_ORDER, normalizeTicker } from './hub_dashboard_core.mjs';
 import { normalizeSectorHorizon } from './hub_api_cache.mjs';
-import { krxSessionInfo, kstAnchorYmd, kstYmdDash } from './krx_session.mjs';
+import { krxSessionInfo, kstAnchorYmd, kstDateParts, kstYmdDash } from './krx_session.mjs';
 import { tradingDates } from './krx_yoy.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 
@@ -612,17 +612,44 @@ async function dailyCloseFallback(config, codes) {
   return out;
 }
 
-function scaleIntradayToFixedMembers(snapRows, baseSum, liveSum, prevDate) {
+function sessionOpenIso(sessionDate) {
+  return `${sessionDate}T09:00:00+09:00`;
+}
+
+function sessionCloseIso(sessionDate) {
+  return `${sessionDate}T15:30:00+09:00`;
+}
+
+const SESSION_OPEN_MIN = 9 * 60;
+const SESSION_CLOSE_MIN = 15 * 60 + 30;
+
+/** Tip timestamp stuck on sessionDate (never spills into the next calendar day). */
+function sessionTipIso(sessionDate, now = new Date()) {
+  if (!krxSessionInfo(now).regular) return sessionCloseIso(sessionDate);
+  const p = kstDateParts(now);
+  const minutes = Math.max(SESSION_OPEN_MIN, Math.min(SESSION_CLOSE_MIN, p.hour * 60 + p.minute));
+  const hh = String(Math.floor(minutes / 60)).padStart(2, '0');
+  const mm = String(minutes % 60).padStart(2, '0');
+  return `${sessionDate}T${hh}:${mm}:00+09:00`;
+}
+
+/**
+ * Scale intraday snapshot shape onto fixed-member base→live mcap sums.
+ * Base VALUE is prior-session close; TIMESTAMP is session open (tradeDate 09:00)
+ * so the 1D chart x-axis stays on the trading day.
+ */
+function scaleIntradayToFixedMembers(snapRows, baseSum, liveSum, sessionDate, now = new Date()) {
+  const openT = sessionOpenIso(sessionDate);
   if (!snapRows.length) {
     return [
-      { t: `${prevDate}T09:00:00+09:00`, value: baseSum },
-      { t: new Date().toISOString(), value: liveSum },
+      { t: openT, value: baseSum },
+      { t: sessionTipIso(sessionDate, now), value: liveSum },
     ];
   }
   const firstSnap = numOrNull(snapRows[0].value);
   const lastSnap = numOrNull(snapRows[snapRows.length - 1].value);
   const denom = lastSnap != null && firstSnap != null ? lastSnap - firstSnap : 0;
-  const rows = [{ t: `${prevDate}T09:00:00+09:00`, value: baseSum }];
+  const rows = [{ t: openT, value: baseSum }];
   for (let i = 0; i < snapRows.length; i++) {
     const snap = snapRows[i];
     const snapVal = numOrNull(snap.value);
@@ -644,6 +671,7 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
   if (!tradeDate) return payload;
 
   const tradeDateDash = String(tradeDate).slice(0, 10);
+  payload.tradeDate = tradeDateDash;
   const liveMap = await loadLiveQuoteMcapByTicker(config);
   const [sectorRows, indexRows, calendar] = await Promise.all([
     safeFetchPaged(
@@ -688,7 +716,7 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
       .map((row) => ({ ts: row.ts, value: numOrNull(row.mcap_sum) }))
       .filter((row) => row.ts && row.value > 0);
 
-    const rows = scaleIntradayToFixedMembers(snaps, baseSum, liveSum, prevDate);
+    const rows = scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash, now);
     return { ...entry, series: downsampleTrend(rebaseTo100(rows, 'value', baseSum)) };
   });
 
@@ -702,7 +730,7 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
     const prevClose = own.map((row) => numOrNull(row.prev_close)).find((value) => value > 0);
     if (own.length && prevClose != null) {
       const rows = [
-        { t: `${tradeDate}T09:00:00+09:00`, value: prevClose },
+        { t: sessionOpenIso(tradeDateDash), value: prevClose },
         ...own.map((row) => ({ t: row.captured_at, value: numOrNull(row.value) })),
       ];
       return { ...entry, series: downsampleTrend(rebaseTo100(rows, 'value', prevClose)) };
@@ -710,8 +738,8 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
     const daily = fallback.get(entry.code);
     if (!daily) return entry;
     const rows = [
-      { t: `${daily.date}T09:00:00+09:00`, value: daily.prev },
-      { t: `${daily.date}T15:30:00+09:00`, value: daily.last },
+      { t: sessionOpenIso(tradeDateDash), value: daily.prev },
+      { t: sessionCloseIso(tradeDateDash), value: daily.last },
     ];
     return { ...entry, series: rebaseTo100(rows, 'value', daily.prev) };
   });
