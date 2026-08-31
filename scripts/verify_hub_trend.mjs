@@ -46,29 +46,41 @@ assert.deepEqual(sampled.at(-1), long.at(-1));
 
 // --- payload fixtures -------------------------------------------------------
 
-function makeDates(count) {
+function makeTradingDates(count, endDate) {
   const out = [];
-  const cursor = new Date(Date.UTC(2025, 0, 1));
-  for (let i = 0; i < count; i++) {
-    out.push(cursor.toISOString().slice(0, 10));
-    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  const cursor = new Date(endDate);
+  while (out.length < count) {
+    const dow = cursor.getUTCDay();
+    if (dow !== 0 && dow !== 6) out.unshift(cursor.toISOString().slice(0, 10));
+    cursor.setUTCDate(cursor.getUTCDate() - 1);
   }
   return out;
 }
 
-const DATES = makeDates(260);
+const FIXTURE_NOW = new Date(Date.UTC(2025, 8, 18));
+const DATES = makeTradingDates(260, FIXTURE_NOW);
 const LAST_DATE = DATES.at(-1);
 const SECTORS = ['semi', 'bio'];
+const FIXTURE_TICKERS = {
+  semi: ['042700', '007660', '036930'],
+  bio: ['207940', '068270', '196170'],
+};
 
 function fixtures({ intraday }) {
   const marketIndexDaily = [];
-  const sectorMcapDaily = [];
+  const stockPriceHistory = [];
   DATES.forEach((date, i) => {
     for (const code of TREND_INDEX_CODES) {
       marketIndexDaily.push({ trade_date: date, index_code: code, close: 2000 + i });
     }
     for (const sector of SECTORS) {
-      sectorMcapDaily.push({ trade_date: date, sector_id: sector, mcap_sum: 1e12 + i * 1e9 });
+      for (const ticker of FIXTURE_TICKERS[sector]) {
+        stockPriceHistory.push({
+          ticker,
+          trade_date: date,
+          mcap_won: 1e12 + i * 1e9,
+        });
+      }
     }
   });
   const sectorIntradaySnapshots = [0, 1, 2].map((i) => ({
@@ -88,9 +100,14 @@ function fixtures({ intraday }) {
         })),
       )
     : [];
+  const stockQuotesLatest = FIXTURE_TICKERS.semi.map((ticker, i) => ({
+    ticker,
+    mcap_won: 1e12 + 3 * 1e9 + i * 1e8,
+  }));
   return {
     market_index_daily: marketIndexDaily,
-    sector_mcap_daily: sectorMcapDaily,
+    stock_price_history: stockPriceHistory,
+    stock_quotes_latest: stockQuotesLatest,
     sector_intraday_snapshots: sectorIntradaySnapshots,
     market_index_intraday: marketIndexIntraday,
   };
@@ -105,6 +122,7 @@ function applyQuery(rows, params) {
     if (op === 'eq') out = out.filter((row) => String(row[key]) === value);
     else if (op === 'gte') out = out.filter((row) => String(row[key]) >= value);
     else if (op === 'lte') out = out.filter((row) => String(row[key]) <= value);
+    else if (op === 'gt') out = out.filter((row) => Number(row[key]) > Number(value));
     else if (op === 'in') {
       const set = new Set(value.replace(/^\(|\)$/g, '').split(','));
       out = out.filter((row) => set.has(String(row[key])));
@@ -135,7 +153,18 @@ function installFetch(tables) {
 }
 
 const ENV = { SUPABASE_URL: 'https://fixture.supabase.co', SUPABASE_ANON_KEY: 'fixture-key' };
-const HUB_INDEX = { sectors: { semi: { meta: { ko: '반도체' } } } };
+const HUB_INDEX = {
+  sectors: {
+    semi: {
+      meta: { ko: '반도체' },
+      companies: FIXTURE_TICKERS.semi.map((ticker) => ({ ticker })),
+    },
+    bio: {
+      meta: { ko: '바이오' },
+      companies: FIXTURE_TICKERS.bio.map((ticker) => ({ ticker })),
+    },
+  },
+};
 
 function assertIndices(payload, horizon, { expectPoints = true } = {}) {
   assert.ok(Array.isArray(payload.indices), `${horizon}: indices array missing`);
@@ -154,19 +183,22 @@ const originalFetch = globalThis.fetch;
 try {
   installFetch(fixtures({ intraday: true }));
   for (const horizon of DAILY_HORIZONS) {
-    const payload = await buildHubTrendPayload(HUB_INDEX, ENV, horizon);
+    const payload = await buildHubTrendPayload(HUB_INDEX, ENV, horizon, FIXTURE_NOW);
     assert.equal(payload.horizon, horizon);
     assert.equal(payload.base, 100);
     assert.ok(payload.sectors.length > 0, `${horizon}: sectors missing`);
+    const semi = payload.sectors.find((s) => s.sector === 'semi');
+    assert.ok(semi?.series?.length >= 2, `${horizon}: semi fixed-member series missing`);
+    assert.equal(semi.series[0].v, 100, `${horizon}: semi base is 100`);
     assertIndices(payload, horizon);
   }
 
-  const intraday = await buildHubTrendPayload(HUB_INDEX, ENV, '1d');
+  const intraday = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_NOW);
   assertIndices(intraday, '1d');
 
   // No intraday captures yet: indices keep their shape and fall back to daily closes.
   installFetch(fixtures({ intraday: false }));
-  const fallback = await buildHubTrendPayload(HUB_INDEX, ENV, '1d');
+  const fallback = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_NOW);
   assertIndices(fallback, '1d (daily fallback)');
 } finally {
   globalThis.fetch = originalFetch;
@@ -176,7 +208,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v3'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v4'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -189,9 +221,11 @@ for (const marker of [
   "const INDEX_CODES = ['KOSPI', 'KOSDAQ']",
   'market_index_daily?',
   'market_index_intraday?',
-  'sector_mcap_daily?',
+  'stock_price_history?',
   'sector_intraday_snapshots?',
   'stock_quotes_latest?',
+  'fixedMembers',
+  'MIN_FIXED_MEMBERS',
   'applyLiveDailyTip',
   'base: 100',
   'logIndexSeries',
@@ -213,5 +247,5 @@ if (liveArg) {
 }
 
 console.log(
-  'verify:hub-trend OK — base-100 normalization, endpoint sampling, sources, KOSPI/KOSDAQ indices',
+  'verify:hub-trend OK — fixed-member intersection, endpoint sampling, sources, KOSPI/KOSDAQ indices',
 );

@@ -1,15 +1,22 @@
 /**
- * Hub comparison trend: sector mcap indices plus KOSPI/KOSDAQ, rebased to 100.
+ * Hub comparison trend: sector mcap indices (fixed-member intersection) plus KOSPI/KOSDAQ.
+ *
+ * Sector return = sum(mcap) of hub members with mcap>0 at both base and t, rebased to 100.
  */
-import { SECTOR_ORDER, normalizeTicker, sectorMcapSums } from './hub_dashboard_core.mjs';
+import { SECTOR_ORDER, normalizeTicker } from './hub_dashboard_core.mjs';
 import { normalizeSectorHorizon } from './hub_api_cache.mjs';
 import { krxSessionInfo, kstYmdDash } from './krx_session.mjs';
+import { tradingDates } from './krx_yoy.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 
 export const TREND_MAX_POINTS = 200;
 const DAILY_LOOKBACK = { '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
+const HORIZON_TRADING_DAYS = { '1d': 1, '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
 const INDEX_CODES = ['KOSPI', 'KOSDAQ'];
 const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
+const MIN_FIXED_MEMBERS = 3;
+const TICKER_BATCH = 80;
+const CALENDAR_DAYS = 260;
 
 export const TREND_INDEX_CODES = INDEX_CODES;
 
@@ -67,6 +74,104 @@ export const TREND_RET_KEY = {
   '200d': 'return200dPct',
 };
 
+function ymdToDash(ymd) {
+  if (!ymd) return '';
+  const s = String(ymd);
+  if (s.includes('-')) return s.slice(0, 10);
+  if (s.length < 8) return s;
+  return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+}
+
+function sectorTickers(hubIndex, sectorId) {
+  const block = hubIndex?.sectors?.[sectorId];
+  if (!block) return [];
+  const seen = new Set();
+  const out = [];
+  for (const company of block.companies || []) {
+    const ticker = normalizeTicker(company.ticker);
+    if (!ticker || seen.has(ticker)) continue;
+    seen.add(ticker);
+    out.push(ticker);
+  }
+  return out;
+}
+
+function allHubTickers(hubIndex) {
+  const seen = new Set();
+  for (const sid of SECTOR_ORDER) {
+    for (const ticker of sectorTickers(hubIndex, sid)) seen.add(ticker);
+  }
+  return [...seen];
+}
+
+function mcapOnDate(ticker, date, grid, liveMap, tDate) {
+  if (date === tDate && liveMap?.has(ticker)) return liveMap.get(ticker);
+  return grid.get(`${ticker}|${date}`) ?? null;
+}
+
+function fixedMembers(tickers, baseDate, tDate, grid, liveMap) {
+  const members = [];
+  for (const ticker of tickers) {
+    const base = numOrNull(mcapOnDate(ticker, baseDate, grid, null, tDate));
+    const end = numOrNull(mcapOnDate(ticker, tDate, grid, liveMap, tDate));
+    if (base > 0 && end > 0) members.push(ticker);
+  }
+  return members;
+}
+
+function sumMembersMcap(members, date, grid, liveMap, tDate) {
+  let sum = 0;
+  for (const ticker of members) {
+    const m = numOrNull(mcapOnDate(ticker, date, grid, date === tDate ? liveMap : null, tDate));
+    if (m > 0) sum += m;
+  }
+  return sum;
+}
+
+function windowDatesAsc(dates, anchorIdx, horizonN) {
+  const startIdx = anchorIdx + horizonN;
+  const out = [];
+  for (let i = startIdx; i >= anchorIdx; i--) out.push(dates[i]);
+  return out;
+}
+
+function collectDatesForHorizons(calendar, horizonNs) {
+  const set = new Set([calendar.tDate]);
+  for (const n of horizonNs) {
+    const startIdx = calendar.anchorIdx + n;
+    if (startIdx >= calendar.dates.length) continue;
+    set.add(calendar.dates[startIdx]);
+    for (let i = calendar.anchorIdx; i <= startIdx; i++) set.add(calendar.dates[i]);
+  }
+  return [...set];
+}
+
+function buildSectorMcapSeries(hubIndex, sectorId, calendar, grid, liveMap, horizonN) {
+  const tickers = sectorTickers(hubIndex, sectorId);
+  const { dates, anchorIdx, tDate } = calendar;
+  const startIdx = anchorIdx + horizonN;
+  if (startIdx >= dates.length) return null;
+
+  const baseDate = dates[startIdx];
+  const members = fixedMembers(tickers, baseDate, tDate, grid, liveMap);
+  if (members.length < MIN_FIXED_MEMBERS) return null;
+
+  const rows = [];
+  for (const date of windowDatesAsc(dates, anchorIdx, horizonN)) {
+    const sum = sumMembersMcap(members, date, grid, liveMap, tDate);
+    if (sum > 0) rows.push({ t: date, value: sum });
+  }
+  if (rows.length < 2) return null;
+  return rows;
+}
+
+function sectorReturnFromRows(rows) {
+  const base = numOrNull(rows[0]?.value);
+  const end = numOrNull(rows[rows.length - 1]?.value);
+  if (!(base > 0) || !(end > 0)) return null;
+  return Math.round(((end / base) - 1) * 10000) / 100;
+}
+
 /**
  * Per-sector return % for one horizon, derived from the same payload as /api/hub_trend.
  * @returns {Promise<{ horizon: string, returns: Record<string, number|null>, seriesBySector: Record<string, object[]> }>}
@@ -84,21 +189,34 @@ export async function buildSectorReturnsForHorizon(hubIndex, env, requestedHoriz
 }
 
 /**
- * sector_returns upsert rows: one row per sector, all horizons filled from trend sources.
+ * All horizons in one pass — endpoint dates only (hub tickers × ~6 anchor days).
  */
-export async function buildAllHorizonReturnsBySector(hubIndex, env) {
-  const settled = await Promise.all(
-    TREND_HORIZONS.map(async (horizon) => {
-      const { returns } = await buildSectorReturnsForHorizon(hubIndex, env, horizon);
-      return { horizon, returns };
-    }),
-  );
+export async function buildAllHorizonReturnsBySector(hubIndex, env, now = new Date()) {
   const bySector = {};
-  for (const sid of SECTOR_ORDER) bySector[sid] = {};
-  for (const { horizon, returns } of settled) {
+  for (const sid of SECTOR_ORDER) {
+    bySector[sid] = {};
+    for (const horizon of TREND_HORIZONS) bySector[sid][TREND_RET_KEY[horizon]] = null;
+  }
+
+  const config = getSupabaseConfig(env);
+  if (!config) return bySector;
+
+  const calendar = await resolveTrendCalendar(config, now);
+  const tickers = allHubTickers(hubIndex);
+  const endpointDates = collectDatesForHorizons(
+    calendar,
+    Object.values(HORIZON_TRADING_DAYS),
+  );
+
+  const liveMap = await loadLiveQuoteMcapByTicker(config);
+  const grid = await loadMcapGrid(config, tickers, endpointDates);
+
+  for (const horizon of TREND_HORIZONS) {
+    const n = HORIZON_TRADING_DAYS[horizon];
     const key = TREND_RET_KEY[horizon];
     for (const sid of SECTOR_ORDER) {
-      bySector[sid][key] = returns[sid] != null ? returns[sid] : null;
+      const rows = buildSectorMcapSeries(hubIndex, sid, calendar, grid, liveMap, n);
+      bySector[sid][key] = rows ? sectorReturnFromRows(rows) : null;
     }
   }
   return bySector;
@@ -188,6 +306,61 @@ export function applyLiveDailyTip(rows, todayDash, liveValue) {
   return out;
 }
 
+async function resolveLatestTradeDateDash(config) {
+  const indexRows = await safeFetch(
+    config,
+    'market_index_daily?select=trade_date&order=trade_date.desc&limit=1',
+  );
+  if (indexRows[0]?.trade_date) return String(indexRows[0].trade_date).slice(0, 10);
+  const histRows = await safeFetch(
+    config,
+    'stock_price_history?select=trade_date&order=trade_date.desc&limit=1',
+  );
+  if (histRows[0]?.trade_date) return String(histRows[0].trade_date).slice(0, 10);
+  return kstYmdDash();
+}
+
+async function resolveTrendCalendar(config, now = new Date()) {
+  const ymdList = tradingDates(CALENDAR_DAYS + 30, now);
+  const dates = ymdList.map(ymdToDash);
+  const session = krxSessionInfo(now);
+  const todayDash = kstYmdDash(now);
+  let tDate = await resolveLatestTradeDateDash(config);
+  if (session.regular && dates.includes(todayDash)) tDate = todayDash;
+
+  let anchorIdx = dates.indexOf(tDate);
+  if (anchorIdx < 0) {
+    dates.unshift(tDate);
+    anchorIdx = 0;
+  }
+  return { tDate, dates, anchorIdx, session, todayDash };
+}
+
+async function loadMcapGrid(config, tickers, dateDashList) {
+  const grid = new Map();
+  const dates = [...new Set((dateDashList || []).filter(Boolean))];
+  if (!tickers.length || !dates.length) return grid;
+
+  const dateFilter = dates.map(encodeURIComponent).join(',');
+  for (let i = 0; i < tickers.length; i += TICKER_BATCH) {
+    const batch = tickers.slice(i, i + TICKER_BATCH);
+    const tickerFilter = batch.map(encodeURIComponent).join(',');
+    const rows = await safeFetchPaged(
+      config,
+      `stock_price_history?ticker=in.(${tickerFilter})` +
+        `&trade_date=in.(${dateFilter})` +
+        '&select=ticker,trade_date,mcap_won&order=trade_date.asc',
+    );
+    for (const row of rows) {
+      const ticker = normalizeTicker(row.ticker);
+      const date = String(row.trade_date).slice(0, 10);
+      const mcap = numOrNull(row.mcap_won);
+      if (ticker && date && mcap != null && mcap > 0) grid.set(`${ticker}|${date}`, mcap);
+    }
+  }
+  return grid;
+}
+
 async function loadLiveQuoteMcapByTicker(config) {
   const map = new Map();
   const rows = await safeFetchPaged(
@@ -222,8 +395,7 @@ async function loadLiveIndexTips(config, tradeDateDash) {
   return out;
 }
 
-async function buildDailyPayload(config, hubIndex, horizon, now = new Date()) {
-  const payload = emptyPayload(hubIndex, horizon);
+async function buildIndexDailySeries(config, horizon, now = new Date()) {
   const window = DAILY_LOOKBACK[horizon] || 20;
   const indexRows = await safeFetch(
     config,
@@ -232,57 +404,56 @@ async function buildDailyPayload(config, hubIndex, horizon, now = new Date()) {
   );
   let dates = latestDates(indexRows, window + 1);
   if (!dates.length) {
-    const sectorDates = await safeFetch(
+    const histRows = await safeFetch(
       config,
-      `sector_mcap_daily?select=trade_date&order=trade_date.desc&limit=${window + 30}`,
+      `stock_price_history?select=trade_date&order=trade_date.desc&limit=${window + 30}`,
     );
-    dates = latestDates(sectorDates, window + 1);
+    dates = latestDates(histRows, window + 1);
   }
-  if (!dates.length) return payload;
+  if (!dates.length) return { indexRows, dates: [], indices: [] };
 
-  const from = dates[0];
-  const to = dates[dates.length - 1];
-  const sectorRows = await safeFetchPaged(
-    config,
-    `sector_mcap_daily?trade_date=gte.${encodeURIComponent(from)}` +
-      `&trade_date=lte.${encodeURIComponent(to)}` +
-      '&select=sector_id,trade_date,mcap_sum&order=trade_date.asc',
-  );
   const dateSet = new Set(dates);
-
   const session = krxSessionInfo(now);
   const todayDash = kstYmdDash(now);
-  let liveSectorSums = null;
   let liveIndexTips = null;
-  if (session.regular) {
-    const [quotes, indexTips] = await Promise.all([
-      loadLiveQuoteMcapByTicker(config),
-      loadLiveIndexTips(config, todayDash),
-    ]);
-    if (quotes.size) liveSectorSums = sectorMcapSums(hubIndex, quotes);
-    if (indexTips.size) liveIndexTips = indexTips;
-  }
+  if (session.regular) liveIndexTips = await loadLiveIndexTips(config, todayDash);
 
-  payload.sectors = payload.sectors.map((entry) => {
-    let rows = sectorRows
-      .filter((row) => row.sector_id === entry.sector && dateSet.has(row.trade_date))
-      .map((row) => ({ t: row.trade_date, value: numOrNull(row.mcap_sum) }));
-    if (liveSectorSums) {
-      rows = applyLiveDailyTip(rows, todayDash, liveSectorSums.get(entry.sector));
-    }
-    return { ...entry, series: downsampleTrend(rebaseTo100(rows)) };
-  });
-  payload.indices = payload.indices.map((entry) => {
+  const indices = INDEX_CODES.map((code) => {
     let rows = indexRows
-      .filter((row) => row.index_code === entry.code && dateSet.has(row.trade_date))
+      .filter((row) => row.index_code === code && dateSet.has(row.trade_date))
       .map((row) => ({ t: row.trade_date, value: numOrNull(row.close) }))
       .sort((a, b) => a.t.localeCompare(b.t));
-    if (liveIndexTips) {
-      rows = applyLiveDailyTip(rows, todayDash, liveIndexTips.get(entry.code));
-    }
-    return { ...entry, series: downsampleTrend(rebaseTo100(rows)) };
+    if (liveIndexTips) rows = applyLiveDailyTip(rows, todayDash, liveIndexTips.get(code));
+    return { code, series: downsampleTrend(rebaseTo100(rows)) };
   });
-  logIndexSeries(horizon, indexRows, payload.indices, 'close');
+
+  return { indexRows, dates, indices };
+}
+
+async function buildDailyPayload(config, hubIndex, horizon, now = new Date()) {
+  const payload = emptyPayload(hubIndex, horizon);
+  const horizonN = DAILY_LOOKBACK[horizon] || 20;
+
+  const [calendar, indexPart] = await Promise.all([
+    resolveTrendCalendar(config, now),
+    buildIndexDailySeries(config, horizon, now),
+  ]);
+  payload.indices = indexPart.indices;
+  logIndexSeries(horizon, indexPart.indexRows, payload.indices, 'close');
+
+  const tickers = allHubTickers(hubIndex);
+  const neededDates = collectDatesForHorizons(calendar, [horizonN]);
+  const liveMap = await loadLiveQuoteMcapByTicker(config);
+  const grid = await loadMcapGrid(config, tickers, neededDates);
+
+  payload.sectors = payload.sectors.map((entry) => {
+    const rows = buildSectorMcapSeries(hubIndex, entry.sector, calendar, grid, liveMap, horizonN);
+    return {
+      ...entry,
+      series: rows ? downsampleTrend(rebaseTo100(rows)) : [],
+    };
+  });
+
   return payload;
 }
 
@@ -323,11 +494,39 @@ async function dailyCloseFallback(config, codes) {
   return out;
 }
 
-async function buildIntradayPayload(config, hubIndex) {
+function scaleIntradayToFixedMembers(snapRows, baseSum, liveSum, prevDate) {
+  if (!snapRows.length) {
+    return [
+      { t: `${prevDate}T09:00:00+09:00`, value: baseSum },
+      { t: new Date().toISOString(), value: liveSum },
+    ];
+  }
+  const firstSnap = numOrNull(snapRows[0].value);
+  const lastSnap = numOrNull(snapRows[snapRows.length - 1].value);
+  const denom = lastSnap != null && firstSnap != null ? lastSnap - firstSnap : 0;
+  const rows = [{ t: `${prevDate}T09:00:00+09:00`, value: baseSum }];
+  for (let i = 0; i < snapRows.length; i++) {
+    const snap = snapRows[i];
+    const snapVal = numOrNull(snap.value);
+    let value = baseSum;
+    if (snapVal != null && denom !== 0 && firstSnap != null) {
+      value = baseSum + ((snapVal - firstSnap) / denom) * (liveSum - baseSum);
+    } else if (snapRows.length > 0) {
+      value = baseSum + ((i + 1) / snapRows.length) * (liveSum - baseSum);
+    }
+    rows.push({ t: snap.ts, value });
+  }
+  if (rows.length > 1) rows[rows.length - 1] = { ...rows[rows.length - 1], value: liveSum };
+  return rows;
+}
+
+async function buildIntradayPayload(config, hubIndex, now = new Date()) {
   const payload = emptyPayload(hubIndex, '1d');
   const tradeDate = await resolveLatestIntradayDate(config);
   if (!tradeDate) return payload;
-  const [sectorRows, indexRows] = await Promise.all([
+
+  const tradeDateDash = String(tradeDate).slice(0, 10);
+  const [sectorRows, indexRows, calendar, liveMap] = await Promise.all([
     safeFetchPaged(
       config,
       `sector_intraday_snapshots?trade_date=eq.${encodeURIComponent(tradeDate)}` +
@@ -338,18 +537,48 @@ async function buildIntradayPayload(config, hubIndex) {
       `market_index_intraday?trade_date=eq.${encodeURIComponent(tradeDate)}&${INDEX_FILTER}` +
         '&select=index_code,captured_at,value,prev_close&order=captured_at.asc&limit=1000',
     ),
+    resolveTrendCalendar(config, now),
+    loadLiveQuoteMcapByTicker(config),
   ]);
+
+  const prevIdx = calendar.dates.indexOf(tradeDateDash) + 1;
+  const prevDate = prevIdx >= 0 && prevIdx < calendar.dates.length
+    ? calendar.dates[prevIdx]
+    : calendar.dates[calendar.anchorIdx + 1];
+  const tDate = tradeDateDash;
+
+  const tickers = allHubTickers(hubIndex);
+  const grid = prevDate ? await loadMcapGrid(config, tickers, [prevDate]) : new Map();
+
+  payload.sectors = payload.sectors.map((entry) => {
+    if (!prevDate) return entry;
+    const members = fixedMembers(
+      sectorTickers(hubIndex, entry.sector),
+      prevDate,
+      tDate,
+      grid,
+      liveMap,
+    );
+    if (members.length < MIN_FIXED_MEMBERS) return entry;
+
+    const baseSum = sumMembersMcap(members, prevDate, grid, null, tDate);
+    const liveSum = sumMembersMcap(members, tDate, grid, liveMap, tDate);
+    if (!(baseSum > 0) || !(liveSum > 0)) return entry;
+
+    const snaps = sectorRows
+      .filter((row) => row.sector_id === entry.sector)
+      .map((row) => ({ ts: row.ts, value: numOrNull(row.mcap_sum) }))
+      .filter((row) => row.ts && row.value > 0);
+
+    const rows = scaleIntradayToFixedMembers(snaps, baseSum, liveSum, prevDate);
+    return { ...entry, series: downsampleTrend(rebaseTo100(rows, 'value', baseSum)) };
+  });
+
   const missingCodes = INDEX_CODES.filter(
     (code) => !indexRows.some((row) => row.index_code === code && numOrNull(row.value) != null),
   );
   const fallback = await dailyCloseFallback(config, missingCodes);
 
-  payload.sectors = payload.sectors.map((entry) => {
-    const rows = sectorRows
-      .filter((row) => row.sector_id === entry.sector)
-      .map((row) => ({ t: row.ts, value: numOrNull(row.mcap_sum) }));
-    return { ...entry, series: downsampleTrend(rebaseTo100(rows)) };
-  });
   payload.indices = payload.indices.map((entry) => {
     const own = indexRows.filter((row) => row.index_code === entry.code);
     const prevClose = own.map((row) => numOrNull(row.prev_close)).find((value) => value > 0);
@@ -377,6 +606,6 @@ export async function buildHubTrendPayload(hubIndex, env, requestedHorizon, now 
   const config = getSupabaseConfig(env);
   if (!config) return emptyPayload(hubIndex, horizon);
   return horizon === '1d'
-    ? buildIntradayPayload(config, hubIndex)
+    ? buildIntradayPayload(config, hubIndex, now)
     : buildDailyPayload(config, hubIndex, horizon, now);
 }
