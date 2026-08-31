@@ -52,7 +52,7 @@ function assertSectorHasMostHorizons(sid, row, label, minFilled = 4) {
 }
 
 const apiSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sectors.js'), 'utf8');
-assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v14'"), 'hub_sectors cache v14');
+assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v15'"), 'hub_sectors cache v15');
 assert.ok(apiSrc.includes('buildAllHorizonReturnsBySector'), 'hub_sectors fills all horizons');
 assert.ok(apiSrc.includes('hasAllHorizons'), 'hub_sectors requires all horizons');
 assert.ok(apiSrc.includes('sector_mcap_trend'), 'hub_sectors source tag');
