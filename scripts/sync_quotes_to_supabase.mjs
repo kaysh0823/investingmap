@@ -39,6 +39,7 @@ import {
   shouldReviewAdjustment,
   upsertPriceAdjustments,
 } from '../functions/lib/price_adjustments.mjs';
+import { repairHubHistoryGapsForRecentSessions } from './lib/hub_history_gap.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NAVER_CONCURRENCY = 4;
@@ -1383,6 +1384,13 @@ async function main() {
     consensus.tradeDate || todayYmdDash,
     tickers,
   );
+  await repairHubHistoryGapsForRecentSessions({
+    authKey,
+    supabaseUrl,
+    serviceKey,
+    expectedTickers: tickers,
+    lookbackSessions: 30,
+  });
   await upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, serviceKey);
 
   // Session close: persist today's sector mcap sums for multi-day sparklines.
