@@ -155,18 +155,35 @@
     });
   }
 
+  function lineReturn(line) {
+    var series = line && line.series;
+    return series && series.length ? series[series.length - 1].v - 100 : -Infinity;
+  }
+
+  function formatLegendReturn(pct) {
+    if (!isFinite(pct)) return '';
+    var rounded = Math.round(pct * 10) / 10;
+    var sign = rounded > 0 ? '+' : '';
+    return ' ' + sign + rounded.toFixed(1) + '%';
+  }
+
   function renderLegend(lines, highlight, reset) {
     var root = document.getElementById('hub-trend-legend');
     if (!root) return;
     root.innerHTML = '';
     root.setAttribute('aria-label', COPY[state.lang].legend);
-    lines.forEach(function (line) {
+    var sorted = lines.slice().sort(function (a, b) {
+      if (a.kind === 'index' && b.kind !== 'index') return 1;
+      if (b.kind === 'index' && a.kind !== 'index') return -1;
+      return lineReturn(b) - lineReturn(a);
+    });
+    sorted.forEach(function (line) {
       var button = document.createElement('button');
       button.type = 'button';
       button.className = 'hub-trend-legend-item' + (line.kind === 'index' ? ' is-index' : '');
       button.setAttribute('data-line-key', line.key);
       button.innerHTML = '<span class="hub-trend-chip" style="background:' + line.color + '"></span><span></span>';
-      button.lastChild.textContent = line.name;
+      button.lastChild.textContent = line.name + formatLegendReturn(lineReturn(line));
       button.addEventListener('mouseenter', function () { highlight(line.key); });
       button.addEventListener('mouseleave', reset);
       button.addEventListener('focus', function () { highlight(line.key); });
