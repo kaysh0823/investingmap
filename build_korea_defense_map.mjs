@@ -283,7 +283,7 @@ function buildT(n, kospi, kosdaq) {
   const cfe = chainFilterEn();
   return {
     ko: {
-      title: '\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4',
+      title: '\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4',
       subtitle:
         '\uD56D\uACF5\uAE30\u00B7\uC5D4\uC9C4, \uBBF8\uC0AC\uC77C\u00B7\uB808\uC774\uB354, \uC721\uC0C1\uBB34\uAE30, \uD574\uAD70\u00B7\uD568\uC815, \uC6B0\uC8FC\u00B7\uC704\uC131\u00B7\uBBFC\uD56D \uAD00\uB828 \uC0C1\uC7A5\uC0AC\u00B7\uAE00\uB85C\uBC8C \uCC38\uACE0 \uB124\uD2B8\uC6CC\uD06C',
       badgeTotal: `\uCD1D <span>${n}</span>\uAC1C \uC0C1\uC7A5\uC0AC`,
@@ -345,7 +345,7 @@ function buildT(n, kospi, kosdaq) {
       fieldProducts: 'products',
     },
     en: {
-      title: '\uD83C\uDDF0\uD83C\uDDF7 Korea Defense, Space & Aviation Map',
+      title: '\uD83C\uDDF0\uD83C\uDDF7 Korea Defense & Space Map',
       subtitle:
         'Listed Korean primes in military aviation, missiles & C4ISR, land systems, naval shipbuilding, and space/civil aviation, with illustrative global relationships',
       badgeTotal: `<span>${n}</span> listed companies`,
@@ -486,7 +486,7 @@ function main() {
   let html = fs.readFileSync(join(__dirname, 'semiconductor', 'korea_semiconductor_map.html'), 'utf8');
 
   const titlePage =
-    '\uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4 / Korea Defense, Space & Aviation Map';
+    '\uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4 / Korea Defense & Space Map';
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${titlePage}</title>`);
 
   html = html.replace(
@@ -553,7 +553,7 @@ function main() {
 
   html = html.replace(
     /<h1 id="hdr-title">[^<]+<\/h1>/,
-    '<h1 id="hdr-title">\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC\u00B7\uD56D\uACF5 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4</h1>',
+    '<h1 id="hdr-title">\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uBC29\uC0B0\u00B7\uC6B0\uC8FC \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4</h1>',
   );
   html = html.replace(
     /<p id="hdr-subtitle">[^<]+<\/p>/,

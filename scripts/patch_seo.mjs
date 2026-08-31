@@ -35,7 +35,7 @@ const PAGES = [
   {
     file: 'defense/korea_defense_map.html',
     path: '/defense/korea_defense_map.html',
-    title: '한국 방산·우주·항공 산업 투자 지도',
+    title: '한국 방산·우주 산업 투자 지도',
     description:
       '항공기·엔진, 미사일·레이더, 육상무기, 해군·함정, 우주·위성·민항 관련 상장사의 KRX 데이터와 글로벌 참고 네트워크.',
   },

@@ -54,7 +54,8 @@ function removeRowsAndListItems(html, tickers) {
 
 function renameBangwi(html) {
   return html
-    .replace(/한국 방위·우주·항공/g, '한국 방산·우주·항공')
+    .replace(/한국 방위·우주·항공/g, '한국 방산·우주')
+    .replace(/한국 방산·우주·항공/g, '한국 방산·우주')
     .replace(/글로벌 방위·항공·우주/g, '글로벌 방산·항공·우주')
     .replace(/방위·항공·우주 밸류체인/g, '방산·항공·우주 밸류체인')
     .replace(/— 방위·항공우주/g, '— 방산·항공우주');
@@ -111,8 +112,10 @@ for (const rel of [
   if (!fs.existsSync(p)) continue;
   let t = fs.readFileSync(p, 'utf8');
   const next = renameBangwi(t)
-    .replace(/방위\/우주\/항공/g, '방산/우주/항공')
-    .replace(/방위·우주·항공/g, '방산·우주·항공')
+    .replace(/방위\/우주\/항공/g, '방산/우주')
+    .replace(/방위·우주·항공/g, '방산·우주')
+    .replace(/방산\/우주\/항공/g, '방산/우주')
+    .replace(/방산·우주·항공/g, '방산·우주')
     .replace(/방위·항공·우주/g, '방산·항공·우주')
     .replace(/\\uBC29\\uC704\\u00B7\\uC6B0\\uC8FC\\u00B7\\uD56D\\uACF5/g, '\\uBC29\\uC0B0\\u00B7\\uC6B0\\uC8FC\\u00B7\\uD56D\\uACF5')
     .replace(/\\uBC29\\uC704\\u00B7\\uD56D\\uACF5\\u00B7\\uC6B0\\uC8FC/g, '\\uBC29\\uC0B0\\u00B7\\uD56D\\uACF5\\u00B7\\uC6B0\\uC8FC');
