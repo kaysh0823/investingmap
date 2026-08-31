@@ -35,7 +35,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v15';
+const CACHE_VERSION = '/api/hub_sectors/cache/v16';
 
 /** Reject Supabase rows if newest updated_at is older than this (covers weekend + holiday buffer). */
 const SECTOR_RETURNS_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
@@ -83,7 +83,7 @@ async function buildSectorPayloadFromTrend(request, env, horizon) {
   const config = getSupabaseConfig(env);
   if (!config) return null;
   const hubIndex = await loadHubIndexFromRequest(request, env);
-  const bySector = await buildAllHorizonReturnsBySector(hubIndex, env);
+  const { bySector, anchors } = await buildAllHorizonReturnsBySector(hubIndex, env);
 
   let filledCells = 0;
   for (const sid of SECTOR_ORDER) {
@@ -125,13 +125,13 @@ async function buildSectorPayloadFromTrend(request, env, horizon) {
     horizon,
     source: 'sector_mcap_trend',
     krxConfigured: !!getAuthKey(env),
-    mcapRecentDd: null,
-    effectiveAnchorDd: kstAnchorYmd(),
-    mcapPast1dDd: null,
-    mcapPast20dDd: null,
-    mcapPast50dDd: null,
-    mcapPast120dDd: null,
-    mcapPast200dDd: null,
+    mcapRecentDd: anchors.mcapRecentDd,
+    effectiveAnchorDd: anchors.effectiveAnchorDd,
+    mcapPast1dDd: anchors.mcapPast1dDd,
+    mcapPast20dDd: anchors.mcapPast20dDd,
+    mcapPast50dDd: anchors.mcapPast50dDd,
+    mcapPast120dDd: anchors.mcapPast120dDd,
+    mcapPast200dDd: anchors.mcapPast200dDd,
     sectors,
   };
 }

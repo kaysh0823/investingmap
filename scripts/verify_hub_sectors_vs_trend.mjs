@@ -52,7 +52,7 @@ function assertSectorHasMostHorizons(sid, row, label, minFilled = 4) {
 }
 
 const apiSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sectors.js'), 'utf8');
-assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v15'"), 'hub_sectors cache v15');
+assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v16'"), 'hub_sectors cache v16');
 assert.ok(apiSrc.includes('buildAllHorizonReturnsBySector'), 'hub_sectors fills all horizons');
 assert.ok(apiSrc.includes('hasAllHorizons'), 'hub_sectors requires all horizons');
 assert.ok(apiSrc.includes('sector_mcap_trend'), 'hub_sectors source tag');
@@ -73,6 +73,8 @@ assert.ok(trendSrc.includes('stock_quotes_latest'), 'live tip from quotes');
 assert.ok(trendSrc.includes('market_index_intraday'), 'live index tip');
 assert.ok(trendSrc.includes('stock_price_history'), 'stock-level mcap history');
 assert.ok(trendSrc.includes('fixedMembers'), 'intersection membership');
+assert.ok(trendSrc.includes('trendAnchorMeta'), 'anchor date metadata');
+assert.ok(trendSrc.includes('safeFetchPaged'), 'paged history fetch');
 
 const syncSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'), 'utf8');
 assert.ok(syncSrc.includes('buildSectorReturnRowsFromTrend'), 'sync writes trend-aligned returns');
@@ -139,7 +141,7 @@ if (!config) {
 }
 
 const hubIndex = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'hub_index.json'), 'utf8'));
-const allBySector = await buildAllHorizonReturnsBySector(hubIndex, env);
+const allBySector = (await buildAllHorizonReturnsBySector(hubIndex, env)).bySector;
 
 let checked = 0;
 let mismatches = 0;
