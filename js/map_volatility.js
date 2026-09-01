@@ -78,17 +78,29 @@
   function formatMcapAxis(value, lang) {
     if (typeof value !== 'number' || !isFinite(value) || value <= 0) return '';
     if (lang === 'en') {
-      if (value >= 1e13) return (value / 1e12).toFixed(0) + 'T';
-      if (value >= 1e12) return (value / 1e12).toFixed(1) + 'T';
-      if (value >= 1e11) return (value / 1e9).toFixed(0) + 'B';
-      if (value >= 1e10) return (value / 1e9).toFixed(1) + 'B';
-      return (value / 1e8).toFixed(0) + '00M';
+      if (value >= 1e12) return '₩' + (value / 1e12).toFixed(value >= 1e13 ? 0 : 1) + 'T';
+      if (value >= 1e9) return '₩' + (value / 1e9).toFixed(0) + 'B';
+      return '₩' + (value / 1e6).toFixed(0) + 'M';
     }
-    if (value >= 1e13) return (value / 1e12).toFixed(0) + '조';
-    if (value >= 1e12) return (value / 1e12).toFixed(1) + '조';
-    if (value >= 1e11) return (value / 1e8).toFixed(0) + '000억';
-    if (value >= 1e10) return (value / 1e8).toFixed(0) + '00억';
-    return (value / 1e8).toFixed(0) + '억';
+    if (value >= 1e12) return (value / 1e12).toFixed(value >= 1e13 ? 0 : 1) + '조';
+    return Math.round(value / 1e8).toLocaleString('ko') + '억';
+  }
+
+  function logMcapTickValues(min, max) {
+    var safeMin = Math.max(1, min);
+    var safeMax = Math.max(safeMin * 1.01, max);
+    var lo = Math.floor(Math.log10(safeMin));
+    var hi = Math.ceil(Math.log10(safeMax));
+    var mults = [1, 2, 3, 5];
+    var ticks = [];
+    for (var e = lo; e <= hi; e++) {
+      var base = Math.pow(10, e);
+      mults.forEach(function (m) {
+        var v = m * base;
+        if (v >= safeMin * 0.999 && v <= safeMax * 1.001) ticks.push(v);
+      });
+    }
+    return ticks.length ? ticks : [safeMin, safeMax];
   }
 
   function formatAtrTick(value) {
@@ -380,6 +392,7 @@
     var sectorMcapMin = d3.min(fg, function (d) { return d.mcap; }) || 1;
     var sectorMcapMax = d3.max(fg, function (d) { return d.mcap; }) || 1;
     var yDomain = expandLogDomain(sectorMcapMin, sectorMcapMax, mobile ? 0.1 : 0.08);
+    var yTickValues = logMcapTickValues(yDomain[0], yDomain[1]);
 
     var x = d3.scaleLinear().domain(xDomain).range([0, innerW]).clamp(true);
     var y = d3.scaleLog().domain(yDomain).range([innerH, 0]).clamp(true);
@@ -408,7 +421,7 @@
       .attr('class', 'im-vol-grid')
       .call(
         d3.axisLeft(y)
-          .ticks(5)
+          .tickValues(yTickValues)
           .tickSize(-innerW)
           .tickFormat(''),
       )
@@ -512,7 +525,7 @@
       .attr('class', 'im-vol-axis')
       .call(
         d3.axisLeft(y)
-          .ticks(5)
+          .tickValues(yTickValues)
           .tickFormat(function (d) { return formatMcapAxis(d, lang); }),
       );
 
@@ -543,5 +556,6 @@
     expandLogDomain: expandLogDomain,
     formatMcapAxis: formatMcapAxis,
     formatAtrTick: formatAtrTick,
+    logMcapTickValues: logMcapTickValues,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

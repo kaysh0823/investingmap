@@ -59,6 +59,14 @@ assert.ok(volSrc.includes('axisBottom'), 'x axis ticks required');
 assert.ok(volSrc.includes('axisLeft'), 'y axis ticks required');
 assert.ok(volSrc.includes('expandLinearDomain'), 'x domain padding helper required');
 
+assert.equal(vol.formatMcapAxis(3e11, 'ko'), '3,000억');
+assert.equal(vol.formatMcapAxis(9e11, 'ko'), '9,000억');
+assert.equal(vol.formatMcapAxis(3e10, 'ko'), '300억');
+assert.equal(vol.formatMcapAxis(1.5e12, 'ko'), '1.5조');
+assert.notEqual(vol.formatMcapAxis(3e11, 'ko'), '3000000억', 'must not inflate 억 labels by 1000×');
+assert.equal(vol.formatMcapAxis(3e11, 'en'), '₩300B');
+assert.equal(vol.formatMcapAxis(1.5e12, 'en'), '₩1.5T');
+
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(tabState.includes('volatility: 1'), 'map_tab_state VALID must include volatility');
 
@@ -98,7 +106,7 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=2'), `${rel}: missing map_volatility.js v2`);
+  assert.ok(html.includes('map_volatility.js?v=3'), `${rel}: missing map_volatility.js v3`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
 }
 
