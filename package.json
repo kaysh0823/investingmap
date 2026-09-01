@@ -57,7 +57,7 @@
     "sync:investor-net": "node scripts/sync_investor_net_to_supabase.mjs",
     "backfill:investor-net": "node scripts/backfill_investor_net.mjs",
     "audit:mcap-universe": "node scripts/audit_mcap_universe.mjs",
-    "verify:quotes-hybrid": "node scripts/verify_quotes_hybrid.mjs",
+    "verify:krx-rs": "node scripts/verify_krx_rs.mjs",
     "pages:build": "node scripts/pages_build.mjs",
     "patch:tickers": "node scripts/patch_tickers_from_krx.mjs",
     "geo": "node scripts/build_trust_pages.mjs && node scripts/patch_geo.mjs",

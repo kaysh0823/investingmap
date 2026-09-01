@@ -1,5 +1,6 @@
 /**
- * KRX Relative Strength: 20 / 50 / 120 trading-day return percentiles, arithmetic mean.
+ * KRX Relative Strength: 20 / 50 / 120 trading-day return percentiles,
+ * weighted mean (20d 0.5 / 50d 0.3 / 120d 0.2).
  * Universe: all KOSPI + KOSDAQ listings from KRX daily API.
  */
 
@@ -13,6 +14,8 @@ const RS_PERIODS = [
   { key: 'rs50', days: 50 },
   { key: 'rs120', days: 120 },
 ];
+
+export const RS_WEIGHTS = { rs20: 0.5, rs50: 0.3, rs120: 0.2 };
 
 const RETURN_PERIODS = [
   { field: 'chg1dPct', days: 1 },
@@ -181,7 +184,9 @@ export async function buildKrxRsSnapshot(authKey) {
     const rs50 = ranksByPeriod.rs50.get(code);
     const rs120 = ranksByPeriod.rs120.get(code);
     if (rs20 == null || rs50 == null || rs120 == null) continue;
-    const rs = Math.round(((rs20 + rs50 + rs120) / 3) * 10) / 10;
+    const rs = Math.round(
+      (rs20 * RS_WEIGHTS.rs20 + rs50 * RS_WEIGHTS.rs50 + rs120 * RS_WEIGHTS.rs120) * 10,
+    ) / 10;
     const now = recent.closes.get(code);
     const ret20 = periodReturn(now, pastMaps.rs20.get(code));
     const ret50 = periodReturn(now, pastMaps.rs50.get(code));
