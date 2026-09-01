@@ -692,7 +692,9 @@ function scaleIntradayToFixedMembers(snapRows, baseSum, liveSum, sessionDate, no
     }
     rows.push({ t: snap.ts, value });
   }
-  if (rows.length > 1) rows[rows.length - 1] = { ...rows[rows.length - 1], value: liveSum };
+  if (rows.length > 1) {
+    rows[rows.length - 1] = { t: sessionTipIso(sessionDate, now), value: liveSum };
+  }
   return rows;
 }
 
@@ -764,6 +766,12 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
         { t: sessionOpenIso(tradeDateDash), value: prevClose },
         ...own.map((row) => ({ t: row.captured_at, value: numOrNull(row.value) })),
       ];
+      if (rows.length > 1) {
+        rows[rows.length - 1] = {
+          t: sessionTipIso(tradeDateDash, now),
+          value: rows[rows.length - 1].value,
+        };
+      }
       return { ...entry, series: downsampleTrend(rebaseTo100(rows, 'value', prevClose)) };
     }
     const daily = fallback.get(entry.code);

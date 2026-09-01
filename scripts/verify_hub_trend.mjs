@@ -66,6 +66,8 @@ function makeTradingDates(count, endDate) {
 }
 
 const FIXTURE_NOW = new Date(Date.UTC(2025, 8, 18));
+/** Same session, after regular close (16:00 KST) — 1D tip must pin to 15:30. */
+const FIXTURE_AFTER_CLOSE = new Date(Date.UTC(2025, 8, 18, 7, 0, 0));
 const DATES = makeTradingDates(260, FIXTURE_NOW);
 const LAST_DATE = DATES.at(-1);
 const SECTORS = ['semi', 'bio'];
@@ -234,12 +236,42 @@ try {
     }
   }
 
-  const intraday = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_NOW);
+  const intraday = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_AFTER_CLOSE);
   assertIndices(intraday, '1d');
+  const sessionCloseT = `${intraday.tradeDate}T15:30:00+09:00`;
+  for (const entry of intraday.sectors || []) {
+    if (!entry.series?.length) continue;
+    assert.equal(
+      entry.series.at(-1)?.t,
+      sessionCloseT,
+      `1d: ${entry.sector} end ${entry.series.at(-1)?.t} != ${sessionCloseT}`,
+    );
+  }
+  for (const entry of intraday.indices || []) {
+    if (!entry.series?.length) continue;
+    assert.equal(
+      entry.series.at(-1)?.t,
+      sessionCloseT,
+      `1d: ${entry.code} end ${entry.series.at(-1)?.t} != ${sessionCloseT}`,
+    );
+  }
+
+  const intradayOpen = await buildHubTrendPayload(
+    HUB_INDEX,
+    ENV,
+    '1d',
+    new Date(Date.UTC(2025, 8, 18, 1, 0, 0)),
+  );
+  const semiOpen = intradayOpen.sectors?.find((s) => s.sector === 'semi');
+  assert.equal(
+    semiOpen?.series?.at(-1)?.t,
+    `${intradayOpen.tradeDate}T10:00:00+09:00`,
+    '1d: during session tip follows current KST clock',
+  );
 
   // No intraday captures yet: indices keep their shape and fall back to daily closes.
   installFetch(fixtures({ intraday: false }));
-  const fallback = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_NOW);
+  const fallback = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_AFTER_CLOSE);
   assertIndices(fallback, '1d (daily fallback)');
 } finally {
   globalThis.fetch = originalFetch;
@@ -249,7 +281,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v9'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v10'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
