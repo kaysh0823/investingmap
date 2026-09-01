@@ -106,7 +106,7 @@ check(html.includes("sbKorean: 'Value chain'"), 'en sidebar Value chain');
 check(html.includes('id="sb-korean">밸류체인</div>'), 'sidebar title markup');
 if (!html.includes('RelationNetwork v2')) {
   check(html.includes('../js/map_i18n.js?v=8'), 'map_i18n cache-bust v=8');
-  check(html.includes('../js/map_heatmap.js?v=15'), 'map_heatmap cache-bust v=15');
+  check(html.includes('../js/map_heatmap.js?v=16'), 'map_heatmap cache-bust v=16');
 } else {
   check(html.includes('../js/map_i18n.js'), 'map_i18n script missing');
   check(html.includes('../js/map_heatmap.js'), 'map_heatmap script missing');

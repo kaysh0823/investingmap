@@ -14,6 +14,8 @@ new vm.Script(source, { filename: 'map_momentum.js' }).runInContext(context);
 
 const momentum = context.InvestingMapMomentum;
 assert.ok(momentum, 'momentum module export missing');
+assert.ok(source.includes("attr('data-ticker'"), 'momentum nodes must expose data-ticker');
+assert.ok(source.includes('applyTickerFocus'), 'momentum must highlight ?ticker focus');
 assert.ok(source.includes('var CHG_CLIP = 15'), 'momentum CHG_CLIP must be 15');
 assert.equal(momentum.getYMode(), '50d', 'BOX is the default y-axis mode');
 assert.equal(
@@ -141,7 +143,7 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=7',
+    '../js/map_momentum.js?v=8',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",

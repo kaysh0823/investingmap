@@ -4,7 +4,7 @@
   "private": true,
   "description": "Static Korea sector investment maps (Cloudflare Pages)",
   "scripts": {
-    "build": "node scripts/rebuild_site.mjs && node scripts/build_trust_pages.mjs && node scripts/patch_geo.mjs && node scripts/patch_mobile_table.mjs && node scripts/patch_candle_modal.mjs && node scripts/patch_heatmap_chg.mjs && node scripts/pages_build.mjs && npm run verify:dist && node scripts/fix_canonical_domain.mjs",
+    "build": "node scripts/rebuild_site.mjs && node scripts/build_trust_pages.mjs && node scripts/patch_global_search.mjs && node scripts/patch_geo.mjs && node scripts/patch_mobile_table.mjs && node scripts/patch_candle_modal.mjs && node scripts/patch_heatmap_chg.mjs && node scripts/pages_build.mjs && npm run verify:dist && node scripts/fix_canonical_domain.mjs",
     "fix:canonical": "node scripts/fix_canonical_domain.mjs",
     "verify:bigchip": "node scripts/skip_rn_wip_verify.mjs verify:bigchip",
     "verify:battery": "node scripts/skip_rn_wip_verify.mjs verify:battery",
@@ -48,7 +48,8 @@
     "verify:reorg": "node scripts/verify_powergrid_chain_split.mjs && node scripts/verify_ship_chain_split.mjs && node scripts/verify_sector_chain_reorg.mjs",
     "verify:tickers": "node scripts/verify_tickers.mjs",
     "verify:heatmap-exclude": "node scripts/verify_heatmap_exclude_chips.mjs",
-    "verify:dist": "node scripts/verify_dist_js.mjs && node scripts/verify_heatmap_exclude_chips.mjs",
+    "verify:dist": "node scripts/verify_dist_js.mjs && node scripts/verify_heatmap_exclude_chips.mjs && node scripts/verify_global_search.mjs",
+    "verify:global-search": "node scripts/verify_global_search.mjs",
     "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",

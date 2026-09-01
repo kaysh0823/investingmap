@@ -194,6 +194,9 @@
       '.im-mm-tooltip strong{display:block;font-size:13px;margin-bottom:2px}' +
       '.im-mm-bubble{cursor:pointer;transition:stroke-width .12s,opacity .12s}' +
       '.im-mm-bubble:hover,.im-mm-bubble:focus{stroke:var(--text,#e6edf3);stroke-width:2.5;outline:none}' +
+      '.im-mm-node.im-mm-focus .im-mm-bubble{stroke:var(--accent,#58a6ff)!important;stroke-width:3!important;' +
+      'filter:drop-shadow(0 0 6px color-mix(in srgb,var(--accent,#58a6ff) 55%,transparent))}' +
+      '.im-mm-node.im-mm-focus text{opacity:1!important}' +
       '.im-mm-legend{margin-top:12px;color:var(--text-muted,#8b949e);font-size:12px}' +
       '.im-mm-legend-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}' +
       '.im-mm-gradient{width:min(260px,62vw);height:10px;border-radius:5px;border:1px solid var(--border,#30363d);' +
@@ -346,6 +349,60 @@
     }
   }
 
+  function getUrlTicker() {
+    try {
+      return new URLSearchParams(window.location.search).get('ticker') || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function applyTickerFocus(container, items, lang) {
+    if (!container) return;
+    var ticker = getUrlTicker();
+    container.querySelectorAll('.im-mm-node.im-mm-focus').forEach(function (el) {
+      el.classList.remove('im-mm-focus');
+    });
+    if (!ticker) return;
+    var node = container.querySelector('.im-mm-node[data-ticker="' + ticker + '"]');
+    if (!node) return;
+    node.classList.add('im-mm-focus');
+    var circle = node.querySelector('.im-mm-bubble');
+    if (circle) {
+      var r = parseFloat(circle.getAttribute('r')) || 10;
+      circle.setAttribute('r', String(Math.max(r * 1.4, 18)));
+    }
+    if (!node.querySelector('text') && items && items.length) {
+      var item = null;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].company && items[i].company.ticker === ticker) {
+          item = items[i];
+          break;
+        }
+      }
+      if (item) {
+        var label = bubbleLabelText(item.company, lang, Math.max(item.radius * 1.4, 18));
+        d3.select(node)
+          .append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', '.35em')
+          .attr('fill', '#f0f3f6')
+          .attr('stroke', 'rgba(0,0,0,.55)')
+          .attr('stroke-width', 2)
+          .style('paint-order', 'stroke')
+          .attr('font-size', label.fontSize)
+          .attr('font-weight', 700)
+          .attr('pointer-events', 'none')
+          .text(label.text);
+      }
+    }
+    try {
+      node.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+    } catch (e2) {
+      node.scrollIntoView(true);
+    }
+  }
+
   function render(opts) {
     opts = opts || {};
     var container = opts.container;
@@ -487,6 +544,7 @@
       .data(items, function (item) { return item.company.ticker || item.company.name; })
       .join('g')
       .attr('class', 'im-mm-node')
+      .attr('data-ticker', function (item) { return item.company.ticker || ''; })
       .attr('transform', function (item) {
         return 'translate(' + x(item.rs) + ',' + y(item.position) + ')';
       });
@@ -541,6 +599,8 @@
         event.preventDefault();
         if (opts.onSelect) opts.onSelect(item.company);
       });
+
+    applyTickerFocus(container, items, opts.lang || 'ko');
   }
 
   global.InvestingMapMomentum = {

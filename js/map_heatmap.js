@@ -242,6 +242,10 @@
       'font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}' +
       'text.hm-chg{font-weight:700}' +
       'text.hm-name{font-weight:600}' +
+      '.hm-tile.im-hm-focus rect{stroke:var(--accent,#58a6ff)!important;stroke-width:3!important;' +
+      'filter:drop-shadow(0 0 6px color-mix(in srgb,var(--accent,#58a6ff) 55%,transparent))}' +
+      '.hm-tile.im-hm-focus{animation:im-hm-pulse 1.2s ease-in-out 2}' +
+      '@keyframes im-hm-pulse{0%,100%{opacity:1}50%{opacity:.88}}' +
       '@media (max-width:768px){' +
       '.hm-horizon-tabs{display:flex!important;gap:5px;margin:0 0 10px;width:100%}' +
       '.hm-horizon-tab{flex:1 1 auto;min-width:calc(20% - 4px);padding:8px 6px;font-size:11px;min-height:36px;' +
@@ -420,6 +424,31 @@
     }
   }
 
+  function getUrlTicker() {
+    try {
+      return new URLSearchParams(window.location.search).get('ticker') || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function applyTickerFocus(container) {
+    if (!container) return;
+    var ticker = getUrlTicker();
+    container.querySelectorAll('.hm-tile.im-hm-focus').forEach(function (el) {
+      el.classList.remove('im-hm-focus');
+    });
+    if (!ticker) return;
+    var tile = container.querySelector('.hm-tile[data-ticker="' + ticker + '"]');
+    if (!tile) return;
+    tile.classList.add('im-hm-focus');
+    try {
+      tile.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+    } catch (e2) {
+      tile.scrollIntoView(true);
+    }
+  }
+
   function recolorLeaves(container, companies) {
     if (!container || typeof d3 === 'undefined') return;
     var byTicker = {};
@@ -435,6 +464,7 @@
         if (!c) return;
         paintLeaf(g, c);
       });
+    applyTickerFocus(container);
   }
 
   function observeContainer(el) {
@@ -591,6 +621,7 @@
     var key = layoutKey(companies, w, h, lang);
     if (key === lastLayoutKey && container.querySelector('svg.im-hm-svg')) {
       recolorLeaves(container, companies);
+      applyTickerFocus(container);
       return;
     }
 
@@ -606,6 +637,7 @@
     if (companies.length <= 3) {
       renderSmallCards(container, companies, w, h, lang, formatMcap, opts);
       lastLayoutKey = key;
+      applyTickerFocus(container);
       return;
     }
 
@@ -771,6 +803,7 @@
       });
 
     lastLayoutKey = key;
+    applyTickerFocus(container);
   }
 
   global.InvestingMapHeatmap = {

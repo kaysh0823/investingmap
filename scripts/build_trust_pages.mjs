@@ -5,6 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { articleLd, faqPageLd, ldScript, organizationLd, webSiteLd, geo, BASE } from './geo_lib.mjs';
+import { GLOBAL_SEARCH_V } from './patch_global_search.mjs';
+import { GLOBAL_BOTTOM_NAV_V } from './patch_global_bottom_nav.mjs';
 
 const outDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -98,7 +100,8 @@ ${bodyEn}
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다.</p>
   </footer>
   <script src="js/desktop_sidebar_nav.js?v=11"></script>
-  <script src="js/global_bottom_nav.js?v=11"></script>
+  <script src="js/global_search.js?v=${GLOBAL_SEARCH_V}"></script>
+  <script src="js/global_bottom_nav.js?v=${GLOBAL_BOTTOM_NAV_V}"></script>
   <script src="js/geo_footer.js"></script>
   <script>
     const PAGE = ${JSON.stringify({ titleKo, titleEn, descKo, descEn, i18nKey })};

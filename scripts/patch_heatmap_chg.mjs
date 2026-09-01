@@ -11,7 +11,7 @@ import {
 } from './patch_heatmap_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 15;
+const SCRIPT_V = 16;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',

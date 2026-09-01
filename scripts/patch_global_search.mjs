@@ -1,14 +1,14 @@
 /**
- * Global bottom nav on all pages (does not remove desktop sector-nav).
+ * Inject global_search.js on all map pages + root pages.
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const GLOBAL_BOTTOM_NAV_V = 13;
+export const GLOBAL_SEARCH_V = 1;
 
-const MAP_FILES = [
+export const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
   'bio/korea_bio_map.html',
@@ -35,7 +35,7 @@ const MAP_FILES = [
   'metal/korea_metal_map.html',
 ];
 
-const ROOT_PAGES = [
+export const ROOT_PAGES = [
   'index.html',
   'about.html',
   'privacy.html',
@@ -46,18 +46,24 @@ const ROOT_PAGES = [
 ];
 
 function versionedSrc(relPath) {
-  return `${relPath}?v=${GLOBAL_BOTTOM_NAV_V}`;
+  return `${relPath}?v=${GLOBAL_SEARCH_V}`;
 }
 
-function bumpGlobalNavVersion(html) {
+function bumpSearchVersion(html) {
   return html.replace(
-    /global_bottom_nav\.js(?:\?v=\d+)?/g,
-    `global_bottom_nav.js?v=${GLOBAL_BOTTOM_NAV_V}`,
+    /global_search\.js(?:\?v=\d+)?/g,
+    `global_search.js?v=${GLOBAL_SEARCH_V}`,
   );
 }
 
-function addGlobalNavScript(html, src) {
-  if (html.includes('global_bottom_nav.js')) return bumpGlobalNavVersion(html);
+function addGlobalSearchScript(html, src) {
+  if (html.includes('global_search.js')) return bumpSearchVersion(html);
+  if (html.includes('global_bottom_nav.js')) {
+    return html.replace(
+      /<script src="([^"]*global_bottom_nav\.js[^"]*)"><\/script>/,
+      `<script src="${src}"></script>\n  <script src="$1"></script>`,
+    );
+  }
   if (html.includes('geo_footer.js')) {
     return html.replace(
       /<script src="([^"]*geo_footer\.js)"><\/script>/,
@@ -67,48 +73,19 @@ function addGlobalNavScript(html, src) {
   return html.replace('</body>', `  <script src="${src}"></script>\n</body>`);
 }
 
-function patchApplyLangRoot(html) {
-  if (!html.includes('InvestingMapGlobalBottomNav.render')) {
-    html = html.replace(
-      /(if \(window\.InvestingMapGeoFooter\) InvestingMapGeoFooter\.apply\(lang\);)/,
-      `$1\n      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);`,
-    );
-  }
-  return html;
-}
-
-function patchMapFile(rel) {
+function patchFile(rel, src) {
   const fp = path.join(ROOT, rel);
   if (!fs.existsSync(fp)) return;
   let html = fs.readFileSync(fp, 'utf8');
-  html = addGlobalNavScript(html, versionedSrc('../js/global_bottom_nav.js'));
-  if (!html.includes('InvestingMapGlobalBottomNav.render')) {
-    const hook = '      if (window.InvestingMapGlobalBottomNav) InvestingMapGlobalBottomNav.render(lang);\n';
-    if (html.includes('InvestingMapMobileUx.syncAll')) {
-      html = html.replace(
-        /(if \(window\.InvestingMapMobileUx\) InvestingMapMobileUx\.syncAll\(\);)/,
-        `$1\n${hook.trimEnd()}`,
-      );
-    }
-  }
+  html = addGlobalSearchScript(html, src);
   fs.writeFileSync(fp, html);
-  console.log('patched map bottom nav:', rel);
-}
-
-function patchRootFile(rel) {
-  const fp = path.join(ROOT, rel);
-  if (!fs.existsSync(fp)) return;
-  let html = fs.readFileSync(fp, 'utf8');
-  html = patchApplyLangRoot(html);
-  html = addGlobalNavScript(html, versionedSrc('js/global_bottom_nav.js'));
-  fs.writeFileSync(fp, html);
-  console.log('patched root bottom nav:', rel);
+  console.log('patched global search:', rel);
 }
 
 function main() {
-  for (const rel of MAP_FILES) patchMapFile(rel);
-  for (const rel of ROOT_PAGES) patchRootFile(rel);
-  console.log('OK patch_global_bottom_nav');
+  for (const rel of MAP_FILES) patchFile(rel, versionedSrc('../js/global_search.js'));
+  for (const rel of ROOT_PAGES) patchFile(rel, versionedSrc('js/global_search.js'));
+  console.log('OK patch_global_search');
 }
 
 const isMain =
