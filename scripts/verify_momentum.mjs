@@ -27,7 +27,7 @@ assert.ok(momentum, 'momentum module export missing');
 assert.ok(source.includes("attr('data-ticker'"), 'momentum nodes must expose data-ticker');
 assert.ok(source.includes('applyTickerFocus'), 'momentum must highlight ?ticker focus');
 assert.ok(source.includes('var CHG_CLIP = 15'), 'momentum CHG_CLIP must be 15');
-assert.equal(momentum.getYMode(), '50d', 'BOX is the default y-axis mode');
+assert.equal(momentum.getYMode(), '20d', '20D BOX is the default y-axis mode');
 assert.equal(
   momentum.pricePosition({ quoteLast: 75, high50d: 100, low50d: 50 }, '50d'),
   50,
@@ -107,7 +107,7 @@ for (const marker of [
   "x(50)",
   "y(50)",
   'InvestingMapHeatmap.colorForChange',
-  "selectedYMode = '50d'",
+  "selectedYMode = '20d'",
   "mode20d: '20D BOX'",
   "mode50d: '50D BOX'",
   "mode120d: '120D BOX'",
@@ -157,7 +157,8 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=9',
+    '../js/map_momentum.js?v=10',
+    '../js/live_quotes.js?v=16',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",
@@ -203,6 +204,7 @@ for (const field of [
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
 assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '5'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes('c.high20d ='), 'live quote high20d mapping required');
 const quotesApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
 for (const field of [
   'high120d',

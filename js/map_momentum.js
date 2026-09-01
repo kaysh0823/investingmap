@@ -10,7 +10,7 @@
   var observedEl = null;
   var resizeTimer = null;
   var visibilityBound = false;
-  var selectedYMode = '50d';
+  var selectedYMode = '20d';
   var YMODES = ['20d', '50d', '120d'];
   var YMODE_STORAGE = 'im_mm_ymode';
   var CHG_CLIP = 15;
@@ -20,7 +20,7 @@
   var COPY = {
     ko: {
       xAxis: 'RS',
-      yAxis: '50D BOX',
+      yAxis: '20D BOX',
       mode20d: '20D BOX',
       mode50d: '50D BOX',
       mode120d: '120D BOX',
@@ -39,7 +39,7 @@
     },
     en: {
       xAxis: 'RS',
-      yAxis: '50D BOX',
+      yAxis: '20D BOX',
       mode20d: '20D BOX',
       mode50d: '50D BOX',
       mode120d: '120D BOX',
@@ -67,7 +67,7 @@
   }
 
   function normalizeYMode(mode) {
-    return YMODES.indexOf(mode) >= 0 ? mode : '50d';
+    return YMODES.indexOf(mode) >= 0 ? mode : '20d';
   }
 
   function loadYMode() {
@@ -76,7 +76,7 @@
         return normalizeYMode(localStorage.getItem(YMODE_STORAGE));
       }
     } catch (e) {}
-    return '50d';
+    return '20d';
   }
 
   function saveYMode(mode) {

@@ -47,7 +47,7 @@ const HINT_KO_LEGACY = '\uC2DC\uAC00\uCD1D\uC561 \uAE30\uC900';
 function patchHtml(html) {
   html = stripHeatmapExcludeFilters(html);
   html = html.replace(/map_heatmap\.js(\?v=\d+)?/g, `map_heatmap.js?v=${SCRIPT_V}`);
-  html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=15');
+  html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=16');
   html = html.replace(new RegExp(`heatmapHint:\\s*'${HINT_KO_LEGACY}'`, 'g'), `heatmapHint: '${HINT_KO}'`);
   html = html.replace(/heatmapHint:\s*'By market cap'/g, `heatmapHint: '${HINT_EN}'`);
   html = html.replace(new RegExp(`"heatmapHint":\\s*"${HINT_KO_LEGACY}"`, 'g'), `"heatmapHint": "${HINT_KO}"`);
