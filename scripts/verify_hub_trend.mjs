@@ -5,10 +5,12 @@ import { fileURLToPath } from 'node:url';
 import {
   buildHubTrendPayload,
   downsampleTrend,
+  downsampleDates,
   rebaseTo100,
   applyLiveDailyTip,
   TREND_INDEX_CODES,
   TREND_MAX_POINTS,
+  TREND_CHART_MAX_POINTS,
 } from '../functions/lib/hub_trend.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -37,6 +39,12 @@ assert.deepEqual(appended, [
   { t: '2026-08-19', value: 100 },
   { t: '2026-08-20', value: 105 },
 ]);
+
+const longDates = Array.from({ length: 201 }, (_, i) => `2025-${String(Math.floor(i / 28) + 1).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`);
+const sampledDates = downsampleDates(longDates);
+assert.ok(sampledDates.length <= TREND_CHART_MAX_POINTS, 'downsampleDates caps chart fetch');
+assert.equal(sampledDates[0], longDates[0], 'downsampleDates keeps window start');
+assert.equal(sampledDates.at(-1), longDates.at(-1), 'downsampleDates keeps window end');
 
 const long = Array.from({ length: 260 }, (_, index) => ({ t: String(index), v: index }));
 const sampled = downsampleTrend(long);
@@ -179,16 +187,22 @@ function assertIndices(payload, horizon, { expectPoints = true } = {}) {
   }
 }
 
-function assertSectorIndexStartAligned(payload, horizon) {
+function assertSectorIndexAligned(payload, horizon) {
   const sector = payload.sectors?.find((entry) => entry.series?.length >= 2);
   if (!sector) return;
   const startT = sector.series[0].t;
+  const endT = sector.series.at(-1)?.t;
   for (const entry of payload.indices || []) {
     if (!entry.series?.length) continue;
     assert.equal(
       entry.series[0].t,
       startT,
       `${horizon}: ${entry.code} start ${entry.series[0].t} != sector ${startT}`,
+    );
+    assert.equal(
+      entry.series.at(-1)?.t,
+      endT,
+      `${horizon}: ${entry.code} end ${entry.series.at(-1)?.t} != sector ${endT}`,
     );
   }
 }
@@ -205,7 +219,14 @@ try {
     assert.ok(semi?.series?.length >= 2, `${horizon}: semi fixed-member series missing`);
     assert.equal(semi.series[0].v, 100, `${horizon}: semi base is 100`);
     assertIndices(payload, horizon);
-    assertSectorIndexStartAligned(payload, horizon);
+    assertSectorIndexAligned(payload, horizon);
+    if (horizon === '200d') {
+      const semi = payload.sectors.find((s) => s.sector === 'semi');
+      assert.ok(
+        semi?.series?.length >= 2 && semi.series.length <= TREND_CHART_MAX_POINTS + 1,
+        `200d: semi series length ${semi?.series?.length} out of chart range`,
+      );
+    }
   }
 
   const intraday = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_NOW);
@@ -223,7 +244,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v7'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v8'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -248,7 +269,9 @@ for (const marker of [
   'logIndexSeries',
   'completedSession',
   'prevSessionDate',
-  'buildIndexDailySeries(config, horizon, calendar',
+  'downsampleDates',
+  'TREND_CHART_MAX_POINTS',
+  'buildIndexDailySeries(config, chartDates, calendar',
   'scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash',
   'payload.tradeDate = tradeDateDash',
 ]) {

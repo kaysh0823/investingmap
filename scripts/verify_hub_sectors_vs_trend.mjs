@@ -58,7 +58,7 @@ assert.ok(apiSrc.includes('hasAllHorizons'), 'hub_sectors requires all horizons'
 assert.ok(apiSrc.includes('sector_mcap_trend'), 'hub_sectors source tag');
 
 const trendApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
-assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v7'"), 'hub_trend cache v7');
+assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v8'"), 'hub_trend cache v8');
 assert.ok(trendApi.includes('regularMax: 600'), 'hub_trend daily regular TTL ~10m');
 
 const sparkApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sector_trend.js'), 'utf8');
@@ -78,7 +78,9 @@ assert.ok(trendSrc.includes('loadMcapGridForDates'), 'anchor-only grid fetch');
 assert.ok(trendSrc.includes('buildSectorReturnAtHorizon'), 'endpoint-only card returns');
 assert.ok(trendSrc.includes('completedSession'), 'completed session anchor');
 assert.ok(trendSrc.includes('prevSessionDate'), '1D prev session helper');
-assert.ok(trendSrc.includes('buildIndexDailySeries(config, horizon, calendar'), 'index uses shared calendar window');
+assert.ok(trendSrc.includes('downsampleDates'), 'pre-query chart date downsample');
+assert.ok(trendSrc.includes('TREND_CHART_MAX_POINTS'), 'chart fetch resolution cap');
+assert.ok(trendSrc.includes('buildIndexDailySeries(config, chartDates, calendar'), 'index uses shared chart dates');
 
 const syncSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'), 'utf8');
 assert.ok(syncSrc.includes('buildSectorReturnRowsFromTrend'), 'sync writes trend-aligned returns');
