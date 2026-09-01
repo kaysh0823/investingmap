@@ -142,8 +142,12 @@ function windowDatesAsc(dates, anchorIdx, horizonN) {
   return out;
 }
 
+function completedSessionDate(calendar) {
+  return calendar.completedSession ?? calendar.dates[calendar.anchorIdx];
+}
+
 function collectAnchorDates(calendar, horizonNs = CARD_ANCHOR_OFFSETS) {
-  const set = new Set([calendar.tDate]);
+  const set = new Set([completedSessionDate(calendar)]);
   for (const n of horizonNs) {
     const idx = calendar.anchorIdx + n;
     if (idx < calendar.dates.length) set.add(calendar.dates[idx]);
@@ -152,7 +156,7 @@ function collectAnchorDates(calendar, horizonNs = CARD_ANCHOR_OFFSETS) {
 }
 
 function collectDatesForHorizons(calendar, horizonNs) {
-  const set = new Set([calendar.tDate]);
+  const set = new Set();
   for (const n of horizonNs) {
     const startIdx = calendar.anchorIdx + n;
     if (startIdx >= calendar.dates.length) continue;
@@ -168,22 +172,31 @@ function mcapGridDateRange(calendar, horizonNs) {
   const startIdx = calendar.anchorIdx + maxN;
   const oldestIdx = Math.min(startIdx, calendar.dates.length - 1);
   const from = calendar.dates[oldestIdx];
-  const to = calendar.tDate;
+  const to = completedSessionDate(calendar);
   if (!from || !to) return null;
   return from <= to ? { from, to } : { from: to, to: from };
 }
 
+/** Session immediately before tDate evaluation (1D base / intraday prev close). */
+export function prevSessionDate(calendar) {
+  const { dates, anchorIdx, tDate, completedSession } = calendar;
+  const completed = completedSession ?? dates[anchorIdx];
+  if (tDate !== completed) return completed;
+  return dates[anchorIdx + 1] ?? null;
+}
+
 export function trendAnchorMeta(calendar, now = new Date()) {
-  const { dates, anchorIdx, tDate } = calendar;
+  const { dates, anchorIdx, tDate, completedSession } = calendar;
   const toYmd = (d) => (d ? String(d).replace(/-/g, '') : null);
   const pastDd = (n) => {
     const idx = anchorIdx + n;
     return idx < dates.length ? toYmd(dates[idx]) : null;
   };
+  const completed = completedSession ?? dates[anchorIdx];
   return {
     mcapRecentDd: toYmd(tDate),
     effectiveAnchorDd: kstAnchorYmd(now),
-    mcapPast1dDd: pastDd(1),
+    mcapPast1dDd: tDate !== completed ? toYmd(completed) : pastDd(1),
     mcapPast20dDd: pastDd(20),
     mcapPast50dDd: pastDd(50),
     mcapPast120dDd: pastDd(120),
@@ -217,10 +230,15 @@ function buildSectorMcapSeries(hubIndex, sectorId, calendar, grid, liveMap, hori
   const members = fixedMembers(tickers, baseDate, tDate, grid, liveMap);
   if (members.length < minMembersRequired(tickers.length)) return null;
 
-  const rows = [];
+  let rows = [];
   for (const date of windowDatesAsc(dates, anchorIdx, horizonN)) {
-    const sum = sumMembersMcap(members, date, grid, liveMap, tDate);
+    const sum = sumMembersMcap(members, date, grid, null, tDate);
     if (sum > 0) rows.push({ t: date, value: sum });
+  }
+  const completed = completedSessionDate(calendar);
+  if (tDate !== completed) {
+    const liveSum = sumMembersMcap(members, tDate, grid, liveMap, tDate);
+    if (liveSum > 0) rows = applyLiveDailyTip(rows, tDate, liveSum);
   }
   if (rows.length < 2) return null;
   return rows;
@@ -405,25 +423,28 @@ async function resolveTrendCalendar(config, now = new Date(), liveMap = null) {
   }
 
   const todayDash = kstYmdDash(now);
-  // Only during regular session use today as tDate (live quotes).
-  // Pre-open / closed / holiday: last history session so 1D = prior session's close return
-  // (not 0% from pairing today's empty tip with the same last close as base).
-  let tDate = dates[0] || todayDash;
+  // Single source: latest completed session in market_index_daily (never today's live row).
+  const completedSession = dates[0] || todayDash;
+
   const quotes = liveMap ?? await loadLiveQuoteMcapByTicker(config);
-  if (krxSessionInfo(now).regular && quotes.size > 0) {
+  const session = krxSessionInfo(now);
+
+  // tDate = evaluation endpoint (live during regular session); anchor stays on completed session.
+  let tDate = completedSession;
+  if (session.regular && quotes.size > 0) {
     tDate = todayDash;
-    if (!dates.includes(todayDash)) dates.unshift(todayDash);
   } else if (!dates.length) {
     const histLatest = await resolveLatestTradeDateDash(config);
     if (histLatest) tDate = histLatest;
   }
 
-  let anchorIdx = dates.indexOf(tDate);
+  let anchorIdx = dates.indexOf(completedSession);
   if (anchorIdx < 0) {
-    dates.unshift(tDate);
+    dates.unshift(completedSession);
     anchorIdx = 0;
   }
-  return { tDate, dates, anchorIdx, todayDash };
+
+  return { tDate, dates, anchorIdx, todayDash, completedSession };
 }
 
 function mergeMcapRowsIntoGrid(grid, rows) {
@@ -511,54 +532,49 @@ async function loadLiveIndexTips(config, tradeDateDash) {
   return out;
 }
 
-async function buildIndexDailySeries(config, horizon, now = new Date()) {
-  const window = DAILY_LOOKBACK[horizon] || 20;
+async function buildIndexDailySeries(config, horizon, calendar, now = new Date()) {
+  const horizonN = DAILY_LOOKBACK[horizon] || 20;
+  const { dates, anchorIdx, tDate, todayDash, completedSession } = calendar;
+  const windowDatesList = windowDatesAsc(dates, anchorIdx, horizonN);
+  if (!windowDatesList.length) return { indexRows: [], dates: [], indices: [] };
+
+  const dateFilter = windowDatesList.map(encodeURIComponent).join(',');
   const indexRows = await safeFetch(
     config,
     `market_index_daily?${INDEX_FILTER}&select=trade_date,index_code,close` +
-      `&order=trade_date.desc&limit=${(window + 40) * INDEX_CODES.length}`,
+      `&trade_date=in.(${dateFilter})&order=trade_date.asc`,
   );
-  let dates = latestDates(indexRows, window + 1);
-  if (!dates.length) {
-    const histRows = await safeFetch(
-      config,
-      `stock_price_history?select=trade_date&order=trade_date.desc&limit=${window + 30}`,
-    );
-    dates = latestDates(histRows, window + 1);
-  }
-  if (!dates.length) return { indexRows, dates: [], indices: [] };
 
-  const dateSet = new Set(dates);
   const session = krxSessionInfo(now);
-  const todayDash = kstYmdDash(now);
   let liveIndexTips = null;
-  if (session.regular) liveIndexTips = await loadLiveIndexTips(config, todayDash);
+  if (session.regular && tDate === todayDash && tDate !== completedSession) {
+    liveIndexTips = await loadLiveIndexTips(config, todayDash);
+  }
 
+  const dateSet = new Set(windowDatesList);
   const indices = INDEX_CODES.map((code) => {
     let rows = indexRows
-      .filter((row) => row.index_code === code && dateSet.has(row.trade_date))
-      .map((row) => ({ t: row.trade_date, value: numOrNull(row.close) }))
+      .filter((row) => row.index_code === code && dateSet.has(String(row.trade_date).slice(0, 10)))
+      .map((row) => ({ t: String(row.trade_date).slice(0, 10), value: numOrNull(row.close) }))
       .sort((a, b) => a.t.localeCompare(b.t));
     if (liveIndexTips) rows = applyLiveDailyTip(rows, todayDash, liveIndexTips.get(code));
     return { code, series: downsampleTrend(rebaseTo100(rows)) };
   });
 
-  return { indexRows, dates, indices };
+  return { indexRows, dates: windowDatesList, indices };
 }
 
 async function buildDailyPayload(config, hubIndex, horizon, now = new Date()) {
   const payload = emptyPayload(hubIndex, horizon);
   const horizonN = DAILY_LOOKBACK[horizon] || 20;
 
-  const [calendar, indexPart] = await Promise.all([
-    resolveTrendCalendar(config, now),
-    buildIndexDailySeries(config, horizon, now),
-  ]);
+  const liveMap = await loadLiveQuoteMcapByTicker(config);
+  const calendar = await resolveTrendCalendar(config, now, liveMap);
+  const indexPart = await buildIndexDailySeries(config, horizon, calendar, now);
   payload.indices = indexPart.indices;
   logIndexSeries(horizon, indexPart.indexRows, payload.indices, 'close');
 
   const tickers = allHubTickers(hubIndex);
-  const liveMap = await loadLiveQuoteMcapByTicker(config);
   const range = mcapGridDateRange(calendar, [horizonN]);
   const grid = range
     ? await loadMcapGridForRange(config, tickers, range.from, range.to)
@@ -687,7 +703,7 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
     resolveTrendCalendar(config, now, liveMap),
   ]);
 
-  const prevDate = calendar.dates[calendar.anchorIdx + 1]
+  const prevDate = prevSessionDate(calendar)
     ?? calendar.dates[calendar.dates.indexOf(tradeDateDash) + 1];
   const tDate = calendar.tDate || tradeDateDash;
 
