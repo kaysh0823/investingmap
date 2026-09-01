@@ -50,10 +50,14 @@ assert.ok(vol, 'InvestingMapVolatility export missing');
 
 assert.equal(vol.clamp01(-1), 0);
 assert.equal(vol.clamp01(2), 1);
-const mockScale = (t) => (t <= 0.5 ? '#cfe3ff' : '#08306b');
-assert.equal(vol.colorForPctB(0, mockScale), '#cfe3ff');
-assert.equal(vol.colorForPctB(1, mockScale), '#08306b');
-assert.ok(volSrc.includes("interpolate('#cfe3ff', '#08306b')"), 'sequential pctB color scale');
+const mockScale = (t) => (t <= 0.5 ? '#ffe0e0' : '#8b0000');
+assert.equal(vol.colorForPctB(0, mockScale), '#ffe0e0');
+assert.equal(vol.colorForPctB(1, mockScale), '#8b0000');
+assert.ok(volSrc.includes("interpolate('#ffe0e0', '#8b0000')"), 'sequential red pctB color scale');
+assert.ok(!volSrc.includes('im-vol-bg'), 'must not render all-market gray background dots');
+assert.ok(volSrc.includes('axisBottom'), 'x axis ticks required');
+assert.ok(volSrc.includes('axisLeft'), 'y axis ticks required');
+assert.ok(volSrc.includes('expandLinearDomain'), 'x domain padding helper required');
 
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(tabState.includes('volatility: 1'), 'map_tab_state VALID must include volatility');
@@ -94,7 +98,7 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=1'), `${rel}: missing map_volatility.js`);
+  assert.ok(html.includes('map_volatility.js?v=2'), `${rel}: missing map_volatility.js v2`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
 }
 

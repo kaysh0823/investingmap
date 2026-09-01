@@ -21,7 +21,7 @@
       pctB: '20일 %b',
       noData: '변동성 스냅샷 데이터가 없습니다.',
       legend:
-        '색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%',
+        '색=20일 %b(진할수록 높음) · 세로선=전체 변동성 25/50/75%',
       pctLine: function (p, v) {
         return p + '% ' + v.toFixed(3);
       },
@@ -35,7 +35,7 @@
       pctB: '20D %b',
       noData: 'No volatility snapshot data available.',
       legend:
-        'Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%',
+        'Color = 20D %b (darker = higher) · vertical lines = market ATR 25/50/75%',
       pctLine: function (p, v) {
         return p + '% ' + v.toFixed(3);
       },
@@ -73,6 +73,51 @@
   function formatPctB(value) {
     if (typeof value !== 'number' || !isFinite(value)) return '—';
     return value.toFixed(2);
+  }
+
+  function formatMcapAxis(value, lang) {
+    if (typeof value !== 'number' || !isFinite(value) || value <= 0) return '';
+    if (lang === 'en') {
+      if (value >= 1e13) return (value / 1e12).toFixed(0) + 'T';
+      if (value >= 1e12) return (value / 1e12).toFixed(1) + 'T';
+      if (value >= 1e11) return (value / 1e9).toFixed(0) + 'B';
+      if (value >= 1e10) return (value / 1e9).toFixed(1) + 'B';
+      return (value / 1e8).toFixed(0) + '00M';
+    }
+    if (value >= 1e13) return (value / 1e12).toFixed(0) + '조';
+    if (value >= 1e12) return (value / 1e12).toFixed(1) + '조';
+    if (value >= 1e11) return (value / 1e8).toFixed(0) + '000억';
+    if (value >= 1e10) return (value / 1e8).toFixed(0) + '00억';
+    return (value / 1e8).toFixed(0) + '억';
+  }
+
+  function formatAtrTick(value) {
+    if (typeof value !== 'number' || !isFinite(value)) return '';
+    if (value >= 0.1) return value.toFixed(2);
+    if (value >= 0.01) return value.toFixed(2);
+    return value.toFixed(3);
+  }
+
+  function expandLinearDomain(min, max, extras, padRatio) {
+    var lo = min;
+    var hi = max;
+    (extras || []).forEach(function (v) {
+      if (v < lo) lo = v;
+      if (v > hi) hi = v;
+    });
+    var span = Math.max(hi - lo, 0.001);
+    var pad = span * (padRatio || 0.06);
+    return [Math.max(0, lo - pad), hi + pad];
+  }
+
+  function expandLogDomain(min, max, padRatio) {
+    var safeMin = Math.max(1, min);
+    var safeMax = Math.max(safeMin * 1.01, max);
+    var logMin = Math.log10(safeMin);
+    var logMax = Math.log10(safeMax);
+    var span = Math.max(logMax - logMin, 0.02);
+    var pad = span * (padRatio || 0.08);
+    return [Math.pow(10, logMin - pad), Math.pow(10, logMax + pad)];
   }
 
   function formatAtr(value) {
@@ -154,7 +199,10 @@
       '.im-vol-legend{margin-top:12px;color:var(--text-muted,#8b949e);font-size:12px}' +
       '.im-vol-legend-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}' +
       '.im-vol-gradient{width:min(160px,40vw);height:10px;border-radius:5px;border:1px solid var(--border,#30363d);' +
-      'background:linear-gradient(to right,#cfe3ff,#08306b)}' +
+      'background:linear-gradient(to right,#ffe0e0,#8b0000)}' +
+      '.im-vol-grid line{stroke:var(--border,#30363d)}' +
+      '.im-vol-axis line,.im-vol-axis path{stroke:var(--text-muted,#8b949e)}' +
+      '.im-vol-axis text{fill:var(--text-muted,#8b949e);font-size:10px}' +
       '@media(max-width:768px){.volatility-wrap{padding:14px 12px 20px}.volatility-meta{font-size:12px}' +
       '#volatility-root{min-height:min(52vh,480px)!important;height:min(58vh,560px)!important}' +
       '.im-vol-legend{font-size:11px}}';
@@ -273,24 +321,26 @@
   function draw(container, opts, snapshot) {
     var quotes = (snapshot && snapshot.quotes) || {};
     var sectorSet = sectorTickerSet(opts.companies);
-    var all = [];
+    var marketAtrs = [];
+    var fg = [];
     Object.keys(quotes).forEach(function (ticker) {
       var q = quotes[ticker];
       if (!q || !(q.mcap > 0) || !(q.atrPct >= 0) || !Number.isFinite(q.pctB)) return;
-      all.push({
+      marketAtrs.push(q.atrPct);
+      if (!sectorSet[ticker]) return;
+      fg.push({
         ticker: ticker,
         mcap: q.mcap,
         atrPct: q.atrPct,
         pctB: q.pctB,
         close: q.close,
-        inSector: !!sectorSet[ticker],
       });
     });
 
     container.innerHTML = '';
     hideTooltip();
 
-    if (!all.length) {
+    if (!fg.length) {
       var empty = document.createElement('div');
       empty.style.cssText =
         'display:flex;align-items:center;justify-content:center;height:100%;padding:24px;' +
@@ -313,24 +363,28 @@
 
     var mobile = global.matchMedia && global.matchMedia('(max-width:768px)').matches;
     var margin = mobile
-      ? { top: 24, right: 18, bottom: 48, left: 62 }
-      : { top: 28, right: 30, bottom: 54, left: 72 };
+      ? { top: 28, right: 20, bottom: 58, left: 78 }
+      : { top: 32, right: 36, bottom: 68, left: 92 };
     var innerW = Math.max(1, width - margin.left - margin.right);
     var innerH = Math.max(1, height - margin.top - margin.bottom);
 
-    var atrValues = all.map(function (d) { return d.atrPct; }).sort(function (a, b) { return a - b; });
-    var sectorMax = 0;
-    all.forEach(function (d) {
-      if (d.inSector && d.atrPct > sectorMax) sectorMax = d.atrPct;
-    });
-    var xMax = Math.max(p99(atrValues), sectorMax, 0.001);
-    var yMin = d3.min(all, function (d) { return d.mcap; }) || 1;
-    var yMax = d3.max(all, function (d) { return d.mcap; }) || 1;
+    marketAtrs.sort(function (a, b) { return a - b; });
+    var p25 = percentile(marketAtrs, 25);
+    var p50 = percentile(marketAtrs, 50);
+    var p75 = percentile(marketAtrs, 75);
 
-    var x = d3.scaleLinear().domain([0, xMax]).range([0, innerW]).clamp(true);
-    var y = d3.scaleLog().domain([Math.max(1, yMin * 0.9), yMax * 1.05]).range([innerH, 0]);
+    var sectorAtrMin = d3.min(fg, function (d) { return d.atrPct; }) || 0;
+    var sectorAtrMax = d3.max(fg, function (d) { return d.atrPct; }) || 0.001;
+    var xDomain = expandLinearDomain(sectorAtrMin, sectorAtrMax, [p25, p50, p75], mobile ? 0.08 : 0.06);
+
+    var sectorMcapMin = d3.min(fg, function (d) { return d.mcap; }) || 1;
+    var sectorMcapMax = d3.max(fg, function (d) { return d.mcap; }) || 1;
+    var yDomain = expandLogDomain(sectorMcapMin, sectorMcapMax, mobile ? 0.1 : 0.08);
+
+    var x = d3.scaleLinear().domain(xDomain).range([0, innerW]).clamp(true);
+    var y = d3.scaleLog().domain(yDomain).range([innerH, 0]).clamp(true);
     var colorScale = d3.scaleSequential(function (t) {
-      return d3.interpolate('#cfe3ff', '#08306b')(t);
+      return d3.interpolate('#ffe0e0', '#8b0000')(t);
     }).domain([0, 1]);
 
     var nameByTicker = {};
@@ -349,8 +403,33 @@
       .attr('aria-label', labels.title);
     var plot = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+    plot
+      .append('g')
+      .attr('class', 'im-vol-grid')
+      .call(
+        d3.axisLeft(y)
+          .ticks(5)
+          .tickSize(-innerW)
+          .tickFormat(''),
+      )
+      .selectAll('line')
+      .attr('opacity', 0.28);
+
+    plot
+      .append('g')
+      .attr('class', 'im-vol-grid')
+      .attr('transform', 'translate(0,' + innerH + ')')
+      .call(
+        d3.axisBottom(x)
+          .ticks(6)
+          .tickSize(-innerH)
+          .tickFormat(''),
+      )
+      .selectAll('line')
+      .attr('opacity', 0.22);
+
     [25, 50, 75].forEach(function (p) {
-      var val = percentile(atrValues, p);
+      var val = percentile(marketAtrs, p);
       plot
         .append('line')
         .attr('x1', x(val))
@@ -359,7 +438,7 @@
         .attr('y2', innerH)
         .attr('stroke', 'var(--text-muted,#8b949e)')
         .attr('stroke-dasharray', '4,4')
-        .attr('opacity', 0.45);
+        .attr('opacity', 0.55);
       plot
         .append('text')
         .attr('x', x(val) + 4)
@@ -368,21 +447,6 @@
         .attr('font-size', 10)
         .text(labels.pctLine(p, val));
     });
-
-    var bg = all.filter(function (d) { return !d.inSector; });
-    var fg = all.filter(function (d) { return d.inSector; });
-
-    plot
-      .selectAll('circle.im-vol-bg')
-      .data(bg)
-      .join('circle')
-      .attr('class', 'im-vol-bg')
-      .attr('cx', function (d) { return x(d.atrPct); })
-      .attr('cy', function (d) { return y(d.mcap); })
-      .attr('r', 2.2)
-      .attr('fill', '#8b949e')
-      .attr('fill-opacity', 0.18)
-      .attr('pointer-events', 'none');
 
     var fgNodes = plot
       .selectAll('g.im-vol-node')
@@ -434,9 +498,28 @@
       });
 
     plot
+      .append('g')
+      .attr('class', 'im-vol-axis')
+      .attr('transform', 'translate(0,' + innerH + ')')
+      .call(
+        d3.axisBottom(x)
+          .ticks(6)
+          .tickFormat(function (d) { return formatAtrTick(d); }),
+      );
+
+    plot
+      .append('g')
+      .attr('class', 'im-vol-axis')
+      .call(
+        d3.axisLeft(y)
+          .ticks(5)
+          .tickFormat(function (d) { return formatMcapAxis(d, lang); }),
+      );
+
+    plot
       .append('text')
       .attr('x', innerW / 2)
-      .attr('y', innerH + 36)
+      .attr('y', innerH + 44)
       .attr('text-anchor', 'middle')
       .attr('fill', 'var(--text-muted,#8b949e)')
       .attr('font-size', 12)
@@ -444,7 +527,7 @@
 
     plot
       .append('text')
-      .attr('transform', 'translate(-52,' + innerH / 2 + ') rotate(-90)')
+      .attr('transform', 'translate(-62,' + innerH / 2 + ') rotate(-90)')
       .attr('text-anchor', 'middle')
       .attr('fill', 'var(--text-muted,#8b949e)')
       .attr('font-size', 12)
@@ -456,5 +539,9 @@
     percentile: percentile,
     clamp01: clamp01,
     colorForPctB: colorForPctB,
+    expandLinearDomain: expandLinearDomain,
+    expandLogDomain: expandLogDomain,
+    formatMcapAxis: formatMcapAxis,
+    formatAtrTick: formatAtrTick,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
