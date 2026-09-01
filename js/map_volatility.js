@@ -10,9 +10,11 @@
   var resizeTimer = null;
   var snapshotCache = null;
   var snapshotLoading = null;
-  var COLOR_MODES = ['pctb', 'turnover', 'rs'];
+  var COLOR_MODES = ['pctb', 'chg', 'rs'];
   var COLOR_MODE_STORAGE = 'im_vol_cmode';
   var MISSING_COLOR = '#b0b8c1';
+  var CHG_CLIP = 15;
+  var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var selectedColorMode = 'pctb';
 
   var COPY = {
@@ -24,14 +26,16 @@
       mcap: '시가총액',
       pctB: '20일 %b',
       turnover: '거래대금',
+      chg: '당일 등락률',
       rs: 'RS',
       noData: '변동성 스냅샷 데이터가 없습니다.',
+      legendSize: '크기 = 거래대금',
       legendLines: '세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
-      legendPctB: '색=20일 %b(진할수록 높음)',
-      legendTurnover: '색=거래대금(진할수록 높음)',
-      legendRs: '색=RS(진할수록 높음)',
+      legendPctB: '색 = 20일 %b(진할수록 높음)',
+      legendChg: '색 = 당일 등락률',
+      legendRs: '색 = RS(진할수록 높음)',
       modePctB: '%b',
-      modeTurnover: '거래대금',
+      modeChg: '당일 등락률',
       modeRs: 'RS',
       pctLine: function (p, v) {
         if (p === 50) return 'P50(중앙값) · ' + v.toFixed(3);
@@ -46,14 +50,16 @@
       mcap: 'Market cap',
       pctB: '20D %b',
       turnover: 'Turnover',
+      chg: '1-day change',
       rs: 'RS',
       noData: 'No volatility snapshot data available.',
+      legendSize: 'Size = turnover',
       legendLines: 'Lines = market-wide volatility percentiles (P25·P50·P75)',
       legendPctB: 'Color = 20D %b (darker = higher)',
-      legendTurnover: 'Color = turnover (darker = higher)',
+      legendChg: 'Color = 1-day change',
       legendRs: 'Color = RS (darker = higher)',
       modePctB: '%b',
-      modeTurnover: 'Turnover',
+      modeChg: '1-day change',
       modeRs: 'RS',
       pctLine: function (p, v) {
         if (p === 50) return 'P50 (median) · ' + v.toFixed(3);
@@ -63,6 +69,7 @@
   };
 
   function normalizeColorMode(mode) {
+    if (mode === 'turnover') return 'pctb';
     return COLOR_MODES.indexOf(mode) >= 0 ? mode : 'pctb';
   }
 
@@ -95,15 +102,22 @@
   }
 
   function colorLegendText(labels, mode) {
-    if (mode === 'turnover') return labels.legendTurnover;
+    if (mode === 'chg') return labels.legendChg;
     if (mode === 'rs') return labels.legendRs;
     return labels.legendPctB;
   }
 
   function colorMetricLabel(labels, mode) {
-    if (mode === 'turnover') return labels.turnover;
+    if (mode === 'chg') return labels.chg;
     if (mode === 'rs') return labels.rs;
     return labels.pctB;
+  }
+
+  function legendGradientStyle(mode) {
+    if (mode === 'chg') {
+      return 'background:linear-gradient(to right,#c62828,#e53935,#8e3a3a,#2a2e38,#2e7d32,#43a047,#00c853)';
+    }
+    return 'background:linear-gradient(to right,#ffe0e0,#8b0000)';
   }
 
   function displayName(company, lang) {
@@ -147,8 +161,14 @@
     return value.toFixed(1);
   }
 
+  function formatChg(value) {
+    if (typeof value !== 'number' || !isFinite(value)) return '—';
+    var sign = value > 0 ? '+' : value < 0 ? '\u2212' : '';
+    return sign + Math.abs(value).toFixed(2) + '%';
+  }
+
   function formatColorMetric(item, mode, lang) {
-    if (mode === 'turnover') return formatTurnover(item.turnoverWon, lang);
+    if (mode === 'chg') return formatChg(item.chg1dPct);
     if (mode === 'rs') return formatRs(item.rs);
     return formatPctB(item.pctB);
   }
@@ -235,6 +255,24 @@
     });
   }
 
+  function colorForChg(chg) {
+    if (typeof chg !== 'number' || !isFinite(chg)) return MISSING_COLOR;
+    var t = (Math.max(-CHG_CLIP, Math.min(CHG_CLIP, chg)) + CHG_CLIP) / (2 * CHG_CLIP);
+    var pos = t * (CHG_RANGE.length - 1);
+    var index = Math.floor(pos);
+    if (index >= CHG_RANGE.length - 1) return CHG_RANGE[CHG_RANGE.length - 1];
+    var fraction = pos - index;
+    var a = d3.rgb(CHG_RANGE[index]);
+    var b = d3.rgb(CHG_RANGE[index + 1]);
+    return d3
+      .rgb(
+        a.r + (b.r - a.r) * fraction,
+        a.g + (b.g - a.g) * fraction,
+        a.b + (b.b - a.b) * fraction,
+      )
+      .formatHex();
+  }
+
   function buildColorFn(fg, mode) {
     var red = redScale();
     if (mode === 'pctb') {
@@ -251,19 +289,21 @@
         return red(clamp01(d.rs / 100));
       };
     }
-    var vals = fg
-      .map(function (d) { return d.turnoverWon; })
-      .filter(function (v) { return typeof v === 'number' && isFinite(v) && v > 0; });
-    var min = d3.min(vals) || 1;
-    var max = d3.max(vals) || min;
-    if (max <= min) max = min * 1.01;
-    var logMin = Math.log10(min);
-    var logMax = Math.log10(max);
     return function (d) {
-      if (!(d.turnoverWon > 0)) return MISSING_COLOR;
-      var t = (Math.log10(d.turnoverWon) - logMin) / (logMax - logMin || 1);
-      return red(clamp01(t));
+      return colorForChg(d.chg1dPct);
     };
+  }
+
+  function turnoverRadiusScale(fg) {
+    var maxTurnover =
+      d3.max(fg, function (d) {
+        return d.turnoverWon > 0 ? d.turnoverWon : 0;
+      }) || 1;
+    return d3.scaleSqrt().domain([0, maxTurnover]).range([4, 16]).clamp(true);
+  }
+
+  function dotRadius(d, rScale) {
+    return d.turnoverWon > 0 ? rScale(d.turnoverWon) : 4;
   }
 
   function snapshotUrl() {
@@ -325,8 +365,8 @@
       '.im-vol-dot{cursor:pointer}' +
       '.im-vol-legend{margin-top:12px;color:var(--text-muted,#8b949e);font-size:12px}' +
       '.im-vol-legend-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}' +
-      '.im-vol-gradient{width:min(160px,40vw);height:10px;border-radius:5px;border:1px solid var(--border,#30363d);' +
-      'background:linear-gradient(to right,#ffe0e0,#8b0000)}' +
+      '.im-vol-gradient{width:min(160px,40vw);height:10px;border-radius:5px;border:1px solid var(--border,#30363d)}' +
+      '.im-vol-gradient-label{font-size:10px;opacity:.85}' +
       '.im-vol-grid line{stroke:var(--border,#30363d)}' +
       '.im-vol-axis line,.im-vol-axis path{stroke:var(--text-muted,#8b949e)}' +
       '.im-vol-axis text{fill:var(--text-muted,#8b949e);font-size:10px}' +
@@ -378,6 +418,7 @@
     [
       labels.mcap + ' ' + formatMcap(item.mcap, lang),
       labels.atr + ' ' + formatAtr(item.atrPct),
+      labels.turnover + ' ' + formatTurnover(item.turnoverWon, lang),
       colorMetricLabel(labels, selectedColorMode) +
         ' ' +
         formatColorMetric(item, selectedColorMode, lang),
@@ -429,7 +470,7 @@
     );
     tabs.innerHTML = [
       { id: 'pctb', text: labels.modePctB },
-      { id: 'turnover', text: labels.modeTurnover },
+      { id: 'chg', text: labels.modeChg },
       { id: 'rs', text: labels.modeRs },
     ]
       .map(function (mode) {
@@ -457,12 +498,22 @@
     if (!el) return;
     var labels = labelsFor(opts);
     el.className = 'im-vol-legend';
+    var gradientHint =
+      selectedColorMode === 'chg'
+        ? '<span class="im-vol-gradient-label" aria-hidden="true">−15% · 0% · +15%</span>'
+        : '';
     el.innerHTML =
       '<div class="im-vol-legend-row"><span>' +
+      labels.legendSize +
+      ' · ' +
       colorLegendText(labels, selectedColorMode) +
       ' · ' +
       labels.legendLines +
-      '</span><span class="im-vol-gradient" aria-hidden="true"></span></div>';
+      '</span><span class="im-vol-gradient" style="' +
+      legendGradientStyle(selectedColorMode) +
+      '" aria-hidden="true"></span>' +
+      gradientHint +
+      '</div>';
   }
 
   function sectorTickerSet(companies) {
@@ -530,6 +581,8 @@
         turnoverWon:
           co && typeof co.turnoverWon === 'number' && isFinite(co.turnoverWon) ? co.turnoverWon : null,
         rs: co && typeof co.rs === 'number' && isFinite(co.rs) ? co.rs : null,
+        chg1dPct:
+          co && typeof co.chg1dPct === 'number' && isFinite(co.chg1dPct) ? co.chg1dPct : null,
       });
     });
 
@@ -581,6 +634,7 @@
     var x = d3.scaleLinear().domain(xDomain).range([0, innerW]).clamp(true);
     var y = d3.scaleLog().domain(yDomain).range([innerH, 0]).clamp(true);
     var colorFn = buildColorFn(fg, selectedColorMode);
+    var rScale = turnoverRadiusScale(fg);
 
     var nameByTicker = {};
     (opts.companies || []).forEach(function (c) {
@@ -655,7 +709,7 @@
     fgNodes
       .append('circle')
       .attr('class', 'im-vol-dot')
-      .attr('r', 7)
+      .attr('r', function (d) { return dotRadius(d, rScale); })
       .attr('fill', function (d) { return colorFn(d); })
       .attr('fill-opacity', 0.92)
       .attr('stroke', 'rgba(255,255,255,.35)')
@@ -669,6 +723,7 @@
           pctB: d.pctB,
           turnoverWon: d.turnoverWon,
           rs: d.rs,
+          chg1dPct: d.chg1dPct,
         }, opts, event);
       })
       .on('mousemove', moveTooltip)
@@ -684,7 +739,7 @@
     fgNodes
       .append('text')
       .attr('text-anchor', 'middle')
-      .attr('dy', -11)
+      .attr('dy', function (d) { return -(dotRadius(d, rScale) + 4); })
       .attr('fill', 'var(--text,#e6edf3)')
       .attr('font-size', 10)
       .attr('font-weight', 600)
@@ -738,6 +793,9 @@
     colorForPctB: colorForPctB,
     normalizeColorMode: normalizeColorMode,
     buildColorFn: buildColorFn,
+    colorForChg: colorForChg,
+    dotRadius: dotRadius,
+    turnoverRadiusScale: turnoverRadiusScale,
     expandLinearDomain: expandLinearDomain,
     expandLogDomain: expandLogDomain,
     formatMcapAxis: formatMcapAxis,

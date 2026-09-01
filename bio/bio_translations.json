@@ -92,16 +92,20 @@
     "volatilityMcap": "시가총액",
     "volatilityPctB": "20일 %b",
     "volatilityNoData": "변동성 스냅샷 데이터가 없습니다.",
-    "volatilityLegend": "색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)",
+    "volatilityLegend": "크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)",
     "volatilityTurnover": "거래대금",
     "volatilityRs": "RS",
     "volatilityLegendLines": "세로선 = 전 종목 변동성 백분위(P25·P50·P75)",
-    "volatilityLegendPctB": "색=20일 %b(진할수록 높음)",
+    "volatilityLegendPctB": "색 = 20일 %b(진할수록 높음)",
     "volatilityLegendTurnover": "색=거래대금(진할수록 높음)",
-    "volatilityLegendRs": "색=RS(진할수록 높음)",
+    "volatilityLegendRs": "색 = RS(진할수록 높음)",
     "volatilityModePctB": "%b",
     "volatilityModeTurnover": "거래대금",
-    "volatilityModeRs": "RS"
+    "volatilityModeRs": "RS",
+    "volatilityChg": "당일 등락률",
+    "volatilityLegendSize": "크기 = 거래대금",
+    "volatilityLegendChg": "색 = 당일 등락률",
+    "volatilityModeChg": "당일 등락률"
   },
   "en": {
     "title": "🇰🇷 Korea Bio Industry Investment Map",
@@ -196,7 +200,7 @@
     "volatilityMcap": "Market cap",
     "volatilityPctB": "20D %b",
     "volatilityNoData": "No volatility snapshot data available.",
-    "volatilityLegend": "Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)",
+    "volatilityLegend": "Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)",
     "volatilityTurnover": "Turnover",
     "volatilityRs": "RS",
     "volatilityLegendLines": "Lines = market-wide volatility percentiles (P25·P50·P75)",
@@ -205,6 +209,10 @@
     "volatilityLegendRs": "Color = RS (darker = higher)",
     "volatilityModePctB": "%b",
     "volatilityModeTurnover": "Turnover",
-    "volatilityModeRs": "RS"
+    "volatilityModeRs": "RS",
+    "volatilityChg": "1-day change",
+    "volatilityLegendSize": "Size = turnover",
+    "volatilityLegendChg": "Color = 1-day change",
+    "volatilityModeChg": "1-day change"
   }
 }

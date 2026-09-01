@@ -45,6 +45,13 @@ const context = {
   d3: {
     scaleLinear: () => ({}),
     scaleLog: () => ({}),
+    scaleSqrt: () => {
+      const scale = (v) => v;
+      scale.domain = () => scale;
+      scale.range = () => scale;
+      scale.clamp = () => scale;
+      return scale;
+    },
     scaleSequential: (fn) => {
       const scale = (t) => fn(t);
       scale.domain = () => scale;
@@ -58,7 +65,27 @@ const context = {
       const vals = fn ? arr.map(fn) : arr;
       return vals.length ? Math.max(...vals) : undefined;
     },
-    rgb: () => ({ formatHex: () => '#000' }),
+    rgb: (...args) => {
+      if (args.length === 3) {
+        const [r, g, b] = args;
+        const hex =
+          '#' +
+          [r, g, b]
+            .map((v) => Math.round(v).toString(16).padStart(2, '0'))
+            .join('');
+        return { r, g, b, formatHex() { return hex; } };
+      }
+      const color = args[0];
+      const hex = String(color).replace('#', '');
+      return {
+        r: parseInt(hex.slice(0, 2), 16),
+        g: parseInt(hex.slice(2, 4), 16),
+        b: parseInt(hex.slice(4, 6), 16),
+        formatHex() {
+          return color;
+        },
+      };
+    },
     interpolate: (a, b) => (t) => (t <= 0 ? a : b),
   },
 };
@@ -88,12 +115,16 @@ assert.ok(!volSrc.includes('im-vol-bg'), 'must not render all-market gray backgr
 assert.ok(volSrc.includes('axisBottom'), 'x axis ticks required');
 assert.ok(volSrc.includes('axisLeft'), 'y axis ticks required');
 assert.ok(volSrc.includes('expandLinearDomain'), 'x domain padding helper required');
-assert.ok(volSrc.includes("COLOR_MODES = ['pctb', 'turnover', 'rs']"), 'color mode set required');
+assert.ok(volSrc.includes("COLOR_MODES = ['pctb', 'chg', 'rs']"), 'color mode set required');
 assert.ok(volSrc.includes('data-vol-mode'), 'color mode toggle required');
 assert.ok(volSrc.includes('P50(중앙값)'), 'ko P50 median label required');
 assert.ok(volSrc.includes('P50 (median)'), 'en P50 median label required');
-assert.ok(volSrc.includes('legendLines'), 'percentile legend lines required');
+assert.ok(volSrc.includes('legendSize'), 'legend size label required');
+assert.ok(volSrc.includes('scaleSqrt'), 'turnover radius scale required');
+assert.ok(volSrc.includes('colorForChg'), '1-day change color helper required');
 assert.ok(volSrc.includes("COLOR_MODE_STORAGE = 'im_vol_cmode'"), 'color mode storage key required');
+assert.ok(!volSrc.includes("modeTurnover"), 'turnover color mode must be removed');
+assert.equal(vol.normalizeColorMode('turnover'), 'pctb', 'legacy turnover mode maps to pctb');
 
 assert.equal(vol.formatMcapAxis(3e11, 'ko'), '3,000억');
 assert.equal(vol.formatMcapAxis(9e11, 'ko'), '9,000억');
@@ -104,18 +135,23 @@ assert.equal(vol.formatMcapAxis(3e11, 'en'), '₩300B');
 assert.equal(vol.formatMcapAxis(1.5e12, 'en'), '₩1.5T');
 
 const fg = [
-  { pctB: 0, turnoverWon: 1e9, rs: 0 },
-  { pctB: 1, turnoverWon: 1e12, rs: 100 },
+  { pctB: 0, turnoverWon: 1e9, rs: 0, chg1dPct: -5 },
+  { pctB: 1, turnoverWon: 1e12, rs: 100, chg1dPct: 5 },
 ];
 const pctFn = vol.buildColorFn(fg, 'pctb');
 const rsFn = vol.buildColorFn(fg, 'rs');
-const turnoverFn = vol.buildColorFn(fg, 'turnover');
+const chgFn = vol.buildColorFn(fg, 'chg');
 assert.equal(pctFn({ pctB: 0 }), '#ffe0e0');
 assert.equal(pctFn({ pctB: null }), '#b0b8c1');
 assert.equal(rsFn({ rs: 100 }), '#8b0000');
 assert.equal(rsFn({ rs: null }), '#b0b8c1');
-assert.equal(turnoverFn({ turnoverWon: 1e12 }), '#8b0000');
-assert.equal(turnoverFn({ turnoverWon: null }), '#b0b8c1');
+assert.equal(chgFn({ chg1dPct: -15 }), '#c62828');
+assert.equal(chgFn({ chg1dPct: 15 }), '#00c853');
+assert.equal(chgFn({ chg1dPct: null }), '#b0b8c1');
+
+const rScale = vol.turnoverRadiusScale(fg);
+assert.equal(vol.dotRadius({ turnoverWon: null }, rScale), 4);
+assert.ok(vol.dotRadius({ turnoverWon: 1e12 }, rScale) >= 4);
 
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(tabState.includes('volatility: 1'), 'map_tab_state VALID must include volatility');
@@ -156,7 +192,7 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=4'), `${rel}: missing map_volatility.js v4`);
+  assert.ok(html.includes('map_volatility.js?v=5'), `${rel}: missing map_volatility.js v5`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
   assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);
 }

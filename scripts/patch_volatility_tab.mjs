@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 4;
+const SCRIPT_V = 5;
 const TAB_STATE_V = 10;
 
 const MAP_FILES = [
@@ -68,14 +68,16 @@ const RENDER_VOLATILITY_FN = `    function renderVolatility() {
           mcap: vt.volatilityMcap,
           pctB: vt.volatilityPctB,
           turnover: vt.volatilityTurnover,
+          chg: vt.volatilityChg,
           rs: vt.volatilityRs,
           noData: vt.volatilityNoData,
+          legendSize: vt.volatilityLegendSize,
           legendLines: vt.volatilityLegendLines,
           legendPctB: vt.volatilityLegendPctB,
-          legendTurnover: vt.volatilityLegendTurnover,
+          legendChg: vt.volatilityLegendChg,
           legendRs: vt.volatilityLegendRs,
           modePctB: vt.volatilityModePctB,
-          modeTurnover: vt.volatilityModeTurnover,
+          modeChg: vt.volatilityModeChg,
           modeRs: vt.volatilityModeRs,
           legend: vt.volatilityLegend
         },
@@ -102,17 +104,19 @@ const TRANSLATIONS = {
     volatilityMcap: '시가총액',
     volatilityPctB: '20일 %b',
     volatilityTurnover: '거래대금',
+    volatilityChg: '당일 등락률',
     volatilityRs: 'RS',
     volatilityNoData: '변동성 스냅샷 데이터가 없습니다.',
+    volatilityLegendSize: '크기 = 거래대금',
     volatilityLegendLines: '세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
-    volatilityLegendPctB: '색=20일 %b(진할수록 높음)',
-    volatilityLegendTurnover: '색=거래대금(진할수록 높음)',
-    volatilityLegendRs: '색=RS(진할수록 높음)',
+    volatilityLegendPctB: '색 = 20일 %b(진할수록 높음)',
+    volatilityLegendChg: '색 = 당일 등락률',
+    volatilityLegendRs: '색 = RS(진할수록 높음)',
     volatilityModePctB: '%b',
-    volatilityModeTurnover: '거래대금',
+    volatilityModeChg: '당일 등락률',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
+      '크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
   },
   en: {
     tabVolatility: '📉 Volatility Distribution',
@@ -125,17 +129,19 @@ const TRANSLATIONS = {
     volatilityMcap: 'Market cap',
     volatilityPctB: '20D %b',
     volatilityTurnover: 'Turnover',
+    volatilityChg: '1-day change',
     volatilityRs: 'RS',
     volatilityNoData: 'No volatility snapshot data available.',
+    volatilityLegendSize: 'Size = turnover',
     volatilityLegendLines: 'Lines = market-wide volatility percentiles (P25·P50·P75)',
     volatilityLegendPctB: 'Color = 20D %b (darker = higher)',
-    volatilityLegendTurnover: 'Color = turnover (darker = higher)',
+    volatilityLegendChg: 'Color = 1-day change',
     volatilityLegendRs: 'Color = RS (darker = higher)',
     volatilityModePctB: '%b',
-    volatilityModeTurnover: 'Turnover',
+    volatilityModeChg: '1-day change',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)',
+      'Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)',
   },
 };
 
