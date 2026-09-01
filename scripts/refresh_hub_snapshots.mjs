@@ -26,4 +26,5 @@ function runOptional(cmd, label) {
 run('node scripts/build_hub_quote_snapshot.mjs', 'hub quote snapshot');
 runOptional('node scripts/build_hub_rs_snapshot.mjs', 'hub RS snapshot');
 runOptional('node scripts/build_hub_sector_returns.mjs', 'hub sector returns');
+runOptional('node scripts/build_hub_volatility_snapshot.mjs', 'hub volatility snapshot');
 console.log('\nOK refresh_hub_snapshots');

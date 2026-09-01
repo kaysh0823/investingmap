@@ -6,7 +6,7 @@
 (function (global) {
   'use strict';
 
-  var VALID = { heatmap: 1, momentum: 1, table: 1, graph: 1 };
+  var VALID = { heatmap: 1, momentum: 1, volatility: 1, table: 1, graph: 1 };
   var focusStyleInjected = false;
 
   function injectFocusStyle() {
@@ -52,6 +52,8 @@
     if (graphEl && graphEl.classList.contains('active')) return 'graph';
     var momentumEl = document.getElementById('tab-momentum');
     if (momentumEl && momentumEl.classList.contains('active')) return 'momentum';
+    var volatilityEl = document.getElementById('tab-volatility');
+    if (volatilityEl && volatilityEl.classList.contains('active')) return 'volatility';
     var heatEl = document.getElementById('tab-heatmap');
     if (heatEl && heatEl.classList.contains('active')) return 'heatmap';
     return 'table';
@@ -182,7 +184,13 @@
   function applyInitialTab(switchTab) {
     if (typeof switchTab !== 'function') return;
     var tab = getTab() || 'table';
-    var btnIds = { table: 'tab-btn-table', graph: 'tab-btn-graph', heatmap: 'tab-btn-heatmap' };
+    var btnIds = {
+      table: 'tab-btn-table',
+      graph: 'tab-btn-graph',
+      heatmap: 'tab-btn-heatmap',
+      momentum: 'tab-btn-momentum',
+      volatility: 'tab-btn-volatility',
+    };
     var btn = document.getElementById(btnIds[tab] || 'tab-btn-table');
     if (btn) switchTab(tab, btn);
     if (tab === 'table') applyInitialTickerFocus();

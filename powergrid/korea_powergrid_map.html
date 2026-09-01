@@ -236,13 +236,14 @@
 <script src="../js/live_quotes.js?v=15"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
-  <script src="../js/map_tab_state.js?v=9"></script>
+  <script src="../js/map_tab_state.js?v=10"></script>
   <script src="../js/sector_nav.js?v=8"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
   <script src="../js/map_momentum.js?v=8"></script>
+  <script src="../js/map_volatility.js?v=1"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=23"></script>
@@ -2037,7 +2038,7 @@
     <p lang="en" class="im-seo-body-p" hidden>Power policy and tariff frameworks change quickly. Cross-check filings and Korea Power Exchange data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 전력설비, 송배전, 전선, 케이블, 변압기, 원전 기자재</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean power equipment, T&amp;D, transformers</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-29 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-29.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-01 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-01.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -2046,6 +2047,7 @@
 <div class="tabs">
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
     <button id="tab-btn-momentum" class="tab-btn" onclick="switchTab('momentum',this)">📊 모멘텀 매트릭스</button>
+    <button id="tab-btn-volatility" class="tab-btn" onclick="switchTab('volatility',this)">📉 변동성 분포</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
@@ -2065,6 +2067,16 @@
       <div id="momentum-legend"></div>
     </div>
   </div>
+  <!-- VOLATILITY TAB -->
+  <div id="tab-volatility" class="tab-content">
+    <div class="volatility-wrap">
+      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%</p>
+      <div id="volatility-root" role="img" aria-label="Volatility distribution"></div>
+      <div id="volatility-legend"></div>
+    </div>
+  </div>
+
+
 
 
 
@@ -2123,16 +2135,16 @@
       <td><div class="company-name">LS ELECTRIC</div></td>
       <td><span class="ticker">010120</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">214,500</td>
-      <td class="quote-cell ret-cell">-2.28%</td>
-      <td class="quote-cell ret-cell">+16.07%</td>
-      <td class="quote-cell ret-cell">-17.18%</td>
-      <td class="quote-cell ret-cell">-71.29%</td>
-      <td class="quote-cell ret-cell">-51.36%</td>
+      <td class="quote-cell">204,500</td>
+      <td class="quote-cell ret-cell">-3.26%</td>
+      <td class="quote-cell ret-cell">+10.14%</td>
+      <td class="quote-cell ret-cell">-15.31%</td>
+      <td class="quote-cell ret-cell">-71.69%</td>
+      <td class="quote-cell ret-cell">-52.41%</td>
       <td class="quote-cell">335,000</td>
       <td class="quote-cell">53,800</td>
-      <td class="quote-cell">57.1%</td>
-      <td class="quote-cell">32.4</td>
+      <td class="quote-cell">53.6%</td>
+      <td class="quote-cell">35.1</td>
       <td class="mcap-cell">32.18조원</td>
       <td class="fin-cell">115.34</td>
       <td class="fin-cell">15.98</td>
@@ -2146,16 +2158,16 @@
       <td><div class="company-name">효성중공업</div><div class="company-name-sub">HYOSUNG HEAVY INDUSTRIES</div></td>
       <td><span class="ticker">298040</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">3,153,000</td>
-      <td class="quote-cell ret-cell">+2.40%</td>
-      <td class="quote-cell ret-cell">+30.45%</td>
-      <td class="quote-cell ret-cell">-18.21%</td>
-      <td class="quote-cell ret-cell">+21.60%</td>
-      <td class="quote-cell ret-cell">+65.08%</td>
+      <td class="quote-cell">2,916,000</td>
+      <td class="quote-cell ret-cell">-6.03%</td>
+      <td class="quote-cell ret-cell">+18.76%</td>
+      <td class="quote-cell ret-cell">-22.72%</td>
+      <td class="quote-cell ret-cell">+17.72%</td>
+      <td class="quote-cell ret-cell">+55.70%</td>
       <td class="quote-cell">4,742,000</td>
       <td class="quote-cell">1,185,000</td>
-      <td class="quote-cell">55.3%</td>
-      <td class="quote-cell">63.6</td>
+      <td class="quote-cell">48.7%</td>
+      <td class="quote-cell">57.7</td>
       <td class="mcap-cell">29.40조원</td>
       <td class="fin-cell">60.47</td>
       <td class="fin-cell">13.37</td>
@@ -2169,16 +2181,16 @@
       <td><div class="company-name">HD현대일렉트릭</div><div class="company-name-sub">HD HYUNDAI ELECTRIC</div></td>
       <td><span class="ticker">267260</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">814,000</td>
-      <td class="quote-cell ret-cell">-0.85%</td>
-      <td class="quote-cell ret-cell">+19.01%</td>
-      <td class="quote-cell ret-cell">-24.49%</td>
-      <td class="quote-cell ret-cell">-12.38%</td>
-      <td class="quote-cell ret-cell">+8.39%</td>
+      <td class="quote-cell">769,000</td>
+      <td class="quote-cell ret-cell">-4.05%</td>
+      <td class="quote-cell ret-cell">+16.05%</td>
+      <td class="quote-cell ret-cell">-24.39%</td>
+      <td class="quote-cell ret-cell">-13.70%</td>
+      <td class="quote-cell ret-cell">+4.13%</td>
       <td class="quote-cell">1,430,000</td>
-      <td class="quote-cell">484,000</td>
-      <td class="quote-cell">34.9%</td>
-      <td class="quote-cell">50.6</td>
+      <td class="quote-cell">490,500</td>
+      <td class="quote-cell">29.6%</td>
+      <td class="quote-cell">47.8</td>
       <td class="mcap-cell">29.34조원</td>
       <td class="fin-cell">55.52</td>
       <td class="fin-cell">20.05</td>
@@ -2192,16 +2204,16 @@
       <td><div class="company-name">한국전력</div><div class="company-name-sub">Korea Electric Power Corp.</div></td>
       <td><span class="ticker">015760</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">32,550</td>
-      <td class="quote-cell ret-cell">-4.12%</td>
-      <td class="quote-cell ret-cell">-6.47%</td>
-      <td class="quote-cell ret-cell">-14.12%</td>
-      <td class="quote-cell ret-cell">-32.61%</td>
-      <td class="quote-cell ret-cell">-32.40%</td>
+      <td class="quote-cell">32,350</td>
+      <td class="quote-cell ret-cell">-2.00%</td>
+      <td class="quote-cell ret-cell">-7.54%</td>
+      <td class="quote-cell ret-cell">-16.05%</td>
+      <td class="quote-cell ret-cell">-31.98%</td>
+      <td class="quote-cell ret-cell">-33.82%</td>
       <td class="quote-cell">69,500</td>
       <td class="quote-cell">30,400</td>
-      <td class="quote-cell">5.5%</td>
-      <td class="quote-cell">18.7</td>
+      <td class="quote-cell">5%</td>
+      <td class="quote-cell">13.8</td>
       <td class="mcap-cell">20.90조원</td>
       <td class="fin-cell">2.83</td>
       <td class="fin-cell">0.50</td>
@@ -2215,16 +2227,16 @@
       <td><div class="company-name">산일전기</div><div class="company-name-sub">SANIL ELECTRIC</div></td>
       <td><span class="ticker">062040</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">202,500</td>
-      <td class="quote-cell ret-cell">+0.50%</td>
-      <td class="quote-cell ret-cell">+41.41%</td>
-      <td class="quote-cell ret-cell">-14.01%</td>
-      <td class="quote-cell ret-cell">+44.03%</td>
-      <td class="quote-cell ret-cell">+53.06%</td>
+      <td class="quote-cell">195,600</td>
+      <td class="quote-cell ret-cell">-3.16%</td>
+      <td class="quote-cell ret-cell">+34.68%</td>
+      <td class="quote-cell ret-cell">-14.55%</td>
+      <td class="quote-cell ret-cell">+43.45%</td>
+      <td class="quote-cell ret-cell">+46.13%</td>
       <td class="quote-cell">341,000</td>
       <td class="quote-cell">101,700</td>
-      <td class="quote-cell">42.1%</td>
-      <td class="quote-cell">69.5</td>
+      <td class="quote-cell">39.2%</td>
+      <td class="quote-cell">68.9</td>
       <td class="mcap-cell">6.21조원</td>
       <td class="fin-cell">47.24</td>
       <td class="fin-cell">12.01</td>
@@ -2238,16 +2250,16 @@
       <td><div class="company-name">가온전선</div><div class="company-name-sub">Gaoncable</div></td>
       <td><span class="ticker">000500</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">204,000</td>
-      <td class="quote-cell ret-cell">-3.55%</td>
-      <td class="quote-cell ret-cell">+52.01%</td>
-      <td class="quote-cell ret-cell">-39.56%</td>
-      <td class="quote-cell ret-cell">+106.90%</td>
-      <td class="quote-cell ret-cell">+203.57%</td>
+      <td class="quote-cell">208,500</td>
+      <td class="quote-cell ret-cell">+2.94%</td>
+      <td class="quote-cell ret-cell">+54.87%</td>
+      <td class="quote-cell ret-cell">-37.96%</td>
+      <td class="quote-cell ret-cell">+116.49%</td>
+      <td class="quote-cell ret-cell">+217.70%</td>
       <td class="quote-cell">352,860</td>
       <td class="quote-cell">29,229</td>
-      <td class="quote-cell">54%</td>
-      <td class="quote-cell">64.0</td>
+      <td class="quote-cell">55.4%</td>
+      <td class="quote-cell">67.2</td>
       <td class="mcap-cell">6.07조원</td>
       <td class="fin-cell">81.11</td>
       <td class="fin-cell">8.62</td>
@@ -2261,16 +2273,16 @@
       <td><div class="company-name">대한전선</div><div class="company-name-sub">Taihan Cable &amp; Solution</div></td>
       <td><span class="ticker">001440</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">29,700</td>
-      <td class="quote-cell ret-cell">-0.34%</td>
-      <td class="quote-cell ret-cell">+28.02%</td>
-      <td class="quote-cell ret-cell">-22.35%</td>
-      <td class="quote-cell ret-cell">-0.83%</td>
-      <td class="quote-cell ret-cell">+32.00%</td>
+      <td class="quote-cell">28,650</td>
+      <td class="quote-cell ret-cell">-1.01%</td>
+      <td class="quote-cell ret-cell">+22.76%</td>
+      <td class="quote-cell ret-cell">-21.18%</td>
+      <td class="quote-cell ret-cell">+0.17%</td>
+      <td class="quote-cell ret-cell">+34.86%</td>
       <td class="quote-cell">75,900</td>
       <td class="quote-cell">14,740</td>
-      <td class="quote-cell">24.5%</td>
-      <td class="quote-cell">58.2</td>
+      <td class="quote-cell">22.7%</td>
+      <td class="quote-cell">59.2</td>
       <td class="mcap-cell">5.82조원</td>
       <td class="fin-cell">83.55</td>
       <td class="fin-cell">4.39</td>
@@ -2284,16 +2296,16 @@
       <td><div class="company-name">일진전기</div><div class="company-name-sub">ILJIN ELECTRIC</div></td>
       <td><span class="ticker">103590</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">72,600</td>
-      <td class="quote-cell ret-cell">-3.33%</td>
-      <td class="quote-cell ret-cell">+39.62%</td>
-      <td class="quote-cell ret-cell">-13.98%</td>
-      <td class="quote-cell ret-cell">-7.75%</td>
-      <td class="quote-cell ret-cell">+34.94%</td>
+      <td class="quote-cell">71,100</td>
+      <td class="quote-cell ret-cell">-1.93%</td>
+      <td class="quote-cell ret-cell">+34.09%</td>
+      <td class="quote-cell ret-cell">-12.42%</td>
+      <td class="quote-cell ret-cell">-7.53%</td>
+      <td class="quote-cell ret-cell">+33.08%</td>
       <td class="quote-cell">147,900</td>
       <td class="quote-cell">33,500</td>
-      <td class="quote-cell">34.2%</td>
-      <td class="quote-cell">61.0</td>
+      <td class="quote-cell">32.9%</td>
+      <td class="quote-cell">66.9</td>
       <td class="mcap-cell">3.46조원</td>
       <td class="fin-cell">37.54</td>
       <td class="fin-cell">6.63</td>
@@ -2307,16 +2319,16 @@
       <td><div class="company-name">한국가스공사</div><div class="company-name-sub">Korea Gas Corporation</div></td>
       <td><span class="ticker">036460</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">37,100</td>
-      <td class="quote-cell ret-cell">+0.54%</td>
-      <td class="quote-cell ret-cell">+7.69%</td>
-      <td class="quote-cell ret-cell">+7.85%</td>
-      <td class="quote-cell ret-cell">+4.65%</td>
-      <td class="quote-cell ret-cell">-7.83%</td>
+      <td class="quote-cell">37,500</td>
+      <td class="quote-cell ret-cell">+0.94%</td>
+      <td class="quote-cell ret-cell">+9.18%</td>
+      <td class="quote-cell ret-cell">+11.79%</td>
+      <td class="quote-cell ret-cell">+8.71%</td>
+      <td class="quote-cell ret-cell">-6.14%</td>
       <td class="quote-cell">45,700</td>
       <td class="quote-cell">31,150</td>
-      <td class="quote-cell">40.9%</td>
-      <td class="quote-cell">70.1</td>
+      <td class="quote-cell">43.6%</td>
+      <td class="quote-cell">74.6</td>
       <td class="mcap-cell">3.42조원</td>
       <td class="fin-cell">24.74</td>
       <td class="fin-cell">0.29</td>
@@ -2330,16 +2342,16 @@
       <td><div class="company-name">LS마린솔루션</div><div class="company-name-sub">LS Marine Solution</div></td>
       <td><span class="ticker">060370</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">33,800</td>
-      <td class="quote-cell ret-cell">-1.89%</td>
-      <td class="quote-cell ret-cell">+28.27%</td>
-      <td class="quote-cell ret-cell">+16.75%</td>
-      <td class="quote-cell ret-cell">+2.42%</td>
-      <td class="quote-cell ret-cell">+31.77%</td>
+      <td class="quote-cell">31,850</td>
+      <td class="quote-cell ret-cell">-2.37%</td>
+      <td class="quote-cell ret-cell">+22.45%</td>
+      <td class="quote-cell ret-cell">+18.07%</td>
+      <td class="quote-cell ret-cell">+4.60%</td>
+      <td class="quote-cell ret-cell">+26.20%</td>
       <td class="quote-cell">51,600</td>
       <td class="quote-cell">21,650</td>
-      <td class="quote-cell">40.6%</td>
-      <td class="quote-cell">84.4</td>
+      <td class="quote-cell">34.1%</td>
+      <td class="quote-cell">80.7</td>
       <td class="mcap-cell">1.77조원</td>
       <td class="fin-cell">140.93</td>
       <td class="fin-cell">2.46</td>
@@ -2353,16 +2365,16 @@
       <td><div class="company-name">LS에코에너지</div><div class="company-name-sub">LS Eco Energy</div></td>
       <td><span class="ticker">229640</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">45,900</td>
-      <td class="quote-cell ret-cell">-5.17%</td>
-      <td class="quote-cell ret-cell">+13.75%</td>
-      <td class="quote-cell ret-cell">-24.75%</td>
-      <td class="quote-cell ret-cell">-3.97%</td>
-      <td class="quote-cell ret-cell">+32.09%</td>
+      <td class="quote-cell">47,250</td>
+      <td class="quote-cell ret-cell">+0.44%</td>
+      <td class="quote-cell ret-cell">+13.27%</td>
+      <td class="quote-cell ret-cell">-20.65%</td>
+      <td class="quote-cell ret-cell">+3.36%</td>
+      <td class="quote-cell ret-cell">+33.62%</td>
       <td class="quote-cell">109,800</td>
       <td class="quote-cell">32,000</td>
-      <td class="quote-cell">17.9%</td>
-      <td class="quote-cell">52.6</td>
+      <td class="quote-cell">19.6%</td>
+      <td class="quote-cell">46.1</td>
       <td class="mcap-cell">1.41조원</td>
       <td class="fin-cell">44.41</td>
       <td class="fin-cell">8.93</td>
@@ -2376,16 +2388,16 @@
       <td><div class="company-name">대원전선</div><div class="company-name-sub">Daewon Cable</div></td>
       <td><span class="ticker">006340</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">13,610</td>
-      <td class="quote-cell ret-cell">-3.75%</td>
-      <td class="quote-cell ret-cell">+4.69%</td>
-      <td class="quote-cell ret-cell">+22.61%</td>
-      <td class="quote-cell ret-cell">+127.59%</td>
-      <td class="quote-cell ret-cell">+256.28%</td>
+      <td class="quote-cell">13,280</td>
+      <td class="quote-cell ret-cell">+0.07%</td>
+      <td class="quote-cell ret-cell">+3.89%</td>
+      <td class="quote-cell ret-cell">+31.47%</td>
+      <td class="quote-cell ret-cell">+134.83%</td>
+      <td class="quote-cell ret-cell">+273.66%</td>
       <td class="quote-cell">20,300</td>
       <td class="quote-cell">2,765</td>
-      <td class="quote-cell">61.8%</td>
-      <td class="quote-cell">74.3</td>
+      <td class="quote-cell">60%</td>
+      <td class="quote-cell">56.7</td>
       <td class="mcap-cell">1.07조원</td>
       <td class="fin-cell">92.65</td>
       <td class="fin-cell">6.86</td>
@@ -2399,16 +2411,16 @@
       <td><div class="company-name">지역난방공사</div><div class="company-name-sub">Korea District Heating</div></td>
       <td><span class="ticker">071320</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">74,800</td>
-      <td class="quote-cell ret-cell">+0.27%</td>
-      <td class="quote-cell ret-cell">+11.48%</td>
-      <td class="quote-cell ret-cell">+7.63%</td>
-      <td class="quote-cell ret-cell">-13.23%</td>
-      <td class="quote-cell ret-cell">-28.08%</td>
+      <td class="quote-cell">75,700</td>
+      <td class="quote-cell ret-cell">+2.14%</td>
+      <td class="quote-cell ret-cell">+20.31%</td>
+      <td class="quote-cell ret-cell">+12.35%</td>
+      <td class="quote-cell ret-cell">-12.59%</td>
+      <td class="quote-cell ret-cell">-25.39%</td>
       <td class="quote-cell">116,700</td>
       <td class="quote-cell">60,400</td>
-      <td class="quote-cell">25.6%</td>
-      <td class="quote-cell">68.2</td>
+      <td class="quote-cell">27.2%</td>
+      <td class="quote-cell">76.7</td>
       <td class="mcap-cell">0.87조원</td>
       <td class="fin-cell">2.54</td>
       <td class="fin-cell">0.36</td>
@@ -2422,16 +2434,16 @@
       <td><div class="company-name">제룡전기</div><div class="company-name-sub">CHERYONG ELECTRIC CO.,LTD.</div></td>
       <td><span class="ticker">033100</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">48,300</td>
-      <td class="quote-cell ret-cell">-3.59%</td>
-      <td class="quote-cell ret-cell">+16.95%</td>
-      <td class="quote-cell ret-cell">-5.85%</td>
-      <td class="quote-cell ret-cell">-2.82%</td>
-      <td class="quote-cell ret-cell">+44.18%</td>
+      <td class="quote-cell">46,300</td>
+      <td class="quote-cell ret-cell">-1.55%</td>
+      <td class="quote-cell ret-cell">+14.44%</td>
+      <td class="quote-cell ret-cell">-6.21%</td>
+      <td class="quote-cell ret-cell">-2.26%</td>
+      <td class="quote-cell ret-cell">+42.37%</td>
       <td class="quote-cell">93,800</td>
       <td class="quote-cell">31,850</td>
-      <td class="quote-cell">26.6%</td>
-      <td class="quote-cell">61.2</td>
+      <td class="quote-cell">23.3%</td>
+      <td class="quote-cell">59.3</td>
       <td class="mcap-cell">0.78조원</td>
       <td class="fin-cell">14.17</td>
       <td class="fin-cell">3.48</td>
@@ -2531,6 +2543,16 @@
         "tabHeatmap": "🔥 섹터 히트맵",
 
         "tabMomentum": "📊 모멘텀 매트릭스",
+        "tabVolatility": "📉 변동성 분포",
+        "volatilityTitle": "변동성 분포",
+        "volatilityHint": "색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%",
+        "volatilityAxisAtr": "ATR3/종가",
+        "volatilityAxisMcap": "시가총액(로그)",
+        "volatilityAtr": "ATR3/종가",
+        "volatilityMcap": "시가총액",
+        "volatilityPctB": "20일 %b",
+        "volatilityNoData": "변동성 스냅샷 데이터가 없습니다.",
+        "volatilityLegend": "색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%",
 
         "momentumHint": "RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률",
 
@@ -2640,6 +2662,16 @@
         "tabHeatmap": "🔥 Sector heatmap",
 
         "tabMomentum": "📊 Momentum matrix",
+        "tabVolatility": "📉 Volatility Distribution",
+        "volatilityTitle": "Volatility Distribution",
+        "volatilityHint": "Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%",
+        "volatilityAxisAtr": "ATR3/Close",
+        "volatilityAxisMcap": "Market cap (log)",
+        "volatilityAtr": "ATR3/Close",
+        "volatilityMcap": "Market cap",
+        "volatilityPctB": "20D %b",
+        "volatilityNoData": "No volatility snapshot data available.",
+        "volatilityLegend": "Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%",
 
         "momentumHint": "RS × 52W position · size = daily turnover · color = 1-day return",
 
@@ -2952,6 +2984,10 @@
       if (momentumBtn) momentumBtn.innerHTML = t.tabMomentum || (lang === 'en' ? '📊 Momentum matrix' : '📊 모멘텀 매트릭스');
       var momentumHint = document.getElementById('momentum-hint');
       if (momentumHint) momentumHint.textContent = t.momentumHint || (lang === 'en' ? 'RS × 52W position · size = daily turnover · color = 1-day return' : 'RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률');
+      var volatilityBtn = document.getElementById('tab-btn-volatility');
+      if (volatilityBtn) volatilityBtn.innerHTML = t.tabVolatility || (lang === 'en' ? '📉 Volatility Distribution' : '📉 변동성 분포');
+      var volatilityHint = document.getElementById('volatility-hint');
+      if (volatilityHint) volatilityHint.textContent = t.volatilityHint || (lang === 'en' ? 'Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%' : '색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%');
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
@@ -3015,7 +3051,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility();
       syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
@@ -3308,6 +3344,36 @@
       });
     }
 
+    function renderVolatility() {
+      if (!window.InvestingMapVolatility) return;
+      var el = document.getElementById('volatility-root');
+      if (!el) return;
+      var vt = T[lang] || {};
+      InvestingMapVolatility.render({
+        container: el,
+        legend: document.getElementById('volatility-legend'),
+        companies: koreanCompanies,
+        lang: lang,
+        labels: {
+          title: vt.volatilityTitle,
+          xAxis: vt.volatilityAxisAtr,
+          yAxis: vt.volatilityAxisMcap,
+          atr: vt.volatilityAtr,
+          mcap: vt.volatilityMcap,
+          pctB: vt.volatilityPctB,
+          noData: vt.volatilityNoData,
+          legend: vt.volatilityLegend
+        },
+        onSelect: function (c) {
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
+        }
+      });
+    }
+
     function renderMomentum() {
       if (!window.InvestingMapMomentum) return;
       var el = document.getElementById('momentum-root');
@@ -3351,6 +3417,7 @@
       if (btn) btn.classList.add('active');
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
+      if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -3364,9 +3431,10 @@
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
       if (document.getElementById('tab-momentum')?.classList.contains('active')) setTimeout(renderMomentum, 80);
+      if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
-          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); },
+          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); },
           onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';

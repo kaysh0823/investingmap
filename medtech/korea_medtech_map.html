@@ -236,13 +236,14 @@
 <script src="../js/live_quotes.js?v=15"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
-  <script src="../js/map_tab_state.js?v=9"></script>
+  <script src="../js/map_tab_state.js?v=10"></script>
   <script src="../js/sector_nav.js?v=8"></script>
   <script src="../js/map_filter_ux.js"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
   <script src="../js/map_momentum.js?v=8"></script>
+  <script src="../js/map_volatility.js?v=1"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=23"></script>
@@ -2037,7 +2038,7 @@
     <p lang="en" class="im-seo-body-p" hidden>Informational only—not investment advice. Cross-check filings and regulatory data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 의료기기, 헬스케어, 진단, IVD, 임플란트</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean medtech, healthcare, diagnostics, implants, medical equipment</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-08-29 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-08-29.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-01 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-01.</p>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>
@@ -2046,6 +2047,7 @@
 <div class="tabs">
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
     <button id="tab-btn-momentum" class="tab-btn" onclick="switchTab('momentum',this)">📊 모멘텀 매트릭스</button>
+    <button id="tab-btn-volatility" class="tab-btn" onclick="switchTab('volatility',this)">📉 변동성 분포</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
@@ -2065,6 +2067,16 @@
       <div id="momentum-legend"></div>
     </div>
   </div>
+  <!-- VOLATILITY TAB -->
+  <div id="tab-volatility" class="tab-content">
+    <div class="volatility-wrap">
+      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%</p>
+      <div id="volatility-root" role="img" aria-label="Volatility distribution"></div>
+      <div id="volatility-legend"></div>
+    </div>
+  </div>
+
+
 
 
 
@@ -2123,16 +2135,16 @@
       <td><div class="company-name">씨젠</div><div class="company-name-sub">Seegene Inc.</div></td>
       <td><span class="ticker">096530</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">35,650</td>
-      <td class="quote-cell ret-cell">+11.76%</td>
-      <td class="quote-cell ret-cell">+32.53%</td>
-      <td class="quote-cell ret-cell">+28.24%</td>
-      <td class="quote-cell ret-cell">+60.22%</td>
-      <td class="quote-cell ret-cell">+46.41%</td>
+      <td class="quote-cell">33,000</td>
+      <td class="quote-cell ret-cell">-5.75%</td>
+      <td class="quote-cell ret-cell">+25.84%</td>
+      <td class="quote-cell ret-cell">+23.99%</td>
+      <td class="quote-cell ret-cell">+52.04%</td>
+      <td class="quote-cell ret-cell">+37.42%</td>
       <td class="quote-cell">35,750</td>
       <td class="quote-cell">21,700</td>
-      <td class="quote-cell">99.3%</td>
-      <td class="quote-cell">91.2</td>
+      <td class="quote-cell">80.4%</td>
+      <td class="quote-cell">86.9</td>
       <td class="mcap-cell">1.86조원</td>
       <td class="fin-cell">26.79</td>
       <td class="fin-cell">1.27</td>
@@ -2146,16 +2158,16 @@
       <td><div class="company-name">씨어스</div><div class="company-name-sub">SEERS Technology</div></td>
       <td><span class="ticker">458870</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell ret-cell">+1.38%</td>
-      <td class="quote-cell ret-cell">-6.95%</td>
-      <td class="quote-cell ret-cell">-31.79%</td>
-      <td class="quote-cell ret-cell">-86.24%</td>
-      <td class="quote-cell ret-cell">-83.00%</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">4.8</td>
+      <td class="quote-cell">21,000</td>
+      <td class="quote-cell ret-cell">-4.30%</td>
+      <td class="quote-cell ret-cell">-12.96%</td>
+      <td class="quote-cell ret-cell">-31.00%</td>
+      <td class="quote-cell ret-cell">-87.51%</td>
+      <td class="quote-cell ret-cell">-83.21%</td>
+      <td class="quote-cell">64,235</td>
+      <td class="quote-cell">17,676</td>
+      <td class="quote-cell">7.1%</td>
+      <td class="quote-cell">2.3</td>
       <td class="mcap-cell">0.85조원</td>
       <td class="fin-cell">69.09</td>
       <td class="fin-cell">28.31</td>
@@ -2169,16 +2181,16 @@
       <td><div class="company-name">리브스메드</div><div class="company-name-sub">LivsMed</div></td>
       <td><span class="ticker">491000</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell ret-cell">-0.15%</td>
-      <td class="quote-cell ret-cell">-10.68%</td>
-      <td class="quote-cell ret-cell">-15.74%</td>
-      <td class="quote-cell ret-cell">-62.29%</td>
+      <td class="quote-cell">33,350</td>
+      <td class="quote-cell ret-cell">+0.45%</td>
+      <td class="quote-cell ret-cell">-18.84%</td>
+      <td class="quote-cell ret-cell">-10.40%</td>
+      <td class="quote-cell ret-cell">-59.86%</td>
       <td class="quote-cell ret-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">11.1</td>
+      <td class="quote-cell">95,900</td>
+      <td class="quote-cell">29,900</td>
+      <td class="quote-cell">5.2%</td>
+      <td class="quote-cell">9.2</td>
       <td class="mcap-cell">0.84조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">5.64</td>
@@ -2192,16 +2204,16 @@
       <td><div class="company-name">인바디</div><div class="company-name-sub">InBody Co., Ltd.</div></td>
       <td><span class="ticker">041830</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">60,300</td>
-      <td class="quote-cell ret-cell">-0.33%</td>
-      <td class="quote-cell ret-cell">+30.52%</td>
-      <td class="quote-cell ret-cell">+29.82%</td>
-      <td class="quote-cell ret-cell">+103.72%</td>
-      <td class="quote-cell ret-cell">+112.32%</td>
+      <td class="quote-cell">61,100</td>
+      <td class="quote-cell ret-cell">-0.17%</td>
+      <td class="quote-cell ret-cell">+20.40%</td>
+      <td class="quote-cell ret-cell">+29.88%</td>
+      <td class="quote-cell ret-cell">+99.34%</td>
+      <td class="quote-cell ret-cell">+112.72%</td>
       <td class="quote-cell">73,500</td>
       <td class="quote-cell">26,000</td>
-      <td class="quote-cell">72.2%</td>
-      <td class="quote-cell">88.2</td>
+      <td class="quote-cell">73.9%</td>
+      <td class="quote-cell">73.6</td>
       <td class="mcap-cell">0.81조원</td>
       <td class="fin-cell">18.30</td>
       <td class="fin-cell">1.86</td>
@@ -2215,16 +2227,16 @@
       <td><div class="company-name">에스디바이오센서</div><div class="company-name-sub">SD Biosensor</div></td>
       <td><span class="ticker">137310</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">6,300</td>
-      <td class="quote-cell ret-cell">+4.30%</td>
-      <td class="quote-cell ret-cell">-0.79%</td>
-      <td class="quote-cell ret-cell">-7.89%</td>
-      <td class="quote-cell ret-cell">-21.74%</td>
-      <td class="quote-cell ret-cell">-30.16%</td>
+      <td class="quote-cell">6,190</td>
+      <td class="quote-cell ret-cell">-2.86%</td>
+      <td class="quote-cell ret-cell">-5.12%</td>
+      <td class="quote-cell ret-cell">-4.67%</td>
+      <td class="quote-cell ret-cell">-19.69%</td>
+      <td class="quote-cell ret-cell">-33.19%</td>
       <td class="quote-cell">10,930</td>
       <td class="quote-cell">5,800</td>
-      <td class="quote-cell">9.7%</td>
-      <td class="quote-cell">34.6</td>
+      <td class="quote-cell">7.6%</td>
+      <td class="quote-cell">26.3</td>
       <td class="mcap-cell">0.76조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.37</td>
@@ -2238,16 +2250,16 @@
       <td><div class="company-name">루닛</div><div class="company-name-sub">Lunit Inc.</div></td>
       <td><span class="ticker">328130</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">9,230</td>
-      <td class="quote-cell ret-cell">+1.99%</td>
-      <td class="quote-cell ret-cell">-0.22%</td>
-      <td class="quote-cell ret-cell">-28.06%</td>
-      <td class="quote-cell ret-cell">-75.25%</td>
-      <td class="quote-cell ret-cell">-73.05%</td>
+      <td class="quote-cell">9,090</td>
+      <td class="quote-cell ret-cell">-1.52%</td>
+      <td class="quote-cell ret-cell">-8.83%</td>
+      <td class="quote-cell ret-cell">-26.16%</td>
+      <td class="quote-cell ret-cell">-76.11%</td>
+      <td class="quote-cell ret-cell">-75.03%</td>
       <td class="quote-cell">24,550</td>
       <td class="quote-cell">8,350</td>
-      <td class="quote-cell">5.4%</td>
-      <td class="quote-cell">6.1</td>
+      <td class="quote-cell">4.6%</td>
+      <td class="quote-cell">5.0</td>
       <td class="mcap-cell">0.69조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">6.70</td>
@@ -2261,16 +2273,16 @@
       <td><div class="company-name">아이센스</div><div class="company-name-sub">i-SENS, Inc.</div></td>
       <td><span class="ticker">099190</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">18,110</td>
-      <td class="quote-cell ret-cell">+2.61%</td>
-      <td class="quote-cell ret-cell">+8.12%</td>
-      <td class="quote-cell ret-cell">+10.70%</td>
-      <td class="quote-cell ret-cell">-7.79%</td>
-      <td class="quote-cell ret-cell">+7.86%</td>
+      <td class="quote-cell">17,330</td>
+      <td class="quote-cell ret-cell">-0.44%</td>
+      <td class="quote-cell ret-cell">+7.83%</td>
+      <td class="quote-cell ret-cell">+12.90%</td>
+      <td class="quote-cell ret-cell">-8.66%</td>
+      <td class="quote-cell ret-cell">+7.51%</td>
       <td class="quote-cell">27,600</td>
       <td class="quote-cell">14,000</td>
-      <td class="quote-cell">30.2%</td>
-      <td class="quote-cell">64.5</td>
+      <td class="quote-cell">24.5%</td>
+      <td class="quote-cell">48.7</td>
       <td class="mcap-cell">0.52조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.42</td>
@@ -2284,16 +2296,16 @@
       <td><div class="company-name">티앤엘</div><div class="company-name-sub">T&amp;L</div></td>
       <td><span class="ticker">340570</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell ret-cell">-1.28%</td>
-      <td class="quote-cell ret-cell">-44.42%</td>
-      <td class="quote-cell ret-cell">-43.82%</td>
-      <td class="quote-cell ret-cell">-39.29%</td>
-      <td class="quote-cell ret-cell">-31.26%</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">6.9</td>
+      <td class="quote-cell">30,650</td>
+      <td class="quote-cell ret-cell">+2.75%</td>
+      <td class="quote-cell ret-cell">-44.97%</td>
+      <td class="quote-cell ret-cell">-42.79%</td>
+      <td class="quote-cell ret-cell">-35.47%</td>
+      <td class="quote-cell ret-cell">-29.60%</td>
+      <td class="quote-cell">35,800</td>
+      <td class="quote-cell">21,812</td>
+      <td class="quote-cell">63.2%</td>
+      <td class="quote-cell">5.0</td>
       <td class="mcap-cell">0.50조원</td>
       <td class="fin-cell">12.32</td>
       <td class="fin-cell">2.32</td>
@@ -2307,16 +2319,16 @@
       <td><div class="company-name">로킷헬스케어</div><div class="company-name-sub">Rokit Healthcare</div></td>
       <td><span class="ticker">376900</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell ret-cell">+1.62%</td>
-      <td class="quote-cell ret-cell">-12.44%</td>
-      <td class="quote-cell ret-cell">-32.49%</td>
-      <td class="quote-cell ret-cell">-71.57%</td>
-      <td class="quote-cell ret-cell">-56.49%</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">3.5</td>
+      <td class="quote-cell">26,000</td>
+      <td class="quote-cell ret-cell">-3.02%</td>
+      <td class="quote-cell ret-cell">-19.82%</td>
+      <td class="quote-cell ret-cell">-31.75%</td>
+      <td class="quote-cell ret-cell">-73.65%</td>
+      <td class="quote-cell ret-cell">-55.75%</td>
+      <td class="quote-cell">153,800</td>
+      <td class="quote-cell">14,120</td>
+      <td class="quote-cell">8.5%</td>
+      <td class="quote-cell">2.8</td>
       <td class="mcap-cell">0.49조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">71.08</td>
@@ -2330,16 +2342,16 @@
       <td><div class="company-name">바이오노트</div><div class="company-name-sub">BioNote</div></td>
       <td><span class="ticker">377740</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell ret-cell">+1.05%</td>
-      <td class="quote-cell ret-cell">+5.38%</td>
-      <td class="quote-cell ret-cell">+3.45%</td>
-      <td class="quote-cell ret-cell">-11.76%</td>
-      <td class="quote-cell ret-cell">-12.57%</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">55.3</td>
+      <td class="quote-cell">4,800</td>
+      <td class="quote-cell ret-cell">-0.62%</td>
+      <td class="quote-cell ret-cell">+4.38%</td>
+      <td class="quote-cell ret-cell">+3.92%</td>
+      <td class="quote-cell ret-cell">-11.01%</td>
+      <td class="quote-cell ret-cell">-13.74%</td>
+      <td class="quote-cell">6,320</td>
+      <td class="quote-cell">4,050</td>
+      <td class="quote-cell">33%</td>
+      <td class="quote-cell">60.3</td>
       <td class="mcap-cell">0.49조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.32</td>
@@ -2353,16 +2365,16 @@
       <td><div class="company-name">토모큐브</div><div class="company-name-sub">Tomocube</div></td>
       <td><span class="ticker">475960</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell ret-cell">-2.44%</td>
-      <td class="quote-cell ret-cell">-7.54%</td>
-      <td class="quote-cell ret-cell">-18.12%</td>
-      <td class="quote-cell ret-cell">-44.96%</td>
-      <td class="quote-cell ret-cell">-28.45%</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">—</td>
-      <td class="quote-cell">12.8</td>
+      <td class="quote-cell">29,450</td>
+      <td class="quote-cell ret-cell">+1.50%</td>
+      <td class="quote-cell ret-cell">-7.44%</td>
+      <td class="quote-cell ret-cell">-14.45%</td>
+      <td class="quote-cell ret-cell">-42.88%</td>
+      <td class="quote-cell ret-cell">-23.65%</td>
+      <td class="quote-cell">67,800</td>
+      <td class="quote-cell">27,200</td>
+      <td class="quote-cell">5.5%</td>
+      <td class="quote-cell">9.9</td>
       <td class="mcap-cell">0.40조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">12.91</td>
@@ -2376,16 +2388,16 @@
       <td><div class="company-name">큐렉소</div><div class="company-name-sub">CUREXO, INC.</div></td>
       <td><span class="ticker">060280</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">8,900</td>
-      <td class="quote-cell ret-cell">+0.45%</td>
-      <td class="quote-cell ret-cell">+7.88%</td>
-      <td class="quote-cell ret-cell">-10.73%</td>
-      <td class="quote-cell ret-cell">-41.06%</td>
-      <td class="quote-cell ret-cell">-6.81%</td>
+      <td class="quote-cell">8,510</td>
+      <td class="quote-cell ret-cell">-1.24%</td>
+      <td class="quote-cell ret-cell">+2.81%</td>
+      <td class="quote-cell ret-cell">-9.19%</td>
+      <td class="quote-cell ret-cell">-41.13%</td>
+      <td class="quote-cell ret-cell">-13.14%</td>
       <td class="quote-cell">22,550</td>
       <td class="quote-cell">6,970</td>
-      <td class="quote-cell">12.4%</td>
-      <td class="quote-cell">28.7</td>
+      <td class="quote-cell">9.9%</td>
+      <td class="quote-cell">22.1</td>
       <td class="mcap-cell">0.37조원</td>
       <td class="fin-cell">164.18</td>
       <td class="fin-cell">4.70</td>
@@ -2399,16 +2411,16 @@
       <td><div class="company-name">덴티움</div><div class="company-name-sub">Dentium</div></td>
       <td><span class="ticker">145720</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">38,200</td>
-      <td class="quote-cell ret-cell">+2.96%</td>
-      <td class="quote-cell ret-cell">-0.26%</td>
-      <td class="quote-cell ret-cell">-13.87%</td>
-      <td class="quote-cell ret-cell">-27.92%</td>
-      <td class="quote-cell ret-cell">-22.28%</td>
+      <td class="quote-cell">37,350</td>
+      <td class="quote-cell ret-cell">-2.09%</td>
+      <td class="quote-cell ret-cell">-2.86%</td>
+      <td class="quote-cell ret-cell">-13.02%</td>
+      <td class="quote-cell ret-cell">-28.76%</td>
+      <td class="quote-cell ret-cell">-23.28%</td>
       <td class="quote-cell">60,600</td>
       <td class="quote-cell">35,000</td>
-      <td class="quote-cell">12.5%</td>
-      <td class="quote-cell">24.5</td>
+      <td class="quote-cell">9.2%</td>
+      <td class="quote-cell">19.4</td>
       <td class="mcap-cell">0.33조원</td>
       <td class="fin-cell">23.99</td>
       <td class="fin-cell">0.70</td>
@@ -2422,16 +2434,16 @@
       <td><div class="company-name">HLB생명과학</div><div class="company-name-sub">HLB Life Science</div></td>
       <td><span class="ticker">067630</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">2,645</td>
-      <td class="quote-cell ret-cell">+0.19%</td>
-      <td class="quote-cell ret-cell">+30.94%</td>
-      <td class="quote-cell ret-cell">-19.24%</td>
-      <td class="quote-cell ret-cell">-30.12%</td>
-      <td class="quote-cell ret-cell">-28.61%</td>
+      <td class="quote-cell">2,740</td>
+      <td class="quote-cell ret-cell">+2.08%</td>
+      <td class="quote-cell ret-cell">+31.39%</td>
+      <td class="quote-cell ret-cell">-18.92%</td>
+      <td class="quote-cell ret-cell">-28.29%</td>
+      <td class="quote-cell ret-cell">-27.61%</td>
       <td class="quote-cell">5,330</td>
       <td class="quote-cell">1,608</td>
-      <td class="quote-cell">27.9%</td>
-      <td class="quote-cell">43.8</td>
+      <td class="quote-cell">30.4%</td>
+      <td class="quote-cell">55.1</td>
       <td class="mcap-cell">0.32조원</td>
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.25</td>
@@ -2530,6 +2542,16 @@
         "dataAsof": "데이터 기준일: 2026-06-12",
         "tabHeatmap": "🔥 섹터 히트맵",
         "tabMomentum": "📊 모멘텀 매트릭스",
+        "tabVolatility": "📉 변동성 분포",
+        "volatilityTitle": "변동성 분포",
+        "volatilityHint": "색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%",
+        "volatilityAxisAtr": "ATR3/종가",
+        "volatilityAxisMcap": "시가총액(로그)",
+        "volatilityAtr": "ATR3/종가",
+        "volatilityMcap": "시가총액",
+        "volatilityPctB": "20일 %b",
+        "volatilityNoData": "변동성 스냅샷 데이터가 없습니다.",
+        "volatilityLegend": "색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%",
         "momentumHint": "RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률",
         "momentumAxisRs": "RS",
         "momentumAxisPosition": "주가 위치",
@@ -2617,6 +2639,16 @@
         "dataAsof": "Data as of: June 12, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
         "tabMomentum": "📊 Momentum matrix",
+        "tabVolatility": "📉 Volatility Distribution",
+        "volatilityTitle": "Volatility Distribution",
+        "volatilityHint": "Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%",
+        "volatilityAxisAtr": "ATR3/Close",
+        "volatilityAxisMcap": "Market cap (log)",
+        "volatilityAtr": "ATR3/Close",
+        "volatilityMcap": "Market cap",
+        "volatilityPctB": "20D %b",
+        "volatilityNoData": "No volatility snapshot data available.",
+        "volatilityLegend": "Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%",
         "momentumHint": "RS × 52W position · size = daily turnover · color = 1-day return",
         "momentumAxisRs": "RS",
         "momentumAxisPosition": "52W price position",
@@ -2909,6 +2941,10 @@
       if (momentumBtn) momentumBtn.innerHTML = t.tabMomentum || (lang === 'en' ? '📊 Momentum matrix' : '📊 모멘텀 매트릭스');
       var momentumHint = document.getElementById('momentum-hint');
       if (momentumHint) momentumHint.textContent = t.momentumHint || (lang === 'en' ? 'RS × 52W position · size = daily turnover · color = 1-day return' : 'RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률');
+      var volatilityBtn = document.getElementById('tab-btn-volatility');
+      if (volatilityBtn) volatilityBtn.innerHTML = t.tabVolatility || (lang === 'en' ? '📉 Volatility Distribution' : '📉 변동성 분포');
+      var volatilityHint = document.getElementById('volatility-hint');
+      if (volatilityHint) volatilityHint.textContent = t.volatilityHint || (lang === 'en' ? 'Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%' : '색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%');
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
@@ -2972,7 +3008,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility();
       syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
@@ -3265,6 +3301,36 @@
       });
     }
 
+    function renderVolatility() {
+      if (!window.InvestingMapVolatility) return;
+      var el = document.getElementById('volatility-root');
+      if (!el) return;
+      var vt = T[lang] || {};
+      InvestingMapVolatility.render({
+        container: el,
+        legend: document.getElementById('volatility-legend'),
+        companies: koreanCompanies,
+        lang: lang,
+        labels: {
+          title: vt.volatilityTitle,
+          xAxis: vt.volatilityAxisAtr,
+          yAxis: vt.volatilityAxisMcap,
+          atr: vt.volatilityAtr,
+          mcap: vt.volatilityMcap,
+          pctB: vt.volatilityPctB,
+          noData: vt.volatilityNoData,
+          legend: vt.volatilityLegend
+        },
+        onSelect: function (c) {
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
+        }
+      });
+    }
+
     function renderMomentum() {
       if (!window.InvestingMapMomentum) return;
       var el = document.getElementById('momentum-root');
@@ -3308,6 +3374,7 @@
       if (btn) btn.classList.add('active');
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
+      if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -3321,9 +3388,10 @@
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
       if (document.getElementById('tab-momentum')?.classList.contains('active')) setTimeout(renderMomentum, 80);
+      if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
-          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); },
+          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); },
           onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';

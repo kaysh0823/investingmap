@@ -116,6 +116,7 @@ run('node scripts/patch_map_nav_filters.mjs', 'desktop sector nav, filters, tab 
 run('node scripts/patch_tab_heatmap_i18n.mjs', 'tabHeatmap i18n');
 run('node scripts/patch_heatmap_chg.mjs', 'heatmap 1D return colors');
 run('node scripts/patch_momentum_tab.mjs', 'momentum matrix tab');
+run('node scripts/patch_volatility_tab.mjs', 'volatility distribution tab');
 run('node scripts/patch_editorial_collapsible_html.mjs', 'editorial collapsible HTML');
 run('node scripts/fix_mcap_script_order.mjs', 'mcap fmt + script order');
 run('node scripts/patch_rs_column.mjs', 'RS table column');

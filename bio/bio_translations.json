@@ -82,7 +82,17 @@
     "momentumChange": "당일 등락률",
     "momentumPosition": "주가 위치",
     "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
-    "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금"
+    "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
+    "tabVolatility": "📉 변동성 분포",
+    "volatilityTitle": "변동성 분포",
+    "volatilityHint": "색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%",
+    "volatilityAxisAtr": "ATR3/종가",
+    "volatilityAxisMcap": "시가총액(로그)",
+    "volatilityAtr": "ATR3/종가",
+    "volatilityMcap": "시가총액",
+    "volatilityPctB": "20일 %b",
+    "volatilityNoData": "변동성 스냅샷 데이터가 없습니다.",
+    "volatilityLegend": "색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%"
   },
   "en": {
     "title": "🇰🇷 Korea Bio Industry Investment Map",
@@ -167,6 +177,16 @@
     "momentumChange": "1-day return",
     "momentumPosition": "Price position",
     "momentumNoData": "No companies have RS, price-position and turnover data.",
-    "momentumLegend": "Color = 1-day return · size = daily turnover"
+    "momentumLegend": "Color = 1-day return · size = daily turnover",
+    "tabVolatility": "📉 Volatility Distribution",
+    "volatilityTitle": "Volatility Distribution",
+    "volatilityHint": "Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%",
+    "volatilityAxisAtr": "ATR3/Close",
+    "volatilityAxisMcap": "Market cap (log)",
+    "volatilityAtr": "ATR3/Close",
+    "volatilityMcap": "Market cap",
+    "volatilityPctB": "20D %b",
+    "volatilityNoData": "No volatility snapshot data available.",
+    "volatilityLegend": "Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%"
   }
 }
