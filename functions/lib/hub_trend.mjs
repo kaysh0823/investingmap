@@ -11,15 +11,15 @@ import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.
 
 export const TREND_MAX_POINTS = 200;
 /** Chart fetch resolution — downsample window dates before Supabase queries (CF subrequest cap). */
-export const TREND_CHART_MAX_POINTS = 80;
+export const TREND_CHART_MAX_POINTS = 50;
 const DAILY_LOOKBACK = { '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
 const HORIZON_TRADING_DAYS = { '1d': 1, '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
 const INDEX_CODES = ['KOSPI', 'KOSDAQ'];
 const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
 const MIN_FIXED_MEMBERS = 3;
 const TICKER_BATCH = 80;
-/** Max trade_date values per in.(…) clause (URL + row volume). */
-const DATE_BATCH = 40;
+/** Max trade_date values per in.(…) clause — must exceed TREND_CHART_MAX_POINTS for single-batch chart fetches. */
+const DATE_BATCH = 64;
 const CALENDAR_DAYS = 260;
 const CARD_ANCHOR_OFFSETS = [1, 20, 50, 120, 200];
 

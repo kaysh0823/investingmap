@@ -220,12 +220,17 @@ try {
     assert.equal(semi.series[0].v, 100, `${horizon}: semi base is 100`);
     assertIndices(payload, horizon);
     assertSectorIndexAligned(payload, horizon);
-    if (horizon === '200d') {
+    if (horizon === '200d' || horizon === '120d') {
       const semi = payload.sectors.find((s) => s.sector === 'semi');
       assert.ok(
         semi?.series?.length >= 2 && semi.series.length <= TREND_CHART_MAX_POINTS + 1,
-        `200d: semi series length ${semi?.series?.length} out of chart range`,
+        `${horizon}: semi series length ${semi?.series?.length} out of chart range`,
       );
+      const endT = semi?.series?.at(-1)?.t;
+      for (const entry of payload.sectors || []) {
+        if (!entry.series?.length) continue;
+        assert.equal(entry.series.at(-1)?.t, endT, `${horizon}: ${entry.sector} end ${entry.series.at(-1)?.t} != ${endT}`);
+      }
     }
   }
 
@@ -244,7 +249,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v8'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v9'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -271,6 +276,7 @@ for (const marker of [
   'prevSessionDate',
   'downsampleDates',
   'TREND_CHART_MAX_POINTS',
+  'DATE_BATCH = 64',
   'buildIndexDailySeries(config, chartDates, calendar',
   'scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash',
   'payload.tradeDate = tradeDateDash',
