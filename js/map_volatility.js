@@ -10,7 +10,7 @@
   var resizeTimer = null;
   var snapshotCache = null;
   var snapshotLoading = null;
-  var COLOR_MODES = ['pctb', 'chg', 'rs'];
+  var COLOR_MODES = ['pctb', 'rs', 'chg'];
   var COLOR_MODE_STORAGE = 'im_vol_cmode';
   var MISSING_COLOR = '#b0b8c1';
   var CHG_CLIP = 15;
@@ -470,8 +470,8 @@
     );
     tabs.innerHTML = [
       { id: 'pctb', text: labels.modePctB },
-      { id: 'chg', text: labels.modeChg },
       { id: 'rs', text: labels.modeRs },
+      { id: 'chg', text: labels.modeChg },
     ]
       .map(function (mode) {
         return (
