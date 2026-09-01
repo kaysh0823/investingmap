@@ -40,9 +40,39 @@ const p75 = percentile(sorted, 75);
 assert.ok(p25 < p50 && p50 < p75, 'ATR percentiles must be strictly increasing');
 
 const volSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_volatility.js'), 'utf8');
-const context = { globalThis: {}, d3: { scaleLinear: () => ({}), scaleLog: () => ({}), scaleSequential: () => () => '#000', min: () => 1, max: () => 1, rgb: () => ({ formatHex: () => '#000' }), interpolate: () => '#000' } };
+const context = {
+  globalThis: {},
+  d3: {
+    scaleLinear: () => ({}),
+    scaleLog: () => ({}),
+    scaleSequential: (fn) => {
+      const scale = (t) => fn(t);
+      scale.domain = () => scale;
+      return scale;
+    },
+    min: (arr, fn) => {
+      const vals = fn ? arr.map(fn) : arr;
+      return vals.length ? Math.min(...vals) : undefined;
+    },
+    max: (arr, fn) => {
+      const vals = fn ? arr.map(fn) : arr;
+      return vals.length ? Math.max(...vals) : undefined;
+    },
+    rgb: () => ({ formatHex: () => '#000' }),
+    interpolate: (a, b) => (t) => (t <= 0 ? a : b),
+  },
+};
 context.globalThis = context;
 context.window = context;
+context.localStorage = {
+  _data: {},
+  getItem(k) {
+    return this._data[k] ?? null;
+  },
+  setItem(k, v) {
+    this._data[k] = String(v);
+  },
+};
 vm.createContext(context);
 new vm.Script(volSrc, { filename: 'map_volatility.js' }).runInContext(context);
 const vol = context.InvestingMapVolatility;
@@ -53,11 +83,17 @@ assert.equal(vol.clamp01(2), 1);
 const mockScale = (t) => (t <= 0.5 ? '#ffe0e0' : '#8b0000');
 assert.equal(vol.colorForPctB(0, mockScale), '#ffe0e0');
 assert.equal(vol.colorForPctB(1, mockScale), '#8b0000');
-assert.ok(volSrc.includes("interpolate('#ffe0e0', '#8b0000')"), 'sequential red pctB color scale');
+assert.ok(volSrc.includes("interpolate('#ffe0e0', '#8b0000')"), 'sequential red color scale');
 assert.ok(!volSrc.includes('im-vol-bg'), 'must not render all-market gray background dots');
 assert.ok(volSrc.includes('axisBottom'), 'x axis ticks required');
 assert.ok(volSrc.includes('axisLeft'), 'y axis ticks required');
 assert.ok(volSrc.includes('expandLinearDomain'), 'x domain padding helper required');
+assert.ok(volSrc.includes("COLOR_MODES = ['pctb', 'turnover', 'rs']"), 'color mode set required');
+assert.ok(volSrc.includes('data-vol-mode'), 'color mode toggle required');
+assert.ok(volSrc.includes('P50(중앙값)'), 'ko P50 median label required');
+assert.ok(volSrc.includes('P50 (median)'), 'en P50 median label required');
+assert.ok(volSrc.includes('legendLines'), 'percentile legend lines required');
+assert.ok(volSrc.includes("COLOR_MODE_STORAGE = 'im_vol_cmode'"), 'color mode storage key required');
 
 assert.equal(vol.formatMcapAxis(3e11, 'ko'), '3,000억');
 assert.equal(vol.formatMcapAxis(9e11, 'ko'), '9,000억');
@@ -66,6 +102,20 @@ assert.equal(vol.formatMcapAxis(1.5e12, 'ko'), '1.5조');
 assert.notEqual(vol.formatMcapAxis(3e11, 'ko'), '3000000억', 'must not inflate 억 labels by 1000×');
 assert.equal(vol.formatMcapAxis(3e11, 'en'), '₩300B');
 assert.equal(vol.formatMcapAxis(1.5e12, 'en'), '₩1.5T');
+
+const fg = [
+  { pctB: 0, turnoverWon: 1e9, rs: 0 },
+  { pctB: 1, turnoverWon: 1e12, rs: 100 },
+];
+const pctFn = vol.buildColorFn(fg, 'pctb');
+const rsFn = vol.buildColorFn(fg, 'rs');
+const turnoverFn = vol.buildColorFn(fg, 'turnover');
+assert.equal(pctFn({ pctB: 0 }), '#ffe0e0');
+assert.equal(pctFn({ pctB: null }), '#b0b8c1');
+assert.equal(rsFn({ rs: 100 }), '#8b0000');
+assert.equal(rsFn({ rs: null }), '#b0b8c1');
+assert.equal(turnoverFn({ turnoverWon: 1e12 }), '#8b0000');
+assert.equal(turnoverFn({ turnoverWon: null }), '#b0b8c1');
 
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(tabState.includes('volatility: 1'), 'map_tab_state VALID must include volatility');
@@ -106,8 +156,9 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=3'), `${rel}: missing map_volatility.js v3`);
+  assert.ok(html.includes('map_volatility.js?v=4'), `${rel}: missing map_volatility.js v4`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
+  assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);
 }
 
 assert.ok(

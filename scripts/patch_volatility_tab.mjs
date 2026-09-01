@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 3;
+const SCRIPT_V = 4;
 const TAB_STATE_V = 10;
 
 const MAP_FILES = [
@@ -42,7 +42,7 @@ const VOLATILITY_BUTTON =
 const VOLATILITY_TAB = `  <!-- VOLATILITY TAB -->
   <div id="tab-volatility" class="tab-content">
     <div class="volatility-wrap">
-      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 세로선=전체 변동성 25/50/75%</p>
+      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)</p>
       <div id="volatility-root" role="img" aria-label="Volatility distribution"></div>
       <div id="volatility-legend"></div>
     </div>
@@ -67,7 +67,16 @@ const RENDER_VOLATILITY_FN = `    function renderVolatility() {
           atr: vt.volatilityAtr,
           mcap: vt.volatilityMcap,
           pctB: vt.volatilityPctB,
+          turnover: vt.volatilityTurnover,
+          rs: vt.volatilityRs,
           noData: vt.volatilityNoData,
+          legendLines: vt.volatilityLegendLines,
+          legendPctB: vt.volatilityLegendPctB,
+          legendTurnover: vt.volatilityLegendTurnover,
+          legendRs: vt.volatilityLegendRs,
+          modePctB: vt.volatilityModePctB,
+          modeTurnover: vt.volatilityModeTurnover,
+          modeRs: vt.volatilityModeRs,
           legend: vt.volatilityLegend
         },
         onSelect: function (c) {
@@ -86,29 +95,47 @@ const TRANSLATIONS = {
   ko: {
     tabVolatility: '📉 변동성 분포',
     volatilityTitle: '변동성 분포',
-    volatilityHint: '색=20일 %b(진할수록 높음) · 세로선=전체 변동성 25/50/75%',
+    volatilityHint: '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
     volatilityAxisAtr: 'ATR3/종가',
     volatilityAxisMcap: '시가총액(로그)',
     volatilityAtr: 'ATR3/종가',
     volatilityMcap: '시가총액',
     volatilityPctB: '20일 %b',
+    volatilityTurnover: '거래대금',
+    volatilityRs: 'RS',
     volatilityNoData: '변동성 스냅샷 데이터가 없습니다.',
+    volatilityLegendLines: '세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
+    volatilityLegendPctB: '색=20일 %b(진할수록 높음)',
+    volatilityLegendTurnover: '색=거래대금(진할수록 높음)',
+    volatilityLegendRs: '색=RS(진할수록 높음)',
+    volatilityModePctB: '%b',
+    volatilityModeTurnover: '거래대금',
+    volatilityModeRs: 'RS',
     volatilityLegend:
-      '색=20일 %b(진할수록 높음) · 세로선=전체 변동성 25/50/75%',
+      '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
   },
   en: {
     tabVolatility: '📉 Volatility Distribution',
     volatilityTitle: 'Volatility Distribution',
     volatilityHint:
-      'Color = 20D %b (darker = higher) · vertical lines = market ATR 25/50/75%',
+      'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)',
     volatilityAxisAtr: 'ATR3/Close',
     volatilityAxisMcap: 'Market cap (log)',
     volatilityAtr: 'ATR3/Close',
     volatilityMcap: 'Market cap',
     volatilityPctB: '20D %b',
+    volatilityTurnover: 'Turnover',
+    volatilityRs: 'RS',
     volatilityNoData: 'No volatility snapshot data available.',
+    volatilityLegendLines: 'Lines = market-wide volatility percentiles (P25·P50·P75)',
+    volatilityLegendPctB: 'Color = 20D %b (darker = higher)',
+    volatilityLegendTurnover: 'Color = turnover (darker = higher)',
+    volatilityLegendRs: 'Color = RS (darker = higher)',
+    volatilityModePctB: '%b',
+    volatilityModeTurnover: 'Turnover',
+    volatilityModeRs: 'RS',
     volatilityLegend:
-      'Color = 20D %b (darker = higher) · vertical lines = market ATR 25/50/75%',
+      'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)',
   },
 };
 
@@ -139,7 +166,7 @@ function patchRuntime(source) {
       `$1\n      var volatilityBtn = document.getElementById('tab-btn-volatility');\n` +
         `      if (volatilityBtn) volatilityBtn.innerHTML = t.tabVolatility || (lang === 'en' ? '📉 Volatility Distribution' : '📉 변동성 분포');\n` +
         `      var volatilityHint = document.getElementById('volatility-hint');\n` +
-        `      if (volatilityHint) volatilityHint.textContent = t.volatilityHint || (lang === 'en' ? 'Color = 20D %b (darker = higher) · vertical lines = market ATR 25/50/75%' : '색=20일 %b(진할수록 높음) · 세로선=전체 변동성 25/50/75%');`,
+        `      if (volatilityHint) volatilityHint.textContent = t.volatilityHint || (lang === 'en' ? 'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)' : '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)');`,
     );
   }
 

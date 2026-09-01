@@ -256,7 +256,7 @@ async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
 }
 
 async function verifyMomentumSchema(supabaseUrl, serviceKey) {
-  const columns = 'high_120d,low_120d,high_50d,low_50d,bb_upper,bb_lower';
+  const columns = 'high_120d,low_120d,high_50d,low_50d,high_20d,low_20d,bb_upper,bb_lower';
   const url =
     `${supabaseUrl}/rest/v1/stock_quotes_latest?select=${columns}&limit=1`;
   const res = await fetch(url, {
@@ -266,7 +266,8 @@ async function verifyMomentumSchema(supabaseUrl, serviceKey) {
   const body = await res.text().catch(() => '');
   throw new Error(
     `Supabase momentum schema unavailable (${res.status}). ` +
-      `Apply supabase/migrations/0012_stock_quotes_momentum_bounds.sql first. ` +
+      `Apply supabase/migrations/0012_stock_quotes_momentum_bounds.sql and ` +
+      `0016_stock_quotes_high_20d.sql first. ` +
       body.slice(0, 180),
   );
 }
@@ -805,6 +806,7 @@ async function upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, ser
   let sparkAttached = 0;
   let range120Attached = 0;
   let range50Attached = 0;
+  let range20Attached = 0;
   let bbAttached = 0;
   for (const row of rows) {
     const bars = historyMap.get(row.ticker) || [];
@@ -825,11 +827,14 @@ async function upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, ser
     row.low_120d = bounds.low_120d;
     row.high_50d = bounds.high_50d;
     row.low_50d = bounds.low_50d;
+    row.high_20d = bounds.high_20d;
+    row.low_20d = bounds.low_20d;
     row.bb_upper = bounds.bb_upper;
     row.bb_lower = bounds.bb_lower;
     if (row.spark20) sparkAttached += 1;
     if (bounds.high_120d != null) range120Attached += 1;
     if (bounds.high_50d != null) range50Attached += 1;
+    if (bounds.high_20d != null) range20Attached += 1;
     if (bounds.bb_upper != null) bbAttached += 1;
   }
   if (!historyMap.size) {

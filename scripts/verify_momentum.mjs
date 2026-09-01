@@ -9,6 +9,16 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = fs.readFileSync(path.join(ROOT, 'js', 'map_momentum.js'), 'utf8');
 const context = {};
 context.globalThis = context;
+context.window = context;
+context.localStorage = {
+  _data: {},
+  getItem(k) {
+    return this._data[k] ?? null;
+  },
+  setItem(k, v) {
+    this._data[k] = String(v);
+  },
+};
 vm.createContext(context);
 new vm.Script(source, { filename: 'map_momentum.js' }).runInContext(context);
 
@@ -39,19 +49,19 @@ assert.equal(
   'flat rolling range is excluded',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 75, high50d: 100, low50d: 50 }, '120d'),
+  momentum.pricePosition({ quoteLast: 75, high20d: 90, low20d: 60 }, '20d'),
   50,
-  'legacy 120d mode falls back to 50d',
+  '20-day price position',
 );
 assert.equal(
-  momentum.rawPosition({ quoteLast: 125, bbUpper: 100, bbLower: 50 }, 'bb'),
-  150,
-  '%b tooltip retains out-of-band value',
+  momentum.pricePosition({ quoteLast: 75, high120d: 110, low120d: 40 }, '120d'),
+  50,
+  '120-day price position',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 125, bbUpper: 100, bbLower: 50 }, 'bb'),
-  100,
-  '%b plot clamps out-of-band value',
+  momentum.pricePosition({ quoteLast: 75, high50d: 100, low50d: 50 }, 'bb'),
+  50,
+  'legacy bb mode falls back to 50d',
 );
 
 const complete = momentum.datum({
@@ -84,8 +94,11 @@ assert.equal(bounds.high_120d, 130);
 assert.equal(bounds.low_120d, 1);
 assert.equal(bounds.high_50d, 130);
 assert.equal(bounds.low_50d, 71);
+assert.equal(bounds.high_20d, 130);
+assert.equal(bounds.low_20d, 101);
 assert.ok(bounds.bb_upper > bounds.bb_lower, 'Bollinger boundaries');
 assert.equal(computeMomentumBounds(history.slice(-49)).high_50d, null);
+assert.equal(computeMomentumBounds(history.slice(-19)).high_20d, null);
 assert.equal(computeMomentumBounds(history.slice(-49)).bb_upper, null);
 
 for (const marker of [
@@ -95,13 +108,14 @@ for (const marker of [
   "y(50)",
   'InvestingMapHeatmap.colorForChange',
   "selectedYMode = '50d'",
+  "mode20d: '20D BOX'",
   "mode50d: '50D BOX'",
-  "modeBb: '50D %b'",
-  "y50d: '50D BOX'",
-  "yBb: '50D %b'",
-  "mode === '50d' || mode === 'bb' ? mode : '50d'",
+  "mode120d: '120D BOX'",
+  "YMODES = ['20d', '50d', '120d']",
+  "YMODE_STORAGE = 'im_mm_ymode'",
+  "id: '20d'",
   "id: '50d'",
-  "id: 'bb'",
+  "id: '120d'",
   'data-mm-mode',
   'rawPosition',
   'bubbleLabelText',
@@ -115,9 +129,9 @@ for (const marker of [
 ]) {
   assert.ok(source.includes(marker), `momentum renderer marker missing: ${marker}`);
 }
-assert.ok(!source.includes("id: '120d'"), '120d mode tab must be removed');
-assert.ok(!source.includes('mode120d'), '120d mode labels must be removed');
-assert.ok(!/\bhigh120d\b/.test(source), '120d price-position branch must be removed');
+assert.ok(!source.includes("id: 'bb'"), '50D %b mode tab must be removed');
+assert.ok(!source.includes('modeBb'), '50D %b mode labels must be removed');
+assert.ok(!source.includes("mode === 'bb'"), 'bb branch must be removed from normalizeYMode');
 
 const mapFiles = fs
   .readdirSync(ROOT, { withFileTypes: true })
@@ -143,7 +157,7 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=8',
+    '../js/map_momentum.js?v=9',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",
@@ -176,29 +190,55 @@ assert.ok(
   liveQuotes.includes('c.turnoverWon =') && liveQuotes.includes('q.turnoverWon'),
   'quotes turnover must be copied to company objects',
 );
-for (const field of ['high120d', 'low120d', 'high50d', 'low50d', 'bbUpper', 'bbLower']) {
+for (const field of [
+  'high120d',
+  'low120d',
+  'high50d',
+  'low50d',
+  'high20d',
+  'low20d',
+  'bbUpper',
+  'bbLower',
+]) {
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
-assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '4'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '5'"), 'quotes API cache key version');
 const quotesApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
-for (const field of ['high120d', 'low120d', 'high50d', 'low50d', 'bbUpper', 'bbLower']) {
+for (const field of [
+  'high120d',
+  'low120d',
+  'high50d',
+  'low50d',
+  'high20d',
+  'low20d',
+  'bbUpper',
+  'bbLower',
+]) {
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
-assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v4'"), 'quotes response cache version');
+assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v5'"), 'quotes response cache version');
 assert.ok(quotesApi.includes("'supabase+naver-live'"), 'hybrid quotes source');
 assert.ok(quotesApi.includes('stale-while-revalidate=120'), 'quotes SWR cache header');
-const migration = fs.readFileSync(
+const migration12 = fs.readFileSync(
   path.join(ROOT, 'supabase', 'migrations', '0012_stock_quotes_momentum_bounds.sql'),
   'utf8',
 );
 for (const column of ['high_120d', 'low_120d', 'high_50d', 'low_50d', 'bb_upper', 'bb_lower']) {
-  assert.ok(migration.includes(column), `migration column missing: ${column}`);
+  assert.ok(migration12.includes(column), `migration column missing: ${column}`);
+}
+const migration16 = fs.readFileSync(
+  path.join(ROOT, 'supabase', 'migrations', '0016_stock_quotes_high_20d.sql'),
+  'utf8',
+);
+for (const column of ['high_20d', 'low_20d']) {
+  assert.ok(migration16.includes(column), `migration 0016 column missing: ${column}`);
 }
 const syncSource = fs.readFileSync(
   path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'),
   'utf8',
 );
 assert.ok(syncSource.includes('computeMomentumBounds'), 'sync momentum calculation missing');
+assert.ok(syncSource.includes('high_20d'), 'sync high_20d upsert missing');
 assert.ok(syncSource.includes('verifyMomentumSchema'), 'sync schema guard missing');
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(/momentum:\s*1/.test(tabState), 'momentum tab state must persist');

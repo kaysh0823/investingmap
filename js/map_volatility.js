@@ -1,5 +1,5 @@
 /**
- * Volatility distribution scatter — ATR3/close vs log market cap, colored by 20D %b.
+ * Volatility distribution scatter — ATR3/close vs log market cap, colored by selectable metric.
  */
 (function (global) {
   'use strict';
@@ -10,6 +10,10 @@
   var resizeTimer = null;
   var snapshotCache = null;
   var snapshotLoading = null;
+  var COLOR_MODES = ['pctb', 'turnover', 'rs'];
+  var COLOR_MODE_STORAGE = 'im_vol_cmode';
+  var MISSING_COLOR = '#b0b8c1';
+  var selectedColorMode = 'pctb';
 
   var COPY = {
     ko: {
@@ -19,11 +23,19 @@
       atr: 'ATR3/종가',
       mcap: '시가총액',
       pctB: '20일 %b',
+      turnover: '거래대금',
+      rs: 'RS',
       noData: '변동성 스냅샷 데이터가 없습니다.',
-      legend:
-        '색=20일 %b(진할수록 높음) · 세로선=전체 변동성 25/50/75%',
+      legendLines: '세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
+      legendPctB: '색=20일 %b(진할수록 높음)',
+      legendTurnover: '색=거래대금(진할수록 높음)',
+      legendRs: '색=RS(진할수록 높음)',
+      modePctB: '%b',
+      modeTurnover: '거래대금',
+      modeRs: 'RS',
       pctLine: function (p, v) {
-        return p + '% ' + v.toFixed(3);
+        if (p === 50) return 'P50(중앙값) · ' + v.toFixed(3);
+        return 'P' + p + ' · ' + v.toFixed(3);
       },
     },
     en: {
@@ -33,14 +45,43 @@
       atr: 'ATR3/Close',
       mcap: 'Market cap',
       pctB: '20D %b',
+      turnover: 'Turnover',
+      rs: 'RS',
       noData: 'No volatility snapshot data available.',
-      legend:
-        'Color = 20D %b (darker = higher) · vertical lines = market ATR 25/50/75%',
+      legendLines: 'Lines = market-wide volatility percentiles (P25·P50·P75)',
+      legendPctB: 'Color = 20D %b (darker = higher)',
+      legendTurnover: 'Color = turnover (darker = higher)',
+      legendRs: 'Color = RS (darker = higher)',
+      modePctB: '%b',
+      modeTurnover: 'Turnover',
+      modeRs: 'RS',
       pctLine: function (p, v) {
-        return p + '% ' + v.toFixed(3);
+        if (p === 50) return 'P50 (median) · ' + v.toFixed(3);
+        return 'P' + p + ' · ' + v.toFixed(3);
       },
     },
   };
+
+  function normalizeColorMode(mode) {
+    return COLOR_MODES.indexOf(mode) >= 0 ? mode : 'pctb';
+  }
+
+  function loadColorMode() {
+    try {
+      if (global.localStorage) {
+        return normalizeColorMode(localStorage.getItem(COLOR_MODE_STORAGE));
+      }
+    } catch (e) {}
+    return 'pctb';
+  }
+
+  function saveColorMode(mode) {
+    try {
+      if (global.localStorage) localStorage.setItem(COLOR_MODE_STORAGE, normalizeColorMode(mode));
+    } catch (e) {}
+  }
+
+  selectedColorMode = loadColorMode();
 
   function labelsFor(opts) {
     var lang = opts.lang === 'en' ? 'en' : 'ko';
@@ -51,6 +92,18 @@
       out[key] = supplied[key] || base[key];
     });
     return out;
+  }
+
+  function colorLegendText(labels, mode) {
+    if (mode === 'turnover') return labels.legendTurnover;
+    if (mode === 'rs') return labels.legendRs;
+    return labels.legendPctB;
+  }
+
+  function colorMetricLabel(labels, mode) {
+    if (mode === 'turnover') return labels.turnover;
+    if (mode === 'rs') return labels.rs;
+    return labels.pctB;
   }
 
   function displayName(company, lang) {
@@ -70,9 +123,34 @@
     return Math.round(value).toLocaleString('ko-KR') + '원';
   }
 
+  function formatTurnover(value, lang) {
+    if (typeof value !== 'number' || !isFinite(value)) return '—';
+    if (lang === 'en') {
+      if (value >= 1e12) return '₩' + (value / 1e12).toFixed(2) + 'T';
+      if (value >= 1e9) return '₩' + (value / 1e9).toFixed(1) + 'B';
+      if (value >= 1e6) return '₩' + (value / 1e6).toFixed(1) + 'M';
+      return '₩' + Math.round(value).toLocaleString('en-US');
+    }
+    if (value >= 1e12) return (value / 1e12).toFixed(2) + '조원';
+    if (value >= 1e8) return (value / 1e8).toFixed(1) + '억원';
+    if (value >= 1e4) return (value / 1e4).toFixed(1) + '만원';
+    return Math.round(value).toLocaleString('ko-KR') + '원';
+  }
+
   function formatPctB(value) {
     if (typeof value !== 'number' || !isFinite(value)) return '—';
     return value.toFixed(2);
+  }
+
+  function formatRs(value) {
+    if (typeof value !== 'number' || !isFinite(value)) return '—';
+    return value.toFixed(1);
+  }
+
+  function formatColorMetric(item, mode, lang) {
+    if (mode === 'turnover') return formatTurnover(item.turnoverWon, lang);
+    if (mode === 'rs') return formatRs(item.rs);
+    return formatPctB(item.pctB);
   }
 
   function formatMcapAxis(value, lang) {
@@ -151,10 +229,41 @@
     return sorted[lo] + (sorted[hi] - sorted[lo]) * (idx - lo);
   }
 
-  function p99(values) {
-    if (!values.length) return 0;
-    var sorted = values.slice().sort(function (a, b) { return a - b; });
-    return percentile(sorted, 99);
+  function redScale() {
+    return d3.scaleSequential(function (t) {
+      return d3.interpolate('#ffe0e0', '#8b0000')(t);
+    });
+  }
+
+  function buildColorFn(fg, mode) {
+    var red = redScale();
+    if (mode === 'pctb') {
+      red.domain([0, 1]);
+      return function (d) {
+        if (typeof d.pctB !== 'number' || !isFinite(d.pctB)) return MISSING_COLOR;
+        return red(clamp01(d.pctB));
+      };
+    }
+    if (mode === 'rs') {
+      red.domain([0, 1]);
+      return function (d) {
+        if (typeof d.rs !== 'number' || !isFinite(d.rs)) return MISSING_COLOR;
+        return red(clamp01(d.rs / 100));
+      };
+    }
+    var vals = fg
+      .map(function (d) { return d.turnoverWon; })
+      .filter(function (v) { return typeof v === 'number' && isFinite(v) && v > 0; });
+    var min = d3.min(vals) || 1;
+    var max = d3.max(vals) || min;
+    if (max <= min) max = min * 1.01;
+    var logMin = Math.log10(min);
+    var logMax = Math.log10(max);
+    return function (d) {
+      if (!(d.turnoverWon > 0)) return MISSING_COLOR;
+      var t = (Math.log10(d.turnoverWon) - logMin) / (logMax - logMin || 1);
+      return red(clamp01(t));
+    };
   }
 
   function snapshotUrl() {
@@ -200,6 +309,12 @@
     style.textContent =
       '.volatility-wrap{padding:20px 28px 28px;max-width:1400px;margin:0 auto}' +
       '.volatility-meta{margin:0 0 12px;color:var(--text-muted,#8b949e);font-size:13px}' +
+      '.vol-mode-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;align-items:center}' +
+      '.vol-mode-tab{padding:6px 12px;min-height:32px;border-radius:16px;border:1px solid var(--border,#30363d);' +
+      'background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;cursor:pointer}' +
+      '.vol-mode-tab:hover{border-color:var(--accent,#58a6ff);color:var(--text,#e6edf3)}' +
+      '.vol-mode-tab[aria-selected="true"]{border-color:var(--accent,#58a6ff);color:var(--accent,#58a6ff);' +
+      'background:color-mix(in srgb,var(--accent,#58a6ff) 14%,var(--surface2,#21262d))}' +
       '#volatility-root{position:relative;width:100%;min-height:420px;height:min(62vh,640px);' +
       'background:var(--surface,#161b22);border:1px solid var(--border,#30363d);border-radius:10px;overflow:hidden}' +
       '#volatility-root svg{display:block;width:100%;height:100%}' +
@@ -216,6 +331,7 @@
       '.im-vol-axis line,.im-vol-axis path{stroke:var(--text-muted,#8b949e)}' +
       '.im-vol-axis text{fill:var(--text-muted,#8b949e);font-size:10px}' +
       '@media(max-width:768px){.volatility-wrap{padding:14px 12px 20px}.volatility-meta{font-size:12px}' +
+      '.vol-mode-tab{flex:1 1 0;padding:8px 6px;min-height:36px;font-size:11px}' +
       '#volatility-root{min-height:min(52vh,480px)!important;height:min(58vh,560px)!important}' +
       '.im-vol-legend{font-size:11px}}';
   }
@@ -262,7 +378,9 @@
     [
       labels.mcap + ' ' + formatMcap(item.mcap, lang),
       labels.atr + ' ' + formatAtr(item.atrPct),
-      labels.pctB + ' ' + formatPctB(item.pctB),
+      colorMetricLabel(labels, selectedColorMode) +
+        ' ' +
+        formatColorMetric(item, selectedColorMode, lang),
     ].forEach(function (text) {
       var line = document.createElement('div');
       line.textContent = text;
@@ -285,13 +403,65 @@
     resizeObs.observe(container);
   }
 
-  function renderLegend(el, opts, colorScale) {
+  function ensureColorModeTabs(container, opts) {
+    var wrap = container.parentNode;
+    if (!wrap) return;
+    var labels = labelsFor(opts);
+    var tabs = wrap.querySelector('#vol-mode-tabs');
+    if (!tabs) {
+      tabs = document.createElement('div');
+      tabs.id = 'vol-mode-tabs';
+      tabs.className = 'vol-mode-tabs';
+      tabs.setAttribute('role', 'tablist');
+      tabs.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-vol-mode]');
+        if (!button) return;
+        var next = normalizeColorMode(button.getAttribute('data-vol-mode'));
+        if (next === selectedColorMode) return;
+        selectedColorMode = next;
+        saveColorMode(next);
+        if (lastOpts) render(lastOpts);
+      });
+    }
+    tabs.setAttribute(
+      'aria-label',
+      opts.lang === 'en' ? 'Volatility color metric' : '변동성 색상 지표',
+    );
+    tabs.innerHTML = [
+      { id: 'pctb', text: labels.modePctB },
+      { id: 'turnover', text: labels.modeTurnover },
+      { id: 'rs', text: labels.modeRs },
+    ]
+      .map(function (mode) {
+        return (
+          '<button type="button" class="vol-mode-tab" role="tab" data-vol-mode="' +
+          mode.id +
+          '" aria-selected="' +
+          (mode.id === selectedColorMode ? 'true' : 'false') +
+          '">' +
+          mode.text +
+          '</button>'
+        );
+      })
+      .join('');
+    if (tabs.parentNode !== wrap || tabs.nextSibling !== container) {
+      if (container && wrap.contains(container)) {
+        wrap.insertBefore(tabs, container);
+      } else {
+        wrap.appendChild(tabs);
+      }
+    }
+  }
+
+  function renderLegend(el, opts) {
     if (!el) return;
     var labels = labelsFor(opts);
     el.className = 'im-vol-legend';
     el.innerHTML =
       '<div class="im-vol-legend-row"><span>' +
-      labels.legend +
+      colorLegendText(labels, selectedColorMode) +
+      ' · ' +
+      labels.legendLines +
       '</span><span class="im-vol-gradient" aria-hidden="true"></span></div>';
   }
 
@@ -303,6 +473,14 @@
     return set;
   }
 
+  function companyByTicker(companies) {
+    var map = {};
+    (companies || []).forEach(function (c) {
+      if (c && c.ticker) map[String(c.ticker).trim()] = c;
+    });
+    return map;
+  }
+
   function render(opts) {
     opts = opts || {};
     var container = opts.container;
@@ -310,6 +488,7 @@
     lastOpts = opts;
     injectStyles();
     observeContainer(container);
+    ensureColorModeTabs(container, opts);
 
     if (!container.style.minHeight) container.style.minHeight = '420px';
     renderLegend(opts.legend, opts);
@@ -333,19 +512,24 @@
   function draw(container, opts, snapshot) {
     var quotes = (snapshot && snapshot.quotes) || {};
     var sectorSet = sectorTickerSet(opts.companies);
+    var coMap = companyByTicker(opts.companies);
     var marketAtrs = [];
     var fg = [];
     Object.keys(quotes).forEach(function (ticker) {
       var q = quotes[ticker];
-      if (!q || !(q.mcap > 0) || !(q.atrPct >= 0) || !Number.isFinite(q.pctB)) return;
+      if (!q || !(q.mcap > 0) || !(q.atrPct >= 0)) return;
       marketAtrs.push(q.atrPct);
       if (!sectorSet[ticker]) return;
+      var co = coMap[ticker];
       fg.push({
         ticker: ticker,
         mcap: q.mcap,
         atrPct: q.atrPct,
         pctB: q.pctB,
         close: q.close,
+        turnoverWon:
+          co && typeof co.turnoverWon === 'number' && isFinite(co.turnoverWon) ? co.turnoverWon : null,
+        rs: co && typeof co.rs === 'number' && isFinite(co.rs) ? co.rs : null,
       });
     });
 
@@ -396,9 +580,7 @@
 
     var x = d3.scaleLinear().domain(xDomain).range([0, innerW]).clamp(true);
     var y = d3.scaleLog().domain(yDomain).range([innerH, 0]).clamp(true);
-    var colorScale = d3.scaleSequential(function (t) {
-      return d3.interpolate('#ffe0e0', '#8b0000')(t);
-    }).domain([0, 1]);
+    var colorFn = buildColorFn(fg, selectedColorMode);
 
     var nameByTicker = {};
     (opts.companies || []).forEach(function (c) {
@@ -474,7 +656,7 @@
       .append('circle')
       .attr('class', 'im-vol-dot')
       .attr('r', 7)
-      .attr('fill', function (d) { return colorForPctB(d.pctB, colorScale); })
+      .attr('fill', function (d) { return colorFn(d); })
       .attr('fill-opacity', 0.92)
       .attr('stroke', 'rgba(255,255,255,.35)')
       .attr('stroke-width', 1)
@@ -485,6 +667,8 @@
           mcap: d.mcap,
           atrPct: d.atrPct,
           pctB: d.pctB,
+          turnoverWon: d.turnoverWon,
+          rs: d.rs,
         }, opts, event);
       })
       .on('mousemove', moveTooltip)
@@ -552,10 +736,20 @@
     percentile: percentile,
     clamp01: clamp01,
     colorForPctB: colorForPctB,
+    normalizeColorMode: normalizeColorMode,
+    buildColorFn: buildColorFn,
     expandLinearDomain: expandLinearDomain,
     expandLogDomain: expandLogDomain,
     formatMcapAxis: formatMcapAxis,
     formatAtrTick: formatAtrTick,
     logMcapTickValues: logMcapTickValues,
+    getColorMode: function () {
+      return selectedColorMode;
+    },
+    setColorMode: function (mode) {
+      selectedColorMode = normalizeColorMode(mode);
+      saveColorMode(selectedColorMode);
+      if (lastOpts) render(lastOpts);
+    },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

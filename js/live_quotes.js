@@ -3,7 +3,7 @@
  */
 (function (global) {
   'use strict';
-  var QUOTES_API_VERSION = '4';
+  var QUOTES_API_VERSION = '5';
 
   var CHUNK_SIZE = 18;
   var POSITION_FALLBACK_KO = '주가 위치';
@@ -277,14 +277,14 @@
       if (!key) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         c.turnoverWon = null;
-        c.high120d = c.low120d = c.high50d = c.low50d = c.bbUpper = c.bbLower = null;
+        c.high120d = c.low120d = c.high50d = c.low50d = c.high20d = c.low20d = c.bbUpper = c.bbLower = null;
         continue;
       }
       var q = items[key];
       if (!q) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         c.turnoverWon = null;
-        c.high120d = c.low120d = c.high50d = c.low50d = c.bbUpper = c.bbLower = null;
+        c.high120d = c.low120d = c.high50d = c.low50d = c.high20d = c.low20d = c.bbUpper = c.bbLower = null;
         continue;
       }
       c.quoteLast = typeof q.last === 'number' && isFinite(q.last) ? q.last : null;
@@ -300,6 +300,8 @@
       c.low120d = typeof q.low120d === 'number' && isFinite(q.low120d) ? q.low120d : null;
       c.high50d = typeof q.high50d === 'number' && isFinite(q.high50d) ? q.high50d : null;
       c.low50d = typeof q.low50d === 'number' && isFinite(q.low50d) ? q.low50d : null;
+      c.high20d = typeof q.high20d === 'number' && isFinite(q.high20d) ? q.high20d : null;
+      c.low20d = typeof q.low20d === 'number' && isFinite(q.low20d) ? q.low20d : null;
       c.bbUpper = typeof q.bbUpper === 'number' && isFinite(q.bbUpper) ? q.bbUpper : null;
       c.bbLower = typeof q.bbLower === 'number' && isFinite(q.bbLower) ? q.bbLower : null;
       if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) {

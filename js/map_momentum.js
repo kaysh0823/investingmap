@@ -11,6 +11,8 @@
   var resizeTimer = null;
   var visibilityBound = false;
   var selectedYMode = '50d';
+  var YMODES = ['20d', '50d', '120d'];
+  var YMODE_STORAGE = 'im_mm_ymode';
   var CHG_CLIP = 15;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var CONTRAST_EXP = 0.55;
@@ -19,10 +21,12 @@
     ko: {
       xAxis: 'RS',
       yAxis: '50D BOX',
+      mode20d: '20D BOX',
       mode50d: '50D BOX',
-      modeBb: '50D %b',
+      mode120d: '120D BOX',
+      y20d: '20D BOX',
       y50d: '50D BOX',
-      yBb: '50D %b',
+      y120d: '120D BOX',
       leader: '주도(강세)',
       pullback: '되돌림주의',
       emerging: '신규부상',
@@ -36,10 +40,12 @@
     en: {
       xAxis: 'RS',
       yAxis: '50D BOX',
+      mode20d: '20D BOX',
       mode50d: '50D BOX',
-      modeBb: '50D %b',
+      mode120d: '120D BOX',
+      y20d: '20D BOX',
       y50d: '50D BOX',
-      yBb: '50D %b',
+      y120d: '120D BOX',
       leader: 'Leading (strong)',
       pullback: 'Pullback risk',
       emerging: 'Emerging',
@@ -61,15 +67,41 @@
   }
 
   function normalizeYMode(mode) {
-    return mode === '50d' || mode === 'bb' ? mode : '50d';
+    return YMODES.indexOf(mode) >= 0 ? mode : '50d';
+  }
+
+  function loadYMode() {
+    try {
+      if (global.localStorage) {
+        return normalizeYMode(localStorage.getItem(YMODE_STORAGE));
+      }
+    } catch (e) {}
+    return '50d';
+  }
+
+  function saveYMode(mode) {
+    try {
+      if (global.localStorage) localStorage.setItem(YMODE_STORAGE, normalizeYMode(mode));
+    } catch (e) {}
+  }
+
+  selectedYMode = loadYMode();
+
+  function boxBounds(company, mode) {
+    var period = mode === '20d' ? 20 : mode === '120d' ? 120 : 50;
+    return {
+      high: company['high' + period + 'd'],
+      low: company['low' + period + 'd'],
+    };
   }
 
   function pricePosition(company, mode) {
     if (!company) return null;
     mode = normalizeYMode(mode || selectedYMode);
     var last = company.quoteLast;
-    var high = mode === 'bb' ? company.bbUpper : company.high50d;
-    var low = mode === 'bb' ? company.bbLower : company.low50d;
+    var bounds = boxBounds(company, mode);
+    var high = bounds.high;
+    var low = bounds.low;
     if (!isFiniteNumber(last) || !isFiniteNumber(high) || !isFiniteNumber(low) || high <= low) return null;
     var raw = ((last - low) / (high - low)) * 100;
     return { raw: raw, plot: clamp100(raw), mode: mode };
@@ -99,7 +131,8 @@
       out[key] = supplied[key] || base[key];
     });
     mode = normalizeYMode(mode || selectedYMode);
-    out.yAxis = mode === 'bb' ? out.yBb : out.y50d;
+    var yKey = 'y' + mode;
+    out.yAxis = out[yKey] || out.y50d;
     out.position = out.yAxis;
     return out;
   }
@@ -245,7 +278,7 @@
     el.appendChild(name);
     [
       labels.xAxis + ' ' + item.rs.toFixed(1),
-      labels.position + ' ' + formatPct(item.yMode === 'bb' ? item.rawPosition : item.position, 1),
+      labels.position + ' ' + formatPct(item.position, 1),
       labels.turnover + ' ' + formatTurnover(item.turnover, lang),
       labels.change + ' ' + formatPct(item.change, 2),
     ].forEach(function (text) {
@@ -278,6 +311,7 @@
         var next = normalizeYMode(button.getAttribute('data-mm-mode'));
         if (next === selectedYMode) return;
         selectedYMode = next;
+        saveYMode(next);
         if (lastOpts) render(lastOpts);
       });
     }
@@ -286,8 +320,9 @@
       opts.lang === 'en' ? 'Momentum vertical axis' : '모멘텀 세로축',
     );
     tabs.innerHTML = [
+      { id: '20d', text: labels.mode20d },
       { id: '50d', text: labels.mode50d },
-      { id: 'bb', text: labels.modeBb },
+      { id: '120d', text: labels.mode120d },
     ]
       .map(function (mode) {
         return (
@@ -617,6 +652,7 @@
     colorForChange: bubbleColor,
     setYMode: function (mode) {
       selectedYMode = normalizeYMode(mode);
+      saveYMode(selectedYMode);
       if (lastOpts) render(lastOpts);
     },
     getYMode: function () {

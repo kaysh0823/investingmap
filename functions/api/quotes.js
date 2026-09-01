@@ -9,7 +9,7 @@ import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
 import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 
-const QUOTES_CACHE_VERSION = 'v4';
+const QUOTES_CACHE_VERSION = 'v5';
 
 function normalizeTicker(t) {
   if (t == null || t === '') return null;
@@ -55,6 +55,8 @@ function mapSupabaseRow(row) {
     low120d: numOrNull(row.low_120d),
     high50d: numOrNull(row.high_50d),
     low50d: numOrNull(row.low_50d),
+    high20d: numOrNull(row.high_20d),
+    low20d: numOrNull(row.low_20d),
     bbUpper: numOrNull(row.bb_upper),
     bbLower: numOrNull(row.bb_lower),
     mcapWon: numOrNull(row.mcap_won),
