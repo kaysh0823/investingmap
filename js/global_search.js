@@ -67,6 +67,7 @@
       modalTitle: '이동할 화면 선택',
       heatmap: '섹터히트맵',
       momentum: '모멘텀매트릭스',
+      volatility: '변동성 분포',
       table: '기업목록',
       noResults: '검색 결과 없음',
       shortcutHint: '/ 또는 Ctrl+K',
@@ -76,6 +77,7 @@
       modalTitle: 'Choose a view',
       heatmap: 'Sector Heatmap',
       momentum: 'Momentum Matrix',
+      volatility: 'Volatility',
       table: 'Company List',
       noResults: 'No matches',
       shortcutHint: '/ or Ctrl+K',
@@ -339,6 +341,7 @@
     [
       { tab: 'heatmap', label: c.heatmap },
       { tab: 'momentum', label: c.momentum },
+      { tab: 'volatility', label: c.volatility },
       { tab: 'table', label: c.table },
     ].forEach(function (opt) {
       var btn = document.createElement('button');

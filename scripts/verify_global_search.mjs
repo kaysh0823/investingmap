@@ -91,6 +91,15 @@ const momentumSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_momentum.js'), 'u
 assert.ok(momentumSrc.includes("attr('data-ticker'"), 'map_momentum must set data-ticker');
 assert.ok(momentumSrc.includes('applyTickerFocus'), 'map_momentum must highlight ?ticker');
 
+const searchSrc = fs.readFileSync(GLOBAL_SEARCH_JS, 'utf8');
+assert.ok(searchSrc.includes("tab: 'volatility'"), 'global_search modal must offer volatility');
+assert.ok(searchSrc.includes("volatility: '변동성 분포'"), 'global_search ko volatility label');
+assert.ok(searchSrc.includes("volatility: 'Volatility'"), 'global_search en volatility label');
+
+const volSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_volatility.js'), 'utf8');
+assert.ok(volSrc.includes('applyTickerFocus'), 'map_volatility must highlight ?ticker');
+assert.ok(volSrc.includes('im-vol-focus'), 'map_volatility must define focus class');
+
 if (fs.existsSync(path.join(ROOT, 'dist'))) {
   assert.ok(fs.existsSync(DIST_GLOBAL_SEARCH_JS), 'dist/js/global_search.js must exist');
   assert.ok(fs.existsSync(DIST_SEARCH_INDEX), 'dist/data/search_index.json must exist');

@@ -115,6 +115,9 @@ assert.ok(!volSrc.includes('im-vol-bg'), 'must not render all-market gray backgr
 assert.ok(volSrc.includes('axisBottom'), 'x axis ticks required');
 assert.ok(volSrc.includes('axisLeft'), 'y axis ticks required');
 assert.ok(volSrc.includes('expandLinearDomain'), 'x domain padding helper required');
+assert.ok(volSrc.includes('applyTickerFocus'), 'map_volatility must highlight ?ticker');
+assert.ok(volSrc.includes('im-vol-focus'), 'map_volatility must define focus class');
+assert.ok(volSrc.includes("attr('data-ticker'"), 'map_volatility must set data-ticker');
 assert.ok(volSrc.includes("COLOR_MODES = ['pctb', 'rs', 'chg']"), 'color mode set required');
 assert.ok(volSrc.includes('data-vol-mode'), 'color mode toggle required');
 assert.ok(volSrc.includes('P50(중앙값)'), 'ko P50 median label required');
@@ -192,7 +195,7 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=6'), `${rel}: missing map_volatility.js v6`);
+  assert.ok(html.includes('map_volatility.js?v=7'), `${rel}: missing map_volatility.js v7`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
   assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);
 }

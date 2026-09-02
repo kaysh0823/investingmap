@@ -362,7 +362,12 @@
       'padding:9px 12px;border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);' +
       'border:1px solid var(--border,#30363d);box-shadow:0 4px 14px rgba(0,0,0,.38);font-size:12px;line-height:1.5}' +
       '.im-vol-tooltip strong{display:block;font-size:13px;margin-bottom:2px}' +
-      '.im-vol-dot{cursor:pointer}' +
+      '.im-vol-dot{cursor:pointer;transition:stroke-width .12s,opacity .12s}' +
+      '.im-vol-node.im-vol-focus .im-vol-dot{stroke:var(--accent,#58a6ff)!important;stroke-width:3!important;' +
+      'filter:drop-shadow(0 0 6px color-mix(in srgb,var(--accent,#58a6ff) 55%,transparent))}' +
+      '.im-vol-node.im-vol-focus{animation:im-vol-pulse 1.2s ease-in-out 2}' +
+      '.im-vol-node.im-vol-focus text{opacity:1!important;font-weight:700!important;font-size:12px!important}' +
+      '@keyframes im-vol-pulse{0%,100%{opacity:1}50%{opacity:.88}}' +
       '.im-vol-legend{margin-top:12px;color:var(--text-muted,#8b949e);font-size:12px}' +
       '.im-vol-legend-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}' +
       '.im-vol-gradient{width:min(160px,40vw);height:10px;border-radius:5px;border:1px solid var(--border,#30363d)}' +
@@ -405,6 +410,39 @@
   function hideTooltip() {
     var el = document.getElementById('im-vol-tooltip');
     if (el) el.style.display = 'none';
+  }
+
+  function getUrlTicker() {
+    try {
+      return new URLSearchParams(window.location.search).get('ticker') || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function applyTickerFocus(container) {
+    if (!container) return;
+    var ticker = getUrlTicker();
+    container.querySelectorAll('.im-vol-node.im-vol-focus').forEach(function (el) {
+      el.classList.remove('im-vol-focus');
+    });
+    if (!ticker) return;
+    var node = container.querySelector('.im-vol-node[data-ticker="' + ticker + '"]');
+    if (!node) return;
+    node.classList.add('im-vol-focus');
+    try {
+      if (typeof d3 !== 'undefined') d3.select(node).raise();
+    } catch (eRaise) { /* ignore */ }
+    var circle = node.querySelector('.im-vol-dot');
+    if (circle) {
+      var r = parseFloat(circle.getAttribute('r')) || 6;
+      circle.setAttribute('r', String(Math.max(r * 1.35, 10)));
+    }
+    try {
+      node.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+    } catch (e2) {
+      node.scrollIntoView(true);
+    }
   }
 
   function showTooltip(item, opts, event) {
@@ -702,6 +740,7 @@
       .data(fg, function (d) { return d.ticker; })
       .join('g')
       .attr('class', 'im-vol-node')
+      .attr('data-ticker', function (d) { return d.ticker || ''; })
       .attr('transform', function (d) {
         return 'translate(' + x(d.atrPct) + ',' + y(d.mcap) + ')';
       });
@@ -784,6 +823,8 @@
       .attr('fill', 'var(--text-muted,#8b949e)')
       .attr('font-size', 12)
       .text(labels.yAxis);
+
+    applyTickerFocus(container);
   }
 
   global.InvestingMapVolatility = {
