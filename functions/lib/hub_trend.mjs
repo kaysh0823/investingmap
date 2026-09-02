@@ -224,7 +224,11 @@ function buildSectorReturnAtHorizon(hubIndex, sectorId, calendar, grid, liveMap,
   const startIdx = anchorIdx + horizonN;
   if (startIdx >= dates.length) return null;
 
-  const baseDate = dates[startIdx];
+  // 1D base must match buildIntradayPayload (prevSessionDate):
+  // mid-session → completed (= dates[anchorIdx]); after close → dates[anchorIdx+1].
+  // Using dates[startIdx] alone made mid-session cards a 2-day return.
+  const baseDate = horizonN === 1 ? prevSessionDate(calendar) : dates[startIdx];
+  if (!baseDate) return null;
   const members = fixedMembers(tickers, baseDate, tDate, grid, liveMap);
   if (members.length < minMembersRequired(tickers.length)) return null;
 

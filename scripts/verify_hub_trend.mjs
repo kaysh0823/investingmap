@@ -281,7 +281,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v10'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v11'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',

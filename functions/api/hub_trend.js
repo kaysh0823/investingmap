@@ -13,7 +13,7 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v10';
+const CACHE_VERSION = '/api/hub_trend/cache/v11';
 
 function maxAge(horizon, now = new Date()) {
   // Regular: ~10m aligns with quote sync cadence so live 20d+ tips stay fresh.
