@@ -187,10 +187,10 @@ export async function fetchLatestInvestorNetSignature(config) {
   try {
     const rows = await fetchSupabaseJson(config, q);
     const row = Array.isArray(rows) && rows[0] ? rows[0] : null;
-    if (!row?.trade_date) return 'inv-v3-none';
-    return `inv-v3-${String(row.trade_date).slice(0, 10).replace(/-/g, '')}`;
+    if (!row?.trade_date) return 'inv-v4-none';
+    return `inv-v4-${String(row.trade_date).slice(0, 10).replace(/-/g, '')}`;
   } catch {
-    return 'inv-v3-none';
+    return 'inv-v4-none';
   }
 }
 

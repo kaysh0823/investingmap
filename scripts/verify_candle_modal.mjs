@@ -271,6 +271,10 @@ assert.equal(
 assert.match(source, /im-candle-inv-cum/, 'investor cum toggle markup');
 assert.match(source, /im-candle-inv-period/, 'investor period toggle markup');
 assert.match(source, /im_inv_period/, 'investor period localStorage key');
+assert.ok(
+  !source.includes("wrap.hidden = state.interval !== 'daily'"),
+  'investor toggles must stay visible on weekly',
+);
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 16, 'investor pane stretch on weekly');
 

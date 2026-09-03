@@ -1139,13 +1139,13 @@
   function syncInvestorCumVisibility() {
     var wrap = document.getElementById('im-candle-inv-cum');
     if (!wrap) return;
-    wrap.hidden = state.interval !== 'daily';
+    wrap.hidden = false;
   }
 
   function syncInvestorPeriodVisibility() {
     var wrap = document.getElementById('im-candle-inv-period');
     if (!wrap) return;
-    wrap.hidden = state.interval !== 'daily';
+    wrap.hidden = false;
   }
 
   function syncPaneLabels() {
