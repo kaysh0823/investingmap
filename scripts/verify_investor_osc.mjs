@@ -179,6 +179,17 @@ if (config?.url && config?.anonKey) {
       `(legacy10=${last.instOsc10}; filled ${withInst.length}/${payload.bars.length})`,
   );
 
+  const payload5y = await fetchTickerOhlcBars(config, ticker, '5y');
+  assert.ok(payload5y.bars.length > 1000, '5y bars loaded');
+  const withInst5y = payload5y.bars.filter((b) => b.instOsc != null);
+  assert.ok(
+    withInst5y.length >= 1000,
+    `5y instOsc filled leftward (got ${withInst5y.length}/${payload5y.bars.length})`,
+  );
+  console.log(
+    `Live 5y ${ticker}: instOsc filled ${withInst5y.length}/${payload5y.bars.length}`,
+  );
+
   const weeklyPayload = await fetchTickerOhlcBars(config, ticker, '1y', { interval: 'weekly' });
   assert.equal(weeklyPayload.interval, 'weekly', 'weekly payload interval');
   assert.ok(weeklyPayload.bars.length > 40, 'weekly bars loaded');

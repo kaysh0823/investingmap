@@ -1,8 +1,9 @@
 /**
- * Backfill stock_investor_net for ~250 trading days (OSC warmup + display buffer).
+ * Backfill stock_investor_net for OSC display depth.
+ * Default 250 (~1Y); use --days=1250 for 5Y daily charts.
  * Skips dates already present for anchor ticker 005930.
  *
- * Usage: npm run backfill:investor-net [--days=250]
+ * Usage: npm run backfill:investor-net [--days=250|1250]
  */
 import { tradingDates } from '../functions/lib/krx_yoy.mjs';
 import {

@@ -181,19 +181,25 @@ export async function fetchInvestorNetForRange(config, ticker, fromDate, toDate)
 }
 
 /**
- * Global latest investor-net session for cache busting.
+ * Investor-net cache signature: min+max trade_date so historical depth
+ * backfills invalidate even when MAX(trade_date) is unchanged.
  * @param {{ url: string, anonKey: string }} config
  * @returns {Promise<string>}
  */
 export async function fetchLatestInvestorNetSignature(config) {
-  const q = 'stock_investor_net?select=trade_date&order=trade_date.desc&limit=1';
+  const ymd = (row) =>
+    row?.trade_date ? String(row.trade_date).slice(0, 10).replace(/-/g, '') : null;
   try {
-    const rows = await fetchSupabaseJson(config, q);
-    const row = Array.isArray(rows) && rows[0] ? rows[0] : null;
-    if (!row?.trade_date) return 'inv-v6-none';
-    return `inv-v6-${String(row.trade_date).slice(0, 10).replace(/-/g, '')}`;
+    const [maxRows, minRows] = await Promise.all([
+      fetchSupabaseJson(config, 'stock_investor_net?select=trade_date&order=trade_date.desc&limit=1'),
+      fetchSupabaseJson(config, 'stock_investor_net?select=trade_date&order=trade_date.asc&limit=1'),
+    ]);
+    const maxYmd = ymd(Array.isArray(maxRows) && maxRows[0] ? maxRows[0] : null);
+    if (!maxYmd) return 'inv-v7-none';
+    const minYmd = ymd(Array.isArray(minRows) && minRows[0] ? minRows[0] : null) || maxYmd;
+    return `inv-v7-${minYmd}-${maxYmd}`;
   } catch {
-    return 'inv-v6-none';
+    return 'inv-v7-none';
   }
 }
 
