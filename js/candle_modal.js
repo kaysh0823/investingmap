@@ -120,6 +120,7 @@
       macdHist: 'Hist',
       instOsc: '기관',
       frgnOsc: '외국인',
+      foreignRatio: '외국인 보유비율(%)',
       atr: 'ATR(3)/종가%',
       atrSignal: 'ATR EMA9',
       chartLabel: '일봉 차트',
@@ -127,7 +128,7 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
-      paneInvestorTpl: '투자자 OSC · 기관·외국인 · 누적 {CUM}{UNIT} / 기준 {PER}{UNIT} (0~100)',
+      paneInvestorTpl: '투자자 OSC · 기관·외국인·보유비율 · 누적 {CUM}{UNIT} / 기준 {PER}{UNIT} (0~100)',
       paneInvestorUnitDay: '일',
       paneInvestorUnitWeek: '주',
       paneNorm: 'BBW% · 이격도% (125일)',
@@ -159,6 +160,7 @@
       macdHist: 'Hist',
       instOsc: 'Inst',
       frgnOsc: 'Frgn',
+      foreignRatio: 'Foreign hold %',
       atr: 'ATR(3)/Close%',
       atrSignal: 'ATR EMA9',
       chartLabel: 'Daily chart',
@@ -166,7 +168,7 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
-      paneInvestorTpl: 'Investor OSC · Inst·Frgn · cum {CUM}{UNIT} / base {PER}{UNIT} (0-100)',
+      paneInvestorTpl: 'Investor OSC · Inst·Frgn·Hold% · cum {CUM}{UNIT} / base {PER}{UNIT} (0-100)',
       paneInvestorUnitDay: 'd',
       paneInvestorUnitWeek: 'w',
       paneNorm: 'BBW% · DISP% (125d)',
@@ -1052,6 +1054,7 @@
     }
     if ('instOsc' in src) dest.instOsc = oscNum(src.instOsc);
     if ('frgnOsc' in src) dest.frgnOsc = oscNum(src.frgnOsc);
+    if ('foreignRatio' in src) dest.foreignRatio = oscNum(src.foreignRatio);
   }
 
   function buildInvestorOscLinesFromByTime(byTime, cum, period) {
@@ -1305,6 +1308,7 @@
     var macdHist = [];
     var instOscLine = [];
     var frgnOscLine = [];
+    var foreignRatioLine = [];
     var bbwLine = [];
     var dispLine = [];
     var atrLine = [];
@@ -1343,8 +1347,10 @@
       if (showInvestor) {
         var iv = oscNum(b[investorOscField('instOsc', cum, period)]);
         var fv = oscNum(b[investorOscField('frgnOsc', cum, period)]);
+        var fr = oscNum(b.foreignRatio);
         if (iv != null) instOscLine.push({ time: b.t, value: iv });
         if (fv != null) frgnOscLine.push({ time: b.t, value: fv });
+        if (fr != null) foreignRatioLine.push({ time: b.t, value: fr });
       }
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
@@ -1387,9 +1393,11 @@
         }
         row.instOsc = row[investorOscField('instOsc', cum, period)];
         row.frgnOsc = row[investorOscField('frgnOsc', cum, period)];
+        row.foreignRatio = oscNum(b.foreignRatio);
       } else {
         row.instOsc = null;
         row.frgnOsc = null;
+        row.foreignRatio = null;
       }
       byTime[b.t] = row;
     }
@@ -1411,6 +1419,7 @@
       macdHist: macdHist,
       instOscLine: instOscLine,
       frgnOscLine: frgnOscLine,
+      foreignRatioLine: foreignRatioLine,
       bbwLine: bbwLine,
       dispLine: dispLine,
       atrLine: atrLine,
@@ -1496,7 +1505,11 @@
         ' · ' +
         labels.frgnOsc +
         ' ' +
-        fmtNum(b[fk], 1);
+        fmtNum(b[fk], 1) +
+        ' · ' +
+        labels.foreignRatio +
+        ' ' +
+        fmtNum(b.foreignRatio, 2);
     }
     text +=
       ' · ' +
@@ -1719,6 +1732,13 @@
     var frgnOscSeries = addInvestorOscLine('investor', { color: '#58a6ff', title: t().frgnOsc });
     frgnOscSeries.setData(data.frgnOscLine || []);
 
+    var foreignRatioSeries = addInvestorOscLine('investor', {
+      color: '#7ee787',
+      lineWidth: 2,
+      title: t().foreignRatio,
+    });
+    foreignRatioSeries.setData(data.foreignRatioLine || []);
+
     var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW%' });
     bbwSeries.setData(data.bbwLine);
 
@@ -1761,6 +1781,7 @@
       macdSignal: macdSignalSeries,
       instOsc: instOscSeries,
       frgnOsc: frgnOscSeries,
+      foreignRatio: foreignRatioSeries,
       bbw: bbwSeries,
       disp: dispSeries,
       atr: atrSeries,

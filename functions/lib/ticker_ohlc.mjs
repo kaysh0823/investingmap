@@ -17,6 +17,7 @@ import {
   loadAndAttachInvestorOsc,
   aggregateDailyBarsToWeekly,
 } from './investor_osc.mjs';
+import { loadAndAttachForeignRatio } from './foreign_ratio.mjs';
 
 export { fetchLatestInvestorNetSignature, fetchPriceAdjustmentsSignature };
 
@@ -171,6 +172,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
       };
     }
     await loadAndAttachInvestorOsc(config, ticker, bars);
+    await loadAndAttachForeignRatio(config, ticker, bars);
   }
   return {
     code: ticker,

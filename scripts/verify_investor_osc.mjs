@@ -178,6 +178,7 @@ if (config?.url && config?.anonKey) {
     `Live ${ticker} @ ${last.t}: instOsc_10_20=${last.instOsc_10_20}, instOsc_10_50=${last.instOsc_10_50} ` +
       `(legacy10=${last.instOsc10}; filled ${withInst.length}/${payload.bars.length})`,
   );
+  assert.ok('foreignRatio' in last, 'daily bars include foreignRatio field');
 
   const payload5y = await fetchTickerOhlcBars(config, ticker, '5y');
   assert.ok(payload5y.bars.length > 1000, '5y bars loaded');
@@ -186,9 +187,17 @@ if (config?.url && config?.anonKey) {
     withInst5y.length >= 1000,
     `5y instOsc filled leftward (got ${withInst5y.length}/${payload5y.bars.length})`,
   );
+  const withFr5y = payload5y.bars.filter((b) => b.foreignRatio != null);
   console.log(
-    `Live 5y ${ticker}: instOsc filled ${withInst5y.length}/${payload5y.bars.length}`,
+    `Live 5y ${ticker}: instOsc filled ${withInst5y.length}/${payload5y.bars.length}, ` +
+      `foreignRatio filled ${withFr5y.length}/${payload5y.bars.length}`,
   );
+  if (withFr5y.length > 0) {
+    assert.ok(
+      withFr5y.length >= 200,
+      `5y foreignRatio should cover recent window (got ${withFr5y.length})`,
+    );
+  }
 
   const weeklyPayload = await fetchTickerOhlcBars(config, ticker, '1y', { interval: 'weekly' });
   assert.equal(weeklyPayload.interval, 'weekly', 'weekly payload interval');

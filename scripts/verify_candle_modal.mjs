@@ -226,6 +226,7 @@ for (let i = 0; i < 30; i++) {
     frgnOsc20: base != null ? 40 + i : null,
     instOsc: base != null ? 40 + i : null,
     frgnOsc: base != null ? 30 + i : null,
+    foreignRatio: base != null ? 45 + (i % 10) : null,
   });
 }
 const investorPanel10 = indicators.buildPanelData(
@@ -251,6 +252,12 @@ const investorPanel10p50 = indicators.buildPanelData(
 );
 assert.equal(investorPanel10.instOscLine.length, 10, 'daily investor instOsc10 lines skip null warmup');
 assert.equal(investorPanel5.instOscLine.length, 10, 'daily investor instOsc5 lines skip null warmup');
+assert.equal(investorPanel10.foreignRatioLine.length, 10, 'daily foreignRatio line on OSC pane');
+assert.equal(
+  investorPanel10.byTime['2026-02-21'].foreignRatio,
+  45,
+  'foreignRatio in crosshair byTime',
+);
 assert.notEqual(
   investorPanel5.instOscLine[9].value,
   investorPanel10.instOscLine[9].value,
@@ -290,10 +297,16 @@ const weeklyNoInvestorPanel = indicators.buildPanelData(
   20,
 );
 assert.equal(weeklyNoInvestorPanel.instOscLine.length, 0, 'weekly builds no investor OSC lines');
+assert.equal(weeklyNoInvestorPanel.foreignRatioLine.length, 0, 'weekly builds no foreignRatio line');
 assert.equal(
   weeklyNoInvestorPanel.byTime['2026-02-21'].instOsc,
   null,
   'weekly crosshair has no investor OSC',
+);
+assert.equal(
+  weeklyNoInvestorPanel.byTime['2026-02-21'].foreignRatio,
+  null,
+  'weekly crosshair has no foreignRatio',
 );
 
 const weeklyMaBars = [];
@@ -398,6 +411,7 @@ try {
   assert.ok('frgnOsc10' in payload.bars[0], 'daily bars include frgnOsc10');
   assert.ok('instOsc_10_20' in payload.bars[0], 'daily bars include instOsc_10_20');
   assert.ok('instOsc_10_50' in payload.bars[0], 'daily bars include instOsc_10_50');
+  assert.ok('foreignRatio' in payload.bars[0], 'daily bars include foreignRatio');
   assert.match(historyRequests[0], /limit=1000&offset=0/);
   assert.match(historyRequests[1], /limit=1000&offset=1000/);
   assert.match(historyRequests[2], /limit=175&offset=2000/);
@@ -414,6 +428,7 @@ try {
   assert.ok(weeklyPayload.bars.length < 2175, 'weekly aggregates below daily count');
   assert.ok(!('instOsc_4_13' in weeklyPayload.bars[0]), 'weekly payload skips investor OSC');
   assert.ok(!('instOsc10' in weeklyPayload.bars[0]), 'weekly payload has no daily OSC aliases');
+  assert.ok(!('foreignRatio' in weeklyPayload.bars[0]), 'weekly payload skips foreignRatio');
 } finally {
   globalThis.fetch = originalFetch;
 }

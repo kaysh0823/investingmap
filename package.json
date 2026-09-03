@@ -57,6 +57,8 @@
     "fetch:krx-mcap": "node scripts/fetch_krx_mcap_csv.mjs",
     "sync:investor-net": "node scripts/sync_investor_net_to_supabase.mjs",
     "backfill:investor-net": "node scripts/backfill_investor_net.mjs",
+    "sync:foreign-ratio": "node scripts/sync_foreign_ratio_to_supabase.mjs",
+    "backfill:foreign-ratio": "node scripts/backfill_foreign_ratio.mjs",
     "audit:mcap-universe": "node scripts/audit_mcap_universe.mjs",
     "verify:krx-rs": "node scripts/verify_krx_rs.mjs",
     "pages:build": "node scripts/pages_build.mjs",
