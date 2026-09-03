@@ -67,6 +67,9 @@
   var INVESTOR_PERIOD_STORAGE = 'im_inv_period';
   var DEFAULT_INVESTOR_CUM = 10;
   var DEFAULT_INVESTOR_PERIOD = 20;
+  /** Weekly investor OSC is fixed (no cum/period toggle). */
+  var WEEKLY_INVESTOR_CUM = 4;
+  var WEEKLY_INVESTOR_PERIOD = 13;
 
   function paneIndexMap() {
     var map = Object.create(null);
@@ -76,10 +79,8 @@
 
   var PANE_INDEX = paneIndexMap();
 
-  /** Daily-only panes collapse on weekly (no investor OSC on aggregated weeks). */
+  /** Investor OSC pane stays visible on weekly (fixed 4w/13w). */
   function paneStretch(spec, interval) {
-    var iv = interval != null ? interval : state.interval;
-    if (iv === 'weekly' && spec.key === 'investor') return 0;
     return spec.stretch;
   }
 
@@ -1017,14 +1018,22 @@
   }
 
   function paneInvestorLabel(cum, period) {
-    var c = cum != null ? cum : state.investorCum;
-    var p = period != null ? period : state.investorPeriod;
     var labels = t();
-    var unit = labels.paneInvestorUnitDay;
+    var weekly = state.interval === 'weekly';
+    var c = weekly ? WEEKLY_INVESTOR_CUM : cum != null ? cum : state.investorCum;
+    var p = weekly ? WEEKLY_INVESTOR_PERIOD : period != null ? period : state.investorPeriod;
+    var unit = weekly ? labels.paneInvestorUnitWeek : labels.paneInvestorUnitDay;
     return labels.paneInvestorTpl
       .replace('{CUM}', String(c))
       .replace('{PER}', String(p))
       .replace(/\{UNIT\}/g, unit);
+  }
+
+  function activeInvestorCumPeriod() {
+    if (state.interval === 'weekly') {
+      return { cum: WEEKLY_INVESTOR_CUM, period: WEEKLY_INVESTOR_PERIOD };
+    }
+    return { cum: state.investorCum, period: state.investorPeriod };
   }
 
   function investorOscField(prefix, cum, period) {
@@ -1055,6 +1064,10 @@
     if ('instOsc' in src) dest.instOsc = oscNum(src.instOsc);
     if ('frgnOsc' in src) dest.frgnOsc = oscNum(src.frgnOsc);
     if ('foreignRatio' in src) dest.foreignRatio = oscNum(src.foreignRatio);
+    var wik = investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
+    var wfk = investorOscField('frgnOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
+    if (wik in src) dest[wik] = oscNum(src[wik]);
+    if (wfk in src) dest[wfk] = oscNum(src[wfk]);
   }
 
   function buildInvestorOscLinesFromByTime(byTime, cum, period) {
@@ -1077,6 +1090,7 @@
   function refreshInvestorOscSeries() {
     var refs = state.seriesRefs;
     if (!refs || !refs.instOsc || !refs.frgnOsc || !state.barsByTime) return;
+    if (state.interval === 'weekly') return;
     var lines = buildInvestorOscLinesFromByTime(
       state.barsByTime,
       state.investorCum,
@@ -1262,12 +1276,15 @@
   }
 
   function buildPanelData(fullBars, range, interval, investorCum, investorPeriod) {
-    var cum =
-      investorCum != null && INVESTOR_CUM_OPTIONS.indexOf(investorCum) >= 0
+    var weekly = interval === 'weekly';
+    var cum = weekly
+      ? WEEKLY_INVESTOR_CUM
+      : investorCum != null && INVESTOR_CUM_OPTIONS.indexOf(investorCum) >= 0
         ? investorCum
         : state.investorCum;
-    var period =
-      investorPeriod != null && INVESTOR_PERIOD_OPTIONS.indexOf(investorPeriod) >= 0
+    var period = weekly
+      ? WEEKLY_INVESTOR_PERIOD
+      : investorPeriod != null && INVESTOR_PERIOD_OPTIONS.indexOf(investorPeriod) >= 0
         ? investorPeriod
         : state.investorPeriod;
     var closes = fullBars.map(function (b) {
@@ -1308,13 +1325,12 @@
     var macdHist = [];
     var instOscLine = [];
     var frgnOscLine = [];
-    var foreignRatioLine = [];
+    var foreignRatioBars = [];
     var bbwLine = [];
     var dispLine = [];
     var atrLine = [];
     var atrSignalLine = [];
     var byTime = Object.create(null);
-    var showInvestor = interval !== 'weekly';
 
     for (var i = start; i < fullBars.length; i++) {
       var b = fullBars[i];
@@ -1344,13 +1360,17 @@
       if (macdPack.signal[i] != null && isFinite(macdPack.signal[i])) {
         macdSignalLine.push({ time: b.t, value: macdPack.signal[i] });
       }
-      if (showInvestor) {
-        var iv = oscNum(b[investorOscField('instOsc', cum, period)]);
-        var fv = oscNum(b[investorOscField('frgnOsc', cum, period)]);
-        var fr = oscNum(b.foreignRatio);
-        if (iv != null) instOscLine.push({ time: b.t, value: iv });
-        if (fv != null) frgnOscLine.push({ time: b.t, value: fv });
-        if (fr != null) foreignRatioLine.push({ time: b.t, value: fr });
+      var iv = oscNum(b[investorOscField('instOsc', cum, period)]);
+      var fv = oscNum(b[investorOscField('frgnOsc', cum, period)]);
+      var fr = oscNum(b.foreignRatio);
+      if (iv != null) instOscLine.push({ time: b.t, value: iv });
+      if (fv != null) frgnOscLine.push({ time: b.t, value: fv });
+      if (fr != null) {
+        foreignRatioBars.push({
+          time: b.t,
+          value: fr,
+          color: 'rgba(126,231,135,0.28)',
+        });
       }
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
@@ -1379,8 +1399,14 @@
         atr: atrPack.value[i],
         atrSignal: atrPack.signal[i],
         live: !!b.live,
+        foreignRatio: fr,
       };
-      if (showInvestor) {
+      if (weekly) {
+        row[investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD)] = iv;
+        row[investorOscField('frgnOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD)] = fv;
+        row.instOsc = iv;
+        row.frgnOsc = fv;
+      } else {
         for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
           var w = INVESTOR_CUM_OPTIONS[wi];
           for (var pi = 0; pi < INVESTOR_PERIOD_OPTIONS.length; pi++) {
@@ -1393,11 +1419,6 @@
         }
         row.instOsc = row[investorOscField('instOsc', cum, period)];
         row.frgnOsc = row[investorOscField('frgnOsc', cum, period)];
-        row.foreignRatio = oscNum(b.foreignRatio);
-      } else {
-        row.instOsc = null;
-        row.frgnOsc = null;
-        row.foreignRatio = null;
       }
       byTime[b.t] = row;
     }
@@ -1419,7 +1440,7 @@
       macdHist: macdHist,
       instOscLine: instOscLine,
       frgnOscLine: frgnOscLine,
-      foreignRatioLine: foreignRatioLine,
+      foreignRatioBars: foreignRatioBars,
       bbwLine: bbwLine,
       dispLine: dispLine,
       atrLine: atrLine,
@@ -1494,18 +1515,19 @@
       labels.macdHist +
       ' ' +
       fmtNum(b.macdHist, 2);
-    if (state.interval === 'daily') {
-      var ik = investorOscField('instOsc', state.investorCum, state.investorPeriod);
-      var fk = investorOscField('frgnOsc', state.investorCum, state.investorPeriod);
+    if (state.interval === 'daily' || state.interval === 'weekly') {
+      var ap = activeInvestorCumPeriod();
+      var ik = investorOscField('instOsc', ap.cum, ap.period);
+      var fk = investorOscField('frgnOsc', ap.cum, ap.period);
       text +=
         ' · ' +
         labels.instOsc +
         ' ' +
-        fmtNum(b[ik], 1) +
+        fmtNum(b[ik] != null ? b[ik] : b.instOsc, 1) +
         ' · ' +
         labels.frgnOsc +
         ' ' +
-        fmtNum(b[fk], 1) +
+        fmtNum(b[fk] != null ? b[fk] : b.frgnOsc, 1) +
         ' · ' +
         labels.foreignRatio +
         ' ' +
@@ -1716,6 +1738,28 @@
     var macdSignalSeries = addLine('macd', { color: '#f778ba', title: 'Signal' });
     macdSignalSeries.setData(data.macdSignalLine);
 
+    // Foreign ratio histogram behind OSC lines (background band).
+    var foreignRatioSeries = chart.addSeries(
+      LWC.HistogramSeries,
+      {
+        color: 'rgba(126,231,135,0.28)',
+        priceLineVisible: false,
+        lastValueVisible: true,
+        base: 0,
+        title: t().foreignRatio,
+        autoscaleInfoProvider: function () {
+          return {
+            priceRange: {
+              minValue: 0,
+              maxValue: 100,
+            },
+          };
+        },
+      },
+      PANE_INDEX.investor,
+    );
+    foreignRatioSeries.setData(data.foreignRatioBars || []);
+
     var instOscSeries = addInvestorOscLine('investor', { color: '#e3b341', title: t().instOsc });
     instOscSeries.setData(data.instOscLine || []);
     for (var li = 0; li < INVESTOR_OSC_LEVELS.length; li++) {
@@ -1731,13 +1775,6 @@
 
     var frgnOscSeries = addInvestorOscLine('investor', { color: '#58a6ff', title: t().frgnOsc });
     frgnOscSeries.setData(data.frgnOscLine || []);
-
-    var foreignRatioSeries = addInvestorOscLine('investor', {
-      color: '#7ee787',
-      lineWidth: 2,
-      title: t().foreignRatio,
-    });
-    foreignRatioSeries.setData(data.foreignRatioLine || []);
 
     var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW%' });
     bbwSeries.setData(data.bbwLine);

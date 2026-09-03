@@ -160,7 +160,14 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
   applyPriceAdjustmentsToBars(bars, adjustments);
   if (bars.length) {
     if (interval === 'weekly') {
+      const dailyFrom = bars[0].t;
       const weeklyBars = aggregateDailyBarsToWeekly(bars);
+      await loadAndAttachInvestorOsc(config, ticker, weeklyBars, {
+        interval: 'weekly',
+        netFromDate: dailyFrom,
+      });
+      // Week stamp is the last session; attach that day's foreignRatio.
+      await loadAndAttachForeignRatio(config, ticker, weeklyBars);
       const displayWeeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];
       return {
         code: ticker,

@@ -209,9 +209,9 @@ export async function fetchLatestInvestorNetSignature(config) {
       depthSig('stock_investor_net'),
       depthSig('stock_foreign_ratio'),
     ]);
-    return `inv-v8-${invDepth}-fr-${frDepth}`;
+    return `inv-v9-${invDepth}-fr-${frDepth}`;
   } catch {
-    return 'inv-v8-none';
+    return 'inv-v9-none';
   }
 }
 

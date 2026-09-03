@@ -204,10 +204,15 @@ if (config?.url && config?.anonKey) {
   assert.ok(weeklyPayload.bars.length > 40, 'weekly bars loaded');
   assert.ok(weeklyPayload.bars.length < payload.bars.length, 'weekly fewer than daily bars');
   const wLast = weeklyPayload.bars[weeklyPayload.bars.length - 1];
-  assert.ok(!('instOsc_4_13' in wLast), 'weekly API payload skips OSC attach');
-  assert.ok(!('instOsc' in wLast) || wLast.instOsc == null, 'weekly bar has no instOsc');
+  assert.ok('instOsc_4_13' in wLast, 'weekly bar has instOsc_4_13');
+  assert.equal(wLast.instOsc_10_20, null, 'weekly clears daily 10/20 field');
+  assert.ok('foreignRatio' in wLast, 'weekly bar has foreignRatio field');
+  const wFilled = weeklyPayload.bars.filter((b) => b.instOsc_4_13 != null).length;
+  const wFr = weeklyPayload.bars.filter((b) => b.foreignRatio != null).length;
+  assert.ok(wFilled > 0, 'weekly instOsc_4_13 populated');
   console.log(
-    `Live weekly ${ticker} @ ${wLast.t}: bars=${weeklyPayload.bars.length}, investor OSC skipped`,
+    `Live weekly ${ticker} @ ${wLast.t}: bars=${weeklyPayload.bars.length}, ` +
+      `instOsc_4_13 filled=${wFilled}, foreignRatio filled=${wFr}`,
   );
 } else {
   console.log('Skipping live Supabase check (SUPABASE_URL/ANON_KEY missing)');

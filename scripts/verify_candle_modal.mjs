@@ -252,11 +252,16 @@ const investorPanel10p50 = indicators.buildPanelData(
 );
 assert.equal(investorPanel10.instOscLine.length, 10, 'daily investor instOsc10 lines skip null warmup');
 assert.equal(investorPanel5.instOscLine.length, 10, 'daily investor instOsc5 lines skip null warmup');
-assert.equal(investorPanel10.foreignRatioLine.length, 10, 'daily foreignRatio line on OSC pane');
+assert.equal(investorPanel10.foreignRatioBars.length, 10, 'daily foreignRatio histogram bars on OSC pane');
 assert.equal(
   investorPanel10.byTime['2026-02-21'].foreignRatio,
   45,
   'foreignRatio in crosshair byTime',
+);
+assert.equal(
+  investorPanel10.foreignRatioBars[0].color,
+  'rgba(126,231,135,0.28)',
+  'foreignRatio bar uses translucent green',
 );
 assert.notEqual(
   investorPanel5.instOscLine[9].value,
@@ -283,30 +288,65 @@ assert.ok(
   'investor toggles hidden on weekly',
 );
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
-assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 0, 'investor pane hidden on weekly');
-assert.ok(
-  !source.includes('WEEKLY_INVESTOR_CUM'),
-  'weekly fixed OSC constants removed from client',
-);
+assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 16, 'investor pane stretch on weekly');
+assert.match(source, /WEEKLY_INVESTOR_CUM = 4/, 'weekly fixed cum 4');
+assert.match(source, /WEEKLY_INVESTOR_PERIOD = 13/, 'weekly fixed period 13');
+assert.match(source, /HistogramSeries/, 'foreignRatio uses histogram series');
+assert.match(source, /rgba\(126,231,135,0\.28\)/, 'foreignRatio translucent green');
 
-const weeklyNoInvestorPanel = indicators.buildPanelData(
-  indicators.normalizeBars(investorBars),
+const weeklyInvestorBars = [];
+for (let i = 0; i < 30; i++) {
+  const base = i >= 13 ? i : null;
+  weeklyInvestorBars.push({
+    t: `2026-02-${String(i + 1).padStart(2, '0')}`,
+    o: 100,
+    h: 101,
+    l: 99,
+    c: 100,
+    v: 1000,
+    instOsc_4_13: base != null ? 55 + i : null,
+    frgnOsc_4_13: base != null ? 45 + i : null,
+    instOsc: base != null ? 55 + i : null,
+    frgnOsc: base != null ? 45 + i : null,
+    foreignRatio: base != null ? 48 + (i % 5) : null,
+  });
+}
+const weeklyInvestorPanel = indicators.buildPanelData(
+  indicators.normalizeBars(weeklyInvestorBars),
   '5y',
   'weekly',
   10,
   20,
 );
-assert.equal(weeklyNoInvestorPanel.instOscLine.length, 0, 'weekly builds no investor OSC lines');
-assert.equal(weeklyNoInvestorPanel.foreignRatioLine.length, 0, 'weekly builds no foreignRatio line');
 assert.equal(
-  weeklyNoInvestorPanel.byTime['2026-02-21'].instOsc,
-  null,
-  'weekly crosshair has no investor OSC',
+  weeklyInvestorPanel.instOscLine.length,
+  17,
+  'weekly investor OSC uses fixed 4/13 (ignores daily toggle args)',
 );
 assert.equal(
-  weeklyNoInvestorPanel.byTime['2026-02-21'].foreignRatio,
-  null,
-  'weekly crosshair has no foreignRatio',
+  weeklyInvestorPanel.foreignRatioBars.length,
+  17,
+  'weekly foreignRatio histogram bars',
+);
+assert.equal(
+  weeklyInvestorPanel.byTime['2026-02-21'].instOsc_4_13,
+  75,
+  'weekly crosshair keeps instOsc_4_13',
+);
+assert.equal(
+  weeklyInvestorPanel.byTime['2026-02-21'].instOsc,
+  75,
+  'weekly instOsc aliases 4/13',
+);
+assert.equal(
+  weeklyInvestorPanel.byTime['2026-02-21'].foreignRatio,
+  48,
+  'weekly foreignRatio in crosshair',
+);
+assert.match(source, /paneInvestorUnitWeek/, 'weekly investor unit label');
+assert.ok(
+  source.includes('WEEKLY_INVESTOR_CUM') && source.includes('paneInvestorUnitWeek'),
+  'weekly pane label uses week unit and fixed 4/13',
 );
 
 const weeklyMaBars = [];
@@ -426,9 +466,9 @@ try {
   assert.equal(weeklyPayload.interval, 'weekly', 'weekly interval flag');
   assert.ok(weeklyPayload.bars.length > 0, 'weekly bars returned');
   assert.ok(weeklyPayload.bars.length < 2175, 'weekly aggregates below daily count');
-  assert.ok(!('instOsc_4_13' in weeklyPayload.bars[0]), 'weekly payload skips investor OSC');
-  assert.ok(!('instOsc10' in weeklyPayload.bars[0]), 'weekly payload has no daily OSC aliases');
-  assert.ok(!('foreignRatio' in weeklyPayload.bars[0]), 'weekly payload skips foreignRatio');
+  assert.ok('instOsc_4_13' in weeklyPayload.bars[0], 'weekly bars include investor OSC 4/13');
+  assert.ok('foreignRatio' in weeklyPayload.bars[0], 'weekly bars include foreignRatio');
+  assert.equal(weeklyPayload.bars[0].instOsc_10_20, null, 'weekly does not keep daily 10/20 grid');
 } finally {
   globalThis.fetch = originalFetch;
 }
