@@ -15,6 +15,7 @@ import {
 import {
   fetchLatestInvestorNetSignature,
   loadAndAttachInvestorOsc,
+  aggregateDailyBarsToWeekly,
 } from './investor_osc.mjs';
 
 export { fetchLatestInvestorNetSignature, fetchPriceAdjustmentsSignature };
@@ -156,10 +157,34 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
   }
   const adjustments = await fetchPriceAdjustments(config, ticker);
   applyPriceAdjustmentsToBars(bars, adjustments);
-  if (interval === 'daily' && bars.length) {
+  if (bars.length) {
+    if (interval === 'weekly') {
+      const dailyFrom = bars[0].t;
+      const weeklyBars = aggregateDailyBarsToWeekly(bars);
+      await loadAndAttachInvestorOsc(config, ticker, weeklyBars, {
+        interval: 'weekly',
+        netFromDate: dailyFrom,
+      });
+      const displayWeeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];
+      return {
+        code: ticker,
+        range,
+        interval: 'weekly',
+        displayDays: displayWeeks,
+        bars: weeklyBars,
+        adjusted: adjustments.length > 0,
+      };
+    }
     await loadAndAttachInvestorOsc(config, ticker, bars);
   }
-  return { code: ticker, range, displayDays, bars, adjusted: adjustments.length > 0 };
+  return {
+    code: ticker,
+    range,
+    interval: 'daily',
+    displayDays,
+    bars,
+    adjusted: adjustments.length > 0,
+  };
 }
 
 /**
@@ -167,12 +192,17 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
  * @param {string|null} code
  * @param {string} [rangeToken]
  */
-export function emptyTickerOhlcPayload(code, rangeToken = '1y') {
+export function emptyTickerOhlcPayload(code, rangeToken = '1y', interval = 'daily') {
   const range = normalizeOhlcRange(rangeToken);
+  const iv = interval === 'weekly' ? 'weekly' : 'daily';
   return {
     code: code || null,
     range,
-    displayDays: OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'],
+    interval: iv,
+    displayDays:
+      iv === 'weekly'
+        ? OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y']
+        : OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'],
     bars: [],
   };
 }

@@ -8,10 +8,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   attachInvestorOscToBars,
+  attachInvestorOscToWeeklyBars,
+  aggregateDailyBarsToWeekly,
   computeInvestorOscSeries,
   ewmSpan,
   groupInvestorNetByDate,
   investorOscBarKey,
+  isoWeekKey,
   INVESTOR_CUM_WINDOWS,
   INVESTOR_OSC_PERIODS,
   rollingSum,
@@ -111,6 +114,30 @@ assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
   }
 }
 
+// weekly: sum daily nets by ISO week, then OSC on weekly series
+{
+  assert.equal(isoWeekKey('2025-12-29'), isoWeekKey('2026-01-02'), 'same ISO week');
+  const daily = [
+    { t: '2025-12-29', o: 10, h: 12, l: 8, c: 10, v: 100 },
+    { t: '2025-12-30', o: 10, h: 13, l: 9, c: 12, v: 150 },
+    { t: '2026-01-02', o: 12, h: 15, l: 11, c: 14, v: 200 },
+    { t: '2026-01-05', o: 14, h: 16, l: 13, c: 15, v: 250 },
+  ];
+  const weekly = aggregateDailyBarsToWeekly(daily);
+  assert.equal(weekly.length, 2, 'weekly bar count');
+  assert.equal(weekly[0].t, '2026-01-02');
+  assert.equal(weekly[0].v, 450);
+  const byDate = groupInvestorNetByDate([
+    { trade_date: '2025-12-29', invst_tp_cd: '9000', net_val: 10 },
+    { trade_date: '2025-12-30', invst_tp_cd: '9000', net_val: 20 },
+    { trade_date: '2026-01-02', invst_tp_cd: '9000', net_val: 30 },
+    { trade_date: '2026-01-05', invst_tp_cd: '9000', net_val: 40 },
+  ]);
+  attachInvestorOscToWeeklyBars(weekly, byDate);
+  assert.ok('frgnOsc_10_20' in weekly[0], 'weekly bars get OSC fields');
+  assert.equal(weekly[0].frgnOsc, weekly[0].frgnOsc10);
+}
+
 const ticker = process.argv[2] || '005930';
 const env = loadEnv();
 const config = getSupabaseConfig(env);
@@ -138,6 +165,18 @@ if (config?.url && config?.anonKey) {
   console.log(
     `Live ${ticker} @ ${last.t}: instOsc_10_20=${last.instOsc_10_20}, instOsc_10_50=${last.instOsc_10_50} ` +
       `(legacy10=${last.instOsc10}; filled ${withInst.length}/${payload.bars.length})`,
+  );
+
+  const weeklyPayload = await fetchTickerOhlcBars(config, ticker, '1y', { interval: 'weekly' });
+  assert.equal(weeklyPayload.interval, 'weekly', 'weekly payload interval');
+  assert.ok(weeklyPayload.bars.length > 40, 'weekly bars loaded');
+  assert.ok(weeklyPayload.bars.length < payload.bars.length, 'weekly fewer than daily bars');
+  const wLast = weeklyPayload.bars[weeklyPayload.bars.length - 1];
+  assert.ok('instOsc_10_20' in wLast, 'weekly bar has instOsc_10_20');
+  const wFilled = weeklyPayload.bars.filter((b) => b.instOsc != null).length;
+  assert.ok(wFilled > 0, 'weekly instOsc populated');
+  console.log(
+    `Live weekly ${ticker} @ ${wLast.t}: bars=${weeklyPayload.bars.length}, instOsc filled=${wFilled}`,
   );
 } else {
   console.log('Skipping live Supabase check (SUPABASE_URL/ANON_KEY missing)');

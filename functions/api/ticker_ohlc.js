@@ -23,7 +23,7 @@ import {
 import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-const CACHE_BASE = '/api/ticker_ohlc/cache/v18';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v19';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {
@@ -40,6 +40,10 @@ function jsonResponse(ch, body, maxAge) {
   });
 }
 
+function normalizeInterval(raw) {
+  return String(raw || '').trim().toLowerCase() === 'weekly' ? 'weekly' : 'daily';
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
   const ch = corsHeaders(request);
@@ -53,16 +57,17 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const code = normalizeTicker(url.searchParams.get('code') || url.searchParams.get('ticker'));
   const range = normalizeOhlcRange(url.searchParams.get('range'));
+  const interval = normalizeInterval(url.searchParams.get('interval'));
   const maxAge = ohlcEdgeMaxAge();
 
   if (!code) {
-    return jsonResponse(ch, emptyTickerOhlcPayload(null, range), maxAge);
+    return jsonResponse(ch, emptyTickerOhlcPayload(null, range, interval), maxAge);
   }
 
   const config = getSupabaseConfig(env);
   let lastSig = 'none';
   let adjSig = 'adj-none';
-  let invSig = 'inv-v2-none';
+  let invSig = 'inv-v3-none';
   if (config) {
     try {
       [lastSig, adjSig, invSig] = await Promise.all([
@@ -73,12 +78,12 @@ export async function onRequest(context) {
     } catch {
       lastSig = 'none';
       adjSig = 'adj-none';
-      invSig = 'inv-v2-none';
+      invSig = 'inv-v3-none';
     }
   }
 
   // Signature invalidates when history, price_adjustments, or investor_net max date changes.
-  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${lastSig}/${adjSig}/${invSig}`;
+  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${interval}/${lastSig}/${adjSig}/${invSig}`;
   const hit = await readHubCache(cachePath, url.origin);
   if (hit) {
     const headers = new Headers(hit.headers);
@@ -87,19 +92,20 @@ export async function onRequest(context) {
     headers.set('X-OHLC-Sig', lastSig);
     headers.set('X-OHLC-Adj', adjSig);
     headers.set('X-OHLC-Inv', invSig);
+    headers.set('X-OHLC-Interval', interval);
     return new Response(hit.body, { status: hit.status, headers });
   }
 
-  let payload = emptyTickerOhlcPayload(code, range);
+  let payload = emptyTickerOhlcPayload(code, range, interval);
   if (config) {
     try {
-      payload = await fetchTickerOhlcBars(config, code, range);
+      payload = await fetchTickerOhlcBars(config, code, range, { interval });
     } catch (err) {
       console.warn(
         '[ticker_ohlc] fetch failed:',
         err && err.message ? err.message : err,
       );
-      payload = emptyTickerOhlcPayload(code, range);
+      payload = emptyTickerOhlcPayload(code, range, interval);
     }
   }
 
@@ -107,6 +113,7 @@ export async function onRequest(context) {
   response.headers.set('X-OHLC-Sig', lastSig);
   response.headers.set('X-OHLC-Adj', adjSig);
   response.headers.set('X-OHLC-Inv', invSig);
+  response.headers.set('X-OHLC-Interval', interval);
   if (payload.bars && payload.bars.length) {
     putHubCache(context, cachePath, url.origin, response);
   }

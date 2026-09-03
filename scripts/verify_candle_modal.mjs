@@ -272,14 +272,19 @@ assert.match(source, /im-candle-inv-cum/, 'investor cum toggle markup');
 assert.match(source, /im-candle-inv-period/, 'investor period toggle markup');
 assert.match(source, /im_inv_period/, 'investor period localStorage key');
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
-assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 0, 'investor pane hidden on weekly');
+assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 16, 'investor pane stretch on weekly');
 
 const weeklyInvestorPanel = indicators.buildPanelData(
   indicators.normalizeBars(investorBars),
   '5y',
   'weekly',
 );
-assert.equal(weeklyInvestorPanel.instOscLine.length, 0, 'weekly investor OSC lines empty');
+assert.equal(weeklyInvestorPanel.instOscLine.length, 10, 'weekly investor OSC lines use bar fields');
+assert.equal(
+  weeklyInvestorPanel.byTime['2026-02-21'].instOsc_10_20,
+  60,
+  'weekly crosshair keeps instOsc_10_20',
+);
 
 const weeklyMaBars = [];
 for (let i = 0; i < 52; i++) {
@@ -378,6 +383,7 @@ try {
   const historyRequests = requests.filter((u) => u.includes('stock_price_history'));
   assert.equal(historyRequests.length, 3, '5Y+warmup PostgREST pagination');
   assert.equal(payload.bars.length, 2175, '5Y returns display+weekly-warmup bars');
+  assert.equal(payload.interval, 'daily', 'default interval is daily');
   assert.ok('instOsc10' in payload.bars[0], 'daily bars include instOsc10');
   assert.ok('frgnOsc10' in payload.bars[0], 'daily bars include frgnOsc10');
   assert.ok('instOsc_10_20' in payload.bars[0], 'daily bars include instOsc_10_20');
@@ -385,6 +391,18 @@ try {
   assert.match(historyRequests[0], /limit=1000&offset=0/);
   assert.match(historyRequests[1], /limit=1000&offset=1000/);
   assert.match(historyRequests[2], /limit=175&offset=2000/);
+
+  requests.length = 0;
+  const weeklyPayload = await fetchTickerOhlcBars(
+    { url: 'https://example.supabase.co', anonKey: 'test' },
+    '005930',
+    '5y',
+    { interval: 'weekly' },
+  );
+  assert.equal(weeklyPayload.interval, 'weekly', 'weekly interval flag');
+  assert.ok(weeklyPayload.bars.length > 0, 'weekly bars returned');
+  assert.ok(weeklyPayload.bars.length < 2175, 'weekly aggregates below daily count');
+  assert.ok('instOsc_10_20' in weeklyPayload.bars[0], 'weekly bars include investor OSC');
 } finally {
   globalThis.fetch = originalFetch;
 }

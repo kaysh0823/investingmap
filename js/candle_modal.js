@@ -76,10 +76,8 @@
 
   var PANE_INDEX = paneIndexMap();
 
-  /** Daily-only panes collapse on weekly (no investor OSC on aggregated weeks). */
+  /** Investor OSC pane is shown for both daily and weekly. */
   function paneStretch(spec, interval) {
-    var iv = interval != null ? interval : state.interval;
-    if (iv === 'weekly' && spec.key === 'investor') return 0;
     return spec.stretch;
   }
 
@@ -127,7 +125,9 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
-      paneInvestorTpl: '투자자 OSC · 기관·외국인 · 누적 {CUM}일 / 기준 {PER}일 (0~100)',
+      paneInvestorTpl: '투자자 OSC · 기관·외국인 · 누적 {CUM}{UNIT} / 기준 {PER}{UNIT} (0~100)',
+      paneInvestorUnitDay: '일',
+      paneInvestorUnitWeek: '주',
       paneNorm: 'BBW% · 이격도% (125일)',
       paneAtr: 'ATR(3)/종가% · EMA9',
       liveSession: '장중(현재가)',
@@ -164,7 +164,9 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
-      paneInvestorTpl: 'Investor OSC · Inst·Frgn · cum {CUM}d / base {PER}d (0-100)',
+      paneInvestorTpl: 'Investor OSC · Inst·Frgn · cum {CUM}{UNIT} / base {PER}{UNIT} (0-100)',
+      paneInvestorUnitDay: 'd',
+      paneInvestorUnitWeek: 'w',
       paneNorm: 'BBW% · DISP% (125d)',
       paneAtr: 'ATR(3)/Close% · EMA9',
       liveSession: 'Live (last)',
@@ -489,18 +491,19 @@
     return state.rangeByInterval[key] || DEFAULT_RANGE_BY_INTERVAL[key];
   }
 
-  function ohlcApiUrl(code, range) {
+  function ohlcApiUrl(code, range, interval) {
     var origin =
       global.location && global.location.protocol && global.location.protocol.indexOf('http') === 0
         ? global.location.origin
         : '';
-    return (
+    var url =
       origin +
       '/api/ticker_ohlc?code=' +
       encodeURIComponent(code) +
       '&range=' +
-      encodeURIComponent(range)
-    );
+      encodeURIComponent(range);
+    if (interval === 'weekly') url += '&interval=weekly';
+    return url;
   }
 
   function quotesApiUrl(code) {
@@ -576,7 +579,7 @@
       if (!inSession) return { bars: bars, live: false, liveTime: null };
       var high = lastBar.h != null && isFinite(lastBar.h) ? Math.max(lastBar.h, last) : last;
       var low = lastBar.l != null && isFinite(lastBar.l) ? Math.min(lastBar.l, last) : last;
-      out[out.length - 1] = {
+      var patched = {
         t: lastBar.t,
         o: lastBar.o,
         h: high,
@@ -584,7 +587,10 @@
         c: last,
         v: lastBar.v,
         live: true,
+        closeOnly: !!lastBar.closeOnly,
       };
+      copyInvestorOscFields(lastBar, patched);
+      out[out.length - 1] = patched;
       return { bars: out, live: true, liveTime: lastT };
     }
 
@@ -641,6 +647,131 @@
         return { bars: out, live: true, liveTime: qDate };
       }
       // After hours, quotes last only: close line — do not claim "live session".
+      out.push({
+        t: qDate,
+        o: last,
+        h: last,
+        l: last,
+        c: last,
+        v: qVol != null ? qVol : 0,
+        live: false,
+        closeOnly: true,
+      });
+      return { bars: out, live: false, liveTime: null };
+    }
+
+    return { bars: bars, live: false, liveTime: null };
+  }
+
+  /**
+   * Live overlay for server-aggregated weekly bars.
+   * Same ISO week as last bar → patch OHLC (keep OSC); newer week → append without OSC.
+   */
+  function applyLiveQuoteToWeeklyBars(bars, quotesJson, code) {
+    if (!bars || !bars.length || !quotesJson) {
+      return { bars: bars, live: false, liveTime: null };
+    }
+    var tick = String(code || '')
+      .toUpperCase()
+      .replace(/[^0-9A-Z]/g, '')
+      .padStart(6, '0')
+      .slice(-6);
+    var items = quotesJson.items || {};
+    var item = items[tick] || items[code] || null;
+    if (!item) return { bars: bars, live: false, liveTime: null };
+
+    var last = typeof item.last === 'number' ? item.last : Number(item.last);
+    if (!isFinite(last) || last <= 0) return { bars: bars, live: false, liveTime: null };
+
+    var qDate = asOfToTradeDate(quotesJson.asOf);
+    if (!qDate) return { bars: bars, live: false, liveTime: null };
+
+    var inSession = quotesJson.regularSession === true;
+    var out = bars.slice();
+    var lastBar = out[out.length - 1];
+    var lastT = lastBar.t;
+    var sameWeek = isoWeekKey(qDate) === isoWeekKey(lastT);
+
+    if (sameWeek && qDate >= lastT) {
+      if (!inSession && qDate === lastT) return { bars: bars, live: false, liveTime: null };
+      if (!inSession && qDate > lastT) {
+        // After hours: advance week stamp to quote date, keep OSC from last week bar.
+        var settled = {
+          t: qDate,
+          o: lastBar.o,
+          h: lastBar.h != null && isFinite(lastBar.h) ? Math.max(lastBar.h, last) : last,
+          l: lastBar.l != null && isFinite(lastBar.l) ? Math.min(lastBar.l, last) : last,
+          c: last,
+          v: lastBar.v,
+          live: false,
+          closeOnly: !!lastBar.closeOnly,
+        };
+        copyInvestorOscFields(lastBar, settled);
+        out[out.length - 1] = settled;
+        return { bars: out, live: false, liveTime: null };
+      }
+      var highW = lastBar.h != null && isFinite(lastBar.h) ? Math.max(lastBar.h, last) : last;
+      var lowW = lastBar.l != null && isFinite(lastBar.l) ? Math.min(lastBar.l, last) : last;
+      var patchedW = {
+        t: qDate > lastT ? qDate : lastT,
+        o: lastBar.o,
+        h: highW,
+        l: lowW,
+        c: last,
+        v: lastBar.v,
+        live: true,
+        closeOnly: !!lastBar.closeOnly,
+      };
+      copyInvestorOscFields(lastBar, patchedW);
+      out[out.length - 1] = patchedW;
+      return { bars: out, live: true, liveTime: patchedW.t };
+    }
+
+    if (qDate > lastT && !sameWeek) {
+      var qOpen =
+        item.open != null && isFinite(Number(item.open)) && Number(item.open) > 0
+          ? Number(item.open)
+          : null;
+      var qHigh =
+        item.high != null && isFinite(Number(item.high)) && Number(item.high) > 0
+          ? Number(item.high)
+          : null;
+      var qLow =
+        item.low != null && isFinite(Number(item.low)) && Number(item.low) > 0
+          ? Number(item.low)
+          : null;
+      var qVol =
+        item.volume != null && isFinite(Number(item.volume)) && Number(item.volume) >= 0
+          ? Number(item.volume)
+          : null;
+      if (qOpen != null && qHigh != null && qLow != null) {
+        out.push({
+          t: qDate,
+          o: qOpen,
+          h: Math.max(qHigh, last),
+          l: Math.min(qLow, last),
+          c: last,
+          v: qVol != null ? qVol : 0,
+          live: inSession,
+        });
+        return { bars: out, live: inSession, liveTime: inSession ? qDate : null };
+      }
+      if (inSession) {
+        var prev =
+          item.prevClose != null && isFinite(Number(item.prevClose)) && Number(item.prevClose) > 0
+            ? Number(item.prevClose)
+            : last;
+        out.push({
+          t: qDate,
+          o: prev,
+          h: Math.max(prev, last),
+          l: Math.min(prev, last),
+          c: last,
+          v: qVol != null ? qVol : 0,
+          live: true,
+        });
+        return { bars: out, live: true, liveTime: qDate };
+      }
       out.push({
         t: qDate,
         o: last,
@@ -884,9 +1015,13 @@
   function paneInvestorLabel(cum, period) {
     var c = cum != null ? cum : state.investorCum;
     var p = period != null ? period : state.investorPeriod;
-    return t()
-      .paneInvestorTpl.replace('{CUM}', String(c))
-      .replace('{PER}', String(p));
+    var labels = t();
+    var unit =
+      state.interval === 'weekly' ? labels.paneInvestorUnitWeek : labels.paneInvestorUnitDay;
+    return labels.paneInvestorTpl
+      .replace('{CUM}', String(c))
+      .replace('{PER}', String(p))
+      .replace(/\{UNIT\}/g, unit);
   }
 
   function investorOscField(prefix, cum, period) {
@@ -1174,7 +1309,7 @@
     var atrLine = [];
     var atrSignalLine = [];
     var byTime = Object.create(null);
-    var showInvestor = interval === 'daily';
+    var showInvestor = true;
 
     for (var i = start; i < fullBars.length; i++) {
       var b = fullBars[i];
@@ -1349,7 +1484,7 @@
       labels.macdHist +
       ' ' +
       fmtNum(b.macdHist, 2);
-    if (state.interval === 'daily') {
+    if (state.interval === 'daily' || state.interval === 'weekly') {
       var ik = investorOscField('instOsc', state.investorCum, state.investorPeriod);
       var fk = investorOscField('frgnOsc', state.investorCum, state.investorPeriod);
       text +=
@@ -1707,7 +1842,9 @@
         // Weekly MA120 and 125-bar normalization need substantially more than one year
         // of daily source bars, regardless of the selected display range.
         var requestRange = state.interval === 'weekly' ? '5y' : range;
-        var ohlcP = fetch(ohlcApiUrl(code, requestRange), { credentials: 'omit' }).then(function (res) {
+        var ohlcP = fetch(ohlcApiUrl(code, requestRange, state.interval), {
+          credentials: 'omit',
+        }).then(function (res) {
           if (!res.ok) throw new Error('HTTP ' + res.status);
           return res.json();
         });
@@ -1731,13 +1868,18 @@
           setStatus(labels.empty, true);
           return;
         }
-        var overlaid = applyLiveQuoteToBars(fullBars, pack.quotes, code);
+        var serverWeekly = state.interval === 'weekly' && pack.json && pack.json.interval === 'weekly';
+        var overlaid = serverWeekly
+          ? applyLiveQuoteToWeeklyBars(fullBars, pack.quotes, code)
+          : applyLiveQuoteToBars(fullBars, pack.quotes, code);
         fullBars = overlaid.bars;
         state.liveOverlay = !!overlaid.live;
         state.liveBarTime = overlaid.liveTime || null;
         updateSubtitle();
 
-        if (state.interval === 'weekly') fullBars = aggregateWeeklyBars(fullBars);
+        if (state.interval === 'weekly' && !serverWeekly) {
+          fullBars = aggregateWeeklyBars(fullBars);
+        }
         var data = buildPanelData(
           fullBars,
           range,
@@ -1990,6 +2132,7 @@
       buildInvestorOscLinesFromByTime: buildInvestorOscLinesFromByTime,
       investorOscField: investorOscField,
       applyLiveQuoteToBars: applyLiveQuoteToBars,
+      applyLiveQuoteToWeeklyBars: applyLiveQuoteToWeeklyBars,
       asOfToTradeDate: asOfToTradeDate,
       priceMaPeriods: priceMaPeriods,
       maLabel: maLabel,

@@ -187,11 +187,102 @@ export async function fetchLatestInvestorNetSignature(config) {
   try {
     const rows = await fetchSupabaseJson(config, q);
     const row = Array.isArray(rows) && rows[0] ? rows[0] : null;
-    if (!row?.trade_date) return 'inv-v2-none';
-    return `inv-v2-${String(row.trade_date).slice(0, 10).replace(/-/g, '')}`;
+    if (!row?.trade_date) return 'inv-v3-none';
+    return `inv-v3-${String(row.trade_date).slice(0, 10).replace(/-/g, '')}`;
   } catch {
-    return 'inv-v2-none';
+    return 'inv-v3-none';
   }
+}
+
+/**
+ * ISO week key (UTC), matching candle_modal.aggregateWeeklyBars.
+ * @param {string} isoDate YYYY-MM-DD
+ * @returns {string} e.g. 2026-W09
+ */
+export function isoWeekKey(isoDate) {
+  const parts = String(isoDate || '').split('-');
+  if (parts.length !== 3) return String(isoDate || '');
+  const date = new Date(Date.UTC(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])));
+  if (!Number.isFinite(date.getTime())) return String(isoDate || '');
+  const day = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  const week = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+  return `${date.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
+}
+
+/**
+ * Aggregate daily OHLCV into ISO weeks (timestamp = week's last session).
+ * Same rules as js/candle_modal.js aggregateWeeklyBars.
+ * @param {Array<{ t: string, o?: number|null, h?: number|null, l?: number|null, c: number, v?: number|null }>} dailyBars
+ */
+export function aggregateDailyBarsToWeekly(dailyBars) {
+  const out = [];
+  let current = null;
+  for (const bar of dailyBars || []) {
+    if (!bar?.t) continue;
+    const key = isoWeekKey(bar.t);
+    if (!current || current.key !== key) {
+      if (current) {
+        const { key: _k, ...rest } = current;
+        out.push(rest);
+      }
+      current = {
+        key,
+        t: bar.t,
+        o: bar.o,
+        h: bar.h,
+        l: bar.l,
+        c: bar.c,
+        v: Number(bar.v) || 0,
+      };
+    } else {
+      current.t = bar.t;
+      current.h =
+        current.h == null || bar.h == null
+          ? current.h ?? bar.h
+          : Math.max(current.h, bar.h);
+      current.l =
+        current.l == null || bar.l == null
+          ? current.l ?? bar.l
+          : Math.min(current.l, bar.l);
+      current.c = bar.c;
+      current.v += Number(bar.v) || 0;
+    }
+  }
+  if (current) {
+    const { key: _k, ...rest } = current;
+    out.push(rest);
+  }
+  return out;
+}
+
+/**
+ * Sum daily investor nets into each ISO week (aligned to weeklyBars order).
+ * @param {Array<{ t: string }>} weeklyBars
+ * @param {Map<string, { inst: number, frgn: number }>} byDate
+ * @returns {{ inst: number[], frgn: number[] }}
+ */
+export function weeklyNetSeriesFromDaily(weeklyBars, byDate) {
+  const weekNets = new Map();
+  for (const [d, bucket] of byDate || []) {
+    const key = isoWeekKey(d);
+    let w = weekNets.get(key);
+    if (!w) {
+      w = { inst: 0, frgn: 0 };
+      weekNets.set(key, w);
+    }
+    w.inst += bucket?.inst ?? 0;
+    w.frgn += bucket?.frgn ?? 0;
+  }
+  const inst = [];
+  const frgn = [];
+  for (const bar of weeklyBars || []) {
+    const pack = weekNets.get(isoWeekKey(bar.t));
+    inst.push(pack?.inst ?? 0);
+    frgn.push(pack?.frgn ?? 0);
+  }
+  return { inst, frgn };
 }
 
 function clearInvestorOscOnBar(bar) {
@@ -208,14 +299,12 @@ function clearInvestorOscOnBar(bar) {
 }
 
 /**
- * Attach instOsc_{cum}_{period} and frgnOsc_{cum}_{period} to daily OHLC bars (mutates bars).
- * Legacy instOsc5/10/20 and instOsc / frgnOsc alias the period-20 combination.
- * @param {Array<{ t: string }>} bars ascending trade dates
- * @param {Map<string, { inst: number, frgn: number }>} byDate
+ * Write OSC combo fields onto bars from aligned net series (mutates bars).
+ * @param {Array<object>} bars
+ * @param {number[]} instNet
+ * @param {number[]} frgnNet
  */
-export function attachInvestorOscToBars(bars, byDate) {
-  const instNet = bars.map((b) => byDate.get(b.t)?.inst ?? 0);
-  const frgnNet = bars.map((b) => byDate.get(b.t)?.frgn ?? 0);
+function writeInvestorOscFromNets(bars, instNet, frgnNet) {
   const byCombo = new Map();
   for (const cum of INVESTOR_CUM_WINDOWS) {
     for (const period of INVESTOR_OSC_PERIODS) {
@@ -242,18 +331,46 @@ export function attachInvestorOscToBars(bars, byDate) {
 }
 
 /**
- * Fetch investor net and attach OSC fields to daily bars.
+ * Attach instOsc_{cum}_{period} and frgnOsc_{cum}_{period} to daily OHLC bars (mutates bars).
+ * Legacy instOsc5/10/20 and instOsc / frgnOsc alias the period-20 combination.
+ * @param {Array<{ t: string }>} bars ascending trade dates
+ * @param {Map<string, { inst: number, frgn: number }>} byDate
+ */
+export function attachInvestorOscToBars(bars, byDate) {
+  const instNet = bars.map((b) => byDate.get(b.t)?.inst ?? 0);
+  const frgnNet = bars.map((b) => byDate.get(b.t)?.frgn ?? 0);
+  return writeInvestorOscFromNets(bars, instNet, frgnNet);
+}
+
+/**
+ * Attach OSC to weekly bars: sum daily nets inside each ISO week, then run the
+ * same cum/period windows on the weekly net series (weeks ≈ days in UI params).
+ * @param {Array<{ t: string }>} weeklyBars
+ * @param {Map<string, { inst: number, frgn: number }>} byDate daily nets
+ */
+export function attachInvestorOscToWeeklyBars(weeklyBars, byDate) {
+  const { inst, frgn } = weeklyNetSeriesFromDaily(weeklyBars, byDate);
+  return writeInvestorOscFromNets(weeklyBars, inst, frgn);
+}
+
+/**
+ * Fetch investor net and attach OSC fields to bars.
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker
- * @param {Array<{ t: string }>} bars
+ * @param {Array<{ t: string }>} bars daily or weekly (see options.interval)
+ * @param {{ interval?: 'daily'|'weekly', netFromDate?: string }} [options]
+ *   netFromDate: optional earlier bound when bars are weekly (cover first week days)
  */
-export async function loadAndAttachInvestorOsc(config, ticker, bars) {
+export async function loadAndAttachInvestorOsc(config, ticker, bars, options = {}) {
   if (!bars.length) return bars;
-  const fromDate = bars[0].t;
+  const interval = options.interval === 'weekly' ? 'weekly' : 'daily';
+  const fromDate = options.netFromDate || bars[0].t;
   const toDate = bars[bars.length - 1].t;
   try {
     const rows = await fetchInvestorNetForRange(config, ticker, fromDate, toDate);
-    attachInvestorOscToBars(bars, groupInvestorNetByDate(rows));
+    const byDate = groupInvestorNetByDate(rows);
+    if (interval === 'weekly') attachInvestorOscToWeeklyBars(bars, byDate);
+    else attachInvestorOscToBars(bars, byDate);
   } catch (err) {
     console.warn(
       '[investor_osc] fetch failed:',
