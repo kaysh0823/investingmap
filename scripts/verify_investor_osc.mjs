@@ -17,6 +17,8 @@ import {
   isoWeekKey,
   INVESTOR_CUM_WINDOWS,
   INVESTOR_OSC_PERIODS,
+  WEEKLY_CUM,
+  WEEKLY_PERIOD,
   rollingSum,
 } from '../functions/lib/investor_osc.mjs';
 import { fetchTickerOhlcBars, getSupabaseConfig } from '../functions/lib/ticker_ohlc.mjs';
@@ -134,8 +136,18 @@ assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
     { trade_date: '2026-01-05', invst_tp_cd: '9000', net_val: 40 },
   ]);
   attachInvestorOscToWeeklyBars(weekly, byDate);
-  assert.ok('frgnOsc_10_20' in weekly[0], 'weekly bars get OSC fields');
-  assert.equal(weekly[0].frgnOsc, weekly[0].frgnOsc10);
+  assert.equal(WEEKLY_CUM, 4, 'weekly cum constant');
+  assert.equal(WEEKLY_PERIOD, 13, 'weekly period constant');
+  assert.ok(
+    investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD) in weekly[0],
+    'weekly bars get OSC 4/13 fields',
+  );
+  assert.equal(
+    weekly[0].frgnOsc,
+    weekly[0][investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD)],
+    'weekly frgnOsc aliases 4/13',
+  );
+  assert.equal(weekly[0].frgnOsc_10_20, null, 'weekly clears daily OSC grid');
 }
 
 const ticker = process.argv[2] || '005930';
@@ -172,11 +184,12 @@ if (config?.url && config?.anonKey) {
   assert.ok(weeklyPayload.bars.length > 40, 'weekly bars loaded');
   assert.ok(weeklyPayload.bars.length < payload.bars.length, 'weekly fewer than daily bars');
   const wLast = weeklyPayload.bars[weeklyPayload.bars.length - 1];
-  assert.ok('instOsc_10_20' in wLast, 'weekly bar has instOsc_10_20');
-  const wFilled = weeklyPayload.bars.filter((b) => b.instOsc != null).length;
-  assert.ok(wFilled > 0, 'weekly instOsc populated');
+  assert.ok('instOsc_4_13' in wLast, 'weekly bar has instOsc_4_13');
+  assert.equal(wLast.instOsc_10_20, null, 'weekly clears daily 10/20 field');
+  const wFilled = weeklyPayload.bars.filter((b) => b.instOsc_4_13 != null).length;
+  assert.ok(wFilled > 0, 'weekly instOsc_4_13 populated');
   console.log(
-    `Live weekly ${ticker} @ ${wLast.t}: bars=${weeklyPayload.bars.length}, instOsc filled=${wFilled}`,
+    `Live weekly ${ticker} @ ${wLast.t}: bars=${weeklyPayload.bars.length}, instOsc_4_13 filled=${wFilled}`,
   );
 } else {
   console.log('Skipping live Supabase check (SUPABASE_URL/ANON_KEY missing)');

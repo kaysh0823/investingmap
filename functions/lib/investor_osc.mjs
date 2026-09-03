@@ -13,6 +13,9 @@ export const INVESTOR_OSC_CODES = Object.freeze([
 ]);
 export const INVESTOR_CUM_WINDOWS = Object.freeze([5, 10, 20]);
 export const INVESTOR_OSC_PERIODS = Object.freeze([20, 50]);
+/** Weekly OSC: fixed 4-week cum / 13-week stochastic (no UI toggle). */
+export const WEEKLY_CUM = 4;
+export const WEEKLY_PERIOD = 13;
 
 const INST_CODE_SET = new Set(INVESTOR_INST_CODES);
 const DEFAULT_CUM_WINDOW = 10;
@@ -187,10 +190,10 @@ export async function fetchLatestInvestorNetSignature(config) {
   try {
     const rows = await fetchSupabaseJson(config, q);
     const row = Array.isArray(rows) && rows[0] ? rows[0] : null;
-    if (!row?.trade_date) return 'inv-v4-none';
-    return `inv-v4-${String(row.trade_date).slice(0, 10).replace(/-/g, '')}`;
+    if (!row?.trade_date) return 'inv-v5-none';
+    return `inv-v5-${String(row.trade_date).slice(0, 10).replace(/-/g, '')}`;
   } catch {
-    return 'inv-v4-none';
+    return 'inv-v5-none';
   }
 }
 
@@ -294,6 +297,8 @@ function clearInvestorOscOnBar(bar) {
     bar[`instOsc${cum}`] = null;
     bar[`frgnOsc${cum}`] = null;
   }
+  bar[investorOscBarKey('instOsc', WEEKLY_CUM, WEEKLY_PERIOD)] = null;
+  bar[investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD)] = null;
   bar.instOsc = null;
   bar.frgnOsc = null;
 }
@@ -343,14 +348,25 @@ export function attachInvestorOscToBars(bars, byDate) {
 }
 
 /**
- * Attach OSC to weekly bars: sum daily nets inside each ISO week, then run the
- * same cum/period windows on the weekly net series (weeks ≈ days in UI params).
+ * Attach OSC to weekly bars: sum daily nets inside each ISO week, then fixed
+ * WEEKLY_CUM / WEEKLY_PERIOD OSC only (no daily 5/10/20 × 20/50 grid).
  * @param {Array<{ t: string }>} weeklyBars
  * @param {Map<string, { inst: number, frgn: number }>} byDate daily nets
  */
 export function attachInvestorOscToWeeklyBars(weeklyBars, byDate) {
   const { inst, frgn } = weeklyNetSeriesFromDaily(weeklyBars, byDate);
-  return writeInvestorOscFromNets(weeklyBars, inst, frgn);
+  const instSeries = computeInvestorOscSeries(inst, WEEKLY_CUM, WEEKLY_PERIOD);
+  const frgnSeries = computeInvestorOscSeries(frgn, WEEKLY_CUM, WEEKLY_PERIOD);
+  const ik = investorOscBarKey('instOsc', WEEKLY_CUM, WEEKLY_PERIOD);
+  const fk = investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD);
+  for (let i = 0; i < weeklyBars.length; i++) {
+    clearInvestorOscOnBar(weeklyBars[i]);
+    weeklyBars[i][ik] = instSeries[i] ?? null;
+    weeklyBars[i][fk] = frgnSeries[i] ?? null;
+    weeklyBars[i].instOsc = weeklyBars[i][ik];
+    weeklyBars[i].frgnOsc = weeklyBars[i][fk];
+  }
+  return weeklyBars;
 }
 
 /**

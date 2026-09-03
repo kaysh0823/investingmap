@@ -63,6 +63,9 @@
   var INVESTOR_OSC_LEVELS = [20, 50, 80];
   var INVESTOR_CUM_OPTIONS = [5, 10, 20];
   var INVESTOR_PERIOD_OPTIONS = [20, 50];
+  /** Weekly OSC is fixed (no toggle): 4-week cum / 13-week base. */
+  var WEEKLY_INVESTOR_CUM = 4;
+  var WEEKLY_INVESTOR_PERIOD = 13;
   var INVESTOR_CUM_STORAGE = 'im_inv_cum';
   var INVESTOR_PERIOD_STORAGE = 'im_inv_period';
   var DEFAULT_INVESTOR_CUM = 10;
@@ -1013,11 +1016,19 @@
   }
 
   function paneInvestorLabel(cum, period) {
-    var c = cum != null ? cum : state.investorCum;
-    var p = period != null ? period : state.investorPeriod;
     var labels = t();
-    var unit =
-      state.interval === 'weekly' ? labels.paneInvestorUnitWeek : labels.paneInvestorUnitDay;
+    var weekly = state.interval === 'weekly';
+    var c = weekly
+      ? WEEKLY_INVESTOR_CUM
+      : cum != null
+        ? cum
+        : state.investorCum;
+    var p = weekly
+      ? WEEKLY_INVESTOR_PERIOD
+      : period != null
+        ? period
+        : state.investorPeriod;
+    var unit = weekly ? labels.paneInvestorUnitWeek : labels.paneInvestorUnitDay;
     return labels.paneInvestorTpl
       .replace('{CUM}', String(c))
       .replace('{PER}', String(p))
@@ -1028,6 +1039,15 @@
     var c = cum != null ? cum : state.investorCum;
     var p = period != null ? period : state.investorPeriod;
     return prefix + '_' + c + '_' + p;
+  }
+
+  /** Active OSC combo for the current chart interval. */
+  function activeInvestorCum() {
+    return state.interval === 'weekly' ? WEEKLY_INVESTOR_CUM : state.investorCum;
+  }
+
+  function activeInvestorPeriod() {
+    return state.interval === 'weekly' ? WEEKLY_INVESTOR_PERIOD : state.investorPeriod;
   }
 
   function oscNum(v) {
@@ -1049,6 +1069,10 @@
       if (lk in src) dest[lk] = oscNum(src[lk]);
       if (lf in src) dest[lf] = oscNum(src[lf]);
     }
+    var wIk = investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
+    var wFk = investorOscField('frgnOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
+    if (wIk in src) dest[wIk] = oscNum(src[wIk]);
+    if (wFk in src) dest[wFk] = oscNum(src[wFk]);
     if ('instOsc' in src) dest.instOsc = oscNum(src.instOsc);
     if ('frgnOsc' in src) dest.frgnOsc = oscNum(src.frgnOsc);
   }
@@ -1075,8 +1099,8 @@
     if (!refs || !refs.instOsc || !refs.frgnOsc || !state.barsByTime) return;
     var lines = buildInvestorOscLinesFromByTime(
       state.barsByTime,
-      state.investorCum,
-      state.investorPeriod,
+      activeInvestorCum(),
+      activeInvestorPeriod(),
     );
     refs.instOsc.setData(lines.instOscLine);
     refs.frgnOsc.setData(lines.frgnOscLine);
@@ -1139,13 +1163,13 @@
   function syncInvestorCumVisibility() {
     var wrap = document.getElementById('im-candle-inv-cum');
     if (!wrap) return;
-    wrap.hidden = false;
+    wrap.hidden = state.interval === 'weekly';
   }
 
   function syncInvestorPeriodVisibility() {
     var wrap = document.getElementById('im-candle-inv-period');
     if (!wrap) return;
-    wrap.hidden = false;
+    wrap.hidden = state.interval === 'weekly';
   }
 
   function syncPaneLabels() {
@@ -1258,12 +1282,15 @@
   }
 
   function buildPanelData(fullBars, range, interval, investorCum, investorPeriod) {
-    var cum =
-      investorCum != null && INVESTOR_CUM_OPTIONS.indexOf(investorCum) >= 0
+    var weekly = interval === 'weekly';
+    var cum = weekly
+      ? WEEKLY_INVESTOR_CUM
+      : investorCum != null && INVESTOR_CUM_OPTIONS.indexOf(investorCum) >= 0
         ? investorCum
         : state.investorCum;
-    var period =
-      investorPeriod != null && INVESTOR_PERIOD_OPTIONS.indexOf(investorPeriod) >= 0
+    var period = weekly
+      ? WEEKLY_INVESTOR_PERIOD
+      : investorPeriod != null && INVESTOR_PERIOD_OPTIONS.indexOf(investorPeriod) >= 0
         ? investorPeriod
         : state.investorPeriod;
     var closes = fullBars.map(function (b) {
@@ -1374,18 +1401,27 @@
         live: !!b.live,
       };
       if (showInvestor) {
-        for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
-          var w = INVESTOR_CUM_OPTIONS[wi];
-          for (var pi = 0; pi < INVESTOR_PERIOD_OPTIONS.length; pi++) {
-            var p = INVESTOR_PERIOD_OPTIONS[pi];
-            row[investorOscField('instOsc', w, p)] = oscNum(b[investorOscField('instOsc', w, p)]);
-            row[investorOscField('frgnOsc', w, p)] = oscNum(b[investorOscField('frgnOsc', w, p)]);
+        if (weekly) {
+          var wIk = investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
+          var wFk = investorOscField('frgnOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
+          row[wIk] = oscNum(b[wIk]);
+          row[wFk] = oscNum(b[wFk]);
+          row.instOsc = row[wIk];
+          row.frgnOsc = row[wFk];
+        } else {
+          for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
+            var w = INVESTOR_CUM_OPTIONS[wi];
+            for (var pi = 0; pi < INVESTOR_PERIOD_OPTIONS.length; pi++) {
+              var p = INVESTOR_PERIOD_OPTIONS[pi];
+              row[investorOscField('instOsc', w, p)] = oscNum(b[investorOscField('instOsc', w, p)]);
+              row[investorOscField('frgnOsc', w, p)] = oscNum(b[investorOscField('frgnOsc', w, p)]);
+            }
+            row['instOsc' + w] = oscNum(b['instOsc' + w]);
+            row['frgnOsc' + w] = oscNum(b['frgnOsc' + w]);
           }
-          row['instOsc' + w] = oscNum(b['instOsc' + w]);
-          row['frgnOsc' + w] = oscNum(b['frgnOsc' + w]);
+          row.instOsc = row[investorOscField('instOsc', cum, period)];
+          row.frgnOsc = row[investorOscField('frgnOsc', cum, period)];
         }
-        row.instOsc = row[investorOscField('instOsc', cum, period)];
-        row.frgnOsc = row[investorOscField('frgnOsc', cum, period)];
       } else {
         row.instOsc = null;
         row.frgnOsc = null;
@@ -1485,8 +1521,8 @@
       ' ' +
       fmtNum(b.macdHist, 2);
     if (state.interval === 'daily' || state.interval === 'weekly') {
-      var ik = investorOscField('instOsc', state.investorCum, state.investorPeriod);
-      var fk = investorOscField('frgnOsc', state.investorCum, state.investorPeriod);
+      var ik = investorOscField('instOsc', activeInvestorCum(), activeInvestorPeriod());
+      var fk = investorOscField('frgnOsc', activeInvestorCum(), activeInvestorPeriod());
       text +=
         ' · ' +
         labels.instOsc +
