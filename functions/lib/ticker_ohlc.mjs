@@ -159,12 +159,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
   applyPriceAdjustmentsToBars(bars, adjustments);
   if (bars.length) {
     if (interval === 'weekly') {
-      const dailyFrom = bars[0].t;
       const weeklyBars = aggregateDailyBarsToWeekly(bars);
-      await loadAndAttachInvestorOsc(config, ticker, weeklyBars, {
-        interval: 'weekly',
-        netFromDate: dailyFrom,
-      });
       const displayWeeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];
       return {
         code: ticker,
