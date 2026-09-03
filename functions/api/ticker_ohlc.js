@@ -23,7 +23,7 @@ import {
 import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-const CACHE_BASE = '/api/ticker_ohlc/cache/v17';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v18';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {
@@ -62,7 +62,7 @@ export async function onRequest(context) {
   const config = getSupabaseConfig(env);
   let lastSig = 'none';
   let adjSig = 'adj-none';
-  let invSig = 'inv-none';
+  let invSig = 'inv-v2-none';
   if (config) {
     try {
       [lastSig, adjSig, invSig] = await Promise.all([
@@ -73,7 +73,7 @@ export async function onRequest(context) {
     } catch {
       lastSig = 'none';
       adjSig = 'adj-none';
-      invSig = 'inv-none';
+      invSig = 'inv-v2-none';
     }
   }
 

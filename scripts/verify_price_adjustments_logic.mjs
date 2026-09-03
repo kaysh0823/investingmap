@@ -6,6 +6,7 @@ import {
   cumulativeAdjustmentRatio,
   detectAdjustmentEvent,
   detectEventsFromHistoryRows,
+  detectMissingSharesCloseJumps,
   matchCleanShareRatio,
   passesInversePriceGapSanity,
 } from '../functions/lib/price_adjustments.mjs';
@@ -99,6 +100,59 @@ assert(Math.abs(pre.c / post.c - 1) < 0.1, `continuity ${pre.c}/${post.c}`);
 assert(cumulativeAdjustmentRatio('2024-10-30', [ev]) === 5, 'cum ratio before ex-date');
 assert(matchCleanShareRatio(5) === 5, 'match 5');
 assert(matchCleanShareRatio(1.07) == null, 'reject 1.07');
+
+// LS ELECTRIC 010120 2026-04-13 5:1 — ex-date +13.7% so C×R≈1.137 (was outside 0.12)
+const lsPrev = { trade_date: '2026-04-10', close: 788_000, mcap_won: 788_000 * 30_000_000 };
+const lsCurr = { trade_date: '2026-04-13', close: 179_200, mcap_won: 179_200 * 150_000_000 };
+const lsCloseRatio = lsCurr.close / lsPrev.close;
+assert(passesInversePriceGapSanity(5, lsCloseRatio), '010120 C×R sanity (13.7% ex-date)');
+const lsEv = detectAdjustmentEvent(lsPrev, lsCurr, '010120', 'test');
+assert(lsEv, '010120 5:1 must be detected');
+assert(lsEv.effective_date === '2026-04-13', `010120 date ${lsEv.effective_date}`);
+assert(Number(lsEv.ratio) === 5, `010120 ratio ${lsEv.ratio}`);
+
+const lsHist = [
+  { trade_date: '2026-04-08', close: 788_000, mcap_won: 788_000 * 30_000_000 },
+  { trade_date: '2026-04-09', close: 788_000, mcap_won: 788_000 * 30_000_000 },
+  lsPrev,
+  lsCurr,
+  { trade_date: '2026-04-14', close: 185_600, mcap_won: 185_600 * 150_000_000 },
+  { trade_date: '2026-04-15', close: 186_800, mcap_won: 186_800 * 150_000_000 },
+  { trade_date: '2026-04-16', close: 188_600, mcap_won: 188_600 * 150_000_000 },
+];
+assert(
+  detectEventsFromHistoryRows('010120', lsHist, 'test').some(
+    (e) => e.effective_date === '2026-04-13' && Number(e.ratio) === 5,
+  ),
+  '010120 history scan with persistence',
+);
+
+const lsAdjBars = applyPriceAdjustmentsToBars(
+  [
+    { t: '2026-04-10', o: 790_000, h: 800_000, l: 780_000, c: 788_000, v: 10_000 },
+    { t: '2026-04-13', o: 175_000, h: 185_000, l: 170_000, c: 179_200, v: 50_000 },
+  ],
+  [lsEv],
+);
+assert(lsAdjBars[0].c === 157_600, `010120 pre-split adjusted ${lsAdjBars[0].c}`);
+assert(lsAdjBars[1].c === 179_200, `010120 post-split unchanged ${lsAdjBars[1].c}`);
+
+const missRows = [
+  { trade_date: '2026-04-10', close: 788_000, mcap_won: null },
+  { trade_date: '2026-04-13', close: 179_200, mcap_won: null },
+];
+const missHits = detectMissingSharesCloseJumps('010120', missRows);
+assert(missHits.length === 1, 'missing-shares close jump is review-only candidate');
+assert(missHits[0].reason === 'missing-shares-close-jump', 'review reason');
+
+const bothShares = [
+  { trade_date: '2026-04-10', close: 788_000, mcap_won: 788_000 * 30_000_000 },
+  { trade_date: '2026-04-13', close: 179_200, mcap_won: 179_200 * 150_000_000 },
+];
+assert(
+  detectMissingSharesCloseJumps('010120', bothShares).length === 0,
+  'known-shares close jump is not a missing-shares review',
+);
 
 console.log('verify_price_adjustments_logic OK');
 console.log('  APR 278470 2024-10-31 ratio=5 detected');

@@ -14,6 +14,7 @@ import { fileURLToPath } from 'url';
 import { listHubCompanies, normalizeTicker } from '../functions/lib/hub_dashboard_core.mjs';
 import {
   detectEventsFromHistoryRows,
+  detectMissingSharesCloseJumps,
   sharesFromHistoryRow,
   upsertPriceAdjustments,
 } from '../functions/lib/price_adjustments.mjs';
@@ -118,6 +119,7 @@ const tickers = args.tickers?.length ? args.tickers : loadDefaultTickers();
 console.log(`seed_price_adjustments_from_history: ${tickers.length} ticker(s)${args.dryRun ? ' [dry-run]' : ''}`);
 
 const allEvents = [];
+const reviewCandidates = [];
 let scanned = 0;
 let skippedShort = 0;
 
@@ -136,6 +138,8 @@ for (const ticker of tickers) {
       console.log(`    ${ev.effective_date} ratio=${ev.ratio} type=${ev.type} (${ev.note})`);
     }
   }
+  const reviews = detectMissingSharesCloseJumps(ticker, history);
+  for (const rv of reviews) reviewCandidates.push(rv);
   if (scanned % 50 === 0) {
     process.stdout.write(`\r  scanned ${scanned}/${tickers.length}`);
   }
@@ -177,35 +181,59 @@ async function deleteAutoSeedAdjustments(supabaseUrl, serviceKey) {
   }
 }
 
-if (aprCheck.ok) {
-  console.log(`\nOK APR ${APR_TICKER} ${APR_EVENT_DATE} ratio=${APR_EVENT_RATIO} detected`);
+if (reviewCandidates.length) {
+  console.log(
+    `\n--- Review-only (missing shares + close jump; NOT upserted) ${reviewCandidates.length} ---`,
+  );
+  const sortedReview = [...reviewCandidates].sort(
+    (a, b) =>
+      a.ticker.localeCompare(b.ticker) ||
+      String(a.effective_date).localeCompare(String(b.effective_date)),
+  );
+  for (const rv of sortedReview) {
+    console.log(
+      `${rv.ticker}\t${rv.effective_date}\tC=${rv.closeRatio}\t${rv.reason}\t${rv.note || ''}`,
+    );
+  }
 } else {
+  console.log('\nReview-only close-jump candidates: 0');
+}
+
+const requireApr = tickers.includes(APR_TICKER);
+
+if (requireApr && aprCheck.ok) {
+  console.log(`\nOK APR ${APR_TICKER} ${APR_EVENT_DATE} ratio=${APR_EVENT_RATIO} detected`);
+} else if (requireApr && !aprCheck.ok) {
   console.error(
     `\nFAIL APR ${APR_TICKER} must have ${APR_EVENT_DATE} ratio=${APR_EVENT_RATIO} — not found in scan`,
   );
-  if (tickers.includes(APR_TICKER)) {
-    try {
-      const aprHist = await fetchTickerHistory(supabaseUrl, serviceKey, APR_TICKER);
-      console.error(`  APR history bars: ${aprHist.length}`);
-      const window = aprHist.filter(
-        (r) => r.trade_date >= '2024-10-25' && r.trade_date <= '2024-11-05',
+  try {
+    const aprHist = await fetchTickerHistory(supabaseUrl, serviceKey, APR_TICKER);
+    console.error(`  APR history bars: ${aprHist.length}`);
+    const window = aprHist.filter(
+      (r) => r.trade_date >= '2024-10-25' && r.trade_date <= '2024-11-05',
+    );
+    for (const r of window) {
+      const sh = sharesFromHistoryRow(r);
+      console.error(
+        `  ${r.trade_date} close=${r.close} mcap=${r.mcap_won} shares~${sh}`,
       );
-      for (const r of window) {
-        const sh = sharesFromHistoryRow(r);
-        console.error(
-          `  ${r.trade_date} close=${r.close} mcap=${r.mcap_won} shares~${sh}`,
-        );
-      }
-    } catch (e) {
-      console.error(`  APR history debug failed: ${e.message || e}`);
     }
+  } catch (e) {
+    console.error(`  APR history debug failed: ${e.message || e}`);
   }
   if (!args.dryRun) process.exit(1);
 }
 
+const scoped = Boolean(args.tickers?.length);
+
 if (!args.dryRun && allEvents.length) {
-  console.log('\nClearing prior auto-seed rows…');
-  await deleteAutoSeedAdjustments(supabaseUrl, serviceKey);
+  if (!scoped) {
+    console.log('\nClearing prior auto-seed rows…');
+    await deleteAutoSeedAdjustments(supabaseUrl, serviceKey);
+  } else {
+    console.log('\nScoped ticker run: keeping existing auto-seed rows, merge-upsert only');
+  }
   const batchSize = 200;
   let upserted = 0;
   for (let i = 0; i < allEvents.length; i += batchSize) {
@@ -220,10 +248,14 @@ if (!args.dryRun && allEvents.length) {
   }
   console.log(`\nUpserted ${upserted} row(s) → price_adjustments`);
 } else if (!args.dryRun && !allEvents.length) {
-  console.log('\nClearing prior auto-seed rows (0 new events)…');
-  await deleteAutoSeedAdjustments(supabaseUrl, serviceKey);
+  if (!scoped) {
+    console.log('\nClearing prior auto-seed rows (0 new events)…');
+    await deleteAutoSeedAdjustments(supabaseUrl, serviceKey);
+  } else {
+    console.log('\nScoped ticker run: 0 events, no delete/upsert');
+  }
 } else if (args.dryRun) {
   console.log('\nDry-run: no upsert performed');
 }
 
-process.exit(aprCheck.ok ? 0 : 1);
+process.exit(requireApr && !aprCheck.ok ? 1 : 0);

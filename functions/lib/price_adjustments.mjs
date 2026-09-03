@@ -10,11 +10,14 @@ export const CLEAN_SHARE_RATIOS = Object.freeze([2, 2.5, 3, 4, 5, 6, 10]);
 
 export const SHARE_RATIO_TOLERANCE = 0.02;
 /** |close_ratio × clean_ratio − 1| must be within this band (inverse price gap). */
-export const INVERSE_PRICE_GAP_TOLERANCE = 0.12;
+export const INVERSE_PRICE_GAP_TOLERANCE = 0.15;
 /** Post-event shares must hold within SHARE_RATIO_TOLERANCE for this many sessions. */
 export const POST_EVENT_SHARES_PERSIST_DAYS = 3;
 /** Warn when share count moves materially but ratio is not clean. */
 export const REVIEW_SHARE_DELTA = 0.03;
+/** Close jump band for missing-shares review candidates (not auto-upserted). */
+export const REVIEW_CLOSE_RATIO_LOW = 0.45;
+export const REVIEW_CLOSE_RATIO_HIGH = 2.2;
 
 /**
  * Price moved inversely to shares: C×R ≈ 1 (split/merge symmetric).
@@ -194,6 +197,51 @@ export function detectEventsFromHistoryRows(ticker, rows, source = 'auto-seed', 
     events.push(ev);
   }
   return events;
+}
+
+function rowShares(row) {
+  return numOrNull(row?.list_shrs) ?? numOrNull(row?.LIST_SHRS) ?? sharesFromHistoryRow(row);
+}
+
+function rowClose(row) {
+  return numOrNull(row?.close ?? row?.TDD_CLSPRC);
+}
+
+/**
+ * Review-only: missing shares on either adjacent day + extreme close jump.
+ * Never auto-upsert — split vs crash/gap needs a human.
+ * @param {string} ticker
+ * @param {Array<{trade_date:string,close:number,mcap_won?:number|null}>} rows
+ * @returns {object[]}
+ */
+export function detectMissingSharesCloseJumps(ticker, rows) {
+  const out = [];
+  if (!rows || rows.length < 2 || !ticker) return out;
+  const code = String(ticker).padStart(6, '0').slice(-6);
+  for (let i = 1; i < rows.length; i++) {
+    const prev = rows[i - 1];
+    const curr = rows[i];
+    const prevClose = rowClose(prev);
+    const currClose = rowClose(curr);
+    if (!(prevClose > 0) || !(currClose > 0)) continue;
+    const closeRatio = currClose / prevClose;
+    if (closeRatio >= REVIEW_CLOSE_RATIO_LOW && closeRatio <= REVIEW_CLOSE_RATIO_HIGH) continue;
+    const prevShares = rowShares(prev);
+    const currShares = rowShares(curr);
+    if (prevShares != null && currShares != null) continue;
+    const effectiveDate = String(curr.trade_date ?? curr.tradeDate ?? '').slice(0, 10);
+    if (!effectiveDate || effectiveDate.length < 10) continue;
+    out.push({
+      ticker: code,
+      effective_date: effectiveDate,
+      closeRatio: Math.round(closeRatio * 10000) / 10000,
+      reason: 'missing-shares-close-jump',
+      note:
+        `close ${Math.round(prevClose)}→${Math.round(currClose)} C=${closeRatio.toFixed(4)}` +
+        ` shares ${prevShares ?? 'null'}→${currShares ?? 'null'}`,
+    });
+  }
+  return out;
 }
 
 /**
