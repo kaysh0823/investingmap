@@ -965,6 +965,7 @@
       syncIntervalButtons();
       syncInvestorCumVisibility();
       syncInvestorPeriodVisibility();
+      syncPaneLabels();
       updateSubtitle();
       document
         .getElementById('im-candle-stack')
@@ -1956,6 +1957,7 @@
         afterLayout(function () {
           if (token !== state.fetchToken || !state.open) return;
           createCharts(pack.LWC, data);
+          syncPaneLabels();
           afterLayout(function () {
             if (token !== state.fetchToken || !state.open) return;
             resizeCharts();

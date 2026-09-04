@@ -287,6 +287,11 @@ assert.ok(
   source.includes("wrap.hidden = state.interval === 'weekly'"),
   'investor toggles hidden on weekly',
 );
+assert.match(
+  source,
+  /state\.interval = interval;\s*state\.range = rangeForInterval\(interval\);[\s\S]*?syncPaneLabels\(\);/,
+  'interval switch syncs pane labels after state.interval is set',
+);
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
 assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 16, 'investor pane stretch on weekly');
 assert.match(source, /WEEKLY_INVESTOR_CUM = 4/, 'weekly fixed cum 4');
