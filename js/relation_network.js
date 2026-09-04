@@ -48,12 +48,11 @@
     if (!panel) return;
     var ko = (lang !== 'en');
     panel.innerHTML =
-      '<div class="rn-wip" style="display:flex;align-items:center;justify-content:center;'
-      + 'min-height:320px;padding:48px 24px;text-align:center;color:#8b949e;'
-      + 'font-size:15px;line-height:1.6;">'
+      '<div class="rn-wip" style="display:flex;align-items:center;justify-content:center;min-height:320px;padding:48px 24px;">'
+      + '<div style="text-align:center;color:#8b949e;font-size:15px;line-height:1.6;max-width:520px;">'
       + (ko ? '🌐 관계 네트워크는 현재 <b>수정 중</b>입니다.<br>더 정확한 밸류체인·거래 관계로 곧 다시 제공할 예정입니다.'
             : '🌐 The relationship network is <b>under revision</b>.<br>It will return shortly with more accurate value-chain data.')
-      + '</div>';
+      + '</div></div>';
   }
 
   var WORKSPACE_LAYOUT_READY = false;

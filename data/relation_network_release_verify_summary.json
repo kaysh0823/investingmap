@@ -1,163 +1,19 @@
 {
-  "generatedAt": "2026-08-29T10:58:14.491Z",
+  "generatedAt": "2026-09-04T23:52:05.831Z",
   "phase": 6,
   "commands": [
     {
       "command": "npm run verify:relation-network",
       "exitCode": 0,
-      "durationMs": 1201,
+      "durationMs": 1040,
       "failures": 0,
       "warnings": 23,
       "warningReason": "see command output / sector validator warnings"
     },
     {
-      "command": "npm run verify:semi-relations",
+      "command": "npm run verify:relation-network-asset-version",
       "exitCode": 0,
-      "durationMs": 923,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:bigchip",
-      "exitCode": 0,
-      "durationMs": 988,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:battery",
-      "exitCode": 0,
-      "durationMs": 928,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:ship",
-      "exitCode": 0,
-      "durationMs": 936,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:finance",
-      "exitCode": 0,
-      "durationMs": 939,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:powergrid",
-      "exitCode": 0,
-      "durationMs": 892,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:nuclear",
-      "exitCode": 0,
-      "durationMs": 899,
-      "failures": 0,
-      "warnings": 1,
-      "warningReason": "see command output / sector validator warnings"
-    },
-    {
-      "command": "npm run verify:renewable",
-      "exitCode": 0,
-      "durationMs": 830,
-      "failures": 0,
-      "warnings": 1,
-      "warningReason": "see command output / sector validator warnings"
-    },
-    {
-      "command": "npm run verify:construction",
-      "exitCode": 0,
-      "durationMs": 1029,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:auto",
-      "exitCode": 0,
-      "durationMs": 910,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:elec",
-      "exitCode": 0,
-      "durationMs": 925,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:metal",
-      "exitCode": 0,
-      "durationMs": 935,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:cosmetics",
-      "exitCode": 0,
-      "durationMs": 930,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:kconsume",
-      "exitCode": 0,
-      "durationMs": 885,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:kcontent",
-      "exitCode": 0,
-      "durationMs": 932,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:medtech",
-      "exitCode": 0,
-      "durationMs": 843,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:software",
-      "exitCode": 0,
-      "durationMs": 798,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:telecom",
-      "exitCode": 0,
-      "durationMs": 830,
-      "failures": 0,
-      "warnings": 0,
-      "warningReason": null
-    },
-    {
-      "command": "npm run verify:robot",
-      "exitCode": 0,
-      "durationMs": 827,
+      "durationMs": 1007,
       "failures": 0,
       "warnings": 0,
       "warningReason": null
@@ -165,7 +21,7 @@
     {
       "command": "npm run verify:nav-tab-preserve",
       "exitCode": 0,
-      "durationMs": 815,
+      "durationMs": 1005,
       "failures": 0,
       "warnings": 0,
       "warningReason": null
@@ -173,7 +29,7 @@
     {
       "command": "npm run verify:data-sector-profile",
       "exitCode": 0,
-      "durationMs": 1220,
+      "durationMs": 1007,
       "failures": 0,
       "warnings": 0,
       "warningReason": null
@@ -181,7 +37,7 @@
     {
       "command": "npm run verify:dist",
       "exitCode": 0,
-      "durationMs": 1277,
+      "durationMs": 1731,
       "failures": 0,
       "warnings": 0,
       "warningReason": null
