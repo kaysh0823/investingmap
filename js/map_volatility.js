@@ -732,8 +732,8 @@
         .attr('x2', x(val))
         .attr('y1', 0)
         .attr('y2', innerH)
-        .attr('stroke', isEmph ? 'rgba(139,148,158,0.55)' : 'rgba(139,148,158,0.22)')
-        .attr('stroke-width', isEmph ? 1.2 : 0.8)
+        .attr('stroke', isEmph ? 'rgba(139,148,158,0.72)' : 'rgba(139,148,158,0.40)')
+        .attr('stroke-width', isEmph ? 1.4 : 0.8)
         .attr('stroke-dasharray', isEmph ? '4,4' : '2,3');
       if (isEmph) {
         plot
@@ -748,7 +748,7 @@
           .append('text')
           .attr('x', x(val) + 2)
           .attr('y', 12)
-          .attr('fill', 'rgba(139,148,158,0.35)')
+          .attr('fill', 'rgba(139,148,158,0.55)')
           .attr('font-size', 8)
           .text('P' + p);
       }
