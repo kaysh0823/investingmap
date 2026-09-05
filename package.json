@@ -53,6 +53,7 @@
     "verify:global-search": "node scripts/verify_global_search.mjs",
     "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
+    "scan:price-jumps": "node scripts/scan_residual_price_jumps.mjs",
     "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",
     "fetch:krx-mcap": "node scripts/fetch_krx_mcap_csv.mjs",
     "sync:investor-net": "node scripts/sync_investor_net_to_supabase.mjs",

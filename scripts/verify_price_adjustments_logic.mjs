@@ -154,6 +154,57 @@ assert(
   'known-shares close jump is not a missing-shares review',
 );
 
+// 1. Samsung Electronics (005930) 50:1 split
+const samsungPrev = { trade_date: '2018-05-03', close: 2_650_000, mcap_won: 2_650_000 * 128_386_494 };
+const samsungCurr = { trade_date: '2018-05-04', close: 51_900, mcap_won: 51_900 * 6_419_324_700 };
+const samsungEv = detectAdjustmentEvent(samsungPrev, samsungCurr, '005930', 'test');
+assert(samsungEv, '005930 50:1 split must be detected');
+assert(Number(samsungEv.ratio) === 50, '005930 ratio 50');
+
+// 2. Koh Young (098460) 5:1 split with 16.5% ex-date surge (C*R = 1.1646)
+const kyPrev = { trade_date: '2021-04-12', close: 121_500, mcap_won: 121_500 * 13_730_951 };
+const kyCurr = { trade_date: '2021-04-13', close: 28_300, mcap_won: 28_300 * 68_654_755 };
+const kyEv = detectAdjustmentEvent(kyPrev, kyCurr, '098460', 'test');
+assert(kyEv, '098460 5:1 split with 16.5% surge must be detected');
+assert(Number(kyEv.ratio) === 5, '098460 ratio 5');
+
+// 3. Ananti (025980) 5:1 split with 24.6% ex-date surge (C*R = 1.2466)
+const anantiPrev = { trade_date: '2018-05-16', close: 37_700, mcap_won: 37_700 * 16_464_183 };
+const anantiCurr = { trade_date: '2018-05-17', close: 9_400, mcap_won: 9_400 * 82_320_915 };
+const anantiEv = detectAdjustmentEvent(anantiPrev, anantiCurr, '025980', 'test');
+assert(anantiEv, '025980 5:1 split with 24.6% surge must be detected');
+assert(Number(anantiEv.ratio) === 5, '025980 ratio 5');
+
+// 4. Inhwa Precision (101930) 5:1 split with 30% limit-up surge (C*R = 1.3000)
+const inhwaPrev = { trade_date: '2026-04-29', close: 52_000, mcap_won: 52_000 * 9_232_882 };
+const inhwaCurr = { trade_date: '2026-04-30', close: 13_520, mcap_won: 13_520 * 46_164_410 };
+const inhwaEv = detectAdjustmentEvent(inhwaPrev, inhwaCurr, '101930', 'test');
+assert(inhwaEv, '101930 5:1 split with 30% surge must be detected');
+assert(Number(inhwaEv.ratio) === 5, '101930 ratio 5');
+
+// 5. Lagged bonus issue detection (e.g. Cafe24 042000 1:1 bonus issue)
+const cafe24Hist = [
+  { trade_date: '2021-01-26', close: 80_000, mcap_won: 80_000 * 9_430_597 },
+  { trade_date: '2021-01-27', close: 75_900, mcap_won: 75_900 * 9_430_597 },
+  { trade_date: '2021-01-28', close: 37_700, mcap_won: 37_700 * 9_430_597 }, // ex-date, price halved, shares unchanged
+  { trade_date: '2021-01-29', close: 35_050, mcap_won: 35_050 * 9_430_597 },
+  { trade_date: '2021-02-19', close: 35_150, mcap_won: 35_150 * 9_430_597 },
+  { trade_date: '2021-02-22', close: 35_150, mcap_won: 35_150 * 18_834_733 }, // new shares listed
+  { trade_date: '2021-02-23', close: 35_000, mcap_won: 35_000 * 18_834_733 },
+  { trade_date: '2021-02-24', close: 35_200, mcap_won: 35_200 * 18_834_733 },
+  { trade_date: '2021-02-25', close: 35_100, mcap_won: 35_100 * 18_834_733 },
+];
+const cafeEvents = detectEventsFromHistoryRows('042000', cafe24Hist, 'test');
+assert(
+  cafeEvents.some((e) => e.effective_date === '2021-01-28' && Number(e.ratio) === 2 && e.type === 'bonus'),
+  '042000 lagged bonus issue detected on ex-date with ratio 2',
+);
+
 console.log('verify_price_adjustments_logic OK');
 console.log('  APR 278470 2024-10-31 ratio=5 detected');
+console.log('  Samsung 005930 2018-05-04 ratio=50 detected');
+console.log('  Koh Young 098460 2021-04-13 ratio=5 detected');
+console.log('  Ananti 025980 2018-05-17 ratio=5 detected');
+console.log('  Inhwa 101930 2026-04-30 ratio=5 detected');
+console.log('  Cafe24 042000 2021-01-28 ratio=2 bonus detected');
 console.log('  overlay continuity:', pre.c, '→', post.c);
