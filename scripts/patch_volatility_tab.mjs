@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 7;
+const SCRIPT_V = 8;
 const TAB_STATE_V = 10;
 
 const MAP_FILES = [
@@ -42,7 +42,7 @@ const VOLATILITY_BUTTON =
 const VOLATILITY_TAB = `  <!-- VOLATILITY TAB -->
   <div id="tab-volatility" class="tab-content">
     <div class="volatility-wrap">
-      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)</p>
+      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)</p>
       <div id="volatility-root" role="img" aria-label="Volatility distribution"></div>
       <div id="volatility-legend"></div>
     </div>
@@ -97,7 +97,7 @@ const TRANSLATIONS = {
   ko: {
     tabVolatility: '📉 변동성 분포',
     volatilityTitle: '변동성 분포',
-    volatilityHint: '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
+    volatilityHint: '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
     volatilityAxisAtr: 'ATR3/종가',
     volatilityAxisMcap: '시가총액(로그)',
     volatilityAtr: 'ATR3/종가',
@@ -108,7 +108,7 @@ const TRANSLATIONS = {
     volatilityRs: 'RS',
     volatilityNoData: '변동성 스냅샷 데이터가 없습니다.',
     volatilityLegendSize: '크기 = 거래대금',
-    volatilityLegendLines: '세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
+    volatilityLegendLines: '세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
     volatilityLegendPctB: '색 = 20일 %b(진할수록 높음)',
     volatilityLegendChg: '색 = 당일 등락률',
     volatilityLegendRs: '색 = RS(진할수록 높음)',
@@ -116,13 +116,13 @@ const TRANSLATIONS = {
     volatilityModeChg: '당일 등락률',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      '크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
+      '크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
   },
   en: {
     tabVolatility: '📉 Volatility Distribution',
     volatilityTitle: 'Volatility Distribution',
     volatilityHint:
-      'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)',
+      'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
     volatilityAxisAtr: 'ATR3/Close',
     volatilityAxisMcap: 'Market cap (log)',
     volatilityAtr: 'ATR3/Close',
@@ -133,7 +133,7 @@ const TRANSLATIONS = {
     volatilityRs: 'RS',
     volatilityNoData: 'No volatility snapshot data available.',
     volatilityLegendSize: 'Size = turnover',
-    volatilityLegendLines: 'Lines = market-wide volatility percentiles (P25·P50·P75)',
+    volatilityLegendLines: 'Lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
     volatilityLegendPctB: 'Color = 20D %b (darker = higher)',
     volatilityLegendChg: 'Color = 1-day change',
     volatilityLegendRs: 'Color = RS (darker = higher)',
@@ -141,7 +141,7 @@ const TRANSLATIONS = {
     volatilityModeChg: '1-day change',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      'Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)',
+      'Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
   },
 };
 
@@ -172,7 +172,7 @@ function patchRuntime(source) {
       `$1\n      var volatilityBtn = document.getElementById('tab-btn-volatility');\n` +
         `      if (volatilityBtn) volatilityBtn.innerHTML = t.tabVolatility || (lang === 'en' ? '📉 Volatility Distribution' : '📉 변동성 분포');\n` +
         `      var volatilityHint = document.getElementById('volatility-hint');\n` +
-        `      if (volatilityHint) volatilityHint.textContent = t.volatilityHint || (lang === 'en' ? 'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles (P25·P50·P75)' : '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위(P25·P50·P75)');`,
+        `      if (volatilityHint) volatilityHint.textContent = t.volatilityHint || (lang === 'en' ? 'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)' : '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)');`,
     );
   }
 

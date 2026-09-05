@@ -127,6 +127,11 @@ assert.ok(volSrc.includes('scaleSqrt'), 'turnover radius scale required');
 assert.ok(volSrc.includes('colorForChg'), '1-day change color helper required');
 assert.ok(volSrc.includes("COLOR_MODE_STORAGE = 'im_vol_cmode'"), 'color mode storage key required');
 assert.ok(!volSrc.includes("modeTurnover"), 'turnover color mode must be removed');
+assert.ok(volSrc.includes('PCTS'), 'must define PCTS percentiles');
+assert.ok(volSrc.includes('EMPH'), 'must define EMPH percentiles');
+assert.ok(volSrc.includes('rgba(139,148,158,0.55)'), 'emphasized percentile stroke required');
+assert.ok(volSrc.includes('rgba(139,148,158,0.22)'), 'non-emphasized percentile stroke required');
+assert.ok(volSrc.includes('P10~P90(P25·P50·P75 강조)'), 'updated legendLines text required');
 assert.equal(vol.normalizeColorMode('turnover'), 'pctb', 'legacy turnover mode maps to pctb');
 
 assert.equal(vol.formatMcapAxis(3e11, 'ko'), '3,000억');
@@ -195,7 +200,7 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=7'), `${rel}: missing map_volatility.js v7`);
+  assert.ok(html.includes('map_volatility.js?v=8'), `${rel}: missing map_volatility.js v8`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
   assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);
 }

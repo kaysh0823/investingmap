@@ -30,7 +30,7 @@
       rs: 'RS',
       noData: '변동성 스냅샷 데이터가 없습니다.',
       legendSize: '크기 = 거래대금',
-      legendLines: '세로선 = 전 종목 변동성 백분위(P25·P50·P75)',
+      legendLines: '세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
       legendPctB: '색 = 20일 %b(진할수록 높음)',
       legendChg: '색 = 당일 등락률',
       legendRs: '색 = RS(진할수록 높음)',
@@ -54,7 +54,7 @@
       rs: 'RS',
       noData: 'No volatility snapshot data available.',
       legendSize: 'Size = turnover',
-      legendLines: 'Lines = market-wide volatility percentiles (P25·P50·P75)',
+      legendLines: 'Lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
       legendPctB: 'Color = 20D %b (darker = higher)',
       legendChg: 'Color = 1-day change',
       legendRs: 'Color = RS (darker = higher)',
@@ -656,13 +656,20 @@
     var innerH = Math.max(1, height - margin.top - margin.bottom);
 
     marketAtrs.sort(function (a, b) { return a - b; });
-    var p25 = percentile(marketAtrs, 25);
-    var p50 = percentile(marketAtrs, 50);
-    var p75 = percentile(marketAtrs, 75);
+    var PCTS = [10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90];
+    var EMPH = [25, 50, 75];
+    var pctVals = PCTS.map(function (p) {
+      return { p: p, v: percentile(marketAtrs, p) };
+    });
 
     var sectorAtrMin = d3.min(fg, function (d) { return d.atrPct; }) || 0;
     var sectorAtrMax = d3.max(fg, function (d) { return d.atrPct; }) || 0.001;
-    var xDomain = expandLinearDomain(sectorAtrMin, sectorAtrMax, [p25, p50, p75], mobile ? 0.08 : 0.06);
+    var xDomain = expandLinearDomain(
+      sectorAtrMin,
+      sectorAtrMax,
+      pctVals.map(function (o) { return o.v; }),
+      mobile ? 0.08 : 0.06,
+    );
 
     var sectorMcapMin = d3.min(fg, function (d) { return d.mcap; }) || 1;
     var sectorMcapMax = d3.max(fg, function (d) { return d.mcap; }) || 1;
@@ -715,24 +722,36 @@
       .selectAll('line')
       .attr('opacity', 0.22);
 
-    [25, 50, 75].forEach(function (p) {
-      var val = percentile(marketAtrs, p);
+    pctVals.forEach(function (item) {
+      var p = item.p;
+      var val = item.v;
+      var isEmph = EMPH.indexOf(p) >= 0;
       plot
         .append('line')
         .attr('x1', x(val))
         .attr('x2', x(val))
         .attr('y1', 0)
         .attr('y2', innerH)
-        .attr('stroke', 'var(--text-muted,#8b949e)')
-        .attr('stroke-dasharray', '4,4')
-        .attr('opacity', 0.55);
-      plot
-        .append('text')
-        .attr('x', x(val) + 4)
-        .attr('y', 12)
-        .attr('fill', 'var(--text-muted,#8b949e)')
-        .attr('font-size', 10)
-        .text(labels.pctLine(p, val));
+        .attr('stroke', isEmph ? 'rgba(139,148,158,0.55)' : 'rgba(139,148,158,0.22)')
+        .attr('stroke-width', isEmph ? 1.2 : 0.8)
+        .attr('stroke-dasharray', isEmph ? '4,4' : '2,3');
+      if (isEmph) {
+        plot
+          .append('text')
+          .attr('x', x(val) + 4)
+          .attr('y', 12)
+          .attr('fill', 'var(--text-muted,#8b949e)')
+          .attr('font-size', 10)
+          .text(labels.pctLine(p, val));
+      } else {
+        plot
+          .append('text')
+          .attr('x', x(val) + 2)
+          .attr('y', 12)
+          .attr('fill', 'rgba(139,148,158,0.35)')
+          .attr('font-size', 8)
+          .text('P' + p);
+      }
     });
 
     var fgNodes = plot
