@@ -238,7 +238,7 @@
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=10"></script>
   <script src="../js/sector_nav.js?v=8"></script>
-  <script src="../js/map_filter_ux.js"></script>
+  <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
@@ -2927,7 +2927,13 @@
         : '';
       el.textContent = text;
     }
-    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
+    let selectedChains = new Set(), currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
+
+    function chainMatchesFilter(companyChain, filter) {
+      if (filter === 'all') return true;
+      if (!companyChain) return false;
+      return companyChain === filter;
+    }
 
     // ═══════════════════════════════════════════════════════
     // LANGUAGE SYSTEM
@@ -3066,7 +3072,7 @@
       const chains = ['all', '전력설비', '송배전', '전선·케이블', '발전설비'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
-        const isActive = currentChain === ch;
+        const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
         const color = CHAIN_COLORS[ch];
         const style = isActive ? `background:${color || '#4FC3F7'};color:#0d1117;border-color:transparent;` : '';
         return `<div class="filter-chip${isActive ? ' active' : ''}" style="${style}" data-filter-chain="${ch}" onclick="setChainFilter('${ch}',this)">${label}</div>`;
@@ -3140,7 +3146,7 @@
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
         if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.shouldHideFromTable && InvestingMapLiveQuotes.shouldHideFromTable(c)) return false;
-        if (currentChain !== 'all' && c.chain !== currentChain) return false;
+        if (selectedChains.size > 0 && ![...selectedChains].some(ch => chainMatchesFilter(c.chain, ch))) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
           const s = searchTerm.toLowerCase();
@@ -3224,7 +3230,15 @@
     }
 
     function setChainFilter(chain, el) {
-      currentChain = chain;
+      if (chain === 'all') {
+        selectedChains.clear();
+      } else {
+        if (selectedChains.has(chain)) {
+          selectedChains.delete(chain);
+        } else {
+          selectedChains.add(chain);
+        }
+      }
       buildChainChips();
       renderTable();
     }

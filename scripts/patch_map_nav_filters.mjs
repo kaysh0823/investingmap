@@ -7,6 +7,8 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
+const SCRIPT_V = 2; // map_filter_ux.js version
+
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
@@ -52,21 +54,22 @@ function ensureHeadScripts(html) {
   if (!html.includes('map_tab_state.js')) {
     html = html.replace(
       /<script src="\.\.\/js\/map_i18n\.js"><\/script>\s*/,
-      '<script src="../js/map_i18n.js"></script>\n  <script src="../js/map_tab_state.js"></script>\n  <script src="../js/sector_nav.js"></script>\n  <script src="../js/map_filter_ux.js"></script>\n',
+      `<script src="../js/map_i18n.js"></script>\n  <script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=8"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
     );
   } else if (!html.includes('sector_nav.js')) {
     html = html.replace(
-      /<script src="\.\.\/js\/map_tab_state\.js"><\/script>\s*/,
-      '<script src="../js/map_tab_state.js"></script>\n  <script src="../js/sector_nav.js"></script>\n',
+      /<script src="\.\.\/js\/map_tab_state\.js(?:\?v=\d+)?"><\/script>\s*/,
+      `<script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=8"></script>\n`,
     );
   }
   if (!html.includes('map_filter_ux.js') && html.includes('sector_nav.js')) {
     html = html.replace(
-      /<script src="\.\.\/js\/sector_nav\.js"><\/script>\s*/,
-      '<script src="../js/sector_nav.js"></script>\n  <script src="../js/map_filter_ux.js"></script>\n',
+      /<script src="\.\.\/js\/sector_nav\.js(?:\?v=\d+)?"><\/script>\s*/,
+      `<script src="../js/sector_nav.js?v=8"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
     );
   }
-  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=8');
+  html = html.replace(/map_filter_ux\.js(?:\?v=\d+)?/g, `map_filter_ux.js?v=${SCRIPT_V}`);
+  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=10');
   html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=8');
   return html;
 }
@@ -139,6 +142,119 @@ function wrapFilterTools(html) {
   );
 }
 
+function patchChainMultiSelect(html, rel) {
+  if (rel.includes('bigchip')) {
+    // bigchip has only 2 companies; keep no chain filter row and neutralized logic
+    html = html.replace(
+      /let currentChain = 'all', currentMarket = 'all'/,
+      "let selectedChains = new Set(), currentMarket = 'all'",
+    );
+    html = html.replace(
+      /\s*<div class="filter-row filter-row-chain">[\s\S]*?<div id="chain-chips"><\/div>\s*<\/div>/,
+      '',
+    );
+    html = html.replace(
+      /\s*document\.getElementById\('fl-chain-label'\)\.textContent = t\.flChain;/,
+      '',
+    );
+    html = html.replace(
+      /function buildChainChips\(\) \{[\s\S]*?document\.getElementById\('chain-chips'\);[\s\S]*?\n    \}/,
+      'function buildChainChips() {}',
+    );
+    html = html.replace(
+      /function setChainFilter\([^)]*\) \{[\s\S]*?(?:currentChain|selectedChains)[\s\S]*?\n    \}/,
+      'function setChainFilter() {}',
+    );
+    html = html.replace(
+      /\s*if \((?:currentChain !== 'all' && c\.chain !== currentChain|selectedChains\.size > 0 && !\[\.\.\.selectedChains\]\.some\(ch => chainMatchesFilter\(c\.chain, ch\)\))\) return false;/,
+      '\n        /* bigchip: no chain filter */',
+    );
+    return html;
+  }
+
+  // 1. Variable declaration
+  if (html.includes("let currentChain = 'all', currentMarket = 'all'")) {
+    html = html.replace(
+      "let currentChain = 'all', currentMarket = 'all'",
+      "let selectedChains = new Set(), currentMarket = 'all'",
+    );
+  }
+
+  // 2. Define chainMatchesFilter if not present
+  if (!html.includes('function chainMatchesFilter')) {
+    html = html.replace(
+      /(let selectedChains = new Set\(\), currentMarket = 'all'[\s\S]*?;\s*\n)/,
+      `$1\n    function chainMatchesFilter(companyChain, filter) {\n      if (filter === 'all') return true;\n      if (!companyChain) return false;\n      return companyChain === filter;\n    }\n`,
+    );
+  }
+
+  // 3. buildChainChips isActive
+  html = html.replace(
+    /const isActive = currentChain === ch;/g,
+    "const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);",
+  );
+
+  // 4. setChainFilter toggle logic
+  html = html.replace(
+    /function setChainFilter\(chain, el\) \{\s*currentChain = chain;\s*buildChainChips\(\);\s*renderTable\(\);\s*\}/g,
+    `function setChainFilter(chain, el) {\n      if (chain === 'all') {\n        selectedChains.clear();\n      } else {\n        if (selectedChains.has(chain)) {\n          selectedChains.delete(chain);\n        } else {\n          selectedChains.add(chain);\n        }\n      }\n      buildChainChips();\n      renderTable();\n    }`,
+  );
+
+  // 5. renderTable filtering
+  html = html.replace(
+    /if \(currentChain !== 'all' && c\.chain !== currentChain\) return false;/g,
+    "if (selectedChains.size > 0 && ![...selectedChains].some(ch => chainMatchesFilter(c.chain, ch))) return false;",
+  );
+  html = html.replace(
+    /if \(currentChain !== 'all' && !chainMatchesFilter\(c\.chain, currentChain\)\) return false;/g,
+    "if (selectedChains.size > 0 && ![...selectedChains].some(ch => chainMatchesFilter(c.chain, ch))) return false;",
+  );
+
+  return html;
+}
+
+function patchBioMultiSelect(js) {
+  // 1. Variable declaration
+  js = js.replace(
+    "let currentChain = 'all', currentMarket = 'all'",
+    "let selectedChains = new Set(), currentMarket = 'all'",
+  );
+
+  // 2. Define chainMatchesFilter if not present
+  if (!js.includes('function chainMatchesFilter')) {
+    js = js.replace(
+      /(let selectedChains = new Set\(\), currentMarket = 'all'[\s\S]*?;\s*\n)/,
+      `$1\n    function chainMatchesFilter(companyChain, filter) {\n      if (filter === 'all') return true;\n      if (!companyChain) return false;\n      return companyChain === filter;\n    }\n`,
+    );
+  }
+
+  // 3. buildChainChips isActive
+  js = js.replace(
+    /const isActive = currentChain === ch;/g,
+    "const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);",
+  );
+
+  // 4. setChainFilter toggle logic
+  js = js.replace(
+    /function setChainFilter\(chain, el\) \{\s*currentChain = chain;\s*buildChainChips\(\);\s*renderTable\(\);\s*\}/g,
+    `function setChainFilter(chain, el) {\n      if (chain === 'all') {\n        selectedChains.clear();\n      } else {\n        if (selectedChains.has(chain)) {\n          selectedChains.delete(chain);\n        } else {\n          selectedChains.add(chain);\n        }\n      }\n      buildChainChips();\n      renderTable();\n    }`,
+  );
+
+  // 5. renderTable filtering
+  js = js.replace(
+    /if \(!chainMatches\(c, currentChain\)\) return false;/g,
+    "if (selectedChains.size > 0 && ![...selectedChains].some(ch => chainMatches(c, ch))) return false;",
+  );
+
+  // 6. resetTableFilters
+  js = js.replace(
+    /currentChain = 'all';/g,
+    "selectedChains.clear();",
+  );
+
+  return js;
+}
+
 function patchMapFile(rel) {
   const fp = path.join(ROOT, rel);
   if (!fs.existsSync(fp)) return;
@@ -150,6 +266,7 @@ function patchMapFile(rel) {
   html = patchApplyLang(html);
   html = patchSwitchTab(html);
   html = patchInit(html);
+  html = patchChainMultiSelect(html, rel);
   if (!html.includes('global_bottom_nav.js')) {
     html = html.replace(
       /<script src="([^"]*geo_footer\.js)"><\/script>/,
@@ -167,11 +284,13 @@ function patchBioTail(rel) {
   js = patchApplyLang(js);
   js = patchSwitchTab(js);
   js = patchInit(js);
+  js = patchBioMultiSelect(js);
   fs.writeFileSync(fp, js);
   console.log('patched:', rel);
 }
 
 for (const rel of MAP_FILES) patchMapFile(rel);
 patchBioTail('bio/bio_inline_tail.js');
+patchBioTail('bio/korea_bio_map.inline.js');
 
-console.log('OK patch_map_nav_filters');
+console.log('OK patch_map_nav_filters v=' + SCRIPT_V);

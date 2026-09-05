@@ -25,7 +25,13 @@
         : '';
       el.textContent = text;
     }
-    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
+    let selectedChains = new Set(), currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
+
+    function chainMatchesFilter(companyChain, filter) {
+      if (filter === 'all') return true;
+      if (!companyChain) return false;
+      return companyChain === filter;
+    }
 
     let imKrwPerUsd = 1400;
     function loadFx() {
@@ -192,7 +198,7 @@
       const chains = ['all'].concat(SECTOR_ORDER);
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
-        const isActive = currentChain === ch;
+        const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
         const color = CHAIN_COLORS[ch];
         const style = isActive ? 'background:' + (color || '#58a6ff') + ';color:#0d1117;border-color:transparent;' : '';
         const ec = escAttr(ch);
@@ -271,7 +277,7 @@
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
         if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.shouldHideFromTable && InvestingMapLiveQuotes.shouldHideFromTable(c)) return false;
-        if (!chainMatches(c, currentChain)) return false;
+        if (selectedChains.size > 0 && ![...selectedChains].some(ch => chainMatches(c, ch))) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
           const s = searchTerm.toLowerCase();
@@ -356,7 +362,15 @@
     }
 
     function setChainFilter(chain, el) {
-      currentChain = chain;
+      if (chain === 'all') {
+        selectedChains.clear();
+      } else {
+        if (selectedChains.has(chain)) {
+          selectedChains.delete(chain);
+        } else {
+          selectedChains.add(chain);
+        }
+      }
       buildChainChips();
       renderTable();
     }
@@ -450,7 +464,7 @@
     function hideTooltip() { }
 
     function resetTableFilters() {
-      currentChain = 'all';
+      selectedChains.clear();
       currentMarket = 'all';
       searchTerm = '';
       var inp = document.getElementById('search-input');

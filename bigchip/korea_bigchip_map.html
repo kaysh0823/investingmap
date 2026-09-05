@@ -166,7 +166,7 @@
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=10"></script>
   <script src="../js/sector_nav.js?v=8"></script>
-  <script src="../js/map_filter_ux.js"></script>
+  <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
@@ -3364,7 +3364,13 @@
         : '';
       el.textContent = text;
     }
-    let currentChain = 'all', currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
+    let selectedChains = new Set(), currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
+
+    function chainMatchesFilter(companyChain, filter) {
+      if (filter === 'all') return true;
+      if (!companyChain) return false;
+      return companyChain === filter;
+    }
 
     // ═══════════════════════════════════════════════════════
     // LANGUAGE SYSTEM
