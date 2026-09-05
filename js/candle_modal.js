@@ -98,6 +98,8 @@
   var I18N = {
     ko: {
       close: '닫기',
+      expand: '확대',
+      collapse: '축소',
       loading: '차트 불러오는 중…',
       empty: '표시할 일봉 데이터가 없습니다.',
       error: '차트를 불러오지 못했습니다.',
@@ -138,6 +140,8 @@
     },
     en: {
       close: 'Close',
+      expand: 'Expand',
+      collapse: 'Restore',
       loading: 'Loading chart…',
       empty: 'No daily candle data available.',
       error: 'Failed to load chart.',
@@ -180,6 +184,7 @@
 
   var state = {
     open: false,
+    expanded: false,
     ticker: null,
     name: '',
     range: DEFAULT_RANGE_BY_INTERVAL.daily,
@@ -837,6 +842,16 @@
 
   /* ---------- DOM ---------- */
 
+  var EXPAND_ICON =
+    '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M2 5V2h3M11 2h3v3M14 11v3h-3M5 14H2v-3"/>' +
+    '</svg>';
+
+  var COLLAPSE_ICON =
+    '<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M5 2v3H2M11 2v3h3M5 14v-3H2M11 14v-3h3"/>' +
+    '</svg>';
+
   function injectCss() {
     var css =
       '#main-table tbody tr[data-ticker]{cursor:pointer}' +
@@ -850,11 +865,15 @@
       'width:min(1000px,92vw);height:min(760px,88vh);max-width:92vw;max-height:88vh;' +
       'display:flex;flex-direction:column;background:var(--surface,#161b22);color:var(--text,#e6edf3);' +
       'border:1px solid var(--border,#30363d);border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.45);overflow:hidden}' +
+      '.im-candle-dialog.im-candle-expanded{width:min(1680px,calc(100vw - 32px));height:calc(100vh - 32px);max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);border-radius:12px}' +
       '.im-candle-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 16px 8px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
       '.im-candle-titles{min-width:0;flex:1}' +
       '.im-candle-title{margin:0;font-size:17px;font-weight:700;line-height:1.3;word-break:keep-all}' +
       '.im-candle-sub{margin:4px 0 0;font-size:12px;color:var(--text-muted,#8b949e);font-family:ui-monospace,monospace}' +
-      '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer}' +
+      '.im-candle-head-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}' +
+      '.im-candle-expand{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}' +
+      '.im-candle-expand:hover,.im-candle-expand:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
+      '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}' +
       '.im-candle-close:hover,.im-candle-close:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
       '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
       '.im-candle-ranges,.im-candle-intervals,.im-candle-inv-cum,.im-candle-inv-period{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
@@ -871,7 +890,7 @@
       'body.im-candle-open{overflow:hidden}' +
       '@media (max-width:768px){' +
       '.im-candle-root{padding:0;align-items:stretch}' +
-      '.im-candle-dialog{width:100%;height:100dvh;max-width:100%;max-height:100dvh;border-radius:0;border:0}' +
+      '.im-candle-dialog,.im-candle-dialog.im-candle-expanded{width:100%;height:100dvh;max-width:100%;max-height:100dvh;border-radius:0;border:0}' +
       '.im-candle-tip{font-size:10px;max-height:4em}' +
       '}';
     var el = document.getElementById('im-candle-modal-css');
@@ -884,11 +903,17 @@
   }
 
   function afterLayout(cb) {
-    requestAnimationFrame(function () {
+    if (typeof requestAnimationFrame !== 'undefined') {
       requestAnimationFrame(function () {
-        cb();
+        requestAnimationFrame(function () {
+          cb();
+        });
       });
-    });
+    } else if (typeof setTimeout !== 'undefined') {
+      setTimeout(cb, 0);
+    } else {
+      cb();
+    }
   }
 
   function ensureDom() {
@@ -902,6 +927,7 @@
         !document.getElementById('im-candle-intervals') ||
         !document.getElementById('im-candle-inv-cum') ||
         !document.getElementById('im-candle-inv-period') ||
+        !document.getElementById('im-candle-expand') ||
         document.getElementById('im-candle-price'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
@@ -920,7 +946,10 @@
       '<h2 class="im-candle-title" id="im-candle-title"></h2>' +
       '<p class="im-candle-sub" id="im-candle-sub"></p>' +
       '</div>' +
+      '<div class="im-candle-head-actions">' +
+      '<button type="button" class="im-candle-expand" id="im-candle-expand" aria-label="" title="" aria-pressed="false"></button>' +
       '<button type="button" class="im-candle-close" id="im-candle-close" aria-label="">×</button>' +
+      '</div>' +
       '</div>' +
       '<div class="im-candle-toolbar">' +
       '<div class="im-candle-ranges" role="group" id="im-candle-ranges"></div>' +
@@ -944,6 +973,9 @@
 
     root.querySelector('.im-candle-backdrop').addEventListener('click', close);
     root.querySelector('#im-candle-close').addEventListener('click', close);
+    root.querySelector('#im-candle-expand').addEventListener('click', function () {
+      setExpanded(!state.expanded);
+    });
     root.querySelector('#im-candle-ranges').addEventListener('click', function (e) {
       var btn = e.target.closest('[data-range]');
       if (!btn) return;
@@ -1233,6 +1265,34 @@
         '</button>';
     }
     wrap.innerHTML = html;
+  }
+
+  function syncExpandButton() {
+    var btn = typeof document !== 'undefined' && document.getElementById ? document.getElementById('im-candle-expand') : null;
+    if (!btn) return;
+    var labels = t();
+    var label = state.expanded ? labels.collapse : labels.expand;
+    btn.setAttribute('aria-label', label);
+    btn.setAttribute('title', label);
+    btn.setAttribute('aria-pressed', state.expanded ? 'true' : 'false');
+    btn.innerHTML = state.expanded ? COLLAPSE_ICON : EXPAND_ICON;
+  }
+
+  function setExpanded(expanded) {
+    state.expanded = !!expanded;
+    var root = typeof document !== 'undefined' && document.getElementById ? document.getElementById('im-candle-root') : null;
+    if (root) {
+      var dialog = root.querySelector('.im-candle-dialog');
+      if (dialog) {
+        dialog.classList.toggle('im-candle-expanded', state.expanded);
+      }
+    }
+    syncExpandButton();
+    resizeCharts();
+    afterLayout(function () {
+      resizeCharts();
+      afterLayout(resizeCharts);
+    });
   }
 
   function setStatus(msg, on) {
@@ -1880,9 +1940,15 @@
     if (!chart) return;
     var host = document.getElementById('im-candle-chart');
     if (host && !chart.autoSizeActive()) {
+      var w = Math.max(host.clientWidth || 0, 120);
+      var h = Math.max(host.clientHeight || 0, 200);
       try {
-        chart.resize(Math.max(host.clientWidth || 0, 120), Math.max(host.clientHeight || 0, 200));
-      } catch (e) {}
+        chart.resize(w, h);
+      } catch (e) {
+        try {
+          chart.applyOptions({ width: w, height: h });
+        } catch (e2) {}
+      }
     }
     syncPaneLabelPositions();
   }
@@ -2017,6 +2083,11 @@
     root.classList.add('is-open');
     document.body.classList.add('im-candle-open');
 
+    state.expanded = false;
+    var dialog = root.querySelector('.im-candle-dialog');
+    if (dialog) dialog.classList.remove('im-candle-expanded');
+    syncExpandButton();
+
     document.getElementById('im-candle-title').textContent = state.name || ticker;
     state.liveOverlay = false;
     state.liveBarTime = null;
@@ -2048,6 +2119,7 @@
     if (!state.open) return;
     state.open = false;
     state.fetchToken += 1;
+    setExpanded(false);
     destroyCharts();
     var root = document.getElementById('im-candle-root');
     if (root) {
@@ -2127,7 +2199,11 @@
   function onKeyDown(e) {
     if (e.key === 'Escape' && state.open) {
       e.preventDefault();
-      close();
+      if (state.expanded) {
+        setExpanded(false);
+      } else {
+        close();
+      }
     }
   }
 
@@ -2136,6 +2212,7 @@
     var labels = t();
     var closeBtn = document.getElementById('im-candle-close');
     if (closeBtn) closeBtn.setAttribute('aria-label', labels.close);
+    syncExpandButton();
     updateSubtitle();
     syncRangeButtons();
     syncIntervalButtons();
@@ -2175,6 +2252,10 @@
       setInvestorCum: setInvestorCum,
       setInvestorPeriod: setInvestorPeriod,
       paneInvestorLabel: paneInvestorLabel,
+      setExpanded: setExpanded,
+      isExpanded: function () {
+        return !!state.expanded;
+      },
     },
     _indicators: {
       sma: sma,

@@ -13,6 +13,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = fs.readFileSync(path.join(ROOT, 'js', 'candle_modal.js'), 'utf8');
 const context = {
   console,
+  setTimeout,
+  clearTimeout,
   URLSearchParams,
   document: {
     documentElement: {
@@ -550,4 +552,51 @@ try {
   assert.equal(livePatch.bars[0].h, 1691000);
 }
 
-console.log('verify:candle OK — weekly OHLCV, ATR%, 3Y/5Y weekly-warmup pagination');
+// Modal expand / collapse assertions
+assert.ok(source.includes('.im-candle-dialog.im-candle-expanded'), 'must have .im-candle-expanded dialog CSS');
+assert.ok(source.includes('id="im-candle-expand"'), 'must have #im-candle-expand button in modal header');
+assert.ok(source.includes("expand: '확대'"), 'ko expand translation');
+assert.ok(source.includes("collapse: '축소'"), 'ko collapse translation');
+assert.ok(source.includes("expand: 'Expand'"), 'en expand translation');
+assert.ok(source.includes("collapse: 'Restore'"), 'en collapse translation');
+assert.ok(typeof ui.setExpanded === 'function', 'setExpanded must be exposed in _ui');
+assert.ok(typeof ui.isExpanded === 'function', 'isExpanded must be exposed in _ui');
+assert.equal(ui.isExpanded(), false, 'isExpanded starts false');
+ui.setExpanded(true);
+assert.equal(ui.isExpanded(), true, 'isExpanded becomes true after setExpanded(true)');
+ui.setExpanded(false);
+assert.equal(ui.isExpanded(), false, 'isExpanded reverts to false');
+
+// Verify map files have bumped to v=31
+const MAP_FILES = [
+  'bigchip/korea_bigchip_map.html',
+  'semiconductor/korea_semiconductor_map.html',
+  'bio/korea_bio_map.html',
+  'ship/korea_ship_map.html',
+  'defense/korea_defense_map.html',
+  'robot/korea_robot_map.html',
+  'auto/korea_auto_map.html',
+  'medtech/korea_medtech_map.html',
+  'battery/korea_battery_map.html',
+  'renewable/korea_renewable_map.html',
+  'nuclear/korea_nuclear_map.html',
+  'powergrid/korea_powergrid_map.html',
+  'finance/korea_finance_map.html',
+  'construction/korea_construction_map.html',
+  'kconsume/korea_kconsume_map.html',
+  'cosmetics/korea_cosmetics_map.html',
+  'kcontent/korea_kcontent_map.html',
+  'software/korea_software_map.html',
+  'holdings/korea_holdings_map.html',
+  'telecom/korea_telecom_map.html',
+  'chemical/korea_chemical_map.html',
+  'travel/korea_travel_map.html',
+  'elec/korea_elec_map.html',
+  'metal/korea_metal_map.html',
+];
+for (const rel of MAP_FILES) {
+  const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  assert.ok(html.includes('candle_modal.js?v=31'), `${rel} must reference candle_modal.js?v=31`);
+}
+
+console.log('verify:candle OK — weekly OHLCV, ATR%, 3Y/5Y weekly-warmup pagination, modal expand/collapse (v=31)');
