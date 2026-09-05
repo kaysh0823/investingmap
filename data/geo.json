@@ -71,7 +71,7 @@
     },
     "ship": {
       "path": "/ship/korea_ship_map.html",
-      "title": { "ko": "한국 조선·조선기자재 산업 투자 지도", "en": "Korea Shipbuilding & Marine Equipment Map" },
+      "title": { "ko": "한국 조선/해운 산업 투자 지도", "en": "Korea Shipbuilding & Shipping Map" },
       "summary": {
         "ko": "조선소·엔진·철강·조선기자재·해양·해운 등 상장사의 KRX 데이터와 밸류체인, 글로벌 거래·수주 관계를 정리합니다.",
         "en": "KRX data, value-chain categories, and illustrative global order and customer relationships for listed Korean shipbuilding and marine equipment companies."

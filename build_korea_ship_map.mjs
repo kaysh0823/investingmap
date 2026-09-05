@@ -619,7 +619,7 @@ function main() {
 
   html = html.replace(
     /<h1 id="hdr-title">[^<]+<\/h1>/,
-    '<h1 id="hdr-title">\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uC870\uC120\u00B7\uC870\uC120\uAE30\uC790\uC7AC \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4</h1>',
+    '<h1 id="hdr-title">\uD83C\uDDF0\uD83C\uDDF7 \uD55C\uAD6D \uC870\uC120/\uD574\uC6B4 \uC0B0\uC5C5 \uD22C\uC790 \uC9C0\uB3C4</h1>',
   );
   html = html.replace(
     /<p id="hdr-subtitle">[^<]+<\/p>/,

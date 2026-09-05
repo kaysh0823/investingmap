@@ -28,7 +28,7 @@ const PAGES = [
   {
     file: 'ship/korea_ship_map.html',
     path: '/ship/korea_ship_map.html',
-    title: '한국 조선·조선기자재 산업 투자 지도',
+    title: '한국 조선/해운 산업 투자 지도',
     description:
       '국내 상장 조선·해양·기자재 기업의 KRX 시가총액·PER·PBR, 밸류체인, 글로벌 거래·수주 관계 지도.',
   },

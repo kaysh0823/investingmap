@@ -14,7 +14,7 @@
   var SECTOR_NAMES_EN = {
     bigchip: 'Chip leaders', semi: 'Semiconductors', elec: 'Electrical & electronics',
     battery: 'Batteries', renewable: 'Renewable energy', nuclear: 'Nuclear power',
-    powergrid: 'Power equipment', ship: 'Shipbuilding', metal: 'Metals & machinery',
+    powergrid: 'Power equipment', ship: 'Shipbuilding/Shipping', metal: 'Metals & machinery',
     defense: 'Defense & aerospace', kconsume: 'K-consumer & retail',
     cosmetics: 'Cosmetics', kcontent: 'K-content', bio: 'Bio & pharma',
     robot: 'Robotics', auto: 'Automotive', medtech: 'MedTech', finance: 'Financials',

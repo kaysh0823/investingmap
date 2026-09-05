@@ -54,23 +54,23 @@ function ensureHeadScripts(html) {
   if (!html.includes('map_tab_state.js')) {
     html = html.replace(
       /<script src="\.\.\/js\/map_i18n\.js"><\/script>\s*/,
-      `<script src="../js/map_i18n.js"></script>\n  <script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=8"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
+      `<script src="../js/map_i18n.js"></script>\n  <script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=9"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
     );
   } else if (!html.includes('sector_nav.js')) {
     html = html.replace(
       /<script src="\.\.\/js\/map_tab_state\.js(?:\?v=\d+)?"><\/script>\s*/,
-      `<script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=8"></script>\n`,
+      `<script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=9"></script>\n`,
     );
   }
   if (!html.includes('map_filter_ux.js') && html.includes('sector_nav.js')) {
     html = html.replace(
       /<script src="\.\.\/js\/sector_nav\.js(?:\?v=\d+)?"><\/script>\s*/,
-      `<script src="../js/sector_nav.js?v=8"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
+      `<script src="../js/sector_nav.js?v=9"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
     );
   }
   html = html.replace(/map_filter_ux\.js(?:\?v=\d+)?/g, `map_filter_ux.js?v=${SCRIPT_V}`);
   html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=10');
-  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=8');
+  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=9');
   return html;
 }
 

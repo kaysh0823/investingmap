@@ -38,7 +38,7 @@
     bigchip: { ko: '삼성전자/하이닉스', en: 'Samsung/SK hynix' },
     semi: { ko: '반도체', en: 'Semi' },
     bio: { ko: '바이오', en: 'Bio' },
-    ship: { ko: '조선', en: 'Ship' },
+    ship: { ko: '조선/해운', en: 'Shipbuilding/Shipping' },
     defense: { ko: '방산/우주', en: 'Defense & Space' },
     robot: { ko: '로봇', en: 'Robot' },
     auto: { ko: '자동차', en: 'Auto' },
