@@ -1,5 +1,5 @@
 /**
- * Remove companies below MIN_MCAP_WON (3천억원) from industry maps and bio inline data.
+ * Remove companies below MIN_MCAP_WON (2천억원) from industry maps and bio inline data.
  * Refreshes mcapWon from latest KRX CSV (data_4937_* / data_4848_*) before filtering.
  */
 import fs from 'fs';
@@ -200,69 +200,69 @@ function patchIndexHubCounts(hubLines) {
   const indexPath = path.join(ROOT, 'index.html');
   let indexHtml = fs.readFileSync(indexPath, 'utf8');
   if (hubLines.semi) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 IDM/, `${hubLines.semi}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 IDM`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 IDM, fabless/, `${hubLines.semi} listings \u00b7 IDM, fabless`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 IDM/g, `${hubLines.semi}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 IDM`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 IDM, fabless/g, `${hubLines.semi} listings \u00b7 IDM, fabless`);
   }
   if (hubLines.bio) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \ub9e4\ud551 \u00b7 \ubc14\uc774\uc624\uc2dc\ubc00\ub7ec/, `${hubLines.bio}\uac1c \ub9e4\ud551 \u00b7 \ubc14\uc774\uc624\uc2dc\ubc00\ub7ec`);
-    indexHtml = indexHtml.replace(/\d+ mappings \u00b7 biosimilars/, `${hubLines.bio} mappings \u00b7 biosimilars`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \ub9e4\ud551 \u00b7 \ubc14\uc774\uc624\uc2dc\ubc00\ub7ec/g, `${hubLines.bio}\uac1c \ub9e4\ud551 \u00b7 \ubc14\uc774\uc624\uc2dc\ubc00\ub7ec`);
+    indexHtml = indexHtml.replace(/\d+ mappings \u00b7 biosimilars/g, `${hubLines.bio} mappings \u00b7 biosimilars`);
   }
   if (hubLines.ship) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc870\uc120\uc18c/, `${hubLines.ship}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc870\uc120\uc18c`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 yards/, `${hubLines.ship} listings \u00b7 yards`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc870\uc120\uc18c/g, `${hubLines.ship}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc870\uc120\uc18c`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 yards/g, `${hubLines.ship} listings \u00b7 yards`);
   }
   if (hubLines.defense) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud56d\uacf5/, `${hubLines.defense}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud56d\uacf5`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 aviation/, `${hubLines.defense} listings \u00b7 aviation`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud56d\uacf5/g, `${hubLines.defense}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud56d\uacf5`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 aviation/g, `${hubLines.defense} listings \u00b7 aviation`);
   }
   if (hubLines.robot) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 FA/, `${hubLines.robot}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 FA`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 FA, AMR/, `${hubLines.robot} listings \u00b7 FA, AMR`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 FA/g, `${hubLines.robot}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 FA`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 FA, AMR/g, `${hubLines.robot} listings \u00b7 FA, AMR`);
   }
   if (hubLines.auto) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc644\uc131\ucc28/, `${hubLines.auto}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc644\uc131\ucc28`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 OEM/, `${hubLines.auto} listings \u00b7 OEM`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc644\uc131\ucc28/g, `${hubLines.auto}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc644\uc131\ucc28`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 OEM/g, `${hubLines.auto} listings \u00b7 OEM`);
   }
   if (hubLines.medtech) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc9c4\ub2e8/, `${hubLines.medtech}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc9c4\ub2e8`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 Diagnostics/, `${hubLines.medtech} listings \u00b7 Diagnostics`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc9c4\ub2e8/g, `${hubLines.medtech}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc9c4\ub2e8`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 Diagnostics/g, `${hubLines.medtech} listings \u00b7 Diagnostics`);
   }
   if (hubLines.battery) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 2\ucc28\uc804\uc9c0/, `${hubLines.battery}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 2\ucc28\uc804\uc9c0`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 cells, materials, equipment, parts/, `${hubLines.battery} listings \u00b7 cells, materials, equipment, parts`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 2\ucc28\uc804\uc9c0/g, `${hubLines.battery}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 2\ucc28\uc804\uc9c0`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 cells, materials, equipment, parts/g, `${hubLines.battery} listings \u00b7 cells, materials, equipment, parts`);
   }
   if (hubLines.renewable) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud0dc\uc591\uad11/, `${hubLines.renewable}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud0dc\uc591\uad11`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 solar/, `${hubLines.renewable} listings \u00b7 solar`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud0dc\uc591\uad11/g, `${hubLines.renewable}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud0dc\uc591\uad11`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 solar/g, `${hubLines.renewable} listings \u00b7 solar`);
   }
   if (hubLines.nuclear) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc6d0\uc804/, `${hubLines.nuclear}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc6d0\uc804`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 nuclear/, `${hubLines.nuclear} listings \u00b7 nuclear`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc6d0\uc804/g, `${hubLines.nuclear}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc6d0\uc804`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 nuclear/g, `${hubLines.nuclear} listings \u00b7 nuclear`);
   }
   if (hubLines.powergrid) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc804\ub825\uc124\ube44/, `${hubLines.powergrid}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc804\ub825\uc124\ube44`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 power equipment/, `${hubLines.powergrid} listings \u00b7 power equipment`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc804\ub825\uc124\ube44/g, `${hubLines.powergrid}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc804\ub825\uc124\ube44`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 power equipment/g, `${hubLines.powergrid} listings \u00b7 power equipment`);
   }
   if (hubLines.finance) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc740\ud589/, `${hubLines.finance}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc740\ud589`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 banks/, `${hubLines.finance} listings \u00b7 banks`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc740\ud589/g, `${hubLines.finance}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc740\ud589`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 banks/g, `${hubLines.finance} listings \u00b7 banks`);
   }
   if (hubLines.construction) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc885\ud569\uac74\uc124/, `${hubLines.construction}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc885\ud569\uac74\uc124`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 contractors/, `${hubLines.construction} listings \u00b7 contractors`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc885\ud569\uac74\uc124/g, `${hubLines.construction}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uc885\ud569\uac74\uc124`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 contractors/g, `${hubLines.construction} listings \u00b7 contractors`);
   }
   if (hubLines.kconsume) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud328\uc158/, `${hubLines.kconsume}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud328\uc158`);
-    indexHtml = indexHtml.replace(/\d+ companies \u00b7 beauty/, `${hubLines.kconsume} companies \u00b7 fashion`);
-    indexHtml = indexHtml.replace(/\d+ companies \u00b7 fashion/, `${hubLines.kconsume} companies \u00b7 fashion`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud328\uc158/g, `${hubLines.kconsume}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ud328\uc158`);
+    indexHtml = indexHtml.replace(/\d+ companies \u00b7 beauty/g, `${hubLines.kconsume} companies \u00b7 fashion`);
+    indexHtml = indexHtml.replace(/\d+ companies \u00b7 fashion/g, `${hubLines.kconsume} companies \u00b7 fashion`);
   }
   if (hubLines.cosmetics) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ube0c\ub79c\ub4dc/, `${hubLines.cosmetics}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ube0c\ub79c\ub4dc`);
-    indexHtml = indexHtml.replace(/\d+ listings \u00b7 brands/, `${hubLines.cosmetics} listings \u00b7 brands`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ube0c\ub79c\ub4dc/g, `${hubLines.cosmetics}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \ube0c\ub79c\ub4dc`);
+    indexHtml = indexHtml.replace(/\d+ listings \u00b7 brands/g, `${hubLines.cosmetics} listings \u00b7 brands`);
   }
   if (hubLines.kcontent) {
-    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uac8c\uc784/, `${hubLines.kcontent}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uac8c\uc784`);
-    indexHtml = indexHtml.replace(/\d+ companies \u00b7 games/, `${hubLines.kcontent} companies \u00b7 games`);
+    indexHtml = indexHtml.replace(/\d+\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uac8c\uc784/g, `${hubLines.kcontent}\uac1c \uc0c1\uc7a5\uc0ac \u00b7 \uac8c\uc784`);
+    indexHtml = indexHtml.replace(/\d+ companies \u00b7 games/g, `${hubLines.kcontent} companies \u00b7 games`);
   }
   fs.writeFileSync(indexPath, indexHtml, 'utf8');
   console.log('index.html hub counts updated');
@@ -270,7 +270,7 @@ function patchIndexHubCounts(hubLines) {
 
 function main() {
   const krx = loadMergedKrxMap(DATA_DIR);
-  console.log(`Applying market-cap floor: ${MIN_MCAP_WON.toLocaleString('ko-KR')} won (3\ucc9c\uc5b5\uc6d0)`);
+  console.log(`Applying market-cap floor: ${MIN_MCAP_WON.toLocaleString('ko-KR')} won (2\ucc9c\uc5b5\uc6d0)`);
   const counts = {};
   for (const rel of HTML_MAPS) {
     const key = rel.split('/')[0];

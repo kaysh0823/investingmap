@@ -714,6 +714,102 @@
       "owningSector": "robot"
     },
     {
+      "id": "krx:117730",
+      "type": "listed_company",
+      "ticker": "117730",
+      "nameKo": "티로보틱스",
+      "nameEn": "T-Robotics co., Ltd.",
+      "market": "KOSDAQ",
+      "role": "완성로봇·플랫폼",
+      "lane": "industrial_robot",
+      "group": "완성로봇·플랫폼",
+      "layer": "industrial_robot",
+      "mcapWon": 294382461150,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "t_robotics",
+      "owningSector": "robot"
+    },
+    {
+      "id": "robot_product:t-robotics-transfer-amr",
+      "type": "robot_product",
+      "nameKo": "이송로봇·AMR",
+      "nameEn": "Transfer robot / AMR",
+      "lane": "industrial_robot"
+    },
+    {
+      "id": "krx:099440",
+      "type": "listed_company",
+      "ticker": "099440",
+      "nameKo": "스맥",
+      "nameEn": "SMEC CO.,LTD",
+      "market": "KOSDAQ",
+      "role": "자동화·SI·물류시스템",
+      "lane": "system_integration",
+      "group": "자동화·SI·물류시스템",
+      "layer": "system_integration",
+      "mcapWon": 273656009940,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "robot_smec_co_ltd",
+      "owningSector": "robot"
+    },
+    {
+      "id": "krx:389500",
+      "type": "listed_company",
+      "ticker": "389500",
+      "nameKo": "에스비비테크",
+      "nameEn": "SBB Tech",
+      "market": "KOSDAQ",
+      "role": "감속기·동력전달",
+      "lane": "precision_component",
+      "group": "감속기·동력전달",
+      "layer": "precision_component",
+      "mcapWon": 252545588800,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "sbb_tech",
+      "owningSector": "robot"
+    },
+    {
+      "id": "reducer:harmonic",
+      "type": "reducer",
+      "nameKo": "하모닉 감속기",
+      "nameEn": "Harmonic reducer",
+      "lane": "precision_component"
+    },
+    {
+      "id": "krx:475400",
+      "type": "listed_company",
+      "ticker": "475400",
+      "nameKo": "씨메스로보틱스",
+      "nameEn": "CMES Robotics",
+      "market": "KOSDAQ",
+      "role": "자동화·SI·물류시스템",
+      "lane": "system_integration",
+      "group": "자동화·SI·물류시스템",
+      "layer": "system_integration",
+      "mcapWon": 216184229140,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "cmes",
+      "owningSector": "robot"
+    },
+    {
+      "id": "robot_product:cmes-pick-palletize",
+      "type": "robot_product",
+      "nameKo": "피킹·팔레타이징 SI",
+      "nameEn": "Picking / palletizing SI",
+      "lane": "system_integration"
+    },
+    {
+      "id": "robot_category:vision-si",
+      "type": "robot_category",
+      "nameKo": "AI비전·SI",
+      "nameEn": "AI vision / SI",
+      "lane": "system_integration"
+    },
+    {
       "id": "global:nvidia",
       "type": "global_company",
       "nameKo": "NVIDIA",
@@ -3150,6 +3246,496 @@
       "excludesFromOrphanResolution": true
     },
     {
+      "id": "member-117730-industrial_robot",
+      "source": "krx:117730",
+      "target": "group:industrial_robot",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "산업용 로봇 분류",
+      "labelEn": "Industrial robot category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
+      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "produces_robot-117730-robot_product-t-robotics-transfer-amr",
+      "source": "krx:117730",
+      "target": "robot_product:t-robotics-transfer-amr",
+      "type": "produces_robot",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "이송로봇·AMR",
+      "labelEn": "Transfer robot / AMR",
+      "evidence": [
+        {
+          "title": "티로보틱스 ↔ 이송로봇·AMR",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "티로보틱스 ↔ 이송로봇·AMR",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member_of_category-117730-robot_category-industrial",
+      "source": "krx:117730",
+      "target": "robot_category:industrial",
+      "type": "member_of_category",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "산업용 로봇",
+      "labelEn": "Industrial robot",
+      "evidence": [
+        {
+          "title": "티로보틱스 ↔ 산업용 로봇",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "티로보틱스 ↔ 산업용 로봇",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member_of_category-117730-robot_category-amr",
+      "source": "krx:117730",
+      "target": "robot_category:amr",
+      "type": "member_of_category",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "자율주행 로봇",
+      "labelEn": "Autonomous mobile robot",
+      "evidence": [
+        {
+          "title": "티로보틱스 ↔ 자율주행 로봇",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "티로보틱스 ↔ 자율주행 로봇",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_application-117730-application-semiconductor-display",
+      "source": "krx:117730",
+      "target": "application:semiconductor-display",
+      "type": "supports_application",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "반도체·디스플레이",
+      "labelEn": "Semiconductor / display",
+      "evidence": [
+        {
+          "title": "티로보틱스 ↔ 반도체·디스플레이",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "티로보틱스 ↔ 반도체·디스플레이",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
+      "noteEn": "Application exposure classification; not a deployment or supply contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member-099440-system_integration",
+      "source": "krx:099440",
+      "target": "group:system_integration",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "자동화·SI 분류",
+      "labelEn": "Automation / SI category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
+      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member-389500-precision_component",
+      "source": "krx:389500",
+      "target": "group:precision_component",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "정밀부품·감속기 분류",
+      "labelEn": "Precision / reducer category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
+      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "produces_component-389500-reducer-harmonic",
+      "source": "krx:389500",
+      "target": "reducer:harmonic",
+      "type": "produces_component",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "하모닉 감속기",
+      "labelEn": "Harmonic reducer",
+      "evidence": [
+        {
+          "title": "에스비비테크 ↔ 하모닉 감속기",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "에스비비테크 ↔ 하모닉 감속기",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member_of_category-389500-robot_category-reducer",
+      "source": "krx:389500",
+      "target": "robot_category:reducer",
+      "type": "member_of_category",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "감속기",
+      "labelEn": "Reducer",
+      "evidence": [
+        {
+          "title": "에스비비테크 ↔ 감속기",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "에스비비테크 ↔ 감속기",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_application-389500-application-robot-drive-train",
+      "source": "krx:389500",
+      "target": "application:robot-drive-train",
+      "type": "supports_application",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "로봇 구동계",
+      "labelEn": "Robot drivetrain",
+      "evidence": [
+        {
+          "title": "에스비비테크 ↔ 로봇 구동계",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "에스비비테크 ↔ 로봇 구동계",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
+      "noteEn": "Application exposure classification; not a deployment or supply contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member-475400-system_integration",
+      "source": "krx:475400",
+      "target": "group:system_integration",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "자동화·SI 분류",
+      "labelEn": "Automation / SI category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
+      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "produces_robot-475400-robot_product-cmes-pick-palletize",
+      "source": "krx:475400",
+      "target": "robot_product:cmes-pick-palletize",
+      "type": "produces_robot",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "피킹·팔레타이징 SI",
+      "labelEn": "Picking / palletizing SI",
+      "evidence": [
+        {
+          "title": "씨메스로보틱스 ↔ 피킹·팔레타이징 SI",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "씨메스로보틱스 ↔ 피킹·팔레타이징 SI",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member_of_category-475400-robot_category-vision-si",
+      "source": "krx:475400",
+      "target": "robot_category:vision-si",
+      "type": "member_of_category",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "AI비전·SI",
+      "labelEn": "AI vision / SI",
+      "evidence": [
+        {
+          "title": "씨메스로보틱스 ↔ AI비전·SI",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "씨메스로보틱스 ↔ AI비전·SI",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_application-475400-application-logistics",
+      "source": "krx:475400",
+      "target": "application:logistics",
+      "type": "supports_application",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "물류",
+      "labelEn": "Logistics",
+      "evidence": [
+        {
+          "title": "씨메스로보틱스 ↔ 물류",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "씨메스로보틱스 ↔ 물류",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
+      "noteEn": "Application exposure classification; not a deployment or supply contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_application-475400-application-palletizing",
+      "source": "krx:475400",
+      "target": "application:palletizing",
+      "type": "supports_application",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "팔레타이징",
+      "labelEn": "Palletizing",
+      "evidence": [
+        {
+          "title": "씨메스로보틱스 ↔ 팔레타이징",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "씨메스로보틱스 ↔ 팔레타이징",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
+      "noteEn": "Application exposure classification; not a deployment or supply contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
       "id": "member-app-application-manufacturing-end_market",
       "source": "application:manufacturing",
       "target": "group:end_market",
@@ -3938,6 +4524,50 @@
       "excludesFromOrphanResolution": true
     },
     {
+      "id": "cross-sector-117730-sector-semiconductor",
+      "source": "krx:117730",
+      "target": "sector:semiconductor",
+      "type": "cross_sector_reference",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "타 섹터 경계 참조",
+      "labelEn": "Cross-sector boundary reference",
+      "evidence": [
+        {
+          "title": "krx:117730 xref sector:semiconductor",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "krx:117730 xref sector:semiconductor",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "반도체·디스플레이 이송은 semi fab 노출. 장비 카테고리≠특정 fab 계약.",
+      "noteEn": "Semi/display transfer is fab exposure; category ≠ named fab contract.",
+      "edgeOrigin": "manuallyCurated",
+      "crossSectorReference": true,
+      "referencedBySectors": [
+        "robot"
+      ],
+      "owningSector": "semiconductor",
+      "excludesFromBusinessCoverage": true,
+      "duplicateBusinessCountExcluded": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
       "id": "cross-sector-056190-sector-semiconductor",
       "source": "krx:056190",
       "target": "sector:semiconductor",
@@ -4027,35 +4657,35 @@
     }
   ],
   "metrics": {
-    "listedCompanyCount": 16,
-    "nodeCount": 81,
-    "edgeCount": 109,
+    "listedCompanyCount": 20,
+    "nodeCount": 89,
+    "edgeCount": 125,
     "nodeCountByType": {
       "group": 8,
       "cross_sector_anchor": 5,
-      "listed_company": 16,
-      "robot_product": 10,
-      "robot_category": 14,
+      "listed_company": 20,
+      "robot_product": 12,
+      "robot_category": 15,
       "application": 10,
       "actuator": 2,
-      "reducer": 1,
+      "reducer": 2,
       "robot_software": 2,
       "robot_component": 1,
       "global_company": 12
     },
-    "robotProductCount": 10,
-    "robotCategoryCount": 14,
+    "robotProductCount": 12,
+    "robotCategoryCount": 15,
     "componentNodeCount": 1,
-    "reducerNodeCount": 1,
+    "reducerNodeCount": 2,
     "actuatorNodeCount": 2,
     "sensorNodeCount": 0,
     "controllerNodeCount": 0,
     "softwareNodeCount": 2,
     "applicationNodeCount": 10,
     "projectNodeCount": 0,
-    "structuralGeneratedEdgeCount": 79,
+    "structuralGeneratedEdgeCount": 94,
     "legacyMigratedEdgeCount": 26,
-    "manuallyCuratedEdgeCount": 4,
+    "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
@@ -4069,20 +4699,20 @@
     "ownershipEdgeCount": 0,
     "acquisitionCount": 0,
     "projectParticipationCount": 0,
-    "crossSectorReferenceCount": 4,
-    "businessRelationOrphanCount": 16,
-    "directCommercialRelationshipOrphanCount": 16,
-    "classificationOnlyCompanyCount": 2,
+    "crossSectorReferenceCount": 5,
+    "businessRelationOrphanCount": 20,
+    "directCommercialRelationshipOrphanCount": 20,
+    "classificationOnlyCompanyCount": 3,
     "hasPeerButNoBusinessCompanyCount": 10,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 57,
-        "denominator": 109,
-        "percentage": 0.5229357798165137,
-        "displayValue": "52.3%",
+        "numerator": 69,
+        "denominator": 125,
+        "percentage": 0.552,
+        "displayValue": "55.2%",
         "applicable": true,
         "reason": null
       },
@@ -4143,8 +4773,8 @@
         "reason": "no_eligible_project_edges"
       },
       "crossSectorReferenceEvidenceCoverage": {
-        "numerator": 4,
-        "denominator": 4,
+        "numerator": 5,
+        "denominator": 5,
         "percentage": 1,
         "displayValue": "100%",
         "applicable": true,
@@ -4164,7 +4794,7 @@
       "inferred_customer_supplier": 2,
       "invalid": 2,
       "duplicate": 0,
-      "cross_sector_reference": 4
+      "cross_sector_reference": 5
     }
   }
 }

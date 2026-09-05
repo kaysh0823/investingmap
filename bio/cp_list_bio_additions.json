@@ -448,5 +448,117 @@
     "sectorId": "smallmol",
     "subSector": "제약·헬스케어",
     "level": "adjacent"
+  },
+  {
+    "ticker": "043150",
+    "name": "바텍",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "치과 영상장비",
+    "level": "core"
+  },
+  {
+    "ticker": "033270",
+    "name": "유나이티드제약",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "243070",
+    "name": "휴온스",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약·미용의료",
+    "level": "core"
+  },
+  {
+    "ticker": "182400",
+    "name": "엔케이젠바이오텍코리아",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "005500",
+    "name": "삼진제약",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "047920",
+    "name": "HLB제약",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "206640",
+    "name": "바디텍메드",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "진단기기",
+    "level": "core"
+  },
+  {
+    "ticker": "217730",
+    "name": "강스템바이오텍",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "314930",
+    "name": "바이오다인",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
+  },
+  {
+    "ticker": "064550",
+    "name": "바이오니아",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "분자진단·RNAi",
+    "level": "core"
+  },
+  {
+    "ticker": "099430",
+    "name": "바이오플러스",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "미용의료·필러",
+    "level": "core"
+  },
+  {
+    "ticker": "144510",
+    "name": "지씨셀",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "세포치료·바이오",
+    "level": "core"
+  },
+  {
+    "ticker": "067080",
+    "name": "대화제약",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약",
+    "level": "core"
+  },
+  {
+    "ticker": "102940",
+    "name": "코오롱생명과학",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "바이오·원료의약품",
+    "level": "core"
   }
 ]

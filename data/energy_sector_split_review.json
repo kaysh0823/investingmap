@@ -243,6 +243,15 @@
     "mcapWon": 326586339600
   },
   {
+    "ticker": "011500",
+    "name": "한농화성",
+    "sector": "battery",
+    "chain": "소재",
+    "origin": "battery",
+    "basis": "정밀화학·전고체 소재",
+    "mcapWon": 217823995060
+  },
+  {
     "ticker": "034020",
     "name": "두산에너빌리티",
     "sector": "nuclear",
@@ -295,6 +304,15 @@
     "origin": "nuclear",
     "basis": "전력·변압기",
     "mcapWon": 367982381760
+  },
+  {
+    "ticker": "105840",
+    "name": "우진",
+    "sector": "nuclear",
+    "chain": "계측·보조기기",
+    "origin": "nuclear",
+    "basis": "원전 계측기",
+    "mcapWon": 283979240200
   },
   {
     "ticker": "009830",

@@ -345,6 +345,30 @@
       "lane": "optical_wireless_component"
     },
     {
+      "id": "krx:138080",
+      "type": "listed_company",
+      "ticker": "138080",
+      "nameKo": "오이솔루션",
+      "nameEn": "OE Solutions",
+      "market": "KOSDAQ",
+      "role": "광통신",
+      "lane": "optical_wireless_component",
+      "group": "광통신",
+      "layer": "optical_wireless_component",
+      "mcapWon": 289639537200,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "oe_solutions",
+      "owningSector": "telecom"
+    },
+    {
+      "id": "network_component:optical-transceiver",
+      "type": "network_component",
+      "nameKo": "광트랜시버",
+      "nameEn": "Optical transceiver",
+      "lane": "optical_wireless_component"
+    },
+    {
       "id": "global:verizon",
       "type": "global_company",
       "nameKo": "Verizon",
@@ -1255,6 +1279,100 @@
       "excludesFromOrphanResolution": true
     },
     {
+      "id": "member-138080-optical_wireless_component",
+      "source": "krx:138080",
+      "target": "group:optical_wireless_component",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "광통신 분류",
+      "labelEn": "Optical components category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 장비 공급·도매망·주파수 소유가 아닙니다.",
+      "noteEn": "Value-chain category only; not equipment supply, wholesale network or spectrum ownership.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "produces_component-138080-network_component-optical-transceiver",
+      "source": "krx:138080",
+      "target": "network_component:optical-transceiver",
+      "type": "produces_component",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "광트랜시버",
+      "labelEn": "Optical transceiver",
+      "evidence": [
+        {
+          "title": "오이솔루션 ↔ 광트랜시버",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "오이솔루션 ↔ 광트랜시버",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "서비스·장비·부품 구조 분류. 납품·도매·주파수 할당이 아닙니다.",
+      "noteEn": "Service/equipment/component structure; not delivery, wholesale or spectrum assignment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_network_generation-138080-network_generation-optical-transport",
+      "source": "krx:138080",
+      "target": "network_generation:optical-transport",
+      "type": "supports_network_generation",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "광전송",
+      "labelEn": "Optical transport",
+      "evidence": [
+        {
+          "title": "오이솔루션 ↔ 광전송",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "오이솔루션 ↔ 광전송",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "망 세대 구조 분류. 호환 인증≠장비 공급계약.",
+      "noteEn": "Network-generation classification; certification ≠ equipment supply.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
       "id": "peer-017670-verizon",
       "source": "krx:017670",
       "target": "global:verizon",
@@ -1540,6 +1658,25 @@
       "excludesFromOrphanResolution": true
     },
     {
+      "id": "peer-138080-ciena",
+      "source": "krx:138080",
+      "target": "global:ciena",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "글로벌 통신 peer (레거시)",
+      "labelEn": "Global telecom peer (legacy)",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "기존 partners 문자열. 장비 공급·로밍·도매망 계약이 아닙니다. 기본 숨김.",
+      "noteEn": "Legacy partners string. Not equipment supply, roaming or wholesale contract. Hidden by default.",
+      "edgeOrigin": "legacyMigrated",
+      "defaultHidden": true,
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
       "id": "cross-sector-017670-sector-software",
       "source": "krx:017670",
       "target": "sector:software",
@@ -1717,16 +1854,16 @@
     }
   ],
   "metrics": {
-    "listedCompanyCount": 10,
-    "nodeCount": 32,
-    "edgeCount": 47,
-    "structuralGeneratedEdgeCount": 28,
-    "legacyMigratedEdgeCount": 15,
+    "listedCompanyCount": 11,
+    "nodeCount": 34,
+    "edgeCount": 51,
+    "structuralGeneratedEdgeCount": 31,
+    "legacyMigratedEdgeCount": 16,
     "manuallyCuratedEdgeCount": 4,
     "operatorNodeCount": 4,
     "telecomServiceCount": 3,
     "equipmentNodeCount": 4,
-    "componentNodeCount": 2,
+    "componentNodeCount": 3,
     "spectrumBandCount": 0,
     "activeLicenseCount": 0,
     "infrastructureAssetCount": 0,
@@ -1740,11 +1877,11 @@
     "crossSectorReferenceCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 15,
-    "businessRelationOrphanCount": 10,
-    "directCommercialRelationshipOrphanCount": 10,
+    "peerEdgeCount": 16,
+    "businessRelationOrphanCount": 11,
+    "directCommercialRelationshipOrphanCount": 11,
     "classificationOnlyCompanyCount": 1,
-    "hasPeerButNoBusinessCompanyCount": 10,
+    "hasPeerButNoBusinessCompanyCount": 11,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
@@ -1847,14 +1984,14 @@
     "nodeCountByType": {
       "group": 3,
       "cross_sector_anchor": 4,
-      "listed_company": 10,
+      "listed_company": 11,
       "telecom_service": 3,
       "network_generation": 2,
-      "network_component": 2,
+      "network_component": 3,
       "network_equipment": 4,
       "global_company": 4
     },
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 15
+    "demotedLegacyPeerCount": 16
   }
 }

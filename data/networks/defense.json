@@ -160,6 +160,19 @@
       "legacyId": "def_i3system_ind"
     },
     {
+      "id": "krx:010820",
+      "type": "listed_company",
+      "ticker": "010820",
+      "nameKo": "퍼스텍",
+      "nameEn": "Firstec",
+      "market": "KOSPI",
+      "role": "육상무기·차량·탄약",
+      "group": "육상무기·차량·탄약",
+      "mcapWon": 289217592340,
+      "isListedKorea": true,
+      "legacyId": "def_firstec"
+    },
+    {
       "id": "program:kf21",
       "type": "program",
       "nameKo": "KF-21 Boramae",

@@ -93,6 +93,16 @@
           "ticker": "417840",
           "name": "저스템",
           "nameEn": "Jstem"
+        },
+        {
+          "ticker": "036200",
+          "name": "유니셈",
+          "nameEn": "UNION SEMICONDUCTOR EQUIPMENT&MATERIALS"
+        },
+        {
+          "ticker": "160980",
+          "name": "싸이맥스",
+          "nameEn": "CYMECHS Inc."
         }
       ],
       "suppliers": [
@@ -293,6 +303,11 @@
           "ticker": "110990",
           "name": "디아이티",
           "nameEn": "DIT"
+        },
+        {
+          "ticker": "168360",
+          "name": "펨트론",
+          "nameEn": "PEMTRON Corporation"
         }
       ],
       "suppliers": [
@@ -846,6 +861,16 @@
           "ticker": "253590",
           "name": "네오셈",
           "nameEn": "Neosem Inc."
+        },
+        {
+          "ticker": "394280",
+          "name": "오픈엣지테크놀로지",
+          "nameEn": "Openedges Technology, Inc."
+        },
+        {
+          "ticker": "094360",
+          "name": "칩스앤미디어",
+          "nameEn": "Chips&Media, Inc."
         }
       ],
       "suppliers": [
@@ -1202,6 +1227,11 @@
           "ticker": "219130",
           "name": "타이거일렉",
           "nameEn": "TigerElec Co.,Ltd."
+        },
+        {
+          "ticker": "091700",
+          "name": "파트론",
+          "nameEn": "PARTRON CO., LTD"
         }
       ],
       "suppliers": [
@@ -1422,6 +1452,11 @@
           "ticker": "061970",
           "name": "LB세미콘",
           "nameEn": "LB SEMICON"
+        },
+        {
+          "ticker": "086390",
+          "name": "유니테스트",
+          "nameEn": "UniTest Inc."
         }
       ],
       "suppliers": [
@@ -1577,6 +1612,11 @@
           "ticker": "093520",
           "name": "매커스",
           "nameEn": "Makus"
+        },
+        {
+          "ticker": "254490",
+          "name": "미래반도체",
+          "nameEn": "MIRAI SEMICONDUCTORS CO., LTD."
         }
       ],
       "suppliers": [

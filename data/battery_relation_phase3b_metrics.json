@@ -2,26 +2,26 @@
   "asOf": "2026-08-23",
   "sectorId": "battery",
   "note": "Orphan metrics split: classic orphanListedCompanyCount==0 can hide business-relation gaps when member_of/produces/exposed_to exist.",
-  "listedCompanyCount": 27,
+  "listedCompanyCount": 28,
   "structuralOrphanCount": 0,
-  "businessRelationOrphanCount": 24,
-  "directRelationshipOrphanCount": 20,
-  "classificationOnlyCompanyCount": 16,
-  "weakRelationOnlyCompanyCount": 24,
+  "businessRelationOrphanCount": 25,
+  "directRelationshipOrphanCount": 21,
+  "classificationOnlyCompanyCount": 17,
+  "weakRelationOnlyCompanyCount": 25,
   "orphanListedCompanyCount": 0,
   "edgeOriginCounts": {
-    "structuralGenerated": 58,
+    "structuralGenerated": 59,
     "manuallyCurated": 5,
     "legacyMigrated": 48
   },
   "statusCounts": {
-    "reference": 72,
+    "reference": 73,
     "reported": 4,
     "peer": 31,
     "inferred": 4
   },
   "typeCounts": {
-    "member_of": 27,
+    "member_of": 28,
     "used_in_process": 3,
     "exposed_to": 16,
     "produces": 20,
@@ -61,7 +61,8 @@
       "krx:126340",
       "krx:005420",
       "krx:107640",
-      "krx:393890"
+      "krx:393890",
+      "krx:011500"
     ],
     "directRelationshipOrphans": [
       "krx:006400",
@@ -83,7 +84,8 @@
       "krx:126340",
       "krx:005420",
       "krx:107640",
-      "krx:393890"
+      "krx:393890",
+      "krx:011500"
     ],
     "classificationOnly": [
       "krx:006400",
@@ -101,7 +103,8 @@
       "krx:126340",
       "krx:005420",
       "krx:107640",
-      "krx:393890"
+      "krx:393890",
+      "krx:011500"
     ],
     "groupMembershipOnly": [],
     "weakRelationOnly": [
@@ -128,7 +131,8 @@
       "krx:126340",
       "krx:005420",
       "krx:107640",
-      "krx:393890"
+      "krx:393890",
+      "krx:011500"
     ],
     "hasPeerButNoBusiness": [
       "krx:006400",
@@ -156,7 +160,8 @@
       "krx:348370",
       "krx:126340",
       "krx:005420",
-      "krx:393890"
+      "krx:393890",
+      "krx:011500"
     ]
   },
   "validateFailures": 0,

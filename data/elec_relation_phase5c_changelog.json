@@ -2,35 +2,35 @@
   "asOf": "2026-08-23",
   "phase": "5C",
   "reviewedBy": "editorial_phase5c",
-  "listedCompanyCount": 29,
+  "listedCompanyCount": 31,
   "metrics": {
-    "listedCompanyCount": 29,
+    "listedCompanyCount": 31,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 89,
-    "edgeCount": 125,
-    "structuralGeneratedEdgeCount": 76,
-    "legacyMigratedEdgeCount": 46,
-    "manuallyCuratedEdgeCount": 3,
+    "nodeCount": 95,
+    "edgeCount": 135,
+    "structuralGeneratedEdgeCount": 83,
+    "legacyMigratedEdgeCount": 48,
+    "manuallyCuratedEdgeCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 46,
+    "peerEdgeCount": 48,
     "supplyRelationshipCount": 0,
     "actualSupplyRelationshipCount": 0,
     "ownershipEdgeCount": 0,
     "jointDevelopmentCount": 0,
     "deviceAdoptionRelationshipCount": 0,
     "groupMembershipEdgeCount": 0,
-    "crossSectorReferenceCount": 3,
-    "crossSectorReferenceOnlyCompanyCount": 3,
-    "businessRelationOrphanCount": 29,
-    "directRelationshipOrphanCount": 29,
-    "directCommercialRelationshipOrphanCount": 29,
-    "classificationOnlyCompanyCount": 29,
+    "crossSectorReferenceCount": 4,
+    "crossSectorReferenceOnlyCompanyCount": 4,
+    "businessRelationOrphanCount": 31,
+    "directRelationshipOrphanCount": 31,
+    "directCommercialRelationshipOrphanCount": 31,
+    "classificationOnlyCompanyCount": 31,
     "groupMembershipOnlyCompanyCount": 0,
-    "hasPeerButNoBusinessCompanyCount": 29,
+    "hasPeerButNoBusinessCompanyCount": 31,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 29,
+    "weakRelationOnlyCompanyCount": 31,
     "structuralOnlyCompanyCount": 0,
     "orphanMetricDefinitions": {
       "listedCompanyCount": {
@@ -491,7 +491,9 @@
         "krx:004710",
         "krx:441270",
         "krx:078350",
-        "krx:290550"
+        "krx:290550",
+        "krx:049070",
+        "krx:065680"
       ],
       "directRelationshipOrphans": [
         "krx:009150",
@@ -522,7 +524,9 @@
         "krx:004710",
         "krx:441270",
         "krx:078350",
-        "krx:290550"
+        "krx:290550",
+        "krx:049070",
+        "krx:065680"
       ],
       "classificationOnly": [
         "krx:009150",
@@ -553,7 +557,9 @@
         "krx:004710",
         "krx:441270",
         "krx:078350",
-        "krx:290550"
+        "krx:290550",
+        "krx:049070",
+        "krx:065680"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -585,7 +591,9 @@
         "krx:004710",
         "krx:441270",
         "krx:078350",
-        "krx:290550"
+        "krx:290550",
+        "krx:049070",
+        "krx:065680"
       ],
       "hasPeerButNoBusiness": [
         "krx:009150",
@@ -616,7 +624,9 @@
         "krx:004710",
         "krx:441270",
         "krx:078350",
-        "krx:290550"
+        "krx:290550",
+        "krx:049070",
+        "krx:065680"
       ],
       "peerOnly": [],
       "structuralOnly": []
@@ -719,8 +729,8 @@
         "reason": "no_group_membership_edges"
       },
       "crossSectorReferenceEvidenceCoverage": {
-        "numerator": 3,
-        "denominator": 3,
+        "numerator": 4,
+        "denominator": 4,
         "percentage": 1,
         "displayValue": "100%",
         "applicable": true,
@@ -736,14 +746,15 @@
     },
     "phase5cCuratedAt": "2026-08-23",
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 46
+    "demotedLegacyPeerCount": 48
   },
   "validate": {
     "failures": [],
     "warnings": [
       "elec cross_sector_reference cross-sector-077360-sector-semiconductor should set excludesFromBusinessCoverage",
       "elec cross_sector_reference cross-sector-011070-sector-auto should set excludesFromBusinessCoverage",
-      "elec cross_sector_reference cross-sector-192650-sector-auto should set excludesFromBusinessCoverage"
+      "elec cross_sector_reference cross-sector-192650-sector-auto should set excludesFromBusinessCoverage",
+      "elec cross_sector_reference cross-sector-049070-sector-auto should set excludesFromBusinessCoverage"
     ]
   },
   "crossSectorBoundary": [
@@ -1154,6 +1165,41 @@
       "target": "group:electronic_component"
     },
     {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "product:electronics_ems_intops"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "component:ems_assembly"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:049070",
+      "target": "end_market:automotive_electronics"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:065680",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:065680",
+      "target": "product:connectors"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:065680",
+      "target": "component:connector"
+    },
+    {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
@@ -1476,6 +1522,20 @@
       "target": "global:panasonic"
     },
     {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:049070",
+      "target": "global:bosch"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:065680",
+      "target": "global:murata"
+    },
+    {
       "action": "add_cross_sector_reference",
       "source": "krx:077360",
       "target": "sector:semiconductor"
@@ -1488,6 +1548,11 @@
     {
       "action": "add_cross_sector_reference",
       "source": "krx:192650",
+      "target": "sector:auto"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:049070",
       "target": "sector:auto"
     },
     {

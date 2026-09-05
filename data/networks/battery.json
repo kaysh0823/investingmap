@@ -14,10 +14,10 @@
   ],
   "metrics": {
     "legacyMigratedEdgeCount": 50,
-    "structuralGeneratedEdgeCount": 58,
+    "structuralGeneratedEdgeCount": 59,
     "manuallyCuratedEdgeCount": 5,
     "removedEdgeCount": 6,
-    "finalEdgeCount": 111
+    "finalEdgeCount": 112
   },
   "nodes": [
     {
@@ -442,6 +442,20 @@
       "mcapWon": 326586339600,
       "isListedKorea": true,
       "legacyId": "energy_w_scope_chungju_plant_co"
+    },
+    {
+      "id": "krx:011500",
+      "type": "listed_company",
+      "ticker": "011500",
+      "nameKo": "한농화성",
+      "nameEn": "Hannongchemicalsinc.",
+      "market": "KOSPI",
+      "role": "소재",
+      "group": "소재",
+      "layer": "소재",
+      "mcapWon": 217823995060,
+      "isListedKorea": true,
+      "legacyId": "energy_hannongchemicalsinc"
     },
     {
       "id": "product:cathode",
@@ -1062,6 +1076,22 @@
       "status": "reference",
       "labelKo": "부품 밸류체인 분류",
       "labelEn": "부품 value-chain category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-23",
+      "noteKo": "동일 밸류체인 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship.",
+      "edgeOrigin": "structuralGenerated"
+    },
+    {
+      "id": "member-011500-group-battery_materials",
+      "source": "krx:011500",
+      "target": "group:battery_materials",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "소재 밸류체인 분류",
+      "labelEn": "소재 value-chain category",
       "evidence": [],
       "confidence": "high",
       "lastVerifiedAt": "2026-08-23",

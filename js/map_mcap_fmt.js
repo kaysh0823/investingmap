@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var MIN_MCAP_WON = 300000000000;
+  var MIN_MCAP_WON = 200000000000;
   var JO = 1e12;
   var EOK_100 = 1e10; // 0.01 jo = 100억원
 

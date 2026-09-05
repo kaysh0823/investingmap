@@ -2,31 +2,31 @@
   "asOf": "2026-08-29",
   "phase": "5G",
   "reviewedBy": "editorial_phase5g",
-  "listedCompanyCount": 14,
-  "nodeCount": 50,
-  "edgeCount": 69,
-  "structuralGenerated": 30,
-  "legacyMigrated": 35,
+  "listedCompanyCount": 16,
+  "nodeCount": 57,
+  "edgeCount": 78,
+  "structuralGenerated": 37,
+  "legacyMigrated": 37,
   "manuallyCurated": 4,
-  "demotedPeer": 35,
+  "demotedPeer": 37,
   "removedUnsupported": 2,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 14,
-    "nodeCount": 50,
-    "edgeCount": 69,
-    "structuralGeneratedEdgeCount": 30,
-    "legacyMigratedEdgeCount": 35,
+    "listedCompanyCount": 16,
+    "nodeCount": 57,
+    "edgeCount": 78,
+    "structuralGeneratedEdgeCount": 37,
+    "legacyMigratedEdgeCount": 37,
     "manuallyCuratedEdgeCount": 4,
     "medicalDeviceNodeCount": 0,
-    "deviceCategoryCount": 8,
-    "specialtyNodeCount": 6,
+    "deviceCategoryCount": 10,
+    "specialtyNodeCount": 8,
     "regulatoryClearanceCount": 0,
     "activeClearanceCount": 0,
     "withdrawnClearanceCount": 0,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 35,
+    "peerEdgeCount": 37,
     "supplyRelationshipCount": 0,
     "installationRelationshipCount": 0,
     "distributionRelationshipCount": 0,
@@ -36,10 +36,10 @@
     "jointVentureEdgeCount": 0,
     "crossSectorReferenceCount": 4,
     "marketExposureCount": 0,
-    "businessRelationOrphanCount": 14,
-    "directCommercialRelationshipOrphanCount": 14,
+    "businessRelationOrphanCount": 16,
+    "directCommercialRelationshipOrphanCount": 16,
     "classificationOnlyCompanyCount": 6,
-    "hasPeerButNoBusinessCompanyCount": 14,
+    "hasPeerButNoBusinessCompanyCount": 15,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
@@ -134,13 +134,13 @@
     "nodeCountByType": {
       "group": 5,
       "cross_sector_anchor": 4,
-      "listed_company": 14,
-      "device_category": 8,
-      "clinical_specialty": 6,
-      "global_company": 13
+      "listed_company": 16,
+      "device_category": 10,
+      "clinical_specialty": 8,
+      "global_company": 14
     },
     "removedUnsupportedPartnerCount": 2,
-    "demotedLegacyPeerCount": 35
+    "demotedLegacyPeerCount": 37
   },
   "validate": {
     "failures": [],
@@ -322,6 +322,41 @@
       "action": "structural_used_in_specialty",
       "ticker": "067630",
       "target": "specialty:laboratory-medicine"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "228760",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "228760",
+      "target": "device_category:cancer-molecular-dx"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "228760",
+      "target": "specialty:laboratory-medicine"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "228760",
+      "target": "specialty:oncology-diagnostics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "389650",
+      "lane": "surgical_device"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "389650",
+      "target": "device_category:embolization-device"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "389650",
+      "target": "specialty:interventional"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -577,6 +612,20 @@
       "afterType": "peer",
       "source": "krx:067630",
       "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:228760",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:228760",
+      "target": "global:illumina"
     },
     {
       "action": "add_cross_sector_reference",
