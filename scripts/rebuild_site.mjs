@@ -98,7 +98,7 @@ run('node scripts/emit_network_profiles.mjs', 'network profiles JS');
 run('node scripts/patch_relation_network.mjs', 'relation network v2 UI + renderer');
 run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');
 run('node scripts/apply_ship_chain_reclass.mjs', 'ship chain split persistence');
-run('node scripts/filter_mcap_floor.mjs', 'mcap floor 2천억원');
+run('node scripts/filter_mcap_floor.mjs', 'mcap floor 3천억원');
 run('node scripts/migrate_medtech_network_phase5g.mjs', 'Phase 5G medtech device/specialty/regulatory ecosystem');
 run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');

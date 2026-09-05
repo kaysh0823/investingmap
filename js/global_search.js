@@ -70,7 +70,7 @@
       volatility: '변동성 분포',
       table: '기업목록',
       noResults: '검색 결과 없음',
-      coverageHint: '시총 2천억원 이상 종목만 커버하고 있습니다.',
+      coverageHint: '시총 3천억원 이상 종목만 커버하고 있습니다.',
       shortcutHint: '/ 또는 Ctrl+K',
     },
     en: {
@@ -81,7 +81,7 @@
       volatility: 'Volatility',
       table: 'Company List',
       noResults: 'No matches',
-      coverageHint: 'Only names with market cap ≥ KRW 200B are covered.',
+      coverageHint: 'Only names with market cap ≥ KRW 300B are covered.',
       shortcutHint: '/ or Ctrl+K',
     },
   };

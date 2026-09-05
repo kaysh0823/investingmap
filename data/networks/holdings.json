@@ -556,30 +556,6 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:012030",
-      "type": "listed_company",
-      "ticker": "012030",
-      "nameKo": "DB",
-      "nameEn": "DB Inc.",
-      "market": "KOSPI",
-      "role": "사업지주",
-      "group": "사업지주",
-      "mcapWon": 298542116572,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:084690",
-      "type": "listed_company",
-      "ticker": "084690",
-      "nameKo": "대상홀딩스",
-      "nameEn": "Daesang Holdings",
-      "market": "KOSPI",
-      "role": "소비·서비스 지주",
-      "group": "소비·서비스 지주",
-      "mcapWon": 290786680140,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:096770",
       "type": "major_affiliate",
       "ticker": "096770",
@@ -1215,34 +1191,6 @@
     {
       "id": "peer-002020-ckh",
       "source": "krx:002020",
-      "target": "global:ckh",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌 지주 peer 비교",
-      "labelEn": "Global holding peer comparison",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-22",
-      "defaultHidden": true
-    },
-    {
-      "id": "peer-012030-ckh",
-      "source": "krx:012030",
-      "target": "global:ckh",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌 지주 peer 비교",
-      "labelEn": "Global holding peer comparison",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-22",
-      "defaultHidden": true
-    },
-    {
-      "id": "peer-084690-ckh",
-      "source": "krx:084690",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",

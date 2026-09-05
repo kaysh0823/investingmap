@@ -1,18 +1,18 @@
 {
   "migratedAt": "2026-08-23",
   "legacyMigratedEdgeCount": 50,
-  "structuralGeneratedEdgeCount": 59,
+  "structuralGeneratedEdgeCount": 58,
   "manuallyCuratedEdgeCount": 5,
   "removedEdgeCount": 6,
-  "finalEdgeCount": 112,
+  "finalEdgeCount": 111,
   "statusCounts": {
-    "reference": 73,
+    "reference": 72,
     "reported": 4,
     "peer": 31,
     "inferred": 4
   },
   "typeCounts": {
-    "member_of": 28,
+    "member_of": 27,
     "used_in_process": 3,
     "exposed_to": 16,
     "produces": 20,
@@ -314,17 +314,6 @@
       "legacyEdgeId": null,
       "source": "krx:393890",
       "target": "group:battery_parts",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:011500",
-      "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",

@@ -169,7 +169,7 @@ const FAQS_KO = [
   },
   {
     q: '어떤 종목이 지도·허브에 포함되나요?',
-    a: 'KOSPI·KOSDAQ 상장사 중 KRX 기준 시가총액 2천억원(200,000,000,000원) 이상이며, 해당 산업 cp_list·편집 분류에 포함된 종목만 산업 지도·허브·Top10에 노출됩니다. 자세한 편집 원칙은 편집·검증 정책 페이지를 참고하세요.',
+    a: 'KOSPI·KOSDAQ 상장사 중 KRX 기준 시가총액 3천억원(300,000,000,000원) 이상이며, 해당 산업 cp_list·편집 분류에 포함된 종목만 산업 지도·허브·Top10에 노출됩니다. 자세한 편집 원칙은 편집·검증 정책 페이지를 참고하세요.',
   },
   {
     q: '시가총액·PER·PBR 데이터는 어디서 가져오나요?',
@@ -200,7 +200,7 @@ const FAQS_EN = FAQS_KO.map((f, i) => ({
   ][i],
   a: [
     'Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed names. Each page shows KRX-based market cap, PER, PBR, value-chain tags, a sortable company table, and a relationship graph in Korean and English.',
-    'Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 200 billion (200,000,000,000 won) that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.',
+    'Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 300 billion (300,000,000,000 won) that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.',
     'Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page (e.g. 15 June 2026). Last price and 52-week high/low refresh via /api/quotes (KRX OPEN API and Naver cache) and may show — when delayed or closed.',
     'English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot from /api/fx (Naver Finance, with static fallback).',
     'Graph edges for customers, peers, and keywords are editorial reference networks from public information—not a substitute for DART filings or annual reports.',
@@ -228,7 +228,7 @@ const pages = [
     </ul>
     <h2>데이터 편집 원칙</h2>
     <ul>
-      <li><strong>시총 하한</strong>: KRX 기준 시가총액 <strong>2천억원(200,000,000,000원) 미만</strong> KOSPI·KOSDAQ 상장사는 산업 지도, 허브 기업 목록, Top10·RS Top10 집계 대상에서 제외합니다.</li>
+      <li><strong>시총 하한</strong>: KRX 기준 시가총액 <strong>3천억원(300,000,000,000원) 미만</strong> KOSPI·KOSDAQ 상장사는 산업 지도, 허브 기업 목록, Top10·RS Top10 집계 대상에서 제외합니다.</li>
       <li>하한은 빌드 시 <code>lib/mcap_policy.mjs</code>의 <code>MIN_MCAP_WON</code>과 <code>scripts/filter_mcap_floor.mjs</code>로 지도·허브 인덱스에 반영됩니다.</li>
       <li>영업일 시세 갱신 후 시총이 하한 아래로 내려가면 기업 표에서도 해당 행을 숨길 수 있습니다.</li>
       <li>산업 분류(cp_list)에 새 종목을 넣을 때도 동일한 시총 하한을 적용합니다.</li>
@@ -250,7 +250,7 @@ const pages = [
     </ul>
     <h2>Data editing principles</h2>
     <ul>
-      <li><strong>Market-cap floor</strong>: KOSPI and KOSDAQ listings below <strong>KRW 200 billion</strong> (200,000,000,000 won) on KRX market cap are excluded from industry maps, the hub company list, and Top 10 / RS Top 10 rankings.</li>
+      <li><strong>Market-cap floor</strong>: KOSPI and KOSDAQ listings below <strong>KRW 300 billion</strong> (300,000,000,000 won) on KRX market cap are excluded from industry maps, the hub company list, and Top 10 / RS Top 10 rankings.</li>
       <li>The floor is applied at build time via <code>lib/mcap_policy.mjs</code> (<code>MIN_MCAP_WON</code>) and <code>scripts/filter_mcap_floor.mjs</code>.</li>
       <li>After live quote updates, rows may be hidden if market cap falls below the floor.</li>
       <li>New tickers added to industry lists (cp_list) must meet the same floor.</li>

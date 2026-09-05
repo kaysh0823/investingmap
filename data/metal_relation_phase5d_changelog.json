@@ -2,28 +2,28 @@
   "asOf": "2026-08-23",
   "phase": "5D",
   "reviewedBy": "editorial_phase5d",
-  "listedCompanyCount": 23,
+  "listedCompanyCount": 20,
   "metrics": {
-    "listedCompanyCount": 23,
+    "listedCompanyCount": 20,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 84,
-    "edgeCount": 103,
+    "nodeCount": 75,
+    "edgeCount": 90,
     "nodeCountByType": {
       "business_category": 7,
       "cross_sector_anchor": 6,
       "end_market": 3,
-      "listed_company": 23,
-      "metal_product": 38,
+      "listed_company": 20,
+      "metal_product": 32,
       "commodity": 3,
       "global_company": 4
     },
-    "structuralGeneratedEdgeCount": 71,
-    "legacyMigratedEdgeCount": 27,
+    "structuralGeneratedEdgeCount": 61,
+    "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 27,
+    "peerEdgeCount": 24,
     "supplyRelationshipCount": 0,
     "offtakeAgreementCount": 0,
     "ownershipEdgeCount": 0,
@@ -34,13 +34,13 @@
     "commodityExposureCount": 5,
     "crossSectorReferenceCount": 5,
     "actualSupplyRelationshipCount": 0,
-    "businessRelationOrphanCount": 23,
-    "directCommercialRelationshipOrphanCount": 23,
-    "classificationOnlyCompanyCount": 13,
+    "businessRelationOrphanCount": 20,
+    "directCommercialRelationshipOrphanCount": 20,
+    "classificationOnlyCompanyCount": 11,
     "groupMembershipOnlyCompanyCount": 0,
-    "hasPeerButNoBusinessCompanyCount": 23,
+    "hasPeerButNoBusinessCompanyCount": 20,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 23,
+    "weakRelationOnlyCompanyCount": 20,
     "zeroDegreeNodeCount": 2,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
@@ -125,9 +125,9 @@
       }
     },
     "structuralOrphanCount": 0,
-    "directRelationshipOrphanCount": 23,
+    "directRelationshipOrphanCount": 20,
     "structuralOnlyCompanyCount": 0,
-    "confirmedReportedBusinessOrphanCount": 23,
+    "confirmedReportedBusinessOrphanCount": 20,
     "orphanListedCompanyCount": 0,
     "metricDefinitions": {
       "listedCompanyCount": {
@@ -579,10 +579,7 @@
         "krx:306200",
         "krx:104700",
         "krx:009160",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
-        "krx:084010"
+        "krx:092790"
       ],
       "directRelationshipOrphans": [
         "krx:010130",
@@ -604,10 +601,7 @@
         "krx:306200",
         "krx:104700",
         "krx:009160",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
-        "krx:084010"
+        "krx:092790"
       ],
       "classificationOnly": [
         "krx:241560",
@@ -620,9 +614,7 @@
         "krx:009520",
         "krx:019210",
         "krx:002240",
-        "krx:009160",
-        "krx:002710",
-        "krx:058430"
+        "krx:009160"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -645,10 +637,7 @@
         "krx:306200",
         "krx:104700",
         "krx:009160",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
-        "krx:084010"
+        "krx:092790"
       ],
       "hasPeerButNoBusiness": [
         "krx:010130",
@@ -670,16 +659,13 @@
         "krx:306200",
         "krx:104700",
         "krx:009160",
-        "krx:092790",
-        "krx:002710",
-        "krx:058430",
-        "krx:084010"
+        "krx:092790"
       ],
       "peerOnly": [],
       "structuralOnly": []
     },
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 27
+    "demotedLegacyPeerCount": 24
   },
   "validate": {
     "failures": [],
@@ -1065,63 +1051,6 @@
       "edgeType": "used_in_end_market"
     },
     {
-      "action": "add_structural",
-      "source": "krx:002710",
-      "target": "group:rolling_processing"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002710",
-      "target": "metal_product:tinplate",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:002710",
-      "target": "metal_product:coated_tinplate",
-      "edgeType": "produces"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:058430",
-      "target": "group:rolling_processing"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:058430",
-      "target": "metal_product:coated_color_steel",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:058430",
-      "target": "metal_product:color_coated_steel",
-      "edgeType": "produces"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:084010",
-      "target": "group:steelmaking"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:084010",
-      "target": "metal_product:rebar_long",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:084010",
-      "target": "metal_product:rebar_sections",
-      "edgeType": "produces"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:084010",
-      "target": "end_market:construction",
-      "edgeType": "used_in_end_market"
-    },
-    {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
@@ -1288,27 +1217,6 @@
       "afterType": "peer",
       "source": "krx:092790",
       "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:002710",
-      "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:058430",
-      "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:084010",
-      "target": "global:arcelormittal"
     },
     {
       "action": "add_cross_sector_reference",

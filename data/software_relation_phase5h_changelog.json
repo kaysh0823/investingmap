@@ -2,24 +2,24 @@
   "asOf": "2026-08-29",
   "phase": "5H",
   "reviewedBy": "editorial_phase5h",
-  "listedCompanyCount": 23,
-  "nodeCount": 65,
-  "edgeCount": 87,
-  "structuralGenerated": 56,
-  "legacyMigrated": 27,
+  "listedCompanyCount": 21,
+  "nodeCount": 61,
+  "edgeCount": 78,
+  "structuralGenerated": 50,
+  "legacyMigrated": 24,
   "manuallyCurated": 4,
-  "demotedPeer": 27,
+  "demotedPeer": 24,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 23,
-    "nodeCount": 65,
-    "edgeCount": 87,
-    "structuralGeneratedEdgeCount": 56,
-    "legacyMigratedEdgeCount": 27,
+    "listedCompanyCount": 21,
+    "nodeCount": 61,
+    "edgeCount": 78,
+    "structuralGeneratedEdgeCount": 50,
+    "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 4,
-    "softwareProductCount": 4,
+    "softwareProductCount": 3,
     "platformNodeCount": 4,
-    "cloudServiceCount": 5,
+    "cloudServiceCount": 4,
     "softwareCategoryCount": 7,
     "integrationRelationshipCount": 0,
     "deploymentRelationshipCount": 0,
@@ -33,11 +33,11 @@
     "crossSectorReferenceCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 27,
-    "businessRelationOrphanCount": 23,
-    "directCommercialRelationshipOrphanCount": 23,
-    "classificationOnlyCompanyCount": 12,
-    "hasPeerButNoBusinessCompanyCount": 18,
+    "peerEdgeCount": 24,
+    "businessRelationOrphanCount": 21,
+    "directCommercialRelationshipOrphanCount": 21,
+    "classificationOnlyCompanyCount": 11,
+    "hasPeerButNoBusinessCompanyCount": 16,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
@@ -123,16 +123,16 @@
     "nodeCountByType": {
       "group": 7,
       "cross_sector_anchor": 4,
-      "listed_company": 23,
+      "listed_company": 21,
       "platform": 4,
       "software_category": 7,
       "customer_industry": 5,
-      "cloud_service": 5,
-      "software_product": 4,
+      "cloud_service": 4,
+      "software_product": 3,
       "global_company": 6
     },
     "removedUnsupportedPartnerCount": 25,
-    "demotedLegacyPeerCount": 27
+    "demotedLegacyPeerCount": 24
   },
   "validate": {
     "failures": [],
@@ -414,36 +414,6 @@
       "action": "structural_member_of",
       "ticker": "025770",
       "lane": "managed_service"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "286940",
-      "lane": "managed_service"
-    },
-    {
-      "action": "structural_provides_managed_service",
-      "ticker": "286940",
-      "target": "cloud_service:lotte-innovate-it"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "286940",
-      "target": "software_category:si-cloud"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "203650",
-      "lane": "cybersecurity"
-    },
-    {
-      "action": "structural_develops",
-      "ticker": "203650",
-      "target": "software_product:dream-security-auth"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "203650",
-      "target": "software_category:cybersecurity"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -731,21 +701,6 @@
       "action": "drop_unknown_partner",
       "source": "krx:025770",
       "partner": "mastercard"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:286940",
-      "target": "global:accenture"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:286940",
-      "target": "global:microsoft"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:203650",
-      "target": "global:paloalto"
     },
     {
       "action": "add_cross_sector_reference",

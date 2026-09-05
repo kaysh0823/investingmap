@@ -6,7 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const SCRIPT_V = 3;
+export const SCRIPT_V = 4;
 export const GLOBAL_SEARCH_V = SCRIPT_V;
 
 export const MAP_FILES = [

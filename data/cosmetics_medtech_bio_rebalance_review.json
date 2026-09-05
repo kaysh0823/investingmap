@@ -181,11 +181,6 @@
       "ticker": "228760",
       "name": "지노믹트리",
       "chain": "진단·IVD"
-    },
-    {
-      "ticker": "389650",
-      "name": "넥스트바이오메디컬",
-      "chain": "의료장비·수술"
     }
   ],
   "movedToCosmetics": [

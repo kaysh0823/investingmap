@@ -1,25 +1,25 @@
 {
   "migratedAt": "2026-08-23",
   "legacyMigratedEdgeCount": 61,
-  "structuralGeneratedEdgeCount": 71,
+  "structuralGeneratedEdgeCount": 67,
   "manuallyCuratedEdgeCount": 8,
   "removedEdgeCount": 1,
-  "finalEdgeCount": 127,
+  "finalEdgeCount": 123,
   "legacyMigratedBusinessEdgeCount": 39,
   "manuallyCuratedBusinessEdgeCount": 8,
   "confirmedBusinessEdgeCount": 0,
   "reportedBusinessEdgeCount": 0,
   "statusCounts": {
-    "reference": 82,
+    "reference": 78,
     "inferred": 9,
     "ended": 2,
     "peer": 34
   },
   "typeCounts": {
-    "member_of": 28,
+    "member_of": 26,
     "builds_vessel_type": 15,
-    "exposed_to": 11,
-    "manufactures": 26,
+    "exposed_to": 10,
+    "manufactures": 25,
     "owns": 1,
     "ordered": 3,
     "awarded_to": 3,
@@ -29,10 +29,10 @@
   },
   "orphanMetrics": {
     "structuralOrphanCount": 0,
-    "businessRelationOrphanCount": 28,
-    "directRelationshipOrphanCount": 20,
-    "classificationOnlyCompanyCount": 20,
-    "weakRelationOnlyCompanyCount": 28
+    "businessRelationOrphanCount": 26,
+    "directRelationshipOrphanCount": 18,
+    "classificationOnlyCompanyCount": 18,
+    "weakRelationOnlyCompanyCount": 26
   },
   "changes": [
     {
@@ -756,50 +756,6 @@
       "target": "product:piping_fitting",
       "beforeType": "(none)",
       "afterType": "manufactures",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:064820",
-      "target": "group:engine",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:064820",
-      "target": "product:marine_engine",
-      "beforeType": "(none)",
-      "afterType": "manufactures",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:014940",
-      "target": "group:shipping",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:014940",
-      "target": "market:global_shipbuilding",
-      "beforeType": "(none)",
-      "afterType": "exposed_to",
       "beforeStatus": "(none)",
       "afterStatus": "reference",
       "origin": "structuralGenerated",

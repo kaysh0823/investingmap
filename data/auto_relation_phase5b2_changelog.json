@@ -3,18 +3,18 @@
   "phase": "5B.2",
   "reviewedBy": "editorial_manual_review_phase5b2",
   "metrics": {
-    "listedCompanyCount": 24,
+    "listedCompanyCount": 22,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 84,
-    "edgeCount": 125,
-    "structuralEdgeCount": 66,
-    "structuralGeneratedEdgeCount": 61,
-    "legacyMigratedEdgeCount": 58,
+    "nodeCount": 80,
+    "edgeCount": 117,
+    "structuralEdgeCount": 62,
+    "structuralGeneratedEdgeCount": 57,
+    "legacyMigratedEdgeCount": 54,
     "manuallyCuratedEdgeCount": 6,
     "confirmedBusinessEdgeCount": 1,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 58,
+    "peerEdgeCount": 54,
     "supplyRelationshipCount": 0,
     "actualSupplyRelationshipCount": 0,
     "vehicleFitmentRelationshipCount": 0,
@@ -31,14 +31,14 @@
     "hybridExposedCompanyCount": 1,
     "hybridExposureCount": 1,
     "hybridStructuralEdgeCount": 1,
-    "businessRelationOrphanCount": 22,
-    "directRelationshipOrphanCount": 22,
-    "directCommercialRelationshipOrphanCount": 22,
-    "confirmedReportedBusinessOrphanCount": 22,
-    "classificationOnlyCompanyCount": 22,
+    "businessRelationOrphanCount": 20,
+    "directRelationshipOrphanCount": 20,
+    "directCommercialRelationshipOrphanCount": 20,
+    "confirmedReportedBusinessOrphanCount": 20,
+    "classificationOnlyCompanyCount": 20,
     "groupMembershipOnlyCompanyCount": 5,
-    "weakRelationOnlyCompanyCount": 17,
-    "hasPeerButNoBusinessCompanyCount": 22,
+    "weakRelationOnlyCompanyCount": 15,
+    "hasPeerButNoBusinessCompanyCount": 20,
     "peerOnlyCompanyCount": 0,
     "structuralOnlyCompanyCount": 0,
     "orphanListedCompanyCount": 0,
@@ -493,9 +493,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "directRelationshipOrphans": [
         "krx:005380",
@@ -517,9 +515,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "classificationOnly": [
         "krx:005380",
@@ -541,9 +537,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "groupMembershipOnly": [
         "krx:005380",
@@ -567,9 +561,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "hasPeerButNoBusiness": [
         "krx:005380",
@@ -591,14 +583,12 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "peerOnly": [],
       "structuralOnly": []
     },
-    "evidenceFieldCoverage": 0.344,
+    "evidenceFieldCoverage": 0.3504273504273504,
     "businessRelationshipDirectEvidenceCoverage": 1,
     "businessRelationshipPrimarySourceCoverage": 1,
     "supplyRelationshipDirectEvidenceCoverage": null,
@@ -610,10 +600,10 @@
     "groupMembershipPrimarySourceCoverage": 1,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 43,
-        "denominator": 125,
-        "percentage": 0.344,
-        "displayValue": "34.4%",
+        "numerator": 41,
+        "denominator": 117,
+        "percentage": 0.3504273504273504,
+        "displayValue": "35%",
         "applicable": true,
         "reason": null
       },
@@ -733,18 +723,18 @@
     "phase5b1CuratedAt": "2026-08-23"
   },
   "orphan": {
-    "listedCompanyCount": 24,
+    "listedCompanyCount": 22,
     "structuralOrphanCount": 0,
-    "businessRelationOrphanCount": 22,
-    "directRelationshipOrphanCount": 22,
-    "directCommercialRelationshipOrphanCount": 22,
-    "classificationOnlyCompanyCount": 22,
+    "businessRelationOrphanCount": 20,
+    "directRelationshipOrphanCount": 20,
+    "directCommercialRelationshipOrphanCount": 20,
+    "classificationOnlyCompanyCount": 20,
     "groupMembershipOnlyCompanyCount": 5,
-    "weakRelationOnlyCompanyCount": 17,
-    "hasPeerButNoBusinessCompanyCount": 22,
+    "weakRelationOnlyCompanyCount": 15,
+    "hasPeerButNoBusinessCompanyCount": 20,
     "peerOnlyCompanyCount": 0,
     "structuralOnlyCompanyCount": 0,
-    "confirmedReportedBusinessOrphanCount": 22,
+    "confirmedReportedBusinessOrphanCount": 20,
     "orphanListedCompanyCount": 0,
     "metricDefinitions": {
       "listedCompanyCount": {
@@ -1196,9 +1186,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "directRelationshipOrphans": [
         "krx:005380",
@@ -1220,9 +1208,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "classificationOnly": [
         "krx:005380",
@@ -1244,9 +1230,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "groupMembershipOnly": [
         "krx:005380",
@@ -1270,9 +1254,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "hasPeerButNoBusiness": [
         "krx:005380",
@@ -1294,9 +1276,7 @@
         "krx:009900",
         "krx:097520",
         "krx:200880",
-        "krx:381970",
-        "krx:010690",
-        "krx:000430"
+        "krx:381970"
       ],
       "peerOnly": [],
       "structuralOnly": []

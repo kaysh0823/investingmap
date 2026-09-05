@@ -96,8 +96,8 @@ const searchSrc = fs.readFileSync(GLOBAL_SEARCH_JS, 'utf8');
 assert.ok(searchSrc.includes("tab: 'volatility'"), 'global_search modal must offer volatility');
 assert.ok(searchSrc.includes("volatility: '변동성 분포'"), 'global_search ko volatility label');
 assert.ok(searchSrc.includes("volatility: 'Volatility'"), 'global_search en volatility label');
-assert.ok(searchSrc.includes("coverageHint: '시총 2천억원 이상 종목만 커버하고 있습니다.'"), 'global_search ko coverageHint');
-assert.ok(searchSrc.includes("coverageHint: 'Only names with market cap ≥ KRW 200B are covered.'"), 'global_search en coverageHint');
+assert.ok(searchSrc.includes("coverageHint: '시총 3천억원 이상 종목만 커버하고 있습니다.'"), 'global_search ko coverageHint');
+assert.ok(searchSrc.includes("coverageHint: 'Only names with market cap ≥ KRW 300B are covered.'"), 'global_search en coverageHint');
 assert.ok(searchSrc.includes('.im-gs-hint'), 'global_search css must include .im-gs-hint');
 assert.ok(searchSrc.includes("hint.className = 'im-gs-hint'"), 'global_search must render .im-gs-hint element');
 
@@ -223,7 +223,7 @@ assert.ok(searchSrc.includes("hint.className = 'im-gs-hint'"), 'global_search mu
   assert.equal(emptyKo.className, 'im-gs-empty');
   assert.equal(emptyKo.textContent, '검색 결과 없음');
   assert.equal(hintKo.className, 'im-gs-hint');
-  assert.equal(hintKo.textContent, '시총 2천억원 이상 종목만 커버하고 있습니다.');
+  assert.equal(hintKo.textContent, '시총 3천억원 이상 종목만 커버하고 있습니다.');
 
   // Test en empty results
   mockDoc.documentElement.setAttribute('lang', 'en');
@@ -235,7 +235,7 @@ assert.ok(searchSrc.includes("hint.className = 'im-gs-hint'"), 'global_search mu
   assert.equal(emptyEn.className, 'im-gs-empty');
   assert.equal(emptyEn.textContent, 'No matches');
   assert.equal(hintEn.className, 'im-gs-hint');
-  assert.equal(hintEn.textContent, 'Only names with market cap ≥ KRW 200B are covered.');
+  assert.equal(hintEn.textContent, 'Only names with market cap ≥ KRW 300B are covered.');
 
   // Test with results: hint and empty must not exist
   inputEl.value = '삼성';

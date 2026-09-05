@@ -1,5 +1,5 @@
 /**
- * Remove companies below MIN_MCAP_WON (2천억원) from industry maps and bio inline data.
+ * Remove companies below MIN_MCAP_WON (3천억원) from industry maps and bio inline data.
  * Refreshes mcapWon from latest KRX CSV (data_4937_* / data_4848_*) before filtering.
  */
 import fs from 'fs';
@@ -270,7 +270,7 @@ function patchIndexHubCounts(hubLines) {
 
 function main() {
   const krx = loadMergedKrxMap(DATA_DIR);
-  console.log(`Applying market-cap floor: ${MIN_MCAP_WON.toLocaleString('ko-KR')} won (2\ucc9c\uc5b5\uc6d0)`);
+  console.log(`Applying market-cap floor: ${MIN_MCAP_WON.toLocaleString('ko-KR')} won (3\ucc9c\uc5b5\uc6d0)`);
   const counts = {};
   for (const rel of HTML_MAPS) {
     const key = rel.split('/')[0];

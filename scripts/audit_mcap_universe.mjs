@@ -1,5 +1,5 @@
 /**
- * Read-only audit: hub coverage vs KRX market-cap floor (2천억원).
+ * Read-only audit: hub coverage vs KRX market-cap floor (3천억원).
  *
  * Usage:
  *   npm run audit:mcap-universe
