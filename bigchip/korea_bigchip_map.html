@@ -2016,10 +2016,6 @@
   <div id="tab-table" class="tab-content">
     <div class="table-container">
       <div class="filter-bar">
-        <div class="filter-row filter-row-chain">
-          <span class="filter-label" id="fl-chain-label">벨류체인</span>
-          <div id="chain-chips"></div>
-        </div>
         <div class="filter-row filter-row-market">
           <span class="filter-label" id="fl-market-label">시장</span>
           <div id="market-chips"></div>
@@ -3435,7 +3431,6 @@
       document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
-      document.getElementById('fl-chain-label').textContent = t.flChain;
       document.getElementById('fl-market-label').textContent = t.flMarket;
       document.getElementById('search-input').placeholder = t.searchPlaceholder;
       document.getElementById('result-label').innerHTML = t.resultLabel + '<span id="show-count"></span>' + t.resultUnit;
@@ -3501,18 +3496,7 @@
       }
     }
 
-    function buildChainChips() {
-      const t = T[lang];
-      const container = document.getElementById('chain-chips');
-      const chains = ['all', 'IDM/종합반도체', '팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
-      container.innerHTML = chains.map(ch => {
-        const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
-        const isActive = currentChain === ch;
-        const color = CHAIN_COLORS[ch];
-        const style = isActive ? `background:${color || '#4FC3F7'};color:#0d1117;border-color:transparent;` : '';
-        return `<div class="filter-chip${isActive ? ' active' : ''}" style="${style}" data-filter-chain="${ch}" onclick="setChainFilter('${ch}',this)">${label}</div>`;
-      }).join('');
-    }
+    function buildChainChips() {}
 
     function buildMarketChips() {
       const t = T[lang];
@@ -3581,7 +3565,7 @@
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
         if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.shouldHideFromTable && InvestingMapLiveQuotes.shouldHideFromTable(c)) return false;
-        if (currentChain !== 'all' && c.chain !== currentChain) return false;
+        /* bigchip: no chain filter */
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
           const s = searchTerm.toLowerCase();
@@ -3664,11 +3648,7 @@
     if (window.InvestingMapMobileTable) InvestingMapMobileTable.sync(document.getElementById('main-table'));
     }
 
-    function setChainFilter(chain, el) {
-      currentChain = chain;
-      buildChainChips();
-      renderTable();
-    }
+    function setChainFilter() {}
     function setMarketFilter(m, el) {
       currentMarket = m;
       buildMarketChips();
