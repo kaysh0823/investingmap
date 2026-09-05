@@ -70,6 +70,7 @@
       volatility: '변동성 분포',
       table: '기업목록',
       noResults: '검색 결과 없음',
+      coverageHint: '시총 2천억원 이상 종목만 커버하고 있습니다.',
       shortcutHint: '/ 또는 Ctrl+K',
     },
     en: {
@@ -80,6 +81,7 @@
       volatility: 'Volatility',
       table: 'Company List',
       noResults: 'No matches',
+      coverageHint: 'Only names with market cap ≥ KRW 200B are covered.',
       shortcutHint: '/ or Ctrl+K',
     },
   };
@@ -227,7 +229,8 @@
       '.im-gs-item:hover,.im-gs-item.is-active{background:color-mix(in srgb,var(--accent,#58a6ff) 12%,var(--surface2,#21262d))}' +
       '.im-gs-item strong{font-weight:700}' +
       '.im-gs-item span{color:var(--text-muted,#8b949e)}' +
-      '.im-gs-empty{padding:10px 12px;font-size:12px;color:var(--text-muted,#8b949e)}' +
+      '.im-gs-empty{padding:10px 12px 0;font-size:12px;color:var(--text-muted,#8b949e)}' +
+      '.im-gs-hint{padding:0 12px 10px;font-size:11px;line-height:1.35;color:var(--text-muted,#8b949e);margin-top:4px}' +
       '.im-gs-topbar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--surface,#161b22);' +
       'border-bottom:1px solid var(--border,#30363d);position:sticky;top:0;z-index:900}' +
       '.im-gs-topbar .hub-brand,.im-gs-topbar .hdr-brand{flex-shrink:0}' +
@@ -271,6 +274,12 @@
       empty.className = 'im-gs-empty';
       empty.textContent = c.noResults;
       ui.list.appendChild(empty);
+      if (c.coverageHint) {
+        var hint = document.createElement('li');
+        hint.className = 'im-gs-hint';
+        hint.textContent = c.coverageHint;
+        ui.list.appendChild(hint);
+      }
       ui.list.classList.add('is-open');
       return;
     }

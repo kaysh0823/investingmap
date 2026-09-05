@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
 import { SECTOR_META } from '../lib/sector_meta.mjs';
 import {
   GLOBAL_SEARCH_V,
@@ -95,6 +96,157 @@ const searchSrc = fs.readFileSync(GLOBAL_SEARCH_JS, 'utf8');
 assert.ok(searchSrc.includes("tab: 'volatility'"), 'global_search modal must offer volatility');
 assert.ok(searchSrc.includes("volatility: '변동성 분포'"), 'global_search ko volatility label');
 assert.ok(searchSrc.includes("volatility: 'Volatility'"), 'global_search en volatility label');
+assert.ok(searchSrc.includes("coverageHint: '시총 2천억원 이상 종목만 커버하고 있습니다.'"), 'global_search ko coverageHint');
+assert.ok(searchSrc.includes("coverageHint: 'Only names with market cap ≥ KRW 200B are covered.'"), 'global_search en coverageHint');
+assert.ok(searchSrc.includes('.im-gs-hint'), 'global_search css must include .im-gs-hint');
+assert.ok(searchSrc.includes("hint.className = 'im-gs-hint'"), 'global_search must render .im-gs-hint element');
+
+// Test dropdown rendering logic for no-result hint (ko / en)
+{
+  class MockElement {
+    constructor(tag) {
+      this.tagName = tag.toUpperCase();
+      this.children = [];
+      this.className = '';
+      this.classes = new Set();
+      this.classList = {
+        add: (c) => this.classes.add(c),
+        remove: (c) => this.classes.delete(c),
+        toggle: (c, force) => (force ? this.classes.add(c) : this.classes.delete(c)),
+        contains: (c) => this.classes.has(c),
+      };
+      this.attributes = {};
+      this.textContent = '';
+      this._innerHTML = '';
+      this.parentNode = null;
+    }
+    setAttribute(k, v) { this.attributes[k] = String(v); }
+    getAttribute(k) { return this.attributes[k] || null; }
+    appendChild(child) {
+      this.children.push(child);
+      child.parentNode = this;
+      return child;
+    }
+    insertBefore(child, ref) {
+      const idx = ref ? this.children.indexOf(ref) : -1;
+      if (idx >= 0) this.children.splice(idx, 0, child);
+      else this.children.push(child);
+      child.parentNode = this;
+      return child;
+    }
+    get firstChild() { return this.children[0] || null; }
+    addEventListener(event, fn) {
+      this.listeners = this.listeners || {};
+      this.listeners[event] = this.listeners[event] || [];
+      this.listeners[event].push(fn);
+    }
+    dispatchEvent(event) {
+      const type = typeof event === 'string' ? event : event.type;
+      const list = (this.listeners && this.listeners[type]) || [];
+      for (const fn of list) fn({ target: this, preventDefault() {} });
+    }
+    querySelector(sel) {
+      for (const c of this.children) {
+        if (('.' + c.className).includes(sel) || c.id === sel.replace('#', '')) return c;
+        const found = c.querySelector(sel);
+        if (found) return found;
+      }
+      return null;
+    }
+    querySelectorAll(sel) {
+      const out = [];
+      for (const c of this.children) {
+        if (('.' + c.className).includes(sel) || c.id === sel.replace('#', '')) out.push(c);
+        out.push(...c.querySelectorAll(sel));
+      }
+      return out;
+    }
+    get innerHTML() { return this._innerHTML; }
+    set innerHTML(v) {
+      this._innerHTML = v;
+      if (v === '') this.children = [];
+    }
+  }
+
+  const mockDoc = {
+    readyState: 'complete',
+    documentElement: new MockElement('html'),
+    head: new MockElement('head'),
+    body: new MockElement('body'),
+    createElement(tag) { return new MockElement(tag); },
+    getElementById(id) {
+      return mockDoc.body.querySelector('#' + id);
+    },
+    querySelector(sel) {
+      return mockDoc.body.querySelector(sel);
+    },
+    addEventListener() {},
+  };
+  mockDoc.documentElement.setAttribute('lang', 'ko');
+
+  const mockIndex = [{ t: '005930', k: '삼성전자', e: 'Samsung Electronics', s: 'semi', m: 500000 }];
+  const mockWindow = {
+    location: { pathname: '/ship/korea_ship_map.html', search: '', href: 'https://example.com/ship/' },
+    localStorage: { getItem() { return null; } },
+    document: mockDoc,
+    fetch: () => Promise.resolve({ ok: true, json: () => Promise.resolve(mockIndex) }),
+  };
+
+  const ctx = {
+    window: mockWindow,
+    document: mockDoc,
+    URLSearchParams: globalThis.URLSearchParams,
+    URL: globalThis.URL,
+    setTimeout: globalThis.setTimeout,
+    clearTimeout: globalThis.clearTimeout,
+    fetch: () => Promise.resolve({ ok: true, json: () => Promise.resolve(mockIndex) }),
+    console: console,
+  };
+  vm.createContext(ctx);
+  vm.runInContext(searchSrc, ctx);
+
+  // Wait for loadIndex promise resolution
+  await new Promise((r) => setTimeout(r, 100));
+
+  const inputEl = mockDoc.body.querySelector('#im-global-search');
+  const listEl = mockDoc.body.querySelector('#im-global-search-list');
+  assert.ok(inputEl, 'input element must exist');
+  assert.ok(listEl, 'list element must exist');
+
+  // Test ko empty results
+  mockDoc.documentElement.setAttribute('lang', 'ko');
+  inputEl.value = '없는종목검색';
+  inputEl.dispatchEvent('input');
+  assert.equal(listEl.children.length, 2, 'ko empty must produce 2 items (empty + hint)');
+  const emptyKo = listEl.children[0];
+  const hintKo = listEl.children[1];
+  assert.equal(emptyKo.className, 'im-gs-empty');
+  assert.equal(emptyKo.textContent, '검색 결과 없음');
+  assert.equal(hintKo.className, 'im-gs-hint');
+  assert.equal(hintKo.textContent, '시총 2천억원 이상 종목만 커버하고 있습니다.');
+
+  // Test en empty results
+  mockDoc.documentElement.setAttribute('lang', 'en');
+  inputEl.value = 'unknownstock';
+  inputEl.dispatchEvent('input');
+  assert.equal(listEl.children.length, 2, 'en empty must produce 2 items (empty + hint)');
+  const emptyEn = listEl.children[0];
+  const hintEn = listEl.children[1];
+  assert.equal(emptyEn.className, 'im-gs-empty');
+  assert.equal(emptyEn.textContent, 'No matches');
+  assert.equal(hintEn.className, 'im-gs-hint');
+  assert.equal(hintEn.textContent, 'Only names with market cap ≥ KRW 200B are covered.');
+
+  // Test with results: hint and empty must not exist
+  inputEl.value = '삼성';
+  inputEl.dispatchEvent('input');
+  assert.ok(listEl.children.length > 0, 'results must be rendered');
+  assert.equal(listEl.children[0].className, 'im-gs-item');
+  assert.ok(
+    !listEl.children.some((c) => c.className === 'im-gs-hint' || c.className === 'im-gs-empty'),
+    'hint and empty must not be in list when results exist',
+  );
+}
 
 const volSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_volatility.js'), 'utf8');
 assert.ok(volSrc.includes('applyTickerFocus'), 'map_volatility must highlight ?ticker');
