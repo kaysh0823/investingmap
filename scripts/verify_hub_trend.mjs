@@ -281,7 +281,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v11'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v12'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -301,6 +301,9 @@ for (const marker of [
   'loadMcapGridForDates',
   'buildSectorReturnAtHorizon',
   'MIN_FIXED_MEMBERS',
+  'MEMBER_COVERAGE_MIN',
+  'lastMcapByTicker',
+  'order=trade_date.asc,ticker.asc',
   'applyLiveDailyTip',
   'base: 100',
   'logIndexSeries',

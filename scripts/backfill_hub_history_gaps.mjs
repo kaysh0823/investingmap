@@ -5,13 +5,14 @@
  * Usage:
  *   node scripts/backfill_hub_history_gaps.mjs
  *   node scripts/backfill_hub_history_gaps.mjs --days=15
+ *   node scripts/backfill_hub_history_gaps.mjs --dates=2026-07-10
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { listHubCompanies, normalizeTicker } from '../functions/lib/hub_dashboard_core.mjs';
 import { getAuthKey } from '../functions/lib/krx_rs.mjs';
-import { repairHubHistoryGapsForRecentSessions } from './lib/hub_history_gap.mjs';
+import { repairHubHistoryGapsForRecentSessions, repairHubHistoryForDates } from './lib/hub_history_gap.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_LOOKBACK = 30;
@@ -53,12 +54,24 @@ function parseDaysArg() {
   return n;
 }
 
+function parseDatesArg() {
+  const arg = process.argv.find((item) => item.startsWith('--dates='));
+  if (!arg) return [];
+  return arg
+    .slice('--dates='.length)
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => /^\d{4}-\d{2}-\d{2}$/.test(s));
+}
+
 async function main() {
   const env = loadEnv();
   const supabaseUrl = env.SUPABASE_URL;
   const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY;
   const authKey = getAuthKey(env);
   const lookbackSessions = parseDaysArg();
+  const dates = parseDatesArg();
+  const force = process.argv.includes('--force');
 
   if (!supabaseUrl || !serviceKey) {
     throw new Error('SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY required (.dev.vars or env)');
@@ -69,15 +82,30 @@ async function main() {
 
   const hubIndex = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'hub_index.json'), 'utf8'));
   const tickers = loadHubTickers(hubIndex);
-  console.log(`Hub history gap backfill: ${tickers.length} tickers, last ${lookbackSessions} sessions`);
 
-  const result = await repairHubHistoryGapsForRecentSessions({
-    authKey,
-    supabaseUrl,
-    serviceKey,
-    expectedTickers: tickers,
-    lookbackSessions,
-  });
+  let result;
+  if (dates.length) {
+    console.log(
+      `Hub history gap backfill: ${tickers.length} tickers, dates=${dates.join(',')} force=${force || true}`,
+    );
+    result = await repairHubHistoryForDates({
+      authKey,
+      supabaseUrl,
+      serviceKey,
+      expectedTickers: tickers,
+      datesDash: dates,
+      forceAll: true,
+    });
+  } else {
+    console.log(`Hub history gap backfill: ${tickers.length} tickers, last ${lookbackSessions} sessions`);
+    result = await repairHubHistoryGapsForRecentSessions({
+      authKey,
+      supabaseUrl,
+      serviceKey,
+      expectedTickers: tickers,
+      lookbackSessions,
+    });
+  }
 
   console.log(
     `Done: checked ${result.daysChecked} sessions, repaired ${result.daysRepaired} day(s), ` +

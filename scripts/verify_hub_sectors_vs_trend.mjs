@@ -58,7 +58,7 @@ assert.ok(apiSrc.includes('hasAllHorizons'), 'hub_sectors requires all horizons'
 assert.ok(apiSrc.includes('sector_mcap_trend'), 'hub_sectors source tag');
 
 const trendApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
-assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v11'"), 'hub_trend cache v11');
+assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v12'"), 'hub_trend cache v12');
 assert.ok(trendApi.includes('regularMax: 600'), 'hub_trend daily regular TTL ~10m');
 
 const sparkApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sector_trend.js'), 'utf8');

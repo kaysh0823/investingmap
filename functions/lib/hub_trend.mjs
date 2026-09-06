@@ -17,6 +17,8 @@ const HORIZON_TRADING_DAYS = { '1d': 1, '20d': 20, '50d': 50, '120d': 120, '200d
 const INDEX_CODES = ['KOSPI', 'KOSDAQ'];
 const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
 const MIN_FIXED_MEMBERS = 3;
+/** Skip chart points when too few fixed members contribute (raw or forward-filled). */
+const MEMBER_COVERAGE_MIN = 0.95;
 const TICKER_BATCH = 80;
 /** Max trade_date values per in.(…) clause — must exceed TREND_CHART_MAX_POINTS for single-batch chart fetches. */
 const DATE_BATCH = 64;
@@ -248,10 +250,34 @@ function buildSectorMcapSeries(hubIndex, sectorId, calendar, grid, liveMap, hori
   const members = fixedMembers(tickers, baseDate, tDate, grid, liveMap);
   if (members.length < minMembersRequired(tickers.length)) return null;
 
+  // Walk oldest→newest: forward-fill missing member mcaps so a single-day fetch gap
+  // cannot create a fake trough from a partial sum.
+  const lastMcapByTicker = new Map();
   let rows = [];
   for (const date of chartDates) {
-    const sum = sumMembersMcap(members, date, grid, null, tDate);
-    if (sum > 0) rows.push({ t: date, value: sum });
+    let observed = 0;
+    let contributed = 0;
+    let sum = 0;
+    for (const ticker of members) {
+      const raw = numOrNull(mcapOnDate(ticker, date, grid, null, tDate));
+      if (raw > 0) {
+        observed += 1;
+        contributed += 1;
+        lastMcapByTicker.set(ticker, raw);
+        sum += raw;
+        continue;
+      }
+      const filled = lastMcapByTicker.get(ticker);
+      if (filled > 0) {
+        contributed += 1;
+        sum += filled;
+      }
+    }
+    const coverage = members.length ? contributed / members.length : 0;
+    // Prefer continuity via forward-fill; drop the point only when coverage is still thin.
+    if (sum > 0 && coverage >= MEMBER_COVERAGE_MIN) {
+      rows.push({ t: date, value: sum });
+    }
   }
   const completed = completedSessionDate(calendar);
   if (tDate !== completed) {
@@ -490,7 +516,7 @@ async function loadMcapGridForDates(config, tickers, dateDashList) {
         config,
         `stock_price_history?ticker=in.(${tickerFilter})` +
           `&trade_date=in.(${dateFilter})` +
-          '&select=ticker,trade_date,mcap_won&order=trade_date.asc',
+          '&select=ticker,trade_date,mcap_won&order=trade_date.asc,ticker.asc',
       );
       mergeMcapRowsIntoGrid(grid, rows);
     }

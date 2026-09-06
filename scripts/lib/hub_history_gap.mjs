@@ -160,3 +160,75 @@ export async function repairHubHistoryGapsForRecentSessions({
     rowsFailed,
   };
 }
+
+/**
+ * Force re-upsert hub tickers for explicit session dates (YYYY-MM-DD) from KRX.
+ * Use when a day exists but may be incomplete / needs refresh (e.g. 2026-07-10).
+ */
+export async function repairHubHistoryForDates({
+  authKey,
+  supabaseUrl,
+  serviceKey,
+  expectedTickers,
+  datesDash = [],
+  forceAll = true,
+}) {
+  if (!authKey || !supabaseUrl || !serviceKey || !expectedTickers?.length || !datesDash?.length) {
+    return { daysChecked: 0, daysRepaired: 0, rowsUpserted: 0, rowsFailed: 0 };
+  }
+
+  const hubTickers = [...new Set(expectedTickers.map(normalizeTicker).filter(Boolean))].sort();
+  let daysRepaired = 0;
+  let rowsUpserted = 0;
+  let rowsFailed = 0;
+
+  for (const tradeDate of datesDash) {
+    const dash = String(tradeDate).slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dash)) continue;
+    const basDd = dash.replace(/-/g, '');
+    const existing = await fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, dash);
+    const targets = forceAll
+      ? hubTickers
+      : hubTickers.filter((t) => !existing.has(t));
+    if (!targets.length) {
+      console.log(`  hub history ${dash}: already complete (${existing.size} tickers)`);
+      continue;
+    }
+
+    try {
+      const byCode = await fetchMarketDay(authKey, basDd);
+      if (!byCode?.size) {
+        console.warn(`  hub history ${dash}: KRX returned empty`);
+        continue;
+      }
+
+      const rows = [];
+      for (const ticker of targets) {
+        const row = historyRowFromKrx(ticker, dash, byCode.get(ticker));
+        if (row) rows.push(row);
+      }
+      if (!rows.length) continue;
+
+      const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
+      rowsUpserted += result.upserted;
+      rowsFailed += result.failed;
+      if (result.upserted) {
+        daysRepaired += 1;
+        console.log(
+          `  hub history ${dash}: upserted ${result.upserted}/${targets.length}` +
+            (forceAll ? ' (force refresh)' : ' missing'),
+        );
+      }
+      await sleep(KRX_DELAY_MS);
+    } catch (e) {
+      console.warn(`  hub history ${dash} failed: ${e.message || e}`);
+    }
+  }
+
+  return {
+    daysChecked: datesDash.length,
+    daysRepaired,
+    rowsUpserted,
+    rowsFailed,
+  };
+}
