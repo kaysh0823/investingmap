@@ -882,7 +882,16 @@
       '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
       '.im-candle-body{position:relative;flex:1 1 auto;min-height:0;padding:6px 8px 8px;display:flex;flex-direction:column;overflow:hidden}' +
       '.im-candle-stack{position:relative;flex:1 1 auto;min-height:0;height:100%;width:100%;overflow:hidden}' +
-      '.im-candle-chart{width:100%;height:100%;min-height:0}' +
+      '.im-candle-chart{position:relative;width:100%;height:100%;min-height:0}' +
+      '.im-candle-hovertip{position:absolute;display:none;pointer-events:none;z-index:6;' +
+      'max-width:min(280px,70%);padding:8px 10px;border-radius:8px;' +
+      'background:rgba(13,17,23,.92);border:1px solid rgba(48,54,61,.9);' +
+      'box-shadow:0 8px 24px rgba(0,0,0,.45);color:#e6edf3;font-size:11px;line-height:1.45;' +
+      'font-variant-numeric:tabular-nums;white-space:nowrap}' +
+      '.im-candle-hovertip .im-ht-date{font-weight:700;margin-bottom:4px;color:#c9d1d9}' +
+      '.im-candle-hovertip .im-ht-row{display:flex;justify-content:space-between;gap:12px}' +
+      '.im-candle-hovertip .im-ht-k{color:#8b949e}' +
+      '.im-candle-hovertip .im-ht-v{color:#e6edf3;font-weight:600}' +
       '.im-candle-pane-labels{position:absolute;inset:0;z-index:2;pointer-events:none}' +
       '.im-candle-pane-label{position:absolute;left:8px;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);white-space:nowrap}' +
       '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
@@ -892,6 +901,7 @@
       '.im-candle-root{padding:0;align-items:stretch}' +
       '.im-candle-dialog,.im-candle-dialog.im-candle-expanded{width:100%;height:100dvh;max-width:100%;max-height:100dvh;border-radius:0;border:0}' +
       '.im-candle-tip{font-size:10px;max-height:4em}' +
+      '.im-candle-hovertip{display:none!important}' +
       '}';
     var el = document.getElementById('im-candle-modal-css');
     if (!el) {
@@ -928,6 +938,7 @@
         !document.getElementById('im-candle-inv-cum') ||
         !document.getElementById('im-candle-inv-period') ||
         !document.getElementById('im-candle-expand') ||
+        !document.getElementById('im-candle-hovertip') ||
         document.getElementById('im-candle-price'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
@@ -961,6 +972,7 @@
       '<div class="im-candle-body">' +
       '<div class="im-candle-stack" id="im-candle-stack" role="img">' +
       '<div class="im-candle-chart" id="im-candle-chart"></div>' +
+      '<div class="im-candle-hovertip" id="im-candle-hovertip" aria-hidden="true"></div>' +
       '<div class="im-candle-pane-labels" id="im-candle-pane-labels">' +
       PANES.map(function (pane) {
         return '<span class="im-candle-pane-label" data-pane="' + pane.key + '"></span>';
@@ -1510,6 +1522,85 @@
     };
   }
 
+  function hideHoverTip() {
+    var tip = document.getElementById('im-candle-hovertip');
+    if (!tip) return;
+    tip.style.display = 'none';
+    tip.innerHTML = '';
+    tip.setAttribute('aria-hidden', 'true');
+  }
+
+  function preferFloatingHoverTip() {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia
+      ? !window.matchMedia('(max-width: 768px)').matches
+      : (window.innerWidth || 0) > 768;
+  }
+
+  function hoverTipRow(label, value) {
+    if (value == null || value === '' || value === '—') return '';
+    return (
+      '<div class="im-ht-row"><span class="im-ht-k">' +
+      label +
+      '</span><span class="im-ht-v">' +
+      value +
+      '</span></div>'
+    );
+  }
+
+  function updateHoverTip(param) {
+    var tip = document.getElementById('im-candle-hovertip');
+    if (!tip) return;
+    if (!preferFloatingHoverTip() || !param || !param.point || param.time == null) {
+      hideHoverTip();
+      return;
+    }
+    var time = String(param.time);
+    if (!state.barsByTime || !state.barsByTime[time]) {
+      hideHoverTip();
+      return;
+    }
+    var b = state.barsByTime[time];
+    var labels = t();
+    var html = '<div class="im-ht-date">' + time + '</div>';
+    html += hoverTipRow(labels.closePx, fmtPrice(b.c));
+    html += hoverTipRow(labels.volume, fmtVol(b.v));
+    if (b.macd != null || b.macdSignal != null) {
+      html += hoverTipRow(
+        labels.macd + '/' + labels.macdSignal,
+        fmtNum(b.macd, 2) + ' / ' + fmtNum(b.macdSignal, 2),
+      );
+    }
+    if (state.interval === 'daily' || state.interval === 'weekly') {
+      var ap = activeInvestorCumPeriod();
+      var ik = investorOscField('instOsc', ap.cum, ap.period);
+      var fk = investorOscField('frgnOsc', ap.cum, ap.period);
+      var instVal = b[ik] != null ? b[ik] : b.instOsc;
+      var frgnVal = b[fk] != null ? b[fk] : b.frgnOsc;
+      html += hoverTipRow(labels.instOsc, fmtNum(instVal, 1));
+      html += hoverTipRow(labels.frgnOsc, fmtNum(frgnVal, 1));
+      html += hoverTipRow(labels.foreignRatio, fmtNum(b.foreignRatio, 2));
+    }
+    tip.innerHTML = html;
+    tip.style.display = 'block';
+    tip.setAttribute('aria-hidden', 'false');
+
+    var stack = document.getElementById('im-candle-stack') || tip.parentElement;
+    var pad = 12;
+    var tw = tip.offsetWidth || 160;
+    var th = tip.offsetHeight || 80;
+    var cw = (stack && stack.clientWidth) || 0;
+    var ch = (stack && stack.clientHeight) || 0;
+    var x = param.point.x + pad;
+    var y = param.point.y + pad;
+    if (cw && x + tw + pad > cw) x = param.point.x - tw - pad;
+    if (ch && y + th + pad > ch) y = param.point.y - th - pad;
+    if (x < pad) x = pad;
+    if (y < pad) y = pad;
+    tip.style.left = Math.round(x) + 'px';
+    tip.style.top = Math.round(y) + 'px';
+  }
+
   function updateTip(time) {
     state.crosshairTime = time;
     var tip = document.getElementById('im-candle-tip');
@@ -1631,6 +1722,7 @@
     state.seriesRefs = null;
     state.barsByTime = null;
     state.panelData = null;
+    hideHoverTip();
   }
 
   function makeChart(LWC, container, colors) {
@@ -1799,20 +1891,32 @@
     var macdSignalSeries = addLine('macd', { color: '#f778ba', title: 'Signal' });
     macdSignalSeries.setData(data.macdSignalLine);
 
-    // Foreign ratio histogram behind OSC lines (background band).
+    // Foreign ratio histogram behind OSC lines — own overlay scale so range zooms to data.
     var foreignRatioSeries = chart.addSeries(
       LWC.HistogramSeries,
       {
         color: 'rgba(126,231,135,0.28)',
+        priceScaleId: 'fr',
         priceLineVisible: false,
         lastValueVisible: true,
         base: 0,
         title: t().foreignRatio,
         autoscaleInfoProvider: function () {
+          var vals = (data.foreignRatioBars || [])
+            .map(function (b) {
+              return b.value;
+            })
+            .filter(function (v) {
+              return typeof v === 'number' && isFinite(v);
+            });
+          if (!vals.length) return null;
+          var mn = Math.min.apply(null, vals);
+          var mx = Math.max.apply(null, vals);
+          var pad = Math.max((mx - mn) * 0.15, 0.5);
           return {
             priceRange: {
-              minValue: 0,
-              maxValue: 100,
+              minValue: Math.max(0, mn - pad),
+              maxValue: mx + pad,
             },
           };
         },
@@ -1860,7 +1964,8 @@
     applyPaneLayout(LWC, chart);
 
     chart.subscribeCrosshairMove(function (param) {
-      updateTip(param && param.time ? String(param.time) : null);
+      updateTip(param && param.time != null ? String(param.time) : null);
+      updateHoverTip(param);
     });
     chart.timeScale().fitContent();
 
@@ -1913,6 +2018,14 @@
       try {
         panes[i].priceScale('right').applyOptions(scaleOptions);
       } catch (eScale) {}
+      if (spec.key === 'investor') {
+        try {
+          panes[i].priceScale('fr').applyOptions({
+            scaleMargins: { top: 0.12, bottom: 0.06 },
+            borderVisible: false,
+          });
+        } catch (eFr) {}
+      }
     }
   }
 

@@ -567,7 +567,7 @@ assert.equal(ui.isExpanded(), true, 'isExpanded becomes true after setExpanded(t
 ui.setExpanded(false);
 assert.equal(ui.isExpanded(), false, 'isExpanded reverts to false');
 
-// Verify map files have bumped to v=31
+// Verify map files have bumped to v=32
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
@@ -596,7 +596,11 @@ const MAP_FILES = [
 ];
 for (const rel of MAP_FILES) {
   const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-  assert.ok(html.includes('candle_modal.js?v=31'), `${rel} must reference candle_modal.js?v=31`);
+  assert.ok(html.includes('candle_modal.js?v=32'), `${rel} must reference candle_modal.js?v=32`);
 }
 
-console.log('verify:candle OK — weekly OHLCV, ATR%, 3Y/5Y weekly-warmup pagination, modal expand/collapse (v=31)');
+assert.ok(source.includes("priceScaleId: 'fr'"), 'foreignRatio uses overlay scale fr');
+assert.ok(source.includes('im-candle-hovertip'), 'floating hover tip element');
+assert.ok(source.includes('updateHoverTip'), 'updateHoverTip helper');
+
+console.log('verify:candle OK — weekly OHLCV, ATR%, 3Y/5Y weekly-warmup pagination, modal expand/collapse, fr auto-scale + hover tip (v=32)');
