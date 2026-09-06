@@ -12,7 +12,7 @@ for (const marker of [
   'id="hub-trend-chart"',
   'id="hub-trend-legend"',
   'id="hub-trend-tooltip"',
-  'hub_trend_chart.js?v=3',
+  'hub_trend_chart.js?v=4',
   'd3/7.9.0/d3.min.js',
   "InvestingMapHubTrendChart.init({ lang: lang, horizon: '20d' })",
   "trendTitle: '섹터 변동 추이'",
@@ -50,6 +50,10 @@ for (const marker of [
   "a.kind === 'index' && b.kind !== 'index'",
   'lineReturn(b) - lineReturn(a)',
   'formatLegendReturn',
+  'selectedLines',
+  'applyEmphasis',
+  'aria-pressed',
+  'is-selected',
   'ResizeObserver',
   'MutationObserver',
   '5 * 60 * 1000',
@@ -62,5 +66,5 @@ for (const marker of [
 }
 
 console.log(
-  'verify:hub-trend-chart OK — section, periods, D3 rendering, indices, hover, resize, and i18n',
+  'verify:hub-trend-chart OK — section, periods, D3 rendering, multi-select legend, hover, resize, and i18n',
 );

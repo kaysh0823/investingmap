@@ -49,6 +49,7 @@
     resizeObserver: null,
     themeObserver: null,
     pollTimer: null,
+    selectedLines: new Set(),
   };
 
   function pageLang(value) {
@@ -80,9 +81,10 @@
       '.hub-trend-tooltip .is-up{color:#3fb950}.hub-trend-tooltip .is-down{color:#f85149}' +
       '.hub-trend-legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px}' +
       '.hub-trend-legend-item{display:inline-flex;align-items:center;gap:5px;padding:2px 0;border:0;background:none;color:var(--text-muted);font:500 10px/1.3 inherit;cursor:pointer}' +
-      '.hub-trend-legend-item:hover,.hub-trend-legend-item:focus-visible,.hub-trend-legend-item.is-active{color:var(--text);outline:none}' +
+      '.hub-trend-legend-item:hover,.hub-trend-legend-item:focus-visible,.hub-trend-legend-item.is-selected{color:var(--text);outline:none}' +
       '.hub-trend-chip{width:13px;height:3px;border-radius:2px;flex:0 0 auto}' +
       '.hub-trend-legend-item.is-index{font-weight:700;color:var(--text)}' +
+      '.hub-trend-legend-item.is-selected{font-weight:700}' +
       '.hub-trend-axis text{fill:var(--text-muted);font-size:10px}' +
       '.hub-trend-axis path,.hub-trend-axis line{stroke:var(--border)}' +
       '.hub-trend-grid line{stroke:var(--border);stroke-opacity:.5}.hub-trend-grid path{display:none}' +
@@ -167,7 +169,7 @@
     return ' ' + sign + rounded.toFixed(1) + '%';
   }
 
-  function renderLegend(lines, highlight, reset) {
+  function renderLegend(lines, applyEmphasis) {
     var root = document.getElementById('hub-trend-legend');
     if (!root) return;
     root.innerHTML = '';
@@ -182,12 +184,20 @@
       button.type = 'button';
       button.className = 'hub-trend-legend-item' + (line.kind === 'index' ? ' is-index' : '');
       button.setAttribute('data-line-key', line.key);
+      var selected = state.selectedLines.has(line.key);
+      button.classList.toggle('is-selected', selected);
+      button.setAttribute('aria-pressed', selected ? 'true' : 'false');
       button.innerHTML = '<span class="hub-trend-chip" style="background:' + line.color + '"></span><span></span>';
       button.lastChild.textContent = line.name + formatLegendReturn(lineReturn(line));
-      button.addEventListener('mouseenter', function () { highlight(line.key); });
-      button.addEventListener('mouseleave', reset);
-      button.addEventListener('focus', function () { highlight(line.key); });
-      button.addEventListener('blur', reset);
+      button.addEventListener('mouseenter', function () { applyEmphasis(line.key); });
+      button.addEventListener('mouseleave', function () { applyEmphasis(null); });
+      button.addEventListener('focus', function () { applyEmphasis(line.key); });
+      button.addEventListener('blur', function () { applyEmphasis(null); });
+      button.addEventListener('click', function () {
+        if (state.selectedLines.has(line.key)) state.selectedLines.delete(line.key);
+        else state.selectedLines.add(line.key);
+        applyEmphasis(null);
+      });
       root.appendChild(button);
     });
   }
@@ -296,31 +306,39 @@
       .style('display', 'none');
     var tooltip = document.getElementById('hub-trend-tooltip');
 
-    function highlight(key) {
+    function applyEmphasis(hoverKey) {
+      var hasSelection = state.selectedLines.size > 0;
+      var useDefault = !hoverKey && !hasSelection;
       paths
         .attr('stroke-opacity', function (line) {
-          if (line.kind === 'index') return 1;
-          return line.key === key ? 1 : 0.12;
+          if (useDefault) return line.kind === 'index' ? 1 : 0.35;
+          var on =
+            line.key === hoverKey ||
+            (hasSelection && state.selectedLines.has(line.key));
+          if (on) return line.kind === 'index' ? 1 : 0.95;
+          return line.kind === 'index' ? 0.15 : 0.12;
         })
         .attr('stroke-width', function (line) {
-          if (line.key === key) return 2.5;
+          var on =
+            !useDefault &&
+            (line.key === hoverKey ||
+              (hasSelection && state.selectedLines.has(line.key)));
+          if (on) return line.kind === 'index' ? 2.8 : 2.4;
           return line.kind === 'index' ? 2.2 : 1;
         });
       document.querySelectorAll('.hub-trend-legend-item').forEach(function (item) {
-        item.classList.toggle('is-active', item.getAttribute('data-line-key') === key);
+        var key = item.getAttribute('data-line-key');
+        var selected = state.selectedLines.has(key);
+        item.classList.toggle('is-selected', selected);
+        item.setAttribute('aria-pressed', selected ? 'true' : 'false');
       });
     }
 
-    function reset() {
-      paths
-        .attr('stroke-opacity', function (line) { return line.kind === 'index' ? 1 : 0.35; })
-        .attr('stroke-width', function (line) { return line.kind === 'index' ? 2.2 : 1; });
-      document.querySelectorAll('.hub-trend-legend-item').forEach(function (item) {
-        item.classList.remove('is-active');
-      });
+    function clearChartHover() {
       crosshair.style('display', 'none');
       marker.style('display', 'none');
       if (tooltip) tooltip.hidden = true;
+      applyEmphasis(null);
     }
 
     function nearestPoint(line, targetDate) {
@@ -348,7 +366,7 @@
           if (!best || distance < best.distance) best = { line: line, point: point, distance: distance };
         });
         if (!best) return;
-        highlight(best.line.key);
+        applyEmphasis(best.line.key);
         var px = x(best.point.t);
         var py = y(best.point.v);
         crosshair.attr('x1', px).attr('x2', px).style('display', null);
@@ -371,9 +389,11 @@
           tooltip.style.top = Math.max(28, Math.min(height - 28, top)) + 'px';
         }
       })
-      .on('pointerleave', reset);
+      .on('pointerleave', clearChartHover);
 
-    renderLegend(lines, highlight, reset);
+    applyEmphasis(null);
+    renderLegend(lines, applyEmphasis);
+    applyEmphasis(null);
   }
 
   function fetchAndRender(horizon) {
