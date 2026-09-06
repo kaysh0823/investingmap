@@ -560,7 +560,7 @@
 <script src="../js/live_quotes.js?v=16"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
-  <script src="../js/map_tab_state.js?v=10"></script>
+  <script src="../js/map_tab_state.js?v=11"></script>
   <script src="../js/sector_nav.js?v=9"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -568,6 +568,7 @@
   <script src="../js/map_heatmap.js?v=16"></script>
   <script src="../js/map_momentum.js?v=10"></script>
   <script src="../js/map_volatility.js?v=9"></script>
+  <script src="../js/map_perfcalendar.js?v=1"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=33"></script>
@@ -2343,6 +2344,7 @@
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
     <button id="tab-btn-momentum" class="tab-btn" onclick="switchTab('momentum',this)">📊 모멘텀 매트릭스</button>
     <button id="tab-btn-volatility" class="tab-btn" onclick="switchTab('volatility',this)">📉 변동성 분포</button>
+    <button id="tab-btn-perfcalendar" class="tab-btn" onclick="switchTab('perfcalendar',this)">📅 퍼포먼스 캘린더</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 섹터·페어링 네트워크</button>
   </div>
@@ -2370,6 +2372,16 @@
       <div id="volatility-legend"></div>
     </div>
   </div>
+  <!-- PERF CALENDAR TAB -->
+  <div id="tab-perfcalendar" class="tab-content">
+    <div class="perfcalendar-wrap">
+      <p class="perfcalendar-meta" id="perfcalendar-hint">전년말 종가=100 기준 연중 수익률</p>
+      <div id="perfcalendar-root" role="img" aria-label="Performance calendar"></div>
+      <div id="perfcalendar-legend"></div>
+    </div>
+  </div>
+
+
 
 
 

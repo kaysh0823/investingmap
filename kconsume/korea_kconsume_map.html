@@ -374,7 +374,7 @@
 <script src="../js/live_quotes.js?v=16"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
-  <script src="../js/map_tab_state.js?v=10"></script>
+  <script src="../js/map_tab_state.js?v=11"></script>
   <script src="../js/sector_nav.js?v=9"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -382,6 +382,7 @@
   <script src="../js/map_heatmap.js?v=16"></script>
   <script src="../js/map_momentum.js?v=10"></script>
   <script src="../js/map_volatility.js?v=9"></script>
+  <script src="../js/map_perfcalendar.js?v=1"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=33"></script>
@@ -2244,6 +2245,7 @@
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
     <button id="tab-btn-momentum" class="tab-btn" onclick="switchTab('momentum',this)">📊 모멘텀 매트릭스</button>
     <button id="tab-btn-volatility" class="tab-btn" onclick="switchTab('volatility',this)">📉 변동성 분포</button>
+    <button id="tab-btn-perfcalendar" class="tab-btn" onclick="switchTab('perfcalendar',this)">📅 퍼포먼스 캘린더</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
@@ -2271,6 +2273,16 @@
       <div id="volatility-legend"></div>
     </div>
   </div>
+  <!-- PERF CALENDAR TAB -->
+  <div id="tab-perfcalendar" class="tab-content">
+    <div class="perfcalendar-wrap">
+      <p class="perfcalendar-meta" id="perfcalendar-hint">전년말 종가=100 기준 연중 수익률</p>
+      <div id="perfcalendar-root" role="img" aria-label="Performance calendar"></div>
+      <div id="perfcalendar-legend"></div>
+    </div>
+  </div>
+
+
 
 
 
@@ -3269,6 +3281,20 @@
 
         "tabMomentum": "📊 모멘텀 매트릭스",
         "tabVolatility": "📉 변동성 분포",
+        "tabPerfCalendar": "📅 퍼포먼스 캘린더",
+        "perfCalendarTitle": "퍼포먼스 캘린더",
+        "perfCalendarSubtitle": "전년말 종가=100 기준 연중 수익률",
+        "perfCalendarSectorAvg": "섹터 평균",
+        "perfCalendarKospi": "KOSPI",
+        "perfCalendarKosdaq": "KOSDAQ",
+        "perfCalendarLoading": "퍼포먼스 데이터를 불러오는 중…",
+        "perfCalendarFailed": "퍼포먼스 캘린더 데이터를 불러오지 못했습니다.",
+        "perfCalendarNoData": "표시할 퍼포먼스 데이터가 없습니다.",
+        "perfCalendarLegend": "종목·섹터 평균·지수 범례",
+        "perfCalendarBase": "기준",
+        "perfCalendarChange": "기준 대비",
+        "perfCalendarOpenChart": "캔들 차트 열기",
+        "perfCalendarYearTabs": "연도 선택",
         "volatilityTitle": "변동성 분포",
         "volatilityHint": "색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%",
         "volatilityAxisAtr": "ATR3/종가",
@@ -3369,6 +3395,20 @@
 
         "tabMomentum": "📊 Momentum matrix",
         "tabVolatility": "📉 Volatility Distribution",
+        "tabPerfCalendar": "📅 Performance Calendar",
+        "perfCalendarTitle": "Performance Calendar",
+        "perfCalendarSubtitle": "YTD vs prior year-end=100",
+        "perfCalendarSectorAvg": "Sector average",
+        "perfCalendarKospi": "KOSPI",
+        "perfCalendarKosdaq": "KOSDAQ",
+        "perfCalendarLoading": "Loading performance data…",
+        "perfCalendarFailed": "Could not load performance calendar data.",
+        "perfCalendarNoData": "No performance data available.",
+        "perfCalendarLegend": "Members, sector average, and index legend",
+        "perfCalendarBase": "Base",
+        "perfCalendarChange": "vs base",
+        "perfCalendarOpenChart": "Open candle chart",
+        "perfCalendarYearTabs": "Year filter",
         "volatilityTitle": "Volatility Distribution",
         "volatilityHint": "Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%",
         "volatilityAxisAtr": "ATR3/Close",
@@ -3854,6 +3894,10 @@
       if (volatilityBtn) volatilityBtn.innerHTML = t.tabVolatility || (lang === 'en' ? '📉 Volatility Distribution' : '📉 변동성 분포');
       var volatilityHint = document.getElementById('volatility-hint');
       if (volatilityHint) volatilityHint.textContent = t.volatilityHint || (lang === 'en' ? 'Color = 20D %b (darker = higher) · gray = all listings · vertical lines = market ATR 25/50/75%' : '색=20일 %b(진할수록 높음) · 회색=전체 종목 · 세로선=전체 변동성 25/50/75%');
+      var perfCalBtn = document.getElementById('tab-btn-perfcalendar');
+      if (perfCalBtn) perfCalBtn.innerHTML = t.tabPerfCalendar || (lang === 'en' ? '📅 Performance Calendar' : '📅 퍼포먼스 캘린더');
+      var perfCalHint = document.getElementById('perfcalendar-hint');
+      if (perfCalHint) perfCalHint.textContent = t.perfCalendarSubtitle || (lang === 'en' ? 'YTD vs prior year-end=100' : '전년말 종가=100 기준 연중 수익률');
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
@@ -3917,7 +3961,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar();
       syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
@@ -4218,6 +4262,42 @@
       });
     }
 
+    function renderPerfCalendar() {
+      if (!window.InvestingMapPerfCalendar) return;
+      var el = document.getElementById('perfcalendar-root');
+      if (!el) return;
+      var pt = T[lang] || {};
+      var sid = (document.body && document.body.getAttribute('data-sector')) || '';
+      InvestingMapPerfCalendar.render({
+        container: el,
+        legend: document.getElementById('perfcalendar-legend'),
+        sectorId: sid,
+        lang: lang,
+        labels: {
+          title: pt.perfCalendarTitle,
+          subtitle: pt.perfCalendarSubtitle,
+          sectorAvg: pt.perfCalendarSectorAvg,
+          kospi: pt.perfCalendarKospi,
+          kosdaq: pt.perfCalendarKosdaq,
+          loading: pt.perfCalendarLoading,
+          failed: pt.perfCalendarFailed,
+          noData: pt.perfCalendarNoData,
+          legend: pt.perfCalendarLegend,
+          base: pt.perfCalendarBase,
+          change: pt.perfCalendarChange,
+          openChart: pt.perfCalendarOpenChart,
+          yearTabs: pt.perfCalendarYearTabs
+        },
+        onSelect: function (c) {
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
+        }
+      });
+    }
+
     function renderVolatility() {
       if (!window.InvestingMapVolatility) return;
       var el = document.getElementById('volatility-root');
@@ -4292,6 +4372,7 @@
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
+      if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
       if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -4306,9 +4387,10 @@
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
       if (document.getElementById('tab-momentum')?.classList.contains('active')) setTimeout(renderMomentum, 80);
       if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
+      if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) setTimeout(renderPerfCalendar, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
-          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); },
+          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); },
           onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';

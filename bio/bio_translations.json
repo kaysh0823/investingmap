@@ -105,7 +105,21 @@
     "volatilityChg": "당일 등락률",
     "volatilityLegendSize": "크기 = 거래대금",
     "volatilityLegendChg": "색 = 당일 등락률",
-    "volatilityModeChg": "당일 등락률"
+    "volatilityModeChg": "당일 등락률",
+    "tabPerfCalendar": "📅 퍼포먼스 캘린더",
+    "perfCalendarTitle": "퍼포먼스 캘린더",
+    "perfCalendarSubtitle": "전년말 종가=100 기준 연중 수익률",
+    "perfCalendarSectorAvg": "섹터 평균",
+    "perfCalendarKospi": "KOSPI",
+    "perfCalendarKosdaq": "KOSDAQ",
+    "perfCalendarLoading": "퍼포먼스 데이터를 불러오는 중…",
+    "perfCalendarFailed": "퍼포먼스 캘린더 데이터를 불러오지 못했습니다.",
+    "perfCalendarNoData": "표시할 퍼포먼스 데이터가 없습니다.",
+    "perfCalendarLegend": "종목·섹터 평균·지수 범례",
+    "perfCalendarBase": "기준",
+    "perfCalendarChange": "기준 대비",
+    "perfCalendarOpenChart": "캔들 차트 열기",
+    "perfCalendarYearTabs": "연도 선택"
   },
   "en": {
     "title": "🇰🇷 Korea Bio Industry Investment Map",
@@ -213,6 +227,20 @@
     "volatilityChg": "1-day change",
     "volatilityLegendSize": "Size = turnover",
     "volatilityLegendChg": "Color = 1-day change",
-    "volatilityModeChg": "1-day change"
+    "volatilityModeChg": "1-day change",
+    "tabPerfCalendar": "📅 Performance Calendar",
+    "perfCalendarTitle": "Performance Calendar",
+    "perfCalendarSubtitle": "YTD vs prior year-end=100",
+    "perfCalendarSectorAvg": "Sector average",
+    "perfCalendarKospi": "KOSPI",
+    "perfCalendarKosdaq": "KOSDAQ",
+    "perfCalendarLoading": "Loading performance data…",
+    "perfCalendarFailed": "Could not load performance calendar data.",
+    "perfCalendarNoData": "No performance data available.",
+    "perfCalendarLegend": "Members, sector average, and index legend",
+    "perfCalendarBase": "Base",
+    "perfCalendarChange": "vs base",
+    "perfCalendarOpenChart": "Open candle chart",
+    "perfCalendarYearTabs": "Year filter"
   }
 }
