@@ -119,16 +119,13 @@ async function liveChecks() {
     assert.equal(payload.year, year);
     assert.ok(payload.members.length > 0, `${sector} ${year} members`);
     assert.ok(payload.sectorAvg.length > 0, `${sector} ${year} sectorAvg`);
+    assert.ok(payload.indices.KOSPI.length > 0, `${sector} ${year} KOSPI`);
+    assert.ok(payload.indices.KOSDAQ.length > 0, `${sector} ${year} KOSDAQ`);
     assert.ok(
       payload.tradingDays <= PERF_CALENDAR_MAX_POINTS + 1,
       `${sector} ${year} tradingDays=${payload.tradingDays}`,
     );
     assert.ok(payload.tradingDays >= 10, `${sector} ${year} too few points`);
-    // market_index_daily may lag stock history; require indices only when present or current year.
-    if (year === cur) {
-      assert.ok(payload.indices.KOSPI.length > 0, `${sector} ${year} KOSPI`);
-      assert.ok(payload.indices.KOSDAQ.length > 0, `${sector} ${year} KOSDAQ`);
-    }
     const first = payload.sectorAvg[0];
     const last = payload.sectorAvg[payload.sectorAvg.length - 1];
     assert.ok(first.t.startsWith(String(year)));

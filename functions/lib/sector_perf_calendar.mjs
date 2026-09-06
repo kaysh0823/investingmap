@@ -15,7 +15,7 @@ import {
 import { downsampleDates } from './hub_trend.mjs';
 import { kstDateParts } from './krx_session.mjs';
 
-export const PERF_CALENDAR_CACHE_VERSION = 'v2';
+export const PERF_CALENDAR_CACHE_VERSION = 'v3';
 export const PERF_CALENDAR_YEAR_SPAN = 5; // current .. current-4
 export const PERF_CALENDAR_TICKER_BATCH = 40;
 /** In-year chart points (weekly-ish); +1 prior-year base day fetched separately. */
