@@ -1,7 +1,7 @@
 /**
- * Sector performance calendar: year-to-date lines rebased to prior year-end = 100.
- * Members from hub_index; closes from stock_price_history + price_adjustments;
- * KOSPI/KOSDAQ from market_index_daily.
+ * Sector performance calendar: year lines rebased to prior year-end = 100.
+ * Trading days are downsampled (~weekly) before history fetches so CF
+ * subrequests stay within limits (full-year daily × 85 members was ~44+ pages).
  */
 
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
@@ -12,11 +12,16 @@ import {
 import {
   applyPriceAdjustmentsToBars,
 } from './price_adjustments.mjs';
+import { downsampleDates } from './hub_trend.mjs';
 import { kstDateParts } from './krx_session.mjs';
 
-export const PERF_CALENDAR_CACHE_VERSION = 'v1';
+export const PERF_CALENDAR_CACHE_VERSION = 'v2';
 export const PERF_CALENDAR_YEAR_SPAN = 5; // current .. current-4
 export const PERF_CALENDAR_TICKER_BATCH = 40;
+/** In-year chart points (weekly-ish); +1 prior-year base day fetched separately. */
+export const PERF_CALENDAR_MAX_POINTS = 70;
+/** Max trade_date values per PostgREST in.(…) — must exceed MAX_POINTS. */
+export const PERF_CALENDAR_DATE_BATCH = 80;
 export const PERF_CALENDAR_PAGE_SIZE = 1000;
 
 const INDEX_CODES = ['KOSPI', 'KOSDAQ'];
@@ -102,33 +107,95 @@ async function fetchPaged(config, query, pageSize = PERF_CALENDAR_PAGE_SIZE) {
   return out;
 }
 
+/** Liquid KRX proxy for session calendar (index history may start late). */
+const CALENDAR_REF_TICKER = '005930';
+
 /**
- * Close history for tickers in [from, to]. Stable order for PostgREST paging.
+ * Trading sessions in [from, to] via a liquid stock calendar (1 page typical).
+ * market_index_daily may not cover older years, so it is not used here.
+ * @returns {Promise<string[]>} YYYY-MM-DD ascending
+ */
+export async function fetchTradingDatesInRange(config, from, to) {
+  const rows = await fetchPaged(
+    config,
+    `stock_price_history?ticker=eq.${CALENDAR_REF_TICKER}` +
+      `&trade_date=gte.${encodeURIComponent(from)}` +
+      `&trade_date=lte.${encodeURIComponent(to)}` +
+      `&select=trade_date&order=trade_date.asc`,
+  );
+  const dates = [];
+  const seen = new Set();
+  for (const row of rows) {
+    const d = String(row.trade_date || '').slice(0, 10);
+    if (!d || seen.has(d)) continue;
+    seen.add(d);
+    dates.push(d);
+  }
+  return dates;
+}
+
+/**
+ * Prior-year-end base day + downsampled in-year sessions (first/last preserved).
+ * @param {string[]} allDatesAsc
+ * @param {string} yearStart
+ * @param {string} yearEnd
+ * @param {number} [maxPoints]
+ * @returns {string[]}
+ */
+export function buildPerfCalendarSampleDates(
+  allDatesAsc,
+  yearStart,
+  yearEnd,
+  maxPoints = PERF_CALENDAR_MAX_POINTS,
+) {
+  const prior = (allDatesAsc || []).filter((d) => d < yearStart);
+  const inYear = (allDatesAsc || []).filter((d) => d >= yearStart && d <= yearEnd);
+  const chart = downsampleDates(inYear, maxPoints);
+  const out = [];
+  if (prior.length) out.push(prior[prior.length - 1]);
+  for (const d of chart) {
+    if (!out.length || out[out.length - 1] !== d) out.push(d);
+  }
+  return out;
+}
+
+/**
+ * Close history for tickers on explicit sample dates only.
  * @returns {Map<string, {t:string,c:number}[]>}
  */
-export async function fetchMemberCloseSeries(config, tickers, from, to) {
+export async function fetchMemberCloseSeriesForDates(config, tickers, datesDash) {
   const byTicker = new Map();
-  if (!tickers.length) return byTicker;
+  const dates = [...new Set((datesDash || []).filter(Boolean))];
+  if (!tickers.length || !dates.length) return byTicker;
 
-  for (let i = 0; i < tickers.length; i += PERF_CALENDAR_TICKER_BATCH) {
-    const batch = tickers.slice(i, i + PERF_CALENDAR_TICKER_BATCH);
-    const tickerFilter = batch.map(encodeURIComponent).join(',');
-    const rows = await fetchPaged(
-      config,
-      `stock_price_history?ticker=in.(${tickerFilter})` +
-        `&trade_date=gte.${encodeURIComponent(from)}` +
-        `&trade_date=lte.${encodeURIComponent(to)}` +
-        `&select=ticker,trade_date,close` +
-        `&order=trade_date.asc,ticker.asc`,
-    );
-    for (const row of rows) {
-      const ticker = normalizeTicker(row.ticker);
-      const t = String(row.trade_date || '').slice(0, 10);
-      const c = numOrNull(row.close);
-      if (!ticker || !t || c == null || c <= 0) continue;
-      if (!byTicker.has(ticker)) byTicker.set(ticker, []);
-      byTicker.get(ticker).push({ t, c });
+  for (let di = 0; di < dates.length; di += PERF_CALENDAR_DATE_BATCH) {
+    const dateBatch = dates.slice(di, di + PERF_CALENDAR_DATE_BATCH);
+    const dateFilter = dateBatch.map(encodeURIComponent).join(',');
+    for (let ti = 0; ti < tickers.length; ti += PERF_CALENDAR_TICKER_BATCH) {
+      const batch = tickers.slice(ti, ti + PERF_CALENDAR_TICKER_BATCH);
+      const tickerFilter = batch.map(encodeURIComponent).join(',');
+      const rows = await fetchPaged(
+        config,
+        `stock_price_history?ticker=in.(${tickerFilter})` +
+          `&trade_date=in.(${dateFilter})` +
+          `&select=ticker,trade_date,close` +
+          `&order=trade_date.asc,ticker.asc`,
+      );
+      for (const row of rows) {
+        const ticker = normalizeTicker(row.ticker);
+        const t = String(row.trade_date || '').slice(0, 10);
+        const c = numOrNull(row.close);
+        if (!ticker || !t || c == null || c <= 0) continue;
+        if (!byTicker.has(ticker)) byTicker.set(ticker, []);
+        byTicker.get(ticker).push({ t, c });
+      }
     }
+  }
+
+  // Ensure each ticker's closes are sorted (batches can interleave by date batch).
+  for (const [ticker, rows] of byTicker) {
+    rows.sort((a, b) => a.t.localeCompare(b.t));
+    byTicker.set(ticker, rows);
   }
   return byTicker;
 }
@@ -225,32 +292,40 @@ export function buildSectorAvgPoints(members) {
 }
 
 /**
+ * Index closes on the same sample dates, rebased like members.
  * @returns {Promise<{KOSPI:{t:string,v:number}[],KOSDAQ:{t:string,v:number}[]}>}
  */
-export async function fetchIndexRebased(config, from, to, yearStart, yearEnd) {
+export async function fetchIndexRebasedForDates(config, datesDash, yearStart, yearEnd) {
   const empty = { KOSPI: [], KOSDAQ: [] };
-  const rows = await fetchPaged(
-    config,
-    `market_index_daily?index_code=in.(${INDEX_CODES.join(',')})` +
-      `&trade_date=gte.${encodeURIComponent(from)}` +
-      `&trade_date=lte.${encodeURIComponent(to)}` +
-      `&select=trade_date,index_code,close` +
-      `&order=trade_date.asc,index_code.asc`,
-  );
+  const dates = [...new Set((datesDash || []).filter(Boolean))];
+  if (!dates.length) return empty;
 
   const byCode = new Map(INDEX_CODES.map((c) => [c, []]));
-  for (const row of rows) {
-    const code = row.index_code;
-    if (!byCode.has(code)) continue;
-    const t = String(row.trade_date || '').slice(0, 10);
-    const c = numOrNull(row.close);
-    if (!t || c == null || c <= 0) continue;
-    byCode.get(code).push({ t, c });
+  for (let di = 0; di < dates.length; di += PERF_CALENDAR_DATE_BATCH) {
+    const dateBatch = dates.slice(di, di + PERF_CALENDAR_DATE_BATCH);
+    const dateFilter = dateBatch.map(encodeURIComponent).join(',');
+    const rows = await fetchPaged(
+      config,
+      `market_index_daily?index_code=in.(${INDEX_CODES.join(',')})` +
+        `&trade_date=in.(${dateFilter})` +
+        `&select=trade_date,index_code,close` +
+        `&order=trade_date.asc,index_code.asc`,
+    );
+    for (const row of rows) {
+      const code = row.index_code;
+      if (!byCode.has(code)) continue;
+      const t = String(row.trade_date || '').slice(0, 10);
+      const c = numOrNull(row.close);
+      if (!t || c == null || c <= 0) continue;
+      byCode.get(code).push({ t, c });
+    }
   }
 
   const out = { ...empty };
   for (const code of INDEX_CODES) {
-    out[code] = rebaseMemberPoints(byCode.get(code) || [], [], yearStart, yearEnd);
+    const rows = byCode.get(code) || [];
+    rows.sort((a, b) => a.t.localeCompare(b.t));
+    out[code] = rebaseMemberPoints(rows, [], yearStart, yearEnd);
   }
   return out;
 }
@@ -266,10 +341,13 @@ export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId,
   const { from, to, yearStart, yearEnd } = dateRangeForYear(year);
   const tickers = membersMeta.map((m) => m.ticker);
 
+  const allDates = await fetchTradingDatesInRange(config, from, to);
+  const sampleDates = buildPerfCalendarSampleDates(allDates, yearStart, yearEnd);
+
   const [closeByTicker, adjByTicker, indices] = await Promise.all([
-    fetchMemberCloseSeries(config, tickers, from, to),
+    fetchMemberCloseSeriesForDates(config, tickers, sampleDates),
     fetchAdjustmentsByTicker(config, tickers),
-    fetchIndexRebased(config, from, to, yearStart, yearEnd),
+    fetchIndexRebasedForDates(config, sampleDates, yearStart, yearEnd),
   ]);
 
   const members = [];
@@ -294,9 +372,7 @@ export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId,
   const sectorAvg = buildSectorAvgPoints(members);
   const tradingDays = sectorAvg.length
     ? sectorAvg.length
-    : new Set(
-        members.flatMap((m) => m.points.map((p) => p.t)),
-      ).size;
+    : new Set(members.flatMap((m) => m.points.map((p) => p.t))).size;
 
   return {
     sector: sectorId,
@@ -305,6 +381,7 @@ export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId,
     sectorAvg,
     indices,
     tradingDays,
+    sampleDates: sampleDates.filter((d) => d >= yearStart && d <= yearEnd),
     asOf: new Date().toISOString(),
   };
 }
@@ -325,6 +402,7 @@ export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, ye
       sectorAvg: [],
       indices: { KOSPI: [], KOSDAQ: [] },
       tradingDays: 0,
+      sampleDates: [],
       asOf: new Date().toISOString(),
       error: 'supabase_unconfigured',
     };
