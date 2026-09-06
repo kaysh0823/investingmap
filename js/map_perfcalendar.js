@@ -478,6 +478,38 @@
     });
   }
 
+  function getUrlTicker() {
+    try {
+      return String(new URLSearchParams(window.location.search).get('ticker') || '').trim();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function applyUrlTickerSelection(lines, legendEl) {
+    var ticker = getUrlTicker();
+    if (!ticker || !lines || !lines.length) return;
+    var match = null;
+    for (var i = 0; i < lines.length; i++) {
+      if (lines[i].kind === 'member' && lines[i].key === ticker) {
+        match = lines[i];
+        break;
+      }
+    }
+    if (!match) return;
+    selectedLines.add(match.key);
+    if (legendEl) {
+      var item = legendEl.querySelector('.perf-legend-item[data-line-key="' + ticker + '"]');
+      if (item && typeof item.scrollIntoView === 'function') {
+        try {
+          item.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+        } catch (e2) {
+          item.scrollIntoView(true);
+        }
+      }
+    }
+  }
+
   function drawChart(opts, payload) {
     var container = opts.container;
     var legendEl = opts.legend || document.getElementById('perfcalendar-legend');
@@ -776,6 +808,7 @@
 
     applyEmphasis(null);
     renderLegend(legendEl, lines, labels, opts, applyEmphasis);
+    applyUrlTickerSelection(lines, legendEl);
     applyEmphasis(null);
   }
 

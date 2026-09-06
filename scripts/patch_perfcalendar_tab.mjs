@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 1;
+const SCRIPT_V = 2;
 const TAB_STATE_V = 11;
 
 const MAP_FILES = [

@@ -94,10 +94,17 @@ assert.ok(momentumSrc.includes('applyTickerFocus'), 'map_momentum must highlight
 
 const searchSrc = fs.readFileSync(GLOBAL_SEARCH_JS, 'utf8');
 assert.ok(searchSrc.includes("tab: 'volatility'"), 'global_search modal must offer volatility');
+assert.ok(searchSrc.includes("tab: 'perfcalendar'"), 'global_search modal must offer perfcalendar');
 assert.ok(searchSrc.includes("volatility: '변동성 분포'"), 'global_search ko volatility label');
 assert.ok(searchSrc.includes("volatility: 'Volatility'"), 'global_search en volatility label');
+assert.ok(searchSrc.includes("perfcalendar: '퍼포먼스 캘린더'"), 'global_search ko perfcalendar label');
+assert.ok(searchSrc.includes("perfcalendar: 'Performance Calendar'"), 'global_search en perfcalendar label');
 assert.ok(searchSrc.includes("coverageHint: '시총 3천억원 이상 종목만 커버하고 있습니다.'"), 'global_search ko coverageHint');
 assert.ok(searchSrc.includes("coverageHint: 'Only names with market cap ≥ KRW 300B are covered.'"), 'global_search en coverageHint');
+
+const perfSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_perfcalendar.js'), 'utf8');
+assert.ok(perfSrc.includes('getUrlTicker'), 'map_perfcalendar must read ?ticker');
+assert.ok(perfSrc.includes('applyUrlTickerSelection'), 'map_perfcalendar must emphasize ?ticker');
 assert.ok(searchSrc.includes('.im-gs-hint'), 'global_search css must include .im-gs-hint');
 assert.ok(searchSrc.includes("hint.className = 'im-gs-hint'"), 'global_search must render .im-gs-hint element');
 
