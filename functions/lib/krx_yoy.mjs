@@ -166,7 +166,7 @@ function mcapFromRow(row) {
 
 /**
  * Map one KRX daily row → stock_price_history fields (OHLC + volume + mcap).
- * @returns {{ open: number|null, high: number|null, low: number|null, close: number, volume: number|null, mcap_won: number|null }|null}
+ * @returns {{ open: number|null, high: number|null, low: number|null, close: number, volume: number|null, mcap_won: number|null, turnover_won: number|null }|null}
  */
 /** Suspended sessions report 0 for open/high/low; that means "no trade", not a price. */
 function tradedPrice(value) {
@@ -184,6 +184,7 @@ export function historyFieldsFromKrxRow(row) {
     close,
     volume: parseNum(row.ACC_TRDVOL),
     mcap_won: mcapFromRow(row),
+    turnover_won: parseNum(row && row.ACC_TRDVAL),
   };
 }
 

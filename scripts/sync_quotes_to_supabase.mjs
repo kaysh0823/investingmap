@@ -19,6 +19,8 @@ import {
   SECTOR_ORDER,
   listHubCompanies,
   normalizeTicker,
+  sumTurnover5dByTicker,
+  TURNOVER5D_MIN_DAYS,
 } from '../functions/lib/hub_dashboard_core.mjs';
 import {
   buildSectorMcapDailyRows,
@@ -355,6 +357,7 @@ function historyRowFromKrx(ticker, tradeDate, krxRow) {
     close: fields.close,
     volume: fields.volume,
     mcap_won: fields.mcap_won,
+    turnover_won: fields.turnover_won,
   };
 }
 
@@ -460,6 +463,7 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
         close: fields.close,
         volume: fields.volume,
         mcap_won: fields.mcap_won ?? q.mcap_won ?? null,
+        turnover_won: fields.turnover_won ?? q.turnover_won ?? null,
       });
       continue;
     }
@@ -494,6 +498,7 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
       close: q.last,
       volume,
       mcap_won: q.mcap_won,
+      turnover_won: q.turnover_won ?? null,
     });
   }
   if (!rows.length) return { upserted: 0, skipped: false, byCode: null };
@@ -572,6 +577,7 @@ async function fillMissingHistoryDays(
           close: fields.close,
           volume: fields.volume,
           mcap_won: fields.mcap_won,
+          turnover_won: fields.turnover_won,
         });
       }
       if (!rows.length) continue;
@@ -948,6 +954,49 @@ async function upsertHubRankDaily(rows, supabaseUrl, serviceKey) {
     upserted += batch.length;
   }
   return { ok: true, upserted };
+}
+
+/** Recent session dates + hub Σ turnover_won for hub_rank_daily turnover5d. */
+async function loadTurnover5dByTicker(tickers, supabaseUrl, serviceKey, limit = 5) {
+  const out = new Map();
+  if (!tickers.length) return out;
+  const dateRes = await fetch(
+    `${supabaseUrl}/rest/v1/stock_price_history?ticker=eq.005930` +
+      `&select=trade_date&order=trade_date.desc&limit=${limit}`,
+    { headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` } },
+  );
+  if (!dateRes.ok) return out;
+  const dateRows = await dateRes.json();
+  const dates = [];
+  const seen = new Set();
+  for (const row of dateRows || []) {
+    const d = String(row.trade_date || '').slice(0, 10);
+    if (!d || seen.has(d)) continue;
+    seen.add(d);
+    dates.push(d);
+  }
+  if (dates.length < TURNOVER5D_MIN_DAYS) return out;
+
+  const historyRows = [];
+  const chunk = 80;
+  const dateFilter = dates.join(',');
+  for (let i = 0; i < tickers.length; i += chunk) {
+    const part = tickers.slice(i, i + chunk);
+    const res = await fetch(
+      `${supabaseUrl}/rest/v1/stock_price_history?ticker=in.(${part.join(',')})` +
+        `&trade_date=in.(${dateFilter})&select=ticker,trade_date,turnover_won`,
+      { headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` } },
+    );
+    if (!res.ok) continue;
+    const page = await res.json();
+    historyRows.push(...page);
+  }
+
+  const sums = sumTurnover5dByTicker(historyRows, dates);
+  for (const [ticker, pack] of sums) {
+    if (pack.days >= TURNOVER5D_MIN_DAYS && pack.sum > 0) out.set(ticker, pack.sum);
+  }
+  return out;
 }
 
 async function upsertSectorReturns(rows, supabaseUrl, serviceKey) {
@@ -1410,10 +1459,21 @@ async function main() {
       );
     }
 
-    const rankRows = buildHubRankDailyRows(hubIndex, rows, consensus.tradeDate);
+    const turnover5dByTicker = await loadTurnover5dByTicker(
+      tickers,
+      supabaseUrl,
+      serviceKey,
+      5,
+    );
+    const rankRows = buildHubRankDailyRows(hubIndex, rows, consensus.tradeDate, {
+      turnover5dByTicker,
+    });
     const rankResult = await upsertHubRankDaily(rankRows, supabaseUrl, serviceKey);
     if (rankResult.ok) {
-      console.log(`  hub_rank_daily upsert ${rankResult.upserted} rows for ${consensus.tradeDate}`);
+      console.log(
+        `  hub_rank_daily upsert ${rankResult.upserted} rows for ${consensus.tradeDate}` +
+          ` (turnover5d=${turnover5dByTicker.size})`,
+      );
     } else {
       console.error(
         `  hub_rank_daily upsert failed (${rankResult.status}): ${(rankResult.body || '').slice(0, 200)}`,

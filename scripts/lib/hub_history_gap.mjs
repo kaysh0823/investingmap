@@ -30,6 +30,7 @@ function historyRowFromKrx(ticker, tradeDate, krxRow) {
     close: fields.close,
     volume: fields.volume,
     mcap_won: fields.mcap_won,
+    turnover_won: fields.turnover_won,
   };
 }
 

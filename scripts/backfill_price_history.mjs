@@ -1,10 +1,11 @@
 /**
  * Backfill stock_price_history: KRX trading days × full KOSPI/KOSDAQ universe → Supabase.
  * Reuses tradingDates + fetchMarketDay from functions/lib/krx_yoy.mjs.
- * Usage: node scripts/backfill_price_history.mjs [--days=2200] [--probe-only]
+ * Usage: node scripts/backfill_price_history.mjs [--days=2200] [--force] [--probe-only]
  * Default: ~9Y (2,200 sessions) so candle weekly 5Y has 260 display weeks +
  * 125w BBW/DISP norm + 50w MA50 (이격도) seed. Falls back to 5Y / 3Y when KRX
  * does not expose older windows.
+ * --force with --days=N: re-upsert the newest N trading sessions (fills new columns).
  */
 import fs from 'fs';
 import path from 'path';
@@ -71,6 +72,7 @@ function rowsFromMarketDay(byCode, tradeDate) {
       close: fields.close,
       volume: fields.volume,
       mcap_won: fields.mcap_won,
+      turnover_won: fields.turnover_won,
     });
   }
   return rows;
@@ -191,6 +193,7 @@ async function main() {
   const daysArg = process.argv.find((a) => a.startsWith('--days='));
   const explicitDays = daysArg ? Math.max(1, parseInt(daysArg.split('=')[1], 10) || 0) : 0;
   const probeOnly = process.argv.includes('--probe-only');
+  const forceRecent = process.argv.includes('--force');
   let targetDays = explicitDays || HIST_TRADING_DAYS_8Y;
 
   if (!explicitDays) {
@@ -227,9 +230,17 @@ async function main() {
   const acquired = new Set(existingDates);
   const candidateCount = Math.ceil(targetDays * CANDIDATE_BUFFER) + 30;
   const dates = tradingDates(candidateCount);
+
+  // --force --days=N: refresh the newest N calendar candidates that KRX returns,
+  // even when the anchor ticker already has those sessions (column backfill).
+  const forceDates = forceRecent && explicitDays
+    ? new Set(dates.slice(0, explicitDays).map(basDdToTradeDate))
+    : null;
+
   console.log(
     `Backfill target=${targetDays} sessions (${historyTier(targetDays)}), ` +
-      `existing ${ANCHOR_TICKER} sessions=${existingDates.length}, candidates=${dates.length}`,
+      `existing ${ANCHOR_TICKER} sessions=${existingDates.length}, candidates=${dates.length}` +
+      (forceDates ? `, force refresh newest ${forceDates.size}` : ''),
   );
 
   const failedDates = [];
@@ -240,8 +251,14 @@ async function main() {
   for (let i = 0; i < dates.length; i++) {
     const basDd = dates[i];
     const tradeDate = basDdToTradeDate(basDd);
-    if (acquired.has(tradeDate)) {
-      if (acquired.size >= targetDays) break;
+    const mustRefresh = forceDates && forceDates.has(tradeDate);
+    if (acquired.has(tradeDate) && !mustRefresh) {
+      if (acquired.size >= targetDays && !forceDates) break;
+      if (forceDates && i >= explicitDays - 1 && datesOk >= forceDates.size) break;
+      continue;
+    }
+    if (forceDates && !mustRefresh) {
+      if (datesOk >= forceDates.size) break;
       continue;
     }
 
@@ -276,8 +293,13 @@ async function main() {
     acquired.add(tradeDate);
     process.stdout.write(
       `\r  acquired ${acquired.size}/${targetDays} · candidate ${i + 1}/${dates.length} ` +
-        `${tradeDate} — ${upserted.inserted} rows (upsert total ${totalRows})`,
+        `${tradeDate} — ${upserted.inserted} rows (upsert total ${totalRows})` +
+        (mustRefresh ? ' [force]' : ''),
     );
+    if (forceDates) {
+      if (datesOk >= forceDates.size) break;
+      continue;
+    }
     if (acquired.size >= targetDays) break;
   }
 

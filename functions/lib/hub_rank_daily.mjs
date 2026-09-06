@@ -1,6 +1,6 @@
 /**
  * Hub daily rank snapshots + Top20 rank/rankDelta enrichment.
- * Metrics: mcap | rs | position | turnover | gain1d | gain5d
+ * Metrics: mcap | rs | position | turnover | turnover5d | gain1d | gain5d
  *
  * API `rank` / `rankDelta` are **list positions** (1..HUB_TOP_N), not full-universe
  * hub_rank_daily ranks. Full-universe rows stay in Supabase for internal use.
@@ -16,6 +16,7 @@ export const HUB_RANK_METRICS = Object.freeze([
   'rs',
   'position',
   'turnover',
+  'turnover5d',
   'gain1d',
   'gain5d',
 ]);
@@ -60,12 +61,13 @@ export function rankByValueDesc(entries) {
 }
 
 /**
- * Build full hub_rank_daily rows for all 6 metrics from stock_quotes_latest-shaped rows.
+ * Build full hub_rank_daily rows for metrics from stock_quotes_latest-shaped rows.
  * @param {object} hubIndex
  * @param {object[]} quoteRows supabase row shape (ticker, mcap_won, rs, …)
  * @param {string} tradeDateDash YYYY-MM-DD
+ * @param {{ turnover5dByTicker?: Map<string, number> }} [opts]
  */
-export function buildHubRankDailyRows(hubIndex, quoteRows, tradeDateDash) {
+export function buildHubRankDailyRows(hubIndex, quoteRows, tradeDateDash, opts = {}) {
   const companies = listHubCompanies(hubIndex);
   const hubSet = new Set(
     companies.map((c) => normalizeTicker(c.ticker)).filter(Boolean),
@@ -81,6 +83,7 @@ export function buildHubRankDailyRows(hubIndex, quoteRows, tradeDateDash) {
   const rsEntries = [];
   const positionEntries = [];
   const turnoverEntries = [];
+  const turnover5dEntries = [];
   const gain1dEntries = [];
   const gain5dEntries = [];
 
@@ -109,11 +112,23 @@ export function buildHubRankDailyRows(hubIndex, quoteRows, tradeDateDash) {
     if (ret5d != null) gain5dEntries.push({ ticker: key, value: ret5d });
   }
 
+  const turnover5dByTicker = opts.turnover5dByTicker;
+  if (turnover5dByTicker && typeof turnover5dByTicker.forEach === 'function') {
+    turnover5dByTicker.forEach((value, ticker) => {
+      const key = normalizeTicker(ticker);
+      const v = numOrNull(value);
+      if (key && hubSet.has(key) && v != null && v > 0) {
+        turnover5dEntries.push({ ticker: key, value: v });
+      }
+    });
+  }
+
   const packs = [
     ['mcap', mcapEntries],
     ['rs', rsEntries],
     ['position', positionEntries],
     ['turnover', turnoverEntries],
+    ['turnover5d', turnover5dEntries],
     ['gain1d', gain1dEntries],
     ['gain5d', gain5dEntries],
   ];

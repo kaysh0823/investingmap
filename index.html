@@ -2344,20 +2344,6 @@
           </ol>
         </div>
       </section>
-      <section class="hub-rank-panel" id="hub-top-position" aria-labelledby="hub-top-title">
-        <button type="button" class="hub-rank-toggle" id="hub-top-toggle" aria-expanded="false" aria-controls="hub-top-position-body">
-          <span class="hub-rank-toggle-inner">
-            <h2 id="hub-top-title">주가 위치 Top 20</h2>
-            <p class="hub-rank-toggle-sub" id="hub-top-sub">52주 구간 대비 현재가 — 전 산업 상장사</p>
-          </span>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-position-body" class="hub-rank-body is-collapsed">
-          <ol class="hub-top-list" id="hub-top-position-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading quotes…</li>
-          </ol>
-        </div>
-      </section>
       <section class="hub-rank-panel" id="hub-top-turnover" aria-labelledby="hub-turnover-title">
         <button type="button" class="hub-rank-toggle" id="hub-turnover-toggle" aria-expanded="false" aria-controls="hub-top-turnover-body">
           <span class="hub-rank-toggle-inner">
@@ -2368,6 +2354,20 @@
         </button>
         <div id="hub-top-turnover-body" class="hub-rank-body is-collapsed">
           <ol class="hub-top-list" id="hub-top-turnover-list">
+            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
+          </ol>
+        </div>
+      </section>
+      <section class="hub-rank-panel" id="hub-top-turnover5d" aria-labelledby="hub-turnover5d-title">
+        <button type="button" class="hub-rank-toggle" id="hub-turnover5d-toggle" aria-expanded="false" aria-controls="hub-top-turnover5d-body">
+          <span class="hub-rank-toggle-inner">
+            <h2 id="hub-turnover5d-title">5일 거래대금 Top 20</h2>
+            <p class="hub-rank-toggle-sub" id="hub-turnover5d-sub">허브 수록 종목 · 최근 5거래일 누적 거래대금</p>
+          </span>
+          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div id="hub-top-turnover5d-body" class="hub-rank-body is-collapsed">
+          <ol class="hub-top-list" id="hub-top-turnover5d-list">
             <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
           </ol>
         </div>
@@ -2445,10 +2445,10 @@
   </footer>
   <script src="js/map_tab_state.js?v=8"></script>
     <script src="js/return_live.js?v=2"></script>
-  <script src="js/hub_dashboard.js?v=51"></script>
+  <script src="js/hub_dashboard.js?v=52"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="js/hub_trend_chart.js?v=4"></script>
-  <script src="js/im_collapsible.js?v=6"></script>
+  <script src="js/im_collapsible.js?v=7"></script>
 <script>
     const T = {
       ko: {

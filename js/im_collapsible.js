@@ -26,8 +26,8 @@
   var RANK_TOGGLES = [
     ['hub-mcap-toggle', 'hub-top-mcap-body'],
     ['hub-rs-toggle', 'hub-top-rs-body'],
-    ['hub-top-toggle', 'hub-top-position-body'],
     ['hub-turnover-toggle', 'hub-top-turnover-body'],
+    ['hub-turnover5d-toggle', 'hub-top-turnover5d-body'],
     ['hub-gain1d-toggle', 'hub-top-gain1d-body'],
     ['hub-gain5d-toggle', 'hub-top-gain5d-body'],
   ];

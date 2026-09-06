@@ -15,7 +15,7 @@ export { calcQuotePosition };
 
 export const SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'metal', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction', 'software', 'holdings', 'telecom', 'chemical', 'travel'];
 
-/** Hub ranking panel list length (mcap / RS / position / turnover / 1d / 5d). */
+/** Hub ranking panel list length (mcap / RS / turnover / 5d turnover / 1d / 5d). */
 export const HUB_TOP_N = 20;
 
 const QUOTE_CONCURRENCY = 24;
@@ -225,7 +225,7 @@ function moverRow(company, fields = {}) {
 }
 
 /**
- * Build hub_movers payload (mcap / 1d gainers / turnover / 5d gainers Top N)
+ * Build hub_movers payload (mcap / 1d gainers / turnover / 5d turnover / 5d gainers Top N)
  * from Supabase stock_quotes_latest rows joined with hub_index membership.
  */
 export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
@@ -282,6 +282,7 @@ export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
     mcapTop10,
     gainers1dTop10,
     turnoverTop10,
+    turnover5dTop10: Array.isArray(opts.turnover5dTop10) ? opts.turnover5dTop10 : [],
     gainers5dTop10,
   };
 }
@@ -305,6 +306,7 @@ export function buildHubMoversFallback(hubIndex, opts = {}) {
     mcapTop10,
     gainers1dTop10: [],
     turnoverTop10: [],
+    turnover5dTop10: [],
     gainers5dTop10: [],
   };
 }
@@ -318,6 +320,62 @@ export function hubMoversCacheable(payload) {
     (payload.gainers1dTop10 || []).length >= HUB_TOP_N &&
     (payload.turnoverTop10 || []).length >= HUB_TOP_N
   );
+}
+
+/** Min sessions with turnover_won for inclusion in 5d turnover Top N. */
+export const TURNOVER5D_MIN_DAYS = 3;
+
+/**
+ * Sum turnover_won over recent session dates (missing days skipped).
+ * @param {object[]} historyRows {ticker, trade_date, turnover_won}
+ * @param {string[]} sessionDates YYYY-MM-DD
+ * @returns {Map<string, { sum: number, days: number }>}
+ */
+export function sumTurnover5dByTicker(historyRows, sessionDates) {
+  const dateSet = new Set((sessionDates || []).map((d) => String(d).slice(0, 10)));
+  const byTicker = new Map();
+  for (const row of historyRows || []) {
+    const ticker = normalizeTicker(row.ticker);
+    const d = String(row.trade_date || '').slice(0, 10);
+    if (!ticker || !dateSet.has(d)) continue;
+    const t = numOrNull(row.turnover_won);
+    if (t == null || t <= 0) continue;
+    const prev = byTicker.get(ticker) || { sum: 0, days: 0 };
+    prev.sum += t;
+    prev.days += 1;
+    byTicker.set(ticker, prev);
+  }
+  return byTicker;
+}
+
+/**
+ * Build 5d cumulative turnover Top N for hub-listed tickers.
+ * @param {object} hubIndex
+ * @param {Map<string, { sum: number, days: number }>|Map<string, number>} sumsByTicker
+ * @param {{ minDays?: number }} [opts]
+ */
+export function buildTurnover5dTopFromSums(hubIndex, sumsByTicker, opts = {}) {
+  const minDays = opts.minDays != null ? opts.minDays : TURNOVER5D_MIN_DAYS;
+  const companies = listHubCompanies(hubIndex);
+  const enriched = [];
+  for (const c of companies) {
+    const key = normalizeTicker(c.ticker);
+    if (!key || !sumsByTicker || !sumsByTicker.has(key)) continue;
+    const pack = sumsByTicker.get(key);
+    let sum = 0;
+    let days = 0;
+    if (pack && typeof pack === 'object' && 'sum' in pack) {
+      sum = Number(pack.sum) || 0;
+      days = Number(pack.days) || 0;
+    } else {
+      sum = Number(pack) || 0;
+      days = sum > 0 ? minDays : 0;
+    }
+    if (!(sum > 0) || days < minDays) continue;
+    enriched.push(moverRow(c, { turnoverWon: sum, mcapWon: c.mcapWon || 0 }));
+  }
+  enriched.sort((a, b) => b.turnoverWon - a.turnoverWon);
+  return enriched.slice(0, HUB_TOP_N);
 }
 
 /** Map sector_returns rows + hub_index into hub_sectors payload shape. */

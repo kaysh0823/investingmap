@@ -20,14 +20,12 @@
   var SWR_KEY = 'im-hub-dashboard-v18';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
-  var dashboardData = { sectors: {}, top10: [], rsTop10: [], mcapTop10: [], gainers1dTop10: [], turnoverTop10: [], gainers5dTop10: [], regularSession: null, asOf: null };
+  var dashboardData = { sectors: {}, rsTop10: [], mcapTop10: [], gainers1dTop10: [], turnoverTop10: [], turnover5dTop10: [], gainers5dTop10: [], regularSession: null, asOf: null };
   var sectorsLoadingHorizon = null;
   var sectorsBootstrapping = false;
-  var top10Loading = false;
   var rsTop10Loading = false;
   var moversLoading = false;
   var sectorsFailed = false;
-  var top10Failed = false;
   var rsTop10Failed = false;
   var moversFailed = false;
   // Anti-flash gates: numbers stay hidden (skeleton) until a fresh API response
@@ -42,7 +40,6 @@
   var trendByHorizon = {};
   var trendsLoadingHorizon = null;
   var trendFetchInFlight = {};
-  var top10Ready = false;
   var rsTop10Ready = false;
   var moversReady = false;
   var swrHold = null;
@@ -118,14 +115,14 @@
       pulseColCount: '종목 수',
       pulseLoading: '로딩중…',
       pulseStatusLoading: '계산 중…',
-      topTitle: '주가 위치 Top 20',
-      topSub: '52주 구간 대비 현재가 — 전 산업 상장사',
       rsTopTitle: 'RS Top 20',
       rsTopSub: 'KRX 전종목 · 20·50·120일 수익률 백분위 평균',
       mcapTopTitle: '시총 Top 20',
       mcapTopSub: '허브 수록 종목 · KRX 시가총액 기준',
       turnoverTopTitle: '당일 거래대금 Top 20',
       turnoverTopSub: '허브 수록 종목 · 당일 거래대금 기준',
+      turnover5dTopTitle: '5일 거래대금 Top 20',
+      turnover5dTopSub: '허브 수록 종목 · 최근 5거래일 누적 거래대금',
       gain1dTopTitle: '당일 상승률 Top 20',
       gain1dTopSub: '허브 수록 종목 · 당일 등락률 기준',
       gain5dTopTitle: '5일 상승률 Top 20',
@@ -155,14 +152,14 @@
       pulseColCount: 'Companies',
       pulseLoading: 'Loading…',
       pulseStatusLoading: 'Calculating…',
-      topTitle: 'Top 20 — 52-week range',
-      topSub: 'Current price vs 52-week high/low — all sectors',
       rsTopTitle: 'RS Top 20',
       rsTopSub: 'Full KRX · avg of 20/50/120-day return percentiles',
       mcapTopTitle: 'Market cap Top 20',
       mcapTopSub: 'Hub-listed names · by KRX market cap',
       turnoverTopTitle: 'Turnover Top 20',
       turnoverTopSub: 'Hub-listed names · by session trading value',
+      turnover5dTopTitle: 'Turnover Top 20 (5d)',
+      turnover5dTopSub: 'Hub-listed · 5-session cumulative trading value',
       gain1dTopTitle: '1-day gainers Top 20',
       gain1dTopSub: 'Hub-listed names · by daily % change',
       gain5dTopTitle: '5-day gainers Top 20',
@@ -436,7 +433,7 @@
         .then(function (r) {
           return r.json().then(function (j) {
             if (!r.ok) {
-              if (acceptPartial && j && ((j.sectors && Object.keys(j.sectors).length) || (j.top10 && j.top10.length))) {
+              if (acceptPartial && j && ((j.sectors && Object.keys(j.sectors).length) || (j.rsTop10 && j.rsTop10.length))) {
                 return j;
               }
               throw new Error('hub_api_' + r.status);
@@ -502,11 +499,11 @@
       sessionStorage.setItem(SWR_KEY, JSON.stringify({
         t: Date.now(),
         sectors: dashboardData.sectors || {},
-        top10: dashboardData.top10 || [],
         rsTop10: dashboardData.rsTop10 || [],
         mcapTop10: dashboardData.mcapTop10 || [],
         gainers1dTop10: dashboardData.gainers1dTop10 || [],
         turnoverTop10: dashboardData.turnoverTop10 || [],
+        turnover5dTop10: dashboardData.turnover5dTop10 || [],
         gainers5dTop10: dashboardData.gainers5dTop10 || [],
         regularSession: dashboardData.regularSession,
         asOf: dashboardData.asOf,
@@ -657,13 +654,6 @@
     var color = colorBasis == null ? '#8b949e' : colorBasis >= 0 ? '#3fb950' : '#f85149';
     return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
       '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts.join(' ') + '"/></svg>';
-  }
-
-  function formatPosition(n) {
-    if (n == null || !isFinite(n)) return I18N.ko.noData;
-    if (n === 100) return '100%';
-    if (n === 0) return '0%';
-    return n.toFixed(1) + '%';
   }
 
   function positionClass(n) {
@@ -921,39 +911,6 @@
     return out;
   }
 
-  function renderTop10(lang) {
-    var list = document.getElementById('hub-top-position-list');
-    if (!list) return;
-    var labels = t(lang);
-    var ranked = dashboardData && dashboardData.top10 ? dashboardData.top10 : [];
-
-    if (!top10Ready) {
-      list.innerHTML = skeletonListHtml(20);
-      return;
-    }
-    if (!ranked.length) {
-      var msg = top10Loading ? labels.loading : labels.quotesFailed;
-      list.innerHTML = '<li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">' + msg + '</li>';
-      return;
-    }
-
-    list.innerHTML = ranked.map(function (row) {
-      var name = lang === 'en' ? (row.nameEn || row.name) : row.name;
-      var sectorMeta = hubData.sectors[row.sectorId] && hubData.sectors[row.sectorId].meta;
-      var sectorLabel = sectorMeta ? (lang === 'en' ? sectorMeta.en : sectorMeta.ko) : '';
-      var href = hubTop10CompanyHref(row, lang);
-      return '<li><a class="hub-top-item" href="' + href + '">' +
-        '<div class="hub-top-row">' +
-        rankBadgeHtml(row, lang) +
-        '<div class="hub-top-meta"><div class="hub-top-name">' + name + '</div>' +
-        '<div class="hub-top-ticker">' + row.ticker + '</div>' +
-        (sectorLabel ? '<div class="hub-top-sector">' + sectorLabel + '</div>' : '') +
-        '</div>' +
-        '<span class="hub-top-pos ' + positionClass(row.positionPct) + '">' + formatPosition(row.positionPct) + '</span>' +
-        '</div></a></li>';
-    }).join('');
-  }
-
   function renderRsTop10(lang) {
     var list = document.getElementById('hub-top-rs-list');
     if (!list) return;
@@ -1033,6 +990,13 @@
     });
   }
 
+  function renderTurnover5dTop10(lang) {
+    var ranked = dashboardData && dashboardData.turnover5dTop10 ? dashboardData.turnover5dTop10 : [];
+    renderMoverList('hub-top-turnover5d-list', ranked, moversReady, moversLoading, lang, function (row) {
+      return { text: formatTurnoverValue(row.turnoverWon, lang), cls: '' };
+    });
+  }
+
   function renderGain1dTop10(lang) {
     var ranked = dashboardData && dashboardData.gainers1dTop10 ? dashboardData.gainers1dTop10 : [];
     renderMoverList('hub-top-gain1d-list', ranked, moversReady, moversLoading, lang, function (row) {
@@ -1050,6 +1014,7 @@
   function renderMovers(lang) {
     renderMcapTop10(lang);
     renderTurnoverTop10(lang);
+    renderTurnover5dTop10(lang);
     renderGain1dTop10(lang);
     renderGain5dTop10(lang);
   }
@@ -1140,14 +1105,14 @@
     renderCoverCount(lang);
     set('hub-pulse-title', labels.pulseTitle);
     set('hub-pulse-sub', pulseSubText(lang));
-    set('hub-top-title', labels.topTitle);
-    set('hub-top-sub', labels.topSub);
     set('hub-rs-title', labels.rsTopTitle);
     set('hub-rs-sub', labels.rsTopSub);
     set('hub-mcap-title', labels.mcapTopTitle);
     set('hub-mcap-sub', labels.mcapTopSub);
     set('hub-turnover-title', labels.turnoverTopTitle);
     set('hub-turnover-sub', labels.turnoverTopSub);
+    set('hub-turnover5d-title', labels.turnover5dTopTitle);
+    set('hub-turnover5d-sub', labels.turnover5dTopSub);
     set('hub-gain1d-title', labels.gain1dTopTitle);
     set('hub-gain1d-sub', labels.gain1dTopSub);
     set('hub-gain5d-title', labels.gain5dTopTitle);
@@ -1209,13 +1174,6 @@
     return fetchSectorsHorizon(lang, pulseHorizonKey);
   }
 
-  function applyTop10Payload(j) {
-    if (!j || j.error) return;
-    dashboardData.top10 = j.top10 || dashboardData.top10;
-    if (j.regularSession != null) dashboardData.regularSession = j.regularSession;
-    if (j.asOf) dashboardData.asOf = j.asOf;
-  }
-
   function applyRsTop10Payload(j) {
     if (!j || j.error) return;
     dashboardData.rsTop10 = j.top10 || dashboardData.rsTop10;
@@ -1226,6 +1184,7 @@
     if (j.mcapTop10) dashboardData.mcapTop10 = j.mcapTop10;
     if (j.gainers1dTop10) dashboardData.gainers1dTop10 = j.gainers1dTop10;
     if (j.turnoverTop10) dashboardData.turnoverTop10 = j.turnoverTop10;
+    if (j.turnover5dTop10) dashboardData.turnover5dTop10 = j.turnover5dTop10;
     if (j.gainers5dTop10) dashboardData.gainers5dTop10 = j.gainers5dTop10;
     if (j.asOf) dashboardData.asOf = j.asOf;
   }
@@ -1257,6 +1216,9 @@
           }
           if (!(dashboardData.turnoverTop10 && dashboardData.turnoverTop10.length) && swrHold.turnoverTop10 && swrHold.turnoverTop10.length) {
             dashboardData.turnoverTop10 = swrHold.turnoverTop10;
+          }
+          if (!(dashboardData.turnover5dTop10 && dashboardData.turnover5dTop10.length) && swrHold.turnover5dTop10 && swrHold.turnover5dTop10.length) {
+            dashboardData.turnover5dTop10 = swrHold.turnover5dTop10;
           }
           if (!(dashboardData.gainers5dTop10 && dashboardData.gainers5dTop10.length) && swrHold.gainers5dTop10 && swrHold.gainers5dTop10.length) {
             dashboardData.gainers5dTop10 = swrHold.gainers5dTop10;
@@ -1301,50 +1263,19 @@
       });
   }
 
-  function fetchTop10(lang) {
-    var url = hubApiUrl('/api/hub_top10');
-    if (!url) {
-      top10Loading = false;
-      top10Ready = true;
-      renderTop10(lang);
-      return Promise.resolve();
-    }
-    top10Loading = true;
-    top10Failed = false;
-    renderTop10(lang);
-    return fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
-      .then(function (j) {
-        if (j && j.error) throw new Error(j.error);
-        applyTop10Payload(j);
-      })
-      .catch(function () {
-        top10Failed = true;
-        if (!(dashboardData.top10 && dashboardData.top10.length) && swrHold && swrHold.top10 && swrHold.top10.length) {
-          dashboardData.top10 = swrHold.top10;
-        }
-      })
-      .then(function () {
-        top10Loading = false;
-        top10Ready = true;
-        if (!top10Failed && dashboardData.top10 && dashboardData.top10.length) writeSwr();
-        renderTop10(lang);
-      });
-  }
-
   function fetchDashboardAndRender(lang, sectorPromise) {
     var sectors = sectorPromise || fetchSectors(lang);
     var trends = fetchTrends(lang, pulseHorizonKey);
-    return Promise.all([sectors, trends, fetchTop10(lang), fetchRsTop10(lang), fetchMovers(lang)]).then(function () {
+    return Promise.all([sectors, trends, fetchRsTop10(lang), fetchMovers(lang)]).then(function () {
       if (!hasHorizonData(pulseHorizonKey)) {
         return fetchSectorsHorizon(lang, pulseHorizonKey);
       }
     }).then(function () {
-      if (!sectorsFailed && !top10Failed && !rsTop10Failed && !moversFailed) writeSwr();
+      if (!sectorsFailed && !rsTop10Failed && !moversFailed) writeSwr();
       sectorsBootstrapping = false;
       if (sectorsLoadingHorizon === pulseHorizonKey) sectorsLoadingHorizon = null;
       // Sector 1D comes only from /api/hub_sectors — no client live overlay.
       renderPulse(lang);
-      renderTop10(lang);
       renderRsTop10(lang);
       renderMovers(lang);
       startHubSectorPoll(lang);
@@ -1356,7 +1287,6 @@
     lang = pageLang(lang);
     readPulseHorizon();
     sectorsBootstrapping = true;
-    top10Loading = true;
     rsTop10Loading = true;
     moversLoading = true;
     var swr = readSwr();
@@ -1364,16 +1294,15 @@
       if (swrIsCurrentVersion(swr)) {
         // Same data version as a fresh fetch would return — safe to paint immediately.
         dashboardData.sectors = swr.sectors || {};
-        dashboardData.top10 = swr.top10 || [];
         dashboardData.rsTop10 = swr.rsTop10 || [];
         dashboardData.mcapTop10 = swr.mcapTop10 || [];
         dashboardData.gainers1dTop10 = swr.gainers1dTop10 || [];
         dashboardData.turnoverTop10 = swr.turnoverTop10 || [];
+        dashboardData.turnover5dTop10 = swr.turnover5dTop10 || [];
         dashboardData.gainers5dTop10 = swr.gainers5dTop10 || [];
         dashboardData.regularSession = swr.regularSession;
         if (swr.asOf) dashboardData.asOf = swr.asOf;
         sectorsReady = Object.keys(dashboardData.sectors).length > 0;
-        top10Ready = dashboardData.top10.length > 0;
         rsTop10Ready = dashboardData.rsTop10.length > 0;
         moversReady = dashboardData.mcapTop10.length > 0;
       } else {
@@ -1387,7 +1316,6 @@
         renderLabels(lang);
         enhanceCards(lang);
         renderPulse(lang);
-        renderTop10(lang);
         renderRsTop10(lang);
         renderMovers(lang);
         var sectorFetch = fetchSectorsHorizon(lang, pulseHorizonKey);
@@ -1395,19 +1323,16 @@
       })
       .catch(function (err) {
         sectorsBootstrapping = false;
-        top10Loading = false;
         rsTop10Loading = false;
         moversLoading = false;
         sectorsReady = true;
         sectorsAuthFetched = true;
-        top10Ready = true;
         rsTop10Ready = true;
         moversReady = true;
         if (typeof console !== 'undefined' && console.warn) {
           console.warn('[hub_dashboard] init failed', err);
         }
         renderPulse(lang);
-        renderTop10(lang);
         renderRsTop10(lang);
         renderMovers(lang);
       });
@@ -1421,7 +1346,6 @@
     // Avoid flashing "Could not load" before hubData / first fetch finishes.
     if (!hubData && sectorsBootstrapping) return;
     renderPulse(lang);
-    renderTop10(lang);
     renderRsTop10(lang);
     renderMovers(lang);
   }
