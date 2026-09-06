@@ -1581,6 +1581,15 @@
       html += hoverTipRow(labels.frgnOsc, fmtNum(frgnVal, 1));
       html += hoverTipRow(labels.foreignRatio, fmtNum(b.foreignRatio, 2));
     }
+    if (typeof b.bbw === 'number' && isFinite(b.bbw)) {
+      html += hoverTipRow(labels.bbw, fmtNum(b.bbw, 1) + '%');
+    }
+    if (typeof b.disp === 'number' && isFinite(b.disp)) {
+      html += hoverTipRow(labels.disp, fmtNum(b.disp, 1) + '%');
+    }
+    if (typeof b.atr === 'number' && isFinite(b.atr)) {
+      html += hoverTipRow(labels.atr, fmtNum(b.atr, 2) + '%');
+    }
     tip.innerHTML = html;
     tip.style.display = 'block';
     tip.setAttribute('aria-hidden', 'false');
