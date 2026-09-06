@@ -62,6 +62,7 @@
     "backfill:foreign-ratio": "node scripts/backfill_foreign_ratio.mjs",
     "audit:mcap-universe": "node scripts/audit_mcap_universe.mjs",
     "triage:mcap-additions": "node scripts/triage_mcap_additions.mjs",
+    "report:coverage-changes": "node scripts/report_coverage_changes.mjs",
     "verify:krx-rs": "node scripts/verify_krx_rs.mjs",
     "pages:build": "node scripts/pages_build.mjs",
     "patch:tickers": "node scripts/patch_tickers_from_krx.mjs",

@@ -12,7 +12,7 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -36,14 +36,28 @@ jobs:
           KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
         run: npm run fetch:krx-mcap
 
+      - name: Report coverage weekly diff
+        run: node scripts/report_coverage_changes.mjs
+
+      - name: Audit mcap universe (additions / removals)
+        env:
+          KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
+        run: node scripts/audit_mcap_universe.mjs
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/data_4937_*.csv data/data_4848_*.csv
+          git add \
+            data/data_4937_*.csv \
+            data/data_4848_*.csv \
+            data/coverage_snapshot.json \
+            docs/reports/coverage_weekly_diff.md \
+            docs/reports/mcap_audit_additions.csv \
+            docs/reports/mcap_audit_removals.csv
           if git diff --staged --quiet; then
-            echo "No CSV changes to commit."
+            echo "No changes to commit."
             exit 0
           fi
-          git commit -m "chore: refresh KRX market cap CSV"
+          git commit -m "chore: weekly KRX mcap refresh + coverage diff"
           git push
