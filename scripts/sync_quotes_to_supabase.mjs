@@ -1008,21 +1008,25 @@ async function upsertSectorReturns(rows, supabaseUrl, serviceKey) {
   return { upserted: 0, failed: rows.length, body: result.body };
 }
 
+/** Live sector mcap sum + quote coverage among hub members. */
 function sectorSumNow(hubIndex, sectorId, quoteByTicker) {
   const block = hubIndex.sectors && hubIndex.sectors[sectorId];
   if (!block) return null;
   let sum = 0;
   let n = 0;
+  let members = 0;
   for (const c of block.companies || []) {
     const key = normalizeTicker(c.ticker);
     if (!key) continue;
+    members += 1;
     const q = quoteByTicker.get(key);
     const mcap = q && q.mcap_won;
     if (mcap == null || !Number.isFinite(mcap) || mcap <= 0) continue;
     sum += mcap;
     n += 1;
   }
-  return n > 0 ? sum : null;
+  if (!(n > 0) || !(sum > 0)) return null;
+  return { sum, covered: n, members, coverage: members > 0 ? n / members : 0 };
 }
 
 function sectorSumFromHistory(hubIndex, sectorId, mcapByTicker) {
@@ -1154,10 +1158,12 @@ async function syncSectorIntradaySnapshots({
   const rows = [];
   let seeded = 0;
   let appended = 0;
+  let skippedCoverage = 0;
+  const INTRADAY_MEMBER_COVERAGE_MIN = 0.95;
 
   for (const sid of SECTOR_ORDER) {
-    const sumNow = sectorSumNow(hubIndex, sid, quoteByTicker);
-    if (sumNow == null) continue;
+    const live = sectorSumNow(hubIndex, sid, quoteByTicker);
+    if (!live) continue;
 
     if (!existing.ids.has(sid) && prevMap) {
       const seedSum = sectorSumFromHistory(hubIndex, sid, prevMap);
@@ -1171,10 +1177,18 @@ async function syncSectorIntradaySnapshots({
         seeded += 1;
       }
     }
+
+    // Skip partial early-session sums (untraded/stale members) so 1D charts
+    // never inherit a fake V-shaped trough from incomplete coverage.
+    if (live.coverage < INTRADAY_MEMBER_COVERAGE_MIN) {
+      skippedCoverage += 1;
+      continue;
+    }
+
     rows.push({
       sector_id: sid,
       ts: liveTs,
-      mcap_sum: sumNow,
+      mcap_sum: live.sum,
       trade_date: tradeDateDash,
     });
     appended += 1;
@@ -1199,9 +1213,10 @@ async function syncSectorIntradaySnapshots({
 
   console.log(
     `  sector intraday snapshots: seeded=${seeded} appended=${appended}` +
+    ` skip_cov=${skippedCoverage}` +
     ` trade_date=${tradeDateDash} prev=${prevDash || 'n/a'} prune=${prune.ok ? 'ok' : 'fail'}`,
   );
-  return { seeded, appended, pruned: !!prune.ok };
+  return { seeded, appended, pruned: !!prune.ok, skippedCoverage };
 }
 
 /**

@@ -8,6 +8,7 @@ import {
   downsampleDates,
   rebaseTo100,
   applyLiveDailyTip,
+  sanitizeIntradaySnapRows,
   TREND_INDEX_CODES,
   TREND_MAX_POINTS,
   TREND_CHART_MAX_POINTS,
@@ -39,6 +40,28 @@ assert.deepEqual(appended, [
   { t: '2026-08-19', value: 100 },
   { t: '2026-08-20', value: 105 },
 ]);
+
+// Partial-sum V-spike (e.g. 09:14 incomplete members) must be interpolated away.
+{
+  const base = 1e12;
+  const cleaned = sanitizeIntradaySnapRows([
+    { ts: 'a', value: base },
+    { ts: 'b', value: base * 0.98 },
+    { ts: 'spike', value: base * 0.76 }, // ~76 rebased — classic early partial sum
+    { ts: 'c', value: base * 0.99 },
+    { ts: 'd', value: base * 1.01 },
+  ]);
+  assert.equal(cleaned.length, 5);
+  assert.equal(cleaned[0].value, base);
+  assert.equal(cleaned[cleaned.length - 1].value, base * 1.01);
+  const spike = cleaned.find((row) => row.ts === 'spike');
+  assert.ok(spike);
+  assert.ok(
+    Math.abs(spike.value - ((base * 0.98 + base * 0.99) / 2)) < 1,
+    `spike repaired to neighbor lerp, got ${spike.value}`,
+  );
+  assert.ok(spike.value / base > 0.9, 'repaired spike stays near neighbors');
+}
 
 const longDates = Array.from({ length: 201 }, (_, i) => `2025-${String(Math.floor(i / 28) + 1).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`);
 const sampledDates = downsampleDates(longDates);
@@ -281,7 +304,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v12'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v13'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -314,6 +337,7 @@ for (const marker of [
   'DATE_BATCH = 64',
   'buildIndexDailySeries(config, chartDates, calendar',
   'scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash',
+  'sanitizeIntradaySnapRows',
   'payload.tradeDate = tradeDateDash',
 ]) {
   assert.ok(core.includes(marker), `hub trend core marker missing: ${marker}`);

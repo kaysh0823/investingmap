@@ -19,6 +19,11 @@ const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
 const MIN_FIXED_MEMBERS = 3;
 /** Skip chart points when too few fixed members contribute (raw or forward-filled). */
 const MEMBER_COVERAGE_MIN = 0.95;
+/** Intraday partial-sum spike vs neighbor lerp, relative to session-open base. */
+const INTRADAY_SPIKE_RATIO = 0.08;
+/** Soft band for single-point absolute outliers (rebased vs open base=100). */
+const INTRADAY_REBASED_MIN = 88;
+const INTRADAY_REBASED_MAX = 120;
 const TICKER_BATCH = 80;
 /** Max trade_date values per in.(…) clause — must exceed TREND_CHART_MAX_POINTS for single-batch chart fetches. */
 const DATE_BATCH = 64;
@@ -695,30 +700,90 @@ function sessionTipIso(sessionDate, now = new Date()) {
 }
 
 /**
+ * Repair single-point partial-sum spikes in intraday mcap snapshots.
+ * Preserves first & last points; V-shaped outliers are interpolated.
+ * @param {{ts:string,value:number|null}[]} snapRows
+ * @returns {{ts:string,value:number}[]}
+ */
+export function sanitizeIntradaySnapRows(snapRows) {
+  if (!Array.isArray(snapRows) || snapRows.length === 0) return [];
+  if (snapRows.length < 3) {
+    return snapRows
+      .map((row) => ({ ts: row.ts, value: numOrNull(row.value) }))
+      .filter((row) => row.ts && row.value > 0);
+  }
+
+  const rows = snapRows.map((row) => ({
+    ts: row.ts,
+    value: numOrNull(row.value),
+  }));
+  const base = rows[0].value;
+  if (!(base > 0)) {
+    return rows.filter((row) => row.ts && row.value > 0);
+  }
+
+  for (let i = 1; i < rows.length - 1; i++) {
+    const prev = rows[i - 1].value;
+    const next = rows[i + 1].value;
+    const cur = rows[i].value;
+    if (!(prev > 0) || !(next > 0)) continue;
+
+    const expected = (prev + next) / 2;
+    const neighborsRecover =
+      Math.abs(next - prev) / base <= INTRADAY_SPIKE_RATIO;
+
+    if (!(cur > 0)) {
+      if (neighborsRecover) rows[i].value = expected;
+      continue;
+    }
+
+    const rebased = (cur / base) * 100;
+    const prevReb = (prev / base) * 100;
+    const nextReb = (next / base) * 100;
+    const neighborsInBand =
+      prevReb >= INTRADAY_REBASED_MIN &&
+      prevReb <= INTRADAY_REBASED_MAX &&
+      nextReb >= INTRADAY_REBASED_MIN &&
+      nextReb <= INTRADAY_REBASED_MAX;
+    const absOutlier =
+      neighborsInBand &&
+      (rebased < INTRADAY_REBASED_MIN || rebased > INTRADAY_REBASED_MAX);
+
+    const spike = Math.abs(cur - expected) / base;
+    if ((spike > INTRADAY_SPIKE_RATIO && neighborsRecover) || absOutlier) {
+      rows[i].value = expected;
+    }
+  }
+
+  return rows.filter((row) => row.ts && row.value > 0);
+}
+
+/**
  * Scale intraday snapshot shape onto fixed-member base→live mcap sums.
  * Base VALUE is prior-session close; TIMESTAMP is session open (tradeDate 09:00)
  * so the 1D chart x-axis stays on the trading day.
  */
 function scaleIntradayToFixedMembers(snapRows, baseSum, liveSum, sessionDate, now = new Date()) {
   const openT = sessionOpenIso(sessionDate);
-  if (!snapRows.length) {
+  const cleaned = sanitizeIntradaySnapRows(snapRows);
+  if (!cleaned.length) {
     return [
       { t: openT, value: baseSum },
       { t: sessionTipIso(sessionDate, now), value: liveSum },
     ];
   }
-  const firstSnap = numOrNull(snapRows[0].value);
-  const lastSnap = numOrNull(snapRows[snapRows.length - 1].value);
+  const firstSnap = numOrNull(cleaned[0].value);
+  const lastSnap = numOrNull(cleaned[cleaned.length - 1].value);
   const denom = lastSnap != null && firstSnap != null ? lastSnap - firstSnap : 0;
   const rows = [{ t: openT, value: baseSum }];
-  for (let i = 0; i < snapRows.length; i++) {
-    const snap = snapRows[i];
+  for (let i = 0; i < cleaned.length; i++) {
+    const snap = cleaned[i];
     const snapVal = numOrNull(snap.value);
     let value = baseSum;
     if (snapVal != null && denom !== 0 && firstSnap != null) {
       value = baseSum + ((snapVal - firstSnap) / denom) * (liveSum - baseSum);
-    } else if (snapRows.length > 0) {
-      value = baseSum + ((i + 1) / snapRows.length) * (liveSum - baseSum);
+    } else if (cleaned.length > 0) {
+      value = baseSum + ((i + 1) / cleaned.length) * (liveSum - baseSum);
     }
     rows.push({ t: snap.ts, value });
   }
