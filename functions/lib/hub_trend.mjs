@@ -19,11 +19,15 @@ const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
 const MIN_FIXED_MEMBERS = 3;
 /** Skip chart points when too few fixed members contribute (raw or forward-filled). */
 const MEMBER_COVERAGE_MIN = 0.95;
-/** Intraday partial-sum spike vs neighbor lerp, relative to session-open base. */
-const INTRADAY_SPIKE_RATIO = 0.08;
-/** Soft band for single-point absolute outliers (rebased vs open base=100). */
-const INTRADAY_REBASED_MIN = 88;
-const INTRADAY_REBASED_MAX = 120;
+/** Robust-center deviation (rebased pts / 100) to flag recoverable outliers. */
+const INTRADAY_DEV_RATIO = 0.12;
+/** Early-session (first ~40m) partial-sum floor — consecutive lows are all dropped. */
+const INTRADAY_EARLY_FLOOR = 90;
+/** Recoverable overshoot high (false rebound after partial-sum trough). */
+const INTRADAY_OVERSHOOT = 110;
+const INTRADAY_EARLY_MINUTES = 40;
+/** Half-width (in samples) when checking that flanks have recovered to center. */
+const INTRADAY_WIDE_HALF = 3;
 const TICKER_BATCH = 80;
 /** Max trade_date values per in.(…) clause — must exceed TREND_CHART_MAX_POINTS for single-batch chart fetches. */
 const DATE_BATCH = 64;
@@ -699,9 +703,35 @@ function sessionTipIso(sessionDate, now = new Date()) {
   return `${sessionDate}T${hh}:${mm}:00+09:00`;
 }
 
+function medianNumber(values) {
+  const nums = (values || []).filter((v) => Number.isFinite(v)).sort((a, b) => a - b);
+  if (!nums.length) return null;
+  const mid = Math.floor(nums.length / 2);
+  return nums.length % 2 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+}
+
+function kstMinutesOfDayFromIso(iso) {
+  const ms = Date.parse(String(iso || ''));
+  if (!Number.isFinite(ms)) return null;
+  const kst = new Date(ms + 9 * 60 * 60 * 1000);
+  return kst.getUTCHours() * 60 + kst.getUTCMinutes();
+}
+
+function isEarlyIntradayTs(ts) {
+  const minutes = kstMinutesOfDayFromIso(ts);
+  if (minutes == null) return false;
+  return minutes >= SESSION_OPEN_MIN && minutes < SESSION_OPEN_MIN + INTRADAY_EARLY_MINUTES;
+}
+
+function nearRebasedCenter(rebased, center, ratio = INTRADAY_DEV_RATIO * 0.65) {
+  if (!(rebased > 0) || !(center > 0)) return false;
+  return Math.abs(rebased - center) <= ratio * 100;
+}
+
 /**
- * Repair single-point partial-sum spikes in intraday mcap snapshots.
- * Preserves first & last points; V-shaped outliers are interpolated.
+ * Repair partial-sum spike *clusters* in intraday mcap snapshots.
+ * Uses a robust rebased center (median, fallback 100); drops recoverable
+ * lows/highs (incl. early-session floors) and interpolates. Keeps first & last.
  * @param {{ts:string,value:number|null}[]} snapRows
  * @returns {{ts:string,value:number}[]}
  */
@@ -722,40 +752,74 @@ export function sanitizeIntradaySnapRows(snapRows) {
     return rows.filter((row) => row.ts && row.value > 0);
   }
 
+  const rebased = rows.map((row) => (row.value > 0 ? (row.value / base) * 100 : null));
+  const center = medianNumber(rebased.filter((v) => v != null)) ?? 100;
+  const drop = new Array(rows.length).fill(false);
+
+  const findAnchor = (from, step) => {
+    for (let j = from; j >= 0 && j < rows.length; j += step) {
+      if (j === 0 || j === rows.length - 1) {
+        if (rebased[j] != null) return j;
+        continue;
+      }
+      if (drop[j]) continue;
+      if (nearRebasedCenter(rebased[j], center)) return j;
+    }
+    return -1;
+  };
+
   for (let i = 1; i < rows.length - 1; i++) {
-    const prev = rows[i - 1].value;
-    const next = rows[i + 1].value;
-    const cur = rows[i].value;
-    if (!(prev > 0) || !(next > 0)) continue;
-
-    const expected = (prev + next) / 2;
-    const neighborsRecover =
-      Math.abs(next - prev) / base <= INTRADAY_SPIKE_RATIO;
-
-    if (!(cur > 0)) {
-      if (neighborsRecover) rows[i].value = expected;
+    const r = rebased[i];
+    if (r == null) {
+      drop[i] = true;
+      continue;
+    }
+    const early = isEarlyIntradayTs(rows[i].ts);
+    if (early && r < INTRADAY_EARLY_FLOOR) {
+      drop[i] = true;
       continue;
     }
 
-    const rebased = (cur / base) * 100;
-    const prevReb = (prev / base) * 100;
-    const nextReb = (next / base) * 100;
-    const neighborsInBand =
-      prevReb >= INTRADAY_REBASED_MIN &&
-      prevReb <= INTRADAY_REBASED_MAX &&
-      nextReb >= INTRADAY_REBASED_MIN &&
-      nextReb <= INTRADAY_REBASED_MAX;
-    const absOutlier =
-      neighborsInBand &&
-      (rebased < INTRADAY_REBASED_MIN || rebased > INTRADAY_REBASED_MAX);
+    const deviant = Math.abs(r - center) / 100 > INTRADAY_DEV_RATIO
+      || Math.abs(r - 100) / 100 > INTRADAY_DEV_RATIO;
+    const overshoot = r > INTRADAY_OVERSHOOT;
+    if (!deviant && !overshoot) continue;
 
-    const spike = Math.abs(cur - expected) / base;
-    if ((spike > INTRADAY_SPIKE_RATIO && neighborsRecover) || absOutlier) {
-      rows[i].value = expected;
-    }
+    const left = findAnchor(Math.max(0, i - 1), -1);
+    const right = findAnchor(Math.min(rows.length - 1, i + 1), 1);
+    // Prefer a wider flank sample so consecutive troughs don't "confirm" each other.
+    const leftWide = findAnchor(Math.max(0, i - INTRADAY_WIDE_HALF), -1);
+    const rightWide = findAnchor(Math.min(rows.length - 1, i + INTRADAY_WIDE_HALF), 1);
+    const L = leftWide >= 0 ? leftWide : left;
+    const R = rightWide >= 0 ? rightWide : right;
+    if (L < 0 || R < 0 || L >= i || R <= i) continue;
+
+    const leftOk = nearRebasedCenter(rebased[L], center) || L === 0;
+    const rightOk = nearRebasedCenter(rebased[R], center) || R === rows.length - 1;
+    if (leftOk && rightOk) drop[i] = true;
   }
 
-  return rows.filter((row) => row.ts && row.value > 0);
+  for (let i = 1; i < rows.length - 1; i++) {
+    if (!drop[i]) continue;
+    let left = i - 1;
+    while (left > 0 && drop[left]) left -= 1;
+    let right = i + 1;
+    while (right < rows.length - 1 && drop[right]) right += 1;
+    const lv = rows[left].value;
+    const rv = rows[right].value;
+    if (!(lv > 0) || !(rv > 0) || right === left) continue;
+    const w = (i - left) / (right - left);
+    rows[i].value = lv + (rv - lv) * w;
+    rebased[i] = (rows[i].value / base) * 100;
+    drop[i] = false;
+  }
+
+  // Never mutate endpoints.
+  rows[0].value = base;
+  return rows.filter((row, idx) => {
+    if (idx === 0 || idx === rows.length - 1) return row.ts && row.value > 0;
+    return row.ts && row.value > 0 && !drop[idx];
+  });
 }
 
 /**

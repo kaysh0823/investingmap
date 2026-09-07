@@ -45,22 +45,39 @@ assert.deepEqual(appended, [
 {
   const base = 1e12;
   const cleaned = sanitizeIntradaySnapRows([
-    { ts: 'a', value: base },
-    { ts: 'b', value: base * 0.98 },
-    { ts: 'spike', value: base * 0.76 }, // ~76 rebased — classic early partial sum
-    { ts: 'c', value: base * 0.99 },
-    { ts: 'd', value: base * 1.01 },
+    { ts: '2026-09-07T09:00:00+09:00', value: base },
+    { ts: '2026-09-07T09:10:00+09:00', value: base * 0.98 },
+    { ts: '2026-09-07T09:14:00+09:00', value: base * 0.76 },
+    { ts: '2026-09-07T09:20:00+09:00', value: base * 0.99 },
+    { ts: '2026-09-07T15:20:00+09:00', value: base * 1.01 },
   ]);
-  assert.equal(cleaned.length, 5);
+  assert.ok(cleaned.length >= 4);
   assert.equal(cleaned[0].value, base);
   assert.equal(cleaned[cleaned.length - 1].value, base * 1.01);
-  const spike = cleaned.find((row) => row.ts === 'spike');
-  assert.ok(spike);
-  assert.ok(
-    Math.abs(spike.value - ((base * 0.98 + base * 0.99) / 2)) < 1,
-    `spike repaired to neighbor lerp, got ${spike.value}`,
-  );
-  assert.ok(spike.value / base > 0.9, 'repaired spike stays near neighbors');
+  const minReb = Math.min(...cleaned.map((row) => (row.value / base) * 100));
+  assert.ok(minReb >= 95, `single-spike min rebased ${minReb}`);
+}
+
+// Cluster trough (09:14–09:34) + overshoot rebound (09:54) — travel-style false V.
+{
+  const base = 1e12;
+  const cleaned = sanitizeIntradaySnapRows([
+    { ts: '2026-09-07T09:00:00+09:00', value: base },
+    { ts: '2026-09-07T09:14:00+09:00', value: base * 0.765 },
+    { ts: '2026-09-07T09:24:00+09:00', value: base * 0.794 },
+    { ts: '2026-09-07T09:34:00+09:00', value: base * 0.953 },
+    { ts: '2026-09-07T09:54:00+09:00', value: base * 1.107 },
+    { ts: '2026-09-07T10:14:00+09:00', value: base * 0.995 },
+    { ts: '2026-09-07T11:00:00+09:00', value: base * 1.002 },
+    { ts: '2026-09-07T15:20:00+09:00', value: base * 1.01 },
+  ]);
+  assert.equal(cleaned[0].value, base);
+  assert.equal(cleaned[cleaned.length - 1].value, base * 1.01);
+  const reb = cleaned.map((row) => (row.value / base) * 100);
+  const minReb = Math.min(...reb);
+  const maxMid = Math.max(...reb.slice(1, -1));
+  assert.ok(minReb >= 95, `cluster min rebased ${minReb}`);
+  assert.ok(maxMid <= 108, `cluster overshoot cleaned, max mid ${maxMid}`);
 }
 
 const longDates = Array.from({ length: 201 }, (_, i) => `2025-${String(Math.floor(i / 28) + 1).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`);
@@ -304,7 +321,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v13'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v14'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
