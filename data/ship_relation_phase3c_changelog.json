@@ -1,25 +1,25 @@
 {
   "migratedAt": "2026-08-23",
   "legacyMigratedEdgeCount": 61,
-  "structuralGeneratedEdgeCount": 63,
+  "structuralGeneratedEdgeCount": 57,
   "manuallyCuratedEdgeCount": 8,
   "removedEdgeCount": 1,
-  "finalEdgeCount": 119,
+  "finalEdgeCount": 113,
   "legacyMigratedBusinessEdgeCount": 39,
   "manuallyCuratedBusinessEdgeCount": 8,
   "confirmedBusinessEdgeCount": 0,
   "reportedBusinessEdgeCount": 0,
   "statusCounts": {
-    "reference": 74,
+    "reference": 68,
     "inferred": 9,
     "ended": 2,
     "peer": 34
   },
   "typeCounts": {
-    "member_of": 24,
+    "member_of": 22,
     "builds_vessel_type": 15,
     "exposed_to": 10,
-    "manufactures": 23,
+    "manufactures": 19,
     "owns": 1,
     "ordered": 3,
     "awarded_to": 3,
@@ -29,10 +29,10 @@
   },
   "orphanMetrics": {
     "structuralOrphanCount": 0,
-    "businessRelationOrphanCount": 24,
-    "directRelationshipOrphanCount": 16,
-    "classificationOnlyCompanyCount": 16,
-    "weakRelationOnlyCompanyCount": 24
+    "businessRelationOrphanCount": 22,
+    "directRelationshipOrphanCount": 14,
+    "classificationOnlyCompanyCount": 14,
+    "weakRelationOnlyCompanyCount": 22
   },
   "changes": [
     {
@@ -411,39 +411,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:100090",
-      "target": "group:offshore_mro",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:100090",
-      "target": "product:mro_service",
-      "beforeType": "(none)",
-      "afterType": "manufactures",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:100090",
-      "target": "product:offshore_module",
-      "beforeType": "(none)",
-      "afterType": "manufactures",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:014620",
       "target": "group:outfitting",
       "beforeType": "(none)",
@@ -501,39 +468,6 @@
       "legacyEdgeId": null,
       "source": "krx:023160",
       "target": "product:piping_fitting",
-      "beforeType": "(none)",
-      "afterType": "manufactures",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:100840",
-      "target": "group:offshore_mro",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:100840",
-      "target": "product:mro_service",
-      "beforeType": "(none)",
-      "afterType": "manufactures",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:100840",
-      "target": "product:offshore_module",
       "beforeType": "(none)",
       "afterType": "manufactures",
       "beforeStatus": "(none)",

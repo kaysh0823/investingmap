@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 신재생에너지 투자 지도",
     "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html",
-    "numberOfItems": 11,
+    "numberOfItems": 12,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -179,30 +179,36 @@
       {
         "@type": "ListItem",
         "position": 7,
+        "name": "SK오션플랜트 (100090, KOSPI)",
+        "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-100090"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
         "name": "지엔씨에너지 (119850, KOSDAQ)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-119850"
       },
       {
         "@type": "ListItem",
-        "position": 8,
+        "position": 9,
         "name": "OCI (456040, KOSPI)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-456040"
       },
       {
         "@type": "ListItem",
-        "position": 9,
+        "position": 10,
         "name": "일진하이솔루스 (271940, KOSPI)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-271940"
       },
       {
         "@type": "ListItem",
-        "position": 10,
+        "position": 11,
         "name": "신성이엔지 (011930, KOSPI)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-011930"
       },
       {
         "@type": "ListItem",
-        "position": 11,
+        "position": 12,
         "name": "유니슨 (018000, KOSDAQ)",
         "url": "https://www.investingmap.kr/renewable/korea_renewable_map.html#ticker-018000"
       }
@@ -2029,8 +2035,8 @@
     </button>
     <p id="hdr-subtitle">태양광·풍력·수소·신재생 운영 — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>11</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>9</span> · KOSDAQ <span>2</span></div>
+      <div class="badge" id="badge-total">Total <span>12</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>10</span> · KOSDAQ <span>2</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -2121,7 +2127,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">11</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">12</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2290,6 +2296,29 @@
       <td style="font-size:12px;color:var(--text-muted)">ESS·태양광 모듈</td>
       <td class="products-cell">산업·계통 ESS, 태양광</td>
       <td><div class="partners-list">Tesla, Enphase, hdelec</div></td>
+    </tr>
+          <tr data-ticker="100090">
+      <td><div class="company-name">SK오션플랜트</div><div class="company-name-sub">SKoceanplant</div></td>
+      <td><span class="ticker">100090</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">12,450</td>
+      <td class="quote-cell ret-cell">-0.22%</td>
+      <td class="quote-cell ret-cell">+9.09%</td>
+      <td class="quote-cell ret-cell">-12.10%</td>
+      <td class="quote-cell ret-cell">-26.75%</td>
+      <td class="quote-cell ret-cell">-26.24%</td>
+      <td class="quote-cell">31,600</td>
+      <td class="quote-cell">11,010</td>
+      <td class="quote-cell">7%</td>
+      <td class="quote-cell">43.0</td>
+      <td class="mcap-cell">0.87조원</td>
+      <td class="fin-cell">25.06</td>
+      <td class="fin-cell">1.20</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">해상풍력</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">해상풍력 하부구조</td>
+      <td class="products-cell">해상풍력 자켓·파일·하부구조 제조</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="119850">
       <td><div class="company-name">지엔씨에너지</div><div class="company-name-sub">GnCenergy Co., Ltd.</div></td>
@@ -2480,7 +2509,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"태양광":"#FFCA28","풍력":"#66BB6A","수소":"#4FC3F7","신재생 운영":"#26A69A"};
+    const CHAIN_COLORS = {"태양광":"#FFCA28","풍력":"#66BB6A","수소":"#4FC3F7","신재생 운영":"#26A69A","해상풍력":"#43A047"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2585,14 +2614,14 @@
             "태양광": "태양광 소재·모듈",
             "풍력": "풍력 타워·기자재",
             "수소": "수소 저장·모빌리티",
-            "신재생 운영": "신재생 개발·운영"
-        },
+            "신재생 운영": "신재생 개발·운영",
+            "해상풍력": "해상풍력"},
         "chainFilter": {
             "태양광": "태양광 소재·모듈",
             "풍력": "풍력 타워·기자재",
             "수소": "수소 저장·모빌리티",
-            "신재생 운영": "신재생 개발·운영"
-        },
+            "신재생 운영": "신재생 개발·운영",
+            "해상풍력": "해상풍력"},
         "allFilter": "전체",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -2718,14 +2747,14 @@
             "태양광": "Solar materials & modules",
             "풍력": "Wind towers & equipment",
             "수소": "Hydrogen storage & mobility",
-            "신재생 운영": "Renewable development & operations"
-        },
+            "신재생 운영": "Renewable development & operations",
+            "해상풍력": "Offshore wind"},
         "chainFilter": {
             "태양광": "Solar materials & modules",
             "풍력": "Wind towers & equipment",
             "수소": "Hydrogen storage & mobility",
-            "신재생 운영": "Renewable development & operations"
-        },
+            "신재생 운영": "Renewable development & operations",
+            "해상풍력": "Offshore wind"},
         "allFilter": "All",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -2799,6 +2828,13 @@
         semType: 'ESS·태양광 모듈', semTypeEn: 'ESS & solar modules',
         products: '산업·계통 ESS, 태양광', productsEn: 'C&I/grid ESS, solar modules',
         revenue: '1.56조원', mcapWon: 1555680000000, per: 40.45, pbr: 4.03, revTier: 2, partners: ['tesla', 'enphase', { id: 'hdelec', edgeLabel: 'HD현대 계열', edgeLabelEn: 'HD Hyundai group', weight: 0.15, kind: 'backing' }]
+      },
+
+      {
+        id: 'renewable_skoceanplant', name: 'SK오션플랜트', nameEn: 'SKoceanplant', ticker: '100090', market: 'KOSPI', chain: '해상풍력',
+        semType: '해상풍력 하부구조', semTypeEn: 'Offshore wind substructures',
+        products: '해상풍력 자켓·파일·하부구조 제조', productsEn: 'Offshore wind jackets, piles and substructure manufacturing',
+        revenue: '0.87조원', mcapWon: 865946867940, per: 25.06, pbr: 1.2, revTier: 1, partners: []
       },
 
       {
@@ -3035,7 +3071,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '태양광', '풍력', '수소', '신재생 운영'];
+      const chains = ['all', '태양광', '풍력', '해상풍력', '수소', '신재생 운영'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);

@@ -2,10 +2,10 @@
   "phase": "5F",
   "sector": "kconsume",
   "asOf": "2026-08-29",
-  "listedCompanyCount": 38,
-  "nodeCount": 77,
-  "edgeCount": 80,
-  "structuralGenerated": 77,
+  "listedCompanyCount": 37,
+  "nodeCount": 76,
+  "edgeCount": 79,
+  "structuralGenerated": 76,
   "legacyMigrated": 3,
   "manuallyCurated": 2,
   "removedUnsupported": 1,
@@ -261,11 +261,6 @@
       "action": "structural_specializes_in",
       "ticker": "007310",
       "category": "consumer_category:sauces-condiments"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "001740",
-      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",

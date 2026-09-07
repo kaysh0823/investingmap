@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 원전 투자 지도",
     "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html",
-    "numberOfItems": 6,
+    "numberOfItems": 7,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -167,12 +167,18 @@
       {
         "@type": "ListItem",
         "position": 5,
+        "name": "SNT에너지 (100840, KOSPI)",
+        "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-100840"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
         "name": "한전산업 (130660, KOSPI)",
         "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-130660"
       },
       {
         "@type": "ListItem",
-        "position": 6,
+        "position": 7,
         "name": "보성파워텍 (006910, KOSDAQ)",
         "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-006910"
       }
@@ -1971,8 +1977,8 @@
     </button>
     <p id="hdr-subtitle">원자로·기자재·운영·정비·SMR — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>6</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>4</span> · KOSDAQ <span>2</span></div>
+      <div class="badge" id="badge-total">Total <span>7</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>5</span> · KOSDAQ <span>2</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -2063,7 +2069,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">6</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">7</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2186,6 +2192,29 @@
       <td style="font-size:12px;color:var(--text-muted)">밸브·계측</td>
       <td class="products-cell">원전·화력 밸브</td>
       <td><div class="partners-list">GE Vernova, 오라노</div></td>
+    </tr>
+          <tr data-ticker="100840">
+      <td><div class="company-name">SNT에너지</div><div class="company-name-sub">SNTEnergy Co.,Ltd.</div></td>
+      <td><span class="ticker">100840</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">32,800</td>
+      <td class="quote-cell ret-cell">-6.00%</td>
+      <td class="quote-cell ret-cell">+16.38%</td>
+      <td class="quote-cell ret-cell">-3.17%</td>
+      <td class="quote-cell ret-cell">-30.25%</td>
+      <td class="quote-cell ret-cell">-17.77%</td>
+      <td class="quote-cell">67,900</td>
+      <td class="quote-cell">21,200</td>
+      <td class="quote-cell">24.8%</td>
+      <td class="quote-cell">58.6</td>
+      <td class="mcap-cell">0.68조원</td>
+      <td class="fin-cell">7.87</td>
+      <td class="fin-cell">1.82</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">운영·정비</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">원전 열교환기·발전설비</td>
+      <td class="products-cell">원전·발전용 열교환기·압력용기·정비 기자재</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="130660">
       <td><div class="company-name">한전산업</div><div class="company-name-sub">Korea Electric Power Industrial Development</div></td>
@@ -2612,6 +2641,13 @@
         semType: '밸브·계측', semTypeEn: 'Valves & instrumentation',
         products: '원전·화력 밸브', productsEn: 'Nuclear/thermal valves',
         revenue: '1.86조원', mcapWon: 1856662500000, per: 38.25, pbr: 14.04, revTier: 2, partners: ['ge_vernova', 'orano']
+      },
+
+      {
+        id: 'nuclear_sntenergy_co_ltd', name: 'SNT에너지', nameEn: 'SNTEnergy Co.,Ltd.', ticker: '100840', market: 'KOSPI', chain: '운영·정비',
+        semType: '원전 열교환기·발전설비', semTypeEn: 'Nuclear heat exchangers & power equipment',
+        products: '원전·발전용 열교환기·압력용기·정비 기자재', productsEn: 'Nuclear/power heat exchangers, pressure vessels and maintenance equipment',
+        revenue: '0.68조원', mcapWon: 676261604100, per: 7.87, pbr: 1.82, revTier: 1, partners: []
       },
 
       {

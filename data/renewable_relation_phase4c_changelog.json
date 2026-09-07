@@ -213,6 +213,15 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
+      "source": "krx:100090",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
       "source": "krx:119850",
       "target": "technology:renewable_operator",
       "beforeType": "legacy_partner",

@@ -1,18 +1,18 @@
 {
   "asOf": "2026-08-30",
   "reviewedBy": "editorial_chemical",
-  "listedCompanyCount": 25,
-  "nodeCount": 92,
-  "edgeCount": 125,
-  "structuralGenerated": 75,
+  "listedCompanyCount": 26,
+  "nodeCount": 93,
+  "edgeCount": 126,
+  "structuralGenerated": 76,
   "legacyMigrated": 46,
   "manuallyCurated": 4,
   "demotedPeer": 46,
   "metrics": {
-    "listedCompanyCount": 25,
-    "nodeCount": 92,
-    "edgeCount": 125,
-    "structuralGeneratedEdgeCount": 75,
+    "listedCompanyCount": 26,
+    "nodeCount": 93,
+    "edgeCount": 126,
+    "structuralGeneratedEdgeCount": 76,
     "legacyMigratedEdgeCount": 46,
     "manuallyCuratedEdgeCount": 4,
     "chemicalProductCount": 50,
@@ -23,8 +23,8 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 46,
-    "businessRelationOrphanCount": 25,
-    "classificationOnlyCompanyCount": 25,
+    "businessRelationOrphanCount": 26,
+    "classificationOnlyCompanyCount": 26,
     "zeroDegreeNodeCount": 0,
     "claimCoverage": {
       "businessRelationshipDirectEvidenceCoverage": {
@@ -68,7 +68,7 @@
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 4,
-      "listed_company": 25,
+      "listed_company": 26,
       "chemical_product": 50,
       "global_company": 9
     },
@@ -195,6 +195,11 @@
       "action": "structural_produces",
       "ticker": "298020",
       "target": "chemical_product:spandex_yarn"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "001740",
+      "lane": "refining_gas"
     },
     {
       "action": "structural_member_of",

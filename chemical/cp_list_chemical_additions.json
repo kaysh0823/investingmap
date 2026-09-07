@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "001740",
+    "name": "SK네트웍스",
+    "nameEn": "SK Networks",
+    "chain": "정유·가스",
+    "semType": "상사·에너지·렌탈",
+    "semTypeEn": "Trading, energy & rental",
+    "products": "글로벌 트레이딩·에너지·렌터카·모빌리티",
+    "productsEn": "Global trading, energy, car rental and mobility services",
+    "partners": [],
+    "subSector": "상사·에너지·렌탈",
+    "level": "core"
+  }
+]

@@ -342,6 +342,22 @@
       "legacyId": "hd_ess"
     },
     {
+      "id": "krx:100090",
+      "type": "listed_company",
+      "ticker": "100090",
+      "nameKo": "SK오션플랜트",
+      "nameEn": "SKoceanplant",
+      "market": "KOSPI",
+      "role": "module_supplier",
+      "technology": "solar",
+      "lane": "solar",
+      "chain": "해상풍력",
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "mcapWon": 865946867940,
+      "legacyId": "renewable_skoceanplant"
+    },
+    {
       "id": "krx:119850",
       "type": "listed_company",
       "ticker": "119850",
@@ -2157,6 +2173,74 @@
       "id": "e-stage-krx:322000-epc",
       "source": "krx:322000",
       "target": "stage:epc",
+      "type": "supports_project_stage",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "accessedAt": "2026-08-23",
+          "directEvidence": false,
+          "sourceType": "other",
+          "evidenceUsageType": "official_role_page",
+          "title": "Project-stage structural support",
+          "url": "",
+          "publishedAt": null,
+          "evidenceSummaryKo": "프로젝트 단계 구조 역할",
+          "evidenceSummaryEn": "Structural project-stage role",
+          "relationshipSupported": "supports_project_stage"
+        }
+      ]
+    },
+    {
+      "editorialStatus": "reference",
+      "status": "reference",
+      "confidence": "medium",
+      "asOf": "2026-08-23",
+      "defaultHidden": false,
+      "reviewStatus": "needs_human_review",
+      "reviewedAt": null,
+      "reviewedBy": null,
+      "lastVerifiedAt": "2026-08-23",
+      "directEvidence": false,
+      "relationClass": "structural",
+      "id": "e-struct-krx:100090-tech-solar",
+      "source": "krx:100090",
+      "target": "technology:solar",
+      "type": "used_in_technology",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "accessedAt": "2026-08-23",
+          "directEvidence": false,
+          "sourceType": "company_ir",
+          "evidenceUsageType": "official_role_page",
+          "title": "Structural technology exposure from sector chain",
+          "url": "",
+          "publishedAt": null,
+          "evidenceSummaryKo": "밸류체인·사업 분류 기반 기술 노출(특정 프로젝트 수주 아님)",
+          "evidenceSummaryEn": "Technology exposure from value-chain classification — not a project award",
+          "relationshipSupported": "used_in_technology"
+        }
+      ]
+    },
+    {
+      "editorialStatus": "reference",
+      "status": "reference",
+      "confidence": "medium",
+      "asOf": "2026-08-23",
+      "defaultHidden": false,
+      "reviewStatus": "needs_human_review",
+      "reviewedAt": null,
+      "reviewedBy": null,
+      "lastVerifiedAt": "2026-08-23",
+      "directEvidence": false,
+      "relationClass": "structural",
+      "id": "e-stage-krx:100090-development",
+      "source": "krx:100090",
+      "target": "stage:development",
       "type": "supports_project_stage",
       "evidence": [
         {
@@ -4017,8 +4101,8 @@
     }
   ],
   "metrics": {
-    "structuralGeneratedEdgeCount": 60,
-    "technologyRoleEdgeCount": 38,
+    "structuralGeneratedEdgeCount": 62,
+    "technologyRoleEdgeCount": 39,
     "equipmentCategoryEdgeCount": 23,
     "uniqueActualProjectCount": 4,
     "projectPortfolioCount": 1,
@@ -4110,12 +4194,12 @@
       "ppaEdges": 1,
       "capacityEdges": 3
     },
-    "businessRelationOrphanCount": 8,
-    "directRelationshipOrphanCount": 8,
-    "classificationOnlyCompanyCount": 8,
-    "weakRelationOnlyCompanyCount": 7,
+    "businessRelationOrphanCount": 9,
+    "directRelationshipOrphanCount": 9,
+    "classificationOnlyCompanyCount": 9,
+    "weakRelationOnlyCompanyCount": 8,
     "listedReferenceCompanyCount": 1,
-    "listedCompanyCount": 11,
+    "listedCompanyCount": 12,
     "technologyNodeCount": 6,
     "equipmentCategoryNodeCount": 12,
     "phase4cCuratedAt": "2026-08-23",

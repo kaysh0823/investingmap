@@ -294,6 +294,23 @@
       "lane": "chemical_materials"
     },
     {
+      "id": "krx:001740",
+      "type": "listed_company",
+      "ticker": "001740",
+      "nameKo": "SK네트웍스",
+      "nameEn": "SK Networks",
+      "market": "KOSPI",
+      "role": "정유·가스",
+      "lane": "refining_gas",
+      "group": "정유·가스",
+      "layer": "refining_gas",
+      "mcapWon": 1283800889600,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "chemical_sk_networks",
+      "owningSector": "chemical"
+    },
+    {
       "id": "krx:004000",
       "type": "listed_company",
       "ticker": "004000",
@@ -1543,6 +1560,24 @@
       "lastVerifiedAt": "2026-08-30",
       "noteKo": "제품·사업 구조 분류. 공급계약·정유 도매·지분이 아닙니다.",
       "noteEn": "Product/business structure classification; not supply, wholesale or ownership.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member-001740-refining_gas",
+      "source": "krx:001740",
+      "target": "group:refining_gas",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "정유·가스 분류",
+      "labelEn": "Refining & gas category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-30",
+      "noteKo": "가치사슬 분류. 원료 공급·정유 도매·지분 관계가 아닙니다.",
+      "noteEn": "Value-chain category only; not feedstock supply, wholesale refining or ownership.",
       "edgeOrigin": "structuralGenerated",
       "excludesFromBusinessCoverage": true,
       "excludesFromOrphanResolution": true
@@ -4385,10 +4420,10 @@
     }
   ],
   "metrics": {
-    "listedCompanyCount": 25,
-    "nodeCount": 92,
-    "edgeCount": 125,
-    "structuralGeneratedEdgeCount": 75,
+    "listedCompanyCount": 26,
+    "nodeCount": 93,
+    "edgeCount": 126,
+    "structuralGeneratedEdgeCount": 76,
     "legacyMigratedEdgeCount": 46,
     "manuallyCuratedEdgeCount": 4,
     "chemicalProductCount": 50,
@@ -4399,8 +4434,8 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 46,
-    "businessRelationOrphanCount": 25,
-    "classificationOnlyCompanyCount": 25,
+    "businessRelationOrphanCount": 26,
+    "classificationOnlyCompanyCount": 26,
     "zeroDegreeNodeCount": 0,
     "claimCoverage": {
       "businessRelationshipDirectEvidenceCoverage": {
@@ -4444,7 +4479,7 @@
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 4,
-      "listed_company": 25,
+      "listed_company": 26,
       "chemical_product": 50,
       "global_company": 9
     },

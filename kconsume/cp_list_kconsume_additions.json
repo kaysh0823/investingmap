@@ -234,19 +234,6 @@
     "level": "core"
   },
   {
-    "ticker": "001740",
-    "name": "SK네트웍스",
-    "nameEn": "SK Networks",
-    "chain": "물류·상사",
-    "semType": "상사·렌탈·모빌리티",
-    "semTypeEn": "Trading, rental & mobility",
-    "products": "글로벌 트레이딩·렌터카·모빌리티",
-    "productsEn": "Global trading, car rental and mobility services",
-    "partners": ["mitsubishi_corp", "dhl"],
-    "subSector": "상사·렌탈",
-    "level": "core"
-  },
-  {
     "ticker": "011760",
     "name": "현대코퍼레이션",
     "nameEn": "Hyundai Corporation",

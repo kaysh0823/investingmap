@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "100840",
+    "name": "SNT에너지",
+    "nameEn": "SNTEnergy Co.,Ltd.",
+    "chain": "운영·정비",
+    "semType": "원전 열교환기·발전설비",
+    "semTypeEn": "Nuclear heat exchangers & power equipment",
+    "products": "원전·발전용 열교환기·압력용기·정비 기자재",
+    "productsEn": "Nuclear/power heat exchangers, pressure vessels and maintenance equipment",
+    "partners": [],
+    "subSector": "원전 열교환기·발전설비",
+    "level": "core"
+  }
+]

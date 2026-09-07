@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "100090",
+    "name": "SK오션플랜트",
+    "nameEn": "SKoceanplant",
+    "chain": "해상풍력",
+    "semType": "해상풍력 하부구조",
+    "semTypeEn": "Offshore wind substructures",
+    "products": "해상풍력 자켓·파일·하부구조 제조",
+    "productsEn": "Offshore wind jackets, piles and substructure manufacturing",
+    "partners": [],
+    "subSector": "해상풍력 하부구조",
+    "level": "core"
+  }
+]

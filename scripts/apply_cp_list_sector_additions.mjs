@@ -200,6 +200,25 @@ const SECTOR_MAPS = {
     additions: 'telecom/cp_list_telecom_additions.json',
     idPrefix: 'telecom',
   },
+  nuclear: {
+    path: 'nuclear/korea_nuclear_map.html',
+    additions: 'nuclear/cp_list_nuclear_additions.json',
+    idPrefix: 'nuclear',
+  },
+  renewable: {
+    path: 'renewable/korea_renewable_map.html',
+    additions: 'renewable/cp_list_renewable_additions.json',
+    idPrefix: 'renewable',
+    chainOrder: ['태양광', '풍력', '해상풍력', '수소', '신재생 운영'],
+    extraChains: {
+      '해상풍력': { color: '#43A047', labelEn: 'Offshore wind' },
+    },
+  },
+  chemical: {
+    path: 'chemical/korea_chemical_map.html',
+    additions: 'chemical/cp_list_chemical_additions.json',
+    idPrefix: 'chemical',
+  },
 };
 
 function padTicker(t) {
