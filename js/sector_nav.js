@@ -17,7 +17,7 @@
     { id: 'defense', path: '../defense/korea_defense_map.html', ko: '\uBC29\uC0B0/\uC6B0\uC8FC', en: 'Defense & Space' },
         { id: 'kconsume', path: '../kconsume/korea_kconsume_map.html', ko: '소비/유통', en: 'Consumer/Retail' },
     { id: 'cosmetics', path: '../cosmetics/korea_cosmetics_map.html', ko: '\uD654\uC7A5\uD488/\uBBF8\uC6A9\uAE30\uAE30', en: 'Cosmetics', koShort: '\uD654\uC7A5\uD488', enShort: 'Cosme' },
-    { id: 'kcontent', path: '../kcontent/korea_kcontent_map.html', ko: 'K-\uCF58\uD150\uCE20', en: 'K-Content' },
+    { id: 'kcontent', path: '../kcontent/korea_kcontent_map.html', ko: '\uCF58\uD150\uCE20', en: 'K-Content' },
     { id: 'bio', path: '../bio/korea_bio_map.html', ko: '\uBC14\uC774\uC624', en: 'Bio' },
     { id: 'robot', path: '../robot/korea_robot_map.html', ko: '\uB85C\uBD07', en: 'Robot' },
     { id: 'auto', path: '../auto/korea_auto_map.html', ko: '\uC790\uB3D9\uCC28', en: 'Auto' },

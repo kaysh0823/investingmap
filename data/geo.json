@@ -183,7 +183,7 @@
     },
     "kcontent": {
       "path": "/kcontent/korea_kcontent_map.html",
-      "title": { "ko": "한국 K-콘텐츠 투자 지도", "en": "Korea K-Content Industry Map" },
+      "title": { "ko": "한국 콘텐츠 투자 지도", "en": "Korea K-Content Industry Map" },
       "summary": {
         "ko": "게임·드라마·웹툰·미디어·K-pop 관련 상장사의 KRX 데이터와 키워드 중심 글로벌 연계 예시를 제공합니다.",
         "en": "KRX data and theme-driven global exposure examples for listed Korean games, drama/webtoon/media, and K-pop companies."

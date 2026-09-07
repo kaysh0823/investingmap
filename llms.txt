@@ -21,7 +21,7 @@
 - [한국 건설 투자 지도](https://www.investingmap.kr/construction/korea_construction_map.html): 종합건설·주택·디벨로퍼·건설기계 밸류체인
 - [한국 소비/유통 투자 지도](https://www.investingmap.kr/kconsume/korea_kconsume_map.html): 패션·식품·유통·여행 관련 상장사
 - [한국 화장품/미용기기 투자 지도](https://www.investingmap.kr/cosmetics/korea_cosmetics_map.html): 브랜드·ODM/OEM·미용기기·유통·채널 밸류체인
-- [한국 K-콘텐츠 투자 지도](https://www.investingmap.kr/kcontent/korea_kcontent_map.html): 게임·드라마·웹툰·K-pop 관련 상장사
+- [한국 콘텐츠 투자 지도](https://www.investingmap.kr/kcontent/korea_kcontent_map.html): 게임·드라마·웹툰·K-pop 관련 상장사
 - [한국 IT·소프트웨어 투자 지도](https://www.investingmap.kr/software/korea_software_map.html): 플랫폼·클라우드·SaaS·보안 상장사, 밸류체인
 - [한국 지주회사 투자 지도](https://www.investingmap.kr/holdings/korea_holdings_map.html): 상장 지주회사와 그룹 포트폴리오
 - [한국 통신 투자 지도](https://www.investingmap.kr/telecom/korea_telecom_map.html): 통신서비스·무선장비·광통신·위성통신 상장사
