@@ -9,6 +9,7 @@ import {
   rebaseTo100,
   applyLiveDailyTip,
   sanitizeIntradaySnapRows,
+  sanitizeIntradayRebasedSeries,
   TREND_INDEX_CODES,
   TREND_MAX_POINTS,
   TREND_CHART_MAX_POINTS,
@@ -40,6 +41,23 @@ assert.deepEqual(appended, [
   { t: '2026-08-19', value: 100 },
   { t: '2026-08-20', value: 105 },
 ]);
+
+// Final rebased-series cleanup (value-only) — travel-style trough + overshoot.
+{
+  const input = [100, 99.2, 76.5, 79.4, 95.3, 110.7, 110, 102, 101.5, 103].map((v, i) => ({
+    t: `t${i}`,
+    v,
+  }));
+  const cleaned = sanitizeIntradayRebasedSeries(input);
+  assert.equal(cleaned[0].v, 100);
+  assert.equal(cleaned[cleaned.length - 1].v, 103);
+  const mid = cleaned.slice(1, -1).map((row) => row.v);
+  const minReb = Math.min(...cleaned.map((row) => row.v));
+  const maxReb = Math.max(...mid);
+  assert.ok(minReb >= 95, `rebased sanitize min ${minReb}`);
+  assert.ok(maxReb <= 112, `rebased sanitize max mid ${maxReb}`);
+  assert.ok(!cleaned.some((row) => row.v === 76.5 || row.v === 79.4 || row.v === 110.7));
+}
 
 // Partial-sum V-spike (e.g. 09:14 incomplete members) must be interpolated away.
 {
@@ -321,7 +339,7 @@ try {
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v14'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v15'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
@@ -355,6 +373,7 @@ for (const marker of [
   'buildIndexDailySeries(config, chartDates, calendar',
   'scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash',
   'sanitizeIntradaySnapRows',
+  'sanitizeIntradayRebasedSeries',
   'payload.tradeDate = tradeDateDash',
 ]) {
   assert.ok(core.includes(marker), `hub trend core marker missing: ${marker}`);

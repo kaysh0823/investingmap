@@ -729,9 +729,8 @@ function nearRebasedCenter(rebased, center, ratio = INTRADAY_DEV_RATIO * 0.65) {
 }
 
 /**
- * Repair partial-sum spike *clusters* in intraday mcap snapshots.
- * Uses a robust rebased center (median, fallback 100); drops recoverable
- * lows/highs (incl. early-session floors) and interpolates. Keeps first & last.
+ * Repair partial-sum spike *clusters* in intraday mcap snapshots (raw stage).
+ * Kept as a first pass; final cleanup is sanitizeIntradayRebasedSeries.
  * @param {{ts:string,value:number|null}[]} snapRows
  * @returns {{ts:string,value:number}[]}
  */
@@ -787,7 +786,6 @@ export function sanitizeIntradaySnapRows(snapRows) {
 
     const left = findAnchor(Math.max(0, i - 1), -1);
     const right = findAnchor(Math.min(rows.length - 1, i + 1), 1);
-    // Prefer a wider flank sample so consecutive troughs don't "confirm" each other.
     const leftWide = findAnchor(Math.max(0, i - INTRADAY_WIDE_HALF), -1);
     const rightWide = findAnchor(Math.min(rows.length - 1, i + INTRADAY_WIDE_HALF), 1);
     const L = leftWide >= 0 ? leftWide : left;
@@ -814,12 +812,70 @@ export function sanitizeIntradaySnapRows(snapRows) {
     drop[i] = false;
   }
 
-  // Never mutate endpoints.
   rows[0].value = base;
   return rows.filter((row, idx) => {
     if (idx === 0 || idx === rows.length - 1) return row.ts && row.value > 0;
     return row.ts && row.value > 0 && !drop[idx];
   });
+}
+
+function pointRebasedValue(point) {
+  const v = numOrNull(point?.v);
+  if (v != null) return v;
+  return numOrNull(point?.value);
+}
+
+/**
+ * Final-pass cleanup on rebased 1D series ({t,v}). Value-only (no clock):
+ * points far from median/100 are replaced by lerp between nearest good flanks.
+ * Preserves first (open≈100) and last (live tip).
+ * @param {{t:string,v?:number,value?:number}[]} series
+ * @returns {{t:string,v:number}[]}
+ */
+export function sanitizeIntradayRebasedSeries(series) {
+  if (!Array.isArray(series) || series.length === 0) return [];
+  const rows = series.map((point) => ({
+    t: point.t,
+    v: pointRebasedValue(point),
+  }));
+  if (rows.length < 3) {
+    return rows.filter((row) => row.t && row.v != null && row.v > 0);
+  }
+
+  const values = rows.map((row) => row.v).filter((v) => v != null && Number.isFinite(v) && v > 0);
+  const center = medianNumber(values) ?? 100;
+  const outlier = new Array(rows.length).fill(false);
+
+  for (let i = 1; i < rows.length - 1; i++) {
+    const v = rows[i].v;
+    if (!(v > 0)) {
+      outlier[i] = true;
+      continue;
+    }
+    const farFromCenter = Math.abs(v - center) > INTRADAY_DEV_RATIO * 100;
+    const farFrom100 = Math.abs(v - 100) > INTRADAY_DEV_RATIO * 100;
+    const extreme = v < INTRADAY_EARLY_FLOOR || v > INTRADAY_OVERSHOOT;
+    if (farFromCenter || farFrom100 || extreme) outlier[i] = true;
+  }
+
+  for (let i = 1; i < rows.length - 1; i++) {
+    if (!outlier[i]) continue;
+    let left = i - 1;
+    while (left > 0 && outlier[left]) left -= 1;
+    let right = i + 1;
+    while (right < rows.length - 1 && outlier[right]) right += 1;
+    const lv = rows[left].v;
+    const rv = rows[right].v;
+    if (!(lv > 0) || !(rv > 0) || right === left) continue;
+    const w = (i - left) / (right - left);
+    rows[i].v = Math.round((lv + (rv - lv) * w) * 10000) / 10000;
+    outlier[i] = false;
+  }
+
+  // Endpoints preserved as-is.
+  return rows
+    .filter((row, idx) => row.t && row.v != null && row.v > 0 && (idx === 0 || idx === rows.length - 1 || !outlier[idx]))
+    .map((row) => ({ t: row.t, v: row.v }));
 }
 
 /**
@@ -909,7 +965,8 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
       .filter((row) => row.ts && row.value > 0);
 
     const rows = scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash, now);
-    return { ...entry, series: downsampleTrend(rebaseTo100(rows, 'value', baseSum)) };
+    const rebased = sanitizeIntradayRebasedSeries(rebaseTo100(rows, 'value', baseSum));
+    return { ...entry, series: downsampleTrend(rebased) };
   });
 
   const missingCodes = INDEX_CODES.filter(
