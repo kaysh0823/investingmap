@@ -172,7 +172,7 @@
       "lane": "industrial_robot",
       "group": "완성로봇·플랫폼",
       "layer": "industrial_robot",
-      "mcapWon": 8846335248000,
+      "mcapWon": 8904534822000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "rainbow",
@@ -214,44 +214,6 @@
       "lane": "end_market"
     },
     {
-      "id": "krx:454910",
-      "type": "listed_company",
-      "ticker": "454910",
-      "nameKo": "두산로보틱스",
-      "nameEn": "Doosan Robotics",
-      "market": "KOSPI",
-      "role": "완성로봇·플랫폼",
-      "lane": "collaborative_robot",
-      "group": "완성로봇·플랫폼",
-      "layer": "collaborative_robot",
-      "mcapWon": 4641110568000,
-      "isListedKorea": true,
-      "isMapConstituent": true,
-      "legacyId": "doosan_robot",
-      "owningSector": "robot"
-    },
-    {
-      "id": "robot_product:doosan-cobot-series",
-      "type": "robot_product",
-      "nameKo": "A/M/H 협동로봇",
-      "nameEn": "A/M/H cobot series",
-      "lane": "collaborative_robot"
-    },
-    {
-      "id": "robot_category:collaborative",
-      "type": "robot_category",
-      "nameKo": "협동로봇",
-      "nameEn": "Collaborative robot",
-      "lane": "collaborative_robot"
-    },
-    {
-      "id": "application:palletizing",
-      "type": "application",
-      "nameKo": "팔레타이징",
-      "nameEn": "Palletizing",
-      "lane": "end_market"
-    },
-    {
       "id": "krx:108490",
       "type": "listed_company",
       "ticker": "108490",
@@ -262,7 +224,7 @@
       "lane": "actuator_drive",
       "group": "액추에이터·모터",
       "layer": "actuator_drive",
-      "mcapWon": 3547968776000,
+      "mcapWon": 4466110026000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "robotis",
@@ -297,6 +259,44 @@
       "lane": "end_market"
     },
     {
+      "id": "krx:454910",
+      "type": "listed_company",
+      "ticker": "454910",
+      "nameKo": "두산로보틱스",
+      "nameEn": "Doosan Robotics",
+      "market": "KOSPI",
+      "role": "완성로봇·플랫폼",
+      "lane": "collaborative_robot",
+      "group": "완성로봇·플랫폼",
+      "layer": "collaborative_robot",
+      "mcapWon": 4433686632000,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "doosan_robot",
+      "owningSector": "robot"
+    },
+    {
+      "id": "robot_product:doosan-cobot-series",
+      "type": "robot_product",
+      "nameKo": "A/M/H 협동로봇",
+      "nameEn": "A/M/H cobot series",
+      "lane": "collaborative_robot"
+    },
+    {
+      "id": "robot_category:collaborative",
+      "type": "robot_category",
+      "nameKo": "협동로봇",
+      "nameEn": "Collaborative robot",
+      "lane": "collaborative_robot"
+    },
+    {
+      "id": "application:palletizing",
+      "type": "application",
+      "nameKo": "팔레타이징",
+      "nameEn": "Palletizing",
+      "lane": "end_market"
+    },
+    {
       "id": "krx:319400",
       "type": "listed_company",
       "ticker": "319400",
@@ -307,7 +307,7 @@
       "lane": "system_integration",
       "group": "자동화·SI·물류시스템",
       "layer": "system_integration",
-      "mcapWon": 2645180926250,
+      "mcapWon": 2455841659950,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "hd_movex",
@@ -345,7 +345,7 @@
       "lane": "precision_component",
       "group": "감속기·동력전달",
       "layer": "precision_component",
-      "mcapWon": 2055841272000,
+      "mcapWon": 2089107312000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "spg",
@@ -383,7 +383,7 @@
       "lane": "system_integration",
       "group": "자동화·SI·물류시스템",
       "layer": "system_integration",
-      "mcapWon": 860014802000,
+      "mcapWon": 851037612000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "sfa",
@@ -411,44 +411,6 @@
       "lane": "end_market"
     },
     {
-      "id": "krx:090710",
-      "type": "listed_company",
-      "ticker": "090710",
-      "nameKo": "휴림로봇",
-      "nameEn": "Hyulim Robot",
-      "market": "KOSDAQ",
-      "role": "완성로봇·플랫폼",
-      "lane": "industrial_robot",
-      "group": "완성로봇·플랫폼",
-      "layer": "industrial_robot",
-      "mcapWon": 795067542850,
-      "isListedKorea": true,
-      "isMapConstituent": true,
-      "legacyId": "hyulim_robot",
-      "owningSector": "robot"
-    },
-    {
-      "id": "robot_product:hyulim-industrial-service",
-      "type": "robot_product",
-      "nameKo": "제조·서비스 로봇",
-      "nameEn": "Industrial / service robots",
-      "lane": "industrial_robot"
-    },
-    {
-      "id": "robot_category:industrial",
-      "type": "robot_category",
-      "nameKo": "산업용 로봇",
-      "nameEn": "Industrial robot",
-      "lane": "industrial_robot"
-    },
-    {
-      "id": "robot_category:service",
-      "type": "robot_category",
-      "nameKo": "서비스 로봇",
-      "nameEn": "Service robot",
-      "lane": "industrial_robot"
-    },
-    {
       "id": "krx:388720",
       "type": "listed_company",
       "ticker": "388720",
@@ -459,7 +421,7 @@
       "lane": "industrial_robot",
       "group": "완성로봇·플랫폼",
       "layer": "industrial_robot",
-      "mcapWon": 789350115000,
+      "mcapWon": 765787425000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "yuil_robotics",
@@ -473,10 +435,48 @@
       "lane": "industrial_robot"
     },
     {
+      "id": "robot_category:industrial",
+      "type": "robot_category",
+      "nameKo": "산업용 로봇",
+      "nameEn": "Industrial robot",
+      "lane": "industrial_robot"
+    },
+    {
       "id": "robot_category:logistics",
       "type": "robot_category",
       "nameKo": "물류 로봇",
       "nameEn": "Logistics robot",
+      "lane": "industrial_robot"
+    },
+    {
+      "id": "krx:090710",
+      "type": "listed_company",
+      "ticker": "090710",
+      "nameKo": "휴림로봇",
+      "nameEn": "Hyulim Robot",
+      "market": "KOSDAQ",
+      "role": "완성로봇·플랫폼",
+      "lane": "industrial_robot",
+      "group": "완성로봇·플랫폼",
+      "layer": "industrial_robot",
+      "mcapWon": 749635111830,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "hyulim_robot",
+      "owningSector": "robot"
+    },
+    {
+      "id": "robot_product:hyulim-industrial-service",
+      "type": "robot_product",
+      "nameKo": "제조·서비스 로봇",
+      "nameEn": "Industrial / service robots",
+      "lane": "industrial_robot"
+    },
+    {
+      "id": "robot_category:service",
+      "type": "robot_category",
+      "nameKo": "서비스 로봇",
+      "nameEn": "Service robot",
       "lane": "industrial_robot"
     },
     {
@@ -490,7 +490,7 @@
       "lane": "industrial_robot",
       "group": "완성로봇·플랫폼",
       "layer": "industrial_robot",
-      "mcapWon": 759525000000,
+      "mcapWon": 744900000000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "robostar",
@@ -514,7 +514,7 @@
       "lane": "robot_software",
       "group": "제어·모션·로봇SW",
       "layer": "robot_software",
-      "mcapWon": 651756518400,
+      "mcapWon": 627570241350,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "clobot",
@@ -559,7 +559,7 @@
       "lane": "actuator_drive",
       "group": "액추에이터·모터",
       "layer": "actuator_drive",
-      "mcapWon": 566177040000,
+      "mcapWon": 592431840000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "higen",
@@ -590,7 +590,7 @@
       "lane": "logistics_robot",
       "group": "완성로봇·플랫폼",
       "layer": "logistics_robot",
-      "mcapWon": 464561154900,
+      "mcapWon": 454619928540,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "yujin",
@@ -611,6 +611,23 @@
       "lane": "logistics_robot"
     },
     {
+      "id": "krx:439960",
+      "type": "listed_company",
+      "ticker": "439960",
+      "nameKo": "코스모로보틱스",
+      "nameEn": "Cosmo Robotics",
+      "market": "KOSDAQ",
+      "role": "완성로봇·플랫폼",
+      "lane": "industrial_robot",
+      "group": "완성로봇·플랫폼",
+      "layer": "industrial_robot",
+      "mcapWon": 410500418900,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "robot_cosmo_robotics_co_ltd",
+      "owningSector": "robot"
+    },
+    {
       "id": "krx:348340",
       "type": "listed_company",
       "ticker": "348340",
@@ -621,7 +638,7 @@
       "lane": "collaborative_robot",
       "group": "완성로봇·플랫폼",
       "layer": "collaborative_robot",
-      "mcapWon": 444291887520,
+      "mcapWon": 403561229760,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "neuromeka",
@@ -635,23 +652,6 @@
       "lane": "collaborative_robot"
     },
     {
-      "id": "krx:439960",
-      "type": "listed_company",
-      "ticker": "439960",
-      "nameKo": "코스모로보틱스",
-      "nameEn": "Cosmo Robotics",
-      "market": "KOSDAQ",
-      "role": "완성로봇·플랫폼",
-      "lane": "industrial_robot",
-      "group": "완성로봇·플랫폼",
-      "layer": "industrial_robot",
-      "mcapWon": 407579862560,
-      "isListedKorea": true,
-      "isMapConstituent": true,
-      "legacyId": "robot_cosmo_robotics_co_ltd",
-      "owningSector": "robot"
-    },
-    {
       "id": "krx:125490",
       "type": "listed_company",
       "ticker": "125490",
@@ -662,7 +662,7 @@
       "lane": "precision_component",
       "group": "센서·비전·정밀부품",
       "layer": "precision_component",
-      "mcapWon": 374149108000,
+      "mcapWon": 396415542720,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "halla_cast",
@@ -707,7 +707,7 @@
       "lane": "industrial_robot",
       "group": "완성로봇·플랫폼",
       "layer": "industrial_robot",
-      "mcapWon": 314786461450,
+      "mcapWon": 315556110500,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "robot_angel_robotics_co_ltd",
@@ -758,6 +758,17 @@
       "isMapConstituent": false
     },
     {
+      "id": "global:intel",
+      "type": "global_company",
+      "nameKo": "Intel",
+      "nameEn": "Intel",
+      "country": "미국/USA",
+      "region": "us",
+      "lane": "industrial_robot",
+      "legacyId": "intel",
+      "isMapConstituent": false
+    },
+    {
       "id": "global:fanuc",
       "type": "global_company",
       "nameKo": "FANUC",
@@ -788,17 +799,6 @@
       "region": "kr",
       "lane": "industrial_robot",
       "legacyId": "doosan_grp",
-      "isMapConstituent": false
-    },
-    {
-      "id": "global:intel",
-      "type": "global_company",
-      "nameKo": "Intel",
-      "nameEn": "Intel",
-      "country": "미국/USA",
-      "region": "us",
-      "lane": "industrial_robot",
-      "legacyId": "intel",
       "isMapConstituent": false
     },
     {
@@ -1056,176 +1056,6 @@
       "excludesFromOrphanResolution": true
     },
     {
-      "id": "member-454910-collaborative_robot",
-      "source": "krx:454910",
-      "target": "group:collaborative_robot",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "협동로봇 분류",
-      "labelEn": "Collaborative robot category",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
-      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "produces_robot-454910-robot_product-doosan-cobot-series",
-      "source": "krx:454910",
-      "target": "robot_product:doosan-cobot-series",
-      "type": "produces_robot",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "A/M/H 협동로봇",
-      "labelEn": "A/M/H cobot series",
-      "evidence": [
-        {
-          "title": "두산로보틱스 ↔ A/M/H 협동로봇",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "두산로보틱스 ↔ A/M/H 협동로봇",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
-      "noteEn": "Product/component/category structure; not customer supply or deployment.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "member_of_category-454910-robot_category-collaborative",
-      "source": "krx:454910",
-      "target": "robot_category:collaborative",
-      "type": "member_of_category",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "협동로봇",
-      "labelEn": "Collaborative robot",
-      "evidence": [
-        {
-          "title": "두산로보틱스 ↔ 협동로봇",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "두산로보틱스 ↔ 협동로봇",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
-      "noteEn": "Product/component/category structure; not customer supply or deployment.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "supports_application-454910-application-manufacturing",
-      "source": "krx:454910",
-      "target": "application:manufacturing",
-      "type": "supports_application",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "제조",
-      "labelEn": "Manufacturing",
-      "evidence": [
-        {
-          "title": "두산로보틱스 ↔ 제조",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "두산로보틱스 ↔ 제조",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
-      "noteEn": "Application exposure classification; not a deployment or supply contract.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "supports_application-454910-application-palletizing",
-      "source": "krx:454910",
-      "target": "application:palletizing",
-      "type": "supports_application",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "팔레타이징",
-      "labelEn": "Palletizing",
-      "evidence": [
-        {
-          "title": "두산로보틱스 ↔ 팔레타이징",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "두산로보틱스 ↔ 팔레타이징",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
-      "noteEn": "Application exposure classification; not a deployment or supply contract.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
       "id": "member-108490-actuator_drive",
       "source": "krx:108490",
       "target": "group:actuator_drive",
@@ -1377,6 +1207,176 @@
           "reviewedAt": null,
           "reviewedBy": null,
           "relationshipSupported": "로보티즈 ↔ 연구·교육",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
+      "noteEn": "Application exposure classification; not a deployment or supply contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member-454910-collaborative_robot",
+      "source": "krx:454910",
+      "target": "group:collaborative_robot",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "협동로봇 분류",
+      "labelEn": "Collaborative robot category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
+      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "produces_robot-454910-robot_product-doosan-cobot-series",
+      "source": "krx:454910",
+      "target": "robot_product:doosan-cobot-series",
+      "type": "produces_robot",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "A/M/H 협동로봇",
+      "labelEn": "A/M/H cobot series",
+      "evidence": [
+        {
+          "title": "두산로보틱스 ↔ A/M/H 협동로봇",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "두산로보틱스 ↔ A/M/H 협동로봇",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member_of_category-454910-robot_category-collaborative",
+      "source": "krx:454910",
+      "target": "robot_category:collaborative",
+      "type": "member_of_category",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "협동로봇",
+      "labelEn": "Collaborative robot",
+      "evidence": [
+        {
+          "title": "두산로보틱스 ↔ 협동로봇",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "두산로보틱스 ↔ 협동로봇",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_application-454910-application-manufacturing",
+      "source": "krx:454910",
+      "target": "application:manufacturing",
+      "type": "supports_application",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "제조",
+      "labelEn": "Manufacturing",
+      "evidence": [
+        {
+          "title": "두산로보틱스 ↔ 제조",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "두산로보틱스 ↔ 제조",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
+      "noteEn": "Application exposure classification; not a deployment or supply contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_application-454910-application-palletizing",
+      "source": "krx:454910",
+      "target": "application:palletizing",
+      "type": "supports_application",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "팔레타이징",
+      "labelEn": "Palletizing",
+      "evidence": [
+        {
+          "title": "두산로보틱스 ↔ 팔레타이징",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "두산로보틱스 ↔ 팔레타이징",
           "claimSupport": {
             "relationship": true,
             "legalEntity": false,
@@ -1830,176 +1830,6 @@
       "excludesFromOrphanResolution": true
     },
     {
-      "id": "member-090710-industrial_robot",
-      "source": "krx:090710",
-      "target": "group:industrial_robot",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "산업용 로봇 분류",
-      "labelEn": "Industrial robot category",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
-      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "produces_robot-090710-robot_product-hyulim-industrial-service",
-      "source": "krx:090710",
-      "target": "robot_product:hyulim-industrial-service",
-      "type": "produces_robot",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "제조·서비스 로봇",
-      "labelEn": "Industrial / service robots",
-      "evidence": [
-        {
-          "title": "휴림로봇 ↔ 제조·서비스 로봇",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "휴림로봇 ↔ 제조·서비스 로봇",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
-      "noteEn": "Product/component/category structure; not customer supply or deployment.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "member_of_category-090710-robot_category-industrial",
-      "source": "krx:090710",
-      "target": "robot_category:industrial",
-      "type": "member_of_category",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "산업용 로봇",
-      "labelEn": "Industrial robot",
-      "evidence": [
-        {
-          "title": "휴림로봇 ↔ 산업용 로봇",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "휴림로봇 ↔ 산업용 로봇",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
-      "noteEn": "Product/component/category structure; not customer supply or deployment.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "member_of_category-090710-robot_category-service",
-      "source": "krx:090710",
-      "target": "robot_category:service",
-      "type": "member_of_category",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "서비스 로봇",
-      "labelEn": "Service robot",
-      "evidence": [
-        {
-          "title": "휴림로봇 ↔ 서비스 로봇",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "휴림로봇 ↔ 서비스 로봇",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
-      "noteEn": "Product/component/category structure; not customer supply or deployment.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "supports_application-090710-application-manufacturing",
-      "source": "krx:090710",
-      "target": "application:manufacturing",
-      "type": "supports_application",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "제조",
-      "labelEn": "Manufacturing",
-      "evidence": [
-        {
-          "title": "휴림로봇 ↔ 제조",
-          "sourceType": "editorial_structure",
-          "primarySource": false,
-          "directEvidence": false,
-          "sourceOpened": false,
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "relationshipSupported": "휴림로봇 ↔ 제조",
-          "claimSupport": {
-            "relationship": true,
-            "legalEntity": false,
-            "product": true,
-            "contractStatus": false
-          },
-          "accessedAt": "2026-08-29",
-          "evidenceUsageType": "classification"
-        }
-      ],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
-      "noteEn": "Application exposure classification; not a deployment or supply contract.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
       "id": "member-388720-industrial_robot",
       "source": "krx:388720",
       "target": "group:industrial_robot",
@@ -2151,6 +1981,176 @@
           "reviewedAt": null,
           "reviewedBy": null,
           "relationshipSupported": "유일로보틱스 ↔ 물류",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
+      "noteEn": "Application exposure classification; not a deployment or supply contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member-090710-industrial_robot",
+      "source": "krx:090710",
+      "target": "group:industrial_robot",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "산업용 로봇 분류",
+      "labelEn": "Industrial robot category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
+      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "produces_robot-090710-robot_product-hyulim-industrial-service",
+      "source": "krx:090710",
+      "target": "robot_product:hyulim-industrial-service",
+      "type": "produces_robot",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "제조·서비스 로봇",
+      "labelEn": "Industrial / service robots",
+      "evidence": [
+        {
+          "title": "휴림로봇 ↔ 제조·서비스 로봇",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "휴림로봇 ↔ 제조·서비스 로봇",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member_of_category-090710-robot_category-industrial",
+      "source": "krx:090710",
+      "target": "robot_category:industrial",
+      "type": "member_of_category",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "산업용 로봇",
+      "labelEn": "Industrial robot",
+      "evidence": [
+        {
+          "title": "휴림로봇 ↔ 산업용 로봇",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "휴림로봇 ↔ 산업용 로봇",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "member_of_category-090710-robot_category-service",
+      "source": "krx:090710",
+      "target": "robot_category:service",
+      "type": "member_of_category",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "서비스 로봇",
+      "labelEn": "Service robot",
+      "evidence": [
+        {
+          "title": "휴림로봇 ↔ 서비스 로봇",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "휴림로봇 ↔ 서비스 로봇",
+          "claimSupport": {
+            "relationship": true,
+            "legalEntity": false,
+            "product": true,
+            "contractStatus": false
+          },
+          "accessedAt": "2026-08-29",
+          "evidenceUsageType": "classification"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "제품·부품·로봇 유형 구조 분류. 고객 공급·배포 계약이 아닙니다.",
+      "noteEn": "Product/component/category structure; not customer supply or deployment.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
+      "id": "supports_application-090710-application-manufacturing",
+      "source": "krx:090710",
+      "target": "application:manufacturing",
+      "type": "supports_application",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "제조",
+      "labelEn": "Manufacturing",
+      "evidence": [
+        {
+          "title": "휴림로봇 ↔ 제조",
+          "sourceType": "editorial_structure",
+          "primarySource": false,
+          "directEvidence": false,
+          "sourceOpened": false,
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "relationshipSupported": "휴림로봇 ↔ 제조",
           "claimSupport": {
             "relationship": true,
             "legalEntity": false,
@@ -2812,6 +2812,24 @@
       "excludesFromOrphanResolution": true
     },
     {
+      "id": "member-439960-industrial_robot",
+      "source": "krx:439960",
+      "target": "group:industrial_robot",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "산업용 로봇 분류",
+      "labelEn": "Industrial robot category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
+      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
+      "edgeOrigin": "structuralGenerated",
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true
+    },
+    {
       "id": "member-348340-collaborative_robot",
       "source": "krx:348340",
       "target": "group:collaborative_robot",
@@ -2939,24 +2957,6 @@
       "lastVerifiedAt": "2026-08-29",
       "noteKo": "적용 가능 분야 분류. 실제 도입·납품 계약이 아닙니다.",
       "noteEn": "Application exposure classification; not a deployment or supply contract.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "member-439960-industrial_robot",
-      "source": "krx:439960",
-      "target": "group:industrial_robot",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "산업용 로봇 분류",
-      "labelEn": "Industrial robot category",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "가치사슬 분류. 부품 공급·도입·투자·계약이 아닙니다.",
-      "noteEn": "Value-chain category only; not component supply, deployment, investment or contract.",
       "edgeOrigin": "structuralGenerated",
       "excludesFromBusinessCoverage": true,
       "excludesFromOrphanResolution": true
@@ -3186,8 +3186,8 @@
       "excludesFromOrphanResolution": true
     },
     {
-      "id": "member-app-application-palletizing-end_market",
-      "source": "application:palletizing",
+      "id": "member-app-application-research-education-end_market",
+      "source": "application:research-education",
       "target": "group:end_market",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3204,8 +3204,8 @@
       "excludesFromOrphanResolution": true
     },
     {
-      "id": "member-app-application-research-education-end_market",
-      "source": "application:research-education",
+      "id": "member-app-application-palletizing-end_market",
+      "source": "application:palletizing",
       "target": "group:end_market",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3410,6 +3410,46 @@
       "legacyPartnerClass": "theme_reference"
     },
     {
+      "id": "peer-108490-nvidia",
+      "source": "krx:108490",
+      "target": "global:nvidia",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "글로벌/국내 peer (레거시)",
+      "labelEn": "Global/domestic peer (legacy)",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "기존 partners. 공급·도입·투자·MOU·계약을 confirmed로 승격하지 않음. 기본 숨김.",
+      "noteEn": "Legacy partners. Not promoted to confirmed supply/deploy/invest/MOU. Hidden by default.",
+      "edgeOrigin": "legacyMigrated",
+      "defaultHidden": true,
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true,
+      "legacyPartnerClass": "peer"
+    },
+    {
+      "id": "peer-108490-intel",
+      "source": "krx:108490",
+      "target": "global:intel",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "글로벌/국내 peer (레거시)",
+      "labelEn": "Global/domestic peer (legacy)",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-29",
+      "noteKo": "기존 partners. 공급·도입·투자·MOU·계약을 confirmed로 승격하지 않음. 기본 숨김.",
+      "noteEn": "Legacy partners. Not promoted to confirmed supply/deploy/invest/MOU. Hidden by default.",
+      "edgeOrigin": "legacyMigrated",
+      "defaultHidden": true,
+      "excludesFromBusinessCoverage": true,
+      "excludesFromOrphanResolution": true,
+      "legacyPartnerClass": "peer"
+    },
+    {
       "id": "peer-454910-nvidia",
       "source": "krx:454910",
       "target": "global:nvidia",
@@ -3488,46 +3528,6 @@
       "excludesFromBusinessCoverage": true,
       "excludesFromOrphanResolution": true,
       "legacyPartnerClass": "theme_reference"
-    },
-    {
-      "id": "peer-108490-nvidia",
-      "source": "krx:108490",
-      "target": "global:nvidia",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌/국내 peer (레거시)",
-      "labelEn": "Global/domestic peer (legacy)",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "기존 partners. 공급·도입·투자·MOU·계약을 confirmed로 승격하지 않음. 기본 숨김.",
-      "noteEn": "Legacy partners. Not promoted to confirmed supply/deploy/invest/MOU. Hidden by default.",
-      "edgeOrigin": "legacyMigrated",
-      "defaultHidden": true,
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true,
-      "legacyPartnerClass": "peer"
-    },
-    {
-      "id": "peer-108490-intel",
-      "source": "krx:108490",
-      "target": "global:intel",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌/국내 peer (레거시)",
-      "labelEn": "Global/domestic peer (legacy)",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "기존 partners. 공급·도입·투자·MOU·계약을 confirmed로 승격하지 않음. 기본 숨김.",
-      "noteEn": "Legacy partners. Not promoted to confirmed supply/deploy/invest/MOU. Hidden by default.",
-      "edgeOrigin": "legacyMigrated",
-      "defaultHidden": true,
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true,
-      "legacyPartnerClass": "peer"
     },
     {
       "id": "peer-090360-siemens",

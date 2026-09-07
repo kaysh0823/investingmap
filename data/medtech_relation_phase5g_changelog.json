@@ -190,11 +190,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "458870",
-      "lane": "in_vitro_diagnostics"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "491000",
       "lane": "surgical_device"
     },
@@ -212,6 +207,11 @@
       "action": "structural_used_in_specialty",
       "ticker": "041830",
       "target": "specialty:preventive-wellness"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "458870",
+      "lane": "in_vitro_diagnostics"
     },
     {
       "action": "structural_member_of",
@@ -245,6 +245,16 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "377740",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "340570",
+      "lane": "surgical_device"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "099190",
       "lane": "in_vitro_diagnostics"
     },
@@ -260,18 +270,8 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "340570",
-      "lane": "surgical_device"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "376900",
       "lane": "surgical_device"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "377740",
-      "lane": "in_vitro_diagnostics"
     },
     {
       "action": "structural_member_of",
@@ -295,21 +295,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "145720",
-      "lane": "dental_device"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "145720",
-      "target": "device_category:dental-implant"
-    },
-    {
-      "action": "structural_used_in_specialty",
-      "ticker": "145720",
-      "target": "specialty:dentistry"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "067630",
       "lane": "in_vitro_diagnostics"
     },
@@ -322,6 +307,21 @@
       "action": "structural_used_in_specialty",
       "ticker": "067630",
       "target": "specialty:laboratory-medicine"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "145720",
+      "lane": "dental_device"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "145720",
+      "target": "device_category:dental-implant"
+    },
+    {
+      "action": "structural_used_in_specialty",
+      "ticker": "145720",
+      "target": "specialty:dentistry"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -343,27 +343,6 @@
       "afterType": "peer",
       "source": "krx:096530",
       "target": "global:siemens_health"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:458870",
-      "target": "global:philips"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:458870",
-      "target": "global:abbott"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:458870",
-      "target": "global:medtronic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -404,6 +383,27 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:458870",
+      "target": "global:philips"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:458870",
+      "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:458870",
+      "target": "global:medtronic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:137310",
       "target": "global:roche"
     },
@@ -439,15 +439,22 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:099190",
+      "source": "krx:377740",
       "target": "global:roche"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:099190",
+      "source": "krx:377740",
       "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:377740",
+      "target": "global:siemens_health"
     },
     {
       "action": "drop_unknown_partner",
@@ -460,6 +467,20 @@
       "afterType": "peer",
       "source": "krx:340570",
       "target": "global:boston_sci"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:099190",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:099190",
+      "target": "global:abbott"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -481,27 +502,6 @@
       "afterType": "peer",
       "source": "krx:376900",
       "target": "global:stryker"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:377740",
-      "target": "global:roche"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:377740",
-      "target": "global:abbott"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:377740",
-      "target": "global:siemens_health"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -547,6 +547,20 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:067630",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:067630",
+      "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:145720",
       "target": "global:straumann"
     },
@@ -563,20 +577,6 @@
       "afterType": "peer",
       "source": "krx:145720",
       "target": "global:zimmer"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:067630",
-      "target": "global:roche"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:067630",
-      "target": "global:abbott"
     },
     {
       "action": "add_cross_sector_reference",

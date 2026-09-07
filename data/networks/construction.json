@@ -108,7 +108,7 @@
       "semType": "종합건설·플랜트",
       "role": "epc_contractor",
       "lane": "overseas_epc",
-      "mcapWon": 60812842875000,
+      "mcapWon": 59515502227000,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -123,7 +123,7 @@
       "semType": "종합건설·플랜트",
       "role": "developer_contractor",
       "lane": "developer_housing",
-      "mcapWon": 14353758108500,
+      "mcapWon": 13329285070500,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -138,7 +138,7 @@
       "semType": "플랜트·EPC",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 9555000000000,
+      "mcapWon": 8986600000000,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -153,7 +153,7 @@
       "semType": "종합건설",
       "role": "epc_contractor",
       "lane": "overseas_epc",
-      "mcapWon": 8090771392220,
+      "mcapWon": 6923793700300,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -168,7 +168,7 @@
       "semType": "건설기계",
       "role": "machinery_supplier",
       "lane": "machinery",
-      "mcapWon": 6546131130200,
+      "mcapWon": 6709065580000,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -183,7 +183,7 @@
       "semType": "건자재·도료·실리콘",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 4068736256000,
+      "mcapWon": 4141775872000,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -198,7 +198,7 @@
       "semType": "종합건설·플랜트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 3179352353500,
+      "mcapWon": 2931166032500,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -213,7 +213,7 @@
       "semType": "종합건설·플랜트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 2836242565900,
+      "mcapWon": 2840111928200,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -228,7 +228,7 @@
       "semType": "주택·디벨로퍼",
       "role": "project_developer",
       "lane": "developer_housing",
-      "mcapWon": 1525754689500,
+      "mcapWon": 1535640789000,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -243,7 +243,7 @@
       "semType": "시멘트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 1246591292550,
+      "mcapWon": 1225998634030,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -258,7 +258,7 @@
       "semType": "인테리어·홈퍼니싱",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 934296941600,
+      "mcapWon": 880168907200,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -273,7 +273,7 @@
       "semType": "시멘트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 854697143520,
+      "mcapWon": 778076566260,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -288,7 +288,7 @@
       "semType": "종합건설",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 634164757480,
+      "mcapWon": 599512981660,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -303,22 +303,7 @@
       "semType": "종합건설",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 503820002054,
-      "isListedKorea": true,
-      "isMapConstituent": true
-    },
-    {
-      "id": "krx:010780",
-      "type": "listed_company",
-      "nameKo": "아이에스동서",
-      "nameEn": "IS Dongseo",
-      "ticker": "010780",
-      "market": "KOSPI",
-      "chain": "종합건설·EPC",
-      "semType": "건설·건자재",
-      "role": "main_contractor",
-      "lane": "general_contractor",
-      "mcapWon": 493255187840,
+      "mcapWon": 502034461586,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -333,7 +318,22 @@
       "semType": "주택·시공",
       "role": "main_contractor",
       "lane": "developer_housing",
-      "mcapWon": 474339804760,
+      "mcapWon": 482643346200,
+      "isListedKorea": true,
+      "isMapConstituent": true
+    },
+    {
+      "id": "krx:010780",
+      "type": "listed_company",
+      "nameKo": "아이에스동서",
+      "nameEn": "IS Dongseo",
+      "ticker": "010780",
+      "market": "KOSPI",
+      "chain": "종합건설·EPC",
+      "semType": "건설·건자재",
+      "role": "main_contractor",
+      "lane": "general_contractor",
+      "mcapWon": 475143002240,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -348,7 +348,7 @@
       "semType": "건설·부동산개발",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 436303350000,
+      "mcapWon": 435527699600,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -363,7 +363,7 @@
       "semType": "판유리·건자재",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 404053953600,
+      "mcapWon": 400061325600,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -378,7 +378,7 @@
       "semType": "시멘트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 397559905600,
+      "mcapWon": 388205554880,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -393,22 +393,7 @@
       "semType": "목질보드·건자재",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 380190783200,
-      "isListedKorea": true,
-      "isMapConstituent": true
-    },
-    {
-      "id": "krx:123890",
-      "type": "listed_company",
-      "nameKo": "한국자산신탁",
-      "nameEn": "Korea Asset Trust",
-      "ticker": "123890",
-      "market": "KOSPI",
-      "chain": "부동산신탁",
-      "semType": "부동산신탁",
-      "role": "main_contractor",
-      "lane": "general_contractor",
-      "mcapWon": 319395946860,
+      "mcapWon": 363506879150,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -423,7 +408,22 @@
       "semType": "창호·바닥재",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 317455518000,
+      "mcapWon": 321042586000,
+      "isListedKorea": true,
+      "isMapConstituent": true
+    },
+    {
+      "id": "krx:123890",
+      "type": "listed_company",
+      "nameKo": "한국자산신탁",
+      "nameEn": "Korea Asset Trust",
+      "ticker": "123890",
+      "market": "KOSPI",
+      "chain": "부동산신탁",
+      "semType": "부동산신탁",
+      "role": "main_contractor",
+      "lane": "general_contractor",
+      "mcapWon": 318172207600,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -1508,8 +1508,8 @@
       "lastVerifiedAt": "2026-08-23",
       "directEvidence": false,
       "relationClass": "structural",
-      "id": "e-struct-010780-ecosystem",
-      "source": "krx:010780",
+      "id": "e-struct-035890-ecosystem",
+      "source": "krx:035890",
       "target": "ecosystem:construction-value-chain",
       "type": "member_of"
     },
@@ -1525,8 +1525,8 @@
       "lastVerifiedAt": "2026-08-23",
       "directEvidence": false,
       "relationClass": "structural",
-      "id": "e-struct-035890-ecosystem",
-      "source": "krx:035890",
+      "id": "e-struct-010780-ecosystem",
+      "source": "krx:010780",
       "target": "ecosystem:construction-value-chain",
       "type": "member_of"
     },
@@ -1610,8 +1610,8 @@
       "lastVerifiedAt": "2026-08-23",
       "directEvidence": false,
       "relationClass": "structural",
-      "id": "e-struct-123890-ecosystem",
-      "source": "krx:123890",
+      "id": "e-struct-108670-ecosystem",
+      "source": "krx:108670",
       "target": "ecosystem:construction-value-chain",
       "type": "member_of"
     },
@@ -1627,8 +1627,8 @@
       "lastVerifiedAt": "2026-08-23",
       "directEvidence": false,
       "relationClass": "structural",
-      "id": "e-struct-108670-ecosystem",
-      "source": "krx:108670",
+      "id": "e-struct-123890-ecosystem",
+      "source": "krx:123890",
       "target": "ecosystem:construction-value-chain",
       "type": "member_of"
     },
@@ -4111,14 +4111,14 @@
         "krx:038500",
         "krx:002990",
         "krx:009410",
-        "krx:010780",
         "krx:035890",
+        "krx:010780",
         "krx:317400",
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:123890",
-        "krx:108670"
+        "krx:108670",
+        "krx:123890"
       ],
       "directRelationshipOrphans": [
         "krx:028050",
@@ -4130,14 +4130,14 @@
         "krx:038500",
         "krx:002990",
         "krx:009410",
-        "krx:010780",
         "krx:035890",
+        "krx:010780",
         "krx:317400",
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:123890",
-        "krx:108670"
+        "krx:108670",
+        "krx:123890"
       ],
       "classificationOnly": [
         "krx:028050",
@@ -4149,14 +4149,14 @@
         "krx:038500",
         "krx:002990",
         "krx:009410",
-        "krx:010780",
         "krx:035890",
+        "krx:010780",
         "krx:317400",
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:123890",
-        "krx:108670"
+        "krx:108670",
+        "krx:123890"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -4169,14 +4169,14 @@
         "krx:038500",
         "krx:002990",
         "krx:009410",
-        "krx:010780",
         "krx:035890",
+        "krx:010780",
         "krx:317400",
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:123890",
-        "krx:108670"
+        "krx:108670",
+        "krx:123890"
       ],
       "hasPeerButNoBusiness": [
         "krx:267270",
@@ -4197,8 +4197,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:123890",
-        "krx:108670"
+        "krx:108670",
+        "krx:123890"
       ]
     },
     "brandNodeCount": 1,

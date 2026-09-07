@@ -24,19 +24,19 @@
     "level": ""
   },
   {
-    "ticker": "290650",
-    "name": "엘앤씨바이오",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "인체조직·재생의학",
-    "level": "core"
-  },
-  {
     "ticker": "039200",
     "name": "오스코텍",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
     "subSector": "신약개발",
+    "level": "core"
+  },
+  {
+    "ticker": "290650",
+    "name": "엘앤씨바이오",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "인체조직·재생의학",
     "level": "core"
   },
   {
@@ -62,6 +62,14 @@
     "sectorId": "smallmol",
     "subSector": "제약·헬스케어",
     "level": "core"
+  },
+  {
+    "ticker": "115180",
+    "name": "큐리언트",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
   },
   {
     "ticker": "445680",
@@ -98,29 +106,21 @@
     "level": "core"
   },
   {
-    "ticker": "115180",
-    "name": "큐리언트",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
-  },
-  {
-    "ticker": "456160",
-    "name": "지투지바이오",
-    "chain": "플랫폼 기술",
-    "sectorId": "platform",
-    "subSector": "장기지속형 주사제",
+    "ticker": "476060",
+    "name": "온코닉테라퓨틱스",
+    "chain": "면역항암제",
+    "sectorId": "immuno_onc",
+    "subSector": "항암 신약",
     "level": "core",
-    "nameEn": "GTGBIO",
-    "semType": "장기지속형 주사제",
-    "semTypeEn": "Long-acting injectable platform",
-    "products": "장기지속형 주사·약물전달",
-    "productsEn": "Long-acting injectable drug delivery",
+    "nameEn": "Onconic Therapeutics",
+    "semType": "항암 신약",
+    "semTypeEn": "Oncology drug development",
+    "products": "항암·면역치료 신약 파이프라인",
+    "productsEn": "Oncology and immuno-oncology pipeline",
     "partners": [
-      "glob_halo",
-      "glob_alny",
-      "glob_mrna"
+      "glob_mrk",
+      "glob_bmy",
+      "glob_rog"
     ]
   },
   {
@@ -150,6 +150,24 @@
     ]
   },
   {
+    "ticker": "456160",
+    "name": "지투지바이오",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "장기지속형 주사제",
+    "level": "core",
+    "nameEn": "GTGBIO",
+    "semType": "장기지속형 주사제",
+    "semTypeEn": "Long-acting injectable platform",
+    "products": "장기지속형 주사·약물전달",
+    "productsEn": "Long-acting injectable drug delivery",
+    "partners": [
+      "glob_halo",
+      "glob_alny",
+      "glob_mrna"
+    ]
+  },
+  {
     "ticker": "005690",
     "name": "파미셀",
     "chain": "합성신약 / 제네릭",
@@ -165,24 +183,6 @@
       "glob_pfe",
       "glob_jnj",
       "glob_mrk"
-    ]
-  },
-  {
-    "ticker": "476060",
-    "name": "온코닉테라퓨틱스",
-    "chain": "면역항암제",
-    "sectorId": "immuno_onc",
-    "subSector": "항암 신약",
-    "level": "core",
-    "nameEn": "Onconic Therapeutics",
-    "semType": "항암 신약",
-    "semTypeEn": "Oncology drug development",
-    "products": "항암·면역치료 신약 파이프라인",
-    "productsEn": "Oncology and immuno-oncology pipeline",
-    "partners": [
-      "glob_mrk",
-      "glob_bmy",
-      "glob_rog"
     ]
   },
   {
@@ -256,14 +256,6 @@
     ]
   },
   {
-    "ticker": "174900",
-    "name": "앱클론",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "",
-    "level": ""
-  },
-  {
     "ticker": "086900",
     "name": "메디톡스",
     "chain": "합성신약 / 제네릭",
@@ -289,6 +281,14 @@
       "glob_rog",
       "glob_azn"
     ]
+  },
+  {
+    "ticker": "249420",
+    "name": "일동제약",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "",
+    "level": ""
   },
   {
     "ticker": "082270",
@@ -317,8 +317,8 @@
     "level": "adjacent"
   },
   {
-    "ticker": "249420",
-    "name": "일동제약",
+    "ticker": "174900",
+    "name": "앱클론",
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
     "subSector": "",
@@ -351,22 +351,22 @@
     ]
   },
   {
-    "ticker": "468530",
-    "name": "프로티나",
-    "chain": "플랫폼 기술",
-    "sectorId": "platform",
-    "subSector": "단백질분석·신약",
+    "ticker": "372320",
+    "name": "큐로셀",
+    "chain": "세포 · 유전자치료제",
+    "sectorId": "cell_gene",
+    "subSector": "CAR-T",
     "level": "core",
-    "nameEn": "Proteina",
-    "semType": "단백질분석·신약",
-    "semTypeEn": "Protein analysis & drug discovery",
-    "products": "단백질 상호작용·신약 플랫폼",
-    "productsEn": "Protein interaction and drug discovery platform",
+    "nameEn": "Curiox Biosystems",
+    "semType": "CAR-T",
+    "semTypeEn": "CAR-T cell therapy",
+    "products": "CAR-T·세포치료 파이프라인",
+    "productsEn": "CAR-T and cell therapy pipeline",
     "partners": [
-      "glob_halo",
-      "glob_mrna",
-      "glob_bntx",
-      "glob_alny"
+      "glob_gild",
+      "glob_nvs",
+      "glob_crsp",
+      "glob_bmy"
     ]
   },
   {
@@ -389,22 +389,22 @@
     ]
   },
   {
-    "ticker": "372320",
-    "name": "큐로셀",
-    "chain": "세포 · 유전자치료제",
-    "sectorId": "cell_gene",
-    "subSector": "CAR-T",
+    "ticker": "468530",
+    "name": "프로티나",
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "단백질분석·신약",
     "level": "core",
-    "nameEn": "Curiox Biosystems",
-    "semType": "CAR-T",
-    "semTypeEn": "CAR-T cell therapy",
-    "products": "CAR-T·세포치료 파이프라인",
-    "productsEn": "CAR-T and cell therapy pipeline",
+    "nameEn": "Proteina",
+    "semType": "단백질분석·신약",
+    "semTypeEn": "Protein analysis & drug discovery",
+    "products": "단백질 상호작용·신약 플랫폼",
+    "productsEn": "Protein interaction and drug discovery platform",
     "partners": [
-      "glob_gild",
-      "glob_nvs",
-      "glob_crsp",
-      "glob_bmy"
+      "glob_halo",
+      "glob_mrna",
+      "glob_bntx",
+      "glob_alny"
     ]
   },
   {
@@ -426,14 +426,6 @@
     ]
   },
   {
-    "ticker": "084110",
-    "name": "휴온스글로벌",
-    "chain": "합성신약 / 제네릭",
-    "sectorId": "smallmol",
-    "subSector": "제약 지주",
-    "level": "adjacent"
-  },
-  {
     "ticker": "206650",
     "name": "유바이오로직스",
     "chain": "합성신약 / 제네릭",
@@ -447,6 +439,14 @@
     "chain": "합성신약 / 제네릭",
     "sectorId": "smallmol",
     "subSector": "제약·헬스케어",
+    "level": "adjacent"
+  },
+  {
+    "ticker": "084110",
+    "name": "휴온스글로벌",
+    "chain": "합성신약 / 제네릭",
+    "sectorId": "smallmol",
+    "subSector": "제약 지주",
     "level": "adjacent"
   }
 ]

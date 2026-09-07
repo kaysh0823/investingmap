@@ -12,7 +12,7 @@
       "market": "KOSPI",
       "role": "항공기·엔진·MRO",
       "group": "항공기·엔진·MRO",
-      "mcapWon": 59658854957000,
+      "mcapWon": 54399388055000,
       "isListedKorea": true,
       "legacyId": "hanwha_aero"
     },
@@ -25,7 +25,7 @@
       "market": "KOSPI",
       "role": "미사일·레이더·C4ISR",
       "group": "미사일·레이더·C4ISR",
-      "mcapWon": 16148000000000,
+      "mcapWon": 14344000000000,
       "isListedKorea": true,
       "legacyId": "lig"
     },
@@ -38,7 +38,7 @@
       "market": "KOSPI",
       "role": "육상무기·차량·탄약",
       "group": "육상무기·차량·탄약",
-      "mcapWon": 15181692956300,
+      "mcapWon": 13839242752400,
       "isListedKorea": true,
       "legacyId": "rotem"
     },
@@ -51,7 +51,7 @@
       "market": "KOSPI",
       "role": "미사일·레이더·C4ISR",
       "group": "미사일·레이더·C4ISR",
-      "mcapWon": 14320089686200,
+      "mcapWon": 12997653963200,
       "isListedKorea": true,
       "legacyId": "hanwha_sys"
     },
@@ -64,7 +64,7 @@
       "market": "KOSPI",
       "role": "항공기·엔진·MRO",
       "group": "항공기·엔진·MRO",
-      "mcapWon": 12973936741700,
+      "mcapWon": 12330601035500,
       "isListedKorea": true,
       "legacyId": "kai"
     },
@@ -77,7 +77,7 @@
       "market": "KOSPI",
       "role": "육상무기·차량·탄약",
       "group": "육상무기·차량·탄약",
-      "mcapWon": 2421297619200,
+      "mcapWon": 2197103395200,
       "isListedKorea": true,
       "legacyId": "poongsan"
     },
@@ -90,7 +90,7 @@
       "market": "KOSDAQ",
       "role": "육상무기·차량·탄약",
       "group": "육상무기·차량·탄약",
-      "mcapWon": 1252620486750,
+      "mcapWon": 1345156414600,
       "isListedKorea": true,
       "legacyId": "def_vitzrocell_co_ltd"
     },
@@ -103,7 +103,7 @@
       "market": "KOSDAQ",
       "role": "우주·위성·민항",
       "group": "우주·위성·민항",
-      "mcapWon": 1147017804500,
+      "mcapWon": 1006282586240,
       "isListedKorea": true,
       "legacyId": "defense_sphere_corporation"
     },
@@ -116,7 +116,7 @@
       "market": "KOSPI",
       "role": "육상무기·차량·탄약",
       "group": "육상무기·차량·탄약",
-      "mcapWon": 1019195163050,
+      "mcapWon": 937726055400,
       "isListedKorea": true,
       "legacyId": "def_snt_dynamics"
     },
@@ -129,7 +129,7 @@
       "market": "KOSDAQ",
       "role": "우주·위성·민항",
       "group": "우주·위성·민항",
-      "mcapWon": 815870211000,
+      "mcapWon": 774255354600,
       "isListedKorea": true,
       "legacyId": "satrec"
     },
@@ -142,7 +142,7 @@
       "market": "KOSDAQ",
       "role": "우주·위성·민항",
       "group": "우주·위성·민항",
-      "mcapWon": 685052308600,
+      "mcapWon": 677536060700,
       "isListedKorea": true,
       "legacyId": "defense_intellian_technologies"
     },

@@ -577,80 +577,80 @@
       "businessRelationOrphans": [
         "krx:278470",
         "krx:090430",
-        "krx:214450",
         "krx:051900",
+        "krx:214450",
         "krx:161890",
         "krx:257720",
         "krx:192820",
         "krx:145020",
-        "krx:483650",
         "krx:214370",
+        "krx:483650",
         "krx:214150",
         "krx:002790",
         "krx:241710",
         "krx:251970",
-        "krx:018290",
         "krx:336570",
+        "krx:018290",
         "krx:092730",
-        "krx:078520",
-        "krx:003350",
+        "krx:018250",
         "krx:352480",
-        "krx:018250"
+        "krx:078520",
+        "krx:003350"
       ],
       "directRelationshipOrphans": [
         "krx:278470",
         "krx:090430",
-        "krx:214450",
         "krx:051900",
+        "krx:214450",
         "krx:161890",
         "krx:257720",
         "krx:192820",
         "krx:145020",
-        "krx:483650",
         "krx:214370",
+        "krx:483650",
         "krx:214150",
         "krx:002790",
         "krx:241710",
         "krx:251970",
-        "krx:018290",
         "krx:336570",
+        "krx:018290",
         "krx:092730",
-        "krx:078520",
-        "krx:003350",
+        "krx:018250",
         "krx:352480",
-        "krx:018250"
+        "krx:078520",
+        "krx:003350"
       ],
       "classificationOnly": [
         "krx:251970",
         "krx:092730",
-        "krx:078520",
-        "krx:003350",
+        "krx:018250",
         "krx:352480",
-        "krx:018250"
+        "krx:078520",
+        "krx:003350"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
         "krx:278470",
         "krx:090430",
-        "krx:214450",
         "krx:051900",
+        "krx:214450",
         "krx:161890",
         "krx:257720",
         "krx:192820",
         "krx:145020",
-        "krx:483650",
         "krx:214370",
+        "krx:483650",
         "krx:214150",
         "krx:002790",
         "krx:241710",
         "krx:251970",
-        "krx:018290",
         "krx:336570",
+        "krx:018290",
         "krx:092730",
-        "krx:078520",
-        "krx:003350",
+        "krx:018250",
         "krx:352480",
-        "krx:018250"
+        "krx:078520",
+        "krx:003350"
       ],
       "hasPeerButNoBusiness": [
         "krx:145020"
@@ -659,13 +659,13 @@
       "structuralOnly": [
         "krx:251970",
         "krx:092730",
-        "krx:078520",
-        "krx:003350",
+        "krx:018250",
         "krx:352480",
-        "krx:018250"
+        "krx:078520",
+        "krx:003350"
       ]
     },
-    "removedUnsupportedPartnerCount": 13,
+    "removedUnsupportedPartnerCount": 8,
     "demotedLegacyPeerCount": 4
   },
   "validate": {
@@ -759,23 +759,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:214450",
-      "target": "group:beauty_device"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214450",
-      "target": "beauty_product:aesthetic_regenerative",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:214450",
-      "target": "beauty_product:skin_booster",
-      "edgeType": "used_in_product_category"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:051900",
       "target": "group:brand_owner"
     },
@@ -801,6 +784,23 @@
       "action": "add_structural",
       "source": "krx:051900",
       "target": "beauty_product:skincare_premium",
+      "edgeType": "used_in_product_category"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:214450",
+      "target": "group:beauty_device"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:214450",
+      "target": "beauty_product:aesthetic_regenerative",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:214450",
+      "target": "beauty_product:skin_booster",
       "edgeType": "used_in_product_category"
     },
     {
@@ -873,23 +873,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:483650",
-      "target": "group:brand_owner"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:483650",
-      "target": "brand:dalba",
-      "edgeType": "operates_brand"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:483650",
-      "target": "beauty_product:skincare_suncare",
-      "edgeType": "used_in_product_category"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:214370",
       "target": "group:beauty_device"
     },
@@ -903,6 +886,23 @@
       "action": "add_structural",
       "source": "krx:214370",
       "target": "beauty_product:peptide_skincare",
+      "edgeType": "used_in_product_category"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:483650",
+      "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:483650",
+      "target": "brand:dalba",
+      "edgeType": "operates_brand"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:483650",
+      "target": "beauty_product:skincare_suncare",
       "edgeType": "used_in_product_category"
     },
     {
@@ -963,23 +963,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:018290",
-      "target": "group:brand_owner"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:018290",
-      "target": "brand:vt",
-      "edgeType": "operates_brand"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:018290",
-      "target": "beauty_product:skincare_color",
-      "edgeType": "used_in_product_category"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:336570",
       "target": "group:beauty_device"
     },
@@ -997,8 +980,35 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:018290",
+      "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:018290",
+      "target": "brand:vt",
+      "edgeType": "operates_brand"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:018290",
+      "target": "beauty_product:skincare_color",
+      "edgeType": "used_in_product_category"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:092730",
       "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:018250",
+      "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:352480",
+      "target": "group:odm_oem"
     },
     {
       "action": "add_structural",
@@ -1009,16 +1019,6 @@
       "action": "add_structural",
       "source": "krx:003350",
       "target": "group:odm_oem"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:352480",
-      "target": "group:odm_oem"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:018250",
-      "target": "group:brand_owner"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1072,31 +1072,6 @@
       "action": "drop_unknown_partner",
       "source": "krx:092730",
       "partner": "shiseido"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:078520",
-      "partner": "loreal"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:078520",
-      "partner": "estee"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:078520",
-      "partner": "shiseido"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:003350",
-      "partner": "intercos"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:352480",
-      "partner": "intercos"
     },
     {
       "action": "drop_unknown_partner",

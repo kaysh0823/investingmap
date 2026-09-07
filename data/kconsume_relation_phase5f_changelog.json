@@ -2,16 +2,21 @@
   "phase": "5F",
   "sector": "kconsume",
   "asOf": "2026-08-29",
-  "listedCompanyCount": 37,
-  "nodeCount": 76,
-  "edgeCount": 79,
-  "structuralGenerated": 76,
+  "listedCompanyCount": 38,
+  "nodeCount": 77,
+  "edgeCount": 80,
+  "structuralGenerated": 77,
   "legacyMigrated": 3,
   "manuallyCurated": 2,
   "removedUnsupported": 1,
   "demotedPeer": 3,
   "confirmedBusinessEdgeCount": 0,
   "changes": [
+    {
+      "action": "structural_member_of",
+      "ticker": "033780",
+      "lane": "brand_owner"
+    },
     {
       "action": "structural_member_of",
       "ticker": "086280",
@@ -129,11 +134,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "026960",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "383220",
       "lane": "brand_owner"
     },
@@ -159,13 +159,8 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "007070",
-      "lane": "retail_channel"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "007070",
-      "category": "consumer_category:convenience-retail"
+      "ticker": "026960",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -184,13 +179,13 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "139480",
+      "ticker": "007070",
       "lane": "retail_channel"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "139480",
-      "category": "consumer_category:hypermarket"
+      "ticker": "007070",
+      "category": "consumer_category:convenience-retail"
     },
     {
       "action": "structural_member_of",
@@ -201,6 +196,16 @@
       "action": "structural_specializes_in",
       "ticker": "069960",
       "category": "consumer_category:department-retail"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "139480",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "139480",
+      "category": "consumer_category:hypermarket"
     },
     {
       "action": "structural_member_of",
@@ -216,26 +221,6 @@
       "action": "structural_member_of",
       "ticker": "001120",
       "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "007310",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "007310",
-      "brand": "brand:jin-ramen"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "007310",
-      "brand": "brand:ottogi-ketchup"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "007310",
-      "category": "consumer_category:sauces-condiments"
     },
     {
       "action": "structural_member_of",
@@ -256,6 +241,26 @@
       "action": "structural_specializes_in",
       "ticker": "280360",
       "category": "consumer_category:confectionery"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "007310",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "007310",
+      "brand": "brand:jin-ramen"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "007310",
+      "brand": "brand:ottogi-ketchup"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "007310",
+      "category": "consumer_category:sauces-condiments"
     },
     {
       "action": "structural_member_of",
@@ -294,6 +299,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "001680",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "093050",
       "lane": "brand_owner"
     },
@@ -306,11 +316,6 @@
       "action": "structural_specializes_in",
       "ticker": "093050",
       "category": "consumer_category:apparel"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "001680",
-      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -329,13 +334,13 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "031430",
-      "lane": "retail_channel"
+      "ticker": "105630",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
-      "ticker": "017810",
-      "lane": "brand_owner"
+      "ticker": "031430",
+      "lane": "retail_channel"
     },
     {
       "action": "structural_member_of",
@@ -344,12 +349,22 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "105630",
+      "ticker": "017810",
       "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
       "ticker": "005610",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "011760",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "036620",
       "lane": "brand_owner"
     },
     {
@@ -366,16 +381,6 @@
       "action": "structural_specializes_in",
       "ticker": "020000",
       "category": "consumer_category:apparel"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "011760",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "036620",
-      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",

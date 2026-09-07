@@ -174,16 +174,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "079160",
-      "lane": "distributor"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "079160",
-      "category": "content_category:theatrical"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "293490",
       "lane": "ip_rights"
     },
@@ -194,8 +184,13 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "214320",
-      "lane": "ip_rights"
+      "ticker": "079160",
+      "lane": "distributor"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "079160",
+      "category": "content_category:theatrical"
     },
     {
       "action": "structural_member_of",
@@ -226,6 +221,11 @@
       "action": "structural_specializes_in",
       "ticker": "225570",
       "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "214320",
+      "lane": "ip_rights"
     },
     {
       "action": "structural_member_of",
@@ -309,11 +309,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "101730",
-      "lane": "ip_rights"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "069080",
       "lane": "ip_rights"
     },
@@ -321,6 +316,11 @@
       "action": "structural_specializes_in",
       "ticker": "069080",
       "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "101730",
+      "lane": "ip_rights"
     },
     {
       "action": "demote_legacy_partner_to_peer",

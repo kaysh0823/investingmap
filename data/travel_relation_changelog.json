@@ -120,21 +120,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "008770",
-      "lane": "hotel_resort"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "008770",
-      "target": "hotel_property:hotel_duty_free"
-    },
-    {
-      "action": "structural_produces",
-      "ticker": "008770",
-      "target": "hotel_property:shilla_hotels"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "020560",
       "lane": "airlines"
     },
@@ -147,6 +132,21 @@
       "action": "structural_produces",
       "ticker": "020560",
       "target": "travel_service:passenger_cargo"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "008770",
+      "lane": "hotel_resort"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "008770",
+      "target": "hotel_property:hotel_duty_free"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "008770",
+      "target": "hotel_property:shilla_hotels"
     },
     {
       "action": "structural_member_of",
@@ -285,16 +285,6 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:008770",
-      "target": "global:marriott"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:008770",
-      "target": "global:hilton"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
       "source": "krx:020560",
       "target": "global:delta"
     },
@@ -307,6 +297,16 @@
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:020560",
       "target": "global:singapore_airlines"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:008770",
+      "target": "global:marriott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:008770",
+      "target": "global:hilton"
     },
     {
       "action": "demote_legacy_partner_to_peer",

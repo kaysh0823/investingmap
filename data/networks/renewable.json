@@ -258,7 +258,7 @@
       "chain": "신재생 운영",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 7590123090000,
+      "mcapWon": 6758020706800,
       "legacyId": "hanwhasol"
     },
     {
@@ -274,7 +274,7 @@
       "chain": "태양광",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 5124978684000,
+      "mcapWon": 4247477780000,
       "legacyId": "oci_holdings"
     },
     {
@@ -290,7 +290,7 @@
       "chain": "수소",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 2131926120000,
+      "mcapWon": 2210714694000,
       "legacyId": "energy_skgas"
     },
     {
@@ -306,7 +306,7 @@
       "chain": "풍력",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 2083267308200,
+      "mcapWon": 1979947370850,
       "legacyId": "cswind"
     },
     {
@@ -322,7 +322,7 @@
       "chain": "풍력",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 1900938823200,
+      "mcapWon": 1771484208000,
       "legacyId": "sk_eternix"
     },
     {
@@ -338,7 +338,7 @@
       "chain": "태양광",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 1523200000000,
+      "mcapWon": 1555680000000,
       "legacyId": "hd_ess"
     },
     {
@@ -354,7 +354,7 @@
       "chain": "신재생 운영",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 858633049800,
+      "mcapWon": 738556014100,
       "legacyId": "energy_gncenergy_co_ltd"
     },
     {
@@ -370,7 +370,7 @@
       "chain": "태양광",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 734104590000,
+      "mcapWon": 709932853500,
       "legacyId": "oci"
     },
     {
@@ -386,7 +386,7 @@
       "chain": "수소",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 403076409000,
+      "mcapWon": 389277396800,
       "legacyId": "energy_iljin_hysolus"
     },
     {
@@ -402,7 +402,7 @@
       "chain": "태양광",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 343377537620,
+      "mcapWon": 327132592020,
       "legacyId": "energy_shinsung_e_g"
     },
     {
@@ -418,7 +418,7 @@
       "chain": "풍력",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 315030916776,
+      "mcapWon": 321777872160,
       "legacyId": "energy_unison_co_ltd"
     },
     {

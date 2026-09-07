@@ -2,19 +2,19 @@
   "asOf": "2026-08-29",
   "phase": "5H",
   "reviewedBy": "editorial_phase5h",
-  "listedCompanyCount": 21,
-  "nodeCount": 61,
-  "edgeCount": 78,
-  "structuralGenerated": 50,
+  "listedCompanyCount": 20,
+  "nodeCount": 60,
+  "edgeCount": 77,
+  "structuralGenerated": 49,
   "legacyMigrated": 24,
   "manuallyCurated": 4,
   "demotedPeer": 24,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 21,
-    "nodeCount": 61,
-    "edgeCount": 78,
-    "structuralGeneratedEdgeCount": 50,
+    "listedCompanyCount": 20,
+    "nodeCount": 60,
+    "edgeCount": 77,
+    "structuralGeneratedEdgeCount": 49,
     "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 4,
     "softwareProductCount": 3,
@@ -34,9 +34,9 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 24,
-    "businessRelationOrphanCount": 21,
-    "directCommercialRelationshipOrphanCount": 21,
-    "classificationOnlyCompanyCount": 11,
+    "businessRelationOrphanCount": 20,
+    "directCommercialRelationshipOrphanCount": 20,
+    "classificationOnlyCompanyCount": 10,
     "hasPeerButNoBusinessCompanyCount": 16,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
@@ -123,7 +123,7 @@
     "nodeCountByType": {
       "group": 7,
       "cross_sector_anchor": 4,
-      "listed_company": 21,
+      "listed_company": 20,
       "platform": 4,
       "software_category": 7,
       "customer_industry": 5,
@@ -131,7 +131,7 @@
       "software_product": 3,
       "global_company": 6
     },
-    "removedUnsupportedPartnerCount": 25,
+    "removedUnsupportedPartnerCount": 22,
     "demotedLegacyPeerCount": 24
   },
   "validate": {
@@ -397,22 +397,17 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "356680",
-      "lane": "cybersecurity"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "036800",
       "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
-      "ticker": "294570",
-      "lane": "managed_service"
+      "ticker": "356680",
+      "lane": "cybersecurity"
     },
     {
       "action": "structural_member_of",
-      "ticker": "025770",
+      "ticker": "294570",
       "lane": "managed_service"
     },
     {
@@ -631,6 +626,21 @@
       }
     },
     {
+      "action": "drop_unknown_partner",
+      "source": "krx:036800",
+      "partner": "visa"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:036800",
+      "partner": "paypal"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:036800",
+      "partner": "mastercard"
+    },
+    {
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:356680",
       "target": "global:paloalto"
@@ -653,21 +663,6 @@
     },
     {
       "action": "drop_unknown_partner",
-      "source": "krx:036800",
-      "partner": "visa"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:036800",
-      "partner": "paypal"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:036800",
-      "partner": "mastercard"
-    },
-    {
-      "action": "drop_unknown_partner",
       "source": "krx:294570",
       "partner": "visa"
     },
@@ -686,21 +681,6 @@
         "weight": 0.1,
         "kind": "theme"
       }
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:025770",
-      "partner": "visa"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:025770",
-      "partner": "paypal"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:025770",
-      "partner": "mastercard"
     },
     {
       "action": "add_cross_sector_reference",

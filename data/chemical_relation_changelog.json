@@ -1,30 +1,30 @@
 {
   "asOf": "2026-08-30",
   "reviewedBy": "editorial_chemical",
-  "listedCompanyCount": 26,
-  "nodeCount": 95,
-  "edgeCount": 130,
-  "structuralGenerated": 78,
-  "legacyMigrated": 48,
+  "listedCompanyCount": 25,
+  "nodeCount": 92,
+  "edgeCount": 125,
+  "structuralGenerated": 75,
+  "legacyMigrated": 46,
   "manuallyCurated": 4,
-  "demotedPeer": 48,
+  "demotedPeer": 46,
   "metrics": {
-    "listedCompanyCount": 26,
-    "nodeCount": 95,
-    "edgeCount": 130,
-    "structuralGeneratedEdgeCount": 78,
-    "legacyMigratedEdgeCount": 48,
+    "listedCompanyCount": 25,
+    "nodeCount": 92,
+    "edgeCount": 125,
+    "structuralGeneratedEdgeCount": 75,
+    "legacyMigratedEdgeCount": 46,
     "manuallyCuratedEdgeCount": 4,
-    "chemicalProductCount": 52,
+    "chemicalProductCount": 50,
     "chemicalSupplyCount": 0,
     "refiningRelationshipCount": 0,
     "ownershipEdgeCount": 0,
     "crossSectorReferenceCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 48,
-    "businessRelationOrphanCount": 26,
-    "classificationOnlyCompanyCount": 26,
+    "peerEdgeCount": 46,
+    "businessRelationOrphanCount": 25,
+    "classificationOnlyCompanyCount": 25,
     "zeroDegreeNodeCount": 0,
     "claimCoverage": {
       "businessRelationshipDirectEvidenceCoverage": {
@@ -68,12 +68,12 @@
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 4,
-      "listed_company": 26,
-      "chemical_product": 52,
+      "listed_company": 25,
+      "chemical_product": 50,
       "global_company": 9
     },
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 48
+    "demotedLegacyPeerCount": 46
   },
   "validate": {
     "failures": [],
@@ -333,21 +333,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "002840",
-      "lane": "specialty_chemical"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "002840",
-      "target": "chemical_product:surfactants"
-    },
-    {
-      "action": "structural_produces",
-      "ticker": "002840",
-      "target": "chemical_product:cosmetic_surfactant"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "006650",
       "lane": "petrochemical"
     },
@@ -375,6 +360,21 @@
       "action": "structural_produces",
       "ticker": "006380",
       "target": "chemical_product:nylon_capro"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "002840",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "002840",
+      "target": "chemical_product:surfactants"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "002840",
+      "target": "chemical_product:cosmetic_surfactant"
     },
     {
       "action": "structural_member_of",
@@ -408,21 +408,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "008730",
-      "lane": "chemical_materials"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "008730",
-      "target": "chemical_product:packaging_film"
-    },
-    {
-      "action": "structural_produces",
-      "ticker": "008730",
-      "target": "chemical_product:bopp_cpp"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "002810",
       "lane": "chemical_materials"
     },
@@ -435,6 +420,21 @@
       "action": "structural_produces",
       "ticker": "002810",
       "target": "chemical_product:plastic_distribution"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "008730",
+      "lane": "chemical_materials"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "008730",
+      "target": "chemical_product:packaging_film"
+    },
+    {
+      "action": "structural_produces",
+      "ticker": "008730",
+      "target": "chemical_product:bopp_cpp"
     },
     {
       "action": "structural_member_of",
@@ -480,21 +480,6 @@
       "action": "structural_produces",
       "ticker": "005950",
       "target": "chemical_product:sm_abs_phenol"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "017890",
-      "lane": "specialty_chemical"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "017890",
-      "target": "chemical_product:ethanol_fine"
-    },
-    {
-      "action": "structural_produces",
-      "ticker": "017890",
-      "target": "chemical_product:ethanol_solvent"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -653,16 +638,6 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:002840",
-      "target": "global:evonik"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:002840",
-      "target": "global:basf"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
       "source": "krx:006650",
       "target": "global:sabic"
     },
@@ -678,6 +653,16 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002840",
+      "target": "global:evonik"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:002840",
+      "target": "global:basf"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
       "source": "krx:161000",
       "target": "global:evonik"
     },
@@ -688,17 +673,17 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:008730",
-      "target": "global:toray"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
       "source": "krx:002810",
       "target": "global:basf"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:002810",
+      "target": "global:toray"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:008730",
       "target": "global:toray"
     },
     {
@@ -725,16 +710,6 @@
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:005950",
       "target": "global:dow"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:017890",
-      "target": "global:evonik"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:017890",
-      "target": "global:basf"
     },
     {
       "action": "add_cross_sector_reference",

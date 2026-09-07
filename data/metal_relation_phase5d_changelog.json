@@ -566,20 +566,20 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:437730",
         "krx:006110",
+        "krx:437730",
         "krx:000670",
-        "krx:001530",
         "krx:295310",
+        "krx:001530",
         "krx:016380",
-        "krx:009520",
         "krx:019210",
+        "krx:009520",
         "krx:460860",
         "krx:002240",
         "krx:306200",
         "krx:104700",
-        "krx:009160",
-        "krx:092790"
+        "krx:092790",
+        "krx:009160"
       ],
       "directRelationshipOrphans": [
         "krx:010130",
@@ -588,31 +588,31 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:437730",
         "krx:006110",
+        "krx:437730",
         "krx:000670",
-        "krx:001530",
         "krx:295310",
+        "krx:001530",
         "krx:016380",
-        "krx:009520",
         "krx:019210",
+        "krx:009520",
         "krx:460860",
         "krx:002240",
         "krx:306200",
         "krx:104700",
-        "krx:009160",
-        "krx:092790"
+        "krx:092790",
+        "krx:009160"
       ],
       "classificationOnly": [
         "krx:241560",
         "krx:017800",
         "krx:001430",
         "krx:437730",
-        "krx:001530",
         "krx:295310",
+        "krx:001530",
         "krx:016380",
-        "krx:009520",
         "krx:019210",
+        "krx:009520",
         "krx:002240",
         "krx:009160"
       ],
@@ -624,20 +624,20 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:437730",
         "krx:006110",
+        "krx:437730",
         "krx:000670",
-        "krx:001530",
         "krx:295310",
+        "krx:001530",
         "krx:016380",
-        "krx:009520",
         "krx:019210",
+        "krx:009520",
         "krx:460860",
         "krx:002240",
         "krx:306200",
         "krx:104700",
-        "krx:009160",
-        "krx:092790"
+        "krx:092790",
+        "krx:009160"
       ],
       "hasPeerButNoBusiness": [
         "krx:010130",
@@ -646,20 +646,20 @@
         "krx:004020",
         "krx:017800",
         "krx:001430",
-        "krx:437730",
         "krx:006110",
+        "krx:437730",
         "krx:000670",
-        "krx:001530",
         "krx:295310",
+        "krx:001530",
         "krx:016380",
-        "krx:009520",
         "krx:019210",
+        "krx:009520",
         "krx:460860",
         "krx:002240",
         "krx:306200",
         "krx:104700",
-        "krx:009160",
-        "krx:092790"
+        "krx:092790",
+        "krx:009160"
       ],
       "peerOnly": [],
       "structuralOnly": []
@@ -826,11 +826,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:437730",
-      "target": "group:metal_products"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:006110",
       "target": "group:nonferrous_metal"
     },
@@ -851,6 +846,11 @@
       "source": "krx:006110",
       "target": "commodity:aluminium",
       "edgeType": "exposed_to_commodity"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:437730",
+      "target": "group:metal_products"
     },
     {
       "action": "add_structural",
@@ -877,11 +877,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:001530",
-      "target": "group:nonferrous_metal"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:295310",
       "target": "group:specialty_alloy"
     },
@@ -896,6 +891,11 @@
       "source": "krx:295310",
       "target": "metal_product:high_purity_specialty_metals",
       "edgeType": "produces"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:001530",
+      "target": "group:nonferrous_metal"
     },
     {
       "action": "add_structural",
@@ -916,11 +916,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:009520",
-      "target": "group:steelmaking"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:019210",
       "target": "group:metal_products"
     },
@@ -935,6 +930,11 @@
       "source": "krx:019210",
       "target": "metal_product:end_mills_drills",
       "edgeType": "produces"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:009520",
+      "target": "group:steelmaking"
     },
     {
       "action": "add_structural",
@@ -1024,11 +1024,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:009160",
-      "target": "group:metal_products"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:092790",
       "target": "group:metal_products"
     },
@@ -1049,6 +1044,11 @@
       "source": "krx:092790",
       "target": "end_market:shipbuilding",
       "edgeType": "used_in_end_market"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:009160",
+      "target": "group:metal_products"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1103,6 +1103,13 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:006110",
+      "target": "global:glencore"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:437730",
       "target": "global:caterpillar"
     },
@@ -1112,13 +1119,6 @@
       "afterType": "peer",
       "source": "krx:437730",
       "target": "global:nippon_steel"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:006110",
-      "target": "global:glencore"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1131,6 +1131,13 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:295310",
+      "target": "global:glencore"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:001530",
       "target": "global:glencore"
     },
@@ -1140,13 +1147,6 @@
       "afterType": "peer",
       "source": "krx:001530",
       "target": "global:arcelormittal"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:295310",
-      "target": "global:glencore"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1159,6 +1159,13 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:019210",
+      "target": "global:caterpillar"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:009520",
       "target": "global:nippon_steel"
     },
@@ -1168,13 +1175,6 @@
       "afterType": "peer",
       "source": "krx:009520",
       "target": "global:arcelormittal"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:019210",
-      "target": "global:caterpillar"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1208,15 +1208,15 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:009160",
-      "target": "global:caterpillar"
+      "source": "krx:092790",
+      "target": "global:nippon_steel"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:092790",
-      "target": "global:nippon_steel"
+      "source": "krx:009160",
+      "target": "global:caterpillar"
     },
     {
       "action": "add_cross_sector_reference",

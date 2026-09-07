@@ -228,31 +228,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "454910",
-      "lane": "collaborative_robot"
-    },
-    {
-      "action": "structural_produces_robot",
-      "ticker": "454910",
-      "target": "robot_product:doosan-cobot-series"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "454910",
-      "target": "robot_category:collaborative"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "454910",
-      "target": "application:manufacturing"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "454910",
-      "target": "application:palletizing"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "108490",
       "lane": "actuator_drive"
     },
@@ -275,6 +250,31 @@
       "action": "structural_supports_application",
       "ticker": "108490",
       "target": "application:research-education"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "454910",
+      "lane": "collaborative_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "454910",
+      "target": "robot_product:doosan-cobot-series"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "454910",
+      "target": "robot_category:collaborative"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "454910",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "454910",
+      "target": "application:palletizing"
     },
     {
       "action": "structural_member_of",
@@ -343,31 +343,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "090710",
-      "lane": "industrial_robot"
-    },
-    {
-      "action": "structural_produces_robot",
-      "ticker": "090710",
-      "target": "robot_product:hyulim-industrial-service"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "090710",
-      "target": "robot_category:industrial"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "090710",
-      "target": "robot_category:service"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "090710",
-      "target": "application:manufacturing"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "388720",
       "lane": "industrial_robot"
     },
@@ -390,6 +365,31 @@
       "action": "structural_supports_application",
       "ticker": "388720",
       "target": "application:logistics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "090710",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "090710",
+      "target": "robot_product:hyulim-industrial-service"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "090710",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "090710",
+      "target": "robot_category:service"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "090710",
+      "target": "application:manufacturing"
     },
     {
       "action": "structural_member_of",
@@ -488,6 +488,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "439960",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "348340",
       "lane": "collaborative_robot"
     },
@@ -505,11 +510,6 @@
       "action": "structural_supports_application",
       "ticker": "348340",
       "target": "application:manufacturing"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "439960",
-      "lane": "industrial_robot"
     },
     {
       "action": "structural_member_of",
@@ -551,11 +551,11 @@
     },
     {
       "action": "structural_application_hub",
-      "target": "application:palletizing"
+      "target": "application:research-education"
     },
     {
       "action": "structural_application_hub",
-      "target": "application:research-education"
+      "target": "application:palletizing"
     },
     {
       "action": "structural_application_hub",
@@ -607,6 +607,18 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
+      "source": "krx:108490",
+      "target": "global:nvidia",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:108490",
+      "target": "global:intel",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
       "source": "krx:454910",
       "target": "global:nvidia",
       "classTag": "peer"
@@ -628,18 +640,6 @@
       "source": "krx:454910",
       "target": "global:doosan_grp",
       "classTag": "theme_reference"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:108490",
-      "target": "global:nvidia",
-      "classTag": "peer"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:108490",
-      "target": "global:intel",
-      "classTag": "peer"
     },
     {
       "action": "demote_legacy_partner_to_peer",

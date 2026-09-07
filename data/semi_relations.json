@@ -75,6 +75,11 @@
           "nameEn": "New Power Plasma"
         },
         {
+          "ticker": "417840",
+          "name": "저스템",
+          "nameEn": "Justem.Co.,Ltd."
+        },
+        {
           "ticker": "348210",
           "name": "넥스틴",
           "nameEn": "NEXTIN Inc."
@@ -88,11 +93,6 @@
           "ticker": "039440",
           "name": "에스티아이",
           "nameEn": "Systems Technology Incorporated"
-        },
-        {
-          "ticker": "417840",
-          "name": "저스템",
-          "nameEn": "Justem.Co.,Ltd."
         }
       ],
       "suppliers": [
@@ -280,19 +280,14 @@
           "nameEn": "INTEKPLUS CO.,LTD"
         },
         {
-          "ticker": "089890",
-          "name": "코세스",
-          "nameEn": "KOSES Co.,Ltd"
-        },
-        {
           "ticker": "092870",
           "name": "엑시콘",
           "nameEn": "Exicon Co., Ltd."
         },
         {
-          "ticker": "110990",
-          "name": "디아이티",
-          "nameEn": "DIT"
+          "ticker": "089890",
+          "name": "코세스",
+          "nameEn": "KOSES Co.,Ltd"
         }
       ],
       "suppliers": [
@@ -425,14 +420,14 @@
       },
       "members": [
         {
-          "ticker": "357780",
-          "name": "솔브레인",
-          "nameEn": "Soulbrain Co., Ltd."
-        },
-        {
           "ticker": "064760",
           "name": "티씨케이",
           "nameEn": "TOKAI CARBON KOREA CO., LTD"
+        },
+        {
+          "ticker": "357780",
+          "name": "솔브레인",
+          "nameEn": "Soulbrain Co., Ltd."
         },
         {
           "ticker": "178320",
@@ -1154,14 +1149,14 @@
           "nameEn": "Isupetasys"
         },
         {
-          "ticker": "353200",
-          "name": "대덕전자",
-          "nameEn": "Daeduck Electronics"
-        },
-        {
           "ticker": "058470",
           "name": "리노공업",
           "nameEn": "LEENO Industrial Inc"
+        },
+        {
+          "ticker": "353200",
+          "name": "대덕전자",
+          "nameEn": "Daeduck Electronics"
         },
         {
           "ticker": "222800",
@@ -1399,29 +1394,19 @@
           "nameEn": "OKins Electronics Co.,Ltd."
         },
         {
-          "ticker": "098120",
-          "name": "마이크로컨텍솔",
-          "nameEn": "Micro Contact Solution Co.,Ltd."
-        },
-        {
           "ticker": "332570",
           "name": "PS일렉트로닉스",
           "nameEn": "Pentastone Electronics"
         },
         {
+          "ticker": "098120",
+          "name": "마이크로컨텍솔",
+          "nameEn": "Micro Contact Solution Co.,Ltd."
+        },
+        {
           "ticker": "033160",
           "name": "엠케이전자",
           "nameEn": "MKElectron"
-        },
-        {
-          "ticker": "330860",
-          "name": "네패스아크",
-          "nameEn": "Nepes Ark Corporation"
-        },
-        {
-          "ticker": "061970",
-          "name": "LB세미콘",
-          "nameEn": "LB SEMICON"
         }
       ],
       "suppliers": [

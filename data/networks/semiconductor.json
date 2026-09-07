@@ -20,7 +20,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (ALD·CVD)",
       "group": "전공정 장비",
-      "mcapWon": 8217862192800,
+      "mcapWon": 8287583874300,
       "isListedKorea": true
     },
     {
@@ -32,7 +32,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (CVD·ALD)",
       "group": "전공정 장비",
-      "mcapWon": 5453221401100,
+      "mcapWon": 5634831834800,
       "isListedKorea": true
     },
     {
@@ -44,7 +44,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (고압 어닐)",
       "group": "전공정 장비",
-      "mcapWon": 4205530000000,
+      "mcapWon": 4180840000000,
       "isListedKorea": true
     },
     {
@@ -56,7 +56,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (PR Strip)",
       "group": "전공정 장비",
-      "mcapWon": 3725119420400,
+      "mcapWon": 3664289321000,
       "isListedKorea": true
     },
     {
@@ -68,7 +68,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (배치확산)",
       "group": "전공정 장비",
-      "mcapWon": 3070749628000,
+      "mcapWon": 3128039733000,
       "isListedKorea": true
     },
     {
@@ -80,7 +80,7 @@
       "market": "KOSDAQ",
       "role": "전공정장비 (CVD)",
       "group": "전공정 장비",
-      "mcapWon": 2762672000000,
+      "mcapWon": 2842048000000,
       "isListedKorea": true
     },
     {
@@ -92,7 +92,7 @@
       "market": "KOSDAQ",
       "role": "계측장비 (AFM)",
       "group": "전공정 장비",
-      "mcapWon": 1897669099000,
+      "mcapWon": 1838148112500,
       "isListedKorea": true
     },
     {
@@ -104,7 +104,7 @@
       "market": "KOSPI",
       "role": "CMP·세정장비",
       "group": "전공정 장비",
-      "mcapWon": 1320570688700,
+      "mcapWon": 1348288814100,
       "isListedKorea": true
     },
     {
@@ -116,7 +116,7 @@
       "market": "KOSDAQ",
       "role": "스크러버·칠러",
       "group": "전공정 장비",
-      "mcapWon": 817370500000,
+      "mcapWon": 792490000000,
       "isListedKorea": true
     },
     {
@@ -128,7 +128,7 @@
       "market": "KOSDAQ",
       "role": "고압 어닐·열처리 장비",
       "group": "전공정 장비",
-      "mcapWon": 653870015000,
+      "mcapWon": 587833473750,
       "isListedKorea": true
     },
     {
@@ -140,7 +140,7 @@
       "market": "KOSDAQ",
       "role": "EUV 소재·장비",
       "group": "전공정 장비",
-      "mcapWon": 533667298850,
+      "mcapWon": 553152108950,
       "isListedKorea": true
     },
     {
@@ -152,7 +152,7 @@
       "market": "KOSDAQ",
       "role": "반도체 유틸리티·설비",
       "group": "전공정 장비",
-      "mcapWon": 525875000000,
+      "mcapWon": 522375000000,
       "isListedKorea": true
     },
     {
@@ -164,43 +164,7 @@
       "market": "KOSDAQ",
       "role": "플라즈마 발생장치",
       "group": "전공정 장비",
-      "mcapWon": 421196895360,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:348210",
-      "type": "listed_company",
-      "ticker": "348210",
-      "nameKo": "넥스틴",
-      "nameEn": "NEXTIN Inc.",
-      "market": "KOSDAQ",
-      "role": "웨이퍼 결함 검사장비",
-      "group": "전공정 장비",
-      "mcapWon": 338407261500,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:079370",
-      "type": "listed_company",
-      "ticker": "079370",
-      "nameKo": "제우스",
-      "nameEn": "ZEUS CO., LTD.",
-      "market": "KOSDAQ",
-      "role": "웨이퍼 세정장비",
-      "group": "전공정 장비",
-      "mcapWon": 319164827100,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:039440",
-      "type": "listed_company",
-      "ticker": "039440",
-      "nameKo": "에스티아이",
-      "nameEn": "Systems Technology Incorporated",
-      "market": "KOSDAQ",
-      "role": "CCSS·리플로우 장비",
-      "group": "전공정 장비",
-      "mcapWon": 312466997050,
+      "mcapWon": 382747386240,
       "isListedKorea": true
     },
     {
@@ -212,7 +176,43 @@
       "market": "KOSDAQ",
       "role": "EFEM·웨이퍼 이송(FOUP)",
       "group": "전공정 장비",
-      "mcapWon": 304620154920,
+      "mcapWon": 345556346910,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:348210",
+      "type": "listed_company",
+      "ticker": "348210",
+      "nameKo": "넥스틴",
+      "nameEn": "NEXTIN Inc.",
+      "market": "KOSDAQ",
+      "role": "웨이퍼 결함 검사장비",
+      "group": "전공정 장비",
+      "mcapWon": 327406406250,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:079370",
+      "type": "listed_company",
+      "ticker": "079370",
+      "nameKo": "제우스",
+      "nameEn": "ZEUS CO., LTD.",
+      "market": "KOSDAQ",
+      "role": "웨이퍼 세정장비",
+      "group": "전공정 장비",
+      "mcapWon": 313271599000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:039440",
+      "type": "listed_company",
+      "ticker": "039440",
+      "nameKo": "에스티아이",
+      "nameEn": "Systems Technology Incorporated",
+      "market": "KOSDAQ",
+      "role": "CCSS·리플로우 장비",
+      "group": "전공정 장비",
+      "mcapWon": 301301923210,
       "isListedKorea": true
     },
     {
@@ -406,7 +406,7 @@
       "market": "KOSPI",
       "role": "패키징장비 (TC Bonder)",
       "group": "후공정 장비",
-      "mcapWon": 20921027900000,
+      "mcapWon": 21921806000000,
       "isListedKorea": true
     },
     {
@@ -418,7 +418,7 @@
       "market": "KOSDAQ",
       "role": "레이저장비",
       "group": "후공정 장비",
-      "mcapWon": 4909340675000,
+      "mcapWon": 5457560650000,
       "isListedKorea": true
     },
     {
@@ -430,7 +430,7 @@
       "market": "KOSDAQ",
       "role": "후공정 디스컴·리플로우 장비",
       "group": "후공정 장비",
-      "mcapWon": 2589643639500,
+      "mcapWon": 3104984880000,
       "isListedKorea": true
     },
     {
@@ -442,7 +442,7 @@
       "market": "KOSDAQ",
       "role": "계측·검사장비 (3D SPI/AOI)",
       "group": "후공정 장비",
-      "mcapWon": 1957460913100,
+      "mcapWon": 1902897542700,
       "isListedKorea": true
     },
     {
@@ -454,7 +454,7 @@
       "market": "KOSDAQ",
       "role": "반도체·디스플레이 검사장비",
       "group": "후공정 장비",
-      "mcapWon": 1391798228400,
+      "mcapWon": 1282786709600,
       "isListedKorea": true
     },
     {
@@ -466,7 +466,7 @@
       "market": "KOSDAQ",
       "role": "반도체 검사·번인 장비",
       "group": "후공정 장비",
-      "mcapWon": 931214722500,
+      "mcapWon": 962391955500,
       "isListedKorea": true
     },
     {
@@ -478,7 +478,7 @@
       "market": "KOSPI",
       "role": "번인 테스터",
       "group": "후공정 장비",
-      "mcapWon": 689105000000,
+      "mcapWon": 884375000000,
       "isListedKorea": true
     },
     {
@@ -490,7 +490,7 @@
       "market": "KOSDAQ",
       "role": "패키징 디스펜서·다이본더",
       "group": "후공정 장비",
-      "mcapWon": 546300000000,
+      "mcapWon": 540000000000,
       "isListedKorea": true
     },
     {
@@ -502,19 +502,7 @@
       "market": "KOSDAQ",
       "role": "검사장비 (비전)",
       "group": "후공정 장비",
-      "mcapWon": 421121285000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:089890",
-      "type": "listed_company",
-      "ticker": "089890",
-      "nameKo": "코세스",
-      "nameEn": "KOSES Co.,Ltd",
-      "market": "KOSDAQ",
-      "role": "레이저 후공정 장비",
-      "group": "후공정 장비",
-      "mcapWon": 389746607000,
+      "mcapWon": 520246756700,
       "isListedKorea": true
     },
     {
@@ -526,19 +514,19 @@
       "market": "KOSDAQ",
       "role": "반도체 검사장비",
       "group": "후공정 장비",
-      "mcapWon": 338015642300,
+      "mcapWon": 426108522050,
       "isListedKorea": true
     },
     {
-      "id": "krx:110990",
+      "id": "krx:089890",
       "type": "listed_company",
-      "ticker": "110990",
-      "nameKo": "디아이티",
-      "nameEn": "DIT",
+      "ticker": "089890",
+      "nameKo": "코세스",
+      "nameEn": "KOSES Co.,Ltd",
       "market": "KOSDAQ",
-      "role": "레이저 검사장비",
+      "role": "레이저 후공정 장비",
       "group": "후공정 장비",
-      "mcapWon": 313173000000,
+      "mcapWon": 368186156400,
       "isListedKorea": true
     },
     {
@@ -654,18 +642,6 @@
       "group": "소재"
     },
     {
-      "id": "krx:357780",
-      "type": "listed_company",
-      "ticker": "357780",
-      "nameKo": "솔브레인",
-      "nameEn": "Soulbrain Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "공정소재 (식각·증착)",
-      "group": "소재",
-      "mcapWon": 2695273119000,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:064760",
       "type": "listed_company",
       "ticker": "064760",
@@ -674,7 +650,19 @@
       "market": "KOSDAQ",
       "role": "공정부품 (SiC Ring)",
       "group": "소재",
-      "mcapWon": 2666290716000,
+      "mcapWon": 2817212832000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:357780",
+      "type": "listed_company",
+      "ticker": "357780",
+      "nameKo": "솔브레인",
+      "nameEn": "Soulbrain Co., Ltd.",
+      "market": "KOSDAQ",
+      "role": "공정소재 (식각·증착)",
+      "group": "소재",
+      "mcapWon": 2528033950000,
       "isListedKorea": true
     },
     {
@@ -686,7 +674,7 @@
       "market": "KOSDAQ",
       "role": "장비 부품 (알루미늄 챔버)",
       "group": "소재",
-      "mcapWon": 2479196206150,
+      "mcapWon": 2141847300050,
       "isListedKorea": true
     },
     {
@@ -698,7 +686,7 @@
       "market": "KOSPI",
       "role": "과산화수소·프리커서 소재",
       "group": "소재",
-      "mcapWon": 2191189308000,
+      "mcapWon": 2084328351600,
       "isListedKorea": true
     },
     {
@@ -710,7 +698,7 @@
       "market": "KOSDAQ",
       "role": "공정소재 (PR·슬러리)",
       "group": "소재",
-      "mcapWon": 2161133342400,
+      "mcapWon": 2051547571500,
       "isListedKorea": true
     },
     {
@@ -722,7 +710,7 @@
       "market": "KOSDAQ",
       "role": "식각 장비",
       "group": "소재",
-      "mcapWon": 1526952370000,
+      "mcapWon": 1390053192000,
       "isListedKorea": true
     },
     {
@@ -734,7 +722,7 @@
       "market": "KOSDAQ",
       "role": "전자재료·실리콘계 소재",
       "group": "소재",
-      "mcapWon": 1441639868400,
+      "mcapWon": 1328570074800,
       "isListedKorea": true
     },
     {
@@ -746,7 +734,7 @@
       "market": "KOSDAQ",
       "role": "부품 세정·코팅 서비스",
       "group": "소재",
-      "mcapWon": 1304627185000,
+      "mcapWon": 1289218202500,
       "isListedKorea": true
     },
     {
@@ -758,7 +746,7 @@
       "market": "KOSDAQ",
       "role": "공정부품 (실리콘 전극)",
       "group": "소재",
-      "mcapWon": 1040305652400,
+      "mcapWon": 986905932600,
       "isListedKorea": true
     },
     {
@@ -770,7 +758,7 @@
       "market": "KOSDAQ",
       "role": "반도체 소재 지주·자회사",
       "group": "소재",
-      "mcapWon": 897049168750,
+      "mcapWon": 883721581100,
       "isListedKorea": true
     },
     {
@@ -782,7 +770,7 @@
       "market": "KOSDAQ",
       "role": "블랭크마스크·EUV 펠리클",
       "group": "소재",
-      "mcapWon": 878997014800,
+      "mcapWon": 854461903950,
       "isListedKorea": true
     },
     {
@@ -794,7 +782,7 @@
       "market": "KOSDAQ",
       "role": "OLED 유기발광소재",
       "group": "소재",
-      "mcapWon": 799563963800,
+      "mcapWon": 800805522750,
       "isListedKorea": true
     },
     {
@@ -806,7 +794,7 @@
       "market": "KOSDAQ",
       "role": "전구체·유기금속소재",
       "group": "소재",
-      "mcapWon": 787451965040,
+      "mcapWon": 726979860880,
       "isListedKorea": true
     },
     {
@@ -818,7 +806,7 @@
       "market": "KOSDAQ",
       "role": "공정부품 (석영·SiC)",
       "group": "소재",
-      "mcapWon": 687431200000,
+      "mcapWon": 676916000000,
       "isListedKorea": true
     },
     {
@@ -830,7 +818,7 @@
       "market": "KOSDAQ",
       "role": "세라믹 부품·히터",
       "group": "소재",
-      "mcapWon": 650624667660,
+      "mcapWon": 603507010680,
       "isListedKorea": true
     },
     {
@@ -842,7 +830,7 @@
       "market": "KOSDAQ",
       "role": "공정소재 (세정·슬러리)",
       "group": "소재",
-      "mcapWon": 646524579000,
+      "mcapWon": 599374720200,
       "isListedKorea": true
     },
     {
@@ -854,7 +842,7 @@
       "market": "KOSPI",
       "role": "PI필름 (반도체 패키징소재)",
       "group": "소재",
-      "mcapWon": 568531993920,
+      "mcapWon": 558841107660,
       "isListedKorea": true
     },
     {
@@ -866,7 +854,7 @@
       "market": "KOSDAQ",
       "role": "실리콘·쿼츠 공정 소모부품",
       "group": "소재",
-      "mcapWon": 493678690700,
+      "mcapWon": 487074293500,
       "isListedKorea": true
     },
     {
@@ -878,7 +866,7 @@
       "market": "KOSDAQ",
       "role": "특수가스 (공정가스)",
       "group": "소재",
-      "mcapWon": 416064000000,
+      "mcapWon": 403456000000,
       "isListedKorea": true
     },
     {
@@ -890,7 +878,7 @@
       "market": "KOSDAQ",
       "role": "전구체 소재",
       "group": "소재",
-      "mcapWon": 379675840000,
+      "mcapWon": 381714368000,
       "isListedKorea": true
     },
     {
@@ -902,7 +890,7 @@
       "market": "KOSDAQ",
       "role": "석영·부품 세정",
       "group": "소재",
-      "mcapWon": 366424125480,
+      "mcapWon": 375711372900,
       "isListedKorea": true
     },
     {
@@ -1013,7 +1001,7 @@
       "market": "KOSPI",
       "role": "아날로그 / 전력반도체 파운드리",
       "group": "파운드리",
-      "mcapWon": 4085080813200,
+      "mcapWon": 3911062461200,
       "isListedKorea": true
     },
     {
@@ -1124,7 +1112,7 @@
       "market": "KOSDAQ",
       "role": "스토리지 (SSD 컨트롤러)",
       "group": "팹리스",
-      "mcapWon": 3172028009100,
+      "mcapWon": 3372472117100,
       "isListedKorea": true
     },
     {
@@ -1136,7 +1124,7 @@
       "market": "KOSDAQ",
       "role": "메모리 (SRAM)",
       "group": "팹리스",
-      "mcapWon": 2641765291100,
+      "mcapWon": 2472995409400,
       "isListedKorea": true
     },
     {
@@ -1148,7 +1136,7 @@
       "market": "KOSDAQ",
       "role": "아날로그 (드라이버IC)",
       "group": "팹리스",
-      "mcapWon": 677481926400,
+      "mcapWon": 613706621600,
       "isListedKorea": true
     },
     {
@@ -1160,7 +1148,7 @@
       "market": "KOSPI",
       "role": "디스플레이IC / 전력반도체",
       "group": "팹리스",
-      "mcapWon": 605031960000,
+      "mcapWon": 588767660000,
       "isListedKorea": true
     },
     {
@@ -1172,7 +1160,7 @@
       "market": "KOSDAQ",
       "role": "SSD 검사장비",
       "group": "팹리스",
-      "mcapWon": 478173887600,
+      "mcapWon": 495282861560,
       "isListedKorea": true
     },
     {
@@ -1335,7 +1323,7 @@
       "market": "KOSDAQ",
       "role": "AI반도체 (설계 플랫폼)",
       "group": "디자인하우스",
-      "mcapWon": 527718558000,
+      "mcapWon": 499257332400,
       "isListedKorea": true
     },
     {
@@ -1347,7 +1335,7 @@
       "market": "KOSDAQ",
       "role": "ASIC 설계 플랫폼",
       "group": "디자인하우스",
-      "mcapWon": 522630758400,
+      "mcapWon": 493028625600,
       "isListedKorea": true
     },
     {
@@ -1359,7 +1347,7 @@
       "market": "KOSDAQ",
       "role": "시스템반도체 (커스텀설계 서비스)",
       "group": "디자인하우스",
-      "mcapWon": 343281178500,
+      "mcapWon": 313664763100,
       "isListedKorea": true
     },
     {
@@ -1470,19 +1458,7 @@
       "market": "KOSPI",
       "role": "고다층 MLB PCB",
       "group": "부품/기판",
-      "mcapWon": 8280559903200,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:353200",
-      "type": "listed_company",
-      "ticker": "353200",
-      "nameKo": "대덕전자",
-      "nameEn": "Daeduck Electronics",
-      "market": "KOSPI",
-      "role": "반도체 기판 (HDI PCB)",
-      "group": "부품/기판",
-      "mcapWon": 5317261130000,
+      "mcapWon": 8155764230900,
       "isListedKorea": true
     },
     {
@@ -1494,7 +1470,19 @@
       "market": "KOSDAQ",
       "role": "테스트소켓 (MEMS핀)",
       "group": "부품/기판",
-      "mcapWon": 5090951580000,
+      "mcapWon": 5075709210000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:353200",
+      "type": "listed_company",
+      "ticker": "353200",
+      "nameKo": "대덕전자",
+      "nameEn": "Daeduck Electronics",
+      "market": "KOSPI",
+      "role": "반도체 기판 (HDI PCB)",
+      "group": "부품/기판",
+      "mcapWon": 4916984037500,
       "isListedKorea": true
     },
     {
@@ -1506,7 +1494,7 @@
       "market": "KOSDAQ",
       "role": "반도체 기판 (PCB)",
       "group": "부품/기판",
-      "mcapWon": 4663235198400,
+      "mcapWon": 4477161481200,
       "isListedKorea": true
     },
     {
@@ -1518,7 +1506,7 @@
       "market": "KOSDAQ",
       "role": "테스트소켓 (고무소켓)",
       "group": "부품/기판",
-      "mcapWon": 3675569857200,
+      "mcapWon": 3857864556000,
       "isListedKorea": true
     },
     {
@@ -1530,7 +1518,7 @@
       "market": "KOSPI",
       "role": "반도체 기판 (BGA·FC-BGA)",
       "group": "부품/기판",
-      "mcapWon": 1441355462000,
+      "mcapWon": 1223113620000,
       "isListedKorea": true
     },
     {
@@ -1542,7 +1530,7 @@
       "market": "KOSDAQ",
       "role": "메모리 모듈·SSD PCB",
       "group": "부품/기판",
-      "mcapWon": 938569896000,
+      "mcapWon": 880501809000,
       "isListedKorea": true
     },
     {
@@ -1554,7 +1542,7 @@
       "market": "KOSPI",
       "role": "리드프레임 / 기판",
       "group": "부품/기판",
-      "mcapWon": 918000000000,
+      "mcapWon": 848300000000,
       "isListedKorea": true
     },
     {
@@ -1566,7 +1554,7 @@
       "market": "KOSDAQ",
       "role": "RF 세라믹 패키지·부품",
       "group": "부품/기판",
-      "mcapWon": 627810481100,
+      "mcapWon": 612519967950,
       "isListedKorea": true
     },
     {
@@ -1578,7 +1566,7 @@
       "market": "KOSDAQ",
       "role": "FPCB/OLED/반도체 소재",
       "group": "부품/기판",
-      "mcapWon": 419684564450,
+      "mcapWon": 407722059050,
       "isListedKorea": true
     },
     {
@@ -1590,7 +1578,7 @@
       "market": "KOSDAQ",
       "role": "검사용 PCB",
       "group": "부품/기판",
-      "mcapWon": 392117409000,
+      "mcapWon": 381383116000,
       "isListedKorea": true
     },
     {
@@ -1688,7 +1676,7 @@
       "market": "KOSDAQ",
       "role": "프로브카드·테스트 인터페이스",
       "group": "패키징/테스트",
-      "mcapWon": 2638150816500,
+      "mcapWon": 2616027958500,
       "isListedKorea": true
     },
     {
@@ -1700,7 +1688,7 @@
       "market": "KOSDAQ",
       "role": "OSAT (패키징·테스트)",
       "group": "패키징/테스트",
-      "mcapWon": 2350452219150,
+      "mcapWon": 2317206784650,
       "isListedKorea": true
     },
     {
@@ -1712,7 +1700,7 @@
       "market": "KOSDAQ",
       "role": "테스트장비 (핸들러)",
       "group": "패키징/테스트",
-      "mcapWon": 1848976885500,
+      "mcapWon": 1745226679500,
       "isListedKorea": true
     },
     {
@@ -1724,7 +1712,7 @@
       "market": "KOSDAQ",
       "role": "비메모리 반도체 테스트",
       "group": "패키징/테스트",
-      "mcapWon": 1579035344600,
+      "mcapWon": 1436013783400,
       "isListedKorea": true
     },
     {
@@ -1748,7 +1736,7 @@
       "market": "KOSDAQ",
       "role": "세라믹 STF·프로브카드 부품",
       "group": "패키징/테스트",
-      "mcapWon": 836426478210,
+      "mcapWon": 822576363740,
       "isListedKorea": true
     },
     {
@@ -1760,7 +1748,7 @@
       "market": "KOSDAQ",
       "role": "테스트 소켓·부품",
       "group": "패키징/테스트",
-      "mcapWon": 586491097500,
+      "mcapWon": 650696438700,
       "isListedKorea": true
     },
     {
@@ -1772,7 +1760,7 @@
       "market": "KOSDAQ",
       "role": "WLP / SiP 패키징",
       "group": "패키징/테스트",
-      "mcapWon": 539585326800,
+      "mcapWon": 496925803100,
       "isListedKorea": true
     },
     {
@@ -1784,19 +1772,7 @@
       "market": "KOSDAQ",
       "role": "테스트 소켓·커넥터",
       "group": "패키징/테스트",
-      "mcapWon": 428146386500,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:098120",
-      "type": "listed_company",
-      "ticker": "098120",
-      "nameKo": "마이크로컨텍솔",
-      "nameEn": "Micro Contact Solution Co.,Ltd.",
-      "market": "KOSDAQ",
-      "role": "반도체 소켓",
-      "group": "패키징/테스트",
-      "mcapWon": 347889257100,
+      "mcapWon": 407899069700,
       "isListedKorea": true
     },
     {
@@ -1808,7 +1784,19 @@
       "market": "KOSDAQ",
       "role": "반도체 테스트",
       "group": "패키징/테스트",
-      "mcapWon": 337257484860,
+      "mcapWon": 355942110060,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:098120",
+      "type": "listed_company",
+      "ticker": "098120",
+      "nameKo": "마이크로컨텍솔",
+      "nameEn": "Micro Contact Solution Co.,Ltd.",
+      "market": "KOSDAQ",
+      "role": "반도체 소켓",
+      "group": "패키징/테스트",
+      "mcapWon": 353292555000,
       "isListedKorea": true
     },
     {
@@ -1820,31 +1808,7 @@
       "market": "KOSDAQ",
       "role": "본딩와이어·패키징 소재",
       "group": "패키징/테스트",
-      "mcapWon": 336786966720,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:330860",
-      "type": "listed_company",
-      "ticker": "330860",
-      "nameKo": "네패스아크",
-      "nameEn": "Nepes Ark Corporation",
-      "market": "KOSDAQ",
-      "role": "반도체 테스트",
-      "group": "패키징/테스트",
-      "mcapWon": 320440383500,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:061970",
-      "type": "listed_company",
-      "ticker": "061970",
-      "nameKo": "LB세미콘",
-      "nameEn": "LB SEMICON",
-      "market": "KOSDAQ",
-      "role": "범핑·패키징·테스트 (OSAT)",
-      "group": "패키징/테스트",
-      "mcapWon": 305912321190,
+      "mcapWon": 341686046780,
       "isListedKorea": true
     },
     {
@@ -1903,7 +1867,7 @@
       "market": "KOSDAQ",
       "role": "비메모리 유통·FPGA",
       "group": "반도체 유통",
-      "mcapWon": 312423221250,
+      "mcapWon": 311828129400,
       "isListedKorea": true
     },
     {
@@ -2195,6 +2159,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-front_equip-417840",
+      "source": "krx:417840",
+      "target": "group:front_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "전공정 장비 밸류체인 분류",
+      "labelEn": "Front-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-front_equip-348210",
       "source": "krx:348210",
       "target": "group:front_equip",
@@ -2227,21 +2206,6 @@
     {
       "id": "member-front_equip-039440",
       "source": "krx:039440",
-      "target": "group:front_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "전공정 장비 밸류체인 분류",
-      "labelEn": "Front-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-front_equip-417840",
-      "source": "krx:417840",
       "target": "group:front_equip",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2621,21 +2585,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-back_equip-089890",
-      "source": "krx:089890",
-      "target": "group:back_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "후공정 장비 밸류체인 분류",
-      "labelEn": "Back-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-back_equip-092870",
       "source": "krx:092870",
       "target": "group:back_equip",
@@ -2651,8 +2600,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-back_equip-110990",
-      "source": "krx:110990",
+      "id": "member-back_equip-089890",
+      "source": "krx:089890",
       "target": "group:back_equip",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2883,8 +2832,8 @@
       "defaultHidden": true
     },
     {
-      "id": "member-materials-357780",
-      "source": "krx:357780",
+      "id": "member-materials-064760",
+      "source": "krx:064760",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -2898,8 +2847,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-064760",
-      "source": "krx:064760",
+      "id": "member-materials-357780",
+      "source": "krx:357780",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4372,8 +4321,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-substrate-353200",
-      "source": "krx:353200",
+      "id": "member-substrate-058470",
+      "source": "krx:058470",
       "target": "group:substrate",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4387,8 +4336,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-substrate-058470",
-      "source": "krx:058470",
+      "id": "member-substrate-353200",
+      "source": "krx:353200",
       "target": "group:substrate",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4938,21 +4887,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-osat-098120",
-      "source": "krx:098120",
-      "target": "group:osat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "패키징/테스트 밸류체인 분류",
-      "labelEn": "Packaging & Test value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-osat-332570",
       "source": "krx:332570",
       "target": "group:osat",
@@ -4968,38 +4902,23 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-osat-098120",
+      "source": "krx:098120",
+      "target": "group:osat",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "패키징/테스트 밸류체인 분류",
+      "labelEn": "Packaging & Test value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-osat-033160",
       "source": "krx:033160",
-      "target": "group:osat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "패키징/테스트 밸류체인 분류",
-      "labelEn": "Packaging & Test value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-osat-330860",
-      "source": "krx:330860",
-      "target": "group:osat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "패키징/테스트 밸류체인 분류",
-      "labelEn": "Packaging & Test value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-osat-061970",
-      "source": "krx:061970",
       "target": "group:osat",
       "type": "member_of",
       "direction": "source_to_target",

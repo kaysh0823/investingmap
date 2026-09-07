@@ -158,8 +158,8 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:361610",
-      "target": "group:battery_parts",
+      "source": "krx:093370",
+      "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -169,8 +169,8 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:093370",
-      "target": "group:battery_materials",
+      "source": "krx:361610",
+      "target": "group:battery_parts",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1114,6 +1114,28 @@
       "reason": "supply label without URL → inferred"
     },
     {
+      "legacyEdgeId": "legacy-093370-catl-peer",
+      "source": "krx:093370",
+      "target": "global:catl",
+      "beforeType": "peer",
+      "afterType": "peer",
+      "beforeStatus": "legacy",
+      "afterStatus": "peer",
+      "origin": "legacyMigrated",
+      "reason": "CATL string → peer comparison only"
+    },
+    {
+      "legacyEdgeId": "legacy-093370-soulbrain-theme",
+      "source": "krx:093370",
+      "target": "soulbrain",
+      "beforeType": "theme",
+      "afterType": "(removed)",
+      "beforeStatus": "legacy",
+      "afterStatus": "(removed)",
+      "origin": "legacyMigrated",
+      "reason": "unsupported/out-of-sector global partner dropped"
+    },
+    {
       "legacyEdgeId": "legacy-361610-catl-peer",
       "source": "krx:361610",
       "target": "global:catl",
@@ -1156,28 +1178,6 @@
       "afterStatus": "reference",
       "origin": "legacyMigrated",
       "reason": "backing without DART/IR → reference (not reported owns)"
-    },
-    {
-      "legacyEdgeId": "legacy-093370-catl-peer",
-      "source": "krx:093370",
-      "target": "global:catl",
-      "beforeType": "peer",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "CATL string → peer comparison only"
-    },
-    {
-      "legacyEdgeId": "legacy-093370-soulbrain-theme",
-      "source": "krx:093370",
-      "target": "soulbrain",
-      "beforeType": "theme",
-      "afterType": "(removed)",
-      "beforeStatus": "legacy",
-      "afterStatus": "(removed)",
-      "origin": "legacyMigrated",
-      "reason": "unsupported/out-of-sector global partner dropped"
     },
     {
       "legacyEdgeId": "legacy-004490-catl-peer",
