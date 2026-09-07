@@ -18,7 +18,7 @@
     { id: 'ship', path: 'ship/korea_ship_map.html', icon: '\u2693', ko: '\uC870\uC120/\uD574\uC6B4', en: 'Shipbuilding/Shipping', koShort: '\uC870\uC120/\uD574\uC6B4', enShort: 'Ship' },
     { id: 'metal', path: 'metal/korea_metal_map.html', icon: '\u2699\uFE0F', ko: '\uCCA0\uAC15\u00B7\uAE08\uC18D\u00B7\uAE30\uACC4', en: 'Metals', koShort: '\uCCA0\uAC15\uAE30\uACC4', enShort: 'Metal' },
     { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC0B0/\uC6B0\uC8FC', en: 'Defense & Space', koShort: '\uBC29\uC0B0/\uC6B0\uC8FC', enShort: 'Defense' },
-    { id: 'kconsume', path: 'kconsume/korea_kconsume_map.html', icon: '\uD83D\uDED2', ko: 'K-\uC18C\uBE44/\uC720\uD1B5', en: 'K-Consume', koShort: 'K-\uC18C\uBE44', enShort: 'Consume' },
+    { id: 'kconsume', path: 'kconsume/korea_kconsume_map.html', icon: '\uD83D\uDED2', ko: '소비/유통', en: 'Consumer/Retail', koShort: '소비/유통', enShort: 'Retail' },
     { id: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html', icon: '\uD83D\uDC84', ko: '\uD654\uC7A5\uD488/\uBBF8\uC6A9\uAE30\uAE30', en: 'Cosmetics', koShort: '\uD654\uC7A5\uD488', enShort: 'Cosme' },
     { id: 'kcontent', path: 'kcontent/korea_kcontent_map.html', icon: '\uD83C\uDFAC', ko: 'K-\uCF58\uD150\uCE20', en: 'K-Content', koShort: 'K-\uCF58\uD150\uCE20', enShort: 'Content' },
     { id: 'bio', path: 'bio/korea_bio_map.html', icon: '\uD83E\uDDEC', ko: '\uBC14\uC774\uC624', en: 'Bio' },

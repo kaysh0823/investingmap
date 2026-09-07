@@ -43,7 +43,7 @@
     robot: { ko: '로봇', en: 'Robot' },
     auto: { ko: '자동차', en: 'Auto' },
     medtech: { ko: '의료기기/헬스케어', en: 'MedTech' },
-    kconsume: { ko: 'K-소비/유통', en: 'K-Consume' },
+    kconsume: { ko: '소비/유통', en: 'Consumer/Retail' },
     cosmetics: { ko: '화장품/미용기기', en: 'Cosmetics' },
     kcontent: { ko: 'K-콘텐츠', en: 'K-Content' },
     battery: { ko: '2차전지', en: 'Battery' },

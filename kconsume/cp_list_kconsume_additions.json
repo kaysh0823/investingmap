@@ -91,6 +91,19 @@
     "level": "core"
   },
   {
+    "ticker": "033780",
+    "name": "KT&G",
+    "nameEn": "KT&G",
+    "chain": "음식·라면·식품",
+    "semType": "담배·홍삼",
+    "semTypeEn": "Tobacco & red ginseng",
+    "products": "담배·홍삼·건기식·소비재",
+    "productsEn": "Tobacco, red ginseng, health foods and consumer goods",
+    "partners": ["nestle", "pepsico", "coca_cola"],
+    "subSector": "담배·홍삼",
+    "level": "core"
+  },
+  {
     "ticker": "005610",
     "name": "삼립",
     "nameEn": "SPC Samlip",
