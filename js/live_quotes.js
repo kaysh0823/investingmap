@@ -277,14 +277,14 @@
       if (!key) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         c.turnoverWon = null;
-        c.high120d = c.low120d = c.high50d = c.low50d = c.high20d = c.low20d = c.bbUpper = c.bbLower = null;
+        c.high120d = c.low120d = c.high50d = c.low50d = c.high20d = c.low20d = c.high10d = c.low10d = c.high5d = c.low5d = c.bbUpper = c.bbLower = null;
         continue;
       }
       var q = items[key];
       if (!q) {
         c.quoteLast = c.quoteHi52 = c.quoteLo52 = c.quotePosition = null;
         c.turnoverWon = null;
-        c.high120d = c.low120d = c.high50d = c.low50d = c.high20d = c.low20d = c.bbUpper = c.bbLower = null;
+        c.high120d = c.low120d = c.high50d = c.low50d = c.high20d = c.low20d = c.high10d = c.low10d = c.high5d = c.low5d = c.bbUpper = c.bbLower = null;
         continue;
       }
       c.quoteLast = typeof q.last === 'number' && isFinite(q.last) ? q.last : null;
@@ -302,6 +302,10 @@
       c.low50d = typeof q.low50d === 'number' && isFinite(q.low50d) ? q.low50d : null;
       c.high20d = typeof q.high20d === 'number' && isFinite(q.high20d) ? q.high20d : null;
       c.low20d = typeof q.low20d === 'number' && isFinite(q.low20d) ? q.low20d : null;
+      c.high10d = typeof q.high10d === 'number' && isFinite(q.high10d) ? q.high10d : null;
+      c.low10d = typeof q.low10d === 'number' && isFinite(q.low10d) ? q.low10d : null;
+      c.high5d = typeof q.high5d === 'number' && isFinite(q.high5d) ? q.high5d : null;
+      c.low5d = typeof q.low5d === 'number' && isFinite(q.low5d) ? q.low5d : null;
       c.bbUpper = typeof q.bbUpper === 'number' && isFinite(q.bbUpper) ? q.bbUpper : null;
       c.bbLower = typeof q.bbLower === 'number' && isFinite(q.bbLower) ? q.bbLower : null;
       if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) {

@@ -27,31 +27,31 @@ assert.ok(momentum, 'momentum module export missing');
 assert.ok(source.includes("attr('data-ticker'"), 'momentum nodes must expose data-ticker');
 assert.ok(source.includes('applyTickerFocus'), 'momentum must highlight ?ticker focus');
 assert.ok(source.includes('var CHG_CLIP = 15'), 'momentum CHG_CLIP must be 15');
-assert.equal(momentum.getYMode(), '20d', '20D BOX is the default y-axis mode');
+assert.equal(momentum.getYMode(), '5d', '5D BOX is the default y-axis mode');
 assert.equal(
-  momentum.pricePosition({ quoteLast: 75, high50d: 100, low50d: 50 }, '50d'),
+  momentum.pricePosition({ quoteLast: 75, high5d: 100, low5d: 50 }, '5d'),
   50,
-  '50-day price position',
+  '5-day price position',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 120, high50d: 100, low50d: 50 }, '50d'),
+  momentum.pricePosition({ quoteLast: 120, high5d: 100, low5d: 50 }, '5d'),
   100,
-  '50-day price position clamps high',
+  '5-day price position clamps high',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 20, high50d: 100, low50d: 50 }, '50d'),
+  momentum.pricePosition({ quoteLast: 20, high5d: 100, low5d: 50 }, '5d'),
   0,
   'price position clamps low',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 50, high50d: 50, low50d: 50 }, '50d'),
+  momentum.pricePosition({ quoteLast: 50, high5d: 50, low5d: 50 }, '5d'),
   null,
   'flat rolling range is excluded',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 75, high20d: 90, low20d: 60 }, '20d'),
+  momentum.pricePosition({ quoteLast: 75, high10d: 90, low10d: 60 }, '10d'),
   50,
-  '20-day price position',
+  '10-day price position',
 );
 assert.equal(
   momentum.pricePosition({ quoteLast: 75, high120d: 110, low120d: 40 }, '120d'),
@@ -59,29 +59,29 @@ assert.equal(
   '120-day price position',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 75, high50d: 100, low50d: 50 }, 'bb'),
+  momentum.pricePosition({ quoteLast: 75, high5d: 100, low5d: 50 }, 'bb'),
   50,
-  'legacy bb mode falls back to 50d',
+  'legacy bb mode falls back to 5d',
 );
 
 const complete = momentum.datum({
   ticker: '005930',
   rs: 67.5,
   quoteLast: 75,
-  high50d: 100,
-  low50d: 50,
+  high5d: 100,
+  low5d: 50,
   turnoverWon: 123_000_000_000,
   chg1dPct: 1.25,
-}, '50d');
+}, '5d');
 assert.equal(complete.rs, 67.5);
 assert.equal(complete.position, 50);
 assert.equal(complete.turnover, 123_000_000_000);
 for (const missing of [
-  { rs: null, quoteLast: 75, high50d: 100, low50d: 50, turnoverWon: 1 },
-  { rs: 50, quoteLast: null, high50d: 100, low50d: 50, turnoverWon: 1 },
-  { rs: 50, quoteLast: 75, high50d: 100, low50d: 50, turnoverWon: null },
+  { rs: null, quoteLast: 75, high5d: 100, low5d: 50, turnoverWon: 1 },
+  { rs: 50, quoteLast: null, high5d: 100, low5d: 50, turnoverWon: 1 },
+  { rs: 50, quoteLast: 75, high5d: 100, low5d: 50, turnoverWon: null },
 ]) {
-  assert.equal(momentum.datum(missing, '50d'), null, 'incomplete bubble is skipped');
+  assert.equal(momentum.datum(missing, '5d'), null, 'incomplete bubble is skipped');
 }
 
 const history = Array.from({ length: 120 }, (_, i) => ({
@@ -96,9 +96,15 @@ assert.equal(bounds.high_50d, 130);
 assert.equal(bounds.low_50d, 71);
 assert.equal(bounds.high_20d, 130);
 assert.equal(bounds.low_20d, 101);
+assert.equal(bounds.high_10d, 130);
+assert.equal(bounds.low_10d, 111);
+assert.equal(bounds.high_5d, 130);
+assert.equal(bounds.low_5d, 116);
 assert.ok(bounds.bb_upper > bounds.bb_lower, 'Bollinger boundaries');
 assert.equal(computeMomentumBounds(history.slice(-49)).high_50d, null);
 assert.equal(computeMomentumBounds(history.slice(-19)).high_20d, null);
+assert.equal(computeMomentumBounds(history.slice(-9)).high_10d, null);
+assert.equal(computeMomentumBounds(history.slice(-4)).high_5d, null);
 assert.equal(computeMomentumBounds(history.slice(-49)).bb_upper, null);
 
 for (const marker of [
@@ -107,14 +113,14 @@ for (const marker of [
   "x(50)",
   "y(50)",
   'InvestingMapHeatmap.colorForChange',
-  "selectedYMode = '20d'",
-  "mode20d: '20D BOX'",
-  "mode50d: '50D BOX'",
+  "selectedYMode = '5d'",
+  "mode5d: '5D BOX'",
+  "mode10d: '10D BOX'",
   "mode120d: '120D BOX'",
-  "YMODES = ['20d', '50d', '120d']",
+  "YMODES = ['5d', '10d', '120d']",
   "YMODE_STORAGE = 'im_mm_ymode'",
-  "id: '20d'",
-  "id: '50d'",
+  "id: '5d'",
+  "id: '10d'",
   "id: '120d'",
   'data-mm-mode',
   'rawPosition',
@@ -132,6 +138,10 @@ for (const marker of [
 assert.ok(!source.includes("id: 'bb'"), '50D %b mode tab must be removed');
 assert.ok(!source.includes('modeBb'), '50D %b mode labels must be removed');
 assert.ok(!source.includes("mode === 'bb'"), 'bb branch must be removed from normalizeYMode');
+assert.ok(!source.includes("id: '20d'"), '20D BOX mode tab must be removed');
+assert.ok(!source.includes("id: '50d'"), '50D BOX mode tab must be removed');
+assert.ok(!source.includes("mode20d:"), '20D BOX labels must be removed');
+assert.ok(!source.includes("mode50d:"), '50D BOX labels must be removed');
 
 const mapFiles = fs
   .readdirSync(ROOT, { withFileTypes: true })
@@ -157,7 +167,7 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=10',
+    '../js/map_momentum.js?v=11',
     '../js/live_quotes.js?v=16',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
@@ -198,13 +208,18 @@ for (const field of [
   'low50d',
   'high20d',
   'low20d',
+  'high10d',
+  'low10d',
+  'high5d',
+  'low5d',
   'bbUpper',
   'bbLower',
 ]) {
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
 assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '5'"), 'quotes API cache key version');
-assert.ok(liveQuotes.includes('c.high20d ='), 'live quote high20d mapping required');
+assert.ok(liveQuotes.includes('c.high5d ='), 'live quote high5d mapping required');
+assert.ok(liveQuotes.includes('c.high10d ='), 'live quote high10d mapping required');
 const quotesApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
 for (const field of [
   'high120d',
@@ -213,6 +228,10 @@ for (const field of [
   'low50d',
   'high20d',
   'low20d',
+  'high10d',
+  'low10d',
+  'high5d',
+  'low5d',
   'bbUpper',
   'bbLower',
 ]) {
@@ -235,12 +254,20 @@ const migration16 = fs.readFileSync(
 for (const column of ['high_20d', 'low_20d']) {
   assert.ok(migration16.includes(column), `migration 0016 column missing: ${column}`);
 }
+const migration19 = fs.readFileSync(
+  path.join(ROOT, 'supabase', 'migrations', '0019_stock_quotes_5d_10d.sql'),
+  'utf8',
+);
+for (const column of ['high_5d', 'low_5d', 'high_10d', 'low_10d']) {
+  assert.ok(migration19.includes(column), `migration 0019 column missing: ${column}`);
+}
 const syncSource = fs.readFileSync(
   path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'),
   'utf8',
 );
 assert.ok(syncSource.includes('computeMomentumBounds'), 'sync momentum calculation missing');
-assert.ok(syncSource.includes('high_20d'), 'sync high_20d upsert missing');
+assert.ok(syncSource.includes('high_5d'), 'sync high_5d upsert missing');
+assert.ok(syncSource.includes('high_10d'), 'sync high_10d upsert missing');
 assert.ok(syncSource.includes('verifyMomentumSchema'), 'sync schema guard missing');
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(/momentum:\s*1/.test(tabState), 'momentum tab state must persist');

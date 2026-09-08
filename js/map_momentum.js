@@ -10,8 +10,8 @@
   var observedEl = null;
   var resizeTimer = null;
   var visibilityBound = false;
-  var selectedYMode = '20d';
-  var YMODES = ['20d', '50d', '120d'];
+  var selectedYMode = '5d';
+  var YMODES = ['5d', '10d', '120d'];
   var YMODE_STORAGE = 'im_mm_ymode';
   var CHG_CLIP = 15;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
@@ -20,12 +20,12 @@
   var COPY = {
     ko: {
       xAxis: 'RS',
-      yAxis: '20D BOX',
-      mode20d: '20D BOX',
-      mode50d: '50D BOX',
+      yAxis: '5D BOX',
+      mode5d: '5D BOX',
+      mode10d: '10D BOX',
       mode120d: '120D BOX',
-      y20d: '20D BOX',
-      y50d: '50D BOX',
+      y5d: '5D BOX',
+      y10d: '10D BOX',
       y120d: '120D BOX',
       leader: '주도(강세)',
       pullback: '되돌림주의',
@@ -39,12 +39,12 @@
     },
     en: {
       xAxis: 'RS',
-      yAxis: '20D BOX',
-      mode20d: '20D BOX',
-      mode50d: '50D BOX',
+      yAxis: '5D BOX',
+      mode5d: '5D BOX',
+      mode10d: '10D BOX',
       mode120d: '120D BOX',
-      y20d: '20D BOX',
-      y50d: '50D BOX',
+      y5d: '5D BOX',
+      y10d: '10D BOX',
       y120d: '120D BOX',
       leader: 'Leading (strong)',
       pullback: 'Pullback risk',
@@ -67,7 +67,7 @@
   }
 
   function normalizeYMode(mode) {
-    return YMODES.indexOf(mode) >= 0 ? mode : '20d';
+    return YMODES.indexOf(mode) >= 0 ? mode : '5d';
   }
 
   function loadYMode() {
@@ -76,7 +76,7 @@
         return normalizeYMode(localStorage.getItem(YMODE_STORAGE));
       }
     } catch (e) {}
-    return '20d';
+    return '5d';
   }
 
   function saveYMode(mode) {
@@ -88,7 +88,7 @@
   selectedYMode = loadYMode();
 
   function boxBounds(company, mode) {
-    var period = mode === '20d' ? 20 : mode === '120d' ? 120 : 50;
+    var period = mode === '10d' ? 10 : mode === '120d' ? 120 : 5;
     return {
       high: company['high' + period + 'd'],
       low: company['low' + period + 'd'],
@@ -132,7 +132,7 @@
     });
     mode = normalizeYMode(mode || selectedYMode);
     var yKey = 'y' + mode;
-    out.yAxis = out[yKey] || out.y50d;
+    out.yAxis = out[yKey] || out.y5d;
     out.position = out.yAxis;
     return out;
   }
@@ -320,8 +320,8 @@
       opts.lang === 'en' ? 'Momentum vertical axis' : '모멘텀 세로축',
     );
     tabs.innerHTML = [
-      { id: '20d', text: labels.mode20d },
-      { id: '50d', text: labels.mode50d },
+      { id: '5d', text: labels.mode5d },
+      { id: '10d', text: labels.mode10d },
       { id: '120d', text: labels.mode120d },
     ]
       .map(function (mode) {

@@ -35,6 +35,8 @@ export function computeMomentumBounds(historyBars) {
   const range120 = rangeFor(120);
   const range50 = rangeFor(50);
   const range20 = rangeFor(20);
+  const range10 = rangeFor(10);
+  const range5 = rangeFor(5);
   let bbUpper = null;
   let bbLower = null;
   if (bars.length >= 50) {
@@ -54,6 +56,10 @@ export function computeMomentumBounds(historyBars) {
     low_50d: range50.low,
     high_20d: range20.high,
     low_20d: range20.low,
+    high_10d: range10.high,
+    low_10d: range10.low,
+    high_5d: range5.high,
+    low_5d: range5.low,
     bb_upper: bbUpper,
     bb_lower: bbLower,
     completeBars: bars.length,
