@@ -54,14 +54,19 @@ assert.equal(
   '10-day price position',
 );
 assert.equal(
-  momentum.pricePosition({ quoteLast: 75, high120d: 110, low120d: 40 }, '120d'),
+  momentum.pricePosition({ quoteLast: 75, high20d: 110, low20d: 40 }, '20d'),
   50,
-  '120-day price position',
+  '20-day price position',
 );
 assert.equal(
   momentum.pricePosition({ quoteLast: 75, high5d: 100, low5d: 50 }, 'bb'),
   50,
   'legacy bb mode falls back to 5d',
+);
+assert.equal(
+  momentum.pricePosition({ quoteLast: 75, high5d: 100, low5d: 50 }, '120d'),
+  50,
+  'legacy 120d mode falls back to 5d',
 );
 
 const complete = momentum.datum({
@@ -116,12 +121,12 @@ for (const marker of [
   "selectedYMode = '5d'",
   "mode5d: '5D BOX'",
   "mode10d: '10D BOX'",
-  "mode120d: '120D BOX'",
-  "YMODES = ['5d', '10d', '120d']",
+  "mode20d: '20D BOX'",
+  "YMODES = ['5d', '10d', '20d']",
   "YMODE_STORAGE = 'im_mm_ymode'",
   "id: '5d'",
   "id: '10d'",
-  "id: '120d'",
+  "id: '20d'",
   'data-mm-mode',
   'rawPosition',
   'bubbleLabelText',
@@ -138,10 +143,12 @@ for (const marker of [
 assert.ok(!source.includes("id: 'bb'"), '50D %b mode tab must be removed');
 assert.ok(!source.includes('modeBb'), '50D %b mode labels must be removed');
 assert.ok(!source.includes("mode === 'bb'"), 'bb branch must be removed from normalizeYMode');
-assert.ok(!source.includes("id: '20d'"), '20D BOX mode tab must be removed');
+assert.ok(!source.includes("id: '120d'"), '120D BOX mode tab must be removed');
 assert.ok(!source.includes("id: '50d'"), '50D BOX mode tab must be removed');
-assert.ok(!source.includes("mode20d:"), '20D BOX labels must be removed');
+assert.ok(!source.includes("mode120d:"), '120D BOX labels must be removed');
 assert.ok(!source.includes("mode50d:"), '50D BOX labels must be removed');
+assert.ok(source.includes("mode === '20d'"), '20d period branch required');
+assert.ok(source.includes("mode20d: '20D BOX'"), '20D BOX labels required');
 
 const mapFiles = fs
   .readdirSync(ROOT, { withFileTypes: true })
@@ -167,8 +174,8 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=11',
-    '../js/live_quotes.js?v=16',
+    '../js/map_momentum.js?v=12',
+    '../js/live_quotes.js?v=17',
     'function renderMomentum()',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",

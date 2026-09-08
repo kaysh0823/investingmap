@@ -11,7 +11,7 @@
   var resizeTimer = null;
   var visibilityBound = false;
   var selectedYMode = '5d';
-  var YMODES = ['5d', '10d', '120d'];
+  var YMODES = ['5d', '10d', '20d'];
   var YMODE_STORAGE = 'im_mm_ymode';
   var CHG_CLIP = 15;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
@@ -23,10 +23,10 @@
       yAxis: '5D BOX',
       mode5d: '5D BOX',
       mode10d: '10D BOX',
-      mode120d: '120D BOX',
+      mode20d: '20D BOX',
       y5d: '5D BOX',
       y10d: '10D BOX',
-      y120d: '120D BOX',
+      y20d: '20D BOX',
       leader: '주도(강세)',
       pullback: '되돌림주의',
       emerging: '신규부상',
@@ -42,10 +42,10 @@
       yAxis: '5D BOX',
       mode5d: '5D BOX',
       mode10d: '10D BOX',
-      mode120d: '120D BOX',
+      mode20d: '20D BOX',
       y5d: '5D BOX',
       y10d: '10D BOX',
-      y120d: '120D BOX',
+      y20d: '20D BOX',
       leader: 'Leading (strong)',
       pullback: 'Pullback risk',
       emerging: 'Emerging',
@@ -88,7 +88,7 @@
   selectedYMode = loadYMode();
 
   function boxBounds(company, mode) {
-    var period = mode === '10d' ? 10 : mode === '120d' ? 120 : 5;
+    var period = mode === '10d' ? 10 : mode === '20d' ? 20 : 5;
     return {
       high: company['high' + period + 'd'],
       low: company['low' + period + 'd'],
@@ -322,7 +322,7 @@
     tabs.innerHTML = [
       { id: '5d', text: labels.mode5d },
       { id: '10d', text: labels.mode10d },
-      { id: '120d', text: labels.mode120d },
+      { id: '20d', text: labels.mode20d },
     ]
       .map(function (mode) {
         return (
