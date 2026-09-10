@@ -6,7 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const SCRIPT_V = 5;
+export const SCRIPT_V = 6;
 export const GLOBAL_SEARCH_V = SCRIPT_V;
 
 export const MAP_FILES = [
@@ -34,6 +34,8 @@ export const MAP_FILES = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
 ];
 
 export const ROOT_PAGES = [

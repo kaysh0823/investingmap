@@ -39,6 +39,7 @@ run('node build_korea_robot_map.mjs', 'rebuild robot map');
 run('node build_korea_bigchip_map.mjs', 'build chip leaders map');
 run('node build_korea_software_map.mjs', 'build IT & software map');
 run('node build_korea_holdings_map.mjs', 'build holdings map');
+run('node scripts/patch_holdings_type_badge.mjs', 'holdings type-map badge');
 run('node build_korea_telecom_map.mjs', 'build telecom map');
 run('node build_korea_chemical_map.mjs', 'build chemical map');
 run('node build_korea_travel_map.mjs', 'build travel map');
@@ -51,6 +52,8 @@ run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy cura
 run('node scripts/split_energy_clean_sectors.mjs', 'split energy into battery/renewable/nuclear');
 run('node scripts/split_kconsume_cosmetics.mjs', 'split cosmetics from kconsume + Pharmaresearch→medtech');
 run('node scripts/apply_cp_list_sector_additions.mjs', 'cp_list additions → semi/ship/battery/robot/kconsume/software/kcontent/medtech/metal/elec/auto/telecom/cosmetics/holdings');
+run('node scripts/split_ship_sectors.mjs', 'split shipping from ship (before exclusive)');
+run('node scripts/split_metal_sectors.mjs', 'split machinery from metal (before exclusive)');
 run('node scripts/rebalance_cosmetics_medtech_bio.mjs', 'cosmetics aesthetic + bio IVD → medtech rebalance');
 run('node scripts/apply_sector_exclusive.mjs', 'enforce single-sector ownership');
 run('node scripts/apply_cross_sector_memberships.mjs', 'verify no active cross-sector memberships');

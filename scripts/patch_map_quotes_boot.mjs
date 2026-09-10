@@ -10,6 +10,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TARGETS = [
   'semiconductor/korea_semiconductor_map.html',
   'ship/korea_ship_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
   'defense/korea_defense_map.html',
   'robot/korea_robot_map.html',
   'kculture/korea_kculture_map.html',

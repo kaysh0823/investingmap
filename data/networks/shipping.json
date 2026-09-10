@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "sector": "shipping",
+    "splitAt": "2026-09-10",
+    "note": "Split from ship; no historical performance series merged"
+  },
+  "nodes": [],
+  "edges": []
+}

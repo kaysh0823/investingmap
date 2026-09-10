@@ -32,6 +32,8 @@ const MAPS = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
 ];
 
 const TAB_HEATMAP_KO = '\uD83D\uDD25 \uC11C\uD130 \uD788\uD2B8\uB9F5';

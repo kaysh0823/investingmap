@@ -35,6 +35,8 @@ const MAP_FILES = [
   { file: 'travel/korea_travel_map.html', key: 'travel' },
   { file: 'elec/korea_elec_map.html', key: 'elec' },
   { file: 'metal/korea_metal_map.html', key: 'metal' },
+  { file: 'machinery/korea_machinery_map.html', key: 'machinery' },
+  { file: 'shipping/korea_shipping_map.html', key: 'shipping' },
   { file: 'battery/korea_battery_map.html', key: 'battery' },
   { file: 'renewable/korea_renewable_map.html', key: 'renewable' },
   { file: 'nuclear/korea_nuclear_map.html', key: 'nuclear' },

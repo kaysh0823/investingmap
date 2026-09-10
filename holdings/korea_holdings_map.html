@@ -435,7 +435,7 @@
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=1"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
-  <script src="../js/sector_nav.js?v=9"></script>
+  <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
@@ -1084,6 +1084,7 @@
     .node-dim {
       opacity: .15
     }
+
     /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
@@ -2215,7 +2216,7 @@
       <h1 id="hdr-title">🇰🇷 한국 지주회사 투자 지도</h1>
       <span class="map-title-chevron" aria-hidden="true">▾</span>
     </button>
-    <p id="hdr-subtitle">국내 상장 지주사를 반도체·정유화학·철강·소비/유통 등 산업 밸류체인으로 분류</p>
+    <p id="hdr-subtitle">기업 유형별 지도(일반 산업 아님) · 국내 상장 지주사를 반도체·정유화학·철강·소비/유통 등 산업 밸류체인으로 분류</p>
     <div class="header-meta">
       <div class="badge" id="badge-total">Total <span>47</span> listed companies</div>
       <div class="badge" id="badge-market">KOSPI <span>43</span> · KOSDAQ <span>4</span></div>
@@ -2567,8 +2568,8 @@
       <td class="fin-cell">0.87</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">방산/우주</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">방산·에너지 사업지주</td>
-      <td class="products-cell">화약·방산·에너지·금융 계열</td>
+      <td style="font-size:12px;color:var(--text-muted)">방산·에너지·화학 지주</td>
+      <td class="products-cell">한화에어로·오션·시스템 등 방산·에너지 계열</td>
       <td><div class="partners-list">CK Hutchison Holdings</div></td>
     </tr>
           <tr data-ticker="001040">
@@ -2705,8 +2706,8 @@
       <td class="fin-cell">2.37</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
       <td><span class="chain-tag">반도체</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">반도체 장비·소재 지주</td>
-      <td class="products-cell">반도체·디스플레이 장비·소재 계열</td>
+      <td style="font-size:12px;color:var(--text-muted)">반도체·로봇 장비 지주</td>
+      <td class="products-cell">원익IPS·QnC 등 반도체·장비 계열 지주</td>
       <td><div class="partners-list">CK Hutchison Holdings</div></td>
     </tr>
           <tr data-ticker="023590">
@@ -2912,8 +2913,8 @@
       <td class="fin-cell">0.55</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">자동차</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">자동차·기계 산업지주</td>
-      <td class="products-cell">자동차부품·정밀기계·에너지 계열</td>
+      <td style="font-size:12px;color:var(--text-muted)">방산·자동차 부품 지주</td>
+      <td class="products-cell">SNT모티브 등 방산·자동차 부품 계열</td>
       <td><div class="partners-list">CK Hutchison Holdings</div></td>
     </tr>
           <tr data-ticker="383800">
@@ -3505,7 +3506,7 @@
     const T = {
     "ko": {
         "title": "🇰🇷 한국 지주회사 투자 지도",
-        "subtitle": "국내 상장 지주사를 반도체·정유화학·철강·소비/유통 등 산업 밸류체인으로 분류",
+        "subtitle": "기업 유형별 지도(일반 산업 아님) · 국내 상장 지주사를 반도체·정유화학·철강·소비/유통 등 산업 밸류체인으로 분류",
         "badgeTotal": "총 <span>31</span>개 상장사",
         "badgeMarket": "KOSPI <span>29</span>사 · KOSDAQ <span>2</span>사",
         "dataAsof": "업데이트 기준일: 2026년 9월 4일",
@@ -3652,7 +3653,7 @@
     },
     "en": {
         "title": "🇰🇷 Korea Holdings Map",
-        "subtitle": "Listed Korean holding companies grouped by industry value chains (semi, chemicals, metals, retail, and more)",
+        "subtitle": "Company-type map (not a general industry) · listed Korean holding companies by industry value chains",
         "badgeTotal": "<span>31</span> listings",
         "badgeMarket": "KOSPI <span>29</span> · KOSDAQ <span>2</span>",
         "dataAsof": "Data as of: September 4, 2026",
@@ -3868,8 +3869,8 @@
 
       {
         id: 'hanwha', name: '한화', nameEn: 'Hanwha Corp.', ticker: '000880', market: 'KOSPI', chain: '방산/우주',
-        semType: '방산·에너지 사업지주', semTypeEn: 'Defense and energy operating holding',
-        products: '화약·방산·에너지·금융 계열', productsEn: 'Explosives, defense, energy and finance affiliates',
+        semType: '방산·에너지·화학 지주', semTypeEn: 'Defense, Energy & Chemicals Holding',
+        products: '한화에어로·오션·시스템 등 방산·에너지 계열', productsEn: 'Holding for Hanwha Aerospace, Ocean, Systems and defense affiliates',
         revenue: '7.33조원', mcapWon: 7327390447800, per: 28.56, pbr: 0.87, revTier: 2, partners: ['ckh']
       },
 
@@ -3910,8 +3911,8 @@
 
       {
         id: 'wonik_holdings', name: '원익홀딩스', nameEn: 'Wonik Holdings', ticker: '030530', market: 'KOSDAQ', chain: '반도체',
-        semType: '반도체 장비·소재 지주', semTypeEn: 'Semiconductor equipment and materials holding',
-        products: '반도체·디스플레이 장비·소재 계열', productsEn: 'Semiconductor and display equipment and materials affiliates',
+        semType: '반도체·로봇 장비 지주', semTypeEn: 'Semiconductor & Robot Equipment Holding',
+        products: '원익IPS·QnC 등 반도체·장비 계열 지주', productsEn: 'Holding for Wonik IPS, QnC and semiconductor equipment affiliates',
         revenue: '1.74조원', mcapWon: 1737854572500, per: 86.35, pbr: 2.37, revTier: 2, partners: ['ckh']
       },
 
@@ -3973,8 +3974,8 @@
 
       {
         id: 'snt_holdings', name: 'SNT홀딩스', nameEn: 'SNT Holdings', ticker: '036530', market: 'KOSPI', chain: '자동차',
-        semType: '자동차·기계 산업지주', semTypeEn: 'Automotive and machinery holding',
-        products: '자동차부품·정밀기계·에너지 계열', productsEn: 'Auto parts, precision machinery and energy affiliates',
+        semType: '방산·자동차 부품 지주', semTypeEn: 'Defense & Auto Parts Holding',
+        products: 'SNT모티브 등 방산·자동차 부품 계열', productsEn: 'Holding for SNT Motiv and defense/auto component affiliates',
         revenue: '0.74조원', mcapWon: 736120452900, per: 5.71, pbr: 0.55, revTier: 1, partners: ['ckh']
       },
 
@@ -4767,9 +4768,9 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
   </footer>
-  <script src="../js/desktop_sidebar_nav.js?v=14"></script>
-  <script src="../js/global_search.js?v=5"></script>
-  <script src="../js/global_bottom_nav.js?v=14"></script>
+  <script src="../js/desktop_sidebar_nav.js?v=15"></script>
+  <script src="../js/global_search.js?v=6"></script>
+  <script src="../js/global_bottom_nav.js?v=15"></script>
   <script src="../js/geo_footer.js"></script>
 <!-- investingmap-seo-related-start -->
   <section class="im-seo-related" id="im-seo-related" aria-labelledby="im-seo-related-title">
@@ -4782,7 +4783,8 @@
       <li><a href="../renewable/korea_renewable_map.html">한국 신재생에너지 투자 지도</a> · <a href="../renewable/korea_renewable_map.html?lang=en" hreflang="en">Korea Renewable Energy Map</a></li>
       <li><a href="../nuclear/korea_nuclear_map.html">한국 원전 투자 지도</a> · <a href="../nuclear/korea_nuclear_map.html?lang=en" hreflang="en">Korea Nuclear Power Map</a></li>
       <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Equipment Map</a></li>
-      <li><a href="../ship/korea_ship_map.html">한국 조선/해운 산업 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Shipping Map</a></li>
+      <li><a href="../ship/korea_ship_map.html">한국 조선·기자재 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Marine Equipment Map</a></li>
+      <li><a href="../shipping/korea_shipping_map.html">한국 해운·물류 투자 지도</a> · <a href="../shipping/korea_shipping_map.html?lang=en" hreflang="en">Korea Shipping &amp; Logistics Map</a></li>
       <li><a href="../defense/korea_defense_map.html">한국 방산·우주 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense &amp; Space Map</a></li>
       <li><a href="../kconsume/korea_kconsume_map.html">한국 소비/유통 투자 지도</a> · <a href="../kconsume/korea_kconsume_map.html?lang=en" hreflang="en">Korea Consumer / Retail Map</a></li>
       <li><a href="../cosmetics/korea_cosmetics_map.html">한국 화장품/미용기기 투자 지도</a> · <a href="../cosmetics/korea_cosmetics_map.html?lang=en" hreflang="en">Korea Cosmetics / Aesthetic Devices Map</a></li>
@@ -4798,7 +4800,8 @@
       <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
       <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
-      <li><a href="../metal/korea_metal_map.html">한국 철강·금속·기계 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel, Metals &amp; Machinery Map</a></li>
+      <li><a href="../metal/korea_metal_map.html">한국 철강·비철금속 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel &amp; Nonferrous Metals Map</a></li>
+      <li><a href="../machinery/korea_machinery_map.html">한국 산업·건설기계 투자 지도</a> · <a href="../machinery/korea_machinery_map.html?lang=en" hreflang="en">Korea Industrial &amp; Construction Machinery Map</a></li>
       </ul>
     </nav>
   </section>

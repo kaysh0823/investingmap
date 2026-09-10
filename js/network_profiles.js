@@ -206,8 +206,7 @@
       "엔진",
       "선체·보냉·구조재",
       "의장/배관",
-      "서비스·해양플랜트",
-      "해운물류"
+      "서비스·해양플랜트"
     ],
     "lanes": [
       "shipowner",
@@ -226,12 +225,43 @@
       "steel": "선체·보냉·구조재",
       "ship_equipment": "의장/배관",
       "offshore": "서비스·해양플랜트",
-      "shipping": "해운물류",
       "electrical_automation": "의장/배관",
       "defense_marine": "종합조선",
       "mro": "서비스·해양플랜트",
-      "shipowner": "해운물류",
       "order_contract": "order_contract"
+    }
+  },
+  "shipping": {
+    "sectorId": "shipping",
+    "dataSector": "shipping",
+    "model": "shipping_logistics",
+    "layout": "projectEcosystem",
+    "networkPath": "data/networks/shipping.json",
+    "defaultEdgeTypes": [
+      "peer",
+      "member_of",
+      "exposed_to"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "hidePeer": true,
+      "hideInferred": true,
+      "hideReference": false,
+      "transactionalOnly": false
+    },
+    "modelDescKo": "해운·항만·물류 상장사 지도(2026-09-10 ship에서 분리). 성과 시계열은 분리 시점부터 신규 집계.",
+    "modelDescEn": "Shipping, port and logistics listings (split from ship on 2026-09-10). Returns start at split.",
+    "layers": [
+      "해운물류"
+    ],
+    "lanes": [
+      "shipping",
+      "ports",
+      "logistics"
+    ],
+    "roleAliases": {
+      "shipping": "해운물류",
+      "shipowner": "해운물류"
     }
   },
   "bio": {
@@ -584,8 +614,34 @@
       "distribution_trading",
       "end_market"
     ],
-    "modelDescKo": "철강·비철·트레이딩·금속제품 가치사슬. 원자재 노출·구조 분류와 실제 공급·지분·시설을 분리합니다.",
-    "modelDescEn": "Value chain for steel, nonferrous metals, trading and metal products. Separates commodity exposure and structural classification from verified supply, ownership and facilities."
+    "modelDescKo": "철강·비철·트레이딩 가치사슬. 산업기계는 machinery 섹터로 분리(2026-09-10).",
+    "modelDescEn": "Steel, nonferrous and trading value chain. Industrial machinery moved to machinery (2026-09-10)."
+  },
+  "machinery": {
+    "sectorId": "machinery",
+    "dataSector": "machinery",
+    "model": "industrial_machinery",
+    "layout": "metalsValueChainEcosystem",
+    "networkPath": "data/networks/machinery.json",
+    "defaultEdgeTypes": [
+      "peer",
+      "member_of",
+      "specializes_in"
+    ],
+    "defaultDepth": 1,
+    "defaultViewFilters": {
+      "transactionalOnly": false,
+      "hidePeer": true,
+      "hideInferred": true
+    },
+    "lanes": [
+      "construction_machinery",
+      "machine_tools",
+      "industrial_equipment",
+      "elevators"
+    ],
+    "modelDescKo": "건설기계·공작기계·산업설비·승강기 상장사(2026-09-10 metal에서 분리). 성과 시계열은 분리 시점부터 신규 집계.",
+    "modelDescEn": "Construction, machine-tool and industrial equipment listings (split from metal on 2026-09-10). Returns start at split."
   },
   "construction": {
     "sectorId": "construction",

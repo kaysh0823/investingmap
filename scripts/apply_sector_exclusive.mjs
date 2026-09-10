@@ -40,6 +40,8 @@ const HTML_MAPS = [
   { key: 'travel', path: 'travel/korea_travel_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'elec', path: 'elec/korea_elec_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
   { key: 'metal', path: 'metal/korea_metal_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'machinery', path: 'machinery/korea_machinery_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
+  { key: 'shipping', path: 'shipping/korea_shipping_map.html', badgeKo: '상장기업', badgeEn: 'listings' },
 ];
 
 function patchMapBadges(html, n, kospi, kosdaq, badgeKo, badgeEn) {

@@ -13,13 +13,8 @@
     },
     {
       "edgeId": "ordered-011200-contract-hmm-hhi",
-      "source": "krx:011200",
-      "target": "contract:hmm-hhi-container-2020s",
-      "beforeType": "ordered",
-      "afterType": "ordered",
-      "beforeStatus": "inferred",
-      "afterStatus": "inferred",
-      "reason": "HMM order without filing → inferred hidden"
+      "reason": "missing edge — skipped",
+      "missing": true
     },
     {
       "edgeId": "awarded-contract-hmm-hhi-329180",
@@ -85,10 +80,10 @@
   "after": {
     "reportedBusiness": 0,
     "statusCounts": {
-      "reference": 68,
-      "inferred": 9,
+      "reference": 59,
+      "inferred": 8,
       "ended": 2,
-      "peer": 34
+      "peer": 24
     },
     "evidenceFieldCoverage": 0,
     "directEvidenceCoverage": 0,

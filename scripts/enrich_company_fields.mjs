@@ -18,6 +18,7 @@ const cpListDir = process.argv[2] || join(root, 'cp_list');
 const HTML_MAPS = [
   { key: 'semi', path: 'semiconductor/korea_semiconductor_map.html' },
   { key: 'ship', path: 'ship/korea_ship_map.html' },
+  { key: 'shipping', path: 'shipping/korea_shipping_map.html' },
   { key: 'defense', path: 'defense/korea_defense_map.html' },
   { key: 'robot', path: 'robot/korea_robot_map.html' },
   { key: 'auto', path: 'auto/korea_auto_map.html' },
@@ -31,7 +32,15 @@ const HTML_MAPS = [
   { key: 'kconsume', path: 'kconsume/korea_kconsume_map.html' },
   { key: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html' },
   { key: 'kcontent', path: 'kcontent/korea_kcontent_map.html' },
-];
+  { key: 'metal', path: 'metal/korea_metal_map.html' },
+  { key: 'machinery', path: 'machinery/korea_machinery_map.html' },
+  { key: 'elec', path: 'elec/korea_elec_map.html' },
+  { key: 'software', path: 'software/korea_software_map.html' },
+  { key: 'holdings', path: 'holdings/korea_holdings_map.html' },
+  { key: 'telecom', path: 'telecom/korea_telecom_map.html' },
+  { key: 'chemical', path: 'chemical/korea_chemical_map.html' },
+  { key: 'travel', path: 'travel/korea_travel_map.html' },
+]
 
 function countEmpty(companies) {
   const empty = (v) => !v || v === '—' || String(v).trim() === '';

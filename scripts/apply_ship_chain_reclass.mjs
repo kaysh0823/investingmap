@@ -13,17 +13,16 @@ import { escHtml, PRERENDER_START, PRERENDER_END } from '../lib/seo_prerender_li
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HTML_PATH = join(ROOT, 'ship', 'korea_ship_map.html');
 
-const CHAINS = ['종합조선', '엔진', '의장/배관', '선체·보냉·구조재', '서비스·해양플랜트', '해운물류'];
-const RETIRED_CHAINS = ['조선기자재', '기타 기자재', '해양플랜트', '방산해양', '철강소재'];
+const CHAINS = ['종합조선', '엔진', '의장/배관', '선체·보냉·구조재', '서비스·해양플랜트'];
+const RETIRED_CHAINS = ['조선기자재', '기타 기자재', '해양플랜트', '방산해양', '철강소재', '해운물류'];
 const CHAIN_COLORS = {
   종합조선: '#4FC3F7',
   엔진: '#66BB6A',
   '의장/배관': '#26C6DA',
   '선체·보냉·구조재': '#FFCA28',
   '서비스·해양플랜트': '#FFA726',
-  해운물류: '#EF5350',
 };
-const ANGLE = "{ '종합조선': 0, '엔진': 60, '의장/배관': 120, '선체·보냉·구조재': 180, '서비스·해양플랜트': 240, '해운물류': 300 }";
+const ANGLE = "{ '종합조선': 0, '엔진': 60, '의장/배관': 120, '선체·보냉·구조재': 180, '서비스·해양플랜트': 240 }";
 
 const LABEL_KO = {
   종합조선: '종합 조선',
@@ -31,7 +30,6 @@ const LABEL_KO = {
   '의장/배관': '의장·배관·피팅',
   '선체·보냉·구조재': '선체·보냉·구조재',
   '서비스·해양플랜트': '서비스·개조·해양플랜트',
-  해운물류: '해운물류',
 };
 const FILTER_KO = {
   종합조선: '조선사',
@@ -39,7 +37,6 @@ const FILTER_KO = {
   '의장/배관': '의장·배관',
   '선체·보냉·구조재': '선체·보냉·구조재',
   '서비스·해양플랜트': '서비스·해양',
-  해운물류: '해운',
 };
 const LABEL_EN = {
   종합조선: 'Integrated shipbuilding',
@@ -47,7 +44,6 @@ const LABEL_EN = {
   '의장/배관': 'Outfitting, piping & fittings',
   '선체·보냉·구조재': 'Hull, insulation & structural materials',
   '서비스·해양플랜트': 'Services, retrofit & offshore plant',
-  해운물류: 'Shipping & logistics',
 };
 const FILTER_EN = {
   종합조선: 'Shipyards',
@@ -55,7 +51,6 @@ const FILTER_EN = {
   '의장/배관': 'Outfitting',
   '선체·보냉·구조재': 'Hull & materials',
   '서비스·해양플랜트': 'Services & offshore',
-  해운물류: 'Shipping',
 };
 
 function toJs(arr) {
@@ -114,7 +109,12 @@ function patchPrerenderRows(html, companies) {
 }
 
 let html = fs.readFileSync(HTML_PATH, 'utf8');
-const companies = extractCompaniesFromHtml(html);
+const companies = extractCompaniesFromHtml(html).filter((c) => {
+  const ov = chainOverride('ship', c.ticker);
+  // Shipping & logistics lives on the shipping map (split 2026-09-10).
+  if (ov === '해운물류' || c.chain === '해운물류') return false;
+  return true;
+});
 for (const c of companies) {
   const next = chainOverride('ship', c.ticker);
   if (next) c.chain = next;

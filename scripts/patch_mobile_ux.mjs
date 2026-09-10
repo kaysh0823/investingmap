@@ -32,6 +32,8 @@ const MAP_FILES = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
 ];
 
 const HINT_KO_OLD = /\uD0C0\uC77C \uD06C\uAE30 = \uC2DC\uAC00\uCD1D\uC561\(KRX \uAE30\uC900\) \uB7 \uC0C9\uC0C1 = (?:\uBCA8\uB958\uCCB4\uC778\/?\uC139\uD130|\uC139\uD130) \uBD84\uB958/g;

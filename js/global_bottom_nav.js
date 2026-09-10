@@ -8,30 +8,32 @@
 
   var ITEMS = [
     { id: 'home', path: 'index.html', icon: '\u2302', ko: '\uD648', en: 'Home' },
-    { id: 'bigchip', path: 'bigchip/korea_bigchip_map.html', icon: '\uD83C\uDFC6', ko: '\uC0BC\uC131\uC804\uC790/\uD558\uC774\uB2C9\uC2A4', en: 'Samsung/SK hynix', koShort: '\uC0BC\uC131/\uD558\uC774\uB2C9\uC2A4', enShort: 'Samsung' },
-    { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: '\uD83D\uDCA0', ko: '\uBC18\uB3C4\uCCB4', en: 'Semi' },
-    { id: 'elec', path: 'elec/korea_elec_map.html', icon: '\uD83D\uDCA1', ko: '\uC804\uAE30\u00B7\uC804\uC790', en: 'Electronics', koShort: '\uC804\uAE30\uC804\uC790', enShort: 'Elec' },
-    { id: 'battery', path: 'battery/korea_battery_map.html', icon: '\uD83D\uDD0B', ko: '2\uCC28\uC804\uC9C0', en: 'Battery', koShort: '\uBC30\uD130\uB9AC', enShort: 'Battery' },
-    { id: 'renewable', path: 'renewable/korea_renewable_map.html', icon: '\uD83C\uDF31', ko: '\uC2E0\uC7AC\uC0DD', en: 'Renewable', koShort: '\uC2E0\uC7AC\uC0DD', enShort: 'Renew' },
-    { id: 'nuclear', path: 'nuclear/korea_nuclear_map.html', icon: '\u269B', ko: '\uC6D0\uC804', en: 'Nuclear' },
-    { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: '\uD83D\uDD0C', ko: '\uC804\uB825\uC124\uBE44', koShort: '\uC804\uB825', en: 'Power Equip.', enShort: 'Power' },
-    { id: 'ship', path: 'ship/korea_ship_map.html', icon: '\u2693', ko: '\uC870\uC120/\uD574\uC6B4', en: 'Shipbuilding/Shipping', koShort: '\uC870\uC120/\uD574\uC6B4', enShort: 'Ship' },
-    { id: 'metal', path: 'metal/korea_metal_map.html', icon: '\u2699\uFE0F', ko: '\uCCA0\uAC15\u00B7\uAE08\uC18D\u00B7\uAE30\uACC4', en: 'Metals', koShort: '\uCCA0\uAC15\uAE30\uACC4', enShort: 'Metal' },
-    { id: 'defense', path: 'defense/korea_defense_map.html', icon: '\uD83D\uDEF0\uFE0F', ko: '\uBC29\uC0B0/\uC6B0\uC8FC', en: 'Defense & Space', koShort: '\uBC29\uC0B0/\uC6B0\uC8FC', enShort: 'Defense' },
-    { id: 'kconsume', path: 'kconsume/korea_kconsume_map.html', icon: '\uD83D\uDED2', ko: '소비/유통', en: 'Consumer/Retail', koShort: '소비/유통', enShort: 'Retail' },
-    { id: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html', icon: '\uD83D\uDC84', ko: '\uD654\uC7A5\uD488/\uBBF8\uC6A9\uAE30\uAE30', en: 'Cosmetics', koShort: '\uD654\uC7A5\uD488', enShort: 'Cosme' },
-    { id: 'kcontent', path: 'kcontent/korea_kcontent_map.html', icon: '\uD83C\uDFAC', ko: '\uCF58\uD150\uCE20', en: 'K-Content', koShort: '\uCF58\uD150\uCE20', enShort: 'Content' },
-    { id: 'bio', path: 'bio/korea_bio_map.html', icon: '\uD83E\uDDEC', ko: '\uBC14\uC774\uC624', en: 'Bio' },
-    { id: 'robot', path: 'robot/korea_robot_map.html', icon: '\uD83E\uDD16', ko: '\uB85C\uBD07', en: 'Robot' },
-    { id: 'auto', path: 'auto/korea_auto_map.html', icon: '\uD83D\uDE97', ko: '\uC790\uB3D9\uCC28', en: 'Auto' },
-    { id: 'medtech', path: 'medtech/korea_medtech_map.html', icon: '\uD83E\uDE7A', ko: '\uC758\uB8CC\uAE30\uAE30/\uD5EC\uC2A4\uCF00\uC5B4', en: 'MedTech', koShort: '\uC758\uB8CC\uAE30\uAE30', enShort: 'Med' },
-    { id: 'finance', path: 'finance/korea_finance_map.html', icon: '\uD83C\uDFE6', ko: '\uAE08\uC735', en: 'Finance' },
-    { id: 'construction', path: 'construction/korea_construction_map.html', icon: '\uD83C\uDFD7\uFE0F', ko: '\uAC74\uC124', en: 'Construction' },
-    { id: 'software', path: 'software/korea_software_map.html', icon: '\uD83D\uDCBB', ko: 'IT\u00B7\uC18C\uD504\uD2B8\uC6E8\uC5B4', en: 'IT & Software', koShort: 'IT\u00B7SW', enShort: 'Software' },
-    { id: 'holdings', path: 'holdings/korea_holdings_map.html', icon: '\uD83C\uDFE2', ko: '\uC9C0\uC8FC\uD68C\uC0AC', en: 'Holdings' },
-    { id: 'telecom', path: 'telecom/korea_telecom_map.html', icon: '\uD83D\uDCE1', ko: '\uD1B5\uC2E0', en: 'Telecom' },
-    { id: 'chemical', path: 'chemical/korea_chemical_map.html', icon: '\u2697\uFE0F', ko: '\uD654\uD559\u00B7\uC815\uC720', en: 'Chemicals', koShort: '\uD654\uD559\u00B7\uC815\uC720', enShort: 'Chem' },
-    { id: 'travel', path: 'travel/korea_travel_map.html', icon: '\u2708\uFE0F', ko: '\uC5EC\uD589\u00B7\uD56D\uACF5', en: 'Travel', koShort: '\uC5EC\uD589', enShort: 'Travel' },
+    { id: 'bigchip', path: 'bigchip/korea_bigchip_map.html', icon: "🏆", ko: "삼성전자/하이닉스", en: "Samsung/SK hynix", koShort: "삼성/하이닉스", enShort: "Samsung/SK hynix" },
+    { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: "💠", ko: "반도체", en: "Semi", koShort: "반도체", enShort: "Semi" },
+    { id: 'elec', path: 'elec/korea_elec_map.html', icon: "💡", ko: "전기·전자", en: "Electrical & Electronics", koShort: "전기·전자", enShort: "Electronics" },
+    { id: 'software', path: 'software/korea_software_map.html', icon: "💻", ko: "IT·소프트웨어", en: "IT & Software", koShort: "IT·SW", enShort: "Software" },
+    { id: 'telecom', path: 'telecom/korea_telecom_map.html', icon: "📡", ko: "통신", en: "Telecom", koShort: "통신", enShort: "Telecom" },
+    { id: 'robot', path: 'robot/korea_robot_map.html', icon: "🤖", ko: "로봇", en: "Robot", koShort: "로봇", enShort: "Robot" },
+    { id: 'auto', path: 'auto/korea_auto_map.html', icon: "🚗", ko: "자동차", en: "Auto", koShort: "자동차", enShort: "Auto" },
+    { id: 'battery', path: 'battery/korea_battery_map.html', icon: "🔋", ko: "2차전지", en: "Battery", koShort: "2차전지", enShort: "Battery" },
+    { id: 'renewable', path: 'renewable/korea_renewable_map.html', icon: "🌱", ko: "신재생", en: "Renewable", koShort: "신재생", enShort: "Renewable" },
+    { id: 'nuclear', path: 'nuclear/korea_nuclear_map.html', icon: "⚛", ko: "원전", en: "Nuclear", koShort: "원전", enShort: "Nuclear" },
+    { id: 'powergrid', path: 'powergrid/korea_powergrid_map.html', icon: "🔌", ko: "전력설비", en: "Power Equip.", koShort: "전력설비", enShort: "Power" },
+    { id: 'chemical', path: 'chemical/korea_chemical_map.html', icon: "⚗️", ko: "화학·정유", en: "Chemicals & Refining", koShort: "화학·정유", enShort: "Chemicals" },
+    { id: 'metal', path: 'metal/korea_metal_map.html', icon: "⚙️", ko: "철강·비철금속", en: "Steel & Nonferrous", koShort: "철강·비철금속", enShort: "Steel & Nonferrous" },
+    { id: 'machinery', path: 'machinery/korea_machinery_map.html', icon: "🚧", ko: "산업·건설기계", en: "Machinery", koShort: "산업·건설기계", enShort: "Machinery" },
+    { id: 'construction', path: 'construction/korea_construction_map.html', icon: "🏗️", ko: "건설", en: "Construction", koShort: "건설", enShort: "Construction" },
+    { id: 'ship', path: 'ship/korea_ship_map.html', icon: "⚓", ko: "조선·기자재", en: "Shipbuilding & Equipment", koShort: "조선·기자재", enShort: "Shipbuilding & Equipment" },
+    { id: 'defense', path: 'defense/korea_defense_map.html', icon: "🛰️", ko: "방산/우주", en: "Defense & Space", koShort: "방산/우주", enShort: "Defense & Space" },
+    { id: 'shipping', path: 'shipping/korea_shipping_map.html', icon: "🚢", ko: "해운·물류", en: "Shipping & Logistics", koShort: "해운·물류", enShort: "Shipping" },
+    { id: 'travel', path: 'travel/korea_travel_map.html', icon: "✈️", ko: "여행·레저·항공", en: "Travel & Airlines", koShort: "여행·항공", enShort: "Travel" },
+    { id: 'kconsume', path: 'kconsume/korea_kconsume_map.html', icon: "🛒", ko: "소비/유통", en: "Consumer/Retail", koShort: "소비/유통", enShort: "Consumer/Retail" },
+    { id: 'kcontent', path: 'kcontent/korea_kcontent_map.html', icon: "🎬", ko: "콘텐츠", en: "K-Content", koShort: "콘텐츠", enShort: "K-Content" },
+    { id: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html', icon: "💄", ko: "화장품/미용기기", en: "Cosmetics", koShort: "화장품", enShort: "Cosmetics" },
+    { id: 'medtech', path: 'medtech/korea_medtech_map.html', icon: "🩺", ko: "의료기기/헬스케어", en: "MedTech", koShort: "헬스케어", enShort: "MedTech" },
+    { id: 'bio', path: 'bio/korea_bio_map.html', icon: "🧬", ko: "바이오", en: "Bio", koShort: "바이오", enShort: "Bio" },
+    { id: 'finance', path: 'finance/korea_finance_map.html', icon: "🏦", ko: "금융", en: "Finance", koShort: "금융", enShort: "Finance" },
+    { id: 'holdings', path: 'holdings/korea_holdings_map.html', icon: "🏢", ko: "지주회사", en: "Holdings", koShort: "지주회사", enShort: "Holdings" },
   ];
 
   function pageLang(lang) {
@@ -49,7 +51,7 @@
 
   function pathPrefix() {
     var path = window.location.pathname.replace(/\\/g, '/');
-    if (/\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|ess|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom|chemical|travel|elec|metal)\//i.test(path)) return '../';
+    if (/\/(bigchip|semiconductor|bio|ship|shipping|defense|robot|auto|medtech|energy|battery|ess|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom|chemical|travel|elec|metal|machinery)\//i.test(path)) return '../';
     return '';
   }
 
@@ -58,6 +60,7 @@
     if (path.indexOf('/bigchip/') !== -1) return 'bigchip';
     if (path.indexOf('/semiconductor/') !== -1) return 'semi';
     if (path.indexOf('/bio/') !== -1) return 'bio';
+    if (path.indexOf('/shipping/') !== -1) return 'shipping';
     if (path.indexOf('/ship/') !== -1) return 'ship';
     if (path.indexOf('/defense/') !== -1) return 'defense';
     if (path.indexOf('/robot/') !== -1) return 'robot';
@@ -81,6 +84,7 @@
     if (path.indexOf('/chemical/') !== -1) return 'chemical';
     if (path.indexOf('/travel/') !== -1) return 'travel';
     if (path.indexOf('/elec/') !== -1) return 'elec';
+    if (path.indexOf('/machinery/') !== -1) return 'machinery';
     if (path.indexOf('/metal/') !== -1) return 'metal';
     if (path === '/' || /\/index\.html$/.test(path)) return 'home';
     return '';

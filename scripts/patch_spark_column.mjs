@@ -31,6 +31,8 @@ const TARGETS = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
   'auto/korea_auto_map.html',
   'medtech/korea_medtech_map.html',
   'bio/korea_bio_map.inline.js',

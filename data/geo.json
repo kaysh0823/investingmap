@@ -71,10 +71,10 @@
     },
     "ship": {
       "path": "/ship/korea_ship_map.html",
-      "title": { "ko": "한국 조선/해운 산업 투자 지도", "en": "Korea Shipbuilding & Shipping Map" },
+      "title": { "ko": "한국 조선·기자재 투자 지도", "en": "Korea Shipbuilding & Marine Equipment Map" },
       "summary": {
-        "ko": "조선소·엔진·철강·조선기자재·해양·해운 등 상장사의 KRX 데이터와 밸류체인, 글로벌 거래·수주 관계를 정리합니다.",
-        "en": "KRX data, value-chain categories, and illustrative global order and customer relationships for listed Korean shipbuilding and marine equipment companies."
+        "ko": "조선·해양플랜트·선박기자재 관련 상장사의 KRX 데이터와 밸류체인, 글로벌 거래·수주 관계를 정리합니다. 해운·물류는 별도 지도입니다.",
+        "en": "KRX data, value-chain categories, and illustrative global order relationships for listed Korean shipbuilding and marine equipment companies. Shipping & logistics is a separate map."
       }
     },
     "defense": {
@@ -239,10 +239,26 @@
     },
     "metal": {
       "path": "/metal/korea_metal_map.html",
-      "title": { "ko": "한국 철강·금속·기계 투자 지도", "en": "Korea Steel, Metals & Machinery Map" },
+      "title": { "ko": "한국 철강·비철금속 투자 지도", "en": "Korea Steel & Nonferrous Metals Map" },
       "summary": {
-        "ko": "철강 사업회사·사업지주, 비철금속, 산업기계 관련 국내 상장사의 KRX 지표를 비교합니다. 다각화 지주회사는 holdings에 둡니다.",
-        "en": "KRX metrics for listed Korean steel operators and operating holdings, nonferrous metals, and industrial machinery. Diversified holdings stay in holdings."
+        "ko": "철강·비철금속·철강 트레이딩 관련 국내 상장사의 KRX 지표를 비교합니다. 산업·건설기계는 별도 지도에 둡니다.",
+        "en": "KRX metrics for listed Korean steel, nonferrous metals and steel trading names. Industrial machinery is on a separate map."
+      }
+    },
+    "machinery": {
+      "path": "/machinery/korea_machinery_map.html",
+      "title": { "ko": "한국 산업·건설기계 투자 지도", "en": "Korea Industrial & Construction Machinery Map" },
+      "summary": {
+        "ko": "건설기계·공작기계·산업설비·승강기 관련 국내 상장사의 KRX 지표를 비교합니다. 2026-09-10 metal에서 분리.",
+        "en": "KRX metrics for listed Korean construction, machine-tool and industrial-equipment names. Split from metal on 2026-09-10."
+      }
+    },
+    "shipping": {
+      "path": "/shipping/korea_shipping_map.html",
+      "title": { "ko": "한국 해운·물류 투자 지도", "en": "Korea Shipping & Logistics Map" },
+      "summary": {
+        "ko": "해운·항만·물류 관련 국내 상장사의 KRX 지표를 비교합니다. 2026-09-10 ship에서 분리.",
+        "en": "KRX metrics for listed Korean shipping, port and logistics names. Split from ship on 2026-09-10."
       }
     }
   }

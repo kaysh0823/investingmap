@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'battery', 'renewable', 'nuclear', 'powergrid', 'ship', 'metal', 'defense', 'kconsume', 'cosmetics', 'kcontent', 'bio', 'robot', 'auto', 'medtech', 'finance', 'construction', 'software', 'holdings', 'telecom', 'chemical', 'travel'];
+  var SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'machinery', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance', 'holdings'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
@@ -57,7 +57,8 @@
       renewable: ['태양광', '풍력', '수소', '운영'],
       nuclear: ['원자로', 'SMR', '기자재', '정비'],
       powergrid: ['변압기', '개폐기', '송배전', '케이블', '발전설비', '원자력'],
-      ship: ['조선소', '엔진', '철강', '조선기자재', '해양', '해운', '방산 해양'],
+      ship: ['조선소', '엔진', '기자재', '해양플랜트'],
+      shipping: ['해운', '항만', '물류'],
       defense: ['방산/우주', '군용 항공', '미사일·C4ISR', '육상무기', '해군·함정', '우주·위성', '민항'],
       kconsume: ['라면·식품', '여행·항공', '패션', '쇼핑·유통'],
       cosmetics: ['브랜드', 'ODM', '미용기기', '유통·채널'],
@@ -72,7 +73,8 @@
       holdings: ['반도체', '정유·화학', '철강·금속·기계', '소비/유통', '건설', '자동차', '전기·전자', 'IT·SW', '조선/해운', '여행·항공', '방산/우주', '화장품', '콘텐츠', '바이오', '전력설비'],
       telecom: ['통신서비스', '무선장비', '광통신', '위성통신'],
       elec: ['가전', '디스플레이', '카메라·모듈', '전자부품', '전선'],
-      metal: ['철강', '비철', '트레이딩', '산업기계'],
+      metal: ['철강', '비철', '트레이딩'],
+      machinery: ['건설기계', '산업설비', '승강기'],
     },
     en: {
       bigchip: ['Samsung Electronics', 'SK hynix', 'HBM', 'Memory'],
@@ -81,7 +83,8 @@
       renewable: ['Solar', 'Wind', 'Hydrogen', 'Operators'],
       nuclear: ['Reactors', 'SMR', 'Components', 'O&M'],
       powergrid: ['Transformers', 'Switchgear', 'T&D', 'Cables', 'Generation', 'Nuclear'],
-      ship: ['Yards', 'Engines', 'Steel', 'Marine equipment', 'Offshore', 'Shipping', 'Naval'],
+      ship: ['Yards', 'Engines', 'Marine equipment', 'Offshore'],
+      shipping: ['Shipping', 'Ports', 'Logistics'],
       defense: ['Defense & Space', 'Military aviation', 'Missiles & C4ISR', 'Land systems', 'Naval', 'Space & satellites', 'Civil aviation'],
       kconsume: ['Food', 'Travel', 'Fashion', 'Retail'],
       cosmetics: ['Brands', 'ODM', 'Aesthetic', 'Channels'],
@@ -96,7 +99,8 @@
       holdings: ['Semi', 'Chemicals', 'Metals', 'Retail', 'Construction', 'Auto', 'Electronics', 'Software', 'Ship', 'Travel', 'Defense', 'Cosmetics', 'Content', 'Bio', 'Power'],
       telecom: ['Services', 'Wireless', 'Optical', 'Satellite'],
       elec: ['Appliances', 'Display', 'Modules', 'Components', 'Cables'],
-      metal: ['Steel', 'Nonferrous', 'Trading', 'Machinery'],
+      metal: ['Steel', 'Nonferrous', 'Trading'],
+      machinery: ['Construction machinery', 'Industrial equipment', 'Elevators'],
     },
   };
 

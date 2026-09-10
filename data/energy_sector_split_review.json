@@ -85,7 +85,7 @@
     "name": "두산퓨얼셀",
     "sector": "battery",
     "chain": "ESS",
-    "origin": "battery",
+    "origin": "renewable",
     "basis": "연료전지",
     "mcapWon": 2871899885100
   },
@@ -176,7 +176,7 @@
     "sector": "battery",
     "chain": "부품",
     "origin": "battery",
-    "basis": "2차전지 소재",
+    "basis": "전지박·동박(집전체)",
     "mcapWon": 523081620100
   },
   {
@@ -239,7 +239,7 @@
     "sector": "battery",
     "chain": "부품",
     "origin": "battery",
-    "basis": "태양광·신재생",
+    "basis": "2차전지 분리막",
     "mcapWon": 340800460080
   },
   {

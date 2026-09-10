@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "sector": "machinery",
+    "splitAt": "2026-09-10",
+    "note": "Split from metal; no historical performance series merged"
+  },
+  "nodes": [],
+  "edges": []
+}

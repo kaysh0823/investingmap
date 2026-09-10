@@ -34,6 +34,8 @@ const MAP_FILES = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
 ];
 
 const FILTER_BAR_OLD =
@@ -69,8 +71,8 @@ function ensureHeadScripts(html) {
     );
   }
   html = html.replace(/map_filter_ux\.js(?:\?v=\d+)?/g, `map_filter_ux.js?v=${SCRIPT_V}`);
-  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=10');
-  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=9');
+  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=11');
+  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=10');
   return html;
 }
 

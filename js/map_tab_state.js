@@ -82,7 +82,7 @@
   function isIndustryMapPage() {
     try {
       var path = (window.location.pathname || '').replace(/\\/g, '/');
-      return /\/(bigchip|semiconductor|bio|ship|defense|robot|auto|medtech|energy|battery|renewable|nuclear|powergrid|kculture|kconsume|cosmetics|kcontent|finance|construction|software|holdings|telecom|chemical|travel|elec|metal)\//i.test(
+      return /\/(bigchip|semiconductor|elec|software|telecom|robot|auto|battery|renewable|nuclear|powergrid|chemical|metal|machinery|construction|ship|shipping|defense|shipping|travel|kconsume|kcontent|cosmetics|medtech|bio|finance|holdings|energy|ess|kculture)\//i.test(
         path
       );
     } catch (e) {

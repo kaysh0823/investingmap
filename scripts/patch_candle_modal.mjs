@@ -33,6 +33,8 @@ const MAP_FILES = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
 ];
 
 const CANDLE_TAG = `<script src="../js/candle_modal.js?v=${SCRIPT_V}"></script>`;

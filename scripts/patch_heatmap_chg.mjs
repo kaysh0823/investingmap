@@ -38,6 +38,8 @@ const MAP_FILES = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
 ];
 
 const HINT_KO = '\uCE78 \uD06C\uAE30 = \uC2DC\uAC00\uCD1D\uC561 \u00B7 \uC0C9 = \uC77C\uC77C \uB4F1\uB77D\uB960';

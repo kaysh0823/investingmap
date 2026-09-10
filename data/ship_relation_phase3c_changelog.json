@@ -1,38 +1,38 @@
 {
   "migratedAt": "2026-08-23",
-  "legacyMigratedEdgeCount": 61,
-  "structuralGeneratedEdgeCount": 57,
-  "manuallyCuratedEdgeCount": 8,
+  "legacyMigratedEdgeCount": 50,
+  "structuralGeneratedEdgeCount": 49,
+  "manuallyCuratedEdgeCount": 7,
   "removedEdgeCount": 1,
-  "finalEdgeCount": 113,
-  "legacyMigratedBusinessEdgeCount": 39,
-  "manuallyCuratedBusinessEdgeCount": 8,
+  "finalEdgeCount": 93,
+  "legacyMigratedBusinessEdgeCount": 29,
+  "manuallyCuratedBusinessEdgeCount": 7,
   "confirmedBusinessEdgeCount": 0,
   "reportedBusinessEdgeCount": 0,
   "statusCounts": {
-    "reference": 68,
-    "inferred": 9,
+    "reference": 59,
+    "inferred": 8,
     "ended": 2,
-    "peer": 34
+    "peer": 24
   },
   "typeCounts": {
-    "member_of": 22,
-    "builds_vessel_type": 15,
-    "exposed_to": 10,
+    "member_of": 18,
+    "builds_vessel_type": 14,
     "manufactures": 19,
     "owns": 1,
-    "ordered": 3,
     "awarded_to": 3,
+    "ordered": 2,
     "maintains": 1,
-    "peer": 34,
+    "peer": 24,
+    "exposed_to": 6,
     "supplies_engine_to": 5
   },
   "orphanMetrics": {
     "structuralOrphanCount": 0,
-    "businessRelationOrphanCount": 22,
-    "directRelationshipOrphanCount": 14,
-    "classificationOnlyCompanyCount": 14,
-    "weakRelationOnlyCompanyCount": 22
+    "businessRelationOrphanCount": 18,
+    "directRelationshipOrphanCount": 11,
+    "classificationOnlyCompanyCount": 11,
+    "weakRelationOnlyCompanyCount": 18
   },
   "changes": [
     {
@@ -136,28 +136,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:011200",
-      "target": "group:shipping",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:011200",
-      "target": "market:global_shipbuilding",
-      "beforeType": "(none)",
-      "afterType": "exposed_to",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:010140",
       "target": "group:shipyard",
       "beforeType": "(none)",
@@ -246,28 +224,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:028670",
-      "target": "group:shipping",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:028670",
-      "target": "market:global_shipbuilding",
-      "beforeType": "(none)",
-      "afterType": "exposed_to",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:439260",
       "target": "group:shipyard",
       "beforeType": "(none)",
@@ -433,28 +389,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:005880",
-      "target": "group:shipping",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:005880",
-      "target": "market:global_shipbuilding",
-      "beforeType": "(none)",
-      "afterType": "exposed_to",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:023160",
       "target": "group:outfitting",
       "beforeType": "(none)",
@@ -602,28 +536,6 @@
       "target": "product:cryogenic_insulation",
       "beforeType": "(none)",
       "afterType": "manufactures",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain → product/vessel_type/market"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:003280",
-      "target": "group:shipping",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:003280",
-      "target": "market:global_shipbuilding",
-      "beforeType": "(none)",
-      "afterType": "exposed_to",
       "beforeStatus": "(none)",
       "afterStatus": "reference",
       "origin": "structuralGenerated",
@@ -661,17 +573,6 @@
       "afterStatus": "reference",
       "origin": "manuallyCurated",
       "reason": "HD KSOE → HD HHI ownership (homepage → reference)"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:011200",
-      "target": "contract:hmm-hhi-container-2020s",
-      "beforeType": "(none)",
-      "afterType": "ordered",
-      "beforeStatus": "(none)",
-      "afterStatus": "inferred",
-      "origin": "manuallyCurated",
-      "reason": "HMM ordered containership (inferred, no filing)"
     },
     {
       "legacyEdgeId": null,
@@ -960,39 +861,6 @@
       "reason": "string partner → peer defaultHidden"
     },
     {
-      "legacyEdgeId": "legacy-hmm-maersk",
-      "source": "krx:011200",
-      "target": "global:maersk",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-hmm-msc",
-      "source": "krx:011200",
-      "target": "global:msc",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-hmm-cma_cgm",
-      "source": "krx:011200",
-      "target": "global:cma_cgm",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
       "legacyEdgeId": "legacy-shi-shell",
       "source": "krx:010140",
       "target": "market:global_shipbuilding",
@@ -1090,28 +958,6 @@
       "afterStatus": "inferred",
       "origin": "legacyMigrated",
       "reason": "labeled domestic supply without DART → inferred hidden"
-    },
-    {
-      "legacyEdgeId": "legacy-pan-vale",
-      "source": "krx:028670",
-      "target": "global:vale",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-pan-bhp",
-      "source": "krx:028670",
-      "target": "global:bhp",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
     },
     {
       "legacyEdgeId": "legacy-ship_daehan_shipbuilding-maersk",
@@ -1233,72 +1079,6 @@
       "afterStatus": "inferred",
       "origin": "legacyMigrated",
       "reason": "labeled domestic supply without DART → inferred hidden"
-    },
-    {
-      "legacyEdgeId": "legacy-kline-vale",
-      "source": "krx:005880",
-      "target": "global:vale",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-kline-rio_tinto",
-      "source": "krx:005880",
-      "target": "global:rio_tinto",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-ship_heunga_shipping-maersk",
-      "source": "krx:003280",
-      "target": "global:maersk",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-ship_heunga_shipping-msc",
-      "source": "krx:003280",
-      "target": "global:msc",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-ship_heunga_shipping-cma_cgm",
-      "source": "krx:003280",
-      "target": "global:cma_cgm",
-      "beforeType": "partner",
-      "afterType": "peer",
-      "beforeStatus": "legacy",
-      "afterStatus": "peer",
-      "origin": "legacyMigrated",
-      "reason": "string partner → peer defaultHidden"
-    },
-    {
-      "legacyEdgeId": "legacy-ship_heunga_shipping-hmm",
-      "source": "krx:003280",
-      "target": "vessel-type:lng_carrier",
-      "beforeType": "theme",
-      "afterType": "builds_vessel_type",
-      "beforeStatus": "legacy",
-      "afterStatus": "reference",
-      "origin": "legacyMigrated",
-      "reason": "theme partner → vessel_type structural"
     }
   ]
 }
