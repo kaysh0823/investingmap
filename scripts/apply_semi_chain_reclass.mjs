@@ -37,12 +37,13 @@ const HTML_PATH = join(ROOT, 'semiconductor', 'korea_semiconductor_map.html');
 const FIELD_OVERRIDES_PATH = join(ROOT, 'data', 'ticker_field_overrides.json');
 
 /**
- * 재분류 과정에서 벨류체인과 어긋난 semType/products를 바로잡을 종목.
+ * 재분류 과정에서 밸류체인과 어긋난 semType/products를 바로잡을 종목.
  * 실제 문구는 data/ticker_field_overrides.json 한 곳에서만 관리한다.
  */
 const METADATA_FIX_TICKERS = [
-  '101490', '213420', '348210', '122640', '160980', '101160', '425040', '079370', '053610',
+  '101490', '348210', '122640', '160980', '101160', '425040', '079370', '053610',
   '356860', '086390', '254490', '031980', '089890', '061970',
+  '089970', '253590',
 ];
 
 const META_FIELDS = ['semType', 'semTypeEn', 'products', 'productsEn'];
@@ -122,7 +123,7 @@ function replaceDicts(html, field, [koLiteral, enLiteral]) {
   return html.replace(re, () => `${field}: ${seen++ === 0 ? koLiteral : enLiteral}`);
 }
 
-/** SEO 프리렌더 표(정적 tbody)의 벨류체인·반도체유형·주요제품 셀을 종목별로 갱신한다. */
+/** SEO 프리렌더 표(정적 tbody)의 밸류체인·반도체유형·주요제품 셀을 종목별로 갱신한다. */
 function patchPrerenderRows(html, companies) {
   const i0 = html.indexOf(PRERENDER_START);
   const i1 = html.indexOf(PRERENDER_END);

@@ -150,6 +150,15 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
+      "source": "krx:336260",
+      "target": "technology:hydrogen",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
       "source": "krx:018670",
       "target": "technology:hydrogen",
       "beforeType": "legacy_partner",

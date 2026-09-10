@@ -2101,7 +2101,7 @@
     <div class="table-container">
       <div class="filter-bar">
         <div class="filter-row filter-row-chain">
-          <span class="filter-label" id="fl-chain-label">벨류체인</span>
+          <span class="filter-label" id="fl-chain-label">밸류체인</span>
           <div id="chain-chips"></div>
         </div>
         <div class="filter-row filter-row-market">
@@ -2135,7 +2135,7 @@
               <th id="th-per" onclick="sortTable('per')">PER</th>
               <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
               <th id="th-market" onclick="sortTable('market')">시장</th>
-              <th id="th-chain" onclick="sortTable('chain')">벨류체인</th>
+              <th id="th-chain" onclick="sortTable('chain')">밸류체인</th>
               <th id="th-semtype">세부 유형</th>
               <th id="th-products">주요 제품·서비스</th>
               <th id="th-partners">글로벌 참고 관계</th>
@@ -2276,9 +2276,9 @@
       <td class="fin-cell">47.24</td>
       <td class="fin-cell">12.01</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">송배전</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">전력케이블·변전설비</td>
-      <td class="products-cell">초고압·특수 케이블, 변압기·개폐기</td>
+      <td><span class="chain-tag">전력설비</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">변압기</td>
+      <td class="products-cell">전력용·데이터센터용 변압기</td>
       <td><div class="partners-list">Siemens Power Grid, GE Vernova</div></td>
     </tr>
           <tr data-ticker="001440">
@@ -2608,7 +2608,7 @@
         "tabGraph": "🌐 관계 네트워크 (수정중)",
         "langFlag": "🇺🇸",
         "langText": "English",
-        "flChain": "벨류체인",
+        "flChain": "밸류체인",
         "flMarket": "시장",
         "searchPlaceholder": "🔍 기업명·티커 검색...",
         "resultLabel": "표시: ",
@@ -2630,14 +2630,14 @@
         "thPer": "PER",
         "thPbr": "PBR",
         "thMarket": "시장",
-        "thChain": "벨류체인",
+        "thChain": "밸류체인",
         "thSemType": "세부 유형",
         "thProducts": "주요 제품·서비스",
         "thPartners": "글로벌 참고 관계",
         "note": "⚠ 종목코드·참고 관계는 공개 정보·에디터리얼 그룹이며 공식 계약을 대체하지 않습니다. 시가총액·시장은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시총을 조(兆)원 단위로 소수 둘째 자리까지 표시합니다. 영문 열은 네이버 금융 USD/KRW 고시 환율(/api/fx)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·주가 위치는 /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·오류 시 —로 표시됩니다.",
-        "sbKorean": "국내 상장 (벨류체인)",
+        "sbKorean": "국내 상장 (밸류체인)",
         "sbGlobal": "Peer 링크 안내",
-        "peerNetworkDesc": "국내외 거래·장비·지분(실선/점선)과 동일 벨류체인 내 국내 peer, 회색 점선=같은 벨류체인에서 함께 등장하는 글로벌 피어 그룹.",
+        "peerNetworkDesc": "국내외 거래·장비·지분(실선/점선)과 동일 밸류체인 내 국내 peer, 회색 점선=같은 밸류체인에서 함께 등장하는 글로벌 피어 그룹.",
         "sbSize": "노드 크기",
         "sbHow": "조작 방법",
         "chainLabel": {
@@ -2854,9 +2854,9 @@
       },
 
       {
-        id: 'sanil', name: '산일전기', nameEn: 'SANIL ELECTRIC', ticker: '062040', market: 'KOSPI', chain: '송배전',
-        semType: '전력케이블·변전설비', semTypeEn: 'Power cable & substation equipment',
-        products: '초고압·특수 케이블, 변압기·개폐기', productsEn: 'EHV & specialty cable, transformers & switchgear',
+        id: 'sanil', name: '산일전기', nameEn: 'SANIL ELECTRIC', ticker: '062040', market: 'KOSPI', chain: '전력설비',
+        semType: '변압기', semTypeEn: 'Transformers',
+        products: '전력용·데이터센터용 변압기', productsEn: 'Power and data-center transformers',
         revenue: '5.87조원', mcapWon: 5874234345000, per: 47.24, pbr: 12.01, revTier: 2, partners: ['siemens_energy', 'ge_vernova']
       },
 

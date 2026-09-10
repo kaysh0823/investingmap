@@ -45,6 +45,11 @@
           "nameEn": "Park Systems Corp."
         },
         {
+          "ticker": "089970",
+          "name": "브이엠",
+          "nameEn": "Vm"
+        },
+        {
           "ticker": "281820",
           "name": "케이씨텍",
           "nameEn": "Kctech"
@@ -280,6 +285,11 @@
           "nameEn": "INTEKPLUS CO.,LTD"
         },
         {
+          "ticker": "253590",
+          "name": "네오셈",
+          "nameEn": "Neosem Inc."
+        },
+        {
           "ticker": "092870",
           "name": "엑시콘",
           "nameEn": "Exicon Co., Ltd."
@@ -445,11 +455,6 @@
           "nameEn": "DONGJIN SEMICHEM CO., LTD."
         },
         {
-          "ticker": "089970",
-          "name": "브이엠",
-          "nameEn": "Vm"
-        },
-        {
           "ticker": "078600",
           "name": "대주전자재료",
           "nameEn": "Daejoo Electronic Materials Co., Ltd."
@@ -473,11 +478,6 @@
           "ticker": "101490",
           "name": "에스앤에스텍",
           "nameEn": "S&S TECH CORPORATION"
-        },
-        {
-          "ticker": "213420",
-          "name": "덕산네오룩스",
-          "nameEn": "DUK SAN NEOLUX CO.,LTD"
         },
         {
           "ticker": "281740",
@@ -836,11 +836,6 @@
           "ticker": "108320",
           "name": "LX세미콘",
           "nameEn": "LX Semicon"
-        },
-        {
-          "ticker": "253590",
-          "name": "네오셈",
-          "nameEn": "Neosem Inc."
         }
       ],
       "suppliers": [

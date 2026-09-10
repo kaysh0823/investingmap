@@ -2,19 +2,19 @@
   "asOf": "2026-08-23",
   "phase": "5C",
   "reviewedBy": "editorial_phase5c",
-  "listedCompanyCount": 28,
+  "listedCompanyCount": 29,
   "metrics": {
-    "listedCompanyCount": 28,
+    "listedCompanyCount": 29,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 88,
-    "edgeCount": 121,
-    "structuralGeneratedEdgeCount": 75,
-    "legacyMigratedEdgeCount": 43,
+    "nodeCount": 89,
+    "edgeCount": 124,
+    "structuralGeneratedEdgeCount": 76,
+    "legacyMigratedEdgeCount": 45,
     "manuallyCuratedEdgeCount": 3,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 43,
+    "peerEdgeCount": 45,
     "supplyRelationshipCount": 0,
     "actualSupplyRelationshipCount": 0,
     "ownershipEdgeCount": 0,
@@ -23,14 +23,14 @@
     "groupMembershipEdgeCount": 0,
     "crossSectorReferenceCount": 3,
     "crossSectorReferenceOnlyCompanyCount": 3,
-    "businessRelationOrphanCount": 28,
-    "directRelationshipOrphanCount": 28,
-    "directCommercialRelationshipOrphanCount": 28,
-    "classificationOnlyCompanyCount": 28,
+    "businessRelationOrphanCount": 29,
+    "directRelationshipOrphanCount": 29,
+    "directCommercialRelationshipOrphanCount": 29,
+    "classificationOnlyCompanyCount": 29,
     "groupMembershipOnlyCompanyCount": 0,
-    "hasPeerButNoBusinessCompanyCount": 28,
+    "hasPeerButNoBusinessCompanyCount": 29,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 28,
+    "weakRelationOnlyCompanyCount": 29,
     "structuralOnlyCompanyCount": 0,
     "orphanMetricDefinitions": {
       "listedCompanyCount": {
@@ -473,6 +473,7 @@
         "krx:001820",
         "krx:204270",
         "krx:065350",
+        "krx:213420",
         "krx:417200",
         "krx:090460",
         "krx:171090",
@@ -503,6 +504,7 @@
         "krx:001820",
         "krx:204270",
         "krx:065350",
+        "krx:213420",
         "krx:417200",
         "krx:090460",
         "krx:171090",
@@ -533,6 +535,7 @@
         "krx:001820",
         "krx:204270",
         "krx:065350",
+        "krx:213420",
         "krx:417200",
         "krx:090460",
         "krx:171090",
@@ -564,6 +567,7 @@
         "krx:001820",
         "krx:204270",
         "krx:065350",
+        "krx:213420",
         "krx:417200",
         "krx:090460",
         "krx:171090",
@@ -594,6 +598,7 @@
         "krx:001820",
         "krx:204270",
         "krx:065350",
+        "krx:213420",
         "krx:417200",
         "krx:090460",
         "krx:171090",
@@ -731,7 +736,7 @@
     },
     "phase5cCuratedAt": "2026-08-23",
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 43
+    "demotedLegacyPeerCount": 45
   },
   "validate": {
     "failures": [],
@@ -937,6 +942,11 @@
       "action": "add_structural",
       "source": "krx:065350",
       "target": "component:electronic_module"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:213420",
+      "target": "group:display"
     },
     {
       "action": "add_structural",
@@ -1218,6 +1228,20 @@
       "beforeType": "partners_string",
       "afterType": "peer",
       "source": "krx:065350",
+      "target": "global:panasonic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:213420",
+      "target": "global:sony"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:213420",
       "target": "global:panasonic"
     },
     {

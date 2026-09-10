@@ -102,5 +102,18 @@
     "partners": ["sony", "panasonic", "bosch"],
     "subSector": "디스플레이 장비",
     "level": "core"
+  },
+  {
+    "ticker": "213420",
+    "name": "덕산네오룩스",
+    "nameEn": "DUK SAN NEOLUX CO.,LTD",
+    "chain": "디스플레이",
+    "semType": "OLED 유기발광소재",
+    "semTypeEn": "OLED emissive materials",
+    "products": "OLED 발광·정공수송 유기소재",
+    "productsEn": "OLED emissive and hole-transport organic materials",
+    "partners": ["sony", "panasonic"],
+    "subSector": "OLED 유기발광소재",
+    "level": "core"
   }
 ]

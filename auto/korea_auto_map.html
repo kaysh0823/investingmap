@@ -2149,7 +2149,7 @@
     <div class="table-container">
       <div class="filter-bar">
         <div class="filter-row filter-row-chain">
-          <span class="filter-label" id="fl-chain-label">벨류체인</span>
+          <span class="filter-label" id="fl-chain-label">밸류체인</span>
           <div id="chain-chips"></div>
         </div>
         <div class="filter-row filter-row-market">
@@ -2183,7 +2183,7 @@
               <th id="th-per" onclick="sortTable('per')">PER</th>
               <th id="th-pbr" onclick="sortTable('pbr')">PBR</th>
               <th id="th-market" onclick="sortTable('market')">시장</th>
-              <th id="th-chain" onclick="sortTable('chain')">벨류체인</th>
+              <th id="th-chain" onclick="sortTable('chain')">밸류체인</th>
               <th id="th-semtype">세부 유형</th>
               <th id="th-products">주요 제품·서비스</th>
               <th id="th-partners">글로벌 참고 관계</th>
@@ -2233,8 +2233,8 @@
       <td class="fin-cell">1.06</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">완성차</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">완성차·SUV·EV</td>
-      <td class="products-cell">승용·전기차·모빌리티</td>
+      <td style="font-size:12px;color:var(--text-muted)">특수차량·방산 모빌리티</td>
+      <td class="products-cell">군용·특수차량, K9·K2 등 방산 연계 모빌리티</td>
       <td><div class="partners-list">Toyota, Volkswagen, Stellantis</div></td>
     </tr>
           <tr data-ticker="012330">
@@ -2486,8 +2486,8 @@
       <td class="fin-cell">0.70</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">부품</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">모터·구동</td>
-      <td class="products-cell">모터·구동부품</td>
+      <td style="font-size:12px;color:var(--text-muted)">방산 차량·동력전달</td>
+      <td class="products-cell">군용 차량·동력전달·특수 모빌리티</td>
       <td><div class="partners-list">DENSO, Bosch</div></td>
     </tr>
           <tr data-ticker="002350">
@@ -3041,8 +3041,8 @@
 
       {
         id: 'kia', name: '기아', nameEn: 'KIA CORPORATION', ticker: '000270', market: 'KOSPI', chain: '완성차',
-        semType: '완성차·SUV·EV', semTypeEn: 'OEM · SUV & EV',
-        products: '승용·전기차·모빌리티', productsEn: 'Passenger, EV, mobility',
+        semType: '특수차량·방산 모빌리티', semTypeEn: 'Specialty & Defense Mobility',
+        products: '군용·특수차량, K9·K2 등 방산 연계 모빌리티', productsEn: 'Military and specialty vehicles including K9/K2 defense platforms',
         revenue: '49.39조원', mcapWon: 49387244247000, per: 8.61, pbr: 1.06, revTier: 3, partners: ['toyota', 'vw', 'stellantis']
       },
 
@@ -3118,8 +3118,8 @@
 
       {
         id: 'snt_motive', name: 'SNT모티브', nameEn: 'SNT Motiv', ticker: '064960', market: 'KOSPI', chain: '부품',
-        semType: '모터·구동', semTypeEn: 'Motors & drivetrain',
-        products: '모터·구동부품', productsEn: 'Motors, drivetrain parts',
+        semType: '방산 차량·동력전달', semTypeEn: 'Defense Vehicles & Powertrain',
+        products: '군용 차량·동력전달·특수 모빌리티', productsEn: 'Military vehicles, powertrain and specialty mobility',
         revenue: '0.70조원', mcapWon: 696682140000, per: 10.24, pbr: 0.7, revTier: 1, partners: ['denso', 'bosch']
       },
 

@@ -96,6 +96,18 @@
       "isListedKorea": true
     },
     {
+      "id": "krx:089970",
+      "type": "listed_company",
+      "ticker": "089970",
+      "nameKo": "브이엠",
+      "nameEn": "Vm",
+      "market": "KOSDAQ",
+      "role": "전공정 식각장비",
+      "group": "전공정 장비",
+      "mcapWon": 1390053192000,
+      "isListedKorea": true
+    },
+    {
       "id": "krx:281820",
       "type": "listed_company",
       "ticker": "281820",
@@ -506,6 +518,18 @@
       "isListedKorea": true
     },
     {
+      "id": "krx:253590",
+      "type": "listed_company",
+      "ticker": "253590",
+      "nameKo": "네오셈",
+      "nameEn": "Neosem Inc.",
+      "market": "KOSDAQ",
+      "role": "메모리·SSD 검사장비",
+      "group": "후공정 장비",
+      "mcapWon": 495282861560,
+      "isListedKorea": true
+    },
+    {
       "id": "krx:092870",
       "type": "listed_company",
       "ticker": "092870",
@@ -702,18 +726,6 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:089970",
-      "type": "listed_company",
-      "ticker": "089970",
-      "nameKo": "브이엠",
-      "nameEn": "Vm",
-      "market": "KOSDAQ",
-      "role": "식각 장비",
-      "group": "소재",
-      "mcapWon": 1390053192000,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:078600",
       "type": "listed_company",
       "ticker": "078600",
@@ -771,18 +783,6 @@
       "role": "블랭크마스크·EUV 펠리클",
       "group": "소재",
       "mcapWon": 854461903950,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:213420",
-      "type": "listed_company",
-      "ticker": "213420",
-      "nameKo": "덕산네오룩스",
-      "nameEn": "DUK SAN NEOLUX CO.,LTD",
-      "market": "KOSDAQ",
-      "role": "OLED 유기발광소재",
-      "group": "소재",
-      "mcapWon": 800805522750,
       "isListedKorea": true
     },
     {
@@ -1149,18 +1149,6 @@
       "role": "디스플레이IC / 전력반도체",
       "group": "팹리스",
       "mcapWon": 588767660000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:253590",
-      "type": "listed_company",
-      "ticker": "253590",
-      "nameKo": "네오셈",
-      "nameEn": "Neosem Inc.",
-      "market": "KOSDAQ",
-      "role": "SSD 검사장비",
-      "group": "팹리스",
-      "mcapWon": 495282861560,
       "isListedKorea": true
     },
     {
@@ -2069,6 +2057,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-front_equip-089970",
+      "source": "krx:089970",
+      "target": "group:front_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "전공정 장비 밸류체인 분류",
+      "labelEn": "Front-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-front_equip-281820",
       "source": "krx:281820",
       "target": "group:front_equip",
@@ -2585,6 +2588,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-back_equip-253590",
+      "source": "krx:253590",
+      "target": "group:back_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "후공정 장비 밸류체인 분류",
+      "labelEn": "Back-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-22",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-back_equip-092870",
       "source": "krx:092870",
       "target": "group:back_equip",
@@ -2907,21 +2925,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-materials-089970",
-      "source": "krx:089970",
-      "target": "group:materials",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "소재 밸류체인 분류",
-      "labelEn": "Materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-materials-078600",
       "source": "krx:078600",
       "target": "group:materials",
@@ -2984,21 +2987,6 @@
     {
       "id": "member-materials-101490",
       "source": "krx:101490",
-      "target": "group:materials",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "소재 밸류체인 분류",
-      "labelEn": "Materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-materials-213420",
-      "source": "krx:213420",
       "target": "group:materials",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3715,21 +3703,6 @@
     {
       "id": "member-fabless-108320",
       "source": "krx:108320",
-      "target": "group:fabless",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "팹리스 밸류체인 분류",
-      "labelEn": "Fabless value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-22",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-fabless-253590",
-      "source": "krx:253590",
       "target": "group:fabless",
       "type": "member_of",
       "direction": "source_to_target",

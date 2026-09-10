@@ -14,10 +14,10 @@
   ],
   "metrics": {
     "legacyMigratedEdgeCount": 50,
-    "structuralGeneratedEdgeCount": 58,
+    "structuralGeneratedEdgeCount": 56,
     "manuallyCuratedEdgeCount": 5,
     "removedEdgeCount": 6,
-    "finalEdgeCount": 111
+    "finalEdgeCount": 109
   },
   "nodes": [
     {
@@ -192,20 +192,6 @@
       "legacyId": "skc"
     },
     {
-      "id": "krx:336260",
-      "type": "listed_company",
-      "ticker": "336260",
-      "nameKo": "두산퓨얼셀",
-      "nameEn": "Doosan Fuel Cell",
-      "market": "KOSPI",
-      "role": "ESS",
-      "group": "ESS",
-      "layer": "ESS",
-      "mcapWon": 2871899885100,
-      "isListedKorea": true,
-      "legacyId": "energy_doosan_fuel_cell"
-    },
-    {
       "id": "krx:450080",
       "type": "listed_company",
       "ticker": "450080",
@@ -338,9 +324,9 @@
       "nameKo": "솔루스첨단소재",
       "nameEn": "Solus Advanced Materials",
       "market": "KOSPI",
-      "role": "부품",
-      "group": "부품",
-      "layer": "부품",
+      "role": "소재",
+      "group": "소재",
+      "layer": "소재",
       "mcapWon": 523081620100,
       "isListedKorea": true,
       "legacyId": "energy_solus_advanced_materials"
@@ -436,9 +422,9 @@
       "nameKo": "더블유씨피",
       "nameEn": "W-SCOPE CHUNGJU PLANT CO., LTD.",
       "market": "KOSDAQ",
-      "role": "부품",
-      "group": "부품",
-      "layer": "부품",
+      "role": "소재",
+      "group": "소재",
+      "layer": "소재",
       "mcapWon": 340800460080,
       "isListedKorea": true,
       "legacyId": "energy_w_scope_chungju_plant_co"
@@ -782,22 +768,6 @@
       "edgeOrigin": "structuralGenerated"
     },
     {
-      "id": "member-336260-group-battery_ess",
-      "source": "krx:336260",
-      "target": "group:battery_ess",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "ESS 밸류체인 분류",
-      "labelEn": "ESS value-chain category",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-23",
-      "noteKo": "동일 밸류체인 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship.",
-      "edgeOrigin": "structuralGenerated"
-    },
-    {
       "id": "member-450080-group-battery_materials",
       "source": "krx:450080",
       "target": "group:battery_materials",
@@ -942,14 +912,14 @@
       "edgeOrigin": "structuralGenerated"
     },
     {
-      "id": "member-336370-group-battery_parts",
+      "id": "member-336370-group-battery_materials",
       "source": "krx:336370",
-      "target": "group:battery_parts",
+      "target": "group:battery_materials",
       "type": "member_of",
       "direction": "source_to_target",
       "status": "reference",
-      "labelKo": "부품 밸류체인 분류",
-      "labelEn": "부품 value-chain category",
+      "labelKo": "소재 밸류체인 분류",
+      "labelEn": "소재 value-chain category",
       "evidence": [],
       "confidence": "high",
       "lastVerifiedAt": "2026-08-23",
@@ -1054,14 +1024,14 @@
       "edgeOrigin": "structuralGenerated"
     },
     {
-      "id": "member-393890-group-battery_parts",
+      "id": "member-393890-group-battery_materials",
       "source": "krx:393890",
-      "target": "group:battery_parts",
+      "target": "group:battery_materials",
       "type": "member_of",
       "direction": "source_to_target",
       "status": "reference",
-      "labelKo": "부품 밸류체인 분류",
-      "labelEn": "부품 value-chain category",
+      "labelKo": "소재 밸류체인 분류",
+      "labelEn": "소재 value-chain category",
       "evidence": [],
       "confidence": "high",
       "lastVerifiedAt": "2026-08-23",
@@ -1261,22 +1231,6 @@
       "id": "produces-278280-product-copper_foil",
       "source": "krx:278280",
       "target": "product:copper_foil",
-      "type": "produces",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "제품·공정 위치",
-      "labelEn": "Product / process position",
-      "evidence": [],
-      "confidence": "medium",
-      "lastVerifiedAt": "2026-08-23",
-      "noteKo": "사업 영역 분류이며 특정 고객 납품을 의미하지 않습니다.",
-      "noteEn": "Business-line classification; not a named customer supply.",
-      "edgeOrigin": "structuralGenerated"
-    },
-    {
-      "id": "produces-336260-product-ess",
-      "source": "krx:336260",
-      "target": "product:ess",
       "type": "produces",
       "direction": "source_to_target",
       "status": "reference",

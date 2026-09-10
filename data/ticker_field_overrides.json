@@ -1,15 +1,37 @@
 {
-  "218410": {
-    "semType": "GaN RF·전력반도체",
-    "semTypeEn": "GaN RF & Power Semiconductors",
-    "products": "GaN RF 증폭기, 5G·위성·방산 통신용 전력반도체",
-    "productsEn": "GaN RF amplifiers and power semiconductors for 5G, satellite and defense communications"
+  "100090": {
+    "byIndustry": {
+      "ship": {
+        "semType": "해상풍력·플랜트",
+        "semTypeEn": "Offshore Wind & Plants",
+        "products": "해상풍력 하부구조·해양플랜트 EPC",
+        "productsEn": "Offshore wind substructures and marine plant EPC"
+      },
+      "energy": {
+        "semType": "해상풍력·플랜트",
+        "semTypeEn": "Offshore Wind & Plants",
+        "products": "해상풍력·신재생 해양플랜트",
+        "productsEn": "Offshore wind and renewable marine plants"
+      }
+    }
   },
-  "420770": {
-    "semType": "반도체·디스플레이 검사장비",
-    "semTypeEn": "Semiconductor & Display Inspection Equipment",
-    "products": "머신비전·AI 기반 반도체·디스플레이 검사·계측 장비",
-    "productsEn": "Machine vision and AI-based semiconductor and display inspection systems"
+  "100130": {
+    "semType": "화학·소재",
+    "semTypeEn": "Chemicals & Materials",
+    "products": "석유화학·소재 (동국그룹)",
+    "productsEn": "Petrochemicals and materials (Dongkuk group)"
+  },
+  "101160": {
+    "semType": "실리콘·쿼츠 공정 소모부품",
+    "semTypeEn": "Silicon & quartz process consumables",
+    "products": "식각장비용 실리콘·쿼츠·세라믹 소모부품",
+    "productsEn": "Silicon, quartz and ceramic consumables for etch tools"
+  },
+  "101170": {
+    "semType": "로봇 감속기·동력전달",
+    "semTypeEn": "Robot Reducers & Power Transmission",
+    "products": "로봇·산업용 감속기·동력전달 부품",
+    "productsEn": "Reducers and power transmission parts for robots and industry"
   },
   "101490": {
     "semType": "블랭크마스크·EUV 펠리클",
@@ -17,17 +39,306 @@
     "products": "포토마스크 블랭크·EUV 펠리클 등 리소그래피 소재",
     "productsEn": "Photomask blanks and EUV pellicles for lithography"
   },
+  "109820": {
+    "semType": "바이오·신약",
+    "semTypeEn": "Biotech & New Drugs",
+    "products": "신약·바이오 R&D",
+    "productsEn": "New drug and biotech R&D"
+  },
+  "115180": {
+    "semType": "세포치료·바이오",
+    "semTypeEn": "Cell Therapy & Biotech",
+    "products": "세포·유전자치료·바이오 R&D",
+    "productsEn": "Cell and gene therapy biotech R&D"
+  },
+  "117730": {
+    "semType": "산업용·협동로봇",
+    "semTypeEn": "Industrial & Collaborative Robots",
+    "products": "산업용·협동로봇 및 자동화 솔루션",
+    "productsEn": "Industrial and collaborative robots with automation solutions"
+  },
+  "119500": {
+    "semType": "방산 금속·정밀가공",
+    "semTypeEn": "Defense Metal Processing",
+    "products": "방산·항공용 금속 가공·정밀 부품",
+    "productsEn": "Precision metal parts for defense and aerospace"
+  },
+  "122640": {
+    "semType": "고압 어닐·열처리 장비",
+    "semTypeEn": "High-pressure anneal & thermal equipment",
+    "products": "고압 수소 어닐링·산화·퍼니스 등 전공정 열처리 장비",
+    "productsEn": "High-pressure hydrogen anneal, oxidation and furnace tools"
+  },
+  "137400": {
+    "semType": "2차전지·ESS 설비",
+    "semTypeEn": "Battery & ESS Equipment",
+    "products": "2차전지·ESS 생산·검사 설비",
+    "productsEn": "Battery and ESS manufacturing and inspection equipment"
+  },
+  "140410": {
+    "semType": "신약개발",
+    "semTypeEn": "Drug Development",
+    "products": "항암·면역 등 신약 파이프라인",
+    "productsEn": "Oncology and immunology drug pipeline"
+  },
+  "160980": {
+    "semType": "웨이퍼 이송·EFEM",
+    "semTypeEn": "Wafer handling & EFEM",
+    "products": "웨이퍼 이송 로봇·EFEM·로드포트",
+    "productsEn": "Wafer transfer robots, EFEM and load ports"
+  },
+  "173940": {
+    "semType": "K-pop·엔터",
+    "semTypeEn": "K-pop & Entertainment",
+    "products": "K-pop 아티스트 매니지먼트·음반 (FNC)",
+    "productsEn": "K-pop artist management and music (FNC Entertainment)"
+  },
+  "174900": {
+    "semType": "항체·바이오",
+    "semTypeEn": "Antibody Biotech",
+    "products": "항체·바이오의약품 R&D",
+    "productsEn": "Antibody and biologics R&D"
+  },
+  "182400": {
+    "semType": "세포·유전자",
+    "semTypeEn": "Cell & Gene",
+    "products": "세포·유전자치료 R&D",
+    "productsEn": "Cell and gene therapy R&D"
+  },
+  "195940": {
+    "semType": "바이오·제약",
+    "semTypeEn": "Biotech & Pharma",
+    "products": "바이오의약품·제네릭 (HK이노엔)",
+    "productsEn": "Biologics and generics (HK Inno.N)"
+  },
+  "199430": {
+    "semType": "물류·AMR·스택커",
+    "semTypeEn": "Logistics AMR & Stackers",
+    "products": "AMR·물류 스택커·창고 자동화 장비",
+    "productsEn": "AMRs, logistics stackers and warehouse automation equipment"
+  },
+  "205470": {
+    "semType": "바이오·헬스케어",
+    "semTypeEn": "Biotech & Healthcare",
+    "products": "바이오·헬스케어 R&D",
+    "productsEn": "Biotech and healthcare R&D"
+  },
+  "206560": {
+    "semType": "VFX·애니메이션",
+    "semTypeEn": "VFX & Animation",
+    "products": "VFX·애니메이션·영상 제작 (덱스터)",
+    "productsEn": "VFX, animation and video production (Dexter)"
+  },
+  "206650": {
+    "semType": "바이오의약품",
+    "semTypeEn": "Biologics",
+    "products": "바이오의약품·CDMO",
+    "productsEn": "Biologics and CDMO services"
+  },
+  "207760": {
+    "semType": "웹툰·웹소설",
+    "semTypeEn": "Webtoon & Web Novels",
+    "products": "웹툰·웹소설 플랫폼·IP",
+    "productsEn": "Webtoon and web novel platform and IP"
+  },
   "213420": {
     "semType": "OLED 유기발광소재",
     "semTypeEn": "OLED emissive materials",
     "products": "OLED 발광·정공수송 유기소재",
     "productsEn": "OLED emissive and hole-transport organic materials"
   },
-  "053610": {
-    "semType": "패키징 디스펜서·다이본더",
-    "semTypeEn": "Packaging dispensers & die bonders",
-    "products": "디스펜서·다이본더·레이저 솔더링 등 후공정 패키징 장비",
-    "productsEn": "Dispensers, die bonders and laser soldering packaging tools"
+  "214150": {
+    "semType": "미용 의료기기",
+    "semTypeEn": "Aesthetic Medical Devices",
+    "products": "슈링크·볼뉴머 등 에스테틱 HIFU·RF 장비",
+    "productsEn": "Shurink/Volnewmer aesthetic HIFU and RF devices"
+  },
+  "214610": {
+    "semType": "바이오·제약",
+    "semTypeEn": "Biotech & Pharma",
+    "products": "바이오의약품·제약",
+    "productsEn": "Biologics and pharmaceuticals"
+  },
+  "217730": {
+    "semType": "줄기세포·재생",
+    "semTypeEn": "Stem Cell & Regenerative",
+    "products": "줄기세포·재생의학 치료제",
+    "productsEn": "Stem cell and regenerative therapeutics"
+  },
+  "218410": {
+    "semType": "GaN RF·전력반도체",
+    "semTypeEn": "GaN RF & Power Semiconductors",
+    "products": "GaN RF 증폭기, 5G·위성·방산 통신용 전력반도체",
+    "productsEn": "GaN RF amplifiers and power semiconductors for 5G, satellite and defense communications"
+  },
+  "225220": {
+    "semType": "바이오·제약",
+    "semTypeEn": "Biotech & Pharma",
+    "products": "바이오의약품·제약",
+    "productsEn": "Biologics and pharmaceuticals"
+  },
+  "235980": {
+    "semType": "바이오·제약",
+    "semTypeEn": "Biotech & Pharma",
+    "products": "바이오의약품·제약 R&D",
+    "productsEn": "Biologics and pharmaceutical R&D"
+  },
+  "243840": {
+    "semType": "전력·ESS 부품",
+    "semTypeEn": "Power & ESS Components",
+    "products": "전력·ESS·전자 부품",
+    "productsEn": "Power, ESS and electronic components"
+  },
+  "249420": {
+    "semType": "제약",
+    "semTypeEn": "Pharmaceuticals",
+    "products": "전문의약품·OTC·제네릭 (일동제약)",
+    "productsEn": "Specialty, OTC and generic pharmaceuticals"
+  },
+  "253590": {
+    "semType": "메모리·SSD 검사장비",
+    "semTypeEn": "Memory/SSD Test Equipment",
+    "products": "SSD·메모리 번인·검사 장비",
+    "productsEn": "SSD and memory burn-in/test equipment"
+  },
+  "254490": {
+    "semType": "반도체 소자 유통",
+    "semTypeEn": "Semiconductor device distribution",
+    "products": "메모리·시스템반도체 등 반도체 소자 유통",
+    "productsEn": "Distribution of memory and system semiconductor devices",
+    "byIndustry": {
+      "semi": {
+        "chain": "반도체 유통"
+      }
+    }
+  },
+  "263050": {
+    "semType": "바이오·제약",
+    "semTypeEn": "Biotech & Pharma",
+    "products": "제약·바이오 R&D",
+    "productsEn": "Pharma and biotech R&D"
+  },
+  "263720": {
+    "semType": "게임·미디어",
+    "semTypeEn": "Games & Media",
+    "products": "모바일 게임·디지털 미디어",
+    "productsEn": "Mobile games and digital media"
+  },
+  "267250": {
+    "byIndustry": {
+      "ship": {
+        "semType": "조선·에너지 지주",
+        "semTypeEn": "Shipbuilding & Energy Holding",
+        "products": "HD현대중공업·일렉트릭 등 조선·에너지 계열 지주",
+        "productsEn": "Holding company for HD Hyundai shipbuilding and energy affiliates"
+      },
+      "energy": {
+        "semType": "에너지·조선 지주",
+        "semTypeEn": "Energy & Shipbuilding Holding",
+        "products": "조선·에너지·플랜트 계열 지주·사업 포트폴리오",
+        "productsEn": "Holding structure for shipbuilding, energy and plant businesses"
+      }
+    }
+  },
+  "267260": {
+    "byIndustry": {
+      "ship": {
+        "semType": "전력설비·중전기",
+        "semTypeEn": "Power Equipment & Heavy Electrical",
+        "products": "변압기·개폐기·전력설비, 조선·산업 전장",
+        "productsEn": "Transformers, switchgear and power systems for shipbuilding and industry"
+      },
+      "energy": {
+        "semType": "전력설비·중전기",
+        "semTypeEn": "Power Equipment & Heavy Electrical",
+        "products": "변압기·개폐기·ESS 연계 전력설비",
+        "productsEn": "Transformers, switchgear and grid/ESS power equipment"
+      }
+    }
+  },
+  "270660": {
+    "semType": "가정·서비스로봇",
+    "semTypeEn": "Consumer & Service Robots",
+    "products": "청소·서비스 등 가정용·상업용 로봇",
+    "productsEn": "Cleaning and service robots for home and commercial use"
+  },
+  "271940": {
+    "semType": "2차전지·소재",
+    "semTypeEn": "Battery Materials",
+    "products": "2차전지·전자 소재 (구 일진머티리얼즈)",
+    "productsEn": "Battery and electronic materials (legacy Iljin Materials)"
+  },
+  "289220": {
+    "semType": "게임·콘텐츠",
+    "semTypeEn": "Games & Content",
+    "products": "모바일·PC 게임 개발·퍼블리싱",
+    "productsEn": "Mobile and PC game development and publishing"
+  },
+  "297090": {
+    "semType": "베어링·전력기기",
+    "semTypeEn": "Bearings & Power Equipment",
+    "products": "대형 베어링·풍력·전력 설비 부품",
+    "productsEn": "Large bearings for wind and power equipment"
+  },
+  "298020": {
+    "semType": "산업·화학 소재",
+    "semTypeEn": "Industrial & Chemical Materials",
+    "products": "스판덱스·산업용 화학·소재",
+    "productsEn": "Spandex and industrial chemical materials"
+  },
+  "298060": {
+    "semType": "제약",
+    "semTypeEn": "Pharmaceuticals",
+    "products": "전문의약품·제네릭",
+    "productsEn": "Specialty and generic pharmaceuticals"
+  },
+  "299900": {
+    "semType": "VFX·콘텐츠 제작",
+    "semTypeEn": "VFX & Content Production",
+    "products": "VFX·영상·콘텐츠 제작 (위즈윅스)",
+    "productsEn": "VFX and video content production (Wizwick)"
+  },
+  "310200": {
+    "semType": "애니메이션·캐릭터",
+    "semTypeEn": "Animation & Characters",
+    "products": "애니메이션·캐릭터 콘텐츠 제작",
+    "productsEn": "Animation and character content production"
+  },
+  "314930": {
+    "semType": "바이오·진단",
+    "semTypeEn": "Biotech & Diagnostics",
+    "products": "바이오·진단·헬스케어 R&D",
+    "productsEn": "Biotech, diagnostics and healthcare R&D"
+  },
+  "336260": {
+    "semType": "수소·연료전지",
+    "semTypeEn": "Hydrogen Fuel Cells",
+    "products": "발전용 연료전지(수소·연료전지)",
+    "productsEn": "Stationary hydrogen fuel-cell power systems"
+  },
+  "336370": {
+    "semType": "전지박·동박(집전체)",
+    "semTypeEn": "Battery/Copper Foil",
+    "products": "전지박·동박 등 2차전지 집전체 (OLED 소재 병행)",
+    "productsEn": "Electrodeposited copper/battery foil; also OLED materials"
+  },
+  "348150": {
+    "semType": "바이오·신약",
+    "semTypeEn": "Biotech & New Drugs",
+    "products": "신약·바이오 R&D",
+    "productsEn": "New drug and biotech R&D"
+  },
+  "348210": {
+    "semType": "웨이퍼 결함 검사장비",
+    "semTypeEn": "Wafer defect inspection",
+    "products": "반도체 웨이퍼 패턴 결함 검사 장비",
+    "productsEn": "Wafer pattern defect inspection equipment"
+  },
+  "348370": {
+    "semType": "2차전지 전해액",
+    "semTypeEn": "Battery Electrolytes",
+    "products": "2차전지 전해액·전해질 소재",
+    "productsEn": "Lithium-ion battery electrolytes and additives"
   },
   "356860": {
     "semType": "메모리 모듈·SSD PCB",
@@ -40,6 +351,84 @@
       }
     }
   },
+  "388720": {
+    "semType": "물류·피킹 로봇",
+    "semTypeEn": "Logistics & Picking Robots",
+    "products": "물류·창고 피킹·이송 로봇 시스템",
+    "productsEn": "Warehouse picking and logistics robot systems"
+  },
+  "389260": {
+    "semType": "신재생·에너지",
+    "semTypeEn": "Renewable Energy",
+    "products": "신재생·에너지 사업·투자",
+    "productsEn": "Renewable energy development and investment"
+  },
+  "393890": {
+    "semType": "2차전지 분리막",
+    "semTypeEn": "Li-ion Battery Separators",
+    "products": "습식 리튬이온전지 분리막",
+    "productsEn": "Wet-process lithium-ion battery separators"
+  },
+  "415380": {
+    "semType": "조선·해양 설계·엔지니어링",
+    "semTypeEn": "Naval Architecture & Marine Engineering",
+    "products": "선박·해양플랜트 설계·엔지니어링 서비스",
+    "productsEn": "Ship and offshore plant design and engineering services"
+  },
+  "420770": {
+    "semType": "반도체·디스플레이 검사장비",
+    "semTypeEn": "Semiconductor & Display Inspection Equipment",
+    "products": "머신비전·AI 기반 반도체·디스플레이 검사·계측 장비",
+    "productsEn": "Machine vision and AI-based semiconductor and display inspection systems"
+  },
+  "425040": {
+    "semType": "반도체 특수가스",
+    "semTypeEn": "Specialty gases",
+    "products": "반도체 공정용 특수가스",
+    "productsEn": "Specialty gases for semiconductor processes"
+  },
+  "432430": {
+    "semType": "웹툰·IP",
+    "semTypeEn": "Webtoon & IP",
+    "products": "웹툰·IP 기획·제작",
+    "productsEn": "Webtoon and IP planning/production"
+  },
+  "445680": {
+    "semType": "세포 처리·분석 자동화 장비",
+    "semTypeEn": "Cell-processing Automation",
+    "products": "세포 전처리·분석 자동화 장비(연구도구)",
+    "productsEn": "Cell sample-prep and analysis automation (research tools)"
+  },
+  "446540": {
+    "semType": "방산·항공 MRO",
+    "semTypeEn": "Defense & Aviation MRO",
+    "products": "항공·방산 부품 MRO·정비·개조",
+    "productsEn": "Aviation and defense parts MRO, maintenance and modification"
+  },
+  "448710": {
+    "semType": "방산 전자·테스트",
+    "semTypeEn": "Defense Electronics & Test",
+    "products": "방산 전자·RF·테스트·계측 솔루션",
+    "productsEn": "Defense electronics, RF and test/measurement solutions"
+  },
+  "462870": {
+    "semType": "게임 개발",
+    "semTypeEn": "Game Developer",
+    "products": "「승리의 여신: 니케」·「스텔라 블레이드」 등 모바일·콘솔 게임",
+    "productsEn": "NIKKE and Stellar Blade mobile/console games"
+  },
+  "475400": {
+    "semType": "물류·팔레타이징 로봇",
+    "semTypeEn": "Logistics & Palletizing Robots",
+    "products": "물류·팔레타이징·공장 자동화 로봇 시스템",
+    "productsEn": "Logistics, palletizing and factory automation robot systems"
+  },
+  "053610": {
+    "semType": "패키징 디스펜서·다이본더",
+    "semTypeEn": "Packaging dispensers & die bonders",
+    "products": "디스펜서·다이본더·레이저 솔더링 등 후공정 패키징 장비",
+    "productsEn": "Dispensers, die bonders and laser soldering packaging tools"
+  },
   "086390": {
     "semType": "메모리 테스트·번인 장비",
     "semTypeEn": "Memory test & burn-in systems",
@@ -48,17 +437,6 @@
     "byIndustry": {
       "semi": {
         "chain": "패키징/테스트"
-      }
-    }
-  },
-  "254490": {
-    "semType": "반도체 소자 유통",
-    "semTypeEn": "Semiconductor device distribution",
-    "products": "메모리·시스템반도체 등 반도체 소자 유통",
-    "productsEn": "Distribution of memory and system semiconductor devices",
-    "byIndustry": {
-      "semi": {
-        "chain": "반도체 유통"
       }
     }
   },
@@ -101,89 +479,11 @@
     "products": "Wicop·SunLike LED, VCSEL 등 첨단 LED·광반도체",
     "productsEn": "Wicop/SunLike LEDs, VCSELs and advanced optoelectronic semiconductors"
   },
-  "348210": {
-    "semType": "웨이퍼 결함 검사장비",
-    "semTypeEn": "Wafer defect inspection",
-    "products": "반도체 웨이퍼 패턴 결함 검사 장비",
-    "productsEn": "Wafer pattern defect inspection equipment"
-  },
-  "122640": {
-    "semType": "고압 어닐·열처리 장비",
-    "semTypeEn": "High-pressure anneal & thermal equipment",
-    "products": "고압 수소 어닐링·산화·퍼니스 등 전공정 열처리 장비",
-    "productsEn": "High-pressure hydrogen anneal, oxidation and furnace tools"
-  },
-  "160980": {
-    "semType": "웨이퍼 이송·EFEM",
-    "semTypeEn": "Wafer handling & EFEM",
-    "products": "웨이퍼 이송 로봇·EFEM·로드포트",
-    "productsEn": "Wafer transfer robots, EFEM and load ports"
-  },
-  "101160": {
-    "semType": "실리콘·쿼츠 공정 소모부품",
-    "semTypeEn": "Silicon & quartz process consumables",
-    "products": "식각장비용 실리콘·쿼츠·세라믹 소모부품",
-    "productsEn": "Silicon, quartz and ceramic consumables for etch tools"
-  },
-  "425040": {
-    "semType": "반도체 특수가스",
-    "semTypeEn": "Specialty gases",
-    "products": "반도체 공정용 특수가스",
-    "productsEn": "Specialty gases for semiconductor processes"
-  },
   "079370": {
     "semType": "웨이퍼 세정장비",
     "semTypeEn": "Wafer cleaning equipment",
     "products": "습식 세정·웨이퍼 공정 자동화 장비",
     "productsEn": "Wet cleaning and wafer process automation equipment"
-  },
-  "267260": {
-    "byIndustry": {
-      "ship": {
-        "semType": "전력설비·중전기",
-        "semTypeEn": "Power Equipment & Heavy Electrical",
-        "products": "변압기·개폐기·전력설비, 조선·산업 전장",
-        "productsEn": "Transformers, switchgear and power systems for shipbuilding and industry"
-      },
-      "energy": {
-        "semType": "전력설비·중전기",
-        "semTypeEn": "Power Equipment & Heavy Electrical",
-        "products": "변압기·개폐기·ESS 연계 전력설비",
-        "productsEn": "Transformers, switchgear and grid/ESS power equipment"
-      }
-    }
-  },
-  "267250": {
-    "byIndustry": {
-      "ship": {
-        "semType": "조선·에너지 지주",
-        "semTypeEn": "Shipbuilding & Energy Holding",
-        "products": "HD현대중공업·일렉트릭 등 조선·에너지 계열 지주",
-        "productsEn": "Holding company for HD Hyundai shipbuilding and energy affiliates"
-      },
-      "energy": {
-        "semType": "에너지·조선 지주",
-        "semTypeEn": "Energy & Shipbuilding Holding",
-        "products": "조선·에너지·플랜트 계열 지주·사업 포트폴리오",
-        "productsEn": "Holding structure for shipbuilding, energy and plant businesses"
-      }
-    }
-  },
-  "100090": {
-    "byIndustry": {
-      "ship": {
-        "semType": "해상풍력·플랜트",
-        "semTypeEn": "Offshore Wind & Plants",
-        "products": "해상풍력 하부구조·해양플랜트 EPC",
-        "productsEn": "Offshore wind substructures and marine plant EPC"
-      },
-      "energy": {
-        "semType": "해상풍력·플랜트",
-        "semTypeEn": "Offshore Wind & Plants",
-        "products": "해상풍력·신재생 해양플랜트",
-        "productsEn": "Offshore wind and renewable marine plants"
-      }
-    }
   },
   "011810": {
     "semType": "조선·해양플랜트",
@@ -196,12 +496,6 @@
     "semTypeEn": "Shipbuilding Steel",
     "products": "조선용 강판·특수강·파이프",
     "productsEn": "Steel plate, specialty steel and pipes for shipbuilding"
-  },
-  "415380": {
-    "semType": "조선·해양 설계·엔지니어링",
-    "semTypeEn": "Naval Architecture & Marine Engineering",
-    "products": "선박·해양플랜트 설계·엔지니어링 서비스",
-    "productsEn": "Ship and offshore plant design and engineering services"
   },
   "000270": {
     "semType": "특수차량·방산 모빌리티",
@@ -245,29 +539,11 @@
     "products": "군용 광학·전자·통신 장비",
     "productsEn": "Military optics, electronics and communication equipment"
   },
-  "446540": {
-    "semType": "방산·항공 MRO",
-    "semTypeEn": "Defense & Aviation MRO",
-    "products": "항공·방산 부품 MRO·정비·개조",
-    "productsEn": "Aviation and defense parts MRO, maintenance and modification"
-  },
   "024740": {
     "semType": "방산 단조·특수금속",
     "semTypeEn": "Defense Forging & Specialty Metals",
     "products": "무기·항공용 단조품·특수금속 부품",
     "productsEn": "Forged and specialty metal parts for weapons and aviation"
-  },
-  "448710": {
-    "semType": "방산 전자·테스트",
-    "semTypeEn": "Defense Electronics & Test",
-    "products": "방산 전자·RF·테스트·계측 솔루션",
-    "productsEn": "Defense electronics, RF and test/measurement solutions"
-  },
-  "119500": {
-    "semType": "방산 금속·정밀가공",
-    "semTypeEn": "Defense Metal Processing",
-    "products": "방산·항공용 금속 가공·정밀 부품",
-    "productsEn": "Precision metal parts for defense and aerospace"
   },
   "013810": {
     "semType": "방산·산업 플랜트",
@@ -281,47 +557,11 @@
     "products": "원익IPS·QnC 등 반도체·장비 계열 지주",
     "productsEn": "Holding for Wonik IPS, QnC and semiconductor equipment affiliates"
   },
-  "388720": {
-    "semType": "물류·피킹 로봇",
-    "semTypeEn": "Logistics & Picking Robots",
-    "products": "물류·창고 피킹·이송 로봇 시스템",
-    "productsEn": "Warehouse picking and logistics robot systems"
-  },
-  "117730": {
-    "semType": "산업용·협동로봇",
-    "semTypeEn": "Industrial & Collaborative Robots",
-    "products": "산업용·협동로봇 및 자동화 솔루션",
-    "productsEn": "Industrial and collaborative robots with automation solutions"
-  },
-  "475400": {
-    "semType": "물류·팔레타이징 로봇",
-    "semTypeEn": "Logistics & Palletizing Robots",
-    "products": "물류·팔레타이징·공장 자동화 로봇 시스템",
-    "productsEn": "Logistics, palletizing and factory automation robot systems"
-  },
-  "270660": {
-    "semType": "가정·서비스로봇",
-    "semTypeEn": "Consumer & Service Robots",
-    "products": "청소·서비스 등 가정용·상업용 로봇",
-    "productsEn": "Cleaning and service robots for home and commercial use"
-  },
   "004380": {
     "semType": "LM 가이드·감속기",
     "semTypeEn": "Linear Motion & Reducers",
     "products": "LM 가이드·볼스크류·감속기 등 로봇·FA 핵심부품",
     "productsEn": "LM guides, ball screws and reducers for robots and factory automation"
-  },
-  "199430": {
-    "semType": "물류·AMR·스택커",
-    "semTypeEn": "Logistics AMR & Stackers",
-    "products": "AMR·물류 스택커·창고 자동화 장비",
-    "productsEn": "AMRs, logistics stackers and warehouse automation equipment"
-  },
-  "101170": {
-    "semType": "로봇 감속기·동력전달",
-    "semTypeEn": "Robot Reducers & Power Transmission",
-    "products": "로봇·산업용 감속기·동력전달 부품",
-    "productsEn": "Reducers and power transmission parts for robots and industry"
   },
   "059120": {
     "semType": "로봇·FA 모션제어",
@@ -363,53 +603,17 @@
       }
     }
   },
-  "298020": {
-    "semType": "산업·화학 소재",
-    "semTypeEn": "Industrial & Chemical Materials",
-    "products": "스판덱스·산업용 화학·소재",
-    "productsEn": "Spandex and industrial chemical materials"
-  },
   "003240": {
     "semType": "석유화학·섬유",
     "semTypeEn": "Petrochemicals & Textiles",
     "products": "PTA·폴리에스터 등 석유화학·섬유 소재",
     "productsEn": "PTA, polyester and petrochemical textile materials"
   },
-  "137400": {
-    "semType": "2차전지·ESS 설비",
-    "semTypeEn": "Battery & ESS Equipment",
-    "products": "2차전지·ESS 생산·검사 설비",
-    "productsEn": "Battery and ESS manufacturing and inspection equipment"
-  },
-  "336370": {
-    "semType": "2차전지 소재",
-    "semTypeEn": "Battery Materials",
-    "products": "2차전지 분리막·소재",
-    "productsEn": "Battery separators and advanced materials"
-  },
-  "348370": {
-    "semType": "2차전지 전해액",
-    "semTypeEn": "Battery Electrolytes",
-    "products": "2차전지 전해액·전해질 소재",
-    "productsEn": "Lithium-ion battery electrolytes and additives"
-  },
   "004710": {
     "semType": "전자·화학 소재",
     "semTypeEn": "Electronic & Chemical Materials",
     "products": "전자·반도체·디스플레이용 화학·소재",
     "productsEn": "Chemical and electronic materials for semiconductors and displays"
-  },
-  "271940": {
-    "semType": "2차전지·소재",
-    "semTypeEn": "Battery Materials",
-    "products": "2차전지·전자 소재 (구 일진머티리얼즈)",
-    "productsEn": "Battery and electronic materials (legacy Iljin Materials)"
-  },
-  "393890": {
-    "semType": "태양광·신재생",
-    "semTypeEn": "Solar & Renewables",
-    "products": "태양광 모듈·신재생 에너지",
-    "productsEn": "Solar modules and renewable energy products"
   },
   "011930": {
     "byIndustry": {
@@ -445,47 +649,11 @@
     "products": "PP·PE 등 석유화학·합성수지",
     "productsEn": "PP, PE and petrochemical polymers"
   },
-  "389260": {
-    "semType": "신재생·에너지",
-    "semTypeEn": "Renewable Energy",
-    "products": "신재생·에너지 사업·투자",
-    "productsEn": "Renewable energy development and investment"
-  },
   "091580": {
     "semType": "전력·배전기기",
     "semTypeEn": "Power Distribution Equipment",
     "products": "배전반·전력기기·전장",
     "productsEn": "Switchboards and power distribution equipment"
-  },
-  "243840": {
-    "semType": "전력·ESS 부품",
-    "semTypeEn": "Power & ESS Components",
-    "products": "전력·ESS·전자 부품",
-    "productsEn": "Power, ESS and electronic components"
-  },
-  "297090": {
-    "semType": "베어링·전력기기",
-    "semTypeEn": "Bearings & Power Equipment",
-    "products": "대형 베어링·풍력·전력 설비 부품",
-    "productsEn": "Large bearings for wind and power equipment"
-  },
-  "100130": {
-    "semType": "화학·소재",
-    "semTypeEn": "Chemicals & Materials",
-    "products": "석유화학·소재 (동국그룹)",
-    "productsEn": "Petrochemicals and materials (Dongkuk group)"
-  },
-  "214150": {
-    "semType": "미용 의료기기",
-    "semTypeEn": "Aesthetic Medical Devices",
-    "products": "슈링크·볼뉴머 등 에스테틱 HIFU·RF 장비",
-    "productsEn": "Shurink/Volnewmer aesthetic HIFU and RF devices"
-  },
-  "462870": {
-    "semType": "모바일 게임",
-    "semTypeEn": "Mobile Games",
-    "products": "스토브·「슈퍼바이브」 등 모바일·PC 게임",
-    "productsEn": "Stove platform and mobile/PC games including Supervive"
   },
   "034120": {
     "semType": "방송·미디어",
@@ -498,18 +666,6 @@
     "semTypeEn": "Animation & Content",
     "products": "애니메이션·캐릭터 IP 제작·라이선싱",
     "productsEn": "Animation and character IP production and licensing"
-  },
-  "310200": {
-    "semType": "애니메이션·캐릭터",
-    "semTypeEn": "Animation & Characters",
-    "products": "애니메이션·캐릭터 콘텐츠 제작",
-    "productsEn": "Animation and character content production"
-  },
-  "263720": {
-    "semType": "게임·미디어",
-    "semTypeEn": "Games & Media",
-    "products": "모바일 게임·디지털 미디어",
-    "productsEn": "Mobile games and digital media"
   },
   "036420": {
     "semType": "콘텐츠·미디어",
@@ -528,42 +684,6 @@
     "semTypeEn": "Animation & Characters",
     "products": "애니메이션·캐릭터·완구 IP",
     "productsEn": "Animation, character and toy IP"
-  },
-  "432430": {
-    "semType": "웹툰·IP",
-    "semTypeEn": "Webtoon & IP",
-    "products": "웹툰·IP 기획·제작",
-    "productsEn": "Webtoon and IP planning/production"
-  },
-  "299900": {
-    "semType": "VFX·콘텐츠 제작",
-    "semTypeEn": "VFX & Content Production",
-    "products": "VFX·영상·콘텐츠 제작 (위즈윅스)",
-    "productsEn": "VFX and video content production (Wizwick)"
-  },
-  "207760": {
-    "semType": "웹툰·웹소설",
-    "semTypeEn": "Webtoon & Web Novels",
-    "products": "웹툰·웹소설 플랫폼·IP",
-    "productsEn": "Webtoon and web novel platform and IP"
-  },
-  "173940": {
-    "semType": "K-pop·엔터",
-    "semTypeEn": "K-pop & Entertainment",
-    "products": "K-pop 아티스트 매니지먼트·음반 (FNC)",
-    "productsEn": "K-pop artist management and music (FNC Entertainment)"
-  },
-  "206560": {
-    "semType": "VFX·애니메이션",
-    "semTypeEn": "VFX & Animation",
-    "products": "VFX·애니메이션·영상 제작 (덱스터)",
-    "productsEn": "VFX, animation and video production (Dexter)"
-  },
-  "289220": {
-    "semType": "게임·콘텐츠",
-    "semTypeEn": "Games & Content",
-    "products": "모바일·PC 게임 개발·퍼블리싱",
-    "productsEn": "Mobile and PC game development and publishing"
   },
   "068050": {
     "semType": "영화·콘텐츠",
@@ -589,36 +709,6 @@
     "products": "전문의약품·바이오 R&D (한미사이언스)",
     "productsEn": "Specialty pharma and biotech R&D (Hanmi Science)"
   },
-  "140410": {
-    "semType": "신약개발",
-    "semTypeEn": "Drug Development",
-    "products": "항암·면역 등 신약 파이프라인",
-    "productsEn": "Oncology and immunology drug pipeline"
-  },
-  "195940": {
-    "semType": "바이오·제약",
-    "semTypeEn": "Biotech & Pharma",
-    "products": "바이오의약품·제네릭 (HK이노엔)",
-    "productsEn": "Biologics and generics (HK Inno.N)"
-  },
-  "115180": {
-    "semType": "세포치료·바이오",
-    "semTypeEn": "Cell Therapy & Biotech",
-    "products": "세포·유전자치료·바이오 R&D",
-    "productsEn": "Cell and gene therapy biotech R&D"
-  },
-  "249420": {
-    "semType": "제약",
-    "semTypeEn": "Pharmaceuticals",
-    "products": "전문의약품·OTC·제네릭 (일동제약)",
-    "productsEn": "Specialty, OTC and generic pharmaceuticals"
-  },
-  "174900": {
-    "semType": "항체·바이오",
-    "semTypeEn": "Antibody Biotech",
-    "products": "항체·바이오의약품 R&D",
-    "productsEn": "Antibody and biologics R&D"
-  },
   "019170": {
     "semType": "제약",
     "semTypeEn": "Pharmaceuticals",
@@ -631,82 +721,28 @@
     "products": "항암·바이오의약품 (HLB제약)",
     "productsEn": "Oncology and biologics (HLB Pharma)"
   },
-  "206650": {
-    "semType": "바이오의약품",
-    "semTypeEn": "Biologics",
-    "products": "바이오의약품·CDMO",
-    "productsEn": "Biologics and CDMO services"
-  },
-  "314930": {
-    "semType": "바이오·진단",
-    "semTypeEn": "Biotech & Diagnostics",
-    "products": "바이오·진단·헬스케어 R&D",
-    "productsEn": "Biotech, diagnostics and healthcare R&D"
-  },
-  "182400": {
-    "semType": "세포·유전자",
-    "semTypeEn": "Cell & Gene",
-    "products": "세포·유전자치료 R&D",
-    "productsEn": "Cell and gene therapy R&D"
-  },
-  "217730": {
-    "semType": "줄기세포·재생",
-    "semTypeEn": "Stem Cell & Regenerative",
-    "products": "줄기세포·재생의학 치료제",
-    "productsEn": "Stem cell and regenerative therapeutics"
-  },
   "084990": {
     "semType": "유전자·재생의학",
     "semTypeEn": "Gene & Regenerative Medicine",
     "products": "유전자·재생의학 치료 (헬릭스미스)",
     "productsEn": "Gene and regenerative medicine (Helixmith)"
   },
-  "235980": {
-    "semType": "바이오·제약",
-    "semTypeEn": "Biotech & Pharma",
-    "products": "바이오의약품·제약 R&D",
-    "productsEn": "Biologics and pharmaceutical R&D"
+  "089970": {
+    "semType": "전공정 식각장비",
+    "semTypeEn": "Etch Equipment",
+    "products": "반도체 플라즈마 식각(에칭) 장비 (구 에이피티씨)",
+    "productsEn": "Semiconductor plasma etch equipment (formerly APTC)"
   },
-  "205470": {
-    "semType": "바이오·헬스케어",
-    "semTypeEn": "Biotech & Healthcare",
-    "products": "바이오·헬스케어 R&D",
-    "productsEn": "Biotech and healthcare R&D"
+  "082740": {
+    "semType": "선박용 엔진",
+    "semTypeEn": "Marine Engines",
+    "products": "선박용 저속·이중연료 엔진",
+    "productsEn": "Low-speed and dual-fuel marine engines"
   },
-  "348150": {
-    "semType": "바이오·신약",
-    "semTypeEn": "Biotech & New Drugs",
-    "products": "신약·바이오 R&D",
-    "productsEn": "New drug and biotech R&D"
-  },
-  "225220": {
-    "semType": "바이오·제약",
-    "semTypeEn": "Biotech & Pharma",
-    "products": "바이오의약품·제약",
-    "productsEn": "Biologics and pharmaceuticals"
-  },
-  "109820": {
-    "semType": "바이오·신약",
-    "semTypeEn": "Biotech & New Drugs",
-    "products": "신약·바이오 R&D",
-    "productsEn": "New drug and biotech R&D"
-  },
-  "263050": {
-    "semType": "바이오·제약",
-    "semTypeEn": "Biotech & Pharma",
-    "products": "제약·바이오 R&D",
-    "productsEn": "Pharma and biotech R&D"
-  },
-  "298060": {
-    "semType": "제약",
-    "semTypeEn": "Pharmaceuticals",
-    "products": "전문의약품·제네릭",
-    "productsEn": "Specialty and generic pharmaceuticals"
-  },
-  "214610": {
-    "semType": "바이오·제약",
-    "semTypeEn": "Biotech & Pharma",
-    "products": "바이오의약품·제약",
-    "productsEn": "Biologics and pharmaceuticals"
+  "062040": {
+    "semType": "변압기",
+    "semTypeEn": "Transformers",
+    "products": "전력용·데이터센터용 변압기",
+    "productsEn": "Power and data-center transformers"
   }
 }

@@ -1,21 +1,21 @@
 {
   "migratedAt": "2026-08-23",
   "legacyMigratedEdgeCount": 50,
-  "structuralGeneratedEdgeCount": 58,
+  "structuralGeneratedEdgeCount": 56,
   "manuallyCuratedEdgeCount": 5,
   "removedEdgeCount": 6,
-  "finalEdgeCount": 111,
+  "finalEdgeCount": 109,
   "statusCounts": {
-    "reference": 72,
+    "reference": 70,
     "reported": 4,
     "peer": 31,
     "inferred": 4
   },
   "typeCounts": {
-    "member_of": 27,
+    "member_of": 26,
     "used_in_process": 3,
     "exposed_to": 16,
-    "produces": 20,
+    "produces": 19,
     "owns": 2,
     "participates_in": 2,
     "manufactures": 1,
@@ -125,17 +125,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:336260",
-      "target": "group:battery_ess",
-      "beforeType": "(none)",
-      "afterType": "member_of",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "cp_list chain → member_of group"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:450080",
       "target": "group:battery_materials",
       "beforeType": "(none)",
@@ -236,7 +225,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:336370",
-      "target": "group:battery_parts",
+      "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -313,7 +302,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:393890",
-      "target": "group:battery_parts",
+      "target": "group:battery_materials",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -446,17 +435,6 @@
       "legacyEdgeId": null,
       "source": "krx:278280",
       "target": "product:copper_foil",
-      "beforeType": "(none)",
-      "afterType": "produces",
-      "beforeStatus": "(none)",
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain/product focus → produces (not customer supply)"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:336260",
-      "target": "product:ess",
       "beforeType": "(none)",
       "afterType": "produces",
       "beforeStatus": "(none)",

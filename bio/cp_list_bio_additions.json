@@ -74,10 +74,14 @@
   {
     "ticker": "445680",
     "name": "큐리옥스바이오시스템즈",
-    "chain": "세포 · 유전자치료제",
-    "sectorId": "cell_gene",
-    "subSector": "세포분석 자동화",
-    "level": "core"
+    "chain": "플랫폼 기술",
+    "sectorId": "platform",
+    "subSector": "세포 처리·분석 자동화 장비",
+    "level": "core",
+    "semType": "세포 처리·분석 자동화 장비",
+    "semTypeEn": "Cell-processing Automation",
+    "products": "세포 전처리·분석 자동화 장비(연구도구)",
+    "productsEn": "Cell sample-prep and analysis automation (research tools)"
   },
   {
     "ticker": "476830",

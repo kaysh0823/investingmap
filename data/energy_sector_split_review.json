@@ -279,6 +279,15 @@
     "mcapWon": 1856662500000
   },
   {
+    "ticker": "100840",
+    "name": "SNT에너지",
+    "sector": "nuclear",
+    "chain": "운영·정비",
+    "origin": "nuclear",
+    "basis": "원전 열교환기·발전설비",
+    "mcapWon": 676261604100
+  },
+  {
     "ticker": "130660",
     "name": "한전산업",
     "sector": "nuclear",
@@ -349,6 +358,15 @@
     "origin": "renewable",
     "basis": "태양광 모듈",
     "mcapWon": 1555680000000
+  },
+  {
+    "ticker": "100090",
+    "name": "SK오션플랜트",
+    "sector": "renewable",
+    "chain": "풍력",
+    "origin": "renewable",
+    "basis": "해상풍력 하부구조",
+    "mcapWon": 865946867940
   },
   {
     "ticker": "119850",

@@ -11,5 +11,18 @@
     "partners": [],
     "subSector": "해상풍력 하부구조",
     "level": "core"
+  },
+  {
+    "ticker": "336260",
+    "name": "두산퓨얼셀",
+    "nameEn": "Doosan Fuel Cell",
+    "chain": "수소",
+    "semType": "수소·연료전지",
+    "semTypeEn": "Hydrogen Fuel Cells",
+    "products": "발전용 연료전지(수소·연료전지)",
+    "productsEn": "Stationary hydrogen fuel-cell power systems",
+    "partners": [],
+    "subSector": "수소·연료전지",
+    "level": "core"
   }
 ]

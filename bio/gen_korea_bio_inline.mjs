@@ -148,8 +148,19 @@ function mergeCpListAdditions(list, byKey, nameEnMap, meta3557) {
 
   for (const a of additions) {
     const ticker = a.ticker;
-    if (!ticker || byKey.has(ticker)) continue;
+    if (!ticker) continue;
     if (!allowedInSector(ticker, 'bio')) continue;
+    if (byKey.has(ticker)) {
+      const existing = byKey.get(ticker);
+      if (a.chain) existing.chain = a.chain;
+      if (a.sectorId) existing.sectorId = a.sectorId;
+      if (a.semType) existing.semType = a.semType;
+      if (a.semTypeEn) existing.semTypeEn = a.semTypeEn;
+      if (a.products) existing.products = a.products;
+      if (a.productsEn) existing.productsEn = a.productsEn;
+      if (a.subSector) existing.subSector = a.subSector;
+      continue;
+    }
     const row = krx.get(ticker);
     const mcapWon = row ? row.mcap : 0;
     if (!passesMcapFloor({ mcapWon })) continue;

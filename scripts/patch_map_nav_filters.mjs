@@ -41,7 +41,7 @@ const FILTER_BAR_OLD =
 
 const FILTER_BAR_NEW = `<div class="filter-bar">
         <div class="filter-row filter-row-chain">
-          <span class="filter-label" id="fl-chain-label">벨류체인</span>
+          <span class="filter-label" id="fl-chain-label">밸류체인</span>
           <div id="chain-chips"></div>
         </div>
         <div class="filter-row filter-row-market">
