@@ -3,12 +3,12 @@
   "phase": "5B.2",
   "reviewedBy": "editorial_manual_review_phase5b2",
   "metrics": {
-    "listedCompanyCount": 22,
+    "listedCompanyCount": 28,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 80,
-    "edgeCount": 117,
-    "structuralEdgeCount": 62,
-    "structuralGeneratedEdgeCount": 57,
+    "nodeCount": 86,
+    "edgeCount": 123,
+    "structuralEdgeCount": 68,
+    "structuralGeneratedEdgeCount": 63,
     "legacyMigratedEdgeCount": 54,
     "manuallyCuratedEdgeCount": 6,
     "confirmedBusinessEdgeCount": 1,
@@ -31,16 +31,16 @@
     "hybridExposedCompanyCount": 1,
     "hybridExposureCount": 1,
     "hybridStructuralEdgeCount": 1,
-    "businessRelationOrphanCount": 20,
-    "directRelationshipOrphanCount": 20,
-    "directCommercialRelationshipOrphanCount": 20,
-    "confirmedReportedBusinessOrphanCount": 20,
-    "classificationOnlyCompanyCount": 20,
+    "businessRelationOrphanCount": 26,
+    "directRelationshipOrphanCount": 26,
+    "directCommercialRelationshipOrphanCount": 26,
+    "confirmedReportedBusinessOrphanCount": 26,
+    "classificationOnlyCompanyCount": 26,
     "groupMembershipOnlyCompanyCount": 5,
-    "weakRelationOnlyCompanyCount": 15,
+    "weakRelationOnlyCompanyCount": 21,
     "hasPeerButNoBusinessCompanyCount": 20,
     "peerOnlyCompanyCount": 0,
-    "structuralOnlyCompanyCount": 0,
+    "structuralOnlyCompanyCount": 6,
     "orphanListedCompanyCount": 0,
     "structuralOrphanCount": 0,
     "orphanMetricDefinitions": {
@@ -483,7 +483,10 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -491,9 +494,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "directRelationshipOrphans": [
         "krx:005380",
@@ -505,7 +511,10 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -513,9 +522,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "classificationOnly": [
         "krx:005380",
@@ -527,7 +539,10 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -535,9 +550,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "groupMembershipOnly": [
         "krx:005380",
@@ -552,6 +570,9 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -559,9 +580,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "hasPeerButNoBusiness": [
         "krx:005380",
@@ -586,9 +610,16 @@
         "krx:381970"
       ],
       "peerOnly": [],
-      "structuralOnly": []
+      "structuralOnly": [
+        "krx:089860",
+        "krx:046070",
+        "krx:437730",
+        "krx:004700",
+        "krx:125490",
+        "krx:448900"
+      ]
     },
-    "evidenceFieldCoverage": 0.3504273504273504,
+    "evidenceFieldCoverage": 0.3333333333333333,
     "businessRelationshipDirectEvidenceCoverage": 1,
     "businessRelationshipPrimarySourceCoverage": 1,
     "supplyRelationshipDirectEvidenceCoverage": null,
@@ -601,9 +632,9 @@
     "claimCoverage": {
       "evidenceFieldCoverage": {
         "numerator": 41,
-        "denominator": 117,
-        "percentage": 0.3504273504273504,
-        "displayValue": "35%",
+        "denominator": 123,
+        "percentage": 0.3333333333333333,
+        "displayValue": "33.3%",
         "applicable": true,
         "reason": null
       },
@@ -723,18 +754,18 @@
     "phase5b1CuratedAt": "2026-08-23"
   },
   "orphan": {
-    "listedCompanyCount": 22,
+    "listedCompanyCount": 28,
     "structuralOrphanCount": 0,
-    "businessRelationOrphanCount": 20,
-    "directRelationshipOrphanCount": 20,
-    "directCommercialRelationshipOrphanCount": 20,
-    "classificationOnlyCompanyCount": 20,
+    "businessRelationOrphanCount": 26,
+    "directRelationshipOrphanCount": 26,
+    "directCommercialRelationshipOrphanCount": 26,
+    "classificationOnlyCompanyCount": 26,
     "groupMembershipOnlyCompanyCount": 5,
-    "weakRelationOnlyCompanyCount": 15,
+    "weakRelationOnlyCompanyCount": 21,
     "hasPeerButNoBusinessCompanyCount": 20,
     "peerOnlyCompanyCount": 0,
-    "structuralOnlyCompanyCount": 0,
-    "confirmedReportedBusinessOrphanCount": 20,
+    "structuralOnlyCompanyCount": 6,
+    "confirmedReportedBusinessOrphanCount": 26,
     "orphanListedCompanyCount": 0,
     "metricDefinitions": {
       "listedCompanyCount": {
@@ -1176,7 +1207,10 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -1184,9 +1218,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "directRelationshipOrphans": [
         "krx:005380",
@@ -1198,7 +1235,10 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -1206,9 +1246,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "classificationOnly": [
         "krx:005380",
@@ -1220,7 +1263,10 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -1228,9 +1274,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "groupMembershipOnly": [
         "krx:005380",
@@ -1245,6 +1294,9 @@
         "krx:005850",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -1252,9 +1304,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "hasPeerButNoBusiness": [
         "krx:005380",
@@ -1279,7 +1334,14 @@
         "krx:381970"
       ],
       "peerOnly": [],
-      "structuralOnly": []
+      "structuralOnly": [
+        "krx:089860",
+        "krx:046070",
+        "krx:437730",
+        "krx:004700",
+        "krx:125490",
+        "krx:448900"
+      ]
     }
   },
   "validate": {

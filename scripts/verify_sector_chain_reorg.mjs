@@ -58,27 +58,54 @@ for (const [ticker, expected] of Object.entries({
 
 const bioByTicker = new Map(sectors.bio.map((c) => [c.ticker, c]));
 for (const ticker of ['086450', '009290']) {
-  check(bioByTicker.get(ticker)?.chain === '합성신약 / 제네릭', `${ticker}: wrong bio chain ${bioByTicker.get(ticker)?.chain}`);
+  check(bioByTicker.get(ticker)?.chain === '종합 제약', `${ticker}: wrong bio chain ${bioByTicker.get(ticker)?.chain}`);
 }
-for (const retired of ['체외진단 (IVD)', '의료기기 / 디지털헬스']) {
+for (const retired of ['체외진단 (IVD)', '의료기기 / 디지털헬스', '합성신약 / 제네릭', '항체신약 / ADC']) {
   check(!sectors.bio.some((c) => c.chain === retired), `bio still contains retired chain ${retired}`);
 }
 check(
-  sectors.medtech.find((c) => c.ticker === '067630')?.chain === '진단·IVD',
-  '067630 is not in medtech 진단·IVD',
+  sectors.medtech.find((c) => c.ticker === '067630')?.chain === '체외진단',
+  '067630 is not in medtech 체외진단',
 );
 check(
-  sectors.defense.find((c) => c.ticker === '347700')?.chain === '우주·위성·민항',
-  '347700 is not in defense 우주·위성·민항',
+  !sectors.bio.some((c) => c.ticker === '086900'),
+  '086900 still on bio',
+);
+check(
+  sectors.cosmetics.find((c) => c.ticker === '086900')?.chain === '에스테틱 의약품·소모품',
+  '086900 not on cosmetics 에스테틱',
+);
+check(
+  sectors.defense.find((c) => c.ticker === '347700')?.chain === '소재·핵심부품',
+  '347700 is not in defense 소재·핵심부품',
 );
 
 const hub = JSON.parse(fs.readFileSync(join(ROOT, 'data', 'hub_index.json'), 'utf8'));
-check(Object.keys(hub.crossIndex || {}).length === 0, `crossIndex: expected 0, got ${Object.keys(hub.crossIndex || {}).length}`);
+const crossKeys = Object.keys(hub.crossIndex || {}).sort();
+check(crossKeys.length === 3, `crossIndex: expected 3, got ${crossKeys.length}`);
+check(
+  Array.isArray(hub.crossIndex?.['377300']) &&
+    hub.crossIndex['377300'].includes('finance') &&
+    hub.crossIndex['377300'].includes('software'),
+  'crossIndex must list 377300 finance+software',
+);
+check(
+  Array.isArray(hub.crossIndex?.['028260']) &&
+    hub.crossIndex['028260'].includes('construction') &&
+    hub.crossIndex['028260'].includes('kconsume'),
+  'crossIndex must list 028260 construction+kconsume',
+);
+check(
+  Array.isArray(hub.crossIndex?.['034020']) &&
+    hub.crossIndex['034020'].includes('nuclear') &&
+    hub.crossIndex['034020'].includes('powergrid'),
+  'crossIndex must list 034020 nuclear+powergrid',
+);
 
 console.log('Sector/chain reorganization verification');
 console.log('========================================');
 console.log('counts:', Object.fromEntries(Object.entries(sectors).map(([k, v]) => [k, v.length])));
-console.log('crossIndex:', Object.keys(hub.crossIndex || {}).length);
+console.log('crossIndex:', crossKeys.length, crossKeys.join(','));
 console.log('failures:', failures.length);
 for (const failure of failures) console.log(`  - ${failure}`);
 process.exit(failures.length ? 1 : 0);

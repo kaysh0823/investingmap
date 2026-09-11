@@ -11,5 +11,100 @@
     "partners": [],
     "subSector": "상사·에너지·렌탈",
     "level": "core"
+  },
+  {
+    "ticker": "018670",
+    "name": "SK가스",
+    "nameEn": "SK Gas",
+    "chain": "정유·가스",
+    "semType": "LPG·가스",
+    "semTypeEn": "LPG & gas",
+    "products": "LPG·가스 유통·트레이딩",
+    "productsEn": "LPG and gas distribution and trading",
+    "partners": [],
+    "subSector": "정유·가스",
+    "level": "core"
+  },
+  {
+    "ticker": "002380",
+    "name": "KCC",
+    "nameEn": "KCC",
+    "chain": "정밀·특수화학",
+    "semType": "실리콘·도료·특수화학",
+    "semTypeEn": "Silicones, coatings & specialty chemicals",
+    "products": "실리콘·도료 등 정밀·특수화학 (건자재 관계)",
+    "productsEn": "Silicones and coatings specialty chemicals",
+    "partners": [],
+    "subSector": "정밀·특수화학",
+    "level": "core"
+  },
+  {
+    "ticker": "001570",
+    "name": "금양",
+    "nameEn": "Kumyang",
+    "chain": "정밀·특수화학",
+    "semType": "발포제·정밀화학",
+    "semTypeEn": "Blowing agents & specialty chemicals",
+    "products": "발포제 등 정밀·특수화학 (주력)",
+    "productsEn": "Blowing agents and specialty chemicals (core)",
+    "partners": [],
+    "subSector": "정밀·특수화학",
+    "level": "core"
+  },
+  {
+    "ticker": "014820",
+    "name": "동원시스템즈",
+    "nameEn": "Dongwon Systems",
+    "chain": "포장재",
+    "semType": "포장재·알루미늄",
+    "semTypeEn": "Packaging & aluminium",
+    "products": "CAN·알루미늄 포장재",
+    "productsEn": "Cans and aluminium packaging",
+    "partners": [
+      "toray"
+    ],
+    "subSector": "포장재",
+    "level": "core"
+  },
+  {
+    "ticker": "008730",
+    "name": "율촌화학",
+    "nameEn": "Yulchon Chemical",
+    "chain": "포장재",
+    "semType": "포장필름",
+    "semTypeEn": "Packaging films",
+    "products": "BOPP·CPP·포장필름",
+    "productsEn": "BOPP, CPP and packaging films",
+    "partners": [
+      "toray"
+    ],
+    "subSector": "포장재",
+    "level": "core"
+  },
+  {
+    "ticker": "014830",
+    "name": "유니드",
+    "nameEn": "UNID",
+    "chain": "정밀·특수화학",
+    "semType": "가성칼륨·탄산칼륨",
+    "semTypeEn": "KOH / K2CO3",
+    "products": "가성칼륨·탄산칼륨",
+    "productsEn": "Potassium hydroxide and carbonate",
+    "partners": [],
+    "subSector": "정밀·특수화학",
+    "level": "core"
+  },
+  {
+    "ticker": "001390",
+    "name": "KG케미칼",
+    "nameEn": "KG Chemical",
+    "chain": "비료·농화학",
+    "semType": "비료·정밀화학",
+    "semTypeEn": "Fertilizer & specialty chem",
+    "products": "비료·정밀화학소재",
+    "productsEn": "Fertilizers and specialty chemicals",
+    "partners": [],
+    "subSector": "비료·농화학",
+    "level": "core"
   }
 ]

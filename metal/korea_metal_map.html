@@ -26,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- investingmap-seo -->
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <meta name="description" content="철강 사업회사·사업지주, 비철금속, 산업기계 관련 국내 상장사의 KRX 지표를 비교합니다. 다각화 지주회사는 holdings에 둡니다.">
+  <meta name="description" content="철강·비철금속·철강 트레이딩 관련 국내 상장사의 KRX 지표를 비교합니다. 산업·건설기계는 별도 지도에 둡니다.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.investingmap.kr/metal/korea_metal_map.html">
   <link rel="alternate" hreflang="ko-KR" href="https://www.investingmap.kr/metal/korea_metal_map.html?lang=ko">
@@ -38,10 +38,10 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:url" content="https://www.investingmap.kr/metal/korea_metal_map.html">
   <meta property="og:title" content="한국 철강·비철금속 투자 지도">
-  <meta property="og:description" content="철강 사업회사·사업지주, 비철금속, 산업기계 관련 국내 상장사의 KRX 지표를 비교합니다. 다각화 지주회사는 holdings에 둡니다.">
+  <meta property="og:description" content="철강·비철금속·철강 트레이딩 관련 국내 상장사의 KRX 지표를 비교합니다. 산업·건설기계는 별도 지도에 둡니다.">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="한국 철강·비철금속 투자 지도">
-  <meta name="twitter:description" content="철강 사업회사·사업지주, 비철금속, 산업기계 관련 국내 상장사의 KRX 지표를 비교합니다. 다각화 지주회사는 holdings에 둡니다.">
+  <meta name="twitter:description" content="철강·비철금속·철강 트레이딩 관련 국내 상장사의 KRX 지표를 비교합니다. 산업·건설기계는 별도 지도에 둡니다.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -239,16 +239,16 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=17"></script>
-  <script src="../js/map_i18n.js"></script>
-  <script src="../js/map_cross_sector.js?v=1"></script>
+<script src="../js/live_quotes.js?v=18"></script>
+  <script src="../js/map_i18n.js?v=10"></script>
+  <script src="../js/map_cross_sector.js?v=2"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
-  <script src="../js/map_momentum.js?v=12"></script>
+  <script src="../js/map_momentum.js?v=13"></script>
   <script src="../js/map_volatility.js?v=9"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
@@ -892,7 +892,6 @@
     .node-dim {
       opacity: .15
     }
-
     /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
@@ -2026,8 +2025,8 @@
     </button>
     <p id="hdr-subtitle">철강·비철금속·철강 트레이딩 관련 상장사</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>15</span>개 상장기업</div>
-      <div class="badge" id="badge-market">KOSPI <span>13</span>사 · KOSDAQ <span>2</span>사</div>
+      <div class="badge" id="badge-total">Total <span>15</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>13</span> · KOSDAQ <span>2</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -2036,16 +2035,16 @@
     <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
-    <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">철강·비철금속·산업기계 상장 종목</h2>
-    <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean steel, metals and machinery stocks</h2>
-    <p lang="ko" class="im-seo-body-p">철강·금속·기계 지도는 제철·강관·비철 사업회사, 철강 중심 사업지주와 산업기계를 묶습니다. POSCO홀딩스 같은 다각화 지주회사는 holdings에 두고, 현대제철·고려아연·세아베스틸지주처럼 철강·금속 사업 노출이 직접적인 회사는 이 지도에 둡니다. 정량 지표는 KRX 데이터입니다.</p>
-    <p lang="ko" class="im-seo-body-p">철강은 후판·봉형강 수요와 원료 가격, 비철은 아연·은 가격, 산업기계는 건설·물류 투자 사이클의 영향을 받습니다. Nippon Steel·Glencore·Caterpillar 연결은 사업 비교용 peer이며 계약 관계가 아닙니다.</p>
+    <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">철강·비철금속 상장 종목</h2>
+    <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean steel &amp; nonferrous metals stocks</h2>
+    <p lang="ko" class="im-seo-body-p">철강·비철금속 지도는 제철·강관·비철 사업회사와 철강 트레이딩을 묶습니다. 산업·건설기계는 별도 지도를 참고하세요. POSCO홀딩스 같은 다각화 지주회사는 holdings에 둡니다. 정량 지표는 KRX 데이터입니다.</p>
+    <p lang="ko" class="im-seo-body-p">철강은 후판·봉형강 수요와 원료 가격, 비철은 아연·은 가격의 영향을 받습니다. Nippon Steel·Glencore 연결은 사업 비교용 peer이며 계약 관계가 아닙니다.</p>
     <p lang="ko" class="im-seo-body-p">포스코인터내셔널과 현대제철은 조선 철강소재 체인에서 이동했으며, 두산에너빌리티는 원전, HD현대일렉트릭은 전력설비에 남겼습니다. 투자 권유가 아니므로 DART와 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The steel, metals and machinery map groups steel, pipe and nonferrous operators, steel-focused operating holdings, and industrial-machinery companies. Diversified holdings such as POSCO Holdings stay in holdings, while names with direct steel and metals exposure such as Hyundai Steel, Korea Zinc, and SeAH Besteel Holdings are listed here. Quantitative fields follow KRX data.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Steel tracks plate and long-product demand and raw-material prices, nonferrous names track zinc and silver, and machinery follows construction and logistics capex. Links to Nippon Steel, Glencore, and Caterpillar are peers, not contracts.</p>
+    <p lang="en" class="im-seo-body-p" hidden>The steel and nonferrous map groups steel, pipe and nonferrous operators plus steel trading. Industrial and construction machinery are on a separate map. Diversified holdings such as POSCO Holdings stay in holdings. Quantitative fields follow KRX data.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Steel tracks plate and long-product demand and raw-material prices; nonferrous names track zinc and silver. Links to Nippon Steel and Glencore are peers, not contracts.</p>
     <p lang="en" class="im-seo-body-p" hidden>POSCO International and Hyundai Steel were moved from the shipbuilding steel chain; Doosan Enerbility remains in nuclear and HD Hyundai Electric in power equipment. This is not investment advice; see DART and our <a href="../editorial-policy.html">editorial policy</a>.</p>
-    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 철강 관련주, 비철금속, 고려아연, 현대제철, 산업기계</p>
-    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean steel stocks, nonferrous metals, machinery, Hyundai Steel, Korea Zinc</p>
+    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 철강 관련주, 비철금속, 고려아연, 현대제철</p>
+    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean steel stocks, nonferrous metals, Hyundai Steel, Korea Zinc</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-01 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-01.</p>
   </div>
       <!-- investingmap-seo-body-end -->
@@ -2168,7 +2167,7 @@
       <td class="fin-cell">28.22</td>
       <td class="fin-cell">2.24</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">비철</span></td>
+      <td><span class="chain-tag">비철 제련</span></td>
       <td style="font-size:12px;color:var(--text-muted)">아연·연·은 제련</td>
       <td class="products-cell">아연·연·은·부산 비철</td>
       <td><div class="partners-list">Glencore</div></td>
@@ -2191,12 +2190,11 @@
       <td class="fin-cell">16.49</td>
       <td class="fin-cell">1.51</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강 트레이딩</span></td>
+      <td><span class="chain-tag">금속 유통·가공서비스</span></td>
       <td style="font-size:12px;color:var(--text-muted)">철강 트레이딩·자원</td>
       <td class="products-cell">철강 무역·에너지·식량 트레이딩</td>
       <td><div class="partners-list">Glencore</div></td>
     </tr>
-          
           <tr data-ticker="004020">
       <td><div class="company-name">현대제철</div><div class="company-name-sub">Hyundai Steel</div></td>
       <td><span class="ticker">004020</span></td>
@@ -2215,12 +2213,11 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.24</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">종합 철강</span></td>
       <td style="font-size:12px;color:var(--text-muted)">일관제철</td>
       <td class="products-cell">열연·냉연·후판·봉형강</td>
       <td><div class="partners-list">Nippon Steel, ArcelorMittal</div></td>
     </tr>
-          
           <tr data-ticker="001430">
       <td><div class="company-name">세아베스틸지주</div><div class="company-name-sub">SeAH Besteel Holdings</div></td>
       <td><span class="ticker">001430</span></td>
@@ -2239,7 +2236,7 @@
       <td class="fin-cell">30.50</td>
       <td class="fin-cell">0.88</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">특수강·단조</span></td>
       <td style="font-size:12px;color:var(--text-muted)">특수강·단조 사업지주</td>
       <td class="products-cell">특수강·자동차부품·대형단조 계열</td>
       <td><div class="partners-list">Nippon Steel</div></td>
@@ -2262,12 +2259,11 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">4.03</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">비철</span></td>
+      <td><span class="chain-tag">비철 가공·첨단금속</span></td>
       <td style="font-size:12px;color:var(--text-muted)">알루미늄 압연</td>
       <td class="products-cell">알루미늄박·포장재·배터리용 압연재</td>
       <td><div class="partners-list">Glencore</div></td>
     </tr>
-          
           <tr data-ticker="000670">
       <td><div class="company-name">영풍</div><div class="company-name-sub">Young Poong</div></td>
       <td><span class="ticker">000670</span></td>
@@ -2286,7 +2282,7 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.24</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">비철</span></td>
+      <td><span class="chain-tag">비철 제련</span></td>
       <td style="font-size:12px;color:var(--text-muted)">아연 제련</td>
       <td class="products-cell">아연·황산 등 비철금속 제련</td>
       <td><div class="partners-list">Glencore</div></td>
@@ -2309,7 +2305,7 @@
       <td class="fin-cell">97.55</td>
       <td class="fin-cell">13.66</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">비철</span></td>
+      <td><span class="chain-tag">비철 가공·첨단금속</span></td>
       <td style="font-size:12px;color:var(--text-muted)">특수합금·첨단금속</td>
       <td class="products-cell">항공·우주·반도체용 고순도 특수금속</td>
       <td><div class="partners-list">Glencore</div></td>
@@ -2332,7 +2328,7 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.93</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">비철</span></td>
+      <td><span class="chain-tag">비철 가공·첨단금속</span></td>
       <td style="font-size:12px;color:var(--text-muted)">비철(알루미늄)</td>
       <td class="products-cell">알루미늄·비철금속 압연·가공</td>
       <td><div class="partners-list">Glencore, ArcelorMittal</div></td>
@@ -2355,12 +2351,11 @@
       <td class="fin-cell">4.39</td>
       <td class="fin-cell">0.29</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">판재·도금강판</span></td>
       <td style="font-size:12px;color:var(--text-muted)">냉연·도금강판</td>
       <td class="products-cell">냉연·아연도금·컬러강판</td>
       <td><div class="partners-list">Nippon Steel</div></td>
     </tr>
-          
           <tr data-ticker="009520">
       <td><div class="company-name">포스코엠텍</div><div class="company-name-sub">POSCO M-Tech</div></td>
       <td><span class="ticker">009520</span></td>
@@ -2379,9 +2374,9 @@
       <td class="fin-cell">440.59</td>
       <td class="fin-cell">5.46</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">철강</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">철강 부자재·소재</td>
-      <td class="products-cell">제강·압연 부자재·철강 소재</td>
+      <td><span class="chain-tag">금속 유통·가공서비스</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">철강 포장·탈산제</td>
+      <td class="products-cell">철강 포장 용역·알루미늄 탈산제</td>
       <td><div class="partners-list">Nippon Steel, ArcelorMittal</div></td>
     </tr>
           <tr data-ticker="460860">
@@ -2402,7 +2397,7 @@
       <td class="fin-cell">57.23</td>
       <td class="fin-cell">0.25</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">봉형강·선재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">봉형강·후판</td>
       <td class="products-cell">철근·형강·후판</td>
       <td><div class="partners-list">ArcelorMittal</div></td>
@@ -2425,7 +2420,7 @@
       <td class="fin-cell">53.46</td>
       <td class="fin-cell">0.28</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">봉형강·선재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">선재·와이어로프</td>
       <td class="products-cell">선재·와이어로프·비드와이어</td>
       <td><div class="partners-list">Nippon Steel</div></td>
@@ -2448,7 +2443,7 @@
       <td class="fin-cell">13.18</td>
       <td class="fin-cell">0.35</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">강관</span></td>
       <td style="font-size:12px;color:var(--text-muted)">에너지용 강관</td>
       <td class="products-cell">유정용·송유관·구조용 강관</td>
       <td><div class="partners-list">Nippon Steel</div></td>
@@ -2471,7 +2466,7 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">0.37</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">봉형강·선재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">봉형강</td>
       <td class="products-cell">철근·봉강</td>
       <td><div class="partners-list">ArcelorMittal</div></td>
@@ -2494,12 +2489,11 @@
       <td class="fin-cell">10.30</td>
       <td class="fin-cell">0.80</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">철강</span></td>
+      <td><span class="chain-tag">강관</span></td>
       <td style="font-size:12px;color:var(--text-muted)">강관</td>
       <td class="products-cell">유정용·산업용 강관</td>
       <td><div class="partners-list">Nippon Steel</div></td>
     </tr>
-          
 <!-- investingmap-seo-prerender-end -->
           </tbody>
         </table>
@@ -2574,7 +2568,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"철강":"#78909C","비철":"#FFA726","철강 트레이딩":"#42A5F5"};
+    const CHAIN_COLORS = {"종합 철강":"#78909C","판재·도금강판":"#42A5F5","봉형강·선재":"#8D6E63","강관":"#26A69A","특수강·단조":"#5C6BC0","비철 제련":"#FFA726","비철 가공·첨단금속":"#FF8A65","금속 유통·가공서비스":"#AB47BC"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2635,7 +2629,7 @@
         "momentumChange": "당일 등락률",
         "momentumPosition": "주가 위치",
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
-        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
+        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 일일 등락률",
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크 (수정중)",
@@ -2667,16 +2661,24 @@
         "sbSize": "노드 크기",
         "sbHow": "조작법",
         "chainLabel": {
-            "철강": "철강",
-            "비철": "비철금속",
-            "철강 트레이딩": "철강 트레이딩",
-            "산업기계": "산업기계"
+            "종합 철강": "종합 철강",
+            "판재·도금강판": "판재·도금강판",
+            "봉형강·선재": "봉형강·선재",
+            "강관": "강관",
+            "특수강·단조": "특수강·단조",
+            "비철 제련": "비철 제련",
+            "비철 가공·첨단금속": "비철 가공·첨단금속",
+            "금속 유통·가공서비스": "금속 유통·가공서비스"
         },
         "chainFilter": {
-            "철강": "철강",
-            "비철": "비철금속",
-            "철강 트레이딩": "철강 트레이딩",
-            "산업기계": "산업기계"
+            "종합 철강": "종합 철강",
+            "판재·도금강판": "판재·도금강판",
+            "봉형강·선재": "봉형강·선재",
+            "강관": "강관",
+            "특수강·단조": "특수강·단조",
+            "비철 제련": "비철 제련",
+            "비철 가공·첨단금속": "비철 가공·첨단금속",
+            "금속 유통·가공서비스": "금속 유통·가공서비스"
         },
         "allFilter": "전체",
         "kosp": "KOSPI",
@@ -2760,7 +2762,7 @@
         "momentumChange": "1-day return",
         "momentumPosition": "Price position",
         "momentumNoData": "No companies have RS, price-position and turnover data.",
-        "momentumLegend": "Color = 1-day return · size = daily turnover",
+        "momentumLegend": "Color = 1-day return · size = daily turnover · vertical lines = market index RS",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
         "tabGraph": "🌐 Relationship network (WIP)",
@@ -2792,16 +2794,24 @@
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
-            "철강": "Steel",
-            "비철": "Nonferrous metals",
-            "철강 트레이딩": "Steel trading",
-            "산업기계": "Industrial machinery"
+            "종합 철강": "Integrated steel",
+            "판재·도금강판": "Flat & coated steel",
+            "봉형강·선재": "Long products & wire rod",
+            "강관": "Steel pipe",
+            "특수강·단조": "Specialty steel & forging",
+            "비철 제련": "Non-ferrous smelting",
+            "비철 가공·첨단금속": "Non-ferrous processing & advanced metals",
+            "금속 유통·가공서비스": "Metal trading & processing services"
         },
         "chainFilter": {
-            "철강": "Steel",
-            "비철": "Nonferrous metals",
-            "철강 트레이딩": "Steel trading",
-            "산업기계": "Industrial machinery"
+            "종합 철강": "Integrated",
+            "판재·도금강판": "Flat steel",
+            "봉형강·선재": "Long products",
+            "강관": "Pipe",
+            "특수강·단조": "Specialty",
+            "비철 제련": "Smelting",
+            "비철 가공·첨단금속": "Processing",
+            "금속 유통·가공서비스": "Trading/services"
         },
         "allFilter": "All",
         "kosp": "KOSPI",
@@ -2838,105 +2848,106 @@
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
-        id: 'korea_zinc', name: '고려아연', nameEn: 'Korea Zinc', ticker: '010130', market: 'KOSPI', chain: '비철',
+        id: 'korea_zinc', name: '고려아연', nameEn: 'Korea Zinc', ticker: '010130', market: 'KOSPI', chain: '비철 제련',
         semType: '아연·연·은 제련', semTypeEn: 'Zinc, lead and silver smelting',
         products: '아연·연·은·부산 비철', productsEn: 'Zinc, lead, silver and by-product metals',
         revenue: '25.51조원', mcapWon: 25506768118000, per: 28.22, pbr: 2.24, revTier: 3, partners: ['glencore']
       },
 
       {
-        id: 'posco_int', name: '포스코인터내셔널', nameEn: 'POSCO International', ticker: '047050', market: 'KOSPI', chain: '철강 트레이딩',
+        id: 'posco_int', name: '포스코인터내셔널', nameEn: 'POSCO International', ticker: '047050', market: 'KOSPI', chain: '금속 유통·가공서비스',
         semType: '철강 트레이딩·자원', semTypeEn: 'Steel trading and resources',
         products: '철강 무역·에너지·식량 트레이딩', productsEn: 'Steel, energy and agri trading',
+        relations: [{"relationId":"group-posco","type":"지배구조","label":"POSCO 계열","chip":"계열","chipEn":"Affiliate","ticker":"005490","name":"POSCO홀딩스","nameEn":"POSCO Holdings","sector":"holdings","map":"holdings/korea_holdings_map.html"},{"relationId":"group-posco","type":"지배구조","label":"POSCO 계열","chip":"계열","chipEn":"Affiliate","ticker":"003670","name":"포스코퓨처엠","nameEn":"POSCO FUTURE M","sector":"battery","map":"battery/korea_battery_map.html"}],
         revenue: '9.62조원', mcapWon: 9622976503600, per: 16.49, pbr: 1.51, revTier: 2, partners: ['glencore']
       },
 
       {
-        id: 'hyundai_steel', name: '현대제철', nameEn: 'Hyundai Steel', ticker: '004020', market: 'KOSPI', chain: '철강',
+        id: 'hyundai_steel', name: '현대제철', nameEn: 'Hyundai Steel', ticker: '004020', market: 'KOSPI', chain: '종합 철강',
         semType: '일관제철', semTypeEn: 'Integrated steelmaking',
         products: '열연·냉연·후판·봉형강', productsEn: 'Hot-rolled, cold-rolled, plate and long products',
         revenue: '4.20조원', mcapWon: 4203542227500, per: null, pbr: 0.24, revTier: 2, partners: ['nippon_steel', 'arcelormittal']
       },
 
       {
-        id: 'seah_besteel_holdings', name: '세아베스틸지주', nameEn: 'SeAH Besteel Holdings', ticker: '001430', market: 'KOSPI', chain: '철강',
+        id: 'seah_besteel_holdings', name: '세아베스틸지주', nameEn: 'SeAH Besteel Holdings', ticker: '001430', market: 'KOSPI', chain: '특수강·단조',
         semType: '특수강·단조 사업지주', semTypeEn: 'Specialty steel and forging operating holding',
         products: '특수강·자동차부품·대형단조 계열', productsEn: 'Specialty steel, automotive parts and large forgings',
         revenue: '1.52조원', mcapWon: 1518760739650, per: 30.5, pbr: 0.88, revTier: 2, partners: ['nippon_steel']
       },
 
       {
-        id: 'sama_aluminium', name: '삼아알미늄', nameEn: 'Sama Aluminium', ticker: '006110', market: 'KOSPI', chain: '비철',
+        id: 'sama_aluminium', name: '삼아알미늄', nameEn: 'Sama Aluminium', ticker: '006110', market: 'KOSPI', chain: '비철 가공·첨단금속',
         semType: '알루미늄 압연', semTypeEn: 'Rolled aluminium',
         products: '알루미늄박·포장재·배터리용 압연재', productsEn: 'Aluminium foil, packaging and battery-grade rolled products',
         revenue: '1.04조원', mcapWon: 1038981358500, per: null, pbr: 4.03, revTier: 2, partners: ['glencore']
       },
 
       {
-        id: 'youngpoong', name: '영풍', nameEn: 'Young Poong', ticker: '000670', market: 'KOSPI', chain: '비철',
+        id: 'youngpoong', name: '영풍', nameEn: 'Young Poong', ticker: '000670', market: 'KOSPI', chain: '비철 제련',
         semType: '아연 제련', semTypeEn: 'Zinc smelting',
         products: '아연·황산 등 비철금속 제련', productsEn: 'Zinc, sulfuric acid and nonferrous smelting',
         revenue: '0.72조원', mcapWon: 723539841900, per: null, pbr: 0.24, revTier: 1, partners: ['glencore']
       },
 
       {
-        id: 'hvm', name: '에이치브이엠', nameEn: 'HVM CO.,LTD.', ticker: '295310', market: 'KOSDAQ', chain: '비철',
+        id: 'hvm', name: '에이치브이엠', nameEn: 'HVM CO.,LTD.', ticker: '295310', market: 'KOSDAQ', chain: '비철 가공·첨단금속',
         semType: '특수합금·첨단금속', semTypeEn: 'Special alloys & advanced metals',
         products: '항공·우주·반도체용 고순도 특수금속', productsEn: 'High-purity specialty metals for aerospace and semiconductors',
         revenue: '0.60조원', mcapWon: 595897402800, per: 97.55, pbr: 13.66, revTier: 1, partners: ['glencore']
       },
 
       {
-        id: 'metal_di_dongil', name: 'DI동일', nameEn: 'DI Dongil', ticker: '001530', market: 'KOSPI', chain: '비철',
+        id: 'metal_di_dongil', name: 'DI동일', nameEn: 'DI Dongil', ticker: '001530', market: 'KOSPI', chain: '비철 가공·첨단금속',
         semType: '비철(알루미늄)', semTypeEn: 'Nonferrous (aluminium)',
         products: '알루미늄·비철금속 압연·가공', productsEn: 'Aluminium rolling and nonferrous processing',
         revenue: '0.57조원', mcapWon: 571751139600, per: null, pbr: 0.93, revTier: 1, partners: ['glencore', 'arcelormittal']
       },
 
       {
-        id: 'kg_steel', name: 'KG스틸', nameEn: 'KG Steel', ticker: '016380', market: 'KOSPI', chain: '철강',
+        id: 'kg_steel', name: 'KG스틸', nameEn: 'KG Steel', ticker: '016380', market: 'KOSPI', chain: '판재·도금강판',
         semType: '냉연·도금강판', semTypeEn: 'Cold-rolled and coated steel',
         products: '냉연·아연도금·컬러강판', productsEn: 'Cold-rolled, galvanized and color-coated steel',
         revenue: '0.56조원', mcapWon: 559049734230, per: 4.39, pbr: 0.29, revTier: 1, partners: ['nippon_steel']
       },
 
       {
-        id: 'metal_posco_m_tech', name: '포스코엠텍', nameEn: 'POSCO M-Tech', ticker: '009520', market: 'KOSDAQ', chain: '철강',
-        semType: '철강 부자재·소재', semTypeEn: 'Steel materials & consumables',
-        products: '제강·압연 부자재·철강 소재', productsEn: 'Steelmaking consumables and steel materials',
+        id: 'metal_posco_m_tech', name: '포스코엠텍', nameEn: 'POSCO M-Tech', ticker: '009520', market: 'KOSDAQ', chain: '금속 유통·가공서비스',
+        semType: '철강 포장·탈산제', semTypeEn: 'Steel packaging & deoxidizer',
+        products: '철강 포장 용역·알루미늄 탈산제', productsEn: 'Steel packaging services and aluminum deoxidizers',
         revenue: '0.53조원', mcapWon: 526780192950, per: 440.59, pbr: 5.46, revTier: 1, partners: ['nippon_steel', 'arcelormittal']
       },
 
       {
-        id: 'dongkuk_steel', name: '동국제강', nameEn: 'Dongkuk Steel', ticker: '460860', market: 'KOSPI', chain: '철강',
+        id: 'dongkuk_steel', name: '동국제강', nameEn: 'Dongkuk Steel', ticker: '460860', market: 'KOSPI', chain: '봉형강·선재',
         semType: '봉형강·후판', semTypeEn: 'Long products and plate',
         products: '철근·형강·후판', productsEn: 'Rebar, sections and plate',
         revenue: '0.52조원', mcapWon: 521380258670, per: 57.23, pbr: 0.25, revTier: 1, partners: ['arcelormittal']
       },
 
       {
-        id: 'kiswire', name: '고려제강', nameEn: 'KISWire', ticker: '002240', market: 'KOSPI', chain: '철강',
+        id: 'kiswire', name: '고려제강', nameEn: 'KISWire', ticker: '002240', market: 'KOSPI', chain: '봉형강·선재',
         semType: '선재·와이어로프', semTypeEn: 'Wire rod and wire rope',
         products: '선재·와이어로프·비드와이어', productsEn: 'Wire rod, wire rope and bead wire',
         revenue: '0.46조원', mcapWon: 464940000000, per: 53.46, pbr: 0.28, revTier: 1, partners: ['nippon_steel']
       },
 
       {
-        id: 'seah_steel', name: '세아제강', nameEn: 'SeAH Steel', ticker: '306200', market: 'KOSPI', chain: '철강',
+        id: 'seah_steel', name: '세아제강', nameEn: 'SeAH Steel', ticker: '306200', market: 'KOSPI', chain: '강관',
         semType: '에너지용 강관', semTypeEn: 'Energy steel pipe',
         products: '유정용·송유관·구조용 강관', productsEn: 'OCTG, line pipe and structural steel pipe',
         revenue: '0.41조원', mcapWon: 410412610000, per: 13.18, pbr: 0.35, revTier: 1, partners: ['nippon_steel']
       },
 
       {
-        id: 'hankook_steel', name: '한국철강', nameEn: 'Hankook Steel', ticker: '104700', market: 'KOSPI', chain: '철강',
+        id: 'hankook_steel', name: '한국철강', nameEn: 'Hankook Steel', ticker: '104700', market: 'KOSPI', chain: '봉형강·선재',
         semType: '봉형강', semTypeEn: 'Long steel products',
         products: '철근·봉강', productsEn: 'Rebar and bars',
         revenue: '0.35조원', mcapWon: 353565000000, per: null, pbr: 0.37, revTier: 1, partners: ['arcelormittal']
       },
 
       {
-        id: 'nexteel', name: '넥스틸', nameEn: 'Nexteel', ticker: '092790', market: 'KOSPI', chain: '철강',
+        id: 'nexteel', name: '넥스틸', nameEn: 'Nexteel', ticker: '092790', market: 'KOSPI', chain: '강관',
         semType: '강관', semTypeEn: 'Steel pipe',
         products: '유정용·산업용 강관', productsEn: 'OCTG and industrial pipe',
         revenue: '0.34조원', mcapWon: 337765980000, per: 10.3, pbr: 0.8, revTier: 1, partners: ['nippon_steel']
@@ -3125,7 +3136,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '철강', '비철', '철강 트레이딩'];
+      const chains = ['all', '종합 철강', '판재·도금강판', '봉형강·선재', '강관', '특수강·단조', '비철 제련', '비철 가공·첨단금속', '금속 유통·가공서비스'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
@@ -3151,7 +3162,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['철강', '비철', '철강 트레이딩'];
+      const chains = ['종합 철강', '판재·도금강판', '봉형강·선재', '강관', '특수강·단조', '비철 제련', '비철 가공·첨단금속', '금속 유통·가공서비스'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -3487,6 +3498,9 @@
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,
@@ -3593,7 +3607,8 @@
       <li><a href="../renewable/korea_renewable_map.html">한국 신재생에너지 투자 지도</a> · <a href="../renewable/korea_renewable_map.html?lang=en" hreflang="en">Korea Renewable Energy Map</a></li>
       <li><a href="../nuclear/korea_nuclear_map.html">한국 원전 투자 지도</a> · <a href="../nuclear/korea_nuclear_map.html?lang=en" hreflang="en">Korea Nuclear Power Map</a></li>
       <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Equipment Map</a></li>
-      <li><a href="../ship/korea_ship_map.html">한국 조선/해운 산업 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Shipping Map</a></li>
+      <li><a href="../ship/korea_ship_map.html">한국 조선·기자재 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Marine Equipment Map</a></li>
+      <li><a href="../shipping/korea_shipping_map.html">한국 해운·물류 투자 지도</a> · <a href="../shipping/korea_shipping_map.html?lang=en" hreflang="en">Korea Shipping &amp; Logistics Map</a></li>
       <li><a href="../defense/korea_defense_map.html">한국 방산·우주 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense &amp; Space Map</a></li>
       <li><a href="../kconsume/korea_kconsume_map.html">한국 소비/유통 투자 지도</a> · <a href="../kconsume/korea_kconsume_map.html?lang=en" hreflang="en">Korea Consumer / Retail Map</a></li>
       <li><a href="../cosmetics/korea_cosmetics_map.html">한국 화장품/미용기기 투자 지도</a> · <a href="../cosmetics/korea_cosmetics_map.html?lang=en" hreflang="en">Korea Cosmetics / Aesthetic Devices Map</a></li>
@@ -3610,6 +3625,7 @@
       <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
       <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
+      <li><a href="../machinery/korea_machinery_map.html">한국 산업·건설기계 투자 지도</a> · <a href="../machinery/korea_machinery_map.html?lang=en" hreflang="en">Korea Industrial &amp; Construction Machinery Map</a></li>
       </ul>
     </nav>
   </section>

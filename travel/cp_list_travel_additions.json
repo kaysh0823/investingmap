@@ -1,0 +1,15 @@
+[
+  {
+    "ticker": "006730",
+    "name": "서부T&D",
+    "nameEn": "Seobu T&D Co.,Ltd",
+    "chain": "호텔·리조트",
+    "semType": "호텔·복합몰",
+    "semTypeEn": "Hotels & mixed-use",
+    "products": "호텔(드래곤시티)·복합쇼핑몰",
+    "productsEn": "Hotels (Dragon City) and mixed-use malls",
+    "partners": [],
+    "subSector": "호텔·리조트",
+    "level": "core"
+  }
+]

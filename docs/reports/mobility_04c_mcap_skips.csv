@@ -1,0 +1,3 @@
+ticker,name,sector,status,notes
+000430,"대원강업",auto,mcap_floor_skip,"매핑표 섀시·안전이나 시총 3천억 미만으로 미편입"
+010690,"화신",auto,mcap_floor_skip,"매핑표 차체·내외장이나 시총 3천억 미만으로 미편입"

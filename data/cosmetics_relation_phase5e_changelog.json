@@ -2,16 +2,16 @@
   "asOf": "2026-08-23",
   "phase": "5E",
   "reviewedBy": "editorial_phase5e",
-  "listedCompanyCount": 21,
+  "listedCompanyCount": 22,
   "metrics": {
-    "listedCompanyCount": 21,
+    "listedCompanyCount": 22,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 60,
-    "edgeCount": 65,
+    "nodeCount": 61,
+    "edgeCount": 66,
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 2,
-      "listed_company": 21,
+      "listed_company": 22,
       "brand": 10,
       "product_category": 11,
       "beauty_product": 6,
@@ -19,7 +19,7 @@
       "retail_channel": 1,
       "global_company": 4
     },
-    "structuralGeneratedEdgeCount": 56,
+    "structuralGeneratedEdgeCount": 57,
     "legacyMigratedEdgeCount": 4,
     "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
@@ -40,13 +40,13 @@
     "marketExposureCount": 0,
     "crossSectorReferenceCount": 5,
     "endorsementRelationshipCount": 0,
-    "businessRelationOrphanCount": 21,
-    "directCommercialRelationshipOrphanCount": 21,
-    "classificationOnlyCompanyCount": 6,
+    "businessRelationOrphanCount": 22,
+    "directCommercialRelationshipOrphanCount": 22,
+    "classificationOnlyCompanyCount": 7,
     "groupMembershipOnlyCompanyCount": 0,
     "hasPeerButNoBusinessCompanyCount": 1,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 21,
+    "weakRelationOnlyCompanyCount": 22,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
@@ -140,9 +140,9 @@
       }
     },
     "structuralOrphanCount": 0,
-    "directRelationshipOrphanCount": 21,
-    "structuralOnlyCompanyCount": 6,
-    "confirmedReportedBusinessOrphanCount": 21,
+    "directRelationshipOrphanCount": 22,
+    "structuralOnlyCompanyCount": 7,
+    "confirmedReportedBusinessOrphanCount": 22,
     "orphanListedCompanyCount": 0,
     "metricDefinitions": {
       "listedCompanyCount": {
@@ -589,6 +589,7 @@
         "krx:002790",
         "krx:241710",
         "krx:251970",
+        "krx:086900",
         "krx:336570",
         "krx:018290",
         "krx:092730",
@@ -612,6 +613,7 @@
         "krx:002790",
         "krx:241710",
         "krx:251970",
+        "krx:086900",
         "krx:336570",
         "krx:018290",
         "krx:092730",
@@ -622,6 +624,7 @@
       ],
       "classificationOnly": [
         "krx:251970",
+        "krx:086900",
         "krx:092730",
         "krx:018250",
         "krx:352480",
@@ -644,6 +647,7 @@
         "krx:002790",
         "krx:241710",
         "krx:251970",
+        "krx:086900",
         "krx:336570",
         "krx:018290",
         "krx:092730",
@@ -658,6 +662,7 @@
       "peerOnly": [],
       "structuralOnly": [
         "krx:251970",
+        "krx:086900",
         "krx:092730",
         "krx:018250",
         "krx:352480",
@@ -963,6 +968,11 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:086900",
+      "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:336570",
       "target": "group:beauty_device"
     },
@@ -1008,7 +1018,7 @@
     {
       "action": "add_structural",
       "source": "krx:352480",
-      "target": "group:odm_oem"
+      "target": "group:brand_owner"
     },
     {
       "action": "add_structural",
@@ -1018,7 +1028,7 @@
     {
       "action": "add_structural",
       "source": "krx:003350",
-      "target": "group:odm_oem"
+      "target": "group:brand_owner"
     },
     {
       "action": "demote_legacy_partner_to_peer",

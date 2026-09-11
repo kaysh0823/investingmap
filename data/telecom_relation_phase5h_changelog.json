@@ -4,11 +4,11 @@
   "reviewedBy": "editorial_phase5h",
   "listedCompanyCount": 10,
   "nodeCount": 32,
-  "edgeCount": 47,
+  "edgeCount": 44,
   "structuralGenerated": 28,
-  "legacyMigrated": 15,
+  "legacyMigrated": 12,
   "manuallyCurated": 4,
-  "demotedPeer": 15,
+  "demotedPeer": 12,
   "confirmedBusinessEdgeCount": 0,
   "emptyChainsSkipped": [
     "위성통신"
@@ -16,11 +16,11 @@
   "metrics": {
     "listedCompanyCount": 10,
     "nodeCount": 32,
-    "edgeCount": 47,
+    "edgeCount": 44,
     "structuralGeneratedEdgeCount": 28,
-    "legacyMigratedEdgeCount": 15,
+    "legacyMigratedEdgeCount": 12,
     "manuallyCuratedEdgeCount": 4,
-    "operatorNodeCount": 4,
+    "operatorNodeCount": 3,
     "telecomServiceCount": 3,
     "equipmentNodeCount": 4,
     "componentNodeCount": 2,
@@ -37,11 +37,11 @@
     "crossSectorReferenceCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 15,
+    "peerEdgeCount": 12,
     "businessRelationOrphanCount": 10,
     "directCommercialRelationshipOrphanCount": 10,
     "classificationOnlyCompanyCount": 1,
-    "hasPeerButNoBusinessCompanyCount": 10,
+    "hasPeerButNoBusinessCompanyCount": 9,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
@@ -152,7 +152,7 @@
       "global_company": 4
     },
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 15
+    "demotedLegacyPeerCount": 12
   },
   "validate": {
     "failures": [],
@@ -262,6 +262,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "189300",
+      "lane": "network_equipment"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "032500",
       "lane": "network_equipment"
     },
@@ -304,11 +309,6 @@
       "action": "structural_supports_network_generation",
       "ticker": "037460",
       "target": "network_generation:5g"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "126560",
-      "lane": "network_operator"
     },
     {
       "action": "structural_member_of",
@@ -378,21 +378,6 @@
     {
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:037460",
-      "target": "global:ericsson"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:126560",
-      "target": "global:verizon"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:126560",
-      "target": "global:deutsche"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:126560",
       "target": "global:ericsson"
     },
     {

@@ -581,6 +581,9 @@
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,

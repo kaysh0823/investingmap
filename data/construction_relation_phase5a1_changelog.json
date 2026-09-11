@@ -1564,63 +1564,12 @@
       "evidenceUrl": null,
       "evidenceIdentifier": null,
       "reviewed": true
-    },
-    {
-      "asOf": "2026-08-23",
-      "reviewedBy": "editorial_manual_review_phase5a1",
-      "entityKind": "edge",
-      "edgeOrProjectId": "e-peer-267270-caterpillar",
-      "before": {
-        "evidenceCount": 1
-      },
-      "after": {
-        "evidenceCount": 0
-      },
-      "reason": "Legacy peer must not carry transactional evidence blocks",
-      "correctionCategory": "evidence",
-      "evidenceUrl": null,
-      "evidenceIdentifier": null,
-      "reviewed": true
-    },
-    {
-      "asOf": "2026-08-23",
-      "reviewedBy": "editorial_manual_review_phase5a1",
-      "entityKind": "edge",
-      "edgeOrProjectId": "e-peer-267270-komatsu",
-      "before": {
-        "evidenceCount": 1
-      },
-      "after": {
-        "evidenceCount": 0
-      },
-      "reason": "Legacy peer must not carry transactional evidence blocks",
-      "correctionCategory": "evidence",
-      "evidenceUrl": null,
-      "evidenceIdentifier": null,
-      "reviewed": true
-    },
-    {
-      "asOf": "2026-08-23",
-      "reviewedBy": "editorial_manual_review_phase5a1",
-      "entityKind": "edge",
-      "edgeOrProjectId": "e-peer-267270-volvo_ce",
-      "before": {
-        "evidenceCount": 1
-      },
-      "after": {
-        "evidenceCount": 0
-      },
-      "reason": "Legacy peer must not carry transactional evidence blocks",
-      "correctionCategory": "evidence",
-      "evidenceUrl": null,
-      "evidenceIdentifier": null,
-      "reviewed": true
     }
   ],
   "metricsSnapshot": {
-    "structuralGeneratedEdgeCount": 38,
+    "structuralGeneratedEdgeCount": 32,
     "buildingTypeEdgeCount": 11,
-    "equipmentCategoryEdgeCount": 3,
+    "equipmentCategoryEdgeCount": 0,
     "brandEdgeCount": 1,
     "uniqueActualProjectCount": 5,
     "domesticProjectCount": 3,
@@ -1963,13 +1912,13 @@
       "projectAnyDirectEvidenceCoverage": "≥1 reviewed direct evidence supports any claimSupport field",
       "projectAnyPrimarySourceCoverage": "≥1 reviewed direct primary evidence supports any claim (not all claims)"
     },
-    "listedCompanyCount": 22,
+    "listedCompanyCount": 20,
     "structuralOrphanCount": 0,
-    "businessRelationOrphanCount": 17,
-    "directRelationshipOrphanCount": 17,
-    "classificationOnlyCompanyCount": 17,
-    "weakRelationOnlyCompanyCount": 17,
-    "confirmedReportedBusinessOrphanCount": 17,
+    "businessRelationOrphanCount": 15,
+    "directRelationshipOrphanCount": 15,
+    "classificationOnlyCompanyCount": 15,
+    "weakRelationOnlyCompanyCount": 15,
+    "confirmedReportedBusinessOrphanCount": 15,
     "orphanMetricDefinitions": {
       "listedCompanyCount": {
         "denominator": null,
@@ -2402,8 +2351,6 @@
       "structuralOrphans": [],
       "businessRelationOrphans": [
         "krx:028050",
-        "krx:267270",
-        "krx:002380",
         "krx:375500",
         "krx:300720",
         "krx:009240",
@@ -2421,8 +2368,6 @@
       ],
       "directRelationshipOrphans": [
         "krx:028050",
-        "krx:267270",
-        "krx:002380",
         "krx:375500",
         "krx:300720",
         "krx:009240",
@@ -2440,8 +2385,6 @@
       ],
       "classificationOnly": [
         "krx:028050",
-        "krx:267270",
-        "krx:002380",
         "krx:375500",
         "krx:300720",
         "krx:009240",
@@ -2460,8 +2403,6 @@
       "groupMembershipOnly": [],
       "weakRelationOnly": [
         "krx:028050",
-        "krx:267270",
-        "krx:002380",
         "krx:375500",
         "krx:300720",
         "krx:009240",
@@ -2478,7 +2419,6 @@
         "krx:123890"
       ],
       "hasPeerButNoBusiness": [
-        "krx:267270",
         "krx:375500",
         "krx:009410",
         "krx:035890"
@@ -2486,7 +2426,6 @@
       "peerOnly": [],
       "structuralOnly": [
         "krx:028050",
-        "krx:002380",
         "krx:300720",
         "krx:009240",
         "krx:038500",

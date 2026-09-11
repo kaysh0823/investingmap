@@ -129,189 +129,184 @@
   ],
   "kconsumeRemain": [
     {
-      "ticker": "033780",
-      "name": "KT&G",
-      "chain": "음식·라면·식품"
+      "ticker": "028260",
+      "name": "삼성물산",
+      "chain": "종합상사"
     },
     {
-      "ticker": "086280",
-      "name": "현대글로비스",
-      "chain": "물류·상사"
+      "ticker": "033780",
+      "name": "KT&G",
+      "chain": "담배·건강소비재"
     },
     {
       "ticker": "003230",
       "name": "삼양식품",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "271560",
       "name": "오리온",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "004170",
       "name": "신세계",
-      "chain": "쇼핑/유통"
+      "chain": "유통"
     },
     {
       "ticker": "111770",
       "name": "영원무역",
-      "chain": "패션"
+      "chain": "의류 제조"
     },
     {
       "ticker": "023530",
       "name": "롯데쇼핑",
-      "chain": "쇼핑/유통"
+      "chain": "유통"
     },
     {
       "ticker": "097950",
       "name": "CJ제일제당",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "004370",
       "name": "농심",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "383220",
       "name": "F&F",
-      "chain": "패션"
+      "chain": "패션 브랜드"
     },
     {
       "ticker": "282330",
       "name": "BGF리테일",
-      "chain": "쇼핑/유통"
+      "chain": "유통"
     },
     {
       "ticker": "026960",
       "name": "동서",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "081660",
       "name": "미스토홀딩스",
-      "chain": "패션"
+      "chain": "패션 브랜드"
     },
     {
       "ticker": "007070",
       "name": "GS리테일",
-      "chain": "쇼핑/유통"
+      "chain": "유통"
     },
     {
       "ticker": "069960",
       "name": "현대백화점",
-      "chain": "쇼핑/유통"
+      "chain": "유통"
     },
     {
       "ticker": "139480",
       "name": "이마트",
-      "chain": "쇼핑/유통"
+      "chain": "유통"
     },
     {
       "ticker": "006040",
       "name": "동원산업",
-      "chain": "음식·라면·식품"
-    },
-    {
-      "ticker": "000120",
-      "name": "CJ대한통운",
-      "chain": "물류·상사"
+      "chain": "농축수산·가공"
     },
     {
       "ticker": "001120",
       "name": "LX인터내셔널",
-      "chain": "물류·상사"
+      "chain": "종합상사"
     },
     {
       "ticker": "280360",
       "name": "롯데웰푸드",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "007310",
       "name": "오뚜기",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "000080",
       "name": "하이트진로",
-      "chain": "음식·라면·식품"
+      "chain": "음료·주류"
     },
     {
       "ticker": "005300",
       "name": "롯데칠성",
-      "chain": "음식·라면·식품"
+      "chain": "음료·주류"
     },
     {
       "ticker": "005180",
       "name": "빙그레",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "001680",
       "name": "대상",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "093050",
       "name": "LF",
-      "chain": "패션"
+      "chain": "패션 브랜드"
     },
     {
       "ticker": "453340",
       "name": "현대그린푸드",
-      "chain": "음식·라면·식품"
+      "chain": "식품소재·급식"
     },
     {
       "ticker": "145990",
       "name": "삼양사",
-      "chain": "음식·라면·식품"
+      "chain": "식품소재·급식"
     },
     {
       "ticker": "105630",
       "name": "한세실업",
-      "chain": "패션"
+      "chain": "의류 제조"
     },
     {
       "ticker": "031430",
       "name": "신세계인터내셔날",
-      "chain": "쇼핑/유통"
+      "chain": "유통"
     },
     {
       "ticker": "003800",
       "name": "에이스침대",
-      "chain": "가구·리빙"
+      "chain": "가구·생활소비재"
     },
     {
       "ticker": "017810",
       "name": "풀무원",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "005610",
       "name": "삼립",
-      "chain": "음식·라면·식품"
+      "chain": "가공식품"
     },
     {
       "ticker": "011760",
       "name": "현대코퍼레이션",
-      "chain": "물류·상사"
+      "chain": "종합상사"
     },
     {
       "ticker": "036620",
       "name": "감성코퍼레이션",
-      "chain": "패션"
+      "chain": "패션 브랜드"
     },
     {
       "ticker": "020000",
       "name": "한섬",
-      "chain": "패션"
+      "chain": "패션 브랜드"
     },
     {
       "ticker": "016800",
       "name": "퍼시스",
-      "chain": "가구·리빙"
+      "chain": "가구·생활소비재"
     }
   ],
   "droppedFromKconsume": [

@@ -3,11 +3,14 @@
  *   ship (in place) — 조선·기자재 (remove 해운물류)
  *   shipping (new) — 해운·물류 only
  * Keeps ship/ folder, URL, sector key. Performance series for shipping start at split.
+ *
+ * Preserves shipping-only members (HMM etc.) that no longer live on the ship map.
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { extractCompaniesFromHtml } from '../lib/map_company_serialize.mjs';
+import { exclusiveSector } from '../lib/sector_exclusive.mjs';
 import {
   padTicker,
   rewriteMapInPlace,
@@ -15,9 +18,10 @@ import {
   writeSplitMap,
 } from '../lib/split_map_scaffold.mjs';
 
-
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'ship', 'korea_ship_map.html');
+const SHIPPING_HTML = path.join(ROOT, 'shipping', 'korea_shipping_map.html');
+const SHIPPING_ADDITIONS = path.join(ROOT, 'shipping', 'cp_list_shipping_additions.json');
 const SPIN_CHAIN = '해운물류';
 
 const SHIP_COLORS = {
@@ -32,7 +36,7 @@ const SHIPPING_COLORS = { 해운물류: '#EF5350' };
 const SHIPPING_CHAINS = ['해운물류'];
 
 const all = extractCompaniesFromHtml(fs.readFileSync(SRC, 'utf8'));
-const shipping = all.filter((c) => c.chain === SPIN_CHAIN);
+let shipping = all.filter((c) => c.chain === SPIN_CHAIN);
 const shipKeep = all.filter((c) => c.chain !== SPIN_CHAIN);
 const leftover = all.filter((c) => c.chain !== SPIN_CHAIN && !SHIP_COLORS[c.chain]);
 if (leftover.length) {
@@ -41,12 +45,49 @@ if (leftover.length) {
     leftover.map((c) => `${c.ticker}:${c.chain}`).join(', '),
   );
 }
+
+const byTicker = new Map(shipping.map((c) => [padTicker(c.ticker), c]));
+if (fs.existsSync(SHIPPING_HTML)) {
+  for (const c of extractCompaniesFromHtml(fs.readFileSync(SHIPPING_HTML, 'utf8'))) {
+    const t = padTicker(c.ticker);
+    const home = exclusiveSector(t);
+    if (home && home !== 'shipping') continue;
+    if (!byTicker.has(t)) byTicker.set(t, c);
+  }
+}
+if (fs.existsSync(SHIPPING_ADDITIONS)) {
+  for (const row of JSON.parse(fs.readFileSync(SHIPPING_ADDITIONS, 'utf8'))) {
+    const t = padTicker(row.ticker);
+    const home = exclusiveSector(t);
+    if (home && home !== 'shipping') continue;
+    if (byTicker.has(t)) continue;
+    byTicker.set(t, {
+      id: `shipping_${t}`,
+      name: row.name,
+      nameEn: row.nameEn || row.name,
+      ticker: t,
+      market: row.market || 'KOSPI',
+      chain: row.chain || '해운물류',
+      semType: row.semType || row.chain || '해운물류',
+      semTypeEn: row.semTypeEn || '',
+      products: row.products || '',
+      productsEn: row.productsEn || '',
+      partners: row.partners || [],
+      mcapWon: row.mcapWon || 0,
+    });
+  }
+}
+shipping = [...byTicker.values()].filter((c) => {
+  const home = exclusiveSector(c.ticker);
+  return !home || home === 'shipping';
+});
+
 console.log(
   `split ship ${all.length} → ship ${shipKeep.length}, shipping ${shipping.length}`,
 );
 console.log(
   'shipping tickers:',
-  shipping.map((c) => padTicker(c.ticker)).join(', '),
+  shipping.map((c) => `${padTicker(c.ticker)}(${c.name})`).join(', '),
 );
 
 const sourceHtml = fs.readFileSync(SRC, 'utf8');
@@ -92,9 +133,15 @@ rewriteMapInPlace({
   ],
 });
 
+const claim = shipping
+  .map((c) => padTicker(c.ticker))
+  .filter((t) => {
+    const home = exclusiveSector(t);
+    return !home || home === 'shipping' || home === 'ship';
+  });
 updateExclusiveForTickers(
   path.join(ROOT, 'lib', 'sector_exclusive.mjs'),
-  shipping.map((c) => c.ticker),
+  claim,
   'ship',
   'shipping',
 );

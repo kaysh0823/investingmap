@@ -1,820 +1,12 @@
 {
-  "asOf": "2026-08-22",
+  "asOf": "2026-09-10",
   "hubs": [
     {
-      "id": "front_equip",
-      "chain": "전공정 장비",
+      "id": "fabless_ip",
+      "chain": "팹리스·IP",
       "label": {
-        "ko": "전공정 장비",
-        "en": "Front-end equipment"
-      },
-      "members": [
-        {
-          "ticker": "036930",
-          "name": "주성엔지니어링",
-          "nameEn": "JUSUNG ENGINEERING Co.,Ltd."
-        },
-        {
-          "ticker": "240810",
-          "name": "원익IPS",
-          "nameEn": "WONIK IPS Co.,Ltd."
-        },
-        {
-          "ticker": "403870",
-          "name": "HPSP",
-          "nameEn": "HPSP Co., Ltd."
-        },
-        {
-          "ticker": "319660",
-          "name": "피에스케이",
-          "nameEn": "PSK INC."
-        },
-        {
-          "ticker": "084370",
-          "name": "유진테크",
-          "nameEn": "Eugene Technology Co., Ltd."
-        },
-        {
-          "ticker": "095610",
-          "name": "테스",
-          "nameEn": "TES CO., LTD."
-        },
-        {
-          "ticker": "140860",
-          "name": "파크시스템스",
-          "nameEn": "Park Systems Corp."
-        },
-        {
-          "ticker": "089970",
-          "name": "브이엠",
-          "nameEn": "Vm"
-        },
-        {
-          "ticker": "281820",
-          "name": "케이씨텍",
-          "nameEn": "Kctech"
-        },
-        {
-          "ticker": "083450",
-          "name": "GST",
-          "nameEn": "GST"
-        },
-        {
-          "ticker": "122640",
-          "name": "예스티",
-          "nameEn": "YEST Co.,Ltd."
-        },
-        {
-          "ticker": "036810",
-          "name": "에프에스티",
-          "nameEn": "FINE SEMITECH Corp."
-        },
-        {
-          "ticker": "045100",
-          "name": "한양이엔지",
-          "nameEn": "HANYANG ENG CO.,LTD."
-        },
-        {
-          "ticker": "144960",
-          "name": "뉴파워프라즈마",
-          "nameEn": "New Power Plasma"
-        },
-        {
-          "ticker": "417840",
-          "name": "저스템",
-          "nameEn": "Justem.Co.,Ltd."
-        },
-        {
-          "ticker": "348210",
-          "name": "넥스틴",
-          "nameEn": "NEXTIN Inc."
-        },
-        {
-          "ticker": "079370",
-          "name": "제우스",
-          "nameEn": "ZEUS CO., LTD."
-        },
-        {
-          "ticker": "039440",
-          "name": "에스티아이",
-          "nameEn": "Systems Technology Incorporated"
-        }
-      ],
-      "suppliers": [
-        {
-          "id": "mks",
-          "name": "MKS Instruments",
-          "nameEn": "MKS Instruments",
-          "country": "US",
-          "note": "진공·공정제어 하위 부품·계측",
-          "noteEn": "Vacuum and process-control subsystems",
-          "evidence": "reported",
-          "source": "https://www.mks.com/n/semiconductor"
-        },
-        {
-          "id": "edwards",
-          "name": "Edwards Vacuum",
-          "nameEn": "Edwards Vacuum (Atlas Copco)",
-          "country": "GB",
-          "note": "건식 진공펌프·배기 시스템",
-          "noteEn": "Dry vacuum pumps and abatement systems",
-          "evidence": "reported",
-          "source": "https://www.edwardsvacuum.com/en/markets/semiconductor"
-        }
-      ],
-      "customers": [
-        {
-          "id": "samsung_d",
-          "name": "삼성전자",
-          "nameEn": "Samsung Electronics",
-          "country": "KR",
-          "note": "메모리·파운드리 전공정 장비 납품",
-          "noteEn": "Front-end tools for memory and foundry lines",
-          "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
-          "ticker": "005930",
-          "entityRole": "domestic_anchor"
-        },
-        {
-          "id": "skhynix_d",
-          "name": "SK하이닉스",
-          "nameEn": "SK hynix",
-          "country": "KR",
-          "note": "DRAM·HBM 전공정 장비 납품",
-          "noteEn": "Front-end tools for DRAM and HBM fabs",
-          "evidence": "confirmed",
-          "source": "https://www.skhynix.com/eng/sustainability/supplyChain.do",
-          "ticker": "000660",
-          "entityRole": "domestic_anchor"
-        },
-        {
-          "id": "tsmc",
-          "name": "TSMC",
-          "nameEn": "TSMC",
-          "country": "TW",
-          "note": "로직 파운드리 라인 장비 공급(일부)",
-          "noteEn": "Selected tools for logic foundry lines",
-          "evidence": "reported",
-          "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf"
-        },
-        {
-          "id": "intel",
-          "name": "Intel",
-          "nameEn": "Intel",
-          "country": "US",
-          "note": "로직·파운드리 전공정 장비",
-          "noteEn": "Logic and foundry front-end equipment",
-          "evidence": "reported",
-          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
-        },
-        {
-          "id": "micron_eq",
-          "name": "Micron",
-          "nameEn": "Micron",
-          "country": "US",
-          "note": "메모리 팹 전공정 장비",
-          "noteEn": "Memory-fab front-end equipment",
-          "evidence": "reported",
-          "source": "https://www.micron.com/about/our-commitment/operating-thoughtfully/supply-chain"
-        }
-      ],
-      "peers": [
-        {
-          "id": "appmat",
-          "name": "Applied Materials",
-          "nameEn": "Applied Materials",
-          "country": "US",
-          "note": "증착·CMP·이온주입 글로벌 peer",
-          "noteEn": "Global peer in deposition, CMP and implant",
-          "evidence": "confirmed",
-          "source": "https://www.appliedmaterials.com/us/en/semiconductor.html"
-        },
-        {
-          "id": "lam",
-          "name": "Lam Research",
-          "nameEn": "Lam Research",
-          "country": "US",
-          "note": "식각·세정 장비 글로벌 peer",
-          "noteEn": "Global peer in etch and clean",
-          "evidence": "confirmed",
-          "source": "https://www.lamresearch.com/"
-        },
-        {
-          "id": "tokyo_electron",
-          "name": "도쿄일렉트론",
-          "nameEn": "Tokyo Electron",
-          "country": "JP",
-          "note": "코터·식각·증착 글로벌 peer",
-          "noteEn": "Global peer in coat/develop, etch and deposition",
-          "evidence": "confirmed",
-          "source": "https://www.tel.com/product/"
-        },
-        {
-          "id": "kla",
-          "name": "KLA",
-          "nameEn": "KLA",
-          "country": "US",
-          "note": "공정제어·계측 글로벌 peer",
-          "noteEn": "Global peer in process control and metrology",
-          "evidence": "confirmed",
-          "source": "https://www.kla.com/"
-        },
-        {
-          "id": "asml",
-          "name": "ASML",
-          "nameEn": "ASML",
-          "country": "NL",
-          "note": "노광 장비 글로벌 peer",
-          "noteEn": "Global peer in lithography",
-          "evidence": "confirmed",
-          "source": "https://www.asml.com/en/products"
-        }
-      ]
-    },
-    {
-      "id": "back_equip",
-      "chain": "후공정 장비",
-      "label": {
-        "ko": "후공정 장비",
-        "en": "Back-end equipment"
-      },
-      "members": [
-        {
-          "ticker": "042700",
-          "name": "한미반도체",
-          "nameEn": "HANMISemiconductor CO.,Ltd."
-        },
-        {
-          "ticker": "039030",
-          "name": "이오테크닉스",
-          "nameEn": "EO Technics Co., Ltd."
-        },
-        {
-          "ticker": "031980",
-          "name": "피에스케이홀딩스",
-          "nameEn": "PSK HOLDINGS INC."
-        },
-        {
-          "ticker": "098460",
-          "name": "고영",
-          "nameEn": "Koh Young Technology Inc."
-        },
-        {
-          "ticker": "420770",
-          "name": "기가비스",
-          "nameEn": "GigaVis Co., Ltd."
-        },
-        {
-          "ticker": "232140",
-          "name": "와이씨",
-          "nameEn": "YIK"
-        },
-        {
-          "ticker": "003160",
-          "name": "디아이",
-          "nameEn": "DI Corp"
-        },
-        {
-          "ticker": "053610",
-          "name": "프로텍",
-          "nameEn": "PROTEC Co., Ltd."
-        },
-        {
-          "ticker": "064290",
-          "name": "인텍플러스",
-          "nameEn": "INTEKPLUS CO.,LTD"
-        },
-        {
-          "ticker": "253590",
-          "name": "네오셈",
-          "nameEn": "Neosem Inc."
-        },
-        {
-          "ticker": "092870",
-          "name": "엑시콘",
-          "nameEn": "Exicon Co., Ltd."
-        },
-        {
-          "ticker": "089890",
-          "name": "코세스",
-          "nameEn": "KOSES Co.,Ltd"
-        }
-      ],
-      "suppliers": [
-        {
-          "id": "coherent",
-          "name": "Coherent",
-          "nameEn": "Coherent",
-          "country": "US",
-          "note": "레이저 소스·광학 (레이저 마킹·컷)",
-          "noteEn": "Laser sources and optics for marking/cutting tools",
-          "evidence": "reported",
-          "source": "https://www.coherent.com/markets/semiconductor"
-        }
-      ],
-      "customers": [
-        {
-          "id": "samsung_d",
-          "name": "삼성전자",
-          "nameEn": "Samsung Electronics",
-          "country": "KR",
-          "note": "패키징·테스트·본딩 장비 납품",
-          "noteEn": "Packaging, test and bonding equipment",
-          "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
-          "ticker": "005930",
-          "entityRole": "domestic_anchor"
-        },
-        {
-          "id": "skhynix_d",
-          "name": "SK하이닉스",
-          "nameEn": "SK hynix",
-          "country": "KR",
-          "note": "HBM·패키지 후공정 장비",
-          "noteEn": "HBM and package back-end equipment",
-          "evidence": "confirmed",
-          "source": "https://news.skhynix.com/",
-          "ticker": "000660",
-          "entityRole": "domestic_anchor"
-        },
-        {
-          "id": "ase",
-          "name": "ASE Group",
-          "nameEn": "ASE Group",
-          "country": "TW",
-          "note": "OSAT 후공정 장비 수요",
-          "noteEn": "OSAT demand for back-end tools",
-          "evidence": "reported",
-          "source": "https://www.aseglobal.com/"
-        },
-        {
-          "id": "amkor",
-          "name": "Amkor Technology",
-          "nameEn": "Amkor Technology",
-          "country": "US",
-          "note": "OSAT 패키징·테스트 라인",
-          "noteEn": "OSAT packaging and test lines",
-          "evidence": "reported",
-          "source": "https://amkor.com/"
-        },
-        {
-          "id": "intel",
-          "name": "Intel",
-          "nameEn": "Intel",
-          "country": "US",
-          "note": "어셈블리·테스트 장비",
-          "noteEn": "Assembly and test equipment",
-          "evidence": "reported",
-          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
-        }
-      ],
-      "peers": [
-        {
-          "id": "kulicke",
-          "name": "Kulicke & Soffa",
-          "nameEn": "Kulicke & Soffa",
-          "country": "SG",
-          "note": "와이어·플립칩 본더 글로벌 peer",
-          "noteEn": "Global peer in wire and flip-chip bonders",
-          "evidence": "confirmed",
-          "source": "https://www.kns.com/"
-        },
-        {
-          "id": "disco",
-          "name": "DISCO",
-          "nameEn": "DISCO Corporation",
-          "country": "JP",
-          "note": "다이싱·그라인딩 글로벌 peer",
-          "noteEn": "Global peer in dicing and grinding",
-          "evidence": "confirmed",
-          "source": "https://www.disco.co.jp/eg/"
-        },
-        {
-          "id": "advantest",
-          "name": "Advantest",
-          "nameEn": "Advantest",
-          "country": "JP",
-          "note": "반도체 테스터 글로벌 peer",
-          "noteEn": "Global peer in semiconductor testers",
-          "evidence": "confirmed",
-          "source": "https://www.advantest.com/"
-        },
-        {
-          "id": "teradyne",
-          "name": "Teradyne",
-          "nameEn": "Teradyne",
-          "country": "US",
-          "note": "자동 테스트 장비 글로벌 peer",
-          "noteEn": "Global peer in automated test equipment",
-          "evidence": "confirmed",
-          "source": "https://www.teradyne.com/"
-        },
-        {
-          "id": "besi",
-          "name": "Besi",
-          "nameEn": "BE Semiconductor Industries",
-          "country": "NL",
-          "note": "다이 어태치·패키징 장비 peer",
-          "noteEn": "Peer in die attach and packaging equipment",
-          "evidence": "confirmed",
-          "source": "https://www.besi.com/"
-        }
-      ]
-    },
-    {
-      "id": "materials",
-      "chain": "소재",
-      "label": {
-        "ko": "소재",
-        "en": "Materials"
-      },
-      "members": [
-        {
-          "ticker": "064760",
-          "name": "티씨케이",
-          "nameEn": "TOKAI CARBON KOREA CO., LTD"
-        },
-        {
-          "ticker": "357780",
-          "name": "솔브레인",
-          "nameEn": "Soulbrain Co., Ltd."
-        },
-        {
-          "ticker": "178320",
-          "name": "서진시스템",
-          "nameEn": "SEOJIN SYSTEM CO., LTD"
-        },
-        {
-          "ticker": "014680",
-          "name": "한솔케미칼",
-          "nameEn": "Hansol Chemical"
-        },
-        {
-          "ticker": "005290",
-          "name": "동진쎄미켐",
-          "nameEn": "DONGJIN SEMICHEM CO., LTD."
-        },
-        {
-          "ticker": "078600",
-          "name": "대주전자재료",
-          "nameEn": "Daejoo Electronic Materials Co., Ltd."
-        },
-        {
-          "ticker": "183300",
-          "name": "코미코",
-          "nameEn": "KoMiCo Ltd."
-        },
-        {
-          "ticker": "166090",
-          "name": "하나머티리얼즈",
-          "nameEn": "Hana Materials Inc."
-        },
-        {
-          "ticker": "036830",
-          "name": "솔브레인홀딩스",
-          "nameEn": "Soulbrain Holdings Co., Ltd."
-        },
-        {
-          "ticker": "101490",
-          "name": "에스앤에스텍",
-          "nameEn": "S&S TECH CORPORATION"
-        },
-        {
-          "ticker": "281740",
-          "name": "레이크머티리얼즈",
-          "nameEn": "Lake Materials Co., Ltd."
-        },
-        {
-          "ticker": "074600",
-          "name": "원익QnC",
-          "nameEn": "WONIK QnC CORPORATION"
-        },
-        {
-          "ticker": "059090",
-          "name": "미코",
-          "nameEn": "MiCo Ltd."
-        },
-        {
-          "ticker": "102710",
-          "name": "이엔에프테크놀로지",
-          "nameEn": "ENF Technology Co., Ltd"
-        },
-        {
-          "ticker": "178920",
-          "name": "PI첨단소재",
-          "nameEn": "PI Advanced Materials Co., Ltd."
-        },
-        {
-          "ticker": "101160",
-          "name": "월덱스",
-          "nameEn": "WORLDEX INDUSTRY & TRADING CO., LTD"
-        },
-        {
-          "ticker": "104830",
-          "name": "원익머트리얼즈",
-          "nameEn": "WONIK Materials Co., Ltd."
-        },
-        {
-          "ticker": "241770",
-          "name": "메카로",
-          "nameEn": "Mecaro"
-        },
-        {
-          "ticker": "114810",
-          "name": "한솔아이원스",
-          "nameEn": "Hansol iOne"
-        }
-      ],
-      "suppliers": [
-        {
-          "id": "air_liquide",
-          "name": "Air Liquide",
-          "nameEn": "Air Liquide",
-          "country": "FR",
-          "note": "특수가스·케미컬 원료",
-          "noteEn": "Specialty gases and chemical feedstocks",
-          "evidence": "reported",
-          "source": "https://www.airliquide.com/electronics"
-        },
-        {
-          "id": "linde",
-          "name": "Linde",
-          "nameEn": "Linde",
-          "country": "US",
-          "note": "반도체 특수가스 공급",
-          "noteEn": "Semiconductor specialty gases",
-          "evidence": "reported",
-          "source": "https://www.linde.com/electronics"
-        }
-      ],
-      "customers": [
-        {
-          "id": "samsung_d",
-          "name": "삼성전자",
-          "nameEn": "Samsung Electronics",
-          "country": "KR",
-          "note": "포토레지스트·식각액·특수가스 등",
-          "noteEn": "Photoresist, etchants, specialty gases and more",
-          "evidence": "confirmed",
-          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
-          "ticker": "005930",
-          "entityRole": "domestic_anchor"
-        },
-        {
-          "id": "skhynix_d",
-          "name": "SK하이닉스",
-          "nameEn": "SK hynix",
-          "country": "KR",
-          "note": "메모리 공정 소재·가스",
-          "noteEn": "Memory process materials and gases",
-          "evidence": "confirmed",
-          "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf",
-          "ticker": "000660",
-          "entityRole": "domestic_anchor"
-        },
-        {
-          "id": "tsmc",
-          "name": "TSMC",
-          "nameEn": "TSMC",
-          "country": "TW",
-          "note": "파운드리 공정 소재",
-          "noteEn": "Foundry process materials",
-          "evidence": "reported",
-          "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf"
-        },
-        {
-          "id": "intel",
-          "name": "Intel",
-          "nameEn": "Intel",
-          "country": "US",
-          "note": "로직 공정 소재",
-          "noteEn": "Logic process materials",
-          "evidence": "reported",
-          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
-        }
-      ],
-      "peers": [
-        {
-          "id": "dupont",
-          "name": "DuPont",
-          "nameEn": "DuPont",
-          "country": "US",
-          "note": "전자재료·CMP·레지스트 peer",
-          "noteEn": "Peer in electronic materials, CMP and resists",
-          "evidence": "confirmed",
-          "source": "https://www.dupont.com/electronics-industrial.html"
-        },
-        {
-          "id": "shin_etsu",
-          "name": "신에츠화학",
-          "nameEn": "Shin-Etsu Chemical",
-          "country": "JP",
-          "note": "실리콘 웨이퍼·레지스트 peer",
-          "noteEn": "Peer in silicon wafers and resists",
-          "evidence": "confirmed",
-          "source": "https://www.shinetsu.co.jp/en/products/electronics-materials/"
-        },
-        {
-          "id": "tok",
-          "name": "도쿄오카공업",
-          "nameEn": "Tokyo Ohka Kogyo (TOK)",
-          "country": "JP",
-          "note": "포토레지스트 글로벌 peer",
-          "noteEn": "Global peer in photoresist",
-          "evidence": "confirmed",
-          "source": "https://www.tok.co.jp/eng/"
-        },
-        {
-          "id": "merck_em",
-          "name": "Merck Electronics",
-          "nameEn": "Merck Electronics",
-          "country": "DE",
-          "note": "전자재료·공정 케미컬 peer",
-          "noteEn": "Peer in electronic materials and process chemicals",
-          "evidence": "confirmed",
-          "source": "https://www.merckgroup.com/en/company/merck-electronics.html"
-        },
-        {
-          "id": "entegris",
-          "name": "Entegris",
-          "nameEn": "Entegris",
-          "country": "US",
-          "note": "여과·특수가스·웨이퍼 핸들링 peer",
-          "noteEn": "Peer in filtration, specialty gas and wafer handling",
-          "evidence": "confirmed",
-          "source": "https://www.entegris.com/"
-        }
-      ]
-    },
-    {
-      "id": "foundry",
-      "chain": "파운드리",
-      "label": {
-        "ko": "파운드리",
-        "en": "Foundry"
-      },
-      "members": [
-        {
-          "ticker": "000990",
-          "name": "DB하이텍",
-          "nameEn": "DB HiTek Co.,LTD"
-        }
-      ],
-      "suppliers": [
-        {
-          "id": "asml",
-          "name": "ASML",
-          "nameEn": "ASML",
-          "country": "NL",
-          "note": "노광 장비 (파운드리 전공정)",
-          "noteEn": "Lithography tools for foundry front-end",
-          "evidence": "confirmed",
-          "source": "https://www.asml.com/en/products"
-        },
-        {
-          "id": "appmat",
-          "name": "Applied Materials",
-          "nameEn": "Applied Materials",
-          "country": "US",
-          "note": "증착·CMP 등 공정장비",
-          "noteEn": "Deposition, CMP and related process tools",
-          "evidence": "confirmed",
-          "source": "https://www.appliedmaterials.com/us/en/semiconductor.html"
-        },
-        {
-          "id": "lam",
-          "name": "Lam Research",
-          "nameEn": "Lam Research",
-          "country": "US",
-          "note": "식각·세정 장비",
-          "noteEn": "Etch and clean equipment",
-          "evidence": "confirmed",
-          "source": "https://www.lamresearch.com/"
-        },
-        {
-          "id": "tokyo_electron",
-          "name": "도쿄일렉트론",
-          "nameEn": "Tokyo Electron",
-          "country": "JP",
-          "note": "코터·식각·증착 장비",
-          "noteEn": "Coat/develop, etch and deposition tools",
-          "evidence": "confirmed",
-          "source": "https://www.tel.com/product/"
-        },
-        {
-          "id": "kla",
-          "name": "KLA",
-          "nameEn": "KLA",
-          "country": "US",
-          "note": "공정제어·계측 장비",
-          "noteEn": "Process control and metrology",
-          "evidence": "confirmed",
-          "source": "https://www.kla.com/"
-        }
-      ],
-      "customers": [
-        {
-          "id": "qualcomm",
-          "name": "Qualcomm",
-          "nameEn": "Qualcomm",
-          "country": "US",
-          "note": "아날로그·전력 등 특화 파운드리 고객",
-          "noteEn": "Specialty foundry customer (analog/power)",
-          "evidence": "reported",
-          "source": "https://www.dbhitek.com/eng/"
-        },
-        {
-          "id": "ti",
-          "name": "Texas Instruments",
-          "nameEn": "Texas Instruments",
-          "country": "US",
-          "note": "아날로그 반도체 위탁생산 수요",
-          "noteEn": "Analog semiconductor foundry demand",
-          "evidence": "reported",
-          "source": "https://www.ti.com/about-ti/company/ti-at-a-glance.html"
-        },
-        {
-          "id": "renesas",
-          "name": "Renesas",
-          "nameEn": "Renesas",
-          "country": "JP",
-          "note": "MCU·아날로그 파운드리 고객",
-          "noteEn": "MCU and analog foundry customer",
-          "evidence": "reported",
-          "source": "https://www.renesas.com/"
-        },
-        {
-          "id": "onsemi",
-          "name": "onsemi",
-          "nameEn": "onsemi",
-          "country": "US",
-          "note": "전력·센서 파운드리 고객",
-          "noteEn": "Power and sensor foundry customer",
-          "evidence": "reported",
-          "source": "https://www.onsemi.com/"
-        }
-      ],
-      "peers": [
-        {
-          "id": "tsmc",
-          "name": "TSMC",
-          "nameEn": "TSMC",
-          "country": "TW",
-          "note": "글로벌 로직 파운드리 peer",
-          "noteEn": "Global logic foundry peer",
-          "evidence": "confirmed",
-          "source": "https://www.tsmc.com/"
-        },
-        {
-          "id": "globalfoundries",
-          "name": "GlobalFoundries",
-          "nameEn": "GlobalFoundries",
-          "country": "US",
-          "note": "특화·레거시 노드 파운드리 peer",
-          "noteEn": "Specialty and mature-node foundry peer",
-          "evidence": "confirmed",
-          "source": "https://gf.com/"
-        },
-        {
-          "id": "umc",
-          "name": "UMC",
-          "nameEn": "United Microelectronics",
-          "country": "TW",
-          "note": "파운드리 peer",
-          "noteEn": "Foundry peer",
-          "evidence": "confirmed",
-          "source": "https://www.umc.com/"
-        },
-        {
-          "id": "smic",
-          "name": "SMIC",
-          "nameEn": "SMIC",
-          "country": "CN",
-          "note": "중국 파운드리 peer",
-          "noteEn": "China foundry peer",
-          "evidence": "confirmed",
-          "source": "https://www.smics.com/"
-        },
-        {
-          "id": "samsung_d",
-          "name": "삼성전자 파운드리",
-          "nameEn": "Samsung Foundry",
-          "country": "KR",
-          "note": "국내·글로벌 파운드리 peer",
-          "noteEn": "Domestic and global foundry peer",
-          "evidence": "confirmed",
-          "source": "https://semiconductor.samsung.com/foundry/",
-          "ticker": "005930",
-          "entityRole": "domestic_anchor"
-        }
-      ]
-    },
-    {
-      "id": "fabless",
-      "chain": "팹리스",
-      "label": {
-        "ko": "팹리스",
-        "en": "Fabless"
+        "ko": "팹리스·IP",
+        "en": "Fabless & IP"
       },
       "members": [
         {
@@ -1131,22 +323,1085 @@
       ]
     },
     {
-      "id": "substrate",
-      "chain": "부품/기판",
+      "id": "foundry",
+      "chain": "파운드리",
       "label": {
-        "ko": "부품/기판",
-        "en": "Components/Substrate"
+        "ko": "파운드리",
+        "en": "Foundry"
+      },
+      "members": [
+        {
+          "ticker": "000990",
+          "name": "DB하이텍",
+          "nameEn": "DB HiTek Co.,LTD"
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "asml",
+          "name": "ASML",
+          "nameEn": "ASML",
+          "country": "NL",
+          "note": "노광 장비 (파운드리 전공정)",
+          "noteEn": "Lithography tools for foundry front-end",
+          "evidence": "confirmed",
+          "source": "https://www.asml.com/en/products"
+        },
+        {
+          "id": "appmat",
+          "name": "Applied Materials",
+          "nameEn": "Applied Materials",
+          "country": "US",
+          "note": "증착·CMP 등 공정장비",
+          "noteEn": "Deposition, CMP and related process tools",
+          "evidence": "confirmed",
+          "source": "https://www.appliedmaterials.com/us/en/semiconductor.html"
+        },
+        {
+          "id": "lam",
+          "name": "Lam Research",
+          "nameEn": "Lam Research",
+          "country": "US",
+          "note": "식각·세정 장비",
+          "noteEn": "Etch and clean equipment",
+          "evidence": "confirmed",
+          "source": "https://www.lamresearch.com/"
+        },
+        {
+          "id": "tokyo_electron",
+          "name": "도쿄일렉트론",
+          "nameEn": "Tokyo Electron",
+          "country": "JP",
+          "note": "코터·식각·증착 장비",
+          "noteEn": "Coat/develop, etch and deposition tools",
+          "evidence": "confirmed",
+          "source": "https://www.tel.com/product/"
+        },
+        {
+          "id": "kla",
+          "name": "KLA",
+          "nameEn": "KLA",
+          "country": "US",
+          "note": "공정제어·계측 장비",
+          "noteEn": "Process control and metrology",
+          "evidence": "confirmed",
+          "source": "https://www.kla.com/"
+        }
+      ],
+      "customers": [
+        {
+          "id": "qualcomm",
+          "name": "Qualcomm",
+          "nameEn": "Qualcomm",
+          "country": "US",
+          "note": "아날로그·전력 등 특화 파운드리 고객",
+          "noteEn": "Specialty foundry customer (analog/power)",
+          "evidence": "reported",
+          "source": "https://www.dbhitek.com/eng/"
+        },
+        {
+          "id": "ti",
+          "name": "Texas Instruments",
+          "nameEn": "Texas Instruments",
+          "country": "US",
+          "note": "아날로그 반도체 위탁생산 수요",
+          "noteEn": "Analog semiconductor foundry demand",
+          "evidence": "reported",
+          "source": "https://www.ti.com/about-ti/company/ti-at-a-glance.html"
+        },
+        {
+          "id": "renesas",
+          "name": "Renesas",
+          "nameEn": "Renesas",
+          "country": "JP",
+          "note": "MCU·아날로그 파운드리 고객",
+          "noteEn": "MCU and analog foundry customer",
+          "evidence": "reported",
+          "source": "https://www.renesas.com/"
+        },
+        {
+          "id": "onsemi",
+          "name": "onsemi",
+          "nameEn": "onsemi",
+          "country": "US",
+          "note": "전력·센서 파운드리 고객",
+          "noteEn": "Power and sensor foundry customer",
+          "evidence": "reported",
+          "source": "https://www.onsemi.com/"
+        }
+      ],
+      "peers": [
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "글로벌 로직 파운드리 peer",
+          "noteEn": "Global logic foundry peer",
+          "evidence": "confirmed",
+          "source": "https://www.tsmc.com/"
+        },
+        {
+          "id": "globalfoundries",
+          "name": "GlobalFoundries",
+          "nameEn": "GlobalFoundries",
+          "country": "US",
+          "note": "특화·레거시 노드 파운드리 peer",
+          "noteEn": "Specialty and mature-node foundry peer",
+          "evidence": "confirmed",
+          "source": "https://gf.com/"
+        },
+        {
+          "id": "umc",
+          "name": "UMC",
+          "nameEn": "United Microelectronics",
+          "country": "TW",
+          "note": "파운드리 peer",
+          "noteEn": "Foundry peer",
+          "evidence": "confirmed",
+          "source": "https://www.umc.com/"
+        },
+        {
+          "id": "smic",
+          "name": "SMIC",
+          "nameEn": "SMIC",
+          "country": "CN",
+          "note": "중국 파운드리 peer",
+          "noteEn": "China foundry peer",
+          "evidence": "confirmed",
+          "source": "https://www.smics.com/"
+        },
+        {
+          "id": "samsung_d",
+          "name": "삼성전자 파운드리",
+          "nameEn": "Samsung Foundry",
+          "country": "KR",
+          "note": "국내·글로벌 파운드리 peer",
+          "noteEn": "Domestic and global foundry peer",
+          "evidence": "confirmed",
+          "source": "https://semiconductor.samsung.com/foundry/",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        }
+      ]
+    },
+    {
+      "id": "front_equip",
+      "chain": "전공정 장비",
+      "label": {
+        "ko": "전공정 장비",
+        "en": "Front-end equipment"
+      },
+      "members": [
+        {
+          "ticker": "036930",
+          "name": "주성엔지니어링",
+          "nameEn": "JUSUNG ENGINEERING Co.,Ltd."
+        },
+        {
+          "ticker": "240810",
+          "name": "원익IPS",
+          "nameEn": "WONIK IPS Co.,Ltd."
+        },
+        {
+          "ticker": "403870",
+          "name": "HPSP",
+          "nameEn": "HPSP Co., Ltd."
+        },
+        {
+          "ticker": "319660",
+          "name": "피에스케이",
+          "nameEn": "PSK INC."
+        },
+        {
+          "ticker": "084370",
+          "name": "유진테크",
+          "nameEn": "Eugene Technology Co., Ltd."
+        },
+        {
+          "ticker": "095610",
+          "name": "테스",
+          "nameEn": "TES CO., LTD."
+        },
+        {
+          "ticker": "089970",
+          "name": "브이엠",
+          "nameEn": "Vm"
+        },
+        {
+          "ticker": "323280",
+          "name": "태성",
+          "nameEn": "TAESUNG"
+        },
+        {
+          "ticker": "281820",
+          "name": "케이씨텍",
+          "nameEn": "Kctech"
+        },
+        {
+          "ticker": "122640",
+          "name": "예스티",
+          "nameEn": "YEST Co.,Ltd."
+        },
+        {
+          "ticker": "015360",
+          "name": "INVENI",
+          "nameEn": "INVENI"
+        },
+        {
+          "ticker": "079370",
+          "name": "제우스",
+          "nameEn": "ZEUS CO., LTD."
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "mks",
+          "name": "MKS Instruments",
+          "nameEn": "MKS Instruments",
+          "country": "US",
+          "note": "진공·공정제어 하위 부품·계측",
+          "noteEn": "Vacuum and process-control subsystems",
+          "evidence": "reported",
+          "source": "https://www.mks.com/n/semiconductor"
+        },
+        {
+          "id": "edwards",
+          "name": "Edwards Vacuum",
+          "nameEn": "Edwards Vacuum (Atlas Copco)",
+          "country": "GB",
+          "note": "건식 진공펌프·배기 시스템",
+          "noteEn": "Dry vacuum pumps and abatement systems",
+          "evidence": "reported",
+          "source": "https://www.edwardsvacuum.com/en/markets/semiconductor"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "메모리·파운드리 전공정 장비 납품",
+          "noteEn": "Front-end tools for memory and foundry lines",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "DRAM·HBM 전공정 장비 납품",
+          "noteEn": "Front-end tools for DRAM and HBM fabs",
+          "evidence": "confirmed",
+          "source": "https://www.skhynix.com/eng/sustainability/supplyChain.do",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "로직 파운드리 라인 장비 공급(일부)",
+          "noteEn": "Selected tools for logic foundry lines",
+          "evidence": "reported",
+          "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf"
+        },
+        {
+          "id": "intel",
+          "name": "Intel",
+          "nameEn": "Intel",
+          "country": "US",
+          "note": "로직·파운드리 전공정 장비",
+          "noteEn": "Logic and foundry front-end equipment",
+          "evidence": "reported",
+          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
+        },
+        {
+          "id": "micron_eq",
+          "name": "Micron",
+          "nameEn": "Micron",
+          "country": "US",
+          "note": "메모리 팹 전공정 장비",
+          "noteEn": "Memory-fab front-end equipment",
+          "evidence": "reported",
+          "source": "https://www.micron.com/about/our-commitment/operating-thoughtfully/supply-chain"
+        }
+      ],
+      "peers": [
+        {
+          "id": "appmat",
+          "name": "Applied Materials",
+          "nameEn": "Applied Materials",
+          "country": "US",
+          "note": "증착·CMP·이온주입 글로벌 peer",
+          "noteEn": "Global peer in deposition, CMP and implant",
+          "evidence": "confirmed",
+          "source": "https://www.appliedmaterials.com/us/en/semiconductor.html"
+        },
+        {
+          "id": "lam",
+          "name": "Lam Research",
+          "nameEn": "Lam Research",
+          "country": "US",
+          "note": "식각·세정 장비 글로벌 peer",
+          "noteEn": "Global peer in etch and clean",
+          "evidence": "confirmed",
+          "source": "https://www.lamresearch.com/"
+        },
+        {
+          "id": "tokyo_electron",
+          "name": "도쿄일렉트론",
+          "nameEn": "Tokyo Electron",
+          "country": "JP",
+          "note": "코터·식각·증착 글로벌 peer",
+          "noteEn": "Global peer in coat/develop, etch and deposition",
+          "evidence": "confirmed",
+          "source": "https://www.tel.com/product/"
+        },
+        {
+          "id": "kla",
+          "name": "KLA",
+          "nameEn": "KLA",
+          "country": "US",
+          "note": "공정제어·계측 글로벌 peer",
+          "noteEn": "Global peer in process control and metrology",
+          "evidence": "confirmed",
+          "source": "https://www.kla.com/"
+        },
+        {
+          "id": "asml",
+          "name": "ASML",
+          "nameEn": "ASML",
+          "country": "NL",
+          "note": "노광 장비 글로벌 peer",
+          "noteEn": "Global peer in lithography",
+          "evidence": "confirmed",
+          "source": "https://www.asml.com/en/products"
+        }
+      ]
+    },
+    {
+      "id": "pack_equip",
+      "chain": "패키징 장비",
+      "label": {
+        "ko": "패키징 장비",
+        "en": "Packaging equipment"
+      },
+      "members": [
+        {
+          "ticker": "042700",
+          "name": "한미반도체",
+          "nameEn": "HANMISemiconductor CO.,Ltd."
+        },
+        {
+          "ticker": "039030",
+          "name": "이오테크닉스",
+          "nameEn": "EO Technics Co., Ltd."
+        },
+        {
+          "ticker": "031980",
+          "name": "피에스케이홀딩스",
+          "nameEn": "PSK HOLDINGS INC."
+        },
+        {
+          "ticker": "053610",
+          "name": "프로텍",
+          "nameEn": "PROTEC Co., Ltd."
+        },
+        {
+          "ticker": "089890",
+          "name": "코세스",
+          "nameEn": "KOSES Co.,Ltd"
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "coherent",
+          "name": "Coherent",
+          "nameEn": "Coherent",
+          "country": "US",
+          "note": "레이저 소스·광학 (레이저 마킹·컷)",
+          "noteEn": "Laser sources and optics for marking/cutting tools",
+          "evidence": "reported",
+          "source": "https://www.coherent.com/markets/semiconductor"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "패키징·테스트·본딩 장비 납품",
+          "noteEn": "Packaging, test and bonding equipment",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "HBM·패키지 후공정 장비",
+          "noteEn": "HBM and package back-end equipment",
+          "evidence": "confirmed",
+          "source": "https://news.skhynix.com/",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "ase",
+          "name": "ASE Group",
+          "nameEn": "ASE Group",
+          "country": "TW",
+          "note": "OSAT 후공정 장비 수요",
+          "noteEn": "OSAT demand for back-end tools",
+          "evidence": "reported",
+          "source": "https://www.aseglobal.com/"
+        },
+        {
+          "id": "amkor",
+          "name": "Amkor Technology",
+          "nameEn": "Amkor Technology",
+          "country": "US",
+          "note": "OSAT 패키징·테스트 라인",
+          "noteEn": "OSAT packaging and test lines",
+          "evidence": "reported",
+          "source": "https://amkor.com/"
+        },
+        {
+          "id": "intel",
+          "name": "Intel",
+          "nameEn": "Intel",
+          "country": "US",
+          "note": "어셈블리·테스트 장비",
+          "noteEn": "Assembly and test equipment",
+          "evidence": "reported",
+          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
+        }
+      ],
+      "peers": [
+        {
+          "id": "kulicke",
+          "name": "Kulicke & Soffa",
+          "nameEn": "Kulicke & Soffa",
+          "country": "SG",
+          "note": "와이어·플립칩 본더 글로벌 peer",
+          "noteEn": "Global peer in wire and flip-chip bonders",
+          "evidence": "confirmed",
+          "source": "https://www.kns.com/"
+        },
+        {
+          "id": "disco",
+          "name": "DISCO",
+          "nameEn": "DISCO Corporation",
+          "country": "JP",
+          "note": "다이싱·그라인딩 글로벌 peer",
+          "noteEn": "Global peer in dicing and grinding",
+          "evidence": "confirmed",
+          "source": "https://www.disco.co.jp/eg/"
+        },
+        {
+          "id": "advantest",
+          "name": "Advantest",
+          "nameEn": "Advantest",
+          "country": "JP",
+          "note": "반도체 테스터 글로벌 peer",
+          "noteEn": "Global peer in semiconductor testers",
+          "evidence": "confirmed",
+          "source": "https://www.advantest.com/"
+        },
+        {
+          "id": "teradyne",
+          "name": "Teradyne",
+          "nameEn": "Teradyne",
+          "country": "US",
+          "note": "자동 테스트 장비 글로벌 peer",
+          "noteEn": "Global peer in automated test equipment",
+          "evidence": "confirmed",
+          "source": "https://www.teradyne.com/"
+        },
+        {
+          "id": "besi",
+          "name": "Besi",
+          "nameEn": "BE Semiconductor Industries",
+          "country": "NL",
+          "note": "다이 어태치·패키징 장비 peer",
+          "noteEn": "Peer in die attach and packaging equipment",
+          "evidence": "confirmed",
+          "source": "https://www.besi.com/"
+        }
+      ]
+    },
+    {
+      "id": "inspect_metro",
+      "chain": "검사·계측 장비",
+      "label": {
+        "ko": "검사·계측 장비",
+        "en": "Inspection & metrology"
+      },
+      "members": [
+        {
+          "ticker": "098460",
+          "name": "고영",
+          "nameEn": "Koh Young Technology Inc."
+        },
+        {
+          "ticker": "140860",
+          "name": "파크시스템스",
+          "nameEn": "Park Systems Corp."
+        },
+        {
+          "ticker": "089030",
+          "name": "테크윙",
+          "nameEn": "Techwing, Inc."
+        },
+        {
+          "ticker": "420770",
+          "name": "기가비스",
+          "nameEn": "GigaVis Co., Ltd."
+        },
+        {
+          "ticker": "232140",
+          "name": "와이씨",
+          "nameEn": "YIK"
+        },
+        {
+          "ticker": "003160",
+          "name": "디아이",
+          "nameEn": "DI Corp"
+        },
+        {
+          "ticker": "064290",
+          "name": "인텍플러스",
+          "nameEn": "INTEKPLUS CO.,LTD"
+        },
+        {
+          "ticker": "253590",
+          "name": "네오셈",
+          "nameEn": "Neosem Inc."
+        },
+        {
+          "ticker": "092870",
+          "name": "엑시콘",
+          "nameEn": "Exicon Co., Ltd."
+        },
+        {
+          "ticker": "332570",
+          "name": "PS일렉트로닉스",
+          "nameEn": "Pentastone Electronics"
+        },
+        {
+          "ticker": "348210",
+          "name": "넥스틴",
+          "nameEn": "NEXTIN Inc."
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "coherent",
+          "name": "Coherent",
+          "nameEn": "Coherent",
+          "country": "US",
+          "note": "레이저 소스·광학 (레이저 마킹·컷)",
+          "noteEn": "Laser sources and optics for marking/cutting tools",
+          "evidence": "reported",
+          "source": "https://www.coherent.com/markets/semiconductor"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "패키징·테스트·본딩 장비 납품",
+          "noteEn": "Packaging, test and bonding equipment",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "HBM·패키지 후공정 장비",
+          "noteEn": "HBM and package back-end equipment",
+          "evidence": "confirmed",
+          "source": "https://news.skhynix.com/",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "ase",
+          "name": "ASE Group",
+          "nameEn": "ASE Group",
+          "country": "TW",
+          "note": "OSAT 후공정 장비 수요",
+          "noteEn": "OSAT demand for back-end tools",
+          "evidence": "reported",
+          "source": "https://www.aseglobal.com/"
+        },
+        {
+          "id": "amkor",
+          "name": "Amkor Technology",
+          "nameEn": "Amkor Technology",
+          "country": "US",
+          "note": "OSAT 패키징·테스트 라인",
+          "noteEn": "OSAT packaging and test lines",
+          "evidence": "reported",
+          "source": "https://amkor.com/"
+        },
+        {
+          "id": "intel",
+          "name": "Intel",
+          "nameEn": "Intel",
+          "country": "US",
+          "note": "어셈블리·테스트 장비",
+          "noteEn": "Assembly and test equipment",
+          "evidence": "reported",
+          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
+        }
+      ],
+      "peers": [
+        {
+          "id": "kulicke",
+          "name": "Kulicke & Soffa",
+          "nameEn": "Kulicke & Soffa",
+          "country": "SG",
+          "note": "와이어·플립칩 본더 글로벌 peer",
+          "noteEn": "Global peer in wire and flip-chip bonders",
+          "evidence": "confirmed",
+          "source": "https://www.kns.com/"
+        },
+        {
+          "id": "disco",
+          "name": "DISCO",
+          "nameEn": "DISCO Corporation",
+          "country": "JP",
+          "note": "다이싱·그라인딩 글로벌 peer",
+          "noteEn": "Global peer in dicing and grinding",
+          "evidence": "confirmed",
+          "source": "https://www.disco.co.jp/eg/"
+        },
+        {
+          "id": "advantest",
+          "name": "Advantest",
+          "nameEn": "Advantest",
+          "country": "JP",
+          "note": "반도체 테스터 글로벌 peer",
+          "noteEn": "Global peer in semiconductor testers",
+          "evidence": "confirmed",
+          "source": "https://www.advantest.com/"
+        },
+        {
+          "id": "teradyne",
+          "name": "Teradyne",
+          "nameEn": "Teradyne",
+          "country": "US",
+          "note": "자동 테스트 장비 글로벌 peer",
+          "noteEn": "Global peer in automated test equipment",
+          "evidence": "confirmed",
+          "source": "https://www.teradyne.com/"
+        },
+        {
+          "id": "besi",
+          "name": "Besi",
+          "nameEn": "BE Semiconductor Industries",
+          "country": "NL",
+          "note": "다이 어태치·패키징 장비 peer",
+          "noteEn": "Peer in die attach and packaging equipment",
+          "evidence": "confirmed",
+          "source": "https://www.besi.com/"
+        }
+      ]
+    },
+    {
+      "id": "process_mat",
+      "chain": "공정 소재",
+      "label": {
+        "ko": "공정 소재",
+        "en": "Process materials"
+      },
+      "members": [
+        {
+          "ticker": "357780",
+          "name": "솔브레인",
+          "nameEn": "Soulbrain Co., Ltd."
+        },
+        {
+          "ticker": "014680",
+          "name": "한솔케미칼",
+          "nameEn": "Hansol Chemical"
+        },
+        {
+          "ticker": "005290",
+          "name": "동진쎄미켐",
+          "nameEn": "DONGJIN SEMICHEM CO., LTD."
+        },
+        {
+          "ticker": "101490",
+          "name": "에스앤에스텍",
+          "nameEn": "S&S TECH CORPORATION"
+        },
+        {
+          "ticker": "281740",
+          "name": "레이크머티리얼즈",
+          "nameEn": "Lake Materials Co., Ltd."
+        },
+        {
+          "ticker": "102710",
+          "name": "이엔에프테크놀로지",
+          "nameEn": "ENF Technology Co., Ltd"
+        },
+        {
+          "ticker": "036810",
+          "name": "에프에스티",
+          "nameEn": "FINE SEMITECH Corp."
+        },
+        {
+          "ticker": "104830",
+          "name": "원익머트리얼즈",
+          "nameEn": "WONIK Materials Co., Ltd."
+        },
+        {
+          "ticker": "170920",
+          "name": "엘티씨",
+          "nameEn": "LTC Co., LTD."
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "air_liquide",
+          "name": "Air Liquide",
+          "nameEn": "Air Liquide",
+          "country": "FR",
+          "note": "특수가스·케미컬 원료",
+          "noteEn": "Specialty gases and chemical feedstocks",
+          "evidence": "reported",
+          "source": "https://www.airliquide.com/electronics"
+        },
+        {
+          "id": "linde",
+          "name": "Linde",
+          "nameEn": "Linde",
+          "country": "US",
+          "note": "반도체 특수가스 공급",
+          "noteEn": "Semiconductor specialty gases",
+          "evidence": "reported",
+          "source": "https://www.linde.com/electronics"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "포토레지스트·식각액·특수가스 등",
+          "noteEn": "Photoresist, etchants, specialty gases and more",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "메모리 공정 소재·가스",
+          "noteEn": "Memory process materials and gases",
+          "evidence": "confirmed",
+          "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "파운드리 공정 소재",
+          "noteEn": "Foundry process materials",
+          "evidence": "reported",
+          "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf"
+        },
+        {
+          "id": "intel",
+          "name": "Intel",
+          "nameEn": "Intel",
+          "country": "US",
+          "note": "로직 공정 소재",
+          "noteEn": "Logic process materials",
+          "evidence": "reported",
+          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
+        }
+      ],
+      "peers": [
+        {
+          "id": "dupont",
+          "name": "DuPont",
+          "nameEn": "DuPont",
+          "country": "US",
+          "note": "전자재료·CMP·레지스트 peer",
+          "noteEn": "Peer in electronic materials, CMP and resists",
+          "evidence": "confirmed",
+          "source": "https://www.dupont.com/electronics-industrial.html"
+        },
+        {
+          "id": "shin_etsu",
+          "name": "신에츠화학",
+          "nameEn": "Shin-Etsu Chemical",
+          "country": "JP",
+          "note": "실리콘 웨이퍼·레지스트 peer",
+          "noteEn": "Peer in silicon wafers and resists",
+          "evidence": "confirmed",
+          "source": "https://www.shinetsu.co.jp/en/products/electronics-materials/"
+        },
+        {
+          "id": "tok",
+          "name": "도쿄오카공업",
+          "nameEn": "Tokyo Ohka Kogyo (TOK)",
+          "country": "JP",
+          "note": "포토레지스트 글로벌 peer",
+          "noteEn": "Global peer in photoresist",
+          "evidence": "confirmed",
+          "source": "https://www.tok.co.jp/eng/"
+        },
+        {
+          "id": "merck_em",
+          "name": "Merck Electronics",
+          "nameEn": "Merck Electronics",
+          "country": "DE",
+          "note": "전자재료·공정 케미컬 peer",
+          "noteEn": "Peer in electronic materials and process chemicals",
+          "evidence": "confirmed",
+          "source": "https://www.merckgroup.com/en/company/merck-electronics.html"
+        },
+        {
+          "id": "entegris",
+          "name": "Entegris",
+          "nameEn": "Entegris",
+          "country": "US",
+          "note": "여과·특수가스·웨이퍼 핸들링 peer",
+          "noteEn": "Peer in filtration, specialty gas and wafer handling",
+          "evidence": "confirmed",
+          "source": "https://www.entegris.com/"
+        }
+      ]
+    },
+    {
+      "id": "process_parts",
+      "chain": "공정 부품·유지관리",
+      "label": {
+        "ko": "공정 부품·유지관리",
+        "en": "Process parts & MRO"
+      },
+      "members": [
+        {
+          "ticker": "064760",
+          "name": "티씨케이",
+          "nameEn": "TOKAI CARBON KOREA CO., LTD"
+        },
+        {
+          "ticker": "178320",
+          "name": "서진시스템",
+          "nameEn": "SEOJIN SYSTEM CO., LTD"
+        },
+        {
+          "ticker": "183300",
+          "name": "코미코",
+          "nameEn": "KoMiCo Ltd."
+        },
+        {
+          "ticker": "127120",
+          "name": "제이에스링크",
+          "nameEn": "JS Link"
+        },
+        {
+          "ticker": "166090",
+          "name": "하나머티리얼즈",
+          "nameEn": "Hana Materials Inc."
+        },
+        {
+          "ticker": "388210",
+          "name": "씨엠티엑스",
+          "nameEn": "CMTX Co.,Ltd."
+        },
+        {
+          "ticker": "074600",
+          "name": "원익QnC",
+          "nameEn": "WONIK QnC CORPORATION"
+        },
+        {
+          "ticker": "059090",
+          "name": "미코",
+          "nameEn": "MiCo Ltd."
+        },
+        {
+          "ticker": "101160",
+          "name": "월덱스",
+          "nameEn": "WORLDEX INDUSTRY & TRADING CO., LTD"
+        },
+        {
+          "ticker": "241770",
+          "name": "메카로",
+          "nameEn": "Mecaro"
+        },
+        {
+          "ticker": "114810",
+          "name": "한솔아이원스",
+          "nameEn": "Hansol iOne"
+        },
+        {
+          "ticker": "159010",
+          "name": "아스플로",
+          "nameEn": "ASFLOW CO.,LTD."
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "air_liquide",
+          "name": "Air Liquide",
+          "nameEn": "Air Liquide",
+          "country": "FR",
+          "note": "특수가스·케미컬 원료",
+          "noteEn": "Specialty gases and chemical feedstocks",
+          "evidence": "reported",
+          "source": "https://www.airliquide.com/electronics"
+        },
+        {
+          "id": "linde",
+          "name": "Linde",
+          "nameEn": "Linde",
+          "country": "US",
+          "note": "반도체 특수가스 공급",
+          "noteEn": "Semiconductor specialty gases",
+          "evidence": "reported",
+          "source": "https://www.linde.com/electronics"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "포토레지스트·식각액·특수가스 등",
+          "noteEn": "Photoresist, etchants, specialty gases and more",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "메모리 공정 소재·가스",
+          "noteEn": "Memory process materials and gases",
+          "evidence": "confirmed",
+          "source": "https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "파운드리 공정 소재",
+          "noteEn": "Foundry process materials",
+          "evidence": "reported",
+          "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf"
+        },
+        {
+          "id": "intel",
+          "name": "Intel",
+          "nameEn": "Intel",
+          "country": "US",
+          "note": "로직 공정 소재",
+          "noteEn": "Logic process materials",
+          "evidence": "reported",
+          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
+        }
+      ],
+      "peers": [
+        {
+          "id": "dupont",
+          "name": "DuPont",
+          "nameEn": "DuPont",
+          "country": "US",
+          "note": "전자재료·CMP·레지스트 peer",
+          "noteEn": "Peer in electronic materials, CMP and resists",
+          "evidence": "confirmed",
+          "source": "https://www.dupont.com/electronics-industrial.html"
+        },
+        {
+          "id": "shin_etsu",
+          "name": "신에츠화학",
+          "nameEn": "Shin-Etsu Chemical",
+          "country": "JP",
+          "note": "실리콘 웨이퍼·레지스트 peer",
+          "noteEn": "Peer in silicon wafers and resists",
+          "evidence": "confirmed",
+          "source": "https://www.shinetsu.co.jp/en/products/electronics-materials/"
+        },
+        {
+          "id": "tok",
+          "name": "도쿄오카공업",
+          "nameEn": "Tokyo Ohka Kogyo (TOK)",
+          "country": "JP",
+          "note": "포토레지스트 글로벌 peer",
+          "noteEn": "Global peer in photoresist",
+          "evidence": "confirmed",
+          "source": "https://www.tok.co.jp/eng/"
+        },
+        {
+          "id": "merck_em",
+          "name": "Merck Electronics",
+          "nameEn": "Merck Electronics",
+          "country": "DE",
+          "note": "전자재료·공정 케미컬 peer",
+          "noteEn": "Peer in electronic materials and process chemicals",
+          "evidence": "confirmed",
+          "source": "https://www.merckgroup.com/en/company/merck-electronics.html"
+        },
+        {
+          "id": "entegris",
+          "name": "Entegris",
+          "nameEn": "Entegris",
+          "country": "US",
+          "note": "여과·특수가스·웨이퍼 핸들링 peer",
+          "noteEn": "Peer in filtration, specialty gas and wafer handling",
+          "evidence": "confirmed",
+          "source": "https://www.entegris.com/"
+        }
+      ]
+    },
+    {
+      "id": "substrate_pack_mat",
+      "chain": "기판·패키징 소재",
+      "label": {
+        "ko": "기판·패키징 소재",
+        "en": "Substrate & packaging materials"
       },
       "members": [
         {
           "ticker": "007660",
           "name": "이수페타시스",
           "nameEn": "Isupetasys"
-        },
-        {
-          "ticker": "058470",
-          "name": "리노공업",
-          "nameEn": "LEENO Industrial Inc"
         },
         {
           "ticker": "353200",
@@ -1159,9 +1414,9 @@
           "nameEn": "SIMMTECH Co., Ltd."
         },
         {
-          "ticker": "095340",
-          "name": "ISC",
-          "nameEn": "ISC Co., LTD."
+          "ticker": "078600",
+          "name": "대주전자재료",
+          "nameEn": "Daejoo Electronic Materials Co., Ltd."
         },
         {
           "ticker": "007810",
@@ -1184,14 +1439,29 @@
           "nameEn": "RFMaterials"
         },
         {
+          "ticker": "178920",
+          "name": "PI첨단소재",
+          "nameEn": "PI Advanced Materials Co., Ltd."
+        },
+        {
+          "ticker": "024850",
+          "name": "HLB이노베이션",
+          "nameEn": "HLB innoVation"
+        },
+        {
+          "ticker": "077360",
+          "name": "덕산하이메탈",
+          "nameEn": "Duksan Hi Metal"
+        },
+        {
           "ticker": "272290",
           "name": "이녹스첨단소재",
           "nameEn": "INNOX Advanced Materials Co., Ltd."
         },
         {
-          "ticker": "219130",
-          "name": "타이거일렉",
-          "nameEn": "TigerElec Co.,Ltd."
+          "ticker": "033160",
+          "name": "엠케이전자",
+          "nameEn": "MKElectron"
         }
       ],
       "suppliers": [
@@ -1336,37 +1606,27 @@
       ]
     },
     {
-      "id": "osat",
-      "chain": "패키징/테스트",
+      "id": "test_parts",
+      "chain": "테스트 부품·인터페이스",
       "label": {
-        "ko": "패키징/테스트",
-        "en": "Packaging & Test"
+        "ko": "테스트 부품·인터페이스",
+        "en": "Test parts & interface"
       },
       "members": [
+        {
+          "ticker": "058470",
+          "name": "리노공업",
+          "nameEn": "LEENO Industrial Inc"
+        },
+        {
+          "ticker": "095340",
+          "name": "ISC",
+          "nameEn": "ISC Co., LTD."
+        },
         {
           "ticker": "131290",
           "name": "티에스이",
           "nameEn": "TSE CO.,Ltd"
-        },
-        {
-          "ticker": "067310",
-          "name": "하나마이크론",
-          "nameEn": "Hana Micron Inc."
-        },
-        {
-          "ticker": "089030",
-          "name": "테크윙",
-          "nameEn": "Techwing, Inc."
-        },
-        {
-          "ticker": "131970",
-          "name": "두산테스나",
-          "nameEn": "DOOSAN TESNA"
-        },
-        {
-          "ticker": "036540",
-          "name": "SFA반도체",
-          "nameEn": "SFA Semicon Co., Ltd"
         },
         {
           "ticker": "252990",
@@ -1379,29 +1639,19 @@
           "nameEn": "TFE Co., Ltd."
         },
         {
-          "ticker": "033640",
-          "name": "네패스",
-          "nameEn": "NEPES Corporation"
-        },
-        {
           "ticker": "080580",
           "name": "오킨스전자",
           "nameEn": "OKins Electronics Co.,Ltd."
         },
         {
-          "ticker": "332570",
-          "name": "PS일렉트로닉스",
-          "nameEn": "Pentastone Electronics"
+          "ticker": "219130",
+          "name": "타이거일렉",
+          "nameEn": "TigerElec Co.,Ltd."
         },
         {
           "ticker": "098120",
           "name": "마이크로컨텍솔",
           "nameEn": "Micro Contact Solution Co.,Ltd."
-        },
-        {
-          "ticker": "033160",
-          "name": "엠케이전자",
-          "nameEn": "MKElectron"
         }
       ],
       "suppliers": [
@@ -1546,6 +1796,356 @@
       ]
     },
     {
+      "id": "osat",
+      "chain": "패키징·테스트 서비스",
+      "label": {
+        "ko": "패키징·테스트 서비스",
+        "en": "Packaging & test services"
+      },
+      "members": [
+        {
+          "ticker": "067310",
+          "name": "하나마이크론",
+          "nameEn": "Hana Micron Inc."
+        },
+        {
+          "ticker": "131970",
+          "name": "두산테스나",
+          "nameEn": "DOOSAN TESNA"
+        },
+        {
+          "ticker": "036540",
+          "name": "SFA반도체",
+          "nameEn": "SFA Semicon Co., Ltd"
+        },
+        {
+          "ticker": "033640",
+          "name": "네패스",
+          "nameEn": "NEPES Corporation"
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "teradyne",
+          "name": "Teradyne",
+          "nameEn": "Teradyne",
+          "country": "US",
+          "note": "자동 테스트 장비",
+          "noteEn": "Automated test equipment",
+          "evidence": "confirmed",
+          "source": "https://www.teradyne.com/"
+        },
+        {
+          "id": "advantest",
+          "name": "Advantest",
+          "nameEn": "Advantest",
+          "country": "JP",
+          "note": "반도체 테스터",
+          "noteEn": "Semiconductor testers",
+          "evidence": "confirmed",
+          "source": "https://www.advantest.com/"
+        },
+        {
+          "id": "kulicke",
+          "name": "Kulicke & Soffa",
+          "nameEn": "Kulicke & Soffa",
+          "country": "SG",
+          "note": "와이어·플립칩 본더·본딩 소재 연계",
+          "noteEn": "Wire/flip-chip bonders and related materials",
+          "evidence": "confirmed",
+          "source": "https://www.kns.com/"
+        },
+        {
+          "id": "henkel",
+          "name": "Henkel",
+          "nameEn": "Henkel",
+          "country": "DE",
+          "note": "다이 어태치·언더필 등 본딩 소재",
+          "noteEn": "Die-attach, underfill and bonding materials",
+          "evidence": "confirmed",
+          "source": "https://www.henkel-adhesives.com/us/en/industries/electronics.html"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "패키징·테스트 OSAT 고객",
+          "noteEn": "Packaging and test OSAT customer",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "HBM·메모리 패키지/테스트",
+          "noteEn": "HBM and memory packaging/test",
+          "evidence": "confirmed",
+          "source": "https://news.skhynix.com/",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "qualcomm",
+          "name": "Qualcomm",
+          "nameEn": "Qualcomm",
+          "country": "US",
+          "note": "팹리스 패키징·테스트 수요",
+          "noteEn": "Fabless packaging and test demand",
+          "evidence": "reported",
+          "source": "https://www.qualcomm.com/"
+        },
+        {
+          "id": "mediatek",
+          "name": "MediaTek",
+          "nameEn": "MediaTek",
+          "country": "TW",
+          "note": "모바일 AP 패키징·테스트",
+          "noteEn": "Mobile AP packaging and test",
+          "evidence": "reported",
+          "source": "https://www.mediatek.com/"
+        },
+        {
+          "id": "amd",
+          "name": "AMD",
+          "nameEn": "AMD",
+          "country": "US",
+          "note": "CPU·GPU 패키징·테스트 수요",
+          "noteEn": "CPU/GPU packaging and test demand",
+          "evidence": "reported",
+          "source": "https://www.amd.com/"
+        }
+      ],
+      "peers": [
+        {
+          "id": "ase",
+          "name": "ASE Group",
+          "nameEn": "ASE Group",
+          "country": "TW",
+          "note": "글로벌 OSAT peer",
+          "noteEn": "Global OSAT peer",
+          "evidence": "confirmed",
+          "source": "https://www.aseglobal.com/"
+        },
+        {
+          "id": "amkor",
+          "name": "Amkor Technology",
+          "nameEn": "Amkor Technology",
+          "country": "US",
+          "note": "글로벌 OSAT peer",
+          "noteEn": "Global OSAT peer",
+          "evidence": "confirmed",
+          "source": "https://amkor.com/"
+        },
+        {
+          "id": "jcet",
+          "name": "JCET",
+          "nameEn": "JCET Group",
+          "country": "CN",
+          "note": "중국 OSAT peer",
+          "noteEn": "China OSAT peer",
+          "evidence": "confirmed",
+          "source": "https://www.jcetglobal.com/"
+        },
+        {
+          "id": "pti",
+          "name": "Powertech Technology",
+          "nameEn": "Powertech Technology (PTI)",
+          "country": "TW",
+          "note": "메모리·로직 OSAT peer",
+          "noteEn": "Memory and logic OSAT peer",
+          "evidence": "confirmed",
+          "source": "https://www.pti.com.tw/"
+        }
+      ]
+    },
+    {
+      "id": "fab_infra",
+      "chain": "팹 인프라·지원설비",
+      "label": {
+        "ko": "팹 인프라·지원설비",
+        "en": "Fab infrastructure"
+      },
+      "members": [
+        {
+          "ticker": "083450",
+          "name": "GST",
+          "nameEn": "GST"
+        },
+        {
+          "ticker": "045100",
+          "name": "한양이엔지",
+          "nameEn": "HANYANG ENG CO.,LTD."
+        },
+        {
+          "ticker": "383310",
+          "name": "에코프로에이치엔",
+          "nameEn": "ECOPRO HN CO., LTD"
+        },
+        {
+          "ticker": "082270",
+          "name": "젬백스",
+          "nameEn": "GemVax"
+        },
+        {
+          "ticker": "029460",
+          "name": "케이씨",
+          "nameEn": "KC"
+        },
+        {
+          "ticker": "144960",
+          "name": "뉴파워프라즈마",
+          "nameEn": "New Power Plasma"
+        },
+        {
+          "ticker": "417840",
+          "name": "저스템",
+          "nameEn": "Justem.Co.,Ltd."
+        },
+        {
+          "ticker": "039440",
+          "name": "에스티아이",
+          "nameEn": "Systems Technology Incorporated"
+        }
+      ],
+      "suppliers": [
+        {
+          "id": "mks",
+          "name": "MKS Instruments",
+          "nameEn": "MKS Instruments",
+          "country": "US",
+          "note": "진공·공정제어 하위 부품·계측",
+          "noteEn": "Vacuum and process-control subsystems",
+          "evidence": "reported",
+          "source": "https://www.mks.com/n/semiconductor"
+        },
+        {
+          "id": "edwards",
+          "name": "Edwards Vacuum",
+          "nameEn": "Edwards Vacuum (Atlas Copco)",
+          "country": "GB",
+          "note": "건식 진공펌프·배기 시스템",
+          "noteEn": "Dry vacuum pumps and abatement systems",
+          "evidence": "reported",
+          "source": "https://www.edwardsvacuum.com/en/markets/semiconductor"
+        }
+      ],
+      "customers": [
+        {
+          "id": "samsung_d",
+          "name": "삼성전자",
+          "nameEn": "Samsung Electronics",
+          "country": "KR",
+          "note": "메모리·파운드리 전공정 장비 납품",
+          "noteEn": "Front-end tools for memory and foundry lines",
+          "evidence": "confirmed",
+          "source": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "ticker": "005930",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "skhynix_d",
+          "name": "SK하이닉스",
+          "nameEn": "SK hynix",
+          "country": "KR",
+          "note": "DRAM·HBM 전공정 장비 납품",
+          "noteEn": "Front-end tools for DRAM and HBM fabs",
+          "evidence": "confirmed",
+          "source": "https://www.skhynix.com/eng/sustainability/supplyChain.do",
+          "ticker": "000660",
+          "entityRole": "domestic_anchor"
+        },
+        {
+          "id": "tsmc",
+          "name": "TSMC",
+          "nameEn": "TSMC",
+          "country": "TW",
+          "note": "로직 파운드리 라인 장비 공급(일부)",
+          "noteEn": "Selected tools for logic foundry lines",
+          "evidence": "reported",
+          "source": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf"
+        },
+        {
+          "id": "intel",
+          "name": "Intel",
+          "nameEn": "Intel",
+          "country": "US",
+          "note": "로직·파운드리 전공정 장비",
+          "noteEn": "Logic and foundry front-end equipment",
+          "evidence": "reported",
+          "source": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html"
+        },
+        {
+          "id": "micron_eq",
+          "name": "Micron",
+          "nameEn": "Micron",
+          "country": "US",
+          "note": "메모리 팹 전공정 장비",
+          "noteEn": "Memory-fab front-end equipment",
+          "evidence": "reported",
+          "source": "https://www.micron.com/about/our-commitment/operating-thoughtfully/supply-chain"
+        }
+      ],
+      "peers": [
+        {
+          "id": "appmat",
+          "name": "Applied Materials",
+          "nameEn": "Applied Materials",
+          "country": "US",
+          "note": "증착·CMP·이온주입 글로벌 peer",
+          "noteEn": "Global peer in deposition, CMP and implant",
+          "evidence": "confirmed",
+          "source": "https://www.appliedmaterials.com/us/en/semiconductor.html"
+        },
+        {
+          "id": "lam",
+          "name": "Lam Research",
+          "nameEn": "Lam Research",
+          "country": "US",
+          "note": "식각·세정 장비 글로벌 peer",
+          "noteEn": "Global peer in etch and clean",
+          "evidence": "confirmed",
+          "source": "https://www.lamresearch.com/"
+        },
+        {
+          "id": "tokyo_electron",
+          "name": "도쿄일렉트론",
+          "nameEn": "Tokyo Electron",
+          "country": "JP",
+          "note": "코터·식각·증착 글로벌 peer",
+          "noteEn": "Global peer in coat/develop, etch and deposition",
+          "evidence": "confirmed",
+          "source": "https://www.tel.com/product/"
+        },
+        {
+          "id": "kla",
+          "name": "KLA",
+          "nameEn": "KLA",
+          "country": "US",
+          "note": "공정제어·계측 글로벌 peer",
+          "noteEn": "Global peer in process control and metrology",
+          "evidence": "confirmed",
+          "source": "https://www.kla.com/"
+        },
+        {
+          "id": "asml",
+          "name": "ASML",
+          "nameEn": "ASML",
+          "country": "NL",
+          "note": "노광 장비 글로벌 peer",
+          "noteEn": "Global peer in lithography",
+          "evidence": "confirmed",
+          "source": "https://www.asml.com/en/products"
+        }
+      ]
+    },
+    {
       "id": "distribution",
       "chain": "반도체 유통",
       "label": {
@@ -1553,6 +2153,11 @@
         "en": "Semiconductor distribution"
       },
       "members": [
+        {
+          "ticker": "031330",
+          "name": "에스에이엠티",
+          "nameEn": "SAMT CO.,LTD."
+        },
         {
           "ticker": "093520",
           "name": "매커스",

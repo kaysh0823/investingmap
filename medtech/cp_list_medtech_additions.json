@@ -8,7 +8,10 @@
     "semTypeEn": "Derma patches & transdermal delivery",
     "products": "마이크로니들·경피흡수 더마패치",
     "productsEn": "Microneedle and transdermal derma patches",
-    "partners": ["3m", "boston_sci"],
+    "partners": [
+      "3m",
+      "boston_sci"
+    ],
     "subSector": "더마패치",
     "level": "core"
   },
@@ -21,7 +24,11 @@
     "semTypeEn": "Surgical instruments & robotics",
     "products": "복강경·수술기구·로봇 수술",
     "productsEn": "Laparoscopic instruments and robotic surgery systems",
-    "partners": ["intuitive", "medtronic", "stryker"],
+    "partners": [
+      "intuitive",
+      "medtronic",
+      "stryker"
+    ],
     "subSector": "수술기구·로봇",
     "level": "core"
   },
@@ -34,7 +41,11 @@
     "semTypeEn": "Remote ECG monitoring",
     "products": "웨어러블·원격 심전도·헬스케어",
     "productsEn": "Wearable and remote ECG monitoring",
-    "partners": ["philips", "abbott", "medtronic"],
+    "partners": [
+      "philips",
+      "abbott",
+      "medtronic"
+    ],
     "subSector": "원격 심전도",
     "level": "core"
   },
@@ -47,7 +58,11 @@
     "semTypeEn": "IVD & diagnostic materials",
     "products": "진단키트·항원·IVD 원료",
     "productsEn": "Diagnostic kits, antigens and IVD materials",
-    "partners": ["roche", "abbott", "siemens_health"],
+    "partners": [
+      "roche",
+      "abbott",
+      "siemens_health"
+    ],
     "subSector": "체외진단·원료",
     "level": "core"
   },
@@ -60,7 +75,11 @@
     "semTypeEn": "Regenerative medicine & bioprinting",
     "products": "3D 바이오프린터·재생의료",
     "productsEn": "3D bioprinters and regenerative medicine",
-    "partners": ["medtronic", "ge_health", "stryker"],
+    "partners": [
+      "medtronic",
+      "ge_health",
+      "stryker"
+    ],
     "subSector": "재생의료·바이오프린팅",
     "level": "core"
   },
@@ -73,8 +92,51 @@
     "semTypeEn": "Holographic microscopy",
     "products": "홀로토모그래피·세포·진단 현미경",
     "productsEn": "Holotomography cell and diagnostic microscopy",
-    "partners": ["olympus", "zeiss", "ge_health"],
+    "partners": [
+      "olympus",
+      "zeiss",
+      "ge_health"
+    ],
     "subSector": "홀로그래픽 현미경",
+    "level": "core"
+  },
+  {
+    "ticker": "290650",
+    "name": "엘앤씨바이오",
+    "nameEn": "L&C Bio",
+    "chain": "의료소모품·재생재료",
+    "semType": "의료소모품·재생재료",
+    "semTypeEn": "Consumables & regenerative materials",
+    "products": "인체조직·재생의료 소재",
+    "productsEn": "Human tissue and regenerative materials",
+    "partners": [],
+    "subSector": "의료소모품·재생재료",
+    "level": "core"
+  },
+  {
+    "ticker": "0120G0",
+    "name": "삼양바이오팜",
+    "nameEn": "Samyang Biopharm",
+    "chain": "의료소모품·재생재료",
+    "semType": "의료소모품·재생재료",
+    "semTypeEn": "Consumables & regenerative materials",
+    "products": "의료·바이오 소재·전문의약품 (재생재료 관계)",
+    "productsEn": "Medical/biotech materials and specialty pharma",
+    "partners": [],
+    "subSector": "의료소모품·재생재료",
+    "level": "core"
+  },
+  {
+    "ticker": "386380",
+    "name": "스카이랩스",
+    "nameEn": "스카이랩스",
+    "chain": "생체측정·모니터링",
+    "semType": "웨어러블 생체측정",
+    "semTypeEn": "Wearable biomonitoring",
+    "products": "반지형 혈압·심방세동 웨어러블",
+    "productsEn": "Ring-type BP/AFib wearable",
+    "partners": [],
+    "subSector": "생체측정·모니터링",
     "level": "core"
   }
 ]

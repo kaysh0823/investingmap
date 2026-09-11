@@ -8,7 +8,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 12;
+const SCRIPT_V = 13;
+const LIVE_QUOTES_V = 18;
 const TAB_STATE_V = 9;
 
 const MAP_FILES = [
@@ -61,6 +62,9 @@ const RENDER_MOMENTUM_FN = `    function renderMomentum() {
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,
@@ -103,7 +107,7 @@ const TRANSLATIONS = {
     momentumChange: '당일 등락률',
     momentumPosition: '주가 위치',
     momentumNoData: 'RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.',
-    momentumLegend: '색 = 당일 등락률 · 크기 = 당일 거래대금',
+    momentumLegend: '색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS',
   },
   en: {
     tabMomentum: '📊 Momentum matrix',
@@ -118,7 +122,7 @@ const TRANSLATIONS = {
     momentumChange: '1-day return',
     momentumPosition: 'Price position',
     momentumNoData: 'No companies have RS, price-position and turnover data.',
-    momentumLegend: 'Color = 1-day return · size = daily turnover',
+    momentumLegend: 'Color = 1-day return · size = daily turnover · vertical lines = market index RS',
   },
 };
 
@@ -179,6 +183,31 @@ function patchRuntime(source) {
     /\}\r[ \t]+function renderMomentum\(\)/g,
     '}\n\n    function renderMomentum()',
   );
+
+  if (!source.includes('getMomentumIndices')) {
+    source = source.replace(
+      /InvestingMapMomentum\.render\(\{\s*\n\s*container: el,/g,
+      `InvestingMapMomentum.render({\n        container: el,\n        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)\n          ? InvestingMapLiveQuotes.getMomentumIndices()\n          : undefined,`,
+    );
+  }
+
+  source = source.replace(
+    /momentumLegend:\s*'색 = 당일 등락률 · 크기 = 당일 거래대금'/g,
+    "momentumLegend: '색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS'",
+  );
+  source = source.replace(
+    /momentumLegend:\s*"색 = 당일 등락률 · 크기 = 당일 거래대금"/g,
+    'momentumLegend: "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS"',
+  );
+  source = source.replace(
+    /momentumLegend:\s*'Color = 1-day return · size = daily turnover'/g,
+    "momentumLegend: 'Color = 1-day return · size = daily turnover · vertical lines = market index RS'",
+  );
+  source = source.replace(
+    /momentumLegend:\s*"Color = 1-day return · size = daily turnover"/g,
+    'momentumLegend: "Color = 1-day return · size = daily turnover · vertical lines = market index RS"',
+  );
+
   return source;
 }
 
@@ -209,6 +238,10 @@ function patchHtml(source) {
   source = source.replace(
     /map_tab_state\.js(?:\?v=\d+)?/g,
     `map_tab_state.js?v=${TAB_STATE_V}`,
+  );
+  source = source.replace(
+    /live_quotes\.js(?:\?v=\d+)?/g,
+    `live_quotes.js?v=${LIVE_QUOTES_V}`,
   );
   return patchRuntime(source);
 }

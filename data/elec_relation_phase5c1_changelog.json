@@ -42,32 +42,32 @@
   "metrics": {
     "listedCompanyCount": 29,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 89,
-    "edgeCount": 124,
-    "structuralGeneratedEdgeCount": 76,
-    "legacyMigratedEdgeCount": 45,
-    "manuallyCuratedEdgeCount": 3,
+    "nodeCount": 87,
+    "edgeCount": 117,
+    "structuralGeneratedEdgeCount": 74,
+    "legacyMigratedEdgeCount": 41,
+    "manuallyCuratedEdgeCount": 2,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 45,
+    "peerEdgeCount": 41,
     "supplyRelationshipCount": 0,
     "actualSupplyRelationshipCount": 0,
     "ownershipEdgeCount": 0,
     "jointDevelopmentCount": 0,
     "deviceAdoptionRelationshipCount": 0,
     "groupMembershipEdgeCount": 0,
-    "crossSectorReferenceCount": 3,
-    "crossSectorReferenceOnlyCompanyCount": 3,
+    "crossSectorReferenceCount": 2,
+    "crossSectorReferenceOnlyCompanyCount": 2,
     "businessRelationOrphanCount": 29,
     "directRelationshipOrphanCount": 29,
     "directCommercialRelationshipOrphanCount": 29,
     "classificationOnlyCompanyCount": 29,
     "groupMembershipOnlyCompanyCount": 0,
-    "hasPeerButNoBusinessCompanyCount": 29,
+    "hasPeerButNoBusinessCompanyCount": 27,
     "peerOnlyCompanyCount": 0,
     "weakRelationOnlyCompanyCount": 29,
-    "structuralOnlyCompanyCount": 0,
+    "structuralOnlyCompanyCount": 2,
     "orphanMetricDefinitions": {
       "listedCompanyCount": {
         "denominator": null,
@@ -508,6 +508,7 @@
         "krx:043260",
         "krx:001820",
         "krx:204270",
+        "krx:009450",
         "krx:065350",
         "krx:213420",
         "krx:417200",
@@ -516,10 +517,8 @@
         "krx:033240",
         "krx:248070",
         "krx:161580",
-        "krx:222080",
         "krx:046890",
         "krx:284740",
-        "krx:077360",
         "krx:004710",
         "krx:192650",
         "krx:017900",
@@ -527,6 +526,7 @@
         "krx:029530",
         "krx:089010",
         "krx:092190",
+        "krx:025320",
         "krx:290550"
       ],
       "directRelationshipOrphans": [
@@ -539,6 +539,7 @@
         "krx:043260",
         "krx:001820",
         "krx:204270",
+        "krx:009450",
         "krx:065350",
         "krx:213420",
         "krx:417200",
@@ -547,10 +548,8 @@
         "krx:033240",
         "krx:248070",
         "krx:161580",
-        "krx:222080",
         "krx:046890",
         "krx:284740",
-        "krx:077360",
         "krx:004710",
         "krx:192650",
         "krx:017900",
@@ -558,6 +557,7 @@
         "krx:029530",
         "krx:089010",
         "krx:092190",
+        "krx:025320",
         "krx:290550"
       ],
       "classificationOnly": [
@@ -570,6 +570,7 @@
         "krx:043260",
         "krx:001820",
         "krx:204270",
+        "krx:009450",
         "krx:065350",
         "krx:213420",
         "krx:417200",
@@ -578,10 +579,8 @@
         "krx:033240",
         "krx:248070",
         "krx:161580",
-        "krx:222080",
         "krx:046890",
         "krx:284740",
-        "krx:077360",
         "krx:004710",
         "krx:192650",
         "krx:017900",
@@ -589,6 +588,7 @@
         "krx:029530",
         "krx:089010",
         "krx:092190",
+        "krx:025320",
         "krx:290550"
       ],
       "groupMembershipOnly": [],
@@ -602,6 +602,7 @@
         "krx:043260",
         "krx:001820",
         "krx:204270",
+        "krx:009450",
         "krx:065350",
         "krx:213420",
         "krx:417200",
@@ -610,10 +611,8 @@
         "krx:033240",
         "krx:248070",
         "krx:161580",
-        "krx:222080",
         "krx:046890",
         "krx:284740",
-        "krx:077360",
         "krx:004710",
         "krx:192650",
         "krx:017900",
@@ -621,6 +620,7 @@
         "krx:029530",
         "krx:089010",
         "krx:092190",
+        "krx:025320",
         "krx:290550"
       ],
       "hasPeerButNoBusiness": [
@@ -641,10 +641,8 @@
         "krx:033240",
         "krx:248070",
         "krx:161580",
-        "krx:222080",
         "krx:046890",
         "krx:284740",
-        "krx:077360",
         "krx:004710",
         "krx:192650",
         "krx:017900",
@@ -655,7 +653,10 @@
         "krx:290550"
       ],
       "peerOnly": [],
-      "structuralOnly": []
+      "structuralOnly": [
+        "krx:009450",
+        "krx:025320"
+      ]
     },
     "claimCoverage": {
       "evidenceFieldCoverage": {
@@ -755,8 +756,8 @@
         "reason": "no_group_membership_edges"
       },
       "crossSectorReferenceEvidenceCoverage": {
-        "numerator": 3,
-        "denominator": 3,
+        "numerator": 2,
+        "denominator": 2,
         "percentage": 1,
         "displayValue": "100%",
         "applicable": true,
@@ -780,13 +781,10 @@
     {
       "asOf": "2026-08-23",
       "reviewedBy": "editorial_phase5c1",
-      "action": "audit_cross_sector_reference",
+      "action": "missing_cross_sector",
       "edgeId": "cross-sector-077360-sector-semiconductor",
       "ticker": "077360",
-      "target": "sector:semiconductor",
-      "owningSector": "semiconductor",
-      "duplicateBusinessCountExcluded": true,
-      "finalDecision": "accepted"
+      "finalDecision": "deferred"
     },
     {
       "asOf": "2026-08-23",

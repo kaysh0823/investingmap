@@ -8,8 +8,46 @@
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
 import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
+import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
 
-const QUOTES_CACHE_VERSION = 'v5';
+const QUOTES_CACHE_VERSION = 'v6';
+
+let indicesCache = { at: 0, value: null };
+
+function slimMarketIndices(indices) {
+  if (!indices || typeof indices !== 'object') return null;
+  const out = {};
+  for (const code of ['KOSPI', 'KOSDAQ']) {
+    const row = indices[code];
+    const rs = row && typeof row.rs === 'number' && Number.isFinite(row.rs) ? row.rs : null;
+    if (rs == null) continue;
+    out[code] = {
+      rs,
+      rs20: numOrNull(row.rs20),
+      rs50: numOrNull(row.rs50),
+      rs120: numOrNull(row.rs120),
+      ret20: numOrNull(row.ret20),
+      ret50: numOrNull(row.ret50),
+      ret120: numOrNull(row.ret120),
+    };
+  }
+  return Object.keys(out).length ? out : null;
+}
+
+async function loadMarketIndicesFromRsSnapshot(request, env) {
+  const now = Date.now();
+  if (indicesCache.value && now - indicesCache.at < 5 * 60 * 1000) {
+    return indicesCache.value;
+  }
+  try {
+    const snap = await loadHubRsSnapshotFromRequest(request, env);
+    const slim = slimMarketIndices(snap && snap.indices);
+    indicesCache = { at: now, value: slim };
+    return slim;
+  } catch {
+    return indicesCache.value;
+  }
+}
 
 function normalizeTicker(t) {
   if (t == null || t === '') return null;
@@ -208,6 +246,7 @@ export async function onRequest(context) {
   const supabaseConfig = getSupabaseConfig(env);
 
   if (!codes.length) {
+    const indices = await loadMarketIndicesFromRsSnapshot(request, env);
     return new Response(
       JSON.stringify({
         asOf: new Date().toISOString(),
@@ -216,6 +255,7 @@ export async function onRequest(context) {
         configured: true,
         krxConfigured: !!authKey,
         regularSession: session.regular,
+        ...(indices ? { indices } : {}),
       }),
       { headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },
     );
@@ -268,6 +308,8 @@ export async function onRequest(context) {
     }
 
     const cacheControl = quotesCacheControl();
+    const indices = await loadMarketIndicesFromRsSnapshot(request, env);
+    if (indices) payload.indices = indices;
     return new Response(JSON.stringify(payload), {
       headers: {
         ...ch,

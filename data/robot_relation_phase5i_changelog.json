@@ -2,56 +2,55 @@
   "asOf": "2026-08-29",
   "phase": "5I",
   "reviewedBy": "editorial_phase5i",
-  "listedCompanyCount": 16,
-  "nodeCount": 81,
-  "edgeCount": 109,
-  "structuralGenerated": 79,
-  "legacyMigrated": 26,
-  "manuallyCurated": 4,
-  "demotedPeer": 26,
+  "listedCompanyCount": 15,
+  "nodeCount": 74,
+  "edgeCount": 99,
+  "structuralGenerated": 72,
+  "legacyMigrated": 24,
+  "manuallyCurated": 3,
+  "demotedPeer": 24,
   "partnerClassCounts": {
-    "peer": 21,
+    "peer": 19,
     "theme_reference": 3,
     "inferred_customer_supplier": 2,
     "invalid": 2,
     "duplicate": 0,
-    "cross_sector_reference": 4
+    "cross_sector_reference": 3
   },
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 16,
-    "nodeCount": 81,
-    "edgeCount": 109,
+    "listedCompanyCount": 15,
+    "nodeCount": 74,
+    "edgeCount": 99,
     "nodeCountByType": {
       "group": 8,
       "cross_sector_anchor": 5,
-      "listed_company": 16,
+      "listed_company": 15,
       "robot_product": 10,
-      "robot_category": 14,
-      "application": 10,
+      "robot_category": 13,
+      "application": 8,
       "actuator": 2,
       "reducer": 1,
       "robot_software": 2,
-      "robot_component": 1,
-      "global_company": 12
+      "global_company": 10
     },
     "robotProductCount": 10,
-    "robotCategoryCount": 14,
-    "componentNodeCount": 1,
+    "robotCategoryCount": 13,
+    "componentNodeCount": 0,
     "reducerNodeCount": 1,
     "actuatorNodeCount": 2,
     "sensorNodeCount": 0,
     "controllerNodeCount": 0,
     "softwareNodeCount": 2,
-    "applicationNodeCount": 10,
+    "applicationNodeCount": 8,
     "projectNodeCount": 0,
-    "structuralGeneratedEdgeCount": 79,
-    "legacyMigratedEdgeCount": 26,
-    "manuallyCuratedEdgeCount": 4,
+    "structuralGeneratedEdgeCount": 72,
+    "legacyMigratedEdgeCount": 24,
+    "manuallyCuratedEdgeCount": 3,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 26,
+    "peerEdgeCount": 24,
     "componentSupplyCount": 0,
     "robotSupplyCount": 0,
     "deploymentRelationshipCount": 0,
@@ -61,20 +60,20 @@
     "ownershipEdgeCount": 0,
     "acquisitionCount": 0,
     "projectParticipationCount": 0,
-    "crossSectorReferenceCount": 4,
-    "businessRelationOrphanCount": 16,
-    "directCommercialRelationshipOrphanCount": 16,
+    "crossSectorReferenceCount": 3,
+    "businessRelationOrphanCount": 15,
+    "directCommercialRelationshipOrphanCount": 15,
     "classificationOnlyCompanyCount": 2,
-    "hasPeerButNoBusinessCompanyCount": 10,
+    "hasPeerButNoBusinessCompanyCount": 9,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 57,
-        "denominator": 109,
-        "percentage": 0.5229357798165137,
-        "displayValue": "52.3%",
+        "numerator": 52,
+        "denominator": 99,
+        "percentage": 0.5252525252525253,
+        "displayValue": "52.5%",
         "applicable": true,
         "reason": null
       },
@@ -135,8 +134,8 @@
         "reason": "no_eligible_project_edges"
       },
       "crossSectorReferenceEvidenceCoverage": {
-        "numerator": 4,
-        "denominator": 4,
+        "numerator": 3,
+        "denominator": 3,
         "percentage": 1,
         "displayValue": "100%",
         "applicable": true,
@@ -149,14 +148,14 @@
       }
     },
     "removedUnsupportedPartnerCount": 2,
-    "demotedLegacyPeerCount": 26,
+    "demotedLegacyPeerCount": 24,
     "legacyPartnerClassCounts": {
-      "peer": 21,
+      "peer": 19,
       "theme_reference": 3,
       "inferred_customer_supplier": 2,
       "invalid": 2,
       "duplicate": 0,
-      "cross_sector_reference": 4
+      "cross_sector_reference": 3
     }
   },
   "validate": {
@@ -513,31 +512,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "125490",
-      "lane": "precision_component"
-    },
-    {
-      "action": "structural_produces_component",
-      "ticker": "125490",
-      "target": "robot_component:precision-die-cast"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "125490",
-      "target": "robot_category:precision-structure"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "125490",
-      "target": "application:robot-structure"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "125490",
-      "target": "application:automotive-electronics"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "455900",
       "lane": "industrial_robot"
     },
@@ -572,14 +546,6 @@
     {
       "action": "structural_application_hub",
       "target": "application:heterogeneous-fleet"
-    },
-    {
-      "action": "structural_application_hub",
-      "target": "application:robot-structure"
-    },
-    {
-      "action": "structural_application_hub",
-      "target": "application:automotive-electronics"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -714,18 +680,6 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:125490",
-      "target": "global:keyence",
-      "classTag": "peer"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:125490",
-      "target": "global:cognex",
-      "classTag": "peer"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
       "source": "krx:455900",
       "target": "global:fanuc",
       "classTag": "peer"
@@ -750,11 +704,6 @@
     {
       "action": "add_cross_sector_reference",
       "source": "krx:277810",
-      "target": "sector:auto"
-    },
-    {
-      "action": "add_cross_sector_reference",
-      "source": "krx:125490",
       "target": "sector:auto"
     },
     {

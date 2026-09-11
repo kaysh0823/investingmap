@@ -8,7 +8,17 @@
     "semTypeEn": "Lead-acid and secondary batteries",
     "products": "SLI·ESS 납축전지, 산업용·2차전지",
     "productsEn": "SLI and ESS lead-acid batteries, industrial and secondary cells",
-    "partners": ["catl", "panasonic", { "id": "lges", "edgeLabel": "2차전지·ESS peer", "edgeLabelEn": "Battery & ESS peer", "weight": 0.1, "kind": "theme" }],
+    "partners": [
+      "catl",
+      "panasonic",
+      {
+        "id": "lges",
+        "edgeLabel": "2차전지·ESS peer",
+        "edgeLabelEn": "Battery & ESS peer",
+        "weight": 0.1,
+        "kind": "theme"
+      }
+    ],
     "subSector": "납축·2차전지",
     "level": "core"
   },
@@ -21,7 +31,18 @@
     "semTypeEn": "Battery recycling",
     "products": "폐배터리·블랙매스 재활용, 전구체·소재 회수",
     "productsEn": "Spent-battery and black-mass recycling, precursor and material recovery",
-    "partners": ["umicore", "catl", "panasonic", { "id": "posfutu", "edgeLabel": "양극재·리사이클 연계", "edgeLabelEn": "Cathode & recycling link", "weight": 0.15, "kind": "theme" }],
+    "partners": [
+      "umicore",
+      "catl",
+      "panasonic",
+      {
+        "id": "posfutu",
+        "edgeLabel": "양극재·리사이클 연계",
+        "edgeLabelEn": "Cathode & recycling link",
+        "weight": 0.15,
+        "kind": "theme"
+      }
+    ],
     "subSector": "배터리 리사이클링",
     "level": "core"
   },
@@ -34,8 +55,43 @@
     "semTypeEn": "ESS and battery thermal components",
     "products": "ESS·배터리 냉각·열교환 모듈, HVAC 부품",
     "productsEn": "ESS and battery cooling and heat-exchange modules, HVAC components",
-    "partners": ["catl", { "id": "lges", "edgeLabel": "ESS·셀 열관리", "edgeLabelEn": "ESS & cell thermal mgmt", "weight": 0.14 }, "schneider_e"],
+    "partners": [
+      "catl",
+      {
+        "id": "lges",
+        "edgeLabel": "ESS·셀 열관리",
+        "edgeLabelEn": "ESS & cell thermal mgmt",
+        "weight": 0.14
+      },
+      "schneider_e"
+    ],
     "subSector": "ESS·배터리 냉각부품",
+    "level": "core"
+  },
+  {
+    "ticker": "222080",
+    "name": "SFA넥셀",
+    "nameEn": "SFA Nexel",
+    "chain": "제조·검사 장비",
+    "semType": "배터리·디스플레이 공정·검사장비",
+    "semTypeEn": "Battery & display process/inspection equipment",
+    "products": "2차전지 제조·검사 장비 (디스플레이 장비 이력)",
+    "productsEn": "Secondary-battery manufacturing and inspection equipment",
+    "partners": [],
+    "subSector": "제조·검사 장비",
+    "level": "core"
+  },
+  {
+    "ticker": "033790",
+    "name": "피노",
+    "nameEn": "FINO INC.",
+    "chain": "제조·검사 장비",
+    "semType": "전지 자동화 장비",
+    "semTypeEn": "Battery automation tools",
+    "products": "2차전지 소재·자동화 장비",
+    "productsEn": "Battery materials and automation equipment",
+    "partners": [],
+    "subSector": "제조·검사 장비",
     "level": "core"
   }
 ]

@@ -174,9 +174,10 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=12',
-    '../js/live_quotes.js?v=17',
+    '../js/map_momentum.js?v=13',
+    '../js/live_quotes.js?v=18',
     'function renderMomentum()',
+    'getMomentumIndices',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",
   ]) {
@@ -224,7 +225,15 @@ for (const field of [
 ]) {
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
-assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '5'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '6'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes('getMomentumIndices'), 'live quotes must expose momentum index RS');
+assert.ok(liveQuotes.includes('rememberMomentumIndices'), 'live quotes must store indices from quotes/RS snap');
+assert.ok(source.includes("'#42A5F5'"), 'KOSPI index guide color');
+assert.ok(source.includes("'#FFA726'"), 'KOSDAQ index guide color');
+assert.ok(source.includes('im-mm-index-line'), 'index guide line class');
+assert.ok(source.includes('drawMarketIndexGuides'), 'index guide renderer');
+assert.ok(source.includes('opts.indices'), 'momentum render accepts opts.indices');
+assert.ok(source.includes('세로선 = 시장지수 RS'), 'legend mentions index guide lines');
 assert.ok(liveQuotes.includes('c.high5d ='), 'live quote high5d mapping required');
 assert.ok(liveQuotes.includes('c.high10d ='), 'live quote high10d mapping required');
 const quotesApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
@@ -244,7 +253,8 @@ for (const field of [
 ]) {
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
-assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v5'"), 'quotes response cache version');
+assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v6'"), 'quotes response cache version');
+assert.ok(quotesApi.includes('loadMarketIndicesFromRsSnapshot'), 'quotes API attaches RS indices');
 assert.ok(quotesApi.includes("'supabase+naver-live'"), 'hybrid quotes source');
 assert.ok(quotesApi.includes('stale-while-revalidate=120'), 'quotes SWR cache header');
 const migration12 = fs.readFileSync(

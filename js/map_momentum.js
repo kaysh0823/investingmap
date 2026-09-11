@@ -35,7 +35,7 @@
       change: '당일 등락률',
       position: '주가 위치',
       noData: 'RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.',
-      legend: '색 = 당일 등락률 · 크기 = 당일 거래대금',
+      legend: '색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS',
     },
     en: {
       xAxis: 'RS',
@@ -54,7 +54,7 @@
       change: '1-day return',
       position: 'Price position',
       noData: 'No companies have RS, price-position and turnover data.',
-      legend: 'Color = 1-day return · size = daily turnover',
+      legend: 'Color = 1-day return · size = daily turnover · vertical lines = market index RS',
     },
   };
 
@@ -438,6 +438,69 @@
     }
   }
 
+  function drawMarketIndexGuides(plot, x, innerH, indices, mobile) {
+    indices = indices || {};
+    var guides = [];
+    if (isFiniteNumber(indices.kospiRs)) {
+      guides.push({
+        key: 'kospi',
+        rs: clamp100(indices.kospiRs),
+        color: '#42A5F5',
+        label: 'KOSPI RS ' + Number(indices.kospiRs).toFixed(1),
+      });
+    }
+    if (isFiniteNumber(indices.kosdaqRs)) {
+      guides.push({
+        key: 'kosdaq',
+        rs: clamp100(indices.kosdaqRs),
+        color: '#FFA726',
+        label: 'KOSDAQ RS ' + Number(indices.kosdaqRs).toFixed(1),
+      });
+    }
+    if (!guides.length) return;
+    guides.sort(function (a, b) {
+      return a.rs - b.rs;
+    });
+    var prevX = null;
+    var labelOffset = 0;
+    guides.forEach(function (guide) {
+      var px = x(guide.rs);
+      plot
+        .append('line')
+        .attr('class', 'im-mm-index-line')
+        .attr('data-index', guide.key)
+        .attr('x1', px)
+        .attr('x2', px)
+        .attr('y1', 0)
+        .attr('y2', innerH)
+        .attr('stroke', guide.color)
+        .attr('stroke-width', 1.4)
+        .attr('stroke-dasharray', '4 4')
+        .attr('opacity', 0.8)
+        .attr('pointer-events', 'none');
+      if (prevX != null && Math.abs(px - prevX) < (mobile ? 52 : 64)) {
+        labelOffset += mobile ? 11 : 13;
+      } else {
+        labelOffset = 0;
+      }
+      prevX = px;
+      var anchor = px < 40 ? 'start' : px > x(100) - 40 ? 'end' : 'middle';
+      plot
+        .append('text')
+        .attr('class', 'im-mm-index-label')
+        .attr('data-index', guide.key)
+        .attr('x', px)
+        .attr('y', (mobile ? 11 : 12) + labelOffset)
+        .attr('text-anchor', anchor)
+        .attr('fill', guide.color)
+        .attr('font-size', mobile ? 10 : 11)
+        .attr('font-weight', 700)
+        .attr('opacity', 0.92)
+        .attr('pointer-events', 'none')
+        .text(guide.label);
+    });
+  }
+
   function render(opts) {
     opts = opts || {};
     var container = opts.container;
@@ -541,6 +604,8 @@
       .attr('stroke', 'var(--text-muted,#8b949e)')
       .attr('stroke-dasharray', '4 5')
       .attr('opacity', 0.48);
+
+    drawMarketIndexGuides(plot, x, innerH, opts.indices, mobile);
 
     var tickCount = mobile ? 5 : 10;
     plot

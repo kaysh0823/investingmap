@@ -26,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- investingmap-seo -->
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <meta name="description" content="철강 사업회사·사업지주, 비철금속, 산업기계 관련 국내 상장사의 KRX 지표를 비교합니다. 다각화 지주회사는 holdings에 둡니다.">
+  <meta name="description" content="건설기계·공작기계·산업설비·승강기 관련 국내 상장사의 KRX 지표를 비교합니다. 2026-09-10 metal에서 분리.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.investingmap.kr/machinery/korea_machinery_map.html">
   <link rel="alternate" hreflang="ko-KR" href="https://www.investingmap.kr/machinery/korea_machinery_map.html?lang=ko">
@@ -38,10 +38,10 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:url" content="https://www.investingmap.kr/machinery/korea_machinery_map.html">
   <meta property="og:title" content="한국 산업·건설기계 투자 지도">
-  <meta property="og:description" content="철강 사업회사·사업지주, 비철금속, 산업기계 관련 국내 상장사의 KRX 지표를 비교합니다. 다각화 지주회사는 holdings에 둡니다.">
+  <meta property="og:description" content="건설기계·공작기계·산업설비·승강기 관련 국내 상장사의 KRX 지표를 비교합니다. 2026-09-10 metal에서 분리.">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="한국 산업·건설기계 투자 지도">
-  <meta name="twitter:description" content="철강 사업회사·사업지주, 비철금속, 산업기계 관련 국내 상장사의 KRX 지표를 비교합니다. 다각화 지주회사는 holdings에 둡니다.">
+  <meta name="twitter:description" content="건설기계·공작기계·산업설비·승강기 관련 국내 상장사의 KRX 지표를 비교합니다. 2026-09-10 metal에서 분리.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 산업·건설기계 투자 지도",
     "url": "https://www.investingmap.kr/machinery/korea_machinery_map.html",
-    "numberOfItems": 5,
+    "numberOfItems": 6,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -155,20 +155,26 @@
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "삼현 (437730, KOSDAQ)",
-        "url": "https://www.investingmap.kr/machinery/korea_machinery_map.html#ticker-437730"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
         "name": "와이지-원 (019210, KOSDAQ)",
         "url": "https://www.investingmap.kr/machinery/korea_machinery_map.html#ticker-019210"
       },
       {
         "@type": "ListItem",
-        "position": 5,
+        "position": 4,
         "name": "SIMPAC (009160, KOSPI)",
         "url": "https://www.investingmap.kr/machinery/korea_machinery_map.html#ticker-009160"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "HD건설기계 (267270, KOSPI)",
+        "url": "https://www.investingmap.kr/machinery/korea_machinery_map.html#ticker-267270"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "전진건설로봇 (079900, KOSPI)",
+        "url": "https://www.investingmap.kr/machinery/korea_machinery_map.html#ticker-079900"
       }
     ]
   }
@@ -179,16 +185,16 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=17"></script>
-  <script src="../js/map_i18n.js"></script>
-  <script src="../js/map_cross_sector.js?v=1"></script>
+<script src="../js/live_quotes.js?v=18"></script>
+  <script src="../js/map_i18n.js?v=10"></script>
+  <script src="../js/map_cross_sector.js?v=2"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
-  <script src="../js/map_momentum.js?v=12"></script>
+  <script src="../js/map_momentum.js?v=13"></script>
   <script src="../js/map_volatility.js?v=9"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
@@ -832,7 +838,6 @@
     .node-dim {
       opacity: .15
     }
-
     /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
@@ -1966,8 +1971,8 @@
     </button>
     <p id="hdr-subtitle">건설기계·공작기계·산업설비·승강기 관련 상장사</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">총 <span>5</span>개 상장기업</div>
-      <div class="badge" id="badge-market">KOSPI <span>3</span>사 · KOSDAQ <span>2</span>사</div>
+      <div class="badge" id="badge-total">Total <span>6</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>5</span> · KOSDAQ <span>1</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -1976,16 +1981,16 @@
     <div id="map-editorial-body" class="map-editorial-body">
       <!-- investingmap-seo-body-start -->
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
-    <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">철강·비철금속·산업기계 상장 종목</h2>
-    <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean steel, metals and machinery stocks</h2>
-    <p lang="ko" class="im-seo-body-p">철강·금속·기계 지도는 제철·강관·비철 사업회사, 철강 중심 사업지주와 산업기계를 묶습니다. POSCO홀딩스 같은 다각화 지주회사는 holdings에 두고, 현대제철·고려아연·세아베스틸지주처럼 철강·금속 사업 노출이 직접적인 회사는 이 지도에 둡니다. 정량 지표는 KRX 데이터입니다.</p>
-    <p lang="ko" class="im-seo-body-p">철강은 후판·봉형강 수요와 원료 가격, 비철은 아연·은 가격, 산업기계는 건설·물류 투자 사이클의 영향을 받습니다. Nippon Steel·Glencore·Caterpillar 연결은 사업 비교용 peer이며 계약 관계가 아닙니다.</p>
-    <p lang="ko" class="im-seo-body-p">포스코인터내셔널과 현대제철은 조선 철강소재 체인에서 이동했으며, 두산에너빌리티는 원전, HD현대일렉트릭은 전력설비에 남겼습니다. 투자 권유가 아니므로 DART와 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The steel, metals and machinery map groups steel, pipe and nonferrous operators, steel-focused operating holdings, and industrial-machinery companies. Diversified holdings such as POSCO Holdings stay in holdings, while names with direct steel and metals exposure such as Hyundai Steel, Korea Zinc, and SeAH Besteel Holdings are listed here. Quantitative fields follow KRX data.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Steel tracks plate and long-product demand and raw-material prices, nonferrous names track zinc and silver, and machinery follows construction and logistics capex. Links to Nippon Steel, Glencore, and Caterpillar are peers, not contracts.</p>
-    <p lang="en" class="im-seo-body-p" hidden>POSCO International and Hyundai Steel were moved from the shipbuilding steel chain; Doosan Enerbility remains in nuclear and HD Hyundai Electric in power equipment. This is not investment advice; see DART and our <a href="../editorial-policy.html">editorial policy</a>.</p>
-    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 철강 관련주, 비철금속, 고려아연, 현대제철, 산업기계</p>
-    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean steel stocks, nonferrous metals, machinery, Hyundai Steel, Korea Zinc</p>
+    <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">산업·건설기계 상장 종목</h2>
+    <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean industrial &amp; construction machinery stocks</h2>
+    <p lang="ko" class="im-seo-body-p">산업·건설기계 지도는 건설기계·공작기계·산업설비·승강기 관련 상장사를 묶습니다. 2026-09-10에 철강·비철금속 지도에서 분리되었으며, 성과 집계는 분리 시점부터 신규로 집계합니다.</p>
+    <p lang="ko" class="im-seo-body-p">산업기계는 건설·물류·제조 설비투자 사이클의 영향을 받습니다. Caterpillar 등 연결은 사업 비교용 peer이며 계약 관계가 아닙니다.</p>
+    <p lang="ko" class="im-seo-body-p">본 콘텐츠는 정보 제공 목적이며 투자 권유가 아닙니다. DART와 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p" hidden>The industrial and construction machinery map groups construction equipment, machine tools, industrial systems and elevators. It was split from metals on 2026-09-10; performance series start at the split.</p>
+    <p lang="en" class="im-seo-body-p" hidden>Machinery follows construction, logistics and manufacturing capex cycles. Links such as Caterpillar are peers, not contracts.</p>
+    <p lang="en" class="im-seo-body-p" hidden>This is informational and not investment advice; see DART and our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 산업기계, 건설기계, 두산밥캣, 현대엘리베이터</p>
+    <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean machinery, construction equipment, Doosan Bobcat, Hyundai Elevator</p>
     <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-01 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-01.</p>
   </div>
       <!-- investingmap-seo-body-end -->
@@ -2058,7 +2063,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">5</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">6</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2090,8 +2095,29 @@
           </thead>
           <tbody id="table-body">
 <!-- investingmap-seo-prerender-start -->
-          
-          
+          <tr data-ticker="267270">
+      <td><div class="company-name">HD건설기계</div><div class="company-name-sub">HD Construction Equipment</div></td>
+      <td><span class="ticker">267270</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">129,600</td>
+      <td class="quote-cell ret-cell">-2.42%</td>
+      <td class="quote-cell ret-cell">+5.38%</td>
+      <td class="quote-cell ret-cell">+0.60%</td>
+      <td class="quote-cell ret-cell">+7.07%</td>
+      <td class="quote-cell ret-cell">+39.58%</td>
+      <td class="quote-cell">217,500</td>
+      <td class="quote-cell">85,400</td>
+      <td class="quote-cell">33.5%</td>
+      <td class="quote-cell">63.6</td>
+      <td class="mcap-cell">6.71조원</td>
+      <td class="fin-cell">25.03</td>
+      <td class="fin-cell">1.37</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">건설기계</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">건설기계</td>
+      <td class="products-cell">굴착기·휠로더 등 건설기계 (구 인프라코어 합병)</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
           <tr data-ticker="241560">
       <td><div class="company-name">두산밥캣</div><div class="company-name-sub">Doosan Bobcat</div></td>
       <td><span class="ticker">241560</span></td>
@@ -2110,12 +2136,11 @@
       <td class="fin-cell">15.42</td>
       <td class="fin-cell">0.86</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">산업기계</span></td>
+      <td><span class="chain-tag">건설기계</span></td>
       <td style="font-size:12px;color:var(--text-muted)">소형 건설기계</td>
       <td class="products-cell">스키드로더·소형 굴착기</td>
       <td><div class="partners-list">Caterpillar</div></td>
     </tr>
-          
           <tr data-ticker="017800">
       <td><div class="company-name">현대엘리베이터</div><div class="company-name-sub">Hyundai Elevator</div></td>
       <td><span class="ticker">017800</span></td>
@@ -2134,40 +2159,34 @@
       <td class="fin-cell">11.01</td>
       <td class="fin-cell">2.13</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">산업기계</span></td>
+      <td><span class="chain-tag">승강기</span></td>
       <td style="font-size:12px;color:var(--text-muted)">승강기</td>
       <td class="products-cell">엘리베이터·에스컬레이터</td>
       <td><div class="partners-list">Caterpillar</div></td>
     </tr>
-          
-          
-          <tr data-ticker="437730">
-      <td><div class="company-name">삼현</div><div class="company-name-sub">Samhyun</div></td>
-      <td><span class="ticker">437730</span></td>
+          <tr data-ticker="079900">
+      <td><div class="company-name">전진건설로봇</div><div class="company-name-sub">JUNJIN C&amp;R</div></td>
+      <td><span class="ticker">079900</span></td>
       <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">31,050</td>
-      <td class="quote-cell ret-cell">-0.16%</td>
-      <td class="quote-cell ret-cell">-20.84%</td>
-      <td class="quote-cell ret-cell">-23.57%</td>
-      <td class="quote-cell ret-cell">-33.19%</td>
-      <td class="quote-cell ret-cell">+14.85%</td>
-      <td class="quote-cell">76,900</td>
-      <td class="quote-cell">14,280</td>
-      <td class="quote-cell">26.8%</td>
-      <td class="quote-cell">9.0</td>
-      <td class="mcap-cell">1.03조원</td>
-      <td class="fin-cell">174.92</td>
-      <td class="fin-cell">12.88</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">산업기계</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">기계·전장모터·구동</td>
-      <td class="products-cell">전장모터·구동·산업기계 부품</td>
-      <td><div class="partners-list">Caterpillar, Nippon Steel</div></td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">-4.23%</td>
+      <td class="quote-cell ret-cell">+25.12%</td>
+      <td class="quote-cell ret-cell">-16.63%</td>
+      <td class="quote-cell ret-cell">-27.21%</td>
+      <td class="quote-cell ret-cell">-19.27%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">59.1</td>
+      <td class="mcap-cell">0.61조원</td>
+      <td class="fin-cell">26.34</td>
+      <td class="fin-cell">5.35</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">건설기계</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">콘크리트 펌프카</td>
+      <td class="products-cell">콘크리트 펌프카·건설로봇</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
-          
-          
-          
-          
           <tr data-ticker="019210">
       <td><div class="company-name">와이지-원</div><div class="company-name-sub">YG-1 CO., LTD</div></td>
       <td><span class="ticker">019210</span></td>
@@ -2186,17 +2205,11 @@
       <td class="fin-cell">21.64</td>
       <td class="fin-cell">1.39</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">산업기계</span></td>
+      <td><span class="chain-tag">핵심부품·공구</span></td>
       <td style="font-size:12px;color:var(--text-muted)">절삭공구</td>
       <td class="products-cell">엔드밀·드릴·탭 등 산업용 절삭공구</td>
       <td><div class="partners-list">Caterpillar</div></td>
     </tr>
-          
-          
-          
-          
-          
-          
           <tr data-ticker="009160">
       <td><div class="company-name">SIMPAC</div><div class="company-name-sub">SIMPACInc</div></td>
       <td><span class="ticker">009160</span></td>
@@ -2215,7 +2228,7 @@
       <td class="fin-cell">11.85</td>
       <td class="fin-cell">0.37</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">산업기계</span></td>
+      <td><span class="chain-tag">공작·금속가공기계</span></td>
       <td style="font-size:12px;color:var(--text-muted)">프레스·합금철</td>
       <td class="products-cell">산업용 프레스와 합금철</td>
       <td><div class="partners-list">Caterpillar</div></td>
@@ -2294,7 +2307,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"산업기계":"#8D6E63"};
+    const CHAIN_COLORS = {"건설기계":"#FFA726","공작·금속가공기계":"#8D6E63","물류·운반기계":"#26A69A","승강기":"#42A5F5","산업용 설비":"#78909C","핵심부품·공구":"#AB47BC","유지보수·서비스":"#66BB6A"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2355,7 +2368,7 @@
         "momentumChange": "당일 등락률",
         "momentumPosition": "주가 위치",
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
-        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
+        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 일일 등락률",
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크 (수정중)",
@@ -2387,16 +2400,22 @@
         "sbSize": "노드 크기",
         "sbHow": "조작법",
         "chainLabel": {
-            "철강": "철강",
-            "비철": "비철금속",
-            "철강 트레이딩": "철강 트레이딩",
-            "산업기계": "산업기계"
+            "건설기계": "건설기계",
+            "공작·금속가공기계": "공작·금속가공기계",
+            "물류·운반기계": "물류·운반기계",
+            "승강기": "승강기",
+            "산업용 설비": "산업용 설비",
+            "핵심부품·공구": "핵심부품·공구",
+            "유지보수·서비스": "유지보수·서비스"
         },
         "chainFilter": {
-            "철강": "철강",
-            "비철": "비철금속",
-            "철강 트레이딩": "철강 트레이딩",
-            "산업기계": "산업기계"
+            "건설기계": "건설기계",
+            "공작·금속가공기계": "공작·금속가공기계",
+            "물류·운반기계": "물류·운반기계",
+            "승강기": "승강기",
+            "산업용 설비": "산업용 설비",
+            "핵심부품·공구": "핵심부품·공구",
+            "유지보수·서비스": "유지보수·서비스"
         },
         "allFilter": "전체",
         "kosp": "KOSPI",
@@ -2480,7 +2499,7 @@
         "momentumChange": "1-day return",
         "momentumPosition": "Price position",
         "momentumNoData": "No companies have RS, price-position and turnover data.",
-        "momentumLegend": "Color = 1-day return · size = daily turnover",
+        "momentumLegend": "Color = 1-day return · size = daily turnover · vertical lines = market index RS",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
         "tabGraph": "🌐 Relationship network (WIP)",
@@ -2512,16 +2531,22 @@
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
-            "철강": "Steel",
-            "비철": "Nonferrous metals",
-            "철강 트레이딩": "Steel trading",
-            "산업기계": "Industrial machinery"
+            "건설기계": "Construction equipment",
+            "공작·금속가공기계": "Machine tools & metalworking",
+            "물류·운반기계": "Logistics & material handling",
+            "승강기": "Elevators",
+            "산업용 설비": "Industrial plant equipment",
+            "핵심부품·공구": "Core parts & tools",
+            "유지보수·서비스": "MRO & services"
         },
         "chainFilter": {
-            "철강": "Steel",
-            "비철": "Nonferrous metals",
-            "철강 트레이딩": "Steel trading",
-            "산업기계": "Industrial machinery"
+            "건설기계": "Construction",
+            "공작·금속가공기계": "Machine tools",
+            "물류·운반기계": "Logistics",
+            "승강기": "Elevators",
+            "산업용 설비": "Plant",
+            "핵심부품·공구": "Parts/tools",
+            "유지보수·서비스": "MRO"
         },
         "allFilter": "All",
         "kosp": "KOSPI",
@@ -2558,38 +2583,45 @@
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
-        id: 'doosan_bobcat', name: '두산밥캣', nameEn: 'Doosan Bobcat', ticker: '241560', market: 'KOSPI', chain: '산업기계',
+        id: 'doosan_bobcat', name: '두산밥캣', nameEn: 'Doosan Bobcat', ticker: '241560', market: 'KOSPI', chain: '건설기계',
         semType: '소형 건설기계', semTypeEn: 'Compact construction equipment',
         products: '스키드로더·소형 굴착기', productsEn: 'Skid-steer loaders and compact excavators',
         revenue: '6.02조원', mcapWon: 6019760882000, per: 15.42, pbr: 0.86, revTier: 2, partners: ['caterpillar']
       },
 
       {
-        id: 'hyundai_elevator', name: '현대엘리베이터', nameEn: 'Hyundai Elevator', ticker: '017800', market: 'KOSPI', chain: '산업기계',
+        id: 'hyundai_elevator', name: '현대엘리베이터', nameEn: 'Hyundai Elevator', ticker: '017800', market: 'KOSPI', chain: '승강기',
         semType: '승강기', semTypeEn: 'Elevators',
         products: '엘리베이터·에스컬레이터', productsEn: 'Elevators and escalators',
         revenue: '2.93조원', mcapWon: 2928019636500, per: 11.01, pbr: 2.13, revTier: 2, partners: ['caterpillar']
       },
 
       {
-        id: 'metal_samhyun', name: '삼현', nameEn: 'Samhyun', ticker: '437730', market: 'KOSDAQ', chain: '산업기계',
-        semType: '기계·전장모터·구동', semTypeEn: 'Motors, actuators & drives',
-        products: '전장모터·구동·산업기계 부품', productsEn: 'Automotive motors, actuators and industrial machinery components',
-        revenue: '1.03조원', mcapWon: 1032081305850, per: 174.92, pbr: 12.88, revTier: 2, partners: ['caterpillar', 'nippon_steel']
-      },
-
-      {
-        id: 'yg1', name: '와이지-원', nameEn: 'YG-1 CO., LTD', ticker: '019210', market: 'KOSDAQ', chain: '산업기계',
+        id: 'yg1', name: '와이지-원', nameEn: 'YG-1 CO., LTD', ticker: '019210', market: 'KOSDAQ', chain: '핵심부품·공구',
         semType: '절삭공구', semTypeEn: 'Cutting tools',
         products: '엔드밀·드릴·탭 등 산업용 절삭공구', productsEn: 'Industrial end mills, drills and taps',
         revenue: '0.53조원', mcapWon: 530382561280, per: 21.64, pbr: 1.39, revTier: 1, partners: ['caterpillar']
       },
 
       {
-        id: 'simpac', name: 'SIMPAC', nameEn: 'SIMPACInc', ticker: '009160', market: 'KOSPI', chain: '산업기계',
+        id: 'simpac', name: 'SIMPAC', nameEn: 'SIMPACInc', ticker: '009160', market: 'KOSPI', chain: '공작·금속가공기계',
         semType: '프레스·합금철', semTypeEn: 'Presses & ferroalloys',
         products: '산업용 프레스와 합금철', productsEn: 'Industrial presses and ferroalloys',
         revenue: '0.32조원', mcapWon: 324240001280, per: 11.85, pbr: 0.37, revTier: 1, partners: ['caterpillar']
+      },
+
+      {
+        id: 'machinery_hd_construction_equipmen', name: 'HD건설기계', nameEn: 'HD Construction Equipment', ticker: '267270', market: 'KOSPI', chain: '건설기계',
+        semType: '건설기계', semTypeEn: 'Construction equipment',
+        products: '굴착기·휠로더 등 건설기계 (구 인프라코어 합병)', productsEn: 'Excavators, wheel loaders and construction equipment (ex-Infracore)',
+        revenue: '6.71조원', mcapWon: 6709065580000, per: 25.03, pbr: 1.37, revTier: 2, partners: []
+      },
+
+      {
+        id: 'machinery_junjin_c_r', name: '전진건설로봇', nameEn: 'JUNJIN C&R', ticker: '079900', market: 'KOSPI', chain: '건설기계',
+        semType: '콘크리트 펌프카', semTypeEn: 'Concrete pump trucks',
+        products: '콘크리트 펌프카·건설로봇', productsEn: 'Concrete pump trucks and construction robots',
+        revenue: '0.61조원', mcapWon: 605590617500, per: 26.34, pbr: 5.35, revTier: 1, partners: []
       }
 
     ];
@@ -2775,7 +2807,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '산업기계'];
+      const chains = ['all', '건설기계', '공작·금속가공기계', '물류·운반기계', '승강기', '산업용 설비', '핵심부품·공구', '유지보수·서비스'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
@@ -2801,7 +2833,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['산업기계'];
+      const chains = ['건설기계', '공작·금속가공기계', '물류·운반기계', '승강기', '산업용 설비', '핵심부품·공구', '유지보수·서비스'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -3137,6 +3169,9 @@
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,
@@ -3243,7 +3278,8 @@
       <li><a href="../renewable/korea_renewable_map.html">한국 신재생에너지 투자 지도</a> · <a href="../renewable/korea_renewable_map.html?lang=en" hreflang="en">Korea Renewable Energy Map</a></li>
       <li><a href="../nuclear/korea_nuclear_map.html">한국 원전 투자 지도</a> · <a href="../nuclear/korea_nuclear_map.html?lang=en" hreflang="en">Korea Nuclear Power Map</a></li>
       <li><a href="../powergrid/korea_powergrid_map.html">한국 전력설비 투자 지도</a> · <a href="../powergrid/korea_powergrid_map.html?lang=en" hreflang="en">Korea Power Equipment Map</a></li>
-      <li><a href="../ship/korea_ship_map.html">한국 조선/해운 산업 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Shipping Map</a></li>
+      <li><a href="../ship/korea_ship_map.html">한국 조선·기자재 투자 지도</a> · <a href="../ship/korea_ship_map.html?lang=en" hreflang="en">Korea Shipbuilding &amp; Marine Equipment Map</a></li>
+      <li><a href="../shipping/korea_shipping_map.html">한국 해운·물류 투자 지도</a> · <a href="../shipping/korea_shipping_map.html?lang=en" hreflang="en">Korea Shipping &amp; Logistics Map</a></li>
       <li><a href="../defense/korea_defense_map.html">한국 방산·우주 산업 투자 지도</a> · <a href="../defense/korea_defense_map.html?lang=en" hreflang="en">Korea Defense &amp; Space Map</a></li>
       <li><a href="../kconsume/korea_kconsume_map.html">한국 소비/유통 투자 지도</a> · <a href="../kconsume/korea_kconsume_map.html?lang=en" hreflang="en">Korea Consumer / Retail Map</a></li>
       <li><a href="../cosmetics/korea_cosmetics_map.html">한국 화장품/미용기기 투자 지도</a> · <a href="../cosmetics/korea_cosmetics_map.html?lang=en" hreflang="en">Korea Cosmetics / Aesthetic Devices Map</a></li>
@@ -3260,6 +3296,7 @@
       <li><a href="../chemical/korea_chemical_map.html">한국 화학·정유 투자 지도</a> · <a href="../chemical/korea_chemical_map.html?lang=en" hreflang="en">Korea Chemicals &amp; Refining Map</a></li>
       <li><a href="../travel/korea_travel_map.html">한국 여행·레저·항공 투자 지도</a> · <a href="../travel/korea_travel_map.html?lang=en" hreflang="en">Korea Travel, Leisure &amp; Airlines Map</a></li>
       <li><a href="../elec/korea_elec_map.html">한국 전기·전자 투자 지도</a> · <a href="../elec/korea_elec_map.html?lang=en" hreflang="en">Korea Electrical &amp; Electronics Map</a></li>
+      <li><a href="../metal/korea_metal_map.html">한국 철강·비철금속 투자 지도</a> · <a href="../metal/korea_metal_map.html?lang=en" hreflang="en">Korea Steel &amp; Nonferrous Metals Map</a></li>
       </ul>
     </nav>
   </section>

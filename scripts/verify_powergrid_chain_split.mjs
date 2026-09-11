@@ -1,4 +1,4 @@
-/** Verifies the approved power-grid cable split in data, UI and overrides. */
+/** Verifies powergrid §0-4 leaf chains in data, UI and overrides. */
 import fs from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
@@ -28,17 +28,28 @@ const got = countByChain(companies).counts;
 
 const colorKeys = extractChainColors(HTML);
 for (const chain of PG.expectedChains) check(colorKeys.includes(chain), `CHAIN_COLORS missing ${chain}`);
-for (const retired of PG.retiredChains) check(!colorKeys.includes(retired), `CHAIN_COLORS still includes ${retired}`);
+for (const retired of PG.retiredChains) {
+  if (PG.expectedChains.includes(retired)) continue;
+  check(!colorKeys.includes(retired), `CHAIN_COLORS still includes ${retired}`);
+}
 for (const field of ['chainLabel', 'chainFilter']) {
-  const dicts = HTML.match(new RegExp(`"${field}": \\{[\\s\\S]*?\\n        \\}`, 'g')) || [];
-  check(dicts.length === 2, `${field}: expected ko/en dictionaries`);
+  const dicts =
+    HTML.match(new RegExp(`"${field}": \\{[\\s\\S]*?\\n        \\}`, 'g')) ||
+    HTML.match(new RegExp(`${field}: \\{[^{}\\n]*\\}`, 'g')) ||
+    [];
+  check(dicts.length === 2, `${field}: expected ko/en dictionaries, got ${dicts.length}`);
   for (const dict of dicts) {
-    for (const chain of PG.expectedChains) check(dict.includes(`"${chain}"`), `${field} missing ${chain}`);
+    for (const chain of PG.expectedChains) {
+      check(dict.includes(chain), `${field} missing ${chain}`);
+    }
   }
 }
 
 check(inferChain('전력·통신 케이블', 'powergrid', colorKeys) === '전선·케이블', 'cable inference failed');
-check(inferChain('해저케이블 시공·유지보수', 'powergrid', colorKeys) === '송배전', 'marine service inference failed');
+check(
+  inferChain('해저케이블 시공·유지보수', 'powergrid', colorKeys) === '전력망 시공·서비스',
+  'marine service inference failed',
+);
 
 console.log('Powergrid chain split verification');
 console.log('==================================');

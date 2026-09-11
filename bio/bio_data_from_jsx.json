@@ -1,36 +1,120 @@
 [
   {
-    "id": "biosimilar",
-    "sector": "바이오시밀러",
-    "sectorEn": "Biosimilar",
-    "icon": "🧬",
-    "color": "#0066FF",
-    "bg": "rgba(0,102,255,0.08)",
-    "description": "오리지널 바이오의약품의 복제약 개발·제조",
+    "id": "pharma_integrated",
+    "sector": "종합 제약",
+    "sectorEn": "Integrated pharma",
+    "icon": "💊",
+    "color": "#42A5F5",
+    "bg": "#42A5F514",
+    "description": "Integrated pharma",
     "domestic": [
       {
-        "name": "셀트리온",
-        "ticker": "068270",
-        "note": "시밀러11→41종('38), 신약16종: ADC CT-P70 FDA패스트트랙·4종1상, 비만약CT-G32 '27IND",
-        "mcap": "대형"
+        "name": "한미약품",
+        "ticker": "128940",
+        "note": "LAPS 장기지속형 플랫폼: 롤론티스·포시가, '25 기술수출전담본부신설·ADC·TPD 멀티모달리티",
+        "mcap": "—"
       },
       {
-        "name": "삼성에피스홀딩스",
-        "ticker": "0126Z0",
-        "note": "'25.11 삼바 인적분할 재상장, 바이오시밀러 9종 글로벌·후속 ADC파이프라인 확대중",
-        "mcap": "대형"
+        "name": "유한양행",
+        "ticker": "000100",
+        "note": "렉라자 FDA허가·J&J '26美매출8억$전망, 레시게르셉트(항IgE) 다국가2상('26.2 개시)",
+        "mcap": "—"
+      },
+      {
+        "name": "삼천당제약",
+        "ticker": "000250",
+        "note": "GLP-1 비만치료제 파이프라인(SC·경구)",
+        "mcap": "—"
       },
       {
         "name": "셀트리온제약",
         "ticker": "068760",
         "note": "셀트리온 합병법인 국내유통, 짐펜트라(자가면역SC) '26 美매출 급성장 기대",
-        "mcap": "중형"
+        "mcap": "—"
       },
       {
-        "name": "프레스티지바이오파마",
-        "ticker": "950210",
-        "note": "투즈뉴(허셉틴 시밀러) EU출시·Teva L/O, HD204 아바스틴 3상완료, PBP1510 췌장암신약 1/2a상",
-        "mcap": "중형"
+        "name": "대웅제약",
+        "ticker": "069620",
+        "note": "나보타(보톡스), 펙수클루 등",
+        "mcap": "—"
+      },
+      {
+        "name": "HK이노엔",
+        "ticker": "195940",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "동국제약",
+        "ticker": "086450",
+        "note": "제약·헬스케어",
+        "mcap": "—"
+      },
+      {
+        "name": "종근당",
+        "ticker": "185750",
+        "note": "제네릭 강자 + 신약 R&D 투자 확대",
+        "mcap": "—"
+      },
+      {
+        "name": "보령",
+        "ticker": "003850",
+        "note": "제약",
+        "mcap": "—"
+      },
+      {
+        "name": "명인제약",
+        "ticker": "317450",
+        "note": "정신과·전문의약품",
+        "mcap": "—"
+      },
+      {
+        "name": "JW중외제약",
+        "ticker": "001060",
+        "note": "리바로·리바넥스, 개량신약",
+        "mcap": "—"
+      },
+      {
+        "name": "신풍제약",
+        "ticker": "019170",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "일동제약",
+        "ticker": "249420",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "부광약품",
+        "ticker": "003000",
+        "note": "제약",
+        "mcap": "—"
+      },
+      {
+        "name": "동아에스티",
+        "ticker": "170900",
+        "note": "슈가논·스티렌, R&D 비율 19%+ 업계 상위권, AI 신약탐색 확대",
+        "mcap": "—"
+      },
+      {
+        "name": "한올바이오파마",
+        "ticker": "009420",
+        "note": "HL161 자가면역 항체 임상 진행, 롤론티스 공동판매, 한미약품 계열",
+        "mcap": "—"
+      },
+      {
+        "name": "광동제약",
+        "ticker": "009290",
+        "note": "제약·헬스케어",
+        "mcap": "—"
+      },
+      {
+        "name": "코미팜",
+        "ticker": "041960",
+        "note": "동물약품·바이오",
+        "mcap": "—"
       }
     ],
     "global": [
@@ -55,37 +139,187 @@
     ]
   },
   {
-    "id": "cdmo",
-    "sector": "CDMO / CMO",
-    "sectorEn": "Contract Development & Manufacturing",
-    "icon": "🏭",
-    "color": "#7C3AED",
-    "bg": "rgba(124,58,237,0.08)",
-    "description": "바이오의약품 위탁개발·생산(대형 캐파 경쟁)",
+    "id": "drug_discovery",
+    "sector": "신약개발",
+    "sectorEn": "Drug discovery",
+    "icon": "🔬",
+    "color": "#EF5350",
+    "bg": "#EF535014",
+    "description": "Drug discovery",
     "domestic": [
       {
-        "name": "삼성바이올로직스",
-        "ticker": "207940",
-        "note": "62만L 세계최대 캐파, 美공장+제5공장 착공, CDMO 글로벌 Top3·셀트리온DS 생산 병행",
-        "mcap": "초대형"
+        "name": "알테오젠",
+        "ticker": "196170",
+        "note": "ALT-B4: MSD·AZ·다이이찌·GSK 등 9건+ L/O, 누적계약 10조+, 상용화3→9개 확대('30)",
+        "mcap": "—"
       },
       {
-        "name": "SK바이오사이언스",
-        "ticker": "302440",
-        "note": "스카이셀플루(세포배양 독감백신) 허가, mRNA 백신 CDMO + 자체 파이프라인",
-        "mcap": "대형"
+        "name": "SK바이오팜",
+        "ticker": "326030",
+        "note": "엑스코프리 美직판 '25 1~3Q 4595억(블록버스터 임박), RPT 방사성의약 SKL35501·WT-7695 '26 1상",
+        "mcap": "—"
       },
       {
-        "name": "에스티팜",
-        "ticker": "237690",
-        "note": "올리고 CDMO 글로벌 Top, FDA승인 5품목, 제2올리고동 '26가동·피르미테그라비르(HIV) 2a상",
-        "mcap": "중형"
+        "name": "HLB",
+        "ticker": "028300",
+        "note": "리보세라닙 간암+리라푸그라티닙 담관암 FDA NDA제출, '26 美허가→美시장 첫진출 기대",
+        "mcap": "—"
       },
       {
-        "name": "바이넥스",
-        "ticker": "053030",
-        "note": "항체·ADC CDMO, 셀트리온DS 상업생산 본격화·'25 흑자전환, 생물보안법 수혜",
-        "mcap": "중형"
+        "name": "에이비엘바이오",
+        "ticker": "298380",
+        "note": "Grabody-B/T: 사노피·GSK·릴리 빅3 L/O(누적10조), 이중항체ADC ABL206·209 '26 IND",
+        "mcap": "—"
+      },
+      {
+        "name": "펩트론",
+        "ticker": "087010",
+        "note": "PT403 장기지속형 GLP-1 비만, 美 FDA 1상 IND 준비·비만약 코스닥 대장주",
+        "mcap": "—"
+      },
+      {
+        "name": "리가켐바이오",
+        "ticker": "141080",
+        "note": "ConjuAll: 얀센·오노·암젠·SOTIO 등 플랫폼L/O 4.3조+, LCB39 차세대ADC '26 1상",
+        "mcap": "—"
+      },
+      {
+        "name": "보로노이",
+        "ticker": "310210",
+        "note": "VRN11 EGFR뇌전이 1a상(韓·대만)+VRN10 HER2 1a상(韓·호주), '26 글로벌1b/2상 2건 동시진입",
+        "mcap": "—"
+      },
+      {
+        "name": "디앤디파마텍",
+        "ticker": "347850",
+        "note": "DD01 MASH 2상 투약완료·조직생검중(JPM'26 발표), DD02S경구GLP-1(화이자/멧세라 L/O) '26H1데이터",
+        "mcap": "—"
+      },
+      {
+        "name": "올릭스",
+        "ticker": "226950",
+        "note": "비대칭siRNA: OLX702A MASH·비만 릴리L/O 9100억('25.2), 호주1상진행·한소3종+로레알 L/O",
+        "mcap": "—"
+      },
+      {
+        "name": "메지온",
+        "ticker": "140410",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "네이처셀",
+        "ticker": "007390",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "에임드바이오",
+        "ticker": "0009K0",
+        "note": "P-ADC: 베링거1.4조+바이오헤븐AMB302+SK플라즈마AMB303 L/O, 누적3조+, '25.12 상장",
+        "mcap": "—"
+      },
+      {
+        "name": "코오롱티슈진",
+        "ticker": "950160",
+        "note": "인보사(TG-C) 골관절염 유전자치료 美3상('26.7 결과예정), FDA BLA '27Q1 목표",
+        "mcap": "—"
+      },
+      {
+        "name": "오스코텍",
+        "ticker": "039200",
+        "note": "신약개발",
+        "mcap": "—"
+      },
+      {
+        "name": "오름테라퓨틱",
+        "ticker": "475830",
+        "note": "DAC/TPD² 항암: BMS ORM-6151 1상(혈액암)+버텍스 플랫폼L/O 1.3조, 현금3000억 보유",
+        "mcap": "—"
+      },
+      {
+        "name": "큐리언트",
+        "ticker": "115180",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "알지노믹스",
+        "ticker": "476830",
+        "note": "RNAi·RNA 치료제 플랫폼",
+        "mcap": "—"
+      },
+      {
+        "name": "지투지바이오",
+        "ticker": "456160",
+        "note": "장기지속형 주사·약물전달",
+        "mcap": "—"
+      },
+      {
+        "name": "현대바이오",
+        "ticker": "048410",
+        "note": "항바이러스·항암 치료제",
+        "mcap": "—"
+      },
+      {
+        "name": "에스티큐브",
+        "ticker": "052020",
+        "note": "면역관문·항암 신약",
+        "mcap": "—"
+      },
+      {
+        "name": "지아이이노베이션",
+        "ticker": "358570",
+        "note": "면역·알레르기 질환 신약",
+        "mcap": "—"
+      },
+      {
+        "name": "앱클론",
+        "ticker": "174900",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "온코닉테라퓨틱스",
+        "ticker": "476060",
+        "note": "항암·면역치료 신약 파이프라인",
+        "mcap": "—"
+      },
+      {
+        "name": "에이프릴바이오",
+        "ticker": "397030",
+        "note": "항체·이중항체 신약 플랫폼",
+        "mcap": "—"
+      },
+      {
+        "name": "큐로셀",
+        "ticker": "372320",
+        "note": "CAR-T·세포치료 파이프라인",
+        "mcap": "—"
+      },
+      {
+        "name": "인벤티지랩",
+        "ticker": "389470",
+        "note": "약물전달·DDS 플랫폼",
+        "mcap": "—"
+      },
+      {
+        "name": "메디포스트",
+        "ticker": "078160",
+        "note": "카티스템(연골줄기세포) 허가 품목",
+        "mcap": "—"
+      },
+      {
+        "name": "신라젠",
+        "ticker": "215600",
+        "note": "온코리틱 바이러스·항암바이러스",
+        "mcap": "—"
+      },
+      {
+        "name": "툴젠",
+        "ticker": "199800",
+        "note": "유전자가위(CRISPR) 원천기술 보유",
+        "mcap": "—"
       }
     ],
     "global": [
@@ -106,68 +340,38 @@
         "ticker": "인수완료",
         "flag": "🇺🇸",
         "note": "'24 노보홀딩스 인수"
+      }
+    ]
+  },
+  {
+    "id": "biosimilar",
+    "sector": "바이오시밀러",
+    "sectorEn": "Biosimilars",
+    "icon": "🧬",
+    "color": "#26A69A",
+    "bg": "#26A69A14",
+    "description": "Biosimilars",
+    "domestic": [
+      {
+        "name": "셀트리온",
+        "ticker": "068270",
+        "note": "시밀러11→41종('38), 신약16종: ADC CT-P70 FDA패스트트랙·4종1상, 비만약CT-G32 '27IND",
+        "mcap": "—"
       },
+      {
+        "name": "프레스티지바이오파마",
+        "ticker": "950210",
+        "note": "투즈뉴(허셉틴 시밀러) EU출시·Teva L/O, HD204 아바스틴 3상완료, PBP1510 췌장암신약 1/2a상",
+        "mcap": "—"
+      }
+    ],
+    "global": [
       {
         "name": "Samsung Biologics",
         "ticker": "207940",
         "flag": "🇰🇷",
         "note": "글로벌 Top3 CDMO"
-      }
-    ]
-  },
-  {
-    "id": "antibody_adc",
-    "sector": "항체신약 / ADC",
-    "sectorEn": "Antibody & ADC Therapeutics",
-    "icon": "🎯",
-    "color": "#DC2626",
-    "bg": "rgba(220,38,38,0.08)",
-    "description": "항체치료제, 항체약물접합체(ADC), 이중항체 등",
-    "domestic": [
-      {
-        "name": "에이비엘바이오",
-        "ticker": "298380",
-        "note": "Grabody: 사노피·GSK·릴리 3대빅파마 L/O(누적10조), ABL001 담도암 FDA패스트트랙, ABL111 위암2상",
-        "mcap": "대형"
       },
-      {
-        "name": "알테오젠",
-        "ticker": "196170",
-        "note": "ALT-B4 SC전환: 키트루다SC 美·EU출시, GSK젬퍼리 L/O('26.1), 누적L/O 10조+, '26 코스피이전",
-        "mcap": "초대형"
-      },
-      {
-        "name": "리가켐바이오",
-        "ticker": "141080",
-        "note": "ConjuAll ADC: LCB14 中허가신청·글로벌1b, LCB84 얀센 1상완료→2상, LCB39 차세대 '26임상진입",
-        "mcap": "대형"
-      },
-      {
-        "name": "오름테라퓨틱",
-        "ticker": "475830",
-        "note": "DAC/TPD² 항암: BMS ORM-6151 1상(혈액암)+버텍스 플랫폼L/O 1.3조, 현금3000억 보유",
-        "mcap": "중형"
-      },
-      {
-        "name": "인투셀",
-        "ticker": "287840",
-        "note": "OHPAS ADC링커: 삼성에피스 SBE303(Nectin-4) '26H1 임상1상 개시, 2030년 10건 L/O 목표",
-        "mcap": "소형"
-      },
-      {
-        "name": "에임드바이오",
-        "ticker": "0009K0",
-        "note": "P-ADC: 베링거1.4조+바이오헤븐AMB302+SK플라즈마AMB303 L/O, 누적3조+, '25.12 상장",
-        "mcap": "대형"
-      },
-      {
-        "name": "이뮨온시아",
-        "ticker": "424870",
-        "note": "IMC-001 PD-L1 NK/T림프종 2상 ORR79%→허가준비, IMC-002 CD47 간암 1b상, 3D메디슨 L/O",
-        "mcap": "소형"
-      }
-    ],
-    "global": [
       {
         "name": "Daiichi Sankyo",
         "ticker": "4568.T",
@@ -179,372 +383,157 @@
         "ticker": "ABBV",
         "flag": "🇺🇸",
         "note": "휴미라 후속 면역 항체 포트폴리오"
-      },
-      {
-        "name": "Roche/Genentech",
-        "ticker": "ROG",
-        "flag": "🇨🇭",
-        "note": "허셉틴·아바스틴·옵디보 항체 레전드"
-      },
-      {
-        "name": "AstraZeneca",
-        "ticker": "AZN",
-        "flag": "🇬🇧",
-        "note": "Enhertu 공동개발, ADC 포트폴리오 확대"
       }
     ]
   },
   {
-    "id": "immuno_onc",
-    "sector": "면역항암제",
-    "sectorEn": "Immuno-Oncology",
-    "icon": "🛡️",
-    "color": "#EA580C",
-    "bg": "rgba(234,88,12,0.08)",
-    "description": "면역관문억제제(PD-1/L1), 세포치료 항암제 등",
+    "id": "vaccine_blood",
+    "sector": "백신·혈액제제",
+    "sectorEn": "Vaccines & blood products",
+    "icon": "💉",
+    "color": "#66BB6A",
+    "bg": "#66BB6A14",
+    "description": "Vaccines & blood products",
     "domestic": [
       {
-        "name": "유한양행",
-        "ticker": "000100",
-        "note": "렉라자 FDA허가·J&J '26美매출8억$전망, 레시게르셉트(항IgE) 다국가2상('26.2 개시)",
-        "mcap": "대형"
-      },
-      {
-        "name": "HLB",
-        "ticker": "028300",
-        "note": "리보세라닙 간암+리라푸그라티닙 담관암 FDA NDA제출, '26 美허가→美시장 첫진출 기대",
-        "mcap": "대형"
-      },
-      {
-        "name": "보로노이",
-        "ticker": "310210",
-        "note": "VRN11 EGFR뇌전이 1a상(韓·대만)+VRN10 HER2 1a상(韓·호주), '26 글로벌1b/2상 2건 동시진입",
-        "mcap": "대형"
-      },
-      {
-        "name": "제넥신",
-        "ticker": "095700",
-        "note": "하일루킨(IL-7 Fc) 면역항암 2상, GX-I7 키트루다 병용 등 다수 임상",
-        "mcap": "중형"
-      },
-      {
-        "name": "CG인바이츠",
-        "ticker": "083790",
-        "note": "아이발티노스타트 췌장암 美 2상, 캄렐리주맙 간암 국내허가 추진, 항암백신 개발",
-        "mcap": "소형"
-      },
-      {
-        "name": "지놈앤컴퍼니",
-        "ticker": "314130",
-        "note": "GEN-001 마이크로바이옴 면역항암 1b/2상, 키트루다 병용 고형암 데이터",
-        "mcap": "소형"
-      }
-    ],
-    "global": [
-      {
-        "name": "Merck & Co",
-        "ticker": "MRK",
-        "flag": "🇺🇸",
-        "note": "키트루다(PD-1) 글로벌 매출 1위 항암제"
-      },
-      {
-        "name": "Bristol-Myers Squibb",
-        "ticker": "BMY",
-        "flag": "🇺🇸",
-        "note": "옵디보(PD-1)+여보이(CTLA-4)"
-      },
-      {
-        "name": "Roche",
-        "ticker": "ROG",
-        "flag": "🇨🇭",
-        "note": "티쎈트릭(PD-L1) + 항체 병용"
-      }
-    ]
-  },
-  {
-    "id": "obesity",
-    "sector": "비만 / 대사질환",
-    "sectorEn": "Obesity & Metabolic Disease",
-    "icon": "⚖️",
-    "color": "#059669",
-    "bg": "rgba(5,150,105,0.08)",
-    "description": "GLP-1 등 비만·당뇨 치료제 — 2025년 최대 테마",
-    "domestic": [
-      {
-        "name": "한미약품",
-        "ticker": "128940",
-        "note": "에피노페그듀타이드 MASH 2상(MSD L/O), HM17321 차세대비만, LAPS기반 ADC·TPD 확장",
-        "mcap": "대형"
-      },
-      {
-        "name": "펩트론",
-        "ticker": "087010",
-        "note": "PT403 장기지속형 GLP-1 비만, 美 FDA 1상 IND 준비·비만약 코스닥 대장주",
-        "mcap": "중형"
-      },
-      {
-        "name": "디앤디파마텍",
-        "ticker": "347850",
-        "note": "DD01 MASH 2상 투약완료·조직생검중(JPM'26 발표), DD02S경구GLP-1(화이자/멧세라 L/O) '26H1데이터",
-        "mcap": "중형"
-      },
-      {
-        "name": "삼천당제약",
-        "ticker": "000250",
-        "note": "GLP-1 비만치료제 파이프라인(SC·경구)",
-        "mcap": "중형"
-      }
-    ],
-    "global": [
-      {
-        "name": "Novo Nordisk",
-        "ticker": "NVO",
-        "flag": "🇩🇰",
-        "note": "위고비·오젬픽 GLP-1 세계 1위"
-      },
-      {
-        "name": "Eli Lilly",
-        "ticker": "LLY",
-        "flag": "🇺🇸",
-        "note": "젭바운드·먼자로 GIP/GLP-1 듀얼"
-      },
-      {
-        "name": "Amgen",
-        "ticker": "AMGN",
-        "flag": "🇺🇸",
-        "note": "MariTide — 차세대 비만 후보"
-      },
-      {
-        "name": "Viking Therapeutics",
-        "ticker": "VKTX",
-        "flag": "🇺🇸",
-        "note": "VK2735 경구+주사 비만 파이프라인"
-      }
-    ]
-  },
-  {
-    "id": "cell_gene",
-    "sector": "세포 · 유전자치료제",
-    "sectorEn": "Cell & Gene Therapy",
-    "icon": "🔬",
-    "color": "#2563EB",
-    "bg": "rgba(37,99,235,0.08)",
-    "description": "CAR-T, 줄기세포, 유전자편집(CRISPR) 치료제",
-    "domestic": [
-      {
-        "name": "코오롱티슈진",
-        "ticker": "950160",
-        "note": "인보사(TG-C) 골관절염 유전자치료 美3상('26.7 결과예정), FDA BLA '27Q1 목표",
-        "mcap": "대형"
-      },
-      {
-        "name": "차바이오텍",
-        "ticker": "085660",
-        "note": "줄기세포(면역세포) 치료제, 세포배양",
-        "mcap": "중형"
-      },
-      {
-        "name": "메디포스트",
-        "ticker": "078160",
-        "note": "카티스템(연골줄기세포) 허가 품목",
-        "mcap": "소형"
-      },
-      {
-        "name": "지놈앤컴퍼니",
-        "ticker": "314130",
-        "note": "마이크로바이옴+유전자치료",
-        "mcap": "소형"
-      },
-      {
-        "name": "툴젠",
-        "ticker": "199800",
-        "note": "유전자가위(CRISPR) 원천기술 보유",
-        "mcap": "중형"
-      },
-      {
-        "name": "진원생명과학",
-        "ticker": "011000",
-        "note": "DNA백신·유전자치료 플라스미드 CDMO",
-        "mcap": "소형"
-      }
-    ],
-    "global": [
-      {
-        "name": "Gilead (Kite)",
-        "ticker": "GILD",
-        "flag": "🇺🇸",
-        "note": "예스카타 CAR-T"
-      },
-      {
-        "name": "Novartis",
-        "ticker": "NVS",
-        "flag": "🇨🇭",
-        "note": "킴리아 CAR-T + 졸겐스마 유전자치료"
-      },
-      {
-        "name": "CRISPR Therapeutics",
-        "ticker": "CRSP",
-        "flag": "🇨🇭",
-        "note": "카스거비 — 최초 CRISPR 승인 치료제"
-      },
-      {
-        "name": "BMS",
-        "ticker": "BMY",
-        "flag": "🇺🇸",
-        "note": "브레안지·아베크마 CAR-T"
-      }
-    ]
-  },
-  {
-    "id": "platform",
-    "sector": "플랫폼 기술",
-    "sectorEn": "Platform Technology",
-    "icon": "⚙️",
-    "color": "#9333EA",
-    "bg": "rgba(147,51,234,0.08)",
-    "description": "SC전환, 약물전달, mRNA, 올리고 등 기반기술",
-    "domestic": [
-      {
-        "name": "알테오젠",
-        "ticker": "196170",
-        "note": "ALT-B4: MSD·AZ·다이이찌·GSK 등 9건+ L/O, 누적계약 10조+, 상용화3→9개 확대('30)",
-        "mcap": "초대형"
-      },
-      {
-        "name": "에이비엘바이오",
-        "ticker": "298380",
-        "note": "Grabody-B/T: 사노피·GSK·릴리 빅3 L/O(누적10조), 이중항체ADC ABL206·209 '26 IND",
-        "mcap": "대형"
-      },
-      {
-        "name": "리가켐바이오",
-        "ticker": "141080",
-        "note": "ConjuAll: 얀센·오노·암젠·SOTIO 등 플랫폼L/O 4.3조+, LCB39 차세대ADC '26 1상",
-        "mcap": "대형"
-      },
-      {
-        "name": "에스티팜",
-        "ticker": "237690",
-        "note": "올리고뉴클레오타이드 합성 플랫폼",
-        "mcap": "중형"
-      },
-      {
-        "name": "올릭스",
-        "ticker": "226950",
-        "note": "비대칭siRNA: OLX702A MASH·비만 릴리L/O 9100억('25.2), 호주1상진행·한소3종+로레알 L/O",
-        "mcap": "대형"
-      },
-      {
-        "name": "아이진",
-        "ticker": "185490",
-        "note": "mRNA-LNP 플랫폼",
-        "mcap": "소형"
-      }
-    ],
-    "global": [
-      {
-        "name": "Halozyme",
-        "ticker": "HALO",
-        "flag": "🇺🇸",
-        "note": "ENHANZE SC전환 플랫폼 — 알테오젠 경쟁사"
-      },
-      {
-        "name": "Moderna",
-        "ticker": "MRNA",
-        "flag": "🇺🇸",
-        "note": "mRNA 플랫폼 선도"
-      },
-      {
-        "name": "BioNTech",
-        "ticker": "BNTX",
-        "flag": "🇩🇪",
-        "note": "mRNA + 면역항암 플랫폼"
-      },
-      {
-        "name": "Alnylam",
-        "ticker": "ALNY",
-        "flag": "🇺🇸",
-        "note": "RNAi 치료제 플랫폼"
-      }
-    ]
-  },
-  {
-    "id": "smallmol",
-    "sector": "합성신약 / 제네릭",
-    "sectorEn": "Small Molecule & Generic",
-    "icon": "💊",
-    "color": "#0891B2",
-    "bg": "rgba(8,145,178,0.08)",
-    "description": "저분자 합성의약품 개발, 제네릭, 개량신약",
-    "domestic": [
-      {
-        "name": "한미약품",
-        "ticker": "128940",
-        "note": "LAPS 장기지속형 플랫폼: 롤론티스·포시가, '25 기술수출전담본부신설·ADC·TPD 멀티모달리티",
-        "mcap": "대형"
-      },
-      {
-        "name": "SK바이오팜",
-        "ticker": "326030",
-        "note": "엑스코프리 美직판 '25 1~3Q 4595억(블록버스터 임박), RPT 방사성의약 SKL35501·WT-7695 '26 1상",
-        "mcap": "대형"
-      },
-      {
-        "name": "대웅제약",
-        "ticker": "069620",
-        "note": "나보타(보톡스), 펙수클루 등",
-        "mcap": "대형"
-      },
-      {
-        "name": "종근당",
-        "ticker": "185750",
-        "note": "제네릭 강자 + 신약 R&D 투자 확대",
-        "mcap": "중형"
+        "name": "SK바이오사이언스",
+        "ticker": "302440",
+        "note": "스카이셀플루(세포배양 독감백신) 허가, mRNA 백신 CDMO + 자체 파이프라인",
+        "mcap": "—"
       },
       {
         "name": "GC바이오파마",
         "ticker": "006280",
         "note": "알리글로 美FDA허가·출시, 면역글로불린 美매출 1500억+돌파('25), 글로벌 시장 확대",
-        "mcap": "대형"
+        "mcap": "—"
       },
       {
-        "name": "JW중외제약",
-        "ticker": "001060",
-        "note": "리바로·리바넥스, 개량신약",
-        "mcap": "중형"
-      },
-      {
-        "name": "한올바이오파마",
-        "ticker": "009420",
-        "note": "HL161 자가면역 항체 임상 진행, 롤론티스 공동판매, 한미약품 계열",
-        "mcap": "중형"
-      },
-      {
-        "name": "동아에스티",
-        "ticker": "170900",
-        "note": "슈가논·스티렌, R&D 비율 19%+ 업계 상위권, AI 신약탐색 확대",
-        "mcap": "중형"
+        "name": "유바이오로직스",
+        "ticker": "206650",
+        "note": "",
+        "mcap": "—"
       }
     ],
-    "global": [
+    "global": []
+  },
+  {
+    "id": "cdmo",
+    "sector": "CDMO·CMO",
+    "sectorEn": "CDMO / CMO",
+    "icon": "🏭",
+    "color": "#7C3AED",
+    "bg": "#7C3AED14",
+    "description": "CDMO / CMO",
+    "domestic": [
       {
-        "name": "Pfizer",
-        "ticker": "PFE",
-        "flag": "🇺🇸",
-        "note": "팍스로비드·리핀자 등 저분자 포트폴리오"
+        "name": "삼성바이올로직스",
+        "ticker": "207940",
+        "note": "62만L 세계최대 캐파, 美공장+제5공장 착공, CDMO 글로벌 Top3·셀트리온DS 생산 병행",
+        "mcap": "—"
       },
       {
-        "name": "Johnson & Johnson",
-        "ticker": "JNJ",
-        "flag": "🇺🇸",
-        "note": "제약+의료기기 통합 빅파마"
-      },
-      {
-        "name": "Merck & Co",
-        "ticker": "MRK",
-        "flag": "🇺🇸",
-        "note": "키트루다+가다실+라제브리오 등"
+        "name": "에스티팜",
+        "ticker": "237690",
+        "note": "올리고뉴클레오타이드 합성 플랫폼",
+        "mcap": "—"
       }
-    ]
+    ],
+    "global": []
+  },
+  {
+    "id": "api_materials",
+    "sector": "원료의약품·생산소재",
+    "sectorEn": "API & production materials",
+    "icon": "🧪",
+    "color": "#FFA726",
+    "bg": "#FFA72614",
+    "description": "API & production materials",
+    "domestic": [
+      {
+        "name": "파미셀",
+        "ticker": "005690",
+        "note": "줄기세포치료·원료의약품",
+        "mcap": "—"
+      }
+    ],
+    "global": []
+  },
+  {
+    "id": "research_tools",
+    "sector": "연구도구·서비스",
+    "sectorEn": "Research tools & services",
+    "icon": "🧰",
+    "color": "#26C6DA",
+    "bg": "#26C6DA14",
+    "description": "Research tools & services",
+    "domestic": [
+      {
+        "name": "큐리옥스바이오시스템즈",
+        "ticker": "445680",
+        "note": "세포 전처리·분석 자동화 장비(연구도구)",
+        "mcap": "—"
+      },
+      {
+        "name": "프로티나",
+        "ticker": "468530",
+        "note": "단백질 상호작용·신약 플랫폼",
+        "mcap": "—"
+      }
+    ],
+    "global": []
+  },
+  {
+    "id": "bio_holdings",
+    "sector": "제약·바이오 지주",
+    "sectorEn": "Pharma / biotech holdings",
+    "icon": "🏛️",
+    "color": "#8D6E63",
+    "bg": "#8D6E6314",
+    "description": "Pharma / biotech holdings",
+    "domestic": [
+      {
+        "name": "삼성에피스홀딩스",
+        "ticker": "0126Z0",
+        "note": "'25.11 삼바 인적분할 재상장, 바이오시밀러 9종 글로벌·후속 ADC파이프라인 확대중",
+        "mcap": "—"
+      },
+      {
+        "name": "한미사이언스",
+        "ticker": "008930",
+        "note": "",
+        "mcap": "—"
+      },
+      {
+        "name": "대웅",
+        "ticker": "003090",
+        "note": "제약 지주",
+        "mcap": "—"
+      },
+      {
+        "name": "동아쏘시오홀딩스",
+        "ticker": "000640",
+        "note": "제약 지주",
+        "mcap": "—"
+      },
+      {
+        "name": "녹십자홀딩스",
+        "ticker": "005250",
+        "note": "바이오 지주",
+        "mcap": "—"
+      },
+      {
+        "name": "휴온스글로벌",
+        "ticker": "084110",
+        "note": "제약 지주",
+        "mcap": "—"
+      },
+      {
+        "name": "차바이오텍",
+        "ticker": "085660",
+        "note": "줄기세포(면역세포) 치료제, 세포배양",
+        "mcap": "—"
+      }
+    ],
+    "global": []
   }
 ]

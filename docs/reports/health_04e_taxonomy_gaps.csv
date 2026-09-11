@@ -1,0 +1,6 @@
+ticker,name,from_sector,status,notes
+228760,"지노믹트리",medtech,mcap_floor_skip,"매핑표 체외진단이나 시총 3천억 미만"
+389650,"넥스트바이오메디컬",medtech,mcap_floor_skip,"매핑표 의료소모품·재생재료이나 시총 3천억 미만"
+003350,"한국화장품제조",cosmetics,mcap_floor_skip,"매핑표 화장품 브랜드이나 시총 3천억 미만"
+078520,"에이블씨엔씨",cosmetics,mcap_floor_skip,"매핑표 화장품 브랜드이나 시총 3천억 미만"
+352480,"씨앤씨인터내셔널",cosmetics,mcap_floor_skip,"매핑표 ODM·OEM이나 시총 3천억 미만"

@@ -831,7 +831,7 @@
     {
       "action": "add_structural",
       "source": "krx:001530",
-      "target": "group:nonferrous_metal"
+      "target": "group:steelmaking"
     },
     {
       "action": "add_structural",

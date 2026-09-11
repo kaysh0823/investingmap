@@ -234,7 +234,7 @@
     "correctedContractCount": 1,
     "correctionReviewedCount": 1,
     "correctionNeedsReviewCount": 0,
-    "ownershipOrGroupEdgeCount": 14,
+    "ownershipOrGroupEdgeCount": 18,
     "denominators": {
       "uniqueContractCount": "all contract nodes",
       "activeContractCount": "contractStatus ∈ {effective, in_delivery, announced, letter_of_award}",
@@ -244,18 +244,18 @@
     }
   },
   "orphan": {
-    "listedCompanyCount": 14,
+    "listedCompanyCount": 18,
     "structuralOrphanCount": 0,
-    "businessRelationOrphanCount": 8,
-    "directRelationshipOrphanCount": 8,
-    "directCommercialRelationshipOrphanCount": 8,
-    "classificationOnlyCompanyCount": 8,
+    "businessRelationOrphanCount": 12,
+    "directRelationshipOrphanCount": 12,
+    "directCommercialRelationshipOrphanCount": 12,
+    "classificationOnlyCompanyCount": 12,
     "groupMembershipOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 8,
+    "weakRelationOnlyCompanyCount": 12,
     "hasPeerButNoBusinessCompanyCount": 3,
     "peerOnlyCompanyCount": 0,
-    "structuralOnlyCompanyCount": 5,
-    "confirmedReportedBusinessOrphanCount": 8,
+    "structuralOnlyCompanyCount": 9,
+    "confirmedReportedBusinessOrphanCount": 12,
     "orphanListedCompanyCount": 0,
     "metricDefinitions": {
       "listedCompanyCount": {
@@ -688,6 +688,7 @@
     "details": {
       "structuralOrphans": [],
       "businessRelationOrphans": [
+        "krx:034020",
         "krx:015760",
         "krx:000500",
         "krx:036460",
@@ -695,9 +696,13 @@
         "krx:229640",
         "krx:006340",
         "krx:071320",
-        "krx:033100"
+        "krx:005090",
+        "krx:119850",
+        "krx:033100",
+        "krx:004690"
       ],
       "directRelationshipOrphans": [
+        "krx:034020",
         "krx:015760",
         "krx:000500",
         "krx:036460",
@@ -705,9 +710,13 @@
         "krx:229640",
         "krx:006340",
         "krx:071320",
-        "krx:033100"
+        "krx:005090",
+        "krx:119850",
+        "krx:033100",
+        "krx:004690"
       ],
       "classificationOnly": [
+        "krx:034020",
         "krx:015760",
         "krx:000500",
         "krx:036460",
@@ -715,10 +724,14 @@
         "krx:229640",
         "krx:006340",
         "krx:071320",
-        "krx:033100"
+        "krx:005090",
+        "krx:119850",
+        "krx:033100",
+        "krx:004690"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
+        "krx:034020",
         "krx:015760",
         "krx:000500",
         "krx:036460",
@@ -726,7 +739,10 @@
         "krx:229640",
         "krx:006340",
         "krx:071320",
-        "krx:033100"
+        "krx:005090",
+        "krx:119850",
+        "krx:033100",
+        "krx:004690"
       ],
       "hasPeerButNoBusiness": [
         "krx:015760",
@@ -735,11 +751,15 @@
       ],
       "peerOnly": [],
       "structuralOnly": [
+        "krx:034020",
         "krx:000500",
         "krx:060370",
         "krx:229640",
         "krx:006340",
-        "krx:071320"
+        "krx:071320",
+        "krx:005090",
+        "krx:119850",
+        "krx:004690"
       ]
     }
   },

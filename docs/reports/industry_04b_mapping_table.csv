@@ -1,0 +1,73 @@
+sector,ticker,name,new_group,tags,needs_review
+chemical,010950,"S-Oil",정유·석유제품,"",false
+chemical,002380,"KCC",정밀·특수화학,"건자재|실리콘|도료",false
+chemical,011780,"금호석유화학",합성수지·고무,"",false
+chemical,011170,"롯데케미칼",기초유분·석유화학,"",false
+chemical,018670,"SK가스",가스,"",false
+chemical,457190,"이수스페셜티케미컬",정밀·특수화학,"",false
+chemical,120110,"코오롱인더",섬유·산업소재,"",false
+chemical,298020,"효성티앤씨",섬유·산업소재,"",false
+chemical,001740,"SK네트웍스",화학 유통,"",true
+chemical,004000,"롯데정밀화학",정밀·특수화학,"",false
+chemical,003240,"태광산업",섬유·산업소재,"",false
+chemical,005090,"SGC에너지",정유·석유제품,"",true
+chemical,298050,"HS효성첨단소재",섬유·산업소재,"",false
+chemical,017940,"E1",가스,"",false
+chemical,069260,"TKG휴켐스",정밀·특수화학,"",false
+chemical,268280,"미원에스씨",정밀·특수화학,"",false
+chemical,002960,"한국쉘석유",정유·석유제품,"",false
+chemical,006650,"대한유화",기초유분·석유화학,"",false
+chemical,006380,"카프로",기초유분·석유화학,"",false
+chemical,002840,"미원상사",정밀·특수화학,"",false
+chemical,161000,"애경케미칼",정밀·특수화학,"",false
+chemical,002810,"삼영무역",화학 유통,"",false
+chemical,007690,"국도화학",정밀·특수화학,"",false
+chemical,025860,"남해화학",비료·농화학,"",false
+chemical,005950,"이수화학",기초유분·석유화학,"",false
+metal,010130,"고려아연",비철 제련,"",false
+metal,047050,"포스코인터내셔널",금속 유통·가공서비스,"",false
+metal,004020,"현대제철",종합 철강,"",false
+metal,001430,"세아베스틸지주",특수강·단조,"",true
+metal,006110,"삼아알미늄",비철 가공·첨단금속,"",false
+metal,000670,"영풍",비철 제련,"",false
+metal,295310,"에이치브이엠",비철 가공·첨단금속,"",false
+metal,001530,"DI동일",비철 가공·첨단금속,"",true
+metal,016380,"KG스틸",판재·도금강판,"",false
+metal,009520,"포스코엠텍",금속 유통·가공서비스,"철강 포장|탈산제",false
+metal,460860,"동국제강",봉형강·선재,"",false
+metal,002240,"고려제강",봉형강·선재,"",false
+metal,306200,"세아제강",강관,"",false
+metal,104700,"한국철강",봉형강·선재,"",false
+metal,092790,"넥스틸",강관,"",false
+machinery,241560,"두산밥캣",건설기계,"",false
+machinery,017800,"현대엘리베이터",승강기,"",false
+machinery,019210,"와이지-원",핵심부품·공구,"",false
+machinery,009160,"SIMPAC",공작·금속가공기계,"",false
+machinery,267270,"HD건설기계",건설기계,"건설기계",false
+construction,028260,"삼성물산",종합건설,"",false
+construction,000720,"현대건설",종합건설,"",false
+construction,028050,"삼성E&A",플랜트·EPC,"",false
+construction,047040,"대우건설",종합건설,"",false
+construction,006360,"GS건설",종합건설,"",false
+construction,375500,"DL이앤씨",종합건설,"",false
+construction,294870,"IPARK현대산업개발",주택·개발,"",false
+construction,300720,"한일시멘트",시멘트·기초 건자재,"",false
+construction,009240,"한샘",마감재·인테리어,"",false
+construction,038500,"삼표시멘트",시멘트·기초 건자재,"",false
+construction,002990,"금호건설",종합건설,"",false
+construction,009410,"태영건설",종합건설,"",false
+construction,035890,"서희건설",주택·개발,"",false
+construction,010780,"아이에스동서",종합건설,"",false
+construction,317400,"자이에스앤디",주택·개발,"",false
+construction,344820,"KCC글라스",마감재·인테리어,"",false
+construction,183190,"아세아시멘트",시멘트·기초 건자재,"",false
+construction,025900,"동화기업",마감재·인테리어,"",false
+construction,108670,"LX하우시스",마감재·인테리어,"",false
+construction,123890,"한국자산신탁",부동산 서비스,"",false
+
+# cross_moves
+ticker,from,to,chain,note
+267270,construction,machinery,건설기계,HD건설기계 사명갱신
+002380,construction,chemical,정밀·특수화학,건자재 태그
+004690,chemical,powergrid,유틸리티,도시가스
+437730,machinery,auto,부품,로봇 액추에이터 태그·auto 세부그룹은 모빌리티 배치

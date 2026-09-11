@@ -2,14 +2,14 @@
   "asOf": "2026-08-23",
   "phase": "5B",
   "reviewedBy": "editorial_phase5b",
-  "listedCompanyCount": 22,
+  "listedCompanyCount": 28,
   "metrics": {
-    "listedCompanyCount": 22,
+    "listedCompanyCount": 28,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 80,
-    "edgeCount": 116,
-    "structuralEdgeCount": 62,
-    "structuralGeneratedEdgeCount": 57,
+    "nodeCount": 86,
+    "edgeCount": 122,
+    "structuralEdgeCount": 68,
+    "structuralGeneratedEdgeCount": 63,
     "legacyMigratedEdgeCount": 54,
     "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
@@ -32,16 +32,16 @@
     "hybridExposedCompanyCount": 1,
     "hybridExposureCount": 1,
     "hybridStructuralEdgeCount": 1,
-    "businessRelationOrphanCount": 22,
-    "directRelationshipOrphanCount": 22,
-    "directCommercialRelationshipOrphanCount": 22,
-    "confirmedReportedBusinessOrphanCount": 22,
-    "classificationOnlyCompanyCount": 22,
+    "businessRelationOrphanCount": 28,
+    "directRelationshipOrphanCount": 28,
+    "directCommercialRelationshipOrphanCount": 28,
+    "confirmedReportedBusinessOrphanCount": 28,
+    "classificationOnlyCompanyCount": 28,
     "groupMembershipOnlyCompanyCount": 5,
-    "weakRelationOnlyCompanyCount": 22,
+    "weakRelationOnlyCompanyCount": 28,
     "hasPeerButNoBusinessCompanyCount": 22,
     "peerOnlyCompanyCount": 0,
-    "structuralOnlyCompanyCount": 0,
+    "structuralOnlyCompanyCount": 6,
     "orphanListedCompanyCount": 0,
     "structuralOrphanCount": 0,
     "orphanMetricDefinitions": {
@@ -486,7 +486,10 @@
         "krx:000240",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -494,9 +497,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "directRelationshipOrphans": [
         "krx:005380",
@@ -510,7 +516,10 @@
         "krx:000240",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -518,9 +527,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "classificationOnly": [
         "krx:005380",
@@ -534,7 +546,10 @@
         "krx:000240",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -542,9 +557,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "groupMembershipOnly": [
         "krx:005380",
@@ -565,7 +583,10 @@
         "krx:000240",
         "krx:204320",
         "krx:073240",
+        "krx:089860",
         "krx:011210",
+        "krx:046070",
+        "krx:437730",
         "krx:064960",
         "krx:002350",
         "krx:025540",
@@ -573,9 +594,12 @@
         "krx:015750",
         "krx:009900",
         "krx:403550",
+        "krx:004700",
+        "krx:125490",
         "krx:097520",
         "krx:200880",
-        "krx:381970"
+        "krx:381970",
+        "krx:448900"
       ],
       "hasPeerButNoBusiness": [
         "krx:005380",
@@ -602,9 +626,16 @@
         "krx:381970"
       ],
       "peerOnly": [],
-      "structuralOnly": []
+      "structuralOnly": [
+        "krx:089860",
+        "krx:046070",
+        "krx:437730",
+        "krx:004700",
+        "krx:125490",
+        "krx:448900"
+      ]
     },
-    "evidenceFieldCoverage": 0.3448275862068966,
+    "evidenceFieldCoverage": 0.32786885245901637,
     "businessRelationshipDirectEvidenceCoverage": null,
     "businessRelationshipPrimarySourceCoverage": null,
     "supplyRelationshipDirectEvidenceCoverage": null,
@@ -617,9 +648,9 @@
     "claimCoverage": {
       "evidenceFieldCoverage": {
         "numerator": 40,
-        "denominator": 116,
-        "percentage": 0.3448275862068966,
-        "displayValue": "34.5%",
+        "denominator": 122,
+        "percentage": 0.32786885245901637,
+        "displayValue": "32.8%",
         "applicable": true,
         "reason": null
       },
@@ -946,6 +977,12 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
+      "source": "krx:089860",
+      "target": "group:materials"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
       "source": "krx:011210",
       "target": "group:powertrain"
     },
@@ -966,6 +1003,18 @@
       "afterType": "exposed_to",
       "source": "krx:011210",
       "target": "technology:transmission"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
+      "source": "krx:046070",
+      "target": "group:materials"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
+      "source": "krx:437730",
+      "target": "group:materials"
     },
     {
       "action": "add_structural",
@@ -1054,6 +1103,18 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
+      "source": "krx:004700",
+      "target": "group:materials"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
+      "source": "krx:125490",
+      "target": "group:materials"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
       "source": "krx:097520",
       "target": "group:electronics_adas"
     },
@@ -1085,6 +1146,12 @@
       "action": "add_structural",
       "afterType": "member_of",
       "source": "krx:381970",
+      "target": "group:materials"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
+      "source": "krx:448900",
       "target": "group:materials"
     },
     {

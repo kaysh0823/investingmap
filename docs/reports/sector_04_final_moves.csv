@@ -1,0 +1,21 @@
+ticker,name,from_sector,to_sector,to_group,batch,notes
+086280,현대글로비스,kconsume,shipping,자동차·특수화물 운송,F,물류 이동
+000120,CJ대한통운,kconsume,shipping,종합물류,F,물류 이동
+189300,인텔리안테크,defense,telecom,위성통신 장비,C,교차이동
+437730,삼현,machinery/robot?,auto,구동·파워트레인,C,교차이동
+222080,SFA넥셀,elec,battery,제조·검사 장비,D,교차이동
+077360,덕산하이메탈,elec,semi,기판·패키징 소재,D,교차이동
+125490,모베이스전자,robot,auto,차체·내외장,D,교차이동
+086900,메디톡스,bio,cosmetics,에스테틱 의약품·소모품,E,교차이동
+290650,엘앤씨바이오,bio,medtech,의료소모품·재생재료,E,교차이동
+0120G0,삼양바이오팜,bio,medtech,의료소모품·재생재료,E,교차이동
+377300,카카오페이,finance,finance+software,결제·핀테크|결제·데이터 인프라,G,교차수록(중복집계 제거)
+082270,젬백스,bio,semi,팹 인프라·지원설비,closure,케미컬필터 95.5%·신약개발 태그
+001570,금양,battery,chemical,정밀·특수화학,closure,발포제 100%·2차전지 셀 태그
+044490,태웅,ship,renewable,구조물·보조설비,closure,해상풍력 플랜지 44%·조선·산업기계 태그
+005090,SGC에너지,chemical,powergrid,유틸리티,closure,집단에너지 중심·정유 없음·삼천리 동일 성격
+014820,동원시스템즈,(미수록),chemical,포장재,closure,포장재 그룹 복원
+008730,율촌화학,(미수록),chemical,포장재,closure,포장재 그룹 복원
+012030,DB,holdings/복합사업,holdings,금융,closure,금융 그룹 신설
+023590,다우기술,holdings/복합사업,holdings,금융,closure,금융 그룹 신설
+032190,다우데이타,holdings/복합사업,holdings,금융,closure,금융 그룹 신설

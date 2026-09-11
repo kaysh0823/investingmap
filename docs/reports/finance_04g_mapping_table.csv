@@ -1,0 +1,100 @@
+sector,ticker,name,old_group,new_group,evidence,needs_review,status
+finance,105560,"KB금융",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,032830,"삼성생명",,"생명보험",chain_overrides §0-4G,false,mapped
+finance,055550,"신한지주",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,086790,"하나금융지주",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,000810,"삼성화재",,"손해보험·재보험",chain_overrides §0-4G,false,mapped
+finance,316140,"우리금융지주",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,138040,"메리츠금융지주",,"비은행 금융그룹",chain_overrides §0-4G,false,mapped
+finance,006800,"미래에셋증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,024110,"기업은행",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,005830,"DB손해보험",,"손해보험·재보험",chain_overrides §0-4G,false,mapped
+finance,071050,"한국금융지주",,"비은행 금융그룹",chain_overrides §0-4G,false,mapped
+finance,323410,"카카오뱅크",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,005940,"NH투자증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,016360,"삼성증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,039490,"키움증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,377300,"카카오페이",,"결제·핀테크",chain_overrides §0-4G,false,mapped
+finance,175330,"JB금융지주",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,029780,"삼성카드",,"카드·캐피탈·여신금융",chain_overrides §0-4G,false,mapped
+finance,088350,"한화생명",,"생명보험",chain_overrides §0-4G,false,mapped
+finance,138930,"BNK금융지주",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,001450,"현대해상",,"손해보험·재보험",chain_overrides §0-4G,false,mapped
+finance,031210,"서울보증보험",,"손해보험·재보험",chain_overrides §0-4G,false,mapped
+finance,139130,"iM금융지주",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,085620,"미래에셋생명",,"생명보험",chain_overrides §0-4G,false,mapped
+finance,003690,"코리안리",,"손해보험·재보험",chain_overrides §0-4G,false,mapped
+finance,001720,"신영증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,279570,"케이뱅크",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,082640,"동양생명",,"생명보험",chain_overrides §0-4G,false,mapped
+finance,003540,"대신증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,030610,"교보증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,003530,"한화투자증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,000370,"한화손해보험",,"손해보험·재보험",chain_overrides §0-4G,false,mapped
+finance,030190,"NICE평가정보",,"금융정보·평가",chain_overrides §0-4G,false,mapped
+finance,003470,"유안타증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,100790,"미래에셋벤처투자",,"자산운용·PE·VC",chain_overrides §0-4G,false,mapped
+finance,094800,"맵스리얼티",,"부동산금융·투자기구",chain_overrides §0-4G,false,mapped
+finance,000400,"롯데손해보험",,"손해보험·재보험",chain_overrides §0-4G,false,mapped
+finance,001510,"SK증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,001270,"부국증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,211050,"인카금융서비스",,"보험판매·중개",chain_overrides §0-4G,false,mapped
+finance,041190,"우리기술투자",,"자산운용·PE·VC",chain_overrides §0-4G,false,mapped
+finance,001500,"현대차증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,034950,"한국기업평가",,"금융정보·평가",chain_overrides §0-4G,false,mapped
+finance,016610,"DB증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,001200,"유진투자증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,027360,"아주IB투자",,"자산운용·PE·VC",chain_overrides §0-4G,false,mapped
+finance,006220,"제주은행",,"은행·은행계 금융그룹",chain_overrides §0-4G,false,mapped
+finance,078020,"LS증권",,"증권",chain_overrides §0-4G,false,mapped
+finance,026890,"스틱인베스트먼트",,"자산운용·PE·VC",chain_overrides §0-4G,false,mapped
+finance,244920,"에이플러스에셋",,"보험판매·중개",chain_overrides §0-4G,false,mapped
+holdings,402340,"SK스퀘어",,"IT·전자",chain_overrides §0-4G,false,mapped
+holdings,034730,"SK",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,005490,"POSCO홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,267250,"HD현대",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,000150,"두산",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,003550,"LG",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,078930,"GS",,"에너지·화학",chain_overrides §0-4G,false,mapped
+holdings,180640,"한진칼",,"운송·물류",chain_overrides §0-4G,false,mapped
+holdings,006260,"LS",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,000880,"한화",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,001040,"CJ",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,004800,"효성",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,004990,"롯데지주",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,009970,"영원무역홀딩스",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,005440,"현대지에프홀딩스",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,030530,"원익홀딩스",,"IT·전자",chain_overrides §0-4G,false,mapped
+holdings,023590,"다우기술",,"금융",chain_overrides §0-4G,false,mapped
+holdings,001800,"오리온홀딩스",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,012630,"HDC",,"건설·부동산",chain_overrides §0-4G,false,mapped
+holdings,003380,"하림지주",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,000210,"DL",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,192400,"쿠쿠홀딩스",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,006120,"SK디스커버리",,"에너지·화학",chain_overrides §0-4G,false,mapped
+holdings,036830,"솔브레인홀딩스",,"IT·전자",chain_overrides §0-4G,false,mapped
+holdings,032190,"다우데이타",,"금융",chain_overrides §0-4G,false,mapped
+holdings,036530,"SNT홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,383800,"LX홀딩스",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,003300,"한일홀딩스",,"건설·부동산",chain_overrides §0-4G,false,mapped
+holdings,0220W0,"한화머시너리앤서비스홀딩스",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,058650,"세아홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,007700,"F&F홀딩스",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,005810,"풍산홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,000070,"삼양홀딩스",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,072710,"농심홀딩스",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,003030,"세아제강지주",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,002030,"아세아",,"건설·부동산",chain_overrides §0-4G,false,mapped
+holdings,092230,"KPX홀딩스",,"에너지·화학",chain_overrides §0-4G,false,mapped
+holdings,001940,"KISCO홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,027410,"BGF",,"소비·유통",chain_overrides §0-4G,false,mapped
+holdings,060980,"HL홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,024720,"콜마홀딩스",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,002020,"코오롱",,"복합사업",chain_overrides §0-4G,false,mapped
+holdings,015860,"일진홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,005720,"넥센",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,001230,"동국홀딩스",,"소재·산업재",chain_overrides §0-4G,false,mapped
+holdings,096760,"JW홀딩스",,"헬스케어",chain_overrides §0-4G,false,mapped
+holdings,012030,"DB",,"금융",chain_overrides §0-4G,false,mapped
+holdings,121440,"골프존홀딩스",,"소비·유통",chain_overrides §0-4G,false,mapped
+software,377300,"카카오페이","finance-only","결제·데이터 인프라",finance+software 교차수록,false,cross

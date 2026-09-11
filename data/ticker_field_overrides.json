@@ -12,8 +12,15 @@
         "semTypeEn": "Offshore Wind & Plants",
         "products": "해상풍력·신재생 해양플랜트",
         "productsEn": "Offshore wind and renewable marine plants"
+      },
+      "renewable": {
+        "chain": "구조물·보조설비",
+        "needs_review": false
       }
-    }
+    },
+    "tags": [
+      "해상풍력"
+    ]
   },
   "100130": {
     "semType": "화학·소재",
@@ -21,11 +28,32 @@
     "products": "석유화학·소재 (동국그룹)",
     "productsEn": "Petrochemicals and materials (Dongkuk group)"
   },
+  "100840": {
+    "products": "원전·발전 열교환기·압력용기 기자재",
+    "productsEn": "Heat exchangers and pressure vessels for nuclear and power plants",
+    "semType": "원전·발전 보조기기",
+    "semTypeEn": "Nuclear & power plant auxiliaries",
+    "byIndustry": {
+      "nuclear": {
+        "products": "원전·발전 열교환기·압력용기 기자재",
+        "productsEn": "Heat exchangers and pressure vessels for nuclear and power plants",
+        "semType": "원전·발전 보조기기",
+        "semTypeEn": "Nuclear & power plant auxiliaries",
+        "chain": "보조기기·소재",
+        "needs_review": false
+      }
+    }
+  },
   "101160": {
     "semType": "실리콘·쿼츠 공정 소모부품",
     "semTypeEn": "Silicon & quartz process consumables",
     "products": "식각장비용 실리콘·쿼츠·세라믹 소모부품",
-    "productsEn": "Silicon, quartz and ceramic consumables for etch tools"
+    "productsEn": "Silicon, quartz and ceramic consumables for etch tools",
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 부품·유지관리"
+      }
+    }
   },
   "101170": {
     "semType": "로봇 감속기·동력전달",
@@ -37,7 +65,104 @@
     "semType": "블랭크마스크·EUV 펠리클",
     "semTypeEn": "Blank masks & EUV pellicles",
     "products": "포토마스크 블랭크·EUV 펠리클 등 리소그래피 소재",
-    "productsEn": "Photomask blanks and EUV pellicles for lithography"
+    "productsEn": "Photomask blanks and EUV pellicles for lithography",
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재"
+      }
+    }
+  },
+  "101730": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "102710": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재"
+      }
+    }
+  },
+  "103140": {
+    "byIndustry": {
+      "defense": {
+        "chain": "유도무기·탄약",
+        "needs_review": false
+      }
+    }
+  },
+  "103590": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "전선·케이블",
+        "needs_review": false
+      }
+    }
+  },
+  "104700": {
+    "byIndustry": {
+      "metal": {
+        "chain": "봉형강·선재",
+        "needs_review": false
+      }
+    }
+  },
+  "104830": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재"
+      }
+    }
+  },
+  "105560": {
+    "tags": [
+      "은행",
+      "개인",
+      "기업"
+    ]
+  },
+  "105630": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "의류 제조",
+        "needs_review": false
+      }
+    }
+  },
+  "107640": {
+    "byIndustry": {
+      "battery": {
+        "chain": "모듈·팩·시스템 부품",
+        "needs_review": false
+      }
+    }
+  },
+  "108320": {
+    "byIndustry": {
+      "semi": {
+        "chain": "팹리스·IP"
+      }
+    }
+  },
+  "108490": {
+    "byIndustry": {
+      "robot": {
+        "chain": "구동부품",
+        "needs_review": false
+      }
+    }
+  },
+  "108670": {
+    "byIndustry": {
+      "construction": {
+        "chain": "마감재·인테리어",
+        "needs_review": false
+      }
+    }
   },
   "109820": {
     "semType": "바이오·신약",
@@ -45,11 +170,59 @@
     "products": "신약·바이오 R&D",
     "productsEn": "New drug and biotech R&D"
   },
+  "111770": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "의류 제조",
+        "needs_review": false
+      }
+    }
+  },
+  "112040": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "112610": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "구조물·보조설비",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "해상풍력"
+    ]
+  },
+  "114090": {
+    "byIndustry": {
+      "travel": {
+        "chain": "카지노",
+        "needs_review": false
+      }
+    }
+  },
+  "114810": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 부품·유지관리"
+      }
+    }
+  },
   "115180": {
     "semType": "세포치료·바이오",
     "semTypeEn": "Cell Therapy & Biotech",
     "products": "세포·유전자치료·바이오 R&D",
-    "productsEn": "Cell and gene therapy biotech R&D"
+    "productsEn": "Cell and gene therapy biotech R&D",
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    }
   },
   "117730": {
     "semType": "산업용·협동로봇",
@@ -63,29 +236,390 @@
     "products": "방산·항공용 금속 가공·정밀 부품",
     "productsEn": "Precision metal parts for defense and aerospace"
   },
+  "119850": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "발전·비상전원 설비",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "바이오가스",
+      "연료전지 운영"
+    ]
+  },
+  "120110": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "섬유·산업소재",
+        "needs_review": false
+      }
+    }
+  },
+  "121440": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "소비·유통",
+        "review_evidence": "골프존홀딩스 — 소비·유통 경계"
+      }
+    },
+    "tags": [
+      "소비·유통",
+      "레저"
+    ]
+  },
+  "121600": {
+    "byIndustry": {
+      "battery": {
+        "chain": "집전체·기타 소재",
+        "needs_review": false
+      }
+    }
+  },
   "122640": {
     "semType": "고압 어닐·열처리 장비",
     "semTypeEn": "High-pressure anneal & thermal equipment",
     "products": "고압 수소 어닐링·산화·퍼니스 등 전공정 열처리 장비",
-    "productsEn": "High-pressure hydrogen anneal, oxidation and furnace tools"
+    "productsEn": "High-pressure hydrogen anneal, oxidation and furnace tools",
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
+  },
+  "122870": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "음악·엔터테인먼트",
+        "needs_review": false
+      }
+    }
+  },
+  "123890": {
+    "byIndustry": {
+      "construction": {
+        "chain": "부동산 서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "124500": {
+    "byIndustry": {
+      "software": {
+        "chain": "IT서비스·SI",
+        "needs_review": false
+      }
+    }
+  },
+  "125490": {
+    "semType": "차체·다이캐스팅",
+    "semTypeEn": "Body & die-casting parts",
+    "products": "자동차 차체·하우징 다이캐스팅 (로봇 구조부품 관계)",
+    "productsEn": "Automotive body and housing die-casting (robot structural adjacency)",
+    "byIndustry": {
+      "auto": {
+        "chain": "차체·내외장"
+      }
+    },
+    "tags": [
+      "로봇",
+      "다이캐스팅",
+      "차체"
+    ]
+  },
+  "126340": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "수소·연료전지",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "슈퍼커패시터"
+    ]
+  },
+  "126560": {
+    "byIndustry": {
+      "telecom": {
+        "taxonomy_gap": true,
+        "needs_review": false,
+        "review_evidence": "통신 사업 근거 부족(디지털사이니지·메시징·화장품소재). 분류체계 공백 — 타 지도 자동편입 금지"
+      }
+    }
+  },
+  "126720": {
+    "name": "수산인더스트리",
+    "nameEn": "Soosan Industries",
+    "semType": "발전설비 정비",
+    "semTypeEn": "Plant maintenance",
+    "products": "원전·발전설비 경상정비",
+    "productsEn": "Nuclear and power-plant maintenance",
+    "byIndustry": {
+      "nuclear": {
+        "chain": "정비·운영지원",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 경상정비",
+        "semType": "발전설비 정비",
+        "products": "원전·발전설비 경상정비"
+      }
+    }
+  },
+  "127120": {
+    "name": "제이에스링크",
+    "nameEn": "JS Link",
+    "semType": "장비 부품·기술서비스",
+    "semTypeEn": "Tool parts & tech service",
+    "products": "반도체 장비 부품·기술서비스",
+    "productsEn": "Semiconductor equipment parts and technical service",
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 부품·유지관리",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 반도체 장비 부품·기술서비스",
+        "semType": "장비 부품·기술서비스",
+        "products": "반도체 장비 부품·기술서비스"
+      }
+    }
+  },
+  "128940": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "펩타이드",
+      "비만·대사"
+    ]
+  },
+  "130660": {
+    "byIndustry": {
+      "nuclear": {
+        "chain": "정비·운영지원",
+        "needs_review": false
+      }
+    }
+  },
+  "131290": {
+    "byIndustry": {
+      "semi": {
+        "chain": "테스트 부품·인터페이스"
+      }
+    }
+  },
+  "131970": {
+    "tags": [
+      "테스트 대행"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "패키징·테스트 서비스"
+      }
+    }
+  },
+  "137310": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "체외진단",
+        "needs_review": false
+      }
+    }
   },
   "137400": {
     "semType": "2차전지·ESS 설비",
     "semTypeEn": "Battery & ESS Equipment",
     "products": "2차전지·ESS 생산·검사 설비",
-    "productsEn": "Battery and ESS manufacturing and inspection equipment"
+    "productsEn": "Battery and ESS manufacturing and inspection equipment",
+    "byIndustry": {
+      "battery": {
+        "chain": "제조·검사 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "139480": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false
+      }
+    }
   },
   "140410": {
     "semType": "신약개발",
     "semTypeEn": "Drug Development",
     "products": "항암·면역 등 신약 파이프라인",
-    "productsEn": "Oncology and immunology drug pipeline"
+    "productsEn": "Oncology and immunology drug pipeline",
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    }
+  },
+  "140860": {
+    "byIndustry": {
+      "semi": {
+        "chain": "검사·계측 장비"
+      }
+    }
+  },
+  "141080": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체",
+      "ADC"
+    ]
+  },
+  "144960": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "팹 인프라·지원설비",
+        "review_status": "confirmed",
+        "review_evidence": "플라즈마·팹 설비 (방산 매출 비중↑ 모니터링) — 그룹 유지",
+        "monitor_note": "방산 매출 비중 약 52% — semi 비중 축소 모니터링, 그룹 유지"
+      }
+    }
+  },
+  "145020": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "에스테틱 의약품·소모품",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "톡신",
+      "필러"
+    ]
+  },
+  "145720": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "치과",
+        "needs_review": false
+      }
+    }
+  },
+  "145990": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "식품소재·급식",
+        "needs_review": false
+      }
+    }
+  },
+  "159010": {
+    "name": "아스플로",
+    "nameEn": "ASFLOW CO.,LTD.",
+    "semType": "고순도 가스배관",
+    "semTypeEn": "UHP gas tubing",
+    "products": "반도체 고순도 가스배관 부품",
+    "productsEn": "Ultra-high-purity gas tubing parts",
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 부품·유지관리",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 고순도 가스배관",
+        "semType": "고순도 가스배관",
+        "products": "반도체 고순도 가스배관 부품"
+      }
+    }
+  },
+  "160190": {
+    "byIndustry": {
+      "robot": {
+        "chain": "구동부품",
+        "needs_review": false
+      }
+    }
   },
   "160980": {
     "semType": "웨이퍼 이송·EFEM",
     "semTypeEn": "Wafer handling & EFEM",
     "products": "웨이퍼 이송 로봇·EFEM·로드포트",
     "productsEn": "Wafer transfer robots, EFEM and load ports"
+  },
+  "161000": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
+      }
+    }
+  },
+  "161390": {
+    "byIndustry": {
+      "auto": {
+        "chain": "타이어",
+        "needs_review": false
+      }
+    }
+  },
+  "161580": {
+    "byIndustry": {
+      "elec": {
+        "chain": "디스플레이 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "161890": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 ODM·OEM",
+        "needs_review": false
+      }
+    }
+  },
+  "166090": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 부품·유지관리"
+      }
+    }
+  },
+  "170900": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "170920": {
+    "name": "엘티씨",
+    "nameEn": "LTC Co., LTD.",
+    "semType": "세정·박리액",
+    "semTypeEn": "Cleaners/strippers",
+    "products": "반도체 세정/박리액 케미컬",
+    "productsEn": "Semiconductor cleaners and strippers",
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 세정·박리액",
+        "semType": "세정·박리액",
+        "products": "반도체 세정/박리액 케미컬"
+      }
+    }
+  },
+  "171090": {
+    "byIndustry": {
+      "elec": {
+        "chain": "디스플레이 장비",
+        "needs_review": false
+      }
+    }
   },
   "173940": {
     "semType": "K-pop·엔터",
@@ -97,7 +631,44 @@
     "semType": "항체·바이오",
     "semTypeEn": "Antibody Biotech",
     "products": "항체·바이오의약품 R&D",
-    "productsEn": "Antibody and biologics R&D"
+    "productsEn": "Antibody and biologics R&D",
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    }
+  },
+  "178320": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "공정 부품·유지관리",
+        "review_status": "confirmed",
+        "review_evidence": "공정 부품·기구물 (ESS 주력 비중↑ 모니터링) — 그룹 유지",
+        "monitor_note": "ESS 주력 비중 확대 — semi 비중 축소 모니터링, 그룹 유지"
+      }
+    }
+  },
+  "178920": {
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    }
+  },
+  "180640": {
+    "tags": [
+      "운송·물류"
+    ]
+  },
+  "181710": {
+    "byIndustry": {
+      "software": {
+        "chain": "인터넷 플랫폼",
+        "needs_review": false
+      }
+    }
   },
   "182400": {
     "semType": "세포·유전자",
@@ -105,17 +676,198 @@
     "products": "세포·유전자치료 R&D",
     "productsEn": "Cell and gene therapy R&D"
   },
+  "183190": {
+    "byIndustry": {
+      "construction": {
+        "chain": "시멘트·기초 건자재",
+        "needs_review": false
+      }
+    }
+  },
+  "183300": {
+    "tags": [
+      "세정·코팅 서비스"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "공정 부품·유지관리"
+      }
+    }
+  },
+  "185750": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "187660": {
+    "name": "페니트리움바이오",
+    "nameEn": "PenetriumBio",
+    "semType": "세포·유전자 신약",
+    "semTypeEn": "Cell/gene therapeutics",
+    "products": "세포·유전자 신약개발",
+    "productsEn": "Cell and gene therapy development",
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 세포·유전자",
+        "semType": "세포·유전자 신약",
+        "products": "세포·유전자 신약개발"
+      }
+    }
+  },
+  "189300": {
+    "semType": "위성통신",
+    "semTypeEn": "Satellite communications",
+    "products": "위성통신 안테나·단말 (방산 관계)",
+    "productsEn": "Satellite communication antennas and terminals (defense adjacency)",
+    "byIndustry": {
+      "telecom": {
+        "chain": "위성통신 장비",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "방산",
+      "위성통신"
+    ]
+  },
+  "192080": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "192400": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "소비·유통",
+        "review_evidence": "쿠쿠홀딩스 — 소비·유통 경계"
+      }
+    },
+    "tags": [
+      "소비·유통"
+    ]
+  },
+  "192650": {
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false
+      }
+    }
+  },
+  "192820": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 ODM·OEM",
+        "needs_review": false
+      }
+    }
+  },
+  "194370": {
+    "name": "제이에스코퍼레이션",
+    "nameEn": "JS Corporation",
+    "semType": "핸드백·의류 ODM",
+    "semTypeEn": "Bag/apparel ODM",
+    "products": "글로벌 핸드백·의류 ODM",
+    "productsEn": "Global handbag and apparel ODM",
+    "byIndustry": {
+      "kconsume": {
+        "chain": "의류 제조",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 의류 ODM",
+        "semType": "핸드백·의류 ODM",
+        "products": "글로벌 핸드백·의류 ODM"
+      }
+    }
+  },
+  "195870": {
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    }
+  },
   "195940": {
     "semType": "바이오·제약",
     "semTypeEn": "Biotech & Pharma",
     "products": "바이오의약품·제네릭 (HK이노엔)",
-    "productsEn": "Biologics and generics (HK Inno.N)"
+    "productsEn": "Biologics and generics (HK Inno.N)",
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "196170": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체",
+      "ADC"
+    ]
   },
   "199430": {
     "semType": "물류·AMR·스택커",
     "semTypeEn": "Logistics AMR & Stackers",
     "products": "AMR·물류 스택커·창고 자동화 장비",
     "productsEn": "AMRs, logistics stackers and warehouse automation equipment"
+  },
+  "199800": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false,
+        "review_evidence": "툴젠 — 유전자가위 플랫폼 vs 신약개발 경계"
+      }
+    },
+    "tags": [
+      "유전자치료"
+    ]
+  },
+  "200710": {
+    "byIndustry": {
+      "semi": {
+        "chain": "디자인하우스"
+      }
+    }
+  },
+  "200880": {
+    "byIndustry": {
+      "auto": {
+        "chain": "차체·내외장",
+        "needs_review": false
+      }
+    }
+  },
+  "204270": {
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false
+      }
+    }
+  },
+  "204320": {
+    "byIndustry": {
+      "auto": {
+        "chain": "섀시·안전",
+        "needs_review": false
+      }
+    }
   },
   "205470": {
     "semType": "바이오·헬스케어",
@@ -133,7 +885,13 @@
     "semType": "바이오의약품",
     "semTypeEn": "Biologics",
     "products": "바이오의약품·CDMO",
-    "productsEn": "Biologics and CDMO services"
+    "productsEn": "Biologics and CDMO services",
+    "byIndustry": {
+      "bio": {
+        "chain": "백신·혈액제제",
+        "needs_review": false
+      }
+    }
   },
   "207760": {
     "semType": "웹툰·웹소설",
@@ -141,23 +899,111 @@
     "products": "웹툰·웹소설 플랫폼·IP",
     "productsEn": "Webtoon and web novel platform and IP"
   },
+  "207940": {
+    "byIndustry": {
+      "bio": {
+        "chain": "CDMO·CMO",
+        "needs_review": false
+      }
+    }
+  },
   "213420": {
     "semType": "OLED 유기발광소재",
     "semTypeEn": "OLED emissive materials",
     "products": "OLED 발광·정공수송 유기소재",
-    "productsEn": "OLED emissive and hole-transport organic materials"
+    "productsEn": "OLED emissive and hole-transport organic materials",
+    "byIndustry": {
+      "elec": {
+        "chain": "디스플레이 소재",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "OLED"
+    ]
   },
   "214150": {
     "semType": "미용 의료기기",
     "semTypeEn": "Aesthetic Medical Devices",
     "products": "슈링크·볼뉴머 등 에스테틱 HIFU·RF 장비",
-    "productsEn": "Shurink/Volnewmer aesthetic HIFU and RF devices"
+    "productsEn": "Shurink/Volnewmer aesthetic HIFU and RF devices",
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "미용 의료장비",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "HIFU",
+      "미용장비"
+    ]
+  },
+  "214320": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "광고·마케팅",
+        "needs_review": false
+      }
+    }
+  },
+  "214370": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "에스테틱 의약품·소모품",
+        "needs_review": false,
+        "review_evidence": "케어젠 — 원료 vs 에스테틱 경계"
+      }
+    }
+  },
+  "214430": {
+    "byIndustry": {
+      "defense": {
+        "chain": "방산전자·센서",
+        "needs_review": false
+      }
+    }
+  },
+  "214450": {
+    "semType": "에스테틱 의약품·소모품",
+    "semTypeEn": "Aesthetic drugs & consumables",
+    "products": "리쥬란 등 에스테틱 의약품·소모품",
+    "productsEn": "Rejuran and aesthetic pharmaceutical consumables",
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "에스테틱 의약품·소모품",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "리쥬란",
+      "에스테틱"
+    ]
   },
   "214610": {
     "semType": "바이오·제약",
     "semTypeEn": "Biotech & Pharma",
     "products": "바이오의약품·제약",
     "productsEn": "Biologics and pharmaceuticals"
+  },
+  "215200": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "교육서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "215600": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "유전자치료",
+      "항암"
+    ]
   },
   "217730": {
     "semType": "줄기세포·재생",
@@ -169,7 +1015,54 @@
     "semType": "GaN RF·전력반도체",
     "semTypeEn": "GaN RF & Power Semiconductors",
     "products": "GaN RF 증폭기, 5G·위성·방산 통신용 전력반도체",
-    "productsEn": "GaN RF amplifiers and power semiconductors for 5G, satellite and defense communications"
+    "productsEn": "GaN RF amplifiers and power semiconductors for 5G, satellite and defense communications",
+    "byIndustry": {
+      "telecom": {
+        "chain": "무선통신 장비",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "GaN",
+      "RF",
+      "방산",
+      "핵심부품"
+    ]
+  },
+  "219130": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "테스트 부품·인터페이스",
+        "review_status": "confirmed",
+        "review_evidence": "테스트 보드·인터페이스 — 현 그룹 확정"
+      }
+    }
+  },
+  "222080": {
+    "name": "SFA넥셀",
+    "nameEn": "SFA Nexel",
+    "semType": "배터리·디스플레이 공정·검사장비",
+    "semTypeEn": "Battery & display process/inspection equipment",
+    "products": "2차전지 제조·검사 장비 (디스플레이 장비 이력)",
+    "productsEn": "Secondary-battery manufacturing and inspection equipment (display equipment adjacency)",
+    "byIndustry": {
+      "battery": {
+        "chain": "제조·검사 장비"
+      }
+    },
+    "tags": [
+      "디스플레이 장비",
+      "OLED",
+      "검사장비"
+    ]
+  },
+  "222800": {
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    }
   },
   "225220": {
     "semType": "바이오·제약",
@@ -177,11 +1070,129 @@
     "products": "바이오의약품·제약",
     "productsEn": "Biologics and pharmaceuticals"
   },
+  "225570": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "226950": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "RNA"
+    ]
+  },
+  "228760": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "체외진단",
+        "mcap_floor_skip": true,
+        "review_evidence": "매핑표 체외진단이나 시총 3천억 미만"
+      }
+    }
+  },
+  "229640": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "전선·케이블",
+        "needs_review": false
+      }
+    }
+  },
+  "232140": {
+    "tags": [
+      "결함·번인 검사"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "검사·계측 장비",
+        "review_status": "confirmed",
+        "review_evidence": "결함·번인 검사 장비 — 현 그룹 확정"
+      }
+    }
+  },
+  "234340": {
+    "name": "헥토파이낸셜",
+    "nameEn": "Hecto Financial",
+    "semType": "간편현금·가상계좌",
+    "semTypeEn": "Cash/virtual-account fintech",
+    "products": "간편현금결제·가상계좌 핀테크",
+    "productsEn": "Cash payment and virtual-account fintech",
+    "tags": [
+      "핀테크"
+    ],
+    "byIndustry": {
+      "software": {
+        "chain": "결제·데이터 인프라",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 핀테크 — finance 교차 근거 부족으로 software만",
+        "semType": "간편현금·가상계좌",
+        "products": "간편현금결제·가상계좌 핀테크"
+      }
+    }
+  },
   "235980": {
     "semType": "바이오·제약",
     "semTypeEn": "Biotech & Pharma",
     "products": "바이오의약품·제약 R&D",
     "productsEn": "Biologics and pharmaceutical R&D"
+  },
+  "236200": {
+    "byIndustry": {
+      "software": {
+        "chain": "보안·인증",
+        "needs_review": false
+      }
+    }
+  },
+  "237690": {
+    "byIndustry": {
+      "bio": {
+        "chain": "CDMO·CMO",
+        "needs_review": false
+      }
+    }
+  },
+  "240810": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
+  },
+  "241560": {
+    "byIndustry": {
+      "machinery": {
+        "chain": "건설기계",
+        "needs_review": false
+      }
+    }
+  },
+  "241710": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 ODM·OEM",
+        "needs_review": false
+      }
+    }
+  },
+  "241770": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "공정 부품·유지관리",
+        "review_status": "corrected",
+        "review_evidence": "메카로 — 공정 부품·유지관리로 정정 확정"
+      }
+    }
   },
   "243840": {
     "semType": "전력·ESS 부품",
@@ -189,17 +1200,76 @@
     "products": "전력·ESS·전자 부품",
     "productsEn": "Power, ESS and electronic components"
   },
+  "247540": {
+    "byIndustry": {
+      "battery": {
+        "chain": "양극재·전구체",
+        "needs_review": false
+      }
+    }
+  },
+  "248070": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false,
+        "review_evidence": "솔루엠 — 부품/EMS·조립 경계, 전자부품·기판 잠정"
+      }
+    }
+  },
   "249420": {
     "semType": "제약",
     "semTypeEn": "Pharmaceuticals",
     "products": "전문의약품·OTC·제네릭 (일동제약)",
-    "productsEn": "Specialty, OTC and generic pharmaceuticals"
+    "productsEn": "Specialty, OTC and generic pharmaceuticals",
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "251270": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "251970": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "용기·부자재",
+        "needs_review": false
+      }
+    }
+  },
+  "252990": {
+    "byIndustry": {
+      "semi": {
+        "chain": "테스트 부품·인터페이스"
+      }
+    }
+  },
+  "253450": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "영상 제작·IP",
+        "needs_review": false
+      }
+    }
   },
   "253590": {
     "semType": "메모리·SSD 검사장비",
     "semTypeEn": "Memory/SSD Test Equipment",
     "products": "SSD·메모리 번인·검사 장비",
-    "productsEn": "SSD and memory burn-in/test equipment"
+    "productsEn": "SSD and memory burn-in/test equipment",
+    "byIndustry": {
+      "semi": {
+        "chain": "검사·계측 장비"
+      }
+    }
   },
   "254490": {
     "semType": "반도체 소자 유통",
@@ -209,6 +1279,22 @@
     "byIndustry": {
       "semi": {
         "chain": "반도체 유통"
+      }
+    }
+  },
+  "257720": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "유통·채널",
+        "needs_review": false
+      }
+    }
+  },
+  "259960": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
       }
     }
   },
@@ -223,6 +1309,14 @@
     "semTypeEn": "Games & Media",
     "products": "모바일 게임·디지털 미디어",
     "productsEn": "Mobile games and digital media"
+  },
+  "263750": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
   },
   "267250": {
     "byIndustry": {
@@ -253,6 +1347,35 @@
         "semTypeEn": "Power Equipment & Heavy Electrical",
         "products": "변압기·개폐기·ESS 연계 전력설비",
         "productsEn": "Transformers, switchgear and grid/ESS power equipment"
+      },
+      "powergrid": {
+        "chain": "변압기",
+        "needs_review": false
+      }
+    }
+  },
+  "267270": {
+    "name": "HD건설기계",
+    "nameEn": "HD Construction Equipment",
+    "semType": "건설기계",
+    "semTypeEn": "Construction equipment",
+    "products": "굴착기·휠로더 등 건설기계 (구 인프라코어 합병)",
+    "productsEn": "Excavators, wheel loaders and construction equipment (ex-Infracore)",
+    "byIndustry": {
+      "machinery": {
+        "chain": "건설기계",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "건설기계"
+    ]
+  },
+  "268280": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
       }
     }
   },
@@ -262,17 +1385,212 @@
     "products": "청소·서비스 등 가정용·상업용 로봇",
     "productsEn": "Cleaning and service robots for home and commercial use"
   },
+  "271560": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
   "271940": {
-    "semType": "2차전지·소재",
-    "semTypeEn": "Battery Materials",
-    "products": "2차전지·전자 소재 (구 일진머티리얼즈)",
-    "productsEn": "Battery and electronic materials (legacy Iljin Materials)"
+    "semType": "수소 저장용기",
+    "semTypeEn": "Hydrogen storage vessels",
+    "products": "Type4 수소 저장용기(넥쏘)",
+    "productsEn": "Type4 hydrogen storage vessels (Nexo)",
+    "byIndustry": {
+      "renewable": {
+        "products": "Type4 수소 저장용기(넥쏘)",
+        "productsEn": "Type4 hydrogen storage vessels (Nexo)",
+        "semType": "수소 저장용기",
+        "semTypeEn": "Hydrogen storage vessels",
+        "chain": "수소·연료전지",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "저장·운송",
+      "수소"
+    ]
+  },
+  "272210": {
+    "byIndustry": {
+      "defense": {
+        "chain": "방산전자·센서",
+        "needs_review": false
+      }
+    }
+  },
+  "272290": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "기판·패키징 소재",
+        "review_status": "confirmed",
+        "review_evidence": "FPCB/패키징 소재 — 현 그룹 확정"
+      }
+    }
+  },
+  "272450": {
+    "byIndustry": {
+      "travel": {
+        "chain": "항공운송",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "LCC",
+      "여객"
+    ]
+  },
+  "277810": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
+  },
+  "278280": {
+    "products": "전해질(LiFSI·F/P/D)·전해액 첨가제",
+    "productsEn": "Electrolytes (LiFSI, F/P/D) and electrolyte additives",
+    "semType": "전해질·전해액 첨가제",
+    "semTypeEn": "Electrolyte & additives",
+    "byIndustry": {
+      "battery": {
+        "products": "전해질(LiFSI·F/P/D)·전해액 첨가제",
+        "productsEn": "Electrolytes (LiFSI, F/P/D) and electrolyte additives",
+        "semType": "전해질·전해액 첨가제",
+        "semTypeEn": "Electrolyte & additives",
+        "chain": "전해액·전해질",
+        "needs_review": false
+      }
+    }
+  },
+  "278470": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "280360": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "281740": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재"
+      }
+    }
+  },
+  "281820": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
+  },
+  "282330": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false
+      }
+    }
+  },
+  "284740": {
+    "byIndustry": {
+      "elec": {
+        "chain": "가전·생활기기",
+        "needs_review": false
+      }
+    }
   },
   "289220": {
     "semType": "게임·콘텐츠",
     "semTypeEn": "Games & Content",
     "products": "모바일·PC 게임 개발·퍼블리싱",
     "productsEn": "Mobile and PC game development and publishing"
+  },
+  "290550": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
+  },
+  "290650": {
+    "semType": "의료소모품·재생재료",
+    "semTypeEn": "Consumables & regenerative materials",
+    "products": "인체조직·재생의료 소재",
+    "productsEn": "Human tissue and regenerative materials",
+    "byIndustry": {
+      "medtech": {
+        "chain": "의료소모품·재생재료",
+        "needs_review": false,
+        "review_evidence": "엘앤씨바이오 — bio→medtech 재생재료 이동, 적합성 모니터링"
+      }
+    },
+    "tags": [
+      "재생재료",
+      "인체조직"
+    ]
+  },
+  "293490": {
+    "semType": "게임 개발·퍼블리싱",
+    "semTypeEn": "Game development & publishing",
+    "products": "게임 개발·퍼블리싱",
+    "productsEn": "Game development and publishing",
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "semType": "게임 개발·퍼블리싱",
+        "products": "게임 개발·퍼블리싱",
+        "semTypeEn": "Game development & publishing",
+        "productsEn": "Game development and publishing",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "게임",
+      "퍼블리싱"
+    ]
+  },
+  "294570": {
+    "byIndustry": {
+      "software": {
+        "chain": "결제·데이터 인프라",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "데이터 API",
+      "마이데이터"
+    ]
+  },
+  "294870": {
+    "byIndustry": {
+      "construction": {
+        "chain": "주택·개발",
+        "needs_review": false
+      }
+    }
+  },
+  "295310": {
+    "byIndustry": {
+      "metal": {
+        "chain": "비철 가공·첨단금속",
+        "needs_review": false
+      }
+    }
   },
   "297090": {
     "semType": "베어링·전력기기",
@@ -284,7 +1602,33 @@
     "semType": "산업·화학 소재",
     "semTypeEn": "Industrial & Chemical Materials",
     "products": "스판덱스·산업용 화학·소재",
-    "productsEn": "Spandex and industrial chemical materials"
+    "productsEn": "Spandex and industrial chemical materials",
+    "byIndustry": {
+      "chemical": {
+        "chain": "섬유·산업소재",
+        "needs_review": false
+      }
+    }
+  },
+  "298040": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "변압기",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "ESS",
+      "PCS"
+    ]
+  },
+  "298050": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "섬유·산업소재",
+        "needs_review": false
+      }
+    }
   },
   "298060": {
     "semType": "제약",
@@ -292,11 +1636,55 @@
     "products": "전문의약품·제네릭",
     "productsEn": "Specialty and generic pharmaceuticals"
   },
+  "298380": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체",
+      "ADC"
+    ]
+  },
   "299900": {
     "semType": "VFX·콘텐츠 제작",
     "semTypeEn": "VFX & Content Production",
     "products": "VFX·영상·콘텐츠 제작 (위즈윅스)",
     "productsEn": "VFX and video content production (Wizwick)"
+  },
+  "300720": {
+    "byIndustry": {
+      "construction": {
+        "chain": "시멘트·기초 건자재",
+        "needs_review": false
+      }
+    }
+  },
+  "302440": {
+    "byIndustry": {
+      "bio": {
+        "chain": "백신·혈액제제",
+        "needs_review": false
+      }
+    }
+  },
+  "306200": {
+    "byIndustry": {
+      "metal": {
+        "chain": "강관",
+        "needs_review": false
+      }
+    }
+  },
+  "307950": {
+    "byIndustry": {
+      "auto": {
+        "chain": "전장·차량 소프트웨어",
+        "needs_review": false
+      }
+    }
   },
   "310200": {
     "semType": "애니메이션·캐릭터",
@@ -304,23 +1692,203 @@
     "products": "애니메이션·캐릭터 콘텐츠 제작",
     "productsEn": "Animation and character content production"
   },
+  "310210": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "저분자",
+      "항암"
+    ]
+  },
   "314930": {
     "semType": "바이오·진단",
     "semTypeEn": "Biotech & Diagnostics",
     "products": "바이오·진단·헬스케어 R&D",
     "productsEn": "Biotech, diagnostics and healthcare R&D"
   },
+  "317400": {
+    "byIndustry": {
+      "construction": {
+        "chain": "주택·개발",
+        "needs_review": false
+      }
+    }
+  },
+  "317450": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "319400": {
+    "byIndustry": {
+      "robot": {
+        "chain": "자동화·시스템 통합",
+        "needs_review": false
+      }
+    }
+  },
+  "319660": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
+  },
+  "322000": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "발전설비 제조",
+        "needs_review": false
+      }
+    }
+  },
+  "323280": {
+    "name": "태성",
+    "nameEn": "TAESUNG",
+    "semType": "습식세정·식각장비",
+    "semTypeEn": "Wet clean / etch tools",
+    "products": "PCB·반도체 습식세정·식각장비",
+    "productsEn": "PCB/semiconductor wet clean and etch equipment",
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: PCB·반도체 습식세정·식각장비",
+        "semType": "습식세정·식각장비",
+        "products": "PCB·반도체 습식세정·식각장비"
+      }
+    }
+  },
+  "326030": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    }
+  },
+  "327260": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "기판·패키징 소재",
+        "review_status": "confirmed",
+        "review_evidence": "RF·세라믹 기판·패키징 소재 — 현 그룹 확정"
+      }
+    }
+  },
+  "328130": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "의료AI·소프트웨어",
+        "needs_review": false
+      }
+    }
+  },
+  "329180": {
+    "byIndustry": {
+      "ship": {
+        "chain": "조선",
+        "needs_review": false
+      }
+    }
+  },
+  "332570": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "검사·계측 장비",
+        "review_status": "confirmed",
+        "review_evidence": "검사·계측 장비 — 현 그룹 확정"
+      }
+    }
+  },
   "336260": {
     "semType": "수소·연료전지",
     "semTypeEn": "Hydrogen Fuel Cells",
     "products": "발전용 연료전지(수소·연료전지)",
-    "productsEn": "Stationary hydrogen fuel-cell power systems"
+    "productsEn": "Stationary hydrogen fuel-cell power systems",
+    "byIndustry": {
+      "renewable": {
+        "chain": "수소·연료전지",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "활용",
+      "수소·연료전지"
+    ]
   },
   "336370": {
     "semType": "전지박·동박(집전체)",
     "semTypeEn": "Battery/Copper Foil",
     "products": "전지박·동박 등 2차전지 집전체 (OLED 소재 병행)",
-    "productsEn": "Electrodeposited copper/battery foil; also OLED materials"
+    "productsEn": "Electrodeposited copper/battery foil; also OLED materials",
+    "byIndustry": {
+      "battery": {
+        "chain": "집전체·기타 소재",
+        "needs_review": false
+      }
+    }
+  },
+  "336570": {
+    "semType": "미용 의료장비",
+    "semTypeEn": "Aesthetic medical devices",
+    "products": "에너지 기반 미용 의료장비",
+    "productsEn": "Energy-based aesthetic medical devices",
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "미용 의료장비",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "에너지기반",
+      "미용장비"
+    ]
+  },
+  "340570": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "의료소모품·재생재료",
+        "needs_review": false
+      }
+    }
+  },
+  "344820": {
+    "byIndustry": {
+      "construction": {
+        "chain": "마감재·인테리어",
+        "needs_review": false
+      }
+    }
+  },
+  "347700": {
+    "byIndustry": {
+      "defense": {
+        "chain": "소재·핵심부품",
+        "needs_review": false
+      }
+    }
+  },
+  "347850": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "펩타이드",
+      "비만·대사"
+    ]
   },
   "348150": {
     "semType": "바이오·신약",
@@ -331,14 +1899,69 @@
   "348210": {
     "semType": "웨이퍼 결함 검사장비",
     "semTypeEn": "Wafer defect inspection",
-    "products": "반도체 웨이퍼 패턴 결함 검사 장비",
-    "productsEn": "Wafer pattern defect inspection equipment"
+    "products": "반도체 웨이퍼 패턴 결함 검사 장비 · 결함·번인 검사",
+    "productsEn": "Wafer pattern defect inspection equipment",
+    "tags": [
+      "결함·번인 검사"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "검사·계측 장비"
+      }
+    }
+  },
+  "348340": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
   },
   "348370": {
     "semType": "2차전지 전해액",
     "semTypeEn": "Battery Electrolytes",
     "products": "2차전지 전해액·전해질 소재",
-    "productsEn": "Lithium-ion battery electrolytes and additives"
+    "productsEn": "Lithium-ion battery electrolytes and additives",
+    "byIndustry": {
+      "battery": {
+        "chain": "전해액·전해질",
+        "needs_review": false
+      }
+    }
+  },
+  "352480": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 ODM·OEM",
+        "mcap_floor_skip": true,
+        "review_evidence": "매핑표 ODM·OEM이나 시총 3천억 미만"
+      }
+    }
+  },
+  "352820": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "음악·엔터테인먼트",
+        "needs_review": false
+      }
+    }
+  },
+  "353200": {
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    }
+  },
+  "356680": {
+    "byIndustry": {
+      "software": {
+        "chain": "보안·인증",
+        "needs_review": false
+      }
+    }
   },
   "356860": {
     "semType": "메모리 모듈·SSD PCB",
@@ -347,7 +1970,207 @@
     "productsEn": "High-layer-count PCBs for DRAM modules, SSDs and servers",
     "byIndustry": {
       "semi": {
-        "chain": "부품/기판"
+        "chain": "기판·패키징 소재"
+      }
+    }
+  },
+  "357780": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재"
+      }
+    }
+  },
+  "358570": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체",
+      "자가면역"
+    ]
+  },
+  "361610": {
+    "byIndustry": {
+      "battery": {
+        "chain": "분리막",
+        "needs_review": false
+      }
+    }
+  },
+  "365340": {
+    "byIndustry": {
+      "battery": {
+        "chain": "재사용·재활용",
+        "needs_review": false
+      }
+    }
+  },
+  "368770": {
+    "name": "파이버프로",
+    "nameEn": "FIBERPRO",
+    "semType": "광섬유 자이로",
+    "semTypeEn": "Fiber-optic gyros",
+    "products": "광섬유 자이로·항공방산 관성센서",
+    "productsEn": "Fiber-optic gyros and aerospace inertial sensors",
+    "byIndustry": {
+      "defense": {
+        "chain": "방산전자·센서",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: FOG",
+        "semType": "광섬유 자이로",
+        "products": "광섬유 자이로·항공방산 관성센서"
+      }
+    }
+  },
+  "372320": {
+    "name": "큐로셀",
+    "nameEn": "Curocell",
+    "semType": "신약개발·세포치료",
+    "semTypeEn": "Drug discovery & cell therapy",
+    "products": "CAR-T·세포치료 파이프라인",
+    "productsEn": "CAR-T and cell therapy pipeline",
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "세포치료",
+      "항암"
+    ]
+  },
+  "373220": {
+    "byIndustry": {
+      "battery": {
+        "chain": "셀 제조",
+        "needs_review": false
+      }
+    }
+  },
+  "375500": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      }
+    }
+  },
+  "376300": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "팬덤 플랫폼",
+        "needs_review": false
+      }
+    }
+  },
+  "376900": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "의료소모품·재생재료",
+        "needs_review": false
+      }
+    }
+  },
+  "377300": {
+    "semType": "간편결제·핀테크",
+    "semTypeEn": "Payments & fintech",
+    "products": "간편결제·디지털 금융 플랫폼",
+    "productsEn": "Mobile payments and digital finance platform",
+    "byIndustry": {
+      "finance": {
+        "chain": "결제·핀테크",
+        "semType": "간편결제·핀테크",
+        "products": "간편결제·디지털 금융 플랫폼"
+      },
+      "software": {
+        "chain": "결제·데이터 인프라",
+        "semType": "결제·핀테크 플랫폼",
+        "products": "간편결제·디지털 금융 플랫폼 (결제·데이터 인프라 교차)"
+      }
+    },
+    "tags": [
+      "결제",
+      "핀테크",
+      "개인"
+    ]
+  },
+  "377740": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "체외진단",
+        "needs_review": false
+      }
+    }
+  },
+  "381970": {
+    "byIndustry": {
+      "auto": {
+        "chain": "유통·모빌리티 서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "383220": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "패션 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "383310": {
+    "name": "에코프로에이치엔",
+    "nameEn": "ECOPRO HN CO., LTD",
+    "semType": "클린룸 필터",
+    "semTypeEn": "Cleanroom filters",
+    "products": "반도체 클린룸 필터·친환경 소재",
+    "productsEn": "Semiconductor cleanroom filters and eco materials",
+    "byIndustry": {
+      "semi": {
+        "chain": "팹 인프라·지원설비",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 클린룸 필터",
+        "semType": "클린룸 필터",
+        "products": "반도체 클린룸 필터·친환경 소재"
+      }
+    }
+  },
+  "386380": {
+    "name": "스카이랩스",
+    "nameEn": "스카이랩스",
+    "semType": "웨어러블 생체측정",
+    "semTypeEn": "Wearable biomonitoring",
+    "products": "반지형 혈압·심방세동 웨어러블",
+    "productsEn": "Ring-type BP/AFib wearable",
+    "byIndustry": {
+      "medtech": {
+        "chain": "생체측정·모니터링",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 웨어러블",
+        "semType": "웨어러블 생체측정",
+        "products": "반지형 혈압·심방세동 웨어러블"
+      }
+    }
+  },
+  "388210": {
+    "name": "씨엠티엑스",
+    "nameEn": "CMTX Co.,Ltd.",
+    "semType": "SiC 포커스링",
+    "semTypeEn": "SiC focus rings",
+    "products": "반도체 SiC 포커스링 소재",
+    "productsEn": "SiC focus-ring materials for semiconductors",
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 부품·유지관리",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: SiC 포커스링",
+        "semType": "SiC 포커스링",
+        "products": "반도체 SiC 포커스링 소재"
       }
     }
   },
@@ -355,7 +2178,13 @@
     "semType": "물류·피킹 로봇",
     "semTypeEn": "Logistics & Picking Robots",
     "products": "물류·창고 피킹·이송 로봇 시스템",
-    "productsEn": "Warehouse picking and logistics robot systems"
+    "productsEn": "Warehouse picking and logistics robot systems",
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
   },
   "389260": {
     "semType": "신재생·에너지",
@@ -363,11 +2192,76 @@
     "products": "신재생·에너지 사업·투자",
     "productsEn": "Renewable energy development and investment"
   },
+  "389470": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "약물전달"
+    ]
+  },
+  "389650": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "의료소모품·재생재료",
+        "mcap_floor_skip": true,
+        "review_evidence": "매핑표 의료소모품·재생재료이나 시총 3천억 미만"
+      }
+    }
+  },
   "393890": {
     "semType": "2차전지 분리막",
     "semTypeEn": "Li-ion Battery Separators",
     "products": "습식 리튬이온전지 분리막",
-    "productsEn": "Wet-process lithium-ion battery separators"
+    "productsEn": "Wet-process lithium-ion battery separators",
+    "byIndustry": {
+      "battery": {
+        "chain": "분리막",
+        "needs_review": false
+      }
+    }
+  },
+  "397030": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체"
+    ]
+  },
+  "399720": {
+    "byIndustry": {
+      "semi": {
+        "chain": "디자인하우스"
+      }
+    }
+  },
+  "402340": {
+    "tags": [
+      "IT·전자",
+      "투자중심"
+    ]
+  },
+  "403550": {
+    "byIndustry": {
+      "auto": {
+        "chain": "유통·모빌리티 서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "403870": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
   },
   "415380": {
     "semType": "조선·해양 설계·엔지니어링",
@@ -375,11 +2269,34 @@
     "products": "선박·해양플랜트 설계·엔지니어링 서비스",
     "productsEn": "Ship and offshore plant design and engineering services"
   },
+  "417200": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
+  },
+  "417840": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "팹 인프라·지원설비",
+        "review_status": "confirmed",
+        "review_evidence": "팹 유틸리티·환경설비 — 현 그룹 확정"
+      }
+    }
+  },
   "420770": {
     "semType": "반도체·디스플레이 검사장비",
     "semTypeEn": "Semiconductor & Display Inspection Equipment",
     "products": "머신비전·AI 기반 반도체·디스플레이 검사·계측 장비",
-    "productsEn": "Machine vision and AI-based semiconductor and display inspection systems"
+    "productsEn": "Machine vision and AI-based semiconductor and display inspection systems",
+    "byIndustry": {
+      "semi": {
+        "chain": "검사·계측 장비"
+      }
+    }
   },
   "425040": {
     "semType": "반도체 특수가스",
@@ -387,17 +2304,89 @@
     "products": "반도체 공정용 특수가스",
     "productsEn": "Specialty gases for semiconductor processes"
   },
+  "425420": {
+    "byIndustry": {
+      "semi": {
+        "chain": "테스트 부품·인터페이스"
+      }
+    }
+  },
   "432430": {
     "semType": "웹툰·IP",
     "semTypeEn": "Webtoon & IP",
     "products": "웹툰·IP 기획·제작",
     "productsEn": "Webtoon and IP planning/production"
   },
+  "437730": {
+    "semType": "자동차 부품·전장",
+    "semTypeEn": "Auto parts & electronics",
+    "products": "자동차 부품·전장 (로봇 액추에이터)",
+    "productsEn": "Automotive parts and electronics (robot actuators)",
+    "byIndustry": {
+      "auto": {
+        "chain": "구동·파워트레인",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "로봇 액추에이터",
+      "자동차 부품",
+      "전장"
+    ]
+  },
+  "439260": {
+    "byIndustry": {
+      "ship": {
+        "chain": "조선",
+        "needs_review": false
+      }
+    }
+  },
+  "439960": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
+  },
+  "440110": {
+    "byIndustry": {
+      "semi": {
+        "chain": "팹리스·IP"
+      }
+    }
+  },
+  "441270": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
+  },
+  "443060": {
+    "byIndustry": {
+      "ship": {
+        "chain": "유지보수·개조",
+        "needs_review": false
+      }
+    }
+  },
   "445680": {
     "semType": "세포 처리·분석 자동화 장비",
     "semTypeEn": "Cell-processing Automation",
     "products": "세포 전처리·분석 자동화 장비(연구도구)",
-    "productsEn": "Cell sample-prep and analysis automation (research tools)"
+    "productsEn": "Cell sample-prep and analysis automation (research tools)",
+    "byIndustry": {
+      "bio": {
+        "chain": "연구도구·서비스",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "연구도구"
+    ]
   },
   "446540": {
     "semType": "방산·항공 MRO",
@@ -411,11 +2400,162 @@
     "products": "방산 전자·RF·테스트·계측 솔루션",
     "productsEn": "Defense electronics, RF and test/measurement solutions"
   },
+  "448900": {
+    "name": "한국피아이엠",
+    "nameEn": "PIM KOREA Co.,Ltd.",
+    "semType": "MIM 정밀부품",
+    "semTypeEn": "MIM precision parts",
+    "products": "차량용 MIM 정밀부품",
+    "productsEn": "Automotive MIM precision parts",
+    "byIndustry": {
+      "auto": {
+        "chain": "섀시·안전",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: MIM",
+        "semType": "MIM 정밀부품",
+        "products": "차량용 MIM 정밀부품"
+      }
+    }
+  },
+  "450080": {
+    "byIndustry": {
+      "battery": {
+        "chain": "양극재·전구체",
+        "needs_review": false
+      }
+    }
+  },
+  "452260": {
+    "name": "한화갤러리아",
+    "nameEn": "HANWHA GALLERIA",
+    "semType": "백화점·리테일",
+    "semTypeEn": "Department retail",
+    "products": "백화점·명품 리테일",
+    "productsEn": "Department store and luxury retail",
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 백화점",
+        "semType": "백화점·리테일",
+        "products": "백화점·명품 리테일"
+      }
+    }
+  },
+  "453340": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "식품소재·급식",
+        "needs_review": false
+      }
+    }
+  },
+  "454910": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
+  },
+  "455900": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
+  },
+  "456040": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "핵심 소재·부품",
+        "needs_review": false
+      }
+    }
+  },
+  "456160": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "약물전달"
+    ]
+  },
+  "457190": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
+      }
+    }
+  },
+  "458870": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "생체측정·모니터링",
+        "needs_review": false
+      }
+    }
+  },
+  "460860": {
+    "byIndustry": {
+      "metal": {
+        "chain": "봉형강·선재",
+        "needs_review": false
+      }
+    }
+  },
+  "460930": {
+    "byIndustry": {
+      "ship": {
+        "chain": "선체·구조물",
+        "needs_review": false
+      }
+    }
+  },
   "462870": {
     "semType": "게임 개발",
     "semTypeEn": "Game Developer",
     "products": "「승리의 여신: 니케」·「스텔라 블레이드」 등 모바일·콘솔 게임",
-    "productsEn": "NIKKE and Stellar Blade mobile/console games"
+    "productsEn": "NIKKE and Stellar Blade mobile/console games",
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "466100": {
+    "byIndustry": {
+      "robot": {
+        "chain": "제어·로봇 소프트웨어",
+        "needs_review": false
+      }
+    }
+  },
+  "468530": {
+    "byIndustry": {
+      "bio": {
+        "chain": "연구도구·서비스",
+        "needs_review": false,
+        "review_evidence": "프로티나 — 연구도구·서비스 잠정"
+      }
+    },
+    "tags": [
+      "연구도구"
+    ]
+  },
+  "475150": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "개발·EPC",
+        "needs_review": false
+      }
+    }
   },
   "475400": {
     "semType": "물류·팔레타이징 로봇",
@@ -423,11 +2563,191 @@
     "products": "물류·팔레타이징·공장 자동화 로봇 시스템",
     "productsEn": "Logistics, palletizing and factory automation robot systems"
   },
+  "475830": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체",
+      "ADC",
+      "항암"
+    ]
+  },
+  "475960": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "연구·분석 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "476060": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항암"
+    ]
+  },
+  "476830": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "RNA"
+    ]
+  },
+  "477850": {
+    "byIndustry": {
+      "software": {
+        "chain": "AI 소프트웨어",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "산업AI",
+      "SaaS"
+    ]
+  },
+  "483650": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "484870": {
+    "name": "엠앤씨솔루션",
+    "nameEn": "MNC Solution",
+    "semType": "방산 유압구동",
+    "semTypeEn": "Defense hydraulics",
+    "products": "방산 유압구동장치·기계",
+    "productsEn": "Defense hydraulic actuators and machinery",
+    "byIndustry": {
+      "defense": {
+        "chain": "소재·핵심부품",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 유압구동",
+        "semType": "방산 유압구동",
+        "products": "방산 유압구동장치·기계"
+      }
+    }
+  },
+  "486990": {
+    "byIndustry": {
+      "software": {
+        "chain": "AI 소프트웨어",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "온디바이스AI",
+      "SaaS"
+    ]
+  },
+  "489790": {
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "영상보안 완제품"
+    ]
+  },
+  "490470": {
+    "byIndustry": {
+      "semi": {
+        "chain": "디자인하우스"
+      }
+    }
+  },
+  "491000": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "수술·치료 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "499790": {
+    "name": "GS피앤엘",
+    "nameEn": "GS P&L",
+    "semType": "에너지·물류 지주",
+    "semTypeEn": "Energy/logistics holding",
+    "products": "GS그룹 에너지·물류 지주",
+    "productsEn": "GS group energy and logistics holding",
+    "tags": [
+      "사업형"
+    ],
+    "byIndustry": {
+      "holdings": {
+        "chain": "에너지·화학",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: GS피앤엘",
+        "semType": "에너지·물류 지주",
+        "products": "GS그룹 에너지·물류 지주"
+      }
+    }
+  },
+  "950160": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "세포치료",
+      "유전자치료"
+    ]
+  },
+  "950210": {
+    "byIndustry": {
+      "bio": {
+        "chain": "바이오시밀러",
+        "needs_review": false
+      }
+    }
+  },
+  "950260": {
+    "name": "인제니아테라퓨틱스(Reg.S)",
+    "nameEn": "인제니아테라퓨틱스(Reg.S)",
+    "semType": "망막질환 신약",
+    "semTypeEn": "Retinal disease therapeutics",
+    "products": "망막질환 신약개발",
+    "productsEn": "Retinal disease drug development",
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 망막 신약",
+        "semType": "망막질환 신약",
+        "products": "망막질환 신약개발"
+      }
+    }
+  },
   "053610": {
     "semType": "패키징 디스펜서·다이본더",
     "semTypeEn": "Packaging dispensers & die bonders",
     "products": "디스펜서·다이본더·레이저 솔더링 등 후공정 패키징 장비",
-    "productsEn": "Dispensers, die bonders and laser soldering packaging tools"
+    "productsEn": "Dispensers, die bonders and laser soldering packaging tools",
+    "byIndustry": {
+      "semi": {
+        "chain": "패키징 장비"
+      }
+    }
   },
   "086390": {
     "semType": "메모리 테스트·번인 장비",
@@ -436,7 +2756,7 @@
     "productsEn": "DRAM and NAND burn-in testers and memory test solutions",
     "byIndustry": {
       "semi": {
-        "chain": "패키징/테스트"
+        "chain": "검사·계측 장비"
       }
     }
   },
@@ -447,7 +2767,7 @@
     "productsEn": "Bump descum and reflow tools for advanced packaging",
     "byIndustry": {
       "semi": {
-        "chain": "후공정 장비"
+        "chain": "패키징 장비"
       }
     }
   },
@@ -458,7 +2778,7 @@
     "productsEn": "Laser reflow and solder-ball attach tools for HBM packaging",
     "byIndustry": {
       "semi": {
-        "chain": "후공정 장비"
+        "chain": "패키징 장비"
       }
     }
   },
@@ -469,7 +2789,7 @@
     "productsEn": "DDI bumping, packaging and wafer test OSAT services",
     "byIndustry": {
       "semi": {
-        "chain": "패키징/테스트"
+        "chain": "패키징·테스트 서비스"
       }
     }
   },
@@ -477,13 +2797,28 @@
     "semType": "LED·VCSEL",
     "semTypeEn": "LED & VCSEL",
     "products": "Wicop·SunLike LED, VCSEL 등 첨단 LED·광반도체",
-    "productsEn": "Wicop/SunLike LEDs, VCSELs and advanced optoelectronic semiconductors"
+    "productsEn": "Wicop/SunLike LEDs, VCSELs and advanced optoelectronic semiconductors",
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false,
+        "review_evidence": "서울반도체 — LED 전용그룹 부재, 카메라·광학·센서 잠정"
+      }
+    },
+    "tags": [
+      "LED"
+    ]
   },
   "079370": {
     "semType": "웨이퍼 세정장비",
     "semTypeEn": "Wafer cleaning equipment",
     "products": "습식 세정·웨이퍼 공정 자동화 장비",
-    "productsEn": "Wet cleaning and wafer process automation equipment"
+    "productsEn": "Wet cleaning and wafer process automation equipment",
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
   },
   "011810": {
     "semType": "조선·해양플랜트",
@@ -501,7 +2836,13 @@
     "semType": "특수차량·방산 모빌리티",
     "semTypeEn": "Specialty & Defense Mobility",
     "products": "군용·특수차량, K9·K2 등 방산 연계 모빌리티",
-    "productsEn": "Military and specialty vehicles including K9/K2 defense platforms"
+    "productsEn": "Military and specialty vehicles including K9/K2 defense platforms",
+    "byIndustry": {
+      "auto": {
+        "chain": "완성차",
+        "needs_review": false
+      }
+    }
   },
   "000880": {
     "semType": "방산·에너지·화학 지주",
@@ -513,13 +2854,25 @@
     "semType": "방산 전원·ESS",
     "semTypeEn": "Defense Power & ESS",
     "products": "군용 전원·ESS·특수 배터리 시스템",
-    "productsEn": "Military power systems, ESS and specialty battery packs"
+    "productsEn": "Military power systems, ESS and specialty battery packs",
+    "byIndustry": {
+      "defense": {
+        "chain": "소재·핵심부품",
+        "needs_review": false
+      }
+    }
   },
   "003570": {
     "semType": "방산 기계·차량 부품",
     "semTypeEn": "Defense Mechanical Components",
     "products": "방산 차량·무기체계 기계 부품·모듈",
-    "productsEn": "Mechanical modules for defense vehicles and weapon systems"
+    "productsEn": "Mechanical modules for defense vehicles and weapon systems",
+    "byIndustry": {
+      "defense": {
+        "chain": "육상체계",
+        "needs_review": false
+      }
+    }
   },
   "036530": {
     "semType": "방산·자동차 부품 지주",
@@ -531,7 +2884,13 @@
     "semType": "방산 차량·동력전달",
     "semTypeEn": "Defense Vehicles & Powertrain",
     "products": "군용 차량·동력전달·특수 모빌리티",
-    "productsEn": "Military vehicles, powertrain and specialty mobility"
+    "productsEn": "Military vehicles, powertrain and specialty mobility",
+    "byIndustry": {
+      "auto": {
+        "chain": "구동·파워트레인",
+        "needs_review": false
+      }
+    }
   },
   "010820": {
     "semType": "방산 전자·광학",
@@ -582,10 +2941,21 @@
     "productsEn": "Logistics, picking and transport robots"
   },
   "002380": {
-    "semType": "건축·산업 소재",
-    "semTypeEn": "Building & Industrial Materials",
-    "products": "건축·자동차·전자용 화학·소재 (실리콘·도료 등)",
-    "productsEn": "Building, auto and electronics materials including silicones and coatings"
+    "semType": "실리콘·도료·특수화학",
+    "semTypeEn": "Silicones, coatings & specialty chemicals",
+    "products": "실리콘·도료 등 정밀·특수화학 (건자재 관계)",
+    "productsEn": "Silicones and coatings specialty chemicals (building-materials adjacency)",
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "건자재",
+      "실리콘",
+      "도료"
+    ]
   },
   "078600": {
     "byIndustry": {
@@ -593,7 +2963,12 @@
         "semType": "전자재료·실리콘계 소재",
         "semTypeEn": "Electronic & Silicone Materials",
         "products": "반도체·디스플레이용 전자재료·실리콘계 소재",
-        "productsEn": "Electronic and silicone-based materials for semiconductors and displays"
+        "productsEn": "Electronic and silicone-based materials for semiconductors and displays",
+        "needs_review": false,
+        "chain": "기판·패키징 소재",
+        "review_status": "corrected",
+        "review_evidence": "대주전자재료 — 기판·패키징 소재로 정정 (배터리 주력 모니터링)",
+        "monitor_note": "배터리 주력 — 향후 elec/battery 홈 재검토 후보, 현 그룹 기판·패키징 소재 유지"
       },
       "energy": {
         "semType": "2차전지·전자재료",
@@ -607,13 +2982,25 @@
     "semType": "석유화학·섬유",
     "semTypeEn": "Petrochemicals & Textiles",
     "products": "PTA·폴리에스터 등 석유화학·섬유 소재",
-    "productsEn": "PTA, polyester and petrochemical textile materials"
+    "productsEn": "PTA, polyester and petrochemical textile materials",
+    "byIndustry": {
+      "chemical": {
+        "chain": "섬유·산업소재",
+        "needs_review": false
+      }
+    }
   },
   "004710": {
     "semType": "전자·화학 소재",
     "semTypeEn": "Electronic & Chemical Materials",
     "products": "전자·반도체·디스플레이용 화학·소재",
-    "productsEn": "Chemical and electronic materials for semiconductors and displays"
+    "productsEn": "Chemical and electronic materials for semiconductors and displays",
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
   },
   "011930": {
     "byIndustry": {
@@ -628,14 +3015,31 @@
         "semTypeEn": "Power & Plant Equipment",
         "products": "발전·플랜트 전기·기계 설비",
         "productsEn": "Electrical and mechanical equipment for power plants"
+      },
+      "renewable": {
+        "chain": "발전설비 제조",
+        "needs_review": false
       }
     }
   },
   "006910": {
-    "semType": "전력·변압기",
-    "semTypeEn": "Power & Transformers",
-    "products": "변압기·전력설비·중전기",
-    "productsEn": "Transformers and heavy electrical power equipment"
+    "semType": "원전 철구조물·보조기기",
+    "semTypeEn": "Nuclear steel structures & auxiliaries",
+    "products": "원전 내진 강구조물·철구조물",
+    "productsEn": "Seismic steel structures for nuclear plants",
+    "byIndustry": {
+      "nuclear": {
+        "products": "원전 내진 강구조물·철구조물",
+        "productsEn": "Seismic steel structures for nuclear plants",
+        "semType": "원전 철구조물·보조기기",
+        "semTypeEn": "Nuclear steel structures & auxiliaries",
+        "chain": "보조기기·소재",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "중전기"
+    ]
   },
   "089980": {
     "semType": "태양광·전력전자",
@@ -701,19 +3105,37 @@
     "semType": "줄기세포·재생의학",
     "semTypeEn": "Stem Cell & Regenerative Medicine",
     "products": "줄기세포·재생의학 치료제 (NatureCell)",
-    "productsEn": "Stem cell and regenerative medicine therapeutics"
+    "productsEn": "Stem cell and regenerative medicine therapeutics",
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    }
   },
   "008930": {
     "semType": "제약·바이오",
     "semTypeEn": "Pharmaceuticals & Biotech",
     "products": "전문의약품·바이오 R&D (한미사이언스)",
-    "productsEn": "Specialty pharma and biotech R&D (Hanmi Science)"
+    "productsEn": "Specialty pharma and biotech R&D (Hanmi Science)",
+    "byIndustry": {
+      "bio": {
+        "chain": "제약·바이오 지주",
+        "needs_review": false
+      }
+    }
   },
   "019170": {
     "semType": "제약",
     "semTypeEn": "Pharmaceuticals",
     "products": "전문의약품·원료의약품",
-    "productsEn": "Specialty pharma and APIs"
+    "productsEn": "Specialty pharma and APIs",
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
   },
   "047920": {
     "semType": "바이오·제약",
@@ -731,18 +3153,3433 @@
     "semType": "전공정 식각장비",
     "semTypeEn": "Etch Equipment",
     "products": "반도체 플라즈마 식각(에칭) 장비 (구 에이피티씨)",
-    "productsEn": "Semiconductor plasma etch equipment (formerly APTC)"
+    "productsEn": "Semiconductor plasma etch equipment (formerly APTC)",
+    "tags": [
+      "식각"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "전공정 장비"
+      }
+    }
   },
   "082740": {
     "semType": "선박용 엔진",
     "semTypeEn": "Marine Engines",
     "products": "선박용 저속·이중연료 엔진",
-    "productsEn": "Low-speed and dual-fuel marine engines"
+    "productsEn": "Low-speed and dual-fuel marine engines",
+    "byIndustry": {
+      "ship": {
+        "chain": "엔진·추진",
+        "needs_review": false
+      }
+    }
   },
   "062040": {
     "semType": "변압기",
     "semTypeEn": "Transformers",
     "products": "전력용·데이터센터용 변압기",
-    "productsEn": "Power and data-center transformers"
+    "productsEn": "Power and data-center transformers",
+    "byIndustry": {
+      "powergrid": {
+        "chain": "변압기",
+        "needs_review": false
+      }
+    }
+  },
+  "064760": {
+    "tags": [
+      "공정 부품"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "공정 부품·유지관리"
+      }
+    }
+  },
+  "074600": {
+    "tags": [
+      "공정 부품"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "공정 부품·유지관리"
+      }
+    }
+  },
+  "039440": {
+    "tags": [
+      "CCSS·유틸리티"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "팹 인프라·지원설비",
+        "review_status": "confirmed",
+        "review_evidence": "CCSS·유틸리티 — 현 그룹 확정"
+      }
+    }
+  },
+  "083450": {
+    "tags": [
+      "CCSS·유틸리티"
+    ],
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "팹 인프라·지원설비"
+      }
+    }
+  },
+  "039030": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "패키징 장비",
+        "review_status": "confirmed",
+        "review_evidence": "레이저 마킹·컷 등 패키징 공정 장비 — 현 그룹 확정"
+      }
+    }
+  },
+  "003160": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "검사·계측 장비",
+        "review_status": "confirmed",
+        "review_evidence": "반도체 검사 장비 — 현 그룹 확정"
+      }
+    }
+  },
+  "036830": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "review_status": "moved_holdings",
+        "review_evidence": "솔브레인홀딩스 — 지주 성격, holdings(반도체)로 이동"
+      },
+      "holdings": {
+        "chain": "반도체"
+      }
+    },
+    "semType": "반도체 소재 지주",
+    "semTypeEn": "Semiconductor materials holding",
+    "products": "솔브레인 등 반도체 공정 소재 계열 지주",
+    "productsEn": "Holding company for Soulbrain and semiconductor process materials affiliates"
+  },
+  "059090": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "공정 부품·유지관리",
+        "review_status": "confirmed",
+        "review_evidence": "공정 부품·세정 부품 — 현 그룹 확정"
+      }
+    }
+  },
+  "036810": {
+    "byIndustry": {
+      "semi": {
+        "needs_review": false,
+        "chain": "공정 소재",
+        "review_status": "corrected",
+        "review_evidence": "에프에스티 — 칠러/TCU 등 공정 소재·부품성 제품으로 정정"
+      }
+    },
+    "tags": [
+      "칠러",
+      "TCU"
+    ]
+  },
+  "080220": {
+    "byIndustry": {
+      "semi": {
+        "chain": "팹리스·IP"
+      }
+    }
+  },
+  "094170": {
+    "byIndustry": {
+      "semi": {
+        "chain": "팹리스·IP"
+      }
+    }
+  },
+  "000990": {
+    "byIndustry": {
+      "semi": {
+        "chain": "파운드리"
+      }
+    }
+  },
+  "036930": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
+  },
+  "084370": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
+  },
+  "095610": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비"
+      }
+    }
+  },
+  "042700": {
+    "byIndustry": {
+      "semi": {
+        "chain": "패키징 장비"
+      }
+    }
+  },
+  "098460": {
+    "byIndustry": {
+      "semi": {
+        "chain": "검사·계측 장비"
+      }
+    }
+  },
+  "089030": {
+    "byIndustry": {
+      "semi": {
+        "chain": "검사·계측 장비"
+      }
+    }
+  },
+  "064290": {
+    "byIndustry": {
+      "semi": {
+        "chain": "검사·계측 장비"
+      }
+    }
+  },
+  "092870": {
+    "byIndustry": {
+      "semi": {
+        "chain": "검사·계측 장비"
+      }
+    }
+  },
+  "014680": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재"
+      }
+    }
+  },
+  "005290": {
+    "byIndustry": {
+      "semi": {
+        "chain": "공정 소재"
+      }
+    }
+  },
+  "007660": {
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    }
+  },
+  "007810": {
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    }
+  },
+  "033160": {
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    }
+  },
+  "058470": {
+    "byIndustry": {
+      "semi": {
+        "chain": "테스트 부품·인터페이스"
+      }
+    }
+  },
+  "095340": {
+    "byIndustry": {
+      "semi": {
+        "chain": "테스트 부품·인터페이스"
+      }
+    }
+  },
+  "080580": {
+    "byIndustry": {
+      "semi": {
+        "chain": "테스트 부품·인터페이스"
+      }
+    }
+  },
+  "098120": {
+    "byIndustry": {
+      "semi": {
+        "chain": "테스트 부품·인터페이스"
+      }
+    }
+  },
+  "067310": {
+    "byIndustry": {
+      "semi": {
+        "chain": "패키징·테스트 서비스"
+      }
+    }
+  },
+  "036540": {
+    "byIndustry": {
+      "semi": {
+        "chain": "패키징·테스트 서비스"
+      }
+    }
+  },
+  "033640": {
+    "byIndustry": {
+      "semi": {
+        "chain": "패키징·테스트 서비스"
+      }
+    }
+  },
+  "045100": {
+    "byIndustry": {
+      "semi": {
+        "chain": "팹 인프라·지원설비"
+      }
+    }
+  },
+  "093520": {
+    "byIndustry": {
+      "semi": {
+        "chain": "반도체 유통"
+      }
+    }
+  },
+  "005420": {
+    "byIndustry": {
+      "battery": {
+        "chain": "원료·정제",
+        "needs_review": false
+      }
+    }
+  },
+  "066970": {
+    "byIndustry": {
+      "battery": {
+        "chain": "양극재·전구체",
+        "needs_review": false
+      }
+    }
+  },
+  "005070": {
+    "byIndustry": {
+      "battery": {
+        "chain": "양극재·전구체",
+        "needs_review": false
+      }
+    }
+  },
+  "051910": {
+    "byIndustry": {
+      "battery": {
+        "chain": "양극재·전구체",
+        "needs_review": false
+      }
+    }
+  },
+  "003670": {
+    "byIndustry": {
+      "battery": {
+        "chain": "양극재·전구체",
+        "needs_review": false
+      }
+    }
+  },
+  "086520": {
+    "byIndustry": {
+      "battery": {
+        "chain": "양극재·전구체",
+        "needs_review": false
+      }
+    }
+  },
+  "093370": {
+    "byIndustry": {
+      "battery": {
+        "chain": "전해액·전해질",
+        "needs_review": false
+      }
+    }
+  },
+  "011790": {
+    "byIndustry": {
+      "battery": {
+        "chain": "집전체·기타 소재",
+        "needs_review": false
+      }
+    }
+  },
+  "020150": {
+    "byIndustry": {
+      "battery": {
+        "chain": "집전체·기타 소재",
+        "needs_review": false
+      }
+    }
+  },
+  "006400": {
+    "byIndustry": {
+      "battery": {
+        "chain": "셀 제조",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "전고체",
+      "개발"
+    ]
+  },
+  "004490": {
+    "byIndustry": {
+      "battery": {
+        "chain": "셀 제조",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "납축"
+    ]
+  },
+  "096770": {
+    "byIndustry": {
+      "battery": {
+        "chain": "셀 제조",
+        "needs_review": false
+      }
+    }
+  },
+  "001570": {
+    "byIndustry": {
+      "battery": {
+        "chain": "셀 제조",
+        "needs_review": false
+      },
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false,
+        "evidence": "발포제 매출 100%",
+        "semType": "발포제·정밀화학",
+        "products": "발포제 등 정밀·특수화학 (주력)"
+      }
+    },
+    "tags": [
+      "개발",
+      "2차전지 셀",
+      "개발단계"
+    ],
+    "name": "금양",
+    "semType": "발포제·정밀화학",
+    "semTypeEn": "Blowing agents & specialty chemicals",
+    "products": "발포제 등 정밀·특수화학 (주력)",
+    "productsEn": "Blowing agents and specialty chemicals (core)"
+  },
+  "010060": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "핵심 소재·부품",
+        "needs_review": false
+      }
+    }
+  },
+  "009830": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "발전설비 제조",
+        "needs_review": false
+      }
+    }
+  },
+  "018000": {
+    "byIndustry": {
+      "renewable": {
+        "chain": "발전설비 제조",
+        "needs_review": false
+      }
+    }
+  },
+  "033100": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "변압기",
+        "needs_review": false
+      }
+    }
+  },
+  "010120": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "개폐·배전기기",
+        "needs_review": false
+      }
+    }
+  },
+  "000500": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "전선·케이블",
+        "needs_review": false
+      }
+    }
+  },
+  "001440": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "전선·케이블",
+        "needs_review": false
+      }
+    }
+  },
+  "006340": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "전선·케이블",
+        "needs_review": false
+      }
+    }
+  },
+  "060370": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "전력망 시공·서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "015760": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "유틸리티",
+        "needs_review": false
+      }
+    }
+  },
+  "036460": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "유틸리티",
+        "needs_review": false
+      }
+    }
+  },
+  "071320": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "유틸리티",
+        "needs_review": false
+      }
+    }
+  },
+  "052690": {
+    "byIndustry": {
+      "nuclear": {
+        "chain": "설계·엔지니어링",
+        "needs_review": false
+      }
+    }
+  },
+  "034020": {
+    "byIndustry": {
+      "nuclear": {
+        "chain": "원자로·주기기",
+        "needs_review": false
+      },
+      "powergrid": {
+        "chain": "발전·비상전원 설비",
+        "needs_review": false,
+        "evidence": "원자로 주기기 + 가스터빈·발전설비 교차수록 P1-A",
+        "semType": "가스터빈·발전설비",
+        "products": "가스터빈·발전설비·원전 주기기"
+      }
+    },
+    "tags": [
+      "SMR"
+    ]
+  },
+  "083650": {
+    "byIndustry": {
+      "nuclear": {
+        "chain": "보조기기·소재",
+        "needs_review": false
+      }
+    }
+  },
+  "051600": {
+    "byIndustry": {
+      "nuclear": {
+        "chain": "정비·운영지원",
+        "needs_review": false
+      }
+    }
+  },
+  "018670": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "가스",
+        "needs_review": false
+      }
+    },
+    "semType": "LPG·가스",
+    "semTypeEn": "LPG & gas",
+    "products": "LPG·가스 유통·트레이딩",
+    "productsEn": "LPG and gas distribution and trading"
+  },
+  "009520": {
+    "semType": "철강 포장·탈산제",
+    "semTypeEn": "Steel packaging & deoxidizer",
+    "products": "철강 포장 용역·알루미늄 탈산제",
+    "productsEn": "Steel packaging services and aluminum deoxidizers",
+    "byIndustry": {
+      "metal": {
+        "chain": "금속 유통·가공서비스",
+        "semType": "철강 포장·탈산제",
+        "products": "철강 포장 용역·알루미늄 탈산제",
+        "semTypeEn": "Steel packaging & deoxidizer",
+        "productsEn": "Steel packaging services and aluminum deoxidizers",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "철강 포장",
+      "탈산제"
+    ]
+  },
+  "004690": {
+    "byIndustry": {
+      "powergrid": {
+        "chain": "유틸리티"
+      }
+    },
+    "semType": "도시가스",
+    "products": "도시가스 공급·에너지",
+    "tags": [
+      "도시가스",
+      "유틸리티"
+    ]
+  },
+  "010950": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정유·석유제품",
+        "needs_review": false
+      }
+    }
+  },
+  "002960": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정유·석유제품",
+        "needs_review": false
+      }
+    }
+  },
+  "005090": {
+    "byIndustry": {
+      "chemical": {
+        "needs_review": false
+      },
+      "powergrid": {
+        "chain": "유틸리티",
+        "needs_review": false,
+        "evidence": "집단에너지(열병합발전) 중심·정유 사업 없음. 삼천리와 동일 성격(유틸리티)",
+        "semType": "집단에너지·열병합",
+        "products": "집단에너지·열병합발전 (주력)"
+      }
+    },
+    "name": "SGC에너지",
+    "nameEn": "SGC Energy",
+    "semType": "집단에너지·열병합",
+    "semTypeEn": "District energy & cogeneration",
+    "products": "집단에너지·열병합발전 (주력)",
+    "productsEn": "District energy and cogeneration (core)",
+    "tags": [
+      "건설",
+      "유리"
+    ]
+  },
+  "017940": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "가스",
+        "needs_review": false
+      }
+    }
+  },
+  "011170": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "기초유분·석유화학",
+        "needs_review": false
+      }
+    }
+  },
+  "006650": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "기초유분·석유화학",
+        "needs_review": false
+      }
+    }
+  },
+  "006380": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "기초유분·석유화학",
+        "needs_review": false
+      }
+    }
+  },
+  "005950": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "기초유분·석유화학",
+        "needs_review": false
+      }
+    }
+  },
+  "011780": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "합성수지·고무",
+        "needs_review": false
+      }
+    }
+  },
+  "004000": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
+      }
+    }
+  },
+  "069260": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
+      }
+    }
+  },
+  "002840": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
+      }
+    }
+  },
+  "007690": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false
+      }
+    }
+  },
+  "025860": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "비료·농화학",
+        "needs_review": false
+      }
+    }
+  },
+  "002810": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "화학 유통",
+        "needs_review": false
+      }
+    }
+  },
+  "001740": {
+    "byIndustry": {
+      "chemical": {
+        "chain": "화학 유통",
+        "needs_review": false,
+        "review_evidence": "종합상사·타지도 자동편입 금지. 화학 잠정 유지(미확정)",
+        "taxonomy_gap": true
+      }
+    }
+  },
+  "004020": {
+    "byIndustry": {
+      "metal": {
+        "chain": "종합 철강",
+        "needs_review": false
+      }
+    }
+  },
+  "016380": {
+    "byIndustry": {
+      "metal": {
+        "chain": "판재·도금강판",
+        "needs_review": false
+      }
+    }
+  },
+  "002240": {
+    "byIndustry": {
+      "metal": {
+        "chain": "봉형강·선재",
+        "needs_review": false
+      }
+    }
+  },
+  "092790": {
+    "byIndustry": {
+      "metal": {
+        "chain": "강관",
+        "needs_review": false
+      }
+    }
+  },
+  "001430": {
+    "byIndustry": {
+      "metal": {
+        "chain": "특수강·단조",
+        "needs_review": false,
+        "review_evidence": "세아베스틸지주 — 지주/특수강 잠정"
+      }
+    }
+  },
+  "010130": {
+    "byIndustry": {
+      "metal": {
+        "chain": "비철 제련",
+        "needs_review": false
+      }
+    }
+  },
+  "000670": {
+    "byIndustry": {
+      "metal": {
+        "chain": "비철 제련",
+        "needs_review": false
+      }
+    }
+  },
+  "006110": {
+    "byIndustry": {
+      "metal": {
+        "chain": "비철 가공·첨단금속",
+        "needs_review": false
+      }
+    }
+  },
+  "001530": {
+    "byIndustry": {
+      "metal": {
+        "chain": "비철 가공·첨단금속",
+        "needs_review": false,
+        "review_evidence": "DI동일 — 지주 성격 잠정"
+      }
+    }
+  },
+  "047050": {
+    "byIndustry": {
+      "metal": {
+        "chain": "금속 유통·가공서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "009160": {
+    "byIndustry": {
+      "machinery": {
+        "chain": "공작·금속가공기계",
+        "needs_review": false
+      }
+    }
+  },
+  "017800": {
+    "byIndustry": {
+      "machinery": {
+        "chain": "승강기",
+        "needs_review": false
+      }
+    }
+  },
+  "019210": {
+    "byIndustry": {
+      "machinery": {
+        "chain": "핵심부품·공구",
+        "needs_review": false
+      }
+    }
+  },
+  "028260": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      },
+      "kconsume": {
+        "chain": "종합상사",
+        "needs_review": false,
+        "evidence": "건설 + 종합상사(트레이딩) 교차수록 P1-A",
+        "semType": "종합상사·건설",
+        "products": "건설·엔지니어링·종합상사 트레이딩"
+      }
+    }
+  },
+  "000720": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      }
+    }
+  },
+  "047040": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      }
+    }
+  },
+  "006360": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      }
+    }
+  },
+  "002990": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      }
+    }
+  },
+  "009410": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      }
+    }
+  },
+  "010780": {
+    "byIndustry": {
+      "construction": {
+        "chain": "종합건설",
+        "needs_review": false
+      }
+    }
+  },
+  "035890": {
+    "byIndustry": {
+      "construction": {
+        "chain": "주택·개발",
+        "needs_review": false
+      }
+    }
+  },
+  "028050": {
+    "byIndustry": {
+      "construction": {
+        "chain": "플랜트·EPC",
+        "needs_review": false
+      }
+    }
+  },
+  "038500": {
+    "byIndustry": {
+      "construction": {
+        "chain": "시멘트·기초 건자재",
+        "needs_review": false
+      }
+    }
+  },
+  "009240": {
+    "byIndustry": {
+      "construction": {
+        "chain": "마감재·인테리어",
+        "needs_review": false
+      }
+    }
+  },
+  "025900": {
+    "byIndustry": {
+      "construction": {
+        "chain": "마감재·인테리어",
+        "needs_review": false
+      }
+    }
+  },
+  "014820": {
+    "byIndustry": {
+      "chemical": {
+        "taxonomy_gap": true,
+        "review_evidence": "포장재 — 분류체계 공백(화학 9그룹에 해당 없음)",
+        "needs_review": false,
+        "chain": "포장재",
+        "semType": "포장재·알루미늄",
+        "products": "CAN·알루미늄 포장재"
+      }
+    },
+    "name": "동원시스템즈",
+    "nameEn": "Dongwon Systems",
+    "semType": "포장재·알루미늄",
+    "semTypeEn": "Packaging & aluminium",
+    "products": "CAN·알루미늄 포장재",
+    "productsEn": "Cans and aluminium packaging",
+    "tags": [
+      "2차전지 소재"
+    ]
+  },
+  "008730": {
+    "byIndustry": {
+      "chemical": {
+        "taxonomy_gap": true,
+        "review_evidence": "포장재 — 분류체계 공백(화학 9그룹에 해당 없음)",
+        "needs_review": false,
+        "chain": "포장재",
+        "semType": "포장필름",
+        "products": "BOPP·CPP·포장필름"
+      }
+    },
+    "name": "율촌화학",
+    "nameEn": "Yulchon Chemical",
+    "semType": "포장필름",
+    "semTypeEn": "Packaging films",
+    "products": "BOPP·CPP·포장필름",
+    "productsEn": "BOPP, CPP and packaging films",
+    "tags": [
+      "2차전지 소재"
+    ]
+  },
+  "012450": {
+    "semType": "지상방산(K9·천무)",
+    "semTypeEn": "Land defense (K9, Chunmoo)",
+    "products": "자주포·다연장로켓 등 지상방산 체계 (항공엔진·우주·해양 사업 병행)",
+    "productsEn": "Land defense systems incl. howitzers and MLRS (also aero engines, space, naval)",
+    "byIndustry": {
+      "defense": {
+        "chain": "육상체계",
+        "semType": "지상방산(K9·천무)",
+        "products": "자주포·다연장로켓 등 지상방산 체계 (항공엔진·우주·해양 사업 병행)",
+        "semTypeEn": "Land defense (K9, Chunmoo)",
+        "productsEn": "Land defense systems incl. howitzers and MLRS (also aero engines, space, naval)",
+        "needs_review": false,
+        "review_evidence": "한화에어로스페이스 — 육상체계(K9·천무) 확정, 항공엔진·우주·해양 고유성 주석/태그"
+      }
+    },
+    "tags": [
+      "지상방산",
+      "항공엔진",
+      "우주",
+      "해양",
+      "K9",
+      "천무"
+    ]
+  },
+  "079550": {
+    "name": "LIG디펜스앤에어로스페이스",
+    "nameEn": "LIG Defense & Aerospace",
+    "semType": "유도무기·탄약",
+    "semTypeEn": "Missiles & munitions",
+    "products": "미사일·레이더·C4ISR",
+    "productsEn": "Missiles, radar and C4ISR",
+    "byIndustry": {
+      "defense": {
+        "chain": "유도무기·탄약",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "미사일",
+      "레이더",
+      "C4ISR"
+    ]
+  },
+  "042660": {
+    "byIndustry": {
+      "ship": {
+        "chain": "조선",
+        "needs_review": false
+      }
+    }
+  },
+  "009540": {
+    "byIndustry": {
+      "ship": {
+        "chain": "조선",
+        "needs_review": false
+      }
+    }
+  },
+  "010140": {
+    "byIndustry": {
+      "ship": {
+        "chain": "조선",
+        "needs_review": false
+      }
+    }
+  },
+  "097230": {
+    "byIndustry": {
+      "ship": {
+        "chain": "조선",
+        "needs_review": false
+      }
+    }
+  },
+  "071970": {
+    "byIndustry": {
+      "ship": {
+        "chain": "엔진·추진",
+        "needs_review": false
+      }
+    }
+  },
+  "077970": {
+    "byIndustry": {
+      "ship": {
+        "chain": "엔진·추진",
+        "needs_review": false
+      }
+    }
+  },
+  "044490": {
+    "byIndustry": {
+      "ship": {
+        "chain": "선체·구조물",
+        "needs_review": false,
+        "review_evidence": "태웅 — 선체·구조물 잠정"
+      },
+      "renewable": {
+        "chain": "구조물·보조설비",
+        "needs_review": false,
+        "evidence": "해상풍력 플랜지 매출 44%",
+        "semType": "해상풍력 플랜지·단조",
+        "products": "해상풍력 타워 플랜지·단조 (주력)"
+      }
+    },
+    "name": "태웅",
+    "semType": "해상풍력 플랜지·단조",
+    "semTypeEn": "Offshore wind flanges & forgings",
+    "products": "해상풍력 타워 플랜지·단조 (주력)",
+    "productsEn": "Offshore wind tower flanges and forgings (core)",
+    "tags": [
+      "조선",
+      "산업기계"
+    ]
+  },
+  "075580": {
+    "byIndustry": {
+      "ship": {
+        "chain": "선체·구조물",
+        "needs_review": false
+      }
+    }
+  },
+  "017960": {
+    "byIndustry": {
+      "ship": {
+        "chain": "탱크·보냉",
+        "needs_review": false
+      }
+    }
+  },
+  "033500": {
+    "byIndustry": {
+      "ship": {
+        "chain": "탱크·보냉",
+        "needs_review": false
+      }
+    }
+  },
+  "014620": {
+    "byIndustry": {
+      "ship": {
+        "chain": "배관·의장",
+        "needs_review": false
+      }
+    }
+  },
+  "023160": {
+    "byIndustry": {
+      "ship": {
+        "chain": "배관·의장",
+        "needs_review": false
+      }
+    }
+  },
+  "013030": {
+    "byIndustry": {
+      "ship": {
+        "chain": "배관·의장",
+        "needs_review": false
+      }
+    }
+  },
+  "064350": {
+    "byIndustry": {
+      "defense": {
+        "chain": "육상체계",
+        "needs_review": false
+      }
+    }
+  },
+  "047810": {
+    "byIndustry": {
+      "defense": {
+        "chain": "항공체계·엔진",
+        "needs_review": false
+      }
+    }
+  },
+  "099320": {
+    "byIndustry": {
+      "defense": {
+        "chain": "우주·위성",
+        "needs_review": false
+      }
+    }
+  },
+  "005380": {
+    "byIndustry": {
+      "auto": {
+        "chain": "완성차",
+        "needs_review": false
+      }
+    }
+  },
+  "003620": {
+    "byIndustry": {
+      "auto": {
+        "chain": "완성차",
+        "needs_review": false
+      }
+    }
+  },
+  "011210": {
+    "byIndustry": {
+      "auto": {
+        "chain": "구동·파워트레인",
+        "needs_review": false
+      }
+    }
+  },
+  "012330": {
+    "byIndustry": {
+      "auto": {
+        "chain": "섀시·안전",
+        "needs_review": false,
+        "review_evidence": "현대모비스 — 섀시·안전 대표 잠정(모듈·전장 비중 검토)"
+      }
+    }
+  },
+  "007340": {
+    "byIndustry": {
+      "auto": {
+        "chain": "섀시·안전",
+        "needs_review": false,
+        "review_evidence": "DN오토모티브 — 섀시·안전 잠정"
+      }
+    }
+  },
+  "000430": {
+    "byIndustry": {
+      "auto": {
+        "chain": "섀시·안전",
+        "needs_review": false,
+        "mcap_floor_skip": true,
+        "review_evidence": "매핑표 섀시·안전이나 시총 3천억 미만으로 미편입"
+      }
+    }
+  },
+  "015750": {
+    "byIndustry": {
+      "auto": {
+        "chain": "차체·내외장",
+        "needs_review": false
+      }
+    }
+  },
+  "009900": {
+    "byIndustry": {
+      "auto": {
+        "chain": "차체·내외장",
+        "needs_review": false
+      }
+    }
+  },
+  "010690": {
+    "byIndustry": {
+      "auto": {
+        "chain": "차체·내외장",
+        "needs_review": false,
+        "mcap_floor_skip": true,
+        "review_evidence": "매핑표 차체·내외장이나 시총 3천억 미만으로 미편입"
+      }
+    }
+  },
+  "097520": {
+    "byIndustry": {
+      "auto": {
+        "chain": "전장·차량 소프트웨어",
+        "needs_review": false
+      }
+    }
+  },
+  "005850": {
+    "byIndustry": {
+      "auto": {
+        "chain": "전장·차량 소프트웨어",
+        "needs_review": false
+      }
+    }
+  },
+  "025540": {
+    "byIndustry": {
+      "auto": {
+        "chain": "전장·차량 소프트웨어",
+        "needs_review": false
+      }
+    }
+  },
+  "018880": {
+    "byIndustry": {
+      "auto": {
+        "chain": "열관리",
+        "needs_review": false
+      }
+    }
+  },
+  "073240": {
+    "byIndustry": {
+      "auto": {
+        "chain": "타이어",
+        "needs_review": false
+      }
+    }
+  },
+  "002350": {
+    "byIndustry": {
+      "auto": {
+        "chain": "타이어",
+        "needs_review": false
+      }
+    }
+  },
+  "000240": {
+    "byIndustry": {
+      "auto": {
+        "chain": "타이어",
+        "needs_review": false
+      }
+    }
+  },
+  "011200": {
+    "byIndustry": {
+      "shipping": {
+        "chain": "컨테이너 해운",
+        "needs_review": false
+      }
+    }
+  },
+  "003280": {
+    "byIndustry": {
+      "shipping": {
+        "chain": "컨테이너 해운",
+        "needs_review": false
+      }
+    }
+  },
+  "028670": {
+    "byIndustry": {
+      "shipping": {
+        "chain": "벌크 해운",
+        "needs_review": false
+      }
+    }
+  },
+  "005880": {
+    "byIndustry": {
+      "shipping": {
+        "chain": "벌크 해운",
+        "needs_review": false
+      }
+    }
+  },
+  "077360": {
+    "semType": "솔더볼·패키징 소재",
+    "semTypeEn": "Solder ball & packaging materials",
+    "products": "솔더볼 등 반도체 패키징 소재",
+    "productsEn": "Semiconductor packaging materials including solder balls",
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재"
+      }
+    },
+    "tags": [
+      "패키징 소재",
+      "솔더볼"
+    ]
+  },
+  "066570": {
+    "byIndustry": {
+      "elec": {
+        "chain": "가전·생활기기",
+        "needs_review": false
+      }
+    }
+  },
+  "021240": {
+    "byIndustry": {
+      "elec": {
+        "chain": "가전·생활기기",
+        "needs_review": false
+      }
+    }
+  },
+  "029530": {
+    "byIndustry": {
+      "elec": {
+        "chain": "가전·생활기기",
+        "needs_review": false
+      }
+    }
+  },
+  "034220": {
+    "byIndustry": {
+      "elec": {
+        "chain": "디스플레이 패널",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "OLED",
+      "TV·IT",
+      "자동차"
+    ]
+  },
+  "009150": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "MLCC",
+      "카메라모듈",
+      "스마트폰"
+    ]
+  },
+  "001820": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
+  },
+  "090460": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
+  },
+  "089010": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
+  },
+  "043260": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false
+      }
+    }
+  },
+  "011070": {
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false
+      }
+    }
+  },
+  "033240": {
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false
+      }
+    }
+  },
+  "092190": {
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false,
+        "review_evidence": "서울바이오시스 — LED 전용그룹 부재, 카메라·광학·센서 잠정"
+      }
+    },
+    "tags": [
+      "LED",
+      "UV"
+    ]
+  },
+  "017900": {
+    "byIndustry": {
+      "elec": {
+        "chain": "카메라·광학·센서",
+        "needs_review": false,
+        "review_evidence": "광전자 — LED 전용그룹 부재, 카메라·광학·센서 잠정"
+      }
+    },
+    "tags": [
+      "LED"
+    ]
+  },
+  "065350": {
+    "byIndustry": {
+      "elec": {
+        "chain": "전자제품 제조·조립",
+        "needs_review": false,
+        "review_evidence": "신성델타테크 — 부품/조립 경계, 전자제품 제조·조립 잠정"
+      }
+    }
+  },
+  "090710": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
+  },
+  "090360": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
+  },
+  "056080": {
+    "byIndustry": {
+      "robot": {
+        "chain": "완성로봇",
+        "needs_review": false
+      }
+    }
+  },
+  "058610": {
+    "byIndustry": {
+      "robot": {
+        "chain": "구동부품",
+        "needs_review": false
+      }
+    }
+  },
+  "056190": {
+    "byIndustry": {
+      "robot": {
+        "chain": "자동화·시스템 통합",
+        "needs_review": false
+      }
+    }
+  },
+  "035420": {
+    "byIndustry": {
+      "software": {
+        "chain": "인터넷 플랫폼",
+        "needs_review": false
+      }
+    }
+  },
+  "035720": {
+    "byIndustry": {
+      "software": {
+        "chain": "인터넷 플랫폼",
+        "needs_review": false
+      }
+    }
+  },
+  "018260": {
+    "byIndustry": {
+      "software": {
+        "chain": "IT서비스·SI",
+        "needs_review": false
+      }
+    }
+  },
+  "064400": {
+    "byIndustry": {
+      "software": {
+        "chain": "IT서비스·SI",
+        "needs_review": false
+      }
+    }
+  },
+  "022100": {
+    "byIndustry": {
+      "software": {
+        "chain": "IT서비스·SI",
+        "needs_review": false
+      }
+    }
+  },
+  "093320": {
+    "byIndustry": {
+      "software": {
+        "chain": "클라우드·인터넷 인프라",
+        "needs_review": false
+      }
+    }
+  },
+  "079940": {
+    "byIndustry": {
+      "software": {
+        "chain": "클라우드·인터넷 인프라",
+        "needs_review": false
+      }
+    }
+  },
+  "030520": {
+    "byIndustry": {
+      "software": {
+        "chain": "기업 소프트웨어",
+        "needs_review": false
+      }
+    }
+  },
+  "042000": {
+    "byIndustry": {
+      "software": {
+        "chain": "기업 소프트웨어",
+        "needs_review": false
+      }
+    }
+  },
+  "053800": {
+    "byIndustry": {
+      "software": {
+        "chain": "보안·인증",
+        "needs_review": false
+      }
+    }
+  },
+  "060250": {
+    "byIndustry": {
+      "software": {
+        "chain": "결제·데이터 인프라",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "PG"
+    ]
+  },
+  "052400": {
+    "byIndustry": {
+      "software": {
+        "chain": "결제·데이터 인프라",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "선불·결제"
+    ]
+  },
+  "036800": {
+    "byIndustry": {
+      "software": {
+        "chain": "결제·데이터 인프라",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "VAN",
+      "PG"
+    ]
+  },
+  "017670": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "통신서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "030200": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "통신서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "032640": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "통신서비스",
+        "needs_review": false
+      }
+    }
+  },
+  "032500": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "무선통신 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "050890": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "무선통신 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "037460": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "무선통신 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "010170": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "광통신 부품·장비",
+        "needs_review": false
+      }
+    }
+  },
+  "069540": {
+    "byIndustry": {
+      "telecom": {
+        "chain": "광통신 부품·장비",
+        "needs_review": false
+      }
+    }
+  },
+  "_policy": {
+    "software_finance_payments": "결제·데이터 인프라(software)는 PG·VAN·결제 플랫폼·데이터 API 기술·인프라 역할. finance의 결제·핀테크는 금융서비스 역할. 교차 수록 시 통합 집계는 ticker 중복 제거.",
+    "travel_shipping_air_cargo": "여객항공사 화물사업만으로 shipping 자동이동 금지. 항공 여객·화물 분할 중복집계 금지. shipping에 항공화물 그룹 신설 금지(분류 공백).",
+    "sk_networks_trading": "001740 SK네트웍스 — 화학 제외·분류공백 유지. kconsume 종합상사 자동편입 금지.",
+    "kakao_pay_cross": "377300 카카오페이 — finance 결제·핀테크 + software 결제·데이터 인프라 교차. 지도별 대표그룹 1개, 통합 ticker 집계 중복제거.",
+    "holdings_axis": "holdings 기본 분류 명칭: 주요 투자·사업영역. 순수/사업/금융/중간지주는 대표그룹이 아닌 메타데이터.",
+    "finance_holding_gap": "012030·023590·032190 — holdings '금융' 그룹(#5C6BC0, 9번째)으로 확정. software 자동 덮어쓰기 금지.",
+    "needs_review_closure": "2026-09 needs_review 마감: 이동4(含005090→powergrid)·정정4·신설2. needs_review 잔여 0. 공백=001740·126560.",
+    "p1_cross": "P1-A CROSS: 028260 construction+kconsume, 034020 nuclear+powergrid, 377300 finance+software. Hub ticker dedup. P1-B relations UI-only.",
+    "p3_mcap_admissions": "2026-09 P3: admitted 36 tickers (≥3천억). Gaps=7. Excluded already-mapped 033780,285130."
+  },
+  "086900": {
+    "name": "메디톡스",
+    "nameEn": "Medytox",
+    "semType": "에스테틱 의약품·소모품",
+    "semTypeEn": "Aesthetic drugs & consumables",
+    "products": "보툴리눔 톡신·필러",
+    "productsEn": "Botulinum toxin and fillers",
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "에스테틱 의약품·소모품",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "톡신",
+      "필러",
+      "에스테틱"
+    ]
+  },
+  "0120G0": {
+    "semType": "의료소모품·재생재료",
+    "semTypeEn": "Consumables & regenerative materials",
+    "products": "의료·바이오 소재·전문의약품 (재생재료 관계)",
+    "productsEn": "Medical/biotech materials and specialty pharma",
+    "byIndustry": {
+      "medtech": {
+        "chain": "의료소모품·재생재료",
+        "needs_review": false,
+        "review_evidence": "삼양바이오팜 — bio→medtech 검토 잠정(제약 성격 잔존)"
+      }
+    },
+    "tags": [
+      "의료소재",
+      "제약"
+    ]
+  },
+  "096530": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "체외진단",
+        "needs_review": false
+      }
+    }
+  },
+  "067630": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "체외진단",
+        "needs_review": false,
+        "review_evidence": "HLB생명과학 — 체외진단 잠정(복합 의료기기)"
+      }
+    }
+  },
+  "041830": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "생체측정·모니터링",
+        "needs_review": false
+      }
+    }
+  },
+  "099190": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "생체측정·모니터링",
+        "needs_review": false
+      }
+    }
+  },
+  "060280": {
+    "byIndustry": {
+      "medtech": {
+        "chain": "수술·치료 장비",
+        "needs_review": false
+      }
+    }
+  },
+  "000100": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "저분자",
+      "항암"
+    ]
+  },
+  "000250": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "펩타이드",
+      "비만·대사"
+    ]
+  },
+  "068760": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "069620": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "086450": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "003850": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "001060": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "003000": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "009420": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "009290": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false
+      }
+    }
+  },
+  "041960": {
+    "byIndustry": {
+      "bio": {
+        "chain": "종합 제약",
+        "needs_review": false,
+        "review_evidence": "코미팜 — 동물약품·바이오, 종합 제약 잠정"
+      }
+    }
+  },
+  "028300": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false,
+        "review_evidence": "HLB — 복합 파이프라인, 신약개발 잠정"
+      }
+    },
+    "tags": [
+      "저분자",
+      "항암"
+    ]
+  },
+  "087010": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "펩타이드",
+      "비만·대사",
+      "약물전달"
+    ]
+  },
+  "0009K0": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체",
+      "ADC",
+      "항암"
+    ]
+  },
+  "039200": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    }
+  },
+  "048410": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "저분자",
+      "감염",
+      "항암"
+    ]
+  },
+  "052020": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "항체",
+      "항암"
+    ]
+  },
+  "078160": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "세포치료"
+    ]
+  },
+  "082270": {
+    "byIndustry": {
+      "bio": {
+        "chain": "신약개발",
+        "needs_review": false,
+        "review_evidence": "젬백스 — 신약개발 잠정"
+      },
+      "semi": {
+        "chain": "팹 인프라·지원설비",
+        "needs_review": false,
+        "evidence": "반도체 케미컬필터 매출 95.5%",
+        "semType": "팹 케미컬필터·유틸리티",
+        "products": "반도체 케미컬필터·팹 유틸리티 (주력)"
+      }
+    },
+    "name": "젬백스",
+    "semType": "팹 케미컬필터·유틸리티",
+    "semTypeEn": "Fab chemical filters & utilities",
+    "products": "반도체 케미컬필터·팹 유틸리티 (주력)",
+    "productsEn": "Semiconductor chemical filters and fab utilities (core)",
+    "tags": [
+      "신약개발",
+      "GV1001"
+    ]
+  },
+  "068270": {
+    "byIndustry": {
+      "bio": {
+        "chain": "바이오시밀러",
+        "needs_review": false
+      }
+    }
+  },
+  "006280": {
+    "byIndustry": {
+      "bio": {
+        "chain": "백신·혈액제제",
+        "needs_review": false
+      }
+    }
+  },
+  "005690": {
+    "byIndustry": {
+      "bio": {
+        "chain": "원료의약품·생산소재",
+        "needs_review": false
+      }
+    }
+  },
+  "0126Z0": {
+    "byIndustry": {
+      "bio": {
+        "chain": "제약·바이오 지주",
+        "needs_review": false
+      }
+    }
+  },
+  "003090": {
+    "byIndustry": {
+      "bio": {
+        "chain": "제약·바이오 지주",
+        "needs_review": false
+      }
+    }
+  },
+  "000640": {
+    "byIndustry": {
+      "bio": {
+        "chain": "제약·바이오 지주",
+        "needs_review": false
+      }
+    }
+  },
+  "005250": {
+    "byIndustry": {
+      "bio": {
+        "chain": "제약·바이오 지주",
+        "needs_review": false
+      }
+    }
+  },
+  "084110": {
+    "byIndustry": {
+      "bio": {
+        "chain": "제약·바이오 지주",
+        "needs_review": false
+      }
+    }
+  },
+  "085660": {
+    "byIndustry": {
+      "bio": {
+        "chain": "제약·바이오 지주",
+        "needs_review": false,
+        "review_evidence": "차바이오텍 — 지주 vs 세포치료 사업 비중"
+      }
+    },
+    "tags": [
+      "세포치료"
+    ]
+  },
+  "090430": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "051900": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "018290": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "092730": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "018250": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "002790": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "003350": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "mcap_floor_skip": true,
+        "review_evidence": "매핑표 화장품 브랜드이나 시총 3천억 미만"
+      }
+    }
+  },
+  "078520": {
+    "byIndustry": {
+      "cosmetics": {
+        "chain": "화장품 브랜드",
+        "mcap_floor_skip": true,
+        "review_evidence": "매핑표 화장품 브랜드이나 시총 3천억 미만"
+      }
+    }
+  },
+  "086280": {
+    "semType": "자동차·특수화물 운송",
+    "semTypeEn": "Auto & special cargo transport",
+    "products": "자동차·CKD·특수화물 운송 (종합물류)",
+    "productsEn": "Auto, CKD and special-cargo transport (integrated logistics)",
+    "byIndustry": {
+      "shipping": {
+        "chain": "자동차·특수화물 운송"
+      }
+    },
+    "tags": [
+      "종합물류",
+      "자동차",
+      "CKD"
+    ]
+  },
+  "000120": {
+    "semType": "종합물류",
+    "semTypeEn": "Integrated logistics",
+    "products": "종합물류·택배·풀필먼트·국제물류",
+    "productsEn": "Integrated logistics, parcel, fulfillment and intl logistics",
+    "byIndustry": {
+      "shipping": {
+        "chain": "종합물류"
+      }
+    },
+    "tags": [
+      "택배",
+      "풀필먼트",
+      "종합물류"
+    ]
+  },
+  "003230": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "097950": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "004370": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "007310": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "005180": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "001680": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "017810": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "005610": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "026960": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가공식품",
+        "needs_review": false
+      }
+    }
+  },
+  "000080": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "음료·주류",
+        "needs_review": false
+      }
+    }
+  },
+  "005300": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "음료·주류",
+        "needs_review": false
+      }
+    }
+  },
+  "006040": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "농축수산·가공",
+        "needs_review": false
+      }
+    }
+  },
+  "033780": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "담배·건강소비재",
+        "needs_review": false
+      }
+    }
+  },
+  "081660": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "패션 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "093050": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "패션 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "036620": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "패션 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "020000": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "패션 브랜드",
+        "needs_review": false
+      }
+    }
+  },
+  "004170": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false
+      }
+    }
+  },
+  "023530": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false
+      }
+    }
+  },
+  "007070": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false
+      }
+    }
+  },
+  "069960": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false
+      }
+    }
+  },
+  "031430": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "유통",
+        "needs_review": false,
+        "review_evidence": "신세계인터내셔날 — 유통 vs 패션 브랜드 경계"
+      }
+    },
+    "tags": [
+      "유통",
+      "패션"
+    ]
+  },
+  "003800": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가구·생활소비재",
+        "needs_review": false
+      }
+    }
+  },
+  "016800": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "가구·생활소비재",
+        "needs_review": false
+      }
+    }
+  },
+  "001120": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "종합상사",
+        "needs_review": false
+      }
+    }
+  },
+  "011760": {
+    "byIndustry": {
+      "kconsume": {
+        "chain": "종합상사",
+        "needs_review": false
+      }
+    }
+  },
+  "036570": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "078340": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "095660": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "069080": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "게임",
+        "needs_review": false
+      }
+    }
+  },
+  "041510": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "음악·엔터테인먼트",
+        "needs_review": false
+      }
+    }
+  },
+  "035900": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "음악·엔터테인먼트",
+        "needs_review": false
+      }
+    }
+  },
+  "035760": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "방송·스트리밍",
+        "needs_review": false,
+        "review_evidence": "CJ ENM — 영상 제작·IP vs 방송·스트리밍 경계",
+        "evidence": "영상 제작·IP→방송·스트리밍",
+        "semType": "방송·스트리밍·콘텐츠",
+        "products": "방송·스트리밍·커머스·음악·영상 IP"
+      }
+    },
+    "tags": [
+      "영상",
+      "방송",
+      "IP",
+      "커머스",
+      "음악"
+    ],
+    "semType": "방송·스트리밍·콘텐츠",
+    "semTypeEn": "Broadcast, streaming & content",
+    "products": "방송·스트리밍·커머스·음악·영상 IP",
+    "productsEn": "Broadcasting, streaming, commerce, music and video IP"
+  },
+  "067160": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "방송·스트리밍",
+        "needs_review": false
+      }
+    }
+  },
+  "079160": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "극장·배급",
+        "needs_review": false
+      }
+    }
+  },
+  "030000": {
+    "byIndustry": {
+      "kcontent": {
+        "chain": "광고·마케팅",
+        "needs_review": false
+      }
+    }
+  },
+  "003490": {
+    "byIndustry": {
+      "travel": {
+        "chain": "항공운송",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "FSC",
+      "여객"
+    ]
+  },
+  "020560": {
+    "byIndustry": {
+      "travel": {
+        "chain": "항공운송",
+        "needs_review": false,
+        "review_evidence": "아시아나항공 — 통합 시 상장상태 모니터링"
+      }
+    },
+    "tags": [
+      "FSC",
+      "여객"
+    ]
+  },
+  "089590": {
+    "byIndustry": {
+      "travel": {
+        "chain": "항공운송",
+        "needs_review": false
+      }
+    },
+    "tags": [
+      "LCC",
+      "여객"
+    ]
+  },
+  "039130": {
+    "byIndustry": {
+      "travel": {
+        "chain": "여행·예약",
+        "needs_review": false
+      }
+    }
+  },
+  "025980": {
+    "byIndustry": {
+      "travel": {
+        "chain": "호텔·리조트",
+        "needs_review": false
+      }
+    }
+  },
+  "035250": {
+    "byIndustry": {
+      "travel": {
+        "chain": "카지노",
+        "needs_review": false
+      }
+    }
+  },
+  "032350": {
+    "byIndustry": {
+      "travel": {
+        "chain": "카지노",
+        "needs_review": false
+      }
+    }
+  },
+  "034230": {
+    "byIndustry": {
+      "travel": {
+        "chain": "카지노",
+        "needs_review": false
+      }
+    }
+  },
+  "008770": {
+    "byIndustry": {
+      "travel": {
+        "chain": "면세",
+        "needs_review": false,
+        "review_evidence": "호텔신라 — 면세 vs 호텔·리조트 경계"
+      }
+    },
+    "tags": [
+      "면세",
+      "호텔"
+    ]
+  },
+  "은행·은행계 금융그룹": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "105560",
+          "055550",
+          "086790",
+          "316140",
+          "024110",
+          "138930",
+          "175330",
+          "139130",
+          "323410",
+          "279570",
+          "006220"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "비은행 금융그룹": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "138040",
+          "071050"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "증권": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "006800",
+          "005940",
+          "016360",
+          "039490",
+          "003540",
+          "003470",
+          "001720",
+          "030610",
+          "003530",
+          "001510",
+          "001270",
+          "001500",
+          "016610",
+          "001200",
+          "078020"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "생명보험": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "032830",
+          "088350",
+          "085620",
+          "082640"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "손해보험·재보험": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "000810",
+          "005830",
+          "001450",
+          "000370",
+          "000400",
+          "003690",
+          "031210"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "카드·캐피탈·여신금융": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "029780"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "자산운용·PE·VC": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "100790",
+          "027360",
+          "041190",
+          "026890"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "결제·핀테크": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "377300"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "금융정보·평가": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "030190",
+          "034950"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "보험판매·중개": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "211050",
+          "244920"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "부동산금융·투자기구": {
+    "byIndustry": {
+      "finance": {
+        "chain": [
+          "094800"
+        ],
+        "needs_review": false
+      }
+    }
+  },
+  "복합사업": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "034730",
+          "267250",
+          "000150",
+          "003550",
+          "000880",
+          "383800",
+          "002020",
+          "000210",
+          "024720",
+          "000070",
+          "023590",
+          "032190",
+          "0220W0",
+          "012030"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "034730",
+        "267250",
+        "000150",
+        "003550",
+        "000880",
+        "383800",
+        "002020",
+        "000210",
+        "024720",
+        "000070",
+        "023590",
+        "032190",
+        "0220W0",
+        "012030"
+      ]
+    ]
+  },
+  "IT·전자": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "402340",
+          "030530",
+          "036830"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "402340",
+        "030530",
+        "036830"
+      ]
+    ]
+  },
+  "에너지·화학": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "078930",
+          "006120",
+          "092230"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "078930",
+        "006120",
+        "092230"
+      ]
+    ]
+  },
+  "소재·산업재": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "005490",
+          "006260",
+          "058650",
+          "005810",
+          "003030",
+          "001940",
+          "001230",
+          "060980",
+          "005720",
+          "004800",
+          "036530",
+          "015860"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "005490",
+        "006260",
+        "058650",
+        "005810",
+        "003030",
+        "001940",
+        "001230",
+        "060980",
+        "005720",
+        "004800",
+        "036530",
+        "015860"
+      ]
+    ]
+  },
+  "소비·유통": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "001040",
+          "004990",
+          "009970",
+          "005440",
+          "001800",
+          "003380",
+          "007700",
+          "072710",
+          "027410",
+          "192400",
+          "121440"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "001040",
+        "004990",
+        "009970",
+        "005440",
+        "001800",
+        "003380",
+        "007700",
+        "072710",
+        "027410",
+        "192400",
+        "121440"
+      ]
+    ]
+  },
+  "건설·부동산": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "012630",
+          "003300",
+          "002030"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "012630",
+        "003300",
+        "002030"
+      ]
+    ]
+  },
+  "운송·물류": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "180640"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "180640"
+      ]
+    ]
+  },
+  "헬스케어": {
+    "byIndustry": {
+      "holdings": {
+        "chain": [
+          "096760"
+        ],
+        "needs_review": false,
+        "holding_form": "사업형/투자중심(메타)"
+      }
+    },
+    "tags": [
+      [
+        "096760"
+      ]
+    ]
+  },
+  "071050": {
+    "byIndustry": {
+      "finance": {
+        "needs_review": false,
+        "chain": "비은행 금융그룹",
+        "review_evidence": "한국금융지주 — 비은행 금융그룹 vs 증권 경계"
+      }
+    },
+    "tags": [
+      "비은행",
+      "증권계열"
+    ]
+  },
+  "004800": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "복합사업",
+        "review_evidence": "효성 — 에너지·화학 vs 소재·산업재 경계",
+        "evidence": "소재·산업재→복합사업"
+      }
+    },
+    "tags": [
+      "소재·산업재",
+      "섬유·산업재"
+    ]
+  },
+  "000070": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "복합사업",
+        "review_evidence": "삼양홀딩스 — 에너지·화학 vs 소재·산업재 vs 복합사업",
+        "evidence": "에너지·화학→복합사업"
+      }
+    },
+    "tags": [
+      "복합사업",
+      "화학·소재"
+    ]
+  },
+  "024720": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "복합사업",
+        "review_evidence": "콜마홀딩스 — 복합사업 vs 헬스케어 경계",
+        "evidence": "헬스케어 경계→복합사업 확정"
+      }
+    },
+    "tags": [
+      "복합사업",
+      "헬스케어"
+    ]
+  },
+  "012030": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "금융",
+        "taxonomy_gap": false,
+        "holding_form": "사업형",
+        "evidence": "금융 자회사 중심 지주 — holdings 금융 그룹 신설 수용"
+      }
+    },
+    "name": "DB",
+    "tags": [
+      "금융",
+      "사업형"
+    ]
+  },
+  "023590": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "금융",
+        "taxonomy_gap": false,
+        "holding_form": "사업형",
+        "evidence": "금융 자회사 중심 지주 — holdings 금융 그룹 신설 수용"
+      }
+    },
+    "name": "다우기술",
+    "tags": [
+      "금융",
+      "사업형"
+    ]
+  },
+  "032190": {
+    "byIndustry": {
+      "holdings": {
+        "needs_review": false,
+        "chain": "금융",
+        "taxonomy_gap": false,
+        "holding_form": "사업형",
+        "evidence": "금융 자회사 중심 지주 — holdings 금융 그룹 신설 수용"
+      }
+    },
+    "name": "다우데이타",
+    "tags": [
+      "금융",
+      "사업형"
+    ]
+  },
+  "055550": {
+    "tags": [
+      "은행",
+      "개인",
+      "기업"
+    ]
+  },
+  "029780": {
+    "tags": [
+      "카드",
+      "여신",
+      "개인"
+    ]
+  },
+  "096760": {
+    "tags": [
+      "헬스케어"
+    ]
+  },
+  "031330": {
+    "name": "에스에이엠티",
+    "nameEn": "SAMT CO.,LTD.",
+    "semType": "반도체·IT 유통",
+    "semTypeEn": "Semi/IT distribution",
+    "products": "삼성전자 반도체·IT 유통",
+    "productsEn": "Samsung Electronics semiconductor and IT distribution",
+    "byIndustry": {
+      "semi": {
+        "chain": "반도체 유통",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 반도체·IT 유통",
+        "semType": "반도체·IT 유통",
+        "products": "삼성전자 반도체·IT 유통"
+      }
+    }
+  },
+  "024850": {
+    "name": "HLB이노베이션",
+    "nameEn": "HLB innoVation",
+    "semType": "리드프레임",
+    "semTypeEn": "Lead frames",
+    "products": "반도체 리드프레임·관련소재",
+    "productsEn": "Semiconductor lead frames and related materials",
+    "tags": [
+      "바이오"
+    ],
+    "byIndustry": {
+      "semi": {
+        "chain": "기판·패키징 소재",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 리드프레임",
+        "semType": "리드프레임",
+        "products": "반도체 리드프레임·관련소재"
+      }
+    }
+  },
+  "029460": {
+    "name": "케이씨",
+    "nameEn": "KC",
+    "semType": "가스공급장치",
+    "semTypeEn": "Gas delivery systems",
+    "products": "반도체 가스공급장치·화학소재",
+    "productsEn": "Semiconductor gas delivery systems and chemicals",
+    "byIndustry": {
+      "semi": {
+        "chain": "팹 인프라·지원설비",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 가스공급장치",
+        "semType": "가스공급장치",
+        "products": "반도체 가스공급장치·화학소재"
+      }
+    }
+  },
+  "015360": {
+    "name": "INVENI",
+    "nameEn": "INVENI",
+    "semType": "건식식각장비",
+    "semTypeEn": "Dry etch tools",
+    "products": "디스플레이·반도체 건식식각장비",
+    "productsEn": "Display/semiconductor dry etch equipment",
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 건식식각장비",
+        "semType": "건식식각장비",
+        "products": "디스플레이·반도체 건식식각장비"
+      }
+    }
+  },
+  "032820": {
+    "name": "우리기술",
+    "nameEn": "Woori Technology, Incorporation",
+    "semType": "원전 MMIS",
+    "semTypeEn": "Nuclear I&C / MMIS",
+    "products": "원전 제어계측시스템(MMIS)",
+    "productsEn": "Nuclear plant MMIS / I&C systems",
+    "byIndustry": {
+      "nuclear": {
+        "chain": "계측·제어",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 원전 MMIS — 빈 그룹 계측·제어 충원",
+        "semType": "원전 MMIS",
+        "products": "원전 제어계측시스템(MMIS)"
+      }
+    }
+  },
+  "089860": {
+    "name": "롯데렌탈",
+    "nameEn": "LOTTE rental",
+    "semType": "렌터카·모빌리티",
+    "semTypeEn": "Car rental & mobility",
+    "products": "렌터카·기기렌탈 모빌리티 서비스",
+    "productsEn": "Car and equipment rental mobility services",
+    "byIndustry": {
+      "auto": {
+        "chain": "유통·모빌리티 서비스",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 롯데렌탈",
+        "semType": "렌터카·모빌리티",
+        "products": "렌터카·기기렌탈 모빌리티 서비스"
+      }
+    }
+  },
+  "046070": {
+    "name": "코다코",
+    "nameEn": "KODACO CO., LTD",
+    "semType": "알루미늄 다이캐스팅",
+    "semTypeEn": "Al die-casting",
+    "products": "차량용 알루미늄 다이캐스팅 부품",
+    "productsEn": "Automotive aluminum die-cast parts",
+    "byIndustry": {
+      "auto": {
+        "chain": "차체·내외장",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 다이캐스팅",
+        "semType": "알루미늄 다이캐스팅",
+        "products": "차량용 알루미늄 다이캐스팅 부품"
+      }
+    }
+  },
+  "004700": {
+    "name": "조광피혁",
+    "nameEn": "ChokwangLeather",
+    "semType": "카시트 가죽",
+    "semTypeEn": "Seat leather",
+    "products": "자동차 카시트용 천연가죽",
+    "productsEn": "Automotive seat leather",
+    "byIndustry": {
+      "auto": {
+        "chain": "차체·내외장",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 카시트 가죽",
+        "semType": "카시트 가죽",
+        "products": "자동차 카시트용 천연가죽"
+      }
+    }
+  },
+  "033790": {
+    "name": "피노",
+    "nameEn": "FINO INC.",
+    "semType": "전지 자동화 장비",
+    "semTypeEn": "Battery automation tools",
+    "products": "2차전지 소재·자동화 장비",
+    "productsEn": "Battery materials and automation equipment",
+    "byIndustry": {
+      "battery": {
+        "chain": "제조·검사 장비",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 전지 장비",
+        "semType": "전지 자동화 장비",
+        "products": "2차전지 소재·자동화 장비"
+      }
+    }
+  },
+  "009450": {
+    "name": "경동나비엔",
+    "nameEn": "KYUNGDONGNAVIEN",
+    "semType": "보일러·온수기",
+    "semTypeEn": "Boilers & water heaters",
+    "products": "콘덴싱 보일러·온수기",
+    "productsEn": "Condensing boilers and water heaters",
+    "byIndustry": {
+      "elec": {
+        "chain": "가전·생활기기",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 보일러",
+        "semType": "보일러·온수기",
+        "products": "콘덴싱 보일러·온수기"
+      }
+    }
+  },
+  "025320": {
+    "name": "시노펙스",
+    "nameEn": "Synopex Inc.",
+    "semType": "FPCB·필터",
+    "semTypeEn": "FPCB & filters",
+    "products": "FPCB·반도체 필터·의료필터",
+    "productsEn": "FPCB, semiconductor and medical filters",
+    "byIndustry": {
+      "elec": {
+        "chain": "전자부품·기판",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: FPCB·필터",
+        "semType": "FPCB·필터",
+        "products": "FPCB·반도체 필터·의료필터"
+      }
+    }
+  },
+  "079900": {
+    "name": "전진건설로봇",
+    "nameEn": "JUNJIN C&R",
+    "semType": "콘크리트 펌프카",
+    "semTypeEn": "Concrete pump trucks",
+    "products": "콘크리트 펌프카·건설로봇",
+    "productsEn": "Concrete pump trucks and construction robots",
+    "tags": [
+      "건설로봇"
+    ],
+    "byIndustry": {
+      "machinery": {
+        "chain": "건설기계",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 펌프카",
+        "semType": "콘크리트 펌프카",
+        "products": "콘크리트 펌프카·건설로봇"
+      }
+    }
+  },
+  "014830": {
+    "name": "유니드",
+    "nameEn": "UNID",
+    "semType": "가성칼륨·탄산칼륨",
+    "semTypeEn": "KOH / K2CO3",
+    "products": "가성칼륨·탄산칼륨",
+    "productsEn": "Potassium hydroxide and carbonate",
+    "byIndustry": {
+      "chemical": {
+        "chain": "정밀·특수화학",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 칼륨화학",
+        "semType": "가성칼륨·탄산칼륨",
+        "products": "가성칼륨·탄산칼륨"
+      }
+    }
+  },
+  "001390": {
+    "name": "KG케미칼",
+    "nameEn": "KG Chemical",
+    "semType": "비료·정밀화학",
+    "semTypeEn": "Fertilizer & specialty chem",
+    "products": "비료·정밀화학소재",
+    "productsEn": "Fertilizers and specialty chemicals",
+    "byIndustry": {
+      "chemical": {
+        "chain": "비료·농화학",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 비료",
+        "semType": "비료·정밀화학",
+        "products": "비료·정밀화학소재"
+      }
+    }
+  },
+  "006730": {
+    "name": "서부T&D",
+    "nameEn": "Seobu T&D Co.,Ltd",
+    "semType": "호텔·복합몰",
+    "semTypeEn": "Hotels & mixed-use",
+    "products": "호텔(드래곤시티)·복합쇼핑몰",
+    "productsEn": "Hotels (Dragon City) and mixed-use malls",
+    "byIndustry": {
+      "travel": {
+        "chain": "호텔·리조트",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 호텔",
+        "semType": "호텔·복합몰",
+        "products": "호텔(드래곤시티)·복합쇼핑몰"
+      }
+    }
+  },
+  "064260": {
+    "name": "다날",
+    "nameEn": "DANAL CO., LTD.",
+    "semType": "모바일 PG",
+    "semTypeEn": "Mobile payments PG",
+    "products": "모바일 결제·전자금융(PG)",
+    "productsEn": "Mobile payments and e-finance (PG)",
+    "tags": [
+      "핀테크"
+    ],
+    "byIndustry": {
+      "software": {
+        "chain": "결제·데이터 인프라",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: PG — finance 교차 근거 부족으로 software만",
+        "semType": "모바일 PG",
+        "products": "모바일 결제·전자금융(PG)"
+      }
+    }
+  },
+  "034310": {
+    "name": "NICE",
+    "nameEn": "NICEHoldings",
+    "semType": "금융정보 지주",
+    "semTypeEn": "Financial-info holding",
+    "products": "NICE그룹 순수지주",
+    "productsEn": "NICE group pure holding",
+    "tags": [
+      "투자중심"
+    ],
+    "byIndustry": {
+      "holdings": {
+        "chain": "금융",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: NICE",
+        "semType": "금융정보 지주",
+        "products": "NICE그룹 순수지주"
+      }
+    }
+  },
+  "008060": {
+    "name": "대덕",
+    "nameEn": "DAEDUCK Co.,LTD",
+    "semType": "전자 지주",
+    "semTypeEn": "Electronics holding",
+    "products": "대덕그룹 순수지주",
+    "productsEn": "Daeduck group pure holding",
+    "tags": [
+      "투자중심"
+    ],
+    "byIndustry": {
+      "holdings": {
+        "chain": "IT·전자",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 대덕",
+        "semType": "전자 지주",
+        "products": "대덕그룹 순수지주"
+      }
+    }
+  },
+  "035810": {
+    "name": "이지홀딩스",
+    "nameEn": "Easy Holdings Co., Ltd.",
+    "semType": "사료·축산 지주",
+    "semTypeEn": "Feed/livestock holding",
+    "products": "사료·축산·바이오 지주",
+    "productsEn": "Feed, livestock and bio holding",
+    "tags": [
+      "사업형"
+    ],
+    "byIndustry": {
+      "holdings": {
+        "chain": "소비·유통",
+        "needs_review": false,
+        "evidence": "P3 mcap admission: 이지홀딩스",
+        "semType": "사료·축산 지주",
+        "products": "사료·축산·바이오 지주"
+      }
+    }
   }
 }

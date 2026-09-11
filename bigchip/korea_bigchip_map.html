@@ -161,16 +161,16 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=17"></script>
-  <script src="../js/map_i18n.js"></script>
-  <script src="../js/map_cross_sector.js?v=1"></script>
+<script src="../js/live_quotes.js?v=18"></script>
+  <script src="../js/map_i18n.js?v=9"></script>
+  <script src="../js/map_cross_sector.js?v=2"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
-  <script src="../js/map_momentum.js?v=12"></script>
+  <script src="../js/map_momentum.js?v=13"></script>
   <script src="../js/map_volatility.js?v=9"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
@@ -814,7 +814,6 @@
     .node-dim {
       opacity: .15
     }
-
     /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
@@ -2188,7 +2187,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"IDM/종합반도체":"#42A5F5","팹리스":"#66BB6A","디자인하우스":"#00897B","파운드리":"#FFA726","소재":"#EF5350","전공정 장비":"#AB47BC","후공정 장비":"#8E24AA","부품/기판":"#26C6DA","패키징/테스트":"#FFCA28","반도체 유통":"#8D6E63"};
+    const CHAIN_COLORS = {"IDM/종합반도체":"#42A5F5","팹리스·IP":"#66BB6A","디자인하우스":"#00897B","파운드리":"#FFA726","전공정 장비":"#AB47BC","패키징 장비":"#8E24AA","검사·계측 장비":"#5C6BC0","공정 소재":"#EF5350","공정 부품·유지관리":"#EC407A","기판·패키징 소재":"#26C6DA","테스트 부품·인터페이스":"#FFCA28","패키징·테스트 서비스":"#43A047","팹 인프라·지원설비":"#78909C","반도체 유통":"#8D6E63"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2249,7 +2248,7 @@
         "momentumChange": "당일 등락률",
         "momentumPosition": "주가 위치",
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
-        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
+        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 일일 등락률",
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크 (수정중)",
@@ -2282,26 +2281,34 @@
         "sbHow": "조작법",
         "chainLabel": {
             "IDM/종합반도체": "IDM/종합반도체",
-            "팹리스": "팹리스 (설계)",
+            "팹리스·IP": "팹리스·IP",
             "디자인하우스": "디자인하우스",
             "파운드리": "파운드리 (위탁제조)",
-            "소재": "소재·공정부품",
             "전공정 장비": "전공정 장비",
-            "후공정 장비": "후공정 장비",
-            "부품/기판": "부품·기판",
-            "패키징/테스트": "패키징·테스트",
+            "패키징 장비": "패키징 장비",
+            "검사·계측 장비": "검사·계측 장비",
+            "공정 소재": "공정 소재",
+            "공정 부품·유지관리": "공정 부품·유지관리",
+            "기판·패키징 소재": "기판·패키징 소재",
+            "테스트 부품·인터페이스": "테스트 부품·인터페이스",
+            "패키징·테스트 서비스": "패키징·테스트 서비스",
+            "팹 인프라·지원설비": "팹 인프라·지원설비",
             "반도체 유통": "반도체 유통"
         },
         "chainFilter": {
             "IDM/종합반도체": "IDM",
-            "팹리스": "팹리스",
+            "팹리스·IP": "팹리스·IP",
             "디자인하우스": "디자인하우스",
             "파운드리": "파운드리",
-            "소재": "소재",
             "전공정 장비": "전공정 장비",
-            "후공정 장비": "후공정 장비",
-            "부품/기판": "부품·기판",
-            "패키징/테스트": "패키징·테스트",
+            "패키징 장비": "패키징 장비",
+            "검사·계측 장비": "검사·계측",
+            "공정 소재": "공정 소재",
+            "공정 부품·유지관리": "공정 부품",
+            "기판·패키징 소재": "기판·패키징 소재",
+            "테스트 부품·인터페이스": "테스트 부품",
+            "패키징·테스트 서비스": "패키징·테스트",
+            "팹 인프라·지원설비": "팹 인프라",
             "반도체 유통": "유통"
         },
         "allFilter": "전체",
@@ -2396,7 +2403,7 @@
         "momentumChange": "1-day return",
         "momentumPosition": "Price position",
         "momentumNoData": "No companies have RS, price-position and turnover data.",
-        "momentumLegend": "Color = 1-day return · size = daily turnover",
+        "momentumLegend": "Color = 1-day return · size = daily turnover · vertical lines = market index RS",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
         "tabGraph": "🌐 Relationship network (WIP)",
@@ -2429,26 +2436,34 @@
         "sbHow": "Controls",
         "chainLabel": {
             "IDM/종합반도체": "IDM",
-            "팹리스": "Fabless (Design)",
+            "팹리스·IP": "Fabless & IP",
             "디자인하우스": "Design house",
             "파운드리": "Foundry",
-            "소재": "Materials & Parts",
             "전공정 장비": "Front-end equipment",
-            "후공정 장비": "Back-end equipment",
-            "부품/기판": "Components/Substrate",
-            "패키징/테스트": "Packaging & Test",
+            "패키징 장비": "Packaging equipment",
+            "검사·계측 장비": "Inspection & metrology",
+            "공정 소재": "Process materials",
+            "공정 부품·유지관리": "Process parts & MRO",
+            "기판·패키징 소재": "Substrate & packaging materials",
+            "테스트 부품·인터페이스": "Test parts & interface",
+            "패키징·테스트 서비스": "Packaging & test services",
+            "팹 인프라·지원설비": "Fab infrastructure",
             "반도체 유통": "Semiconductor distribution"
         },
         "chainFilter": {
             "IDM/종합반도체": "IDM",
-            "팹리스": "Fabless",
+            "팹리스·IP": "Fabless & IP",
             "디자인하우스": "Design house",
             "파운드리": "Foundry",
-            "소재": "Materials",
             "전공정 장비": "FE equipment",
-            "후공정 장비": "BE equipment",
-            "부품/기판": "Components/Sub",
-            "패키징/테스트": "Packaging/Test",
+            "패키징 장비": "Packaging tools",
+            "검사·계측 장비": "Inspection",
+            "공정 소재": "Materials",
+            "공정 부품·유지관리": "Parts & MRO",
+            "기판·패키징 소재": "Substrate mats",
+            "테스트 부품·인터페이스": "Test parts",
+            "패키징·테스트 서비스": "OSAT",
+            "팹 인프라·지원설비": "Fab infra",
             "반도체 유통": "Distribution"
         },
         "allFilter": "All",
@@ -2499,6 +2514,7 @@
         id: 'samsung_electronics', name: '삼성전자', nameEn: 'Samsung Electronics', ticker: '005930', market: 'KOSPI', chain: 'IDM/종합반도체',
         semType: '메모리·시스템LSI·파운드리', semTypeEn: 'Memory, system LSI & foundry',
         products: 'DRAM·NAND·모바일AP·파운드리', productsEn: 'DRAM, NAND, mobile APs, foundry',
+        relations: [{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"000660","name":"SK하이닉스","nameEn":"SK hynix","sector":"bigchip","map":"bigchip/korea_bigchip_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"042700","name":"한미반도체","nameEn":"HANMISemiconductor CO.,Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"240810","name":"원익IPS","nameEn":"WONIK IPS Co.,Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"036930","name":"주성엔지니어링","nameEn":"JUSUNG ENGINEERING Co.,Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"058470","name":"리노공업","nameEn":"LEENO Industrial Inc","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"357780","name":"솔브레인","nameEn":"Soulbrain Co., Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"000990","name":"DB하이텍","nameEn":"DB HiTek Co.,LTD","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"}],
         revenue: '1493.72조원', mcapWon: 1493724184344000, per: 48.83, pbr: 5.04, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 노광장비·공동 R&D', edgeLabelEn: 'EUV lithography equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'applied_materials', edgeLabel: '반도체 공정장비·공동 R&D', edgeLabelEn: 'Semiconductor process equipment and joint R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-announces-samsung-electronics-will-join-new' }, { id: 'lam_research', edgeLabel: '식각·세정 장비', edgeLabelEn: 'Etch and cleaning equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'kla', edgeLabel: '공정제어·수율관리 장비', edgeLabelEn: 'Process control and yield management equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.kla.com/sec-filings/all-sec-filings/xbrl_doc_only/4189' }, { id: 'tokyo_electron', edgeLabel: '코터·디벨로퍼·식각·증착 장비', edgeLabelEn: 'Coat/develop, etch and deposition equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'wonik_ips', edgeLabel: '증착·반도체 공정장비', edgeLabelEn: 'Deposition and semiconductor process equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'dongjin_semichem', edgeLabel: '포토레지스트·공정 화학재료', edgeLabelEn: 'Photoresist and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'soulbrain', edgeLabel: 'DS 화학재료·식각액', edgeLabelEn: 'DS chemicals and etchants', kind: 'supplier', evidence: 'confirmed', source: 'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf' }, { id: 'sk_specialty', edgeLabel: 'NF3·WF6 등 반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases including NF3 and WF6', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/kor/pdf/2023_SK%EB%A8%B8%ED%8B%B0%EB%A6%AC%EC%96%BC%EC%A6%88_%EC%A7%80%EC%86%8D%EA%B0%80%EB%8A%A5%EA%B2%BD%EC%98%81%EB%B3%B4%EA%B3%A0%EC%84%9C_Eng.pdf' }, { id: 'hansol_chemical', edgeLabel: '초고순도 과산화수소·박막 전구체', edgeLabelEn: 'Ultra-high-purity hydrogen peroxide and thin-film precursors', kind: 'supplier', evidence: 'confirmed', source: 'https://m.kisrating.com/fileDown.do?fileName=rs20250617-32.pdf&gubun=2&menuCd=R8' }, { id: 'enf_technology', edgeLabel: '식각액·신너·박리액·현상액·세정액', edgeLabelEn: 'Etchants, thinner, stripper, developer and cleaners', kind: 'supplier', evidence: 'confirmed', source: 'https://www.theworldfolio.com/interviews/enf-technology-expert-electronic-materials-suppliers-eye-global-growth/5976/' }, { id: 'wonik_materials', edgeLabel: '초고순도 반도체 특수가스', edgeLabelEn: 'Ultra-high-purity semiconductor specialty gases', kind: 'supplier', evidence: 'likely', source: 'https://wimco.co.kr/en/company/history' }, { id: 'hana_materials', edgeLabel: '식각용 Si·SiC 링·전극; OEM 경유 포함', edgeLabelEn: 'Si and SiC etch rings/electrodes, including OEM channels', kind: 'supplier', evidence: 'confirmed', source: 'https://hanamts.com/wp-content/uploads/2023/08/esg_report_en.pdf' }, { id: 'tck', edgeLabel: 'CVD-SiC 포커스링; OEM 경유', edgeLabelEn: 'CVD-SiC focus rings via equipment OEMs', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-ir/20240530%ED%8B%B0%EC%94%A8%EC%BC%80%EC%9D%B4_%EC%BD%94%EC%8A%A4%EB%8B%A5_%EA%B8%80%EB%A1%9C%EB%B2%8C_%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8_%EC%97%91%EC%8A%A4%ED%8F%AC_%EC%B0%B8%EA%B0%80.pdf' }, { id: 'wonik_qnc', edgeLabel: '쿼츠웨어·세라믹·부품 세정/코팅', edgeLabelEn: 'Quartzware, ceramics and parts cleaning/coating', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/001011/20250317004257/11011.htm' }, { id: 'comico', edgeLabel: '장비 부품 정밀세정·코팅·재생', edgeLabelEn: 'Precision cleaning, coating and refurbishment of equipment parts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/000858/20250814002520/11012.htm' }, { id: 'worldex', edgeLabel: '식각용 실리콘 전극·쿼츠·세라믹', edgeLabelEn: 'Silicon electrodes, quartz and ceramic etch consumables', kind: 'supplier', evidence: 'confirmed', source: 'https://www.thelec.kr/news/articleView.html?idxno=44159' }, { id: 'sns_tech', edgeLabel: 'DUV 블랭크마스크; EUV는 평가 단계', edgeLabelEn: 'DUV blank masks; EUV remains under evaluation', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/000236/20250317001294/11011.htm' }, { id: 'psk', edgeLabel: 'PR strip·세정·bevel etch', edgeLabelEn: 'Photoresist strip, cleaning and bevel etch', kind: 'supplier', evidence: 'likely', source: 'https://kind.krx.co.kr/external/2026/03/23/000046/20260323000129/11011.htm' }, { id: 'tes', edgeLabel: 'PECVD·기상 식각/세정 장비', edgeLabelEn: 'PECVD and gas-phase etch/clean equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.bloter.net/news/articleView.html?idxno=629201' }, { id: 'eugene_tech', edgeLabel: 'LPCVD·플라즈마 처리·ALD', edgeLabelEn: 'LPCVD, plasma treatment and ALD', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2024/08/13/001042/20240813002835/11012.htm' }, { id: 'kc_tech', edgeLabel: '반도체 장비; CMP·세정 포트폴리오', edgeLabelEn: 'Semiconductor equipment; CMP and cleaning portfolio', kind: 'supplier', evidence: 'confirmed', source: 'https://www.digitaltoday.co.kr/news/articleView.html?idxno=692432' }, { id: 'hpsp', edgeLabel: '고압 수소/중수소 어닐링; NAND 중심', edgeLabelEn: 'High-pressure hydrogen/deuterium annealing, mainly NAND', kind: 'supplier', evidence: 'confirmed', source: 'https://marketinsight.hankyung.com/article/2025071351421' }, { id: 'eo_technics', edgeLabel: 'DRAM 레이저 어닐링·HBM grooving', edgeLabelEn: 'DRAM laser annealing and HBM grooving', kind: 'supplier', evidence: 'confirmed', source: 'https://v.daum.net/v/20251118143613858' }, { id: 'park_systems', edgeLabel: 'AFM·WLI 계측; 일부 공급 확인', edgeLabelEn: 'AFM and WLI metrology; partial supply reported', kind: 'supplier', evidence: 'likely', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=414681' }, { id: 'techwing', edgeLabel: 'HBM Cube Prober', edgeLabelEn: 'HBM Cube Prober', kind: 'supplier', evidence: 'confirmed', source: 'https://www.etoday.co.kr/news/view/2594407' }, { id: 'isc', edgeLabel: 'HBM 테스트 소켓·burn-in', edgeLabelEn: 'HBM test sockets and burn-in solutions', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=419017' }, { id: 'daeduck_electronics', edgeLabel: 'DDR·GDDR 메모리 패키지 기판', edgeLabelEn: 'DDR and GDDR memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://dealsite.co.kr/articles/154591' }, { id: 'simmtech', edgeLabel: '메모리 모듈 PCB·패키지 기판', edgeLabelEn: 'Memory-module PCBs and package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://www.simmtech.com/upload/media/file/639032761440475136.pdf' }, { id: 'haesung_ds', edgeLabel: '메모리 패키지 기판', edgeLabelEn: 'Memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/05/15/002857/20250515006693/11013.htm' }, { id: 'tlb', edgeLabel: '메모리 모듈·SSD PCB', edgeLabelEn: 'Memory-module and SSD PCBs', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/20/001007/20250320004328/11011.htm' }, { id: 'hana_micron', edgeLabel: '패키징·테스트·모듈 장기 계약', edgeLabelEn: 'Long-term packaging, test and module contracts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/002412/20250814007359/11012.htm' }, { id: 'sfa_semicon', edgeLabel: '메모리/비메모리 패키징·테스트', edgeLabelEn: 'Memory and non-memory packaging and test', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2026/03/23/001039/20260323004733/11011.htm' }, { id: 'doosan_tesna', edgeLabel: '시스템반도체 wafer test', edgeLabelEn: 'System-semiconductor wafer testing', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-report/250526_%EB%91%90%EC%82%B0%ED%85%8C%EC%8A%A4%EB%82%98%28%EA%B8%80%EC%84%B8%29.pdf' }, { id: 'gaonchips', edgeLabel: 'SAFE DSP·2/5nm physical design', edgeLabelEn: 'SAFE DSP and 2/5nm physical design', kind: 'supplier', evidence: 'confirmed', source: 'https://www.gaonchips.com/en/sub/news/view.php?idx=296' }, { id: 'adtechnology', edgeLabel: 'SAFE DSP·ASIC 설계/양산 지원', edgeLabelEn: 'SAFE DSP, ASIC design and production support', kind: 'supplier', evidence: 'confirmed', source: 'https://www.asiae.co.kr/en/print.htm?idxno=2020102709064767539' }, { id: 'nepes', edgeLabel: 'WLP/FOWLP·bumping; 근거 갱신 필요', edgeLabelEn: 'WLP/FOWLP and bumping; older named evidence', kind: 'supplier', evidence: 'likely', source: 'https://www.nepes.co.kr/kr/ir/ir_news.php?bgu=view&idx=770' }, { id: 'shin_etsu', edgeLabel: '실리콘 웨이퍼·리소그래피 소재', edgeLabelEn: 'Silicon wafers and lithography materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.shinetsu.co.jp/en/news/news-release/shin-etsu-presented-with-an-excellent-supplier-award-from-samsung-electronics-for-best-in-value/' }, { id: 'sumco', edgeLabel: '300mm 실리콘 웨이퍼', edgeLabelEn: '300mm silicon wafers', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sumcosi.com/english/corporate/evaluation.html' }, { id: 'merck_emd', edgeLabel: '박막·가스·평탄화·패터닝 소재', edgeLabelEn: 'Thin-film, gas, planarization and patterning materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.asiae.co.kr/en/article/2025022015232338530' }, { id: 'dupont', edgeLabel: 'CMP pad·전자재료', edgeLabelEn: 'CMP pads and electronic materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.dupont.com/news/dupont-earns-best-partner-award-for-innovation-from-samsung.html' }, { id: 'air_liquide', edgeLabel: '고순도 산업가스', edgeLabelEn: 'High-purity industrial gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.airliquide.com/group/press-releases-news/2026-01-13/closing-dig-airgas-acquisition-air-liquide-becomes-industrial-gas-leader-dynamic-south-korean-market' }, { id: 'apple', edgeLabel: '미국 생산 칩의 Apple 제품 공급', edgeLabelEn: 'US-made chips supplied for Apple products', kind: 'customer', evidence: 'confirmed', source: 'https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/' }, { id: 'nvidia', edgeLabel: 'HBM4·SOCAMM 공급 및 AI 플랫폼 협업', edgeLabelEn: 'HBM4 and SOCAMM supply and AI-platform collaboration', kind: 'customer', evidence: 'confirmed', source: 'https://news.samsung.com/global/samsung-unveils-hbm4e-showcasing-comprehensive-ai-solutions-nvidia-partnership-and-vision-at-nvidia-gtc-2026' }, { id: 'google', edgeLabel: 'Broadcom 경유 TPU용 HBM 공급 보도', edgeLabelEn: 'Reported HBM supply for Google TPUs via Broadcom', kind: 'customer', evidence: 'reported', source: 'https://www.trendforce.com/news/2025/12/01/news-samsung-reportedly-supplies-60-of-google-tpu-hbm3e-set-to-remain-primary-supplier-in-2026/' }, { id: 'amd', edgeLabel: 'MI455X HBM4·MI350 계열 HBM3E', edgeLabelEn: 'HBM4 for MI455X and HBM3E for MI350-series', kind: 'customer', evidence: 'confirmed', source: 'https://news.samsungsemiconductor.com/global/samsung-and-amd-expand-strategic-collaboration-on-next-generation-ai-memory-solutions/' }, { id: 'qualcomm', edgeLabel: '10/7nm EUV foundry 관계; historical', edgeLabelEn: '10/7nm EUV foundry relationship; historical', kind: 'customer', evidence: 'likely', source: 'https://investor.qualcomm.com/news-events/press-releases/news-details/2018/Samsung-Electronics-and-Qualcomm-Expand-Foundry-Cooperation-on-EUV-Process-Technology-02-21-2018/default.aspx' }, { id: 'tesla', edgeLabel: 'AI6 foundry 계약', edgeLabelEn: 'AI6 foundry contract', kind: 'customer', evidence: 'confirmed', source: 'https://www.reuters.com/business/tesla-samsung-165-billion-supply-deal-may-spur-chipmakers-us-contract-business-2025-07-28/' }, { id: 'sk_hynix', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'tsmc', edgeLabel: '첨단 파운드리 경쟁', edgeLabelEn: 'Advanced-foundry competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'intel', edgeLabel: 'IDM·첨단 공정 경쟁', edgeLabelEn: 'IDM and advanced-process competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }, { id: 'globalfoundries', edgeLabel: '파운드리 peer', edgeLabelEn: 'Foundry peer', kind: 'peer', evidence: 'confirmed', source: 'https://www.trendforce.com/presscenter/news/20260312-12965.html' }, { id: 'sandisk', edgeLabel: 'NAND·flash/storage peer', edgeLabelEn: 'NAND, flash and storage peer', kind: 'peer', evidence: 'confirmed', source: 'https://investor.sandisk.com/static-files/342a38e2-e204-4f50-ad22-3e3a28e2f6ff' }, { id: 'ymtc', edgeLabel: 'NAND peer', edgeLabelEn: 'NAND peer', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }, { id: 'cxmt', edgeLabel: 'DRAM peer; HBM 동급 아님', edgeLabelEn: 'DRAM peer; not equivalent in advanced HBM', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }]
       },
 
@@ -2506,6 +2522,7 @@
         id: 'sk_hynix', name: 'SK하이닉스', nameEn: 'SK hynix', ticker: '000660', market: 'KOSPI', chain: 'IDM/종합반도체',
         semType: '메모리·AI 반도체', semTypeEn: 'Memory & AI semiconductors',
         products: 'HBM·DRAM·NAND', productsEn: 'HBM, DRAM, NAND',
+        relations: [{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"005930","name":"삼성전자","nameEn":"Samsung Electronics","sector":"bigchip","map":"bigchip/korea_bigchip_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"042700","name":"한미반도체","nameEn":"HANMISemiconductor CO.,Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"240810","name":"원익IPS","nameEn":"WONIK IPS Co.,Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"036930","name":"주성엔지니어링","nameEn":"JUSUNG ENGINEERING Co.,Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"058470","name":"리노공업","nameEn":"LEENO Industrial Inc","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"357780","name":"솔브레인","nameEn":"Soulbrain Co., Ltd.","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"bigchip-semi","type":"고객↔공급","label":"반도체 대형 고객·밸류체인","chip":"연관","chipEn":"Related","ticker":"000990","name":"DB하이텍","nameEn":"DB HiTek Co.,LTD","sector":"semi","map":"semiconductor/korea_semiconductor_map.html"},{"relationId":"group-sk","type":"지배구조","label":"SK 계열","chip":"계열","chipEn":"Affiliate","ticker":"034730","name":"SK","nameEn":"SK Inc.","sector":"holdings","map":"holdings/korea_holdings_map.html"},{"relationId":"group-sk","type":"지배구조","label":"SK 계열","chip":"계열","chipEn":"Affiliate","ticker":"402340","name":"SK스퀘어","nameEn":"SK Square","sector":"holdings","map":"holdings/korea_holdings_map.html"},{"relationId":"group-sk","type":"지배구조","label":"SK 계열","chip":"계열","chipEn":"Affiliate","ticker":"096770","name":"SK이노베이션","nameEn":"SK Innovation","sector":"battery","map":"battery/korea_battery_map.html"},{"relationId":"group-sk","type":"지배구조","label":"SK 계열","chip":"계열","chipEn":"Affiliate","ticker":"017670","name":"SK텔레콤","nameEn":"SK Telecom","sector":"telecom","map":"telecom/korea_telecom_map.html"}],
         revenue: '1203.12조원', mcapWon: 1203120925155000, per: 34.65, pbr: 12.52, revTier: 3, partners: [{ id: 'asml', edgeLabel: 'EUV 장비 장기 구매', edgeLabelEn: 'Long-term EUV equipment purchases', kind: 'supplier', evidence: 'confirmed', source: 'https://en.yna.co.kr/view/AEN20260324006600320' }, { id: 'applied_materials', edgeLabel: 'DRAM·HBM 장기 공정 R&D', edgeLabelEn: 'Long-term DRAM and HBM process R&D', kind: 'supplier', evidence: 'confirmed', source: 'https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-and-sk-hynix-announce-long-term-rd-partnership' }, { id: 'lam_research', edgeLabel: 'EUV dry resist 공정 장비·기술', edgeLabelEn: 'EUV dry-resist process equipment and technology', kind: 'supplier', evidence: 'confirmed', source: 'https://newsroom.lamresearch.com/2022-06-14-Lam-Research-Teams-Up-with-SK-hynix-to-Enhance-DRAM-Production-Cost-Efficiency-with-Breakthrough-Dry-Resist-EUV-Technology' }, { id: 'hanmi_semiconductor', edgeLabel: 'HBM용 TC 본더 반복 수주', edgeLabelEn: 'Repeated orders for HBM TC bonders', kind: 'supplier', evidence: 'confirmed', source: 'https://www.hanmisemi.com/en/news/new_view3.html' }, { id: 'jusung_engineering', edgeLabel: 'DRAM용 high-k ALD 장비 공급 보도', edgeLabelEn: 'Reported supply of high-k ALD tools for DRAM', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=2672' }, { id: 'dongjin_semichem', edgeLabel: 'HBM CMP 슬러리·공정재료 공급 보도', edgeLabelEn: 'Reported HBM CMP slurry and process-material supply', kind: 'supplier', evidence: 'reported', source: 'https://www.thelec.net/news/articleView.html?idxno=4751' }, { id: 'soulbrain', edgeLabel: '고순도 불화수소·공정 화학재료', edgeLabelEn: 'High-purity hydrogen fluoride and process chemicals', kind: 'supplier', evidence: 'confirmed', source: 'https://sg.finance.yahoo.com/news/south-korean-firm-boost-output-091907734.html' }, { id: 'sk_specialty', edgeLabel: '반도체 특수가스', edgeLabelEn: 'Semiconductor specialty gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.skspecialty.com/new/eng/pdf/ir3/23/%5BSK_Specialty%5DAudit_Report_2023.pdf' }, { id: 'tsmc', edgeLabel: 'HBM4 base die·CoWoS 기술/파운드리 파트너', edgeLabelEn: 'HBM4 base-die and CoWoS technology/foundry partner', kind: 'supplier', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/' }, { id: 'hansol_chemical', edgeLabel: '초고순도 과산화수소·박막 전구체', edgeLabelEn: 'Ultra-high-purity hydrogen peroxide and thin-film precursors', kind: 'supplier', evidence: 'confirmed', source: 'https://m.kisrating.com/fileDown.do?fileName=rs20250617-32.pdf&gubun=2&menuCd=R8' }, { id: 'enf_technology', edgeLabel: '식각액·신너·박리액·현상액·세정액', edgeLabelEn: 'Etchants, thinner, stripper, developer and cleaners', kind: 'supplier', evidence: 'confirmed', source: 'https://www.theworldfolio.com/interviews/enf-technology-expert-electronic-materials-suppliers-eye-global-growth/5976/' }, { id: 'wonik_materials', edgeLabel: '초고순도 반도체 특수가스', edgeLabelEn: 'Ultra-high-purity semiconductor specialty gases', kind: 'supplier', evidence: 'likely', source: 'https://wimco.co.kr/en/company/history' }, { id: 'hana_materials', edgeLabel: '식각용 Si·SiC 링·전극; 현재 관계 likely', edgeLabelEn: 'Si and SiC etch rings/electrodes; current relationship likely', kind: 'supplier', evidence: 'likely', source: 'https://hanamts.com/wp-content/uploads/2023/08/esg_report_en.pdf' }, { id: 'tck', edgeLabel: 'CVD-SiC 포커스링; OEM 경유', edgeLabelEn: 'CVD-SiC focus rings via equipment OEMs', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-ir/20240530%ED%8B%B0%EC%94%A8%EC%BC%80%EC%9D%B4_%EC%BD%94%EC%8A%A4%EB%8B%A5_%EA%B8%80%EB%A1%9C%EB%B2%8C_%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8_%EC%97%91%EC%8A%A4%ED%8F%AC_%EC%B0%B8%EA%B0%80.pdf' }, { id: 'wonik_qnc', edgeLabel: '쿼츠웨어·세라믹·부품 세정/코팅', edgeLabelEn: 'Quartzware, ceramics and parts cleaning/coating', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/001011/20250317004257/11011.htm' }, { id: 'comico', edgeLabel: '장비 부품 정밀세정·코팅·재생', edgeLabelEn: 'Precision cleaning, coating and refurbishment of equipment parts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/000858/20250814002520/11012.htm' }, { id: 'worldex', edgeLabel: '식각용 실리콘 전극·쿼츠·세라믹', edgeLabelEn: 'Silicon electrodes, quartz and ceramic etch consumables', kind: 'supplier', evidence: 'confirmed', source: 'https://www.thelec.kr/news/articleView.html?idxno=44159' }, { id: 'sns_tech', edgeLabel: 'DUV 블랭크마스크', edgeLabelEn: 'DUV blank masks', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/17/000236/20250317001294/11011.htm' }, { id: 'psk', edgeLabel: 'PR strip·세정·bevel etch', edgeLabelEn: 'Photoresist strip, cleaning and bevel etch', kind: 'supplier', evidence: 'likely', source: 'https://kind.krx.co.kr/external/2026/03/23/000046/20260323000129/11011.htm' }, { id: 'tes', edgeLabel: 'PECVD·기상 식각/세정 장비', edgeLabelEn: 'PECVD and gas-phase etch/clean equipment', kind: 'supplier', evidence: 'confirmed', source: 'https://www.digitaltoday.co.kr/news/articleView.html?idxno=672263' }, { id: 'eugene_tech', edgeLabel: 'LPCVD·플라즈마 처리·ALD', edgeLabelEn: 'LPCVD, plasma treatment and ALD', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2024/08/13/001042/20240813002835/11012.htm' }, { id: 'kc_tech', edgeLabel: '반도체 장비; CMP·세정 포트폴리오', edgeLabelEn: 'Semiconductor equipment; CMP and cleaning portfolio', kind: 'supplier', evidence: 'confirmed', source: 'https://www.datatooza.com/article/20260310123042851052ef3d94aa_80' }, { id: 'hpsp', edgeLabel: '고압 수소/중수소 어닐링; NAND 중심', edgeLabelEn: 'High-pressure hydrogen/deuterium annealing, mainly NAND', kind: 'supplier', evidence: 'confirmed', source: 'https://marketinsight.hankyung.com/article/2025071351421' }, { id: 'park_systems', edgeLabel: 'AFM·WLI 계측', edgeLabelEn: 'AFM and WLI metrology', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=414681' }, { id: 'techwing', edgeLabel: 'HBM Cube Prober', edgeLabelEn: 'HBM Cube Prober', kind: 'supplier', evidence: 'confirmed', source: 'https://www.etoday.co.kr/news/view/2594407' }, { id: 'isc', edgeLabel: 'HBM 테스트 소켓·burn-in', edgeLabelEn: 'HBM test sockets and burn-in solutions', kind: 'supplier', evidence: 'confirmed', source: 'https://www.sisajournal-e.com/news/articleView.html?idxno=419017' }, { id: 'daeduck_electronics', edgeLabel: 'DDR·GDDR 메모리 패키지 기판', edgeLabelEn: 'DDR and GDDR memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://dealsite.co.kr/articles/154591' }, { id: 'simmtech', edgeLabel: '메모리 모듈 PCB·패키지 기판', edgeLabelEn: 'Memory-module PCBs and package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://www.simmtech.com/upload/media/file/639032761440475136.pdf' }, { id: 'haesung_ds', edgeLabel: '메모리 패키지 기판', edgeLabelEn: 'Memory package substrates', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/05/15/002857/20250515006693/11013.htm' }, { id: 'tlb', edgeLabel: '메모리 모듈·SSD PCB', edgeLabelEn: 'Memory-module and SSD PCBs', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/03/20/001007/20250320004328/11011.htm' }, { id: 'hana_micron', edgeLabel: '패키징·테스트·모듈 장기 계약', edgeLabelEn: 'Long-term packaging, test and module contracts', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2025/08/14/002412/20250814007359/11012.htm' }, { id: 'sfa_semicon', edgeLabel: '메모리/비메모리 패키징·테스트', edgeLabelEn: 'Memory and non-memory packaging and test', kind: 'supplier', evidence: 'confirmed', source: 'https://kind.krx.co.kr/external/2026/03/23/001039/20260323004733/11011.htm' }, { id: 'doosan_tesna', edgeLabel: 'DP 사업부 경유 테스트 관계', edgeLabelEn: 'Testing relationship through the DP operation', kind: 'supplier', evidence: 'confirmed', source: 'https://file.alphasquare.co.kr/media/pdfs/company-report/250526_%EB%91%90%EC%82%B0%ED%85%8C%EC%8A%A4%EB%82%98%28%EA%B8%80%EC%84%B8%29.pdf' }, { id: 'shin_etsu', edgeLabel: '실리콘 웨이퍼 주요 공급원 보도', edgeLabelEn: 'Reported major silicon-wafer source', kind: 'supplier', evidence: 'likely', source: 'https://www.trendforce.com/news/2025/09/02/news-memory-giant-fragile-link-koreas-reliance-on-japan-in-hbm-supply-chain/' }, { id: 'merck_emd', edgeLabel: '박막·가스·평탄화·패터닝 소재', edgeLabelEn: 'Thin-film, gas, planarization and patterning materials', kind: 'supplier', evidence: 'confirmed', source: 'https://www.asiae.co.kr/en/article/2025022015232338530' }, { id: 'qnity', edgeLabel: 'CMP pad 장기 공급 계약', edgeLabelEn: 'Long-term CMP-pad supply agreement', kind: 'supplier', evidence: 'confirmed', source: 'https://www.qnityelectronics.com/news/qnity-and-sk-hynix-sign-long-term-cmp-pad-supply-agreement-at-se.html' }, { id: 'air_liquide', edgeLabel: '고순도 산업가스', edgeLabelEn: 'High-purity industrial gases', kind: 'supplier', evidence: 'confirmed', source: 'https://www.airliquide.com/group/press-releases-news/2026-01-13/closing-dig-airgas-acquisition-air-liquide-becomes-industrial-gas-leader-dynamic-south-korean-market' }, { id: 'nvidia', edgeLabel: 'H100용 HBM3 및 후속 HBM 공급', edgeLabelEn: 'HBM3 for H100 and subsequent HBM supply', kind: 'customer', evidence: 'confirmed', source: 'https://news.skhynix.com/en/sk-hynix-to-supply-industrys-first-hbm3-dram-to-nvidia/' }, { id: 'apple', edgeLabel: '고객사로 공개; 제품·규모는 비공개', edgeLabelEn: 'Disclosed as a client; product and volume not disclosed', kind: 'customer', evidence: 'confirmed', source: 'https://www.reuters.com/technology/sk-hynix-q3-profit-plunges-economic-downturn-hurts-chip-demand-2022-10-25/' }, { id: 'microsoft', edgeLabel: 'Maia용 HBM·AI 메모리 협력 보도', edgeLabelEn: 'Reported HBM for Maia and AI-memory collaboration', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/global-big-tech-ai-partnership-ms/' }, { id: 'google', edgeLabel: 'TPU용 HBM3E 공급 보도', edgeLabelEn: 'Reported HBM3E supply for Google TPUs', kind: 'customer', evidence: 'reported', source: 'https://news.skhynix.com/en/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/' }, { id: 'amazon_aws', edgeLabel: '자체 ASIC용 HBM 잠재/신흥 고객', edgeLabelEn: 'Emerging HBM customer for proprietary ASICs', kind: 'customer', evidence: 'likely', source: 'https://news.skhynix.com/en/exploring-the-ai-ecosystem-how-sk-hynixs-industry-leading-memory-fuels-ai-innovation/' }, { id: 'meta', edgeLabel: '기업용 SSD·서버 DRAM 공급', edgeLabelEn: 'Enterprise SSD and server-DRAM supply', kind: 'customer', evidence: 'confirmed', source: 'https://news.skhynix.com/en/global-big-tech-ai-partnership-meta/' }, { id: 'samsung_electronics', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'micron', edgeLabel: 'DRAM·HBM·NAND 경쟁', edgeLabelEn: 'DRAM, HBM and NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm' }, { id: 'kioxia', edgeLabel: 'NAND 경쟁', edgeLabelEn: 'NAND competitor', kind: 'peer', evidence: 'confirmed', source: 'https://www.kioxia-holdings.com/content/dam/kioxia-hd/en-jp/ir/library/integrated-report/2025/asset/Integrated-Report-2025-01-en.pdf' }, { id: 'sandisk', edgeLabel: 'NAND·flash/storage peer', edgeLabelEn: 'NAND, flash and storage peer', kind: 'peer', evidence: 'confirmed', source: 'https://investor.sandisk.com/static-files/342a38e2-e204-4f50-ad22-3e3a28e2f6ff' }, { id: 'ymtc', edgeLabel: 'NAND peer', edgeLabelEn: 'NAND peer', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }, { id: 'cxmt', edgeLabel: 'DRAM peer; HBM 동급 아님', edgeLabelEn: 'DRAM peer; not equivalent in advanced HBM', kind: 'peer', evidence: 'confirmed', source: 'https://en.sedaily.com/finance/2026/06/25/samsung-defends-dram-nand-lead-sk-hynix-holds-58-percent-of' }]
       }
 
@@ -2593,7 +2610,7 @@
         "primaryRole": "supplier",
         "ticker": "005290",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 소재",
         "mcapWon": 2051547571500,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=005290"
@@ -2609,7 +2626,7 @@
         "primaryRole": "supplier",
         "ticker": "357780",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 소재",
         "mcapWon": 2528033950000,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=357780"
@@ -2636,7 +2653,7 @@
         "primaryRole": "supplier",
         "ticker": "014680",
         "market": "KOSPI",
-        "chain": "소재",
+        "chain": "공정 소재",
         "mcapWon": 2084328351600,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=014680"
@@ -2652,7 +2669,7 @@
         "primaryRole": "supplier",
         "ticker": "102710",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 소재",
         "mcapWon": 599374720200,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=102710"
@@ -2668,7 +2685,7 @@
         "primaryRole": "supplier",
         "ticker": "104830",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 소재",
         "mcapWon": 403456000000,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=104830"
@@ -2684,7 +2701,7 @@
         "primaryRole": "supplier",
         "ticker": "166090",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 부품·유지관리",
         "mcapWon": 986905932600,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=166090"
@@ -2700,7 +2717,7 @@
         "primaryRole": "supplier",
         "ticker": "064760",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 부품·유지관리",
         "mcapWon": 2817212832000,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=064760"
@@ -2716,7 +2733,7 @@
         "primaryRole": "supplier",
         "ticker": "074600",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 부품·유지관리",
         "mcapWon": 676916000000,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=074600"
@@ -2732,7 +2749,7 @@
         "primaryRole": "supplier",
         "ticker": "183300",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 부품·유지관리",
         "mcapWon": 1289218202500,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=183300"
@@ -2748,7 +2765,7 @@
         "primaryRole": "supplier",
         "ticker": "101160",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 부품·유지관리",
         "mcapWon": 487074293500,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=101160"
@@ -2764,7 +2781,7 @@
         "primaryRole": "supplier",
         "ticker": "101490",
         "market": "KOSDAQ",
-        "chain": "소재",
+        "chain": "공정 소재",
         "mcapWon": 854461903950,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=101490"
@@ -2860,7 +2877,7 @@
         "primaryRole": "supplier",
         "ticker": "039030",
         "market": "KOSDAQ",
-        "chain": "후공정 장비",
+        "chain": "패키징 장비",
         "mcapWon": 5457560650000,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=039030"
@@ -2876,7 +2893,7 @@
         "primaryRole": "supplier",
         "ticker": "140860",
         "market": "KOSDAQ",
-        "chain": "전공정 장비",
+        "chain": "검사·계측 장비",
         "mcapWon": 1838148112500,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=140860"
@@ -2892,7 +2909,7 @@
         "primaryRole": "supplier",
         "ticker": "089030",
         "market": "KOSDAQ",
-        "chain": "패키징/테스트",
+        "chain": "검사·계측 장비",
         "mcapWon": 1745226679500,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=089030"
@@ -2908,7 +2925,7 @@
         "primaryRole": "supplier",
         "ticker": "095340",
         "market": "KOSDAQ",
-        "chain": "부품/기판",
+        "chain": "테스트 부품·인터페이스",
         "mcapWon": 3857864556000,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=095340"
@@ -2924,7 +2941,7 @@
         "primaryRole": "supplier",
         "ticker": "353200",
         "market": "KOSPI",
-        "chain": "부품/기판",
+        "chain": "기판·패키징 소재",
         "mcapWon": 4916984037500,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=353200"
@@ -2940,7 +2957,7 @@
         "primaryRole": "supplier",
         "ticker": "222800",
         "market": "KOSDAQ",
-        "chain": "부품/기판",
+        "chain": "기판·패키징 소재",
         "mcapWon": 4477161481200,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=222800"
@@ -2956,7 +2973,7 @@
         "primaryRole": "supplier",
         "ticker": "195870",
         "market": "KOSPI",
-        "chain": "부품/기판",
+        "chain": "기판·패키징 소재",
         "mcapWon": 848300000000,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=195870"
@@ -2972,7 +2989,7 @@
         "primaryRole": "supplier",
         "ticker": "356860",
         "market": "KOSDAQ",
-        "chain": "부품/기판",
+        "chain": "기판·패키징 소재",
         "mcapWon": 880501809000,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=356860"
@@ -2988,7 +3005,7 @@
         "primaryRole": "supplier",
         "ticker": "067310",
         "market": "KOSDAQ",
-        "chain": "패키징/테스트",
+        "chain": "패키징·테스트 서비스",
         "mcapWon": 2317206784650,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=067310"
@@ -3004,7 +3021,7 @@
         "primaryRole": "supplier",
         "ticker": "036540",
         "market": "KOSDAQ",
-        "chain": "패키징/테스트",
+        "chain": "패키징·테스트 서비스",
         "mcapWon": 922622299830,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=036540"
@@ -3020,7 +3037,7 @@
         "primaryRole": "supplier",
         "ticker": "131970",
         "market": "KOSDAQ",
-        "chain": "패키징/테스트",
+        "chain": "패키징·테스트 서비스",
         "mcapWon": 1436013783400,
         "revTier": 2,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=131970"
@@ -3068,7 +3085,7 @@
         "primaryRole": "supplier",
         "ticker": "033640",
         "market": "KOSDAQ",
-        "chain": "패키징/테스트",
+        "chain": "패키징·테스트 서비스",
         "mcapWon": 496925803100,
         "revTier": 1,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=033640"
@@ -3293,7 +3310,7 @@
         "primaryRole": "supplier",
         "ticker": "042700",
         "market": "KOSPI",
-        "chain": "후공정 장비",
+        "chain": "패키징 장비",
         "mcapWon": 21921806000000,
         "revTier": 3,
         "targetUrl": "../semiconductor/korea_semiconductor_map.html?tab=table&ticker=042700"
@@ -3549,7 +3566,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['IDM/종합반도체', '팹리스', '디자인하우스', '파운드리', '소재', '전공정 장비', '후공정 장비', '부품/기판', '패키징/테스트', '반도체 유통'];
+      const chains = ['IDM/종합반도체', '팹리스·IP', '디자인하우스', '파운드리', '전공정 장비', '패키징 장비', '검사·계측 장비', '공정 소재', '공정 부품·유지관리', '기판·패키징 소재', '테스트 부품·인터페이스', '패키징·테스트 서비스', '팹 인프라·지원설비', '반도체 유통'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -3873,6 +3890,9 @@
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,

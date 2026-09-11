@@ -1,0 +1,141 @@
+{
+  "cross": {
+    "377300": [
+      "finance",
+      "software"
+    ],
+    "028260": [
+      "construction",
+      "kconsume"
+    ],
+    "034020": [
+      "nuclear",
+      "powergrid"
+    ]
+  },
+  "hubUnique": 647,
+  "relationGroups": [
+    {
+      "id": "nuclear-epc",
+      "type": "EPC·주설비",
+      "label": "원전 건설·주설비",
+      "members": 7
+    },
+    {
+      "id": "bigchip-semi",
+      "type": "고객↔공급",
+      "label": "반도체 대형 고객·밸류체인",
+      "members": 8
+    },
+    {
+      "id": "ship-defense",
+      "type": "사업겸영",
+      "label": "조선↔해양방산(함정)",
+      "members": 4
+    },
+    {
+      "id": "satcom-defense",
+      "type": "사업연관",
+      "label": "위성통신↔우주·위성 방산",
+      "members": 3
+    },
+    {
+      "id": "battery-auto",
+      "type": "공급",
+      "label": "2차전지↔완성차",
+      "members": 5
+    },
+    {
+      "id": "aesthetic-bio",
+      "type": "제품연관",
+      "label": "에스테틱↔바이오(톡신·재생)",
+      "members": 4
+    },
+    {
+      "id": "semi-display-mat",
+      "type": "소재겸영",
+      "label": "반도체·디스플레이 소재(덕산 계열 등)",
+      "members": 3
+    },
+    {
+      "id": "group-sk",
+      "type": "지배구조",
+      "label": "SK 계열",
+      "members": 5
+    },
+    {
+      "id": "group-lg",
+      "type": "지배구조",
+      "label": "LG 계열",
+      "members": 6
+    },
+    {
+      "id": "group-hdhyundai",
+      "type": "지배구조",
+      "label": "HD현대 계열",
+      "members": 4
+    },
+    {
+      "id": "group-posco",
+      "type": "지배구조",
+      "label": "POSCO 계열",
+      "members": 3
+    },
+    {
+      "id": "group-hanwha",
+      "type": "지배구조",
+      "label": "한화 계열",
+      "members": 4
+    }
+  ],
+  "mapsWithRelations": {
+    "bigchip": 2,
+    "semi": 8,
+    "elec": 3,
+    "telecom": 3,
+    "auto": 2,
+    "battery": 5,
+    "nuclear": 4,
+    "powergrid": 1,
+    "metal": 1,
+    "construction": 3,
+    "ship": 3,
+    "defense": 4,
+    "cosmetics": 3,
+    "bio": 1,
+    "holdings": 6
+  },
+  "aggregation": {
+    "hubHasRelationsField": false,
+    "mapCountSnapshot": {
+      "bigchip": 2,
+      "semi": 92,
+      "elec": 29,
+      "software": 23,
+      "telecom": 10,
+      "robot": 15,
+      "auto": 28,
+      "battery": 26,
+      "renewable": 13,
+      "nuclear": 9,
+      "powergrid": 18,
+      "chemical": 29,
+      "metal": 15,
+      "machinery": 6,
+      "construction": 20,
+      "ship": 17,
+      "defense": 13,
+      "shipping": 6,
+      "travel": 12,
+      "kconsume": 38,
+      "kcontent": 25,
+      "cosmetics": 19,
+      "medtech": 17,
+      "bio": 66,
+      "finance": 50,
+      "holdings": 52
+    },
+    "note": "relations UI-only; hub company objects omit relations; map company counts unchanged by inject design"
+  },
+  "brokenLinks": []
+}

@@ -1,0 +1,196 @@
+{
+  "generatedAt": "2026-09-11T12:34:23.405Z",
+  "auditAdditionsCount": 80,
+  "admitted": [
+    "323280",
+    "127120",
+    "388210",
+    "159010",
+    "031330",
+    "024850",
+    "383310",
+    "029460",
+    "015360",
+    "170920",
+    "032820",
+    "126720",
+    "089860",
+    "046070",
+    "004700",
+    "448900",
+    "033790",
+    "009450",
+    "025320",
+    "079900",
+    "014830",
+    "001390",
+    "950260",
+    "187660",
+    "386380",
+    "484870",
+    "368770",
+    "452260",
+    "194370",
+    "006730",
+    "064260",
+    "234340",
+    "499790",
+    "034310",
+    "008060",
+    "035810"
+  ],
+  "admittedBySector": {
+    "semi": 10,
+    "nuclear": 2,
+    "auto": 4,
+    "battery": 1,
+    "elec": 2,
+    "machinery": 1,
+    "chemical": 2,
+    "bio": 2,
+    "medtech": 1,
+    "defense": 2,
+    "kconsume": 2,
+    "travel": 1,
+    "software": 2,
+    "holdings": 4
+  },
+  "skippedFloor": [],
+  "alreadyExcluded": [
+    {
+      "ticker": "033780",
+      "name": "KT&G",
+      "notes": "이미 kconsume 담배·건강소비재 편입 — P3 재편입 제외"
+    },
+    {
+      "ticker": "285130",
+      "name": "SK케미칼",
+      "notes": "renewable exclusive + SUCCESSOR_DROP(지도 미노출) — P3 재편입 제외. 감사 additions에 잔존"
+    }
+  ],
+  "taxonomyGaps": [
+    {
+      "ticker": "016590",
+      "name": "신대양제지",
+      "status": "taxonomy_gap",
+      "notes": "제지 그룹 부재 — 억지편입 금지. 그룹 신설은 별도 승인 후"
+    },
+    {
+      "ticker": "078130",
+      "name": "국일제지",
+      "status": "taxonomy_gap",
+      "notes": "제지 그룹 부재 — 억지편입 금지. 그룹 신설은 별도 승인 후"
+    },
+    {
+      "ticker": "002310",
+      "name": "아세아제지",
+      "status": "taxonomy_gap",
+      "notes": "제지 그룹 부재 — 억지편입 금지. 그룹 신설은 별도 승인 후"
+    },
+    {
+      "ticker": "012750",
+      "name": "에스원",
+      "status": "taxonomy_gap",
+      "notes": "물리보안·시설관리 — 수용 그룹 부재. 미편입 유지"
+    },
+    {
+      "ticker": "002900",
+      "name": "TYM",
+      "status": "taxonomy_gap",
+      "notes": "농기계 — 수용 그룹 부재. 미편입 유지"
+    },
+    {
+      "ticker": "900290",
+      "name": "GRT",
+      "status": "taxonomy_gap",
+      "notes": "중국상장(외국기업) — 국내 지도 편입 보류"
+    },
+    {
+      "ticker": "204620",
+      "name": "글로벌텍스프리",
+      "status": "taxonomy_gap",
+      "notes": "택스리펀드 대행 — 수용 그룹 부재. 미편입 유지"
+    }
+  ],
+  "auditTickersNotInAdmitOrGap": [
+    "005935",
+    "005387",
+    "088980",
+    "005385",
+    "000155",
+    "395400",
+    "009155",
+    "00680K",
+    "415640",
+    "066575",
+    "000815",
+    "330590",
+    "051915",
+    "451800",
+    "071055",
+    "365550",
+    "293940",
+    "00088K",
+    "00104K",
+    "003545",
+    "448730",
+    "090435",
+    "005945",
+    "005389",
+    "357120",
+    "126560",
+    "006405",
+    "02826K",
+    "000157",
+    "004310",
+    "020120",
+    "105840",
+    "002710",
+    "025770",
+    "452430",
+    "110990",
+    "017890",
+    "034830",
+    "168360",
+    "117730"
+  ],
+  "note": "Prefer shares/REITs/SPACs filtered by triage are intentionally not admitted. Boundary tickers rechecked via loadMergedKrxMap.",
+  "postBuild": {
+    "generatedAt": "2026-09-11T12:39:57.390Z",
+    "hubCovered": 647,
+    "auditAdditionsRemaining": 47,
+    "triageEligibleRemaining": 19,
+    "verifiedCounts": {
+      "semi": 92,
+      "nuclear": 9,
+      "auto": 28,
+      "battery": 26,
+      "elec": 29,
+      "machinery": 6,
+      "chemical": 29,
+      "bio": 66,
+      "medtech": 17,
+      "defense": 13,
+      "kconsume": 38,
+      "travel": 12,
+      "software": 23,
+      "holdings": 52,
+      "bigchip": 2
+    },
+    "verifySuite": [
+      "verify:dist",
+      "verify:data-sector-profile",
+      "verify:global-search",
+      "verify:reorg",
+      "verify:nav-tab-preserve",
+      "verify_p3_mcap_admissions"
+    ],
+    "notes": [
+      "P3 admitted 36; hubUnique 611→647 (+36).",
+      "033780 remains on kconsume; 285130 stays renewable exclusive but SUCCESSOR_DROP keeps it off renewable map (pre-existing).",
+      "Fresh audit still lists preferred shares/REITs/SPACs and taxonomy gaps; boundary removals near floor (e.g. 001390/035810) observed in audit A but still on-map with mcapWon>0 at build time.",
+      "Nuclear empty group 계측·제어 filled by 032820.",
+      "No finance CROSS for 064260/234340 (insufficient evidence)."
+    ]
+  }
+}

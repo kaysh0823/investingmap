@@ -1,12 +1,14 @@
 /**
  * Build data/hub_index.json — lightweight company index for hub dashboard.
  * Also builds ticker→sector reverse index and injects crossSectors into map data.
+ * Then injects UI-only relations (does not affect hub aggregation payloads).
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { kstYmdDash } from '../functions/lib/krx_session.mjs';
 import { buildHubWithCrossSectors } from '../lib/cross_sector_inject.mjs';
+import { injectCrossRelations } from '../lib/cross_relations_inject.mjs';
 import { listHubCompanies } from '../functions/lib/hub_dashboard_core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -31,6 +33,15 @@ function main() {
   const outPath = path.join(ROOT, 'data', 'hub_index.json');
   fs.writeFileSync(outPath, JSON.stringify(out) + '\n', 'utf8');
   console.log('OK', outPath);
+
+  // P1-B: UI-only — after hub snapshot so aggregation never sees relations
+  const rel = injectCrossRelations(ROOT);
+  console.log(
+    `relations: groups=${rel.relationGroups} patchedMaps=${rel.patchedMaps} companies=${rel.companiesWithRelations} broken=${rel.brokenLinks.length}`,
+  );
+  if (rel.brokenLinks.length) {
+    console.warn('WARN broken relation memberships:', rel.brokenLinks.join(', '));
+  }
 }
 
 main();

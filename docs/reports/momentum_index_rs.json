@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-09-11T13:30:00+09:00",
+  "recentDd": "20260910",
+  "past20Dd": "20260814",
+  "past50Dd": "20260703",
+  "past120Dd": "20260327",
+  "weights": { "rs20": 0.5, "rs50": 0.3, "rs120": 0.2 },
+  "note": "Index closes via KRX OPEN API when authorized; otherwise Naver history fallback (same as backfill_market_index). Synthetic __KOSPI/__KOSDAQ never enter quotes.",
+  "indices": {
+    "KOSPI": {
+      "rs": 55.6,
+      "rs20": 67.2,
+      "rs50": 16.1,
+      "rs120": 85.9,
+      "ret20": 0.8,
+      "ret50": -13.04,
+      "ret120": 29.33
+    },
+    "KOSDAQ": {
+      "rs": 38.3,
+      "rs20": 44.1,
+      "rs50": 33.7,
+      "rs120": 30.6,
+      "ret20": -3.21,
+      "ret50": -3.63,
+      "ret120": -26.68
+    }
+  },
+  "sampleStockRsUnchanged": { "005930": 47.2 },
+  "ui": {
+    "kospiStroke": "#42A5F5",
+    "kosdaqStroke": "#FFA726",
+    "scriptVersions": { "map_momentum": 13, "live_quotes": 18 },
+    "quotesCacheVersion": "v6"
+  }
+}

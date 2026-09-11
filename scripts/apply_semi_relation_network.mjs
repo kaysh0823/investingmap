@@ -5,12 +5,12 @@
 import fs from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { SEMI_VALUE_CHAIN_ORDER } from '../lib/curated_sector_configs.mjs';
 import { applyCuratedRelationPatches } from '../lib/curated_relation_network.mjs';
 import {
   extractCompaniesFromHtml,
   patchKoreanCompaniesHtml,
 } from '../lib/map_company_serialize.mjs';
+import { ANGLE, LEGEND_CHAINS } from '../lib/semi_chain_ui.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const HTML_PATH = join(ROOT, 'semiconductor', 'korea_semiconductor_map.html');
@@ -37,17 +37,9 @@ const ROLE_SECTOR = {
   customer: 'Downstream customer',
 };
 
-const FALLBACK_ANGLE = {
-  팹리스: 0,
-  디자인하우스: 40,
-  파운드리: 80,
-  소재: 120,
-  '전공정 장비': 160,
-  '후공정 장비': 200,
-  '부품/기판': 240,
-  '패키징/테스트': 280,
-  '반도체 유통': 320,
-};
+const FALLBACK_ANGLE = Object.fromEntries(
+  LEGEND_CHAINS.map((c, i) => [c, Math.round((360 / LEGEND_CHAINS.length) * i)]),
+);
 
 const TRANSLATION_PATCHES = {
   ko: {
@@ -55,7 +47,7 @@ const TRANSLATION_PATCHES = {
     sbKorean: '밸류체인',
     sbGlobal: '공급사·peer·고객',
     peerNetworkDesc:
-      '밸류체인 그룹(허브)을 중심으로 국내 멤버, 후방 공급사, 글로벌 peer, 전방 고객을 공개자료 기준으로 연결합니다. 반도체 전 밸류체인 그룹(장비·소재·파운드리·팹리스·디자인하우스·부품/기판·패키징/테스트·유통)을 큐레이션했습니다.',
+      '밸류체인 그룹(허브)을 중심으로 국내 멤버, 후방 공급사, 글로벌 peer, 전방 고객을 공개자료 기준으로 연결합니다. 반도체 13개 밸류체인 그룹(팹리스·IP·디자인하우스·파운드리·전/후공정 장비·검사·소재·부품·기판·테스트·OSAT·팹 인프라·유통)을 큐레이션했습니다.',
     graphHint:
       '공개자료 기반 공급망·고객·peer 관계이며 계약 조건을 의미하지 않습니다. “보도” 관계는 공식 확인 건과 구분해 표시합니다.',
     relationSupplier: '후방 공급사',
@@ -74,7 +66,7 @@ const TRANSLATION_PATCHES = {
     sbKorean: 'Value chain',
     sbGlobal: 'Suppliers, peers & customers',
     peerNetworkDesc:
-      'Value-chain group hubs link domestic members with upstream suppliers, global peers and downstream customers from public sources. All semiconductor value-chain groups are curated (equipment, materials, foundry, fabless, design house, substrate, packaging/test, distribution).',
+      'Value-chain group hubs link domestic members with upstream suppliers, global peers and downstream customers from public sources. All 13 semiconductor value-chain groups are curated.',
     graphHint:
       'Public-source supply-chain, customer and peer relationships; they do not assert contract terms. Reported links are distinguished from confirmed disclosures.',
     relationSupplier: 'Upstream supplier',
@@ -310,18 +302,33 @@ export function applySemiRelationNetwork() {
   const hubsLit = hubsRuntimeLiteral(relations.hubs);
   const hubAngle = hubAngleLiteral(relations.hubs);
 
+  // Always refresh inline hub literals so chain labels stay in sync with 13 groups
+  // (even when RelationNetwork v2 owns the graph canvas).
+  if (html.includes('const CURATED_RELATION_HUBS = [')) {
+    html = html.replace(
+      /const CURATED_RELATION_HUBS = \[[\s\S]*?\n    \];/,
+      `const CURATED_RELATION_HUBS = ${hubsLit};`,
+    );
+  }
+  if (html.includes('const CURATED_HUB_ANGLE = ')) {
+    html = html.replace(/const CURATED_HUB_ANGLE = \{[^}]+\};/, `const CURATED_HUB_ANGLE = ${hubAngle};`);
+  }
+  if (html.includes('const CURATED_FALLBACK_ANGLE = ')) {
+    html = html.replace(/const CURATED_FALLBACK_ANGLE = \{[^}]+\};/, `const CURATED_FALLBACK_ANGLE = ${ANGLE};`);
+  }
+
   const v2Active = html.includes('RelationNetwork v2') || html.includes('relation_network.js');
   if (!v2Active) {
     html = applyCuratedRelationPatches(html, {
       mode: 'chainGroup',
-      chainOrder: SEMI_VALUE_CHAIN_ORDER.filter((c) => c !== 'IDM/종합반도체'),
+      chainOrder: LEGEND_CHAINS,
       hubsLiteral: hubsLit,
       hubAngleLiteral: hubAngle,
-      fallbackAngleLiteral: objLiteral(FALLBACK_ANGLE),
+      fallbackAngleLiteral: ANGLE,
       skipChainChips: true,
       sidebarTitleKo: '밸류체인',
       i18nVer: '8',
-      heatmapVer: '14',
+      heatmapVer: '17',
       patchPartnerCell: false,
     });
     html = partnerCellPatch(html);

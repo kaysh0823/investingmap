@@ -1,0 +1,13 @@
+id,type,label,members
+nuclear-epc,EPC·주설비,"원전 건설·주설비",7
+bigchip-semi,고객↔공급,"반도체 대형 고객·밸류체인",8
+ship-defense,사업겸영,"조선↔해양방산(함정)",4
+satcom-defense,사업연관,"위성통신↔우주·위성 방산",3
+battery-auto,공급,"2차전지↔완성차",5
+aesthetic-bio,제품연관,"에스테틱↔바이오(톡신·재생)",4
+semi-display-mat,소재겸영,"반도체·디스플레이 소재(덕산 계열 등)",3
+group-sk,지배구조,"SK 계열",5
+group-lg,지배구조,"LG 계열",6
+group-hdhyundai,지배구조,"HD현대 계열",4
+group-posco,지배구조,"POSCO 계열",3
+group-hanwha,지배구조,"한화 계열",4

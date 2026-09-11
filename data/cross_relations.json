@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "note": "UI-only related-company links. Never used for mcap/company-count/performance/hub aggregation.",
+  "relations": [
+    {
+      "id": "nuclear-epc",
+      "type": "EPC·주설비",
+      "label": "원전 건설·주설비",
+      "members": [
+        { "ticker": "000720", "sector": "construction" },
+        { "ticker": "028260", "sector": "construction" },
+        { "ticker": "047040", "sector": "construction" },
+        { "ticker": "034020", "sector": "nuclear" },
+        { "ticker": "083650", "sector": "nuclear" },
+        { "ticker": "052690", "sector": "nuclear" },
+        { "ticker": "051600", "sector": "nuclear" }
+      ]
+    },
+    {
+      "id": "bigchip-semi",
+      "type": "고객↔공급",
+      "label": "반도체 대형 고객·밸류체인",
+      "members": [
+        { "ticker": "005930", "sector": "bigchip" },
+        { "ticker": "000660", "sector": "bigchip" },
+        { "ticker": "042700", "sector": "semi" },
+        { "ticker": "240810", "sector": "semi" },
+        { "ticker": "036930", "sector": "semi" },
+        { "ticker": "058470", "sector": "semi" },
+        { "ticker": "357780", "sector": "semi" },
+        { "ticker": "000990", "sector": "semi" }
+      ]
+    },
+    {
+      "id": "ship-defense",
+      "type": "사업겸영",
+      "label": "조선↔해양방산(함정)",
+      "members": [
+        { "ticker": "329180", "sector": "ship" },
+        { "ticker": "042660", "sector": "ship" },
+        { "ticker": "272210", "sector": "defense" },
+        { "ticker": "079550", "sector": "defense" }
+      ]
+    },
+    {
+      "id": "satcom-defense",
+      "type": "사업연관",
+      "label": "위성통신↔우주·위성 방산",
+      "members": [
+        { "ticker": "189300", "sector": "telecom" },
+        { "ticker": "272210", "sector": "defense" },
+        { "ticker": "099320", "sector": "defense" }
+      ]
+    },
+    {
+      "id": "battery-auto",
+      "type": "공급",
+      "label": "2차전지↔완성차",
+      "members": [
+        { "ticker": "373220", "sector": "battery" },
+        { "ticker": "006400", "sector": "battery" },
+        { "ticker": "096770", "sector": "battery" },
+        { "ticker": "005380", "sector": "auto" },
+        { "ticker": "000270", "sector": "auto" }
+      ]
+    },
+    {
+      "id": "aesthetic-bio",
+      "type": "제품연관",
+      "label": "에스테틱↔바이오(톡신·재생)",
+      "members": [
+        { "ticker": "145020", "sector": "cosmetics" },
+        { "ticker": "086900", "sector": "cosmetics" },
+        { "ticker": "214450", "sector": "cosmetics" },
+        { "ticker": "069620", "sector": "bio" }
+      ]
+    },
+    {
+      "id": "semi-display-mat",
+      "type": "소재겸영",
+      "label": "반도체·디스플레이 소재(덕산 계열 등)",
+      "members": [
+        { "ticker": "077360", "sector": "semi" },
+        { "ticker": "213420", "sector": "elec" },
+        { "ticker": "272290", "sector": "semi" }
+      ]
+    },
+    {
+      "id": "group-sk",
+      "type": "지배구조",
+      "label": "SK 계열",
+      "members": [
+        { "ticker": "034730", "sector": "holdings" },
+        { "ticker": "402340", "sector": "holdings" },
+        { "ticker": "000660", "sector": "bigchip" },
+        { "ticker": "096770", "sector": "battery" },
+        { "ticker": "017670", "sector": "telecom" }
+      ]
+    },
+    {
+      "id": "group-lg",
+      "type": "지배구조",
+      "label": "LG 계열",
+      "members": [
+        { "ticker": "003550", "sector": "holdings" },
+        { "ticker": "066570", "sector": "elec" },
+        { "ticker": "034220", "sector": "elec" },
+        { "ticker": "051910", "sector": "battery" },
+        { "ticker": "373220", "sector": "battery" },
+        { "ticker": "032640", "sector": "telecom" }
+      ]
+    },
+    {
+      "id": "group-hdhyundai",
+      "type": "지배구조",
+      "label": "HD현대 계열",
+      "members": [
+        { "ticker": "267250", "sector": "holdings" },
+        { "ticker": "329180", "sector": "ship" },
+        { "ticker": "009540", "sector": "ship" },
+        { "ticker": "267260", "sector": "powergrid" }
+      ]
+    },
+    {
+      "id": "group-posco",
+      "type": "지배구조",
+      "label": "POSCO 계열",
+      "members": [
+        { "ticker": "005490", "sector": "holdings" },
+        { "ticker": "003670", "sector": "battery" },
+        { "ticker": "047050", "sector": "metal" }
+      ]
+    },
+    {
+      "id": "group-hanwha",
+      "type": "지배구조",
+      "label": "한화 계열",
+      "members": [
+        { "ticker": "000880", "sector": "holdings" },
+        { "ticker": "012450", "sector": "defense" },
+        { "ticker": "042660", "sector": "ship" },
+        { "ticker": "272210", "sector": "defense" }
+      ]
+    }
+  ]
+}

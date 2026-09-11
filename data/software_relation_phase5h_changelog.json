@@ -2,19 +2,19 @@
   "asOf": "2026-08-29",
   "phase": "5H",
   "reviewedBy": "editorial_phase5h",
-  "listedCompanyCount": 20,
-  "nodeCount": 60,
-  "edgeCount": 77,
-  "structuralGenerated": 49,
+  "listedCompanyCount": 23,
+  "nodeCount": 63,
+  "edgeCount": 80,
+  "structuralGenerated": 52,
   "legacyMigrated": 24,
   "manuallyCurated": 4,
   "demotedPeer": 24,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 20,
-    "nodeCount": 60,
-    "edgeCount": 77,
-    "structuralGeneratedEdgeCount": 49,
+    "listedCompanyCount": 23,
+    "nodeCount": 63,
+    "edgeCount": 80,
+    "structuralGeneratedEdgeCount": 52,
     "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 4,
     "softwareProductCount": 3,
@@ -34,9 +34,9 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 24,
-    "businessRelationOrphanCount": 20,
-    "directCommercialRelationshipOrphanCount": 20,
-    "classificationOnlyCompanyCount": 10,
+    "businessRelationOrphanCount": 23,
+    "directCommercialRelationshipOrphanCount": 23,
+    "classificationOnlyCompanyCount": 13,
     "hasPeerButNoBusinessCompanyCount": 16,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
@@ -123,7 +123,7 @@
     "nodeCountByType": {
       "group": 7,
       "cross_sector_anchor": 4,
-      "listed_company": 20,
+      "listed_company": 23,
       "platform": 4,
       "software_category": 7,
       "customer_industry": 5,
@@ -131,7 +131,7 @@
       "software_product": 3,
       "global_company": 6
     },
-    "removedUnsupportedPartnerCount": 22,
+    "removedUnsupportedPartnerCount": 24,
     "demotedLegacyPeerCount": 24
   },
   "validate": {
@@ -244,6 +244,11 @@
       "action": "structural_used_in_industry",
       "ticker": "064400",
       "target": "industry:enterprise-it"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "377300",
+      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
@@ -363,7 +368,12 @@
     {
       "action": "structural_member_of",
       "ticker": "477850",
-      "lane": "data_ai"
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "064260",
+      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
@@ -388,12 +398,17 @@
     {
       "action": "structural_member_of",
       "ticker": "486990",
-      "lane": "data_ai"
+      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
       "ticker": "236200",
-      "lane": "cybersecurity"
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "234340",
+      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
@@ -403,7 +418,7 @@
     {
       "action": "structural_member_of",
       "ticker": "356680",
-      "lane": "cybersecurity"
+      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
@@ -444,6 +459,16 @@
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:064400",
       "target": "global:microsoft"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:377300",
+      "partner": "visa"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:377300",
+      "partner": "mastercard"
     },
     {
       "action": "demote_legacy_partner_to_peer",

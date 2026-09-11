@@ -1,0 +1,28 @@
+[
+  {
+    "ticker": "267270",
+    "name": "HD건설기계",
+    "nameEn": "HD Construction Equipment",
+    "chain": "건설기계",
+    "semType": "건설기계",
+    "semTypeEn": "Construction equipment",
+    "products": "굴착기·휠로더 등 건설기계 (구 인프라코어 합병)",
+    "productsEn": "Excavators, wheel loaders and construction equipment (ex-Infracore)",
+    "partners": [],
+    "subSector": "건설기계",
+    "level": "core"
+  },
+  {
+    "ticker": "079900",
+    "name": "전진건설로봇",
+    "nameEn": "JUNJIN C&R",
+    "chain": "건설기계",
+    "semType": "콘크리트 펌프카",
+    "semTypeEn": "Concrete pump trucks",
+    "products": "콘크리트 펌프카·건설로봇",
+    "productsEn": "Concrete pump trucks and construction robots",
+    "partners": [],
+    "subSector": "건설기계",
+    "level": "core"
+  }
+]

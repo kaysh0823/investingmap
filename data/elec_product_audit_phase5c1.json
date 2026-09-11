@@ -386,7 +386,7 @@
       "displayName": "Duksan Hi-Metal",
       "chain": "전자부품",
       "primaryLane": "electronic_component",
-      "existingProductNode": "product:solder_packaging_materials",
+      "existingProductNode": null,
       "existingProductId": "product:solder_packaging_materials",
       "productLabel": "반도체 솔더·패키징 소재",
       "componentId": "component:solder_ball",

@@ -1,0 +1,11 @@
+ticker,sector,provisional_group,status,notes
+028300,bio,"신약개발",needs_review,"HLB — 복합 파이프라인, 신약개발 잠정"
+082270,bio,"신약개발",needs_review,"젬백스 — 신약개발 잠정"
+199800,bio,"신약개발",needs_review,"툴젠 — 유전자가위 플랫폼 vs 신약개발 경계"
+468530,bio,"연구도구·서비스",needs_review,"프로티나 — 연구도구·서비스 잠정"
+085660,bio,"제약·바이오 지주",needs_review,"차바이오텍 — 지주 vs 세포치료 사업 비중"
+041960,bio,"종합 제약",needs_review,"코미팜 — 동물약품·바이오, 종합 제약 잠정"
+214370,cosmetics,"에스테틱 의약품·소모품",needs_review,"케어젠 — 원료 vs 에스테틱 경계"
+067630,medtech,"체외진단",needs_review,"HLB생명과학 — 체외진단 잠정(복합 의료기기)"
+290650,medtech,"의료소모품·재생재료",needs_review,"엘앤씨바이오 — bio→medtech 재생재료 이동, 적합성 모니터링"
+0120G0,medtech,"의료소모품·재생재료",needs_review,"삼양바이오팜 — bio→medtech 검토 잠정(제약 성격 잔존)"

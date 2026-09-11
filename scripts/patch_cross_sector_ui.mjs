@@ -39,7 +39,7 @@ const TARGETS = [
   'bio/bio_inline_tail.js',
 ];
 
-const SCRIPT_TAG = '  <script src="../js/map_cross_sector.js?v=1"></script>';
+const SCRIPT_TAG = '  <script src="../js/map_cross_sector.js?v=2"></script>';
 
 const HTML_NAME_OLD = '<td><div class="company-name">${displayName}</div>${subNameHtml}</td>';
 const HTML_NAME_NEW =
@@ -58,7 +58,13 @@ function patchFile(rel) {
   }
   let html = fs.readFileSync(fp, 'utf8');
   if (html.includes(MARKER) && html.includes('InvestingMapCrossSector')) {
-    console.log('skip (patched)', rel);
+    if (html.includes('map_cross_sector.js?v=1')) {
+      html = html.replace(/map_cross_sector\.js\?v=1/g, 'map_cross_sector.js?v=2');
+      fs.writeFileSync(fp, html, 'utf8');
+      console.log('bump script', rel);
+    } else {
+      console.log('skip (patched)', rel);
+    }
     return;
   }
 

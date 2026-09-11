@@ -1,0 +1,5 @@
+ticker,sector,provisional_group,status,notes
+001740,chemical,"화학 유통",needs_review,"SK네트웍스 — 화학 근거 약함, 제외/이동 확정 대기(잠정 화학 유통)"
+005090,chemical,"정유·석유제품",needs_review,"SGC에너지 — 발전 비중, 정유·석유제품 잠정"
+001430,metal,"특수강·단조",needs_review,"세아베스틸지주 — 지주/특수강 잠정"
+001530,metal,"비철 가공·첨단금속",needs_review,"DI동일 — 지주 성격 잠정"

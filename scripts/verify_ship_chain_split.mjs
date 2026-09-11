@@ -1,5 +1,6 @@
 /**
  * Verifies the approved ship chain split in data, UI, SEO rows and overrides.
+ * (Updated for §0-4C 8-group ship taxonomy.)
  */
 import fs from 'fs';
 import { dirname, join } from 'path';
@@ -54,9 +55,10 @@ check(rows.length === companies.length, `prerender rows: expected ${companies.le
 const byTicker = new Map(companies.map((c) => [c.ticker, c.chain]));
 for (const [ticker, chain] of rows) check(byTicker.get(ticker) === chain, `prerender ${ticker}: ${chain} != ${byTicker.get(ticker)}`);
 
-for (const sample of ['선박엔진', '피팅·밸브', '선박평형수 계측', '해양플랜트', 'LNG 보냉재']) {
+for (const sample of ['선박엔진', '피팅·밸브', 'LNG 보냉재', '해양플랜트', '개조·MRO']) {
   const inferred = inferChain(sample, 'ship', colorKeys);
   check(!SHIP.retiredChains.includes(inferred), `inferChain('${sample}') returned retired ${inferred}`);
+  check(SHIP.expectedChains.includes(inferred), `inferChain('${sample}') not in expected: ${inferred}`);
 }
 
 console.log('Ship chain split verification');

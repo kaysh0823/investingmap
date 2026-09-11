@@ -1,0 +1,66 @@
+sector,ticker,name,new_group,tags,needs_review
+auto,005380,"현대차",완성차,"",false
+auto,000270,"기아",완성차,"",false
+auto,012330,"현대모비스",섀시·안전,"",true
+auto,307950,"현대오토에버",전장·차량 소프트웨어,"",false
+auto,161390,"한국타이어앤테크놀로지",타이어,"",false
+auto,018880,"한온시스템",열관리,"",false
+auto,007340,"DN오토모티브",섀시·안전,"",true
+auto,005850,"에스엘",전장·차량 소프트웨어,"",false
+auto,000240,"한국앤컴퍼니",타이어,"",false
+auto,204320,"HL만도",섀시·안전,"",false
+auto,073240,"금호타이어",타이어,"",false
+auto,011210,"현대위아",구동·파워트레인,"",false
+auto,437730,"삼현",구동·파워트레인,"로봇 액추에이터|자동차 부품|전장",false
+auto,064960,"SNT모티브",구동·파워트레인,"",false
+auto,002350,"넥센타이어",타이어,"",false
+auto,025540,"한국단자",전장·차량 소프트웨어,"",false
+auto,003620,"KG모빌리티",완성차,"",false
+auto,015750,"성우하이텍",차체·내외장,"",false
+auto,009900,"명신산업",차체·내외장,"",false
+auto,403550,"쏘카",유통·모빌리티 서비스,"",false
+auto,097520,"엠씨넥스",전장·차량 소프트웨어,"",false
+auto,200880,"서연이화",차체·내외장,"",false
+auto,381970,"케이카",유통·모빌리티 서비스,"",false
+ship,329180,"HD현대중공업",조선,"",false
+ship,042660,"한화오션",조선,"",false
+ship,009540,"HD한국조선해양",조선,"",false
+ship,010140,"삼성중공업",조선,"",false
+ship,443060,"HD현대마린솔루션",유지보수·개조,"",false
+ship,082740,"한화엔진",엔진·추진,"",false
+ship,439260,"대한조선",조선,"",false
+ship,071970,"HD현대마린엔진",엔진·추진,"",false
+ship,097230,"HJ중공업",조선,"",false
+ship,017960,"한국카본",탱크·보냉,"",false
+ship,077970,"STX엔진",엔진·추진,"",false
+ship,014620,"성광벤드",배관·의장,"",false
+ship,023160,"태광",배관·의장,"",false
+ship,044490,"태웅",선체·구조물,"",true
+ship,075580,"세진중공업",선체·구조물,"",false
+ship,033500,"동성화인텍",탱크·보냉,"",false
+ship,460930,"현대힘스",선체·구조물,"",false
+ship,013030,"하이록코리아",배관·의장,"",false
+shipping,011200,"HMM",컨테이너 해운,"",false
+shipping,028670,"팬오션",벌크 해운,"",false
+shipping,005880,"대한해운",벌크 해운,"",false
+shipping,003280,"흥아해운",컨테이너 해운,"",false
+defense,012450,"한화에어로스페이스",육상체계,"지상방산|항공엔진|우주|해양|K9|천무",true
+defense,079550,"LIG디펜스앤에어로스페이스",유도무기·탄약,"미사일|레이더|C4ISR",false
+defense,064350,"현대로템",육상체계,"",false
+defense,272210,"한화시스템",방산전자·센서,"",false
+defense,047810,"한국항공우주",항공체계·엔진,"",false
+defense,103140,"풍산",유도무기·탄약,"",false
+defense,082920,"비츠로셀",소재·핵심부품,"",false
+defense,347700,"스피어",소재·핵심부품,"",false
+defense,003570,"SNT다이내믹스",육상체계,"",false
+defense,099320,"쎄트렉아이",우주·위성,"",false
+defense,214430,"아이쓰리시스템",방산전자·센서,"",false
+
+# cross_moves
+ticker,from,to,chain,note
+189300,defense,telecom,위성통신,방산 태그·telecom 세부그룹은 테크 배치
+437730,auto,auto,구동·파워트레인,배치B 편입 후 세부배정
+
+# mcap_floor_skip
+000430,auto,섀시·안전,대원강업,시총 3천억 미만
+010690,auto,차체·내외장,화신,시총 3천억 미만

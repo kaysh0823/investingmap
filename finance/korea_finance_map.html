@@ -449,16 +449,16 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=17"></script>
-  <script src="../js/map_i18n.js"></script>
-  <script src="../js/map_cross_sector.js?v=1"></script>
+<script src="../js/live_quotes.js?v=18"></script>
+  <script src="../js/map_i18n.js?v=15"></script>
+  <script src="../js/map_cross_sector.js?v=2"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
-  <script src="../js/map_momentum.js?v=12"></script>
+  <script src="../js/map_momentum.js?v=13"></script>
   <script src="../js/map_volatility.js?v=9"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
@@ -1102,7 +1102,6 @@
     .node-dim {
       opacity: .15
     }
-
     /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
@@ -2378,9 +2377,9 @@
       <td class="fin-cell">10.46</td>
       <td class="fin-cell">0.98</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">금융지주·은행</td>
-      <td class="products-cell">국민은행·증권·보험·카드</td>
+      <td class="products-cell">국민은행·증권·보험·카드 · 개인 · 기업</td>
       <td><div class="partners-list">JPMorgan Chase, HSBC</div></td>
     </tr>
           <tr data-ticker="032830">
@@ -2401,7 +2400,7 @@
       <td class="fin-cell">30.06</td>
       <td class="fin-cell">1.10</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">생명보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">생명보험</td>
       <td class="products-cell">종신·연금·보장성</td>
       <td><div class="partners-list">AIG, MetLife, Prudential</div></td>
@@ -2424,9 +2423,9 @@
       <td class="fin-cell">10.15</td>
       <td class="fin-cell">0.82</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">금융지주·은행</td>
-      <td class="products-cell">신한은행·카드·투자증권</td>
+      <td class="products-cell">신한은행·카드·투자증권 · 개인 · 기업</td>
       <td><div class="partners-list">JPMorgan Chase, Citigroup</div></td>
     </tr>
           <tr data-ticker="086790">
@@ -2447,7 +2446,7 @@
       <td class="fin-cell">8.67</td>
       <td class="fin-cell">0.73</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">금융지주·은행</td>
       <td class="products-cell">하나은행·증권·카드</td>
       <td><div class="partners-list">HSBC, JPMorgan Chase</div></td>
@@ -2470,7 +2469,7 @@
       <td class="fin-cell">13.77</td>
       <td class="fin-cell">1.31</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">손해보험·재보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">손해보험</td>
       <td class="products-cell">자동차·장기·일반보험</td>
       <td><div class="partners-list">Allianz, AIG</div></td>
@@ -2493,7 +2492,7 @@
       <td class="fin-cell">7.69</td>
       <td class="fin-cell">0.63</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">금융지주·은행</td>
       <td class="products-cell">우리은행·카드·캐피탈</td>
       <td><div class="partners-list">Citigroup, HSBC</div></td>
@@ -2516,7 +2515,7 @@
       <td class="fin-cell">8.44</td>
       <td class="fin-cell">1.78</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">비은행 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">금융지주</td>
       <td class="products-cell">메리츠증권·화재·캐피탈</td>
       <td><div class="partners-list">Goldman Sachs, Morgan Stanley</div></td>
@@ -2539,7 +2538,7 @@
       <td class="fin-cell">19.60</td>
       <td class="fin-cell">2.30</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권·WM</td>
       <td class="products-cell">브로커리지·IB·자산관리</td>
       <td><div class="partners-list">Morgan Stanley, BlackRock</div></td>
@@ -2562,7 +2561,7 @@
       <td class="fin-cell">6.85</td>
       <td class="fin-cell">0.48</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">국책·중소기업 금융</td>
       <td class="products-cell">중소기업 대출·정책금융</td>
       <td><div class="partners-list">ADB, IFC</div></td>
@@ -2585,7 +2584,7 @@
       <td class="fin-cell">5.01</td>
       <td class="fin-cell">0.83</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">손해보험·재보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">손해보험</td>
       <td class="products-cell">자동차·장기보험</td>
       <td><div class="partners-list">Allianz, Munich Re</div></td>
@@ -2608,9 +2607,9 @@
       <td class="fin-cell">6.95</td>
       <td class="fin-cell">1.17</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">비은행 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">금융지주·증권</td>
-      <td class="products-cell">한국투자증권·자산운용</td>
+      <td class="products-cell">한국투자증권·자산운용 · 비은행 · 증권계열</td>
       <td><div class="partners-list">Morgan Stanley, Goldman Sachs</div></td>
     </tr>
           <tr data-ticker="323410">
@@ -2631,7 +2630,7 @@
       <td class="fin-cell">23.56</td>
       <td class="fin-cell">1.68</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">인터넷전문은행</td>
       <td class="products-cell">모바일·인터넷 전문은행</td>
       <td><div class="partners-list">JPMorgan Chase, HSBC</div></td>
@@ -2654,7 +2653,7 @@
       <td class="fin-cell">11.02</td>
       <td class="fin-cell">1.26</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·IB·리서치</td>
       <td><div class="partners-list">JPMorgan Chase, Goldman Sachs</div></td>
@@ -2677,7 +2676,7 @@
       <td class="fin-cell">10.53</td>
       <td class="fin-cell">1.31</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">WM·브로커리지·IB</td>
       <td><div class="partners-list">Goldman Sachs, Morgan Stanley</div></td>
@@ -2700,7 +2699,7 @@
       <td class="fin-cell">8.19</td>
       <td class="fin-cell">1.43</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">온라인·리테일 증권</td>
       <td class="products-cell">온라인 트레이딩·파생</td>
       <td><div class="partners-list">Interactive Brokers, Charles Schwab</div></td>
@@ -2723,9 +2722,9 @@
       <td class="fin-cell">133.28</td>
       <td class="fin-cell">3.18</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">결제·핀테크</span></td>
       <td style="font-size:12px;color:var(--text-muted)">간편결제·핀테크</td>
-      <td class="products-cell">간편결제·디지털 금융 플랫폼</td>
+      <td class="products-cell">간편결제·디지털 금융 플랫폼 · 핀테크 · 개인</td>
       <td><div class="partners-list">Visa, Mastercard</div></td>
     </tr>
           <tr data-ticker="175330">
@@ -2746,7 +2745,7 @@
       <td class="fin-cell">7.38</td>
       <td class="fin-cell">0.84</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">지방금융지주</td>
       <td class="products-cell">전북·광주은행</td>
       <td><div class="partners-list">HSBC</div></td>
@@ -2769,9 +2768,9 @@
       <td class="fin-cell">8.51</td>
       <td class="fin-cell">0.62</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">카드·캐피탈</span></td>
+      <td><span class="chain-tag">카드·캐피탈·여신금융</span></td>
       <td style="font-size:12px;color:var(--text-muted)">신용카드</td>
-      <td class="products-cell">카드·할부·멤버십</td>
+      <td class="products-cell">카드·할부·멤버십 · 여신 · 개인</td>
       <td><div class="partners-list">Visa, Mastercard</div></td>
     </tr>
           <tr data-ticker="088350">
@@ -2792,7 +2791,7 @@
       <td class="fin-cell">7.17</td>
       <td class="fin-cell">0.27</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">생명보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">생명보험</td>
       <td class="products-cell">종신·연금·보장성</td>
       <td><div class="partners-list">MetLife, Prudential</div></td>
@@ -2815,7 +2814,7 @@
       <td class="fin-cell">7.03</td>
       <td class="fin-cell">0.51</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">지방금융지주</td>
       <td class="products-cell">부산·경남은행</td>
       <td><div class="partners-list">HSBC</div></td>
@@ -2838,7 +2837,7 @@
       <td class="fin-cell">3.02</td>
       <td class="fin-cell">0.60</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">손해보험·재보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">손해보험</td>
       <td class="products-cell">자동차·장기·해상</td>
       <td><div class="partners-list">Allianz, Lloyd's</div></td>
@@ -2861,7 +2860,7 @@
       <td class="fin-cell">12.07</td>
       <td class="fin-cell">0.62</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">손해보험·재보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">보증보험</td>
       <td class="products-cell">계약·납품·하자 보증보험</td>
       <td><div class="partners-list">AIG, Lloyd's</div></td>
@@ -2884,7 +2883,7 @@
       <td class="fin-cell">7.05</td>
       <td class="fin-cell">0.46</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">지방금융지주</td>
       <td class="products-cell">대구은행·증권</td>
       <td><div class="partners-list">HSBC</div></td>
@@ -2907,7 +2906,7 @@
       <td class="fin-cell">28.24</td>
       <td class="fin-cell">1.51</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">생명보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">생명보험</td>
       <td class="products-cell">종신·연금·보장성 생명보험</td>
       <td><div class="partners-list">MetLife, Prudential</div></td>
@@ -2930,7 +2929,7 @@
       <td class="fin-cell">8.56</td>
       <td class="fin-cell">0.65</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">손해보험·재보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">재보험</td>
       <td class="products-cell">생명·손해 재보험</td>
       <td><div class="partners-list">Munich Re, Lloyd's</div></td>
@@ -2953,7 +2952,7 @@
       <td class="fin-cell">13.73</td>
       <td class="fin-cell">0.82</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·IB·자산관리</td>
       <td><div class="partners-list">Morgan Stanley, Goldman Sachs</div></td>
@@ -2976,7 +2975,7 @@
       <td class="fin-cell">22.35</td>
       <td class="fin-cell">1.14</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">인터넷전문은행</td>
       <td class="products-cell">모바일·인터넷 전문은행</td>
       <td><div class="partners-list">JPMorgan Chase, HSBC</div></td>
@@ -2999,7 +2998,7 @@
       <td class="fin-cell">9.70</td>
       <td class="fin-cell">0.78</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">생명보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">생명보험</td>
       <td class="products-cell">종신·연금·보장성 생명보험</td>
       <td><div class="partners-list">MetLife, Prudential</div></td>
@@ -3022,7 +3021,7 @@
       <td class="fin-cell">12.27</td>
       <td class="fin-cell">0.56</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·IB</td>
       <td><div class="partners-list">Morgan Stanley</div></td>
@@ -3045,7 +3044,7 @@
       <td class="fin-cell">8.64</td>
       <td class="fin-cell">0.58</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·IB·WM</td>
       <td><div class="partners-list">Morgan Stanley, Goldman Sachs</div></td>
@@ -3068,7 +3067,7 @@
       <td class="fin-cell">12.53</td>
       <td class="fin-cell">0.62</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">증권</td>
       <td class="products-cell">브로커리지·IB</td>
       <td><div class="partners-list">Goldman Sachs</div></td>
@@ -3091,7 +3090,7 @@
       <td class="fin-cell">3.50</td>
       <td class="fin-cell">0.37</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">손해보험·재보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">손해보험</td>
       <td class="products-cell">자동차·장기보험</td>
       <td><div class="partners-list">Allianz</div></td>
@@ -3114,7 +3113,7 @@
       <td class="fin-cell">11.11</td>
       <td class="fin-cell">1.84</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">금융정보·평가</span></td>
       <td style="font-size:12px;color:var(--text-muted)">신용평가·정보</td>
       <td class="products-cell">신용평가·기업·개인 신용정보</td>
       <td><div class="partners-list">—</div></td>
@@ -3137,7 +3136,7 @@
       <td class="fin-cell">11.25</td>
       <td class="fin-cell">0.54</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·WM</td>
       <td><div class="partners-list">Yuanta Financial</div></td>
@@ -3160,7 +3159,7 @@
       <td class="fin-cell">66.67</td>
       <td class="fin-cell">5.45</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">자산운용·PE·VC</span></td>
       <td style="font-size:12px;color:var(--text-muted)">벤처투자</td>
       <td class="products-cell">벤처·성장기업 투자</td>
       <td><div class="partners-list">BlackRock, Morgan Stanley</div></td>
@@ -3183,7 +3182,7 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">—</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">부동산금융·투자기구</span></td>
       <td style="font-size:12px;color:var(--text-muted)">부동산투자회사</td>
       <td class="products-cell">부동산 간접투자</td>
       <td><div class="partners-list">BlackRock</div></td>
@@ -3206,7 +3205,7 @@
       <td class="fin-cell">12.02</td>
       <td class="fin-cell">0.96</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">보험</span></td>
+      <td><span class="chain-tag">손해보험·재보험</span></td>
       <td style="font-size:12px;color:var(--text-muted)">손해보험</td>
       <td class="products-cell">자동차·장기·일반보험</td>
       <td><div class="partners-list">Allianz, AIG</div></td>
@@ -3229,7 +3228,7 @@
       <td class="fin-cell">24.24</td>
       <td class="fin-cell">1.16</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·IB·리서치</td>
       <td><div class="partners-list">Morgan Stanley, Goldman Sachs</div></td>
@@ -3252,7 +3251,7 @@
       <td class="fin-cell">12.12</td>
       <td class="fin-cell">0.66</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·IB·WM</td>
       <td><div class="partners-list">Morgan Stanley, Goldman Sachs</div></td>
@@ -3275,7 +3274,7 @@
       <td class="fin-cell">6.62</td>
       <td class="fin-cell">2.23</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">보험판매·중개</span></td>
       <td style="font-size:12px;color:var(--text-muted)">보험대리(GA)</td>
       <td class="products-cell">생·손보 GA·보험 중개</td>
       <td><div class="partners-list">—</div></td>
@@ -3298,7 +3297,7 @@
       <td class="fin-cell">3.86</td>
       <td class="fin-cell">0.55</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">자산운용·PE·VC</span></td>
       <td style="font-size:12px;color:var(--text-muted)">기술투자</td>
       <td class="products-cell">기술·벤처 투자</td>
       <td><div class="partners-list">BlackRock, JPMorgan Chase</div></td>
@@ -3321,7 +3320,7 @@
       <td class="fin-cell">9.23</td>
       <td class="fin-cell">0.40</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">증권·IB</td>
       <td class="products-cell">브로커리지·기업금융</td>
       <td><div class="partners-list">Morgan Stanley</div></td>
@@ -3344,7 +3343,7 @@
       <td class="fin-cell">17.68</td>
       <td class="fin-cell">3.37</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">금융정보·평가</span></td>
       <td style="font-size:12px;color:var(--text-muted)">신용평가</td>
       <td class="products-cell">기업·채권 신용평가</td>
       <td><div class="partners-list">—</div></td>
@@ -3367,7 +3366,7 @@
       <td class="fin-cell">5.29</td>
       <td class="fin-cell">0.39</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">종합증권</td>
       <td class="products-cell">브로커리지·IB·WM</td>
       <td><div class="partners-list">Morgan Stanley, Goldman Sachs</div></td>
@@ -3390,7 +3389,7 @@
       <td class="fin-cell">6.68</td>
       <td class="fin-cell">0.38</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">증권</td>
       <td class="products-cell">브로커리지·IB</td>
       <td><div class="partners-list">Morgan Stanley</div></td>
@@ -3413,7 +3412,7 @@
       <td class="fin-cell">117.29</td>
       <td class="fin-cell">3.69</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">자산운용·PE·VC</span></td>
       <td style="font-size:12px;color:var(--text-muted)">IB·벤처투자</td>
       <td class="products-cell">벤처·PE 투자</td>
       <td><div class="partners-list">Goldman Sachs, BlackRock</div></td>
@@ -3436,7 +3435,7 @@
       <td class="fin-cell">54.38</td>
       <td class="fin-cell">0.72</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">은행·금융지주</span></td>
+      <td><span class="chain-tag">은행·은행계 금융그룹</span></td>
       <td style="font-size:12px;color:var(--text-muted)">지방은행</td>
       <td class="products-cell">지역·중소기업·리테일 금융</td>
       <td><div class="partners-list">HSBC</div></td>
@@ -3459,7 +3458,7 @@
       <td class="fin-cell">17.95</td>
       <td class="fin-cell">0.47</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">증권·자산운용</span></td>
+      <td><span class="chain-tag">증권</span></td>
       <td style="font-size:12px;color:var(--text-muted)">온라인·리테일 증권</td>
       <td class="products-cell">온라인 트레이딩</td>
       <td><div class="partners-list">Interactive Brokers</div></td>
@@ -3482,7 +3481,7 @@
       <td class="fin-cell">16.93</td>
       <td class="fin-cell">1.00</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">자산운용·PE·VC</span></td>
       <td style="font-size:12px;color:var(--text-muted)">PE·자산운용</td>
       <td class="products-cell">PE·사모펀드·자산운용</td>
       <td><div class="partners-list">BlackRock, Morgan Stanley</div></td>
@@ -3505,7 +3504,7 @@
       <td class="fin-cell">10.33</td>
       <td class="fin-cell">1.35</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">기타금융</span></td>
+      <td><span class="chain-tag">보험판매·중개</span></td>
       <td style="font-size:12px;color:var(--text-muted)">보험대리(GA)</td>
       <td class="products-cell">생·손보 GA·보험 중개</td>
       <td><div class="partners-list">—</div></td>
@@ -3584,7 +3583,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"은행·금융지주":"#42A5F5","증권·자산운용":"#66BB6A","보험":"#FFA726","카드·캐피탈":"#AB47BC","기타금융":"#78909C"};
+    const CHAIN_COLORS = {"은행·은행계 금융그룹":"#42A5F5","비은행 금융그룹":"#5C6BC0","증권":"#66BB6A","생명보험":"#FFA726","손해보험·재보험":"#FF8A65","카드·캐피탈·여신금융":"#AB47BC","자산운용·PE·VC":"#26A69A","결제·핀테크":"#7E57C2","금융정보·평가":"#78909C","보험판매·중개":"#FFCA28","부동산금융·투자기구":"#8D6E63"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -3647,7 +3646,7 @@
 
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
 
-        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
+        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크 (수정중)",
@@ -3684,18 +3683,30 @@
         "sbSize": "노드 크기",
         "sbHow": "조작법",
         "chainLabel": {
-            "은행·금융지주": "은행·금융지주",
-            "증권·자산운용": "증권·자산운용",
-            "보험": "보험",
-            "카드·캐피탈": "카드·캐피탈",
-            "기타금융": "기타금융"
+            "은행·은행계 금융그룹": "은행·은행계 금융그룹",
+            "비은행 금융그룹": "비은행 금융그룹",
+            "증권": "증권",
+            "생명보험": "생명보험",
+            "손해보험·재보험": "손해보험·재보험",
+            "카드·캐피탈·여신금융": "카드·캐피탈·여신금융",
+            "자산운용·PE·VC": "자산운용·PE·VC",
+            "결제·핀테크": "결제·핀테크",
+            "금융정보·평가": "금융정보·평가",
+            "보험판매·중개": "보험판매·중개",
+            "부동산금융·투자기구": "부동산금융·투자기구"
         },
         "chainFilter": {
-            "은행·금융지주": "은행·금융지주",
-            "증권·자산운용": "증권·자산운용",
-            "보험": "보험",
-            "카드·캐피탈": "카드·캐피탈",
-            "기타금융": "기타금융"
+            "은행·은행계 금융그룹": "은행",
+            "비은행 금융그룹": "비은행",
+            "증권": "증권",
+            "생명보험": "생명",
+            "손해보험·재보험": "손보·재보",
+            "카드·캐피탈·여신금융": "카드·여신",
+            "자산운용·PE·VC": "운용·PE/VC",
+            "결제·핀테크": "결제·핀테크",
+            "금융정보·평가": "정보·평가",
+            "보험판매·중개": "보험판매",
+            "부동산금융·투자기구": "부동산금융"
         },
         "allFilter": "전체",
         "kosp": "KOSPI",
@@ -3781,7 +3792,7 @@
 
         "momentumNoData": "No companies have RS, price-position and turnover data.",
 
-        "momentumLegend": "Color = 1-day return · size = daily turnover",
+        "momentumLegend": "Color = 1-day return · size = daily turnover · vertical lines = market index RS",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
         "tabGraph": "🌐 Relationship network (WIP)",
@@ -3818,18 +3829,30 @@
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
-            "은행·금융지주": "Banks & holdings",
-            "증권·자산운용": "Securities & AM",
-            "보험": "Insurance",
-            "카드·캐피탈": "Cards & capital",
-            "기타금융": "Other finance"
+            "은행·은행계 금융그룹": "Bank & banking groups",
+            "비은행 금융그룹": "Non-bank financial groups",
+            "증권": "Securities",
+            "생명보험": "Life insurance",
+            "손해보험·재보험": "P&C / reinsurance",
+            "카드·캐피탈·여신금융": "Card, capital & consumer finance",
+            "자산운용·PE·VC": "Asset mgmt / PE / VC",
+            "결제·핀테크": "Payments & fintech",
+            "금융정보·평가": "Financial info & ratings",
+            "보험판매·중개": "Insurance brokerage",
+            "부동산금융·투자기구": "RE finance / vehicles"
         },
         "chainFilter": {
-            "은행·금융지주": "Banks & holdings",
-            "증권·자산운용": "Securities & AM",
-            "보험": "Insurance",
-            "카드·캐피탈": "Cards & capital",
-            "기타금융": "Other finance"
+            "은행·은행계 금융그룹": "Banks",
+            "비은행 금융그룹": "Non-bank",
+            "증권": "Securities",
+            "생명보험": "Life",
+            "손해보험·재보험": "P&C",
+            "카드·캐피탈·여신금융": "Card/capital",
+            "자산운용·PE·VC": "AM/PE/VC",
+            "결제·핀테크": "Fintech",
+            "금융정보·평가": "Info/ratings",
+            "보험판매·중개": "Brokerage",
+            "부동산금융·투자기구": "RE finance"
         },
         "allFilter": "All",
         "kosp": "KOSPI",
@@ -3866,350 +3889,351 @@
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
-        id: 'kb_fin', name: 'KB금융', nameEn: 'KB Financial Group', ticker: '105560', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'kb_fin', name: 'KB금융', nameEn: 'KB Financial Group', ticker: '105560', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '금융지주·은행', semTypeEn: 'Bank holding',
-        products: '국민은행·증권·보험·카드', productsEn: 'Bank, securities, insurance, card',
+        products: '국민은행·증권·보험·카드 · 개인 · 기업', productsEn: 'Bank, securities, insurance, card',
         revenue: '61.01조원', mcapWon: 61006290248000, per: 10.46, pbr: 0.98, revTier: 3, partners: ['jpmorgan', 'hsbc']
       },
 
       {
-        id: 'samsung_life', name: '삼성생명', nameEn: 'Samsung Life Insurance', ticker: '032830', market: 'KOSPI', chain: '보험',
+        id: 'samsung_life', name: '삼성생명', nameEn: 'Samsung Life Insurance', ticker: '032830', market: 'KOSPI', chain: '생명보험',
         semType: '생명보험', semTypeEn: 'Life insurance',
         products: '종신·연금·보장성', productsEn: 'Life, annuity, protection',
         revenue: '59.50조원', mcapWon: 59500000000000, per: 30.06, pbr: 1.1, revTier: 3, partners: ['aig', 'metlife', 'prudential']
       },
 
       {
-        id: 'shinhan', name: '신한지주', nameEn: 'ShinhanFinancialGroup Co.,Ltd.', ticker: '055550', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'shinhan', name: '신한지주', nameEn: 'ShinhanFinancialGroup Co.,Ltd.', ticker: '055550', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '금융지주·은행', semTypeEn: 'Bank holding',
-        products: '신한은행·카드·투자증권', productsEn: 'Bank, card, securities',
+        products: '신한은행·카드·투자증권 · 개인 · 기업', productsEn: 'Bank, card, securities',
         revenue: '51.78조원', mcapWon: 51780361361700, per: 10.15, pbr: 0.82, revTier: 3, partners: ['jpmorgan', 'citi']
       },
 
       {
-        id: 'hana', name: '하나금융지주', nameEn: 'HanaFinancialGroupInc.', ticker: '086790', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'hana', name: '하나금융지주', nameEn: 'HanaFinancialGroupInc.', ticker: '086790', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '금융지주·은행', semTypeEn: 'Bank holding',
         products: '하나은행·증권·카드', productsEn: 'Bank, securities, card',
         revenue: '36.85조원', mcapWon: 36847588556400, per: 8.67, pbr: 0.73, revTier: 3, partners: ['hsbc', 'jpmorgan']
       },
 
       {
-        id: 'samsung_fire', name: '삼성화재', nameEn: 'SamsungFire&MarineInsurance', ticker: '000810', market: 'KOSPI', chain: '보험',
+        id: 'samsung_fire', name: '삼성화재', nameEn: 'SamsungFire&MarineInsurance', ticker: '000810', market: 'KOSPI', chain: '손해보험·재보험',
         semType: '손해보험', semTypeEn: 'P&C insurance',
         products: '자동차·장기·일반보험', productsEn: 'Auto, long-term, commercial',
         revenue: '29.60조원', mcapWon: 29601274599000, per: 13.77, pbr: 1.31, revTier: 3, partners: ['allianz', 'aig']
       },
 
       {
-        id: 'woori', name: '우리금융지주', nameEn: 'WooriFinancialGroup', ticker: '316140', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'woori', name: '우리금융지주', nameEn: 'WooriFinancialGroup', ticker: '316140', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '금융지주·은행', semTypeEn: 'Bank holding',
         products: '우리은행·카드·캐피탈', productsEn: 'Bank, card, capital',
         revenue: '24.46조원', mcapWon: 24461313692400, per: 7.69, pbr: 0.63, revTier: 3, partners: ['citi', 'hsbc']
       },
 
       {
-        id: 'meritz_fin', name: '메리츠금융지주', nameEn: 'Meritz Financial Group', ticker: '138040', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'meritz_fin', name: '메리츠금융지주', nameEn: 'Meritz Financial Group', ticker: '138040', market: 'KOSPI', chain: '비은행 금융그룹',
         semType: '금융지주', semTypeEn: 'Financial holding',
         products: '메리츠증권·화재·캐피탈', productsEn: 'Securities, P&C, capital',
         revenue: '22.68조원', mcapWon: 22675555491500, per: 8.44, pbr: 1.78, revTier: 3, partners: ['goldman', 'morgan_stanley']
       },
 
       {
-        id: 'mirae', name: '미래에셋증권', nameEn: 'MIRAE ASSET SECURITIES', ticker: '006800', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'mirae', name: '미래에셋증권', nameEn: 'MIRAE ASSET SECURITIES', ticker: '006800', market: 'KOSPI', chain: '증권',
         semType: '종합증권·WM', semTypeEn: 'Full-service brokerage & WM',
         products: '브로커리지·IB·자산관리', productsEn: 'Brokerage, IB, wealth',
         revenue: '18.71조원', mcapWon: 18707075206950, per: 19.6, pbr: 2.3, revTier: 3, partners: ['morgan_stanley', 'blackrock']
       },
 
       {
-        id: 'ibk', name: '기업은행', nameEn: 'INDUSTRIALBANKOFKOREA', ticker: '024110', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'ibk', name: '기업은행', nameEn: 'INDUSTRIALBANKOFKOREA', ticker: '024110', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '국책·중소기업 금융', semTypeEn: 'SME & policy bank',
         products: '중소기업 대출·정책금융', productsEn: 'SME lending, policy finance',
         revenue: '16.51조원', mcapWon: 16506715488300, per: 6.85, pbr: 0.48, revTier: 3, partners: ['adb', 'ifc']
       },
 
       {
-        id: 'db_ins', name: 'DB손해보험', nameEn: 'DB INSURANCE', ticker: '005830', market: 'KOSPI', chain: '보험',
+        id: 'db_ins', name: 'DB손해보험', nameEn: 'DB INSURANCE', ticker: '005830', market: 'KOSPI', chain: '손해보험·재보험',
         semType: '손해보험', semTypeEn: 'P&C insurance',
         products: '자동차·장기보험', productsEn: 'Auto & long-term P&C',
         revenue: '12.82조원', mcapWon: 12818418299300, per: 5.01, pbr: 0.83, revTier: 2, partners: ['allianz', 'munich_re']
       },
 
       {
-        id: 'korea_inv', name: '한국금융지주', nameEn: 'KOREA INVESTMENT HOLDINGS', ticker: '071050', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'korea_inv', name: '한국금융지주', nameEn: 'KOREA INVESTMENT HOLDINGS', ticker: '071050', market: 'KOSPI', chain: '비은행 금융그룹',
         semType: '금융지주·증권', semTypeEn: 'Securities holding',
-        products: '한국투자증권·자산운용', productsEn: 'Brokerage & asset management',
+        products: '한국투자증권·자산운용 · 비은행 · 증권계열', productsEn: 'Brokerage & asset management',
         revenue: '10.52조원', mcapWon: 10521067289600, per: 6.95, pbr: 1.17, revTier: 2, partners: ['morgan_stanley', 'goldman']
       },
 
       {
-        id: 'finance_kakaobank', name: '카카오뱅크', nameEn: 'KakaoBank', ticker: '323410', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'finance_kakaobank', name: '카카오뱅크', nameEn: 'KakaoBank', ticker: '323410', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '인터넷전문은행', semTypeEn: 'Internet-only bank',
         products: '모바일·인터넷 전문은행', productsEn: 'Mobile and internet-only banking',
         revenue: '10.47조원', mcapWon: 10472793592150, per: 23.56, pbr: 1.68, revTier: 2, partners: ['jpmorgan', 'hsbc']
       },
 
       {
-        id: 'nh_inv', name: 'NH투자증권', nameEn: 'NH INVESTMENT & SECURITIES', ticker: '005940', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'nh_inv', name: 'NH투자증권', nameEn: 'NH INVESTMENT & SECURITIES', ticker: '005940', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·IB·리서치', productsEn: 'Brokerage, IB, research',
         revenue: '9.84조원', mcapWon: 9839342698250, per: 11.02, pbr: 1.26, revTier: 2, partners: ['jpmorgan', 'goldman']
       },
 
       {
-        id: 'samsung_sec', name: '삼성증권', nameEn: 'SamsungSecurities', ticker: '016360', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'samsung_sec', name: '삼성증권', nameEn: 'SamsungSecurities', ticker: '016360', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: 'WM·브로커리지·IB', productsEn: 'WM, brokerage, IB',
         revenue: '7.75조원', mcapWon: 7751240000000, per: 10.53, pbr: 1.31, revTier: 2, partners: ['goldman', 'morgan_stanley']
       },
 
       {
-        id: 'kiwoom', name: '키움증권', nameEn: 'KIWOOM Securities', ticker: '039490', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'kiwoom', name: '키움증권', nameEn: 'KIWOOM Securities', ticker: '039490', market: 'KOSPI', chain: '증권',
         semType: '온라인·리테일 증권', semTypeEn: 'Online retail brokerage',
         products: '온라인 트레이딩·파생', productsEn: 'Online trading, derivatives',
         revenue: '7.09조원', mcapWon: 7094759478000, per: 8.19, pbr: 1.43, revTier: 2, partners: ['interactive_brokers', 'schwab']
       },
 
       {
-        id: 'finance_kakao_pay', name: '카카오페이', nameEn: 'Kakao Pay', ticker: '377300', market: 'KOSPI', chain: '기타금융',
+        id: 'finance_kakao_pay', name: '카카오페이', nameEn: 'Kakao Pay', ticker: '377300', market: 'KOSPI', chain: '결제·핀테크',
         semType: '간편결제·핀테크', semTypeEn: 'Payments & fintech',
-        products: '간편결제·디지털 금융 플랫폼', productsEn: 'Mobile payments and digital finance platform',
+        products: '간편결제·디지털 금융 플랫폼 · 핀테크 · 개인', productsEn: 'Mobile payments and digital finance platform',
+        crossSectors: [{"sectorId":"software","labelKo":"IT·소프트웨어","labelEn":"IT & Software","shortKo":"IT·SW","shortEn":"Software","map":"software/korea_software_map.html"}],
         revenue: '6.40조원', mcapWon: 6398398000500, per: 133.28, pbr: 3.18, revTier: 2, partners: ['visa', 'mastercard']
       },
 
       {
-        id: 'jb', name: 'JB금융지주', nameEn: 'JB Financial Group Co., Ltd.', ticker: '175330', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'jb', name: 'JB금융지주', nameEn: 'JB Financial Group Co., Ltd.', ticker: '175330', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '지방금융지주', semTypeEn: 'Regional bank holding',
         products: '전북·광주은행', productsEn: 'Jeonbuk & Gwangju banks',
         revenue: '5.78조원', mcapWon: 5782176544000, per: 7.38, pbr: 0.84, revTier: 2, partners: ['hsbc']
       },
 
       {
-        id: 'samsung_card', name: '삼성카드', nameEn: 'SAMSUNG CARD CO., LTD.', ticker: '029780', market: 'KOSPI', chain: '카드·캐피탈',
+        id: 'samsung_card', name: '삼성카드', nameEn: 'SAMSUNG CARD CO., LTD.', ticker: '029780', market: 'KOSPI', chain: '카드·캐피탈·여신금융',
         semType: '신용카드', semTypeEn: 'Credit card',
-        products: '카드·할부·멤버십', productsEn: 'Cards, installments, membership',
+        products: '카드·할부·멤버십 · 여신 · 개인', productsEn: 'Cards, installments, membership',
         revenue: '5.35조원', mcapWon: 5346887819650, per: 8.51, pbr: 0.62, revTier: 2, partners: ['visa', 'mastercard']
       },
 
       {
-        id: 'hanwha_life', name: '한화생명', nameEn: 'HANWHA LIFE INSURANCE', ticker: '088350', market: 'KOSPI', chain: '보험',
+        id: 'hanwha_life', name: '한화생명', nameEn: 'HANWHA LIFE INSURANCE', ticker: '088350', market: 'KOSPI', chain: '생명보험',
         semType: '생명보험', semTypeEn: 'Life insurance',
         products: '종신·연금·보장성', productsEn: 'Life, annuity, protection',
         revenue: '4.99조원', mcapWon: 4985362200000, per: 7.17, pbr: 0.27, revTier: 2, partners: ['metlife', 'prudential']
       },
 
       {
-        id: 'bnk', name: 'BNK금융지주', nameEn: 'BNK Financial Group Inc.', ticker: '138930', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'bnk', name: 'BNK금융지주', nameEn: 'BNK Financial Group Inc.', ticker: '138930', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '지방금융지주', semTypeEn: 'Regional bank holding',
         products: '부산·경남은행', productsEn: 'Busan & Kyongnam banks',
         revenue: '4.72조원', mcapWon: 4722263767890, per: 7.03, pbr: 0.51, revTier: 2, partners: ['hsbc']
       },
 
       {
-        id: 'hyundai_marine', name: '현대해상', nameEn: 'Hyundai MARINE & FIRE INSURANCE CO.,LTD', ticker: '001450', market: 'KOSPI', chain: '보험',
+        id: 'hyundai_marine', name: '현대해상', nameEn: 'Hyundai MARINE & FIRE INSURANCE CO.,LTD', ticker: '001450', market: 'KOSPI', chain: '손해보험·재보험',
         semType: '손해보험', semTypeEn: 'P&C insurance',
         products: '자동차·장기·해상', productsEn: 'Auto, long-term, marine',
         revenue: '4.36조원', mcapWon: 4356185575000, per: 3.02, pbr: 0.6, revTier: 2, partners: ['allianz', 'lloyds']
       },
 
       {
-        id: 'finance_sgi_seoul_guarantee', name: '서울보증보험', nameEn: 'SGI Seoul Guarantee', ticker: '031210', market: 'KOSPI', chain: '보험',
+        id: 'finance_sgi_seoul_guarantee', name: '서울보증보험', nameEn: 'SGI Seoul Guarantee', ticker: '031210', market: 'KOSPI', chain: '손해보험·재보험',
         semType: '보증보험', semTypeEn: 'Surety & guarantee insurance',
         products: '계약·납품·하자 보증보험', productsEn: 'Contract, performance and warranty guarantees',
         revenue: '3.05조원', mcapWon: 3047712752700, per: 12.07, pbr: 0.62, revTier: 2, partners: ['aig', 'lloyds']
       },
 
       {
-        id: 'dgb', name: 'iM금융지주', nameEn: 'iM Financial Group', ticker: '139130', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'dgb', name: 'iM금융지주', nameEn: 'iM Financial Group', ticker: '139130', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '지방금융지주', semTypeEn: 'Regional bank holding',
         products: '대구은행·증권', productsEn: 'Daegu bank & securities',
         revenue: '2.87조원', mcapWon: 2869544952960, per: 7.05, pbr: 0.46, revTier: 2, partners: ['hsbc']
       },
 
       {
-        id: 'finance_mirae_asset_life', name: '미래에셋생명', nameEn: 'Mirae Asset Life', ticker: '085620', market: 'KOSPI', chain: '보험',
+        id: 'finance_mirae_asset_life', name: '미래에셋생명', nameEn: 'Mirae Asset Life', ticker: '085620', market: 'KOSPI', chain: '생명보험',
         semType: '생명보험', semTypeEn: 'Life insurance',
         products: '종신·연금·보장성 생명보험', productsEn: 'Life, annuity and protection products',
         revenue: '2.69조원', mcapWon: 2692785600000, per: 28.24, pbr: 1.51, revTier: 2, partners: ['metlife', 'prudential']
       },
 
       {
-        id: 'finance_korean_re', name: '코리안리', nameEn: 'Korean Re', ticker: '003690', market: 'KOSPI', chain: '보험',
+        id: 'finance_korean_re', name: '코리안리', nameEn: 'Korean Re', ticker: '003690', market: 'KOSPI', chain: '손해보험·재보험',
         semType: '재보험', semTypeEn: 'Reinsurance',
         products: '생명·손해 재보험', productsEn: 'Life and P&C reinsurance',
         revenue: '2.56조원', mcapWon: 2562454949500, per: 8.56, pbr: 0.65, revTier: 2, partners: ['munich_re', 'lloyds']
       },
 
       {
-        id: 'finance_shinyoung_securities', name: '신영증권', nameEn: 'Shinyoung Securities', ticker: '001720', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'finance_shinyoung_securities', name: '신영증권', nameEn: 'Shinyoung Securities', ticker: '001720', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·IB·자산관리', productsEn: 'Brokerage, IB and wealth management',
         revenue: '2.43조원', mcapWon: 2433120000000, per: 13.73, pbr: 0.82, revTier: 2, partners: ['morgan_stanley', 'goldman']
       },
 
       {
-        id: 'finance_k_bank', name: '케이뱅크', nameEn: 'K bank', ticker: '279570', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'finance_k_bank', name: '케이뱅크', nameEn: 'K bank', ticker: '279570', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '인터넷전문은행', semTypeEn: 'Internet-only bank',
         products: '모바일·인터넷 전문은행', productsEn: 'Mobile and internet-only banking',
         revenue: '2.27조원', mcapWon: 2271892845600, per: 22.35, pbr: 1.14, revTier: 2, partners: ['jpmorgan', 'hsbc']
       },
 
       {
-        id: 'finance_tongyang_life', name: '동양생명', nameEn: 'Tongyang Life', ticker: '082640', market: 'KOSPI', chain: '보험',
+        id: 'finance_tongyang_life', name: '동양생명', nameEn: 'Tongyang Life', ticker: '082640', market: 'KOSPI', chain: '생명보험',
         semType: '생명보험', semTypeEn: 'Life insurance',
         products: '종신·연금·보장성 생명보험', productsEn: 'Life, annuity and protection products',
         revenue: '1.29조원', mcapWon: 1287516293250, per: 9.7, pbr: 0.78, revTier: 2, partners: ['metlife', 'prudential']
       },
 
       {
-        id: 'daishin', name: '대신증권', nameEn: 'DaishinSecurities', ticker: '003540', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'daishin', name: '대신증권', nameEn: 'DaishinSecurities', ticker: '003540', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·IB', productsEn: 'Brokerage, IB',
         revenue: '1.26조원', mcapWon: 1263152339000, per: 12.27, pbr: 0.56, revTier: 2, partners: ['morgan_stanley']
       },
 
       {
-        id: 'finance_kyobo_securities', name: '교보증권', nameEn: 'Kyobo Securities', ticker: '030610', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'finance_kyobo_securities', name: '교보증권', nameEn: 'Kyobo Securities', ticker: '030610', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·IB·WM', productsEn: 'Brokerage, IB and wealth management',
         revenue: '1.15조원', mcapWon: 1151025906100, per: 8.64, pbr: 0.58, revTier: 2, partners: ['morgan_stanley', 'goldman']
       },
 
       {
-        id: 'hanwha_inv', name: '한화투자증권', nameEn: 'HANWHA INVESTMENT & SECURITIES', ticker: '003530', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'hanwha_inv', name: '한화투자증권', nameEn: 'HANWHA INVESTMENT & SECURITIES', ticker: '003530', market: 'KOSPI', chain: '증권',
         semType: '증권', semTypeEn: 'Brokerage',
         products: '브로커리지·IB', productsEn: 'Brokerage, IB',
         revenue: '1.09조원', mcapWon: 1094193652500, per: 12.53, pbr: 0.62, revTier: 2, partners: ['goldman']
       },
 
       {
-        id: 'hanwha_gi', name: '한화손해보험', nameEn: 'Hanwha General Insurance Co.,Ltd.', ticker: '000370', market: 'KOSPI', chain: '보험',
+        id: 'hanwha_gi', name: '한화손해보험', nameEn: 'Hanwha General Insurance Co.,Ltd.', ticker: '000370', market: 'KOSPI', chain: '손해보험·재보험',
         semType: '손해보험', semTypeEn: 'P&C insurance',
         products: '자동차·장기보험', productsEn: 'Auto & long-term P&C',
         revenue: '0.98조원', mcapWon: 982941664300, per: 3.5, pbr: 0.37, revTier: 1, partners: ['allianz']
       },
 
       {
-        id: 'finance_nice_info_service', name: 'NICE평가정보', nameEn: 'NICE Info Service', ticker: '030190', market: 'KOSPI', chain: '기타금융',
+        id: 'finance_nice_info_service', name: 'NICE평가정보', nameEn: 'NICE Info Service', ticker: '030190', market: 'KOSPI', chain: '금융정보·평가',
         semType: '신용평가·정보', semTypeEn: 'Credit ratings & information',
         products: '신용평가·기업·개인 신용정보', productsEn: 'Credit ratings and corporate/consumer credit data',
         revenue: '0.95조원', mcapWon: 946867041250, per: 11.11, pbr: 1.84, revTier: 1, partners: []
       },
 
       {
-        id: 'yuant', name: '유안타증권', nameEn: 'Yuanta Securities Korea', ticker: '003470', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'yuant', name: '유안타증권', nameEn: 'Yuanta Securities Korea', ticker: '003470', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·WM', productsEn: 'Brokerage, WM',
         revenue: '0.91조원', mcapWon: 914267083990, per: 11.25, pbr: 0.54, revTier: 1, partners: ['yuanta_tw']
       },
 
       {
-        id: 'mirae_vent', name: '미래에셋벤처투자', nameEn: 'Mirae Asset Venture Investment Co., Ltd', ticker: '100790', market: 'KOSDAQ', chain: '기타금융',
+        id: 'mirae_vent', name: '미래에셋벤처투자', nameEn: 'Mirae Asset Venture Investment Co., Ltd', ticker: '100790', market: 'KOSDAQ', chain: '자산운용·PE·VC',
         semType: '벤처투자', semTypeEn: 'Venture investment',
         products: '벤처·성장기업 투자', productsEn: 'Venture & growth equity',
         revenue: '0.80조원', mcapWon: 795746258440, per: 66.67, pbr: 5.45, revTier: 1, partners: ['blackrock', 'morgan_stanley']
       },
 
       {
-        id: 'maps_realty', name: '맵스리얼티', nameEn: 'MIRAEASSET MAPS REALTY INVESTMENT COMPANY', ticker: '094800', market: 'KOSPI', chain: '기타금융',
+        id: 'maps_realty', name: '맵스리얼티', nameEn: 'MIRAEASSET MAPS REALTY INVESTMENT COMPANY', ticker: '094800', market: 'KOSPI', chain: '부동산금융·투자기구',
         semType: '부동산투자회사', semTypeEn: 'Realty investment company',
         products: '부동산 간접투자', productsEn: 'Real-estate investment',
         revenue: '0.67조원', mcapWon: 667478839890, per: null, pbr: null, revTier: 1, partners: ['blackrock']
       },
 
       {
-        id: 'finance_lotte_insurance', name: '롯데손해보험', nameEn: 'Lotte Insurance', ticker: '000400', market: 'KOSPI', chain: '보험',
+        id: 'finance_lotte_insurance', name: '롯데손해보험', nameEn: 'Lotte Insurance', ticker: '000400', market: 'KOSPI', chain: '손해보험·재보험',
         semType: '손해보험', semTypeEn: 'P&C insurance',
         products: '자동차·장기·일반보험', productsEn: 'Auto, long-term and commercial insurance',
         revenue: '0.64조원', mcapWon: 636189456000, per: 12.02, pbr: 0.96, revTier: 1, partners: ['allianz', 'aig']
       },
 
       {
-        id: 'finance_sk_securities', name: 'SK증권', nameEn: 'SK Securities', ticker: '001510', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'finance_sk_securities', name: 'SK증권', nameEn: 'SK Securities', ticker: '001510', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·IB·리서치', productsEn: 'Brokerage, IB and research',
         revenue: '0.56조원', mcapWon: 562047056550, per: 24.24, pbr: 1.16, revTier: 1, partners: ['morgan_stanley', 'goldman']
       },
 
       {
-        id: 'finance_bookook_securities', name: '부국증권', nameEn: 'Bookook Securities', ticker: '001270', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'finance_bookook_securities', name: '부국증권', nameEn: 'Bookook Securities', ticker: '001270', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·IB·WM', productsEn: 'Brokerage, IB and wealth management',
         revenue: '0.54조원', mcapWon: 540271060600, per: 12.12, pbr: 0.66, revTier: 1, partners: ['morgan_stanley', 'goldman']
       },
 
       {
-        id: 'finance_inca_financial', name: '인카금융서비스', nameEn: 'Inca Financial', ticker: '211050', market: 'KOSDAQ', chain: '기타금융',
+        id: 'finance_inca_financial', name: '인카금융서비스', nameEn: 'Inca Financial', ticker: '211050', market: 'KOSDAQ', chain: '보험판매·중개',
         semType: '보험대리(GA)', semTypeEn: 'Insurance general agency',
         products: '생·손보 GA·보험 중개', productsEn: 'Life and P&C insurance general agency',
         revenue: '0.52조원', mcapWon: 524657947050, per: 6.62, pbr: 2.23, revTier: 1, partners: []
       },
 
       {
-        id: 'woori_tech_inv', name: '우리기술투자', nameEn: 'Woori Technology Investment Co., Ltd', ticker: '041190', market: 'KOSDAQ', chain: '기타금융',
+        id: 'woori_tech_inv', name: '우리기술투자', nameEn: 'Woori Technology Investment Co., Ltd', ticker: '041190', market: 'KOSDAQ', chain: '자산운용·PE·VC',
         semType: '기술투자', semTypeEn: 'Technology investment',
         products: '기술·벤처 투자', productsEn: 'Tech & venture investment',
         revenue: '0.52조원', mcapWon: 522480000000, per: 3.86, pbr: 0.55, revTier: 1, partners: ['blackrock', 'jpmorgan']
       },
 
       {
-        id: 'hyundai_sec', name: '현대차증권', nameEn: 'HYUNDAI MOTOR SECURITIES', ticker: '001500', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'hyundai_sec', name: '현대차증권', nameEn: 'HYUNDAI MOTOR SECURITIES', ticker: '001500', market: 'KOSPI', chain: '증권',
         semType: '증권·IB', semTypeEn: 'Brokerage & IB',
         products: '브로커리지·기업금융', productsEn: 'Brokerage, corporate finance',
         revenue: '0.49조원', mcapWon: 489717708480, per: 9.23, pbr: 0.4, revTier: 1, partners: ['morgan_stanley']
       },
 
       {
-        id: 'finance_korea_ratings', name: '한국기업평가', nameEn: 'Korea Ratings', ticker: '034950', market: 'KOSDAQ', chain: '기타금융',
+        id: 'finance_korea_ratings', name: '한국기업평가', nameEn: 'Korea Ratings', ticker: '034950', market: 'KOSDAQ', chain: '금융정보·평가',
         semType: '신용평가', semTypeEn: 'Credit rating',
         products: '기업·채권 신용평가', productsEn: 'Corporate and bond credit ratings',
         revenue: '0.47조원', mcapWon: 471759404600, per: 17.68, pbr: 3.37, revTier: 1, partners: []
       },
 
       {
-        id: 'finance_db_financial_investment', name: 'DB증권', nameEn: 'DB Financial Investment', ticker: '016610', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'finance_db_financial_investment', name: 'DB증권', nameEn: 'DB Financial Investment', ticker: '016610', market: 'KOSPI', chain: '증권',
         semType: '종합증권', semTypeEn: 'Full-service brokerage',
         products: '브로커리지·IB·WM', productsEn: 'Brokerage, IB and wealth management',
         revenue: '0.42조원', mcapWon: 422341570550, per: 5.29, pbr: 0.39, revTier: 1, partners: ['morgan_stanley', 'goldman']
       },
 
       {
-        id: 'eugene', name: '유진투자증권', nameEn: 'EUGENE INVESTMENT & SECURITIES', ticker: '001200', market: 'KOSPI', chain: '증권·자산운용',
+        id: 'eugene', name: '유진투자증권', nameEn: 'EUGENE INVESTMENT & SECURITIES', ticker: '001200', market: 'KOSPI', chain: '증권',
         semType: '증권', semTypeEn: 'Brokerage',
         products: '브로커리지·IB', productsEn: 'Brokerage, IB',
         revenue: '0.42조원', mcapWon: 421853250390, per: 6.68, pbr: 0.38, revTier: 1, partners: ['morgan_stanley']
       },
 
       {
-        id: 'aju_ib', name: '아주IB투자', nameEn: 'AJU IB INVESTMENT CO., LTD.', ticker: '027360', market: 'KOSDAQ', chain: '기타금융',
+        id: 'aju_ib', name: '아주IB투자', nameEn: 'AJU IB INVESTMENT CO., LTD.', ticker: '027360', market: 'KOSDAQ', chain: '자산운용·PE·VC',
         semType: 'IB·벤처투자', semTypeEn: 'IB & venture investment',
         products: '벤처·PE 투자', productsEn: 'Venture & PE investment',
         revenue: '0.39조원', mcapWon: 385848118110, per: 117.29, pbr: 3.69, revTier: 1, partners: ['goldman', 'blackrock']
       },
 
       {
-        id: 'finance_jeju_bank', name: '제주은행', nameEn: 'Jeju Bank', ticker: '006220', market: 'KOSPI', chain: '은행·금융지주',
+        id: 'finance_jeju_bank', name: '제주은행', nameEn: 'Jeju Bank', ticker: '006220', market: 'KOSPI', chain: '은행·은행계 금융그룹',
         semType: '지방은행', semTypeEn: 'Regional bank',
         products: '지역·중소기업·리테일 금융', productsEn: 'Regional, SME and retail banking',
         revenue: '0.38조원', mcapWon: 380631468990, per: 54.38, pbr: 0.72, revTier: 1, partners: ['hsbc']
       },
 
       {
-        id: 'ebest', name: 'LS증권', nameEn: 'LS SECURITIES', ticker: '078020', market: 'KOSDAQ', chain: '증권·자산운용',
+        id: 'ebest', name: 'LS증권', nameEn: 'LS SECURITIES', ticker: '078020', market: 'KOSDAQ', chain: '증권',
         semType: '온라인·리테일 증권', semTypeEn: 'Online retail brokerage',
         products: '온라인 트레이딩', productsEn: 'Online trading',
         revenue: '0.37조원', mcapWon: 373943220600, per: 17.95, pbr: 0.47, revTier: 1, partners: ['interactive_brokers']
       },
 
       {
-        id: 'finance_stic_investments', name: '스틱인베스트먼트', nameEn: 'STIC Investments', ticker: '026890', market: 'KOSPI', chain: '기타금융',
+        id: 'finance_stic_investments', name: '스틱인베스트먼트', nameEn: 'STIC Investments', ticker: '026890', market: 'KOSPI', chain: '자산운용·PE·VC',
         semType: 'PE·자산운용', semTypeEn: 'Private equity & asset management',
         products: 'PE·사모펀드·자산운용', productsEn: 'Private equity, funds and asset management',
         revenue: '0.32조원', mcapWon: 322961072210, per: 16.93, pbr: 1, revTier: 1, partners: ['blackrock', 'morgan_stanley']
       },
 
       {
-        id: 'finance_a_plus_asset', name: '에이플러스에셋', nameEn: 'A Plus Asset', ticker: '244920', market: 'KOSPI', chain: '기타금융',
+        id: 'finance_a_plus_asset', name: '에이플러스에셋', nameEn: 'A Plus Asset', ticker: '244920', market: 'KOSPI', chain: '보험판매·중개',
         semType: '보험대리(GA)', semTypeEn: 'Insurance general agency',
         products: '생·손보 GA·보험 중개', productsEn: 'Life and P&C insurance general agency',
         revenue: '0.32조원', mcapWon: 315603394280, per: 10.33, pbr: 1.35, revTier: 1, partners: []
@@ -4413,7 +4437,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '은행·금융지주', '증권·자산운용', '보험', '카드·캐피탈', '기타금융'];
+      const chains = ['all', '은행·은행계 금융그룹', '비은행 금융그룹', '증권', '생명보험', '손해보험·재보험', '카드·캐피탈·여신금융', '자산운용·PE·VC', '결제·핀테크', '금융정보·평가', '보험판매·중개', '부동산금융·투자기구'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
@@ -4439,7 +4463,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['은행·금융지주', '증권·자산운용', '보험', '카드·캐피탈', '기타금융'];
+      const chains = ['은행·은행계 금융그룹', '비은행 금융그룹', '증권', '생명보험', '손해보험·재보험', '카드·캐피탈·여신금융', '자산운용·PE·VC', '결제·핀테크', '금융정보·평가', '보험판매·중개', '부동산금융·투자기구'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -4775,6 +4799,9 @@
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,

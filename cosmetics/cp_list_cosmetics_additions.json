@@ -8,7 +8,10 @@
     "semTypeEn": "Packaging & components",
     "products": "디스펜서·펌프·화장품 용기",
     "productsEn": "Dispensers, pumps and cosmetic packaging",
-    "partners": ["albea", "aptar"],
+    "partners": [
+      "albea",
+      "aptar"
+    ],
     "subSector": "용기·부자재",
     "level": "core"
   },
@@ -21,7 +24,9 @@
     "semTypeEn": "Color cosmetics ODM",
     "products": "색조화장품 ODM",
     "productsEn": "Color cosmetics ODM manufacturing",
-    "partners": ["intercos"],
+    "partners": [
+      "intercos"
+    ],
     "subSector": "색조 ODM",
     "level": "core"
   },
@@ -34,7 +39,9 @@
     "semTypeEn": "ODM / OEM",
     "products": "화장품 ODM·OEM",
     "productsEn": "Cosmetics ODM and OEM",
-    "partners": ["intercos"],
+    "partners": [
+      "intercos"
+    ],
     "subSector": "ODM",
     "level": "core"
   },
@@ -47,7 +54,11 @@
     "semTypeEn": "Derma beauty brands",
     "products": "아토팜·제로이드 더마코스메틱",
     "productsEn": "Atopalm and Zeroid derma cosmetics brands",
-    "partners": ["loreal", "estee", "shiseido"],
+    "partners": [
+      "loreal",
+      "estee",
+      "shiseido"
+    ],
     "subSector": "더마 브랜드",
     "level": "core"
   },
@@ -60,7 +71,11 @@
     "semTypeEn": "Beauty brands",
     "products": "미샤 등 색조·기초 화장품",
     "productsEn": "Missha and other color and skincare brands",
-    "partners": ["loreal", "estee", "shiseido"],
+    "partners": [
+      "loreal",
+      "estee",
+      "shiseido"
+    ],
     "subSector": "브랜드",
     "level": "core"
   },
@@ -73,8 +88,25 @@
     "semTypeEn": "Beauty & consumer brands",
     "products": "AGE20's·루나(화장품) 및 생활용품",
     "productsEn": "AGE20's, Luna cosmetics and household products",
-    "partners": ["loreal", "estee", "shiseido"],
+    "partners": [
+      "loreal",
+      "estee",
+      "shiseido"
+    ],
     "subSector": "브랜드",
+    "level": "core"
+  },
+  {
+    "ticker": "086900",
+    "name": "메디톡스",
+    "nameEn": "Medytox",
+    "chain": "에스테틱 의약품·소모품",
+    "semType": "에스테틱 의약품·소모품",
+    "semTypeEn": "Aesthetic drugs & consumables",
+    "products": "보툴리눔 톡신·필러",
+    "productsEn": "Botulinum toxin and fillers",
+    "partners": [],
+    "subSector": "에스테틱 의약품·소모품",
     "level": "core"
   }
 ]

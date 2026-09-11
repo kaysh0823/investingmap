@@ -1,30 +1,30 @@
 {
   "asOf": "2026-08-30",
   "reviewedBy": "editorial_chemical",
-  "listedCompanyCount": 26,
-  "nodeCount": 93,
-  "edgeCount": 126,
-  "structuralGenerated": 76,
-  "legacyMigrated": 46,
-  "manuallyCurated": 4,
-  "demotedPeer": 46,
+  "listedCompanyCount": 29,
+  "nodeCount": 92,
+  "edgeCount": 121,
+  "structuralGenerated": 75,
+  "legacyMigrated": 43,
+  "manuallyCurated": 3,
+  "demotedPeer": 43,
   "metrics": {
-    "listedCompanyCount": 26,
-    "nodeCount": 93,
-    "edgeCount": 126,
-    "structuralGeneratedEdgeCount": 76,
-    "legacyMigratedEdgeCount": 46,
-    "manuallyCuratedEdgeCount": 4,
-    "chemicalProductCount": 50,
+    "listedCompanyCount": 29,
+    "nodeCount": 92,
+    "edgeCount": 121,
+    "structuralGeneratedEdgeCount": 75,
+    "legacyMigratedEdgeCount": 43,
+    "manuallyCuratedEdgeCount": 3,
+    "chemicalProductCount": 46,
     "chemicalSupplyCount": 0,
     "refiningRelationshipCount": 0,
     "ownershipEdgeCount": 0,
-    "crossSectorReferenceCount": 4,
+    "crossSectorReferenceCount": 3,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 46,
-    "businessRelationOrphanCount": 26,
-    "classificationOnlyCompanyCount": 26,
+    "peerEdgeCount": 43,
+    "businessRelationOrphanCount": 29,
+    "classificationOnlyCompanyCount": 29,
     "zeroDegreeNodeCount": 0,
     "claimCoverage": {
       "businessRelationshipDirectEvidenceCoverage": {
@@ -52,8 +52,8 @@
         "reason": "no_eligible_ownership_edges"
       },
       "crossSectorReferenceEvidenceCoverage": {
-        "numerator": 4,
-        "denominator": 4,
+        "numerator": 3,
+        "denominator": 3,
         "percentage": 1,
         "displayValue": "100%",
         "applicable": true,
@@ -68,12 +68,12 @@
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 4,
-      "listed_company": 26,
-      "chemical_product": 50,
+      "listed_company": 29,
+      "chemical_product": 46,
       "global_company": 9
     },
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 46
+    "demotedLegacyPeerCount": 43
   },
   "validate": {
     "failures": [],
@@ -123,6 +123,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "002380",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "011780",
       "lane": "petrochemical"
     },
@@ -150,6 +155,11 @@
       "action": "structural_produces",
       "ticker": "011170",
       "target": "chemical_product:ethylene_propylene"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "018670",
+      "lane": "petrochemical"
     },
     {
       "action": "structural_member_of",
@@ -199,12 +209,12 @@
     {
       "action": "structural_member_of",
       "ticker": "001740",
-      "lane": "refining_gas"
+      "lane": "petrochemical"
     },
     {
       "action": "structural_member_of",
       "ticker": "004000",
-      "lane": "chemical_materials"
+      "lane": "specialty_chemical"
     },
     {
       "action": "structural_specializes_in",
@@ -230,21 +240,6 @@
       "action": "structural_produces",
       "ticker": "003240",
       "target": "chemical_product:an_acrylic_pet"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "005090",
-      "lane": "refining_gas"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "005090",
-      "target": "refining_product:cogeneration"
-    },
-    {
-      "action": "structural_produces",
-      "ticker": "005090",
-      "target": "refining_product:steam_power"
     },
     {
       "action": "structural_member_of",
@@ -323,6 +318,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "001570",
+      "lane": "specialty_chemical"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "014820",
       "lane": "chemical_materials"
     },
@@ -398,18 +398,8 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "004690",
-      "lane": "refining_gas"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "004690",
-      "target": "refining_product:city_gas"
-    },
-    {
-      "action": "structural_produces",
-      "ticker": "004690",
-      "target": "refining_product:gas_supply"
+      "ticker": "014830",
+      "lane": "specialty_chemical"
     },
     {
       "action": "structural_member_of",
@@ -485,6 +475,11 @@
       "action": "structural_produces",
       "ticker": "005950",
       "target": "chemical_product:sm_abs_phenol"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "001390",
+      "lane": "petrochemical"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -588,16 +583,6 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:005090",
-      "target": "global:exxonmobil"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:005090",
-      "target": "global:shell"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
       "source": "krx:298050",
       "target": "global:toray"
     },
@@ -673,11 +658,6 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:004690",
-      "target": "global:shell"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
       "source": "krx:002810",
       "target": "global:basf"
     },
@@ -730,11 +710,6 @@
       "action": "add_cross_sector_reference",
       "source": "krx:014820",
       "target": "sector:kconsume"
-    },
-    {
-      "action": "add_cross_sector_reference",
-      "source": "krx:004690",
-      "target": "sector:powergrid"
     }
   ]
 }

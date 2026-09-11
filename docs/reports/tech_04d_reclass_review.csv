@@ -1,0 +1,6 @@
+ticker,sector,provisional_group,status,notes
+046890,elec,"카메라·광학·센서",needs_review,"서울반도체 — LED 전용그룹 부재, 카메라·광학·센서 잠정"
+092190,elec,"카메라·광학·센서",needs_review,"서울바이오시스 — LED 전용그룹 부재, 카메라·광학·센서 잠정"
+017900,elec,"카메라·광학·센서",needs_review,"광전자 — LED 전용그룹 부재, 카메라·광학·센서 잠정"
+248070,elec,"전자부품·기판",needs_review,"솔루엠 — 부품/EMS·조립 경계, 전자부품·기판 잠정"
+065350,elec,"전자제품 제조·조립",needs_review,"신성델타테크 — 부품/조립 경계, 전자제품 제조·조립 잠정"

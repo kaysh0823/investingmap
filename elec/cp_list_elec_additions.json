@@ -8,7 +8,11 @@
     "semTypeEn": "UV & optoelectronic LEDs",
     "products": "UV·Violeds·광반도체 LED",
     "productsEn": "UV LEDs, Violeds and optoelectronic components",
-    "partners": ["panasonic", "murata", "nichia"],
+    "partners": [
+      "panasonic",
+      "murata",
+      "nichia"
+    ],
     "subSector": "UV·광반도체 LED",
     "level": "core"
   },
@@ -21,7 +25,11 @@
     "semTypeEn": "Office equipment (printers)",
     "products": "복합기·프린터·3D프린터",
     "productsEn": "MFPs, printers and 3D printers",
-    "partners": ["hp", "canon", "xerox"],
+    "partners": [
+      "hp",
+      "canon",
+      "xerox"
+    ],
     "subSector": "사무기기(프린터)",
     "level": "core"
   },
@@ -34,7 +42,11 @@
     "semTypeEn": "Electronic components & materials",
     "products": "반도체·디스플레이용 화학소재",
     "productsEn": "Chemical materials for semiconductors and displays",
-    "partners": ["murata", "sony", "bosch"],
+    "partners": [
+      "murata",
+      "sony",
+      "bosch"
+    ],
     "subSector": "전자부품·소재",
     "level": "core"
   },
@@ -47,7 +59,11 @@
     "semTypeEn": "FPCB & hinge modules",
     "products": "FPCB·힌지·폴더블 부품",
     "productsEn": "FPCB, hinges and foldable device parts",
-    "partners": ["murata", "sony", "panasonic"],
+    "partners": [
+      "murata",
+      "sony",
+      "panasonic"
+    ],
     "subSector": "FPCB·힌지",
     "level": "core"
   },
@@ -60,7 +76,11 @@
     "semTypeEn": "Memory modules",
     "products": "메모리 모듈·PCB",
     "productsEn": "Memory modules and PCBs",
-    "partners": ["murata", "sony", "panasonic"],
+    "partners": [
+      "murata",
+      "sony",
+      "panasonic"
+    ],
     "subSector": "메모리 모듈",
     "level": "core"
   },
@@ -73,7 +93,11 @@
     "semTypeEn": "FPCB",
     "products": "연성·경성 PCB·FPCB",
     "productsEn": "Rigid, flex and FPCB boards",
-    "partners": ["murata", "sony", "panasonic"],
+    "partners": [
+      "murata",
+      "sony",
+      "panasonic"
+    ],
     "subSector": "FPCB",
     "level": "core"
   },
@@ -86,21 +110,12 @@
     "semTypeEn": "Display equipment (laser)",
     "products": "레이저·디스플레이 공정장비",
     "productsEn": "Laser and display process equipment",
-    "partners": ["sony", "panasonic", "bosch"],
+    "partners": [
+      "sony",
+      "panasonic",
+      "bosch"
+    ],
     "subSector": "디스플레이 장비(레이저)",
-    "level": "core"
-  },
-  {
-    "ticker": "222080",
-    "name": "SFA넥셀",
-    "nameEn": "SFA Nexel",
-    "chain": "디스플레이",
-    "semType": "디스플레이 장비",
-    "semTypeEn": "Display equipment",
-    "products": "OLED·디스플레이 공정·검사장비",
-    "productsEn": "OLED and display process/inspection equipment",
-    "partners": ["sony", "panasonic", "bosch"],
-    "subSector": "디스플레이 장비",
     "level": "core"
   },
   {
@@ -112,8 +127,37 @@
     "semTypeEn": "OLED emissive materials",
     "products": "OLED 발광·정공수송 유기소재",
     "productsEn": "OLED emissive and hole-transport organic materials",
-    "partners": ["sony", "panasonic"],
+    "partners": [
+      "sony",
+      "panasonic"
+    ],
     "subSector": "OLED 유기발광소재",
+    "level": "core"
+  },
+  {
+    "ticker": "009450",
+    "name": "경동나비엔",
+    "nameEn": "KYUNGDONGNAVIEN",
+    "chain": "가전·생활기기",
+    "semType": "보일러·온수기",
+    "semTypeEn": "Boilers & water heaters",
+    "products": "콘덴싱 보일러·온수기",
+    "productsEn": "Condensing boilers and water heaters",
+    "partners": [],
+    "subSector": "가전·생활기기",
+    "level": "core"
+  },
+  {
+    "ticker": "025320",
+    "name": "시노펙스",
+    "nameEn": "Synopex Inc.",
+    "chain": "전자부품·기판",
+    "semType": "FPCB·필터",
+    "semTypeEn": "FPCB & filters",
+    "products": "FPCB·반도체 필터·의료필터",
+    "productsEn": "FPCB, semiconductor and medical filters",
+    "partners": [],
+    "subSector": "전자부품·기판",
     "level": "core"
   }
 ]

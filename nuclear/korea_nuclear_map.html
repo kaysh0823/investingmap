@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 원전 투자 지도",
     "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html",
-    "numberOfItems": 7,
+    "numberOfItems": 9,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -167,20 +167,32 @@
       {
         "@type": "ListItem",
         "position": 5,
+        "name": "우리기술 (032820, KOSDAQ)",
+        "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-032820"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
         "name": "SNT에너지 (100840, KOSPI)",
         "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-100840"
       },
       {
         "@type": "ListItem",
-        "position": 6,
+        "position": 7,
         "name": "한전산업 (130660, KOSPI)",
         "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-130660"
       },
       {
         "@type": "ListItem",
-        "position": 7,
+        "position": 8,
         "name": "보성파워텍 (006910, KOSDAQ)",
         "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-006910"
+      },
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "name": "수산인더스트리 (126720, KOSPI)",
+        "url": "https://www.investingmap.kr/nuclear/korea_nuclear_map.html#ticker-126720"
       }
     ]
   }
@@ -191,16 +203,16 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=17"></script>
-  <script src="../js/map_i18n.js"></script>
-  <script src="../js/map_cross_sector.js?v=1"></script>
+<script src="../js/live_quotes.js?v=18"></script>
+  <script src="../js/map_i18n.js?v=9"></script>
+  <script src="../js/map_cross_sector.js?v=2"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
-  <script src="../js/map_momentum.js?v=12"></script>
+  <script src="../js/map_momentum.js?v=13"></script>
   <script src="../js/map_volatility.js?v=9"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
@@ -844,7 +856,6 @@
     .node-dim {
       opacity: .15
     }
-
     /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
@@ -1978,8 +1989,8 @@
     </button>
     <p id="hdr-subtitle">원자로·기자재·운영·정비·SMR — 상장사와 글로벌 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>7</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>5</span> · KOSDAQ <span>2</span></div>
+      <div class="badge" id="badge-total">Total <span>9</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>6</span> · KOSDAQ <span>3</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -2070,7 +2081,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">7</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">9</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2121,9 +2132,9 @@
       <td class="fin-cell">7.66</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
       <td><span class="chain-tag">원자로·주기기</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">원전 기자재·가스터빈</td>
-      <td class="products-cell">SMR 연료·기자재, GT</td>
-      <td><div class="partners-list">GE Vernova, 미쓰비시중공업, 오라노</div></td>
+      <td style="font-size:12px;color:var(--text-muted)">가스터빈·발전설비</td>
+      <td class="products-cell">가스터빈·발전설비·원전 주기기 · SMR</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="052690">
       <td><div class="company-name">한전기술</div><div class="company-name-sub">KEPCO Engineering &amp; Construction</div></td>
@@ -2143,7 +2154,7 @@
       <td class="fin-cell">67.42</td>
       <td class="fin-cell">9.21</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">설계·EPC</span></td>
+      <td><span class="chain-tag">설계·엔지니어링</span></td>
       <td style="font-size:12px;color:var(--text-muted)">발전 EPC·O&amp;M</td>
       <td class="products-cell">원전·화력 정비·해외 EPC</td>
       <td><div class="partners-list">GE Vernova, 미쓰비시중공업, kepco</div></td>
@@ -2166,7 +2177,7 @@
       <td class="fin-cell">23.14</td>
       <td class="fin-cell">2.14</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">운영·정비</span></td>
+      <td><span class="chain-tag">정비·운영지원</span></td>
       <td style="font-size:12px;color:var(--text-muted)">발전설비 정비·O&amp;M</td>
       <td class="products-cell">원전·화력·신재생 O&amp;M</td>
       <td><div class="partners-list">GE Vernova, kepco</div></td>
@@ -2189,10 +2200,33 @@
       <td class="fin-cell">38.25</td>
       <td class="fin-cell">14.04</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">계측·보조기기</span></td>
+      <td><span class="chain-tag">보조기기·소재</span></td>
       <td style="font-size:12px;color:var(--text-muted)">밸브·계측</td>
       <td class="products-cell">원전·화력 밸브</td>
       <td><div class="partners-list">GE Vernova, 오라노</div></td>
+    </tr>
+          <tr data-ticker="032820">
+      <td><div class="company-name">우리기술</div><div class="company-name-sub">Woori Technology, Incorporation</div></td>
+      <td><span class="ticker">032820</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">-7.27%</td>
+      <td class="quote-cell ret-cell">+20.33%</td>
+      <td class="quote-cell ret-cell">-18.14%</td>
+      <td class="quote-cell ret-cell">-51.67%</td>
+      <td class="quote-cell ret-cell">+220.44%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">39.9</td>
+      <td class="mcap-cell">1.84조원</td>
+      <td class="fin-cell">3514.00</td>
+      <td class="fin-cell">23.27</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">계측·제어</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">원전 MMIS</td>
+      <td class="products-cell">원전 제어계측시스템(MMIS)</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="100840">
       <td><div class="company-name">SNT에너지</div><div class="company-name-sub">SNTEnergy Co.,Ltd.</div></td>
@@ -2212,9 +2246,9 @@
       <td class="fin-cell">7.87</td>
       <td class="fin-cell">1.82</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">운영·정비</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">원전 열교환기·발전설비</td>
-      <td class="products-cell">원전·발전용 열교환기·압력용기·정비 기자재</td>
+      <td><span class="chain-tag">보조기기·소재</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">원전·발전 보조기기</td>
+      <td class="products-cell">원전·발전 열교환기·압력용기 기자재</td>
       <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="130660">
@@ -2235,7 +2269,7 @@
       <td class="fin-cell">108.08</td>
       <td class="fin-cell">4.27</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">운영·정비</span></td>
+      <td><span class="chain-tag">정비·운영지원</span></td>
       <td style="font-size:12px;color:var(--text-muted)">발전 운전·정비</td>
       <td class="products-cell">발전 운전·정비 — 에너지·전력</td>
       <td><div class="partners-list">—</div></td>
@@ -2258,9 +2292,32 @@
       <td class="fin-cell">19.93</td>
       <td class="fin-cell">3.67</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">계측·보조기기</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">전력·변압기</td>
-      <td class="products-cell">변압기·전력설비·중전기</td>
+      <td><span class="chain-tag">보조기기·소재</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">원전 철구조물·보조기기</td>
+      <td class="products-cell">원전 내진 강구조물·철구조물 · 중전기</td>
+      <td><div class="partners-list">—</div></td>
+    </tr>
+          <tr data-ticker="126720">
+      <td><div class="company-name">수산인더스트리</div><div class="company-name-sub">Soosan Industries</div></td>
+      <td><span class="ticker">126720</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">-1.83%</td>
+      <td class="quote-cell ret-cell">+1.42%</td>
+      <td class="quote-cell ret-cell">-2.95%</td>
+      <td class="quote-cell ret-cell">-21.90%</td>
+      <td class="quote-cell ret-cell">+3.88%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">31.9</td>
+      <td class="mcap-cell">0.30조원</td>
+      <td class="fin-cell">6.88</td>
+      <td class="fin-cell">0.61</td>
+      <td><span class="market-badge kospi">KOSPI</span></td>
+      <td><span class="chain-tag">정비·운영지원</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">발전설비 정비</td>
+      <td class="products-cell">원전·발전설비 경상정비</td>
       <td><div class="partners-list">—</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
@@ -2337,7 +2394,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"원자로·주기기":"#78909C","설계·EPC":"#42A5F5","운영·정비":"#66BB6A","계측·보조기기":"#FF8A65"};
+    const CHAIN_COLORS = {"설계·엔지니어링":"#42A5F5","건설·EPC":"#26A69A","원자로·주기기":"#78909C","보조기기·소재":"#FF8A65","계측·제어":"#AB47BC","정비·운영지원":"#66BB6A","연료·해체·폐기물":"#EF5350"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2400,7 +2457,7 @@
 
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
 
-        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
+        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
         "tabTable": "📋 기업 목록 &amp; 필터",
         "tabGraph": "🌐 관계 네트워크 (수정중)",
@@ -2439,16 +2496,22 @@
         "sbSize": "노드 크기",
         "sbHow": "조작 방법",
         "chainLabel": {
-            "원자로·주기기": "원자로·주기기·SMR",
-            "설계·EPC": "원전 설계·EPC",
-            "운영·정비": "원전 운영·정비",
-            "계측·보조기기": "계측·보조기기"
+            "설계·엔지니어링": "설계·엔지니어링",
+            "건설·EPC": "건설·EPC",
+            "원자로·주기기": "원자로·주기기",
+            "보조기기·소재": "보조기기·소재",
+            "계측·제어": "계측·제어",
+            "정비·운영지원": "정비·운영지원",
+            "연료·해체·폐기물": "연료·해체·폐기물"
         },
         "chainFilter": {
-            "원자로·주기기": "원자로·주기기·SMR",
-            "설계·EPC": "원전 설계·EPC",
-            "운영·정비": "원전 운영·정비",
-            "계측·보조기기": "계측·보조기기"
+            "설계·엔지니어링": "설계·엔지니어링",
+            "건설·EPC": "건설·EPC",
+            "원자로·주기기": "원자로·주기기",
+            "보조기기·소재": "보조기기·소재",
+            "계측·제어": "계측·제어",
+            "정비·운영지원": "정비·운영지원",
+            "연료·해체·폐기물": "연료·해체·폐기물"
         },
         "allFilter": "전체",
         "kosp": "KOSPI",
@@ -2533,7 +2596,7 @@
 
         "momentumNoData": "No companies have RS, price-position and turnover data.",
 
-        "momentumLegend": "Color = 1-day return · size = daily turnover",
+        "momentumLegend": "Color = 1-day return · size = daily turnover · vertical lines = market index RS",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list &amp; filters",
         "tabGraph": "🌐 Relationship network (WIP)",
@@ -2572,16 +2635,22 @@
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
-            "원자로·주기기": "Reactors, major components & SMR",
-            "설계·EPC": "Nuclear design & EPC",
-            "운영·정비": "Nuclear operations & maintenance",
-            "계측·보조기기": "Instrumentation & auxiliary equipment"
+            "설계·엔지니어링": "Design & engineering",
+            "건설·EPC": "Construction & EPC",
+            "원자로·주기기": "Reactor & NSSS",
+            "보조기기·소재": "Auxiliaries & materials",
+            "계측·제어": "I&C",
+            "정비·운영지원": "Maintenance & ops support",
+            "연료·해체·폐기물": "Fuel, decommissioning & waste"
         },
         "chainFilter": {
-            "원자로·주기기": "Reactors, major components & SMR",
-            "설계·EPC": "Nuclear design & EPC",
-            "운영·정비": "Nuclear operations & maintenance",
-            "계측·보조기기": "Instrumentation & auxiliary equipment"
+            "설계·엔지니어링": "Design",
+            "건설·EPC": "EPC",
+            "원자로·주기기": "Reactor",
+            "보조기기·소재": "Auxiliaries",
+            "계측·제어": "I&C",
+            "정비·운영지원": "O&M",
+            "연료·해체·폐기물": "Fuel & waste"
         },
         "allFilter": "All",
         "kosp": "KOSPI",
@@ -2617,52 +2686,71 @@
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
-        id: 'doosan_e', name: '두산에너빌리티', nameEn: 'Doosan Enerbility', ticker: '034020', market: 'KOSPI', chain: '원자로·주기기',
-        semType: '원전 기자재·가스터빈', semTypeEn: 'Nuclear island & gas turbines',
-        products: 'SMR 연료·기자재, GT', productsEn: 'SMR components, heavy-duty GT',
-        revenue: '50.73조원', mcapWon: 50732442763200, per: 705.3, pbr: 7.66, revTier: 3, partners: ['ge_vernova', 'mitsubishi_heavy', 'orano']
+        id: 'powergrid_doosan_enerbility', name: '두산에너빌리티', nameEn: 'Doosan Enerbility', ticker: '034020', market: 'KOSPI', chain: '원자로·주기기',
+        semType: '가스터빈·발전설비', semTypeEn: 'Gas turbines & power plants',
+        products: '가스터빈·발전설비·원전 주기기 · SMR', productsEn: 'Power equipment and services',
+        crossSectors: [{"sectorId":"powergrid","labelKo":"전력설비","labelEn":"Power Equip.","shortKo":"전력설비","shortEn":"Power","map":"powergrid/korea_powergrid_map.html"}],
+        relations: [{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"000720","name":"현대건설","nameEn":"HyundaiEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"028260","name":"삼성물산","nameEn":"SAMSUNG C&T CORPORATION","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"047040","name":"대우건설","nameEn":"DaewooEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"083650","name":"비에이치아이","nameEn":"BHI Co., LTD.","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"052690","name":"한전기술","nameEn":"KEPCO Engineering & Construction","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"051600","name":"한전KPS","nameEn":"KEPCO Plant Service & Engineering","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"}],
+        revenue: '50.73조원', mcapWon: 50732442763200, per: 705.3, pbr: 7.66, revTier: 3, partners: []
       },
 
       {
-        id: 'kento', name: '한전기술', nameEn: 'KEPCO Engineering & Construction', ticker: '052690', market: 'KOSPI', chain: '설계·EPC',
+        id: 'kento', name: '한전기술', nameEn: 'KEPCO Engineering & Construction', ticker: '052690', market: 'KOSPI', chain: '설계·엔지니어링',
         semType: '발전 EPC·O&M', semTypeEn: 'Power EPC & O&M',
         products: '원전·화력 정비·해외 EPC', productsEn: 'Nuclear/thermal O&M, overseas EPC',
+        relations: [{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"000720","name":"현대건설","nameEn":"HyundaiEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"028260","name":"삼성물산","nameEn":"SAMSUNG C&T CORPORATION","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"047040","name":"대우건설","nameEn":"DaewooEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"034020","name":"두산에너빌리티","nameEn":"Doosan Enerbility","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"083650","name":"비에이치아이","nameEn":"BHI Co., LTD.","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"051600","name":"한전KPS","nameEn":"KEPCO Plant Service & Engineering","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"}],
         revenue: '4.11조원', mcapWon: 4112472000000, per: 67.42, pbr: 9.21, revTier: 2, partners: ['ge_vernova', 'mitsubishi_heavy', { id: 'kepco', edgeLabel: '한전 계열 수주', edgeLabelEn: 'KEPCO-linked projects', weight: 0.25, kind: 'theme' }]
       },
 
       {
-        id: 'kepco_kps', name: '한전KPS', nameEn: 'KEPCO Plant Service & Engineering', ticker: '051600', market: 'KOSPI', chain: '운영·정비',
+        id: 'kepco_kps', name: '한전KPS', nameEn: 'KEPCO Plant Service & Engineering', ticker: '051600', market: 'KOSPI', chain: '정비·운영지원',
         semType: '발전설비 정비·O&M', semTypeEn: 'Power-plant maintenance & O&M',
         products: '원전·화력·신재생 O&M', productsEn: 'Nuclear, thermal & renewable O&M',
+        relations: [{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"000720","name":"현대건설","nameEn":"HyundaiEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"028260","name":"삼성물산","nameEn":"SAMSUNG C&T CORPORATION","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"047040","name":"대우건설","nameEn":"DaewooEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"034020","name":"두산에너빌리티","nameEn":"Doosan Enerbility","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"083650","name":"비에이치아이","nameEn":"BHI Co., LTD.","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"052690","name":"한전기술","nameEn":"KEPCO Engineering & Construction","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"}],
         revenue: '2.06조원', mcapWon: 2061000000000, per: 23.14, pbr: 2.14, revTier: 2, partners: ['ge_vernova', { id: 'kepco', edgeLabel: '한전 계열', edgeLabelEn: 'KEPCO affiliate', weight: 0.35, kind: 'backing' }]
       },
 
       {
-        id: 'bhi', name: '비에이치아이', nameEn: 'BHI Co., LTD.', ticker: '083650', market: 'KOSDAQ', chain: '계측·보조기기',
+        id: 'bhi', name: '비에이치아이', nameEn: 'BHI Co., LTD.', ticker: '083650', market: 'KOSDAQ', chain: '보조기기·소재',
         semType: '밸브·계측', semTypeEn: 'Valves & instrumentation',
         products: '원전·화력 밸브', productsEn: 'Nuclear/thermal valves',
+        relations: [{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"000720","name":"현대건설","nameEn":"HyundaiEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"028260","name":"삼성물산","nameEn":"SAMSUNG C&T CORPORATION","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"047040","name":"대우건설","nameEn":"DaewooEngineering&Construction","sector":"construction","map":"construction/korea_construction_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"034020","name":"두산에너빌리티","nameEn":"Doosan Enerbility","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"052690","name":"한전기술","nameEn":"KEPCO Engineering & Construction","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"},{"relationId":"nuclear-epc","type":"EPC·주설비","label":"원전 건설·주설비","chip":"연관","chipEn":"Related","ticker":"051600","name":"한전KPS","nameEn":"KEPCO Plant Service & Engineering","sector":"nuclear","map":"nuclear/korea_nuclear_map.html"}],
         revenue: '1.86조원', mcapWon: 1856662500000, per: 38.25, pbr: 14.04, revTier: 2, partners: ['ge_vernova', 'orano']
       },
 
       {
-        id: 'nuclear_sntenergy_co_ltd', name: 'SNT에너지', nameEn: 'SNTEnergy Co.,Ltd.', ticker: '100840', market: 'KOSPI', chain: '운영·정비',
-        semType: '원전 열교환기·발전설비', semTypeEn: 'Nuclear heat exchangers & power equipment',
-        products: '원전·발전용 열교환기·압력용기·정비 기자재', productsEn: 'Nuclear/power heat exchangers, pressure vessels and maintenance equipment',
+        id: 'nuclear_woori_technology_incorpo', name: '우리기술', nameEn: 'Woori Technology, Incorporation', ticker: '032820', market: 'KOSDAQ', chain: '계측·제어',
+        semType: '원전 MMIS', semTypeEn: 'Nuclear I&C / MMIS',
+        products: '원전 제어계측시스템(MMIS)', productsEn: 'Nuclear plant MMIS / I&C systems',
+        revenue: '1.84조원', mcapWon: 1836700425560, per: 3514, pbr: 23.27, revTier: 2, partners: []
+      },
+
+      {
+        id: 'nuclear_sntenergy_co_ltd', name: 'SNT에너지', nameEn: 'SNTEnergy Co.,Ltd.', ticker: '100840', market: 'KOSPI', chain: '보조기기·소재',
+        semType: '원전·발전 보조기기', semTypeEn: 'Nuclear & power plant auxiliaries',
+        products: '원전·발전 열교환기·압력용기 기자재', productsEn: 'Heat exchangers and pressure vessels for nuclear and power plants',
         revenue: '0.68조원', mcapWon: 676261604100, per: 7.87, pbr: 1.82, revTier: 1, partners: []
       },
 
       {
-        id: 'energy_korea_electric_power_ind', name: '한전산업', nameEn: 'Korea Electric Power Industrial Development', ticker: '130660', market: 'KOSPI', chain: '운영·정비',
+        id: 'energy_korea_electric_power_ind', name: '한전산업', nameEn: 'Korea Electric Power Industrial Development', ticker: '130660', market: 'KOSPI', chain: '정비·운영지원',
         semType: '발전 운전·정비', semTypeEn: '—',
         products: '발전 운전·정비 — 에너지·전력', productsEn: 'Power equipment and services',
         revenue: '0.39조원', mcapWon: 391200000000, per: 108.08, pbr: 4.27, revTier: 1, partners: []
       },
 
       {
-        id: 'energy_bosung_power_technology_', name: '보성파워텍', nameEn: 'BOSUNG POWER TECHNOLOGY CO., LTD.', ticker: '006910', market: 'KOSDAQ', chain: '계측·보조기기',
-        semType: '전력·변압기', semTypeEn: 'Power & Transformers',
-        products: '변압기·전력설비·중전기', productsEn: 'Transformers and heavy electrical power equipment',
+        id: 'energy_bosung_power_technology_', name: '보성파워텍', nameEn: 'BOSUNG POWER TECHNOLOGY CO., LTD.', ticker: '006910', market: 'KOSDAQ', chain: '보조기기·소재',
+        semType: '원전 철구조물·보조기기', semTypeEn: 'Nuclear steel structures & auxiliaries',
+        products: '원전 내진 강구조물·철구조물 · 중전기', productsEn: 'Seismic steel structures for nuclear plants',
         revenue: '0.33조원', mcapWon: 333100206720, per: 19.93, pbr: 3.67, revTier: 1, partners: []
+      },
+
+      {
+        id: 'nuclear_soosan_industries', name: '수산인더스트리', nameEn: 'Soosan Industries', ticker: '126720', market: 'KOSPI', chain: '정비·운영지원',
+        semType: '발전설비 정비', semTypeEn: 'Plant maintenance',
+        products: '원전·발전설비 경상정비', productsEn: 'Nuclear and power-plant maintenance',
+        revenue: '0.30조원', mcapWon: 302863200000, per: 6.88, pbr: 0.61, revTier: 1, partners: []
       }
 
     ];
@@ -2862,7 +2950,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '원자로·주기기', '설계·EPC', '운영·정비', '계측·보조기기'];
+      const chains = ['all', '설계·엔지니어링', '건설·EPC', '원자로·주기기', '보조기기·소재', '계측·제어', '정비·운영지원', '연료·해체·폐기물'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
@@ -2888,7 +2976,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['원자로·주기기', '설계·EPC', '운영·정비', '계측·보조기기'];
+      const chains = ['설계·엔지니어링', '건설·EPC', '원자로·주기기', '보조기기·소재', '계측·제어', '정비·운영지원', '연료·해체·폐기물'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -3224,6 +3312,9 @@
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,

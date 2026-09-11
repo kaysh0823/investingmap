@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-09-11T12:00:10.057Z",
+  "implementation_verify": "passed",
+  "business_evidence_verify": "incomplete",
+  "note": "기계 검증 통과. needs_review 잔여 0. taxonomy_gap(001740·126560)만 의도적 공백.",
+  "needs_review_closure": {
+    "residual_needs_review": [],
+    "taxonomy_gaps": [
+      "001740",
+      "126560"
+    ],
+    "holdings_groups": 9,
+    "chemical_groups": 10
+  },
+  "counts": {
+    "bigchip": 2,
+    "semi": 82,
+    "battery": 25,
+    "renewable": 13,
+    "nuclear": 7,
+    "powergrid": 17,
+    "chemical": 27,
+    "metal": 15,
+    "machinery": 5,
+    "construction": 20,
+    "auto": 24,
+    "ship": 17,
+    "shipping": 6,
+    "defense": 11,
+    "elec": 27,
+    "software": 21,
+    "telecom": 10,
+    "robot": 15,
+    "bio": 64,
+    "medtech": 16,
+    "cosmetics": 19,
+    "kconsume": 35,
+    "kcontent": 25,
+    "travel": 11,
+    "finance": 50,
+    "holdings": 48
+  },
+  "hub_unique_companies": 611,
+  "cross_listed": {
+    "377300": [
+      "software",
+      "finance"
+    ]
+  },
+  "unexpected_multi_sector": [],
+  "taxonomy_residue_active": [],
+  "holdings_axis": "주요 투자·사업영역",
+  "finance_groups": 11,
+  "bigchip_immutable": [
+    "005930",
+    "000660"
+  ],
+  "menu_count": 26
+}

@@ -34,7 +34,7 @@ const edges = network.edges || [];
 const byId = new Map(nodes.map((n) => [n.id, n]));
 const companies = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'travel/korea_travel_map.html'), 'utf8'));
 const listedCount = companies.length;
-check(listedCount === 11, `listed ${listedCount} (expected 11)`);
+check(listedCount === 12, `listed ${listedCount} (expected 12)`);
 check(fs.readFileSync(join(ROOT, 'travel/korea_travel_map.html'), 'utf8').includes('data-sector="travel"'), 'data-sector');
 for (const c of companies) check(byId.has(`krx:${c.ticker}`), `missing ${c.ticker}`);
 

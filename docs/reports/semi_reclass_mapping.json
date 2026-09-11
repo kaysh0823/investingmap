@@ -1,0 +1,862 @@
+{
+  "mapReport": [
+    {
+      "ticker": "042700",
+      "name": "한미반도체",
+      "old": "패키징 장비",
+      "neo": "패키징 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "036930",
+      "name": "주성엔지니어링",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "007660",
+      "name": "이수페타시스",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "240810",
+      "name": "원익IPS",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "039030",
+      "name": "이오테크닉스",
+      "old": "패키징 장비",
+      "neo": "패키징 장비",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "058470",
+      "name": "리노공업",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "353200",
+      "name": "대덕전자",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "222800",
+      "name": "심텍",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "403870",
+      "name": "HPSP",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "000990",
+      "name": "DB하이텍",
+      "old": "파운드리",
+      "neo": "파운드리",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "095340",
+      "name": "ISC",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "319660",
+      "name": "피에스케이",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "440110",
+      "name": "파두",
+      "old": "팹리스·IP",
+      "neo": "팹리스·IP",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "084370",
+      "name": "유진테크",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "031980",
+      "name": "피에스케이홀딩스",
+      "old": "패키징 장비",
+      "neo": "패키징 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "095610",
+      "name": "테스",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "064760",
+      "name": "티씨케이",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [
+        "공정 부품"
+      ],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "131290",
+      "name": "티에스이",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "357780",
+      "name": "솔브레인",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "080220",
+      "name": "제주반도체",
+      "old": "팹리스·IP",
+      "neo": "팹리스·IP",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "067310",
+      "name": "하나마이크론",
+      "old": "패키징·테스트 서비스",
+      "neo": "패키징·테스트 서비스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "178320",
+      "name": "서진시스템",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "014680",
+      "name": "한솔케미칼",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "005290",
+      "name": "동진쎄미켐",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "098460",
+      "name": "고영",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "140860",
+      "name": "파크시스템스",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "089030",
+      "name": "테크윙",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "131970",
+      "name": "두산테스나",
+      "old": "패키징·테스트 서비스",
+      "neo": "패키징·테스트 서비스",
+      "tags": [
+        "테스트 대행"
+      ],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "089970",
+      "name": "브이엠",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [
+        "식각"
+      ],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "281820",
+      "name": "케이씨텍",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "078600",
+      "name": "대주전자재료",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "183300",
+      "name": "코미코",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [
+        "세정·코팅 서비스"
+      ],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "420770",
+      "name": "기가비스",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "007810",
+      "name": "코리아써키트",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "166090",
+      "name": "하나머티리얼즈",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "232140",
+      "name": "와이씨",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [
+        "결함·번인 검사"
+      ],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "036540",
+      "name": "SFA반도체",
+      "old": "패키징·테스트 서비스",
+      "neo": "패키징·테스트 서비스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "003160",
+      "name": "디아이",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "036830",
+      "name": "솔브레인홀딩스",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "356860",
+      "name": "티엘비",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "101490",
+      "name": "에스앤에스텍",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "195870",
+      "name": "해성디에스",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "252990",
+      "name": "샘씨엔에스",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "083450",
+      "name": "GST",
+      "old": "팹 인프라·지원설비",
+      "neo": "팹 인프라·지원설비",
+      "tags": [
+        "CCSS·유틸리티"
+      ],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "281740",
+      "name": "레이크머티리얼즈",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "074600",
+      "name": "원익QnC",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [
+        "공정 부품"
+      ],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "425420",
+      "name": "티에프이",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "094170",
+      "name": "동운아나텍",
+      "old": "팹리스·IP",
+      "neo": "팹리스·IP",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "327260",
+      "name": "RF머트리얼즈",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "059090",
+      "name": "미코",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "102710",
+      "name": "이엔에프테크놀로지",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "108320",
+      "name": "LX세미콘",
+      "old": "팹리스·IP",
+      "neo": "팹리스·IP",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "122640",
+      "name": "예스티",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "178920",
+      "name": "PI첨단소재",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "036810",
+      "name": "에프에스티",
+      "old": "팹 인프라·지원설비",
+      "neo": "팹 인프라·지원설비",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "053610",
+      "name": "프로텍",
+      "old": "패키징 장비",
+      "neo": "패키징 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "045100",
+      "name": "한양이엔지",
+      "old": "팹 인프라·지원설비",
+      "neo": "팹 인프라·지원설비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "064290",
+      "name": "인텍플러스",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "399720",
+      "name": "가온칩스",
+      "old": "디자인하우스",
+      "neo": "디자인하우스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "033640",
+      "name": "네패스",
+      "old": "패키징·테스트 서비스",
+      "neo": "패키징·테스트 서비스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "253590",
+      "name": "네오셈",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "490470",
+      "name": "세미파이브",
+      "old": "디자인하우스",
+      "neo": "디자인하우스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "101160",
+      "name": "월덱스",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "092870",
+      "name": "엑시콘",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "080580",
+      "name": "오킨스전자",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "272290",
+      "name": "이녹스첨단소재",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "104830",
+      "name": "원익머트리얼즈",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "144960",
+      "name": "뉴파워프라즈마",
+      "old": "팹 인프라·지원설비",
+      "neo": "팹 인프라·지원설비",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "241770",
+      "name": "메카로",
+      "old": "공정 소재",
+      "neo": "공정 소재",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "219130",
+      "name": "타이거일렉",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "114810",
+      "name": "한솔아이원스",
+      "old": "공정 부품·유지관리",
+      "neo": "공정 부품·유지관리",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "089890",
+      "name": "코세스",
+      "old": "패키징 장비",
+      "neo": "패키징 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "332570",
+      "name": "PS일렉트로닉스",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "098120",
+      "name": "마이크로컨텍솔",
+      "old": "테스트 부품·인터페이스",
+      "neo": "테스트 부품·인터페이스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "417840",
+      "name": "저스템",
+      "old": "팹 인프라·지원설비",
+      "neo": "팹 인프라·지원설비",
+      "tags": [],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    },
+    {
+      "ticker": "033160",
+      "name": "엠케이전자",
+      "old": "기판·패키징 소재",
+      "neo": "기판·패키징 소재",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "348210",
+      "name": "넥스틴",
+      "old": "검사·계측 장비",
+      "neo": "검사·계측 장비",
+      "tags": [
+        "결함·번인 검사"
+      ],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "200710",
+      "name": "에이디테크놀로지",
+      "old": "디자인하우스",
+      "neo": "디자인하우스",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "079370",
+      "name": "제우스",
+      "old": "전공정 장비",
+      "neo": "전공정 장비",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "093520",
+      "name": "매커스",
+      "old": "반도체 유통",
+      "neo": "반도체 유통",
+      "tags": [],
+      "needs_review": false,
+      "evidence": "★ 원본표 배정"
+    },
+    {
+      "ticker": "039440",
+      "name": "에스티아이",
+      "old": "팹 인프라·지원설비",
+      "neo": "팹 인프라·지원설비",
+      "tags": [
+        "CCSS·유틸리티"
+      ],
+      "needs_review": true,
+      "evidence": "✎ 추가조사(잠정)"
+    }
+  ],
+  "missingOnMap": [],
+  "extraOnMap": [],
+  "groups": {
+    "팹리스·IP": [
+      "440110",
+      "080220",
+      "108320",
+      "094170"
+    ],
+    "디자인하우스": [
+      "399720",
+      "200710",
+      "490470"
+    ],
+    "파운드리": [
+      "000990"
+    ],
+    "전공정 장비": [
+      "036930",
+      "240810",
+      "403870",
+      "319660",
+      "084370",
+      "095610",
+      "089970",
+      "281820",
+      "122640",
+      "079370"
+    ],
+    "패키징 장비": [
+      "042700",
+      "031980",
+      "053610",
+      "089890",
+      "039030"
+    ],
+    "검사·계측 장비": [
+      "098460",
+      "140860",
+      "089030",
+      "420770",
+      "064290",
+      "253590",
+      "092870",
+      "348210",
+      "232140",
+      "003160",
+      "332570"
+    ],
+    "공정 소재": [
+      "357780",
+      "014680",
+      "005290",
+      "281740",
+      "101490",
+      "102710",
+      "104830",
+      "241770",
+      "036830",
+      "078600"
+    ],
+    "공정 부품·유지관리": [
+      "064760",
+      "183300",
+      "166090",
+      "074600",
+      "101160",
+      "114810",
+      "059090",
+      "178320"
+    ],
+    "기판·패키징 소재": [
+      "007660",
+      "353200",
+      "222800",
+      "007810",
+      "356860",
+      "195870",
+      "033160",
+      "178920",
+      "272290",
+      "327260"
+    ],
+    "테스트 부품·인터페이스": [
+      "058470",
+      "095340",
+      "131290",
+      "252990",
+      "425420",
+      "080580",
+      "098120",
+      "219130"
+    ],
+    "패키징·테스트 서비스": [
+      "067310",
+      "131970",
+      "036540",
+      "033640"
+    ],
+    "팹 인프라·지원설비": [
+      "083450",
+      "045100",
+      "039440",
+      "417840",
+      "144960",
+      "036810"
+    ],
+    "반도체 유통": [
+      "093520"
+    ]
+  }
+}

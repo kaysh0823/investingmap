@@ -151,16 +151,7 @@
     },
     {
       "source": "krx:336260",
-      "target": "technology:hydrogen",
-      "beforeType": "legacy_partner",
-      "afterType": "used_in_technology",
-      "afterEditorialStatus": "reference",
-      "origin": "phase4c_structural",
-      "reason": "cp_list/chain → technology structural edge"
-    },
-    {
-      "source": "krx:018670",
-      "target": "technology:hydrogen",
+      "target": "technology:solar",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",
       "afterEditorialStatus": "reference",
@@ -231,8 +222,8 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
-      "source": "krx:119850",
-      "target": "technology:renewable_operator",
+      "source": "krx:456040",
+      "target": "technology:solar",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",
       "afterEditorialStatus": "reference",
@@ -240,7 +231,16 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
-      "source": "krx:456040",
+      "source": "krx:044490",
+      "target": "technology:solar",
+      "beforeType": "legacy_partner",
+      "afterType": "used_in_technology",
+      "afterEditorialStatus": "reference",
+      "origin": "phase4c_structural",
+      "reason": "cp_list/chain → technology structural edge"
+    },
+    {
+      "source": "krx:126340",
       "target": "technology:solar",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",
@@ -268,7 +268,7 @@
     },
     {
       "source": "krx:018000",
-      "target": "technology:onshore_wind",
+      "target": "technology:solar",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",
       "afterEditorialStatus": "reference",
@@ -282,13 +282,6 @@
       "afterEditorialStatus": "reported",
       "afterProjectStatus": "under_construction",
       "reason": "reported SPV stake"
-    },
-    {
-      "source": "krx:018670",
-      "afterType": "project_developer",
-      "afterEditorialStatus": "reference",
-      "afterProjectStatus": "development",
-      "reason": "weak IR exposure — hidden development node"
     },
     {
       "legacyEdgeId": "009830->first_solar",

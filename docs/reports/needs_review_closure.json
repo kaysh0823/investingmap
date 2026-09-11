@@ -1,0 +1,147 @@
+{
+  "moves": [
+    {
+      "ticker": "082270",
+      "name": "젬백스",
+      "from": "bio",
+      "to": "semi",
+      "chain": "팹 인프라·지원설비",
+      "evidence": "반도체 케미컬필터 매출 95.5%",
+      "tags": [
+        "신약개발",
+        "GV1001"
+      ],
+      "semType": "팹 케미컬필터·유틸리티",
+      "semTypeEn": "Fab chemical filters & utilities",
+      "products": "반도체 케미컬필터·팹 유틸리티 (주력)",
+      "productsEn": "Semiconductor chemical filters and fab utilities (core)"
+    },
+    {
+      "ticker": "001570",
+      "name": "금양",
+      "from": "battery",
+      "to": "chemical",
+      "chain": "정밀·특수화학",
+      "evidence": "발포제 매출 100%",
+      "tags": [
+        "2차전지 셀",
+        "개발단계"
+      ],
+      "semType": "발포제·정밀화학",
+      "semTypeEn": "Blowing agents & specialty chemicals",
+      "products": "발포제 등 정밀·특수화학 (주력)",
+      "productsEn": "Blowing agents and specialty chemicals (core)"
+    },
+    {
+      "ticker": "044490",
+      "name": "태웅",
+      "from": "ship",
+      "to": "renewable",
+      "chain": "구조물·보조설비",
+      "evidence": "해상풍력 플랜지 매출 44%",
+      "tags": [
+        "조선",
+        "산업기계"
+      ],
+      "semType": "해상풍력 플랜지·단조",
+      "semTypeEn": "Offshore wind flanges & forgings",
+      "products": "해상풍력 타워 플랜지·단조 (주력)",
+      "productsEn": "Offshore wind tower flanges and forgings (core)"
+    }
+  ],
+  "group_fixes": [
+    {
+      "ticker": "004800",
+      "sector": "holdings",
+      "chain": "복합사업",
+      "name": "효성",
+      "note": "소재·산업재→복합사업"
+    },
+    {
+      "ticker": "000070",
+      "sector": "holdings",
+      "chain": "복합사업",
+      "name": "삼양홀딩스",
+      "note": "에너지·화학→복합사업"
+    },
+    {
+      "ticker": "024720",
+      "sector": "holdings",
+      "chain": "복합사업",
+      "name": "콜마홀딩스",
+      "note": "헬스케어 경계→복합사업 확정"
+    },
+    {
+      "ticker": "035760",
+      "sector": "kcontent",
+      "chain": "방송·스트리밍",
+      "name": "CJ ENM",
+      "note": "영상 제작·IP→방송·스트리밍",
+      "tags": [
+        "커머스",
+        "음악",
+        "영상"
+      ]
+    }
+  ],
+  "holdings_finance": [
+    {
+      "ticker": "012030",
+      "name": "DB",
+      "form": "사업형"
+    },
+    {
+      "ticker": "023590",
+      "name": "다우기술",
+      "form": "사업형"
+    },
+    {
+      "ticker": "032190",
+      "name": "다우데이타",
+      "form": "사업형"
+    }
+  ],
+  "packaging": [
+    {
+      "ticker": "014820",
+      "name": "동원시스템즈",
+      "nameEn": "Dongwon Systems",
+      "semType": "포장재·알루미늄",
+      "semTypeEn": "Packaging & aluminium",
+      "products": "CAN·알루미늄 포장재",
+      "productsEn": "Cans and aluminium packaging",
+      "tags": [
+        "2차전지 소재"
+      ]
+    },
+    {
+      "ticker": "008730",
+      "name": "율촌화학",
+      "nameEn": "Yulchon Chemical",
+      "semType": "포장필름",
+      "semTypeEn": "Packaging films",
+      "products": "BOPP·CPP·포장필름",
+      "productsEn": "BOPP, CPP and packaging films",
+      "tags": [
+        "2차전지 소재"
+      ]
+    }
+  ],
+  "residual_needs_review": [
+    "005090"
+  ],
+  "taxonomy_gaps": [
+    "001740",
+    "126560"
+  ],
+  "expected": {
+    "semi": 82,
+    "bio": 64,
+    "battery": 25,
+    "chemical": 28,
+    "ship": 17,
+    "renewable": 13,
+    "holdings_groups": 9,
+    "chemical_groups": 10
+  }
+}

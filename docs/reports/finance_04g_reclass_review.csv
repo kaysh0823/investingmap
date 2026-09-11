@@ -1,0 +1,7 @@
+ticker,sector,provisional_group,status,notes
+071050,finance,"비은행 금융그룹",needs_review,"한국금융지주 — 비은행 금융그룹 vs 증권 경계"
+004800,holdings,"소재·산업재",needs_review,"효성 — 에너지·화학 vs 소재·산업재 경계"
+000070,holdings,"복합사업",needs_review,"삼양홀딩스 — 에너지·화학 vs 소재·산업재 vs 복합사업"
+024720,holdings,"복합사업",needs_review,"콜마홀딩스 — 복합사업 vs 헬스케어 경계"
+192400,holdings,"소비·유통",needs_review,"쿠쿠홀딩스 — 소비·유통 경계"
+121440,holdings,"소비·유통",needs_review,"골프존홀딩스 — 소비·유통 경계"

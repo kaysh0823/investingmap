@@ -1,0 +1,18 @@
+kind,ticker,name,from,to,group,evidence,status
+move,082270,젬백스,bio,semi,팹 인프라·지원설비,"반도체 케미컬필터 매출 95.5%; 태그 신약개발/GV1001",confirmed
+move,001570,금양,battery,chemical,정밀·특수화학,"발포제 매출 100%; 태그 2차전지 셀/개발단계",confirmed
+move,044490,태웅,ship,renewable,구조물·보조설비,"해상풍력 플랜지 매출 44%; 태그 조선·산업기계",confirmed
+move,005090,SGC에너지,chemical,powergrid,유틸리티,"집단에너지(열병합) 중심·정유 없음·삼천리 동일 성격; 태그 건설·유리",confirmed
+group_fix,004800,효성,holdings,holdings,복합사업,"소재·산업재→복합사업",confirmed
+group_fix,000070,삼양홀딩스,holdings,holdings,복합사업,"에너지·화학→복합사업",confirmed
+group_fix,024720,콜마홀딩스,holdings,holdings,복합사업,"→복합사업 확정",confirmed
+group_fix,035760,CJ ENM,kcontent,kcontent,방송·스트리밍,"영상 제작·IP→방송·스트리밍; 태그 커머스·음악·영상",confirmed
+new_group,012030,DB,holdings/복합사업,holdings,금융,"금융 자회사 중심 지주; 형태태그 사업형",confirmed
+new_group,023590,다우기술,holdings/복합사업,holdings,금융,"금융 자회사 중심 지주; 형태태그 사업형",confirmed
+new_group,032190,다우데이타,holdings/복합사업,holdings,금융,"금융 자회사 중심 지주; 형태태그 사업형",confirmed
+new_group,014820,동원시스템즈,(미수록),chemical,포장재,"배치B 포장재 복원; 태그 2차전지 소재",confirmed
+new_group,008730,율촌화학,(미수록),chemical,포장재,"배치B 포장재 복원; 태그 2차전지 소재",confirmed
+new_group_def,,holdings,,,금융,"#5C6BC0 순서 9번째",created
+new_group_def,,chemical,,,포장재,"#90A4AE 화학 유통 뒤 10번째",created
+taxonomy_gap,001740,SK네트웍스,,,,,"종합상사·타지도 자동편입 금지. 그룹 신설 대상 아님",open
+taxonomy_gap,126560,현대퓨처넷,,,,,"telecom 미수록 유지. 그룹 신설 대상 아님",open

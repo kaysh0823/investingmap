@@ -2,20 +2,20 @@
   "asOf": "2026-08-29",
   "phase": "5G",
   "reviewedBy": "editorial_phase5g",
-  "listedCompanyCount": 14,
-  "nodeCount": 50,
-  "edgeCount": 69,
-  "structuralGenerated": 30,
+  "listedCompanyCount": 17,
+  "nodeCount": 53,
+  "edgeCount": 72,
+  "structuralGenerated": 33,
   "legacyMigrated": 35,
   "manuallyCurated": 4,
   "demotedPeer": 35,
   "removedUnsupported": 2,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 14,
-    "nodeCount": 50,
-    "edgeCount": 69,
-    "structuralGeneratedEdgeCount": 30,
+    "listedCompanyCount": 17,
+    "nodeCount": 53,
+    "edgeCount": 72,
+    "structuralGeneratedEdgeCount": 33,
     "legacyMigratedEdgeCount": 35,
     "manuallyCuratedEdgeCount": 4,
     "medicalDeviceNodeCount": 0,
@@ -36,9 +36,9 @@
     "jointVentureEdgeCount": 0,
     "crossSectorReferenceCount": 4,
     "marketExposureCount": 0,
-    "businessRelationOrphanCount": 14,
-    "directCommercialRelationshipOrphanCount": 14,
-    "classificationOnlyCompanyCount": 6,
+    "businessRelationOrphanCount": 17,
+    "directCommercialRelationshipOrphanCount": 17,
+    "classificationOnlyCompanyCount": 9,
     "hasPeerButNoBusinessCompanyCount": 14,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
@@ -134,7 +134,7 @@
     "nodeCountByType": {
       "group": 5,
       "cross_sector_anchor": 4,
-      "listed_company": 14,
+      "listed_company": 17,
       "device_category": 8,
       "clinical_specialty": 6,
       "global_company": 13
@@ -190,8 +190,13 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "290650",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "491000",
-      "lane": "surgical_device"
+      "lane": "in_vitro_diagnostics"
     },
     {
       "action": "structural_member_of",
@@ -251,7 +256,7 @@
     {
       "action": "structural_member_of",
       "ticker": "340570",
-      "lane": "surgical_device"
+      "lane": "in_vitro_diagnostics"
     },
     {
       "action": "structural_member_of",
@@ -271,12 +276,22 @@
     {
       "action": "structural_member_of",
       "ticker": "376900",
-      "lane": "surgical_device"
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "386380",
+      "lane": "in_vitro_diagnostics"
     },
     {
       "action": "structural_member_of",
       "ticker": "475960",
-      "lane": "surgical_device"
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "0120G0",
+      "lane": "in_vitro_diagnostics"
     },
     {
       "action": "structural_member_of",

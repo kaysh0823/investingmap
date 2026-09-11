@@ -424,15 +424,15 @@
   ],
   "metrics": {
     "legacyMigratedEdgeCount": 81,
-    "structuralGeneratedEdgeCount": 61,
+    "structuralGeneratedEdgeCount": 54,
     "manuallyCuratedEdgeCount": 21,
     "removedEdgeCount": 0,
-    "finalEdgeCount": 163,
+    "finalEdgeCount": 156,
     "ownershipEdgeCount": 9,
     "ownershipWithStakePctCount": 9,
     "ownershipPrimarySourceCoverage": 100,
     "groupMembershipEdgeCount": 12,
-    "classificationEdgeCount": 61,
+    "classificationEdgeCount": 54,
     "businessPartnershipEdgeCount": 0,
     "listedCompanyOwnershipOrphanCount": 44,
     "classificationOnlyCompanyCount": 44,
@@ -452,13 +452,13 @@
     "phase3d1CuratedAt": "2026-08-23"
   },
   "statusCounts": {
-    "reference": 61,
+    "reference": 54,
     "confirmed": 9,
     "reported": 12,
     "peer": 81
   },
   "typeCounts": {
-    "member_of": 61,
+    "member_of": 54,
     "owns": 9,
     "group_member": 12,
     "peer": 81

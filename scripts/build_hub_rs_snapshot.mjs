@@ -69,6 +69,16 @@ async function main() {
   const out = { ...snapshot, hubTop10Preview: hubPreview };
   fs.writeFileSync(outPath, `${JSON.stringify(out)}\n`, 'utf8');
   console.log(`OK ${outPath} — ${snapshot.quotesOk}/${snapshot.universe} RS scores`);
+  if (snapshot.indices) {
+    console.log(
+      'Index RS:',
+      Object.entries(snapshot.indices)
+        .map(([code, row]) => `${code}=${row.rs} (20=${row.rs20}/50=${row.rs50}/120=${row.rs120})`)
+        .join(', '),
+    );
+  } else {
+    console.warn('WARN hub_rs_snapshot has no indices (KOSPI/KOSDAQ closes unavailable)');
+  }
   if (hubPreview.length) {
     console.log('Hub RS Top 3:', hubPreview.slice(0, 3).map((r) => `${r.name} ${r.rs}`).join(', '));
   }

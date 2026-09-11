@@ -138,7 +138,7 @@
     "@type": "ItemList",
     "name": "한국 여행·레저·항공 투자 지도",
     "url": "https://www.investingmap.kr/travel/korea_travel_map.html",
-    "numberOfItems": 11,
+    "numberOfItems": 12,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -205,6 +205,12 @@
         "position": 11,
         "name": "진에어 (272450, KOSPI)",
         "url": "https://www.investingmap.kr/travel/korea_travel_map.html#ticker-272450"
+      },
+      {
+        "@type": "ListItem",
+        "position": 12,
+        "name": "서부T&D (006730, KOSDAQ)",
+        "url": "https://www.investingmap.kr/travel/korea_travel_map.html#ticker-006730"
       }
     ]
   }
@@ -215,16 +221,16 @@
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=2"></script>
-<script src="../js/live_quotes.js?v=17"></script>
-  <script src="../js/map_i18n.js"></script>
-  <script src="../js/map_cross_sector.js?v=1"></script>
+<script src="../js/live_quotes.js?v=18"></script>
+  <script src="../js/map_i18n.js?v=14"></script>
+  <script src="../js/map_cross_sector.js?v=2"></script>
   <script src="../js/map_tab_state.js?v=9"></script>
   <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
   <script src="../js/map_heatmap.js?v=16"></script>
-  <script src="../js/map_momentum.js?v=12"></script>
+  <script src="../js/map_momentum.js?v=13"></script>
   <script src="../js/map_volatility.js?v=9"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
@@ -868,7 +874,6 @@
     .node-dim {
       opacity: .15
     }
-
     /* investingmap-mobile-table-v2 ??base */
     table {
       border-collapse: separate;
@@ -2094,7 +2099,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">11</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">12</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2144,9 +2149,9 @@
       <td class="fin-cell">12.47</td>
       <td class="fin-cell">0.90</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">항공</span></td>
+      <td><span class="chain-tag">항공운송</span></td>
       <td style="font-size:12px;color:var(--text-muted)">FSC·LCC</td>
-      <td class="products-cell">국제·국내 항공·화물·정비</td>
+      <td class="products-cell">국제·국내 항공·화물·정비 · FSC · 여객</td>
       <td><div class="partners-list">Delta Air Lines, United Airlines, Singapore Airlines</div></td>
     </tr>
           <tr data-ticker="035250">
@@ -2190,9 +2195,9 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.95</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">항공</span></td>
+      <td><span class="chain-tag">항공운송</span></td>
       <td style="font-size:12px;color:var(--text-muted)">FSC</td>
-      <td class="products-cell">국제·국내 항공·화물</td>
+      <td class="products-cell">국제·국내 항공·화물 · FSC · 여객</td>
       <td><div class="partners-list">Delta Air Lines, United Airlines, Singapore Airlines</div></td>
     </tr>
           <tr data-ticker="008770">
@@ -2213,7 +2218,7 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.90</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">호텔·리조트</span></td>
+      <td><span class="chain-tag">면세</span></td>
       <td style="font-size:12px;color:var(--text-muted)">호텔·면세</td>
       <td class="products-cell">신라호텔·면세·호텔 운영</td>
       <td><div class="partners-list">Marriott, Hilton</div></td>
@@ -2263,6 +2268,29 @@
       <td style="font-size:12px;color:var(--text-muted)">카지노·호텔</td>
       <td class="products-cell">외국인 전용 카지노·호텔·엔터</td>
       <td><div class="partners-list">Las Vegas Sands, MGM Resorts, Galaxy Entertainment</div></td>
+    </tr>
+          <tr data-ticker="006730">
+      <td><div class="company-name">서부T&amp;D</div><div class="company-name-sub">Seobu T&amp;D Co.,Ltd</div></td>
+      <td><span class="ticker">006730</span></td>
+      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell ret-cell">-0.18%</td>
+      <td class="quote-cell ret-cell">+11.08%</td>
+      <td class="quote-cell ret-cell">+11.19%</td>
+      <td class="quote-cell ret-cell">-25.05%</td>
+      <td class="quote-cell ret-cell">-11.31%</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">—</td>
+      <td class="quote-cell">67.0</td>
+      <td class="mcap-cell">0.72조원</td>
+      <td class="fin-cell">—</td>
+      <td class="fin-cell">—</td>
+      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
+      <td><span class="chain-tag">호텔·리조트</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">호텔·복합몰</td>
+      <td class="products-cell">호텔(드래곤시티)·복합쇼핑몰</td>
+      <td><div class="partners-list">—</div></td>
     </tr>
           <tr data-ticker="114090">
       <td><div class="company-name">GKL</div><div class="company-name-sub">Grand Korea Leisure</div></td>
@@ -2328,7 +2356,7 @@
       <td class="fin-cell">17.34</td>
       <td class="fin-cell">3.65</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">여행·면세</span></td>
+      <td><span class="chain-tag">여행·예약</span></td>
       <td style="font-size:12px;color:var(--text-muted)">여행사·패키지</td>
       <td class="products-cell">해외·국내 패키지·항공·호텔 예약</td>
       <td><div class="partners-list">Booking Holdings, Expedia Group</div></td>
@@ -2351,9 +2379,9 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.27</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">항공</span></td>
+      <td><span class="chain-tag">항공운송</span></td>
       <td style="font-size:12px;color:var(--text-muted)">LCC</td>
-      <td class="products-cell">국내·단거리 국제 LCC</td>
+      <td class="products-cell">국내·단거리 국제 LCC · 여객</td>
       <td><div class="partners-list">Delta Air Lines, United Airlines</div></td>
     </tr>
           <tr data-ticker="272450">
@@ -2374,9 +2402,9 @@
       <td class="fin-cell">—</td>
       <td class="fin-cell">1.27</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">항공</span></td>
+      <td><span class="chain-tag">항공운송</span></td>
       <td style="font-size:12px;color:var(--text-muted)">LCC</td>
-      <td class="products-cell">국내·동북아 LCC</td>
+      <td class="products-cell">국내·동북아 LCC · 여객</td>
       <td><div class="partners-list">United Airlines, Singapore Airlines</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
@@ -2453,7 +2481,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"항공":"#42A5F5","카지노":"#AB47BC","호텔·리조트":"#26A69A","여행·면세":"#FFA726"};
+    const CHAIN_COLORS = {"항공운송":"#42A5F5","여행·예약":"#FFA726","호텔·리조트":"#26A69A","카지노":"#AB47BC","레저·스포츠":"#66BB6A","면세":"#EF5350"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2514,7 +2542,7 @@
         "momentumChange": "당일 등락률",
         "momentumPosition": "주가 위치",
         "momentumNoData": "RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.",
-        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금",
+        "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 일일 등락률",
         "tabTable": "📋 기업목록 & 필터",
         "tabGraph": "🌐 관계 네트워크 (수정중)",
@@ -2546,16 +2574,20 @@
         "sbSize": "노드 크기",
         "sbHow": "조작법",
         "chainLabel": {
-            "항공": "항공",
-            "카지노": "카지노",
+            "항공운송": "항공운송",
+            "여행·예약": "여행·예약",
             "호텔·리조트": "호텔·리조트",
-            "여행·면세": "여행·면세"
+            "카지노": "카지노",
+            "레저·스포츠": "레저·스포츠",
+            "면세": "면세"
         },
         "chainFilter": {
-            "항공": "항공",
-            "카지노": "카지노",
+            "항공운송": "항공운송",
+            "여행·예약": "여행·예약",
             "호텔·리조트": "호텔·리조트",
-            "여행·면세": "여행·면세"
+            "카지노": "카지노",
+            "레저·스포츠": "레저·스포츠",
+            "면세": "면세"
         },
         "allFilter": "전체",
         "kosp": "KOSPI",
@@ -2639,7 +2671,7 @@
         "momentumChange": "1-day return",
         "momentumPosition": "Price position",
         "momentumNoData": "No companies have RS, price-position and turnover data.",
-        "momentumLegend": "Color = 1-day return · size = daily turnover",
+        "momentumLegend": "Color = 1-day return · size = daily turnover · vertical lines = market index RS",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
         "tabGraph": "🌐 Relationship network (WIP)",
@@ -2671,16 +2703,20 @@
         "sbSize": "Node size",
         "sbHow": "Controls",
         "chainLabel": {
-            "항공": "Airlines",
-            "카지노": "Casino",
-            "호텔·리조트": "Hotel & resort",
-            "여행·면세": "Travel & duty-free"
+            "항공운송": "Air transport",
+            "여행·예약": "Travel & booking",
+            "호텔·리조트": "Hotels & resorts",
+            "카지노": "Casinos",
+            "레저·스포츠": "Leisure & sports",
+            "면세": "Duty-free"
         },
         "chainFilter": {
-            "항공": "Airlines",
+            "항공운송": "Airlines",
+            "여행·예약": "Travel",
+            "호텔·리조트": "Hotels",
             "카지노": "Casino",
-            "호텔·리조트": "Hotel & resort",
-            "여행·면세": "Travel & duty-free"
+            "레저·스포츠": "Leisure",
+            "면세": "Duty-free"
         },
         "allFilter": "All",
         "kosp": "KOSPI",
@@ -2717,9 +2753,9 @@
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
-        id: 'korean_air', name: '대한항공', nameEn: 'Korean Air', ticker: '003490', market: 'KOSPI', chain: '항공',
+        id: 'korean_air', name: '대한항공', nameEn: 'Korean Air', ticker: '003490', market: 'KOSPI', chain: '항공운송',
         semType: 'FSC·LCC', semTypeEn: 'Full-service & network carrier',
-        products: '국제·국내 항공·화물·정비', productsEn: 'International and domestic passenger, cargo and MRO',
+        products: '국제·국내 항공·화물·정비 · FSC · 여객', productsEn: 'International and domestic passenger, cargo and MRO',
         revenue: '11.12조원', mcapWon: 11120263962200, per: 12.47, pbr: 0.9, revTier: 2, partners: ['delta', 'united', 'singapore_airlines']
       },
 
@@ -2731,14 +2767,14 @@
       },
 
       {
-        id: 'asiana', name: '아시아나항공', nameEn: 'Asiana Airlines', ticker: '020560', market: 'KOSPI', chain: '항공',
+        id: 'asiana', name: '아시아나항공', nameEn: 'Asiana Airlines', ticker: '020560', market: 'KOSPI', chain: '항공운송',
         semType: 'FSC', semTypeEn: 'Full-service carrier',
-        products: '국제·국내 항공·화물', productsEn: 'International and domestic passenger and cargo',
+        products: '국제·국내 항공·화물 · FSC · 여객', productsEn: 'International and domestic passenger and cargo',
         revenue: '1.66조원', mcapWon: 1664404944880, per: null, pbr: 1.95, revTier: 2, partners: ['delta', 'united', 'singapore_airlines']
       },
 
       {
-        id: 'hotel_shilla', name: '호텔신라', nameEn: 'Hotel Shilla', ticker: '008770', market: 'KOSPI', chain: '호텔·리조트',
+        id: 'hotel_shilla', name: '호텔신라', nameEn: 'Hotel Shilla', ticker: '008770', market: 'KOSPI', chain: '면세',
         semType: '호텔·면세', semTypeEn: 'Hotels & duty-free',
         products: '신라호텔·면세·호텔 운영', productsEn: 'Shilla hotels, duty-free and hotel operations',
         revenue: '1.66조원', mcapWon: 1656270706200, per: null, pbr: 1.9, revTier: 2, partners: ['marriott', 'hilton']
@@ -2773,24 +2809,31 @@
       },
 
       {
-        id: 'hanatour', name: '하나투어', nameEn: 'HANATOUR SERVICE', ticker: '039130', market: 'KOSPI', chain: '여행·면세',
+        id: 'hanatour', name: '하나투어', nameEn: 'HANATOUR SERVICE', ticker: '039130', market: 'KOSPI', chain: '여행·예약',
         semType: '여행사·패키지', semTypeEn: 'Travel agency & packages',
         products: '해외·국내 패키지·항공·호텔 예약', productsEn: 'Outbound and domestic packages, flights and hotels',
         revenue: '0.50조원', mcapWon: 503422790000, per: 17.34, pbr: 3.65, revTier: 1, partners: ['booking', 'expedia']
       },
 
       {
-        id: 'jeju_air', name: '제주항공', nameEn: 'Jeju Air', ticker: '089590', market: 'KOSPI', chain: '항공',
+        id: 'jeju_air', name: '제주항공', nameEn: 'Jeju Air', ticker: '089590', market: 'KOSPI', chain: '항공운송',
         semType: 'LCC', semTypeEn: 'Low-cost carrier',
-        products: '국내·단거리 국제 LCC', productsEn: 'Domestic and short-haul international LCC',
+        products: '국내·단거리 국제 LCC · 여객', productsEn: 'Domestic and short-haul international LCC',
         revenue: '0.38조원', mcapWon: 380222244275, per: null, pbr: 1.27, revTier: 1, partners: ['delta', 'united']
       },
 
       {
-        id: 'jin_air', name: '진에어', nameEn: 'Jin Air', ticker: '272450', market: 'KOSPI', chain: '항공',
+        id: 'jin_air', name: '진에어', nameEn: 'Jin Air', ticker: '272450', market: 'KOSPI', chain: '항공운송',
         semType: 'LCC', semTypeEn: 'Low-cost carrier',
-        products: '국내·동북아 LCC', productsEn: 'Domestic and Northeast Asia LCC',
+        products: '국내·동북아 LCC · 여객', productsEn: 'Domestic and Northeast Asia LCC',
         revenue: '0.32조원', mcapWon: 320508000000, per: null, pbr: 1.27, revTier: 1, partners: ['united', 'singapore_airlines']
+      },
+
+      {
+        id: 'travel_006730', name: '서부T&D', nameEn: 'Seobu T&D Co.,Ltd', ticker: '006730', market: 'KOSDAQ', chain: '호텔·리조트',
+        semType: '호텔·복합몰', semTypeEn: 'Hotels & mixed-use',
+        products: '호텔(드래곤시티)·복합쇼핑몰', productsEn: 'Hotels (Dragon City) and mixed-use malls',
+        revenue: '', mcapWon: 720544306830, per: null, pbr: null, revTier: 1, partners: []
       }
 
     ];
@@ -2982,7 +3025,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '항공', '카지노', '호텔·리조트', '여행·면세'];
+      const chains = ['all', '항공운송', '여행·예약', '호텔·리조트', '카지노', '레저·스포츠', '면세'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
@@ -3008,7 +3051,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['항공', '카지노', '호텔·리조트', '여행·면세'];
+      const chains = ['항공운송', '여행·예약', '호텔·리조트', '카지노', '레저·스포츠', '면세'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>
@@ -3344,6 +3387,9 @@
       var mt = T[lang] || {};
       InvestingMapMomentum.render({
         container: el,
+        indices: (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.getMomentumIndices)
+          ? InvestingMapLiveQuotes.getMomentumIndices()
+          : undefined,
         legend: document.getElementById('momentum-legend'),
         companies: koreanCompanies,
         lang: lang,

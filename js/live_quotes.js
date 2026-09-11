@@ -3,7 +3,7 @@
  */
 (function (global) {
   'use strict';
-  var QUOTES_API_VERSION = '5';
+  var QUOTES_API_VERSION = '6';
 
   var CHUNK_SIZE = 18;
   var POSITION_FALLBACK_KO = '주가 위치';
@@ -11,6 +11,42 @@
   var RS_FALLBACK = 'RS';
   var rsSnapshot = null;
   var rsSnapshotPromise = null;
+  /** @type {{kospiRs?: number, kosdaqRs?: number}|null} */
+  var momentumIndices = null;
+
+  function rememberMomentumIndices(source) {
+    if (!source) return;
+    var ix = source.indices || source;
+    if (!ix || typeof ix !== 'object') return;
+    var next = momentumIndices ? { kospiRs: momentumIndices.kospiRs, kosdaqRs: momentumIndices.kosdaqRs } : {};
+    var kospi =
+      ix.KOSPI && typeof ix.KOSPI.rs === 'number'
+        ? ix.KOSPI.rs
+        : typeof ix.kospiRs === 'number'
+          ? ix.kospiRs
+          : null;
+    var kosdaq =
+      ix.KOSDAQ && typeof ix.KOSDAQ.rs === 'number'
+        ? ix.KOSDAQ.rs
+        : typeof ix.kosdaqRs === 'number'
+          ? ix.kosdaqRs
+          : null;
+    if (kospi != null && isFinite(kospi)) next.kospiRs = kospi;
+    if (kosdaq != null && isFinite(kosdaq)) next.kosdaqRs = kosdaq;
+    if (next.kospiRs != null || next.kosdaqRs != null) momentumIndices = next;
+  }
+
+  function getMomentumIndices() {
+    if (!momentumIndices) return {};
+    var out = {};
+    if (typeof momentumIndices.kospiRs === 'number' && isFinite(momentumIndices.kospiRs)) {
+      out.kospiRs = momentumIndices.kospiRs;
+    }
+    if (typeof momentumIndices.kosdaqRs === 'number' && isFinite(momentumIndices.kosdaqRs)) {
+      out.kosdaqRs = momentumIndices.kosdaqRs;
+    }
+    return out;
+  }
 
   function rsSnapshotUrl() {
     var origin = (typeof window !== 'undefined' && window.location && window.location.origin)
@@ -44,12 +80,14 @@
         })
         .then(function (j) {
           if (j && j.quotes && Object.keys(j.quotes).length) {
+            rememberMomentumIndices(j);
             rsSnapshot = j;
             return rsSnapshot;
           }
           return fetch(rsSnapshotApiUrl(), { cache: 'default', credentials: 'same-origin' })
             .then(function (r2) { return r2.ok ? r2.json() : { quotes: {} }; })
             .then(function (j2) {
+              rememberMomentumIndices(j2);
               rsSnapshot = j2 && j2.quotes ? j2 : { quotes: {} };
               return rsSnapshot;
             });
@@ -523,6 +561,7 @@
     var asOf = '';
     var regularSession = null;
     var source = '';
+    var indices = null;
     var chain = Promise.resolve();
     for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
       (function (chunk) {
@@ -533,6 +572,10 @@
           if (j && j.asOf) asOf = j.asOf;
           if (j && j.regularSession != null) regularSession = j.regularSession;
           if (j && j.source) source = j.source;
+          if (j && j.indices) {
+            indices = j.indices;
+            rememberMomentumIndices(j);
+          }
           var items = (j && j.items) || {};
           for (var k in items) {
             if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
@@ -541,7 +584,7 @@
       })(codes.slice(i, i + CHUNK_SIZE));
     }
     return chain.then(function () {
-      return { asOf: asOf, items: merged, regularSession: regularSession, source: source };
+      return { asOf: asOf, items: merged, regularSession: regularSession, source: source, indices: indices };
     });
   }
 
@@ -557,6 +600,7 @@
     var getCompanies = opts && opts.getCompanies;
     var renderTable = opts && opts.renderTable;
     return loadRsSnapshot().then(function (snap) {
+      rememberMomentumIndices(snap);
       if (getCompanies) {
         mergeRsIntoCompanies(getCompanies(), snap);
         applyLiveReturns(getCompanies(), snap);
@@ -607,6 +651,7 @@
       return fetchAllCodes(base, codes)
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
+          if (j && j.indices) rememberMomentumIndices(j);
           function finishQuotes() {
             try {
               onAsOf(j.asOf || '', { regularSession: j.regularSession });
@@ -616,7 +661,7 @@
             return j;
           }
           // Prefer quotes prevClose + horizon returns; only fetch 689KB RS snap as fallback.
-          if (quotesResponseCanSkipRsSnapshot(j)) {
+          if (quotesResponseCanSkipRsSnapshot(j) && (j.indices || momentumIndices)) {
             applyLiveReturns(getCompanies(), null);
             return finishQuotes();
           }
@@ -624,7 +669,10 @@
             if (snap && !quotesResponseHasRsReturns(j)) {
               mergeRsIntoCompanies(getCompanies(), snap);
             }
-            if (snap) applyLiveReturns(getCompanies(), snap);
+            if (snap) {
+              rememberMomentumIndices(snap);
+              applyLiveReturns(getCompanies(), snap);
+            }
             return finishQuotes();
           });
         })
@@ -668,6 +716,8 @@
     loadRsSnapshot: loadRsSnapshot,
     mergeRsIntoCompanies: mergeRsIntoCompanies,
     applyLiveReturns: applyLiveReturns,
+    getMomentumIndices: getMomentumIndices,
+    rememberMomentumIndices: rememberMomentumIndices,
     positionHeaderLabel: positionHeaderLabel,
     emptyQuotesRow: emptyQuotesRow,
     formatQuotesRow: formatQuotesRow,

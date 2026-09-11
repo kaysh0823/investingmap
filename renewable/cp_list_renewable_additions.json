@@ -24,5 +24,31 @@
     "partners": [],
     "subSector": "수소·연료전지",
     "level": "core"
+  },
+  {
+    "ticker": "126340",
+    "name": "비나텍",
+    "nameEn": "Vinatech",
+    "chain": "수소·연료전지",
+    "semType": "슈퍼커패시터·연료전지",
+    "semTypeEn": "Supercapacitor & fuel cell",
+    "products": "슈퍼커패시터·연료전지 관련",
+    "productsEn": "Supercapacitors and fuel-cell related products",
+    "partners": [],
+    "subSector": "수소·연료전지",
+    "level": "core"
+  },
+  {
+    "ticker": "044490",
+    "name": "태웅",
+    "nameEn": "Taewoong",
+    "chain": "구조물·보조설비",
+    "semType": "해상풍력 플랜지·단조",
+    "semTypeEn": "Offshore wind flanges & forgings",
+    "products": "해상풍력 타워 플랜지·단조 (주력)",
+    "productsEn": "Offshore wind tower flanges and forgings (core)",
+    "partners": [],
+    "subSector": "구조물·보조설비",
+    "level": "core"
   }
 ]

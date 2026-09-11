@@ -10,7 +10,7 @@
       "nameKo": "삼성바이오로직스",
       "nameEn": "Samsung Biologics",
       "market": "KOSPI",
-      "role": "CDMO / CMO",
+      "role": "CDMO·CMO",
       "group": "cdmo",
       "mcapWon": 66983006097000,
       "isListedKorea": true,
@@ -36,8 +36,8 @@
       "nameKo": "알테오젠",
       "nameEn": "Alteogen Inc.",
       "market": "KOSDAQ",
-      "role": "항체신약 / ADC",
-      "group": "antibody_adc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 20095505870500,
       "isListedKorea": true,
       "legacyId": "bio_2"
@@ -49,8 +49,8 @@
       "nameKo": "삼성에피스홀딩스",
       "nameEn": "Samsung Epis Holdings",
       "market": "KOSPI",
-      "role": "바이오시밀러",
-      "group": "biosimilar",
+      "role": "제약·바이오 지주",
+      "group": "bio_holdings",
       "mcapWon": 8858365444000,
       "isListedKorea": true,
       "legacyId": "bio_3"
@@ -62,8 +62,8 @@
       "nameKo": "SK바이오팜",
       "nameEn": "SK Biopharm",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 6781927450000,
       "isListedKorea": true,
       "legacyId": "bio_4"
@@ -75,8 +75,8 @@
       "nameKo": "한미약품",
       "nameEn": "Hanmi Pharm",
       "market": "KOSPI",
-      "role": "비만 / 대사질환",
-      "group": "obesity",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 6066004238500,
       "isListedKorea": true,
       "legacyId": "bio_5"
@@ -88,8 +88,8 @@
       "nameKo": "유한양행",
       "nameEn": "Yuhan",
       "market": "KOSPI",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 5992324573400,
       "isListedKorea": true,
       "legacyId": "bio_6"
@@ -101,8 +101,8 @@
       "nameKo": "HLB",
       "nameEn": "HLB INC.",
       "market": "KOSDAQ",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 4495440026250,
       "isListedKorea": true,
       "legacyId": "bio_7"
@@ -114,8 +114,8 @@
       "nameKo": "에이비엘바이오",
       "nameEn": "ABL Bio",
       "market": "KOSDAQ",
-      "role": "항체신약 / ADC",
-      "group": "antibody_adc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 3997504858200,
       "isListedKorea": true,
       "legacyId": "bio_8"
@@ -127,8 +127,8 @@
       "nameKo": "삼천당제약",
       "nameEn": "Samchundang Pharm",
       "market": "KOSDAQ",
-      "role": "비만 / 대사질환",
-      "group": "obesity",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 3682823104000,
       "isListedKorea": true,
       "legacyId": "bio_9"
@@ -140,8 +140,8 @@
       "nameKo": "펩트론",
       "nameEn": "Peptron, Inc.",
       "market": "KOSDAQ",
-      "role": "비만 / 대사질환",
-      "group": "obesity",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 3667819155000,
       "isListedKorea": true,
       "legacyId": "bio_10"
@@ -153,8 +153,8 @@
       "nameKo": "한미사이언스",
       "nameEn": "Hanmi Science",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "제약·바이오 지주",
+      "group": "bio_holdings",
       "mcapWon": 3611073840000,
       "isListedKorea": true,
       "legacyId": "bio_11"
@@ -166,8 +166,8 @@
       "nameKo": "리가켐바이오",
       "nameEn": "LegoChem Bio",
       "market": "KOSDAQ",
-      "role": "항체신약 / ADC",
-      "group": "antibody_adc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 3405786456000,
       "isListedKorea": true,
       "legacyId": "bio_12"
@@ -179,8 +179,8 @@
       "nameKo": "SK바이오사이언스",
       "nameEn": "SK Bioscience",
       "market": "KOSPI",
-      "role": "CDMO / CMO",
-      "group": "cdmo",
+      "role": "백신·혈액제제",
+      "group": "vaccine_blood",
       "mcapWon": 2973503358700,
       "isListedKorea": true,
       "legacyId": "bio_13"
@@ -192,8 +192,8 @@
       "nameKo": "한올바이오파마",
       "nameEn": "HanAll Biopharma",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 2857562898600,
       "isListedKorea": true,
       "legacyId": "bio_14"
@@ -205,8 +205,8 @@
       "nameKo": "보로노이",
       "nameEn": "Voronoi, Inc.",
       "market": "KOSDAQ",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 2834102844000,
       "isListedKorea": true,
       "legacyId": "bio_15"
@@ -218,8 +218,8 @@
       "nameKo": "디앤디파마텍",
       "nameEn": "D&D Pharmatech",
       "market": "KOSDAQ",
-      "role": "비만 / 대사질환",
-      "group": "obesity",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 2255210362800,
       "isListedKorea": true,
       "legacyId": "bio_16"
@@ -231,7 +231,7 @@
       "nameKo": "에스티팜",
       "nameEn": "ST Pharm",
       "market": "KOSDAQ",
-      "role": "CDMO / CMO",
+      "role": "CDMO·CMO",
       "group": "cdmo",
       "mcapWon": 2112715765600,
       "isListedKorea": true,
@@ -244,8 +244,8 @@
       "nameKo": "올릭스",
       "nameEn": "Olix Pharmaceuticals, Inc.",
       "market": "KOSDAQ",
-      "role": "플랫폼 기술",
-      "group": "platform",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 2019927315000,
       "isListedKorea": true,
       "legacyId": "bio_18"
@@ -257,8 +257,8 @@
       "nameKo": "메지온",
       "nameEn": "Mezzion Pharma Co., Ltd.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 1990408810000,
       "isListedKorea": true,
       "legacyId": "bio_19"
@@ -270,8 +270,8 @@
       "nameKo": "셀트리온제약",
       "nameEn": "Celltrion Pharm",
       "market": "KOSDAQ",
-      "role": "바이오시밀러",
-      "group": "biosimilar",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 1813835262200,
       "isListedKorea": true,
       "legacyId": "bio_20"
@@ -283,8 +283,8 @@
       "nameKo": "네이처셀",
       "nameEn": "NATURECELL CO.,LTD.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 1543219591200,
       "isListedKorea": true,
       "legacyId": "bio_21"
@@ -296,8 +296,8 @@
       "nameKo": "에임드바이오",
       "nameEn": "Aimed Bio Inc.",
       "market": "KOSDAQ",
-      "role": "항체신약 / ADC",
-      "group": "antibody_adc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 1516538725450,
       "isListedKorea": true,
       "legacyId": "bio_22"
@@ -309,8 +309,8 @@
       "nameKo": "녹십자",
       "nameEn": "GC Biopharma",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "백신·혈액제제",
+      "group": "vaccine_blood",
       "mcapWon": 1491202248800,
       "isListedKorea": true,
       "legacyId": "bio_23"
@@ -322,8 +322,8 @@
       "nameKo": "코오롱티슈진",
       "nameEn": "Kolon TissueGene",
       "market": "KOSDAQ",
-      "role": "세포 · 유전자치료제",
-      "group": "cell_gene",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 1452989736000,
       "isListedKorea": true,
       "legacyId": "bio_24"
@@ -335,8 +335,8 @@
       "nameKo": "오스코텍",
       "nameEn": "OSCOTEC Inc.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 1400249241600,
       "isListedKorea": true,
       "legacyId": "bio_25"
@@ -348,24 +348,11 @@
       "nameKo": "대웅제약",
       "nameEn": "Daewoongpharmaceutical",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 1345201357500,
       "isListedKorea": true,
       "legacyId": "bio_26"
-    },
-    {
-      "id": "krx:290650",
-      "type": "listed_company",
-      "ticker": "290650",
-      "nameKo": "엘앤씨바이오",
-      "nameEn": "L&C BIO",
-      "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
-      "mcapWon": 1291848821600,
-      "isListedKorea": true,
-      "legacyId": "bio_27"
     },
     {
       "id": "krx:475830",
@@ -374,11 +361,11 @@
       "nameKo": "오름테라퓨틱",
       "nameEn": "Orum Therapeutics",
       "market": "KOSDAQ",
-      "role": "항체신약 / ADC",
-      "group": "antibody_adc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 1214125081000,
       "isListedKorea": true,
-      "legacyId": "bio_28"
+      "legacyId": "bio_27"
     },
     {
       "id": "krx:195940",
@@ -387,11 +374,11 @@
       "nameKo": "HK이노엔",
       "nameEn": "HK inno.N Corporation",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 1191271916550,
       "isListedKorea": true,
-      "legacyId": "bio_29"
+      "legacyId": "bio_28"
     },
     {
       "id": "krx:003090",
@@ -400,11 +387,11 @@
       "nameKo": "대웅",
       "nameEn": "Daewoong",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "제약·바이오 지주",
+      "group": "bio_holdings",
       "mcapWon": 980273782800,
       "isListedKorea": true,
-      "legacyId": "bio_30"
+      "legacyId": "bio_29"
     },
     {
       "id": "krx:086450",
@@ -413,11 +400,11 @@
       "nameKo": "동국제약",
       "nameEn": "DongKook Pharmaceutical Co.,Ltd.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 976977072000,
       "isListedKorea": true,
-      "legacyId": "bio_31"
+      "legacyId": "bio_30"
     },
     {
       "id": "krx:185750",
@@ -426,11 +413,11 @@
       "nameKo": "종근당",
       "nameEn": "Chong Kun Dang",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 938589040000,
       "isListedKorea": true,
-      "legacyId": "bio_32"
+      "legacyId": "bio_31"
     },
     {
       "id": "krx:115180",
@@ -439,11 +426,11 @@
       "nameKo": "큐리언트",
       "nameEn": "Qurient Co., Ltd.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 865162180550,
       "isListedKorea": true,
-      "legacyId": "bio_33"
+      "legacyId": "bio_32"
     },
     {
       "id": "krx:445680",
@@ -452,11 +439,11 @@
       "nameKo": "큐리옥스바이오시스템즈",
       "nameEn": "Curiox Biosystems Co., Ltd.",
       "market": "KOSDAQ",
-      "role": "플랫폼 기술",
-      "group": "platform",
+      "role": "연구도구·서비스",
+      "group": "research_tools",
       "mcapWon": 820127355550,
       "isListedKorea": true,
-      "legacyId": "bio_34"
+      "legacyId": "bio_33"
     },
     {
       "id": "krx:476830",
@@ -465,11 +452,11 @@
       "nameKo": "알지노믹스",
       "nameEn": "Rznomics Inc.",
       "market": "KOSDAQ",
-      "role": "플랫폼 기술",
-      "group": "platform",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 791163295200,
       "isListedKorea": true,
-      "legacyId": "bio_35"
+      "legacyId": "bio_34"
     },
     {
       "id": "krx:003850",
@@ -478,9 +465,22 @@
       "nameKo": "보령",
       "nameEn": "Boryung",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 775516351280,
+      "isListedKorea": true,
+      "legacyId": "bio_35"
+    },
+    {
+      "id": "krx:950260",
+      "type": "listed_company",
+      "ticker": "950260",
+      "nameKo": "인제니아테라퓨틱스(Reg.S)",
+      "nameEn": "인제니아테라퓨틱스(Reg.S)",
+      "market": "KOSDAQ",
+      "role": "신약개발",
+      "group": "smallmol",
+      "mcapWon": 770346977060,
       "isListedKorea": true,
       "legacyId": "bio_36"
     },
@@ -491,8 +491,8 @@
       "nameKo": "차바이오텍",
       "nameEn": "Cha Biotech",
       "market": "KOSDAQ",
-      "role": "세포 · 유전자치료제",
-      "group": "cell_gene",
+      "role": "제약·바이오 지주",
+      "group": "bio_holdings",
       "mcapWon": 752150324140,
       "isListedKorea": true,
       "legacyId": "bio_37"
@@ -502,10 +502,10 @@
       "type": "listed_company",
       "ticker": "476060",
       "nameKo": "온코닉테라퓨틱스",
-      "nameEn": "Onconic Therapeutics",
+      "nameEn": "Onconic Therapeutics Inc.",
       "market": "KOSDAQ",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 746504889600,
       "isListedKorea": true,
       "legacyId": "bio_38"
@@ -517,8 +517,8 @@
       "nameKo": "코미팜",
       "nameEn": "KOMIPHARM INTERNATIONAL CO., LTD.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 717437866450,
       "isListedKorea": true,
       "legacyId": "bio_39"
@@ -528,10 +528,10 @@
       "type": "listed_company",
       "ticker": "317450",
       "nameKo": "명인제약",
-      "nameEn": "Myung In Pharm",
+      "nameEn": "MYUNGIN PHARM",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 651890000000,
       "isListedKorea": true,
       "legacyId": "bio_40"
@@ -543,8 +543,8 @@
       "nameKo": "JW중외제약",
       "nameEn": "JW Pharmaceutical",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 640363075000,
       "isListedKorea": true,
       "legacyId": "bio_41"
@@ -556,8 +556,8 @@
       "nameKo": "지투지바이오",
       "nameEn": "G2GBIO, Inc.",
       "market": "KOSDAQ",
-      "role": "플랫폼 기술",
-      "group": "platform",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 631086716700,
       "isListedKorea": true,
       "legacyId": "bio_42"
@@ -569,8 +569,8 @@
       "nameKo": "파미셀",
       "nameEn": "Pharmicell",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "원료의약품·생산소재",
+      "group": "api_materials",
       "mcapWon": 630042147000,
       "isListedKorea": true,
       "legacyId": "bio_43"
@@ -582,8 +582,8 @@
       "nameKo": "동아쏘시오홀딩스",
       "nameEn": "Dong-A Socio Holdings",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "제약·바이오 지주",
+      "group": "bio_holdings",
       "mcapWon": 623432000200,
       "isListedKorea": true,
       "legacyId": "bio_44"
@@ -593,10 +593,10 @@
       "type": "listed_company",
       "ticker": "048410",
       "nameKo": "현대바이오",
-      "nameEn": "Hyundai Bioscience",
+      "nameEn": "HYUNDAI BIOSCIENCE CO., LTD.",
       "market": "KOSDAQ",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 599299602120,
       "isListedKorea": true,
       "legacyId": "bio_45"
@@ -608,8 +608,8 @@
       "nameKo": "에스티큐브",
       "nameEn": "Stcube",
       "market": "KOSDAQ",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 547265492550,
       "isListedKorea": true,
       "legacyId": "bio_46"
@@ -621,8 +621,8 @@
       "nameKo": "신풍제약",
       "nameEn": "Shinpoong Pharmaceutical",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 524709405220,
       "isListedKorea": true,
       "legacyId": "bio_47"
@@ -632,26 +632,13 @@
       "type": "listed_company",
       "ticker": "358570",
       "nameKo": "지아이이노베이션",
-      "nameEn": "GI Innovation",
+      "nameEn": "GI Innovation Inc.",
       "market": "KOSDAQ",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 521934488540,
       "isListedKorea": true,
       "legacyId": "bio_48"
-    },
-    {
-      "id": "krx:086900",
-      "type": "listed_company",
-      "ticker": "086900",
-      "nameKo": "메디톡스",
-      "nameEn": "Medy-Tox Inc.",
-      "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
-      "mcapWon": 507975391200,
-      "isListedKorea": true,
-      "legacyId": "bio_49"
     },
     {
       "id": "krx:397030",
@@ -660,11 +647,11 @@
       "nameKo": "에이프릴바이오",
       "nameEn": "AprilBio Co.,Ltd.",
       "market": "KOSDAQ",
-      "role": "항체신약 / ADC",
-      "group": "antibody_adc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 490546319600,
       "isListedKorea": true,
-      "legacyId": "bio_50"
+      "legacyId": "bio_49"
     },
     {
       "id": "krx:249420",
@@ -673,24 +660,11 @@
       "nameKo": "일동제약",
       "nameEn": "ILDONG PHARM",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 475522927560,
       "isListedKorea": true,
-      "legacyId": "bio_51"
-    },
-    {
-      "id": "krx:082270",
-      "type": "listed_company",
-      "ticker": "082270",
-      "nameKo": "젬백스",
-      "nameEn": "GemVax & KAEL Co.,Ltd.",
-      "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
-      "mcapWon": 467482783680,
-      "isListedKorea": true,
-      "legacyId": "bio_52"
+      "legacyId": "bio_50"
     },
     {
       "id": "krx:005250",
@@ -699,11 +673,11 @@
       "nameKo": "녹십자홀딩스",
       "nameEn": "GC Corp.",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "제약·바이오 지주",
+      "group": "bio_holdings",
       "mcapWon": 465579279000,
       "isListedKorea": true,
-      "legacyId": "bio_53"
+      "legacyId": "bio_51"
     },
     {
       "id": "krx:174900",
@@ -712,11 +686,11 @@
       "nameKo": "앱클론",
       "nameEn": "AbClon Inc.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 430965986400,
       "isListedKorea": true,
-      "legacyId": "bio_54"
+      "legacyId": "bio_52"
     },
     {
       "id": "krx:003000",
@@ -725,11 +699,11 @@
       "nameKo": "부광약품",
       "nameEn": "Bukwang Pharmaceutical",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 402551857680,
       "isListedKorea": true,
-      "legacyId": "bio_55"
+      "legacyId": "bio_53"
     },
     {
       "id": "krx:950210",
@@ -742,33 +716,33 @@
       "group": "biosimilar",
       "mcapWon": 390625007500,
       "isListedKorea": true,
-      "legacyId": "bio_56"
+      "legacyId": "bio_54"
     },
     {
-      "id": "krx:0120G0",
+      "id": "krx:187660",
       "type": "listed_company",
-      "ticker": "0120G0",
-      "nameKo": "삼양바이오팜",
-      "nameEn": "Samyang Biopharm",
-      "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
+      "ticker": "187660",
+      "nameKo": "페니트리움바이오",
+      "nameEn": "PenetriumBio",
+      "market": "KOSDAQ",
+      "role": "신약개발",
       "group": "smallmol",
-      "mcapWon": 370678119500,
+      "mcapWon": 374202580050,
       "isListedKorea": true,
-      "legacyId": "bio_57"
+      "legacyId": "bio_55"
     },
     {
       "id": "krx:372320",
       "type": "listed_company",
       "ticker": "372320",
       "nameKo": "큐로셀",
-      "nameEn": "Curiox Biosystems",
+      "nameEn": "Curocell",
       "market": "KOSDAQ",
-      "role": "세포 · 유전자치료제",
-      "group": "cell_gene",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 366213005600,
       "isListedKorea": true,
-      "legacyId": "bio_58"
+      "legacyId": "bio_56"
     },
     {
       "id": "krx:170900",
@@ -777,24 +751,24 @@
       "nameKo": "동아에스티",
       "nameEn": "Dong-A ST",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 359445202950,
       "isListedKorea": true,
-      "legacyId": "bio_59"
+      "legacyId": "bio_57"
     },
     {
       "id": "krx:389470",
       "type": "listed_company",
       "ticker": "389470",
       "nameKo": "인벤티지랩",
-      "nameEn": "Inventage Lab",
+      "nameEn": "Inventage Lab Inc.",
       "market": "KOSDAQ",
-      "role": "플랫폼 기술",
-      "group": "platform",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 356646574400,
       "isListedKorea": true,
-      "legacyId": "bio_60"
+      "legacyId": "bio_58"
     },
     {
       "id": "krx:078160",
@@ -803,11 +777,11 @@
       "nameKo": "메디포스트",
       "nameEn": "MEDIPOST CO., LTD.",
       "market": "KOSDAQ",
-      "role": "세포 · 유전자치료제",
-      "group": "cell_gene",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 349705058760,
       "isListedKorea": true,
-      "legacyId": "bio_61"
+      "legacyId": "bio_59"
     },
     {
       "id": "krx:468530",
@@ -816,11 +790,11 @@
       "nameKo": "프로티나",
       "nameEn": "PROTEINA CO., LTD.",
       "market": "KOSDAQ",
-      "role": "플랫폼 기술",
-      "group": "platform",
+      "role": "연구도구·서비스",
+      "group": "research_tools",
       "mcapWon": 341483301000,
       "isListedKorea": true,
-      "legacyId": "bio_62"
+      "legacyId": "bio_60"
     },
     {
       "id": "krx:215600",
@@ -829,11 +803,11 @@
       "nameKo": "신라젠",
       "nameEn": "SillaJen, Inc.",
       "market": "KOSDAQ",
-      "role": "면역항암제",
-      "group": "immuno_onc",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 327679178860,
       "isListedKorea": true,
-      "legacyId": "bio_63"
+      "legacyId": "bio_61"
     },
     {
       "id": "krx:206650",
@@ -842,11 +816,11 @@
       "nameKo": "유바이오로직스",
       "nameEn": "EuBiologics Co., Ltd.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "백신·혈액제제",
+      "group": "vaccine_blood",
       "mcapWon": 323052778530,
       "isListedKorea": true,
-      "legacyId": "bio_64"
+      "legacyId": "bio_62"
     },
     {
       "id": "krx:199800",
@@ -855,11 +829,11 @@
       "nameKo": "툴젠",
       "nameEn": "ToolGen Incorporated",
       "market": "KOSDAQ",
-      "role": "세포 · 유전자치료제",
-      "group": "cell_gene",
+      "role": "신약개발",
+      "group": "drug_discovery",
       "mcapWon": 320315592400,
       "isListedKorea": true,
-      "legacyId": "bio_65"
+      "legacyId": "bio_63"
     },
     {
       "id": "krx:009290",
@@ -868,11 +842,11 @@
       "nameKo": "광동제약",
       "nameEn": "Kwangdong Pharmaceutical",
       "market": "KOSPI",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "종합 제약",
+      "group": "pharma_integrated",
       "mcapWon": 315730782720,
       "isListedKorea": true,
-      "legacyId": "bio_66"
+      "legacyId": "bio_64"
     },
     {
       "id": "krx:084110",
@@ -881,11 +855,11 @@
       "nameKo": "휴온스글로벌",
       "nameEn": "Huons Global Co., Ltd.",
       "market": "KOSDAQ",
-      "role": "합성신약 / 제네릭",
-      "group": "smallmol",
+      "role": "제약·바이오 지주",
+      "group": "bio_holdings",
       "mcapWon": 301303525600,
       "isListedKorea": true,
-      "legacyId": "bio_67"
+      "legacyId": "bio_65"
     },
     {
       "id": "global:gsk",

@@ -2,10 +2,10 @@
   "phase": "5F",
   "sector": "kconsume",
   "asOf": "2026-08-29",
-  "listedCompanyCount": 37,
-  "nodeCount": 76,
-  "edgeCount": 79,
-  "structuralGenerated": 76,
+  "listedCompanyCount": 38,
+  "nodeCount": 77,
+  "edgeCount": 80,
+  "structuralGenerated": 77,
   "legacyMigrated": 3,
   "manuallyCurated": 2,
   "removedUnsupported": 1,
@@ -14,12 +14,12 @@
   "changes": [
     {
       "action": "structural_member_of",
-      "ticker": "033780",
+      "ticker": "028260",
       "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
-      "ticker": "086280",
+      "ticker": "033780",
       "lane": "brand_owner"
     },
     {
@@ -155,7 +155,7 @@
     {
       "action": "structural_member_of",
       "ticker": "282330",
-      "lane": "retail_channel"
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -210,11 +210,6 @@
     {
       "action": "structural_member_of",
       "ticker": "006040",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "000120",
       "lane": "brand_owner"
     },
     {
@@ -329,13 +324,23 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "452260",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "194370",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "105630",
       "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
       "ticker": "031430",
-      "lane": "retail_channel"
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",

@@ -1,0 +1,75 @@
+sector,ticker,name,old_group,new_group,evidence,needs_review,status
+kconsume,033780,"KT&G",,"담배·건강소비재",chain_overrides §0-4F,false,mapped
+kconsume,003230,"삼양식품",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,271560,"오리온",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,004170,"신세계",,"유통",chain_overrides §0-4F,false,mapped
+kconsume,111770,"영원무역",,"의류 제조",chain_overrides §0-4F,false,mapped
+kconsume,023530,"롯데쇼핑",,"유통",chain_overrides §0-4F,false,mapped
+kconsume,097950,"CJ제일제당",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,004370,"농심",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,383220,"F&F",,"패션 브랜드",chain_overrides §0-4F,false,mapped
+kconsume,282330,"BGF리테일",,"유통",chain_overrides §0-4F,false,mapped
+kconsume,026960,"동서",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,081660,"미스토홀딩스",,"패션 브랜드",chain_overrides §0-4F,false,mapped
+kconsume,007070,"GS리테일",,"유통",chain_overrides §0-4F,false,mapped
+kconsume,069960,"현대백화점",,"유통",chain_overrides §0-4F,false,mapped
+kconsume,139480,"이마트",,"유통",chain_overrides §0-4F,false,mapped
+kconsume,006040,"동원산업",,"농축수산·가공",chain_overrides §0-4F,false,mapped
+kconsume,001120,"LX인터내셔널",,"종합상사",chain_overrides §0-4F,false,mapped
+kconsume,280360,"롯데웰푸드",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,007310,"오뚜기",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,000080,"하이트진로",,"음료·주류",chain_overrides §0-4F,false,mapped
+kconsume,005300,"롯데칠성",,"음료·주류",chain_overrides §0-4F,false,mapped
+kconsume,005180,"빙그레",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,001680,"대상",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,093050,"LF",,"패션 브랜드",chain_overrides §0-4F,false,mapped
+kconsume,453340,"현대그린푸드",,"식품소재·급식",chain_overrides §0-4F,false,mapped
+kconsume,145990,"삼양사",,"식품소재·급식",chain_overrides §0-4F,false,mapped
+kconsume,105630,"한세실업",,"의류 제조",chain_overrides §0-4F,false,mapped
+kconsume,031430,"신세계인터내셔날",,"유통",chain_overrides §0-4F,true,needs_review
+kconsume,003800,"에이스침대",,"가구·생활소비재",chain_overrides §0-4F,false,mapped
+kconsume,017810,"풀무원",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,005610,"삼립",,"가공식품",chain_overrides §0-4F,false,mapped
+kconsume,011760,"현대코퍼레이션",,"종합상사",chain_overrides §0-4F,false,mapped
+kconsume,036620,"감성코퍼레이션",,"패션 브랜드",chain_overrides §0-4F,false,mapped
+kconsume,020000,"한섬",,"패션 브랜드",chain_overrides §0-4F,false,mapped
+kconsume,016800,"퍼시스",,"가구·생활소비재",chain_overrides §0-4F,false,mapped
+kcontent,259960,"크래프톤",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,352820,"하이브",,"음악·엔터테인먼트",chain_overrides §0-4F,false,mapped
+kcontent,036570,"NC",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,251270,"넷마블",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,030000,"제일기획",,"광고·마케팅",chain_overrides §0-4F,false,mapped
+kcontent,263750,"펄어비스",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,462870,"시프트업",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,041510,"에스엠",,"음악·엔터테인먼트",chain_overrides §0-4F,false,mapped
+kcontent,035900,"JYP Ent.",,"음악·엔터테인먼트",chain_overrides §0-4F,false,mapped
+kcontent,192080,"더블유게임즈",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,293490,"카카오게임즈",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,079160,"CJ CGV",,"극장·배급",chain_overrides §0-4F,false,mapped
+kcontent,122870,"와이지엔터테인먼트",,"음악·엔터테인먼트",chain_overrides §0-4F,false,mapped
+kcontent,225570,"넥슨게임즈",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,214320,"이노션",,"광고·마케팅",chain_overrides §0-4F,false,mapped
+kcontent,035760,"CJ ENM",,"영상 제작·IP",chain_overrides §0-4F,true,needs_review
+kcontent,253450,"스튜디오드래곤",,"영상 제작·IP",chain_overrides §0-4F,false,mapped
+kcontent,112040,"위메이드",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,067160,"SOOP",,"방송·스트리밍",chain_overrides §0-4F,false,mapped
+kcontent,376300,"디어유",,"팬덤 플랫폼",chain_overrides §0-4F,false,mapped
+kcontent,078340,"컴투스",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,095660,"네오위즈",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,215200,"메가스터디교육",,"교육서비스",chain_overrides §0-4F,false,mapped
+kcontent,069080,"웹젠",,"게임",chain_overrides §0-4F,false,mapped
+kcontent,101730,"위메이드맥스",,"게임",chain_overrides §0-4F,false,mapped
+travel,003490,"대한항공",,"항공운송",chain_overrides §0-4F,false,mapped
+travel,035250,"강원랜드",,"카지노",chain_overrides §0-4F,false,mapped
+travel,020560,"아시아나항공",,"항공운송",chain_overrides §0-4F,true,needs_review
+travel,008770,"호텔신라",,"면세",chain_overrides §0-4F,true,needs_review
+travel,032350,"롯데관광개발",,"카지노",chain_overrides §0-4F,false,mapped
+travel,034230,"파라다이스",,"카지노",chain_overrides §0-4F,false,mapped
+travel,114090,"GKL",,"카지노",chain_overrides §0-4F,false,mapped
+travel,025980,"아난티",,"호텔·리조트",chain_overrides §0-4F,false,mapped
+travel,039130,"하나투어",,"여행·예약",chain_overrides §0-4F,false,mapped
+travel,089590,"제주항공",,"항공운송",chain_overrides §0-4F,false,mapped
+travel,272450,"진에어",,"항공운송",chain_overrides §0-4F,false,mapped
+shipping,086280,"현대글로비스","kconsume/물류·상사","자동차·특수화물 운송",물류 교차이동,false,mapped
+shipping,000120,"CJ대한통운","kconsume/물류·상사","종합물류",물류 교차이동,false,mapped
+taxonomy_gap,001740,"SK네트웍스","chemical/화학 유통(잠정)","",종합상사 자동편입 금지·분류공백,true,taxonomy_gap

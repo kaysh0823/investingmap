@@ -8,7 +8,9 @@
     "semTypeEn": "Cosmetics ODM holding",
     "products": "한국콜마·화장품 ODM 계열 지주",
     "productsEn": "Kolmar Korea and cosmetics ODM group holding",
-    "partners": ["ckh"],
+    "partners": [
+      "ckh"
+    ],
     "subSector": "화장품 ODM 지주",
     "level": "core"
   },
@@ -218,6 +220,71 @@
     "productsEn": "JW Pharmaceutical and JW group holding",
     "partners": [],
     "subSector": "JW중외 지주",
+    "level": "core"
+  },
+  {
+    "ticker": "036830",
+    "name": "솔브레인홀딩스",
+    "nameEn": "Soulbrain Holdings",
+    "chain": "반도체",
+    "semType": "반도체 소재 지주",
+    "semTypeEn": "Semiconductor materials holding",
+    "products": "솔브레인 등 반도체 공정 소재 계열 지주",
+    "productsEn": "Holding company for Soulbrain and semiconductor process materials affiliates",
+    "partners": [],
+    "subSector": "반도체 소재 지주",
+    "level": "core"
+  },
+  {
+    "ticker": "499790",
+    "name": "GS피앤엘",
+    "nameEn": "GS P&L",
+    "chain": "에너지·화학",
+    "semType": "에너지·물류 지주",
+    "semTypeEn": "Energy/logistics holding",
+    "products": "GS그룹 에너지·물류 지주",
+    "productsEn": "GS group energy and logistics holding",
+    "partners": [],
+    "subSector": "에너지·화학",
+    "level": "core"
+  },
+  {
+    "ticker": "034310",
+    "name": "NICE",
+    "nameEn": "NICEHoldings",
+    "chain": "금융",
+    "semType": "금융정보 지주",
+    "semTypeEn": "Financial-info holding",
+    "products": "NICE그룹 순수지주",
+    "productsEn": "NICE group pure holding",
+    "partners": [],
+    "subSector": "금융",
+    "level": "core"
+  },
+  {
+    "ticker": "008060",
+    "name": "대덕",
+    "nameEn": "DAEDUCK Co.,LTD",
+    "chain": "IT·전자",
+    "semType": "전자 지주",
+    "semTypeEn": "Electronics holding",
+    "products": "대덕그룹 순수지주",
+    "productsEn": "Daeduck group pure holding",
+    "partners": [],
+    "subSector": "IT·전자",
+    "level": "core"
+  },
+  {
+    "ticker": "035810",
+    "name": "이지홀딩스",
+    "nameEn": "Easy Holdings Co., Ltd.",
+    "chain": "소비·유통",
+    "semType": "사료·축산 지주",
+    "semTypeEn": "Feed/livestock holding",
+    "products": "사료·축산·바이오 지주",
+    "productsEn": "Feed, livestock and bio holding",
+    "partners": [],
+    "subSector": "소비·유통",
     "level": "core"
   }
 ]

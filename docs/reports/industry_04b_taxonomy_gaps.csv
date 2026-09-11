@@ -1,0 +1,4 @@
+ticker,name,from_sector,status,notes
+014820,"동원시스템즈",chemical,taxonomy_gap,"포장재 — 분류체계 공백(화학 9그룹에 해당 없음)"
+008730,"율촌화학",chemical,taxonomy_gap,"포장재 — 분류체계 공백(화학 9그룹에 해당 없음)"
+034830,"한국토지신탁",construction,mcap_floor_skip,"매핑표 부동산 서비스이나 시총 3천억 미만으로 미편입"

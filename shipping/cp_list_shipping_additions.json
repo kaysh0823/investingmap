@@ -1,0 +1,80 @@
+[
+  {
+    "ticker": "011200",
+    "name": "HMM",
+    "nameEn": "HMM",
+    "chain": "컨테이너 해운",
+    "semType": "컨테이너 해운",
+    "semTypeEn": "Container shipping",
+    "products": "컨테이너선 해상운송",
+    "productsEn": "Container liner shipping",
+    "partners": [],
+    "subSector": "컨테이너 해운",
+    "level": "core"
+  },
+  {
+    "ticker": "003280",
+    "name": "흥아해운",
+    "nameEn": "Heung-A Shipping",
+    "chain": "컨테이너 해운",
+    "semType": "컨테이너 해운",
+    "semTypeEn": "Container shipping",
+    "products": "컨테이너·근해 정기선",
+    "productsEn": "Container and short-sea liner services",
+    "partners": [],
+    "subSector": "컨테이너 해운",
+    "level": "core"
+  },
+  {
+    "ticker": "028670",
+    "name": "팬오션",
+    "nameEn": "Pan Ocean",
+    "chain": "벌크 해운",
+    "semType": "벌크 해운",
+    "semTypeEn": "Bulk shipping",
+    "products": "건화물 벌크 해상운송",
+    "productsEn": "Dry bulk shipping",
+    "partners": [],
+    "subSector": "벌크 해운",
+    "level": "core"
+  },
+  {
+    "ticker": "005880",
+    "name": "대한해운",
+    "nameEn": "Korea Line",
+    "chain": "벌크 해운",
+    "semType": "벌크 해운",
+    "semTypeEn": "Bulk shipping",
+    "products": "벌크·특수화물 해상운송",
+    "productsEn": "Bulk and specialized cargo shipping",
+    "partners": [],
+    "subSector": "벌크 해운",
+    "level": "core"
+  },
+  {
+    "ticker": "086280",
+    "name": "현대글로비스",
+    "nameEn": "Hyundai Glovis",
+    "chain": "자동차·특수화물 운송",
+    "semType": "자동차·특수화물 운송",
+    "semTypeEn": "Auto & special cargo transport",
+    "products": "자동차·CKD·특수화물 운송 (종합물류)",
+    "productsEn": "Auto, CKD and special-cargo transport (integrated logistics)",
+    "partners": [],
+    "subSector": "자동차·특수화물 운송",
+    "level": "core"
+  },
+  {
+    "ticker": "000120",
+    "name": "CJ대한통운",
+    "nameEn": "CJ Logistics",
+    "chain": "종합물류",
+    "semType": "종합물류",
+    "semTypeEn": "Integrated logistics",
+    "products": "종합물류·택배·풀필먼트·국제물류",
+    "productsEn": "Integrated logistics, parcel, fulfillment and intl logistics",
+    "partners": [],
+    "subSector": "종합물류",
+    "level": "core"
+  }
+]

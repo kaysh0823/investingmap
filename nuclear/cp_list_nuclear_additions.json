@@ -11,5 +11,31 @@
     "partners": [],
     "subSector": "원전 열교환기·발전설비",
     "level": "core"
+  },
+  {
+    "ticker": "032820",
+    "name": "우리기술",
+    "nameEn": "Woori Technology, Incorporation",
+    "chain": "계측·제어",
+    "semType": "원전 MMIS",
+    "semTypeEn": "Nuclear I&C / MMIS",
+    "products": "원전 제어계측시스템(MMIS)",
+    "productsEn": "Nuclear plant MMIS / I&C systems",
+    "partners": [],
+    "subSector": "계측·제어",
+    "level": "core"
+  },
+  {
+    "ticker": "126720",
+    "name": "수산인더스트리",
+    "nameEn": "Soosan Industries",
+    "chain": "정비·운영지원",
+    "semType": "발전설비 정비",
+    "semTypeEn": "Plant maintenance",
+    "products": "원전·발전설비 경상정비",
+    "productsEn": "Nuclear and power-plant maintenance",
+    "partners": [],
+    "subSector": "정비·운영지원",
+    "level": "core"
   }
 ]

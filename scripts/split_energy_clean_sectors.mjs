@@ -48,10 +48,54 @@ const SECTORS = {
     descriptionKo: '2차전지 셀·소재·장비·부품 관련 상장사와 글로벌 참고 관계를 정리합니다.',
     descriptionEn: 'Listed Korean battery cell, material, equipment, and parts companies with illustrative global relationships.',
     dataSector: 'battery',
-    chains: ['셀', '소재', '장비', '부품', 'ESS'],
-    colors: { '셀': '#42A5F5', '소재': '#26A69A', '장비': '#AB47BC', '부품': '#FF8A65', 'ESS': '#7E57C2' },
-    chainLabelKo: { '셀': '배터리 셀', '소재': '양극재·음극재·전해질', '장비': '제조·검사 장비', '부품': '분리막·동박·BMS·부품', 'ESS': 'ESS·PCS·연료전지' },
-    chainLabelEn: { '셀': 'Battery cells', '소재': 'Cathode, anode & electrolyte materials', '장비': 'Manufacturing & inspection equipment', '부품': 'Separators, copper foil, BMS & parts', 'ESS': 'ESS, PCS & fuel cells' },
+    chains: [
+      '원료·정제',
+      '양극재·전구체',
+      '음극재',
+      '전해액·전해질',
+      '분리막',
+      '집전체·기타 소재',
+      '셀 제조',
+      '모듈·팩·시스템 부품',
+      '제조·검사 장비',
+      '재사용·재활용',
+    ],
+    colors: {
+      '원료·정제': '#8D6E63',
+      '양극재·전구체': '#EF5350',
+      음극재: '#5C6BC0',
+      '전해액·전해질': '#26A69A',
+      분리막: '#42A5F5',
+      '집전체·기타 소재': '#FF8A65',
+      '셀 제조': '#AB47BC',
+      '모듈·팩·시스템 부품': '#7E57C2',
+      '제조·검사 장비': '#FFA726',
+      '재사용·재활용': '#66BB6A',
+    },
+    chainLabelKo: {
+      '원료·정제': '원료·정제',
+      '양극재·전구체': '양극재·전구체',
+      음극재: '음극재',
+      '전해액·전해질': '전해액·전해질',
+      분리막: '분리막',
+      '집전체·기타 소재': '집전체·기타 소재',
+      '셀 제조': '셀 제조',
+      '모듈·팩·시스템 부품': '모듈·팩·시스템 부품',
+      '제조·검사 장비': '제조·검사 장비',
+      '재사용·재활용': '재사용·재활용',
+    },
+    chainLabelEn: {
+      '원료·정제': 'Feedstock & refining',
+      '양극재·전구체': 'Cathode & precursors',
+      음극재: 'Anode materials',
+      '전해액·전해질': 'Electrolyte',
+      분리막: 'Separator',
+      '집전체·기타 소재': 'Current collectors & other materials',
+      '셀 제조': 'Cell manufacturing',
+      '모듈·팩·시스템 부품': 'Module, pack & system parts',
+      '제조·검사 장비': 'Manufacturing & inspection equipment',
+      '재사용·재활용': 'Reuse & recycling',
+    },
     keywordsKo: '2차전지, 배터리, ESS, 양극재, 음극재, 전해질, 배터리 장비',
     keywordsEn: 'Korean battery stocks, ESS, cathode, anode, electrolyte, battery equipment',
     template: 'energy',
@@ -66,10 +110,38 @@ const SECTORS = {
     descriptionKo: '태양광·풍력·수소 등 신재생에너지 관련 상장사와 글로벌 참고 관계를 정리합니다.',
     descriptionEn: 'Listed Korean solar, wind, hydrogen, and renewable-energy companies with illustrative global relationships.',
     dataSector: 'renewable',
-    chains: ['태양광', '풍력', '수소', '신재생 운영'],
-    colors: { '태양광': '#FFCA28', '풍력': '#66BB6A', '수소': '#4FC3F7', '신재생 운영': '#26A69A' },
-    chainLabelKo: { '태양광': '태양광 소재·모듈', '풍력': '풍력 타워·기자재', '수소': '수소 저장·모빌리티', '신재생 운영': '신재생 개발·운영' },
-    chainLabelEn: { '태양광': 'Solar materials & modules', '풍력': 'Wind towers & equipment', '수소': 'Hydrogen storage & mobility', '신재생 운영': 'Renewable development & operations' },
+    chains: [
+      '핵심 소재·부품',
+      '발전설비 제조',
+      '구조물·보조설비',
+      '개발·EPC',
+      '발전 운영·유지보수',
+      '수소·연료전지',
+    ],
+    colors: {
+      '핵심 소재·부품': '#EF5350',
+      '발전설비 제조': '#42A5F5',
+      '구조물·보조설비': '#FFCA28',
+      '개발·EPC': '#26A69A',
+      '발전 운영·유지보수': '#66BB6A',
+      '수소·연료전지': '#4FC3F7',
+    },
+    chainLabelKo: {
+      '핵심 소재·부품': '핵심 소재·부품',
+      '발전설비 제조': '발전설비 제조',
+      '구조물·보조설비': '구조물·보조설비',
+      '개발·EPC': '개발·EPC',
+      '발전 운영·유지보수': '발전 운영·유지보수',
+      '수소·연료전지': '수소·연료전지',
+    },
+    chainLabelEn: {
+      '핵심 소재·부품': 'Core materials & parts',
+      '발전설비 제조': 'Generation equipment',
+      '구조물·보조설비': 'Structures & auxiliaries',
+      '개발·EPC': 'Development & EPC',
+      '발전 운영·유지보수': 'O&M',
+      '수소·연료전지': 'Hydrogen & fuel cells',
+    },
     keywordsKo: '신재생에너지, 태양광, 풍력, 수소, 재생에너지 관련주',
     keywordsEn: 'Korean renewable stocks, solar, wind, hydrogen',
     template: 'energy',
@@ -84,10 +156,42 @@ const SECTORS = {
     descriptionKo: '원자로·원전 기자재·운영·정비·SMR 관련 상장사와 글로벌 참고 관계를 정리합니다.',
     descriptionEn: 'Listed Korean nuclear reactor, component, O&M, and SMR-related companies with illustrative global relationships.',
     dataSector: 'nuclear',
-    chains: ['원자로·주기기', '설계·EPC', '운영·정비', '계측·보조기기'],
-    colors: { '원자로·주기기': '#78909C', '설계·EPC': '#42A5F5', '운영·정비': '#66BB6A', '계측·보조기기': '#FF8A65' },
-    chainLabelKo: { '원자로·주기기': '원자로·주기기·SMR', '설계·EPC': '원전 설계·EPC', '운영·정비': '원전 운영·정비', '계측·보조기기': '계측·보조기기' },
-    chainLabelEn: { '원자로·주기기': 'Reactors, major components & SMR', '설계·EPC': 'Nuclear design & EPC', '운영·정비': 'Nuclear operations & maintenance', '계측·보조기기': 'Instrumentation & auxiliary equipment' },
+    chains: [
+      '설계·엔지니어링',
+      '건설·EPC',
+      '원자로·주기기',
+      '보조기기·소재',
+      '계측·제어',
+      '정비·운영지원',
+      '연료·해체·폐기물',
+    ],
+    colors: {
+      '설계·엔지니어링': '#42A5F5',
+      '건설·EPC': '#26A69A',
+      '원자로·주기기': '#78909C',
+      '보조기기·소재': '#FF8A65',
+      '계측·제어': '#AB47BC',
+      '정비·운영지원': '#66BB6A',
+      '연료·해체·폐기물': '#EF5350',
+    },
+    chainLabelKo: {
+      '설계·엔지니어링': '설계·엔지니어링',
+      '건설·EPC': '건설·EPC',
+      '원자로·주기기': '원자로·주기기',
+      '보조기기·소재': '보조기기·소재',
+      '계측·제어': '계측·제어',
+      '정비·운영지원': '정비·운영지원',
+      '연료·해체·폐기물': '연료·해체·폐기물',
+    },
+    chainLabelEn: {
+      '설계·엔지니어링': 'Design & engineering',
+      '건설·EPC': 'Construction & EPC',
+      '원자로·주기기': 'Reactor & NSSS',
+      '보조기기·소재': 'Auxiliaries & materials',
+      '계측·제어': 'I&C',
+      '정비·운영지원': 'Maintenance & ops support',
+      '연료·해체·폐기물': 'Fuel, decommissioning & waste',
+    },
     keywordsKo: '원전, SMR, 원자로, 원전 기자재, 원전 정비',
     keywordsEn: 'Korean nuclear stocks, SMR, reactors, nuclear components, O&M',
     template: 'powergrid',
@@ -98,29 +202,26 @@ const FORCE = {
   battery: new Set([
     '373220', '006400', '051910', '096770', '003670', '247540', '086520', '011790',
     '066970', '450080', '020150', '093370', '361610', '005070', '137400', '336370',
-    '348370', '121600', '001570', '278280', '005420', '393890',
-    '336260', '126340',
+    '348370', '121600', '001570', '278280', '005420', '393890', '004490', '107640', '365340',
   ]),
-  renewable: new Set(['009830', '010060', '112610', '322000', '475150', '456040', '119850', '271940', '011930']),
-  nuclear: new Set(['034020', '052690', '051600', '083650', '105840', '006910', '130660']),
+  renewable: new Set([
+    '009830', '010060', '112610', '322000', '475150', '456040', '271940', '011930',
+    '018000', '100090', '336260', '126340',
+  ]),
+  nuclear: new Set(['034020', '052690', '051600', '083650', '100840', '006910', '130660']),
 };
 // Keep the previously confirmed renewable universe stable; SK케미칼 is not one
 // of the sector's approved operating names even if it appears in a stale source.
-const SUCCESSOR_DROP = new Set(['285130']);
+const SUCCESSOR_DROP = new Set(['285130', '119850', '018670']);
 
 const CHAIN_FORCE = {
-  battery: {
-    '051910': '소재',
-    '361610': '부품',
-    '393890': '부품',
-    '373220': '셀',
-    '006400': '셀',
-    '096770': '셀',
-    '336260': 'ESS',
-    '126340': 'ESS',
+  battery: {},
+  renewable: {
+    '126340': '수소·연료전지',
+    '336260': '수소·연료전지',
   },
   nuclear: {
-    '051600': '운영·정비',
+    '051600': '정비·운영지원',
   },
 };
 
@@ -154,22 +255,29 @@ function chainForSector(sid, c, entry) {
   if (CHAIN_FORCE[sid]?.[ticker]) return CHAIN_FORCE[sid][ticker];
   const text = sourceText(c, entry);
   if (sid === 'battery') {
-    if (/셀|cell|에너지솔루션|삼성SDI|SK온|SK이노/i.test(text)) return '셀';
-    if (/장비|설비|피엔티|검사|코팅|production/i.test(text)) return '장비';
-    if (/분리막|동박|BMS|부품|일진하이솔루스/i.test(text)) return '부품';
-    return '소재';
+    if (/재활용|재사용|리사이클/i.test(text)) return '재사용·재활용';
+    if (/장비|피엔티|검사/i.test(text)) return '제조·검사 장비';
+    if (/모듈|팩|BMS|한중엔시에스/i.test(text)) return '모듈·팩·시스템 부품';
+    if (/셀|cell|에너지솔루션|삼성SDI|세방전지/i.test(text)) return '셀 제조';
+    if (/동박|집전체|솔루스|나노신소재|SKC|롯데에너지/i.test(text)) return '집전체·기타 소재';
+    if (/분리막|아이이테크|더블유씨피/i.test(text)) return '분리막';
+    if (/전해|엔켐|후성|천보/i.test(text)) return '전해액·전해질';
+    if (/양극|전구체|에코프로|엘앤에프|코스모신|퓨처엠|LG화학/i.test(text)) return '양극재·전구체';
+    if (/원료|정제|코스모화학/i.test(text)) return '원료·정제';
+    return '양극재·전구체';
   }
   if (sid === 'renewable') {
-    if (/풍력|wind|타워|씨에스윈드/i.test(text)) return '풍력';
-    if (/수소|hydrogen|하이솔루스/i.test(text)) return '수소';
-    if (/운영|EPC|개발|이터닉스|신재생/i.test(text)) return '신재생 운영';
-    return '태양광';
+    if (/수소|hydrogen|하이솔루스|퓨얼셀|슈퍼커패시터|비나텍/i.test(text)) return '수소·연료전지';
+    if (/EPC|개발|이터닉스/i.test(text)) return '개발·EPC';
+    if (/타워|씨에스윈드|오션플랜트|해상풍력|구조/i.test(text)) return '구조물·보조설비';
+    if (/OCI|폴리|웨이퍼|홀딩스/i.test(text)) return '핵심 소재·부품';
+    return '발전설비 제조';
   }
   if (sid === 'nuclear') {
-    if (/두산에너빌리티|원자로|SMR|주기기|터빈/i.test(text)) return '원자로·주기기';
-    if (/한전기술|설계|EPC/i.test(text)) return '설계·EPC';
-    if (/KPS|한전산업|운영|정비|O&M/i.test(text)) return '운영·정비';
-    return '계측·보조기기';
+    if (/두산에너빌리티|원자로|SMR|주기기/i.test(text)) return '원자로·주기기';
+    if (/한전기술|설계|엔지니어링/i.test(text)) return '설계·엔지니어링';
+    if (/KPS|한전산업|정비|운영/i.test(text)) return '정비·운영지원';
+    return '보조기기·소재';
   }
   return c.chain || '기타';
 }

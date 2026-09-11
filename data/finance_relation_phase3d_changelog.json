@@ -1,15 +1,15 @@
 {
   "migratedAt": "2026-08-23",
   "legacyMigratedEdgeCount": 81,
-  "structuralGeneratedEdgeCount": 61,
+  "structuralGeneratedEdgeCount": 54,
   "manuallyCuratedEdgeCount": 21,
   "removedEdgeCount": 0,
-  "finalEdgeCount": 163,
+  "finalEdgeCount": 156,
   "ownershipEdgeCount": 9,
   "ownershipWithStakePctCount": 0,
   "ownershipPrimarySourceCoverage": 0,
   "groupMembershipEdgeCount": 12,
-  "classificationEdgeCount": 61,
+  "classificationEdgeCount": 54,
   "businessPartnershipEdgeCount": 0,
   "listedCompanyOwnershipOrphanCount": 44,
   "classificationOnlyCompanyCount": 44,
@@ -17,11 +17,11 @@
   "confirmedBusinessEdgeCount": 0,
   "reportedBusinessEdgeCount": 0,
   "statusCounts": {
-    "reference": 82,
+    "reference": 75,
     "peer": 81
   },
   "typeCounts": {
-    "member_of": 61,
+    "member_of": 54,
     "owns": 9,
     "group_member": 12,
     "peer": 81
@@ -762,7 +762,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:105560",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -773,7 +773,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:032830",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -784,7 +784,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:055550",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -795,7 +795,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:086790",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -806,7 +806,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:000810",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -817,7 +817,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:316140",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -828,7 +828,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:138040",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -839,7 +839,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:006800",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -850,7 +850,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:024110",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -861,7 +861,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:005830",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -872,7 +872,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:071050",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -883,7 +883,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:323410",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -894,7 +894,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:005940",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -905,7 +905,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:016360",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -916,7 +916,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:039490",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -938,7 +938,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:175330",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -949,7 +949,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:029780",
-      "target": "category:card_capital",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -960,7 +960,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:088350",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -971,7 +971,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:138930",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -982,7 +982,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:001450",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -993,7 +993,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:031210",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1004,7 +1004,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:139130",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1015,7 +1015,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:085620",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1026,7 +1026,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:003690",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1037,7 +1037,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:001720",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1048,7 +1048,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:279570",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1059,7 +1059,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:082640",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1070,7 +1070,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:003540",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1081,7 +1081,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:030610",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1092,7 +1092,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:003530",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1103,7 +1103,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:000370",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1125,7 +1125,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:003470",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1158,7 +1158,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:000400",
-      "target": "category:insurance",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1169,7 +1169,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:001510",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1180,7 +1180,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:001270",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1213,7 +1213,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:001500",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1235,7 +1235,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:016610",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1246,7 +1246,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:001200",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1268,7 +1268,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:006220",
-      "target": "category:bank_holding",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",
@@ -1279,7 +1279,7 @@
     {
       "legacyEdgeId": null,
       "source": "krx:078020",
-      "target": "category:securities_am",
+      "target": "category:other_finance",
       "beforeType": "(none)",
       "afterType": "member_of",
       "beforeStatus": "(none)",

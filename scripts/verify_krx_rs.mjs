@@ -46,4 +46,18 @@ assert.ok(
 );
 assert.ok(!src.includes('(rs20 + rs50 + rs120) / 3'), 'krx_rs must not use arithmetic mean');
 
-console.log('verify:krx-rs OK — weighted RS (0.5/0.3/0.2), percentileRanks unchanged');
+assert.ok(
+  src.includes('fetchMarketIndexCloses') && src.includes('INDEX_RS_CODES'),
+  'krx_rs must fetch KOSPI/KOSDAQ closes for index RS',
+);
+assert.ok(src.includes('indices'), 'krx_rs snapshot must expose indices field');
+assert.ok(
+  src.includes("INDEX_RS_CODES") && src.includes("'__KOSPI'") && src.includes("'__KOSDAQ'"),
+  'index synthetic codes must be __KOSPI/__KOSDAQ',
+);
+assert.ok(
+  src.includes('fetchNaverMarketIndexHistory'),
+  'krx_rs must fall back to Naver index history when KRX index API is unauthorized',
+);
+
+console.log('verify:krx-rs OK — weighted RS (0.5/0.3/0.2), percentileRanks unchanged, index RS guide fields');

@@ -1,0 +1,83 @@
+sector,ticker,name,new_group,tags,needs_review
+elec,009150,"삼성전기",전자부품·기판,"MLCC|카메라모듈|스마트폰",false
+elec,066570,"LG전자",가전·생활기기,"",false
+elec,011070,"LG이노텍",카메라·광학·센서,"",false
+elec,021240,"코웨이",가전·생활기기,"",false
+elec,034220,"LG디스플레이",디스플레이 패널,"OLED|TV·IT|자동차",false
+elec,489790,"한화비전",카메라·광학·센서,"영상보안 완제품",false
+elec,043260,"성호전자",전자부품·기판,"",false
+elec,001820,"삼화콘덴서",전자부품·기판,"",false
+elec,204270,"제이앤티씨",카메라·광학·센서,"",false
+elec,065350,"신성델타테크",전자제품 제조·조립,"",true
+elec,213420,"덕산네오룩스",디스플레이 소재,"OLED",false
+elec,417200,"LS머트리얼즈",전자부품·기판,"",false
+elec,090460,"비에이치",전자부품·기판,"",false
+elec,171090,"선익시스템",디스플레이 장비,"",false
+elec,033240,"자화전자",카메라·광학·센서,"",false
+elec,248070,"솔루엠",전자부품·기판,"",true
+elec,161580,"필옵틱스",디스플레이 장비,"",false
+elec,046890,"서울반도체",카메라·광학·센서,"LED",true
+elec,284740,"쿠쿠홈시스",가전·생활기기,"",false
+elec,004710,"한솔테크닉스",전자부품·기판,"",false
+elec,192650,"드림텍",카메라·광학·센서,"",false
+elec,017900,"광전자",카메라·광학·센서,"LED",true
+elec,441270,"파인엠텍",전자부품·기판,"",false
+elec,029530,"신도리코",가전·생활기기,"",false
+elec,089010,"켐트로닉스",전자부품·기판,"",false
+elec,092190,"서울바이오시스",카메라·광학·센서,"LED|UV",true
+elec,290550,"디케이티",전자부품·기판,"",false
+software,035420,"NAVER",인터넷 플랫폼,"",false
+software,018260,"삼성에스디에스",IT서비스·SI,"",false
+software,035720,"카카오",인터넷 플랫폼,"",false
+software,064400,"LG씨엔에스",IT서비스·SI,"",false
+software,022100,"포스코DX",IT서비스·SI,"",false
+software,181710,"NHN",인터넷 플랫폼,"",false
+software,124500,"아이티센글로벌",IT서비스·SI,"",false
+software,093320,"케이아이엔엑스",클라우드·인터넷 인프라,"",false
+software,053800,"안랩",보안·인증,"",false
+software,060250,"NHN KCP",결제·데이터 인프라,"PG",false
+software,079940,"가비아",클라우드·인터넷 인프라,"",false
+software,052400,"코나아이",결제·데이터 인프라,"선불·결제",false
+software,030520,"한컴",기업 소프트웨어,"",false
+software,477850,"마키나락스",AI 소프트웨어,"산업AI|SaaS",false
+software,042000,"카페24",기업 소프트웨어,"",false
+software,486990,"노타",AI 소프트웨어,"온디바이스AI|SaaS",false
+software,236200,"슈프리마",보안·인증,"",false
+software,036800,"나이스정보통신",결제·데이터 인프라,"VAN|PG",false
+software,356680,"엑스게이트",보안·인증,"",false
+software,294570,"쿠콘",결제·데이터 인프라,"데이터 API|마이데이터",false
+telecom,017670,"SK텔레콤",통신서비스,"",false
+telecom,030200,"KT",통신서비스,"",false
+telecom,032640,"LG유플러스",통신서비스,"",false
+telecom,010170,"대한광통신",광통신 부품·장비,"",false
+telecom,218410,"RFHIC",무선통신 장비,"GaN|RF|방산|핵심부품",false
+telecom,189300,"인텔리안테크",위성통신 장비,"방산|위성통신",false
+telecom,032500,"케이엠더블유",무선통신 장비,"",false
+telecom,050890,"쏠리드",무선통신 장비,"",false
+telecom,037460,"삼지전자",무선통신 장비,"",false
+telecom,069540,"빛과전자",광통신 부품·장비,"",false
+robot,277810,"레인보우로보틱스",완성로봇,"",false
+robot,108490,"로보티즈",구동부품,"",false
+robot,454910,"두산로보틱스",완성로봇,"",false
+robot,319400,"현대무벡스",자동화·시스템 통합,"",false
+robot,058610,"에스피지",구동부품,"",false
+robot,056190,"SFA",자동화·시스템 통합,"",false
+robot,388720,"유일로보틱스",완성로봇,"",false
+robot,090710,"휴림로봇",완성로봇,"",false
+robot,090360,"로보스타",완성로봇,"",false
+robot,466100,"클로봇",제어·로봇 소프트웨어,"",false
+robot,160190,"하이젠알앤엠",구동부품,"",false
+robot,056080,"유진로봇",완성로봇,"",false
+robot,439960,"코스모로보틱스",완성로봇,"",false
+robot,348340,"뉴로메카",완성로봇,"",false
+robot,455900,"엔젤로보틱스",완성로봇,"",false
+
+# cross_moves
+ticker,from,to,chain,note
+222080,elec,battery,제조·검사 장비,SFA넥셀 사명갱신·디스플레이 장비 태그
+077360,elec,semi,기판·패키징 소재,semi 80→81 회귀검증
+125490,robot,auto,차체·내외장,로봇 태그
+126560,telecom,,taxonomy_gap,통신근거없음·타지도자동편입금지
+
+# software_finance_policy
+software 결제·데이터 인프라 = PG/VAN/결제플랫폼/데이터API 기술인프라; finance 결제·핀테크 = 금융서비스; 통합집계 ticker 중복제거

@@ -1,0 +1,28 @@
+[
+  {
+    "ticker": "484870",
+    "name": "엠앤씨솔루션",
+    "nameEn": "MNC Solution",
+    "chain": "소재·핵심부품",
+    "semType": "방산 유압구동",
+    "semTypeEn": "Defense hydraulics",
+    "products": "방산 유압구동장치·기계",
+    "productsEn": "Defense hydraulic actuators and machinery",
+    "partners": [],
+    "subSector": "소재·핵심부품",
+    "level": "core"
+  },
+  {
+    "ticker": "368770",
+    "name": "파이버프로",
+    "nameEn": "FIBERPRO",
+    "chain": "방산전자·센서",
+    "semType": "광섬유 자이로",
+    "semTypeEn": "Fiber-optic gyros",
+    "products": "광섬유 자이로·항공방산 관성센서",
+    "productsEn": "Fiber-optic gyros and aerospace inertial sensors",
+    "partners": [],
+    "subSector": "방산전자·센서",
+    "level": "core"
+  }
+]
