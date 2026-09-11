@@ -262,23 +262,6 @@
       "lane": "managed_service"
     },
     {
-      "id": "krx:377300",
-      "type": "listed_company",
-      "ticker": "377300",
-      "nameKo": "카카오페이",
-      "nameEn": "Kakao Pay",
-      "market": "KOSPI",
-      "role": "결제·데이터 인프라",
-      "lane": "managed_service",
-      "group": "결제·데이터 인프라",
-      "layer": "managed_service",
-      "mcapWon": 6398398000500,
-      "isListedKorea": true,
-      "isMapConstituent": true,
-      "legacyId": "sw_kakao_pay",
-      "owningSector": "software"
-    },
-    {
       "id": "krx:022100",
       "type": "listed_company",
       "ticker": "022100",
@@ -1281,24 +1264,6 @@
       "lastVerifiedAt": "2026-08-29",
       "noteKo": "산업 노출 분류. 특정 고객 계약·도입 사례가 아닙니다.",
       "noteEn": "Industry exposure classification; not a named customer contract.",
-      "edgeOrigin": "structuralGenerated",
-      "excludesFromBusinessCoverage": true,
-      "excludesFromOrphanResolution": true
-    },
-    {
-      "id": "member-377300-managed_service",
-      "source": "krx:377300",
-      "target": "group:managed_service",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "SI·매니지드 분류",
-      "labelEn": "SI / managed category",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-29",
-      "noteKo": "가치사슬 분류. 고객 계약·파트너십·클라우드 제휴가 아닙니다.",
-      "noteEn": "Value-chain category only; not customer contract, partnership or cloud alliance.",
       "edgeOrigin": "structuralGenerated",
       "excludesFromBusinessCoverage": true,
       "excludesFromOrphanResolution": true
@@ -2907,10 +2872,10 @@
     }
   ],
   "metrics": {
-    "listedCompanyCount": 23,
-    "nodeCount": 63,
-    "edgeCount": 80,
-    "structuralGeneratedEdgeCount": 52,
+    "listedCompanyCount": 22,
+    "nodeCount": 62,
+    "edgeCount": 79,
+    "structuralGeneratedEdgeCount": 51,
     "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 4,
     "softwareProductCount": 3,
@@ -2930,9 +2895,9 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 24,
-    "businessRelationOrphanCount": 23,
-    "directCommercialRelationshipOrphanCount": 23,
-    "classificationOnlyCompanyCount": 13,
+    "businessRelationOrphanCount": 22,
+    "directCommercialRelationshipOrphanCount": 22,
+    "classificationOnlyCompanyCount": 12,
     "hasPeerButNoBusinessCompanyCount": 16,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
@@ -3019,7 +2984,7 @@
     "nodeCountByType": {
       "group": 7,
       "cross_sector_anchor": 4,
-      "listed_company": 23,
+      "listed_company": 22,
       "platform": 4,
       "software_category": 7,
       "customer_industry": 5,
@@ -3027,7 +2992,7 @@
       "software_product": 3,
       "global_company": 6
     },
-    "removedUnsupportedPartnerCount": 24,
+    "removedUnsupportedPartnerCount": 22,
     "demotedLegacyPeerCount": 24
   }
 }

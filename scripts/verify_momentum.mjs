@@ -174,10 +174,11 @@ for (const file of mapFiles) {
     'id="tab-btn-momentum"',
     'id="tab-momentum"',
     'id="momentum-root"',
-    '../js/map_momentum.js?v=13',
-    '../js/live_quotes.js?v=18',
+    '../js/map_momentum.js?v=14',
+    '../js/live_quotes.js?v=19',
     'function renderMomentum()',
     'getMomentumIndices',
+    'onQuotesReady:',
     "if (tab === 'momentum') setTimeout(renderMomentum, 40);",
     "InvestingMapCandleModal.open({",
   ]) {
@@ -228,6 +229,8 @@ for (const field of [
 assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '6'"), 'quotes API cache key version');
 assert.ok(liveQuotes.includes('getMomentumIndices'), 'live quotes must expose momentum index RS');
 assert.ok(liveQuotes.includes('rememberMomentumIndices'), 'live quotes must store indices from quotes/RS snap');
+assert.ok(liveQuotes.includes('onQuotesReady'), 'live quotes must accept onQuotesReady callback');
+assert.ok(liveQuotes.includes('invokeQuotesReady'), 'live quotes must invoke onQuotesReady after merge');
 assert.ok(source.includes("'#42A5F5'"), 'KOSPI index guide color');
 assert.ok(source.includes("'#FFA726'"), 'KOSDAQ index guide color');
 assert.ok(source.includes('im-mm-index-line'), 'index guide line class');

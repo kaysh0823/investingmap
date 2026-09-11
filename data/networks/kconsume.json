@@ -74,23 +74,6 @@
       "noteEn": "Cross-sector boundary; no duplicate business edges in kconsume."
     },
     {
-      "id": "krx:028260",
-      "type": "listed_company",
-      "ticker": "028260",
-      "nameKo": "삼성물산",
-      "nameEn": "SAMSUNG C&T CORPORATION",
-      "market": "KOSPI",
-      "role": "종합상사",
-      "lane": "brand_owner",
-      "group": "종합상사",
-      "layer": "brand_owner",
-      "mcapWon": 59515502227000,
-      "isListedKorea": true,
-      "isMapConstituent": true,
-      "legacyId": "kc_samsung_c_t_corporation",
-      "owningSector": "kconsume"
-    },
-    {
       "id": "krx:033780",
       "type": "listed_company",
       "ticker": "033780",
@@ -958,21 +941,6 @@
     }
   ],
   "edges": [
-    {
-      "id": "member-028260-brand_owner",
-      "source": "krx:028260",
-      "target": "group:brand_owner",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "브랜드 가치사슬 분류",
-      "labelEn": "Brand owners value-chain category",
-      "evidence": [],
-      "confidence": "high",
-      "edgeOrigin": "structuralGenerated",
-      "relationClass": "structural",
-      "asOf": "2026-08-29"
-    },
     {
       "id": "member-033780-brand_owner",
       "source": "krx:033780",
@@ -3071,10 +3039,10 @@
     }
   ],
   "metrics": {
-    "listedCompanyCount": 38,
-    "nodeCount": 77,
-    "edgeCount": 80,
-    "structuralGeneratedEdgeCount": 77,
+    "listedCompanyCount": 37,
+    "nodeCount": 76,
+    "edgeCount": 79,
+    "structuralGeneratedEdgeCount": 76,
     "legacyMigratedEdgeCount": 3,
     "manuallyCuratedEdgeCount": 0,
     "brandNodeCount": 19,
@@ -3092,9 +3060,9 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 3,
-    "businessRelationOrphanCount": 38,
-    "directCommercialRelationshipOrphanCount": 38,
-    "classificationOnlyCompanyCount": 38,
+    "businessRelationOrphanCount": 37,
+    "directCommercialRelationshipOrphanCount": 37,
+    "classificationOnlyCompanyCount": 37,
     "hasPeerButNoBusinessCompanyCount": 3,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 1,
@@ -3173,7 +3141,7 @@
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 2,
-      "listed_company": 38,
+      "listed_company": 37,
       "brand": 19,
       "product_category": 11,
       "global_company": 3

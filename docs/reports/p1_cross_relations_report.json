@@ -1,17 +1,13 @@
 {
   "cross": {
-    "377300": [
-      "finance",
-      "software"
-    ],
-    "028260": [
-      "construction",
-      "kconsume"
-    ],
-    "034020": [
-      "nuclear",
-      "powergrid"
-    ]
+    "377300": null,
+    "028260": null,
+    "034020": null
+  },
+  "exclusive": {
+    "377300": "finance",
+    "028260": "construction",
+    "034020": "nuclear"
   },
   "hubUnique": 647,
   "relationGroups": [
@@ -111,14 +107,14 @@
       "bigchip": 2,
       "semi": 92,
       "elec": 29,
-      "software": 23,
+      "software": 22,
       "telecom": 10,
       "robot": 15,
       "auto": 28,
       "battery": 26,
       "renewable": 13,
       "nuclear": 9,
-      "powergrid": 18,
+      "powergrid": 17,
       "chemical": 29,
       "metal": 15,
       "machinery": 6,
@@ -127,7 +123,7 @@
       "defense": 13,
       "shipping": 6,
       "travel": 12,
-      "kconsume": 38,
+      "kconsume": 37,
       "kcontent": 25,
       "cosmetics": 19,
       "medtech": 17,

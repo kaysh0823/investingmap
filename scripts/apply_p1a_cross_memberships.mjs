@@ -1,6 +1,6 @@
 /**
- * P1-A data: chain overrides + additions for 028260 / 034020 cross homes.
- * SECTOR_CROSS itself is maintained in lib/sector_exclusive.mjs.
+ * Clear former P1-A / Kakao Pay cross homes; single-home via SECTOR_EXCLUSIVE.
+ * Primary homes keep chain overrides; secondary sector additions/overrides removed.
  */
 import fs from 'fs';
 import { dirname, join } from 'path';
@@ -14,18 +14,29 @@ function pad(t) {
   return s.padStart(6, '0');
 }
 
+function removeAddition(fileRel, ticker) {
+  const fp = join(ROOT, fileRel);
+  if (!fs.existsSync(fp)) return false;
+  const arr = JSON.parse(fs.readFileSync(fp, 'utf8'));
+  const next = arr.filter((r) => pad(r.ticker) !== pad(ticker));
+  if (next.length === arr.length) return false;
+  fs.writeFileSync(fp, JSON.stringify(next, null, 2) + '\n', 'utf8');
+  return true;
+}
+
 const overridesPath = join(ROOT, 'data', 'chain_overrides.json');
 const overrides = JSON.parse(fs.readFileSync(overridesPath, 'utf8'));
 if (!overrides.construction) overrides.construction = {};
 overrides.construction['028260'] = '종합건설';
-if (!overrides.kconsume) overrides.kconsume = {};
-overrides.kconsume['028260'] = '종합상사';
 if (!overrides.nuclear) overrides.nuclear = {};
 overrides.nuclear['034020'] = '원자로·주기기';
-if (!overrides.powergrid) overrides.powergrid = {};
-overrides.powergrid['034020'] = '발전·비상전원 설비';
+if (!overrides.finance) overrides.finance = {};
+overrides.finance['377300'] = '결제·핀테크';
+if (overrides.kconsume) delete overrides.kconsume['028260'];
+if (overrides.powergrid) delete overrides.powergrid['034020'];
+if (overrides.software) delete overrides.software['377300'];
 fs.writeFileSync(overridesPath, JSON.stringify(overrides, null, 2) + '\n', 'utf8');
-console.log('OK chain_overrides');
+console.log('OK chain_overrides (primary only)');
 
 const fieldsPath = join(ROOT, 'data', 'ticker_field_overrides.json');
 const fields = JSON.parse(fs.readFileSync(fieldsPath, 'utf8'));
@@ -36,13 +47,8 @@ fields['028260'].byIndustry.construction = {
   chain: '종합건설',
   needs_review: false,
 };
-fields['028260'].byIndustry.kconsume = {
-  chain: '종합상사',
-  needs_review: false,
-  evidence: '건설 + 종합상사(트레이딩) 교차수록 P1-A',
-  semType: '종합상사·건설',
-  products: '건설·엔지니어링·종합상사 트레이딩',
-};
+delete fields['028260'].byIndustry.kconsume;
+
 fields['034020'] = fields['034020'] || {};
 fields['034020'].byIndustry = fields['034020'].byIndustry || {};
 fields['034020'].byIndustry.nuclear = {
@@ -50,52 +56,29 @@ fields['034020'].byIndustry.nuclear = {
   chain: '원자로·주기기',
   needs_review: false,
 };
-fields['034020'].byIndustry.powergrid = {
-  chain: '발전·비상전원 설비',
-  needs_review: false,
-  evidence: '원자로 주기기 + 가스터빈·발전설비 교차수록 P1-A',
-  semType: '가스터빈·발전설비',
-  products: '가스터빈·발전설비·원전 주기기',
+delete fields['034020'].byIndustry.powergrid;
+
+fields['377300'] = fields['377300'] || {};
+fields['377300'].byIndustry = fields['377300'].byIndustry || {};
+fields['377300'].byIndustry.finance = {
+  ...(fields['377300'].byIndustry.finance || {}),
+  chain: '결제·핀테크',
 };
+delete fields['377300'].byIndustry.software;
+
 fields._policy = fields._policy || {};
+fields._policy.kakao_pay_cross =
+  '377300 카카오페이 — finance 결제·핀테크 단일홈 (software 교차 해제).';
 fields._policy.p1_cross =
-  'P1-A CROSS: 028260 construction+kconsume, 034020 nuclear+powergrid, 377300 finance+software. Hub ticker dedup. P1-B relations UI-only.';
+  'P1 single-home: 028260 construction only, 034020 nuclear only, 377300 finance only. SECTOR_CROSS={}. P1-B relations UI-only.';
+fields._policy.software_finance_payments =
+  '결제·데이터 인프라(software)는 PG·VAN·결제 플랫폼·데이터 API 기술·인프라 역할. finance의 결제·핀테크는 금융서비스 역할. 카카오페이(377300)는 finance 단일홈.';
 fs.writeFileSync(fieldsPath, JSON.stringify(fields, null, 2) + '\n', 'utf8');
 console.log('OK ticker_field_overrides');
 
-function upsertAddition(fileRel, row) {
-  const fp = join(ROOT, fileRel);
-  const arr = fs.existsSync(fp) ? JSON.parse(fs.readFileSync(fp, 'utf8')) : [];
-  const i = arr.findIndex((r) => pad(r.ticker) === pad(row.ticker));
-  if (i >= 0) arr[i] = { ...arr[i], ...row };
-  else arr.push(row);
-  fs.writeFileSync(fp, JSON.stringify(arr, null, 2) + '\n', 'utf8');
-}
-
-upsertAddition('kconsume/cp_list_kconsume_additions.json', {
-  ticker: '028260',
-  name: '삼성물산',
-  nameEn: 'SAMSUNG C&T CORPORATION',
-  chain: '종합상사',
-  semType: '종합상사·건설',
-  semTypeEn: 'Trading house & construction',
-  products: '건설·엔지니어링·종합상사 트레이딩',
-  productsEn: 'Construction, engineering and trading-house operations',
-  partners: [],
-  subSector: '종합상사',
-  level: 'cross',
-});
-upsertAddition('powergrid/cp_list_powergrid_additions.json', {
-  ticker: '034020',
-  name: '두산에너빌리티',
-  nameEn: 'Doosan Enerbility',
-  chain: '발전·비상전원 설비',
-  semType: '가스터빈·발전설비',
-  semTypeEn: 'Gas turbines & power plants',
-  products: '가스터빈·발전설비·원전 주기기',
-  productsEn: 'Gas turbines, power plants and nuclear critical components',
-  partners: [],
-  subSector: '발전·비상전원 설비',
-  level: 'cross',
-});
-console.log('OK additions');
+const removed = [
+  removeAddition('kconsume/cp_list_kconsume_additions.json', '028260') && 'kconsume:028260',
+  removeAddition('powergrid/cp_list_powergrid_additions.json', '034020') && 'powergrid:034020',
+  removeAddition('software/cp_list_software_additions.json', '377300') && 'software:377300',
+].filter(Boolean);
+console.log('OK additions removed:', removed.join(', ') || '(already clean)');

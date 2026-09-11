@@ -37,18 +37,5 @@
     "partners": [],
     "subSector": "유틸리티",
     "level": "core"
-  },
-  {
-    "ticker": "034020",
-    "name": "두산에너빌리티",
-    "nameEn": "Doosan Enerbility",
-    "chain": "발전·비상전원 설비",
-    "semType": "가스터빈·발전설비",
-    "semTypeEn": "Gas turbines & power plants",
-    "products": "가스터빈·발전설비·원전 주기기",
-    "productsEn": "Gas turbines, power plants and nuclear critical components",
-    "partners": [],
-    "subSector": "발전·비상전원 설비",
-    "level": "cross"
   }
 ]

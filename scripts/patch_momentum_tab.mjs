@@ -8,8 +8,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 13;
-const LIVE_QUOTES_V = 18;
+const SCRIPT_V = 14;
+const LIVE_QUOTES_V = 19;
 const TAB_STATE_V = 9;
 
 const MAP_FILES = [
@@ -183,6 +183,43 @@ function patchRuntime(source) {
     /\}\r[ \t]+function renderMomentum\(\)/g,
     '}\n\n    function renderMomentum()',
   );
+
+  if (!source.includes('onQuotesReady:')) {
+    const onReady =
+      `onQuotesReady: function () {\n` +
+      `            function isActive(id) {\n` +
+      `              var el = document.getElementById(id);\n` +
+      `              return !!(el && (el.classList.contains('active') || el.offsetParent !== null));\n` +
+      `            }\n` +
+      `            var tab = null;\n` +
+      `            if (isActive('tab-momentum')) tab = 'momentum';\n` +
+      `            else if (isActive('tab-heatmap')) tab = 'heatmap';\n` +
+      `            else if (isActive('tab-volatility')) tab = 'volatility';\n` +
+      `            else if (isActive('tab-perfcalendar')) tab = 'perfcalendar';\n` +
+      `            else if (window.InvestingMapTabState && typeof InvestingMapTabState.getTab === 'function') {\n` +
+      `              tab = InvestingMapTabState.getTab();\n` +
+      `            }\n` +
+      `            if (tab === 'momentum' && typeof renderMomentum === 'function') renderMomentum();\n` +
+      `            else if (tab === 'heatmap' && typeof renderHeatmap === 'function') renderHeatmap();\n` +
+      `            else if (tab === 'volatility' && typeof renderVolatility === 'function') renderVolatility();\n` +
+      `            else if (tab === 'perfcalendar' && typeof renderPerfCalendar === 'function') renderPerfCalendar();\n` +
+      `          }`;
+    source = source.replace(
+      /renderTable:\s*function\s*\(\)\s*\{\s*renderTable\(\);(?:\s*if\s*\(document\.getElementById\('tab-heatmap'\)[\s\S]*?renderPerfCalendar\(\);)?\s*\},/,
+      `renderTable: function () { renderTable(); },\n          ${onReady},`,
+    );
+    if (!source.includes('onQuotesReady:')) {
+      source = source.replace(
+        /renderTable:\s*renderTable,/,
+        `renderTable: function () { renderTable(); },\n          ${onReady},`,
+      );
+    }
+  } else {
+    source = source.replace(
+      /renderTable:\s*function\s*\(\)\s*\{\s*renderTable\(\);\s*if\s*\(document\.getElementById\('tab-heatmap'\)[\s\S]*?renderPerfCalendar\(\);\s*\},/,
+      'renderTable: function () { renderTable(); },',
+    );
+  }
 
   if (!source.includes('getMomentumIndices')) {
     source = source.replace(

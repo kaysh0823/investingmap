@@ -44,7 +44,7 @@ check(maps.battery.length === 26, `battery ${maps.battery.length}`);
 check(maps.chemical.length === 29, `chemical ${maps.chemical.length}`);
 check(maps.ship.length === 17, `ship ${maps.ship.length}`);
 check(maps.renewable.length === 13, `renewable ${maps.renewable.length}`);
-check(maps.powergrid.length === 18, `powergrid ${maps.powergrid.length}`);
+check(maps.powergrid.length === 17, `powergrid ${maps.powergrid.length}`);
 check(maps.holdings.length === 52, `holdings ${maps.holdings.length}`);
 
 check(

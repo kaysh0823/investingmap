@@ -517,7 +517,8 @@
     var height = Math.floor(rect.height || container.clientHeight || 0);
     if (width < 80 || height < 80) {
       if (resizeTimer) clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () { render(opts); }, 100);
+      // Prefer lastOpts so a later quotes-ready render is not overwritten by a stale size retry.
+      resizeTimer = setTimeout(function () { render(lastOpts || opts); }, 100);
       return;
     }
 

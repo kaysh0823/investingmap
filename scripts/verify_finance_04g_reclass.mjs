@@ -49,13 +49,10 @@ const holdings = extractCompaniesFromHtml(holdingsHtml);
 const software = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'software/korea_software_map.html'), 'utf8'));
 
 check(finance.some((c) => c.ticker === '377300' && c.chain === '결제·핀테크'), '377300 not finance 결제·핀테크');
-check(software.some((c) => c.ticker === '377300' && c.chain === '결제·데이터 인프라'), '377300 not software cross');
-check(software.length === 23, `software expected 23, got ${software.length}`);
-check(!exclusiveSector('377300'), '377300 still exclusive');
-check(
-  JSON.stringify(crossSectors('377300')?.slice().sort()) === JSON.stringify(['finance', 'software']),
-  '377300 SECTOR_CROSS',
-);
+check(!software.some((c) => c.ticker === '377300'), '377300 still on software');
+check(software.length === 22, `software expected 22, got ${software.length}`);
+check(exclusiveSector('377300') === 'finance', '377300 exclusive finance');
+check(!crossSectors('377300'), '377300 still in SECTOR_CROSS');
 
 for (const t of ['012030', '023590', '032190']) {
   check(holdings.some((c) => c.ticker === t && c.chain === '금융'), `${t} not holdings 금융`);
@@ -66,31 +63,17 @@ check(FINANCE_04G.holdings.chains[8] === '금융', 'holdings 금융 not 9th');
 
 check(exclusiveSector('005930') === 'bigchip', 'bigchip');
 const kconsume = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'kconsume/korea_kconsume_map.html'), 'utf8'));
-check(kconsume.length === 38, `kconsume expected 38, got ${kconsume.length}`);
+check(kconsume.length === 37, `kconsume expected 37, got ${kconsume.length}`);
 const shipping = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'shipping/korea_shipping_map.html'), 'utf8'));
 check(shipping.length === 6, `shipping expected 6, got ${shipping.length}`);
 
 const hubPath = join(ROOT, 'data', 'hub_index.json');
 if (fs.existsSync(hubPath)) {
   const cross = JSON.parse(fs.readFileSync(hubPath, 'utf8')).crossIndex || {};
-  check(
-    Array.isArray(cross['377300']) &&
-      cross['377300'].includes('finance') &&
-      cross['377300'].includes('software'),
-    'hub crossIndex 377300',
-  );
-  check(
-    Array.isArray(cross['028260']) &&
-      cross['028260'].includes('construction') &&
-      cross['028260'].includes('kconsume'),
-    'hub crossIndex 028260',
-  );
-  check(
-    Array.isArray(cross['034020']) &&
-      cross['034020'].includes('nuclear') &&
-      cross['034020'].includes('powergrid'),
-    'hub crossIndex 034020',
-  );
+  check(Object.keys(cross).length === 0, 'hub crossIndex must be empty');
+  check(!cross['377300'], 'hub crossIndex still has 377300');
+  check(!cross['028260'], 'hub crossIndex still has 028260');
+  check(!cross['034020'], 'hub crossIndex still has 034020');
 }
 
 console.log('Finance §0-4G verification');

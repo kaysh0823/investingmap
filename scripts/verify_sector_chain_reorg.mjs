@@ -82,25 +82,10 @@ check(
 
 const hub = JSON.parse(fs.readFileSync(join(ROOT, 'data', 'hub_index.json'), 'utf8'));
 const crossKeys = Object.keys(hub.crossIndex || {}).sort();
-check(crossKeys.length === 3, `crossIndex: expected 3, got ${crossKeys.length}`);
-check(
-  Array.isArray(hub.crossIndex?.['377300']) &&
-    hub.crossIndex['377300'].includes('finance') &&
-    hub.crossIndex['377300'].includes('software'),
-  'crossIndex must list 377300 finance+software',
-);
-check(
-  Array.isArray(hub.crossIndex?.['028260']) &&
-    hub.crossIndex['028260'].includes('construction') &&
-    hub.crossIndex['028260'].includes('kconsume'),
-  'crossIndex must list 028260 construction+kconsume',
-);
-check(
-  Array.isArray(hub.crossIndex?.['034020']) &&
-    hub.crossIndex['034020'].includes('nuclear') &&
-    hub.crossIndex['034020'].includes('powergrid'),
-  'crossIndex must list 034020 nuclear+powergrid',
-);
+check(crossKeys.length === 0, `crossIndex: expected 0, got ${crossKeys.length}`);
+check(!hub.crossIndex?.['377300'], 'crossIndex must not list 377300');
+check(!hub.crossIndex?.['028260'], 'crossIndex must not list 028260');
+check(!hub.crossIndex?.['034020'], 'crossIndex must not list 034020');
 
 console.log('Sector/chain reorganization verification');
 console.log('========================================');

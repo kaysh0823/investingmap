@@ -636,7 +636,25 @@
       if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) setTimeout(renderPerfCalendar, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
-          renderTable: function () { renderTable(); if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); },
+          renderTable: function () { renderTable(); },
+          onQuotesReady: function () {
+            function isActive(id) {
+              var el = document.getElementById(id);
+              return !!(el && (el.classList.contains('active') || el.offsetParent !== null));
+            }
+            var tab = null;
+            if (isActive('tab-momentum')) tab = 'momentum';
+            else if (isActive('tab-heatmap')) tab = 'heatmap';
+            else if (isActive('tab-volatility')) tab = 'volatility';
+            else if (isActive('tab-perfcalendar')) tab = 'perfcalendar';
+            else if (window.InvestingMapTabState && typeof InvestingMapTabState.getTab === 'function') {
+              tab = InvestingMapTabState.getTab();
+            }
+            if (tab === 'momentum' && typeof renderMomentum === 'function') renderMomentum();
+            else if (tab === 'heatmap' && typeof renderHeatmap === 'function') renderHeatmap();
+            else if (tab === 'volatility' && typeof renderVolatility === 'function') renderVolatility();
+            else if (tab === 'perfcalendar' && typeof renderPerfCalendar === 'function') renderPerfCalendar();
+          },
           onAsOf: function (iso, meta) {
             imQuotesError = '';
             imQuotesAsOf = iso || '';

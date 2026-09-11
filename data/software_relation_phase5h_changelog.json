@@ -2,19 +2,19 @@
   "asOf": "2026-08-29",
   "phase": "5H",
   "reviewedBy": "editorial_phase5h",
-  "listedCompanyCount": 23,
-  "nodeCount": 63,
-  "edgeCount": 80,
-  "structuralGenerated": 52,
+  "listedCompanyCount": 22,
+  "nodeCount": 62,
+  "edgeCount": 79,
+  "structuralGenerated": 51,
   "legacyMigrated": 24,
   "manuallyCurated": 4,
   "demotedPeer": 24,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 23,
-    "nodeCount": 63,
-    "edgeCount": 80,
-    "structuralGeneratedEdgeCount": 52,
+    "listedCompanyCount": 22,
+    "nodeCount": 62,
+    "edgeCount": 79,
+    "structuralGeneratedEdgeCount": 51,
     "legacyMigratedEdgeCount": 24,
     "manuallyCuratedEdgeCount": 4,
     "softwareProductCount": 3,
@@ -34,9 +34,9 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 24,
-    "businessRelationOrphanCount": 23,
-    "directCommercialRelationshipOrphanCount": 23,
-    "classificationOnlyCompanyCount": 13,
+    "businessRelationOrphanCount": 22,
+    "directCommercialRelationshipOrphanCount": 22,
+    "classificationOnlyCompanyCount": 12,
     "hasPeerButNoBusinessCompanyCount": 16,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
@@ -123,7 +123,7 @@
     "nodeCountByType": {
       "group": 7,
       "cross_sector_anchor": 4,
-      "listed_company": 23,
+      "listed_company": 22,
       "platform": 4,
       "software_category": 7,
       "customer_industry": 5,
@@ -131,7 +131,7 @@
       "software_product": 3,
       "global_company": 6
     },
-    "removedUnsupportedPartnerCount": 24,
+    "removedUnsupportedPartnerCount": 22,
     "demotedLegacyPeerCount": 24
   },
   "validate": {
@@ -244,11 +244,6 @@
       "action": "structural_used_in_industry",
       "ticker": "064400",
       "target": "industry:enterprise-it"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "377300",
-      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
@@ -459,16 +454,6 @@
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:064400",
       "target": "global:microsoft"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:377300",
-      "partner": "visa"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:377300",
-      "partner": "mastercard"
     },
     {
       "action": "demote_legacy_partner_to_peer",

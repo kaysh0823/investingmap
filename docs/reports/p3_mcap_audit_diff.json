@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-11T12:34:23.405Z",
-  "auditAdditionsCount": 80,
+  "generatedAt": "2026-09-11T14:41:41.624Z",
+  "auditAdditionsCount": 47,
   "admitted": [
     "323280",
     "127120",
@@ -65,7 +65,7 @@
     {
       "ticker": "285130",
       "name": "SK케미칼",
-      "notes": "renewable exclusive + SUCCESSOR_DROP(지도 미노출) — P3 재편입 제외. 감사 additions에 잔존"
+      "notes": "이미 renewable exclusive — P3 재편입 제외(감사 additions에 잔존해도 스킵)"
     }
   ],
   "taxonomyGaps": [
@@ -154,43 +154,5 @@
     "168360",
     "117730"
   ],
-  "note": "Prefer shares/REITs/SPACs filtered by triage are intentionally not admitted. Boundary tickers rechecked via loadMergedKrxMap.",
-  "postBuild": {
-    "generatedAt": "2026-09-11T12:39:57.390Z",
-    "hubCovered": 647,
-    "auditAdditionsRemaining": 47,
-    "triageEligibleRemaining": 19,
-    "verifiedCounts": {
-      "semi": 92,
-      "nuclear": 9,
-      "auto": 28,
-      "battery": 26,
-      "elec": 29,
-      "machinery": 6,
-      "chemical": 29,
-      "bio": 66,
-      "medtech": 17,
-      "defense": 13,
-      "kconsume": 38,
-      "travel": 12,
-      "software": 23,
-      "holdings": 52,
-      "bigchip": 2
-    },
-    "verifySuite": [
-      "verify:dist",
-      "verify:data-sector-profile",
-      "verify:global-search",
-      "verify:reorg",
-      "verify:nav-tab-preserve",
-      "verify_p3_mcap_admissions"
-    ],
-    "notes": [
-      "P3 admitted 36; hubUnique 611→647 (+36).",
-      "033780 remains on kconsume; 285130 stays renewable exclusive but SUCCESSOR_DROP keeps it off renewable map (pre-existing).",
-      "Fresh audit still lists preferred shares/REITs/SPACs and taxonomy gaps; boundary removals near floor (e.g. 001390/035810) observed in audit A but still on-map with mcapWon>0 at build time.",
-      "Nuclear empty group 계측·제어 filled by 032820.",
-      "No finance CROSS for 064260/234340 (insufficient evidence)."
-    ]
-  }
+  "note": "Prefer shares/REITs/SPACs filtered by triage are intentionally not admitted. Boundary tickers rechecked via loadMergedKrxMap."
 }

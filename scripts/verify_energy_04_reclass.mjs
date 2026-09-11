@@ -19,7 +19,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { battery: 26, renewable: 13, nuclear: 9, powergrid: 18 };
+const EXPECTED_N = { battery: 26, renewable: 13, nuclear: 9, powergrid: 17 };
 
 for (const key of ['battery', 'renewable', 'nuclear', 'powergrid']) {
   const cfg = ENERGY_04[key];
@@ -84,11 +84,8 @@ check(
 );
 check(!maps.chemical.some((c) => c.ticker === '005090'), '005090 still chemical');
 check(exclusiveSector('005090') === 'powergrid', 'exclusive 005090');
-check(
-  maps.powergrid.some((c) => c.ticker === '034020' && c.chain === '발전·비상전원 설비'),
-  '034020 not powergrid cross',
-);
-check(!exclusiveSector('034020'), '034020 still exclusive');
+check(!maps.powergrid.some((c) => c.ticker === '034020'), '034020 still on powergrid');
+check(exclusiveSector('034020') === 'nuclear', '034020 exclusive nuclear');
 
 const fields = JSON.parse(fs.readFileSync(join(ROOT, 'data/ticker_field_overrides.json'), 'utf8'));
 check(!String(fields['005090']?.products || '').includes('정유'), '005090 products still mentions 정유');

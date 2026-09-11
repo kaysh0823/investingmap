@@ -16,7 +16,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { kconsume: 38, kcontent: 25, travel: 12 };
+const EXPECTED_N = { kconsume: 37, kcontent: 25, travel: 12 };
 
 for (const key of ['kconsume', 'kcontent', 'travel']) {
   const cfg = CONSUMER_04F[key];
@@ -64,7 +64,8 @@ check(!String(kakao?.products || '').includes('카카오'), '293490 still has �
 check(!String(kakao?.semType || '').includes('카카오'), '293490 semType still 카카오');
 
 check(!maps.kconsume.some((c) => c.ticker === '001740'), '001740 auto-entered kconsume');
-check(maps.kconsume.some((c) => c.ticker === '028260' && c.chain === '종합상사'), '028260 missing kconsume cross');
+check(!maps.kconsume.some((c) => c.ticker === '028260'), '028260 still on kconsume');
+check(exclusiveSector('028260') === 'construction', '028260 exclusive construction');
 check(maps.chemical.length === 29, `chemical expected 29, got ${maps.chemical.length}`);
 check(exclusiveSector('086280') === 'shipping', 'exclusive 086280');
 check(exclusiveSector('000120') === 'shipping', 'exclusive 000120');

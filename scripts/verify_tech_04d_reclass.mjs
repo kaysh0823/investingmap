@@ -16,7 +16,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { elec: 29, software: 23, telecom: 10, robot: 15 };
+const EXPECTED_N = { elec: 29, software: 22, telecom: 10, robot: 15 };
 
 for (const key of ['elec', 'software', 'telecom', 'robot']) {
   const cfg = TECH_04D[key];
@@ -72,10 +72,8 @@ check(maps.telecom.some((c) => c.ticker === '189300' && c.chain === '위성통�
 check(maps.battery.length === 26, `battery expected 26, got ${maps.battery.length}`);
 check(maps.semi.length === 92, `semi expected 92, got ${maps.semi.length}`);
 check(maps.auto.length === 28, `auto expected 28, got ${maps.auto.length}`);
-check(
-  maps.software.some((c) => c.ticker === '377300' && c.chain === '결제·데이터 인프라'),
-  '377300 software cross',
-);
+check(!maps.software.some((c) => c.ticker === '377300'), '377300 still on software');
+check(exclusiveSector('377300') === 'finance', '377300 exclusive finance');
 
 check(exclusiveSector('222080') === 'battery', 'exclusive 222080');
 check(exclusiveSector('077360') === 'semi', 'exclusive 077360');

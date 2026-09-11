@@ -31,31 +31,27 @@ const nuclear = load('nuclear/korea_nuclear_map.html');
 const powergrid = load('powergrid/korea_powergrid_map.html');
 
 check(construction.some((c) => c.ticker === '028260' && c.chain === '종합건설'), '028260 missing construction');
-check(kconsume.some((c) => c.ticker === '028260' && c.chain === '종합상사'), '028260 missing kconsume 종합상사');
+check(!kconsume.some((c) => c.ticker === '028260'), '028260 still on kconsume');
 check(nuclear.some((c) => c.ticker === '034020' && c.chain === '원자로·주기기'), '034020 missing nuclear');
-check(
-  powergrid.some((c) => c.ticker === '034020' && c.chain === '발전·비상전원 설비'),
-  '034020 missing powergrid 발전·비상전원 설비',
-);
-check(!exclusiveSector('028260'), '028260 still exclusive');
-check(!exclusiveSector('034020'), '034020 still exclusive');
-check(
-  JSON.stringify(crossSectors('028260')?.slice().sort()) === JSON.stringify(['construction', 'kconsume']),
-  '028260 CROSS',
-);
-check(
-  JSON.stringify(crossSectors('034020')?.slice().sort()) === JSON.stringify(['nuclear', 'powergrid']),
-  '034020 CROSS',
-);
+check(!powergrid.some((c) => c.ticker === '034020'), '034020 still on powergrid');
+check(exclusiveSector('028260') === 'construction', '028260 exclusive construction');
+check(exclusiveSector('034020') === 'nuclear', '034020 exclusive nuclear');
+check(exclusiveSector('377300') === 'finance', '377300 exclusive finance');
+check(!crossSectors('028260'), '028260 still CROSS');
+check(!crossSectors('034020'), '034020 still CROSS');
+check(!crossSectors('377300'), '377300 still CROSS');
 
 const hub = JSON.parse(fs.readFileSync(join(ROOT, 'data/hub_index.json'), 'utf8'));
+check(Object.keys(hub.crossIndex || {}).length === 0, 'hub crossIndex must be empty');
 const unique = listHubCompanies(hub);
 const tickers = unique.map((c) => pad(c.ticker));
 check(new Set(tickers).size === tickers.length, 'hub uniqueCompanies has ticker duplicates');
 check(tickers.includes('028260'), 'hub missing 028260');
 check(tickers.includes('034020'), 'hub missing 034020');
+check(tickers.includes('377300'), 'hub missing 377300');
 check(tickers.filter((t) => t === '028260').length === 1, '028260 hub mcap double-count');
 check(tickers.filter((t) => t === '034020').length === 1, '034020 hub mcap double-count');
+check(tickers.filter((t) => t === '377300').length === 1, '377300 hub mcap double-count');
 
 // Aggregation invariance: hub_index company shapes must not carry relations
 for (const [sid, block] of Object.entries(hub.sectors || {})) {
@@ -117,6 +113,11 @@ const report = {
     '028260': crossSectors('028260'),
     '034020': crossSectors('034020'),
     '377300': crossSectors('377300'),
+  },
+  exclusive: {
+    '028260': exclusiveSector('028260'),
+    '034020': exclusiveSector('034020'),
+    '377300': exclusiveSector('377300'),
   },
   hubUnique: hub.meta?.totalCompanies,
   relationGroups: (doc.relations || []).map((r) => ({

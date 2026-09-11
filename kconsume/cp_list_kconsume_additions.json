@@ -283,19 +283,6 @@
     "level": "core"
   },
   {
-    "ticker": "028260",
-    "name": "삼성물산",
-    "nameEn": "SAMSUNG C&T CORPORATION",
-    "chain": "종합상사",
-    "semType": "종합상사·건설",
-    "semTypeEn": "Trading house & construction",
-    "products": "건설·엔지니어링·종합상사 트레이딩",
-    "productsEn": "Construction, engineering and trading-house operations",
-    "partners": [],
-    "subSector": "종합상사",
-    "level": "cross"
-  },
-  {
     "ticker": "452260",
     "name": "한화갤러리아",
     "nameEn": "HANWHA GALLERIA",

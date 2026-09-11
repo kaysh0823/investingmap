@@ -2086,11 +2086,6 @@
         "chain": "결제·핀테크",
         "semType": "간편결제·핀테크",
         "products": "간편결제·디지털 금융 플랫폼"
-      },
-      "software": {
-        "chain": "결제·데이터 인프라",
-        "semType": "결제·핀테크 플랫폼",
-        "products": "간편결제·디지털 금융 플랫폼 (결제·데이터 인프라 교차)"
       }
     },
     "tags": [
@@ -3706,13 +3701,6 @@
       "nuclear": {
         "chain": "원자로·주기기",
         "needs_review": false
-      },
-      "powergrid": {
-        "chain": "발전·비상전원 설비",
-        "needs_review": false,
-        "evidence": "원자로 주기기 + 가스터빈·발전설비 교차수록 P1-A",
-        "semType": "가스터빈·발전설비",
-        "products": "가스터빈·발전설비·원전 주기기"
       }
     },
     "tags": [
@@ -4037,13 +4025,6 @@
       "construction": {
         "chain": "종합건설",
         "needs_review": false
-      },
-      "kconsume": {
-        "chain": "종합상사",
-        "needs_review": false,
-        "evidence": "건설 + 종합상사(트레이딩) 교차수록 P1-A",
-        "semType": "종합상사·건설",
-        "products": "건설·엔지니어링·종합상사 트레이딩"
       }
     }
   },
@@ -4898,14 +4879,14 @@
     }
   },
   "_policy": {
-    "software_finance_payments": "결제·데이터 인프라(software)는 PG·VAN·결제 플랫폼·데이터 API 기술·인프라 역할. finance의 결제·핀테크는 금융서비스 역할. 교차 수록 시 통합 집계는 ticker 중복 제거.",
+    "software_finance_payments": "결제·데이터 인프라(software)는 PG·VAN·결제 플랫폼·데이터 API 기술·인프라 역할. finance의 결제·핀테크는 금융서비스 역할. 카카오페이(377300)는 finance 단일홈.",
     "travel_shipping_air_cargo": "여객항공사 화물사업만으로 shipping 자동이동 금지. 항공 여객·화물 분할 중복집계 금지. shipping에 항공화물 그룹 신설 금지(분류 공백).",
     "sk_networks_trading": "001740 SK네트웍스 — 화학 제외·분류공백 유지. kconsume 종합상사 자동편입 금지.",
-    "kakao_pay_cross": "377300 카카오페이 — finance 결제·핀테크 + software 결제·데이터 인프라 교차. 지도별 대표그룹 1개, 통합 ticker 집계 중복제거.",
+    "kakao_pay_cross": "377300 카카오페이 — finance 결제·핀테크 단일홈 (software 교차 해제).",
     "holdings_axis": "holdings 기본 분류 명칭: 주요 투자·사업영역. 순수/사업/금융/중간지주는 대표그룹이 아닌 메타데이터.",
     "finance_holding_gap": "012030·023590·032190 — holdings '금융' 그룹(#5C6BC0, 9번째)으로 확정. software 자동 덮어쓰기 금지.",
     "needs_review_closure": "2026-09 needs_review 마감: 이동4(含005090→powergrid)·정정4·신설2. needs_review 잔여 0. 공백=001740·126560.",
-    "p1_cross": "P1-A CROSS: 028260 construction+kconsume, 034020 nuclear+powergrid, 377300 finance+software. Hub ticker dedup. P1-B relations UI-only.",
+    "p1_cross": "P1 single-home: 028260 construction only, 034020 nuclear only, 377300 finance only. SECTOR_CROSS={}. P1-B relations UI-only.",
     "p3_mcap_admissions": "2026-09 P3: admitted 36 tickers (≥3천억). Gaps=7. Excluded already-mapped 033780,285130."
   },
   "086900": {

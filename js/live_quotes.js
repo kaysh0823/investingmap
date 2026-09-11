@@ -596,16 +596,28 @@
     }
   }
 
+  function invokeQuotesReady(onQuotesReady) {
+    if (typeof onQuotesReady !== 'function') return;
+    try {
+      onQuotesReady();
+    } catch (e) {}
+  }
+
   function hydrateRsSnapshot(opts) {
     var getCompanies = opts && opts.getCompanies;
     var renderTable = opts && opts.renderTable;
+    var onQuotesReady = (opts && opts.onQuotesReady) || function () {};
     return loadRsSnapshot().then(function (snap) {
       rememberMomentumIndices(snap);
       if (getCompanies) {
         mergeRsIntoCompanies(getCompanies(), snap);
         applyLiveReturns(getCompanies(), snap);
       }
-      if (renderTable) renderTable();
+      try {
+        if (renderTable) renderTable();
+      } finally {
+        invokeQuotesReady(onQuotesReady);
+      }
       focusTickerAfterRender();
       return snap;
     });
@@ -619,6 +631,7 @@
     var base = (opts && opts.baseUrl != null && opts.baseUrl !== '') ? String(opts.baseUrl).replace(/\/+$/, '') : getApiBase();
     var getCompanies = opts.getCompanies;
     var renderTable = opts.renderTable;
+    var onQuotesReady = opts.onQuotesReady || function () {};
     var pollMs = (opts && opts.pollMs) || 300000;
     var onAsOf = opts.onAsOf || function () {};
     var onError = opts.onError || function () {};
@@ -656,7 +669,11 @@
             try {
               onAsOf(j.asOf || '', { regularSession: j.regularSession });
             } catch (e1) {}
-            if (renderTable) renderTable();
+            try {
+              if (renderTable) renderTable();
+            } finally {
+              invokeQuotesReady(onQuotesReady);
+            }
             focusTickerAfterRender();
             return j;
           }

@@ -1,0 +1,56 @@
+{
+  "builtAt": "2026-09-11T14:43:37.132Z",
+  "goal": "crossIndex empty; three tickers single-home",
+  "crossIndex": {},
+  "crossIndexCount": 0,
+  "multiMapTickers": [],
+  "multiMapCount": 0,
+  "singleHome": [
+    {
+      "ticker": "377300",
+      "name": "카카오페이",
+      "from": [
+        "finance",
+        "software"
+      ],
+      "to": "finance",
+      "actual": [
+        "finance"
+      ]
+    },
+    {
+      "ticker": "034020",
+      "name": "두산에너빌리티",
+      "from": [
+        "nuclear",
+        "powergrid"
+      ],
+      "to": "nuclear",
+      "actual": [
+        "nuclear"
+      ]
+    },
+    {
+      "ticker": "028260",
+      "name": "삼성물산",
+      "from": [
+        "construction",
+        "kconsume"
+      ],
+      "to": "construction",
+      "actual": [
+        "construction"
+      ]
+    }
+  ],
+  "mapCounts": {
+    "software": 22,
+    "powergrid": 17,
+    "kconsume": 37,
+    "finance": 50,
+    "nuclear": 9,
+    "construction": 20,
+    "bigchip": 2
+  },
+  "hubUnique": 647
+}

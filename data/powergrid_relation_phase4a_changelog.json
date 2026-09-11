@@ -157,50 +157,6 @@
     },
     {
       "legacyEdgeId": null,
-      "source": "krx:034020",
-      "target": "group:chain_%EB%B0%9C%EC%A0%84%C2%B7%EB%B9%84%EC%83%81%EC%A0%84%EC%9B%90%20%EC%84%A4%EB%B9%84",
-      "beforeType": null,
-      "afterType": "member_of",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "chain classification"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:034020",
-      "target": "equipment:power_transformer",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:034020",
-      "target": "equipment:switchgear",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": null,
-      "source": "krx:034020",
-      "target": "equipment:grid_automation",
-      "beforeType": null,
-      "afterType": "manufactures",
-      "beforeStatus": null,
-      "afterStatus": "reference",
-      "origin": "structuralGenerated",
-      "reason": "role equipment"
-    },
-    {
-      "legacyEdgeId": null,
       "source": "krx:010120",
       "target": "group:chain_%EA%B0%9C%ED%8F%90%C2%B7%EB%B0%B0%EC%A0%84%EA%B8%B0%EA%B8%B0",
       "beforeType": null,
@@ -1093,30 +1049,30 @@
   ],
   "metrics": {
     "legacyMigratedEdgeCount": 19,
-    "structuralGeneratedEdgeCount": 149,
+    "structuralGeneratedEdgeCount": 141,
     "manuallyCuratedEdgeCount": 6,
     "removedEdgeCount": 2,
-    "finalEdgeCount": 174,
+    "finalEdgeCount": 166,
     "legacyMigratedBusinessEdgeCount": 19,
     "manuallyCuratedBusinessEdgeCount": 6,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 2,
-    "businessRelationOrphanCount": 16,
-    "classificationOnlyCompanyCount": 9,
+    "businessRelationOrphanCount": 15,
+    "classificationOnlyCompanyCount": 8,
     "weakRelationOnlyCompanyCount": 0,
-    "directRelationshipOrphanCount": 16,
+    "directRelationshipOrphanCount": 15,
     "phase4aMigratedAt": "2026-08-23"
   },
   "statusCounts": {
-    "reference": 153,
+    "reference": 145,
     "peer": 19,
     "reported": 2
   },
   "typeCounts": {
-    "used_in_grid_stage": 50,
-    "member_of": 18,
-    "manufactures": 40,
-    "exposed_to": 41,
+    "used_in_grid_stage": 48,
+    "member_of": 17,
+    "manufactures": 37,
+    "exposed_to": 39,
     "peer": 19,
     "awarded_contract": 2,
     "supplies_transformer_to": 1,
@@ -1133,14 +1089,8 @@
     ]
   },
   "audit": {
-    "listedCount": 18,
+    "listedCount": 17,
     "tickers": [
-      {
-        "ticker": "034020",
-        "name": "두산에너빌리티",
-        "chain": "발전·비상전원 설비",
-        "partners": 0
-      },
       {
         "ticker": "010120",
         "name": "LS ELECTRIC",

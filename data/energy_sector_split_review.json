@@ -135,6 +135,15 @@
     "mcapWon": 892584000000
   },
   {
+    "ticker": "033790",
+    "name": "피노",
+    "sector": "battery",
+    "chain": "제조·검사 장비",
+    "origin": "battery",
+    "basis": "전지 자동화 장비",
+    "mcapWon": 849883247400
+  },
+  {
     "ticker": "137400",
     "name": "피엔티",
     "sector": "battery",
@@ -270,6 +279,15 @@
     "mcapWon": 1856662500000
   },
   {
+    "ticker": "032820",
+    "name": "우리기술",
+    "sector": "nuclear",
+    "chain": "보조기기·소재",
+    "origin": "nuclear",
+    "basis": "원전 MMIS",
+    "mcapWon": 1836700425560
+  },
+  {
     "ticker": "100840",
     "name": "SNT에너지",
     "sector": "nuclear",
@@ -295,6 +313,15 @@
     "origin": "nuclear",
     "basis": "원전 철구조물·보조기기",
     "mcapWon": 333100206720
+  },
+  {
+    "ticker": "126720",
+    "name": "수산인더스트리",
+    "sector": "nuclear",
+    "chain": "정비·운영지원",
+    "origin": "nuclear",
+    "basis": "발전설비 정비",
+    "mcapWon": 302863200000
   },
   {
     "ticker": "009830",
