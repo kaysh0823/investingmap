@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const LIVE_QUOTES_V = 19;
+const LIVE_QUOTES_V = 22;
 const MOMENTUM_V = 14;
 
 const MAP_FILES = [

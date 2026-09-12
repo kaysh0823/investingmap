@@ -5,3 +5,4 @@ dist/
 data/.naver_quotes_cache.json
 node_modules/
 .claude/
+supabase/.temp/

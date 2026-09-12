@@ -1,10 +1,12 @@
 /**
- * Build data/hub_rs_snapshot.json — KRX full-market RS (20/50/120-day percentile avg).
+ * Build data/hub_rs_snapshot.json — KRX full-market RS
+ * (tradingKRX-aligned: adjusted stock_price_history + market_index_daily).
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
+import { getSupabaseConfig } from '../functions/lib/supabase_hub.mjs';
 import {
   listHubCompanies,
   normalizeTicker,
@@ -12,22 +14,21 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-function loadAuthKey() {
+function loadEnv() {
   const env = { ...process.env };
   const devVars = path.join(ROOT, '.dev.vars');
-  if (fs.existsSync(devVars)) {
-    for (const line of fs.readFileSync(devVars, 'utf8').split('\n')) {
-      const m = line.match(/^\s*([A-Za-z0-9_\u0080-\uFFFF ]+)\s*=\s*(.*)$/);
-      if (!m) continue;
-      const k = m[1].trim();
-      let v = m[2].trim();
-      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
-        v = v.slice(1, -1);
-      }
-      if (!env[k]) env[k] = v;
+  if (!fs.existsSync(devVars)) return env;
+  for (const line of fs.readFileSync(devVars, 'utf8').split('\n')) {
+    const m = line.match(/^\s*([A-Za-z0-9_\u0080-\uFFFF ]+)\s*=\s*(.*)$/);
+    if (!m) continue;
+    const k = m[1].trim();
+    let v = m[2].trim();
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+      v = v.slice(1, -1);
     }
+    if (!env[k]) env[k] = v;
   }
-  return getAuthKey(env);
+  return env;
 }
 
 async function main() {
@@ -36,18 +37,26 @@ async function main() {
     console.log('skip hub_rs_snapshot (deterministic build — use npm run refresh:hub-snapshots)');
     process.exit(0);
   }
-  const authKey = loadAuthKey();
-  if (!authKey) {
+
+  const env = loadEnv();
+  const authKey = getAuthKey(env);
+  const supabase = getSupabaseConfig(env, { preferServiceRole: true });
+
+  if (!supabase && !authKey) {
     if (fs.existsSync(outPath)) {
-      console.warn('KRX_AUTH_KEY missing — keeping existing hub_rs_snapshot.json');
+      console.warn('SUPABASE/KRX credentials missing — keeping existing hub_rs_snapshot.json');
       process.exit(0);
     }
-    console.warn('KRX_AUTH_KEY missing — skip hub_rs_snapshot.json (runtime /api/hub_rs_snapshot will build)');
+    console.warn('SUPABASE/KRX credentials missing — skip hub_rs_snapshot.json');
     process.exit(0);
   }
 
-  console.log('Building KRX RS snapshot (20/50/120 trading days)…');
-  const snapshot = await buildKrxRsSnapshot(authKey);
+  console.log(
+    'Building KRX RS snapshot '
+    + `(${supabase ? 'supabase history+adj+ffill' : 'KRX bydd_trd fallback'}; `
+    + '20/50/120/200, tradingKRX weights)…',
+  );
+  const snapshot = await buildKrxRsSnapshot({ authKey, supabase, env });
   if (!snapshot || !snapshot.quotes) {
     console.error('RS snapshot build failed');
     process.exit(1);
@@ -68,12 +77,26 @@ async function main() {
 
   const out = { ...snapshot, hubTop10Preview: hubPreview };
   fs.writeFileSync(outPath, `${JSON.stringify(out)}\n`, 'utf8');
-  console.log(`OK ${outPath} — ${snapshot.quotesOk}/${snapshot.universe} RS scores`);
+  console.log(
+    `OK ${outPath} — ${snapshot.quotesOk}/${snapshot.universeOrdinary || snapshot.universe} RS scores`
+    + ` source=${snapshot.source || 'n/a'}`,
+  );
+  if (snapshot.universeRaw != null) {
+    console.log(
+      `Universe: raw=${snapshot.universeRaw} ordinary=${snapshot.universeOrdinary}`
+      + (snapshot.universeExcluded
+        ? ` excl=${JSON.stringify(snapshot.universeExcluded)}`
+        : '')
+      + (snapshot.rankPoolByPeriod
+        ? ` rankPool=${JSON.stringify(snapshot.rankPoolByPeriod)}`
+        : ''),
+    );
+  }
   if (snapshot.indices) {
     console.log(
       'Index RS:',
       Object.entries(snapshot.indices)
-        .map(([code, row]) => `${code}=${row.rs} (20=${row.rs20}/50=${row.rs50}/120=${row.rs120})`)
+        .map(([code, row]) => `${code}=${row.rs} (20=${row.rs20}/50=${row.rs50}/120=${row.rs120}/200=${row.rs200})`)
         .join(', '),
     );
   } else {

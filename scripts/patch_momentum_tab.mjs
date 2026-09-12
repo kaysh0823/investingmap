@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SCRIPT_V = 14;
-const LIVE_QUOTES_V = 19;
+const LIVE_QUOTES_V = 22;
 const TAB_STATE_V = 9;
 
 const MAP_FILES = [

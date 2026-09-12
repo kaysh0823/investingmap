@@ -10,7 +10,7 @@ import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
 
-const QUOTES_CACHE_VERSION = 'v6';
+const QUOTES_CACHE_VERSION = 'v9';
 
 let indicesCache = { at: 0, value: null };
 
@@ -26,9 +26,11 @@ function slimMarketIndices(indices) {
       rs20: numOrNull(row.rs20),
       rs50: numOrNull(row.rs50),
       rs120: numOrNull(row.rs120),
+      rs200: numOrNull(row.rs200),
       ret20: numOrNull(row.ret20),
       ret50: numOrNull(row.ret50),
       ret120: numOrNull(row.ret120),
+      ret200: numOrNull(row.ret200),
     };
   }
   return Object.keys(out).length ? out : null;

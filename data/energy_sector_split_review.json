@@ -247,7 +247,7 @@
     "name": "두산에너빌리티",
     "sector": "nuclear",
     "chain": "원자로·주기기",
-    "origin": "powergrid",
+    "origin": "nuclear",
     "basis": "원전·발전설비",
     "mcapWon": 50732442763200
   },

@@ -174,6 +174,7 @@ export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
         rs20: numOrNull(row.rs20),
         rs50: numOrNull(row.rs50),
         rs120: numOrNull(row.rs120),
+        rs200: numOrNull(row.rs200),
       });
     }
   }
@@ -191,6 +192,7 @@ export function buildHubRsTop10FromSupabaseRows(hubIndex, rows, opts = {}) {
         rs20: q.rs20,
         rs50: q.rs50,
         rs120: q.rs120,
+        rs200: q.rs200,
       };
     })
     .sort((a, b) => b.rs - a.rs);
@@ -725,6 +727,7 @@ export function buildHubRsTop10(hubIndex, rsSnapshot) {
         rs20: q.rs20,
         rs50: q.rs50,
         rs120: q.rs120,
+        rs200: q.rs200,
       };
     })
     .filter(Boolean)
@@ -745,8 +748,10 @@ export async function buildHubRsTop10Payload(hubIndex, env, request, opts) {
 
   if ((!snapshot || !snapshot.quotes || !Object.keys(snapshot.quotes).length) && env) {
     const authKey = getAuthKey(env);
-    if (authKey) {
-      const live = await buildKrxRsSnapshot(authKey);
+    const { getSupabaseConfig } = await import('./supabase_hub.mjs');
+    const supabase = getSupabaseConfig(env, { preferServiceRole: true });
+    if (authKey || supabase) {
+      const live = await buildKrxRsSnapshot({ authKey, supabase, env });
       if (live && live.quotes) snapshot = live;
     }
   }

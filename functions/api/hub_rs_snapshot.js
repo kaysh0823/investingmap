@@ -5,6 +5,7 @@
 
 import { buildKrxRsSnapshot } from '../lib/krx_rs.mjs';
 import { getAuthKey } from '../lib/krx_yoy.mjs';
+import { getSupabaseConfig } from '../lib/supabase_hub.mjs';
 import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 import {
@@ -14,7 +15,7 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_BASE = '/api/hub_rs_snapshot/cache/v2';
+const CACHE_BASE = '/api/hub_rs_snapshot/cache/v3';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -44,7 +45,10 @@ export async function onRequest(context) {
     let snapshot = await loadHubRsSnapshotFromRequest(request, env);
     if ((!snapshot || !snapshot.quotes || !Object.keys(snapshot.quotes).length) && env) {
       const authKey = getAuthKey(env);
-      if (authKey) snapshot = await buildKrxRsSnapshot(authKey);
+      const supabase = getSupabaseConfig(env, { preferServiceRole: true });
+      if (authKey || supabase) {
+        snapshot = await buildKrxRsSnapshot({ authKey, supabase, env });
+      }
     }
     const payload = snapshot || { quotes: {}, source: 'missing' };
     const maxAge = edgeCacheMaxAgeSeconds(undefined, { regularMax: 21600, closedMax: 21600 });

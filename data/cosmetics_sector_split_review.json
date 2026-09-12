@@ -129,11 +129,6 @@
   ],
   "kconsumeRemain": [
     {
-      "ticker": "028260",
-      "name": "삼성물산",
-      "chain": "종합상사"
-    },
-    {
       "ticker": "033780",
       "name": "KT&G",
       "chain": "담배·건강소비재"

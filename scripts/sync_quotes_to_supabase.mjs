@@ -137,17 +137,20 @@ async function fetchNaverQuotes(codes) {
   return { quotes, ok, failed };
 }
 
-async function loadKrxQuotes(authKey) {
-  if (!authKey) {
-    console.warn('KRX_AUTH_KEY missing — skipping KRX returns/RS');
+async function loadKrxQuotes(authKey, supabase) {
+  if (!authKey && !supabase) {
+    console.warn('KRX/SUPABASE credentials missing — skipping returns/RS');
     return { quotes: {}, ok: 0 };
   }
   console.log('Building KRX returns/RS snapshot…');
-  const snapshot = await buildKrxRsSnapshot(authKey);
+  const snapshot = await buildKrxRsSnapshot({ authKey, supabase });
   if (!snapshot || !snapshot.quotes) {
     throw new Error('KRX RS snapshot build failed');
   }
-  console.log(`  KRX universe ${snapshot.quotesOk}/${snapshot.universe} tickers`);
+  console.log(
+    `  RS universe ${snapshot.quotesOk}/${snapshot.universeOrdinary || snapshot.universe} tickers`
+    + ` source=${snapshot.source || 'n/a'}`,
+  );
   return { quotes: snapshot.quotes, ok: snapshot.quotesOk || 0 };
 }
 
@@ -1416,7 +1419,8 @@ async function main() {
   console.log(`  kst=${todayYmdDash} clockRegular=${clockRegular}${force ? ' --force' : ''}`);
 
   const naverResult = await fetchNaverQuotes(tickers);
-  const krxResult = await loadKrxQuotes(authKey);
+  const supabaseCfg = { url: supabaseUrl, anonKey: serviceKey };
+  const krxResult = await loadKrxQuotes(authKey, supabaseCfg);
 
   // Naver's page marker is the source of truth for holiday detection.
   const consensus = deriveNaverTradeConsensus(naverResult.quotes);

@@ -2,9 +2,12 @@
  * Shared Supabase REST helpers for hub dashboard Pages Functions.
  */
 
-export function getSupabaseConfig(env) {
-  const url = (env.SUPABASE_URL || '').replace(/\/$/, '');
-  const anonKey = (env.SUPABASE_ANON_KEY || '').trim();
+export function getSupabaseConfig(env, opts = {}) {
+  const url = (env?.SUPABASE_URL || '').replace(/\/$/, '');
+  const preferService = !!opts.preferServiceRole;
+  const anonKey = preferService
+    ? (env?.SUPABASE_SERVICE_ROLE_KEY || env?.SUPABASE_ANON_KEY || '').trim()
+    : (env?.SUPABASE_ANON_KEY || env?.SUPABASE_SERVICE_ROLE_KEY || '').trim();
   if (!url || !anonKey) return null;
   return { url, anonKey };
 }
