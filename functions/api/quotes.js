@@ -10,9 +10,9 @@ import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
 
-const QUOTES_CACHE_VERSION = 'v9';
+const QUOTES_CACHE_VERSION = 'v10';
 
-let indicesCache = { at: 0, value: null };
+let rsSnapshotCache = { at: 0, snap: null };
 
 function slimMarketIndices(indices) {
   if (!indices || typeof indices !== 'object') return null;
@@ -36,19 +36,25 @@ function slimMarketIndices(indices) {
   return Object.keys(out).length ? out : null;
 }
 
-async function loadMarketIndicesFromRsSnapshot(request, env) {
+async function loadRsSnapshot(request, env) {
   const now = Date.now();
-  if (indicesCache.value && now - indicesCache.at < 5 * 60 * 1000) {
-    return indicesCache.value;
+  if (rsSnapshotCache.snap && now - rsSnapshotCache.at < 5 * 60 * 1000) {
+    return rsSnapshotCache.snap;
   }
   try {
     const snap = await loadHubRsSnapshotFromRequest(request, env);
-    const slim = slimMarketIndices(snap && snap.indices);
-    indicesCache = { at: now, value: slim };
-    return slim;
+    if (snap) {
+      rsSnapshotCache = { at: now, snap };
+    }
+    return snap || rsSnapshotCache.snap;
   } catch {
-    return indicesCache.value;
+    return rsSnapshotCache.snap;
   }
+}
+
+async function loadMarketIndicesFromRsSnapshot(request, env) {
+  const snap = await loadRsSnapshot(request, env);
+  return slimMarketIndices(snap && snap.indices);
 }
 
 function normalizeTicker(t) {
@@ -85,7 +91,13 @@ function numOrNull(v) {
   return Number.isFinite(n) ? n : null;
 }
 
-function mapSupabaseRow(row) {
+function mapSupabaseRow(row, snapQuote = null) {
+  const snapRs = snapQuote ? numOrNull(snapQuote.rs) : null;
+  const snapRs20 = snapQuote ? numOrNull(snapQuote.rs20) : null;
+  const snapRs50 = snapQuote ? numOrNull(snapQuote.rs50) : null;
+  const snapRs120 = snapQuote ? numOrNull(snapQuote.rs120) : null;
+  const snapRs200 = snapQuote ? numOrNull(snapQuote.rs200) : null;
+
   return {
     last: numOrNull(row.last),
     prevClose: numOrNull(row.prev_close),
@@ -113,7 +125,11 @@ function mapSupabaseRow(row) {
     ret50dPct: numOrNull(row.ret_50d_pct),
     ret120dPct: numOrNull(row.ret_120d_pct),
     ret200dPct: numOrNull(row.ret_200d_pct),
-    rs: numOrNull(row.rs),
+    rs: snapRs != null ? snapRs : numOrNull(row.rs),
+    rs20: snapRs20 != null ? snapRs20 : numOrNull(row.rs20 ?? row.rs_20),
+    rs50: snapRs50 != null ? snapRs50 : numOrNull(row.rs50 ?? row.rs_50),
+    rs120: snapRs120 != null ? snapRs120 : numOrNull(row.rs120 ?? row.rs_120),
+    rs200: snapRs200 != null ? snapRs200 : numOrNull(row.rs200 ?? row.rs_200),
     spark20: parseSpark20(row.spark20),
   };
 }
@@ -137,7 +153,27 @@ function parseSpark20(v) {
   return out.length ? out : null;
 }
 
-async function fetchQuotesFromSupabase(codes, config) {
+function applySnapshotRsToItems(items, snapQuotes) {
+  if (!items || !snapQuotes) return;
+  for (const [code, item] of Object.entries(items)) {
+    if (!item) continue;
+    const ticker = normalizeTicker(code);
+    const snapQuote = ticker ? snapQuotes[ticker] : null;
+    if (!snapQuote) continue;
+    const snapRs = numOrNull(snapQuote.rs);
+    const snapRs20 = numOrNull(snapQuote.rs20);
+    const snapRs50 = numOrNull(snapQuote.rs50);
+    const snapRs120 = numOrNull(snapQuote.rs120);
+    const snapRs200 = numOrNull(snapQuote.rs200);
+    if (snapRs != null) item.rs = snapRs;
+    if (snapRs20 != null) item.rs20 = snapRs20;
+    if (snapRs50 != null) item.rs50 = snapRs50;
+    if (snapRs120 != null) item.rs120 = snapRs120;
+    if (snapRs200 != null) item.rs200 = snapRs200;
+  }
+}
+
+async function fetchQuotesFromSupabase(codes, config, snapQuotes = null) {
   const list = codes.join(',');
   const url = `${config.url}/rest/v1/stock_quotes_latest?ticker=in.(${list})&select=*`;
   const res = await fetch(url, {
@@ -162,7 +198,8 @@ async function fetchQuotesFromSupabase(codes, config) {
   for (const row of rows) {
     const ticker = normalizeTicker(row.ticker);
     if (!ticker) continue;
-    items[ticker] = mapSupabaseRow(row);
+    const snapQuote = snapQuotes ? snapQuotes[ticker] : null;
+    items[ticker] = mapSupabaseRow(row, snapQuote);
     if (row.as_of && !asOf) asOf = row.as_of;
     if (row.regular_session != null && regularSession == null) {
       regularSession = !!row.regular_session;
@@ -247,8 +284,11 @@ export async function onRequest(context) {
   const warmHist = url.searchParams.get('warm') === '1';
   const supabaseConfig = getSupabaseConfig(env);
 
+  const snap = await loadRsSnapshot(request, env);
+  const snapQuotes = snap && snap.quotes ? snap.quotes : null;
+  const indices = slimMarketIndices(snap && snap.indices);
+
   if (!codes.length) {
-    const indices = await loadMarketIndicesFromRsSnapshot(request, env);
     return new Response(
       JSON.stringify({
         asOf: new Date().toISOString(),
@@ -268,7 +308,7 @@ export async function onRequest(context) {
 
     if (supabaseConfig) {
       try {
-        const supabase = await fetchQuotesFromSupabase(codes, supabaseConfig);
+        const supabase = await fetchQuotesFromSupabase(codes, supabaseConfig, snapQuotes);
         const regular =
           supabase.regularSession != null ? supabase.regularSession : session.regular;
 
@@ -309,8 +349,9 @@ export async function onRequest(context) {
       };
     }
 
+    applySnapshotRsToItems(payload.items, snapQuotes);
+
     const cacheControl = quotesCacheControl();
-    const indices = await loadMarketIndicesFromRsSnapshot(request, env);
     if (indices) payload.indices = indices;
     return new Response(JSON.stringify(payload), {
       headers: {

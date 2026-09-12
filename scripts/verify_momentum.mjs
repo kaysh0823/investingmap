@@ -175,7 +175,7 @@ for (const file of mapFiles) {
     'id="tab-momentum"',
     'id="momentum-root"',
     '../js/map_momentum.js?v=14',
-    '../js/live_quotes.js?v=22',
+    '../js/live_quotes.js?v=23',
     'function renderMomentum()',
     'getMomentumIndices',
     'onQuotesReady:',
@@ -226,7 +226,7 @@ for (const field of [
 ]) {
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
-assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '9'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '10'"), 'quotes API cache key version');
 assert.ok(liveQuotes.includes('getMomentumIndices'), 'live quotes must expose momentum index RS');
 assert.ok(liveQuotes.includes('rememberMomentumIndices'), 'live quotes must store indices from quotes/RS snap');
 assert.ok(liveQuotes.includes('onQuotesReady'), 'live quotes must accept onQuotesReady callback');
@@ -256,7 +256,7 @@ for (const field of [
 ]) {
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
-assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v9'"), 'quotes response cache version');
+assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v10'"), 'quotes response cache version');
 assert.ok(quotesApi.includes('loadMarketIndicesFromRsSnapshot'), 'quotes API attaches RS indices');
 assert.ok(quotesApi.includes("'supabase+naver-live'"), 'hybrid quotes source');
 assert.ok(quotesApi.includes('stale-while-revalidate=120'), 'quotes SWR cache header');

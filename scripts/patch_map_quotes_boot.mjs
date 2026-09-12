@@ -73,7 +73,7 @@ const HTML_MAPS = TARGETS.filter((r) => r.endsWith('.html'));
 for (const rel of HTML_MAPS) {
   const fp = path.join(ROOT, rel);
   let html = fs.readFileSync(fp, 'utf8');
-  const next = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=22');
+  const next = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=23');
   if (next !== html) {
     fs.writeFileSync(fp, next, 'utf8');
     console.log('bumped live_quotes v=20', rel);
@@ -83,7 +83,7 @@ for (const rel of HTML_MAPS) {
 const bioHtml = path.join(ROOT, 'bio/korea_bio_map.html');
 if (fs.existsSync(bioHtml)) {
   let html = fs.readFileSync(bioHtml, 'utf8');
-  const next = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=22');
+  const next = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=23');
   if (next !== html) {
     fs.writeFileSync(bioHtml, next, 'utf8');
     console.log('bumped live_quotes v=20 bio/korea_bio_map.html');

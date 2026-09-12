@@ -138,6 +138,21 @@ async function fetchNaverQuotes(codes) {
 }
 
 async function loadKrxQuotes(authKey, supabase) {
+  const snapshotPath = path.join(ROOT, 'data', 'hub_rs_snapshot.json');
+  if (fs.existsSync(snapshotPath)) {
+    try {
+      const snap = JSON.parse(fs.readFileSync(snapshotPath, 'utf8'));
+      if (snap && snap.quotes && Object.keys(snap.quotes).length > 0) {
+        console.log(
+          `Loaded RS snapshot from data/hub_rs_snapshot.json (${snap.quotesOk || Object.keys(snap.quotes).length} tickers, source=${snap.source})`,
+        );
+        return { quotes: snap.quotes, ok: snap.quotesOk || Object.keys(snap.quotes).length };
+      }
+    } catch (e) {
+      console.warn('Failed to parse data/hub_rs_snapshot.json, falling back to buildKrxRsSnapshot:', e.message);
+    }
+  }
+
   if (!authKey && !supabase) {
     console.warn('KRX/SUPABASE credentials missing — skipping returns/RS');
     return { quotes: {}, ok: 0 };
