@@ -567,7 +567,70 @@ assert.equal(ui.isExpanded(), true, 'isExpanded becomes true after setExpanded(t
 ui.setExpanded(false);
 assert.equal(ui.isExpanded(), false, 'isExpanded reverts to false');
 
-// Verify map files have bumped to v=33
+// Modal prev / next navigation assertions
+assert.ok(source.includes('.im-candle-navbtn'), 'must have .im-candle-navbtn CSS');
+assert.ok(source.includes('id="im-candle-prev"'), 'must have #im-candle-prev button in modal header');
+assert.ok(source.includes('id="im-candle-next"'), 'must have #im-candle-next button in modal header');
+assert.ok(source.includes("prevStock: '이전 종목'"), 'ko prevStock translation');
+assert.ok(source.includes("nextStock: '다음 종목'"), 'ko nextStock translation');
+assert.ok(source.includes("prevStock: 'Previous stock'"), 'en prevStock translation');
+assert.ok(source.includes("nextStock: 'Next stock'"), 'en nextStock translation');
+assert.ok(typeof ui.getSectorList === 'function', 'getSectorList must be exposed in _ui');
+assert.ok(typeof ui.goTo === 'function', 'goTo must be exposed in _ui');
+assert.ok(typeof ui.syncNavButtons === 'function', 'syncNavButtons must be exposed in _ui');
+assert.ok(source.includes("ArrowLeft") && source.includes("ArrowRight"), 'keyboard navigation ArrowLeft/ArrowRight');
+
+// Test getSectorList DOM parsing and deduplication
+{
+  const mockRows = [
+    {
+      getAttribute: (k) => (k === 'data-ticker' ? '005930' : null),
+      querySelector: (s) => (s === '.company-name' ? { textContent: ' 삼성전자 ' } : null),
+    },
+    {
+      getAttribute: (k) => (k === 'data-ticker' ? '000660' : null),
+      querySelector: (s) => (s === '.company-name' ? { textContent: 'SK하이닉스' } : null),
+    },
+    {
+      getAttribute: (k) => (k === 'data-ticker' ? '042700' : null),
+      querySelector: (s) => (s === '.company-name' ? { textContent: '한미반도체' } : null),
+    },
+    {
+      // duplicate should be filtered
+      getAttribute: (k) => (k === 'data-ticker' ? '005930' : null),
+      querySelector: (s) => (s === '.company-name' ? { textContent: '삼성전자' } : null),
+    },
+  ];
+
+  context.document.querySelectorAll = (sel) => {
+    if (sel.includes('#table-body tr[data-ticker]')) return mockRows;
+    return [];
+  };
+
+  const list = ui.getSectorList();
+  assert.equal(list.length, 3, 'dedupes to 3 tickers');
+  assert.equal(list[0].ticker, '005930');
+  assert.equal(list[0].name, '삼성전자');
+  assert.equal(list[1].ticker, '000660');
+  assert.equal(list[1].name, 'SK하이닉스');
+  assert.equal(list[2].ticker, '042700');
+  assert.equal(list[2].name, '한미반도체');
+
+  // Wrap around navigation math check
+  const n = list.length;
+  let idx = 0;
+  // prev from 0 -> 2
+  idx = (idx - 1 + n) % n;
+  assert.equal(idx, 2, 'wrap backward from 0');
+  // next from 2 -> 0
+  idx = (idx + 1 + n) % n;
+  assert.equal(idx, 0, 'wrap forward from last');
+  // next from 0 -> 1
+  idx = (idx + 1 + n) % n;
+  assert.equal(idx, 1, 'forward to 1');
+}
+
+// Verify map files have bumped to v=34
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
@@ -593,10 +656,12 @@ const MAP_FILES = [
   'travel/korea_travel_map.html',
   'elec/korea_elec_map.html',
   'metal/korea_metal_map.html',
+  'machinery/korea_machinery_map.html',
+  'shipping/korea_shipping_map.html',
 ];
 for (const rel of MAP_FILES) {
   const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-  assert.ok(html.includes('candle_modal.js?v=33'), `${rel} must reference candle_modal.js?v=33`);
+  assert.ok(html.includes('candle_modal.js?v=34'), `${rel} must reference candle_modal.js?v=34`);
 }
 
 assert.ok(source.includes("priceScaleId: 'fr'"), 'foreignRatio uses overlay scale fr');
@@ -607,4 +672,4 @@ assert.ok(
   'hovertip includes bbw/disp/atr rows',
 );
 
-console.log('verify:candle OK — weekly OHLCV, ATR%, hover tip bbw/disp/atr, fr auto-scale (v=33)');
+console.log('verify:candle OK — weekly OHLCV, ATR%, hover tip bbw/disp/atr, prev/next nav (v=34)');

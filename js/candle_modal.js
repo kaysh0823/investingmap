@@ -100,6 +100,8 @@
       close: '닫기',
       expand: '확대',
       collapse: '축소',
+      prevStock: '이전 종목',
+      nextStock: '다음 종목',
       loading: '차트 불러오는 중…',
       empty: '표시할 일봉 데이터가 없습니다.',
       error: '차트를 불러오지 못했습니다.',
@@ -142,6 +144,8 @@
       close: 'Close',
       expand: 'Expand',
       collapse: 'Restore',
+      prevStock: 'Previous stock',
+      nextStock: 'Next stock',
       loading: 'Loading chart…',
       empty: 'No daily candle data available.',
       error: 'Failed to load chart.',
@@ -187,6 +191,8 @@
     expanded: false,
     ticker: null,
     name: '',
+    navList: [],
+    navIndex: -1,
     range: DEFAULT_RANGE_BY_INTERVAL.daily,
     interval: 'daily',
     investorCum: DEFAULT_INVESTOR_CUM,
@@ -868,7 +874,12 @@
       '.im-candle-dialog.im-candle-expanded{width:min(1680px,calc(100vw - 32px));height:calc(100vh - 32px);max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);border-radius:12px}' +
       '.im-candle-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 16px 8px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
       '.im-candle-titles{min-width:0;flex:1}' +
+      '.im-candle-title-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap}' +
       '.im-candle-title{margin:0;font-size:17px;font-weight:700;line-height:1.3;word-break:keep-all}' +
+      '.im-candle-nav{display:inline-flex;align-items:center;gap:2px}' +
+      '.im-candle-navbtn{flex-shrink:0;width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:20px;font-weight:400;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background .15s,opacity .15s}' +
+      '.im-candle-navbtn:hover:not(:disabled),.im-candle-navbtn:focus-visible:not(:disabled){background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
+      '.im-candle-navbtn:disabled{opacity:.25;cursor:not-allowed}' +
       '.im-candle-sub{margin:4px 0 0;font-size:12px;color:var(--text-muted,#8b949e);font-family:ui-monospace,monospace}' +
       '.im-candle-head-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}' +
       '.im-candle-expand{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}' +
@@ -939,6 +950,8 @@
         !document.getElementById('im-candle-inv-period') ||
         !document.getElementById('im-candle-expand') ||
         !document.getElementById('im-candle-hovertip') ||
+        !document.getElementById('im-candle-prev') ||
+        !document.getElementById('im-candle-next') ||
         document.getElementById('im-candle-price'))
     ) {
       root.parentNode && root.parentNode.removeChild(root);
@@ -954,7 +967,13 @@
       '<div class="im-candle-dialog" role="dialog" aria-modal="true" aria-labelledby="im-candle-title" tabindex="-1">' +
       '<div class="im-candle-head">' +
       '<div class="im-candle-titles">' +
+      '<div class="im-candle-title-wrap">' +
       '<h2 class="im-candle-title" id="im-candle-title"></h2>' +
+      '<div class="im-candle-nav">' +
+      '<button type="button" id="im-candle-prev" class="im-candle-navbtn" aria-label="이전 종목" title="이전 종목 (←)">‹</button>' +
+      '<button type="button" id="im-candle-next" class="im-candle-navbtn" aria-label="다음 종목" title="다음 종목 (→)">›</button>' +
+      '</div>' +
+      '</div>' +
       '<p class="im-candle-sub" id="im-candle-sub"></p>' +
       '</div>' +
       '<div class="im-candle-head-actions">' +
@@ -987,6 +1006,12 @@
     root.querySelector('#im-candle-close').addEventListener('click', close);
     root.querySelector('#im-candle-expand').addEventListener('click', function () {
       setExpanded(!state.expanded);
+    });
+    root.querySelector('#im-candle-prev').addEventListener('click', function () {
+      goTo(-1);
+    });
+    root.querySelector('#im-candle-next').addEventListener('click', function () {
+      goTo(1);
     });
     root.querySelector('#im-candle-ranges').addEventListener('click', function (e) {
       var btn = e.target.closest('[data-range]');
@@ -2159,17 +2184,109 @@
       });
   }
 
+  function normalizeTickerCode(ticker) {
+    if (!ticker) return '';
+    return String(ticker).toUpperCase().replace(/[^0-9A-Z]/g, '');
+  }
+
+  function extractCleanName(el) {
+    if (!el) return '';
+    if (el.childNodes && el.childNodes.length > 0) {
+      for (var i = 0; i < el.childNodes.length; i++) {
+        var node = el.childNodes[i];
+        if (node.nodeType === 3 && node.textContent && node.textContent.trim()) {
+          return node.textContent.trim();
+        }
+      }
+    }
+    if (typeof el.cloneNode === 'function' && el.querySelector && el.querySelector('.im-relation-badge, .im-cross-badge, a')) {
+      try {
+        var clone = el.cloneNode(true);
+        var badges = clone.querySelectorAll('.im-relation-badge, .im-cross-badge, a');
+        for (var j = 0; j < badges.length; j++) {
+          badges[j].parentNode && badges[j].parentNode.removeChild(badges[j]);
+        }
+        return clone.textContent ? clone.textContent.trim() : '';
+      } catch (err) {
+        // fallback
+      }
+    }
+    return el.textContent ? el.textContent.trim() : '';
+  }
+
+  function getSectorList() {
+    var list = [];
+    var seen = Object.create(null);
+    var rows = document.querySelectorAll('#table-body tr[data-ticker]');
+    if (!rows || !rows.length) {
+      rows = document.querySelectorAll('#table-cards .im-stock-card[data-ticker]');
+    }
+    if (!rows || !rows.length) return list;
+    for (var i = 0; i < rows.length; i++) {
+      var el = rows[i];
+      var rawTicker = el.getAttribute('data-ticker');
+      var ticker = normalizeTickerCode(rawTicker);
+      if (!ticker || ticker.length < 5 || seen[ticker]) continue;
+      seen[ticker] = true;
+      var nameEl = el.querySelector('.company-name');
+      var name = nameEl ? extractCleanName(nameEl) : ticker;
+      list.push({ ticker: ticker, name: name || ticker });
+    }
+    return list;
+  }
+
+  function syncNavButtons() {
+    var prevBtn = document.getElementById('im-candle-prev');
+    var nextBtn = document.getElementById('im-candle-next');
+    var disabled = !state.navList || state.navList.length < 2 || state.navIndex < 0;
+    var labels = t();
+    var prevLabel = labels.prevStock || '이전 종목';
+    var nextLabel = labels.nextStock || '다음 종목';
+    if (prevBtn) {
+      prevBtn.disabled = disabled;
+      prevBtn.setAttribute('aria-label', prevLabel);
+      prevBtn.setAttribute('title', prevLabel + (disabled ? '' : ' (←)'));
+    }
+    if (nextBtn) {
+      nextBtn.disabled = disabled;
+      nextBtn.setAttribute('aria-label', nextLabel);
+      nextBtn.setAttribute('title', nextLabel + (disabled ? '' : ' (→)'));
+    }
+  }
+
+  function goTo(delta) {
+    if (!state.open || !state.navList) return;
+    var n = state.navList.length;
+    if (n < 2 || state.navIndex < 0) return;
+    var newIdx = (state.navIndex + delta + n) % n;
+    var target = state.navList[newIdx];
+    if (!target) return;
+    state.ticker = target.ticker;
+    state.name = resolveName(target.ticker, target.name);
+    state.navIndex = newIdx;
+    var titleEl = document.getElementById('im-candle-title');
+    if (titleEl) titleEl.textContent = state.name || target.ticker;
+    updateSubtitle();
+    syncNavButtons();
+    loadAndRender(target.ticker, state.range);
+  }
+
   function resolveName(ticker, hint) {
     if (hint) return hint;
-    var row = document.querySelector('#table-body tr[data-ticker="' + ticker + '"]');
+    var norm = normalizeTickerCode(ticker);
+    var row = document.querySelector('#table-body tr[data-ticker="' + ticker + '"]') ||
+      (norm ? document.querySelector('#table-body tr[data-ticker="' + norm + '"]') : null);
     if (row) {
       var n = row.querySelector('.company-name');
-      if (n && n.textContent) return n.textContent.trim();
+      var name = extractCleanName(n);
+      if (name) return name;
     }
-    var card = document.querySelector('#table-cards .im-stock-card[data-ticker="' + ticker + '"]');
+    var card = document.querySelector('#table-cards .im-stock-card[data-ticker="' + ticker + '"]') ||
+      (norm ? document.querySelector('#table-cards .im-stock-card[data-ticker="' + norm + '"]') : null);
     if (card) {
       var cn = card.querySelector('.company-name');
-      if (cn && cn.textContent) return cn.textContent.trim();
+      var cname = extractCleanName(cn);
+      if (cname) return cname;
     }
     return ticker;
   }
@@ -2185,6 +2302,14 @@
     state.open = true;
     state.ticker = ticker;
     state.name = resolveName(ticker, opts && opts.name);
+    state.navList = getSectorList();
+    state.navIndex = -1;
+    for (var i = 0; i < state.navList.length; i++) {
+      if (state.navList[i].ticker === state.ticker) {
+        state.navIndex = i;
+        break;
+      }
+    }
     state.investorCum = readStoredInvestorCum();
     state.investorPeriod = readStoredInvestorPeriod();
     if (opts && opts.investorCum && INVESTOR_CUM_OPTIONS.indexOf(opts.investorCum) >= 0) {
@@ -2214,6 +2339,7 @@
     state.liveOverlay = false;
     state.liveBarTime = null;
     updateSubtitle();
+    syncNavButtons();
     document.getElementById('im-candle-close').setAttribute('aria-label', labels.close);
     syncRangeButtons();
     syncIntervalButtons();
@@ -2253,6 +2379,9 @@
     updateTip(null);
     state.liveOverlay = false;
     state.liveBarTime = null;
+    state.navList = [];
+    state.navIndex = -1;
+    syncNavButtons();
     if (state.lastFocus && state.lastFocus.focus) {
       try {
         state.lastFocus.focus();
@@ -2315,17 +2444,38 @@
     e.stopPropagation();
     var host = e.target.closest('[data-ticker]');
     var nameEl = host && host.querySelector('.company-name');
-    open({ ticker: ticker, name: nameEl ? nameEl.textContent.trim() : '' });
+    open({ ticker: ticker, name: extractCleanName(nameEl) });
+  }
+
+  function isInputFocused() {
+    var el = document.activeElement;
+    if (!el) return false;
+    var tag = el.tagName ? el.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return true;
+    if (el.isContentEditable) return true;
+    return false;
   }
 
   function onKeyDown(e) {
-    if (e.key === 'Escape' && state.open) {
+    if (!state.open) return;
+    if (e.key === 'Escape') {
       e.preventDefault();
       if (state.expanded) {
         setExpanded(false);
       } else {
         close();
       }
+      return;
+    }
+    if ((e.key === 'ArrowLeft' || e.key === 'Left') && !isInputFocused()) {
+      e.preventDefault();
+      goTo(-1);
+      return;
+    }
+    if ((e.key === 'ArrowRight' || e.key === 'Right') && !isInputFocused()) {
+      e.preventDefault();
+      goTo(1);
+      return;
     }
   }
 
@@ -2335,6 +2485,7 @@
     var closeBtn = document.getElementById('im-candle-close');
     if (closeBtn) closeBtn.setAttribute('aria-label', labels.close);
     syncExpandButton();
+    syncNavButtons();
     updateSubtitle();
     syncRangeButtons();
     syncIntervalButtons();
@@ -2377,6 +2528,12 @@
       setExpanded: setExpanded,
       isExpanded: function () {
         return !!state.expanded;
+      },
+      getSectorList: getSectorList,
+      goTo: goTo,
+      syncNavButtons: syncNavButtons,
+      getNavState: function () {
+        return { list: state.navList, index: state.navIndex };
       },
     },
     _indicators: {
