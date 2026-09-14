@@ -8,9 +8,9 @@
   "generatedBy": "curate_nuclear_phase4b1.mjs",
   "_legacyFallback": false,
   "metrics": {
-    "structuralGeneratedEdgeCount": 23,
+    "structuralGeneratedEdgeCount": 24,
     "lifecycleRoleEdgeCount": 2,
-    "equipmentCategoryEdgeCount": 10,
+    "equipmentCategoryEdgeCount": 11,
     "uniqueProjectCount": 3,
     "uniqueActualProjectCount": 3,
     "structuralEcosystemNodeCount": 2,
@@ -39,21 +39,21 @@
     "epcRoleEdgeCount": 3,
     "confirmedSupplyContractCount": 0,
     "reportedSupplyContractCount": 1,
-    "businessRelationOrphanCount": 6,
-    "directRelationshipOrphanCount": 6,
-    "classificationOnlyCompanyCount": 6,
+    "businessRelationOrphanCount": 7,
+    "directRelationshipOrphanCount": 7,
+    "classificationOnlyCompanyCount": 7,
     "listedReferenceCompanyCount": 1,
     "duplicateListedEntityCount": 0,
     "publicListedTypeConflictCount": 0,
     "projectEvidenceFieldCoverage": 1,
     "projectDirectEvidenceCoverage": 1,
     "exactProjectEvidenceCoverage": 0.4,
-    "structuralRoleEvidenceCoverage": 0.43478260869565216,
+    "structuralRoleEvidenceCoverage": 0.4166666666666667,
     "projectPrimarySourceCoverage": 1,
     "primarySourceCoverage": 1,
     "smrDirectEvidenceCoverage": 0.75,
     "roleDirectEvidenceCoverage": 1,
-    "humanReviewRoleCount": 52,
+    "humanReviewRoleCount": 53,
     "projectValueKnownCount": 0,
     "companyContractValueKnownCount": 0,
     "potentialValueCount": 1,
@@ -462,6 +462,22 @@
       "isKey": true
     },
     {
+      "id": "krx:032820",
+      "type": "listed_company",
+      "ticker": "032820",
+      "nameKo": "우리기술",
+      "nameEn": "Woori Technology, Incorporation",
+      "market": "KOSDAQ",
+      "chain": "계측·제어",
+      "role": "pump_valve",
+      "lane": "construction_ic",
+      "scopeTags": [
+        "large_nuclear"
+      ],
+      "isListedKorea": true,
+      "isKey": false
+    },
+    {
       "id": "krx:051600",
       "type": "listed_company",
       "ticker": "051600",
@@ -492,22 +508,6 @@
       ],
       "isListedKorea": true,
       "isKey": true
-    },
-    {
-      "id": "krx:032820",
-      "type": "listed_company",
-      "ticker": "032820",
-      "nameKo": "우리기술",
-      "nameEn": "Woori Technology, Incorporation",
-      "market": "KOSDAQ",
-      "chain": "계측·제어",
-      "role": "pump_valve",
-      "lane": "construction_ic",
-      "scopeTags": [
-        "large_nuclear"
-      ],
-      "isListedKorea": true,
-      "isKey": false
     },
     {
       "id": "krx:100840",
@@ -566,6 +566,22 @@
       "market": "KOSPI",
       "chain": "정비·운영지원",
       "role": "pump_valve",
+      "lane": "construction_ic",
+      "scopeTags": [
+        "large_nuclear"
+      ],
+      "isListedKorea": true,
+      "isKey": false
+    },
+    {
+      "id": "krx:105840",
+      "type": "listed_company",
+      "ticker": "105840",
+      "nameKo": "우진",
+      "nameEn": "WOOJIN INC",
+      "market": "KOSPI",
+      "chain": "계측·제어",
+      "role": "instrumentation_control",
       "lane": "construction_ic",
       "scopeTags": [
         "large_nuclear"
@@ -1166,6 +1182,40 @@
       "id": "e-mfg-006910-electrical",
       "source": "krx:006910",
       "target": "equipment:electrical",
+      "type": "manufactures",
+      "editorialStatus": "reference",
+      "relationClass": "structural",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "accessedAt": "2026-08-23",
+          "directEvidence": false,
+          "sourceType": "exchange_disclosure",
+          "title": "Company chain / product classification (structural)",
+          "url": "https://kind.krx.co.kr/",
+          "publishedAt": null,
+          "evidenceSummaryKo": "cp_list 체인·제품 분류 기반 구조 관계. 특정 프로젝트 수주를 의미하지 않음.",
+          "evidenceSummaryEn": "Structural classification from sector chain — not a project award.",
+          "quotedFactKo": "",
+          "relationshipSupported": "product_capability"
+        }
+      ]
+    },
+    {
+      "status": "reference",
+      "confidence": "medium",
+      "asOf": "2026-08-23",
+      "defaultHidden": false,
+      "reviewStatus": "needs_human_review",
+      "reviewedAt": null,
+      "reviewedBy": null,
+      "lastVerifiedAt": null,
+      "directEvidence": false,
+      "id": "e-mfg-105840-ic",
+      "source": "krx:105840",
+      "target": "equipment:ic",
       "type": "manufactures",
       "editorialStatus": "reference",
       "relationClass": "structural",

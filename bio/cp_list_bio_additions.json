@@ -24,5 +24,13 @@
     "partners": [],
     "subSector": "신약개발",
     "level": "core"
+  },
+  {
+    "ticker": "004310",
+    "name": "현대약품",
+    "chain": "바이오시밀러",
+    "sectorId": "biosimilar",
+    "subSector": "제약",
+    "level": "core"
   }
 ]

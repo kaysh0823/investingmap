@@ -347,6 +347,16 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "356680",
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "477850",
+      "lane": "managed_service"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "030520",
       "lane": "enterprise_software"
     },
@@ -359,11 +369,6 @@
       "action": "structural_specializes_in",
       "ticker": "030520",
       "target": "software_category:productivity-saas"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "477850",
-      "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
@@ -402,22 +407,17 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "234340",
-      "lane": "managed_service"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "036800",
       "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
-      "ticker": "356680",
+      "ticker": "234340",
       "lane": "managed_service"
     },
     {
       "action": "structural_member_of",
-      "ticker": "294570",
+      "ticker": "025770",
       "lane": "managed_service"
     },
     {
@@ -554,8 +554,24 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
-      "source": "krx:030520",
-      "target": "global:microsoft"
+      "source": "krx:356680",
+      "target": "global:paloalto"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:356680",
+      "partner": "fortinet"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:356680",
+      "partner": {
+        "id": "ahnlab",
+        "edgeLabel": "국내 보안 peer",
+        "edgeLabelEn": "Domestic security peer",
+        "weight": 0.1,
+        "kind": "theme"
+      }
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -582,6 +598,11 @@
         "weight": 0.1,
         "kind": "theme"
       }
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:030520",
+      "target": "global:microsoft"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -651,46 +672,19 @@
       "partner": "mastercard"
     },
     {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:356680",
-      "target": "global:paloalto"
-    },
-    {
       "action": "drop_unknown_partner",
-      "source": "krx:356680",
-      "partner": "fortinet"
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:356680",
-      "partner": {
-        "id": "ahnlab",
-        "edgeLabel": "국내 보안 peer",
-        "edgeLabelEn": "Domestic security peer",
-        "weight": 0.1,
-        "kind": "theme"
-      }
-    },
-    {
-      "action": "drop_unknown_partner",
-      "source": "krx:294570",
+      "source": "krx:025770",
       "partner": "visa"
     },
     {
       "action": "drop_unknown_partner",
-      "source": "krx:294570",
+      "source": "krx:025770",
       "partner": "paypal"
     },
     {
       "action": "drop_unknown_partner",
-      "source": "krx:294570",
-      "partner": {
-        "id": "kakao",
-        "edgeLabel": "핀테크·API 연계",
-        "edgeLabelEn": "Fintech API link",
-        "weight": 0.1,
-        "kind": "theme"
-      }
+      "source": "krx:025770",
+      "partner": "mastercard"
     },
     {
       "action": "add_cross_sector_reference",

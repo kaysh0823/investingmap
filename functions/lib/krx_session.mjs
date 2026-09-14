@@ -1,10 +1,15 @@
-/** KRX regular session: Mon–Fri 09:00–15:30 Asia/Seoul (no holiday calendar). */
+/** KRX sessions (Asia/Seoul, no holiday calendar):
+ *  Regular: Mon–Fri 09:00–15:30
+ *  Aftermarket continuous auction: Mon–Fri 16:00–20:00 (from 2026-09-14)
+ */
 
 const KST_TZ = 'Asia/Seoul';
 const WEEKDAY_MAP = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
 
 export const SESSION_OPEN = 9 * 60;
 export const SESSION_CLOSE = 15 * 60 + 30;
+export const AFTERMARKET_OPEN = 16 * 60;
+export const AFTERMARKET_CLOSE = 20 * 60;
 
 /**
  * @param {Date} [now]
@@ -80,18 +85,18 @@ export function ymdToDash(ymd) {
 
 /**
  * @param {Date} [now]
- * @returns {{ regular: boolean, kst: { weekday: number, minutes: number, iso: string } }}
+ * @returns {{ regular: boolean, aftermarket: boolean, kst: { weekday: number, minutes: number, iso: string } }}
  */
 export function krxSessionInfo(now = new Date()) {
   const p = kstDateParts(now);
   const minutes = p.hour * 60 + p.minute;
-  const regular =
-    p.weekday >= 1 &&
-    p.weekday <= 5 &&
-    minutes >= SESSION_OPEN &&
-    minutes <= SESSION_CLOSE;
+  const weekdayOk = p.weekday >= 1 && p.weekday <= 5;
+  const regular = weekdayOk && minutes >= SESSION_OPEN && minutes <= SESSION_CLOSE;
+  const aftermarket =
+    weekdayOk && minutes >= AFTERMARKET_OPEN && minutes <= AFTERMARKET_CLOSE;
   return {
     regular,
+    aftermarket,
     kst: {
       weekday: p.weekday,
       minutes,
@@ -102,6 +107,24 @@ export function krxSessionInfo(now = new Date()) {
 
 export function isKrxRegularSession(now) {
   return krxSessionInfo(now).regular;
+}
+
+/** Weekday 16:00–20:00 KST aftermarket continuous auction. */
+export function isKrxAfterMarket(now = new Date()) {
+  return krxSessionInfo(now).aftermarket;
+}
+
+/**
+ * True once the regular continuous auction has ended (weekday after 15:30 KST).
+ * Independent of aftermarket "live" markers — daily OHLC may be recorded then.
+ * @param {Date} [now]
+ */
+export function isKrxRegularSessionEnded(now = new Date()) {
+  const p = kstDateParts(now);
+  if (p.weekday < 1 || p.weekday > 5) return false;
+  const minutes = p.hour * 60 + p.minute;
+  // Regular is inclusive through 15:30 (= SESSION_CLOSE); ended from 15:31.
+  return minutes > SESSION_CLOSE;
 }
 
 /**
@@ -126,7 +149,7 @@ export function secondsUntilNextSessionOpen(now = new Date()) {
 
 /**
  * Cloudflare / browser Cache-Control max-age for market data.
- * Regular session: short TTL. Closed: never outlive the next 09:00 KST open
+ * Regular + aftermarket: short TTL. Closed: never outlive the next 09:00 KST open
  * (optionally capped via closedMax for hub Cache API entries).
  * @param {Date} [now]
  * @param {{ regularMax?: number, closedMax?: number|null }} [opts]
@@ -134,7 +157,8 @@ export function secondsUntilNextSessionOpen(now = new Date()) {
 export function edgeCacheMaxAgeSeconds(now = new Date(), opts = {}) {
   const regularMax = opts.regularMax != null ? opts.regularMax : 300;
   const closedMax = Object.prototype.hasOwnProperty.call(opts, 'closedMax') ? opts.closedMax : null;
-  if (krxSessionInfo(now).regular) return regularMax;
+  const s = krxSessionInfo(now);
+  if (s.regular || s.aftermarket) return regularMax;
   const untilOpen = secondsUntilNextSessionOpen(now);
   if (closedMax == null) return Math.max(60, untilOpen);
   return Math.max(60, Math.min(closedMax, untilOpen));
@@ -163,7 +187,7 @@ export function isKrxClockRegularSession(now = new Date()) {
   return p.weekday >= 1 && p.weekday <= 5 && minutes >= SESSION_OPEN && minutes <= SESSION_CLOSE;
 }
 
-/** Regular session: refresh Naver quotes (incl. mcap) every 5 min. */
+/** Regular / aftermarket: refresh Naver quotes (incl. mcap) every 5 min. */
 export const NAVER_REFRESH_MS_REGULAR = 5 * 60 * 1000;
 /** Off-hours / weekends: still refresh, but less often. */
 export const NAVER_REFRESH_MS_OFF = 30 * 60 * 1000;
@@ -171,5 +195,7 @@ export const NAVER_REFRESH_MS_OFF = 30 * 60 * 1000;
 export const NAVER_REFRESH_MS = NAVER_REFRESH_MS_REGULAR;
 
 export function naverRefreshMs(now = new Date()) {
-  return isKrxRegularSession(now) ? NAVER_REFRESH_MS_REGULAR : NAVER_REFRESH_MS_OFF;
+  return isKrxRegularSession(now) || isKrxAfterMarket(now)
+    ? NAVER_REFRESH_MS_REGULAR
+    : NAVER_REFRESH_MS_OFF;
 }

@@ -4887,7 +4887,7 @@
     "finance_holding_gap": "012030·023590·032190 — holdings '금융' 그룹(#5C6BC0, 9번째)으로 확정. software 자동 덮어쓰기 금지.",
     "needs_review_closure": "2026-09 needs_review 마감: 이동4(含005090→powergrid)·정정4·신설2. needs_review 잔여 0. 공백=001740·126560.",
     "p1_cross": "P1 single-home: 028260 construction only, 034020 nuclear only, 377300 finance only. SECTOR_CROSS={}. P1-B relations UI-only.",
-    "p3_mcap_admissions": "2026-09 P3: admitted 36 tickers (≥3천억). Gaps=7. Excluded already-mapped 033780,285130."
+    "p3_mcap_admissions": "2026-09 P3: admitted 33 tickers (≥3천억). Gaps=7. Excluded already-mapped 033780,285130."
   },
   "086900": {
     "name": "메디톡스",

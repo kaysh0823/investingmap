@@ -245,7 +245,9 @@ function mergeSupabaseWithNaverLive(codes, supabaseItems, naverItems) {
 }
 
 function quotesCacheControl(now = new Date()) {
-  if (krxSessionInfo(now).regular) {
+  const session = krxSessionInfo(now);
+  // Short TTL during regular or aftermarket so Naver live overlay reaches clients.
+  if (session.regular || session.aftermarket) {
     return 'public, max-age=300, stale-while-revalidate=120';
   }
   const maxAge = edgeCacheMaxAgeSeconds(now);
@@ -309,8 +311,11 @@ export async function onRequest(context) {
     if (supabaseConfig) {
       try {
         const supabase = await fetchQuotesFromSupabase(codes, supabaseConfig, snapQuotes);
+        // Clock wins: stale DB regular_session=false must not skip Naver live
+        // overlay during regular hours or aftermarket (16:00–20:00 KST).
+        // Aftermarket: if Naver only returns the day close, that is the correct last.
         const regular =
-          supabase.regularSession != null ? supabase.regularSession : session.regular;
+          session.regular || session.aftermarket || supabase.regularSession === true;
 
         if (regular) {
           let naverItems = {};

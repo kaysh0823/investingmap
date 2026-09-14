@@ -341,13 +341,21 @@
     return '';
   }
 
+  function ymdDashFromCompact(ymd) {
+    return ymd && /^\d{8}$/.test(ymd)
+      ? ymd.slice(0, 4) + '-' + ymd.slice(4, 6) + '-' + ymd.slice(6, 8)
+      : '';
+  }
+
   function formatSessionStatus(lang) {
     var labels = t(lang);
     if (dashboardData && dashboardData.regularSession === true) {
       return labels.sessionLive;
     }
     if (dashboardData && dashboardData.regularSession === false) {
-      var ymd = formatAsOfYmdKst(dashboardData.asOf);
+      // Last data session (mcapRecentDd), not calendar effectiveAnchorDd (rolls to today pre-open).
+      var anchor = ymdDashFromCompact(hubSectorReturnsMeta.mcapRecentDd);
+      var ymd = anchor || formatAsOfYmdKst(dashboardData.asOf);
       return ymd ? labels.sessionClosed + ' · ' + ymd : labels.sessionClosed;
     }
     return '';

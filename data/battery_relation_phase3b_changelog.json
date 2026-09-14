@@ -893,17 +893,6 @@
       "reason": "theme/peer domestic → peer hidden"
     },
     {
-      "legacyEdgeId": "legacy-278280-lges-peer",
-      "source": "krx:278280",
-      "target": "krx:373220",
-      "beforeType": "peer",
-      "afterType": "supplies_material_to",
-      "beforeStatus": "legacy",
-      "afterStatus": "inferred",
-      "origin": "legacyMigrated",
-      "reason": "supply label without URL → inferred"
-    },
-    {
       "legacyEdgeId": "legacy-365340-umicore-peer",
       "source": "krx:365340",
       "target": "umicore",
@@ -946,6 +935,17 @@
       "afterStatus": "peer",
       "origin": "legacyMigrated",
       "reason": "theme/peer domestic → peer hidden"
+    },
+    {
+      "legacyEdgeId": "legacy-278280-lges-peer",
+      "source": "krx:278280",
+      "target": "krx:373220",
+      "beforeType": "peer",
+      "afterType": "supplies_material_to",
+      "beforeStatus": "legacy",
+      "afterStatus": "inferred",
+      "origin": "legacyMigrated",
+      "reason": "supply label without URL → inferred"
     },
     {
       "legacyEdgeId": "legacy-107640-catl-peer",

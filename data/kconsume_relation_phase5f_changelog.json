@@ -129,6 +129,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "026960",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "383220",
       "lane": "brand_owner"
     },
@@ -150,11 +155,6 @@
     {
       "action": "structural_member_of",
       "ticker": "282330",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "026960",
       "lane": "brand_owner"
     },
     {
@@ -284,11 +284,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "001680",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "093050",
       "lane": "brand_owner"
     },
@@ -304,7 +299,17 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "001680",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "453340",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "452260",
       "lane": "brand_owner"
     },
     {
@@ -319,22 +324,17 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "452260",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "194370",
       "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
-      "ticker": "105630",
+      "ticker": "031430",
       "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
-      "ticker": "031430",
+      "ticker": "105630",
       "lane": "brand_owner"
     },
     {

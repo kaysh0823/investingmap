@@ -20,14 +20,14 @@
           "nameEn": "Jeju Semiconductor Corp."
         },
         {
-          "ticker": "094170",
-          "name": "동운아나텍",
-          "nameEn": "DONGWOON ANATECH CO.,LTD."
-        },
-        {
           "ticker": "108320",
           "name": "LX세미콘",
           "nameEn": "LX Semicon"
+        },
+        {
+          "ticker": "094170",
+          "name": "동운아나텍",
+          "nameEn": "DONGWOON ANATECH CO.,LTD."
         }
       ],
       "suppliers": [
@@ -188,14 +188,14 @@
       },
       "members": [
         {
-          "ticker": "399720",
-          "name": "가온칩스",
-          "nameEn": "GAONCHIPS CO., LTD."
-        },
-        {
           "ticker": "490470",
           "name": "세미파이브",
           "nameEn": "SemiFive"
+        },
+        {
+          "ticker": "399720",
+          "name": "가온칩스",
+          "nameEn": "GAONCHIPS CO., LTD."
         },
         {
           "ticker": "200710",
@@ -524,11 +524,6 @@
           "nameEn": "TES CO., LTD."
         },
         {
-          "ticker": "089970",
-          "name": "브이엠",
-          "nameEn": "Vm"
-        },
-        {
           "ticker": "323280",
           "name": "태성",
           "nameEn": "TAESUNG"
@@ -537,6 +532,11 @@
           "ticker": "281820",
           "name": "케이씨텍",
           "nameEn": "Kctech"
+        },
+        {
+          "ticker": "089970",
+          "name": "브이엠",
+          "nameEn": "Vm"
         },
         {
           "ticker": "122640",
@@ -1404,14 +1404,14 @@
           "nameEn": "Isupetasys"
         },
         {
-          "ticker": "353200",
-          "name": "대덕전자",
-          "nameEn": "Daeduck Electronics"
-        },
-        {
           "ticker": "222800",
           "name": "심텍",
           "nameEn": "SIMMTECH Co., Ltd."
+        },
+        {
+          "ticker": "353200",
+          "name": "대덕전자",
+          "nameEn": "Daeduck Electronics"
         },
         {
           "ticker": "078600",
@@ -1639,6 +1639,11 @@
           "nameEn": "TFE Co., Ltd."
         },
         {
+          "ticker": "098120",
+          "name": "마이크로컨텍솔",
+          "nameEn": "Micro Contact Solution Co.,Ltd."
+        },
+        {
           "ticker": "080580",
           "name": "오킨스전자",
           "nameEn": "OKins Electronics Co.,Ltd."
@@ -1647,11 +1652,6 @@
           "ticker": "219130",
           "name": "타이거일렉",
           "nameEn": "TigerElec Co.,Ltd."
-        },
-        {
-          "ticker": "098120",
-          "name": "마이크로컨텍솔",
-          "nameEn": "Micro Contact Solution Co.,Ltd."
         }
       ],
       "suppliers": [
@@ -2007,11 +2007,6 @@
           "ticker": "417840",
           "name": "저스템",
           "nameEn": "Justem.Co.,Ltd."
-        },
-        {
-          "ticker": "039440",
-          "name": "에스티아이",
-          "nameEn": "Systems Technology Incorporated"
         }
       ],
       "suppliers": [

@@ -12,7 +12,7 @@
       "market": "KOSPI",
       "role": "IT·전자",
       "group": "IT·전자",
-      "mcapWon": 137332881918000,
+      "mcapWon": 143665233822000,
       "isListedKorea": true
     },
     {
@@ -24,7 +24,7 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 41544048819000,
+      "mcapWon": 42414081255000,
       "isListedKorea": true
     },
     {
@@ -36,19 +36,7 @@
       "market": "KOSPI",
       "role": "소재·산업재",
       "group": "소재·산업재",
-      "mcapWon": 26704394599000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:267250",
-      "type": "listed_company",
-      "ticker": "267250",
-      "nameKo": "HD현대",
-      "nameEn": "HD Hyundai",
-      "market": "KOSPI",
-      "role": "복합사업",
-      "group": "복합사업",
-      "mcapWon": 18997836942500,
+      "mcapWon": 26466670018000,
       "isListedKorea": true
     },
     {
@@ -60,7 +48,19 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 18493359570000,
+      "mcapWon": 21958840260000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:267250",
+      "type": "listed_company",
+      "ticker": "267250",
+      "nameKo": "HD현대",
+      "nameEn": "HD Hyundai",
+      "market": "KOSPI",
+      "role": "복합사업",
+      "group": "복합사업",
+      "mcapWon": 19550788537500,
       "isListedKorea": true
     },
     {
@@ -72,7 +72,7 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 18309351684400,
+      "mcapWon": 17009100450000,
       "isListedKorea": true
     },
     {
@@ -84,19 +84,7 @@
       "market": "KOSPI",
       "role": "에너지·화학",
       "group": "에너지·화학",
-      "mcapWon": 11509751830500,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:180640",
-      "type": "listed_company",
-      "ticker": "180640",
-      "nameKo": "한진칼",
-      "nameEn": "Hanjin KAL",
-      "market": "KOSPI",
-      "role": "운송·물류",
-      "group": "운송·물류",
-      "mcapWon": 9747292734000,
+      "mcapWon": 11054563905000,
       "isListedKorea": true
     },
     {
@@ -108,7 +96,19 @@
       "market": "KOSPI",
       "role": "소재·산업재",
       "group": "소재·산업재",
-      "mcapWon": 9344400000000,
+      "mcapWon": 9968400000000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:180640",
+      "type": "listed_company",
+      "ticker": "180640",
+      "nameKo": "한진칼",
+      "nameEn": "Hanjin KAL",
+      "market": "KOSPI",
+      "role": "운송·물류",
+      "group": "운송·물류",
+      "mcapWon": 9313337920500,
       "isListedKorea": true
     },
     {
@@ -120,7 +120,7 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 7327390447800,
+      "mcapWon": 7322057558100,
       "isListedKorea": true
     },
     {
@@ -132,7 +132,7 @@
       "market": "KOSPI",
       "role": "소비·유통",
       "group": "소비·유통",
-      "mcapWon": 3833857537200,
+      "mcapWon": 3743408843400,
       "isListedKorea": true
     },
     {
@@ -144,7 +144,7 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 2661724713000,
+      "mcapWon": 2683487242100,
       "isListedKorea": true
     },
     {
@@ -156,19 +156,7 @@
       "market": "KOSPI",
       "role": "소비·유통",
       "group": "소비·유통",
-      "mcapWon": 2466678456000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:009970",
-      "type": "listed_company",
-      "ticker": "009970",
-      "nameKo": "영원무역홀딩스",
-      "nameEn": "Youngone Holdings",
-      "market": "KOSPI",
-      "role": "소비·유통",
-      "group": "소비·유통",
-      "mcapWon": 2213807325300,
+      "mcapWon": 2496577588800,
       "isListedKorea": true
     },
     {
@@ -180,19 +168,19 @@
       "market": "KOSPI",
       "role": "소비·유통",
       "group": "소비·유통",
-      "mcapWon": 2184260640090,
+      "mcapWon": 2457522466600,
       "isListedKorea": true
     },
     {
-      "id": "krx:030530",
+      "id": "krx:009970",
       "type": "listed_company",
-      "ticker": "030530",
-      "nameKo": "원익홀딩스",
-      "nameEn": "Wonik Holdings",
-      "market": "KOSDAQ",
-      "role": "IT·전자",
-      "group": "IT·전자",
-      "mcapWon": 1737854572500,
+      "ticker": "009970",
+      "nameKo": "영원무역홀딩스",
+      "nameEn": "Youngone Holdings",
+      "market": "KOSPI",
+      "role": "소비·유통",
+      "group": "소비·유통",
+      "mcapWon": 2215102707000,
       "isListedKorea": true
     },
     {
@@ -204,19 +192,19 @@
       "market": "KOSPI",
       "role": "금융",
       "group": "금융",
-      "mcapWon": 1657904049600,
+      "mcapWon": 1761793598400,
       "isListedKorea": true
     },
     {
-      "id": "krx:001800",
+      "id": "krx:030530",
       "type": "listed_company",
-      "ticker": "001800",
-      "nameKo": "오리온홀딩스",
-      "nameEn": "Orion Holdings",
-      "market": "KOSPI",
-      "role": "소비·유통",
-      "group": "소비·유통",
-      "mcapWon": 1537002458600,
+      "ticker": "030530",
+      "nameKo": "원익홀딩스",
+      "nameEn": "Wonik Holdings",
+      "market": "KOSDAQ",
+      "role": "IT·전자",
+      "group": "IT·전자",
+      "mcapWon": 1726268875350,
       "isListedKorea": true
     },
     {
@@ -228,7 +216,19 @@
       "market": "KOSPI",
       "role": "건설·부동산",
       "group": "건설·부동산",
-      "mcapWon": 1353149980650,
+      "mcapWon": 1699651962450,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:001800",
+      "type": "listed_company",
+      "ticker": "001800",
+      "nameKo": "오리온홀딩스",
+      "nameEn": "Orion Holdings",
+      "market": "KOSPI",
+      "role": "소비·유통",
+      "group": "소비·유통",
+      "mcapWon": 1530986793400,
       "isListedKorea": true
     },
     {
@@ -240,7 +240,7 @@
       "market": "KOSDAQ",
       "role": "소비·유통",
       "group": "소비·유통",
-      "mcapWon": 1234301943420,
+      "mcapWon": 1283584416660,
       "isListedKorea": true
     },
     {
@@ -252,19 +252,7 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 1123235382400,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:192400",
-      "type": "listed_company",
-      "ticker": "192400",
-      "nameKo": "쿠쿠홀딩스",
-      "nameEn": "Cuckoo Holdings",
-      "market": "KOSPI",
-      "role": "소비·유통",
-      "group": "소비·유통",
-      "mcapWon": 990406852250,
+      "mcapWon": 1152573620000,
       "isListedKorea": true
     },
     {
@@ -276,7 +264,19 @@
       "market": "KOSPI",
       "role": "에너지·화학",
       "group": "에너지·화학",
-      "mcapWon": 921187427900,
+      "mcapWon": 999549307400,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:192400",
+      "type": "listed_company",
+      "ticker": "192400",
+      "nameKo": "쿠쿠홀딩스",
+      "nameEn": "Cuckoo Holdings",
+      "market": "KOSPI",
+      "role": "소비·유통",
+      "group": "소비·유통",
+      "mcapWon": 988628743000,
       "isListedKorea": true
     },
     {
@@ -288,7 +288,7 @@
       "market": "KOSDAQ",
       "role": "IT·전자",
       "group": "IT·전자",
-      "mcapWon": 883721581100,
+      "mcapWon": 864242799150,
       "isListedKorea": true
     },
     {
@@ -300,7 +300,7 @@
       "market": "KOSPI",
       "role": "에너지·화학",
       "group": "에너지·화학",
-      "mcapWon": 848759994800,
+      "mcapWon": 789267471800,
       "isListedKorea": true
     },
     {
@@ -312,7 +312,7 @@
       "market": "KOSDAQ",
       "role": "금융",
       "group": "금융",
-      "mcapWon": 766000000000,
+      "mcapWon": 783235000000,
       "isListedKorea": true
     },
     {
@@ -324,7 +324,7 @@
       "market": "KOSPI",
       "role": "소재·산업재",
       "group": "소재·산업재",
-      "mcapWon": 736120452900,
+      "mcapWon": 773619390700,
       "isListedKorea": true
     },
     {
@@ -336,31 +336,7 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 624738851100,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:003300",
-      "type": "listed_company",
-      "ticker": "003300",
-      "nameKo": "한일홀딩스",
-      "nameEn": "Hanil Holdings",
-      "market": "KOSPI",
-      "role": "건설·부동산",
-      "group": "건설·부동산",
-      "mcapWon": 576548002800,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:0220W0",
-      "type": "listed_company",
-      "ticker": "0220W0",
-      "nameKo": "한화머시너리앤서비스홀딩스",
-      "nameEn": "Hanwha Machinery & Service Holdings",
-      "market": "KOSPI",
-      "role": "복합사업",
-      "group": "복합사업",
-      "mcapWon": 567099239850,
+      "mcapWon": 617110782100,
       "isListedKorea": true
     },
     {
@@ -372,7 +348,19 @@
       "market": "KOSPI",
       "role": "소재·산업재",
       "group": "소재·산업재",
-      "mcapWon": 566762729600,
+      "mcapWon": 567611176800,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:003300",
+      "type": "listed_company",
+      "ticker": "003300",
+      "nameKo": "한일홀딩스",
+      "nameEn": "Hanil Holdings",
+      "market": "KOSPI",
+      "role": "건설·부동산",
+      "group": "건설·부동산",
+      "mcapWon": 555890935320,
       "isListedKorea": true
     },
     {
@@ -384,7 +372,7 @@
       "market": "KOSPI",
       "role": "소비·유통",
       "group": "소비·유통",
-      "mcapWon": 555032867730,
+      "mcapWon": 547601138000,
       "isListedKorea": true
     },
     {
@@ -396,7 +384,19 @@
       "market": "KOSPI",
       "role": "소재·산업재",
       "group": "소재·산업재",
-      "mcapWon": 534881533200,
+      "mcapWon": 535602397800,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:0220W0",
+      "type": "listed_company",
+      "ticker": "0220W0",
+      "nameKo": "한화머시너리앤서비스홀딩스",
+      "nameEn": "Hanwha Machinery & Service Holdings",
+      "market": "KOSPI",
+      "role": "복합사업",
+      "group": "복합사업",
+      "mcapWon": 529067249100,
       "isListedKorea": true
     },
     {
@@ -408,7 +408,7 @@
       "market": "KOSPI",
       "role": "복합사업",
       "group": "복합사업",
-      "mcapWon": 469673055500,
+      "mcapWon": 467344098200,
       "isListedKorea": true
     },
     {
@@ -420,43 +420,7 @@
       "market": "KOSPI",
       "role": "금융",
       "group": "금융",
-      "mcapWon": 463875321340,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:008060",
-      "type": "listed_company",
-      "ticker": "008060",
-      "nameKo": "대덕",
-      "nameEn": "DAEDUCK Co.,LTD",
-      "market": "KOSPI",
-      "role": "IT·전자",
-      "group": "IT·전자",
-      "mcapWon": 454288662960,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:072710",
-      "type": "listed_company",
-      "ticker": "072710",
-      "nameKo": "농심홀딩스",
-      "nameEn": "Nongshim Holdings",
-      "market": "KOSPI",
-      "role": "소비·유통",
-      "group": "소비·유통",
-      "mcapWon": 436879818000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:003030",
-      "type": "listed_company",
-      "ticker": "003030",
-      "nameKo": "세아제강지주",
-      "nameEn": "SeAH Steel Holdings",
-      "market": "KOSPI",
-      "role": "소재·산업재",
-      "group": "소재·산업재",
-      "mcapWon": 426590671000,
+      "mcapWon": 456156318370,
       "isListedKorea": true
     },
     {
@@ -468,7 +432,43 @@
       "market": "KOSPI",
       "role": "건설·부동산",
       "group": "건설·부동산",
-      "mcapWon": 425152938000,
+      "mcapWon": 455006292000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:008060",
+      "type": "listed_company",
+      "ticker": "008060",
+      "nameKo": "대덕",
+      "nameEn": "DAEDUCK Co.,LTD",
+      "market": "KOSPI",
+      "role": "IT·전자",
+      "group": "IT·전자",
+      "mcapWon": 454914404920,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:003030",
+      "type": "listed_company",
+      "ticker": "003030",
+      "nameKo": "세아제강지주",
+      "nameEn": "SeAH Steel Holdings",
+      "market": "KOSPI",
+      "role": "소재·산업재",
+      "group": "소재·산업재",
+      "mcapWon": 443571464700,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:072710",
+      "type": "listed_company",
+      "ticker": "072710",
+      "nameKo": "농심홀딩스",
+      "nameEn": "Nongshim Holdings",
+      "market": "KOSPI",
+      "role": "소비·유통",
+      "group": "소비·유통",
+      "mcapWon": 435024702000,
       "isListedKorea": true
     },
     {
@@ -480,19 +480,7 @@
       "market": "KOSPI",
       "role": "에너지·화학",
       "group": "에너지·화학",
-      "mcapWon": 416550095600,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:001940",
-      "type": "listed_company",
-      "ticker": "001940",
-      "nameKo": "KISCO홀딩스",
-      "nameEn": "KISCO Holdings",
-      "market": "KOSPI",
-      "role": "소재·산업재",
-      "group": "소재·산업재",
-      "mcapWon": 385597536000,
+      "mcapWon": 412747914200,
       "isListedKorea": true
     },
     {
@@ -504,7 +492,19 @@
       "market": "KOSPI",
       "role": "소비·유통",
       "group": "소비·유통",
-      "mcapWon": 371859733035,
+      "mcapWon": 365159557665,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:001940",
+      "type": "listed_company",
+      "ticker": "001940",
+      "nameKo": "KISCO홀딩스",
+      "nameEn": "KISCO Holdings",
+      "market": "KOSPI",
+      "role": "소재·산업재",
+      "group": "소재·산업재",
+      "mcapWon": 365041785000,
       "isListedKorea": true
     },
     {
@@ -516,19 +516,43 @@
       "market": "KOSPI",
       "role": "소재·산업재",
       "group": "소재·산업재",
-      "mcapWon": 364515707050,
+      "mcapWon": 357358245300,
       "isListedKorea": true
     },
     {
-      "id": "krx:024720",
+      "id": "krx:121440",
       "type": "listed_company",
-      "ticker": "024720",
-      "nameKo": "콜마홀딩스",
-      "nameEn": "Kolmar Holdings",
+      "ticker": "121440",
+      "nameKo": "골프존홀딩스",
+      "nameEn": "Golfzon Holdings",
+      "market": "KOSDAQ",
+      "role": "소비·유통",
+      "group": "소비·유통",
+      "mcapWon": 337554125840,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:015860",
+      "type": "listed_company",
+      "ticker": "015860",
+      "nameKo": "일진홀딩스",
+      "nameEn": "Iljin Holdings",
       "market": "KOSPI",
-      "role": "복합사업",
-      "group": "복합사업",
-      "mcapWon": 341590739640,
+      "role": "소재·산업재",
+      "group": "소재·산업재",
+      "mcapWon": 337536783720,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:012030",
+      "type": "listed_company",
+      "ticker": "012030",
+      "nameKo": "DB",
+      "nameEn": "DB Inc.",
+      "market": "KOSPI",
+      "role": "금융",
+      "group": "금융",
+      "mcapWon": 331735815517,
       "isListedKorea": true
     },
     {
@@ -544,27 +568,15 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:015860",
+      "id": "krx:024720",
       "type": "listed_company",
-      "ticker": "015860",
-      "nameKo": "일진홀딩스",
-      "nameEn": "Iljin Holdings",
+      "ticker": "024720",
+      "nameKo": "콜마홀딩스",
+      "nameEn": "Kolmar Holdings",
       "market": "KOSPI",
-      "role": "소재·산업재",
-      "group": "소재·산업재",
-      "mcapWon": 321252114330,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:005720",
-      "type": "listed_company",
-      "ticker": "005720",
-      "nameKo": "넥센",
-      "nameEn": "Nexen",
-      "market": "KOSPI",
-      "role": "소재·산업재",
-      "group": "소재·산업재",
-      "mcapWon": 316314741540,
+      "role": "복합사업",
+      "group": "복합사업",
+      "mcapWon": 323756684960,
       "isListedKorea": true
     },
     {
@@ -576,7 +588,7 @@
       "market": "KOSPI",
       "role": "소재·산업재",
       "group": "소재·산업재",
-      "mcapWon": 315680661450,
+      "mcapWon": 322678508625,
       "isListedKorea": true
     },
     {
@@ -588,43 +600,7 @@
       "market": "KOSPI",
       "role": "헬스케어",
       "group": "헬스케어",
-      "mcapWon": 309006257560,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:012030",
-      "type": "listed_company",
-      "ticker": "012030",
-      "nameKo": "DB",
-      "nameEn": "DB Inc.",
-      "market": "KOSPI",
-      "role": "금융",
-      "group": "금융",
-      "mcapWon": 303169117031,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:035810",
-      "type": "listed_company",
-      "ticker": "035810",
-      "nameKo": "이지홀딩스",
-      "nameEn": "Easy Holdings Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "소비·유통",
-      "group": "소비·유통",
-      "mcapWon": 302903488575,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:121440",
-      "type": "listed_company",
-      "ticker": "121440",
-      "nameKo": "골프존홀딩스",
-      "nameEn": "Golfzon Holdings",
-      "market": "KOSDAQ",
-      "role": "소비·유통",
-      "group": "소비·유통",
-      "mcapWon": 301999566900,
+      "mcapWon": 315659502340,
       "isListedKorea": true
     },
     {
@@ -897,8 +873,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-267250-ckh",
-      "source": "krx:267250",
+      "id": "peer-000150-ckh",
+      "source": "krx:000150",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -911,8 +887,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-000150-ckh",
-      "source": "krx:000150",
+      "id": "peer-267250-ckh",
+      "source": "krx:267250",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -953,8 +929,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-180640-ckh",
-      "source": "krx:180640",
+      "id": "peer-006260-ckh",
+      "source": "krx:006260",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -967,8 +943,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-006260-ckh",
-      "source": "krx:006260",
+      "id": "peer-180640-ckh",
+      "source": "krx:180640",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -1065,8 +1041,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-001800-ckh",
-      "source": "krx:001800",
+      "id": "peer-012630-ckh",
+      "source": "krx:012630",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -1079,8 +1055,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-012630-ckh",
-      "source": "krx:012630",
+      "id": "peer-001800-ckh",
+      "source": "krx:001800",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -1205,8 +1181,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-072710-ckh",
-      "source": "krx:072710",
+      "id": "peer-003030-ckh",
+      "source": "krx:003030",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -1219,8 +1195,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-003030-ckh",
-      "source": "krx:003030",
+      "id": "peer-072710-ckh",
+      "source": "krx:072710",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -1247,8 +1223,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-024720-ckh",
-      "source": "krx:024720",
+      "id": "peer-012030-ckh",
+      "source": "krx:012030",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",
@@ -1275,8 +1251,8 @@
       "defaultHidden": true
     },
     {
-      "id": "peer-012030-ckh",
-      "source": "krx:012030",
+      "id": "peer-024720-ckh",
+      "source": "krx:024720",
       "target": "global:ckh",
       "type": "peer",
       "direction": "undirected",

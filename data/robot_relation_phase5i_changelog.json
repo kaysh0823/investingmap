@@ -367,6 +367,26 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "090360",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "090360",
+      "target": "robot_product:robostar-scara-articulated"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "090360",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "090360",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "090710",
       "lane": "industrial_robot"
     },
@@ -388,26 +408,6 @@
     {
       "action": "structural_supports_application",
       "ticker": "090710",
-      "target": "application:manufacturing"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "090360",
-      "lane": "industrial_robot"
-    },
-    {
-      "action": "structural_produces_robot",
-      "ticker": "090360",
-      "target": "robot_product:robostar-scara-articulated"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "090360",
-      "target": "robot_category:industrial"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "090360",
       "target": "application:manufacturing"
     },
     {
@@ -487,11 +487,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "439960",
-      "lane": "industrial_robot"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "348340",
       "lane": "collaborative_robot"
     },
@@ -509,6 +504,11 @@
       "action": "structural_supports_application",
       "ticker": "348340",
       "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "439960",
+      "lane": "industrial_robot"
     },
     {
       "action": "structural_member_of",

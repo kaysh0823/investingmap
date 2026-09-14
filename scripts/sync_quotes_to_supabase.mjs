@@ -8,7 +8,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { fetchNaverQuote, resolveNaverSession } from '../functions/lib/naver_sise_quotes.mjs';
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
-import { isKrxClockRegularSession, kstWeekday, kstYmd, kstYmdDash } from '../functions/lib/krx_session.mjs';
+import { isKrxClockRegularSession, isKrxAfterMarket, isKrxRegularSessionEnded, kstDateParts, kstWeekday, kstYmd, kstYmdDash, SESSION_CLOSE, AFTERMARKET_OPEN } from '../functions/lib/krx_session.mjs';
+import {
+  fetchKrxDailyOhlc,
+  dailyOhlcFieldsToKrxRow,
+} from '../functions/lib/krx_daily_ohlc.mjs';
 import {
   tradingDates,
   pastDatesFromAnchor,
@@ -210,10 +214,13 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed) 
     regular_session: regularSession,
     // In-memory only — stripped before stock_quotes_latest upsert; used for
     // session-close history when KRX day OHLC is not published yet.
+    // _sessionClose is regular-session close (never aftermarket last).
     _sessionOpen: naver?.open ?? null,
     _sessionHigh: naver?.high ?? null,
     _sessionLow: naver?.low ?? null,
+    _sessionClose: naver?.close ?? null,
     _sessionVolume: naver?.volume ?? null,
+    _naverMarketClosed: naver?.marketClosed ?? null,
   };
 }
 
@@ -223,7 +230,9 @@ function stripSessionOhlcvFields(row) {
     _sessionOpen,
     _sessionHigh,
     _sessionLow,
+    _sessionClose,
     _sessionVolume,
+    _naverMarketClosed,
     ...rest
   } = row;
   return rest;
@@ -444,29 +453,73 @@ async function repairHistoryCoverageForDate(
   return { expected: expectedRows.size, repaired, missing };
 }
 
-/** Persist session close OHLC into history when the market is closed (prefer KRX day). */
-async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed, supabaseUrl, serviceKey, authKey) {
-  if (!marketClosed || !tradeDateDash) return { upserted: 0, skipped: true, byCode: null };
+/**
+ * Persist today's regular-session OHLC into stock_price_history once the
+ * regular auction has ended (15:30+). Source priority:
+ *   (a) apihub fetchMarketDay (T+1-ready, preferred when published)
+ *   (b) data.krx MDCSTAT01501 (T+0 regular close) ← aftermarket-safe
+ *   (c) Naver session OHLCV (never aftermarket last as close)
+ * Idempotent on (ticker, trade_date); T+1 apihub backfill may overwrite.
+ */
+async function upsertSessionCloseHistory(
+  quoteRows,
+  tradeDateDash,
+  regularSessionEnded,
+  supabaseUrl,
+  serviceKey,
+  authKey,
+  env = process.env,
+) {
+  if (!regularSessionEnded || !tradeDateDash) return { upserted: 0, skipped: true, byCode: null };
 
+  const basDd = dashToBasDd(tradeDateDash);
   let byCode = null;
+  let source = null;
+
+  // (a) apihub OPEN API
   if (authKey) {
     try {
-      byCode = await fetchMarketDay(authKey, dashToBasDd(tradeDateDash));
-      // Empty KRX day right after close is common — fall through to Naver OHLCV
-      // so candles keep a real body/volume; later syncs overwrite with full KRX OHLC.
+      byCode = await fetchMarketDay(authKey, basDd);
       if (!byCode || byCode.size === 0) {
         console.log(
-          `  history session close ${tradeDateDash}: KRX day empty/not ready → Naver OHLCV fallback`,
+          `  history session close ${tradeDateDash}: apihub empty/not ready → try data.krx MDCSTAT01501`,
         );
         byCode = null;
+      } else {
+        source = 'apihub';
       }
     } catch (e) {
-      console.warn(`  history session close KRX check failed: ${e.message || e}`);
+      console.warn(`  history session close apihub failed: ${e.message || e}`);
       byCode = null;
     }
   }
 
+  // (b) data.krx [12001] 전종목 시세 — regular-session close (T+0)
+  if (!byCode) {
+    try {
+      const dailyMap = await fetchKrxDailyOhlc(basDd, env);
+      if (dailyMap && dailyMap.size > 0) {
+        byCode = new Map();
+        for (const [ticker, fields] of dailyMap) {
+          const krxRow = dailyOhlcFieldsToKrxRow(fields);
+          if (krxRow) byCode.set(ticker, krxRow);
+        }
+        source = 'data.krx';
+        console.log(
+          `  history session close ${tradeDateDash}: data.krx MDCSTAT01501 rows=${byCode.size}`,
+        );
+      } else {
+        console.log(
+          `  history session close ${tradeDateDash}: data.krx empty → Naver OHLCV fallback`,
+        );
+      }
+    } catch (e) {
+      console.warn(`  history session close data.krx failed: ${e.message || e}`);
+    }
+  }
+
   const krxReady = !!(byCode && byCode.size > 0);
+  const inAftermarket = isKrxAfterMarket();
   const rows = [];
   for (const q of quoteRows) {
     if (!q || !q.ticker) continue;
@@ -489,9 +542,7 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
     // A successful KRX day intentionally omits suspended/not-yet-listed names.
     // Do not invent a candle for the consensus date from a stale Naver quote.
     if (krxReady) continue;
-    // Fallback: Naver session OHLCV (open/high/low/volume + last as close).
-    if (q.last == null || !Number.isFinite(q.last) || q.last <= 0) continue;
-    if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
+    // (c) Fallback: Naver regular-session OHLCV (never aftermarket last as close).
     const open =
       q._sessionOpen != null && Number.isFinite(q._sessionOpen) && q._sessionOpen > 0
         ? q._sessionOpen
@@ -508,13 +559,16 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
       q._sessionVolume != null && Number.isFinite(q._sessionVolume) && q._sessionVolume >= 0
         ? q._sessionVolume
         : null;
+    const close = resolveRegularSessionClose(q, inAftermarket);
+    if (close == null || !Number.isFinite(close) || close <= 0) continue;
+    if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
     rows.push({
       ticker: q.ticker,
       trade_date: tradeDateDash,
       open,
       high,
       low,
-      close: q.last,
+      close,
       volume,
       mcap_won: q.mcap_won,
       turnover_won: q.turnover_won ?? null,
@@ -525,9 +579,14 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
   const withOhlcv = rows.filter(
     (r) => r.open != null && r.high != null && r.low != null && r.volume != null,
   ).length;
+  const sourceLabel =
+    source === 'apihub'
+      ? 'apihub'
+      : source === 'data.krx'
+        ? 'data.krx'
+        : `Naver OHLCV ${withOhlcv}/${rows.length}`;
   console.log(
-    `  history session close ${tradeDateDash}: upserted ${result.upserted}` +
-      (krxReady ? ' (KRX)' : ` (Naver OHLCV ${withOhlcv}/${rows.length})`),
+    `  history session close ${tradeDateDash}: upserted ${result.upserted} (${sourceLabel})`,
   );
   const coverage = krxReady
     ? await repairHistoryCoverageForDate(
@@ -538,7 +597,34 @@ async function upsertSessionCloseHistory(quoteRows, tradeDateDash, marketClosed,
         serviceKey,
       )
     : null;
-  return { ...result, coverage, byCode: krxReady ? byCode : null };
+  return { ...result, coverage, byCode: krxReady ? byCode : null, source };
+}
+
+/**
+ * Daily bar close must be the regular-session close.
+ * Prefer explicit Naver session close; allow last only when it is still the
+ * regular close (장마감 marker, or clock between 15:30 and aftermarket open).
+ * Never use aftermarket last.
+ */
+function resolveRegularSessionClose(q, inAftermarket = isKrxAfterMarket()) {
+  if (q._sessionClose != null && Number.isFinite(q._sessionClose) && q._sessionClose > 0) {
+    return q._sessionClose;
+  }
+  const lastOk = q.last != null && Number.isFinite(q.last) && q.last > 0;
+  if (!lastOk) return null;
+  // Page still says 장마감 → last is regular close even if clock is later.
+  if (q._naverMarketClosed === true) return q.last;
+  // 15:31–15:59: aftermarket not open yet; last is still regular close.
+  if (!inAftermarket && isInPostClosePreAftermarketWindow()) return q.last;
+  return null;
+}
+
+/** Clock between regular close and aftermarket open (15:31–15:59 KST). */
+function isInPostClosePreAftermarketWindow(now = new Date()) {
+  const p = kstDateParts(now);
+  if (p.weekday < 1 || p.weekday > 5) return false;
+  const minutes = p.hour * 60 + p.minute;
+  return minutes > SESSION_CLOSE && minutes < AFTERMARKET_OPEN;
 }
 
 async function fetchHistoryMaxTradeDate(supabaseUrl, serviceKey, sampleTicker = '005930') {
@@ -1449,7 +1535,7 @@ async function main() {
   const asOf = session.regularSession ? new Date().toISOString() : tradeDateToAsOf(session.tradeDate);
   console.log(
     `  naverTradeDate=${consensus.tradeDate || 'n/a'} naverMarketClosed=${consensus.marketClosed} ` +
-    `→ regularSession=${regularSession} asOf=${asOf}`,
+    `→ regularSession=${regularSession} regularSessionEnded=${isKrxRegularSessionEnded()} asOf=${asOf}`,
   );
   if (clockRegular && !regularSession) {
     console.log('  (clock says session, but Naver marker indicates non-trading day → holiday)');
@@ -1469,14 +1555,17 @@ async function main() {
   console.log(`Upserting ${rows.length} rows…`);
   const upsertResult = await upsertToSupabase(rows, supabaseUrl, serviceKey);
 
-  // Keep stock_price_history current: session close from Naver + KRX gap fill.
+  // Keep stock_price_history current: regular-session close bar (clock gate),
+  // then KRX gap fill. Aftermarket "live" markers must not skip this.
+  const regularSessionEnded = isKrxRegularSessionEnded();
   const histResult = await upsertSessionCloseHistory(
     rows,
     consensus.tradeDate,
-    session.marketClosed === true,
+    regularSessionEnded,
     supabaseUrl,
     serviceKey,
     authKey,
+    env,
   );
   if (histResult.byCode?.size && consensus.tradeDate) {
     await detectDailyPriceAdjustments({

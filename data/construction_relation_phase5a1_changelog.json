@@ -2363,8 +2363,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "directRelationshipOrphans": [
         "krx:028050",
@@ -2380,8 +2380,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "classificationOnly": [
         "krx:028050",
@@ -2397,8 +2397,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -2415,8 +2415,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "hasPeerButNoBusiness": [
         "krx:375500",
@@ -2435,8 +2435,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ]
     },
     "brandNodeCount": 1,

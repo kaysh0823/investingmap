@@ -592,11 +592,11 @@
         "krx:086900",
         "krx:336570",
         "krx:018290",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "directRelationshipOrphans": [
         "krx:278470",
@@ -616,20 +616,20 @@
         "krx:086900",
         "krx:336570",
         "krx:018290",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "classificationOnly": [
         "krx:251970",
         "krx:086900",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -650,11 +650,11 @@
         "krx:086900",
         "krx:336570",
         "krx:018290",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "hasPeerButNoBusiness": [
         "krx:145020"
@@ -663,14 +663,14 @@
       "structuralOnly": [
         "krx:251970",
         "krx:086900",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ]
     },
-    "removedUnsupportedPartnerCount": 8,
+    "removedUnsupportedPartnerCount": 9,
     "demotedLegacyPeerCount": 4
   },
   "validate": {
@@ -1007,6 +1007,11 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:003350",
+      "target": "group:brand_owner"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:092730",
       "target": "group:brand_owner"
     },
@@ -1023,11 +1028,6 @@
     {
       "action": "add_structural",
       "source": "krx:078520",
-      "target": "group:brand_owner"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:003350",
       "target": "group:brand_owner"
     },
     {
@@ -1067,6 +1067,11 @@
       "action": "drop_unknown_partner",
       "source": "krx:251970",
       "partner": "aptar"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:003350",
+      "partner": "intercos"
     },
     {
       "action": "drop_unknown_partner",

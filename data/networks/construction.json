@@ -138,7 +138,7 @@
       "semType": "플랜트·EPC",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 8986600000000,
+      "mcapWon": 9996000000000,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -213,7 +213,7 @@
       "semType": "시멘트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 1225998634030,
+      "mcapWon": 1220850469400,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -228,7 +228,7 @@
       "semType": "인테리어·홈퍼니싱",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 880168907200,
+      "mcapWon": 926060066800,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -243,7 +243,7 @@
       "semType": "시멘트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 778076566260,
+      "mcapWon": 758651631180,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -258,7 +258,7 @@
       "semType": "종합건설",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 599512981660,
+      "mcapWon": 548094217540,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -303,7 +303,7 @@
       "semType": "건설·건자재",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 475143002240,
+      "mcapWon": 468758014360,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -318,7 +318,7 @@
       "semType": "건설·부동산개발",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 435527699600,
+      "mcapWon": 439405951600,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -333,7 +333,7 @@
       "semType": "판유리·건자재",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 400061325600,
+      "mcapWon": 393673120800,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -348,7 +348,7 @@
       "semType": "시멘트",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 388205554880,
+      "mcapWon": 385327293120,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -363,22 +363,7 @@
       "semType": "목질보드·건자재",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 363506879150,
-      "isListedKorea": true,
-      "isMapConstituent": true
-    },
-    {
-      "id": "krx:108670",
-      "type": "listed_company",
-      "nameKo": "LX하우시스",
-      "nameEn": "LX Hausys",
-      "ticker": "108670",
-      "market": "KOSPI",
-      "chain": "마감재·인테리어",
-      "semType": "창호·바닥재",
-      "role": "main_contractor",
-      "lane": "general_contractor",
-      "mcapWon": 321042586000,
+      "mcapWon": 364012452000,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -393,7 +378,22 @@
       "semType": "부동산신탁",
       "role": "main_contractor",
       "lane": "general_contractor",
-      "mcapWon": 318172207600,
+      "mcapWon": 309606032780,
+      "isListedKorea": true,
+      "isMapConstituent": true
+    },
+    {
+      "id": "krx:108670",
+      "type": "listed_company",
+      "nameKo": "LX하우시스",
+      "nameEn": "LX Hausys",
+      "ticker": "108670",
+      "market": "KOSPI",
+      "chain": "마감재·인테리어",
+      "semType": "창호·바닥재",
+      "role": "main_contractor",
+      "lane": "general_contractor",
+      "mcapWon": 308936231500,
       "isListedKorea": true,
       "isMapConstituent": true
     },
@@ -1546,8 +1546,8 @@
       "lastVerifiedAt": "2026-08-23",
       "directEvidence": false,
       "relationClass": "structural",
-      "id": "e-struct-108670-ecosystem",
-      "source": "krx:108670",
+      "id": "e-struct-123890-ecosystem",
+      "source": "krx:123890",
       "target": "ecosystem:construction-value-chain",
       "type": "member_of"
     },
@@ -1563,8 +1563,8 @@
       "lastVerifiedAt": "2026-08-23",
       "directEvidence": false,
       "relationClass": "structural",
-      "id": "e-struct-123890-ecosystem",
-      "source": "krx:123890",
+      "id": "e-struct-108670-ecosystem",
+      "source": "krx:108670",
       "target": "ecosystem:construction-value-chain",
       "type": "member_of"
     },
@@ -3858,8 +3858,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "directRelationshipOrphans": [
         "krx:028050",
@@ -3875,8 +3875,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "classificationOnly": [
         "krx:028050",
@@ -3892,8 +3892,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -3910,8 +3910,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ],
       "hasPeerButNoBusiness": [
         "krx:375500",
@@ -3930,8 +3930,8 @@
         "krx:344820",
         "krx:183190",
         "krx:025900",
-        "krx:108670",
-        "krx:123890"
+        "krx:123890",
+        "krx:108670"
       ]
     },
     "brandNodeCount": 1,

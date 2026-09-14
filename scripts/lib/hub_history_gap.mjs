@@ -77,7 +77,7 @@ async function upsertHistoryBatch(rows, supabaseUrl, serviceKey, attempt = 0) {
   return { ok: false, body };
 }
 
-async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
+export async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
   let upserted = 0;
   let failed = 0;
   for (let i = 0; i < rows.length; i += HISTORY_UPSERT_BATCH) {

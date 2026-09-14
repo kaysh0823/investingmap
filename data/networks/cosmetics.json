@@ -491,7 +491,7 @@
       "lane": "brand_owner",
       "group": "용기·부자재",
       "layer": "brand_owner",
-      "mcapWon": 685720000000,
+      "mcapWon": 654720000000,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "cos_pumtech_korea",
@@ -570,6 +570,23 @@
       "lane": "brand_owner"
     },
     {
+      "id": "krx:003350",
+      "type": "listed_company",
+      "ticker": "003350",
+      "nameKo": "한국화장품제조",
+      "nameEn": "Korea Cosmetics Mfg",
+      "market": "KOSPI",
+      "role": "화장품 브랜드",
+      "lane": "brand_owner",
+      "group": "화장품 브랜드",
+      "layer": "brand_owner",
+      "mcapWon": 355988600000,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "cos_003350",
+      "owningSector": "cosmetics"
+    },
+    {
       "id": "krx:092730",
       "type": "listed_company",
       "ticker": "092730",
@@ -580,7 +597,7 @@
       "lane": "brand_owner",
       "group": "화장품 브랜드",
       "layer": "brand_owner",
-      "mcapWon": 367842347550,
+      "mcapWon": 346204562400,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "cos_092730",
@@ -597,7 +614,7 @@
       "lane": "brand_owner",
       "group": "화장품 브랜드",
       "layer": "brand_owner",
-      "mcapWon": 308732140150,
+      "mcapWon": 303714252500,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "cos_aekyung_industrial",
@@ -614,7 +631,7 @@
       "lane": "brand_owner",
       "group": "화장품 ODM·OEM",
       "layer": "brand_owner",
-      "mcapWon": 297131841800,
+      "mcapWon": 290998386350,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "cos_352480",
@@ -631,27 +648,10 @@
       "lane": "brand_owner",
       "group": "화장품 브랜드",
       "layer": "brand_owner",
-      "mcapWon": 292919452860,
+      "mcapWon": 262743026100,
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "cos_078520",
-      "owningSector": "cosmetics"
-    },
-    {
-      "id": "krx:003350",
-      "type": "listed_company",
-      "ticker": "003350",
-      "nameKo": "한국화장품제조",
-      "nameEn": "Hankook Cosmetics Manufacturing",
-      "market": "KOSPI",
-      "role": "화장품 브랜드",
-      "lane": "brand_owner",
-      "group": "화장품 브랜드",
-      "layer": "brand_owner",
-      "mcapWon": 288915000000,
-      "isListedKorea": true,
-      "isMapConstituent": true,
-      "legacyId": "cos_003350",
       "owningSector": "cosmetics"
     },
     {
@@ -2478,6 +2478,22 @@
       "excludesFromBusinessCoverage": true
     },
     {
+      "id": "member-003350-brand_owner",
+      "source": "krx:003350",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-23",
+      "noteKo": "밸류체인 분류이며 기업 간 거래·ODM 계약·유통계약을 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not trade, ODM contract or distribution agreement.",
+      "edgeOrigin": "structuralGenerated"
+    },
+    {
       "id": "member-092730-brand_owner",
       "source": "krx:092730",
       "target": "group:brand_owner",
@@ -2528,22 +2544,6 @@
     {
       "id": "member-078520-brand_owner",
       "source": "krx:078520",
-      "target": "group:brand_owner",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "브랜드 가치사슬 분류",
-      "labelEn": "Brand owners value-chain category",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-23",
-      "noteKo": "밸류체인 분류이며 기업 간 거래·ODM 계약·유통계약을 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not trade, ODM contract or distribution agreement.",
-      "edgeOrigin": "structuralGenerated"
-    },
-    {
-      "id": "member-003350-brand_owner",
-      "source": "krx:003350",
       "target": "group:brand_owner",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3465,11 +3465,11 @@
         "krx:086900",
         "krx:336570",
         "krx:018290",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "directRelationshipOrphans": [
         "krx:278470",
@@ -3489,20 +3489,20 @@
         "krx:086900",
         "krx:336570",
         "krx:018290",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "classificationOnly": [
         "krx:251970",
         "krx:086900",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -3523,11 +3523,11 @@
         "krx:086900",
         "krx:336570",
         "krx:018290",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ],
       "hasPeerButNoBusiness": [
         "krx:145020"
@@ -3536,14 +3536,14 @@
       "structuralOnly": [
         "krx:251970",
         "krx:086900",
+        "krx:003350",
         "krx:092730",
         "krx:018250",
         "krx:352480",
-        "krx:078520",
-        "krx:003350"
+        "krx:078520"
       ]
     },
-    "removedUnsupportedPartnerCount": 8,
+    "removedUnsupportedPartnerCount": 9,
     "demotedLegacyPeerCount": 4
   }
 }

@@ -79,11 +79,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "030000",
-      "lane": "ip_rights"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "263750",
       "lane": "ip_rights"
     },
@@ -99,18 +94,8 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "462870",
+      "ticker": "030000",
       "lane": "ip_rights"
-    },
-    {
-      "action": "structural_controls_ip",
-      "ticker": "462870",
-      "ip": "content_ip:nikke"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "462870",
-      "category": "content_category:game"
     },
     {
       "action": "structural_member_of",
@@ -136,6 +121,21 @@
       "action": "structural_specializes_in",
       "ticker": "041510",
       "category": "content_category:kpop"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "462870",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_controls_ip",
+      "ticker": "462870",
+      "ip": "content_ip:nikke"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "462870",
+      "category": "content_category:game"
     },
     {
       "action": "structural_member_of",
@@ -214,21 +214,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "225570",
-      "lane": "ip_rights"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "225570",
-      "category": "content_category:game"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "214320",
-      "lane": "ip_rights"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "035760",
       "lane": "production_studio"
     },
@@ -241,6 +226,21 @@
       "action": "structural_specializes_in",
       "ticker": "035760",
       "category": "content_category:broadcast-media"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "225570",
+      "lane": "ip_rights"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "225570",
+      "category": "content_category:game"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "214320",
+      "lane": "ip_rights"
     },
     {
       "action": "structural_member_of",

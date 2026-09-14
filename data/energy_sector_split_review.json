@@ -6,7 +6,7 @@
     "chain": "셀 제조",
     "origin": "battery",
     "basis": "2차전지·ESS",
-    "mcapWon": 83889000000000
+    "mcapWon": 84240000000000
   },
   {
     "ticker": "006400",
@@ -15,7 +15,7 @@
     "chain": "모듈·팩·시스템 부품",
     "origin": "battery",
     "basis": "2차전지·ESS",
-    "mcapWon": 44160870440000
+    "mcapWon": 43919113850000
   },
   {
     "ticker": "096770",
@@ -24,7 +24,7 @@
     "chain": "셀 제조",
     "origin": "battery",
     "basis": "정유·석유화학·배터리",
-    "mcapWon": 23380000580400
+    "mcapWon": 24478843702400
   },
   {
     "ticker": "051910",
@@ -33,7 +33,7 @@
     "chain": "분리막",
     "origin": "battery",
     "basis": "석유화학·배터리소재",
-    "mcapWon": 19907040726000
+    "mcapWon": 19271709639000
   },
   {
     "ticker": "003670",
@@ -42,7 +42,7 @@
     "chain": "양극재·전구체",
     "origin": "battery",
     "basis": "양극재·음극재",
-    "mcapWon": 16330525992000
+    "mcapWon": 16481734566000
   },
   {
     "ticker": "086520",
@@ -51,7 +51,7 @@
     "chain": "양극재·전구체",
     "origin": "battery",
     "basis": "배터리소재 지주",
-    "mcapWon": 11187954924800
+    "mcapWon": 11459507228800
   },
   {
     "ticker": "247540",
@@ -60,7 +60,7 @@
     "chain": "양극재·전구체",
     "origin": "battery",
     "basis": "양극재",
-    "mcapWon": 10370026004000
+    "mcapWon": 10790696870200
   },
   {
     "ticker": "066970",
@@ -69,7 +69,7 @@
     "chain": "양극재·전구체",
     "origin": "battery",
     "basis": "양극재",
-    "mcapWon": 4935049500600
+    "mcapWon": 4882159440000
   },
   {
     "ticker": "011790",
@@ -78,7 +78,7 @@
     "chain": "집전체·기타 소재",
     "origin": "battery",
     "basis": "첨단소재·화학",
-    "mcapWon": 4181136521400
+    "mcapWon": 4444007500800
   },
   {
     "ticker": "450080",
@@ -87,7 +87,7 @@
     "chain": "양극재·전구체",
     "origin": "battery",
     "basis": "전구체·양극재 소재",
-    "mcapWon": 2538677239500
+    "mcapWon": 2570543481000
   },
   {
     "ticker": "020150",
@@ -96,7 +96,7 @@
     "chain": "집전체·기타 소재",
     "origin": "battery",
     "basis": "전지용 동박",
-    "mcapWon": 1929667311550
+    "mcapWon": 2209822538600
   },
   {
     "ticker": "093370",
@@ -105,7 +105,7 @@
     "chain": "전해액·전해질",
     "origin": "battery",
     "basis": "LiFSI·냉매·특수가스",
-    "mcapWon": 1340691625000
+    "mcapWon": 1427568442300
   },
   {
     "ticker": "361610",
@@ -114,7 +114,7 @@
     "chain": "분리막",
     "origin": "battery",
     "basis": "분리막·전고체 인터페이스",
-    "mcapWon": 1331493988000
+    "mcapWon": 1365026699000
   },
   {
     "ticker": "005070",
@@ -123,7 +123,7 @@
     "chain": "양극재·전구체",
     "origin": "battery",
     "basis": "양극재·기능성필름",
-    "mcapWon": 1295368269000
+    "mcapWon": 1335225754200
   },
   {
     "ticker": "004490",
@@ -132,16 +132,7 @@
     "chain": "셀 제조",
     "origin": "battery",
     "basis": "납축·2차전지",
-    "mcapWon": 892584000000
-  },
-  {
-    "ticker": "033790",
-    "name": "피노",
-    "sector": "battery",
-    "chain": "제조·검사 장비",
-    "origin": "battery",
-    "basis": "전지 자동화 장비",
-    "mcapWon": 849883247400
+    "mcapWon": 853776000000
   },
   {
     "ticker": "137400",
@@ -150,7 +141,7 @@
     "chain": "제조·검사 장비",
     "origin": "battery",
     "basis": "2차전지·ESS 설비",
-    "mcapWon": 697691939600
+    "mcapWon": 701245548800
   },
   {
     "ticker": "001570",
@@ -162,22 +153,13 @@
     "mcapWon": 633275240400
   },
   {
-    "ticker": "222080",
-    "name": "SFA넥셀",
+    "ticker": "033790",
+    "name": "피노",
     "sector": "battery",
     "chain": "제조·검사 장비",
     "origin": "battery",
-    "basis": "배터리·디스플레이 공정·검사장비",
-    "mcapWon": 587240087200
-  },
-  {
-    "ticker": "121600",
-    "name": "나노신소재",
-    "sector": "battery",
-    "chain": "집전체·기타 소재",
-    "origin": "battery",
-    "basis": "CNT 도전재·배터리소재",
-    "mcapWon": 576322977000
+    "basis": "전지 자동화 장비",
+    "mcapWon": 633246341200
   },
   {
     "ticker": "336370",
@@ -186,25 +168,25 @@
     "chain": "집전체·기타 소재",
     "origin": "battery",
     "basis": "전지박·동박(집전체)",
-    "mcapWon": 523081620100
+    "mcapWon": 597506655980
   },
   {
-    "ticker": "278280",
-    "name": "천보",
+    "ticker": "222080",
+    "name": "SFA넥셀",
     "sector": "battery",
-    "chain": "전해액·전해질",
+    "chain": "제조·검사 장비",
     "origin": "battery",
-    "basis": "전해질·첨가제",
-    "mcapWon": 486445092500
+    "basis": "배터리·디스플레이 공정·검사장비",
+    "mcapWon": 583351080000
   },
   {
-    "ticker": "365340",
-    "name": "성일하이텍",
+    "ticker": "121600",
+    "name": "나노신소재",
     "sector": "battery",
-    "chain": "재사용·재활용",
+    "chain": "집전체·기타 소재",
     "origin": "battery",
-    "basis": "배터리 리사이클링",
-    "mcapWon": 480665478000
+    "basis": "CNT 도전재·배터리소재",
+    "mcapWon": 579388524750
   },
   {
     "ticker": "348370",
@@ -213,7 +195,25 @@
     "chain": "전해액·전해질",
     "origin": "battery",
     "basis": "2차전지 전해액",
-    "mcapWon": 453557575800
+    "mcapWon": 482041868000
+  },
+  {
+    "ticker": "365340",
+    "name": "성일하이텍",
+    "sector": "battery",
+    "chain": "재사용·재활용",
+    "origin": "battery",
+    "basis": "배터리 리사이클링",
+    "mcapWon": 470974641750
+  },
+  {
+    "ticker": "278280",
+    "name": "천보",
+    "sector": "battery",
+    "chain": "전해액·전해질",
+    "origin": "battery",
+    "basis": "전해질·첨가제",
+    "mcapWon": 467452903750
   },
   {
     "ticker": "005420",
@@ -222,7 +222,7 @@
     "chain": "원료·정제",
     "origin": "battery",
     "basis": "황산코발트·이산화티타늄",
-    "mcapWon": 395988830680
+    "mcapWon": 406743134520
   },
   {
     "ticker": "107640",
@@ -231,7 +231,7 @@
     "chain": "모듈·팩·시스템 부품",
     "origin": "battery",
     "basis": "ESS·배터리 냉각부품",
-    "mcapWon": 360784850800
+    "mcapWon": 382540721200
   },
   {
     "ticker": "393890",
@@ -240,7 +240,7 @@
     "chain": "분리막",
     "origin": "battery",
     "basis": "2차전지 분리막",
-    "mcapWon": 340800460080
+    "mcapWon": 339446734320
   },
   {
     "ticker": "034020",
@@ -249,7 +249,7 @@
     "chain": "원자로·주기기",
     "origin": "nuclear",
     "basis": "원전·발전설비",
-    "mcapWon": 50732442763200
+    "mcapWon": 58162952056800
   },
   {
     "ticker": "052690",
@@ -258,25 +258,7 @@
     "chain": "설계·엔지니어링",
     "origin": "nuclear",
     "basis": "원전·발전 설계",
-    "mcapWon": 4112472000000
-  },
-  {
-    "ticker": "051600",
-    "name": "한전KPS",
-    "sector": "nuclear",
-    "chain": "정비·운영지원",
-    "origin": "nuclear",
-    "basis": "발전 정비",
-    "mcapWon": 2061000000000
-  },
-  {
-    "ticker": "083650",
-    "name": "비에이치아이",
-    "sector": "nuclear",
-    "chain": "보조기기·소재",
-    "origin": "nuclear",
-    "basis": "발전 보일러·HRSG",
-    "mcapWon": 1856662500000
+    "mcapWon": 5809440000000
   },
   {
     "ticker": "032820",
@@ -285,7 +267,25 @@
     "chain": "보조기기·소재",
     "origin": "nuclear",
     "basis": "원전 MMIS",
-    "mcapWon": 1836700425560
+    "mcapWon": 2427623798600
+  },
+  {
+    "ticker": "051600",
+    "name": "한전KPS",
+    "sector": "nuclear",
+    "chain": "정비·운영지원",
+    "origin": "nuclear",
+    "basis": "발전 정비",
+    "mcapWon": 2218500000000
+  },
+  {
+    "ticker": "083650",
+    "name": "비에이치아이",
+    "sector": "nuclear",
+    "chain": "보조기기·소재",
+    "origin": "nuclear",
+    "basis": "발전 보일러·HRSG",
+    "mcapWon": 2116595250000
   },
   {
     "ticker": "100840",
@@ -294,7 +294,7 @@
     "chain": "보조기기·소재",
     "origin": "nuclear",
     "basis": "원전·발전 보조기기",
-    "mcapWon": 676261604100
+    "mcapWon": 781733597400
   },
   {
     "ticker": "130660",
@@ -303,7 +303,7 @@
     "chain": "정비·운영지원",
     "origin": "nuclear",
     "basis": "발전 운전·정비",
-    "mcapWon": 391200000000
+    "mcapWon": 442382000000
   },
   {
     "ticker": "006910",
@@ -312,7 +312,7 @@
     "chain": "보조기기·소재",
     "origin": "nuclear",
     "basis": "원전 철구조물·보조기기",
-    "mcapWon": 333100206720
+    "mcapWon": 371912767680
   },
   {
     "ticker": "126720",
@@ -321,7 +321,16 @@
     "chain": "정비·운영지원",
     "origin": "nuclear",
     "basis": "발전설비 정비",
-    "mcapWon": 302863200000
+    "mcapWon": 319292100000
+  },
+  {
+    "ticker": "105840",
+    "name": "우진",
+    "sector": "nuclear",
+    "chain": "보조기기·소재",
+    "origin": "nuclear",
+    "basis": "원전 계측기",
+    "mcapWon": 312659931600
   },
   {
     "ticker": "009830",
@@ -330,7 +339,7 @@
     "chain": "개발·EPC",
     "origin": "renewable",
     "basis": "태양광·케미칼",
-    "mcapWon": 6758020706800
+    "mcapWon": 6701797572800
   },
   {
     "ticker": "010060",
@@ -339,7 +348,7 @@
     "chain": "핵심 소재·부품",
     "origin": "renewable",
     "basis": "태양광 폴리실리콘 지주",
-    "mcapWon": 4247477780000
+    "mcapWon": 4079445692000
   },
   {
     "ticker": "336260",
@@ -348,7 +357,7 @@
     "chain": "수소·연료전지",
     "origin": "renewable",
     "basis": "연료전지",
-    "mcapWon": 2871899885100
+    "mcapWon": 3196093828800
   },
   {
     "ticker": "112610",
@@ -357,7 +366,7 @@
     "chain": "구조물·보조설비",
     "origin": "renewable",
     "basis": "풍력 타워",
-    "mcapWon": 1979947370850
+    "mcapWon": 2226650078400
   },
   {
     "ticker": "475150",
@@ -366,7 +375,7 @@
     "chain": "개발·EPC",
     "origin": "renewable",
     "basis": "신재생 EPC·운영",
-    "mcapWon": 1771484208000
+    "mcapWon": 1768077507600
   },
   {
     "ticker": "322000",
@@ -375,25 +384,7 @@
     "chain": "발전설비 제조",
     "origin": "renewable",
     "basis": "태양광 모듈",
-    "mcapWon": 1555680000000
-  },
-  {
-    "ticker": "100090",
-    "name": "SK오션플랜트",
-    "sector": "renewable",
-    "chain": "구조물·보조설비",
-    "origin": "renewable",
-    "basis": "해상풍력 하부구조",
-    "mcapWon": 865946867940
-  },
-  {
-    "ticker": "456040",
-    "name": "OCI",
-    "sector": "renewable",
-    "chain": "핵심 소재·부품",
-    "origin": "renewable",
-    "basis": "화학·태양광소재",
-    "mcapWon": 709932853500
+    "mcapWon": 1498560000000
   },
   {
     "ticker": "044490",
@@ -402,7 +393,25 @@
     "chain": "구조물·보조설비",
     "origin": "renewable",
     "basis": "해상풍력 플랜지·단조",
-    "mcapWon": 648239144400
+    "mcapWon": 787290442350
+  },
+  {
+    "ticker": "100090",
+    "name": "SK오션플랜트",
+    "sector": "renewable",
+    "chain": "구조물·보조설비",
+    "origin": "renewable",
+    "basis": "해상풍력 하부구조",
+    "mcapWon": 779727049920
+  },
+  {
+    "ticker": "456040",
+    "name": "OCI",
+    "sector": "renewable",
+    "chain": "핵심 소재·부품",
+    "origin": "renewable",
+    "basis": "화학·태양광소재",
+    "mcapWon": 717990099000
   },
   {
     "ticker": "126340",
@@ -411,7 +420,7 @@
     "chain": "수소·연료전지",
     "origin": "renewable",
     "basis": "수소연료전지·슈퍼커패시터",
-    "mcapWon": 426516591600
+    "mcapWon": 479651655200
   },
   {
     "ticker": "271940",
@@ -420,7 +429,7 @@
     "chain": "수소·연료전지",
     "origin": "renewable",
     "basis": "수소 저장용기",
-    "mcapWon": 389277396800
+    "mcapWon": 397992562400
   },
   {
     "ticker": "011930",
@@ -429,7 +438,7 @@
     "chain": "발전설비 제조",
     "origin": "renewable",
     "basis": "전력·플랜트 설비",
-    "mcapWon": 327132592020
+    "mcapWon": 328554024760
   },
   {
     "ticker": "018000",
@@ -438,6 +447,6 @@
     "chain": "발전설비 제조",
     "origin": "renewable",
     "basis": "풍력발전",
-    "mcapWon": 321777872160
+    "mcapWon": 320480380740
   }
 ]

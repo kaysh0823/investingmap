@@ -280,7 +280,7 @@
       "group": "조선",
       "layer": "조선",
       "lane": "shipyard",
-      "mcapWon": 45815574712500,
+      "mcapWon": 50276426775000,
       "isListedKorea": true,
       "legacyId": "hd_hhi"
     },
@@ -295,7 +295,7 @@
       "group": "조선",
       "layer": "조선",
       "lane": "shipyard",
-      "mcapWon": 26596682599200,
+      "mcapWon": 26228986526400,
       "isListedKorea": true,
       "legacyId": "hwo"
     },
@@ -310,7 +310,7 @@
       "group": "조선",
       "layer": "조선",
       "lane": "shipyard",
-      "mcapWon": 24664430926000,
+      "mcapWon": 25867573898000,
       "isListedKorea": true,
       "legacyId": "hd_ksoe"
     },
@@ -340,7 +340,7 @@
       "group": "유지보수·개조",
       "layer": "유지보수·개조",
       "lane": "shipyard",
-      "mcapWon": 9437443330000,
+      "mcapWon": 11073864620000,
       "isListedKorea": true,
       "legacyId": "ship_hd_hyundai_marine_soluti"
     },
@@ -355,7 +355,7 @@
       "group": "엔진·추진",
       "layer": "엔진·추진",
       "lane": "shipyard",
-      "mcapWon": 3805189675200,
+      "mcapWon": 4197391242600,
       "isListedKorea": true,
       "legacyId": "hanwha_eng"
     },
@@ -370,7 +370,7 @@
       "group": "조선",
       "layer": "조선",
       "lane": "shipyard",
-      "mcapWon": 1788265873500,
+      "mcapWon": 1801596929000,
       "isListedKorea": true,
       "legacyId": "ship_daehan_shipbuilding"
     },
@@ -385,7 +385,7 @@
       "group": "엔진·추진",
       "layer": "엔진·추진",
       "lane": "shipyard",
-      "mcapWon": 1702859049000,
+      "mcapWon": 1780878487500,
       "isListedKorea": true,
       "legacyId": "ship_hd_hyundai_marine_engine"
     },
@@ -400,7 +400,7 @@
       "group": "조선",
       "layer": "조선",
       "lane": "shipyard",
-      "mcapWon": 1454657991840,
+      "mcapWon": 1443822550560,
       "isListedKorea": true,
       "legacyId": "hj_ship"
     },
@@ -415,7 +415,7 @@
       "group": "탱크·보냉",
       "layer": "탱크·보냉",
       "lane": "shipyard",
-      "mcapWon": 1165304759300,
+      "mcapWon": 1121379746200,
       "isListedKorea": true,
       "legacyId": "ship_hankukcarbon"
     },
@@ -430,7 +430,7 @@
       "group": "엔진·추진",
       "layer": "엔진·추진",
       "lane": "shipyard",
-      "mcapWon": 945486883650,
+      "mcapWon": 995671962400,
       "isListedKorea": true,
       "legacyId": "stxe"
     },
@@ -445,7 +445,7 @@
       "group": "배관·의장",
       "layer": "배관·의장",
       "lane": "shipyard",
-      "mcapWon": 819294679400,
+      "mcapWon": 910917585200,
       "isListedKorea": true,
       "legacyId": "ship_sung_kwang_bend_co_ltd"
     },
@@ -460,7 +460,7 @@
       "group": "배관·의장",
       "layer": "배관·의장",
       "lane": "shipyard",
-      "mcapWon": 676428378300,
+      "mcapWon": 732042948600,
       "isListedKorea": true,
       "legacyId": "ship_t_k_corporation"
     },
@@ -475,7 +475,7 @@
       "group": "선체·구조물",
       "layer": "선체·구조물",
       "lane": "shipyard",
-      "mcapWon": 584412407680,
+      "mcapWon": 590665847840,
       "isListedKorea": true,
       "legacyId": "ship_sejin_heavy_industries_c"
     },
@@ -490,7 +490,7 @@
       "group": "탱크·보냉",
       "layer": "탱크·보냉",
       "lane": "shipyard",
-      "mcapWon": 514619717040,
+      "mcapWon": 503523604260,
       "isListedKorea": true,
       "legacyId": "ship_dongsung_finetec_co_ltd"
     },
@@ -505,7 +505,7 @@
       "group": "선체·구조물",
       "layer": "선체·구조물",
       "lane": "shipyard",
-      "mcapWon": 470871497460,
+      "mcapWon": 487206406120,
       "isListedKorea": true,
       "legacyId": "ship_hyundai_hyms_co_ltd"
     },
@@ -520,7 +520,7 @@
       "group": "배관·의장",
       "layer": "배관·의장",
       "lane": "shipyard",
-      "mcapWon": 402470524800,
+      "mcapWon": 406589375200,
       "isListedKorea": true,
       "legacyId": "ship_hy_lok_corporation"
     },

@@ -61,6 +61,7 @@
     "backfill:investor-net": "node scripts/backfill_investor_net.mjs",
     "sync:foreign-ratio": "node scripts/sync_foreign_ratio_to_supabase.mjs",
     "backfill:foreign-ratio": "node scripts/backfill_foreign_ratio.mjs",
+    "backfill:daily-ohlc": "node scripts/backfill_daily_ohlc_krxweb.mjs",
     "audit:mcap-universe": "node scripts/audit_mcap_universe.mjs",
     "triage:mcap-additions": "node scripts/triage_mcap_additions.mjs",
     "report:coverage-changes": "node scripts/report_coverage_changes.mjs",

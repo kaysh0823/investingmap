@@ -6,10 +6,16 @@ on:
   schedule:
     # KST 09:00–14:50 (UTC 00:00–05:50), every 10 min, Mon–Fri
     - cron: '*/10 0-5 * * 1-5'
-    # KST 15:00–15:30 (UTC 06:00–06:30), every 10 min — stops before 06:40 UTC (15:40 KST)
+    # KST 15:00–15:30 (UTC 06:00–06:30), every 10 min
     - cron: '0,10,20,30 6 * * 1-5'
-    # KST 16:00 (UTC 07:00), Mon–Fri — post-close final snapshot
+    # KST 15:40 (UTC 06:40), Mon–Fri — regular close → seed daily OHLC before aftermarket
+    - cron: '40 6 * * 1-5'
+    # KST 16:00 (UTC 07:00), Mon–Fri — post-close / aftermarket open snapshot
     - cron: '0 7 * * 1-5'
+    # KST 16:00–19:50 (UTC 07:00–10:50), every 10 min — aftermarket continuous auction
+    - cron: '*/10 7-10 * * 1-5'
+    # KST 20:00 (UTC 11:00), Mon–Fri — aftermarket close snapshot
+    - cron: '0 11 * * 1-5'
   repository_dispatch:
     types: [sync-quotes]
   workflow_dispatch:
@@ -41,4 +47,6 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
         run: node scripts/sync_quotes_to_supabase.mjs

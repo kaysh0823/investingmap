@@ -75,7 +75,7 @@
       "role": "셀 제조",
       "group": "셀 제조",
       "layer": "셀 제조",
-      "mcapWon": 83889000000000,
+      "mcapWon": 84240000000000,
       "isListedKorea": true,
       "legacyId": "lges"
     },
@@ -89,7 +89,7 @@
       "role": "셀 제조",
       "group": "셀 제조",
       "layer": "셀 제조",
-      "mcapWon": 44160870440000,
+      "mcapWon": 43919113850000,
       "isListedKorea": true,
       "legacyId": "sdi"
     },
@@ -103,7 +103,7 @@
       "role": "셀 제조",
       "group": "셀 제조",
       "layer": "셀 제조",
-      "mcapWon": 23380000580400,
+      "mcapWon": 24478843702400,
       "isListedKorea": true,
       "legacyId": "skinn"
     },
@@ -117,7 +117,7 @@
       "role": "양극재·전구체",
       "group": "양극재·전구체",
       "layer": "양극재·전구체",
-      "mcapWon": 19907040726000,
+      "mcapWon": 19271709639000,
       "isListedKorea": true,
       "legacyId": "lg_chem"
     },
@@ -131,7 +131,7 @@
       "role": "양극재·전구체",
       "group": "양극재·전구체",
       "layer": "양극재·전구체",
-      "mcapWon": 16330525992000,
+      "mcapWon": 16481734566000,
       "isListedKorea": true,
       "legacyId": "posfutu"
     },
@@ -145,7 +145,7 @@
       "role": "양극재·전구체",
       "group": "양극재·전구체",
       "layer": "양극재·전구체",
-      "mcapWon": 11187954924800,
+      "mcapWon": 11459507228800,
       "isListedKorea": true,
       "legacyId": "ecopro"
     },
@@ -159,7 +159,7 @@
       "role": "양극재·전구체",
       "group": "양극재·전구체",
       "layer": "양극재·전구체",
-      "mcapWon": 10370026004000,
+      "mcapWon": 10790696870200,
       "isListedKorea": true,
       "legacyId": "eprobm"
     },
@@ -173,7 +173,7 @@
       "role": "양극재·전구체",
       "group": "양극재·전구체",
       "layer": "양극재·전구체",
-      "mcapWon": 4935049500600,
+      "mcapWon": 4882159440000,
       "isListedKorea": true,
       "legacyId": "lnf"
     },
@@ -187,7 +187,7 @@
       "role": "집전체·기타 소재",
       "group": "집전체·기타 소재",
       "layer": "집전체·기타 소재",
-      "mcapWon": 4181136521400,
+      "mcapWon": 4444007500800,
       "isListedKorea": true,
       "legacyId": "skc"
     },
@@ -201,7 +201,7 @@
       "role": "양극재·전구체",
       "group": "양극재·전구체",
       "layer": "양극재·전구체",
-      "mcapWon": 2538677239500,
+      "mcapWon": 2570543481000,
       "isListedKorea": true,
       "legacyId": "ecopro_m"
     },
@@ -215,7 +215,7 @@
       "role": "집전체·기타 소재",
       "group": "집전체·기타 소재",
       "layer": "집전체·기타 소재",
-      "mcapWon": 1929667311550,
+      "mcapWon": 2209822538600,
       "isListedKorea": true,
       "legacyId": "iljinm"
     },
@@ -229,7 +229,7 @@
       "role": "전해액·전해질",
       "group": "전해액·전해질",
       "layer": "전해액·전해질",
-      "mcapWon": 1340691625000,
+      "mcapWon": 1427568442300,
       "isListedKorea": true,
       "legacyId": "fosung"
     },
@@ -243,7 +243,7 @@
       "role": "분리막",
       "group": "분리막",
       "layer": "분리막",
-      "mcapWon": 1331493988000,
+      "mcapWon": 1365026699000,
       "isListedKorea": true,
       "legacyId": "skiet"
     },
@@ -257,7 +257,7 @@
       "role": "양극재·전구체",
       "group": "양극재·전구체",
       "layer": "양극재·전구체",
-      "mcapWon": 1295368269000,
+      "mcapWon": 1335225754200,
       "isListedKorea": true,
       "legacyId": "energy_cosmoam_t"
     },
@@ -271,23 +271,9 @@
       "role": "셀 제조",
       "group": "셀 제조",
       "layer": "셀 제조",
-      "mcapWon": 892584000000,
+      "mcapWon": 853776000000,
       "isListedKorea": true,
       "legacyId": "energy_sebang_global_battery"
-    },
-    {
-      "id": "krx:033790",
-      "type": "listed_company",
-      "ticker": "033790",
-      "nameKo": "피노",
-      "nameEn": "FINO INC.",
-      "market": "KOSDAQ",
-      "role": "제조·검사 장비",
-      "group": "제조·검사 장비",
-      "layer": "제조·검사 장비",
-      "mcapWon": 849883247400,
-      "isListedKorea": true,
-      "legacyId": "battery_fino_inc"
     },
     {
       "id": "krx:137400",
@@ -299,9 +285,37 @@
       "role": "제조·검사 장비",
       "group": "제조·검사 장비",
       "layer": "제조·검사 장비",
-      "mcapWon": 697691939600,
+      "mcapWon": 701245548800,
       "isListedKorea": true,
       "legacyId": "energy_people_technology_inc"
+    },
+    {
+      "id": "krx:033790",
+      "type": "listed_company",
+      "ticker": "033790",
+      "nameKo": "피노",
+      "nameEn": "FINO INC.",
+      "market": "KOSDAQ",
+      "role": "제조·검사 장비",
+      "group": "제조·검사 장비",
+      "layer": "제조·검사 장비",
+      "mcapWon": 633246341200,
+      "isListedKorea": true,
+      "legacyId": "battery_fino_inc"
+    },
+    {
+      "id": "krx:336370",
+      "type": "listed_company",
+      "ticker": "336370",
+      "nameKo": "솔루스첨단소재",
+      "nameEn": "Solus Advanced Materials",
+      "market": "KOSPI",
+      "role": "집전체·기타 소재",
+      "group": "집전체·기타 소재",
+      "layer": "집전체·기타 소재",
+      "mcapWon": 597506655980,
+      "isListedKorea": true,
+      "legacyId": "energy_solus_advanced_materials"
     },
     {
       "id": "krx:222080",
@@ -313,7 +327,7 @@
       "role": "제조·검사 장비",
       "group": "제조·검사 장비",
       "layer": "제조·검사 장비",
-      "mcapWon": 587240087200,
+      "mcapWon": 583351080000,
       "isListedKorea": true,
       "legacyId": "battery_sfa_nexel"
     },
@@ -327,51 +341,9 @@
       "role": "집전체·기타 소재",
       "group": "집전체·기타 소재",
       "layer": "집전체·기타 소재",
-      "mcapWon": 576322977000,
+      "mcapWon": 579388524750,
       "isListedKorea": true,
       "legacyId": "energy_advanced_nano_products_c"
-    },
-    {
-      "id": "krx:336370",
-      "type": "listed_company",
-      "ticker": "336370",
-      "nameKo": "솔루스첨단소재",
-      "nameEn": "Solus Advanced Materials",
-      "market": "KOSPI",
-      "role": "집전체·기타 소재",
-      "group": "집전체·기타 소재",
-      "layer": "집전체·기타 소재",
-      "mcapWon": 523081620100,
-      "isListedKorea": true,
-      "legacyId": "energy_solus_advanced_materials"
-    },
-    {
-      "id": "krx:278280",
-      "type": "listed_company",
-      "ticker": "278280",
-      "nameKo": "천보",
-      "nameEn": "Chunbo Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "전해액·전해질",
-      "group": "전해액·전해질",
-      "layer": "전해액·전해질",
-      "mcapWon": 486445092500,
-      "isListedKorea": true,
-      "legacyId": "cheombo"
-    },
-    {
-      "id": "krx:365340",
-      "type": "listed_company",
-      "ticker": "365340",
-      "nameKo": "성일하이텍",
-      "nameEn": "SungEel HiTech",
-      "market": "KOSDAQ",
-      "role": "재사용·재활용",
-      "group": "재사용·재활용",
-      "layer": "재사용·재활용",
-      "mcapWon": 480665478000,
-      "isListedKorea": true,
-      "legacyId": "energy_sungeel_hitech_co_ltd"
     },
     {
       "id": "krx:348370",
@@ -383,9 +355,37 @@
       "role": "전해액·전해질",
       "group": "전해액·전해질",
       "layer": "전해액·전해질",
-      "mcapWon": 453557575800,
+      "mcapWon": 482041868000,
       "isListedKorea": true,
       "legacyId": "energy_enchem_co_ltd"
+    },
+    {
+      "id": "krx:365340",
+      "type": "listed_company",
+      "ticker": "365340",
+      "nameKo": "성일하이텍",
+      "nameEn": "SungEel HiTech",
+      "market": "KOSDAQ",
+      "role": "재사용·재활용",
+      "group": "재사용·재활용",
+      "layer": "재사용·재활용",
+      "mcapWon": 470974641750,
+      "isListedKorea": true,
+      "legacyId": "energy_sungeel_hitech_co_ltd"
+    },
+    {
+      "id": "krx:278280",
+      "type": "listed_company",
+      "ticker": "278280",
+      "nameKo": "천보",
+      "nameEn": "Chunbo Co., Ltd.",
+      "market": "KOSDAQ",
+      "role": "전해액·전해질",
+      "group": "전해액·전해질",
+      "layer": "전해액·전해질",
+      "mcapWon": 467452903750,
+      "isListedKorea": true,
+      "legacyId": "cheombo"
     },
     {
       "id": "krx:005420",
@@ -397,7 +397,7 @@
       "role": "원료·정제",
       "group": "원료·정제",
       "layer": "원료·정제",
-      "mcapWon": 395988830680,
+      "mcapWon": 406743134520,
       "isListedKorea": true,
       "legacyId": "energy_cosmochemicalco"
     },
@@ -411,7 +411,7 @@
       "role": "모듈·팩·시스템 부품",
       "group": "모듈·팩·시스템 부품",
       "layer": "모듈·팩·시스템 부품",
-      "mcapWon": 360784850800,
+      "mcapWon": 382540721200,
       "isListedKorea": true,
       "legacyId": "energy_han_jung_ncs_co_ltd"
     },
@@ -425,7 +425,7 @@
       "role": "분리막",
       "group": "분리막",
       "layer": "분리막",
-      "mcapWon": 340800460080,
+      "mcapWon": 339446734320,
       "isListedKorea": true,
       "legacyId": "energy_w_scope_chungju_plant_co"
     },
@@ -1892,23 +1892,6 @@
       "edgeOrigin": "legacyMigrated"
     },
     {
-      "id": "legacy-278280-373220-supply",
-      "source": "krx:278280",
-      "target": "krx:373220",
-      "type": "supplies_material_to",
-      "direction": "source_to_target",
-      "status": "inferred",
-      "labelKo": "foil 공급",
-      "labelEn": "Foil supply",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-23",
-      "defaultHidden": true,
-      "noteKo": "레거시 라벨만 존재 — 공식 URL 없어 inferred.",
-      "noteEn": "Legacy label only — inferred without official URL.",
-      "edgeOrigin": "legacyMigrated"
-    },
-    {
       "id": "peer-365340-catl",
       "source": "krx:365340",
       "target": "global:catl",
@@ -1936,6 +1919,23 @@
       "confidence": "low",
       "lastVerifiedAt": "2026-08-23",
       "defaultHidden": true,
+      "edgeOrigin": "legacyMigrated"
+    },
+    {
+      "id": "legacy-278280-373220-supply",
+      "source": "krx:278280",
+      "target": "krx:373220",
+      "type": "supplies_material_to",
+      "direction": "source_to_target",
+      "status": "inferred",
+      "labelKo": "foil 공급",
+      "labelEn": "Foil supply",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-23",
+      "defaultHidden": true,
+      "noteKo": "레거시 라벨만 존재 — 공식 URL 없어 inferred.",
+      "noteEn": "Legacy label only — inferred without official URL.",
       "edgeOrigin": "legacyMigrated"
     },
     {

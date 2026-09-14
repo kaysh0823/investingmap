@@ -58,6 +58,13 @@ assert(parsed.high === 273000, `sise high: ${parsed.high}`);
 assert(parsed.low === 252500, `sise low: ${parsed.low}`);
 assert(parsed.volume === 26093355, `sise volume: ${parsed.volume}`);
 
+// When 장마감 and last is present, close falls back to last (regular close).
+const closedWithLast = parseNaverSiseHtml(
+  CLOSED_HTML + '<span id="_nowVal">273,000</span>',
+);
+assert(closedWithLast.close === 273000, `장마감 close=last: ${closedWithLast.close}`);
+assert(closedWithLast.marketClosed === true, 'sise marketClosed');
+
 const mobile = parseNaverMobileIntegration({
   totalInfos: [
     { code: 'openPrice', value: '1,598,000' },

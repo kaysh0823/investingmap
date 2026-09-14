@@ -121,11 +121,12 @@ function parsePerPbr(html) {
 
 /**
  * Session day OHLCV from PC sise header (<dd>시가…</dd>) or table ids.
+ * Close is the regular-session close when present (not aftermarket last).
  * @param {string} html
- * @returns {{ open: number|null, high: number|null, low: number|null, volume: number|null }}
+ * @returns {{ open: number|null, high: number|null, low: number|null, close: number|null, volume: number|null }}
  */
 function parseSessionOhlcv(html) {
-  const out = { open: null, high: null, low: null, volume: null };
+  const out = { open: null, high: null, low: null, close: null, volume: null };
   if (!html || typeof html !== 'string') return out;
 
   const ddPack = html.match(
@@ -154,11 +155,19 @@ function parseSessionOhlcv(html) {
     html.match(/id="_quant"[^>]*>([^<]+)/) ||
     html.match(/id="_volume"[^>]*>([^<]+)/) ||
     html.match(/>거래량<\/[^>]*>[\s\S]{0,120}?<span[^>]*class="tah p11"[^>]*>([0-9,]+)/);
+  const closeM =
+    html.match(/id="_n_close"[^>]*>([^<]+)/) ||
+    html.match(/id="_close"[^>]*>([^<]+)/) ||
+    html.match(/<dd>종가\s*([\d,]+)<\/dd>/) ||
+    html.match(/<dd>정규장\s*종가\s*([\d,]+)<\/dd>/) ||
+    html.match(/>종가<\/[^>]*>[\s\S]{0,120}?<span[^>]*class="tah p11"[^>]*>([0-9,]+)/) ||
+    html.match(/>정규장\s*종가<\/[^>]*>[\s\S]{0,120}?(?:<span[^>]*>)?\s*([0-9,]+)/);
 
   if (out.open == null && openM) out.open = parseKoreanNumber(openM[1]);
   if (out.high == null && highM) out.high = parseKoreanNumber(highM[1]);
   if (out.low == null && lowM) out.low = parseKoreanNumber(lowM[1]);
   if (out.volume == null && volM) out.volume = parseKoreanNumber(volM[1]);
+  if (out.close == null && closeM) out.close = parseKoreanNumber(closeM[1]);
   return out;
 }
 
@@ -220,6 +229,7 @@ export function parseNaverSiseHtml(html) {
       open: null,
       high: null,
       low: null,
+      close: null,
       volume: null,
       high52w: null,
       low52w: null,
@@ -286,12 +296,17 @@ export function parseNaverSiseHtml(html) {
   const turnoverWon = parseTurnoverWon(html);
   const { tradeDate, marketClosed } = parseNaverTradeMeta(html);
 
+  // Regular-session close: explicit 종가 field, else last when the page says 장마감.
+  let close = session.close;
+  if (close == null && marketClosed === true && last != null) close = last;
+
   return {
     last,
     prevClose,
     open: session.open,
     high: session.high,
     low: session.low,
+    close,
     volume: session.volume,
     high52w,
     low52w,
@@ -430,6 +445,7 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   if (naver.open != null && (preferLast || out.open == null)) out.open = naver.open;
   if (naver.high != null && (preferLast || out.high == null)) out.high = naver.high;
   if (naver.low != null && (preferLast || out.low == null)) out.low = naver.low;
+  if (naver.close != null && (preferLast || out.close == null)) out.close = naver.close;
   if (naver.volume != null && (preferLast || out.volume == null)) out.volume = naver.volume;
   if (naver.chg1dPct != null && (preferLast || out.chg1dPct == null)) out.chg1dPct = naver.chg1dPct;
   if (naver.high52w != null && (preferLast || out.high52w == null)) out.high52w = naver.high52w;
