@@ -309,8 +309,8 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j) {
-          hubSectorReturnsMeta.mcapRecentDd = j.mcapRecentDd || null;
-          hubSectorReturnsMeta.effectiveAnchorDd = j.effectiveAnchorDd || null;
+          hubSectorReturnsMeta.mcapRecentDd = newerYmd(hubSectorReturnsMeta.mcapRecentDd, j.mcapRecentDd);
+          hubSectorReturnsMeta.effectiveAnchorDd = newerYmd(hubSectorReturnsMeta.effectiveAnchorDd, j.effectiveAnchorDd);
           if (j.sectors) mergeSectorsPayload(j, { onlyMissing: true });
         }
       })
@@ -345,6 +345,13 @@
     return ymd && /^\d{8}$/.test(ymd)
       ? ymd.slice(0, 4) + '-' + ymd.slice(4, 6) + '-' + ymd.slice(6, 8)
       : '';
+  }
+
+  /** Prefer the newer YYYYMMDD; invalid values lose to a valid peer. */
+  function newerYmd(a, b) {
+    if (!/^\d{8}$/.test(b || '')) return a;
+    if (!/^\d{8}$/.test(a || '')) return b;
+    return b > a ? b : a;
   }
 
   function formatSessionStatus(lang) {
@@ -1159,6 +1166,8 @@
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
         // Fresh API wins over static hub_sector_returns.json (onlyMissing merge).
+        hubSectorReturnsMeta.mcapRecentDd = newerYmd(hubSectorReturnsMeta.mcapRecentDd, j.mcapRecentDd);
+        hubSectorReturnsMeta.effectiveAnchorDd = newerYmd(hubSectorReturnsMeta.effectiveAnchorDd, j.effectiveAnchorDd);
         mergeSectorsPayload(j);
         sectorsReady = true;
         var ok = j.sectors && Object.values(j.sectors).some(function (s) {
@@ -1176,6 +1185,7 @@
         sectorsAuthFetched = true;
         delete sectorFetchInFlight[retKey];
         if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
+        // Re-paint session label after meta (mcapRecentDd) may have advanced.
         renderPulse(lang);
         renderLabels(lang);
       });
