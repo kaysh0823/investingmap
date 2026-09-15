@@ -38,6 +38,7 @@
   var sectorsAuthFetched = false;
   // horizon param → { sectorId: [{t,v}, ...] }
   var trendByHorizon = {};
+  var trendMetaByHorizon = {};
   var trendsLoadingHorizon = null;
   var trendFetchInFlight = {};
   var rsTop10Ready = false;
@@ -119,6 +120,8 @@
       pulseColCount: '종목 수',
       pulseLoading: '로딩중…',
       pulseStatusLoading: '계산 중…',
+      pulseTrendAccumulating: '장중 데이터 누적 중',
+      pulseTrendSynthesized: '현재가',
       rsTopTitle: 'RS Top 20',
       rsTopSub: 'KRX 전종목 · 20·50·120일 수익률 백분위 평균',
       mcapTopTitle: '시총 Top 20',
@@ -156,6 +159,8 @@
       pulseColCount: 'Companies',
       pulseLoading: 'Loading…',
       pulseStatusLoading: 'Calculating…',
+      pulseTrendAccumulating: 'Building intraday series',
+      pulseTrendSynthesized: 'Live',
       rsTopTitle: 'RS Top 20',
       rsTopSub: 'Full KRX · avg of 20/50/120-day return percentiles',
       mcapTopTitle: 'Market cap Top 20',
@@ -208,8 +213,9 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-dashboard-css-v16')) return;
-    var oldCss = document.getElementById('im-hub-dashboard-css-v15')
+    if (document.getElementById('im-hub-dashboard-css-v17')) return;
+    var oldCss = document.getElementById('im-hub-dashboard-css-v16')
+      || document.getElementById('im-hub-dashboard-css-v15')
       || document.getElementById('im-hub-dashboard-css-v14')
       || document.getElementById('im-hub-dashboard-css-v13')
       || document.getElementById('im-hub-dashboard-css-v12')
@@ -244,6 +250,9 @@
       '.hub-pulse-card-ret.is-flat{color:var(--text-muted)}' +
       '.hub-pulse-card-ret.is-loading{font-size:12px;font-weight:600;color:var(--text-muted)}' +
       '.hub-pulse-spark{display:block;width:100%;max-width:72px;height:24px;margin:0 auto}' +
+      '.hub-pulse-spark-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;min-height:28px}' +
+      '.hub-pulse-spark-hint{font-size:8px;line-height:1.2;color:var(--text-muted);text-align:center;max-width:76px}' +
+      '.hub-pulse-spark-badge{font-size:8px;font-weight:700;letter-spacing:.02em;color:var(--accent,#58a6ff);line-height:1.2}' +
       '.hub-pulse-mcap-label{font-size:9px;font-weight:600;color:var(--text-muted);letter-spacing:.02em;line-height:1.2}' +
       '.hub-pulse-mcap-val{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;word-break:keep-all}' +
       '.hub-pulse-count{font-size:10px;color:var(--text-muted)}' +
@@ -297,7 +306,7 @@
       '}'
     ;
     var el = document.createElement('style');
-    el.id = 'im-hub-dashboard-css-v16';
+    el.id = 'im-hub-dashboard-css-v17';
     el.textContent = css;
     document.head.appendChild(el);
   }
@@ -644,18 +653,26 @@
     return 'is-flat';
   }
 
-  function sparklineSvg(series, pct, loading) {
+  function sparklineSvg(series, pct, loading, opts) {
+    opts = opts || {};
     var placeholder =
       '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
       '<polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg>';
-    if (loading || !series || series.length < 2) return placeholder;
+    if (loading || !series || !series.length) return placeholder;
     var vals = [];
     for (var i = 0; i < series.length; i++) {
       var v = series[i] && series[i].v;
       if (v == null || !isFinite(v)) continue;
       vals.push(v);
     }
-    if (vals.length < 2) return placeholder;
+    if (!vals.length) return placeholder;
+    var colorBasis = pct != null && isFinite(pct) ? pct : vals[vals.length - 1];
+    var color = colorBasis == null ? '#8b949e' : colorBasis >= 0 ? '#3fb950' : '#f85149';
+    // Single point: draw a dot (synthesized / first intraday sample).
+    if (vals.length === 1) {
+      return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
+        '<circle cx="28" cy="11" r="3.2" fill="' + color + '"/></svg>';
+    }
     var min = vals[0];
     var max = vals[0];
     for (var j = 1; j < vals.length; j++) {
@@ -673,9 +690,6 @@
       var y = pad + (1 - (vals[k] - min) / span) * (h - 2 * pad);
       pts.push(x.toFixed(1) + ',' + y.toFixed(1));
     }
-    var end = vals[vals.length - 1];
-    var colorBasis = pct != null && isFinite(pct) ? pct : end;
-    var color = colorBasis == null ? '#8b949e' : colorBasis >= 0 ? '#3fb950' : '#f85149';
     return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
       '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts.join(' ') + '"/></svg>';
   }
@@ -778,7 +792,11 @@
   function extractTrendMap(j) {
     if (!j || j.error) return {};
     if (j.trends && typeof j.trends === 'object') return j.trends;
-    var meta = { horizon: 1, asOf: 1, tradeDate: 1, regularSession: 1, error: 1, message: 1 };
+    var meta = {
+      horizon: 1, asOf: 1, tradeDate: 1, regularSession: 1, sessionOpen: 1,
+      numeratorMode: 1, anchorDd: 1, refsRecentDd: 1, k: 1, synthesized: 1,
+      source: 1, stale: 1, error: 1, message: 1,
+    };
     var out = {};
     for (var k in j) {
       if (!Object.prototype.hasOwnProperty.call(j, k) || meta[k]) continue;
@@ -791,8 +809,9 @@
     var h = retKeyToHorizonParam(retKey);
     var map = trendByHorizon[h];
     if (!map) return false;
+    var minLen = h === '1d' ? 1 : 2;
     return Object.keys(map).some(function (sid) {
-      return map[sid] && map[sid].length >= 2;
+      return map[sid] && map[sid].length >= minLen;
     });
   }
 
@@ -802,12 +821,26 @@
     if (trendFetchInFlight[horizonParam]) return trendFetchInFlight[horizonParam];
     var url = hubApiUrl('/api/hub_sector_trend?horizon=' + encodeURIComponent(horizonParam));
     if (!url) return Promise.resolve();
+    // Always bust browser/CDN stale series; replace map only when asOf is newer/equal.
+    url += (url.indexOf('?') >= 0 ? '&' : '?') + 'cb=' + Date.now();
     if (opts.bust) url += '&_t=' + Date.now();
     if (!opts.quiet) trendsLoadingHorizon = horizonParam;
     trendFetchInFlight[horizonParam] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
       .then(function (j) {
         if (j && j.error) throw new Error(j.error);
-        trendByHorizon[horizonParam] = extractTrendMap(j);
+        var prevMeta = trendMetaByHorizon[horizonParam] || {};
+        var nextAsOf = j && j.asOf ? String(j.asOf) : '';
+        var prevAsOf = prevMeta.asOf ? String(prevMeta.asOf) : '';
+        if (!prevAsOf || !nextAsOf || nextAsOf >= prevAsOf) {
+          trendByHorizon[horizonParam] = extractTrendMap(j);
+          trendMetaByHorizon[horizonParam] = {
+            asOf: j.asOf || null,
+            synthesized: !!j.synthesized,
+            source: j.source || null,
+            sessionOpen: j.sessionOpen,
+            anchorDd: j.anchorDd || null,
+          };
+        }
       })
       .catch(function () {
         if (!trendByHorizon[horizonParam]) trendByHorizon[horizonParam] = {};
@@ -870,7 +903,9 @@
       var isLoading = !sectorsReady || (sectorsLoadingHorizon === retKey && retPct == null);
       var horizonParam = retKeyToHorizonParam(retKey);
       var series = (trendByHorizon[horizonParam] || {})[sid] || null;
-      var sparkLoading = isLoading || (trendsLoadingHorizon === horizonParam && !(series && series.length >= 2));
+      var tMeta = trendMetaByHorizon[horizonParam] || {};
+      var minSpark = horizonParam === '1d' ? 1 : 2;
+      var sparkLoading = isLoading || (trendsLoadingHorizon === horizonParam && !(series && series.length >= minSpark));
       var cls = 'hub-pulse-card-ret is-flat';
       var retText;
       if (isLoading) {
@@ -888,10 +923,24 @@
         '<div class="hub-pulse-mcap-label">' + labels.pulseMcapLabel + '</div>' +
         '<div class="hub-pulse-mcap-val">' + formatMcapWithWeight(sectorMcap, weightPct, lang) + '</div>' +
         '<div class="hub-pulse-count">' + countLabel + '</div>';
+      var sparkHint = '';
+      if (!sparkLoading && series && series.length === 1 && horizonParam === '1d') {
+        sparkHint = '<div class="hub-pulse-spark-hint">' + labels.pulseTrendAccumulating + '</div>';
+      }
+      var sparkBadge = '';
+      if (!sparkLoading && (tMeta.synthesized || (series && series.some(function (p) { return p && p.synthesized; })))) {
+        sparkBadge = '<div class="hub-pulse-spark-badge">' + labels.pulseTrendSynthesized + '</div>';
+      }
+      var sparkBlock =
+        '<div class="hub-pulse-spark-wrap">' +
+        sparklineSvg(series, retPct, sparkLoading) +
+        sparkBadge +
+        sparkHint +
+        '</div>';
       return '<a class="hub-pulse-card" href="' + href + '">' +
         '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">' + (meta.icon || '') + '</span><span>' + label + '</span></div>' +
         '<div class="' + cls + '">' + retText + '</div>' +
-        sparklineSvg(series, retPct, sparkLoading) +
+        sparkBlock +
         mcapBlock +
         '</a>';
     }).join('');

@@ -1,6 +1,7 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_sector_trend?horizon=20d
- * 1d → sector_intraday_returns (stock-aggregate); else → hub_trend mcap series.
+ * 1d → sector_intraday_returns + live tip / synthesized point (== hub_sectors 1D);
+ * else → hub_trend mcap series.
  */
 
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
@@ -14,7 +15,7 @@ import {
 } from '../lib/hub_api_cache.mjs';
 import { buildHubSectorTrendPayload } from '../lib/hub_sector_trend.mjs';
 
-const CACHE_VERSION = '/api/hub_sector_trend/cache/v7';
+const CACHE_VERSION = '/api/hub_sector_trend/cache/v8';
 
 function trendMaxAge(horizon, now = new Date()) {
   const session = krxSessionInfo(now);
@@ -61,14 +62,22 @@ export async function onRequest(context) {
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubSectorTrendPayload(hubIndex, env, horizon);
-    // Flatten to { sectorId: [{t,v}] } plus light meta for clients that ignore extras.
+    const payload = await buildHubSectorTrendPayload(hubIndex, env, horizon, new Date(), request);
+    // Flatten to { sectorId: [{t,v}] } plus hub_sectors-aligned meta.
     const bodyObj = {
       ...payload.trends,
       horizon: payload.horizon,
       asOf: payload.asOf,
       tradeDate: payload.tradeDate,
-      regularSession: session.regular,
+      regularSession: payload.regularSession ?? session.regular,
+      sessionOpen: payload.sessionOpen ?? !!(session.regular || session.aftermarket),
+      numeratorMode: payload.numeratorMode ?? null,
+      anchorDd: payload.anchorDd ?? null,
+      refsRecentDd: payload.refsRecentDd ?? null,
+      k: payload.k ?? null,
+      synthesized: !!payload.synthesized,
+      source: payload.source || null,
+      stale: !!payload.stale,
     };
     const maxAge = trendMaxAge(horizon);
     const body = JSON.stringify(bodyObj);

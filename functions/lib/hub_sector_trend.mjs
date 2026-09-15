@@ -1,11 +1,18 @@
 /**
- * Hub sector sparkline: 1d from sector_intraday_returns (stock-aggregate);
- * longer horizons still use hub_trend mcap series (locked end to card %).
+ * Hub sector sparkline: 1d from sector_intraday_returns (stock-aggregate) with
+ * live tip / synthesized single-point fallback so tip == /api/hub_sectors 1D.
+ * Longer horizons still use hub_trend mcap series (locked end to card %).
  */
 import { kstYmdDash, krxSessionInfo } from './krx_session.mjs';
 import { fetchSupabaseJson, getSupabaseConfig } from './supabase_hub.mjs';
-import { normalizeSectorHorizon, HORIZON_RET_KEY } from './hub_api_cache.mjs';
-import { SECTOR_ORDER } from './hub_dashboard_core.mjs';
+import { normalizeSectorHorizon } from './hub_api_cache.mjs';
+import {
+  SECTOR_ORDER,
+  listHubCompanies,
+  normalizeTicker,
+} from './hub_dashboard_core.mjs';
+import { aggregateSectorReturns } from './returns_core.mjs';
+import { loadReturnSource } from './hub_returns_source.mjs';
 import {
   buildHubTrendPayload,
   downsampleTrend,
@@ -50,32 +57,83 @@ export function normalizeMcapSeries(rows) {
   }));
 }
 
-async function buildIntradayReturnsPayload(env, tradeDateDash, now = new Date()) {
-  const config = getSupabaseConfig(env);
-  const asOf = now.toISOString();
-  const session = krxSessionInfo(now);
-  if (!config) {
-    return {
-      horizon: '1d',
-      asOf,
-      tradeDate: tradeDateDash,
-      regularSession: !!session.regular,
-      sessionOpen: !!(session.regular || session.aftermarket),
-      trends: {},
-      source: 'sector_intraday_returns',
-    };
+function basDdToDash(basDd) {
+  const s = String(basDd || '').replace(/-/g, '');
+  if (s.length !== 8) return '';
+  return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+}
+
+function tipTimestamp(sessionOpen, anchorDash, now = new Date()) {
+  if (sessionOpen) return now.toISOString();
+  // Official tip locked at regular close 15:30 KST.
+  return `${anchorDash}T15:30:00+09:00`;
+}
+
+/**
+ * Cap-weighted 1D by sector from the shared return source (same as hub_sectors).
+ * @returns {{ bySector: Map<string, number>, meta: object, k: number }}
+ */
+async function computeLiveSector1d(hubIndex, env, request, now = new Date()) {
+  const tickers = listHubCompanies(hubIndex)
+    .map((c) => normalizeTicker(c.ticker))
+    .filter(Boolean);
+  const source = await loadReturnSource({ env, request, tickers });
+  const k = source.meta?.k ?? 0;
+  const bySector = new Map();
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors?.[sid];
+    if (!block) continue;
+    const members = [];
+    for (const c of block.companies || []) {
+      const t = normalizeTicker(c.ticker);
+      const src = t ? source.byTicker[t] : null;
+      if (!src || src.shares == null || !(src.shares > 0)) continue;
+      members.push({
+        numerator: src.numerator,
+        closes: src.closes,
+        k,
+        shares: src.shares,
+      });
+    }
+    const agg = aggregateSectorReturns(members);
+    if (agg.chg1dPct != null) bySector.set(sid, agg.chg1dPct);
   }
+  const session = krxSessionInfo(now);
+  const sessionOpen = source.meta?.sessionOpen ?? !!(session.regular || session.aftermarket);
+  return {
+    bySector,
+    meta: {
+      asOf: source.meta?.asOf || now.toISOString(),
+      sessionOpen,
+      numeratorMode: source.meta?.numeratorMode ?? (sessionOpen ? 'live' : 'official'),
+      anchorDd: source.meta?.anchorDd || null,
+      refsRecentDd: source.meta?.refsRecentDd || null,
+      k,
+      stale: !!source.meta?.stale,
+    },
+  };
+}
+
+async function buildIntradayReturnsPayload(hubIndex, env, request, now = new Date()) {
+  const live = await computeLiveSector1d(hubIndex, env, request, now);
+  const meta = live.meta;
+  const sessionOpen = !!meta.sessionOpen;
+  const anchorDash = basDdToDash(meta.anchorDd) || kstYmdDash(now);
+  const tipTs = tipTimestamp(sessionOpen, anchorDash, now);
+  const config = getSupabaseConfig(env);
 
   let rows = [];
-  try {
-    rows = await fetchSupabaseJson(
-      config,
-      `sector_intraday_returns?trade_date=eq.${encodeURIComponent(tradeDateDash)}`
-        + `&select=sector_id,ts,ret_1d_pct,anchor_dd,session_kind`
-        + `&order=ts.asc`,
-    );
-  } catch {
-    rows = [];
+  if (config && anchorDash) {
+    try {
+      rows = await fetchSupabaseJson(
+        config,
+        `sector_intraday_returns?trade_date=eq.${encodeURIComponent(anchorDash)}`
+          + `&select=sector_id,ts,ret_1d_pct,anchor_dd,session_kind`
+          + `&order=ts.asc`,
+      );
+    } catch {
+      rows = [];
+    }
   }
 
   const bySector = new Map();
@@ -85,10 +143,7 @@ async function buildIntradayReturnsPayload(env, tradeDateDash, now = new Date())
     if (!bySector.has(sid)) bySector.set(sid, []);
     const v = Number(row.ret_1d_pct);
     if (!Number.isFinite(v)) continue;
-    // After market close: keep regular-session tip only for the default series.
-    if (!session.regular && !session.aftermarket && row.session_kind === 'aftermarket') {
-      continue;
-    }
+    if (!sessionOpen && row.session_kind === 'aftermarket') continue;
     bySector.get(sid).push({
       t: row.ts,
       v: Math.round(v * 100) / 100,
@@ -96,35 +151,99 @@ async function buildIntradayReturnsPayload(env, tradeDateDash, now = new Date())
     });
   }
 
+  const hasAnyRow = [...bySector.values()].some((pts) => pts.length > 0);
   const trends = {};
+
+  if (!hasAnyRow) {
+    // No table rows yet — synthesize one point = current hub_sectors 1D.
+    for (const sid of SECTOR_ORDER) {
+      const v = live.bySector.get(sid);
+      if (v == null) continue;
+      trends[sid] = [{
+        t: tipTs,
+        v: Math.round(v * 100) / 100,
+        synthesized: true,
+      }];
+    }
+    return {
+      horizon: '1d',
+      trends,
+      tradeDate: anchorDash,
+      regularSession: !!krxSessionInfo(now).regular,
+      synthesized: true,
+      source: 'live_aggregate',
+      ...meta,
+      asOf: meta.asOf,
+    };
+  }
+
   for (const sid of SECTOR_ORDER) {
-    const pts = bySector.get(sid) || [];
-    if (pts.length < 1) continue;
+    let pts = bySector.get(sid) || [];
+    if (!pts.length) {
+      const v = live.bySector.get(sid);
+      if (v == null) continue;
+      trends[sid] = [{
+        t: tipTs,
+        v: Math.round(v * 100) / 100,
+        synthesized: true,
+      }];
+      continue;
+    }
     // Seed 0% at open when missing.
-    const seeded = pts[0].t?.includes('T09:00')
-      ? pts
-      : [{ t: `${tradeDateDash}T09:00:00+09:00`, v: 0, session_kind: 'regular' }, ...pts];
-    trends[sid] = downsamplePoints(seeded, SPARKLINE_MAX_POINTS);
+    if (!pts[0].t?.includes('T09:00')) {
+      pts = [{ t: `${anchorDash}T09:00:00+09:00`, v: 0, session_kind: 'regular' }, ...pts];
+    }
+    // While session open, append current aggregate when newer than last table ts.
+    if (sessionOpen) {
+      const liveV = live.bySector.get(sid);
+      if (liveV != null) {
+        const lastTs = pts[pts.length - 1]?.t;
+        const lastMs = lastTs ? Date.parse(lastTs) : 0;
+        const tipMs = Date.parse(tipTs);
+        if (!Number.isFinite(lastMs) || tipMs > lastMs) {
+          pts = [...pts, {
+            t: tipTs,
+            v: Math.round(liveV * 100) / 100,
+            live: true,
+          }];
+        } else {
+          // Same/older clock — still lock tip value to live aggregate.
+          pts = [...pts.slice(0, -1), {
+            ...pts[pts.length - 1],
+            v: Math.round(liveV * 100) / 100,
+            live: true,
+          }];
+        }
+      }
+    }
+    trends[sid] = downsamplePoints(pts, SPARKLINE_MAX_POINTS);
   }
 
   return {
     horizon: '1d',
-    asOf,
-    tradeDate: tradeDateDash,
-    regularSession: !!session.regular,
-    sessionOpen: !!(session.regular || session.aftermarket),
     trends,
+    tradeDate: anchorDash,
+    regularSession: !!krxSessionInfo(now).regular,
+    synthesized: false,
     source: 'sector_intraday_returns',
+    ...meta,
+    asOf: meta.asOf,
   };
 }
 
-export async function buildHubSectorTrendPayload(hubIndex, env, horizon, now = new Date()) {
+export async function buildHubSectorTrendPayload(
+  hubIndex,
+  env,
+  horizon,
+  now = new Date(),
+  request = null,
+) {
   const h = normalizeSectorHorizon(horizon);
   const asOf = now.toISOString();
   const tradeDate = kstYmdDash(now);
 
   if (h === '1d') {
-    return buildIntradayReturnsPayload(env, tradeDate, now);
+    return buildIntradayReturnsPayload(hubIndex, env, request, now);
   }
 
   const config = getSupabaseConfig(env);
