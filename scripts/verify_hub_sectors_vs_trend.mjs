@@ -57,43 +57,35 @@ assert.ok(apiSrc.includes('buildHubSectorsFromReturnSource') || apiSrc.includes(
 assert.ok(apiSrc.includes('stock_aggregate'), 'hub_sectors source tag');
 
 const trendApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
-assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v15'"), 'hub_trend cache v15');
-assert.ok(trendApi.includes('regularMax: 600'), 'hub_trend daily regular TTL ~10m');
+assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v16'"), 'hub_trend cache v16');
+assert.ok(trendApi.includes('regularMax: 300') || trendApi.includes('return 300'), 'hub_trend session TTL ~5m');
 
 const sparkApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sector_trend.js'), 'utf8');
 assert.ok(sparkApi.includes("CACHE_VERSION = '/api/hub_sector_trend/cache/v8'"), 'hub_sector_trend cache v8');
 assert.ok(sparkApi.includes('synthesized'), 'hub_sector_trend exposes synthesized meta');
 
 const sparkLib = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_sector_trend.mjs'), 'utf8');
-assert.ok(sparkLib.includes('live_aggregate'), 'synthesized source tag');
-assert.ok(sparkLib.includes('loadReturnSource'), '1d tip uses shared return source');
-assert.ok(sparkLib.includes('aggregateSectorReturns'), '1d tip uses aggregateSectorReturns');
+assert.ok(sparkLib.includes('buildIntraday1dSeries'), 'spark uses shared 1d helper');
+assert.ok(sparkLib.includes('sector_trend_core.mjs'), 'spark imports sector_trend_core');
+
+const trendCore = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'sector_trend_core.mjs'), 'utf8');
+assert.ok(trendCore.includes("source: 'live_aggregate'"), 'synthesized source tag');
+assert.ok(trendCore.includes('loadReturnSource'), '1d tip uses shared return source');
+assert.ok(trendCore.includes('aggregateSectorReturns'), '1d tip uses aggregateSectorReturns');
+assert.ok(trendCore.includes('buildIntraday1dSeries'), 'shared 1d builder');
+assert.ok(trendCore.includes('buildDailySectorSeriesFromRefs'), 'shared Nd builder');
+assert.ok(trendCore.includes('buildAggregateHubTrendPayload'), 'hub_trend aggregate payload');
 
 const trendSrc = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_trend.mjs'), 'utf8');
 assert.ok(trendSrc.includes('returnPctFromRebasedSeries'), 'shared return extractor');
 assert.ok(trendSrc.includes('buildAllHorizonReturnsBySector'), 'all-horizon builder');
 assert.ok(trendSrc.includes('buildSectorReturnRowsFromTrend'), 'sync row builder');
-assert.ok(trendSrc.includes('applyLiveDailyTip'), 'regular-session live tip');
-assert.ok(trendSrc.includes('stock_quotes_latest'), 'live tip from quotes');
-assert.ok(trendSrc.includes('market_index_intraday'), 'live index tip');
-assert.ok(trendSrc.includes('stock_price_history'), 'stock-level mcap history');
-assert.ok(trendSrc.includes('fixedMembers'), 'intersection membership');
-assert.ok(trendSrc.includes('trendAnchorMeta'), 'anchor date metadata');
-assert.ok(trendSrc.includes('loadMcapGridForDates'), 'anchor-only grid fetch');
-assert.ok(trendSrc.includes('buildSectorReturnAtHorizon'), 'endpoint-only card returns');
-assert.ok(
-  trendSrc.includes('horizonN === 1 ? prevSessionDate(calendar)'),
-  '1D card base matches intraday prevSessionDate',
-);
-assert.ok(trendSrc.includes('completedSession'), 'completed session anchor');
-assert.ok(trendSrc.includes('prevSessionDate'), '1D prev session helper');
-assert.ok(trendSrc.includes('downsampleDates'), 'pre-query chart date downsample');
-assert.ok(trendSrc.includes('TREND_CHART_MAX_POINTS'), 'chart fetch resolution cap');
-assert.ok(trendSrc.includes('DATE_BATCH = 64'), 'single date-batch for chart fetches');
-assert.ok(trendSrc.includes('buildIndexDailySeries(config, chartDates, calendar'), 'index uses shared chart dates');
+assert.ok(trendSrc.includes('buildAggregateHubTrendPayload'), 'delegates to stock-aggregate payload');
+assert.ok(trendSrc.includes('sector_trend_core.mjs'), 'imports sector_trend_core');
 
 const syncSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'), 'utf8');
 assert.ok(syncSrc.includes('buildSectorReturnRowsFromTrend'), 'sync writes trend-aligned returns');
+assert.ok(syncSrc.includes('[legacy]'), 'legacy sync stages tagged');
 assert.ok(!syncSrc.includes('mcapWeightedReturnInverse'), 'inverse past-mcap removed from sync');
 
 assert.equal(

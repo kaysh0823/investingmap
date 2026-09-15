@@ -133,9 +133,26 @@ async function main() {
     }
   }
 
-  // (c) trend last == hub_sectors return1dPct
+  // (c) hub_sector_trend tip == hub_sectors return1dPct
+  function trendSeriesMap(payload) {
+    if (!payload || payload.error) return {};
+    if (payload.trends && typeof payload.trends === 'object') return payload.trends;
+    const meta = new Set([
+      'horizon', 'asOf', 'tradeDate', 'regularSession', 'sessionOpen',
+      'numeratorMode', 'anchorDd', 'refsRecentDd', 'k', 'synthesized',
+      'source', 'stale', 'error', 'message', 'base', 'sectors', 'indices',
+    ]);
+    const out = {};
+    for (const [key, val] of Object.entries(payload)) {
+      if (meta.has(key)) continue;
+      if (Array.isArray(val)) out[key] = val;
+    }
+    return out;
+  }
+
+  const sparkMap = trendSeriesMap(trend);
   for (const sid of SAMPLE_SECTORS) {
-    const series = trend.trends?.[sid];
+    const series = sparkMap[sid];
     const card = sectors.sectors?.[sid]?.return1dPct;
     if (!series?.length || card == null) continue;
     const last = series[series.length - 1]?.v;
@@ -172,10 +189,53 @@ async function main() {
     }
   }
 
+  // (f)(g)(h) hub_trend chart tip == hub_sectors / hub_sector_trend
+  const [hubTrend1d, hubTrend20d, hubTrend200d] = await Promise.all([
+    getJson('/api/hub_trend?horizon=1d&nocache=1&cb=1'),
+    getJson('/api/hub_trend?horizon=20d&nocache=1&cb=1'),
+    getJson('/api/hub_trend?horizon=200d&nocache=1&cb=1'),
+  ]);
+  assertMetaEqual(quotes, hubTrend1d, 'quotes vs hub_trend 1d');
+
+  function sectorTipPct(payload, sid) {
+    const entry = (payload.sectors || []).find((s) => s.sector === sid);
+    const series = entry?.series;
+    if (!series?.length) return null;
+    const v = series[series.length - 1]?.v;
+    if (v == null || !Number.isFinite(v)) return null;
+    return Math.round((v - 100) * 100) / 100;
+  }
+
+  for (const sid of SAMPLE_SECTORS) {
+    const card1 = sectors.sectors?.[sid]?.return1dPct;
+    const tip1 = sectorTipPct(hubTrend1d, sid);
+    if (card1 != null && tip1 != null) {
+      assert.equal(tip1, card1, `(f) hub_trend 1d tip ${sid}`);
+    }
+    const card20 = sectors.sectors?.[sid]?.return20dPct;
+    const tip20 = sectorTipPct(hubTrend20d, sid);
+    if (card20 != null && tip20 != null) {
+      assert.equal(tip20, card20, `(g) hub_trend 20d tip ${sid}`);
+    }
+    const card200 = sectors.sectors?.[sid]?.return200dPct;
+    const tip200 = sectorTipPct(hubTrend200d, sid);
+    if (card200 != null && tip200 != null) {
+      assert.equal(tip200, card200, `(g) hub_trend 200d tip ${sid}`);
+    }
+    // (h) hub_trend 1d tip (base100→%) == hub_sector_trend last %
+    const sparkLast = sparkMap[sid]?.length
+      ? sparkMap[sid][sparkMap[sid].length - 1]?.v
+      : null;
+    if (tip1 != null && sparkLast != null) {
+      assert.equal(tip1, sparkLast, `(h) hub_trend==spark ${sid}`);
+    }
+  }
+
   console.log(
     `verify:returns-consistency OK — base=${BASE} `
     + `mode=${quotes.numeratorMode} anchor=${quotes.anchorDd} k=${quotes.k} `
-    + `sectors=${Object.keys(sectors.sectors || {}).length}`,
+    + `sectors=${Object.keys(sectors.sectors || {}).length}`
+    + ` hub_trend1d_synth=${!!hubTrend1d.synthesized}`,
   );
 }
 

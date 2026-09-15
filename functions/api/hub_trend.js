@@ -1,6 +1,6 @@
 /**
  * GET /api/hub_trend?horizon=1d|20d|50d|120d|200d
- * Sector mcap and KOSPI/KOSDAQ series rebased to 100.
+ * Stock-aggregate sector series rebased to 100 (same math as /api/hub_sectors).
  */
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { buildHubTrendPayload } from '../lib/hub_trend.mjs';
@@ -13,12 +13,13 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v15';
+const CACHE_VERSION = '/api/hub_trend/cache/v16';
 
 function maxAge(horizon, now = new Date()) {
-  // Regular: ~10m aligns with quote sync cadence so live 20d+ tips stay fresh.
+  const session = krxSessionInfo(now);
+  if (session.regular || session.aftermarket) return 300;
   return normalizeSectorHorizon(horizon) === '1d'
-    ? edgeCacheMaxAgeSeconds(now, { regularMax: 60, closedMax: 300 })
+    ? edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 300 })
     : edgeCacheMaxAgeSeconds(now, { regularMax: 600, closedMax: 3600 });
 }
 
@@ -50,7 +51,7 @@ export async function onRequest(context) {
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubTrendPayload(hubIndex, env, horizon);
+    const payload = await buildHubTrendPayload(hubIndex, env, horizon, new Date(), request);
     const ttl = maxAge(horizon);
     const response = new Response(JSON.stringify(payload), {
       headers: {

@@ -3,7 +3,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  buildHubTrendPayload,
   downsampleTrend,
   downsampleDates,
   rebaseTo100,
@@ -13,7 +12,14 @@ import {
   TREND_INDEX_CODES,
   TREND_MAX_POINTS,
   TREND_CHART_MAX_POINTS,
+  returnPctFromRebasedSeries,
 } from '../functions/lib/hub_trend.mjs';
+import {
+  retPctToBase100,
+  pctSeriesToBase100,
+  buildDailySectorSeriesFromRefs,
+} from '../functions/lib/sector_trend_core.mjs';
+import { aggregateSectorReturns } from '../functions/lib/returns_core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DAILY_HORIZONS = ['20d', '50d', '120d', '200d'];
@@ -110,281 +116,140 @@ assert.equal(sampled.length, TREND_MAX_POINTS);
 assert.deepEqual(sampled[0], long[0]);
 assert.deepEqual(sampled.at(-1), long.at(-1));
 
-// --- payload fixtures -------------------------------------------------------
+// --- stock-aggregate helpers ------------------------------------------------
 
-function makeTradingDates(count, endDate) {
-  const out = [];
-  const cursor = new Date(endDate);
-  while (out.length < count) {
+assert.equal(retPctToBase100(12.34), 112.34);
+assert.equal(retPctToBase100(-5), 95);
+assert.deepEqual(
+  pctSeriesToBase100([{ t: 'a', v: 0 }, { t: 'b', v: 10, synthesized: true }]),
+  [{ t: 'a', v: 100 }, { t: 'b', v: 110, synthesized: true }],
+);
+
+{
+  // 21 sessions so pastSessionDd(anchor, 20) lands on first date.
+  const tradingDates = [];
+  const cursor = new Date(Date.UTC(2025, 0, 2));
+  while (tradingDates.length < 25) {
     const dow = cursor.getUTCDay();
-    if (dow !== 0 && dow !== 6) out.unshift(cursor.toISOString().slice(0, 10));
-    cursor.setUTCDate(cursor.getUTCDate() - 1);
-  }
-  return out;
-}
-
-const FIXTURE_NOW = new Date(Date.UTC(2025, 8, 18));
-/** Same session, after regular close (16:00 KST) — 1D tip must pin to 15:30. */
-const FIXTURE_AFTER_CLOSE = new Date(Date.UTC(2025, 8, 18, 7, 0, 0));
-const DATES = makeTradingDates(260, FIXTURE_NOW);
-const LAST_DATE = DATES.at(-1);
-const SECTORS = ['semi', 'bio'];
-const FIXTURE_TICKERS = {
-  semi: ['042700', '007660', '036930'],
-  bio: ['207940', '068270', '196170'],
-};
-
-function fixtures({ intraday }) {
-  const marketIndexDaily = [];
-  const stockPriceHistory = [];
-  DATES.forEach((date, i) => {
-    for (const code of TREND_INDEX_CODES) {
-      marketIndexDaily.push({ trade_date: date, index_code: code, close: 2000 + i });
+    if (dow !== 0 && dow !== 6) {
+      tradingDates.push(cursor.toISOString().slice(0, 10).replace(/-/g, ''));
     }
-    for (const sector of SECTORS) {
-      for (const ticker of FIXTURE_TICKERS[sector]) {
-        stockPriceHistory.push({
-          ticker,
-          trade_date: date,
-          mcap_won: 1e12 + i * 1e9,
-        });
-      }
-    }
-  });
-  const sectorIntradaySnapshots = [0, 1, 2].map((i) => ({
-    trade_date: LAST_DATE,
-    ts: `${LAST_DATE}T0${i}:00:00+00:00`,
-    sector_id: 'semi',
-    mcap_sum: 1e12 + i * 1e9,
-  }));
-  const marketIndexIntraday = intraday
-    ? TREND_INDEX_CODES.flatMap((code) =>
-        [0, 1].map((i) => ({
-          trade_date: LAST_DATE,
-          captured_at: `${LAST_DATE}T0${i}:30:00+00:00`,
-          index_code: code,
-          value: 2500 + i,
-          prev_close: 2490,
-        })),
-      )
-    : [];
-  const stockQuotesLatest = FIXTURE_TICKERS.semi.map((ticker, i) => ({
-    ticker,
-    mcap_won: 1e12 + 3 * 1e9 + i * 1e8,
-  }));
-  return {
-    market_index_daily: marketIndexDaily,
-    stock_price_history: stockPriceHistory,
-    stock_quotes_latest: stockQuotesLatest,
-    sector_intraday_snapshots: sectorIntradaySnapshots,
-    market_index_intraday: marketIndexIntraday,
-  };
-}
-
-function applyQuery(rows, params) {
-  let out = rows.slice();
-  for (const [key, raw] of params.entries()) {
-    if (['select', 'order', 'limit', 'offset'].includes(key)) continue;
-    const [op, ...rest] = raw.split('.');
-    const value = rest.join('.');
-    if (op === 'eq') out = out.filter((row) => String(row[key]) === value);
-    else if (op === 'gte') out = out.filter((row) => String(row[key]) >= value);
-    else if (op === 'lte') out = out.filter((row) => String(row[key]) <= value);
-    else if (op === 'gt') out = out.filter((row) => Number(row[key]) > Number(value));
-    else if (op === 'in') {
-      const set = new Set(value.replace(/^\(|\)$/g, '').split(','));
-      out = out.filter((row) => set.has(String(row[key])));
-    }
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
   }
-  const order = params.get('order');
-  if (order) {
-    const [field, dir] = order.split('.');
-    out.sort((a, b) => String(a[field]).localeCompare(String(b[field])) * (dir === 'desc' ? -1 : 1));
-  }
-  const offset = Number(params.get('offset') || 0);
-  const limit = Number(params.get('limit') || 0);
-  out = out.slice(offset);
-  if (limit > 0) out = out.slice(0, limit);
-  return out;
-}
-
-function installFetch(tables) {
-  globalThis.fetch = async (input) => {
-    const url = new URL(String(input));
-    const table = url.pathname.replace(/^.*\/rest\/v1\//, '');
-    const rows = applyQuery(tables[table] || [], url.searchParams);
-    return new Response(JSON.stringify(rows), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  };
-}
-
-const ENV = { SUPABASE_URL: 'https://fixture.supabase.co', SUPABASE_ANON_KEY: 'fixture-key' };
-const HUB_INDEX = {
-  sectors: {
-    semi: {
-      meta: { ko: '반도체' },
-      companies: FIXTURE_TICKERS.semi.map((ticker) => ({ ticker })),
+  const recentDd = tradingDates[tradingDates.length - 1];
+  const closesA = tradingDates.map((_, i) => 10000 + i * 10);
+  const closesB = tradingDates.map((_, i) => 20000 + i * 20);
+  const refs = {
+    recentDd,
+    tradingDates,
+    quotes: {
+      '042700': { closes: closesA, shares: 100 },
+      '007660': { closes: closesB, shares: 50 },
     },
-    bio: {
-      meta: { ko: '바이오' },
-      companies: FIXTURE_TICKERS.bio.map((ticker) => ({ ticker })),
+  };
+  const hubIndex = {
+    sectors: {
+      semi: {
+        meta: { ko: '반도체' },
+        companies: [{ ticker: '042700' }, { ticker: '007660' }],
+      },
     },
-  },
-};
-
-function assertIndices(payload, horizon, { expectPoints = true } = {}) {
-  assert.ok(Array.isArray(payload.indices), `${horizon}: indices array missing`);
-  const codes = payload.indices.map((entry) => entry.code);
-  for (const code of TREND_INDEX_CODES) {
-    assert.ok(codes.includes(code), `${horizon}: ${code} missing from indices`);
-  }
-  if (!expectPoints) return;
-  for (const entry of payload.indices) {
-    assert.ok(entry.series.length > 0, `${horizon}: ${entry.code} series is empty`);
-    assert.equal(entry.series[0].v, 100, `${horizon}: ${entry.code} first point is not 100`);
-  }
-}
-
-function assertSectorIndexAligned(payload, horizon) {
-  const sector = payload.sectors?.find((entry) => entry.series?.length >= 2);
-  if (!sector) return;
-  const startT = sector.series[0].t;
-  const endT = sector.series.at(-1)?.t;
-  for (const entry of payload.indices || []) {
-    if (!entry.series?.length) continue;
-    assert.equal(
-      entry.series[0].t,
-      startT,
-      `${horizon}: ${entry.code} start ${entry.series[0].t} != sector ${startT}`,
-    );
-    assert.equal(
-      entry.series.at(-1)?.t,
-      endT,
-      `${horizon}: ${entry.code} end ${entry.series.at(-1)?.t} != sector ${endT}`,
-    );
-  }
-}
-
-const originalFetch = globalThis.fetch;
-try {
-  installFetch(fixtures({ intraday: true }));
-  for (const horizon of DAILY_HORIZONS) {
-    const payload = await buildHubTrendPayload(HUB_INDEX, ENV, horizon, FIXTURE_NOW);
-    assert.equal(payload.horizon, horizon);
-    assert.equal(payload.base, 100);
-    assert.ok(payload.sectors.length > 0, `${horizon}: sectors missing`);
-    const semi = payload.sectors.find((s) => s.sector === 'semi');
-    assert.ok(semi?.series?.length >= 2, `${horizon}: semi fixed-member series missing`);
-    assert.equal(semi.series[0].v, 100, `${horizon}: semi base is 100`);
-    assertIndices(payload, horizon);
-    assertSectorIndexAligned(payload, horizon);
-    if (horizon === '200d' || horizon === '120d') {
-      const semi = payload.sectors.find((s) => s.sector === 'semi');
-      assert.ok(
-        semi?.series?.length >= 2 && semi.series.length <= TREND_CHART_MAX_POINTS + 1,
-        `${horizon}: semi series length ${semi?.series?.length} out of chart range`,
-      );
-      const endT = semi?.series?.at(-1)?.t;
-      for (const entry of payload.sectors || []) {
-        if (!entry.series?.length) continue;
-        assert.equal(entry.series.at(-1)?.t, endT, `${horizon}: ${entry.sector} end ${entry.series.at(-1)?.t} != ${endT}`);
-      }
-    }
-  }
-
-  const intraday = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_AFTER_CLOSE);
-  assertIndices(intraday, '1d');
-  const sessionCloseT = `${intraday.tradeDate}T15:30:00+09:00`;
-  for (const entry of intraday.sectors || []) {
-    if (!entry.series?.length) continue;
-    assert.equal(
-      entry.series.at(-1)?.t,
-      sessionCloseT,
-      `1d: ${entry.sector} end ${entry.series.at(-1)?.t} != ${sessionCloseT}`,
-    );
-  }
-  for (const entry of intraday.indices || []) {
-    if (!entry.series?.length) continue;
-    assert.equal(
-      entry.series.at(-1)?.t,
-      sessionCloseT,
-      `1d: ${entry.code} end ${entry.series.at(-1)?.t} != ${sessionCloseT}`,
-    );
-  }
-
-  const intradayOpen = await buildHubTrendPayload(
-    HUB_INDEX,
-    ENV,
-    '1d',
-    new Date(Date.UTC(2025, 8, 18, 1, 0, 0)),
-  );
-  const semiOpen = intradayOpen.sectors?.find((s) => s.sector === 'semi');
-  assert.equal(
-    semiOpen?.series?.at(-1)?.t,
-    `${intradayOpen.tradeDate}T10:00:00+09:00`,
-    '1d: during session tip follows current KST clock',
-  );
-
-  // No intraday captures yet: indices keep their shape and fall back to daily closes.
-  installFetch(fixtures({ intraday: false }));
-  const fallback = await buildHubTrendPayload(HUB_INDEX, ENV, '1d', FIXTURE_AFTER_CLOSE);
-  assertIndices(fallback, '1d (daily fallback)');
-} finally {
-  globalThis.fetch = originalFetch;
+  };
+  const source = {
+    meta: {
+      sessionOpen: false,
+      anchorDd: recentDd,
+      refsRecentDd: recentDd,
+      k: 0,
+      numeratorMode: 'official',
+    },
+    byTicker: {
+      '042700': {
+        numerator: closesA[closesA.length - 1],
+        closes: closesA,
+        shares: 100,
+      },
+      '007660': {
+        numerator: closesB[closesB.length - 1],
+        closes: closesB,
+        shares: 50,
+      },
+    },
+  };
+  const { sectors } = buildDailySectorSeriesFromRefs(hubIndex, refs, source, 20);
+  const semi = sectors.find((s) => s.sector === 'semi');
+  assert.ok(semi?.series?.length >= 2, 'semi daily series');
+  assert.equal(semi.series[0].v, 100, 'window start rebased to 100');
+  const tipPct = returnPctFromRebasedSeries(semi.series);
+  const agg = aggregateSectorReturns([
+    { numerator: closesA.at(-1), closes: closesA, k: 0, shares: 100 },
+    { numerator: closesB.at(-1), closes: closesB, k: 0, shares: 50 },
+  ]);
+  assert.equal(tipPct, agg.ret20dPct, 'daily tip − 100 == aggregateSectorReturns.ret20dPct');
 }
 
 // --- source markers ---------------------------------------------------------
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v15'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v16'",
   'anchoredCachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
+  'regularMax: 300',
 ]) {
   assert.ok(api.includes(marker), `hub trend API marker missing: ${marker}`);
 }
 
 const core = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_trend.mjs'), 'utf8');
 for (const marker of [
-  "const INDEX_CODES = ['KOSPI', 'KOSDAQ']",
+  'buildAggregateHubTrendPayload',
+  'sector_trend_core.mjs',
+  'returnPctFromRebasedSeries',
+  'buildSectorReturnRowsFromTrend',
+  'applyLiveDailyTip',
+  'sanitizeIntradaySnapRows',
+  'TREND_CHART_MAX_POINTS',
+]) {
+  assert.ok(core.includes(marker), `hub trend lib marker missing: ${marker}`);
+}
+
+const aggCore = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'sector_trend_core.mjs'), 'utf8');
+for (const marker of [
+  'buildIntraday1dSeries',
+  'buildDailySectorSeriesFromRefs',
+  'buildAggregateHubTrendPayload',
+  'sector_intraday_returns?',
+  'pctSeriesToBase100',
+  'computeLiveSectorAggregates',
   'market_index_daily?',
   'market_index_intraday?',
-  'stock_price_history?',
-  'sector_intraday_snapshots?',
-  'stock_quotes_latest?',
-  'fixedMembers',
-  'loadMcapGridForDates',
-  'buildSectorReturnAtHorizon',
-  'MIN_FIXED_MEMBERS',
-  'MEMBER_COVERAGE_MIN',
-  'lastMcapByTicker',
-  'order=trade_date.asc,ticker.asc',
-  'applyLiveDailyTip',
-  'base: 100',
-  'logIndexSeries',
-  'completedSession',
-  'prevSessionDate',
-  'downsampleDates',
-  'TREND_CHART_MAX_POINTS',
-  'DATE_BATCH = 64',
-  'buildIndexDailySeries(config, chartDates, calendar',
-  'scaleIntradayToFixedMembers(snaps, baseSum, liveSum, tradeDateDash',
-  'sanitizeIntradaySnapRows',
-  'sanitizeIntradayRebasedSeries',
-  'payload.tradeDate = tradeDateDash',
+  "source: 'stock_aggregate'",
+  'synthesized',
 ]) {
-  assert.ok(core.includes(marker), `hub trend core marker missing: ${marker}`);
+  assert.ok(aggCore.includes(marker), `sector_trend_core marker missing: ${marker}`);
 }
+
+const syncSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'), 'utf8');
+assert.ok(syncSrc.includes('[legacy] sector intraday snapshots'), 'legacy snapshot log');
+assert.ok(syncSrc.includes('[legacy] Building sector_returns from hub_trend mcap series'), 'legacy sector_returns log');
 
 // --- optional live check: node scripts/verify_hub_trend.mjs --live=<origin> ---
 
+const originalFetch = globalThis.fetch;
 const liveArg = process.argv.slice(2).find((value) => value.startsWith('--live'));
 if (liveArg) {
   const origin = liveArg.includes('=') ? liveArg.split('=')[1] : 'https://www.investingmap.kr';
-  for (const horizon of DAILY_HORIZONS) {
+  function assertIndices(payload, horizon) {
+    assert.ok(Array.isArray(payload.indices), `${horizon}: indices array missing`);
+    const codes = payload.indices.map((entry) => entry.code);
+    for (const code of TREND_INDEX_CODES) {
+      assert.ok(codes.includes(code), `${horizon}: ${code} missing from indices`);
+    }
+    assert.equal(payload.base, 100, `${horizon}: base`);
+    assert.ok(payload.anchorDd, `${horizon}: anchorDd`);
+  }
+  for (const horizon of ['1d', ...DAILY_HORIZONS]) {
     const response = await originalFetch(`${origin}/api/hub_trend?horizon=${horizon}&nocache=1`);
     assert.ok(response.ok, `live ${horizon}: HTTP ${response.status}`);
     assertIndices(await response.json(), `live ${horizon}`);
@@ -393,5 +258,5 @@ if (liveArg) {
 }
 
 console.log(
-  'verify:hub-trend OK — fixed-member intersection, endpoint sampling, sources, KOSPI/KOSDAQ indices',
+  'verify:hub-trend OK — stock-aggregate helpers, tip lock, markers, legacy sync tags',
 );

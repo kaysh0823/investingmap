@@ -1478,7 +1478,7 @@ async function syncSectorIntradaySnapshots({
   }
 
   console.log(
-    `  sector intraday snapshots: seeded=${seeded} appended=${appended}` +
+    `  [legacy] sector intraday snapshots: seeded=${seeded} appended=${appended}` +
     ` skip_cov=${skippedCoverage}` +
     ` trade_date=${tradeDateDash} prev=${prevDash || 'n/a'} prune=${prune.ok ? 'ok' : 'fail'}`,
   );
@@ -1821,7 +1821,7 @@ async function main() {
       now: new Date(),
     });
   } else {
-    console.log('  sector intraday snapshots: skip (not regular session)');
+    console.log('  [legacy] sector intraday snapshots: skip (not regular session)');
   }
 
   // sector_returns AFTER intraday/daily upserts so 1d & 20d+ share hub_trend series.
@@ -1829,9 +1829,9 @@ async function main() {
     SUPABASE_URL: supabaseUrl,
     SUPABASE_ANON_KEY: env.SUPABASE_ANON_KEY || serviceKey,
   };
-  console.log('Building sector_returns from hub_trend mcap series…');
+  console.log('[legacy] Building sector_returns from hub_trend mcap series…');
   const sectorRows = await buildSectorReturnRowsFromTrend(hubIndex, trendEnv, asOf);
-  console.log(`Upserting ${sectorRows.length} sector_returns rows…`);
+  console.log(`[legacy] Upserting ${sectorRows.length} sector_returns rows…`);
   const sectorResult = await upsertSectorReturns(sectorRows, supabaseUrl, serviceKey);
   for (const r of sectorRows) {
     const vals = SECTOR_HORIZONS.map((f) => `${f.out}=${r[f.out] == null ? 'null' : r[f.out]}`).join(' ');

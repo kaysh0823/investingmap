@@ -1002,11 +1002,14 @@ async function buildIntradayPayload(config, hubIndex, now = new Date()) {
   return payload;
 }
 
-export async function buildHubTrendPayload(hubIndex, env, requestedHorizon, now = new Date()) {
+export async function buildHubTrendPayload(
+  hubIndex,
+  env,
+  requestedHorizon,
+  now = new Date(),
+  request = null,
+) {
   const horizon = normalizeSectorHorizon(requestedHorizon);
-  const config = getSupabaseConfig(env);
-  if (!config) return emptyPayload(hubIndex, horizon);
-  return horizon === '1d'
-    ? buildIntradayPayload(config, hubIndex, now)
-    : buildDailyPayload(config, hubIndex, horizon, now);
+  const { buildAggregateHubTrendPayload } = await import('./sector_trend_core.mjs');
+  return buildAggregateHubTrendPayload(hubIndex, env, horizon, now, request);
 }

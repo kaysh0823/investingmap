@@ -30,6 +30,8 @@
       base: '기준',
       change: '기준 대비',
       legend: '섹터 및 시장지수 범례',
+      accumulating: '장중 데이터 누적 중',
+      synthesized: '현재가',
     },
     en: {
       loading: 'Loading trend data…',
@@ -38,6 +40,8 @@
       base: 'Base',
       change: 'vs base',
       legend: 'Sector and market index legend',
+      accumulating: 'Building intraday series',
+      synthesized: 'Live',
     },
   };
 
@@ -45,6 +49,7 @@
     lang: 'ko',
     horizon: '20d',
     payload: null,
+    payloadAsOf: null,
     initialized: false,
     requestId: 0,
     resizeObserver: null,
@@ -59,14 +64,19 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('im-hub-trend-chart-css-v1')) return;
+    if (document.getElementById('im-hub-trend-chart-css-v5')) return;
+    var old = document.getElementById('im-hub-trend-chart-css-v1');
+    if (old) old.remove();
     var style = document.createElement('style');
-    style.id = 'im-hub-trend-chart-css-v1';
+    style.id = 'im-hub-trend-chart-css-v5';
     style.textContent =
       '.hub-trend{margin:0 0 24px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:14px}' +
       '.hub-trend-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 18px;margin-bottom:12px}' +
       '.hub-trend-head h2{margin:0;font-size:16px;font-weight:700;color:var(--text)}' +
       '.hub-trend-head p{margin:3px 0 0;font-size:12px;color:var(--text-muted)}' +
+      '.hub-trend-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0 0 8px;font-size:11px;color:var(--text-muted)}' +
+      '.hub-trend-badge{font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--accent,#58a6ff)}' +
+      '.hub-trend-hint{font-size:10px;color:var(--text-muted)}' +
       '.hub-trend-tabs{display:flex;flex-wrap:nowrap;gap:5px}' +
       '.hub-trend-tab{padding:6px 12px;border:1px solid var(--border);border-radius:20px;background:var(--surface2);color:var(--text-muted);font:600 11px/1.2 inherit;cursor:pointer;transition:border-color .15s,color .15s,background .15s}' +
       '.hub-trend-tab:hover{color:var(--text);border-color:var(--text-muted)}' +
@@ -91,6 +101,37 @@
       '.hub-trend-grid line{stroke:var(--border);stroke-opacity:.5}.hub-trend-grid path{display:none}' +
       '@media(max-width:640px){.hub-trend{padding:13px 10px}.hub-trend-head{align-items:flex-start}.hub-trend-tabs{width:100%}.hub-trend-tab{flex:1 1 0;min-width:0;padding:6px 3px;font-size:10px}#hub-trend-chart{min-height:350px}.hub-trend-legend{gap:5px 9px}.hub-trend-legend-item{font-size:9px}}';
     document.head.appendChild(style);
+  }
+
+  function updateMetaBanner() {
+    var host = document.querySelector('.hub-trend-chart-wrap') || document.getElementById('hub-trend-chart');
+    if (!host) return;
+    var el = document.getElementById('hub-trend-meta');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'hub-trend-meta';
+      el.className = 'hub-trend-meta';
+      host.parentNode.insertBefore(el, host);
+    }
+    var p = state.payload;
+    if (!p || state.horizon !== '1d') {
+      el.innerHTML = '';
+      el.hidden = true;
+      return;
+    }
+    var parts = [];
+    if (p.synthesized) {
+      parts.push('<span class="hub-trend-badge">' + COPY[state.lang].synthesized + '</span>');
+    }
+    var minLen = Infinity;
+    (p.sectors || []).forEach(function (s) {
+      if (s.series && s.series.length && s.series.length < minLen) minLen = s.series.length;
+    });
+    if (minLen === 1) {
+      parts.push('<span class="hub-trend-hint">' + COPY[state.lang].accumulating + '</span>');
+    }
+    el.innerHTML = parts.join('');
+    el.hidden = !parts.length;
   }
 
   function setStatus(message) {
@@ -287,7 +328,7 @@
       return (a.kind === 'index' ? 1 : 0) - (b.kind === 'index' ? 1 : 0);
     });
     var paths = plot.selectAll('.hub-trend-line')
-      .data(ordered, function (line) { return line.key; })
+      .data(ordered.filter(function (line) { return line.series.length >= 2; }), function (line) { return line.key; })
       .join('path')
       .attr('class', 'hub-trend-line')
       .attr('data-line-key', function (line) { return line.key; })
@@ -297,6 +338,17 @@
       .attr('stroke-opacity', function (line) { return line.kind === 'index' ? 1 : 0.35; })
       .attr('vector-effect', 'non-scaling-stroke')
       .attr('d', function (line) { return lineGenerator(line.series); });
+
+    var dots = plot.selectAll('.hub-trend-dot')
+      .data(ordered.filter(function (line) { return line.series.length === 1; }), function (line) { return line.key; })
+      .join('circle')
+      .attr('class', 'hub-trend-dot')
+      .attr('data-line-key', function (line) { return line.key; })
+      .attr('cx', function (line) { return x(line.series[0].t); })
+      .attr('cy', function (line) { return y(line.series[0].v); })
+      .attr('r', function (line) { return line.kind === 'index' ? 3.5 : 2.8; })
+      .attr('fill', function (line) { return line.color; })
+      .attr('fill-opacity', function (line) { return line.kind === 'index' ? 1 : 0.55; });
 
     var crosshair = plot.append('line')
       .attr('y1', 0).attr('y2', innerHeight)
@@ -326,6 +378,23 @@
               (hasSelection && state.selectedLines.has(line.key)));
           if (on) return line.kind === 'index' ? 2.8 : 2.4;
           return line.kind === 'index' ? 2.2 : 1;
+        });
+      dots
+        .attr('fill-opacity', function (line) {
+          if (useDefault) return line.kind === 'index' ? 1 : 0.55;
+          var on =
+            line.key === hoverKey ||
+            (hasSelection && state.selectedLines.has(line.key));
+          if (on) return 1;
+          return 0.15;
+        })
+        .attr('r', function (line) {
+          var on =
+            !useDefault &&
+            (line.key === hoverKey ||
+              (hasSelection && state.selectedLines.has(line.key)));
+          if (on) return line.kind === 'index' ? 4.5 : 3.8;
+          return line.kind === 'index' ? 3.5 : 2.8;
         });
       document.querySelectorAll('.hub-trend-legend-item').forEach(function (item) {
         var key = item.getAttribute('data-line-key');
@@ -399,11 +468,16 @@
 
   function fetchAndRender(horizon) {
     if (!HORIZONS.includes(horizon)) horizon = '20d';
+    var horizonChanged = state.horizon !== horizon;
     state.horizon = horizon;
+    if (horizonChanged) state.payloadAsOf = null;
     updateTabs();
     setStatus(COPY[state.lang].loading);
     var requestId = ++state.requestId;
-    return fetch('/api/hub_trend?horizon=' + encodeURIComponent(horizon), {
+    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon)
+      + '&cb=' + Date.now()
+      + '&v=5';
+    return fetch(url, {
       headers: { Accept: 'application/json' },
     })
       .then(function (response) {
@@ -412,7 +486,13 @@
       })
       .then(function (payload) {
         if (requestId !== state.requestId) return;
-        state.payload = payload;
+        var nextAsOf = payload && payload.asOf ? String(payload.asOf) : '';
+        var prevAsOf = state.payloadAsOf ? String(state.payloadAsOf) : '';
+        if (!prevAsOf || !nextAsOf || nextAsOf >= prevAsOf) {
+          state.payload = payload;
+          state.payloadAsOf = nextAsOf || null;
+        }
+        updateMetaBanner();
         render();
       })
       .catch(function (error) {
