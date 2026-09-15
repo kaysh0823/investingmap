@@ -1,5 +1,6 @@
 /**
  * Verify /api/quotes-style return math for 005930 matches returns_core + hub_return_refs.
+ * k is keyed off anchorDd (not liveTradeDd): official→refsRecentDd→k=0, live→today→k=1.
  */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -10,6 +11,7 @@ import {
   resolveNumerator,
   sessionsSince,
   refCloseAt,
+  roundPct,
 } from '../functions/lib/returns_core.mjs';
 import { krxSessionInfo } from '../functions/lib/krx_session.mjs';
 
@@ -19,44 +21,63 @@ const row = refs.quotes['005930'];
 assert.ok(row && Array.isArray(row.closes) && row.closes.length >= 201, '005930 closes');
 
 const closes = row.closes;
-const officialClose = closes[closes.length - 1];
-assert.equal(officialClose, closes.at(-1));
+const L = closes.length;
+const officialClose = closes[L - 1];
+assert.equal(officialClose, 249000, '005930 recentDd close');
+assert.equal(refs.recentDd, '20260914');
 
 const session = krxSessionInfo();
-const sessionOpen = !!(session.regular || session.aftermarket);
+const sessionOpenNow = !!(session.regular || session.aftermarket);
 
-// Simulate closed-hours official path (k=0 when liveTradeDd === recentDd)
-const k0 = sessionsSince(refs.recentDd, refs.recentDd, refs.tradingDates);
-assert.equal(k0, 0);
-const numOfficial = resolveNumerator({
-  liveLast: officialClose + 1000,
-  sessionOpen: false,
-  officialClose,
-});
-assert.equal(numOfficial, officialClose);
-const off = computeStockReturns({ numerator: numOfficial, closes, k: k0 });
-assert.equal(off.chg1dPct, Math.round((officialClose / refCloseAt(closes, 0, 1) - 1) * 10000) / 100);
-assert.equal(off.ret20dPct, Math.round((officialClose / refCloseAt(closes, 0, 20) - 1) * 10000) / 100);
+// --- official: anchorDd = refsRecentDd → k=0 → ref1 = closes[L-2]
+{
+  const sessionOpen = false;
+  const liveTradeDd = '20260915'; // clock may be today, but official anchors on refs tip
+  const anchorDd = sessionOpen ? liveTradeDd : refs.recentDd;
+  const k = sessionsSince(refs.recentDd, anchorDd, refs.tradingDates);
+  assert.equal(anchorDd, refs.recentDd);
+  assert.equal(k, 0);
+  assert.equal(refCloseAt(closes, 0, 1), closes[L - 2]);
+  assert.equal(closes[L - 2], 259500, 'prior session close for 1D');
 
-// Live path: never pass refsRecentDd as liveTradeDd
-const k1 = sessionsSince(refs.recentDd, '20991231', refs.tradingDates);
-assert.equal(k1, 1);
-const liveLast = 248500;
-const numLive = resolveNumerator({ liveLast, sessionOpen: true, officialClose });
-assert.equal(numLive, liveLast);
-const live = computeStockReturns({ numerator: numLive, closes, k: k1 });
-assert.equal(live.chg1dPct, Math.round((liveLast / refCloseAt(closes, 1, 1) - 1) * 10000) / 100);
-assert.equal(refCloseAt(closes, 1, 1), officialClose, 'k=1 ref1 is recentDd close');
-assert.equal(live.ret20dPct, Math.round((liveLast / refCloseAt(closes, 1, 20) - 1) * 10000) / 100);
-assert.notEqual(
-  sessionsSince(refs.recentDd, refs.recentDd, refs.tradingDates),
-  sessionsSince(refs.recentDd, '20260915', refs.tradingDates),
-  'must not collapse live day to refsRecentDd',
-);
+  const numerator = resolveNumerator({
+    liveLast: 248500,
+    sessionOpen,
+    officialClose,
+  });
+  assert.equal(numerator, officialClose);
+  const off = computeStockReturns({ numerator, closes, k });
+  assert.equal(off.chg1dPct, roundPct(249000 / 259500 - 1));
+  assert.equal(off.chg1dPct, -4.05);
+}
+
+// --- live: anchorDd = liveTradeDd → k=1 → ref1 = closes[L-1]
+{
+  const sessionOpen = true;
+  const liveTradeDd = '20260915';
+  const anchorDd = sessionOpen ? liveTradeDd : refs.recentDd;
+  const k = sessionsSince(refs.recentDd, anchorDd, refs.tradingDates);
+  assert.equal(anchorDd, '20260915');
+  assert.equal(k, 1);
+  assert.equal(refCloseAt(closes, 1, 1), officialClose);
+
+  const liveLast = 248500;
+  const numerator = resolveNumerator({ liveLast, sessionOpen, officialClose });
+  assert.equal(numerator, liveLast);
+  const live = computeStockReturns({ numerator, closes, k });
+  assert.equal(live.chg1dPct, roundPct(248500 / 249000 - 1));
+  assert.equal(live.chg1dPct, -0.2);
+  assert.equal(live.ret20dPct, roundPct(248500 / refCloseAt(closes, 1, 20) - 1));
+}
 
 const quotesSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
 assert.ok(quotesSrc.includes('computeStockReturns'), 'quotes wires returns_core');
 assert.ok(quotesSrc.includes('numeratorMode'), 'quotes exposes numeratorMode');
+assert.ok(
+  /sessionsSince\(\s*recentDd\s*,\s*anchorDd/.test(quotesSrc)
+    || quotesSrc.includes('sessionsSince(recentDd, anchorDd'),
+  'k must use anchorDd not liveTradeDd',
+);
 
 const liveSrc = fs.readFileSync(path.join(ROOT, 'js', 'live_quotes.js'), 'utf8');
 assert.ok(liveSrc.includes('getReturnMeta'), 'client exposes getReturnMeta');
@@ -64,9 +85,6 @@ assert.ok(liveSrc.includes('syncReturnMetaBadges'), 'client paints return meta b
 assert.ok(!/calcLiveChg1dPct/.test(liveSrc), 'client no longer recalculates 1D');
 
 console.log(
-  'verify:quotes-returns OK — 005930 officialClose=%s sessionOpen=%s chg1d(off)=%s ret20(off)=%s',
-  officialClose,
-  sessionOpen,
-  off.chg1dPct,
-  off.ret20dPct,
+  'verify:quotes-returns OK — official chg1d=-4.05 live chg1d=-0.20 sessionOpenNow=%s',
+  sessionOpenNow,
 );

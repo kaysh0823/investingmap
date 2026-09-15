@@ -91,11 +91,12 @@ function applyStockReturnsFromRefs(items, refs, { sessionOpen, naverTradeDate })
   const recentDd = compactYmd(refs?.recentDd);
   // Live session date: Naver marker first, else KST trading-day anchor — never refsRecentDd.
   const liveTradeDd = compactYmd(naverTradeDate) || kstAnchorYmd();
-  const k = recentDd
-    ? sessionsSince(recentDd, liveTradeDd, refs?.tradingDates || [])
-    : 0;
   const numeratorMode = sessionOpen ? 'live' : 'official';
   const anchorDd = sessionOpen ? liveTradeDd : recentDd;
+  // k follows the return anchor (official → refs tip → 0; live → today → usually 1).
+  const k = recentDd && anchorDd
+    ? sessionsSince(recentDd, anchorDd, refs?.tradingDates || [])
+    : 0;
 
   if (items && refs?.quotes) {
     for (const [code, item] of Object.entries(items)) {
