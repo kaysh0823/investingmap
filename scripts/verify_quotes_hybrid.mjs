@@ -30,9 +30,6 @@ function mergeSupabaseWithNaverLive(codes, supabaseItems, naverItems) {
         base.last = liveLast;
         const livePrev = numOrNull(naver.prevClose);
         if (livePrev != null) base.prevClose = livePrev;
-        if (base.prevClose != null && base.prevClose > 0) {
-          base.chg1dPct = Math.round(((base.last / base.prevClose) - 1) * 10000) / 100;
-        }
       }
     }
     if (Object.keys(base).length) items[code] = base;
@@ -57,7 +54,8 @@ const merged = mergeSupabaseWithNaverLive(
 assert(merged['005930'].last === 70_500, 'last from naver');
 assert(merged['005930'].rs === 95, 'rs from supabase');
 assert(merged['005930'].high52w === 80_000, 'high52w from supabase');
-assert(merged['005930'].chg1dPct === -0.7, `chg1dPct ${merged['005930'].chg1dPct}`);
+assert(merged['005930'].ret20dPct === 3.2, 'returns left for returns_core overwrite');
+assert(merged['005930'].chg1dPct == null, 'merge must not set chg1dPct from last/prevClose');
 
 const noNaver = mergeSupabaseWithNaverLive(['005930'], merged, {});
 assert(noNaver['005930'].last === 70_500, 'fallback keeps supabase when naver missing last');
@@ -66,6 +64,9 @@ const src = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'u
 assert(src.includes('fetchNaverLiveOverlay'), 'naver overlay helper');
 assert(src.includes('stale-while-revalidate=120'), 'SWR header');
 assert(src.includes('mergeSupabaseWithNaverLive'), 'merge helper');
+assert(src.includes('computeStockReturns'), 'quotes uses returns_core');
+assert(src.includes('loadHubReturnRefsFromRequest') || src.includes('loadReturnRefs'), 'hub_return_refs load');
+assert(src.includes("QUOTES_CACHE_VERSION = 'v11'"), 'quotes cache version v11');
 
 console.log('verify_quotes_hybrid static OK');
 

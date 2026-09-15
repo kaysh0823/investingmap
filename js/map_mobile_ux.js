@@ -289,6 +289,11 @@
       if (el) delete el.dataset.fullLabel;
     });
     syncTabs();
+    try {
+      if (global.InvestingMapLiveQuotes && InvestingMapLiveQuotes.syncReturnMetaBadges) {
+        InvestingMapLiveQuotes.syncReturnMetaBadges(pageLang());
+      }
+    } catch (e) {}
   }
 
   function syncAll() {

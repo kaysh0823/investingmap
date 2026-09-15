@@ -1,18 +1,28 @@
 /**
  * Cloudflare Pages Function: GET /api/quotes?codes=005930,000660
- * Primary: Supabase stock_quotes_latest (derived fields) + Naver live overlay (last/prevClose, regular session).
- * Fallback: Naver Finance crawl (PC sise + mobile integration, cached: 5 min regular / 30 min off-hours).
+ * Primary: Supabase stock_quotes_latest (derived fields) + Naver live overlay (last/prevClose).
+ * Stock returns (1D/5/20/50/120/200D) from returns_core + hub_return_refs (single source).
+ * Fallback: Naver Finance crawl (PC sise + mobile integration).
  * Optional KRX OPEN API on fallback path: 1-year return when warm=1 and secret configured.
  */
 
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
 import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
-import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
+import {
+  loadHubReturnRefsFromRequest,
+  loadHubRsSnapshotFromRequest,
+} from '../lib/hub_dashboard_core.mjs';
+import {
+  computeStockReturns,
+  resolveNumerator,
+  sessionsSince,
+} from '../lib/returns_core.mjs';
 
-const QUOTES_CACHE_VERSION = 'v10';
+const QUOTES_CACHE_VERSION = 'v11';
 
 let rsSnapshotCache = { at: 0, snap: null };
+let returnRefsCache = { at: 0, refs: null };
 
 function slimMarketIndices(indices) {
   if (!indices || typeof indices !== 'object') return null;
@@ -52,9 +62,75 @@ async function loadRsSnapshot(request, env) {
   }
 }
 
-async function loadMarketIndicesFromRsSnapshot(request, env) {
-  const snap = await loadRsSnapshot(request, env);
-  return slimMarketIndices(snap && snap.indices);
+async function loadReturnRefs(request, env) {
+  const now = Date.now();
+  if (returnRefsCache.refs && now - returnRefsCache.at < 5 * 60 * 1000) {
+    return returnRefsCache.refs;
+  }
+  try {
+    const refs = await loadHubReturnRefsFromRequest(request, env);
+    if (refs && refs.quotes) {
+      returnRefsCache = { at: now, refs };
+    }
+    return refs || returnRefsCache.refs;
+  } catch {
+    return returnRefsCache.refs;
+  }
+}
+
+function compactYmd(v) {
+  const s = String(v || '').replace(/-/g, '');
+  return /^\d{8}$/.test(s) ? s : '';
+}
+
+/**
+ * Overwrite display returns from hub_return_refs + returns_core.
+ * RS fields are left untouched (snapshot path).
+ */
+function applyStockReturnsFromRefs(items, refs, { sessionOpen, naverTradeDate }) {
+  const recentDd = compactYmd(refs?.recentDd);
+  const liveTradeDd = compactYmd(naverTradeDate) || recentDd;
+  const k = recentDd
+    ? sessionsSince(recentDd, liveTradeDd, refs?.tradingDates || [])
+    : 0;
+  const numeratorMode = sessionOpen ? 'live' : 'official';
+  const anchorDd = sessionOpen ? (compactYmd(naverTradeDate) || recentDd) : recentDd;
+
+  if (items && refs?.quotes) {
+    for (const [code, item] of Object.entries(items)) {
+      if (!item) continue;
+      const t = normalizeTicker(code);
+      const row = t ? refs.quotes[t] : null;
+      const closes = row && Array.isArray(row.closes) ? row.closes : null;
+      if (!closes || !closes.length) {
+        item.chg1dPct = null;
+        item.ret5dPct = null;
+        item.ret20dPct = null;
+        item.ret50dPct = null;
+        item.ret120dPct = null;
+        item.ret200dPct = null;
+        continue;
+      }
+      const officialClose = numOrNull(closes[closes.length - 1]);
+      const liveLast = sessionOpen ? numOrNull(item.last) : null;
+      const numerator = resolveNumerator({ liveLast, sessionOpen, officialClose });
+      const returns = computeStockReturns({ numerator, closes, k });
+      item.chg1dPct = returns.chg1dPct;
+      item.ret5dPct = returns.ret5dPct;
+      item.ret20dPct = returns.ret20dPct;
+      item.ret50dPct = returns.ret50dPct;
+      item.ret120dPct = returns.ret120dPct;
+      item.ret200dPct = returns.ret200dPct;
+    }
+  }
+
+  return {
+    sessionOpen: !!sessionOpen,
+    numeratorMode,
+    anchorDd: anchorDd || null,
+    refsRecentDd: recentDd || null,
+    k,
+  };
 }
 
 function normalizeTicker(t) {
@@ -119,6 +195,7 @@ function mapSupabaseRow(row, snapQuote = null) {
     turnoverWon: numOrNull(row.turnover_won),
     per: numOrNull(row.per),
     pbr: numOrNull(row.pbr),
+    // Display returns overwritten by applyStockReturnsFromRefs when refs load.
     chg1dPct: numOrNull(row.chg_1d_pct),
     ret5dPct: numOrNull(row.ret_5d_pct),
     ret20dPct: numOrNull(row.ret_20d_pct),
@@ -218,10 +295,8 @@ async function fetchNaverLiveOverlay(codes) {
 }
 
 /**
- * Overlay Naver last/prevClose onto Supabase rows; derived fields stay from Supabase.
- * @param {string[]} codes
- * @param {Record<string, object>} supabaseItems
- * @param {Record<string, object>} naverItems
+ * Overlay Naver last/prevClose onto Supabase rows.
+ * Display returns come from applyStockReturnsFromRefs (not last/prevClose here).
  */
 function mergeSupabaseWithNaverLive(codes, supabaseItems, naverItems) {
   const items = {};
@@ -234,9 +309,6 @@ function mergeSupabaseWithNaverLive(codes, supabaseItems, naverItems) {
         base.last = liveLast;
         const livePrev = numOrNull(naver.prevClose);
         if (livePrev != null) base.prevClose = livePrev;
-        if (base.prevClose != null && base.prevClose > 0) {
-          base.chg1dPct = Math.round(((base.last / base.prevClose) - 1) * 10000) / 100;
-        }
       }
     }
     if (Object.keys(base).length) items[code] = base;
@@ -263,6 +335,7 @@ async function fetchQuotesFromNaver(codes, authKey, warmHist) {
     items,
     source: authKey && warmHist ? 'naver-sise-cache+krx-yoy' : 'naver-sise-cache',
     regularSession: cached.regularSession,
+    tradeDate: cached.tradeDate || null,
     cacheHits: cached.cacheHits,
     naverFetched: cached.fetched,
   };
@@ -283,14 +356,22 @@ export async function onRequest(context) {
   const codesRaw = url.searchParams.get('codes') || '';
   const codes = [...new Set(codesRaw.split(/[, ]+/).map(normalizeTicker).filter(Boolean))];
   const session = krxSessionInfo();
+  const sessionOpen = !!(session.regular || session.aftermarket);
   const warmHist = url.searchParams.get('warm') === '1';
   const supabaseConfig = getSupabaseConfig(env);
 
-  const snap = await loadRsSnapshot(request, env);
+  const [snap, refs] = await Promise.all([
+    loadRsSnapshot(request, env),
+    loadReturnRefs(request, env),
+  ]);
   const snapQuotes = snap && snap.quotes ? snap.quotes : null;
   const indices = slimMarketIndices(snap && snap.indices);
 
   if (!codes.length) {
+    const emptyMeta = applyStockReturnsFromRefs({}, refs, {
+      sessionOpen,
+      naverTradeDate: null,
+    });
     return new Response(
       JSON.stringify({
         asOf: new Date().toISOString(),
@@ -298,7 +379,8 @@ export async function onRequest(context) {
         source: supabaseConfig ? 'supabase' : 'naver-sise-cache',
         configured: true,
         krxConfigured: !!authKey,
-        regularSession: session.regular,
+        regularSession: sessionOpen,
+        ...emptyMeta,
         ...(indices ? { indices } : {}),
       }),
       { headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },
@@ -307,40 +389,41 @@ export async function onRequest(context) {
 
   try {
     let payload;
+    let naverTradeDate = null;
 
     if (supabaseConfig) {
       try {
         const supabase = await fetchQuotesFromSupabase(codes, supabaseConfig, snapQuotes);
         // Clock wins: stale DB regular_session=false must not skip Naver live
         // overlay during regular hours or aftermarket (16:00–20:00 KST).
-        // Aftermarket: if Naver only returns the day close, that is the correct last.
-        const regular =
-          session.regular || session.aftermarket || supabase.regularSession === true;
+        const wantLive = sessionOpen || supabase.regularSession === true;
 
-        if (regular) {
+        if (wantLive) {
           let naverItems = {};
           try {
             const naver = await fetchNaverLiveOverlay(codes);
             naverItems = naver.items || {};
+            naverTradeDate = naver.tradeDate || null;
           } catch {
             /* Naver failure → Supabase last for all codes */
           }
           payload = {
             asOf: supabase.asOf,
             source: 'supabase+naver-live',
-            regularSession: regular,
+            regularSession: sessionOpen || wantLive,
             items: mergeSupabaseWithNaverLive(codes, supabase.items, naverItems),
           };
         } else {
           payload = {
             asOf: supabase.asOf,
             source: 'supabase',
-            regularSession: regular,
+            regularSession: false,
             items: supabase.items,
           };
         }
       } catch {
         const naver = await fetchQuotesFromNaver(codes, authKey, warmHist);
+        naverTradeDate = naver.tradeDate || null;
         payload = {
           asOf: new Date().toISOString(),
           ...naver,
@@ -348,6 +431,7 @@ export async function onRequest(context) {
       }
     } else {
       const naver = await fetchQuotesFromNaver(codes, authKey, warmHist);
+      naverTradeDate = naver.tradeDate || null;
       payload = {
         asOf: new Date().toISOString(),
         ...naver,
@@ -355,6 +439,12 @@ export async function onRequest(context) {
     }
 
     applySnapshotRsToItems(payload.items, snapQuotes);
+    const returnMeta = applyStockReturnsFromRefs(payload.items, refs, {
+      sessionOpen,
+      naverTradeDate,
+    });
+    Object.assign(payload, returnMeta);
+    payload.regularSession = sessionOpen;
 
     const cacheControl = quotesCacheControl();
     if (indices) payload.indices = indices;
@@ -373,7 +463,12 @@ export async function onRequest(context) {
         message: e && e.message ? String(e.message) : 'unknown',
         asOf: new Date().toISOString(),
         items: {},
-        regularSession: session.regular,
+        regularSession: sessionOpen,
+        sessionOpen,
+        numeratorMode: sessionOpen ? 'live' : 'official',
+        anchorDd: null,
+        refsRecentDd: null,
+        k: 0,
       }),
       { status: 502, headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },
     );

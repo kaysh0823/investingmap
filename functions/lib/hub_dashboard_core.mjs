@@ -710,6 +710,23 @@ export async function loadHubRsSnapshotFromRequest(request, env) {
   }
 }
 
+/** Same ASSETS/fetch pattern as hub_rs_snapshot (5 min edge cache). */
+export async function loadHubReturnRefsFromRequest(request, env) {
+  const url = new URL('/data/hub_return_refs.json', request.url);
+  let res;
+  if (env && env.ASSETS) {
+    res = await env.ASSETS.fetch(new Request(url));
+  } else {
+    res = await fetch(url.toString(), { cf: { cacheTtl: 300 } });
+  }
+  if (!res.ok) return null;
+  try {
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
 export function buildHubRsTop10(hubIndex, rsSnapshot) {
   const quotes = rsSnapshot && rsSnapshot.quotes ? rsSnapshot.quotes : {};
   return listHubCompanies(hubIndex)

@@ -175,7 +175,7 @@ for (const file of mapFiles) {
     'id="tab-momentum"',
     'id="momentum-root"',
     '../js/map_momentum.js?v=14',
-    '../js/live_quotes.js?v=23',
+    '../js/live_quotes.js?v=24',
     'function renderMomentum()',
     'getMomentumIndices',
     'onQuotesReady:',
@@ -226,7 +226,10 @@ for (const field of [
 ]) {
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
-assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '10'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '11'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes('getReturnMeta'), 'live quotes must expose return meta');
+assert.ok(liveQuotes.includes('applyLiveReturns'), 'applyLiveReturns kept as no-op export');
+assert.ok(!/function applyLiveReturns\(companies/.test(liveQuotes), 'client must not recompute live 1D returns');
 assert.ok(liveQuotes.includes('getMomentumIndices'), 'live quotes must expose momentum index RS');
 assert.ok(liveQuotes.includes('rememberMomentumIndices'), 'live quotes must store indices from quotes/RS snap');
 assert.ok(liveQuotes.includes('onQuotesReady'), 'live quotes must accept onQuotesReady callback');
@@ -256,8 +259,9 @@ for (const field of [
 ]) {
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
-assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v10'"), 'quotes response cache version');
-assert.ok(quotesApi.includes('loadMarketIndicesFromRsSnapshot'), 'quotes API attaches RS indices');
+assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v11'"), 'quotes response cache version');
+assert.ok(quotesApi.includes('slimMarketIndices'), 'quotes API attaches RS indices');
+assert.ok(quotesApi.includes('computeStockReturns'), 'quotes API uses returns_core');
 assert.ok(quotesApi.includes("'supabase+naver-live'"), 'hybrid quotes source');
 assert.ok(quotesApi.includes('stale-while-revalidate=120'), 'quotes SWR cache header');
 const migration12 = fs.readFileSync(

@@ -3,7 +3,7 @@
  */
 (function (global) {
   'use strict';
-  var QUOTES_API_VERSION = '10';
+  var QUOTES_API_VERSION = '11';
 
   var CHUNK_SIZE = 18;
   var POSITION_FALLBACK_KO = '주가 위치';
@@ -13,6 +13,8 @@
   var rsSnapshotPromise = null;
   /** @type {{kospiRs?: number, kosdaqRs?: number}|null} */
   var momentumIndices = null;
+  /** @type {{ asOf?: string|null, sessionOpen?: boolean|null, numeratorMode?: string|null, anchorDd?: string|null, refsRecentDd?: string|null, k?: number|null }|null} */
+  var returnMeta = null;
 
   function rememberMomentumIndices(source) {
     if (!source) return;
@@ -111,95 +113,56 @@
     return null;
   }
 
-  function applyRsFieldsFromRow(c, row) {
+  function applyRsOnlyFromRow(c, row) {
     if (!row) {
       c.rs = null;
-      c.chg1dPct = c.ret5dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
       return;
     }
     c.rs = typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
-    c.chg1dPct = pickRetPct(row, 'chg1dPct');
-    c.ret5dPct = pickRetPct(row, 'ret5dPct');
-    c.ret20dPct = pickRetPct(row, 'ret20dPct', 'ret1mPct');
-    c.ret50dPct = pickRetPct(row, 'ret50dPct', 'ret3mPct');
-    c.ret120dPct = pickRetPct(row, 'ret120dPct', 'ret6mPct');
-    c.ret200dPct = pickRetPct(row, 'ret200dPct', 'ret250dPct', 'ret1yPct');
   }
 
-  function applyRsFieldsFromRowIfPresent(c, row) {
-    if (!row) return;
-    if (typeof row.rs === 'number' && isFinite(row.rs)) c.rs = row.rs;
+  function applyQuoteReturnsFromApi(c, q) {
+    if (!q) return;
     var v;
-    v = pickRetPct(row, 'chg1dPct');
+    v = pickRetPct(q, 'chg1dPct');
     if (v != null) c.chg1dPct = v;
-    v = pickRetPct(row, 'ret5dPct');
+    v = pickRetPct(q, 'ret5dPct');
     if (v != null) c.ret5dPct = v;
-    v = pickRetPct(row, 'ret20dPct', 'ret1mPct');
+    v = pickRetPct(q, 'ret20dPct', 'ret1mPct');
     if (v != null) c.ret20dPct = v;
-    v = pickRetPct(row, 'ret50dPct', 'ret3mPct');
+    v = pickRetPct(q, 'ret50dPct', 'ret3mPct');
     if (v != null) c.ret50dPct = v;
-    v = pickRetPct(row, 'ret120dPct', 'ret6mPct');
+    v = pickRetPct(q, 'ret120dPct', 'ret6mPct');
     if (v != null) c.ret120dPct = v;
-    v = pickRetPct(row, 'ret200dPct', 'ret1yPct');
+    v = pickRetPct(q, 'ret200dPct', 'ret1yPct');
     if (v != null) c.ret200dPct = v;
   }
 
-  function quoteItemHasRsReturns(q) {
-    if (!q) return false;
-    if (typeof q.rs === 'number' && isFinite(q.rs)) return true;
-    if (pickRetPct(q, 'chg1dPct') != null) return true;
-    if (pickRetPct(q, 'ret5dPct') != null) return true;
-    if (pickRetPct(q, 'ret20dPct', 'ret1mPct') != null) return true;
-    if (pickRetPct(q, 'ret50dPct', 'ret3mPct') != null) return true;
-    if (pickRetPct(q, 'ret120dPct', 'ret6mPct') != null) return true;
-    if (pickRetPct(q, 'ret200dPct', 'ret1yPct') != null) return true;
-    return false;
+  function quoteItemHasRs(q) {
+    return !!(q && typeof q.rs === 'number' && isFinite(q.rs));
   }
 
-  /** True when /api/quotes already carries RS + horizon returns (e.g. Supabase path). */
-  function quotesResponseHasRsReturns(j) {
+  /** True when /api/quotes already carries RS (snapshot fetch only needed for RS gaps). */
+  function quotesResponseHasRs(j) {
     if (!j) return false;
-    if (j.source === 'supabase') return true;
+    if (j.indices) return true;
     var items = j.items || {};
     for (var k in items) {
-      if (Object.prototype.hasOwnProperty.call(items, k) && quoteItemHasRsReturns(items[k])) {
+      if (Object.prototype.hasOwnProperty.call(items, k) && quoteItemHasRs(items[k])) {
         return true;
       }
     }
     return false;
   }
 
-  function quoteItemHasPrevClose(q) {
-    return !!(q && typeof q.prevClose === 'number' && isFinite(q.prevClose) && q.prevClose > 0);
-  }
-
-  function quoteItemHasHorizonReturns(q) {
-    if (!q) return false;
-    if (pickRetPct(q, 'ret20dPct', 'ret1mPct') != null) return true;
-    if (pickRetPct(q, 'ret50dPct', 'ret3mPct') != null) return true;
-    if (pickRetPct(q, 'ret120dPct', 'ret6mPct') != null) return true;
-    if (pickRetPct(q, 'ret200dPct', 'ret1yPct') != null) return true;
-    return false;
-  }
-
   /**
-   * Skip 689KB hub_rs_snapshot when quotes already have prevClose (live 1D)
-   * and multi-horizon returns (fallback columns).
+   * Skip hub_rs_snapshot when quotes already include RS (returns come from API alone).
    */
   function quotesResponseCanSkipRsSnapshot(j) {
-    var items = (j && j.items) || {};
-    var hasPrev = false;
-    var hasHorizon = false;
-    for (var k in items) {
-      if (!Object.prototype.hasOwnProperty.call(items, k)) continue;
-      var q = items[k];
-      if (quoteItemHasPrevClose(q)) hasPrev = true;
-      if (quoteItemHasHorizonReturns(q)) hasHorizon = true;
-      if (hasPrev && hasHorizon) return true;
-    }
-    return false;
+    return quotesResponseHasRs(j);
   }
 
+  /** Merge RS ranks only — never overwrite API returns (chg1d / retXd). */
   function mergeRsIntoCompanies(companies, snap) {
     if (!companies) return;
     var quotes = (snap && snap.quotes) || {};
@@ -208,37 +171,67 @@
       var key = normalizeTicker(c.ticker);
       if (!key) {
         c.rs = null;
-        c.chg1dPct = c.ret5dPct = c.ret20dPct = c.ret50dPct = c.ret120dPct = c.ret200dPct = null;
         continue;
       }
-      applyRsFieldsFromRow(c, quotes[key]);
+      applyRsOnlyFromRow(c, quotes[key]);
     }
   }
 
-  /** Naver last for 1D only; 20D+ stay on KRX snapshot (or quotes API fields). */
-  function applyLiveReturns(companies, snap) {
-    var RL = global.InvestingMapReturnLive;
-    if (!RL || !companies) return;
-    snap = snap || { quotes: {} };
-    if (!RL.shouldUseLive1dReturns(snap.recentDd)) return;
-    var snapStale = RL.isRecentDdStale(snap.recentDd);
-    var quotes = snap.quotes || {};
-    for (var i = 0; i < companies.length; i++) {
-      var c = companies[i];
-      var key = normalizeTicker(c.ticker);
-      if (!key || c.quoteLast == null) continue;
-      var row = quotes[key];
-      var refClose = null;
-      if (typeof c.quotePrevClose === 'number' && c.quotePrevClose > 0) {
-        refClose = c.quotePrevClose;
-      } else if (row && row.refClose != null && row.refClose > 0) {
-        // When KRX recentDd lags, keep API/Naver chg1dPct instead of multi-day span vs old refClose.
-        if (snapStale && c.chg1dPct != null) continue;
-        refClose = row.refClose;
-      }
-      if (refClose == null || refClose <= 0) continue;
-      var live = RL.calcLiveChg1dPct(c.quoteLast, refClose);
-      if (live != null) c.chg1dPct = live;
+  /** @deprecated Returns are computed server-side in /api/quotes; kept as no-op. */
+  function applyLiveReturns() {}
+
+  function rememberReturnMeta(j) {
+    if (!j) return;
+    returnMeta = {
+      asOf: j.asOf || null,
+      sessionOpen: j.sessionOpen != null ? !!j.sessionOpen : null,
+      numeratorMode: j.numeratorMode || null,
+      anchorDd: j.anchorDd || null,
+      refsRecentDd: j.refsRecentDd || null,
+      k: typeof j.k === 'number' && isFinite(j.k) ? j.k : null,
+    };
+  }
+
+  function getReturnMeta() {
+    if (!returnMeta) return {};
+    return {
+      asOf: returnMeta.asOf || null,
+      sessionOpen: returnMeta.sessionOpen,
+      numeratorMode: returnMeta.numeratorMode || null,
+      anchorDd: returnMeta.anchorDd || null,
+      refsRecentDd: returnMeta.refsRecentDd || null,
+      k: returnMeta.k,
+    };
+  }
+
+  function formatAnchorDash(ymd) {
+    var s = String(ymd || '').replace(/-/g, '');
+    if (!/^\d{8}$/.test(s)) return '';
+    return s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6, 8);
+  }
+
+  /** Shared badge: "기준 · YYYY-MM-DD · live|마감" */
+  function formatReturnMetaBadge(lang) {
+    var meta = getReturnMeta();
+    var dash = formatAnchorDash(meta.anchorDd);
+    if (!dash) return '';
+    var mode = meta.numeratorMode === 'live'
+      ? 'live'
+      : (lang === 'en' ? 'closed' : '\uB9C8\uAC10');
+    var label = lang === 'en' ? 'Basis' : '\uAE30\uC900';
+    return label + ' \u00B7 ' + dash + ' \u00B7 ' + mode;
+  }
+
+  function syncReturnMetaBadges(lang) {
+    var badge = formatReturnMetaBadge(lang);
+    var badgeRe = /\s*·\s*(기준|Basis)\s*·\s*\d{4}-\d{2}-\d{2}\s*·\s*(live|마감|closed)\s*$/;
+    var ids = ['heatmap-hint', 'momentum-hint', 'volatility-hint'];
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (!el) continue;
+      var base = String(el.textContent || '').replace(badgeRe, '').trim();
+      el.dataset.imHintBase = base;
+      el.textContent = badge ? (base ? base + ' \u00B7 ' + badge : badge) : base;
     }
   }
 
@@ -359,7 +352,8 @@
       } else {
         c.spark20 = null;
       }
-      applyRsFieldsFromRowIfPresent(c, q);
+      if (typeof q.rs === 'number' && isFinite(q.rs)) c.rs = q.rs;
+      applyQuoteReturnsFromApi(c, q);
     }
   }
 
@@ -546,14 +540,16 @@
 
   function formatQuotesAsofDisplay(asOf, regularSession, lang) {
     var ymd = formatAsOfYmdKst(asOf);
+    var base = '';
     if (regularSession === false) {
       var closed = lang === 'en' ? 'Closed' : '\uC7A5\uB9C8\uAC10';
-      return ymd ? closed + ' \u00B7 ' + ymd : closed;
+      base = ymd ? closed + ' \u00B7 ' + ymd : closed;
+    } else if (regularSession === true || asOf) {
+      base = lang === 'en' ? '~10m delayed' : '10\uBD84 \uC9C0\uC5F0';
     }
-    if (regularSession === true || asOf) {
-      return lang === 'en' ? '~10m delayed' : '10\uBD84 \uC9C0\uC5F0';
-    }
-    return '';
+    var badge = formatReturnMetaBadge(lang);
+    if (badge && base) return base + ' \u00B7 ' + badge;
+    return badge || base;
   }
 
   function fetchAllCodes(base, codes) {
@@ -562,6 +558,7 @@
     var regularSession = null;
     var source = '';
     var indices = null;
+    var metaFields = null;
     var chain = Promise.resolve();
     for (var i = 0; i < codes.length; i += CHUNK_SIZE) {
       (function (chunk) {
@@ -576,6 +573,15 @@
             indices = j.indices;
             rememberMomentumIndices(j);
           }
+          if (j && (j.anchorDd != null || j.numeratorMode != null || j.sessionOpen != null)) {
+            metaFields = {
+              sessionOpen: j.sessionOpen,
+              numeratorMode: j.numeratorMode,
+              anchorDd: j.anchorDd,
+              refsRecentDd: j.refsRecentDd,
+              k: j.k,
+            };
+          }
           var items = (j && j.items) || {};
           for (var k in items) {
             if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
@@ -584,7 +590,21 @@
       })(codes.slice(i, i + CHUNK_SIZE));
     }
     return chain.then(function () {
-      return { asOf: asOf, items: merged, regularSession: regularSession, source: source, indices: indices };
+      var out = {
+        asOf: asOf,
+        items: merged,
+        regularSession: regularSession,
+        source: source,
+        indices: indices,
+      };
+      if (metaFields) {
+        out.sessionOpen = metaFields.sessionOpen;
+        out.numeratorMode = metaFields.numeratorMode;
+        out.anchorDd = metaFields.anchorDd;
+        out.refsRecentDd = metaFields.refsRecentDd;
+        out.k = metaFields.k;
+      }
+      return out;
     });
   }
 
@@ -611,7 +631,6 @@
       rememberMomentumIndices(snap);
       if (getCompanies) {
         mergeRsIntoCompanies(getCompanies(), snap);
-        applyLiveReturns(getCompanies(), snap);
       }
       try {
         if (renderTable) renderTable();
@@ -664,10 +683,22 @@
       return fetchAllCodes(base, codes)
         .then(function (j) {
           mergeCompanies(getCompanies(), j.items || {});
+          rememberReturnMeta(j);
           if (j && j.indices) rememberMomentumIndices(j);
           function finishQuotes() {
             try {
-              onAsOf(j.asOf || '', { regularSession: j.regularSession });
+              var pageLang = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'ko';
+              syncReturnMetaBadges(pageLang);
+            } catch (e0) {}
+            try {
+              onAsOf(j.asOf || '', {
+                regularSession: j.regularSession,
+                sessionOpen: j.sessionOpen,
+                numeratorMode: j.numeratorMode,
+                anchorDd: j.anchorDd,
+                refsRecentDd: j.refsRecentDd,
+                k: j.k,
+              });
             } catch (e1) {}
             try {
               if (renderTable) renderTable();
@@ -677,19 +708,15 @@
             focusTickerAfterRender();
             return j;
           }
-          // Prefer quotes prevClose + horizon returns; only fetch 689KB RS snap as fallback.
-          if (quotesResponseCanSkipRsSnapshot(j) && (j.indices || momentumIndices)) {
-            applyLiveReturns(getCompanies(), null);
+          // Skip RS snapshot when API already has RS; returns never need the snapshot.
+          if (quotesResponseCanSkipRsSnapshot(j)) {
             return finishQuotes();
           }
           return loadRsSnapshot().then(function (snap) {
-            if (snap && !quotesResponseHasRsReturns(j)) {
+            if (snap && !quotesResponseHasRs(j)) {
               mergeRsIntoCompanies(getCompanies(), snap);
             }
-            if (snap) {
-              rememberMomentumIndices(snap);
-              applyLiveReturns(getCompanies(), snap);
-            }
+            if (snap) rememberMomentumIndices(snap);
             return finishQuotes();
           });
         })
@@ -733,6 +760,9 @@
     loadRsSnapshot: loadRsSnapshot,
     mergeRsIntoCompanies: mergeRsIntoCompanies,
     applyLiveReturns: applyLiveReturns,
+    getReturnMeta: getReturnMeta,
+    formatReturnMetaBadge: formatReturnMetaBadge,
+    syncReturnMetaBadges: syncReturnMetaBadges,
     getMomentumIndices: getMomentumIndices,
     rememberMomentumIndices: rememberMomentumIndices,
     positionHeaderLabel: positionHeaderLabel,
