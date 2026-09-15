@@ -1,6 +1,11 @@
 /**
  * Build data/hub_return_refs.json — shared adjusted-close history for live returns.
  * Does not alter existing hub APIs; foundation for a single return math path.
+ *
+ * Flags:
+ *   --guard-today     Skip (exit 3) if weekday trading day but history max(trade_date) < today
+ *   --require-date=YYYYMMDD  Fail (exit 2) if built recentDd !== this date
+ *                            (ignored on non-trading days when --guard-today allows last session)
  */
 import fs from 'fs';
 import path from 'path';
@@ -10,17 +15,22 @@ import {
   RETURN_REF_CLOSES,
   RETURN_REF_TRADING_DATES,
 } from '../functions/lib/krx_rs_from_history.mjs';
-import { getSupabaseConfig } from '../functions/lib/supabase_hub.mjs';
+import { fetchSupabaseJson, getSupabaseConfig } from '../functions/lib/supabase_hub.mjs';
 import {
   listHubCompanies,
   normalizeTicker,
 } from '../functions/lib/hub_dashboard_core.mjs';
 import { fetchKrxDailyOhlc } from '../functions/lib/krx_daily_ohlc.mjs';
-import { kstYmdDash } from '../functions/lib/krx_session.mjs';
+import { kstDateParts, kstYmdDash } from '../functions/lib/krx_session.mjs';
+import { fetchNaverQuote } from '../functions/lib/naver_sise_quotes.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_PATH = path.join(ROOT, 'data', 'hub_return_refs.json');
 const SAMPLE_TICKER = '005930';
+/** Exit: today's candle missing on an expected trading day — do not overwrite refs. */
+export const EXIT_SKIP_MISSING_TODAY = 3;
+/** Exit: --require-date mismatch after build. */
+export const EXIT_REQUIRE_DATE = 2;
 
 function loadEnv() {
   const env = { ...process.env };
@@ -37,6 +47,19 @@ function loadEnv() {
     if (!env[k]) env[k] = v;
   }
   return env;
+}
+
+function parseArgs(argv) {
+  let requireDate = null;
+  let guardToday = false;
+  for (const a of argv) {
+    if (a === '--guard-today') guardToday = true;
+    else if (a.startsWith('--require-date=')) {
+      const raw = a.slice('--require-date='.length).replace(/-/g, '');
+      requireDate = /^\d{8}$/.test(raw) ? raw : null;
+    }
+  }
+  return { requireDate, guardToday };
 }
 
 function collectUniverseTickers() {
@@ -71,12 +94,78 @@ function sharesFromMcapClose(mcap, close) {
   return sh > 0 ? sh : null;
 }
 
+async function fetchHistoryMaxTradeDate(config) {
+  const rows = await fetchSupabaseJson(
+    config,
+    `stock_price_history?ticker=eq.${SAMPLE_TICKER}`
+      + `&select=trade_date&order=trade_date.desc&limit=1`,
+  );
+  if (!Array.isArray(rows) || !rows[0]?.trade_date) return null;
+  return String(rows[0].trade_date).slice(0, 10);
+}
+
+/**
+ * True when KST "today" is expected to be a trading session (weekday + Naver
+ * tradeDate already on today, or weekday with no holiday signal).
+ * Holidays: Naver tradeDate stays on the prior session while calendar is weekday.
+ */
+async function expectTradingSessionToday(todayDash) {
+  const p = kstDateParts();
+  if (p.weekday < 1 || p.weekday > 5) return false;
+  try {
+    const q = await fetchNaverQuote(SAMPLE_TICKER);
+    const td = q?.tradeDate ? String(q.tradeDate).slice(0, 10) : null;
+    if (td && td < todayDash) {
+      console.log(
+        `  post_close guard: Naver tradeDate=${td} < today=${todayDash} → non-trading day`,
+      );
+      return false;
+    }
+  } catch (e) {
+    console.warn(`  post_close guard: Naver peek failed (${e.message || e}) — treat as trading day`);
+  }
+  return true;
+}
+
+/**
+ * @returns {Promise<'ok'|'skip_missing_today'|'allow_non_trading'>}
+ */
+async function guardTodayCandle(config) {
+  const todayDash = kstYmdDash();
+  const maxDash = await fetchHistoryMaxTradeDate(config);
+  console.log(`  post_close guard: history max(trade_date)=${maxDash || 'n/a'} today=${todayDash}`);
+
+  if (!maxDash) return 'ok';
+  if (maxDash >= todayDash) return 'ok';
+
+  const expectTrade = await expectTradingSessionToday(todayDash);
+  if (!expectTrade) return 'allow_non_trading';
+
+  console.warn(
+    `::warning::post_close: today's candle missing (max=${maxDash}) — skip refs/RS rebuild`,
+  );
+  return 'skip_missing_today';
+}
+
 async function main() {
+  const { requireDate, guardToday } = parseArgs(process.argv.slice(2));
   const env = loadEnv();
   const supabase = getSupabaseConfig(env, { preferServiceRole: true });
   if (!supabase) {
     console.error('SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY required');
     process.exit(1);
+  }
+
+  let skipRequireDate = false;
+  if (guardToday) {
+    const g = await guardTodayCandle(supabase);
+    if (g === 'skip_missing_today') {
+      process.exit(EXIT_SKIP_MISSING_TODAY);
+    }
+    if (g === 'allow_non_trading') {
+      skipRequireDate = true;
+      console.log('  post_close guard: non-trading day — build allowed on last session');
+    }
   }
 
   const tickers = collectUniverseTickers();
@@ -99,6 +188,20 @@ async function main() {
   }
 
   const { recentDd, tradingDates, quotes: seriesMap } = refs;
+
+  if (requireDate && !skipRequireDate && recentDd !== requireDate) {
+    console.error(
+      `FATAL: --require-date=${requireDate} but recentDd=${recentDd} `
+      + '(refusing to publish stale tip)',
+    );
+    process.exit(EXIT_REQUIRE_DATE);
+  }
+  if (requireDate && skipRequireDate) {
+    console.log(
+      `  --require-date=${requireDate} waived (non-trading day); recentDd=${recentDd}`,
+    );
+  }
+
   let ohlcByTicker = new Map();
   try {
     ohlcByTicker = await fetchKrxDailyOhlc(recentDd, env);

@@ -101,8 +101,11 @@ GitHub `schedule` cron(`*/10`)은 **스로틀링**되어 실제로는 1~3시간 
 | (없음) / `intraday` | 09:00–15:30 등 | 시세 sync만 |
 | `regular_close` | **15:40** | 시세 sync + 당일 봉(MDCSTAT T+0) |
 | `post_close` | **20:05** | 시세 sync + 당일 봉 확인 → `hub_return_refs`·`hub_rs_snapshot` 재생성 → 커밋·푸시 |
+| | | 당일 봉이 `stock_price_history`에 없으면 refs 재빌드를 **스킵**(어제 tip으로 덮지 않음) |
 
 GitHub schedule `40 6`(15:40)·`0 11`(20:00)는 동일 슬롯의 **백업**입니다(러너 시각으로 slot 추론).
+
+**KRX_AUTH_KEY:** apihub(`fetchMarketDay`)·지수 종가에 사용. `Unauthorized API Call`(401)이면 키 만료·오타·엔드포인트 권한을 확인하세요. MDCSTAT(data.krx) 일봉 경로는 `KRX_ID`/`KRX_PW`로 동작하며 apihub와 무관합니다.
 
 ### 3) 장중·마감 스케줄 예시 (KST)
 

@@ -455,22 +455,35 @@ async function repairHistoryCoverageForDate(
 
 /**
  * Persist today's regular-session OHLC into stock_price_history once the
- * regular auction has ended (15:30+). Source priority:
+ * regular auction has ended (15:30+ clock) or Naver reports 장마감.
+ * Source priority:
  *   (a) apihub fetchMarketDay (T+1-ready, preferred when published)
  *   (b) data.krx MDCSTAT01501 (T+0 regular close) ← aftermarket-safe
  *   (c) Naver session OHLCV (never aftermarket last as close)
  * Idempotent on (ticker, trade_date); T+1 apihub backfill may overwrite.
+ *
+ * @param {boolean} sessionClosedForHistory naverMarketClosed || regularSessionEnded
  */
 async function upsertSessionCloseHistory(
   quoteRows,
   tradeDateDash,
-  regularSessionEnded,
+  sessionClosedForHistory,
   supabaseUrl,
   serviceKey,
   authKey,
   env = process.env,
 ) {
-  if (!regularSessionEnded || !tradeDateDash) return { upserted: 0, skipped: true, byCode: null };
+  if (!tradeDateDash) {
+    console.log('  history session close: skip (no tradeDate)');
+    return { upserted: 0, skipped: true, byCode: null, reason: 'no_trade_date', source: null };
+  }
+  if (!sessionClosedForHistory) {
+    console.log(
+      `  history session close ${tradeDateDash}: skip (regular session still open; `
+      + 'need naverMarketClosed or clock>15:30 KST)',
+    );
+    return { upserted: 0, skipped: true, byCode: null, reason: 'session_open', source: null };
+  }
 
   const basDd = dashToBasDd(tradeDateDash);
   let byCode = null;
@@ -487,11 +500,26 @@ async function upsertSessionCloseHistory(
         byCode = null;
       } else {
         source = 'apihub';
+        console.log(
+          `  history session close ${tradeDateDash}: source=apihub rows=${byCode.size}`,
+        );
       }
     } catch (e) {
-      console.warn(`  history session close apihub failed: ${e.message || e}`);
+      const msg = String(e.message || e);
+      if (/401|Unauthorized/i.test(msg)) {
+        console.warn(
+          `  history session close apihub 401 Unauthorized — check KRX_AUTH_KEY `
+          + `(expiry/typo/endpoint ACL). Falling back to MDCSTAT/Naver. (${msg.slice(0, 120)})`,
+        );
+      } else {
+        console.warn(`  history session close apihub failed: ${msg}`);
+      }
       byCode = null;
     }
+  } else {
+    console.log(
+      `  history session close ${tradeDateDash}: no KRX_AUTH_KEY → skip apihub, try MDCSTAT`,
+    );
   }
 
   // (b) data.krx [12001] 전종목 시세 — regular-session close (T+0)
@@ -506,7 +534,7 @@ async function upsertSessionCloseHistory(
         }
         source = 'data.krx';
         console.log(
-          `  history session close ${tradeDateDash}: data.krx MDCSTAT01501 rows=${byCode.size}`,
+          `  history session close ${tradeDateDash}: source=data.krx/MDCSTAT01501 rows=${byCode.size}`,
         );
       } else {
         console.log(
@@ -574,7 +602,13 @@ async function upsertSessionCloseHistory(
       turnover_won: q.turnover_won ?? null,
     });
   }
-  if (!rows.length) return { upserted: 0, skipped: false, byCode: null };
+  if (!source && rows.length) source = 'naver';
+  if (!rows.length) {
+    console.log(
+      `  history session close ${tradeDateDash}: skip upsert (0 rows; source attempted=${source || 'none'})`,
+    );
+    return { upserted: 0, skipped: false, byCode: null, source, reason: 'no_rows' };
+  }
   const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
   const withOhlcv = rows.filter(
     (r) => r.open != null && r.high != null && r.low != null && r.volume != null,
@@ -583,10 +617,10 @@ async function upsertSessionCloseHistory(
     source === 'apihub'
       ? 'apihub'
       : source === 'data.krx'
-        ? 'data.krx'
+        ? 'data.krx/MDCSTAT01501'
         : `Naver OHLCV ${withOhlcv}/${rows.length}`;
   console.log(
-    `  history session close ${tradeDateDash}: upserted ${result.upserted} (${sourceLabel})`,
+    `  history session close ${tradeDateDash}: upserted ${result.upserted} (source=${sourceLabel})`,
   );
   const coverage = krxReady
     ? await repairHistoryCoverageForDate(
@@ -1555,22 +1589,31 @@ async function main() {
   console.log(`Upserting ${rows.length} rows…`);
   const upsertResult = await upsertToSupabase(rows, supabaseUrl, serviceKey);
 
-  // Keep stock_price_history current: regular-session close bar (clock gate),
-  // then KRX gap fill. Aftermarket "live" markers must not skip this.
+  // Keep stock_price_history current: regular-session close bar once the
+  // regular auction has ended (clock >15:30) or Naver reports 장마감.
+  // Aftermarket "live" markers must not skip this.
+  const naverMarketClosed = consensus.marketClosed === true;
   const regularSessionEnded = isKrxRegularSessionEnded();
+  const sessionClosedForHistory = naverMarketClosed || regularSessionEnded;
+  const historyTradeDateDash = consensus.tradeDate || kstYmdDash();
+  console.log(
+    `  history gate: sessionClosedForHistory=${sessionClosedForHistory} `
+    + `(naverMarketClosed=${naverMarketClosed} regularSessionEnded=${regularSessionEnded}) `
+    + `historyTradeDate=${historyTradeDateDash}`,
+  );
   const histResult = await upsertSessionCloseHistory(
     rows,
-    consensus.tradeDate,
-    regularSessionEnded,
+    historyTradeDateDash,
+    sessionClosedForHistory,
     supabaseUrl,
     serviceKey,
     authKey,
     env,
   );
-  if (histResult.byCode?.size && consensus.tradeDate) {
+  if (histResult.byCode?.size && historyTradeDateDash) {
     await detectDailyPriceAdjustments({
       tickers,
-      tradeDateDash: consensus.tradeDate,
+      tradeDateDash: historyTradeDateDash,
       byCode: histResult.byCode,
       supabaseUrl,
       serviceKey,
@@ -1580,7 +1623,7 @@ async function main() {
     authKey,
     supabaseUrl,
     serviceKey,
-    consensus.tradeDate || todayYmdDash,
+    historyTradeDateDash || todayYmdDash,
     tickers,
   );
   await repairHubHistoryGapsForRecentSessions({
@@ -1593,11 +1636,11 @@ async function main() {
   await upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, serviceKey);
 
   // Session close: persist today's sector mcap sums for multi-day sparklines.
-  if (session.marketClosed === true && consensus.tradeDate) {
-    const mcapRows = buildSectorMcapDailyRows(hubIndex, new Map(rows.map((r) => [r.ticker, r.mcap_won])), consensus.tradeDate);
+  if (sessionClosedForHistory && historyTradeDateDash) {
+    const mcapRows = buildSectorMcapDailyRows(hubIndex, new Map(rows.map((r) => [r.ticker, r.mcap_won])), historyTradeDateDash);
     const dailyResult = await upsertSectorMcapDaily(mcapRows, supabaseUrl, serviceKey);
     if (dailyResult.ok) {
-      console.log(`  sector_mcap_daily upsert ${dailyResult.upserted} rows for ${consensus.tradeDate}`);
+      console.log(`  sector_mcap_daily upsert ${dailyResult.upserted} rows for ${historyTradeDateDash}`);
     } else {
       console.error(
         `  sector_mcap_daily upsert failed (${dailyResult.status}): ${(dailyResult.body || '').slice(0, 200)}`,
@@ -1610,13 +1653,13 @@ async function main() {
       serviceKey,
       5,
     );
-    const rankRows = buildHubRankDailyRows(hubIndex, rows, consensus.tradeDate, {
+    const rankRows = buildHubRankDailyRows(hubIndex, rows, historyTradeDateDash, {
       turnover5dByTicker,
     });
     const rankResult = await upsertHubRankDaily(rankRows, supabaseUrl, serviceKey);
     if (rankResult.ok) {
       console.log(
-        `  hub_rank_daily upsert ${rankResult.upserted} rows for ${consensus.tradeDate}` +
+        `  hub_rank_daily upsert ${rankResult.upserted} rows for ${historyTradeDateDash}` +
           ` (turnover5d=${turnover5dByTicker.size})`,
       );
     } else {
@@ -1625,7 +1668,10 @@ async function main() {
       );
     }
   } else {
-    console.log('  sector_mcap_daily / hub_rank_daily: skip (session not closed)');
+    console.log(
+      '  sector_mcap_daily / hub_rank_daily: skip '
+      + `(sessionClosedForHistory=${sessionClosedForHistory} date=${historyTradeDateDash || 'n/a'})`,
+    );
   }
 
   const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));
