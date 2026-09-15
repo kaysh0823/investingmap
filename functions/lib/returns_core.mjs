@@ -33,32 +33,28 @@ export function resolveNumerator({ liveLast, sessionOpen, officialClose }) {
 }
 
 /**
- * Trading sessions elapsed from refs tip (recentDd) to the live Naver tradeDate.
- * liveTradeDd === recentDd → 0; liveTradeDd after recentDd → count via tradingDates (usually 1).
+ * Trading sessions from refs tip (recentDd) to the current live session date.
+ * tradingDates only goes through recentDd, so liveTradeDd (today) is usually absent —
+ * always count the live session itself as +1 when live > recent.
+ *
  * @param {string} recentDd YYYYMMDD
- * @param {string} liveTradeDd YYYYMMDD (Naver session marker — holidays auto-skip)
- * @param {string[]} tradingDates YYYYMMDD session calendar (any order)
+ * @param {string} liveTradeDd YYYYMMDD (Naver tradeDate, else kstAnchorYmd — never refsRecentDd)
+ * @param {string[]} tradingDates YYYYMMDD session calendar through recentDd
  * @returns {number}
  */
 export function sessionsSince(recentDd, liveTradeDd, tradingDates) {
   const recent = compactYmd(recentDd);
   const live = compactYmd(liveTradeDd);
   if (!recent || !live) return 0;
-  if (live === recent) return 0;
-  if (live < recent) return 0;
+  if (live <= recent) return 0;
 
-  const dates = (tradingDates || [])
-    .map(compactYmd)
-    .filter(Boolean);
-  if (!dates.length) return live > recent ? 1 : 0;
-
-  let k = 0;
-  for (const d of dates) {
-    if (d > recent && d <= live) k += 1;
+  // 1 for the live session itself + any listed sessions strictly between.
+  let between = 0;
+  for (const raw of tradingDates || []) {
+    const d = compactYmd(raw);
+    if (d && d > recent && d < live) between += 1;
   }
-  // Live session ahead of the committed calendar tip (refs not yet rolled).
-  if (k === 0 && live > recent) return 1;
-  return k;
+  return 1 + between;
 }
 
 /**

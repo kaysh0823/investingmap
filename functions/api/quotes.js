@@ -7,7 +7,7 @@
  */
 
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
-import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
+import { edgeCacheMaxAgeSeconds, krxSessionInfo, kstAnchorYmd } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 import {
   loadHubReturnRefsFromRequest,
@@ -89,12 +89,13 @@ function compactYmd(v) {
  */
 function applyStockReturnsFromRefs(items, refs, { sessionOpen, naverTradeDate }) {
   const recentDd = compactYmd(refs?.recentDd);
-  const liveTradeDd = compactYmd(naverTradeDate) || recentDd;
+  // Live session date: Naver marker first, else KST trading-day anchor — never refsRecentDd.
+  const liveTradeDd = compactYmd(naverTradeDate) || kstAnchorYmd();
   const k = recentDd
     ? sessionsSince(recentDd, liveTradeDd, refs?.tradingDates || [])
     : 0;
   const numeratorMode = sessionOpen ? 'live' : 'official';
-  const anchorDd = sessionOpen ? (compactYmd(naverTradeDate) || recentDd) : recentDd;
+  const anchorDd = sessionOpen ? liveTradeDd : recentDd;
 
   if (items && refs?.quotes) {
     for (const [code, item] of Object.entries(items)) {

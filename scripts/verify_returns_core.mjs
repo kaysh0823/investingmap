@@ -25,6 +25,36 @@ assert.equal(sessionsSince('20260912', '20260915', cal), 1);
 assert.equal(sessionsSince('20260911', '20260915', cal), 2);
 assert.equal(sessionsSince('20260915', '20260916', cal), 1, 'live ahead of tip → 1');
 
+// Live day not in tradingDates (refs tip = recentDd only): still k=1
+assert.equal(
+  sessionsSince('20260914', '20260915', ['20260911', '20260914']),
+  1,
+  'today missing from calendar still counts as 1',
+);
+assert.equal(
+  sessionsSince('20260914', '20260914', ['20260911', '20260914']),
+  0,
+  'same session → k=0',
+);
+
+// 005930 live 248500 vs recentDd 20260914 close 249000 (k=1)
+{
+  const closes005930 = Array.from({ length: 201 }, (_, i) => 1000 + i);
+  closes005930[closes005930.length - 1] = 249000;
+  // Place a known ref20 for k=1: index L-1+1-20 = L-20
+  const L = closes005930.length;
+  closes005930[L - 20] = 274500;
+  const kLive = sessionsSince('20260914', '20260915', ['20260911', '20260914']);
+  assert.equal(kLive, 1);
+  const live = computeStockReturns({ numerator: 248500, closes: closes005930, k: kLive });
+  assert.equal(live.chg1dPct, roundPct(248500 / 249000 - 1));
+  assert.equal(live.chg1dPct, -0.2);
+  assert.equal(live.ret20dPct, roundPct(248500 / closes005930[L - 1 + 1 - 20] - 1));
+  assert.equal(refCloseAt(closes005930, 1, 1), 249000);
+  const kSame = sessionsSince('20260914', '20260914', ['20260911', '20260914']);
+  assert.equal(kSame, 0);
+}
+
 // closes oldest→newest; last = recentDd close. L=201 → index 200 is last.
 const closes = Array.from({ length: 201 }, (_, i) => 1000 + i);
 const L = closes.length;

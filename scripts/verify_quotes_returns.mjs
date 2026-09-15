@@ -38,19 +38,21 @@ const off = computeStockReturns({ numerator: numOfficial, closes, k: k0 });
 assert.equal(off.chg1dPct, Math.round((officialClose / refCloseAt(closes, 0, 1) - 1) * 10000) / 100);
 assert.equal(off.ret20dPct, Math.round((officialClose / refCloseAt(closes, 0, 20) - 1) * 10000) / 100);
 
-// Simulate live path k=1 (next session after refs tip)
-const tip = refs.tradingDates[refs.tradingDates.length - 1];
-assert.equal(tip, refs.recentDd);
-const liveDd = '20991231'; // ahead of tip → sessionsSince returns 1
-const k1 = sessionsSince(refs.recentDd, liveDd, refs.tradingDates);
+// Live path: never pass refsRecentDd as liveTradeDd
+const k1 = sessionsSince(refs.recentDd, '20991231', refs.tradingDates);
 assert.equal(k1, 1);
-const liveLast = officialClose * 1.01;
+const liveLast = 248500;
 const numLive = resolveNumerator({ liveLast, sessionOpen: true, officialClose });
 assert.equal(numLive, liveLast);
 const live = computeStockReturns({ numerator: numLive, closes, k: k1 });
 assert.equal(live.chg1dPct, Math.round((liveLast / refCloseAt(closes, 1, 1) - 1) * 10000) / 100);
 assert.equal(refCloseAt(closes, 1, 1), officialClose, 'k=1 ref1 is recentDd close');
 assert.equal(live.ret20dPct, Math.round((liveLast / refCloseAt(closes, 1, 20) - 1) * 10000) / 100);
+assert.notEqual(
+  sessionsSince(refs.recentDd, refs.recentDd, refs.tradingDates),
+  sessionsSince(refs.recentDd, '20260915', refs.tradingDates),
+  'must not collapse live day to refsRecentDd',
+);
 
 const quotesSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
 assert.ok(quotesSrc.includes('computeStockReturns'), 'quotes wires returns_core');
