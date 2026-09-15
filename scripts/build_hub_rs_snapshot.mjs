@@ -11,6 +11,7 @@ import {
   listHubCompanies,
   normalizeTicker,
 } from '../functions/lib/hub_dashboard_core.mjs';
+import { loadListedShareMeta3557 } from '../lib/krx_data_sources.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -56,7 +57,14 @@ async function main() {
     + `(${supabase ? 'supabase history+adj+ffill' : 'KRX bydd_trd fallback'}; `
     + '20/50/120/200, tradingKRX weights)…',
   );
-  const snapshot = await buildKrxRsSnapshot({ authKey, supabase, env });
+  const listingMeta = loadListedShareMeta3557(path.join(ROOT, 'data'));
+  console.log(`Listing meta (data_3557): ${listingMeta.size} codes for spac/reit/kind filter`);
+  const snapshot = await buildKrxRsSnapshot({
+    authKey,
+    supabase,
+    env,
+    listingMeta,
+  });
   if (!snapshot || !snapshot.quotes) {
     console.error('RS snapshot build failed');
     process.exit(1);

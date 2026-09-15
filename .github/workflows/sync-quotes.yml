@@ -102,9 +102,9 @@ jobs:
         run: |
           echo "regular_close: quotes sync + session-close OHLC path (MDCSTAT01501 / Naver) completed."
 
-      # post_close (KST 20:05 preferred / 20:00 schedule backup): refresh static return refs + RS.
-      # Guard: skip rebuild if today's candle is missing (do not overwrite with yesterday tip).
-      - name: Refresh return refs + RS snapshot
+      # post_close (KST 20:05 preferred / 20:00 schedule backup): RS first, then refs
+      # (refs universe = hub + hub_rs_snapshot). Guard: skip commit if today's candle missing.
+      - name: Refresh RS snapshot + return refs
         id: refs
         if: steps.slot.outputs.slot == 'post_close'
         env:
@@ -117,6 +117,14 @@ jobs:
         run: |
           set -euo pipefail
           REQUIRE_DATE="$(TZ=Asia/Seoul date +%Y%m%d)"
+          # RS first so refs can read the refreshed ordinary universe from hub_rs_snapshot.
+          set +e
+          node scripts/build_hub_rs_snapshot.mjs
+          rs_code=$?
+          set -e
+          if [ "$rs_code" -ne 0 ]; then
+            exit "$rs_code"
+          fi
           set +e
           node scripts/build_hub_return_refs.mjs --guard-today --require-date="$REQUIRE_DATE"
           code=$?
@@ -124,14 +132,14 @@ jobs:
           if [ "$code" -eq 3 ]; then
             echo "skipped=true" >> "$GITHUB_OUTPUT"
             echo "::warning::post_close: today's candle missing — skip refs/RS rebuild and commit"
+            # Discard uncommitted RS rebuild so we do not publish a stale-tip RS alone.
+            git checkout -- data/hub_rs_snapshot.json 2>/dev/null || true
             exit 0
           fi
           if [ "$code" -ne 0 ]; then
             exit "$code"
           fi
           echo "skipped=false" >> "$GITHUB_OUTPUT"
-          node scripts/build_hub_rs_snapshot.mjs
-
       - name: Commit refs and RS snapshot
         if: steps.slot.outputs.slot == 'post_close' && steps.refs.outputs.skipped != 'true'
         run: |

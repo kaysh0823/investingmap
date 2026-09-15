@@ -83,7 +83,25 @@ export function nameFromKrxRow(row) {
  */
 export function securityTypeFromKrxRow(row) {
   if (!row || typeof row !== 'object') return '';
-  for (const key of ['SECUGRP_NM', 'KIND_STKCERT_TP_NM', 'STK_KIND_NM', 'SECU_GRP_NM']) {
+  for (const key of ['SECUGRP_NM', 'KIND_STKCERT_TP_NM', 'SECU_GRP_NM']) {
+    const v = row[key];
+    if (v != null && String(v).trim()) return String(v).trim();
+  }
+  return '';
+}
+
+function listingDeptFromRow(row) {
+  if (!row || typeof row !== 'object') return '';
+  for (const key of ['SECT_TP_NM', 'MKT_TP_NM', 'dept']) {
+    const v = row[key];
+    if (v != null && String(v).trim()) return String(v).trim();
+  }
+  return '';
+}
+
+function shareKindFromRow(row) {
+  if (!row || typeof row !== 'object') return '';
+  for (const key of ['STK_KIND_NM', 'kind']) {
     const v = row[key];
     if (v != null && String(v).trim()) return String(v).trim();
   }
@@ -93,6 +111,7 @@ export function securityTypeFromKrxRow(row) {
 /**
  * Exclude preferred / SPAC / REIT / ETF·ETN from the RS ranking universe.
  * Returns exclusion reason, or null when the name/code looks like an ordinary share.
+ * Uses apihub SECUGRP_NM when present; otherwise name + data_3557 증권구분/소속부/주식종류.
  * @param {string} code
  * @param {string} [name]
  * @param {object|null} [row]
@@ -102,20 +121,28 @@ export function rsUniverseExclusionReason(code, name, row) {
   const cd = String(code || '').trim().toUpperCase();
   const nm = String(name || nameFromKrxRow(row) || '').trim();
   const secu = securityTypeFromKrxRow(row);
+  const dept = listingDeptFromRow(row);
+  const kind = shareKindFromRow(row);
 
-  // 1) Explicit KRX security-type field when present.
+  // 1) Explicit KRX security-type / listing fields when present.
   if (secu) {
     if (/ETF|ETN/i.test(secu)) return 'etf_etn';
-    if (/리츠|REIT/i.test(secu)) return 'reit';
+    if (/리츠|REIT|부동산투자|사회간접자본/i.test(secu)) return 'reit';
     if (/스팩|SPAC|기업인수/i.test(secu)) return 'spac';
     if (/우선/i.test(secu)) return 'preferred';
-    if (!/보통/.test(secu)) return 'non_ordinary_secu';
+    if (/예탁증권|외국주권|^투자회사$/i.test(secu)) return 'non_ordinary_secu';
+    // "주권" = equity share certificate (data_3557); "보통주" = apihub — both OK.
+    // Other unknown types stay non-ordinary.
+    if (!/보통|주권/.test(secu)) return 'non_ordinary_secu';
   }
+  if (/SPAC|스팩/i.test(dept)) return 'spac';
+  if (/우선/.test(kind)) return 'preferred';
+  if (kind && !/보통/.test(kind)) return 'non_ordinary_secu';
 
-  // 2) Fallback heuristics (bydd_trd usually has no SECUGRP_NM).
+  // 2) Name heuristics (MDCSTAT has no SECUGRP_NM; apihub 401 → names from 3557).
   if (/ETF|ETN/i.test(nm)) return 'etf_etn';
-  if (/스팩|기업인수목적/.test(nm)) return 'spac';
-  if (/리츠/.test(nm)) return 'reit';
+  if (/스팩|SPAC|기업인수목적/i.test(nm)) return 'spac';
+  if (/리츠|REIT|부동산투자/i.test(nm)) return 'reit';
   // Ordinary shares end with digit 0; preferred often 5/7/K/L etc., or name suffix.
   if (cd.length >= 6 && cd[5] !== '0') return 'preferred';
   if (/(?:우|우B|\(전환\))$/.test(nm)) return 'preferred';
@@ -326,7 +353,10 @@ export async function buildKrxRsSnapshot(authKeyOrOpts) {
   if (supabase?.url && supabase?.anonKey) {
     try {
       const { buildRsSnapshotFromHistory } = await import('./krx_rs_from_history.mjs');
-      const snap = await buildRsSnapshotFromHistory(supabase, { authKey });
+      const snap = await buildRsSnapshotFromHistory(supabase, {
+        authKey,
+        listingMeta: opts.listingMeta || null,
+      });
       if (snap?.quotes && Object.keys(snap.quotes).length > 500) return snap;
       console.warn('[krx_rs] history snapshot incomplete — falling back to KRX bydd_trd');
     } catch (e) {

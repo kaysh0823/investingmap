@@ -240,19 +240,41 @@ async function fetchIndexCloses(config, sinceDash, untilDash) {
   return byCode;
 }
 
-async function loadNamesFromKrx(authKey, basDd) {
+async function loadUniverseFilterMeta(authKey, basDd, listingMeta) {
+  /** @type {Map<string, string>} */
   const names = new Map();
-  if (!authKey || !basDd) return names;
-  try {
-    const byCode = await fetchMarketDay(authKey, basDd);
-    for (const [code, row] of byCode) {
-      const nm = nameFromKrxRow(row);
-      if (nm) names.set(code, nm);
+  /** @type {Map<string, object>} */
+  const rows = new Map();
+
+  if (listingMeta && listingMeta.size) {
+    for (const [rawCode, meta] of listingMeta) {
+      const code = String(rawCode || '').trim().toUpperCase();
+      if (!code || !meta) continue;
+      if (meta.name) names.set(code, meta.name);
+      rows.set(code, {
+        ISU_NM: meta.name || '',
+        SECUGRP_NM: meta.secu || '',
+        SECT_TP_NM: meta.dept || '',
+        STK_KIND_NM: meta.kind || '',
+      });
     }
-  } catch {
-    /* name heuristics degrade to code-only */
   }
-  return names;
+
+  if (authKey && basDd) {
+    try {
+      const byCode = await fetchMarketDay(authKey, basDd);
+      for (const [code, row] of byCode) {
+        const nm = nameFromKrxRow(row);
+        if (nm) names.set(code, nm);
+        const prev = rows.get(code) || {};
+        rows.set(code, { ...prev, ...row });
+      }
+    } catch {
+      /* name heuristics degrade to listing CSV / code-only */
+    }
+  }
+
+  return { names, rows };
 }
 
 function alignToCalendar(points, datesAsc) {
@@ -335,7 +357,11 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
     return null;
   }
 
-  const names = await loadNamesFromKrx(opts.authKey, recentDd);
+  const { names, rows: listingRows } = await loadUniverseFilterMeta(
+    opts.authKey,
+    recentDd,
+    opts.listingMeta,
+  );
   const excludedCounts = {
     preferred: 0,
     spac: 0,
@@ -360,7 +386,11 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
     if (back >= 3) break;
   }
   for (const code of seedCodes) {
-    const reason = rsUniverseExclusionReason(code, names.get(code), null);
+    const reason = rsUniverseExclusionReason(
+      code,
+      names.get(code),
+      listingRows.get(code) || null,
+    );
     if (reason) {
       if (excludedCounts[reason] != null) excludedCounts[reason] += 1;
       else excludedCounts[reason] = 1;

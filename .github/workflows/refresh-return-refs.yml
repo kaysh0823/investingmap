@@ -40,8 +40,8 @@ jobs:
           KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
           REFRESH_HUB_SNAPSHOTS: '1'
         run: |
-          node scripts/build_hub_return_refs.mjs
           node scripts/build_hub_rs_snapshot.mjs
+          node scripts/build_hub_return_refs.mjs
 
       - name: Commit and push
         run: |

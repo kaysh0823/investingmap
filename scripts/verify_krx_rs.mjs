@@ -54,8 +54,33 @@ assert.equal(rsUniverseExclusionReason('005935', '삼성전자우'), 'preferred'
 assert.equal(rsUniverseExclusionReason('00104K', 'CJ4우(전환)'), 'preferred');
 assert.equal(rsUniverseExclusionReason('000000', '테스트스팩'), 'spac');
 assert.equal(rsUniverseExclusionReason('000000', '기업인수목적회사'), 'spac');
+assert.equal(rsUniverseExclusionReason('000000', 'ABC SPAC'), 'spac');
 assert.equal(rsUniverseExclusionReason('000000', '롯데리츠'), 'reit');
+assert.equal(rsUniverseExclusionReason('000000', 'Foo REIT'), 'reit');
+assert.equal(rsUniverseExclusionReason('000000', '테스트부동산투자'), 'reit');
 assert.equal(rsUniverseExclusionReason('000000', 'KODEX ETF'), 'etf_etn');
+assert.equal(
+  rsUniverseExclusionReason('365550', 'ESR켄달스퀘어리츠', {
+    SECUGRP_NM: '부동산투자회사',
+    STK_KIND_NM: '보통주',
+  }),
+  'reit',
+);
+assert.equal(
+  rsUniverseExclusionReason('465320', '교보15호스팩', {
+    SECUGRP_NM: '주권',
+    SECT_TP_NM: 'SPAC(소속부없음)',
+    STK_KIND_NM: '보통주',
+  }),
+  'spac',
+);
+assert.equal(
+  rsUniverseExclusionReason('005930', '삼성전자', {
+    SECUGRP_NM: '주권',
+    STK_KIND_NM: '보통주',
+  }),
+  null,
+);
 
 assert.deepEqual(
   ffillLimited([10, null, null, 12, null], 2),
