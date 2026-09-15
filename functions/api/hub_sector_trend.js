@@ -1,7 +1,6 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_sector_trend?horizon=20d
- * Normalized sector mcap-sum return sparkline series.
- * 1d → sector_intraday_snapshots; else → stock_price_history daily path.
+ * 1d → sector_intraday_returns (stock-aggregate); else → hub_trend mcap series.
  */
 
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
@@ -15,13 +14,14 @@ import {
 } from '../lib/hub_api_cache.mjs';
 import { buildHubSectorTrendPayload } from '../lib/hub_sector_trend.mjs';
 
-const CACHE_VERSION = '/api/hub_sector_trend/cache/v6';
+const CACHE_VERSION = '/api/hub_sector_trend/cache/v7';
 
 function trendMaxAge(horizon, now = new Date()) {
+  const session = krxSessionInfo(now);
+  if (session.regular || session.aftermarket) return 300;
   if (normalizeSectorHorizon(horizon) === '1d') {
-    return edgeCacheMaxAgeSeconds(now, { regularMax: 60, closedMax: 300 });
+    return edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 300 });
   }
-  // Same ~10m regular TTL as /api/hub_trend daily (live tip freshness).
   return edgeCacheMaxAgeSeconds(now, { regularMax: 600, closedMax: 3600 });
 }
 

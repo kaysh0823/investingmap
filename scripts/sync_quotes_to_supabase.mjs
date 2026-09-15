@@ -26,6 +26,8 @@ import {
   sumTurnover5dByTicker,
   TURNOVER5D_MIN_DAYS,
 } from '../functions/lib/hub_dashboard_core.mjs';
+import { aggregateSectorReturns } from '../functions/lib/returns_core.mjs';
+import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
 import {
   buildSectorMcapDailyRows,
   upsertSectorMcapDaily,
@@ -1285,6 +1287,95 @@ async function pruneIntradaySnapshots(supabaseUrl, serviceKey, keepDates) {
 }
 
 /**
+ * Append cap-weighted sector 1D returns (same math as /api/hub_sectors) each sync run.
+ * Replaces mcap-sum sector_intraday_snapshots as the 1D sparkline source of truth.
+ */
+async function syncSectorIntradayReturns({
+  hubIndex,
+  quoteRows,
+  refs,
+  tradeDateDash,
+  supabaseUrl,
+  serviceKey,
+  sessionKind = 'regular',
+  now = new Date(),
+}) {
+  if (!tradeDateDash || !refs?.quotes) {
+    console.log('  sector intraday returns: skip (no tradeDate/refs)');
+    return { appended: 0 };
+  }
+
+  const tickers = listHubCompanies(hubIndex).map((c) => normalizeTicker(c.ticker)).filter(Boolean);
+  const source = await loadReturnSource({
+    env: {},
+    request: null,
+    tickers,
+    refs,
+    quoteRows,
+  });
+  const k = source.meta?.k ?? 0;
+  const anchorDd = source.meta?.anchorDd || dashToBasDd(tradeDateDash);
+  const liveTs = now.toISOString();
+  const rows = [];
+
+  for (const sid of SECTOR_ORDER) {
+    const block = hubIndex.sectors?.[sid];
+    if (!block) continue;
+    const members = [];
+    for (const c of block.companies || []) {
+      const t = normalizeTicker(c.ticker);
+      const src = t ? source.byTicker[t] : null;
+      if (!src || src.shares == null || !(src.shares > 0)) continue;
+      members.push({
+        numerator: src.numerator,
+        closes: src.closes,
+        k,
+        shares: src.shares,
+      });
+    }
+    const agg = aggregateSectorReturns(members);
+    if (agg.chg1dPct == null) continue;
+    rows.push({
+      sector_id: sid,
+      ts: liveTs,
+      ret_1d_pct: agg.chg1dPct,
+      anchor_dd: anchorDd,
+      trade_date: tradeDateDash,
+      session_kind: sessionKind,
+    });
+  }
+
+  if (!rows.length) {
+    console.log('  sector intraday returns: 0 rows');
+    return { appended: 0 };
+  }
+
+  const url = `${supabaseUrl}/rest/v1/sector_intraday_returns`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+      'Content-Type': 'application/json',
+      Prefer: 'resolution=merge-duplicates, on_conflict=sector_id,ts',
+    },
+    body: JSON.stringify(rows),
+  });
+  if (!res.ok) {
+    const body = await res.text();
+    console.error(
+      `  sector intraday returns insert failed (${res.status}): ${body.slice(0, 200)}`,
+    );
+    return { appended: 0, failed: true };
+  }
+  console.log(
+    `  sector intraday returns: appended ${rows.length} `
+    + `(session=${sessionKind} anchor=${anchorDd} asOf=${source.meta?.asOf || 'n/a'})`,
+  );
+  return { appended: rows.length, anchorDd };
+}
+
+/**
  * Regular-session only: seed 0% baseline from previous close sum, append live sumNow,
  * keep today + previous trading day snapshots.
  */
@@ -1691,6 +1782,33 @@ async function main() {
 
   const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));
   const historyCtx = await prepareSectorHistoryContext(supabaseUrl, serviceKey);
+
+  let refsForReturns = null;
+  try {
+    const refsPath = path.join(ROOT, 'data', 'hub_return_refs.json');
+    if (fs.existsSync(refsPath)) {
+      refsForReturns = JSON.parse(fs.readFileSync(refsPath, 'utf8'));
+    }
+  } catch (e) {
+    console.warn('  hub_return_refs load failed:', e.message || e);
+  }
+
+  const aftermarket = isKrxAfterMarket();
+  if (regularSession || aftermarket) {
+    const sessionKind = regularSession ? 'regular' : 'aftermarket';
+    await syncSectorIntradayReturns({
+      hubIndex,
+      quoteRows: rows,
+      refs: refsForReturns,
+      tradeDateDash: consensus.tradeDate || todayYmdDash,
+      supabaseUrl,
+      serviceKey,
+      sessionKind,
+      now: new Date(),
+    });
+  } else {
+    console.log('  sector intraday returns: skip (session closed)');
+  }
 
   if (regularSession) {
     await syncSectorIntradaySnapshots({

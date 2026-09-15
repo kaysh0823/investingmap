@@ -42,15 +42,16 @@ jobs:
         run: |
           node scripts/build_hub_rs_snapshot.mjs
           node scripts/build_hub_return_refs.mjs
+          node scripts/build_hub_sector_returns.mjs
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/hub_return_refs.json data/hub_rs_snapshot.json
+          git add data/hub_return_refs.json data/hub_rs_snapshot.json data/hub_sector_returns.json
           if git diff --staged --quiet; then
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "chore: refresh hub_return_refs + hub_rs_snapshot"
+          git commit -m "chore: refresh hub_return_refs + hub_rs_snapshot + hub_sector_returns"
           git push

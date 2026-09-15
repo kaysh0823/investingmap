@@ -303,15 +303,20 @@
   }
 
   function loadHubSectorReturns() {
-    // Static fallback only — /api/hub_sectors merge (non-onlyMissing) overwrites
-    // these values when the fresh fetch succeeds.
-    return fetch('data/hub_sector_returns.json?v=21', { cache: 'default' })
+    // Meta only (prior-close label). Do not paint static return numbers —
+    // keep skeletons until /api/hub_sectors arrives (same source as live).
+    return fetch('data/hub_sector_returns.json?v=22', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j) {
-          hubSectorReturnsMeta.mcapRecentDd = newerYmd(hubSectorReturnsMeta.mcapRecentDd, j.mcapRecentDd);
-          hubSectorReturnsMeta.effectiveAnchorDd = newerYmd(hubSectorReturnsMeta.effectiveAnchorDd, j.effectiveAnchorDd);
-          if (j.sectors) mergeSectorsPayload(j, { onlyMissing: true });
+          hubSectorReturnsMeta.mcapRecentDd = newerYmd(
+            hubSectorReturnsMeta.mcapRecentDd,
+            j.anchorDd || j.mcapRecentDd,
+          );
+          hubSectorReturnsMeta.effectiveAnchorDd = newerYmd(
+            hubSectorReturnsMeta.effectiveAnchorDd,
+            j.anchorDd || j.effectiveAnchorDd,
+          );
         }
       })
       .catch(function () {});

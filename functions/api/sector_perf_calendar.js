@@ -30,8 +30,8 @@ function cacheMaxAge(year, now = new Date()) {
     // Completed years: long-lived edge cache (1 week).
     return 7 * 24 * 3600;
   }
-  // Current year: refresh during session; longer when closed.
-  return edgeCacheMaxAgeSeconds(now, { regularMax: 600, closedMax: 3600 });
+  // Current year: same 5m window as quotes/hub_sectors while session open.
+  return edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 3600 });
 }
 
 export async function onRequest(context) {
@@ -99,7 +99,7 @@ export async function onRequest(context) {
       );
     }
 
-    const payload = await buildSectorPerfCalendarFromEnv(hubIndex, env, sector, year);
+    const payload = await buildSectorPerfCalendarFromEnv(hubIndex, env, sector, year, request);
     const maxAge = cacheMaxAge(year);
     const body = JSON.stringify(payload);
     const response = new Response(body, {

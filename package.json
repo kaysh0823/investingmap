@@ -56,6 +56,7 @@
     "build:hub-return-refs": "node scripts/build_hub_return_refs.mjs",
     "verify:returns-core": "node scripts/verify_returns_core.mjs",
     "verify:quotes-returns": "node scripts/verify_quotes_returns.mjs",
+    "verify:returns-consistency": "node scripts/verify_returns_consistency.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "scan:price-jumps": "node scripts/scan_residual_price_jumps.mjs",
     "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",

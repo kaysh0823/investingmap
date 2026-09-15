@@ -1,28 +1,20 @@
 /**
  * Cloudflare Pages Function: GET /api/quotes?codes=005930,000660
- * Primary: Supabase stock_quotes_latest (derived fields) + Naver live overlay (last/prevClose).
- * Stock returns (1D/5/20/50/120/200D) from returns_core + hub_return_refs (single source).
- * Fallback: Naver Finance crawl (PC sise + mobile integration).
- * Optional KRX OPEN API on fallback path: 1-year return when warm=1 and secret configured.
+ * Primary: stock_quotes_latest (+ hub_return_refs via loadReturnSource / returns_core).
+ * No per-request Naver crawl on the happy path; stale as_of (>15m) may refresh those codes only.
+ * Fallback: Naver Finance crawl when Supabase is unavailable.
  */
 
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
-import { edgeCacheMaxAgeSeconds, krxSessionInfo, kstAnchorYmd } from '../lib/krx_session.mjs';
+import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
-import {
-  loadHubReturnRefsFromRequest,
-  loadHubRsSnapshotFromRequest,
-} from '../lib/hub_dashboard_core.mjs';
-import {
-  computeStockReturns,
-  resolveNumerator,
-  sessionsSince,
-} from '../lib/returns_core.mjs';
+import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
+import { computeStockReturns } from '../lib/returns_core.mjs';
+import { loadReturnSource } from '../lib/hub_returns_source.mjs';
 
-const QUOTES_CACHE_VERSION = 'v11';
+const QUOTES_CACHE_VERSION = 'v12';
 
 let rsSnapshotCache = { at: 0, snap: null };
-let returnRefsCache = { at: 0, refs: null };
 
 function slimMarketIndices(indices) {
   if (!indices || typeof indices !== 'object') return null;
@@ -60,79 +52,6 @@ async function loadRsSnapshot(request, env) {
   } catch {
     return rsSnapshotCache.snap;
   }
-}
-
-async function loadReturnRefs(request, env) {
-  const now = Date.now();
-  if (returnRefsCache.refs && now - returnRefsCache.at < 5 * 60 * 1000) {
-    return returnRefsCache.refs;
-  }
-  try {
-    const refs = await loadHubReturnRefsFromRequest(request, env);
-    if (refs && refs.quotes) {
-      returnRefsCache = { at: now, refs };
-    }
-    return refs || returnRefsCache.refs;
-  } catch {
-    return returnRefsCache.refs;
-  }
-}
-
-function compactYmd(v) {
-  const s = String(v || '').replace(/-/g, '');
-  return /^\d{8}$/.test(s) ? s : '';
-}
-
-/**
- * Overwrite display returns from hub_return_refs + returns_core.
- * RS fields are left untouched (snapshot path).
- */
-function applyStockReturnsFromRefs(items, refs, { sessionOpen, naverTradeDate }) {
-  const recentDd = compactYmd(refs?.recentDd);
-  // Live session date: Naver marker first, else KST trading-day anchor — never refsRecentDd.
-  const liveTradeDd = compactYmd(naverTradeDate) || kstAnchorYmd();
-  const numeratorMode = sessionOpen ? 'live' : 'official';
-  const anchorDd = sessionOpen ? liveTradeDd : recentDd;
-  // k follows the return anchor (official → refs tip → 0; live → today → usually 1).
-  const k = recentDd && anchorDd
-    ? sessionsSince(recentDd, anchorDd, refs?.tradingDates || [])
-    : 0;
-
-  if (items && refs?.quotes) {
-    for (const [code, item] of Object.entries(items)) {
-      if (!item) continue;
-      const t = normalizeTicker(code);
-      const row = t ? refs.quotes[t] : null;
-      const closes = row && Array.isArray(row.closes) ? row.closes : null;
-      if (!closes || !closes.length) {
-        item.chg1dPct = null;
-        item.ret5dPct = null;
-        item.ret20dPct = null;
-        item.ret50dPct = null;
-        item.ret120dPct = null;
-        item.ret200dPct = null;
-        continue;
-      }
-      const officialClose = numOrNull(closes[closes.length - 1]);
-      const liveLast = sessionOpen ? numOrNull(item.last) : null;
-      const numerator = resolveNumerator({ liveLast, sessionOpen, officialClose });
-      const returns = computeStockReturns({ numerator, closes, k });
-      item.chg1dPct = returns.chg1dPct;
-      item.ret5dPct = returns.ret5dPct;
-      item.ret20dPct = returns.ret20dPct;
-      item.ret50dPct = returns.ret50dPct;
-      item.ret120dPct = returns.ret120dPct;
-      item.ret200dPct = returns.ret200dPct;
-    }
-  }
-
-  return {
-    sessionOpen: !!sessionOpen,
-    numeratorMode,
-    anchorDd: anchorDd || null,
-    refsRecentDd: recentDd || null,
-    k,
-  };
 }
 
 function normalizeTicker(t) {
@@ -197,13 +116,12 @@ function mapSupabaseRow(row, snapQuote = null) {
     turnoverWon: numOrNull(row.turnover_won),
     per: numOrNull(row.per),
     pbr: numOrNull(row.pbr),
-    // Display returns overwritten by applyStockReturnsFromRefs when refs load.
-    chg1dPct: numOrNull(row.chg_1d_pct),
-    ret5dPct: numOrNull(row.ret_5d_pct),
-    ret20dPct: numOrNull(row.ret_20d_pct),
-    ret50dPct: numOrNull(row.ret_50d_pct),
-    ret120dPct: numOrNull(row.ret_120d_pct),
-    ret200dPct: numOrNull(row.ret_200d_pct),
+    chg1dPct: null,
+    ret5dPct: null,
+    ret20dPct: null,
+    ret50dPct: null,
+    ret120dPct: null,
+    ret200dPct: null,
     rs: snapRs != null ? snapRs : numOrNull(row.rs),
     rs20: snapRs20 != null ? snapRs20 : numOrNull(row.rs20 ?? row.rs_20),
     rs50: snapRs50 != null ? snapRs50 : numOrNull(row.rs50 ?? row.rs_50),
@@ -279,7 +197,7 @@ async function fetchQuotesFromSupabase(codes, config, snapQuotes = null) {
     if (!ticker) continue;
     const snapQuote = snapQuotes ? snapQuotes[ticker] : null;
     items[ticker] = mapSupabaseRow(row, snapQuote);
-    if (row.as_of && !asOf) asOf = row.as_of;
+    if (row.as_of && (!asOf || String(row.as_of) > asOf)) asOf = row.as_of;
     if (row.regular_session != null && regularSession == null) {
       regularSession = !!row.regular_session;
     }
@@ -292,35 +210,39 @@ async function fetchQuotesFromSupabase(codes, config, snapQuotes = null) {
   };
 }
 
-async function fetchNaverLiveOverlay(codes) {
-  return getCachedNaverQuotes(codes, { concurrency: 4 });
-}
-
-/**
- * Overlay Naver last/prevClose onto Supabase rows.
- * Display returns come from applyStockReturnsFromRefs (not last/prevClose here).
- */
-function mergeSupabaseWithNaverLive(codes, supabaseItems, naverItems) {
-  const items = {};
-  for (const code of codes) {
-    const base = supabaseItems[code] ? { ...supabaseItems[code] } : {};
-    const naver = naverItems[code];
-    if (naver) {
-      const liveLast = numOrNull(naver.last);
-      if (liveLast != null) {
-        base.last = liveLast;
-        const livePrev = numOrNull(naver.prevClose);
-        if (livePrev != null) base.prevClose = livePrev;
-      }
+function applyReturnsFromSource(items, source) {
+  const k = source?.meta?.k ?? 0;
+  for (const [code, item] of Object.entries(items || {})) {
+    if (!item) continue;
+    const t = normalizeTicker(code);
+    const src = t ? source?.byTicker?.[t] : null;
+    if (!src) {
+      item.chg1dPct = null;
+      item.ret5dPct = null;
+      item.ret20dPct = null;
+      item.ret50dPct = null;
+      item.ret120dPct = null;
+      item.ret200dPct = null;
+      continue;
     }
-    if (Object.keys(base).length) items[code] = base;
+    const returns = computeStockReturns({
+      numerator: src.numerator,
+      closes: src.closes,
+      k,
+    });
+    item.chg1dPct = returns.chg1dPct;
+    item.ret5dPct = returns.ret5dPct;
+    item.ret20dPct = returns.ret20dPct;
+    item.ret50dPct = returns.ret50dPct;
+    item.ret120dPct = returns.ret120dPct;
+    item.ret200dPct = returns.ret200dPct;
+    // Official mode: display last must match return numerator (refs tip close).
+    if (src.last != null) item.last = src.last;
   }
-  return items;
 }
 
 function quotesCacheControl(now = new Date()) {
   const session = krxSessionInfo(now);
-  // Short TTL during regular or aftermarket so Naver live overlay reaches clients.
   if (session.regular || session.aftermarket) {
     return 'public, max-age=300, stale-while-revalidate=120';
   }
@@ -362,18 +284,20 @@ export async function onRequest(context) {
   const warmHist = url.searchParams.get('warm') === '1';
   const supabaseConfig = getSupabaseConfig(env);
 
-  const [snap, refs] = await Promise.all([
-    loadRsSnapshot(request, env),
-    loadReturnRefs(request, env),
-  ]);
+  const snap = await loadRsSnapshot(request, env);
   const snapQuotes = snap && snap.quotes ? snap.quotes : null;
   const indices = slimMarketIndices(snap && snap.indices);
 
+  const emptyMeta = {
+    sessionOpen,
+    numeratorMode: sessionOpen ? 'live' : 'official',
+    anchorDd: null,
+    refsRecentDd: null,
+    k: 0,
+    stale: false,
+  };
+
   if (!codes.length) {
-    const emptyMeta = applyStockReturnsFromRefs({}, refs, {
-      sessionOpen,
-      naverTradeDate: null,
-    });
     return new Response(
       JSON.stringify({
         asOf: new Date().toISOString(),
@@ -391,62 +315,49 @@ export async function onRequest(context) {
 
   try {
     let payload;
-    let naverTradeDate = null;
 
     if (supabaseConfig) {
       try {
         const supabase = await fetchQuotesFromSupabase(codes, supabaseConfig, snapQuotes);
-        // Clock wins: stale DB regular_session=false must not skip Naver live
-        // overlay during regular hours or aftermarket (16:00–20:00 KST).
-        const wantLive = sessionOpen || supabase.regularSession === true;
-
-        if (wantLive) {
-          let naverItems = {};
-          try {
-            const naver = await fetchNaverLiveOverlay(codes);
-            naverItems = naver.items || {};
-            naverTradeDate = naver.tradeDate || null;
-          } catch {
-            /* Naver failure → Supabase last for all codes */
-          }
-          payload = {
-            asOf: supabase.asOf,
-            source: 'supabase+naver-live',
-            regularSession: sessionOpen || wantLive,
-            items: mergeSupabaseWithNaverLive(codes, supabase.items, naverItems),
-          };
-        } else {
-          payload = {
-            asOf: supabase.asOf,
-            source: 'supabase',
-            regularSession: false,
-            items: supabase.items,
-          };
-        }
+        payload = {
+          asOf: supabase.asOf,
+          source: 'supabase',
+          regularSession: sessionOpen,
+          items: supabase.items,
+        };
       } catch {
         const naver = await fetchQuotesFromNaver(codes, authKey, warmHist);
-        naverTradeDate = naver.tradeDate || null;
         payload = {
           asOf: new Date().toISOString(),
           ...naver,
+          regularSession: sessionOpen,
         };
       }
     } else {
       const naver = await fetchQuotesFromNaver(codes, authKey, warmHist);
-      naverTradeDate = naver.tradeDate || null;
       payload = {
         asOf: new Date().toISOString(),
         ...naver,
+        regularSession: sessionOpen,
       };
     }
 
     applySnapshotRsToItems(payload.items, snapQuotes);
-    const returnMeta = applyStockReturnsFromRefs(payload.items, refs, {
-      sessionOpen,
-      naverTradeDate,
+
+    const source = await loadReturnSource({
+      env,
+      request,
+      tickers: codes,
+      staleRefresh: sessionOpen
+        ? async (staleCodes) => getCachedNaverQuotes(staleCodes, { concurrency: 4 })
+        : null,
     });
-    Object.assign(payload, returnMeta);
+
+    applyReturnsFromSource(payload.items, source);
+    Object.assign(payload, source.meta);
+    if (source.meta?.asOf) payload.asOf = source.meta.asOf;
     payload.regularSession = sessionOpen;
+    if (source.meta?.stale) payload.source = `${payload.source}+stale-naver`;
 
     const cacheControl = quotesCacheControl();
     if (indices) payload.indices = indices;
@@ -466,11 +377,7 @@ export async function onRequest(context) {
         asOf: new Date().toISOString(),
         items: {},
         regularSession: sessionOpen,
-        sessionOpen,
-        numeratorMode: sessionOpen ? 'live' : 'official',
-        anchorDd: null,
-        refsRecentDd: null,
-        k: 0,
+        ...emptyMeta,
       }),
       { status: 502, headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },
     );

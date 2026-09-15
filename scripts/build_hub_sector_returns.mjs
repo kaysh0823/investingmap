@@ -1,32 +1,13 @@
 /**
- * Build data/hub_sector_returns.json — KRX mcap-ratio sector returns (1M/3M/6M/1Y).
- * Same calculation as /api/hub_sectors; used for instant hub paint before live API refresh.
+ * Build data/hub_sector_returns.json — official-mode stock aggregate
+ * (same math as /api/hub_sectors after close). Committed with refs/RS on post_close.
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { buildHubSectors } from '../functions/lib/hub_dashboard_core.mjs';
-import { getAuthKey } from '../functions/lib/krx_yoy.mjs';
+import { buildOfficialSectorReturnsFromRefs } from '../functions/lib/hub_returns_source.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-
-function loadAuthKey() {
-  const env = { ...process.env };
-  const devVars = path.join(ROOT, '.dev.vars');
-  if (fs.existsSync(devVars)) {
-    for (const line of fs.readFileSync(devVars, 'utf8').split('\n')) {
-      const m = line.match(/^\s*([A-Za-z0-9_\u0080-\uFFFF ]+)\s*=\s*(.*)$/);
-      if (!m) continue;
-      const k = m[1].trim();
-      let v = m[2].trim();
-      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
-        v = v.slice(1, -1);
-      }
-      if (!env[k]) env[k] = v;
-    }
-  }
-  return getAuthKey(env);
-}
 
 async function main() {
   const outPath = path.join(ROOT, 'data', 'hub_sector_returns.json');
@@ -34,22 +15,18 @@ async function main() {
     console.log('skip hub_sector_returns (deterministic build — use npm run refresh:hub-snapshots)');
     process.exit(0);
   }
-  const authKey = loadAuthKey();
-  if (!authKey) {
-    if (fs.existsSync(outPath)) {
-      console.warn('KRX_AUTH_KEY missing — keeping existing hub_sector_returns.json');
-      process.exit(0);
-    }
-    console.warn('KRX_AUTH_KEY missing — skip hub_sector_returns.json');
-    process.exit(0);
-  }
 
   const hubPath = path.join(ROOT, 'data', 'hub_index.json');
+  const refsPath = path.join(ROOT, 'data', 'hub_return_refs.json');
+  if (!fs.existsSync(hubPath) || !fs.existsSync(refsPath)) {
+    console.error('hub_index.json / hub_return_refs.json required');
+    process.exit(1);
+  }
   const hubIndex = JSON.parse(fs.readFileSync(hubPath, 'utf8'));
-  const env = { KRX_AUTH_KEY: authKey };
+  const refs = JSON.parse(fs.readFileSync(refsPath, 'utf8'));
 
-  console.log('Building hub sector returns (KRX mcap ratio, all horizons)…');
-  const payload = await buildHubSectors(hubIndex, env);
+  console.log('Building hub sector returns (official stock aggregate from hub_return_refs)…');
+  const payload = buildOfficialSectorReturnsFromRefs(hubIndex, refs);
   if (!payload || !payload.sectors || !Object.keys(payload.sectors).length) {
     console.error('Sector returns build failed');
     process.exit(1);
@@ -59,6 +36,10 @@ async function main() {
     builtAt: hubIndex.builtAt || null,
     asOf: payload.asOf,
     source: payload.source,
+    numeratorMode: payload.numeratorMode,
+    anchorDd: payload.anchorDd,
+    refsRecentDd: payload.refsRecentDd,
+    k: payload.k,
     mcapRecentDd: payload.mcapRecentDd,
     effectiveAnchorDd: payload.effectiveAnchorDd,
     mcapPast1dDd: payload.mcapPast1dDd,
@@ -71,9 +52,12 @@ async function main() {
 
   fs.writeFileSync(outPath, `${JSON.stringify(out)}\n`, 'utf8');
   const sample = Object.entries(out.sectors).slice(0, 2)
-    .map(([sid, s]) => `${sid} 20D=${s.return20dPct?.toFixed(2)}%`)
+    .map(([sid, s]) => `${sid} 1D=${s.return1dPct?.toFixed?.(2) ?? s.return1dPct}%`)
     .join(', ');
-  console.log(`OK ${outPath} — ${Object.keys(out.sectors).length} sectors (${sample}…)`);
+  console.log(
+    `OK ${outPath} — ${Object.keys(out.sectors).length} sectors `
+    + `(missingShares=${payload.missingShares || 0}; ${sample}…)`,
+  );
 }
 
 main().catch((e) => {

@@ -13,9 +13,11 @@ import {
   applyPriceAdjustmentsToBars,
 } from './price_adjustments.mjs';
 import { downsampleDates } from './hub_trend.mjs';
-import { kstDateParts } from './krx_session.mjs';
+import { kstDateParts, kstYmdDash } from './krx_session.mjs';
+import { aggregateSectorReturns } from './returns_core.mjs';
+import { loadReturnSource } from './hub_returns_source.mjs';
 
-export const PERF_CALENDAR_CACHE_VERSION = 'v3';
+export const PERF_CALENDAR_CACHE_VERSION = 'v4';
 export const PERF_CALENDAR_YEAR_SPAN = 5; // current .. current-4
 export const PERF_CALENDAR_TICKER_BATCH = 40;
 /** In-year chart points (weekly-ish); +1 prior-year base day fetched separately. */
@@ -271,24 +273,34 @@ export function rebaseMemberPoints(closes, adjustments, yearStart, yearEnd) {
 }
 
 /**
- * Equal-weight average of member points by date.
- * @param {{points:{t:string,v:number}[]}[]} members
+ * Shares-weighted average of member rebased points by date.
+ * Falls back to equal-weight when shares missing.
+ * @param {{points:{t:string,v:number}[], shares?: number|null}[]} members
  * @returns {{t:string,v:number}[]}
  */
 export function buildSectorAvgPoints(members) {
-  const sums = new Map(); // t -> {sum, n}
+  const sums = new Map(); // t -> {wSum, w, n, eqSum}
   for (const m of members || []) {
+    const shares = numOrNull(m.shares);
+    const w = shares != null && shares > 0 ? shares : null;
     for (const p of m.points || []) {
       if (!p?.t || p.v == null || !Number.isFinite(p.v)) continue;
-      const prev = sums.get(p.t) || { sum: 0, n: 0 };
-      prev.sum += p.v;
+      const prev = sums.get(p.t) || { wSum: 0, w: 0, n: 0, eqSum: 0 };
+      prev.eqSum += p.v;
       prev.n += 1;
+      if (w != null) {
+        prev.wSum += p.v * w;
+        prev.w += w;
+      }
       sums.set(p.t, prev);
     }
   }
   return [...sums.entries()]
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .map(([t, { sum, n }]) => ({ t, v: roundIndex(sum / n) }));
+    .map(([t, row]) => ({
+      t,
+      v: roundIndex(row.w > 0 ? row.wSum / row.w : row.eqSum / row.n),
+    }));
 }
 
 /**
@@ -336,10 +348,11 @@ export async function fetchIndexRebasedForDates(config, datesDash, yearStart, ye
  * @param {string} sectorId
  * @param {number} year
  */
-export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId, year) {
+export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId, year, opts = {}) {
   const membersMeta = listSectorMembers(hubIndex, sectorId);
   const { from, to, yearStart, yearEnd } = dateRangeForYear(year);
   const tickers = membersMeta.map((m) => m.ticker);
+  const sharesByTicker = opts.sharesByTicker || new Map();
 
   const allDates = await fetchTradingDatesInRange(config, from, to);
   const sampleDates = buildPerfCalendarSampleDates(allDates, yearStart, yearEnd);
@@ -365,11 +378,26 @@ export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId,
       name: meta.name,
       nameEn: meta.nameEn,
       market: meta.market,
+      shares: sharesByTicker.get(meta.ticker) ?? null,
       points,
     });
   }
 
-  const sectorAvg = buildSectorAvgPoints(members);
+  let sectorAvg = buildSectorAvgPoints(members);
+
+  // Live/official tip: last day-change matches aggregateSectorReturns 1D.
+  const tipRet = opts.tipRet1dPct;
+  const tipDate = opts.tipDateDash; // YYYY-MM-DD
+  if (tipRet != null && Number.isFinite(tipRet) && sectorAvg.length) {
+    const last = sectorAvg[sectorAvg.length - 1];
+    const tipV = roundIndex(last.v * (1 + tipRet / 100));
+    if (tipDate && tipDate > last.t) {
+      sectorAvg = [...sectorAvg, { t: tipDate, v: tipV }];
+    } else {
+      sectorAvg = [...sectorAvg.slice(0, -1), { t: last.t, v: tipV }];
+    }
+  }
+
   const tradingDays = sectorAvg.length
     ? sectorAvg.length
     : new Set(members.flatMap((m) => m.points.map((p) => p.t))).size;
@@ -382,7 +410,13 @@ export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId,
     indices,
     tradingDays,
     sampleDates: sampleDates.filter((d) => d >= yearStart && d <= yearEnd),
-    asOf: new Date().toISOString(),
+    asOf: opts.asOf || new Date().toISOString(),
+    sessionOpen: opts.sessionOpen ?? null,
+    numeratorMode: opts.numeratorMode ?? null,
+    anchorDd: opts.anchorDd ?? null,
+    refsRecentDd: opts.refsRecentDd ?? null,
+    k: opts.k ?? null,
+    tipRet1dPct: tipRet ?? null,
   };
 }
 
@@ -392,7 +426,7 @@ export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId,
  * @param {string} sectorId
  * @param {number} year
  */
-export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, year) {
+export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, year, request = null) {
   const config = getSupabaseConfig(env);
   if (!config) {
     return {
@@ -407,5 +441,44 @@ export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, ye
       error: 'supabase_unconfigured',
     };
   }
-  return buildSectorPerfCalendarPayload(hubIndex, config, sectorId, year);
+
+  const membersMeta = listSectorMembers(hubIndex, sectorId);
+  const tickers = membersMeta.map((m) => m.ticker);
+  let tipOpts = {};
+  try {
+    const source = await loadReturnSource({ env, request, tickers });
+    const sharesByTicker = new Map();
+    const members = [];
+    const k = source.meta?.k ?? 0;
+    for (const t of tickers) {
+      const src = source.byTicker[t];
+      if (!src) continue;
+      if (src.shares != null && src.shares > 0) sharesByTicker.set(t, src.shares);
+      members.push({
+        numerator: src.numerator,
+        closes: src.closes,
+        k,
+        shares: src.shares,
+      });
+    }
+    const agg = aggregateSectorReturns(members);
+    const tipDateDash = source.meta?.anchorDd
+      ? `${String(source.meta.anchorDd).slice(0, 4)}-${String(source.meta.anchorDd).slice(4, 6)}-${String(source.meta.anchorDd).slice(6, 8)}`
+      : kstYmdDash();
+    tipOpts = {
+      sharesByTicker,
+      tipRet1dPct: agg.chg1dPct,
+      tipDateDash,
+      asOf: source.meta?.asOf,
+      sessionOpen: source.meta?.sessionOpen,
+      numeratorMode: source.meta?.numeratorMode,
+      anchorDd: source.meta?.anchorDd,
+      refsRecentDd: source.meta?.refsRecentDd,
+      k: source.meta?.k,
+    };
+  } catch {
+    tipOpts = {};
+  }
+
+  return buildSectorPerfCalendarPayload(hubIndex, config, sectorId, year, tipOpts);
 }

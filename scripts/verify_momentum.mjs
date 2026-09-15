@@ -259,10 +259,11 @@ for (const field of [
 ]) {
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
-assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v11'"), 'quotes response cache version');
+assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v12'"), 'quotes response cache version');
 assert.ok(quotesApi.includes('slimMarketIndices'), 'quotes API attaches RS indices');
 assert.ok(quotesApi.includes('computeStockReturns'), 'quotes API uses returns_core');
-assert.ok(quotesApi.includes("'supabase+naver-live'"), 'hybrid quotes source');
+assert.ok(quotesApi.includes('loadReturnSource'), 'quotes API uses shared return source');
+assert.ok(!quotesApi.includes("'supabase+naver-live'"), 'no per-request Naver overlay on happy path');
 assert.ok(quotesApi.includes('stale-while-revalidate=120'), 'quotes SWR cache header');
 const migration12 = fs.readFileSync(
   path.join(ROOT, 'supabase', 'migrations', '0012_stock_quotes_momentum_bounds.sql'),
