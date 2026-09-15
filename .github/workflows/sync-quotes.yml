@@ -2,23 +2,31 @@ name: Sync quotes to Supabase
 
 on:
   # Backup only — GitHub schedule cron is heavily throttled (often 1–3h gaps).
-  # Prefer external cron → repository_dispatch for ~10 min cadence during the session.
+  # Prefer external cron → repository_dispatch (intraday ~10m + close slots).
   schedule:
     # KST 09:00–14:50 (UTC 00:00–05:50), every 10 min, Mon–Fri
     - cron: '*/10 0-5 * * 1-5'
     # KST 15:00–15:30 (UTC 06:00–06:30), every 10 min
     - cron: '0,10,20,30 6 * * 1-5'
-    # KST 15:40 (UTC 06:40), Mon–Fri — regular close → seed daily OHLC before aftermarket
+    # KST 15:40 (UTC 06:40) backup — regular_close (prefer dispatch slot=regular_close)
     - cron: '40 6 * * 1-5'
     # KST 16:00 (UTC 07:00), Mon–Fri — post-close / aftermarket open snapshot
     - cron: '0 7 * * 1-5'
     # KST 16:00–19:50 (UTC 07:00–10:50), every 10 min — aftermarket continuous auction
     - cron: '*/10 7-10 * * 1-5'
-    # KST 20:00 (UTC 11:00), Mon–Fri — aftermarket close snapshot
+    # KST 20:00 (UTC 11:00) backup — post_close (prefer dispatch 20:05 slot=post_close)
     - cron: '0 11 * * 1-5'
   repository_dispatch:
     types: [sync-quotes]
   workflow_dispatch:
+    inputs:
+      slot:
+        description: "regular_close | post_close | intraday (empty = auto/KST)"
+        required: false
+        default: ''
+
+permissions:
+  contents: write
 
 jobs:
   sync:
@@ -42,6 +50,40 @@ jobs:
             npm install
           fi
 
+      - name: Resolve sync slot
+        id: slot
+        env:
+          # Prefer explicit payload/input; else infer from KST clock (schedule backup).
+          DISPATCH_SLOT: ${{ github.event.client_payload.slot || github.event.inputs.slot || '' }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          SLOT="${DISPATCH_SLOT:-}"
+          KST_HM="$(TZ=Asia/Seoul date +%H%M)"
+          KST_NOW="$(TZ=Asia/Seoul date -Iseconds)"
+
+          if [ -z "$SLOT" ]; then
+            # Backup schedule windows (± few minutes for runner lag)
+            if [ "$KST_HM" -ge 1535 ] && [ "$KST_HM" -le 1550 ]; then
+              SLOT=regular_close
+            elif [ "$KST_HM" -ge 1955 ] && [ "$KST_HM" -le 2015 ]; then
+              SLOT=post_close
+            else
+              SLOT=intraday
+            fi
+          fi
+
+          case "$SLOT" in
+            regular_close|post_close|intraday) ;;
+            *)
+              echo "Unknown slot='$SLOT' — falling back to intraday"
+              SLOT=intraday
+              ;;
+          esac
+
+          echo "slot=$SLOT" >> "$GITHUB_OUTPUT"
+          echo "Resolved slot=$SLOT event=$EVENT_NAME KST=$KST_NOW (HM=$KST_HM)"
+
       - name: Sync hub quotes to Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -49,4 +91,40 @@ jobs:
           KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
           KRX_ID: ${{ secrets.KRX_ID }}
           KRX_PW: ${{ secrets.KRX_PW }}
-        run: node scripts/sync_quotes_to_supabase.mjs
+          SYNC_SLOT: ${{ steps.slot.outputs.slot }}
+        run: |
+          echo "Sync quotes (slot=$SYNC_SLOT) — includes MDCSTAT T+0 OHLC when session closed"
+          node scripts/sync_quotes_to_supabase.mjs
+
+      # regular_close (KST 15:40): sync above seeds daily OHLC via MDCSTAT after regular close.
+      - name: Note regular_close OHLC
+        if: steps.slot.outputs.slot == 'regular_close'
+        run: |
+          echo "regular_close: quotes sync + session-close OHLC path (MDCSTAT01501 / Naver) completed."
+
+      # post_close (KST 20:05 preferred / 20:00 schedule backup): refresh static return refs + RS.
+      - name: Refresh return refs + RS snapshot
+        if: steps.slot.outputs.slot == 'post_close'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+          KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
+          REFRESH_HUB_SNAPSHOTS: '1'
+        run: |
+          node scripts/build_hub_return_refs.mjs
+          node scripts/build_hub_rs_snapshot.mjs
+
+      - name: Commit refs and RS snapshot
+        if: steps.slot.outputs.slot == 'post_close'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/hub_return_refs.json data/hub_rs_snapshot.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: post_close refresh hub_return_refs + hub_rs_snapshot"
+          git push

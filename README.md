@@ -62,7 +62,7 @@ node scripts/update_fx_from_naver.mjs
 워크플로: `.github/workflows/sync-quotes.yml` → `scripts/sync_quotes_to_supabase.mjs`  
 (네이버 시세 + KRX 기간수익률 → Supabase `stock_quotes_latest` / `sector_returns`)
 
-GitHub `schedule` cron(`*/10`)은 **스로틀링**되어 실제로는 1~3시간 간격으로만 돌 수 있습니다. 워크플로의 schedule은 **백업용**으로 유지하고, 장중 10분 간격은 외부 크론 → `repository_dispatch`를 권장합니다.
+GitHub `schedule` cron(`*/10`)은 **스로틀링**되어 실제로는 1~3시간 간격으로만 돌 수 있습니다. 워크플로의 schedule은 **백업용**으로 유지하고, 장중 10분 간격·마감 슬롯은 외부 크론 → `repository_dispatch`를 권장합니다.
 
 ### 1) GitHub fine-grained PAT
 
@@ -71,14 +71,14 @@ GitHub `schedule` cron(`*/10`)은 **스로틀링**되어 실제로는 1~3시간 
 3. Permissions → Repository permissions → **Contents: Read and write**
 4. 생성된 토큰을 cron-job.org 등에서만 보관 (repo secrets에 넣지 않아도 됨)
 
-### 2) cron-job.org에서 10분마다 dispatch
+### 2) cron-job.org에서 dispatch
 
 - **URL:** `POST https://api.github.com/repos/kaysh0823/investingmap/dispatches`
 - **Headers:**
   - `Authorization: Bearer <fine-grained PAT>`
   - `Accept: application/vnd.github+json`
   - `Content-Type: application/json` (권장)
-- **Body:**
+- **Body (장중 10분):**
 
 ```json
 {"event_type":"sync-quotes"}
@@ -86,19 +86,37 @@ GitHub `schedule` cron(`*/10`)은 **스로틀링**되어 실제로는 1~3시간 
 
 `event_type`은 워크플로의 `repository_dispatch.types`와 같아야 합니다 (`sync-quotes`).
 
-### 3) 장중만 호출하는 스케줄 예시 (KST)
+마감 슬롯은 `client_payload.slot`으로 분기합니다.
 
-정규장 **평일 09:00–15:40**에만 10분 간격으로 호출합니다. cron-job.org는 **Timezone = Asia/Seoul**을 쓰는 것을 권장합니다.
+```json
+{"event_type":"sync-quotes","client_payload":{"slot":"regular_close"}}
+```
 
-| 구간 (KST) | cron-job.org 표현 예시 | 비고 |
+```json
+{"event_type":"sync-quotes","client_payload":{"slot":"post_close"}}
+```
+
+| slot | 권장 KST | 동작 |
+|------|----------|------|
+| (없음) / `intraday` | 09:00–15:30 등 | 시세 sync만 |
+| `regular_close` | **15:40** | 시세 sync + 당일 봉(MDCSTAT T+0) |
+| `post_close` | **20:05** | 시세 sync + 당일 봉 확인 → `hub_return_refs`·`hub_rs_snapshot` 재생성 → 커밋·푸시 |
+
+GitHub schedule `40 6`(15:40)·`0 11`(20:00)는 동일 슬롯의 **백업**입니다(러너 시각으로 slot 추론).
+
+### 3) 장중·마감 스케줄 예시 (KST)
+
+Timezone = **Asia/Seoul** 권장.
+
+| 구간 (KST) | cron-job.org 표현 예시 | Body |
 |------------|------------------------|------|
-| 09:00–14:50 | `*/10 9-14 * * 1-5` | 매시 00,10,…,50분 |
-| 15:00–15:40 | `0,10,20,30,40 15 * * 1-5` | 15:40까지 (장후 직후 여유) |
+| 09:00–14:50 | `*/10 9-14 * * 1-5` | `{"event_type":"sync-quotes"}` |
+| 15:00–15:30 | `0,10,20,30 15 * * 1-5` | 동일 |
+| **15:40** | `40 15 * * 1-5` | `slot: regular_close` |
+| 16:00–19:50 | `*/10 16-19 * * 1-5` | 시세만 (애프터마켓) |
+| **20:05** | `5 20 * * 1-5` | `slot: post_close` |
 
-한 개의 잡으로 합치기 어렵다면 위처럼 **두 잡**을 만들고 URL·헤더·바디는 동일하게 둡니다.  
-장후 최종 스냅샷은 GitHub schedule의 `0 7 * * 1-5`(KST 16:00) 백업이 커버합니다.
-
-수동 실행: Actions → **Sync quotes to Supabase** → Run workflow, 또는 동일 `dispatches` POST.
+수동 실행: Actions → **Sync quotes to Supabase** → Run workflow (`slot` 입력 선택 가능), 또는 동일 `dispatches` POST.
 
 ## 서브경로 배포
 

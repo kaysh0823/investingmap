@@ -37,6 +37,10 @@ Cloudflare Pages Functions (/api/*)  ── 엣지 캐시(거래일 앵커) ─�
   - `schedule` cron(백업용) + `repository_dispatch: [sync-quotes]`(주 트리거)
   - GitHub Actions cron이 심하게 지연돼서, **cron-job.org**가 평일 장중 10분마다
     `POST /repos/kaysh0823/investingmap/dispatches`로 트리거함
+  - **마감 슬롯** (`client_payload.slot`):
+    - `regular_close` (KST 15:40) — 시세 sync + MDCSTAT T+0 일봉
+    - `post_close` (KST 20:05) — sync 후 `hub_return_refs`·`hub_rs_snapshot` 재생성·커밋
+    - schedule `40 6` / `0 11`은 동일 슬롯 KST 시각 추론 백업
   - PAT(fine-grained, Contents read-write)는 cron-job.org에만 보관
 - **수집 소스**
   - 현재가·52주·시총·PER/PBR·거래대금·전일종가 → 네이버 (`functions/lib/naver_sise_quotes.mjs`)
