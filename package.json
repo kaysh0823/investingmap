@@ -53,6 +53,8 @@
     "verify:volatility": "node scripts/verify_volatility.mjs",
     "verify:global-search": "node scripts/verify_global_search.mjs",
     "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
+    "build:hub-return-refs": "node scripts/build_hub_return_refs.mjs",
+    "verify:returns-core": "node scripts/verify_returns_core.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "scan:price-jumps": "node scripts/scan_residual_price_jumps.mjs",
     "verify:price-adjustments-logic": "node scripts/verify_price_adjustments_logic.mjs",

@@ -25,6 +25,10 @@ import {
 
 export const RS_HISTORY_LOOKBACK = 230;
 export const RS_FFILL_LIMIT = 20;
+/** Trading-session calendar length for hub_return_refs.json */
+export const RETURN_REF_TRADING_DATES = 260;
+/** Adjusted-close window length (supports N=200 with k≤1) */
+export const RETURN_REF_CLOSES = 201;
 const PAGE_SIZE = 1000;
 const TICKER_BATCH = 40;
 const FETCH_CONCURRENCY = 3;
@@ -518,4 +522,80 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
     quotes,
     ...(Object.keys(indices).length ? { indices } : {}),
   };
+}
+
+/**
+ * Build adjusted-close reference series for hub return math (shared with RS path).
+ * closes are oldest→newest; last element is the recentDd adjusted close (ffill≤20).
+ *
+ * @param {{ url: string, anonKey: string }} config
+ * @param {string[]} tickers
+ * @param {{ tradingDatesCount?: number, closesCount?: number }} [opts]
+ * @returns {Promise<{
+ *   recentDd: string,
+ *   tradingDates: string[],
+ *   quotes: Map<string, { closes: (number|null)[], mcap: number|null }>,
+ * }|null>}
+ */
+export async function buildAdjustedCloseRefsFromHistory(config, tickers, opts = {}) {
+  if (!config?.url || !config?.anonKey) return null;
+  const tradingDatesCount = Math.max(
+    opts.tradingDatesCount || RETURN_REF_TRADING_DATES,
+    opts.closesCount || RETURN_REF_CLOSES,
+  );
+  const closesCount = opts.closesCount || RETURN_REF_CLOSES;
+
+  const codes = [...new Set(
+    (tickers || []).map((t) => normalizeTicker(t)).filter(Boolean),
+  )].sort();
+  if (!codes.length) return null;
+
+  const datesDesc = await fetchCalendarDatesDesc(config, tradingDatesCount);
+  if (datesDesc.length < closesCount) {
+    console.warn(
+      `[return_refs] history calendar too short (${datesDesc.length} < ${closesCount})`,
+    );
+    return null;
+  }
+  const datesAsc = [...datesDesc].reverse();
+  const anchorDash = datesDesc[0];
+  const sinceDash = datesDesc[datesDesc.length - 1];
+  const anchorIdx = datesAsc.length - 1;
+  const recentDd = dashToBasDd(anchorDash);
+  const tradingDates = datesAsc.map(dashToBasDd);
+
+  console.log(
+    `[return_refs] anchor=${anchorDash} sessions=${datesAsc.length} `
+    + `tickers=${codes.length} closes=${closesCount} (adj+ffill≤${RS_FFILL_LIMIT})`,
+  );
+
+  const historyByTicker = await fetchHistoryByTicker(config, codes, sinceDash, anchorDash);
+  const adjustmentsByTicker = await fetchAdjustmentsByTicker(config, codes);
+  logAdjustmentSamples(historyByTicker, adjustmentsByTicker, datesAsc);
+
+  /** @type {Map<string, { closes: (number|null)[], mcap: number|null }>} */
+  const quotes = new Map();
+  for (const code of codes) {
+    const points = historyByTicker.get(code) || [];
+    if (!points.length) continue;
+    const bars = points.map((p) => ({ t: p.t, c: p.c }));
+    applyPriceAdjustmentsToBars(bars, adjustmentsByTicker.get(code) || []);
+    const adjPoints = bars.map((b, i) => ({
+      t: b.t,
+      c: b.c,
+      m: points[i]?.m ?? null,
+    }));
+    const { raw, mcaps } = alignToCalendar(adjPoints, datesAsc);
+    if (raw[anchorIdx] == null) continue;
+    const filled = ffillLimited(raw, RS_FFILL_LIMIT);
+    const last = filled[anchorIdx];
+    if (last == null || !(last > 0)) continue;
+    const closes = filled.slice(-closesCount);
+    const mcap = mcaps[anchorIdx] != null && mcaps[anchorIdx] > 0
+      ? mcaps[anchorIdx]
+      : null;
+    quotes.set(code, { closes, mcap });
+  }
+
+  return { recentDd, tradingDates, quotes };
 }

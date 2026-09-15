@@ -1,0 +1,56 @@
+name: Refresh hub return refs
+
+on:
+  schedule:
+    # After regular close + MDCSTAT T+0 OHLC settle — UTC 08:10 = KST 17:10, Mon–Fri
+    - cron: '10 8 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build hub return refs + RS snapshot
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+          KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
+          REFRESH_HUB_SNAPSHOTS: '1'
+        run: |
+          node scripts/build_hub_return_refs.mjs
+          node scripts/build_hub_rs_snapshot.mjs
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/hub_return_refs.json data/hub_rs_snapshot.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: refresh hub_return_refs + hub_rs_snapshot"
+          git push
