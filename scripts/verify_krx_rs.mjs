@@ -80,7 +80,17 @@ assert.ok(histSrc.includes('stock_price_history'), 'history path reads stock_pri
 assert.ok(histSrc.includes('applyPriceAdjustmentsToBars'), 'same adj as ticker_ohlc');
 assert.ok(histSrc.includes('market_index_daily'), 'indices from market_index_daily');
 assert.ok(histSrc.includes('ffillLimited') && histSrc.includes('RS_FFILL_LIMIT'), 'halt ffill≤20');
+assert.ok(
+  histSrc.includes('filled[anchorIdx]') && !histSrc.includes('if (raw[anchorIdx] == null)'),
+  'membership allows ffill≤20 safety net (not raw-only)',
+);
 assert.ok(histSrc.includes('supabase-history-adj'), 'source tag');
+
+const syncSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'sync_quotes_to_supabase.mjs'), 'utf8');
+assert.ok(
+  syncSrc.includes("universeMode = 'full'") && syncSrc.includes('universe=${universeMode}'),
+  'session-close history upserts full market for KRX sources',
+);
 
 const buildSrc = fs.readFileSync(path.join(ROOT, 'scripts', 'build_hub_rs_snapshot.mjs'), 'utf8');
 assert.ok(buildSrc.includes('getSupabaseConfig'), 'build injects Supabase');

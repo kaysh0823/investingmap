@@ -425,8 +425,11 @@ async function repairHistoryCoverageForDate(
 ) {
   if (!byCode || !byCode.size) return { expected: 0, repaired: 0, missing: [] };
   const expectedRows = new Map();
-  for (const ticker of expectedTickers) {
-    const row = historyRowFromKrx(ticker, tradeDate, byCode.get(ticker));
+  for (const raw of expectedTickers) {
+    const ticker = normalizeTicker(raw);
+    if (!ticker) continue;
+    const krx = byCode.get(ticker) || byCode.get(raw);
+    const row = historyRowFromKrx(ticker, tradeDate, krx);
     if (row) expectedRows.set(ticker, row);
   }
   const existing = await fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, tradeDate);
@@ -529,8 +532,9 @@ async function upsertSessionCloseHistory(
       if (dailyMap && dailyMap.size > 0) {
         byCode = new Map();
         for (const [ticker, fields] of dailyMap) {
+          const t = normalizeTicker(ticker) || ticker;
           const krxRow = dailyOhlcFieldsToKrxRow(fields);
-          if (krxRow) byCode.set(ticker, krxRow);
+          if (t && krxRow) byCode.set(t, krxRow);
         }
         source = 'data.krx';
         console.log(
@@ -549,60 +553,67 @@ async function upsertSessionCloseHistory(
   const krxReady = !!(byCode && byCode.size > 0);
   const inAftermarket = isKrxAfterMarket();
   const rows = [];
-  for (const q of quoteRows) {
-    if (!q || !q.ticker) continue;
-    const krx = krxReady ? byCode.get(q.ticker) : null;
-    const fields = krx ? historyFieldsFromKrxRow(krx) : null;
-    if (fields) {
+  let universeMode = 'hub';
+
+  if (krxReady) {
+    // Full-market upsert (apihub / MDCSTAT01501) — do not filter to hub quoteRows.
+    for (const [rawTicker, krx] of byCode) {
+      const ticker = normalizeTicker(rawTicker);
+      if (!ticker) continue;
+      const fields = historyFieldsFromKrxRow(krx);
+      if (!fields || fields.close == null || !(fields.close > 0)) continue;
       rows.push({
-        ticker: q.ticker,
+        ticker,
         trade_date: tradeDateDash,
         open: fields.open,
         high: fields.high,
         low: fields.low,
         close: fields.close,
         volume: fields.volume,
-        mcap_won: fields.mcap_won ?? q.mcap_won ?? null,
-        turnover_won: fields.turnover_won ?? q.turnover_won ?? null,
+        mcap_won: fields.mcap_won ?? null,
+        turnover_won: fields.turnover_won ?? null,
       });
-      continue;
     }
-    // A successful KRX day intentionally omits suspended/not-yet-listed names.
-    // Do not invent a candle for the consensus date from a stale Naver quote.
-    if (krxReady) continue;
-    // (c) Fallback: Naver regular-session OHLCV (never aftermarket last as close).
-    const open =
-      q._sessionOpen != null && Number.isFinite(q._sessionOpen) && q._sessionOpen > 0
-        ? q._sessionOpen
-        : null;
-    const high =
-      q._sessionHigh != null && Number.isFinite(q._sessionHigh) && q._sessionHigh > 0
-        ? q._sessionHigh
-        : null;
-    const low =
-      q._sessionLow != null && Number.isFinite(q._sessionLow) && q._sessionLow > 0
-        ? q._sessionLow
-        : null;
-    const volume =
-      q._sessionVolume != null && Number.isFinite(q._sessionVolume) && q._sessionVolume >= 0
-        ? q._sessionVolume
-        : null;
-    const close = resolveRegularSessionClose(q, inAftermarket);
-    if (close == null || !Number.isFinite(close) || close <= 0) continue;
-    if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
-    rows.push({
-      ticker: q.ticker,
-      trade_date: tradeDateDash,
-      open,
-      high,
-      low,
-      close,
-      volume,
-      mcap_won: q.mcap_won,
-      turnover_won: q.turnover_won ?? null,
-    });
+    universeMode = 'full';
+  } else {
+    // (c) Naver session OHLCV fallback — hub quoteRows only.
+    for (const q of quoteRows) {
+      if (!q || !q.ticker) continue;
+      const open =
+        q._sessionOpen != null && Number.isFinite(q._sessionOpen) && q._sessionOpen > 0
+          ? q._sessionOpen
+          : null;
+      const high =
+        q._sessionHigh != null && Number.isFinite(q._sessionHigh) && q._sessionHigh > 0
+          ? q._sessionHigh
+          : null;
+      const low =
+        q._sessionLow != null && Number.isFinite(q._sessionLow) && q._sessionLow > 0
+          ? q._sessionLow
+          : null;
+      const volume =
+        q._sessionVolume != null && Number.isFinite(q._sessionVolume) && q._sessionVolume >= 0
+          ? q._sessionVolume
+          : null;
+      const close = resolveRegularSessionClose(q, inAftermarket);
+      if (close == null || !Number.isFinite(close) || close <= 0) continue;
+      if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
+      rows.push({
+        ticker: normalizeTicker(q.ticker) || q.ticker,
+        trade_date: tradeDateDash,
+        open,
+        high,
+        low,
+        close,
+        volume,
+        mcap_won: q.mcap_won,
+        turnover_won: q.turnover_won ?? null,
+      });
+    }
+    if (rows.length) source = 'naver';
+    universeMode = 'hub';
   }
-  if (!source && rows.length) source = 'naver';
+
   if (!rows.length) {
     console.log(
       `  history session close ${tradeDateDash}: skip upsert (0 rows; source attempted=${source || 'none'})`,
@@ -620,18 +631,22 @@ async function upsertSessionCloseHistory(
         ? 'data.krx/MDCSTAT01501'
         : `Naver OHLCV ${withOhlcv}/${rows.length}`;
   console.log(
-    `  history session close ${tradeDateDash}: upserted ${result.upserted} (source=${sourceLabel})`,
+    `  history session close ${tradeDateDash}: upserted ${result.upserted} `
+    + `(source=${sourceLabel}, universe=${universeMode})`,
   );
+
+  // Hub coverage check stays hub-scoped (even when full-market upsert ran).
+  const hubTickers = quoteRows.map((row) => row.ticker).filter(Boolean);
   const coverage = krxReady
     ? await repairHistoryCoverageForDate(
-        quoteRows.map((row) => row.ticker),
+        hubTickers,
         tradeDateDash,
         byCode,
         supabaseUrl,
         serviceKey,
       )
     : null;
-  return { ...result, coverage, byCode: krxReady ? byCode : null, source };
+  return { ...result, coverage, byCode: krxReady ? byCode : null, source, universeMode };
 }
 
 /**

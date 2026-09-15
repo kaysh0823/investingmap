@@ -344,7 +344,22 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
     non_ordinary_secu: 0,
   };
   const ordinaryCodes = [];
-  for (const code of anchor.closes.keys()) {
+  const seedCodes = new Set(anchor.closes.keys());
+  // Safety net: also seed from prior sessions within ffill window (halts missing T+0).
+  const seedLookback = Math.min(RS_FFILL_LIMIT, Math.max(0, anchorIdx));
+  for (let back = 1; back <= seedLookback; back++) {
+    const d = datesAsc[anchorIdx - back];
+    if (!d) break;
+    try {
+      const prev = await fetchAnchorDayRows(config, d);
+      for (const code of prev.closes.keys()) seedCodes.add(code);
+    } catch {
+      /* ignore seed gaps */
+    }
+    // One extra session is enough for most halt gaps; more days are costly.
+    if (back >= 3) break;
+  }
+  for (const code of seedCodes) {
     const reason = rsUniverseExclusionReason(code, names.get(code), null);
     if (reason) {
       if (excludedCounts[reason] != null) excludedCounts[reason] += 1;
@@ -353,13 +368,14 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
     }
     ordinaryCodes.push(code);
   }
-  const universeRaw = anchor.closes.size;
+  const universeRaw = seedCodes.size;
   const universeOrdinary = ordinaryCodes.length;
   console.log(
     `[krx_rs] universe raw=${universeRaw} ordinary=${universeOrdinary} `
+    + `(anchorDay=${anchor.closes.size} seed+=${seedCodes.size - anchor.closes.size}) `
     + `(excl preferred=${excludedCounts.preferred} spac=${excludedCounts.spac} `
     + `reit=${excludedCounts.reit} etf=${excludedCounts.etf_etn || 0}) `
-    + `— tk RS equity≈2398`,
+    + `- tk RS equity~2398`,
   );
 
   const historyByTicker = await fetchHistoryByTicker(
@@ -384,9 +400,9 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
       m: points[i]?.m ?? null,
     }));
     const { raw, mcaps } = alignToCalendar(adjPoints, datesAsc);
-    // Require original (post-adj) close on anchor — no ffill for membership.
-    if (raw[anchorIdx] == null) continue;
     const filled = ffillLimited(raw, RS_FFILL_LIMIT);
+    // Prefer real anchor close; allow ffill≤20 membership as halt safety net.
+    if (filled[anchorIdx] == null || !(filled[anchorIdx] > 0)) continue;
     seriesByTicker.set(code, { raw, filled, mcaps });
   }
 
@@ -586,8 +602,8 @@ export async function buildAdjustedCloseRefsFromHistory(config, tickers, opts = 
       m: points[i]?.m ?? null,
     }));
     const { raw, mcaps } = alignToCalendar(adjPoints, datesAsc);
-    if (raw[anchorIdx] == null) continue;
     const filled = ffillLimited(raw, RS_FFILL_LIMIT);
+    // Prefer real recentDd close; allow ffill≤20 as halt safety net.
     const last = filled[anchorIdx];
     if (last == null || !(last > 0)) continue;
     const closes = filled.slice(-closesCount);
