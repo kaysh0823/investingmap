@@ -1,5 +1,5 @@
 /**
- * Volatility distribution scatter — ATR3/close vs log market cap, colored by selectable metric.
+ * Volatility distribution scatter — 5D range vol% vs log market cap, colored by selectable metric.
  */
 (function (global) {
   'use strict';
@@ -20,9 +20,9 @@
   var COPY = {
     ko: {
       title: '변동성 분포',
-      xAxis: 'ATR3/종가',
+      xAxis: '5일 변동성 (고저폭 ÷ 종가, %)',
       yAxis: '시가총액(로그)',
-      atr: 'ATR3/종가',
+      atr: '5일 변동성%',
       mcap: '시가총액',
       pctB: '20일 %b',
       turnover: '거래대금',
@@ -30,23 +30,25 @@
       rs: 'RS',
       noData: '변동성 스냅샷 데이터가 없습니다.',
       legendSize: '크기 = 거래대금',
-      legendLines: '세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
+      legendLines: '세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
       legendPctB: '색 = 20일 %b(진할수록 높음)',
       legendChg: '색 = 당일 등락률',
       legendRs: '색 = RS(진할수록 높음)',
       modePctB: '%b',
       modeChg: '당일 등락률',
       modeRs: 'RS',
+      basisDaily: '일봉',
       pctLine: function (p, v) {
-        if (p === 50) return 'P50(중앙값) · ' + v.toFixed(3);
-        return 'P' + p + ' · ' + v.toFixed(3);
+        var pct = (typeof v === 'number' && isFinite(v) ? v * 100 : 0).toFixed(2) + '%';
+        if (p === 50) return 'P50(중앙값) · ' + pct;
+        return 'P' + p + ' · ' + pct;
       },
     },
     en: {
       title: 'Volatility Distribution',
-      xAxis: 'ATR3/Close',
+      xAxis: '5D Range Vol (high−low ÷ close, %)',
       yAxis: 'Market cap (log)',
-      atr: 'ATR3/Close',
+      atr: '5D Range Vol%',
       mcap: 'Market cap',
       pctB: '20D %b',
       turnover: 'Turnover',
@@ -54,16 +56,18 @@
       rs: 'RS',
       noData: 'No volatility snapshot data available.',
       legendSize: 'Size = turnover',
-      legendLines: 'Lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
+      legendLines: 'Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
       legendPctB: 'Color = 20D %b (darker = higher)',
       legendChg: 'Color = 1-day change',
       legendRs: 'Color = RS (darker = higher)',
       modePctB: '%b',
       modeChg: '1-day change',
       modeRs: 'RS',
+      basisDaily: 'Daily',
       pctLine: function (p, v) {
-        if (p === 50) return 'P50 (median) · ' + v.toFixed(3);
-        return 'P' + p + ' · ' + v.toFixed(3);
+        var pct = (typeof v === 'number' && isFinite(v) ? v * 100 : 0).toFixed(2) + '%';
+        if (p === 50) return 'P50 (median) · ' + pct;
+        return 'P' + p + ' · ' + pct;
       },
     },
   };
@@ -203,9 +207,9 @@
 
   function formatAtrTick(value) {
     if (typeof value !== 'number' || !isFinite(value)) return '';
-    if (value >= 0.1) return value.toFixed(2);
-    if (value >= 0.01) return value.toFixed(2);
-    return value.toFixed(3);
+    var pct = value * 100;
+    if (pct >= 10) return pct.toFixed(1) + '%';
+    return pct.toFixed(2) + '%';
   }
 
   function expandLinearDomain(min, max, extras, padRatio) {
@@ -230,9 +234,55 @@
     return [Math.pow(10, logMin - pad), Math.pow(10, logMax + pad)];
   }
 
-  function formatAtr(value) {
+  function formatRangeVol(value) {
     if (typeof value !== 'number' || !isFinite(value)) return '—';
-    return value.toFixed(4);
+    return (value * 100).toFixed(2) + '%';
+  }
+
+  function quoteRangeVol(q) {
+    if (!q) return null;
+    if (typeof q.rangeVol5 === 'number' && isFinite(q.rangeVol5) && q.rangeVol5 >= 0) {
+      return q.rangeVol5;
+    }
+    // One-release alias from snapshot builder.
+    if (typeof q.atrPct === 'number' && isFinite(q.atrPct) && q.atrPct >= 0) return q.atrPct;
+    return null;
+  }
+
+  function formatAnchorDash(ymd) {
+    var s = String(ymd || '').replace(/-/g, '');
+    if (!/^\d{8}$/.test(s)) return '';
+    return s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6, 8);
+  }
+
+  function syncVolatilityBasisBadge(snapshot, lang) {
+    var labels = COPY[lang === 'en' ? 'en' : 'ko'];
+    var dash = formatAnchorDash(snapshot && snapshot.recentDd);
+    var text = '';
+    if (dash) {
+      var basis = lang === 'en' ? 'Basis' : '기준';
+      text = basis + ' ' + dash + ' · ' + labels.basisDaily;
+    }
+    try {
+      if (global.InvestingMapReturnsBadge && global.InvestingMapReturnsBadge.format && dash) {
+        global.InvestingMapReturnsBadge.remember({
+          anchorDd: String(snapshot.recentDd || '').replace(/-/g, ''),
+          numeratorMode: 'official',
+          sessionOpen: false,
+          regularSession: false,
+          asOf: snapshot.asOf || null,
+          dataVersion: snapshot.recentDd || null,
+        });
+      }
+    } catch (e0) {}
+    var hint = document.getElementById('volatility-hint');
+    if (!hint) return;
+    var badgeRe = /\s*·\s*(기준|Basis)[\s\S]*$/;
+    var base = String(hint.getAttribute('data-im-hint-base') || hint.textContent || '')
+      .replace(badgeRe, '')
+      .trim();
+    if (!hint.getAttribute('data-im-hint-base')) hint.setAttribute('data-im-hint-base', base);
+    hint.textContent = text ? (base ? base + ' · ' + text : text) : base;
   }
 
   function clamp01(v) {
@@ -455,7 +505,12 @@
     el.appendChild(name);
     [
       labels.mcap + ' ' + formatMcap(item.mcap, lang),
-      labels.atr + ' ' + formatAtr(item.atrPct),
+      labels.atr +
+        ' ' +
+        formatRangeVol(item.rangeVol5) +
+        (item.rangeVol5Sma20 != null && isFinite(item.rangeVol5Sma20)
+          ? ' · SMA20 ' + formatRangeVol(item.rangeVol5Sma20)
+          : ''),
       labels.turnover + ' ' + formatTurnover(item.turnoverWon, lang),
       colorMetricLabel(labels, selectedColorMode) +
         ' ' +
@@ -602,18 +657,23 @@
     var quotes = (snapshot && snapshot.quotes) || {};
     var sectorSet = sectorTickerSet(opts.companies);
     var coMap = companyByTicker(opts.companies);
-    var marketAtrs = [];
+    var marketRangeVols = [];
     var fg = [];
     Object.keys(quotes).forEach(function (ticker) {
       var q = quotes[ticker];
-      if (!q || !(q.mcap > 0) || !(q.atrPct >= 0)) return;
-      marketAtrs.push(q.atrPct);
+      var rv = quoteRangeVol(q);
+      if (!q || !(q.mcap > 0) || rv == null) return;
+      marketRangeVols.push(rv);
       if (!sectorSet[ticker]) return;
       var co = coMap[ticker];
       fg.push({
         ticker: ticker,
         mcap: q.mcap,
-        atrPct: q.atrPct,
+        rangeVol5: rv,
+        rangeVol5Sma20:
+          typeof q.rangeVol5Sma20 === 'number' && isFinite(q.rangeVol5Sma20)
+            ? q.rangeVol5Sma20
+            : null,
         pctB: q.pctB,
         close: q.close,
         turnoverWon:
@@ -626,6 +686,7 @@
 
     container.innerHTML = '';
     hideTooltip();
+    syncVolatilityBasisBadge(snapshot, opts.lang === 'en' ? 'en' : 'ko');
 
     if (!fg.length) {
       var empty = document.createElement('div');
@@ -655,15 +716,15 @@
     var innerW = Math.max(1, width - margin.left - margin.right);
     var innerH = Math.max(1, height - margin.top - margin.bottom);
 
-    marketAtrs.sort(function (a, b) { return a - b; });
+    marketRangeVols.sort(function (a, b) { return a - b; });
     var PCTS = [10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90];
     var EMPH = [25, 50, 75];
     var pctVals = PCTS.map(function (p) {
-      return { p: p, v: percentile(marketAtrs, p) };
+      return { p: p, v: percentile(marketRangeVols, p) };
     });
 
-    var sectorAtrMin = d3.min(fg, function (d) { return d.atrPct; }) || 0;
-    var sectorAtrMax = d3.max(fg, function (d) { return d.atrPct; }) || 0.001;
+    var sectorAtrMin = d3.min(fg, function (d) { return d.rangeVol5; }) || 0;
+    var sectorAtrMax = d3.max(fg, function (d) { return d.rangeVol5; }) || 0.001;
     var xDomain = expandLinearDomain(
       sectorAtrMin,
       sectorAtrMax,
@@ -761,7 +822,7 @@
       .attr('class', 'im-vol-node')
       .attr('data-ticker', function (d) { return d.ticker || ''; })
       .attr('transform', function (d) {
-        return 'translate(' + x(d.atrPct) + ',' + y(d.mcap) + ')';
+        return 'translate(' + x(d.rangeVol5) + ',' + y(d.mcap) + ')';
       });
 
     fgNodes
@@ -777,7 +838,8 @@
           ticker: d.ticker,
           name: nameByTicker[d.ticker] || d.ticker,
           mcap: d.mcap,
-          atrPct: d.atrPct,
+          rangeVol5: d.rangeVol5,
+          rangeVol5Sma20: d.rangeVol5Sma20,
           pctB: d.pctB,
           turnoverWon: d.turnoverWon,
           rs: d.rs,

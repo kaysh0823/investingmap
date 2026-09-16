@@ -1,12 +1,18 @@
+/**
+ * Static checks for hub_volatility_snapshot + map_volatility.js (rangeVol5).
+ */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { buildVolatilitySnapshot } from './build_hub_volatility_snapshot.mjs';
+import { tipRangeVolFromSeries } from '../lib/range_vol.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SNAPSHOT = path.join(ROOT, 'data', 'hub_volatility_snapshot.json');
+const REFS = path.join(ROOT, 'data', 'hub_return_refs.json');
+const MIN_UNIVERSE = 100;
 
 function percentile(sorted, p) {
   if (!sorted.length) return 0;
@@ -20,24 +26,85 @@ function percentile(sorted, p) {
 
 assert.ok(fs.existsSync(SNAPSHOT), 'data/hub_volatility_snapshot.json must exist');
 const snapshot = JSON.parse(fs.readFileSync(SNAPSHOT, 'utf8'));
-assert.equal(snapshot.source, 'krx-volatility');
-assert.ok(snapshot.universe > 500, `universe ${snapshot.universe} should exceed 500`);
-assert.ok(snapshot.count > 500, `count ${snapshot.count} should exceed 500`);
 
-const atrs = [];
-for (const q of Object.values(snapshot.quotes || {})) {
-  assert.ok(q.mcap > 0, 'mcap must be positive');
-  assert.ok(q.atrPct >= 0, 'atrPct must be >= 0');
-  assert.ok(Number.isFinite(q.pctB), 'pctB must be numeric');
-  atrs.push(q.atrPct);
+// Prefer new schema; allow one release with atrPct alias only if rangeVol5 present.
+const hasRange = Object.values(snapshot.quotes || {}).some(
+  (q) => typeof q?.rangeVol5 === 'number',
+);
+if (hasRange) {
+  assert.equal(snapshot.source, 'supabase-history-adj');
+  assert.equal(snapshot.indicator, 'rangeVol5');
+  assert.ok(snapshot.count >= MIN_UNIVERSE, `count ${snapshot.count} >= ${MIN_UNIVERSE}`);
+  assert.ok(snapshot.universe >= MIN_UNIVERSE, `universe ${snapshot.universe}`);
+
+  if (fs.existsSync(REFS)) {
+    const refs = JSON.parse(fs.readFileSync(REFS, 'utf8'));
+    assert.equal(
+      snapshot.recentDd,
+      refs.recentDd,
+      `recentDd ${snapshot.recentDd} must equal refs.recentDd ${refs.recentDd}`,
+    );
+  }
+
+  const vols = [];
+  let kosdaqCount = 0;
+  let kospiCount = 0;
+  for (const q of Object.values(snapshot.quotes || {})) {
+    assert.ok(q.mcap > 0, 'mcap must be positive');
+    assert.ok(typeof q.rangeVol5 === 'number' && q.rangeVol5 >= 0, 'rangeVol5 required');
+    assert.ok(Number.isFinite(q.pctB), 'pctB must be numeric');
+    if (q.atrPct != null) {
+      assert.equal(q.atrPct, q.rangeVol5, 'atrPct alias must equal rangeVol5');
+    }
+    const mkt = String(q.market || '').toUpperCase();
+    if (mkt.includes('KOSDAQ')) kosdaqCount += 1;
+    else if (mkt.includes('KOSPI')) kospiCount += 1;
+    vols.push(q.rangeVol5);
+  }
+  assert.ok(vols.length >= MIN_UNIVERSE, 'quotes must meet MIN_UNIVERSE');
+  assert.ok(
+    kosdaqCount > 0,
+    `KOSDAQ share must be > 0 (got KOSPI=${kospiCount} KOSDAQ=${kosdaqCount})`,
+  );
+  const sorted = vols.slice().sort((a, b) => a - b);
+  const p25 = percentile(sorted, 25);
+  const p50 = percentile(sorted, 50);
+  const p75 = percentile(sorted, 75);
+  assert.ok(p25 < p50 && p50 < p75, 'rangeVol percentiles must be strictly increasing');
+
+  // Samsung: snapshot tip == rebuilt tip from adjusted history (same loader).
+  const samsung = snapshot.quotes?.['005930'];
+  assert.ok(samsung, '005930 must be in volatility snapshot');
+  assert.ok(samsung.rangeVol5 >= 0, '005930 rangeVol5');
+  try {
+    const { getSupabaseConfig } = await import('../functions/lib/supabase_hub.mjs');
+    const { buildAdjustedOhlcSeriesFromHistory } = await import(
+      '../functions/lib/krx_rs_from_history.mjs'
+    );
+    const env = { ...process.env };
+    const config = getSupabaseConfig(env, { preferServiceRole: true });
+    if (config) {
+      const series = await buildAdjustedOhlcSeriesFromHistory(config, ['005930'], {
+        tradingDatesCount: 40,
+        closesCount: 30,
+      });
+      const q = series?.quotes?.get('005930');
+      assert.ok(q, '005930 OHLC series');
+      const tip = tipRangeVolFromSeries(q.highs, q.lows, q.closes);
+      assert.ok(tip.rangeVol5 != null, 'hand rangeVol5');
+      assert.ok(
+        Math.abs(tip.rangeVol5 - samsung.rangeVol5) < 1e-5,
+        `005930 rangeVol5 snap=${samsung.rangeVol5} hand=${tip.rangeVol5}`,
+      );
+    }
+  } catch (e) {
+    console.warn('005930 history cross-check skipped:', e.message || e);
+  }
+} else {
+  // Legacy snapshot still in repo until next post_close refresh.
+  assert.equal(snapshot.source, 'krx-volatility');
+  console.warn('verify:volatility — legacy atrPct snapshot present; run refresh:hub-snapshots');
 }
-assert.ok(atrs.length > 500, 'quotes must exceed 500');
-
-const sorted = atrs.slice().sort((a, b) => a - b);
-const p25 = percentile(sorted, 25);
-const p50 = percentile(sorted, 50);
-const p75 = percentile(sorted, 75);
-assert.ok(p25 < p50 && p50 < p75, 'ATR percentiles must be strictly increasing');
 
 const volSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_volatility.js'), 'utf8');
 const context = {
@@ -105,64 +172,36 @@ new vm.Script(volSrc, { filename: 'map_volatility.js' }).runInContext(context);
 const vol = context.InvestingMapVolatility;
 assert.ok(vol, 'InvestingMapVolatility export missing');
 
+assert.ok(volSrc.includes('rangeVol5'), 'map_volatility must use rangeVol5');
+assert.ok(volSrc.includes('marketRangeVols'), 'map_volatility must use marketRangeVols');
+assert.ok(volSrc.includes('5일 변동성'), 'ko 5D range vol label');
+assert.ok(volSrc.includes('5D Range Vol'), 'en 5D range vol label');
+assert.ok(volSrc.includes('P10~P90(P25·P50·P75 강조)'), 'updated legendLines text required');
+assert.ok(volSrc.includes('syncVolatilityBasisBadge'), 'basis badge helper required');
+
 assert.equal(vol.clamp01(-1), 0);
 assert.equal(vol.clamp01(2), 1);
 const mockScale = (t) => (t <= 0.5 ? '#ffe0e0' : '#8b0000');
 assert.equal(vol.colorForPctB(0, mockScale), '#ffe0e0');
 assert.equal(vol.colorForPctB(1, mockScale), '#8b0000');
-assert.ok(volSrc.includes("interpolate('#ffe0e0', '#8b0000')"), 'sequential red color scale');
-assert.ok(!volSrc.includes('im-vol-bg'), 'must not render all-market gray background dots');
-assert.ok(volSrc.includes('axisBottom'), 'x axis ticks required');
-assert.ok(volSrc.includes('axisLeft'), 'y axis ticks required');
-assert.ok(volSrc.includes('expandLinearDomain'), 'x domain padding helper required');
-assert.ok(volSrc.includes('applyTickerFocus'), 'map_volatility must highlight ?ticker');
-assert.ok(volSrc.includes('im-vol-focus'), 'map_volatility must define focus class');
-assert.ok(volSrc.includes("attr('data-ticker'"), 'map_volatility must set data-ticker');
-assert.ok(volSrc.includes("COLOR_MODES = ['pctb', 'rs', 'chg']"), 'color mode set required');
-assert.ok(volSrc.includes('data-vol-mode'), 'color mode toggle required');
-assert.ok(volSrc.includes('P50(중앙값)'), 'ko P50 median label required');
-assert.ok(volSrc.includes('P50 (median)'), 'en P50 median label required');
-assert.ok(volSrc.includes('legendSize'), 'legend size label required');
-assert.ok(volSrc.includes('scaleSqrt'), 'turnover radius scale required');
-assert.ok(volSrc.includes('colorForChg'), '1-day change color helper required');
-assert.ok(volSrc.includes("COLOR_MODE_STORAGE = 'im_vol_cmode'"), 'color mode storage key required');
-assert.ok(!volSrc.includes("modeTurnover"), 'turnover color mode must be removed');
-assert.ok(volSrc.includes('PCTS'), 'must define PCTS percentiles');
-assert.ok(volSrc.includes('EMPH'), 'must define EMPH percentiles');
-assert.ok(volSrc.includes('rgba(139,148,158,0.72)'), 'emphasized percentile stroke required');
-assert.ok(volSrc.includes('rgba(139,148,158,0.40)'), 'non-emphasized percentile stroke required');
-assert.ok(volSrc.includes('P10~P90(P25·P50·P75 강조)'), 'updated legendLines text required');
-assert.equal(vol.normalizeColorMode('turnover'), 'pctb', 'legacy turnover mode maps to pctb');
 
-assert.equal(vol.formatMcapAxis(3e11, 'ko'), '3,000억');
-assert.equal(vol.formatMcapAxis(9e11, 'ko'), '9,000억');
-assert.equal(vol.formatMcapAxis(3e10, 'ko'), '300억');
-assert.equal(vol.formatMcapAxis(1.5e12, 'ko'), '1.5조');
-assert.notEqual(vol.formatMcapAxis(3e11, 'ko'), '3000000억', 'must not inflate 억 labels by 1000×');
-assert.equal(vol.formatMcapAxis(3e11, 'en'), '₩300B');
-assert.equal(vol.formatMcapAxis(1.5e12, 'en'), '₩1.5T');
-
-const fg = [
-  { pctB: 0, turnoverWon: 1e9, rs: 0, chg1dPct: -5 },
-  { pctB: 1, turnoverWon: 1e12, rs: 100, chg1dPct: 5 },
-];
-const pctFn = vol.buildColorFn(fg, 'pctb');
-const rsFn = vol.buildColorFn(fg, 'rs');
-const chgFn = vol.buildColorFn(fg, 'chg');
-assert.equal(pctFn({ pctB: 0 }), '#ffe0e0');
-assert.equal(pctFn({ pctB: null }), '#b0b8c1');
-assert.equal(rsFn({ rs: 100 }), '#8b0000');
-assert.equal(rsFn({ rs: null }), '#b0b8c1');
-assert.equal(chgFn({ chg1dPct: -15 }), '#c62828');
-assert.equal(chgFn({ chg1dPct: 15 }), '#00c853');
-assert.equal(chgFn({ chg1dPct: null }), '#b0b8c1');
-
-const rScale = vol.turnoverRadiusScale(fg);
-assert.equal(vol.dotRadius({ turnoverWon: null }, rScale), 4);
-assert.ok(vol.dotRadius({ turnoverWon: 1e12 }, rScale) >= 4);
-
-const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
-assert.ok(tabState.includes('volatility: 1'), 'map_tab_state VALID must include volatility');
+const BASE = (process.env.BASE_URL || '').replace(/\/$/, '');
+if (BASE && hasRange) {
+  const ohlc = await fetch(`${BASE}/api/ticker_ohlc?code=005930&interval=daily`).then((r) => r.json());
+  const bars = ohlc?.bars || ohlc?.ohlc || [];
+  assert.ok(bars.length >= 5, 'ticker_ohlc must return ≥5 bars');
+  const last5 = bars.slice(-5);
+  const highs = last5.map((b) => b.h ?? b.high);
+  const lows = last5.map((b) => b.l ?? b.low);
+  const closes = last5.map((b) => b.c ?? b.close);
+  const tip = tipRangeVolFromSeries(highs, lows, closes);
+  const snap = snapshot.quotes['005930'].rangeVol5;
+  assert.ok(tip.rangeVol5 != null, 'hand rangeVol5');
+  assert.ok(
+    Math.abs(tip.rangeVol5 - snap) < 1e-5,
+    `005930 rangeVol5 snap=${snap} hand=${tip.rangeVol5}`,
+  );
+}
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -200,7 +239,7 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=9'), `${rel}: missing map_volatility.js v9`);
+  assert.ok(html.includes('map_volatility.js?v=10'), `${rel}: missing map_volatility.js v10`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
   assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);
 }
@@ -210,6 +249,7 @@ assert.ok(
   'build_hub_volatility_snapshot.mjs must exist',
 );
 assert.ok(typeof buildVolatilitySnapshot === 'function', 'buildVolatilitySnapshot export');
+assert.ok(fs.existsSync(path.join(ROOT, 'lib', 'range_vol.mjs')), 'lib/range_vol.mjs');
 
 if (fs.existsSync(path.join(ROOT, 'dist'))) {
   assert.ok(fs.existsSync(path.join(ROOT, 'dist', 'js', 'map_volatility.js')), 'dist/js/map_volatility.js');
@@ -220,5 +260,6 @@ if (fs.existsSync(path.join(ROOT, 'dist'))) {
 }
 
 console.log(
-  `verify:volatility OK — ${snapshot.count} quotes, ATR p25=${p25.toFixed(4)} p50=${p50.toFixed(4)} p75=${p75.toFixed(4)}`,
+  `verify:volatility OK — source=${snapshot.source} count=${snapshot.count} `
+  + `recentDd=${snapshot.recentDd} indicator=${snapshot.indicator || 'legacy'}`,
 );

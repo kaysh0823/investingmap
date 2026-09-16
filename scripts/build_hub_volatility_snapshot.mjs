@@ -1,235 +1,261 @@
 /**
- * Build data/hub_volatility_snapshot.json — KRX full-market ATR3/close, %b(20), mcap.
+ * Build data/hub_volatility_snapshot.json —
+ * full-market ordinary shares: rangeVol5 + SMA20 + %b(20) from adjusted stock_price_history.
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import {
-  getAuthKey,
-  fetchMarketDay,
-  tradingDates,
-  recentDateCandidates,
-} from '../functions/lib/krx_yoy.mjs';
+  buildAdjustedOhlcSeriesFromHistory,
+  RS_FFILL_LIMIT,
+} from '../functions/lib/krx_rs_from_history.mjs';
+import { getSupabaseConfig } from '../functions/lib/supabase_hub.mjs';
+import { rsUniverseExclusionReason } from '../functions/lib/krx_rs.mjs';
+import { normalizeTicker } from '../functions/lib/hub_dashboard_core.mjs';
 import { kstYmdDash } from '../functions/lib/krx_session.mjs';
+import { loadListedShareMeta3557 } from '../lib/krx_data_sources.mjs';
+import {
+  RANGE_VOL_PERIOD,
+  RANGE_VOL_SIGNAL,
+  tipRangeVolFromSeries,
+} from '../lib/range_vol.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const KRX_BASE = 'https://data-dbg.krx.co.kr/svc/apis';
-const KOSPI_DAILY = '/sto/stk_bydd_trd';
-const KOSDAQ_DAILY = '/sto/ksq_bydd_trd';
-const TRADING_DAYS = 22;
+const OUT_PATH = path.join(ROOT, 'data', 'hub_volatility_snapshot.json');
 const MIN_UNIVERSE = 100;
-const SHORT_CODE_RE = /^[0-9A-Z]{6}$/;
+/** Need ≥24 sessions for SMA20 of 5D range vol (5 + 20 − 1). */
+const OHLC_BARS = 30;
+const TRADING_DATES = 40;
 
-function parseNum(v) {
-  if (v == null || v === '' || v === '-') return null;
-  const n = parseFloat(String(v).replace(/,/g, ''));
-  return Number.isFinite(n) ? n : null;
-}
-
-function shortCodeFromRow(row) {
-  const srt = row && row.ISU_SRT_CD;
-  if (srt) {
-    const s = String(srt).trim().toUpperCase();
-    if (SHORT_CODE_RE.test(s)) return s;
+function loadEnv() {
+  const env = { ...process.env };
+  const devVars = path.join(ROOT, '.dev.vars');
+  if (!fs.existsSync(devVars)) return env;
+  for (const line of fs.readFileSync(devVars, 'utf8').split('\n')) {
+    const m = line.match(/^\s*([A-Za-z0-9_\u0080-\uFFFF ]+)\s*=\s*(.*)$/);
+    if (!m) continue;
+    const k = m[1].trim();
+    let v = m[2].trim();
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+      v = v.slice(1, -1);
+    }
+    if (!env[k]) env[k] = v;
   }
-  const cd = row && row.ISU_CD;
-  if (!cd) return null;
-  const s = String(cd).trim().toUpperCase();
-  if (SHORT_CODE_RE.test(s)) return s;
-  if (s.length >= 9 && s.startsWith('KR')) return s.substring(3, 9);
-  return null;
+  return env;
 }
 
-function mcapFromRow(row) {
-  const cl = parseNum(row?.TDD_CLSPRC);
-  const shrs = parseNum(row?.LIST_SHRS);
-  if (cl != null && shrs != null && cl > 0 && shrs > 0) return cl * shrs;
-  const direct = parseNum(row?.MKTCAP);
-  if (direct != null && direct > 0) return direct;
-  return null;
-}
-
-function barFromRow(row) {
-  const close = parseNum(row?.TDD_CLSPRC);
-  const high = parseNum(row?.TDD_HGPRC);
-  const low = parseNum(row?.TDD_LWPRC);
-  if (close == null || close <= 0) return null;
-  return {
-    close,
-    high: high != null && high > 0 ? high : close,
-    low: low != null && low > 0 ? low : close,
-    mcap: mcapFromRow(row),
-  };
-}
-
-async function krxDaily(authKey, endpoint, basDd) {
-  const url = `${KRX_BASE}${endpoint}`;
-  const headers = { AUTH_KEY: authKey, Accept: 'application/json', 'Content-Type': 'application/json' };
-  let res = await fetch(url, { method: 'POST', headers, body: JSON.stringify({ basDd }) });
-  if (!res.ok) {
-    res = await fetch(`${url}?basDd=${encodeURIComponent(basDd)}`, {
-      method: 'GET',
-      headers: { AUTH_KEY: authKey, Accept: 'application/json' },
-    });
-  }
-  if (!res.ok) return [];
-  const j = await res.json();
-  return Array.isArray(j.OutBlock_1) ? j.OutBlock_1 : [];
-}
-
-async function fetchMarketDayTagged(authKey, basDd) {
-  const [kospi, kosdaq] = await Promise.all([
-    krxDaily(authKey, KOSPI_DAILY, basDd),
-    krxDaily(authKey, KOSDAQ_DAILY, basDd),
-  ]);
-  const byCode = new Map();
-  for (const row of kospi) {
-    const code = shortCodeFromRow(row);
-    if (code) byCode.set(code, { row, market: 'KOSPI' });
-  }
-  for (const row of kosdaq) {
-    const code = shortCodeFromRow(row);
-    if (code) byCode.set(code, { row, market: 'KOSDAQ' });
-  }
-  return byCode;
-}
-
-function trueRange(high, low, prevClose) {
-  if (prevClose == null || prevClose <= 0) return high - low;
-  return Math.max(high - low, Math.abs(high - prevClose), Math.abs(low - prevClose));
-}
-
-function computeAtrPct(bars) {
-  if (bars.length < 4) return null;
-  const trs = [];
-  for (let i = 1; i < bars.length; i++) {
-    const b = bars[i];
-    const prev = bars[i - 1].close;
-    trs.push(trueRange(b.high, b.low, prev));
-  }
-  if (trs.length < 3) return null;
-  const atr3 = (trs[trs.length - 3] + trs[trs.length - 2] + trs[trs.length - 1]) / 3;
-  const close = bars[bars.length - 1].close;
-  if (!(close > 0) || !(atr3 >= 0)) return null;
-  return atr3 / close;
-}
-
-function computePctB(bars) {
-  if (bars.length < 20) return null;
-  const closes = bars.slice(-20).map((b) => b.close);
-  const mid = closes.reduce((s, v) => s + v, 0) / closes.length;
-  const variance = closes.reduce((s, v) => s + (v - mid) ** 2, 0) / closes.length;
+function computePctB(closes) {
+  if (!closes || closes.length < 20) return null;
+  const window = closes.slice(-20);
+  if (window.some((c) => c == null || !(c > 0))) return null;
+  const mid = window.reduce((s, v) => s + v, 0) / window.length;
+  const variance = window.reduce((s, v) => s + (v - mid) ** 2, 0) / window.length;
   const sd = Math.sqrt(variance);
   const upper = mid + 2 * sd;
   const lower = mid - 2 * sd;
-  const close = closes[closes.length - 1];
+  const close = window[window.length - 1];
   if (upper === lower) return null;
   return (close - lower) / (upper - lower);
 }
 
-function loadAuthKey() {
-  const env = { ...process.env };
-  const devVars = path.join(ROOT, '.dev.vars');
-  if (fs.existsSync(devVars)) {
-    for (const line of fs.readFileSync(devVars, 'utf8').split('\n')) {
-      const m = line.match(/^\s*([A-Za-z0-9_\u0080-\uFFFF ]+)\s*=\s*(.*)$/);
-      if (!m) continue;
-      const k = m[1].trim();
-      let v = m[2].trim();
-      if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
-        v = v.slice(1, -1);
-      }
-      if (!env[k]) env[k] = v;
-    }
-  }
-  return getAuthKey(env);
+function round5(v) {
+  return Math.round(v * 100000) / 100000;
 }
 
-export async function buildVolatilitySnapshot(authKey) {
-  const dates = tradingDates(TRADING_DAYS + 12);
-  let anchorDd = null;
-  for (const basDd of recentDateCandidates(dates)) {
-    const day = await fetchMarketDay(authKey, basDd);
-    let valid = 0;
-    for (const [, row] of day) {
-      if (parseNum(row?.TDD_CLSPRC) > 0) valid += 1;
-    }
-    if (valid >= MIN_UNIVERSE) {
-      anchorDd = basDd;
-      break;
+function round4(v) {
+  return Math.round(v * 10000) / 10000;
+}
+
+/** @param {unknown} raw @returns {'KOSPI'|'KOSDAQ'|null} */
+function coerceMarket(raw) {
+  const s = String(raw || '').toUpperCase();
+  if (s.includes('KOSDAQ')) return 'KOSDAQ';
+  if (s.includes('KOSPI')) return 'KOSPI';
+  return null;
+}
+
+/**
+ * Ordinary-share universe from hub_rs_snapshot (same filter as RS percentiles).
+ * Also returns marketByCode (RS quote.market first, else data_3557).
+ * @param {object} env
+ * @param {{ url: string, anonKey: string }} supabase
+ * @returns {Promise<{ codes: string[], marketByCode: Map<string,string>, universeRaw: number, excluded: object }>}
+ */
+async function resolveOrdinaryUniverse(env, supabase) {
+  const excluded = { preferred: 0, spac: 0, reit: 0, etf_etn: 0, non_ordinary_secu: 0 };
+  const listingMeta = loadListedShareMeta3557(path.join(ROOT, 'data'));
+  const rsPath = path.join(ROOT, 'data', 'hub_rs_snapshot.json');
+  if (fs.existsSync(rsPath)) {
+    try {
+      const snap = JSON.parse(fs.readFileSync(rsPath, 'utf8'));
+      const quotes = snap?.quotes || {};
+      const codes = Object.keys(quotes)
+        .map((t) => normalizeTicker(t))
+        .filter(Boolean)
+        .sort();
+      if (codes.length >= MIN_UNIVERSE) {
+        const marketByCode = new Map();
+        for (const [raw, q] of Object.entries(quotes)) {
+          const code = normalizeTicker(raw);
+          if (!code) continue;
+          const fromRs = coerceMarket(q?.market);
+          const fromMeta = coerceMarket(listingMeta.get(code)?.market);
+          marketByCode.set(code, fromRs || fromMeta || 'KOSPI');
+        }
+        return {
+          codes,
+          marketByCode,
+          universeRaw: snap.universeRaw ?? codes.length,
+          excluded: snap.universeExcluded || excluded,
+        };
+      }
+    } catch (e) {
+      console.warn('hub_rs_snapshot parse failed:', e.message || e);
     }
   }
-  if (!anchorDd) return null;
 
-  const anchorIdx = dates.indexOf(anchorDd);
-  const windowDates = dates.slice(anchorIdx, anchorIdx + TRADING_DAYS).reverse();
-  const seriesByCode = new Map();
+  // Fallback: data_3557 listing filter (no apihub).
+  void supabase;
+  void env;
+  const codes = [];
   const marketByCode = new Map();
-
-  for (const basDd of windowDates) {
-    const day = await fetchMarketDayTagged(authKey, basDd);
-    for (const [code, { row, market }] of day) {
-      const bar = barFromRow(row);
-      if (!bar || !(bar.close > 0)) continue;
-      if (!seriesByCode.has(code)) seriesByCode.set(code, []);
-      seriesByCode.get(code).push({ ...bar, basDd });
-      if (!marketByCode.has(code)) marketByCode.set(code, market);
+  for (const [rawCode, meta] of listingMeta) {
+    const code = normalizeTicker(rawCode);
+    if (!code || !meta) continue;
+    const row = {
+      ISU_NM: meta.name || '',
+      SECUGRP_NM: meta.secu || '',
+      SECT_TP_NM: meta.dept || '',
+      STK_KIND_NM: meta.kind || '',
+    };
+    const reason = rsUniverseExclusionReason(code, meta.name, row);
+    if (reason) {
+      if (excluded[reason] != null) excluded[reason] += 1;
+      else excluded[reason] = 1;
+      continue;
     }
+    codes.push(code);
+    marketByCode.set(code, coerceMarket(meta.market) || 'KOSPI');
+  }
+  return {
+    codes: [...new Set(codes)].sort(),
+    marketByCode,
+    universeRaw: listingMeta.size,
+    excluded,
+  };
+}
+
+/**
+ * @param {{ url: string, anonKey: string }} [supabase]
+ * @param {object} [env]
+ */
+export async function buildVolatilitySnapshot(supabase, env = process.env) {
+  const config = supabase || getSupabaseConfig(env, { preferServiceRole: true });
+  if (!config) return null;
+
+  const { codes, marketByCode, universeRaw, excluded } = await resolveOrdinaryUniverse(env, config);
+  if (codes.length < MIN_UNIVERSE) {
+    console.warn(`[volatility] ordinary universe too small (${codes.length})`);
+    return null;
+  }
+
+  const series = await buildAdjustedOhlcSeriesFromHistory(config, codes, {
+    tradingDatesCount: TRADING_DATES,
+    closesCount: OHLC_BARS,
+  });
+  if (!series?.quotes?.size) return null;
+
+  const refsPath = path.join(ROOT, 'data', 'hub_return_refs.json');
+  let refsRecentDd = null;
+  if (fs.existsSync(refsPath)) {
+    try {
+      refsRecentDd = JSON.parse(fs.readFileSync(refsPath, 'utf8'))?.recentDd || null;
+    } catch {
+      /* ignore */
+    }
+  }
+  if (refsRecentDd && series.recentDd && refsRecentDd !== series.recentDd) {
+    console.warn(
+      `[volatility] recentDd ${series.recentDd} != refs.recentDd ${refsRecentDd} — anchors should match`,
+    );
   }
 
   const quotes = {};
-  for (const [code, bars] of seriesByCode) {
-    bars.sort((a, b) => String(a.basDd).localeCompare(String(b.basDd)));
-    const atrPct = computeAtrPct(bars);
-    const pctB = computePctB(bars);
-    if (atrPct == null || pctB == null || !Number.isFinite(pctB)) continue;
-    const mcap = bars[bars.length - 1].mcap;
-    if (!(mcap > 0)) continue;
+  for (const [code, q] of series.quotes) {
+    const tip = tipRangeVolFromSeries(q.highs, q.lows, q.closes, RANGE_VOL_PERIOD, RANGE_VOL_SIGNAL);
+    const pctB = computePctB(q.closes);
+    if (tip.rangeVol5 == null || !(tip.rangeVol5 >= 0) || pctB == null || !Number.isFinite(pctB)) {
+      continue;
+    }
+    if (!(q.mcap > 0)) continue;
+    const close = q.closes[q.closes.length - 1];
+    if (!(close > 0)) continue;
+    const rangeVol5 = round5(tip.rangeVol5);
+    const rangeVol5Sma20 =
+      tip.rangeVol5Sma20 != null && Number.isFinite(tip.rangeVol5Sma20)
+        ? round5(tip.rangeVol5Sma20)
+        : null;
     quotes[code] = {
-      mcap,
-      atrPct: Math.round(atrPct * 100000) / 100000,
-      pctB: Math.round(pctB * 10000) / 10000,
+      mcap: q.mcap,
+      rangeVol5,
+      rangeVol5Sma20,
+      // One-release alias for older map_volatility clients.
+      atrPct: rangeVol5,
+      pctB: round4(pctB),
       market: marketByCode.get(code) || 'KOSPI',
-      close: bars[bars.length - 1].close,
+      close,
     };
   }
 
   return {
     builtAt: kstYmdDash(),
     asOf: new Date().toISOString(),
-    source: 'krx-volatility',
-    recentDd: anchorDd,
-    universe: seriesByCode.size,
+    source: 'supabase-history-adj',
+    indicator: 'rangeVol5',
+    recentDd: series.recentDd,
+    universe: codes.length,
+    universeRaw,
+    universeExcluded: excluded,
     count: Object.keys(quotes).length,
+    ffillLimit: RS_FFILL_LIMIT,
     quotes,
   };
 }
 
 async function main() {
-  const outPath = path.join(ROOT, 'data', 'hub_volatility_snapshot.json');
   if (process.env.REFRESH_HUB_SNAPSHOTS !== '1') {
     console.log('skip hub_volatility_snapshot (deterministic build — use npm run refresh:hub-snapshots)');
     process.exit(0);
   }
-  const authKey = loadAuthKey();
-  if (!authKey) {
-    if (fs.existsSync(outPath)) {
-      console.warn('KRX_AUTH_KEY missing — keeping existing hub_volatility_snapshot.json');
+  const env = loadEnv();
+  const supabase = getSupabaseConfig(env, { preferServiceRole: true });
+  if (!supabase) {
+    if (fs.existsSync(OUT_PATH)) {
+      console.warn('SUPABASE credentials missing — keeping existing hub_volatility_snapshot.json');
       process.exit(0);
     }
-    console.warn('KRX_AUTH_KEY missing — skip hub_volatility_snapshot.json');
+    console.warn('SUPABASE credentials missing — skip hub_volatility_snapshot.json');
     process.exit(0);
   }
 
-  console.log('Building KRX volatility snapshot (ATR3/close, %b20, mcap)…');
-  const snapshot = await buildVolatilitySnapshot(authKey);
+  console.log(
+    'Building volatility snapshot (rangeVol5 + SMA20 + %b20 from adjusted history)…',
+  );
+  const snapshot = await buildVolatilitySnapshot(supabase, env);
   if (!snapshot || !snapshot.quotes) {
     console.error('volatility snapshot build failed');
     process.exit(1);
   }
+  if (snapshot.count < MIN_UNIVERSE) {
+    console.error(`volatility count too low: ${snapshot.count}`);
+    process.exit(1);
+  }
 
-  fs.writeFileSync(outPath, `${JSON.stringify(snapshot)}\n`, 'utf8');
-  console.log(`OK ${outPath} — ${snapshot.count}/${snapshot.universe} quotes`);
+  fs.writeFileSync(OUT_PATH, `${JSON.stringify(snapshot)}\n`, 'utf8');
+  console.log(
+    `OK ${OUT_PATH} — ${snapshot.count}/${snapshot.universe} quotes `
+    + `recentDd=${snapshot.recentDd} source=${snapshot.source}`,
+  );
 }
 
 const isMain =

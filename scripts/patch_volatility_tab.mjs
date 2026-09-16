@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 9;
+const SCRIPT_V = 10;
 const TAB_STATE_V = 10;
 
 const MAP_FILES = [
@@ -102,7 +102,7 @@ const TRANSLATIONS = {
     volatilityHint: '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
     volatilityAxisAtr: 'ATR3/종가',
     volatilityAxisMcap: '시가총액(로그)',
-    volatilityAtr: 'ATR3/종가',
+    volatilityAtr: '5일 변동성%',
     volatilityMcap: '시가총액',
     volatilityPctB: '20일 %b',
     volatilityTurnover: '거래대금',
@@ -127,7 +127,7 @@ const TRANSLATIONS = {
       'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
     volatilityAxisAtr: 'ATR3/Close',
     volatilityAxisMcap: 'Market cap (log)',
-    volatilityAtr: 'ATR3/Close',
+    volatilityAtr: '5D Range Vol%',
     volatilityMcap: 'Market cap',
     volatilityPctB: '20D %b',
     volatilityTurnover: 'Turnover',

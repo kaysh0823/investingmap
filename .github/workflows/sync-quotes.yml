@@ -144,16 +144,17 @@ jobs:
           fi
           echo "skipped=false" >> "$GITHUB_OUTPUT"
           node scripts/build_hub_sector_returns.mjs
+          node scripts/build_hub_volatility_snapshot.mjs
 
       - name: Commit refs and RS snapshot
         if: steps.slot.outputs.slot == 'post_close' && steps.refs.outputs.skipped != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/hub_return_refs.json data/hub_rs_snapshot.json data/hub_sector_returns.json
+          git add data/hub_return_refs.json data/hub_rs_snapshot.json data/hub_sector_returns.json data/hub_volatility_snapshot.json
           if git diff --staged --quiet; then
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "chore: post_close refresh hub_return_refs + hub_rs_snapshot + hub_sector_returns"
+          git commit -m "chore: post_close refresh hub_return_refs + hub_rs_snapshot + hub_sector_returns + hub_volatility_snapshot"
           git push

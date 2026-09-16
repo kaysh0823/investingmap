@@ -145,10 +145,15 @@ async function fetchAnchorDayRows(config, anchorDash) {
  * @param {string[]} tickers
  * @param {string} sinceDash
  * @param {string} untilDash
- * @returns {Promise<Map<string, {t:string,c:number,m?:number|null}[]>>}
+ * @param {{ includeOhlc?: boolean }} [opts]
+ * @returns {Promise<Map<string, {t:string,c:number,h?:number|null,l?:number|null,m?:number|null}[]>>}
  */
-async function fetchHistoryByTicker(config, tickers, sinceDash, untilDash) {
+async function fetchHistoryByTicker(config, tickers, sinceDash, untilDash, opts = {}) {
   const byTicker = new Map();
+  const includeOhlc = !!opts.includeOhlc;
+  const select = includeOhlc
+    ? 'ticker,trade_date,close,high,low,mcap_won'
+    : 'ticker,trade_date,close,mcap_won';
   const batches = [];
   for (let i = 0; i < tickers.length; i += TICKER_BATCH) {
     batches.push(tickers.slice(i, i + TICKER_BATCH));
@@ -160,7 +165,7 @@ async function fetchHistoryByTicker(config, tickers, sinceDash, untilDash) {
       `stock_price_history?ticker=in.(${tickerFilter})` +
         `&trade_date=gte.${encodeURIComponent(sinceDash)}` +
         `&trade_date=lte.${encodeURIComponent(untilDash)}` +
-        `&select=ticker,trade_date,close,mcap_won` +
+        `&select=${select}` +
         `&order=ticker.asc,trade_date.asc`,
     );
     for (const row of rows) {
@@ -169,7 +174,14 @@ async function fetchHistoryByTicker(config, tickers, sinceDash, untilDash) {
       const c = numOrNull(row.close);
       if (!t || !d || c == null || c <= 0) continue;
       if (!byTicker.has(t)) byTicker.set(t, []);
-      byTicker.get(t).push({ t: d, c, m: numOrNull(row.mcap_won) });
+      const point = { t: d, c, m: numOrNull(row.mcap_won) };
+      if (includeOhlc) {
+        const h = numOrNull(row.high);
+        const l = numOrNull(row.low);
+        point.h = h != null && h > 0 ? h : c;
+        point.l = l != null && l > 0 ? l : c;
+      }
+      byTicker.get(t).push(point);
     }
   });
   for (const [t, rows] of byTicker) {
@@ -641,6 +653,119 @@ export async function buildAdjustedCloseRefsFromHistory(config, tickers, opts = 
       ? mcaps[anchorIdx]
       : null;
     quotes.set(code, { closes, mcap });
+  }
+
+  return { recentDd, tradingDates, quotes };
+}
+
+/**
+ * Adjusted OHLC series (close/high/low) for volatility — same calendar/ffill/adj as return refs.
+ * @param {{ url: string, anonKey: string }} config
+ * @param {string[]} tickers
+ * @param {{ tradingDatesCount?: number, closesCount?: number }} [opts]
+ * @returns {Promise<{
+ *   recentDd: string,
+ *   tradingDates: string[],
+ *   quotes: Map<string, { closes: (number|null)[], highs: (number|null)[], lows: (number|null)[], mcap: number|null }>,
+ * }|null>}
+ */
+export async function buildAdjustedOhlcSeriesFromHistory(config, tickers, opts = {}) {
+  if (!config?.url || !config?.anonKey) return null;
+  const tradingDatesCount = Math.max(
+    opts.tradingDatesCount || 40,
+    opts.closesCount || 30,
+  );
+  const closesCount = opts.closesCount || 30;
+
+  const codes = [...new Set(
+    (tickers || []).map((t) => normalizeTicker(t)).filter(Boolean),
+  )].sort();
+  if (!codes.length) return null;
+
+  const datesDesc = await fetchCalendarDatesDesc(config, tradingDatesCount);
+  if (datesDesc.length < closesCount) {
+    console.warn(
+      `[ohlc_refs] history calendar too short (${datesDesc.length} < ${closesCount})`,
+    );
+    return null;
+  }
+  const datesAsc = [...datesDesc].reverse();
+  const anchorDash = datesDesc[0];
+  const sinceDash = datesDesc[datesDesc.length - 1];
+  const anchorIdx = datesAsc.length - 1;
+  const recentDd = dashToBasDd(anchorDash);
+  const tradingDates = datesAsc.map(dashToBasDd);
+
+  console.log(
+    `[ohlc_refs] anchor=${anchorDash} sessions=${datesAsc.length} `
+    + `tickers=${codes.length} bars=${closesCount} (adj+ffill≤${RS_FFILL_LIMIT})`,
+  );
+
+  const historyByTicker = await fetchHistoryByTicker(
+    config,
+    codes,
+    sinceDash,
+    anchorDash,
+    { includeOhlc: true },
+  );
+  const adjustmentsByTicker = await fetchAdjustmentsByTicker(config, codes);
+
+  /** @type {Map<string, { closes: (number|null)[], highs: (number|null)[], lows: (number|null)[], mcap: number|null }>} */
+  const quotes = new Map();
+  for (const code of codes) {
+    const points = historyByTicker.get(code) || [];
+    if (!points.length) continue;
+    const bars = points.map((p) => ({
+      t: p.t,
+      c: p.c,
+      h: p.h != null ? p.h : p.c,
+      l: p.l != null ? p.l : p.c,
+    }));
+    applyPriceAdjustmentsToBars(bars, adjustmentsByTicker.get(code) || []);
+    const byDate = new Map(bars.map((b, i) => [b.t, { ...b, m: points[i]?.m ?? null }]));
+    const rawC = datesAsc.map((d) => {
+      const p = byDate.get(d);
+      return p && p.c > 0 ? p.c : null;
+    });
+    const rawH = datesAsc.map((d) => {
+      const p = byDate.get(d);
+      return p && p.h > 0 ? p.h : null;
+    });
+    const rawL = datesAsc.map((d) => {
+      const p = byDate.get(d);
+      return p && p.l > 0 ? p.l : null;
+    });
+    const mcaps = datesAsc.map((d) => {
+      const p = byDate.get(d);
+      return p && p.m != null && p.m > 0 ? p.m : null;
+    });
+    const filledC = ffillLimited(rawC, RS_FFILL_LIMIT);
+    const filledH = new Array(datesAsc.length);
+    const filledL = new Array(datesAsc.length);
+    let lastH = null;
+    let lastL = null;
+    for (let i = 0; i < datesAsc.length; i++) {
+      if (rawC[i] != null && Number.isFinite(rawC[i]) && rawC[i] > 0) {
+        lastH = rawH[i] != null && rawH[i] > 0 ? rawH[i] : rawC[i];
+        lastL = rawL[i] != null && rawL[i] > 0 ? rawL[i] : rawC[i];
+        filledH[i] = lastH;
+        filledL[i] = lastL;
+      } else if (filledC[i] != null && lastH != null && lastL != null) {
+        filledH[i] = lastH;
+        filledL[i] = lastL;
+      } else {
+        filledH[i] = null;
+        filledL[i] = null;
+      }
+    }
+    const last = filledC[anchorIdx];
+    if (last == null || !(last > 0)) continue;
+    quotes.set(code, {
+      closes: filledC.slice(-closesCount),
+      highs: filledH.slice(-closesCount),
+      lows: filledL.slice(-closesCount),
+      mcap: mcaps[anchorIdx] != null && mcaps[anchorIdx] > 0 ? mcaps[anchorIdx] : null,
+    });
   }
 
   return { recentDd, tradingDates, quotes };

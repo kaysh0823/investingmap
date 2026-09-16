@@ -18,6 +18,10 @@
   ! Cache-Control
   Cache-Control: public, max-age=60, must-revalidate
 
+/data/hub_volatility_snapshot.json
+  ! Cache-Control
+  Cache-Control: public, max-age=60, must-revalidate
+
 /js/*.js
   Content-Type: application/javascript; charset=utf-8
   Cache-Control: public, max-age=31536000, immutable
