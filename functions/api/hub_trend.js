@@ -4,23 +4,24 @@
  */
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { buildHubTrendPayload } from '../lib/hub_trend.mjs';
-import { krxSessionInfo, kstAnchorYmd, edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
+import { krxSessionInfo, kstAnchorYmd } from '../lib/krx_session.mjs';
 import {
-  anchoredCachePath,
   corsHeaders,
   normalizeSectorHorizon,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
+import { peekReturnsDataVersion } from '../lib/hub_returns_source.mjs';
+import {
+  maybeNotModified,
+  returnsJsonResponse,
+  returnsResponseHeaders,
+} from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v16';
+const CACHE_VERSION = '/api/hub_trend/cache/v17';
 
-function maxAge(horizon, now = new Date()) {
-  const session = krxSessionInfo(now);
-  if (session.regular || session.aftermarket) return 300;
-  return normalizeSectorHorizon(horizon) === '1d'
-    ? edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 300 })
-    : edgeCacheMaxAgeSeconds(now, { regularMax: 600, closedMax: 3600 });
+function cachePath(horizon, dataVersion) {
+  return `${CACHE_VERSION}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
 }
 
 export async function onRequest(context) {
@@ -34,17 +35,26 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const horizon = normalizeSectorHorizon(url.searchParams.get('horizon'));
   const nocache = url.searchParams.get('nocache') === '1';
-  const cachePath = `${anchoredCachePath(CACHE_VERSION)}/${horizon}`;
   const anchor = kstAnchorYmd();
+  const peek = await peekReturnsDataVersion(env, request);
+  const path = cachePath(horizon, peek.dataVersion);
 
   if (!nocache) {
-    const hit = await readHubCache(cachePath, url.origin);
+    const hit = await readHubCache(path, url.origin);
     if (hit) {
-      const headers = new Headers(hit.headers);
-      for (const [key, value] of Object.entries(cors)) headers.set(key, value);
-      headers.set('X-Hub-Cache', 'HIT');
-      headers.set('X-Hub-Horizon', horizon);
-      headers.set('X-Hub-Anchor', anchor);
+      const headers = returnsResponseHeaders({
+        cors,
+        dataVersion: peek.dataVersion,
+        horizon,
+        extra: {
+          'X-Hub-Cache': 'HIT',
+          'X-Hub-Horizon': horizon,
+          'X-Hub-Anchor': anchor,
+          'X-Hub-Regular-Session': String(krxSessionInfo().regular),
+        },
+      });
+      const notMod = maybeNotModified(request, headers);
+      if (notMod) return notMod;
       return new Response(hit.body, { status: hit.status, headers });
     }
   }
@@ -52,19 +62,21 @@ export async function onRequest(context) {
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
     const payload = await buildHubTrendPayload(hubIndex, env, horizon, new Date(), request);
-    const ttl = maxAge(horizon);
-    const response = new Response(JSON.stringify(payload), {
-      headers: {
-        ...cors,
-        'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': `public, max-age=${ttl}, stale-while-revalidate=${ttl * 6}`,
+    const dataVersion = payload.dataVersion || peek.dataVersion;
+    const response = returnsJsonResponse(request, payload, {
+      cors,
+      dataVersion,
+      horizon,
+      extra: {
         'X-Hub-Cache': 'MISS',
         'X-Hub-Horizon': horizon,
         'X-Hub-Anchor': anchor,
         'X-Hub-Regular-Session': String(krxSessionInfo().regular),
       },
     });
-    if (!nocache) putHubCache(context, cachePath, url.origin, response);
+    if (!nocache && response.status === 200) {
+      putHubCache(context, cachePath(horizon, dataVersion), url.origin, response);
+    }
     return response;
   } catch (error) {
     return new Response(

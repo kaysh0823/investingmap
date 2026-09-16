@@ -5,30 +5,25 @@
  */
 
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
-import { krxSessionInfo, kstAnchorYmd, edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
+import { krxSessionInfo, kstAnchorYmd } from '../lib/krx_session.mjs';
 import {
-  anchoredCachePath,
   corsHeaders,
   normalizeSectorHorizon,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 import { buildHubSectorTrendPayload } from '../lib/hub_sector_trend.mjs';
+import { peekReturnsDataVersion } from '../lib/hub_returns_source.mjs';
+import {
+  maybeNotModified,
+  returnsJsonResponse,
+  returnsResponseHeaders,
+} from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_sector_trend/cache/v8';
+const CACHE_VERSION = '/api/hub_sector_trend/cache/v9';
 
-function trendMaxAge(horizon, now = new Date()) {
-  const session = krxSessionInfo(now);
-  if (session.regular || session.aftermarket) return 300;
-  if (normalizeSectorHorizon(horizon) === '1d') {
-    return edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 300 });
-  }
-  return edgeCacheMaxAgeSeconds(now, { regularMax: 600, closedMax: 3600 });
-}
-
-function cachePaths(horizon, now = new Date()) {
-  const dayBase = anchoredCachePath(CACHE_VERSION, now);
-  return `${dayBase}/${normalizeSectorHorizon(horizon)}`;
+function cachePath(horizon, dataVersion) {
+  return `${CACHE_VERSION}/dv/${encodeURIComponent(dataVersion || '0')}/${normalizeSectorHorizon(horizon)}`;
 }
 
 export async function onRequest(context) {
@@ -44,18 +39,26 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const horizon = normalizeSectorHorizon(url.searchParams.get('horizon'));
   const nocache = url.searchParams.get('nocache') === '1';
-  const cachePath = cachePaths(horizon);
   const session = krxSessionInfo();
   const anchor = kstAnchorYmd();
+  const peek = await peekReturnsDataVersion(env, request);
+  const path = cachePath(horizon, peek.dataVersion);
 
   if (!nocache) {
-    const hit = await readHubCache(cachePath, url.origin);
+    const hit = await readHubCache(path, url.origin);
     if (hit) {
-      const headers = new Headers(hit.headers);
-      for (const [k, v] of Object.entries(ch)) headers.set(k, v);
-      headers.set('X-Hub-Cache', 'HIT');
-      headers.set('X-Hub-Horizon', horizon);
-      headers.set('X-Hub-Anchor', anchor);
+      const headers = returnsResponseHeaders({
+        cors: ch,
+        dataVersion: peek.dataVersion,
+        horizon,
+        extra: {
+          'X-Hub-Cache': 'HIT',
+          'X-Hub-Horizon': horizon,
+          'X-Hub-Anchor': anchor,
+        },
+      });
+      const notMod = maybeNotModified(request, headers);
+      if (notMod) return notMod;
       return new Response(hit.body, { status: hit.status, headers });
     }
   }
@@ -63,7 +66,6 @@ export async function onRequest(context) {
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
     const payload = await buildHubSectorTrendPayload(hubIndex, env, horizon, new Date(), request);
-    // Flatten to { sectorId: [{t,v}] } plus hub_sectors-aligned meta.
     const bodyObj = {
       ...payload.trends,
       horizon: payload.horizon,
@@ -75,24 +77,25 @@ export async function onRequest(context) {
       anchorDd: payload.anchorDd ?? null,
       refsRecentDd: payload.refsRecentDd ?? null,
       k: payload.k ?? null,
+      dataVersion: payload.dataVersion ?? peek.dataVersion,
+      refsEtag: payload.refsEtag ?? null,
       synthesized: !!payload.synthesized,
       source: payload.source || null,
       stale: !!payload.stale,
     };
-    const maxAge = trendMaxAge(horizon);
-    const body = JSON.stringify(bodyObj);
-    const response = new Response(body, {
-      headers: {
-        ...ch,
-        'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': `public, max-age=${maxAge}, stale-while-revalidate=${maxAge * 6}`,
+    const dataVersion = bodyObj.dataVersion || peek.dataVersion;
+    const response = returnsJsonResponse(request, bodyObj, {
+      cors: ch,
+      dataVersion,
+      horizon,
+      extra: {
         'X-Hub-Cache': 'MISS',
         'X-Hub-Horizon': horizon,
         'X-Hub-Anchor': anchor,
       },
     });
-    if (!nocache && Object.keys(payload.trends || {}).length > 0) {
-      putHubCache(context, cachePath, url.origin, response);
+    if (!nocache && response.status === 200 && Object.keys(payload.trends || {}).length > 0) {
+      putHubCache(context, cachePath(horizon, dataVersion), url.origin, response);
     }
     return response;
   } catch (e) {

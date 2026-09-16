@@ -4,7 +4,6 @@
  */
 
 import {
-  loadHubReturnRefsFromRequest,
   SECTOR_ORDER,
   uniqueHubMcapTotal,
   normalizeTicker as normalizeHubTicker,
@@ -17,14 +16,39 @@ import {
 } from './returns_core.mjs';
 import { getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 
-const REFS_TTL_MS = 5 * 60 * 1000;
+const REFS_CHECK_MS = 60 * 1000;
 const STALE_ASOF_MS = 15 * 60 * 1000;
 
-let returnRefsCache = { at: 0, refs: null };
+/** @type {{ at: number, refs: object|null, etag: string|null }} */
+let returnRefsCache = { at: 0, refs: null, etag: null };
 
 function compactYmd(v) {
   const s = String(v || '').replace(/-/g, '');
   return /^\d{8}$/.test(s) ? s : '';
+}
+
+/**
+ * Shared data version for returns ETag / X-Data-Version.
+ * Format: `{refsRecentDd}-{maxAsOfEpochSeconds}-{refs.builtAt}`
+ */
+function builtAtToken(refs) {
+  const raw = String(refs?.builtAt || '').trim();
+  if (!raw) return '0';
+  const isoDay = raw.match(/(\d{4}-\d{2}-\d{2})/);
+  if (isoDay) return isoDay[1];
+  const ymd = raw.match(/(\d{8})/);
+  if (ymd) {
+    const s = ymd[1];
+    return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+  }
+  return raw.replace(/[^0-9A-Za-z:-]/g, '').slice(0, 32) || '0';
+}
+
+export function buildDataVersion(refs, maxAsOf) {
+  const recent = compactYmd(refs?.recentDd) || '0';
+  const ms = maxAsOf ? Date.parse(maxAsOf) : NaN;
+  const epoch = Number.isFinite(ms) ? Math.floor(ms / 1000) : 0;
+  return `${recent}-${epoch}-${builtAtToken(refs)}`;
 }
 
 function normalizeTicker(t) {
@@ -63,27 +87,61 @@ export function pastSessionDd(tradingDates, anchorDd, n) {
 }
 
 /**
- * Load hub_return_refs.json with 5-minute in-memory cache (request path).
+ * Load hub_return_refs.json with ≤60s memory reuse + ETag revalidation.
  * @param {Request|null} request
  * @param {object} env
  * @param {object|null} [refsOverride]
+ * @returns {Promise<object|null>}
  */
 export async function loadCachedReturnRefs(request, env, refsOverride = null) {
-  if (refsOverride && refsOverride.quotes) return refsOverride;
+  if (refsOverride && refsOverride.quotes) {
+    returnRefsCache = {
+      at: Date.now(),
+      refs: refsOverride,
+      etag: returnRefsCache.etag,
+    };
+    return refsOverride;
+  }
   const now = Date.now();
-  if (returnRefsCache.refs && now - returnRefsCache.at < REFS_TTL_MS) {
+  if (returnRefsCache.refs && now - returnRefsCache.at < REFS_CHECK_MS) {
     return returnRefsCache.refs;
   }
   if (!request) return returnRefsCache.refs;
+
   try {
-    const refs = await loadHubReturnRefsFromRequest(request, env);
+    const url = new URL('/data/hub_return_refs.json', request.url);
+    const headers = {};
+    if (returnRefsCache.etag && returnRefsCache.refs) {
+      headers['If-None-Match'] = returnRefsCache.etag;
+    }
+    let res;
+    if (env && env.ASSETS) {
+      res = await env.ASSETS.fetch(new Request(url, { headers }));
+    } else {
+      res = await fetch(url.toString(), {
+        headers,
+        cf: { cacheTtl: 60 },
+      });
+    }
+    const etag = res.headers.get('etag') || res.headers.get('ETag') || null;
+    if (res.status === 304 && returnRefsCache.refs) {
+      returnRefsCache = { at: now, refs: returnRefsCache.refs, etag: etag || returnRefsCache.etag };
+      return returnRefsCache.refs;
+    }
+    if (!res.ok) return returnRefsCache.refs;
+    const refs = await res.json();
     if (refs && refs.quotes) {
-      returnRefsCache = { at: now, refs };
+      returnRefsCache = { at: now, refs, etag };
     }
     return refs || returnRefsCache.refs;
   } catch {
     return returnRefsCache.refs;
   }
+}
+
+/** Last known refs ETag (for meta.refsEtag). */
+export function getCachedRefsEtag() {
+  return returnRefsCache.etag || null;
 }
 
 /**
@@ -170,6 +228,44 @@ async function fetchLatestQuoteRows(tickers, config) {
   return { rows, maxAsOf };
 }
 
+/** Global max(as_of) from stock_quotes_latest — shared dataVersion input. */
+async function fetchGlobalMaxAsOf(config) {
+  if (!config) return null;
+  try {
+    const url =
+      `${config.url}/rest/v1/stock_quotes_latest`
+      + `?select=as_of&order=as_of.desc&limit=1`;
+    const res = await fetch(url, {
+      headers: {
+        apikey: config.anonKey,
+        Authorization: `Bearer ${config.anonKey}`,
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const asOf = Array.isArray(data) && data[0]?.as_of ? String(data[0].as_of) : null;
+    return asOf;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Lightweight dataVersion for endpoints that do not call loadReturnSource.
+ * @returns {Promise<{ dataVersion: string, refsEtag: string|null, maxAsOf: string|null, refs: object|null }>}
+ */
+export async function peekReturnsDataVersion(env, request = null) {
+  const refs = await loadCachedReturnRefs(request, env, null);
+  const config = getSupabaseConfig(env);
+  const maxAsOf = config ? await fetchGlobalMaxAsOf(config) : null;
+  return {
+    dataVersion: buildDataVersion(refs, maxAsOf),
+    refsEtag: getCachedRefsEtag(),
+    maxAsOf,
+    refs,
+  };
+}
+
 /**
  * Build return source from optional in-memory quote rows (sync path).
  * @param {Array<{ ticker: string, last?: number, as_of?: string, tradeDate?: string, trade_date?: string }>} quoteRows
@@ -222,6 +318,7 @@ export async function loadReturnSource({
   const session = krxSessionInfo();
   const sessionOpen = !!(session.regular || session.aftermarket);
   const refs = await loadCachedReturnRefs(request, env, refsOverride);
+  const refsEtag = getCachedRefsEtag();
   if (!refs?.quotes) {
     return {
       meta: {
@@ -232,6 +329,8 @@ export async function loadReturnSource({
         refsRecentDd: null,
         k: 0,
         stale: false,
+        dataVersion: buildDataVersion(null, null),
+        refsEtag,
       },
       refs: null,
       byTicker: {},
@@ -243,9 +342,11 @@ export async function loadReturnSource({
     ? rowsFromQuoteOverrides(quoteRows)
     : { rows: new Map(), maxAsOf: null };
 
+  let globalMaxAsOf = null;
   if (!quoteRows) {
     const config = getSupabaseConfig(env);
     if (!config) {
+      const dataVersion = buildDataVersion(refs, null);
       return {
         meta: {
           asOf: null,
@@ -255,12 +356,19 @@ export async function loadReturnSource({
           refsRecentDd: compactYmd(refs.recentDd),
           k: 0,
           stale: false,
+          dataVersion,
+          refsEtag,
         },
         refs,
         byTicker: {},
       };
     }
-    ({ rows, maxAsOf } = await fetchLatestQuoteRows(codes, config));
+    [{ rows, maxAsOf }, globalMaxAsOf] = await Promise.all([
+      fetchLatestQuoteRows(codes, config),
+      fetchGlobalMaxAsOf(config),
+    ]);
+  } else if (maxAsOf) {
+    globalMaxAsOf = maxAsOf;
   }
 
   let stale = false;
@@ -336,15 +444,20 @@ export async function loadReturnSource({
     };
   }
 
+  const versionAsOf = globalMaxAsOf || maxAsOf;
+  const dataVersion = buildDataVersion(refs, versionAsOf);
+
   return {
     meta: {
-      asOf: maxAsOf || new Date().toISOString(),
+      asOf: maxAsOf || versionAsOf || new Date().toISOString(),
       sessionOpen,
       numeratorMode,
       anchorDd: anchorDd || null,
       refsRecentDd: refsRecentDd || null,
       k,
       stale,
+      dataVersion,
+      refsEtag,
     },
     refs,
     byTicker,
@@ -421,6 +534,8 @@ export function buildOfficialSectorReturnsFromRefs(hubIndex, refs) {
     refsRecentDd: recentDd,
     k: 0,
     stale: false,
+    dataVersion: buildDataVersion(refs, refs?.asOf || null),
+    refsEtag: null,
     source: 'stock_aggregate_official',
     mcapRecentDd: recentDd,
     effectiveAnchorDd: recentDd,

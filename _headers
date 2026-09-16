@@ -2,6 +2,12 @@
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
 
+/data/hub_return_refs.json
+  Cache-Control: public, max-age=60, must-revalidate
+
+/data/hub_rs_snapshot.json
+  Cache-Control: public, max-age=60, must-revalidate
+
 /data/*.json
   Cache-Control: public, max-age=300, stale-while-revalidate=60
 

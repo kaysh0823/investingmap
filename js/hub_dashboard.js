@@ -47,7 +47,6 @@
   var fxRate = 1400;
   var hubSectorReturnsMeta = { mcapRecentDd: null, effectiveAnchorDd: null };
   var hubSectorPollTimer = null;
-  var HUB_SECTOR_POLL_MS = 5 * 60 * 1000;
 
   /** Value-chain / keyword chips shown below representative stocks on hub cards. */
   var HUB_CARD_TAGS = {
@@ -369,25 +368,20 @@
   }
 
   function formatSessionStatus(lang) {
+    if (global.InvestingMapReturnsBadge && global.InvestingMapReturnsBadge.format) {
+      var text = global.InvestingMapReturnsBadge.format(lang);
+      if (text) return text;
+    }
     var labels = t(lang);
     if (dashboardData && dashboardData.regularSession === true) {
       return labels.sessionLive;
     }
     if (dashboardData && dashboardData.regularSession === false) {
-      // Last data session (mcapRecentDd), not calendar effectiveAnchorDd (rolls to today pre-open).
       var anchor = ymdDashFromCompact(hubSectorReturnsMeta.mcapRecentDd);
       var ymd = anchor || formatAsOfYmdKst(dashboardData.asOf);
       return ymd ? labels.sessionClosed + ' · ' + ymd : labels.sessionClosed;
     }
     return '';
-  }
-
-  /** Poll /api/hub_sectors only during KRX regular session. */
-  function shouldPollHubSectors() {
-    if (dashboardData.regularSession === false) return false;
-    var RL = global.InvestingMapReturnLive;
-    if (dashboardData.regularSession === true) return true;
-    return !!(RL && RL.isKrxRegularSession && RL.isKrxRegularSession());
   }
 
   function stopHubSectorPoll() {
@@ -397,33 +391,71 @@
     }
   }
 
-  /**
-   * Background refresh of authoritative sector returns (no client-side overlay).
-   * Stops itself once the session is closed.
-   */
-  function refreshSectorsFromApi(lang) {
-    if (!sectorsReady || !sectorsAuthFetched) return Promise.resolve();
-    if (!shouldPollHubSectors()) {
-      stopHubSectorPoll();
-      return Promise.resolve();
-    }
-    var tasks = [fetchSectorsHorizon(lang, pulseHorizonKey, { bust: true, quiet: true })];
-    // 1D sparkline accumulates intraday snapshots — refresh with sector poll.
-    if (pulseHorizonKey === 'return1dPct') {
-      delete trendByHorizon['1d'];
-      tasks.push(fetchTrends(lang, 'return1dPct', { bust: true, quiet: true }));
-    }
-    return Promise.all(tasks).then(function () {
-      if (!shouldPollHubSectors()) stopHubSectorPoll();
-    });
-  }
-
-  function startHubSectorPoll(lang) {
+  function startHubReturnsTick(lang) {
     stopHubSectorPoll();
-    if (!shouldPollHubSectors()) return;
-    hubSectorPollTimer = setInterval(function () {
-      refreshSectorsFromApi(lang);
-    }, HUB_SECTOR_POLL_MS);
+    var Tick = global.InvestingMapReturnsTick;
+    if (!Tick || !Tick.register) return;
+    Tick.register('hub_sectors', function () {
+      var horizonParam = retKeyToHorizonParam(pulseHorizonKey);
+      var url = hubApiUrl('/api/hub_sectors?horizon=' + encodeURIComponent(horizonParam));
+      if (!url) return Promise.resolve({ data: null, dataVersion: '' });
+      return fetchWithTimeout(url, HUB_API_TIMEOUT_MS, true).then(function (j) {
+        return { data: j, dataVersion: (j && j.dataVersion) || '' };
+      });
+    }, function (j) {
+      if (!j || j.error) return;
+      hubSectorReturnsMeta.mcapRecentDd = newerYmd(hubSectorReturnsMeta.mcapRecentDd, j.mcapRecentDd);
+      hubSectorReturnsMeta.effectiveAnchorDd = newerYmd(hubSectorReturnsMeta.effectiveAnchorDd, j.effectiveAnchorDd);
+      mergeSectorsPayload(j);
+      sectorsReady = true;
+      sectorsAuthFetched = true;
+      try {
+        if (global.InvestingMapReturnsBadge) {
+          global.InvestingMapReturnsBadge.updateFromApi(j, lang);
+        }
+      } catch (e) {}
+      renderPulse(lang);
+      renderLabels(lang);
+    });
+    Tick.register('hub_movers', function () {
+      var url = hubApiUrl('/api/hub_movers');
+      if (!url) return Promise.resolve({ data: null, dataVersion: '' });
+      return fetchWithTimeout(url, HUB_API_TIMEOUT_MS, false).then(function (j) {
+        return { data: j, dataVersion: (j && j.dataVersion) || '' };
+      });
+    }, function (j) {
+      if (!j) return;
+      applyMoversPayload(j);
+      moversReady = true;
+      moversLoading = false;
+      renderMovers(lang);
+    });
+    if (pulseHorizonKey === 'return1dPct') {
+      Tick.register('hub_sector_trend', function () {
+        var url = hubApiUrl('/api/hub_sector_trend?horizon=1d');
+        if (!url) return Promise.resolve({ data: null, dataVersion: '' });
+        return fetchWithTimeout(url, HUB_API_TIMEOUT_MS, true).then(function (j) {
+          return { data: j, dataVersion: (j && j.dataVersion) || '' };
+        });
+      }, function (j) {
+        if (!j || j.error) return;
+        var prevMeta = trendMetaByHorizon['1d'] || {};
+        var nextAsOf = j.asOf ? String(j.asOf) : '';
+        var prevAsOf = prevMeta.asOf ? String(prevMeta.asOf) : '';
+        if (!prevAsOf || !nextAsOf || nextAsOf >= prevAsOf) {
+          trendByHorizon['1d'] = extractTrendMap(j);
+          trendMetaByHorizon['1d'] = {
+            asOf: j.asOf || null,
+            synthesized: !!j.synthesized,
+            source: j.source || null,
+            sessionOpen: j.sessionOpen,
+            anchorDd: j.anchorDd || null,
+          };
+        }
+        renderPulse(lang);
+      });
+    }
+    Tick.start();
   }
 
   function loadHubIndex() {
@@ -467,10 +499,14 @@
           return r.json().then(function (j) {
             if (!r.ok) {
               if (acceptPartial && j && ((j.sectors && Object.keys(j.sectors).length) || (j.rsTop10 && j.rsTop10.length))) {
+                var dv0 = r.headers.get('X-Data-Version') || '';
+                if (dv0 && j && !j.dataVersion) j.dataVersion = dv0;
                 return j;
               }
               throw new Error('hub_api_' + r.status);
             }
+            var dv = r.headers.get('X-Data-Version') || '';
+            if (dv && j && !j.dataVersion) j.dataVersion = dv;
             return j;
           });
         })
@@ -795,7 +831,7 @@
     var meta = {
       horizon: 1, asOf: 1, tradeDate: 1, regularSession: 1, sessionOpen: 1,
       numeratorMode: 1, anchorDd: 1, refsRecentDd: 1, k: 1, synthesized: 1,
-      source: 1, stale: 1, error: 1, message: 1,
+      source: 1, stale: 1, error: 1, message: 1, dataVersion: 1, refsEtag: 1,
     };
     var out = {};
     for (var k in j) {
@@ -1354,7 +1390,7 @@
       renderPulse(lang);
       renderRsTop10(lang);
       renderMovers(lang);
-      startHubSectorPoll(lang);
+      startHubReturnsTick(lang);
     });
   }
 

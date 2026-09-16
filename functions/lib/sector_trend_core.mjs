@@ -159,6 +159,8 @@ export async function computeLiveSectorAggregates(hubIndex, env, request, now = 
       refsRecentDd: source.meta?.refsRecentDd || null,
       k,
       stale: !!source.meta?.stale,
+      dataVersion: source.meta?.dataVersion || null,
+      refsEtag: source.meta?.refsEtag || null,
     },
   };
 }

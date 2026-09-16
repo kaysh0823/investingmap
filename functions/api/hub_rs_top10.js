@@ -15,9 +15,7 @@ import {
 import { enrichTopRowsWithRankDelta, attachListRanks } from '../lib/hub_rank_daily.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
-  anchoredCachePath,
   corsHeaders,
-  hubEdgeMaxAge,
   putHubCache,
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
@@ -26,8 +24,18 @@ import {
   getSupabaseConfig,
   numOrNull,
 } from '../lib/supabase_hub.mjs';
+import { peekReturnsDataVersion } from '../lib/hub_returns_source.mjs';
+import {
+  maybeNotModified,
+  returnsJsonResponse,
+  returnsResponseHeaders,
+} from '../lib/returns_cache_headers.mjs';
 
-const CACHE_BASE = '/api/hub_rs_top10/cache/v7';
+const CACHE_BASE = '/api/hub_rs_top10/cache/v8';
+
+function cachePath(dataVersion) {
+  return `${CACHE_BASE}/dv/${encodeURIComponent(dataVersion || '0')}`;
+}
 
 async function withRankDelta(config, metric, rows, asOf) {
   try {
@@ -114,31 +122,34 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const session = krxSessionInfo();
   const nocache = url.searchParams.get('nocache') === '1';
-  const cachePath = anchoredCachePath(CACHE_BASE);
+  const peek = await peekReturnsDataVersion(env, request);
+  const path = cachePath(peek.dataVersion);
 
   if (!nocache) {
-    const hit = await readHubCache(cachePath, url.origin);
+    const hit = await readHubCache(path, url.origin);
     if (hit) {
-      const headers = new Headers(hit.headers);
-      for (const [k, v] of Object.entries(ch)) headers.set(k, v);
-      headers.set('X-Hub-Cache', 'HIT');
+      const headers = returnsResponseHeaders({
+        cors: ch,
+        dataVersion: peek.dataVersion,
+        extra: { 'X-Hub-Cache': 'HIT' },
+      });
+      const notMod = maybeNotModified(request, headers);
+      if (notMod) return notMod;
       return new Response(hit.body, { status: hit.status, headers });
     }
   }
 
   try {
     const payload = await buildRsTop10Payload(request, env);
-    const maxAge = hubEdgeMaxAge();
-    const response = new Response(JSON.stringify(payload), {
-      headers: {
-        ...ch,
-        'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': `public, max-age=${maxAge}`,
-        'X-Hub-Cache': 'MISS',
-      },
+    if (payload && !payload.dataVersion) payload.dataVersion = peek.dataVersion;
+    const dataVersion = (payload && payload.dataVersion) || peek.dataVersion;
+    const response = returnsJsonResponse(request, payload, {
+      cors: ch,
+      dataVersion,
+      extra: { 'X-Hub-Cache': 'MISS' },
     });
-    if (!nocache && hubRsTop10Cacheable(payload)) {
-      putHubCache(context, cachePath, url.origin, response);
+    if (!nocache && response.status === 200 && hubRsTop10Cacheable(payload)) {
+      putHubCache(context, cachePath(dataVersion), url.origin, response);
     }
     return response;
   } catch (e) {

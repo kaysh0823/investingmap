@@ -175,7 +175,7 @@ for (const file of mapFiles) {
     'id="tab-momentum"',
     'id="momentum-root"',
     '../js/map_momentum.js?v=14',
-    '../js/live_quotes.js?v=24',
+    '../js/live_quotes.js?v=25',
     'function renderMomentum()',
     'getMomentumIndices',
     'onQuotesReady:',

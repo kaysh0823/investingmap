@@ -6,13 +6,17 @@
  */
 
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
-import { edgeCacheMaxAgeSeconds, krxSessionInfo } from '../lib/krx_session.mjs';
+import { krxSessionInfo } from '../lib/krx_session.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { computeStockReturns } from '../lib/returns_core.mjs';
 import { loadReturnSource } from '../lib/hub_returns_source.mjs';
+import {
+  returnsJsonResponse,
+  simpleHash,
+} from '../lib/returns_cache_headers.mjs';
 
-const QUOTES_CACHE_VERSION = 'v12';
+const QUOTES_CACHE_VERSION = 'v13';
 
 let rsSnapshotCache = { at: 0, snap: null };
 
@@ -70,7 +74,8 @@ function corsHeaders(request) {
   return {
     'Access-Control-Allow-Origin': origin || '*',
     'Access-Control-Allow-Methods': 'GET,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, If-None-Match',
+    'Access-Control-Expose-Headers': 'ETag, X-Data-Version',
     'Access-Control-Max-Age': '86400',
   };
 }
@@ -241,15 +246,6 @@ function applyReturnsFromSource(items, source) {
   }
 }
 
-function quotesCacheControl(now = new Date()) {
-  const session = krxSessionInfo(now);
-  if (session.regular || session.aftermarket) {
-    return 'public, max-age=300, stale-while-revalidate=120';
-  }
-  const maxAge = edgeCacheMaxAgeSeconds(now);
-  return `public, max-age=${maxAge}`;
-}
-
 async function fetchQuotesFromNaver(codes, authKey, warmHist) {
   const cached = await getCachedNaverQuotes(codes, { concurrency: 4 });
   let items = cached.items;
@@ -359,15 +355,13 @@ export async function onRequest(context) {
     payload.regularSession = sessionOpen;
     if (source.meta?.stale) payload.source = `${payload.source}+stale-naver`;
 
-    const cacheControl = quotesCacheControl();
     if (indices) payload.indices = indices;
-    return new Response(JSON.stringify(payload), {
-      headers: {
-        ...ch,
-        'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': cacheControl,
-        'X-InvestingMap-Quotes-Version': QUOTES_CACHE_VERSION,
-      },
+    const codesHash = simpleHash(codes.slice().sort().join(','));
+    return returnsJsonResponse(request, payload, {
+      cors: ch,
+      dataVersion: payload.dataVersion || source.meta?.dataVersion || null,
+      codesHash,
+      extra: { 'X-InvestingMap-Quotes-Version': QUOTES_CACHE_VERSION },
     });
   } catch (e) {
     return new Response(

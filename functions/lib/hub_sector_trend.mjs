@@ -110,6 +110,8 @@ export async function buildHubSectorTrendPayload(
     anchorDd: payload.anchorDd,
     refsRecentDd: payload.refsRecentDd,
     k: payload.k,
+    dataVersion: payload.dataVersion,
+    refsEtag: payload.refsEtag,
     stale: payload.stale,
     synthesized: !!payload.synthesized,
     trends,

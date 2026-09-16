@@ -416,6 +416,8 @@ export async function buildSectorPerfCalendarPayload(hubIndex, config, sectorId,
     anchorDd: opts.anchorDd ?? null,
     refsRecentDd: opts.refsRecentDd ?? null,
     k: opts.k ?? null,
+    dataVersion: opts.dataVersion ?? null,
+    refsEtag: opts.refsEtag ?? null,
     tipRet1dPct: tipRet ?? null,
   };
 }
@@ -475,6 +477,8 @@ export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, ye
       anchorDd: source.meta?.anchorDd,
       refsRecentDd: source.meta?.refsRecentDd,
       k: source.meta?.k,
+      dataVersion: source.meta?.dataVersion,
+      refsEtag: source.meta?.refsEtag,
     };
   } catch {
     tipOpts = {};

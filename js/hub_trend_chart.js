@@ -120,7 +120,13 @@
       return;
     }
     var parts = [];
-    if (p.synthesized) {
+    if (global.InvestingMapReturnsBadge && global.InvestingMapReturnsBadge.format) {
+      try {
+        global.InvestingMapReturnsBadge.remember(p);
+        var badgeText = global.InvestingMapReturnsBadge.format(state.lang);
+        if (badgeText) parts.push('<span class="hub-trend-badge">' + badgeText + '</span>');
+      } catch (e) {}
+    } else if (p.synthesized) {
       parts.push('<span class="hub-trend-badge">' + COPY[state.lang].synthesized + '</span>');
     }
     var minLen = Infinity;
@@ -474,15 +480,19 @@
     updateTabs();
     setStatus(COPY[state.lang].loading);
     var requestId = ++state.requestId;
-    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon)
-      + '&cb=' + Date.now()
-      + '&v=5';
+    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&v=6';
     return fetch(url, {
       headers: { Accept: 'application/json' },
+      cache: 'default',
+      credentials: 'same-origin',
     })
       .then(function (response) {
         if (!response.ok) throw new Error('HTTP ' + response.status);
-        return response.json();
+        return response.json().then(function (payload) {
+          var dv = response.headers.get('X-Data-Version') || '';
+          if (dv && payload && !payload.dataVersion) payload.dataVersion = dv;
+          return payload;
+        });
       })
       .then(function (payload) {
         if (requestId !== state.requestId) return;
@@ -492,6 +502,7 @@
           state.payload = payload;
           state.payloadAsOf = nextAsOf || null;
         }
+        setStatus('');
         updateMetaBanner();
         render();
       })
@@ -502,23 +513,58 @@
       });
   }
 
-  function isRegularKst() {
-    var parts = new Intl.DateTimeFormat('en-CA', {
-      timeZone: 'Asia/Seoul', weekday: 'short', hour: '2-digit', minute: '2-digit',
-      hourCycle: 'h23',
-    }).formatToParts(new Date());
-    var values = {};
-    parts.forEach(function (part) { values[part.type] = part.value; });
-    if (values.weekday === 'Sat' || values.weekday === 'Sun') return false;
-    var minutes = Number(values.hour) * 60 + Number(values.minute);
-    return minutes >= 9 * 60 && minutes <= 15 * 60 + 30;
-  }
-
   function startPolling() {
+    var Tick = global.InvestingMapReturnsTick;
+    if (Tick && Tick.register) {
+      Tick.register('hub_trend_chart', function () {
+        if (document.hidden) {
+          return Promise.resolve({
+            data: state.payload,
+            dataVersion: (state.payload && state.payload.dataVersion) || '',
+          });
+        }
+        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&v=6';
+        return fetch(url, {
+          headers: { Accept: 'application/json' },
+          cache: 'default',
+          credentials: 'same-origin',
+        }).then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json().then(function (payload) {
+            var dv = response.headers.get('X-Data-Version') || '';
+            if (dv && payload && !payload.dataVersion) payload.dataVersion = dv;
+            return { data: payload, dataVersion: dv || payload.dataVersion || '' };
+          });
+        });
+      }, function (payload) {
+        if (!payload) return;
+        var nextAsOf = payload.asOf ? String(payload.asOf) : '';
+        var prevAsOf = state.payloadAsOf ? String(state.payloadAsOf) : '';
+        if (!prevAsOf || !nextAsOf || nextAsOf >= prevAsOf) {
+          state.payload = payload;
+          state.payloadAsOf = nextAsOf || null;
+        }
+        updateMetaBanner();
+        render();
+      });
+      Tick.start();
+      return;
+    }
+    function isRegularKst() {
+      var parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Seoul', weekday: 'short', hour: '2-digit', minute: '2-digit',
+        hourCycle: 'h23',
+      }).formatToParts(new Date());
+      var values = {};
+      parts.forEach(function (part) { values[part.type] = part.value; });
+      if (values.weekday === 'Sat' || values.weekday === 'Sun') return false;
+      var minutes = Number(values.hour) * 60 + Number(values.minute);
+      return minutes >= 9 * 60 && minutes <= 15 * 60 + 30;
+    }
     if (state.pollTimer) clearInterval(state.pollTimer);
     state.pollTimer = setInterval(function () {
       if (isRegularKst() && !document.hidden) fetchAndRender(state.horizon);
-    }, 5 * 60 * 1000);
+    }, 60 * 1000);
   }
 
   function init(options) {

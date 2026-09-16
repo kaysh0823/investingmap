@@ -185,22 +185,35 @@
     returnMeta = {
       asOf: j.asOf || null,
       sessionOpen: j.sessionOpen != null ? !!j.sessionOpen : null,
+      regularSession: j.regularSession != null ? !!j.regularSession : null,
       numeratorMode: j.numeratorMode || null,
       anchorDd: j.anchorDd || null,
       refsRecentDd: j.refsRecentDd || null,
       k: typeof j.k === 'number' && isFinite(j.k) ? j.k : null,
+      dataVersion: j.dataVersion || null,
     };
+    try {
+      if (global.InvestingMapReturnsBadge) {
+        global.InvestingMapReturnsBadge.remember(returnMeta);
+      }
+    } catch (e) {}
   }
 
   function getReturnMeta() {
+    if (global.InvestingMapReturnsBadge && global.InvestingMapReturnsBadge.getMeta) {
+      var shared = global.InvestingMapReturnsBadge.getMeta();
+      if (shared && (shared.anchorDd || shared.dataVersion)) return shared;
+    }
     if (!returnMeta) return {};
     return {
       asOf: returnMeta.asOf || null,
       sessionOpen: returnMeta.sessionOpen,
+      regularSession: returnMeta.regularSession,
       numeratorMode: returnMeta.numeratorMode || null,
       anchorDd: returnMeta.anchorDd || null,
       refsRecentDd: returnMeta.refsRecentDd || null,
       k: returnMeta.k,
+      dataVersion: returnMeta.dataVersion || null,
     };
   }
 
@@ -210,8 +223,11 @@
     return s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6, 8);
   }
 
-  /** Shared badge: "기준 · YYYY-MM-DD · live|마감" */
+  /** Shared badge via InvestingMapReturnsBadge when available. */
   function formatReturnMetaBadge(lang) {
+    if (global.InvestingMapReturnsBadge && global.InvestingMapReturnsBadge.format) {
+      return global.InvestingMapReturnsBadge.format(lang);
+    }
     var meta = getReturnMeta();
     var dash = formatAnchorDash(meta.anchorDd);
     if (!dash) return '';
@@ -223,6 +239,13 @@
   }
 
   function syncReturnMetaBadges(lang) {
+    if (global.InvestingMapReturnsBadge && global.InvestingMapReturnsBadge.paint) {
+      try {
+        global.InvestingMapReturnsBadge.bind('#quotes-asof');
+        global.InvestingMapReturnsBadge.paint(lang);
+        return;
+      } catch (e) {}
+    }
     var badge = formatReturnMetaBadge(lang);
     var badgeRe = /\s*·\s*(기준|Basis)\s*·\s*\d{4}-\d{2}-\d{2}\s*·\s*(live|마감|closed)\s*$/;
     var ids = ['heatmap-hint', 'momentum-hint', 'volatility-hint'];
@@ -502,13 +525,15 @@
   }
 
   function fetchJson(url) {
-    return fetch(url, { mode: 'cors', cache: 'no-store', credentials: 'same-origin' })
+    return fetch(url, { mode: 'cors', cache: 'default', credentials: 'same-origin' })
       .then(function (r) {
         return r.json().then(function (j) {
           if (!r.ok) {
             var msg = (j && (j.message || j.error)) ? String(j.message || j.error) : ('quotes ' + r.status);
             throw new Error(msg);
           }
+          var dv = r.headers.get('X-Data-Version') || r.headers.get('x-data-version') || '';
+          if (dv && j && !j.dataVersion) j.dataVersion = dv;
           return j;
         });
       });
@@ -539,6 +564,10 @@
   }
 
   function formatQuotesAsofDisplay(asOf, regularSession, lang) {
+    if (global.InvestingMapReturnsBadge && global.InvestingMapReturnsBadge.format) {
+      var text = global.InvestingMapReturnsBadge.format(lang);
+      if (text) return text;
+    }
     var ymd = formatAsOfYmdKst(asOf);
     var base = '';
     if (regularSession === false) {
@@ -580,6 +609,8 @@
               anchorDd: j.anchorDd,
               refsRecentDd: j.refsRecentDd,
               k: j.k,
+              dataVersion: j.dataVersion,
+              regularSession: j.regularSession,
             };
           }
           var items = (j && j.items) || {};
@@ -603,6 +634,8 @@
         out.anchorDd = metaFields.anchorDd;
         out.refsRecentDd = metaFields.refsRecentDd;
         out.k = metaFields.k;
+        out.dataVersion = metaFields.dataVersion;
+        if (metaFields.regularSession != null) out.regularSession = metaFields.regularSession;
       }
       return out;
     });
@@ -651,22 +684,64 @@
     var getCompanies = opts.getCompanies;
     var renderTable = opts.renderTable;
     var onQuotesReady = opts.onQuotesReady || function () {};
-    var pollMs = (opts && opts.pollMs) || 300000;
     var onAsOf = opts.onAsOf || function () {};
     var onError = opts.onError || function () {};
     var running = false;
+    var lastPayload = null;
 
     if (!base) {
       return hydrateRsSnapshot(opts);
     }
 
-    function run() {
-      if (running) return Promise.resolve(null);
+    function applyPayload(j) {
+      if (!j) return null;
+      lastPayload = j;
+      mergeCompanies(getCompanies(), j.items || {});
+      rememberReturnMeta(j);
+      if (j && j.indices) rememberMomentumIndices(j);
+      function finishQuotes() {
+        try {
+          var pageLang = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'ko';
+          syncReturnMetaBadges(pageLang);
+        } catch (e0) {}
+        try {
+          onAsOf(j.asOf || '', {
+            regularSession: j.regularSession,
+            sessionOpen: j.sessionOpen,
+            numeratorMode: j.numeratorMode,
+            anchorDd: j.anchorDd,
+            refsRecentDd: j.refsRecentDd,
+            k: j.k,
+            dataVersion: j.dataVersion,
+          });
+        } catch (e1) {}
+        try {
+          if (renderTable) renderTable();
+        } finally {
+          invokeQuotesReady(onQuotesReady);
+        }
+        focusTickerAfterRender();
+        return j;
+      }
+      if (quotesResponseCanSkipRsSnapshot(j)) {
+        return finishQuotes();
+      }
+      return loadRsSnapshot().then(function (snap) {
+        if (snap && !quotesResponseHasRs(j)) {
+          mergeRsIntoCompanies(getCompanies(), snap);
+        }
+        if (snap) rememberMomentumIndices(snap);
+        return finishQuotes();
+      });
+    }
+
+    function fetchFn() {
+      if (running) return Promise.resolve({ data: lastPayload, dataVersion: lastPayload && lastPayload.dataVersion });
       running = true;
       var companies = getCompanies();
       if (!companies || !companies.length) {
         running = false;
-        return Promise.resolve(null);
+        return Promise.resolve({ data: null, dataVersion: '' });
       }
       var codes = [];
       var seen = {};
@@ -678,64 +753,42 @@
       }
       if (!codes.length) {
         running = false;
-        return Promise.resolve(null);
+        return Promise.resolve({ data: null, dataVersion: '' });
       }
       return fetchAllCodes(base, codes)
         .then(function (j) {
-          mergeCompanies(getCompanies(), j.items || {});
-          rememberReturnMeta(j);
-          if (j && j.indices) rememberMomentumIndices(j);
-          function finishQuotes() {
-            try {
-              var pageLang = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'ko';
-              syncReturnMetaBadges(pageLang);
-            } catch (e0) {}
-            try {
-              onAsOf(j.asOf || '', {
-                regularSession: j.regularSession,
-                sessionOpen: j.sessionOpen,
-                numeratorMode: j.numeratorMode,
-                anchorDd: j.anchorDd,
-                refsRecentDd: j.refsRecentDd,
-                k: j.k,
-              });
-            } catch (e1) {}
-            try {
-              if (renderTable) renderTable();
-            } finally {
-              invokeQuotesReady(onQuotesReady);
-            }
-            focusTickerAfterRender();
-            return j;
-          }
-          // Skip RS snapshot when API already has RS; returns never need the snapshot.
-          if (quotesResponseCanSkipRsSnapshot(j)) {
-            return finishQuotes();
-          }
-          return loadRsSnapshot().then(function (snap) {
-            if (snap && !quotesResponseHasRs(j)) {
-              mergeRsIntoCompanies(getCompanies(), snap);
-            }
-            if (snap) rememberMomentumIndices(snap);
-            return finishQuotes();
-          });
+          running = false;
+          return { data: j, dataVersion: (j && j.dataVersion) || '' };
         })
         .catch(function (err) {
-          try {
-            onError(err || new Error('quotes fetch failed'));
-          } catch (e2) {}
-          return hydrateRsSnapshot(opts);
-        })
-        .then(function (result) {
           running = false;
-          return result;
+          try { onError(err || new Error('quotes fetch failed')); } catch (e2) {}
+          throw err;
         });
     }
 
+    function renderFn(j) {
+      if (!j) return;
+      applyPayload(j);
+    }
+
+    var Tick = global.InvestingMapReturnsTick;
+    if (Tick && Tick.register) {
+      Tick.register('quotes', fetchFn, renderFn);
+      Tick.start();
+      return Tick.forceTick();
+    }
+
+    // Fallback without ReturnsTick
+    function run() {
+      return fetchFn().then(function (res) {
+        return applyPayload(res && res.data);
+      }).catch(function () {
+        return hydrateRsSnapshot(opts);
+      });
+    }
     var first = run();
-    setInterval(function () {
-      run();
-    }, pollMs);
+    setInterval(function () { run(); }, 60 * 1000);
     return first;
   }
 

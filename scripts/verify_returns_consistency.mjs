@@ -34,7 +34,12 @@ async function getJson(pathname) {
   if (!res.ok) {
     throw new Error(`${pathname} ${res.status}: ${JSON.stringify(body).slice(0, 200)}`);
   }
-  return body;
+  const dataVersion =
+    res.headers.get('X-Data-Version')
+    || res.headers.get('x-data-version')
+    || body?.dataVersion
+    || null;
+  return { body, dataVersion, etag: res.headers.get('etag') || res.headers.get('ETag') };
 }
 
 function metaKey(m) {
@@ -58,24 +63,58 @@ async function main() {
   assert.ok(tickers.length > 100, 'hub tickers');
 
   const codesParam = tickers.join(',');
-  const [quotes, sectors, trend] = await Promise.all([
+  const [quotesRes, sectorsRes, trendRes] = await Promise.all([
     getJson(`/api/quotes?codes=${encodeURIComponent(codesParam)}&nocache=1`),
     getJson('/api/hub_sectors?horizon=1d&nocache=1'),
     getJson('/api/hub_sector_trend?horizon=1d&nocache=1'),
   ]);
+  const quotes = quotesRes.body;
+  const sectors = sectorsRes.body;
+  const trend = trendRes.body;
 
   assertMetaEqual(quotes, sectors, 'quotes vs hub_sectors');
   if (trend.anchorDd != null || trend.numeratorMode != null) {
     assertMetaEqual(quotes, trend, 'quotes vs hub_sector_trend');
   }
 
+  // (i) same-tick X-Data-Version across returns endpoints
+  const versionBag = {
+    quotes: quotesRes.dataVersion || quotes.dataVersion || null,
+    hub_sectors: sectorsRes.dataVersion || sectors.dataVersion || null,
+    hub_sector_trend: trendRes.dataVersion || trend.dataVersion || null,
+  };
+  assert.ok(versionBag.quotes, '(i) quotes X-Data-Version missing');
+  assert.equal(versionBag.hub_sectors, versionBag.quotes, '(i) hub_sectors X-Data-Version');
+  assert.equal(versionBag.hub_sector_trend, versionBag.quotes, '(i) hub_sector_trend X-Data-Version');
+
   const year = new Date().getFullYear();
   const calendars = {};
   for (const sid of SAMPLE_SECTORS) {
-    calendars[sid] = await getJson(
+    const calRes = await getJson(
       `/api/sector_perf_calendar?sector=${sid}&year=${year}&nocache=1`,
     );
+    calendars[sid] = calRes.body;
     assertMetaEqual(quotes, calendars[sid], `quotes vs calendar(${sid})`);
+    const calVer = calRes.dataVersion || calendars[sid].dataVersion || null;
+    assert.equal(calVer, versionBag.quotes, `(i) calendar(${sid}) X-Data-Version`);
+  }
+
+  const moversRes = await getJson('/api/hub_movers?nocache=1');
+  if (moversRes.dataVersion || moversRes.body?.dataVersion) {
+    assert.equal(
+      moversRes.dataVersion || moversRes.body.dataVersion,
+      versionBag.quotes,
+      '(i) hub_movers X-Data-Version',
+    );
+  }
+
+  const rsTopRes = await getJson('/api/hub_rs_top10?nocache=1');
+  if (rsTopRes.dataVersion || rsTopRes.body?.dataVersion) {
+    assert.equal(
+      rsTopRes.dataVersion || rsTopRes.body.dataVersion,
+      versionBag.quotes,
+      '(i) hub_rs_top X-Data-Version',
+    );
   }
 
   // (b) sector returnXdPct == aggregate from quote members
@@ -141,6 +180,7 @@ async function main() {
       'horizon', 'asOf', 'tradeDate', 'regularSession', 'sessionOpen',
       'numeratorMode', 'anchorDd', 'refsRecentDd', 'k', 'synthesized',
       'source', 'stale', 'error', 'message', 'base', 'sectors', 'indices',
+      'dataVersion', 'refsEtag',
     ]);
     const out = {};
     for (const [key, val] of Object.entries(payload)) {
@@ -190,12 +230,20 @@ async function main() {
   }
 
   // (f)(g)(h) hub_trend chart tip == hub_sectors / hub_sector_trend
-  const [hubTrend1d, hubTrend20d, hubTrend200d] = await Promise.all([
+  const [hubTrend1dRes, hubTrend20dRes, hubTrend200dRes] = await Promise.all([
     getJson('/api/hub_trend?horizon=1d&nocache=1&cb=1'),
     getJson('/api/hub_trend?horizon=20d&nocache=1&cb=1'),
     getJson('/api/hub_trend?horizon=200d&nocache=1&cb=1'),
   ]);
+  const hubTrend1d = hubTrend1dRes.body;
+  const hubTrend20d = hubTrend20dRes.body;
+  const hubTrend200d = hubTrend200dRes.body;
   assertMetaEqual(quotes, hubTrend1d, 'quotes vs hub_trend 1d');
+  assert.equal(
+    hubTrend1dRes.dataVersion || hubTrend1d.dataVersion,
+    versionBag.quotes,
+    '(i) hub_trend 1d X-Data-Version',
+  );
 
   function sectorTipPct(payload, sid) {
     const entry = (payload.sectors || []).find((s) => s.sector === sid);
@@ -234,6 +282,7 @@ async function main() {
   console.log(
     `verify:returns-consistency OK — base=${BASE} `
     + `mode=${quotes.numeratorMode} anchor=${quotes.anchorDd} k=${quotes.k} `
+    + `dataVersion=${versionBag.quotes} `
     + `sectors=${Object.keys(sectors.sectors || {}).length}`
     + ` hub_trend1d_synth=${!!hubTrend1d.synthesized}`,
   );

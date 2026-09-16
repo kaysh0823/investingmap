@@ -4,7 +4,7 @@
  */
 
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';
-import { krxSessionInfo, edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
+import { krxSessionInfo } from '../lib/krx_session.mjs';
 import {
   corsHeaders,
   putHubCache,
@@ -17,21 +17,20 @@ import {
   normalizePerfCalendarSector,
   normalizePerfCalendarYear,
 } from '../lib/sector_perf_calendar.mjs';
+import { peekReturnsDataVersion } from '../lib/hub_returns_source.mjs';
+import {
+  maybeNotModified,
+  returnsJsonResponse,
+  returnsResponseHeaders,
+} from '../lib/returns_cache_headers.mjs';
 
 const CACHE_BASE = `/api/sector_perf_calendar/cache/${PERF_CALENDAR_CACHE_VERSION}`;
 
-function cachePath(sector, year) {
-  return `${CACHE_BASE}/${sector}/${year}`;
-}
-
-function cacheMaxAge(year, now = new Date()) {
-  const cur = currentKstYear(now);
-  if (year < cur) {
-    // Completed years: long-lived edge cache (1 week).
-    return 7 * 24 * 3600;
-  }
-  // Current year: same 5m window as quotes/hub_sectors while session open.
-  return edgeCacheMaxAgeSeconds(now, { regularMax: 300, closedMax: 3600 });
+function cachePath(sector, year, dataVersion) {
+  const cur = currentKstYear();
+  // Completed years are immutable; skip dataVersion in key.
+  if (year < cur) return `${CACHE_BASE}/${sector}/${year}`;
+  return `${CACHE_BASE}/${sector}/${year}/dv/${encodeURIComponent(dataVersion || '0')}`;
 }
 
 export async function onRequest(context) {
@@ -75,14 +74,32 @@ export async function onRequest(context) {
     );
   }
 
-  const path = cachePath(sector, year);
+  const peek = await peekReturnsDataVersion(env, request);
+  const path = cachePath(sector, year, peek.dataVersion);
+  const isCurrentYear = year >= currentKstYear();
+
   if (!nocache) {
     const hit = await readHubCache(path, url.origin);
     if (hit) {
+      if (isCurrentYear) {
+        const headers = returnsResponseHeaders({
+          cors: ch,
+          dataVersion: peek.dataVersion,
+          horizon: `${sector}-${year}`,
+          extra: {
+            'X-Hub-Cache': 'HIT',
+            'X-Perf-Calendar-Version': PERF_CALENDAR_CACHE_VERSION,
+          },
+        });
+        const notMod = maybeNotModified(request, headers);
+        if (notMod) return notMod;
+        return new Response(hit.body, { status: hit.status, headers });
+      }
       const headers = new Headers(hit.headers);
       for (const [k, v] of Object.entries(ch)) headers.set(k, v);
       headers.set('X-Hub-Cache', 'HIT');
       headers.set('X-Perf-Calendar-Version', PERF_CALENDAR_CACHE_VERSION);
+      headers.set('X-Data-Version', peek.dataVersion || '');
       return new Response(hit.body, { status: hit.status, headers });
     }
   }
@@ -100,18 +117,39 @@ export async function onRequest(context) {
     }
 
     const payload = await buildSectorPerfCalendarFromEnv(hubIndex, env, sector, year, request);
-    const maxAge = cacheMaxAge(year);
+    const dataVersion = payload.dataVersion || peek.dataVersion;
+
+    if (isCurrentYear) {
+      const response = returnsJsonResponse(request, payload, {
+        cors: ch,
+        dataVersion,
+        horizon: `${sector}-${year}`,
+        extra: {
+          'X-Hub-Cache': 'MISS',
+          'X-Perf-Calendar-Version': PERF_CALENDAR_CACHE_VERSION,
+          'X-Perf-Calendar-Sector': sector,
+          'X-Perf-Calendar-Year': String(year),
+          'X-Hub-Session': session.regular ? 'regular' : 'closed',
+        },
+      });
+      if (!nocache && response.status === 200 && (payload.members?.length || payload.sectorAvg?.length)) {
+        putHubCache(context, cachePath(sector, year, dataVersion), url.origin, response);
+      }
+      return response;
+    }
+
+    // Completed years: longer CDN TTL (immutable history).
     const body = JSON.stringify(payload);
     const response = new Response(body, {
       headers: {
         ...ch,
         'Content-Type': 'application/json; charset=utf-8',
-        'Cache-Control': `public, max-age=${maxAge}, stale-while-revalidate=${Math.min(maxAge * 6, 604800)}`,
+        'Cache-Control': 'public, max-age=604800, must-revalidate',
         'X-Hub-Cache': 'MISS',
         'X-Perf-Calendar-Version': PERF_CALENDAR_CACHE_VERSION,
         'X-Perf-Calendar-Sector': sector,
         'X-Perf-Calendar-Year': String(year),
-        'X-Hub-Session': session.regular ? 'regular' : 'closed',
+        'X-Data-Version': dataVersion || '',
       },
     });
     if (!nocache && (payload.members?.length || payload.sectorAvg?.length)) {
