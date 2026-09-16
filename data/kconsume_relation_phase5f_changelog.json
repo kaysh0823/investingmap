@@ -109,6 +109,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "026960",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "004370",
       "lane": "brand_owner"
     },
@@ -129,7 +134,7 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "026960",
+      "ticker": "282330",
       "lane": "brand_owner"
     },
     {
@@ -154,8 +159,13 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "282330",
-      "lane": "brand_owner"
+      "ticker": "069960",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "069960",
+      "category": "consumer_category:department-retail"
     },
     {
       "action": "structural_member_of",
@@ -184,16 +194,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "069960",
-      "lane": "retail_channel"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "069960",
-      "category": "consumer_category:department-retail"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "139480",
       "lane": "retail_channel"
     },
@@ -214,26 +214,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "280360",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "280360",
-      "brand": "brand:pepero"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "280360",
-      "brand": "brand:ghana-chocolate"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "280360",
-      "category": "consumer_category:confectionery"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "007310",
       "lane": "brand_owner"
     },
@@ -251,6 +231,26 @@
       "action": "structural_specializes_in",
       "ticker": "007310",
       "category": "consumer_category:sauces-condiments"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "280360",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "280360",
+      "brand": "brand:pepero"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "280360",
+      "brand": "brand:ghana-chocolate"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "280360",
+      "category": "consumer_category:confectionery"
     },
     {
       "action": "structural_member_of",

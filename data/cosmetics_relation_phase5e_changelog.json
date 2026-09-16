@@ -580,9 +580,9 @@
         "krx:051900",
         "krx:214450",
         "krx:161890",
-        "krx:257720",
         "krx:192820",
         "krx:145020",
+        "krx:257720",
         "krx:214370",
         "krx:483650",
         "krx:214150",
@@ -604,9 +604,9 @@
         "krx:051900",
         "krx:214450",
         "krx:161890",
-        "krx:257720",
         "krx:192820",
         "krx:145020",
+        "krx:257720",
         "krx:214370",
         "krx:483650",
         "krx:214150",
@@ -638,9 +638,9 @@
         "krx:051900",
         "krx:214450",
         "krx:161890",
-        "krx:257720",
         "krx:192820",
         "krx:145020",
+        "krx:257720",
         "krx:214370",
         "krx:483650",
         "krx:214150",
@@ -827,23 +827,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:257720",
-      "target": "group:distributor"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:257720",
-      "target": "channel:cross_border_distribution",
-      "edgeType": "specializes_in"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:257720",
-      "target": "beauty_product:multi_brand_distribution",
-      "edgeType": "used_in_product_category"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:192820",
       "target": "group:odm_oem"
     },
@@ -874,6 +857,23 @@
       "action": "add_structural",
       "source": "krx:145020",
       "target": "beauty_product:aesthetic_injectables",
+      "edgeType": "used_in_product_category"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:257720",
+      "target": "group:distributor"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:257720",
+      "target": "channel:cross_border_distribution",
+      "edgeType": "specializes_in"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:257720",
+      "target": "beauty_product:multi_brand_distribution",
       "edgeType": "used_in_product_category"
     },
     {

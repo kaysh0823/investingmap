@@ -26,11 +26,6 @@
       "chain": "ODM·OEM"
     },
     {
-      "ticker": "257720",
-      "name": "실리콘투",
-      "chain": "유통·채널"
-    },
-    {
       "ticker": "192820",
       "name": "코스맥스",
       "chain": "ODM·OEM"
@@ -39,6 +34,11 @@
       "ticker": "145020",
       "name": "휴젤",
       "chain": "미용기기"
+    },
+    {
+      "ticker": "257720",
+      "name": "실리콘투",
+      "chain": "유통·채널"
     },
     {
       "ticker": "214370",

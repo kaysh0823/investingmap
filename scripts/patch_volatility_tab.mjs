@@ -6,8 +6,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 10;
+const SCRIPT_V = 11;
 const TAB_STATE_V = 10;
+const TURNOVER_RADIUS_V = 1;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -44,7 +45,7 @@ const VOLATILITY_BUTTON =
 const VOLATILITY_TAB = `  <!-- VOLATILITY TAB -->
   <div id="tab-volatility" class="tab-content">
     <div class="volatility-wrap">
-      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)</p>
+      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)</p>
       <div id="volatility-root" role="img" aria-label="Volatility distribution"></div>
       <div id="volatility-legend"></div>
     </div>
@@ -205,6 +206,24 @@ function patchRuntime(source) {
   return source;
 }
 
+function ensureTurnoverRadiusScript(source) {
+  if (source.includes('turnover_radius.js')) return source;
+  const tag = `<script src="../js/turnover_radius.js?v=${TURNOVER_RADIUS_V}"></script>`;
+  if (/<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
+    return source.replace(
+      /(<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>)/,
+      `${tag}\n  $1`,
+    );
+  }
+  if (/<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
+    return source.replace(
+      /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>)/,
+      `${tag}\n  $1`,
+    );
+  }
+  return source;
+}
+
 function patchHtml(source) {
   if (!source.includes('tab-btn-volatility')) {
     source = source.replace(
@@ -229,6 +248,7 @@ function patchHtml(source) {
       `map_volatility.js?v=${SCRIPT_V}`,
     );
   }
+  source = ensureTurnoverRadiusScript(source);
   source = source.replace(
     /map_tab_state\.js(?:\?v=\d+)?/g,
     `map_tab_state.js?v=${TAB_STATE_V}`,

@@ -8,9 +8,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 14;
+const SCRIPT_V = 15;
 const LIVE_QUOTES_V = 22;
 const TAB_STATE_V = 9;
+const TURNOVER_RADIUS_V = 1;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -248,6 +249,24 @@ function patchRuntime(source) {
   return source;
 }
 
+function ensureTurnoverRadiusScript(source) {
+  if (source.includes('turnover_radius.js')) return source;
+  const tag = `<script src="../js/turnover_radius.js?v=${TURNOVER_RADIUS_V}"></script>`;
+  if (/<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
+    return source.replace(
+      /(<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>)/,
+      `${tag}\n  $1`,
+    );
+  }
+  if (/<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
+    return source.replace(
+      /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>)/,
+      `${tag}\n  $1`,
+    );
+  }
+  return source;
+}
+
 function patchHtml(source) {
   if (!source.includes('tab-btn-momentum')) {
     source = source.replace(
@@ -272,6 +291,7 @@ function patchHtml(source) {
       `map_momentum.js?v=${SCRIPT_V}`,
     );
   }
+  source = ensureTurnoverRadiusScript(source);
   source = source.replace(
     /map_tab_state\.js(?:\?v=\d+)?/g,
     `map_tab_state.js?v=${TAB_STATE_V}`,

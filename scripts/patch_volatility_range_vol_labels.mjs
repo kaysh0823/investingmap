@@ -1,3 +1,7 @@
+/**
+ * One-off / rescue label patch for volatility axis & legend copy.
+ * Script cache-bust versions are owned by patch_momentum_tab / patch_volatility_tab.
+ */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -46,37 +50,13 @@ function patchLabels(html) {
   return next;
 }
 
-function ensureTurnoverRadiusScript(html) {
-  if (html.includes('turnover_radius.js')) return html;
-  // Prefer injecting before map_momentum; else before map_volatility.
-  if (/<script[^>]+map_momentum\.js[^>]*>/.test(html)) {
-    return html.replace(
-      /(<script[^>]+map_momentum\.js[^>]*>)/,
-      '<script src="../js/turnover_radius.js?v=1"></script>\n  $1',
-    );
-  }
-  if (/<script[^>]+map_volatility\.js[^>]*>/.test(html)) {
-    return html.replace(
-      /(<script[^>]+map_volatility\.js[^>]*>)/,
-      '<script src="../js/turnover_radius.js?v=1"></script>\n  $1',
-    );
-  }
-  return html;
-}
-
 let n = 0;
 for (const p of walk(ROOT)) {
-  let html = fs.readFileSync(p, 'utf8');
-  let next = patchLabels(html);
-  next = next
-    .replace(/map_volatility\.js\?v=\d+/g, 'map_volatility.js?v=11')
-    .replace(/map_momentum\.js\?v=\d+/g, 'map_momentum.js?v=15');
-  if (p.endsWith('.html')) {
-    next = ensureTurnoverRadiusScript(next);
-  }
+  const html = fs.readFileSync(p, 'utf8');
+  const next = patchLabels(html);
   if (next !== html) {
     fs.writeFileSync(p, next);
     n += 1;
   }
 }
-console.log(`patched ${n} files`);
+console.log(`patched ${n} files (labels only; versions owned by patch_*_tab)`);

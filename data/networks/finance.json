@@ -307,7 +307,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "holding",
-      "mcapWon": 61006290248000,
+      "mcapWon": 63098947878600,
       "isListedKorea": true,
       "legacyId": "kb_fin"
     },
@@ -323,7 +323,7 @@
       "group": "생명보험",
       "layer": "생명보험",
       "lane": "insurance",
-      "mcapWon": 59500000000000,
+      "mcapWon": 61500000000000,
       "isListedKorea": true,
       "legacyId": "samsung_life"
     },
@@ -339,7 +339,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "holding",
-      "mcapWon": 51780361361700,
+      "mcapWon": 53000931983100,
       "isListedKorea": true,
       "legacyId": "shinhan"
     },
@@ -355,7 +355,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "holding",
-      "mcapWon": 36847588556400,
+      "mcapWon": 37807875674400,
       "isListedKorea": true,
       "legacyId": "hana"
     },
@@ -371,7 +371,7 @@
       "group": "손해보험·재보험",
       "layer": "손해보험·재보험",
       "lane": "independent",
-      "mcapWon": 29601274599000,
+      "mcapWon": 30628166478000,
       "isListedKorea": true,
       "legacyId": "samsung_fire"
     },
@@ -387,7 +387,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "holding",
-      "mcapWon": 24461313692400,
+      "mcapWon": 25861208150700,
       "isListedKorea": true,
       "legacyId": "woori"
     },
@@ -403,7 +403,7 @@
       "group": "비은행 금융그룹",
       "layer": "비은행 금융그룹",
       "lane": "holding",
-      "mcapWon": 22675555491500,
+      "mcapWon": 21487389853200,
       "isListedKorea": true,
       "legacyId": "meritz_fin"
     },
@@ -419,7 +419,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 18707075206950,
+      "mcapWon": 18164054155950,
       "isListedKorea": true,
       "legacyId": "mirae"
     },
@@ -435,7 +435,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "bank",
-      "mcapWon": 16506715488300,
+      "mcapWon": 16626329368650,
       "isListedKorea": true,
       "legacyId": "ibk"
     },
@@ -451,7 +451,7 @@
       "group": "손해보험·재보험",
       "layer": "손해보험·재보험",
       "lane": "independent",
-      "mcapWon": 12818418299300,
+      "mcapWon": 12556416903300,
       "isListedKorea": true,
       "legacyId": "db_ins"
     },
@@ -467,7 +467,7 @@
       "group": "비은행 금융그룹",
       "layer": "비은행 금융그룹",
       "lane": "holding",
-      "mcapWon": 10521067289600,
+      "mcapWon": 10788552051200,
       "isListedKorea": true,
       "legacyId": "korea_inv"
     },
@@ -499,7 +499,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 9839342698250,
+      "mcapWon": 9710120561500,
       "isListedKorea": true,
       "legacyId": "nh_inv"
     },
@@ -515,7 +515,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 7751240000000,
+      "mcapWon": 7804820000000,
       "isListedKorea": true,
       "legacyId": "samsung_sec"
     },
@@ -531,7 +531,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 7094759478000,
+      "mcapWon": 7291471848000,
       "isListedKorea": true,
       "legacyId": "kiwoom"
     },
@@ -563,7 +563,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "holding",
-      "mcapWon": 5782176544000,
+      "mcapWon": 5922067912000,
       "isListedKorea": true,
       "legacyId": "jb"
     },
@@ -579,7 +579,7 @@
       "group": "카드·캐피탈·여신금융",
       "layer": "카드·캐피탈·여신금융",
       "lane": "card_capital",
-      "mcapWon": 5346887819650,
+      "mcapWon": 5271579540500,
       "isListedKorea": true,
       "legacyId": "samsung_card"
     },
@@ -595,7 +595,7 @@
       "group": "생명보험",
       "layer": "생명보험",
       "lane": "insurance",
-      "mcapWon": 4985362200000,
+      "mcapWon": 5202494700000,
       "isListedKorea": true,
       "legacyId": "hanwha_life"
     },
@@ -611,7 +611,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "holding",
-      "mcapWon": 4722263767890,
+      "mcapWon": 4887957233430,
       "isListedKorea": true,
       "legacyId": "bnk"
     },
@@ -627,7 +627,7 @@
       "group": "손해보험·재보험",
       "layer": "손해보험·재보험",
       "lane": "independent",
-      "mcapWon": 4356185575000,
+      "mcapWon": 4373235225000,
       "isListedKorea": true,
       "legacyId": "hyundai_marine"
     },
@@ -659,7 +659,7 @@
       "group": "은행·은행계 금융그룹",
       "layer": "은행·은행계 금융그룹",
       "lane": "holding",
-      "mcapWon": 2869544952960,
+      "mcapWon": 2921804877600,
       "isListedKorea": true,
       "legacyId": "dgb"
     },
@@ -728,6 +728,22 @@
       "legacyId": "finance_k_bank"
     },
     {
+      "id": "krx:003540",
+      "type": "listed_company",
+      "ticker": "003540",
+      "nameKo": "대신증권",
+      "nameEn": "DaishinSecurities",
+      "market": "KOSPI",
+      "role": "securities_company",
+      "financeRole": "securities_company",
+      "group": "증권",
+      "layer": "증권",
+      "lane": "securities",
+      "mcapWon": 1296518627200,
+      "isListedKorea": true,
+      "legacyId": "daishin"
+    },
+    {
       "id": "krx:082640",
       "type": "listed_company",
       "ticker": "082640",
@@ -742,22 +758,6 @@
       "mcapWon": 1287516293250,
       "isListedKorea": true,
       "legacyId": "finance_tongyang_life"
-    },
-    {
-      "id": "krx:003540",
-      "type": "listed_company",
-      "ticker": "003540",
-      "nameKo": "대신증권",
-      "nameEn": "DaishinSecurities",
-      "market": "KOSPI",
-      "role": "securities_company",
-      "financeRole": "securities_company",
-      "group": "증권",
-      "layer": "증권",
-      "lane": "securities",
-      "mcapWon": 1263152339000,
-      "isListedKorea": true,
-      "legacyId": "daishin"
     },
     {
       "id": "krx:030610",
@@ -787,7 +787,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 1094193652500,
+      "mcapWon": 1026611103375,
       "isListedKorea": true,
       "legacyId": "hanwha_inv"
     },
@@ -835,7 +835,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 914267083990,
+      "mcapWon": 921010887560,
       "isListedKorea": true,
       "legacyId": "yuant"
     },
@@ -851,7 +851,7 @@
       "group": "자산운용·PE·VC",
       "layer": "자산운용·PE·VC",
       "lane": "securities",
-      "mcapWon": 795746258440,
+      "mcapWon": 847804424880,
       "isListedKorea": true,
       "legacyId": "mirae_vent"
     },
@@ -867,7 +867,7 @@
       "group": "부동산금융·투자기구",
       "layer": "부동산금융·투자기구",
       "lane": "securities",
-      "mcapWon": 667478839890,
+      "mcapWon": 675833929680,
       "isListedKorea": true,
       "legacyId": "maps_realty"
     },
@@ -902,22 +902,6 @@
       "mcapWon": 556264679425,
       "isListedKorea": true,
       "legacyId": "finance_sk_securities"
-    },
-    {
-      "id": "krx:041190",
-      "type": "listed_company",
-      "ticker": "041190",
-      "nameKo": "우리기술투자",
-      "nameEn": "Woori Technology Investment Co., Ltd",
-      "market": "KOSDAQ",
-      "role": "asset_manager",
-      "financeRole": "asset_manager",
-      "group": "자산운용·PE·VC",
-      "layer": "자산운용·PE·VC",
-      "lane": "securities",
-      "mcapWon": 522480000000,
-      "isListedKorea": true,
-      "legacyId": "woori_tech_inv"
     },
     {
       "id": "krx:001270",
@@ -963,7 +947,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 489717708480,
+      "mcapWon": 495901012880,
       "isListedKorea": true,
       "legacyId": "hyundai_sec"
     },
@@ -982,6 +966,22 @@
       "mcapWon": 470851301800,
       "isListedKorea": true,
       "legacyId": "finance_korea_ratings"
+    },
+    {
+      "id": "krx:041190",
+      "type": "listed_company",
+      "ticker": "041190",
+      "nameKo": "우리기술투자",
+      "nameEn": "Woori Technology Investment Co., Ltd",
+      "market": "KOSDAQ",
+      "role": "asset_manager",
+      "financeRole": "asset_manager",
+      "group": "자산운용·PE·VC",
+      "layer": "자산운용·PE·VC",
+      "lane": "securities",
+      "mcapWon": 443688000000,
+      "isListedKorea": true,
+      "legacyId": "woori_tech_inv"
     },
     {
       "id": "krx:016610",
@@ -1016,6 +1016,22 @@
       "legacyId": "eugene"
     },
     {
+      "id": "krx:027360",
+      "type": "listed_company",
+      "ticker": "027360",
+      "nameKo": "아주IB투자",
+      "nameEn": "AJU IB INVESTMENT CO., LTD.",
+      "market": "KOSDAQ",
+      "role": "asset_manager",
+      "financeRole": "asset_manager",
+      "group": "자산운용·PE·VC",
+      "layer": "자산운용·PE·VC",
+      "lane": "securities",
+      "mcapWon": 393722569500,
+      "isListedKorea": true,
+      "legacyId": "aju_ib"
+    },
+    {
       "id": "krx:006220",
       "type": "listed_company",
       "ticker": "006220",
@@ -1032,22 +1048,6 @@
       "legacyId": "finance_jeju_bank"
     },
     {
-      "id": "krx:027360",
-      "type": "listed_company",
-      "ticker": "027360",
-      "nameKo": "아주IB투자",
-      "nameEn": "AJU IB INVESTMENT CO., LTD.",
-      "market": "KOSDAQ",
-      "role": "asset_manager",
-      "financeRole": "asset_manager",
-      "group": "자산운용·PE·VC",
-      "layer": "자산운용·PE·VC",
-      "lane": "securities",
-      "mcapWon": 385848118110,
-      "isListedKorea": true,
-      "legacyId": "aju_ib"
-    },
-    {
       "id": "krx:078020",
       "type": "listed_company",
       "ticker": "078020",
@@ -1059,7 +1059,7 @@
       "group": "증권",
       "layer": "증권",
       "lane": "securities",
-      "mcapWon": 373943220600,
+      "mcapWon": 370059537300,
       "isListedKorea": true,
       "legacyId": "ebest"
     },
@@ -1762,6 +1762,22 @@
       "noteEn": "Sector classification only; not ownership or trade."
     },
     {
+      "id": "member-003540-category-other_finance",
+      "source": "krx:003540",
+      "target": "category:other_finance",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "증권 분류",
+      "labelEn": "증권 classification",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-23",
+      "edgeOrigin": "structuralGenerated",
+      "noteKo": "업종 분류이며 지배·거래를 의미하지 않습니다.",
+      "noteEn": "Sector classification only; not ownership or trade."
+    },
+    {
       "id": "member-082640-category-other_finance",
       "source": "krx:082640",
       "target": "category:other_finance",
@@ -1790,22 +1806,6 @@
       "confidence": "high",
       "lastVerifiedAt": "2026-08-23",
       "edgeOrigin": "structuralGenerated"
-    },
-    {
-      "id": "member-003540-category-other_finance",
-      "source": "krx:003540",
-      "target": "category:other_finance",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "증권 분류",
-      "labelEn": "증권 classification",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-23",
-      "edgeOrigin": "structuralGenerated",
-      "noteKo": "업종 분류이며 지배·거래를 의미하지 않습니다.",
-      "noteEn": "Sector classification only; not ownership or trade."
     },
     {
       "id": "member-030610-category-other_finance",
@@ -1952,22 +1952,6 @@
       "noteEn": "Sector classification only; not ownership or trade."
     },
     {
-      "id": "member-041190-category-other_finance",
-      "source": "krx:041190",
-      "target": "category:other_finance",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "자산운용·PE·VC 분류",
-      "labelEn": "자산운용·PE·VC classification",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-23",
-      "edgeOrigin": "structuralGenerated",
-      "noteKo": "업종 분류이며 지배·거래를 의미하지 않습니다.",
-      "noteEn": "Sector classification only; not ownership or trade."
-    },
-    {
       "id": "member-001270-category-other_finance",
       "source": "krx:001270",
       "target": "category:other_finance",
@@ -2032,6 +2016,22 @@
       "noteEn": "Sector classification only; not ownership or trade."
     },
     {
+      "id": "member-041190-category-other_finance",
+      "source": "krx:041190",
+      "target": "category:other_finance",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "자산운용·PE·VC 분류",
+      "labelEn": "자산운용·PE·VC classification",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-23",
+      "edgeOrigin": "structuralGenerated",
+      "noteKo": "업종 분류이며 지배·거래를 의미하지 않습니다.",
+      "noteEn": "Sector classification only; not ownership or trade."
+    },
+    {
       "id": "member-016610-category-other_finance",
       "source": "krx:016610",
       "target": "category:other_finance",
@@ -2064,22 +2064,6 @@
       "noteEn": "Sector classification only; not ownership or trade."
     },
     {
-      "id": "member-006220-category-other_finance",
-      "source": "krx:006220",
-      "target": "category:other_finance",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "은행·은행계 금융그룹 분류",
-      "labelEn": "은행·은행계 금융그룹 classification",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-08-23",
-      "edgeOrigin": "structuralGenerated",
-      "noteKo": "업종 분류이며 지배·거래를 의미하지 않습니다.",
-      "noteEn": "Sector classification only; not ownership or trade."
-    },
-    {
       "id": "member-027360-category-other_finance",
       "source": "krx:027360",
       "target": "category:other_finance",
@@ -2088,6 +2072,22 @@
       "status": "reference",
       "labelKo": "자산운용·PE·VC 분류",
       "labelEn": "자산운용·PE·VC classification",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-08-23",
+      "edgeOrigin": "structuralGenerated",
+      "noteKo": "업종 분류이며 지배·거래를 의미하지 않습니다.",
+      "noteEn": "Sector classification only; not ownership or trade."
+    },
+    {
+      "id": "member-006220-category-other_finance",
+      "source": "krx:006220",
+      "target": "category:other_finance",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "은행·은행계 금융그룹 분류",
+      "labelEn": "은행·은행계 금융그룹 classification",
       "evidence": [],
       "confidence": "high",
       "lastVerifiedAt": "2026-08-23",
@@ -3916,6 +3916,23 @@
       "noteEn": "Sector peer only; not trade or ownership."
     },
     {
+      "id": "peer-003540-morgan_stanley",
+      "source": "krx:003540",
+      "target": "global:morgan_stanley",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "글로벌 동종 비교",
+      "labelEn": "Global peer comparison",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-23",
+      "edgeOrigin": "legacyMigrated",
+      "defaultHidden": true,
+      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
+      "noteEn": "Sector peer only; not trade or ownership."
+    },
+    {
       "id": "peer-082640-metlife",
       "source": "krx:082640",
       "target": "global:metlife",
@@ -3936,23 +3953,6 @@
       "id": "peer-082640-prudential",
       "source": "krx:082640",
       "target": "global:prudential",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌 동종 비교",
-      "labelEn": "Global peer comparison",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-23",
-      "edgeOrigin": "legacyMigrated",
-      "defaultHidden": true,
-      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
-      "noteEn": "Sector peer only; not trade or ownership."
-    },
-    {
-      "id": "peer-003540-morgan_stanley",
-      "source": "krx:003540",
-      "target": "global:morgan_stanley",
       "type": "peer",
       "direction": "undirected",
       "status": "peer",
@@ -4171,40 +4171,6 @@
       "noteEn": "Sector peer only; not trade or ownership."
     },
     {
-      "id": "peer-041190-blackrock",
-      "source": "krx:041190",
-      "target": "global:blackrock",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌 동종 비교",
-      "labelEn": "Global peer comparison",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-23",
-      "edgeOrigin": "legacyMigrated",
-      "defaultHidden": true,
-      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
-      "noteEn": "Sector peer only; not trade or ownership."
-    },
-    {
-      "id": "peer-041190-jpmorgan",
-      "source": "krx:041190",
-      "target": "global:jpmorgan",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌 동종 비교",
-      "labelEn": "Global peer comparison",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-23",
-      "edgeOrigin": "legacyMigrated",
-      "defaultHidden": true,
-      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
-      "noteEn": "Sector peer only; not trade or ownership."
-    },
-    {
       "id": "peer-001270-morgan_stanley",
       "source": "krx:001270",
       "target": "global:morgan_stanley",
@@ -4242,6 +4208,40 @@
       "id": "peer-001500-morgan_stanley",
       "source": "krx:001500",
       "target": "global:morgan_stanley",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "글로벌 동종 비교",
+      "labelEn": "Global peer comparison",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-23",
+      "edgeOrigin": "legacyMigrated",
+      "defaultHidden": true,
+      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
+      "noteEn": "Sector peer only; not trade or ownership."
+    },
+    {
+      "id": "peer-041190-blackrock",
+      "source": "krx:041190",
+      "target": "global:blackrock",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "글로벌 동종 비교",
+      "labelEn": "Global peer comparison",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-23",
+      "edgeOrigin": "legacyMigrated",
+      "defaultHidden": true,
+      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
+      "noteEn": "Sector peer only; not trade or ownership."
+    },
+    {
+      "id": "peer-041190-jpmorgan",
+      "source": "krx:041190",
+      "target": "global:jpmorgan",
       "type": "peer",
       "direction": "undirected",
       "status": "peer",
@@ -4307,23 +4307,6 @@
       "noteEn": "Sector peer only; not trade or ownership."
     },
     {
-      "id": "peer-006220-hsbc",
-      "source": "krx:006220",
-      "target": "global:hsbc",
-      "type": "peer",
-      "direction": "undirected",
-      "status": "peer",
-      "labelKo": "글로벌 동종 비교",
-      "labelEn": "Global peer comparison",
-      "evidence": [],
-      "confidence": "low",
-      "lastVerifiedAt": "2026-08-23",
-      "edgeOrigin": "legacyMigrated",
-      "defaultHidden": true,
-      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
-      "noteEn": "Sector peer only; not trade or ownership."
-    },
-    {
       "id": "peer-027360-goldman",
       "source": "krx:027360",
       "target": "global:goldman",
@@ -4344,6 +4327,23 @@
       "id": "peer-027360-blackrock",
       "source": "krx:027360",
       "target": "global:blackrock",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "글로벌 동종 비교",
+      "labelEn": "Global peer comparison",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-08-23",
+      "edgeOrigin": "legacyMigrated",
+      "defaultHidden": true,
+      "noteKo": "업종 비교용 peer이며 거래·지분관계가 아닙니다.",
+      "noteEn": "Sector peer only; not trade or ownership."
+    },
+    {
+      "id": "peer-006220-hsbc",
+      "source": "krx:006220",
+      "target": "global:hsbc",
       "type": "peer",
       "direction": "undirected",
       "status": "peer",
