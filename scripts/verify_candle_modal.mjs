@@ -51,7 +51,7 @@ for (const removed of [
 }
 assert.equal(source.match(/createChart\(/g)?.length, 1, 'exactly one chart is created');
 const paneKeys = ui.panes.map((pane) => pane.key);
-assert.equal(paneKeys.join(','), 'price,vol,macd,investor,norm,atr', 'pane order');
+assert.equal(paneKeys.join(','), 'price,vol,macd,investor,norm,range', 'pane order');
 paneKeys.forEach((key, index) => {
   assert.equal(ui.paneIndex[key], index, `pane index for ${key}`);
 });
@@ -388,9 +388,9 @@ assert.equal(
   'weekly MA4 crosshair uses 4-bar SMA',
 );
 
-const atrBars = [];
-for (let i = 0; i < 11; i++) {
-  atrBars.push({
+const rangeBars = [];
+for (let i = 0; i < 30; i++) {
+  rangeBars.push({
     t: `2026-01-${String(i + 1).padStart(2, '0')}`,
     o: 10 + i,
     h: 12 + i,
@@ -399,12 +399,14 @@ for (let i = 0; i < 11; i++) {
     v: 100,
   });
 }
-const atr = indicators.atrPercent(atrBars, 3, 9);
-assert.equal(atr.value[0], null, 'ATR warmup bar 1');
-assert.equal(atr.value[1], null, 'ATR warmup bar 2');
-assert.ok(Math.abs(atr.value[2] - (4 / 12) * 100) < 1e-9, 'ATR3 / close calculation');
-assert.equal(atr.signal[9], null, 'ATR EMA9 warmup');
-assert.ok(Number.isFinite(atr.signal[10]), 'ATR EMA9 first value');
+const rangePack = indicators.rangeVolPercent(rangeBars, 5, 20);
+assert.equal(rangePack.value[0], null, 'range warmup bar 1');
+assert.equal(rangePack.value[3], null, 'range warmup bar 4');
+assert.ok(Number.isFinite(rangePack.value[4]), 'range value from 5th bar');
+// hi=16, lo=8, close=14 → (16-8)/14*100
+assert.ok(Math.abs(rangePack.value[4] - (8 / 14) * 100) < 1e-9, 'range vol5 / close calculation');
+assert.equal(rangePack.signal[22], null, 'SMA20 warmup through bar 23');
+assert.ok(Number.isFinite(rangePack.signal[23]), 'SMA20 from 24th bar');
 
 assert.equal(normalizeOhlcRange('3y'), '3y');
 assert.equal(normalizeOhlcRange('5y'), '5y');
@@ -661,15 +663,15 @@ const MAP_FILES = [
 ];
 for (const rel of MAP_FILES) {
   const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-  assert.ok(html.includes('candle_modal.js?v=34'), `${rel} must reference candle_modal.js?v=34`);
+  assert.ok(html.includes('candle_modal.js?v=35'), `${rel} must reference candle_modal.js?v=35`);
 }
 
 assert.ok(source.includes("priceScaleId: 'fr'"), 'foreignRatio uses overlay scale fr');
 assert.ok(source.includes('im-candle-hovertip'), 'floating hover tip element');
 assert.ok(source.includes('updateHoverTip'), 'updateHoverTip helper');
 assert.ok(
-  /labels\.bbw[\s\S]*labels\.disp[\s\S]*labels\.atr/.test(source.slice(source.indexOf('function updateHoverTip'))),
-  'hovertip includes bbw/disp/atr rows',
+  /labels\.bbw[\s\S]*labels\.disp[\s\S]*labels\.range/.test(source.slice(source.indexOf('function updateHoverTip'))),
+  'hovertip includes bbw/disp/range rows',
 );
 
-console.log('verify:candle OK — weekly OHLCV, ATR%, hover tip bbw/disp/atr, prev/next nav (v=34)');
+console.log('verify:candle OK — weekly OHLCV, 5D range vol% · SMA20, hover tip bbw/disp/range, prev/next nav (v=35)');

@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v5 + /api/ticker_ohlc.
- * One chart, six native panes (price / volume / MACD / investor OSC / BBW%·DISP% / ATR%).
+ * One chart, six native panes (price / volume / MACD / investor OSC / BBW%·DISP% / 5D range vol%).
  * The panes share a single time scale, so their x axes align by construction.
  */
 (function (global) {
@@ -25,7 +25,7 @@
     macd: { top: 0.12, bottom: 0.12 },
     investor: { top: 0.12, bottom: 0.12 },
     norm: { top: 0.12, bottom: 0.12 },
-    atr: { top: 0.12, bottom: 0.12 },
+    range: { top: 0.12, bottom: 0.12 },
   };
   /** Pane order and relative heights; index doubles as the v5 pane index. */
   var PANES = [
@@ -34,7 +34,7 @@
     { key: 'macd', stretch: 16 },
     { key: 'investor', stretch: 16 },
     { key: 'norm', stretch: 16 },
-    { key: 'atr', stretch: 15 },
+    { key: 'range', stretch: 15 },
   ];
   /** lightweight-charts draws a 1px separator between panes. */
   var PANE_SEPARATOR_PX = 1;
@@ -58,8 +58,8 @@
   var MACD_FAST = 12;
   var MACD_SLOW = 26;
   var MACD_SIGNAL = 9;
-  var ATR_PERIOD = 3;
-  var ATR_SIGNAL = 9;
+  var RANGE_PERIOD = 5;
+  var RANGE_SIGNAL = 20;
   var INVESTOR_OSC_LEVELS = [20, 50, 80];
   var INVESTOR_CUM_OPTIONS = [5, 10, 20];
   var INVESTOR_PERIOD_OPTIONS = [20, 50];
@@ -126,8 +126,8 @@
       instOsc: '기관',
       frgnOsc: '외국인',
       foreignRatio: '외국인 보유비율(%)',
-      atr: 'ATR(3)/종가%',
-      atrSignal: 'ATR EMA9',
+      range: '5일 변동성%',
+      rangeSignal: 'SMA20',
       chartLabel: '일봉 차트',
       weeklyChartLabel: '주봉 차트',
       panePrice: '가격',
@@ -137,7 +137,7 @@
       paneInvestorUnitDay: '일',
       paneInvestorUnitWeek: '주',
       paneNorm: 'BBW% · 이격도% (125일)',
-      paneAtr: 'ATR(3)/종가% · EMA9',
+      paneRange: '5일 변동성(고저/종가)% · SMA20',
       liveSession: '장중(현재가)',
     },
     en: {
@@ -170,8 +170,8 @@
       instOsc: 'Inst',
       frgnOsc: 'Frgn',
       foreignRatio: 'Foreign hold %',
-      atr: 'ATR(3)/Close%',
-      atrSignal: 'ATR EMA9',
+      range: '5D Range Vol%',
+      rangeSignal: 'SMA20',
       chartLabel: 'Daily chart',
       weeklyChartLabel: 'Weekly chart',
       panePrice: 'Price',
@@ -181,7 +181,7 @@
       paneInvestorUnitDay: 'd',
       paneInvestorUnitWeek: 'w',
       paneNorm: 'BBW% · DISP% (125d)',
-      paneAtr: 'ATR(3)/Close% · EMA9',
+      paneRange: '5D Range Vol% · SMA20',
       liveSession: 'Live (last)',
     },
   };
@@ -392,27 +392,37 @@
     return { line: line, signal: signal, hist: hist };
   }
 
-  /** ATR(period) / close × 100 with a trailing SMA of True Range and EMA signal. */
-  function atrPercent(bars, period, signalPeriod) {
-    var tr = new Array(bars.length);
+  /**
+   * 5-session high-low range / close × 100 [%], with SMA signal (not EMA).
+   * vol5[i] = (max(h) − min(l)) / close × 100 over bars[i-period+1 .. i].
+   */
+  function rangeVolPercent(bars, period, signalPeriod) {
+    var p = period | 0;
+    var sp = signalPeriod | 0;
+    var value = new Array(bars.length);
     for (var i = 0; i < bars.length; i++) {
-      var bar = bars[i];
-      var prevClose = i > 0 ? bars[i - 1].c : null;
-      var range = bar.h - bar.l;
-      if (prevClose != null && isFinite(prevClose)) {
-        range = Math.max(range, Math.abs(bar.h - prevClose), Math.abs(bar.l - prevClose));
+      value[i] = null;
+      if (p < 1 || i < p - 1) continue;
+      var hi = -Infinity;
+      var lo = Infinity;
+      var ok = true;
+      for (var j = i - p + 1; j <= i; j++) {
+        var bar = bars[j];
+        if (!bar || !isFinite(bar.h) || !isFinite(bar.l)) {
+          ok = false;
+          break;
+        }
+        if (bar.h > hi) hi = bar.h;
+        if (bar.l < lo) lo = bar.l;
       }
-      tr[i] = isFinite(range) ? range : null;
+      if (!ok || !(hi >= lo) || !(bars[i].c > 0)) continue;
+      value[i] = ((hi - lo) / bars[i].c) * 100;
     }
-    var atr = sma(tr, period);
-    var pct = new Array(bars.length);
-    for (var j = 0; j < bars.length; j++) {
-      pct[j] =
-        atr[j] != null && isFinite(atr[j]) && bars[j].c > 0
-          ? (atr[j] / bars[j].c) * 100
-          : null;
-    }
-    return { value: pct, signal: ema(pct, signalPeriod), tr: tr };
+    // sma() tolerates gaps poorly with leading nulls — keep only once `sp` finite vol values exist.
+    var signal = sma(value, sp);
+    var readyAt = p > 0 && sp > 0 ? p + sp - 2 : signal.length;
+    for (var s = 0; s < signal.length && s < readyAt; s++) signal[s] = null;
+    return { value: value, signal: signal };
   }
 
   function isoWeekKey(isoDate) {
@@ -1246,7 +1256,7 @@
       macd: labels.paneMacd,
       investor: paneInvestorLabel(state.investorCum, state.investorPeriod),
       norm: labels.paneNorm,
-      atr: labels.paneAtr,
+      range: labels.paneRange,
     };
     var nodes = root.querySelectorAll('[data-pane]');
     for (var i = 0; i < nodes.length; i++) {
@@ -1403,7 +1413,7 @@
     var disparity = disparityFromMa(closes, disparityMa);
     var dispPct = trailingMinMaxNorm(disparity, NORM_WINDOW);
     var macdPack = macd(closes, MACD_FAST, MACD_SLOW, MACD_SIGNAL);
-    var atrPack = atrPercent(fullBars, ATR_PERIOD, ATR_SIGNAL);
+    var rangePack = rangeVolPercent(fullBars, RANGE_PERIOD, RANGE_SIGNAL);
 
     var displayMap = DISPLAY_BARS[interval] || DISPLAY_BARS.daily;
     var displayN = displayMap[range] || displayMap['1y'];
@@ -1426,8 +1436,8 @@
     var foreignRatioBars = [];
     var bbwLine = [];
     var dispLine = [];
-    var atrLine = [];
-    var atrSignalLine = [];
+    var rangeLine = [];
+    var rangeSignalLine = [];
     var byTime = Object.create(null);
 
     for (var i = start; i < fullBars.length; i++) {
@@ -1472,11 +1482,11 @@
       }
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
-      if (atrPack.value[i] != null && isFinite(atrPack.value[i])) {
-        atrLine.push({ time: b.t, value: atrPack.value[i] });
+      if (rangePack.value[i] != null && isFinite(rangePack.value[i])) {
+        rangeLine.push({ time: b.t, value: rangePack.value[i] });
       }
-      if (atrPack.signal[i] != null && isFinite(atrPack.signal[i])) {
-        atrSignalLine.push({ time: b.t, value: atrPack.signal[i] });
+      if (rangePack.signal[i] != null && isFinite(rangePack.signal[i])) {
+        rangeSignalLine.push({ time: b.t, value: rangePack.signal[i] });
       }
       var row = {
         o: b.o,
@@ -1494,8 +1504,8 @@
         macdHist: macdPack.hist[i],
         bbw: bbwPct[i],
         disp: dispPct[i],
-        atr: atrPack.value[i],
-        atrSignal: atrPack.signal[i],
+        range: rangePack.value[i],
+        rangeSignal: rangePack.signal[i],
         live: !!b.live,
         foreignRatio: fr,
       };
@@ -1541,8 +1551,8 @@
       foreignRatioBars: foreignRatioBars,
       bbwLine: bbwLine,
       dispLine: dispLine,
-      atrLine: atrLine,
-      atrSignalLine: atrSignalLine,
+      rangeLine: rangeLine,
+      rangeSignalLine: rangeSignalLine,
       byTime: byTime,
     };
   }
@@ -1612,8 +1622,8 @@
     if (typeof b.disp === 'number' && isFinite(b.disp)) {
       html += hoverTipRow(labels.disp, fmtNum(b.disp, 1) + '%');
     }
-    if (typeof b.atr === 'number' && isFinite(b.atr)) {
-      html += hoverTipRow(labels.atr, fmtNum(b.atr, 2) + '%');
+    if (typeof b.range === 'number' && isFinite(b.range)) {
+      html += hoverTipRow(labels.range, fmtNum(b.range, 2) + '%');
     }
     tip.innerHTML = html;
     tip.style.display = 'block';
@@ -1729,13 +1739,13 @@
       ' ' +
       fmtNum(b.disp, 1) +
       ' · ' +
-      labels.atr +
+      labels.range +
       ' ' +
-      fmtNum(b.atr, 2) +
+      fmtNum(b.range, 2) +
       ' ' +
-      labels.atrSignal +
+      labels.rangeSignal +
       ' ' +
-      fmtNum(b.atrSignal, 2);
+      fmtNum(b.rangeSignal, 2);
     if (b.live) text += ' · ' + labels.liveSession;
     tip.textContent = text;
   }
@@ -1981,19 +1991,19 @@
     var dispSeries = addLine('norm', { color: '#39c5cf', title: 'DISP%' });
     dispSeries.setData(data.dispLine);
 
-    var atrSeries = addLine('atr', {
+    var rangeSeries = addLine('range', {
       color: '#a371f7',
       priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
-      title: 'ATR(3)/Close%',
+      title: t().range,
     });
-    atrSeries.setData(data.atrLine);
+    rangeSeries.setData(data.rangeLine);
 
-    var atrSignalSeries = addLine('atr', {
+    var rangeSignalSeries = addLine('range', {
       color: '#e3b341',
       priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
-      title: 'EMA9',
+      title: t().rangeSignal,
     });
-    atrSignalSeries.setData(data.atrSignalLine);
+    rangeSignalSeries.setData(data.rangeSignalLine);
 
     applyPaneLayout(LWC, chart);
 
@@ -2021,8 +2031,8 @@
       foreignRatio: foreignRatioSeries,
       bbw: bbwSeries,
       disp: dispSeries,
-      atr: atrSeries,
-      atrSignal: atrSignalSeries,
+      range: rangeSeries,
+      rangeSignal: rangeSignalSeries,
     };
     state.barsByTime = data.byTime;
 
@@ -2545,7 +2555,7 @@
       bandwidthPercentile: bandwidthPercentile,
       disparityFromMa: disparityFromMa,
       macd: macd,
-      atrPercent: atrPercent,
+      rangeVolPercent: rangeVolPercent,
       aggregateWeeklyBars: aggregateWeeklyBars,
       isoWeekKey: isoWeekKey,
       normalizeBars: normalizeBars,
