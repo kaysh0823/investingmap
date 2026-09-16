@@ -1,7 +1,8 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_movers
  * Hub-listed movers: mcap / 1d gainers / turnover / 5d turnover / 5d gainers Top 20.
- * Primary: Supabase. Fallback: hub_index (mcap). Includes rank + rankDelta.
+ * Returns from loadReturnSource + computeStockReturns (same as /api/quotes).
+ * mcap / turnover still from stock_quotes_latest.
  */
 
 import {
@@ -16,6 +17,8 @@ import {
 } from '../lib/hub_dashboard_core.mjs';
 import { enrichTopRowsWithRankDelta, attachListRanks } from '../lib/hub_rank_daily.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
+import { computeStockReturns } from '../lib/returns_core.mjs';
+import { loadReturnSource } from '../lib/hub_returns_source.mjs';
 import {
   anchoredCachePath,
   corsHeaders,
@@ -28,7 +31,7 @@ import {
   getSupabaseConfig,
 } from '../lib/supabase_hub.mjs';
 
-const CACHE_BASE = '/api/hub_movers/cache/v8';
+const CACHE_BASE = '/api/hub_movers/cache/v9';
 const ANCHOR_TICKER = '005930';
 const HISTORY_CHUNK = 80;
 
@@ -56,7 +59,6 @@ async function enrichMoversRanks(payload, config) {
       '[hub_movers] enrichMoversRanks failed:',
       err && err.message ? err.message : err,
     );
-    // Still attach list ranks so clients always see rank/rankDelta.
     return {
       ...payload,
       mcapTop10: attachListRanks(payload.mcapTop10 || [], null),
@@ -126,19 +128,71 @@ async function buildTurnover5dTop10(hubIndex, config) {
   }
 }
 
-async function buildMoversFromSupabase(hubIndex, config) {
-  const rows = await fetchSupabaseJson(
-    config,
-    'stock_quotes_latest?select=ticker,mcap_won,chg_1d_pct,ret_5d_pct,turnover_won,as_of&limit=2000',
-  );
+/**
+ * mcap/turnover from DB; 1d/5d returns from loadReturnSource + computeStockReturns.
+ */
+async function buildMoversFromReturnSource(hubIndex, config, request, env) {
+  const tickers = [
+    ...new Set(
+      listHubCompanies(hubIndex)
+        .map((c) => normalizeTicker(c.ticker))
+        .filter(Boolean),
+    ),
+  ];
+  const [quoteRows, source, turnover5dTop10] = await Promise.all([
+    fetchSupabaseJson(
+      config,
+      'stock_quotes_latest?select=ticker,mcap_won,turnover_won,as_of&limit=2000',
+    ),
+    loadReturnSource({ env, request, tickers }),
+    buildTurnover5dTop10(hubIndex, config),
+  ]);
+
+  if (!quoteRows?.length) return null;
+
+  const k = source?.meta?.k ?? 0;
+  const byTicker = new Map();
+  for (const row of quoteRows) {
+    const t = normalizeTicker(row.ticker);
+    if (!t) continue;
+    const src = source?.byTicker?.[t];
+    const returns = src
+      ? computeStockReturns({ numerator: src.numerator, closes: src.closes, k })
+      : {
+          chg1dPct: null,
+          ret5dPct: null,
+        };
+    byTicker.set(t, {
+      ticker: t,
+      mcap_won: row.mcap_won,
+      turnover_won: row.turnover_won,
+      as_of: row.as_of,
+      chg1dPct: returns.chg1dPct,
+      ret5dPct: returns.ret5dPct,
+    });
+  }
+
+  const rows = [...byTicker.values()];
   if (!rows.length) return null;
-  const turnover5dTop10 = await buildTurnover5dTop10(hubIndex, config);
+
   const payload = buildHubMoversFromSupabaseRows(hubIndex, rows, {
-    source: 'supabase',
+    source: 'stock_aggregate',
+    asOf: source?.meta?.asOf || null,
     turnover5dTop10,
   });
   if (!payload.mcapTop10 || !payload.mcapTop10.length) return null;
-  return enrichMoversRanks(payload, config);
+
+  const enriched = await enrichMoversRanks(payload, config);
+  return {
+    ...enriched,
+    asOf: source?.meta?.asOf || enriched.asOf,
+    sessionOpen: source?.meta?.sessionOpen ?? null,
+    numeratorMode: source?.meta?.numeratorMode ?? null,
+    anchorDd: source?.meta?.anchorDd ?? null,
+    refsRecentDd: source?.meta?.refsRecentDd ?? null,
+    k: source?.meta?.k ?? null,
+    stale: !!source?.meta?.stale,
+  };
 }
 
 async function buildMoversPayload(request, env) {
@@ -146,16 +200,15 @@ async function buildMoversPayload(request, env) {
   const hubIndex = await loadHubIndexFromRequest(request, env);
   if (config) {
     try {
-      const supabase = await buildMoversFromSupabase(hubIndex, config);
-      if (supabase) return supabase;
+      const live = await buildMoversFromReturnSource(hubIndex, config, request, env);
+      if (live) return live;
     } catch (err) {
       console.warn(
-        '[hub_movers] supabase path failed:',
+        '[hub_movers] return-source path failed:',
         err && err.message ? err.message : err,
       );
     }
   }
-  // Fallback still enrich from hub_rank_daily when config is available.
   return enrichMoversRanks(buildHubMoversFallback(hubIndex), config);
 }
 

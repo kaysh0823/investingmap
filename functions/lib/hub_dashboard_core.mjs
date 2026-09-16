@@ -253,8 +253,12 @@ export function buildHubMoversFromSupabaseRows(hubIndex, rows, opts = {}) {
     const mcapWon = row && numOrNull(row.mcap_won) != null ? numOrNull(row.mcap_won) : (c.mcapWon || 0);
     return moverRow(c, {
       mcapWon,
-      chg1dPct: row ? numOrNull(row.chg_1d_pct) : null,
-      ret5dPct: row ? numOrNull(row.ret_5d_pct) : null,
+      chg1dPct: row
+        ? (numOrNull(row.chg1dPct) ?? numOrNull(row.chg_1d_pct))
+        : null,
+      ret5dPct: row
+        ? (numOrNull(row.ret5dPct) ?? numOrNull(row.ret_5d_pct))
+        : null,
       turnoverWon: row ? numOrNull(row.turnover_won) : null,
     });
   });

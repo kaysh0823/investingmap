@@ -11,6 +11,7 @@ import {
   KRX_USER_AGENT,
   krxDataPost,
 } from './krx_data_session.mjs';
+import { normalizeKrxCode } from './krx_code.mjs';
 
 const KRX_OTP_URL = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
 const KRX_DOWNLOAD_URL = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
@@ -44,11 +45,7 @@ function tradedPrice(v) {
 }
 
 function padTicker(raw) {
-  const s = String(raw || '').replace(/"/g, '').trim();
-  if (!s) return null;
-  const digits = s.replace(/\D/g, '');
-  if (!digits) return null;
-  return digits.padStart(6, '0').slice(-6);
+  return normalizeKrxCode(raw);
 }
 
 function splitCsvLine(line) {
@@ -90,6 +87,8 @@ function findColumnIndex(headers, patterns) {
 /**
  * @returns {{
  *   ticker: string,
+ *   rawCode: string,
+ *   name: string|null,
  *   open: number|null,
  *   high: number|null,
  *   low: number|null,
@@ -101,11 +100,17 @@ function findColumnIndex(headers, patterns) {
  * }|null}
  */
 function rowFromCells(cells) {
-  const ticker = padTicker(cells.ticker);
+  const rawCode = String(cells.ticker || '').replace(/"/g, '').trim();
+  const ticker = normalizeKrxCode(cells.ticker);
   const close = tradedPrice(cells.close);
   if (!ticker || close == null) return null;
+  const name = cells.name != null && String(cells.name).trim()
+    ? String(cells.name).replace(/"/g, '').trim()
+    : null;
   return {
     ticker,
+    rawCode,
+    name,
     open: tradedPrice(cells.open),
     high: tradedPrice(cells.high),
     low: tradedPrice(cells.low),
@@ -141,6 +146,7 @@ function parseDailyOhlcCsv(text) {
 
   const headers = splitCsvLine(lines[headerIdx]);
   const tickerIdx = findColumnIndex(headers, ['종목코드', 'isu_srt_cd', '티커', 'ticker']);
+  const nameIdx = findColumnIndex(headers, ['종목명', 'isu_abbrv', 'isu_nm', 'name']);
   const openIdx = findColumnIndex(headers, ['시가', 'tdd_opnprc', 'open']);
   const highIdx = findColumnIndex(headers, ['고가', 'tdd_hgprc', 'high']);
   const lowIdx = findColumnIndex(headers, ['저가', 'tdd_lwprc', 'low']);
@@ -157,6 +163,7 @@ function parseDailyOhlcCsv(text) {
     if (!cols.length || cols.every((c) => !c)) continue;
     const parsed = rowFromCells({
       ticker: cols[tickerIdx],
+      name: nameIdx >= 0 ? cols[nameIdx] : null,
       open: openIdx >= 0 ? cols[openIdx] : null,
       high: highIdx >= 0 ? cols[highIdx] : null,
       low: lowIdx >= 0 ? cols[lowIdx] : null,
@@ -179,6 +186,7 @@ function parseDailyOhlcJson(json) {
   for (const row of out) {
     const parsed = rowFromCells({
       ticker: row.ISU_SRT_CD || row.ISU_CD || row.ticker,
+      name: row.ISU_ABBRV || row.ISU_NM || row.name,
       open: row.TDD_OPNPRC ?? row.tdd_opnprc,
       high: row.TDD_HGPRC ?? row.tdd_hgprc,
       low: row.TDD_LWPRC ?? row.tdd_lwprc,
@@ -275,13 +283,29 @@ async function fetchViaOtpCsv(env, dayYmd) {
 export async function fetchKrxDailyOhlc(dayYmd, env = process.env) {
   const ymd = String(dayYmd || '').replace(/\D/g, '');
   const out = new Map();
+  /** @type {Map<string, { rawCode: string, name: string|null, close: number }>} */
+  const firstMeta = new Map();
   if (ymd.length !== 8) return out;
 
   try {
     let rows = await fetchViaOtpCsv(env, ymd);
     if (!rows.length) rows = await fetchViaJson(env, ymd);
     for (const row of rows) {
-      if (!row?.ticker || out.has(row.ticker)) continue;
+      if (!row?.ticker) continue;
+      if (out.has(row.ticker)) {
+        const keep = firstMeta.get(row.ticker);
+        console.warn(
+          `[fetchKrxDailyOhlc] duplicate key ${row.ticker}: keep `
+          + `raw=${keep?.rawCode || '?'} name=${keep?.name || '?'} close=${keep?.close}; `
+          + `skip raw=${row.rawCode || '?'} name=${row.name || '?'} close=${row.close}`,
+        );
+        continue;
+      }
+      firstMeta.set(row.ticker, {
+        rawCode: row.rawCode || row.ticker,
+        name: row.name || null,
+        close: row.close,
+      });
       out.set(row.ticker, {
         open: row.open,
         high: row.high,
@@ -322,4 +346,55 @@ export function ymdToDash(ymd) {
   return `${ymd.slice(0, 4)}-${ymd.slice(4, 6)}-${ymd.slice(6, 8)}`;
 }
 
-export { KRX_USER_AGENT, KRX_MDI_REFERER, KRX_BLD };
+/** Debug / one-off: OTP CSV text + parsed rows. */
+export async function fetchDailyOhlcOtpCsvRaw(env, dayYmd) {
+  const ymd = String(dayYmd || '').replace(/\D/g, '');
+  const payload = buildPayload(ymd);
+  const { res: otpRes, session } = await krxDataPost(
+    env,
+    KRX_OTP_URL,
+    payload,
+    KRX_DAILY_OHLC_REFERER,
+  );
+  const otp = (await otpRes.text()).trim();
+  if (!otp || otp === 'LOGOUT' || otp.length < 8 || /html/i.test(otp)) {
+    if (!session.loggedIn) {
+      throw new Error('KRX login required — set KRX_ID and KRX_PW (data.krx.co.kr account)');
+    }
+    return { text: '', rows: [], otpOk: false };
+  }
+  const { res: dlRes } = await krxDataPost(
+    env,
+    KRX_DOWNLOAD_URL,
+    { code: otp },
+    KRX_OTP_URL,
+  );
+  if (!dlRes.ok) return { text: '', rows: [], otpOk: true, downloadStatus: dlRes.status };
+  const buf = Buffer.from(await dlRes.arrayBuffer());
+  const text = decodeCsvBuffer(buf);
+  return { text, rows: parseDailyOhlcCsv(text), otpOk: true };
+}
+
+/** Debug / one-off: getJsonData body + parsed rows. */
+export async function fetchDailyOhlcJsonRaw(env, dayYmd) {
+  const ymd = String(dayYmd || '').replace(/\D/g, '');
+  const fields = { bld: KRX_BLD, ...buildPayload(ymd) };
+  delete fields.name;
+  delete fields.url;
+  const { res, session } = await krxDataPost(env, KRX_JSON_URL, fields, KRX_DAILY_OHLC_REFERER);
+  const text = await res.text();
+  if (!session.loggedIn && text.trim() === 'LOGOUT') {
+    throw new Error('KRX login required — set KRX_ID and KRX_PW (data.krx.co.kr account)');
+  }
+  if (!res.ok) return { text, json: null, rows: [], ok: false, status: res.status };
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    return { text, json: null, rows: [], ok: false, parseError: true };
+  }
+  return { text, json, rows: parseDailyOhlcJson(json), ok: true };
+}
+
+export { KRX_USER_AGENT, KRX_MDI_REFERER, KRX_BLD, parseDailyOhlcCsv, parseDailyOhlcJson };
+export { normalizeKrxCode } from './krx_code.mjs';

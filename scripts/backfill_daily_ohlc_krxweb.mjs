@@ -9,7 +9,7 @@ import { fetchKrxDailyOhlc, ymdToDash } from '../functions/lib/krx_daily_ohlc.mj
 import { loadEnv } from './lib/investor_net_supabase.mjs';
 import { upsertHistoryRows } from './lib/hub_history_gap.mjs';
 
-const SAMPLE_TICKER = '005930';
+const SAMPLE_TICKERS = ['000150', '000880', '001200', '0015G0', '0088D0', '0120G0', '005930'];
 
 function parseArgs(argv) {
   let dayYmd = null;
@@ -42,6 +42,11 @@ function mapToHistoryRows(dailyMap, tradeDateDash) {
     });
   }
   return rows;
+}
+
+function fmt(n) {
+  if (n == null || !Number.isFinite(n)) return 'n/a';
+  return Number(n).toLocaleString('en-US');
 }
 
 async function main() {
@@ -78,15 +83,22 @@ async function main() {
     process.exit(1);
   }
 
-  const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
-  const sample = dailyMap.get(SAMPLE_TICKER);
-  const sampleClose =
-    sample && Number.isFinite(sample.close) ? sample.close : 'n/a';
+  console.log('sample closes:');
+  for (const t of SAMPLE_TICKERS) {
+    const f = dailyMap.get(t);
+    console.log(`  ${t} close=${fmt(f?.close)}${f ? '' : ' (missing)'}`);
+  }
+
+  const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey, {
+    tradeDateDash,
+    // --force: overwrite contaminated days even when prev close is wrong.
+    closeJumpSanity: !force,
+  });
 
   console.log(
     `daily-ohlc-krxweb ${tradeDateDash}: fetched ${dailyMap.size}, upserted ${result.upserted}` +
       (result.failed ? `, failed ${result.failed}` : '') +
-      `, ${SAMPLE_TICKER} close=${sampleClose}`,
+      (result.rejected ? `, jump-rejected ${result.rejected}` : ''),
   );
 
   if (result.failed) process.exit(1);

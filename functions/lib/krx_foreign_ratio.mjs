@@ -9,6 +9,7 @@ import {
   KRX_USER_AGENT,
   krxDataPost,
 } from './krx_data_session.mjs';
+import { normalizeKrxCode } from './krx_code.mjs';
 
 const KRX_OTP_URL = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
 const KRX_DOWNLOAD_URL = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
@@ -34,11 +35,7 @@ function parseNum(v) {
 }
 
 function padTicker(raw) {
-  const s = String(raw || '').replace(/"/g, '').trim();
-  if (!s) return null;
-  const digits = s.replace(/\D/g, '');
-  if (!digits) return null;
-  return digits.padStart(6, '0').slice(-6);
+  return normalizeKrxCode(raw);
 }
 
 function splitCsvLine(line) {

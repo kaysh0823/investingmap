@@ -1,7 +1,7 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_sector_trend?horizon=20d
  * 1d → sector_intraday_returns + live tip / synthesized point (== hub_sectors 1D);
- * else → hub_trend mcap series.
+ * else → hub_trend stock-aggregate series (base-100 → %).
  */
 
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';

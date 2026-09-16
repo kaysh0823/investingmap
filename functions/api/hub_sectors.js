@@ -1,7 +1,7 @@
 /**
  * Cloudflare Pages Function: GET /api/hub_sectors
  * Cap-weighted sector returns from the same loadReturnSource + aggregateSectorReturns
- * path as /api/quotes (not sector_mcap_daily).
+ * path as /api/quotes (stock-aggregate; not the legacy mcap-daily table).
  */
 
 import {

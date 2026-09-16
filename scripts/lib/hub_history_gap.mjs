@@ -5,6 +5,11 @@
  */
 import { tradingDates, fetchMarketDay, historyFieldsFromKrxRow } from '../../functions/lib/krx_yoy.mjs';
 import { normalizeTicker } from '../../functions/lib/hub_dashboard_core.mjs';
+import {
+  fetchAdjustmentTickersForDate,
+  fetchPrevClosesForDate,
+  filterRowsByCloseJumpSanity,
+} from '../../functions/lib/history_close_sanity.mjs';
 
 const HISTORY_UPSERT_BATCH = 500;
 const KRX_DELAY_MS = 150;
@@ -77,19 +82,45 @@ async function upsertHistoryBatch(rows, supabaseUrl, serviceKey, attempt = 0) {
   return { ok: false, body };
 }
 
-export async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
+export async function upsertHistoryRows(rows, supabaseUrl, serviceKey, opts = {}) {
+  const list = Array.isArray(rows) ? rows.slice() : [];
+  let toWrite = list;
+  let rejected = [];
+
+  if (opts.closeJumpSanity !== false && list.length) {
+    const tradeDate = opts.tradeDateDash
+      || list.find((r) => r?.trade_date)?.trade_date
+      || null;
+    if (tradeDate) {
+      const tickers = list.map((r) => r.ticker);
+      const [prevCloseByTicker, adjustmentTickers] = await Promise.all([
+        fetchPrevClosesForDate(supabaseUrl, serviceKey, tradeDate, tickers),
+        fetchAdjustmentTickersForDate(supabaseUrl, serviceKey, tradeDate),
+      ]);
+      const filtered = filterRowsByCloseJumpSanity(list, {
+        prevCloseByTicker,
+        adjustmentTickers,
+        label: `@${tradeDate}`,
+      });
+      toWrite = filtered.accepted;
+      rejected = filtered.rejected;
+    }
+  }
+
   let upserted = 0;
   let failed = 0;
-  for (let i = 0; i < rows.length; i += HISTORY_UPSERT_BATCH) {
-    const batch = rows.slice(i, i + HISTORY_UPSERT_BATCH);
+  for (let i = 0; i < toWrite.length; i += HISTORY_UPSERT_BATCH) {
+    const batch = toWrite.slice(i, i + HISTORY_UPSERT_BATCH);
     const result = await upsertHistoryBatch(batch, supabaseUrl, serviceKey);
-    if (!result.ok) {
+    if (result.ok) upserted += batch.length;
+    else {
       failed += batch.length;
-      continue;
+      console.error(
+        `history upsert failed batch@${i}: ${(result.body || '').slice(0, 200)}`,
+      );
     }
-    upserted += batch.length;
   }
-  return { upserted, failed };
+  return { upserted, failed, rejected: rejected.length, rejectedRows: rejected };
 }
 
 /**
