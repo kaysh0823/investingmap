@@ -405,7 +405,11 @@
     var circle = node.querySelector('.im-mm-bubble');
     if (circle) {
       var r = parseFloat(circle.getAttribute('r')) || 10;
-      circle.setAttribute('r', String(Math.max(r * 1.4, 18)));
+      var hoverFn =
+        global.InvestingMapTurnoverRadius && global.InvestingMapTurnoverRadius.hoverRadius
+          ? global.InvestingMapTurnoverRadius.hoverRadius
+          : function (rr) { return Math.max(rr * 1.4, 18); };
+      circle.setAttribute('r', String(hoverFn(r)));
     }
     if (!node.querySelector('text') && items && items.length) {
       var item = null;
@@ -416,7 +420,11 @@
         }
       }
       if (item) {
-        var label = bubbleLabelText(item.company, lang, Math.max(item.radius * 1.4, 18));
+        var labelR =
+          global.InvestingMapTurnoverRadius && global.InvestingMapTurnoverRadius.hoverRadius
+            ? global.InvestingMapTurnoverRadius.hoverRadius(item.radius)
+            : Math.max(item.radius * 1.4, 18);
+        var label = bubbleLabelText(item.company, lang, labelR);
         d3.select(node)
           .append('text')
           .attr('text-anchor', 'middle')
@@ -548,11 +556,30 @@
     var x = d3.scaleLinear().domain([0, 100]).range([0, innerW]);
     var y = d3.scaleLinear().domain([0, 100]).range([innerH, 0]);
     var maxTurnover = d3.max(items, function (item) { return item.turnover; }) || 1;
-    var maxRadius = Math.max(12, Math.min(mobile ? 30 : 42, Math.sqrt((innerW * innerH) / items.length) * 0.3));
-    var radius = d3.scaleSqrt().domain([0, maxTurnover]).range([7, maxRadius]);
+    var radiusApi =
+      global.InvestingMapTurnoverRadius && typeof global.InvestingMapTurnoverRadius.create === 'function'
+        ? global.InvestingMapTurnoverRadius.create({
+            items: items,
+            turnoverOf: function (item) { return item.turnover; },
+            innerW: innerW,
+            innerH: innerH,
+            mobile: mobile,
+          })
+        : null;
+    var radius = radiusApi
+      ? null
+      : d3.scaleSqrt()
+          .domain([0, maxTurnover])
+          .range([
+            7,
+            Math.max(12, Math.min(mobile ? 30 : 42, Math.sqrt((innerW * innerH) / items.length) * 0.3)),
+          ])
+          .clamp(true);
 
     items.forEach(function (item) {
-      item.radius = radius(item.turnover);
+      item.radius = radiusApi
+        ? radiusApi.radius(item)
+        : (item.turnover > 0 ? radius(item.turnover) : 7);
     });
     items.sort(function (a, b) {
       return b.radius - a.radius;

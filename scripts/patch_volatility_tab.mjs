@@ -99,8 +99,9 @@ const TRANSLATIONS = {
   ko: {
     tabVolatility: '📉 변동성 분포',
     volatilityTitle: '변동성 분포',
-    volatilityHint: '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
-    volatilityAxisAtr: 'ATR3/종가',
+    volatilityHint:
+      '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
+    volatilityAxisAtr: '5일 변동성 (고저폭 ÷ 종가, %)',
     volatilityAxisMcap: '시가총액(로그)',
     volatilityAtr: '5일 변동성%',
     volatilityMcap: '시가총액',
@@ -110,7 +111,7 @@ const TRANSLATIONS = {
     volatilityRs: 'RS',
     volatilityNoData: '변동성 스냅샷 데이터가 없습니다.',
     volatilityLegendSize: '크기 = 거래대금',
-    volatilityLegendLines: '세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
+    volatilityLegendLines: '세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
     volatilityLegendPctB: '색 = 20일 %b(진할수록 높음)',
     volatilityLegendChg: '색 = 당일 등락률',
     volatilityLegendRs: '색 = RS(진할수록 높음)',
@@ -118,14 +119,14 @@ const TRANSLATIONS = {
     volatilityModeChg: '당일 등락률',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      '크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 변동성 백분위 P10~P90(P25·P50·P75 강조)',
+      '크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
   },
   en: {
     tabVolatility: '📉 Volatility Distribution',
     volatilityTitle: 'Volatility Distribution',
     volatilityHint:
-      'Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
-    volatilityAxisAtr: 'ATR3/Close',
+      'Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
+    volatilityAxisAtr: '5D Range Vol (high−low ÷ close, %)',
     volatilityAxisMcap: 'Market cap (log)',
     volatilityAtr: '5D Range Vol%',
     volatilityMcap: 'Market cap',
@@ -135,7 +136,8 @@ const TRANSLATIONS = {
     volatilityRs: 'RS',
     volatilityNoData: 'No volatility snapshot data available.',
     volatilityLegendSize: 'Size = turnover',
-    volatilityLegendLines: 'Lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
+    volatilityLegendLines:
+      'Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
     volatilityLegendPctB: 'Color = 20D %b (darker = higher)',
     volatilityLegendChg: 'Color = 1-day change',
     volatilityLegendRs: 'Color = RS (darker = higher)',
@@ -143,7 +145,7 @@ const TRANSLATIONS = {
     volatilityModeChg: '1-day change',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      'Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide volatility percentiles P10~P90 (P25·P50·P75 emphasized)',
+      'Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
   },
 };
 

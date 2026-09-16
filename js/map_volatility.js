@@ -344,16 +344,51 @@
     };
   }
 
+  function turnoverRadiusApi(fg, innerW, innerH, mobile) {
+    if (global.InvestingMapTurnoverRadius && typeof global.InvestingMapTurnoverRadius.create === 'function') {
+      return global.InvestingMapTurnoverRadius.create({
+        items: fg,
+        turnoverOf: function (d) {
+          return d.turnoverWon > 0 ? d.turnoverWon : 0;
+        },
+        innerW: innerW,
+        innerH: innerH,
+        mobile: mobile,
+      });
+    }
+    var maxTurnover =
+      d3.max(fg, function (d) {
+        return d.turnoverWon > 0 ? d.turnoverWon : 0;
+      }) || 1;
+    var maxR = Math.max(
+      12,
+      Math.min(mobile ? 30 : 42, Math.sqrt((innerW * innerH) / Math.max(1, fg.length)) * 0.3),
+    );
+    var scale = d3.scaleSqrt().domain([0, maxTurnover]).range([7, maxR]).clamp(true);
+    return {
+      radius: function (d) {
+        return d.turnoverWon > 0 ? scale(d.turnoverWon) : 7;
+      },
+      minR: 7,
+      maxR: maxR,
+      hoverRadius: function (r) {
+        return Math.max(r * 1.4, 18);
+      },
+    };
+  }
+
+  /** @deprecated thin wrapper for tests — prefer turnoverRadiusApi */
   function turnoverRadiusScale(fg) {
     var maxTurnover =
       d3.max(fg, function (d) {
         return d.turnoverWon > 0 ? d.turnoverWon : 0;
       }) || 1;
-    return d3.scaleSqrt().domain([0, maxTurnover]).range([4, 16]).clamp(true);
+    return d3.scaleSqrt().domain([0, maxTurnover]).range([7, 16]).clamp(true);
   }
 
   function dotRadius(d, rScale) {
-    return d.turnoverWon > 0 ? rScale(d.turnoverWon) : 4;
+    if (rScale && typeof rScale.radius === 'function') return rScale.radius(d);
+    return d.turnoverWon > 0 ? rScale(d.turnoverWon) : 7;
   }
 
   function snapshotUrl() {
@@ -485,8 +520,12 @@
     } catch (eRaise) { /* ignore */ }
     var circle = node.querySelector('.im-vol-dot');
     if (circle) {
-      var r = parseFloat(circle.getAttribute('r')) || 6;
-      circle.setAttribute('r', String(Math.max(r * 1.35, 10)));
+      var r = parseFloat(circle.getAttribute('r')) || 7;
+      var hoverFn =
+        global.InvestingMapTurnoverRadius && global.InvestingMapTurnoverRadius.hoverRadius
+          ? global.InvestingMapTurnoverRadius.hoverRadius
+          : function (rr) { return Math.max(rr * 1.4, 18); };
+      circle.setAttribute('r', String(hoverFn(r)));
     }
     try {
       node.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
@@ -740,7 +779,10 @@
     var x = d3.scaleLinear().domain(xDomain).range([0, innerW]).clamp(true);
     var y = d3.scaleLog().domain(yDomain).range([innerH, 0]).clamp(true);
     var colorFn = buildColorFn(fg, selectedColorMode);
-    var rScale = turnoverRadiusScale(fg);
+    var rScale = turnoverRadiusApi(fg, innerW, innerH, mobile);
+    fg.sort(function (a, b) {
+      return rScale.radius(b) - rScale.radius(a);
+    });
 
     var nameByTicker = {};
     (opts.companies || []).forEach(function (c) {
@@ -918,6 +960,7 @@
     colorForChg: colorForChg,
     dotRadius: dotRadius,
     turnoverRadiusScale: turnoverRadiusScale,
+    turnoverRadiusApi: turnoverRadiusApi,
     expandLinearDomain: expandLinearDomain,
     expandLogDomain: expandLogDomain,
     formatMcapAxis: formatMcapAxis,

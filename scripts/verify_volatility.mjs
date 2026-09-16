@@ -239,7 +239,10 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('map_volatility.js?v=10'), `${rel}: missing map_volatility.js v10`);
+  assert.ok(html.includes('turnover_radius.js?v=1'), `${rel}: missing turnover_radius.js`);
+  assert.ok(html.includes('map_volatility.js?v=11'), `${rel}: missing map_volatility.js v11`);
+  assert.ok(html.includes('map_momentum.js?v=15'), `${rel}: missing map_momentum.js v15`);
+  assert.ok(!html.includes('ATR' + '3'), `${rel}: leftover ATR` + `3 label`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
   assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);
 }
@@ -250,7 +253,53 @@ assert.ok(
 );
 assert.ok(typeof buildVolatilitySnapshot === 'function', 'buildVolatilitySnapshot export');
 assert.ok(fs.existsSync(path.join(ROOT, 'lib', 'range_vol.mjs')), 'lib/range_vol.mjs');
+assert.ok(fs.existsSync(path.join(ROOT, 'js', 'turnover_radius.js')), 'js/turnover_radius.js');
 
+// Radius parity: same sector max turnover → same r (±1) for momentum/volatility domain inputs.
+{
+  const d3Src = `
+    globalThis.d3 = {
+      max(arr, fn) { let m = -Infinity; for (const x of arr) { const v = fn ? fn(x) : x; if (v > m) m = v; } return m === -Infinity ? undefined : m; },
+      scaleSqrt() {
+        let domain = [0, 1], range = [0, 1], clamp = false;
+        const scale = (v) => {
+          const d0 = domain[0], d1 = domain[1], r0 = range[0], r1 = range[1];
+          let t = d1 === d0 ? 0 : (Math.sqrt(Math.max(0, v)) - Math.sqrt(Math.max(0, d0))) / (Math.sqrt(Math.max(0, d1)) - Math.sqrt(Math.max(0, d0)));
+          if (clamp) t = Math.max(0, Math.min(1, t));
+          return r0 + (r1 - r0) * t;
+        };
+        scale.domain = (d) => { if (d) { domain = d; return scale; } return domain; };
+        scale.range = (r) => { if (r) { range = r; return scale; } return range; };
+        scale.clamp = (c) => { if (c != null) { clamp = !!c; return scale; } return clamp; };
+        return scale;
+      },
+    };
+  `;
+  const trSrc = fs.readFileSync(path.join(ROOT, 'js', 'turnover_radius.js'), 'utf8');
+  const ctx = { console };
+  vm.createContext(ctx);
+  new vm.Script(d3Src + trSrc, { filename: 'turnover_radius.js' }).runInContext(ctx);
+  const api = ctx.InvestingMapTurnoverRadius;
+  assert.ok(api && typeof api.create === 'function', 'InvestingMapTurnoverRadius.create');
+  const items = [
+    { turnover: 1e11, turnoverWon: 1e11 },
+    { turnover: null, turnoverWon: null },
+    { turnover: 5e10, turnoverWon: 5e10 },
+  ];
+  const common = { items, innerW: 800, innerH: 500, mobile: false };
+  const mm = api.create({
+    ...common,
+    turnoverOf: (d) => (d.turnover > 0 ? d.turnover : 0),
+  });
+  const vol = api.create({
+    ...common,
+    turnoverOf: (d) => (d.turnoverWon > 0 ? d.turnoverWon : 0),
+  });
+  assert.ok(Math.abs(mm.radius(items[0]) - vol.radius(items[0])) <= 1, 'max turnover radius parity');
+  assert.equal(mm.radius(items[1]), mm.minR, 'null turnover → minR (momentum)');
+  assert.equal(vol.radius(items[1]), vol.minR, 'null turnover → minR (volatility)');
+  assert.equal(api.hoverRadius(10), Math.max(10 * 1.4, 18));
+}
 if (fs.existsSync(path.join(ROOT, 'dist'))) {
   assert.ok(fs.existsSync(path.join(ROOT, 'dist', 'js', 'map_volatility.js')), 'dist/js/map_volatility.js');
   assert.ok(
