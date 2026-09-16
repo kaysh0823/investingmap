@@ -2,14 +2,21 @@
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
 
+/data/*.json
+  Cache-Control: public, max-age=300, stale-while-revalidate=60
+
+# Snapshot JSON: unset wildcard Cache-Control then set 60s (Pages appends otherwise).
 /data/hub_return_refs.json
+  ! Cache-Control
   Cache-Control: public, max-age=60, must-revalidate
 
 /data/hub_rs_snapshot.json
+  ! Cache-Control
   Cache-Control: public, max-age=60, must-revalidate
 
-/data/*.json
-  Cache-Control: public, max-age=300, stale-while-revalidate=60
+/data/hub_sector_returns.json
+  ! Cache-Control
+  Cache-Control: public, max-age=60, must-revalidate
 
 /js/*.js
   Content-Type: application/javascript; charset=utf-8
