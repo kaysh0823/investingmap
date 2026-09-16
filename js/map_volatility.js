@@ -344,15 +344,15 @@
     };
   }
 
-  function turnoverRadiusApi(fg, innerW, innerH, mobile) {
+  function turnoverRadiusApi(fg, width, height, mobile) {
     if (global.InvestingMapTurnoverRadius && typeof global.InvestingMapTurnoverRadius.create === 'function') {
       return global.InvestingMapTurnoverRadius.create({
         items: fg,
         turnoverOf: function (d) {
           return d.turnoverWon > 0 ? d.turnoverWon : 0;
         },
-        innerW: innerW,
-        innerH: innerH,
+        width: width,
+        height: height,
         mobile: mobile,
       });
     }
@@ -362,7 +362,7 @@
       }) || 1;
     var maxR = Math.max(
       12,
-      Math.min(mobile ? 30 : 42, Math.sqrt((innerW * innerH) / Math.max(1, fg.length)) * 0.3),
+      Math.min(mobile ? 30 : 42, Math.sqrt((width * height) / Math.max(1, fg.length)) * 0.3),
     );
     var scale = d3.scaleSqrt().domain([0, maxTurnover]).range([7, maxR]).clamp(true);
     return {
@@ -779,7 +779,7 @@
     var x = d3.scaleLinear().domain(xDomain).range([0, innerW]).clamp(true);
     var y = d3.scaleLog().domain(yDomain).range([innerH, 0]).clamp(true);
     var colorFn = buildColorFn(fg, selectedColorMode);
-    var rScale = turnoverRadiusApi(fg, innerW, innerH, mobile);
+    var rScale = turnoverRadiusApi(fg, width, height, mobile);
     fg.sort(function (a, b) {
       return rScale.radius(b) - rScale.radius(a);
     });

@@ -14,8 +14,8 @@
    * @param {{
    *   items: any[],
    *   turnoverOf: (d: any) => number,
-   *   innerW: number,
-   *   innerH: number,
+   *   width: number,
+   *   height: number,
    *   mobile?: boolean
    * }} opts
    */
@@ -24,8 +24,15 @@
     var turnoverOf = opts && typeof opts.turnoverOf === 'function'
       ? opts.turnoverOf
       : function () { return 0; };
-    var innerW = Math.max(1, Number(opts && opts.innerW) || 1);
-    var innerH = Math.max(1, Number(opts && opts.innerH) || 1);
+    // Prefer SVG outer size; fall back to legacy innerW/innerH if callers lag.
+    var width = Math.max(
+      1,
+      Number(opts && opts.width) || Number(opts && opts.innerW) || 1,
+    );
+    var height = Math.max(
+      1,
+      Number(opts && opts.height) || Number(opts && opts.innerH) || 1,
+    );
     var mobile = !!(opts && opts.mobile);
     var n = Math.max(1, items.length);
     var maxTurnover = (typeof d3 !== 'undefined' && d3.max
@@ -34,7 +41,7 @@
     if (!(maxTurnover > 0)) maxTurnover = 1;
     var maxR = Math.max(
       12,
-      Math.min(mobile ? 30 : 42, Math.sqrt((innerW * innerH) / n) * 0.3),
+      Math.min(mobile ? 30 : 42, Math.sqrt((width * height) / n) * 0.3),
     );
     var scale =
       typeof d3 !== 'undefined' && d3.scaleSqrt

@@ -239,9 +239,9 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(html.includes('turnover_radius.js?v=1'), `${rel}: missing turnover_radius.js`);
-  assert.ok(html.includes('map_volatility.js?v=11'), `${rel}: missing map_volatility.js v11`);
-  assert.ok(html.includes('map_momentum.js?v=15'), `${rel}: missing map_momentum.js v15`);
+  assert.ok(html.includes('turnover_radius.js?v=2'), `${rel}: missing turnover_radius.js`);
+  assert.ok(html.includes('map_volatility.js?v=12'), `${rel}: missing map_volatility.js v12`);
+  assert.ok(html.includes('map_momentum.js?v=16'), `${rel}: missing map_momentum.js v16`);
   assert.ok(!html.includes('ATR' + '3'), `${rel}: leftover ATR` + `3 label`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
   assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);
@@ -286,7 +286,7 @@ assert.ok(fs.existsSync(path.join(ROOT, 'js', 'turnover_radius.js')), 'js/turnov
     { turnover: null, turnoverWon: null },
     { turnover: 5e10, turnoverWon: 5e10 },
   ];
-  const common = { items, innerW: 800, innerH: 500, mobile: false };
+  const common = { items, width: 800, height: 500, mobile: false };
   const mm = api.create({
     ...common,
     turnoverOf: (d) => (d.turnover > 0 ? d.turnover : 0),
@@ -299,6 +299,64 @@ assert.ok(fs.existsSync(path.join(ROOT, 'js', 'turnover_radius.js')), 'js/turnov
   assert.equal(mm.radius(items[1]), mm.minR, 'null turnover → minR (momentum)');
   assert.equal(vol.radius(items[1]), vol.minR, 'null turnover → minR (volatility)');
   assert.equal(api.hoverRadius(10), Math.max(10 * 1.4, 18));
+
+  // Semiconductor 036930: same SVG outer size + same sector turnover universe → r within ±0.05.
+  const semiHtml = fs.readFileSync(
+    path.join(ROOT, 'semiconductor', 'korea_semiconductor_map.html'),
+    'utf8',
+  );
+  const tickerRe = /ticker:\s*'(\d{6})'/g;
+  const semiTickers = new Set();
+  let tm;
+  while ((tm = tickerRe.exec(semiHtml))) semiTickers.add(tm[1]);
+  assert.ok(semiTickers.has('036930'), '036930 in semiconductor map');
+  const quotesSnap = snapshot.quotes || {};
+  const rsQuotes = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'data', 'hub_rs_snapshot.json'), 'utf8'),
+  ).quotes || {};
+  // Shared displayed universe: in vol snapshot + has RS (both views can plot with live turnover).
+  const shared = [];
+  for (const t of semiTickers) {
+    const vq = quotesSnap[t];
+    const rq = rsQuotes[t];
+    const rv =
+      typeof vq?.rangeVol5 === 'number'
+        ? vq.rangeVol5
+        : typeof vq?.atrPct === 'number'
+          ? vq.atrPct
+          : null;
+    if (!(vq?.mcap > 0) || rv == null) continue;
+    if (typeof rq?.rs !== 'number') continue;
+    // Deterministic stand-in for live turnoverWon (absent from static snapshots).
+    const turnover = 1e8 * (1 + (Number(t) % 97));
+    shared.push({ ticker: t, turnover, turnoverWon: turnover });
+  }
+  assert.ok(shared.length >= 10, `semi shared universe too small (${shared.length})`);
+  assert.ok(shared.some((d) => d.ticker === '036930'), '036930 in shared universe');
+  const chart = { width: 1200, height: 500, mobile: false };
+  const mmApi = api.create({
+    items: shared,
+    turnoverOf: (d) => (d.turnover > 0 ? d.turnover : 0),
+    ...chart,
+  });
+  const volApi = api.create({
+    items: shared,
+    turnoverOf: (d) => (d.turnoverWon > 0 ? d.turnoverWon : 0),
+    ...chart,
+  });
+  const row = shared.find((d) => d.ticker === '036930');
+  const rMm = mmApi.radius(row);
+  const rVol = volApi.radius(row);
+  assert.ok(
+    Math.abs(rMm - rVol) <= 0.05,
+    `036930 radius parity mm=${rMm} vol=${rVol} (n=${shared.length} maxR=${mmApi.maxR})`,
+  );
+  // Outer-size formula check (not inner plot area).
+  const expectedMaxR = Math.max(
+    12,
+    Math.min(42, Math.sqrt((chart.width * chart.height) / shared.length) * 0.3),
+  );
+  assert.ok(Math.abs(mmApi.maxR - expectedMaxR) < 1e-9, 'maxR uses SVG width*height');
 }
 if (fs.existsSync(path.join(ROOT, 'dist'))) {
   assert.ok(fs.existsSync(path.join(ROOT, 'dist', 'js', 'map_volatility.js')), 'dist/js/map_volatility.js');

@@ -8,10 +8,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 15;
-const LIVE_QUOTES_V = 22;
+const SCRIPT_V = 16;
+const LIVE_QUOTES_V = 25;
 const TAB_STATE_V = 9;
-const TURNOVER_RADIUS_V = 1;
+const TURNOVER_RADIUS_V = 2;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -250,8 +250,13 @@ function patchRuntime(source) {
 }
 
 function ensureTurnoverRadiusScript(source) {
-  if (source.includes('turnover_radius.js')) return source;
   const tag = `<script src="../js/turnover_radius.js?v=${TURNOVER_RADIUS_V}"></script>`;
+  if (source.includes('turnover_radius.js')) {
+    return source.replace(
+      /turnover_radius\.js(?:\?v=\d+)?/g,
+      `turnover_radius.js?v=${TURNOVER_RADIUS_V}`,
+    );
+  }
   if (/<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
     return source.replace(
       /(<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>)/,

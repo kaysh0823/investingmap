@@ -561,8 +561,8 @@
         ? global.InvestingMapTurnoverRadius.create({
             items: items,
             turnoverOf: function (item) { return item.turnover; },
-            innerW: innerW,
-            innerH: innerH,
+            width: width,
+            height: height,
             mobile: mobile,
           })
         : null;
@@ -572,7 +572,7 @@
           .domain([0, maxTurnover])
           .range([
             7,
-            Math.max(12, Math.min(mobile ? 30 : 42, Math.sqrt((innerW * innerH) / items.length) * 0.3)),
+            Math.max(12, Math.min(mobile ? 30 : 42, Math.sqrt((width * height) / items.length) * 0.3)),
           ])
           .clamp(true);
 
