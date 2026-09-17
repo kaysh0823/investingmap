@@ -72,7 +72,7 @@ export async function onRequest(context) {
       asOf: payload.asOf,
       tradeDate: payload.tradeDate,
       regularSession: payload.regularSession ?? session.regular,
-      sessionOpen: payload.sessionOpen ?? !!(session.regular || session.aftermarket),
+      sessionOpen: payload.sessionOpen ?? !!session.regular,
       numeratorMode: payload.numeratorMode ?? null,
       anchorDd: payload.anchorDd ?? null,
       refsRecentDd: payload.refsRecentDd ?? null,

@@ -147,13 +147,14 @@ export async function computeLiveSectorAggregates(hubIndex, env, request, now = 
     bySector.set(sid, aggregateSectorReturns(members));
   }
   const session = krxSessionInfo(now);
-  const sessionOpen = source.meta?.sessionOpen ?? !!(session.regular || session.aftermarket);
+  const sessionOpen = source.meta?.sessionOpen ?? !!session.regular;
   return {
     bySector,
     source,
     meta: {
       asOf: source.meta?.asOf || now.toISOString(),
       sessionOpen,
+      regularSession: source.meta?.regularSession ?? !!session.regular,
       numeratorMode: source.meta?.numeratorMode ?? (sessionOpen ? 'live' : 'official'),
       anchorDd: source.meta?.anchorDd || null,
       refsRecentDd: source.meta?.refsRecentDd || null,
@@ -185,9 +186,10 @@ export async function buildIntraday1dSeries({
 }) {
   const live = await computeLiveSectorAggregates(hubIndex, env, request, now);
   const meta = live.meta;
-  const sessionOpen = !!meta.sessionOpen;
+  const numeratorMode = meta.numeratorMode || (meta.sessionOpen ? 'live' : 'official');
+  const liveTip = numeratorMode === 'live';
   const anchorDash = basDdToDash(meta.anchorDd) || kstYmdDash(now);
-  const tipTs = tipTimestamp(sessionOpen, anchorDash, now);
+  const tipTs = tipTimestamp(liveTip, anchorDash, now);
   const config = getSupabaseConfig(env);
 
   let rows = [];
@@ -197,6 +199,7 @@ export async function buildIntraday1dSeries({
         config,
         `sector_intraday_returns?trade_date=eq.${encodeURIComponent(anchorDash)}`
           + `&select=sector_id,ts,ret_1d_pct,anchor_dd,session_kind`
+          + `&session_kind=in.(regular,close)`
           + `&order=ts.asc`,
       );
     } catch {
@@ -208,31 +211,43 @@ export async function buildIntraday1dSeries({
   for (const row of rows || []) {
     const sid = row.sector_id;
     if (!sid) continue;
+    const kind = String(row.session_kind || 'regular');
+    if (kind !== 'regular' && kind !== 'close') continue;
     if (!bySector.has(sid)) bySector.set(sid, []);
     const v = Number(row.ret_1d_pct);
     if (!Number.isFinite(v)) continue;
-    if (!sessionOpen && row.session_kind === 'aftermarket') continue;
     bySector.get(sid).push({
       t: row.ts,
       v: round2(v),
-      session_kind: row.session_kind || 'regular',
+      session_kind: kind,
     });
   }
 
   const hasAnyRow = [...bySector.values()].some((pts) => pts.length > 0);
   /** @type {Record<string, {t:string,v:number,synthesized?:boolean,live?:boolean}[]>} */
   const trends = {};
+  /** @type {Record<string, number>} */
+  const distinctValues = {};
+  let pointCount = 0;
 
   if (!hasAnyRow) {
     for (const sid of SECTOR_ORDER) {
       const agg = live.bySector.get(sid);
       const v = agg?.chg1dPct;
       if (v == null) continue;
-      trends[sid] = [{ t: tipTs, v: round2(v), synthesized: true }];
+      const series = liveTip
+        ? [{ t: tipTs, v: round2(v), synthesized: true }]
+        : [
+          { t: `${anchorDash}T09:00:00+09:00`, v: 0, session_kind: 'regular' },
+          { t: `${anchorDash}T15:30:00+09:00`, v: round2(v), session_kind: 'close' },
+        ];
+      trends[sid] = series;
+      distinctValues[sid] = new Set(series.map((p) => p.v)).size;
+      pointCount = Math.max(pointCount, series.length);
     }
     return {
       trends,
-      meta,
+      meta: { ...meta, numeratorMode, pointCount, distinctValues },
       synthesized: true,
       source: 'live_aggregate',
       tradeDate: anchorDash,
@@ -245,13 +260,21 @@ export async function buildIntraday1dSeries({
     const liveV = live.bySector.get(sid)?.chg1dPct;
     if (!pts.length) {
       if (liveV == null) continue;
-      trends[sid] = [{ t: tipTs, v: round2(liveV), synthesized: true }];
+      const series = liveTip
+        ? [{ t: tipTs, v: round2(liveV), synthesized: true }]
+        : [
+          { t: `${anchorDash}T09:00:00+09:00`, v: 0 },
+          { t: `${anchorDash}T15:30:00+09:00`, v: round2(liveV) },
+        ];
+      trends[sid] = series;
+      distinctValues[sid] = new Set(series.map((p) => p.v)).size;
+      pointCount = Math.max(pointCount, series.length);
       continue;
     }
     if (!pts[0].t?.includes('T09:00')) {
       pts = [{ t: `${anchorDash}T09:00:00+09:00`, v: 0, session_kind: 'regular' }, ...pts];
     }
-    if (sessionOpen && liveV != null) {
+    if (liveTip && liveV != null) {
       const lastTs = pts[pts.length - 1]?.t;
       const lastMs = lastTs ? Date.parse(lastTs) : 0;
       const tipMs = Date.parse(tipTs);
@@ -261,12 +284,15 @@ export async function buildIntraday1dSeries({
         pts = [...pts.slice(0, -1), { ...pts[pts.length - 1], v: round2(liveV), live: true }];
       }
     }
-    trends[sid] = downsamplePts(pts, 30);
+    const down = downsamplePts(pts, 60);
+    trends[sid] = down;
+    distinctValues[sid] = new Set(down.map((p) => p.v)).size;
+    pointCount = Math.max(pointCount, down.length);
   }
 
   return {
     trends,
-    meta,
+    meta: { ...meta, numeratorMode, pointCount, distinctValues },
     synthesized: false,
     source: 'sector_intraday_returns',
     tradeDate: anchorDash,

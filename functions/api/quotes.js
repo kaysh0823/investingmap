@@ -276,7 +276,8 @@ export async function onRequest(context) {
   const codesRaw = url.searchParams.get('codes') || '';
   const codes = [...new Set(codesRaw.split(/[, ]+/).map(normalizeTicker).filter(Boolean))];
   const session = krxSessionInfo();
-  const sessionOpen = !!(session.regular || session.aftermarket);
+  // Prefer loader meta; fall back to regular-only session (never aftermarket).
+  const sessionOpenFallback = !!session.regular;
   const warmHist = url.searchParams.get('warm') === '1';
   const supabaseConfig = getSupabaseConfig(env);
 
@@ -285,8 +286,8 @@ export async function onRequest(context) {
   const indices = slimMarketIndices(snap && snap.indices);
 
   const emptyMeta = {
-    sessionOpen,
-    numeratorMode: sessionOpen ? 'live' : 'official',
+    sessionOpen: sessionOpenFallback,
+    numeratorMode: sessionOpenFallback ? 'live' : 'official',
     anchorDd: null,
     refsRecentDd: null,
     k: 0,
@@ -301,7 +302,7 @@ export async function onRequest(context) {
         source: supabaseConfig ? 'supabase' : 'naver-sise-cache',
         configured: true,
         krxConfigured: !!authKey,
-        regularSession: sessionOpen,
+        regularSession: !!session.regular,
         ...emptyMeta,
         ...(indices ? { indices } : {}),
       }),
@@ -318,7 +319,7 @@ export async function onRequest(context) {
         payload = {
           asOf: supabase.asOf,
           source: 'supabase',
-          regularSession: sessionOpen,
+          regularSession: !!session.regular,
           items: supabase.items,
         };
       } catch {
@@ -326,7 +327,7 @@ export async function onRequest(context) {
         payload = {
           asOf: new Date().toISOString(),
           ...naver,
-          regularSession: sessionOpen,
+          regularSession: !!session.regular,
         };
       }
     } else {
@@ -334,7 +335,7 @@ export async function onRequest(context) {
       payload = {
         asOf: new Date().toISOString(),
         ...naver,
-        regularSession: sessionOpen,
+        regularSession: !!session.regular,
       };
     }
 
@@ -344,7 +345,7 @@ export async function onRequest(context) {
       env,
       request,
       tickers: codes,
-      staleRefresh: sessionOpen
+      staleRefresh: sessionOpenFallback
         ? async (staleCodes) => getCachedNaverQuotes(staleCodes, { concurrency: 4 })
         : null,
     });
@@ -352,7 +353,8 @@ export async function onRequest(context) {
     applyReturnsFromSource(payload.items, source);
     Object.assign(payload, source.meta);
     if (source.meta?.asOf) payload.asOf = source.meta.asOf;
-    payload.regularSession = sessionOpen;
+    payload.regularSession = source.meta?.regularSession ?? !!session.regular;
+    payload.sessionOpen = source.meta?.sessionOpen ?? sessionOpenFallback;
     if (source.meta?.stale) payload.source = `${payload.source}+stale-naver`;
 
     if (indices) payload.indices = indices;
@@ -370,7 +372,7 @@ export async function onRequest(context) {
         message: e && e.message ? String(e.message) : 'unknown',
         asOf: new Date().toISOString(),
         items: {},
-        regularSession: sessionOpen,
+        regularSession: !!session.regular,
         ...emptyMeta,
       }),
       { status: 502, headers: { ...ch, 'Content-Type': 'application/json; charset=utf-8' } },

@@ -149,8 +149,7 @@ export function secondsUntilNextSessionOpen(now = new Date()) {
 
 /**
  * Cloudflare / browser Cache-Control max-age for market data.
- * Regular + aftermarket: short TTL. Closed: never outlive the next 09:00 KST open
- * (optionally capped via closedMax for hub Cache API entries).
+ * Regular session: short TTL. Closed (incl. aftermarket): until next 09:00 KST open.
  * @param {Date} [now]
  * @param {{ regularMax?: number, closedMax?: number|null }} [opts]
  */
@@ -158,7 +157,7 @@ export function edgeCacheMaxAgeSeconds(now = new Date(), opts = {}) {
   const regularMax = opts.regularMax != null ? opts.regularMax : 300;
   const closedMax = Object.prototype.hasOwnProperty.call(opts, 'closedMax') ? opts.closedMax : null;
   const s = krxSessionInfo(now);
-  if (s.regular || s.aftermarket) return regularMax;
+  if (s.regular) return regularMax;
   const untilOpen = secondsUntilNextSessionOpen(now);
   if (closedMax == null) return Math.max(60, untilOpen);
   return Math.max(60, Math.min(closedMax, untilOpen));
@@ -187,15 +186,22 @@ export function isKrxClockRegularSession(now = new Date()) {
   return p.weekday >= 1 && p.weekday <= 5 && minutes >= SESSION_OPEN && minutes <= SESSION_CLOSE;
 }
 
-/** Regular / aftermarket: refresh Naver quotes (incl. mcap) every 5 min. */
+/** Regular session only: refresh Naver quotes every 5 min. Aftermarket uses off-hours TTL. */
 export const NAVER_REFRESH_MS_REGULAR = 5 * 60 * 1000;
-/** Off-hours / weekends: still refresh, but less often. */
+/** Off-hours / weekends / aftermarket: still refresh, but less often. */
 export const NAVER_REFRESH_MS_OFF = 30 * 60 * 1000;
 /** @deprecated use naverRefreshMs() */
 export const NAVER_REFRESH_MS = NAVER_REFRESH_MS_REGULAR;
 
+/**
+ * True only during regular continuous auction (09:00–15:30 weekday).
+ * Aftermarket is NOT "session open" for returns numerators.
+ * @param {Date} [now]
+ */
+export function isSessionOpen(now = new Date()) {
+  return krxSessionInfo(now).regular;
+}
+
 export function naverRefreshMs(now = new Date()) {
-  return isKrxRegularSession(now) || isKrxAfterMarket(now)
-    ? NAVER_REFRESH_MS_REGULAR
-    : NAVER_REFRESH_MS_OFF;
+  return isKrxRegularSession(now) ? NAVER_REFRESH_MS_REGULAR : NAVER_REFRESH_MS_OFF;
 }

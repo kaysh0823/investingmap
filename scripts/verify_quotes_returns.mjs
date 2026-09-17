@@ -27,7 +27,7 @@ assert.equal(officialClose, 249000, '005930 recentDd close');
 assert.equal(refs.recentDd, '20260914');
 
 const session = krxSessionInfo();
-const sessionOpenNow = !!(session.regular || session.aftermarket);
+const sessionOpenNow = !!session.regular;
 
 // --- official: anchorDd = refsRecentDd → k=0 → ref1 = closes[L-2]
 {

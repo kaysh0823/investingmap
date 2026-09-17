@@ -5,7 +5,7 @@
 (function (global) {
   'use strict';
 
-  var SESSION_BOUNDARIES_MIN = [9 * 60, 15 * 60 + 30, 16 * 60, 20 * 60];
+  var SESSION_BOUNDARIES_MIN = [9 * 60, 15 * 60 + 30, 16 * 60];
   var MAX_RETRY = 2;
 
   /** @type {Map<string, { fetch: Function, render: Function }>} */
@@ -45,8 +45,8 @@
   function sessionOpenNow() {
     var m = kstMinutesNow();
     if (m < 0) return false;
-    // Regular 09:00–15:30 or aftermarket until 20:00
-    return (m >= 9 * 60 && m < 15 * 60 + 30) || (m >= 15 * 60 + 30 && m < 20 * 60);
+    // Poll 09:00–16:00 so B-mode (post 15:30 regular close) still refreshes once.
+    return m >= 9 * 60 && m < 16 * 60;
   }
 
   function defaultIntervalMs() {

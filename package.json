@@ -57,6 +57,7 @@
     "verify:returns-core": "node scripts/verify_returns_core.mjs",
     "verify:quotes-returns": "node scripts/verify_quotes_returns.mjs",
     "verify:returns-consistency": "node scripts/verify_returns_consistency.mjs",
+    "verify:views": "node scripts/verify_views_consistency.mjs",
     "lint:returns": "node scripts/lint_return_sources.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "scan:price-jumps": "node scripts/scan_residual_price_jumps.mjs",

@@ -51,7 +51,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
   const companies = listHubCompanies(hubIndex);
   const tickers = companies.map((c) => normalizeTicker(c.ticker)).filter(Boolean);
   const session = krxSessionInfo();
-  const sessionOpen = !!(session.regular || session.aftermarket);
+  const sessionOpen = !!session.regular;
 
   const source = await loadReturnSource({
     env,
@@ -111,8 +111,8 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
   return {
     asOf: source.meta.asOf,
     builtAt: hubIndex.builtAt || null,
-    regularSession: sessionOpen,
-    sessionOpen: source.meta.sessionOpen,
+    regularSession: source.meta.regularSession ?? !!session.regular,
+    sessionOpen: source.meta.sessionOpen ?? sessionOpen,
     numeratorMode: source.meta.numeratorMode,
     anchorDd,
     refsRecentDd: source.meta.refsRecentDd,

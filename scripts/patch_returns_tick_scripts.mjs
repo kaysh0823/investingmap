@@ -10,11 +10,13 @@ function patchIndex() {
   if (!html.includes('returns_tick.js')) {
     html = html.replace(
       /<script src="js\/return_live\.js\?v=\d+"><\/script>/,
-      (m) => `${m}\n  <script src="js/returns_tick.js?v=1"></script>\n  <script src="js/returns_badge.js?v=1"></script>`,
+      (m) => `${m}\n  <script src="js/returns_tick.js?v=2"></script>\n  <script src="js/returns_badge.js?v=2"></script>`,
     );
   }
   html = html.replace(/hub_dashboard\.js\?v=\d+/g, 'hub_dashboard.js?v=56');
-  html = html.replace(/hub_trend_chart\.js\?v=\d+/g, 'hub_trend_chart.js?v=6');
+  html = html.replace(/hub_trend_chart\.js\?v=\d+/g, 'hub_trend_chart.js?v=7');
+  html = html.replace(/returns_tick\.js\?v=\d+/g, 'returns_tick.js?v=2');
+  html = html.replace(/returns_badge\.js\?v=\d+/g, 'returns_badge.js?v=2');
   fs.writeFileSync(p, html);
   console.log('patched index.html');
 }
@@ -40,11 +42,13 @@ function patchMaps() {
         /<script src="(\.\.\/)?js\/return_live\.js\?v=\d+"><\/script>/,
         (m, pre) => {
           const prefix = pre || '';
-          return `${m}\n<script src="${prefix}js/returns_tick.js?v=1"></script>\n<script src="${prefix}js/returns_badge.js?v=1"></script>`;
+          return `${m}\n<script src="${prefix}js/returns_tick.js?v=2"></script>\n<script src="${prefix}js/returns_badge.js?v=2"></script>`;
         },
       );
     }
     html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=25');
+    html = html.replace(/returns_tick\.js\?v=\d+/g, 'returns_tick.js?v=2');
+    html = html.replace(/returns_badge\.js\?v=\d+/g, 'returns_badge.js?v=2');
     if (html !== before) {
       fs.writeFileSync(p, html);
       n += 1;

@@ -237,10 +237,23 @@ function compactYmdLocal(v) {
 }
 
 /**
- * Stock return columns via returns_core (same as /api/quotes).
+ * Stock return columns via returns_core (same as /api/quotes / loadReturnSource).
  * refs missing → all null (do not fall back to Naver/KRX legacy formulas).
+ * @param {string} ticker
+ * @param {object|null} naver
+ * @param {object|null} refs
+ * @param {boolean} sessionOpen regular auction only
+ * @param {number|null} [overrideLast] forced numerator (regular-close last)
+ * @param {Date} [now]
  */
-function stockReturnFieldsFromRefs(ticker, naver, refs, sessionOpen) {
+export function stockReturnFieldsFromRefs(
+  ticker,
+  naver,
+  refs,
+  sessionOpen,
+  overrideLast = null,
+  now = new Date(),
+) {
   const empty = {
     chg_1d_pct: null,
     ret_5d_pct: null,
@@ -257,17 +270,39 @@ function stockReturnFieldsFromRefs(ticker, naver, refs, sessionOpen) {
 
   const officialClose = Number(closes[closes.length - 1]);
   const official = Number.isFinite(officialClose) && officialClose > 0 ? officialClose : null;
-  const liveLast = naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
-  const numerator = resolveNumerator({ liveLast, sessionOpen, officialClose: official });
-
+  const todayDd = kstAnchorYmd(now);
   const refsRecentDd = compactYmdLocal(refs.recentDd);
-  // Match loadReturnSource: closed → anchor/k on refs tip; open → live trade date.
-  const liveTradeDd = sessionOpen
-    ? (compactYmdLocal(naver?.tradeDate) || kstAnchorYmd())
-    : refsRecentDd;
-  const k = refsRecentDd && liveTradeDd
-    ? sessionsSince(refsRecentDd, liveTradeDd, refs.tradingDates || [])
-    : 0;
+  const p = kstDateParts(now);
+  const minutes = p.hour * 60 + p.minute;
+  const liveTradeDd = compactYmdLocal(naver?.tradeDate) || todayDd;
+  const closeEligible =
+    !sessionOpen
+    && p.weekday >= 1
+    && p.weekday <= 5
+    && minutes >= 15 * 60 + 30
+    && liveTradeDd === todayDd
+    && !!refsRecentDd
+    && refsRecentDd < todayDd;
+
+  let numerator = null;
+  let k = 0;
+  if (sessionOpen) {
+    const liveLast = overrideLast != null
+      ? overrideLast
+      : (naver?.last != null && Number.isFinite(naver.last) ? naver.last : null);
+    numerator = resolveNumerator({ liveLast, sessionOpen: true, officialClose: official });
+    k = refsRecentDd && liveTradeDd
+      ? sessionsSince(refsRecentDd, liveTradeDd, refs.tradingDates || [])
+      : 0;
+  } else if (closeEligible) {
+    // B: overrideLast only — never Naver sessionClose (may be NXT integrated).
+    numerator = overrideLast != null && Number(overrideLast) > 0 ? Number(overrideLast) : null;
+    k = sessionsSince(refsRecentDd, todayDd, refs.tradingDates || []);
+  } else {
+    // C official
+    numerator = official;
+    k = 0;
+  }
 
   const returns = computeStockReturns({ numerator, closes, k });
   return {
@@ -280,7 +315,7 @@ function stockReturnFieldsFromRefs(ticker, naver, refs, sessionOpen) {
   };
 }
 
-function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null) {
+export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null) {
   // last is always Naver (live or last session). Pair prev_close from the same
   // quote when possible for display / history helpers.
   const last = naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
@@ -326,7 +361,7 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, 
     _sessionOpen: naver?.open ?? null,
     _sessionHigh: naver?.high ?? null,
     _sessionLow: naver?.low ?? null,
-    _sessionClose: naver?.close ?? naver?.sessionClose ?? null,
+    _sessionClose: naver?.close ?? null,
     _sessionVolume: naver?.volume ?? null,
     _naverMarketClosed: naver?.marketClosed ?? null,
   };
@@ -357,7 +392,7 @@ async function loadLatestLastByTicker(tickers, supabaseUrl, serviceKey) {
     const batch = tickers.slice(i, i + CHUNK);
     const filter = batch.map((t) => encodeURIComponent(t)).join(',');
     const url =
-      `${supabaseUrl}/rest/v1/stock_quotes_latest?select=ticker,last&ticker=in.(${filter})`;
+      `${supabaseUrl}/rest/v1/stock_quotes_latest?select=ticker,last,as_of&ticker=in.(${filter})`;
     const res = await fetch(url, {
       headers: {
         apikey: serviceKey,
@@ -371,7 +406,38 @@ async function loadLatestLastByTicker(tickers, supabaseUrl, serviceKey) {
     const rows = await res.json();
     for (const r of rows || []) {
       const t = normalizeTicker(r.ticker);
-      if (t) map.set(t, r.last);
+      if (t) map.set(t, { last: r.last, asOf: r.as_of || null });
+    }
+  }
+  return map;
+}
+
+/** Today’s regular-close from stock_price_history (MDCSTAT / session-close upsert). */
+async function loadHistoryCloseByTicker(tickers, tradeDateDash, supabaseUrl, serviceKey) {
+  const map = new Map();
+  if (!tradeDateDash) return map;
+  const CHUNK = 100;
+  for (let i = 0; i < tickers.length; i += CHUNK) {
+    const batch = tickers.slice(i, i + CHUNK);
+    const filter = batch.map((t) => encodeURIComponent(t)).join(',');
+    const url =
+      `${supabaseUrl}/rest/v1/stock_price_history?trade_date=eq.${encodeURIComponent(tradeDateDash)}`
+      + `&select=ticker,close&ticker=in.(${filter})`;
+    const res = await fetch(url, {
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+      },
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`stock_price_history close read failed ${res.status}: ${body.slice(0, 160)}`);
+    }
+    const rows = await res.json();
+    for (const r of rows || []) {
+      const t = normalizeTicker(r.ticker);
+      const c = Number(r.close);
+      if (t && Number.isFinite(c) && c > 0) map.set(t, c);
     }
   }
   return map;
@@ -389,6 +455,35 @@ async function loadLatestLastByTicker(tickers, supabaseUrl, serviceKey) {
  * }}
  */
 export function detectNaverStale({
+  tickers,
+  naverQuotes,
+  prevLastByTicker,
+  consensusTradeDate,
+  todayYmdDash,
+  regularSession,
+  now = new Date(),
+  force = false,
+}) {
+  // Adapter: prev map may be {last,asOf} or bare number (tests).
+  const prevLast = new Map();
+  for (const [t, v] of prevLastByTicker || []) {
+    if (v != null && typeof v === 'object') prevLast.set(t, v.last);
+    else prevLast.set(t, v);
+  }
+  return detectNaverStaleInner({
+    tickers,
+    naverQuotes,
+    prevLastByTicker: prevLast,
+    consensusTradeDate,
+    todayYmdDash,
+    regularSession,
+    now,
+    force,
+  });
+}
+
+/** @private */
+function detectNaverStaleInner({
   tickers,
   naverQuotes,
   prevLastByTicker,
@@ -1507,6 +1602,8 @@ async function pruneIntradaySnapshots(supabaseUrl, serviceKey, keepDates) {
 /**
  * Append cap-weighted sector 1D returns (same math as /api/hub_sectors) each sync run.
  * Replaces mcap-sum sector_intraday_snapshots as the 1D sparkline source of truth.
+ *
+ * @returns {Promise<{ appended: number, frozen?: boolean, failed?: boolean, anchorDd?: string }>}
  */
 async function syncSectorIntradayReturns({
   hubIndex,
@@ -1533,7 +1630,9 @@ async function syncSectorIntradayReturns({
   });
   const k = source.meta?.k ?? 0;
   const anchorDd = source.meta?.anchorDd || dashToBasDd(tradeDateDash);
-  const liveTs = now.toISOString();
+  const liveTs = sessionKind === 'close'
+    ? `${tradeDateDash}T15:30:00+09:00`
+    : now.toISOString();
   const rows = [];
 
   for (const sid of SECTOR_ORDER) {
@@ -1568,6 +1667,29 @@ async function syncSectorIntradayReturns({
     return { appended: 0 };
   }
 
+  // Freeze guard (regular only): after 09:30, if every sector matches prior row to 4dp → exit 2.
+  if (sessionKind === 'regular') {
+    const p = kstDateParts(now);
+    const minutes = p.hour * 60 + p.minute;
+    if (minutes >= 9 * 60 + 30) {
+      const prev = await loadLatestIntradayReturnsBySector(
+        tradeDateDash,
+        supabaseUrl,
+        serviceKey,
+      );
+      if (prev.size && rows.every((r) => {
+        const pv = prev.get(r.sector_id);
+        if (pv == null) return false;
+        return Number(pv).toFixed(4) === Number(r.ret_1d_pct).toFixed(4);
+      })) {
+        console.error(
+          'INTRADAY_FROZEN: all sector ret_1d_pct unchanged vs prior row (4dp) after 09:30 — skip insert',
+        );
+        return { appended: 0, frozen: true };
+      }
+    }
+  }
+
   const url = `${supabaseUrl}/rest/v1/sector_intraday_returns`;
   const res = await fetch(url, {
     method: 'POST',
@@ -1588,9 +1710,33 @@ async function syncSectorIntradayReturns({
   }
   console.log(
     `  sector intraday returns: appended ${rows.length} `
-    + `(session=${sessionKind} anchor=${anchorDd} asOf=${source.meta?.asOf || 'n/a'})`,
+    + `(session=${sessionKind} anchor=${anchorDd} asOf=${source.meta?.asOf || 'n/a'} ts=${liveTs})`,
   );
   return { appended: rows.length, anchorDd };
+}
+
+/** Latest ret_1d_pct per sector for a trade_date (any session_kind). */
+async function loadLatestIntradayReturnsBySector(tradeDateDash, supabaseUrl, serviceKey) {
+  const map = new Map();
+  if (!tradeDateDash) return map;
+  const url =
+    `${supabaseUrl}/rest/v1/sector_intraday_returns?trade_date=eq.${encodeURIComponent(tradeDateDash)}`
+    + `&select=sector_id,ts,ret_1d_pct&order=ts.desc&limit=500`;
+  const res = await fetch(url, {
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+    },
+  });
+  if (!res.ok) return map;
+  const rows = await res.json();
+  for (const r of rows || []) {
+    const sid = r.sector_id;
+    if (!sid || map.has(sid)) continue;
+    const v = Number(r.ret_1d_pct);
+    if (Number.isFinite(v)) map.set(sid, v);
+  }
+  return map;
 }
 
 /**
@@ -1899,9 +2045,10 @@ async function main() {
     console.log('  (clock says session, but Naver marker indicates non-trading day → holiday)');
   }
 
-  // Same sessionOpen rule as /api/quotes (krxSessionInfo regular|aftermarket).
+  // Same sessionOpen rule as /api/quotes — regular auction only (never aftermarket).
   const krxNow = krxSessionInfo();
-  const sessionOpenForReturns = !!(krxNow.regular || krxNow.aftermarket);
+  const sessionOpenForReturns = !!krxNow.regular;
+  const syncSlot = String(process.env.SYNC_SLOT || '').trim() || 'intraday';
 
   let prevLastByTicker = new Map();
   try {
@@ -1956,7 +2103,7 @@ async function main() {
   }
 
   let returnsFilled = 0;
-  const rows = tickers.map((ticker) => {
+  let rows = tickers.map((ticker) => {
     const returnFields = stockReturnFieldsFromRefs(
       ticker,
       naverResult.quotes[ticker],
@@ -1976,8 +2123,62 @@ async function main() {
   });
   console.log(
     `  stock returns via returns_core: filled=${returnsFilled}/${tickers.length}`
-    + ` sessionOpen=${sessionOpenForReturns} refs=${refsForReturns ? 'ok' : 'null'}`,
+    + ` sessionOpen=${sessionOpenForReturns} slot=${syncSlot} refs=${refsForReturns ? 'ok' : 'null'}`,
   );
+
+  // Post-15:30: never overwrite last with Naver aftermarket/NXT.
+  // Prefer stock_price_history(today).close; else keep prior last + as_of.
+  if (!sessionOpenForReturns && !skipLatestAndIntraday) {
+    const histDate = consensus.tradeDate || todayYmdDash;
+    let histCloses = new Map();
+    try {
+      histCloses = await loadHistoryCloseByTicker(
+        tickers,
+        histDate,
+        supabaseUrl,
+        serviceKey,
+      );
+    } catch (e) {
+      console.warn('  history close preload failed:', e.message || e);
+    }
+    let fromHist = 0;
+    let keptPrev = 0;
+    let fromSessionClose = 0;
+    for (const row of rows) {
+      const hc = histCloses.get(row.ticker);
+      if (hc != null) {
+        row.last = hc;
+        fromHist += 1;
+      } else {
+        const prev = prevLastByTicker.get(row.ticker);
+        if (prev?.last != null && Number.isFinite(Number(prev.last))) {
+          row.last = Number(prev.last);
+          if (prev.asOf) row.as_of = prev.asOf;
+          keptPrev += 1;
+        } else if (row._sessionClose != null && Number.isFinite(Number(row._sessionClose))) {
+          row.last = Number(row._sessionClose);
+          fromSessionClose += 1;
+        }
+      }
+      const rf = stockReturnFieldsFromRefs(
+        row.ticker,
+        naverResult.quotes[row.ticker],
+        refsForReturns,
+        false,
+        row.last,
+      );
+      row.chg_1d_pct = rf.chg_1d_pct;
+      row.ret_5d_pct = rf.ret_5d_pct;
+      row.ret_20d_pct = rf.ret_20d_pct;
+      row.ret_50d_pct = rf.ret_50d_pct;
+      row.ret_120d_pct = rf.ret_120d_pct;
+      row.ret_200d_pct = rf.ret_200d_pct;
+    }
+    console.log(
+      `  post-close last guard: hist=${fromHist} keptPrev=${keptPrev}`
+      + ` sessionClose=${fromSessionClose} (no Naver aftermarket last)`,
+    );
+  }
 
   let upsertResult = { upserted: [], failed: [] };
   if (skipLatestAndIntraday) {
@@ -2016,6 +2217,47 @@ async function main() {
       supabaseUrl,
       serviceKey,
     });
+  }
+  // After history upsert: refresh stock_quotes_latest.last from today's close bar.
+  if (!sessionOpenForReturns && !skipLatestAndIntraday && historyTradeDateDash) {
+    try {
+      const histCloses = await loadHistoryCloseByTicker(
+        tickers,
+        historyTradeDateDash,
+        supabaseUrl,
+        serviceKey,
+      );
+      if (histCloses.size) {
+        let patched = 0;
+        for (const row of rows) {
+          const hc = histCloses.get(row.ticker);
+          if (hc == null) continue;
+          if (row.last === hc) continue;
+          row.last = hc;
+          row.as_of = new Date().toISOString();
+          const rf = stockReturnFieldsFromRefs(
+            row.ticker,
+            naverResult.quotes[row.ticker],
+            refsForReturns,
+            false,
+            row.last,
+          );
+          row.chg_1d_pct = rf.chg_1d_pct;
+          row.ret_5d_pct = rf.ret_5d_pct;
+          row.ret_20d_pct = rf.ret_20d_pct;
+          row.ret_50d_pct = rf.ret_50d_pct;
+          row.ret_120d_pct = rf.ret_120d_pct;
+          row.ret_200d_pct = rf.ret_200d_pct;
+          patched += 1;
+        }
+        if (patched) {
+          console.log(`  post-history last refresh: ${patched} tickers from stock_price_history`);
+          await upsertToSupabase(rows, supabaseUrl, serviceKey);
+        }
+      }
+    } catch (e) {
+      console.warn('  post-history last refresh failed:', e.message || e);
+    }
   }
   await fillMissingHistoryDays(
     authKey,
@@ -2079,11 +2321,22 @@ async function main() {
   const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));
   const historyCtx = await prepareSectorHistoryContext(supabaseUrl, serviceKey);
 
-  const aftermarket = isKrxAfterMarket();
+  let intradayFrozen = false;
   if (skipLatestAndIntraday) {
     console.log('  sector intraday returns: skip (non-trading day / pre-open)');
-  } else if (regularSession || aftermarket) {
-    const sessionKind = regularSession ? 'regular' : 'aftermarket';
+  } else if (regularSession) {
+    const ir = await syncSectorIntradayReturns({
+      hubIndex,
+      quoteRows: rows,
+      refs: refsForReturns,
+      tradeDateDash: consensus.tradeDate || todayYmdDash,
+      supabaseUrl,
+      serviceKey,
+      sessionKind: 'regular',
+      now: new Date(),
+    });
+    if (ir.frozen) intradayFrozen = true;
+  } else if (syncSlot === 'regular_close') {
     await syncSectorIntradayReturns({
       hubIndex,
       quoteRows: rows,
@@ -2091,11 +2344,13 @@ async function main() {
       tradeDateDash: consensus.tradeDate || todayYmdDash,
       supabaseUrl,
       serviceKey,
-      sessionKind,
+      sessionKind: 'close',
       now: new Date(),
     });
   } else {
-    console.log('  sector intraday returns: skip (session closed)');
+    console.log(
+      `  sector intraday returns: skip (not regular; slot=${syncSlot})`,
+    );
   }
 
   if (skipLatestAndIntraday) {
@@ -2161,6 +2416,9 @@ async function main() {
   }
   if (sectorResult.failed) {
     process.exit(1);
+  }
+  if (intradayFrozen) {
+    process.exit(2);
   }
 }
 

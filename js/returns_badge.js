@@ -2,7 +2,7 @@
  * Shared returns basis badge for hub + map pages.
  * Uses API meta only (never client clock for mode/asOf).
  *
- * "기준 {anchorDd} · {정규장 LIVE | 애프터마켓 LIVE | 장마감 공식종가} · {asOf HH:mm} · v{hash}"
+ * "기준 {anchorDd} · {장중 LIVE | 장마감 정규종가 | 장마감 공식종가} · {asOf HH:mm} · v{hash}"
  */
 (function (global) {
   'use strict';
@@ -54,16 +54,15 @@
     var en = lang === 'en';
     if (!m) return '';
     if (m.numeratorMode === 'live') {
-      // Prefer explicit aftermarket when sessionOpen but not regularSession.
-      if (m.regularSession === false && m.sessionOpen === true) {
-        return en ? 'Aftermarket LIVE' : '애프터마켓 LIVE';
-      }
-      if (m.regularSession === true || m.sessionOpen === true) {
-        return en ? 'Regular LIVE' : '정규장 LIVE';
-      }
-      return en ? 'LIVE' : 'LIVE';
+      return en ? 'Intraday LIVE' : '장중 LIVE';
     }
-    return en ? 'Official close' : '장마감 공식종가';
+    if (m.numeratorMode === 'close') {
+      return en ? 'Regular close' : '장마감 정규종가';
+    }
+    if (m.numeratorMode === 'official') {
+      return en ? 'Official close' : '장마감 공식종가';
+    }
+    return '';
   }
 
   function remember(apiMeta) {

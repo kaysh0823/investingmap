@@ -3,6 +3,8 @@ name: Sync quotes to Supabase
 on:
   # Backup only — GitHub schedule cron is heavily throttled (often 1–3h gaps).
   # Prefer external cron → repository_dispatch (intraday ~10m + close slots).
+  # Slots: regular 09:00–15:30 / regular_close 15:40 / post_close 20:05.
+  # No aftermarket 16:00–19:50 runs (NXT prices must never feed returns).
   schedule:
     # KST 09:00–14:50 (UTC 00:00–05:50), every 10 min, Mon–Fri
     - cron: '*/10 0-5 * * 1-5'
@@ -10,10 +12,6 @@ on:
     - cron: '0,10,20,30 6 * * 1-5'
     # KST 15:40 (UTC 06:40) backup — regular_close (prefer dispatch slot=regular_close)
     - cron: '40 6 * * 1-5'
-    # KST 16:00 (UTC 07:00), Mon–Fri — post-close / aftermarket open snapshot
-    - cron: '0 7 * * 1-5'
-    # KST 16:00–19:50 (UTC 07:00–10:50), every 10 min — aftermarket continuous auction
-    - cron: '*/10 7-10 * * 1-5'
     # KST 20:00 (UTC 11:00) backup — post_close (prefer dispatch 20:05 slot=post_close)
     - cron: '0 11 * * 1-5'
   repository_dispatch:
@@ -158,3 +156,31 @@ jobs:
           fi
           git commit -m "chore: post_close refresh hub_return_refs + hub_rs_snapshot + hub_sector_returns + hub_volatility_snapshot"
           git push
+
+      - name: Verify views consistency
+        if: >
+          steps.slot.outputs.slot == 'regular_close' ||
+          steps.slot.outputs.slot == 'post_close'
+        env:
+          BASE_URL: https://www.investingmap.kr
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          npm run verify:views
+
+      - name: Verify views consistency (last intraday)
+        if: steps.slot.outputs.slot == 'intraday'
+        env:
+          BASE_URL: https://www.investingmap.kr
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          KST_HM="$(TZ=Asia/Seoul date +%H%M)"
+          # Run on the final regular-session slots (≥15:20) so mid-day noise does not fail the job.
+          if [ "$KST_HM" -ge 1520 ] && [ "$KST_HM" -le 1540 ]; then
+            npm run verify:views
+          else
+            echo "skip verify:views for mid-session intraday (KST=$KST_HM)"
+          fi

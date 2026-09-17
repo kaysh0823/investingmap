@@ -1,6 +1,10 @@
 /**
  * Shared return inputs for /api/quotes, /api/hub_sectors, calendar tip, sync intraday.
- * Live numerator = stock_quotes_latest.last; official = hub_return_refs tip close.
+ *
+ * Numerator modes (regular auction only — never aftermarket NXT):
+ *   A live     — 09:00–15:30: stock_quotes_latest.last (Naver basic)
+ *   B close    — weekday ≥15:30, liveTradeDd==today, refs not tip yet
+ *   C official — pre-open / holiday / weekend / refs tip (k=0)
  */
 
 import {
@@ -8,7 +12,7 @@ import {
   uniqueHubMcapTotal,
   normalizeTicker as normalizeHubTicker,
 } from './hub_dashboard_core.mjs';
-import { krxSessionInfo, kstAnchorYmd, kstDateParts } from './krx_session.mjs';
+import { isSessionOpen, krxSessionInfo, kstAnchorYmd, kstDateParts } from './krx_session.mjs';
 import {
   resolveNumerator,
   sessionsSince,
@@ -305,6 +309,7 @@ function rowsFromQuoteOverrides(quoteRows) {
  *   refs?: object|null,
  *   quoteRows?: Array<object>|null,
  *   staleRefresh?: (codes: string[]) => Promise<{ items?: Record<string, { last?: number, tradeDate?: string }> }|null>,
+ *   now?: Date,
  * }} args
  */
 export async function loadReturnSource({
@@ -314,9 +319,14 @@ export async function loadReturnSource({
   refs: refsOverride = null,
   quoteRows = null,
   staleRefresh = null,
+  now = new Date(),
 }) {
-  const session = krxSessionInfo();
-  const sessionOpen = !!(session.regular || session.aftermarket);
+  const session = krxSessionInfo(now);
+  // A: regular auction only — aftermarket is never "session open" for returns.
+  const sessionOpen = isSessionOpen(now);
+  const todayDd = kstAnchorYmd(now);
+  const p = kstDateParts(now);
+  const minutes = p.hour * 60 + p.minute;
   const refs = await loadCachedReturnRefs(request, env, refsOverride);
   const refsEtag = getCachedRefsEtag();
   if (!refs?.quotes) {
@@ -324,10 +334,12 @@ export async function loadReturnSource({
       meta: {
         asOf: null,
         sessionOpen,
+        regularSession: !!session.regular,
         numeratorMode: sessionOpen ? 'live' : 'official',
         anchorDd: null,
         refsRecentDd: null,
         k: 0,
+        closeMissingCount: 0,
         stale: false,
         dataVersion: buildDataVersion(null, null),
         refsEtag,
@@ -351,10 +363,12 @@ export async function loadReturnSource({
         meta: {
           asOf: null,
           sessionOpen,
+          regularSession: !!session.regular,
           numeratorMode: sessionOpen ? 'live' : 'official',
-          anchorDd: sessionOpen ? kstAnchorYmd() : compactYmd(refs.recentDd),
+          anchorDd: sessionOpen ? todayDd : compactYmd(refs.recentDd),
           refsRecentDd: compactYmd(refs.recentDd),
           k: 0,
+          closeMissingCount: 0,
           stale: false,
           dataVersion,
           refsEtag,
@@ -373,7 +387,7 @@ export async function loadReturnSource({
 
   let stale = false;
   if (sessionOpen && staleRefresh && typeof staleRefresh === 'function') {
-    const nowMs = Date.now();
+    const nowMs = now.getTime();
     const staleCodes = [];
     for (const t of codes) {
       const row = rows.get(t);
@@ -397,11 +411,11 @@ export async function loadReturnSource({
           rows.set(t, {
             ...prev,
             last: live,
-            asOf: new Date().toISOString(),
+            asOf: now.toISOString(),
             tradeDd:
               compactYmd(items[t]?.tradeDate || refreshed?.tradeDate)
               || prev.tradeDd
-              || kstAnchorYmd(),
+              || todayDd,
           });
           stale = true;
         }
@@ -416,15 +430,42 @@ export async function loadReturnSource({
     const td = rows.get(t)?.tradeDd;
     if (td && (!liveTradeDd || td > liveTradeDd)) liveTradeDd = td;
   }
-  if (!liveTradeDd) liveTradeDd = ymdFromAsOf(maxAsOf) || kstAnchorYmd();
+  if (!liveTradeDd) liveTradeDd = ymdFromAsOf(maxAsOf) || todayDd;
 
   const refsRecentDd = compactYmd(refs.recentDd);
-  const numeratorMode = sessionOpen ? 'live' : 'official';
-  const anchorDd = sessionOpen ? liveTradeDd : refsRecentDd;
-  const k = refsRecentDd && anchorDd
-    ? sessionsSince(refsRecentDd, anchorDd, refs.tradingDates || [])
-    : 0;
+  const closeEligible =
+    !sessionOpen
+    && p.weekday >= 1
+    && p.weekday <= 5
+    && minutes >= 15 * 60 + 30
+    && liveTradeDd === todayDd
+    && !!refsRecentDd
+    && refsRecentDd < todayDd;
 
+  /** @type {'live'|'close'|'official'} */
+  let numeratorMode;
+  let anchorDd;
+  let k;
+  if (sessionOpen) {
+    // A — regular session live
+    numeratorMode = 'live';
+    anchorDd = liveTradeDd || todayDd;
+    k = refsRecentDd && anchorDd
+      ? sessionsSince(refsRecentDd, anchorDd, refs.tradingDates || [])
+      : 0;
+  } else if (closeEligible) {
+    // B — weekday after 15:30, today has a live trade date, refs not yet tip
+    numeratorMode = 'close';
+    anchorDd = todayDd;
+    k = sessionsSince(refsRecentDd, todayDd, refs.tradingDates || []);
+  } else {
+    // C — pre-open / holiday / weekend / refs tip already today
+    numeratorMode = 'official';
+    anchorDd = refsRecentDd || todayDd;
+    k = 0;
+  }
+
+  let closeMissingCount = 0;
   /** @type {Record<string, { numerator: number|null, closes: number[], shares: number|null, last: number|null, officialClose: number|null }>} */
   const byTicker = {};
   for (const t of codes) {
@@ -432,14 +473,34 @@ export async function loadReturnSource({
     const closes = refQ && Array.isArray(refQ.closes) ? refQ.closes : null;
     if (!closes || !closes.length) continue;
     const officialClose = numOrNull(closes[closes.length - 1]);
-    const liveLast = sessionOpen ? numOrNull(rows.get(t)?.last) : null;
-    const numerator = resolveNumerator({ liveLast, sessionOpen, officialClose });
+    const row = rows.get(t);
+    const rowLast = numOrNull(row?.last);
+    const rowTradeDd = compactYmd(row?.tradeDd);
+    let numerator = null;
+    let displayLast = officialClose;
+    if (numeratorMode === 'live') {
+      numerator = resolveNumerator({ liveLast: rowLast, sessionOpen: true, officialClose });
+      displayLast = rowLast ?? officialClose;
+    } else if (numeratorMode === 'official') {
+      numerator = officialClose;
+      displayLast = officialClose;
+    } else {
+      // B close: today row required — no officialClose fallback (exclude from sector agg)
+      if (rowTradeDd === todayDd && rowLast != null) {
+        numerator = rowLast;
+        displayLast = rowLast;
+      } else {
+        numerator = null;
+        displayLast = officialClose;
+        closeMissingCount += 1;
+      }
+    }
     const shares = numOrNull(refQ.shares);
     byTicker[t] = {
       numerator,
       closes,
       shares: shares != null && shares > 0 ? shares : null,
-      last: sessionOpen ? (liveLast ?? officialClose) : officialClose,
+      last: displayLast,
       officialClose,
     };
   }
@@ -449,12 +510,14 @@ export async function loadReturnSource({
 
   return {
     meta: {
-      asOf: maxAsOf || versionAsOf || new Date().toISOString(),
+      asOf: maxAsOf || versionAsOf || now.toISOString(),
       sessionOpen,
+      regularSession: !!session.regular,
       numeratorMode,
       anchorDd: anchorDd || null,
       refsRecentDd: refsRecentDd || null,
       k,
+      closeMissingCount,
       stale,
       dataVersion,
       refsEtag,

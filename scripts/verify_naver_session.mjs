@@ -11,7 +11,14 @@ import {
   emptyQuote,
   resolveNaverSession,
 } from '../functions/lib/naver_sise_quotes.mjs';
-import { detectNaverStale } from './sync_quotes_to_supabase.mjs';
+import { detectNaverStale, stockReturnFieldsFromRefs, toSupabaseRow } from './sync_quotes_to_supabase.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { computeStockReturns, roundPct } from '../functions/lib/returns_core.mjs';
+import { kstDateParts } from '../functions/lib/krx_session.mjs';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 function assert(cond, msg) {
   if (!cond) throw new Error('FAIL: ' + msg);
@@ -206,6 +213,94 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
   );
   assert(merged.sessionClose === 253500, `merged.sessionClose: ${merged.sessionClose}`);
   assert(merged.close == null, `merged.close must stay null: ${merged.close}`);
+}
+
+// sessionClose must never become _sessionClose (NXT / mobile integrated close)
+{
+  const row = toSupabaseRow(
+    '005930',
+    { close: null, sessionClose: 253500, last: 250000 },
+    null,
+    new Date().toISOString(),
+    false,
+    true,
+  );
+  assert(row._sessionClose === null, `_sessionClose must be null, got ${row._sessionClose}`);
+}
+
+// ── stockReturnFieldsFromRefs A/B/C edge cases ──
+{
+  const refsFile = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'data', 'hub_return_refs.json'), 'utf8'),
+  );
+  const closes = refsFile.quotes['005930'].closes;
+  const L = closes.length;
+  const official1d = roundPct(closes[L - 1] / closes[L - 2] - 1);
+  const prevDd = String(refsFile.recentDd || '').replace(/-/g, '');
+  assert(/^\d{8}$/.test(prevDd), 'refs.recentDd');
+
+  function dash(ymd) {
+    return `${ymd.slice(0, 4)}-${ymd.slice(4, 6)}-${ymd.slice(6, 8)}`;
+  }
+  function nextYmd(ymd) {
+    const d = new Date(`${dash(ymd)}T12:00:00+09:00`);
+    d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
+    const p = kstDateParts(d);
+    return `${p.year}${String(p.month).padStart(2, '0')}${String(p.day).padStart(2, '0')}`;
+  }
+  let simToday = nextYmd(prevDd);
+  for (let i = 0; i < 5; i++) {
+    const probe = kstAt(dash(simToday), 12, 0);
+    const wp = kstDateParts(probe);
+    if (wp.weekday >= 1 && wp.weekday <= 5) break;
+    simToday = nextYmd(simToday);
+  }
+  const refs = { ...refsFile, recentDd: prevDd };
+  const naverPrev = { tradeDate: prevDd, last: closes[L - 1], sessionClose: closes[L - 1] + 999 };
+  const naverToday = { tradeDate: simToday, last: closes[L - 1] + 5000, sessionClose: closes[L - 1] + 999 };
+
+  // 08:30 pre-open → official k=0, refs tip 1D
+  {
+    const now = kstAt(dash(simToday), 8, 30);
+    const fields = stockReturnFieldsFromRefs('005930', naverPrev, refs, false, null, now);
+    assert(fields.chg_1d_pct != null, '08:30 chg_1d_pct');
+    assert(
+      Math.abs(fields.chg_1d_pct - official1d) <= 0.01,
+      `08:30 chg=${fields.chg_1d_pct} vs official=${official1d}`,
+    );
+    if (official1d !== 0) {
+      assert(fields.chg_1d_pct !== 0, '08:30 must not force 0%');
+    }
+  }
+
+  // Holiday afternoon: tradeDate still prev → official (not B)
+  {
+    const now = kstAt(dash(simToday), 16, 0);
+    const fields = stockReturnFieldsFromRefs('005930', naverPrev, refs, false, null, now);
+    assert(
+      Math.abs(fields.chg_1d_pct - official1d) <= 0.01,
+      `holiday chg=${fields.chg_1d_pct} vs official=${official1d}`,
+    );
+  }
+
+  // 15:45 B without overrideLast → numerator null (chg null); with override → close return
+  {
+    const now = kstAt(dash(simToday), 15, 45);
+    const missing = stockReturnFieldsFromRefs('005930', naverToday, refs, false, null, now);
+    assert(missing.chg_1d_pct == null, `B missing override must be null, got ${missing.chg_1d_pct}`);
+    const override = closes[L - 1] + 1000;
+    const ok = stockReturnFieldsFromRefs('005930', naverToday, refs, false, override, now);
+    const expected = computeStockReturns({
+      numerator: override,
+      closes,
+      k: 1,
+    });
+    assert(ok.chg_1d_pct != null, 'B with overrideLast');
+    assert(
+      Math.abs(ok.chg_1d_pct - expected.chg1dPct) <= 0.01,
+      `B override chg=${ok.chg_1d_pct} vs ${expected.chg1dPct}`,
+    );
+  }
 }
 
 console.log('All Naver session checks passed.');

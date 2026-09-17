@@ -16,8 +16,9 @@ export function roundPct(ratio) {
 }
 
 /**
- * Session-open numerator: live last while the board is open (regular or aftermarket);
+ * Session-open numerator: live last while regular auction is open;
  * otherwise the official close. Missing both → null.
+ * Prefer loadReturnSource for live|close|official mode selection.
  * @param {{ liveLast?: number|null, sessionOpen?: boolean, officialClose?: number|null }} args
  * @returns {number|null}
  */

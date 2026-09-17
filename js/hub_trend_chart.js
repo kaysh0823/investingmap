@@ -32,6 +32,7 @@
       legend: '섹터 및 시장지수 범례',
       accumulating: '장중 데이터 누적 중',
       synthesized: '현재가',
+      frozenDelay: '장중 데이터 수집 지연',
     },
     en: {
       loading: 'Loading trend data…',
@@ -42,6 +43,7 @@
       legend: 'Sector and market index legend',
       accumulating: 'Building intraday series',
       synthesized: 'Live',
+      frozenDelay: 'Intraday data delayed',
     },
   };
 
@@ -136,6 +138,15 @@
     if (minLen === 1) {
       parts.push('<span class="hub-trend-hint">' + COPY[state.lang].accumulating + '</span>');
     }
+    var distinctMap = p.distinctValues || {};
+    var maxDistinct = 0;
+    Object.keys(distinctMap).forEach(function (sid) {
+      var n = Number(distinctMap[sid]);
+      if (n > maxDistinct) maxDistinct = n;
+    });
+    if (maxDistinct <= 1 && afterKst0930()) {
+      parts.push('<span class="hub-trend-hint">' + COPY[state.lang].frozenDelay + '</span>');
+    }
     el.innerHTML = parts.join('');
     el.hidden = !parts.length;
   }
@@ -145,6 +156,41 @@
     if (!el) return;
     el.textContent = message || '';
     el.hidden = !message;
+  }
+
+  function afterKst0930() {
+    try {
+      var parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Seoul',
+        hour: '2-digit',
+        minute: '2-digit',
+        hourCycle: 'h23',
+      }).formatToParts(new Date());
+      var values = {};
+      for (var i = 0; i < parts.length; i++) values[parts[i].type] = parts[i].value;
+      return Number(values.hour) * 60 + Number(values.minute) >= 9 * 60 + 30;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /** Strip trailing zeros after d3.format('.2f') — e.g. 100.00→100, 99.60→99.6 */
+  function format1dYTick(value) {
+    var s = (Math.round(Number(value) * 100) / 100).toFixed(2);
+    return s.replace(/\.?0+$/, '');
+  }
+
+  function unique1dYTicks(scale, count) {
+    var raw = scale.ticks(count);
+    var seen = Object.create(null);
+    var out = [];
+    for (var i = 0; i < raw.length; i++) {
+      var label = format1dYTick(raw[i]);
+      if (seen[label]) continue;
+      seen[label] = true;
+      out.push(raw[i]);
+    }
+    return out;
   }
 
   function sectorColor(index) {
@@ -294,10 +340,22 @@
       xDomain = [new Date(+xDomain[0] - padMs), new Date(+xDomain[1] + padMs)];
     }
     var yExtent = d3.extent(allPoints.concat([{ v: 100 }]), function (point) { return point.v; });
-    var ySpan = Math.max(1, yExtent[1] - yExtent[0]);
-    var yPad = Math.max(0.6, ySpan * 0.09);
+    var ySpan;
+    var yPad;
+    var yDomain;
+    if (state.horizon === '1d') {
+      ySpan = Math.max(0, (yExtent[1] || 100) - (yExtent[0] || 100));
+      yPad = Math.max(0.08, ySpan * 0.15);
+      yDomain = [yExtent[0] - yPad, yExtent[1] + yPad];
+    } else {
+      ySpan = Math.max(1, yExtent[1] - yExtent[0]);
+      yPad = Math.max(0.6, ySpan * 0.09);
+      yDomain = [yExtent[0] - yPad, yExtent[1] + yPad];
+    }
     var x = d3.scaleTime().domain(xDomain).range([0, innerWidth]);
-    var y = d3.scaleLinear().domain([yExtent[0] - yPad, yExtent[1] + yPad]).nice().range([innerHeight, 0]);
+    var yScale = d3.scaleLinear().domain(yDomain);
+    if (state.horizon !== '1d') yScale = yScale.nice();
+    var y = yScale.range([innerHeight, 0]);
 
     var svg = d3.select(root).append('svg')
       .attr('viewBox', '0 0 ' + width + ' ' + height)
@@ -305,9 +363,11 @@
       .attr('aria-label', document.getElementById('hub-trend-title')?.textContent || 'Sector trend');
     var plot = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+    var yTickCount = mobile ? 5 : 7;
+    var yTicks = state.horizon === '1d' ? unique1dYTicks(y, yTickCount) : y.ticks(yTickCount);
     plot.append('g')
       .attr('class', 'hub-trend-grid')
-      .call(d3.axisLeft(y).ticks(mobile ? 5 : 7).tickSize(-innerWidth).tickFormat(''));
+      .call(d3.axisLeft(y).tickValues(yTicks).tickSize(-innerWidth).tickFormat(''));
     plot.append('line')
       .attr('x1', 0).attr('x2', innerWidth).attr('y1', y(100)).attr('y2', y(100))
       .attr('stroke', 'var(--text-muted)').attr('stroke-opacity', 0.7)
@@ -322,7 +382,9 @@
       .attr('transform', 'translate(0,' + innerHeight + ')')
       .call(d3.axisBottom(x).ticks(mobile ? 4 : 7).tickFormat(xFormat));
     plot.append('g').attr('class', 'hub-trend-axis')
-      .call(d3.axisLeft(y).ticks(mobile ? 5 : 7).tickFormat(function (value) { return Number(value).toFixed(0); }));
+      .call(d3.axisLeft(y).tickValues(yTicks).tickFormat(function (value) {
+        return state.horizon === '1d' ? format1dYTick(value) : Number(value).toFixed(0);
+      }));
 
     var lineGenerator = d3.line()
       .defined(function (point) { return isFinite(point.v); })
@@ -480,7 +542,7 @@
     updateTabs();
     setStatus(COPY[state.lang].loading);
     var requestId = ++state.requestId;
-    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&v=6';
+    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&v=7';
     return fetch(url, {
       headers: { Accept: 'application/json' },
       cache: 'default',
@@ -523,7 +585,7 @@
             dataVersion: (state.payload && state.payload.dataVersion) || '',
           });
         }
-        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&v=6';
+        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&v=7';
         return fetch(url, {
           headers: { Accept: 'application/json' },
           cache: 'default',
@@ -612,5 +674,7 @@
     init: init,
     setLang: setLang,
     refresh: function () { return fetchAndRender(state.horizon); },
+    format1dYTick: format1dYTick,
+    unique1dYTicks: unique1dYTicks,
   };
 })(window);
