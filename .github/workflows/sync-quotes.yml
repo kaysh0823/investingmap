@@ -3,23 +3,28 @@ name: Sync quotes to Supabase
 on:
   # Backup only — GitHub schedule cron is heavily throttled (often 1–3h gaps).
   # Prefer external cron → repository_dispatch (intraday ~10m + close slots).
-  # Slots: regular 09:00–15:30 / regular_close 15:40 / post_close 20:05.
+  # Slots: regular 09:00–15:30 / regular_close 15:40 / post_close 20:05
+  #         + post_close_retry 20:30 / 21:00 / 21:30 (HISTORY_PENDING / tip guard).
   # No aftermarket 16:00–19:50 runs (NXT prices must never feed returns).
   schedule:
     # KST 09:00–14:50 (UTC 00:00–05:50), every 10 min, Mon–Fri
     - cron: '*/10 0-5 * * 1-5'
     # KST 15:00–15:30 (UTC 06:00–06:30), every 10 min
     - cron: '0,10,20,30 6 * * 1-5'
-    # KST 15:40 (UTC 06:40) backup — regular_close (prefer dispatch slot=regular_close)
+    # KST 15:40 (UTC 06:40) backup — regular_close
     - cron: '40 6 * * 1-5'
-    # KST 20:00 (UTC 11:00) backup — post_close (prefer dispatch 20:05 slot=post_close)
+    # KST 20:00 (UTC 11:00) backup — post_close
     - cron: '0 11 * * 1-5'
+    # KST 20:30 / 21:00 / 21:30 — post_close_retry (HISTORY_PENDING / tip guard)
+    - cron: '30 11 * * 1-5'
+    - cron: '0 12 * * 1-5'
+    - cron: '30 12 * * 1-5'
   repository_dispatch:
     types: [sync-quotes]
   workflow_dispatch:
     inputs:
       slot:
-        description: "regular_close | post_close | intraday (empty = auto/KST)"
+        description: "regular_close | post_close | post_close_retry | intraday (empty = auto/KST)"
         required: false
         default: ''
 
@@ -29,7 +34,7 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     concurrency:
       group: sync-quotes
       cancel-in-progress: false
@@ -54,7 +59,6 @@ jobs:
       - name: Resolve sync slot
         id: slot
         env:
-          # Prefer explicit payload/input; else infer from KST clock (schedule backup).
           DISPATCH_SLOT: ${{ github.event.client_payload.slot || github.event.inputs.slot || '' }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
@@ -64,50 +68,71 @@ jobs:
           KST_NOW="$(TZ=Asia/Seoul date -Iseconds)"
 
           if [ -z "$SLOT" ]; then
-            # Backup schedule windows (± few minutes for runner lag)
             if [ "$KST_HM" -ge 1535 ] && [ "$KST_HM" -le 1550 ]; then
               SLOT=regular_close
             elif [ "$KST_HM" -ge 1955 ] && [ "$KST_HM" -le 2015 ]; then
               SLOT=post_close
+            elif [ "$KST_HM" -ge 2025 ] && [ "$KST_HM" -le 2140 ]; then
+              SLOT=post_close_retry
             else
               SLOT=intraday
             fi
           fi
 
           case "$SLOT" in
-            regular_close|post_close|intraday) ;;
+            regular_close|post_close|post_close_retry|intraday) ;;
             *)
               echo "Unknown slot='$SLOT' — falling back to intraday"
               SLOT=intraday
               ;;
           esac
 
+          # post_close_retry uses the same chain as post_close
+          CHAIN_SLOT="$SLOT"
+          if [ "$SLOT" = "post_close_retry" ]; then
+            CHAIN_SLOT=post_close
+          fi
+
           echo "slot=$SLOT" >> "$GITHUB_OUTPUT"
-          echo "Resolved slot=$SLOT event=$EVENT_NAME KST=$KST_NOW (HM=$KST_HM)"
+          echo "chain_slot=$CHAIN_SLOT" >> "$GITHUB_OUTPUT"
+          echo "Resolved slot=$SLOT chain=$CHAIN_SLOT event=$EVENT_NAME KST=$KST_NOW (HM=$KST_HM)"
 
       - name: Sync hub quotes to Supabase
+        id: sync_quotes
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
           KRX_ID: ${{ secrets.KRX_ID }}
           KRX_PW: ${{ secrets.KRX_PW }}
-          SYNC_SLOT: ${{ steps.slot.outputs.slot }}
+          SYNC_SLOT: ${{ steps.slot.outputs.chain_slot }}
         run: |
-          echo "Sync quotes (slot=$SYNC_SLOT) — includes MDCSTAT T+0 OHLC when session closed"
+          set +e
+          echo "Sync quotes (slot=$SYNC_SLOT) — apihub/MDCSTAT only for regular close"
           node scripts/sync_quotes_to_supabase.mjs
+          code=$?
+          set -e
+          echo "sync_exit=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" -eq 3 ]; then
+            echo "history_pending=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::HISTORY_PENDING (exit 3) — skip refs chain; rely on post_close_retry"
+            exit 0
+          fi
+          if [ "$code" -ne 0 ]; then
+            exit "$code"
+          fi
+          echo "history_pending=false" >> "$GITHUB_OUTPUT"
 
-      # regular_close (KST 15:40): sync above seeds daily OHLC via MDCSTAT after regular close.
       - name: Note regular_close OHLC
         if: steps.slot.outputs.slot == 'regular_close'
         run: |
-          echo "regular_close: quotes sync + session-close OHLC path (MDCSTAT01501 / Naver) completed."
+          echo "regular_close: quotes sync + session-close OHLC path (MDCSTAT01501 / apihub) completed."
 
-      # post_close (KST 20:05 preferred / 20:00 schedule backup): RS first, then refs
-      # (refs universe = hub + hub_rs_snapshot). Guard: skip commit if today's candle missing.
       - name: Refresh RS snapshot + return refs
         id: refs
-        if: steps.slot.outputs.slot == 'post_close'
+        if: >
+          (steps.slot.outputs.chain_slot == 'post_close') &&
+          (steps.sync_quotes.outputs.history_pending != 'true')
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -118,7 +143,6 @@ jobs:
         run: |
           set -euo pipefail
           REQUIRE_DATE="$(TZ=Asia/Seoul date +%Y%m%d)"
-          # RS first so refs can read the refreshed ordinary universe from hub_rs_snapshot.
           set +e
           node scripts/build_hub_rs_snapshot.mjs
           rs_code=$?
@@ -132,8 +156,7 @@ jobs:
           set -e
           if [ "$code" -eq 3 ]; then
             echo "skipped=true" >> "$GITHUB_OUTPUT"
-            echo "::warning::post_close: today's candle missing — skip refs/RS rebuild and commit"
-            # Discard uncommitted RS rebuild so we do not publish a stale-tip RS alone.
+            echo "::warning::post_close: tip/source guard — skip refs commit (retry later)"
             git checkout -- data/hub_rs_snapshot.json 2>/dev/null || true
             exit 0
           fi
@@ -145,7 +168,10 @@ jobs:
           node scripts/build_hub_volatility_snapshot.mjs
 
       - name: Commit refs and RS snapshot
-        if: steps.slot.outputs.slot == 'post_close' && steps.refs.outputs.skipped != 'true'
+        if: >
+          steps.slot.outputs.chain_slot == 'post_close' &&
+          steps.sync_quotes.outputs.history_pending != 'true' &&
+          steps.refs.outputs.skipped != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -160,7 +186,9 @@ jobs:
       - name: Verify views consistency
         if: >
           steps.slot.outputs.slot == 'regular_close' ||
-          steps.slot.outputs.slot == 'post_close'
+          (steps.slot.outputs.chain_slot == 'post_close' &&
+           steps.sync_quotes.outputs.history_pending != 'true' &&
+           steps.refs.outputs.skipped != 'true')
         env:
           BASE_URL: https://www.investingmap.kr
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -178,9 +206,18 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           KST_HM="$(TZ=Asia/Seoul date +%H%M)"
-          # Run on the final regular-session slots (≥15:20) so mid-day noise does not fail the job.
           if [ "$KST_HM" -ge 1520 ] && [ "$KST_HM" -le 1540 ]; then
             npm run verify:views
           else
             echo "skip verify:views for mid-session intraday (KST=$KST_HM)"
           fi
+
+      # Surface HISTORY_PENDING / tip-guard skip as a soft failure marker for dashboards.
+      - name: Fail job when post_close still pending
+        if: >
+          steps.slot.outputs.chain_slot == 'post_close' &&
+          (steps.sync_quotes.outputs.history_pending == 'true' ||
+           steps.refs.outputs.skipped == 'true')
+        run: |
+          echo "::error::post_close incomplete — HISTORY_PENDING or tip/source guard (exit 3 semantics)"
+          exit 3

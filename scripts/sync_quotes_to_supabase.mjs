@@ -8,7 +8,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { fetchNaverQuote, resolveNaverSession } from '../functions/lib/naver_sise_quotes.mjs';
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
-import { isKrxClockRegularSession, isKrxAfterMarket, isKrxRegularSessionEnded, krxSessionInfo, kstAnchorYmd, kstDateParts, kstWeekday, kstYmd, kstYmdDash, SESSION_CLOSE, AFTERMARKET_OPEN } from '../functions/lib/krx_session.mjs';
+import { isKrxClockRegularSession, isKrxRegularSessionEnded, krxSessionInfo, kstAnchorYmd, kstDateParts, kstWeekday, kstYmd, kstYmdDash } from '../functions/lib/krx_session.mjs';
 import {
   fetchKrxDailyOhlc,
   dailyOhlcFieldsToKrxRow,
@@ -675,9 +675,26 @@ async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
 
   let upserted = 0;
   let failed = 0;
+  let stripSource = false;
   for (let i = 0; i < toWrite.length; i += HISTORY_UPSERT_BATCH) {
-    const batch = toWrite.slice(i, i + HISTORY_UPSERT_BATCH);
-    const result = await upsertHistoryBatch(batch, supabaseUrl, serviceKey);
+    let batch = toWrite.slice(i, i + HISTORY_UPSERT_BATCH);
+    if (stripSource) {
+      batch = batch.map(({ source, ...rest }) => rest);
+    }
+    let result = await upsertHistoryBatch(batch, supabaseUrl, serviceKey);
+    if (
+      !result.ok
+      && !stripSource
+      && /source|PGRST204|42703/i.test(String(result.body || ''))
+    ) {
+      console.warn(
+        '  history upsert: source column missing — retry without source '
+        + '(apply migration 0021)',
+      );
+      stripSource = true;
+      batch = toWrite.slice(i, i + HISTORY_UPSERT_BATCH).map(({ source, ...rest }) => rest);
+      result = await upsertHistoryBatch(batch, supabaseUrl, serviceKey);
+    }
     if (!result.ok) {
       console.error(`  history upsert failed: ${(result.body || '').slice(0, 200)}`);
       failed += batch.length;
@@ -688,10 +705,10 @@ async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
   return { upserted, failed };
 }
 
-function historyRowFromKrx(ticker, tradeDate, krxRow) {
+function historyRowFromKrx(ticker, tradeDate, krxRow, source = null) {
   const fields = historyFieldsFromKrxRow(krxRow);
   if (!fields) return null;
-  return {
+  const row = {
     ticker,
     trade_date: tradeDate,
     open: fields.open,
@@ -702,6 +719,8 @@ function historyRowFromKrx(ticker, tradeDate, krxRow) {
     mcap_won: fields.mcap_won,
     turnover_won: fields.turnover_won,
   };
+  if (source) row.source = source;
+  return row;
 }
 
 async function fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, tradeDate) {
@@ -737,6 +756,7 @@ async function repairHistoryCoverageForDate(
   byCode,
   supabaseUrl,
   serviceKey,
+  source = null,
 ) {
   if (!byCode || !byCode.size) return { expected: 0, repaired: 0, missing: [] };
   const expectedRows = new Map();
@@ -744,7 +764,7 @@ async function repairHistoryCoverageForDate(
     const ticker = normalizeTicker(raw);
     if (!ticker) continue;
     const krx = byCode.get(ticker) || byCode.get(raw);
-    const row = historyRowFromKrx(ticker, tradeDate, krx);
+    const row = historyRowFromKrx(ticker, tradeDate, krx, source);
     if (row) expectedRows.set(ticker, row);
   }
   const existing = await fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, tradeDate);
@@ -774,11 +794,10 @@ async function repairHistoryCoverageForDate(
 /**
  * Persist today's regular-session OHLC into stock_price_history once the
  * regular auction has ended (15:30+ clock) or Naver reports 장마감.
- * Source priority:
- *   (a) apihub fetchMarketDay (T+1-ready, preferred when published)
- *   (b) data.krx MDCSTAT01501 (T+0 regular close) ← aftermarket-safe
- *   (c) Naver session OHLCV (never aftermarket last as close)
- * Idempotent on (ticker, trade_date); T+1 apihub backfill may overwrite.
+ * Source priority (regular close only — never Naver/NXT last):
+ *   (a) apihub fetchMarketDay
+ *   (b) data.krx MDCSTAT01501
+ * Both empty → HISTORY_PENDING (no row write).
  *
  * @param {boolean} sessionClosedForHistory naverMarketClosed || regularSessionEnded
  */
@@ -805,6 +824,7 @@ async function upsertSessionCloseHistory(
 
   const basDd = dashToBasDd(tradeDateDash);
   let byCode = null;
+  /** @type {'apihub'|'mdcstat'|null} */
   let source = null;
 
   // (a) apihub OPEN API
@@ -827,7 +847,7 @@ async function upsertSessionCloseHistory(
       if (/401|Unauthorized/i.test(msg)) {
         console.warn(
           `  history session close apihub 401 Unauthorized — check KRX_AUTH_KEY `
-          + `(expiry/typo/endpoint ACL). Falling back to MDCSTAT/Naver. (${msg.slice(0, 120)})`,
+          + `(expiry/typo/endpoint ACL). Falling back to MDCSTAT. (${msg.slice(0, 120)})`,
         );
       } else {
         console.warn(`  history session close apihub failed: ${msg}`);
@@ -851,13 +871,13 @@ async function upsertSessionCloseHistory(
           const krxRow = dailyOhlcFieldsToKrxRow(fields);
           if (t && krxRow) byCode.set(t, krxRow);
         }
-        source = 'data.krx';
+        source = 'mdcstat';
         console.log(
-          `  history session close ${tradeDateDash}: source=data.krx/MDCSTAT01501 rows=${byCode.size}`,
+          `  history session close ${tradeDateDash}: source=mdcstat/MDCSTAT01501 rows=${byCode.size}`,
         );
       } else {
         console.log(
-          `  history session close ${tradeDateDash}: data.krx empty → Naver OHLCV fallback`,
+          `  history session close ${tradeDateDash}: data.krx empty`,
         );
       }
     } catch (e) {
@@ -865,130 +885,89 @@ async function upsertSessionCloseHistory(
     }
   }
 
-  const krxReady = !!(byCode && byCode.size > 0);
-  const inAftermarket = isKrxAfterMarket();
-  const rows = [];
-  let universeMode = 'hub';
+  if (!byCode || !byCode.size) {
+    console.error(
+      `HISTORY_PENDING: ${tradeDateDash} — apihub and MDCSTAT both empty; `
+      + 'skip stock_price_history write (no Naver/NXT close)',
+    );
+    return {
+      upserted: 0,
+      skipped: false,
+      byCode: null,
+      source: null,
+      reason: 'history_pending',
+      pending: true,
+    };
+  }
 
-  if (krxReady) {
-    // Full-market upsert (apihub / MDCSTAT01501) — do not filter to hub quoteRows.
-    for (const [rawTicker, krx] of byCode) {
-      const ticker = normalizeTicker(rawTicker);
-      if (!ticker) continue;
-      const fields = historyFieldsFromKrxRow(krx);
-      if (!fields || fields.close == null || !(fields.close > 0)) continue;
-      rows.push({
-        ticker,
-        trade_date: tradeDateDash,
-        open: fields.open,
-        high: fields.high,
-        low: fields.low,
-        close: fields.close,
-        volume: fields.volume,
-        mcap_won: fields.mcap_won ?? null,
-        turnover_won: fields.turnover_won ?? null,
-      });
-    }
-    universeMode = 'full';
-  } else {
-    // (c) Naver session OHLCV fallback — hub quoteRows only.
-    for (const q of quoteRows) {
-      if (!q || !q.ticker) continue;
-      const open =
-        q._sessionOpen != null && Number.isFinite(q._sessionOpen) && q._sessionOpen > 0
-          ? q._sessionOpen
-          : null;
-      const high =
-        q._sessionHigh != null && Number.isFinite(q._sessionHigh) && q._sessionHigh > 0
-          ? q._sessionHigh
-          : null;
-      const low =
-        q._sessionLow != null && Number.isFinite(q._sessionLow) && q._sessionLow > 0
-          ? q._sessionLow
-          : null;
-      const volume =
-        q._sessionVolume != null && Number.isFinite(q._sessionVolume) && q._sessionVolume >= 0
-          ? q._sessionVolume
-          : null;
-      const close = resolveRegularSessionClose(q, inAftermarket);
-      if (close == null || !Number.isFinite(close) || close <= 0) continue;
-      if (q.mcap_won == null || !Number.isFinite(q.mcap_won) || q.mcap_won <= 0) continue;
-      rows.push({
-        ticker: normalizeTicker(q.ticker) || q.ticker,
-        trade_date: tradeDateDash,
-        open,
-        high,
-        low,
-        close,
-        volume,
-        mcap_won: q.mcap_won,
-        turnover_won: q.turnover_won ?? null,
-      });
-    }
-    if (rows.length) source = 'naver';
-    universeMode = 'hub';
+  const rows = [];
+  for (const [rawTicker, krx] of byCode) {
+    const ticker = normalizeTicker(rawTicker);
+    if (!ticker) continue;
+    const fields = historyFieldsFromKrxRow(krx);
+    if (!fields || fields.close == null || !(fields.close > 0)) continue;
+    rows.push({
+      ticker,
+      trade_date: tradeDateDash,
+      open: fields.open,
+      high: fields.high,
+      low: fields.low,
+      close: fields.close,
+      volume: fields.volume,
+      mcap_won: fields.mcap_won ?? null,
+      turnover_won: fields.turnover_won ?? null,
+      source,
+    });
   }
 
   if (!rows.length) {
-    console.log(
-      `  history session close ${tradeDateDash}: skip upsert (0 rows; source attempted=${source || 'none'})`,
+    console.error(
+      `HISTORY_PENDING: ${tradeDateDash} — ${source} returned 0 usable closes`,
     );
-    return { upserted: 0, skipped: false, byCode: null, source, reason: 'no_rows' };
+    return {
+      upserted: 0,
+      skipped: false,
+      byCode: null,
+      source,
+      reason: 'history_pending',
+      pending: true,
+    };
   }
+
   const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
-  const withOhlcv = rows.filter(
-    (r) => r.open != null && r.high != null && r.low != null && r.volume != null,
-  ).length;
-  const sourceLabel =
-    source === 'apihub'
-      ? 'apihub'
-      : source === 'data.krx'
-        ? 'data.krx/MDCSTAT01501'
-        : `Naver OHLCV ${withOhlcv}/${rows.length}`;
   console.log(
     `  history session close ${tradeDateDash}: upserted ${result.upserted} `
-    + `(source=${sourceLabel}, universe=${universeMode})`,
+    + `(source=${source}, universe=full)`,
   );
 
-  // Hub coverage check stays hub-scoped (even when full-market upsert ran).
   const hubTickers = quoteRows.map((row) => row.ticker).filter(Boolean);
-  const coverage = krxReady
-    ? await repairHistoryCoverageForDate(
-        hubTickers,
-        tradeDateDash,
-        byCode,
-        supabaseUrl,
-        serviceKey,
-      )
-    : null;
-  return { ...result, coverage, byCode: krxReady ? byCode : null, source, universeMode };
+  const coverage = await repairHistoryCoverageForDate(
+    hubTickers,
+    tradeDateDash,
+    byCode,
+    supabaseUrl,
+    serviceKey,
+    source,
+  );
+  return {
+    ...result,
+    coverage,
+    byCode,
+    source,
+    universeMode: 'full',
+    pending: false,
+  };
 }
 
 /**
- * Daily bar close must be the regular-session close.
- * Prefer explicit Naver session close; allow last only when it is still the
- * regular close (장마감 marker, or clock between 15:30 and aftermarket open).
- * Never use aftermarket last.
+ * @deprecated Naver last is never a regular-session close. Kept for tests only:
+ * returns _sessionClose when present; never q.last.
  */
-function resolveRegularSessionClose(q, inAftermarket = isKrxAfterMarket()) {
+export function resolveRegularSessionClose(q) {
   if (q._sessionClose != null && Number.isFinite(q._sessionClose) && q._sessionClose > 0) {
     return q._sessionClose;
   }
-  const lastOk = q.last != null && Number.isFinite(q.last) && q.last > 0;
-  if (!lastOk) return null;
-  // Page still says 장마감 → last is regular close even if clock is later.
-  if (q._naverMarketClosed === true) return q.last;
-  // 15:31–15:59: aftermarket not open yet; last is still regular close.
-  if (!inAftermarket && isInPostClosePreAftermarketWindow()) return q.last;
   return null;
-}
-
-/** Clock between regular close and aftermarket open (15:31–15:59 KST). */
-function isInPostClosePreAftermarketWindow(now = new Date()) {
-  const p = kstDateParts(now);
-  if (p.weekday < 1 || p.weekday > 5) return false;
-  const minutes = p.hour * 60 + p.minute;
-  return minutes > SESSION_CLOSE && minutes < AFTERMARKET_OPEN;
 }
 
 async function fetchHistoryMaxTradeDate(supabaseUrl, serviceKey, sampleTicker = '005930') {
@@ -1047,6 +1026,7 @@ async function fillMissingHistoryDays(
           volume: fields.volume,
           mcap_won: fields.mcap_won,
           turnover_won: fields.turnover_won,
+          source: 'backfill',
         });
       }
       if (!rows.length) continue;
@@ -2209,6 +2189,12 @@ async function main() {
     authKey,
     env,
   );
+  if (histResult.pending && (syncSlot === 'post_close' || syncSlot === 'post_close_retry')) {
+    console.error(
+      'HISTORY_PENDING on post_close — skip RS/refs/volatility chain (exit 3)',
+    );
+    process.exit(3);
+  }
   if (histResult.byCode?.size && historyTradeDateDash) {
     await detectDailyPriceAdjustments({
       tickers,

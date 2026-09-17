@@ -11,7 +11,7 @@ import {
   emptyQuote,
   resolveNaverSession,
 } from '../functions/lib/naver_sise_quotes.mjs';
-import { detectNaverStale, stockReturnFieldsFromRefs, toSupabaseRow } from './sync_quotes_to_supabase.mjs';
+import { detectNaverStale, stockReturnFieldsFromRefs, toSupabaseRow, resolveRegularSessionClose } from './sync_quotes_to_supabase.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -226,6 +226,18 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     true,
   );
   assert(row._sessionClose === null, `_sessionClose must be null, got ${row._sessionClose}`);
+}
+
+// resolveRegularSessionClose never uses last / marketClosed marker
+{
+  assert(
+    resolveRegularSessionClose({ _sessionClose: null, last: 253500, _naverMarketClosed: true }) === null,
+    '장마감 last must not become regular close',
+  );
+  assert(
+    resolveRegularSessionClose({ _sessionClose: 252500, last: 253500 }) === 252500,
+    '_sessionClose preferred',
+  );
 }
 
 // ── stockReturnFieldsFromRefs A/B/C edge cases ──

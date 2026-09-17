@@ -62,7 +62,7 @@ function parseArgs(argv) {
   return { requireDate, guardToday };
 }
 
-function collectUniverseTickers() {
+function collectHubTickers() {
   const set = new Set();
   const hubPath = path.join(ROOT, 'data', 'hub_index.json');
   if (fs.existsSync(hubPath)) {
@@ -72,6 +72,11 @@ function collectUniverseTickers() {
       if (t) set.add(t);
     }
   }
+  return [...set].sort();
+}
+
+function collectUniverseTickers() {
+  const set = new Set(collectHubTickers());
   const rsPath = path.join(ROOT, 'data', 'hub_rs_snapshot.json');
   if (fs.existsSync(rsPath)) {
     try {
@@ -102,6 +107,122 @@ async function fetchHistoryMaxTradeDate(config) {
   );
   if (!Array.isArray(rows) || !rows[0]?.trade_date) return null;
   return String(rows[0].trade_date).slice(0, 10);
+}
+
+const TRUSTED_HISTORY_SOURCES = new Set(['apihub', 'mdcstat', 'backfill']);
+
+/**
+ * Reject tip build when hub coverage/source quality on the anchor day is poor.
+ * @returns {Promise<void>} exits 3 on failure
+ */
+async function guardAnchorDaySourceQuality(config, anchorDash, hubTickers) {
+  if (!anchorDash || !hubTickers.length) return;
+  const pageSize = 1000;
+  /** @type {Map<string, string|null>} */
+  const byTicker = new Map();
+  let sourceColumnOk = true;
+  try {
+    for (let offset = 0; ; offset += pageSize) {
+      const rows = await fetchSupabaseJson(
+        config,
+        `stock_price_history?trade_date=eq.${encodeURIComponent(anchorDash)}`
+          + `&select=ticker,source,close&limit=${pageSize}&offset=${offset}`,
+      );
+      for (const r of rows || []) {
+        const t = normalizeTicker(r.ticker);
+        if (t) byTicker.set(t, r.source != null ? String(r.source) : null);
+      }
+      if (!rows || rows.length < pageSize) break;
+    }
+  } catch (e) {
+    const msg = String(e.message || e);
+    if (/source|42703/i.test(msg)) {
+      console.warn(
+        '  anchor-day source guard: source column missing — apply migration 0021; '
+        + 'falling back to coverage-only check',
+      );
+      sourceColumnOk = false;
+      for (let offset = 0; ; offset += pageSize) {
+        const rows = await fetchSupabaseJson(
+          config,
+          `stock_price_history?trade_date=eq.${encodeURIComponent(anchorDash)}`
+            + `&select=ticker,close&limit=${pageSize}&offset=${offset}`,
+        );
+        for (const r of rows || []) {
+          const t = normalizeTicker(r.ticker);
+          if (t) byTicker.set(t, null);
+        }
+        if (!rows || rows.length < pageSize) break;
+      }
+    } else {
+      throw e;
+    }
+  }
+
+  let missing = 0;
+  let badSource = 0;
+  for (const t of hubTickers) {
+    if (!byTicker.has(t)) {
+      missing += 1;
+      continue;
+    }
+    if (!sourceColumnOk) continue;
+    const src = byTicker.get(t);
+    // null / naver / unknown → untrusted for tip
+    if (!src || !TRUSTED_HISTORY_SOURCES.has(src)) badSource += 1;
+  }
+  const n = hubTickers.length;
+  const missingPct = missing / n;
+  const badPct = badSource / n;
+  console.log(
+    `  anchor-day source guard ${anchorDash}: hub=${n} missing=${missing} `
+    + `(${(missingPct * 100).toFixed(2)}%) badSource=${badSource} `
+    + `(${(badPct * 100).toFixed(2)}%) sourceCol=${sourceColumnOk}`,
+  );
+  if (missingPct >= 0.05) {
+    console.error(
+      `FATAL: ≥5% hub tickers missing history on ${anchorDash} `
+      + `(${missing}/${n}) — exit 3`,
+    );
+    process.exit(EXIT_SKIP_MISSING_TODAY);
+  }
+  if (sourceColumnOk && badPct >= 0.01) {
+    console.error(
+      `FATAL: ≥1% hub tickers have untrusted source on ${anchorDash} `
+      + `(${badSource}/${n}; need apihub|mdcstat|backfill) — exit 3`,
+    );
+    process.exit(EXIT_SKIP_MISSING_TODAY);
+  }
+}
+
+async function fetchHistoryClose(config, ticker, tradeDateDash) {
+  try {
+    const rows = await fetchSupabaseJson(
+      config,
+      `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}`
+        + `&trade_date=eq.${encodeURIComponent(tradeDateDash)}`
+        + `&select=close,source&limit=1`,
+    );
+    if (!Array.isArray(rows) || !rows[0]) return null;
+    const close = Number(rows[0].close);
+    return {
+      close: Number.isFinite(close) && close > 0 ? close : null,
+      source: rows[0].source != null ? String(rows[0].source) : null,
+    };
+  } catch {
+    const rows = await fetchSupabaseJson(
+      config,
+      `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}`
+        + `&trade_date=eq.${encodeURIComponent(tradeDateDash)}`
+        + `&select=close&limit=1`,
+    );
+    if (!Array.isArray(rows) || !rows[0]) return null;
+    const close = Number(rows[0].close);
+    return {
+      close: Number.isFinite(close) && close > 0 ? close : null,
+      source: null,
+    };
+  }
 }
 
 /**
@@ -169,14 +290,23 @@ async function main() {
   }
 
   const tickers = collectUniverseTickers();
+  const hubTickers = collectHubTickers();
   if (!tickers.length) {
     console.error('No tickers from hub_index / hub_rs_snapshot');
     process.exit(1);
   }
   console.log(
-    `Universe: hub+rs = ${tickers.length} tickers `
+    `Universe: hub+rs = ${tickers.length} tickers (hub=${hubTickers.length}) `
     + `(closes=${RETURN_REF_CLOSES}, tradingDates=${RETURN_REF_TRADING_DATES})`,
   );
+
+  // Prefer today's dash when history already has it; else max trade_date.
+  const todayDash = kstYmdDash();
+  const maxDash = await fetchHistoryMaxTradeDate(supabase);
+  const anchorForGuard = maxDash && maxDash >= todayDash ? todayDash : maxDash;
+  if (anchorForGuard) {
+    await guardAnchorDaySourceQuality(supabase, anchorForGuard, hubTickers);
+  }
 
   const refs = await buildAdjustedCloseRefsFromHistory(supabase, tickers, {
     tradingDatesCount: RETURN_REF_TRADING_DATES,
@@ -188,6 +318,12 @@ async function main() {
   }
 
   const { recentDd, tradingDates, quotes: seriesMap } = refs;
+
+  // Re-check on the tip day actually used by the builder.
+  const tipDash = `${recentDd.slice(0, 4)}-${recentDd.slice(4, 6)}-${recentDd.slice(6, 8)}`;
+  if (tipDash !== anchorForGuard) {
+    await guardAnchorDaySourceQuality(supabase, tipDash, hubTickers);
+  }
 
   if (requireDate && !skipRequireDate && recentDd !== requireDate) {
     console.error(
@@ -240,6 +376,17 @@ async function main() {
     );
     if (!okLast) {
       console.error(`FATAL: ${SAMPLE_TICKER} last close missing — recentDd alignment broken`);
+      process.exit(1);
+    }
+    const hist = await fetchHistoryClose(supabase, SAMPLE_TICKER, tipDash);
+    console.log(
+      `tip check ${SAMPLE_TICKER}: refsTip=${last} history.close=${hist?.close ?? 'n/a'} `
+      + `source=${hist?.source ?? 'n/a'}`,
+    );
+    if (hist?.close != null && Number(last) !== Number(hist.close)) {
+      console.error(
+        `FATAL: ${SAMPLE_TICKER} refs tip ${last} != history.close ${hist.close} on ${tipDash}`,
+      );
       process.exit(1);
     }
   } else {

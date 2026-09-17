@@ -333,6 +333,48 @@ async function main() {
       } else if (quotes.refsRecentDd === today && mode !== 'official') {
         fail(`f) post_close expected official, got ${mode}`);
       }
+      // official: quotes.last == refs tip == history close (same 005930)
+      if (mode === 'official' && quotes.refsRecentDd === today) {
+        const tip = Number(
+          JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'hub_return_refs.json'), 'utf8'))
+            .quotes?.['005930']?.closes?.slice(-1)?.[0],
+        );
+        const qLast = numOrNull(quotes.items?.['005930']?.last);
+        if (!Number.isFinite(tip) || tip <= 0) {
+          fail('f) official refs tip missing for 005930');
+        }
+        if (qLast == null || !nearlyEqual(qLast, tip, 1)) {
+          fail('f) official quotes.last != refs tip', { qLast, tip });
+        }
+        const config = getSupabaseConfig(env);
+        if (config) {
+          try {
+            const dash = `${today.slice(0, 4)}-${today.slice(4, 6)}-${today.slice(6, 8)}`;
+            const url =
+              `${config.url}/rest/v1/stock_price_history?ticker=eq.005930&trade_date=eq.${dash}`
+              + `&select=close&limit=1`;
+            const res = await fetch(url, {
+              headers: {
+                apikey: config.anonKey,
+                Authorization: `Bearer ${config.anonKey}`,
+              },
+            });
+            if (res.ok) {
+              const rows = await res.json();
+              const close = numOrNull(rows?.[0]?.close);
+              if (close != null && !nearlyEqual(close, tip, 1)) {
+                fail('f) official refs tip != ticker_ohlc close', { tip, close });
+              }
+              if (close != null && qLast != null && !nearlyEqual(qLast, close, 1)) {
+                fail('f) official quotes.last != ticker_ohlc close', { qLast, close });
+              }
+              console.log(`  f) official triple match last=tip=ohlc=${tip}`);
+            }
+          } catch {
+            /* optional when supabase unavailable */
+          }
+        }
+      }
     }
     console.log(`  f) mode clock check ok (${mode}, k=${k})`);
 
