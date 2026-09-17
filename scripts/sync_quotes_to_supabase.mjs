@@ -115,6 +115,15 @@ async function fetchNaverQuotes(codes) {
   const quotes = {};
   const failed = [];
   let ok = 0;
+  const counters = {
+    siseOk: 0,
+    siseFail: 0,
+    mobileOk: 0,
+    mobileFail: 0,
+    basicOk: 0,
+    basicFail: 0,
+  };
+  let sample005930 = null;
 
   for (let i = 0; i < codes.length; i += NAVER_CONCURRENCY) {
     const batch = codes.slice(i, i + NAVER_CONCURRENCY);
@@ -137,10 +146,34 @@ async function fetchNaverQuotes(codes) {
 
     for (const row of rows) {
       if (row.q) {
-        quotes[row.code] = row.q;
+        const sources = row.q._sources || {};
+        if (sources.basic === 'ok') counters.basicOk += 1;
+        else counters.basicFail += 1;
+        if (sources.sise === 'ok') counters.siseOk += 1;
+        else counters.siseFail += 1;
+        if (sources.mobile === 'ok') counters.mobileOk += 1;
+        else counters.mobileFail += 1;
+        if (row.code === '005930') {
+          sample005930 = {
+            siseLast: sources.siseQuote?.last ?? null,
+            mobileLast: sources.mobileQuote?.last ?? null,
+            mobileSessionClose: sources.mobileQuote?.sessionClose ?? null,
+            basicLast: sources.basicQuote?.last ?? null,
+            siseTradeDate: sources.siseQuote?.tradeDate ?? null,
+            mobileTradeDate: sources.mobileQuote?.tradeDate ?? null,
+            basicTradeDate: sources.basicQuote?.tradeDate ?? null,
+            mergedLast: row.q.last ?? null,
+            mergedTradeDate: row.q.tradeDate ?? null,
+          };
+        }
+        const { _sources, ...clean } = row.q;
+        quotes[row.code] = clean;
         ok += 1;
       } else {
         failed.push(row.code);
+        counters.basicFail += 1;
+        counters.siseFail += 1;
+        counters.mobileFail += 1;
       }
     }
 
@@ -150,7 +183,20 @@ async function fetchNaverQuotes(codes) {
   }
 
   process.stdout.write('\n');
-  return { quotes, ok, failed };
+  console.log(
+    `  Naver sources: sise ok/fail=${counters.siseOk}/${counters.siseFail}, `
+    + `mobile ok/fail=${counters.mobileOk}/${counters.mobileFail}, `
+    + `basic ok/fail=${counters.basicOk}/${counters.basicFail}`,
+  );
+  if (sample005930) {
+    console.log(
+      `  005930 sample: sise.last=${sample005930.siseLast} basic.last=${sample005930.basicLast} `
+      + `mobile.last=${sample005930.mobileLast} mobile.sessionClose=${sample005930.mobileSessionClose} `
+      + `sise.tradeDate=${sample005930.siseTradeDate} basic.tradeDate=${sample005930.basicTradeDate} `
+      + `merged.last=${sample005930.mergedLast} merged.tradeDate=${sample005930.mergedTradeDate}`,
+    );
+  }
+  return { quotes, ok, failed, counters, sample005930 };
 }
 
 async function loadKrxQuotes(authKey, supabase) {
@@ -280,7 +326,7 @@ function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, 
     _sessionOpen: naver?.open ?? null,
     _sessionHigh: naver?.high ?? null,
     _sessionLow: naver?.low ?? null,
-    _sessionClose: naver?.close ?? null,
+    _sessionClose: naver?.close ?? naver?.sessionClose ?? null,
     _sessionVolume: naver?.volume ?? null,
     _naverMarketClosed: naver?.marketClosed ?? null,
   };
@@ -298,6 +344,101 @@ function stripSessionOhlcvFields(row) {
     ...rest
   } = row;
   return rest;
+}
+
+/** After 09:10 KST during regular|aftermarket: ≥90% unchanged last → crawl stale. */
+const STALE_GUARD_START_MIN = 9 * 60 + 10;
+const STALE_SAME_LAST_RATIO = 0.9;
+
+async function loadLatestLastByTicker(tickers, supabaseUrl, serviceKey) {
+  const map = new Map();
+  const CHUNK = 100;
+  for (let i = 0; i < tickers.length; i += CHUNK) {
+    const batch = tickers.slice(i, i + CHUNK);
+    const filter = batch.map((t) => encodeURIComponent(t)).join(',');
+    const url =
+      `${supabaseUrl}/rest/v1/stock_quotes_latest?select=ticker,last&ticker=in.(${filter})`;
+    const res = await fetch(url, {
+      headers: {
+        apikey: serviceKey,
+        Authorization: `Bearer ${serviceKey}`,
+      },
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`stock_quotes_latest read failed ${res.status}: ${body.slice(0, 160)}`);
+    }
+    const rows = await res.json();
+    for (const r of rows || []) {
+      const t = normalizeTicker(r.ticker);
+      if (t) map.set(t, r.last);
+    }
+  }
+  return map;
+}
+
+/**
+ * Crawl stale / non-trading-day gate before stock_quotes_latest upsert.
+ * @returns {{
+ *   stale: boolean,
+ *   nonTradingDay: boolean,
+ *   reason: string|null,
+ *   compared?: number,
+ *   same?: number,
+ *   ratio?: number
+ * }}
+ */
+export function detectNaverStale({
+  tickers,
+  naverQuotes,
+  prevLastByTicker,
+  consensusTradeDate,
+  todayYmdDash,
+  regularSession,
+  now = new Date(),
+  force = false,
+}) {
+  if (force) return { stale: false, nonTradingDay: false, reason: null };
+  if (consensusTradeDate && todayYmdDash && consensusTradeDate < todayYmdDash) {
+    return {
+      stale: false,
+      nonTradingDay: true,
+      reason: `consensus.tradeDate ${consensusTradeDate} < today ${todayYmdDash}`,
+    };
+  }
+  // 90% unchanged last — regular session after 09:10 only (not aftermarket).
+  if (!regularSession) return { stale: false, nonTradingDay: false, reason: null };
+  const p = kstDateParts(now);
+  const minutes = p.hour * 60 + p.minute;
+  if (minutes < STALE_GUARD_START_MIN) {
+    return { stale: false, nonTradingDay: false, reason: null };
+  }
+
+  let compared = 0;
+  let same = 0;
+  for (const t of tickers) {
+    const prev = prevLastByTicker.get(t);
+    const next = naverQuotes[t]?.last;
+    if (prev == null || next == null) continue;
+    if (!Number.isFinite(Number(prev)) || !Number.isFinite(Number(next))) continue;
+    compared += 1;
+    if (Number(prev) === Number(next)) same += 1;
+  }
+  if (compared < 20) return { stale: false, nonTradingDay: false, reason: null, compared, same };
+  const ratio = same / compared;
+  if (ratio >= STALE_SAME_LAST_RATIO) {
+    return {
+      stale: true,
+      nonTradingDay: false,
+      reason:
+        `hub last unchanged ${same}/${compared} (${(ratio * 100).toFixed(1)}% ≥ `
+        + `${STALE_SAME_LAST_RATIO * 100}%)`,
+      compared,
+      same,
+      ratio,
+    };
+  }
+  return { stale: false, nonTradingDay: false, reason: null, compared, same, ratio };
 }
 
 async function upsertBatch(table, rows, supabaseUrl, serviceKey, attempt = 0) {
@@ -1758,6 +1899,45 @@ async function main() {
     console.log('  (clock says session, but Naver marker indicates non-trading day → holiday)');
   }
 
+  // Same sessionOpen rule as /api/quotes (krxSessionInfo regular|aftermarket).
+  const krxNow = krxSessionInfo();
+  const sessionOpenForReturns = !!(krxNow.regular || krxNow.aftermarket);
+
+  let prevLastByTicker = new Map();
+  try {
+    prevLastByTicker = await loadLatestLastByTicker(tickers, supabaseUrl, serviceKey);
+  } catch (e) {
+    console.warn('  stock_quotes_latest preload failed:', e.message || e);
+  }
+  const staleCheck = detectNaverStale({
+    tickers,
+    naverQuotes: naverResult.quotes,
+    prevLastByTicker,
+    consensusTradeDate: consensus.tradeDate,
+    todayYmdDash,
+    regularSession: !!krxNow.regular,
+    now: new Date(),
+    force,
+  });
+  if (staleCheck.compared != null) {
+    console.log(
+      `  stale-guard compare same/compared=${staleCheck.same}/${staleCheck.compared}`
+      + (staleCheck.ratio != null ? ` (${(staleCheck.ratio * 100).toFixed(1)}%)` : ''),
+    );
+  }
+  if (staleCheck.stale) {
+    console.error(`NAVER_STALE: ${staleCheck.reason}`);
+    console.error('  skip stock_quotes_latest upsert + sector_intraday_returns; exit 2');
+    process.exit(2);
+  }
+  const skipLatestAndIntraday = !!staleCheck.nonTradingDay;
+  if (skipLatestAndIntraday) {
+    console.log(
+      `  non-trading day / pre-open (tradeDate=${consensus.tradeDate || 'n/a'})`
+      + ' — skip stock_quotes_latest upsert + intraday; continue history gates',
+    );
+  }
+
   let refsForReturns = null;
   try {
     const refsPath = path.join(ROOT, 'data', 'hub_return_refs.json');
@@ -1775,9 +1955,6 @@ async function main() {
     refsForReturns = null;
   }
 
-  // Same sessionOpen rule as /api/quotes (krxSessionInfo regular|aftermarket).
-  const krxNow = krxSessionInfo();
-  const sessionOpenForReturns = !!(krxNow.regular || krxNow.aftermarket);
   let returnsFilled = 0;
   const rows = tickers.map((ticker) => {
     const returnFields = stockReturnFieldsFromRefs(
@@ -1802,8 +1979,13 @@ async function main() {
     + ` sessionOpen=${sessionOpenForReturns} refs=${refsForReturns ? 'ok' : 'null'}`,
   );
 
-  console.log(`Upserting ${rows.length} rows…`);
-  const upsertResult = await upsertToSupabase(rows, supabaseUrl, serviceKey);
+  let upsertResult = { upserted: [], failed: [] };
+  if (skipLatestAndIntraday) {
+    console.log('  stock_quotes_latest upsert: skip (non-trading day / pre-open)');
+  } else {
+    console.log(`Upserting ${rows.length} rows…`);
+    upsertResult = await upsertToSupabase(rows, supabaseUrl, serviceKey);
+  }
 
   // Keep stock_price_history current: regular-session close bar once the
   // regular auction has ended (clock >15:30) or Naver reports 장마감.
@@ -1849,7 +2031,11 @@ async function main() {
     expectedTickers: tickers,
     lookbackSessions: 30,
   });
-  await upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, serviceKey);
+  if (skipLatestAndIntraday) {
+    console.log('  history indicators → stock_quotes_latest: skip (non-trading day / pre-open)');
+  } else {
+    await upsertHistoryIndicatorsForTickers(tickers, rows, supabaseUrl, serviceKey);
+  }
 
   // Session close: persist today's sector mcap sums for multi-day sparklines.
   if (sessionClosedForHistory && historyTradeDateDash) {
@@ -1894,7 +2080,9 @@ async function main() {
   const historyCtx = await prepareSectorHistoryContext(supabaseUrl, serviceKey);
 
   const aftermarket = isKrxAfterMarket();
-  if (regularSession || aftermarket) {
+  if (skipLatestAndIntraday) {
+    console.log('  sector intraday returns: skip (non-trading day / pre-open)');
+  } else if (regularSession || aftermarket) {
     const sessionKind = regularSession ? 'regular' : 'aftermarket';
     await syncSectorIntradayReturns({
       hubIndex,
@@ -1910,7 +2098,9 @@ async function main() {
     console.log('  sector intraday returns: skip (session closed)');
   }
 
-  if (regularSession) {
+  if (skipLatestAndIntraday) {
+    console.log('  [legacy] sector intraday snapshots: skip (non-trading day / pre-open)');
+  } else if (regularSession) {
     await syncSectorIntradaySnapshots({
       hubIndex,
       quoteByTicker,
@@ -1974,7 +2164,12 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+const isMain =
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isMain) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

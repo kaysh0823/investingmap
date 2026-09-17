@@ -5,6 +5,7 @@
 
 export const NAVER_SISE_URL = 'https://finance.naver.com/item/sise.naver';
 export const NAVER_MOBILE_INTEGRATION_URL = 'https://m.stock.naver.com/api/stock';
+export const NAVER_MOBILE_BASIC_URL = 'https://m.stock.naver.com/api/stock';
 
 export function parseKoreanNumber(s) {
   if (s == null || s === '') return null;
@@ -341,6 +342,7 @@ export async function fetchNaverSiseQuote(code, init) {
 export function parseNaverMobileIntegration(json) {
   const out = {
     last: null,
+    sessionClose: null,
     prevClose: null,
     open: null,
     high: null,
@@ -387,18 +389,70 @@ export function parseNaverMobileIntegration(json) {
 
   const dt = json.dealTrendInfos;
   if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
-    // Recent session close — use as last only when PC sise is unavailable (preferNaverLast merge).
-    out.last = parseKoreanNumber(dt[0].closePrice);
+    // Recent session close only — never use as live last (stale after open).
+    out.sessionClose = parseKoreanNumber(dt[0].closePrice);
     if (out.volume == null && dt[0].accumulatedTradingVolume != null) {
       out.volume = parseKoreanNumber(dt[0].accumulatedTradingVolume);
     }
   }
-  if (out.last == null && byCode.lastClosePrice) {
-    out.last = parseKoreanNumber(byCode.lastClosePrice);
-  }
+  // Do not set last from lastClosePrice / dealTrend — those are prior-session closes.
   if (out.chg1dPct == null && out.last != null && out.prevClose != null && out.prevClose > 0) {
     out.chg1dPct = Math.round(((out.last / out.prevClose) - 1) * 10000) / 100;
   }
+  return out;
+}
+
+/**
+ * Parse m.stock /basic JSON (live last while marketStatus is OPEN).
+ * @param {object} json
+ */
+export function parseNaverBasicQuote(json) {
+  const out = {
+    last: null,
+    prevClose: null,
+    open: null,
+    high: null,
+    low: null,
+    volume: null,
+    high52w: null,
+    low52w: null,
+    mcapWon: null,
+    turnoverWon: null,
+    per: null,
+    pbr: null,
+    chg1dPct: null,
+    tradeDate: null,
+    marketClosed: null,
+  };
+  if (!json || typeof json !== 'object') return out;
+
+  out.last = parseKoreanNumber(json.closePrice);
+  const compareAbs = parseKoreanNumber(json.compareToPreviousClosePrice);
+  const code = String(json.compareToPreviousPrice?.code ?? json.compareToPreviousPrice?.name ?? '');
+  const name = String(json.compareToPreviousPrice?.name || '').toUpperCase();
+  const falling =
+    code === '3' || code === '5' || name.includes('FALL') || name.includes('DECLIN');
+  const rising =
+    code === '1' || code === '2' || name.includes('RIS') || name.includes('UPPER');
+  if (out.last != null && compareAbs != null) {
+    if (falling) out.prevClose = out.last + Math.abs(compareAbs);
+    else if (rising) out.prevClose = out.last - Math.abs(compareAbs);
+    else out.prevClose = out.last - compareAbs; // signed compare fallback
+  }
+
+  const ratio = parseFloat(String(json.fluctuationsRatio ?? '').replace(/,/g, ''));
+  if (Number.isFinite(ratio)) out.chg1dPct = ratio;
+  else if (out.last != null && out.prevClose != null && out.prevClose > 0) {
+    out.chg1dPct = Math.round(((out.last / out.prevClose) - 1) * 10000) / 100;
+  }
+
+  const tradedAt = String(json.localTradedAt || '');
+  const dM = tradedAt.match(/^(\d{4}-\d{2}-\d{2})/);
+  if (dM) out.tradeDate = dM[1];
+
+  const status = String(json.marketStatus || '').toUpperCase();
+  if (status) out.marketClosed = status !== 'OPEN';
+
   return out;
 }
 
@@ -416,24 +470,61 @@ export async function fetchNaverMobileQuote(code, init) {
   return parseNaverMobileIntegration(await res.json());
 }
 
-/** PC sise + mobile integration merged (mcap/per/pbr prefer latest Naver). */
+/** Live quote from m.stock /basic (preferred last source). */
+export async function fetchNaverBasicQuote(code, init) {
+  const url = `${NAVER_MOBILE_BASIC_URL}/${encodeURIComponent(code)}/basic`;
+  const res = await fetch(url, {
+    ...init,
+    headers: {
+      'User-Agent': 'investingmap-quotes/1.0',
+      Accept: 'application/json',
+      ...(init && init.headers),
+    },
+  });
+  if (!res.ok) throw new Error(`Naver basic HTTP ${res.status} ${code}`);
+  return parseNaverBasicQuote(await res.json());
+}
+
+/**
+ * Merge sources with live-last priority: basic → PC sise → mobile integration.
+ * Mobile dealTrend close is sessionClose only (never live last).
+ */
 export async function fetchNaverQuote(code, init) {
-  const [siseR, mobileR] = await Promise.allSettled([
+  const [basicR, siseR, mobileR] = await Promise.allSettled([
+    fetchNaverBasicQuote(code, init),
     fetchNaverSiseQuote(code, init),
     fetchNaverMobileQuote(code, init),
   ]);
   let merged = emptyQuote();
   const mergeOpts = { preferNaverLast: true, preferNaverFundamentals: true };
+  // Lowest → highest last priority.
   if (mobileR.status === 'fulfilled') {
     merged = mergeNaverIntoQuote(merged, mobileR.value, mergeOpts);
   }
   if (siseR.status === 'fulfilled') {
     merged = mergeNaverIntoQuote(merged, siseR.value, mergeOpts);
   }
-  if (siseR.status === 'rejected' && mobileR.status === 'rejected') {
-    throw siseR.reason || mobileR.reason;
+  if (basicR.status === 'fulfilled') {
+    merged = mergeNaverIntoQuote(merged, basicR.value, mergeOpts);
   }
-  return merged;
+  if (
+    basicR.status === 'rejected' &&
+    siseR.status === 'rejected' &&
+    mobileR.status === 'rejected'
+  ) {
+    throw basicR.reason || siseR.reason || mobileR.reason;
+  }
+  return {
+    ...merged,
+    _sources: {
+      basic: basicR.status === 'fulfilled' ? 'ok' : 'fail',
+      sise: siseR.status === 'fulfilled' ? 'ok' : 'fail',
+      mobile: mobileR.status === 'fulfilled' ? 'ok' : 'fail',
+      basicQuote: basicR.status === 'fulfilled' ? basicR.value : null,
+      siseQuote: siseR.status === 'fulfilled' ? siseR.value : null,
+      mobileQuote: mobileR.status === 'fulfilled' ? mobileR.value : null,
+    },
+  };
 }
 
 export function mergeNaverIntoQuote(quote, naver, opts) {
@@ -446,6 +537,9 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   if (naver.high != null && (preferLast || out.high == null)) out.high = naver.high;
   if (naver.low != null && (preferLast || out.low == null)) out.low = naver.low;
   if (naver.close != null && (preferLast || out.close == null)) out.close = naver.close;
+  if (naver.sessionClose != null && (preferLast || out.sessionClose == null)) {
+    out.sessionClose = naver.sessionClose;
+  }
   if (naver.volume != null && (preferLast || out.volume == null)) out.volume = naver.volume;
   if (naver.chg1dPct != null && (preferLast || out.chg1dPct == null)) out.chg1dPct = naver.chg1dPct;
   if (naver.high52w != null && (preferLast || out.high52w == null)) out.high52w = naver.high52w;
@@ -488,6 +582,8 @@ export function emptyQuote() {
     open: null,
     high: null,
     low: null,
+    close: null,
+    sessionClose: null,
     volume: null,
     high52w: null,
     low52w: null,

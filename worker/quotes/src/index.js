@@ -92,12 +92,8 @@ async function quoteOne(code) {
     const high52w = infoValue(integration, 'highPriceOf52Weeks');
     const low52w = infoValue(integration, 'lowPriceOf52Weeks');
     let last = null;
-    const dt = integration && integration.dealTrendInfos;
-    if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
-      last = parseKoreanNumber(dt[0].closePrice);
-    }
-    if (last == null) last = infoValue(integration, 'lastClosePrice');
-
+    // dealTrendInfos closePrice is prior-session close — never live last.
+    // Live last comes from fetchNaverQuote (basic → sise) below.
     const daily = await fetchDailyPages(code);
     const yoyReturnPct = yoyFromDaily(daily);
     item = mergeNaverIntoQuote(item, { last, high52w, low52w }, { preferNaverLast: true });
