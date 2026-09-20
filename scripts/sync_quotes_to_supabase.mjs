@@ -336,7 +336,16 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
     ret_200d_pct: null,
   };
 
-  return {
+  const sessionOpen = naver?.open ?? null;
+  const sessionHigh = naver?.high ?? null;
+  const sessionLow = naver?.low ?? null;
+  const sessionVolumeRaw = naver?.volume;
+  const sessionVolume =
+    sessionVolumeRaw != null && Number.isFinite(Number(sessionVolumeRaw))
+      ? Math.round(Number(sessionVolumeRaw))
+      : null;
+
+  const row = {
     ticker,
     last,
     prev_close: prevClose,
@@ -358,15 +367,27 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
     // In-memory only — stripped before stock_quotes_latest upsert; used for
     // session-close history when KRX day OHLC is not published yet.
     // _sessionClose is regular-session close (never aftermarket last).
-    _sessionOpen: naver?.open ?? null,
-    _sessionHigh: naver?.high ?? null,
-    _sessionLow: naver?.low ?? null,
+    _sessionOpen: sessionOpen,
+    _sessionHigh: sessionHigh,
+    _sessionLow: sessionLow,
     _sessionClose: naver?.close ?? null,
-    _sessionVolume: naver?.volume ?? null,
+    _sessionVolume: sessionVolume,
     _naverMarketClosed: naver?.marketClosed ?? null,
   };
+
+  // Persist session_* only on regular-session (A) sync. Post-15:30 (B) omits
+  // these keys so merge-duplicates keeps the last regular values (no NXT/aftermarket).
+  if (regularSession) {
+    row.session_open = sessionOpen;
+    row.session_high = sessionHigh;
+    row.session_low = sessionLow;
+    row.session_volume = sessionVolume;
+  }
+
+  return row;
 }
 
+/** Strip in-memory `_` helpers only — keep session_open/high/low/volume when present. */
 function stripSessionOhlcvFields(row) {
   if (!row || typeof row !== 'object') return row;
   const {

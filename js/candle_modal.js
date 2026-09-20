@@ -139,6 +139,7 @@
       paneNorm: 'BBW% · 이격도% (125일)',
       paneRange: '5일 변동성(고저/종가)% · SMA20',
       liveSession: '장중(현재가)',
+      closeOnly: '종가만',
     },
     en: {
       close: 'Close',
@@ -183,6 +184,7 @@
       paneNorm: 'BBW% · DISP% (125d)',
       paneRange: '5D Range Vol% · SMA20',
       liveSession: 'Live (last)',
+      closeOnly: 'Close only',
     },
   };
 
@@ -603,17 +605,43 @@
     if (qDate === lastT) {
       // Do not overwrite settled history OHLC after the session ends.
       if (!inSession) return { bars: bars, live: false, liveTime: null };
-      var high = lastBar.h != null && isFinite(lastBar.h) ? Math.max(lastBar.h, last) : last;
-      var low = lastBar.l != null && isFinite(lastBar.l) ? Math.min(lastBar.l, last) : last;
+      var qOpen =
+        item.open != null && isFinite(Number(item.open)) && Number(item.open) > 0
+          ? Number(item.open)
+          : null;
+      var qHigh =
+        item.high != null && isFinite(Number(item.high)) && Number(item.high) > 0
+          ? Number(item.high)
+          : null;
+      var qLow =
+        item.low != null && isFinite(Number(item.low)) && Number(item.low) > 0
+          ? Number(item.low)
+          : null;
+      var qVol =
+        item.volume != null && isFinite(Number(item.volume)) && Number(item.volume) >= 0
+          ? Number(item.volume)
+          : null;
+      var high =
+        qHigh != null
+          ? Math.max(qHigh, last)
+          : lastBar.h != null && isFinite(lastBar.h)
+            ? Math.max(lastBar.h, last)
+            : last;
+      var low =
+        qLow != null
+          ? Math.min(qLow, last)
+          : lastBar.l != null && isFinite(lastBar.l)
+            ? Math.min(lastBar.l, last)
+            : last;
       var patched = {
         t: lastBar.t,
-        o: lastBar.o,
+        o: qOpen != null ? qOpen : lastBar.o,
         h: high,
         l: low,
         c: last,
-        v: lastBar.v,
+        v: qVol != null ? qVol : lastBar.v,
         live: true,
-        closeOnly: !!lastBar.closeOnly,
+        closeOnly: qOpen == null && qHigh == null && qLow == null ? !!lastBar.closeOnly : false,
       };
       copyInvestorOscFields(lastBar, patched);
       out[out.length - 1] = patched;
@@ -736,17 +764,43 @@
         out[out.length - 1] = settled;
         return { bars: out, live: false, liveTime: null };
       }
-      var highW = lastBar.h != null && isFinite(lastBar.h) ? Math.max(lastBar.h, last) : last;
-      var lowW = lastBar.l != null && isFinite(lastBar.l) ? Math.min(lastBar.l, last) : last;
+      var qOpenW =
+        item.open != null && isFinite(Number(item.open)) && Number(item.open) > 0
+          ? Number(item.open)
+          : null;
+      var qHighW =
+        item.high != null && isFinite(Number(item.high)) && Number(item.high) > 0
+          ? Number(item.high)
+          : null;
+      var qLowW =
+        item.low != null && isFinite(Number(item.low)) && Number(item.low) > 0
+          ? Number(item.low)
+          : null;
+      var qVolW =
+        item.volume != null && isFinite(Number(item.volume)) && Number(item.volume) >= 0
+          ? Number(item.volume)
+          : null;
+      var highW =
+        qHighW != null
+          ? Math.max(qHighW, last)
+          : lastBar.h != null && isFinite(lastBar.h)
+            ? Math.max(lastBar.h, last)
+            : last;
+      var lowW =
+        qLowW != null
+          ? Math.min(qLowW, last)
+          : lastBar.l != null && isFinite(lastBar.l)
+            ? Math.min(lastBar.l, last)
+            : last;
       var patchedW = {
         t: qDate > lastT ? qDate : lastT,
-        o: lastBar.o,
+        o: qOpenW != null ? qOpenW : lastBar.o,
         h: highW,
         l: lowW,
         c: last,
-        v: lastBar.v,
+        v: qVolW != null ? qVolW : lastBar.v,
         live: true,
-        closeOnly: !!lastBar.closeOnly,
+        closeOnly: qOpenW == null && qHighW == null && qLowW == null ? !!lastBar.closeOnly : false,
       };
       copyInvestorOscFields(lastBar, patchedW);
       out[out.length - 1] = patchedW;
@@ -910,6 +964,7 @@
       'box-shadow:0 8px 24px rgba(0,0,0,.45);color:#e6edf3;font-size:11px;line-height:1.45;' +
       'font-variant-numeric:tabular-nums;white-space:nowrap}' +
       '.im-candle-hovertip .im-ht-date{font-weight:700;margin-bottom:4px;color:#c9d1d9}' +
+      '.im-candle-hovertip .im-ht-badge{margin-left:6px;font-size:10px;font-weight:600;color:#58a6ff}' +
       '.im-candle-hovertip .im-ht-row{display:flex;justify-content:space-between;gap:12px}' +
       '.im-candle-hovertip .im-ht-k{color:#8b949e}' +
       '.im-candle-hovertip .im-ht-v{color:#e6edf3;font-weight:600}' +
@@ -1597,7 +1652,18 @@
     }
     var b = state.barsByTime[time];
     var labels = t();
-    var html = '<div class="im-ht-date">' + time + '</div>';
+    var html = '<div class="im-ht-date">' + time;
+    if (b.live) {
+      html += ' <span class="im-ht-badge">' + labels.liveSession + '</span>';
+    } else if (b.closeOnly) {
+      html += ' <span class="im-ht-badge">' + labels.closeOnly + '</span>';
+    }
+    html += '</div>';
+    if (!b.closeOnly) {
+      html += hoverTipRow(labels.open, fmtPrice(b.o));
+      html += hoverTipRow(labels.high, fmtPrice(b.h));
+      html += hoverTipRow(labels.low, fmtPrice(b.l));
+    }
     html += hoverTipRow(labels.closePx, fmtPrice(b.c));
     html += hoverTipRow(labels.volume, fmtVol(b.v));
     if (b.macd != null || b.macdSignal != null) {

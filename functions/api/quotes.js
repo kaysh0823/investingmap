@@ -103,6 +103,10 @@ function mapSupabaseRow(row, snapQuote = null) {
   return {
     last: numOrNull(row.last),
     prevClose: numOrNull(row.prev_close),
+    open: numOrNull(row.session_open),
+    high: numOrNull(row.session_high),
+    low: numOrNull(row.session_low),
+    volume: numOrNull(row.session_volume),
     high52w: numOrNull(row.high_52w),
     low52w: numOrNull(row.low_52w),
     high120d: numOrNull(row.high_120d),
@@ -134,6 +138,19 @@ function mapSupabaseRow(row, snapQuote = null) {
     rs200: snapRs200 != null ? snapRs200 : numOrNull(row.rs200 ?? row.rs_200),
     spark20: parseSpark20(row.spark20),
   };
+}
+
+/** Expose session OHLV on items only while numeratorMode is live. */
+function applyLiveSessionOhlcv(items, numeratorMode) {
+  const live = numeratorMode === 'live';
+  for (const item of Object.values(items || {})) {
+    if (!item) continue;
+    if (live) continue;
+    item.open = null;
+    item.high = null;
+    item.low = null;
+    item.volume = null;
+  }
 }
 
 function parseSpark20(v) {
@@ -356,6 +373,7 @@ export async function onRequest(context) {
     payload.regularSession = source.meta?.regularSession ?? !!session.regular;
     payload.sessionOpen = source.meta?.sessionOpen ?? sessionOpenFallback;
     if (source.meta?.stale) payload.source = `${payload.source}+stale-naver`;
+    applyLiveSessionOhlcv(payload.items, payload.numeratorMode);
 
     if (indices) payload.indices = indices;
     const codesHash = simpleHash(codes.slice().sort().join(','));

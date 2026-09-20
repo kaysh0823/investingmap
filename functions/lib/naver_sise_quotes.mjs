@@ -453,6 +453,14 @@ export function parseNaverBasicQuote(json) {
   const status = String(json.marketStatus || '').toUpperCase();
   if (status) out.marketClosed = status !== 'OPEN';
 
+  // Optional session OHLV on /basic (prefer over mobile when present).
+  if (json.openPrice != null) out.open = parseKoreanNumber(json.openPrice);
+  if (json.highPrice != null) out.high = parseKoreanNumber(json.highPrice);
+  if (json.lowPrice != null) out.low = parseKoreanNumber(json.lowPrice);
+  if (json.accumulatedTradingVolume != null) {
+    out.volume = parseKoreanNumber(json.accumulatedTradingVolume);
+  }
+
   return out;
 }
 

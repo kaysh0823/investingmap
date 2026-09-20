@@ -552,6 +552,31 @@ try {
   assert.equal(livePatch.live, true);
   assert.equal(livePatch.bars[0].c, 1691000);
   assert.equal(livePatch.bars[0].h, 1691000);
+
+  const livePatchOhlcv = indicators.applyLiveQuoteToBars(
+    [{ t: '2026-08-20', o: 1500, h: 1600, l: 1490, c: 1550, v: 1 }],
+    {
+      asOf: '2026-08-20T02:00:00.000Z',
+      regularSession: true,
+      items: {
+        '000660': {
+          last: 1691000,
+          prevClose: 1500000,
+          open: 1598000,
+          high: 1721000,
+          low: 1576000,
+          volume: 9397942,
+        },
+      },
+    },
+    '000660',
+  );
+  assert.equal(livePatchOhlcv.live, true);
+  assert.equal(livePatchOhlcv.bars[0].o, 1598000, 'same-day live uses item.open');
+  assert.equal(livePatchOhlcv.bars[0].h, 1721000, 'same-day live uses max(item.high,last)');
+  assert.equal(livePatchOhlcv.bars[0].l, 1576000, 'same-day live uses min(item.low,last)');
+  assert.equal(livePatchOhlcv.bars[0].v, 9397942, 'same-day live uses item.volume');
+  assert.equal(livePatchOhlcv.bars[0].closeOnly, false);
 }
 
 // Modal expand / collapse assertions
@@ -663,7 +688,7 @@ const MAP_FILES = [
 ];
 for (const rel of MAP_FILES) {
   const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-  assert.ok(html.includes('candle_modal.js?v=35'), `${rel} must reference candle_modal.js?v=35`);
+  assert.ok(html.includes('candle_modal.js?v=36'), `${rel} must reference candle_modal.js?v=36`);
 }
 
 assert.ok(source.includes("priceScaleId: 'fr'"), 'foreignRatio uses overlay scale fr');
@@ -673,5 +698,27 @@ assert.ok(
   /labels\.bbw[\s\S]*labels\.disp[\s\S]*labels\.range/.test(source.slice(source.indexOf('function updateHoverTip'))),
   'hovertip includes bbw/disp/range rows',
 );
+{
+  const tipSrc = source.slice(source.indexOf('function updateHoverTip'));
+  assert.ok(tipSrc.includes('labels.open'), 'hovertip open row');
+  assert.ok(tipSrc.includes('labels.high'), 'hovertip high row');
+  assert.ok(tipSrc.includes('labels.low'), 'hovertip low row');
+  assert.ok(tipSrc.includes('labels.liveSession'), 'hovertip live badge');
+  assert.ok(tipSrc.includes('labels.closeOnly'), 'hovertip close-only badge');
+  assert.ok(source.includes("open: '시가'"), 'ko open label');
+  assert.ok(source.includes("high: '고가'"), 'ko high label');
+  assert.ok(source.includes("low: '저가'"), 'ko low label');
+  assert.ok(source.includes("closeOnly: '종가만'"), 'ko closeOnly label');
+}
 
-console.log('verify:candle OK — weekly OHLCV, 5D range vol% · SMA20, hover tip bbw/disp/range, prev/next nav (v=35)');
+{
+  const quotesApi = fs.readFileSync(path.join(ROOT, 'functions/api/quotes.js'), 'utf8');
+  assert.ok(quotesApi.includes('session_open'), 'quotes maps session_open');
+  assert.ok(quotesApi.includes('applyLiveSessionOhlcv'), 'quotes gates OHLV by live mode');
+  assert.ok(
+    /numeratorMode === ['"]live['"]/.test(quotesApi),
+    'quotes exposes OHLV only when numeratorMode is live',
+  );
+}
+
+console.log('verify:candle OK — session OHLV tooltip/patch, weekly OHLCV, hover tip OHLC+bbw/disp/range, prev/next nav (v=36)');

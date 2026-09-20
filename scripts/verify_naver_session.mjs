@@ -128,6 +128,23 @@ assert(basic.prevClose === 253500, `basic prevClose: ${basic.prevClose}`);
 assert(basic.chg1dPct === 0.59, `basic chg: ${basic.chg1dPct}`);
 assert(basic.tradeDate === '2026-09-17', `basic tradeDate: ${basic.tradeDate}`);
 assert(basic.marketClosed === false, `basic marketClosed: ${basic.marketClosed}`);
+assert(basic.open == null && basic.high == null && basic.low == null, 'basic without OHLV stays null');
+
+const basicOhlv = parseNaverBasicQuote({
+  closePrice: '255,000',
+  openPrice: '250,000',
+  highPrice: '260,000',
+  lowPrice: '248,500',
+  accumulatedTradingVolume: '1,234,567',
+  compareToPreviousClosePrice: '1,500',
+  compareToPreviousPrice: { code: '2', name: 'RISING' },
+  localTradedAt: '2026-09-17T11:00:00+09:00',
+  marketStatus: 'OPEN',
+});
+assert(basicOhlv.open === 250000, `basic open: ${basicOhlv.open}`);
+assert(basicOhlv.high === 260000, `basic high: ${basicOhlv.high}`);
+assert(basicOhlv.low === 248500, `basic low: ${basicOhlv.low}`);
+assert(basicOhlv.volume === 1234567, `basic volume: ${basicOhlv.volume}`);
 
 // ── resolveNaverSession decision matrix ──
 const holiday = resolveNaverSession({
@@ -226,6 +243,26 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     true,
   );
   assert(row._sessionClose === null, `_sessionClose must be null, got ${row._sessionClose}`);
+  assert(row.session_open === undefined, 'B-path must omit session_open');
+  assert(row.session_high === undefined, 'B-path must omit session_high');
+  assert(row.session_low === undefined, 'B-path must omit session_low');
+  assert(row.session_volume === undefined, 'B-path must omit session_volume');
+}
+
+{
+  const liveRow = toSupabaseRow(
+    '005930',
+    { last: 255000, open: 250000, high: 260000, low: 248500, volume: 1234567.8, close: null },
+    null,
+    new Date().toISOString(),
+    true,
+    false,
+  );
+  assert(liveRow.session_open === 250000, `A-path session_open: ${liveRow.session_open}`);
+  assert(liveRow.session_high === 260000, `A-path session_high: ${liveRow.session_high}`);
+  assert(liveRow.session_low === 248500, `A-path session_low: ${liveRow.session_low}`);
+  assert(liveRow.session_volume === 1234568, `A-path session_volume rounded: ${liveRow.session_volume}`);
+  assert(liveRow._sessionOpen === 250000, 'A-path keeps _sessionOpen for history helpers');
 }
 
 // resolveRegularSessionClose never uses last / marketClosed marker
