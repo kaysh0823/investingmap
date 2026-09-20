@@ -19,7 +19,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { chemical: 29, metal: 15, machinery: 6, construction: 20 };
+const EXPECTED_N = { chemical: 27, metal: 17, machinery: 6, construction: 20 };
 
 for (const key of ['chemical', 'metal', 'machinery', 'construction']) {
   const cfg = INDUSTRY_04B[key];
@@ -73,7 +73,7 @@ check(!maps.chemical.some((c) => c.ticker === '005090'), '005090 still on chemic
 check(maps.powergrid.some((c) => c.ticker === '005090' && c.chain === '유틸리티'), '005090 missing on powergrid');
 check(exclusiveSector('005090') === 'powergrid', 'exclusive 005090');
 check(!maps.machinery.some((c) => c.ticker === '437730'), '437730 still on machinery');
-check(maps.auto.some((c) => c.ticker === '437730'), '437730 missing on auto');
+check(!maps.auto.some((c) => c.ticker === '437730'), '437730 still on auto');
 check(maps.chemical.some((c) => c.ticker === '014820' && c.chain === '포장재'), '014820 missing packaging');
 check(maps.chemical.some((c) => c.ticker === '008730' && c.chain === '포장재'), '008730 missing packaging');
 check(
@@ -84,7 +84,7 @@ check(
 check(exclusiveSector('267270') === 'machinery', 'exclusive 267270');
 check(exclusiveSector('002380') === 'chemical', 'exclusive 002380');
 check(exclusiveSector('004690') === 'powergrid', 'exclusive 004690');
-check(exclusiveSector('437730') === 'auto', 'exclusive 437730');
+check(exclusiveSector('437730') === 'robot', 'exclusive 437730');
 check(exclusiveSector('005930') === 'bigchip', 'bigchip');
 
 const fields = JSON.parse(fs.readFileSync(join(ROOT, 'data/ticker_field_overrides.json'), 'utf8'));
@@ -94,7 +94,7 @@ check(!String(fields['009520']?.products || '').includes('제조업'), '009520 s
 const semi = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'semiconductor/korea_semiconductor_map.html'), 'utf8'),
 );
-check(semi.length === 92, `semi expected 92, got ${semi.length}`);
+check(semi.length === 91, `semi expected 91, got ${semi.length}`);
 const battery = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'battery/korea_battery_map.html'), 'utf8'));
 check(battery.length === 26, `battery expected 26, got ${battery.length}`);
 

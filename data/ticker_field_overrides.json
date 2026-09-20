@@ -2313,20 +2313,20 @@
     "productsEn": "Webtoon and IP planning/production"
   },
   "437730": {
-    "semType": "자동차 부품·전장",
-    "semTypeEn": "Auto parts & electronics",
-    "products": "자동차 부품·전장 (로봇 액추에이터)",
-    "productsEn": "Automotive parts and electronics (robot actuators)",
+    "semType": "휴머노이드 관절 액추에이터",
+    "semTypeEn": "Humanoid joint actuators",
+    "products": "AXLON 휴머노이드 관절 액추에이터(모터·감속기·제어 3-in-1)",
+    "productsEn": "AXLON humanoid joint actuators (motor, reducer, controller 3-in-1)",
     "byIndustry": {
-      "auto": {
-        "chain": "구동·파워트레인",
+      "robot": {
+        "chain": "구동부품",
         "needs_review": false
       }
     },
     "tags": [
       "로봇 액추에이터",
-      "자동차 부품",
-      "전장"
+      "휴머노이드",
+      "구동부품"
     ]
   },
   "439260": {

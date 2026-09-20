@@ -249,7 +249,7 @@
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=16"></script>
+  <script src="../js/map_heatmap.js?v=21"></script>
   <script src="../js/turnover_radius.js?v=2"></script>
   <script src="../js/map_momentum.js?v=16"></script>
   <script src="../js/map_volatility.js?v=12"></script>
@@ -2153,8 +2153,8 @@
     </button>
     <p id="hdr-subtitle">국내 상장 산업로봇·자동화·물류·지역AI 밸류와 글로벌 장비·SW 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>15</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>1</span> · KOSDAQ <span>14</span></div>
+      <div class="badge" id="badge-total">Total <span>16</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>1</span> · KOSDAQ <span>15</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -2245,7 +2245,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">15</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">16</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2991,6 +2991,13 @@
         semType: '감속기·기어드모터', semTypeEn: 'Reducers & geared motors',
         products: '정밀 감속기, AC·DC·BLDC 기어드모터', productsEn: 'Precision reducers and AC/DC/BLDC geared motors',
         revenue: '2.15조원', mcapWon: 2146768448000, per: 229.85, pbr: 8.14, revTier: 2, partners: []
+      },
+
+      {
+        id: 'robot_samhyun', name: '삼현', nameEn: 'Samhyun', ticker: '437730', market: 'KOSDAQ', chain: '구동부품',
+        semType: '휴머노이드 관절 액추에이터', semTypeEn: 'Humanoid joint actuators',
+        products: 'AXLON 휴머노이드 관절 액추에이터(모터·감속기·제어 3-in-1) · 로봇 액추에이터 · 구동부품', productsEn: 'AXLON humanoid joint actuators (motor, reducer, controller 3-in-1)',
+        revenue: '1.34조원', mcapWon: 1341230084100, per: 174.92, pbr: 12.88, revTier: 2, partners: ['fanuc', 'abb', 'yaskawa', { id: 'robotis', edgeLabel: '국내 액추에이터 peer', edgeLabelEn: 'Domestic actuator peer', weight: 0.12, kind: 'theme' }, { id: 'higen', edgeLabel: '국내 모터·액추에이터 peer', edgeLabelEn: 'Domestic motor/actuator peer', weight: 0.1, kind: 'theme' }]
       },
 
       {

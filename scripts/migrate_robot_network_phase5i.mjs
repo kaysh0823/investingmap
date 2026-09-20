@@ -23,6 +23,11 @@ const CHAIN_LANE = {
   '센서·비전·정밀부품': 'precision_component',
   '제어·모션·로봇SW': 'robot_software',
   '자동화·SI·물류시스템': 'system_integration',
+  '완성로봇': 'industrial_robot',
+  '구동부품': 'actuator_drive',
+  '센싱·정밀부품': 'precision_component',
+  '제어·로봇 소프트웨어': 'robot_software',
+  '자동화·시스템 통합': 'system_integration',
 };
 
 const LANE_HUBS = [

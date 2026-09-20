@@ -1,5 +1,36 @@
 [
   {
+    "ticker": "437730",
+    "name": "삼현",
+    "nameEn": "Samhyun",
+    "chain": "구동부품",
+    "semType": "휴머노이드 관절 액추에이터",
+    "semTypeEn": "Humanoid joint actuators",
+    "products": "AXLON 휴머노이드 관절 액추에이터(모터·감속기·제어 3-in-1)",
+    "productsEn": "AXLON humanoid joint actuators (motor, reducer, controller 3-in-1)",
+    "partners": [
+      "fanuc",
+      "abb",
+      "yaskawa",
+      {
+        "id": "robotis",
+        "edgeLabel": "국내 액추에이터 peer",
+        "edgeLabelEn": "Domestic actuator peer",
+        "weight": 0.12,
+        "kind": "theme"
+      },
+      {
+        "id": "higen",
+        "edgeLabel": "국내 모터·액추에이터 peer",
+        "edgeLabelEn": "Domestic motor/actuator peer",
+        "weight": 0.1,
+        "kind": "theme"
+      }
+    ],
+    "subSector": "구동부품",
+    "level": "core"
+  },
+  {
     "ticker": "439960",
     "name": "코스모로보틱스",
     "nameEn": "Cosmo Robotics",

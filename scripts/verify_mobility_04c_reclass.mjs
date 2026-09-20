@@ -16,8 +16,8 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-/** Spec auto=25 but 000430/010690 below mcap floor — on-map 24. */
-const EXPECTED_N = { auto: 28, ship: 17, shipping: 6, defense: 13 };
+/** Spec auto=25 but 000430/010690 below mcap floor; 437730 moved to robot → on-map 26. */
+const EXPECTED_N = { auto: 26, ship: 17, shipping: 6, defense: 13 };
 
 for (const key of ['auto', 'ship', 'shipping', 'defense']) {
   const cfg = MOBILITY_04C[key];
@@ -40,7 +40,7 @@ for (const key of ['auto', 'ship', 'shipping', 'defense']) {
 }
 
 const maps = Object.fromEntries(
-  ['auto', 'ship', 'shipping', 'defense', 'telecom'].map((k) => {
+  ['auto', 'ship', 'shipping', 'defense', 'telecom', 'robot'].map((k) => {
     const path =
       k === 'auto'
         ? 'auto/korea_auto_map.html'
@@ -50,7 +50,9 @@ const maps = Object.fromEntries(
             ? 'shipping/korea_shipping_map.html'
             : k === 'defense'
               ? 'defense/korea_defense_map.html'
-              : 'telecom/korea_telecom_map.html';
+              : k === 'robot'
+                ? 'robot/korea_robot_map.html'
+                : 'telecom/korea_telecom_map.html';
     return [k, extractCompaniesFromHtml(fs.readFileSync(join(ROOT, path), 'utf8'))];
   }),
 );
@@ -61,9 +63,10 @@ check(
   '189300 missing on telecom',
 );
 check(
-  maps.auto.some((c) => c.ticker === '437730' && c.chain === '구동·파워트레인'),
-  '437730 not 구동·파워트레인',
+  maps.robot.some((c) => c.ticker === '437730' && c.chain === '구동부품'),
+  '437730 not robot 구동부품',
 );
+check(!maps.auto.some((c) => c.ticker === '437730'), '437730 still on auto');
 check(!maps.auto.some((c) => c.ticker === '000430' || c.ticker === '010690'), 'below-floor auto still on map');
 check(maps.shipping.length === 6, `shipping expected 6, got ${maps.shipping.length}`);
 check(
@@ -80,22 +83,23 @@ check(
 );
 
 check(exclusiveSector('189300') === 'telecom', 'exclusive 189300');
-check(exclusiveSector('437730') === 'auto', 'exclusive 437730');
+check(exclusiveSector('437730') === 'robot', 'exclusive 437730');
 check(exclusiveSector('012450') === 'defense', 'exclusive 012450');
 check(exclusiveSector('005930') === 'bigchip', 'bigchip');
 
 const fields = JSON.parse(fs.readFileSync(join(ROOT, 'data/ticker_field_overrides.json'), 'utf8'));
 check(String(fields['012450']?.products || '').includes('지상방산'), '012450 products');
 check(fields['079550']?.name === 'LIG디펜스앤에어로스페이스', '079550 field name');
+check(String(fields['437730']?.products || '').includes('AXLON'), '437730 products');
 
 const semi = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'semiconductor/korea_semiconductor_map.html'), 'utf8'),
 );
-check(semi.length === 92, `semi expected 92, got ${semi.length}`);
+check(semi.length === 91, `semi expected 91, got ${semi.length}`);
 const chemical = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'chemical/korea_chemical_map.html'), 'utf8'),
 );
-check(chemical.length === 29, `chemical expected 29, got ${chemical.length}`);
+check(chemical.length === 27, `chemical expected 27, got ${chemical.length}`);
 const battery = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'battery/korea_battery_map.html'), 'utf8'));
 check(battery.length === 26, `battery expected 26, got ${battery.length}`);
 check(maps.auto.some((c) => c.ticker === '125490' && c.chain === '차체·내외장'), '125490 on auto');

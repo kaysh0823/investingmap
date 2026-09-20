@@ -1,0 +1,37 @@
+{
+  "asOf": "2026-09-20",
+  "ticker": "437730",
+  "name": "삼현",
+  "from": {
+    "sector": "auto",
+    "chain": "구동·파워트레인",
+    "semType": "자동차 부품·전장"
+  },
+  "to": {
+    "sector": "robot",
+    "chain": "구동부품",
+    "semType": "휴머노이드 관절 액추에이터"
+  },
+  "evidence": [
+    {
+      "url": "https://www.irobotnews.com/news/articleView.html?idxno=47329",
+      "note": "휴머노이드용 액추에이터 AXLON 공개 (로봇신문)"
+    },
+    {
+      "url": "https://www3.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=04601846645512552",
+      "note": "자동차 구동 기술 기반 휴머노이드 관절 액추에이터 사업 확대"
+    }
+  ],
+  "verification": "verified",
+  "sourcesUpdated": [
+    "lib/sector_exclusive.mjs",
+    "auto/cp_list_auto_additions.json (removed)",
+    "metal/cp_list_metal_additions.json (removed leftover)",
+    "robot/cp_list_robot_additions.json (added)",
+    "data/ticker_field_overrides.json",
+    "data/chain_overrides.json",
+    "lib/chain_reclass_invariants.mjs",
+    "lib/relation_network/robot_product_canonical.mjs"
+  ],
+  "notes": "지도 노출 홈만 robot으로 이동. 성과 시계열은 신규 편입 시점으로 기록·이어붙이지 않음. bigchip 불변."
+}

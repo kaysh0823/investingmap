@@ -3267,7 +3267,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"가공식품":"#FF8A65","음료·주류":"#EF5350","식품소재·급식":"#FFA726","농축수산·가공":"#26A69A","담배·건강소비재":"#66BB6A","패션 브랜드":"#AB47BC","의류 제조":"#CE93D8","유통":"#42A5F5","가구·생활소비재":"#8D6E63","종합상사":"#5C6BC0"};
+    const CHAIN_COLORS = {"가공식품":"#FF8A65","음료·주류":"#EF5350","식품소재·급식":"#FFA726","농축수산·가공":"#26A69A","담배·건강소비재":"#66BB6A","패션 브랜드":"#AB47BC","의류 제조":"#CE93D8","유통":"#42A5F5","가구·생활소비재":"#8D6E63","종합상사":"#5C6BC0","물류·상사":"#5C6BC0"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -3377,8 +3377,8 @@
             "의류 제조": "의류 제조",
             "유통": "유통",
             "가구·생활소비재": "가구·생활소비재",
-            "종합상사": "종합상사"
-        },
+            "종합상사": "종합상사",
+            "물류·상사": "물류·상사"},
         "chainFilter": {
             "가공식품": "가공식품",
             "음료·주류": "음료·주류",
@@ -3389,8 +3389,8 @@
             "의류 제조": "의류 제조",
             "유통": "유통",
             "가구·생활소비재": "가구·생활소비재",
-            "종합상사": "종합상사"
-        },
+            "종합상사": "종합상사",
+            "물류·상사": "물류·상사"},
         "sizeDesc": "대형: 시총 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◇ 글로벌 참고 관계",
         "howDesc": "• 노드 클릭: 관계 강조\n• 드래그: 이동\n• 스크롤: 확대/축소\n• 빈 건: 선택 해제\n• 범례: 그룹 하이라이트\n• 축: IP→제작(ODM)→유통; 점선=한류 수요 전파(참고)",
         "graphHint": "ODM·브랜드, OTT, K-pop 연결과 한류 수요 테마 노드를 함께 보세요",
@@ -3509,8 +3509,8 @@
             "의류 제조": "Apparel manufacturing",
             "유통": "Retail & distribution",
             "가구·생활소비재": "Furniture & household",
-            "종합상사": "General trading companies"
-        },
+            "종합상사": "General trading companies",
+            "물류·상사": "Logistics & trading"},
         "chainFilter": {
             "가공식품": "Foods",
             "음료·주류": "Beverages",
@@ -3521,8 +3521,8 @@
             "의류 제조": "Apparel mfg",
             "유통": "Retail",
             "가구·생활소비재": "Home",
-            "종합상사": "Trading"
-        },
+            "종합상사": "Trading",
+            "물류·상사": "Logistics & trading"},
         "sizeDesc": "Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◇ Global peers",
         "howDesc": "• Click: highlight\n• Drag\n• Scroll: zoom\n• Background: clear\n• Legend: group\n• Backbone: IP → production (ODM) → distribution; dashed = K-wave spillover",
         "graphHint": "See ODM-to-brand links and the K-demand flow node (illustrative)",
@@ -4012,7 +4012,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '가공식품', '음료·주류', '식품소재·급식', '농축수산·가공', '담배·건강소비재', '패션 브랜드', '의류 제조', '유통', '가구·생활소비재', '종합상사'];
+      const chains = ['all', '음식·라면·식품', '패션', '쇼핑/유통', '가구·리빙', '물류·상사', '가공식품', '음료·주류', '식품소재·급식', '농축수산·가공', '담배·건강소비재', '패션 브랜드', '의류 제조', '유통', '가구·생활소비재', '종합상사'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);

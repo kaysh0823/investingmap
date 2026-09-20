@@ -22,7 +22,7 @@
       {
         id: 'bio_2', name: '알테오젠', nameEn: 'Alteogen Inc.', ticker: '196170', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: 'ALT-B4: MSD·AZ·다이이찌·GSK 등 9건+ L/O, 누적계약 10조+, 상용화3→9개 확대(\'30) · 항체 · ADC', productsEn: 'Biotech and healthcare products and services',
+        products: 'ALT-B4: MSD·AZ·다이이찌·GSK 등 9건+ L/O, 누적계약 10조+, 상용화3→9개 확대(\'30)', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '18.67조원', mcapWon: 18667575644000, per: 127.03, pbr: 40.81, revTier: 3, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -46,7 +46,7 @@
       {
         id: 'bio_5', name: '한미약품', nameEn: 'Hanmi Pharm', ticker: '128940', market: 'KOSPI', chain: '종합 제약',
         semType: 'Integrated pharma', semTypeEn: 'Integrated pharma',
-        products: 'LAPS 장기지속형 플랫폼: 롤론티스·포시가, \'25 기술수출전담본부신설·ADC·TPD 멀티모달리티 · 펩타이드 · 비만·대사', productsEn: 'Biotech and healthcare products and services',
+        products: 'LAPS 장기지속형 플랫폼: 롤론티스·포시가, \'25 기술수출전담본부신설·ADC·TPD 멀티모달리티', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'pharma_integrated',
         revenue: '5.94조원', mcapWon: 5944299824000, per: 30.74, pbr: 4.17, revTier: 2, partners: ['glob_sdz', 'glob_amgn', 'glob_teva']
       },
@@ -54,7 +54,7 @@
       {
         id: 'bio_6', name: '유한양행', nameEn: 'Yuhan', ticker: '000100', market: 'KOSPI', chain: '종합 제약',
         semType: 'Integrated pharma', semTypeEn: 'Integrated pharma',
-        products: '렉라자 FDA허가·J&J \'26美매출8억$전망, 레시게르셉트(항IgE) 다국가2상(\'26.2 개시) · 저분자 · 항암', productsEn: 'Biotech and healthcare products and services',
+        products: '렉라자 FDA허가·J&J \'26美매출8억$전망, 레시게르셉트(항IgE) 다국가2상(\'26.2 개시)', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'pharma_integrated',
         revenue: '5.85조원', mcapWon: 5845093011400, per: 29.7, pbr: 2.5, revTier: 2, partners: ['glob_sdz', 'glob_amgn', 'glob_teva']
       },
@@ -62,7 +62,7 @@
       {
         id: 'bio_7', name: 'HLB', nameEn: 'HLB INC.', ticker: '028300', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: '리보세라닙 간암+리라푸그라티닙 담관암 FDA NDA제출, \'26 美허가→美시장 첫진출 기대 · 저분자 · 항암', productsEn: 'Biotech and healthcare products and services',
+        products: '리보세라닙 간암+리라푸그라티닙 담관암 FDA NDA제출, \'26 美허가→美시장 첫진출 기대', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '4.19조원', mcapWon: 4189084113350, per: null, pbr: 14.59, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -70,7 +70,7 @@
       {
         id: 'bio_8', name: '삼천당제약', nameEn: 'Samchundang Pharm', ticker: '000250', market: 'KOSDAQ', chain: '종합 제약',
         semType: 'Integrated pharma', semTypeEn: 'Integrated pharma',
-        products: 'GLP-1 비만치료제 파이프라인(SC·경구) · 펩타이드 · 비만·대사', productsEn: 'Biotech and healthcare products and services',
+        products: 'GLP-1 비만치료제 파이프라인(SC·경구)', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'pharma_integrated',
         revenue: '3.77조원', mcapWon: 3769615750400, per: 1157.08, pbr: 22.03, revTier: 2, partners: ['glob_sdz', 'glob_amgn', 'glob_teva']
       },
@@ -94,7 +94,7 @@
       {
         id: 'bio_11', name: '펩트론', nameEn: 'Peptron, Inc.', ticker: '087010', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: 'PT403 장기지속형 GLP-1 비만, 美 FDA 1상 IND 준비·비만약 코스닥 대장주 · 펩타이드 · 비만·대사 · 약물전달', productsEn: 'Biotech and healthcare products and services',
+        products: 'PT403 장기지속형 GLP-1 비만, 美 FDA 1상 IND 준비·비만약 코스닥 대장주', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '3.40조원', mcapWon: 3404333100000, per: null, pbr: 37.64, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -102,7 +102,7 @@
       {
         id: 'bio_12', name: '리가켐바이오', nameEn: 'LegoChem Bio', ticker: '141080', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: 'ConjuAll: 얀센·오노·암젠·SOTIO 등 플랫폼L/O 4.3조+, LCB39 차세대ADC \'26 1상 · 항체', productsEn: 'Biotech and healthcare products and services',
+        products: 'ConjuAll: 얀센·오노·암젠·SOTIO 등 플랫폼L/O 4.3조+, LCB39 차세대ADC \'26 1상', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '3.15조원', mcapWon: 3154054413600, per: null, pbr: 9.27, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -118,7 +118,7 @@
       {
         id: 'bio_14', name: '보로노이', nameEn: 'Voronoi, Inc.', ticker: '310210', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: 'VRN11 EGFR뇌전이 1a상(韓·대만)+VRN10 HER2 1a상(韓·호주), \'26 글로벌1b/2상 2건 동시진입 · 저분자 · 항암', productsEn: 'Biotech and healthcare products and services',
+        products: 'VRN11 EGFR뇌전이 1a상(韓·대만)+VRN10 HER2 1a상(韓·호주), \'26 글로벌1b/2상 2건 동시진입', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '2.69조원', mcapWon: 2687766814800, per: null, pbr: 34.08, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -150,7 +150,7 @@
       {
         id: 'bio_18', name: '디앤디파마텍', nameEn: 'D&D Pharmatech', ticker: '347850', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: 'DD01 MASH 2상 투약완료·조직생검중(JPM\'26 발표), DD02S경구GLP-1(화이자/멧세라 L/O) \'26H1데이터 · 펩타이드 · 비만·대사', productsEn: 'Biotech and healthcare products and services',
+        products: 'DD01 MASH 2상 투약완료·조직생검중(JPM\'26 발표), DD02S경구GLP-1(화이자/멧세라 L/O) \'26H1데이터', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '2.18조원', mcapWon: 2179578307950, per: null, pbr: 47.92, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -190,7 +190,7 @@
       {
         id: 'bio_23', name: '에임드바이오', nameEn: 'Aimed Bio Inc.', ticker: '0009K0', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: 'P-ADC: 베링거1.4조+바이오헤븐AMB302+SK플라즈마AMB303 L/O, 누적3조+, \'25.12 상장 · 항체 · 항암', productsEn: 'Biotech and healthcare products and services',
+        products: 'P-ADC: 베링거1.4조+바이오헤븐AMB302+SK플라즈마AMB303 L/O, 누적3조+, \'25.12 상장', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '1.46조원', mcapWon: 1464801796650, per: 251.85, pbr: 9.06, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -198,7 +198,7 @@
       {
         id: 'bio_24', name: '코오롱티슈진', nameEn: 'Kolon TissueGene', ticker: '950160', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: '인보사(TG-C) 골관절염 유전자치료 美3상(\'26.7 결과예정), FDA BLA \'27Q1 목표 · 세포치료', productsEn: 'Biotech and healthcare products and services',
+        products: '인보사(TG-C) 골관절염 유전자치료 美3상(\'26.7 결과예정), FDA BLA \'27Q1 목표', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '1.43조원', mcapWon: 1431747196000, per: null, pbr: null, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -231,7 +231,7 @@
       {
         id: 'bio_28', name: '오름테라퓨틱', nameEn: 'Orum Therapeutics', ticker: '475830', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: 'DAC/TPD² 항암: BMS ORM-6151 1상(혈액암)+버텍스 플랫폼L/O 1.3조, 현금3000억 보유 · 항체 · ADC', productsEn: 'Biotech and healthcare products and services',
+        products: 'DAC/TPD² 항암: BMS ORM-6151 1상(혈액암)+버텍스 플랫폼L/O 1.3조, 현금3000억 보유', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '1.11조원', mcapWon: 1107699090000, per: null, pbr: 11.01, revTier: 2, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -295,7 +295,7 @@
       {
         id: 'bio_36', name: '차바이오텍', nameEn: 'Cha Biotech', ticker: '085660', market: 'KOSDAQ', chain: '제약·바이오 지주',
         semType: 'Pharma / biotech holdings', semTypeEn: 'Pharma / biotech holdings',
-        products: '줄기세포(면역세포) 치료제, 세포배양 · 세포치료', productsEn: 'Biotech and healthcare products and services',
+        products: '줄기세포(면역세포) 치료제, 세포배양', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'bio_holdings',
         revenue: '0.75조원', mcapWon: 747501681840, per: null, pbr: 3.18, revTier: 1, partners: []
       },
@@ -335,7 +335,7 @@
       {
         id: 'bio_41', name: '현대바이오', nameEn: 'HYUNDAI BIOSCIENCE CO., LTD.', ticker: '048410', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: '항바이러스·항암 치료제 · 저분자 · 감염', productsEn: 'Biotech and healthcare products and services',
+        products: '항바이러스·항암 치료제', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '0.65조원', mcapWon: 646587332400, per: null, pbr: 7.73, revTier: 1, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -367,7 +367,7 @@
       {
         id: 'bio_45', name: '지아이이노베이션', nameEn: 'GI Innovation Inc.', ticker: '358570', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: '면역·알레르기 질환 신약 · 항체 · 자가면역', productsEn: 'Biotech and healthcare products and services',
+        products: '면역·알레르기 질환 신약', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '0.55조원', mcapWon: 550966691240, per: null, pbr: 6.51, revTier: 1, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -383,7 +383,7 @@
       {
         id: 'bio_47', name: '에스티큐브', nameEn: 'Stcube', ticker: '052020', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: '면역관문·항암 신약 · 항체', productsEn: 'Biotech and healthcare products and services',
+        products: '면역관문·항암 신약', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '0.53조원', mcapWon: 533668834350, per: null, pbr: 10.36, revTier: 1, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -471,7 +471,7 @@
       {
         id: 'bio_58', name: '메디포스트', nameEn: 'MEDIPOST CO., LTD.', ticker: '078160', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: '카티스템(연골줄기세포) 허가 품목 · 세포치료', productsEn: 'Biotech and healthcare products and services',
+        products: '카티스템(연골줄기세포) 허가 품목', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '0.34조원', mcapWon: 342648230220, per: null, pbr: 1.6, revTier: 1, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -511,7 +511,7 @@
       {
         id: 'bio_63', name: '신라젠', nameEn: 'SillaJen, Inc.', ticker: '215600', market: 'KOSDAQ', chain: '신약개발',
         semType: 'Drug discovery', semTypeEn: 'Drug discovery',
-        products: '온코리틱 바이러스·항암바이러스 · 유전자치료', productsEn: 'Biotech and healthcare products and services',
+        products: '온코리틱 바이러스·항암바이러스', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'drug_discovery',
         revenue: '0.31조원', mcapWon: 308974447720, per: null, pbr: 3.2, revTier: 1, partners: ['glob_lonn', 'glob_2269hk', 'glob_catalentnovoholdings']
       },
@@ -519,7 +519,7 @@
       {
         id: 'bio_64', name: '프로티나', nameEn: 'PROTEINA CO., LTD.', ticker: '468530', market: 'KOSDAQ', chain: '연구도구·서비스',
         semType: 'Research tools & services', semTypeEn: 'Research tools & services',
-        products: '단백질 상호작용·신약 플랫폼 · 연구도구', productsEn: 'Biotech and healthcare products and services',
+        products: '단백질 상호작용·신약 플랫폼', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'research_tools',
         revenue: '0.30조원', mcapWon: 304836312600, per: null, pbr: 13.18, revTier: 1, partners: []
       }
@@ -528,7 +528,7 @@
     const globalCompanies = [{"id":"glob_sdz","name":"Sandoz (Novartis)","nameEn":"Sandoz (Novartis)","country":"Switzerland","region":"eu","sector":"글로벌 시밀러 1위, '23 분사"},{"id":"glob_amgn","name":"Amgen","nameEn":"Amgen","country":"USA","region":"us","sector":"MVasi·Kanjinti 등 시밀러 포트폴리오"},{"id":"glob_teva","name":"Teva","nameEn":"Teva","country":"Israel","region":"il","sector":"제네릭+시밀러 글로벌 리더"},{"id":"glob_lonn","name":"Lonza","nameEn":"Lonza","country":"Switzerland","region":"eu","sector":"글로벌 바이오 CDMO 1위"},{"id":"glob_2269hk","name":"WuXi Biologics","nameEn":"WuXi Biologics","country":"China","region":"cn","sector":"중국 최대 바이오 CDMO"},{"id":"glob_catalentnovoholdings","name":"Catalent → Novo Holdings","nameEn":"Catalent → Novo Holdings","country":"USA","region":"us","sector":"'24 노보홀딩스 인수"},{"id":"glob_207940","name":"Samsung Biologics","nameEn":"Samsung Biologics","country":"Korea","region":"kr","sector":"글로벌 Top3 CDMO"},{"id":"glob_4568t","name":"Daiichi Sankyo","nameEn":"Daiichi Sankyo","country":"Japan","region":"jp","sector":"Enhertu ADC 블록버스터"},{"id":"glob_abbv","name":"AbbVie","nameEn":"AbbVie","country":"USA","region":"us","sector":"휴미라 후속 면역 항체 포트폴리오"}];
     const SECTOR_ORDER = ["종합 제약","신약개발","바이오시밀러","백신·혈액제제","CDMO·CMO","원료의약품·생산소재","연구도구·서비스","제약·바이오 지주"];
     const N_SECTORS = 8;
-    const T = {"ko":{"title":"🇰🇷 한국 바이오 산업 투자 지도","subtitle":"국내 바이오·제약 상장사 · 기술이전·글로벌 페어링과 섹터 peer를 한 그래프에서 확인","badgeTotal":"총 <span>65</span>개 기업 매핑","badgeMarket":"KOSPI <span>26</span>사 · KOSDAQ <span>39</span>사","dataAsof":"업데이트 기준일: 2026년 6월 15일","tabHeatmap":"🔥 서터 히트맵","heatmapHint":"시가총액 기준","tabTable":"📋 기업 목록 &amp; 필터","tabGraph":"🌐 섹터·peer 네트워크 (수정중)","langFlag":"🇺🇸","langText":"English","flChain":"섹터","flMarket":"시장","searchPlaceholder":"🔍 기업명·티커·섹터 검색...","resultLabel":"표시: ","resultUnit":"개","thName":"기업명","thTicker":"종목코드","thLast":"현재가","thChg1d":"1일","thRet20d":"20일","thRet50d":"50일","thRet120d":"120일","thRet200d":"200일","th52High":"52주 최고","th52Lo":"52주 최저","thPosition":"주가 위치","thMarket":"시장","thMcap":"시가총액","thPer":"PER","thPbr":"PBR","thChain":"섹터","thSemType":"섹터 요약","thProducts":"핵심 테마","thPartners":"글로벌 페어링","note":"본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 페어링은 biomap.jsx 기준 섹터이며, 시가총액·시장 구분은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시가총액을 조(兆)원 단위로 소수 둘째 자리까지 표시하고, 영문 열은 네이버 금융 USD/KRW 고시 환율(/api/fx)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·주가 위치는 /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·오류 시 —로 표시됩니다.","sbKorean":"국내 상장 (섹터)","sbGlobal":"Peer 링크 안내","peerNetworkDesc":"글로벌 페어링·기술이전 관계(실선/점선)와 같은 섹터 내 시총 순 국내 peer, 회색 점선=같은 섹터에서 함께 등장하는 글로벌 피어 그룹.","sbSize":"노드 크기","sbHow":"조작 방법","allFilter":"전체","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"비상장","regionLabel":{"us":"미국","tw":"대만","cn":"중국","eu":"유럽","kr":"한국","jp":"일본","gb":"영국","il":"이스라엘","dk":"덴마크"},"sizeDesc":"대형: 시총 약 15조원↑<br>중형: 약 1~15조원<br>소형: 1조원 미만","howDesc":"• 노드 클릭: peer·글로벌 링크 강조<br>• 드래그·스크롤·빈 곳 클릭으로 선택 해제<br>• 회색 점선: 글로벌 피어 그룹, 실선/점선: 페어링 종류","graphHint":"노드를 클릭하면 연결된 peer·글로벌 관계가 강조됩니다","ttChain":"섹터","ttSemType":"요약","ttProducts":"테마","ttRevenue":"시가총액","ttPartners":"페어링","ttSuppliers":"국내 기업","ttCountry":"국가","ttSector":"분야","ttTags":"복수 축","fieldSemType":"semType","fieldProducts":"products","tabMomentum":"📊 모멘텀 매트릭스","momentumHint":"RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률","momentumAxisRs":"RS","momentumAxisPosition":"주가 위치","momentumLeader":"주도(강세)","momentumPullback":"되돌림주의","momentumEmerging":"신규부상","momentumLagging":"소외","momentumTurnover":"당일 거래대금","momentumChange":"당일 등락률","momentumPosition":"주가 위치","momentumNoData":"RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.","momentumLegend":"색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS","tabVolatility":"📉 변동성 분포","volatilityTitle":"변동성 분포","volatilityHint":"색=20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityAxisAtr":"5일 변동성 (고저폭 ÷ 종가, %)","volatilityAxisMcap":"시가총액(로그)","volatilityAtr":"5일 변동성%","volatilityMcap":"시가총액","volatilityPctB":"20일 %b","volatilityNoData":"변동성 스냅샷 데이터가 없습니다.","volatilityLegend":"크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityTurnover":"거래대금","volatilityRs":"RS","volatilityLegendLines":"세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityLegendPctB":"색 = 20일 %b(진할수록 높음)","volatilityLegendTurnover":"색=거래대금(진할수록 높음)","volatilityLegendRs":"색 = RS(진할수록 높음)","volatilityModePctB":"%b","volatilityModeTurnover":"거래대금","volatilityModeRs":"RS","volatilityChg":"당일 등락률","volatilityLegendSize":"크기 = 거래대금","volatilityLegendChg":"색 = 당일 등락률","volatilityModeChg":"당일 등락률","tabPerfCalendar":"📅 퍼포먼스 캘린더","perfCalendarTitle":"퍼포먼스 캘린더","perfCalendarSubtitle":"전년말 종가=100 기준 연중 수익률","perfCalendarSectorAvg":"섹터 평균","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"퍼포먼스 데이터를 불러오는 중…","perfCalendarFailed":"퍼포먼스 캘린더 데이터를 불러오지 못했습니다.","perfCalendarNoData":"표시할 퍼포먼스 데이터가 없습니다.","perfCalendarLegend":"종목·섹터 평균·지수 범례","perfCalendarBase":"기준","perfCalendarChange":"기준 대비","perfCalendarOpenChart":"캔들 차트 열기","perfCalendarYearTabs":"연도 선택","chainLabel":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"},"chainFilter":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"}},"en":{"title":"🇰🇷 Korea Bio Industry Investment Map","subtitle":"Listed Korean bio/pharma — global licensing & partnerships, sector peers, and peer grouping on one graph","badgeTotal":"<span>65</span> companies","badgeMarket":"KOSPI <span>26</span> · KOSDAQ <span>39</span>","dataAsof":"Data as of: June 15, 2026","tabHeatmap":"🔥 Sector heatmap","heatmapHint":"By market cap","tabTable":"📋 List &amp; filters","tabGraph":"🌐 Sector peer network (WIP)","langFlag":"🇰🇷","langText":"한국어","flChain":"Sector","flMarket":"Market","searchPlaceholder":"🔍 Search name, ticker, sector...","resultLabel":"Showing: ","resultUnit":"","thName":"Company","thTicker":"Ticker","thLast":"Last","thChg1d":"Day","thRet20d":"1M","thRet50d":"3M","thRet120d":"6M","thRet200d":"200D","th52High":"52W High","th52Lo":"52W Low","thPosition":"52W Range","thMarket":"Market","thMcap":"Market cap (~$B)","thPer":"PER","thPbr":"PBR","thChain":"Sector","thSemType":"Sector summary","thProducts":"Key theme","thPartners":"Global licensing & partnerships","note":"For information only, not investment advice. Partnerships follow biomap.jsx sectors. Market cap and segment follow KRX disclosures as of the date shown above. Korean table uses market cap in trillions of won, two decimal places. English table shows USD billions (two decimals) using the USD/KRW spot from Naver Finance (/api/fx, illustrative). Last price, 52-week high/low, and 52-week range refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.","sbKorean":"Korean listed (by sector)","sbGlobal":"Peer links","peerNetworkDesc":"Solid/dashed lines show big-pharma and platform licensing & partnerships; domestic peer ladder by market cap within each sector; thin gray chains group global nodes that co-occur in the same sector.","sbSize":"Node size","sbHow":"Controls","allFilter":"All","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"Unlisted","regionLabel":{"us":"USA","tw":"Taiwan","cn":"China","eu":"Europe","kr":"Korea","jp":"Japan","gb":"UK","il":"Israel","dk":"Denmark"},"sizeDesc":"Large: mcap ~₩15T+<br>Mid: ~₩1–15T<br>Small: <₩1T","howDesc":"• Click node: highlight peer & global relationships<br>• Drag / scroll / background click to reset<br>• Gray dashes: global peer grouping; line style: partnership type","graphHint":"Click a node to highlight linked peers and global connections","ttChain":"Sector","ttSemType":"Summary","ttProducts":"Theme","ttRevenue":"Market cap","ttPartners":"Partnerships","ttSuppliers":"Korean companies","ttCountry":"Country","ttSector":"Field","ttTags":"Multi-axis","fieldSemType":"semTypeEn","fieldProducts":"productsEn","tabMomentum":"📊 Momentum matrix","momentumHint":"RS × 52W position · size = daily turnover · color = 1-day return","momentumAxisRs":"RS","momentumAxisPosition":"52W price position","momentumLeader":"Leading (strong)","momentumPullback":"Pullback risk","momentumEmerging":"Emerging","momentumLagging":"Lagging","momentumTurnover":"Daily turnover","momentumChange":"1-day return","momentumPosition":"Price position","momentumNoData":"No companies have RS, price-position and turnover data.","momentumLegend":"Color = 1-day return · size = daily turnover · vertical lines = market index RS","tabVolatility":"📉 Volatility Distribution","volatilityTitle":"Volatility Distribution","volatilityHint":"Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityAxisAtr":"5D Range Vol (high−low ÷ close, %)","volatilityAxisMcap":"Market cap (log)","volatilityAtr":"5D Range Vol%","volatilityMcap":"Market cap","volatilityPctB":"20D %b","volatilityNoData":"No volatility snapshot data available.","volatilityLegend":"Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityTurnover":"Turnover","volatilityRs":"RS","volatilityLegendLines":"Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityLegendPctB":"Color = 20D %b (darker = higher)","volatilityLegendTurnover":"Color = turnover (darker = higher)","volatilityLegendRs":"Color = RS (darker = higher)","volatilityModePctB":"%b","volatilityModeTurnover":"Turnover","volatilityModeRs":"RS","volatilityChg":"1-day change","volatilityLegendSize":"Size = turnover","volatilityLegendChg":"Color = 1-day change","volatilityModeChg":"1-day change","tabPerfCalendar":"📅 Performance Calendar","perfCalendarTitle":"Performance Calendar","perfCalendarSubtitle":"YTD vs prior year-end=100","perfCalendarSectorAvg":"Sector average","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"Loading performance data…","perfCalendarFailed":"Could not load performance calendar data.","perfCalendarNoData":"No performance data available.","perfCalendarLegend":"Members, sector average, and index legend","perfCalendarBase":"Base","perfCalendarChange":"vs base","perfCalendarOpenChart":"Open candle chart","perfCalendarYearTabs":"Year filter","chainLabel":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"},"chainFilter":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"}}};
+    const T = {"ko":{"title":"🇰🇷 한국 바이오 산업 투자 지도","subtitle":"국내 바이오·제약 상장사 · 기술이전·글로벌 페어링과 섹터 peer를 한 그래프에서 확인","badgeTotal":"총 <span>65</span>개 기업 매핑","badgeMarket":"KOSPI <span>26</span>사 · KOSDAQ <span>39</span>사","dataAsof":"업데이트 기준일: 2026년 6월 15일","tabHeatmap":"🔥 서터 히트맵","heatmapHint":"칸 크기 = 시가총액 · 색 = 일일 등락률","tabTable":"📋 기업 목록 &amp; 필터","tabGraph":"🌐 섹터·peer 네트워크 (수정중)","langFlag":"🇺🇸","langText":"English","flChain":"섹터","flMarket":"시장","searchPlaceholder":"🔍 기업명·티커·섹터 검색...","resultLabel":"표시: ","resultUnit":"개","thName":"기업명","thTicker":"종목코드","thLast":"현재가","thChg1d":"1일","thRet20d":"20일","thRet50d":"50일","thRet120d":"120일","thRet200d":"200일","th52High":"52주 최고","th52Lo":"52주 최저","thPosition":"주가 위치","thMarket":"시장","thMcap":"시가총액","thPer":"PER","thPbr":"PBR","thChain":"섹터","thSemType":"섹터 요약","thProducts":"핵심 테마","thPartners":"글로벌 페어링","note":"본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 페어링은 biomap.jsx 기준 섹터이며, 시가총액·시장 구분은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시가총액을 조(兆)원 단위로 소수 둘째 자리까지 표시하고, 영문 열은 네이버 금융 USD/KRW 고시 환율(/api/fx)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·주가 위치는 /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·오류 시 —로 표시됩니다.","sbKorean":"국내 상장 (섹터)","sbGlobal":"Peer 링크 안내","peerNetworkDesc":"글로벌 페어링·기술이전 관계(실선/점선)와 같은 섹터 내 시총 순 국내 peer, 회색 점선=같은 섹터에서 함께 등장하는 글로벌 피어 그룹.","sbSize":"노드 크기","sbHow":"조작 방법","allFilter":"전체","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"비상장","regionLabel":{"us":"미국","tw":"대만","cn":"중국","eu":"유럽","kr":"한국","jp":"일본","gb":"영국","il":"이스라엘","dk":"덴마크"},"sizeDesc":"대형: 시총 약 15조원↑<br>중형: 약 1~15조원<br>소형: 1조원 미만","howDesc":"• 노드 클릭: peer·글로벌 링크 강조<br>• 드래그·스크롤·빈 곳 클릭으로 선택 해제<br>• 회색 점선: 글로벌 피어 그룹, 실선/점선: 페어링 종류","graphHint":"노드를 클릭하면 연결된 peer·글로벌 관계가 강조됩니다","ttChain":"섹터","ttSemType":"요약","ttProducts":"테마","ttRevenue":"시가총액","ttPartners":"페어링","ttSuppliers":"국내 기업","ttCountry":"국가","ttSector":"분야","ttTags":"복수 축","fieldSemType":"semType","fieldProducts":"products","tabMomentum":"📊 모멘텀 매트릭스","momentumHint":"RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률","momentumAxisRs":"RS","momentumAxisPosition":"주가 위치","momentumLeader":"주도(강세)","momentumPullback":"되돌림주의","momentumEmerging":"신규부상","momentumLagging":"소외","momentumTurnover":"당일 거래대금","momentumChange":"당일 등락률","momentumPosition":"주가 위치","momentumNoData":"RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.","momentumLegend":"색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS","tabVolatility":"📉 변동성 분포","volatilityTitle":"변동성 분포","volatilityHint":"색=20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityAxisAtr":"5일 변동성 (고저폭 ÷ 종가, %)","volatilityAxisMcap":"시가총액(로그)","volatilityAtr":"5일 변동성%","volatilityMcap":"시가총액","volatilityPctB":"20일 %b","volatilityNoData":"변동성 스냅샷 데이터가 없습니다.","volatilityLegend":"크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityTurnover":"거래대금","volatilityRs":"RS","volatilityLegendLines":"세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityLegendPctB":"색 = 20일 %b(진할수록 높음)","volatilityLegendTurnover":"색=거래대금(진할수록 높음)","volatilityLegendRs":"색 = RS(진할수록 높음)","volatilityModePctB":"%b","volatilityModeTurnover":"거래대금","volatilityModeRs":"RS","volatilityChg":"당일 등락률","volatilityLegendSize":"크기 = 거래대금","volatilityLegendChg":"색 = 당일 등락률","volatilityModeChg":"당일 등락률","tabPerfCalendar":"📅 퍼포먼스 캘린더","perfCalendarTitle":"퍼포먼스 캘린더","perfCalendarSubtitle":"전년말 종가=100 기준 연중 수익률","perfCalendarSectorAvg":"섹터 평균","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"퍼포먼스 데이터를 불러오는 중…","perfCalendarFailed":"퍼포먼스 캘린더 데이터를 불러오지 못했습니다.","perfCalendarNoData":"표시할 퍼포먼스 데이터가 없습니다.","perfCalendarLegend":"종목·섹터 평균·지수 범례","perfCalendarBase":"기준","perfCalendarChange":"기준 대비","perfCalendarOpenChart":"캔들 차트 열기","perfCalendarYearTabs":"연도 선택","chainLabel":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"},"chainFilter":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"}},"en":{"title":"🇰🇷 Korea Bio Industry Investment Map","subtitle":"Listed Korean bio/pharma — global licensing & partnerships, sector peers, and peer grouping on one graph","badgeTotal":"<span>65</span> companies","badgeMarket":"KOSPI <span>26</span> · KOSDAQ <span>39</span>","dataAsof":"Data as of: June 15, 2026","tabHeatmap":"🔥 Sector heatmap","heatmapHint":"Tile size = market cap · color = 1-day return","tabTable":"📋 List &amp; filters","tabGraph":"🌐 Sector peer network (WIP)","langFlag":"🇰🇷","langText":"한국어","flChain":"Sector","flMarket":"Market","searchPlaceholder":"🔍 Search name, ticker, sector...","resultLabel":"Showing: ","resultUnit":"","thName":"Company","thTicker":"Ticker","thLast":"Last","thChg1d":"Day","thRet20d":"1M","thRet50d":"3M","thRet120d":"6M","thRet200d":"200D","th52High":"52W High","th52Lo":"52W Low","thPosition":"52W Range","thMarket":"Market","thMcap":"Market cap (~$B)","thPer":"PER","thPbr":"PBR","thChain":"Sector","thSemType":"Sector summary","thProducts":"Key theme","thPartners":"Global licensing & partnerships","note":"For information only, not investment advice. Partnerships follow biomap.jsx sectors. Market cap and segment follow KRX disclosures as of the date shown above. Korean table uses market cap in trillions of won, two decimal places. English table shows USD billions (two decimals) using the USD/KRW spot from Naver Finance (/api/fx, illustrative). Last price, 52-week high/low, and 52-week range refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.","sbKorean":"Korean listed (by sector)","sbGlobal":"Peer links","peerNetworkDesc":"Solid/dashed lines show big-pharma and platform licensing & partnerships; domestic peer ladder by market cap within each sector; thin gray chains group global nodes that co-occur in the same sector.","sbSize":"Node size","sbHow":"Controls","allFilter":"All","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"Unlisted","regionLabel":{"us":"USA","tw":"Taiwan","cn":"China","eu":"Europe","kr":"Korea","jp":"Japan","gb":"UK","il":"Israel","dk":"Denmark"},"sizeDesc":"Large: mcap ~₩15T+<br>Mid: ~₩1–15T<br>Small: <₩1T","howDesc":"• Click node: highlight peer & global relationships<br>• Drag / scroll / background click to reset<br>• Gray dashes: global peer grouping; line style: partnership type","graphHint":"Click a node to highlight linked peers and global connections","ttChain":"Sector","ttSemType":"Summary","ttProducts":"Theme","ttRevenue":"Market cap","ttPartners":"Partnerships","ttSuppliers":"Korean companies","ttCountry":"Country","ttSector":"Field","ttTags":"Multi-axis","fieldSemType":"semTypeEn","fieldProducts":"productsEn","tabMomentum":"📊 Momentum matrix","momentumHint":"RS × 52W position · size = daily turnover · color = 1-day return","momentumAxisRs":"RS","momentumAxisPosition":"52W price position","momentumLeader":"Leading (strong)","momentumPullback":"Pullback risk","momentumEmerging":"Emerging","momentumLagging":"Lagging","momentumTurnover":"Daily turnover","momentumChange":"1-day return","momentumPosition":"Price position","momentumNoData":"No companies have RS, price-position and turnover data.","momentumLegend":"Color = 1-day return · size = daily turnover · vertical lines = market index RS","tabVolatility":"📉 Volatility Distribution","volatilityTitle":"Volatility Distribution","volatilityHint":"Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityAxisAtr":"5D Range Vol (high−low ÷ close, %)","volatilityAxisMcap":"Market cap (log)","volatilityAtr":"5D Range Vol%","volatilityMcap":"Market cap","volatilityPctB":"20D %b","volatilityNoData":"No volatility snapshot data available.","volatilityLegend":"Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityTurnover":"Turnover","volatilityRs":"RS","volatilityLegendLines":"Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityLegendPctB":"Color = 20D %b (darker = higher)","volatilityLegendTurnover":"Color = turnover (darker = higher)","volatilityLegendRs":"Color = RS (darker = higher)","volatilityModePctB":"%b","volatilityModeTurnover":"Turnover","volatilityModeRs":"RS","volatilityChg":"1-day change","volatilityLegendSize":"Size = turnover","volatilityLegendChg":"Color = 1-day change","volatilityModeChg":"1-day change","tabPerfCalendar":"📅 Performance Calendar","perfCalendarTitle":"Performance Calendar","perfCalendarSubtitle":"YTD vs prior year-end=100","perfCalendarSectorAvg":"Sector average","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"Loading performance data…","perfCalendarFailed":"Could not load performance calendar data.","perfCalendarNoData":"No performance data available.","perfCalendarLegend":"Members, sector average, and index legend","perfCalendarBase":"Base","perfCalendarChange":"vs base","perfCalendarOpenChart":"Open candle chart","perfCalendarYearTabs":"Year filter","chainLabel":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"},"chainFilter":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"}}};
 
 /* investingmap-cross-sector-v1 */
     function imInitialLang(fallback) {

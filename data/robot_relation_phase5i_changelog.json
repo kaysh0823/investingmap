@@ -2,34 +2,34 @@
   "asOf": "2026-08-29",
   "phase": "5I",
   "reviewedBy": "editorial_phase5i",
-  "listedCompanyCount": 15,
-  "nodeCount": 74,
-  "edgeCount": 99,
-  "structuralGenerated": 72,
-  "legacyMigrated": 24,
+  "listedCompanyCount": 16,
+  "nodeCount": 77,
+  "edgeCount": 108,
+  "structuralGenerated": 77,
+  "legacyMigrated": 28,
   "manuallyCurated": 3,
-  "demotedPeer": 24,
+  "demotedPeer": 28,
   "partnerClassCounts": {
-    "peer": 19,
+    "peer": 23,
     "theme_reference": 3,
     "inferred_customer_supplier": 2,
-    "invalid": 2,
+    "invalid": 3,
     "duplicate": 0,
     "cross_sector_reference": 3
   },
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 15,
-    "nodeCount": 74,
-    "edgeCount": 99,
+    "listedCompanyCount": 16,
+    "nodeCount": 77,
+    "edgeCount": 108,
     "nodeCountByType": {
       "group": 8,
       "cross_sector_anchor": 5,
-      "listed_company": 15,
+      "listed_company": 16,
       "robot_product": 10,
       "robot_category": 13,
-      "application": 8,
-      "actuator": 2,
+      "application": 9,
+      "actuator": 3,
       "reducer": 1,
       "robot_software": 2,
       "global_company": 10
@@ -38,19 +38,19 @@
     "robotCategoryCount": 13,
     "componentNodeCount": 0,
     "reducerNodeCount": 1,
-    "actuatorNodeCount": 2,
+    "actuatorNodeCount": 3,
     "sensorNodeCount": 0,
     "controllerNodeCount": 0,
     "softwareNodeCount": 2,
-    "applicationNodeCount": 8,
+    "applicationNodeCount": 9,
     "projectNodeCount": 0,
-    "structuralGeneratedEdgeCount": 72,
-    "legacyMigratedEdgeCount": 24,
+    "structuralGeneratedEdgeCount": 77,
+    "legacyMigratedEdgeCount": 28,
     "manuallyCuratedEdgeCount": 3,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 24,
+    "peerEdgeCount": 28,
     "componentSupplyCount": 0,
     "robotSupplyCount": 0,
     "deploymentRelationshipCount": 0,
@@ -61,19 +61,19 @@
     "acquisitionCount": 0,
     "projectParticipationCount": 0,
     "crossSectorReferenceCount": 3,
-    "businessRelationOrphanCount": 15,
-    "directCommercialRelationshipOrphanCount": 15,
+    "businessRelationOrphanCount": 16,
+    "directCommercialRelationshipOrphanCount": 16,
     "classificationOnlyCompanyCount": 2,
-    "hasPeerButNoBusinessCompanyCount": 9,
+    "hasPeerButNoBusinessCompanyCount": 10,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 52,
-        "denominator": 99,
-        "percentage": 0.5252525252525253,
-        "displayValue": "52.5%",
+        "numerator": 55,
+        "denominator": 108,
+        "percentage": 0.5092592592592593,
+        "displayValue": "50.9%",
         "applicable": true,
         "reason": null
       },
@@ -147,13 +147,13 @@
         "phase5i": "No invented supply/deploy/invest; legacy partners demoted to peer"
       }
     },
-    "removedUnsupportedPartnerCount": 2,
-    "demotedLegacyPeerCount": 24,
+    "removedUnsupportedPartnerCount": 3,
+    "demotedLegacyPeerCount": 28,
     "legacyPartnerClassCounts": {
-      "peer": 19,
+      "peer": 23,
       "theme_reference": 3,
       "inferred_customer_supplier": 2,
-      "invalid": 2,
+      "invalid": 3,
       "duplicate": 0,
       "cross_sector_reference": 3
     }
@@ -314,6 +314,26 @@
       "action": "structural_supports_application",
       "ticker": "058610",
       "target": "application:robot-drive-train"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "437730",
+      "lane": "actuator_drive"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "437730",
+      "target": "actuator:axlon"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "437730",
+      "target": "robot_category:actuator-module"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "437730",
+      "target": "application:humanoid"
     },
     {
       "action": "structural_member_of",
@@ -541,6 +561,10 @@
     },
     {
       "action": "structural_application_hub",
+      "target": "application:humanoid"
+    },
+    {
+      "action": "structural_application_hub",
       "target": "application:semiconductor-display"
     },
     {
@@ -606,6 +630,35 @@
       "source": "krx:454910",
       "target": "global:doosan_grp",
       "classTag": "theme_reference"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:437730",
+      "target": "global:fanuc",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:437730",
+      "target": "global:abb",
+      "classTag": "peer"
+    },
+    {
+      "action": "drop_unknown_partner",
+      "source": "krx:437730",
+      "partner": "yaskawa"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:437730",
+      "target": "krx:108490",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:437730",
+      "target": "krx:160190",
+      "classTag": "peer"
     },
     {
       "action": "demote_legacy_partner_to_peer",

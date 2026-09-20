@@ -34,19 +34,6 @@
     "level": "core"
   },
   {
-    "ticker": "437730",
-    "name": "삼현",
-    "nameEn": "Samhyun",
-    "chain": "구동·파워트레인",
-    "semType": "자동차 부품·전장",
-    "semTypeEn": "Auto parts & electronics",
-    "products": "자동차 부품·전장 (로봇 액추에이터)",
-    "productsEn": "Automotive parts and electronics (robot actuators)",
-    "partners": [],
-    "subSector": "구동·파워트레인",
-    "level": "core"
-  },
-  {
     "ticker": "000430",
     "name": "대원강업",
     "nameEn": "Daewon Kangup",

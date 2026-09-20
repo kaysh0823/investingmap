@@ -1,18 +1,5 @@
 [
   {
-    "ticker": "437730",
-    "name": "삼현",
-    "nameEn": "Samhyun",
-    "chain": "산업기계",
-    "semType": "기계·전장모터·구동",
-    "semTypeEn": "Motors, actuators & drives",
-    "products": "전장모터·구동·산업기계 부품",
-    "productsEn": "Automotive motors, actuators and industrial machinery components",
-    "partners": ["caterpillar", "nippon_steel"],
-    "subSector": "기계·전장모터·구동",
-    "level": "core"
-  },
-  {
     "ticker": "001530",
     "name": "DI동일",
     "nameEn": "DI Dongil",

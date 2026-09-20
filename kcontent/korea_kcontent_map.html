@@ -2919,7 +2919,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"게임":"#66BB6A","음악·엔터테인먼트":"#FFD54F","팬덤 플랫폼":"#FF7043","영상 제작·IP":"#BA68C8","웹툰·출판":"#7E57C2","방송·스트리밍":"#29B6F6","극장·배급":"#26A69A","광고·마케팅":"#90A4AE","교육서비스":"#42A5F5"};
+    const CHAIN_COLORS = {"게임":"#66BB6A","음악·엔터테인먼트":"#FFD54F","팬덤 플랫폼":"#FF7043","영상 제작·IP":"#BA68C8","웹툰·출판":"#7E57C2","방송·스트리밍":"#29B6F6","극장·배급":"#26A69A","광고·마케팅":"#90A4AE","교육서비스":"#42A5F5","광고":"#FF7043","교육":"#29B6F6"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -3028,8 +3028,9 @@
             "방송·스트리밍": "방송·스트리밍",
             "극장·배급": "극장·배급",
             "광고·마케팅": "광고·마케팅",
-            "교육서비스": "교육서비스"
-        },
+            "교육서비스": "교육서비스",
+            "광고": "광고",
+            "교육": "교육"},
         "chainFilter": {
             "게임": "게임",
             "음악·엔터테인먼트": "음악·엔터테인먼트",
@@ -3039,8 +3040,9 @@
             "방송·스트리밍": "방송·스트리밍",
             "극장·배급": "극장·배급",
             "광고·마케팅": "광고·마케팅",
-            "교육서비스": "교육서비스"
-        },
+            "교육서비스": "교육서비스",
+            "광고": "광고",
+            "교육": "교육"},
         "allFilter": "전체",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -3170,8 +3172,9 @@
             "방송·스트리밍": "Broadcast & streaming",
             "극장·배급": "Cinema & distribution",
             "광고·마케팅": "Advertising & marketing",
-            "교육서비스": "Education services"
-        },
+            "교육서비스": "Education services",
+            "광고": "Advertising",
+            "교육": "Education"},
         "chainFilter": {
             "게임": "Games",
             "음악·엔터테인먼트": "Music/ent.",
@@ -3181,8 +3184,9 @@
             "방송·스트리밍": "Streaming",
             "극장·배급": "Cinema",
             "광고·마케팅": "Ads",
-            "교육서비스": "Edu"
-        },
+            "교육서비스": "Edu",
+            "광고": "Advertising",
+            "교육": "Education"},
         "allFilter": "All",
         "kosp": "KOSPI",
         "kosdaq": "KOSDAQ",
@@ -3593,7 +3597,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '게임', '음악·엔터테인먼트', '팬덤 플랫폼', '영상 제작·IP', '웹툰·출판', '방송·스트리밍', '극장·배급', '광고·마케팅', '교육서비스'];
+      const chains = ['all', '게임', '드라마·미디어·웹툰·컨텐츠', 'K-pop·엔터테인먼트', '광고', '교육', '음악·엔터테인먼트', '팬덤 플랫폼', '영상 제작·IP', '웹툰·출판', '방송·스트리밍', '극장·배급', '광고·마케팅', '교육서비스'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
@@ -3619,7 +3623,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['게임', '음악·엔터테인먼트', '팬덤 플랫폼', '영상 제작·IP', '웹툰·출판', '방송·스트리밍', '극장·배급', '광고·마케팅', '교육서비스'];
+      const chains = ['게임', '드라마·미디어·웹툰·컨텐츠', 'K-pop·엔터테인먼트', '광고', '교육', '음악·엔터테인먼트', '팬덤 플랫폼', '영상 제작·IP', '웹툰·출판', '방송·스트리밍', '극장·배급', '광고·마케팅', '교육서비스'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>

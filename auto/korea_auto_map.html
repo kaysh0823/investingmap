@@ -321,7 +321,7 @@
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=16"></script>
+  <script src="../js/map_heatmap.js?v=20"></script>
   <script src="../js/turnover_radius.js?v=2"></script>
   <script src="../js/map_momentum.js?v=16"></script>
   <script src="../js/map_volatility.js?v=12"></script>
@@ -2100,8 +2100,8 @@
     </button>
     <p id="hdr-subtitle">완성차·부품·타이어·전장/ADAS 등 국내 상장 자동차 밸류체인과 글로벌 peer 참고 관계</p>
     <div class="header-meta">
-      <div class="badge" id="badge-total">Total <span>27</span> listed companies</div>
-      <div class="badge" id="badge-market">KOSPI <span>23</span> · KOSDAQ <span>4</span></div>
+      <div class="badge" id="badge-total">Total <span>26</span> listed companies</div>
+      <div class="badge" id="badge-market">KOSPI <span>23</span> · KOSDAQ <span>3</span></div>
     </div>
   </div>
   <section class="geo-summary map-editorial-collapsible" id="map-editorial" aria-labelledby="map-editorial-title">
@@ -2192,7 +2192,7 @@
         <div class="filter-row filter-row-tools">
         <input type="text" id="search-input" class="search-box" placeholder="🔍 기업명 검색..."
           oninput="setSearch(this.value)">
-        <div class="result-count" id="result-label">표시: <span id="show-count">27</span>개</div>
+        <div class="result-count" id="result-label">표시: <span id="show-count">26</span>개</div>
         </div>
       </div>
       <div class="tbl-wrap">
@@ -2523,29 +2523,7 @@
       <td class="products-cell">엔진·변속기·공작기계</td>
       <td><div class="partners-list">DENSO, Bosch</div></td>
     </tr>
-          <tr data-ticker="437730">
-      <td><div class="company-name">삼현</div><div class="company-name-sub">Samhyun</div></td>
-      <td><span class="ticker">437730</span></td>
-      <td class="spark-cell"><svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true"><polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg></td>
-      <td class="quote-cell">49,400</td>
-      <td class="quote-cell ret-cell">-6.07%</td>
-      <td class="quote-cell ret-cell">+35.80%</td>
-      <td class="quote-cell ret-cell">+33.78%</td>
-      <td class="quote-cell ret-cell">-4.07%</td>
-      <td class="quote-cell ret-cell">+71.88%</td>
-      <td class="quote-cell">77,300</td>
-      <td class="quote-cell">19,000</td>
-      <td class="quote-cell">52.1%</td>
-      <td class="quote-cell">81.4</td>
-      <td class="mcap-cell">1.34조원</td>
-      <td class="fin-cell">174.92</td>
-      <td class="fin-cell">12.88</td>
-      <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">구동·파워트레인</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">자동차 부품·전장</td>
-      <td class="products-cell">자동차 부품·전장 (로봇 액추에이터)</td>
-      <td><div class="partners-list">—</div></td>
-    </tr>
+          
           <tr data-ticker="064960">
       <td><div class="company-name">SNT모티브</div><div class="company-name-sub">SNT Motiv</div></td>
       <td><span class="ticker">064960</span></td>
@@ -3287,13 +3265,6 @@
         semType: '파워트레인·공작', semTypeEn: 'Powertrain & machinery',
         products: '엔진·변속기·공작기계', productsEn: 'Engines, transmissions, machine tools',
         revenue: '1.56조원', mcapWon: 1560997764200, per: 20.69, pbr: 0.57, revTier: 2, partners: ['denso', 'bosch']
-      },
-
-      {
-        id: 'auto_samhyun', name: '삼현', nameEn: 'Samhyun', ticker: '437730', market: 'KOSDAQ', chain: '구동·파워트레인',
-        semType: '자동차 부품·전장', semTypeEn: 'Auto parts & electronics',
-        products: '자동차 부품·전장 (로봇 액추에이터)', productsEn: 'Automotive parts and electronics (robot actuators)',
-        revenue: '1.34조원', mcapWon: 1341230084100, per: 174.92, pbr: 12.88, revTier: 2, partners: []
       },
 
       {

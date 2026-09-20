@@ -195,7 +195,7 @@
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
-  <script src="../js/map_heatmap.js?v=16"></script>
+  <script src="../js/map_heatmap.js?v=19"></script>
   <script src="../js/turnover_radius.js?v=2"></script>
   <script src="../js/map_momentum.js?v=16"></script>
   <script src="../js/map_volatility.js?v=12"></script>
@@ -2586,6 +2586,13 @@
     // ═══════════════════════════════════════════════════════
     const koreanCompanies = [
       {
+        id: 'machinery_hd_construction_equipmen', name: 'HD건설기계', nameEn: 'HD Construction Equipment', ticker: '267270', market: 'KOSPI', chain: '건설기계',
+        semType: '건설기계', semTypeEn: 'Construction equipment',
+        products: '굴착기·휠로더 등 건설기계 (구 인프라코어 합병)', productsEn: 'Excavators, wheel loaders and construction equipment (ex-Infracore)',
+        revenue: '6.83조원', mcapWon: 6828870322500, per: 25.03, pbr: 1.37, revTier: 2, partners: []
+      },
+
+      {
         id: 'doosan_bobcat', name: '두산밥캣', nameEn: 'Doosan Bobcat', ticker: '241560', market: 'KOSPI', chain: '건설기계',
         semType: '소형 건설기계', semTypeEn: 'Compact construction equipment',
         products: '스키드로더·소형 굴착기', productsEn: 'Skid-steer loaders and compact excavators',
@@ -2600,6 +2607,13 @@
       },
 
       {
+        id: 'machinery_junjin_c_r', name: '전진건설로봇', nameEn: 'JUNJIN C&R', ticker: '079900', market: 'KOSPI', chain: '건설기계',
+        semType: '콘크리트 펌프카', semTypeEn: 'Concrete pump trucks',
+        products: '콘크리트 펌프카·건설로봇', productsEn: 'Concrete pump trucks and construction robots',
+        revenue: '0.60조원', mcapWon: 599753599500, per: 26.34, pbr: 5.35, revTier: 1, partners: []
+      },
+
+      {
         id: 'yg1', name: '와이지-원', nameEn: 'YG-1 CO., LTD', ticker: '019210', market: 'KOSDAQ', chain: '핵심부품·공구',
         semType: '절삭공구', semTypeEn: 'Cutting tools',
         products: '엔드밀·드릴·탭 등 산업용 절삭공구', productsEn: 'Industrial end mills, drills and taps',
@@ -2611,20 +2625,6 @@
         semType: '프레스·합금철', semTypeEn: 'Presses & ferroalloys',
         products: '산업용 프레스와 합금철', productsEn: 'Industrial presses and ferroalloys',
         revenue: '0.32조원', mcapWon: 316068630280, per: 11.85, pbr: 0.37, revTier: 1, partners: ['caterpillar']
-      },
-
-      {
-        id: 'machinery_hd_construction_equipmen', name: 'HD건설기계', nameEn: 'HD Construction Equipment', ticker: '267270', market: 'KOSPI', chain: '건설기계',
-        semType: '건설기계', semTypeEn: 'Construction equipment',
-        products: '굴착기·휠로더 등 건설기계 (구 인프라코어 합병)', productsEn: 'Excavators, wheel loaders and construction equipment (ex-Infracore)',
-        revenue: '6.83조원', mcapWon: 6828870322500, per: 25.03, pbr: 1.37, revTier: 2, partners: []
-      },
-
-      {
-        id: 'machinery_junjin_c_r', name: '전진건설로봇', nameEn: 'JUNJIN C&R', ticker: '079900', market: 'KOSPI', chain: '건설기계',
-        semType: '콘크리트 펌프카', semTypeEn: 'Concrete pump trucks',
-        products: '콘크리트 펌프카·건설로봇', productsEn: 'Concrete pump trucks and construction robots',
-        revenue: '0.60조원', mcapWon: 599753599500, per: 26.34, pbr: 5.35, revTier: 1, partners: []
       }
 
     ];
