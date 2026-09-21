@@ -2,10 +2,10 @@
   "phase": "5F",
   "sector": "kconsume",
   "asOf": "2026-08-29",
-  "listedCompanyCount": 37,
-  "nodeCount": 76,
-  "edgeCount": 79,
-  "structuralGenerated": 76,
+  "listedCompanyCount": 36,
+  "nodeCount": 75,
+  "edgeCount": 78,
+  "structuralGenerated": 75,
   "legacyMigrated": 3,
   "manuallyCurated": 2,
   "removedUnsupported": 1,
@@ -69,6 +69,16 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "023530",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "023530",
+      "category": "consumer_category:department-retail"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "111770",
       "lane": "manufacturing"
     },
@@ -79,13 +89,23 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "023530",
-      "lane": "retail_channel"
+      "ticker": "383220",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "383220",
+      "brand": "brand:mlb"
+    },
+    {
+      "action": "structural_operates_brand",
+      "ticker": "383220",
+      "brand": "brand:discovery-expedition"
     },
     {
       "action": "structural_specializes_in",
-      "ticker": "023530",
-      "category": "consumer_category:department-retail"
+      "ticker": "383220",
+      "category": "consumer_category:apparel"
     },
     {
       "action": "structural_member_of",
@@ -114,6 +134,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "282330",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "004370",
       "lane": "brand_owner"
     },
@@ -134,31 +159,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "282330",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "383220",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "383220",
-      "brand": "brand:mlb"
-    },
-    {
-      "action": "structural_operates_brand",
-      "ticker": "383220",
-      "brand": "brand:discovery-expedition"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "383220",
-      "category": "consumer_category:apparel"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "069960",
       "lane": "retail_channel"
     },
@@ -166,6 +166,16 @@
       "action": "structural_specializes_in",
       "ticker": "069960",
       "category": "consumer_category:department-retail"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "139480",
+      "lane": "retail_channel"
+    },
+    {
+      "action": "structural_specializes_in",
+      "ticker": "139480",
+      "category": "consumer_category:hypermarket"
     },
     {
       "action": "structural_member_of",
@@ -194,22 +204,12 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "139480",
-      "lane": "retail_channel"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "139480",
-      "category": "consumer_category:hypermarket"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "006040",
+      "ticker": "001120",
       "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
-      "ticker": "001120",
+      "ticker": "006040",
       "lane": "brand_owner"
     },
     {
@@ -324,46 +324,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "194370",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "031430",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "105630",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "003800",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "017810",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "005610",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "011760",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "036620",
-      "lane": "brand_owner"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "020000",
       "lane": "brand_owner"
     },
@@ -379,7 +339,42 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "016800",
+      "ticker": "194370",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "031430",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "003800",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "105630",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "011760",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "005610",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "017810",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "036620",
       "lane": "brand_owner"
     },
     {

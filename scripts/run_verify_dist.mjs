@@ -8,6 +8,7 @@ const STEPS = [
   'verify_heatmap_exclude_chips.mjs',
   'verify_global_search.mjs',
   'verify_volatility.mjs',
+  'verify_seed_coverage.mjs',
 ];
 
 for (const step of STEPS) {

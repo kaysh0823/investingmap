@@ -2,28 +2,28 @@
   "asOf": "2026-08-29",
   "phase": "5H",
   "reviewedBy": "editorial_phase5h",
-  "listedCompanyCount": 10,
-  "nodeCount": 32,
-  "edgeCount": 44,
-  "structuralGenerated": 28,
-  "legacyMigrated": 12,
+  "listedCompanyCount": 11,
+  "nodeCount": 34,
+  "edgeCount": 48,
+  "structuralGenerated": 31,
+  "legacyMigrated": 13,
   "manuallyCurated": 4,
-  "demotedPeer": 12,
+  "demotedPeer": 13,
   "confirmedBusinessEdgeCount": 0,
   "emptyChainsSkipped": [
     "위성통신"
   ],
   "metrics": {
-    "listedCompanyCount": 10,
-    "nodeCount": 32,
-    "edgeCount": 44,
-    "structuralGeneratedEdgeCount": 28,
-    "legacyMigratedEdgeCount": 12,
+    "listedCompanyCount": 11,
+    "nodeCount": 34,
+    "edgeCount": 48,
+    "structuralGeneratedEdgeCount": 31,
+    "legacyMigratedEdgeCount": 13,
     "manuallyCuratedEdgeCount": 4,
     "operatorNodeCount": 3,
     "telecomServiceCount": 3,
     "equipmentNodeCount": 4,
-    "componentNodeCount": 2,
+    "componentNodeCount": 3,
     "spectrumBandCount": 0,
     "activeLicenseCount": 0,
     "infrastructureAssetCount": 0,
@@ -37,11 +37,11 @@
     "crossSectorReferenceCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 12,
-    "businessRelationOrphanCount": 10,
-    "directCommercialRelationshipOrphanCount": 10,
+    "peerEdgeCount": 13,
+    "businessRelationOrphanCount": 11,
+    "directCommercialRelationshipOrphanCount": 11,
     "classificationOnlyCompanyCount": 1,
-    "hasPeerButNoBusinessCompanyCount": 9,
+    "hasPeerButNoBusinessCompanyCount": 10,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
@@ -144,15 +144,15 @@
     "nodeCountByType": {
       "group": 3,
       "cross_sector_anchor": 4,
-      "listed_company": 10,
+      "listed_company": 11,
       "telecom_service": 3,
       "network_generation": 2,
-      "network_component": 2,
+      "network_component": 3,
       "network_equipment": 4,
       "global_company": 4
     },
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 12
+    "demotedLegacyPeerCount": 13
   },
   "validate": {
     "failures": [],
@@ -262,11 +262,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "189300",
-      "lane": "network_equipment"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "032500",
       "lane": "network_equipment"
     },
@@ -279,6 +274,11 @@
       "action": "structural_supports_network_generation",
       "ticker": "032500",
       "target": "network_generation:5g"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "189300",
+      "lane": "network_equipment"
     },
     {
       "action": "structural_member_of",
@@ -323,6 +323,21 @@
     {
       "action": "structural_supports_network_generation",
       "ticker": "069540",
+      "target": "network_generation:optical-transport"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "138080",
+      "lane": "optical_wireless_component"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "138080",
+      "target": "network_component:optical-transceiver"
+    },
+    {
+      "action": "structural_supports_network_generation",
+      "ticker": "138080",
       "target": "network_generation:optical-transport"
     },
     {
@@ -383,6 +398,11 @@
     {
       "action": "demote_legacy_partner_to_peer",
       "source": "krx:069540",
+      "target": "global:ciena"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:138080",
       "target": "global:ciena"
     },
     {

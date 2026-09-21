@@ -2,19 +2,19 @@
   "asOf": "2026-08-23",
   "phase": "5C",
   "reviewedBy": "editorial_phase5c",
-  "listedCompanyCount": 29,
+  "listedCompanyCount": 31,
   "metrics": {
-    "listedCompanyCount": 29,
+    "listedCompanyCount": 31,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 87,
-    "edgeCount": 117,
-    "structuralGeneratedEdgeCount": 74,
-    "legacyMigratedEdgeCount": 41,
+    "nodeCount": 91,
+    "edgeCount": 125,
+    "structuralGeneratedEdgeCount": 78,
+    "legacyMigratedEdgeCount": 45,
     "manuallyCuratedEdgeCount": 2,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
-    "peerEdgeCount": 41,
+    "peerEdgeCount": 45,
     "supplyRelationshipCount": 0,
     "actualSupplyRelationshipCount": 0,
     "ownershipEdgeCount": 0,
@@ -23,14 +23,14 @@
     "groupMembershipEdgeCount": 0,
     "crossSectorReferenceCount": 2,
     "crossSectorReferenceOnlyCompanyCount": 2,
-    "businessRelationOrphanCount": 29,
-    "directRelationshipOrphanCount": 29,
-    "directCommercialRelationshipOrphanCount": 29,
-    "classificationOnlyCompanyCount": 29,
+    "businessRelationOrphanCount": 31,
+    "directRelationshipOrphanCount": 31,
+    "directCommercialRelationshipOrphanCount": 31,
+    "classificationOnlyCompanyCount": 31,
     "groupMembershipOnlyCompanyCount": 0,
-    "hasPeerButNoBusinessCompanyCount": 27,
+    "hasPeerButNoBusinessCompanyCount": 29,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 29,
+    "weakRelationOnlyCompanyCount": 31,
     "structuralOnlyCompanyCount": 2,
     "orphanMetricDefinitions": {
       "listedCompanyCount": {
@@ -469,29 +469,31 @@
         "krx:021240",
         "krx:034220",
         "krx:489790",
+        "krx:043260",
         "krx:001820",
         "krx:204270",
-        "krx:043260",
+        "krx:417200",
         "krx:009450",
         "krx:065350",
-        "krx:213420",
-        "krx:417200",
         "krx:161580",
         "krx:171090",
+        "krx:213420",
         "krx:090460",
+        "krx:017900",
         "krx:248070",
         "krx:033240",
         "krx:046890",
         "krx:284740",
         "krx:004710",
-        "krx:017900",
         "krx:192650",
-        "krx:089010",
-        "krx:029530",
+        "krx:290550",
         "krx:092190",
-        "krx:025320",
+        "krx:078350",
         "krx:441270",
-        "krx:290550"
+        "krx:029530",
+        "krx:089010",
+        "krx:025320",
+        "krx:052710"
       ],
       "directRelationshipOrphans": [
         "krx:009150",
@@ -500,29 +502,31 @@
         "krx:021240",
         "krx:034220",
         "krx:489790",
+        "krx:043260",
         "krx:001820",
         "krx:204270",
-        "krx:043260",
+        "krx:417200",
         "krx:009450",
         "krx:065350",
-        "krx:213420",
-        "krx:417200",
         "krx:161580",
         "krx:171090",
+        "krx:213420",
         "krx:090460",
+        "krx:017900",
         "krx:248070",
         "krx:033240",
         "krx:046890",
         "krx:284740",
         "krx:004710",
-        "krx:017900",
         "krx:192650",
-        "krx:089010",
-        "krx:029530",
+        "krx:290550",
         "krx:092190",
-        "krx:025320",
+        "krx:078350",
         "krx:441270",
-        "krx:290550"
+        "krx:029530",
+        "krx:089010",
+        "krx:025320",
+        "krx:052710"
       ],
       "classificationOnly": [
         "krx:009150",
@@ -531,29 +535,31 @@
         "krx:021240",
         "krx:034220",
         "krx:489790",
+        "krx:043260",
         "krx:001820",
         "krx:204270",
-        "krx:043260",
+        "krx:417200",
         "krx:009450",
         "krx:065350",
-        "krx:213420",
-        "krx:417200",
         "krx:161580",
         "krx:171090",
+        "krx:213420",
         "krx:090460",
+        "krx:017900",
         "krx:248070",
         "krx:033240",
         "krx:046890",
         "krx:284740",
         "krx:004710",
-        "krx:017900",
         "krx:192650",
-        "krx:089010",
-        "krx:029530",
+        "krx:290550",
         "krx:092190",
-        "krx:025320",
+        "krx:078350",
         "krx:441270",
-        "krx:290550"
+        "krx:029530",
+        "krx:089010",
+        "krx:025320",
+        "krx:052710"
       ],
       "groupMembershipOnly": [],
       "weakRelationOnly": [
@@ -563,29 +569,31 @@
         "krx:021240",
         "krx:034220",
         "krx:489790",
+        "krx:043260",
         "krx:001820",
         "krx:204270",
-        "krx:043260",
+        "krx:417200",
         "krx:009450",
         "krx:065350",
-        "krx:213420",
-        "krx:417200",
         "krx:161580",
         "krx:171090",
+        "krx:213420",
         "krx:090460",
+        "krx:017900",
         "krx:248070",
         "krx:033240",
         "krx:046890",
         "krx:284740",
         "krx:004710",
-        "krx:017900",
         "krx:192650",
-        "krx:089010",
-        "krx:029530",
+        "krx:290550",
         "krx:092190",
-        "krx:025320",
+        "krx:078350",
         "krx:441270",
-        "krx:290550"
+        "krx:029530",
+        "krx:089010",
+        "krx:025320",
+        "krx:052710"
       ],
       "hasPeerButNoBusiness": [
         "krx:009150",
@@ -594,27 +602,29 @@
         "krx:021240",
         "krx:034220",
         "krx:489790",
+        "krx:043260",
         "krx:001820",
         "krx:204270",
-        "krx:043260",
-        "krx:065350",
-        "krx:213420",
         "krx:417200",
+        "krx:065350",
         "krx:161580",
         "krx:171090",
+        "krx:213420",
         "krx:090460",
+        "krx:017900",
         "krx:248070",
         "krx:033240",
         "krx:046890",
         "krx:284740",
         "krx:004710",
-        "krx:017900",
         "krx:192650",
-        "krx:089010",
-        "krx:029530",
+        "krx:290550",
         "krx:092190",
+        "krx:078350",
         "krx:441270",
-        "krx:290550"
+        "krx:029530",
+        "krx:089010",
+        "krx:052710"
       ],
       "peerOnly": [],
       "structuralOnly": [
@@ -737,7 +747,7 @@
     },
     "phase5cCuratedAt": "2026-08-23",
     "removedUnsupportedPartnerCount": 0,
-    "demotedLegacyPeerCount": 41
+    "demotedLegacyPeerCount": 45
   },
   "validate": {
     "failures": [],
@@ -880,6 +890,21 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:043260",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:043260",
+      "target": "product:electronic_components_modules"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:043260",
+      "target": "component:electronic_module"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:001820",
       "target": "group:electronic_component"
     },
@@ -915,18 +940,23 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:043260",
+      "source": "krx:417200",
       "target": "group:electronic_component"
     },
     {
       "action": "add_structural",
-      "source": "krx:043260",
-      "target": "product:electronic_components_modules"
+      "source": "krx:417200",
+      "target": "product:ultracapacitor_aluminum"
     },
     {
       "action": "add_structural",
-      "source": "krx:043260",
-      "target": "component:electronic_module"
+      "source": "krx:417200",
+      "target": "component:ultracapacitor"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:417200",
+      "target": "end_market:automotive_electronics"
     },
     {
       "action": "add_structural",
@@ -950,31 +980,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:213420",
-      "target": "group:electronic_component"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:417200",
-      "target": "group:electronic_component"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:417200",
-      "target": "product:ultracapacitor_aluminum"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:417200",
-      "target": "component:ultracapacitor"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:417200",
-      "target": "end_market:automotive_electronics"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:161580",
       "target": "group:electronic_component"
     },
@@ -995,6 +1000,11 @@
     },
     {
       "action": "add_structural",
+      "source": "krx:213420",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
       "source": "krx:090460",
       "target": "group:electronic_component"
     },
@@ -1007,6 +1017,21 @@
       "action": "add_structural",
       "source": "krx:090460",
       "target": "component:fpcb"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:017900",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:017900",
+      "target": "product:led_opto_devices"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:017900",
+      "target": "component:led"
     },
     {
       "action": "add_structural",
@@ -1085,21 +1110,6 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:017900",
-      "target": "group:electronic_component"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:017900",
-      "target": "product:led_opto_devices"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:017900",
-      "target": "component:led"
-    },
-    {
-      "action": "add_structural",
       "source": "krx:192650",
       "target": "group:camera_module"
     },
@@ -1115,12 +1125,7 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:089010",
-      "target": "group:electronic_component"
-    },
-    {
-      "action": "add_structural",
-      "source": "krx:029530",
+      "source": "krx:290550",
       "target": "group:electronic_component"
     },
     {
@@ -1130,7 +1135,7 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:025320",
+      "source": "krx:078350",
       "target": "group:electronic_component"
     },
     {
@@ -1140,8 +1145,33 @@
     },
     {
       "action": "add_structural",
-      "source": "krx:290550",
+      "source": "krx:029530",
       "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:089010",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:025320",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:052710",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:052710",
+      "target": "product:motor_antenna_ceramic"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:052710",
+      "target": "component:ceramic_parts"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1196,6 +1226,13 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:043260",
+      "target": "global:murata"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:001820",
       "target": "global:murata"
     },
@@ -1210,7 +1247,7 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:043260",
+      "source": "krx:417200",
       "target": "global:murata"
     },
     {
@@ -1219,27 +1256,6 @@
       "afterType": "peer",
       "source": "krx:065350",
       "target": "global:panasonic"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:213420",
-      "target": "global:sony"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:213420",
-      "target": "global:panasonic"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:417200",
-      "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1273,8 +1289,29 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:213420",
+      "target": "global:sony"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:213420",
+      "target": "global:panasonic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:090460",
       "target": "global:murata"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:017900",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1315,13 +1352,6 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:017900",
-      "target": "global:panasonic"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
       "source": "krx:192650",
       "target": "global:bosch"
     },
@@ -1329,43 +1359,22 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:089010",
+      "source": "krx:290550",
       "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:089010",
+      "source": "krx:290550",
       "target": "global:sony"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:089010",
-      "target": "global:bosch"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:029530",
-      "target": "global:hp"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:029530",
-      "target": "global:canon"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:029530",
-      "target": "global:xerox"
+      "source": "krx:290550",
+      "target": "global:panasonic"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1392,6 +1401,27 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:078350",
+      "target": "global:murata"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:078350",
+      "target": "global:sony"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:078350",
+      "target": "global:panasonic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:441270",
       "target": "global:murata"
     },
@@ -1413,22 +1443,50 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:290550",
+      "source": "krx:029530",
+      "target": "global:hp"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:029530",
+      "target": "global:canon"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:029530",
+      "target": "global:xerox"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:089010",
       "target": "global:murata"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:290550",
+      "source": "krx:089010",
       "target": "global:sony"
     },
     {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:290550",
-      "target": "global:panasonic"
+      "source": "krx:089010",
+      "target": "global:bosch"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:052710",
+      "target": "global:murata"
     },
     {
       "action": "add_cross_sector_reference",

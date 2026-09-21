@@ -2,31 +2,31 @@
   "asOf": "2026-08-29",
   "phase": "5G",
   "reviewedBy": "editorial_phase5g",
-  "listedCompanyCount": 17,
-  "nodeCount": 53,
-  "edgeCount": 72,
-  "structuralGenerated": 33,
-  "legacyMigrated": 35,
+  "listedCompanyCount": 16,
+  "nodeCount": 51,
+  "edgeCount": 67,
+  "structuralGenerated": 30,
+  "legacyMigrated": 33,
   "manuallyCurated": 4,
-  "demotedPeer": 35,
+  "demotedPeer": 33,
   "removedUnsupported": 2,
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 17,
-    "nodeCount": 53,
-    "edgeCount": 72,
-    "structuralGeneratedEdgeCount": 33,
-    "legacyMigratedEdgeCount": 35,
+    "listedCompanyCount": 16,
+    "nodeCount": 51,
+    "edgeCount": 67,
+    "structuralGeneratedEdgeCount": 30,
+    "legacyMigratedEdgeCount": 33,
     "manuallyCuratedEdgeCount": 4,
     "medicalDeviceNodeCount": 0,
-    "deviceCategoryCount": 8,
+    "deviceCategoryCount": 7,
     "specialtyNodeCount": 6,
     "regulatoryClearanceCount": 0,
     "activeClearanceCount": 0,
     "withdrawnClearanceCount": 0,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
-    "peerEdgeCount": 35,
+    "peerEdgeCount": 33,
     "supplyRelationshipCount": 0,
     "installationRelationshipCount": 0,
     "distributionRelationshipCount": 0,
@@ -36,10 +36,10 @@
     "jointVentureEdgeCount": 0,
     "crossSectorReferenceCount": 4,
     "marketExposureCount": 0,
-    "businessRelationOrphanCount": 17,
-    "directCommercialRelationshipOrphanCount": 17,
+    "businessRelationOrphanCount": 16,
+    "directCommercialRelationshipOrphanCount": 16,
     "classificationOnlyCompanyCount": 9,
-    "hasPeerButNoBusinessCompanyCount": 14,
+    "hasPeerButNoBusinessCompanyCount": 13,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 0,
     "duplicateSemanticNodeCount": 0,
@@ -134,13 +134,13 @@
     "nodeCountByType": {
       "group": 5,
       "cross_sector_anchor": 4,
-      "listed_company": 17,
-      "device_category": 8,
+      "listed_company": 16,
+      "device_category": 7,
       "clinical_specialty": 6,
       "global_company": 13
     },
     "removedUnsupportedPartnerCount": 2,
-    "demotedLegacyPeerCount": 35
+    "demotedLegacyPeerCount": 33
   },
   "validate": {
     "failures": [],
@@ -200,11 +200,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "491000",
-      "lane": "in_vitro_diagnostics"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "041830",
       "lane": "patient_monitoring"
     },
@@ -217,6 +212,11 @@
       "action": "structural_used_in_specialty",
       "ticker": "041830",
       "target": "specialty:preventive-wellness"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "491000",
+      "lane": "in_vitro_diagnostics"
     },
     {
       "action": "structural_member_of",
@@ -255,11 +255,6 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "377740",
-      "lane": "in_vitro_diagnostics"
-    },
-    {
-      "action": "structural_member_of",
       "ticker": "099190",
       "lane": "in_vitro_diagnostics"
     },
@@ -275,7 +270,7 @@
     },
     {
       "action": "structural_member_of",
-      "ticker": "386380",
+      "ticker": "377740",
       "lane": "in_vitro_diagnostics"
     },
     {
@@ -286,6 +281,11 @@
     {
       "action": "structural_member_of",
       "ticker": "475960",
+      "lane": "in_vitro_diagnostics"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "386380",
       "lane": "in_vitro_diagnostics"
     },
     {
@@ -324,21 +324,6 @@
       "target": "specialty:dentistry"
     },
     {
-      "action": "structural_member_of",
-      "ticker": "067630",
-      "lane": "in_vitro_diagnostics"
-    },
-    {
-      "action": "structural_specializes_in",
-      "ticker": "067630",
-      "target": "device_category:ivd-reagents-distribution"
-    },
-    {
-      "action": "structural_used_in_specialty",
-      "ticker": "067630",
-      "target": "specialty:laboratory-medicine"
-    },
-    {
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
@@ -379,6 +364,20 @@
       "afterType": "peer",
       "source": "krx:458870",
       "target": "global:medtronic"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:041830",
+      "target": "global:ge_health"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:041830",
+      "target": "global:philips"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -405,20 +404,6 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
-      "source": "krx:041830",
-      "target": "global:ge_health"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:041830",
-      "target": "global:philips"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
       "source": "krx:137310",
       "target": "global:roche"
     },
@@ -475,6 +460,20 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:099190",
+      "target": "global:roche"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:099190",
+      "target": "global:abbott"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:377740",
       "target": "global:roche"
     },
@@ -491,20 +490,6 @@
       "afterType": "peer",
       "source": "krx:377740",
       "target": "global:siemens_health"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:099190",
-      "target": "global:roche"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:099190",
-      "target": "global:abbott"
     },
     {
       "action": "drop_unknown_partner",
@@ -578,20 +563,6 @@
       "afterType": "peer",
       "source": "krx:145720",
       "target": "global:zimmer"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:067630",
-      "target": "global:roche"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:067630",
-      "target": "global:abbott"
     },
     {
       "action": "add_cross_sector_reference",

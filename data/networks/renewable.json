@@ -258,7 +258,7 @@
       "chain": "발전설비 제조",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 6701797572800,
+      "mcapWon": 6386948022400,
       "legacyId": "hanwhasol"
     },
     {
@@ -274,7 +274,7 @@
       "chain": "핵심 소재·부품",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 4079445692000,
+      "mcapWon": 3808727328000,
       "legacyId": "oci_holdings"
     },
     {
@@ -290,7 +290,7 @@
       "chain": "수소·연료전지",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 3196093828800,
+      "mcapWon": 3333630653400,
       "legacyId": "renewable_doosan_fuel_cell"
     },
     {
@@ -306,7 +306,7 @@
       "chain": "구조물·보조설비",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 2226650078400,
+      "mcapWon": 2167610114200,
       "legacyId": "cswind"
     },
     {
@@ -322,7 +322,7 @@
       "chain": "개발·EPC",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 1768077507600,
+      "mcapWon": 1734010503600,
       "legacyId": "sk_eternix"
     },
     {
@@ -338,7 +338,7 @@
       "chain": "발전설비 제조",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 1498560000000,
+      "mcapWon": 1422400000000,
       "legacyId": "hd_ess"
     },
     {
@@ -354,7 +354,7 @@
       "chain": "구조물·보조설비",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 787290442350,
+      "mcapWon": 753277894650,
       "legacyId": "renewable_taewoong"
     },
     {
@@ -370,7 +370,7 @@
       "chain": "구조물·보조설비",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 779727049920,
+      "mcapWon": 744739297680,
       "legacyId": "renewable_skoceanplant"
     },
     {
@@ -386,7 +386,7 @@
       "chain": "핵심 소재·부품",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 717990099000,
+      "mcapWon": 678599121000,
       "legacyId": "oci"
     },
     {
@@ -402,7 +402,7 @@
       "chain": "수소·연료전지",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 479651655200,
+      "mcapWon": 579459409800,
       "legacyId": "renewable_vinatech"
     },
     {
@@ -418,24 +418,8 @@
       "chain": "수소·연료전지",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 397992562400,
+      "mcapWon": 417238553100,
       "legacyId": "energy_iljin_hysolus"
-    },
-    {
-      "id": "krx:011930",
-      "type": "listed_company",
-      "ticker": "011930",
-      "nameKo": "신성이엔지",
-      "nameEn": "SHINSUNG E&G",
-      "market": "KOSPI",
-      "role": "module_supplier",
-      "technology": "solar",
-      "lane": "solar",
-      "chain": "발전설비 제조",
-      "isListedKorea": true,
-      "isMapConstituent": true,
-      "mcapWon": 328554024760,
-      "legacyId": "energy_shinsung_e_g"
     },
     {
       "id": "krx:018000",
@@ -450,8 +434,24 @@
       "chain": "발전설비 제조",
       "isListedKorea": true,
       "isMapConstituent": true,
-      "mcapWon": 320480380740,
+      "mcapWon": 375107018945,
       "legacyId": "energy_unison_co_ltd"
+    },
+    {
+      "id": "krx:011930",
+      "type": "listed_company",
+      "ticker": "011930",
+      "nameKo": "신성이엔지",
+      "nameEn": "SHINSUNG E&G",
+      "market": "KOSPI",
+      "role": "module_supplier",
+      "technology": "solar",
+      "lane": "solar",
+      "chain": "발전설비 제조",
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "mcapWon": 342971413980,
+      "legacyId": "energy_shinsung_e_g"
     },
     {
       "id": "global:siemens_energy",
@@ -2220,74 +2220,6 @@
       "lastVerifiedAt": "2026-08-23",
       "directEvidence": false,
       "relationClass": "structural",
-      "id": "e-struct-krx:011930-tech-solar",
-      "source": "krx:011930",
-      "target": "technology:solar",
-      "type": "used_in_technology",
-      "evidence": [
-        {
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "accessedAt": "2026-08-23",
-          "directEvidence": false,
-          "sourceType": "company_ir",
-          "evidenceUsageType": "official_role_page",
-          "title": "Structural technology exposure from sector chain",
-          "url": "",
-          "publishedAt": null,
-          "evidenceSummaryKo": "밸류체인·사업 분류 기반 기술 노출(특정 프로젝트 수주 아님)",
-          "evidenceSummaryEn": "Technology exposure from value-chain classification — not a project award",
-          "relationshipSupported": "used_in_technology"
-        }
-      ]
-    },
-    {
-      "editorialStatus": "reference",
-      "status": "reference",
-      "confidence": "medium",
-      "asOf": "2026-08-23",
-      "defaultHidden": false,
-      "reviewStatus": "needs_human_review",
-      "reviewedAt": null,
-      "reviewedBy": null,
-      "lastVerifiedAt": "2026-08-23",
-      "directEvidence": false,
-      "relationClass": "structural",
-      "id": "e-stage-krx:011930-epc",
-      "source": "krx:011930",
-      "target": "stage:epc",
-      "type": "supports_project_stage",
-      "evidence": [
-        {
-          "reviewStatus": "needs_human_review",
-          "reviewedAt": null,
-          "reviewedBy": null,
-          "accessedAt": "2026-08-23",
-          "directEvidence": false,
-          "sourceType": "other",
-          "evidenceUsageType": "official_role_page",
-          "title": "Project-stage structural support",
-          "url": "",
-          "publishedAt": null,
-          "evidenceSummaryKo": "프로젝트 단계 구조 역할",
-          "evidenceSummaryEn": "Structural project-stage role",
-          "relationshipSupported": "supports_project_stage"
-        }
-      ]
-    },
-    {
-      "editorialStatus": "reference",
-      "status": "reference",
-      "confidence": "medium",
-      "asOf": "2026-08-23",
-      "defaultHidden": false,
-      "reviewStatus": "needs_human_review",
-      "reviewedAt": null,
-      "reviewedBy": null,
-      "lastVerifiedAt": "2026-08-23",
-      "directEvidence": false,
-      "relationClass": "structural",
       "id": "e-struct-krx:018000-tech-solar",
       "source": "krx:018000",
       "target": "technology:solar",
@@ -2325,6 +2257,74 @@
       "id": "e-stage-krx:018000-development",
       "source": "krx:018000",
       "target": "stage:development",
+      "type": "supports_project_stage",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "accessedAt": "2026-08-23",
+          "directEvidence": false,
+          "sourceType": "other",
+          "evidenceUsageType": "official_role_page",
+          "title": "Project-stage structural support",
+          "url": "",
+          "publishedAt": null,
+          "evidenceSummaryKo": "프로젝트 단계 구조 역할",
+          "evidenceSummaryEn": "Structural project-stage role",
+          "relationshipSupported": "supports_project_stage"
+        }
+      ]
+    },
+    {
+      "editorialStatus": "reference",
+      "status": "reference",
+      "confidence": "medium",
+      "asOf": "2026-08-23",
+      "defaultHidden": false,
+      "reviewStatus": "needs_human_review",
+      "reviewedAt": null,
+      "reviewedBy": null,
+      "lastVerifiedAt": "2026-08-23",
+      "directEvidence": false,
+      "relationClass": "structural",
+      "id": "e-struct-krx:011930-tech-solar",
+      "source": "krx:011930",
+      "target": "technology:solar",
+      "type": "used_in_technology",
+      "evidence": [
+        {
+          "reviewStatus": "needs_human_review",
+          "reviewedAt": null,
+          "reviewedBy": null,
+          "accessedAt": "2026-08-23",
+          "directEvidence": false,
+          "sourceType": "company_ir",
+          "evidenceUsageType": "official_role_page",
+          "title": "Structural technology exposure from sector chain",
+          "url": "",
+          "publishedAt": null,
+          "evidenceSummaryKo": "밸류체인·사업 분류 기반 기술 노출(특정 프로젝트 수주 아님)",
+          "evidenceSummaryEn": "Technology exposure from value-chain classification — not a project award",
+          "relationshipSupported": "used_in_technology"
+        }
+      ]
+    },
+    {
+      "editorialStatus": "reference",
+      "status": "reference",
+      "confidence": "medium",
+      "asOf": "2026-08-23",
+      "defaultHidden": false,
+      "reviewStatus": "needs_human_review",
+      "reviewedAt": null,
+      "reviewedBy": null,
+      "lastVerifiedAt": "2026-08-23",
+      "directEvidence": false,
+      "relationClass": "structural",
+      "id": "e-stage-krx:011930-epc",
+      "source": "krx:011930",
+      "target": "stage:epc",
       "type": "supports_project_stage",
       "evidence": [
         {

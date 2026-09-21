@@ -2,12 +2,12 @@
   "asOf": "2026-08-29",
   "phase": "5I",
   "reviewedBy": "editorial_phase5i",
-  "listedCompanyCount": 16,
-  "nodeCount": 77,
-  "edgeCount": 108,
-  "structuralGenerated": 77,
+  "listedCompanyCount": 17,
+  "nodeCount": 79,
+  "edgeCount": 114,
+  "structuralGenerated": 82,
   "legacyMigrated": 28,
-  "manuallyCurated": 3,
+  "manuallyCurated": 4,
   "demotedPeer": 28,
   "partnerClassCounts": {
     "peer": 23,
@@ -15,18 +15,18 @@
     "inferred_customer_supplier": 2,
     "invalid": 3,
     "duplicate": 0,
-    "cross_sector_reference": 3
+    "cross_sector_reference": 4
   },
   "confirmedBusinessEdgeCount": 0,
   "metrics": {
-    "listedCompanyCount": 16,
-    "nodeCount": 77,
-    "edgeCount": 108,
+    "listedCompanyCount": 17,
+    "nodeCount": 79,
+    "edgeCount": 114,
     "nodeCountByType": {
       "group": 8,
       "cross_sector_anchor": 5,
-      "listed_company": 16,
-      "robot_product": 10,
+      "listed_company": 17,
+      "robot_product": 11,
       "robot_category": 13,
       "application": 9,
       "actuator": 3,
@@ -34,7 +34,7 @@
       "robot_software": 2,
       "global_company": 10
     },
-    "robotProductCount": 10,
+    "robotProductCount": 11,
     "robotCategoryCount": 13,
     "componentNodeCount": 0,
     "reducerNodeCount": 1,
@@ -44,9 +44,9 @@
     "softwareNodeCount": 2,
     "applicationNodeCount": 9,
     "projectNodeCount": 0,
-    "structuralGeneratedEdgeCount": 77,
+    "structuralGeneratedEdgeCount": 82,
     "legacyMigratedEdgeCount": 28,
-    "manuallyCuratedEdgeCount": 3,
+    "manuallyCuratedEdgeCount": 4,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "inferredBusinessEdgeCount": 0,
@@ -60,9 +60,9 @@
     "ownershipEdgeCount": 0,
     "acquisitionCount": 0,
     "projectParticipationCount": 0,
-    "crossSectorReferenceCount": 3,
-    "businessRelationOrphanCount": 16,
-    "directCommercialRelationshipOrphanCount": 16,
+    "crossSectorReferenceCount": 4,
+    "businessRelationOrphanCount": 17,
+    "directCommercialRelationshipOrphanCount": 17,
     "classificationOnlyCompanyCount": 2,
     "hasPeerButNoBusinessCompanyCount": 10,
     "peerOnlyCompanyCount": 0,
@@ -70,10 +70,10 @@
     "duplicateSemanticNodeCount": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 55,
-        "denominator": 108,
-        "percentage": 0.5092592592592593,
-        "displayValue": "50.9%",
+        "numerator": 60,
+        "denominator": 114,
+        "percentage": 0.5263157894736842,
+        "displayValue": "52.6%",
         "applicable": true,
         "reason": null
       },
@@ -134,8 +134,8 @@
         "reason": "no_eligible_project_edges"
       },
       "crossSectorReferenceEvidenceCoverage": {
-        "numerator": 3,
-        "denominator": 3,
+        "numerator": 4,
+        "denominator": 4,
         "percentage": 1,
         "displayValue": "100%",
         "applicable": true,
@@ -155,7 +155,7 @@
       "inferred_customer_supplier": 2,
       "invalid": 3,
       "duplicate": 0,
-      "cross_sector_reference": 3
+      "cross_sector_reference": 4
     }
   },
   "validate": {
@@ -362,6 +362,26 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "160190",
+      "lane": "actuator_drive"
+    },
+    {
+      "action": "structural_produces_component",
+      "ticker": "160190",
+      "target": "actuator:higen-servo"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "160190",
+      "target": "robot_category:servo-drive"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "160190",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "388720",
       "lane": "industrial_robot"
     },
@@ -384,26 +404,6 @@
       "action": "structural_supports_application",
       "ticker": "388720",
       "target": "application:logistics"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "090360",
-      "lane": "industrial_robot"
-    },
-    {
-      "action": "structural_produces_robot",
-      "ticker": "090360",
-      "target": "robot_product:robostar-scara-articulated"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "090360",
-      "target": "robot_category:industrial"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "090360",
-      "target": "application:manufacturing"
     },
     {
       "action": "structural_member_of",
@@ -432,6 +432,26 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "090360",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "090360",
+      "target": "robot_product:robostar-scara-articulated"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "090360",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "090360",
+      "target": "application:manufacturing"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "466100",
       "lane": "robot_software"
     },
@@ -454,26 +474,6 @@
       "action": "structural_supports_application",
       "ticker": "466100",
       "target": "application:heterogeneous-fleet"
-    },
-    {
-      "action": "structural_member_of",
-      "ticker": "160190",
-      "lane": "actuator_drive"
-    },
-    {
-      "action": "structural_produces_component",
-      "ticker": "160190",
-      "target": "actuator:higen-servo"
-    },
-    {
-      "action": "structural_member_of_category",
-      "ticker": "160190",
-      "target": "robot_category:servo-drive"
-    },
-    {
-      "action": "structural_supports_application",
-      "ticker": "160190",
-      "target": "application:manufacturing"
     },
     {
       "action": "structural_member_of",
@@ -534,6 +534,31 @@
       "action": "structural_member_of",
       "ticker": "455900",
       "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "117730",
+      "lane": "industrial_robot"
+    },
+    {
+      "action": "structural_produces_robot",
+      "ticker": "117730",
+      "target": "robot_product:t-robotics-transfer-amr"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "117730",
+      "target": "robot_category:industrial"
+    },
+    {
+      "action": "structural_member_of_category",
+      "ticker": "117730",
+      "target": "robot_category:amr"
+    },
+    {
+      "action": "structural_supports_application",
+      "ticker": "117730",
+      "target": "application:semiconductor-display"
     },
     {
       "action": "structural_application_hub",
@@ -662,6 +687,18 @@
     },
     {
       "action": "demote_legacy_partner_to_peer",
+      "source": "krx:160190",
+      "target": "global:siemens",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "source": "krx:160190",
+      "target": "global:abb",
+      "classTag": "peer"
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
       "source": "krx:090360",
       "target": "global:siemens",
       "classTag": "peer"
@@ -677,18 +714,6 @@
       "source": "krx:090360",
       "target": "krx:454910",
       "classTag": "inferred_customer_supplier"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:160190",
-      "target": "global:siemens",
-      "classTag": "peer"
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "source": "krx:160190",
-      "target": "global:abb",
-      "classTag": "peer"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -758,6 +783,11 @@
       "action": "add_cross_sector_reference",
       "source": "krx:277810",
       "target": "sector:auto"
+    },
+    {
+      "action": "add_cross_sector_reference",
+      "source": "krx:117730",
+      "target": "sector:semiconductor"
     },
     {
       "action": "add_cross_sector_reference",

@@ -423,20 +423,20 @@
     }
   ],
   "metrics": {
-    "legacyMigratedEdgeCount": 81,
-    "structuralGeneratedEdgeCount": 54,
+    "legacyMigratedEdgeCount": 79,
+    "structuralGeneratedEdgeCount": 52,
     "manuallyCuratedEdgeCount": 21,
     "removedEdgeCount": 0,
-    "finalEdgeCount": 156,
+    "finalEdgeCount": 152,
     "ownershipEdgeCount": 9,
     "ownershipWithStakePctCount": 9,
     "ownershipPrimarySourceCoverage": 100,
     "groupMembershipEdgeCount": 12,
-    "classificationEdgeCount": 54,
+    "classificationEdgeCount": 52,
     "businessPartnershipEdgeCount": 0,
-    "listedCompanyOwnershipOrphanCount": 44,
-    "classificationOnlyCompanyCount": 44,
-    "weakRelationOnlyCompanyCount": 32,
+    "listedCompanyOwnershipOrphanCount": 42,
+    "classificationOnlyCompanyCount": 42,
+    "weakRelationOnlyCompanyCount": 30,
     "confirmedBusinessEdgeCount": 9,
     "reportedBusinessEdgeCount": 12,
     "confirmedOwnershipEdgeCount": 9,
@@ -452,16 +452,16 @@
     "phase3d1CuratedAt": "2026-08-23"
   },
   "statusCounts": {
-    "reference": 54,
+    "reference": 52,
     "confirmed": 9,
     "reported": 12,
-    "peer": 81
+    "peer": 79
   },
   "typeCounts": {
-    "member_of": 54,
+    "member_of": 52,
     "owns": 9,
     "group_member": 12,
-    "peer": 81
+    "peer": 79
   },
   "validateFailures": [],
   "validateWarnings": []

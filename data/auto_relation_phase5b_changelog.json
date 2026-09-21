@@ -2,14 +2,14 @@
   "asOf": "2026-08-23",
   "phase": "5B",
   "reviewedBy": "editorial_phase5b",
-  "listedCompanyCount": 26,
+  "listedCompanyCount": 27,
   "metrics": {
-    "listedCompanyCount": 26,
+    "listedCompanyCount": 27,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 84,
-    "edgeCount": 120,
-    "structuralEdgeCount": 66,
-    "structuralGeneratedEdgeCount": 61,
+    "nodeCount": 86,
+    "edgeCount": 122,
+    "structuralEdgeCount": 68,
+    "structuralGeneratedEdgeCount": 63,
     "legacyMigratedEdgeCount": 54,
     "manuallyCuratedEdgeCount": 5,
     "confirmedBusinessEdgeCount": 0,
@@ -32,16 +32,16 @@
     "hybridExposedCompanyCount": 1,
     "hybridExposureCount": 1,
     "hybridStructuralEdgeCount": 1,
-    "businessRelationOrphanCount": 26,
-    "directRelationshipOrphanCount": 26,
-    "directCommercialRelationshipOrphanCount": 26,
-    "confirmedReportedBusinessOrphanCount": 26,
-    "classificationOnlyCompanyCount": 26,
+    "businessRelationOrphanCount": 27,
+    "directRelationshipOrphanCount": 27,
+    "directCommercialRelationshipOrphanCount": 27,
+    "confirmedReportedBusinessOrphanCount": 27,
+    "classificationOnlyCompanyCount": 27,
     "groupMembershipOnlyCompanyCount": 5,
-    "weakRelationOnlyCompanyCount": 26,
+    "weakRelationOnlyCompanyCount": 27,
     "hasPeerButNoBusinessCompanyCount": 22,
     "peerOnlyCompanyCount": 0,
-    "structuralOnlyCompanyCount": 4,
+    "structuralOnlyCompanyCount": 5,
     "orphanListedCompanyCount": 0,
     "structuralOrphanCount": 0,
     "orphanMetricDefinitions": {
@@ -482,9 +482,9 @@
         "krx:161390",
         "krx:018880",
         "krx:007340",
+        "krx:000240",
         "krx:005850",
         "krx:204320",
-        "krx:000240",
         "krx:073240",
         "krx:089860",
         "krx:011210",
@@ -493,14 +493,15 @@
         "krx:002350",
         "krx:003620",
         "krx:015750",
+        "krx:125490",
         "krx:004700",
         "krx:009900",
         "krx:403550",
-        "krx:125490",
+        "krx:448900",
         "krx:097520",
         "krx:381970",
-        "krx:448900",
-        "krx:200880"
+        "krx:200880",
+        "krx:000430"
       ],
       "directRelationshipOrphans": [
         "krx:005380",
@@ -510,9 +511,9 @@
         "krx:161390",
         "krx:018880",
         "krx:007340",
+        "krx:000240",
         "krx:005850",
         "krx:204320",
-        "krx:000240",
         "krx:073240",
         "krx:089860",
         "krx:011210",
@@ -521,14 +522,15 @@
         "krx:002350",
         "krx:003620",
         "krx:015750",
+        "krx:125490",
         "krx:004700",
         "krx:009900",
         "krx:403550",
-        "krx:125490",
+        "krx:448900",
         "krx:097520",
         "krx:381970",
-        "krx:448900",
-        "krx:200880"
+        "krx:200880",
+        "krx:000430"
       ],
       "classificationOnly": [
         "krx:005380",
@@ -538,9 +540,9 @@
         "krx:161390",
         "krx:018880",
         "krx:007340",
+        "krx:000240",
         "krx:005850",
         "krx:204320",
-        "krx:000240",
         "krx:073240",
         "krx:089860",
         "krx:011210",
@@ -549,14 +551,15 @@
         "krx:002350",
         "krx:003620",
         "krx:015750",
+        "krx:125490",
         "krx:004700",
         "krx:009900",
         "krx:403550",
-        "krx:125490",
+        "krx:448900",
         "krx:097520",
         "krx:381970",
-        "krx:448900",
-        "krx:200880"
+        "krx:200880",
+        "krx:000430"
       ],
       "groupMembershipOnly": [
         "krx:005380",
@@ -573,9 +576,9 @@
         "krx:161390",
         "krx:018880",
         "krx:007340",
+        "krx:000240",
         "krx:005850",
         "krx:204320",
-        "krx:000240",
         "krx:073240",
         "krx:089860",
         "krx:011210",
@@ -584,14 +587,15 @@
         "krx:002350",
         "krx:003620",
         "krx:015750",
+        "krx:125490",
         "krx:004700",
         "krx:009900",
         "krx:403550",
-        "krx:125490",
+        "krx:448900",
         "krx:097520",
         "krx:381970",
-        "krx:448900",
-        "krx:200880"
+        "krx:200880",
+        "krx:000430"
       ],
       "hasPeerButNoBusiness": [
         "krx:005380",
@@ -601,9 +605,9 @@
         "krx:161390",
         "krx:018880",
         "krx:007340",
+        "krx:000240",
         "krx:005850",
         "krx:204320",
-        "krx:000240",
         "krx:073240",
         "krx:011210",
         "krx:064960",
@@ -620,12 +624,13 @@
       "peerOnly": [],
       "structuralOnly": [
         "krx:089860",
-        "krx:004700",
         "krx:125490",
-        "krx:448900"
+        "krx:004700",
+        "krx:448900",
+        "krx:000430"
       ]
     },
-    "evidenceFieldCoverage": 0.3333333333333333,
+    "evidenceFieldCoverage": 0.3360655737704918,
     "businessRelationshipDirectEvidenceCoverage": null,
     "businessRelationshipPrimarySourceCoverage": null,
     "supplyRelationshipDirectEvidenceCoverage": null,
@@ -637,10 +642,10 @@
     "groupMembershipPrimarySourceCoverage": 0,
     "claimCoverage": {
       "evidenceFieldCoverage": {
-        "numerator": 40,
-        "denominator": 120,
-        "percentage": 0.3333333333333333,
-        "displayValue": "33.3%",
+        "numerator": 41,
+        "denominator": 122,
+        "percentage": 0.3360655737704918,
+        "displayValue": "33.6%",
         "applicable": true,
         "reason": null
       },
@@ -907,6 +912,18 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
+      "source": "krx:000240",
+      "target": "group:tire"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "specializes_in",
+      "source": "krx:000240",
+      "target": "product:tire_holding"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
       "source": "krx:005850",
       "target": "group:lighting"
     },
@@ -939,18 +956,6 @@
       "afterType": "exposed_to",
       "source": "krx:204320",
       "target": "technology:adas"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "member_of",
-      "source": "krx:000240",
-      "target": "group:tire"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "specializes_in",
-      "source": "krx:000240",
-      "target": "product:tire_holding"
     },
     {
       "action": "add_structural",
@@ -1063,6 +1068,12 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
+      "source": "krx:125490",
+      "target": "group:materials"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
       "source": "krx:004700",
       "target": "group:materials"
     },
@@ -1087,7 +1098,7 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
-      "source": "krx:125490",
+      "source": "krx:448900",
       "target": "group:materials"
     },
     {
@@ -1117,12 +1128,6 @@
     {
       "action": "add_structural",
       "afterType": "member_of",
-      "source": "krx:448900",
-      "target": "group:materials"
-    },
-    {
-      "action": "add_structural",
-      "afterType": "member_of",
       "source": "krx:200880",
       "target": "group:interior"
     },
@@ -1131,6 +1136,18 @@
       "afterType": "manufactures",
       "source": "krx:200880",
       "target": "product:interior_trim_seat"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "member_of",
+      "source": "krx:000430",
+      "target": "group:chassis_braking_steering"
+    },
+    {
+      "action": "add_structural",
+      "afterType": "manufactures",
+      "source": "krx:000430",
+      "target": "product:spring_suspension"
     },
     {
       "action": "demote_legacy_partner_to_peer",
@@ -1296,6 +1313,22 @@
       "action": "demote_legacy_partner_to_peer",
       "beforeType": "partners_string",
       "afterType": "peer",
+      "source": "krx:000240",
+      "target": "global:michelin",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
+      "source": "krx:000240",
+      "target": "global:bridgestone",
+      "defaultHidden": true
+    },
+    {
+      "action": "demote_legacy_partner_to_peer",
+      "beforeType": "partners_string",
+      "afterType": "peer",
       "source": "krx:005850",
       "target": "global:bosch",
       "defaultHidden": true
@@ -1330,22 +1363,6 @@
       "afterType": "peer",
       "source": "krx:204320",
       "target": "global:zf",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:000240",
-      "target": "global:michelin",
-      "defaultHidden": true
-    },
-    {
-      "action": "demote_legacy_partner_to_peer",
-      "beforeType": "partners_string",
-      "afterType": "peer",
-      "source": "krx:000240",
-      "target": "global:bridgestone",
       "defaultHidden": true
     },
     {

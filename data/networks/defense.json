@@ -12,7 +12,7 @@
       "market": "KOSPI",
       "role": "육상체계",
       "group": "육상체계",
-      "mcapWon": 55740036481000,
+      "mcapWon": 55585346278000,
       "isListedKorea": true,
       "legacyId": "hanwha_aero"
     },
@@ -25,22 +25,9 @@
       "market": "KOSPI",
       "role": "유도무기·탄약",
       "group": "유도무기·탄약",
-      "mcapWon": 14916000000000,
+      "mcapWon": 16368000000000,
       "isListedKorea": true,
       "legacyId": "lig"
-    },
-    {
-      "id": "krx:064350",
-      "type": "listed_company",
-      "ticker": "064350",
-      "nameKo": "현대로템",
-      "nameEn": "HYUNDAI ROTEM",
-      "market": "KOSPI",
-      "role": "육상체계",
-      "group": "육상체계",
-      "mcapWon": 13544558561300,
-      "isListedKorea": true,
-      "legacyId": "rotem"
     },
     {
       "id": "krx:272210",
@@ -51,9 +38,22 @@
       "market": "KOSPI",
       "role": "방산전자·센서",
       "group": "방산전자·센서",
-      "mcapWon": 13394384680100,
+      "mcapWon": 15113551120000,
       "isListedKorea": true,
       "legacyId": "hanwha_sys"
+    },
+    {
+      "id": "krx:064350",
+      "type": "listed_company",
+      "ticker": "064350",
+      "nameKo": "현대로템",
+      "nameEn": "HYUNDAI ROTEM",
+      "market": "KOSPI",
+      "role": "육상체계",
+      "group": "육상체계",
+      "mcapWon": 13369930892500,
+      "isListedKorea": true,
+      "legacyId": "rotem"
     },
     {
       "id": "krx:047810",
@@ -64,7 +64,7 @@
       "market": "KOSPI",
       "role": "항공체계·엔진",
       "group": "항공체계·엔진",
-      "mcapWon": 12720501463500,
+      "mcapWon": 12652268888600,
       "isListedKorea": true,
       "legacyId": "kai"
     },
@@ -77,7 +77,7 @@
       "market": "KOSPI",
       "role": "유도무기·탄약",
       "group": "유도무기·탄약",
-      "mcapWon": 2171881545000,
+      "mcapWon": 2222325245400,
       "isListedKorea": true,
       "legacyId": "poongsan"
     },
@@ -90,7 +90,7 @@
       "market": "KOSDAQ",
       "role": "소재·핵심부품",
       "group": "소재·핵심부품",
-      "mcapWon": 1254877460600,
+      "mcapWon": 1324843649950,
       "isListedKorea": true,
       "legacyId": "def_vitzrocell_co_ltd"
     },
@@ -103,7 +103,7 @@
       "market": "KOSDAQ",
       "role": "소재·핵심부품",
       "group": "소재·핵심부품",
-      "mcapWon": 1033604808100,
+      "mcapWon": 1244965392300,
       "isListedKorea": true,
       "legacyId": "defense_sphere_corporation"
     },
@@ -116,7 +116,7 @@
       "market": "KOSPI",
       "role": "육상체계",
       "group": "육상체계",
-      "mcapWon": 956015038750,
+      "mcapWon": 936063420550,
       "isListedKorea": true,
       "legacyId": "def_snt_dynamics"
     },
@@ -129,7 +129,7 @@
       "market": "KOSDAQ",
       "role": "우주·위성",
       "group": "우주·위성",
-      "mcapWon": 769874843400,
+      "mcapWon": 860770450800,
       "isListedKorea": true,
       "legacyId": "satrec"
     },
@@ -142,9 +142,22 @@
       "market": "KOSDAQ",
       "role": "방산전자·센서",
       "group": "방산전자·센서",
-      "mcapWon": 438432900000,
+      "mcapWon": 457431659000,
       "isListedKorea": true,
       "legacyId": "def_i3system_ind"
+    },
+    {
+      "id": "krx:010820",
+      "type": "listed_company",
+      "ticker": "010820",
+      "nameKo": "퍼스텍",
+      "nameEn": "Firstec",
+      "market": "KOSPI",
+      "role": "육상체계",
+      "group": "육상체계",
+      "mcapWon": 311652683820,
+      "isListedKorea": true,
+      "legacyId": "def_firstec"
     },
     {
       "id": "program:kf21",

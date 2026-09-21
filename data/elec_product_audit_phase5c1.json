@@ -449,7 +449,7 @@
       "displayName": "Amotech",
       "chain": "전자부품",
       "primaryLane": "electronic_component",
-      "existingProductNode": null,
+      "existingProductNode": "product:motor_antenna_ceramic",
       "existingProductId": "product:motor_antenna_ceramic",
       "productLabel": "모터·안테나·세라믹",
       "componentId": "component:ceramic_parts",

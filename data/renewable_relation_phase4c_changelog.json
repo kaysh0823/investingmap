@@ -258,7 +258,7 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
-      "source": "krx:011930",
+      "source": "krx:018000",
       "target": "technology:solar",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",
@@ -267,7 +267,7 @@
       "reason": "cp_list/chain → technology structural edge"
     },
     {
-      "source": "krx:018000",
+      "source": "krx:011930",
       "target": "technology:solar",
       "beforeType": "legacy_partner",
       "afterType": "used_in_technology",

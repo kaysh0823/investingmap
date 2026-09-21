@@ -1,0 +1,18 @@
+{
+  "asOf": "2026-09-21",
+  "ticker": "006380",
+  "name": "카프로",
+  "action": "exclude_delisted",
+  "from": { "sector": "chemical", "chain": "정밀·특수화학" },
+  "to": null,
+  "evidence": "KRX 시총 CSV에서 행 소멸(상장폐지). curated seed가 남아 CF Pages 빌드가 throw로 실패함.",
+  "verification": "verified",
+  "sourcesUpdated": [
+    "lib/curated_sector_configs.mjs",
+    "data/chain_overrides.json",
+    "data/ticker_field_overrides.json",
+    "lib/sector_exclusive.mjs",
+    "lib/relation_network/chemical_network_canonical.mjs"
+  ],
+  "notes": "hub_return_refs / hub_rs_snapshot의 006380은 다음 post_close 빌드에서 자연 소멸. 성과 시계열 이어붙이지 않음."
+}

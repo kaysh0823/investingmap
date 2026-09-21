@@ -12,7 +12,7 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -43,6 +43,9 @@ jobs:
         env:
           KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
         run: node scripts/audit_mcap_universe.mjs
+
+      - name: Build site (block commit if seed/KRX break maps)
+        run: npm run build
 
       - name: Commit and push
         run: |
