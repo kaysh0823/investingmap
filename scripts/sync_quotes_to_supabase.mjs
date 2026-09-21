@@ -767,6 +767,103 @@ async function fetchHistoryTickerSetForDate(supabaseUrl, serviceKey, tradeDate) 
   return found;
 }
 
+/** Paginated (ticker → OHLC + source) for a trade_date — used by session-close lock. */
+async function fetchHistoryRowsForDate(supabaseUrl, serviceKey, tradeDate) {
+  const byTicker = new Map();
+  const pageSize = 1000;
+  for (let offset = 0; ; offset += pageSize) {
+    const url =
+      `${supabaseUrl}/rest/v1/stock_price_history?trade_date=eq.${tradeDate}` +
+      `&select=ticker,open,high,low,close,volume,mcap_won,turnover_won,source` +
+      `&limit=${pageSize}&offset=${offset}`;
+    const res = await fetch(url, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    });
+    if (!res.ok) {
+      throw new Error(`history rows fetch ${res.status}: ${(await res.text()).slice(0, 160)}`);
+    }
+    const page = await res.json();
+    for (const row of page) {
+      const ticker = normalizeTicker(row?.ticker);
+      if (ticker) byTicker.set(ticker, row);
+    }
+    if (!Array.isArray(page) || page.length < pageSize) break;
+  }
+  return byTicker;
+}
+
+/** Sources whose close is authoritative for the session (first 15:40 KRX write). */
+export const LOCKED_SESSION_CLOSE_SOURCES = new Set(['mdcstat', 'apihub']);
+
+/**
+ * If (ticker, trade_date) already has source ∈ {mdcstat, apihub} and the new
+ * close differs, keep OHLC from the existing row and update volume only.
+ * @param {Array<object>} incomingRows
+ * @param {Map<string, object>|Record<string, object>} existingByTicker
+ * @returns {{ rows: Array<object>, conflicts: number }}
+ */
+export function applySessionCloseLock(incomingRows, existingByTicker) {
+  const lookup = (ticker) => {
+    if (!ticker) return null;
+    if (existingByTicker instanceof Map) return existingByTicker.get(ticker) || null;
+    if (existingByTicker && typeof existingByTicker === 'object') {
+      return existingByTicker[ticker] || null;
+    }
+    return null;
+  };
+  const rows = [];
+  let conflicts = 0;
+  for (const row of incomingRows || []) {
+    const ticker = normalizeTicker(row?.ticker) || row?.ticker;
+    const existing = lookup(ticker);
+    const lockedSource = existing && LOCKED_SESSION_CLOSE_SOURCES.has(String(existing.source || ''));
+    const existingClose = existing?.close != null ? Number(existing.close) : null;
+    const incomingClose = row?.close != null ? Number(row.close) : null;
+    if (
+      lockedSource
+      && existingClose != null
+      && Number.isFinite(existingClose)
+      && incomingClose != null
+      && Number.isFinite(incomingClose)
+      && existingClose !== incomingClose
+    ) {
+      conflicts += 1;
+      rows.push({
+        ...row,
+        open: existing.open ?? row.open,
+        high: existing.high ?? row.high,
+        low: existing.low ?? row.low,
+        close: existingClose,
+        volume: row.volume,
+        mcap_won: existing.mcap_won ?? row.mcap_won,
+        turnover_won: existing.turnover_won ?? row.turnover_won,
+        source: existing.source,
+      });
+      continue;
+    }
+    rows.push(row);
+  }
+  return { rows, conflicts };
+}
+
+/**
+ * CLOSE_CONFLICT never aborts the post_close chain — warning only.
+ * Exit 3 is reserved for HISTORY_PENDING (no KRX row for the day).
+ * @returns {{ exitCode: 0, warn: boolean, conflicts: number, hubCount: number, rate: number }}
+ */
+export function closeConflictChainAction(conflicts, hubCount) {
+  const n = Number(conflicts) || 0;
+  const hub = Number(hubCount) || 0;
+  const rate = hub > 0 ? n / hub : 0;
+  return {
+    exitCode: 0,
+    warn: rate >= 0.01,
+    conflicts: n,
+    hubCount: hub,
+    rate,
+  };
+}
+
 /**
  * Verify every hub ticker that has a KRX row exists for the session. A suspended
  * or not-yet-listed security has no KRX row and must not receive a synthetic bar.
@@ -819,6 +916,8 @@ async function repairHistoryCoverageForDate(
  *   (a) apihub fetchMarketDay
  *   (b) data.krx MDCSTAT01501
  * Both empty → HISTORY_PENDING (no row write).
+ * Existing source ∈ {mdcstat,apihub} with a different close → volume-only
+ * update (CLOSE_CONFLICT warning); chain continues (exit 3 only for HISTORY_PENDING).
  *
  * @param {boolean} sessionClosedForHistory naverMarketClosed || regularSessionEnded
  */
@@ -833,14 +932,14 @@ async function upsertSessionCloseHistory(
 ) {
   if (!tradeDateDash) {
     console.log('  history session close: skip (no tradeDate)');
-    return { upserted: 0, skipped: true, byCode: null, reason: 'no_trade_date', source: null };
+    return { upserted: 0, skipped: true, byCode: null, reason: 'no_trade_date', source: null, conflicts: 0 };
   }
   if (!sessionClosedForHistory) {
     console.log(
       `  history session close ${tradeDateDash}: skip (regular session still open; `
       + 'need naverMarketClosed or clock>15:30 KST)',
     );
-    return { upserted: 0, skipped: true, byCode: null, reason: 'session_open', source: null };
+    return { upserted: 0, skipped: true, byCode: null, reason: 'session_open', source: null, conflicts: 0 };
   }
 
   const basDd = dashToBasDd(tradeDateDash);
@@ -918,6 +1017,7 @@ async function upsertSessionCloseHistory(
       source: null,
       reason: 'history_pending',
       pending: true,
+      conflicts: 0,
     };
   }
 
@@ -952,13 +1052,27 @@ async function upsertSessionCloseHistory(
       source,
       reason: 'history_pending',
       pending: true,
+      conflicts: 0,
     };
   }
 
-  const result = await upsertHistoryRows(rows, supabaseUrl, serviceKey);
+  // First KRX write for the day locks OHLC; later runs may only refresh volume.
+  const existingByTicker = await fetchHistoryRowsForDate(
+    supabaseUrl,
+    serviceKey,
+    tradeDateDash,
+  );
+  const locked = applySessionCloseLock(rows, existingByTicker);
+  if (locked.conflicts > 0) {
+    console.warn(`CLOSE_CONFLICT ${locked.conflicts}`);
+  }
+
+  const result = await upsertHistoryRows(locked.rows, supabaseUrl, serviceKey);
   console.log(
     `  history session close ${tradeDateDash}: upserted ${result.upserted} `
-    + `(source=${source}, universe=full)`,
+    + `(source=${source}, universe=full`
+    + (locked.conflicts ? `, close_conflicts=${locked.conflicts}` : '')
+    + ')',
   );
 
   const hubTickers = quoteRows.map((row) => row.ticker).filter(Boolean);
@@ -977,6 +1091,7 @@ async function upsertSessionCloseHistory(
     source,
     universeMode: 'full',
     pending: false,
+    conflicts: locked.conflicts,
   };
 }
 
@@ -2215,6 +2330,17 @@ async function main() {
       'HISTORY_PENDING on post_close — skip RS/refs/volatility chain (exit 3)',
     );
     process.exit(3);
+  }
+  {
+    const hubCount = tickers.length;
+    const conflicts = Number(histResult.conflicts) || 0;
+    const action = closeConflictChainAction(conflicts, hubCount);
+    if (action.warn) {
+      console.warn(
+        `::warning::CLOSE_CONFLICT ${conflicts}/${hubCount} `
+        + `(${(action.rate * 100).toFixed(2)}%) — OHLC locked; volume-only; continuing chain`,
+      );
+    }
   }
   if (histResult.byCode?.size && historyTradeDateDash) {
     await detectDailyPriceAdjustments({

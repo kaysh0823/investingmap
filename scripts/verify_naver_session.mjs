@@ -11,7 +11,14 @@ import {
   emptyQuote,
   resolveNaverSession,
 } from '../functions/lib/naver_sise_quotes.mjs';
-import { detectNaverStale, stockReturnFieldsFromRefs, toSupabaseRow, resolveRegularSessionClose } from './sync_quotes_to_supabase.mjs';
+import {
+  detectNaverStale,
+  stockReturnFieldsFromRefs,
+  toSupabaseRow,
+  resolveRegularSessionClose,
+  applySessionCloseLock,
+  closeConflictChainAction,
+} from './sync_quotes_to_supabase.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -275,6 +282,54 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     resolveRegularSessionClose({ _sessionClose: 252500, last: 253500 }) === 252500,
     '_sessionClose preferred',
   );
+}
+
+// Session-close lock: existing mdcstat close wins; volume may refresh
+{
+  const existing = new Map([
+    [
+      '005930',
+      {
+        ticker: '005930',
+        open: 270000,
+        high: 275000,
+        low: 269000,
+        close: 274000,
+        volume: 10_000_000,
+        source: 'mdcstat',
+      },
+    ],
+  ]);
+  const locked = applySessionCloseLock(
+    [
+      {
+        ticker: '005930',
+        trade_date: '2026-03-20',
+        open: 271000,
+        high: 276000,
+        low: 270000,
+        close: 274500,
+        volume: 12_500_000,
+        source: 'mdcstat',
+      },
+    ],
+    existing,
+  );
+  assert(locked.conflicts === 1, `close conflict count: ${locked.conflicts}`);
+  assert(locked.rows.length === 1, 'one merged row');
+  assert(locked.rows[0].close === 274000, `locked close: ${locked.rows[0].close}`);
+  assert(locked.rows[0].open === 270000, `locked open: ${locked.rows[0].open}`);
+  assert(locked.rows[0].high === 275000, `locked high: ${locked.rows[0].high}`);
+  assert(locked.rows[0].low === 269000, `locked low: ${locked.rows[0].low}`);
+  assert(locked.rows[0].volume === 12_500_000, `volume refresh: ${locked.rows[0].volume}`);
+  assert(locked.rows[0].source === 'mdcstat', 'source stays locked');
+
+  // conflict ≥1% of hub → warning only, never exit 3 (chain continues)
+  const action = closeConflictChainAction(3, 100); // 3%
+  assert(action.warn === true, '≥1% should warn');
+  assert(action.exitCode === 0, `CLOSE_CONFLICT must exitCode 0, got ${action.exitCode}`);
+  const low = closeConflictChainAction(0, 100);
+  assert(low.warn === false && low.exitCode === 0, 'no conflict → exit 0, no warn gate');
 }
 
 // ── stockReturnFieldsFromRefs A/B/C edge cases ──
