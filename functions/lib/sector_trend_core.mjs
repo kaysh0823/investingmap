@@ -201,7 +201,7 @@ export async function buildIntraday1dSeries({
           + `&select=sector_id,ts,ret_1d_pct,anchor_dd,session_kind`
           + `&session_kind=in.(regular,close)`
           + `&order=ts.asc&limit=10000`,
-        { warnIfTruncated: 'sector_intraday_returns truncated' },
+        { paginate: true, warnIfTruncated: 'sector_intraday_returns truncated' },
       );
     } catch (e) {
       const msg = String(e?.message || e);
@@ -285,6 +285,23 @@ export async function buildIntraday1dSeries({
         pts = [...pts, { t: tipTs, v: round2(liveV), live: true }];
       } else {
         pts = [...pts.slice(0, -1), { ...pts[pts.length - 1], v: round2(liveV), live: true }];
+      }
+    } else if (!liveTip) {
+      // B/C: tip at 15:30 — prefer live aggregate; else DB session=close.
+      // Drop late regular rows that may arrive after the close snapshot.
+      const closeTs = `${anchorDash}T15:30:00+09:00`;
+      const closeMs = Date.parse(closeTs);
+      const dbClose = [...pts].reverse().find((p) => p.session_kind === 'close');
+      const tipV = liveV != null
+        ? round2(liveV)
+        : (dbClose != null && Number.isFinite(Number(dbClose.v)) ? round2(dbClose.v) : null);
+      pts = pts.filter((p) => {
+        if (p.session_kind === 'close') return false;
+        const ms = Date.parse(p.t);
+        return Number.isFinite(ms) && Number.isFinite(closeMs) && ms < closeMs;
+      });
+      if (tipV != null) {
+        pts = [...pts, { t: closeTs, v: tipV, session_kind: 'close' }];
       }
     }
     const down = downsamplePts(pts, 60);

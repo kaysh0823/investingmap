@@ -19,10 +19,38 @@ export function numOrNull(v) {
 }
 
 /**
- * @param {{ warnIfTruncated?: string, preferCountExact?: boolean }} [opts]
+ * @param {{ warnIfTruncated?: string, preferCountExact?: boolean, paginate?: boolean, pageSize?: number }} [opts]
  *   warnIfTruncated — if Content-Range total > rows.length, console.warn this message
+ *   paginate — follow limit/offset until all rows fetched (bypasses PostgREST max-rows=1000)
  */
 export async function fetchSupabaseJson(config, pathAndQuery, opts = {}) {
+  if (opts.paginate) {
+    const pageSize = Math.max(1, Math.min(Number(opts.pageSize) || 1000, 1000));
+    const out = [];
+    let offset = 0;
+    const base = String(pathAndQuery)
+      .replace(/([?&])limit=\d+/gi, '$1')
+      .replace(/([?&])offset=\d+/gi, '$1')
+      .replace(/[?&]{2,}/g, (m) => m[0])
+      .replace(/[?&]$/, '');
+    for (;;) {
+      const sep = base.includes('?') ? '&' : '?';
+      const page = await fetchSupabaseJson(
+        config,
+        `${base}${sep}limit=${pageSize}&offset=${offset}`,
+        { preferCountExact: false },
+      );
+      out.push(...page);
+      if (page.length < pageSize) break;
+      offset += pageSize;
+      if (offset > 100000) {
+        if (opts.warnIfTruncated) console.warn(opts.warnIfTruncated);
+        break;
+      }
+    }
+    return out;
+  }
+
   const headers = {
     apikey: config.anonKey,
     Authorization: `Bearer ${config.anonKey}`,
