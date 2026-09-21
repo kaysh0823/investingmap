@@ -18,20 +18,34 @@ export function numOrNull(v) {
   return Number.isFinite(n) ? n : null;
 }
 
-export async function fetchSupabaseJson(config, pathAndQuery) {
-  const res = await fetch(`${config.url}/rest/v1/${pathAndQuery}`, {
-    headers: {
-      apikey: config.anonKey,
-      Authorization: `Bearer ${config.anonKey}`,
-    },
-  });
+/**
+ * @param {{ warnIfTruncated?: string, preferCountExact?: boolean }} [opts]
+ *   warnIfTruncated — if Content-Range total > rows.length, console.warn this message
+ */
+export async function fetchSupabaseJson(config, pathAndQuery, opts = {}) {
+  const headers = {
+    apikey: config.anonKey,
+    Authorization: `Bearer ${config.anonKey}`,
+  };
+  if (opts.preferCountExact !== false) {
+    headers.Prefer = 'count=exact';
+  }
+  const res = await fetch(`${config.url}/rest/v1/${pathAndQuery}`, { headers });
   if (!res.ok) {
     const body = await res.text().catch(() => '');
-    throw new Error(`supabase_fetch_failed:${res.status}:${body.slice(0, 120)}`);
+    throw new Error(`supabase_fetch_failed:${res.status}:${body.slice(0, 200)}`);
   }
   const data = await res.json();
   if (!Array.isArray(data)) {
     throw new Error('supabase_invalid_response');
+  }
+  const range = res.headers.get('content-range') || '';
+  const totalMatch = range.match(/\/(\d+)\s*$/);
+  if (totalMatch && opts.warnIfTruncated) {
+    const total = Number(totalMatch[1]);
+    if (Number.isFinite(total) && total > data.length) {
+      console.warn(opts.warnIfTruncated);
+    }
   }
   return data;
 }

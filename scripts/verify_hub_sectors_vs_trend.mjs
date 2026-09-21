@@ -57,7 +57,7 @@ assert.ok(apiSrc.includes('buildHubSectorsFromReturnSource') || apiSrc.includes(
 assert.ok(apiSrc.includes('stock_aggregate'), 'hub_sectors source tag');
 
 const trendApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
-assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v16'"), 'hub_trend cache v16');
+assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v20'"), 'hub_trend cache v20');
 assert.ok(trendApi.includes('regularMax: 300') || trendApi.includes('return 300'), 'hub_trend session TTL ~5m');
 
 const sparkApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sector_trend.js'), 'utf8');

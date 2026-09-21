@@ -200,9 +200,12 @@ export async function buildIntraday1dSeries({
         `sector_intraday_returns?trade_date=eq.${encodeURIComponent(anchorDash)}`
           + `&select=sector_id,ts,ret_1d_pct,anchor_dd,session_kind`
           + `&session_kind=in.(regular,close)`
-          + `&order=ts.asc`,
+          + `&order=ts.asc&limit=10000`,
+        { warnIfTruncated: 'sector_intraday_returns truncated' },
       );
-    } catch {
+    } catch (e) {
+      const msg = String(e?.message || e);
+      console.warn(`sector_intraday_returns ${anchorDash}: ${msg.slice(0, 200)}`);
       rows = [];
     }
   }
@@ -312,9 +315,13 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
 
   const refsRecentDd = compactYmd(refs.recentDd);
   const sessionOpen = !!source?.meta?.sessionOpen;
+  const numeratorMode = source?.meta?.numeratorMode
+    || (sessionOpen ? 'live' : 'official');
   const k = source?.meta?.k ?? 0;
   const anchorDd = compactYmd(source?.meta?.anchorDd) || refsRecentDd;
   const startDd = pastSessionDd(tradingDates, anchorDd, horizonN) || null;
+  // B mode (close, refs < today): tip date is today so Nd lines reach the same day as cards.
+  const tipAtAnchor = sessionOpen || numeratorMode === 'close';
 
   // Align closes[] to tradingDates (closes = last closesLen dates).
   function closeOnDate(ticker, ymd) {
@@ -396,8 +403,8 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
       });
     }
 
-    // Tip at anchor: live numerator or official (already last window point if official).
-    if (sessionOpen && k >= 1 && source?.byTicker) {
+    // Tip at anchor: live (A) or B-mode close (refs < today) so Nd reaches today.
+    if (tipAtAnchor && k >= 1 && source?.byTicker) {
       let tipSum = 0;
       let tipN = 0;
       for (const m of members) {
@@ -410,10 +417,13 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
       if (tipSum > 0 && tipN) {
         const tipV = roundIndex((tipSum / baseSum) * 100);
         const tipDash = basDdToDash(anchorDd) || kstYmdDash();
+        const tipPt = sessionOpen
+          ? { t: tipDash, v: tipV, live: true }
+          : { t: tipDash, v: tipV };
         if (series.length && series[series.length - 1].t === tipDash) {
-          series[series.length - 1] = { t: tipDash, v: tipV, live: true };
+          series[series.length - 1] = tipPt;
         } else {
-          series.push({ t: tipDash, v: tipV, live: true });
+          series.push(tipPt);
         }
       }
     }
@@ -439,10 +449,17 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
     if (targetPct != null && series.length) {
       const locked = retPctToBase100(targetPct);
       if (locked != null) {
-        series[series.length - 1] = {
-          ...series[series.length - 1],
-          v: locked,
-        };
+        const tipDash = tipAtAnchor
+          ? (basDdToDash(anchorDd) || series[series.length - 1].t)
+          : series[series.length - 1].t;
+        if (series[series.length - 1].t === tipDash) {
+          series[series.length - 1] = {
+            ...series[series.length - 1],
+            v: locked,
+          };
+        } else {
+          series.push({ t: tipDash, v: locked });
+        }
       }
     }
 
@@ -488,32 +505,94 @@ async function fetchIndexDailyRebased(config, windowDatesDash, liveTips) {
   });
 }
 
-async function fetchIndexIntradayRebased(config, tradeDateDash) {
+async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 'live') {
   if (!config || !tradeDateDash) {
     return INDEX_CODES.map((code) => ({ code, series: [] }));
   }
+
   let rows = [];
   try {
     rows = await fetchSupabaseJson(
       config,
       `market_index_intraday?trade_date=eq.${encodeURIComponent(tradeDateDash)}`
-        + `&select=index_code,captured_at,value,close`
+        + `&select=index_code,captured_at,value`
         + `&order=captured_at.asc&limit=2000`,
     );
-  } catch {
+  } catch (e) {
+    const msg = String(e?.message || e);
+    const m = msg.match(/supabase_fetch_failed:(\d+):(.*)$/s);
+    if (m) {
+      console.warn(
+        `fetchIndexIntradayRebased ${tradeDateDash}: status=${m[1]} body=${m[2].slice(0, 200)}`,
+      );
+    } else {
+      console.warn(`fetchIndexIntradayRebased ${tradeDateDash}: ${msg.slice(0, 200)}`);
+    }
     rows = [];
   }
+
+  let dailyCloseByCode = new Map();
+  const mode = String(numeratorMode || 'live');
+  if (mode !== 'live') {
+    try {
+      const daily = await fetchSupabaseJson(
+        config,
+        `market_index_daily?trade_date=eq.${encodeURIComponent(tradeDateDash)}`
+          + `&select=index_code,close`,
+      );
+      dailyCloseByCode = new Map(
+        (daily || [])
+          .map((r) => [r.index_code, numOrNull(r.close)])
+          .filter(([, v]) => v != null && v > 0),
+      );
+    } catch (e) {
+      const msg = String(e?.message || e);
+      const m = msg.match(/supabase_fetch_failed:(\d+):(.*)$/s);
+      if (m) {
+        console.warn(
+          `fetchIndexIntradayRebased daily close ${tradeDateDash}: status=${m[1]} body=${m[2].slice(0, 200)}`,
+        );
+      } else {
+        console.warn(
+          `fetchIndexIntradayRebased daily close ${tradeDateDash}: ${msg.slice(0, 200)}`,
+        );
+      }
+    }
+  }
+
+  const openTs = `${tradeDateDash}T09:00:00+09:00`;
+  const closeTs = `${tradeDateDash}T15:30:00+09:00`;
+
   return INDEX_CODES.map((code) => {
-    const pts = (rows || [])
+    const captures = (rows || [])
       .filter((r) => r.index_code === code)
       .map((r) => ({
         t: r.captured_at,
-        value: numOrNull(r.value) ?? numOrNull(r.close),
+        value: numOrNull(r.value),
       }))
       .filter((r) => r.t && r.value != null && r.value > 0);
-    if (pts.length < 2) {
+
+    if (!captures.length) {
       return { code, series: [] };
     }
+
+    const first = captures[0].value;
+    // 09:00 base 100 from first capture (not prev_close), then capture points.
+    const pts = [{ t: openTs, value: first }, ...captures];
+
+    if (mode !== 'live') {
+      const dayClose = dailyCloseByCode.get(code);
+      if (dayClose != null && dayClose > 0) {
+        const last = pts[pts.length - 1];
+        if (last?.t === closeTs) {
+          pts[pts.length - 1] = { t: closeTs, value: dayClose };
+        } else {
+          pts.push({ t: closeTs, value: dayClose });
+        }
+      }
+    }
+    // live: last capture remains tip (already in series).
+
     return { code, series: rebaseRowsTo100(pts) };
   });
 }
@@ -545,7 +624,11 @@ export async function buildAggregateHubTrendPayload(
       name: sectorName(hubIndex, sid),
       series: [],
     });
-    const indices = await fetchIndexIntradayRebased(config, one.tradeDate);
+    const indices = await fetchIndexIntradayRebased(
+      config,
+      one.tradeDate,
+      one.meta?.numeratorMode,
+    );
     return {
       horizon: '1d',
       base: 100,
@@ -587,28 +670,47 @@ export async function buildAggregateHubTrendPayload(
 
   const tradingDates = (refs.tradingDates || []).map(compactYmd).filter(Boolean);
   const refsRecentDd = compactYmd(refs.recentDd);
+  const anchorDd = compactYmd(live.meta.anchorDd) || kstYmdDash(now);
+  const todayDash = basDdToDash(anchorDd) || kstYmdDash(now);
+  const isBMode = live.meta.numeratorMode === 'close'
+    && !!refsRecentDd
+    && !!anchorDd
+    && refsRecentDd < anchorDd;
   let windowDates = tradingDates.filter((d) => {
     if (startDd && d < startDd) return false;
     if (d > refsRecentDd) return false;
     return true;
   }).map(basDdToDash);
 
-  // Live tip date for indices
+  // B mode: extend index window to today (market_index_daily.close tip), matching sector tip date.
+  if (isBMode && todayDash && !windowDates.includes(todayDash)) {
+    windowDates = [...windowDates, todayDash];
+  }
+
+  // Live tip (A mode) — latest intraday capture; B mode uses daily close via windowDates.
   const liveTips = new Map();
   if (live.meta.sessionOpen && config) {
     try {
       const tipRows = await fetchSupabaseJson(
         config,
-        `market_index_intraday?trade_date=eq.${encodeURIComponent(basDdToDash(live.meta.anchorDd) || kstYmdDash(now))}`
-          + `&select=index_code,value,close,captured_at&order=captured_at.desc&limit=10`,
+        `market_index_intraday?trade_date=eq.${encodeURIComponent(todayDash)}`
+          + `&select=index_code,value,captured_at&order=captured_at.desc&limit=10`,
       );
       for (const code of INDEX_CODES) {
         const row = (tipRows || []).find((r) => r.index_code === code);
-        const v = numOrNull(row?.value) ?? numOrNull(row?.close);
+        const v = numOrNull(row?.value);
         if (v != null) liveTips.set(code, v);
       }
-    } catch {
-      /* no live index tip */
+    } catch (e) {
+      const msg = String(e?.message || e);
+      const m = msg.match(/supabase_fetch_failed:(\d+):(.*)$/s);
+      if (m) {
+        console.warn(
+          `fetchIndexDaily liveTips ${todayDash}: status=${m[1]} body=${m[2].slice(0, 200)}`,
+        );
+      } else {
+        console.warn(`fetchIndexDaily liveTips ${todayDash}: ${msg.slice(0, 200)}`);
+      }
     }
   }
 

@@ -18,7 +18,7 @@ import {
   returnsResponseHeaders,
 } from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v18';
+const CACHE_VERSION = '/api/hub_trend/cache/v20';
 
 function cachePath(horizon, dataVersion) {
   return `${CACHE_VERSION}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;

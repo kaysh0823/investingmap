@@ -96,6 +96,16 @@ function lastSeriesPoint(series) {
   return series[series.length - 1];
 }
 
+/** True for T15:30+09:00 or equivalent UTC (06:30Z = KST 15:30). */
+function isKstCloseTip(t) {
+  const s = String(t || '');
+  if (s.includes('T15:30')) return true;
+  const ms = Date.parse(s);
+  if (!Number.isFinite(ms)) return false;
+  const kst = new Date(ms + 9 * 60 * 60 * 1000);
+  return kst.getUTCHours() === 15 && kst.getUTCMinutes() === 30;
+}
+
 function retPctFromBase100(v) {
   if (v == null || !Number.isFinite(Number(v))) return null;
   return Math.round((Number(v) - 100) * 100) / 100;
@@ -135,7 +145,8 @@ async function main() {
       const text = fs.readFileSync(path.join(jsRoot, f), 'utf8');
       const lines = text.split(/\r?\n/);
       for (let i = 0; i < lines.length; i++) {
-        if (/\.chg1dPct\s*=/.test(lines[i])) {
+        // Assignment only — do not match `===` / `==` comparisons.
+        if (/\.chg1dPct\s*=(?![=])/.test(lines[i])) {
           violations.push(`${f}:${i + 1}: ${lines[i].trim()}`);
         }
       }
@@ -146,11 +157,12 @@ async function main() {
     console.log('  g) no rogue chg1dPct assignments in js/');
   }
 
-  const [quotes, sectors, trend, movers] = await Promise.all([
+  const [quotes, sectors, trend, movers, trend20] = await Promise.all([
     fetchJson(base, '/api/quotes?codes=005930,000660,036930'),
     fetchJson(base, '/api/hub_sectors?horizon=1d'),
     fetchJson(base, '/api/hub_trend?horizon=1d&v=7'),
     fetchJson(base, '/api/hub_movers'),
+    fetchJson(base, '/api/hub_trend?horizon=20d'),
   ]);
 
   // e) meta alignment
@@ -225,6 +237,7 @@ async function main() {
     const pointCount = trend.pointCount ?? sample.length;
     const distinctMap = trend.distinctValues || {};
     const maxDistinct = Math.max(0, ...Object.values(distinctMap).map(Number));
+    const afterClose = mode === 'close' || mode === 'official' || minutes >= 16 * 60;
 
     if (mode === 'live' && minutes >= 11 * 60 && minutes < 15 * 60 + 30) {
       if (pointCount < 6) fail(`c) 11:00 live pointCount≥6 expected, got ${pointCount}`);
@@ -239,23 +252,69 @@ async function main() {
         /* ok if live flag omitted */
       }
     }
-    if (mode === 'close' || mode === 'official' || minutes >= 16 * 60) {
-      const tipKst = new Date(tipMs + 9 * 60 * 60 * 1000);
-      const hm = tipKst.getUTCHours() * 60 + tipKst.getUTCMinutes();
-      if (hm !== 15 * 60 + 30 && mode !== 'live') {
-        // Allow exact 15:30 close tip
-        const iso = tip.t || '';
-        if (!iso.includes('T15:30')) {
-          fail(`c) B/C last t must be 15:30, got ${tip.t}`);
-        }
+    if (afterClose) {
+      if (!isKstCloseTip(tip.t) && mode !== 'live') {
+        fail(`c) B/C last t must be 15:30, got ${tip.t}`);
       }
       const hasLive = (trend.sectors || []).some((s) =>
         (s.series || []).some((p) => p.live),
       );
       if (hasLive) fail('c) B/C must not include live tip points');
+
+      for (const sid of ['semi', 'holdings']) {
+        const series = (trend.sectors || []).find((s) => s.sector === sid)?.series || [];
+        if (series.length < 40) {
+          fail(`c) ${sid} pointCount≥40 after close, got ${series.length}`);
+        }
+        const sidTip = lastSeriesPoint(series);
+        if (!isKstCloseTip(sidTip?.t)) {
+          fail(`c) ${sid} last t must be 15:30 after close, got ${sidTip?.t}`);
+        }
+      }
     }
+
+    // 1d KOSPI/KOSDAQ index series
+    const indexList = trend.indices || [];
+    for (const code of ['KOSPI', 'KOSDAQ']) {
+      const idx = indexList.find((x) => x.code === code);
+      const series = idx?.series || [];
+      if (mode === 'live' && minutes >= 11 * 60 && minutes < 15 * 60 + 30) {
+        if (series.length < 4) {
+          fail(`c) 1d ${code} series≥4 expected during live, got ${series.length}`);
+        }
+      }
+      if (afterClose) {
+        if (series.length < 4) {
+          fail(`c) 1d ${code} series≥4 after close, got ${series.length}`);
+        }
+        const iTip = lastSeriesPoint(series);
+        if (!iTip) {
+          fail(`c) 1d ${code} missing after close`);
+        } else if (!isKstCloseTip(iTip.t)) {
+          fail(`c) 1d ${code} last t must be 15:30 after close, got ${iTip.t}`);
+        }
+      }
+    }
+
+    // 20d indices last date == sector last date
+    {
+      const semi20 = (trend20.sectors || []).find((s) => s.sector === 'semi');
+      const sectorLast = String(lastSeriesPoint(semi20?.series)?.t || '').slice(0, 10);
+      if (!sectorLast) fail('c) 20d semi series missing');
+      for (const code of ['KOSPI', 'KOSDAQ']) {
+        const idx = (trend20.indices || []).find((x) => x.code === code);
+        const indexLast = String(lastSeriesPoint(idx?.series)?.t || '').slice(0, 10);
+        if (!indexLast) fail(`c) 20d ${code} series missing`);
+        if (indexLast !== sectorLast) {
+          fail(`c) 20d ${code} last date ${indexLast} != sector ${sectorLast}`);
+        }
+      }
+    }
+
     console.log(
-      `  c) trend tip t=${tip.t} pointCount=${pointCount} maxDistinct=${maxDistinct}`,
+      `  c) trend tip t=${tip.t} pointCount=${pointCount} maxDistinct=${maxDistinct}`
+        + ` indices=${indexList.map((i) => `${i.code}:${(i.series || []).length}`).join(',')}`
+        + ` 20dTip=${String(lastSeriesPoint((trend20.sectors || []).find((s) => s.sector === 'semi')?.series)?.t || '').slice(0, 10)}`,
     );
   }
 
