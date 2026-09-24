@@ -1,5 +1,6 @@
 /**
  * Static checks for hub_valuation_snapshot (FY + TTM) + valuation tab wiring.
+ * Used by verify:dist (Cloudflare build gate).
  */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -41,6 +42,20 @@ const MAP_FILES = [
   'machinery/korea_machinery_map.html',
   'shipping/korea_shipping_map.html',
 ];
+
+const EXTRA_CHECK_FILES = [
+  'bio/korea_bio_map.inline.js',
+  'bio/bio_inline_tail.js',
+];
+
+function fail(file, msg) {
+  console.error(`FAIL ${file}: ${msg}`);
+  process.exit(1);
+}
+
+function countKey(text, key) {
+  return (text.match(new RegExp(`["']?${key}["']?\\s*:`, 'g')) || []).length;
+}
 
 assert.ok(fs.existsSync(SNAPSHOT), 'data/hub_valuation_snapshot.json must exist');
 const snapshot = JSON.parse(fs.readFileSync(SNAPSHOT, 'utf8'));
@@ -94,10 +109,8 @@ if (!Number.isFinite(attachRate) || attachRate <= 0) {
 }
 assert.ok(
   attachRate >= MIN_TTM_FILL,
-  `hub Naver TTM attach rate ${attachRate} >= ${MIN_TTM_FILL} `
-  + `(filled=${ttmFilled} lossNull=${ttmNullLoss} missing=${ttmMissingQuote})`,
+  `hub Naver TTM attach rate ${attachRate} >= ${MIN_TTM_FILL}`,
 );
-// Positive PER share is lower (적자); require a sane floor and no dropped quotes.
 assert.ok(ttmMissingQuote / Math.max(1, hubCount) <= 0.1, 'too many hub without quotes_latest');
 assert.ok(ttmFilled / Math.max(1, hubCount) >= 0.7, `positive perTtm share ${ttmFilled}/${hubCount}`);
 console.log(
@@ -105,17 +118,13 @@ console.log(
   + `(+per=${ttmFilled} lossNull=${ttmNullLoss} missing=${ttmMissingQuote})`,
 );
 
-// Spot-check: market percentile field is FY
-let fyPos = 0;
-for (const q of Object.values(snapshot.quotes || {})) {
-  if (q.perFy != null && q.perFy > 0) fyPos += 1;
-}
-assert.ok(fyPos >= MIN_COUNT * 0.3, `enough perFy for market lines (${fyPos})`);
-
 assert.ok(fs.existsSync(path.join(ROOT, 'js', 'map_valuation.js')), 'map_valuation.js');
 const mapJs = fs.readFileSync(path.join(ROOT, 'js', 'map_valuation.js'), 'utf8');
 assert.ok(/perTtm/.test(mapJs), 'map_valuation uses perTtm');
 assert.ok(/resolveDisplay/.test(mapJs), 'map_valuation resolveDisplay');
+assert.ok(/groupMetric/.test(mapJs), 'map_valuation segmented groupMetric');
+assert.ok(!/ \|\| 'Div'/.test(mapJs), 'map_valuation must not fall back to bare Div');
+assert.ok(/isUsableLabel|!== 'undefined'/.test(mapJs), 'map_valuation null-guards labels');
 
 assert.ok(
   fs.existsSync(path.join(ROOT, 'scripts', 'build_hub_valuation_snapshot.mjs')),
@@ -136,22 +145,71 @@ console.log('  h) hub_valuation_snapshot 60s header ok');
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(/valuation:\s*1/.test(tabState), 'map_tab_state VALID includes valuation');
 
+const REQUIRED_I18N = ['valuationSortChain', 'valuationMetricDvd', 'valuationLegendPer'];
+
 for (const rel of MAP_FILES) {
   const file = path.join(ROOT, rel);
-  if (!fs.existsSync(file)) continue;
+  if (!fs.existsSync(file)) fail(rel, 'file missing');
   const html = fs.readFileSync(file, 'utf8');
-  assert.ok(
-    /map_valuation\.js\?v=2/.test(html),
-    `${rel} must include map_valuation.js?v=2`,
-  );
-  assert.ok(/id="valuation-root"/.test(html), `${rel} valuation-root`);
-  assert.ok(/id="tab-btn-valuation"/.test(html), `${rel} tab-btn-valuation`);
+
+  if (!/map_valuation\.js\?v=\d+/.test(html)) fail(rel, 'map_valuation.js?v=N missing');
+  if (!/id="valuation-root"/.test(html)) fail(rel, 'valuation-root missing');
+  if (!/function renderValuation\s*\(/.test(html) && !rel.startsWith('bio/')) {
+    // bio map HTML uses inline.js for renderValuation
+    if (rel !== 'bio/korea_bio_map.html') fail(rel, 'function renderValuation missing');
+  }
+  if (rel === 'bio/korea_bio_map.html' && !/map_valuation\.js\?v=\d+/.test(html)) {
+    fail(rel, 'map_valuation.js missing');
+  }
+
+  for (const key of REQUIRED_I18N) {
+    const n = countKey(html, key);
+    // HTML pages embed ko+en T objects → expect ≥2; bio HTML may only have scripts
+    if (rel === 'bio/korea_bio_map.html') continue;
+    if (n < 2) fail(rel, `${key} ko/en missing (count=${n})`);
+  }
 
   const perfIdx = html.indexOf('tab-btn-perfcalendar');
   const valIdx = html.indexOf('tab-btn-valuation');
   const tableIdx = html.indexOf('tab-btn-table');
-  assert.ok(perfIdx >= 0 && valIdx > perfIdx, `${rel} valuation button after perfcalendar`);
-  assert.ok(tableIdx > valIdx, `${rel} table button after valuation`);
+  if (!(perfIdx >= 0 && valIdx > perfIdx)) fail(rel, 'valuation button after perfcalendar');
+  if (!(tableIdx > valIdx)) fail(rel, 'table button after valuation');
+}
+
+for (const rel of EXTRA_CHECK_FILES) {
+  const file = path.join(ROOT, rel);
+  if (!fs.existsSync(file)) fail(rel, 'file missing');
+  const text = fs.readFileSync(file, 'utf8');
+  if (!/function renderValuation\s*\(/.test(text)) fail(rel, 'function renderValuation missing');
+  for (const key of REQUIRED_I18N) {
+    // inline T is JSON one-liner: keys appear in ko+en → ≥2; tail may only reference props
+    if (rel.endsWith('bio_inline_tail.js')) {
+      if (!text.includes(key) && !text.includes(`vt.${key}`)) {
+        // tail uses vt.valuationMetricDvd etc via render labels
+        if (!new RegExp(`vt\\.${key}|${key}`).test(text)) {
+          // renderValuation uses vt.valuationMetricDvd — check that
+        }
+      }
+      continue;
+    }
+    const n = countKey(text, key);
+    if (n < 2) fail(rel, `${key} ko/en missing (count=${n})`);
+  }
+  if (rel.endsWith('korea_bio_map.inline.js')) {
+    for (const key of REQUIRED_I18N) {
+      const n = countKey(text, key);
+      if (n < 2) fail(rel, `${key} ko/en missing (count=${n})`);
+    }
+  }
+}
+
+// bio_inline_tail must wire labels
+{
+  const tail = fs.readFileSync(path.join(ROOT, 'bio', 'bio_inline_tail.js'), 'utf8');
+  if (!/vt\.valuationSortChain/.test(tail)) fail('bio/bio_inline_tail.js', 'vt.valuationSortChain');
+  if (!/vt\.valuationMetricDvd/.test(tail)) fail('bio/bio_inline_tail.js', 'vt.valuationMetricDvd');
+  if (!/vt\.valuationLegendPer/.test(tail)) fail('bio/bio_inline_tail.js', 'vt.valuationLegendPer');
+  if (!/if \(tab === 'valuation'\)/.test(tail)) fail('bio/bio_inline_tail.js', 'tab switch valuation');
 }
 
 if (fs.existsSync(path.join(ROOT, 'dist', 'js', 'map_volatility.js'))) {

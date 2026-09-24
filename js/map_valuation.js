@@ -1,5 +1,5 @@
 /**
- * Valuation comparison v2 — chain-group PER TTM / FY / PBR / dividend strip.
+ * Valuation comparison v3 — chain-group PER TTM / FY / PBR / dividend strip.
  * Snapshot: /data/hub_valuation_snapshot.json (KRX FY + Naver TTM for hub).
  */
 (function (global) {
@@ -25,13 +25,16 @@
   var COPY = {
     ko: {
       title: '밸류에이션 비교',
+      groupMetric: '지표',
+      groupSort: '정렬',
       metricPerTtm: 'PER TTM',
       metricPerFy: 'PER FY',
       metricPbr: 'PBR',
       metricDvd: '배당수익률',
       sortChain: '체인 순',
       sortMedian: '그룹 중앙값 순',
-      medianLabel: function (v, metric) {
+      medianLabel: function (v, metric, n) {
+        if (n != null && n <= 2) return '(n=' + n + ')';
         var unit = metric === 'dvdYld' ? '%' : '×';
         var name =
           metric === 'perTtm' ? 'PER(TTM)' :
@@ -49,10 +52,10 @@
       legendPer:
         'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
       basisClose: function (dd) {
-        return '기준 ' + dd + ' · KRX 12021 · 종가 기준';
+        return '기준 ' + formatDash(dd) + ' · KRX 12021 · 종가 기준';
       },
       basisLive: function (dd) {
-        return '기준 ' + dd + ' · 장중 현재가 기준';
+        return '기준 ' + formatDash(dd) + ' · 장중 현재가 기준';
       },
       tipPerTtm: 'PER TTM',
       tipPerFy: 'PER FY',
@@ -67,13 +70,16 @@
     },
     en: {
       title: 'Valuation',
+      groupMetric: 'Metric',
+      groupSort: 'Sort',
       metricPerTtm: 'PER TTM',
       metricPerFy: 'PER FY',
       metricPbr: 'PBR',
       metricDvd: 'Div. yield',
       sortChain: 'Chain order',
       sortMedian: 'By group median',
-      medianLabel: function (v, metric) {
+      medianLabel: function (v, metric, n) {
+        if (n != null && n <= 2) return '(n=' + n + ')';
         var unit = metric === 'dvdYld' ? '%' : '×';
         var name =
           metric === 'perTtm' ? 'PER(TTM)' :
@@ -91,10 +97,10 @@
       legendPer:
         'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
       basisClose: function (dd) {
-        return 'As of ' + dd + ' · KRX 12021 · close basis';
+        return 'As of ' + formatDash(dd) + ' · KRX 12021 · close basis';
       },
       basisLive: function (dd) {
-        return 'As of ' + dd + ' · intraday last';
+        return 'As of ' + formatDash(dd) + ' · intraday last';
       },
       tipPerTtm: 'PER TTM',
       tipPerFy: 'PER FY',
@@ -109,11 +115,29 @@
     },
   };
 
+  function formatDash(dd) {
+    var s = String(dd || '').replace(/\//g, '-').trim();
+    if (/^\d{8}$/.test(s)) return s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6, 8);
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+    return s;
+  }
+
+  function isUsableLabel(v) {
+    return v != null && v !== '' && String(v) !== 'undefined' && typeof v !== 'undefined';
+  }
+
   function labelsFor(opts) {
     var lang = opts && opts.lang === 'en' ? 'en' : 'ko';
     var base = COPY[lang];
     var L = opts && opts.labels ? opts.labels : {};
-    return Object.assign({}, base, L);
+    var out = {};
+    Object.keys(base).forEach(function (k) {
+      out[k] = base[k];
+    });
+    Object.keys(L).forEach(function (k) {
+      if (isUsableLabel(L[k])) out[k] = L[k];
+    });
+    return out;
   }
 
   function formatMetric(v, metric) {
@@ -182,21 +206,22 @@
     if (stylesInjected) return;
     stylesInjected = true;
     var css =
-      '.valuation-wrap{display:flex;flex-direction:column;gap:10px;min-height:420px}' +
-      '.valuation-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}' +
-      '.valuation-toolbar button{appearance:none;border:1px solid var(--border,#30363d);' +
-      'background:var(--surface2,#21262d);color:var(--text,#e6edf3);border-radius:6px;' +
-      'padding:4px 10px;font-size:12px;cursor:pointer}' +
-      '.valuation-toolbar button.active{border-color:var(--accent,#58a6ff);color:var(--accent,#58a6ff)}' +
-      '.valuation-basis{font-size:12px;color:var(--text-muted,#8b949e);margin:0}' +
+      '.valuation-wrap{display:flex;flex-direction:column;gap:10px;min-height:420px;padding:0 4px 8px}' +
+      '.valuation-toolbar{display:flex;flex-direction:column;gap:8px}' +
+      '.valuation-seg-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}' +
+      '.valuation-seg-title{font-size:11px;font-weight:600;color:var(--text-muted,#8b949e);min-width:2.5em;flex:0 0 auto}' +
+      '.valuation-seg{display:inline-flex;flex-wrap:wrap;gap:0;border:1px solid var(--border,#30363d);border-radius:8px;overflow:hidden;background:var(--surface2,#21262d)}' +
+      '.valuation-seg button{appearance:none;border:0;border-right:1px solid var(--border,#30363d);background:transparent;color:var(--text,#e6edf3);padding:6px 12px;font-size:12px;cursor:pointer}' +
+      '.valuation-seg button:last-child{border-right:0}' +
+      '.valuation-seg button.active{background:color-mix(in srgb,var(--accent,#58a6ff) 22%,transparent);color:var(--accent,#58a6ff);font-weight:600}' +
+      '.valuation-basis{font-size:12px;color:var(--text-muted,#8b949e);margin:0;padding:0 8px;overflow:visible;white-space:nowrap}' +
       '#valuation-root{flex:1;min-height:360px;position:relative}' +
-      '#valuation-legend{font-size:12px;color:var(--text-muted,#8b949e);line-height:1.45}' +
-      '.valuation-tip{position:fixed;z-index:40;pointer-events:none;max-width:280px;' +
-      'background:rgba(22,27,34,.96);border:1px solid var(--border,#30363d);border-radius:8px;' +
-      'padding:8px 10px;font-size:12px;color:var(--text,#e6edf3);box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
+      '#valuation-legend{font-size:12px;color:var(--text-muted,#8b949e);line-height:1.45;padding:0 8px}' +
+      '.valuation-tip{position:fixed;z-index:40;pointer-events:none;max-width:280px;background:rgba(22,27,34,.96);border:1px solid var(--border,#30363d);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text,#e6edf3);box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
       '.valuation-tip b{display:block;margin-bottom:4px}' +
       '.valuation-band-label{font-size:11px;fill:var(--text-muted,#8b949e)}' +
-      '.valuation-fy-tag{font-size:8px;fill:var(--text-muted,#8b949e);pointer-events:none}';
+      '.valuation-fy-tag{font-size:8px;fill:var(--text-muted,#8b949e);pointer-events:none}' +
+      '@media (max-width:640px){.valuation-toolbar{gap:10px}.valuation-seg button{padding:6px 10px}}';
     var el = document.createElement('style');
     el.id = 'im-map-valuation-css';
     el.textContent = css;
@@ -324,10 +349,10 @@
   }
 
   function metricButtonLabel(m, labels) {
-    if (m === 'perTtm') return labels.metricPerTtm || 'PER TTM';
-    if (m === 'perFy') return labels.metricPerFy || 'PER FY';
-    if (m === 'pbr') return labels.metricPbr || 'PBR';
-    return labels.metricDvd || 'Div';
+    if (m === 'perTtm') return labels.metricPerTtm;
+    if (m === 'perFy') return labels.metricPerFy;
+    if (m === 'pbr') return labels.metricPbr;
+    return labels.metricDvd;
   }
 
   function ensureChrome(opts) {
@@ -343,30 +368,51 @@
     }
     var labels = labelsFor(opts);
     toolbar.innerHTML = '';
-    METRICS.forEach(function (m) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.dataset.metric = m;
-      b.textContent = metricButtonLabel(m, labels);
-      if (m === selectedMetric) b.classList.add('active');
-      b.addEventListener('click', function () {
-        saveMetric(m);
-        if (lastOpts) draw(lastOpts);
+
+    function addSegRow(title, items, isActive, onClick) {
+      var row = document.createElement('div');
+      row.className = 'valuation-seg-row';
+      var tit = document.createElement('span');
+      tit.className = 'valuation-seg-title';
+      tit.textContent = title;
+      row.appendChild(tit);
+      var seg = document.createElement('div');
+      seg.className = 'valuation-seg';
+      items.forEach(function (it) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = it.label;
+        if (isActive(it.id)) b.classList.add('active');
+        b.addEventListener('click', function () { onClick(it.id); });
+        seg.appendChild(b);
       });
-      toolbar.appendChild(b);
-    });
-    ['chain', 'median'].forEach(function (s) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.dataset.sort = s;
-      b.textContent = s === 'chain' ? labels.sortChain : labels.sortMedian;
-      if (s === selectedSort) b.classList.add('active');
-      b.addEventListener('click', function () {
-        saveSort(s);
+      row.appendChild(seg);
+      toolbar.appendChild(row);
+    }
+
+    addSegRow(
+      labels.groupMetric,
+      METRICS.map(function (m) {
+        return { id: m, label: metricButtonLabel(m, labels) };
+      }),
+      function (id) { return id === selectedMetric; },
+      function (id) {
+        saveMetric(id);
         if (lastOpts) draw(lastOpts);
-      });
-      toolbar.appendChild(b);
-    });
+      },
+    );
+    addSegRow(
+      labels.groupSort,
+      [
+        { id: 'chain', label: labels.sortChain },
+        { id: 'median', label: labels.sortMedian },
+      ],
+      function (id) { return id === selectedSort; },
+      function (id) {
+        saveSort(id);
+        if (lastOpts) draw(lastOpts);
+      },
+    );
   }
 
   function syncBasisBadge(snapshot, labels, liveSession) {
@@ -535,7 +581,7 @@
     var bandH = 44;
     var labelW = Math.min(140, Math.floor(width * 0.22));
     var naW = 72;
-    var margin = { top: 28, right: 12, bottom: 28, left: labelW };
+    var margin = { top: 32, right: 12, bottom: 28, left: labelW };
     var innerW = Math.max(80, width - margin.left - margin.right - naW);
     var height = margin.top + margin.bottom + groups.length * bandH;
 
@@ -562,26 +608,37 @@
 
     var gRoot = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    [
+    var pctMarks = [
       { p: 25, v: p25 },
       { p: 50, v: p50 },
       { p: 75, v: p75 },
-    ].forEach(function (o) {
-      if (o.v == null || !isFinite(o.v) || !isPlottable(o.v, metric)) return;
-      var xx = x(o.v);
+    ]
+      .filter(function (o) {
+        return o.v != null && isFinite(o.v) && isPlottable(o.v, metric);
+      })
+      .map(function (o) {
+        return { p: o.p, v: o.v, x: x(o.v) };
+      })
+      .sort(function (a, b) { return a.x - b.x; });
+    pctMarks.forEach(function (o, i) {
       gRoot
         .append('line')
-        .attr('x1', xx)
-        .attr('x2', xx)
+        .attr('x1', o.x)
+        .attr('x2', o.x)
         .attr('y1', 0)
         .attr('y2', groups.length * bandH)
         .attr('stroke', 'var(--text-muted,#8b949e)')
         .attr('stroke-opacity', o.p === 50 ? 0.55 : 0.35)
         .attr('stroke-dasharray', o.p === 50 ? '4,4' : '2,3');
+      var yLab = -8;
+      if (i > 0 && Math.abs(o.x - pctMarks[i - 1].x) < 28) {
+        yLab = pctMarks[i - 1]._yLab === -8 ? -18 : -8;
+      }
+      o._yLab = yLab;
       gRoot
         .append('text')
-        .attr('x', xx + 3)
-        .attr('y', -8)
+        .attr('x', o.x + 3)
+        .attr('y', yLab)
         .attr('fill', 'var(--text-muted,#8b949e)')
         .attr('font-size', 10)
         .text('P' + o.p);
@@ -627,6 +684,7 @@
 
       if (g.median != null && isPlottable(g.median, metric)) {
         var mx = x(g.median);
+        var nPlot = g.items.filter(function (d) { return d.plottable; }).length;
         gRoot
           .append('line')
           .attr('x1', mx)
@@ -641,7 +699,7 @@
           .attr('y', y0 + 12)
           .attr('fill', 'var(--accent,#58a6ff)')
           .attr('font-size', 10)
-          .text(labels.medianLabel(g.median, metric));
+          .text(labels.medianLabel(g.median, metric, nPlot));
       }
 
       if (gi === 0) {

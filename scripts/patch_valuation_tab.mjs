@@ -1,12 +1,14 @@
 /**
  * Add valuation comparison tab after performance calendar on sector map pages.
+ * Supports both `tabPerfCalendar:` and `"tabPerfCalendar":` T-object styles.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 2;
+const SCRIPT_V = 3;
 const TAB_STATE_V = 12;
 
 const MAP_FILES = [
@@ -121,6 +123,8 @@ const TRANSLATIONS = {
   },
 };
 
+const REQUIRED_KEYS = Object.keys(TRANSLATIONS.ko);
+
 function translationLines(lang, indent, keyQuote, valueQuote) {
   const qk = (key) => (keyQuote ? `${keyQuote}${key}${keyQuote}` : key);
   return Object.entries(TRANSLATIONS[lang])
@@ -128,54 +132,99 @@ function translationLines(lang, indent, keyQuote, valueQuote) {
     .join('\n');
 }
 
-function patchTranslationObjects(source) {
-  // First-time insert after perfcalendar / volatility
-  if (!/["']?tabValuation["']?\s*:/.test(source)) {
-    const afterPerf = source.replace(
-      /^([ \t]*)(["']?)tabPerfCalendar\2\s*:\s*(["'])(.*?)\3,[ \t]*$/gm,
-      (line, indent, keyQuote, valueQuote, value) => {
-        const lang = /Performance/i.test(value) && !/퍼포먼스|캘린더/.test(value) ? 'en' : 'ko';
-        return `${line}\n${translationLines(lang, indent, keyQuote, valueQuote)}`;
-      },
-    );
-    if (afterPerf !== source) source = afterPerf;
-    else {
-      source = source.replace(
-        /^([ \t]*)(["']?)tabVolatility\2\s*:\s*(["'])(.*?)\3,[ \t]*$/gm,
-        (line, indent, keyQuote, valueQuote, value) => {
-          const lang = /Volatility/i.test(value) && !/변동성/.test(value) ? 'en' : 'ko';
-          return `${line}\n${translationLines(lang, indent, keyQuote, valueQuote)}`;
-        },
-      );
+/** Match both `tabPerfCalendar:` and `"tabPerfCalendar":` / `'tabPerfCalendar':`. */
+function replaceAnchorLine(source, anchorKey, replacer) {
+  const patterns = [
+    // unquoted key: tabPerfCalendar: '...'
+    new RegExp(
+      `^([ \\t]*)(${anchorKey})\\s*:\\s*(['"])(.*?)\\3,[ \\t]*\\r?$`,
+      'gm',
+    ),
+    // double-quoted key: "tabPerfCalendar": "..."
+    new RegExp(
+      `^([ \\t]*)("${anchorKey}")\\s*:\\s*(["'])(.*?)\\3,[ \\t]*\\r?$`,
+      'gm',
+    ),
+    // single-quoted key: 'tabPerfCalendar': '...'
+    new RegExp(
+      `^([ \\t]*)('${anchorKey}')\\s*:\\s*(['"])(.*?)\\3,[ \\t]*\\r?$`,
+      'gm',
+    ),
+  ];
+  let out = source;
+  let changed = false;
+  for (const re of patterns) {
+    const next = out.replace(re, (...args) => {
+      const line = args[0];
+      const indent = args[1];
+      const keyTok = args[2];
+      const valueQuote = args[3];
+      const value = args[4];
+      const keyQuote = keyTok.startsWith('"') || keyTok.startsWith("'") ? keyTok[0] : '';
+      changed = true;
+      return replacer({ line, indent, keyQuote, valueQuote, value, keyTok });
+    });
+    if (next !== out) {
+      out = next;
+      break;
     }
   }
+  return { source: out, changed };
+}
 
-  // v2: insert valuationMetricPerFy after valuationMetricPer when missing
-  if (!/["']?valuationMetricPerFy["']?\s*:/.test(source)) {
-    source = source.replace(
-      /^([ \t]*)(["']?)valuationMetricPer\2\s*:\s*(["'])(.*?)\3,[ \t]*$/gm,
-      (line, indent, keyQuote, valueQuote) => {
-        const qk = `${keyQuote || ''}valuationMetricPerFy${keyQuote || ''}`;
-        return (
-          `${indent}${keyQuote || ''}valuationMetricPer${keyQuote || ''}: ${valueQuote}PER TTM${valueQuote},\n` +
-          `${indent}${qk}: ${valueQuote}PER FY${valueQuote},`
-        );
-      },
-    );
-  } else {
-    source = source.replace(
-      /(["']?)valuationMetricPer\1\s*:\s*(["'])PER\2(?! TTM)/g,
-      `$1valuationMetricPer$1: $2PER TTM$2`,
-    );
+function detectLangFromValue(value, kind) {
+  if (kind === 'perf') {
+    return /Performance/i.test(value) && !/퍼포먼스|캘린더/.test(value) ? 'en' : 'ko';
+  }
+  if (kind === 'vol') {
+    return /Volatility/i.test(value) && !/변동성/.test(value) ? 'en' : 'ko';
+  }
+  return /Valuation/i.test(value) && !/밸류/.test(value) ? 'en' : 'ko';
+}
+
+function patchTranslationObjects(source) {
+  // Insert full block after tabPerfCalendar (or volatility) when tabValuation missing.
+  // Detect T-object keys only (not vt.tabValuation / t.tabValuation references).
+  if (!/(?:^|[{\s,])["']?tabValuation["']?\s*:/.test(source)) {
+    let r = replaceAnchorLine(source, 'tabPerfCalendar', ({ line, indent, keyQuote, valueQuote, value }) => {
+      const lang = detectLangFromValue(value, 'perf');
+      return `${line}\n${translationLines(lang, indent, keyQuote, valueQuote)}`;
+    });
+    if (!r.changed) {
+      r = replaceAnchorLine(source, 'tabVolatility', ({ line, indent, keyQuote, valueQuote, value }) => {
+        const lang = detectLangFromValue(value, 'vol');
+        return `${line}\n${translationLines(lang, indent, keyQuote, valueQuote)}`;
+      });
+    }
+    source = r.source;
+  }
+
+  // Fill missing required keys after each tabValuation line (ko + en), same quote style.
+  const anchorPatterns = [
+    /^([ \t]*)(tabValuation)\s*:\s*(['"])(.*?)\3,[ \t]*\r?$/gm,
+    /^([ \t]*)("tabValuation")\s*:\s*(["'])(.*?)\3,[ \t]*\r?$/gm,
+    /^([ \t]*)('tabValuation')\s*:\s*(['"])(.*?)\3,[ \t]*\r?$/gm,
+  ];
+  for (const re of anchorPatterns) {
+    source = source.replace(re, (line, indent, keyTok, valueQuote, value, offset, full) => {
+      const keyQuote = keyTok.startsWith('"') || keyTok.startsWith("'") ? keyTok[0] : '';
+      const lang = detectLangFromValue(value, 'val');
+      const window = full.slice(offset, offset + 1400);
+      const extras = [];
+      for (const key of REQUIRED_KEYS) {
+        if (key === 'tabValuation') continue;
+        if (new RegExp(`["']?${key}["']?\\s*:`).test(window)) continue;
+        const qk = keyQuote ? `${keyQuote}${key}${keyQuote}` : key;
+        extras.push(`${indent}${qk}: ${valueQuote}${TRANSLATIONS[lang][key]}${valueQuote},`);
+      }
+      if (!extras.length) return line;
+      return `${line}\n${extras.join('\n')}`;
+    });
   }
 
   source = source.replace(
-    /(["']?)valuationLegendPer\1\s*:\s*(["'])PER = 종가 ÷ 최근 4분기 EPS\(KRX 산출\), 적자 기업 제외\2/g,
-    `$1valuationLegendPer$1: $2${TRANSLATIONS.ko.valuationLegendPer}$2`,
-  );
-  source = source.replace(
-    /(["']?)valuationLegendPer\1\s*:\s*(["'])PER = close ÷ TTM EPS \(KRX\); loss-making names excluded from scale\2/g,
-    `$1valuationLegendPer$1: $2${TRANSLATIONS.en.valuationLegendPer}$2`,
+    /(["']?)valuationMetricPer\1\s*:\s*(["'])PER\2(?! TTM)/g,
+    `$1valuationMetricPer$1: $2PER TTM$2`,
   );
   return source;
 }
@@ -189,7 +238,7 @@ function patchRuntime(source) {
       `$1\n      var valuationBtn = document.getElementById('tab-btn-valuation');\n` +
         `      if (valuationBtn) valuationBtn.innerHTML = t.tabValuation || (lang === 'en' ? '⚖️ Valuation' : '⚖️ 밸류에이션 비교');\n` +
         `      var valuationHint = document.getElementById('valuation-hint');\n` +
-        `      if (valuationHint) valuationHint.textContent = t.valuationLegend || '';`,
+        `      if (valuationHint && t.valuationLegend) valuationHint.textContent = t.valuationLegend;`,
     );
   }
 
@@ -238,10 +287,7 @@ function patchHtml(source) {
     }
   }
   if (!source.includes('id="tab-valuation"')) {
-    source = source.replace(
-      /(\s*<!-- TABLE TAB -->)/,
-      `\n${VAL_TAB}$1`,
-    );
+    source = source.replace(/(\s*<!-- TABLE TAB -->)/, `\n${VAL_TAB}$1`);
   }
   if (!source.includes('map_valuation.js')) {
     source = source.replace(
@@ -285,6 +331,25 @@ for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
   const after = patchRuntime(before);
   fs.writeFileSync(file, after, 'utf8');
   console.log(after === before ? 'unchanged' : 'patched', rel);
+}
+
+const genPath = path.join(ROOT, 'bio', 'gen_korea_bio_inline.mjs');
+if (fs.existsSync(genPath)) {
+  try {
+    execSync(`node "${genPath}"`, { cwd: ROOT, stdio: 'inherit' });
+    // Re-apply runtime hooks after gen (gen rebuilds T from translations).
+    const inlinePath = path.join(ROOT, 'bio', 'korea_bio_map.inline.js');
+    const tailPath = path.join(ROOT, 'bio', 'bio_inline_tail.js');
+    for (const file of [inlinePath, tailPath]) {
+      if (!fs.existsSync(file)) continue;
+      const before = fs.readFileSync(file, 'utf8');
+      const after = patchRuntime(before);
+      fs.writeFileSync(file, after, 'utf8');
+      console.log(after === before ? 'unchanged-after-gen' : 'patched-after-gen', path.relative(ROOT, file));
+    }
+  } catch (e) {
+    console.warn('WARN gen_korea_bio_inline failed:', e.message || e);
+  }
 }
 
 console.log(`OK patch_valuation_tab v=${SCRIPT_V}`);
