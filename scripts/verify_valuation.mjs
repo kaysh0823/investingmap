@@ -1,6 +1,11 @@
 /**
  * Static checks for hub_valuation_snapshot (FY + TTM) + valuation tab wiring.
  * Used by verify:dist (Cloudflare build gate).
+ *
+ * Principle: CF / verify:dist must NOT assert fixed market screen values
+ * (e.g. "Samsung PER FY = 41.48"). Gates check wiring, schema, fill rates,
+ * and internal consistency (per ≈ close ÷ eps). Optional local-only screen
+ * cross-check: `node scripts/verify_valuation.mjs --expect-per-fy=41.48`.
  */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -13,6 +18,29 @@ const REFS = path.join(ROOT, 'data', 'hub_return_refs.json');
 const HEADERS = path.join(ROOT, '_headers');
 const MIN_COUNT = 2000;
 const MIN_TTM_FILL = 0.9;
+const RATIO_TOL = 0.005; // ±0.5%
+
+function parseExpectPerFy(argv) {
+  for (const a of argv) {
+    if (a.startsWith('--expect-per-fy=')) {
+      const n = Number(a.slice('--expect-per-fy='.length));
+      return Number.isFinite(n) ? n : null;
+    }
+  }
+  return null;
+}
+
+function assertCloseRatio(label, actual, close, eps, tol) {
+  assert.ok(close > 0 && eps > 0, `${label}: close/eps must be positive (close=${close} eps=${eps})`);
+  const expected = close / eps;
+  const rel = Math.abs(Number(actual) - expected) / expected;
+  assert.ok(
+    rel <= tol,
+    `${label}: ${actual} ≈ close÷eps=${expected.toFixed(4)} (rel=${(rel * 100).toFixed(3)}% > ±${tol * 100}%)`,
+  );
+}
+
+const EXPECT_PER_FY = parseExpectPerFy(process.argv.slice(2));
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -82,21 +110,36 @@ if (fs.existsSync(REFS)) {
 
 const samsung = snapshot.quotes?.['005930'];
 assert.ok(samsung, '005930 must be in valuation snapshot');
-assert.ok(
-  Math.abs(Number(samsung.perFy) - 41.48) < 0.05,
-  `005930 perFy=${samsung.perFy} expected ~41.48`,
+assert.ok(Number(samsung.perFy) > 0, `005930 perFy=${samsung.perFy} must be > 0`);
+assert.ok(Number(samsung.perTtm) > 0, `005930 perTtm=${samsung.perTtm} must be > 0`);
+assert.ok(Number(samsung.pbrFy) > 0, `005930 pbrFy=${samsung.pbrFy} must be > 0`);
+assert.ok(Number(samsung.epsFy) > 0, `005930 epsFy=${samsung.epsFy} must be > 0`);
+assert.ok(Number(samsung.epsTtm) > 0, `005930 epsTtm=${samsung.epsTtm} must be > 0`);
+assert.ok(Number(samsung.close) > 0, `005930 close=${samsung.close} must be > 0`);
+assertCloseRatio(
+  '005930 perFy',
+  Number(samsung.perFy),
+  Number(samsung.close),
+  Number(samsung.epsFy),
+  RATIO_TOL,
 );
-assert.ok(samsung.perTtm != null && samsung.perTtm > 0, '005930 perTtm required');
-assert.ok(samsung.epsTtm != null && samsung.epsTtm > 0, '005930 epsTtm required');
-if (Number(samsung.close) === 274000) {
+assertCloseRatio(
+  '005930 perTtm',
+  Number(samsung.perTtm),
+  Number(samsung.close),
+  Number(samsung.epsTtm),
+  RATIO_TOL,
+);
+if (EXPECT_PER_FY != null) {
   assert.ok(
-    Math.abs(samsung.perTtm - 12.2) <= 0.3,
-    `005930 perTtm=${samsung.perTtm} expected ≈12.2±0.3 at close 274000`,
+    Math.abs(Number(samsung.perFy) - EXPECT_PER_FY) / EXPECT_PER_FY <= RATIO_TOL,
+    `005930 perFy=${samsung.perFy} vs --expect-per-fy=${EXPECT_PER_FY} (±${RATIO_TOL * 100}%)`,
   );
+  console.log(`  005930 --expect-per-fy=${EXPECT_PER_FY} matched`);
 }
 console.log(
-  `  005930 perTtm=${samsung.perTtm} perFy=${samsung.perFy} close=${samsung.close} `
-  + `epsTtm=${samsung.epsTtm}`,
+  `  005930 perTtm=${samsung.perTtm} perFy=${samsung.perFy} pbrFy=${samsung.pbrFy} `
+  + `close=${samsung.close} epsFy=${samsung.epsFy} epsTtm=${samsung.epsTtm}`,
 );
 
 const hubCount = Number(snapshot.hubHit) || 0;
