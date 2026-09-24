@@ -6,7 +6,7 @@
 (function (global) {
   'use strict';
 
-  var VALID = { heatmap: 1, momentum: 1, volatility: 1, perfcalendar: 1, table: 1, graph: 1 };
+  var VALID = { heatmap: 1, momentum: 1, volatility: 1, perfcalendar: 1, valuation: 1, table: 1, graph: 1 };
   var focusStyleInjected = false;
 
   function injectFocusStyle() {

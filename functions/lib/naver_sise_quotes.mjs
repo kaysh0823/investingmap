@@ -566,6 +566,8 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   if (naver.turnoverWon != null && (preferLast || out.turnoverWon == null)) {
     out.turnoverWon = naver.turnoverWon;
   }
+  // Fundamentals: only overwrite when the incoming source has a real value.
+  // /basic has no per/pbr — keep mobile/sise values (preferFundamentals must not clear).
   if (naver.per != null && (preferFundamentals || out.per == null)) out.per = naver.per;
   if (naver.pbr != null && (preferFundamentals || out.pbr == null)) out.pbr = naver.pbr;
   // Trade marker: PC sise is authoritative; prefer any non-null so the session

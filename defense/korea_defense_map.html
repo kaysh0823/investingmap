@@ -238,7 +238,7 @@
 <script src="../js/live_quotes.js?v=23"></script>
   <script src="../js/map_i18n.js?v=11"></script>
   <script src="../js/map_cross_sector.js?v=2"></script>
-  <script src="../js/map_tab_state.js?v=11"></script>
+  <script src="../js/map_tab_state.js?v=12"></script>
   <script src="../js/sector_nav.js?v=10"></script>
   <script src="../js/map_filter_ux.js?v=2"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -248,6 +248,7 @@
   <script src="../js/map_momentum.js?v=16"></script>
   <script src="../js/map_volatility.js?v=12"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
+  <script src="../js/map_valuation.js?v=2"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=36"></script>
@@ -2082,6 +2083,7 @@
     <button id="tab-btn-momentum" class="tab-btn" onclick="switchTab('momentum',this)">📊 모멘텀 매트릭스</button>
     <button id="tab-btn-volatility" class="tab-btn" onclick="switchTab('volatility',this)">📉 변동성 분포</button>
     <button id="tab-btn-perfcalendar" class="tab-btn" onclick="switchTab('perfcalendar',this)">📅 퍼포먼스 캘린더</button>
+    <button id="tab-btn-valuation" class="tab-btn" onclick="switchTab('valuation',this)">⚖️ 밸류에이션 비교</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
@@ -2117,6 +2119,16 @@
       <div id="perfcalendar-legend"></div>
     </div>
   </div>
+  <!-- VALUATION TAB -->
+  <div id="tab-valuation" class="tab-content">
+    <div class="valuation-wrap">
+      <p class="valuation-basis" id="valuation-hint">기준 · KRX 12021 · 일별</p>
+      <div id="valuation-root" role="img" aria-label="Valuation comparison"></div>
+      <div id="valuation-legend"></div>
+    </div>
+  </div>
+
+
 
 
 
@@ -2589,6 +2601,18 @@
         "tabMomentum": "📊 모멘텀 매트릭스",
         "tabVolatility": "📉 변동성 분포",
         "tabPerfCalendar": "📅 퍼포먼스 캘린더",
+        "tabValuation": "⚖️ 밸류에이션 비교",
+        "valuationMetricPer": "PER TTM",
+        "valuationMetricPerFy": "PER FY",
+        "valuationMetricPbr": "PBR",
+        "valuationMetricDvd": "배당수익률",
+        "valuationSortChain": "체인 순",
+        "valuationSortMedian": "그룹 중앙값 순",
+        "valuationLoading": "밸류에이션 데이터를 불러오는 중…",
+        "valuationFailed": "밸류에이션 스냅샷을 불러오지 못했습니다.",
+        "valuationNoData": "표시할 밸류에이션 데이터가 없습니다.",
+        "valuationLegend": "점 크기=시총 · 색=당일 등락률 · 세로 점선=전 시장 P25/P50/P75",
+        "valuationLegendPer": "PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준",
         "perfCalendarTitle": "퍼포먼스 캘린더",
         "perfCalendarSubtitle": "전년말 종가=100 기준 연중 수익률",
         "perfCalendarSectorAvg": "섹터 평균",
@@ -2729,6 +2753,18 @@
         "tabMomentum": "📊 Momentum matrix",
         "tabVolatility": "📉 Volatility Distribution",
         "tabPerfCalendar": "📅 Performance Calendar",
+        "tabValuation": "⚖️ Valuation",
+        "valuationMetricPer": "PER TTM",
+        "valuationMetricPerFy": "PER FY",
+        "valuationMetricPbr": "PBR",
+        "valuationMetricDvd": "Div. yield",
+        "valuationSortChain": "Chain order",
+        "valuationSortMedian": "By group median",
+        "valuationLoading": "Loading valuation data…",
+        "valuationFailed": "Could not load valuation snapshot.",
+        "valuationNoData": "No valuation data available.",
+        "valuationLegend": "Dot size=mcap · color=1D chg · dashed lines=market P25/P50/P75",
+        "valuationLegendPer": "PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS",
         "perfCalendarTitle": "Performance Calendar",
         "perfCalendarSubtitle": "YTD vs prior year-end=100",
         "perfCalendarSectorAvg": "Sector average",
@@ -3085,6 +3121,10 @@
       if (perfCalBtn) perfCalBtn.innerHTML = t.tabPerfCalendar || (lang === 'en' ? '📅 Performance Calendar' : '📅 퍼포먼스 캘린더');
       var perfCalHint = document.getElementById('perfcalendar-hint');
       if (perfCalHint) perfCalHint.textContent = t.perfCalendarSubtitle || (lang === 'en' ? 'YTD vs prior year-end=100' : '전년말 종가=100 기준 연중 수익률');
+      var valuationBtn = document.getElementById('tab-btn-valuation');
+      if (valuationBtn) valuationBtn.innerHTML = t.tabValuation || (lang === 'en' ? '⚖️ Valuation' : '⚖️ 밸류에이션 비교');
+      var valuationHint = document.getElementById('valuation-hint');
+      if (valuationHint) valuationHint.textContent = t.valuationLegend || '';
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
@@ -3148,7 +3188,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
       syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
@@ -3449,6 +3489,40 @@
       });
     }
 
+    function renderValuation() {
+      if (!window.InvestingMapValuation) return;
+      var el = document.getElementById('valuation-root');
+      if (!el) return;
+      var vt = T[lang] || {};
+      InvestingMapValuation.render({
+        container: el,
+        legend: document.getElementById('valuation-legend'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        labels: {
+          title: vt.tabValuation,
+          metricPerTtm: vt.valuationMetricPer,
+          metricPerFy: vt.valuationMetricPerFy,
+          metricPbr: vt.valuationMetricPbr,
+          metricDvd: vt.valuationMetricDvd,
+          sortChain: vt.valuationSortChain,
+          sortMedian: vt.valuationSortMedian,
+          loading: vt.valuationLoading,
+          failed: vt.valuationFailed,
+          noData: vt.valuationNoData,
+          legend: vt.valuationLegend,
+          legendPer: vt.valuationLegendPer
+        },
+        onSelect: function (c) {
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
+        }
+      });
+    }
+
     function renderPerfCalendar() {
       if (!window.InvestingMapPerfCalendar) return;
       var el = document.getElementById('perfcalendar-root');
@@ -3563,6 +3637,7 @@
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
+      if (tab === 'valuation') setTimeout(renderValuation, 40);
       if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -3578,6 +3653,7 @@
       if (document.getElementById('tab-momentum')?.classList.contains('active')) setTimeout(renderMomentum, 80);
       if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
       if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) setTimeout(renderPerfCalendar, 80);
+      if (document.getElementById('tab-valuation')?.classList.contains('active')) setTimeout(renderValuation, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },

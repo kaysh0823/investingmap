@@ -122,6 +122,10 @@
       if (perfCalBtn) perfCalBtn.innerHTML = t.tabPerfCalendar || (lang === 'en' ? '📅 Performance Calendar' : '📅 퍼포먼스 캘린더');
       var perfCalHint = document.getElementById('perfcalendar-hint');
       if (perfCalHint) perfCalHint.textContent = t.perfCalendarSubtitle || (lang === 'en' ? 'YTD vs prior year-end=100' : '전년말 종가=100 기준 연중 수익률');
+      var valuationBtn = document.getElementById('tab-btn-valuation');
+      if (valuationBtn) valuationBtn.innerHTML = t.tabValuation || (lang === 'en' ? '⚖️ Valuation' : '⚖️ 밸류에이션 비교');
+      var valuationHint = document.getElementById('valuation-hint');
+      if (valuationHint) valuationHint.textContent = t.valuationLegend || '';
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
@@ -185,7 +189,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
       if (svgEl) {
         svgEl.selectAll('.node text')
           .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label));
@@ -508,6 +512,40 @@
       });
     }
 
+    function renderValuation() {
+      if (!window.InvestingMapValuation) return;
+      var el = document.getElementById('valuation-root');
+      if (!el) return;
+      var vt = T[lang] || {};
+      InvestingMapValuation.render({
+        container: el,
+        legend: document.getElementById('valuation-legend'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        labels: {
+          title: vt.tabValuation,
+          metricPerTtm: vt.valuationMetricPer,
+          metricPerFy: vt.valuationMetricPerFy,
+          metricPbr: vt.valuationMetricPbr,
+          metricDvd: vt.valuationMetricDvd,
+          sortChain: vt.valuationSortChain,
+          sortMedian: vt.valuationSortMedian,
+          loading: vt.valuationLoading,
+          failed: vt.valuationFailed,
+          noData: vt.valuationNoData,
+          legend: vt.valuationLegend,
+          legendPer: vt.valuationLegendPer
+        },
+        onSelect: function (c) {
+          if (!window.InvestingMapCandleModal || !c || !c.ticker) return;
+          InvestingMapCandleModal.open({
+            ticker: c.ticker,
+            name: lang === 'en' && c.nameEn ? c.nameEn : (c.name || c.nameKo || c.ticker)
+          });
+        }
+      });
+    }
+
     function renderPerfCalendar() {
       if (!window.InvestingMapPerfCalendar) return;
       var el = document.getElementById('perfcalendar-root');
@@ -622,6 +660,7 @@
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
+      if (tab === 'valuation') setTimeout(renderValuation, 40);
       if (tab === 'graph') setTimeout(function() { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -634,6 +673,7 @@
       if (document.getElementById('tab-momentum')?.classList.contains('active')) setTimeout(renderMomentum, 80);
       if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
       if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) setTimeout(renderPerfCalendar, 80);
+      if (document.getElementById('tab-valuation')?.classList.contains('active')) setTimeout(renderValuation, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },
@@ -668,7 +708,7 @@
             imQuotesAsOf = '';
             updateQuotesAsofDisplay();
             renderTable();
-            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar();
+            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
           }
         };
       applyLang();

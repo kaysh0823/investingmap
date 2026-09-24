@@ -126,12 +126,19 @@ async function main() {
 
   console.log(`verify:views base=${base}`);
 
-  // h) tickFormat unit test (offline)
+  // h) tickFormat unit test (offline) + hub_valuation_snapshot cache header
   {
     const labels = unique1dYTickLabels([99.6, 100.4], 7);
     assert.ok(labels.length >= 2, '1d y ticks should produce ≥2 labels');
     assert.equal(new Set(labels).size, labels.length, `duplicate 1d y labels: ${labels.join(',')}`);
     console.log(`  h) format1dYTick unique on [99.6,100.4]: ${labels.join(', ')}`);
+    const headersPath = path.join(ROOT, '_headers');
+    const headersText = fs.readFileSync(headersPath, 'utf8');
+    assert.ok(
+      /\/data\/hub_valuation_snapshot\.json[\s\S]*?max-age=60,\s*must-revalidate/.test(headersText),
+      'h) hub_valuation_snapshot.json must have 60s must-revalidate in _headers',
+    );
+    console.log('  h) hub_valuation_snapshot 60s header ok');
   }
 
   // g) code guard: chg1dPct assignment outside /api/quotes pipeline
