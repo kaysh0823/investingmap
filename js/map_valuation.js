@@ -1,5 +1,5 @@
 /**
- * Valuation comparison v3 — chain-group PER TTM / FY / PBR / dividend strip.
+ * Valuation comparison v4 — chain-group PER TTM / FY / PBR / dividend strip.
  * Snapshot: /data/hub_valuation_snapshot.json (KRX FY + Naver TTM for hub).
  */
 (function (global) {
@@ -9,18 +9,22 @@
   var resizeObs = null;
   var observedEl = null;
   var resizeTimer = null;
+  var winResizeBound = false;
   var snapshotCache = null;
   var snapshotLoading = null;
   var liveTickRegistered = false;
-  var METRICS = ['perTtm', 'perFy', 'pbr', 'dvdYld'];
-  var METRIC_STORAGE = 'im_val_metric_v2';
-  var SORT_STORAGE = 'im_val_sort';
-  var selectedMetric = 'perTtm';
-  var selectedSort = 'chain';
+  var stylesInjected = false;
+  var metricLoaded = false;
+  var widthRetryTimer = null;
+  var lastChart = { metric: null };
+
+  var METRICS = ['perTtm', 'perFy', 'pbr', 'dvd'];
+  var METRIC_STORAGE = 'im.valuation.metric';
+  var state = { metric: 'perTtm', sort: 'chain' };
+
   var CHG_CLIP = 15;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var MISSING_COLOR = '#9aa3ad';
-  var stylesInjected = false;
 
   var COPY = {
     ko: {
@@ -35,7 +39,7 @@
       sortMedian: '그룹 중앙값 순',
       medianLabel: function (v, metric, n) {
         if (n != null && n <= 2) return '(n=' + n + ')';
-        var unit = metric === 'dvdYld' ? '%' : '×';
+        var unit = metric === 'dvd' ? '%' : '×';
         var name =
           metric === 'perTtm' ? 'PER(TTM)' :
           metric === 'perFy' ? 'PER(FY)' :
@@ -80,7 +84,7 @@
       sortMedian: 'By group median',
       medianLabel: function (v, metric, n) {
         if (n != null && n <= 2) return '(n=' + n + ')';
-        var unit = metric === 'dvdYld' ? '%' : '×';
+        var unit = metric === 'dvd' ? '%' : '×';
         var name =
           metric === 'perTtm' ? 'PER(TTM)' :
           metric === 'perFy' ? 'PER(FY)' :
@@ -142,7 +146,7 @@
 
   function formatMetric(v, metric) {
     if (v == null || !isFinite(v)) return '—';
-    if (metric === 'dvdYld') return (Math.round(v * 100) / 100).toFixed(2);
+    if (metric === 'dvd') return (Math.round(v * 100) / 100).toFixed(2);
     if (Math.abs(v) >= 100) return Math.round(v).toString();
     if (Math.abs(v) >= 10) return (Math.round(v * 10) / 10).toFixed(1);
     return (Math.round(v * 100) / 100).toFixed(2);
@@ -162,38 +166,49 @@
 
   function normalizeMetric(m) {
     if (m === 'per') return 'perTtm';
+    if (m === 'dvdYld') return 'dvd';
     return METRICS.indexOf(m) >= 0 ? m : 'perTtm';
   }
 
-  function loadMetric() {
+  function loadMetricOnce() {
+    if (metricLoaded) return;
+    metricLoaded = true;
     try {
-      return normalizeMetric(global.localStorage && global.localStorage.getItem(METRIC_STORAGE));
+      var raw = global.localStorage && global.localStorage.getItem(METRIC_STORAGE);
+      state.metric = normalizeMetric(raw);
     } catch (e) {
-      return 'perTtm';
+      state.metric = 'perTtm';
     }
   }
 
-  function saveMetric(m) {
-    selectedMetric = normalizeMetric(m);
+  function persistMetric() {
     try {
-      if (global.localStorage) global.localStorage.setItem(METRIC_STORAGE, selectedMetric);
+      if (global.localStorage) global.localStorage.setItem(METRIC_STORAGE, state.metric);
     } catch (e) {}
   }
 
-  function loadSort() {
-    try {
-      var s = global.localStorage && global.localStorage.getItem(SORT_STORAGE);
-      return s === 'median' ? 'median' : 'chain';
-    } catch (e) {
-      return 'chain';
+  /**
+   * Viewport-clamp tooltip position.
+   * @param {{x:number,y?:number,w:number,h?:number,vw:number,vh?:number}} o
+   * @returns {{left:number,top:number}}
+   */
+  function clampTip(o) {
+    var x = Number(o.x) || 0;
+    var y = Number(o.y) || 0;
+    var w = Number(o.w) || 0;
+    var h = Number(o.h) || 0;
+    var vw = Number(o.vw) || 0;
+    var vh = Number(o.vh);
+    if (!isFinite(vh) || vh <= 0) {
+      vh = typeof global.innerHeight === 'number' ? global.innerHeight : 1080;
     }
-  }
-
-  function saveSort(s) {
-    selectedSort = s === 'median' ? 'median' : 'chain';
-    try {
-      if (global.localStorage) global.localStorage.setItem(SORT_STORAGE, selectedSort);
-    } catch (e) {}
+    var left = Math.min(x + 12, vw - w - 8);
+    var top = Math.min(y + 12, vh - h - 8);
+    if (!isFinite(left)) left = x + 12;
+    if (!isFinite(top)) top = y + 12;
+    left = Math.max(8, left);
+    top = Math.max(8, top);
+    return { left: left, top: top };
   }
 
   function sessionOpenNow() {
@@ -206,18 +221,19 @@
     if (stylesInjected) return;
     stylesInjected = true;
     var css =
-      '.valuation-wrap{display:flex;flex-direction:column;gap:10px;min-height:420px;padding:0 4px 8px}' +
-      '.valuation-toolbar{display:flex;flex-direction:column;gap:8px}' +
+      '.valuation-wrap{display:flex;flex-direction:column;gap:10px;min-height:420px;padding:0 4px 8px 12px;min-width:0}' +
+      '.valuation-toolbar{display:flex;flex-direction:column;gap:8px;min-width:0}' +
       '.valuation-seg-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}' +
       '.valuation-seg-title{font-size:11px;font-weight:600;color:var(--text-muted,#8b949e);min-width:2.5em;flex:0 0 auto}' +
       '.valuation-seg{display:inline-flex;flex-wrap:wrap;gap:0;border:1px solid var(--border,#30363d);border-radius:8px;overflow:hidden;background:var(--surface2,#21262d)}' +
       '.valuation-seg button{appearance:none;border:0;border-right:1px solid var(--border,#30363d);background:transparent;color:var(--text,#e6edf3);padding:6px 12px;font-size:12px;cursor:pointer}' +
       '.valuation-seg button:last-child{border-right:0}' +
       '.valuation-seg button.active{background:color-mix(in srgb,var(--accent,#58a6ff) 22%,transparent);color:var(--accent,#58a6ff);font-weight:600}' +
-      '.valuation-basis{font-size:12px;color:var(--text-muted,#8b949e);margin:0;padding:0 8px;overflow:visible;white-space:nowrap}' +
-      '#valuation-root{flex:1;min-height:360px;position:relative}' +
+      '.valuation-basis{font-size:12px;color:var(--text-muted,#8b949e);margin:0;margin-left:0;padding:0 8px;overflow:visible;white-space:nowrap}' +
+      '#valuation-root{flex:1;min-height:360px;position:relative;min-width:0}' +
+      '#valuation-root svg{display:block;width:100%;height:auto}' +
       '#valuation-legend{font-size:12px;color:var(--text-muted,#8b949e);line-height:1.45;padding:0 8px}' +
-      '.valuation-tip{position:fixed;z-index:40;pointer-events:none;max-width:280px;background:rgba(22,27,34,.96);border:1px solid var(--border,#30363d);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text,#e6edf3);box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
+      '.valuation-tip{position:fixed;z-index:40;pointer-events:none;max-width:260px;background:rgba(22,27,34,.96);border:1px solid var(--border,#30363d);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text,#e6edf3);box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
       '.valuation-tip b{display:block;margin-bottom:4px}' +
       '.valuation-band-label{font-size:11px;fill:var(--text-muted,#8b949e)}' +
       '.valuation-fy-tag{font-size:8px;fill:var(--text-muted,#8b949e);pointer-events:none}' +
@@ -253,28 +269,24 @@
 
   function isPlottable(v, metric) {
     if (v == null || !isFinite(v)) return false;
-    if (metric === 'dvdYld') return v >= 0;
+    if (metric === 'dvd') return v >= 0;
     return v > 0;
   }
 
   function xDomainFor(metric) {
     if (metric === 'pbr') return [0.1, 20];
-    if (metric === 'dvdYld') return [0, 12];
+    if (metric === 'dvd') return [0, 12];
     return [0.5, 200];
   }
 
   function makeXScale(metric, width) {
     var dom = xDomainFor(metric);
-    if (metric === 'dvdYld') {
+    if (metric === 'dvd') {
       return d3.scaleLinear().domain(dom).range([0, width]).clamp(true);
     }
     return d3.scaleLog().domain(dom).range([0, width]).clamp(true);
   }
 
-  /**
-   * Resolve display value for a company × metric.
-   * @returns {{ value: number|null, fyFallback: boolean, live: boolean }}
-   */
   function resolveDisplay(q, company, metric, liveSession) {
     q = q || {};
     var last =
@@ -306,7 +318,7 @@
       }
       return { value: null, fyFallback: false, live: false };
     }
-    if (metric === 'dvdYld') {
+    if (metric === 'dvd') {
       return {
         value: q.dvdYld != null && isFinite(q.dvdYld) ? q.dvdYld : null,
         fyFallback: false,
@@ -316,14 +328,13 @@
     return { value: null, fyFallback: false, live: false };
   }
 
-  /** Market percentile basis — always KRX FY PER (or matching FY field). */
   function marketMetricValue(q, metric) {
     if (!q) return null;
     if (metric === 'perTtm' || metric === 'perFy') {
       return q.perFy != null && q.perFy > 0 ? q.perFy : null;
     }
     if (metric === 'pbr') return q.pbrFy != null && q.pbrFy > 0 ? q.pbrFy : null;
-    if (metric === 'dvdYld') return q.dvdYld != null && isFinite(q.dvdYld) ? q.dvdYld : null;
+    if (metric === 'dvd') return q.dvdYld != null && isFinite(q.dvdYld) ? q.dvdYld : null;
     return null;
   }
 
@@ -355,7 +366,46 @@
     return labels.metricDvd;
   }
 
-  function ensureChrome(opts) {
+  function assertToolbarActive(toolbar) {
+    if (!toolbar || typeof console === 'undefined' || typeof console.assert !== 'function') return;
+    var rows = toolbar.querySelectorAll('.valuation-seg-row');
+    var metricRow = rows[0];
+    var sortRow = rows[1];
+    if (metricRow) {
+      var activeM = metricRow.querySelector('button.active');
+      console.assert(
+        activeM && activeM.getAttribute('data-metric') === state.metric,
+        '[valuation] active metric button mismatch',
+        state.metric,
+        activeM && activeM.getAttribute('data-metric'),
+      );
+    }
+    if (sortRow) {
+      var activeS = sortRow.querySelector('button.active');
+      console.assert(
+        activeS && activeS.getAttribute('data-sort') === state.sort,
+        '[valuation] active sort button mismatch',
+        state.sort,
+        activeS && activeS.getAttribute('data-sort'),
+      );
+    }
+  }
+
+  function setState(patch) {
+    if (patch && patch.metric != null) {
+      state.metric = normalizeMetric(patch.metric);
+      persistMetric();
+    }
+    if (patch && patch.sort != null) {
+      state.sort = patch.sort === 'median' ? 'median' : 'chain';
+    }
+    renderToolbar();
+    renderChart();
+  }
+
+  function renderToolbar() {
+    if (!lastOpts) return;
+    var opts = lastOpts;
     var wrap = opts.container && opts.container.closest
       ? opts.container.closest('.valuation-wrap')
       : null;
@@ -369,7 +419,7 @@
     var labels = labelsFor(opts);
     toolbar.innerHTML = '';
 
-    function addSegRow(title, items, isActive, onClick) {
+    function addSegRow(title, items, kind) {
       var row = document.createElement('div');
       row.className = 'valuation-seg-row';
       var tit = document.createElement('span');
@@ -382,8 +432,19 @@
         var b = document.createElement('button');
         b.type = 'button';
         b.textContent = it.label;
-        if (isActive(it.id)) b.classList.add('active');
-        b.addEventListener('click', function () { onClick(it.id); });
+        if (kind === 'metric') {
+          b.setAttribute('data-metric', it.id);
+          if (it.id === state.metric) b.classList.add('active');
+          b.addEventListener('click', function () {
+            setState({ metric: it.id });
+          });
+        } else {
+          b.setAttribute('data-sort', it.id);
+          if (it.id === state.sort) b.classList.add('active');
+          b.addEventListener('click', function () {
+            setState({ sort: it.id });
+          });
+        }
         seg.appendChild(b);
       });
       row.appendChild(seg);
@@ -395,11 +456,7 @@
       METRICS.map(function (m) {
         return { id: m, label: metricButtonLabel(m, labels) };
       }),
-      function (id) { return id === selectedMetric; },
-      function (id) {
-        saveMetric(id);
-        if (lastOpts) draw(lastOpts);
-      },
+      'metric',
     );
     addSegRow(
       labels.groupSort,
@@ -407,12 +464,9 @@
         { id: 'chain', label: labels.sortChain },
         { id: 'median', label: labels.sortMedian },
       ],
-      function (id) { return id === selectedSort; },
-      function (id) {
-        saveSort(id);
-        if (lastOpts) draw(lastOpts);
-      },
+      'sort',
     );
+    assertToolbarActive(toolbar);
   }
 
   function syncBasisBadge(snapshot, labels, liveSession) {
@@ -466,12 +520,59 @@
       function () {
         var tab = document.getElementById('tab-valuation');
         if (!tab || !tab.classList.contains('active')) return;
-        if (lastOpts) draw(lastOpts);
+        if (lastOpts) renderChart();
       },
     );
   }
 
-  function draw(opts) {
+  function measureTextWidth(text, fontSize) {
+    if (typeof document === 'undefined') {
+      return Math.ceil(String(text || '').length * (fontSize || 10) * 0.7);
+    }
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '0');
+    svg.setAttribute('height', '0');
+    svg.style.cssText = 'position:absolute;left:-9999px;top:-9999px;visibility:hidden';
+    var t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('font-size', String(fontSize || 10));
+    t.textContent = text || '';
+    svg.appendChild(t);
+    document.body.appendChild(svg);
+    var w = 0;
+    try {
+      w = t.getBBox().width;
+    } catch (e) {
+      w = String(text || '').length * (fontSize || 10) * 0.7;
+    }
+    document.body.removeChild(svg);
+    return Math.ceil(w) || Math.ceil(String(text || '').length * (fontSize || 10) * 0.7);
+  }
+
+  function measureContainerWidth(container, attempt, done) {
+    attempt = attempt || 0;
+    var raf =
+      typeof global.requestAnimationFrame === 'function'
+        ? global.requestAnimationFrame.bind(global)
+        : function (fn) { return setTimeout(fn, 16); };
+    raf(function () {
+      var tab = document.getElementById('tab-valuation');
+      var visible = !tab || tab.classList.contains('active') || tab.offsetParent !== null;
+      var rect = container.getBoundingClientRect ? container.getBoundingClientRect() : { width: 0 };
+      var w = Math.floor(rect.width || container.clientWidth || 0);
+      if ((!visible || w <= 0) && attempt < 12) {
+        if (widthRetryTimer) clearTimeout(widthRetryTimer);
+        widthRetryTimer = setTimeout(function () {
+          measureContainerWidth(container, attempt + 1, done);
+        }, 32);
+        return;
+      }
+      done(w > 0 ? w : 640);
+    });
+  }
+
+  function renderChart() {
+    if (!lastOpts) return;
+    var opts = lastOpts;
     var container = opts.container;
     if (!container || typeof d3 === 'undefined') return;
     var labels = labelsFor(opts);
@@ -496,7 +597,9 @@
         container.innerHTML = '';
         var live = sessionOpenNow();
         syncBasisBadge(snapshot, labels, live);
-        paint(container, companies, snapshot, opts, labels, live);
+        measureContainerWidth(container, 0, function (width) {
+          paint(container, companies, snapshot, opts, labels, live, width);
+        });
       })
       .catch(function () {
         container.innerHTML = '';
@@ -509,9 +612,10 @@
       });
   }
 
-  function paint(container, companies, snapshot, opts, labels, liveSession) {
+  function paint(container, companies, snapshot, opts, labels, liveSession, width) {
     var quotes = (snapshot && snapshot.quotes) || {};
-    var metric = selectedMetric;
+    var metric = state.metric;
+    lastChart.metric = metric;
     var lang = opts.lang === 'en' ? 'en' : 'ko';
 
     var marketVals = [];
@@ -568,7 +672,7 @@
       return { chain: ch, items: items, median: groupMedian(vals) };
     });
 
-    if (selectedSort === 'median') {
+    if (state.sort === 'median') {
       groups.sort(function (a, b) {
         var am = a.median == null ? Infinity : a.median;
         var bm = b.median == null ? Infinity : b.median;
@@ -576,12 +680,10 @@
       });
     }
 
-    var rect = container.getBoundingClientRect();
-    var width = Math.floor(rect.width || container.clientWidth || 0) || 640;
     var bandH = 44;
     var labelW = Math.min(140, Math.floor(width * 0.22));
-    var naW = 72;
-    var margin = { top: 32, right: 12, bottom: 28, left: labelW };
+    var naW = measureTextWidth(labels.naDeficit, 10) + 16;
+    var margin = { top: 32, right: 24, bottom: 28, left: labelW };
     var innerW = Math.max(80, width - margin.left - margin.right - naW);
     var height = margin.top + margin.bottom + groups.length * bandH;
 
@@ -601,8 +703,10 @@
     var svg = d3
       .select(container)
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
+      .attr('viewBox', '0 0 ' + width + ' ' + height)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('width', '100%')
+      .style('height', 'auto')
       .attr('role', 'img')
       .attr('aria-label', labels.title);
 
@@ -645,13 +749,13 @@
     });
 
     var tickVals =
-      metric === 'dvdYld'
+      metric === 'dvd'
         ? [0, 2, 4, 6, 8, 10, 12]
         : metric === 'pbr'
           ? [0.1, 0.3, 0.5, 1, 2, 5, 10, 20]
           : [0.5, 1, 2, 5, 10, 20, 50, 100, 200];
     var axis = d3.axisBottom(x).tickValues(tickVals).tickFormat(function (v) {
-      return metric === 'dvdYld' ? v + '%' : String(v);
+      return metric === 'dvd' ? v + '%' : String(v);
     });
     gRoot
       .append('g')
@@ -717,7 +821,7 @@
         var cx;
         var cy = yMid + (Math.random() - 0.5) * 10;
         if (d.plottable) cx = x(d.value);
-        else cx = innerW + 16 + Math.random() * (naW - 28);
+        else cx = innerW + 16 + Math.random() * Math.max(8, naW - 28);
         var r = d.mcap > 0 ? rScale(d.mcap) : 4;
         var circle = gRoot
           .append('circle')
@@ -808,7 +912,7 @@
       '<br>' +
       labels.tipDvd +
       ': ' +
-      formatMetric(q.dvdYld, 'dvdYld') +
+      formatMetric(q.dvdYld, 'dvd') +
       '% · ' +
       (liveSession ? labels.tipLast : labels.tipClose) +
       ': ' +
@@ -831,12 +935,31 @@
 
   function moveTip(ev) {
     if (!tipEl) return;
-    tipEl.style.left = (ev.clientX || 0) + 12 + 'px';
-    tipEl.style.top = (ev.clientY || 0) + 12 + 'px';
+    var tipW = tipEl.offsetWidth || 260;
+    var tipH = tipEl.offsetHeight || 80;
+    var vw = typeof global.innerWidth === 'number' ? global.innerWidth : 1920;
+    var vh = typeof global.innerHeight === 'number' ? global.innerHeight : 1080;
+    var pos = clampTip({
+      x: ev.clientX || 0,
+      y: ev.clientY || 0,
+      w: tipW,
+      h: tipH,
+      vw: vw,
+      vh: vh,
+    });
+    tipEl.style.left = pos.left + 'px';
+    tipEl.style.top = pos.top + 'px';
   }
 
   function hideTip() {
     if (tipEl) tipEl.style.display = 'none';
+  }
+
+  function scheduleRerender() {
+    if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (lastOpts) renderChart();
+    }, 150);
   }
 
   function observeContainer(el) {
@@ -845,35 +968,55 @@
     if (resizeObs) resizeObs.disconnect();
     observedEl = el;
     resizeObs = new ResizeObserver(function () {
-      if (resizeTimer) clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        if (lastOpts) draw(lastOpts);
-      }, 120);
+      scheduleRerender();
     });
     resizeObs.observe(el);
+  }
+
+  function bindWindowResize() {
+    if (winResizeBound || typeof global.addEventListener !== 'function') return;
+    winResizeBound = true;
+    global.addEventListener('resize', scheduleRerender);
+  }
+
+  /**
+   * Pure-ish sync helper for verify (no jsdom required).
+   * Sets state.metric and returns active label + chart.metric as if toolbar/chart re-rendered.
+   */
+  function simulateMetricSelect(metricId, opts) {
+    state.metric = normalizeMetric(metricId);
+    lastChart.metric = state.metric;
+    var labels = labelsFor(opts || { lang: 'ko' });
+    return {
+      state: { metric: state.metric, sort: state.sort },
+      activeLabel: metricButtonLabel(state.metric, labels),
+      chart: { metric: lastChart.metric },
+    };
   }
 
   function render(opts) {
     opts = opts || {};
     if (!opts.container) return;
     lastOpts = opts;
-    selectedMetric = loadMetric();
-    selectedSort = loadSort();
+    loadMetricOnce();
     injectStyles();
-    ensureChrome(opts);
+    renderToolbar();
     observeContainer(opts.container);
+    bindWindowResize();
     registerLiveTick();
-    draw(opts);
+    renderChart();
   }
 
   global.InvestingMapValuation = {
     render: render,
     getMetric: function () {
-      return selectedMetric;
+      return state.metric;
     },
     setMetric: function (m) {
-      saveMetric(m);
-      if (lastOpts) draw(lastOpts);
+      setState({ metric: m });
+    },
+    getState: function () {
+      return { metric: state.metric, sort: state.sort };
     },
     _test: {
       percentile: percentile,
@@ -882,6 +1025,16 @@
       marketMetricValue: marketMetricValue,
       formatMetric: formatMetric,
       normalizeMetric: normalizeMetric,
+      clampTip: clampTip,
+      simulateMetricSelect: simulateMetricSelect,
+      METRICS: METRICS,
+      METRIC_STORAGE: METRIC_STORAGE,
+      getState: function () {
+        return { metric: state.metric, sort: state.sort };
+      },
+      getChart: function () {
+        return { metric: lastChart.metric };
+      },
     },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

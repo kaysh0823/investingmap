@@ -125,6 +125,36 @@ assert.ok(/resolveDisplay/.test(mapJs), 'map_valuation resolveDisplay');
 assert.ok(/groupMetric/.test(mapJs), 'map_valuation segmented groupMetric');
 assert.ok(!/ \|\| 'Div'/.test(mapJs), 'map_valuation must not fall back to bare Div');
 assert.ok(/isUsableLabel|!== 'undefined'/.test(mapJs), 'map_valuation null-guards labels');
+assert.ok(/im\.valuation\.metric/.test(mapJs), 'map_valuation uses im.valuation.metric storage');
+assert.ok(/function clampTip/.test(mapJs), 'map_valuation exports clampTip');
+assert.ok(/viewBox/.test(mapJs), 'map_valuation uses SVG viewBox');
+
+// Pure unit tests (no jsdom) — load IIFE into a sandbox.
+{
+  const { createContext, runInContext } = await import('node:vm');
+  const sandbox = {
+    console,
+    setTimeout,
+    clearTimeout,
+    requestAnimationFrame: (fn) => setTimeout(fn, 0),
+  };
+  sandbox.window = sandbox;
+  sandbox.globalThis = sandbox;
+  createContext(sandbox);
+  runInContext(mapJs, sandbox);
+  const Val = sandbox.InvestingMapValuation;
+  assert.ok(Val && Val._test, 'InvestingMapValuation._test available');
+
+  const tip = Val._test.clampTip({ x: 1900, w: 260, vw: 1920 });
+  assert.ok(tip.left <= 1652, `clampTip left=${tip.left} must be ≤ 1652`);
+  console.log(`  unit clampTip left=${tip.left} (≤1652) ok`);
+
+  const sim = Val._test.simulateMetricSelect('dvd', { lang: 'ko' });
+  assert.equal(sim.state.metric, 'dvd', 'state.metric after dvd select');
+  assert.equal(sim.activeLabel, '배당수익률', 'active button label for dvd');
+  assert.equal(sim.chart.metric, 'dvd', 'chart.metric after dvd select');
+  console.log('  unit metric=dvd → 배당수익률 + chart.metric=dvd ok');
+}
 
 assert.ok(
   fs.existsSync(path.join(ROOT, 'scripts', 'build_hub_valuation_snapshot.mjs')),
