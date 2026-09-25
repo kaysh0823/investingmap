@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 5;
+const SCRIPT_V = 6;
 const TAB_STATE_V = 13;
 
 const MAP_FILES = [

@@ -1,5 +1,5 @@
 /**
- * Valuation comparison v5 — chain-group PER TTM / FY / PBR / dividend strip.
+ * Valuation comparison v6 — chain-group PER TTM / FY / PBR / dividend strip.
  * Snapshot: /data/hub_valuation_snapshot.json (KRX FY + Naver TTM for hub).
  */
 (function (global) {
@@ -316,9 +316,10 @@
     var loBound = isPbr ? [0.1, 2] : [0.3, 5];
     var hiBound = isPbr ? [3, 50] : [20, 1000];
     var q05 = vals.length ? quantileAsc(vals, 0.05) : isPbr ? 0.5 : 1;
-    var vmax = vals.length ? vals[vals.length - 1] : hiBound[0];
+    var q95 = vals.length ? quantileAsc(vals, 0.95) : hiBound[0];
     var lo = clampNum(q05 / 1.25, loBound[0], loBound[1]);
-    var hi = clampNum(vmax * 1.15, hiBound[0], hiBound[1]);
+    // Cap on upper quantile (not raw max) so a few extreme PER/PBR don't stretch the axis.
+    var hi = clampNum(q95 * 1.6, hiBound[0], hiBound[1]);
 
     [marketPct.p25, marketPct.p50, marketPct.p75].forEach(function (p) {
       if (p != null && isFinite(p) && p > 0) {
