@@ -395,6 +395,226 @@
    "chain": "end_customer",
    "role": "의료기기",
    "exchange": "NYSE:SYK"
+  },
+  {
+   "id": "global:universal_robots",
+   "type": "global",
+   "nameKo": "유니버설로봇",
+   "nameEn": "Universal Robots (Teradyne)",
+   "country": "eu",
+   "chain": "global_robot",
+   "role": "협동로봇 1위",
+   "exchange": "NASDAQ:TER"
+  },
+  {
+   "id": "global:fanuc",
+   "type": "global",
+   "nameKo": "화낙",
+   "nameEn": "FANUC",
+   "country": "jp",
+   "chain": "global_robot",
+   "role": "산업용 로봇",
+   "exchange": "TSE:6954"
+  },
+  {
+   "id": "global:abb",
+   "type": "global",
+   "nameKo": "ABB",
+   "nameEn": "ABB Robotics",
+   "country": "eu",
+   "chain": "global_robot",
+   "role": "산업용·협동로봇",
+   "exchange": "SIX:ABBN"
+  },
+  {
+   "id": "global:kuka",
+   "type": "global",
+   "nameKo": "쿠카",
+   "nameEn": "KUKA (Midea)",
+   "country": "eu",
+   "chain": "global_robot",
+   "role": "산업용 로봇",
+   "exchange": ""
+  },
+  {
+   "id": "global:techman",
+   "type": "global",
+   "nameKo": "테크맨",
+   "nameEn": "Techman Robot",
+   "country": "tw",
+   "chain": "global_robot",
+   "role": "협동로봇",
+   "exchange": "TWSE:4585"
+  },
+  {
+   "id": "global:aubo",
+   "type": "global",
+   "nameKo": "아우보",
+   "nameEn": "AUBO Robotics",
+   "country": "cn",
+   "chain": "global_robot",
+   "role": "협동로봇",
+   "exchange": ""
+  },
+  {
+   "id": "global:yaskawa",
+   "type": "global",
+   "nameKo": "야스카와",
+   "nameEn": "Yaskawa Electric",
+   "country": "jp",
+   "chain": "global_robot",
+   "role": "서보·산업용 로봇 (서보 1위)",
+   "exchange": "TSE:6506"
+  },
+  {
+   "id": "global:harmonic_drive",
+   "type": "global",
+   "nameKo": "하모닉드라이브",
+   "nameEn": "Harmonic Drive Systems",
+   "country": "jp",
+   "chain": "actuator",
+   "role": "하모닉 감속기 1위",
+   "exchange": "TSE:6324"
+  },
+  {
+   "id": "global:nabtesco",
+   "type": "global",
+   "nameKo": "나브테스코",
+   "nameEn": "Nabtesco",
+   "country": "jp",
+   "chain": "actuator",
+   "role": "RV 감속기 1위 (60%)",
+   "exchange": "TSE:6268"
+  },
+  {
+   "id": "global:leaderdrive",
+   "type": "global",
+   "nameKo": "리더드라이브",
+   "nameEn": "Leaderdrive",
+   "country": "cn",
+   "chain": "actuator",
+   "role": "하모닉 감속기",
+   "exchange": "SSE:688017"
+  },
+  {
+   "id": "global:maxon",
+   "type": "global",
+   "nameKo": "맥슨",
+   "nameEn": "maxon",
+   "country": "eu",
+   "chain": "actuator",
+   "role": "정밀 모터",
+   "exchange": ""
+  },
+  {
+   "id": "global:mitsubishi_elec",
+   "type": "global",
+   "nameKo": "미쓰비시전기",
+   "nameEn": "Mitsubishi Electric",
+   "country": "jp",
+   "chain": "actuator",
+   "role": "서보모터",
+   "exchange": "TSE:6503"
+  },
+  {
+   "id": "global:daifuku",
+   "type": "global",
+   "nameKo": "다이후쿠",
+   "nameEn": "Daifuku",
+   "country": "jp",
+   "chain": "si",
+   "role": "물류자동화 1위권",
+   "exchange": "TSE:6383"
+  },
+  {
+   "id": "global:dematic",
+   "type": "global",
+   "nameKo": "디매틱(KION)",
+   "nameEn": "Dematic (KION)",
+   "country": "eu",
+   "chain": "si",
+   "role": "물류자동화",
+   "exchange": "XETRA:KGX"
+  },
+  {
+   "id": "global:symbotic",
+   "type": "global",
+   "nameKo": "심보틱",
+   "nameEn": "Symbotic",
+   "country": "us",
+   "chain": "si",
+   "role": "창고 로봇",
+   "exchange": "NASDAQ:SYM"
+  },
+  {
+   "id": "global:autostore",
+   "type": "global",
+   "nameKo": "오토스토어",
+   "nameEn": "AutoStore",
+   "country": "eu",
+   "chain": "si",
+   "role": "큐브 스토리지",
+   "exchange": "OSL:AUTO"
+  },
+  {
+   "id": "global:geekplus",
+   "type": "global",
+   "nameKo": "긱플러스",
+   "nameEn": "Geek+",
+   "country": "cn",
+   "chain": "si",
+   "role": "AMR",
+   "exchange": "HKEX:2590"
+  },
+  {
+   "id": "global:locus",
+   "type": "global",
+   "nameKo": "로커스",
+   "nameEn": "Locus Robotics",
+   "country": "us",
+   "chain": "si",
+   "role": "AMR",
+   "exchange": ""
+  },
+  {
+   "id": "global:ekso",
+   "type": "global",
+   "nameKo": "엑소바이오닉스",
+   "nameEn": "Ekso Bionics",
+   "country": "us",
+   "chain": "robot",
+   "role": "웨어러블 로봇 1위 (17%)",
+   "exchange": "NASDAQ:EKSO"
+  },
+  {
+   "id": "global:rewalk",
+   "type": "global",
+   "nameKo": "리워크(라이프워드)",
+   "nameEn": "ReWalk (Lifeward)",
+   "country": "us",
+   "chain": "robot",
+   "role": "웨어러블 로봇",
+   "exchange": "NASDAQ:LFWD"
+  },
+  {
+   "id": "global:cyberdyne",
+   "type": "global",
+   "nameKo": "사이버다인",
+   "nameEn": "Cyberdyne",
+   "country": "jp",
+   "chain": "robot",
+   "role": "웨어러블 로봇",
+   "exchange": "TSE:7779"
+  },
+  {
+   "id": "global:ottobock",
+   "type": "global",
+   "nameKo": "오토복",
+   "nameEn": "Ottobock",
+   "country": "eu",
+   "chain": "robot",
+   "role": "웨어러블·의족",
+   "exchange": "XETRA:OBO"
   }
  ],
  "edges": [
@@ -940,6 +1160,874 @@
    "evidence": [
     {
      "url": "https://stockstalker.co.kr/hyundai-robot/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_universal_robots",
+   "source": "krx:454910",
+   "target": "global:universal_robots",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_fanuc",
+   "source": "krx:454910",
+   "target": "global:fanuc",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_abb",
+   "source": "krx:454910",
+   "target": "global:abb",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_kuka",
+   "source": "krx:454910",
+   "target": "global:kuka",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_techman",
+   "source": "krx:454910",
+   "target": "global:techman",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_aubo",
+   "source": "krx:454910",
+   "target": "global:aubo",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_yaskawa",
+   "source": "krx:454910",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>global_universal_robots",
+   "source": "krx:277810",
+   "target": "global:universal_robots",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>global_fanuc",
+   "source": "krx:277810",
+   "target": "global:fanuc",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>global_abb",
+   "source": "krx:277810",
+   "target": "global:abb",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>global_kuka",
+   "source": "krx:277810",
+   "target": "global:kuka",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>global_techman",
+   "source": "krx:277810",
+   "target": "global:techman",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>global_aubo",
+   "source": "krx:277810",
+   "target": "global:aubo",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>global_yaskawa",
+   "source": "krx:277810",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348340>global_universal_robots",
+   "source": "krx:348340",
+   "target": "global:universal_robots",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348340>global_fanuc",
+   "source": "krx:348340",
+   "target": "global:fanuc",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348340>global_abb",
+   "source": "krx:348340",
+   "target": "global:abb",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348340>global_kuka",
+   "source": "krx:348340",
+   "target": "global:kuka",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348340>global_techman",
+   "source": "krx:348340",
+   "target": "global:techman",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348340>global_aubo",
+   "source": "krx:348340",
+   "target": "global:aubo",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348340>global_yaskawa",
+   "source": "krx:348340",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090360>global_fanuc",
+   "source": "krx:090360",
+   "target": "global:fanuc",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090360>global_abb",
+   "source": "krx:090360",
+   "target": "global:abb",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090360>global_kuka",
+   "source": "krx:090360",
+   "target": "global:kuka",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090360>global_yaskawa",
+   "source": "krx:090360",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388720>global_fanuc",
+   "source": "krx:388720",
+   "target": "global:fanuc",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388720>global_abb",
+   "source": "krx:388720",
+   "target": "global:abb",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388720>global_kuka",
+   "source": "krx:388720",
+   "target": "global:kuka",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388720>global_yaskawa",
+   "source": "krx:388720",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090710>global_fanuc",
+   "source": "krx:090710",
+   "target": "global:fanuc",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090710>global_abb",
+   "source": "krx:090710",
+   "target": "global:abb",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090710>global_kuka",
+   "source": "krx:090710",
+   "target": "global:kuka",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090710>global_yaskawa",
+   "source": "krx:090710",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "산업용 로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2025/07/09/3112356/0/en/Collaborative-Robot-Market-Analysis-Report-2025-2030-with-Universal-Robots-FANUC-ABB-Techman-Robot-Aubo-Robotics-Technology-Co-and-Kuka-Leading.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_058610>global_harmonic_drive",
+   "source": "krx:058610",
+   "target": "global:harmonic_drive",
+   "type": "peer",
+   "labelKo": "로봇 감속기 경쟁 (하모닉·RV)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://nextfinancial.substack.com/p/the-joint-problem-who-owns-the-most",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_058610>global_nabtesco",
+   "source": "krx:058610",
+   "target": "global:nabtesco",
+   "type": "peer",
+   "labelKo": "로봇 감속기 경쟁 (하모닉·RV)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://nextfinancial.substack.com/p/the-joint-problem-who-owns-the-most",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_058610>global_leaderdrive",
+   "source": "krx:058610",
+   "target": "global:leaderdrive",
+   "type": "peer",
+   "labelKo": "로봇 감속기 경쟁 (하모닉·RV)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://nextfinancial.substack.com/p/the-joint-problem-who-owns-the-most",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_160190>global_yaskawa",
+   "source": "krx:160190",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_160190>global_maxon",
+   "source": "krx:160190",
+   "target": "global:maxon",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_160190>global_mitsubishi_elec",
+   "source": "krx:160190",
+   "target": "global:mitsubishi_elec",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108490>global_yaskawa",
+   "source": "krx:108490",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108490>global_maxon",
+   "source": "krx:108490",
+   "target": "global:maxon",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108490>global_mitsubishi_elec",
+   "source": "krx:108490",
+   "target": "global:mitsubishi_elec",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_437730>global_yaskawa",
+   "source": "krx:437730",
+   "target": "global:yaskawa",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_437730>global_maxon",
+   "source": "krx:437730",
+   "target": "global:maxon",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_437730>global_mitsubishi_elec",
+   "source": "krx:437730",
+   "target": "global:mitsubishi_elec",
+   "type": "peer",
+   "labelKo": "서보모터·액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/servo-motors-and-drives-market-1127.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319400>global_daifuku",
+   "source": "krx:319400",
+   "target": "global:daifuku",
+   "type": "peer",
+   "labelKo": "물류자동화·AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319400>global_dematic",
+   "source": "krx:319400",
+   "target": "global:dematic",
+   "type": "peer",
+   "labelKo": "물류자동화·AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319400>global_symbotic",
+   "source": "krx:319400",
+   "target": "global:symbotic",
+   "type": "peer",
+   "labelKo": "물류자동화·AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319400>global_autostore",
+   "source": "krx:319400",
+   "target": "global:autostore",
+   "type": "peer",
+   "labelKo": "물류자동화·AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319400>global_geekplus",
+   "source": "krx:319400",
+   "target": "global:geekplus",
+   "type": "peer",
+   "labelKo": "물류자동화·AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319400>global_locus",
+   "source": "krx:319400",
+   "target": "global:locus",
+   "type": "peer",
+   "labelKo": "물류자동화·AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_455900>global_ekso",
+   "source": "krx:455900",
+   "target": "global:ekso",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_455900>global_rewalk",
+   "source": "krx:455900",
+   "target": "global:rewalk",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_455900>global_cyberdyne",
+   "source": "krx:455900",
+   "target": "global:cyberdyne",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_455900>global_ottobock",
+   "source": "krx:455900",
+   "target": "global:ottobock",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_439960>global_ekso",
+   "source": "krx:439960",
+   "target": "global:ekso",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_439960>global_rewalk",
+   "source": "krx:439960",
+   "target": "global:rewalk",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_439960>global_cyberdyne",
+   "source": "krx:439960",
+   "target": "global:cyberdyne",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_439960>global_ottobock",
+   "source": "krx:439960",
+   "target": "global:ottobock",
+   "type": "peer",
+   "labelKo": "웨어러블 로봇 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/wearable-robotic-exoskeleton-market-22855",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_056080>global_daifuku",
+   "source": "krx:056080",
+   "target": "global:daifuku",
+   "type": "peer",
+   "labelKo": "물류 AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_056080>global_geekplus",
+   "source": "krx:056080",
+   "target": "global:geekplus",
+   "type": "peer",
+   "labelKo": "물류 AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_056080>global_locus",
+   "source": "krx:056080",
+   "target": "global:locus",
+   "type": "peer",
+   "labelKo": "물류 AMR 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/warehouse-automation-market",
      "accessedAt": "2026-09-25"
     }
    ]

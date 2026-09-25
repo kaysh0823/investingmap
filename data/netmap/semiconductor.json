@@ -1590,6 +1590,436 @@
    "chain": "fabless",
    "role": "AI 반도체 (비상장)",
    "exchange": ""
+  },
+  {
+   "id": "global:formfactor",
+   "type": "global",
+   "nameKo": "폼팩터",
+   "nameEn": "FormFactor",
+   "country": "us",
+   "chain": "test_parts",
+   "role": "프로브카드 1위",
+   "exchange": "NASDAQ:FORM"
+  },
+  {
+   "id": "global:technoprobe",
+   "type": "global",
+   "nameKo": "테크노프로브",
+   "nameEn": "Technoprobe",
+   "country": "eu",
+   "chain": "test_parts",
+   "role": "프로브카드",
+   "exchange": "BIT:TPRO"
+  },
+  {
+   "id": "global:mjc",
+   "type": "global",
+   "nameKo": "MJC",
+   "nameEn": "Micronics Japan",
+   "country": "jp",
+   "chain": "test_parts",
+   "role": "프로브카드",
+   "exchange": "TSE:6871"
+  },
+  {
+   "id": "global:cohu",
+   "type": "global",
+   "nameKo": "코휴",
+   "nameEn": "Cohu",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "테스트 핸들러·소켓",
+   "exchange": "NASDAQ:COHU"
+  },
+  {
+   "id": "global:yamaichi",
+   "type": "global",
+   "nameKo": "야마이치",
+   "nameEn": "Yamaichi Electronics",
+   "country": "jp",
+   "chain": "test_parts",
+   "role": "테스트 소켓",
+   "exchange": "TSE:6941"
+  },
+  {
+   "id": "global:jsr",
+   "type": "global",
+   "nameKo": "JSR",
+   "nameEn": "JSR",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "포토레지스트",
+   "exchange": ""
+  },
+  {
+   "id": "global:tok",
+   "type": "global",
+   "nameKo": "TOK",
+   "nameEn": "Tokyo Ohka Kogyo",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "포토레지스트",
+   "exchange": "TSE:4186"
+  },
+  {
+   "id": "global:shin_etsu",
+   "type": "global",
+   "nameKo": "신에츠화학",
+   "nameEn": "Shin-Etsu Chemical",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "PR·웨이퍼·쿼츠",
+   "exchange": "TSE:4063"
+  },
+  {
+   "id": "global:fujifilm",
+   "type": "global",
+   "nameKo": "후지필름",
+   "nameEn": "Fujifilm",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "포토레지스트",
+   "exchange": "TSE:4901"
+  },
+  {
+   "id": "global:dupont",
+   "type": "global",
+   "nameKo": "듀폰",
+   "nameEn": "DuPont (Qnity)",
+   "country": "us",
+   "chain": "process_mat",
+   "role": "PR·CMP 소재",
+   "exchange": "NYSE:DD"
+  },
+  {
+   "id": "global:entegris",
+   "type": "global",
+   "nameKo": "엔테그리스",
+   "nameEn": "Entegris",
+   "country": "us",
+   "chain": "process_mat",
+   "role": "CMP 슬러리 1위·필터",
+   "exchange": "NASDAQ:ENTG"
+  },
+  {
+   "id": "global:fujimi",
+   "type": "global",
+   "nameKo": "후지미",
+   "nameEn": "Fujimi",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "CMP 슬러리",
+   "exchange": "TSE:5384"
+  },
+  {
+   "id": "global:resonac",
+   "type": "global",
+   "nameKo": "레조낙",
+   "nameEn": "Resonac",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "CMP 슬러리·소재",
+   "exchange": "TSE:4004"
+  },
+  {
+   "id": "global:tongfu",
+   "type": "global",
+   "nameKo": "통푸",
+   "nameEn": "Tongfu Microelectronics",
+   "country": "cn",
+   "chain": "osat",
+   "role": "OSAT",
+   "exchange": "SZSE:002156"
+  },
+  {
+   "id": "global:pti",
+   "type": "global",
+   "nameKo": "PTI",
+   "nameEn": "Powertech Technology",
+   "country": "tw",
+   "chain": "osat",
+   "role": "OSAT (메모리)",
+   "exchange": "TWSE:6239"
+  },
+  {
+   "id": "global:huatian",
+   "type": "global",
+   "nameKo": "화톈",
+   "nameEn": "Hua Tian Technology",
+   "country": "cn",
+   "chain": "osat",
+   "role": "OSAT",
+   "exchange": "SZSE:002185"
+  },
+  {
+   "id": "global:changchuan",
+   "type": "global",
+   "nameKo": "창촨",
+   "nameEn": "Changchuan Technology",
+   "country": "cn",
+   "chain": "inspect_metro",
+   "role": "테스트 핸들러",
+   "exchange": "SZSE:300604"
+  },
+  {
+   "id": "global:asm_intl",
+   "type": "global",
+   "nameKo": "ASM인터내셔널",
+   "nameEn": "ASM International",
+   "country": "eu",
+   "chain": "front_equip",
+   "role": "ALD 장비",
+   "exchange": "AMS:ASM"
+  },
+  {
+   "id": "global:screen",
+   "type": "global",
+   "nameKo": "스크린",
+   "nameEn": "SCREEN Holdings",
+   "country": "jp",
+   "chain": "front_equip",
+   "role": "세정 장비",
+   "exchange": "TSE:7735"
+  },
+  {
+   "id": "global:hitachi_ht",
+   "type": "global",
+   "nameKo": "히타치하이테크",
+   "nameEn": "Hitachi High-Tech",
+   "country": "jp",
+   "chain": "inspect_metro",
+   "role": "검사·계측",
+   "exchange": ""
+  },
+  {
+   "id": "global:onto",
+   "type": "global",
+   "nameKo": "온토",
+   "nameEn": "Onto Innovation",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "검사·계측",
+   "exchange": "NYSE:ONTO"
+  },
+  {
+   "id": "global:camtek",
+   "type": "global",
+   "nameKo": "캠텍",
+   "nameEn": "Camtek",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "패키징 검사",
+   "exchange": "NASDAQ:CAMT"
+  },
+  {
+   "id": "global:kinsus",
+   "type": "global",
+   "nameKo": "킨서스",
+   "nameEn": "Kinsus Interconnect",
+   "country": "tw",
+   "chain": "substrate",
+   "role": "BT 기판",
+   "exchange": "TWSE:3189"
+  },
+  {
+   "id": "global:phison",
+   "type": "global",
+   "nameKo": "파이슨",
+   "nameEn": "Phison",
+   "country": "tw",
+   "chain": "fabless",
+   "role": "SSD 컨트롤러",
+   "exchange": "TWSE:8299"
+  },
+  {
+   "id": "global:silicon_motion",
+   "type": "global",
+   "nameKo": "실리콘모션",
+   "nameEn": "Silicon Motion",
+   "country": "tw",
+   "chain": "fabless",
+   "role": "SSD 컨트롤러",
+   "exchange": "NASDAQ:SIMO"
+  },
+  {
+   "id": "global:marvell",
+   "type": "global",
+   "nameKo": "마벨",
+   "nameEn": "Marvell",
+   "country": "us",
+   "chain": "fabless",
+   "role": "SSD 컨트롤러·네트워크",
+   "exchange": "NASDAQ:MRVL"
+  },
+  {
+   "id": "global:vanguard",
+   "type": "global",
+   "nameKo": "뱅가드",
+   "nameEn": "Vanguard International",
+   "country": "tw",
+   "chain": "foundry",
+   "role": "8인치 파운드리",
+   "exchange": "TWSE:5347"
+  },
+  {
+   "id": "global:guc",
+   "type": "global",
+   "nameKo": "GUC",
+   "nameEn": "Global Unichip",
+   "country": "tw",
+   "chain": "design_house",
+   "role": "디자인하우스 (TSMC)",
+   "exchange": "TWSE:3443"
+  },
+  {
+   "id": "global:alchip",
+   "type": "global",
+   "nameKo": "알칩",
+   "nameEn": "Alchip",
+   "country": "tw",
+   "chain": "design_house",
+   "role": "디자인하우스",
+   "exchange": "TWSE:3661"
+  },
+  {
+   "id": "global:faraday",
+   "type": "global",
+   "nameKo": "패러데이",
+   "nameEn": "Faraday Technology",
+   "country": "tw",
+   "chain": "design_house",
+   "role": "디자인하우스 (UMC)",
+   "exchange": "TWSE:3035"
+  },
+  {
+   "id": "global:besi",
+   "type": "global",
+   "nameKo": "BESI",
+   "nameEn": "BE Semiconductor",
+   "country": "eu",
+   "chain": "pack_equip",
+   "role": "하이브리드 본더 (점유 67%)",
+   "exchange": "AMS:BESI"
+  },
+  {
+   "id": "global:asmpt",
+   "type": "global",
+   "nameKo": "ASMPT",
+   "nameEn": "ASMPT (싱가포르)",
+   "country": "cn",
+   "chain": "pack_equip",
+   "role": "TC 본더",
+   "exchange": "HKEX:0522"
+  },
+  {
+   "id": "global:hanwha_semitech",
+   "type": "kr_other",
+   "nameKo": "한화세미텍",
+   "nameEn": "Hanwha Semitech",
+   "country": "kr",
+   "chain": "pack_equip",
+   "role": "TC 본더 (비상장)",
+   "exchange": ""
+  },
+  {
+   "id": "global:shinkawa",
+   "type": "global",
+   "nameKo": "신카와",
+   "nameEn": "Shinkawa (Yamaha Robotics)",
+   "country": "jp",
+   "chain": "pack_equip",
+   "role": "TC 본더",
+   "exchange": ""
+  },
+  {
+   "id": "global:hoya",
+   "type": "global",
+   "nameKo": "호야",
+   "nameEn": "HOYA",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "EUV 블랭크마스크 (34%)",
+   "exchange": "TSE:7741"
+  },
+  {
+   "id": "global:agc",
+   "type": "global",
+   "nameKo": "AGC",
+   "nameEn": "AGC",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "EUV 블랭크마스크 (59%)·CMP",
+   "exchange": "TSE:5201"
+  },
+  {
+   "id": "global:mitsui_chem",
+   "type": "global",
+   "nameKo": "미쓰이화학",
+   "nameEn": "Mitsui Chemicals",
+   "country": "jp",
+   "chain": "process_mat",
+   "role": "EUV 펠리클 1위",
+   "exchange": "TSE:4183"
+  },
+  {
+   "id": "global:tokai_carbon",
+   "type": "global",
+   "nameKo": "도카이카본",
+   "nameEn": "Tokai Carbon",
+   "country": "jp",
+   "chain": "process_parts",
+   "role": "SiC 부품",
+   "exchange": "TSE:5301"
+  },
+  {
+   "id": "global:coorstek",
+   "type": "global",
+   "nameKo": "쿠어스텍",
+   "nameEn": "CoorsTek",
+   "country": "us",
+   "chain": "process_parts",
+   "role": "세라믹·SiC 부품",
+   "exchange": ""
+  },
+  {
+   "id": "global:ferrotec",
+   "type": "global",
+   "nameKo": "페로텍",
+   "nameEn": "Ferrotec",
+   "country": "jp",
+   "chain": "process_parts",
+   "role": "세라믹·실리콘 부품",
+   "exchange": "TSE:6890"
+  },
+  {
+   "id": "global:shin_etsu_quartz",
+   "type": "global",
+   "nameKo": "신에츠쿼츠",
+   "nameEn": "Shin-Etsu Quartz",
+   "country": "jp",
+   "chain": "process_parts",
+   "role": "쿼츠 부품",
+   "exchange": ""
+  },
+  {
+   "id": "global:heraeus",
+   "type": "global",
+   "nameKo": "헤레우스",
+   "nameEn": "Heraeus Conamic",
+   "country": "eu",
+   "chain": "process_parts",
+   "role": "쿼츠 부품",
+   "exchange": ""
+  },
+  {
+   "id": "global:teradyne",
+   "type": "global",
+   "nameKo": "테라다인",
+   "nameEn": "Teradyne",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "ATE (어드반테스트와 양강)",
+   "exchange": "NASDAQ:TER"
   }
  ],
  "edges": [
@@ -5663,6 +6093,2246 @@
    "evidence": [
     {
      "url": "https://www.micron.com/products/memory/hbm/hbm3e",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_058470>global_cohu",
+   "source": "krx:058470",
+   "target": "global:cohu",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_058470>global_yamaichi",
+   "source": "krx:058470",
+   "target": "global:yamaichi",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_095340>global_cohu",
+   "source": "krx:095340",
+   "target": "global:cohu",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_095340>global_yamaichi",
+   "source": "krx:095340",
+   "target": "global:yamaichi",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_425420>global_cohu",
+   "source": "krx:425420",
+   "target": "global:cohu",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_425420>global_yamaichi",
+   "source": "krx:425420",
+   "target": "global:yamaichi",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_080580>global_cohu",
+   "source": "krx:080580",
+   "target": "global:cohu",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_080580>global_yamaichi",
+   "source": "krx:080580",
+   "target": "global:yamaichi",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098120>global_cohu",
+   "source": "krx:098120",
+   "target": "global:cohu",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098120>global_yamaichi",
+   "source": "krx:098120",
+   "target": "global:yamaichi",
+   "type": "peer",
+   "labelKo": "테스트 소켓 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.oganalysis.com/industry-reports/semiconductor-test-socket-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_131290>global_formfactor",
+   "source": "krx:131290",
+   "target": "global:formfactor",
+   "type": "peer",
+   "labelKo": "프로브카드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/probe-cards-market-7555",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_131290>global_technoprobe",
+   "source": "krx:131290",
+   "target": "global:technoprobe",
+   "type": "peer",
+   "labelKo": "프로브카드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/probe-cards-market-7555",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_131290>global_mjc",
+   "source": "krx:131290",
+   "target": "global:mjc",
+   "type": "peer",
+   "labelKo": "프로브카드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/probe-cards-market-7555",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_252990>global_formfactor",
+   "source": "krx:252990",
+   "target": "global:formfactor",
+   "type": "peer",
+   "labelKo": "프로브카드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/probe-cards-market-7555",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_252990>global_technoprobe",
+   "source": "krx:252990",
+   "target": "global:technoprobe",
+   "type": "peer",
+   "labelKo": "프로브카드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/probe-cards-market-7555",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_252990>global_mjc",
+   "source": "krx:252990",
+   "target": "global:mjc",
+   "type": "peer",
+   "labelKo": "프로브카드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/probe-cards-market-7555",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005290>global_jsr",
+   "source": "krx:005290",
+   "target": "global:jsr",
+   "type": "peer",
+   "labelKo": "포토레지스트 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/photoresist-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005290>global_tok",
+   "source": "krx:005290",
+   "target": "global:tok",
+   "type": "peer",
+   "labelKo": "포토레지스트 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/photoresist-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005290>global_shin_etsu",
+   "source": "krx:005290",
+   "target": "global:shin_etsu",
+   "type": "peer",
+   "labelKo": "포토레지스트 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/photoresist-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005290>global_fujifilm",
+   "source": "krx:005290",
+   "target": "global:fujifilm",
+   "type": "peer",
+   "labelKo": "포토레지스트 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/photoresist-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005290>global_dupont",
+   "source": "krx:005290",
+   "target": "global:dupont",
+   "type": "peer",
+   "labelKo": "포토레지스트 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/photoresist-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_281820>global_entegris",
+   "source": "krx:281820",
+   "target": "global:entegris",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_281820>global_fujimi",
+   "source": "krx:281820",
+   "target": "global:fujimi",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_281820>global_resonac",
+   "source": "krx:281820",
+   "target": "global:resonac",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_281820>global_agc",
+   "source": "krx:281820",
+   "target": "global:agc",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_357780>global_entegris",
+   "source": "krx:357780",
+   "target": "global:entegris",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_357780>global_fujimi",
+   "source": "krx:357780",
+   "target": "global:fujimi",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_357780>global_resonac",
+   "source": "krx:357780",
+   "target": "global:resonac",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_357780>global_agc",
+   "source": "krx:357780",
+   "target": "global:agc",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_102710>global_entegris",
+   "source": "krx:102710",
+   "target": "global:entegris",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_102710>global_fujimi",
+   "source": "krx:102710",
+   "target": "global:fujimi",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_102710>global_resonac",
+   "source": "krx:102710",
+   "target": "global:resonac",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_102710>global_agc",
+   "source": "krx:102710",
+   "target": "global:agc",
+   "type": "peer",
+   "labelKo": "CMP 슬러리·공정소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_067310>global_ase",
+   "source": "krx:067310",
+   "target": "global:ase",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_067310>global_amkor",
+   "source": "krx:067310",
+   "target": "global:amkor",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_067310>global_jcet",
+   "source": "krx:067310",
+   "target": "global:jcet",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_067310>global_tongfu",
+   "source": "krx:067310",
+   "target": "global:tongfu",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_067310>global_pti",
+   "source": "krx:067310",
+   "target": "global:pti",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_067310>global_huatian",
+   "source": "krx:067310",
+   "target": "global:huatian",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036540>global_ase",
+   "source": "krx:036540",
+   "target": "global:ase",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036540>global_amkor",
+   "source": "krx:036540",
+   "target": "global:amkor",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036540>global_jcet",
+   "source": "krx:036540",
+   "target": "global:jcet",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036540>global_tongfu",
+   "source": "krx:036540",
+   "target": "global:tongfu",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036540>global_pti",
+   "source": "krx:036540",
+   "target": "global:pti",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036540>global_huatian",
+   "source": "krx:036540",
+   "target": "global:huatian",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033640>global_ase",
+   "source": "krx:033640",
+   "target": "global:ase",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033640>global_amkor",
+   "source": "krx:033640",
+   "target": "global:amkor",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033640>global_jcet",
+   "source": "krx:033640",
+   "target": "global:jcet",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033640>global_tongfu",
+   "source": "krx:033640",
+   "target": "global:tongfu",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033640>global_pti",
+   "source": "krx:033640",
+   "target": "global:pti",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033640>global_huatian",
+   "source": "krx:033640",
+   "target": "global:huatian",
+   "type": "peer",
+   "labelKo": "OSAT 경쟁 (TrendForce Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.trendforce.com/presscenter/news/20250513-12577.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089030>global_cohu",
+   "source": "krx:089030",
+   "target": "global:cohu",
+   "type": "peer",
+   "labelKo": "테스트 핸들러 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://reports.valuates.com/market-reports/QYRE-Auto-5L8031/global-and-china-semiconductor-test-handler",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089030>global_advantest",
+   "source": "krx:089030",
+   "target": "global:advantest",
+   "type": "peer",
+   "labelKo": "테스트 핸들러 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://reports.valuates.com/market-reports/QYRE-Auto-5L8031/global-and-china-semiconductor-test-handler",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089030>global_changchuan",
+   "source": "krx:089030",
+   "target": "global:changchuan",
+   "type": "peer",
+   "labelKo": "테스트 핸들러 경쟁 (상위 5사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://reports.valuates.com/market-reports/QYRE-Auto-5L8031/global-and-china-semiconductor-test-handler",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_240810>global_appmat",
+   "source": "krx:240810",
+   "target": "global:appmat",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_240810>global_lam",
+   "source": "krx:240810",
+   "target": "global:lam",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_240810>global_tokyo_electron",
+   "source": "krx:240810",
+   "target": "global:tokyo_electron",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_240810>global_asm_intl",
+   "source": "krx:240810",
+   "target": "global:asm_intl",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036930>global_appmat",
+   "source": "krx:036930",
+   "target": "global:appmat",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036930>global_lam",
+   "source": "krx:036930",
+   "target": "global:lam",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036930>global_tokyo_electron",
+   "source": "krx:036930",
+   "target": "global:tokyo_electron",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036930>global_asm_intl",
+   "source": "krx:036930",
+   "target": "global:asm_intl",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_084370>global_appmat",
+   "source": "krx:084370",
+   "target": "global:appmat",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_084370>global_lam",
+   "source": "krx:084370",
+   "target": "global:lam",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_084370>global_tokyo_electron",
+   "source": "krx:084370",
+   "target": "global:tokyo_electron",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_084370>global_asm_intl",
+   "source": "krx:084370",
+   "target": "global:asm_intl",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_095610>global_appmat",
+   "source": "krx:095610",
+   "target": "global:appmat",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_095610>global_lam",
+   "source": "krx:095610",
+   "target": "global:lam",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_095610>global_tokyo_electron",
+   "source": "krx:095610",
+   "target": "global:tokyo_electron",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_095610>global_asm_intl",
+   "source": "krx:095610",
+   "target": "global:asm_intl",
+   "type": "peer",
+   "labelKo": "증착(CVD/ALD) 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089970>global_lam",
+   "source": "krx:089970",
+   "target": "global:lam",
+   "type": "peer",
+   "labelKo": "식각·스트립 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089970>global_tokyo_electron",
+   "source": "krx:089970",
+   "target": "global:tokyo_electron",
+   "type": "peer",
+   "labelKo": "식각·스트립 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089970>global_appmat",
+   "source": "krx:089970",
+   "target": "global:appmat",
+   "type": "peer",
+   "labelKo": "식각·스트립 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319660>global_tokyo_electron",
+   "source": "krx:319660",
+   "target": "global:tokyo_electron",
+   "type": "peer",
+   "labelKo": "식각·스트립 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319660>global_appmat",
+   "source": "krx:319660",
+   "target": "global:appmat",
+   "type": "peer",
+   "labelKo": "식각·스트립 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079370>global_screen",
+   "source": "krx:079370",
+   "target": "global:screen",
+   "type": "peer",
+   "labelKo": "세정·CMP 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_281820>global_screen",
+   "source": "krx:281820",
+   "target": "global:screen",
+   "type": "peer",
+   "labelKo": "세정·CMP 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/semiconductor-manufacturing-equipment-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348210>global_hitachi_ht",
+   "source": "krx:348210",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348210>global_onto",
+   "source": "krx:348210",
+   "target": "global:onto",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348210>global_camtek",
+   "source": "krx:348210",
+   "target": "global:camtek",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_140860>global_kla",
+   "source": "krx:140860",
+   "target": "global:kla",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_140860>global_hitachi_ht",
+   "source": "krx:140860",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_140860>global_onto",
+   "source": "krx:140860",
+   "target": "global:onto",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_140860>global_camtek",
+   "source": "krx:140860",
+   "target": "global:camtek",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064290>global_kla",
+   "source": "krx:064290",
+   "target": "global:kla",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064290>global_hitachi_ht",
+   "source": "krx:064290",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064290>global_onto",
+   "source": "krx:064290",
+   "target": "global:onto",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064290>global_camtek",
+   "source": "krx:064290",
+   "target": "global:camtek",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_kla",
+   "source": "krx:098460",
+   "target": "global:kla",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_hitachi_ht",
+   "source": "krx:098460",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_onto",
+   "source": "krx:098460",
+   "target": "global:onto",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_camtek",
+   "source": "krx:098460",
+   "target": "global:camtek",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_420770>global_kla",
+   "source": "krx:420770",
+   "target": "global:kla",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_420770>global_hitachi_ht",
+   "source": "krx:420770",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_420770>global_onto",
+   "source": "krx:420770",
+   "target": "global:onto",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_420770>global_camtek",
+   "source": "krx:420770",
+   "target": "global:camtek",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_222800>global_nan_ya",
+   "source": "krx:222800",
+   "target": "global:nan_ya",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_222800>global_kinsus",
+   "source": "krx:222800",
+   "target": "global:kinsus",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_222800>global_unimicron",
+   "source": "krx:222800",
+   "target": "global:unimicron",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_222800>global_ibiden",
+   "source": "krx:222800",
+   "target": "global:ibiden",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_353200>global_nan_ya",
+   "source": "krx:353200",
+   "target": "global:nan_ya",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_353200>global_kinsus",
+   "source": "krx:353200",
+   "target": "global:kinsus",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_353200>global_unimicron",
+   "source": "krx:353200",
+   "target": "global:unimicron",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_353200>global_ibiden",
+   "source": "krx:353200",
+   "target": "global:ibiden",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007810>global_nan_ya",
+   "source": "krx:007810",
+   "target": "global:nan_ya",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007810>global_kinsus",
+   "source": "krx:007810",
+   "target": "global:kinsus",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007810>global_unimicron",
+   "source": "krx:007810",
+   "target": "global:unimicron",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007810>global_ibiden",
+   "source": "krx:007810",
+   "target": "global:ibiden",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_195870>global_nan_ya",
+   "source": "krx:195870",
+   "target": "global:nan_ya",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_195870>global_kinsus",
+   "source": "krx:195870",
+   "target": "global:kinsus",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_195870>global_unimicron",
+   "source": "krx:195870",
+   "target": "global:unimicron",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_195870>global_ibiden",
+   "source": "krx:195870",
+   "target": "global:ibiden",
+   "type": "peer",
+   "labelKo": "반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.wiseguyreports.com/reports/bt-substrate-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_440110>global_phison",
+   "source": "krx:440110",
+   "target": "global:phison",
+   "type": "peer",
+   "labelKo": "SSD 컨트롤러 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/reports/5741644/ssd-controllers-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_440110>global_silicon_motion",
+   "source": "krx:440110",
+   "target": "global:silicon_motion",
+   "type": "peer",
+   "labelKo": "SSD 컨트롤러 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/reports/5741644/ssd-controllers-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_440110>global_marvell",
+   "source": "krx:440110",
+   "target": "global:marvell",
+   "type": "peer",
+   "labelKo": "SSD 컨트롤러 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/reports/5741644/ssd-controllers-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000990>global_vanguard",
+   "source": "krx:000990",
+   "target": "global:vanguard",
+   "type": "peer",
+   "labelKo": "8인치·성숙공정 파운드리 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://korea.counterpointresearch.com/global-semiconductor-foundry-markets-q22025-revenue/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000990>global_smic",
+   "source": "krx:000990",
+   "target": "global:smic",
+   "type": "peer",
+   "labelKo": "8인치·성숙공정 파운드리 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://korea.counterpointresearch.com/global-semiconductor-foundry-markets-q22025-revenue/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000990>global_globalfoundries",
+   "source": "krx:000990",
+   "target": "global:globalfoundries",
+   "type": "peer",
+   "labelKo": "8인치·성숙공정 파운드리 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://korea.counterpointresearch.com/global-semiconductor-foundry-markets-q22025-revenue/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_490470>global_guc",
+   "source": "krx:490470",
+   "target": "global:guc",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_490470>global_alchip",
+   "source": "krx:490470",
+   "target": "global:alchip",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_490470>global_faraday",
+   "source": "krx:490470",
+   "target": "global:faraday",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_399720>global_guc",
+   "source": "krx:399720",
+   "target": "global:guc",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_399720>global_alchip",
+   "source": "krx:399720",
+   "target": "global:alchip",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_399720>global_faraday",
+   "source": "krx:399720",
+   "target": "global:faraday",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_200710>global_guc",
+   "source": "krx:200710",
+   "target": "global:guc",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_200710>global_alchip",
+   "source": "krx:200710",
+   "target": "global:alchip",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_200710>global_faraday",
+   "source": "krx:200710",
+   "target": "global:faraday",
+   "type": "peer",
+   "labelKo": "디자인하우스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042700>global_besi",
+   "source": "krx:042700",
+   "target": "global:besi",
+   "type": "peer",
+   "labelKo": "HBM TC본더·하이브리드 본더 경쟁 (한미 TCB 점유 71%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/en/article/2025122209224722092",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042700>global_asmpt",
+   "source": "krx:042700",
+   "target": "global:asmpt",
+   "type": "peer",
+   "labelKo": "HBM TC본더·하이브리드 본더 경쟁 (한미 TCB 점유 71%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/en/article/2025122209224722092",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042700>global_hanwha_semitech",
+   "source": "krx:042700",
+   "target": "global:hanwha_semitech",
+   "type": "peer",
+   "labelKo": "HBM TC본더·하이브리드 본더 경쟁 (한미 TCB 점유 71%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/en/article/2025122209224722092",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042700>global_shinkawa",
+   "source": "krx:042700",
+   "target": "global:shinkawa",
+   "type": "peer",
+   "labelKo": "HBM TC본더·하이브리드 본더 경쟁 (한미 TCB 점유 71%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/en/article/2025122209224722092",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101490>global_hoya",
+   "source": "krx:101490",
+   "target": "global:hoya",
+   "type": "peer",
+   "labelKo": "EUV 블랭크마스크 경쟁 (AGC 59%·HOYA 34%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/euv-mask-blanks-market-7334",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101490>global_agc",
+   "source": "krx:101490",
+   "target": "global:agc",
+   "type": "peer",
+   "labelKo": "EUV 블랭크마스크 경쟁 (AGC 59%·HOYA 34%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/euv-mask-blanks-market-7334",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036810>global_mitsui_chem",
+   "source": "krx:036810",
+   "target": "global:mitsui_chem",
+   "type": "peer",
+   "labelKo": "EUV 펠리클 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.archivemarketresearch.com/reports/pellicles-for-euv-reticles-821916",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101490>global_mitsui_chem",
+   "source": "krx:101490",
+   "target": "global:mitsui_chem",
+   "type": "peer",
+   "labelKo": "EUV 펠리클 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.archivemarketresearch.com/reports/pellicles-for-euv-reticles-821916",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064760>global_tokai_carbon",
+   "source": "krx:064760",
+   "target": "global:tokai_carbon",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064760>global_coorstek",
+   "source": "krx:064760",
+   "target": "global:coorstek",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064760>global_ferrotec",
+   "source": "krx:064760",
+   "target": "global:ferrotec",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388210>global_tokai_carbon",
+   "source": "krx:388210",
+   "target": "global:tokai_carbon",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388210>global_coorstek",
+   "source": "krx:388210",
+   "target": "global:coorstek",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388210>global_ferrotec",
+   "source": "krx:388210",
+   "target": "global:ferrotec",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_166090>global_tokai_carbon",
+   "source": "krx:166090",
+   "target": "global:tokai_carbon",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_166090>global_coorstek",
+   "source": "krx:166090",
+   "target": "global:coorstek",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_166090>global_ferrotec",
+   "source": "krx:166090",
+   "target": "global:ferrotec",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101160>global_tokai_carbon",
+   "source": "krx:101160",
+   "target": "global:tokai_carbon",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101160>global_coorstek",
+   "source": "krx:101160",
+   "target": "global:coorstek",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101160>global_ferrotec",
+   "source": "krx:101160",
+   "target": "global:ferrotec",
+   "type": "peer",
+   "labelKo": "SiC·실리콘 식각 소모부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.verifiedmarketreports.com/product/silicon-rings-and-silicon-electrodes-for-etching-market/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_074600>global_shin_etsu_quartz",
+   "source": "krx:074600",
+   "target": "global:shin_etsu_quartz",
+   "type": "peer",
+   "labelKo": "쿼츠웨어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.qyresearch.com/reports/4737028/quartz-ware",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_074600>global_heraeus",
+   "source": "krx:074600",
+   "target": "global:heraeus",
+   "type": "peer",
+   "labelKo": "쿼츠웨어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.qyresearch.com/reports/4737028/quartz-ware",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_074600>global_coorstek",
+   "source": "krx:074600",
+   "target": "global:coorstek",
+   "type": "peer",
+   "labelKo": "쿼츠웨어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.qyresearch.com/reports/4737028/quartz-ware",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101160>global_shin_etsu_quartz",
+   "source": "krx:101160",
+   "target": "global:shin_etsu_quartz",
+   "type": "peer",
+   "labelKo": "쿼츠웨어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.qyresearch.com/reports/4737028/quartz-ware",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101160>global_heraeus",
+   "source": "krx:101160",
+   "target": "global:heraeus",
+   "type": "peer",
+   "labelKo": "쿼츠웨어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.qyresearch.com/reports/4737028/quartz-ware",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_232140>global_teradyne",
+   "source": "krx:232140",
+   "target": "global:teradyne",
+   "type": "peer",
+   "labelKo": "메모리 테스터·ATE 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://semiconductorx.com/semiconductor-test-equipment.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_092870>global_advantest",
+   "source": "krx:092870",
+   "target": "global:advantest",
+   "type": "peer",
+   "labelKo": "메모리 테스터·ATE 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://semiconductorx.com/semiconductor-test-equipment.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_092870>global_teradyne",
+   "source": "krx:092870",
+   "target": "global:teradyne",
+   "type": "peer",
+   "labelKo": "메모리 테스터·ATE 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://semiconductorx.com/semiconductor-test-equipment.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003160>global_advantest",
+   "source": "krx:003160",
+   "target": "global:advantest",
+   "type": "peer",
+   "labelKo": "메모리 테스터·ATE 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://semiconductorx.com/semiconductor-test-equipment.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003160>global_teradyne",
+   "source": "krx:003160",
+   "target": "global:teradyne",
+   "type": "peer",
+   "labelKo": "메모리 테스터·ATE 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://semiconductorx.com/semiconductor-test-equipment.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241770>global_dupont",
+   "source": "krx:241770",
+   "target": "global:dupont",
+   "type": "peer",
+   "labelKo": "전구체 소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kipost.net/news/articleView.html?idxno=302508",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241770>global_merck_em",
+   "source": "krx:241770",
+   "target": "global:merck_em",
+   "type": "peer",
+   "labelKo": "전구체 소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kipost.net/news/articleView.html?idxno=302508",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_014680>global_dupont",
+   "source": "krx:014680",
+   "target": "global:dupont",
+   "type": "peer",
+   "labelKo": "반도체 케미컬 소재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.researchandmarkets.com/report/cmp-slurry",
      "accessedAt": "2026-09-25"
     }
    ]

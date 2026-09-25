@@ -327,6 +327,166 @@
    "chain": "end_customer",
    "role": "완성차",
    "exchange": "KRX:005380"
+  },
+  {
+   "id": "global:hitachi_energy",
+   "type": "global",
+   "nameKo": "히타치에너지",
+   "nameEn": "Hitachi Energy",
+   "country": "jp",
+   "chain": "global_oem",
+   "role": "변압기·HVDC 1위",
+   "exchange": "TSE:6501"
+  },
+  {
+   "id": "global:tbea",
+   "type": "global",
+   "nameKo": "TBEA",
+   "nameEn": "TBEA",
+   "country": "cn",
+   "chain": "global_oem",
+   "role": "변압기",
+   "exchange": "SSE:600089"
+  },
+  {
+   "id": "global:mitsubishi_elec",
+   "type": "global",
+   "nameKo": "미쓰비시전기",
+   "nameEn": "Mitsubishi Electric",
+   "country": "jp",
+   "chain": "global_oem",
+   "role": "변압기·개폐기",
+   "exchange": "TSE:6503"
+  },
+  {
+   "id": "global:toshiba_es",
+   "type": "global",
+   "nameKo": "도시바에너지",
+   "nameEn": "Toshiba Energy Systems",
+   "country": "jp",
+   "chain": "global_oem",
+   "role": "변압기",
+   "exchange": ""
+  },
+  {
+   "id": "global:eaton",
+   "type": "global",
+   "nameKo": "이튼",
+   "nameEn": "Eaton",
+   "country": "us",
+   "chain": "global_oem",
+   "role": "배전·변압기",
+   "exchange": "NYSE:ETN"
+  },
+  {
+   "id": "global:schneider",
+   "type": "global",
+   "nameKo": "슈나이더일렉트릭",
+   "nameEn": "Schneider Electric",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "배전·개폐기 (DC 18%)",
+   "exchange": "EPA:SU"
+  },
+  {
+   "id": "global:abb",
+   "type": "global",
+   "nameKo": "ABB",
+   "nameEn": "ABB",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "배전·개폐기",
+   "exchange": "SIX:ABBN"
+  },
+  {
+   "id": "global:siemens",
+   "type": "global",
+   "nameKo": "지멘스",
+   "nameEn": "Siemens",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "배전·개폐기",
+   "exchange": "XETRA:SIE"
+  },
+  {
+   "id": "global:prysmian",
+   "type": "global",
+   "nameKo": "프리즈미안",
+   "nameEn": "Prysmian",
+   "country": "eu",
+   "chain": "cable",
+   "role": "전선·해저케이블 1위 (22%)",
+   "exchange": "BIT:PRY"
+  },
+  {
+   "id": "global:nexans",
+   "type": "global",
+   "nameKo": "넥상스",
+   "nameEn": "Nexans",
+   "country": "eu",
+   "chain": "cable",
+   "role": "전선·해저케이블",
+   "exchange": "EPA:NEX"
+  },
+  {
+   "id": "global:nkt",
+   "type": "global",
+   "nameKo": "NKT",
+   "nameEn": "NKT",
+   "country": "eu",
+   "chain": "cable",
+   "role": "해저케이블",
+   "exchange": "CPH:NKT"
+  },
+  {
+   "id": "global:sumitomo_electric",
+   "type": "global",
+   "nameKo": "스미토모전공",
+   "nameEn": "Sumitomo Electric",
+   "country": "jp",
+   "chain": "cable",
+   "role": "HVDC 케이블",
+   "exchange": "TSE:5802"
+  },
+  {
+   "id": "global:hengtong",
+   "type": "global",
+   "nameKo": "헝퉁",
+   "nameEn": "Hengtong",
+   "country": "cn",
+   "chain": "cable",
+   "role": "케이블",
+   "exchange": "SSE:600487"
+  },
+  {
+   "id": "global:caterpillar",
+   "type": "global",
+   "nameKo": "캐터필러",
+   "nameEn": "Caterpillar",
+   "country": "us",
+   "chain": "genset",
+   "role": "데이터센터 발전기",
+   "exchange": "NYSE:CAT"
+  },
+  {
+   "id": "global:cummins",
+   "type": "global",
+   "nameKo": "커민스",
+   "nameEn": "Cummins",
+   "country": "us",
+   "chain": "genset",
+   "role": "데이터센터 발전기",
+   "exchange": "NYSE:CMI"
+  },
+  {
+   "id": "global:rolls_royce",
+   "type": "global",
+   "nameKo": "롤스로이스(MTU)",
+   "nameEn": "Rolls-Royce Power Systems",
+   "country": "eu",
+   "chain": "genset",
+   "role": "발전기",
+   "exchange": "LSE:RR"
   }
  ],
  "edges": [
@@ -788,6 +948,734 @@
    "evidence": [
     {
      "url": "https://www.kogas.or.kr/site/koGas/1040401000000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267260>global_hitachi_energy",
+   "source": "krx:267260",
+   "target": "global:hitachi_energy",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267260>global_siemens_energy",
+   "source": "krx:267260",
+   "target": "global:siemens_energy",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267260>global_ge_vernova",
+   "source": "krx:267260",
+   "target": "global:ge_vernova",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267260>global_tbea",
+   "source": "krx:267260",
+   "target": "global:tbea",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267260>global_mitsubishi_elec",
+   "source": "krx:267260",
+   "target": "global:mitsubishi_elec",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267260>global_toshiba_es",
+   "source": "krx:267260",
+   "target": "global:toshiba_es",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298040>global_hitachi_energy",
+   "source": "krx:298040",
+   "target": "global:hitachi_energy",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298040>global_siemens_energy",
+   "source": "krx:298040",
+   "target": "global:siemens_energy",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298040>global_ge_vernova",
+   "source": "krx:298040",
+   "target": "global:ge_vernova",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298040>global_tbea",
+   "source": "krx:298040",
+   "target": "global:tbea",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298040>global_mitsubishi_elec",
+   "source": "krx:298040",
+   "target": "global:mitsubishi_elec",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298040>global_toshiba_es",
+   "source": "krx:298040",
+   "target": "global:toshiba_es",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_hitachi_energy",
+   "source": "krx:010120",
+   "target": "global:hitachi_energy",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_siemens_energy",
+   "source": "krx:010120",
+   "target": "global:siemens_energy",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_ge_vernova",
+   "source": "krx:010120",
+   "target": "global:ge_vernova",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_tbea",
+   "source": "krx:010120",
+   "target": "global:tbea",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_mitsubishi_elec",
+   "source": "krx:010120",
+   "target": "global:mitsubishi_elec",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_toshiba_es",
+   "source": "krx:010120",
+   "target": "global:toshiba_es",
+   "type": "peer",
+   "labelKo": "전력 변압기 경쟁 (상위 5사 45%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/power-transformer-market-report",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_062040>global_eaton",
+   "source": "krx:062040",
+   "target": "global:eaton",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_062040>global_hitachi_energy",
+   "source": "krx:062040",
+   "target": "global:hitachi_energy",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_062040>global_siemens_energy",
+   "source": "krx:062040",
+   "target": "global:siemens_energy",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033100>global_eaton",
+   "source": "krx:033100",
+   "target": "global:eaton",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033100>global_hitachi_energy",
+   "source": "krx:033100",
+   "target": "global:hitachi_energy",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033100>global_siemens_energy",
+   "source": "krx:033100",
+   "target": "global:siemens_energy",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_103590>global_eaton",
+   "source": "krx:103590",
+   "target": "global:eaton",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_103590>global_hitachi_energy",
+   "source": "krx:103590",
+   "target": "global:hitachi_energy",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_103590>global_siemens_energy",
+   "source": "krx:103590",
+   "target": "global:siemens_energy",
+   "type": "peer",
+   "labelKo": "북미 변압기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://uk.finance.yahoo.com/news/u-transformers-industry-research-report-080100906.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_schneider",
+   "source": "krx:010120",
+   "target": "global:schneider",
+   "type": "peer",
+   "labelKo": "배전·개폐기 경쟁 (Top5 40%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/switchgear-market-1162268.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_abb",
+   "source": "krx:010120",
+   "target": "global:abb",
+   "type": "peer",
+   "labelKo": "배전·개폐기 경쟁 (Top5 40%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/switchgear-market-1162268.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_siemens",
+   "source": "krx:010120",
+   "target": "global:siemens",
+   "type": "peer",
+   "labelKo": "배전·개폐기 경쟁 (Top5 40%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/switchgear-market-1162268.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010120>global_eaton",
+   "source": "krx:010120",
+   "target": "global:eaton",
+   "type": "peer",
+   "labelKo": "배전·개폐기 경쟁 (Top5 40%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/Market-Reports/switchgear-market-1162268.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001440>global_prysmian",
+   "source": "krx:001440",
+   "target": "global:prysmian",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001440>global_nexans",
+   "source": "krx:001440",
+   "target": "global:nexans",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001440>global_nkt",
+   "source": "krx:001440",
+   "target": "global:nkt",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001440>global_sumitomo_electric",
+   "source": "krx:001440",
+   "target": "global:sumitomo_electric",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001440>global_hengtong",
+   "source": "krx:001440",
+   "target": "global:hengtong",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000500>global_prysmian",
+   "source": "krx:000500",
+   "target": "global:prysmian",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000500>global_nexans",
+   "source": "krx:000500",
+   "target": "global:nexans",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000500>global_nkt",
+   "source": "krx:000500",
+   "target": "global:nkt",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000500>global_sumitomo_electric",
+   "source": "krx:000500",
+   "target": "global:sumitomo_electric",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000500>global_hengtong",
+   "source": "krx:000500",
+   "target": "global:hengtong",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_229640>global_prysmian",
+   "source": "krx:229640",
+   "target": "global:prysmian",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_229640>global_nexans",
+   "source": "krx:229640",
+   "target": "global:nexans",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_229640>global_nkt",
+   "source": "krx:229640",
+   "target": "global:nkt",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_229640>global_sumitomo_electric",
+   "source": "krx:229640",
+   "target": "global:sumitomo_electric",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_229640>global_hengtong",
+   "source": "krx:229640",
+   "target": "global:hengtong",
+   "type": "peer",
+   "labelKo": "초고압·해저 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_ls_cable>global_prysmian",
+   "source": "global:ls_cable",
+   "target": "global:prysmian",
+   "type": "peer",
+   "labelKo": "해저케이블 경쟁 (Top5 60%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_ls_cable>global_nexans",
+   "source": "global:ls_cable",
+   "target": "global:nexans",
+   "type": "peer",
+   "labelKo": "해저케이블 경쟁 (Top5 60%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_ls_cable>global_nkt",
+   "source": "global:ls_cable",
+   "target": "global:nkt",
+   "type": "peer",
+   "labelKo": "해저케이블 경쟁 (Top5 60%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/hvdc-cables-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_119850>global_caterpillar",
+   "source": "krx:119850",
+   "target": "global:caterpillar",
+   "type": "peer",
+   "labelKo": "데이터센터 비상발전기 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/data-center-generators-companies.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_119850>global_cummins",
+   "source": "krx:119850",
+   "target": "global:cummins",
+   "type": "peer",
+   "labelKo": "데이터센터 비상발전기 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/data-center-generators-companies.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_119850>global_rolls_royce",
+   "source": "krx:119850",
+   "target": "global:rolls_royce",
+   "type": "peer",
+   "labelKo": "데이터센터 비상발전기 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/data-center-generators-companies.asp",
      "accessedAt": "2026-09-25"
     }
    ]

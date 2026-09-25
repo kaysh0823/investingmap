@@ -542,6 +542,326 @@
    "chain": "end_customer",
    "role": "모회사",
    "exchange": ""
+  },
+  {
+   "id": "global:murata",
+   "type": "global",
+   "nameKo": "무라타",
+   "nameEn": "Murata",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "MLCC 1위 (28~30%)",
+   "exchange": "TSE:6981"
+  },
+  {
+   "id": "global:tdk",
+   "type": "global",
+   "nameKo": "TDK",
+   "nameEn": "TDK",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "MLCC·수동부품",
+   "exchange": "TSE:6762"
+  },
+  {
+   "id": "global:taiyo_yuden",
+   "type": "global",
+   "nameKo": "타이요유덴",
+   "nameEn": "Taiyo Yuden",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "MLCC",
+   "exchange": "TSE:6976"
+  },
+  {
+   "id": "global:yageo",
+   "type": "global",
+   "nameKo": "야게오",
+   "nameEn": "Yageo",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "MLCC·수동부품",
+   "exchange": "TWSE:2327"
+  },
+  {
+   "id": "global:ibiden",
+   "type": "global",
+   "nameKo": "이비덴",
+   "nameEn": "Ibiden",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "FC-BGA 기판",
+   "exchange": "TSE:4062"
+  },
+  {
+   "id": "global:unimicron",
+   "type": "global",
+   "nameKo": "유니마이크론",
+   "nameEn": "Unimicron",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "FC-BGA 기판",
+   "exchange": "TWSE:3037"
+  },
+  {
+   "id": "global:nan_ya",
+   "type": "global",
+   "nameKo": "난야PCB",
+   "nameEn": "Nan Ya PCB",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "FC-BGA 기판",
+   "exchange": "TWSE:8046"
+  },
+  {
+   "id": "global:shinko",
+   "type": "global",
+   "nameKo": "신코전기",
+   "nameEn": "Shinko Electric",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "FC-BGA 기판",
+   "exchange": ""
+  },
+  {
+   "id": "global:ats",
+   "type": "global",
+   "nameKo": "AT&S",
+   "nameEn": "AT&S",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "FC-BGA 기판",
+   "exchange": "VIE:ATS"
+  },
+  {
+   "id": "global:sunny_optical",
+   "type": "global",
+   "nameKo": "써니옵티컬",
+   "nameEn": "Sunny Optical",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "카메라모듈 (16%)",
+   "exchange": "HKEX:2382"
+  },
+  {
+   "id": "global:ofilm",
+   "type": "global",
+   "nameKo": "오필름",
+   "nameEn": "O-Film",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "카메라모듈",
+   "exchange": "SZSE:002456"
+  },
+  {
+   "id": "global:sharp",
+   "type": "global",
+   "nameKo": "샤프",
+   "nameEn": "Sharp (Foxconn)",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "카메라모듈",
+   "exchange": "TSE:6753"
+  },
+  {
+   "id": "global:tianma",
+   "type": "global",
+   "nameKo": "텐마",
+   "nameEn": "Tianma",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "OLED 패널",
+   "exchange": "SZSE:000050"
+  },
+  {
+   "id": "global:csot",
+   "type": "global",
+   "nameKo": "CSOT",
+   "nameEn": "TCL CSOT",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "OLED·LCD 패널",
+   "exchange": "SZSE:000100"
+  },
+  {
+   "id": "global:visionox",
+   "type": "global",
+   "nameKo": "비전옥스",
+   "nameEn": "Visionox",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "OLED 패널",
+   "exchange": "SZSE:002387"
+  },
+  {
+   "id": "global:ams_osram",
+   "type": "global",
+   "nameKo": "ams오스람",
+   "nameEn": "ams OSRAM",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "LED 2위",
+   "exchange": "SIX:AMS"
+  },
+  {
+   "id": "global:everlight",
+   "type": "global",
+   "nameKo": "에버라이트",
+   "nameEn": "Everlight",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "LED 패키지",
+   "exchange": "TWSE:2393"
+  },
+  {
+   "id": "global:lumileds",
+   "type": "global",
+   "nameKo": "루미레즈",
+   "nameEn": "Lumileds",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "LED",
+   "exchange": ""
+  },
+  {
+   "id": "global:haier",
+   "type": "global",
+   "nameKo": "하이얼",
+   "nameEn": "Haier",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "가전 1위",
+   "exchange": "SSE:600690"
+  },
+  {
+   "id": "global:whirlpool",
+   "type": "global",
+   "nameKo": "월풀",
+   "nameEn": "Whirlpool",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "가전",
+   "exchange": "NYSE:WHR"
+  },
+  {
+   "id": "global:electrolux",
+   "type": "global",
+   "nameKo": "일렉트로룩스",
+   "nameEn": "Electrolux",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "가전",
+   "exchange": "STO:ELUX-B"
+  },
+  {
+   "id": "global:midea",
+   "type": "global",
+   "nameKo": "메이디",
+   "nameEn": "Midea",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "가전",
+   "exchange": "SZSE:000333"
+  },
+  {
+   "id": "global:zhen_ding",
+   "type": "global",
+   "nameKo": "전딩",
+   "nameEn": "Zhen Ding Tech",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "FPCB 1위",
+   "exchange": "TWSE:4958"
+  },
+  {
+   "id": "global:nippon_mektron",
+   "type": "global",
+   "nameKo": "니폰멕트론",
+   "nameEn": "Nippon Mektron",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "FPCB",
+   "exchange": ""
+  },
+  {
+   "id": "global:flexium",
+   "type": "global",
+   "nameKo": "플렉시움",
+   "nameEn": "Flexium",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "FPCB",
+   "exchange": "TWSE:6269"
+  },
+  {
+   "id": "global:canon_tokki",
+   "type": "global",
+   "nameKo": "캐논토키",
+   "nameEn": "Canon Tokki",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "OLED 증착기 1위",
+   "exchange": "TSE:7751"
+  },
+  {
+   "id": "global:udc",
+   "type": "global",
+   "nameKo": "UDC",
+   "nameEn": "Universal Display",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "OLED 발광소재 (27%)",
+   "exchange": "NASDAQ:OLED"
+  },
+  {
+   "id": "global:idemitsu",
+   "type": "global",
+   "nameKo": "이데미츠",
+   "nameEn": "Idemitsu Kosan",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "OLED 소재",
+   "exchange": "TSE:5019"
+  },
+  {
+   "id": "global:merck_em",
+   "type": "global",
+   "nameKo": "머크",
+   "nameEn": "Merck Electronics",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "OLED 소재",
+   "exchange": "XETRA:MRK"
+  },
+  {
+   "id": "global:vusion",
+   "type": "global",
+   "nameKo": "뷰전그룹",
+   "nameEn": "VusionGroup (SES-imagotag)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "ESL 1위 (18%)",
+   "exchange": "EPA:VU"
+  },
+  {
+   "id": "global:pricer",
+   "type": "global",
+   "nameKo": "프라이서",
+   "nameEn": "Pricer",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "ESL",
+   "exchange": "STO:PRIC-B"
+  },
+  {
+   "id": "global:hanshow",
+   "type": "global",
+   "nameKo": "한쇼",
+   "nameEn": "Hanshow",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "ESL",
+   "exchange": ""
   }
  ],
  "edges": [
@@ -1367,6 +1687,692 @@
    "evidence": [
     {
      "url": "https://biz.heraldcorp.com/article/10781938",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_murata",
+   "source": "krx:009150",
+   "target": "global:murata",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁 (삼성전기 22~24% 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_tdk",
+   "source": "krx:009150",
+   "target": "global:tdk",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁 (삼성전기 22~24% 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_taiyo_yuden",
+   "source": "krx:009150",
+   "target": "global:taiyo_yuden",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁 (삼성전기 22~24% 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_yageo",
+   "source": "krx:009150",
+   "target": "global:yageo",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁 (삼성전기 22~24% 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001820>global_murata",
+   "source": "krx:001820",
+   "target": "global:murata",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001820>global_tdk",
+   "source": "krx:001820",
+   "target": "global:tdk",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001820>global_taiyo_yuden",
+   "source": "krx:001820",
+   "target": "global:taiyo_yuden",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001820>global_yageo",
+   "source": "krx:001820",
+   "target": "global:yageo",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_052710>global_murata",
+   "source": "krx:052710",
+   "target": "global:murata",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_052710>global_tdk",
+   "source": "krx:052710",
+   "target": "global:tdk",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_052710>global_taiyo_yuden",
+   "source": "krx:052710",
+   "target": "global:taiyo_yuden",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_052710>global_yageo",
+   "source": "krx:052710",
+   "target": "global:yageo",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/multilayer-ceramic-capacitor-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_ibiden",
+   "source": "krx:009150",
+   "target": "global:ibiden",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_unimicron",
+   "source": "krx:009150",
+   "target": "global:unimicron",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_nan_ya",
+   "source": "krx:009150",
+   "target": "global:nan_ya",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_shinko",
+   "source": "krx:009150",
+   "target": "global:shinko",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_ats",
+   "source": "krx:009150",
+   "target": "global:ats",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011070>global_ibiden",
+   "source": "krx:011070",
+   "target": "global:ibiden",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011070>global_unimicron",
+   "source": "krx:011070",
+   "target": "global:unimicron",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011070>global_ats",
+   "source": "krx:011070",
+   "target": "global:ats",
+   "type": "peer",
+   "labelKo": "FC-BGA 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/advanced-ic-substrates-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011070>global_sunny_optical",
+   "source": "krx:011070",
+   "target": "global:sunny_optical",
+   "type": "peer",
+   "labelKo": "카메라모듈 경쟁 (LG이노텍 18% 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/camera-module-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011070>global_ofilm",
+   "source": "krx:011070",
+   "target": "global:ofilm",
+   "type": "peer",
+   "labelKo": "카메라모듈 경쟁 (LG이노텍 18% 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/camera-module-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011070>global_sharp",
+   "source": "krx:011070",
+   "target": "global:sharp",
+   "type": "peer",
+   "labelKo": "카메라모듈 경쟁 (LG이노텍 18% 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/camera-module-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_sunny_optical",
+   "source": "krx:009150",
+   "target": "global:sunny_optical",
+   "type": "peer",
+   "labelKo": "카메라모듈 경쟁 (12.8%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/camera-module-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>global_ofilm",
+   "source": "krx:009150",
+   "target": "global:ofilm",
+   "type": "peer",
+   "labelKo": "카메라모듈 경쟁 (12.8%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/camera-module-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034220>global_tianma",
+   "source": "krx:034220",
+   "target": "global:tianma",
+   "type": "peer",
+   "labelKo": "OLED 패널 경쟁 (LGD 21% 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://heyupnow.com/blogs/heyup-trend-insight-lab/global-oled-market-2025-forecast-samsung-display-to-lead-with-41-revenue-share-says-counterpoint",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034220>global_csot",
+   "source": "krx:034220",
+   "target": "global:csot",
+   "type": "peer",
+   "labelKo": "OLED 패널 경쟁 (LGD 21% 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://heyupnow.com/blogs/heyup-trend-insight-lab/global-oled-market-2025-forecast-samsung-display-to-lead-with-41-revenue-share-says-counterpoint",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034220>global_visionox",
+   "source": "krx:034220",
+   "target": "global:visionox",
+   "type": "peer",
+   "labelKo": "OLED 패널 경쟁 (LGD 21% 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://heyupnow.com/blogs/heyup-trend-insight-lab/global-oled-market-2025-forecast-samsung-display-to-lead-with-41-revenue-share-says-counterpoint",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_046890>global_ams_osram",
+   "source": "krx:046890",
+   "target": "global:ams_osram",
+   "type": "peer",
+   "labelKo": "LED 경쟁 (서울반도체 3위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.semiconductor-today.com/news_items/2025/may/seoul-semi-120525.shtml",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_046890>global_everlight",
+   "source": "krx:046890",
+   "target": "global:everlight",
+   "type": "peer",
+   "labelKo": "LED 경쟁 (서울반도체 3위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.semiconductor-today.com/news_items/2025/may/seoul-semi-120525.shtml",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_046890>global_lumileds",
+   "source": "krx:046890",
+   "target": "global:lumileds",
+   "type": "peer",
+   "labelKo": "LED 경쟁 (서울반도체 3위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.semiconductor-today.com/news_items/2025/may/seoul-semi-120525.shtml",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_092190>global_nichia",
+   "source": "krx:092190",
+   "target": "global:nichia",
+   "type": "peer",
+   "labelKo": "LED 칩 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.semiconductor-today.com/news_items/2025/may/seoul-semi-120525.shtml",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_092190>global_ams_osram",
+   "source": "krx:092190",
+   "target": "global:ams_osram",
+   "type": "peer",
+   "labelKo": "LED 칩 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.semiconductor-today.com/news_items/2025/may/seoul-semi-120525.shtml",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_092190>global_everlight",
+   "source": "krx:092190",
+   "target": "global:everlight",
+   "type": "peer",
+   "labelKo": "LED 칩 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.semiconductor-today.com/news_items/2025/may/seoul-semi-120525.shtml",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066570>global_haier",
+   "source": "krx:066570",
+   "target": "global:haier",
+   "type": "peer",
+   "labelKo": "글로벌 가전 경쟁 (Top5)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electric-household-appliances-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066570>global_whirlpool",
+   "source": "krx:066570",
+   "target": "global:whirlpool",
+   "type": "peer",
+   "labelKo": "글로벌 가전 경쟁 (Top5)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electric-household-appliances-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066570>global_electrolux",
+   "source": "krx:066570",
+   "target": "global:electrolux",
+   "type": "peer",
+   "labelKo": "글로벌 가전 경쟁 (Top5)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electric-household-appliances-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066570>global_midea",
+   "source": "krx:066570",
+   "target": "global:midea",
+   "type": "peer",
+   "labelKo": "글로벌 가전 경쟁 (Top5)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electric-household-appliances-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066570>global_samsung",
+   "source": "krx:066570",
+   "target": "global:samsung",
+   "type": "peer",
+   "labelKo": "글로벌 가전 경쟁 (Top5)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electric-household-appliances-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090460>global_zhen_ding",
+   "source": "krx:090460",
+   "target": "global:zhen_ding",
+   "type": "peer",
+   "labelKo": "FPCB 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.giiresearch.com/report/meti1947416-flexible-printed-circuit-boards-fpcb-market-by.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090460>global_nippon_mektron",
+   "source": "krx:090460",
+   "target": "global:nippon_mektron",
+   "type": "peer",
+   "labelKo": "FPCB 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.giiresearch.com/report/meti1947416-flexible-printed-circuit-boards-fpcb-market-by.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090460>global_flexium",
+   "source": "krx:090460",
+   "target": "global:flexium",
+   "type": "peer",
+   "labelKo": "FPCB 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.giiresearch.com/report/meti1947416-flexible-printed-circuit-boards-fpcb-market-by.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_171090>global_canon_tokki",
+   "source": "krx:171090",
+   "target": "global:canon_tokki",
+   "type": "peer",
+   "labelKo": "G6+ OLED 증착기 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Canon_Tokki",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_213420>global_udc",
+   "source": "krx:213420",
+   "target": "global:udc",
+   "type": "peer",
+   "labelKo": "OLED 발광소재 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.oled-info.com/ubi-research-oled-material-market-grew-7-2025-227-billion-will-slow-down-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_213420>global_idemitsu",
+   "source": "krx:213420",
+   "target": "global:idemitsu",
+   "type": "peer",
+   "labelKo": "OLED 발광소재 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.oled-info.com/ubi-research-oled-material-market-grew-7-2025-227-billion-will-slow-down-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_213420>global_merck_em",
+   "source": "krx:213420",
+   "target": "global:merck_em",
+   "type": "peer",
+   "labelKo": "OLED 발광소재 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.oled-info.com/ubi-research-oled-material-market-grew-7-2025-227-billion-will-slow-down-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_248070>global_vusion",
+   "source": "krx:248070",
+   "target": "global:vusion",
+   "type": "peer",
+   "labelKo": "ESL 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electronic-shelf-label-esl-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_248070>global_pricer",
+   "source": "krx:248070",
+   "target": "global:pricer",
+   "type": "peer",
+   "labelKo": "ESL 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electronic-shelf-label-esl-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_248070>global_hanshow",
+   "source": "krx:248070",
+   "target": "global:hanshow",
+   "type": "peer",
+   "labelKo": "ESL 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.gminsights.com/industry-analysis/electronic-shelf-label-esl-market",
      "accessedAt": "2026-09-25"
     }
    ]

@@ -127,12 +127,30 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
   assert.equal(all.nodes.length, 4, 'default keeps connected nodes');
   assert.equal(all.edges.length, 3);
 
-  const semiRaw = JSON.parse(
-    fs.readFileSync(path.join(ROOT, 'data', 'netmap', 'semiconductor.json'), 'utf8'),
-  );
-  const semiAll = Net._test.filterGraph(semiRaw, Net._test.defaultFilters());
-  assert.equal(semiAll.nodes.length, 147, `semiconductor filterGraph nodes=${semiAll.nodes.length}`);
-  assert.equal(semiAll.edges.length, 291, `semiconductor filterGraph edges=${semiAll.edges.length}`);
+  for (const sector of ['semiconductor', 'elec', 'battery', 'powergrid', 'robot']) {
+    const raw = JSON.parse(
+      fs.readFileSync(path.join(ROOT, 'data', 'netmap', `${sector}.json`), 'utf8'),
+    );
+    const filtered = Net._test.filterGraph(raw, Net._test.defaultFilters());
+    assert.equal(
+      filtered.nodes.length,
+      raw.nodes.length,
+      `${sector}: defaultFilters must keep all nodes (${filtered.nodes.length} vs ${raw.nodes.length})`,
+    );
+    assert.equal(
+      filtered.edges.length,
+      raw.edges.length,
+      `${sector}: defaultFilters must keep all edges (${filtered.edges.length} vs ${raw.edges.length})`,
+    );
+    const domestic = Net._test.filterGraph(raw, {
+      ...Net._test.defaultFilters(),
+      scope: 'domestic',
+    });
+    assert.ok(
+      domestic.nodes.every((n) => n.country === 'kr'),
+      `${sector}: domestic scope nodes must all be country===kr`,
+    );
+  }
 
   const gray = Net._test.colorForDomestic(
     { ticker: '123456', type: 'kr_listed' },

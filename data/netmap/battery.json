@@ -429,6 +429,286 @@
    "chain": "end_customer",
    "role": "완성차",
    "exchange": "KRX:005380"
+  },
+  {
+   "id": "global:byd",
+   "type": "global",
+   "nameKo": "BYD",
+   "nameEn": "BYD",
+   "country": "cn",
+   "chain": "cell_global",
+   "role": "셀 2위 (16.4%)",
+   "exchange": "HKEX:1211"
+  },
+  {
+   "id": "global:calb",
+   "type": "global",
+   "nameKo": "CALB",
+   "nameEn": "CALB",
+   "country": "cn",
+   "chain": "cell_global",
+   "role": "셀 4위",
+   "exchange": "HKEX:3931"
+  },
+  {
+   "id": "global:gotion",
+   "type": "global",
+   "nameKo": "궈쉬안",
+   "nameEn": "Gotion High-tech",
+   "country": "cn",
+   "chain": "cell_global",
+   "role": "셀 5위",
+   "exchange": "SZSE:002074"
+  },
+  {
+   "id": "global:eve",
+   "type": "global",
+   "nameKo": "EVE에너지",
+   "nameEn": "EVE Energy",
+   "country": "cn",
+   "chain": "cell_global",
+   "role": "셀",
+   "exchange": "SZSE:300014"
+  },
+  {
+   "id": "global:svolt",
+   "type": "global",
+   "nameKo": "SVOLT",
+   "nameEn": "SVOLT",
+   "country": "cn",
+   "chain": "cell_global",
+   "role": "셀",
+   "exchange": ""
+  },
+  {
+   "id": "global:umicore",
+   "type": "global",
+   "nameKo": "유미코아",
+   "nameEn": "Umicore",
+   "country": "eu",
+   "chain": "cathode",
+   "role": "양극재",
+   "exchange": "EBR:UMI"
+  },
+  {
+   "id": "global:basf",
+   "type": "global",
+   "nameKo": "BASF",
+   "nameEn": "BASF",
+   "country": "eu",
+   "chain": "cathode",
+   "role": "양극재",
+   "exchange": "XETRA:BAS"
+  },
+  {
+   "id": "global:ronbay",
+   "type": "global",
+   "nameKo": "롱바이",
+   "nameEn": "Ronbay Technology",
+   "country": "cn",
+   "chain": "cathode",
+   "role": "하이니켈 양극재",
+   "exchange": "SSE:688005"
+  },
+  {
+   "id": "global:easpring",
+   "type": "global",
+   "nameKo": "이스프링",
+   "nameEn": "Easpring",
+   "country": "cn",
+   "chain": "cathode",
+   "role": "양극재",
+   "exchange": "SZSE:300073"
+  },
+  {
+   "id": "global:shanshan",
+   "type": "global",
+   "nameKo": "샨샨",
+   "nameEn": "Shanshan",
+   "country": "cn",
+   "chain": "cathode",
+   "role": "양극재·음극재",
+   "exchange": "SSE:600884"
+  },
+  {
+   "id": "global:sumitomo_mm",
+   "type": "global",
+   "nameKo": "스미토모금속광산",
+   "nameEn": "Sumitomo Metal Mining",
+   "country": "jp",
+   "chain": "cathode",
+   "role": "NCA 양극재",
+   "exchange": "TSE:5713"
+  },
+  {
+   "id": "global:semcorp",
+   "type": "global",
+   "nameKo": "셈코프",
+   "nameEn": "Shanghai Energy (SEMCORP)",
+   "country": "cn",
+   "chain": "separator",
+   "role": "분리막 1위",
+   "exchange": "SZSE:002812"
+  },
+  {
+   "id": "global:asahi_kasei",
+   "type": "global",
+   "nameKo": "아사히카세이",
+   "nameEn": "Asahi Kasei",
+   "country": "jp",
+   "chain": "separator",
+   "role": "분리막",
+   "exchange": "TSE:3407"
+  },
+  {
+   "id": "global:toray",
+   "type": "global",
+   "nameKo": "도레이",
+   "nameEn": "Toray",
+   "country": "jp",
+   "chain": "separator",
+   "role": "분리막",
+   "exchange": "TSE:3402"
+  },
+  {
+   "id": "global:senior_tech",
+   "type": "global",
+   "nameKo": "시니어",
+   "nameEn": "Senior Technology Material",
+   "country": "cn",
+   "chain": "separator",
+   "role": "분리막",
+   "exchange": "SZSE:300568"
+  },
+  {
+   "id": "global:tinci",
+   "type": "global",
+   "nameKo": "톈츠",
+   "nameEn": "Tinci Materials",
+   "country": "cn",
+   "chain": "electrolyte",
+   "role": "전해액 1위",
+   "exchange": "SZSE:002709"
+  },
+  {
+   "id": "global:capchem",
+   "type": "global",
+   "nameKo": "캡켐",
+   "nameEn": "Capchem",
+   "country": "cn",
+   "chain": "electrolyte",
+   "role": "전해액 2위",
+   "exchange": "SZSE:300037"
+  },
+  {
+   "id": "global:mitsubishi_chem",
+   "type": "global",
+   "nameKo": "미쓰비시케미컬",
+   "nameEn": "Mitsubishi Chemical",
+   "country": "jp",
+   "chain": "electrolyte",
+   "role": "전해액",
+   "exchange": "TSE:4188"
+  },
+  {
+   "id": "global:nuode",
+   "type": "global",
+   "nameKo": "누오더",
+   "nameEn": "Nuode",
+   "country": "cn",
+   "chain": "foil_misc",
+   "role": "동박",
+   "exchange": "SSE:600110"
+  },
+  {
+   "id": "global:wason",
+   "type": "global",
+   "nameKo": "와손",
+   "nameEn": "Wason Copper Foil",
+   "country": "cn",
+   "chain": "foil_misc",
+   "role": "동박",
+   "exchange": ""
+  },
+  {
+   "id": "global:chang_chun",
+   "type": "global",
+   "nameKo": "창춘",
+   "nameEn": "Chang Chun Group",
+   "country": "tw",
+   "chain": "foil_misc",
+   "role": "동박",
+   "exchange": ""
+  },
+  {
+   "id": "global:furukawa",
+   "type": "global",
+   "nameKo": "후루카와전기",
+   "nameEn": "Furukawa Electric",
+   "country": "jp",
+   "chain": "foil_misc",
+   "role": "동박",
+   "exchange": "TSE:5801"
+  },
+  {
+   "id": "global:wuxi_lead",
+   "type": "global",
+   "nameKo": "우시리드",
+   "nameEn": "Wuxi Lead Intelligent",
+   "country": "cn",
+   "chain": "equipment",
+   "role": "배터리 장비 1위",
+   "exchange": "SZSE:300450"
+  },
+  {
+   "id": "global:yinghe",
+   "type": "global",
+   "nameKo": "잉허",
+   "nameEn": "Yinghe Technology",
+   "country": "cn",
+   "chain": "equipment",
+   "role": "배터리 장비",
+   "exchange": "SZSE:300457"
+  },
+  {
+   "id": "global:hitachi_ht",
+   "type": "global",
+   "nameKo": "히타치하이테크",
+   "nameEn": "Hitachi High-Tech",
+   "country": "jp",
+   "chain": "equipment",
+   "role": "배터리 장비",
+   "exchange": ""
+  },
+  {
+   "id": "global:brunp",
+   "type": "global",
+   "nameKo": "브룬프",
+   "nameEn": "Brunp (CATL)",
+   "country": "cn",
+   "chain": "recycling",
+   "role": "재활용 1위",
+   "exchange": ""
+  },
+  {
+   "id": "global:redwood",
+   "type": "global",
+   "nameKo": "레드우드",
+   "nameEn": "Redwood Materials",
+   "country": "us",
+   "chain": "recycling",
+   "role": "재활용",
+   "exchange": ""
+  },
+  {
+   "id": "global:li_cycle",
+   "type": "global",
+   "nameKo": "리사이클",
+   "nameEn": "Li-Cycle",
+   "country": "us",
+   "chain": "recycling",
+   "role": "재활용",
+   "exchange": ""
   }
  ],
  "edges": [
@@ -1506,6 +1786,1182 @@
    "evidence": [
     {
      "url": "https://www.hankyung.com/article/202609078602i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>global_byd",
+   "source": "krx:373220",
+   "target": "global:byd",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>global_calb",
+   "source": "krx:373220",
+   "target": "global:calb",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>global_gotion",
+   "source": "krx:373220",
+   "target": "global:gotion",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>global_eve",
+   "source": "krx:373220",
+   "target": "global:eve",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>global_svolt",
+   "source": "krx:373220",
+   "target": "global:svolt",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>global_byd",
+   "source": "krx:006400",
+   "target": "global:byd",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>global_calb",
+   "source": "krx:006400",
+   "target": "global:calb",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>global_gotion",
+   "source": "krx:006400",
+   "target": "global:gotion",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>global_eve",
+   "source": "krx:006400",
+   "target": "global:eve",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>global_svolt",
+   "source": "krx:006400",
+   "target": "global:svolt",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>global_catl",
+   "source": "krx:006400",
+   "target": "global:catl",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>global_panasonic",
+   "source": "krx:006400",
+   "target": "global:panasonic",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096770>global_byd",
+   "source": "krx:096770",
+   "target": "global:byd",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096770>global_calb",
+   "source": "krx:096770",
+   "target": "global:calb",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096770>global_gotion",
+   "source": "krx:096770",
+   "target": "global:gotion",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096770>global_eve",
+   "source": "krx:096770",
+   "target": "global:eve",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096770>global_svolt",
+   "source": "krx:096770",
+   "target": "global:svolt",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096770>global_catl",
+   "source": "krx:096770",
+   "target": "global:catl",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096770>global_panasonic",
+   "source": "krx:096770",
+   "target": "global:panasonic",
+   "type": "peer",
+   "labelKo": "EV 배터리 점유율 경쟁 (SNE 2025 Top10)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://cnevpost.com/2026/02/04/global-ev-battery-market-share-2025/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003670>global_umicore",
+   "source": "krx:003670",
+   "target": "global:umicore",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003670>global_basf",
+   "source": "krx:003670",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003670>global_ronbay",
+   "source": "krx:003670",
+   "target": "global:ronbay",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003670>global_easpring",
+   "source": "krx:003670",
+   "target": "global:easpring",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003670>global_shanshan",
+   "source": "krx:003670",
+   "target": "global:shanshan",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003670>global_sumitomo_mm",
+   "source": "krx:003670",
+   "target": "global:sumitomo_mm",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_247540>global_umicore",
+   "source": "krx:247540",
+   "target": "global:umicore",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_247540>global_basf",
+   "source": "krx:247540",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_247540>global_ronbay",
+   "source": "krx:247540",
+   "target": "global:ronbay",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_247540>global_easpring",
+   "source": "krx:247540",
+   "target": "global:easpring",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_247540>global_shanshan",
+   "source": "krx:247540",
+   "target": "global:shanshan",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_247540>global_sumitomo_mm",
+   "source": "krx:247540",
+   "target": "global:sumitomo_mm",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066970>global_umicore",
+   "source": "krx:066970",
+   "target": "global:umicore",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066970>global_basf",
+   "source": "krx:066970",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066970>global_ronbay",
+   "source": "krx:066970",
+   "target": "global:ronbay",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066970>global_easpring",
+   "source": "krx:066970",
+   "target": "global:easpring",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066970>global_shanshan",
+   "source": "krx:066970",
+   "target": "global:shanshan",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_066970>global_sumitomo_mm",
+   "source": "krx:066970",
+   "target": "global:sumitomo_mm",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051910>global_umicore",
+   "source": "krx:051910",
+   "target": "global:umicore",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051910>global_basf",
+   "source": "krx:051910",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051910>global_ronbay",
+   "source": "krx:051910",
+   "target": "global:ronbay",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051910>global_easpring",
+   "source": "krx:051910",
+   "target": "global:easpring",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051910>global_shanshan",
+   "source": "krx:051910",
+   "target": "global:shanshan",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051910>global_sumitomo_mm",
+   "source": "krx:051910",
+   "target": "global:sumitomo_mm",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005070>global_umicore",
+   "source": "krx:005070",
+   "target": "global:umicore",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005070>global_basf",
+   "source": "krx:005070",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005070>global_ronbay",
+   "source": "krx:005070",
+   "target": "global:ronbay",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005070>global_easpring",
+   "source": "krx:005070",
+   "target": "global:easpring",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005070>global_shanshan",
+   "source": "krx:005070",
+   "target": "global:shanshan",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005070>global_sumitomo_mm",
+   "source": "krx:005070",
+   "target": "global:sumitomo_mm",
+   "type": "peer",
+   "labelKo": "하이니켈 양극재 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.globenewswire.com/news-release/2026/08/24/3349515/28124/en/global-high-nickel-nmc-811-9-5-5-cathode-market-report-2026-2035-featuring-ecopro-bm-co-posco-future-m-umicore-lg-chem-ningbo-ronbay-new-energy-technology-and-others.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_361610>global_semcorp",
+   "source": "krx:361610",
+   "target": "global:semcorp",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_361610>global_asahi_kasei",
+   "source": "krx:361610",
+   "target": "global:asahi_kasei",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_361610>global_toray",
+   "source": "krx:361610",
+   "target": "global:toray",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_361610>global_senior_tech",
+   "source": "krx:361610",
+   "target": "global:senior_tech",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_393890>global_semcorp",
+   "source": "krx:393890",
+   "target": "global:semcorp",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_393890>global_asahi_kasei",
+   "source": "krx:393890",
+   "target": "global:asahi_kasei",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_393890>global_toray",
+   "source": "krx:393890",
+   "target": "global:toray",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_393890>global_senior_tech",
+   "source": "krx:393890",
+   "target": "global:senior_tech",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sg.finance.yahoo.com/news/battery-separator-market-research-report-081100045.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348370>global_tinci",
+   "source": "krx:348370",
+   "target": "global:tinci",
+   "type": "peer",
+   "labelKo": "전해액 경쟁 (톈츠 1위·캡켐 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-electrolyte-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348370>global_capchem",
+   "source": "krx:348370",
+   "target": "global:capchem",
+   "type": "peer",
+   "labelKo": "전해액 경쟁 (톈츠 1위·캡켐 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-electrolyte-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348370>global_mitsubishi_chem",
+   "source": "krx:348370",
+   "target": "global:mitsubishi_chem",
+   "type": "peer",
+   "labelKo": "전해액 경쟁 (톈츠 1위·캡켐 2위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-electrolyte-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_093370>global_tinci",
+   "source": "krx:093370",
+   "target": "global:tinci",
+   "type": "peer",
+   "labelKo": "LiPF6·전해질 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-electrolyte-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_278280>global_tinci",
+   "source": "krx:278280",
+   "target": "global:tinci",
+   "type": "peer",
+   "labelKo": "LiPF6·전해질 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-electrolyte-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011790>global_nuode",
+   "source": "krx:011790",
+   "target": "global:nuode",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011790>global_wason",
+   "source": "krx:011790",
+   "target": "global:wason",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011790>global_chang_chun",
+   "source": "krx:011790",
+   "target": "global:chang_chun",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011790>global_furukawa",
+   "source": "krx:011790",
+   "target": "global:furukawa",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_020150>global_nuode",
+   "source": "krx:020150",
+   "target": "global:nuode",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_020150>global_wason",
+   "source": "krx:020150",
+   "target": "global:wason",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_020150>global_chang_chun",
+   "source": "krx:020150",
+   "target": "global:chang_chun",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_020150>global_furukawa",
+   "source": "krx:020150",
+   "target": "global:furukawa",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336370>global_nuode",
+   "source": "krx:336370",
+   "target": "global:nuode",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336370>global_wason",
+   "source": "krx:336370",
+   "target": "global:wason",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336370>global_chang_chun",
+   "source": "krx:336370",
+   "target": "global:chang_chun",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336370>global_furukawa",
+   "source": "krx:336370",
+   "target": "global:furukawa",
+   "type": "peer",
+   "labelKo": "배터리 동박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.snsinsider.com/reports/copper-foil-market-6872",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_137400>global_wuxi_lead",
+   "source": "krx:137400",
+   "target": "global:wuxi_lead",
+   "type": "peer",
+   "labelKo": "배터리 제조장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-production-machine-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_137400>global_yinghe",
+   "source": "krx:137400",
+   "target": "global:yinghe",
+   "type": "peer",
+   "labelKo": "배터리 제조장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-production-machine-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_137400>global_hitachi_ht",
+   "source": "krx:137400",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "배터리 제조장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-production-machine-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_222080>global_wuxi_lead",
+   "source": "krx:222080",
+   "target": "global:wuxi_lead",
+   "type": "peer",
+   "labelKo": "배터리 제조장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-production-machine-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_222080>global_yinghe",
+   "source": "krx:222080",
+   "target": "global:yinghe",
+   "type": "peer",
+   "labelKo": "배터리 제조장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-production-machine-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_222080>global_hitachi_ht",
+   "source": "krx:222080",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "배터리 제조장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketsandmarkets.com/ResearchInsight/battery-production-machine-market.asp",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_365340>global_brunp",
+   "source": "krx:365340",
+   "target": "global:brunp",
+   "type": "peer",
+   "labelKo": "배터리 재활용 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/li-ion-battery-recycling-market-10583",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_365340>global_redwood",
+   "source": "krx:365340",
+   "target": "global:redwood",
+   "type": "peer",
+   "labelKo": "배터리 재활용 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/li-ion-battery-recycling-market-10583",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_365340>global_li_cycle",
+   "source": "krx:365340",
+   "target": "global:li_cycle",
+   "type": "peer",
+   "labelKo": "배터리 재활용 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/li-ion-battery-recycling-market-10583",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_365340>global_umicore",
+   "source": "krx:365340",
+   "target": "global:umicore",
+   "type": "peer",
+   "labelKo": "배터리 재활용 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.marketresearchfuture.com/reports/li-ion-battery-recycling-market-10583",
      "accessedAt": "2026-09-25"
     }
    ]
