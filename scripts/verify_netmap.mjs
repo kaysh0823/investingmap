@@ -63,7 +63,7 @@ for (const [sector, rel] of Object.entries(MAP_SECTOR)) {
   const hasData = sectorsWithData.includes(sector);
   const srcPath = path.join(ROOT, rel);
   const distPath = path.join(ROOT, 'dist', rel);
-  // Prefer source (authoritative after patch); fall back to dist.
+  // Prefer source for markup wiring; dataUrl must match on dist (what ships).
   const html = fs.existsSync(srcPath)
     ? fs.readFileSync(srcPath, 'utf8')
     : fs.existsSync(distPath)
@@ -79,7 +79,17 @@ for (const [sector, rel] of Object.entries(MAP_SECTOR)) {
     assert.ok(!html.includes('id="netmap-legend"'), `${rel}: netmap-legend must be absent`);
     assert.ok(/map_netmap\.js/.test(html), `${rel}: map_netmap.js`);
     assert.ok(html.includes('InvestingMapNetmap.recolorNodes'), `${rel}: quotes-ready recolor`);
-    console.log(`  html OK ${rel}`);
+    assert.ok(fs.existsSync(distPath), `dist/${rel}: missing`);
+    const distHtml = fs.readFileSync(distPath, 'utf8');
+    const expectedUrl = `../data/netmap/${sector}.json`;
+    const urlMatch = distHtml.match(/dataUrl:\s*'(\.\.\/data\/netmap\/[a-z0-9_-]+\.json)'/);
+    assert.ok(urlMatch, `dist/${rel}: dataUrl missing`);
+    assert.equal(
+      urlMatch[1],
+      expectedUrl,
+      `dist/${rel}: dataUrl must be ${expectedUrl} (got ${urlMatch[1]})`,
+    );
+    console.log(`  html OK ${rel} dataUrl=${urlMatch[1]}`);
   } else {
     assert.ok(!html.includes('tab-btn-netmap'), `${rel}: must not have netmap tab without data`);
   }

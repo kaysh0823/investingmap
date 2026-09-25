@@ -334,6 +334,22 @@ function migrateNetmapDom(source) {
   return source;
 }
 
+function forceNetmapDataUrl(source, sector) {
+  const expected = `../data/netmap/${sector}.json`;
+  const next = source.replace(
+    /dataUrl:\s*'\.\.\/data\/netmap\/[a-z0-9_-]+\.json'/g,
+    `dataUrl: '${expected}'`,
+  );
+  const m = next.match(/dataUrl:\s*'(\.\.\/data\/netmap\/[a-z0-9_-]+\.json)'/);
+  if (m && m[1] !== expected) {
+    throw new Error(`netmap dataUrl mismatch for ${sector}: got ${m[1]}, expected ${expected}`);
+  }
+  if (next.includes('function renderNetmap()') && !next.includes(`dataUrl: '${expected}'`)) {
+    throw new Error(`netmap dataUrl missing for ${sector}: expected ${expected}`);
+  }
+  return next;
+}
+
 function migrateRenderNetmap(source, sector) {
   if (!source.includes('function renderNetmap()')) return source;
   if (source.includes("panel: document.getElementById('netmap-panel')")) {
@@ -344,13 +360,15 @@ function migrateRenderNetmap(source, sector) {
         `$1,\n          countryNames: {\n            us: nt.netmapCountryNameUs,\n            tw: nt.netmapCountryNameTw,\n            jp: nt.netmapCountryNameJp,\n            cn: nt.netmapCountryNameCn,\n            eu: nt.netmapCountryNameEu\n          }\n        $2`,
       );
     }
-    return source;
+    // Cloned maps often keep another sector's dataUrl — always rewrite.
+    return forceNetmapDataUrl(source, sector);
   }
   // Replace whole function
-  return source.replace(
+  source = source.replace(
     /function renderNetmap\(\) \{[\s\S]*?\n    \}\n(?=\s*function render)/,
-    renderNetFn(sector).replace(/^    /, '').replace(/\n$/,'') + '\n',
+    renderNetFn(sector).replace(/^    /, '').replace(/\n$/, '') + '\n',
   );
+  return forceNetmapDataUrl(source, sector);
 }
 
 function patchQuotesReadyRecolor(source) {
