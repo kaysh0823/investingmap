@@ -7,11 +7,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 import { SECTOR_META } from '../lib/sector_meta.mjs';
-import {
-  GLOBAL_SEARCH_V,
-  MAP_FILES,
-  ROOT_PAGES,
-} from './patch_global_search.mjs';
+import { MAP_FILES, ROOT_PAGES } from './patch_global_search.mjs';
+import { assetVersion } from './asset_versions.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SEARCH_INDEX = path.join(ROOT, 'data', 'search_index.json');
@@ -64,14 +61,14 @@ for (const entry of index) {
   );
 }
 
-const expectedTag = `global_search.js?v=${GLOBAL_SEARCH_V}`;
+const expectedTag = `global_search.js?v=${assetVersion('js/global_search.js')}`;
 for (const rel of MAP_FILES) {
   const fp = path.join(ROOT, rel);
   assert.ok(fs.existsSync(fp), `missing map page ${rel}`);
   const html = fs.readFileSync(fp, 'utf8');
   assert.ok(
     html.includes(`../js/${expectedTag}`),
-    `${rel}: missing global_search.js script`,
+    `${rel}: missing global_search.js script (${expectedTag})`,
   );
 }
 for (const rel of ROOT_PAGES) {
@@ -80,7 +77,7 @@ for (const rel of ROOT_PAGES) {
   const html = fs.readFileSync(fp, 'utf8');
   assert.ok(
     html.includes(`js/${expectedTag}`),
-    `${rel}: missing global_search.js script`,
+    `${rel}: missing global_search.js script (${expectedTag})`,
   );
 }
 

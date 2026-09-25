@@ -6,8 +6,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 2;
-const TAB_STATE_V = 11;
+/** Placeholder — final ?v= stamped by patch_asset_versions. */
+const V_PLACEHOLDER = 0;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -205,19 +205,10 @@ function patchHtml(source) {
   }
   if (!source.includes('map_perfcalendar.js')) {
     source = source.replace(
-      /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>)/,
-      `$1\n  <script src="../js/map_perfcalendar.js?v=${SCRIPT_V}"></script>`,
-    );
-  } else {
-    source = source.replace(
-      /map_perfcalendar\.js(?:\?v=\d+)?/g,
-      `map_perfcalendar.js?v=${SCRIPT_V}`,
+      /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `$1\n  <script src="../js/map_perfcalendar.js?v=${V_PLACEHOLDER}"></script>`,
     );
   }
-  source = source.replace(
-    /map_tab_state\.js(?:\?v=\d+)?/g,
-    `map_tab_state.js?v=${TAB_STATE_V}`,
-  );
   return patchRuntime(source);
 }
 
@@ -247,4 +238,4 @@ for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
   console.log(after === before ? 'unchanged' : 'patched', rel);
 }
 
-console.log(`OK patch_perfcalendar_tab v=${SCRIPT_V}`);
+console.log('OK patch_perfcalendar_tab (script tags; ?v= stamped later)');

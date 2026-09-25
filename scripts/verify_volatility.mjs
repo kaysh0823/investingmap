@@ -8,7 +8,6 @@ import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { buildVolatilitySnapshot } from './build_hub_volatility_snapshot.mjs';
 import { tipRangeVolFromSeries } from '../lib/range_vol.mjs';
-import { SCRIPT_V as VOLATILITY_SCRIPT_V, TURNOVER_RADIUS_V } from './patch_volatility_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SNAPSHOT = path.join(ROOT, 'data', 'hub_volatility_snapshot.json');
@@ -266,15 +265,9 @@ for (const rel of MAP_FILES) {
       : html;
   assert.ok(html.includes('id="tab-btn-volatility"'), `${rel}: missing volatility tab button`);
   assert.ok(html.includes('id="tab-volatility"'), `${rel}: missing volatility tab content`);
-  assert.ok(
-    html.includes(`turnover_radius.js?v=${TURNOVER_RADIUS_V}`),
-    `${rel}: missing turnover_radius.js?v=${TURNOVER_RADIUS_V}`,
-  );
-  assert.ok(
-    html.includes(`map_volatility.js?v=${VOLATILITY_SCRIPT_V}`),
-    `${rel}: missing map_volatility.js?v=${VOLATILITY_SCRIPT_V}`,
-  );
-  assert.ok(html.includes('map_momentum.js?v=16'), `${rel}: missing map_momentum.js v16`);
+  assert.ok(html.includes('turnover_radius.js'), `${rel}: missing turnover_radius.js`);
+  assert.ok(html.includes('map_volatility.js'), `${rel}: missing map_volatility.js`);
+  assert.ok(html.includes('map_momentum.js'), `${rel}: missing map_momentum.js`);
   assert.ok(!html.includes('ATR' + '3'), `${rel}: leftover ATR` + `3 label`);
   assert.ok(runtime.includes('function renderVolatility()'), `${rel}: missing renderVolatility()`);
   assert.ok(runtime.includes('companies: koreanCompanies'), `${rel}: renderVolatility must pass koreanCompanies`);

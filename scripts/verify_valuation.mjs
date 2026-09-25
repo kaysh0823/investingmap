@@ -11,7 +11,6 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SCRIPT_V as VALUATION_SCRIPT_V } from './patch_valuation_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SNAPSHOT = path.join(ROOT, 'data', 'hub_valuation_snapshot.json');
@@ -363,18 +362,17 @@ for (const rel of MAP_FILES) {
   if (!fs.existsSync(file)) fail(rel, 'file missing');
   const html = fs.readFileSync(file, 'utf8');
 
-  if (!html.includes(`map_valuation.js?v=${VALUATION_SCRIPT_V}`)) {
-    fail(rel, `map_valuation.js?v=${VALUATION_SCRIPT_V} missing`);
+  if (!html.includes('map_valuation.js')) {
+    fail(rel, 'map_valuation.js missing');
   }
   if (!/id="valuation-root"/.test(html)) fail(rel, 'valuation-root missing');
   if (!/function renderValuation\s*\(/.test(html) && !rel.startsWith('bio/')) {
     // bio map HTML uses inline.js for renderValuation
     if (rel !== 'bio/korea_bio_map.html') fail(rel, 'function renderValuation missing');
   }
-  if (rel === 'bio/korea_bio_map.html' && !html.includes(`map_valuation.js?v=${VALUATION_SCRIPT_V}`)) {
-    fail(rel, `map_valuation.js?v=${VALUATION_SCRIPT_V} missing`);
+  if (rel === 'bio/korea_bio_map.html' && !html.includes('map_valuation.js')) {
+    fail(rel, 'map_valuation.js missing');
   }
-
   for (const key of REQUIRED_I18N) {
     const n = countKey(html, key);
     // HTML pages embed ko+en T objects → expect ≥2; bio HTML may only have scripts

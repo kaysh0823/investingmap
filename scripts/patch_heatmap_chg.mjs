@@ -11,7 +11,6 @@ import {
 } from './patch_heatmap_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 16;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -48,8 +47,13 @@ const HINT_KO_LEGACY = '\uC2DC\uAC00\uCD1D\uC561 \uAE30\uC900';
 
 function patchHtml(html) {
   html = stripHeatmapExcludeFilters(html);
-  html = html.replace(/map_heatmap\.js(\?v=\d+)?/g, `map_heatmap.js?v=${SCRIPT_V}`);
-  html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=23');
+  // Ensure map_heatmap.js is referenced; leave existing ?v= (stamped later).
+  if (!/map_heatmap\.js/.test(html)) {
+    html = html.replace(
+      /(<script src="\.\.\/js\/live_quotes\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `$1\n  <script src="../js/map_heatmap.js?v=0"></script>`,
+    );
+  }
   html = html.replace(new RegExp(`heatmapHint:\\s*'${HINT_KO_LEGACY}'`, 'g'), `heatmapHint: '${HINT_KO}'`);
   html = html.replace(/heatmapHint:\s*'By market cap'/g, `heatmapHint: '${HINT_EN}'`);
   html = html.replace(new RegExp(`"heatmapHint":\\s*"${HINT_KO_LEGACY}"`, 'g'), `"heatmapHint": "${HINT_KO}"`);
@@ -93,4 +97,4 @@ if (fs.existsSync(bioTrPath)) {
 
 patchHeatmapOnSelectFromMaps();
 stripHeatmapExcludeFiltersFromMaps();
-console.log('OK patch_heatmap_chg v=' + SCRIPT_V);
+console.log('OK patch_heatmap_chg (hints; ?v= stamped later)');

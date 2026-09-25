@@ -276,11 +276,21 @@ function patchInitTabClassSource(src) {
 }
 
 function patchScriptVersions(html) {
-  return html
-    .replace(/map_mobile_table\.js(\?v=\d+)?/g, 'map_mobile_table.js?v=9')
-    .replace(/map_mobile_ux\.js(\?v=\d+)?/g, 'map_mobile_ux.js?v=8');
+  // Ensure script tags exist; leave ?v= to patch_asset_versions.
+  if (!/map_mobile_table\.js/.test(html)) {
+    html = html.replace(
+      /(<script src="\.\.\/js\/map_heatmap\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `$1\n  <script src="../js/map_mobile_table.js?v=0"></script>`,
+    );
+  }
+  if (!/map_mobile_ux\.js/.test(html) && /map_mobile_table\.js/.test(html)) {
+    html = html.replace(
+      /(<script src="\.\.\/js\/map_mobile_table\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `$1\n  <script src="../js/map_mobile_ux.js?v=0"></script>`,
+    );
+  }
+  return html;
 }
-
 function patchFile(rel) {
   const abs = path.join(root, rel);
   let html = fs.readFileSync(abs, 'utf8');

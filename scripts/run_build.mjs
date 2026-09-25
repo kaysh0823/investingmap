@@ -20,6 +20,8 @@ const steps = [
   ['node', ['scripts/patch_mobile_table.mjs']],
   ['node', ['scripts/patch_candle_modal.mjs']],
   ['node', ['scripts/patch_heatmap_chg.mjs']],
+  // Must be last after every patch_* that may insert/rewrite script tags.
+  ['node', ['scripts/patch_asset_versions.mjs']],
   ['node', ['scripts/pages_build.mjs']],
   ['npm', ['run', 'verify:dist']],
   ['node', ['scripts/fix_canonical_domain.mjs']],

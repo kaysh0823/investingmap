@@ -688,7 +688,7 @@ const MAP_FILES = [
 ];
 for (const rel of MAP_FILES) {
   const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-  assert.ok(html.includes('candle_modal.js?v=36'), `${rel} must reference candle_modal.js?v=36`);
+  assert.ok(html.includes('candle_modal.js'), `${rel} must reference candle_modal.js`);
 }
 
 assert.ok(source.includes("priceScaleId: 'fr'"), 'foreignRatio uses overlay scale fr');

@@ -8,9 +8,8 @@ import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const SCRIPT_V = 9;
-const TAB_STATE_V = 13;
-export const RS_COLOR_V = 3;
+/** Placeholder only — final ?v= is stamped by patch_asset_versions (content hash). */
+const V_PLACEHOLDER = 0;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -303,30 +302,16 @@ function patchHtml(source) {
   }
   if (!source.includes('map_valuation.js')) {
     source = source.replace(
-      /(<script src="\.\.\/js\/map_perfcalendar\.js(?:\?v=\d+)?"><\/script>)/,
-      `$1\n  <script src="../js/map_valuation.js?v=${SCRIPT_V}"></script>`,
-    );
-  } else {
-    source = source.replace(
-      /map_valuation\.js(?:\?v=\d+)?/g,
-      `map_valuation.js?v=${SCRIPT_V}`,
+      /(<script src="\.\.\/js\/map_perfcalendar\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `$1\n  <script src="../js/map_valuation.js?v=${V_PLACEHOLDER}"></script>`,
     );
   }
   if (!source.includes('rs_color_scale.js')) {
     source = source.replace(
-      /(<script src="\.\.\/js\/map_valuation\.js(?:\?v=\d+)?"><\/script>)/,
-      `<script src="../js/rs_color_scale.js?v=${RS_COLOR_V}"></script>\n  $1`,
-    );
-  } else {
-    source = source.replace(
-      /rs_color_scale\.js(?:\?v=\d+)?/g,
-      `rs_color_scale.js?v=${RS_COLOR_V}`,
+      /(<script src="\.\.\/js\/map_valuation\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `<script src="../js/rs_color_scale.js?v=${V_PLACEHOLDER}"></script>\n  $1`,
     );
   }
-  source = source.replace(
-    /map_tab_state\.js(?:\?v=\d+)?/g,
-    `map_tab_state.js?v=${TAB_STATE_V}`,
-  );
   return patchRuntime(source);
 }
 
@@ -376,7 +361,7 @@ function main() {
     }
   }
 
-  console.log(`OK patch_valuation_tab v=${SCRIPT_V}`);
+  console.log('OK patch_valuation_tab (script tags; ?v= stamped later)');
 }
 
 const isMain =

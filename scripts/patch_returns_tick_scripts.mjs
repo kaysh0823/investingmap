@@ -3,20 +3,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+/** Placeholder — final ?v= stamped by patch_asset_versions. */
+const V_PLACEHOLDER = 0;
 
 function patchIndex() {
   const p = path.join(ROOT, 'index.html');
   let html = fs.readFileSync(p, 'utf8');
   if (!html.includes('returns_tick.js')) {
     html = html.replace(
-      /<script src="js\/return_live\.js\?v=\d+"><\/script>/,
-      (m) => `${m}\n  <script src="js/returns_tick.js?v=2"></script>\n  <script src="js/returns_badge.js?v=2"></script>`,
+      /<script src="js\/return_live\.js\?v=[\w.\-]+"><\/script>/,
+      (m) =>
+        `${m}\n  <script src="js/returns_tick.js?v=${V_PLACEHOLDER}"></script>\n  <script src="js/returns_badge.js?v=${V_PLACEHOLDER}"></script>`,
     );
   }
-  html = html.replace(/hub_dashboard\.js\?v=\d+/g, 'hub_dashboard.js?v=56');
-  html = html.replace(/hub_trend_chart\.js\?v=\d+/g, 'hub_trend_chart.js?v=7');
-  html = html.replace(/returns_tick\.js\?v=\d+/g, 'returns_tick.js?v=2');
-  html = html.replace(/returns_badge\.js\?v=\d+/g, 'returns_badge.js?v=2');
   fs.writeFileSync(p, html);
   console.log('patched index.html');
 }
@@ -39,16 +38,13 @@ function patchMaps() {
     const before = html;
     if (!html.includes('returns_tick.js')) {
       html = html.replace(
-        /<script src="(\.\.\/)?js\/return_live\.js\?v=\d+"><\/script>/,
+        /<script src="(\.\.\/)?js\/return_live\.js\?v=[\w.\-]+"><\/script>/,
         (m, pre) => {
           const prefix = pre || '';
-          return `${m}\n<script src="${prefix}js/returns_tick.js?v=2"></script>\n<script src="${prefix}js/returns_badge.js?v=2"></script>`;
+          return `${m}\n<script src="${prefix}js/returns_tick.js?v=${V_PLACEHOLDER}"></script>\n<script src="${prefix}js/returns_badge.js?v=${V_PLACEHOLDER}"></script>`;
         },
       );
     }
-    html = html.replace(/live_quotes\.js\?v=\d+/g, 'live_quotes.js?v=25');
-    html = html.replace(/returns_tick\.js\?v=\d+/g, 'returns_tick.js?v=2');
-    html = html.replace(/returns_badge\.js\?v=\d+/g, 'returns_badge.js?v=2');
     if (html !== before) {
       fs.writeFileSync(p, html);
       n += 1;

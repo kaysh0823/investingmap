@@ -12,7 +12,7 @@ for (const marker of [
   'id="hub-trend-chart"',
   'id="hub-trend-legend"',
   'id="hub-trend-tooltip"',
-  'hub_trend_chart.js?v=7',
+  'hub_trend_chart.js',
   'd3/7.9.0/d3.min.js',
   "InvestingMapHubTrendChart.init({ lang: lang, horizon: '20d' })",
   "trendTitle: '섹터 변동 추이'",

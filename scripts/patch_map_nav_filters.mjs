@@ -7,8 +7,6 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-const SCRIPT_V = 2; // map_filter_ux.js version
-
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
@@ -55,24 +53,21 @@ const FILTER_BAR_NEW = `<div class="filter-bar">
 function ensureHeadScripts(html) {
   if (!html.includes('map_tab_state.js')) {
     html = html.replace(
-      /<script src="\.\.\/js\/map_i18n\.js"><\/script>\s*/,
-      `<script src="../js/map_i18n.js"></script>\n  <script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=9"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
+      /<script src="\.\.\/js\/map_i18n\.js(?:\?v=[\w.\-]+)?"><\/script>\s*/,
+      `<script src="../js/map_i18n.js?v=0"></script>\n  <script src="../js/map_tab_state.js?v=0"></script>\n  <script src="../js/sector_nav.js?v=0"></script>\n  <script src="../js/map_filter_ux.js?v=0"></script>\n`,
     );
   } else if (!html.includes('sector_nav.js')) {
     html = html.replace(
-      /<script src="\.\.\/js\/map_tab_state\.js(?:\?v=\d+)?"><\/script>\s*/,
-      `<script src="../js/map_tab_state.js?v=10"></script>\n  <script src="../js/sector_nav.js?v=9"></script>\n`,
+      /<script src="\.\.\/js\/map_tab_state\.js(?:\?v=[\w.\-]+)?"><\/script>\s*/,
+      `<script src="../js/map_tab_state.js?v=0"></script>\n  <script src="../js/sector_nav.js?v=0"></script>\n`,
     );
   }
   if (!html.includes('map_filter_ux.js') && html.includes('sector_nav.js')) {
     html = html.replace(
-      /<script src="\.\.\/js\/sector_nav\.js(?:\?v=\d+)?"><\/script>\s*/,
-      `<script src="../js/sector_nav.js?v=9"></script>\n  <script src="../js/map_filter_ux.js?v=${SCRIPT_V}"></script>\n`,
+      /<script src="\.\.\/js\/sector_nav\.js(?:\?v=[\w.\-]+)?"><\/script>\s*/,
+      `<script src="../js/sector_nav.js?v=0"></script>\n  <script src="../js/map_filter_ux.js?v=0"></script>\n`,
     );
   }
-  html = html.replace(/map_filter_ux\.js(?:\?v=\d+)?/g, `map_filter_ux.js?v=${SCRIPT_V}`);
-  html = html.replace(/map_tab_state\.js(?:\?v=\d+)?/g, 'map_tab_state.js?v=11');
-  html = html.replace(/sector_nav\.js(?:\?v=\d+)?/g, 'sector_nav.js?v=10');
   return html;
 }
 
@@ -295,4 +290,4 @@ for (const rel of MAP_FILES) patchMapFile(rel);
 patchBioTail('bio/bio_inline_tail.js');
 patchBioTail('bio/korea_bio_map.inline.js');
 
-console.log('OK patch_map_nav_filters v=' + SCRIPT_V);
+console.log('OK patch_map_nav_filters (script tags; ?v= stamped later)');

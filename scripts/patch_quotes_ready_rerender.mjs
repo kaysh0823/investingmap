@@ -7,8 +7,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const LIVE_QUOTES_V = 22;
-const MOMENTUM_V = 14;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -78,8 +76,6 @@ function patchBoot(source) {
     );
   }
 
-  out = out.replace(/live_quotes\.js(?:\?v=\d+)?/g, `live_quotes.js?v=${LIVE_QUOTES_V}`);
-  out = out.replace(/map_momentum\.js(?:\?v=\d+)?/g, `map_momentum.js?v=${MOMENTUM_V}`);
   return out;
 }
 

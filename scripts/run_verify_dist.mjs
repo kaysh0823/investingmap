@@ -7,6 +7,7 @@ const STEPS = [
   'verify_dist_js.mjs',
   'verify_heatmap_exclude_chips.mjs',
   'verify_global_search.mjs',
+  'verify_asset_versions.mjs',
   'verify_volatility.mjs',
   'verify_valuation.mjs',
   'verify_seed_coverage.mjs',

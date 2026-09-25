@@ -49,14 +49,12 @@ export const ROOT_PAGES = [
 ];
 
 function versionedSrc(relPath) {
-  return `${relPath}?v=${GLOBAL_SEARCH_V}`;
+  return `${relPath}?v=0`;
 }
 
 function bumpSearchVersion(html) {
-  return html.replace(
-    /global_search\.js(?:\?v=\d+)?/g,
-    `global_search.js?v=${GLOBAL_SEARCH_V}`,
-  );
+  // Leave existing ?v=; only normalize bare global_search.js → ?v=0 for stamp.
+  return html.replace(/global_search\.js(?!\?)/g, 'global_search.js?v=0');
 }
 
 function addGlobalSearchScript(html, src) {

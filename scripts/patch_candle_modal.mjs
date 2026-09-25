@@ -6,7 +6,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 36;
+/** Placeholder — final ?v= stamped by patch_asset_versions. */
+const V_PLACEHOLDER = 0;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -37,7 +38,7 @@ const MAP_FILES = [
   'shipping/korea_shipping_map.html',
 ];
 
-const CANDLE_TAG = `<script src="../js/candle_modal.js?v=${SCRIPT_V}"></script>`;
+const CANDLE_TAG = `<script src="../js/candle_modal.js?v=${V_PLACEHOLDER}"></script>`;
 
 function patchApplyLang(html) {
   if (html.includes('InvestingMapCandleModal.applyLang')) return html;
@@ -59,18 +60,16 @@ function patchApplyLang(html) {
 }
 
 function patchScript(html) {
-  if (html.includes('candle_modal.js')) {
-    return html.replace(/candle_modal\.js\?v=\d+/g, `candle_modal.js?v=${SCRIPT_V}`);
-  }
+  if (html.includes('candle_modal.js')) return html;
   if (html.includes('map_mobile_ux.js')) {
     return html.replace(
-      /(<script src="\.\.\/js\/map_mobile_ux\.js\?v=\d+"><\/script>)/,
+      /(<script src="\.\.\/js\/map_mobile_ux\.js\?v=[\w.\-]+"><\/script>)/,
       `$1\n  ${CANDLE_TAG}`,
     );
   }
   if (html.includes('map_mobile_table.js')) {
     return html.replace(
-      /(<script src="\.\.\/js\/map_mobile_table\.js\?v=\d+"><\/script>)/,
+      /(<script src="\.\.\/js\/map_mobile_table\.js\?v=[\w.\-]+"><\/script>)/,
       `$1\n  ${CANDLE_TAG}`,
     );
   }
@@ -87,8 +86,6 @@ function patchFile(rel) {
   const before = html;
   html = patchScript(html);
   html = patchApplyLang(html);
-  // Keep mobile table cache buster in sync with spark/mobile patches
-  html = html.replace(/map_mobile_table\.js\?v=\d+/g, 'map_mobile_table.js?v=9');
   if (html === before) {
     console.log('unchanged', rel);
     return;
@@ -125,4 +122,4 @@ function patchBioApplyLang(rel) {
 patchBioApplyLang('bio/bio_inline_tail.js');
 patchBioApplyLang('bio/korea_bio_map.inline.js');
 
-console.log('OK patch_candle_modal v=' + SCRIPT_V);
+console.log('OK patch_candle_modal (script tags; ?v= stamped later)');

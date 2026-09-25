@@ -8,10 +8,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 16;
-const LIVE_QUOTES_V = 25;
-const TAB_STATE_V = 9;
-const TURNOVER_RADIUS_V = 2;
+/** Placeholder only — final ?v= is stamped by patch_asset_versions (content hash). */
+const V_PLACEHOLDER = 0;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -250,22 +248,17 @@ function patchRuntime(source) {
 }
 
 function ensureTurnoverRadiusScript(source) {
-  const tag = `<script src="../js/turnover_radius.js?v=${TURNOVER_RADIUS_V}"></script>`;
-  if (source.includes('turnover_radius.js')) {
+  const tag = `<script src="../js/turnover_radius.js?v=${V_PLACEHOLDER}"></script>`;
+  if (source.includes('turnover_radius.js')) return source;
+  if (/<script src="\.\.\/js\/map_momentum\.js(?:\?v=[\w.\-]+)?"><\/script>/.test(source)) {
     return source.replace(
-      /turnover_radius\.js(?:\?v=\d+)?/g,
-      `turnover_radius.js?v=${TURNOVER_RADIUS_V}`,
-    );
-  }
-  if (/<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
-    return source.replace(
-      /(<script src="\.\.\/js\/map_momentum\.js(?:\?v=\d+)?"><\/script>)/,
+      /(<script src="\.\.\/js\/map_momentum\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
       `${tag}\n  $1`,
     );
   }
-  if (/<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
+  if (/<script src="\.\.\/js\/map_volatility\.js(?:\?v=[\w.\-]+)?"><\/script>/.test(source)) {
     return source.replace(
-      /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>)/,
+      /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
       `${tag}\n  $1`,
     );
   }
@@ -287,24 +280,11 @@ function patchHtml(source) {
   }
   if (!source.includes('map_momentum.js')) {
     source = source.replace(
-      /(<script src="\.\.\/js\/map_heatmap\.js(?:\?v=\d+)?"><\/script>)/,
-      `$1\n  <script src="../js/map_momentum.js?v=${SCRIPT_V}"></script>`,
-    );
-  } else {
-    source = source.replace(
-      /map_momentum\.js(?:\?v=\d+)?/g,
-      `map_momentum.js?v=${SCRIPT_V}`,
+      /(<script src="\.\.\/js\/map_heatmap\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `$1\n  <script src="../js/map_momentum.js?v=${V_PLACEHOLDER}"></script>`,
     );
   }
   source = ensureTurnoverRadiusScript(source);
-  source = source.replace(
-    /map_tab_state\.js(?:\?v=\d+)?/g,
-    `map_tab_state.js?v=${TAB_STATE_V}`,
-  );
-  source = source.replace(
-    /live_quotes\.js(?:\?v=\d+)?/g,
-    `live_quotes.js?v=${LIVE_QUOTES_V}`,
-  );
   return patchRuntime(source);
 }
 
@@ -334,4 +314,4 @@ for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
   console.log(after === before ? 'unchanged' : 'patched', rel);
 }
 
-console.log(`OK patch_momentum_tab v=${SCRIPT_V}`);
+console.log('OK patch_momentum_tab (script tags; ?v= stamped later)');
