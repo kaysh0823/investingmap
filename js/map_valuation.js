@@ -77,6 +77,7 @@
       tipEpsTtm: 'EPS(TTM)',
       tipRs: 'RS',
       tipRsVs: function (marketRs, delta) {
+        if (marketRs == null || !isFinite(marketRs)) return '';
         var sign = delta > 0 ? '+' : '';
         return (
           '시장 RS ' +
@@ -86,6 +87,7 @@
           (Math.round(delta * 10) / 10).toFixed(1)
         );
       },
+      marketRsPending: '시장 RS 기준 미로드',
       tipDvd: '배당수익률',
       tipClose: '종가',
       tipLast: '현재가',
@@ -137,6 +139,7 @@
       tipEpsTtm: 'EPS (TTM)',
       tipRs: 'RS',
       tipRsVs: function (marketRs, delta) {
+        if (marketRs == null || !isFinite(marketRs)) return '';
         var sign = delta > 0 ? '+' : '';
         return (
           'vs market RS ' +
@@ -147,6 +150,7 @@
           ')'
         );
       },
+      marketRsPending: 'Market RS not loaded',
       tipDvd: 'Div. yield',
       tipClose: 'Close',
       tipLast: 'Last',
@@ -669,15 +673,32 @@
     assertToolbarActive(toolbar);
   }
 
+  function marketRsLoaded() {
+    if (global.InvestingMapRsColor && typeof global.InvestingMapRsColor.hasMarketRs === 'function') {
+      return !!global.InvestingMapRsColor.hasMarketRs();
+    }
+    var m = global.InvestingMapMarketRs;
+    if (!m || typeof m !== 'object') return false;
+    return (
+      (typeof m.kospiRs === 'number' && isFinite(m.kospiRs)) ||
+      (typeof m.kosdaqRs === 'number' && isFinite(m.kosdaqRs))
+    );
+  }
+
   function syncBasisBadge(snapshot, labels, liveSession) {
     var hint = document.getElementById('valuation-hint');
     if (!hint) return;
     var dd = snapshot && snapshot.recentDd ? String(snapshot.recentDd).slice(0, 10) : '';
-    if (!dd) {
-      hint.textContent = labels.loading;
-      return;
+    var base = !dd
+      ? labels.loading
+      : liveSession
+        ? labels.basisLive(dd)
+        : labels.basisClose(dd);
+    if (!marketRsLoaded() && labels.marketRsPending) {
+      hint.textContent = base + ' · ' + labels.marketRsPending;
+    } else {
+      hint.textContent = base;
     }
-    hint.textContent = liveSession ? labels.basisLive(dd) : labels.basisClose(dd);
   }
 
   function chainOrder(companies) {
@@ -1169,6 +1190,9 @@
         global.InvestingMapRsColor && typeof global.InvestingMapRsColor.gradientCss === 'function'
           ? global.InvestingMapRsColor.gradientCss()
           : 'background:linear-gradient(to right,#f85149,#6e7681,#3fb950)';
+      var rsLabel = marketRsLoaded()
+        ? labels.legendRsLo + ' · ' + labels.legendRsMid + ' · ' + labels.legendRsHi
+        : labels.marketRsPending || labels.legendRsMid;
       legend.innerHTML =
         '<div>' +
         labels.legend +
@@ -1177,11 +1201,7 @@
         gradCss +
         '" aria-hidden="true"></span>' +
         '<span class="valuation-gradient-label">' +
-        labels.legendRsLo +
-        ' · ' +
-        labels.legendRsMid +
-        ' · ' +
-        labels.legendRsHi +
+        rsLabel +
         '</span></div><div style="margin-top:4px">' +
         labels.legendPer +
         '</div>';
@@ -1238,19 +1258,16 @@
       labels.tipRs +
       ': ' +
       (d.rs != null && isFinite(d.rs) ? (Math.round(d.rs * 10) / 10).toFixed(1) : '—') +
-      (d.rs != null && isFinite(d.rs) && typeof labels.tipRsVs === 'function'
-        ? ' (' +
-          labels.tipRsVs(
-            global.InvestingMapRsColor && global.InvestingMapRsColor.marketRsFor
-              ? global.InvestingMapRsColor.marketRsFor(d)
-              : 50,
-            d.rs -
-              (global.InvestingMapRsColor && global.InvestingMapRsColor.marketRsFor
-                ? global.InvestingMapRsColor.marketRsFor(d)
-                : 50),
-          ) +
-          ')'
-        : '') +
+      (function () {
+        if (!(d.rs != null && isFinite(d.rs)) || typeof labels.tipRsVs !== 'function') return '';
+        var mRs =
+          global.InvestingMapRsColor && typeof global.InvestingMapRsColor.marketRsFor === 'function'
+            ? global.InvestingMapRsColor.marketRsFor(d)
+            : null;
+        if (mRs == null || !isFinite(mRs)) return '';
+        var vs = labels.tipRsVs(mRs, d.rs - mRs);
+        return vs ? ' (' + vs + ')' : '';
+      })() +
       '<br>' +
       labels.tipDvd +      ': ' +
       formatMetric(q.dvdYld, 'dvd') +

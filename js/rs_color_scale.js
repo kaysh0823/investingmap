@@ -65,28 +65,37 @@
 
   /**
    * @param {number|null|undefined} rs
-   * @param {number|null|undefined} marketRs center (default 50)
+   * @param {number|null|undefined} marketRs center; null/undefined → neutral (기준 미확정)
    */
   function colorForRs(rs, marketRs) {
     if (typeof rs !== 'number' || !isFinite(rs)) return MISSING_COLOR;
-    var center =
-      typeof marketRs === 'number' && isFinite(marketRs) ? marketRs : 50;
-    return divergingColor(rs, center, RS_HALF);
+    if (marketRs == null || !isFinite(marketRs)) return NEUTRAL;
+    return divergingColor(rs, marketRs, RS_HALF);
   }
 
   /**
    * Resolve market RS for a company from window.InvestingMapMarketRs.
-   * KOSDAQ → kosdaqRs, else kospiRs; missing → 50.
+   * KOSDAQ → kosdaqRs, else kospiRs; missing → null (기준 미확정).
    */
   function marketRsFor(company) {
-    var m = global.InvestingMapMarketRs || {};
+    var m = global.InvestingMapMarketRs;
+    if (!m || typeof m !== 'object') return null;
     var market = String(
       (company && (company.market || company.Market || company.mkt)) || '',
     ).toUpperCase();
     if (market.indexOf('KOSDAQ') >= 0) {
-      return typeof m.kosdaqRs === 'number' && isFinite(m.kosdaqRs) ? m.kosdaqRs : 50;
+      return typeof m.kosdaqRs === 'number' && isFinite(m.kosdaqRs) ? m.kosdaqRs : null;
     }
-    return typeof m.kospiRs === 'number' && isFinite(m.kospiRs) ? m.kospiRs : 50;
+    return typeof m.kospiRs === 'number' && isFinite(m.kospiRs) ? m.kospiRs : null;
+  }
+
+  function hasMarketRs() {
+    var m = global.InvestingMapMarketRs;
+    if (!m || typeof m !== 'object') return false;
+    return (
+      (typeof m.kospiRs === 'number' && isFinite(m.kospiRs)) ||
+      (typeof m.kosdaqRs === 'number' && isFinite(m.kosdaqRs))
+    );
   }
 
   function gradientCss() {
@@ -141,6 +150,7 @@
     clamp01: clamp01,
     colorForRs: colorForRs,
     marketRsFor: marketRsFor,
+    hasMarketRs: hasMarketRs,
     gradient: gradientCss,
     gradientCss: gradientCss,
     gradientLabels: gradientLabels,

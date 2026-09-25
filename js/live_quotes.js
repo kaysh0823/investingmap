@@ -20,7 +20,8 @@
     if (!source) return;
     var ix = source.indices || source;
     if (!ix || typeof ix !== 'object') return;
-    var next = momentumIndices ? { kospiRs: momentumIndices.kospiRs, kosdaqRs: momentumIndices.kosdaqRs } : {};
+    var prev = momentumIndices;
+    var next = prev ? { kospiRs: prev.kospiRs, kosdaqRs: prev.kosdaqRs } : {};
     var kospi =
       ix.KOSPI && typeof ix.KOSPI.rs === 'number'
         ? ix.KOSPI.rs
@@ -35,8 +36,16 @@
           : null;
     if (kospi != null && isFinite(kospi)) next.kospiRs = kospi;
     if (kosdaq != null && isFinite(kosdaq)) next.kosdaqRs = kosdaq;
-    if (next.kospiRs != null || next.kosdaqRs != null) {
-      momentumIndices = next;
+    if (next.kospiRs == null && next.kosdaqRs == null) return;
+
+    var firstPublish = !prev;
+    var changed =
+      !prev ||
+      prev.kospiRs !== next.kospiRs ||
+      prev.kosdaqRs !== next.kosdaqRs;
+    momentumIndices = next;
+    // Always publish on first successful load and whenever values change.
+    if (firstPublish || changed) {
       try {
         global.InvestingMapMarketRs = {
           kospiRs: next.kospiRs,
@@ -49,6 +58,12 @@
         }
       } catch (e) {}
     }
+  }
+
+  /** Ingest any /api/quotes (or compatible) JSON — remember indices when present. */
+  function ingestQuotesJson(j) {
+    if (j && j.indices) rememberMomentumIndices(j);
+    return j;
   }
 
   function getMomentumIndices() {
@@ -555,7 +570,8 @@
           }
           var dv = r.headers.get('X-Data-Version') || r.headers.get('x-data-version') || '';
           if (dv && j && !j.dataVersion) j.dataVersion = dv;
-          return j;
+          // Guarantee indices → MarketRs on every successful quotes JSON path (incl. first load).
+          return ingestQuotesJson(j);
         });
       });
   }
@@ -839,6 +855,7 @@
     syncReturnMetaBadges: syncReturnMetaBadges,
     getMomentumIndices: getMomentumIndices,
     rememberMomentumIndices: rememberMomentumIndices,
+    ingestQuotesJson: ingestQuotesJson,
     positionHeaderLabel: positionHeaderLabel,
     emptyQuotesRow: emptyQuotesRow,
     formatQuotesRow: formatQuotesRow,

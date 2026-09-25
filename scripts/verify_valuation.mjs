@@ -189,7 +189,14 @@ assert.ok(/colorForRs/.test(rsColorJs), 'rs_color_scale exports colorForRs');
 assert.ok(/colorForPctB/.test(rsColorJs), 'rs_color_scale exports colorForPctB');
 assert.ok(/#3fb950/.test(rsColorJs) && /#f85149/.test(rsColorJs), 'rs_color_scale green/red palette');
 assert.ok(/InvestingMapPctBColor/.test(rsColorJs), 'InvestingMapPctBColor export');
+assert.ok(/hasMarketRs/.test(rsColorJs), 'rs_color_scale hasMarketRs');
 assert.ok(/시장 RS 초과 초록|green above market RS/.test(mapJs), 'valuation legend diverging RS copy');
+assert.ok(/marketRsPending|시장 RS 기준 미로드/.test(mapJs), 'valuation badge pending market RS');
+
+const liveQuotesJs = fs.readFileSync(path.join(ROOT, 'js', 'live_quotes.js'), 'utf8');
+assert.ok(/ingestQuotesJson/.test(liveQuotesJs), 'live_quotes ingestQuotesJson');
+assert.ok(/rememberMomentumIndices/.test(liveQuotesJs), 'live_quotes rememberMomentumIndices');
+assert.ok(/im:market-rs/.test(liveQuotesJs), 'live_quotes dispatches im:market-rs');
 
 // Pure unit tests (no jsdom) — load IIFE into a sandbox.
 {
@@ -202,6 +209,21 @@ assert.ok(/시장 RS 초과 초록|green above market RS/.test(mapJs), 'valuatio
   };
   sandbox.window = sandbox;
   sandbox.globalThis = sandbox;
+  // Minimal CustomEvent for im:market-rs dispatch
+  sandbox.CustomEvent = function CustomEvent(type, init) {
+    this.type = type;
+    this.detail = init && init.detail;
+  };
+  const listeners = {};
+  sandbox.addEventListener = function (type, fn) {
+    (listeners[type] || (listeners[type] = [])).push(fn);
+  };
+  sandbox.dispatchEvent = function (ev) {
+    (listeners[ev && ev.type] || []).forEach(function (fn) {
+      fn(ev);
+    });
+    return true;
+  };
   createContext(sandbox);
   const rsColorSrc = fs.readFileSync(path.join(ROOT, 'js', 'rs_color_scale.js'), 'utf8');
   runInContext(rsColorSrc, sandbox);
@@ -254,13 +276,60 @@ assert.ok(/시장 RS 초과 초록|green above market RS/.test(mapJs), 'valuatio
   assert.ok(red.r > red.g, `colorForRs(30,50) red-ish got ${JSON.stringify(red)}`);
   assert.equal(mid.toLowerCase(), sandbox.InvestingMapRsColor.NEUTRAL.toLowerCase(), 'colorForRs(50,50) neutral');
 
+  // Unloaded market RS → null center → neutral gray (기준 미확정)
+  delete sandbox.InvestingMapMarketRs;
+  assert.equal(
+    sandbox.InvestingMapRsColor.marketRsFor({ market: 'KOSPI' }),
+    null,
+    'marketRsFor without MarketRs → null',
+  );
+  assert.equal(
+    sandbox.InvestingMapRsColor.colorForRs(77.5, null).toLowerCase(),
+    sandbox.InvestingMapRsColor.NEUTRAL.toLowerCase(),
+    'colorForRs(rs, null) → NEUTRAL',
+  );
+  assert.equal(sandbox.InvestingMapRsColor.hasMarketRs(), false, 'hasMarketRs false when unloaded');
+
   const pctG = rgbParts(sandbox.InvestingMapPctBColor.colorForPctB(0.9));
   const pctR = rgbParts(sandbox.InvestingMapPctBColor.colorForPctB(0.1));
   const pctM = sandbox.InvestingMapPctBColor.colorForPctB(0.5);
   assert.ok(pctG.g > pctG.r, `colorForPctB(0.9) green-ish got ${JSON.stringify(pctG)}`);
   assert.ok(pctR.r > pctR.g, `colorForPctB(0.1) red-ish got ${JSON.stringify(pctR)}`);
   assert.equal(pctM.toLowerCase(), sandbox.InvestingMapPctBColor.NEUTRAL.toLowerCase(), 'colorForPctB(0.5) neutral');
-  console.log('  unit diverging RS/%b color scale ok');
+  console.log('  unit diverging RS/%b color scale + null-center ok');
+
+  // Fixture: /api/quotes-shaped indices → remember → InvestingMapMarketRs
+  runInContext(liveQuotesJs, sandbox);
+  assert.ok(sandbox.InvestingMapLiveQuotes, 'InvestingMapLiveQuotes loaded');
+  const quotesFixture = {
+    asOf: '2026-09-25T09:00:00+09:00',
+    items: {},
+    indices: {
+      KOSPI: { rs: 77.5 },
+      KOSDAQ: { rs: 50 },
+    },
+  };
+  let marketRsEvents = 0;
+  sandbox.addEventListener('im:market-rs', function () {
+    marketRsEvents += 1;
+  });
+  sandbox.InvestingMapLiveQuotes.ingestQuotesJson(quotesFixture);
+  assert.ok(sandbox.InvestingMapMarketRs, 'InvestingMapMarketRs set after ingest');
+  assert.equal(sandbox.InvestingMapMarketRs.kospiRs, 77.5, 'kospiRs 77.5');
+  assert.equal(sandbox.InvestingMapMarketRs.kosdaqRs, 50, 'kosdaqRs 50');
+  assert.ok(marketRsEvents >= 1, 'first remember dispatches im:market-rs');
+  assert.equal(
+    sandbox.InvestingMapRsColor.marketRsFor({ market: 'KOSPI' }),
+    77.5,
+    'marketRsFor KOSPI after remember',
+  );
+  assert.equal(
+    sandbox.InvestingMapRsColor.marketRsFor({ market: 'KOSDAQ' }),
+    50,
+    'marketRsFor KOSDAQ after remember',
+  );
+  assert.equal(sandbox.InvestingMapRsColor.hasMarketRs(), true, 'hasMarketRs after remember');
+  console.log('  unit quotes fixture → InvestingMapMarketRs {kospiRs:77.5,kosdaqRs:50} ok');
 }
 
 assert.ok(

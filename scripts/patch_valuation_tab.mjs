@@ -8,9 +8,9 @@ import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const SCRIPT_V = 8;
+export const SCRIPT_V = 9;
 const TAB_STATE_V = 13;
-export const RS_COLOR_V = 2;
+export const RS_COLOR_V = 3;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',

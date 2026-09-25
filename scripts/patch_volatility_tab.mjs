@@ -9,7 +9,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const SCRIPT_V = 14;
 const TAB_STATE_V = 10;
 export const TURNOVER_RADIUS_V = 2;
-export const RS_COLOR_V = 2;
+export const RS_COLOR_V = 3;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
