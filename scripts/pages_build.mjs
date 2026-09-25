@@ -17,6 +17,7 @@ const out = join(repo, 'dist');
 const ROOT_STATIC_FILES = [
   'ads.txt',
   '_headers',
+  '_routes.json',
   'robots.txt',
   'sitemap.xml',
   'llms.txt',

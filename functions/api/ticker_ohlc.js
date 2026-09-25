@@ -53,12 +53,12 @@ function formatServerTiming(parts) {
   return parts.map(([name, dur]) => `${name};dur=${Math.round(dur)}`).join(', ');
 }
 
-function exposeServerTiming(headers) {
+function exposeOhlcTiming(headers) {
   const prev = headers.get('Access-Control-Expose-Headers') || '';
-  if (/\bServer-Timing\b/i.test(prev)) return;
+  if (/\bX-OHLC-Timing\b/i.test(prev)) return;
   headers.set(
     'Access-Control-Expose-Headers',
-    prev ? `${prev}, Server-Timing` : 'Server-Timing',
+    prev ? `${prev}, X-OHLC-Timing` : 'X-OHLC-Timing',
   );
 }
 
@@ -115,11 +115,11 @@ export async function onRequest(context) {
     headers.set('X-OHLC-Adj', adjSig);
     headers.set('X-OHLC-Inv', invSig);
     headers.set('X-OHLC-Interval', interval);
-    headers.set('Server-Timing', formatServerTiming([
+    headers.set('X-OHLC-Timing', formatServerTiming([
       ['sig', sigDur],
       ['cache', cacheDur],
     ]));
-    exposeServerTiming(headers);
+    exposeOhlcTiming(headers);
     return new Response(hit.body, { status: hit.status, headers });
   }
 
@@ -145,14 +145,14 @@ export async function onRequest(context) {
   response.headers.set('X-OHLC-Interval', interval);
   response.headers.set('X-Cache', 'MISS');
   response.headers.set(
-    'Server-Timing',
+    'X-OHLC-Timing',
     formatServerTiming([
       ['sig', sigDur],
       ['cache', cacheDur],
       ['bars', barsDur],
     ]),
   );
-  exposeServerTiming(response.headers);
+  exposeOhlcTiming(response.headers);
   if (payload.bars && payload.bars.length) {
     putHubCache(context, cachePath, url.origin, response);
   }

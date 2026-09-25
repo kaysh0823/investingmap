@@ -1,5 +1,8 @@
 # Cloudflare Pages Functions — KRX quotes API
 
+Pages Functions run only under `/api/*` (see root `_routes.json`). Static HTML/JS/CSS bypass the Worker.
+`*.pages.dev` host preference is handled via HTML `<link rel="canonical" href="https://www.investingmap.kr/...">` (no host redirect middleware).
+
 `GET /api/quotes?codes=005930,000660`
 
 Returns JSON compatible with `js/live_quotes.js`:
