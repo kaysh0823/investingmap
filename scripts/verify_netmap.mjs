@@ -196,10 +196,35 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
 
   const noUs = Net._test.filterGraph(sample, {
     ...Net._test.defaultFilters(),
-    countries: { us: false, tw: true, jp: true, cn: true, eu: true },
+    countries: Net._test.COUNTRIES.reduce((acc, c) => {
+      acc[c] = c !== 'us';
+      return acc;
+    }, {}),
   });
   assert.ok(!noUs.nodes.some((n) => n.id === 'global:x'), 'us chip off removes US node');
   assert.ok(!noUs.edges.some((e) => e.id === 'e2'), 'edge to US removed');
+
+  const otherSample = {
+    nodes: [
+      { id: 'krx:1', type: 'kr_listed', country: 'kr', chain: 'a', nameKo: 'A', ticker: '1' },
+      { id: 'global:other1', type: 'global', country: 'other', chain: 'g', nameEn: 'OtherCo' },
+    ],
+    edges: [
+      {
+        id: 'e-other',
+        source: 'krx:1',
+        target: 'global:other1',
+        type: 'peer',
+        confidence: 'medium',
+      },
+    ],
+  };
+  const otherCounts = Net._test.countNodesByCountry(otherSample, Net._test.defaultFilters());
+  assert.equal(otherCounts.other, 1, 'countNodesByCountry counts country=other');
+  assert.ok(
+    Net._test.COUNTRIES.every((c) => typeof otherCounts[c] === 'number'),
+    'countNodesByCountry keys cover COUNTRIES',
+  );
 
   const noPeer = Net._test.filterGraph(sample, {
     ...Net._test.defaultFilters(),

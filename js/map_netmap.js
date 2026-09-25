@@ -55,7 +55,10 @@
     return {
       types: { supply: true, partner: true, equity: true, peer: true, distribution: true },
       scope: 'all',
-      countries: { us: true, tw: true, jp: true, cn: true, eu: true },
+      countries: COUNTRIES.reduce(function (acc, c) {
+        acc[c] = true;
+        return acc;
+      }, {}),
       search: '',
     };
   }
@@ -884,7 +887,10 @@
   function countNodesByCountry(raw, filt) {
     var base = Object.assign({}, filt || defaultFilters(), { scope: 'all' });
     var g = filterGraph(raw, base);
-    var counts = { us: 0, tw: 0, jp: 0, cn: 0, eu: 0 };
+    var counts = COUNTRIES.reduce(function (acc, c) {
+      acc[c] = 0;
+      return acc;
+    }, {});
     g.nodes.forEach(function (n) {
       if (!isGlobalNode(n)) return;
       var c = String(n.country || '').toLowerCase();
@@ -1614,6 +1620,7 @@
       isDomesticNode: isDomesticNode,
       isGlobalNode: isGlobalNode,
       colorForDomestic: colorForDomestic,
+      countNodesByCountry: countNodesByCountry,
       recolorNodes: recolorNodes,
       getRenderSeq: function () {
         return renderSeq;
