@@ -17,6 +17,7 @@
   var stylesInjected = false;
   var metricLoaded = false;
   var widthRetryTimer = null;
+  var renderSeq = 0;
   var lastChart = { metric: null };
   var lastPaintX = null;
   var lastPaintMetric = null;
@@ -791,8 +792,23 @@
     });
   }
 
+  function pruneExtraSvgs(container) {
+    if (!container || typeof container.querySelectorAll !== 'function') return;
+    var svgs = container.querySelectorAll('svg');
+    if (!svgs || svgs.length <= 1) return;
+    for (var i = 1; i < svgs.length; i++) {
+      var node = svgs[i];
+      if (node && node.parentNode) node.parentNode.removeChild(node);
+    }
+  }
+
   function renderChart() {
     if (!lastOpts) return;
+    var seq = ++renderSeq;
+    if (widthRetryTimer) {
+      clearTimeout(widthRetryTimer);
+      widthRetryTimer = null;
+    }
     var opts = lastOpts;
     var container = opts.container;
     if (!container || typeof d3 === 'undefined') return;
@@ -815,14 +831,19 @@
 
     fetchSnapshot()
       .then(function (snapshot) {
+        if (seq !== renderSeq) return;
         container.innerHTML = '';
         var live = sessionOpenNow();
         syncBasisBadge(snapshot, labels, live);
         measureContainerWidth(container, 0, function (width) {
+          if (seq !== renderSeq) return;
+          container.innerHTML = '';
+          if (seq !== renderSeq) return;
           paint(container, companies, snapshot, opts, labels, live, width);
         });
       })
       .catch(function () {
+        if (seq !== renderSeq) return;
         container.innerHTML = '';
         var err = document.createElement('div');
         err.style.cssText =
@@ -1184,6 +1205,8 @@
     lastPaintX = x;
     lastPaintMetric = metric;
 
+    pruneExtraSvgs(container);
+
     var legend = opts.legend || document.getElementById('valuation-legend');
     if (legend) {
       var gradCss =
@@ -1409,6 +1432,124 @@
       simulateMetricSelect: simulateMetricSelect,
       METRICS: METRICS,
       METRIC_STORAGE: METRIC_STORAGE,
+      getRenderSeq: function () {
+        return renderSeq;
+      },
+      pruneExtraSvgs: pruneExtraSvgs,
+      /**
+       * Simulate two overlapping renderChart cycles (no jsdom / no full d3 paint).
+       * Uses the same renderSeq + deferred-callback discard rules as renderChart.
+       * Stub paint appends an <svg>; only the latest seq should remain.
+       */
+      simulateConcurrentRenders: function (container) {
+        function makeSvg() {
+          return {
+            tagName: 'svg',
+            nodeName: 'svg',
+            parentNode: null,
+          };
+        }
+        var kids = [];
+        var stub = container || {
+          _kids: kids,
+          get children() {
+            return this._kids;
+          },
+          get innerHTML() {
+            return this._kids.length ? 'x' : '';
+          },
+          set innerHTML(v) {
+            if (!v) this._kids.length = 0;
+          },
+          appendChild: function (n) {
+            n.parentNode = this;
+            this._kids.push(n);
+            return n;
+          },
+          querySelectorAll: function (sel) {
+            if (sel !== 'svg') return [];
+            return this._kids.filter(function (n) {
+              return n && String(n.tagName).toLowerCase() === 'svg';
+            });
+          },
+          removeChild: function (n) {
+            var i = this._kids.indexOf(n);
+            if (i >= 0) this._kids.splice(i, 1);
+            n.parentNode = null;
+            return n;
+          },
+        };
+        if (!stub._kids) {
+          stub._kids = [];
+          stub.appendChild =
+            stub.appendChild ||
+            function (n) {
+              n.parentNode = stub;
+              stub._kids.push(n);
+              return n;
+            };
+          stub.querySelectorAll =
+            stub.querySelectorAll ||
+            function (sel) {
+              if (sel !== 'svg') return [];
+              return stub._kids.filter(function (n) {
+                return n && String(n.tagName).toLowerCase() === 'svg';
+              });
+            };
+          stub.removeChild =
+            stub.removeChild ||
+            function (n) {
+              var i = stub._kids.indexOf(n);
+              if (i >= 0) stub._kids.splice(i, 1);
+              n.parentNode = null;
+              return n;
+            };
+          Object.defineProperty(stub, 'innerHTML', {
+            configurable: true,
+            get: function () {
+              return stub._kids.length ? 'x' : '';
+            },
+            set: function (v) {
+              if (!v) stub._kids.length = 0;
+            },
+          });
+        }
+
+        var deferred = [];
+        function schedulePaintLike(seq) {
+          deferred.push(function () {
+            if (seq !== renderSeq) return;
+            stub.innerHTML = '';
+            if (seq !== renderSeq) return;
+            stub.appendChild(makeSvg());
+            pruneExtraSvgs(stub);
+          });
+        }
+
+        var seq1 = ++renderSeq;
+        if (widthRetryTimer) {
+          clearTimeout(widthRetryTimer);
+          widthRetryTimer = null;
+        }
+        schedulePaintLike(seq1);
+
+        var seq2 = ++renderSeq;
+        if (widthRetryTimer) {
+          clearTimeout(widthRetryTimer);
+          widthRetryTimer = null;
+        }
+        schedulePaintLike(seq2);
+
+        // Flush in start order (stale first) — only seq2 should paint.
+        for (var i = 0; i < deferred.length; i++) deferred[i]();
+        return {
+          renderSeq: renderSeq,
+          seq1: seq1,
+          seq2: seq2,
+          svgCount: stub.querySelectorAll('svg').length,
+          container: stub,
+        };
+      },
       getState: function () {
         return { metric: state.metric, sort: state.sort };
       },

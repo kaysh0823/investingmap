@@ -171,6 +171,9 @@ assert.ok(/isUsableLabel|!== 'undefined'/.test(mapJs), 'map_valuation null-guard
 assert.ok(/im\.valuation\.metric/.test(mapJs), 'map_valuation uses im.valuation.metric storage');
 assert.ok(/function clampTip/.test(mapJs), 'map_valuation exports clampTip');
 assert.ok(/viewBox/.test(mapJs), 'map_valuation uses SVG viewBox');
+assert.ok(/var renderSeq\s*=\s*0/.test(mapJs), 'map_valuation renderSeq race guard');
+assert.ok(/seq !== renderSeq/.test(mapJs), 'map_valuation discards stale render seq');
+assert.ok(/pruneExtraSvgs/.test(mapJs), 'map_valuation pruneExtraSvgs safeguard');
 assert.ok(/InvestingMapRsColor|rs_color_scale/.test(mapJs), 'map_valuation uses shared RS color module');
 assert.ok(/EPS\(TTM\)/.test(mapJs) && /\bRS\b/.test(mapJs), 'map_valuation legend mentions EPS and RS');
 
@@ -329,6 +332,20 @@ assert.ok(/im:market-rs/.test(liveQuotesJs), 'live_quotes dispatches im:market-r
   );
   assert.equal(sandbox.InvestingMapRsColor.hasMarketRs(), true, 'hasMarketRs after remember');
   console.log('  unit quotes fixture → InvestingMapMarketRs {kospiRs:77.5,kosdaqRs:50} ok');
+
+  assert.ok(typeof Val._test.getRenderSeq === 'function', '_test.getRenderSeq');
+  assert.ok(typeof Val._test.simulateConcurrentRenders === 'function', '_test.simulateConcurrentRenders');
+  assert.ok(typeof Val._test.pruneExtraSvgs === 'function', '_test.pruneExtraSvgs');
+  const race = Val._test.simulateConcurrentRenders();
+  assert.equal(race.seq2, race.renderSeq, 'latest seq wins');
+  assert.ok(race.seq1 < race.seq2, 'seq increments across overlapping renders');
+  assert.equal(race.svgCount, 1, `concurrent renders must leave 1 svg, got ${race.svgCount}`);
+  // Defense: prune keeps only the first when two svgs are forced in
+  race.container.appendChild({ tagName: 'svg', nodeName: 'svg', parentNode: null });
+  assert.equal(race.container.querySelectorAll('svg').length, 2, 'precondition: 2 svgs');
+  Val._test.pruneExtraSvgs(race.container);
+  assert.equal(race.container.querySelectorAll('svg').length, 1, 'pruneExtraSvgs → 1 svg');
+  console.log('  unit concurrent renderChart race → single svg ok');
 }
 
 assert.ok(
