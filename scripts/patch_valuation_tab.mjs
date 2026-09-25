@@ -8,8 +8,9 @@ import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 6;
+const SCRIPT_V = 7;
 const TAB_STATE_V = 13;
+const RS_COLOR_V = 1;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -102,7 +103,8 @@ const TRANSLATIONS = {
     valuationLoading: '밸류에이션 데이터를 불러오는 중…',
     valuationFailed: '밸류에이션 스냅샷을 불러오지 못했습니다.',
     valuationNoData: '표시할 밸류에이션 데이터가 없습니다.',
-    valuationLegend: '점 크기=시총 · 색=당일 등락률 · 세로 점선=전 시장 P25/P50/P75(KRX FY)',
+    valuationLegend:
+      '점 크기 = EPS(TTM) · 색 = RS(진할수록 높음) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
     valuationLegendPer:
       'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
   },
@@ -117,7 +119,8 @@ const TRANSLATIONS = {
     valuationLoading: 'Loading valuation data…',
     valuationFailed: 'Could not load valuation snapshot.',
     valuationNoData: 'No valuation data available.',
-    valuationLegend: 'Dot size=mcap · color=1D chg · dashed lines=market P25/P50/P75 (KRX FY)',
+    valuationLegend:
+      'Dot size = EPS(TTM) · color = RS (darker = higher) · dashed lines = market P25/P50/P75 (KRX FY)',
     valuationLegendPer:
       'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
   },
@@ -226,6 +229,15 @@ function patchTranslationObjects(source) {
     /(["']?)valuationMetricPer\1\s*:\s*(["'])PER\2(?! TTM)/g,
     `$1valuationMetricPer$1: $2PER TTM$2`,
   );
+  // Refresh legend copy (EPS/RS) when older mcap/chg wording is still present.
+  source = source.replace(
+    /(["']?)valuationLegend\1\s*:\s*(["'])점 크기[^'"]*\2/g,
+    `$1valuationLegend$1: $2${TRANSLATIONS.ko.valuationLegend}$2`,
+  );
+  source = source.replace(
+    /(["']?)valuationLegend\1\s*:\s*(["'])Dot size[^'"]*\2/g,
+    `$1valuationLegend$1: $2${TRANSLATIONS.en.valuationLegend}$2`,
+  );
   return source;
 }
 
@@ -298,6 +310,17 @@ function patchHtml(source) {
     source = source.replace(
       /map_valuation\.js(?:\?v=\d+)?/g,
       `map_valuation.js?v=${SCRIPT_V}`,
+    );
+  }
+  if (!source.includes('rs_color_scale.js')) {
+    source = source.replace(
+      /(<script src="\.\.\/js\/map_valuation\.js(?:\?v=\d+)?"><\/script>)/,
+      `<script src="../js/rs_color_scale.js?v=${RS_COLOR_V}"></script>\n  $1`,
+    );
+  } else {
+    source = source.replace(
+      /rs_color_scale\.js(?:\?v=\d+)?/g,
+      `rs_color_scale.js?v=${RS_COLOR_V}`,
     );
   }
   source = source.replace(

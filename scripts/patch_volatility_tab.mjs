@@ -6,9 +6,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 12;
+const SCRIPT_V = 13;
 const TAB_STATE_V = 10;
 const TURNOVER_RADIUS_V = 2;
+const RS_COLOR_V = 1;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -229,6 +230,29 @@ function ensureTurnoverRadiusScript(source) {
   return source;
 }
 
+function ensureRsColorScaleScript(source) {
+  const tag = `<script src="../js/rs_color_scale.js?v=${RS_COLOR_V}"></script>`;
+  if (source.includes('rs_color_scale.js')) {
+    return source.replace(
+      /rs_color_scale\.js(?:\?v=\d+)?/g,
+      `rs_color_scale.js?v=${RS_COLOR_V}`,
+    );
+  }
+  if (/<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
+    return source.replace(
+      /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=\d+)?"><\/script>)/,
+      `${tag}\n  $1`,
+    );
+  }
+  if (/<script src="\.\.\/js\/map_valuation\.js(?:\?v=\d+)?"><\/script>/.test(source)) {
+    return source.replace(
+      /(<script src="\.\.\/js\/map_valuation\.js(?:\?v=\d+)?"><\/script>)/,
+      `${tag}\n  $1`,
+    );
+  }
+  return source;
+}
+
 function patchHtml(source) {
   if (!source.includes('tab-btn-volatility')) {
     source = source.replace(
@@ -254,6 +278,7 @@ function patchHtml(source) {
     );
   }
   source = ensureTurnoverRadiusScript(source);
+  source = ensureRsColorScaleScript(source);
   source = source.replace(
     /map_tab_state\.js(?:\?v=\d+)?/g,
     `map_tab_state.js?v=${TAB_STATE_V}`,

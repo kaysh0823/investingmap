@@ -129,7 +129,7 @@
     "valuationLoading": "밸류에이션 데이터를 불러오는 중…",
     "valuationFailed": "밸류에이션 스냅샷을 불러오지 못했습니다.",
     "valuationNoData": "표시할 밸류에이션 데이터가 없습니다.",
-    "valuationLegend": "점 크기=시총 · 색=당일 등락률 · 세로 점선=전 시장 P25/P50/P75(KRX FY)",
+    "valuationLegend": "점 크기 = EPS(TTM) · 색 = RS(진할수록 높음) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)",
     "valuationLegendPer": "PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준",
     "valuationMetricPerFy": "PER FY"
   },
@@ -263,7 +263,7 @@
     "valuationLoading": "Loading valuation data…",
     "valuationFailed": "Could not load valuation snapshot.",
     "valuationNoData": "No valuation data available.",
-    "valuationLegend": "Dot size=mcap · color=1D chg · dashed lines=market P25/P50/P75 (KRX FY)",
+    "valuationLegend": "Dot size = EPS(TTM) · color = RS (darker = higher) · dashed lines = market P25/P50/P75 (KRX FY)",
     "valuationLegendPer": "PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS",
     "valuationMetricPerFy": "PER FY"
   }

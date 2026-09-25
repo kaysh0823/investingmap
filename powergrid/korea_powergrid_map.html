@@ -264,9 +264,10 @@
   <script src="../js/map_heatmap.js?v=16"></script>
   <script src="../js/turnover_radius.js?v=2"></script>
   <script src="../js/map_momentum.js?v=16"></script>
-  <script src="../js/map_volatility.js?v=12"></script>
+  <script src="../js/rs_color_scale.js?v=1"></script>
+  <script src="../js/map_volatility.js?v=13"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
-  <script src="../js/map_valuation.js?v=6"></script>
+  <script src="../js/map_valuation.js?v=7"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=36"></script>
@@ -2669,7 +2670,7 @@
         "valuationLoading": "밸류에이션 데이터를 불러오는 중…",
         "valuationFailed": "밸류에이션 스냅샷을 불러오지 못했습니다.",
         "valuationNoData": "표시할 밸류에이션 데이터가 없습니다.",
-        "valuationLegend": "점 크기=시총 · 색=당일 등락률 · 세로 점선=전 시장 P25/P50/P75",
+        "valuationLegend": "점 크기 = EPS(TTM) · 색 = RS(진할수록 높음) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)",
         "valuationLegendPer": "PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준",
         "perfCalendarTitle": "퍼포먼스 캘린더",
         "perfCalendarSubtitle": "전년말 종가=100 기준 연중 수익률",
@@ -2820,7 +2821,7 @@
         "valuationLoading": "Loading valuation data…",
         "valuationFailed": "Could not load valuation snapshot.",
         "valuationNoData": "No valuation data available.",
-        "valuationLegend": "Dot size=mcap · color=1D chg · dashed lines=market P25/P50/P75",
+        "valuationLegend": "Dot size = EPS(TTM) · color = RS (darker = higher) · dashed lines = market P25/P50/P75 (KRX FY)",
         "valuationLegendPer": "PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS",
         "perfCalendarTitle": "Performance Calendar",
         "perfCalendarSubtitle": "YTD vs prior year-end=100",

@@ -1,5 +1,6 @@
 /**
- * Valuation comparison v6 — chain-group PER TTM / FY / PBR / dividend strip.
+ * Valuation comparison v7 — chain-group PER TTM / FY / PBR / dividend strip.
+ * Dot size = EPS(TTM|FY); color = RS (shared rs_color_scale).
  * Snapshot: /data/hub_valuation_snapshot.json (KRX FY + Naver TTM for hub).
  */
 (function (global) {
@@ -28,6 +29,8 @@
   var CHG_CLIP = 15;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var MISSING_COLOR = '#9aa3ad';
+  var EPS_R_MIN = 3.5;
+  var EPS_R_MAX = 11;
 
   var COPY = {
     ko: {
@@ -55,7 +58,8 @@
       loading: '밸류에이션 데이터를 불러오는 중…',
       failed: '밸류에이션 스냅샷을 불러오지 못했습니다.',
       noData: '표시할 밸류에이션 데이터가 없습니다.',
-      legend: '점 크기=시총 · 색=당일 등락률 · 세로 점선=전 시장 P25/P50/P75(KRX FY)',
+      legend:
+        '점 크기 = EPS(TTM) · 색 = RS(진할수록 높음) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
       legendPer:
         'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
       basisClose: function (dd) {
@@ -68,6 +72,7 @@
       tipPerFy: 'PER FY',
       tipPbr: 'PBR',
       tipEpsTtm: 'EPS(TTM)',
+      tipRs: 'RS',
       tipDvd: '배당수익률',
       tipClose: '종가',
       tipLast: '현재가',
@@ -100,7 +105,8 @@
       loading: 'Loading valuation data…',
       failed: 'Could not load valuation snapshot.',
       noData: 'No valuation data available.',
-      legend: 'Dot size=mcap · color=1D chg · dashed lines=market P25/P50/P75 (KRX FY)',
+      legend:
+        'Dot size = EPS(TTM) · color = RS (darker = higher) · dashed lines = market P25/P50/P75 (KRX FY)',
       legendPer:
         'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
       basisClose: function (dd) {
@@ -113,6 +119,7 @@
       tipPerFy: 'PER FY',
       tipPbr: 'PBR',
       tipEpsTtm: 'EPS (TTM)',
+      tipRs: 'RS',
       tipDvd: 'Div. yield',
       tipClose: 'Close',
       tipLast: 'Last',
@@ -254,10 +261,66 @@
     return Math.sign(t) * Math.pow(Math.abs(t), 0.85);
   }
 
+  /** @deprecated chg coloring kept for tests only — dots use RS via InvestingMapRsColor. */
   function colorForChg(pct) {
     if (pct == null || !isFinite(pct) || typeof d3 === 'undefined') return MISSING_COLOR;
     var sc = d3.scaleLinear().domain([-1, -0.66, -0.33, 0, 0.33, 0.66, 1]).range(CHG_RANGE).clamp(true);
     return sc(contrastPct(pct, CHG_CLIP));
+  }
+
+  function colorForRsDot(rs) {
+    if (global.InvestingMapRsColor && typeof global.InvestingMapRsColor.colorForRs === 'function') {
+      return global.InvestingMapRsColor.colorForRs(rs);
+    }
+    return MISSING_COLOR;
+  }
+
+  /** Prefer TTM EPS; fall back to FY. */
+  function resolveEps(q) {
+    q = q || {};
+    if (q.epsTtm != null && isFinite(q.epsTtm) && q.epsTtm > 0) return q.epsTtm;
+    if (q.epsFy != null && isFinite(q.epsFy) && q.epsFy > 0) return q.epsFy;
+    if (q.epsTtm != null && isFinite(q.epsTtm)) return q.epsTtm;
+    if (q.epsFy != null && isFinite(q.epsFy)) return q.epsFy;
+    return null;
+  }
+
+  /**
+   * Pure sqrt radius for EPS (no d3 required).
+   * eps ≤ 0 → EPS_R_MIN (N/A / deficit).
+   */
+  function epsRadius(eps, domainMin, domainMax) {
+    if (!(eps > 0)) return EPS_R_MIN;
+    var lo = domainMin;
+    var hi = domainMax;
+    if (!(hi > lo) || !isFinite(lo) || !isFinite(hi)) return (EPS_R_MIN + EPS_R_MAX) / 2;
+    var t = Math.sqrt((eps - lo) / (hi - lo));
+    t = Math.max(0, Math.min(1, t));
+    return EPS_R_MIN + t * (EPS_R_MAX - EPS_R_MIN);
+  }
+
+  function makeEpsRadiusScale(positiveEps) {
+    var vals = (positiveEps || []).filter(function (v) {
+      return v != null && isFinite(v) && v > 0;
+    });
+    var lo = vals.length ? Math.min.apply(null, vals) : 1;
+    var hi = vals.length ? Math.max.apply(null, vals) : lo;
+    if (typeof d3 !== 'undefined' && d3.scaleSqrt) {
+      var sc = d3.scaleSqrt().domain([lo, hi]).range([EPS_R_MIN, EPS_R_MAX]).clamp(true);
+      return {
+        domain: [lo, hi],
+        radius: function (eps) {
+          if (!(eps > 0)) return EPS_R_MIN;
+          return sc(eps);
+        },
+      };
+    }
+    return {
+      domain: [lo, hi],
+      radius: function (eps) {
+        return epsRadius(eps, lo, hi);
+      },
+    };
   }
 
   function percentile(sorted, p) {
@@ -740,6 +803,7 @@
       var ch = c.chain || (lang === 'en' ? 'Other' : '기타');
       if (!byChain[ch]) byChain[ch] = [];
       var resolved = resolveDisplay(q, c, metric, liveSession);
+      var eps = resolveEps(q);
       byChain[ch].push({
         ticker: t,
         name: lang === 'en' && c.nameEn ? c.nameEn : c.name || t,
@@ -747,11 +811,13 @@
         chain: ch,
         mcap: c.mcapWon > 0 ? c.mcapWon : null,
         chg1dPct: typeof c.chg1dPct === 'number' ? c.chg1dPct : null,
+        rs: typeof c.rs === 'number' && isFinite(c.rs) ? c.rs : null,
         last: typeof c.last === 'number' ? c.last : null,
         value: resolved.value,
         plottable: isPlottable(resolved.value, metric),
         fyFallback: !!resolved.fyFallback,
         live: !!resolved.live,
+        eps: eps,
         q: q,
       });
     });
@@ -815,17 +881,14 @@
       return { display: v, dir: 0 };
     }
 
-    var mcaps = [];
+    var epsPos = [];
     groups.forEach(function (g) {
       g.items.forEach(function (d) {
-        if (d.mcap > 0) mcaps.push(d.mcap);
+        if (d.eps > 0) epsPos.push(d.eps);
       });
     });
-    var rScale = d3
-      .scaleSqrt()
-      .domain([d3.min(mcaps) || 1e10, d3.max(mcaps) || 1e14])
-      .range([3.5, 11])
-      .clamp(true);
+    var epsScale = makeEpsRadiusScale(epsPos);
+    var rScale = epsScale;
 
     var svg = d3
       .select(container)
@@ -978,7 +1041,9 @@
         var cx;
         var cx0;
         var clampDir = 0;
-        if (d.plottable) {
+        // EPS ≤ 0 (deficit) → N/A lane at min radius; else metric x when plottable.
+        var inNaLane = !d.plottable || !(d.eps > 0);
+        if (!inNaLane) {
           var cp = clampPlot(d.value);
           clampDir = cp.dir;
           cx = x(cp.display);
@@ -986,9 +1051,10 @@
         } else {
           cx = innerW + 16 + Math.abs(stableJitter(d.ticker + 'na')) * 0.8 + 4;
           cx0 = cx;
+          clampDir = 0;
         }
-        var r = d.mcap > 0 ? rScale(d.mcap) : 4;
-        var fill = d.plottable ? colorForChg(d.chg1dPct) : MISSING_COLOR;
+        var r = rScale.radius(d.eps);
+        var fill = colorForRsDot(d.rs);
 
         if (clampDir !== 0) {
           var mark = gRoot
@@ -1114,7 +1180,11 @@
       '× · ' +
       labels.tipEpsTtm +
       ': ' +
-      formatMetric(q.epsTtm, 'perTtm') +
+      (d.eps != null && isFinite(d.eps) ? formatMetric(d.eps, 'perTtm') : '—') +
+      ' · ' +
+      labels.tipRs +
+      ': ' +
+      (d.rs != null && isFinite(d.rs) ? (Math.round(d.rs * 10) / 10).toFixed(1) : '—') +
       '<br>' +
       labels.tipDvd +
       ': ' +
@@ -1236,6 +1306,12 @@
       ticks125: ticks125,
       formatAxisTick: formatAxisTick,
       quantileAsc: quantileAsc,
+      epsRadius: epsRadius,
+      makeEpsRadiusScale: makeEpsRadiusScale,
+      resolveEps: resolveEps,
+      colorForRsDot: colorForRsDot,
+      EPS_R_MIN: EPS_R_MIN,
+      EPS_R_MAX: EPS_R_MAX,
       simulateMetricSelect: simulateMetricSelect,
       METRICS: METRICS,
       METRIC_STORAGE: METRIC_STORAGE,

@@ -171,6 +171,21 @@ assert.ok(/isUsableLabel|!== 'undefined'/.test(mapJs), 'map_valuation null-guard
 assert.ok(/im\.valuation\.metric/.test(mapJs), 'map_valuation uses im.valuation.metric storage');
 assert.ok(/function clampTip/.test(mapJs), 'map_valuation exports clampTip');
 assert.ok(/viewBox/.test(mapJs), 'map_valuation uses SVG viewBox');
+assert.ok(/InvestingMapRsColor|rs_color_scale/.test(mapJs), 'map_valuation uses shared RS color module');
+assert.ok(/EPS\(TTM\)/.test(mapJs) && /\bRS\b/.test(mapJs), 'map_valuation legend mentions EPS and RS');
+
+const volJs = fs.readFileSync(path.join(ROOT, 'js', 'map_volatility.js'), 'utf8');
+assert.ok(
+  /InvestingMapRsColor|rs_color_scale/.test(volJs),
+  'map_volatility uses shared RS color module (same as valuation)',
+);
+assert.ok(
+  fs.existsSync(path.join(ROOT, 'js', 'rs_color_scale.js')),
+  'js/rs_color_scale.js shared module',
+);
+const rsColorJs = fs.readFileSync(path.join(ROOT, 'js', 'rs_color_scale.js'), 'utf8');
+assert.ok(/colorForRs/.test(rsColorJs), 'rs_color_scale exports colorForRs');
+assert.ok(/#ffe0e0/.test(rsColorJs) && /#8b0000/.test(rsColorJs), 'rs_color_scale pink→red range');
 
 // Pure unit tests (no jsdom) — load IIFE into a sandbox.
 {
@@ -184,9 +199,12 @@ assert.ok(/viewBox/.test(mapJs), 'map_valuation uses SVG viewBox');
   sandbox.window = sandbox;
   sandbox.globalThis = sandbox;
   createContext(sandbox);
+  const rsColorSrc = fs.readFileSync(path.join(ROOT, 'js', 'rs_color_scale.js'), 'utf8');
+  runInContext(rsColorSrc, sandbox);
   runInContext(mapJs, sandbox);
   const Val = sandbox.InvestingMapValuation;
   assert.ok(Val && Val._test, 'InvestingMapValuation._test available');
+  assert.ok(sandbox.InvestingMapRsColor, 'InvestingMapRsColor loaded for valuation');
 
   const tip = Val._test.clampTip({ x: 1900, w: 260, vw: 1920 });
   assert.ok(tip.left <= 1652, `clampTip left=${tip.left} must be ≤ 1652`);
@@ -207,6 +225,18 @@ assert.ok(/viewBox/.test(mapJs), 'map_valuation uses SVG viewBox');
   assert.ok(domHi.hi < 300, `q95-based hi=${domHi.hi} must be < 300 (not stretched by 900)`);
   assert.ok(900 > domHi.hi, `900 must sit above hi=${domHi.hi} (▶ outlier)`);
   console.log(`  unit computeXDomain hi-cap [..,900] hi=${domHi.hi} (<300, 900→▶) ok`);
+
+  const rLo = Val._test.epsRadius(500, 500, 22140);
+  const rHi = Val._test.epsRadius(22140, 500, 22140);
+  assert.ok(Math.abs(rLo - Val._test.EPS_R_MIN) < 1e-6, `eps 500 → r≈${Val._test.EPS_R_MIN} got ${rLo}`);
+  assert.ok(Math.abs(rHi - Val._test.EPS_R_MAX) < 1e-6, `eps 22140 → r≈${Val._test.EPS_R_MAX} got ${rHi}`);
+  console.log(`  unit epsRadius [500,22140] → ${rLo}..${rHi} ok`);
+
+  const c0 = sandbox.InvestingMapRsColor.colorForRs(null);
+  const c100 = sandbox.InvestingMapRsColor.colorForRs(100);
+  assert.equal(c0, sandbox.InvestingMapRsColor.MISSING_COLOR, 'RS null → gray');
+  assert.ok(c100 && c100 !== c0, 'RS 100 → colored');
+  console.log('  unit RS color scale (shared) ok');
 }
 
 assert.ok(

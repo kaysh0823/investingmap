@@ -300,6 +300,9 @@
   }
 
   function redScale() {
+    if (global.InvestingMapRsColor && typeof global.InvestingMapRsColor.redScale === 'function') {
+      return global.InvestingMapRsColor.redScale();
+    }
     return d3.scaleSequential(function (t) {
       return d3.interpolate('#ffe0e0', '#8b0000')(t);
     });
@@ -324,6 +327,11 @@
   }
 
   function buildColorFn(fg, mode) {
+    if (mode === 'rs' && global.InvestingMapRsColor && typeof global.InvestingMapRsColor.colorForRs === 'function') {
+      return function (d) {
+        return global.InvestingMapRsColor.colorForRs(d.rs);
+      };
+    }
     var red = redScale();
     if (mode === 'pctb') {
       red.domain([0, 1]);
