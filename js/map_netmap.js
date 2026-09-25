@@ -6,7 +6,7 @@
   'use strict';
 
   var EDGE_TYPES = ['supply', 'partner', 'equity', 'peer', 'distribution'];
-  var COUNTRIES = ['us', 'tw', 'jp', 'cn', 'eu'];
+  var COUNTRIES = ['us', 'tw', 'jp', 'cn', 'eu', 'other'];
   var FILTER_KEY = 'im.netmap.filters';
   var LINK_DIST = { supply: 70, partner: 60, equity: 50, peer: 90, distribution: 70 };
   var COUNTRY_COLOR = {
@@ -15,6 +15,7 @@
     jp: '#e0607e',
     cn: '#f2a03d',
     eu: '#9b6cf5',
+    other: '#b08968',
     kr: '#8b949e',
   };
   var EDGE_COLOR = {

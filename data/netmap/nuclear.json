@@ -1,0 +1,791 @@
+{
+ "sectorId": "nuclear",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "reactor": "원자로·주기기",
+  "engineering": "설계·엔지니어링",
+  "ic": "계측·제어",
+  "maintenance": "정비·운영지원",
+  "bop": "보조기기·소재",
+  "end_customer": "발주처·운영사",
+  "global_peer": "글로벌 원전·SMR"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:034020",
+   "type": "kr_listed",
+   "ticker": "034020",
+   "nameKo": "두산에너빌리티",
+   "nameEn": "두산에너빌리티",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "reactor",
+   "role": "원자로·주기기"
+  },
+  {
+   "id": "krx:052690",
+   "type": "kr_listed",
+   "ticker": "052690",
+   "nameKo": "한전기술",
+   "nameEn": "한전기술",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "engineering",
+   "role": "설계·엔지니어링"
+  },
+  {
+   "id": "krx:032820",
+   "type": "kr_listed",
+   "ticker": "032820",
+   "nameKo": "우리기술",
+   "nameEn": "우리기술",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "ic",
+   "role": "계측·제어"
+  },
+  {
+   "id": "krx:051600",
+   "type": "kr_listed",
+   "ticker": "051600",
+   "nameKo": "한전KPS",
+   "nameEn": "한전KPS",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "maintenance",
+   "role": "정비·운영지원"
+  },
+  {
+   "id": "krx:083650",
+   "type": "kr_listed",
+   "ticker": "083650",
+   "nameKo": "비에이치아이",
+   "nameEn": "비에이치아이",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "bop",
+   "role": "보조기기·소재"
+  },
+  {
+   "id": "krx:100840",
+   "type": "kr_listed",
+   "ticker": "100840",
+   "nameKo": "SNT에너지",
+   "nameEn": "SNT에너지",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "bop",
+   "role": "보조기기·소재"
+  },
+  {
+   "id": "krx:130660",
+   "type": "kr_listed",
+   "ticker": "130660",
+   "nameKo": "한전산업",
+   "nameEn": "한전산업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "maintenance",
+   "role": "정비·운영지원"
+  },
+  {
+   "id": "krx:006910",
+   "type": "kr_listed",
+   "ticker": "006910",
+   "nameKo": "보성파워텍",
+   "nameEn": "보성파워텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "bop",
+   "role": "보조기기·소재"
+  },
+  {
+   "id": "krx:126720",
+   "type": "kr_listed",
+   "ticker": "126720",
+   "nameKo": "수산인더스트리",
+   "nameEn": "수산인더스트리",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "maintenance",
+   "role": "정비·운영지원"
+  },
+  {
+   "id": "krx:105840",
+   "type": "kr_listed",
+   "ticker": "105840",
+   "nameKo": "우진",
+   "nameEn": "우진",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "ic",
+   "role": "계측·제어"
+  },
+  {
+   "id": "global:khnp",
+   "type": "kr_other",
+   "nameKo": "한국수력원자력",
+   "nameEn": "KHNP",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "원전 운영·체코 주계약자",
+   "exchange": ""
+  },
+  {
+   "id": "global:kepco",
+   "type": "kr_other",
+   "nameKo": "한국전력",
+   "nameEn": "KEPCO",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "모회사 (한전기술·KPS·한전산업)",
+   "exchange": "KRX:015760"
+  },
+  {
+   "id": "global:daewoo_enc",
+   "type": "kr_other",
+   "nameKo": "대우건설",
+   "nameEn": "Daewoo E&C",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "두코바니 시공",
+   "exchange": "KRX:047040"
+  },
+  {
+   "id": "global:cez",
+   "type": "global",
+   "nameKo": "CEZ (두코바니 II)",
+   "nameEn": "ČEZ / EDU II",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "체코 두코바니 5·6호기 발주",
+   "exchange": "PSE:CEZ"
+  },
+  {
+   "id": "global:westinghouse",
+   "type": "global",
+   "nameKo": "웨스팅하우스",
+   "nameEn": "Westinghouse Electric",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "AP1000 (체코 경쟁·협력)",
+   "exchange": ""
+  },
+  {
+   "id": "global:edf",
+   "type": "global",
+   "nameKo": "EDF",
+   "nameEn": "Électricité de France",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "EPR (체코 입찰 경쟁)",
+   "exchange": ""
+  },
+  {
+   "id": "global:nuscale",
+   "type": "global",
+   "nameKo": "뉴스케일파워",
+   "nameEn": "NuScale Power",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "SMR (두산 지분투자·주기기)",
+   "exchange": "NYSE:SMR"
+  },
+  {
+   "id": "global:terrapower",
+   "type": "global",
+   "nameKo": "테라파워",
+   "nameEn": "TerraPower",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "SMR (Natrium)",
+   "exchange": ""
+  },
+  {
+   "id": "global:xenergy",
+   "type": "global",
+   "nameKo": "X-energy",
+   "nameEn": "X-energy",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "SMR (HTGR)",
+   "exchange": ""
+  },
+  {
+   "id": "global:rr_smr",
+   "type": "global",
+   "nameKo": "롤스로이스 SMR",
+   "nameEn": "Rolls-Royce SMR",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "SMR",
+   "exchange": "LSE:RR"
+  },
+  {
+   "id": "global:ge_vernova",
+   "type": "global",
+   "nameKo": "GE 버노바",
+   "nameEn": "GE Vernova (GE-Hitachi)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "BWRX-300·터빈",
+   "exchange": "NYSE:GEV"
+  },
+  {
+   "id": "global:mhi",
+   "type": "global",
+   "nameKo": "미쓰비시중공업",
+   "nameEn": "Mitsubishi Heavy Industries",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "원전 주기기",
+   "exchange": "TSE:7011"
+  },
+  {
+   "id": "global:framatome",
+   "type": "global",
+   "nameKo": "프라마톰",
+   "nameEn": "Framatome",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "원자로·핵연료 (EDF 자회사)",
+   "exchange": ""
+  },
+  {
+   "id": "global:siemens_energy",
+   "type": "global",
+   "nameKo": "지멘스에너지",
+   "nameEn": "Siemens Energy",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "터빈·발전기",
+   "exchange": "XETRA:ENR"
+  },
+  {
+   "id": "global:cnnc",
+   "type": "global",
+   "nameKo": "중국핵공업(CNNC)",
+   "nameEn": "CNNC",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "화룽1 원전",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:global_kepco>krx_052690",
+   "source": "global:kepco",
+   "target": "krx:052690",
+   "type": "equity",
+   "labelKo": "한전 자회사 (한전기술)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/KEPCO_E%26C",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_kepco>krx_051600",
+   "source": "global:kepco",
+   "target": "krx:051600",
+   "type": "equity",
+   "labelKo": "한전 자회사 (한전KPS)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/KEPCO_Plant_Service_%26_Engineering",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_kepco>krx_130660",
+   "source": "global:kepco",
+   "target": "krx:130660",
+   "type": "equity",
+   "labelKo": "한전 계열 (한전산업개발)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/KEPCO_Plant_Service_%26_Engineering",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_kepco>global_khnp",
+   "source": "global:kepco",
+   "target": "global:khnp",
+   "type": "equity",
+   "labelKo": "한전 자회사 (한수원)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Korea_Hydro_%26_Nuclear_Power",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_khnp>global_cez",
+   "source": "global:khnp",
+   "target": "global:cez",
+   "type": "supply",
+   "labelKo": "두코바니 5·6호기 EPC 최종계약 (2025.6)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.khan.co.kr/article/202506052035005/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034020>global_khnp",
+   "source": "krx:034020",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "두코바니 원자로설비 4.93조 + 터빈발전기 0.71조",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.smedaily.co.kr/news/articleView.html?idxno=354256",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_052690>global_khnp",
+   "source": "krx:052690",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "두코바니 설계 (팀코리아)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.khan.co.kr/article/202506052035005/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_051600>global_khnp",
+   "source": "krx:051600",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "두코바니 시운전·정비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.m-economynews.com/news/article.html?no=55523",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_daewoo_enc>global_khnp",
+   "source": "global:daewoo_enc",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "두코바니 시공 (팀코리아)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.khan.co.kr/article/202506052035005/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_034020>global_daewoo_enc",
+   "source": "krx:034020",
+   "target": "global:daewoo_enc",
+   "type": "partner",
+   "labelKo": "체코 원전 주기기·시공 (두산 컨소시엄)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250502143523788",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_034020>global_nuscale",
+   "source": "krx:034020",
+   "target": "global:nuscale",
+   "type": "equity",
+   "labelKo": "뉴스케일 지분투자 (1.04억$)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.doosanenerbility.com/en/business/smr_nuscale",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034020>global_nuscale",
+   "source": "krx:034020",
+   "target": "global:nuscale",
+   "type": "supply",
+   "labelKo": "SMR 주기기 (RPV·증기발생기) 공급권",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.doosanenerbility.com/en/business/smr_nuscale",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034020>global_terrapower",
+   "source": "krx:034020",
+   "target": "global:terrapower",
+   "type": "supply",
+   "labelKo": "SMR 핵심 기기 계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2561168",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034020>global_xenergy",
+   "source": "krx:034020",
+   "target": "global:xenergy",
+   "type": "supply",
+   "labelKo": "SMR 주요 기기 제작",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2561168",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034020>global_rr_smr",
+   "source": "krx:034020",
+   "target": "global:rr_smr",
+   "type": "supply",
+   "labelKo": "핵심 기기 파트너 선정",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2561168",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034020>global_westinghouse",
+   "source": "krx:034020",
+   "target": "global:westinghouse",
+   "type": "supply",
+   "labelKo": "AP1000 주기기 (불가리아·미국 발주 기대)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.cbci.co.kr/news/articleView.html?idxno=551616",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_westinghouse>global_khnp",
+   "source": "global:westinghouse",
+   "target": "global:khnp",
+   "type": "partner",
+   "labelKo": "지재권 분쟁 합의 후 협력 (체코)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsquest.co.kr/news/articleView.html?idxno=251200",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_khnp>global_westinghouse",
+   "source": "global:khnp",
+   "target": "global:westinghouse",
+   "type": "peer",
+   "labelKo": "체코 신규원전 입찰 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.khan.co.kr/article/202506052035005/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_khnp>global_edf",
+   "source": "global:khnp",
+   "target": "global:edf",
+   "type": "peer",
+   "labelKo": "체코 신규원전 입찰 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.khan.co.kr/article/202506052035005/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034020>global_mhi",
+   "source": "krx:034020",
+   "target": "global:mhi",
+   "type": "peer",
+   "labelKo": "원전 주기기·터빈 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%EB%91%90%EC%82%B0%EC%97%90%EB%84%88%EB%B9%8C%EB%A6%AC%ED%8B%B0",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034020>global_framatome",
+   "source": "krx:034020",
+   "target": "global:framatome",
+   "type": "peer",
+   "labelKo": "원전 주기기·터빈 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%EB%91%90%EC%82%B0%EC%97%90%EB%84%88%EB%B9%8C%EB%A6%AC%ED%8B%B0",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034020>global_ge_vernova",
+   "source": "krx:034020",
+   "target": "global:ge_vernova",
+   "type": "peer",
+   "labelKo": "원전 주기기·터빈 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%EB%91%90%EC%82%B0%EC%97%90%EB%84%88%EB%B9%8C%EB%A6%AC%ED%8B%B0",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034020>global_siemens_energy",
+   "source": "krx:034020",
+   "target": "global:siemens_energy",
+   "type": "peer",
+   "labelKo": "원전 주기기·터빈 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%EB%91%90%EC%82%B0%EC%97%90%EB%84%88%EB%B9%8C%EB%A6%AC%ED%8B%B0",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034020>global_cnnc",
+   "source": "krx:034020",
+   "target": "global:cnnc",
+   "type": "peer",
+   "labelKo": "원전 주기기·터빈 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%EB%91%90%EC%82%B0%EC%97%90%EB%84%88%EB%B9%8C%EB%A6%AC%ED%8B%B0",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034020>global_westinghouse",
+   "source": "krx:034020",
+   "target": "global:westinghouse",
+   "type": "peer",
+   "labelKo": "원자로 주기기",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.newsquest.co.kr/news/articleView.html?idxno=251200",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_edf>global_framatome",
+   "source": "global:edf",
+   "target": "global:framatome",
+   "type": "equity",
+   "labelKo": "EDF 자회사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Framatome",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_032820>krx_034020",
+   "source": "krx:032820",
+   "target": "krx:034020",
+   "type": "supply",
+   "labelKo": "원전 MMIS용 DCS 독점 공급 MOU·LTSA + 신한울 3·4 가상화 DCS",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260917000551",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_032820>global_khnp",
+   "source": "krx:032820",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "원전 제어계측 부품 VMI 장기공급 협약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260810000877",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_105840>global_khnp",
+   "source": "krx:105840",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "원전 계측기·SCADA (30년 공급)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20251021190935471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_105840>krx_032820",
+   "source": "krx:105840",
+   "target": "krx:032820",
+   "type": "peer",
+   "labelKo": "원전 계측·제어 국산화",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20251021190935471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_083650>krx_034020",
+   "source": "krx:083650",
+   "target": "krx:034020",
+   "type": "supply",
+   "labelKo": "발전설비 (476억 계약) · 원전 보조기기(BOP)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://alphabiz.co.kr/news/view/1065571137037840",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_126720>global_khnp",
+   "source": "krx:126720",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "원전 기전설비 정비공사 936억 (새울·신월성)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.electimes.com/news/articleView.html?idxno=357386",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_126720>krx_051600",
+   "source": "krx:126720",
+   "target": "krx:051600",
+   "type": "peer",
+   "labelKo": "원전 정비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.electimes.com/news/articleView.html?idxno=357386",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_130660>krx_051600",
+   "source": "krx:130660",
+   "target": "krx:051600",
+   "type": "peer",
+   "labelKo": "발전설비 정비·운전",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1060001.aspx?cmp_cd=051600&cn=",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_100840>krx_083650",
+   "source": "krx:100840",
+   "target": "krx:083650",
+   "type": "peer",
+   "labelKo": "발전 보조기기 (열교환기·HRSG)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260923000173",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006910>krx_034020",
+   "source": "krx:006910",
+   "target": "krx:034020",
+   "type": "supply",
+   "labelKo": "원전 철골·구조물 (두산 협력사)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20251021190935471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

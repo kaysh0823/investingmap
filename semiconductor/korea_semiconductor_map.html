@@ -730,7 +730,7 @@
   <script src="../js/map_volatility.js?v=eec26c5a"></script>
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=8d92012e"></script>
-  <script src="../js/map_netmap.js?v=47381c5f"></script>
+  <script src="../js/map_netmap.js?v=5d2d48f7"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
   <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
@@ -5102,6 +5102,8 @@
         valuationLegend: '점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
         valuationLegendPer: 'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
         tabNetmap: '🕸️ 네트워크맵',
+        netmapCountryOther: '기타',
+        netmapCountryNameOther: '기타(중동·아시아 등)',
         netmapGuideDomestic: '● 국내: 색 = RS(시장 RS 초과 초록 · 미만 빨강), 크기 = 시총',
         netmapGuideGlobal: '■ 글로벌: 색 = 국가, 크기 = 연결 수',
         netmapFooterHint: '출처는 노드 클릭 → 관계 목록에서 확인',
@@ -5252,6 +5254,8 @@
         valuationLegend: 'Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)',
         valuationLegendPer: 'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
         tabNetmap: '🕸️ Network map',
+        netmapCountryOther: 'Other',
+        netmapCountryNameOther: 'Other (Middle East, Asia, etc.)',
         netmapGuideDomestic: '● Domestic: color = RS (green above market · red below), size = market cap',
         netmapGuideGlobal: '■ Global: color = country, size = connection count',
         netmapFooterHint: 'Sources appear in the relation list after clicking a node',
@@ -6738,14 +6742,16 @@
             tw: nt.netmapCountryTw,
             jp: nt.netmapCountryJp,
             cn: nt.netmapCountryCn,
-            eu: nt.netmapCountryEu
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
           },
           countryNames: {
             us: nt.netmapCountryNameUs,
             tw: nt.netmapCountryNameTw,
             jp: nt.netmapCountryNameJp,
             cn: nt.netmapCountryNameCn,
-            eu: nt.netmapCountryNameEu
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
           }
         }
       });

@@ -1,17 +1,21 @@
 /**
- * Verify data/netmap JSON schema + semiconductor tab wiring + map_netmap pure helpers.
+ * Verify data/netmap JSON schema + sector tab wiring + map_netmap pure helpers.
  */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createContext, runInContext } from 'node:vm';
+import { MAP_SECTOR } from './patch_netmap_tab.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NETMAP_DIR = path.join(ROOT, 'data', 'netmap');
 const EDGE_TYPES = new Set(['supply', 'partner', 'equity', 'peer', 'distribution']);
 const CONF = new Set(['high', 'medium', 'low']);
 const NODE_TYPES = new Set(['kr_listed', 'kr_anchor', 'kr_other', 'global']);
+/** Must stay in sync with js/map_netmap.js COUNTRIES (+ kr for domestic). */
+const NETMAP_COUNTRIES = ['us', 'tw', 'jp', 'cn', 'eu', 'other'];
+const ALLOWED_NODE_COUNTRY = new Set(['kr', ...NETMAP_COUNTRIES]);
 
 function validateNetmapFile(file) {
   const raw = JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -24,6 +28,10 @@ function validateNetmapFile(file) {
     ids.add(n.id);
     assert.ok(NODE_TYPES.has(n.type), `node.type ${n.type}`);
     assert.ok(n.nameKo || n.nameEn, `node name ${n.id}`);
+    assert.ok(
+      ALLOWED_NODE_COUNTRY.has(n.country),
+      `${file}: node ${n.id} country=${n.country} not in {kr,${NETMAP_COUNTRIES.join(',')}}`,
+    );
   }
   for (const e of raw.edges) {
     assert.ok(e && typeof e.id === 'string', 'edge.id');
@@ -50,16 +58,7 @@ if (fs.existsSync(NETMAP_DIR)) {
 }
 assert.ok(sectorsWithData.includes('semiconductor'), 'semiconductor.json required');
 
-const MAP_SECTOR = {
-  semiconductor: 'semiconductor/korea_semiconductor_map.html',
-  bio: 'bio/korea_bio_map.html',
-  battery: 'battery/korea_battery_map.html',
-  powergrid: 'powergrid/korea_powergrid_map.html',
-  robot: 'robot/korea_robot_map.html',
-  elec: 'elec/korea_elec_map.html',
-};
-
-for (const [sector, rel] of Object.entries(MAP_SECTOR)) {
+for (const [rel, sector] of Object.entries(MAP_SECTOR)) {
   const hasData = sectorsWithData.includes(sector);
   const srcPath = path.join(ROOT, rel);
   const distPath = path.join(ROOT, 'dist', rel);
@@ -69,7 +68,10 @@ for (const [sector, rel] of Object.entries(MAP_SECTOR)) {
     : fs.existsSync(distPath)
       ? fs.readFileSync(distPath, 'utf8')
       : '';
-  if (!html) continue;
+  if (!html) {
+    if (hasData) assert.fail(`${rel}: missing HTML but data/netmap/${sector}.json exists`);
+    continue;
+  }
   if (hasData) {
     assert.ok(html.includes('tab-btn-netmap'), `${rel}: tab-btn-netmap`);
     assert.ok(html.includes('id="tab-netmap"'), `${rel}: tab-netmap`);
@@ -79,6 +81,8 @@ for (const [sector, rel] of Object.entries(MAP_SECTOR)) {
     assert.ok(!html.includes('id="netmap-legend"'), `${rel}: netmap-legend must be absent`);
     assert.ok(/map_netmap\.js/.test(html), `${rel}: map_netmap.js`);
     assert.ok(html.includes('InvestingMapNetmap.recolorNodes'), `${rel}: quotes-ready recolor`);
+    assert.ok(html.includes('nt.netmapCountryOther'), `${rel}: countries.other label`);
+    assert.ok(html.includes('nt.netmapCountryNameOther'), `${rel}: countryNames.other label`);
     assert.ok(fs.existsSync(distPath), `dist/${rel}: missing`);
     const distHtml = fs.readFileSync(distPath, 'utf8');
     const expectedUrl = `../data/netmap/${sector}.json`;
@@ -108,6 +112,11 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
   runInContext(mapJs, sandbox);
   const Net = sandbox.InvestingMapNetmap;
   assert.ok(Net && Net._test, '_test');
+  assert.equal(
+    Net._test.COUNTRIES.join(','),
+    NETMAP_COUNTRIES.join(','),
+    'COUNTRIES includes other',
+  );
 
   const sample = {
     nodes: [
@@ -127,7 +136,7 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
   assert.equal(all.nodes.length, 4, 'default keeps connected nodes');
   assert.equal(all.edges.length, 3);
 
-  for (const sector of ['semiconductor', 'elec', 'battery', 'powergrid', 'robot']) {
+  for (const sector of sectorsWithData) {
     const raw = JSON.parse(
       fs.readFileSync(path.join(ROOT, 'data', 'netmap', `${sector}.json`), 'utf8'),
     );
@@ -221,7 +230,7 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
     const H = 800;
     const s = Net._test.computeLayoutSeeds(
       ['c1', 'c2', 'c3', 'c4'],
-      ['us', 'tw', 'jp', 'cn', 'eu'],
+      Net._test.COUNTRIES,
       W,
       H,
     );
@@ -236,7 +245,7 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
       });
     });
     // Globals on outer radial ring
-    ['us', 'tw', 'jp', 'cn', 'eu'].forEach((c, i) => {
+    Net._test.COUNTRIES.forEach((c, i) => {
       const a = s.countryAngles[c];
       sampleNodes.push({
         id: 'g:' + c,

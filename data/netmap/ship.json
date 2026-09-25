@@ -1,0 +1,1301 @@
+{
+ "sectorId": "ship",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "yard": "조선",
+  "mro": "유지보수·개조",
+  "engine": "엔진·추진",
+  "cargo": "탱크·보냉",
+  "piping": "배관·의장",
+  "hull": "선체·구조물",
+  "end_customer": "선주·수요처",
+  "global_peer": "글로벌 조선·엔진·기술"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:329180",
+   "type": "kr_listed",
+   "ticker": "329180",
+   "nameKo": "HD현대중공업",
+   "nameEn": "HD현대중공업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "yard",
+   "role": "조선"
+  },
+  {
+   "id": "krx:042660",
+   "type": "kr_listed",
+   "ticker": "042660",
+   "nameKo": "한화오션",
+   "nameEn": "한화오션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "yard",
+   "role": "조선"
+  },
+  {
+   "id": "krx:009540",
+   "type": "kr_listed",
+   "ticker": "009540",
+   "nameKo": "HD한국조선해양",
+   "nameEn": "HD한국조선해양",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "yard",
+   "role": "조선"
+  },
+  {
+   "id": "krx:010140",
+   "type": "kr_listed",
+   "ticker": "010140",
+   "nameKo": "삼성중공업",
+   "nameEn": "삼성중공업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "yard",
+   "role": "조선"
+  },
+  {
+   "id": "krx:443060",
+   "type": "kr_listed",
+   "ticker": "443060",
+   "nameKo": "HD현대마린솔루션",
+   "nameEn": "HD현대마린솔루션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "mro",
+   "role": "유지보수·개조"
+  },
+  {
+   "id": "krx:082740",
+   "type": "kr_listed",
+   "ticker": "082740",
+   "nameKo": "한화엔진",
+   "nameEn": "한화엔진",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "engine",
+   "role": "엔진·추진"
+  },
+  {
+   "id": "krx:439260",
+   "type": "kr_listed",
+   "ticker": "439260",
+   "nameKo": "대한조선",
+   "nameEn": "대한조선",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "yard",
+   "role": "조선"
+  },
+  {
+   "id": "krx:071970",
+   "type": "kr_listed",
+   "ticker": "071970",
+   "nameKo": "HD현대마린엔진",
+   "nameEn": "HD현대마린엔진",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "engine",
+   "role": "엔진·추진"
+  },
+  {
+   "id": "krx:097230",
+   "type": "kr_listed",
+   "ticker": "097230",
+   "nameKo": "HJ중공업",
+   "nameEn": "HJ중공업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "yard",
+   "role": "조선"
+  },
+  {
+   "id": "krx:017960",
+   "type": "kr_listed",
+   "ticker": "017960",
+   "nameKo": "한국카본",
+   "nameEn": "한국카본",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cargo",
+   "role": "탱크·보냉"
+  },
+  {
+   "id": "krx:077970",
+   "type": "kr_listed",
+   "ticker": "077970",
+   "nameKo": "STX엔진",
+   "nameEn": "STX엔진",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "engine",
+   "role": "엔진·추진"
+  },
+  {
+   "id": "krx:014620",
+   "type": "kr_listed",
+   "ticker": "014620",
+   "nameKo": "성광벤드",
+   "nameEn": "성광벤드",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "piping",
+   "role": "배관·의장"
+  },
+  {
+   "id": "krx:023160",
+   "type": "kr_listed",
+   "ticker": "023160",
+   "nameKo": "태광",
+   "nameEn": "태광",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "piping",
+   "role": "배관·의장"
+  },
+  {
+   "id": "krx:075580",
+   "type": "kr_listed",
+   "ticker": "075580",
+   "nameKo": "세진중공업",
+   "nameEn": "세진중공업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "hull",
+   "role": "선체·구조물"
+  },
+  {
+   "id": "krx:033500",
+   "type": "kr_listed",
+   "ticker": "033500",
+   "nameKo": "동성화인텍",
+   "nameEn": "동성화인텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "cargo",
+   "role": "탱크·보냉"
+  },
+  {
+   "id": "krx:460930",
+   "type": "kr_listed",
+   "ticker": "460930",
+   "nameKo": "현대힘스",
+   "nameEn": "현대힘스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "hull",
+   "role": "선체·구조물"
+  },
+  {
+   "id": "krx:013030",
+   "type": "kr_listed",
+   "ticker": "013030",
+   "nameKo": "하이록코리아",
+   "nameEn": "하이록코리아",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "piping",
+   "role": "배관·의장"
+  },
+  {
+   "id": "global:cssc",
+   "type": "global",
+   "nameKo": "중국선박집단(CSSC)",
+   "nameEn": "China State Shipbuilding Corp.",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "조선 1위 그룹",
+   "exchange": "SSE:600150"
+  },
+  {
+   "id": "global:yangzijiang",
+   "type": "global",
+   "nameKo": "양쯔장조선",
+   "nameEn": "Yangzijiang Shipbuilding",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "민영 조선",
+   "exchange": "SGX:BS6"
+  },
+  {
+   "id": "global:new_times",
+   "type": "global",
+   "nameKo": "뉴타임즈조선",
+   "nameEn": "New Times Shipbuilding",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "민영 조선",
+   "exchange": ""
+  },
+  {
+   "id": "global:imabari",
+   "type": "global",
+   "nameKo": "이마바리조선",
+   "nameEn": "Imabari Shipbuilding",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "일본 최대 조선",
+   "exchange": ""
+  },
+  {
+   "id": "global:man_es",
+   "type": "global",
+   "nameKo": "MAN 에너지솔루션",
+   "nameEn": "MAN Energy Solutions",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "저속엔진 라이선서",
+   "exchange": ""
+  },
+  {
+   "id": "global:wingd",
+   "type": "global",
+   "nameKo": "WinGD",
+   "nameEn": "WinGD",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "저속엔진 라이선서 (CSSC 소유)",
+   "exchange": ""
+  },
+  {
+   "id": "global:gtt",
+   "type": "global",
+   "nameKo": "GTT",
+   "nameEn": "Gaztransport & Technigaz",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "LNG 화물창 라이선서",
+   "exchange": "EPA:GTT"
+  },
+  {
+   "id": "global:us_navy",
+   "type": "global",
+   "nameKo": "미 해군",
+   "nameEn": "U.S. Navy",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "함정 MRO 발주처",
+   "exchange": ""
+  },
+  {
+   "id": "global:qatarenergy",
+   "type": "global",
+   "nameKo": "카타르에너지",
+   "nameEn": "QatarEnergy",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "LNG선 발주처",
+   "exchange": ""
+  },
+  {
+   "id": "global:samsung_eng",
+   "type": "kr_other",
+   "nameKo": "삼성E&A",
+   "nameEn": "Samsung E&A",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "플랜트 EPC",
+   "exchange": "KRX:028050"
+  },
+  {
+   "id": "global:hyundai_enc",
+   "type": "kr_other",
+   "nameKo": "현대건설",
+   "nameEn": "Hyundai E&C",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "플랜트·건설",
+   "exchange": "KRX:000720"
+  },
+  {
+   "id": "global:gs_enc",
+   "type": "kr_other",
+   "nameKo": "GS건설",
+   "nameEn": "GS E&C",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "플랜트·건설",
+   "exchange": "KRX:006360"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_009540>krx_329180",
+   "source": "krx:009540",
+   "target": "krx:329180",
+   "type": "equity",
+   "labelKo": "HD한국조선해양 (중간지주) → HD현대중공업",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/HD_Hyundai_Heavy_Industries",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_009540>krx_071970",
+   "source": "krx:009540",
+   "target": "krx:071970",
+   "type": "equity",
+   "labelKo": "HD한국조선해양 자회사 (HD현대마린엔진)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/HD%ED%98%84%EB%8C%80%EB%A7%88%EB%A6%B0%EC%97%94%EC%A7%84",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_042660>krx_082740",
+   "source": "krx:042660",
+   "target": "krx:082740",
+   "type": "partner",
+   "labelKo": "한화 계열 (한화오션 인수 후 한화엔진 편입)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanwha-engine.com/page.do?seqId=0000000359",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_329180>global_cssc",
+   "source": "krx:329180",
+   "target": "global:cssc",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_329180>global_yangzijiang",
+   "source": "krx:329180",
+   "target": "global:yangzijiang",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_329180>global_new_times",
+   "source": "krx:329180",
+   "target": "global:new_times",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_329180>global_imabari",
+   "source": "krx:329180",
+   "target": "global:imabari",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042660>global_cssc",
+   "source": "krx:042660",
+   "target": "global:cssc",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042660>global_yangzijiang",
+   "source": "krx:042660",
+   "target": "global:yangzijiang",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042660>global_new_times",
+   "source": "krx:042660",
+   "target": "global:new_times",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042660>global_imabari",
+   "source": "krx:042660",
+   "target": "global:imabari",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010140>global_cssc",
+   "source": "krx:010140",
+   "target": "global:cssc",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010140>global_yangzijiang",
+   "source": "krx:010140",
+   "target": "global:yangzijiang",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010140>global_new_times",
+   "source": "krx:010140",
+   "target": "global:new_times",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010140>global_imabari",
+   "source": "krx:010140",
+   "target": "global:imabari",
+   "type": "peer",
+   "labelKo": "글로벌 조선 경쟁 (중국 71%·한국 18% 수주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_329180>krx_042660",
+   "source": "krx:329180",
+   "target": "krx:042660",
+   "type": "peer",
+   "labelKo": "국내 조선 빅3",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_329180>krx_010140",
+   "source": "krx:329180",
+   "target": "krx:010140",
+   "type": "peer",
+   "labelKo": "국내 조선 빅3",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042660>krx_010140",
+   "source": "krx:042660",
+   "target": "krx:010140",
+   "type": "peer",
+   "labelKo": "국내 조선 빅3",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_439260>krx_329180",
+   "source": "krx:439260",
+   "target": "krx:329180",
+   "type": "peer",
+   "labelKo": "중형 조선 (탱커·컨테이너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_439260>krx_042660",
+   "source": "krx:439260",
+   "target": "krx:042660",
+   "type": "peer",
+   "labelKo": "중형 조선 (탱커·컨테이너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_439260>krx_010140",
+   "source": "krx:439260",
+   "target": "krx:010140",
+   "type": "peer",
+   "labelKo": "중형 조선 (탱커·컨테이너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_097230>krx_329180",
+   "source": "krx:097230",
+   "target": "krx:329180",
+   "type": "peer",
+   "labelKo": "중형 조선 (탱커·컨테이너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_097230>krx_042660",
+   "source": "krx:097230",
+   "target": "krx:042660",
+   "type": "peer",
+   "labelKo": "중형 조선 (탱커·컨테이너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_097230>krx_010140",
+   "source": "krx:097230",
+   "target": "krx:010140",
+   "type": "peer",
+   "labelKo": "중형 조선 (탱커·컨테이너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://maritime-executive.com/article/china-continued-shipbuilding-dominance-in-2025-raking-in-most-orders",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_329180>global_us_navy",
+   "source": "krx:329180",
+   "target": "global:us_navy",
+   "type": "supply",
+   "labelKo": "미 해군 함정 MRO (2026년 2건)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://trader.ai.kr/news/hd-hyundai-hanwha-ocean-us-navy-mro-4-wins-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_042660>global_us_navy",
+   "source": "krx:042660",
+   "target": "global:us_navy",
+   "type": "supply",
+   "labelKo": "미 해군 함정 MRO (2026년 2건)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://trader.ai.kr/news/hd-hyundai-hanwha-ocean-us-navy-mro-4-wins-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_329180>global_qatarenergy",
+   "source": "krx:329180",
+   "target": "global:qatarenergy",
+   "type": "supply",
+   "labelKo": "카타르 LNG선 대규모 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ftoday.co.kr/news/articleView.html?idxno=359680",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_042660>global_qatarenergy",
+   "source": "krx:042660",
+   "target": "global:qatarenergy",
+   "type": "supply",
+   "labelKo": "카타르 LNG선 대규모 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ftoday.co.kr/news/articleView.html?idxno=359680",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010140>global_qatarenergy",
+   "source": "krx:010140",
+   "target": "global:qatarenergy",
+   "type": "supply",
+   "labelKo": "카타르 LNG선 대규모 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ftoday.co.kr/news/articleView.html?idxno=359680",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_man_es>krx_329180",
+   "source": "global:man_es",
+   "target": "krx:329180",
+   "type": "partner",
+   "labelKo": "저속엔진 라이선스 (MAN B&W)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/HD%ED%98%84%EB%8C%80%EB%A7%88%EB%A6%B0%EC%97%94%EC%A7%84",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_man_es>krx_071970",
+   "source": "global:man_es",
+   "target": "krx:071970",
+   "type": "partner",
+   "labelKo": "저속엔진 라이선스",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/HD%ED%98%84%EB%8C%80%EB%A7%88%EB%A6%B0%EC%97%94%EC%A7%84",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_wingd>krx_071970",
+   "source": "global:wingd",
+   "target": "krx:071970",
+   "type": "partner",
+   "labelKo": "저속엔진 라이선스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/HD%ED%98%84%EB%8C%80%EB%A7%88%EB%A6%B0%EC%97%94%EC%A7%84",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_wingd>krx_082740",
+   "source": "global:wingd",
+   "target": "krx:082740",
+   "type": "partner",
+   "labelKo": "WinGD 기술제휴 (1984~)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hanwha-engine.com/page.do?seqId=0000000359",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_man_es>krx_082740",
+   "source": "global:man_es",
+   "target": "krx:082740",
+   "type": "partner",
+   "labelKo": "MAN 라이선스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanwha-engine.com/page.do?seqId=0000000359",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_071970>krx_329180",
+   "source": "krx:071970",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "선박용 저속엔진 (HD현대 조선 3사 등)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/HD%ED%98%84%EB%8C%80%EB%A7%88%EB%A6%B0%EC%97%94%EC%A7%84",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_071970>krx_042660",
+   "source": "krx:071970",
+   "target": "krx:042660",
+   "type": "supply",
+   "labelKo": "선박용 저속엔진 (HD현대 조선 3사 등)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/HD%ED%98%84%EB%8C%80%EB%A7%88%EB%A6%B0%EC%97%94%EC%A7%84",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_071970>krx_010140",
+   "source": "krx:071970",
+   "target": "krx:010140",
+   "type": "supply",
+   "labelKo": "선박용 저속엔진 (HD현대 조선 3사 등)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/HD%ED%98%84%EB%8C%80%EB%A7%88%EB%A6%B0%EC%97%94%EC%A7%84",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_082740>krx_042660",
+   "source": "krx:082740",
+   "target": "krx:042660",
+   "type": "supply",
+   "labelKo": "선박용 엔진 (한화오션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hanwha-engine.com/page.do?seqId=0000000359",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_082740>krx_010140",
+   "source": "krx:082740",
+   "target": "krx:010140",
+   "type": "supply",
+   "labelKo": "선박용 엔진",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanwha-engine.com/page.do?seqId=0000000359",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_082740>krx_329180",
+   "source": "krx:082740",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "선박용 엔진",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanwha-engine.com/page.do?seqId=0000000359",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_082740>krx_071970",
+   "source": "krx:082740",
+   "target": "krx:071970",
+   "type": "peer",
+   "labelKo": "국내 선박 엔진 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=339531",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_077970>krx_082740",
+   "source": "krx:077970",
+   "target": "krx:082740",
+   "type": "peer",
+   "labelKo": "선박·함정 엔진",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=339531",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_077970>krx_071970",
+   "source": "krx:077970",
+   "target": "krx:071970",
+   "type": "peer",
+   "labelKo": "선박·함정 엔진",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=339531",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_017960>krx_329180",
+   "source": "krx:017960",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "LNG 보냉재 (Mark III)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.finance-scope.com/article/view/scp202502250013",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_017960>krx_010140",
+   "source": "krx:017960",
+   "target": "krx:010140",
+   "type": "supply",
+   "labelKo": "LNG 보냉재 (Mark III)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.finance-scope.com/article/view/scp202502250013",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_017960>krx_042660",
+   "source": "krx:017960",
+   "target": "krx:042660",
+   "type": "supply",
+   "labelKo": "LNG 보냉재 (NO96 SUPER+ 신규)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.finance-scope.com/article/view/scp202502250013",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033500>krx_329180",
+   "source": "krx:033500",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "LNG 보냉재 (Mark III)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033500>krx_010140",
+   "source": "krx:033500",
+   "target": "krx:010140",
+   "type": "supply",
+   "labelKo": "LNG 보냉재 (Mark III)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017960>krx_033500",
+   "source": "krx:017960",
+   "target": "krx:033500",
+   "type": "peer",
+   "labelKo": "LNG 보냉재 양분",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_gtt>krx_017960",
+   "source": "global:gtt",
+   "target": "krx:017960",
+   "type": "partner",
+   "labelKo": "GTT 화물창 라이선스 기반 보냉재",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_gtt>krx_033500",
+   "source": "global:gtt",
+   "target": "krx:033500",
+   "type": "partner",
+   "labelKo": "GTT 화물창 라이선스 기반 보냉재",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_gtt>krx_329180",
+   "source": "global:gtt",
+   "target": "krx:329180",
+   "type": "partner",
+   "labelKo": "LNG 화물창 라이선스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_gtt>krx_042660",
+   "source": "global:gtt",
+   "target": "krx:042660",
+   "type": "partner",
+   "labelKo": "LNG 화물창 라이선스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_gtt>krx_010140",
+   "source": "global:gtt",
+   "target": "krx:010140",
+   "type": "partner",
+   "labelKo": "LNG 화물창 라이선스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10486979",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014620>krx_042660",
+   "source": "krx:014620",
+   "target": "krx:042660",
+   "type": "supply",
+   "labelKo": "용접 피팅",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014620",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014620>krx_329180",
+   "source": "krx:014620",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "용접 피팅",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014620",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014620>krx_010140",
+   "source": "krx:014620",
+   "target": "krx:010140",
+   "type": "supply",
+   "labelKo": "용접 피팅",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014620",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014620>global_samsung_eng",
+   "source": "krx:014620",
+   "target": "global:samsung_eng",
+   "type": "supply",
+   "labelKo": "플랜트용 피팅",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014620",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014620>global_hyundai_enc",
+   "source": "krx:014620",
+   "target": "global:hyundai_enc",
+   "type": "supply",
+   "labelKo": "플랜트용 피팅",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014620",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014620>global_gs_enc",
+   "source": "krx:014620",
+   "target": "global:gs_enc",
+   "type": "supply",
+   "labelKo": "플랜트용 피팅",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014620",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_023160>krx_014620",
+   "source": "krx:023160",
+   "target": "krx:014620",
+   "type": "peer",
+   "labelKo": "용접 피팅 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=380917",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_013030>krx_014620",
+   "source": "krx:013030",
+   "target": "krx:014620",
+   "type": "peer",
+   "labelKo": "피팅 (계장용 vs 용접)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=380917",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_023160>krx_329180",
+   "source": "krx:023160",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "용접 피팅",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=380917",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_023160>krx_042660",
+   "source": "krx:023160",
+   "target": "krx:042660",
+   "type": "supply",
+   "labelKo": "용접 피팅",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=380917",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_023160>krx_010140",
+   "source": "krx:023160",
+   "target": "krx:010140",
+   "type": "supply",
+   "labelKo": "용접 피팅",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=380917",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_460930>krx_329180",
+   "source": "krx:460930",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "선박 블록 (기관실·중앙부·구상선수), HD현대중공업·삼호·미포 주고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://securities.miraeasset.com/bbs/download/2128960.pdf?attachmentId=2128960",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_075580>krx_329180",
+   "source": "krx:075580",
+   "target": "krx:329180",
+   "type": "supply",
+   "labelKo": "Deck House·LPG 탱크·블록",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.news2day.co.kr/article/20250609500024",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_460930>krx_075580",
+   "source": "krx:460930",
+   "target": "krx:075580",
+   "type": "peer",
+   "labelKo": "선박 블록 사외제작",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://securities.miraeasset.com/bbs/download/2128960.pdf?attachmentId=2128960",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_329180>krx_443060",
+   "source": "krx:329180",
+   "target": "krx:443060",
+   "type": "partner",
+   "labelKo": "HD현대 계열 AS·개조 (마린솔루션)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.catch.co.kr/Comp/GroupSummary/IC5",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

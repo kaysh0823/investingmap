@@ -1,0 +1,1258 @@
+{
+ "sectorId": "defense",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "land": "육상체계",
+  "missile": "유도무기·탄약",
+  "electronics": "방산전자·센서",
+  "aero": "항공체계·엔진",
+  "components": "소재·핵심부품",
+  "space": "우주·위성",
+  "end_customer": "수요처·정부",
+  "global_peer": "글로벌 방산"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:012450",
+   "type": "kr_listed",
+   "ticker": "012450",
+   "nameKo": "한화에어로스페이스",
+   "nameEn": "한화에어로스페이스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "land",
+   "role": "육상체계"
+  },
+  {
+   "id": "krx:079550",
+   "type": "kr_listed",
+   "ticker": "079550",
+   "nameKo": "LIG디펜스앤에어로스페이스",
+   "nameEn": "LIG디펜스앤에어로스페이스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "missile",
+   "role": "유도무기·탄약"
+  },
+  {
+   "id": "krx:272210",
+   "type": "kr_listed",
+   "ticker": "272210",
+   "nameKo": "한화시스템",
+   "nameEn": "한화시스템",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "electronics",
+   "role": "방산전자·센서"
+  },
+  {
+   "id": "krx:064350",
+   "type": "kr_listed",
+   "ticker": "064350",
+   "nameKo": "현대로템",
+   "nameEn": "현대로템",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "land",
+   "role": "육상체계"
+  },
+  {
+   "id": "krx:047810",
+   "type": "kr_listed",
+   "ticker": "047810",
+   "nameKo": "한국항공우주",
+   "nameEn": "한국항공우주",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "aero",
+   "role": "항공체계·엔진"
+  },
+  {
+   "id": "krx:103140",
+   "type": "kr_listed",
+   "ticker": "103140",
+   "nameKo": "풍산",
+   "nameEn": "풍산",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "missile",
+   "role": "유도무기·탄약"
+  },
+  {
+   "id": "krx:082920",
+   "type": "kr_listed",
+   "ticker": "082920",
+   "nameKo": "비츠로셀",
+   "nameEn": "비츠로셀",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "소재·핵심부품"
+  },
+  {
+   "id": "krx:347700",
+   "type": "kr_listed",
+   "ticker": "347700",
+   "nameKo": "스피어",
+   "nameEn": "스피어",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "소재·핵심부품"
+  },
+  {
+   "id": "krx:003570",
+   "type": "kr_listed",
+   "ticker": "003570",
+   "nameKo": "SNT다이내믹스",
+   "nameEn": "SNT다이내믹스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "land",
+   "role": "육상체계"
+  },
+  {
+   "id": "krx:099320",
+   "type": "kr_listed",
+   "ticker": "099320",
+   "nameKo": "쎄트렉아이",
+   "nameEn": "쎄트렉아이",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "space",
+   "role": "우주·위성"
+  },
+  {
+   "id": "krx:214430",
+   "type": "kr_listed",
+   "ticker": "214430",
+   "nameKo": "아이쓰리시스템",
+   "nameEn": "아이쓰리시스템",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "electronics",
+   "role": "방산전자·센서"
+  },
+  {
+   "id": "krx:010820",
+   "type": "kr_listed",
+   "ticker": "010820",
+   "nameKo": "퍼스텍",
+   "nameEn": "퍼스텍",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "land",
+   "role": "육상체계"
+  },
+  {
+   "id": "krx:484870",
+   "type": "kr_listed",
+   "ticker": "484870",
+   "nameKo": "엠앤씨솔루션",
+   "nameEn": "엠앤씨솔루션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "components",
+   "role": "소재·핵심부품"
+  },
+  {
+   "id": "krx:368770",
+   "type": "kr_listed",
+   "ticker": "368770",
+   "nameKo": "파이버프로",
+   "nameEn": "파이버프로",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "electronics",
+   "role": "방산전자·센서"
+  },
+  {
+   "id": "global:lockheed",
+   "type": "global",
+   "nameKo": "록히드마틴",
+   "nameEn": "Lockheed Martin",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "방산 1위 (F-16·T-50 공동개발)",
+   "exchange": "NYSE:LMT"
+  },
+  {
+   "id": "global:rtx",
+   "type": "global",
+   "nameKo": "RTX(레이시온)",
+   "nameEn": "RTX",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "미사일·레이더",
+   "exchange": "NYSE:RTX"
+  },
+  {
+   "id": "global:ge_aero",
+   "type": "global",
+   "nameKo": "GE 에어로스페이스",
+   "nameEn": "GE Aerospace",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "항공엔진 (F414)",
+   "exchange": "NYSE:GE"
+  },
+  {
+   "id": "global:bae",
+   "type": "global",
+   "nameKo": "BAE 시스템즈",
+   "nameEn": "BAE Systems",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "방산",
+   "exchange": "LSE:BA"
+  },
+  {
+   "id": "global:rheinmetall",
+   "type": "global",
+   "nameKo": "라인메탈",
+   "nameEn": "Rheinmetall",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "전차·탄약",
+   "exchange": "XETRA:RHM"
+  },
+  {
+   "id": "global:knds",
+   "type": "global",
+   "nameKo": "KNDS",
+   "nameEn": "KNDS (Krauss-Maffei Wegmann/Nexter)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "전차·자주포",
+   "exchange": ""
+  },
+  {
+   "id": "global:leonardo",
+   "type": "global",
+   "nameKo": "레오나르도",
+   "nameEn": "Leonardo",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "항공·전자",
+   "exchange": "BIT:LDO"
+  },
+  {
+   "id": "global:thales",
+   "type": "global",
+   "nameKo": "탈레스",
+   "nameEn": "Thales",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "방산전자·레이더",
+   "exchange": "EPA:HO"
+  },
+  {
+   "id": "global:saab",
+   "type": "global",
+   "nameKo": "사브",
+   "nameEn": "Saab",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "전투기·레이더",
+   "exchange": "STO:SAAB-B"
+  },
+  {
+   "id": "global:mhi",
+   "type": "global",
+   "nameKo": "미쓰비시중공업",
+   "nameEn": "Mitsubishi Heavy Industries",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "방산·항공",
+   "exchange": "TSE:7011"
+  },
+  {
+   "id": "global:wb_group",
+   "type": "global",
+   "nameKo": "WB그룹",
+   "nameEn": "WB Group",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "폴란드 방산 (천무 JV 파트너)",
+   "exchange": ""
+  },
+  {
+   "id": "global:poland",
+   "type": "global",
+   "nameKo": "폴란드 국방부",
+   "nameEn": "Poland MND",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "K2·K9·천무·FA-50 발주",
+   "exchange": ""
+  },
+  {
+   "id": "global:uae",
+   "type": "global",
+   "nameKo": "UAE 국방부",
+   "nameEn": "UAE MoD",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "천궁-II 발주",
+   "exchange": ""
+  },
+  {
+   "id": "global:saudi",
+   "type": "global",
+   "nameKo": "사우디 국방부",
+   "nameEn": "Saudi MoD",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "천궁-II 발주",
+   "exchange": ""
+  },
+  {
+   "id": "global:iraq",
+   "type": "global",
+   "nameKo": "이라크 국방부",
+   "nameEn": "Iraq MoD",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "천궁-II·FA-50 발주",
+   "exchange": ""
+  },
+  {
+   "id": "global:philippines",
+   "type": "global",
+   "nameKo": "필리핀 국방부",
+   "nameEn": "Philippines DND",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "FA-50 발주",
+   "exchange": ""
+  },
+  {
+   "id": "global:malaysia",
+   "type": "global",
+   "nameKo": "말레이시아 국방부",
+   "nameEn": "Malaysia MoD",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "FA-50 발주",
+   "exchange": ""
+  },
+  {
+   "id": "global:dapa",
+   "type": "kr_other",
+   "nameKo": "방위사업청",
+   "nameEn": "DAPA",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "국내 방산 발주",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_012450>krx_272210",
+   "source": "krx:012450",
+   "target": "krx:272210",
+   "type": "equity",
+   "labelKo": "한화에어로스페이스 자회사 (한화시스템)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.boannews.com/html/detail.html?idx=108751",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_012450>krx_099320",
+   "source": "krx:012450",
+   "target": "krx:099320",
+   "type": "equity",
+   "labelKo": "한화에어로스페이스 최대주주 (쎄트렉아이 ~33~37%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://itooza.com/newsview/2021043015344610967",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_012450>global_poland",
+   "source": "krx:012450",
+   "target": "global:poland",
+   "type": "supply",
+   "labelKo": "K9 자주포 (2차 152문) + 천무 3차 5.6조",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Industry/2025/12/202512292141361303e207547429_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_012450>global_wb_group",
+   "source": "krx:012450",
+   "target": "global:wb_group",
+   "type": "partner",
+   "labelKo": "한화-WB Advanced Systems JV (천무 현지생산·부품 2조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=650608",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064350>global_poland",
+   "source": "krx:064350",
+   "target": "global:poland",
+   "type": "supply",
+   "labelKo": "K2 전차 2차 이행계약 65억$ (180대·현지생산)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.kukinews.com/article/view/kuk202508030002",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_047810>global_poland",
+   "source": "krx:047810",
+   "target": "global:poland",
+   "type": "supply",
+   "labelKo": "FA-50 48대",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_103140>global_poland",
+   "source": "krx:103140",
+   "target": "global:poland",
+   "type": "supply",
+   "labelKo": "155mm 포탄 (K9 연계)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=85400",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_103140>krx_012450",
+   "source": "krx:103140",
+   "target": "krx:012450",
+   "type": "supply",
+   "labelKo": "K9 자주포용 155mm 탄약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=85400",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_079550>global_uae",
+   "source": "krx:079550",
+   "target": "global:uae",
+   "type": "supply",
+   "labelKo": "천궁-II 체계 (UAE 2.6조·사우디 4.3조·이라크 3.7조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2025/09/20250912070104775fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_079550>global_saudi",
+   "source": "krx:079550",
+   "target": "global:saudi",
+   "type": "supply",
+   "labelKo": "천궁-II 체계 (UAE 2.6조·사우디 4.3조·이라크 3.7조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2025/09/20250912070104775fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_079550>global_iraq",
+   "source": "krx:079550",
+   "target": "global:iraq",
+   "type": "supply",
+   "labelKo": "천궁-II 체계 (UAE 2.6조·사우디 4.3조·이라크 3.7조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2025/09/20250912070104775fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_272210>krx_079550",
+   "source": "krx:272210",
+   "target": "krx:079550",
+   "type": "supply",
+   "labelKo": "천궁-II 다기능레이더(MFR)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_272210>global_uae",
+   "source": "krx:272210",
+   "target": "global:uae",
+   "type": "supply",
+   "labelKo": "천궁-II MFR (사우디 1.2조 등 중동 3개국)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_272210>global_saudi",
+   "source": "krx:272210",
+   "target": "global:saudi",
+   "type": "supply",
+   "labelKo": "천궁-II MFR (사우디 1.2조 등 중동 3개국)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_272210>global_iraq",
+   "source": "krx:272210",
+   "target": "global:iraq",
+   "type": "supply",
+   "labelKo": "천궁-II MFR (사우디 1.2조 등 중동 3개국)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_012450>krx_079550",
+   "source": "krx:012450",
+   "target": "krx:079550",
+   "type": "supply",
+   "labelKo": "천궁-II 발사대·추진기관 (한화에어로 체계 참여)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20251218n26170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_ge_aero>krx_012450",
+   "source": "global:ge_aero",
+   "target": "krx:012450",
+   "type": "partner",
+   "labelKo": "F414 엔진 라이선스 생산",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hanwha.co.kr/newsroom/media_center/news/news_view.do?seq=14239",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_012450>krx_047810",
+   "source": "krx:012450",
+   "target": "krx:047810",
+   "type": "supply",
+   "labelKo": "KF-21 양산 엔진 전량 (F414, 80여기 6,232억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hanwha.co.kr/newsroom/media_center/news/news_view.do?seq=14239",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_047810>global_dapa",
+   "source": "krx:047810",
+   "target": "global:dapa",
+   "type": "supply",
+   "labelKo": "KF-21 최초양산 (방위사업청)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hanwha.co.kr/newsroom/media_center/news/news_view.do?seq=14239",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_lockheed>krx_047810",
+   "source": "global:lockheed",
+   "target": "krx:047810",
+   "type": "partner",
+   "labelKo": "T-50/FA-50 공동개발·KF-21 기술협력 (30년+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newswatch.kr/news/articleView.html?idxno=72012",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_047810>global_philippines",
+   "source": "krx:047810",
+   "target": "global:philippines",
+   "type": "supply",
+   "labelKo": "FA-50 수출 (필리핀 12대 추가 1조·말레이시아 18대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148943956",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_047810>global_malaysia",
+   "source": "krx:047810",
+   "target": "global:malaysia",
+   "type": "supply",
+   "labelKo": "FA-50 수출 (필리핀 12대 추가 1조·말레이시아 18대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148943956",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_047810>global_iraq",
+   "source": "krx:047810",
+   "target": "global:iraq",
+   "type": "supply",
+   "labelKo": "FA-50 수출 (필리핀 12대 추가 1조·말레이시아 18대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148943956",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_012450>global_dapa",
+   "source": "krx:012450",
+   "target": "global:dapa",
+   "type": "supply",
+   "labelKo": "국내 방산 주계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.idomin.com/news/articleView.html?idxno=923331",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_079550>global_dapa",
+   "source": "krx:079550",
+   "target": "global:dapa",
+   "type": "supply",
+   "labelKo": "국내 방산 주계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.idomin.com/news/articleView.html?idxno=923331",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_272210>global_dapa",
+   "source": "krx:272210",
+   "target": "global:dapa",
+   "type": "supply",
+   "labelKo": "국내 방산 주계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.idomin.com/news/articleView.html?idxno=923331",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064350>global_dapa",
+   "source": "krx:064350",
+   "target": "global:dapa",
+   "type": "supply",
+   "labelKo": "국내 방산 주계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.idomin.com/news/articleView.html?idxno=923331",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_103140>global_dapa",
+   "source": "krx:103140",
+   "target": "global:dapa",
+   "type": "supply",
+   "labelKo": "국내 방산 주계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.idomin.com/news/articleView.html?idxno=923331",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003570>krx_064350",
+   "source": "krx:003570",
+   "target": "krx:064350",
+   "type": "supply",
+   "labelKo": "K2 전차 1,500마력 변속기 (4차 양산 1,337억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.idomin.com/news/articleView.html?idxno=923331",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_484870>krx_064350",
+   "source": "krx:484870",
+   "target": "krx:064350",
+   "type": "supply",
+   "labelKo": "폴란드 K2 포·포탑 구동장치·서보밸브 (419억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202512028187i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_484870>krx_012450",
+   "source": "krx:484870",
+   "target": "krx:012450",
+   "type": "supply",
+   "labelKo": "폴란드 K9 현수장치 등 유압부품",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202512028187i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010820>krx_079550",
+   "source": "krx:010820",
+   "target": "krx:079550",
+   "type": "supply",
+   "labelKo": "유도무기 구동장치",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/firstec",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010820>krx_012450",
+   "source": "krx:010820",
+   "target": "krx:012450",
+   "type": "supply",
+   "labelKo": "유도무기·항공 구동장치",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/firstec",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_214430>krx_079550",
+   "source": "krx:214430",
+   "target": "krx:079550",
+   "type": "supply",
+   "labelKo": "적외선 검출기·모듈 (75억 공급계약)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03404646612549536",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_214430>krx_272210",
+   "source": "krx:214430",
+   "target": "krx:272210",
+   "type": "supply",
+   "labelKo": "적외선 검출기·모듈",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202405101325034680101922",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_082920>krx_079550",
+   "source": "krx:082920",
+   "target": "krx:079550",
+   "type": "supply",
+   "labelKo": "군용 리튬 1차전지 (무전기·유도무기)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2025010689921",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_368770>krx_079550",
+   "source": "krx:368770",
+   "target": "krx:079550",
+   "type": "supply",
+   "labelKo": "광섬유 자이로 관성항법장치",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://orangeboard.co.kr/@lepain/%ED%8C%8C%EC%9D%B4%EB%B2%84%ED%94%84%EB%A1%9C-%EA%B4%91%EC%84%AC%EC%9C%A0-%EC%84%BC%EC%84%9C%EB%A1%9C-%EC%9A%B0%EC%A3%BC-%EB%B0%A9%EC%82%B0-UAM%EC%8B%9C%EC%9E%A5%EC%97%90%EC%84%9C-%EB%AC%B4%ED%95%9C%ED%95%9C-%ED%99%95%EC%9E%A5%EC%84%B1%EC%9D%84-%ED%8E%BC%EC%B9%A0-%ED%9A%8C%EC%82%AC",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>global_lockheed",
+   "source": "krx:012450",
+   "target": "global:lockheed",
+   "type": "peer",
+   "labelKo": "글로벌 방산 경쟁 (한화에어로 매출 26.6조)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>global_rtx",
+   "source": "krx:012450",
+   "target": "global:rtx",
+   "type": "peer",
+   "labelKo": "글로벌 방산 경쟁 (한화에어로 매출 26.6조)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>global_bae",
+   "source": "krx:012450",
+   "target": "global:bae",
+   "type": "peer",
+   "labelKo": "글로벌 방산 경쟁 (한화에어로 매출 26.6조)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>global_rheinmetall",
+   "source": "krx:012450",
+   "target": "global:rheinmetall",
+   "type": "peer",
+   "labelKo": "글로벌 방산 경쟁 (한화에어로 매출 26.6조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>global_leonardo",
+   "source": "krx:012450",
+   "target": "global:leonardo",
+   "type": "peer",
+   "labelKo": "글로벌 방산 경쟁 (한화에어로 매출 26.6조)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>global_thales",
+   "source": "krx:012450",
+   "target": "global:thales",
+   "type": "peer",
+   "labelKo": "글로벌 방산 경쟁 (한화에어로 매출 26.6조)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064350>global_rheinmetall",
+   "source": "krx:064350",
+   "target": "global:rheinmetall",
+   "type": "peer",
+   "labelKo": "전차 경쟁 (K2 vs 레오파드2·챌린저)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kukinews.com/article/view/kuk202508030002",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064350>global_knds",
+   "source": "krx:064350",
+   "target": "global:knds",
+   "type": "peer",
+   "labelKo": "전차 경쟁 (K2 vs 레오파드2·챌린저)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kukinews.com/article/view/kuk202508030002",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064350>global_bae",
+   "source": "krx:064350",
+   "target": "global:bae",
+   "type": "peer",
+   "labelKo": "전차 경쟁 (K2 vs 레오파드2·챌린저)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kukinews.com/article/view/kuk202508030002",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>global_knds",
+   "source": "krx:012450",
+   "target": "global:knds",
+   "type": "peer",
+   "labelKo": "자주포 경쟁 (K9 vs PzH2000·아처)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.dailian.co.kr/news/view/1643319/%ED%95%98%EC%9D%B4%EB%A7%88%EC%8A%A4-%EB%B9%A0%EB%A5%B4%EA%B2%8C%EC%9C%A0%EB%9F%BD%EC%9D%B4-%ED%95%9C%ED%99%94-K9%EC%B2%9C%EB%AC%B4-%EB%8B%A4-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079550>global_rtx",
+   "source": "krx:079550",
+   "target": "global:rtx",
+   "type": "peer",
+   "labelKo": "방공·유도무기 경쟁 (천궁-II vs 패트리엇)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2025/09/20250912070104775fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079550>global_thales",
+   "source": "krx:079550",
+   "target": "global:thales",
+   "type": "peer",
+   "labelKo": "방공·유도무기 경쟁 (천궁-II vs 패트리엇)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2025/09/20250912070104775fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079550>global_saab",
+   "source": "krx:079550",
+   "target": "global:saab",
+   "type": "peer",
+   "labelKo": "방공·유도무기 경쟁 (천궁-II vs 패트리엇)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2025/09/20250912070104775fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_272210>global_thales",
+   "source": "krx:272210",
+   "target": "global:thales",
+   "type": "peer",
+   "labelKo": "레이더·방산전자 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_272210>global_leonardo",
+   "source": "krx:272210",
+   "target": "global:leonardo",
+   "type": "peer",
+   "labelKo": "레이더·방산전자 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_272210>global_saab",
+   "source": "krx:272210",
+   "target": "global:saab",
+   "type": "peer",
+   "labelKo": "레이더·방산전자 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_272210>global_rtx",
+   "source": "krx:272210",
+   "target": "global:rtx",
+   "type": "peer",
+   "labelKo": "레이더·방산전자 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_047810>global_lockheed",
+   "source": "krx:047810",
+   "target": "global:lockheed",
+   "type": "peer",
+   "labelKo": "전투기·훈련기 경쟁 (FA-50 vs 그리펜·M-346)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2024101848691",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_047810>global_saab",
+   "source": "krx:047810",
+   "target": "global:saab",
+   "type": "peer",
+   "labelKo": "전투기·훈련기 경쟁 (FA-50 vs 그리펜·M-346)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2024101848691",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_047810>global_leonardo",
+   "source": "krx:047810",
+   "target": "global:leonardo",
+   "type": "peer",
+   "labelKo": "전투기·훈련기 경쟁 (FA-50 vs 그리펜·M-346)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2024101848691",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_047810>global_mhi",
+   "source": "krx:047810",
+   "target": "global:mhi",
+   "type": "peer",
+   "labelKo": "전투기·훈련기 경쟁 (FA-50 vs 그리펜·M-346)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2024101848691",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_103140>global_rheinmetall",
+   "source": "krx:103140",
+   "target": "global:rheinmetall",
+   "type": "peer",
+   "labelKo": "탄약 경쟁 (155mm)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2023/05/20230520101743618da65389f94_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_103140>global_bae",
+   "source": "krx:103140",
+   "target": "global:bae",
+   "type": "peer",
+   "labelKo": "탄약 경쟁 (155mm)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2023/05/20230520101743618da65389f94_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_012450>krx_103140",
+   "source": "krx:012450",
+   "target": "krx:103140",
+   "type": "partner",
+   "labelKo": "풍산 탄약부문 인수 검토",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.joongangenews.com/news/articleView.html?idxno=509595",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>krx_064350",
+   "source": "krx:012450",
+   "target": "krx:064350",
+   "type": "peer",
+   "labelKo": "육상체계 (자주포·전차)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012450>krx_079550",
+   "source": "krx:012450",
+   "target": "krx:079550",
+   "type": "peer",
+   "labelKo": "유도무기 (천무·천궁 체계)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026091110234494445",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079550>krx_272210",
+   "source": "krx:079550",
+   "target": "krx:272210",
+   "type": "peer",
+   "labelKo": "방산전자",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/06/25/20260625017004",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

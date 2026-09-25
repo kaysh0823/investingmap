@@ -26,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- investingmap-seo -->
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <meta name="description" content="가전·디스플레이·카메라모듈·전자부품·전선 관련 국내 상장사의 KRX 지표와 글로벌 peer를 비교합니다.">
+  <meta name="description" content="가전·디스플레이·카메라모듈·전자부품 관련 국내 상장사와 글로벌 peer">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.investingmap.kr/elec/korea_elec_map.html">
   <link rel="alternate" hreflang="ko-KR" href="https://www.investingmap.kr/elec/korea_elec_map.html?lang=ko">
@@ -38,10 +38,10 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:url" content="https://www.investingmap.kr/elec/korea_elec_map.html">
   <meta property="og:title" content="한국 전기·전자 투자 지도">
-  <meta property="og:description" content="가전·디스플레이·카메라모듈·전자부품·전선 관련 국내 상장사의 KRX 지표와 글로벌 peer를 비교합니다.">
+  <meta property="og:description" content="가전·디스플레이·카메라모듈·전자부품 관련 국내 상장사와 글로벌 peer">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="한국 전기·전자 투자 지도">
-  <meta name="twitter:description" content="가전·디스플레이·카메라모듈·전자부품·전선 관련 국내 상장사의 KRX 지표와 글로벌 peer를 비교합니다.">
+  <meta name="twitter:description" content="가전·디스플레이·카메라모듈·전자부품 관련 국내 상장사와 글로벌 peer">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -331,7 +331,7 @@
   </script>
 <!-- investingmap-seo-ld-end -->
 <meta name="investingmap-quotes-api" content="/api/quotes">
-  <title>한국 전기·전자 투자 지도</title>
+  <title>한국 전기·전자 투자 지도 / Korea Electrical & Electronics Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=58abf587"></script>
@@ -352,7 +352,7 @@
   <script src="../js/map_volatility.js?v=eec26c5a"></script>
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=8d92012e"></script>
-  <script src="../js/map_netmap.js?v=47381c5f"></script>
+  <script src="../js/map_netmap.js?v=5d2d48f7"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
   <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
@@ -3131,11 +3131,13 @@
         "netmapCountryJp": "JP",
         "netmapCountryCn": "CN",
         "netmapCountryEu": "EU",
+        "netmapCountryOther": "기타",
         "netmapCountryNameUs": "미국",
         "netmapCountryNameTw": "대만",
         "netmapCountryNameJp": "일본",
         "netmapCountryNameCn": "중국",
         "netmapCountryNameEu": "유럽",
+        "netmapCountryNameOther": "기타(중동·아시아 등)",
         "valuationMetricPer": "PER TTM",
         "valuationMetricPerFy": "PER FY",
         "valuationMetricPbr": "PBR",
@@ -3314,11 +3316,13 @@
         "netmapCountryJp": "JP",
         "netmapCountryCn": "CN",
         "netmapCountryEu": "EU",
+        "netmapCountryOther": "Other",
         "netmapCountryNameUs": "United States",
         "netmapCountryNameTw": "Taiwan",
         "netmapCountryNameJp": "Japan",
         "netmapCountryNameCn": "China",
         "netmapCountryNameEu": "Europe",
+        "netmapCountryNameOther": "Other (Middle East, Asia, etc.)",
         "valuationMetricPer": "PER TTM",
         "valuationMetricPerFy": "PER FY",
         "valuationMetricPbr": "PBR",
@@ -4209,14 +4213,16 @@
             tw: nt.netmapCountryTw,
             jp: nt.netmapCountryJp,
             cn: nt.netmapCountryCn,
-            eu: nt.netmapCountryEu
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
           },
           countryNames: {
             us: nt.netmapCountryNameUs,
             tw: nt.netmapCountryNameTw,
             jp: nt.netmapCountryNameJp,
             cn: nt.netmapCountryNameCn,
-            eu: nt.netmapCountryNameEu
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
           }
         }
       });

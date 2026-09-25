@@ -1,0 +1,2167 @@
+{
+ "sectorId": "auto",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "oem": "완성차",
+  "chassis": "섀시·안전",
+  "electronics": "전장·차량 소프트웨어",
+  "tire": "타이어",
+  "thermal": "열관리",
+  "mobility": "유통·모빌리티 서비스",
+  "powertrain": "구동·파워트레인",
+  "body": "차체·내외장",
+  "global_oem": "글로벌 완성차",
+  "global_peer": "글로벌 부품·타이어"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:005380",
+   "type": "kr_listed",
+   "ticker": "005380",
+   "nameKo": "현대차",
+   "nameEn": "현대차",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "oem",
+   "role": "완성차"
+  },
+  {
+   "id": "krx:000270",
+   "type": "kr_listed",
+   "ticker": "000270",
+   "nameKo": "기아",
+   "nameEn": "기아",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "oem",
+   "role": "완성차"
+  },
+  {
+   "id": "krx:012330",
+   "type": "kr_listed",
+   "ticker": "012330",
+   "nameKo": "현대모비스",
+   "nameEn": "현대모비스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "chassis",
+   "role": "섀시·안전"
+  },
+  {
+   "id": "krx:307950",
+   "type": "kr_listed",
+   "ticker": "307950",
+   "nameKo": "현대오토에버",
+   "nameEn": "현대오토에버",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "electronics",
+   "role": "전장·차량 소프트웨어"
+  },
+  {
+   "id": "krx:161390",
+   "type": "kr_listed",
+   "ticker": "161390",
+   "nameKo": "한국타이어앤테크놀로지",
+   "nameEn": "한국타이어앤테크놀로지",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "tire",
+   "role": "타이어"
+  },
+  {
+   "id": "krx:018880",
+   "type": "kr_listed",
+   "ticker": "018880",
+   "nameKo": "한온시스템",
+   "nameEn": "한온시스템",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "thermal",
+   "role": "열관리"
+  },
+  {
+   "id": "krx:007340",
+   "type": "kr_listed",
+   "ticker": "007340",
+   "nameKo": "DN오토모티브",
+   "nameEn": "DN오토모티브",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "chassis",
+   "role": "섀시·안전"
+  },
+  {
+   "id": "krx:000240",
+   "type": "kr_listed",
+   "ticker": "000240",
+   "nameKo": "한국앤컴퍼니",
+   "nameEn": "한국앤컴퍼니",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "tire",
+   "role": "타이어"
+  },
+  {
+   "id": "krx:005850",
+   "type": "kr_listed",
+   "ticker": "005850",
+   "nameKo": "에스엘",
+   "nameEn": "에스엘",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "electronics",
+   "role": "전장·차량 소프트웨어"
+  },
+  {
+   "id": "krx:204320",
+   "type": "kr_listed",
+   "ticker": "204320",
+   "nameKo": "HL만도",
+   "nameEn": "HL만도",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "chassis",
+   "role": "섀시·안전"
+  },
+  {
+   "id": "krx:073240",
+   "type": "kr_listed",
+   "ticker": "073240",
+   "nameKo": "금호타이어",
+   "nameEn": "금호타이어",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "tire",
+   "role": "타이어"
+  },
+  {
+   "id": "krx:089860",
+   "type": "kr_listed",
+   "ticker": "089860",
+   "nameKo": "롯데렌탈",
+   "nameEn": "롯데렌탈",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "mobility",
+   "role": "유통·모빌리티 서비스"
+  },
+  {
+   "id": "krx:011210",
+   "type": "kr_listed",
+   "ticker": "011210",
+   "nameKo": "현대위아",
+   "nameEn": "현대위아",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "powertrain",
+   "role": "구동·파워트레인"
+  },
+  {
+   "id": "krx:064960",
+   "type": "kr_listed",
+   "ticker": "064960",
+   "nameKo": "SNT모티브",
+   "nameEn": "SNT모티브",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "powertrain",
+   "role": "구동·파워트레인"
+  },
+  {
+   "id": "krx:025540",
+   "type": "kr_listed",
+   "ticker": "025540",
+   "nameKo": "한국단자",
+   "nameEn": "한국단자",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "electronics",
+   "role": "전장·차량 소프트웨어"
+  },
+  {
+   "id": "krx:002350",
+   "type": "kr_listed",
+   "ticker": "002350",
+   "nameKo": "넥센타이어",
+   "nameEn": "넥센타이어",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "tire",
+   "role": "타이어"
+  },
+  {
+   "id": "krx:003620",
+   "type": "kr_listed",
+   "ticker": "003620",
+   "nameKo": "KG모빌리티",
+   "nameEn": "KG모빌리티",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "oem",
+   "role": "완성차"
+  },
+  {
+   "id": "krx:015750",
+   "type": "kr_listed",
+   "ticker": "015750",
+   "nameKo": "성우하이텍",
+   "nameEn": "성우하이텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "body",
+   "role": "차체·내외장"
+  },
+  {
+   "id": "krx:125490",
+   "type": "kr_listed",
+   "ticker": "125490",
+   "nameKo": "한라캐스트",
+   "nameEn": "한라캐스트",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "body",
+   "role": "차체·내외장"
+  },
+  {
+   "id": "krx:004700",
+   "type": "kr_listed",
+   "ticker": "004700",
+   "nameKo": "조광피혁",
+   "nameEn": "조광피혁",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "body",
+   "role": "차체·내외장"
+  },
+  {
+   "id": "krx:009900",
+   "type": "kr_listed",
+   "ticker": "009900",
+   "nameKo": "명신산업",
+   "nameEn": "명신산업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "body",
+   "role": "차체·내외장"
+  },
+  {
+   "id": "krx:403550",
+   "type": "kr_listed",
+   "ticker": "403550",
+   "nameKo": "쏘카",
+   "nameEn": "쏘카",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "mobility",
+   "role": "유통·모빌리티 서비스"
+  },
+  {
+   "id": "krx:448900",
+   "type": "kr_listed",
+   "ticker": "448900",
+   "nameKo": "한국피아이엠",
+   "nameEn": "한국피아이엠",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "chassis",
+   "role": "섀시·안전"
+  },
+  {
+   "id": "krx:097520",
+   "type": "kr_listed",
+   "ticker": "097520",
+   "nameKo": "엠씨넥스",
+   "nameEn": "엠씨넥스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "electronics",
+   "role": "전장·차량 소프트웨어"
+  },
+  {
+   "id": "krx:381970",
+   "type": "kr_listed",
+   "ticker": "381970",
+   "nameKo": "케이카",
+   "nameEn": "케이카",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "mobility",
+   "role": "유통·모빌리티 서비스"
+  },
+  {
+   "id": "krx:200880",
+   "type": "kr_listed",
+   "ticker": "200880",
+   "nameKo": "서연이화",
+   "nameEn": "서연이화",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "body",
+   "role": "차체·내외장"
+  },
+  {
+   "id": "krx:000430",
+   "type": "kr_listed",
+   "ticker": "000430",
+   "nameKo": "대원강업",
+   "nameEn": "대원강업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "chassis",
+   "role": "섀시·안전"
+  },
+  {
+   "id": "global:toyota",
+   "type": "global",
+   "nameKo": "토요타",
+   "nameEn": "Toyota",
+   "country": "jp",
+   "chain": "global_oem",
+   "role": "완성차 1위",
+   "exchange": "TSE:7203"
+  },
+  {
+   "id": "global:vw",
+   "type": "global",
+   "nameKo": "폭스바겐그룹",
+   "nameEn": "Volkswagen Group",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "완성차 2위 (아우디·포르쉐 포함)",
+   "exchange": "XETRA:VOW3"
+  },
+  {
+   "id": "global:gm",
+   "type": "global",
+   "nameKo": "GM",
+   "nameEn": "General Motors",
+   "country": "us",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": "NYSE:GM"
+  },
+  {
+   "id": "global:stellantis",
+   "type": "global",
+   "nameKo": "스텔란티스",
+   "nameEn": "Stellantis",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": "NYSE:STLA"
+  },
+  {
+   "id": "global:ford",
+   "type": "global",
+   "nameKo": "포드",
+   "nameEn": "Ford",
+   "country": "us",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": "NYSE:F"
+  },
+  {
+   "id": "global:bmw",
+   "type": "global",
+   "nameKo": "BMW",
+   "nameEn": "BMW",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": "XETRA:BMW"
+  },
+  {
+   "id": "global:mercedes",
+   "type": "global",
+   "nameKo": "메르세데스-벤츠",
+   "nameEn": "Mercedes-Benz Group",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": "XETRA:MBG"
+  },
+  {
+   "id": "global:renault",
+   "type": "global",
+   "nameKo": "르노",
+   "nameEn": "Renault",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": "EPA:RNO"
+  },
+  {
+   "id": "global:volvo",
+   "type": "global",
+   "nameKo": "볼보카",
+   "nameEn": "Volvo Cars",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": "STO:VOLCAR-B"
+  },
+  {
+   "id": "global:tesla",
+   "type": "global",
+   "nameKo": "테슬라",
+   "nameEn": "Tesla",
+   "country": "us",
+   "chain": "global_oem",
+   "role": "EV 완성차",
+   "exchange": "NASDAQ:TSLA"
+  },
+  {
+   "id": "global:chery",
+   "type": "global",
+   "nameKo": "체리자동차",
+   "nameEn": "Chery",
+   "country": "cn",
+   "chain": "global_oem",
+   "role": "완성차",
+   "exchange": ""
+  },
+  {
+   "id": "global:byd",
+   "type": "global",
+   "nameKo": "BYD",
+   "nameEn": "BYD",
+   "country": "cn",
+   "chain": "global_oem",
+   "role": "EV 완성차",
+   "exchange": "HKEX:1211"
+  },
+  {
+   "id": "global:bosch",
+   "type": "global",
+   "nameKo": "보쉬",
+   "nameEn": "Bosch",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "부품 1위",
+   "exchange": ""
+  },
+  {
+   "id": "global:denso",
+   "type": "global",
+   "nameKo": "덴소",
+   "nameEn": "Denso",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "부품 (열관리 1위)",
+   "exchange": "TSE:6902"
+  },
+  {
+   "id": "global:zf",
+   "type": "global",
+   "nameKo": "ZF",
+   "nameEn": "ZF Friedrichshafen",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "섀시·구동",
+   "exchange": ""
+  },
+  {
+   "id": "global:magna",
+   "type": "global",
+   "nameKo": "마그나",
+   "nameEn": "Magna",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "부품·위탁생산",
+   "exchange": "NYSE:MGA"
+  },
+  {
+   "id": "global:aisin",
+   "type": "global",
+   "nameKo": "아이신",
+   "nameEn": "Aisin",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "구동·변속기",
+   "exchange": "TSE:7259"
+  },
+  {
+   "id": "global:continental",
+   "type": "global",
+   "nameKo": "콘티넨탈",
+   "nameEn": "Continental",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "부품·타이어",
+   "exchange": "XETRA:CON"
+  },
+  {
+   "id": "global:borgwarner",
+   "type": "global",
+   "nameKo": "보그워너",
+   "nameEn": "BorgWarner",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "구동",
+   "exchange": "NYSE:BWA"
+  },
+  {
+   "id": "global:michelin",
+   "type": "global",
+   "nameKo": "미쉐린",
+   "nameEn": "Michelin",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "타이어 1위",
+   "exchange": "EPA:ML"
+  },
+  {
+   "id": "global:bridgestone",
+   "type": "global",
+   "nameKo": "브리지스톤",
+   "nameEn": "Bridgestone",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "타이어",
+   "exchange": "TSE:5108"
+  },
+  {
+   "id": "global:goodyear",
+   "type": "global",
+   "nameKo": "굿이어",
+   "nameEn": "Goodyear",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "타이어",
+   "exchange": "NASDAQ:GT"
+  },
+  {
+   "id": "global:affinity",
+   "type": "global",
+   "nameKo": "어피니티",
+   "nameEn": "Affinity Equity Partners",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "사모펀드 (롯데렌탈 인수)",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_012330>krx_005380",
+   "source": "krx:012330",
+   "target": "krx:005380",
+   "type": "equity",
+   "labelKo": "현대모비스→현대차 22.4%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsverse.kr/news/articleView.html?idxno=9424",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005380>krx_000270",
+   "source": "krx:005380",
+   "target": "krx:000270",
+   "type": "equity",
+   "labelKo": "현대차→기아 34.5%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsverse.kr/news/articleView.html?idxno=9424",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_000270>krx_012330",
+   "source": "krx:000270",
+   "target": "krx:012330",
+   "type": "equity",
+   "labelKo": "기아→현대모비스 17.9%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsverse.kr/news/articleView.html?idxno=9424",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005380>krx_011210",
+   "source": "krx:005380",
+   "target": "krx:011210",
+   "type": "equity",
+   "labelKo": "현대차 계열 (현대위아)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/현대위아",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005380>krx_307950",
+   "source": "krx:005380",
+   "target": "krx:307950",
+   "type": "equity",
+   "labelKo": "현대차그룹 계열 (현대오토에버)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newstomato.com/ReadNews.aspx?no=1279047",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_toyota",
+   "source": "krx:005380",
+   "target": "global:toyota",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_vw",
+   "source": "krx:005380",
+   "target": "global:vw",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_gm",
+   "source": "krx:005380",
+   "target": "global:gm",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_stellantis",
+   "source": "krx:005380",
+   "target": "global:stellantis",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_ford",
+   "source": "krx:005380",
+   "target": "global:ford",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_bmw",
+   "source": "krx:005380",
+   "target": "global:bmw",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_mercedes",
+   "source": "krx:005380",
+   "target": "global:mercedes",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_tesla",
+   "source": "krx:005380",
+   "target": "global:tesla",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>global_byd",
+   "source": "krx:005380",
+   "target": "global:byd",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_toyota",
+   "source": "krx:000270",
+   "target": "global:toyota",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_vw",
+   "source": "krx:000270",
+   "target": "global:vw",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_gm",
+   "source": "krx:000270",
+   "target": "global:gm",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_stellantis",
+   "source": "krx:000270",
+   "target": "global:stellantis",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_ford",
+   "source": "krx:000270",
+   "target": "global:ford",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_bmw",
+   "source": "krx:000270",
+   "target": "global:bmw",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_mercedes",
+   "source": "krx:000270",
+   "target": "global:mercedes",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_tesla",
+   "source": "krx:000270",
+   "target": "global:tesla",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000270>global_byd",
+   "source": "krx:000270",
+   "target": "global:byd",
+   "type": "peer",
+   "labelKo": "글로벌 완성차 경쟁 (현대차그룹 3위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005380>krx_000270",
+   "source": "krx:005380",
+   "target": "krx:000270",
+   "type": "peer",
+   "labelKo": "완성차 (그룹 내 양대 브랜드)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260130164541",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003620>krx_000270",
+   "source": "krx:003620",
+   "target": "krx:000270",
+   "type": "peer",
+   "labelKo": "국내 완성차 (SUV·픽업)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260803000428",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_003620>global_chery",
+   "source": "krx:003620",
+   "target": "global:chery",
+   "type": "partner",
+   "labelKo": "플랫폼·E/E 아키텍처 협력 + 7,500만$ CB",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260803000428",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_chery>krx_003620",
+   "source": "global:chery",
+   "target": "krx:003620",
+   "type": "equity",
+   "labelKo": "전환사채 (전환 시 16.22%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260803000428",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_003620>global_byd",
+   "source": "krx:003620",
+   "target": "global:byd",
+   "type": "partner",
+   "labelKo": "EV·HEV 공동개발 협약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.autoelectronics.co.kr/article/articleView.asp?idx=5368",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_012330>krx_000270",
+   "source": "krx:012330",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "모듈·핵심부품 (매출 38.2%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10869947",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_012330>krx_005380",
+   "source": "krx:012330",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "모듈·핵심부품 (매출 36.3%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10869947",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011210>krx_005380",
+   "source": "krx:011210",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "엔진·구동부품·모듈",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/현대위아",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011210>krx_000270",
+   "source": "krx:011210",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "엔진·구동부품·모듈",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/현대위아",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_307950>krx_005380",
+   "source": "krx:307950",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "차량 SW·IT (현대차·기아 36.4%, 내부거래 94%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newstomato.com/ReadNews.aspx?no=1279047",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_307950>krx_000270",
+   "source": "krx:307950",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "차량 SW·IT (현대차·기아 36.4%, 내부거래 94%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newstomato.com/ReadNews.aspx?no=1279047",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012330>global_bosch",
+   "source": "krx:012330",
+   "target": "global:bosch",
+   "type": "peer",
+   "labelKo": "글로벌 부품사 Top10 경쟁 (모비스 6위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012330>global_denso",
+   "source": "krx:012330",
+   "target": "global:denso",
+   "type": "peer",
+   "labelKo": "글로벌 부품사 Top10 경쟁 (모비스 6위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012330>global_zf",
+   "source": "krx:012330",
+   "target": "global:zf",
+   "type": "peer",
+   "labelKo": "글로벌 부품사 Top10 경쟁 (모비스 6위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012330>global_magna",
+   "source": "krx:012330",
+   "target": "global:magna",
+   "type": "peer",
+   "labelKo": "글로벌 부품사 Top10 경쟁 (모비스 6위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012330>global_aisin",
+   "source": "krx:012330",
+   "target": "global:aisin",
+   "type": "peer",
+   "labelKo": "글로벌 부품사 Top10 경쟁 (모비스 6위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_012330>global_continental",
+   "source": "krx:012330",
+   "target": "global:continental",
+   "type": "peer",
+   "labelKo": "글로벌 부품사 Top10 경쟁 (모비스 6위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>krx_005380",
+   "source": "krx:018880",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "열관리 (현대차그룹 48%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>krx_000270",
+   "source": "krx:018880",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "열관리 (현대차그룹 48%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>global_vw",
+   "source": "krx:018880",
+   "target": "global:vw",
+   "type": "supply",
+   "labelKo": "열관리 (13%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>global_ford",
+   "source": "krx:018880",
+   "target": "global:ford",
+   "type": "supply",
+   "labelKo": "열관리 (11%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>global_gm",
+   "source": "krx:018880",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "열관리 (6%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>global_bmw",
+   "source": "krx:018880",
+   "target": "global:bmw",
+   "type": "supply",
+   "labelKo": "열관리 (5%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>global_mercedes",
+   "source": "krx:018880",
+   "target": "global:mercedes",
+   "type": "supply",
+   "labelKo": "열관리 (4%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018880>global_stellantis",
+   "source": "krx:018880",
+   "target": "global:stellantis",
+   "type": "supply",
+   "labelKo": "열관리 (3%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018880>global_denso",
+   "source": "krx:018880",
+   "target": "global:denso",
+   "type": "peer",
+   "labelKo": "열관리 세계 1·2위",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10810028",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_161390>krx_018880",
+   "source": "krx:161390",
+   "target": "krx:018880",
+   "type": "equity",
+   "labelKo": "한국타이어→한온시스템 54.77%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202501032027200602",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_000240>krx_161390",
+   "source": "krx:000240",
+   "target": "krx:161390",
+   "type": "equity",
+   "labelKo": "지주사 (한국앤컴퍼니)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202501032027200602",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>krx_005380",
+   "source": "krx:204320",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "섀시·브레이크·조향 (현대차그룹 44%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=635827",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>krx_000270",
+   "source": "krx:204320",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "섀시·브레이크·조향 (현대차그룹 44%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=635827",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>krx_012330",
+   "source": "krx:204320",
+   "target": "krx:012330",
+   "type": "supply",
+   "labelKo": "섀시·브레이크·조향 (현대차그룹 44%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=635827",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>krx_011210",
+   "source": "krx:204320",
+   "target": "krx:011210",
+   "type": "supply",
+   "labelKo": "섀시·브레이크·조향 (현대차그룹 44%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=635827",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>global_gm",
+   "source": "krx:204320",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "북미 27% (GM)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=635827",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>global_bmw",
+   "source": "krx:204320",
+   "target": "global:bmw",
+   "type": "supply",
+   "labelKo": "섀시·브레이크 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.consumernews.co.kr/news/articleView.html?idxno=685021",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>global_vw",
+   "source": "krx:204320",
+   "target": "global:vw",
+   "type": "supply",
+   "labelKo": "섀시·브레이크 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.consumernews.co.kr/news/articleView.html?idxno=685021",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>global_renault",
+   "source": "krx:204320",
+   "target": "global:renault",
+   "type": "supply",
+   "labelKo": "섀시·브레이크 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.consumernews.co.kr/news/articleView.html?idxno=685021",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>global_volvo",
+   "source": "krx:204320",
+   "target": "global:volvo",
+   "type": "supply",
+   "labelKo": "섀시·브레이크 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.consumernews.co.kr/news/articleView.html?idxno=685021",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204320>global_ford",
+   "source": "krx:204320",
+   "target": "global:ford",
+   "type": "supply",
+   "labelKo": "섀시·브레이크 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.consumernews.co.kr/news/articleView.html?idxno=685021",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_204320>global_bosch",
+   "source": "krx:204320",
+   "target": "global:bosch",
+   "type": "peer",
+   "labelKo": "섀시·브레이크 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_204320>global_zf",
+   "source": "krx:204320",
+   "target": "global:zf",
+   "type": "peer",
+   "labelKo": "섀시·브레이크 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_204320>global_continental",
+   "source": "krx:204320",
+   "target": "global:continental",
+   "type": "peer",
+   "labelKo": "섀시·브레이크 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.autonews.com/manufacturing/suppliers/an-top-suppliers-2025-main-page-0622/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064960>global_gm",
+   "source": "krx:064960",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "구동모터·파워트레인 부품 (GM 34.5%→25.5%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/132235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064960>krx_012330",
+   "source": "krx:064960",
+   "target": "krx:012330",
+   "type": "supply",
+   "labelKo": "구동모터",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/132235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064960>global_stellantis",
+   "source": "krx:064960",
+   "target": "global:stellantis",
+   "type": "supply",
+   "labelKo": "구동·파워트레인 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/132235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064960>global_magna",
+   "source": "krx:064960",
+   "target": "global:magna",
+   "type": "supply",
+   "labelKo": "구동·파워트레인 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/132235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064960>global_borgwarner",
+   "source": "krx:064960",
+   "target": "global:borgwarner",
+   "type": "supply",
+   "labelKo": "구동·파워트레인 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/132235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161390>global_michelin",
+   "source": "krx:161390",
+   "target": "global:michelin",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161390>global_bridgestone",
+   "source": "krx:161390",
+   "target": "global:bridgestone",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161390>global_goodyear",
+   "source": "krx:161390",
+   "target": "global:goodyear",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161390>global_continental",
+   "source": "krx:161390",
+   "target": "global:continental",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_073240>global_michelin",
+   "source": "krx:073240",
+   "target": "global:michelin",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_073240>global_bridgestone",
+   "source": "krx:073240",
+   "target": "global:bridgestone",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_073240>global_goodyear",
+   "source": "krx:073240",
+   "target": "global:goodyear",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_073240>global_continental",
+   "source": "krx:073240",
+   "target": "global:continental",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002350>global_michelin",
+   "source": "krx:002350",
+   "target": "global:michelin",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002350>global_bridgestone",
+   "source": "krx:002350",
+   "target": "global:bridgestone",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002350>global_goodyear",
+   "source": "krx:002350",
+   "target": "global:goodyear",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002350>global_continental",
+   "source": "krx:002350",
+   "target": "global:continental",
+   "type": "peer",
+   "labelKo": "글로벌 타이어 경쟁 (한국 7위·금호 16위·넥센 19위)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_161390>krx_005380",
+   "source": "krx:161390",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "OE 타이어",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_161390>krx_000270",
+   "source": "krx:161390",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "OE 타이어",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_073240>krx_005380",
+   "source": "krx:073240",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "OE 타이어",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_073240>krx_000270",
+   "source": "krx:073240",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "OE 타이어",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_002350>krx_005380",
+   "source": "krx:002350",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "OE 타이어",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_002350>krx_000270",
+   "source": "krx:002350",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "OE 타이어",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161390>krx_073240",
+   "source": "krx:161390",
+   "target": "krx:073240",
+   "type": "peer",
+   "labelKo": "국내 타이어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161390>krx_002350",
+   "source": "krx:161390",
+   "target": "krx:002350",
+   "type": "peer",
+   "labelKo": "국내 타이어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_073240>krx_002350",
+   "source": "krx:073240",
+   "target": "krx:002350",
+   "type": "peer",
+   "labelKo": "국내 타이어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://kr.investing.com/news/stock-market-news/article-2076077",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_002350>global_vw",
+   "source": "krx:002350",
+   "target": "global:vw",
+   "type": "supply",
+   "labelKo": "OE 타이어 (포르쉐·벤츠·BMW·아우디)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/156352",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_002350>global_mercedes",
+   "source": "krx:002350",
+   "target": "global:mercedes",
+   "type": "supply",
+   "labelKo": "OE 타이어 (포르쉐·벤츠·BMW·아우디)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/156352",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_002350>global_bmw",
+   "source": "krx:002350",
+   "target": "global:bmw",
+   "type": "supply",
+   "labelKo": "OE 타이어 (포르쉐·벤츠·BMW·아우디)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/156352",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_015750>krx_005380",
+   "source": "krx:015750",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "차체 부품 1차 협력사 (매출 3.1조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.drcr.co.kr/articles/496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_015750>krx_000270",
+   "source": "krx:015750",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "차체 부품 1차 협력사 (매출 3.1조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.drcr.co.kr/articles/496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_200880>krx_005380",
+   "source": "krx:200880",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "내장재 (현대차그룹 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.drcr.co.kr/articles/496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_200880>krx_000270",
+   "source": "krx:200880",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "내장재 (현대차그룹 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.drcr.co.kr/articles/496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_009900>global_tesla",
+   "source": "krx:009900",
+   "target": "global:tesla",
+   "type": "supply",
+   "labelKo": "핫스탬핑 (글로벌 EV업체 9,120억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.drcr.co.kr/articles/496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_009900>krx_005380",
+   "source": "krx:009900",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "핫스탬핑 부품 (3,860억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.drcr.co.kr/articles/496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_009900>krx_000270",
+   "source": "krx:009900",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "핫스탬핑 부품 (3,860억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.drcr.co.kr/articles/496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005850>krx_005380",
+   "source": "krx:005850",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "헤드램프 최대 공급사 (현대차·기아·모비스 44~50%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://theguru.co.kr/news/article.html?no=88521",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005850>krx_000270",
+   "source": "krx:005850",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "헤드램프 최대 공급사 (현대차·기아·모비스 44~50%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://theguru.co.kr/news/article.html?no=88521",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005850>krx_012330",
+   "source": "krx:005850",
+   "target": "krx:012330",
+   "type": "supply",
+   "labelKo": "헤드램프 최대 공급사 (현대차·기아·모비스 44~50%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://theguru.co.kr/news/article.html?no=88521",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005850>global_gm",
+   "source": "krx:005850",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "GM 신모델 램프",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=62065",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_025540>krx_005380",
+   "source": "krx:025540",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "자동차용 커넥터 (현대차·기아 ~70%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/133554",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_025540>krx_000270",
+   "source": "krx:025540",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "자동차용 커넥터 (현대차·기아 ~70%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/133554",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_097520>krx_012330",
+   "source": "krx:097520",
+   "target": "krx:012330",
+   "type": "supply",
+   "labelKo": "전장 카메라모듈 (현대모비스 12.4%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=22650",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_097520>krx_005380",
+   "source": "krx:097520",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "현대차그룹 1차 협력사 (신차용 카메라 직납)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=14067",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_097520>krx_000270",
+   "source": "krx:097520",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "현대차그룹 1차 협력사 (신차용 카메라 직납)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=14067",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_000430>krx_005380",
+   "source": "krx:000430",
+   "target": "krx:005380",
+   "type": "supply",
+   "labelKo": "스프링·시트 (현대차그룹 의존도 ~50%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/128470",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_000430>krx_000270",
+   "source": "krx:000430",
+   "target": "krx:000270",
+   "type": "supply",
+   "labelKo": "스프링·시트 (현대차그룹 의존도 ~50%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/128470",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_089860>krx_403550",
+   "source": "krx:089860",
+   "target": "krx:403550",
+   "type": "equity",
+   "labelKo": "롯데렌탈→쏘카 13.29% (2대주주)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.econovill.com/news/articleView.html?idxno=567954",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_affinity>krx_089860",
+   "source": "global:affinity",
+   "target": "krx:089860",
+   "type": "equity",
+   "labelKo": "어피니티 인수 (SK렌터카 합산 36%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://weekly.hankooki.com/news/articleView.html?idxno=7101778",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_381970>krx_089860",
+   "source": "krx:381970",
+   "target": "krx:089860",
+   "type": "peer",
+   "labelKo": "중고차·렌탈 (중고차 매각 채널 경쟁)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.econovill.com/news/articleView.html?idxno=567954",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_381970>krx_403550",
+   "source": "krx:381970",
+   "target": "krx:403550",
+   "type": "peer",
+   "labelKo": "모빌리티 서비스 (중고차·카셰어링)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.econovill.com/news/articleView.html?idxno=567954",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

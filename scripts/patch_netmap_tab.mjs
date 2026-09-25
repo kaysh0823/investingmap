@@ -111,14 +111,16 @@ function renderNetFn(sector) {
             tw: nt.netmapCountryTw,
             jp: nt.netmapCountryJp,
             cn: nt.netmapCountryCn,
-            eu: nt.netmapCountryEu
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
           },
           countryNames: {
             us: nt.netmapCountryNameUs,
             tw: nt.netmapCountryNameTw,
             jp: nt.netmapCountryNameJp,
             cn: nt.netmapCountryNameCn,
-            eu: nt.netmapCountryNameEu
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
           }
         }
       });
@@ -164,11 +166,13 @@ const TRANSLATIONS = {
     netmapCountryJp: 'JP',
     netmapCountryCn: 'CN',
     netmapCountryEu: 'EU',
+    netmapCountryOther: '기타',
     netmapCountryNameUs: '미국',
     netmapCountryNameTw: '대만',
     netmapCountryNameJp: '일본',
     netmapCountryNameCn: '중국',
     netmapCountryNameEu: '유럽',
+    netmapCountryNameOther: '기타(중동·아시아 등)',
   },
   en: {
     tabNetmap: '🕸️ Network map',
@@ -206,11 +210,13 @@ const TRANSLATIONS = {
     netmapCountryJp: 'JP',
     netmapCountryCn: 'CN',
     netmapCountryEu: 'EU',
+    netmapCountryOther: 'Other',
     netmapCountryNameUs: 'United States',
     netmapCountryNameTw: 'Taiwan',
     netmapCountryNameJp: 'Japan',
     netmapCountryNameCn: 'China',
     netmapCountryNameEu: 'Europe',
+    netmapCountryNameOther: 'Other (Middle East, Asia, etc.)',
   },
 };
 
@@ -350,16 +356,40 @@ function forceNetmapDataUrl(source, sector) {
   return next;
 }
 
+function ensureOtherCountryLabels(source) {
+  // Idempotently add `other` to labels.countries / labels.countryNames.
+  if (
+    /countries:\s*\{[\s\S]*?eu:\s*nt\.netmapCountryEu/.test(source) &&
+    !/countries:\s*\{[\s\S]*?other:\s*nt\.netmapCountryOther/.test(source)
+  ) {
+    source = source.replace(
+      /(countries:\s*\{[\s\S]*?eu:\s*nt\.netmapCountryEu)(\s*\})/,
+      `$1,\n            other: nt.netmapCountryOther$2`,
+    );
+  }
+  if (
+    /countryNames:\s*\{[\s\S]*?eu:\s*nt\.netmapCountryNameEu/.test(source) &&
+    !/countryNames:\s*\{[\s\S]*?other:\s*nt\.netmapCountryNameOther/.test(source)
+  ) {
+    source = source.replace(
+      /(countryNames:\s*\{[\s\S]*?eu:\s*nt\.netmapCountryNameEu)(\s*\})/,
+      `$1,\n            other: nt.netmapCountryNameOther$2`,
+    );
+  }
+  return source;
+}
+
 function migrateRenderNetmap(source, sector) {
   if (!source.includes('function renderNetmap()')) return source;
   if (source.includes("panel: document.getElementById('netmap-panel')")) {
     // Ensure countryNames block present
     if (!source.includes('countryNames:')) {
       source = source.replace(
-        /(countries: \{[\s\S]*?eu: nt\.netmapCountryEu\s*\}\s*)(}\s*\}\);)/,
-        `$1,\n          countryNames: {\n            us: nt.netmapCountryNameUs,\n            tw: nt.netmapCountryNameTw,\n            jp: nt.netmapCountryNameJp,\n            cn: nt.netmapCountryNameCn,\n            eu: nt.netmapCountryNameEu\n          }\n        $2`,
+        /(countries: \{[\s\S]*?eu: nt\.netmapCountryEu(?:,\s*other: nt\.netmapCountryOther)?\s*\}\s*)(}\s*\}\);)/,
+        `$1,\n          countryNames: {\n            us: nt.netmapCountryNameUs,\n            tw: nt.netmapCountryNameTw,\n            jp: nt.netmapCountryNameJp,\n            cn: nt.netmapCountryNameCn,\n            eu: nt.netmapCountryNameEu,\n            other: nt.netmapCountryNameOther\n          }\n        $2`,
       );
     }
+    source = ensureOtherCountryLabels(source);
     // Cloned maps often keep another sector's dataUrl — always rewrite.
     return forceNetmapDataUrl(source, sector);
   }
@@ -559,6 +589,8 @@ function main() {
   }
   console.log('OK patch_netmap_tab');
 }
+
+export { MAP_SECTOR };
 
 const isMain =
   process.argv[1] &&
