@@ -1,0 +1,5676 @@
+{
+ "sectorId": "semiconductor",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상. 밸류체인 그룹 수준 참고 연결 없음.",
+ "chains": {
+  "idm": "IDM",
+  "fabless": "팹리스·IP",
+  "design_house": "디자인하우스",
+  "foundry": "파운드리",
+  "front_equip": "전공정 장비",
+  "pack_equip": "패키징 장비",
+  "inspect_metro": "검사·계측 장비",
+  "process_mat": "공정 소재",
+  "process_parts": "공정 부품·유지관리",
+  "substrate": "기판·패키징 소재",
+  "test_parts": "테스트 부품·인터페이스",
+  "osat": "패키징·테스트 서비스",
+  "fab_infra": "팹 인프라·지원설비",
+  "distribution": "반도체 유통",
+  "end_customer": "수요처·세트"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·파운드리 파트너",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통 (source 제품을 target이 유통)"
+ },
+ "nodes": [
+  {
+   "id": "krx:440110",
+   "type": "kr_listed",
+   "ticker": "440110",
+   "nameKo": "파두",
+   "nameEn": "FADU INC.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fabless",
+   "role": "스토리지 (SSD 컨트롤러)"
+  },
+  {
+   "id": "krx:080220",
+   "type": "kr_listed",
+   "ticker": "080220",
+   "nameKo": "제주반도체",
+   "nameEn": "Jeju Semiconductor Corp.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fabless",
+   "role": "메모리 (SRAM)"
+  },
+  {
+   "id": "krx:108320",
+   "type": "kr_listed",
+   "ticker": "108320",
+   "nameKo": "LX세미콘",
+   "nameEn": "LX Semicon",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fabless",
+   "role": "디스플레이IC / 전력반도체"
+  },
+  {
+   "id": "krx:094170",
+   "type": "kr_listed",
+   "ticker": "094170",
+   "nameKo": "동운아나텍",
+   "nameEn": "DONGWOON ANATECH CO.,LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fabless",
+   "role": "아날로그 (드라이버IC)"
+  },
+  {
+   "id": "krx:490470",
+   "type": "kr_listed",
+   "ticker": "490470",
+   "nameKo": "세미파이브",
+   "nameEn": "SemiFive",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "design_house",
+   "role": "ASIC 설계 플랫폼"
+  },
+  {
+   "id": "krx:399720",
+   "type": "kr_listed",
+   "ticker": "399720",
+   "nameKo": "가온칩스",
+   "nameEn": "GAONCHIPS CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "design_house",
+   "role": "AI반도체 (설계 플랫폼)"
+  },
+  {
+   "id": "krx:200710",
+   "type": "kr_listed",
+   "ticker": "200710",
+   "nameKo": "에이디테크놀로지",
+   "nameEn": "ADTechnology Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "design_house",
+   "role": "시스템반도체 (커스텀설계 서비스)"
+  },
+  {
+   "id": "krx:000990",
+   "type": "kr_listed",
+   "ticker": "000990",
+   "nameKo": "DB하이텍",
+   "nameEn": "DB HiTek Co.,LTD",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "foundry",
+   "role": "아날로그 / 전력반도체 파운드리"
+  },
+  {
+   "id": "krx:036930",
+   "type": "kr_listed",
+   "ticker": "036930",
+   "nameKo": "주성엔지니어링",
+   "nameEn": "JUSUNG ENGINEERING Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "전공정장비 (ALD·CVD)"
+  },
+  {
+   "id": "krx:240810",
+   "type": "kr_listed",
+   "ticker": "240810",
+   "nameKo": "원익IPS",
+   "nameEn": "WONIK IPS Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "전공정장비 (CVD·ALD)"
+  },
+  {
+   "id": "krx:403870",
+   "type": "kr_listed",
+   "ticker": "403870",
+   "nameKo": "HPSP",
+   "nameEn": "HPSP Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "전공정장비 (고압 어닐)"
+  },
+  {
+   "id": "krx:319660",
+   "type": "kr_listed",
+   "ticker": "319660",
+   "nameKo": "피에스케이",
+   "nameEn": "PSK INC.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "전공정장비 (PR Strip)"
+  },
+  {
+   "id": "krx:084370",
+   "type": "kr_listed",
+   "ticker": "084370",
+   "nameKo": "유진테크",
+   "nameEn": "Eugene Technology Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "전공정장비 (배치확산)"
+  },
+  {
+   "id": "krx:095610",
+   "type": "kr_listed",
+   "ticker": "095610",
+   "nameKo": "테스",
+   "nameEn": "TES CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "전공정장비 (CVD)"
+  },
+  {
+   "id": "krx:089970",
+   "type": "kr_listed",
+   "ticker": "089970",
+   "nameKo": "브이엠",
+   "nameEn": "Vm",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "전공정 식각장비"
+  },
+  {
+   "id": "krx:281820",
+   "type": "kr_listed",
+   "ticker": "281820",
+   "nameKo": "케이씨텍",
+   "nameEn": "Kctech",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "CMP·세정장비"
+  },
+  {
+   "id": "krx:323280",
+   "type": "kr_listed",
+   "ticker": "323280",
+   "nameKo": "태성",
+   "nameEn": "TAESUNG",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "습식세정·식각장비"
+  },
+  {
+   "id": "krx:122640",
+   "type": "kr_listed",
+   "ticker": "122640",
+   "nameKo": "예스티",
+   "nameEn": "YEST Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "고압 어닐·열처리 장비"
+  },
+  {
+   "id": "krx:079370",
+   "type": "kr_listed",
+   "ticker": "079370",
+   "nameKo": "제우스",
+   "nameEn": "ZEUS CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "front_equip",
+   "role": "웨이퍼 세정장비"
+  },
+  {
+   "id": "krx:042700",
+   "type": "kr_listed",
+   "ticker": "042700",
+   "nameKo": "한미반도체",
+   "nameEn": "HANMISemiconductor CO.,Ltd.",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pack_equip",
+   "role": "패키징장비 (TC Bonder)"
+  },
+  {
+   "id": "krx:039030",
+   "type": "kr_listed",
+   "ticker": "039030",
+   "nameKo": "이오테크닉스",
+   "nameEn": "EO Technics Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pack_equip",
+   "role": "레이저장비"
+  },
+  {
+   "id": "krx:031980",
+   "type": "kr_listed",
+   "ticker": "031980",
+   "nameKo": "피에스케이홀딩스",
+   "nameEn": "PSK HOLDINGS INC.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pack_equip",
+   "role": "후공정 디스컴·리플로우 장비"
+  },
+  {
+   "id": "krx:053610",
+   "type": "kr_listed",
+   "ticker": "053610",
+   "nameKo": "프로텍",
+   "nameEn": "PROTEC Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pack_equip",
+   "role": "패키징 디스펜서·다이본더"
+  },
+  {
+   "id": "krx:089890",
+   "type": "kr_listed",
+   "ticker": "089890",
+   "nameKo": "코세스",
+   "nameEn": "KOSES Co.,Ltd",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pack_equip",
+   "role": "레이저 후공정 장비"
+  },
+  {
+   "id": "krx:098460",
+   "type": "kr_listed",
+   "ticker": "098460",
+   "nameKo": "고영",
+   "nameEn": "Koh Young Technology Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "계측·검사장비 (3D SPI/AOI)"
+  },
+  {
+   "id": "krx:140860",
+   "type": "kr_listed",
+   "ticker": "140860",
+   "nameKo": "파크시스템스",
+   "nameEn": "Park Systems Corp.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "계측장비 (AFM)"
+  },
+  {
+   "id": "krx:089030",
+   "type": "kr_listed",
+   "ticker": "089030",
+   "nameKo": "테크윙",
+   "nameEn": "Techwing, Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "테스트장비 (핸들러)"
+  },
+  {
+   "id": "krx:420770",
+   "type": "kr_listed",
+   "ticker": "420770",
+   "nameKo": "기가비스",
+   "nameEn": "GigaVis Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "반도체·디스플레이 검사장비"
+  },
+  {
+   "id": "krx:232140",
+   "type": "kr_listed",
+   "ticker": "232140",
+   "nameKo": "와이씨",
+   "nameEn": "YIK",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "반도체 검사·번인 장비"
+  },
+  {
+   "id": "krx:003160",
+   "type": "kr_listed",
+   "ticker": "003160",
+   "nameKo": "디아이",
+   "nameEn": "DI Corp",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "번인 테스터"
+  },
+  {
+   "id": "krx:064290",
+   "type": "kr_listed",
+   "ticker": "064290",
+   "nameKo": "인텍플러스",
+   "nameEn": "INTEKPLUS CO.,LTD",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "검사장비 (비전)"
+  },
+  {
+   "id": "krx:253590",
+   "type": "kr_listed",
+   "ticker": "253590",
+   "nameKo": "네오셈",
+   "nameEn": "Neosem Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "메모리·SSD 검사장비"
+  },
+  {
+   "id": "krx:092870",
+   "type": "kr_listed",
+   "ticker": "092870",
+   "nameKo": "엑시콘",
+   "nameEn": "Exicon Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "반도체 검사장비"
+  },
+  {
+   "id": "krx:348210",
+   "type": "kr_listed",
+   "ticker": "348210",
+   "nameKo": "넥스틴",
+   "nameEn": "NEXTIN Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "웨이퍼 결함 검사장비"
+  },
+  {
+   "id": "krx:110990",
+   "type": "kr_listed",
+   "ticker": "110990",
+   "nameKo": "디아이티",
+   "nameEn": "DIT",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "레이저 검사장비"
+  },
+  {
+   "id": "krx:168360",
+   "type": "kr_listed",
+   "ticker": "168360",
+   "nameKo": "펨트론",
+   "nameEn": "PEMTRON Corporation",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "inspect_metro",
+   "role": "검사장비·SMT/반도체"
+  },
+  {
+   "id": "krx:357780",
+   "type": "kr_listed",
+   "ticker": "357780",
+   "nameKo": "솔브레인",
+   "nameEn": "Soulbrain Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "공정소재 (식각·증착)"
+  },
+  {
+   "id": "krx:014680",
+   "type": "kr_listed",
+   "ticker": "014680",
+   "nameKo": "한솔케미칼",
+   "nameEn": "Hansol Chemical",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "과산화수소·프리커서 소재"
+  },
+  {
+   "id": "krx:005290",
+   "type": "kr_listed",
+   "ticker": "005290",
+   "nameKo": "동진쎄미켐",
+   "nameEn": "DONGJIN SEMICHEM CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "공정소재 (PR·슬러리)"
+  },
+  {
+   "id": "krx:101490",
+   "type": "kr_listed",
+   "ticker": "101490",
+   "nameKo": "에스앤에스텍",
+   "nameEn": "S&S TECH CORPORATION",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "블랭크마스크·EUV 펠리클"
+  },
+  {
+   "id": "krx:281740",
+   "type": "kr_listed",
+   "ticker": "281740",
+   "nameKo": "레이크머티리얼즈",
+   "nameEn": "Lake Materials Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "전구체·유기금속소재"
+  },
+  {
+   "id": "krx:036810",
+   "type": "kr_listed",
+   "ticker": "036810",
+   "nameKo": "에프에스티",
+   "nameEn": "FINE SEMITECH Corp.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "EUV 소재·장비"
+  },
+  {
+   "id": "krx:102710",
+   "type": "kr_listed",
+   "ticker": "102710",
+   "nameKo": "이엔에프테크놀로지",
+   "nameEn": "ENF Technology Co., Ltd",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "공정소재 (세정·슬러리)"
+  },
+  {
+   "id": "krx:104830",
+   "type": "kr_listed",
+   "ticker": "104830",
+   "nameKo": "원익머트리얼즈",
+   "nameEn": "WONIK Materials Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "특수가스 (공정가스)"
+  },
+  {
+   "id": "krx:170920",
+   "type": "kr_listed",
+   "ticker": "170920",
+   "nameKo": "엘티씨",
+   "nameEn": "LTC Co., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_mat",
+   "role": "세정·박리액"
+  },
+  {
+   "id": "krx:064760",
+   "type": "kr_listed",
+   "ticker": "064760",
+   "nameKo": "티씨케이",
+   "nameEn": "TOKAI CARBON KOREA CO., LTD",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "공정부품 (SiC Ring)"
+  },
+  {
+   "id": "krx:178320",
+   "type": "kr_listed",
+   "ticker": "178320",
+   "nameKo": "서진시스템",
+   "nameEn": "SEOJIN SYSTEM CO., LTD",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "장비 부품 (알루미늄 챔버)"
+  },
+  {
+   "id": "krx:183300",
+   "type": "kr_listed",
+   "ticker": "183300",
+   "nameKo": "코미코",
+   "nameEn": "KoMiCo Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "부품 세정·코팅 서비스"
+  },
+  {
+   "id": "krx:166090",
+   "type": "kr_listed",
+   "ticker": "166090",
+   "nameKo": "하나머티리얼즈",
+   "nameEn": "Hana Materials Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "공정부품 (실리콘 전극)"
+  },
+  {
+   "id": "krx:074600",
+   "type": "kr_listed",
+   "ticker": "074600",
+   "nameKo": "원익QnC",
+   "nameEn": "WONIK QnC CORPORATION",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "공정부품 (석영·SiC)"
+  },
+  {
+   "id": "krx:388210",
+   "type": "kr_listed",
+   "ticker": "388210",
+   "nameKo": "씨엠티엑스",
+   "nameEn": "CMTX Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "SiC 포커스링"
+  },
+  {
+   "id": "krx:059090",
+   "type": "kr_listed",
+   "ticker": "059090",
+   "nameKo": "미코",
+   "nameEn": "MiCo Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "세라믹 부품·히터"
+  },
+  {
+   "id": "krx:101160",
+   "type": "kr_listed",
+   "ticker": "101160",
+   "nameKo": "월덱스",
+   "nameEn": "WORLDEX INDUSTRY & TRADING CO., LTD",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "실리콘·쿼츠 공정 소모부품"
+  },
+  {
+   "id": "krx:241770",
+   "type": "kr_listed",
+   "ticker": "241770",
+   "nameKo": "메카로",
+   "nameEn": "Mecaro",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "전구체 소재"
+  },
+  {
+   "id": "krx:114810",
+   "type": "kr_listed",
+   "ticker": "114810",
+   "nameKo": "한솔아이원스",
+   "nameEn": "Hansol iOne",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "process_parts",
+   "role": "석영·부품 세정"
+  },
+  {
+   "id": "krx:007660",
+   "type": "kr_listed",
+   "ticker": "007660",
+   "nameKo": "이수페타시스",
+   "nameEn": "Isupetasys",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "고다층 MLB PCB"
+  },
+  {
+   "id": "krx:353200",
+   "type": "kr_listed",
+   "ticker": "353200",
+   "nameKo": "대덕전자",
+   "nameEn": "Daeduck Electronics",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "반도체 기판 (HDI PCB)"
+  },
+  {
+   "id": "krx:222800",
+   "type": "kr_listed",
+   "ticker": "222800",
+   "nameKo": "심텍",
+   "nameEn": "SIMMTECH Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "반도체 기판 (PCB)"
+  },
+  {
+   "id": "krx:078600",
+   "type": "kr_listed",
+   "ticker": "078600",
+   "nameKo": "대주전자재료",
+   "nameEn": "Daejoo Electronic Materials Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "전자재료·실리콘계 소재"
+  },
+  {
+   "id": "krx:007810",
+   "type": "kr_listed",
+   "ticker": "007810",
+   "nameKo": "코리아써키트",
+   "nameEn": "Korea Circuit",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "반도체 기판 (BGA·FC-BGA)"
+  },
+  {
+   "id": "krx:195870",
+   "type": "kr_listed",
+   "ticker": "195870",
+   "nameKo": "해성디에스",
+   "nameEn": "HAESUNG DS",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "리드프레임 / 기판"
+  },
+  {
+   "id": "krx:356860",
+   "type": "kr_listed",
+   "ticker": "356860",
+   "nameKo": "티엘비",
+   "nameEn": "TLB Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "메모리 모듈·SSD PCB"
+  },
+  {
+   "id": "krx:327260",
+   "type": "kr_listed",
+   "ticker": "327260",
+   "nameKo": "RF머트리얼즈",
+   "nameEn": "RFMaterials",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "RF 세라믹 패키지·부품"
+  },
+  {
+   "id": "krx:178920",
+   "type": "kr_listed",
+   "ticker": "178920",
+   "nameKo": "PI첨단소재",
+   "nameEn": "PI Advanced Materials Co., Ltd.",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "PI필름 (반도체 패키징소재)"
+  },
+  {
+   "id": "krx:077360",
+   "type": "kr_listed",
+   "ticker": "077360",
+   "nameKo": "덕산하이메탈",
+   "nameEn": "Duksan Hi Metal",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "솔더볼·패키징 소재"
+  },
+  {
+   "id": "krx:024850",
+   "type": "kr_listed",
+   "ticker": "024850",
+   "nameKo": "HLB이노베이션",
+   "nameEn": "HLB innoVation",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "리드프레임"
+  },
+  {
+   "id": "krx:272290",
+   "type": "kr_listed",
+   "ticker": "272290",
+   "nameKo": "이녹스첨단소재",
+   "nameEn": "INNOX Advanced Materials Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "FPCB/OLED/반도체 소재"
+  },
+  {
+   "id": "krx:033160",
+   "type": "kr_listed",
+   "ticker": "033160",
+   "nameKo": "엠케이전자",
+   "nameEn": "MKElectron",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "본딩와이어·패키징 소재"
+  },
+  {
+   "id": "krx:058470",
+   "type": "kr_listed",
+   "ticker": "058470",
+   "nameKo": "리노공업",
+   "nameEn": "LEENO Industrial Inc",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "테스트소켓 (MEMS핀)"
+  },
+  {
+   "id": "krx:095340",
+   "type": "kr_listed",
+   "ticker": "095340",
+   "nameKo": "ISC",
+   "nameEn": "ISC Co., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "테스트소켓 (고무소켓)"
+  },
+  {
+   "id": "krx:131290",
+   "type": "kr_listed",
+   "ticker": "131290",
+   "nameKo": "티에스이",
+   "nameEn": "TSE CO.,Ltd",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "프로브카드·테스트 인터페이스"
+  },
+  {
+   "id": "krx:252990",
+   "type": "kr_listed",
+   "ticker": "252990",
+   "nameKo": "샘씨엔에스",
+   "nameEn": "SEMCNS Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "세라믹 STF·프로브카드 부품"
+  },
+  {
+   "id": "krx:425420",
+   "type": "kr_listed",
+   "ticker": "425420",
+   "nameKo": "티에프이",
+   "nameEn": "TFE Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "테스트 소켓·부품"
+  },
+  {
+   "id": "krx:080580",
+   "type": "kr_listed",
+   "ticker": "080580",
+   "nameKo": "오킨스전자",
+   "nameEn": "OKins Electronics Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "테스트 소켓·커넥터"
+  },
+  {
+   "id": "krx:219130",
+   "type": "kr_listed",
+   "ticker": "219130",
+   "nameKo": "타이거일렉",
+   "nameEn": "TigerElec Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "검사용 PCB"
+  },
+  {
+   "id": "krx:098120",
+   "type": "kr_listed",
+   "ticker": "098120",
+   "nameKo": "마이크로컨텍솔",
+   "nameEn": "Micro Contact Solution Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "test_parts",
+   "role": "반도체 소켓"
+  },
+  {
+   "id": "krx:067310",
+   "type": "kr_listed",
+   "ticker": "067310",
+   "nameKo": "하나마이크론",
+   "nameEn": "Hana Micron Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "osat",
+   "role": "OSAT (패키징·테스트)"
+  },
+  {
+   "id": "krx:131970",
+   "type": "kr_listed",
+   "ticker": "131970",
+   "nameKo": "두산테스나",
+   "nameEn": "DOOSAN TESNA",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "osat",
+   "role": "비메모리 반도체 테스트"
+  },
+  {
+   "id": "krx:036540",
+   "type": "kr_listed",
+   "ticker": "036540",
+   "nameKo": "SFA반도체",
+   "nameEn": "SFA Semicon Co., Ltd",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "osat",
+   "role": "OSAT (반도체 패키징)"
+  },
+  {
+   "id": "krx:033640",
+   "type": "kr_listed",
+   "ticker": "033640",
+   "nameKo": "네패스",
+   "nameEn": "NEPES Corporation",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "osat",
+   "role": "WLP / SiP 패키징"
+  },
+  {
+   "id": "krx:330860",
+   "type": "kr_listed",
+   "ticker": "330860",
+   "nameKo": "네패스아크",
+   "nameEn": "Nepes Ark Corporation",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "osat",
+   "role": "반도체 테스트"
+  },
+  {
+   "id": "krx:083450",
+   "type": "kr_listed",
+   "ticker": "083450",
+   "nameKo": "GST",
+   "nameEn": "GST",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "스크러버·칠러"
+  },
+  {
+   "id": "krx:045100",
+   "type": "kr_listed",
+   "ticker": "045100",
+   "nameKo": "한양이엔지",
+   "nameEn": "HANYANG ENG CO.,LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "반도체 유틸리티·설비"
+  },
+  {
+   "id": "krx:383310",
+   "type": "kr_listed",
+   "ticker": "383310",
+   "nameKo": "에코프로에이치엔",
+   "nameEn": "ECOPRO HN CO., LTD",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "클린룸 필터"
+  },
+  {
+   "id": "krx:029460",
+   "type": "kr_listed",
+   "ticker": "029460",
+   "nameKo": "케이씨",
+   "nameEn": "KC",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "가스공급장치"
+  },
+  {
+   "id": "krx:082270",
+   "type": "kr_listed",
+   "ticker": "082270",
+   "nameKo": "젬백스",
+   "nameEn": "GemVax",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "팹 케미컬필터·유틸리티"
+  },
+  {
+   "id": "krx:144960",
+   "type": "kr_listed",
+   "ticker": "144960",
+   "nameKo": "뉴파워프라즈마",
+   "nameEn": "New Power Plasma",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "플라즈마 발생장치"
+  },
+  {
+   "id": "krx:417840",
+   "type": "kr_listed",
+   "ticker": "417840",
+   "nameKo": "저스템",
+   "nameEn": "Justem.Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "EFEM·웨이퍼 이송(FOUP)"
+  },
+  {
+   "id": "krx:039440",
+   "type": "kr_listed",
+   "ticker": "039440",
+   "nameKo": "에스티아이",
+   "nameEn": "Systems Technology Incorporated",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fab_infra",
+   "role": "CCSS·리플로우 장비"
+  },
+  {
+   "id": "krx:031330",
+   "type": "kr_listed",
+   "ticker": "031330",
+   "nameKo": "에스에이엠티",
+   "nameEn": "SAMT CO.,LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "distribution",
+   "role": "반도체·IT 유통"
+  },
+  {
+   "id": "krx:093520",
+   "type": "kr_listed",
+   "ticker": "093520",
+   "nameKo": "매커스",
+   "nameEn": "Makus",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "distribution",
+   "role": "비메모리 유통·FPGA"
+  },
+  {
+   "id": "krx:005930",
+   "type": "kr_anchor",
+   "ticker": "005930",
+   "nameKo": "삼성전자",
+   "nameEn": "Samsung Electronics",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "idm",
+   "role": "IDM (메모리·파운드리·시스템LSI)"
+  },
+  {
+   "id": "krx:000660",
+   "type": "kr_anchor",
+   "ticker": "000660",
+   "nameKo": "SK하이닉스",
+   "nameEn": "SK hynix",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "idm",
+   "role": "IDM (메모리·HBM)"
+  },
+  {
+   "id": "global:nvidia",
+   "type": "global",
+   "nameKo": "엔비디아",
+   "nameEn": "NVIDIA",
+   "country": "us",
+   "chain": "fabless",
+   "role": "AI GPU 팹리스",
+   "exchange": "NASDAQ:NVDA"
+  },
+  {
+   "id": "global:amd",
+   "type": "global",
+   "nameKo": "AMD",
+   "nameEn": "AMD",
+   "country": "us",
+   "chain": "fabless",
+   "role": "CPU/GPU/FPGA 팹리스",
+   "exchange": "NASDAQ:AMD"
+  },
+  {
+   "id": "global:intel",
+   "type": "global",
+   "nameKo": "인텔",
+   "nameEn": "Intel",
+   "country": "us",
+   "chain": "idm",
+   "role": "IDM·파운드리",
+   "exchange": "NASDAQ:INTC"
+  },
+  {
+   "id": "global:micron",
+   "type": "global",
+   "nameKo": "마이크론",
+   "nameEn": "Micron",
+   "country": "us",
+   "chain": "idm",
+   "role": "메모리 IDM",
+   "exchange": "NASDAQ:MU"
+  },
+  {
+   "id": "global:qualcomm",
+   "type": "global",
+   "nameKo": "퀄컴",
+   "nameEn": "Qualcomm",
+   "country": "us",
+   "chain": "fabless",
+   "role": "모바일 AP 팹리스",
+   "exchange": "NASDAQ:QCOM"
+  },
+  {
+   "id": "global:apple",
+   "type": "global",
+   "nameKo": "애플",
+   "nameEn": "Apple",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "세트·자체 칩 설계",
+   "exchange": "NASDAQ:AAPL"
+  },
+  {
+   "id": "global:google",
+   "type": "global",
+   "nameKo": "구글",
+   "nameEn": "Google (Alphabet)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "클라우드·TPU",
+   "exchange": "NASDAQ:GOOGL"
+  },
+  {
+   "id": "global:microsoft",
+   "type": "global",
+   "nameKo": "마이크로소프트",
+   "nameEn": "Microsoft",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "클라우드",
+   "exchange": "NASDAQ:MSFT"
+  },
+  {
+   "id": "global:tesla",
+   "type": "global",
+   "nameKo": "테슬라",
+   "nameEn": "Tesla",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "자율주행 칩 설계",
+   "exchange": "NASDAQ:TSLA"
+  },
+  {
+   "id": "global:appmat",
+   "type": "global",
+   "nameKo": "어플라이드머티어리얼즈",
+   "nameEn": "Applied Materials",
+   "country": "us",
+   "chain": "front_equip",
+   "role": "전공정 장비",
+   "exchange": "NASDAQ:AMAT"
+  },
+  {
+   "id": "global:lam",
+   "type": "global",
+   "nameKo": "램리서치",
+   "nameEn": "Lam Research",
+   "country": "us",
+   "chain": "front_equip",
+   "role": "식각·증착 장비",
+   "exchange": "NASDAQ:LRCX"
+  },
+  {
+   "id": "global:kla",
+   "type": "global",
+   "nameKo": "KLA",
+   "nameEn": "KLA",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "검사·계측",
+   "exchange": "NASDAQ:KLAC"
+  },
+  {
+   "id": "global:amkor",
+   "type": "global",
+   "nameKo": "앰코",
+   "nameEn": "Amkor Technology",
+   "country": "us",
+   "chain": "osat",
+   "role": "OSAT",
+   "exchange": "NASDAQ:AMKR"
+  },
+  {
+   "id": "global:wolfspeed",
+   "type": "global",
+   "nameKo": "울프스피드",
+   "nameEn": "Wolfspeed",
+   "country": "us",
+   "chain": "idm",
+   "role": "SiC 전력반도체",
+   "exchange": "NYSE:WOLF"
+  },
+  {
+   "id": "global:lumentum",
+   "type": "global",
+   "nameKo": "루멘텀",
+   "nameEn": "Lumentum",
+   "country": "us",
+   "chain": "idm",
+   "role": "광통신 반도체",
+   "exchange": "NASDAQ:LITE"
+  },
+  {
+   "id": "global:macom",
+   "type": "global",
+   "nameKo": "메이콤",
+   "nameEn": "MACOM",
+   "country": "us",
+   "chain": "fabless",
+   "role": "RF·광 반도체",
+   "exchange": "NASDAQ:MTSI"
+  },
+  {
+   "id": "global:tsmc",
+   "type": "global",
+   "nameKo": "TSMC",
+   "nameEn": "TSMC",
+   "country": "tw",
+   "chain": "foundry",
+   "role": "파운드리 1위",
+   "exchange": "TWSE:2330"
+  },
+  {
+   "id": "global:umc",
+   "type": "global",
+   "nameKo": "UMC",
+   "nameEn": "United Microelectronics",
+   "country": "tw",
+   "chain": "foundry",
+   "role": "파운드리",
+   "exchange": "TWSE:2303"
+  },
+  {
+   "id": "global:mediatek",
+   "type": "global",
+   "nameKo": "미디어텍",
+   "nameEn": "MediaTek",
+   "country": "tw",
+   "chain": "fabless",
+   "role": "모바일 AP 팹리스",
+   "exchange": "TWSE:2454"
+  },
+  {
+   "id": "global:ase",
+   "type": "global",
+   "nameKo": "ASE",
+   "nameEn": "ASE Technology",
+   "country": "tw",
+   "chain": "osat",
+   "role": "OSAT 1위",
+   "exchange": "TWSE:3711"
+  },
+  {
+   "id": "global:unimicron",
+   "type": "global",
+   "nameKo": "유니마이크론",
+   "nameEn": "Unimicron",
+   "country": "tw",
+   "chain": "substrate",
+   "role": "반도체 기판",
+   "exchange": "TWSE:3037"
+  },
+  {
+   "id": "global:nan_ya",
+   "type": "global",
+   "nameKo": "난야PCB",
+   "nameEn": "Nan Ya PCB",
+   "country": "tw",
+   "chain": "substrate",
+   "role": "반도체 기판",
+   "exchange": "TWSE:8046"
+  },
+  {
+   "id": "global:kingston",
+   "type": "global",
+   "nameKo": "킹스턴",
+   "nameEn": "Kingston Technology",
+   "country": "tw",
+   "chain": "end_customer",
+   "role": "메모리 모듈",
+   "exchange": ""
+  },
+  {
+   "id": "global:foxconn",
+   "type": "global",
+   "nameKo": "폭스콘",
+   "nameEn": "Foxconn (Hon Hai)",
+   "country": "tw",
+   "chain": "end_customer",
+   "role": "EMS",
+   "exchange": "TWSE:2317"
+  },
+  {
+   "id": "global:novatek",
+   "type": "global",
+   "nameKo": "노바텍",
+   "nameEn": "Novatek",
+   "country": "tw",
+   "chain": "fabless",
+   "role": "DDI 팹리스",
+   "exchange": "TWSE:3034"
+  },
+  {
+   "id": "global:globalfoundries",
+   "type": "global",
+   "nameKo": "글로벌파운드리",
+   "nameEn": "GlobalFoundries",
+   "country": "us",
+   "chain": "foundry",
+   "role": "파운드리",
+   "exchange": "NASDAQ:GFS"
+  },
+  {
+   "id": "global:tokyo_electron",
+   "type": "global",
+   "nameKo": "도쿄일렉트론",
+   "nameEn": "Tokyo Electron",
+   "country": "jp",
+   "chain": "front_equip",
+   "role": "전공정 장비",
+   "exchange": "TSE:8035"
+  },
+  {
+   "id": "global:advantest",
+   "type": "global",
+   "nameKo": "어드반테스트",
+   "nameEn": "Advantest",
+   "country": "jp",
+   "chain": "inspect_metro",
+   "role": "테스터",
+   "exchange": "TSE:6857"
+  },
+  {
+   "id": "global:disco",
+   "type": "global",
+   "nameKo": "디스코",
+   "nameEn": "DISCO",
+   "country": "jp",
+   "chain": "pack_equip",
+   "role": "다이싱 장비",
+   "exchange": "TSE:6146"
+  },
+  {
+   "id": "global:ibiden",
+   "type": "global",
+   "nameKo": "이비덴",
+   "nameEn": "Ibiden",
+   "country": "jp",
+   "chain": "substrate",
+   "role": "반도체 기판 1위",
+   "exchange": "TSE:4062"
+  },
+  {
+   "id": "global:shinko",
+   "type": "global",
+   "nameKo": "신코전기",
+   "nameEn": "Shinko Electric Industries",
+   "country": "jp",
+   "chain": "substrate",
+   "role": "반도체 기판",
+   "exchange": ""
+  },
+  {
+   "id": "global:kyocera",
+   "type": "global",
+   "nameKo": "교세라",
+   "nameEn": "Kyocera",
+   "country": "jp",
+   "chain": "substrate",
+   "role": "세라믹 패키지·기판",
+   "exchange": "TSE:6971"
+  },
+  {
+   "id": "global:kioxia",
+   "type": "global",
+   "nameKo": "키옥시아",
+   "nameEn": "Kioxia",
+   "country": "jp",
+   "chain": "idm",
+   "role": "NAND IDM",
+   "exchange": "TSE:285A"
+  },
+  {
+   "id": "global:sony",
+   "type": "global",
+   "nameKo": "소니",
+   "nameEn": "Sony Semiconductor",
+   "country": "jp",
+   "chain": "idm",
+   "role": "CIS IDM",
+   "exchange": "TSE:6758"
+  },
+  {
+   "id": "global:ebara",
+   "type": "global",
+   "nameKo": "에바라",
+   "nameEn": "Ebara",
+   "country": "jp",
+   "chain": "front_equip",
+   "role": "CMP 장비",
+   "exchange": "TSE:6361"
+  },
+  {
+   "id": "global:boe",
+   "type": "global",
+   "nameKo": "BOE",
+   "nameEn": "BOE Technology",
+   "country": "cn",
+   "chain": "end_customer",
+   "role": "디스플레이 패널",
+   "exchange": "SZSE:000725"
+  },
+  {
+   "id": "global:ymtc",
+   "type": "global",
+   "nameKo": "YMTC",
+   "nameEn": "YMTC",
+   "country": "cn",
+   "chain": "idm",
+   "role": "NAND IDM",
+   "exchange": ""
+  },
+  {
+   "id": "global:cxmt",
+   "type": "global",
+   "nameKo": "CXMT",
+   "nameEn": "CXMT",
+   "country": "cn",
+   "chain": "idm",
+   "role": "DRAM IDM",
+   "exchange": ""
+  },
+  {
+   "id": "global:smic",
+   "type": "global",
+   "nameKo": "SMIC",
+   "nameEn": "SMIC",
+   "country": "cn",
+   "chain": "foundry",
+   "role": "파운드리",
+   "exchange": "HKEX:0981"
+  },
+  {
+   "id": "global:amec",
+   "type": "global",
+   "nameKo": "AMEC",
+   "nameEn": "AMEC",
+   "country": "cn",
+   "chain": "front_equip",
+   "role": "식각 장비",
+   "exchange": "SSE:688012"
+  },
+  {
+   "id": "global:jhicc",
+   "type": "global",
+   "nameKo": "JHICC",
+   "nameEn": "JHICC",
+   "country": "cn",
+   "chain": "idm",
+   "role": "DRAM IDM",
+   "exchange": ""
+  },
+  {
+   "id": "global:jcet",
+   "type": "global",
+   "nameKo": "JCET",
+   "nameEn": "JCET (STATS ChipPAC)",
+   "country": "cn",
+   "chain": "osat",
+   "role": "OSAT",
+   "exchange": "SSE:600584"
+  },
+  {
+   "id": "global:asml",
+   "type": "global",
+   "nameKo": "ASML",
+   "nameEn": "ASML",
+   "country": "eu",
+   "chain": "front_equip",
+   "role": "노광 장비 (EUV)",
+   "exchange": "NASDAQ:ASML"
+  },
+  {
+   "id": "global:infineon",
+   "type": "global",
+   "nameKo": "인피니언",
+   "nameEn": "Infineon",
+   "country": "eu",
+   "chain": "idm",
+   "role": "전력·차량 반도체",
+   "exchange": "XETRA:IFX"
+  },
+  {
+   "id": "global:nxp",
+   "type": "global",
+   "nameKo": "NXP",
+   "nameEn": "NXP Semiconductors",
+   "country": "eu",
+   "chain": "idm",
+   "role": "차량 반도체",
+   "exchange": "NASDAQ:NXPI"
+  },
+  {
+   "id": "global:stmicro",
+   "type": "global",
+   "nameKo": "ST마이크로",
+   "nameEn": "STMicroelectronics",
+   "country": "eu",
+   "chain": "idm",
+   "role": "차량·전력 반도체",
+   "exchange": "NYSE:STM"
+  },
+  {
+   "id": "global:merck_em",
+   "type": "global",
+   "nameKo": "머크",
+   "nameEn": "Merck Electronics",
+   "country": "eu",
+   "chain": "process_mat",
+   "role": "전자소재",
+   "exchange": "XETRA:MRK"
+  },
+  {
+   "id": "global:lgdisplay",
+   "type": "kr_other",
+   "nameKo": "LG디스플레이",
+   "nameEn": "LG Display",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "디스플레이 패널",
+   "exchange": "KRX:034220"
+  },
+  {
+   "id": "global:samsung_display",
+   "type": "kr_other",
+   "nameKo": "삼성디스플레이",
+   "nameEn": "Samsung Display",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "디스플레이 패널",
+   "exchange": ""
+  },
+  {
+   "id": "global:samsung_em",
+   "type": "kr_other",
+   "nameKo": "삼성전기",
+   "nameEn": "Samsung Electro-Mechanics",
+   "country": "kr",
+   "chain": "substrate",
+   "role": "FC-BGA 기판",
+   "exchange": "KRX:009150"
+  },
+  {
+   "id": "global:lg_innotek",
+   "type": "kr_other",
+   "nameKo": "LG이노텍",
+   "nameEn": "LG Innotek",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "카메라 모듈",
+   "exchange": "KRX:011070"
+  },
+  {
+   "id": "global:telechips",
+   "type": "kr_other",
+   "nameKo": "텔레칩스",
+   "nameEn": "Telechips",
+   "country": "kr",
+   "chain": "fabless",
+   "role": "차량용 AP 팹리스",
+   "exchange": "KRX:054450"
+  },
+  {
+   "id": "global:rebellions",
+   "type": "kr_other",
+   "nameKo": "리벨리온",
+   "nameEn": "Rebellions",
+   "country": "kr",
+   "chain": "fabless",
+   "role": "AI 반도체 (비상장)",
+   "exchange": ""
+  },
+  {
+   "id": "global:furiosa",
+   "type": "kr_other",
+   "nameKo": "퓨리오사AI",
+   "nameEn": "FuriosaAI",
+   "country": "kr",
+   "chain": "fabless",
+   "role": "AI 반도체 (비상장)",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "supply:krx_042700>krx_000660",
+   "source": "krx:042700",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "HBM4용 TC본더 4.5 그리핀 442억 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.dnews.co.kr/m_home/view.jsp?idxno=202606081539555740499",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_042700>global_micron",
+   "source": "krx:042700",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "마이크론 TC본더 50대 신규 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=35090",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_036930>krx_000660",
+   "source": "krx:036930",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "차세대 D램 하이-K ALD 장비 전량 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=11987",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_007660>global_nvidia",
+   "source": "krx:007660",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "AI 가속기·서버용 고다층 MLB 공급 (엔비디아 비중 ~42%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=19527",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_007660>global_google",
+   "source": "krx:007660",
+   "target": "global:google",
+   "type": "supply",
+   "labelKo": "AI 가속기·서버용 고다층 MLB 공급 (엔비디아 비중 ~42%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=19527",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_007660>global_microsoft",
+   "source": "krx:007660",
+   "target": "global:microsoft",
+   "type": "supply",
+   "labelKo": "AI 가속기·서버용 고다층 MLB 공급 (엔비디아 비중 ~42%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=19527",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_007660>global_intel",
+   "source": "krx:007660",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "AI 가속기·서버용 고다층 MLB 공급 (엔비디아 비중 ~42%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=19527",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_240810>krx_005930",
+   "source": "krx:240810",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "삼성전자향 매출 50.4% (2022 3Q 누적)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=47263",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_240810>krx_000660",
+   "source": "krx:240810",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "SK하이닉스 증착 장비 주요 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsprime.co.kr/news/article/?no=732917",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_039030>krx_005930",
+   "source": "krx:039030",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "레이저 그루빙·스텔스 다이싱 양산 평가 협약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=25347",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_039030>global_tsmc",
+   "source": "krx:039030",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "레이저 그루빙 장비 TSMC 양산라인 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://thebell.co.kr/free/content/ArticleView.asp?key=202404191323101640102658&lcode=00",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_039030>global_disco",
+   "source": "krx:039030",
+   "target": "global:disco",
+   "type": "peer",
+   "labelKo": "스텔스 다이싱 장비 경쟁 (디스코 독점시장 진입)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.thebell.co.kr/m/newsview.asp?svccode=&newskey=202310101625056560105589",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_058470>global_qualcomm",
+   "source": "krx:058470",
+   "target": "global:qualcomm",
+   "type": "supply",
+   "labelKo": "테스트 소켓, 퀄컴 매출 비중 22%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=304209",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_058470>global_apple",
+   "source": "krx:058470",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "퀄컴·애플 중심 프리미엄 소켓",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=304209",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_058470>global_tsmc",
+   "source": "krx:058470",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "엔비디아·퀄컴·TSMC·삼성전자 등 1,400여 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=401019",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_058470>global_nvidia",
+   "source": "krx:058470",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "엔비디아·퀄컴·TSMC·삼성전자 등 1,400여 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=401019",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_058470>krx_005930",
+   "source": "krx:058470",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "엔비디아·퀄컴·TSMC·삼성전자 등 1,400여 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=401019",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_353200>krx_005930",
+   "source": "krx:353200",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "메모리 패키지 기판 (주요 거래처)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/142211",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_353200>krx_000660",
+   "source": "krx:353200",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "메모리 패키지 기판 (주요 거래처)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/142211",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_353200>global_amkor",
+   "source": "krx:353200",
+   "target": "global:amkor",
+   "type": "supply",
+   "labelKo": "패키지 기판 (Amkor·STATS ChipPAC)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/142211",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_353200>global_jcet",
+   "source": "krx:353200",
+   "target": "global:jcet",
+   "type": "supply",
+   "labelKo": "패키지 기판 (Amkor·STATS ChipPAC)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/142211",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_222800>krx_000660",
+   "source": "krx:222800",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "메모리 모듈·패키지 PCB, SoCAMM 기판",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.cbci.co.kr/news/articleView.html?idxno=596254",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_222800>krx_005930",
+   "source": "krx:222800",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "메모리 모듈·패키지 PCB, SoCAMM 기판",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.cbci.co.kr/news/articleView.html?idxno=596254",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_222800>global_micron",
+   "source": "krx:222800",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "메모리 모듈·패키지 PCB, SoCAMM 기판",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.cbci.co.kr/news/articleView.html?idxno=596254",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_403870>krx_005930",
+   "source": "krx:403870",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "고압 수소 어닐링 장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026050675316",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_403870>global_tsmc",
+   "source": "krx:403870",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "고압 수소 어닐링 장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026050675316",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_403870>global_intel",
+   "source": "krx:403870",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "고압 수소 어닐링 장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026050675316",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_403870>krx_000660",
+   "source": "krx:403870",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "고압 어닐링 장비 (메모리 확대)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=615151",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_403870>krx_122640",
+   "source": "krx:403870",
+   "target": "krx:122640",
+   "type": "peer",
+   "labelKo": "고압 어닐링 장비 경쟁·특허분쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=615151",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095340>global_nvidia",
+   "source": "krx:095340",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "AI GPU 테스트 소켓",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=419017",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095340>global_amd",
+   "source": "krx:095340",
+   "target": "global:amd",
+   "type": "supply",
+   "labelKo": "러버 소켓 (350여 글로벌 고객)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://economychosun.com/site/data/html_dir/2024/04/19/2024041900047.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095340>global_qualcomm",
+   "source": "krx:095340",
+   "target": "global:qualcomm",
+   "type": "supply",
+   "labelKo": "러버 소켓 (350여 글로벌 고객)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://economychosun.com/site/data/html_dir/2024/04/19/2024041900047.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095340>global_intel",
+   "source": "krx:095340",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "러버 소켓 (350여 글로벌 고객)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://economychosun.com/site/data/html_dir/2024/04/19/2024041900047.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095340>krx_005930",
+   "source": "krx:095340",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "러버 소켓 (350여 글로벌 고객)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://economychosun.com/site/data/html_dir/2024/04/19/2024041900047.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095340>krx_000660",
+   "source": "krx:095340",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "HBM 3사 테스트 솔루션",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=419017",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095340>global_micron",
+   "source": "krx:095340",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "HBM 3사 테스트 솔루션",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=419017",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_319660>krx_005930",
+   "source": "krx:319660",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "PR 스트립 장비 (세계 1위, 점유율 46%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/Content/ArticleView.asp?key=202206240849336360107694&svccode=04",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_319660>krx_000660",
+   "source": "krx:319660",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "PR 스트립 장비 (세계 1위, 점유율 46%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/Content/ArticleView.asp?key=202206240849336360107694&svccode=04",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_319660>global_micron",
+   "source": "krx:319660",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "PR 스트립 장비 (세계 1위, 점유율 46%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/Content/ArticleView.asp?key=202206240849336360107694&svccode=04",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_319660>global_lam",
+   "source": "krx:319660",
+   "target": "global:lam",
+   "type": "peer",
+   "labelKo": "드라이 스트립 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.ddaily.co.kr/page/view/2022030602250456574",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_031980>global_micron",
+   "source": "krx:031980",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "HBM 양산용 리플로우 장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=28196",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_031980>krx_005930",
+   "source": "krx:031980",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "HBM 후공정 장비 (국내 유일 3사 공급)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=28196",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_031980>krx_000660",
+   "source": "krx:031980",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "HBM 후공정 장비 (국내 유일 3사 공급)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=28196",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_031980>krx_319660",
+   "source": "krx:031980",
+   "target": "krx:319660",
+   "type": "equity",
+   "labelKo": "지주회사, 피에스케이 지분 32.76%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=031980",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_084370>krx_000660",
+   "source": "krx:084370",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "배치 ALD·확산 장비 공급계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/newsView/blt202109060141",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_084370>krx_005930",
+   "source": "krx:084370",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "배치 ALD·확산 장비 공급계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/newsView/blt202109060141",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_084370>global_micron",
+   "source": "krx:084370",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "배치 ALD·확산 장비 공급계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/newsView/blt202109060141",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_440110>krx_000660",
+   "source": "krx:440110",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "eSSD 컨트롤러 매입 계약 (메타향 eSSD)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/131674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_440110>global_tsmc",
+   "source": "krx:440110",
+   "target": "global:tsmc",
+   "type": "partner",
+   "labelKo": "SSD 컨트롤러 TSMC 파운드리 생산",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://economist.co.kr/article/view/ecn202406040018",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064760>global_lam",
+   "source": "krx:064760",
+   "target": "global:lam",
+   "type": "supply",
+   "labelKo": "SiC 포커스링 (세계 1위) 핵심 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026090309206",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064760>global_tokyo_electron",
+   "source": "krx:064760",
+   "target": "global:tokyo_electron",
+   "type": "supply",
+   "labelKo": "SiC 포커스링 (세계 1위) 핵심 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026090309206",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064760>global_amec",
+   "source": "krx:064760",
+   "target": "global:amec",
+   "type": "supply",
+   "labelKo": "SiC 포커스링 (세계 1위) 핵심 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026090309206",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064760>krx_005930",
+   "source": "krx:064760",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "세메스(삼성전자 자회사) 향 SiC 링",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026090309206",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_131290>krx_005930",
+   "source": "krx:131290",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "HBM4·4E 프로브카드",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=423618",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_131290>krx_000660",
+   "source": "krx:131290",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "HBM4·4E 프로브카드",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=423618",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_131290>global_micron",
+   "source": "krx:131290",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "NAND 프로브카드",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=29874",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_131290>global_intel",
+   "source": "krx:131290",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "NAND 프로브카드",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=29874",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_131290>global_ymtc",
+   "source": "krx:131290",
+   "target": "global:ymtc",
+   "type": "supply",
+   "labelKo": "NAND 프로브카드",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=29874",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095610>krx_005930",
+   "source": "krx:095610",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "PECVD·GPE 장비, 매출 비중 86%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://alphabiz.co.kr/news/view/1065569913797003",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_095610>krx_000660",
+   "source": "krx:095610",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "매출 비중 14%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://alphabiz.co.kr/news/view/1065569913797003",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_357780>krx_005930",
+   "source": "krx:357780",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "식각액·세정액",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=47292",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_357780>krx_000660",
+   "source": "krx:357780",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "식각액·세정액",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=47292",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_067310>krx_005930",
+   "source": "krx:067310",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "패키징·테스트 외주 (본사 삼성전자 사업 1.06조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/159535",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_067310>krx_000660",
+   "source": "krx:067310",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "외주임가공 계약 (베트남 D램·SSD)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=305303",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_080220>global_qualcomm",
+   "source": "krx:080220",
+   "target": "global:qualcomm",
+   "type": "supply",
+   "labelKo": "5G IoT 칩셋 저전력 메모리 인증 (국내 유일)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202608040816463778",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_080220>global_mediatek",
+   "source": "krx:080220",
+   "target": "global:mediatek",
+   "type": "supply",
+   "labelKo": "5G IoT 칩셋 저전력 메모리 인증 (국내 유일)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202608040816463778",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014680>krx_005930",
+   "source": "krx:014680",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "고순도 과산화수소 (평택·이천·청주 사실상 단독 공급)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thecommoditiesnews.com/news/articleView.html?idxno=10242",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014680>krx_000660",
+   "source": "krx:014680",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "고순도 과산화수소 (평택·이천·청주 사실상 단독 공급)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thecommoditiesnews.com/news/articleView.html?idxno=10242",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014680>global_tsmc",
+   "source": "krx:014680",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "과산화수소·프리커서",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2025112656846",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_014680>global_micron",
+   "source": "krx:014680",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "과산화수소·프리커서",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2025112656846",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_178320>global_lam",
+   "source": "krx:178320",
+   "target": "global:lam",
+   "type": "supply",
+   "labelKo": "자회사 텍슨, 램리서치 핵심 공급사 (Top Supplier 수상)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/stock/2026/08/20/2026082008029688754",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005290>krx_005930",
+   "source": "krx:005290",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "PR·CMP 슬러리 주요 매출처",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=005290",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005290>krx_000660",
+   "source": "krx:005290",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "PR·CMP 슬러리 주요 매출처",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=005290",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005290>global_lgdisplay",
+   "source": "krx:005290",
+   "target": "global:lgdisplay",
+   "type": "supply",
+   "labelKo": "디스플레이 소재",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=005290",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_098460>global_foxconn",
+   "source": "krx:098460",
+   "target": "global:foxconn",
+   "type": "supply",
+   "labelKo": "3D SPI 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202302109400i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_140860>global_tsmc",
+   "source": "krx:140860",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "첨단 패키징용 대면적 AFM 공급 임박",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=423195",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_140860>krx_005930",
+   "source": "krx:140860",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "반도체 계측용 원자현미경(AFM)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20211011000067",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_140860>krx_000660",
+   "source": "krx:140860",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "반도체 계측용 원자현미경(AFM)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20211011000067",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_140860>global_intel",
+   "source": "krx:140860",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "반도체 계측용 원자현미경(AFM)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20211011000067",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_140860>global_micron",
+   "source": "krx:140860",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "반도체 계측용 원자현미경(AFM)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20211011000067",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089030>global_micron",
+   "source": "krx:089030",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "메모리 테스트 핸들러 최대 고객 (매출 절반 이상)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202606082293i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089030>krx_000660",
+   "source": "krx:089030",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "HBM 큐브프로버",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=323169",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089030>krx_005930",
+   "source": "krx:089030",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "큐브프로버 첫 양산 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202606082293i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089030>global_kioxia",
+   "source": "krx:089030",
+   "target": "global:kioxia",
+   "type": "supply",
+   "labelKo": "테스트 핸들러",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202606082293i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089030>global_intel",
+   "source": "krx:089030",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "테스트 핸들러",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202606082293i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089030>global_infineon",
+   "source": "krx:089030",
+   "target": "global:infineon",
+   "type": "supply",
+   "labelKo": "테스트 핸들러",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202606082293i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_131970>krx_005930",
+   "source": "krx:131970",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "CIS 웨이퍼 테스트 1차 벤더 (매출 ~95%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/stock/2026/06/10/2026061000171824025",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_advantest>krx_131970",
+   "source": "global:advantest",
+   "target": "krx:131970",
+   "type": "supply",
+   "labelKo": "테스터 장비 매입",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=42147",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>krx_005930",
+   "source": "krx:183300",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "부품 세정·코팅 (삼성 30.3%, 하이닉스 29.2%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260921000059",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>krx_000660",
+   "source": "krx:183300",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "부품 세정·코팅 (삼성 30.3%, 하이닉스 29.2%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260921000059",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>global_tsmc",
+   "source": "krx:183300",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "체코 신공장, TSMC 대응",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=58836",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>global_intel",
+   "source": "krx:183300",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "세정·코팅 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=84292",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>global_micron",
+   "source": "krx:183300",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "세정·코팅 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=84292",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>global_umc",
+   "source": "krx:183300",
+   "target": "global:umc",
+   "type": "supply",
+   "labelKo": "세정·코팅 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=84292",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>global_globalfoundries",
+   "source": "krx:183300",
+   "target": "global:globalfoundries",
+   "type": "supply",
+   "labelKo": "세정·코팅 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=84292",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183300>krx_000990",
+   "source": "krx:183300",
+   "target": "krx:000990",
+   "type": "supply",
+   "labelKo": "세정·코팅 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=84292",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_036540>krx_005930",
+   "source": "krx:036540",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "패키징 외주, 삼성전자향 80%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=401896",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_036540>krx_000660",
+   "source": "krx:036540",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "패키징 외주",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=401896",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_036540>global_micron",
+   "source": "krx:036540",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "패키징 외주",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=401896",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089970>krx_000660",
+   "source": "krx:089970",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "식각장비 463억 공급계약 (매출 사실상 100%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202602241667i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_420770>global_ibiden",
+   "source": "krx:420770",
+   "target": "global:ibiden",
+   "type": "supply",
+   "labelKo": "FC-BGA 초미세 검사장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=654842",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_420770>global_samsung_em",
+   "source": "krx:420770",
+   "target": "global:samsung_em",
+   "type": "supply",
+   "labelKo": "FC-BGA 2/2μm 검사장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsprime.co.kr/news/article/?no=650387",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_420770>global_unimicron",
+   "source": "krx:420770",
+   "target": "global:unimicron",
+   "type": "supply",
+   "labelKo": "기판 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.itooza.com/view.php?ud=2023051500365740230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_420770>global_shinko",
+   "source": "krx:420770",
+   "target": "global:shinko",
+   "type": "supply",
+   "labelKo": "기판 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.itooza.com/view.php?ud=2023051500365740230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_420770>global_kyocera",
+   "source": "krx:420770",
+   "target": "global:kyocera",
+   "type": "supply",
+   "labelKo": "기판 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.itooza.com/view.php?ud=2023051500365740230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_420770>global_nan_ya",
+   "source": "krx:420770",
+   "target": "global:nan_ya",
+   "type": "supply",
+   "labelKo": "기판 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.itooza.com/view.php?ud=2023051500365740230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_420770>krx_353200",
+   "source": "krx:420770",
+   "target": "krx:353200",
+   "type": "supply",
+   "labelKo": "기판 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.itooza.com/view.php?ud=2023051500365740230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_281820>krx_005930",
+   "source": "krx:281820",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "CMP 장비·슬러리 (두 회사 매출 90% 이상)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=339606",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_281820>krx_000660",
+   "source": "krx:281820",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "CMP 장비·슬러리 (두 회사 매출 90% 이상)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=339606",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_281820>global_appmat",
+   "source": "krx:281820",
+   "target": "global:appmat",
+   "type": "peer",
+   "labelKo": "CMP 장비 국산화 (AMAT·Ebara 대체)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=339606",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_281820>global_ebara",
+   "source": "krx:281820",
+   "target": "global:ebara",
+   "type": "peer",
+   "labelKo": "CMP 장비 국산화 (AMAT·Ebara 대체)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=339606",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_029460>krx_281820",
+   "source": "krx:029460",
+   "target": "krx:281820",
+   "type": "equity",
+   "labelKo": "케이씨 → 케이씨텍 지배",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=370779",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_007810>krx_005930",
+   "source": "krx:007810",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "HDI·패키지 기판",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=60357",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_007810>global_apple",
+   "source": "krx:007810",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "HDI 기판",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=60357",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_166090>global_tokyo_electron",
+   "source": "krx:166090",
+   "target": "global:tokyo_electron",
+   "type": "supply",
+   "labelKo": "실리콘·SiC 전극·링 (TEL·세메스·삼성전자)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=166090",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_166090>krx_005930",
+   "source": "krx:166090",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "실리콘·SiC 전극·링 (TEL·세메스·삼성전자)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=166090",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005930>krx_166090",
+   "source": "krx:005930",
+   "target": "krx:166090",
+   "type": "equity",
+   "labelKo": "삼성전자 지분 투자",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/65802",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_252990>krx_005930",
+   "source": "krx:252990",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "프로브카드용 세라믹 STF",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hinews.co.kr/view.php?ud=202506250748492174ccc2200b3c_48",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_252990>krx_000660",
+   "source": "krx:252990",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "프로브카드용 세라믹 STF",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hinews.co.kr/view.php?ud=202506250748492174ccc2200b3c_48",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_252990>global_intel",
+   "source": "krx:252990",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "프로브카드용 세라믹 STF",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hinews.co.kr/view.php?ud=202506250748492174ccc2200b3c_48",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_252990>global_micron",
+   "source": "krx:252990",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "프로브카드용 세라믹 STF",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hinews.co.kr/view.php?ud=202506250748492174ccc2200b3c_48",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_252990>global_kioxia",
+   "source": "krx:252990",
+   "target": "global:kioxia",
+   "type": "supply",
+   "labelKo": "프로브카드용 세라믹 STF",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hinews.co.kr/view.php?ud=202506250748492174ccc2200b3c_48",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_252990>global_ymtc",
+   "source": "krx:252990",
+   "target": "global:ymtc",
+   "type": "supply",
+   "labelKo": "신규 고객 확보",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=19261",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_252990>global_smic",
+   "source": "krx:252990",
+   "target": "global:smic",
+   "type": "supply",
+   "labelKo": "신규 고객 확보",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=19261",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>global_infineon",
+   "source": "krx:195870",
+   "target": "global:infineon",
+   "type": "supply",
+   "labelKo": "리드프레임 주요 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=24382",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>global_nxp",
+   "source": "krx:195870",
+   "target": "global:nxp",
+   "type": "supply",
+   "labelKo": "리드프레임 주요 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=24382",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>global_stmicro",
+   "source": "krx:195870",
+   "target": "global:stmicro",
+   "type": "supply",
+   "labelKo": "리드프레임 주요 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=24382",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>global_ase",
+   "source": "krx:195870",
+   "target": "global:ase",
+   "type": "supply",
+   "labelKo": "리드프레임 (후공정 고객)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=63341",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>global_amkor",
+   "source": "krx:195870",
+   "target": "global:amkor",
+   "type": "supply",
+   "labelKo": "리드프레임 (후공정 고객)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=63341",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>global_jcet",
+   "source": "krx:195870",
+   "target": "global:jcet",
+   "type": "supply",
+   "labelKo": "리드프레임 (후공정 고객)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=63341",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>krx_005930",
+   "source": "krx:195870",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "메모리 패키지 기판",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=63341",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_195870>krx_000660",
+   "source": "krx:195870",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "메모리 패키지 기판",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=63341",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_101490>krx_005930",
+   "source": "krx:101490",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "DUV 블랭크마스크 공급, 2027 EUV 블랭크마스크 공급 예정",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026072787781",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_101490>krx_000660",
+   "source": "krx:101490",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "DUV 블랭크마스크",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251015142601",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005930>krx_101490",
+   "source": "krx:005930",
+   "target": "krx:101490",
+   "type": "equity",
+   "labelKo": "삼성전자 지분 투자",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/64001",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_232140>krx_005930",
+   "source": "krx:232140",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "메모리 웨이퍼 테스터 (별도 매출 95%), 1,621억 계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=54986",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_232140>global_advantest",
+   "source": "krx:232140",
+   "target": "global:advantest",
+   "type": "peer",
+   "labelKo": "삼성전자 웨이퍼 테스터 공동 공급사",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.ddaily.co.kr/page/view/2023062918054057195",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003160>krx_000660",
+   "source": "krx:003160",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "자회사 디지털프론티어 HBM4 웨이퍼 테스터 1,960억 계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202608130615585324",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003160>krx_005930",
+   "source": "krx:003160",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "번인 테스터 등 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/166658",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_356860>krx_000660",
+   "source": "krx:356860",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "메모리 모듈 PCB 34~35% 점유",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.net/news/articleView.html?idxno=1927",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_356860>krx_005930",
+   "source": "krx:356860",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "SSD PCB 30% 점유",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.net/news/articleView.html?idxno=1927",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_356860>global_micron",
+   "source": "krx:356860",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "메모리 모듈 PCB",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.net/news/articleView.html?idxno=1927",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_327260>global_wolfspeed",
+   "source": "krx:327260",
+   "target": "global:wolfspeed",
+   "type": "supply",
+   "labelKo": "세라믹 패키지 (매출 ~20%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1673392286815.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_327260>global_lumentum",
+   "source": "krx:327260",
+   "target": "global:lumentum",
+   "type": "supply",
+   "labelKo": "화합물 반도체 패키지",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=71988",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_327260>global_macom",
+   "source": "krx:327260",
+   "target": "global:macom",
+   "type": "supply",
+   "labelKo": "화합물 반도체 패키지",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=71988",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_083450>krx_005930",
+   "source": "krx:083450",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "스크러버·칠러",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=31596",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_083450>krx_000660",
+   "source": "krx:083450",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "스크러버·칠러",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=31596",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_083450>global_micron",
+   "source": "krx:083450",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "스크러버·칠러 해외 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=16150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_083450>global_ymtc",
+   "source": "krx:083450",
+   "target": "global:ymtc",
+   "type": "supply",
+   "labelKo": "스크러버·칠러 해외 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=16150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_083450>global_cxmt",
+   "source": "krx:083450",
+   "target": "global:cxmt",
+   "type": "supply",
+   "labelKo": "스크러버·칠러 해외 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=16150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_083450>global_tsmc",
+   "source": "krx:083450",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "스크러버·칠러 해외 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=16150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "distribution:krx_005930>krx_031330",
+   "source": "krx:005930",
+   "target": "krx:031330",
+   "type": "distribution",
+   "labelKo": "삼성전자 반도체 국내 유통 (점유 50~70%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202108051326001731",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_074600>global_tokyo_electron",
+   "source": "krx:074600",
+   "target": "global:tokyo_electron",
+   "type": "supply",
+   "labelKo": "쿼츠 최대 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.dailyinvest.kr/news/articleView.html?idxno=64661",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_074600>global_lam",
+   "source": "krx:074600",
+   "target": "global:lam",
+   "type": "supply",
+   "labelKo": "Lam향 쿼츠 전용공장",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.dailyinvest.kr/news/articleView.html?idxno=64661",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_074600>krx_005930",
+   "source": "krx:074600",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "쿼츠·세라믹 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=074600",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_074600>krx_000660",
+   "source": "krx:074600",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "쿼츠·세라믹 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=074600",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_388210>global_tsmc",
+   "source": "krx:388210",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "실리콘·사파이어·세라믹 정밀부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01905686645388568",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_388210>krx_005930",
+   "source": "krx:388210",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "실리콘·사파이어·세라믹 정밀부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01905686645388568",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_388210>global_micron",
+   "source": "krx:388210",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "실리콘·사파이어·세라믹 정밀부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01905686645388568",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_388210>krx_064760",
+   "source": "krx:388210",
+   "target": "krx:064760",
+   "type": "peer",
+   "labelKo": "SiC 링 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01905686645388568",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_281740>krx_005930",
+   "source": "krx:281740",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "전구체, 테일러 팹 공급 거점",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=45378",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_281740>krx_000660",
+   "source": "krx:281740",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "반도체 전구체",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202507224549i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_281740>global_tsmc",
+   "source": "krx:281740",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "반도체 전구체",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202507224549i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_281740>global_kioxia",
+   "source": "krx:281740",
+   "target": "global:kioxia",
+   "type": "supply",
+   "labelKo": "반도체 전구체",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202507224549i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_425420>krx_005930",
+   "source": "krx:425420",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "테스트 소켓 (매출 절반 이상)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=304225",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_425420>krx_095340",
+   "source": "krx:425420",
+   "target": "krx:095340",
+   "type": "peer",
+   "labelKo": "삼성 메모리 테스트 소켓 공급 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=304225",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_425420>krx_131290",
+   "source": "krx:425420",
+   "target": "krx:131290",
+   "type": "peer",
+   "labelKo": "삼성 메모리 테스트 소켓 공급 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=304225",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_122640>krx_000660",
+   "source": "krx:122640",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "고압 어닐링 장비 공급 추진·양산 테스트",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=20118",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033640>krx_005930",
+   "source": "krx:033640",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "WLP 범핑·패키징 (주 고객)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202311030757519260109087&lcode=00",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033640>global_qualcomm",
+   "source": "krx:033640",
+   "target": "global:qualcomm",
+   "type": "supply",
+   "labelKo": "네패스라웨 PLP 물량 (일부 계약 해지)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=20537",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_033640>krx_330860",
+   "source": "krx:033640",
+   "target": "krx:330860",
+   "type": "equity",
+   "labelKo": "자회사 (웨이퍼 테스트)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202311030757519260109087&lcode=00",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033640>krx_000990",
+   "source": "krx:033640",
+   "target": "krx:000990",
+   "type": "supply",
+   "labelKo": "DB하이텍 후공정",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202311030757519260109087&lcode=00",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064290>global_intel",
+   "source": "krx:064290",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "패키징 검사장비 단독 납품 (2020)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/intekplus",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064290>krx_005930",
+   "source": "krx:064290",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "반도체 검사장비 공급계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sedaily.com/NewsVIew/1ODBEFERHV",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_036810>krx_005930",
+   "source": "krx:036810",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "펠리클 (삼성 내 점유율 80%)·EUV 장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2298912",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005930>krx_036810",
+   "source": "krx:005930",
+   "target": "krx:036810",
+   "type": "equity",
+   "labelKo": "삼성전자 지분 7% (2021)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202502191625142880104637",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_102710>krx_005930",
+   "source": "krx:102710",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "세정액·슬러리",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://msg.ls-sec.co.kr/eum/K_20241106_31780_96.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_102710>krx_000660",
+   "source": "krx:102710",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "세정액·슬러리",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://msg.ls-sec.co.kr/eum/K_20241106_31780_96.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_053610>krx_005930",
+   "source": "krx:053610",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "디스펜서·다이본더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679526438692.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_053610>krx_000660",
+   "source": "krx:053610",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "디스펜서·다이본더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679526438692.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_053610>global_amkor",
+   "source": "krx:053610",
+   "target": "global:amkor",
+   "type": "supply",
+   "labelKo": "디스펜서·다이본더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679526438692.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_053610>global_jcet",
+   "source": "krx:053610",
+   "target": "global:jcet",
+   "type": "supply",
+   "labelKo": "디스펜서·다이본더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679526438692.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_053610>global_tsmc",
+   "source": "krx:053610",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "후공정 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.infostockdaily.co.kr/news/articleView.html?idxno=190710",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_108320>global_lgdisplay",
+   "source": "krx:108320",
+   "target": "global:lgdisplay",
+   "type": "supply",
+   "labelKo": "DDI (매출 57.5%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.nate.com/view/20250227n04734",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_108320>global_boe",
+   "source": "krx:108320",
+   "target": "global:boe",
+   "type": "supply",
+   "labelKo": "DDI (매출 29.7%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.nate.com/view/20250227n04734",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108320>global_novatek",
+   "source": "krx:108320",
+   "target": "global:novatek",
+   "type": "peer",
+   "labelKo": "아이폰 OLED DDI 공급 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=32427",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_094170>krx_005930",
+   "source": "krx:094170",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "OIS/AF 드라이버 IC",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=488837",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_094170>global_lg_innotek",
+   "source": "krx:094170",
+   "target": "global:lg_innotek",
+   "type": "supply",
+   "labelKo": "OIS/AF 드라이버 IC",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=488837",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_045100>krx_005930",
+   "source": "krx:045100",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "배관설비 (매출 39%), 평택 P5 1,480억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.e-focus.co.kr/news/articleView.html?idxno=3002831",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_045100>krx_000660",
+   "source": "krx:045100",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "배관설비 (매출 14%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679007801286.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_178920>krx_005930",
+   "source": "krx:178920",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "갤럭시 5G 안테나용 MPI 필름",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=9379",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_178920>global_apple",
+   "source": "krx:178920",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "아이폰 방열시트용 PI 필름",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=18488",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_253590>global_micron",
+   "source": "krx:253590",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "SSD 테스터 (매출 비중 50%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.infostockdaily.co.kr/news/articleView.html?idxno=168939",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_253590>krx_005930",
+   "source": "krx:253590",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "SSD 테스터",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01207046625769904",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_253590>krx_000660",
+   "source": "krx:253590",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "SSD 테스터",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01207046625769904",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_490470>krx_005930",
+   "source": "krx:490470",
+   "target": "krx:005930",
+   "type": "partner",
+   "labelKo": "삼성 파운드리 디자인솔루션파트너(DSP)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=31144",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_490470>global_rebellions",
+   "source": "krx:490470",
+   "target": "global:rebellions",
+   "type": "supply",
+   "labelKo": "AI 반도체 ASIC 설계·양산 지원",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20251217000378",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_490470>global_furiosa",
+   "source": "krx:490470",
+   "target": "global:furiosa",
+   "type": "supply",
+   "labelKo": "AI 반도체 ASIC 설계·양산 지원",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20251217000378",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_490470>krx_399720",
+   "source": "krx:490470",
+   "target": "krx:399720",
+   "type": "peer",
+   "labelKo": "삼성 파운드리 DSP 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_490470>krx_200710",
+   "source": "krx:490470",
+   "target": "krx:200710",
+   "type": "peer",
+   "labelKo": "삼성 파운드리 DSP 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=416279",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_077360>global_amkor",
+   "source": "krx:077360",
+   "target": "global:amkor",
+   "type": "supply",
+   "labelKo": "솔더볼 주요 고객 (앰코코리아)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01964726638985680",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_077360>krx_005930",
+   "source": "krx:077360",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "솔더볼",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.market-ink.co.kr/news/articleView.html?idxno=10976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_077360>krx_000660",
+   "source": "krx:077360",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "솔더볼",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.market-ink.co.kr/news/articleView.html?idxno=10976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_077360>global_jcet",
+   "source": "krx:077360",
+   "target": "global:jcet",
+   "type": "supply",
+   "labelKo": "솔더볼",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.market-ink.co.kr/news/articleView.html?idxno=10976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_399720>krx_005930",
+   "source": "krx:399720",
+   "target": "krx:005930",
+   "type": "partner",
+   "labelKo": "삼성 파운드리 DSP (베스트 디자인 파트너)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.epnc.co.kr/news/articleView.html?idxno=235605",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_399720>global_telechips",
+   "source": "krx:399720",
+   "target": "global:telechips",
+   "type": "supply",
+   "labelKo": "설계 서비스 (매출 비중 40%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=612222",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_101160>krx_005930",
+   "source": "krx:101160",
+   "target": "krx:005930",
+   "type": "partner",
+   "labelKo": "식각 부품 자체개발 협력",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/stock/2022/07/07/2022070709250348193",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_101160>krx_000660",
+   "source": "krx:101160",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "실리콘·쿼츠 식각 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03099606645386928",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_101160>global_micron",
+   "source": "krx:101160",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "실리콘·쿼츠 식각 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03099606645386928",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_101160>global_tsmc",
+   "source": "krx:101160",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "실리콘·쿼츠 식각 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03099606645386928",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_101160>global_sony",
+   "source": "krx:101160",
+   "target": "global:sony",
+   "type": "supply",
+   "labelKo": "실리콘·쿼츠 식각 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03099606645386928",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_101160>global_kioxia",
+   "source": "krx:101160",
+   "target": "global:kioxia",
+   "type": "supply",
+   "labelKo": "실리콘·쿼츠 식각 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03099606645386928",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_101160>global_lam",
+   "source": "krx:101160",
+   "target": "global:lam",
+   "type": "peer",
+   "labelKo": "애프터마켓 부품 특허분쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260917134617",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_080580>krx_005930",
+   "source": "krx:080580",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "번인 소켓 (매출 37~52%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=32473",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_080580>krx_000660",
+   "source": "krx:080580",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "번인 소켓",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1681169676454.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089890>krx_005930",
+   "source": "krx:089890",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "레이저 커팅·리페어 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%EC%BD%94%EC%84%B8%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089890>krx_000660",
+   "source": "krx:089890",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "레이저 커팅·리페어 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%EC%BD%94%EC%84%B8%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089890>global_amkor",
+   "source": "krx:089890",
+   "target": "global:amkor",
+   "type": "supply",
+   "labelKo": "레이저 커팅·리페어 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%EC%BD%94%EC%84%B8%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_383310>krx_000660",
+   "source": "krx:383310",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "케미컬 필터 (2016 정식 협력사)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383310",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_383310>krx_005930",
+   "source": "krx:383310",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "케미컬 필터 (2022 고객사 확보)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383310",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_092870>krx_005930",
+   "source": "krx:092870",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "메모리 검사장비 120.6억 계약 (최근 매출 18.3%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=04227926645478440",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_029460>krx_005930",
+   "source": "krx:029460",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "Gas 공급장치 309억 계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03030726632333184",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_144960>krx_240810",
+   "source": "krx:144960",
+   "target": "krx:240810",
+   "type": "supply",
+   "labelKo": "리모트 플라즈마 발생장치(RPG)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1691449294018.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_144960>krx_036930",
+   "source": "krx:144960",
+   "target": "krx:036930",
+   "type": "supply",
+   "labelKo": "리모트 플라즈마 발생장치(RPG)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1691449294018.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_144960>krx_005930",
+   "source": "krx:144960",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "리모트 플라즈마 발생장치(RPG)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1691449294018.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_144960>krx_000660",
+   "source": "krx:144960",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "리모트 플라즈마 발생장치(RPG)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1691449294018.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_098120>krx_005930",
+   "source": "krx:098120",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "번인 소켓",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=445458",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_098120>krx_000660",
+   "source": "krx:098120",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "번인 소켓",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=445458",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_104830>krx_005930",
+   "source": "krx:104830",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "특수가스 최대 고객, 텍사스 공장",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=74738",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_104830>krx_000660",
+   "source": "krx:104830",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "특수가스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thescoop.co.kr/news/articleView.html?idxno=307562",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_104830>global_micron",
+   "source": "krx:104830",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "특수가스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thescoop.co.kr/news/articleView.html?idxno=307562",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_272290>krx_005930",
+   "source": "krx:272290",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "LPDDR용 DAF 양산",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02558406645485000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_272290>krx_000660",
+   "source": "krx:272290",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "반도체 패키지 소재",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02558406645485000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_241770>krx_000660",
+   "source": "krx:241770",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "전구체 50% 납품·히터블록",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=437775",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_241770>krx_005930",
+   "source": "krx:241770",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "히터블록 (점유 90%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=437775",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_merck_em>krx_241770",
+   "source": "global:merck_em",
+   "target": "krx:241770",
+   "type": "equity",
+   "labelKo": "머크, 메카로 전구체 사업 인수",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.kipost.net/news/articleView.html?idxno=302508",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>krx_005930",
+   "source": "krx:033160",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>krx_000660",
+   "source": "krx:033160",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>global_micron",
+   "source": "krx:033160",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>global_ase",
+   "source": "krx:033160",
+   "target": "global:ase",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>global_amkor",
+   "source": "krx:033160",
+   "target": "global:amkor",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>global_qualcomm",
+   "source": "krx:033160",
+   "target": "global:qualcomm",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>global_amd",
+   "source": "krx:033160",
+   "target": "global:amd",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033160>global_nvidia",
+   "source": "krx:033160",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "본딩와이어 (IDM·OSAT·팹리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.chickstockfi.com/analysis/515",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_170920>global_samsung_display",
+   "source": "krx:170920",
+   "target": "global:samsung_display",
+   "type": "supply",
+   "labelKo": "박리액 사실상 독점 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/839304",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_114810>krx_005930",
+   "source": "krx:114810",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "장비 부품 정밀가공·세정코팅",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=374145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_114810>global_lgdisplay",
+   "source": "krx:114810",
+   "target": "global:lgdisplay",
+   "type": "supply",
+   "labelKo": "패널 부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=374145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_079370>krx_005930",
+   "source": "krx:079370",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "HBM 세정장비 ATOM/SATURN",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20240502000072",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_079370>krx_000660",
+   "source": "krx:079370",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "HBM 세정장비 ATOM/SATURN",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20240502000072",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_348210>krx_000660",
+   "source": "krx:348210",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "IRIS-II 3D 웨이퍼 검사장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=31984",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_348210>global_ymtc",
+   "source": "krx:348210",
+   "target": "global:ymtc",
+   "type": "supply",
+   "labelKo": "AEGIS DP 검사장비 (중국 매출 85%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/139302",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_348210>global_jhicc",
+   "source": "krx:348210",
+   "target": "global:jhicc",
+   "type": "supply",
+   "labelKo": "AEGIS DP 검사장비 (중국 매출 85%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/139302",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_348210>global_kla",
+   "source": "krx:348210",
+   "target": "global:kla",
+   "type": "peer",
+   "labelKo": "웨이퍼 검사장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/139302",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_417840>krx_005930",
+   "source": "krx:417840",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "EFEM/FOUP 습도제어 (IDM 3사 점유 85%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sks.co.kr/data1/research/qna_file/20260528163937669_0_ko.pdf?v=2",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_417840>krx_000660",
+   "source": "krx:417840",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "EFEM/FOUP 습도제어 (IDM 3사 점유 85%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sks.co.kr/data1/research/qna_file/20260528163937669_0_ko.pdf?v=2",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_417840>global_micron",
+   "source": "krx:417840",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "EFEM/FOUP 습도제어 (IDM 3사 점유 85%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sks.co.kr/data1/research/qna_file/20260528163937669_0_ko.pdf?v=2",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_200710>krx_005930",
+   "source": "krx:200710",
+   "target": "krx:005930",
+   "type": "partner",
+   "labelKo": "삼성 파운드리 DSP",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20260115000268",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_330860>krx_005930",
+   "source": "krx:330860",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "PMIC 웨이퍼 테스트 (매출 85%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=8126",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_110990>krx_000660",
+   "source": "krx:110990",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "레이저 어닐링 장비 공동개발→HBM3E 양산 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=32286",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "distribution:global_amd>krx_093520",
+   "source": "global:amd",
+   "target": "krx:093520",
+   "type": "distribution",
+   "labelKo": "AMD(자일링스) FPGA 국내 유일 총판",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.amd.com/ko/corporate/contacts/authorized-distributors/adaptive-computing-products.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_039440>krx_005930",
+   "source": "krx:039440",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "CCSS (매출 46%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://supple.kr/news/cmru6hkvz001u4bcfbb4h597s",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_039440>krx_000660",
+   "source": "krx:039440",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "CCSS (매출 36%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://supple.kr/news/cmru6hkvz001u4bcfbb4h597s",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_039440>global_micron",
+   "source": "krx:039440",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "CCSS",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.dailyinvest.kr/news/articleView.html?idxno=70043",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_039440>global_intel",
+   "source": "krx:039440",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "CCSS",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.dailyinvest.kr/news/articleView.html?idxno=70043",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_039440>global_ase",
+   "source": "krx:039440",
+   "target": "global:ase",
+   "type": "supply",
+   "labelKo": "리플로우 장비 품질테스트",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10855183",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_168360>krx_000660",
+   "source": "krx:168360",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "HBM 3D 검사장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.creditnews.kr/news/articleView.html?idxno=31385",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_168360>global_micron",
+   "source": "krx:168360",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "검사장비 50억 계약 (SOCAMM2)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2596890",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_168360>global_kingston",
+   "source": "krx:168360",
+   "target": "global:kingston",
+   "type": "supply",
+   "labelKo": "검사장비 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2588367",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_000660>global_nvidia",
+   "source": "krx:000660",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "HBM3E/HBM4 (Rubin HBM4 점유 ~70% 전망)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.ekn.kr/view.php?key=20260316025418165",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_000660>global_tsmc",
+   "source": "krx:000660",
+   "target": "global:tsmc",
+   "type": "partner",
+   "labelKo": "HBM4 베이스다이·CoWoS 협력",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.skhynix.com/sk-hynix-partners-with-tsmc-to-strengthen-hbm-technological-leadership/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_000660>global_intel",
+   "source": "krx:000660",
+   "target": "global:intel",
+   "type": "partner",
+   "labelKo": "HBM 협력",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2026/05/202605120643031484fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005930>global_tesla",
+   "source": "krx:005930",
+   "target": "global:tesla",
+   "type": "supply",
+   "labelKo": "AI5/AI6 파운드리 22조 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2588991",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005930>global_nvidia",
+   "source": "krx:005930",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "HBM4·4nm 파운드리 (HBM 베이스다이)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Industry/2026/03/2026031715095466896ed0c62d49_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005930>global_google",
+   "source": "krx:005930",
+   "target": "global:google",
+   "type": "supply",
+   "labelKo": "TPU용 HBM3E (2025 공급량 60%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260612n28201",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005930>krx_000660",
+   "source": "krx:005930",
+   "target": "krx:000660",
+   "type": "peer",
+   "labelKo": "D램·HBM 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://korea.counterpointresearch.com/global-dram-and-hbm-market-share-quarterly/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005930>global_micron",
+   "source": "krx:005930",
+   "target": "global:micron",
+   "type": "peer",
+   "labelKo": "D램·HBM 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://korea.counterpointresearch.com/global-dram-and-hbm-market-share-quarterly/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000660>global_micron",
+   "source": "krx:000660",
+   "target": "global:micron",
+   "type": "peer",
+   "labelKo": "D램·HBM 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://korea.counterpointresearch.com/global-dram-and-hbm-market-share-quarterly/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005930>global_tsmc",
+   "source": "krx:005930",
+   "target": "global:tsmc",
+   "type": "peer",
+   "labelKo": "파운드리 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://korea.counterpointresearch.com/global-semiconductor-foundry-markets-q22025-revenue/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000990>global_umc",
+   "source": "krx:000990",
+   "target": "global:umc",
+   "type": "peer",
+   "labelKo": "8인치 파운드리 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10624917",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_asml>global_tsmc",
+   "source": "global:asml",
+   "target": "global:tsmc",
+   "type": "supply",
+   "labelKo": "EUV 노광장비 (SK하이닉스 $8B 주문 2026-03)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/348239/asml-targets-60-euv-shipments-in-2026-as-memory-demand-surges",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_asml>krx_005930",
+   "source": "global:asml",
+   "target": "krx:005930",
+   "type": "supply",
+   "labelKo": "EUV 노광장비 (SK하이닉스 $8B 주문 2026-03)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/348239/asml-targets-60-euv-shipments-in-2026-as-memory-demand-surges",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_asml>global_intel",
+   "source": "global:asml",
+   "target": "global:intel",
+   "type": "supply",
+   "labelKo": "EUV 노광장비 (SK하이닉스 $8B 주문 2026-03)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/348239/asml-targets-60-euv-shipments-in-2026-as-memory-demand-surges",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_asml>krx_000660",
+   "source": "global:asml",
+   "target": "krx:000660",
+   "type": "supply",
+   "labelKo": "EUV 노광장비 (SK하이닉스 $8B 주문 2026-03)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/348239/asml-targets-60-euv-shipments-in-2026-as-memory-demand-surges",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_asml>global_micron",
+   "source": "global:asml",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "EUV 노광장비 (SK하이닉스 $8B 주문 2026-03)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/348239/asml-targets-60-euv-shipments-in-2026-as-memory-demand-surges",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_tsmc>global_nvidia",
+   "source": "global:tsmc",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "파운드리·CoWoS (2026 CoWoS 60% 할당)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://thebuildout.ai/intel/777f939e-2e3e-4c12-bf9f-fdc928d58c58",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_tsmc>global_apple",
+   "source": "global:tsmc",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "2nm 파운드리 (애플 초기 물량 절반)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/341044/tsmcs-first-2-nm-node-customers-are-apple-amd-nvidia-and-mediatek-intel-missing",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_tsmc>global_amd",
+   "source": "global:tsmc",
+   "target": "global:amd",
+   "type": "supply",
+   "labelKo": "2nm 파운드리 (애플 초기 물량 절반)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/341044/tsmcs-first-2-nm-node-customers-are-apple-amd-nvidia-and-mediatek-intel-missing",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_tsmc>global_mediatek",
+   "source": "global:tsmc",
+   "target": "global:mediatek",
+   "type": "supply",
+   "labelKo": "2nm 파운드리 (애플 초기 물량 절반)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.techpowerup.com/341044/tsmcs-first-2-nm-node-customers-are-apple-amd-nvidia-and-mediatek-intel-missing",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_amkor>global_nvidia",
+   "source": "global:amkor",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "CoWoS 보조 첨단 패키징",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://thebuildout.ai/intel/777f939e-2e3e-4c12-bf9f-fdc928d58c58",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_micron>global_nvidia",
+   "source": "global:micron",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "HBM3E (B300/GB300, MI350X)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.micron.com/products/memory/hbm/hbm3e",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_micron>global_amd",
+   "source": "global:micron",
+   "target": "global:amd",
+   "type": "supply",
+   "labelKo": "HBM3E (B300/GB300, MI350X)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.micron.com/products/memory/hbm/hbm3e",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": [
+  "127120",
+  "015360",
+  "332570"
+ ]
+}

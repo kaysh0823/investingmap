@@ -32,6 +32,7 @@ export const JS_FILES = [
   'js/map_perfcalendar.js',
   'js/map_tab_state.js',
   'js/map_valuation.js',
+  'js/map_netmap.js',
   'js/map_volatility.js',
   'js/network_profiles.js',
   'js/relation_network.js',

@@ -14,6 +14,7 @@
     volatility: 1,
     perfcalendar: 1,
     valuation: 1,
+    netmap: 1,
     table: 1,
   };
   var GRAPH_FALLBACK = 'heatmap';
@@ -78,6 +79,8 @@
     if (perfEl && perfEl.classList.contains('active')) return 'perfcalendar';
     var valEl = document.getElementById('tab-valuation');
     if (valEl && valEl.classList.contains('active')) return 'valuation';
+    var netEl = document.getElementById('tab-netmap');
+    if (netEl && netEl.classList.contains('active')) return 'netmap';
     var heatEl = document.getElementById('tab-heatmap');
     if (heatEl && heatEl.classList.contains('active')) return 'heatmap';
     return 'table';
@@ -199,6 +202,7 @@
       volatility: 'tab-btn-volatility',
       perfcalendar: 'tab-btn-perfcalendar',
       valuation: 'tab-btn-valuation',
+      netmap: 'tab-btn-netmap',
     };
     var btn = document.getElementById(btnIds[tab] || 'tab-btn-table');
     if (btn) switchTab(tab, btn);

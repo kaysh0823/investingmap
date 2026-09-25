@@ -555,6 +555,34 @@ function reEsc(s) {
 }
 
 function stripSemiCuratedArtifacts(html) {
+  // Drop semiconductor-only netmap tab if cloned (re-added only when data/netmap/<sector>.json exists).
+  html = html.replace(/\n?\s*<script src="\.\.\/js\/map_netmap\.js(?:\?v=[\w.\-]+)?"><\/script>/g, '');
+  html = html.replace(
+    /\n?\s*<button id="tab-btn-netmap" class="tab-btn"[^>]*>[\s\S]*?<\/button>/g,
+    '',
+  );
+  html = html.replace(
+    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/aside>\s*<\/div>\s*<\/div>\s*<\/div>\s*/g,
+    '\n',
+  );
+  html = html.replace(
+    /\n?\s*var netmapBtn = document\.getElementById\('tab-btn-netmap'\);\s*\n\s*if \(netmapBtn\) netmapBtn\.innerHTML = [^;]+;/g,
+    '',
+  );
+  html = html.replace(
+    /\n?\s*function renderNetmap\(\) \{[\s\S]*?\n\s*\}\n(?=\s*function render)/g,
+    '\n',
+  );
+  html = html.replace(/\n?\s*if \(tab === 'netmap'\) setTimeout\(renderNetmap, 40\);/g, '');
+  html = html.replace(
+    /\n?\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) setTimeout\(renderNetmap, 80\);/g,
+    '',
+  );
+  html = html.replace(
+    /\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) renderNetmap\(\);/g,
+    '',
+  );
+
   const marker = "const CURATED_RELATION_MODE = 'chainGroup';";
   const start = html.indexOf(marker);
   if (start < 0) return html;
