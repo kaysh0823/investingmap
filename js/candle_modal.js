@@ -105,6 +105,7 @@
       loading: '차트 불러오는 중…',
       empty: '표시할 일봉 데이터가 없습니다.',
       error: '차트를 불러오지 못했습니다.',
+      retry: '다시 시도',
       range3m: '3M',
       range6m: '6M',
       range1y: '1Y',
@@ -150,6 +151,7 @@
       loading: 'Loading chart…',
       empty: 'No daily candle data available.',
       error: 'Failed to load chart.',
+      retry: 'Retry',
       range3m: '3M',
       range6m: '6M',
       range1y: '1Y',
@@ -970,8 +972,10 @@
       '.im-candle-hovertip .im-ht-v{color:#e6edf3;font-weight:600}' +
       '.im-candle-pane-labels{position:absolute;inset:0;z-index:2;pointer-events:none}' +
       '.im-candle-pane-label{position:absolute;left:8px;font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--text-muted,#8b949e);white-space:nowrap}' +
-      '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
+      '.im-candle-status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:24px;text-align:center;font-size:14px;color:var(--text-muted,#8b949e);background:rgba(22,27,34,.72);z-index:3}' +
       '.im-candle-status.is-on{display:flex}' +
+      '.im-candle-retry{margin:0;padding:8px 14px;border:1px solid var(--border,#30363d);border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);font:inherit;font-size:13px;font-weight:600;cursor:pointer}' +
+      '.im-candle-retry:focus-visible{outline:2px solid var(--accent,#58a6ff);outline-offset:2px}' +
       'body.im-candle-open{overflow:hidden}' +
       '@media (max-width:768px){' +
       '.im-candle-root{padding:0;align-items:stretch}' +
@@ -1397,11 +1401,63 @@
     });
   }
 
-  function setStatus(msg, on) {
+  function setStatus(msg, on, opts) {
     var el = document.getElementById('im-candle-status');
     if (!el) return;
-    el.textContent = msg || '';
     el.classList.toggle('is-on', !!on);
+    while (el.firstChild) el.removeChild(el.firstChild);
+    if (!on || !msg) return;
+    var text = document.createElement('span');
+    text.textContent = msg;
+    el.appendChild(text);
+    if (opts && typeof opts.onRetry === 'function') {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'im-candle-retry';
+      btn.textContent = opts.retryLabel || t().retry || 'Retry';
+      btn.addEventListener('click', function (ev) {
+        try {
+          ev.preventDefault();
+        } catch (e) {}
+        opts.onRetry();
+      });
+      el.appendChild(btn);
+    }
+  }
+
+  var OHLC_FETCH_TIMEOUT_MS = 20000;
+  var OHLC_RETRY_DELAY_MS = 500;
+
+  function fetchOhlcJson(code, requestRange, interval) {
+    function once() {
+      var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var timer = null;
+      if (ctrl) {
+        timer = setTimeout(function () {
+          try {
+            ctrl.abort();
+          } catch (e) {}
+        }, OHLC_FETCH_TIMEOUT_MS);
+      }
+      return fetch(ohlcApiUrl(code, requestRange, interval), {
+        credentials: 'omit',
+        signal: ctrl ? ctrl.signal : undefined,
+      })
+        .then(function (res) {
+          if (timer) clearTimeout(timer);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .catch(function (err) {
+          if (timer) clearTimeout(timer);
+          throw err;
+        });
+    }
+    return once().catch(function () {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, OHLC_RETRY_DELAY_MS);
+      }).then(once);
+    });
   }
 
   /* ---------- series build ---------- */
@@ -2191,12 +2247,7 @@
         // Weekly MA120 and 125-bar normalization need substantially more than one year
         // of daily source bars, regardless of the selected display range.
         var requestRange = state.interval === 'weekly' ? '5y' : range;
-        var ohlcP = fetch(ohlcApiUrl(code, requestRange, state.interval), {
-          credentials: 'omit',
-        }).then(function (res) {
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          return res.json();
-        });
+        var ohlcP = fetchOhlcJson(code, requestRange, state.interval);
         var quotesP = fetch(quotesApiUrl(code), { credentials: 'omit' })
           .then(function (res) {
             if (!res.ok) return null;
@@ -2256,7 +2307,12 @@
       .catch(function () {
         if (token !== state.fetchToken || !state.open) return;
         destroyCharts();
-        setStatus(labels.error, true);
+        setStatus(labels.error, true, {
+          retryLabel: labels.retry,
+          onRetry: function () {
+            loadAndRender(code, range);
+          },
+        });
       });
   }
 

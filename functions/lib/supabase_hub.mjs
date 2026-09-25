@@ -19,8 +19,24 @@ export function numOrNull(v) {
 }
 
 /**
+ * Prefer header for PostgREST. Default: no count=exact.
+ * count=exact makes PostgREST count all matching rows — seconds of latency on large
+ * tables (e.g. stock_investor_net). Only enable when preferCountExact===true or when
+ * warnIfTruncated is set on a non-paginate call (needs Content-Range total).
+ *
+ * @param {{ warnIfTruncated?: string, preferCountExact?: boolean, paginate?: boolean }} [opts]
+ * @returns {Record<string, string>}
+ */
+export function buildSupabasePreferHeaders(opts = {}) {
+  const preferExact =
+    opts.preferCountExact === true || (!!opts.warnIfTruncated && !opts.paginate);
+  return preferExact ? { Prefer: 'count=exact' } : {};
+}
+
+/**
  * @param {{ warnIfTruncated?: string, preferCountExact?: boolean, paginate?: boolean, pageSize?: number }} [opts]
  *   warnIfTruncated — if Content-Range total > rows.length, console.warn this message
+ *   preferCountExact — opt-in count=exact (default false; kept for callers that need totals)
  *   paginate — follow limit/offset until all rows fetched (bypasses PostgREST max-rows=1000)
  */
 export async function fetchSupabaseJson(config, pathAndQuery, opts = {}) {
@@ -54,10 +70,8 @@ export async function fetchSupabaseJson(config, pathAndQuery, opts = {}) {
   const headers = {
     apikey: config.anonKey,
     Authorization: `Bearer ${config.anonKey}`,
+    ...buildSupabasePreferHeaders(opts),
   };
-  if (opts.preferCountExact !== false) {
-    headers.Prefer = 'count=exact';
-  }
   const res = await fetch(`${config.url}/rest/v1/${pathAndQuery}`, { headers });
   if (!res.ok) {
     const body = await res.text().catch(() => '');

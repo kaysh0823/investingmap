@@ -4,6 +4,11 @@
  */
 
 import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
+import { putHubCache, readHubCache } from './hub_api_cache.mjs';
+
+/** Edge cache for ticker-agnostic investor_net / foreign_ratio depth signature. */
+const INVESTOR_DEPTH_SIG_CACHE = '/api/_sig/investor_depth/v1';
+const INVESTOR_DEPTH_SIG_MAX_AGE = 60;
 
 export const INVESTOR_INST_CODES = Object.freeze(['3000', '3100', '6000']);
 export const INVESTOR_FRGN_CODE = '9000';
@@ -184,10 +189,26 @@ export async function fetchInvestorNetForRange(config, ticker, fromDate, toDate)
  * Investor-net + foreign-ratio cache signature.
  * Includes min+max for both tables so historical depth backfills invalidate
  * even when MAX(trade_date) is unchanged.
+ * Depth min/max are ticker-agnostic globals — cache 60s via caches.default.
+ *
  * @param {{ url: string, anonKey: string }} config
+ * @param {{ origin?: string, context?: { waitUntil?: Function } }} [cacheCtx]
  * @returns {Promise<string>}
  */
-export async function fetchLatestInvestorNetSignature(config) {
+export async function fetchLatestInvestorNetSignature(config, cacheCtx = {}) {
+  const origin = cacheCtx.origin || '';
+  if (origin) {
+    try {
+      const hit = await readHubCache(INVESTOR_DEPTH_SIG_CACHE, origin);
+      if (hit) {
+        const body = await hit.json();
+        if (body && typeof body.sig === 'string' && body.sig) return body.sig;
+      }
+    } catch {
+      /* miss / parse error → fetch */
+    }
+  }
+
   const ymd = (row) =>
     row?.trade_date ? String(row.trade_date).slice(0, 10).replace(/-/g, '') : null;
   const depthSig = async (table) => {
@@ -204,15 +225,32 @@ export async function fetchLatestInvestorNetSignature(config) {
       return 'none';
     }
   };
+
+  let sig = 'inv-v9-none';
   try {
     const [invDepth, frDepth] = await Promise.all([
       depthSig('stock_investor_net'),
       depthSig('stock_foreign_ratio'),
     ]);
-    return `inv-v9-${invDepth}-fr-${frDepth}`;
+    sig = `inv-v9-${invDepth}-fr-${frDepth}`;
   } catch {
-    return 'inv-v9-none';
+    sig = 'inv-v9-none';
   }
+
+  if (origin && cacheCtx.context) {
+    try {
+      const cached = new Response(JSON.stringify({ sig }), {
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': `public, max-age=${INVESTOR_DEPTH_SIG_MAX_AGE}`,
+        },
+      });
+      putHubCache(cacheCtx.context, INVESTOR_DEPTH_SIG_CACHE, origin, cached);
+    } catch {
+      /* ignore cache put */
+    }
+  }
+  return sig;
 }
 
 /**
