@@ -197,6 +197,12 @@ assert.ok(/viewBox/.test(mapJs), 'map_valuation uses SVG viewBox');
   assert.equal(sim.activeLabel, '배당수익률', 'active button label for dvd');
   assert.equal(sim.chart.metric, 'dvd', 'chart.metric after dvd select');
   console.log('  unit metric=dvd → 배당수익률 + chart.metric=dvd ok');
+
+  const dom = Val._test.computeXDomain('perTtm', [6, 9, 12, 30, 85], { p75: 25 });
+  assert.ok(dom.lo <= 6 / 1.25, `domain lo=${dom.lo} must be ≤ ${6 / 1.25}`);
+  assert.ok(dom.hi >= 85 * 1.15, `domain hi=${dom.hi} must be ≥ ${85 * 1.15}`);
+  assert.ok(dom.lo <= 25 && dom.hi >= 25, `domain must include P75=25 (lo=${dom.lo} hi=${dom.hi})`);
+  console.log(`  unit computeXDomain [6,9,12,30,85] lo=${dom.lo} hi=${dom.hi} (P75=25) ok`);
 }
 
 assert.ok(
@@ -217,6 +223,11 @@ console.log('  h) hub_valuation_snapshot 60s header ok');
 
 const tabState = fs.readFileSync(path.join(ROOT, 'js', 'map_tab_state.js'), 'utf8');
 assert.ok(/valuation:\s*1/.test(tabState), 'map_tab_state VALID includes valuation');
+assert.ok(
+  /tab-btn-valuation/.test(tabState),
+  "map_tab_state.js must include 'tab-btn-valuation' btnIds entry",
+);
+console.log('  map_tab_state valuation btnIds ok');
 
 const REQUIRED_I18N = ['valuationSortChain', 'valuationMetricDvd', 'valuationLegendPer'];
 

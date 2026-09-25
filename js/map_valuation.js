@@ -1,5 +1,5 @@
 /**
- * Valuation comparison v4 — chain-group PER TTM / FY / PBR / dividend strip.
+ * Valuation comparison v5 — chain-group PER TTM / FY / PBR / dividend strip.
  * Snapshot: /data/hub_valuation_snapshot.json (KRX FY + Naver TTM for hub).
  */
 (function (global) {
@@ -17,6 +17,9 @@
   var metricLoaded = false;
   var widthRetryTimer = null;
   var lastChart = { metric: null };
+  var lastPaintX = null;
+  var lastPaintMetric = null;
+  var TRANS_MS = 200;
 
   var METRICS = ['perTtm', 'perFy', 'pbr', 'dvd'];
   var METRIC_STORAGE = 'im.valuation.metric';
@@ -273,18 +276,117 @@
     return v > 0;
   }
 
-  function xDomainFor(metric) {
-    if (metric === 'pbr') return [0.1, 20];
-    if (metric === 'dvd') return [0, 12];
-    return [0.5, 200];
+  function clampNum(v, lo, hi) {
+    if (v == null || !isFinite(v)) return lo;
+    return Math.max(lo, Math.min(hi, v));
   }
 
-  function makeXScale(metric, width) {
-    var dom = xDomainFor(metric);
+  /** Floor-index quantile on ascending array (q in 0..1). */
+  function quantileAsc(sorted, q) {
+    if (!sorted || !sorted.length) return null;
+    if (sorted.length === 1) return sorted[0];
+    var i = Math.floor((sorted.length - 1) * q);
+    return sorted[Math.max(0, Math.min(sorted.length - 1, i))];
+  }
+
+  /**
+   * Data-driven x domain for PER/PBR; dvd stays linear 0..max(≤12).
+   * @param {string} metric
+   * @param {number[]} values plottable member values (loss excluded)
+   * @param {{p25?:number|null,p50?:number|null,p75?:number|null}} marketPct
+   */
+  function computeXDomain(metric, values, marketPct) {
+    marketPct = marketPct || {};
+    var vals = (values || [])
+      .filter(function (v) {
+        return v != null && isFinite(v) && (metric === 'dvd' ? v >= 0 : v > 0);
+      })
+      .slice()
+      .sort(function (a, b) {
+        return a - b;
+      });
+
+    if (metric === 'dvd') {
+      var mx = vals.length ? vals[vals.length - 1] : 1;
+      var hiDvd = Math.max(1, Math.min(12, mx * 1.05));
+      return { lo: 0, hi: hiDvd, domain: [0, hiDvd] };
+    }
+
+    var isPbr = metric === 'pbr';
+    var loBound = isPbr ? [0.1, 2] : [0.3, 5];
+    var hiBound = isPbr ? [3, 50] : [20, 1000];
+    var q05 = vals.length ? quantileAsc(vals, 0.05) : isPbr ? 0.5 : 1;
+    var vmax = vals.length ? vals[vals.length - 1] : hiBound[0];
+    var lo = clampNum(q05 / 1.25, loBound[0], loBound[1]);
+    var hi = clampNum(vmax * 1.15, hiBound[0], hiBound[1]);
+
+    [marketPct.p25, marketPct.p50, marketPct.p75].forEach(function (p) {
+      if (p != null && isFinite(p) && p > 0) {
+        lo = Math.min(lo, p);
+        hi = Math.max(hi, p);
+      }
+    });
+
+    if (!(lo > 0)) lo = loBound[0];
+    if (!(hi > lo)) hi = lo * 2;
+    return { lo: lo, hi: hi, domain: [lo, hi] };
+  }
+
+  function makeXScale(metric, width, domain) {
+    var dom = domain && domain.length === 2 ? domain : computeXDomain(metric, [], {}).domain;
     if (metric === 'dvd') {
       return d3.scaleLinear().domain(dom).range([0, width]).clamp(true);
     }
     return d3.scaleLog().domain(dom).range([0, width]).clamp(true);
+  }
+
+  /** 1-2-5 log ticks with ≥ minGap px spacing. */
+  function ticks125(domain, x, minGap) {
+    minGap = minGap == null ? 40 : minGap;
+    var lo = domain[0];
+    var hi = domain[1];
+    if (!(lo > 0) || !(hi > lo)) return [];
+    var cands = [];
+    var exp0 = Math.floor(Math.log10(lo)) - 1;
+    var exp1 = Math.ceil(Math.log10(hi)) + 1;
+    for (var e = exp0; e <= exp1; e++) {
+      [1, 2, 5].forEach(function (m) {
+        var v = m * Math.pow(10, e);
+        if (v >= lo * 0.999 && v <= hi * 1.001) cands.push(v);
+      });
+    }
+    cands.sort(function (a, b) {
+      return a - b;
+    });
+    var out = [];
+    var lastPx = -Infinity;
+    cands.forEach(function (v) {
+      var px = x(v);
+      if (!isFinite(px)) return;
+      if (px - lastPx >= minGap) {
+        out.push(v);
+        lastPx = px;
+      }
+    });
+    return out;
+  }
+
+  function formatAxisTick(v, metric) {
+    if (metric === 'dvd') return v + '%';
+    if (v >= 1000) {
+      var k = v / 1000;
+      return (Math.abs(k - Math.round(k)) < 1e-6 ? Math.round(k) : Math.round(k * 10) / 10) + 'k';
+    }
+    if (v >= 1) return String(Math.round(v));
+    if (v >= 0.1) return (Math.round(v * 10) / 10).toString();
+    return String(v);
+  }
+
+  function stableJitter(ticker) {
+    var s = String(ticker || '');
+    var h = 0;
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+    return ((Math.abs(h) % 1000) / 1000 - 0.5) * 10;
   }
 
   function resolveDisplay(q, company, metric, liveSession) {
@@ -663,6 +765,7 @@
         'color:var(--text-muted,#8b949e);padding:24px;text-align:center';
       empty.textContent = labels.noData;
       container.appendChild(empty);
+      lastPaintX = null;
       return;
     }
 
@@ -680,6 +783,15 @@
       });
     }
 
+    var plotValues = [];
+    groups.forEach(function (g) {
+      g.items.forEach(function (d) {
+        if (d.plottable) plotValues.push(d.value);
+      });
+    });
+    var domInfo = computeXDomain(metric, plotValues, { p25: p25, p50: p50, p75: p75 });
+    var domain = domInfo.domain;
+
     var bandH = 44;
     var labelW = Math.min(140, Math.floor(width * 0.22));
     var naW = measureTextWidth(labels.naDeficit, 10) + 16;
@@ -687,7 +799,21 @@
     var innerW = Math.max(80, width - margin.left - margin.right - naW);
     var height = margin.top + margin.bottom + groups.length * bandH;
 
-    var x = makeXScale(metric, innerW);
+    var x = makeXScale(metric, innerW, domain);
+    var prevX = lastPaintX;
+    var doTrans =
+      !!prevX &&
+      lastPaintMetric != null &&
+      (metric === 'dvd') === (lastPaintMetric === 'dvd');
+
+    function clampPlot(v) {
+      if (v == null || !isFinite(v)) return { display: null, dir: 0 };
+      if (v > domain[1]) return { display: domain[1], dir: 1 };
+      if (metric !== 'dvd' && v < domain[0]) return { display: domain[0], dir: -1 };
+      if (metric === 'dvd' && v < 0) return { display: 0, dir: -1 };
+      return { display: v, dir: 0 };
+    }
+
     var mcaps = [];
     groups.forEach(function (g) {
       g.items.forEach(function (d) {
@@ -703,6 +829,7 @@
     var svg = d3
       .select(container)
       .append('svg')
+      .attr('class', 'valuation-chart')
       .attr('viewBox', '0 0 ' + width + ' ' + height)
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('width', '100%')
@@ -721,50 +848,68 @@
         return o.v != null && isFinite(o.v) && isPlottable(o.v, metric);
       })
       .map(function (o) {
-        return { p: o.p, v: o.v, x: x(o.v) };
+        var cp = clampPlot(o.v);
+        return { p: o.p, v: o.v, x: x(cp.display), x0: prevX ? prevX(cp.display) : x(cp.display) };
       })
       .sort(function (a, b) { return a.x - b.x; });
+
     pctMarks.forEach(function (o, i) {
-      gRoot
+      var line = gRoot
         .append('line')
-        .attr('x1', o.x)
-        .attr('x2', o.x)
+        .attr('class', 'val-pct-line')
+        .attr('x1', doTrans ? o.x0 : o.x)
+        .attr('x2', doTrans ? o.x0 : o.x)
         .attr('y1', 0)
         .attr('y2', groups.length * bandH)
         .attr('stroke', 'var(--text-muted,#8b949e)')
         .attr('stroke-opacity', o.p === 50 ? 0.55 : 0.35)
         .attr('stroke-dasharray', o.p === 50 ? '4,4' : '2,3');
+      if (doTrans) {
+        line.transition().duration(TRANS_MS).attr('x1', o.x).attr('x2', o.x);
+      }
       var yLab = -8;
       if (i > 0 && Math.abs(o.x - pctMarks[i - 1].x) < 28) {
         yLab = pctMarks[i - 1]._yLab === -8 ? -18 : -8;
       }
       o._yLab = yLab;
-      gRoot
+      var pLab = gRoot
         .append('text')
-        .attr('x', o.x + 3)
+        .attr('class', 'val-pct-label')
+        .attr('x', (doTrans ? o.x0 : o.x) + 3)
         .attr('y', yLab)
         .attr('fill', 'var(--text-muted,#8b949e)')
         .attr('font-size', 10)
         .text('P' + o.p);
+      if (doTrans) {
+        pLab.transition().duration(TRANS_MS).attr('x', o.x + 3);
+      }
     });
 
     var tickVals =
       metric === 'dvd'
-        ? [0, 2, 4, 6, 8, 10, 12]
-        : metric === 'pbr'
-          ? [0.1, 0.3, 0.5, 1, 2, 5, 10, 20]
-          : [0.5, 1, 2, 5, 10, 20, 50, 100, 200];
-    var axis = d3.axisBottom(x).tickValues(tickVals).tickFormat(function (v) {
-      return metric === 'dvd' ? v + '%' : String(v);
-    });
-    gRoot
+        ? [0, 2, 4, 6, 8, 10, 12].filter(function (v) {
+            return v >= domain[0] && v <= domain[1] + 1e-9;
+          })
+        : ticks125(domain, x, 40);
+    var axisG = gRoot
       .append('g')
-      .attr('transform', 'translate(0,' + groups.length * bandH + ')')
-      .call(axis)
-      .selectAll('text')
-      .attr('fill', 'var(--text-muted,#8b949e)')
-      .attr('font-size', 10);
-    gRoot.selectAll('.domain, .tick line').attr('stroke', 'var(--border,#30363d)');
+      .attr('class', 'val-x-axis')
+      .attr('transform', 'translate(0,' + groups.length * bandH + ')');
+    var axis = d3.axisBottom(x).tickValues(tickVals).tickFormat(function (v) {
+      return formatAxisTick(v, metric);
+    });
+    if (doTrans && prevX) {
+      axisG.call(
+        d3.axisBottom(prevX).tickValues(tickVals).tickFormat(function (v) {
+          return formatAxisTick(v, metric);
+        }),
+      );
+      axisG.transition().duration(TRANS_MS).call(axis);
+    } else {
+      axisG.call(axis);
+    }
+    axisG.selectAll('text').attr('fill', 'var(--text-muted,#8b949e)').attr('font-size', 10);
+    axisG.selectAll('.domain, .tick line').attr('stroke', 'var(--border,#30363d)');
 
     groups.forEach(function (g, gi) {
       var y0 = gi * bandH;
@@ -787,23 +932,33 @@
         .text(g.chain.length > 14 ? g.chain.slice(0, 13) + '…' : g.chain);
 
       if (g.median != null && isPlottable(g.median, metric)) {
-        var mx = x(g.median);
+        var medC = clampPlot(g.median);
+        var mx = x(medC.display);
+        var mx0 = prevX ? prevX(medC.display) : mx;
         var nPlot = g.items.filter(function (d) { return d.plottable; }).length;
-        gRoot
+        var medLine = gRoot
           .append('line')
-          .attr('x1', mx)
-          .attr('x2', mx)
+          .attr('class', 'val-median-line')
+          .attr('x1', doTrans ? mx0 : mx)
+          .attr('x2', doTrans ? mx0 : mx)
           .attr('y1', y0 + 4)
           .attr('y2', y0 + bandH - 4)
           .attr('stroke', 'var(--accent,#58a6ff)')
           .attr('stroke-width', 1.5);
-        gRoot
+        if (doTrans) {
+          medLine.transition().duration(TRANS_MS).attr('x1', mx).attr('x2', mx);
+        }
+        var medTxt = gRoot
           .append('text')
-          .attr('x', mx + 4)
+          .attr('class', 'val-median-label')
+          .attr('x', (doTrans ? mx0 : mx) + 4)
           .attr('y', y0 + 12)
           .attr('fill', 'var(--accent,#58a6ff)')
           .attr('font-size', 10)
           .text(labels.medianLabel(g.median, metric, nPlot));
+        if (doTrans) {
+          medTxt.transition().duration(TRANS_MS).attr('x', mx + 4);
+        }
       }
 
       if (gi === 0) {
@@ -818,43 +973,93 @@
       }
 
       g.items.forEach(function (d) {
+        var cy = yMid + stableJitter(d.ticker);
         var cx;
-        var cy = yMid + (Math.random() - 0.5) * 10;
-        if (d.plottable) cx = x(d.value);
-        else cx = innerW + 16 + Math.random() * Math.max(8, naW - 28);
-        var r = d.mcap > 0 ? rScale(d.mcap) : 4;
-        var circle = gRoot
-          .append('circle')
-          .attr('cx', cx)
-          .attr('cy', cy)
-          .attr('r', r)
-          .attr('fill', d.plottable ? colorForChg(d.chg1dPct) : MISSING_COLOR)
-          .attr('fill-opacity', 0.88)
-          .attr('stroke', 'rgba(0,0,0,0.25)')
-          .attr('stroke-width', 0.5)
-          .style('cursor', 'pointer');
-        if (d.fyFallback && d.plottable) {
-          gRoot
-            .append('text')
-            .attr('class', 'valuation-fy-tag')
-            .attr('x', cx)
-            .attr('y', cy - r - 2)
-            .attr('text-anchor', 'middle')
-            .text(labels.fyTag);
+        var cx0;
+        var clampDir = 0;
+        if (d.plottable) {
+          var cp = clampPlot(d.value);
+          clampDir = cp.dir;
+          cx = x(cp.display);
+          cx0 = prevX ? prevX(cp.display) : cx;
+        } else {
+          cx = innerW + 16 + Math.abs(stableJitter(d.ticker + 'na')) * 0.8 + 4;
+          cx0 = cx;
         }
-        circle
-          .on('mouseenter', function (ev) {
-            showTip(ev, d, labels, liveSession);
-          })
-          .on('mousemove', function (ev) {
-            moveTip(ev);
-          })
-          .on('mouseleave', hideTip)
-          .on('click', function () {
-            if (typeof opts.onSelect === 'function') opts.onSelect(d);
-          });
+        var r = d.mcap > 0 ? rScale(d.mcap) : 4;
+        var fill = d.plottable ? colorForChg(d.chg1dPct) : MISSING_COLOR;
+
+        if (clampDir !== 0) {
+          var mark = gRoot
+            .append('text')
+            .attr('class', 'val-outlier')
+            .attr('x', doTrans ? cx0 : cx)
+            .attr('y', cy)
+            .attr('text-anchor', 'middle')
+            .attr('dominant-baseline', 'middle')
+            .attr('fill', fill)
+            .attr('font-size', 12)
+            .attr('font-weight', 700)
+            .style('cursor', 'pointer')
+            .text(clampDir > 0 ? '▶' : '◀');
+          if (doTrans) {
+            mark.transition().duration(TRANS_MS).attr('x', cx);
+          }
+          mark
+            .on('mouseenter', function (ev) {
+              showTip(ev, d, labels, liveSession);
+            })
+            .on('mousemove', function (ev) {
+              moveTip(ev);
+            })
+            .on('mouseleave', hideTip)
+            .on('click', function () {
+              if (typeof opts.onSelect === 'function') opts.onSelect(d);
+            });
+        } else {
+          var circle = gRoot
+            .append('circle')
+            .attr('class', 'val-dot')
+            .attr('cx', doTrans ? cx0 : cx)
+            .attr('cy', cy)
+            .attr('r', r)
+            .attr('fill', fill)
+            .attr('fill-opacity', 0.88)
+            .attr('stroke', 'rgba(0,0,0,0.25)')
+            .attr('stroke-width', 0.5)
+            .style('cursor', 'pointer');
+          if (doTrans) {
+            circle.transition().duration(TRANS_MS).attr('cx', cx);
+          }
+          if (d.fyFallback && d.plottable) {
+            var fyT = gRoot
+              .append('text')
+              .attr('class', 'valuation-fy-tag')
+              .attr('x', doTrans ? cx0 : cx)
+              .attr('y', cy - r - 2)
+              .attr('text-anchor', 'middle')
+              .text(labels.fyTag);
+            if (doTrans) {
+              fyT.transition().duration(TRANS_MS).attr('x', cx);
+            }
+          }
+          circle
+            .on('mouseenter', function (ev) {
+              showTip(ev, d, labels, liveSession);
+            })
+            .on('mousemove', function (ev) {
+              moveTip(ev);
+            })
+            .on('mouseleave', hideTip)
+            .on('click', function () {
+              if (typeof opts.onSelect === 'function') opts.onSelect(d);
+            });
+        }
       });
     });
+
+    lastPaintX = x;
+    lastPaintMetric = metric;
 
     var legend = opts.legend || document.getElementById('valuation-legend');
     if (legend) {
@@ -1026,6 +1231,10 @@
       formatMetric: formatMetric,
       normalizeMetric: normalizeMetric,
       clampTip: clampTip,
+      computeXDomain: computeXDomain,
+      ticks125: ticks125,
+      formatAxisTick: formatAxisTick,
+      quantileAsc: quantileAsc,
       simulateMetricSelect: simulateMetricSelect,
       METRICS: METRICS,
       METRIC_STORAGE: METRIC_STORAGE,
