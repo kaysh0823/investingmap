@@ -1,0 +1,797 @@
+{
+ "sectorId": "powergrid",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "transformer": "변압기",
+  "switchgear": "개폐·배전기기",
+  "cable": "전선·케이블",
+  "epc": "전력망 시공·서비스",
+  "genset": "발전·비상전원 설비",
+  "utility": "유틸리티",
+  "end_customer": "수요처",
+  "global_oem": "글로벌 전력기기"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:010120",
+   "type": "kr_listed",
+   "ticker": "010120",
+   "nameKo": "LS ELECTRIC",
+   "nameEn": "LS ELECTRIC",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "switchgear",
+   "role": "개폐·배전기기"
+  },
+  {
+   "id": "krx:298040",
+   "type": "kr_listed",
+   "ticker": "298040",
+   "nameKo": "효성중공업",
+   "nameEn": "효성중공업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "transformer",
+   "role": "변압기"
+  },
+  {
+   "id": "krx:267260",
+   "type": "kr_listed",
+   "ticker": "267260",
+   "nameKo": "HD현대일렉트릭",
+   "nameEn": "HD현대일렉트릭",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "transformer",
+   "role": "변압기"
+  },
+  {
+   "id": "krx:015760",
+   "type": "kr_listed",
+   "ticker": "015760",
+   "nameKo": "한국전력",
+   "nameEn": "한국전력",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "utility",
+   "role": "유틸리티"
+  },
+  {
+   "id": "krx:000500",
+   "type": "kr_listed",
+   "ticker": "000500",
+   "nameKo": "가온전선",
+   "nameEn": "가온전선",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cable",
+   "role": "전선·케이블"
+  },
+  {
+   "id": "krx:062040",
+   "type": "kr_listed",
+   "ticker": "062040",
+   "nameKo": "산일전기",
+   "nameEn": "산일전기",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "transformer",
+   "role": "변압기"
+  },
+  {
+   "id": "krx:001440",
+   "type": "kr_listed",
+   "ticker": "001440",
+   "nameKo": "대한전선",
+   "nameEn": "대한전선",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cable",
+   "role": "전선·케이블"
+  },
+  {
+   "id": "krx:103590",
+   "type": "kr_listed",
+   "ticker": "103590",
+   "nameKo": "일진전기",
+   "nameEn": "일진전기",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cable",
+   "role": "전선·케이블"
+  },
+  {
+   "id": "krx:036460",
+   "type": "kr_listed",
+   "ticker": "036460",
+   "nameKo": "한국가스공사",
+   "nameEn": "한국가스공사",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "utility",
+   "role": "유틸리티"
+  },
+  {
+   "id": "krx:229640",
+   "type": "kr_listed",
+   "ticker": "229640",
+   "nameKo": "LS에코에너지",
+   "nameEn": "LS에코에너지",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cable",
+   "role": "전선·케이블"
+  },
+  {
+   "id": "krx:060370",
+   "type": "kr_listed",
+   "ticker": "060370",
+   "nameKo": "LS마린솔루션",
+   "nameEn": "LS마린솔루션",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "epc",
+   "role": "전력망 시공·서비스"
+  },
+  {
+   "id": "krx:006340",
+   "type": "kr_listed",
+   "ticker": "006340",
+   "nameKo": "대원전선",
+   "nameEn": "대원전선",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cable",
+   "role": "전선·케이블"
+  },
+  {
+   "id": "krx:119850",
+   "type": "kr_listed",
+   "ticker": "119850",
+   "nameKo": "지엔씨에너지",
+   "nameEn": "지엔씨에너지",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "genset",
+   "role": "발전·비상전원 설비"
+  },
+  {
+   "id": "krx:071320",
+   "type": "kr_listed",
+   "ticker": "071320",
+   "nameKo": "지역난방공사",
+   "nameEn": "지역난방공사",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "utility",
+   "role": "유틸리티"
+  },
+  {
+   "id": "krx:005090",
+   "type": "kr_listed",
+   "ticker": "005090",
+   "nameKo": "SGC에너지",
+   "nameEn": "SGC에너지",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "utility",
+   "role": "유틸리티"
+  },
+  {
+   "id": "krx:033100",
+   "type": "kr_listed",
+   "ticker": "033100",
+   "nameKo": "제룡전기",
+   "nameEn": "제룡전기",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "transformer",
+   "role": "변압기"
+  },
+  {
+   "id": "krx:004690",
+   "type": "kr_listed",
+   "ticker": "004690",
+   "nameKo": "삼천리",
+   "nameEn": "삼천리",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "utility",
+   "role": "유틸리티"
+  },
+  {
+   "id": "global:ge_vernova",
+   "type": "global",
+   "nameKo": "GE버노바",
+   "nameEn": "GE Vernova",
+   "country": "us",
+   "chain": "global_oem",
+   "role": "전력기기·HVDC",
+   "exchange": "NYSE:GEV"
+  },
+  {
+   "id": "global:siemens_energy",
+   "type": "global",
+   "nameKo": "지멘스에너지",
+   "nameEn": "Siemens Energy",
+   "country": "eu",
+   "chain": "global_oem",
+   "role": "전력기기",
+   "exchange": "XETRA:ENR"
+  },
+  {
+   "id": "global:tmeic",
+   "type": "global",
+   "nameKo": "TMEIC",
+   "nameEn": "TMEIC (Toshiba-Mitsubishi)",
+   "country": "jp",
+   "chain": "global_oem",
+   "role": "산업용 전기기기",
+   "exchange": ""
+  },
+  {
+   "id": "global:tesla",
+   "type": "global",
+   "nameKo": "테슬라",
+   "nameEn": "Tesla",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "ESS(메가팩)·완성차",
+   "exchange": "NASDAQ:TSLA"
+  },
+  {
+   "id": "global:bloom_energy",
+   "type": "global",
+   "nameKo": "블룸에너지",
+   "nameEn": "Bloom Energy",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "연료전지·DC 전력",
+   "exchange": "NYSE:BE"
+  },
+  {
+   "id": "global:scottish_power",
+   "type": "global",
+   "nameKo": "스코티시파워",
+   "nameEn": "Scottish Power (Iberdrola)",
+   "country": "eu",
+   "chain": "utility",
+   "role": "영국 송전사",
+   "exchange": "BME:IBE"
+  },
+  {
+   "id": "global:balfour_beatty",
+   "type": "global",
+   "nameKo": "발포어비티",
+   "nameEn": "Balfour Beatty",
+   "country": "eu",
+   "chain": "epc",
+   "role": "인프라 시공",
+   "exchange": "LSE:BBY"
+  },
+  {
+   "id": "global:ls_cable",
+   "type": "kr_other",
+   "nameKo": "LS전선",
+   "nameEn": "LS Cable & System",
+   "country": "kr",
+   "chain": "cable",
+   "role": "전선·해저케이블 (비상장)",
+   "exchange": ""
+  },
+  {
+   "id": "global:naver",
+   "type": "kr_other",
+   "nameKo": "네이버",
+   "nameEn": "NAVER",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "데이터센터 운영",
+   "exchange": "KRX:035420"
+  },
+  {
+   "id": "global:kakao",
+   "type": "kr_other",
+   "nameKo": "카카오",
+   "nameEn": "Kakao",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "데이터센터 운영",
+   "exchange": "KRX:035720"
+  },
+  {
+   "id": "global:kt",
+   "type": "kr_other",
+   "nameKo": "KT",
+   "nameEn": "KT",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "통신·데이터센터",
+   "exchange": "KRX:030200"
+  },
+  {
+   "id": "global:hyundai",
+   "type": "kr_other",
+   "nameKo": "현대자동차",
+   "nameEn": "Hyundai Motor",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "KRX:005380"
+  }
+ ],
+ "edges": [
+  {
+   "id": "peer:krx_267260>krx_298040",
+   "source": "krx:267260",
+   "target": "krx:298040",
+   "type": "peer",
+   "labelKo": "미국 변압기 시장 (국내 3사 점유 ~25%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=442070",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267260>krx_010120",
+   "source": "krx:267260",
+   "target": "krx:010120",
+   "type": "peer",
+   "labelKo": "미국 변압기 시장 (국내 3사 점유 ~25%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=442070",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298040>krx_010120",
+   "source": "krx:298040",
+   "target": "krx:010120",
+   "type": "peer",
+   "labelKo": "미국 변압기 시장 (국내 3사 점유 ~25%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=442070",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_298040>global_scottish_power",
+   "source": "krx:298040",
+   "target": "global:scottish_power",
+   "type": "supply",
+   "labelKo": "초고압변압기 850억, 영국 275kV+ 점유 1위",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=62283",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_010120>global_bloom_energy",
+   "source": "krx:010120",
+   "target": "global:bloom_energy",
+   "type": "partner",
+   "labelKo": "와이오밍 하이퍼스케일 DC 배전 시스템 공급 협력",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.lsholdings.com/ko/media/news/36516d2f5063524a52676444316e664858772b5a5461474d547866346b57776f",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_010120>global_ge_vernova",
+   "source": "krx:010120",
+   "target": "global:ge_vernova",
+   "type": "partner",
+   "labelKo": "전압형 HVDC 변환설비 국산화 협력",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.epj.co.kr/news/articleView.html?idxno=36728",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010120>krx_015760",
+   "source": "krx:010120",
+   "target": "krx:015760",
+   "type": "supply",
+   "labelKo": "개폐기·차단기·배전반 (국내 전력기기 점유 70%, 주요 고객 한전)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=010120",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_062040>global_ge_vernova",
+   "source": "krx:062040",
+   "target": "global:ge_vernova",
+   "type": "supply",
+   "labelKo": "BESS용 변압기 공급계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202502040454",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_062040>global_siemens_energy",
+   "source": "krx:062040",
+   "target": "global:siemens_energy",
+   "type": "supply",
+   "labelKo": "변압기 주요 고객 (미국 매출 72%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ket.kr/news/article.html?no=38215",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_062040>global_tmeic",
+   "source": "krx:062040",
+   "target": "global:tmeic",
+   "type": "supply",
+   "labelKo": "변압기 주요 고객 (미국 매출 72%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ket.kr/news/article.html?no=38215",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_062040>global_tesla",
+   "source": "krx:062040",
+   "target": "global:tesla",
+   "type": "supply",
+   "labelKo": "변압기 주요 고객 (미국 매출 72%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ket.kr/news/article.html?no=38215",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_062040>global_bloom_energy",
+   "source": "krx:062040",
+   "target": "global:bloom_energy",
+   "type": "supply",
+   "labelKo": "변압기 주요 고객 (미국 매출 72%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ket.kr/news/article.html?no=38215",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_062040>krx_033100",
+   "source": "krx:062040",
+   "target": "krx:033100",
+   "type": "peer",
+   "labelKo": "북미 중소형 변압기 수출 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=351955",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_103590>krx_015760",
+   "source": "krx:103590",
+   "target": "krx:015760",
+   "type": "supply",
+   "labelKo": "154kV 식물유 변압기 한전 3개 변전소 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://securities.miraeasset.com/bbs/download/2131241.pdf?attachmentId=2131241",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_103590>krx_062040",
+   "source": "krx:103590",
+   "target": "krx:062040",
+   "type": "peer",
+   "labelKo": "미국 변압기 수출 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01840086628946912",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_001440>global_balfour_beatty",
+   "source": "krx:001440",
+   "target": "global:balfour_beatty",
+   "type": "supply",
+   "labelKo": "스코틀랜드 전력망 초고압 케이블 시스템 650억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260604n29078",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001440>global_ls_cable",
+   "source": "krx:001440",
+   "target": "global:ls_cable",
+   "type": "peer",
+   "labelKo": "전선·해저케이블 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.newdaily.co.kr/site/data/html/2026/04/22/2026042200092.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_ls_cable>krx_000500",
+   "source": "global:ls_cable",
+   "target": "krx:000500",
+   "type": "equity",
+   "labelKo": "LS전선 최대주주 (31.59% 인수)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.lsholdings.com/ko/media/news/71375371694e6d50646559744d4455746571667551417454414c477747506665",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_ls_cable>krx_229640",
+   "source": "global:ls_cable",
+   "target": "krx:229640",
+   "type": "equity",
+   "labelKo": "LS전선 61.1%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03089766638923032",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_ls_cable>krx_060370",
+   "source": "global:ls_cable",
+   "target": "krx:060370",
+   "type": "equity",
+   "labelKo": "LS전선 53.6%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03089766638923032",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_ls_cable>krx_060370",
+   "source": "global:ls_cable",
+   "target": "krx:060370",
+   "type": "partner",
+   "labelKo": "안마 해상풍력 (케이블 제작 LS전선 / 시공 LS마린솔루션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03089766638923032",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_229640>krx_060370",
+   "source": "krx:229640",
+   "target": "krx:060370",
+   "type": "partner",
+   "labelKo": "해저케이블 생산·시공 가치사슬",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.epnc.co.kr/news/articleView.html?idxno=307863",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006340>krx_015760",
+   "source": "krx:006340",
+   "target": "krx:015760",
+   "type": "supply",
+   "labelKo": "전력 케이블 (한전·KT 비중 ~15%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://finance.greatsisyphus.com/2026/07/daewon-cable-latest-investment-analysis.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006340>global_kt",
+   "source": "krx:006340",
+   "target": "global:kt",
+   "type": "supply",
+   "labelKo": "통신·전력 케이블",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://finance.greatsisyphus.com/2026/07/daewon-cable-latest-investment-analysis.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006340>global_hyundai",
+   "source": "krx:006340",
+   "target": "global:hyundai",
+   "type": "supply",
+   "labelKo": "모빌리티용 전선",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://finance.greatsisyphus.com/2026/07/daewon-cable-latest-investment-analysis.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000500>krx_001440",
+   "source": "krx:000500",
+   "target": "krx:001440",
+   "type": "peer",
+   "labelKo": "전력 케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026082608064302820",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_119850>global_naver",
+   "source": "krx:119850",
+   "target": "global:naver",
+   "type": "supply",
+   "labelKo": "각 세종 2·3단계 비상발전 627억 (매출 27.7%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsis.com/view/NISX20250820_0003296520",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_119850>global_kakao",
+   "source": "krx:119850",
+   "target": "global:kakao",
+   "type": "supply",
+   "labelKo": "안산 데이터센터 비상 디젤발전기 166억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02479686632394848",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_119850>global_kt",
+   "source": "krx:119850",
+   "target": "global:kt",
+   "type": "supply",
+   "labelKo": "데이터센터 비상발전기 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsis.com/view/NISX20250820_0003296520",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_036460>krx_071320",
+   "source": "krx:036460",
+   "target": "krx:071320",
+   "type": "supply",
+   "labelKo": "발전용 천연가스 개별요금제 4.1조 (수원·양산·대구·청주 열병합)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2092020",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_071320>krx_015760",
+   "source": "krx:071320",
+   "target": "krx:015760",
+   "type": "supply",
+   "labelKo": "구역전기·열병합 전력 판매 (전력시장)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kdhc.co.kr/kdhc/main/contents.do?menuNo=200149",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005090>krx_015760",
+   "source": "krx:005090",
+   "target": "krx:015760",
+   "type": "supply",
+   "labelKo": "집단에너지·발전 전력 판매 (SMP·REC)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sgcenergy.co.kr/02_business/business03.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_036460>krx_004690",
+   "source": "krx:036460",
+   "target": "krx:004690",
+   "type": "supply",
+   "labelKo": "도시가스용 천연가스 도매 공급",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kogas.or.kr/site/koGas/1040401000000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

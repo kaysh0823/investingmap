@@ -54,7 +54,9 @@ const MAP_SECTOR = {
   semiconductor: 'semiconductor/korea_semiconductor_map.html',
   bio: 'bio/korea_bio_map.html',
   battery: 'battery/korea_battery_map.html',
+  powergrid: 'powergrid/korea_powergrid_map.html',
   robot: 'robot/korea_robot_map.html',
+  elec: 'elec/korea_elec_map.html',
 };
 
 for (const [sector, rel] of Object.entries(MAP_SECTOR)) {

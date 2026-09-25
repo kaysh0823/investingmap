@@ -1,0 +1,1376 @@
+{
+ "sectorId": "elec",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "components": "전자부품·기판",
+  "appliance": "가전·생활기기",
+  "optics": "카메라·광학·센서",
+  "display": "디스플레이 패널",
+  "ems": "전자제품 제조·조립",
+  "display_equip": "디스플레이 장비",
+  "display_mat": "디스플레이 소재",
+  "end_customer": "수요처·세트",
+  "global_peer": "글로벌 부품·경쟁사"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:009150",
+   "type": "kr_listed",
+   "ticker": "009150",
+   "nameKo": "삼성전기",
+   "nameEn": "삼성전기",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:066570",
+   "type": "kr_listed",
+   "ticker": "066570",
+   "nameKo": "LG전자",
+   "nameEn": "LG전자",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "appliance",
+   "role": "가전·생활기기"
+  },
+  {
+   "id": "krx:011070",
+   "type": "kr_listed",
+   "ticker": "011070",
+   "nameKo": "LG이노텍",
+   "nameEn": "LG이노텍",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:021240",
+   "type": "kr_listed",
+   "ticker": "021240",
+   "nameKo": "코웨이",
+   "nameEn": "코웨이",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "appliance",
+   "role": "가전·생활기기"
+  },
+  {
+   "id": "krx:034220",
+   "type": "kr_listed",
+   "ticker": "034220",
+   "nameKo": "LG디스플레이",
+   "nameEn": "LG디스플레이",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "display",
+   "role": "디스플레이 패널"
+  },
+  {
+   "id": "krx:489790",
+   "type": "kr_listed",
+   "ticker": "489790",
+   "nameKo": "한화비전",
+   "nameEn": "한화비전",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:043260",
+   "type": "kr_listed",
+   "ticker": "043260",
+   "nameKo": "성호전자",
+   "nameEn": "성호전자",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:001820",
+   "type": "kr_listed",
+   "ticker": "001820",
+   "nameKo": "삼화콘덴서",
+   "nameEn": "삼화콘덴서",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:204270",
+   "type": "kr_listed",
+   "ticker": "204270",
+   "nameKo": "제이앤티씨",
+   "nameEn": "제이앤티씨",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:417200",
+   "type": "kr_listed",
+   "ticker": "417200",
+   "nameKo": "LS머트리얼즈",
+   "nameEn": "LS머트리얼즈",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:009450",
+   "type": "kr_listed",
+   "ticker": "009450",
+   "nameKo": "경동나비엔",
+   "nameEn": "경동나비엔",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "appliance",
+   "role": "가전·생활기기"
+  },
+  {
+   "id": "krx:065350",
+   "type": "kr_listed",
+   "ticker": "065350",
+   "nameKo": "신성델타테크",
+   "nameEn": "신성델타테크",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "ems",
+   "role": "전자제품 제조·조립"
+  },
+  {
+   "id": "krx:161580",
+   "type": "kr_listed",
+   "ticker": "161580",
+   "nameKo": "필옵틱스",
+   "nameEn": "필옵틱스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "display_equip",
+   "role": "디스플레이 장비"
+  },
+  {
+   "id": "krx:171090",
+   "type": "kr_listed",
+   "ticker": "171090",
+   "nameKo": "선익시스템",
+   "nameEn": "선익시스템",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "display_equip",
+   "role": "디스플레이 장비"
+  },
+  {
+   "id": "krx:213420",
+   "type": "kr_listed",
+   "ticker": "213420",
+   "nameKo": "덕산네오룩스",
+   "nameEn": "덕산네오룩스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "display_mat",
+   "role": "디스플레이 소재"
+  },
+  {
+   "id": "krx:090460",
+   "type": "kr_listed",
+   "ticker": "090460",
+   "nameKo": "비에이치",
+   "nameEn": "비에이치",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:017900",
+   "type": "kr_listed",
+   "ticker": "017900",
+   "nameKo": "광전자",
+   "nameEn": "광전자",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:248070",
+   "type": "kr_listed",
+   "ticker": "248070",
+   "nameKo": "솔루엠",
+   "nameEn": "솔루엠",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:033240",
+   "type": "kr_listed",
+   "ticker": "033240",
+   "nameKo": "자화전자",
+   "nameEn": "자화전자",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:046890",
+   "type": "kr_listed",
+   "ticker": "046890",
+   "nameKo": "서울반도체",
+   "nameEn": "서울반도체",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:284740",
+   "type": "kr_listed",
+   "ticker": "284740",
+   "nameKo": "쿠쿠홈시스",
+   "nameEn": "쿠쿠홈시스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "appliance",
+   "role": "가전·생활기기"
+  },
+  {
+   "id": "krx:004710",
+   "type": "kr_listed",
+   "ticker": "004710",
+   "nameKo": "한솔테크닉스",
+   "nameEn": "한솔테크닉스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:192650",
+   "type": "kr_listed",
+   "ticker": "192650",
+   "nameKo": "드림텍",
+   "nameEn": "드림텍",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:290550",
+   "type": "kr_listed",
+   "ticker": "290550",
+   "nameKo": "디케이티",
+   "nameEn": "디케이티",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:092190",
+   "type": "kr_listed",
+   "ticker": "092190",
+   "nameKo": "서울바이오시스",
+   "nameEn": "서울바이오시스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "optics",
+   "role": "카메라·광학·센서"
+  },
+  {
+   "id": "krx:078350",
+   "type": "kr_listed",
+   "ticker": "078350",
+   "nameKo": "한양디지텍",
+   "nameEn": "한양디지텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:441270",
+   "type": "kr_listed",
+   "ticker": "441270",
+   "nameKo": "파인엠텍",
+   "nameEn": "파인엠텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:029530",
+   "type": "kr_listed",
+   "ticker": "029530",
+   "nameKo": "신도리코",
+   "nameEn": "신도리코",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "appliance",
+   "role": "가전·생활기기"
+  },
+  {
+   "id": "krx:089010",
+   "type": "kr_listed",
+   "ticker": "089010",
+   "nameKo": "켐트로닉스",
+   "nameEn": "켐트로닉스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:025320",
+   "type": "kr_listed",
+   "ticker": "025320",
+   "nameKo": "시노펙스",
+   "nameEn": "시노펙스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "krx:052710",
+   "type": "kr_listed",
+   "ticker": "052710",
+   "nameKo": "아모텍",
+   "nameEn": "아모텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품·기판"
+  },
+  {
+   "id": "global:apple",
+   "type": "global",
+   "nameKo": "애플",
+   "nameEn": "Apple",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "스마트폰·세트",
+   "exchange": "NASDAQ:AAPL"
+  },
+  {
+   "id": "global:amd",
+   "type": "global",
+   "nameKo": "AMD",
+   "nameEn": "AMD",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "AI 가속기 (기판 수요)",
+   "exchange": "NASDAQ:AMD"
+  },
+  {
+   "id": "global:nvidia",
+   "type": "global",
+   "nameKo": "엔비디아",
+   "nameEn": "NVIDIA",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "AI 가속기 (기판 수요)",
+   "exchange": "NASDAQ:NVDA"
+  },
+  {
+   "id": "global:tesla",
+   "type": "global",
+   "nameKo": "테슬라",
+   "nameEn": "Tesla",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "전장 (MLCC 수요)",
+   "exchange": "NASDAQ:TSLA"
+  },
+  {
+   "id": "global:hp",
+   "type": "global",
+   "nameKo": "HP",
+   "nameEn": "HP Inc.",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "PC·프린터",
+   "exchange": "NYSE:HPQ"
+  },
+  {
+   "id": "global:aptiv",
+   "type": "global",
+   "nameKo": "앱티브(델파이)",
+   "nameEn": "Aptiv (Delphi)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "전장 부품",
+   "exchange": "NYSE:APTV"
+  },
+  {
+   "id": "global:amazon",
+   "type": "global",
+   "nameKo": "아마존",
+   "nameEn": "Amazon (Whole Foods)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "유통 (ESL)",
+   "exchange": "NASDAQ:AMZN"
+  },
+  {
+   "id": "global:staples",
+   "type": "global",
+   "nameKo": "스테이플스",
+   "nameEn": "Staples",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "유통 (ESL)",
+   "exchange": ""
+  },
+  {
+   "id": "global:waitrose",
+   "type": "global",
+   "nameKo": "웨이트로즈",
+   "nameEn": "Waitrose",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "유통 (ESL)",
+   "exchange": ""
+  },
+  {
+   "id": "global:delta",
+   "type": "global",
+   "nameKo": "델타전자",
+   "nameEn": "Delta Electronics",
+   "country": "tw",
+   "chain": "end_customer",
+   "role": "전원장치",
+   "exchange": "TWSE:2308"
+  },
+  {
+   "id": "global:liteon",
+   "type": "global",
+   "nameKo": "라이트온",
+   "nameEn": "Lite-On",
+   "country": "tw",
+   "chain": "end_customer",
+   "role": "전원장치",
+   "exchange": "TWSE:2301"
+  },
+  {
+   "id": "global:boe",
+   "type": "global",
+   "nameKo": "BOE",
+   "nameEn": "BOE Technology",
+   "country": "cn",
+   "chain": "end_customer",
+   "role": "디스플레이 패널",
+   "exchange": "SZSE:000725"
+  },
+  {
+   "id": "global:nichia",
+   "type": "global",
+   "nameKo": "니치아",
+   "nameEn": "Nichia",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "LED",
+   "exchange": ""
+  },
+  {
+   "id": "global:samsung",
+   "type": "kr_other",
+   "nameKo": "삼성전자",
+   "nameEn": "Samsung Electronics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "세트·MX·VD",
+   "exchange": "KRX:005930"
+  },
+  {
+   "id": "global:samsung_display",
+   "type": "kr_other",
+   "nameKo": "삼성디스플레이",
+   "nameEn": "Samsung Display",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "디스플레이 패널",
+   "exchange": ""
+  },
+  {
+   "id": "global:hyundai_mobis",
+   "type": "kr_other",
+   "nameKo": "현대모비스",
+   "nameEn": "Hyundai Mobis",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "전장 부품",
+   "exchange": "KRX:012330"
+  },
+  {
+   "id": "global:sk_magic",
+   "type": "kr_other",
+   "nameKo": "SK매직",
+   "nameEn": "SK Magic",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "가전",
+   "exchange": ""
+  },
+  {
+   "id": "global:ls_cable",
+   "type": "kr_other",
+   "nameKo": "LS전선",
+   "nameEn": "LS Cable & System",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "모회사",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "supply:krx_009150>global_amd",
+   "source": "krx:009150",
+   "target": "global:amd",
+   "type": "supply",
+   "labelKo": "AI 가속기·서버용 FC-BGA 기판 (국내 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.dailian.co.kr/news/view/1601932/MLCCFC-BGA-%EB%82%A0%EA%B0%9C-%EB%8B%AC%EC%95%84%EC%82%BC%EC%84%B1%EC%A0%84%EA%B8%B0-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_009150>global_nvidia",
+   "source": "krx:009150",
+   "target": "global:nvidia",
+   "type": "supply",
+   "labelKo": "AI 가속기·서버용 FC-BGA 기판 (국내 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.dailian.co.kr/news/view/1601932/MLCCFC-BGA-%EB%82%A0%EA%B0%9C-%EB%8B%AC%EC%95%84%EC%82%BC%EC%84%B1%EC%A0%84%EA%B8%B0-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_009150>global_samsung",
+   "source": "krx:009150",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "카메라모듈·MLCC (전략 거래선)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://jasoseol.com/companies/138/insights",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009150>krx_011070",
+   "source": "krx:009150",
+   "target": "krx:011070",
+   "type": "peer",
+   "labelKo": "카메라모듈·반도체 기판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.huffingtonpost.kr/article/256956",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_066570>krx_011070",
+   "source": "krx:066570",
+   "target": "krx:011070",
+   "type": "equity",
+   "labelKo": "LG전자 40.8%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://jasoseol.com/companies/789/insights",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011070>global_apple",
+   "source": "krx:011070",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "카메라모듈 애플 비중 ~80% (상반기 8.8조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2614710",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034220>global_apple",
+   "source": "krx:034220",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "아이폰 OLED (최대 고객 57.5%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026031310562494031",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_034220>krx_066570",
+   "source": "krx:034220",
+   "target": "krx:066570",
+   "type": "supply",
+   "labelKo": "TV·IT 패널 (계열 매출)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55565",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_065350>krx_066570",
+   "source": "krx:065350",
+   "target": "krx:066570",
+   "type": "supply",
+   "labelKo": "세탁기 등 가전 부품 (최대 고객 LG전자 75%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01502246616126376",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_001820>krx_066570",
+   "source": "krx:001820",
+   "target": "krx:066570",
+   "type": "supply",
+   "labelKo": "전장용 MLCC (VS사업부)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/1654012",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_001820>global_hyundai_mobis",
+   "source": "krx:001820",
+   "target": "global:hyundai_mobis",
+   "type": "supply",
+   "labelKo": "전장용 MLCC",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/1654012",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_001820>global_aptiv",
+   "source": "krx:001820",
+   "target": "global:aptiv",
+   "type": "supply",
+   "labelKo": "전장용 MLCC",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/1654012",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_001820>global_tesla",
+   "source": "krx:001820",
+   "target": "global:tesla",
+   "type": "supply",
+   "labelKo": "전장용 MLCC",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20220112073939199",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001820>krx_009150",
+   "source": "krx:001820",
+   "target": "krx:009150",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://stockstalker.co.kr/mlcc/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_052710>krx_009150",
+   "source": "krx:052710",
+   "target": "krx:009150",
+   "type": "peer",
+   "labelKo": "MLCC 경쟁 (아모텍 MLCC 전환)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026092189461",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_052710>global_samsung",
+   "source": "krx:052710",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "갤럭시 안테나; 네트워크사업부 MLCC 승인",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=9972",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089010>global_samsung",
+   "source": "krx:089010",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "케미컬·전자부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=089010",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_089010>krx_066570",
+   "source": "krx:089010",
+   "target": "krx:066570",
+   "type": "supply",
+   "labelKo": "케미컬·전자부품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=089010",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_025320>global_samsung",
+   "source": "krx:025320",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "MX사업부 1차 협력사 (FPCB 기반 SUB-PBA)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=025320",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_043260>global_hp",
+   "source": "krx:043260",
+   "target": "global:hp",
+   "type": "supply",
+   "labelKo": "SMPS 주고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1711494178866.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_043260>krx_009450",
+   "source": "krx:043260",
+   "target": "krx:009450",
+   "type": "supply",
+   "labelKo": "SMPS 주고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1711494178866.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_043260>krx_011070",
+   "source": "krx:043260",
+   "target": "krx:011070",
+   "type": "supply",
+   "labelKo": "SMPS 주고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1711494178866.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_043260>global_sk_magic",
+   "source": "krx:043260",
+   "target": "global:sk_magic",
+   "type": "supply",
+   "labelKo": "SMPS 주고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1711494178866.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_043260>krx_248070",
+   "source": "krx:043260",
+   "target": "krx:248070",
+   "type": "supply",
+   "labelKo": "필름 캐패시터",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1711494178866.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_043260>global_delta",
+   "source": "krx:043260",
+   "target": "global:delta",
+   "type": "supply",
+   "labelKo": "필름 캐패시터",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1711494178866.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_043260>global_liteon",
+   "source": "krx:043260",
+   "target": "global:liteon",
+   "type": "supply",
+   "labelKo": "필름 캐패시터",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1711494178866.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_248070>global_samsung",
+   "source": "krx:248070",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "파워모듈 (삼성전자 생산·판매법인 거래 비중 큼)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/solum",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_248070>global_staples",
+   "source": "krx:248070",
+   "target": "global:staples",
+   "type": "supply",
+   "labelKo": "ESL 공급",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.segyebiz.com/newsView/20250406506760",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_248070>global_waitrose",
+   "source": "krx:248070",
+   "target": "global:waitrose",
+   "type": "supply",
+   "labelKo": "ESL 공급",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.segyebiz.com/newsView/20250406506760",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_248070>global_amazon",
+   "source": "krx:248070",
+   "target": "global:amazon",
+   "type": "supply",
+   "labelKo": "ESL 공급",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.segyebiz.com/newsView/20250406506760",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004710>global_samsung",
+   "source": "krx:004710",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "TV 파워보드·LCM, 보급형 스마트폰 EMS",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=13881",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_078350>global_samsung",
+   "source": "krx:078350",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "메모리 모듈 외주 (삼성전자 97.1%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/hanyangdigitech",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_441270>global_samsung",
+   "source": "krx:441270",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "폴더블 금속판·외장 힌지",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20240708000401",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_192650>global_samsung",
+   "source": "krx:192650",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "갤럭시 지문인식 모듈 (국내 최대 벤더)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03083206629175856",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033240>global_apple",
+   "source": "krx:033240",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "아이폰 폴디드줌 액추에이터 (매출 ~40%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thecommoditiesnews.com/news/articleView.html?idxno=9987",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033240>global_samsung",
+   "source": "krx:033240",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "갤럭시 S25 액추에이터",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=39571",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204270>global_samsung",
+   "source": "krx:204270",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "커버글라스 (삼성 22%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/64695",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_204270>krx_066570",
+   "source": "krx:204270",
+   "target": "krx:066570",
+   "type": "supply",
+   "labelKo": "커버글라스 (LG 10%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/64695",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_046890>krx_092190",
+   "source": "krx:046890",
+   "target": "krx:092190",
+   "type": "equity",
+   "labelKo": "자회사 (LED 칩)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=5107",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_092190>krx_046890",
+   "source": "krx:092190",
+   "target": "krx:046890",
+   "type": "supply",
+   "labelKo": "LED 칩·와이캅",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=5107",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_046890>global_samsung",
+   "source": "krx:046890",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "TV용 LED",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%EC%84%9C%EC%9A%B8%EB%B0%98%EB%8F%84%EC%B2%B4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_046890>krx_066570",
+   "source": "krx:046890",
+   "target": "krx:066570",
+   "type": "supply",
+   "labelKo": "TV용 LED",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%EC%84%9C%EC%9A%B8%EB%B0%98%EB%8F%84%EC%B2%B4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_046890>global_nichia",
+   "source": "krx:046890",
+   "target": "global:nichia",
+   "type": "peer",
+   "labelKo": "LED 특허·시장 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.ddaily.co.kr/page/view/2025051209415469358",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_090460>global_samsung_display",
+   "source": "krx:090460",
+   "target": "global:samsung_display",
+   "type": "supply",
+   "labelKo": "아이폰 OLED용 FPCB (삼성디스플레이 경유)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=404878",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_090460>global_samsung",
+   "source": "krx:090460",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "폴더블 카메라모듈 FPCB",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=404878",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_090460>krx_290550",
+   "source": "krx:090460",
+   "target": "krx:290550",
+   "type": "equity",
+   "labelKo": "비에이치 26.67% (모기업)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1714346493573.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_090460>krx_066570",
+   "source": "krx:090460",
+   "target": "krx:066570",
+   "type": "supply",
+   "labelKo": "BH EVS: LG전자 차량용 무선충전 사업 양수",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1714346493573.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_ls_cable>krx_417200",
+   "source": "global:ls_cable",
+   "target": "krx:417200",
+   "type": "equity",
+   "labelKo": "LS전선 자회사 (2021 편입)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=629973",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_161580>global_samsung_display",
+   "source": "krx:161580",
+   "target": "global:samsung_display",
+   "type": "supply",
+   "labelKo": "8.6세대 OLED 장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=34061",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_161580>global_boe",
+   "source": "krx:161580",
+   "target": "global:boe",
+   "type": "supply",
+   "labelKo": "8.6세대 OLED 장비",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=34061",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_171090>krx_034220",
+   "source": "krx:171090",
+   "target": "krx:034220",
+   "type": "supply",
+   "labelKo": "OLED 증착기 (BOE B16 8.6G)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/sunicsystem",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_171090>global_boe",
+   "source": "krx:171090",
+   "target": "global:boe",
+   "type": "supply",
+   "labelKo": "OLED 증착기 (BOE B16 8.6G)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/sunicsystem",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_213420>global_samsung_display",
+   "source": "krx:213420",
+   "target": "global:samsung_display",
+   "type": "supply",
+   "labelKo": "OLED 발광소재 (매출 57%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/64743",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_213420>global_boe",
+   "source": "krx:213420",
+   "target": "global:boe",
+   "type": "supply",
+   "labelKo": "OLED 소재 (중국 ~40%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/64743",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034220>global_samsung_display",
+   "source": "krx:034220",
+   "target": "global:samsung_display",
+   "type": "peer",
+   "labelKo": "OLED 패널 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026031310562494031",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034220>global_boe",
+   "source": "krx:034220",
+   "target": "global:boe",
+   "type": "peer",
+   "labelKo": "패널 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026031310562494031",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_021240>krx_284740",
+   "source": "krx:021240",
+   "target": "krx:284740",
+   "type": "peer",
+   "labelKo": "렌탈 가전 경쟁 (1위 vs 2위권)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10781938",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_021240>krx_066570",
+   "source": "krx:021240",
+   "target": "krx:066570",
+   "type": "peer",
+   "labelKo": "렌탈·구독 가전 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10879963",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_284740>krx_066570",
+   "source": "krx:284740",
+   "target": "krx:066570",
+   "type": "peer",
+   "labelKo": "렌탈·구독 가전 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10781938",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

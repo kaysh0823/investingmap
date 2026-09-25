@@ -466,17 +466,21 @@ function stripNetmap(source) {
     /\n?\s*<button id="tab-btn-netmap" class="tab-btn"[^>]*>[\s\S]*?<\/button>/g,
     '',
   );
+  // Full tab block (shell + details) through next TABLE / tab-table marker
   out = out.replace(
-    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?(?:<\/aside>\s*<\/div>\s*<\/div>|netmap-stage[\s\S]*?<\/div>\s*<\/div>)\s*<\/div>\s*/g,
+    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"))/,
     '\n',
   );
-  // Fallback old/new shells
   out = out.replace(
-    /\n?\s*<div id="tab-netmap" class="tab-content">[\s\S]*?id="netmap-root"[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/g,
+    /\n?\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"))/,
     '\n',
   );
   out = out.replace(
     /\n?\s*var netmapBtn = document\.getElementById\('tab-btn-netmap'\);\s*\n\s*if \(netmapBtn\) netmapBtn\.innerHTML = [^;]+;/g,
+    '',
+  );
+  out = out.replace(
+    /\n?\s*var netmapSum = document\.querySelector\('#tab-netmap \.netmap-panel-summary'\);\s*\n\s*if \(netmapSum\) netmapSum\.textContent = [^;]+;/g,
     '',
   );
   out = out.replace(
@@ -492,6 +496,10 @@ function stripNetmap(source) {
     /\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) renderNetmap\(\);/g,
     '',
   );
+  out = out.replace(
+    /\n[ \t]*if \(window\.InvestingMapNetmap && typeof InvestingMapNetmap\.recolorNodes === 'function'\) InvestingMapNetmap\.recolorNodes\(\);\r?\n/g,
+    '\n',
+  );
   // i18n keys inserted after tabValuation / tabNetmap
   for (const key of REQUIRED_KEYS) {
     const re = new RegExp(
@@ -500,6 +508,11 @@ function stripNetmap(source) {
     );
     out = out.replace(re, '');
   }
+  // Orphan closing div left when an incomplete strip ate the shell but not the wrapper
+  out = out.replace(
+    /(<\/div>\s*<\/div>\s*<\/div>)\s*<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"|[\r\n]+\s*<div id="tab-))/g,
+    '$1\n',
+  );
   return out;
 }
 

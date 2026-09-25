@@ -1,0 +1,949 @@
+{
+ "sectorId": "robot",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "robot": "완성로봇",
+  "actuator": "구동부품·감속기",
+  "si": "자동화·시스템 통합",
+  "software": "제어·로봇 소프트웨어",
+  "end_customer": "수요처·투자자",
+  "global_robot": "글로벌 로봇"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:277810",
+   "type": "kr_listed",
+   "ticker": "277810",
+   "nameKo": "레인보우로보틱스",
+   "nameEn": "레인보우로보틱스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:108490",
+   "type": "kr_listed",
+   "ticker": "108490",
+   "nameKo": "로보티즈",
+   "nameEn": "로보티즈",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "actuator",
+   "role": "구동부품"
+  },
+  {
+   "id": "krx:454910",
+   "type": "kr_listed",
+   "ticker": "454910",
+   "nameKo": "두산로보틱스",
+   "nameEn": "두산로보틱스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:319400",
+   "type": "kr_listed",
+   "ticker": "319400",
+   "nameKo": "현대무벡스",
+   "nameEn": "현대무벡스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "si",
+   "role": "자동화·시스템 통합"
+  },
+  {
+   "id": "krx:058610",
+   "type": "kr_listed",
+   "ticker": "058610",
+   "nameKo": "에스피지",
+   "nameEn": "에스피지",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "actuator",
+   "role": "구동부품"
+  },
+  {
+   "id": "krx:437730",
+   "type": "kr_listed",
+   "ticker": "437730",
+   "nameKo": "삼현",
+   "nameEn": "삼현",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "actuator",
+   "role": "구동부품"
+  },
+  {
+   "id": "krx:056190",
+   "type": "kr_listed",
+   "ticker": "056190",
+   "nameKo": "SFA",
+   "nameEn": "SFA",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "si",
+   "role": "자동화·시스템 통합"
+  },
+  {
+   "id": "krx:160190",
+   "type": "kr_listed",
+   "ticker": "160190",
+   "nameKo": "하이젠알앤엠",
+   "nameEn": "하이젠알앤엠",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "actuator",
+   "role": "구동부품"
+  },
+  {
+   "id": "krx:388720",
+   "type": "kr_listed",
+   "ticker": "388720",
+   "nameKo": "유일로보틱스",
+   "nameEn": "유일로보틱스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:090710",
+   "type": "kr_listed",
+   "ticker": "090710",
+   "nameKo": "휴림로봇",
+   "nameEn": "휴림로봇",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:090360",
+   "type": "kr_listed",
+   "ticker": "090360",
+   "nameKo": "로보스타",
+   "nameEn": "로보스타",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:466100",
+   "type": "kr_listed",
+   "ticker": "466100",
+   "nameKo": "클로봇",
+   "nameEn": "클로봇",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "software",
+   "role": "제어·로봇 소프트웨어"
+  },
+  {
+   "id": "krx:056080",
+   "type": "kr_listed",
+   "ticker": "056080",
+   "nameKo": "유진로봇",
+   "nameEn": "유진로봇",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:348340",
+   "type": "kr_listed",
+   "ticker": "348340",
+   "nameKo": "뉴로메카",
+   "nameEn": "뉴로메카",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:439960",
+   "type": "kr_listed",
+   "ticker": "439960",
+   "nameKo": "코스모로보틱스",
+   "nameEn": "코스모로보틱스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:455900",
+   "type": "kr_listed",
+   "ticker": "455900",
+   "nameKo": "엔젤로보틱스",
+   "nameEn": "엔젤로보틱스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "krx:117730",
+   "type": "kr_listed",
+   "ticker": "117730",
+   "nameKo": "티로보틱스",
+   "nameEn": "티로보틱스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "robot",
+   "role": "완성로봇"
+  },
+  {
+   "id": "global:samsung",
+   "type": "kr_other",
+   "nameKo": "삼성전자",
+   "nameEn": "Samsung Electronics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "전략 투자자·수요처",
+   "exchange": "KRX:005930"
+  },
+  {
+   "id": "global:lg_elec",
+   "type": "kr_other",
+   "nameKo": "LG전자",
+   "nameEn": "LG Electronics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "전략 투자자·수요처",
+   "exchange": "KRX:066570"
+  },
+  {
+   "id": "global:hyundai",
+   "type": "kr_other",
+   "nameKo": "현대자동차",
+   "nameEn": "Hyundai Motor",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "완성차·보스턴다이내믹스",
+   "exchange": "KRX:005380"
+  },
+  {
+   "id": "global:doosan",
+   "type": "kr_other",
+   "nameKo": "㈜두산",
+   "nameEn": "Doosan Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "지주회사",
+   "exchange": "KRX:000150"
+  },
+  {
+   "id": "global:posco_holdings",
+   "type": "kr_other",
+   "nameKo": "포스코홀딩스",
+   "nameEn": "POSCO Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "투자자·수요처",
+   "exchange": "KRX:005490"
+  },
+  {
+   "id": "global:skon",
+   "type": "kr_other",
+   "nameKo": "SK온",
+   "nameEn": "SK On",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "배터리 (투자자)",
+   "exchange": "KRX:096770"
+  },
+  {
+   "id": "global:hd_electric",
+   "type": "kr_other",
+   "nameKo": "HD현대일렉트릭",
+   "nameEn": "HD Hyundai Electric",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "전력기기 (수요처)",
+   "exchange": "KRX:267260"
+  },
+  {
+   "id": "global:hyundai_elevator",
+   "type": "kr_other",
+   "nameKo": "현대엘리베이터",
+   "nameEn": "Hyundai Elevator",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "모회사",
+   "exchange": "KRX:017800"
+  },
+  {
+   "id": "global:samsung_display",
+   "type": "kr_other",
+   "nameKo": "삼성디스플레이",
+   "nameEn": "Samsung Display",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "디스플레이 (수요처)",
+   "exchange": ""
+  },
+  {
+   "id": "global:lgdisplay",
+   "type": "kr_other",
+   "nameKo": "LG디스플레이",
+   "nameEn": "LG Display",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "디스플레이 (수요처)",
+   "exchange": "KRX:034220"
+  },
+  {
+   "id": "global:cj_logistics",
+   "type": "kr_other",
+   "nameKo": "CJ대한통운",
+   "nameEn": "CJ Logistics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "물류",
+   "exchange": "KRX:000120"
+  },
+  {
+   "id": "global:hanwha_robotics",
+   "type": "kr_other",
+   "nameKo": "한화로보틱스",
+   "nameEn": "Hanwha Robotics",
+   "country": "kr",
+   "chain": "global_robot",
+   "role": "협동로봇 (비상장)",
+   "exchange": ""
+  },
+  {
+   "id": "global:kt",
+   "type": "kr_other",
+   "nameKo": "KT",
+   "nameEn": "KT",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "통신·로봇 유통",
+   "exchange": "KRX:030200"
+  },
+  {
+   "id": "global:sfa_semi",
+   "type": "kr_other",
+   "nameKo": "SFA반도체",
+   "nameEn": "SFA Semicon",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "OSAT (자회사)",
+   "exchange": "KRX:036540"
+  },
+  {
+   "id": "global:onexia",
+   "type": "global",
+   "nameKo": "원엑시아",
+   "nameEn": "ONExia",
+   "country": "us",
+   "chain": "si",
+   "role": "미국 자동화 SI (자회사)",
+   "exchange": ""
+  },
+  {
+   "id": "global:boston_dynamics",
+   "type": "global",
+   "nameKo": "보스턴다이내믹스",
+   "nameEn": "Boston Dynamics",
+   "country": "us",
+   "chain": "global_robot",
+   "role": "휴머노이드·4족 (현대차 계열)",
+   "exchange": ""
+  },
+  {
+   "id": "global:miele",
+   "type": "global",
+   "nameKo": "밀레",
+   "nameEn": "Miele (Imanto AG)",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "가전 (최대주주)",
+   "exchange": ""
+  },
+  {
+   "id": "global:boe",
+   "type": "global",
+   "nameKo": "BOE",
+   "nameEn": "BOE Technology",
+   "country": "cn",
+   "chain": "end_customer",
+   "role": "디스플레이 패널",
+   "exchange": "SZSE:000725"
+  },
+  {
+   "id": "global:stryker",
+   "type": "global",
+   "nameKo": "스트라이커",
+   "nameEn": "Stryker",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "의료기기",
+   "exchange": "NYSE:SYK"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:global_samsung>krx_277810",
+   "source": "global:samsung",
+   "target": "krx:277810",
+   "type": "equity",
+   "labelKo": "삼성전자 35% 최대주주 (콜옵션 행사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=321699",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_277810>global_samsung",
+   "source": "krx:277810",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "협동·양팔·AMR 삼성 글로벌 생산기지 투입",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsspace.kr/news/article.html?no=5027",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_doosan>krx_454910",
+   "source": "global:doosan",
+   "target": "krx:454910",
+   "type": "equity",
+   "labelKo": "㈜두산 68.2%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.eugenefn.com/common/files/amail//20230911_B_syyang0901_65.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_454910>global_onexia",
+   "source": "krx:454910",
+   "target": "global:onexia",
+   "type": "equity",
+   "labelKo": "미국 자동화 SI 원엑시아 89.59% 인수",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsway.co.kr/news/view?ud=2026092115071594589",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_277810>krx_454910",
+   "source": "krx:277810",
+   "target": "krx:454910",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%EB%91%90%EC%82%B0%EB%A1%9C%EB%B3%B4%ED%8B%B1%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>krx_348340",
+   "source": "krx:454910",
+   "target": "krx:348340",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁 (국내 매출 1위 다툼)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20241210141327",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_454910>global_hanwha_robotics",
+   "source": "krx:454910",
+   "target": "global:hanwha_robotics",
+   "type": "peer",
+   "labelKo": "협동로봇 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202607091444493383",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_090710>global_hanwha_robotics",
+   "source": "krx:090710",
+   "target": "global:hanwha_robotics",
+   "type": "partner",
+   "labelKo": "베트남 로봇 도입 공급·CS 협력 MOU",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202607091444493383",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_posco_holdings>krx_348340",
+   "source": "global:posco_holdings",
+   "target": "krx:348340",
+   "type": "equity",
+   "labelKo": "포스코홀딩스 CVC CB 100억 (전환 시 3.81%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20241210141327",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_348340>global_posco_holdings",
+   "source": "krx:348340",
+   "target": "global:posco_holdings",
+   "type": "supply",
+   "labelKo": "협동로봇 포스코 생산라인 투입",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=419092",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_miele>krx_056080",
+   "source": "global:miele",
+   "target": "krx:056080",
+   "type": "equity",
+   "labelKo": "밀레그룹 이만토 AG 최대주주 (51%), 2026 173억 추가 투자",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.irobotnews.com/news/articleView.html?idxno=46428",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lg_elec>krx_455900",
+   "source": "global:lg_elec",
+   "target": "krx:455900",
+   "type": "equity",
+   "labelKo": "LG전자 7.22%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ebn.co.kr/news/articleView.html?idxno=1697885",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lg_elec>krx_090360",
+   "source": "global:lg_elec",
+   "target": "krx:090360",
+   "type": "equity",
+   "labelKo": "LG전자 33.40% 최대주주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2584771",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_090360>global_lg_elec",
+   "source": "krx:090360",
+   "target": "global:lg_elec",
+   "type": "supply",
+   "labelKo": "LG전자향 매출 (3Q 누적 124억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202511302246372938dd55077bc2_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_117730>global_samsung_display",
+   "source": "krx:117730",
+   "target": "global:samsung_display",
+   "type": "supply",
+   "labelKo": "디스플레이용 진공로봇 (6·8·11세대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2588453",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_117730>global_lgdisplay",
+   "source": "krx:117730",
+   "target": "global:lgdisplay",
+   "type": "supply",
+   "labelKo": "디스플레이용 진공로봇 (6·8·11세대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2588453",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_117730>global_boe",
+   "source": "krx:117730",
+   "target": "global:boe",
+   "type": "supply",
+   "labelKo": "디스플레이용 진공로봇 (6·8·11세대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2588453",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_skon>krx_388720",
+   "source": "global:skon",
+   "target": "krx:388720",
+   "type": "equity",
+   "labelKo": "SK온 367억 투자, 2대 주주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260713n29265",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_388720>global_hd_electric",
+   "source": "krx:388720",
+   "target": "global:hd_electric",
+   "type": "supply",
+   "labelKo": "대형 자동화 프로젝트 계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260713n29265",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_388720>global_samsung",
+   "source": "krx:388720",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "사출·제조 자동화 1차 벤더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260713n29265",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_388720>global_lg_elec",
+   "source": "krx:388720",
+   "target": "global:lg_elec",
+   "type": "supply",
+   "labelKo": "사출·제조 자동화 1차 벤더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260713n29265",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_388720>global_hyundai",
+   "source": "krx:388720",
+   "target": "global:hyundai",
+   "type": "supply",
+   "labelKo": "사출·제조 자동화 1차 벤더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260713n29265",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_058610>krx_277810",
+   "source": "krx:058610",
+   "target": "krx:277810",
+   "type": "supply",
+   "labelKo": "협동·양팔·4족 로봇 감속기 전량 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=740952&menu=1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_058610>global_stryker",
+   "source": "krx:058610",
+   "target": "global:stryker",
+   "type": "supply",
+   "labelKo": "감속기·모터 해외 고객 (해외 비중 70%+)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=740952&menu=1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lg_elec>krx_108490",
+   "source": "global:lg_elec",
+   "target": "krx:108490",
+   "type": "equity",
+   "labelKo": "LG전자 7.36% 2대 주주; 우즈벡 액추에이터 공장 지분투자 MOU",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2596120",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_108490>global_cj_logistics",
+   "source": "krx:108490",
+   "target": "global:cj_logistics",
+   "type": "partner",
+   "labelKo": "휴머노이드 물류 피지컬 AI 공동개발 MOU",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ntoday.co.kr/news/articleView.html?idxno=125699",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_160190>global_lg_elec",
+   "source": "krx:160190",
+   "target": "global:lg_elec",
+   "type": "partner",
+   "labelKo": "LG전자 모터사업부 분사 (2008) 기원",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "http://higen.co.kr/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_058610>krx_160190",
+   "source": "krx:058610",
+   "target": "krx:160190",
+   "type": "peer",
+   "labelKo": "로봇 구동부품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=488505",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_058610>krx_437730",
+   "source": "krx:058610",
+   "target": "krx:437730",
+   "type": "peer",
+   "labelKo": "휴머노이드 액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/industry/2026/09/23/2026092314084449540",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108490>krx_437730",
+   "source": "krx:108490",
+   "target": "krx:437730",
+   "type": "peer",
+   "labelKo": "휴머노이드 액추에이터 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/industry/2026/09/23/2026092314084449540",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hyundai_elevator>krx_319400",
+   "source": "global:hyundai_elevator",
+   "target": "krx:319400",
+   "type": "equity",
+   "labelKo": "현대엘리베이터 최대주주 (40.79%, 2026-06 일부 매각 후)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.ceoscoredaily.com/page/view/2026060810150228606",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_056190>global_sfa_semi",
+   "source": "krx:056190",
+   "target": "global:sfa_semi",
+   "type": "equity",
+   "labelKo": "SFA → SFA반도체 자회사",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://jasoseol.com/companies/3905/insights",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_056190>global_samsung_display",
+   "source": "krx:056190",
+   "target": "global:samsung_display",
+   "type": "supply",
+   "labelKo": "디스플레이 장비 (매출 비중 5%로 축소)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202402291602242320102252",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_466100>global_boston_dynamics",
+   "source": "krx:466100",
+   "target": "global:boston_dynamics",
+   "type": "partner",
+   "labelKo": "보스턴다이내믹스 로봇 국내 공급·SW 협력",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=623813",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hyundai>krx_466100",
+   "source": "global:hyundai",
+   "target": "krx:466100",
+   "type": "equity",
+   "labelKo": "현대차그룹 제로원 투자 (누적 320억 투자유치 중)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.irobotnews.com/news/articleView.html?idxno=43274",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_466100>global_samsung",
+   "source": "krx:466100",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "로봇 관제 SW (130개 고객사)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.irobotnews.com/news/articleView.html?idxno=43274",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_466100>global_lg_elec",
+   "source": "krx:466100",
+   "target": "global:lg_elec",
+   "type": "supply",
+   "labelKo": "로봇 관제 SW (130개 고객사)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.irobotnews.com/news/articleView.html?idxno=43274",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_466100>global_kt",
+   "source": "krx:466100",
+   "target": "global:kt",
+   "type": "supply",
+   "labelKo": "로봇 관제 SW (130개 고객사)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.irobotnews.com/news/articleView.html?idxno=43274",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hyundai>global_boston_dynamics",
+   "source": "global:hyundai",
+   "target": "global:boston_dynamics",
+   "type": "equity",
+   "labelKo": "현대차그룹 보스턴다이내믹스 인수",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://stockstalker.co.kr/hyundai-robot/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

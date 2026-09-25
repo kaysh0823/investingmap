@@ -1,0 +1,1515 @@
+{
+ "sectorId": "battery",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "cell": "셀 제조",
+  "cathode": "양극재·전구체",
+  "foil_misc": "집전체·기타 소재",
+  "electrolyte": "전해액·전해질",
+  "separator": "분리막",
+  "equipment": "제조·검사 장비",
+  "recycling": "재사용·재활용",
+  "raw": "원료·정제",
+  "pack": "모듈·팩·시스템 부품",
+  "end_customer": "수요처·완성차",
+  "cell_global": "글로벌 셀 제조"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:373220",
+   "type": "kr_listed",
+   "ticker": "373220",
+   "nameKo": "LG에너지솔루션",
+   "nameEn": "LG에너지솔루션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cell",
+   "role": "셀 제조"
+  },
+  {
+   "id": "krx:006400",
+   "type": "kr_listed",
+   "ticker": "006400",
+   "nameKo": "삼성SDI",
+   "nameEn": "삼성SDI",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cell",
+   "role": "셀 제조"
+  },
+  {
+   "id": "krx:096770",
+   "type": "kr_listed",
+   "ticker": "096770",
+   "nameKo": "SK이노베이션",
+   "nameEn": "SK이노베이션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cell",
+   "role": "셀 제조"
+  },
+  {
+   "id": "krx:051910",
+   "type": "kr_listed",
+   "ticker": "051910",
+   "nameKo": "LG화학",
+   "nameEn": "LG화학",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cathode",
+   "role": "양극재·전구체"
+  },
+  {
+   "id": "krx:003670",
+   "type": "kr_listed",
+   "ticker": "003670",
+   "nameKo": "포스코퓨처엠",
+   "nameEn": "포스코퓨처엠",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cathode",
+   "role": "양극재·전구체"
+  },
+  {
+   "id": "krx:086520",
+   "type": "kr_listed",
+   "ticker": "086520",
+   "nameKo": "에코프로",
+   "nameEn": "에코프로",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "cathode",
+   "role": "양극재·전구체"
+  },
+  {
+   "id": "krx:247540",
+   "type": "kr_listed",
+   "ticker": "247540",
+   "nameKo": "에코프로비엠",
+   "nameEn": "에코프로비엠",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "cathode",
+   "role": "양극재·전구체"
+  },
+  {
+   "id": "krx:066970",
+   "type": "kr_listed",
+   "ticker": "066970",
+   "nameKo": "엘앤에프",
+   "nameEn": "엘앤에프",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cathode",
+   "role": "양극재·전구체"
+  },
+  {
+   "id": "krx:011790",
+   "type": "kr_listed",
+   "ticker": "011790",
+   "nameKo": "SKC",
+   "nameEn": "SKC",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "foil_misc",
+   "role": "집전체·기타 소재"
+  },
+  {
+   "id": "krx:450080",
+   "type": "kr_listed",
+   "ticker": "450080",
+   "nameKo": "에코프로머티",
+   "nameEn": "에코프로머티",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cathode",
+   "role": "양극재·전구체"
+  },
+  {
+   "id": "krx:020150",
+   "type": "kr_listed",
+   "ticker": "020150",
+   "nameKo": "롯데에너지머티리얼즈",
+   "nameEn": "롯데에너지머티리얼즈",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "foil_misc",
+   "role": "집전체·기타 소재"
+  },
+  {
+   "id": "krx:093370",
+   "type": "kr_listed",
+   "ticker": "093370",
+   "nameKo": "후성",
+   "nameEn": "후성",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "electrolyte",
+   "role": "전해액·전해질"
+  },
+  {
+   "id": "krx:005070",
+   "type": "kr_listed",
+   "ticker": "005070",
+   "nameKo": "코스모신소재",
+   "nameEn": "코스모신소재",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cathode",
+   "role": "양극재·전구체"
+  },
+  {
+   "id": "krx:361610",
+   "type": "kr_listed",
+   "ticker": "361610",
+   "nameKo": "SK아이이테크놀로지",
+   "nameEn": "SK아이이테크놀로지",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "separator",
+   "role": "분리막"
+  },
+  {
+   "id": "krx:004490",
+   "type": "kr_listed",
+   "ticker": "004490",
+   "nameKo": "세방전지",
+   "nameEn": "세방전지",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cell",
+   "role": "셀 제조"
+  },
+  {
+   "id": "krx:137400",
+   "type": "kr_listed",
+   "ticker": "137400",
+   "nameKo": "피엔티",
+   "nameEn": "피엔티",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "equipment",
+   "role": "제조·검사 장비"
+  },
+  {
+   "id": "krx:033790",
+   "type": "kr_listed",
+   "ticker": "033790",
+   "nameKo": "피노",
+   "nameEn": "피노",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "equipment",
+   "role": "제조·검사 장비"
+  },
+  {
+   "id": "krx:121600",
+   "type": "kr_listed",
+   "ticker": "121600",
+   "nameKo": "나노신소재",
+   "nameEn": "나노신소재",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "foil_misc",
+   "role": "집전체·기타 소재"
+  },
+  {
+   "id": "krx:222080",
+   "type": "kr_listed",
+   "ticker": "222080",
+   "nameKo": "SFA넥셀",
+   "nameEn": "SFA넥셀",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "equipment",
+   "role": "제조·검사 장비"
+  },
+  {
+   "id": "krx:336370",
+   "type": "kr_listed",
+   "ticker": "336370",
+   "nameKo": "솔루스첨단소재",
+   "nameEn": "솔루스첨단소재",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "foil_misc",
+   "role": "집전체·기타 소재"
+  },
+  {
+   "id": "krx:365340",
+   "type": "kr_listed",
+   "ticker": "365340",
+   "nameKo": "성일하이텍",
+   "nameEn": "성일하이텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "recycling",
+   "role": "재사용·재활용"
+  },
+  {
+   "id": "krx:348370",
+   "type": "kr_listed",
+   "ticker": "348370",
+   "nameKo": "엔켐",
+   "nameEn": "엔켐",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "electrolyte",
+   "role": "전해액·전해질"
+  },
+  {
+   "id": "krx:278280",
+   "type": "kr_listed",
+   "ticker": "278280",
+   "nameKo": "천보",
+   "nameEn": "천보",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "electrolyte",
+   "role": "전해액·전해질"
+  },
+  {
+   "id": "krx:005420",
+   "type": "kr_listed",
+   "ticker": "005420",
+   "nameKo": "코스모화학",
+   "nameEn": "코스모화학",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "raw",
+   "role": "원료·정제"
+  },
+  {
+   "id": "krx:107640",
+   "type": "kr_listed",
+   "ticker": "107640",
+   "nameKo": "한중엔시에스",
+   "nameEn": "한중엔시에스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pack",
+   "role": "모듈·팩·시스템 부품"
+  },
+  {
+   "id": "krx:393890",
+   "type": "kr_listed",
+   "ticker": "393890",
+   "nameKo": "더블유씨피",
+   "nameEn": "더블유씨피",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "separator",
+   "role": "분리막"
+  },
+  {
+   "id": "global:gm",
+   "type": "global",
+   "nameKo": "GM",
+   "nameEn": "General Motors",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "NYSE:GM"
+  },
+  {
+   "id": "global:tesla",
+   "type": "global",
+   "nameKo": "테슬라",
+   "nameEn": "Tesla",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "완성차·ESS",
+   "exchange": "NASDAQ:TSLA"
+  },
+  {
+   "id": "global:ford",
+   "type": "global",
+   "nameKo": "포드",
+   "nameEn": "Ford",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "NYSE:F"
+  },
+  {
+   "id": "global:vw",
+   "type": "global",
+   "nameKo": "폭스바겐",
+   "nameEn": "Volkswagen Group",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "XETRA:VOW3"
+  },
+  {
+   "id": "global:bmw",
+   "type": "global",
+   "nameKo": "BMW",
+   "nameEn": "BMW",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "XETRA:BMW"
+  },
+  {
+   "id": "global:stellantis",
+   "type": "global",
+   "nameKo": "스텔란티스",
+   "nameEn": "Stellantis",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "NYSE:STLA"
+  },
+  {
+   "id": "global:toyota",
+   "type": "global",
+   "nameKo": "도요타",
+   "nameEn": "Toyota",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "TSE:7203"
+  },
+  {
+   "id": "global:honda",
+   "type": "global",
+   "nameKo": "혼다",
+   "nameEn": "Honda",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "TSE:7267"
+  },
+  {
+   "id": "global:panasonic",
+   "type": "global",
+   "nameKo": "파나소닉",
+   "nameEn": "Panasonic Energy",
+   "country": "jp",
+   "chain": "cell_global",
+   "role": "셀 제조",
+   "exchange": "TSE:6752"
+  },
+  {
+   "id": "global:catl",
+   "type": "global",
+   "nameKo": "CATL",
+   "nameEn": "CATL",
+   "country": "cn",
+   "chain": "cell_global",
+   "role": "셀 제조 1위",
+   "exchange": "SZSE:300750"
+  },
+  {
+   "id": "global:northvolt",
+   "type": "global",
+   "nameKo": "노스볼트",
+   "nameEn": "Northvolt",
+   "country": "eu",
+   "chain": "cell_global",
+   "role": "셀 제조",
+   "exchange": ""
+  },
+  {
+   "id": "global:hyundai",
+   "type": "kr_other",
+   "nameKo": "현대자동차",
+   "nameEn": "Hyundai Motor",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "완성차",
+   "exchange": "KRX:005380"
+  }
+ ],
+ "edges": [
+  {
+   "id": "supply:krx_373220>global_vw",
+   "source": "krx:373220",
+   "target": "global:vw",
+   "type": "supply",
+   "labelKo": "EV 배터리 (2024 고객 비중 VW 29%·테슬라 26%·GM 16%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/LG_Energy_Solution",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_373220>global_tesla",
+   "source": "krx:373220",
+   "target": "global:tesla",
+   "type": "supply",
+   "labelKo": "EV 배터리 (2024 고객 비중 VW 29%·테슬라 26%·GM 16%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/LG_Energy_Solution",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_373220>global_gm",
+   "source": "krx:373220",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "EV 배터리 (2024 고객 비중 VW 29%·테슬라 26%·GM 16%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/LG_Energy_Solution",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_373220>global_gm",
+   "source": "krx:373220",
+   "target": "global:gm",
+   "type": "partner",
+   "labelKo": "얼티엄셀즈 JV (오하이오·테네시), 테네시 ESS LFP 양산",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202607081301578625",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_373220>global_toyota",
+   "source": "krx:373220",
+   "target": "global:toyota",
+   "type": "supply",
+   "labelKo": "GM 합작 지분 인수 후 도요타 물량 전환",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.aseanexpress.co.kr/news/article.html?no=11083",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_373220>global_honda",
+   "source": "krx:373220",
+   "target": "global:honda",
+   "type": "partner",
+   "labelKo": "북미 합작공장",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.finance.daum.net/quotes/Q510037/news/stock/20251226085503454",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_006400>global_gm",
+   "source": "krx:006400",
+   "target": "global:gm",
+   "type": "partner",
+   "labelKo": "차세대 각형 배터리 공동개발(JDA); 인디애나 JV 지분 인수",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.koreatimes.co.kr/business/companies/20260811/samsung-sdi-gm-to-jointly-develop-next-generation-ev-batteries",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_006400>global_stellantis",
+   "source": "krx:006400",
+   "target": "global:stellantis",
+   "type": "partner",
+   "labelKo": "스타플러스에너지 JV (인디애나, DOE 대출 $7.54B)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://electrek.co/guides/samsung-sdi/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006400>global_bmw",
+   "source": "krx:006400",
+   "target": "global:bmw",
+   "type": "supply",
+   "labelKo": "EV 배터리 주요 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_electric_vehicle_battery_manufacturers",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006400>global_hyundai",
+   "source": "krx:006400",
+   "target": "global:hyundai",
+   "type": "supply",
+   "labelKo": "유럽향 각형 배터리 2026~2032 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://electrek.co/guides/samsung-sdi/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_096770>global_ford",
+   "source": "krx:096770",
+   "target": "global:ford",
+   "type": "supply",
+   "labelKo": "블루오벌SK JV 종료 후 SK온 테네시 단독 운영, 포드 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/industry/2026/05/21/2026052116281648366",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_096770>global_hyundai",
+   "source": "krx:096770",
+   "target": "global:hyundai",
+   "type": "partner",
+   "labelKo": "현대차 합작공장 (조지아)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/industry/2026/05/21/2026052116281648366",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>krx_006400",
+   "source": "krx:373220",
+   "target": "krx:006400",
+   "type": "peer",
+   "labelKo": "EV·ESS 배터리 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_electric_vehicle_battery_manufacturers",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>krx_096770",
+   "source": "krx:373220",
+   "target": "krx:096770",
+   "type": "peer",
+   "labelKo": "EV·ESS 배터리 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_electric_vehicle_battery_manufacturers",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006400>krx_096770",
+   "source": "krx:006400",
+   "target": "krx:096770",
+   "type": "peer",
+   "labelKo": "EV·ESS 배터리 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_electric_vehicle_battery_manufacturers",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>global_catl",
+   "source": "krx:373220",
+   "target": "global:catl",
+   "type": "peer",
+   "labelKo": "글로벌 셀 점유율 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_electric_vehicle_battery_manufacturers",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_373220>global_panasonic",
+   "source": "krx:373220",
+   "target": "global:panasonic",
+   "type": "peer",
+   "labelKo": "글로벌 셀 점유율 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_electric_vehicle_battery_manufacturers",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003670>krx_373220",
+   "source": "krx:003670",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "양극재 주요 고객",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/105605",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003670>krx_006400",
+   "source": "krx:003670",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "하이니켈 NCA 양극재 40조 계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/105605",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003670>global_gm",
+   "source": "krx:003670",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "얼티엄셀즈향 양극재 ($107억→축소)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.electimes.com/news/articleView.html?idxno=363682",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003670>krx_096770",
+   "source": "krx:003670",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "SK온향 LFP 양극재 1조742억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202609230759382232",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_247540>krx_006400",
+   "source": "krx:247540",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "핵심 벤더 (합작사 에코프로이엠)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=641514",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_247540>krx_096770",
+   "source": "krx:247540",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "양극재 10.1조 공급 (2024~26), 1Q26 비중 24%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55876",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_247540>krx_006400",
+   "source": "krx:247540",
+   "target": "krx:006400",
+   "type": "partner",
+   "labelKo": "에코프로이엠 JV (60:40)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.electimes.com/news/articleView.html?idxno=224108",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_086520>krx_247540",
+   "source": "krx:086520",
+   "target": "krx:247540",
+   "type": "equity",
+   "labelKo": "지주회사, 최대주주 47.4%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=086520",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_086520>krx_450080",
+   "source": "krx:086520",
+   "target": "krx:450080",
+   "type": "equity",
+   "labelKo": "지주회사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ecopro.co.kr/sub0802",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_450080>krx_247540",
+   "source": "krx:450080",
+   "target": "krx:247540",
+   "type": "supply",
+   "labelKo": "전구체 대부분 에코프로비엠 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55876",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_450080>krx_006400",
+   "source": "krx:450080",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "전구체 2,056억 공급계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=543203",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_051910>krx_373220",
+   "source": "krx:051910",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "양극재 판매 ~90% LG에너지솔루션",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.infostockdaily.co.kr/news/articleView.html?idxno=197534",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_051910>krx_373220",
+   "source": "krx:051910",
+   "target": "krx:373220",
+   "type": "equity",
+   "labelKo": "모회사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/LG_Energy_Solution",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_051910>global_gm",
+   "source": "krx:051910",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "양극재 50만t·25조 (2026~2035)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.lg.co.kr/media/release/27323",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_051910>global_toyota",
+   "source": "krx:051910",
+   "target": "global:toyota",
+   "type": "supply",
+   "labelKo": "북미 양극재 2.8조",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20240922114640118",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_051910>global_panasonic",
+   "source": "krx:051910",
+   "target": "global:panasonic",
+   "type": "supply",
+   "labelKo": "파나소닉 양극재 공급사 (최종 고객 테슬라 유력)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=42510",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_066970>krx_373220",
+   "source": "krx:066970",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "양극재 매출 ~80%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202408091022055480108311",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_066970>global_tesla",
+   "source": "krx:066970",
+   "target": "global:tesla",
+   "type": "supply",
+   "labelKo": "테슬라 직접 납품",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202408091022055480108311",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_066970>krx_096770",
+   "source": "krx:066970",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "LFP 양극재 1,617억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260917183510",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_066970>krx_006400",
+   "source": "krx:066970",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "LFP 양극재 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260917183510",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005070>krx_373220",
+   "source": "krx:005070",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "EV용 양극재 (최대 고객)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=480040",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005070>krx_006400",
+   "source": "krx:005070",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "ESS용 양극재",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.ebn.co.kr/news/articleView.html?idxno=1710121",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005070>krx_051910",
+   "source": "krx:005070",
+   "target": "krx:051910",
+   "type": "supply",
+   "labelKo": "LG화학 하이니켈 양극재 3,308억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20230622000354",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005420>krx_005070",
+   "source": "krx:005420",
+   "target": "krx:005070",
+   "type": "equity",
+   "labelKo": "코스모그룹 모회사",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.ebn.co.kr/news/articleView.html?idxno=1710121",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005420>krx_005070",
+   "source": "krx:005420",
+   "target": "krx:005070",
+   "type": "supply",
+   "labelKo": "황산코발트 등 원료",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.ebn.co.kr/news/articleView.html?idxno=1710121",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_006400>krx_033790",
+   "source": "krx:006400",
+   "target": "krx:033790",
+   "type": "equity",
+   "labelKo": "삼성SDI 300억 지분투자 (~7%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2569935",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_033790>krx_006400",
+   "source": "krx:033790",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "전구체 듀얼벤더",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20260327000053",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011790>global_catl",
+   "source": "krx:011790",
+   "target": "global:catl",
+   "type": "supply",
+   "labelKo": "SK넥실리스 동박 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/SK%EB%84%A5%EC%8B%A4%EB%A6%AC%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011790>global_panasonic",
+   "source": "krx:011790",
+   "target": "global:panasonic",
+   "type": "supply",
+   "labelKo": "SK넥실리스 동박 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/SK%EB%84%A5%EC%8B%A4%EB%A6%AC%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011790>krx_373220",
+   "source": "krx:011790",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "동박 매출 90%가 LGES·CATL 등 5개사",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02558406632327608",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_020150>krx_006400",
+   "source": "krx:020150",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "스타플러스에너지(삼성SDI·스텔란티스 JV) 하이엔드 동박",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2469137",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_020150>global_stellantis",
+   "source": "krx:020150",
+   "target": "global:stellantis",
+   "type": "supply",
+   "labelKo": "스타플러스에너지 동박",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2469137",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_336370>krx_373220",
+   "source": "krx:336370",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "전지박 5년 공급 (헝가리)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Industry/2021/01/202101080930166290ce58317c16_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_121600>krx_096770",
+   "source": "krx:121600",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "CNT 도전재 (주력 SK온·LGES, 삼성SDI 본격화)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.epnc.co.kr/news/articleView.html?idxno=235656",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_121600>krx_373220",
+   "source": "krx:121600",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "CNT 도전재 (주력 SK온·LGES, 삼성SDI 본격화)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.epnc.co.kr/news/articleView.html?idxno=235656",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_121600>krx_006400",
+   "source": "krx:121600",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "CNT 도전재 (주력 SK온·LGES, 삼성SDI 본격화)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.epnc.co.kr/news/articleView.html?idxno=235656",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_121600>global_northvolt",
+   "source": "krx:121600",
+   "target": "global:northvolt",
+   "type": "supply",
+   "labelKo": "CNT 도전재",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.finance-scope.com/article/view/scp202411070013",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_348370>krx_096770",
+   "source": "krx:348370",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "전해액 매출 50~60% (SK온 사용량의 60%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01361206629215544",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_348370>krx_373220",
+   "source": "krx:348370",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "전해액 매출 30%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01361206629215544",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_278280>krx_006400",
+   "source": "krx:278280",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "전해질·첨가제",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sks.co.kr/data1/research/qna_file/20250610071430256_0_ko.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_278280>krx_373220",
+   "source": "krx:278280",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "전해질·첨가제",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sks.co.kr/data1/research/qna_file/20250610071430256_0_ko.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_278280>global_catl",
+   "source": "krx:278280",
+   "target": "global:catl",
+   "type": "supply",
+   "labelKo": "전해질·첨가제",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sks.co.kr/data1/research/qna_file/20250610071430256_0_ko.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_361610>krx_096770",
+   "source": "krx:361610",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "캡티브 고객 분리막",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/164181",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_096770>krx_361610",
+   "source": "krx:096770",
+   "target": "krx:361610",
+   "type": "equity",
+   "labelKo": "SK이노베이션 자회사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/164181",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_393890>krx_006400",
+   "source": "krx:393890",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "분리막 (의존도 50%+), ESS LFP 분리막",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_393890>krx_096770",
+   "source": "krx:393890",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "SK온 ESS 분리막",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_361610>krx_393890",
+   "source": "krx:361610",
+   "target": "krx:393890",
+   "type": "peer",
+   "labelKo": "분리막 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newspim.com/news/view/20230717000894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_137400>krx_373220",
+   "source": "krx:137400",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "롤투롤 전극 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=480635",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_137400>krx_096770",
+   "source": "krx:137400",
+   "target": "krx:096770",
+   "type": "supply",
+   "labelKo": "롤투롤 전극 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=480635",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_137400>krx_006400",
+   "source": "krx:137400",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "롤투롤 전극 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=480635",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_137400>krx_011790",
+   "source": "krx:137400",
+   "target": "krx:011790",
+   "type": "supply",
+   "labelKo": "동박 장비 (SK넥실리스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=480635",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_222080>krx_373220",
+   "source": "krx:222080",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "LGES 장비 협력사 (전극 공정)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=51725",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_006400>krx_365340",
+   "source": "krx:006400",
+   "target": "krx:365340",
+   "type": "equity",
+   "labelKo": "삼성SDI 8.6% (3대 주주)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=51354",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006400>krx_365340",
+   "source": "krx:006400",
+   "target": "krx:365340",
+   "type": "supply",
+   "labelKo": "삼성SDI 폐배터리 재활용 원료",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=17230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_365340>krx_373220",
+   "source": "krx:365340",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "재활용 소재 신규 고객",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=17230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_107640>krx_006400",
+   "source": "krx:107640",
+   "target": "krx:006400",
+   "type": "supply",
+   "labelKo": "ESS 수냉식 냉각 모듈 단독 공급 (ESS 매출 77~82%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202608141926i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004490>global_hyundai",
+   "source": "krx:004490",
+   "target": "global:hyundai",
+   "type": "supply",
+   "labelKo": "시동용 납축전지 장기 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026090794041",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004490>global_vw",
+   "source": "krx:004490",
+   "target": "global:vw",
+   "type": "supply",
+   "labelKo": "시동용 납축전지 장기 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026090794041",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004490>global_bmw",
+   "source": "krx:004490",
+   "target": "global:bmw",
+   "type": "supply",
+   "labelKo": "시동용 납축전지 장기 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2026090794041",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004490>krx_373220",
+   "source": "krx:004490",
+   "target": "krx:373220",
+   "type": "supply",
+   "labelKo": "세방리튬배터리 ESS 배터리팩(JF2) 조단위 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202609078602i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}
