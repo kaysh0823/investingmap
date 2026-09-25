@@ -43,6 +43,8 @@
   var gRoot = null;
   var layoutWidth = 720;
   var layoutHeight = 560;
+  var autoFitArmed = false;
+  var userNavigated = false;
   var selectedId = null;
   var tipEl = null;
   var filters = defaultFilters();
@@ -248,10 +250,10 @@
     var countryList = countries || COUNTRIES.slice();
     var chainCenters = Object.create(null);
     var n = Math.max(chainList.length, 1);
-    var R = Math.min(width, height) * 0.28;
+    var domesticR = Math.min(width, height) * 0.28;
     chainList.forEach(function (ch, i) {
       var a = (2 * Math.PI * i) / n - Math.PI / 2;
-      chainCenters[ch] = { x: cx + Math.cos(a) * R, y: cy + Math.sin(a) * R };
+      chainCenters[ch] = { x: cx + Math.cos(a) * domesticR, y: cy + Math.sin(a) * domesticR };
     });
     var countryAngles = Object.create(null);
     var cn = Math.max(countryList.length, 1);
@@ -263,8 +265,70 @@
       cy: cy,
       chainCenters: chainCenters,
       countryAngles: countryAngles,
+      domesticR: domesticR,
+      isolateR: domesticR * 1.15,
       radial: Math.min(width, height) * 0.42,
     };
+  }
+
+  /**
+   * Pure fit transform from node coordinates.
+   * @returns {{ scale: number, tx: number, ty: number, minX: number, maxX: number, minY: number, maxY: number }}
+   */
+  function computeFit(nodes, width, height, opts) {
+    opts = opts || {};
+    var padding = opts.padding != null ? opts.padding : 40;
+    var maxScale = opts.maxScale != null ? opts.maxScale : 1.6;
+    var list = nodes || [];
+    var minX = Infinity;
+    var maxX = -Infinity;
+    var minY = Infinity;
+    var maxY = -Infinity;
+    var count = 0;
+    for (var i = 0; i < list.length; i++) {
+      var n = list[i];
+      if (!n || n.x == null || n.y == null || !isFinite(n.x) || !isFinite(n.y)) continue;
+      if (n.x < minX) minX = n.x;
+      if (n.x > maxX) maxX = n.x;
+      if (n.y < minY) minY = n.y;
+      if (n.y > maxY) maxY = n.y;
+      count += 1;
+    }
+    if (!count) {
+      return { scale: 1, tx: 0, ty: 0, minX: 0, maxX: 0, minY: 0, maxY: 0 };
+    }
+    var bw = Math.max(1, maxX - minX);
+    var bh = Math.max(1, maxY - minY);
+    var availW = Math.max(1, width - padding * 2);
+    var availH = Math.max(1, height - padding * 2);
+    var scale = Math.min(maxScale, availW / bw, availH / bh);
+    if (!(scale > 0) || !isFinite(scale)) scale = 1;
+    var tx = width / 2 - (scale * (minX + maxX)) / 2;
+    var ty = height / 2 - (scale * (minY + maxY)) / 2;
+    return { scale: scale, tx: tx, ty: ty, minX: minX, maxX: maxX, minY: minY, maxY: maxY };
+  }
+
+  function clampNodeToStage(n, width, height) {
+    if (!n) return;
+    var cx = width / 2;
+    var cy = height / 2;
+    var halfW = width * 0.7;
+    var halfH = height * 0.7;
+    if (n.x < cx - halfW) n.x = cx - halfW;
+    else if (n.x > cx + halfW) n.x = cx + halfW;
+    if (n.y < cy - halfH) n.y = cy - halfH;
+    else if (n.y > cy + halfH) n.y = cy + halfH;
+  }
+
+  function markUserNavigated() {
+    userNavigated = true;
+    autoFitArmed = false;
+  }
+
+  function maybeAutoFitOnce() {
+    if (!autoFitArmed || userNavigated) return;
+    autoFitArmed = false;
+    fitView({ padding: 40, maxScale: 1.6, animate: true });
   }
 
   function domainOfUrl(url) {
@@ -1068,29 +1132,24 @@
     svgRoot.transition().duration(350).call(zoomBehavior.transform, t);
   }
 
-  function fitView() {
+  function fitView(opts) {
     if (!svgRoot || !gRoot || !zoomBehavior || typeof d3 === 'undefined') return;
     var nodes = graphState.nodes;
     if (!nodes.length) return;
-    var minX = Infinity;
-    var maxX = -Infinity;
-    var minY = Infinity;
-    var maxY = -Infinity;
-    nodes.forEach(function (n) {
-      if (n.x < minX) minX = n.x;
-      if (n.x > maxX) maxX = n.x;
-      if (n.y < minY) minY = n.y;
-      if (n.y > maxY) maxY = n.y;
-    });
+    opts = opts || {};
     var svg = svgRoot.node();
-    var w = svg.clientWidth || layoutWidth || 720;
-    var h = svg.clientHeight || layoutHeight || 560;
-    var bw = Math.max(40, maxX - minX);
-    var bh = Math.max(40, maxY - minY);
-    var scale = Math.min(2.5, 0.85 / Math.max(bw / w, bh / h));
-    var tx = w / 2 - (scale * (minX + maxX)) / 2;
-    var ty = h / 2 - (scale * (minY + maxY)) / 2;
-    svgRoot.transition().duration(400).call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+    var w = (svg && svg.clientWidth) || layoutWidth || 720;
+    var h = (svg && svg.clientHeight) || layoutHeight || 560;
+    var fit = computeFit(nodes, w, h, {
+      padding: opts.padding != null ? opts.padding : 40,
+      maxScale: opts.maxScale != null ? opts.maxScale : 1.6,
+    });
+    var transform = d3.zoomIdentity.translate(fit.tx, fit.ty).scale(fit.scale);
+    if (opts.animate === false) {
+      svgRoot.call(zoomBehavior.transform, transform);
+    } else {
+      svgRoot.transition().duration(400).call(zoomBehavior.transform, transform);
+    }
   }
 
   function paint(container, width, height) {
@@ -1100,6 +1159,8 @@
     clearSelection();
     layoutWidth = width;
     layoutHeight = height;
+    autoFitArmed = true;
+    userNavigated = false;
     var labels = labelsFor(lastOpts);
     var lang = lastOpts.lang === 'en' ? 'en' : 'ko';
     var filtered = filterGraph(graphState.raw, filters);
@@ -1136,7 +1197,8 @@
     var degrees = degreeMap(edges);
     var mcapScale = mcapRadiusScale(lastOpts.companies);
     nodes.forEach(function (n) {
-      n._r = nodeRadius(n, mcapScale, degrees[n.id] || 0);
+      n._degree = degrees[n.id] || 0;
+      n._r = nodeRadius(n, mcapScale, n._degree);
     });
 
     var chains = [];
@@ -1182,6 +1244,7 @@
       .zoom()
       .scaleExtent([0.4, 4])
       .on('zoom', function (ev) {
+        if (ev.sourceEvent) markUserNavigated();
         gRoot.attr('transform', ev.transform);
         var k = ev.transform.k;
         gRoot.selectAll('.nm-label').style('display', function (d) {
@@ -1233,6 +1296,7 @@
         d3
           .drag()
           .on('start', function (ev, d) {
+            if (ev.sourceEvent) markUserNavigated();
             if (!ev.active && sim) sim.alphaTarget(0.3).restart();
             d.fx = d.x;
             d.fy = d.y;
@@ -1304,6 +1368,14 @@
             return d.id;
           })
           .distance(function (d) {
+            var s = typeof d.source === 'object' ? d.source : null;
+            var t = typeof d.target === 'object' ? d.target : null;
+            if (
+              (s && isGlobalNode(s) && (s._degree || 0) === 1) ||
+              (t && isGlobalNode(t) && (t._degree || 0) === 1)
+            ) {
+              return 55;
+            }
             return edgeStyle(d.type, d.confidence).distance;
           })
           .strength(0.6),
@@ -1311,6 +1383,7 @@
       .force(
         'charge',
         d3.forceManyBody().strength(function (d) {
+          if ((d._degree || 0) === 0) return -60;
           return isGlobalNode(d) ? -260 : -220;
         }),
       )
@@ -1322,45 +1395,69 @@
       )
       .force(
         'x',
-        d3.forceX(function (d) {
-          if (isDomesticNode(d) && d.chain && seeds.chainCenters[d.chain]) {
-            return seeds.chainCenters[d.chain].x;
-          }
-          return seeds.cx;
-        }).strength(function (d) {
-          return isDomesticNode(d) ? 0.05 : 0;
-        }),
+        d3
+          .forceX(function (d) {
+            if ((d._degree || 0) === 0) return seeds.cx;
+            if (isDomesticNode(d) && d.chain && seeds.chainCenters[d.chain]) {
+              return seeds.chainCenters[d.chain].x;
+            }
+            return seeds.cx;
+          })
+          .strength(function (d) {
+            if ((d._degree || 0) === 0) return 0.02;
+            return isDomesticNode(d) ? 0.05 : 0;
+          }),
       )
       .force(
         'y',
-        d3.forceY(function (d) {
-          if (isDomesticNode(d) && d.chain && seeds.chainCenters[d.chain]) {
-            return seeds.chainCenters[d.chain].y;
-          }
-          return seeds.cy;
-        }).strength(function (d) {
-          return isDomesticNode(d) ? 0.05 : 0;
-        }),
+        d3
+          .forceY(function (d) {
+            if ((d._degree || 0) === 0) return seeds.cy;
+            if (isDomesticNode(d) && d.chain && seeds.chainCenters[d.chain]) {
+              return seeds.chainCenters[d.chain].y;
+            }
+            return seeds.cy;
+          })
+          .strength(function (d) {
+            if ((d._degree || 0) === 0) return 0.02;
+            return isDomesticNode(d) ? 0.05 : 0;
+          }),
       )
       .force(
         'radial',
         d3
           .forceRadial(
             function (d) {
-              return isGlobalNode(d) ? seeds.radial : 0;
+              if ((d._degree || 0) === 0) return seeds.isolateR;
+              if (isGlobalNode(d)) return seeds.radial;
+              return 0;
             },
             seeds.cx,
             seeds.cy,
           )
           .strength(function (d) {
-            return isGlobalNode(d) ? 0.06 : 0;
+            if ((d._degree || 0) === 0) return 0.35;
+            if (isGlobalNode(d) && (d._degree || 0) === 1) return 0.08;
+            if (isGlobalNode(d)) return 0.06;
+            return 0;
           }),
       )
       .alphaDecay(0.03);
 
     var ticks = 0;
+    var autoFitFired = false;
+    function tryAutoFitFromSim() {
+      if (autoFitFired) return;
+      if (!autoFitArmed || userNavigated) return;
+      if (sim && sim.alpha() >= 0.02 && ticks < 300) return;
+      autoFitFired = true;
+      maybeAutoFitOnce();
+    }
     sim.on('tick', function () {
       ticks += 1;
+      nodes.forEach(function (n) {
+        clampNodeToStage(n, width, height);
+      });
       link
         .attr('x1', function (d) {
           return d.source.x;
@@ -1378,6 +1475,10 @@
         return 'translate(' + d.x + ',' + d.y + ')';
       });
       if (ticks >= 300) sim.stop();
+      tryAutoFitFromSim();
+    });
+    sim.on('end', function () {
+      tryAutoFitFromSim();
     });
 
     applySearchHighlight();
@@ -1506,6 +1607,8 @@
       edgeStyle: edgeStyle,
       nodeRadius: nodeRadius,
       computeLayoutSeeds: computeLayoutSeeds,
+      computeFit: computeFit,
+      clampNodeToStage: clampNodeToStage,
       mcapRadiusScale: mcapRadiusScale,
       isDomesticNode: isDomesticNode,
       isGlobalNode: isGlobalNode,

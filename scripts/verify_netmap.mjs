@@ -183,7 +183,59 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
 
   const seeds = Net._test.computeLayoutSeeds(['a', 'b'], ['us', 'tw'], 800, 600);
   assert.ok(seeds.chainCenters.a && seeds.countryAngles.us != null, 'layout seeds');
-  console.log('  unit filterGraph / nodeRadius / edgeStyle / colorForDomestic ok');
+  assert.ok(seeds.domesticR > 0 && seeds.isolateR > seeds.domesticR, 'isolateR = domesticR×1.15');
+
+  // computeFit: tamed layout sample at 1400px width → scale ≥ 0.7
+  {
+    const W = 1400;
+    const H = 800;
+    const s = Net._test.computeLayoutSeeds(
+      ['c1', 'c2', 'c3', 'c4'],
+      ['us', 'tw', 'jp', 'cn', 'eu'],
+      W,
+      H,
+    );
+    const sampleNodes = [];
+    // Connected domestic cluster near chain centers
+    Object.keys(s.chainCenters).forEach((ch, i) => {
+      sampleNodes.push({
+        id: 'kr:' + i,
+        x: s.chainCenters[ch].x + (i % 2 ? 12 : -8),
+        y: s.chainCenters[ch].y + (i % 3 ? 10 : -6),
+        _degree: 2,
+      });
+    });
+    // Globals on outer radial ring
+    ['us', 'tw', 'jp', 'cn', 'eu'].forEach((c, i) => {
+      const a = s.countryAngles[c];
+      sampleNodes.push({
+        id: 'g:' + c,
+        x: s.cx + Math.cos(a) * s.radial,
+        y: s.cy + Math.sin(a) * s.radial,
+        _degree: i === 0 ? 1 : 3,
+      });
+    });
+    // Degree-0 isolates on R0 ring (spread)
+    for (let i = 0; i < 6; i++) {
+      const a = (2 * Math.PI * i) / 6 - Math.PI / 2;
+      sampleNodes.push({
+        id: 'iso:' + i,
+        x: s.cx + Math.cos(a) * s.isolateR,
+        y: s.cy + Math.sin(a) * s.isolateR,
+        _degree: 0,
+      });
+    }
+    // Clamp as production does
+    sampleNodes.forEach((n) => Net._test.clampNodeToStage(n, W, H));
+    const fit = Net._test.computeFit(sampleNodes, W, H, { padding: 40, maxScale: 1.6 });
+    assert.ok(
+      fit.scale >= 0.7,
+      `computeFit scale at 1400px should be ≥0.7 (got ${fit.scale})`,
+    );
+    assert.ok(fit.scale <= 1.6, `computeFit respects maxScale (${fit.scale})`);
+  }
+
+  console.log('  unit filterGraph / nodeRadius / edgeStyle / colorForDomestic / computeFit ok');
 }
 
 assert.ok(
