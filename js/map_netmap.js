@@ -25,16 +25,24 @@
     distribution: '#d29922',
   };
 
+  var ANCHOR_TICKERS = ['005930', '000660'];
   var lastOpts = null;
   var renderSeq = 0;
   var widthRetryTimer = null;
   var stylesInjected = false;
+  var recolorBound = false;
+  var resizeObs = null;
+  var observedEl = null;
   var dataCache = Object.create(null);
   var dataLoading = Object.create(null);
+  var anchorRsCache = Object.create(null);
+  var anchorFetchPromise = null;
   var sim = null;
   var zoomBehavior = null;
   var svgRoot = null;
   var gRoot = null;
+  var layoutWidth = 720;
+  var layoutHeight = 560;
   var selectedId = null;
   var tipEl = null;
   var filters = defaultFilters();
@@ -104,8 +112,24 @@
       source: L.source || 'Source',
       openChart: L.openChart || 'Open chart',
       legendRs: L.legendRs || 'Domestic color = RS (green above market · red below) · size = market cap',
+      guideDomestic:
+        L.guideDomestic ||
+        '● Domestic: color = RS (green above market · red below), size = market cap',
+      guideGlobal: L.guideGlobal || '■ Global: color = country, size = connection count',
+      footerHint: L.footerHint || 'Sources appear in the relation list after clicking a node',
+      panelFilters: L.panelFilters || 'Filters & legend',
+      sectionSearch: L.sectionSearch || 'Search',
+      sectionTypes: L.sectionTypes || 'Relation types',
+      sectionScope: L.sectionScope || 'Scope',
+      sectionCountries: L.sectionCountries || 'Countries',
+      sectionGuide: L.sectionGuide || 'Node guide',
+      close: L.close || 'Close',
+      asOfLabel: L.asOfLabel || 'as of',
+      nodesLabel: L.nodesLabel || 'nodes',
+      edgesLabel: L.edgesLabel || 'edges',
       types: L.types || {},
       countries: L.countries || {},
+      countryNames: L.countryNames || {},
     };
   }
 
@@ -159,22 +183,10 @@
       edges.push(e);
     });
 
-    var used = Object.create(null);
-    edges.forEach(function (e) {
-      used[e.source] = true;
-      used[e.target] = true;
-    });
-    // Keep isolated domestic anchors/listed when scope filters removed their edges? Spec: remove hidden from sim.
-    // Keep nodes that pass keepNode AND (have an edge OR are searched). Prefer: only nodes in used.
+    // Keep all nodes that pass keepNode — including isolated domestic listings (degree 0).
     var nodes = nodesIn.filter(function (n) {
-      return n && keepNode[n.id] && used[n.id];
+      return n && keepNode[n.id];
     });
-    // If filter wiped everything but we have nodes, fall back to keepNode set with no edges
-    if (!nodes.length && !edges.length) {
-      nodes = nodesIn.filter(function (n) {
-        return n && keepNode[n.id];
-      });
-    }
     return { nodes: nodes, edges: edges };
   }
 
@@ -267,21 +279,50 @@
     if (stylesInjected) return;
     stylesInjected = true;
     var css =
-      '.netmap-wrap{display:flex;flex-direction:column;gap:8px;min-height:520px}' +
-      '.netmap-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}' +
-      '.netmap-toolbar input[type=search]{min-width:160px;flex:1;max-width:280px;padding:6px 10px;border:1px solid var(--border,#30363d);border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);font:inherit;font-size:13px}' +
-      '.netmap-chips{display:flex;flex-wrap:wrap;gap:6px}' +
-      '.netmap-chip{padding:5px 10px;border:1px solid var(--border,#30363d);border-radius:999px;background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font:inherit;font-size:12px;cursor:pointer}' +
-      '.netmap-chip.is-on{color:var(--text,#e6edf3);border-color:var(--accent,#58a6ff);background:color-mix(in srgb,var(--accent,#58a6ff) 16%,var(--surface2,#21262d))}' +
-      '.netmap-actions{display:flex;gap:6px;margin-left:auto}' +
-      '.netmap-actions button{padding:5px 10px;border:1px solid var(--border,#30363d);border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);font:inherit;font-size:12px;cursor:pointer}' +
-      '.netmap-layout{display:grid;grid-template-columns:1fr 300px;gap:12px;min-height:520px}' +
-      '.netmap-layout.is-drawer{grid-template-columns:1fr}' +
-      '#netmap-root{position:relative;min-height:520px;border:1px solid var(--border,#30363d);border-radius:10px;background:var(--surface,#161b22);overflow:hidden}' +
-      '#netmap-root svg{display:block;width:100%;height:100%;min-height:520px}' +
-      '#netmap-side{border:1px solid var(--border,#30363d);border-radius:10px;background:var(--surface,#161b22);padding:12px;overflow:auto;max-height:70vh}' +
+      '.netmap-shell{display:flex;gap:12px;align-items:stretch;min-height:560px}' +
+      '.netmap-panel-fold{flex:0 0 240px;min-width:240px;max-width:240px;align-self:stretch}' +
+      '.netmap-panel-fold>summary{display:none;list-style:none;cursor:pointer;padding:10px 12px;border:1px solid var(--border,#30363d);border-radius:10px;background:var(--surface,#161b22);color:var(--text,#e6edf3);font-size:13px;font-weight:600}' +
+      '.netmap-panel-fold>summary::-webkit-details-marker{display:none}' +
+      '.netmap-panel{background:var(--surface,#161b22);border:1px solid var(--border,#30363d);border-radius:10px;padding:12px;overflow:auto;max-height:clamp(560px,72vh,860px);position:sticky;top:0;box-sizing:border-box}' +
+      '.netmap-panel-sec{margin:0 0 14px}' +
+      '.netmap-panel-sec:last-child{margin-bottom:0}' +
+      '.netmap-panel-label{display:block;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted,#8b949e);margin:0 0 6px;font-weight:600}' +
+      '.netmap-panel input[type=search]{width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--border,#30363d);border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);font:inherit;font-size:13px}' +
+      '.netmap-panel-list{display:flex;flex-direction:column;gap:4px}' +
+      '.netmap-panel-row{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:6px 8px;border:1px solid var(--border,#30363d);border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);font:inherit;font-size:12px;cursor:pointer;opacity:.45}' +
+      '.netmap-panel-row.is-on{opacity:1;border-color:var(--accent,#58a6ff);background:color-mix(in srgb,var(--accent,#58a6ff) 14%,var(--surface2,#21262d))}' +
+      '.netmap-panel-row-label{flex:1;min-width:0}' +
+      '.netmap-panel-row-count{color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;font-size:11px}' +
+      '.netmap-panel-row .netmap-ccode{font-weight:700;min-width:22px}' +
+      '.netmap-panel-row .netmap-cname{flex:1;color:var(--text-muted,#8b949e);font-size:11px}' +
+      '.netmap-seg{display:grid;grid-template-columns:1fr 1fr;gap:4px}' +
+      '.netmap-seg button{padding:7px 6px;border:1px solid var(--border,#30363d);border-radius:8px;background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font:inherit;font-size:11px;cursor:pointer}' +
+      '.netmap-seg button.is-on{color:var(--text,#e6edf3);border-color:var(--accent,#58a6ff);background:color-mix(in srgb,var(--accent,#58a6ff) 16%,var(--surface2,#21262d))}' +
+      '.netmap-panel-countries.is-disabled{opacity:.4;pointer-events:none}' +
+      '.netmap-panel-guide{font-size:12px;color:var(--text-muted,#8b949e);line-height:1.45;margin:0}' +
+      '.netmap-panel-guide p{margin:0 0 6px}' +
+      '.netmap-panel-footer{font-size:11px;color:var(--text-muted,#8b949e);line-height:1.45;border-top:1px solid var(--border,#30363d);padding-top:10px}' +
+      '.netmap-edge-swatch{position:relative;display:inline-block;width:28px;height:12px;flex:0 0 28px}' +
+      '.netmap-edge-swatch::before{content:"";position:absolute;left:0;right:5px;top:50%;border-top:2px solid #7d8590}' +
+      '.netmap-edge-swatch.partner::before{border-color:#3fb950}' +
+      '.netmap-edge-swatch.equity::before{border-color:#a371f7;border-top-style:dashed}' +
+      '.netmap-edge-swatch.peer::before{border-color:#6e7681;border-top-style:dotted}' +
+      '.netmap-edge-swatch.distribution::before{border-color:#d29922}' +
+      '.netmap-edge-swatch.has-arrow::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);border:4px solid transparent;border-left-color:#7d8590}' +
+      '.netmap-edge-swatch.partner.has-arrow::after{border-left-color:#3fb950}' +
+      '.netmap-edge-swatch.equity.has-arrow::after{border-left-color:#a371f7}' +
+      '.netmap-edge-swatch.distribution.has-arrow::after{border-left-color:#d29922}' +
+      '.netmap-dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:0 0 10px}' +
+      '.netmap-stage{position:relative;flex:1;min-width:0;min-height:clamp(560px,72vh,860px)}' +
+      '#netmap-root{height:clamp(560px,72vh,860px);border:1px solid var(--border,#30363d);border-radius:10px;background:var(--surface,#161b22);overflow:hidden}' +
+      '#netmap-root svg{display:block;width:100%;height:100%}' +
+      '.netmap-stage-actions{position:absolute;top:12px;left:12px;z-index:3;display:flex;gap:6px}' +
+      '.netmap-stage-actions button{padding:5px 10px;border:1px solid var(--border,#30363d);border-radius:8px;background:color-mix(in srgb,var(--surface,#161b22) 88%,transparent);backdrop-filter:blur(6px);color:var(--text,#e6edf3);font:inherit;font-size:12px;cursor:pointer}' +
+      '#netmap-side{position:absolute;top:12px;right:12px;width:320px;max-width:calc(100% - 24px);max-height:calc(100% - 24px);overflow:auto;z-index:4;border:1px solid var(--border,#30363d);border-radius:10px;padding:12px;box-sizing:border-box;background:color-mix(in srgb,var(--surface,#161b22) 88%,transparent);backdrop-filter:blur(10px)}' +
       '#netmap-side[hidden]{display:none!important}' +
-      '.netmap-side-title{font-weight:700;margin:0 0 8px;font-size:14px}' +
+      '.netmap-side-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}' +
+      '.netmap-side-title{font-weight:700;margin:0;font-size:14px}' +
+      '.netmap-side-close{border:0;background:transparent;color:var(--text-muted,#8b949e);cursor:pointer;font-size:18px;line-height:1;padding:0 2px}' +
       '.netmap-side-meta{font-size:12px;color:var(--text-muted,#8b949e);margin-bottom:10px}' +
       '.netmap-rel{display:flex;flex-direction:column;gap:4px;padding:8px 0;border-top:1px solid var(--border,#30363d);font-size:12px}' +
       '.netmap-rel-row{display:flex;gap:6px;align-items:flex-start}' +
@@ -289,20 +330,22 @@
       '.netmap-badge.high{color:#3fb950;border-color:#3fb950}' +
       '.netmap-badge.medium{color:#d29922;border-color:#d29922}' +
       '.netmap-badge.low{opacity:.7}' +
-      '.netmap-legend{font-size:12px;color:var(--text-muted,#8b949e);line-height:1.45}' +
-      '.netmap-legend-row{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0;align-items:center}' +
-      '.netmap-swatch{display:inline-flex;align-items:center;gap:4px}' +
-      '.netmap-line{display:inline-block;width:22px;height:0;border-top:2px solid #7d8590;vertical-align:middle}' +
-      '.netmap-line.dash{border-top-style:dashed}' +
-      '.netmap-line.dot{border-top-style:dotted}' +
-      '.netmap-dot{display:inline-block;width:10px;height:10px;border-radius:50%}' +
-      '.netmap-tip{position:fixed;z-index:40;pointer-events:none;max-width:280px;padding:8px 10px;border-radius:8px;background:rgba(22,27,34,.96);border:1px solid var(--border,#30363d);color:var(--text,#e6edf3);font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
       '.netmap-open-chart{margin:0 0 10px;padding:6px 10px;border:1px solid var(--border,#30363d);border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);font:inherit;font-size:12px;cursor:pointer}' +
-      '@media (max-width:899px){.netmap-layout{grid-template-columns:1fr}.netmap-layout #netmap-side:not([hidden]){position:sticky;bottom:0;max-height:40vh;z-index:2}}';
+      '.netmap-tip{position:fixed;z-index:40;pointer-events:none;max-width:280px;padding:8px 10px;border-radius:8px;background:rgba(22,27,34,.96);border:1px solid var(--border,#30363d);color:var(--text,#e6edf3);font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
+      '@media (max-width:899px){' +
+      '.netmap-shell{flex-direction:column;min-height:0}' +
+      '.netmap-panel-fold{flex:none;min-width:0;max-width:none;width:100%}' +
+      '.netmap-panel-fold>summary{display:block;margin-bottom:8px}' +
+      '.netmap-panel{position:static;max-height:50vh;margin-top:0}' +
+      '.netmap-panel-fold:not([open]) .netmap-panel{display:none}' +
+      '.netmap-stage{min-height:520px}' +
+      '#netmap-root{height:520px}' +
+      '#netmap-side:not([hidden]){position:sticky;top:auto;right:auto;bottom:0;width:100%;max-width:none;max-height:40vh;border-radius:10px 10px 0 0}' +
+      '}';
     var el = document.createElement('style');
     el.id = 'im-netmap-css';
     el.textContent = css;
-    document.head.appendChild(el);
+    (document.head || document.documentElement).appendChild(el);
   }
 
   function ensureTip() {
@@ -430,14 +473,150 @@
     }
   }
 
-  function colorForDomestic(node) {
+  function colorForDomestic(node, tickers, anchorRs) {
     var rsMod = global.InvestingMapRsColor;
     if (!rsMod || typeof rsMod.colorForRs !== 'function') return '#9aa3ad';
+    tickers = tickers || (graphState && graphState.tickers) || Object.create(null);
+    anchorRs = anchorRs || anchorRsCache;
+    var ticker = node && node.ticker != null ? String(node.ticker) : '';
+    var company =
+      (ticker && tickers[ticker]) ||
+      (node && node._company) ||
+      null;
+    var rs = null;
+    var marketHint = '';
+    if (company) {
+      rs = typeof company.rs === 'number' && isFinite(company.rs) ? company.rs : null;
+      marketHint = company.market || company.Market || '';
+    } else if (ticker && anchorRs[ticker] && typeof anchorRs[ticker].rs === 'number') {
+      rs = anchorRs[ticker].rs;
+      marketHint = anchorRs[ticker].market || '';
+    } else if (node && typeof node._rs === 'number' && isFinite(node._rs)) {
+      rs = node._rs;
+      marketHint = node._market || '';
+    }
     var marketRs =
       typeof rsMod.marketRsFor === 'function'
-        ? rsMod.marketRsFor({ market: node._market })
+        ? rsMod.marketRsFor(company || { market: marketHint })
         : null;
-    return rsMod.colorForRs(node._rs, marketRs);
+    return rsMod.colorForRs(rs, marketRs);
+  }
+
+  function syncNodeRsFromLive(node) {
+    if (!node || !node.ticker) return;
+    var ticker = String(node.ticker);
+    var c = graphState.tickers && graphState.tickers[ticker];
+    if (c) {
+      node._company = c;
+      node._rs = typeof c.rs === 'number' && isFinite(c.rs) ? c.rs : null;
+      node._market = c.market || c.Market || '';
+      if (c.mcapWon > 0) node._mcapWon = c.mcapWon;
+      return;
+    }
+    var a = anchorRsCache[ticker];
+    if (a && typeof a.rs === 'number') {
+      node._rs = a.rs;
+      node._market = a.market || node._market || '';
+    }
+  }
+
+  function recolorNodes() {
+    if (!lastOpts) return;
+    graphState.tickers = indexCompanies(lastOpts.companies);
+    if (!gRoot || typeof d3 === 'undefined') return;
+    gRoot.selectAll('.nm-node').each(function (d) {
+      if (!d || isGlobalNode(d)) return;
+      syncNodeRsFromLive(d);
+      var fill = colorForDomestic(d, graphState.tickers, anchorRsCache);
+      d3.select(this).select('circle').attr('fill', fill);
+    });
+  }
+
+  function fetchAnchorRs() {
+    var missing = ANCHOR_TICKERS.filter(function (t) {
+      return !(anchorRsCache[t] && typeof anchorRsCache[t].rs === 'number');
+    });
+    if (!missing.length) return Promise.resolve(anchorRsCache);
+    if (anchorFetchPromise) return anchorFetchPromise;
+    var origin = '';
+    try {
+      origin = global.location && global.location.origin ? global.location.origin : '';
+    } catch (e) {
+      origin = '';
+    }
+    var url = (origin || '') + '/api/quotes?codes=' + ANCHOR_TICKERS.join(',');
+    anchorFetchPromise = fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error('anchor_quotes_' + r.status);
+        return r.json();
+      })
+      .then(function (j) {
+        var items = (j && j.items) || {};
+        ANCHOR_TICKERS.forEach(function (t) {
+          var row = items[t] || items[String(Number(t))] || null;
+          if (row && typeof row.rs === 'number' && isFinite(row.rs)) {
+            anchorRsCache[t] = {
+              rs: row.rs,
+              market: row.market || row.Market || (t === '005930' || t === '000660' ? 'KOSPI' : ''),
+            };
+          }
+        });
+        anchorFetchPromise = null;
+        return anchorRsCache;
+      })
+      .catch(function () {
+        anchorFetchPromise = null;
+        return anchorRsCache;
+      });
+    return anchorFetchPromise;
+  }
+
+  function bindRecolorListeners() {
+    if (recolorBound) return;
+    recolorBound = true;
+    if (typeof global.addEventListener === 'function') {
+      global.addEventListener('im:market-rs', function () {
+        recolorNodes();
+      });
+    }
+    var Tick = global.InvestingMapReturnsTick;
+    if (Tick && typeof Tick.register === 'function') {
+      Tick.register(
+        'netmap',
+        function () {
+          return Promise.resolve({ data: {}, dataVersion: String(Date.now()) });
+        },
+        function () {
+          recolorNodes();
+        },
+      );
+    }
+  }
+
+  function observeStageResize(el) {
+    if (!el || typeof global.ResizeObserver !== 'function') return;
+    if (observedEl === el) return;
+    if (resizeObs) {
+      try {
+        resizeObs.disconnect();
+      } catch (e) {}
+    }
+    observedEl = el;
+    resizeObs = new global.ResizeObserver(function () {
+      updateViewBoxOnly();
+    });
+    resizeObs.observe(el);
+  }
+
+  function updateViewBoxOnly() {
+    if (!svgRoot || !lastOpts || !lastOpts.container) return;
+    measureContainerWidth(lastOpts.container, 0, function (w, h) {
+      layoutWidth = w;
+      layoutHeight = h;
+      try {
+        svgRoot.attr('viewBox', '0 0 ' + w + ' ' + h);
+      } catch (e) {}
+    });
   }
 
   function matchesSearch(node, q) {
@@ -523,7 +702,13 @@
     side.hidden = false;
     var name = lang === 'en' ? node.nameEn || node.nameKo : node.nameKo || node.nameEn;
     var html = '';
+    html += '<div class="netmap-side-head">';
     html += '<p class="netmap-side-title">' + escapeHtml(name) + '</p>';
+    html +=
+      '<button type="button" class="netmap-side-close" aria-label="' +
+      escapeAttr(labels.close) +
+      '">×</button>';
+    html += '</div>';
     html +=
       '<div class="netmap-side-meta">' +
       escapeHtml([node.chain, node.role, node.country].filter(Boolean).join(' · ')) +
@@ -585,6 +770,13 @@
       html += '</div>';
     });
     side.innerHTML = html;
+    var closeBtn = side.querySelector('.netmap-side-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        clearSelection();
+      });
+    }
     var btn = side.querySelector('.netmap-open-chart');
     if (btn) {
       btn.addEventListener('click', function () {
@@ -612,81 +804,78 @@
     return escapeHtml(s).replace(/'/g, '&#39;');
   }
 
-  function buildToolbar(host, labels) {
-    host.innerHTML = '';
-    host.className = 'netmap-toolbar';
-    var search = document.createElement('input');
-    search.type = 'search';
-    search.placeholder = labels.search;
-    search.value = filters.search || '';
-    search.addEventListener('input', function () {
-      filters.search = search.value || '';
-      saveFilters();
-      applySearchHighlight();
-      if (filters.search) focusSearchMatch();
+  function countEdgesByType(raw, filt) {
+    var base = Object.assign({}, filt || defaultFilters(), {
+      types: { supply: true, partner: true, equity: true, peer: true, distribution: true },
     });
-    host.appendChild(search);
+    var g = filterGraph(raw, base);
+    var counts = { supply: 0, partner: 0, equity: 0, peer: 0, distribution: 0 };
+    g.edges.forEach(function (e) {
+      if (counts[e.type] != null) counts[e.type] += 1;
+    });
+    return counts;
+  }
 
-    var typeChips = document.createElement('div');
-    typeChips.className = 'netmap-chips';
+  function countNodesByCountry(raw, filt) {
+    var base = Object.assign({}, filt || defaultFilters(), { scope: 'all' });
+    var g = filterGraph(raw, base);
+    var counts = { us: 0, tw: 0, jp: 0, cn: 0, eu: 0 };
+    g.nodes.forEach(function (n) {
+      if (!isGlobalNode(n)) return;
+      var c = String(n.country || '').toLowerCase();
+      if (counts[c] != null) counts[c] += 1;
+    });
+    return counts;
+  }
+
+  function updatePanelCounts(panel, labels) {
+    if (!panel || !graphState.raw) return;
+    var typeCounts = countEdgesByType(graphState.raw, filters);
     EDGE_TYPES.forEach(function (t) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'netmap-chip' + (filters.types[t] ? ' is-on' : '');
-      b.textContent = (labels.types && labels.types[t]) || t;
-      b.addEventListener('click', function () {
-        filters.types[t] = !filters.types[t];
-        b.classList.toggle('is-on', !!filters.types[t]);
-        saveFilters();
-        restartGraph();
-      });
-      typeChips.appendChild(b);
+      var el = panel.querySelector('[data-type-count="' + t + '"]');
+      if (el) el.textContent = String(typeCounts[t] || 0);
     });
-    host.appendChild(typeChips);
-
-    var scopeChips = document.createElement('div');
-    scopeChips.className = 'netmap-chips';
-    ;[
-      ['all', labels.scopeAll],
-      ['domestic', labels.scopeDomestic],
-    ].forEach(function (pair) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'netmap-chip' + (filters.scope === pair[0] ? ' is-on' : '');
-      b.textContent = pair[1];
-      b.addEventListener('click', function () {
-        filters.scope = pair[0];
-        saveFilters();
-        var chips = scopeChips.querySelectorAll('.netmap-chip');
-        for (var i = 0; i < chips.length; i++) {
-          chips[i].classList.toggle('is-on', i === (pair[0] === 'all' ? 0 : 1));
-        }
-        restartGraph();
-      });
-      scopeChips.appendChild(b);
-    });
-    host.appendChild(scopeChips);
-
-    var countryChips = document.createElement('div');
-    countryChips.className = 'netmap-chips';
+    var countryCounts = countNodesByCountry(graphState.raw, filters);
     COUNTRIES.forEach(function (c) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'netmap-chip' + (filters.countries[c] !== false ? ' is-on' : '');
-      b.textContent = (labels.countries && labels.countries[c]) || c.toUpperCase();
-      b.style.borderColor = COUNTRY_COLOR[c];
-      b.addEventListener('click', function () {
-        filters.countries[c] = !(filters.countries[c] !== false);
-        b.classList.toggle('is-on', filters.countries[c] !== false);
-        saveFilters();
-        restartGraph();
-      });
-      countryChips.appendChild(b);
+      var el = panel.querySelector('[data-country-count="' + c + '"]');
+      if (el) el.textContent = String(countryCounts[c] || 0);
     });
-    host.appendChild(countryChips);
+    var countriesSec = panel.querySelector('.netmap-panel-countries');
+    if (countriesSec) {
+      countriesSec.classList.toggle('is-disabled', filters.scope === 'domestic');
+    }
+    var filtered = filterGraph(graphState.raw, filters);
+    var footer = panel.querySelector('.netmap-panel-footer-stats');
+    if (footer) {
+      var asOf = (graphState.raw && graphState.raw.asOf) || '';
+      footer.textContent =
+        (labels.asOfLabel || 'as of') +
+        ' ' +
+        asOf +
+        ' · ' +
+        (labels.nodesLabel || 'nodes') +
+        ' ' +
+        filtered.nodes.length +
+        ' · ' +
+        (labels.edgesLabel || 'edges') +
+        ' ' +
+        filtered.edges.length;
+    }
+  }
 
-    var actions = document.createElement('div');
-    actions.className = 'netmap-actions';
+  function ensureStageActions(labels) {
+    var stage =
+      lastOpts && lastOpts.container && lastOpts.container.closest
+        ? lastOpts.container.closest('.netmap-stage')
+        : null;
+    if (!stage) return;
+    var host = stage.querySelector('.netmap-stage-actions');
+    if (!host) {
+      host = document.createElement('div');
+      host.className = 'netmap-stage-actions';
+      stage.appendChild(host);
+    }
+    host.innerHTML = '';
     var fitBtn = document.createElement('button');
     fitBtn.type = 'button';
     fitBtn.textContent = labels.fit;
@@ -697,12 +886,159 @@
     resetBtn.addEventListener('click', function () {
       filters = defaultFilters();
       saveFilters();
-      buildToolbar(host, labels);
+      var panel = document.getElementById('netmap-panel');
+      if (panel) buildPanel(panel, labelsFor(lastOpts));
       restartGraph();
     });
-    actions.appendChild(fitBtn);
-    actions.appendChild(resetBtn);
-    host.appendChild(actions);
+    host.appendChild(fitBtn);
+    host.appendChild(resetBtn);
+  }
+
+  function buildPanel(panel, labels) {
+    if (!panel) return;
+    var fold = panel.closest ? panel.closest('.netmap-panel-fold') : null;
+    if (fold && typeof fold.open === 'boolean') {
+      fold.open = !layoutIsDrawer();
+    }
+    panel.innerHTML = '';
+
+    function sec(labelText) {
+      var s = document.createElement('div');
+      s.className = 'netmap-panel-sec';
+      var lab = document.createElement('span');
+      lab.className = 'netmap-panel-label';
+      lab.textContent = labelText;
+      s.appendChild(lab);
+      panel.appendChild(s);
+      return s;
+    }
+
+    var searchSec = sec(labels.sectionSearch);
+    var search = document.createElement('input');
+    search.type = 'search';
+    search.placeholder = labels.search;
+    search.value = filters.search || '';
+    search.addEventListener('input', function () {
+      filters.search = search.value || '';
+      saveFilters();
+      applySearchHighlight();
+      if (filters.search) focusSearchMatch();
+    });
+    searchSec.appendChild(search);
+
+    var typeSec = sec(labels.sectionTypes);
+    var typeList = document.createElement('div');
+    typeList.className = 'netmap-panel-list';
+    EDGE_TYPES.forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'netmap-panel-row' + (filters.types[t] ? ' is-on' : '');
+      b.setAttribute('data-type', t);
+      var sw = document.createElement('span');
+      sw.className =
+        'netmap-edge-swatch ' + t + (t === 'peer' ? '' : ' has-arrow');
+      b.appendChild(sw);
+      var lab = document.createElement('span');
+      lab.className = 'netmap-panel-row-label';
+      lab.textContent = (labels.types && labels.types[t]) || t;
+      b.appendChild(lab);
+      var cnt = document.createElement('span');
+      cnt.className = 'netmap-panel-row-count';
+      cnt.setAttribute('data-type-count', t);
+      cnt.textContent = '0';
+      b.appendChild(cnt);
+      b.addEventListener('click', function () {
+        filters.types[t] = !filters.types[t];
+        b.classList.toggle('is-on', !!filters.types[t]);
+        saveFilters();
+        restartGraph();
+      });
+      typeList.appendChild(b);
+    });
+    typeSec.appendChild(typeList);
+
+    var scopeSec = sec(labels.sectionScope);
+    var seg = document.createElement('div');
+    seg.className = 'netmap-seg';
+    ;[
+      ['all', labels.scopeAll],
+      ['domestic', labels.scopeDomestic],
+    ].forEach(function (pair) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = filters.scope === pair[0] ? 'is-on' : '';
+      b.textContent = pair[1];
+      b.addEventListener('click', function () {
+        filters.scope = pair[0];
+        saveFilters();
+        var buttons = seg.querySelectorAll('button');
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].classList.toggle('is-on', i === (pair[0] === 'all' ? 0 : 1));
+        }
+        restartGraph();
+      });
+      seg.appendChild(b);
+    });
+    scopeSec.appendChild(seg);
+
+    var countrySec = sec(labels.sectionCountries);
+    countrySec.classList.add('netmap-panel-countries');
+    if (filters.scope === 'domestic') countrySec.classList.add('is-disabled');
+    var countryList = document.createElement('div');
+    countryList.className = 'netmap-panel-list';
+    COUNTRIES.forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'netmap-panel-row' + (filters.countries[c] !== false ? ' is-on' : '');
+      var dot = document.createElement('span');
+      dot.className = 'netmap-dot';
+      dot.style.background = COUNTRY_COLOR[c];
+      b.appendChild(dot);
+      var code = document.createElement('span');
+      code.className = 'netmap-ccode';
+      code.textContent = (labels.countries && labels.countries[c]) || c.toUpperCase();
+      b.appendChild(code);
+      var cname = document.createElement('span');
+      cname.className = 'netmap-cname';
+      cname.textContent =
+        (labels.countryNames && labels.countryNames[c]) || c.toUpperCase();
+      b.appendChild(cname);
+      var cnt = document.createElement('span');
+      cnt.className = 'netmap-panel-row-count';
+      cnt.setAttribute('data-country-count', c);
+      cnt.textContent = '0';
+      b.appendChild(cnt);
+      b.addEventListener('click', function () {
+        filters.countries[c] = !(filters.countries[c] !== false);
+        b.classList.toggle('is-on', filters.countries[c] !== false);
+        saveFilters();
+        restartGraph();
+      });
+      countryList.appendChild(b);
+    });
+    countrySec.appendChild(countryList);
+
+    var guideSec = sec(labels.sectionGuide);
+    var guide = document.createElement('div');
+    guide.className = 'netmap-panel-guide';
+    guide.innerHTML =
+      '<p>' +
+      escapeHtml(labels.guideDomestic) +
+      '</p><p>' +
+      escapeHtml(labels.guideGlobal) +
+      '</p>';
+    guideSec.appendChild(guide);
+
+    var footer = document.createElement('div');
+    footer.className = 'netmap-panel-footer';
+    footer.innerHTML =
+      '<div class="netmap-panel-footer-stats"></div><div>' +
+      escapeHtml(labels.footerHint) +
+      '</div>';
+    panel.appendChild(footer);
+
+    updatePanelCounts(panel, labels);
+    ensureStageActions(labels);
   }
 
   function applySearchHighlight() {
@@ -726,8 +1062,8 @@
     });
     if (!hit || hit.x == null) return;
     var svg = svgRoot.node();
-    var w = svg.clientWidth || 720;
-    var h = svg.clientHeight || 560;
+    var w = svg.clientWidth || layoutWidth || 720;
+    var h = svg.clientHeight || layoutHeight || 560;
     var t = global.d3.zoomIdentity.translate(w / 2 - hit.x, h / 2 - hit.y).scale(1.4);
     svgRoot.transition().duration(350).call(zoomBehavior.transform, t);
   }
@@ -747,8 +1083,8 @@
       if (n.y > maxY) maxY = n.y;
     });
     var svg = svgRoot.node();
-    var w = svg.clientWidth || 720;
-    var h = svg.clientHeight || 560;
+    var w = svg.clientWidth || layoutWidth || 720;
+    var h = svg.clientHeight || layoutHeight || 560;
     var bw = Math.max(40, maxX - minX);
     var bh = Math.max(40, maxY - minY);
     var scale = Math.min(2.5, 0.85 / Math.max(bw / w, bh / h));
@@ -757,54 +1093,21 @@
     svgRoot.transition().duration(400).call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
   }
 
-  function renderLegend(el, raw, filtered, labels) {
-    if (!el) return;
-    var html = '<div class="netmap-legend-row">';
-    EDGE_TYPES.forEach(function (t) {
-      var st = edgeStyle(t, 'high');
-      var cls = 'netmap-line' + (st.dasharray === '6,4' ? ' dash' : st.dasharray === '2,3' ? ' dot' : '');
-      html +=
-        '<span class="netmap-swatch"><span class="' +
-        cls +
-        '" style="border-color:' +
-        st.color +
-        '"></span>' +
-        escapeHtml((labels.types && labels.types[t]) || t) +
-        '</span>';
-    });
-    html += '</div><div class="netmap-legend-row">';
-    COUNTRIES.forEach(function (c) {
-      html +=
-        '<span class="netmap-swatch"><span class="netmap-dot" style="background:' +
-        COUNTRY_COLOR[c] +
-        '"></span>' +
-        escapeHtml((labels.countries && labels.countries[c]) || c.toUpperCase()) +
-        '</span>';
-    });
-    html += '</div>';
-    html += '<div>' + escapeHtml(labels.legendRs) + '</div>';
-    var asOf = (raw && raw.asOf) || '';
-    html +=
-      '<div style="margin-top:4px">asOf ' +
-      escapeHtml(asOf) +
-      ' · nodes ' +
-      filtered.nodes.length +
-      ' · edges ' +
-      filtered.edges.length +
-      '</div>';
-    el.innerHTML = html;
-  }
-
   function paint(container, width, height) {
     if (typeof d3 === 'undefined') return;
     stopSim();
     container.innerHTML = '';
     clearSelection();
+    layoutWidth = width;
+    layoutHeight = height;
     var labels = labelsFor(lastOpts);
     var lang = lastOpts.lang === 'en' ? 'en' : 'ko';
     var filtered = filterGraph(graphState.raw, filters);
+    var panel = document.getElementById('netmap-panel');
+    if (panel) updatePanelCounts(panel, labels);
     var tickers = graphState.tickers;
     var nodes = enrichNodes(filtered.nodes, tickers).map(function (n) {
+      syncNodeRsFromLive(n);
       return Object.assign({}, n);
     });
     var nodeById = Object.create(null);
@@ -827,7 +1130,6 @@
         'display:flex;align-items:center;justify-content:center;height:100%;min-height:520px;color:var(--text-muted)';
       empty.textContent = labels.noData;
       container.appendChild(empty);
-      renderLegend(lastOpts.legend, graphState.raw, filtered, labels);
       return;
     }
 
@@ -978,7 +1280,7 @@
       } else {
         g.append('circle')
           .attr('r', d._r)
-          .attr('fill', colorForDomestic(d))
+          .attr('fill', colorForDomestic(d, tickers, anchorRsCache))
           .attr('stroke', isAnchorNode(d) ? '#e6edf3' : '#30363d')
           .attr('stroke-width', isAnchorNode(d) ? 2 : 1);
       }
@@ -1079,7 +1381,6 @@
     });
 
     applySearchHighlight();
-    renderLegend(lastOpts.legend, graphState.raw, filtered, labels);
     if (filters.search) setTimeout(focusSearchMatch, 50);
   }
 
@@ -1120,17 +1421,22 @@
     loading.textContent = labels.loading;
     container.appendChild(loading);
 
-    fetchData(opts.dataUrl)
-      .then(function (raw) {
+    var dataP = fetchData(opts.dataUrl);
+    var anchorP = fetchAnchorRs();
+    Promise.all([dataP, anchorP])
+      .then(function (pair) {
         if (seq !== renderSeq) return;
-        graphState.raw = raw;
+        graphState.raw = pair[0];
         graphState.tickers = indexCompanies(opts.companies);
+        var panel = opts.panel || document.getElementById('netmap-panel');
+        if (panel) updatePanelCounts(panel, labels);
         container.innerHTML = '';
         measureContainerWidth(container, 0, function (w, h) {
           if (seq !== renderSeq) return;
           container.innerHTML = '';
           if (seq !== renderSeq) return;
           paint(container, w, h);
+          recolorNodes();
         });
       })
       .catch(function () {
@@ -1154,10 +1460,11 @@
     lastOpts = opts;
     filters = loadFilters();
     injectStyles();
-    var layout = opts.container.closest ? opts.container.closest('.netmap-layout') : null;
-    if (layout) layout.classList.toggle('is-drawer', layoutIsDrawer());
-    var toolbar = opts.toolbar || document.getElementById('netmap-toolbar');
-    if (toolbar) buildToolbar(toolbar, labelsFor(opts));
+    bindRecolorListeners();
+    observeStageResize(opts.container);
+    var panel = opts.panel || document.getElementById('netmap-panel');
+    if (panel) buildPanel(panel, labelsFor(opts));
+    ensureStageActions(labelsFor(opts));
     if (opts.side) {
       opts.side.hidden = true;
       opts.side.innerHTML = '';
@@ -1190,6 +1497,7 @@
     render: render,
     focus: focus,
     getState: getState,
+    recolorNodes: recolorNodes,
     _test: {
       EDGE_TYPES: EDGE_TYPES,
       COUNTRIES: COUNTRIES,
@@ -1201,6 +1509,8 @@
       mcapRadiusScale: mcapRadiusScale,
       isDomesticNode: isDomesticNode,
       isGlobalNode: isGlobalNode,
+      colorForDomestic: colorForDomestic,
+      recolorNodes: recolorNodes,
       getRenderSeq: function () {
         return renderSeq;
       },

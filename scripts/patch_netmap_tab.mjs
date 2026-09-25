@@ -45,12 +45,15 @@ const NET_BUTTON =
 
 const NET_TAB = `  <!-- NETMAP TAB -->
   <div id="tab-netmap" class="tab-content">
-    <div class="netmap-wrap">
-      <div id="netmap-toolbar" class="netmap-toolbar"></div>
-      <div id="netmap-legend" class="netmap-legend"></div>
-      <div class="netmap-layout">
+    <div class="netmap-shell">
+      <details class="netmap-panel-fold" open>
+        <summary class="netmap-panel-summary">필터·범례</summary>
+        <aside id="netmap-panel" class="netmap-panel"></aside>
+      </details>
+      <div class="netmap-stage">
         <div id="netmap-root" role="img" aria-label="Network map"></div>
         <aside id="netmap-side" hidden></aside>
+        <div class="netmap-stage-actions"></div>
       </div>
     </div>
   </div>
@@ -66,8 +69,7 @@ function renderNetFn(sector) {
       InvestingMapNetmap.render({
         container: el,
         side: document.getElementById('netmap-side'),
-        toolbar: document.getElementById('netmap-toolbar'),
-        legend: document.getElementById('netmap-legend'),
+        panel: document.getElementById('netmap-panel'),
         companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
         lang: lang,
         dataUrl: '../data/netmap/${sector}.json',
@@ -84,6 +86,19 @@ function renderNetFn(sector) {
           source: nt.netmapSource,
           openChart: nt.netmapOpenChart,
           legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
           types: {
             supply: nt.netmapTypeSupply,
             partner: nt.netmapTypePartner,
@@ -97,6 +112,13 @@ function renderNetFn(sector) {
             jp: nt.netmapCountryJp,
             cn: nt.netmapCountryCn,
             eu: nt.netmapCountryEu
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu
           }
         }
       });
@@ -119,6 +141,19 @@ const TRANSLATIONS = {
     netmapSource: '출처',
     netmapOpenChart: '차트 열기',
     netmapLegendRs: '국내 점 색 = RS(시장 RS 초과 초록 · 미만 빨강) · 크기 = 시총',
+    netmapGuideDomestic: '● 국내: 색 = RS(시장 RS 초과 초록 · 미만 빨강), 크기 = 시총',
+    netmapGuideGlobal: '■ 글로벌: 색 = 국가, 크기 = 연결 수',
+    netmapFooterHint: '출처는 노드 클릭 → 관계 목록에서 확인',
+    netmapPanelFilters: '필터·범례',
+    netmapSectionSearch: '검색',
+    netmapSectionTypes: '관계 유형',
+    netmapSectionScope: '범위',
+    netmapSectionCountries: '국가',
+    netmapSectionGuide: '노드 안내',
+    netmapClose: '닫기',
+    netmapAsOf: '기준',
+    netmapNodes: '노드',
+    netmapEdges: '관계',
     netmapTypeSupply: '공급',
     netmapTypePartner: '파트너',
     netmapTypeEquity: '지분',
@@ -129,6 +164,11 @@ const TRANSLATIONS = {
     netmapCountryJp: 'JP',
     netmapCountryCn: 'CN',
     netmapCountryEu: 'EU',
+    netmapCountryNameUs: '미국',
+    netmapCountryNameTw: '대만',
+    netmapCountryNameJp: '일본',
+    netmapCountryNameCn: '중국',
+    netmapCountryNameEu: '유럽',
   },
   en: {
     tabNetmap: '🕸️ Network map',
@@ -143,6 +183,19 @@ const TRANSLATIONS = {
     netmapSource: 'Source',
     netmapOpenChart: 'Open chart',
     netmapLegendRs: 'Domestic color = RS (green above market · red below) · size = market cap',
+    netmapGuideDomestic: '● Domestic: color = RS (green above market · red below), size = market cap',
+    netmapGuideGlobal: '■ Global: color = country, size = connection count',
+    netmapFooterHint: 'Sources appear in the relation list after clicking a node',
+    netmapPanelFilters: 'Filters & legend',
+    netmapSectionSearch: 'Search',
+    netmapSectionTypes: 'Relation types',
+    netmapSectionScope: 'Scope',
+    netmapSectionCountries: 'Countries',
+    netmapSectionGuide: 'Node guide',
+    netmapClose: 'Close',
+    netmapAsOf: 'as of',
+    netmapNodes: 'nodes',
+    netmapEdges: 'edges',
     netmapTypeSupply: 'Supply',
     netmapTypePartner: 'Partner',
     netmapTypeEquity: 'Equity',
@@ -153,6 +206,11 @@ const TRANSLATIONS = {
     netmapCountryJp: 'JP',
     netmapCountryCn: 'CN',
     netmapCountryEu: 'EU',
+    netmapCountryNameUs: 'United States',
+    netmapCountryNameTw: 'Taiwan',
+    netmapCountryNameJp: 'Japan',
+    netmapCountryNameCn: 'China',
+    netmapCountryNameEu: 'Europe',
   },
 };
 
@@ -228,7 +286,7 @@ function patchTranslationObjects(source) {
     source = source.replace(re, (line, indent, keyTok, valueQuote, value, offset, full) => {
       const keyQuote = keyTok.startsWith('"') || keyTok.startsWith("'") ? keyTok[0] : '';
       const lang = detectLangFromValue(value);
-      const window = full.slice(offset, offset + 2200);
+      const window = full.slice(offset, offset + 4200);
       const extras = [];
       for (const key of REQUIRED_KEYS) {
         if (key === 'tabNetmap') continue;
@@ -243,8 +301,71 @@ function patchTranslationObjects(source) {
   return source;
 }
 
+function migrateNetmapDom(source) {
+  if (source.includes('id="netmap-panel"') && source.includes('netmap-shell')) {
+    // Drop legacy toolbar/legend if both somehow present.
+    source = source.replace(/\n?\s*<div id="netmap-toolbar"[\s\S]*?<\/div>\s*/g, '\n');
+    source = source.replace(/\n?\s*<div id="netmap-legend"[\s\S]*?<\/div>\s*/g, '\n');
+    return source;
+  }
+  if (source.includes('id="netmap-toolbar"') || source.includes('class="netmap-wrap"')) {
+    source = source.replace(
+      /<div id="tab-netmap" class="tab-content">[\s\S]*?<\/aside>\s*<\/div>\s*<\/div>\s*<\/div>/,
+      NET_TAB.replace(/^  <!-- NETMAP TAB -->\n/, '').trim().replace(/^/, '  <!-- NETMAP TAB -->\n  ').replace(/<\/div>\n\n$/, '</div>'),
+    );
+    // Fallback: wrap-based replace
+    if (!source.includes('id="netmap-panel"')) {
+      source = source.replace(
+        /<div class="netmap-wrap">[\s\S]*?<div class="netmap-layout">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/,
+        `<div class="netmap-shell">
+      <details class="netmap-panel-fold" open>
+        <summary class="netmap-panel-summary">필터·범례</summary>
+        <aside id="netmap-panel" class="netmap-panel"></aside>
+      </details>
+      <div class="netmap-stage">
+        <div id="netmap-root" role="img" aria-label="Network map"></div>
+        <aside id="netmap-side" hidden></aside>
+        <div class="netmap-stage-actions"></div>
+      </div>
+    </div>`,
+      );
+    }
+  }
+  return source;
+}
+
+function migrateRenderNetmap(source, sector) {
+  if (!source.includes('function renderNetmap()')) return source;
+  if (source.includes("panel: document.getElementById('netmap-panel')")) {
+    // Ensure countryNames block present
+    if (!source.includes('countryNames:')) {
+      source = source.replace(
+        /(countries: \{[\s\S]*?eu: nt\.netmapCountryEu\s*\}\s*)(}\s*\}\);)/,
+        `$1,\n          countryNames: {\n            us: nt.netmapCountryNameUs,\n            tw: nt.netmapCountryNameTw,\n            jp: nt.netmapCountryNameJp,\n            cn: nt.netmapCountryNameCn,\n            eu: nt.netmapCountryNameEu\n          }\n        $2`,
+      );
+    }
+    return source;
+  }
+  // Replace whole function
+  return source.replace(
+    /function renderNetmap\(\) \{[\s\S]*?\n    \}\n(?=\s*function render)/,
+    renderNetFn(sector).replace(/^    /, '').replace(/\n$/,'') + '\n',
+  );
+}
+
+function patchQuotesReadyRecolor(source) {
+  if (source.includes('InvestingMapNetmap.recolorNodes')) return source;
+  return source.replace(
+    /(onQuotesReady:\s*function\s*\(\)\s*\{)/,
+    `$1\n            if (window.InvestingMapNetmap && typeof InvestingMapNetmap.recolorNodes === 'function') InvestingMapNetmap.recolorNodes();`,
+  );
+}
+
 function patchRuntime(source, sector) {
   source = patchTranslationObjects(source);
+  source = migrateNetmapDom(source);
+  source = migrateRenderNetmap(source, sector);
+  source = patchQuotesReadyRecolor(source);
 
   if (!source.includes("getElementById('tab-btn-netmap')")) {
     source = source.replace(
@@ -278,6 +399,15 @@ function patchRuntime(source, sector) {
     /(if \(document\.getElementById\('tab-valuation'\)\?\.classList\.contains\('active'\)\) renderValuation\(\);)(?!\s*if \(document\.getElementById\('tab-netmap'\))/g,
     `$1 if (document.getElementById('tab-netmap')?.classList.contains('active')) renderNetmap();`,
   );
+
+  // applyLang: update details summary label
+  if (!source.includes('netmap-panel-summary') || !source.includes('netmapPanelFilters')) {
+    source = source.replace(
+      /(if \(netmapBtn\) netmapBtn\.innerHTML = [^;]+;)/,
+      `$1\n      var netmapSum = document.querySelector('#tab-netmap .netmap-panel-summary');\n` +
+        `      if (netmapSum) netmapSum.textContent = t.netmapPanelFilters || (lang === 'en' ? 'Filters & legend' : '필터·범례');`,
+    );
+  }
   return source;
 }
 
@@ -337,12 +467,12 @@ function stripNetmap(source) {
     '',
   );
   out = out.replace(
-    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/div>\s*/g,
+    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?(?:<\/aside>\s*<\/div>\s*<\/div>|netmap-stage[\s\S]*?<\/div>\s*<\/div>)\s*<\/div>\s*/g,
     '\n',
   );
-  // Fallback if comment missing / wrap structure differs
+  // Fallback old/new shells
   out = out.replace(
-    /\n?\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/aside>\s*<\/div>\s*<\/div>\s*<\/div>\s*/g,
+    /\n?\s*<div id="tab-netmap" class="tab-content">[\s\S]*?id="netmap-root"[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*/g,
     '\n',
   );
   out = out.replace(

@@ -562,7 +562,7 @@ function stripSemiCuratedArtifacts(html) {
     '',
   );
   html = html.replace(
-    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/aside>\s*<\/div>\s*<\/div>\s*<\/div>\s*/g,
+    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?(?:netmap-stage[\s\S]*?<\/div>\s*<\/div>|<\/aside>\s*<\/div>\s*<\/div>)\s*<\/div>\s*/g,
     '\n',
   );
   html = html.replace(

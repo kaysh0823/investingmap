@@ -2252,7 +2252,22 @@
       <div id="valuation-legend"></div>
     </div>
   </div>
-<!-- TABLE TAB -->
+  <!-- NETMAP TAB -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- TABLE TAB -->
 
 
   <div id="tab-table" class="tab-content">
@@ -3749,6 +3764,7 @@
       });
     }
 
+
     function renderValuation() {
       if (!window.InvestingMapValuation) return;
       var el = document.getElementById('valuation-root');
@@ -3917,6 +3933,7 @@
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },
           onQuotesReady: function () {
+            if (window.InvestingMapNetmap && typeof InvestingMapNetmap.recolorNodes === 'function') InvestingMapNetmap.recolorNodes();
             function isActive(id) {
               var el = document.getElementById(id);
               return !!(el && (el.classList.contains('active') || el.offsetParent !== null));

@@ -730,7 +730,7 @@
   <script src="../js/map_volatility.js?v=eec26c5a"></script>
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=8d92012e"></script>
-  <script src="../js/map_netmap.js?v=f4eeaa65"></script>
+  <script src="../js/map_netmap.js?v=566b1f6b"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
   <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
@@ -2717,13 +2717,17 @@
     </div>
   </div>
   <!-- NETMAP TAB -->
+    <!-- NETMAP TAB -->
   <div id="tab-netmap" class="tab-content">
-    <div class="netmap-wrap">
-      <div id="netmap-toolbar" class="netmap-toolbar"></div>
-      <div id="netmap-legend" class="netmap-legend"></div>
-      <div class="netmap-layout">
+    <div class="netmap-shell">
+      <details class="netmap-panel-fold" open>
+        <summary class="netmap-panel-summary">필터·범례</summary>
+        <aside id="netmap-panel" class="netmap-panel"></aside>
+      </details>
+      <div class="netmap-stage">
         <div id="netmap-root" role="img" aria-label="Network map"></div>
         <aside id="netmap-side" hidden></aside>
+        <div class="netmap-stage-actions"></div>
       </div>
     </div>
   </div>
@@ -5086,7 +5090,36 @@
         tabVolatility: '📉 변동성 분포',
         tabPerfCalendar: '📅 퍼포먼스 캘린더',
         tabValuation: '⚖️ 밸류에이션 비교',
+        valuationMetricPer: 'PER TTM',
+        valuationMetricPerFy: 'PER FY',
+        valuationMetricPbr: 'PBR',
+        valuationMetricDvd: '배당수익률',
+        valuationSortChain: '체인 순',
+        valuationSortMedian: '그룹 중앙값 순',
+        valuationLoading: '밸류에이션 데이터를 불러오는 중…',
+        valuationFailed: '밸류에이션 스냅샷을 불러오지 못했습니다.',
+        valuationNoData: '표시할 밸류에이션 데이터가 없습니다.',
+        valuationLegend: '점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
+        valuationLegendPer: 'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
         tabNetmap: '🕸️ 네트워크맵',
+        netmapGuideDomestic: '● 국내: 색 = RS(시장 RS 초과 초록 · 미만 빨강), 크기 = 시총',
+        netmapGuideGlobal: '■ 글로벌: 색 = 국가, 크기 = 연결 수',
+        netmapFooterHint: '출처는 노드 클릭 → 관계 목록에서 확인',
+        netmapPanelFilters: '필터·범례',
+        netmapSectionSearch: '검색',
+        netmapSectionTypes: '관계 유형',
+        netmapSectionScope: '범위',
+        netmapSectionCountries: '국가',
+        netmapSectionGuide: '노드 안내',
+        netmapClose: '닫기',
+        netmapAsOf: '기준',
+        netmapNodes: '노드',
+        netmapEdges: '관계',
+        netmapCountryNameUs: '미국',
+        netmapCountryNameTw: '대만',
+        netmapCountryNameJp: '일본',
+        netmapCountryNameCn: '중국',
+        netmapCountryNameEu: '유럽',
         netmapSearch: '이름·티커 검색',
         netmapScopeAll: '국내+글로벌',
         netmapScopeDomestic: '국내만',
@@ -5207,6 +5240,10 @@
         tabVolatility: '📉 Volatility Distribution',
         tabPerfCalendar: '📅 Performance Calendar',
         tabValuation: '⚖️ Valuation',
+        valuationMetricPer: 'PER TTM',
+        valuationMetricPerFy: 'PER FY',
+        valuationMetricPbr: 'PBR',
+        valuationMetricDvd: 'Div. yield',
         valuationSortChain: 'Chain order',
         valuationSortMedian: 'By group median',
         valuationLoading: 'Loading valuation data…',
@@ -5215,6 +5252,24 @@
         valuationLegend: 'Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)',
         valuationLegendPer: 'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
         tabNetmap: '🕸️ Network map',
+        netmapGuideDomestic: '● Domestic: color = RS (green above market · red below), size = market cap',
+        netmapGuideGlobal: '■ Global: color = country, size = connection count',
+        netmapFooterHint: 'Sources appear in the relation list after clicking a node',
+        netmapPanelFilters: 'Filters & legend',
+        netmapSectionSearch: 'Search',
+        netmapSectionTypes: 'Relation types',
+        netmapSectionScope: 'Scope',
+        netmapSectionCountries: 'Countries',
+        netmapSectionGuide: 'Node guide',
+        netmapClose: 'Close',
+        netmapAsOf: 'as of',
+        netmapNodes: 'nodes',
+        netmapEdges: 'edges',
+        netmapCountryNameUs: 'United States',
+        netmapCountryNameTw: 'Taiwan',
+        netmapCountryNameJp: 'Japan',
+        netmapCountryNameCn: 'China',
+        netmapCountryNameEu: 'Europe',
         netmapSearch: 'Search name/ticker',
         netmapScopeAll: 'Domestic + global',
         netmapScopeDomestic: 'Domestic only',
@@ -6641,8 +6696,7 @@
       InvestingMapNetmap.render({
         container: el,
         side: document.getElementById('netmap-side'),
-        toolbar: document.getElementById('netmap-toolbar'),
-        legend: document.getElementById('netmap-legend'),
+        panel: document.getElementById('netmap-panel'),
         companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
         lang: lang,
         dataUrl: '../data/netmap/semiconductor.json',
@@ -6659,6 +6713,19 @@
           source: nt.netmapSource,
           openChart: nt.netmapOpenChart,
           legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
           types: {
             supply: nt.netmapTypeSupply,
             partner: nt.netmapTypePartner,
@@ -6672,10 +6739,18 @@
             jp: nt.netmapCountryJp,
             cn: nt.netmapCountryCn,
             eu: nt.netmapCountryEu
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu
           }
         }
       });
     }
+
 
     function renderValuation() {
       if (!window.InvestingMapValuation) return;
@@ -6847,6 +6922,7 @@
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },
           onQuotesReady: function () {
+            if (window.InvestingMapNetmap && typeof InvestingMapNetmap.recolorNodes === 'function') InvestingMapNetmap.recolorNodes();
             function isActive(id) {
               var el = document.getElementById(id);
               return !!(el && (el.classList.contains('active') || el.offsetParent !== null));

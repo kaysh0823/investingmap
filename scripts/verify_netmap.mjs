@@ -71,7 +71,12 @@ for (const [sector, rel] of Object.entries(MAP_SECTOR)) {
   if (hasData) {
     assert.ok(html.includes('tab-btn-netmap'), `${rel}: tab-btn-netmap`);
     assert.ok(html.includes('id="tab-netmap"'), `${rel}: tab-netmap`);
+    assert.ok(html.includes('id="netmap-panel"'), `${rel}: netmap-panel`);
+    assert.ok(html.includes('netmap-shell'), `${rel}: netmap-shell`);
+    assert.ok(!html.includes('id="netmap-toolbar"'), `${rel}: netmap-toolbar must be absent`);
+    assert.ok(!html.includes('id="netmap-legend"'), `${rel}: netmap-legend must be absent`);
     assert.ok(/map_netmap\.js/.test(html), `${rel}: map_netmap.js`);
+    assert.ok(html.includes('InvestingMapNetmap.recolorNodes'), `${rel}: quotes-ready recolor`);
     console.log(`  html OK ${rel}`);
   } else {
     assert.ok(!html.includes('tab-btn-netmap'), `${rel}: must not have netmap tab without data`);
@@ -110,6 +115,39 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
   assert.equal(all.nodes.length, 4, 'default keeps connected nodes');
   assert.equal(all.edges.length, 3);
 
+  const semiRaw = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'data', 'netmap', 'semiconductor.json'), 'utf8'),
+  );
+  const semiAll = Net._test.filterGraph(semiRaw, Net._test.defaultFilters());
+  assert.equal(semiAll.nodes.length, 147, `semiconductor filterGraph nodes=${semiAll.nodes.length}`);
+  assert.equal(semiAll.edges.length, 291, `semiconductor filterGraph edges=${semiAll.edges.length}`);
+
+  const gray = Net._test.colorForDomestic(
+    { ticker: '123456', type: 'kr_listed' },
+    {},
+    {},
+  );
+  assert.ok(typeof gray === 'string' && gray.length > 0, 'colorForDomestic returns string');
+
+  // Inject RS + market RS → fill must not stay missing/gray when scale is loaded.
+  sandbox.InvestingMapMarketRs = { kospiRs: 50, kosdaqRs: 50 };
+  // Load rs_color_scale into sandbox
+  const rsJs = fs.readFileSync(path.join(ROOT, 'js', 'rs_color_scale.js'), 'utf8');
+  runInContext(rsJs, sandbox);
+  assert.ok(sandbox.InvestingMapRsColor, 'InvestingMapRsColor');
+  const hot = Net._test.colorForDomestic(
+    { ticker: '005930', type: 'kr_anchor', _market: 'KOSPI' },
+    { '005930': { rs: 80, market: 'KOSPI' } },
+    {},
+  );
+  assert.notEqual(hot, '#9aa3ad', `colorForDomestic with RS should not be gray (${hot})`);
+  assert.notEqual(
+    String(hot).toLowerCase(),
+    '#8b949e',
+    `colorForDomestic with RS should not be missing gray (${hot})`,
+  );
+  assert.ok(typeof Net._test.recolorNodes === 'function', 'recolorNodes exposed');
+
   const dom = Net._test.filterGraph(sample, {
     ...Net._test.defaultFilters(),
     scope: 'domestic',
@@ -145,7 +183,7 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
 
   const seeds = Net._test.computeLayoutSeeds(['a', 'b'], ['us', 'tw'], 800, 600);
   assert.ok(seeds.chainCenters.a && seeds.countryAngles.us != null, 'layout seeds');
-  console.log('  unit filterGraph / nodeRadius / edgeStyle ok');
+  console.log('  unit filterGraph / nodeRadius / edgeStyle / colorForDomestic ok');
 }
 
 assert.ok(
