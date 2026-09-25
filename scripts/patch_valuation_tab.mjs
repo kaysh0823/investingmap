@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 7;
+export const SCRIPT_V = 7;
 const TAB_STATE_V = 13;
 const RS_COLOR_V = 1;
 
@@ -330,49 +330,56 @@ function patchHtml(source) {
   return patchRuntime(source);
 }
 
-for (const rel of MAP_FILES) {
-  const file = path.join(ROOT, rel);
-  if (!fs.existsSync(file)) continue;
-  const before = fs.readFileSync(file, 'utf8');
-  const after = patchHtml(before);
-  fs.writeFileSync(file, after, 'utf8');
-  console.log(after === before ? 'unchanged' : 'patched', rel);
-}
-
-const bioTranslationsPath = path.join(ROOT, 'bio', 'bio_translations.json');
-if (fs.existsSync(bioTranslationsPath)) {
-  const translations = JSON.parse(fs.readFileSync(bioTranslationsPath, 'utf8'));
-  for (const lang of ['ko', 'en']) Object.assign(translations[lang], TRANSLATIONS[lang]);
-  fs.writeFileSync(bioTranslationsPath, `${JSON.stringify(translations, null, 2)}\n`, 'utf8');
-  console.log('patched bio/bio_translations.json');
-}
-
-for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
-  const file = path.join(ROOT, rel);
-  if (!fs.existsSync(file)) continue;
-  const before = fs.readFileSync(file, 'utf8');
-  const after = patchRuntime(before);
-  fs.writeFileSync(file, after, 'utf8');
-  console.log(after === before ? 'unchanged' : 'patched', rel);
-}
-
-const genPath = path.join(ROOT, 'bio', 'gen_korea_bio_inline.mjs');
-if (fs.existsSync(genPath)) {
-  try {
-    execSync(`node "${genPath}"`, { cwd: ROOT, stdio: 'inherit' });
-    // Re-apply runtime hooks after gen (gen rebuilds T from translations).
-    const inlinePath = path.join(ROOT, 'bio', 'korea_bio_map.inline.js');
-    const tailPath = path.join(ROOT, 'bio', 'bio_inline_tail.js');
-    for (const file of [inlinePath, tailPath]) {
-      if (!fs.existsSync(file)) continue;
-      const before = fs.readFileSync(file, 'utf8');
-      const after = patchRuntime(before);
-      fs.writeFileSync(file, after, 'utf8');
-      console.log(after === before ? 'unchanged-after-gen' : 'patched-after-gen', path.relative(ROOT, file));
-    }
-  } catch (e) {
-    console.warn('WARN gen_korea_bio_inline failed:', e.message || e);
+function main() {
+  for (const rel of MAP_FILES) {
+    const file = path.join(ROOT, rel);
+    if (!fs.existsSync(file)) continue;
+    const before = fs.readFileSync(file, 'utf8');
+    const after = patchHtml(before);
+    fs.writeFileSync(file, after, 'utf8');
+    console.log(after === before ? 'unchanged' : 'patched', rel);
   }
+
+  const bioTranslationsPath = path.join(ROOT, 'bio', 'bio_translations.json');
+  if (fs.existsSync(bioTranslationsPath)) {
+    const translations = JSON.parse(fs.readFileSync(bioTranslationsPath, 'utf8'));
+    for (const lang of ['ko', 'en']) Object.assign(translations[lang], TRANSLATIONS[lang]);
+    fs.writeFileSync(bioTranslationsPath, `${JSON.stringify(translations, null, 2)}\n`, 'utf8');
+    console.log('patched bio/bio_translations.json');
+  }
+
+  for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
+    const file = path.join(ROOT, rel);
+    if (!fs.existsSync(file)) continue;
+    const before = fs.readFileSync(file, 'utf8');
+    const after = patchRuntime(before);
+    fs.writeFileSync(file, after, 'utf8');
+    console.log(after === before ? 'unchanged' : 'patched', rel);
+  }
+
+  const genPath = path.join(ROOT, 'bio', 'gen_korea_bio_inline.mjs');
+  if (fs.existsSync(genPath)) {
+    try {
+      execSync(`node "${genPath}"`, { cwd: ROOT, stdio: 'inherit' });
+      // Re-apply runtime hooks after gen (gen rebuilds T from translations).
+      const inlinePath = path.join(ROOT, 'bio', 'korea_bio_map.inline.js');
+      const tailPath = path.join(ROOT, 'bio', 'bio_inline_tail.js');
+      for (const file of [inlinePath, tailPath]) {
+        if (!fs.existsSync(file)) continue;
+        const before = fs.readFileSync(file, 'utf8');
+        const after = patchRuntime(before);
+        fs.writeFileSync(file, after, 'utf8');
+        console.log(after === before ? 'unchanged-after-gen' : 'patched-after-gen', path.relative(ROOT, file));
+      }
+    } catch (e) {
+      console.warn('WARN gen_korea_bio_inline failed:', e.message || e);
+    }
+  }
+
+  console.log(`OK patch_valuation_tab v=${SCRIPT_V}`);
 }
 
-console.log(`OK patch_valuation_tab v=${SCRIPT_V}`);
+const isMain =
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isMain) main();

@@ -6,9 +6,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SCRIPT_V = 13;
+export const SCRIPT_V = 13;
 const TAB_STATE_V = 10;
-const TURNOVER_RADIUS_V = 2;
+export const TURNOVER_RADIUS_V = 2;
 const RS_COLOR_V = 1;
 
 const MAP_FILES = [
@@ -286,30 +286,37 @@ function patchHtml(source) {
   return patchRuntime(source);
 }
 
-for (const rel of MAP_FILES) {
-  const file = path.join(ROOT, rel);
-  if (!fs.existsSync(file)) continue;
-  const before = fs.readFileSync(file, 'utf8');
-  const after = patchHtml(before);
-  fs.writeFileSync(file, after, 'utf8');
-  console.log(after === before ? 'unchanged' : 'patched', rel);
+function main() {
+  for (const rel of MAP_FILES) {
+    const file = path.join(ROOT, rel);
+    if (!fs.existsSync(file)) continue;
+    const before = fs.readFileSync(file, 'utf8');
+    const after = patchHtml(before);
+    fs.writeFileSync(file, after, 'utf8');
+    console.log(after === before ? 'unchanged' : 'patched', rel);
+  }
+
+  const bioTranslationsPath = path.join(ROOT, 'bio', 'bio_translations.json');
+  if (fs.existsSync(bioTranslationsPath)) {
+    const translations = JSON.parse(fs.readFileSync(bioTranslationsPath, 'utf8'));
+    for (const lang of ['ko', 'en']) Object.assign(translations[lang], TRANSLATIONS[lang]);
+    fs.writeFileSync(bioTranslationsPath, `${JSON.stringify(translations, null, 2)}\n`, 'utf8');
+    console.log('patched bio/bio_translations.json');
+  }
+
+  for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
+    const file = path.join(ROOT, rel);
+    if (!fs.existsSync(file)) continue;
+    const before = fs.readFileSync(file, 'utf8');
+    const after = patchRuntime(before);
+    fs.writeFileSync(file, after, 'utf8');
+    console.log(after === before ? 'unchanged' : 'patched', rel);
+  }
+
+  console.log(`OK patch_volatility_tab v=${SCRIPT_V}`);
 }
 
-const bioTranslationsPath = path.join(ROOT, 'bio', 'bio_translations.json');
-if (fs.existsSync(bioTranslationsPath)) {
-  const translations = JSON.parse(fs.readFileSync(bioTranslationsPath, 'utf8'));
-  for (const lang of ['ko', 'en']) Object.assign(translations[lang], TRANSLATIONS[lang]);
-  fs.writeFileSync(bioTranslationsPath, `${JSON.stringify(translations, null, 2)}\n`, 'utf8');
-  console.log('patched bio/bio_translations.json');
-}
-
-for (const rel of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
-  const file = path.join(ROOT, rel);
-  if (!fs.existsSync(file)) continue;
-  const before = fs.readFileSync(file, 'utf8');
-  const after = patchRuntime(before);
-  fs.writeFileSync(file, after, 'utf8');
-  console.log(after === before ? 'unchanged' : 'patched', rel);
-}
-
-console.log(`OK patch_volatility_tab v=${SCRIPT_V}`);
+const isMain =
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isMain) main();
