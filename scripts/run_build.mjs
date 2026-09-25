@@ -20,6 +20,8 @@ const steps = [
   ['node', ['scripts/patch_mobile_table.mjs']],
   ['node', ['scripts/patch_candle_modal.mjs']],
   ['node', ['scripts/patch_heatmap_chg.mjs']],
+  // Trust pages + later patches may rewrite HTML — re-ensure AdSense before hash stamp.
+  ['node', ['scripts/patch_adsense_head.mjs']],
   // Must be last after every patch_* that may insert/rewrite script tags.
   ['node', ['scripts/patch_asset_versions.mjs']],
   ['node', ['scripts/pages_build.mjs']],

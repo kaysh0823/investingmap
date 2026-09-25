@@ -76,8 +76,9 @@ export function clearAssetVersionCache() {
  * @returns {string}
  */
 export function stampAssetVersions(html) {
+  // Match one or more ?v= suffixes so prior double-stamps collapse to a single hash.
   return String(html).replace(
-    /((?:\.\.\/|\/)?js\/([\w\-]+\.js))\?v=[\w.\-]+/g,
+    /((?:\.\.\/|\/)?js\/([\w\-]+\.js))(?:\?v=[\w.\-]+)+/g,
     (full, prefixPath, fileName) => {
       const rel = `js/${fileName}`;
       if (!JS_SET.has(rel)) return full;
