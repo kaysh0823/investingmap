@@ -186,7 +186,10 @@ assert.ok(
 );
 const rsColorJs = fs.readFileSync(path.join(ROOT, 'js', 'rs_color_scale.js'), 'utf8');
 assert.ok(/colorForRs/.test(rsColorJs), 'rs_color_scale exports colorForRs');
-assert.ok(/#ffe0e0/.test(rsColorJs) && /#8b0000/.test(rsColorJs), 'rs_color_scale pink→red range');
+assert.ok(/colorForPctB/.test(rsColorJs), 'rs_color_scale exports colorForPctB');
+assert.ok(/#3fb950/.test(rsColorJs) && /#f85149/.test(rsColorJs), 'rs_color_scale green/red palette');
+assert.ok(/InvestingMapPctBColor/.test(rsColorJs), 'InvestingMapPctBColor export');
+assert.ok(/시장 RS 초과 초록|green above market RS/.test(mapJs), 'valuation legend diverging RS copy');
 
 // Pure unit tests (no jsdom) — load IIFE into a sandbox.
 {
@@ -234,10 +237,30 @@ assert.ok(/#ffe0e0/.test(rsColorJs) && /#8b0000/.test(rsColorJs), 'rs_color_scal
   console.log(`  unit epsRadius [500,22140] → ${rLo}..${rHi} ok`);
 
   const c0 = sandbox.InvestingMapRsColor.colorForRs(null);
-  const c100 = sandbox.InvestingMapRsColor.colorForRs(100);
   assert.equal(c0, sandbox.InvestingMapRsColor.MISSING_COLOR, 'RS null → gray');
-  assert.ok(c100 && c100 !== c0, 'RS 100 → colored');
-  console.log('  unit RS color scale (shared) ok');
+
+  function rgbParts(hex) {
+    const h = String(hex).replace('#', '');
+    return {
+      r: parseInt(h.slice(0, 2), 16),
+      g: parseInt(h.slice(2, 4), 16),
+      b: parseInt(h.slice(4, 6), 16),
+    };
+  }
+  const gre = rgbParts(sandbox.InvestingMapRsColor.colorForRs(70, 50));
+  const red = rgbParts(sandbox.InvestingMapRsColor.colorForRs(30, 50));
+  const mid = sandbox.InvestingMapRsColor.colorForRs(50, 50);
+  assert.ok(gre.g > gre.r, `colorForRs(70,50) green-ish got ${JSON.stringify(gre)}`);
+  assert.ok(red.r > red.g, `colorForRs(30,50) red-ish got ${JSON.stringify(red)}`);
+  assert.equal(mid.toLowerCase(), sandbox.InvestingMapRsColor.NEUTRAL.toLowerCase(), 'colorForRs(50,50) neutral');
+
+  const pctG = rgbParts(sandbox.InvestingMapPctBColor.colorForPctB(0.9));
+  const pctR = rgbParts(sandbox.InvestingMapPctBColor.colorForPctB(0.1));
+  const pctM = sandbox.InvestingMapPctBColor.colorForPctB(0.5);
+  assert.ok(pctG.g > pctG.r, `colorForPctB(0.9) green-ish got ${JSON.stringify(pctG)}`);
+  assert.ok(pctR.r > pctR.g, `colorForPctB(0.1) red-ish got ${JSON.stringify(pctR)}`);
+  assert.equal(pctM.toLowerCase(), sandbox.InvestingMapPctBColor.NEUTRAL.toLowerCase(), 'colorForPctB(0.5) neutral');
+  console.log('  unit diverging RS/%b color scale ok');
 }
 
 assert.ok(

@@ -1,5 +1,6 @@
 /**
- * Volatility distribution scatter — 5D range vol% vs log market cap, colored by selectable metric.
+ * Volatility distribution scatter — 5D range vol% vs log market cap.
+ * Color: %b / RS diverging (shared rs_color_scale) or 1D chg.
  */
 (function (global) {
   'use strict';
@@ -31,9 +32,9 @@
       noData: '변동성 스냅샷 데이터가 없습니다.',
       legendSize: '크기 = 거래대금',
       legendLines: '세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
-      legendPctB: '색 = 20일 %b(진할수록 높음)',
+      legendPctB: '색 = 20일 %b (50 초과 초록 · 미만 빨강)',
       legendChg: '색 = 당일 등락률',
-      legendRs: '색 = RS(진할수록 높음)',
+      legendRs: '색 = RS (시장 RS 초과 초록 · 미만 빨강)',
       modePctB: '%b',
       modeChg: '당일 등락률',
       modeRs: 'RS',
@@ -57,9 +58,9 @@
       noData: 'No volatility snapshot data available.',
       legendSize: 'Size = turnover',
       legendLines: 'Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
-      legendPctB: 'Color = 20D %b (darker = higher)',
+      legendPctB: 'Color = 20D %b (green above 50 · red below)',
       legendChg: 'Color = 1-day change',
-      legendRs: 'Color = RS (darker = higher)',
+      legendRs: 'Color = RS (green above market RS · red below)',
       modePctB: '%b',
       modeChg: '1-day change',
       modeRs: 'RS',
@@ -121,7 +122,51 @@
     if (mode === 'chg') {
       return 'background:linear-gradient(to right,#c62828,#e53935,#8e3a3a,#2a2e38,#2e7d32,#43a047,#00c853)';
     }
-    return 'background:linear-gradient(to right,#ffe0e0,#8b0000)';
+    if (global.InvestingMapRsColor && typeof global.InvestingMapRsColor.gradientCss === 'function') {
+      return global.InvestingMapRsColor.gradientCss();
+    }
+    return 'background:linear-gradient(to right,#f85149,#6e7681,#3fb950)';
+  }
+
+  function legendGradientHint(mode, labels, lang) {
+    if (mode === 'chg') {
+      return '<span class="im-vol-gradient-label" aria-hidden="true">−15% · 0% · +15%</span>';
+    }
+    var g =
+      global.InvestingMapRsColor && typeof global.InvestingMapRsColor.gradientLabels === 'function'
+        ? global.InvestingMapRsColor.gradientLabels(lang)
+        : null;
+    if (!g) {
+      return mode === 'rs'
+        ? '<span class="im-vol-gradient-label" aria-hidden="true">' +
+            (labels.legendRsLo || '시장 RS 미만') +
+            ' · ' +
+            (labels.legendRsMid || '시장 RS') +
+            ' · ' +
+            (labels.legendRsHi || '초과') +
+            '</span>'
+        : '';
+    }
+    if (mode === 'rs') {
+      return (
+        '<span class="im-vol-gradient-label" aria-hidden="true">' +
+        g.lo +
+        ' · ' +
+        g.mid +
+        ' · ' +
+        g.hi +
+        '</span>'
+      );
+    }
+    return (
+      '<span class="im-vol-gradient-label" aria-hidden="true">' +
+      g.loPctB +
+      ' · ' +
+      g.midPctB +
+      ' · ' +
+      g.hiPctB +
+      '</span>'
+    );
   }
 
   function displayName(company, lang) {
@@ -327,24 +372,24 @@
   }
 
   function buildColorFn(fg, mode) {
-    if (mode === 'rs' && global.InvestingMapRsColor && typeof global.InvestingMapRsColor.colorForRs === 'function') {
-      return function (d) {
-        return global.InvestingMapRsColor.colorForRs(d.rs);
-      };
-    }
-    var red = redScale();
-    if (mode === 'pctb') {
-      red.domain([0, 1]);
-      return function (d) {
-        if (typeof d.pctB !== 'number' || !isFinite(d.pctB)) return MISSING_COLOR;
-        return red(clamp01(d.pctB));
-      };
-    }
     if (mode === 'rs') {
-      red.domain([0, 1]);
       return function (d) {
-        if (typeof d.rs !== 'number' || !isFinite(d.rs)) return MISSING_COLOR;
-        return red(clamp01(d.rs / 100));
+        if (!global.InvestingMapRsColor || typeof global.InvestingMapRsColor.colorForRs !== 'function') {
+          return MISSING_COLOR;
+        }
+        var center =
+          typeof global.InvestingMapRsColor.marketRsFor === 'function'
+            ? global.InvestingMapRsColor.marketRsFor(d)
+            : 50;
+        return global.InvestingMapRsColor.colorForRs(d.rs, center);
+      };
+    }
+    if (mode === 'pctb') {
+      return function (d) {
+        if (!global.InvestingMapPctBColor || typeof global.InvestingMapPctBColor.colorForPctB !== 'function') {
+          return MISSING_COLOR;
+        }
+        return global.InvestingMapPctBColor.colorForPctB(d.pctB);
       };
     }
     return function (d) {
@@ -428,8 +473,11 @@
     return snapshotLoading;
   }
 
-  function colorForPctB(pctB, colorScale) {
-    return colorScale(clamp01(pctB));
+  function colorForPctB(pctB) {
+    if (global.InvestingMapPctBColor && typeof global.InvestingMapPctBColor.colorForPctB === 'function') {
+      return global.InvestingMapPctBColor.colorForPctB(pctB);
+    }
+    return MISSING_COLOR;
   }
 
   function injectStyles() {
@@ -637,11 +685,8 @@
   function renderLegend(el, opts) {
     if (!el) return;
     var labels = labelsFor(opts);
+    var lang = opts && opts.lang === 'en' ? 'en' : 'ko';
     el.className = 'im-vol-legend';
-    var gradientHint =
-      selectedColorMode === 'chg'
-        ? '<span class="im-vol-gradient-label" aria-hidden="true">−15% · 0% · +15%</span>'
-        : '';
     el.innerHTML =
       '<div class="im-vol-legend-row"><span>' +
       labels.legendSize +
@@ -652,7 +697,7 @@
       '</span><span class="im-vol-gradient" style="' +
       legendGradientStyle(selectedColorMode) +
       '" aria-hidden="true"></span>' +
-      gradientHint +
+      legendGradientHint(selectedColorMode, labels, lang) +
       '</div>';
   }
 
@@ -680,6 +725,7 @@
     injectStyles();
     observeContainer(container);
     ensureColorModeTabs(container, opts);
+    bindMarketRs();
 
     if (!container.style.minHeight) container.style.minHeight = '420px';
     renderLegend(opts.legend, opts);
@@ -698,6 +744,17 @@
         empty.textContent = labelsFor(opts).noData;
         container.appendChild(empty);
       });
+  }
+
+  var marketRsBound = false;
+  function bindMarketRs() {
+    if (marketRsBound || typeof global.addEventListener !== 'function') return;
+    marketRsBound = true;
+    global.addEventListener('im:market-rs', function () {
+      var tab = document.getElementById('tab-volatility');
+      if (!tab || !tab.classList.contains('active')) return;
+      if (lastOpts) render(lastOpts);
+    });
   }
 
   function draw(container, opts, snapshot) {
@@ -726,6 +783,7 @@
         turnoverWon:
           co && typeof co.turnoverWon === 'number' && isFinite(co.turnoverWon) ? co.turnoverWon : null,
         rs: co && typeof co.rs === 'number' && isFinite(co.rs) ? co.rs : null,
+        market: (co && (co.market || co.Market)) || q.market || '',
         chg1dPct:
           co && typeof co.chg1dPct === 'number' && isFinite(co.chg1dPct) ? co.chg1dPct : null,
       });

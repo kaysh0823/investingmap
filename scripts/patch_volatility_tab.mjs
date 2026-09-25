@@ -6,10 +6,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const SCRIPT_V = 13;
+export const SCRIPT_V = 14;
 const TAB_STATE_V = 10;
 export const TURNOVER_RADIUS_V = 2;
-const RS_COLOR_V = 1;
+export const RS_COLOR_V = 2;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -46,7 +46,7 @@ const VOLATILITY_BUTTON =
 const VOLATILITY_TAB = `  <!-- VOLATILITY TAB -->
   <div id="tab-volatility" class="tab-content">
     <div class="volatility-wrap">
-      <p class="volatility-meta" id="volatility-hint">색=20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)</p>
+      <p class="volatility-meta" id="volatility-hint">색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)</p>
       <div id="volatility-root" role="img" aria-label="Volatility distribution"></div>
       <div id="volatility-legend"></div>
     </div>
@@ -102,7 +102,7 @@ const TRANSLATIONS = {
     tabVolatility: '📉 변동성 분포',
     volatilityTitle: '변동성 분포',
     volatilityHint:
-      '색=20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
+      '색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
     volatilityAxisAtr: '5일 변동성 (고저폭 ÷ 종가, %)',
     volatilityAxisMcap: '시가총액(로그)',
     volatilityAtr: '5일 변동성%',
@@ -114,20 +114,20 @@ const TRANSLATIONS = {
     volatilityNoData: '변동성 스냅샷 데이터가 없습니다.',
     volatilityLegendSize: '크기 = 거래대금',
     volatilityLegendLines: '세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
-    volatilityLegendPctB: '색 = 20일 %b(진할수록 높음)',
+    volatilityLegendPctB: '색 = 20일 %b (50 초과 초록 · 미만 빨강)',
     volatilityLegendChg: '색 = 당일 등락률',
-    volatilityLegendRs: '색 = RS(진할수록 높음)',
+    volatilityLegendRs: '색 = RS (시장 RS 초과 초록 · 미만 빨강)',
     volatilityModePctB: '%b',
     volatilityModeChg: '당일 등락률',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      '크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
+      '크기 = 거래대금 · 색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)',
   },
   en: {
     tabVolatility: '📉 Volatility Distribution',
     volatilityTitle: 'Volatility Distribution',
     volatilityHint:
-      'Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
+      'Color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
     volatilityAxisAtr: '5D Range Vol (high−low ÷ close, %)',
     volatilityAxisMcap: 'Market cap (log)',
     volatilityAtr: '5D Range Vol%',
@@ -140,14 +140,14 @@ const TRANSLATIONS = {
     volatilityLegendSize: 'Size = turnover',
     volatilityLegendLines:
       'Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
-    volatilityLegendPctB: 'Color = 20D %b (darker = higher)',
+    volatilityLegendPctB: 'Color = 20D %b (green above 50 · red below)',
     volatilityLegendChg: 'Color = 1-day change',
-    volatilityLegendRs: 'Color = RS (darker = higher)',
+    volatilityLegendRs: 'Color = RS (green above market RS · red below)',
     volatilityModePctB: '%b',
     volatilityModeChg: '1-day change',
     volatilityModeRs: 'RS',
     volatilityLegend:
-      'Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
+      'Size = turnover · color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)',
   },
 };
 
@@ -159,14 +159,41 @@ function translationLines(lang, indent, keyQuote, valueQuote) {
 }
 
 function patchTranslationObjects(source) {
-  if (/["']?tabVolatility["']?\s*:/.test(source)) return source;
-  return source.replace(
-    /^([ \t]*)(["']?)tabMomentum\2\s*:\s*(["'])(.*?)\3,[ \t]*$/gm,
-    (line, indent, keyQuote, valueQuote, value) => {
-      const lang = /Momentum matrix|Volatility/i.test(value) && !/모멘텀/.test(value) ? 'en' : 'ko';
-      return `${line}\n${translationLines(lang, indent, keyQuote, valueQuote)}`;
-    },
-  );
+  if (!/["']?tabVolatility["']?\s*:/.test(source)) {
+    source = source.replace(
+      /^([ \t]*)(["']?)tabMomentum\2\s*:\s*(["'])(.*?)\3,[ \t]*$/gm,
+      (line, indent, keyQuote, valueQuote, value) => {
+        const lang = /Momentum matrix|Volatility/i.test(value) && !/모멘텀/.test(value) ? 'en' : 'ko';
+        return `${line}\n${translationLines(lang, indent, keyQuote, valueQuote)}`;
+      },
+    );
+  }
+  // Refresh diverging-color legend copy when older wording remains.
+  const refresh = [
+    ['volatilityLegendPctB', TRANSLATIONS.ko.volatilityLegendPctB, TRANSLATIONS.en.volatilityLegendPctB],
+    ['volatilityLegendRs', TRANSLATIONS.ko.volatilityLegendRs, TRANSLATIONS.en.volatilityLegendRs],
+    ['volatilityHint', TRANSLATIONS.ko.volatilityHint, TRANSLATIONS.en.volatilityHint],
+    ['volatilityLegend', TRANSLATIONS.ko.volatilityLegend, TRANSLATIONS.en.volatilityLegend],
+  ];
+  for (const [key, ko, en] of refresh) {
+    source = source.replace(
+      new RegExp(`(["']?)${key}\\1\\s*:\\s*(["'])색[^'"]*\\2`, 'g'),
+      `$1${key}$1: $2${ko}$2`,
+    );
+    source = source.replace(
+      new RegExp(`(["']?)${key}\\1\\s*:\\s*(["'])Color[^'"]*\\2`, 'g'),
+      `$1${key}$1: $2${en}$2`,
+    );
+    source = source.replace(
+      new RegExp(`(["']?)${key}\\1\\s*:\\s*(["'])크기[^'"]*\\2`, 'g'),
+      `$1${key}$1: $2${ko}$2`,
+    );
+    source = source.replace(
+      new RegExp(`(["']?)${key}\\1\\s*:\\s*(["'])Size[^'"]*\\2`, 'g'),
+      `$1${key}$1: $2${en}$2`,
+    );
+  }
+  return source;
 }
 
 function patchRuntime(source) {

@@ -8,9 +8,9 @@ import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const SCRIPT_V = 7;
+export const SCRIPT_V = 8;
 const TAB_STATE_V = 13;
-const RS_COLOR_V = 1;
+export const RS_COLOR_V = 2;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -104,7 +104,7 @@ const TRANSLATIONS = {
     valuationFailed: '밸류에이션 스냅샷을 불러오지 못했습니다.',
     valuationNoData: '표시할 밸류에이션 데이터가 없습니다.',
     valuationLegend:
-      '점 크기 = EPS(TTM) · 색 = RS(진할수록 높음) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
+      '점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
     valuationLegendPer:
       'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
   },
@@ -120,7 +120,7 @@ const TRANSLATIONS = {
     valuationFailed: 'Could not load valuation snapshot.',
     valuationNoData: 'No valuation data available.',
     valuationLegend:
-      'Dot size = EPS(TTM) · color = RS (darker = higher) · dashed lines = market P25/P50/P75 (KRX FY)',
+      'Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)',
     valuationLegendPer:
       'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
   },

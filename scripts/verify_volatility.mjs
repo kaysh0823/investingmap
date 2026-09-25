@@ -169,9 +169,13 @@ context.localStorage = {
   },
 };
 vm.createContext(context);
+const rsColorSrc = fs.readFileSync(path.join(ROOT, 'js', 'rs_color_scale.js'), 'utf8');
+new vm.Script(rsColorSrc, { filename: 'rs_color_scale.js' }).runInContext(context);
 new vm.Script(volSrc, { filename: 'map_volatility.js' }).runInContext(context);
 const vol = context.InvestingMapVolatility;
 assert.ok(vol, 'InvestingMapVolatility export missing');
+assert.ok(context.InvestingMapRsColor, 'InvestingMapRsColor required');
+assert.ok(context.InvestingMapPctBColor, 'InvestingMapPctBColor required');
 
 assert.ok(volSrc.includes('rangeVol5'), 'map_volatility must use rangeVol5');
 assert.ok(volSrc.includes('marketRangeVols'), 'map_volatility must use marketRangeVols');
@@ -179,12 +183,34 @@ assert.ok(volSrc.includes('5일 변동성'), 'ko 5D range vol label');
 assert.ok(volSrc.includes('5D Range Vol'), 'en 5D range vol label');
 assert.ok(volSrc.includes('P10~P90(P25·P50·P75 강조)'), 'updated legendLines text required');
 assert.ok(volSrc.includes('syncVolatilityBasisBadge'), 'basis badge helper required');
+assert.ok(volSrc.includes('InvestingMapPctBColor') || volSrc.includes('colorForPctB'), 'pctB uses shared scale');
+assert.ok(/시장 RS 초과 초록|green above market RS/.test(volSrc), 'volatility RS diverging legend');
 
 assert.equal(vol.clamp01(-1), 0);
 assert.equal(vol.clamp01(2), 1);
-const mockScale = (t) => (t <= 0.5 ? '#ffe0e0' : '#8b0000');
-assert.equal(vol.colorForPctB(0, mockScale), '#ffe0e0');
-assert.equal(vol.colorForPctB(1, mockScale), '#8b0000');
+
+function rgbParts(hex) {
+  const h = String(hex).replace('#', '');
+  return {
+    r: parseInt(h.slice(0, 2), 16),
+    g: parseInt(h.slice(2, 4), 16),
+    b: parseInt(h.slice(4, 6), 16),
+  };
+}
+const gre = rgbParts(context.InvestingMapRsColor.colorForRs(70, 50));
+const red = rgbParts(context.InvestingMapRsColor.colorForRs(30, 50));
+const mid = context.InvestingMapRsColor.colorForRs(50, 50);
+assert.ok(gre.g > gre.r, 'colorForRs(70,50) green');
+assert.ok(red.r > red.g, 'colorForRs(30,50) red');
+assert.equal(mid.toLowerCase(), context.InvestingMapRsColor.NEUTRAL.toLowerCase(), 'colorForRs(50,50) gray');
+const pctG = rgbParts(context.InvestingMapPctBColor.colorForPctB(0.9));
+const pctR = rgbParts(context.InvestingMapPctBColor.colorForPctB(0.1));
+const pctM = context.InvestingMapPctBColor.colorForPctB(0.5);
+assert.ok(pctG.g > pctG.r, 'colorForPctB(0.9) green');
+assert.ok(pctR.r > pctR.g, 'colorForPctB(0.1) red');
+assert.equal(pctM.toLowerCase(), context.InvestingMapPctBColor.NEUTRAL.toLowerCase(), 'colorForPctB(0.5) gray');
+assert.equal(vol.colorForPctB(0.5).toLowerCase(), context.InvestingMapPctBColor.NEUTRAL.toLowerCase());
+console.log('  unit diverging RS/%b (volatility) ok');
 
 const BASE = (process.env.BASE_URL || '').replace(/\/$/, '');
 if (BASE && hasRange) {

@@ -35,7 +35,20 @@
           : null;
     if (kospi != null && isFinite(kospi)) next.kospiRs = kospi;
     if (kosdaq != null && isFinite(kosdaq)) next.kosdaqRs = kosdaq;
-    if (next.kospiRs != null || next.kosdaqRs != null) momentumIndices = next;
+    if (next.kospiRs != null || next.kosdaqRs != null) {
+      momentumIndices = next;
+      try {
+        global.InvestingMapMarketRs = {
+          kospiRs: next.kospiRs,
+          kosdaqRs: next.kosdaqRs,
+        };
+        if (typeof global.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
+          global.dispatchEvent(
+            new CustomEvent('im:market-rs', { detail: global.InvestingMapMarketRs }),
+          );
+        }
+      } catch (e) {}
+    }
   }
 
   function getMomentumIndices() {
@@ -435,8 +448,16 @@
     return n.toFixed(1);
   }
 
-  function rsColorStyle(n) {
+  function rsColorStyle(n, company) {
     if (n == null || !isFinite(n)) return '';
+    if (global.InvestingMapRsColor && typeof global.InvestingMapRsColor.colorForRs === 'function') {
+      var center =
+        typeof global.InvestingMapRsColor.marketRsFor === 'function'
+          ? global.InvestingMapRsColor.marketRsFor(company)
+          : 50;
+      var col = global.InvestingMapRsColor.colorForRs(n, center);
+      return 'color:' + col + ';font-weight:600';
+    }
     if (n >= 80) return 'color:#059669;font-weight:700';
     if (n >= 60) return 'color:#22c55e;font-weight:600';
     if (n >= 40) return 'color:#facc15';
@@ -447,7 +468,7 @@
     var n = c && typeof c.rs === 'number' ? c.rs : null;
     var text = formatRs(n);
     if (text === '\u2014') return text;
-    return '<span style="' + rsColorStyle(n) + '">' + text + '</span>';
+    return '<span style="' + rsColorStyle(n, c) + '">' + text + '</span>';
   }
 
   function formatSpark20Svg(closes) {

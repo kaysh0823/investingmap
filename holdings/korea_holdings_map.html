@@ -462,10 +462,10 @@
   <script src="../js/map_heatmap.js?v=16"></script>
   <script src="../js/turnover_radius.js?v=2"></script>
   <script src="../js/map_momentum.js?v=16"></script>
-  <script src="../js/rs_color_scale.js?v=1"></script>
-  <script src="../js/map_volatility.js?v=13"></script>
+  <script src="../js/rs_color_scale.js?v=2"></script>
+  <script src="../js/map_volatility.js?v=14"></script>
   <script src="../js/map_perfcalendar.js?v=2"></script>
-  <script src="../js/map_valuation.js?v=7"></script>
+  <script src="../js/map_valuation.js?v=8"></script>
   <script src="../js/map_mobile_table.js?v=9"></script>
   <script src="../js/map_mobile_ux.js?v=8"></script>
   <script src="../js/candle_modal.js?v=36"></script>
@@ -3626,7 +3626,7 @@
         "valuationLoading": "밸류에이션 데이터를 불러오는 중…",
         "valuationFailed": "밸류에이션 스냅샷을 불러오지 못했습니다.",
         "valuationNoData": "표시할 밸류에이션 데이터가 없습니다.",
-        "valuationLegend": "점 크기 = EPS(TTM) · 색 = RS(진할수록 높음) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)",
+        "valuationLegend": "점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)",
         "valuationLegendPer": "PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준",
         "perfCalendarTitle": "퍼포먼스 캘린더",
         "perfCalendarSubtitle": "전년말 종가=100 기준 연중 수익률",
@@ -3642,7 +3642,7 @@
         "perfCalendarOpenChart": "캔들 차트 열기",
         "perfCalendarYearTabs": "연도 선택",
         "volatilityTitle": "변동성 분포",
-        "volatilityHint": "색=20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)",
+        "volatilityHint": "색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)",
         "volatilityAxisAtr": "5일 변동성 (고저폭 ÷ 종가, %)",
         "volatilityAxisMcap": "시가총액(로그)",
         "volatilityAtr": "5일 변동성%",
@@ -3654,13 +3654,13 @@
         "volatilityNoData": "변동성 스냅샷 데이터가 없습니다.",
         "volatilityLegendSize": "크기 = 거래대금",
         "volatilityLegendLines": "세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)",
-        "volatilityLegendPctB": "색 = 20일 %b(진할수록 높음)",
+        "volatilityLegendPctB": "색 = 20일 %b (50 초과 초록 · 미만 빨강)",
         "volatilityLegendChg": "색 = 당일 등락률",
-        "volatilityLegendRs": "색 = RS(진할수록 높음)",
+        "volatilityLegendRs": "색 = RS (시장 RS 초과 초록 · 미만 빨강)",
         "volatilityModePctB": "%b",
         "volatilityModeChg": "당일 등락률",
         "volatilityModeRs": "RS",
-        "volatilityLegend": "크기 = 거래대금 · 색 = 20일 %b(진할수록 높음) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)",
+        "volatilityLegend": "크기 = 거래대금 · 색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)",
         "momentumHint": "RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률",
         "momentumAxisRs": "RS",
         "momentumAxisPosition": "주가 위치",
@@ -3773,7 +3773,7 @@
         "valuationLoading": "Loading valuation data…",
         "valuationFailed": "Could not load valuation snapshot.",
         "valuationNoData": "No valuation data available.",
-        "valuationLegend": "Dot size = EPS(TTM) · color = RS (darker = higher) · dashed lines = market P25/P50/P75 (KRX FY)",
+        "valuationLegend": "Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)",
         "valuationLegendPer": "PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS",
         "perfCalendarTitle": "Performance Calendar",
         "perfCalendarSubtitle": "YTD vs prior year-end=100",
@@ -3789,7 +3789,7 @@
         "perfCalendarOpenChart": "Open candle chart",
         "perfCalendarYearTabs": "Year filter",
         "volatilityTitle": "Volatility Distribution",
-        "volatilityHint": "Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)",
+        "volatilityHint": "Color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)",
         "volatilityAxisAtr": "5D Range Vol (high−low ÷ close, %)",
         "volatilityAxisMcap": "Market cap (log)",
         "volatilityAtr": "5D Range Vol%",
@@ -3801,13 +3801,13 @@
         "volatilityNoData": "No volatility snapshot data available.",
         "volatilityLegendSize": "Size = turnover",
         "volatilityLegendLines": "Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)",
-        "volatilityLegendPctB": "Color = 20D %b (darker = higher)",
+        "volatilityLegendPctB": "Color = 20D %b (green above 50 · red below)",
         "volatilityLegendChg": "Color = 1-day change",
-        "volatilityLegendRs": "Color = RS (darker = higher)",
+        "volatilityLegendRs": "Color = RS (green above market RS · red below)",
         "volatilityModePctB": "%b",
         "volatilityModeChg": "1-day change",
         "volatilityModeRs": "RS",
-        "volatilityLegend": "Size = turnover · Color = 20D %b (darker = higher) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)",
+        "volatilityLegend": "Size = turnover · color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)",
         "momentumHint": "RS × 52W position · size = daily turnover · color = 1-day return",
         "momentumAxisRs": "RS",
         "momentumAxisPosition": "52W price position",

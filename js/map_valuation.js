@@ -1,6 +1,6 @@
 /**
- * Valuation comparison v7 — chain-group PER TTM / FY / PBR / dividend strip.
- * Dot size = EPS(TTM|FY); color = RS (shared rs_color_scale).
+ * Valuation comparison v8 — chain-group PER TTM / FY / PBR / dividend strip.
+ * Dot size = EPS(TTM|FY); color = RS vs market RS (shared rs_color_scale diverging).
  * Snapshot: /data/hub_valuation_snapshot.json (KRX FY + Naver TTM for hub).
  */
 (function (global) {
@@ -59,9 +59,12 @@
       failed: '밸류에이션 스냅샷을 불러오지 못했습니다.',
       noData: '표시할 밸류에이션 데이터가 없습니다.',
       legend:
-        '점 크기 = EPS(TTM) · 색 = RS(진할수록 높음) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
+        '점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
       legendPer:
         'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
+      legendRsLo: '시장 RS 미만',
+      legendRsMid: '시장 RS',
+      legendRsHi: '초과',
       basisClose: function (dd) {
         return '기준 ' + formatDash(dd) + ' · KRX 12021 · 종가 기준';
       },
@@ -73,6 +76,16 @@
       tipPbr: 'PBR',
       tipEpsTtm: 'EPS(TTM)',
       tipRs: 'RS',
+      tipRsVs: function (marketRs, delta) {
+        var sign = delta > 0 ? '+' : '';
+        return (
+          '시장 RS ' +
+          (Math.round(marketRs * 10) / 10).toFixed(1) +
+          ' 대비 ' +
+          sign +
+          (Math.round(delta * 10) / 10).toFixed(1)
+        );
+      },
       tipDvd: '배당수익률',
       tipClose: '종가',
       tipLast: '현재가',
@@ -106,9 +119,12 @@
       failed: 'Could not load valuation snapshot.',
       noData: 'No valuation data available.',
       legend:
-        'Dot size = EPS(TTM) · color = RS (darker = higher) · dashed lines = market P25/P50/P75 (KRX FY)',
+        'Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)',
       legendPer:
         'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
+      legendRsLo: 'Below market RS',
+      legendRsMid: 'Market RS',
+      legendRsHi: 'Above',
       basisClose: function (dd) {
         return 'As of ' + formatDash(dd) + ' · KRX 12021 · close basis';
       },
@@ -120,6 +136,17 @@
       tipPbr: 'PBR',
       tipEpsTtm: 'EPS (TTM)',
       tipRs: 'RS',
+      tipRsVs: function (marketRs, delta) {
+        var sign = delta > 0 ? '+' : '';
+        return (
+          'vs market RS ' +
+          (Math.round(marketRs * 10) / 10).toFixed(1) +
+          ' (' +
+          sign +
+          (Math.round(delta * 10) / 10).toFixed(1) +
+          ')'
+        );
+      },
       tipDvd: 'Div. yield',
       tipClose: 'Close',
       tipLast: 'Last',
@@ -243,6 +270,9 @@
       '#valuation-root{flex:1;min-height:360px;position:relative;min-width:0}' +
       '#valuation-root svg{display:block;width:100%;height:auto}' +
       '#valuation-legend{font-size:12px;color:var(--text-muted,#8b949e);line-height:1.45;padding:0 8px}' +
+      '.valuation-legend-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin-top:6px}' +
+      '.valuation-gradient{display:inline-block;width:120px;height:10px;border-radius:4px;border:1px solid var(--border,#30363d)}' +
+      '.valuation-gradient-label{font-size:11px;color:var(--text-muted,#8b949e)}' +
       '.valuation-tip{position:fixed;z-index:40;pointer-events:none;max-width:260px;background:rgba(22,27,34,.96);border:1px solid var(--border,#30363d);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--text,#e6edf3);box-shadow:0 8px 24px rgba(0,0,0,.35)}' +
       '.valuation-tip b{display:block;margin-bottom:4px}' +
       '.valuation-band-label{font-size:11px;fill:var(--text-muted,#8b949e)}' +
@@ -268,11 +298,15 @@
     return sc(contrastPct(pct, CHG_CLIP));
   }
 
-  function colorForRsDot(rs) {
-    if (global.InvestingMapRsColor && typeof global.InvestingMapRsColor.colorForRs === 'function') {
-      return global.InvestingMapRsColor.colorForRs(rs);
+  function colorForRsDot(d) {
+    if (!global.InvestingMapRsColor || typeof global.InvestingMapRsColor.colorForRs !== 'function') {
+      return MISSING_COLOR;
     }
-    return MISSING_COLOR;
+    var center =
+      typeof global.InvestingMapRsColor.marketRsFor === 'function'
+        ? global.InvestingMapRsColor.marketRsFor(d)
+        : 50;
+    return global.InvestingMapRsColor.colorForRs(d && d.rs, center);
   }
 
   /** Prefer TTM EPS; fall back to FY. */
@@ -812,6 +846,7 @@
         mcap: c.mcapWon > 0 ? c.mcapWon : null,
         chg1dPct: typeof c.chg1dPct === 'number' ? c.chg1dPct : null,
         rs: typeof c.rs === 'number' && isFinite(c.rs) ? c.rs : null,
+        market: c.market || c.Market || '',
         last: typeof c.last === 'number' ? c.last : null,
         value: resolved.value,
         plottable: isPlottable(resolved.value, metric),
@@ -1054,7 +1089,7 @@
           clampDir = 0;
         }
         var r = rScale.radius(d.eps);
-        var fill = colorForRsDot(d.rs);
+        var fill = colorForRsDot(d);
 
         if (clampDir !== 0) {
           var mark = gRoot
@@ -1130,8 +1165,26 @@
 
     var legend = opts.legend || document.getElementById('valuation-legend');
     if (legend) {
+      var gradCss =
+        global.InvestingMapRsColor && typeof global.InvestingMapRsColor.gradientCss === 'function'
+          ? global.InvestingMapRsColor.gradientCss()
+          : 'background:linear-gradient(to right,#f85149,#6e7681,#3fb950)';
       legend.innerHTML =
-        '<div>' + labels.legend + '</div><div style="margin-top:4px">' + labels.legendPer + '</div>';
+        '<div>' +
+        labels.legend +
+        '</div><div class="valuation-legend-row">' +
+        '<span class="valuation-gradient" style="' +
+        gradCss +
+        '" aria-hidden="true"></span>' +
+        '<span class="valuation-gradient-label">' +
+        labels.legendRsLo +
+        ' · ' +
+        labels.legendRsMid +
+        ' · ' +
+        labels.legendRsHi +
+        '</span></div><div style="margin-top:4px">' +
+        labels.legendPer +
+        '</div>';
     }
   }
 
@@ -1185,9 +1238,21 @@
       labels.tipRs +
       ': ' +
       (d.rs != null && isFinite(d.rs) ? (Math.round(d.rs * 10) / 10).toFixed(1) : '—') +
+      (d.rs != null && isFinite(d.rs) && typeof labels.tipRsVs === 'function'
+        ? ' (' +
+          labels.tipRsVs(
+            global.InvestingMapRsColor && global.InvestingMapRsColor.marketRsFor
+              ? global.InvestingMapRsColor.marketRsFor(d)
+              : 50,
+            d.rs -
+              (global.InvestingMapRsColor && global.InvestingMapRsColor.marketRsFor
+                ? global.InvestingMapRsColor.marketRsFor(d)
+                : 50),
+          ) +
+          ')'
+        : '') +
       '<br>' +
-      labels.tipDvd +
-      ': ' +
+      labels.tipDvd +      ': ' +
       formatMetric(q.dvdYld, 'dvd') +
       '% · ' +
       (liveSession ? labels.tipLast : labels.tipClose) +
@@ -1255,6 +1320,17 @@
     global.addEventListener('resize', scheduleRerender);
   }
 
+  var marketRsBound = false;
+  function bindMarketRs() {
+    if (marketRsBound || typeof global.addEventListener !== 'function') return;
+    marketRsBound = true;
+    global.addEventListener('im:market-rs', function () {
+      var tab = document.getElementById('tab-valuation');
+      if (!tab || !tab.classList.contains('active')) return;
+      if (lastOpts) renderChart();
+    });
+  }
+
   /**
    * Pure-ish sync helper for verify (no jsdom required).
    * Sets state.metric and returns active label + chart.metric as if toolbar/chart re-rendered.
@@ -1279,6 +1355,7 @@
     renderToolbar();
     observeContainer(opts.container);
     bindWindowResize();
+    bindMarketRs();
     registerLiveTick();
     renderChart();
   }
