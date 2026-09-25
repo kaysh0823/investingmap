@@ -34,16 +34,31 @@ export function buildFxPayload(rate, asOf = null) {
   };
 }
 
+const NAVER_FX_TIMEOUT_MS = 4000;
+
 /**
  * @returns {Promise<{ rate: number, asOf: string, source: string }>}
  */
 export async function fetchUsdKrwFromNaver() {
-  const res = await fetch(FX_USDKRW_SOURCE, {
-    headers: { 'User-Agent': 'investingmap-fx/1.0' },
-  });
-  if (!res.ok) throw new Error(`naver_fx_http_${res.status}`);
-  const html = await res.text();
-  const rate = parseUsdKrwRate(html);
-  if (rate == null) throw new Error('naver_fx_parse_failed');
-  return buildFxPayload(rate);
+  const ac = new AbortController();
+  const tid = setTimeout(() => {
+    try {
+      ac.abort();
+    } catch {
+      /* ignore */
+    }
+  }, NAVER_FX_TIMEOUT_MS);
+  try {
+    const res = await fetch(FX_USDKRW_SOURCE, {
+      headers: { 'User-Agent': 'investingmap-fx/1.0' },
+      signal: ac.signal,
+    });
+    if (!res.ok) throw new Error(`naver_fx_http_${res.status}`);
+    const html = await res.text();
+    const rate = parseUsdKrwRate(html);
+    if (rate == null) throw new Error('naver_fx_parse_failed');
+    return buildFxPayload(rate);
+  } finally {
+    clearTimeout(tid);
+  }
 }

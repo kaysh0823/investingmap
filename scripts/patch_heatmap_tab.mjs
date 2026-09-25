@@ -317,10 +317,14 @@ function patchMap(rel) {
     'return `<tr data-ticker="${c.ticker}">\n      <td><div class="company-name">'
   );
 
-  if (c.includes("document.getElementById('tab-table')?.classList.contains('active')")) {
+  // Heatmap re-render belongs in immediate INIT (not behind loadFx).
+  if (
+    c.includes("document.body.classList.toggle('im-tab-table'") &&
+    !c.includes("tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80)")
+  ) {
     c = c.replace(
-      /loadFx\(\)\.then\(function \(\) \{\s*document\.body\.classList\.toggle\('im-tab-table', document\.getElementById\('tab-table'\)\?\.classList\.contains\('active'\)\);/,
-      "loadFx().then(function () {\n      document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));\n      if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);"
+      /document\.body\.classList\.toggle\('im-tab-table', document\.getElementById\('tab-table'\)\?\.classList\.contains\('active'\)\);/,
+      "document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));\n      if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);",
     );
   }
 
@@ -439,10 +443,13 @@ if (fs.existsSync(bioTail)) {
     );
     bioChanged = true;
   }
-  if (!bc.includes("tab-heatmap')?.classList.contains('active')")) {
+  if (
+    bc.includes("document.body.classList.toggle('im-tab-table'") &&
+    !bc.includes("tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80)")
+  ) {
     bc = bc.replace(
-      /loadFx\(\)\.then\(function \(\) \{\s*document\.body\.classList\.toggle\('im-tab-table', document\.getElementById\('tab-table'\)\?\.classList\.contains\('active'\)\);/,
-      "loadFx().then(function () {\n      document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));\n      if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);"
+      /document\.body\.classList\.toggle\('im-tab-table', document\.getElementById\('tab-table'\)\?\.classList\.contains\('active'\)\);/,
+      "document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));\n      if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);",
     );
     bioChanged = true;
   }

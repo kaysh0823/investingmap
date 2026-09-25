@@ -35,12 +35,18 @@
 
     let imKrwPerUsd = 1400;
     function loadFx() {
-      return fetch('/api/fx', { cache: 'no-store' })
+      var ac = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var tid = ac ? setTimeout(function () { try { ac.abort(); } catch (e) {} }, 5000) : null;
+      return fetch('/api/fx', { cache: 'no-store', signal: ac ? ac.signal : undefined })
         .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('fx')); })
         .then(function (j) {
-          if (j && typeof j.rate === 'number' && j.rate > 500 && j.rate < 5000) imKrwPerUsd = j.rate;
+          if (j && typeof j.rate === 'number' && j.rate > 500 && j.rate < 5000) {
+            imKrwPerUsd = j.rate;
+            if (document.getElementById('tab-table')?.classList.contains('active') && typeof renderTable === 'function') renderTable();
+          }
         })
-        .catch(function () { /* keep imKrwPerUsd */ });
+        .catch(function () { /* keep imKrwPerUsd */ })
+        .finally(function () { if (tid != null) clearTimeout(tid); });
     }
     function fmtMcapKoJo(won) {
       var mcapFmt = (typeof window !== 'undefined' ? window : globalThis).InvestingMapMcapFmt;
@@ -666,8 +672,7 @@
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
     }
 
-    loadFx().catch(function () { }).finally(function () {
-      if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);
+          if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);
       document.body.classList.toggle('im-tab-table', document.getElementById('tab-table')?.classList.contains('active'));
       if (document.getElementById('tab-heatmap')?.classList.contains('active')) setTimeout(renderHeatmap, 80);
       if (document.getElementById('tab-momentum')?.classList.contains('active')) setTimeout(renderMomentum, 80);
@@ -717,4 +722,4 @@
       } else if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.start) {
         InvestingMapLiveQuotes.start(imQuoteOpts);
       }
-    });
+    loadFx();

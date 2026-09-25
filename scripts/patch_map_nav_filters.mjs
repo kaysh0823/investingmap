@@ -111,20 +111,95 @@ function patchSwitchTab(html) {
   );
 }
 
+const LOAD_FX_FN_OLD =
+  /function loadFx\(\) \{\s*return fetch\('\/api\/fx', \{ cache: 'no-store' \}\)\s*\.then\(function \(r\) \{ return r\.ok \? r\.json\(\) : Promise\.reject\(new Error\('fx'\)\); \}\)\s*\.then\(function \(j\) \{\s*if \(j && typeof j\.rate === 'number' && j\.rate > 500 && j\.rate < 5000\) imKrwPerUsd = j\.rate;\s*\}\)\s*\.catch\(function \(\) \{ \/\* keep imKrwPerUsd \*\/ \}\);\s*\}/;
+
+const LOAD_FX_FN_NEW = `function loadFx() {
+      var ac = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var tid = ac ? setTimeout(function () { try { ac.abort(); } catch (e) {} }, 5000) : null;
+      return fetch('/api/fx', { cache: 'no-store', signal: ac ? ac.signal : undefined })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('fx')); })
+        .then(function (j) {
+          if (j && typeof j.rate === 'number' && j.rate > 500 && j.rate < 5000) {
+            imKrwPerUsd = j.rate;
+            if (document.getElementById('tab-table')?.classList.contains('active') && typeof renderTable === 'function') renderTable();
+          }
+        })
+        .catch(function () { /* keep imKrwPerUsd */ })
+        .finally(function () { if (tid != null) clearTimeout(tid); });
+    }`;
+
+function patchLoadFxFn(html) {
+  if (html.includes('AbortController') && html.includes("fetch('/api/fx'") && /signal:\s*ac/.test(html)) {
+    // Ensure table refresh on FX success (idempotent add if missing).
+    if (!html.includes("imKrwPerUsd = j.rate;\n            if (document.getElementById('tab-table')")) {
+      html = html.replace(
+        /if \(j && typeof j\.rate === 'number' && j\.rate > 500 && j\.rate < 5000\) imKrwPerUsd = j\.rate;/,
+        "if (j && typeof j.rate === 'number' && j.rate > 500 && j.rate < 5000) {\n            imKrwPerUsd = j.rate;\n            if (document.getElementById('tab-table')?.classList.contains('active') && typeof renderTable === 'function') renderTable();\n          }",
+      );
+    }
+    return html;
+  }
+  if (LOAD_FX_FN_OLD.test(html)) {
+    return html.replace(LOAD_FX_FN_OLD, LOAD_FX_FN_NEW);
+  }
+  return html;
+}
+
+/**
+ * Decouple page INIT from /api/fx: run applyInitialTab + renders immediately,
+ * fire loadFx() in parallel (no loadFx().then wrapping INIT).
+ */
+function decoupleLoadFxInit(html) {
+  // loadFx().then(function () { ...INIT... });
+  html = html.replace(
+    /loadFx\(\)\.then\(function \(\) \{\n([\s\S]*?)\n    \}\);/,
+    (full, body) => {
+      let inner = body;
+      if (!inner.includes('InvestingMapTabState.applyInitialTab')) {
+        inner =
+          '      if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);\n' +
+          inner;
+      }
+      return `${inner}\n    loadFx();`;
+    },
+  );
+  // loadFx().catch(...).finally(function () { ...INIT... });
+  html = html.replace(
+    /loadFx\(\)\.catch\(function \(\) \{ \}\)\.finally\(function \(\) \{\n([\s\S]*?)\n    \}\);/,
+    (full, body) => {
+      let inner = body;
+      if (!inner.includes('InvestingMapTabState.applyInitialTab')) {
+        inner =
+          '      if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);\n' +
+          inner;
+      }
+      return `${inner}\n    loadFx();`;
+    },
+  );
+  // Ensure applyInitialTab exists somewhere in INIT if still missing.
+  if (!html.includes('InvestingMapTabState.applyInitialTab')) {
+    html = html.replace(
+      /(\/\/ =+\s*\n\s*\/\/ INIT\s*\n\s*\/\/ =+\s*\n)/,
+      `$1    if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);\n`,
+    );
+  }
+  // Ensure a bare loadFx(); call exists (fire-and-forget after INIT).
+  if (
+    html.includes('function loadFx()') &&
+    !/(?:^|\n)\s*loadFx\(\);\s*(?:\n|$)/.test(html)
+  ) {
+    html = html.replace(
+      /(if \(window\.InvestingMapLiveQuotes && InvestingMapLiveQuotes\.start\) \{\s*\n\s*InvestingMapLiveQuotes\.start\(imQuoteOpts\);\s*\n\s*\})/,
+      `$1\n    loadFx();`,
+    );
+  }
+  return html;
+}
+
 function patchInit(html) {
-  if (html.includes('InvestingMapTabState.applyInitialTab')) return html;
-  if (/loadFx\(\)\.then\(function \(\) \{\s*\n/.test(html)) {
-    return html.replace(
-      /loadFx\(\)\.then\(function \(\) \{\s*\n/,
-      'loadFx().then(function () {\n      if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);\n',
-    );
-  }
-  if (/loadFx\(\)\.catch\(function \(\) \{ \}\)\.finally\(function \(\) \{\s*\n/.test(html)) {
-    return html.replace(
-      /loadFx\(\)\.catch\(function \(\) \{ \}\)\.finally\(function \(\) \{\s*\n/,
-      'loadFx().catch(function () { }).finally(function () {\n      if (window.InvestingMapTabState) InvestingMapTabState.applyInitialTab(switchTab);\n',
-    );
-  }
+  html = patchLoadFxFn(html);
+  html = decoupleLoadFxInit(html);
   return html;
 }
 
