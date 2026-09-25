@@ -1,7 +1,8 @@
 /**
- * Sector editorial intro on industry map pages (AdSense / thin-content compliance).
+ * Sector editorial intro on industry map pages.
  * Paragraph text: lib/sector_editorial.mjs → js/sector_editorial_data.js (IM_SECTOR_EDITORIAL).
  * Static HTML (#im-seo-body) is prerendered from the same source; this script syncs lang / open state.
+ * Lead + how-to stay visible; longer notes open via “산업 해설·출처 보기”.
  */
 (function (global) {
   'use strict';
@@ -11,9 +12,20 @@
     en: 'Sector overview',
   };
 
+  var MORE_LABEL = {
+    ko: '산업 해설·출처 보기',
+    en: 'Show industry notes & sources',
+  };
+
+  var LESS_LABEL = {
+    ko: '해설·출처 접기',
+    en: 'Hide industry notes',
+  };
+
   var EDITORIAL = global.IM_SECTOR_EDITORIAL || {};
 
   var stylesInjected = false;
+  var moreBound = false;
 
   function injectStyles() {
     if (stylesInjected) return;
@@ -21,25 +33,54 @@
     var css =
       'section#map-editorial.geo-summary.map-editorial-collapsible{max-width:none;margin-left:0;margin-right:0;width:100%}' +
       '#map-editorial.map-editorial-collapsible{padding:6px 28px 10px}' +
-      '.map-editorial-details{margin:0}' +
-      '.map-editorial-summary{font-size:15px;font-weight:700;color:var(--text);cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:flex-start;gap:8px;user-select:none;padding:6px 0;margin:0;text-align:left}' +
-      '.map-editorial-summary::-webkit-details-marker{display:none}' +
-      '.map-editorial-summary::before{content:"\\25B8";font-size:11px;color:var(--accent);transition:transform .2s ease;flex-shrink:0}' +
-      '.map-editorial-details[open] .map-editorial-summary::before{transform:rotate(90deg)}' +
-      '.map-editorial-summary:hover{color:var(--accent)}' +
       '.map-editorial-body{padding-top:4px;font-size:13px;line-height:1.55;color:var(--text-muted)}' +
       '.map-editorial-body p{margin:0 0 10px}' +
       '.map-editorial-body p:last-child{margin-bottom:0}' +
       '.map-editorial-body a{color:var(--accent)}' +
+      '.map-editorial-lead,.map-editorial-howto{color:var(--text);font-size:13.5px;line-height:1.55;margin:0 0 8px}' +
+      '.map-editorial-howto{color:var(--text-muted)}' +
+      '.map-editorial-more-btn{display:inline-flex;align-items:center;gap:6px;margin:4px 0 10px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer}' +
+      '.map-editorial-more-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}' +
+      '.map-editorial-detail.is-collapsed{display:none}' +
       '.map-editorial-body .map-editorial-seo{margin:0;padding:0;border:none}' +
-      '.map-editorial-body .map-editorial-seo-title{font-size:14px;font-weight:700;color:var(--text);margin:14px 0 8px}' +
-      '.map-editorial-body .map-editorial-dynamic+.map-editorial-seo .map-editorial-seo-title{margin-top:14px}' +
+      '.map-editorial-body .map-editorial-seo-title{font-size:14px;font-weight:700;color:var(--text);margin:0 0 8px}' +
       '.map-editorial-body .im-seo-keywords,.map-editorial-body .im-seo-snapshot-note{font-size:12px;opacity:.9}' +
-      '.map-editorial-body p[hidden],.map-editorial-body h2[hidden]{display:none}';
+      '.map-editorial-body p[hidden],.map-editorial-body h2[hidden],.map-editorial-more-btn[hidden]{display:none}' +
+      '#map-editorial-panel.is-collapsed{display:block}' +
+      '#map-editorial-panel.is-collapsed .map-editorial-detail.is-collapsed{display:none}' +
+      '#tab-btn-graph[hidden],#tab-btn-graph{display:none!important}';
     var el = document.createElement('style');
     el.id = 'map-editorial-collapsible-css';
     el.textContent = css;
     document.head.appendChild(el);
+  }
+
+  function setDetailExpanded(open) {
+    var detail = document.getElementById('map-editorial-detail');
+    var btns = document.querySelectorAll('.map-editorial-more-btn');
+    if (!detail) return;
+    if (open) detail.classList.remove('is-collapsed');
+    else detail.classList.add('is-collapsed');
+    for (var i = 0; i < btns.length; i++) {
+      var b = btns[i];
+      var lang = b.getAttribute('lang') === 'en' ? 'en' : 'ko';
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      b.textContent = open ? LESS_LABEL[lang] : MORE_LABEL[lang];
+    }
+  }
+
+  function bindMoreButton() {
+    if (moreBound) return;
+    var btns = document.querySelectorAll('.map-editorial-more-btn');
+    if (!btns.length) return;
+    moreBound = true;
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener('click', function () {
+        var detail = document.getElementById('map-editorial-detail');
+        var open = detail && !detail.classList.contains('is-collapsed');
+        setDetailExpanded(!open);
+      });
+    }
   }
 
   function detachSeoBlock(root) {
@@ -59,37 +100,15 @@
   }
 
   function seoHasParagraphs(seoEl) {
-    return !!(seoEl && seoEl.querySelectorAll('.im-seo-body-p').length >= 2);
+    return !!(
+      seoEl &&
+      (seoEl.querySelectorAll('.im-seo-body-p').length >= 1 ||
+        seoEl.querySelectorAll('.im-seo-lead').length >= 1)
+    );
   }
 
   function ensureCollapsible(section) {
     if (!section) return;
-    if (section.querySelector('.map-editorial-details')) {
-      section.classList.add('map-editorial-collapsible');
-      var existing = section.querySelector('.map-editorial-details');
-      if (existing) existing.open = true;
-      return;
-    }
-    var titleEl = document.getElementById('map-editorial-title');
-    var bodyEl = document.getElementById('map-editorial-body');
-    if (!titleEl || !bodyEl) return;
-    if (document.getElementById('map-editorial-panel')) return;
-    if (!section.contains(titleEl) || !section.contains(bodyEl)) return;
-
-    var details = document.createElement('details');
-    details.className = 'map-editorial-details';
-    details.open = true;
-
-    var summary = document.createElement('summary');
-    summary.className = 'map-editorial-summary';
-    summary.id = 'map-editorial-title';
-
-    details.appendChild(summary);
-    details.appendChild(bodyEl);
-    bodyEl.classList.add('map-editorial-body');
-
-    section.insertBefore(details, titleEl);
-    titleEl.remove();
     section.classList.add('map-editorial-collapsible');
   }
 
@@ -117,30 +136,45 @@
     if (bodyEl) {
       var seoBlock = bodyEl.querySelector('#im-seo-body') || section.querySelector('#im-seo-body');
       if (seoHasParagraphs(seoBlock)) {
-        // Prefer prerendered #im-seo-body (same source as SECTOR_EDITORIAL) — avoid duplicate paragraphs.
         var dyn = bodyEl.querySelector('.map-editorial-dynamic');
         if (dyn) dyn.remove();
         syncSeoLang(seoBlock, lang);
       } else if (data) {
         var block = data[lang] || data.en;
         seoBlock = detachSeoBlock(bodyEl) || detachSeoBlock(section);
-        var editorialHtml = block.paragraphs
+        var parts = [];
+        if (block.lead) parts.push('<p class="map-editorial-lead">' + block.lead + '</p>');
+        if (block.howTo) parts.push('<p class="map-editorial-howto">' + block.howTo + '</p>');
+        var detailPs = (block.paragraphs || [])
           .map(function (p) {
-            return '<p>' + p + '</p>';
+            return '<p class="im-seo-detail">' + p + '</p>';
           })
           .join('');
-        bodyEl.innerHTML = '<div class="map-editorial-dynamic">' + editorialHtml + '</div>';
+        parts.push(
+          '<div class="map-editorial-detail-wrap">' +
+            '<button type="button" class="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="' +
+            lang +
+            '">' +
+            MORE_LABEL[lang] +
+            '</button>' +
+            '<div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">' +
+            detailPs +
+            '</div></div>',
+        );
+        bodyEl.innerHTML = '<div class="map-editorial-dynamic">' + parts.join('') + '</div>';
+        moreBound = false;
         if (seoBlock) {
           bodyEl.appendChild(seoBlock);
           syncSeoLang(seoBlock, lang);
         }
       }
     }
+    bindMoreButton();
     section.setAttribute('lang', lang);
     section.classList.add('map-editorial-ready');
   }
 
-  global.InvestingMapEditorial = { render: render };
+  global.InvestingMapEditorial = { render: render, setDetailExpanded: setDetailExpanded };
 
   document.addEventListener('DOMContentLoaded', function () {
     render(imLang());

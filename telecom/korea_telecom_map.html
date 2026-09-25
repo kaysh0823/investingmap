@@ -220,7 +220,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -233,7 +233,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2018,15 +2018,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">통신서비스·무선장비·광통신·위성통신 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean telecom services and equipment stocks</h2>
-    <p lang="ko" class="im-seo-body-p">통신 지도는 국내 상장사를 통신서비스, 무선장비, 광통신, 위성통신으로 나누어 네트워크 밸류체인을 비교합니다. 시장·시가총액·PER·PBR은 KRX 데이터 기준이며, 사업 유형과 제품은 DART 사업보고서의 주요 사업 설명을 요약했습니다.</p>
-    <p lang="ko" class="im-seo-body-p">통신서비스는 가입자 경쟁, 주파수 정책, 설비투자와 데이터센터 수요에 영향을 받고 장비사는 5G 투자, 광전송 증설과 위성망 구축 사이클에 민감합니다. 글로벌 그래프 연결은 Verizon·Ericsson·Ciena 등 동종 peer 참고 관계이며 실제 납품이나 계약을 뜻하지 않습니다.</p>
-    <p lang="ko" class="im-seo-body-p">주파수·보안·통신요금 규제와 고객사 투자 일정은 빠르게 변합니다. 본 콘텐츠는 정보 제공 목적이며 투자 권유가 아니므로 과학기술정보통신부 자료, DART 공시와 기업 IR을 확인하고 <a href="../disclaimer.html">면책 고지</a>를 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The telecom map groups listed Korean companies into telecom services, wireless equipment, optical communications, and satellite communications. Market, market cap, PER, and PBR follow KRX data; business and product descriptions summarize principal activities in DART annual reports.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Operators are exposed to subscriber competition, spectrum policy, network capex, and data-center demand, while equipment suppliers track 5G, optical-transport, and satellite-network investment cycles. Global links to Verizon, Ericsson, Ciena, and others are peer references and do not imply supply or contractual relationships.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Spectrum, security, tariff regulation, and customer investment schedules can change quickly. This content is informational and not investment advice; check ministry releases, DART filings, and company IR and see our <a href="../disclaimer.html">disclaimer</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">통신 지도는 국내 상장사를 통신서비스, 무선장비, 광통신, 위성통신으로 나누어 네트워크 밸류체인을 비교합니다. 시장·시가총액·PER·PBR은 KRX 데이터 기준이며, 사업 유형과 제품은 DART 사업보고서의 주요 사업 설명을 요약했습니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>The telecom map groups listed Korean companies into telecom services, wireless equipment, optical communications, and satellite communications. Market, market cap, PER, and PBR follow KRX data; business and product descriptions summarize principal activities in DART annual reports.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">통신서비스는 가입자 경쟁, 주파수 정책, 설비투자와 데이터센터 수요에 영향을 받고 장비사는 5G 투자, 광전송 증설과 위성망 구축 사이클에 민감합니다. 글로벌 그래프 연결은 Verizon·Ericsson·Ciena 등 동종 peer 참고 관계이며 실제 납품이나 계약을 뜻하지 않습니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">주파수·보안·통신요금 규제와 고객사 투자 일정은 빠르게 변합니다. 본 콘텐츠는 정보 제공 목적이며 투자 권유가 아니므로 과학기술정보통신부 자료, DART 공시와 기업 IR을 확인하고 <a href="../disclaimer.html">면책 고지</a>를 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Operators are exposed to subscriber competition, spectrum policy, network capex, and data-center demand, while equipment suppliers track 5G, optical-transport, and satellite-network investment cycles. Global links to Verizon, Ericsson, Ciena, and others are peer references and do not imply supply or contractual relationships.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Spectrum, security, tariff regulation, and customer investment schedules can change quickly. This content is informational and not investment advice; check ministry releases, DART filings, and company IR and see our <a href="../disclaimer.html">disclaimer</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 통신 관련주, 5G, 광통신, 무선장비, 위성통신</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean telecom stocks, 5G, optical networking, wireless, satellite communications</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

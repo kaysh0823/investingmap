@@ -316,7 +316,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -329,7 +329,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2114,15 +2114,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">완성차·부품·타이어·전장 등 자동차 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean auto OEMs, parts, tires &amp; electronics</h2>
-    <p lang="ko" class="im-seo-body-p">완성차, 부품, 타이어, 전장·ADAS 등 국내 상장 자동차 밸류체인을 정리합니다. 현대차·기아·현대모비스·한국타이어 등 대표 종목의 시가총액·PER·PBR과 글로벌 OEM·부품 peer 참고 관계를 한 페이지에서 비교할 수 있습니다.</p>
-    <p lang="ko" class="im-seo-body-p">자동차주는 글로벌 수요·환율·원자재·전동화·ADAS 투자 사이클에 민감합니다. 표의 세부 유형·주요 사업 열에서 완성차·부품·타이어·전장 mix를 확인하세요.</p>
-    <p lang="ko" class="im-seo-body-p">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 공시와 산업 통계를 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map covers listed Korean OEMs, auto parts, tires, and electronics/ADAS names. Compare KRX metrics and illustrative global OEM and parts peer relationships for Hyundai Motor, Kia, Hyundai Mobis, Hankook Tire, and peers.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Auto stocks track global demand, FX, materials, electrification, and ADAS investment cycles. Use segment and product columns for business mix.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Informational only—not investment advice. Cross-check filings and industry data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">완성차, 부품, 타이어, 전장·ADAS 등 국내 상장 자동차 밸류체인을 정리합니다. 현대차·기아·현대모비스·한국타이어 등 대표 종목의 시가총액·PER·PBR과 글로벌 OEM·부품 peer 참고 관계를 한 페이지에서 비교할 수 있습니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>This map covers listed Korean OEMs, auto parts, tires, and electronics/ADAS names. Compare KRX metrics and illustrative global OEM and parts peer relationships for Hyundai Motor, Kia, Hyundai Mobis, Hankook Tire, and peers.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">자동차주는 글로벌 수요·환율·원자재·전동화·ADAS 투자 사이클에 민감합니다. 표의 세부 유형·주요 사업 열에서 완성차·부품·타이어·전장 mix를 확인하세요.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 공시와 산업 통계를 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Auto stocks track global demand, FX, materials, electrification, and ADAS investment cycles. Use segment and product columns for business mix.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Informational only—not investment advice. Cross-check filings and industry data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 자동차 관련주, 완성차, 부품, 타이어, 전장, ADAS</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean auto stocks, OEM, parts, tires, ADAS</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

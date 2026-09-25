@@ -23,13 +23,13 @@ const OLD_HOST_RE = /https?:\/\/(?:www\.)?investing-kr\.com/gi;
 const NON_WWW_MAP_RE = /https?:\/\/investingmap\.kr(?=\/|"|'|$)/gi;
 
 const HUB_DESCRIPTION_EN =
-  'Hub for ten Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks for semiconductor, energy, power grid, finance, construction, shipbuilding, defense, K-culture, bio, and robotics.';
+  'Hub for 26 Korean industry maps: listed KOSPI/KOSDAQ companies, value-chain labels, KRX market cap, PER, PBR, and analysis tabs (heatmap, momentum, volatility, valuation, performance calendar).';
 
 const HUB_OG_DESCRIPTION_EN =
-  'Hub for ten Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX market cap, PER, PBR, and relationship networks.';
+  'Hub for 26 Korean industry maps: listed KOSPI/KOSDAQ companies, value chains, KRX metrics, and analysis tabs.';
 
 const HUB_LD_DESCRIPTION_EN =
-  'Interactive maps of Korean listed companies across ten sectors: semiconductor, energy, power grid, finance, construction, shipbuilding, defense, K-culture, bio, and robotics.';
+  'Interactive maps of Korean listed companies across 26 sector maps: semiconductors, batteries, robotics, finance, shipbuilding, defense, bio, and more.';
 
 const TEXT_EXT = new Set(['.html', '.xml', '.txt', '.json', '.js', '.mjs', '.md']);
 const SKIP_DIRS = new Set([
@@ -145,13 +145,12 @@ function patchIndexHubCopy(html) {
 }
 
 function patchAboutCopy(html) {
-  return html.replace(
-    /<strong>여덟 개 산업<\/strong>/,
-    '<strong>열 개 산업</strong>',
-  ).replace(
-    /반도체, 바이오, 조선·해양, 방산·우주, 로봇·피지컬AI, 에너지, 전력설비, K컬처 등/,
-    '반도체, 에너지, 전력설비, 금융, 건설, 조선·해양, 방산·우주, K컬처, 바이오, 로봇·피지컬AI 등',
-  );
+  return html
+    .replace(/<strong>여덟 개 산업<\/strong>/g, '<strong>26개 산업 지도</strong>')
+    .replace(/<strong>열 개 산업<\/strong>/g, '<strong>26개 산업 지도</strong>')
+    .replace(/<strong>열한 개 산업<\/strong>/g, '<strong>26개 산업 지도</strong>')
+    .replace(/<strong>ten industries<\/strong>/gi, '<strong>26 industry maps</strong>')
+    .replace(/<strong>eleven industries<\/strong>/gi, '<strong>26 industry maps</strong>');
 }
 
 function processFile(file) {

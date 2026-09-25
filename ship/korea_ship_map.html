@@ -256,7 +256,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -269,7 +269,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2054,15 +2054,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">조선·기자재 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean shipbuilding &amp; marine equipment stocks</h2>
-    <p lang="ko" class="im-seo-body-p">조선소, 엔진·기자재, 철강·용접, 해양플랜트 등 조선·기자재 밸류체인에 속한 상장사를 묶어 보여 줍니다. 해운·물류는 별도 해운·물류 지도를 참고하세요. 수주 잔량·선종 mix는 각 기업 설명에 반영하되, 실시간 수주 공시는 별도로 확인해야 합니다.</p>
-    <p lang="ko" class="im-seo-body-p">조선·기자재는 LNG선·컨테이너선 사이클과 환율, 원자재 가격에 민감합니다. 표의 주가 위치는 52주 구간 대비 현재가를 백분율로 나타내며, 동종 업체 간 상대적 위치 비교에 유용합니다. 글로벌 조선 peer와의 참고 관계는 그래프에서 회색·실선으로 구분됩니다.</p>
-    <p lang="ko" class="im-seo-body-p">편집 분류 기준과 데이터 출처는 <a href="../editorial-policy.html">편집·검증 정책</a>에 정리되어 있습니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Listed companies across shipbuilding and marine equipment—yards, engines, steel and welding, offshore—are grouped on this map. Shipping and logistics names are on the separate Shipping &amp; Logistics map. Order backlog and vessel-mix themes are reflected in company notes; verify real-time order disclosures separately.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Shipbuilding is sensitive to LNG and container-ship cycles, FX, and raw-material prices. The 52-week range column shows where the last price sits within the 52-week high/low as a percentage, useful for comparing peers. Reference relationships to global yard peers are shown as gray and solid lines in the graph.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Classification rules and data sources are described in our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">조선소, 엔진·기자재, 철강·용접, 해양플랜트 등 조선·기자재 밸류체인에 속한 상장사를 묶어 보여 줍니다. 해운·물류는 별도 해운·물류 지도를 참고하세요. 수주 잔량·선종 mix는 각 기업 설명에 반영하되, 실시간 수주 공시는 별도로 확인해야 합니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>Listed companies across shipbuilding and marine equipment—yards, engines, steel and welding, offshore—are grouped on this map. Shipping and logistics names are on the separate Shipping &amp; Logistics map. Order backlog and vessel-mix themes are reflected in company notes; verify real-time order disclosures separately.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">조선·기자재는 LNG선·컨테이너선 사이클과 환율, 원자재 가격에 민감합니다. 표의 주가 위치는 52주 구간 대비 현재가를 백분율로 나타내며, 동종 업체 간 상대적 위치 비교에 유용합니다. 글로벌 조선 peer와의 참고 관계는 그래프에서 회색·실선으로 구분됩니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">편집 분류 기준과 데이터 출처는 <a href="../editorial-policy.html">편집·검증 정책</a>에 정리되어 있습니다.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Shipbuilding is sensitive to LNG and container-ship cycles, FX, and raw-material prices. The 52-week range column shows where the last price sits within the 52-week high/low as a percentage, useful for comparing peers. Reference relationships to global yard peers are shown as gray and solid lines in the graph.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Classification rules and data sources are described in our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 조선 관련주, 조선기자재, LNG선</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean shipbuilding stocks, marine equipment, LNG carriers</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

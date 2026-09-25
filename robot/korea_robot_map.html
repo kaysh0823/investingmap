@@ -256,7 +256,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -269,7 +269,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2179,15 +2179,25 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">로봇·피지컬AI·공장자동화 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean robotics &amp; physical AI stocks</h2>
-    <p lang="ko" class="im-seo-body-p">공장 자동화, 물류 AMR, 협동로봇, 감속기·서보, 비전·센싱, 피지컬AI 소프트웨어 등 로봇·자동화 생태계의 상장사를 섹터별로 분류합니다. 국내 대기업 계열·스타트업 IPO 종목이 혼재하므로 시총 규모와 KOSPI/KOSDAQ 구분을 함께 보는 것이 좋습니다.</p>
-    <p lang="ko" class="im-seo-body-p">로봇은 설비투자 사이클과 제조업 PMI, 자동차·전자 대기업 capex와 연동됩니다. 그래프는 국내외 장비사·SI·글로벌 로봇 OEM과의 참고 관계를 보여 주며, 실제 납품 비중은 공시에 따라 달라질 수 있습니다.</p>
-    <p lang="ko" class="im-seo-body-p">편집 정책 등은 <a href="../authors.html">편집·데이터 팀</a> 페이지를 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Listed companies in the robotics and automation ecosystem—factory automation, logistics AMRs, cobots, reducers and servos, vision and sensing, Physical AI software—are classified by sector. Large chaebol affiliates and startup IPOs sit side by side, so compare market cap and KOSPI vs KOSDAQ segment together.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Robotics tracks equipment-investment cycles, manufacturing PMI, and capex at major auto and electronics groups. The graph shows illustrative ties to domestic and overseas equipment makers, integrators, and global robot OEMs; actual delivery mix follows filings.</p>
-    <p lang="en" class="im-seo-body-p" hidden>For editorial policy and related information, see our <a href="../authors.html">editorial &amp; data team</a> page.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">로봇·피지컬AI 지도는 공장 자동화, 물류 AMR, 협동로봇, 감속기·서보, 비전·센싱, 소프트웨어 등 상장사를 섹터로 나눠 KRX 지표를 비교합니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>The robotics / Physical AI map groups listed Korean names across factory automation, logistics AMRs, cobots, reducers/servos, vision/sensing, and software for KRX comparison.</p>
+    <p lang="ko" class="im-seo-howto map-editorial-howto">히트맵·표로 규모와 체인을 본 뒤, 모멘텀으로 상대 강도, 밸류에이션으로 배수 분포를 확인하세요. 설비투자·제조업 경기에 민감하므로 공시의 수주·고객 비중을 함께 봅니다. 관계 네트워크 탭은 공개 메뉴에 없습니다.</p>
+    <p lang="en" class="im-seo-howto map-editorial-howto" hidden>Scan heatmap and table by chain, then use momentum and valuation tabs. Capex and manufacturing cycles matter—check filings for orders and customer mix. The relationship-network tab is not in the public menu.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">밸류체인 예시는 모션·감속기·서보 → 비전·센싱 → 로봇 본체·AMR·협동로봇 → SI·소프트웨어로 이어질 수 있습니다. 대기업 계열과 중소형 IPO가 혼재하므로 시총·KOSPI/KOSDAQ 구분을 함께 보세요. 대표 그룹은 종목당 1곳입니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">분류는 공시된 주력 제품·사업을 기준으로 하며, 납품 비중·독점 공급을 공시 없이 단정하지 않습니다. 글로벌 OEM·SI와의 연결은 동종·수요 참고일 수 있으며, 확인된 계약과 구분합니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">한계: 로봇 테마는 실적 가시화가 느릴 수 있고, PER만으로 비교하기 어렵습니다. 출처: &lt;a href=&quot;https://data.krx.co.kr/&quot; rel=&quot;noopener&quot;&gt;KRX&lt;/a&gt;, &lt;a href=&quot;https://dart.fss.or.kr/&quot; rel=&quot;noopener&quot;&gt;DART&lt;/a&gt;, data/ CSV, <a href="../editorial-policy.html">편집·검증 정책</a>, <a href="../authors.html">편집·데이터 팀</a>. 정보 제공 목적이며 투자 권유가 아닙니다.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>A simplified stack runs motion/reducers/servos → vision/sensing → robot bodies/AMRs/cobots → SI/software. Chaebol affiliates and smaller IPOs sit side by side—compare market cap and KOSPI vs KOSDAQ. One primary group per ticker.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Labels follow disclosed products/business lines; we do not assert exclusive supply without filings. Links to global OEMs or SIs may be peer/demand references, not confirmed contracts.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Limits: theme stocks can lag earnings visibility; PER alone is a weak comparator. Sources: &lt;a href=&quot;https://data.krx.co.kr/&quot; rel=&quot;noopener&quot;&gt;KRX&lt;/a&gt;, &lt;a href=&quot;https://dart.fss.or.kr/&quot; rel=&quot;noopener&quot;&gt;DART&lt;/a&gt;, data/ CSVs, <a href="../editorial-policy.html">editorial policy</a>, <a href="../authors.html">editorial team</a>. Informational only.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 로봇 관련주, 피지컬AI, AMR, 협동로봇</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean robotics stocks, Physical AI, AMR, cobots</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

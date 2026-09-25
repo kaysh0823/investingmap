@@ -74,6 +74,10 @@ const PANEL_CSS = `
       transform: rotate(180deg)
     }
     .map-editorial-panel.is-collapsed {
+      /* Lead/how-to stay visible; long notes use #map-editorial-detail.is-collapsed */
+      display: block
+    }
+    .map-editorial-detail.is-collapsed {
       display: none
     }
     .map-editorial-title-sr {
@@ -91,14 +95,10 @@ const PANEL_CSS = `
 
 function convertDetailsToPanel(html) {
   if (html.includes('id="map-editorial-panel"')) {
-    // Ensure default collapsed class present.
+    // Panel shell stays visible so lead/how-to remain readable.
     html = html.replace(
-      /id="map-editorial-panel" class="map-editorial-panel"/,
-      'id="map-editorial-panel" class="map-editorial-panel is-collapsed"',
-    );
-    html = html.replace(
-      /id="map-editorial-panel" class="map-editorial-panel is-collapsed is-collapsed"/,
-      'id="map-editorial-panel" class="map-editorial-panel is-collapsed"',
+      /id="map-editorial-panel" class="map-editorial-panel"/g,
+      'id="map-editorial-panel" class="map-editorial-panel"',
     );
     return html;
   }

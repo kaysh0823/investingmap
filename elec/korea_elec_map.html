@@ -340,7 +340,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -353,7 +353,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2138,15 +2138,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">가전·디스플레이·전자부품·전선 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean electrical and electronics stocks</h2>
-    <p lang="ko" class="im-seo-body-p">전기·전자 지도는 국내 상장사를 가전, 디스플레이, 카메라·모듈, 전자부품, 전선·케이블로 나눠 비교합니다. 삼성전기와 LG이노텍은 반도체 부품/기판 체인에서 옮겨 왔으며, 시가총액·PER·PBR과 시장 구분은 KRX 데이터 기준입니다.</p>
-    <p lang="ko" class="im-seo-body-p">가전·디스플레이는 소비 수요와 패널 가격에, 전자부품은 스마트폰·전장 사이클과 MLCC 재고에 민감합니다. 그래프의 Sony·Murata·Bosch 연결은 동종 사업 비교를 위한 peer 참고선이며 납품이나 계약을 뜻하지 않습니다.</p>
-    <p lang="ko" class="im-seo-body-p">전선은 전력설비 섹터의 대한전선과 사업이 겹칠 수 있고, 부품사는 반도체 기판·테스트 체인과도 인접합니다. 본 페이지는 정보 제공 목적이며 투자 권유가 아니므로 DART 공시와 <a href="../disclaimer.html">면책 고지</a>를 확인하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The electrical and electronics map groups listed Korean companies into appliances, displays, camera modules, electronic components, and cables. Samsung Electro-Mechanics and LG Innotek were moved from the semiconductor substrate chain; market cap, PER, PBR, and market segment follow KRX data.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Appliances and displays track consumer demand and panel prices, while components are sensitive to smartphone and auto-electronics cycles and MLCC inventories. Links to Sony, Murata, and Bosch are peer references and do not imply supply or contracts.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Cable names can overlap thematically with power-equipment listings, and component makers sit next to semiconductor substrate and test chains. This page is informational and not investment advice; check DART filings and our <a href="../disclaimer.html">disclaimer</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">전기·전자 지도는 국내 상장사를 가전, 디스플레이, 카메라·모듈, 전자부품, 전선·케이블로 나눠 비교합니다. 삼성전기와 LG이노텍은 반도체 부품/기판 체인에서 옮겨 왔으며, 시가총액·PER·PBR과 시장 구분은 KRX 데이터 기준입니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>The electrical and electronics map groups listed Korean companies into appliances, displays, camera modules, electronic components, and cables. Samsung Electro-Mechanics and LG Innotek were moved from the semiconductor substrate chain; market cap, PER, PBR, and market segment follow KRX data.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">가전·디스플레이는 소비 수요와 패널 가격에, 전자부품은 스마트폰·전장 사이클과 MLCC 재고에 민감합니다. 그래프의 Sony·Murata·Bosch 연결은 동종 사업 비교를 위한 peer 참고선이며 납품이나 계약을 뜻하지 않습니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">전선은 전력설비 섹터의 대한전선과 사업이 겹칠 수 있고, 부품사는 반도체 기판·테스트 체인과도 인접합니다. 본 페이지는 정보 제공 목적이며 투자 권유가 아니므로 DART 공시와 <a href="../disclaimer.html">면책 고지</a>를 확인하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Appliances and displays track consumer demand and panel prices, while components are sensitive to smartphone and auto-electronics cycles and MLCC inventories. Links to Sony, Murata, and Bosch are peer references and do not imply supply or contracts.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Cable names can overlap thematically with power-equipment listings, and component makers sit next to semiconductor substrate and test chains. This page is informational and not investment advice; check DART filings and our <a href="../disclaimer.html">disclaimer</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 전기전자 관련주, 가전, 디스플레이, 전자부품, MLCC</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean electronics stocks, appliances, display, electronic components, MLCC</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

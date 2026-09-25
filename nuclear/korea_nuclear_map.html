@@ -214,7 +214,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -227,7 +227,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2012,15 +2012,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">원전·SMR 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean nuclear and SMR listed stocks</h2>
-    <p lang="ko" class="im-seo-body-p">원전 지도는 원자로·주기기, 설계·EPC, 운영·정비, 계측·보조기기 및 SMR 관련 상장사를 별도 섹터로 정리합니다. 기존 전력설비 지도에 포함되어 있던 원전 기자재·정비 기업을 분리해 원전 밸류체인을 더 직접적으로 볼 수 있게 했습니다.</p>
-    <p lang="ko" class="im-seo-body-p">원전 관련주는 국내 전력정책, 해외 원전 수주, SMR 기술 상용화, 규제 승인 일정에 민감합니다. 표의 KRX 지표와 52주 가격 위치는 상대 비교용이며, 그래프의 글로벌 관계는 원전 기자재·설계·정비 peer를 이해하기 위한 참고 연결입니다.</p>
-    <p lang="ko" class="im-seo-body-p">원전 프로젝트는 장기 계약과 규제 리스크가 큽니다. 본 콘텐츠는 투자 권유가 아니며, 한국수력원자력·산업부·DART 공시 등 1차 자료를 반드시 확인하시기 바랍니다.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The nuclear map groups listed Korean companies in reactors and major components, design and EPC, operations and maintenance, instrumentation, auxiliary equipment, and SMR themes. Nuclear component and maintenance names previously inside the power-equipment map are now separated for a clearer value-chain view.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Nuclear stocks are sensitive to domestic power policy, overseas plant orders, SMR commercialization, and regulatory approvals. KRX metrics and 52-week position are for comparison; graph relationships are reference links for nuclear equipment, design, and O&amp;M peers.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Nuclear projects involve long contracts and regulatory risk. This content is not investment advice; verify primary sources such as KHNP, ministry releases, and DART filings.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">원전 지도는 원자로·주기기, 설계·EPC, 운영·정비, 계측·보조기기 및 SMR 관련 상장사를 별도 섹터로 정리합니다. 기존 전력설비 지도에 포함되어 있던 원전 기자재·정비 기업을 분리해 원전 밸류체인을 더 직접적으로 볼 수 있게 했습니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>The nuclear map groups listed Korean companies in reactors and major components, design and EPC, operations and maintenance, instrumentation, auxiliary equipment, and SMR themes. Nuclear component and maintenance names previously inside the power-equipment map are now separated for a clearer value-chain view.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">원전 관련주는 국내 전력정책, 해외 원전 수주, SMR 기술 상용화, 규제 승인 일정에 민감합니다. 표의 KRX 지표와 52주 가격 위치는 상대 비교용이며, 그래프의 글로벌 관계는 원전 기자재·설계·정비 peer를 이해하기 위한 참고 연결입니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">원전 프로젝트는 장기 계약과 규제 리스크가 큽니다. 본 콘텐츠는 투자 권유가 아니며, 한국수력원자력·산업부·DART 공시 등 1차 자료를 반드시 확인하시기 바랍니다.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Nuclear stocks are sensitive to domestic power policy, overseas plant orders, SMR commercialization, and regulatory approvals. KRX metrics and 52-week position are for comparison; graph relationships are reference links for nuclear equipment, design, and O&amp;M peers.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Nuclear projects involve long contracts and regulatory risk. This content is not investment advice; verify primary sources such as KHNP, ministry releases, and DART filings.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 원전, SMR, 원자로, 원전 기자재, 원전 정비</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean nuclear stocks, SMR, reactors, nuclear components, O&amp;M</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

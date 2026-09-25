@@ -95,6 +95,17 @@
   function setEditorialExpanded(btn, panel, expanded) {
     if (!btn || !panel) return;
     btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    // Prefer detail region so summary stay visible.
+    var detail = document.getElementById('map-editorial-detail');
+    if (detail) {
+      if (expanded) detail.classList.remove('is-collapsed');
+      else detail.classList.add('is-collapsed');
+      if (global.InvestingMapEditorial && typeof global.InvestingMapEditorial.setDetailExpanded === 'function') {
+        global.InvestingMapEditorial.setDetailExpanded(expanded);
+      }
+      panel.classList.remove('is-collapsed');
+      return;
+    }
     if (expanded) panel.classList.remove('is-collapsed');
     else panel.classList.add('is-collapsed');
   }
@@ -205,7 +216,9 @@
       '.map-title-toggle h1{flex:1;min-width:0;margin:0}' +
       '.map-title-chevron{flex-shrink:0;margin-top:.35em;font-size:.7em;line-height:1;color:var(--text-muted);transition:transform .15s ease}' +
       '.map-title-toggle[aria-expanded="true"] .map-title-chevron{transform:rotate(180deg)}' +
-      '.map-editorial-panel.is-collapsed{display:none}' +
+      /* Panel stays visible so lead/how-to remain readable; detail uses its own collapse. */
+      '.map-editorial-panel.is-collapsed{display:block}' +
+      '.map-editorial-detail.is-collapsed{display:none}' +
       '.map-editorial-title-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}' +
       '@media (min-width:769px){' +
       '.header>.im-map-topbar{border:none;padding:0;margin:0;background:transparent}' +

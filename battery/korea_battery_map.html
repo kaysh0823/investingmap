@@ -310,7 +310,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -323,7 +323,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2136,15 +2136,25 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">2차전지·배터리 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean battery value chain &amp; listed stocks</h2>
-    <p lang="ko" class="im-seo-body-p">2차전지·배터리 지도는 국내 상장사를 셀, 소재, 장비, 부품, ESS 밸류체인으로 나누어 비교합니다. LG에너지솔루션·삼성SDI 같은 셀 업체부터 양극재·전해질·분리막·동박·제조장비 기업, 그리고 ESS·PCS·연료전지 노출 기업까지 한 화면에서 확인할 수 있습니다.</p>
-    <p lang="ko" class="im-seo-body-p">배터리·ESS 밸류체인은 전기차·에너지저장 수요, 리튬·니켈 등 원자재 가격, 전력망 연계 프로젝트, 고객사 증설 계획에 민감합니다. 표의 시가총액·PER·PBR과 52주 가격 위치는 KRX 데이터 기준이며, 관계 그래프는 공개 자료를 바탕으로 한 참고 네트워크입니다.</p>
-    <p lang="ko" class="im-seo-body-p">본 페이지는 배터리·ESS 산업 구조를 파악하기 위한 정보 제공 자료이며 투자 권유가 아닙니다. 소재 가격과 수주·증설·ESS 프로젝트 공시는 변동성이 크므로 DART 공시와 기업 IR 자료를 함께 확인하고, 갱신 기준은 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The battery map groups listed Korean companies by cells, materials, equipment, parts, and ESS. It covers cell makers such as LG Energy Solution and Samsung SDI as well as cathode, electrolyte, separator, copper-foil, and manufacturing-equipment suppliers, plus ESS, PCS, and fuel-cell exposure.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Battery and ESS value chains are sensitive to EV and energy-storage demand, lithium and nickel prices, grid-linked projects, and customer capacity plans. Market cap, PER, PBR, and 52-week position follow KRX data; the relationship graph is an editorial reference network based on public information.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This page is informational only and is not investment advice. Material prices, orders, capacity-expansion, and ESS project disclosures can change quickly, so cross-check DART filings and company IR; see our <a href="../editorial-policy.html">editorial policy</a> for update cadence.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">2차전지·배터리 지도는 셀·소재·장비·부품·ESS 밸류체인으로 국내 상장사를 나눠, 시총 하한 이상 종목의 KRX 지표와 산업 위치를 비교합니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>The battery map groups listed Korean names by cells, materials, equipment, parts, and ESS so you can compare KRX metrics above the market-cap floor.</p>
+    <p lang="ko" class="im-seo-howto map-editorial-howto">사용 예: 히트맵으로 시총·등락을 보고, 표에서 셀/소재/장비 등 체인별로 정렬한 뒤, 밸류에이션 탭에서 PER·PBR·배당 분포를, 모멘텀·변동성 탭에서 RS·고저폭을 확인하세요. 관계 네트워크 탭은 현재 공개되지 않습니다.</p>
+    <p lang="en" class="im-seo-howto map-editorial-howto" hidden>Use the heatmap for size and daily moves, sort the table by chain, then check valuation for multiples and momentum/volatility for RS and range. The relationship-network tab is not publicly listed while under revision.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">밸류체인 흐름은 양극·음극·전해질·분리막·동박 등 소재 → 전극·조립·검사 장비 → 셀·모듈·팩 → ESS·PCS 등으로 이어질 수 있습니다. 한 종목은 대표 체인 1곳만 두고, 복수 노출은 태그로 표시합니다. 자동차·화학 지도와 주제가 겹칠 수 있으나 시총·종목수 집계는 ticker 기준 중복을 제거합니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">분류는 공시·IR상 주력 제품과 매출 구성을 우선합니다. 고객사 납품·증설 계획을 ‘확정 계약’으로 단정하지 않으며, 동종 peer·수요 산업 참고와 실제 거래 공시를 구분합니다. 원자재 가격·수주·증설은 변동이 크므로 최신 DART·기업 IR을 확인하세요.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">한계: 배터리 업종 PER은 적자·투자 확대기와 겹치면 비교가 어렵고, ESS·연료전지 노출은 매출 비중이 작을 수 있습니다. 출처: &lt;a href=&quot;https://data.krx.co.kr/&quot; rel=&quot;noopener&quot;&gt;KRX&lt;/a&gt;, &lt;a href=&quot;https://dart.fss.or.kr/&quot; rel=&quot;noopener&quot;&gt;DART&lt;/a&gt;, data/ CSV·밸류에이션 스냅샷, <a href="../editorial-policy.html">편집·검증 정책</a>. 정보 제공 목적이며 투자 권유가 아닙니다.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>A simplified flow runs materials (cathode, anode, electrolyte, separator, foil) → electrode/assembly/test tools → cells/modules/packs → ESS/PCS. One primary chain per ticker; extra exposure uses tags. Themes can overlap auto or chemicals maps, but counts use de-duplicated tickers.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Labels follow products and sales mix in filings/IR. Customer or capacity plans are not treated as confirmed contracts without disclosure. Peer and end-market references differ from verified trade relationships. Cross-check DART and company IR for orders and capex.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Limits: battery PER can be hard to compare in loss-making or heavy-investment phases; ESS exposure may be a small sales share. Sources: &lt;a href=&quot;https://data.krx.co.kr/&quot; rel=&quot;noopener&quot;&gt;KRX&lt;/a&gt;, &lt;a href=&quot;https://dart.fss.or.kr/&quot; rel=&quot;noopener&quot;&gt;DART&lt;/a&gt;, dated CSVs/snapshots, <a href="../editorial-policy.html">editorial policy</a>. Informational only.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 2차전지, 배터리, ESS, 양극재, 음극재, 전해질, 배터리 장비</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean battery stocks, ESS, cathode, anode, electrolyte, battery equipment</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

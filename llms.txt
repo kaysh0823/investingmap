@@ -1,8 +1,8 @@
 # Investing Map
 
 > Investing Map은 국내외 투자자를 위한 한국 상장사 산업 지도 플랫폼입니다.
-> KOSPI·KOSDAQ 상장 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 국내외 거래처·글로벌 피어 관계를
-> 산업별 인터랙티브 지도로 제공하며, 한국어·영어를 지원합니다.
+> KOSPI·KOSDAQ 상장 기업의 KRX 시가총액·PER·PBR, 밸류체인 분류, 히트맵·모멘텀·밸류에이션 등
+> 분석 탭을 산업별 지도로 제공하며, 한국어·영어를 지원합니다. 관계 네트워크 UI는 현재 공개 메뉴에 없습니다.
 
 ## 산업 투자 지도 (핵심 콘텐츠)
 - [한국 삼성전자/하이닉스 투자 지도](https://www.investingmap.kr/bigchip/korea_bigchip_map.html): 삼성전자·SK하이닉스 KRX 데이터, 밸류체인, 글로벌 피어 그룹

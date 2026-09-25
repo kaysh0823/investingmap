@@ -274,7 +274,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -287,7 +287,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2082,15 +2082,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">종합건설·주택·건설기계 등 건설 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean construction sector stocks</h2>
-    <p lang="ko" class="im-seo-body-p">종합건설, 주택·디벨로퍼, 건설기계, 건설 지주 등 국내 상장 건설사를 밸류체인별로 정리합니다. 삼성물산·현대건설·대우건설·DL이앤씨·GS건설 등 대표 종목의 시가총액·PER·PBR과 글로벌 EPC·장비 peer 참고 관계를 한 페이지에서 비교할 수 있습니다.</p>
-    <p lang="ko" class="im-seo-body-p">건설주는 수주·분양·원자재·금리에 민감합니다. 표의 세부 유형·주요 사업 열에서 건축·토목·플랜트·주택 mix를 확인하세요.</p>
-    <p lang="ko" class="im-seo-body-p">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 공시와 국토교통부·한국부동산원 자료를 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map covers listed Korean general contractors, housing developers, construction equipment makers, and related holdings. Compare KRX metrics and illustrative global EPC and equipment peer relationships for Samsung C&amp;T, Hyundai E&amp;C, Daewoo E&amp;C, DL E&amp;C, GS E&amp;C, and peers.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Construction stocks track orders, housing sales, materials, and rates. Use segment and product columns for business mix.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Informational only—not investment advice. Cross-check filings and official data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">종합건설, 주택·디벨로퍼, 건설기계, 건설 지주 등 국내 상장 건설사를 밸류체인별로 정리합니다. 삼성물산·현대건설·대우건설·DL이앤씨·GS건설 등 대표 종목의 시가총액·PER·PBR과 글로벌 EPC·장비 peer 참고 관계를 한 페이지에서 비교할 수 있습니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>This map covers listed Korean general contractors, housing developers, construction equipment makers, and related holdings. Compare KRX metrics and illustrative global EPC and equipment peer relationships for Samsung C&amp;T, Hyundai E&amp;C, Daewoo E&amp;C, DL E&amp;C, GS E&amp;C, and peers.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">건설주는 수주·분양·원자재·금리에 민감합니다. 표의 세부 유형·주요 사업 열에서 건축·토목·플랜트·주택 mix를 확인하세요.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 공시와 국토교통부·한국부동산원 자료를 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Construction stocks track orders, housing sales, materials, and rates. Use segment and product columns for business mix.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Informational only—not investment advice. Cross-check filings and official data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 건설주, 종합건설, 주택, 건설기계</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean construction stocks, contractors, housing</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

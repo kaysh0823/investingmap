@@ -256,7 +256,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -269,7 +269,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2054,15 +2054,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">전력설비·송배전·전선·케이블·발전설비 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean power equipment &amp; grid stocks</h2>
-    <p lang="ko" class="im-seo-body-p">전력설비·송배전·전선·케이블·발전설비 밸류체인에 속한 상장사를 다룹니다. 변압기·개폐기, 전선·케이블, 발전 EPC·원전 기자재, 전력·가스 유틸리티가 한 지도에서 연결됩니다.</p>
-    <p lang="ko" class="im-seo-body-p">전력기기는 북미·중동 송전 투자 사이클과 전력 수요에 민감합니다. 발전·원전은 규제와 수주가 밸류에이션에 큰 변수입니다. 표의 세부 유형·제품 열에서 사업 mix를 확인하세요.</p>
-    <p lang="ko" class="im-seo-body-p">전력 정책·요금 체계는 빠르게 변합니다. 공시와 한국전력거래소 자료로 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This map covers listed companies in power equipment, transmission &amp; distribution, and power generation equipment—including transformers, switchgear, cables, EPC, and utilities.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Grid equipment makers track transmission-investment cycles; generation and nuclear companies are driven by regulation and order books. Check segment and product columns for business mix.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Power policy and tariff frameworks change quickly. Cross-check filings and Korea Power Exchange data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">전력설비·송배전·전선·케이블·발전설비 밸류체인에 속한 상장사를 다룹니다. 변압기·개폐기, 전선·케이블, 발전 EPC·원전 기자재, 전력·가스 유틸리티가 한 지도에서 연결됩니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>This map covers listed companies in power equipment, transmission &amp; distribution, and power generation equipment—including transformers, switchgear, cables, EPC, and utilities.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">전력기기는 북미·중동 송전 투자 사이클과 전력 수요에 민감합니다. 발전·원전은 규제와 수주가 밸류에이션에 큰 변수입니다. 표의 세부 유형·제품 열에서 사업 mix를 확인하세요.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">전력 정책·요금 체계는 빠르게 변합니다. 공시와 한국전력거래소 자료로 교차 검증하시고, <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Grid equipment makers track transmission-investment cycles; generation and nuclear companies are driven by regulation and order books. Check segment and product columns for business mix.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Power policy and tariff frameworks change quickly. Cross-check filings and Korea Power Exchange data; see our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 전력설비, 송배전, 전선, 케이블, 변압기, 원전 기자재</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean power equipment, T&amp;D, transformers</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

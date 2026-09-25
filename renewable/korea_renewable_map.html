@@ -232,7 +232,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -245,7 +245,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2058,15 +2058,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">신재생에너지 밸류체인과 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean renewable-energy listed stocks</h2>
-    <p lang="ko" class="im-seo-body-p">신재생에너지 지도는 태양광, 풍력, 수소, 신재생 개발·운영 관련 상장사를 분리해 보여 줍니다. 기존 에너지 지도에 함께 있던 태양광 소재·모듈, 풍력 타워, 신재생 EPC·운영 기업을 별도 섹터로 정리했습니다.</p>
-    <p lang="ko" class="im-seo-body-p">신재생 기업은 정책 지원, PPA·REC 가격, 금리, 프로젝트 파이낸싱, 글로벌 공급망 변화에 민감합니다. 표에서는 각 기업의 주요 사업 mix와 KRX 밸류에이션을 함께 볼 수 있으며, 그래프의 해외 연결은 peer·수요처 참고 관계입니다.</p>
-    <p lang="ko" class="im-seo-body-p">재생에너지 정책과 프로젝트 일정은 빠르게 바뀝니다. 투자 판단 전 공시·사업보고서·산업부 자료를 확인하고, 본 페이지는 정보 제공 목적이라는 점을 유의하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The renewable-energy map separates listed companies in solar, wind, hydrogen, and renewable project development and operations. Solar materials and modules, wind towers, and renewable EPC/operators previously grouped under energy now sit in a dedicated sector.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Renewable names are sensitive to policy support, PPA and REC prices, interest rates, project financing, and global supply-chain changes. The table combines business-mix notes with KRX valuation data, while overseas links in the graph are peer and demand references.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Renewable policy and project schedules change quickly. Check filings, annual reports, and Ministry data before making investment decisions; this page is for information only.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">신재생에너지 지도는 태양광, 풍력, 수소, 신재생 개발·운영 관련 상장사를 분리해 보여 줍니다. 기존 에너지 지도에 함께 있던 태양광 소재·모듈, 풍력 타워, 신재생 EPC·운영 기업을 별도 섹터로 정리했습니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>The renewable-energy map separates listed companies in solar, wind, hydrogen, and renewable project development and operations. Solar materials and modules, wind towers, and renewable EPC/operators previously grouped under energy now sit in a dedicated sector.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">신재생 기업은 정책 지원, PPA·REC 가격, 금리, 프로젝트 파이낸싱, 글로벌 공급망 변화에 민감합니다. 표에서는 각 기업의 주요 사업 mix와 KRX 밸류에이션을 함께 볼 수 있으며, 그래프의 해외 연결은 peer·수요처 참고 관계입니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">재생에너지 정책과 프로젝트 일정은 빠르게 바뀝니다. 투자 판단 전 공시·사업보고서·산업부 자료를 확인하고, 본 페이지는 정보 제공 목적이라는 점을 유의하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Renewable names are sensitive to policy support, PPA and REC prices, interest rates, project financing, and global supply-chain changes. The table combines business-mix notes with KRX valuation data, while overseas links in the graph are peer and demand references.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Renewable policy and project schedules change quickly. Check filings, annual reports, and Ministry data before making investment decisions; this page is for information only.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 신재생에너지, 태양광, 풍력, 수소, 재생에너지 관련주</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean renewable stocks, solar, wind, hydrogen</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

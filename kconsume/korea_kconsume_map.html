@@ -370,7 +370,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -383,7 +383,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2226,15 +2226,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">소비/유통 상장 종목 지도</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean consumer &amp; retail listed stocks</h2>
-    <p lang="ko" class="im-seo-body-p">패션, 식품·라면, 쇼핑·유통, 여행·레저 등 소비/유통 테마 상장사를 묶습니다. 삼양식품, 신세계, F&amp;F, KT&amp;G 등 소비재·유통 종목을 밸류체인별로 비교할 때 출발점으로 쓸 수 있습니다. 화장품은 별도 화장품 지도에서 다룹니다.</p>
-    <p lang="ko" class="im-seo-body-p">소비·유통주는 환율, 중국·동남아 수요, 채널 경쟁, 원가·판촉 사이클의 영향을 크게 받습니다. 표의 재무 지표는 참고용이며, 식품·패션은 계절성·일회성 이벤트가 실적에 영향을 줄 수 있습니다.</p>
-    <p lang="ko" class="im-seo-body-p">투자 유의 사항은 <a href="../disclaimer.html">면책 고지</a>, 사이트 소개는 <a href="../about.html">소개</a> 페이지를 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Listed companies are grouped by consumer and retail themes—fashion, food and ramen, retail, and travel. Cosmetics now sit on a dedicated cosmetics map. Use this page when comparing Samyang Foods, Shinsegae, F&amp;F, KT&amp;G, and peers.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Consumer and retail stocks are sensitive to FX, China and Southeast Asia demand, channel competition, and cost/promotion cycles. Table metrics are for reference; food and fashion names can swing with seasonality and one-off events.</p>
-    <p lang="en" class="im-seo-body-p" hidden>For investment cautions see our <a href="../disclaimer.html">disclaimer</a>; for site overview see <a href="../about.html">about</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">패션, 식품·라면, 쇼핑·유통, 여행·레저 등 소비/유통 테마 상장사를 묶습니다. 삼양식품, 신세계, F&amp;F, KT&amp;G 등 소비재·유통 종목을 밸류체인별로 비교할 때 출발점으로 쓸 수 있습니다. 화장품은 별도 화장품 지도에서 다룹니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>Listed companies are grouped by consumer and retail themes—fashion, food and ramen, retail, and travel. Cosmetics now sit on a dedicated cosmetics map. Use this page when comparing Samyang Foods, Shinsegae, F&amp;F, KT&amp;G, and peers.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">소비·유통주는 환율, 중국·동남아 수요, 채널 경쟁, 원가·판촉 사이클의 영향을 크게 받습니다. 표의 재무 지표는 참고용이며, 식품·패션은 계절성·일회성 이벤트가 실적에 영향을 줄 수 있습니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">투자 유의 사항은 <a href="../disclaimer.html">면책 고지</a>, 사이트 소개는 <a href="../about.html">소개</a> 페이지를 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Consumer and retail stocks are sensitive to FX, China and Southeast Asia demand, channel competition, and cost/promotion cycles. Table metrics are for reference; food and fashion names can swing with seasonality and one-off events.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>For investment cautions see our <a href="../disclaimer.html">disclaimer</a>; for site overview see <a href="../about.html">about</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 소비/유통, 패션, 식품, 유통, 여행</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean consumer retail, fashion, food stocks</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

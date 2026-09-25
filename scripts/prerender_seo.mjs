@@ -40,33 +40,58 @@ Sitemap: ${BASE}/sitemap.xml
   console.log('wrote robots.txt');
 }
 
-function writeSitemap(lastmod) {
+/** Prefer file mtime (YYYY-MM-DD); omit lastmod when unknown rather than inventing "today". */
+function fileLastmod(rel) {
+  try {
+    const st = fs.statSync(path.join(ROOT, rel));
+    return st.mtime.toISOString().slice(0, 10);
+  } catch {
+    return null;
+  }
+}
+
+function writeSitemap(quoteAsOf) {
+  const trustPages = [
+    'about.html',
+    'editorial-policy.html',
+    'faq.html',
+    'privacy.html',
+    'disclaimer.html',
+    'authors.html',
+  ];
   const urls = [
-    { loc: `${BASE}/`, priority: '1.0', changefreq: 'daily' },
+    {
+      loc: `${BASE}/`,
+      priority: '1.0',
+      changefreq: 'daily',
+      lastmod: fileLastmod('index.html') || quoteAsOf,
+    },
     ...SECTOR_ROUTES.map((r) => ({
       loc: `${BASE}/${r.file}`,
       priority: '0.9',
       changefreq: 'daily',
+      // Quote snapshot as-of for map pages (distinct from content-edit dates in editorial copy).
+      lastmod: quoteAsOf,
     })),
-    { loc: `${BASE}/about.html`, priority: '0.3', changefreq: 'monthly' },
-    { loc: `${BASE}/editorial-policy.html`, priority: '0.3', changefreq: 'monthly' },
-    { loc: `${BASE}/faq.html`, priority: '0.3', changefreq: 'monthly' },
-    { loc: `${BASE}/privacy.html`, priority: '0.3', changefreq: 'monthly' },
-    { loc: `${BASE}/disclaimer.html`, priority: '0.3', changefreq: 'monthly' },
-    { loc: `${BASE}/authors.html`, priority: '0.3', changefreq: 'monthly' },
+    ...trustPages.map((f) => ({
+      loc: `${BASE}/${f}`,
+      priority: '0.3',
+      changefreq: 'monthly',
+      lastmod: fileLastmod(f),
+    })),
   ];
   const body =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     urls
-      .map(
-        (u) =>
-          `  <url><loc>${u.loc}</loc><lastmod>${lastmod}</lastmod><changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`,
-      )
+      .map((u) => {
+        const lm = u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : '';
+        return `  <url><loc>${u.loc}</loc>${lm}<changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`;
+      })
       .join('\n') +
     `\n</urlset>\n`;
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), body, 'utf8');
-  console.log(`wrote sitemap.xml (${urls.length} URLs, lastmod=${lastmod})`);
+  console.log(`wrote sitemap.xml (${urls.length} URLs; map lastmod=quote as-of ${quoteAsOf})`);
 }
 
 function patchIndex(lastmod) {
@@ -111,8 +136,8 @@ function main() {
   execSync('node scripts/emit_sector_editorial_js.mjs', { cwd: ROOT, stdio: 'inherit' });
 
   const snapshots = loadSnapshots(ROOT);
-  const lastmod = readLastmod();
-  console.log(`SEO prerender — quote snapshot: ${snapshots.builtAt}, hub lastmod: ${lastmod}`);
+  const quoteAsOf = snapshots.builtAt || readLastmod();
+  console.log(`SEO prerender — quote snapshot as-of: ${quoteAsOf}`);
 
   for (const route of SECTOR_ROUTES) {
     const pageMeta = geo.pages[route.geoKey];
@@ -132,8 +157,8 @@ function main() {
   }
 
   writeRobotsTxt();
-  writeSitemap(lastmod);
-  patchIndex(lastmod);
+  writeSitemap(quoteAsOf);
+  patchIndex(quoteAsOf);
   console.log('OK prerender_seo');
 }
 

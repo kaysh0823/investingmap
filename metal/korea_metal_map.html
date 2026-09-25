@@ -244,7 +244,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -257,7 +257,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -2042,15 +2042,21 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">철강·비철금속 상장 종목</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean steel &amp; nonferrous metals stocks</h2>
-    <p lang="ko" class="im-seo-body-p">철강·비철금속 지도는 제철·강관·비철 사업회사와 철강 트레이딩을 묶습니다. 산업·건설기계는 별도 지도를 참고하세요. POSCO홀딩스 같은 다각화 지주회사는 holdings에 둡니다. 정량 지표는 KRX 데이터입니다.</p>
-    <p lang="ko" class="im-seo-body-p">철강은 후판·봉형강 수요와 원료 가격, 비철은 아연·은 가격의 영향을 받습니다. Nippon Steel·Glencore 연결은 사업 비교용 peer이며 계약 관계가 아닙니다.</p>
-    <p lang="ko" class="im-seo-body-p">포스코인터내셔널과 현대제철은 조선 철강소재 체인에서 이동했으며, 두산에너빌리티는 원전, HD현대일렉트릭은 전력설비에 남겼습니다. 투자 권유가 아니므로 DART와 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The steel and nonferrous map groups steel, pipe and nonferrous operators plus steel trading. Industrial and construction machinery are on a separate map. Diversified holdings such as POSCO Holdings stay in holdings. Quantitative fields follow KRX data.</p>
-    <p lang="en" class="im-seo-body-p" hidden>Steel tracks plate and long-product demand and raw-material prices; nonferrous names track zinc and silver. Links to Nippon Steel and Glencore are peers, not contracts.</p>
-    <p lang="en" class="im-seo-body-p" hidden>POSCO International and Hyundai Steel were moved from the shipbuilding steel chain; Doosan Enerbility remains in nuclear and HD Hyundai Electric in power equipment. This is not investment advice; see DART and our <a href="../editorial-policy.html">editorial policy</a>.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">철강·비철금속 지도는 제철·강관·비철 사업회사와 철강 트레이딩을 묶습니다. 산업·건설기계는 별도 지도를 참고하세요. POSCO홀딩스 같은 다각화 지주회사는 holdings에 둡니다. 정량 지표는 KRX 데이터입니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>The steel and nonferrous map groups steel, pipe and nonferrous operators plus steel trading. Industrial and construction machinery are on a separate map. Diversified holdings such as POSCO Holdings stay in holdings. Quantitative fields follow KRX data.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">철강은 후판·봉형강 수요와 원료 가격, 비철은 아연·은 가격의 영향을 받습니다. Nippon Steel·Glencore 연결은 사업 비교용 peer이며 계약 관계가 아닙니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">포스코인터내셔널과 현대제철은 조선 철강소재 체인에서 이동했으며, 두산에너빌리티는 원전, HD현대일렉트릭은 전력설비에 남겼습니다. 투자 권유가 아니므로 DART와 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Steel tracks plate and long-product demand and raw-material prices; nonferrous names track zinc and silver. Links to Nippon Steel and Glencore are peers, not contracts.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>POSCO International and Hyundai Steel were moved from the shipbuilding steel chain; Doosan Enerbility remains in nuclear and HD Hyundai Electric in power equipment. This is not investment advice; see DART and our <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 철강 관련주, 비철금속, 고려아연, 현대제철</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Korean steel stocks, nonferrous metals, Hyundai Steel, Korea Zinc</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

@@ -166,7 +166,7 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=a9e82c21"></script>
+  <script src="../js/map_tab_state.js?v=00617f9f"></script>
   <script src="../js/sector_nav.js?v=432e3f2e"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
@@ -179,7 +179,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=6705d7e4"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=5b311aee"></script>
+  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
   <script src="../js/candle_modal.js?v=43fc2c53"></script>
 <style>
     :root {
@@ -1964,15 +1964,25 @@
       <div class="im-seo-body map-editorial-seo" id="im-seo-body" aria-labelledby="im-seo-body-title">
     <h2 id="im-seo-body-title" class="map-editorial-seo-title" lang="ko">삼성전자·SK하이닉스 비교</h2>
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Samsung Electronics and SK hynix</h2>
-    <p lang="ko" class="im-seo-body-p">삼성전자/하이닉스 지도는 삼성전자와 SK하이닉스를 중심으로 후방 공급사·글로벌 peer·전방 고객 관계를 한 화면에 둡니다. 관계 네트워크 좌측 밸류체인 범례는 국내 상장 노드를 반도체 섹터와 같은 분류(IDM/종합반도체, 팹리스, 파운드리, 소재, 전·후공정 장비, 부품/기판, 패키징/테스트, 유통)로 색·그룹합니다.</p>
-    <p lang="ko" class="im-seo-body-p">종목·시장 구분과 시가총액·PER·PBR은 페이지 기준일의 KRX 데이터에서 가져오며, 기존 반도체 지도에서는 두 종목을 제외해 섹터별 단일 소속을 유지합니다. 메모리 업황은 DRAM·NAND 가격, AI 서버용 HBM 수요, 설비투자와 재고 사이클에 민감합니다.</p>
-    <p lang="ko" class="im-seo-body-p">본 페이지는 산업 구조 비교를 위한 정보 제공 자료이며 투자 권유·자문이 아닙니다. 최신 생산능력, 투자계획과 사업별 실적은 삼성전자·SK하이닉스의 DART 공시와 기업 IR을 확인하고, 데이터 갱신 기준은 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
-    <p lang="en" class="im-seo-body-p" hidden>The Samsung/SK hynix map centers on Samsung Electronics and SK hynix with upstream suppliers, global peers, and downstream customers. The left-hand value-chain legend colors domestic listed nodes with the same semiconductor taxonomy used on the semi map (IDM, fabless, foundry, materials, front/back-end equipment, substrates, packaging &amp; test, distribution).</p>
-    <p lang="en" class="im-seo-body-p" hidden>Listings, market classification, market cap, PER, and PBR follow KRX data as of the page date; both names are removed from the broader semiconductor map to preserve one-sector membership. Memory earnings are sensitive to DRAM and NAND pricing, AI-server HBM demand, capital spending, and inventory cycles.</p>
-    <p lang="en" class="im-seo-body-p" hidden>This page is informational and is not investment advice. Check Samsung Electronics and SK hynix DART filings and investor-relations material for current capacity, capex, and segment results; see our <a href="../editorial-policy.html">editorial policy</a> for update standards.</p>
+    <p lang="ko" class="im-seo-lead map-editorial-lead">삼성전자·SK하이닉스 전용 지도로, 두 종목의 KRX 시총·PER·PBR과 메모리·HBM·시스템반도체 노출을 일반 반도체 지도와 분리해 비교합니다.</p>
+    <p lang="en" class="im-seo-lead map-editorial-lead" hidden>A dedicated Samsung Electronics and SK hynix map comparing KRX market cap, PER, PBR, and memory/HBM/system-chip exposure—kept separate from the general semiconductor map.</p>
+    <p lang="ko" class="im-seo-howto map-editorial-howto">표·히트맵·모멘텀·밸류에이션 탭으로 두 종목과 관련 상장 노드의 지표를 비교하세요. 관계 네트워크 탭은 공개 메뉴에 없습니다. 삼성전자·SK하이닉스는 일반 반도체 지도에 중복 편입하지 않습니다.</p>
+    <p lang="en" class="im-seo-howto map-editorial-howto" hidden>Use the table, heatmap, momentum, and valuation tabs. The relationship-network tab is not in the public menu. Neither name is duplicated on the general semiconductor map.</p>
+    <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
+    <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>
+    <div id="map-editorial-detail" class="map-editorial-detail is-collapsed" role="region">
+    <p lang="ko" class="im-seo-body-p im-seo-detail">밸류체인 참고: 국내 상장 노드는 반도체 지도와 같은 축(IDM/종합반도체, 팹리스, 파운드리, 소재, 전·후공정 장비, 부품/기판, 패키징/테스트, 유통)으로 분류합니다. 후방 공급·글로벌 peer·전방 수요 연결은 참고용이며, 공시되지 않은 납품·계약을 ‘확인된 거래처’로 쓰지 않습니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">종목·시장 구분과 시가총액·PER·PBR은 페이지 기준일의 KRX 데이터에서 가져옵니다. 메모리 업황은 DRAM·NAND 가격, AI 서버용 HBM 수요, 설비투자와 재고 사이클에 민감합니다.</p>
+    <p lang="ko" class="im-seo-body-p im-seo-detail">본 페이지는 산업 구조 비교를 위한 정보 제공 자료이며 투자 권유·자문이 아닙니다. 최신 생산능력·투자계획·사업별 실적은 &lt;a href=&quot;https://dart.fss.or.kr/&quot; rel=&quot;noopener&quot;&gt;DART&lt;/a&gt; 공시와 기업 IR을 확인하고, 갱신 기준은 <a href="../editorial-policy.html">편집·검증 정책</a>을 참고하세요.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Domestic listed nodes follow the same taxonomy as the semi map (IDM, fabless, foundry, materials, front/back-end equipment, substrates, packaging &amp; test, distribution). Supplier, peer, and demand links are references—not confirmed trades without disclosure.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Listings and valuation fields follow KRX as of the page date. Memory earnings track DRAM/NAND pricing, AI-server HBM demand, capex, and inventory cycles.</p>
+    <p lang="en" class="im-seo-body-p im-seo-detail" hidden>Informational only—not investment advice. Verify capacity and segment results via &lt;a href=&quot;https://dart.fss.or.kr/&quot; rel=&quot;noopener&quot;&gt;DART&lt;/a&gt; and company IR; see the <a href="../editorial-policy.html">editorial policy</a>.</p>
     <p class="im-seo-keywords" lang="ko"><strong>키워드:</strong> 삼성전자, SK하이닉스, HBM, 메모리 반도체</p>
     <p class="im-seo-keywords" lang="en" hidden><strong>Keywords:</strong> Samsung Electronics, SK hynix, HBM, memory stocks</p>
-    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17.</p>
+    <p class="im-seo-snapshot-note">표 시세·52주·RS 필드 스냅샷 기준일: 2026-09-17 (영업일 /api/quotes로 갱신) · Table quote snapshot as of 2026-09-17. 시세 기준일과 콘텐츠 수정일은 다를 수 있습니다.</p>
+    </div>
+    </div>
   </div>
       <!-- investingmap-seo-body-end -->
       </div>

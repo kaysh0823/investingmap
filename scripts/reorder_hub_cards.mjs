@@ -26,7 +26,7 @@ function stubCard(id) {
         <h2 id="card-${id}-title">한국 ${meta.ko} 투자 지도</h2>
         <p class="hub-card-lead" id="card-${id}-lead"></p>
         <p class="hub-card-keyplayers" id="card-${id}-keyplayers"></p><div class="hub-card-tags" id="card-${id}-tags"></div>
-        <p class="hub-card-map" id="card-${id}-map">KRX metrics, value-chain tags, company table and peer graph.</p><span class="hub-card-cta" id="card-${id}-cta">Open map →</span>
+        <p class="hub-card-map" id="card-${id}-map">KRX metrics, value-chain tags, company table, and analysis tabs.</p><span class="hub-card-cta" id="card-${id}-cta">Open map →</span>
       </a>`;
 }
 

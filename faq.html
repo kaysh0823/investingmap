@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta name="description" content="Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.">
+  <meta name="description" content="Investing Map 데이터 출처, 환율·시총 표기, 제공 기능에 대한 FAQ입니다.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.investingmap.kr/faq.html">
   <link rel="alternate" hreflang="ko-KR" href="https://www.investingmap.kr/faq.html?lang=ko">
@@ -14,14 +14,14 @@
   <meta property="og:site_name" content="Investing Map">
   <meta property="og:url" content="https://www.investingmap.kr/faq.html">
   <meta property="og:title" content="자주 묻는 질문">
-  <meta property="og:description" content="Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.">
+  <meta property="og:description" content="Investing Map 데이터 출처, 환율·시총 표기, 제공 기능에 대한 FAQ입니다.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Investing Map",
     "url": "https://www.investingmap.kr/",
-    "description": "Korean listed-company industry maps: KRX market cap, PER, PBR, value chains, and relationship networks",
+    "description": "Korean listed-company industry maps: KRX market cap, PER, PBR, value-chain labels, and analysis tabs (heatmap, momentum, valuation)",
     "inLanguage": [
       "ko",
       "en"
@@ -40,7 +40,7 @@
     "name": "Investing Map",
     "url": "https://www.investingmap.kr/",
     "logo": "https://www.investingmap.kr/favicon.svg",
-    "description": "한국 KOSPI·KOSDAQ 상장사 산업 지도: 시가총액·PER·PBR, 밸류체인, 국내외 거래처·글로벌 피어 관계",
+    "description": "한국 KOSPI·KOSDAQ 상장사 산업 지도: 시가총액·PER·PBR, 밸류체인 분류, 히트맵·모멘텀·밸류에이션 등 분석 탭",
     "knowsAbout": [
       "한국 주식 투자",
       "KOSPI",
@@ -57,10 +57,10 @@
     "@context": "https://schema.org",
     "@type": "Article",
     "headline": "자주 묻는 질문",
-    "description": "Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.",
+    "description": "Investing Map 데이터 출처, 환율·시총 표기, 제공 기능에 대한 FAQ입니다.",
     "url": "https://www.investingmap.kr/faq.html",
     "datePublished": "2026-06-20T09:00:00+09:00",
-    "dateModified": "2026-06-20T09:00:00+09:00",
+    "dateModified": "2026-09-25T09:00:00+09:00",
     "author": {
       "@type": "Organization",
       "name": "Investing Map Editorial Team",
@@ -92,7 +92,7 @@
         "name": "Investing Map은 무엇을 제공하나요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Investing Map은 KOSPI·KOSDAQ 상장사를 산업별로 분류한 인터랙티브 지도입니다. 각 페이지에서 KRX 기준 시가총액·PER·PBR, 밸류체인 태그, 정렬·필터 가능한 기업 표, 관계형 그래프를 한국어·영어로 볼 수 있습니다."
+          "text": "Investing Map은 KOSPI·KOSDAQ 상장사를 산업 밸류체인으로 묶어 비교하는 정보 사이트입니다. 각 산업 지도에서 KRX 기준 시가총액·PER·PBR, 밸류체인 분류, 정렬·필터 가능한 기업 표, 모멘텀·변동성·밸류에이션·퍼포먼스 캘린더 등 분석 탭을 한국어·영어로 볼 수 있습니다."
         }
       },
       {
@@ -108,7 +108,7 @@
         "name": "시가총액·PER·PBR 데이터는 어디서 가져오나요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일(예: 2026년 6월 15일)에 맞춥니다. PER·PBR도 동일 CSV 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 KRX OPEN API·네이버 시세 캐시로 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다."
+          "text": "시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일에 맞춥니다. PER·PBR도 동일 CSV 또는 별도 밸류에이션 스냅샷 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다."
         }
       },
       {
@@ -121,10 +121,10 @@
       },
       {
         "@type": "Question",
-        "name": "관계 지도(그래프)는 공시 데이터인가요?",
+        "name": "관계 네트워크(그래프) 탭은 어디서 보나요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "관계 그래프의 거래처·피어·키워드 연결은 공개 정보와 편집 분류를 바탕으로 한 참고용 네트워크입니다. 공식 공시·계약 관계를 대체하지 않으며, 투자 판단 전 DART 전자공시와 사업보고서에서 최신 정보를 확인해야 합니다."
+          "text": "관계 네트워크 지도는 현재 공개 탐색 메뉴에서 제공하지 않습니다(정비 중). 기존에 북마크한 ?tab=graph 링크는 히트맵 등 정상 작동하는 탭으로 연결됩니다. 거래처·피어 참고 데이터 자체는 삭제하지 않았으며, 공개 준비가 되면 다시 안내합니다. 확인된 계약·지분 관계는 DART 전자공시와 사업보고서를 우선하세요."
         }
       },
       {
@@ -132,7 +132,7 @@
         "name": "데이터는 얼마나 자주 갱신되나요?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "KRX 정량 데이터(시총·PER·PBR)는 주기적으로 CSV를 갱신하며 페이지 기준일을 업데이트합니다. 실시간 시세 필드는 영업일 기준으로 /api/quotes 폴링 주기에 따라 반영됩니다. 고트래픽 페이지는 연 1회 이상 편집·검증 정책에 따라 출처를 재확인합니다."
+          "text": "KRX 정량 데이터(시총·PER·PBR)는 CSV·스냅샷을 갱신할 때 페이지 기준일과 함께 반영됩니다. 시세 필드는 영업일 기준 /api/quotes 폴링에 따라 갱신됩니다. 시세 기준일·콘텐츠 수정일·출처 검증일은 서로 다를 수 있습니다."
         }
       }
     ]
@@ -182,23 +182,23 @@
       <button type="button" class="lang-toggle" id="lang-toggle" onclick="toggleLang()"><span class="flag">🇺🇸</span> <span id="lang-text">English</span></button>
     </div>
     <h1 id="page-title">자주 묻는 질문</h1>
-    <p class="lead" id="page-lead">Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.</p>
+    <p class="lead" id="page-lead">Investing Map 데이터 출처, 환율·시총 표기, 제공 기능에 대한 FAQ입니다.</p>
   </header>
   <main class="trust-main" id="trust-body-ko" lang="ko">
-<div class="faq-item"><h2>Investing Map은 무엇을 제공하나요?</h2><p>Investing Map은 KOSPI·KOSDAQ 상장사를 산업별로 분류한 인터랙티브 지도입니다. 각 페이지에서 KRX 기준 시가총액·PER·PBR, 밸류체인 태그, 정렬·필터 가능한 기업 표, 관계형 그래프를 한국어·영어로 볼 수 있습니다.</p></div>
+<div class="faq-item"><h2>Investing Map은 무엇을 제공하나요?</h2><p>Investing Map은 KOSPI·KOSDAQ 상장사를 산업 밸류체인으로 묶어 비교하는 정보 사이트입니다. 각 산업 지도에서 KRX 기준 시가총액·PER·PBR, 밸류체인 분류, 정렬·필터 가능한 기업 표, 모멘텀·변동성·밸류에이션·퍼포먼스 캘린더 등 분석 탭을 한국어·영어로 볼 수 있습니다.</p></div>
 <div class="faq-item"><h2>어떤 종목이 지도·허브에 포함되나요?</h2><p>KOSPI·KOSDAQ 상장사 중 KRX 기준 시가총액 3천억원(300,000,000,000원) 이상이며, 해당 산업 cp_list·편집 분류에 포함된 종목만 산업 지도·허브·Top10에 노출됩니다. 자세한 편집 원칙은 편집·검증 정책 페이지를 참고하세요.</p></div>
-<div class="faq-item"><h2>시가총액·PER·PBR 데이터는 어디서 가져오나요?</h2><p>시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일(예: 2026년 6월 15일)에 맞춥니다. PER·PBR도 동일 CSV 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 KRX OPEN API·네이버 시세 캐시로 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다.</p></div>
+<div class="faq-item"><h2>시가총액·PER·PBR 데이터는 어디서 가져오나요?</h2><p>시가총액·시장 구분은 data/ 폴더의 KRX CSV(4937·4848·5016 시리즈)를 기준으로 하며, 페이지 상단에 표시된 기준일에 맞춥니다. PER·PBR도 동일 CSV 또는 별도 밸류에이션 스냅샷 출처를 사용합니다. 현재가·52주 고저는 /api/quotes를 통해 갱신되며 지연·휴장일에는 —로 표시될 수 있습니다.</p></div>
 <div class="faq-item"><h2>영문 시가총액은 어떻게 환산하나요?</h2><p>영문 표의 시가총액은 네이버 금융 USD/KRW 고시 환율(/api/fx, 캐시·정적 폴백)을 적용해 Billion(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 환율 출처: https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_USDKRW</p></div>
-<div class="faq-item"><h2>관계 지도(그래프)는 공시 데이터인가요?</h2><p>관계 그래프의 거래처·피어·키워드 연결은 공개 정보와 편집 분류를 바탕으로 한 참고용 네트워크입니다. 공식 공시·계약 관계를 대체하지 않으며, 투자 판단 전 DART 전자공시와 사업보고서에서 최신 정보를 확인해야 합니다.</p></div>
-<div class="faq-item"><h2>데이터는 얼마나 자주 갱신되나요?</h2><p>KRX 정량 데이터(시총·PER·PBR)는 주기적으로 CSV를 갱신하며 페이지 기준일을 업데이트합니다. 실시간 시세 필드는 영업일 기준으로 /api/quotes 폴링 주기에 따라 반영됩니다. 고트래픽 페이지는 연 1회 이상 편집·검증 정책에 따라 출처를 재확인합니다.</p></div>
+<div class="faq-item"><h2>관계 네트워크(그래프) 탭은 어디서 보나요?</h2><p>관계 네트워크 지도는 현재 공개 탐색 메뉴에서 제공하지 않습니다(정비 중). 기존에 북마크한 ?tab=graph 링크는 히트맵 등 정상 작동하는 탭으로 연결됩니다. 거래처·피어 참고 데이터 자체는 삭제하지 않았으며, 공개 준비가 되면 다시 안내합니다. 확인된 계약·지분 관계는 DART 전자공시와 사업보고서를 우선하세요.</p></div>
+<div class="faq-item"><h2>데이터는 얼마나 자주 갱신되나요?</h2><p>KRX 정량 데이터(시총·PER·PBR)는 CSV·스냅샷을 갱신할 때 페이지 기준일과 함께 반영됩니다. 시세 필드는 영업일 기준 /api/quotes 폴링에 따라 갱신됩니다. 시세 기준일·콘텐츠 수정일·출처 검증일은 서로 다를 수 있습니다.</p></div>
   </main>
   <main class="trust-main" id="trust-body-en" lang="en" hidden>
-<div class="faq-item"><h2>What does Investing Map provide?</h2><p>Investing Map is a set of interactive industry maps for KOSPI and KOSDAQ listed names. Each page shows KRX-based market cap, PER, PBR, value-chain tags, a sortable company table, and a relationship graph in Korean and English.</p></div>
-<div class="faq-item"><h2>Which stocks appear on maps and the hub?</h2><p>Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 300 billion (300,000,000,000 won) that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.</p></div>
-<div class="faq-item"><h2>Where do market cap, PER, and PBR come from?</h2><p>Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page (e.g. 15 June 2026). Last price and 52-week high/low refresh via /api/quotes (KRX OPEN API and Naver cache) and may show — when delayed or closed.</p></div>
+<div class="faq-item"><h2>What does Investing Map provide?</h2><p>Investing Map groups KOSPI and KOSDAQ listed companies by industry value chain. Each map shows KRX-based market cap, PER, PBR, value-chain labels, a sortable company table, and analysis tabs such as momentum, volatility, valuation, and a performance calendar—in Korean and English.</p></div>
+<div class="faq-item"><h2>Which stocks appear on maps and the hub?</h2><p>Only KOSPI/KOSDAQ names with KRX market cap of at least KRW 300 billion that are in the sector cp_list and editorial taxonomy appear on maps, the hub, and Top 10. See the editorial policy page for details.</p></div>
+<div class="faq-item"><h2>Where do market cap, PER, and PBR come from?</h2><p>Market cap and market segment use KRX CSV files under data/ (4937, 4848, 5016 series), aligned to the as-of date shown on each page. Quote fields refresh via /api/quotes and may show — when delayed or closed.</p></div>
 <div class="faq-item"><h2>How is English market cap converted?</h2><p>English market cap is an illustrative billions-USD figure (two decimals) using the USD/KRW spot from /api/fx (Naver Finance, with static fallback).</p></div>
-<div class="faq-item"><h2>Are relationship graphs official filing data?</h2><p>Graph edges for customers, peers, and keywords are editorial reference networks from public information—not a substitute for DART filings or annual reports.</p></div>
-<div class="faq-item"><h2>How often is data updated?</h2><p>KRX quantitative fields are updated when CSVs are refreshed and the page as-of date changes. Quote fields follow /api/quotes polling on trading days. High-traffic pages are source-checked at least annually per our editorial policy.</p></div>
+<div class="faq-item"><h2>Where is the relationship-network (graph) tab?</h2><p>The relationship-network graph is not currently offered in the public tab menu (under revision). Bookmarked ?tab=graph links open a working tab such as the heatmap instead. Underlying reference data was not deleted and will return when ready. Prefer DART filings for confirmed contracts or ownership.</p></div>
+<div class="faq-item"><h2>How often is data updated?</h2><p>KRX quantitative fields update when CSVs or snapshots are refreshed. Quote fields follow /api/quotes on trading days. Quote as-of dates, content edit dates, and source-verification dates can differ.</p></div>
   </main>
   <footer class="im-trust-footer" id="im-trust-footer">
     <nav class="im-trust-nav" aria-label="Trust and policies">
@@ -215,7 +215,7 @@
   <script src="js/global_bottom_nav.js?v=26c1dc05"></script>
   <script src="js/geo_footer.js"></script>
   <script>
-    const PAGE = {"titleKo":"자주 묻는 질문","titleEn":"Frequently asked questions","descKo":"Investing Map 데이터 출처, 환율·시총 표기, 관계 지도 해석에 대한 FAQ입니다.","descEn":"FAQ on Investing Map data sources, FX conversion, and reading the relationship graphs."};
+    const PAGE = {"titleKo":"자주 묻는 질문","titleEn":"Frequently asked questions","descKo":"Investing Map 데이터 출처, 환율·시총 표기, 제공 기능에 대한 FAQ입니다.","descEn":"FAQ on Investing Map data sources, FX conversion, and available features."};
     const T = {
       ko: { hub: '허브', langFlag: '🇺🇸', langText: 'English', themeLight: '라이트 모드', themeDark: '다크 모드' },
       en: { hub: 'Hub', langFlag: '🇰🇷', langText: '한국어', themeLight: 'Light mode', themeDark: 'Dark mode' }

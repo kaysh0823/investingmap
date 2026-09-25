@@ -1,13 +1,28 @@
 /**
- * Preserve table / heatmap / momentum / volatility / perfcalendar / valuation / graph tab when switching industry via nav links.
+ * Preserve table / heatmap / momentum / volatility / perfcalendar / valuation tab when switching industry via nav links.
+ * Graph (관계 네트워크) is WIP — not a public tab; ?tab=graph deep links remap to heatmap.
  * Sector nav links carry the current tab (?tab= omitted for table default).
  * ?tab=table&ticker=005930 — open company list and scroll to the row.
  */
 (function (global) {
   'use strict';
 
-  var VALID = { heatmap: 1, momentum: 1, volatility: 1, perfcalendar: 1, valuation: 1, table: 1, graph: 1 };
+  /** Tabs shown in the public UI. `graph` remains in VALID_LEGACY for deep-link remap only. */
+  var PUBLIC_TABS = {
+    heatmap: 1,
+    momentum: 1,
+    volatility: 1,
+    perfcalendar: 1,
+    valuation: 1,
+    table: 1,
+  };
+  var GRAPH_FALLBACK = 'heatmap';
   var focusStyleInjected = false;
+
+  function publicTab(tab) {
+    if (!tab || tab === 'graph' || !PUBLIC_TABS[tab]) return GRAPH_FALLBACK;
+    return tab;
+  }
 
   function injectFocusStyle() {
     if (focusStyleInjected) return;
@@ -40,16 +55,21 @@
     try {
       var sp = new URLSearchParams(window.location.search);
       var q = sp.get('tab');
-      if (q && VALID[q]) return q;
+      if (q === 'graph') return GRAPH_FALLBACK;
+      if (q && PUBLIC_TABS[q]) return q;
       if (sp.get('ticker')) return 'table';
     } catch (e) {}
     try {
       var s = localStorage.getItem('im_map_tab');
-      if (s && VALID[s]) return s;
+      if (s === 'graph') {
+        try {
+          localStorage.setItem('im_map_tab', GRAPH_FALLBACK);
+        } catch (eClear) {}
+        return GRAPH_FALLBACK;
+      }
+      if (s && PUBLIC_TABS[s]) return s;
     } catch (e2) {}
     if (isTableTabActive()) return 'table';
-    var graphEl = document.getElementById('tab-graph');
-    if (graphEl && graphEl.classList.contains('active')) return 'graph';
     var momentumEl = document.getElementById('tab-momentum');
     if (momentumEl && momentumEl.classList.contains('active')) return 'momentum';
     var volatilityEl = document.getElementById('tab-volatility');
@@ -64,7 +84,8 @@
   }
 
   function onTabChange(tab) {
-    if (!VALID[tab]) return;
+    tab = publicTab(tab);
+    if (!PUBLIC_TABS[tab]) return;
     try {
       localStorage.setItem('im_map_tab', tab);
     } catch (e) {}
@@ -96,11 +117,10 @@
     try {
       var u = new URL(href, window.location.href);
       if (!isIndustryMapPage()) {
-        // Hub and non-map pages: open the sector heatmap, matching hub cards.
         u.searchParams.set('tab', 'heatmap');
         return u.pathname + u.search + u.hash;
       }
-      var tab = getTab();
+      var tab = publicTab(getTab());
       if (!tab || tab === 'table') u.searchParams.delete('tab');
       else u.searchParams.set('tab', tab);
       return u.pathname + u.search + u.hash;
@@ -109,7 +129,7 @@
         var sep = href.indexOf('?') >= 0 ? '&' : '?';
         return href + sep + 'tab=heatmap';
       }
-      var tab2 = getTab();
+      var tab2 = publicTab(getTab());
       if (!tab2 || tab2 === 'table') return href;
       var sep2 = href.indexOf('?') >= 0 ? '&' : '?';
       return href + sep2 + 'tab=' + encodeURIComponent(tab2);
@@ -120,45 +140,29 @@
     document.querySelectorAll('#table-body tr.im-row-focus').forEach(function (r) {
       r.classList.remove('im-row-focus');
     });
-    document.querySelectorAll('#table-cards [data-ticker].im-row-focus').forEach(function (c) {
-      c.classList.remove('im-row-focus');
+    document.querySelectorAll('#table-cards [data-ticker].im-row-focus').forEach(function (r) {
+      r.classList.remove('im-row-focus');
     });
   }
 
-  function findTickerElement(ticker) {
-    if (!ticker) return null;
-    var mobile = global.InvestingMapMobileTable && global.InvestingMapMobileTable.isMobile
-      && global.InvestingMapMobileTable.isMobile();
-    if (mobile) {
-      return document.querySelector('#table-cards [data-ticker="' + ticker + '"]')
-        || document.querySelector('#table-body tr[data-ticker="' + ticker + '"]');
-    }
-    return document.querySelector('#table-body tr[data-ticker="' + ticker + '"]');
-  }
-
-  function scrollToTicker(ticker, opts) {
-    if (!ticker) return false;
-    opts = opts || {};
+  function scrollToTicker(ticker) {
     injectFocusStyle();
-    var el = findTickerElement(ticker);
-    if (!el) return false;
-
     clearRowFocus();
-    if (global.InvestingMapMobileTable && global.InvestingMapMobileTable.scrollToTicker && el.closest('#table-cards')) {
-      global.InvestingMapMobileTable.scrollToTicker(ticker);
-    } else {
-      el.scrollIntoView({ block: 'center', behavior: opts.instant ? 'auto' : 'smooth' });
-    }
+    var code = String(ticker || '').trim();
+    if (!code) return false;
+    var row = document.querySelector('#table-body tr[data-ticker="' + code + '"]');
+    var card = document.querySelector('#table-cards [data-ticker="' + code + '"]');
+    var el = row || card;
+    if (!el) return false;
     el.classList.add('im-row-focus');
-    if (!opts.keepHighlight) {
-      setTimeout(function () {
-        el.classList.remove('im-row-focus');
-      }, 2500);
+    try {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (e) {
+      el.scrollIntoView(true);
     }
     return true;
   }
 
-  /** Re-scroll after table re-render (e.g. quotePosition sort) while ?ticker= is set. */
   function focusTickerAfterTableRender() {
     var ticker = getFocusTicker();
     if (!ticker || !isTableTabActive()) return;
@@ -187,10 +191,9 @@
 
   function applyInitialTab(switchTab) {
     if (typeof switchTab !== 'function') return;
-    var tab = getTab() || 'table';
+    var tab = publicTab(getTab() || 'table');
     var btnIds = {
       table: 'tab-btn-table',
-      graph: 'tab-btn-graph',
       heatmap: 'tab-btn-heatmap',
       momentum: 'tab-btn-momentum',
       volatility: 'tab-btn-volatility',
@@ -204,7 +207,10 @@
 
   function buildMapTableTickerUrl(mapPath, ticker, lang) {
     try {
-      var u = new URL(mapPath || 'index.html', global.location && global.location.href ? global.location.href : undefined);
+      var u = new URL(
+        mapPath || 'index.html',
+        global.location && global.location.href ? global.location.href : undefined,
+      );
       if (lang) u.searchParams.set('lang', lang);
       u.searchParams.set('tab', 'table');
       if (ticker) u.searchParams.set('ticker', String(ticker).trim());
@@ -218,6 +224,30 @@
     }
   }
 
+  /** Hide public graph tab chrome (data/scripts remain for future enable). */
+  function hidePublicGraphTab() {
+    var btn = document.getElementById('tab-btn-graph');
+    if (btn) {
+      btn.hidden = true;
+      btn.setAttribute('aria-hidden', 'true');
+      btn.tabIndex = -1;
+      btn.style.display = 'none';
+    }
+    var panel = document.getElementById('tab-graph');
+    if (panel) {
+      panel.hidden = true;
+      panel.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', hidePublicGraphTab);
+    } else {
+      hidePublicGraphTab();
+    }
+  }
+
   global.InvestingMapTabState = {
     getTab: getTab,
     getFocusTicker: getFocusTicker,
@@ -228,5 +258,7 @@
     focusTickerIfPending: focusTickerIfPending,
     focusTickerAfterTableRender: focusTickerAfterTableRender,
     buildMapTableTickerUrl: buildMapTableTickerUrl,
+    publicTab: publicTab,
+    GRAPH_FALLBACK: GRAPH_FALLBACK,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
