@@ -4,6 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -72,6 +73,7 @@ function renderNetFn(sector) {
         panel: document.getElementById('netmap-panel'),
         companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
         lang: lang,
+        sectorId: '${sector}',
         dataUrl: '../data/netmap/${sector}.json',
         labels: {
           title: nt.tabNetmap,
@@ -124,6 +126,86 @@ function renderNetFn(sector) {
           }
         }
       });
+    }
+
+`;
+}
+
+/** Bio: first visit paints; later tab re-entry only recolors (ResizeObserver keeps fit). */
+function renderNetFnBio() {
+  return `    var __imNetmapPainted = false;
+    function renderNetmap(force) {
+      if (!window.InvestingMapNetmap) return;
+      var el = document.getElementById('netmap-root');
+      if (!el) return;
+      if (__imNetmapPainted && !force) {
+        if (el.querySelector('svg') && typeof InvestingMapNetmap.recolorNodes === 'function') {
+          InvestingMapNetmap.recolorNodes();
+          return;
+        }
+        __imNetmapPainted = false;
+      }
+      var nt = T[lang] || {};
+      InvestingMapNetmap.render({
+        container: el,
+        side: document.getElementById('netmap-side'),
+        panel: document.getElementById('netmap-panel'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        sectorId: 'bio',
+        dataUrl: '../data/netmap/bio.json',
+        labels: {
+          title: nt.tabNetmap,
+          search: nt.netmapSearch,
+          scopeAll: nt.netmapScopeAll,
+          scopeDomestic: nt.netmapScopeDomestic,
+          fit: nt.netmapFit,
+          reset: nt.netmapReset,
+          loading: nt.netmapLoading,
+          failed: nt.netmapFailed,
+          noData: nt.netmapNoData,
+          source: nt.netmapSource,
+          openChart: nt.netmapOpenChart,
+          legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
+          types: {
+            supply: nt.netmapTypeSupply,
+            partner: nt.netmapTypePartner,
+            equity: nt.netmapTypeEquity,
+            peer: nt.netmapTypePeer,
+            distribution: nt.netmapTypeDistribution
+          },
+          countries: {
+            us: nt.netmapCountryUs,
+            tw: nt.netmapCountryTw,
+            jp: nt.netmapCountryJp,
+            cn: nt.netmapCountryCn,
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
+          }
+        }
+      });
+      __imNetmapPainted = true;
     }
 
 `;
@@ -353,6 +435,11 @@ function forceNetmapDataUrl(source, sector) {
   if (next.includes('function renderNetmap()') && !next.includes(`dataUrl: '${expected}'`)) {
     throw new Error(`netmap dataUrl missing for ${sector}: expected ${expected}`);
   }
+  // If sectorId already present, keep it aligned; do not inject into existing maps
+  // (avoids mass diffs on sectors that already ship a correct dataUrl).
+  if (/sectorId:\s*'[a-z0-9_-]+'/.test(next)) {
+    return next.replace(/sectorId:\s*'[a-z0-9_-]+'/g, `sectorId: '${sector}'`);
+  }
   return next;
 }
 
@@ -460,46 +547,61 @@ function patchRuntime(source, sector) {
 }
 
 function patchHtml(source, sector) {
-  if (!source.includes('tab-btn-netmap')) {
-    source = source.replace(
-      /(<button id="tab-btn-valuation"[\s\S]*?<\/button>)/,
-      `$1${NET_BUTTON}`,
-    );
-  }
-  if (!source.includes('id="tab-netmap"')) {
-    if (source.includes('id="tab-valuation"')) {
-      source = source.replace(
-        /(<\/div>\s*<\/div>\s*<\/div>\s*)(\s*<!-- TABLE TAB -->)/,
-        (m, a, b) => {
-          // Prefer insert after valuation tab block
-          return m;
-        },
+  return withPreservedEditorialCss(source, (src) => {
+    let out = src;
+    if (!out.includes('tab-btn-netmap')) {
+      out = out.replace(
+        /(<button id="tab-btn-valuation"[\s\S]*?<\/button>)/,
+        `$1${NET_BUTTON}`,
       );
-      // Insert after valuation tab closing: find tab-valuation block end before TABLE or after valuation-wrap
-      if (!source.includes('id="tab-netmap"')) {
-        source = source.replace(
+    }
+    if (!out.includes('id="tab-netmap"')) {
+      if (out.includes('id="tab-valuation"')) {
+        out = out.replace(
           /(<div id="tab-valuation" class="tab-content">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>)/,
           `$1\n${NET_TAB}`,
         );
+        if (!out.includes('id="tab-netmap"')) {
+          out = out.replace(/(\s*<!-- TABLE TAB -->)/, `\n${NET_TAB}$1`);
+        }
+      } else {
+        out = out.replace(/(\s*<!-- TABLE TAB -->)/, `\n${NET_TAB}$1`);
       }
-      if (!source.includes('id="tab-netmap"')) {
-        source = source.replace(/(\s*<!-- TABLE TAB -->)/, `\n${NET_TAB}$1`);
-      }
-    } else {
-      source = source.replace(/(\s*<!-- TABLE TAB -->)/, `\n${NET_TAB}$1`);
     }
-  }
-  if (!source.includes('map_netmap.js')) {
-    source = source.replace(
-      /(<script src="\.\.\/js\/map_valuation\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
-      `$1\n  <script src="../js/map_netmap.js?v=${V_PLACEHOLDER}"></script>`,
-    );
-  }
-  return patchRuntime(source, sector);
+    if (!out.includes('map_netmap.js')) {
+      out = out.replace(
+        /(<script src="\.\.\/js\/map_valuation\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+        `$1\n  <script src="../js/map_netmap.js?v=${V_PLACEHOLDER}"></script>`,
+      );
+    }
+    return patchRuntime(out, sector);
+  });
 }
 
 function hasNetmapData(sector) {
   return fs.existsSync(path.join(NETMAP_DIR, `${sector}.json`));
+}
+
+/**
+ * Never let strip/patch touch the editorial header CSS block produced by
+ * patch_editorial_collapsible_html.mjs (start/end markers).
+ */
+const EDITORIAL_CSS_BLOCK_RE =
+  /\/\*\s*investingmap-header-editorial-toggle-v2\s*\*\/[\s\S]*?\/\*\s*investingmap-header-editorial-toggle-v2-end\s*\*\//;
+
+function withPreservedEditorialCss(source, transform) {
+  const blocks = [];
+  const masked = source.replace(EDITORIAL_CSS_BLOCK_RE, (m) => {
+    const i = blocks.length;
+    blocks.push(m);
+    return `/*__IM_EDITORIAL_CSS_PRESERVE_${i}__*/`;
+  });
+  let out = transform(masked);
+  out = out.replace(/\/\*__IM_EDITORIAL_CSS_PRESERVE_(\d+)__\*\//g, (_, idx) => {
+    const i = Number(idx);
+    return blocks[i] != null ? blocks[i] : '';
+  });
+  return out;
 }
 
 /**
@@ -508,60 +610,116 @@ function hasNetmapData(sector) {
  * matching data/netmap/<sector>.json the tab must not ship.
  */
 function stripNetmap(source) {
-  let out = source;
-  out = out.replace(/\n?\s*<script src="\.\.\/js\/map_netmap\.js(?:\?v=[\w.\-]+)?"><\/script>/g, '');
-  out = out.replace(
-    /\n?\s*<button id="tab-btn-netmap" class="tab-btn"[^>]*>[\s\S]*?<\/button>/g,
-    '',
-  );
-  // Full tab block (shell + details) through next TABLE / tab-table marker
-  out = out.replace(
-    /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"))/,
-    '\n',
-  );
-  out = out.replace(
-    /\n?\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"))/,
-    '\n',
-  );
-  out = out.replace(
-    /\n?\s*var netmapBtn = document\.getElementById\('tab-btn-netmap'\);\s*\n\s*if \(netmapBtn\) netmapBtn\.innerHTML = [^;]+;/g,
-    '',
-  );
-  out = out.replace(
-    /\n?\s*var netmapSum = document\.querySelector\('#tab-netmap \.netmap-panel-summary'\);\s*\n\s*if \(netmapSum\) netmapSum\.textContent = [^;]+;/g,
-    '',
-  );
-  out = out.replace(
-    /\n?\s*function renderNetmap\(\) \{[\s\S]*?\n\s*\}\n(?=\s*function render)/g,
-    '\n',
-  );
-  out = out.replace(/\n?\s*if \(tab === 'netmap'\) setTimeout\(renderNetmap, 40\);/g, '');
-  out = out.replace(
-    /\n?\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) setTimeout\(renderNetmap, 80\);/g,
-    '',
-  );
-  out = out.replace(
-    /\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) renderNetmap\(\);/g,
-    '',
-  );
-  out = out.replace(
-    /\n[ \t]*if \(window\.InvestingMapNetmap && typeof InvestingMapNetmap\.recolorNodes === 'function'\) InvestingMapNetmap\.recolorNodes\(\);\r?\n/g,
-    '\n',
-  );
-  // i18n keys inserted after tabValuation / tabNetmap
-  for (const key of REQUIRED_KEYS) {
-    const re = new RegExp(
-      `\\n[ \\t]*(?:["']?${key}["']?)\\s*:\\s*(['"])(?:.*?)\\1,`,
-      'g',
+  return withPreservedEditorialCss(source, (src) => {
+    let out = src;
+    out = out.replace(/\n?\s*<script src="\.\.\/js\/map_netmap\.js(?:\?v=[\w.\-]+)?"><\/script>/g, '');
+    out = out.replace(
+      /\n?\s*<button id="tab-btn-netmap" class="tab-btn"[^>]*>[\s\S]*?<\/button>/g,
+      '',
     );
-    out = out.replace(re, '');
+    out = out.replace(
+      /\n?\s*<!-- NETMAP TAB -->\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"))/,
+      '\n',
+    );
+    out = out.replace(
+      /\n?\s*<div id="tab-netmap" class="tab-content">[\s\S]*?<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"))/,
+      '\n',
+    );
+    out = out.replace(
+      /\n?\s*var netmapBtn = document\.getElementById\('tab-btn-netmap'\);\s*\n\s*if \(netmapBtn\) netmapBtn\.innerHTML = [^;]+;/g,
+      '',
+    );
+    out = out.replace(
+      /\n?\s*var netmapSum = document\.querySelector\('#tab-netmap \.netmap-panel-summary'\);\s*\n\s*if \(netmapSum\) netmapSum\.textContent = [^;]+;/g,
+      '',
+    );
+    out = out.replace(
+      /\n?\s*(?:var __imNetmapPainted = false;\s*)?function renderNetmap\(\) \{[\s\S]*?\n\s*\}\n(?=\s*function render)/g,
+      '\n',
+    );
+    out = out.replace(/\n?\s*if \(tab === 'netmap'\) setTimeout\(renderNetmap, 40\);/g, '');
+    out = out.replace(
+      /\n?\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) setTimeout\(renderNetmap, 80\);/g,
+      '',
+    );
+    out = out.replace(
+      /\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) \{\s*__imNetmapPainted = false;\s*renderNetmap\(true\);\s*\}/g,
+      '',
+    );
+    out = out.replace(
+      /\s*if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) renderNetmap\(\);/g,
+      '',
+    );
+    out = out.replace(
+      /\n[ \t]*if \(window\.InvestingMapNetmap && typeof InvestingMapNetmap\.recolorNodes === 'function'\) InvestingMapNetmap\.recolorNodes\(\);\r?\n/g,
+      '\n',
+    );
+    for (const key of REQUIRED_KEYS) {
+      const re = new RegExp(
+        `\\n[ \\t]*(?:["']?${key}["']?)\\s*:\\s*(['"])(?:.*?)\\1,`,
+        'g',
+      );
+      out = out.replace(re, '');
+    }
+    out = out.replace(
+      /(<\/div>\s*<\/div>\s*<\/div>)\s*<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"|[\r\n]+\s*<div id="tab-))/g,
+      '$1\n',
+    );
+    return out;
+  });
+}
+
+/** Patch bio/bio_inline_tail.js runtime (HTML holds markup only). */
+function patchBioInlineTail(source) {
+  let out = patchRuntime(source, 'bio');
+  if (out.includes("dataUrl: '../data/netmap/bio.json'") && !out.includes('__imNetmapPainted')) {
+    out = out.replace(
+      /function renderNetmap\(\) \{[\s\S]*?\n    \}\n(?=\s*function render)/,
+      renderNetFnBio().replace(/^    /, '').replace(/\n$/, '') + '\n',
+    );
+  } else if (!out.includes('function renderNetmap()')) {
+    const fn = renderNetFnBio();
+    if (out.includes('function renderValuation()')) {
+      out = out.replace(/^([ \t]*)function renderValuation\(\) \{/m, `${fn}$1function renderValuation() {`);
+    } else {
+      out = out.replace(/^([ \t]*)function renderPerfCalendar\(\) \{/m, `${fn}$1function renderPerfCalendar() {`);
+    }
   }
-  // Orphan closing div left when an incomplete strip ate the shell but not the wrapper
   out = out.replace(
-    /(<\/div>\s*<\/div>\s*<\/div>)\s*<\/div>\s*(?=\s*(?:<!--\s*TABLE TAB\s*-->|<div id="tab-table"|[\r\n]+\s*<div id="tab-))/g,
-    '$1\n',
+    /(if \(document\.getElementById\('tab-netmap'\)\?\.classList\.contains\('active'\)\) )renderNetmap\(\);/g,
+    `$1{ __imNetmapPainted = false; renderNetmap(true); }`,
   );
   return out;
+}
+
+function ensureBioTranslations() {
+  const p = path.join(ROOT, 'bio', 'bio_translations.json');
+  if (!fs.existsSync(p)) return false;
+  const raw = JSON.parse(fs.readFileSync(p, 'utf8'));
+  let changed = false;
+  for (const lang of ['ko', 'en']) {
+    if (!raw[lang]) continue;
+    for (const [key, value] of Object.entries(TRANSLATIONS[lang])) {
+      if (raw[lang][key] !== value) {
+        raw[lang][key] = value;
+        changed = true;
+      }
+    }
+  }
+  if (changed) fs.writeFileSync(p, `${JSON.stringify(raw, null, 2)}\n`, 'utf8');
+  return changed;
+}
+
+function regenerateBioInline() {
+  const gen = path.join(ROOT, 'bio', 'gen_korea_bio_inline.mjs');
+  if (!fs.existsSync(gen)) {
+    console.warn('missing bio/gen_korea_bio_inline.mjs');
+    return;
+  }
+  const r = spawnSync(process.execPath, [gen], { cwd: ROOT, stdio: 'inherit' });
+  if (r.status !== 0) {
+    throw new Error(`gen_korea_bio_inline.mjs failed with status ${r.status}`);
+  }
 }
 
 function main() {
@@ -587,6 +745,26 @@ function main() {
     fs.writeFileSync(file, after, 'utf8');
     console.log(after === before ? 'unchanged' : 'patched', rel);
   }
+
+  // Bio runtime lives in bio_inline_tail.js (concatenated by gen_korea_bio_inline).
+  if (hasNetmapData('bio')) {
+    const tChanged = ensureBioTranslations();
+    if (tChanged) console.log('patched bio/bio_translations.json (netmap keys)');
+    const tailPath = path.join(ROOT, 'bio', 'bio_inline_tail.js');
+    if (fs.existsSync(tailPath)) {
+      const before = fs.readFileSync(tailPath, 'utf8');
+      const after = patchBioInlineTail(before);
+      if (after !== before) {
+        fs.writeFileSync(tailPath, after, 'utf8');
+        console.log('patched bio/bio_inline_tail.js');
+      } else {
+        console.log('unchanged bio/bio_inline_tail.js');
+      }
+      regenerateBioInline();
+      console.log('regenerated bio/korea_bio_map.inline.js');
+    }
+  }
+
   console.log('OK patch_netmap_tab');
 }
 

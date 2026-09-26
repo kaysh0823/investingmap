@@ -80,19 +80,77 @@ for (const [rel, sector] of Object.entries(MAP_SECTOR)) {
     assert.ok(!html.includes('id="netmap-toolbar"'), `${rel}: netmap-toolbar must be absent`);
     assert.ok(!html.includes('id="netmap-legend"'), `${rel}: netmap-legend must be absent`);
     assert.ok(/map_netmap\.js/.test(html), `${rel}: map_netmap.js`);
-    assert.ok(html.includes('InvestingMapNetmap.recolorNodes'), `${rel}: quotes-ready recolor`);
-    assert.ok(html.includes('nt.netmapCountryOther'), `${rel}: countries.other label`);
-    assert.ok(html.includes('nt.netmapCountryNameOther'), `${rel}: countryNames.other label`);
+
+    // Bio runtime lives in bio_inline_tail.js / korea_bio_map.inline.js (not the HTML shell).
+    const wiringParts = [html];
+    if (sector === 'bio') {
+      for (const relJs of ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js']) {
+        const p = path.join(ROOT, relJs);
+        if (fs.existsSync(p)) wiringParts.push(fs.readFileSync(p, 'utf8'));
+      }
+    }
+    const wiring = wiringParts.join('\n');
+    assert.ok(
+      wiring.includes('InvestingMapNetmap.recolorNodes'),
+      `${rel}: quotes-ready recolor (HTML or bio inline)`,
+    );
+    assert.ok(wiring.includes('nt.netmapCountryOther'), `${rel}: countries.other label`);
+    assert.ok(wiring.includes('nt.netmapCountryNameOther'), `${rel}: countryNames.other label`);
+
     assert.ok(fs.existsSync(distPath), `dist/${rel}: missing`);
-    const distHtml = fs.readFileSync(distPath, 'utf8');
     const expectedUrl = `../data/netmap/${sector}.json`;
-    const urlMatch = distHtml.match(/dataUrl:\s*'(\.\.\/data\/netmap\/[a-z0-9_-]+\.json)'/);
-    assert.ok(urlMatch, `dist/${rel}: dataUrl missing`);
+    let urlHaystack = fs.readFileSync(distPath, 'utf8');
+    if (sector === 'bio') {
+      const distInline = path.join(ROOT, 'dist', 'bio', 'korea_bio_map.inline.js');
+      const srcInline = path.join(ROOT, 'bio', 'korea_bio_map.inline.js');
+      const inlinePath = fs.existsSync(distInline) ? distInline : srcInline;
+      assert.ok(fs.existsSync(inlinePath), 'bio inline.js missing for dataUrl check');
+      urlHaystack = fs.readFileSync(inlinePath, 'utf8');
+    }
+    const urlMatch = urlHaystack.match(/dataUrl:\s*'(\.\.\/data\/netmap\/[a-z0-9_-]+\.json)'/);
+    assert.ok(urlMatch, `${sector === 'bio' ? 'bio inline' : `dist/${rel}`}: dataUrl missing`);
     assert.equal(
       urlMatch[1],
       expectedUrl,
-      `dist/${rel}: dataUrl must be ${expectedUrl} (got ${urlMatch[1]})`,
+      `${rel}: dataUrl must be ${expectedUrl} (got ${urlMatch[1]})`,
     );
+
+    // koreanCompanies ticker parity vs netmap kr nodes (bio reads from inline.js).
+    if (sector === 'bio') {
+      const inlineSrc = path.join(ROOT, 'bio', 'korea_bio_map.inline.js');
+      const inline = fs.readFileSync(inlineSrc, 'utf8');
+      const m = inline.match(/const koreanCompanies\s*=\s*(\[[\s\S]*?\]);/);
+      assert.ok(m, 'bio inline: koreanCompanies array');
+      const companies = JSON.parse(m[1]);
+      const htmlTickers = new Set(
+        companies.map((c) => String(c.ticker).padStart(6, '0')).filter((t) => /^\d{6}$/.test(t)),
+      );
+      const net = JSON.parse(
+        fs.readFileSync(path.join(ROOT, 'data', 'netmap', 'bio.json'), 'utf8'),
+      );
+      const krTickers = new Set();
+      for (const n of net.nodes) {
+        if (n.country !== 'kr' && n.type !== 'kr_listed' && n.type !== 'kr_anchor') continue;
+        if (n.ticker) krTickers.add(String(n.ticker).padStart(6, '0'));
+        const idT = String(n.id || '').replace(/^krx:/, '');
+        if (/^\d{6}$/.test(idT)) krTickers.add(idT);
+      }
+      const onlyHtml = [...htmlTickers].filter((t) => !krTickers.has(t)).sort();
+      const onlyNet = [...krTickers].filter((t) => !htmlTickers.has(t)).sort();
+      assert.deepEqual(
+        onlyHtml,
+        [],
+        `bio: koreanCompanies tickers missing from netmap kr: ${onlyHtml.join(',')}`,
+      );
+      // Extra netmap kr nodes (anchors / special tickers) are allowed; log for visibility.
+      if (onlyNet.length) {
+        console.log(`  bio netmap-only kr tickers (ok): ${onlyNet.join(',')}`);
+      }
+      console.log(
+        `  bio parity OK koreanCompanies=${htmlTickers.size} ⊆ netmapKr=${krTickers.size}`,
+      );
+    }
+
     console.log(`  html OK ${rel} dataUrl=${urlMatch[1]}`);
   } else {
     assert.ok(!html.includes('tab-btn-netmap'), `${rel}: must not have netmap tab without data`);

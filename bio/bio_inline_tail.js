@@ -139,6 +139,10 @@
       if (perfCalHint) perfCalHint.textContent = t.perfCalendarSubtitle || (lang === 'en' ? 'YTD vs prior year-end=100' : '전년말 종가=100 기준 연중 수익률');
       var valuationBtn = document.getElementById('tab-btn-valuation');
       if (valuationBtn) valuationBtn.innerHTML = t.tabValuation || (lang === 'en' ? '⚖️ Valuation' : '⚖️ 밸류에이션 비교');
+      var netmapBtn = document.getElementById('tab-btn-netmap');
+      if (netmapBtn) netmapBtn.innerHTML = t.tabNetmap || (lang === 'en' ? '🕸️ Network map' : '🕸️ 네트워크맵');
+      var netmapSum = document.querySelector('#tab-netmap .netmap-panel-summary');
+      if (netmapSum) netmapSum.textContent = t.netmapPanelFilters || (lang === 'en' ? 'Filters & legend' : '필터·범례');
       var valuationHint = document.getElementById('valuation-hint');
       if (valuationHint) valuationHint.textContent = t.valuationLegend || '';
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
@@ -204,7 +208,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
       if (svgEl) {
         svgEl.selectAll('.node text')
           .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label));
@@ -527,6 +531,148 @@
       });
     }
 
+    var __imNetmapPainted = false;
+    function renderNetmap(force) {
+      if (!window.InvestingMapNetmap) return;
+      var el = document.getElementById('netmap-root');
+      if (!el) return;
+      if (__imNetmapPainted && !force) {
+        if (el.querySelector('svg') && typeof InvestingMapNetmap.recolorNodes === 'function') {
+          InvestingMapNetmap.recolorNodes();
+          return;
+        }
+        __imNetmapPainted = false;
+      }
+      var nt = T[lang] || {};
+      InvestingMapNetmap.render({
+        container: el,
+        side: document.getElementById('netmap-side'),
+        panel: document.getElementById('netmap-panel'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        sectorId: 'bio',
+        dataUrl: '../data/netmap/bio.json',
+        labels: {
+          title: nt.tabNetmap,
+          search: nt.netmapSearch,
+          scopeAll: nt.netmapScopeAll,
+          scopeDomestic: nt.netmapScopeDomestic,
+          fit: nt.netmapFit,
+          reset: nt.netmapReset,
+          loading: nt.netmapLoading,
+          failed: nt.netmapFailed,
+          noData: nt.netmapNoData,
+          source: nt.netmapSource,
+          openChart: nt.netmapOpenChart,
+          legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
+          types: {
+            supply: nt.netmapTypeSupply,
+            partner: nt.netmapTypePartner,
+            equity: nt.netmapTypeEquity,
+            peer: nt.netmapTypePeer,
+            distribution: nt.netmapTypeDistribution
+          },
+          countries: {
+            us: nt.netmapCountryUs,
+            tw: nt.netmapCountryTw,
+            jp: nt.netmapCountryJp,
+            cn: nt.netmapCountryCn,
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
+          }
+        }
+      });
+      __imNetmapPainted = true;
+    }
+
+
+    function renderNetmap() {
+      if (!window.InvestingMapNetmap) return;
+      var el = document.getElementById('netmap-root');
+      if (!el) return;
+      var nt = T[lang] || {};
+      InvestingMapNetmap.render({
+        container: el,
+        side: document.getElementById('netmap-side'),
+        panel: document.getElementById('netmap-panel'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        sectorId: 'bio',
+        dataUrl: '../data/netmap/bio.json',
+        labels: {
+          title: nt.tabNetmap,
+          search: nt.netmapSearch,
+          scopeAll: nt.netmapScopeAll,
+          scopeDomestic: nt.netmapScopeDomestic,
+          fit: nt.netmapFit,
+          reset: nt.netmapReset,
+          loading: nt.netmapLoading,
+          failed: nt.netmapFailed,
+          noData: nt.netmapNoData,
+          source: nt.netmapSource,
+          openChart: nt.netmapOpenChart,
+          legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
+          types: {
+            supply: nt.netmapTypeSupply,
+            partner: nt.netmapTypePartner,
+            equity: nt.netmapTypeEquity,
+            peer: nt.netmapTypePeer,
+            distribution: nt.netmapTypeDistribution
+          },
+          countries: {
+            us: nt.netmapCountryUs,
+            tw: nt.netmapCountryTw,
+            jp: nt.netmapCountryJp,
+            cn: nt.netmapCountryCn,
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
+          }
+        }
+      });
+    }
+
     function renderValuation() {
       if (!window.InvestingMapValuation) return;
       var el = document.getElementById('valuation-root');
@@ -676,6 +822,7 @@
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
       if (tab === 'valuation') setTimeout(renderValuation, 40);
+      if (tab === 'netmap') setTimeout(renderNetmap, 40);
       if (tab === 'graph') setTimeout(function() { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -688,10 +835,12 @@
       if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
       if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) setTimeout(renderPerfCalendar, 80);
       if (document.getElementById('tab-valuation')?.classList.contains('active')) setTimeout(renderValuation, 80);
+      if (document.getElementById('tab-netmap')?.classList.contains('active')) setTimeout(renderNetmap, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },
           onQuotesReady: function () {
+            if (window.InvestingMapNetmap && typeof InvestingMapNetmap.recolorNodes === 'function') InvestingMapNetmap.recolorNodes();
             function isActive(id) {
               var el = document.getElementById(id);
               return !!(el && (el.classList.contains('active') || el.offsetParent !== null));
@@ -722,7 +871,7 @@
             imQuotesAsOf = '';
             updateQuotesAsofDisplay();
             renderTable();
-            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
+            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
           }
         };
       applyLang();

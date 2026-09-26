@@ -6,7 +6,7 @@
     const globalCompanies = [{"id":"glob_sdz","name":"Sandoz (Novartis)","nameEn":"Sandoz (Novartis)","country":"Switzerland","region":"eu","sector":"글로벌 시밀러 1위, '23 분사"},{"id":"glob_amgn","name":"Amgen","nameEn":"Amgen","country":"USA","region":"us","sector":"MVasi·Kanjinti 등 시밀러 포트폴리오"},{"id":"glob_teva","name":"Teva","nameEn":"Teva","country":"Israel","region":"il","sector":"제네릭+시밀러 글로벌 리더"},{"id":"glob_lonn","name":"Lonza","nameEn":"Lonza","country":"Switzerland","region":"eu","sector":"글로벌 바이오 CDMO 1위"},{"id":"glob_2269hk","name":"WuXi Biologics","nameEn":"WuXi Biologics","country":"China","region":"cn","sector":"중국 최대 바이오 CDMO"},{"id":"glob_catalentnovoholdings","name":"Catalent → Novo Holdings","nameEn":"Catalent → Novo Holdings","country":"USA","region":"us","sector":"'24 노보홀딩스 인수"},{"id":"glob_207940","name":"Samsung Biologics","nameEn":"Samsung Biologics","country":"Korea","region":"kr","sector":"글로벌 Top3 CDMO"},{"id":"glob_4568t","name":"Daiichi Sankyo","nameEn":"Daiichi Sankyo","country":"Japan","region":"jp","sector":"Enhertu ADC 블록버스터"},{"id":"glob_abbv","name":"AbbVie","nameEn":"AbbVie","country":"USA","region":"us","sector":"휴미라 후속 면역 항체 포트폴리오"}];
     const SECTOR_ORDER = ["종합 제약","신약개발","바이오시밀러","백신·혈액제제","CDMO·CMO","원료의약품·생산소재","연구도구·서비스","제약·바이오 지주"];
     const N_SECTORS = 8;
-    const T = {"ko":{"title":"🇰🇷 한국 바이오 산업 투자 지도","subtitle":"국내 바이오·제약 상장사 · 기술이전·글로벌 페어링과 섹터 peer를 한 그래프에서 확인","badgeTotal":"총 <span>65</span>개 기업 매핑","badgeMarket":"KOSPI <span>26</span>사 · KOSDAQ <span>39</span>사","editorialToggleShow":"섹터 설명 보기","editorialToggleHide":"섹터 설명 접기","dataAsof":"업데이트 기준일: 2026년 6월 15일","tabHeatmap":"🔥 서터 히트맵","heatmapHint":"칸 크기 = 시가총액 · 색 = 일일 등락률","tabTable":"📋 기업 목록 &amp; 필터","tabGraph":"🌐 섹터·peer 네트워크 (수정중)","langFlag":"🇺🇸","langText":"English","flChain":"섹터","flMarket":"시장","searchPlaceholder":"🔍 기업명·티커·섹터 검색...","resultLabel":"표시: ","resultUnit":"개","thName":"기업명","thTicker":"종목코드","thLast":"현재가","thChg1d":"1일","thRet20d":"20일","thRet50d":"50일","thRet120d":"120일","thRet200d":"200일","th52High":"52주 최고","th52Lo":"52주 최저","thPosition":"주가 위치","thMarket":"시장","thMcap":"시가총액","thPer":"PER","thPbr":"PBR","thChain":"섹터","thSemType":"섹터 요약","thProducts":"핵심 테마","thPartners":"글로벌 페어링","note":"본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 페어링은 biomap.jsx 기준 섹터이며, 시가총액·시장 구분은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시가총액을 조(兆)원 단위로 소수 둘째 자리까지 표시하고, 영문 열은 네이버 금융 USD/KRW 고시 환율(/api/fx)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·주가 위치는 /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·오류 시 —로 표시됩니다.","sbKorean":"국내 상장 (섹터)","sbGlobal":"Peer 링크 안내","peerNetworkDesc":"글로벌 페어링·기술이전 관계(실선/점선)와 같은 섹터 내 시총 순 국내 peer, 회색 점선=같은 섹터에서 함께 등장하는 글로벌 피어 그룹.","sbSize":"노드 크기","sbHow":"조작 방법","allFilter":"전체","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"비상장","regionLabel":{"us":"미국","tw":"대만","cn":"중국","eu":"유럽","kr":"한국","jp":"일본","gb":"영국","il":"이스라엘","dk":"덴마크"},"sizeDesc":"대형: 시총 약 15조원↑<br>중형: 약 1~15조원<br>소형: 1조원 미만","howDesc":"• 노드 클릭: peer·글로벌 링크 강조<br>• 드래그·스크롤·빈 곳 클릭으로 선택 해제<br>• 회색 점선: 글로벌 피어 그룹, 실선/점선: 페어링 종류","graphHint":"노드를 클릭하면 연결된 peer·글로벌 관계가 강조됩니다","ttChain":"섹터","ttSemType":"요약","ttProducts":"테마","ttRevenue":"시가총액","ttPartners":"페어링","ttSuppliers":"국내 기업","ttCountry":"국가","ttSector":"분야","ttTags":"복수 축","fieldSemType":"semType","fieldProducts":"products","tabMomentum":"📊 모멘텀 매트릭스","momentumHint":"RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률","momentumAxisRs":"RS","momentumAxisPosition":"주가 위치","momentumLeader":"주도(강세)","momentumPullback":"되돌림주의","momentumEmerging":"신규부상","momentumLagging":"소외","momentumTurnover":"당일 거래대금","momentumChange":"당일 등락률","momentumPosition":"주가 위치","momentumNoData":"RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.","momentumLegend":"색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS","tabVolatility":"📉 변동성 분포","volatilityTitle":"변동성 분포","volatilityHint":"색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityAxisAtr":"5일 변동성 (고저폭 ÷ 종가, %)","volatilityAxisMcap":"시가총액(로그)","volatilityAtr":"5일 변동성%","volatilityMcap":"시가총액","volatilityPctB":"20일 %b","volatilityNoData":"변동성 스냅샷 데이터가 없습니다.","volatilityLegend":"크기 = 거래대금 · 색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityTurnover":"거래대금","volatilityRs":"RS","volatilityLegendLines":"세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityLegendPctB":"색 = 20일 %b (50 초과 초록 · 미만 빨강)","volatilityLegendTurnover":"색=거래대금(진할수록 높음)","volatilityLegendRs":"색 = RS (시장 RS 초과 초록 · 미만 빨강)","volatilityModePctB":"%b","volatilityModeTurnover":"거래대금","volatilityModeRs":"RS","volatilityChg":"당일 등락률","volatilityLegendSize":"크기 = 거래대금","volatilityLegendChg":"색 = 당일 등락률","volatilityModeChg":"당일 등락률","tabPerfCalendar":"📅 퍼포먼스 캘린더","perfCalendarTitle":"퍼포먼스 캘린더","perfCalendarSubtitle":"전년말 종가=100 기준 연중 수익률","perfCalendarSectorAvg":"섹터 평균","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"퍼포먼스 데이터를 불러오는 중…","perfCalendarFailed":"퍼포먼스 캘린더 데이터를 불러오지 못했습니다.","perfCalendarNoData":"표시할 퍼포먼스 데이터가 없습니다.","perfCalendarLegend":"종목·섹터 평균·지수 범례","perfCalendarBase":"기준","perfCalendarChange":"기준 대비","perfCalendarOpenChart":"캔들 차트 열기","perfCalendarYearTabs":"연도 선택","tabValuation":"⚖️ 밸류에이션 비교","valuationMetricPer":"PER TTM","valuationMetricPbr":"PBR","valuationMetricDvd":"배당수익률","valuationSortChain":"체인 순","valuationSortMedian":"그룹 중앙값 순","valuationLoading":"밸류에이션 데이터를 불러오는 중…","valuationFailed":"밸류에이션 스냅샷을 불러오지 못했습니다.","valuationNoData":"표시할 밸류에이션 데이터가 없습니다.","valuationLegend": "점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)","valuationLegendPer":"PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준","valuationMetricPerFy":"PER FY","chainLabel":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"},"chainFilter":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"}},"en":{"title":"🇰🇷 Korea Bio Industry Investment Map","subtitle":"Listed Korean bio/pharma — global licensing & partnerships, sector peers, and peer grouping on one graph","badgeTotal":"<span>65</span> companies","badgeMarket":"KOSPI <span>26</span> · KOSDAQ <span>39</span>","editorialToggleShow":"섹터 설명 보기","editorialToggleHide":"섹터 설명 접기","dataAsof":"Data as of: June 15, 2026","tabHeatmap":"🔥 Sector heatmap","heatmapHint":"Tile size = market cap · color = 1-day return","tabTable":"📋 List &amp; filters","tabGraph":"🌐 Sector peer network (WIP)","langFlag":"🇰🇷","langText":"한국어","flChain":"Sector","flMarket":"Market","searchPlaceholder":"🔍 Search name, ticker, sector...","resultLabel":"Showing: ","resultUnit":"","thName":"Company","thTicker":"Ticker","thLast":"Last","thChg1d":"Day","thRet20d":"1M","thRet50d":"3M","thRet120d":"6M","thRet200d":"200D","th52High":"52W High","th52Lo":"52W Low","thPosition":"52W Range","thMarket":"Market","thMcap":"Market cap (~$B)","thPer":"PER","thPbr":"PBR","thChain":"Sector","thSemType":"Sector summary","thProducts":"Key theme","thPartners":"Global licensing & partnerships","note":"For information only, not investment advice. Partnerships follow biomap.jsx sectors. Market cap and segment follow KRX disclosures as of the date shown above. Korean table uses market cap in trillions of won, two decimal places. English table shows USD billions (two decimals) using the USD/KRW spot from Naver Finance (/api/fx, illustrative). Last price, 52-week high/low, and 52-week range refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.","sbKorean":"Korean listed (by sector)","sbGlobal":"Peer links","peerNetworkDesc":"Solid/dashed lines show big-pharma and platform licensing & partnerships; domestic peer ladder by market cap within each sector; thin gray chains group global nodes that co-occur in the same sector.","sbSize":"Node size","sbHow":"Controls","allFilter":"All","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"Unlisted","regionLabel":{"us":"USA","tw":"Taiwan","cn":"China","eu":"Europe","kr":"Korea","jp":"Japan","gb":"UK","il":"Israel","dk":"Denmark"},"sizeDesc":"Large: mcap ~₩15T+<br>Mid: ~₩1–15T<br>Small: <₩1T","howDesc":"• Click node: highlight peer & global relationships<br>• Drag / scroll / background click to reset<br>• Gray dashes: global peer grouping; line style: partnership type","graphHint":"Click a node to highlight linked peers and global connections","ttChain":"Sector","ttSemType":"Summary","ttProducts":"Theme","ttRevenue":"Market cap","ttPartners":"Partnerships","ttSuppliers":"Korean companies","ttCountry":"Country","ttSector":"Field","ttTags":"Multi-axis","fieldSemType":"semTypeEn","fieldProducts":"productsEn","tabMomentum":"📊 Momentum matrix","momentumHint":"RS × 52W position · size = daily turnover · color = 1-day return","momentumAxisRs":"RS","momentumAxisPosition":"52W price position","momentumLeader":"Leading (strong)","momentumPullback":"Pullback risk","momentumEmerging":"Emerging","momentumLagging":"Lagging","momentumTurnover":"Daily turnover","momentumChange":"1-day return","momentumPosition":"Price position","momentumNoData":"No companies have RS, price-position and turnover data.","momentumLegend":"Color = 1-day return · size = daily turnover · vertical lines = market index RS","tabVolatility":"📉 Volatility Distribution","volatilityTitle":"Volatility Distribution","volatilityHint":"Color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityAxisAtr":"5D Range Vol (high−low ÷ close, %)","volatilityAxisMcap":"Market cap (log)","volatilityAtr":"5D Range Vol%","volatilityMcap":"Market cap","volatilityPctB":"20D %b","volatilityNoData":"No volatility snapshot data available.","volatilityLegend":"Size = turnover · color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityTurnover":"Turnover","volatilityRs":"RS","volatilityLegendLines":"Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityLegendPctB":"Color = 20D %b (green above 50 · red below)","volatilityLegendTurnover":"Color = turnover (darker = higher)","volatilityLegendRs":"Color = RS (green above market RS · red below)","volatilityModePctB":"%b","volatilityModeTurnover":"Turnover","volatilityModeRs":"RS","volatilityChg":"1-day change","volatilityLegendSize":"Size = turnover","volatilityLegendChg":"Color = 1-day change","volatilityModeChg":"1-day change","tabPerfCalendar":"📅 Performance Calendar","perfCalendarTitle":"Performance Calendar","perfCalendarSubtitle":"YTD vs prior year-end=100","perfCalendarSectorAvg":"Sector average","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"Loading performance data…","perfCalendarFailed":"Could not load performance calendar data.","perfCalendarNoData":"No performance data available.","perfCalendarLegend":"Members, sector average, and index legend","perfCalendarBase":"Base","perfCalendarChange":"vs base","perfCalendarOpenChart":"Open candle chart","perfCalendarYearTabs":"Year filter","tabValuation":"⚖️ Valuation","valuationMetricPer":"PER TTM","valuationMetricPbr":"PBR","valuationMetricDvd":"Div. yield","valuationSortChain":"Chain order","valuationSortMedian":"By group median","valuationLoading":"Loading valuation data…","valuationFailed":"Could not load valuation snapshot.","valuationNoData":"No valuation data available.","valuationLegend": "Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)","valuationLegendPer":"PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS","valuationMetricPerFy":"PER FY","chainLabel":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"},"chainFilter":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"}}};
+    const T = {"ko":{"title":"🇰🇷 한국 바이오 산업 투자 지도","subtitle":"국내 바이오·제약 상장사 · 기술이전·글로벌 페어링과 섹터 peer를 한 그래프에서 확인","badgeTotal":"총 <span>65</span>개 기업 매핑","badgeMarket":"KOSPI <span>26</span>사 · KOSDAQ <span>39</span>사","editorialToggleShow":"섹터 설명 보기","editorialToggleHide":"섹터 설명 접기","dataAsof":"업데이트 기준일: 2026년 6월 15일","tabHeatmap":"🔥 서터 히트맵","heatmapHint":"칸 크기 = 시가총액 · 색 = 일일 등락률","tabTable":"📋 기업 목록 &amp; 필터","tabGraph":"🌐 섹터·peer 네트워크 (수정중)","langFlag":"🇺🇸","langText":"English","flChain":"섹터","flMarket":"시장","searchPlaceholder":"🔍 기업명·티커·섹터 검색...","resultLabel":"표시: ","resultUnit":"개","thName":"기업명","thTicker":"종목코드","thLast":"현재가","thChg1d":"1일","thRet20d":"20일","thRet50d":"50일","thRet120d":"120일","thRet200d":"200일","th52High":"52주 최고","th52Lo":"52주 최저","thPosition":"주가 위치","thMarket":"시장","thMcap":"시가총액","thPer":"PER","thPbr":"PBR","thChain":"섹터","thSemType":"섹터 요약","thProducts":"핵심 테마","thPartners":"글로벌 페어링","note":"본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 페어링은 biomap.jsx 기준 섹터이며, 시가총액·시장 구분은 상단 기준일의 KRX 공시에 맞추었습니다. 한국어 열은 시가총액을 조(兆)원 단위로 소수 둘째 자리까지 표시하고, 영문 열은 네이버 금융 USD/KRW 고시 환율(/api/fx)을 적용해 B(십억 달러) 단위로 소수 둘째 자리까지 환산한 참고치입니다. 현재가·52주 최고·최저·주가 위치는 /api/quotes(KRX OPEN API 일별매매정보)로 주기 갱신되며, 당일 종가는 영업일 기준 지연·오류 시 —로 표시됩니다.","sbKorean":"국내 상장 (섹터)","sbGlobal":"Peer 링크 안내","peerNetworkDesc":"글로벌 페어링·기술이전 관계(실선/점선)와 같은 섹터 내 시총 순 국내 peer, 회색 점선=같은 섹터에서 함께 등장하는 글로벌 피어 그룹.","sbSize":"노드 크기","sbHow":"조작 방법","allFilter":"전체","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"비상장","regionLabel":{"us":"미국","tw":"대만","cn":"중국","eu":"유럽","kr":"한국","jp":"일본","gb":"영국","il":"이스라엘","dk":"덴마크"},"sizeDesc":"대형: 시총 약 15조원↑<br>중형: 약 1~15조원<br>소형: 1조원 미만","howDesc":"• 노드 클릭: peer·글로벌 링크 강조<br>• 드래그·스크롤·빈 곳 클릭으로 선택 해제<br>• 회색 점선: 글로벌 피어 그룹, 실선/점선: 페어링 종류","graphHint":"노드를 클릭하면 연결된 peer·글로벌 관계가 강조됩니다","ttChain":"섹터","ttSemType":"요약","ttProducts":"테마","ttRevenue":"시가총액","ttPartners":"페어링","ttSuppliers":"국내 기업","ttCountry":"국가","ttSector":"분야","ttTags":"복수 축","fieldSemType":"semType","fieldProducts":"products","tabMomentum":"📊 모멘텀 매트릭스","momentumHint":"RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률","momentumAxisRs":"RS","momentumAxisPosition":"주가 위치","momentumLeader":"주도(강세)","momentumPullback":"되돌림주의","momentumEmerging":"신규부상","momentumLagging":"소외","momentumTurnover":"당일 거래대금","momentumChange":"당일 등락률","momentumPosition":"주가 위치","momentumNoData":"RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.","momentumLegend":"색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS","tabVolatility":"📉 변동성 분포","volatilityTitle":"변동성 분포","volatilityHint":"색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityAxisAtr":"5일 변동성 (고저폭 ÷ 종가, %)","volatilityAxisMcap":"시가총액(로그)","volatilityAtr":"5일 변동성%","volatilityMcap":"시가총액","volatilityPctB":"20일 %b","volatilityNoData":"변동성 스냅샷 데이터가 없습니다.","volatilityLegend":"크기 = 거래대금 · 색 = 20일 %b (50 초과 초록 · 미만 빨강) · 세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityTurnover":"거래대금","volatilityRs":"RS","volatilityLegendLines":"세로선 = 전 종목 5일 변동성 백분위 P10~P90(P25·P50·P75 강조)","volatilityLegendPctB":"색 = 20일 %b (50 초과 초록 · 미만 빨강)","volatilityLegendTurnover":"색=거래대금(진할수록 높음)","volatilityLegendRs":"색 = RS (시장 RS 초과 초록 · 미만 빨강)","volatilityModePctB":"%b","volatilityModeTurnover":"거래대금","volatilityModeRs":"RS","volatilityChg":"당일 등락률","volatilityLegendSize":"크기 = 거래대금","volatilityLegendChg":"색 = 당일 등락률","volatilityModeChg":"당일 등락률","tabPerfCalendar":"📅 퍼포먼스 캘린더","perfCalendarTitle":"퍼포먼스 캘린더","perfCalendarSubtitle":"전년말 종가=100 기준 연중 수익률","perfCalendarSectorAvg":"섹터 평균","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"퍼포먼스 데이터를 불러오는 중…","perfCalendarFailed":"퍼포먼스 캘린더 데이터를 불러오지 못했습니다.","perfCalendarNoData":"표시할 퍼포먼스 데이터가 없습니다.","perfCalendarLegend":"종목·섹터 평균·지수 범례","perfCalendarBase":"기준","perfCalendarChange":"기준 대비","perfCalendarOpenChart":"캔들 차트 열기","perfCalendarYearTabs":"연도 선택","tabValuation":"⚖️ 밸류에이션 비교","valuationMetricPer":"PER TTM","valuationMetricPbr":"PBR","valuationMetricDvd":"배당수익률","valuationSortChain":"체인 순","valuationSortMedian":"그룹 중앙값 순","valuationLoading":"밸류에이션 데이터를 불러오는 중…","valuationFailed":"밸류에이션 스냅샷을 불러오지 못했습니다.","valuationNoData":"표시할 밸류에이션 데이터가 없습니다.","valuationLegend":"점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)","valuationLegendPer":"PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준","valuationMetricPerFy":"PER FY","tabNetmap":"🕸️ 네트워크맵","netmapSearch":"이름·티커 검색","netmapScopeAll":"국내+글로벌","netmapScopeDomestic":"국내만","netmapFit":"전체보기","netmapReset":"초기화","netmapLoading":"네트워크맵을 불러오는 중…","netmapFailed":"네트워크맵을 불러오지 못했습니다.","netmapNoData":"표시할 네트워크 데이터가 없습니다.","netmapSource":"출처","netmapOpenChart":"차트 열기","netmapLegendRs":"국내 점 색 = RS(시장 RS 초과 초록 · 미만 빨강) · 크기 = 시총","netmapGuideDomestic":"● 국내: 색 = RS(시장 RS 초과 초록 · 미만 빨강), 크기 = 시총","netmapGuideGlobal":"■ 글로벌: 색 = 국가, 크기 = 연결 수","netmapFooterHint":"출처는 노드 클릭 → 관계 목록에서 확인","netmapPanelFilters":"필터·범례","netmapSectionSearch":"검색","netmapSectionTypes":"관계 유형","netmapSectionScope":"범위","netmapSectionCountries":"국가","netmapSectionGuide":"노드 안내","netmapClose":"닫기","netmapAsOf":"기준","netmapNodes":"노드","netmapEdges":"관계","netmapTypeSupply":"공급","netmapTypePartner":"파트너","netmapTypeEquity":"지분","netmapTypePeer":"피어","netmapTypeDistribution":"유통","netmapCountryUs":"US","netmapCountryTw":"TW","netmapCountryJp":"JP","netmapCountryCn":"CN","netmapCountryEu":"EU","netmapCountryOther":"기타","netmapCountryNameUs":"미국","netmapCountryNameTw":"대만","netmapCountryNameJp":"일본","netmapCountryNameCn":"중국","netmapCountryNameEu":"유럽","netmapCountryNameOther":"기타(중동·아시아 등)","chainLabel":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"},"chainFilter":{"종합 제약":"종합 제약","신약개발":"신약개발","바이오시밀러":"바이오시밀러","백신·혈액제제":"백신·혈액제제","CDMO·CMO":"CDMO·CMO","원료의약품·생산소재":"원료의약품·생산소재","연구도구·서비스":"연구도구·서비스","제약·바이오 지주":"제약·바이오 지주"}},"en":{"title":"🇰🇷 Korea Bio Industry Investment Map","subtitle":"Listed Korean bio/pharma — global licensing & partnerships, sector peers, and peer grouping on one graph","badgeTotal":"<span>65</span> companies","badgeMarket":"KOSPI <span>26</span> · KOSDAQ <span>39</span>","editorialToggleShow":"섹터 설명 보기","editorialToggleHide":"섹터 설명 접기","dataAsof":"Data as of: June 15, 2026","tabHeatmap":"🔥 Sector heatmap","heatmapHint":"Tile size = market cap · color = 1-day return","tabTable":"📋 List &amp; filters","tabGraph":"🌐 Sector peer network (WIP)","langFlag":"🇰🇷","langText":"한국어","flChain":"Sector","flMarket":"Market","searchPlaceholder":"🔍 Search name, ticker, sector...","resultLabel":"Showing: ","resultUnit":"","thName":"Company","thTicker":"Ticker","thLast":"Last","thChg1d":"Day","thRet20d":"1M","thRet50d":"3M","thRet120d":"6M","thRet200d":"200D","th52High":"52W High","th52Lo":"52W Low","thPosition":"52W Range","thMarket":"Market","thMcap":"Market cap (~$B)","thPer":"PER","thPbr":"PBR","thChain":"Sector","thSemType":"Sector summary","thProducts":"Key theme","thPartners":"Global licensing & partnerships","note":"For information only, not investment advice. Partnerships follow biomap.jsx sectors. Market cap and segment follow KRX disclosures as of the date shown above. Korean table uses market cap in trillions of won, two decimal places. English table shows USD billions (two decimals) using the USD/KRW spot from Naver Finance (/api/fx, illustrative). Last price, 52-week high/low, and 52-week range refresh via /api/quotes (KRX OPEN API daily trade); delayed vs. live tick; shows — if unavailable.","sbKorean":"Korean listed (by sector)","sbGlobal":"Peer links","peerNetworkDesc":"Solid/dashed lines show big-pharma and platform licensing & partnerships; domestic peer ladder by market cap within each sector; thin gray chains group global nodes that co-occur in the same sector.","sbSize":"Node size","sbHow":"Controls","allFilter":"All","kosp":"KOSPI","kosdaq":"KOSDAQ","unlisted":"Unlisted","regionLabel":{"us":"USA","tw":"Taiwan","cn":"China","eu":"Europe","kr":"Korea","jp":"Japan","gb":"UK","il":"Israel","dk":"Denmark"},"sizeDesc":"Large: mcap ~₩15T+<br>Mid: ~₩1–15T<br>Small: <₩1T","howDesc":"• Click node: highlight peer & global relationships<br>• Drag / scroll / background click to reset<br>• Gray dashes: global peer grouping; line style: partnership type","graphHint":"Click a node to highlight linked peers and global connections","ttChain":"Sector","ttSemType":"Summary","ttProducts":"Theme","ttRevenue":"Market cap","ttPartners":"Partnerships","ttSuppliers":"Korean companies","ttCountry":"Country","ttSector":"Field","ttTags":"Multi-axis","fieldSemType":"semTypeEn","fieldProducts":"productsEn","tabMomentum":"📊 Momentum matrix","momentumHint":"RS × 52W position · size = daily turnover · color = 1-day return","momentumAxisRs":"RS","momentumAxisPosition":"52W price position","momentumLeader":"Leading (strong)","momentumPullback":"Pullback risk","momentumEmerging":"Emerging","momentumLagging":"Lagging","momentumTurnover":"Daily turnover","momentumChange":"1-day return","momentumPosition":"Price position","momentumNoData":"No companies have RS, price-position and turnover data.","momentumLegend":"Color = 1-day return · size = daily turnover · vertical lines = market index RS","tabVolatility":"📉 Volatility Distribution","volatilityTitle":"Volatility Distribution","volatilityHint":"Color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityAxisAtr":"5D Range Vol (high−low ÷ close, %)","volatilityAxisMcap":"Market cap (log)","volatilityAtr":"5D Range Vol%","volatilityMcap":"Market cap","volatilityPctB":"20D %b","volatilityNoData":"No volatility snapshot data available.","volatilityLegend":"Size = turnover · color = 20D %b (green above 50 · red below) · lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityTurnover":"Turnover","volatilityRs":"RS","volatilityLegendLines":"Lines = market-wide 5D range-vol percentiles P10~P90 (P25·P50·P75 emphasized)","volatilityLegendPctB":"Color = 20D %b (green above 50 · red below)","volatilityLegendTurnover":"Color = turnover (darker = higher)","volatilityLegendRs":"Color = RS (green above market RS · red below)","volatilityModePctB":"%b","volatilityModeTurnover":"Turnover","volatilityModeRs":"RS","volatilityChg":"1-day change","volatilityLegendSize":"Size = turnover","volatilityLegendChg":"Color = 1-day change","volatilityModeChg":"1-day change","tabPerfCalendar":"📅 Performance Calendar","perfCalendarTitle":"Performance Calendar","perfCalendarSubtitle":"YTD vs prior year-end=100","perfCalendarSectorAvg":"Sector average","perfCalendarKospi":"KOSPI","perfCalendarKosdaq":"KOSDAQ","perfCalendarLoading":"Loading performance data…","perfCalendarFailed":"Could not load performance calendar data.","perfCalendarNoData":"No performance data available.","perfCalendarLegend":"Members, sector average, and index legend","perfCalendarBase":"Base","perfCalendarChange":"vs base","perfCalendarOpenChart":"Open candle chart","perfCalendarYearTabs":"Year filter","tabValuation":"⚖️ Valuation","valuationMetricPer":"PER TTM","valuationMetricPbr":"PBR","valuationMetricDvd":"Div. yield","valuationSortChain":"Chain order","valuationSortMedian":"By group median","valuationLoading":"Loading valuation data…","valuationFailed":"Could not load valuation snapshot.","valuationNoData":"No valuation data available.","valuationLegend":"Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)","valuationLegendPer":"PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS","valuationMetricPerFy":"PER FY","tabNetmap":"🕸️ Network map","netmapSearch":"Search name/ticker","netmapScopeAll":"Domestic + global","netmapScopeDomestic":"Domestic only","netmapFit":"Fit","netmapReset":"Reset","netmapLoading":"Loading network map…","netmapFailed":"Could not load network map.","netmapNoData":"No network data available.","netmapSource":"Source","netmapOpenChart":"Open chart","netmapLegendRs":"Domestic color = RS (green above market · red below) · size = market cap","netmapGuideDomestic":"● Domestic: color = RS (green above market · red below), size = market cap","netmapGuideGlobal":"■ Global: color = country, size = connection count","netmapFooterHint":"Sources appear in the relation list after clicking a node","netmapPanelFilters":"Filters & legend","netmapSectionSearch":"Search","netmapSectionTypes":"Relation types","netmapSectionScope":"Scope","netmapSectionCountries":"Countries","netmapSectionGuide":"Node guide","netmapClose":"Close","netmapAsOf":"as of","netmapNodes":"nodes","netmapEdges":"edges","netmapTypeSupply":"Supply","netmapTypePartner":"Partner","netmapTypeEquity":"Equity","netmapTypePeer":"Peer","netmapTypeDistribution":"Distribution","netmapCountryUs":"US","netmapCountryTw":"TW","netmapCountryJp":"JP","netmapCountryCn":"CN","netmapCountryEu":"EU","netmapCountryOther":"Other","netmapCountryNameUs":"United States","netmapCountryNameTw":"Taiwan","netmapCountryNameJp":"Japan","netmapCountryNameCn":"China","netmapCountryNameEu":"Europe","netmapCountryNameOther":"Other (Middle East, Asia, etc.)","chainLabel":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"},"chainFilter":{"종합 제약":"Integrated pharma","신약개발":"Drug discovery","바이오시밀러":"Biosimilars","백신·혈액제제":"Vaccines & blood products","CDMO·CMO":"CDMO / CMO","원료의약품·생산소재":"API & production materials","연구도구·서비스":"Research tools & services","제약·바이오 지주":"Pharma / biotech holdings"}}};
 
 /* investingmap-cross-sector-v1 */
     function imInitialLang(fallback) {
@@ -149,6 +149,10 @@
       if (perfCalHint) perfCalHint.textContent = t.perfCalendarSubtitle || (lang === 'en' ? 'YTD vs prior year-end=100' : '전년말 종가=100 기준 연중 수익률');
       var valuationBtn = document.getElementById('tab-btn-valuation');
       if (valuationBtn) valuationBtn.innerHTML = t.tabValuation || (lang === 'en' ? '⚖️ Valuation' : '⚖️ 밸류에이션 비교');
+      var netmapBtn = document.getElementById('tab-btn-netmap');
+      if (netmapBtn) netmapBtn.innerHTML = t.tabNetmap || (lang === 'en' ? '🕸️ Network map' : '🕸️ 네트워크맵');
+      var netmapSum = document.querySelector('#tab-netmap .netmap-panel-summary');
+      if (netmapSum) netmapSum.textContent = t.netmapPanelFilters || (lang === 'en' ? 'Filters & legend' : '필터·범례');
       var valuationHint = document.getElementById('valuation-hint');
       if (valuationHint) valuationHint.textContent = t.valuationLegend || '';
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
@@ -214,7 +218,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
       if (svgEl) {
         svgEl.selectAll('.node text')
           .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label));
@@ -537,6 +541,148 @@
       });
     }
 
+    var __imNetmapPainted = false;
+    function renderNetmap(force) {
+      if (!window.InvestingMapNetmap) return;
+      var el = document.getElementById('netmap-root');
+      if (!el) return;
+      if (__imNetmapPainted && !force) {
+        if (el.querySelector('svg') && typeof InvestingMapNetmap.recolorNodes === 'function') {
+          InvestingMapNetmap.recolorNodes();
+          return;
+        }
+        __imNetmapPainted = false;
+      }
+      var nt = T[lang] || {};
+      InvestingMapNetmap.render({
+        container: el,
+        side: document.getElementById('netmap-side'),
+        panel: document.getElementById('netmap-panel'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        sectorId: 'bio',
+        dataUrl: '../data/netmap/bio.json',
+        labels: {
+          title: nt.tabNetmap,
+          search: nt.netmapSearch,
+          scopeAll: nt.netmapScopeAll,
+          scopeDomestic: nt.netmapScopeDomestic,
+          fit: nt.netmapFit,
+          reset: nt.netmapReset,
+          loading: nt.netmapLoading,
+          failed: nt.netmapFailed,
+          noData: nt.netmapNoData,
+          source: nt.netmapSource,
+          openChart: nt.netmapOpenChart,
+          legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
+          types: {
+            supply: nt.netmapTypeSupply,
+            partner: nt.netmapTypePartner,
+            equity: nt.netmapTypeEquity,
+            peer: nt.netmapTypePeer,
+            distribution: nt.netmapTypeDistribution
+          },
+          countries: {
+            us: nt.netmapCountryUs,
+            tw: nt.netmapCountryTw,
+            jp: nt.netmapCountryJp,
+            cn: nt.netmapCountryCn,
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
+          }
+        }
+      });
+      __imNetmapPainted = true;
+    }
+
+
+    function renderNetmap() {
+      if (!window.InvestingMapNetmap) return;
+      var el = document.getElementById('netmap-root');
+      if (!el) return;
+      var nt = T[lang] || {};
+      InvestingMapNetmap.render({
+        container: el,
+        side: document.getElementById('netmap-side'),
+        panel: document.getElementById('netmap-panel'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        sectorId: 'bio',
+        dataUrl: '../data/netmap/bio.json',
+        labels: {
+          title: nt.tabNetmap,
+          search: nt.netmapSearch,
+          scopeAll: nt.netmapScopeAll,
+          scopeDomestic: nt.netmapScopeDomestic,
+          fit: nt.netmapFit,
+          reset: nt.netmapReset,
+          loading: nt.netmapLoading,
+          failed: nt.netmapFailed,
+          noData: nt.netmapNoData,
+          source: nt.netmapSource,
+          openChart: nt.netmapOpenChart,
+          legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
+          types: {
+            supply: nt.netmapTypeSupply,
+            partner: nt.netmapTypePartner,
+            equity: nt.netmapTypeEquity,
+            peer: nt.netmapTypePeer,
+            distribution: nt.netmapTypeDistribution
+          },
+          countries: {
+            us: nt.netmapCountryUs,
+            tw: nt.netmapCountryTw,
+            jp: nt.netmapCountryJp,
+            cn: nt.netmapCountryCn,
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
+          }
+        }
+      });
+    }
+
     function renderValuation() {
       if (!window.InvestingMapValuation) return;
       var el = document.getElementById('valuation-root');
@@ -686,6 +832,7 @@
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
       if (tab === 'valuation') setTimeout(renderValuation, 40);
+      if (tab === 'netmap') setTimeout(renderNetmap, 40);
       if (tab === 'graph') setTimeout(function() { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -698,10 +845,12 @@
       if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
       if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) setTimeout(renderPerfCalendar, 80);
       if (document.getElementById('tab-valuation')?.classList.contains('active')) setTimeout(renderValuation, 80);
+      if (document.getElementById('tab-netmap')?.classList.contains('active')) setTimeout(renderNetmap, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },
           onQuotesReady: function () {
+            if (window.InvestingMapNetmap && typeof InvestingMapNetmap.recolorNodes === 'function') InvestingMapNetmap.recolorNodes();
             function isActive(id) {
               var el = document.getElementById(id);
               return !!(el && (el.classList.contains('active') || el.offsetParent !== null));
@@ -732,7 +881,7 @@
             imQuotesAsOf = '';
             updateQuotesAsofDisplay();
             renderTable();
-            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
+            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
           }
         };
       applyLang();

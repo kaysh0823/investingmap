@@ -1,0 +1,953 @@
+{
+ "sectorId": "medtech",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "ivd": "체외진단",
+  "consumables": "의료소모품·재생재료",
+  "monitoring": "생체측정·모니터링",
+  "surgical": "수술·치료 장비",
+  "ai": "의료AI·소프트웨어",
+  "research": "연구·분석 장비",
+  "dental": "치과",
+  "end_customer": "모회사·파트너·고객",
+  "global_peer": "글로벌 의료기기"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:096530",
+   "type": "kr_listed",
+   "ticker": "096530",
+   "nameKo": "씨젠",
+   "nameEn": "씨젠",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "ivd",
+   "role": "체외진단"
+  },
+  {
+   "id": "krx:290650",
+   "type": "kr_listed",
+   "ticker": "290650",
+   "nameKo": "엘앤씨바이오",
+   "nameEn": "엘앤씨바이오",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "consumables",
+   "role": "의료소모품·재생재료"
+  },
+  {
+   "id": "krx:458870",
+   "type": "kr_listed",
+   "ticker": "458870",
+   "nameKo": "씨어스",
+   "nameEn": "씨어스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "monitoring",
+   "role": "생체측정·모니터링"
+  },
+  {
+   "id": "krx:041830",
+   "type": "kr_listed",
+   "ticker": "041830",
+   "nameKo": "인바디",
+   "nameEn": "인바디",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "monitoring",
+   "role": "생체측정·모니터링"
+  },
+  {
+   "id": "krx:491000",
+   "type": "kr_listed",
+   "ticker": "491000",
+   "nameKo": "리브스메드",
+   "nameEn": "리브스메드",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "surgical",
+   "role": "수술·치료 장비"
+  },
+  {
+   "id": "krx:137310",
+   "type": "kr_listed",
+   "ticker": "137310",
+   "nameKo": "에스디바이오센서",
+   "nameEn": "에스디바이오센서",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "ivd",
+   "role": "체외진단"
+  },
+  {
+   "id": "krx:328130",
+   "type": "kr_listed",
+   "ticker": "328130",
+   "nameKo": "루닛",
+   "nameEn": "루닛",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "ai",
+   "role": "의료AI·소프트웨어"
+  },
+  {
+   "id": "krx:376900",
+   "type": "kr_listed",
+   "ticker": "376900",
+   "nameKo": "로킷헬스케어",
+   "nameEn": "로킷헬스케어",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "consumables",
+   "role": "의료소모품·재생재료"
+  },
+  {
+   "id": "krx:099190",
+   "type": "kr_listed",
+   "ticker": "099190",
+   "nameKo": "아이센스",
+   "nameEn": "아이센스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "monitoring",
+   "role": "생체측정·모니터링"
+  },
+  {
+   "id": "krx:377740",
+   "type": "kr_listed",
+   "ticker": "377740",
+   "nameKo": "바이오노트",
+   "nameEn": "바이오노트",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "ivd",
+   "role": "체외진단"
+  },
+  {
+   "id": "krx:340570",
+   "type": "kr_listed",
+   "ticker": "340570",
+   "nameKo": "티앤엘",
+   "nameEn": "티앤엘",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "consumables",
+   "role": "의료소모품·재생재료"
+  },
+  {
+   "id": "krx:475960",
+   "type": "kr_listed",
+   "ticker": "475960",
+   "nameKo": "토모큐브",
+   "nameEn": "토모큐브",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "research",
+   "role": "연구·분석 장비"
+  },
+  {
+   "id": "krx:386380",
+   "type": "kr_listed",
+   "ticker": "386380",
+   "nameKo": "스카이랩스",
+   "nameEn": "스카이랩스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "monitoring",
+   "role": "생체측정·모니터링"
+  },
+  {
+   "id": "krx:0120G0",
+   "type": "kr_listed",
+   "ticker": "0120G0",
+   "nameKo": "삼양바이오팜",
+   "nameEn": "삼양바이오팜",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "consumables",
+   "role": "의료소모품·재생재료"
+  },
+  {
+   "id": "krx:060280",
+   "type": "kr_listed",
+   "ticker": "060280",
+   "nameKo": "큐렉소",
+   "nameEn": "큐렉소",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "surgical",
+   "role": "수술·치료 장비"
+  },
+  {
+   "id": "krx:145720",
+   "type": "kr_listed",
+   "ticker": "145720",
+   "nameKo": "덴티움",
+   "nameEn": "덴티움",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "dental",
+   "role": "치과"
+  },
+  {
+   "id": "global:roche",
+   "type": "global",
+   "nameKo": "로슈 진단",
+   "nameEn": "Roche Diagnostics",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "체외진단 1위",
+   "exchange": "SIX:ROG"
+  },
+  {
+   "id": "global:abbott",
+   "type": "global",
+   "nameKo": "애보트",
+   "nameEn": "Abbott",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "진단·CGM(리브레)",
+   "exchange": "NYSE:ABT"
+  },
+  {
+   "id": "global:dexcom",
+   "type": "global",
+   "nameKo": "덱스컴",
+   "nameEn": "Dexcom",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "CGM 1위",
+   "exchange": "NASDAQ:DXCM"
+  },
+  {
+   "id": "global:medtronic",
+   "type": "global",
+   "nameKo": "메드트로닉",
+   "nameEn": "Medtronic",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "의료기기·CGM",
+   "exchange": "NYSE:MDT"
+  },
+  {
+   "id": "global:danaher",
+   "type": "global",
+   "nameKo": "다나허",
+   "nameEn": "Danaher (Cepheid)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "분자진단",
+   "exchange": "NYSE:DHR"
+  },
+  {
+   "id": "global:thermo",
+   "type": "global",
+   "nameKo": "써모피셔",
+   "nameEn": "Thermo Fisher",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "분석장비·진단",
+   "exchange": "NYSE:TMO"
+  },
+  {
+   "id": "global:ge_hc",
+   "type": "global",
+   "nameKo": "GE헬스케어",
+   "nameEn": "GE HealthCare",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "루닛 파트너 (영상장비)",
+   "exchange": "NASDAQ:GEHC"
+  },
+  {
+   "id": "global:philips",
+   "type": "global",
+   "nameKo": "필립스",
+   "nameEn": "Philips",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "루닛 파트너",
+   "exchange": "AMS:PHIA"
+  },
+  {
+   "id": "global:fujifilm",
+   "type": "global",
+   "nameKo": "후지필름",
+   "nameEn": "Fujifilm",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "루닛 파트너",
+   "exchange": "TSE:4901"
+  },
+  {
+   "id": "global:volpara",
+   "type": "global",
+   "nameKo": "볼파라",
+   "nameEn": "Volpara Health",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "루닛 인수 (유방암 검진 SW)",
+   "exchange": ""
+  },
+  {
+   "id": "global:intuitive",
+   "type": "global",
+   "nameKo": "인튜이티브서지컬",
+   "nameEn": "Intuitive Surgical",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "수술로봇 1위 (다빈치)",
+   "exchange": "NASDAQ:ISRG"
+  },
+  {
+   "id": "global:stryker",
+   "type": "global",
+   "nameKo": "스트라이커",
+   "nameEn": "Stryker (Mako)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "정형외과 로봇",
+   "exchange": "NYSE:SYK"
+  },
+  {
+   "id": "global:zimmer",
+   "type": "global",
+   "nameKo": "짐머바이오메트",
+   "nameEn": "Zimmer Biomet",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "정형외과",
+   "exchange": "NYSE:ZBH"
+  },
+  {
+   "id": "global:straumann",
+   "type": "global",
+   "nameKo": "스트라우만",
+   "nameEn": "Straumann",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "임플란트 1위",
+   "exchange": "SIX:STMN"
+  },
+  {
+   "id": "global:envista",
+   "type": "global",
+   "nameKo": "엔비스타(노벨바이오케어)",
+   "nameEn": "Envista",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "임플란트",
+   "exchange": "NYSE:NVST"
+  },
+  {
+   "id": "global:osstem",
+   "type": "kr_other",
+   "nameKo": "오스템임플란트",
+   "nameEn": "Osstem Implant",
+   "country": "kr",
+   "chain": "global_peer",
+   "role": "국내 임플란트 1위 (비상장 전환)",
+   "exchange": ""
+  },
+  {
+   "id": "global:hero",
+   "type": "global",
+   "nameKo": "히어로 코스메틱(처치앤드와이트)",
+   "nameEn": "Hero Cosmetics (Church & Dwight)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "마이티패치 (티앤엘 ODM)",
+   "exchange": "NYSE:CHD"
+  },
+  {
+   "id": "global:hy",
+   "type": "kr_other",
+   "nameKo": "hy(한국야쿠르트)",
+   "nameEn": "hy",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "큐렉소 최대주주 35.5%",
+   "exchange": ""
+  },
+  {
+   "id": "global:samyang_hd",
+   "type": "kr_other",
+   "nameKo": "삼양홀딩스",
+   "nameEn": "Samyang Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "삼양바이오팜 모회사",
+   "exchange": "KRX:000070"
+  },
+  {
+   "id": "global:tanita",
+   "type": "global",
+   "nameKo": "타니타",
+   "nameEn": "Tanita",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "체성분 분석기",
+   "exchange": ""
+  },
+  {
+   "id": "global:withings",
+   "type": "global",
+   "nameKo": "위딩스",
+   "nameEn": "Withings",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "체성분·헬스 기기",
+   "exchange": ""
+  },
+  {
+   "id": "global:jnj_ethicon",
+   "type": "global",
+   "nameKo": "J&J 메드텍(에티콘)",
+   "nameEn": "Johnson & Johnson MedTech",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "수술기구",
+   "exchange": "NYSE:JNJ"
+  },
+  {
+   "id": "global:quidel",
+   "type": "global",
+   "nameKo": "퀴델오소",
+   "nameEn": "QuidelOrtho",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "신속진단",
+   "exchange": "NASDAQ:QDEL"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_377740>krx_137310",
+   "source": "krx:377740",
+   "target": "krx:137310",
+   "type": "equity",
+   "labelKo": "바이오노트→에스디바이오센서 36.5%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_377740>krx_137310",
+   "source": "krx:377740",
+   "target": "krx:137310",
+   "type": "supply",
+   "labelKo": "진단 원료(항원·항체) 공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096530>krx_137310",
+   "source": "krx:096530",
+   "target": "krx:137310",
+   "type": "peer",
+   "labelKo": "체외진단 (분자 vs 신속)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096530>global_roche",
+   "source": "krx:096530",
+   "target": "global:roche",
+   "type": "peer",
+   "labelKo": "분자진단 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096530>global_abbott",
+   "source": "krx:096530",
+   "target": "global:abbott",
+   "type": "peer",
+   "labelKo": "분자진단 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096530>global_danaher",
+   "source": "krx:096530",
+   "target": "global:danaher",
+   "type": "peer",
+   "labelKo": "분자진단 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_096530>global_thermo",
+   "source": "krx:096530",
+   "target": "global:thermo",
+   "type": "peer",
+   "labelKo": "분자진단 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_137310>global_abbott",
+   "source": "krx:137310",
+   "target": "global:abbott",
+   "type": "peer",
+   "labelKo": "신속진단 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_137310>global_quidel",
+   "source": "krx:137310",
+   "target": "global:quidel",
+   "type": "peer",
+   "labelKo": "신속진단 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_137310>global_roche",
+   "source": "krx:137310",
+   "target": "global:roche",
+   "type": "peer",
+   "labelKo": "신속진단 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1708989054004.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_328130>global_ge_hc",
+   "source": "krx:328130",
+   "target": "global:ge_hc",
+   "type": "partner",
+   "labelKo": "AI 솔루션 탑재·유통 파트너",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=436224",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_328130>global_philips",
+   "source": "krx:328130",
+   "target": "global:philips",
+   "type": "partner",
+   "labelKo": "AI 솔루션 탑재·유통 파트너",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=436224",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_328130>global_fujifilm",
+   "source": "krx:328130",
+   "target": "global:fujifilm",
+   "type": "partner",
+   "labelKo": "AI 솔루션 탑재·유통 파트너",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=436224",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_328130>global_volpara",
+   "source": "krx:328130",
+   "target": "global:volpara",
+   "type": "equity",
+   "labelKo": "볼파라 헬스 인수 (북미 거점)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.medicaltimes.com/Mobile/News/NewsView.html?ID=1167507",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_099190>global_dexcom",
+   "source": "krx:099190",
+   "target": "global:dexcom",
+   "type": "peer",
+   "labelKo": "CGM 경쟁 (케어센스 에어 국산 1호)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2023091208305326843",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_099190>global_abbott",
+   "source": "krx:099190",
+   "target": "global:abbott",
+   "type": "peer",
+   "labelKo": "CGM 경쟁 (케어센스 에어 국산 1호)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2023091208305326843",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_099190>global_medtronic",
+   "source": "krx:099190",
+   "target": "global:medtronic",
+   "type": "peer",
+   "labelKo": "CGM 경쟁 (케어센스 에어 국산 1호)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2023091208305326843",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_041830>global_tanita",
+   "source": "krx:041830",
+   "target": "global:tanita",
+   "type": "peer",
+   "labelKo": "체성분 분석기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=041830",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_041830>global_withings",
+   "source": "krx:041830",
+   "target": "global:withings",
+   "type": "peer",
+   "labelKo": "체성분 분석기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=041830",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_458870>krx_386380",
+   "source": "krx:458870",
+   "target": "krx:386380",
+   "type": "peer",
+   "labelKo": "웨어러블 모니터링 (심전도 패치 vs 반지)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=458870",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_458870>global_philips",
+   "source": "krx:458870",
+   "target": "global:philips",
+   "type": "peer",
+   "labelKo": "환자 모니터링",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=458870",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_340570>global_hero",
+   "source": "krx:340570",
+   "target": "global:hero",
+   "type": "supply",
+   "labelKo": "마이티패치 ODM (트러블 패치 매출 67%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://pharm.edaily.co.kr/news/read?newsId=01882726638856448",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_290650>krx_376900",
+   "source": "krx:290650",
+   "target": "krx:376900",
+   "type": "peer",
+   "labelKo": "재생의료 소재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=290650",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_samyang_hd>krx_0120G0",
+   "source": "global:samyang_hd",
+   "target": "krx:0120G0",
+   "type": "equity",
+   "labelKo": "삼양홀딩스→삼양바이오팜 (봉합사·의료소재)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=000070",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_0120G0>global_jnj_ethicon",
+   "source": "krx:0120G0",
+   "target": "global:jnj_ethicon",
+   "type": "peer",
+   "labelKo": "수술용 봉합사 경쟁 (에티콘)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=000070",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_0120G0>krx_290650",
+   "source": "krx:0120G0",
+   "target": "krx:290650",
+   "type": "peer",
+   "labelKo": "의료 소재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=000070",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hy>krx_060280",
+   "source": "global:hy",
+   "target": "krx:060280",
+   "type": "equity",
+   "labelKo": "hy(한국야쿠르트) 최대주주 35.47%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03181606632227240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060280>global_stryker",
+   "source": "krx:060280",
+   "target": "global:stryker",
+   "type": "peer",
+   "labelKo": "수술로봇 경쟁 (정형·재활)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03181606632227240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060280>global_zimmer",
+   "source": "krx:060280",
+   "target": "global:zimmer",
+   "type": "peer",
+   "labelKo": "수술로봇 경쟁 (정형·재활)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03181606632227240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060280>global_intuitive",
+   "source": "krx:060280",
+   "target": "global:intuitive",
+   "type": "peer",
+   "labelKo": "수술로봇 경쟁 (정형·재활)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03181606632227240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_491000>global_intuitive",
+   "source": "krx:491000",
+   "target": "global:intuitive",
+   "type": "peer",
+   "labelKo": "복강경 수술기구 (아티센셜 vs 다빈치)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=491000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_491000>global_jnj_ethicon",
+   "source": "krx:491000",
+   "target": "global:jnj_ethicon",
+   "type": "peer",
+   "labelKo": "수술기구",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=491000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_491000>krx_060280",
+   "source": "krx:491000",
+   "target": "krx:060280",
+   "type": "peer",
+   "labelKo": "수술 장비",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=491000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145720>global_osstem",
+   "source": "krx:145720",
+   "target": "global:osstem",
+   "type": "peer",
+   "labelKo": "임플란트 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=145720",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145720>global_straumann",
+   "source": "krx:145720",
+   "target": "global:straumann",
+   "type": "peer",
+   "labelKo": "임플란트 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=145720",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145720>global_envista",
+   "source": "krx:145720",
+   "target": "global:envista",
+   "type": "peer",
+   "labelKo": "임플란트 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=145720",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_475960>global_thermo",
+   "source": "krx:475960",
+   "target": "global:thermo",
+   "type": "peer",
+   "labelKo": "연구용 현미경·분석장비",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=475960",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

@@ -1,0 +1,2799 @@
+{
+ "sectorId": "bio",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "pharma": "종합 제약",
+  "biotech": "신약개발",
+  "biosimilar": "바이오시밀러",
+  "vaccine": "백신·혈액제제",
+  "cdmo": "CDMO·CMO",
+  "api": "원료의약품·생산소재",
+  "tools": "연구도구·서비스",
+  "holding": "제약·바이오 지주",
+  "end_customer": "글로벌 파트너·라이선시",
+  "global_peer": "글로벌 제약·CDMO"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:207940",
+   "type": "kr_listed",
+   "ticker": "207940",
+   "nameKo": "삼성바이오로직스",
+   "nameEn": "Samsung Biologics",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cdmo",
+   "role": "CDMO / CMO"
+  },
+  {
+   "id": "krx:068270",
+   "type": "kr_listed",
+   "ticker": "068270",
+   "nameKo": "셀트리온",
+   "nameEn": "Celltrion",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "biosimilar",
+   "role": "Biosimilars"
+  },
+  {
+   "id": "krx:196170",
+   "type": "kr_listed",
+   "ticker": "196170",
+   "nameKo": "알테오젠",
+   "nameEn": "Alteogen Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:0126Z0",
+   "type": "kr_listed",
+   "ticker": "0126Z0",
+   "nameKo": "삼성에피스홀딩스",
+   "nameEn": "Samsung Epis Holdings",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "holding",
+   "role": "Pharma / biotech holdings"
+  },
+  {
+   "id": "krx:128940",
+   "type": "kr_listed",
+   "ticker": "128940",
+   "nameKo": "한미약품",
+   "nameEn": "Hanmi Pharm",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:326030",
+   "type": "kr_listed",
+   "ticker": "326030",
+   "nameKo": "SK바이오팜",
+   "nameEn": "SK Biopharm",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:000100",
+   "type": "kr_listed",
+   "ticker": "000100",
+   "nameKo": "유한양행",
+   "nameEn": "Yuhan",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:028300",
+   "type": "kr_listed",
+   "ticker": "028300",
+   "nameKo": "HLB",
+   "nameEn": "HLB INC.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:000250",
+   "type": "kr_listed",
+   "ticker": "000250",
+   "nameKo": "삼천당제약",
+   "nameEn": "Samchundang Pharm",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:087010",
+   "type": "kr_listed",
+   "ticker": "087010",
+   "nameKo": "펩트론",
+   "nameEn": "Peptron, Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:008930",
+   "type": "kr_listed",
+   "ticker": "008930",
+   "nameKo": "한미사이언스",
+   "nameEn": "Hanmi Science",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "holding",
+   "role": "제약·바이오"
+  },
+  {
+   "id": "krx:298380",
+   "type": "kr_listed",
+   "ticker": "298380",
+   "nameKo": "에이비엘바이오",
+   "nameEn": "ABL Bio",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:141080",
+   "type": "kr_listed",
+   "ticker": "141080",
+   "nameKo": "리가켐바이오",
+   "nameEn": "LegoChem Bio",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:302440",
+   "type": "kr_listed",
+   "ticker": "302440",
+   "nameKo": "SK바이오사이언스",
+   "nameEn": "SK Bioscience",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "vaccine",
+   "role": "Vaccines & blood products"
+  },
+  {
+   "id": "krx:226950",
+   "type": "kr_listed",
+   "ticker": "226950",
+   "nameKo": "올릭스",
+   "nameEn": "Olix Pharmaceuticals, Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:009420",
+   "type": "kr_listed",
+   "ticker": "009420",
+   "nameKo": "한올바이오파마",
+   "nameEn": "HanAll Biopharma",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:310210",
+   "type": "kr_listed",
+   "ticker": "310210",
+   "nameKo": "보로노이",
+   "nameEn": "Voronoi, Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:140410",
+   "type": "kr_listed",
+   "ticker": "140410",
+   "nameKo": "메지온",
+   "nameEn": "Mezzion Pharma Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "신약개발"
+  },
+  {
+   "id": "krx:347850",
+   "type": "kr_listed",
+   "ticker": "347850",
+   "nameKo": "디앤디파마텍",
+   "nameEn": "D&D Pharmatech",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:237690",
+   "type": "kr_listed",
+   "ticker": "237690",
+   "nameKo": "에스티팜",
+   "nameEn": "ST Pharm",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "cdmo",
+   "role": "CDMO / CMO"
+  },
+  {
+   "id": "krx:068760",
+   "type": "kr_listed",
+   "ticker": "068760",
+   "nameKo": "셀트리온제약",
+   "nameEn": "Celltrion Pharm",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:007390",
+   "type": "kr_listed",
+   "ticker": "007390",
+   "nameKo": "네이처셀",
+   "nameEn": "NATURECELL CO.,LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "줄기세포·재생의학"
+  },
+  {
+   "id": "krx:006280",
+   "type": "kr_listed",
+   "ticker": "006280",
+   "nameKo": "녹십자",
+   "nameEn": "GC Biopharma",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "vaccine",
+   "role": "Vaccines & blood products"
+  },
+  {
+   "id": "krx:0009K0",
+   "type": "kr_listed",
+   "ticker": "0009K0",
+   "nameKo": "에임드바이오",
+   "nameEn": "Aimed Bio Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:039200",
+   "type": "kr_listed",
+   "ticker": "039200",
+   "nameKo": "오스코텍",
+   "nameEn": "OSCOTEC Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:950160",
+   "type": "kr_listed",
+   "ticker": "950160",
+   "nameKo": "코오롱티슈진",
+   "nameEn": "Kolon TissueGene",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:069620",
+   "type": "kr_listed",
+   "ticker": "069620",
+   "nameKo": "대웅제약",
+   "nameEn": "Daewoongpharmaceutical",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:195940",
+   "type": "kr_listed",
+   "ticker": "195940",
+   "nameKo": "HK이노엔",
+   "nameEn": "HK inno.N Corporation",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "바이오·제약"
+  },
+  {
+   "id": "krx:086450",
+   "type": "kr_listed",
+   "ticker": "086450",
+   "nameKo": "동국제약",
+   "nameEn": "DongKook Pharmaceutical Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:003090",
+   "type": "kr_listed",
+   "ticker": "003090",
+   "nameKo": "대웅",
+   "nameEn": "Daewoong",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "holding",
+   "role": "Pharma / biotech holdings"
+  },
+  {
+   "id": "krx:950260",
+   "type": "kr_listed",
+   "ticker": "950260",
+   "nameKo": "인제니아테라퓨틱스(Reg.S)",
+   "nameEn": "인제니아테라퓨틱스(Reg.S)",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "망막질환 신약"
+  },
+  {
+   "id": "krx:185750",
+   "type": "kr_listed",
+   "ticker": "185750",
+   "nameKo": "종근당",
+   "nameEn": "Chong Kun Dang",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:475830",
+   "type": "kr_listed",
+   "ticker": "475830",
+   "nameKo": "오름테라퓨틱",
+   "nameEn": "Orum Therapeutics",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:115180",
+   "type": "kr_listed",
+   "ticker": "115180",
+   "nameKo": "큐리언트",
+   "nameEn": "Qurient Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "세포치료·바이오"
+  },
+  {
+   "id": "krx:445680",
+   "type": "kr_listed",
+   "ticker": "445680",
+   "nameKo": "큐리옥스바이오시스템즈",
+   "nameEn": "Curiox Biosystems Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "tools",
+   "role": "세포 처리·분석 자동화 장비"
+  },
+  {
+   "id": "krx:476830",
+   "type": "kr_listed",
+   "ticker": "476830",
+   "nameKo": "알지노믹스",
+   "nameEn": "Rznomics Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:005690",
+   "type": "kr_listed",
+   "ticker": "005690",
+   "nameKo": "파미셀",
+   "nameEn": "Pharmicell",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "api",
+   "role": "API & production materials"
+  },
+  {
+   "id": "krx:085660",
+   "type": "kr_listed",
+   "ticker": "085660",
+   "nameKo": "차바이오텍",
+   "nameEn": "Cha Biotech",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "holding",
+   "role": "Pharma / biotech holdings"
+  },
+  {
+   "id": "krx:041960",
+   "type": "kr_listed",
+   "ticker": "041960",
+   "nameKo": "코미팜",
+   "nameEn": "KOMIPHARM INTERNATIONAL CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:003850",
+   "type": "kr_listed",
+   "ticker": "003850",
+   "nameKo": "보령",
+   "nameEn": "Boryung",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:476060",
+   "type": "kr_listed",
+   "ticker": "476060",
+   "nameKo": "온코닉테라퓨틱스",
+   "nameEn": "Onconic Therapeutics Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:048410",
+   "type": "kr_listed",
+   "ticker": "048410",
+   "nameKo": "현대바이오",
+   "nameEn": "HYUNDAI BIOSCIENCE CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:001060",
+   "type": "kr_listed",
+   "ticker": "001060",
+   "nameKo": "JW중외제약",
+   "nameEn": "JW Pharmaceutical",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:000640",
+   "type": "kr_listed",
+   "ticker": "000640",
+   "nameKo": "동아쏘시오홀딩스",
+   "nameEn": "Dong-A Socio Holdings",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "holding",
+   "role": "Pharma / biotech holdings"
+  },
+  {
+   "id": "krx:317450",
+   "type": "kr_listed",
+   "ticker": "317450",
+   "nameKo": "명인제약",
+   "nameEn": "MYUNGIN PHARM",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:358570",
+   "type": "kr_listed",
+   "ticker": "358570",
+   "nameKo": "지아이이노베이션",
+   "nameEn": "GI Innovation Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:456160",
+   "type": "kr_listed",
+   "ticker": "456160",
+   "nameKo": "지투지바이오",
+   "nameEn": "G2GBIO, Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:397030",
+   "type": "kr_listed",
+   "ticker": "397030",
+   "nameKo": "에이프릴바이오",
+   "nameEn": "AprilBio Co.,Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:019170",
+   "type": "kr_listed",
+   "ticker": "019170",
+   "nameKo": "신풍제약",
+   "nameEn": "Shinpoong Pharmaceutical",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "제약"
+  },
+  {
+   "id": "krx:052020",
+   "type": "kr_listed",
+   "ticker": "052020",
+   "nameKo": "에스티큐브",
+   "nameEn": "Stcube",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:249420",
+   "type": "kr_listed",
+   "ticker": "249420",
+   "nameKo": "일동제약",
+   "nameEn": "ILDONG PHARM",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "제약"
+  },
+  {
+   "id": "krx:005250",
+   "type": "kr_listed",
+   "ticker": "005250",
+   "nameKo": "녹십자홀딩스",
+   "nameEn": "GC Corp.",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "holding",
+   "role": "Pharma / biotech holdings"
+  },
+  {
+   "id": "krx:187660",
+   "type": "kr_listed",
+   "ticker": "187660",
+   "nameKo": "페니트리움바이오",
+   "nameEn": "PenetriumBio",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "세포·유전자 신약"
+  },
+  {
+   "id": "krx:003000",
+   "type": "kr_listed",
+   "ticker": "003000",
+   "nameKo": "부광약품",
+   "nameEn": "Bukwang Pharmaceutical",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:174900",
+   "type": "kr_listed",
+   "ticker": "174900",
+   "nameKo": "앱클론",
+   "nameEn": "AbClon Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "항체·바이오"
+  },
+  {
+   "id": "krx:468530",
+   "type": "kr_listed",
+   "ticker": "468530",
+   "nameKo": "프로티나",
+   "nameEn": "PROTEINA CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "tools",
+   "role": "Research tools & services"
+  },
+  {
+   "id": "krx:950210",
+   "type": "kr_listed",
+   "ticker": "950210",
+   "nameKo": "프레스티지바이오파마",
+   "nameEn": "Prestige BioPharma",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "biosimilar",
+   "role": "Biosimilars"
+  },
+  {
+   "id": "krx:078160",
+   "type": "kr_listed",
+   "ticker": "078160",
+   "nameKo": "메디포스트",
+   "nameEn": "MEDIPOST CO., LTD.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:170900",
+   "type": "kr_listed",
+   "ticker": "170900",
+   "nameKo": "동아에스티",
+   "nameEn": "Dong-A ST",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "krx:389470",
+   "type": "kr_listed",
+   "ticker": "389470",
+   "nameKo": "인벤티지랩",
+   "nameEn": "Inventage Lab Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:372320",
+   "type": "kr_listed",
+   "ticker": "372320",
+   "nameKo": "큐로셀",
+   "nameEn": "Curocell",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "신약개발·세포치료"
+  },
+  {
+   "id": "krx:004310",
+   "type": "kr_listed",
+   "ticker": "004310",
+   "nameKo": "현대약품",
+   "nameEn": "Hyundai pharm",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "biosimilar",
+   "role": "제약"
+  },
+  {
+   "id": "krx:206650",
+   "type": "kr_listed",
+   "ticker": "206650",
+   "nameKo": "유바이오로직스",
+   "nameEn": "EuBiologics Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "vaccine",
+   "role": "바이오의약품"
+  },
+  {
+   "id": "krx:215600",
+   "type": "kr_listed",
+   "ticker": "215600",
+   "nameKo": "신라젠",
+   "nameEn": "SillaJen, Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "biotech",
+   "role": "Drug discovery"
+  },
+  {
+   "id": "krx:009290",
+   "type": "kr_listed",
+   "ticker": "009290",
+   "nameKo": "광동제약",
+   "nameEn": "Kwangdong Pharmaceutical",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pharma",
+   "role": "Integrated pharma"
+  },
+  {
+   "id": "global:msd",
+   "type": "global",
+   "nameKo": "MSD(머크)",
+   "nameEn": "Merck & Co. (MSD)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "키트루다 SC (알테오젠 ALT-B4) · 한미 MK-6024",
+   "exchange": "NYSE:MRK"
+  },
+  {
+   "id": "global:novartis",
+   "type": "global",
+   "nameKo": "노바티스",
+   "nameEn": "Novartis",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "알테오젠 4.4조 계약",
+   "exchange": "SIX:NOVN"
+  },
+  {
+   "id": "global:biogen",
+   "type": "global",
+   "nameKo": "바이오젠",
+   "nameEn": "Biogen",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "알테오젠 계약",
+   "exchange": "NASDAQ:BIIB"
+  },
+  {
+   "id": "global:gsk",
+   "type": "global",
+   "nameKo": "GSK",
+   "nameEn": "GSK",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "에이비엘 그랩바디-B 4.1조 · 테사로 · SK바사 협력",
+   "exchange": "LSE:GSK"
+  },
+  {
+   "id": "global:jnj",
+   "type": "global",
+   "nameKo": "존슨앤드존슨",
+   "nameEn": "Johnson & Johnson (Janssen)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "렉라자(유한) · LCB84(리가켐)",
+   "exchange": "NYSE:JNJ"
+  },
+  {
+   "id": "global:lilly",
+   "type": "global",
+   "nameKo": "일라이 릴리",
+   "nameEn": "Eli Lilly",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "한미 소네페글루타이드 1.9조 · 올릭스",
+   "exchange": "NYSE:LLY"
+  },
+  {
+   "id": "global:roche",
+   "type": "global",
+   "nameKo": "로슈(제넨텍)",
+   "nameEn": "Roche (Genentech)",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "한미 HM17321 3.5조 · 삼바 CDMO 고객",
+   "exchange": "SIX:ROG"
+  },
+  {
+   "id": "global:bms",
+   "type": "global",
+   "nameKo": "BMS",
+   "nameEn": "Bristol Myers Squibb",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "오름 ORM-6151 (개발 중단)",
+   "exchange": "NYSE:BMY"
+  },
+  {
+   "id": "global:vertex",
+   "type": "global",
+   "nameKo": "버텍스",
+   "nameEn": "Vertex",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "오름 DAC 플랫폼",
+   "exchange": "NASDAQ:VRTX"
+  },
+  {
+   "id": "global:agios",
+   "type": "global",
+   "nameKo": "아지오스",
+   "nameEn": "Agios",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "오스코텍 세비도플레닙 1조",
+   "exchange": "NASDAQ:AGIO"
+  },
+  {
+   "id": "global:ono",
+   "type": "global",
+   "nameKo": "오노약품",
+   "nameEn": "Ono Pharmaceutical",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "리가켐 ADC 계약",
+   "exchange": "TSE:4528"
+  },
+  {
+   "id": "global:daiichi",
+   "type": "global",
+   "nameKo": "다이이찌산쿄",
+   "nameEn": "Daiichi Sankyo",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "엔허투 SC (알테오젠)",
+   "exchange": "TSE:4568"
+  },
+  {
+   "id": "global:sanofi",
+   "type": "global",
+   "nameKo": "사노피",
+   "nameEn": "Sanofi",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "한올·SK바사 협력",
+   "exchange": "EPA:SAN"
+  },
+  {
+   "id": "global:pfizer",
+   "type": "global",
+   "nameKo": "화이자",
+   "nameEn": "Pfizer",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "삼바 CDMO 고객",
+   "exchange": "NYSE:PFE"
+  },
+  {
+   "id": "global:astrazeneca",
+   "type": "global",
+   "nameKo": "아스트라제네카",
+   "nameEn": "AstraZeneca",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "삼바 CDMO 고객",
+   "exchange": "LSE:AZN"
+  },
+  {
+   "id": "global:abbvie",
+   "type": "global",
+   "nameKo": "애브비",
+   "nameEn": "AbbVie",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "휴미라 (시밀러 원개발사)",
+   "exchange": "NYSE:ABBV"
+  },
+  {
+   "id": "global:amgen",
+   "type": "global",
+   "nameKo": "암젠",
+   "nameEn": "Amgen",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "바이오시밀러 경쟁",
+   "exchange": "NASDAQ:AMGN"
+  },
+  {
+   "id": "global:sandoz",
+   "type": "global",
+   "nameKo": "산도스",
+   "nameEn": "Sandoz",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "바이오시밀러 1위",
+   "exchange": "SIX:SDZ"
+  },
+  {
+   "id": "global:teva",
+   "type": "global",
+   "nameKo": "테바",
+   "nameEn": "Teva",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "제네릭·시밀러",
+   "exchange": "NYSE:TEVA"
+  },
+  {
+   "id": "global:lonza",
+   "type": "global",
+   "nameKo": "론자",
+   "nameEn": "Lonza",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "CDMO 1위",
+   "exchange": "SIX:LONN"
+  },
+  {
+   "id": "global:wuxi",
+   "type": "global",
+   "nameKo": "우시바이오로직스",
+   "nameEn": "WuXi Biologics",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "CDMO",
+   "exchange": "HKEX:2269"
+  },
+  {
+   "id": "global:fujifilm_db",
+   "type": "global",
+   "nameKo": "후지필름 다이오신스",
+   "nameEn": "Fujifilm Diosynth",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "CDMO",
+   "exchange": "TSE:4901"
+  },
+  {
+   "id": "global:halozyme",
+   "type": "global",
+   "nameKo": "할로자임",
+   "nameEn": "Halozyme",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "SC 제형 플랫폼 경쟁 (알테오젠)",
+   "exchange": "NASDAQ:HALO"
+  },
+  {
+   "id": "global:novo",
+   "type": "global",
+   "nameKo": "노보노디스크",
+   "nameEn": "Novo Nordisk",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "비만·당뇨 (한미·펩트론 경쟁)",
+   "exchange": "CPH:NOVO-B"
+  },
+  {
+   "id": "global:takeda",
+   "type": "global",
+   "nameKo": "다케다",
+   "nameEn": "Takeda",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "일본 제약",
+   "exchange": "TSE:4502"
+  },
+  {
+   "id": "global:hengrui",
+   "type": "global",
+   "nameKo": "항서제약",
+   "nameEn": "Jiangsu Hengrui",
+   "country": "cn",
+   "chain": "end_customer",
+   "role": "HLB 리보세라닙 (캄렐리주맙 병용)",
+   "exchange": "SSE:600276"
+  },
+  {
+   "id": "global:celltrion_hc",
+   "type": "kr_other",
+   "nameKo": "셀트리온 헬스케어(합병)",
+   "nameEn": "Celltrion Healthcare (merged)",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "2023 셀트리온 합병",
+   "exchange": ""
+  },
+  {
+   "id": "global:kolon",
+   "type": "kr_other",
+   "nameKo": "코오롱",
+   "nameEn": "Kolon Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "코오롱티슈진 최대주주",
+   "exchange": "KRX:002020"
+  },
+  {
+   "id": "global:cha",
+   "type": "kr_other",
+   "nameKo": "차바이오그룹",
+   "nameEn": "CHA Biogroup",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "차바이오텍 지배",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "partner:krx_196170>global_msd",
+   "source": "krx:196170",
+   "target": "global:msd",
+   "type": "partner",
+   "labelKo": "ALT-B4 → 키트루다 SC(큐렉스) 상업화, 로열티 수령",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.dailian.co.kr/news/view/1684482/%EC%95%8C%ED%85%8C%EC%98%A4%EC%A0%A0-MSD-%ED%82%A4%ED%8A%B8%EB%A3%A8%EB%8B%A4-%ED%81%90%EB%A0%89%EC%8A%A4-%EC%B2%AB-2026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_196170>global_novartis",
+   "source": "krx:196170",
+   "target": "global:novartis",
+   "type": "partner",
+   "labelKo": "ALT-B4 라이선스 4조 4,165억 (2026.9)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_196170>global_biogen",
+   "source": "krx:196170",
+   "target": "global:biogen",
+   "type": "partner",
+   "labelKo": "ALT-B4 라이선스 최대 8,675억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_196170>global_gsk",
+   "source": "krx:196170",
+   "target": "global:gsk",
+   "type": "partner",
+   "labelKo": "ALT-B4 라이선스 (테사로) 4,200억",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_196170>global_daiichi",
+   "source": "krx:196170",
+   "target": "global:daiichi",
+   "type": "partner",
+   "labelKo": "엔허투 SC (ALT-B4)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebionews.net/news/articleView.html?idxno=24401",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_196170>global_halozyme",
+   "source": "krx:196170",
+   "target": "global:halozyme",
+   "type": "peer",
+   "labelKo": "SC 제형 플랫폼 경쟁 (ALT-B4 vs 엔핸즈)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebionews.net/news/articleView.html?idxno=24401",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_298380>global_gsk",
+   "source": "krx:298380",
+   "target": "global:gsk",
+   "type": "partner",
+   "labelKo": "그랩바디-B BBB 셔틀 4조 1,104억 (계약금 739억)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.biospectator.com/news/view/25076",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_141080>global_jnj",
+   "source": "krx:141080",
+   "target": "global:jnj",
+   "type": "partner",
+   "labelKo": "LCB84 (Trop2 ADC) 라이선스",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.news1.kr/bio/pharmaceutical-bio/5974659",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_141080>global_ono",
+   "source": "krx:141080",
+   "target": "global:ono",
+   "type": "partner",
+   "labelKo": "ADC 플랫폼·후보물질 라이선스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.news1.kr/bio/pharmaceutical-bio/5974659",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_039200>global_agios",
+   "source": "krx:039200",
+   "target": "global:agios",
+   "type": "partner",
+   "labelKo": "세비도플레닙 1조 (2026.6)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_039200>krx_000100",
+   "source": "krx:039200",
+   "target": "krx:000100",
+   "type": "partner",
+   "labelKo": "렉라자 공동개발 (원개발 오스코텍/제노스코)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_000100>global_jnj",
+   "source": "krx:000100",
+   "target": "global:jnj",
+   "type": "partner",
+   "labelKo": "렉라자(레이저티닙) 라이선스 → 리브리반트 병용 FDA 승인",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_128940>global_lilly",
+   "source": "krx:128940",
+   "target": "global:lilly",
+   "type": "partner",
+   "labelKo": "소네페글루타이드 1조 8,973억 (2026.6)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_128940>global_roche",
+   "source": "krx:128940",
+   "target": "global:roche",
+   "type": "partner",
+   "labelKo": "HM17321 비만 3.5조 (제넨텍, 2026.8)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_128940>global_msd",
+   "source": "krx:128940",
+   "target": "global:msd",
+   "type": "partner",
+   "labelKo": "에피노페그듀타이드(MK-6024) MASH 라이선스",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=335346",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_475830>global_bms",
+   "source": "krx:475830",
+   "target": "global:bms",
+   "type": "partner",
+   "labelKo": "ORM-6151 (2023, 계약금 1억$) → BMS 개발 중단",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.apsk.co.kr/news/articleView.html?idxno=540493",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_475830>global_vertex",
+   "source": "krx:475830",
+   "target": "global:vertex",
+   "type": "partner",
+   "labelKo": "DAC 플랫폼 라이선스 (2024)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.edaily.co.kr/News/Read?newsId=02876566645578480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_028300>global_hengrui",
+   "source": "krx:028300",
+   "target": "global:hengrui",
+   "type": "partner",
+   "labelKo": "리보세라닙+캄렐리주맙 병용 (간암) FDA 도전",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/HLB_(company)",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>global_novo",
+   "source": "krx:128940",
+   "target": "global:novo",
+   "type": "peer",
+   "labelKo": "비만·당뇨 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=335346",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>global_lilly",
+   "source": "krx:128940",
+   "target": "global:lilly",
+   "type": "peer",
+   "labelKo": "비만·당뇨 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.greened.kr/news/articleView.html?idxno=335346",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_087010>global_lilly",
+   "source": "krx:087010",
+   "target": "global:lilly",
+   "type": "partner",
+   "labelKo": "장기지속 플랫폼(스마트데포) 공동연구",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=087010",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_226950>global_lilly",
+   "source": "krx:226950",
+   "target": "global:lilly",
+   "type": "partner",
+   "labelKo": "RNAi 라이선스 (심혈관·대사)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=226950",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_009420>global_sanofi",
+   "source": "krx:009420",
+   "target": "global:sanofi",
+   "type": "partner",
+   "labelKo": "바토클리맙 등 라이선스 이력",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009420",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_302440>global_sanofi",
+   "source": "krx:302440",
+   "target": "global:sanofi",
+   "type": "partner",
+   "labelKo": "폐렴구균 백신 공동개발",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SK_Bioscience",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_302440>global_gsk",
+   "source": "krx:302440",
+   "target": "global:gsk",
+   "type": "partner",
+   "labelKo": "백신 CMO·협력 이력",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SK_Bioscience",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_302440>global_novartis",
+   "source": "krx:302440",
+   "target": "global:novartis",
+   "type": "partner",
+   "labelKo": "노바백스 백신 CMO 이력",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SK_Bioscience",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_326030>global_jnj",
+   "source": "krx:326030",
+   "target": "global:jnj",
+   "type": "peer",
+   "labelKo": "뇌전증 (세노바메이트 미국 직판) 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SK_Biopharmaceuticals",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>global_pfizer",
+   "source": "krx:207940",
+   "target": "global:pfizer",
+   "type": "supply",
+   "labelKo": "CDMO 위탁생산 (글로벌 톱20 다수)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>global_roche",
+   "source": "krx:207940",
+   "target": "global:roche",
+   "type": "supply",
+   "labelKo": "CDMO 위탁생산 (글로벌 톱20 다수)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>global_astrazeneca",
+   "source": "krx:207940",
+   "target": "global:astrazeneca",
+   "type": "supply",
+   "labelKo": "CDMO 위탁생산 (글로벌 톱20 다수)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>global_lilly",
+   "source": "krx:207940",
+   "target": "global:lilly",
+   "type": "supply",
+   "labelKo": "CDMO 위탁생산 (글로벌 톱20 다수)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>global_msd",
+   "source": "krx:207940",
+   "target": "global:msd",
+   "type": "supply",
+   "labelKo": "CDMO 위탁생산 (글로벌 톱20 다수)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>global_gsk",
+   "source": "krx:207940",
+   "target": "global:gsk",
+   "type": "supply",
+   "labelKo": "CDMO 위탁생산 (글로벌 톱20 다수)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>global_novartis",
+   "source": "krx:207940",
+   "target": "global:novartis",
+   "type": "supply",
+   "labelKo": "CDMO 위탁생산 (글로벌 톱20 다수)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_207940>krx_068270",
+   "source": "krx:207940",
+   "target": "krx:068270",
+   "type": "supply",
+   "labelKo": "셀트리온 DS 위탁생산 (초기 계약)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_207940>global_lonza",
+   "source": "krx:207940",
+   "target": "global:lonza",
+   "type": "peer",
+   "labelKo": "글로벌 CDMO 경쟁 (삼바 캐파 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_207940>global_wuxi",
+   "source": "krx:207940",
+   "target": "global:wuxi",
+   "type": "peer",
+   "labelKo": "글로벌 CDMO 경쟁 (삼바 캐파 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_207940>global_fujifilm_db",
+   "source": "krx:207940",
+   "target": "global:fujifilm_db",
+   "type": "peer",
+   "labelKo": "글로벌 CDMO 경쟁 (삼바 캐파 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_237690>krx_207940",
+   "source": "krx:237690",
+   "target": "krx:207940",
+   "type": "peer",
+   "labelKo": "CDMO (올리고 vs 항체)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Biologics",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_237690>global_novartis",
+   "source": "krx:237690",
+   "target": "global:novartis",
+   "type": "supply",
+   "labelKo": "올리고뉴클레오타이드 원료 공급",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=237690",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_0126Z0>krx_207940",
+   "source": "krx:0126Z0",
+   "target": "krx:207940",
+   "type": "partner",
+   "labelKo": "삼성에피스홀딩스 (삼바에서 분할, 에피스 지주)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Bioepis",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_068270>krx_0126Z0",
+   "source": "krx:068270",
+   "target": "krx:0126Z0",
+   "type": "peer",
+   "labelKo": "바이오시밀러 국내 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Samsung_Bioepis",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_068270>global_sandoz",
+   "source": "krx:068270",
+   "target": "global:sandoz",
+   "type": "peer",
+   "labelKo": "글로벌 바이오시밀러 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Celltrion",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_068270>global_amgen",
+   "source": "krx:068270",
+   "target": "global:amgen",
+   "type": "peer",
+   "labelKo": "글로벌 바이오시밀러 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Celltrion",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_068270>global_teva",
+   "source": "krx:068270",
+   "target": "global:teva",
+   "type": "peer",
+   "labelKo": "글로벌 바이오시밀러 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Celltrion",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_068270>global_abbvie",
+   "source": "krx:068270",
+   "target": "global:abbvie",
+   "type": "peer",
+   "labelKo": "휴미라 시밀러(유플라이마) vs 원개발사",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Celltrion",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_068270>krx_068760",
+   "source": "krx:068270",
+   "target": "krx:068760",
+   "type": "equity",
+   "labelKo": "셀트리온→셀트리온제약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Celltrion",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_068270>global_celltrion_hc",
+   "source": "krx:068270",
+   "target": "global:celltrion_hc",
+   "type": "equity",
+   "labelKo": "셀트리온헬스케어 합병 (2023)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Celltrion",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_950210>krx_068270",
+   "source": "krx:950210",
+   "target": "krx:068270",
+   "type": "peer",
+   "labelKo": "바이오시밀러",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Celltrion",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000250>krx_068270",
+   "source": "krx:000250",
+   "target": "krx:068270",
+   "type": "peer",
+   "labelKo": "아일리아 시밀러 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Sam_Chun_Dang_Pharm",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_008930>krx_128940",
+   "source": "krx:008930",
+   "target": "krx:128940",
+   "type": "equity",
+   "labelKo": "한미사이언스→한미약품",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_003090>krx_069620",
+   "source": "krx:003090",
+   "target": "krx:069620",
+   "type": "equity",
+   "labelKo": "대웅→대웅제약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=069620",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_069620>krx_009420",
+   "source": "krx:069620",
+   "target": "krx:009420",
+   "type": "equity",
+   "labelKo": "대웅제약→한올바이오파마",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=009420",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_005250>krx_006280",
+   "source": "krx:005250",
+   "target": "krx:006280",
+   "type": "equity",
+   "labelKo": "녹십자홀딩스→녹십자",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=006280",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_000640>krx_170900",
+   "source": "krx:000640",
+   "target": "krx:170900",
+   "type": "equity",
+   "labelKo": "동아쏘시오홀딩스→동아에스티",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=170900",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_kolon>krx_950160",
+   "source": "global:kolon",
+   "target": "krx:950160",
+   "type": "equity",
+   "labelKo": "코오롱→코오롱티슈진",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=950160",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_cha>krx_085660",
+   "source": "global:cha",
+   "target": "krx:085660",
+   "type": "equity",
+   "labelKo": "차바이오그룹 지배",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=085660",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_000100>krx_397030",
+   "source": "krx:000100",
+   "target": "krx:397030",
+   "type": "equity",
+   "labelKo": "유한양행→에이프릴바이오 지분 투자",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=397030",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_000100>krx_358570",
+   "source": "krx:000100",
+   "target": "krx:358570",
+   "type": "partner",
+   "labelKo": "지아이이노베이션 공동개발 (GI-101)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=358570",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_195940>krx_009420",
+   "source": "krx:195940",
+   "target": "krx:009420",
+   "type": "peer",
+   "labelKo": "케이캡 vs 위장약",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=195940",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_128940",
+   "source": "krx:000100",
+   "target": "krx:128940",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_069620",
+   "source": "krx:000100",
+   "target": "krx:069620",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_185750",
+   "source": "krx:000100",
+   "target": "krx:185750",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_006280",
+   "source": "krx:000100",
+   "target": "krx:006280",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_170900",
+   "source": "krx:000100",
+   "target": "krx:170900",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_195940",
+   "source": "krx:000100",
+   "target": "krx:195940",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_003850",
+   "source": "krx:000100",
+   "target": "krx:003850",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_001060",
+   "source": "krx:000100",
+   "target": "krx:001060",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>krx_249420",
+   "source": "krx:000100",
+   "target": "krx:249420",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_069620",
+   "source": "krx:128940",
+   "target": "krx:069620",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_185750",
+   "source": "krx:128940",
+   "target": "krx:185750",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_006280",
+   "source": "krx:128940",
+   "target": "krx:006280",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_170900",
+   "source": "krx:128940",
+   "target": "krx:170900",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_195940",
+   "source": "krx:128940",
+   "target": "krx:195940",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_003850",
+   "source": "krx:128940",
+   "target": "krx:003850",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_001060",
+   "source": "krx:128940",
+   "target": "krx:001060",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_128940>krx_249420",
+   "source": "krx:128940",
+   "target": "krx:249420",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069620>krx_185750",
+   "source": "krx:069620",
+   "target": "krx:185750",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069620>krx_006280",
+   "source": "krx:069620",
+   "target": "krx:006280",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069620>krx_170900",
+   "source": "krx:069620",
+   "target": "krx:170900",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069620>krx_195940",
+   "source": "krx:069620",
+   "target": "krx:195940",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069620>krx_003850",
+   "source": "krx:069620",
+   "target": "krx:003850",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069620>krx_001060",
+   "source": "krx:069620",
+   "target": "krx:001060",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069620>krx_249420",
+   "source": "krx:069620",
+   "target": "krx:249420",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_185750>krx_006280",
+   "source": "krx:185750",
+   "target": "krx:006280",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006280>krx_170900",
+   "source": "krx:006280",
+   "target": "krx:170900",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_170900>krx_195940",
+   "source": "krx:170900",
+   "target": "krx:195940",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_195940>krx_003850",
+   "source": "krx:195940",
+   "target": "krx:003850",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003850>krx_001060",
+   "source": "krx:003850",
+   "target": "krx:001060",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001060>krx_249420",
+   "source": "krx:001060",
+   "target": "krx:249420",
+   "type": "peer",
+   "labelKo": "국내 종합제약 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000100>global_takeda",
+   "source": "krx:000100",
+   "target": "global:takeda",
+   "type": "peer",
+   "labelKo": "아시아 제약",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Hanmi_Pharmaceutical",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_302440>krx_006280",
+   "source": "krx:302440",
+   "target": "krx:006280",
+   "type": "peer",
+   "labelKo": "백신 (독감·수두 등)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SK_Bioscience",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_206650>krx_302440",
+   "source": "krx:206650",
+   "target": "krx:302440",
+   "type": "peer",
+   "labelKo": "백신 (콜레라·장티푸스)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SK_Bioscience",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_226950>krx_087010",
+   "source": "krx:226950",
+   "target": "krx:087010",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_087010>krx_310210",
+   "source": "krx:087010",
+   "target": "krx:310210",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_310210>krx_140410",
+   "source": "krx:310210",
+   "target": "krx:140410",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_140410>krx_347850",
+   "source": "krx:140410",
+   "target": "krx:347850",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_347850>krx_007390",
+   "source": "krx:347850",
+   "target": "krx:007390",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007390>krx_0009K0",
+   "source": "krx:007390",
+   "target": "krx:0009K0",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_0009K0>krx_950260",
+   "source": "krx:0009K0",
+   "target": "krx:950260",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_950260>krx_115180",
+   "source": "krx:950260",
+   "target": "krx:115180",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_115180>krx_476830",
+   "source": "krx:115180",
+   "target": "krx:476830",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_476830>krx_476060",
+   "source": "krx:476830",
+   "target": "krx:476060",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_476060>krx_048410",
+   "source": "krx:476060",
+   "target": "krx:048410",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_048410>krx_358570",
+   "source": "krx:048410",
+   "target": "krx:358570",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_358570>krx_456160",
+   "source": "krx:358570",
+   "target": "krx:456160",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_456160>krx_397030",
+   "source": "krx:456160",
+   "target": "krx:397030",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_397030>krx_052020",
+   "source": "krx:397030",
+   "target": "krx:052020",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_052020>krx_187660",
+   "source": "krx:052020",
+   "target": "krx:187660",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_187660>krx_174900",
+   "source": "krx:187660",
+   "target": "krx:174900",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_174900>krx_078160",
+   "source": "krx:174900",
+   "target": "krx:078160",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_078160>krx_389470",
+   "source": "krx:078160",
+   "target": "krx:389470",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_389470>krx_372320",
+   "source": "krx:389470",
+   "target": "krx:372320",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_372320>krx_215600",
+   "source": "krx:372320",
+   "target": "krx:215600",
+   "type": "peer",
+   "labelKo": "신약개발 바이오텍 (체인 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298380>krx_226950",
+   "source": "krx:298380",
+   "target": "krx:226950",
+   "type": "peer",
+   "labelKo": "플랫폼 바이오텍",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_141080>krx_226950",
+   "source": "krx:141080",
+   "target": "krx:226950",
+   "type": "peer",
+   "labelKo": "플랫폼 바이오텍",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_475830>krx_226950",
+   "source": "krx:475830",
+   "target": "krx:226950",
+   "type": "peer",
+   "labelKo": "플랫폼 바이오텍",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_196170>krx_226950",
+   "source": "krx:196170",
+   "target": "krx:226950",
+   "type": "peer",
+   "labelKo": "플랫폼 바이오텍",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.mt.co.kr/thebio/2026/09/07/2026090619570577205",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_445680>krx_468530",
+   "source": "krx:445680",
+   "target": "krx:468530",
+   "type": "peer",
+   "labelKo": "연구도구·분석 서비스",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=445680",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005690>krx_237690",
+   "source": "krx:005690",
+   "target": "krx:237690",
+   "type": "peer",
+   "labelKo": "원료의약품·CDMO",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=005690",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_041960>krx_009290",
+   "source": "krx:041960",
+   "target": "krx:009290",
+   "type": "peer",
+   "labelKo": "종합제약(소형)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=041960",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_317450>krx_003000",
+   "source": "krx:317450",
+   "target": "krx:003000",
+   "type": "peer",
+   "labelKo": "종합제약(소형)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=317450",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_019170>krx_004310",
+   "source": "krx:019170",
+   "target": "krx:004310",
+   "type": "peer",
+   "labelKo": "종합제약(소형)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=019170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086450>krx_249420",
+   "source": "krx:086450",
+   "target": "krx:249420",
+   "type": "peer",
+   "labelKo": "종합제약(소형)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=086450",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009290>krx_003000",
+   "source": "krx:009290",
+   "target": "krx:003000",
+   "type": "peer",
+   "labelKo": "종합제약(소형)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009290",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_019170>krx_086450",
+   "source": "krx:019170",
+   "target": "krx:086450",
+   "type": "peer",
+   "labelKo": "종합제약(소형)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=019170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}
