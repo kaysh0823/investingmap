@@ -36,6 +36,36 @@
     holdings: 'holdings/korea_holdings_map.html',
   };
 
+  /** item.s → data/netmap/<id>.json basename (must match sector map dataUrl). */
+  var NETMAP_ID = {
+    bigchip: 'bigchip',
+    semi: 'semiconductor',
+    elec: 'elec',
+    software: 'software',
+    telecom: 'telecom',
+    robot: 'robot',
+    auto: 'auto',
+    battery: 'battery',
+    renewable: 'renewable',
+    nuclear: 'nuclear',
+    powergrid: 'powergrid',
+    chemical: 'chemical',
+    metal: 'metal',
+    machinery: 'machinery',
+    construction: 'construction',
+    ship: 'ship',
+    defense: 'defense',
+    shipping: 'shipping',
+    travel: 'travel',
+    kconsume: 'kconsume',
+    kcontent: 'kcontent',
+    cosmetics: 'cosmetics',
+    medtech: 'medtech',
+    bio: 'bio',
+    finance: 'finance',
+    holdings: 'holdings',
+  };
+
   var SECTOR_LABELS = {
     bigchip: { ko: "삼성전자/하이닉스", en: "Samsung/SK hynix" },
     semi: { ko: "반도체", en: "Semi" },
@@ -73,6 +103,9 @@
       momentum: '모멘텀매트릭스',
       volatility: '변동성 분포',
       perfcalendar: '퍼포먼스 캘린더',
+      valuation: '밸류에이션 비교',
+      netmap: '네트워크맵',
+      netmapNoData: '관계 데이터 없음',
       table: '기업목록',
       noResults: '검색 결과 없음',
       coverageHint: '시총 3천억원 이상 종목만 커버하고 있습니다.',
@@ -85,6 +118,9 @@
       momentum: 'Momentum Matrix',
       volatility: 'Volatility',
       perfcalendar: 'Performance Calendar',
+      valuation: 'Valuation',
+      netmap: 'Network Map',
+      netmapNoData: 'No relation data',
       table: 'Company List',
       noResults: 'No matches',
       coverageHint: 'Only names with market cap ≥ KRW 300B are covered.',
@@ -94,6 +130,7 @@
 
   var indexCache = null;
   var indexLoading = null;
+  var netmapSessionCache = Object.create(null);
   var ui = null;
   var modal = null;
   var modalItem = null;
@@ -250,6 +287,8 @@
       '.im-gs-modal-actions button{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border,#30363d);' +
       'background:var(--surface2,#21262d);color:var(--text,#e6edf3);font-size:13px;font-weight:600;cursor:pointer;text-align:left}' +
       '.im-gs-modal-actions button:hover{border-color:var(--accent,#58a6ff);color:var(--accent,#58a6ff)}' +
+      '.im-gs-modal-actions button:disabled{opacity:.45;cursor:not-allowed;border-color:var(--border,#30363d);color:var(--text-muted,#8b949e)}' +
+      '.im-gs-modal-actions button .im-gs-btn-sub{display:block;font-size:11px;font-weight:400;color:var(--text-muted,#8b949e);margin-top:2px}' +
       '@media(max-width:768px){.im-gs-wrap{max-width:none;flex:1 1 120px;min-width:0;margin-right:4px}.im-gs-input{font-size:12px;padding:8px 8px 8px 28px}}';
     document.head.appendChild(el);
   }
@@ -335,6 +374,40 @@
     modalItem = null;
   }
 
+  function fetchNetmapHasTicker(sid, ticker) {
+    var id = NETMAP_ID[sid];
+    if (!id) return Promise.resolve(null);
+    var url = pathPrefix() + 'data/netmap/' + id + '.json';
+    if (Object.prototype.hasOwnProperty.call(netmapSessionCache, url)) {
+      return Promise.resolve(netmapHasTicker(netmapSessionCache[url], ticker));
+    }
+    return fetch(url, { credentials: 'same-origin' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('netmap ' + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        netmapSessionCache[url] = data;
+        return netmapHasTicker(data, ticker);
+      })
+      .catch(function () {
+        return null; // fetch fail → keep button enabled
+      });
+  }
+
+  function netmapHasTicker(data, ticker) {
+    if (!data || !Array.isArray(data.nodes)) return false;
+    var t = String(ticker || '');
+    var pad = t.padStart(6, '0');
+    for (var i = 0; i < data.nodes.length; i++) {
+      var n = data.nodes[i];
+      if (!n) continue;
+      var nt = String(n.ticker || '');
+      if (nt === t || nt.padStart(6, '0') === pad) return true;
+    }
+    return false;
+  }
+
   function openViewModal(item) {
     closeModal();
     modalItem = item;
@@ -353,21 +426,35 @@
     sub.textContent = nm + ' (' + item.t + ' · ' + sectorLabel(item.s, lang) + ')';
     var actions = document.createElement('div');
     actions.className = 'im-gs-modal-actions';
-    [
+
+    var opts = [
       { tab: 'heatmap', label: c.heatmap },
       { tab: 'momentum', label: c.momentum },
       { tab: 'volatility', label: c.volatility },
       { tab: 'perfcalendar', label: c.perfcalendar },
+      { tab: 'valuation', label: c.valuation },
+      { tab: 'netmap', label: c.netmap, netmap: true },
       { tab: 'table', label: c.table },
-    ].forEach(function (opt) {
+    ];
+
+    var netmapBtn = null;
+    opts.forEach(function (opt) {
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.textContent = opt.label;
+      btn.appendChild(document.createTextNode(opt.label));
+      if (opt.netmap) {
+        netmapBtn = btn;
+        var subLine = document.createElement('span');
+        subLine.className = 'im-gs-btn-sub';
+        btn.appendChild(subLine);
+      }
       btn.addEventListener('click', function () {
+        if (btn.disabled) return;
         window.location.href = buildNavUrl(item, opt.tab, lang);
       });
       actions.appendChild(btn);
     });
+
     panel.appendChild(title);
     panel.appendChild(sub);
     panel.appendChild(actions);
@@ -386,6 +473,16 @@
     trapFocus(panel);
     var firstBtn = actions.querySelector('button');
     if (firstBtn) firstBtn.focus();
+
+    if (netmapBtn) {
+      fetchNetmapHasTicker(item.s, item.t).then(function (has) {
+        if (has === false) {
+          netmapBtn.disabled = true;
+          var subEl = netmapBtn.querySelector('.im-gs-btn-sub');
+          if (subEl) subEl.textContent = c.netmapNoData;
+        }
+      });
+    }
   }
 
   function onInput() {
@@ -526,6 +623,7 @@
     pathPrefix: pathPrefix,
     pageLang: pageLang,
     SECTOR_MAP: SECTOR_MAP,
+    NETMAP_ID: NETMAP_ID,
     search: function (q) { return search(q, pageLang()); },
     loadIndex: loadIndex,
   };

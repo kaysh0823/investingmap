@@ -208,6 +208,8 @@ assert.ok(/im:market-rs/.test(liveQuotesJs), 'live_quotes dispatches im:market-r
     setTimeout,
     clearTimeout,
     requestAnimationFrame: (fn) => setTimeout(fn, 0),
+    URL,
+    URLSearchParams,
   };
   sandbox.window = sandbox;
   sandbox.globalThis = sandbox;
@@ -346,6 +348,114 @@ assert.ok(/im:market-rs/.test(liveQuotesJs), 'live_quotes dispatches im:market-r
   Val._test.pruneExtraSvgs(race.container);
   assert.equal(race.container.querySelectorAll('svg').length, 1, 'pruneExtraSvgs → 1 svg');
   console.log('  unit concurrent renderChart race → single svg ok');
+
+  // applyUrlTickerHighlight: scrollBy only once across two highlight calls
+  {
+    assert.ok(typeof Val._test.applyUrlTickerHighlight === 'function', '_test.applyUrlTickerHighlight');
+    let scrollCalls = 0;
+    sandbox.scrollBy = function () {
+      scrollCalls += 1;
+    };
+    sandbox.innerHeight = 800;
+    sandbox.location = { search: '?tab=valuation&ticker=005930', href: 'https://example.test/' };
+    const tabEl = { classList: { contains: (c) => c === 'active' } };
+    const hintParent = {
+      children: [],
+      insertBefore(el, _ref) {
+        this.children.push(el);
+        return el;
+      },
+    };
+    const hintEl = { id: 'valuation-hint', textContent: '', parentNode: hintParent };
+    sandbox.document = {
+      getElementById(id) {
+        if (id === 'tab-valuation') return tabEl;
+        if (id === 'valuation-hint') return hintEl;
+        if (id === 'valuation-ticker-hint') {
+          return hintParent.children.find((c) => c.id === 'valuation-ticker-hint') || null;
+        }
+        return null;
+      },
+      createElement(tag) {
+        return { tagName: tag, style: {}, id: '', textContent: '' };
+      },
+      createElementNS(_ns, tag) {
+        const attrs = Object.create(null);
+        return {
+          tagName: tag,
+          textContent: '',
+          setAttribute(k, v) {
+            attrs[k] = String(v);
+          },
+          getAttribute(k) {
+            return attrs[k] != null ? attrs[k] : null;
+          },
+        };
+      },
+    };
+    const g = {
+      children: [],
+      appendChild(el) {
+        el.parentNode = this;
+        this.children.push(el);
+        return el;
+      },
+      removeChild(el) {
+        this.children = this.children.filter((c) => c !== el);
+        el.parentNode = null;
+        return el;
+      },
+    };
+    const circle = {
+      tagName: 'circle',
+      parentNode: g,
+      style: {},
+      attrs: {
+        class: 'val-dot',
+        'data-ticker': '005930',
+        'data-cx': '120',
+        'data-cy': '80',
+        cx: '120',
+        cy: '80',
+        r: '5',
+      },
+      getAttribute(k) {
+        return this.attrs[k] != null ? this.attrs[k] : null;
+      },
+      setAttribute(k, v) {
+        this.attrs[k] = String(v);
+      },
+      getBoundingClientRect() {
+        return { top: 400, height: 10, left: 0, width: 10 };
+      },
+    };
+    g.children.push(circle);
+    const container = {
+      querySelector(sel) {
+        if (sel.indexOf('val-dot') >= 0 && sel.indexOf('005930') >= 0) return circle;
+        if (sel.indexOf('val-outlier') >= 0) return null;
+        return null;
+      },
+      querySelectorAll(sel) {
+        if (sel === '.val-ticker-focus-label') {
+          return g.children.filter((c) => c.getAttribute && c.getAttribute('class') === 'val-ticker-focus-label');
+        }
+        return [];
+      },
+    };
+    Val._test.resetTickerScrollDone();
+    const labels = { tickerNotPlottable: (n) => n + ': nope' };
+    const companies = [{ ticker: '005930', name: '삼성전자' }];
+    Val._test.applyUrlTickerHighlight(container, companies, labels, 'ko');
+    Val._test.applyUrlTickerHighlight(container, companies, labels, 'ko');
+    assert.equal(scrollCalls, 1, `applyUrlTickerHighlight×2 must scrollBy once, got ${scrollCalls}`);
+    assert.equal(Val._test.getTickerScrollDone(), true, 'tickerScrollDone after scroll');
+    const labelsLeft = g.children.filter(
+      (c) => c.getAttribute && c.getAttribute('class') === 'val-ticker-focus-label',
+    );
+    assert.equal(labelsLeft.length, 1, 're-apply leaves a single focus label');
+    console.log('  unit applyUrlTickerHighlight ×2 → scrollBy 1 ok');
+  }
 }
 
 assert.ok(

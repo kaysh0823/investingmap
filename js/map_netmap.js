@@ -48,6 +48,10 @@
   var userNavigated = false;
   var selectedId = null;
   var tipEl = null;
+  var searchInputEl = null;
+  var searchStatusEl = null;
+  var searchDebounceTimer = null;
+  var urlFocusDone = false;
   var filters = defaultFilters();
   var graphState = { nodes: [], edges: [], raw: null, tickers: Object.create(null) };
 
@@ -81,7 +85,7 @@
             if (typeof j.countries[c] === 'boolean') d.countries[c] = j.countries[c];
           });
         }
-        if (typeof j.search === 'string') d.search = j.search;
+        // search is session-only — never restore from localStorage (avoids stale dim on reload)
       }
       return d;
     } catch (e) {
@@ -97,7 +101,6 @@
           types: filters.types,
           scope: filters.scope,
           countries: filters.countries,
-          search: filters.search || '',
         }),
       );
     } catch (e) {}
@@ -105,6 +108,7 @@
 
   function labelsFor(opts) {
     var L = (opts && opts.labels) || {};
+    var lang = opts && opts.lang === 'en' ? 'en' : 'ko';
     return {
       title: L.title || 'Network map',
       search: L.search || 'Search',
@@ -133,6 +137,9 @@
       asOfLabel: L.asOfLabel || 'as of',
       nodesLabel: L.nodesLabel || 'nodes',
       edgesLabel: L.edgesLabel || 'edges',
+      matchCount:
+        L.matchCount || (lang === 'en' ? '{n} matches' : '{n}개 일치'),
+      matchNone: L.matchNone || (lang === 'en' ? 'No match' : '일치 없음'),
       types: L.types || {},
       countries: L.countries || {},
       countryNames: L.countryNames || {},
@@ -213,24 +220,56 @@
     };
   }
 
+  /** Area-proportional radius vs max mcap in companies (no min–max normalize). */
   function mcapRadiusScale(companies) {
-    var vals = [];
+    var hi = 0;
     (companies || []).forEach(function (c) {
-      if (c && c.mcapWon > 0) vals.push(c.mcapWon);
+      if (c && c.mcapWon > hi) hi = c.mcapWon;
     });
-    vals.sort(function (a, b) {
-      return a - b;
-    });
-    var lo = vals.length ? vals[0] : 1e11;
-    var hi = vals.length ? vals[vals.length - 1] : 1e13;
-    if (hi <= lo) hi = lo * 10;
+    if (!(hi > 0)) hi = 1;
     return function (mcap) {
       if (!(mcap > 0)) return 8;
-      var t = (Math.sqrt(mcap) - Math.sqrt(lo)) / (Math.sqrt(hi) - Math.sqrt(lo) || 1);
+      var t = mcap / hi;
       if (t < 0) t = 0;
       if (t > 1) t = 1;
-      return 6 + t * 20;
+      return 6 + 22 * Math.sqrt(t);
     };
+  }
+
+  /** d3.zoomIdentity.translate(w/2,h/2).scale(k).translate(-x,-y) — centers (x,y) in view. */
+  function centerTransform(x, y, w, h, k) {
+    var d3z = global.d3 && global.d3.zoomIdentity;
+    if (d3z) {
+      return d3z.translate(w / 2, h / 2).scale(k).translate(-x, -y);
+    }
+    // Pure fallback for unit tests without d3
+    return {
+      k: k,
+      x: w / 2 - k * x,
+      y: h / 2 - k * y,
+      applyX: function (px) {
+        return w / 2 + k * (px - x);
+      },
+      applyY: function (py) {
+        return h / 2 + k * (py - y);
+      },
+    };
+  }
+
+  function stageSize() {
+    var w = layoutWidth || 720;
+    var h = layoutHeight || 560;
+    try {
+      if (svgRoot) {
+        var node = svgRoot.node && svgRoot.node();
+        if (node && node.viewBox && node.viewBox.baseVal) {
+          var vb = node.viewBox.baseVal;
+          if (vb.width > 0) w = vb.width;
+          if (vb.height > 0) h = vb.height;
+        }
+      }
+    } catch (e) {}
+    return { w: w, h: h };
   }
 
   function nodeRadius(node, mcapScale, degree) {
@@ -333,6 +372,28 @@
     if (!autoFitArmed || userNavigated) return;
     autoFitArmed = false;
     fitView({ padding: 40, maxScale: 1.6, animate: true });
+    maybeFocusUrlTicker();
+  }
+
+  function getUrlTicker() {
+    try {
+      var sp = new URLSearchParams(global.location.search);
+      if (sp.get('tab') !== 'netmap') return '';
+      return String(sp.get('ticker') || '').trim();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function maybeFocusUrlTicker() {
+    if (urlFocusDone) return;
+    var code = getUrlTicker();
+    if (!code) return;
+    urlFocusDone = true;
+    // Defer so fit transition can start; focus will markUserNavigated.
+    setTimeout(function () {
+      focus(code);
+    }, 420);
   }
 
   function domainOfUrl(url) {
@@ -684,6 +745,9 @@
       try {
         svgRoot.attr('viewBox', '0 0 ' + w + ' ' + h);
       } catch (e) {}
+      if (!userNavigated) {
+        fitView({ animate: false });
+      }
     });
   }
 
@@ -706,16 +770,37 @@
     );
   }
 
+  function matchingNodes(q) {
+    q = (q || '').trim();
+    if (!q) return [];
+    return (graphState.nodes || []).filter(function (n) {
+      return matchesSearch(n, q);
+    });
+  }
+
+  function updateSearchStatus() {
+    if (!searchStatusEl) return;
+    var labels = labelsFor(lastOpts || {});
+    var q = (filters.search || '').trim();
+    if (!q) {
+      searchStatusEl.textContent = '';
+      return;
+    }
+    var n = matchingNodes(q).length;
+    if (n === 0) {
+      searchStatusEl.textContent = labels.matchNone;
+    } else {
+      searchStatusEl.textContent = String(labels.matchCount || '{n} matches').replace(
+        '{n}',
+        String(n),
+      );
+    }
+  }
+
   function clearSelection() {
     selectedId = null;
-    if (gRoot) {
-      gRoot.selectAll('.nm-node').style('opacity', 1);
-      gRoot.selectAll('.nm-link').style('opacity', function (d) {
-        return edgeStyle(d.type, d.confidence).opacity;
-      });
-      gRoot.selectAll('.nm-label').style('opacity', 1);
-    }
     renderSide(null);
+    applySearchHighlight();
   }
 
   function neighborSet(id, edges) {
@@ -736,21 +821,7 @@
       return;
     }
     selectedId = id;
-    var keep = neighborSet(id, graphState.edges);
-    if (gRoot) {
-      gRoot.selectAll('.nm-node').style('opacity', function (d) {
-        return keep[d.id] ? 1 : 0.12;
-      });
-      gRoot.selectAll('.nm-label').style('opacity', function (d) {
-        return keep[d.id] ? 1 : 0.12;
-      });
-      gRoot.selectAll('.nm-link').style('opacity', function (d) {
-        var s = typeof d.source === 'object' ? d.source.id : d.source;
-        var t = typeof d.target === 'object' ? d.target.id : d.target;
-        var base = edgeStyle(d.type, d.confidence).opacity;
-        return keep[s] && keep[t] && (s === id || t === id) ? base : 0.08;
-      });
-    }
+    applySearchHighlight();
     var node = graphState.nodes.find(function (n) {
       return n.id === id;
     });
@@ -989,13 +1060,45 @@
     search.type = 'search';
     search.placeholder = labels.search;
     search.value = filters.search || '';
-    search.addEventListener('input', function () {
+    searchInputEl = search;
+    var searchStatus = document.createElement('div');
+    searchStatus.className = 'netmap-search-status';
+    searchStatus.style.cssText =
+      'font-size:11px;color:var(--text-muted,#8b949e);margin-top:4px;min-height:1.2em';
+    searchStatusEl = searchStatus;
+    function runSearchFromInput() {
       filters.search = search.value || '';
-      saveFilters();
       applySearchHighlight();
-      if (filters.search) focusSearchMatch();
+      updateSearchStatus();
+      if ((filters.search || '').trim()) focusSearchMatch();
+    }
+    function onSearchInput() {
+      if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(runSearchFromInput, 120);
+    }
+    search.addEventListener('input', onSearchInput);
+    search.addEventListener('compositionend', function () {
+      if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+      runSearchFromInput();
+    });
+    search.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') {
+        ev.preventDefault();
+        if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+        runSearchFromInput();
+        var hits = matchingNodes(filters.search);
+        if (hits.length) selectNode(hits[0].id);
+      } else if (ev.key === 'Escape') {
+        ev.preventDefault();
+        search.value = '';
+        filters.search = '';
+        applySearchHighlight();
+        updateSearchStatus();
+      }
     });
     searchSec.appendChild(search);
+    searchSec.appendChild(searchStatus);
+    updateSearchStatus();
 
     var typeSec = sec(labels.sectionTypes);
     var typeList = document.createElement('div');
@@ -1115,28 +1218,98 @@
   function applySearchHighlight() {
     if (!gRoot) return;
     var q = (filters.search || '').trim();
-    gRoot.selectAll('.nm-node').classed('is-match', function (d) {
-      return q ? matchesSearch(d, q) : false;
+    var keep = selectedId ? neighborSet(selectedId, graphState.edges) : null;
+
+    gRoot.selectAll('.nm-node').each(function (d) {
+      var g = global.d3.select(this);
+      var isMatch = q ? matchesSearch(d, q) : false;
+      g.classed('is-match', isMatch);
+      var shape = g.select('circle,rect');
+      if (shape.empty()) return;
+
+      // Restore base stroke when not a search match
+      var baseStroke = shape.attr('data-base-stroke');
+      var baseSw = shape.attr('data-base-sw');
+      if (baseStroke == null) {
+        shape.attr('data-base-stroke', shape.attr('stroke') || '#30363d');
+        shape.attr('data-base-sw', shape.attr('stroke-width') || '1');
+        baseStroke = shape.attr('data-base-stroke');
+        baseSw = shape.attr('data-base-sw');
+      }
+
+      if (q && isMatch) {
+        shape.attr('stroke', '#f0b429').attr('stroke-width', 3);
+      } else {
+        shape.attr('stroke', baseStroke).attr('stroke-width', baseSw);
+      }
+
+      var opacity = 1;
+      if (keep) {
+        opacity = keep[d.id] ? 1 : 0.12;
+      } else if (q) {
+        opacity = isMatch ? 1 : 0.15;
+      }
+      g.style('opacity', opacity);
+      g.select('.nm-label').style('opacity', opacity).style('display', function () {
+        return shouldShowLabel(d, currentZoomK()) ? null : 'none';
+      });
     });
-    gRoot.selectAll('.nm-node').attr('stroke-width', function (d) {
-      if (isAnchorNode(d)) return 2;
-      return q && matchesSearch(d, q) ? 2.5 : 1;
+
+    gRoot.selectAll('.nm-link').style('opacity', function (d) {
+      var s = typeof d.source === 'object' ? d.source.id : d.source;
+      var t = typeof d.target === 'object' ? d.target.id : d.target;
+      var base = edgeStyle(d.type, d.confidence).opacity;
+      if (keep) {
+        return keep[s] && keep[t] && (s === selectedId || t === selectedId) ? base : 0.08;
+      }
+      if (q) {
+        var srcN = graphState.nodes.find(function (n) {
+          return n.id === s;
+        });
+        var tgtN = graphState.nodes.find(function (n) {
+          return n.id === t;
+        });
+        var related =
+          (srcN && matchesSearch(srcN, q)) || (tgtN && matchesSearch(tgtN, q));
+        return related ? base : 0.06;
+      }
+      return base;
     });
+    updateSearchStatus();
+  }
+
+  function currentZoomK() {
+    try {
+      if (svgRoot && zoomBehavior && global.d3) {
+        return global.d3.zoomTransform(svgRoot.node()).k || 1;
+      }
+    } catch (e) {}
+    return 1;
   }
 
   function focusSearchMatch() {
-    if (!gRoot || !svgRoot || !zoomBehavior) return;
+    if (!gRoot || !svgRoot || !zoomBehavior || typeof global.d3 === 'undefined') return;
     var q = (filters.search || '').trim();
     if (!q) return;
-    var hit = graphState.nodes.find(function (n) {
-      return matchesSearch(n, q);
+    var hits = matchingNodes(q).filter(function (n) {
+      return n && n.x != null && isFinite(n.x);
     });
-    if (!hit || hit.x == null) return;
-    var svg = svgRoot.node();
-    var w = svg.clientWidth || layoutWidth || 720;
-    var h = svg.clientHeight || layoutHeight || 560;
-    var t = global.d3.zoomIdentity.translate(w / 2 - hit.x, h / 2 - hit.y).scale(1.4);
-    svgRoot.transition().duration(350).call(zoomBehavior.transform, t);
+    if (!hits.length) return;
+    markUserNavigated();
+    var sz = stageSize();
+    var w = sz.w;
+    var h = sz.h;
+    var transform;
+    if (hits.length === 1) {
+      var hit = hits[0];
+      var curK = currentZoomK();
+      var k = Math.max(curK, 1.6);
+      transform = centerTransform(hit.x, hit.y, w, h, k);
+    } else {
+      var fit = computeFit(hits, w, h, { padding: 80, maxScale: 2 });
+      transform = global.d3.zoomIdentity.translate(fit.tx, fit.ty).scale(fit.scale);
+    }
+    svgRoot.transition().duration(350).call(zoomBehavior.transform, transform);
   }
 
   function fitView(opts) {
@@ -1144,10 +1317,8 @@
     var nodes = graphState.nodes;
     if (!nodes.length) return;
     opts = opts || {};
-    var svg = svgRoot.node();
-    var w = (svg && svg.clientWidth) || layoutWidth || 720;
-    var h = (svg && svg.clientHeight) || layoutHeight || 560;
-    var fit = computeFit(nodes, w, h, {
+    var sz = stageSize();
+    var fit = computeFit(nodes, sz.w, sz.h, {
       padding: opts.padding != null ? opts.padding : 40,
       maxScale: opts.maxScale != null ? opts.maxScale : 1.6,
     });
@@ -1163,11 +1334,16 @@
     if (typeof d3 === 'undefined') return;
     stopSim();
     container.innerHTML = '';
-    clearSelection();
+    svgRoot = null;
+    gRoot = null;
+    zoomBehavior = null;
+    selectedId = null;
+    renderSide(null);
     layoutWidth = width;
     layoutHeight = height;
     autoFitArmed = true;
     userNavigated = false;
+    urlFocusDone = false;
     var labels = labelsFor(lastOpts);
     var lang = lastOpts.lang === 'en' ? 'en' : 'ko';
     var filtered = filterGraph(graphState.raw, filters);
@@ -1347,13 +1523,19 @@
           .attr('ry', 4)
           .attr('fill', COUNTRY_COLOR[d.country] || COUNTRY_COLOR.kr)
           .attr('stroke', '#c9d1d9')
-          .attr('stroke-width', 1);
+          .attr('stroke-width', 1)
+          .attr('data-base-stroke', '#c9d1d9')
+          .attr('data-base-sw', '1');
       } else {
+        var baseStroke = isAnchorNode(d) ? '#e6edf3' : '#30363d';
+        var baseSw = isAnchorNode(d) ? '2' : '1';
         g.append('circle')
           .attr('r', d._r)
           .attr('fill', colorForDomestic(d, tickers, anchorRsCache))
-          .attr('stroke', isAnchorNode(d) ? '#e6edf3' : '#30363d')
-          .attr('stroke-width', isAnchorNode(d) ? 2 : 1);
+          .attr('stroke', baseStroke)
+          .attr('stroke-width', baseSw)
+          .attr('data-base-stroke', baseStroke)
+          .attr('data-base-sw', baseSw);
       }
       g.append('text')
         .attr('class', 'nm-label')
@@ -1495,6 +1677,8 @@
   function shouldShowLabel(d, k) {
     if (isAnchorNode(d) || isGlobalNode(d)) return true;
     if ((d._r || 0) >= 12) return true;
+    var q = (filters.search || '').trim();
+    if (q && matchesSearch(d, q)) return true;
     return k >= 1.6;
   }
 
@@ -1582,13 +1766,31 @@
 
   function focus(code) {
     if (!code) return;
-    var hit = graphState.nodes.find(function (n) {
+    var lang = lastOpts && lastOpts.lang === 'en' ? 'en' : 'ko';
+    var hit = (graphState.nodes || []).find(function (n) {
       return String(n.ticker || '') === String(code);
     });
+    if (!hit) {
+      // Also try id suffix / padded ticker
+      var codePad = String(code).padStart(6, '0');
+      hit = (graphState.nodes || []).find(function (n) {
+        return String(n.ticker || '').padStart(6, '0') === codePad;
+      });
+    }
     if (hit) {
-      selectNode(hit.id);
-      filters.search = String(code);
+      var display =
+        lang === 'en' ? hit.nameEn || hit.nameKo || hit.ticker : hit.nameKo || hit.nameEn || hit.ticker;
+      filters.search = display;
+      if (searchInputEl) searchInputEl.value = display;
+      applySearchHighlight();
+      updateSearchStatus();
       focusSearchMatch();
+      selectNode(hit.id);
+    } else {
+      filters.search = String(code);
+      if (searchInputEl) searchInputEl.value = String(code);
+      applySearchHighlight();
+      updateSearchStatus();
     }
   }
 
@@ -1617,6 +1819,8 @@
       computeFit: computeFit,
       clampNodeToStage: clampNodeToStage,
       mcapRadiusScale: mcapRadiusScale,
+      centerTransform: centerTransform,
+      stageSize: stageSize,
       isDomesticNode: isDomesticNode,
       isGlobalNode: isGlobalNode,
       colorForDomestic: colorForDomestic,

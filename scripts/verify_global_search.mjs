@@ -92,6 +92,9 @@ assert.ok(momentumSrc.includes('applyTickerFocus'), 'map_momentum must highlight
 const searchSrc = fs.readFileSync(GLOBAL_SEARCH_JS, 'utf8');
 assert.ok(searchSrc.includes("tab: 'volatility'"), 'global_search modal must offer volatility');
 assert.ok(searchSrc.includes("tab: 'perfcalendar'"), 'global_search modal must offer perfcalendar');
+assert.ok(searchSrc.includes("tab: 'valuation'"), 'global_search modal must offer valuation');
+assert.ok(searchSrc.includes("tab: 'netmap'"), 'global_search modal must offer netmap');
+assert.ok(searchSrc.includes('NETMAP_ID'), 'global_search must define NETMAP_ID');
 assert.ok(searchSrc.includes("volatility: '변동성 분포'"), 'global_search ko volatility label');
 assert.ok(searchSrc.includes("volatility: 'Volatility'"), 'global_search en volatility label');
 assert.ok(searchSrc.includes("perfcalendar: '퍼포먼스 캘린더'"), 'global_search ko perfcalendar label');

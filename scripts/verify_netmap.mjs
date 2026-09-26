@@ -157,6 +157,60 @@ for (const [rel, sector] of Object.entries(MAP_SECTOR)) {
   }
 }
 
+// global_search NETMAP_ID must match every sector page dataUrl basename (26).
+{
+  const gsJs = fs.readFileSync(path.join(ROOT, 'js', 'global_search.js'), 'utf8');
+  const sandbox = {
+    console,
+    setTimeout,
+    clearTimeout,
+    fetch: async () => ({ ok: false }),
+    document: {
+      readyState: 'loading',
+      addEventListener() {},
+      createElement() {
+        return { style: {}, appendChild() {}, setAttribute() {}, addEventListener() {} };
+      },
+      getElementById() {
+        return null;
+      },
+      querySelector() {
+        return null;
+      },
+      head: { appendChild() {} },
+      body: { appendChild() {}, insertBefore() {}, firstChild: null },
+    },
+    window: null,
+    location: { href: 'https://www.investingmap.kr/', pathname: '/', search: '' },
+    URL,
+    URLSearchParams,
+    localStorage: { getItem() { return null; }, setItem() {} },
+  };
+  sandbox.window = sandbox;
+  sandbox.globalThis = sandbox;
+  createContext(sandbox);
+  runInContext(gsJs, sandbox);
+  const GS = sandbox.InvestingMapGlobalSearch;
+  assert.ok(GS && GS.NETMAP_ID && GS.SECTOR_MAP, 'InvestingMapGlobalSearch.NETMAP_ID');
+  const netmapIds = GS.NETMAP_ID;
+  const sectorMap = GS.SECTOR_MAP;
+  const mapSectorValues = new Set(Object.values(MAP_SECTOR));
+  let n = 0;
+  for (const [sid, mapPath] of Object.entries(sectorMap)) {
+    const id = netmapIds[sid];
+    assert.ok(id, `NETMAP_ID missing for sid=${sid}`);
+    assert.ok(mapSectorValues.has(id), `NETMAP_ID[${sid}]=${id} not in MAP_SECTOR values`);
+    const folder = String(mapPath).split('/')[0];
+    assert.equal(id, folder, `NETMAP_ID[${sid}] must equal map folder ${folder}`);
+    // Find HTML for this sector and confirm dataUrl basename
+    const rel = Object.entries(MAP_SECTOR).find(([, sec]) => sec === id)?.[0];
+    assert.ok(rel, `MAP_SECTOR entry for ${id}`);
+    n += 1;
+  }
+  assert.equal(n, 26, `expected 26 NETMAP_ID entries, got ${n}`);
+  console.log(`  NETMAP_ID OK ${n} sectors ↔ dataUrl basename`);
+}
+
 const mapJs = fs.readFileSync(path.join(ROOT, 'js', 'map_netmap.js'), 'utf8');
 assert.ok(/InvestingMapNetmap/.test(mapJs), 'InvestingMapNetmap export');
 assert.ok(/filterGraph/.test(mapJs), 'filterGraph');
@@ -297,6 +351,29 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
   const rLo = Net._test.nodeRadius({ type: 'kr_listed', _mcapWon: 1e11 }, scale, 0);
   const rHi = Net._test.nodeRadius({ type: 'kr_listed', _mcapWon: 1e13 }, scale, 0);
   assert.ok(rHi >= rLo, `nodeRadius monotone ${rLo} → ${rHi}`);
+
+  // Area-proportional: Samsung/Hynix-scale caps stay within ≤3px (no min–max stretch).
+  {
+    const big = Net._test.mcapRadiusScale([
+      { mcapWon: 1.675e15 },
+      { mcapWon: 1.361e15 },
+    ]);
+    const rA = Net._test.nodeRadius({ type: 'kr_listed', _mcapWon: 1.675e15 }, big, 0);
+    const rB = Net._test.nodeRadius({ type: 'kr_listed', _mcapWon: 1.361e15 }, big, 0);
+    assert.ok(
+      Math.abs(rA - rB) <= 3,
+      `bigchip-scale mcap radii should differ by ≤3 (got ${rA} vs ${rB})`,
+    );
+  }
+
+  {
+    const ct = Net._test.centerTransform(100, 50, 800, 600, 1.6);
+    assert.ok(typeof ct.applyX === 'function', 'centerTransform.applyX');
+    assert.ok(
+      Math.abs(ct.applyX(100) - 400) < 1e-6,
+      `centerTransform should map x→w/2 (got ${ct.applyX(100)})`,
+    );
+  }
 
   for (const t of Net._test.EDGE_TYPES) {
     const st = Net._test.edgeStyle(t, 'high');

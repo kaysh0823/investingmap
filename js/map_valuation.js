@@ -22,6 +22,7 @@
   var lastPaintX = null;
   var lastPaintMetric = null;
   var TRANS_MS = 200;
+  var tickerScrollDone = false;
 
   var METRICS = ['perTtm', 'perFy', 'pbr', 'dvd'];
   var METRIC_STORAGE = 'im.valuation.metric';
@@ -56,6 +57,9 @@
       naDeficit: 'N/A(적자)',
       fyTag: 'FY',
       fyFallbackTip: '(FY 대체)',
+      tickerNotPlottable: function (name) {
+        return name + ': 현재 지표로 표시할 수 없음';
+      },
       loading: '밸류에이션 데이터를 불러오는 중…',
       failed: '밸류에이션 스냅샷을 불러오지 못했습니다.',
       noData: '표시할 밸류에이션 데이터가 없습니다.',
@@ -118,6 +122,9 @@
       naDeficit: 'N/A (loss)',
       fyTag: 'FY',
       fyFallbackTip: '(FY fallback)',
+      tickerNotPlottable: function (name) {
+        return name + ': not plottable on this metric';
+      },
       loading: 'Loading valuation data…',
       failed: 'Could not load valuation snapshot.',
       noData: 'No valuation data available.',
@@ -1137,6 +1144,9 @@
           var mark = gRoot
             .append('text')
             .attr('class', 'val-outlier')
+            .attr('data-ticker', d.ticker)
+            .attr('data-cx', cx)
+            .attr('data-cy', cy)
             .attr('x', doTrans ? cx0 : cx)
             .attr('y', cy)
             .attr('text-anchor', 'middle')
@@ -1164,6 +1174,9 @@
           var circle = gRoot
             .append('circle')
             .attr('class', 'val-dot')
+            .attr('data-ticker', d.ticker)
+            .attr('data-cx', cx)
+            .attr('data-cy', cy)
             .attr('cx', doTrans ? cx0 : cx)
             .attr('cy', cy)
             .attr('r', r)
@@ -1228,6 +1241,124 @@
         '</span></div><div style="margin-top:4px">' +
         labels.legendPer +
         '</div>';
+    }
+
+    applyUrlTickerHighlight(container, companies, labels, lang);
+  }
+
+  function getUrlTicker() {
+    try {
+      return String(new URLSearchParams(global.location.search).get('ticker') || '').trim();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function isValuationTabActive() {
+    var tab = document.getElementById('tab-valuation');
+    return tab && tab.classList.contains('active');
+  }
+
+  function ensureTickerHintEl() {
+    var hint = document.getElementById('valuation-hint');
+    if (!hint || !hint.parentNode) return null;
+    var el = document.getElementById('valuation-ticker-hint');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'valuation-ticker-hint';
+      el.style.cssText =
+        'font-size:12px;color:var(--text-muted,#8b949e);margin-top:4px;line-height:1.35';
+      hint.parentNode.insertBefore(el, hint.nextSibling);
+    }
+    return el;
+  }
+
+  function companyDisplayName(companies, ticker, lang) {
+    var t = String(ticker || '');
+    for (var i = 0; i < (companies || []).length; i++) {
+      var c = companies[i];
+      if (c && String(c.ticker) === t) {
+        return lang === 'en'
+          ? c.nameEn || c.name || c.nameKo || t
+          : c.name || c.nameKo || c.nameEn || t;
+      }
+    }
+    return t;
+  }
+
+  function applyUrlTickerHighlight(container, companies, labels, lang) {
+    if (container) {
+      container.querySelectorAll('.val-ticker-focus-label').forEach(function (el) {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      });
+    }
+    var hintEl = ensureTickerHintEl();
+    if (hintEl) hintEl.textContent = '';
+    var ticker = getUrlTicker();
+    if (!ticker || !isValuationTabActive() || !container) return;
+
+    var mark =
+      container.querySelector('.val-dot[data-ticker="' + ticker + '"]') ||
+      container.querySelector('.val-outlier[data-ticker="' + ticker + '"]');
+    var name = companyDisplayName(companies, ticker, lang);
+
+    if (!mark) {
+      if (hintEl && typeof labels.tickerNotPlottable === 'function') {
+        hintEl.textContent = labels.tickerNotPlottable(name);
+      }
+      return;
+    }
+
+    if (mark.parentNode && typeof mark.parentNode.appendChild === 'function') {
+      mark.parentNode.appendChild(mark);
+    }
+    var tag = mark.tagName && mark.tagName.toLowerCase();
+    if (tag === 'circle') {
+      var r0 = parseFloat(mark.getAttribute('r')) || 6;
+      mark.setAttribute('r', String(r0 * 1.6));
+      mark.setAttribute('stroke', '#f0b429');
+      mark.setAttribute('stroke-width', '2.5');
+    } else {
+      mark.setAttribute('stroke', '#f0b429');
+      mark.setAttribute('stroke-width', '2.5');
+      mark.style.paintOrder = 'stroke';
+    }
+
+    var cx =
+      parseFloat(mark.getAttribute('data-cx')) ||
+      parseFloat(mark.getAttribute('cx') || mark.getAttribute('x')) ||
+      0;
+    var cy =
+      parseFloat(mark.getAttribute('data-cy')) ||
+      parseFloat(mark.getAttribute('cy') || mark.getAttribute('y')) ||
+      0;
+    var rLab = tag === 'circle' ? parseFloat(mark.getAttribute('r')) || 10 : 10;
+    var parent = mark.parentNode;
+    if (parent) {
+      var label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('class', 'val-ticker-focus-label');
+      label.setAttribute('x', String(cx + rLab + 6));
+      label.setAttribute('y', String(cy));
+      label.setAttribute('dominant-baseline', 'middle');
+      label.setAttribute('fill', '#f0b429');
+      label.setAttribute('font-size', '11');
+      label.setAttribute('font-weight', '600');
+      label.textContent = name;
+      parent.appendChild(label);
+    }
+
+    if (!tickerScrollDone) {
+      try {
+        var rect = mark.getBoundingClientRect();
+        var midY = rect.top + rect.height / 2;
+        var target = midY - (global.innerHeight || 0) / 2;
+        if (typeof global.scrollBy === 'function') {
+          global.scrollBy({ top: target, behavior: 'smooth' });
+        }
+        tickerScrollDone = true;
+      } catch (e) {
+        tickerScrollDone = true;
+      }
     }
   }
 
@@ -1436,6 +1567,13 @@
         return renderSeq;
       },
       pruneExtraSvgs: pruneExtraSvgs,
+      applyUrlTickerHighlight: applyUrlTickerHighlight,
+      resetTickerScrollDone: function () {
+        tickerScrollDone = false;
+      },
+      getTickerScrollDone: function () {
+        return tickerScrollDone;
+      },
       /**
        * Simulate two overlapping renderChart cycles (no jsdom / no full d3 paint).
        * Uses the same renderSeq + deferred-callback discard rules as renderChart.
