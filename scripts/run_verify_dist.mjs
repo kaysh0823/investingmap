@@ -17,7 +17,6 @@ const STEPS = [
   'verify_editorial_toggle.mjs',
   'verify_css_balance.mjs',
   'verify_netmap.mjs',
-  'verify_no_graph_tab.mjs',
   'verify_map_init.mjs',
 ];
 

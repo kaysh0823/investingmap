@@ -317,9 +317,8 @@ export function applySemiRelationNetwork() {
     html = html.replace(/const CURATED_FALLBACK_ANGLE = \{[^}]+\};/, `const CURATED_FALLBACK_ANGLE = ${ANGLE};`);
   }
 
-  const hasGraphTab = html.includes('id="tab-graph"') || html.includes('id="tab-btn-graph"');
   const v2Active = html.includes('RelationNetwork v2') || html.includes('relation_network.js');
-  if (hasGraphTab && !v2Active) {
+  if (!v2Active) {
     html = applyCuratedRelationPatches(html, {
       mode: 'chainGroup',
       chainOrder: LEGEND_CHAINS,
@@ -334,11 +333,7 @@ export function applySemiRelationNetwork() {
     });
     html = partnerCellPatch(html);
   } else {
-    console.log(
-      'apply_semi_relation_network: skip curated inline graph (' +
-        (hasGraphTab ? 'RelationNetwork v2 active' : 'graph tab retired') +
-        ')',
-    );
+    console.log('apply_semi_relation_network: skip curated inline graph (RelationNetwork v2 active)');
   }
 
   html = html.replace(

@@ -48,7 +48,8 @@
       '.map-editorial-body .im-seo-keywords,.map-editorial-body .im-seo-snapshot-note{font-size:12px;opacity:.9}' +
       '.map-editorial-body p[hidden],.map-editorial-body h2[hidden],.map-editorial-more-btn[hidden]{display:none}' +
       '#map-editorial-panel.is-collapsed{display:none}' +
-      '#map-editorial-panel.is-collapsed .map-editorial-detail.is-collapsed{display:none}';
+      '#map-editorial-panel.is-collapsed .map-editorial-detail.is-collapsed{display:none}' +
+      '#tab-btn-graph[hidden],#tab-btn-graph{display:none!important}';
     var el = document.createElement('style');
     el.id = 'map-editorial-collapsible-css';
     el.textContent = css;

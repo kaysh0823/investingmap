@@ -1,6 +1,6 @@
 /**
- * Preserve table / heatmap / momentum / volatility / perfcalendar / valuation / netmap tab when switching industry via nav links.
- * Graph (관계 네트워크) is retired from public UI; ?tab=graph / localStorage 'graph' remap to netmap (else heatmap).
+ * Preserve table / heatmap / momentum / volatility / perfcalendar / valuation tab when switching industry via nav links.
+ * Graph (관계 네트워크) is WIP — not a public tab; ?tab=graph deep links remap to heatmap.
  * Sector nav links carry the current tab (?tab= omitted for table default).
  * ?tab=table&ticker=005930 — open company list and scroll to the row.
  */
@@ -17,18 +17,11 @@
     netmap: 1,
     table: 1,
   };
-
-  function graphFallback() {
-    try {
-      if (typeof document !== 'undefined' && document.getElementById('tab-btn-netmap')) return 'netmap';
-    } catch (e) {}
-    return 'heatmap';
-  }
-
+  var GRAPH_FALLBACK = 'heatmap';
   var focusStyleInjected = false;
 
   function publicTab(tab) {
-    if (!tab || tab === 'graph' || !PUBLIC_TABS[tab]) return graphFallback();
+    if (!tab || tab === 'graph' || !PUBLIC_TABS[tab]) return GRAPH_FALLBACK;
     return tab;
   }
 
@@ -63,18 +56,17 @@
     try {
       var sp = new URLSearchParams(window.location.search);
       var q = sp.get('tab');
-      if (q === 'graph') return graphFallback();
+      if (q === 'graph') return GRAPH_FALLBACK;
       if (q && PUBLIC_TABS[q]) return q;
       if (sp.get('ticker')) return 'table';
     } catch (e) {}
     try {
       var s = localStorage.getItem('im_map_tab');
       if (s === 'graph') {
-        var fb = graphFallback();
         try {
-          localStorage.setItem('im_map_tab', fb);
+          localStorage.setItem('im_map_tab', GRAPH_FALLBACK);
         } catch (eClear) {}
-        return fb;
+        return GRAPH_FALLBACK;
       }
       if (s && PUBLIC_TABS[s]) return s;
     } catch (e2) {}
@@ -236,7 +228,7 @@
     }
   }
 
-  /** No-op when graph chrome is absent (pages no longer ship #tab-btn-graph / #tab-graph). */
+  /** Hide public graph tab chrome (data/scripts remain for future enable). */
   function hidePublicGraphTab() {
     var btn = document.getElementById('tab-btn-graph');
     if (btn) {
@@ -271,13 +263,6 @@
     focusTickerAfterTableRender: focusTickerAfterTableRender,
     buildMapTableTickerUrl: buildMapTableTickerUrl,
     publicTab: publicTab,
-    graphFallback: graphFallback,
-    /** @deprecated use graphFallback() — kept for older callers */
-    GRAPH_FALLBACK: 'netmap',
-    _test: {
-      graphFallback: graphFallback,
-      publicTab: publicTab,
-      PUBLIC_TABS: PUBLIC_TABS,
-    },
+    GRAPH_FALLBACK: GRAPH_FALLBACK,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
