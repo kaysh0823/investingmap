@@ -61,7 +61,7 @@
   }
   </script>
   <script src="../js/seo.js"></script>
-            <!-- investingmap-geo-webpage -->
+              <!-- investingmap-geo-webpage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -181,6 +181,7 @@
   <script src="../js/map_volatility.js?v=eec26c5a"></script>
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=8d92012e"></script>
+  <script src="../js/map_netmap.js?v=7ebde5ef"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
   <script src="../js/map_mobile_ux.js?v=58cbc54d"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
@@ -863,74 +864,8 @@
 
     tbody tr:hover td:first-child {
       background: var(--surface2)
-    /* investingmap-header-editorial-toggle-v2 */
-    .header-title-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap
     }
-    .header-title-row h1 {
-      margin: 0
-    }
-    .header-meta-inline {
-      margin: 0;
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap
-    }
-    .map-editorial-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin: 6px 0 0;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface2);
-      color: var(--text-muted);
-      font: inherit;
-      font-size: 12px;
-      cursor: pointer
-    }
-    .map-editorial-toggle:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px
-    }
-    .map-title-chevron {
-      flex-shrink: 0;
-      font-size: 0.85em;
-      line-height: 1;
-      color: var(--text-muted);
-      transition: transform .15s ease
-    }
-    .map-editorial-toggle[aria-expanded="true"] .map-title-chevron {
-      transform: rotate(180deg)
-    }
-    .map-editorial-panel.is-collapsed {
-      display: none
-    }
-    .map-editorial-detail.is-collapsed {
-      display: none
-    }
-    .map-editorial-title-sr {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0
-    }
-    @media (min-width: 769px) {
-      /* Keep title/subtitle/toggle clear of absolute .header-actions (right:20px). */
-      .header {
-        padding-right: max(28px, min(42vw, 320px))
-      }
-    }
-    /* investingmap-header-editorial-toggle-v2-end */
+
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -2065,6 +2000,7 @@
     <button id="tab-btn-volatility" class="tab-btn" onclick="switchTab('volatility',this)">📉 변동성 분포</button>
     <button id="tab-btn-perfcalendar" class="tab-btn" onclick="switchTab('perfcalendar',this)">📅 퍼포먼스 캘린더</button>
     <button id="tab-btn-valuation" class="tab-btn" onclick="switchTab('valuation',this)">⚖️ 밸류에이션 비교</button>
+    <button id="tab-btn-netmap" class="tab-btn" onclick="switchTab('netmap',this)">🕸️ 네트워크맵</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
     <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
@@ -2108,7 +2044,34 @@
       <div id="valuation-legend"></div>
     </div>
   </div>
-<!-- TABLE TAB -->
+  <!-- NETMAP TAB -->
+  <div id="tab-netmap" class="tab-content">
+    <div class="netmap-shell">
+      <details class="netmap-panel-fold" open>
+        <summary class="netmap-panel-summary">필터·범례</summary>
+        <aside id="netmap-panel" class="netmap-panel"></aside>
+      </details>
+      <div class="netmap-stage">
+        <div id="netmap-root" role="img" aria-label="Network map"></div>
+        <aside id="netmap-side" hidden></aside>
+        <div class="netmap-stage-actions"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- TABLE TAB -->
 
 
   <div id="tab-table" class="tab-content">
@@ -2299,6 +2262,48 @@
         "tabVolatility": "📉 변동성 분포",
         "tabPerfCalendar": "📅 퍼포먼스 캘린더",
         "tabValuation": "⚖️ 밸류에이션 비교",
+        "tabNetmap": "🕸️ 네트워크맵",
+        "netmapSearch": "이름·티커 검색",
+        "netmapScopeAll": "국내+글로벌",
+        "netmapScopeDomestic": "국내만",
+        "netmapFit": "전체보기",
+        "netmapReset": "초기화",
+        "netmapLoading": "네트워크맵을 불러오는 중…",
+        "netmapFailed": "네트워크맵을 불러오지 못했습니다.",
+        "netmapNoData": "표시할 네트워크 데이터가 없습니다.",
+        "netmapSource": "출처",
+        "netmapOpenChart": "차트 열기",
+        "netmapLegendRs": "국내 점 색 = RS(시장 RS 초과 초록 · 미만 빨강) · 크기 = 시총",
+        "netmapGuideDomestic": "● 국내: 색 = RS(시장 RS 초과 초록 · 미만 빨강), 크기 = 시총",
+        "netmapGuideGlobal": "■ 글로벌: 색 = 국가, 크기 = 연결 수",
+        "netmapFooterHint": "출처는 노드 클릭 → 관계 목록에서 확인",
+        "netmapPanelFilters": "필터·범례",
+        "netmapSectionSearch": "검색",
+        "netmapSectionTypes": "관계 유형",
+        "netmapSectionScope": "범위",
+        "netmapSectionCountries": "국가",
+        "netmapSectionGuide": "노드 안내",
+        "netmapClose": "닫기",
+        "netmapAsOf": "기준",
+        "netmapNodes": "노드",
+        "netmapEdges": "관계",
+        "netmapTypeSupply": "공급",
+        "netmapTypePartner": "파트너",
+        "netmapTypeEquity": "지분",
+        "netmapTypePeer": "피어",
+        "netmapTypeDistribution": "유통",
+        "netmapCountryUs": "US",
+        "netmapCountryTw": "TW",
+        "netmapCountryJp": "JP",
+        "netmapCountryCn": "CN",
+        "netmapCountryEu": "EU",
+        "netmapCountryOther": "기타",
+        "netmapCountryNameUs": "미국",
+        "netmapCountryNameTw": "대만",
+        "netmapCountryNameJp": "일본",
+        "netmapCountryNameCn": "중국",
+        "netmapCountryNameEu": "유럽",
+        "netmapCountryNameOther": "기타(중동·아시아 등)",
         "valuationMetricPer": "PER TTM",
         "valuationMetricPerFy": "PER FY",
         "valuationMetricPbr": "PBR",
@@ -2460,12 +2465,56 @@
         "subtitle": "Supplier, global-peer and customer relationships centered on Samsung Electronics and SK hynix",
         "badgeTotal": "<span>2</span> listings",
         "badgeMarket": "KOSPI <span>2</span> · KOSDAQ <span>0</span>",
+        "editorialToggleShow": "섹터 설명 보기",
+        "editorialToggleHide": "섹터 설명 접기",
         "dataAsof": "Data as of: September 18, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
         "tabMomentum": "📊 Momentum matrix",
         "tabVolatility": "📉 Volatility Distribution",
         "tabPerfCalendar": "📅 Performance Calendar",
         "tabValuation": "⚖️ Valuation",
+        "tabNetmap": "🕸️ Network map",
+        "netmapSearch": "Search name/ticker",
+        "netmapScopeAll": "Domestic + global",
+        "netmapScopeDomestic": "Domestic only",
+        "netmapFit": "Fit",
+        "netmapReset": "Reset",
+        "netmapLoading": "Loading network map…",
+        "netmapFailed": "Could not load network map.",
+        "netmapNoData": "No network data available.",
+        "netmapSource": "Source",
+        "netmapOpenChart": "Open chart",
+        "netmapLegendRs": "Domestic color = RS (green above market · red below) · size = market cap",
+        "netmapGuideDomestic": "● Domestic: color = RS (green above market · red below), size = market cap",
+        "netmapGuideGlobal": "■ Global: color = country, size = connection count",
+        "netmapFooterHint": "Sources appear in the relation list after clicking a node",
+        "netmapPanelFilters": "Filters & legend",
+        "netmapSectionSearch": "Search",
+        "netmapSectionTypes": "Relation types",
+        "netmapSectionScope": "Scope",
+        "netmapSectionCountries": "Countries",
+        "netmapSectionGuide": "Node guide",
+        "netmapClose": "Close",
+        "netmapAsOf": "as of",
+        "netmapNodes": "nodes",
+        "netmapEdges": "edges",
+        "netmapTypeSupply": "Supply",
+        "netmapTypePartner": "Partner",
+        "netmapTypeEquity": "Equity",
+        "netmapTypePeer": "Peer",
+        "netmapTypeDistribution": "Distribution",
+        "netmapCountryUs": "US",
+        "netmapCountryTw": "TW",
+        "netmapCountryJp": "JP",
+        "netmapCountryCn": "CN",
+        "netmapCountryEu": "EU",
+        "netmapCountryOther": "Other",
+        "netmapCountryNameUs": "United States",
+        "netmapCountryNameTw": "Taiwan",
+        "netmapCountryNameJp": "Japan",
+        "netmapCountryNameCn": "China",
+        "netmapCountryNameEu": "Europe",
+        "netmapCountryNameOther": "Other (Middle East, Asia, etc.)",
         "valuationMetricPer": "PER TTM",
         "valuationMetricPerFy": "PER FY",
         "valuationMetricPbr": "PBR",
@@ -3597,6 +3646,8 @@
       if (perfCalHint) perfCalHint.textContent = t.perfCalendarSubtitle || (lang === 'en' ? 'YTD vs prior year-end=100' : '전년말 종가=100 기준 연중 수익률');
       var valuationBtn = document.getElementById('tab-btn-valuation');
       if (valuationBtn) valuationBtn.innerHTML = t.tabValuation || (lang === 'en' ? '⚖️ Valuation' : '⚖️ 밸류에이션 비교');
+      var netmapBtn = document.getElementById('tab-btn-netmap');
+      if (netmapBtn) netmapBtn.innerHTML = t.tabNetmap || (lang === 'en' ? '🕸️ Network map' : '🕸️ 네트워크맵');
       var valuationHint = document.getElementById('valuation-hint');
       if (valuationHint) valuationHint.textContent = t.valuationLegend || '';
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
@@ -3661,7 +3712,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation();
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) renderNetmap();
       syncSortHeader();
       // Update graph node labels if graph is already built
       if (svgEl) {
@@ -3939,6 +3990,71 @@
       });
     }
 
+    function renderNetmap() {
+      if (!window.InvestingMapNetmap) return;
+      var el = document.getElementById('netmap-root');
+      if (!el) return;
+      var nt = T[lang] || {};
+      InvestingMapNetmap.render({
+        container: el,
+        side: document.getElementById('netmap-side'),
+        panel: document.getElementById('netmap-panel'),
+        companies: typeof koreanCompanies !== 'undefined' ? koreanCompanies : [],
+        lang: lang,
+        dataUrl: '../data/netmap/bigchip.json',
+        labels: {
+          title: nt.tabNetmap,
+          search: nt.netmapSearch,
+          scopeAll: nt.netmapScopeAll,
+          scopeDomestic: nt.netmapScopeDomestic,
+          fit: nt.netmapFit,
+          reset: nt.netmapReset,
+          loading: nt.netmapLoading,
+          failed: nt.netmapFailed,
+          noData: nt.netmapNoData,
+          source: nt.netmapSource,
+          openChart: nt.netmapOpenChart,
+          legendRs: nt.netmapLegendRs,
+          guideDomestic: nt.netmapGuideDomestic,
+          guideGlobal: nt.netmapGuideGlobal,
+          footerHint: nt.netmapFooterHint,
+          panelFilters: nt.netmapPanelFilters,
+          sectionSearch: nt.netmapSectionSearch,
+          sectionTypes: nt.netmapSectionTypes,
+          sectionScope: nt.netmapSectionScope,
+          sectionCountries: nt.netmapSectionCountries,
+          sectionGuide: nt.netmapSectionGuide,
+          close: nt.netmapClose,
+          asOfLabel: nt.netmapAsOf,
+          nodesLabel: nt.netmapNodes,
+          edgesLabel: nt.netmapEdges,
+          types: {
+            supply: nt.netmapTypeSupply,
+            partner: nt.netmapTypePartner,
+            equity: nt.netmapTypeEquity,
+            peer: nt.netmapTypePeer,
+            distribution: nt.netmapTypeDistribution
+          },
+          countries: {
+            us: nt.netmapCountryUs,
+            tw: nt.netmapCountryTw,
+            jp: nt.netmapCountryJp,
+            cn: nt.netmapCountryCn,
+            eu: nt.netmapCountryEu,
+            other: nt.netmapCountryOther
+          },
+          countryNames: {
+            us: nt.netmapCountryNameUs,
+            tw: nt.netmapCountryNameTw,
+            jp: nt.netmapCountryNameJp,
+            cn: nt.netmapCountryNameCn,
+            eu: nt.netmapCountryNameEu,
+            other: nt.netmapCountryNameOther
+          }
+        }
+      });
+    }
+
     function renderValuation() {
       if (!window.InvestingMapValuation) return;
       var el = document.getElementById('valuation-root');
@@ -4088,6 +4204,7 @@
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
       if (tab === 'valuation') setTimeout(renderValuation, 40);
+      if (tab === 'netmap') setTimeout(renderNetmap, 40);
       if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);
       else if (window.RelationNetwork) RelationNetwork.onTabHidden();
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
@@ -4103,10 +4220,12 @@
       if (document.getElementById('tab-volatility')?.classList.contains('active')) setTimeout(renderVolatility, 80);
       if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) setTimeout(renderPerfCalendar, 80);
       if (document.getElementById('tab-valuation')?.classList.contains('active')) setTimeout(renderValuation, 80);
+      if (document.getElementById('tab-netmap')?.classList.contains('active')) setTimeout(renderNetmap, 80);
       var imQuoteOpts = {
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },
           onQuotesReady: function () {
+            if (window.InvestingMapNetmap && typeof InvestingMapNetmap.recolorNodes === 'function') InvestingMapNetmap.recolorNodes();
             function isActive(id) {
               var el = document.getElementById(id);
               return !!(el && (el.classList.contains('active') || el.offsetParent !== null));
