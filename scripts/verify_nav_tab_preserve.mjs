@@ -110,6 +110,8 @@ assert.doesNotMatch(navEl.innerHTML, /[?&]tab=/, 'table omits tab param');
 
 sector.store.im_map_tab = 'graph';
 sector.api.render('semi', 'ko', false);
-assert.match(navEl.innerHTML, /tab=graph/, 'sector nav carries graph');
+// Graph tab retired: nav should carry netmap (public fallback), never tab=graph
+assert.match(navEl.innerHTML, /tab=netmap/, 'sector nav remaps graph→netmap');
+assert.doesNotMatch(navEl.innerHTML, /tab=graph/, 'sector nav must not emit tab=graph');
 
 console.log('verify:nav-tab-preserve OK');

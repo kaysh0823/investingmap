@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const STEPS = [
+  'verify_inline_js_syntax.mjs',
   'verify_dist_js.mjs',
   'verify_heatmap_exclude_chips.mjs',
   'verify_global_search.mjs',
@@ -17,6 +18,7 @@ const STEPS = [
   'verify_editorial_toggle.mjs',
   'verify_css_balance.mjs',
   'verify_netmap.mjs',
+  'verify_no_graph_tab.mjs',
   'verify_map_init.mjs',
 ];
 

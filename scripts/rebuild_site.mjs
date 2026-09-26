@@ -100,8 +100,9 @@ run('node scripts/migrate_telecom_network_phase5h.mjs', 'Phase 5H telecom networ
 run('node scripts/migrate_chemical_network.mjs', 'chemical refining value-chain ecosystem');
 run('node scripts/migrate_travel_network.mjs', 'travel leisure airlines value-chain ecosystem');
 run('node scripts/migrate_robot_network_phase5i.mjs', 'Phase 5I robot component/system/application ecosystem');
-run('node scripts/emit_network_profiles.mjs', 'network profiles JS');
-run('node scripts/patch_relation_network.mjs', 'relation network v2 UI + renderer');
+run('node scripts/emit_network_profiles.mjs', 'network profiles JS (kept; pages no longer load)');
+run('node scripts/strip_graph_tab.mjs', 'strip WIP graph tab chrome from sector pages');
+// patch_relation_network.mjs retired from pipeline (file kept) — do not re-inject graph tab
 run('node scripts/apply_powergrid_chain_reclass.mjs', 'powergrid cable split persistence');
 run('node scripts/apply_energy_04_chain_reclass.mjs', 'energy §0-4 battery/renewable/nuclear/powergrid chains');
 run('node scripts/apply_industry_04b_chain_reclass.mjs', 'industry §0-4B chemical/metal/machinery/construction chains');
@@ -114,6 +115,7 @@ run('node scripts/patch_mobile_ux.mjs', 'mobile UX header/tabs');
 run('node scripts/patch_global_bottom_nav.mjs', 'global bottom nav');
 run('node scripts/patch_global_search.mjs', 'global search');
 run('node bio/gen_korea_bio_inline.mjs', 'bio inline.js');
+run('node scripts/strip_graph_tab.mjs', 'strip graph tab again after bio regen');
 run('node scripts/apply_health_04e_chain_reclass.mjs', 'health §0-4E bio/medtech/cosmetics chains');
 run('node scripts/apply_consumer_04f_chain_reclass.mjs', 'consumer §0-4F kconsume/kcontent/travel + shipping logistics');
 run('node scripts/apply_finance_04g_chain_reclass.mjs', 'finance §0-4G finance/holdings + Kakao Pay finance-only');

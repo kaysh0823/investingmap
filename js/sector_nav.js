@@ -53,16 +53,35 @@
     document.head.appendChild(el);
   }
 
+  var PUBLIC_TABS = {
+    heatmap: 1,
+    momentum: 1,
+    volatility: 1,
+    perfcalendar: 1,
+    valuation: 1,
+    netmap: 1,
+    table: 1,
+  };
+
+  function normalizeTab(t) {
+    if (!t) return 'table';
+    if (t === 'graph') {
+      try {
+        if (typeof document !== 'undefined' && document.getElementById('tab-btn-netmap')) return 'netmap';
+      } catch (e) {}
+      return 'netmap';
+    }
+    return PUBLIC_TABS[t] ? t : 'table';
+  }
+
   function currentMapTab() {
     try {
       if (global.InvestingMapTabState && typeof global.InvestingMapTabState.getTab === 'function') {
-        var t = global.InvestingMapTabState.getTab();
-        if (t === 'heatmap' || t === 'momentum' || t === 'volatility' || t === 'graph' || t === 'table') return t;
+        return normalizeTab(global.InvestingMapTabState.getTab());
       }
     } catch (e) {}
     try {
-      var s = localStorage.getItem('im_map_tab');
-      if (s === 'heatmap' || s === 'momentum' || s === 'volatility' || s === 'graph' || s === 'table') return s;
+      return normalizeTab(localStorage.getItem('im_map_tab'));
     } catch (e2) {}
     return 'table';
   }
@@ -79,7 +98,9 @@
     } catch (e) {
       var cleaned = String(href || '').replace(/([?&])ticker=[^&]*/g, '$1').replace(/[?&]$/, '');
       if (tab === 'table') {
-        return cleaned.replace(/([?&])tab=(heatmap|momentum|volatility|graph|table)\b/g, '$1').replace(/[?&]$/, '');
+        return cleaned
+          .replace(/([?&])tab=(heatmap|momentum|volatility|perfcalendar|valuation|netmap|graph|table)\b/g, '$1')
+          .replace(/[?&]$/, '');
       }
       try {
         var u2 = new URL(cleaned, window.location.href);
