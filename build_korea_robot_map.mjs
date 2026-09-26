@@ -15,6 +15,7 @@ import {
   semiChainsNoAllSource,
   retargetSemiCloneAngles,
 } from './scripts/apply_semi_chain_reclass.mjs';
+import { pageConfigForFile, resyncSeoWebPage } from './scripts/patch_seo.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -713,6 +714,9 @@ function main() {
 
   html = html.replace(/<body data-sector="semi">/, '<body data-sector="robot">');
   html = stripSemiCuratedArtifacts(html);
+
+  const seoPage = pageConfigForFile('robot/korea_robot_map.html');
+  if (seoPage) html = resyncSeoWebPage(html, seoPage);
 
   fs.writeFileSync(join(__dirname, 'robot', 'korea_robot_map.html'), html, 'utf8');
   console.log('Wrote robot/korea_robot_map.html', 'n=', n, 'kospi', kospi, 'kosdaq', kosdaq);

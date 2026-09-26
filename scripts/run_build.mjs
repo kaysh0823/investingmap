@@ -14,6 +14,10 @@ function run(cmd, args) {
 
 const steps = [
   ['node', ['scripts/rebuild_site.mjs']],
+  // Rebuild regenerates cloned maps (robot←semi, renewable←battery, …) and can
+  // leave investingmap-seo WebPage JSON-LD pointing at the template sector.
+  // Resync before patch_geo (which only fixes geo-webpage).
+  ['node', ['scripts/patch_seo.mjs']],
   ['node', ['scripts/build_trust_pages.mjs']],
   ['node', ['scripts/patch_global_search.mjs']],
   ['node', ['scripts/patch_geo.mjs']],

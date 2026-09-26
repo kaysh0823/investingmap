@@ -30,6 +30,26 @@ function pagesFromGeo() {
 
 export const PAGES = pagesFromGeo();
 
+/** Resolve PAGES entry (or geo fallback) for a map HTML relative path. */
+export function pageConfigForFile(rel) {
+  const norm = String(rel || '').replace(/\\/g, '/');
+  const hit = PAGES.find((p) => p.file === norm);
+  if (hit) return hit;
+  for (const [, p] of Object.entries(geo.pages || {})) {
+    if (!p?.path || !p?.title?.ko) continue;
+    const file = String(p.path).replace(/^\//, '');
+    if (file === norm) {
+      return {
+        file,
+        path: p.path,
+        title: p.title.ko,
+        description: p.summary?.ko || p.title.ko,
+      };
+    }
+  }
+  return null;
+}
+
 function seoBlock(page) {
   const url = `${BASE}${page.path}`;
   const desc = page.description.replace(/"/g, '&quot;');
@@ -70,7 +90,8 @@ function seoBlock(page) {
 `;
 }
 
-function resyncSeoWebPage(html, page) {
+export function resyncSeoWebPage(html, page) {
+  if (!html || !page) return html;
   const url = `${BASE}${page.path}`;
   const descAttr = page.description.replace(/"/g, '&quot;');
   let next = html;
@@ -107,8 +128,10 @@ function resyncSeoWebPage(html, page) {
 
   // Resync the WebPage JSON-LD that belongs to the investingmap-seo block
   // (first ld+json after the marker, before seo.js).
+  // Do not capture trailing whitespace in `pre` — pretty already indents;
+  // capturing \s* would accumulate 2 spaces on every resync (non-idempotent).
   next = next.replace(
-    /(<!-- investingmap-seo -->[\s\S]*?<script type="application\/ld\+json">\s*)([\s\S]*?)(\s*<\/script>\s*<script src="\.\.\/js\/seo\.js"><\/script>)/,
+    /(<!-- investingmap-seo -->[\s\S]*?<script type="application\/ld\+json">)\s*([\s\S]*?)(\s*<\/script>\s*<script src="\.\.\/js\/seo\.js"><\/script>)/,
     (full, pre, jsonStr, post) => {
       let obj;
       try {
@@ -130,7 +153,7 @@ function resyncSeoWebPage(html, page) {
         };
       }
       const pretty = JSON.stringify(obj, null, 2).replace(/^/gm, '  ');
-      return `${pre}${pretty}${post}`;
+      return `${pre}\n${pretty}${post}`;
     },
   );
   return next;
@@ -189,20 +212,27 @@ function patchFile(rel) {
   console.log('patched:', rel);
 }
 
-for (const page of PAGES) patchFile(page.file);
+function main() {
+  for (const page of PAGES) patchFile(page.file);
 
-// bio inline tail (regenerated into korea_bio_map.inline.js)
-const bioTail = path.join(root, 'bio/bio_inline_tail.js');
-if (fs.existsSync(bioTail)) {
-  let tail = fs.readFileSync(bioTail, 'utf8');
-  if (!tail.includes('InvestingMapSeo.sync')) {
-    tail = tail.replace(
-      /document\.title = t\.title;\n/,
-      "document.title = t.title;\n      if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: t.title, description: t.subtitle });\n",
-    );
-    fs.writeFileSync(bioTail, tail, 'utf8');
-    console.log('patched: bio/bio_inline_tail.js');
+  // bio inline tail (regenerated into korea_bio_map.inline.js)
+  const bioTail = path.join(root, 'bio/bio_inline_tail.js');
+  if (fs.existsSync(bioTail)) {
+    let tail = fs.readFileSync(bioTail, 'utf8');
+    if (!tail.includes('InvestingMapSeo.sync')) {
+      tail = tail.replace(
+        /document\.title = t\.title;\n/,
+        "document.title = t.title;\n      if (window.InvestingMapSeo) InvestingMapSeo.sync({ title: t.title, description: t.subtitle });\n",
+      );
+      fs.writeFileSync(bioTail, tail, 'utf8');
+      console.log('patched: bio/bio_inline_tail.js');
+    }
   }
+
+  console.log('OK patch_seo');
 }
 
-console.log('OK patch_seo');
+const isMain =
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isMain) main();

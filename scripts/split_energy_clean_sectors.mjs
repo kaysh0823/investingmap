@@ -26,6 +26,7 @@ import {
 import { loadPerPbrMap } from '../lib/krx_per_pbr.mjs';
 import { passesMcapFloor, filterCompaniesByMcap } from '../lib/mcap_policy.mjs';
 import { exclusiveSector } from '../lib/sector_exclusive.mjs';
+import { pageConfigForFile, resyncSeoWebPage } from './patch_seo.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CP_LIST_DIR = path.resolve(ROOT, 'cp_list');
@@ -398,6 +399,8 @@ function writeMap(meta, companies, templates) {
   html = stripPrerenderRows(html, keep);
   html = patchText(html, meta, from);
   html = patchChains(html, meta);
+  const seoPage = pageConfigForFile(`${meta.folder}/${meta.file}`);
+  if (seoPage) html = resyncSeoWebPage(html, seoPage);
   fs.mkdirSync(path.join(ROOT, meta.folder), { recursive: true });
   fs.writeFileSync(path.join(ROOT, meta.folder, meta.file), html, 'utf8');
   console.log(`OK ${meta.folder}: ${companies.length} companies`);
