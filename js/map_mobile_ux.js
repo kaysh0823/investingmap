@@ -171,8 +171,6 @@
     return panel;
   }
 
-  var EDITORIAL_OPEN_KEY = 'im.editorial.open';
-
   function setupMapTitleToggle() {
     var btn = ensureTitleToggleButton();
     var panel = ensureEditorialPanel();
@@ -180,19 +178,13 @@
 
     if (!titleToggleReady) {
       titleToggleReady = true;
-      var open = false;
       try {
-        open = sessionStorage.getItem(EDITORIAL_OPEN_KEY) === '1';
+        sessionStorage.removeItem('im.editorial.open');
       } catch (e) {}
-      setEditorialExpanded(btn, panel, open);
+      setEditorialExpanded(btn, panel, false);
       btn.addEventListener('click', function () {
         var isOpen = btn.getAttribute('aria-expanded') === 'true';
-        var next = !isOpen;
-        setEditorialExpanded(btn, panel, next);
-        try {
-          if (next) sessionStorage.setItem(EDITORIAL_OPEN_KEY, '1');
-          else sessionStorage.removeItem(EDITORIAL_OPEN_KEY);
-        } catch (e2) {}
+        setEditorialExpanded(btn, panel, !isOpen);
       });
     }
 
