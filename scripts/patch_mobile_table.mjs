@@ -7,8 +7,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const MARKER_V1 = 'investingmap-mobile-table';
 const MARKER_V2 = 'investingmap-mobile-table-v2';
+// Legacy v1 marker is exactly "investingmap-mobile-table" (no -v2 suffix).
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -229,17 +229,82 @@ function stripImTabHeaderCollapse(html) {
   return html;
 }
 
+/** Editorial collapse CSS from patch_editorial_collapsible_html — never strip. */
+const EDITORIAL_CSS_BLOCK_RE =
+  /\/\*\s*investingmap-header-editorial-toggle-v2\s*\*\/[\s\S]*?\/\*\s*investingmap-header-editorial-toggle-v2-end\s*\*\//;
+
+function withPreservedEditorialCss(html, transform) {
+  const blocks = [];
+  const masked = html.replace(EDITORIAL_CSS_BLOCK_RE, (m) => {
+    const i = blocks.length;
+    blocks.push(m);
+    return `/*__IM_EDITORIAL_CSS_PRESERVE_${i}__*/`;
+  });
+  let out = transform(masked);
+  out = out.replace(/\/\*__IM_EDITORIAL_CSS_PRESERVE_(\d+)__\*\//g, (_, idx) => {
+    const i = Number(idx);
+    return blocks[i] != null ? blocks[i] : '';
+  });
+  return out;
+}
+
+/**
+ * Remove legacy v1 mobile-table CSS only.
+ * Must not match investingmap-mobile-table-v2 (MARKER_V1 is a prefix of v2).
+ * Deletion ends at an explicit v1-end marker, else the next /* investingmap- comment or @media.
+ */
+function stripV1MobileCssBlocks(html) {
+  // Exact v1 open: "/* investingmap-mobile-table */" — (?!-v2) rejects the v2 marker.
+  const startRe = /\/\*\s*investingmap-mobile-table(?!-v2)\s*\*\//g;
+  const endRe = /\/\*\s*investingmap-mobile-table(?!-v2)[^*]*-end\s*\*\//;
+  const boundaryRe = /\/\*\s*investingmap-|\n\s*@media/;
+
+  let out = '';
+  let cursor = 0;
+  let m;
+  while ((m = startRe.exec(html))) {
+    let sliceStart = m.index;
+    while (sliceStart > cursor && /[ \t]/.test(html[sliceStart - 1])) sliceStart -= 1;
+    if (sliceStart > cursor && (html[sliceStart - 1] === '\n' || html[sliceStart - 1] === '\r')) {
+      if (html[sliceStart - 1] === '\n' && sliceStart - 1 > cursor && html[sliceStart - 2] === '\r') {
+        sliceStart -= 2;
+      } else {
+        sliceStart -= 1;
+      }
+    }
+    out += html.slice(cursor, sliceStart);
+
+    const afterStart = m.index + m[0].length;
+    const rest = html.slice(afterStart);
+    const endM = endRe.exec(rest);
+    const boundM = boundaryRe.exec(rest);
+
+    let sliceEnd;
+    if (endM && (!boundM || endM.index <= boundM.index)) {
+      sliceEnd = afterStart + endM.index + endM[0].length;
+    } else if (boundM) {
+      sliceEnd = afterStart + boundM.index;
+    } else {
+      sliceEnd = html.length;
+    }
+
+    cursor = sliceEnd;
+    startRe.lastIndex = cursor;
+  }
+  out += html.slice(cursor);
+  return out;
+}
+
 function stripOldMobileCss(html) {
-  html = html.replace(
-    new RegExp(`\\s*/\\* ${MARKER_V1}[^*]*\\*/[\\s\\S]*?(?=\\n\\s*@media\\(max-width:768px\\))`, 'g'),
-    '',
-  );
-  // Do not strip v2 base / mobile-layout here ??injectMobileV2Css is idempotent when present.
-  html = html.replace(
-    /\r?\n      \.tbl-wrap \{\r?\n        max-width: 100%;\r?\n        max-height: min\(72vh[\s\S]*?word-break: keep-all\r?\n      \}\r?\n\r?\n/g,
-    '\n',
-  );
-  return html;
+  return withPreservedEditorialCss(html, (src) => {
+    let out = stripV1MobileCssBlocks(src);
+    // Do not strip v2 base / mobile-layout here — injectMobileV2Css is idempotent when present.
+    out = out.replace(
+      /\r?\n      \.tbl-wrap \{\r?\n        max-width: 100%;\r?\n        max-height: min\(72vh[\s\S]*?word-break: keep-all\r?\n      \}\r?\n\r?\n/g,
+      '\n',
+    );
+    return out;
+  });
 }
 
 function injectMobileV2Css(html) {

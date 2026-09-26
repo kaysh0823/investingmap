@@ -68,6 +68,31 @@ function enclosingDivClass(html, pos) {
   return opens.length ? opens[opens.length - 1] : '';
 }
 
+/** Static collapse CSS must live in <style> (not only JS-injected via map_mobile_ux). */
+function hasStaticEditorialCollapseCss(html) {
+  const styles = [];
+  const re = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+  let m;
+  while ((m = re.exec(html))) styles.push(m[1]);
+  const css = styles.join('\n');
+  return (
+    /\.map-editorial-panel\.is-collapsed\s*\{[^}]*display:\s*none/.test(css) &&
+    css.includes('investingmap-header-editorial-toggle-v2')
+  );
+}
+
+function checkStaticCollapseCss(rel, html, label) {
+  if (!html.includes('id="map-editorial-panel"') && !html.includes("id='map-editorial-panel'")) {
+    return [];
+  }
+  if (!hasStaticEditorialCollapseCss(html)) {
+    return [
+      `${label}: missing static CSS .map-editorial-panel.is-collapsed { display: none } in <style> (editorial-toggle-v2)`,
+    ];
+  }
+  return [];
+}
+
 function checkHtml(rel, html, label) {
   const failures = [];
 
@@ -169,6 +194,7 @@ function checkHtml(rel, html, label) {
 }
 
 let checked = 0;
+let distChecked = 0;
 const failures = [];
 
 for (const rel of listMapHtml(ROOT)) {
@@ -178,6 +204,7 @@ for (const rel of listMapHtml(ROOT)) {
   }
   checked++;
   failures.push(...checkHtml(rel, html, rel));
+  failures.push(...checkStaticCollapseCss(rel, html, rel));
 }
 
 if (fs.existsSync(DIST)) {
@@ -186,14 +213,21 @@ if (fs.existsSync(DIST)) {
     if (!html.includes('id="map-editorial-panel"') && !html.includes("id='map-editorial-panel'")) {
       continue;
     }
+    distChecked++;
     failures.push(...checkHtml(rel, html, `dist/${rel}`));
+    failures.push(...checkStaticCollapseCss(rel, html, `dist/${rel}`));
   }
 }
 
 assert.ok(checked >= 20, `expected many sector maps with editorial panel, got ${checked}`);
 if (failures.length) {
   for (const f of failures) console.error('  FAIL', f);
-  console.error(`verify:editorial-toggle FAILED — ${failures.length} issue(s) across ${checked} maps`);
+  console.error(
+    `verify:editorial-toggle FAILED — ${failures.length} issue(s) across ${checked} source + ${distChecked} dist maps`,
+  );
   process.exit(1);
 }
-console.log(`verify:editorial-toggle OK — ${checked} source maps (+ dist when present)`);
+console.log(
+  `verify:editorial-toggle OK — ${checked} source maps` +
+    (distChecked ? ` + ${distChecked} dist maps (static collapse CSS)` : ''),
+);
