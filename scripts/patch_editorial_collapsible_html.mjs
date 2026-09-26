@@ -5,6 +5,7 @@
 import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { stripOrphanCloseBefore } from '../lib/css_blocks.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -329,8 +330,8 @@ function stripMarkedCss(html) {
     );
     html = html.replace(precise, '');
   }
-  // Orphan braces left by older incomplete @media strips.
-  html = html.replace(/\n[ \t]*\}\s*\n([ \t]*\/\*\s*investingmap-header-editorial)/g, '\n$1');
+  // Only remove *orphan* closers (depth already 0). Never eat a real rule's `}`.
+  html = stripOrphanCloseBefore(html, /\/\*\s*investingmap-header-editorial/);
   html = html.replace(/\n?\s*\.map-title-toggle\s*\{[\s\S]*?\}\s*/g, '\n');
   html = html.replace(/\n?\s*\.map-title-toggle:focus-visible\s*\{[\s\S]*?\}\s*/g, '\n');
   html = html.replace(/\n?\s*\.map-title-toggle\s+h1\s*\{[\s\S]*?\}\s*/g, '\n');
@@ -355,8 +356,8 @@ function injectPanelCss(html) {
     return html;
   }
   html = stripMarkedCss(html);
-  // Clean leftover orphan closing braces / blank lines before @media.
-  html = html.replace(/\n[ \t]*\}\s*\n+(\s*@media\s*\(\s*max-width)/g, '\n$1');
+  // Only orphan `}` before @media (depth 0); keep legitimate rule closers.
+  html = stripOrphanCloseBefore(html, /@media\s*\(\s*max-width/);
   html = html.replace(/\n{3,}([ \t]*@media)/g, '\n\n$1');
   const block = PANEL_CSS.trim();
   const mobileMedia = /@media\s*\(\s*max-width:\s*768px\s*\)\s*\{/;

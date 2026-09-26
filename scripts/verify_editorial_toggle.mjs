@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { hasTopLevelRule } from '../lib/css_blocks.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
@@ -68,17 +69,20 @@ function enclosingDivClass(html, pos) {
   return opens.length ? opens[opens.length - 1] : '';
 }
 
-/** Static collapse CSS must live in <style> (not only JS-injected via map_mobile_ux). */
+/** Static collapse CSS must live in <style> at brace depth 0 (not only JS-injected). */
 function hasStaticEditorialCollapseCss(html) {
-  const styles = [];
   const re = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
   let m;
-  while ((m = re.exec(html))) styles.push(m[1]);
-  const css = styles.join('\n');
-  return (
-    /\.map-editorial-panel\.is-collapsed\s*\{[^}]*display:\s*none/.test(css) &&
-    css.includes('investingmap-header-editorial-toggle-v2')
-  );
+  while ((m = re.exec(html))) {
+    const css = m[1];
+    if (
+      css.includes('investingmap-header-editorial-toggle-v2') &&
+      hasTopLevelRule(css, '.map-editorial-panel.is-collapsed')
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function checkStaticCollapseCss(rel, html, label) {

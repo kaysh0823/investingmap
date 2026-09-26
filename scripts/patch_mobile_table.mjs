@@ -5,10 +5,22 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {
+  findTopLevelBlock,
+  insertBlockAtTopLevelBeforeMobileMedia,
+  mapFirstStyle,
+  depthAt,
+  scanBraceDepth,
+} from '../lib/css_blocks.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER_V2 = 'investingmap-mobile-table-v2';
 // Legacy v1 marker is exactly "investingmap-mobile-table" (no -v2 suffix).
+const V1_START_RE = /\/\*\s*investingmap-mobile-table(?!-v2)\s*\*\//;
+const V1_END_RE = /\/\*\s*investingmap-mobile-table(?!-v2)[^*]*-end\s*\*\//;
+const EDITORIAL_START = 'investingmap-header-editorial-toggle-v2';
+const EDITORIAL_END = 'investingmap-header-editorial-toggle-v2-end';
+const V2_BASE_START_RE = /\/\*\s*investingmap-mobile-table-v2[^*]*base\s*\*\//;
 
 const MAP_FILES = [
   'bigchip/korea_bigchip_map.html',
@@ -229,81 +241,101 @@ function stripImTabHeaderCollapse(html) {
   return html;
 }
 
-/** Editorial collapse CSS from patch_editorial_collapsible_html — never strip. */
-const EDITORIAL_CSS_BLOCK_RE =
-  /\/\*\s*investingmap-header-editorial-toggle-v2\s*\*\/[\s\S]*?\/\*\s*investingmap-header-editorial-toggle-v2-end\s*\*\//;
+/** Extract editorial CSS (marker-based; may currently be nested due to prior brace bugs). */
+function extractEditorialBlock(css) {
+  const found = findTopLevelBlock(css, EDITORIAL_START, EDITORIAL_END);
+  if (!found) return { css, block: null };
+  return {
+    css: css.slice(0, found.start) + css.slice(found.end),
+    block: found.block.trim(),
+  };
+}
 
-function withPreservedEditorialCss(html, transform) {
-  const blocks = [];
-  const masked = html.replace(EDITORIAL_CSS_BLOCK_RE, (m) => {
-    const i = blocks.length;
-    blocks.push(m);
-    return `/*__IM_EDITORIAL_CSS_PRESERVE_${i}__*/`;
-  });
-  let out = transform(masked);
-  out = out.replace(/\/\*__IM_EDITORIAL_CSS_PRESERVE_(\d+)__\*\//g, (_, idx) => {
-    const i = Number(idx);
-    return blocks[i] != null ? blocks[i] : '';
-  });
+/** Remove legacy v1 mobile-table CSS: marker → last balanced `}` (never past @media / next investingmap-). */
+function stripV1MobileCssBlocks(css) {
+  let out = css;
+  let guard = 0;
+  while (guard++ < 20) {
+    // End marker if present; otherwise brace-balanced to depth 0 return.
+    const block = findTopLevelBlock(out, V1_START_RE, V1_END_RE);
+    if (!block) break;
+    out = out.slice(0, block.start) + out.slice(block.end);
+  }
+  return out;
+}
+
+/** Replace (possibly broken) v2 sticky-base block with the canonical STICKY_BASE_CSS.
+ *  End boundary is `@media` or editorial marker — never `mobile-layout` (lives inside @media).
+ */
+function ensureStickyBase(css) {
+  const m = V2_BASE_START_RE.exec(css);
+  if (!m) {
+    return insertBlockAtTopLevelBeforeMobileMedia(css, STICKY_BASE_CSS.trim());
+  }
+  let sliceStart = m.index;
+  while (sliceStart > 0 && /[ \t]/.test(css[sliceStart - 1])) sliceStart -= 1;
+  if (sliceStart > 0 && (css[sliceStart - 1] === '\n' || css[sliceStart - 1] === '\r')) {
+    if (css[sliceStart - 1] === '\n' && sliceStart > 1 && css[sliceStart - 2] === '\r') sliceStart -= 2;
+    else sliceStart -= 1;
+  }
+  const after = m.index + m[0].length;
+  const rest = css.slice(after);
+  // Prefer stopping before @media / editorial even when braces are currently broken.
+  const bound = rest.search(/@media\s*\(|\/\*\s*investingmap-header-editorial/);
+  let end;
+  if (bound >= 0) {
+    end = after + bound;
+  } else {
+    const found = findTopLevelBlock(css, V2_BASE_START_RE, null, m.index);
+    end = found ? found.end : css.length;
+  }
+  return css.slice(0, sliceStart) + STICKY_BASE_CSS + css.slice(end);
+}
+
+/**
+ * Historic orphan-`}` deletes left `@media(max-width:768px)` unclosed so
+ * `.geo-summary` / `.im-trust-footer` sat inside it. Close dangling depth
+ * immediately before those anchors (and any leftover at EOF).
+ */
+function closeDanglingBeforeAnchors(css) {
+  let out = css;
+  const anchors = [/\.geo-summary\s*\{/, /\.im-trust-footer\s*\{/];
+  for (const re of anchors) {
+    const m = re.exec(out);
+    if (!m) continue;
+    const d = depthAt(out, m.index);
+    if (d > 0) {
+      out = `${out.slice(0, m.index)}\n    ${'}'.repeat(d)}\n\n    ${out.slice(m.index)}`;
+      break;
+    }
+  }
+  const endD = scanBraceDepth(out);
+  if (endD > 0) out = `${out}\n    ${'}'.repeat(endD)}\n`;
   return out;
 }
 
 /**
- * Remove legacy v1 mobile-table CSS only.
- * Must not match investingmap-mobile-table-v2 (MARKER_V1 is a prefix of v2).
- * Deletion ends at an explicit v1-end marker, else the next /* investingmap- comment or @media.
+ * Strip legacy v1 mobile CSS; never touch editorial.
+ * Always re-seat editorial at depth 0 before @media(max-width:768px).
+ * Repair sticky-base braces (prior orphan-`}` deletes ate hover closer).
  */
-function stripV1MobileCssBlocks(html) {
-  // Exact v1 open: "/* investingmap-mobile-table */" — (?!-v2) rejects the v2 marker.
-  const startRe = /\/\*\s*investingmap-mobile-table(?!-v2)\s*\*\//g;
-  const endRe = /\/\*\s*investingmap-mobile-table(?!-v2)[^*]*-end\s*\*\//;
-  const boundaryRe = /\/\*\s*investingmap-|\n\s*@media/;
-
-  let out = '';
-  let cursor = 0;
-  let m;
-  while ((m = startRe.exec(html))) {
-    let sliceStart = m.index;
-    while (sliceStart > cursor && /[ \t]/.test(html[sliceStart - 1])) sliceStart -= 1;
-    if (sliceStart > cursor && (html[sliceStart - 1] === '\n' || html[sliceStart - 1] === '\r')) {
-      if (html[sliceStart - 1] === '\n' && sliceStart - 1 > cursor && html[sliceStart - 2] === '\r') {
-        sliceStart -= 2;
-      } else {
-        sliceStart -= 1;
-      }
-    }
-    out += html.slice(cursor, sliceStart);
-
-    const afterStart = m.index + m[0].length;
-    const rest = html.slice(afterStart);
-    const endM = endRe.exec(rest);
-    const boundM = boundaryRe.exec(rest);
-
-    let sliceEnd;
-    if (endM && (!boundM || endM.index <= boundM.index)) {
-      sliceEnd = afterStart + endM.index + endM[0].length;
-    } else if (boundM) {
-      sliceEnd = afterStart + boundM.index;
-    } else {
-      sliceEnd = html.length;
-    }
-
-    cursor = sliceEnd;
-    startRe.lastIndex = cursor;
-  }
-  out += html.slice(cursor);
-  return out;
-}
-
 function stripOldMobileCss(html) {
-  return withPreservedEditorialCss(html, (src) => {
-    let out = stripV1MobileCssBlocks(src);
-    // Do not strip v2 base / mobile-layout here — injectMobileV2Css is idempotent when present.
-    out = out.replace(
+  return mapFirstStyle(html, (css0) => {
+    const { css: withoutEd, block: editorial } = extractEditorialBlock(css0);
+    let css = stripV1MobileCssBlocks(withoutEd);
+    css = css.replace(
       /\r?\n      \.tbl-wrap \{\r?\n        max-width: 100%;\r?\n        max-height: min\(72vh[\s\S]*?word-break: keep-all\r?\n      \}\r?\n\r?\n/g,
       '\n',
     );
-    return out;
+    css = ensureStickyBase(css);
+    const again = extractEditorialBlock(css);
+    css = again.css;
+    const block = editorial || again.block;
+    if (block) {
+      css = insertBlockAtTopLevelBeforeMobileMedia(css, block);
+    }
+    css = closeDanglingBeforeAnchors(css);
+    return css;
   });
 }
 

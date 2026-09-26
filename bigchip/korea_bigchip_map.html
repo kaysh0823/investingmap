@@ -160,7 +160,7 @@
   </script>
 <!-- investingmap-seo-ld-end -->
 <meta name="investingmap-quotes-api" content="/api/quotes">
-  <title>한국 삼성전자/하이닉스 투자 지도</title>
+  <title>한국 삼성전자/하이닉스 투자 지도 / Korea Samsung/SK hynix Map</title>
   <script>try { var __im = localStorage.getItem('im_theme'); if (__im === 'light' || __im === 'dark') document.documentElement.setAttribute('data-theme', __im); } catch (e) { }</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="../js/return_live.js?v=58abf587"></script>
@@ -866,6 +866,74 @@
       background: var(--surface2)
     }
 
+    /* investingmap-header-editorial-toggle-v2 */
+    .header-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+    .header-title-row h1 {
+      margin: 0
+    }
+    .header-meta-inline {
+      margin: 0;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+    .map-editorial-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 6px 0 0;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer
+    }
+    .map-editorial-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px
+    }
+    .map-title-chevron {
+      flex-shrink: 0;
+      font-size: 0.85em;
+      line-height: 1;
+      color: var(--text-muted);
+      transition: transform .15s ease
+    }
+    .map-editorial-toggle[aria-expanded="true"] .map-title-chevron {
+      transform: rotate(180deg)
+    }
+    .map-editorial-panel.is-collapsed {
+      display: none
+    }
+    .map-editorial-detail.is-collapsed {
+      display: none
+    }
+    .map-editorial-title-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
+    @media (min-width: 769px) {
+      /* Keep title/subtitle/toggle clear of absolute .header-actions (right:20px). */
+      .header {
+        padding-right: max(28px, min(42vw, 320px))
+      }
+    }
+    /* investingmap-header-editorial-toggle-v2-end */
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -1928,7 +1996,9 @@
       .rn-legend-help-summary { min-height: 44px; }
     }
 
-  </style>
+  
+    }
+</style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
     crossorigin="anonymous"></script>
