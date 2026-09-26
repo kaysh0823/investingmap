@@ -1,0 +1,1065 @@
+{
+ "sectorId": "metal",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "smelting": "비철 제련",
+  "trading": "금속 유통·가공서비스",
+  "steel": "종합 철강",
+  "special": "특수강·단조",
+  "nonferrous": "비철 가공·첨단금속",
+  "flat": "판재·도금강판",
+  "long": "봉형강·선재",
+  "pipe": "강관",
+  "end_customer": "수요처·모회사",
+  "global_peer": "글로벌 철강·비철"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:010130",
+   "type": "kr_listed",
+   "ticker": "010130",
+   "nameKo": "고려아연",
+   "nameEn": "고려아연",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "smelting",
+   "role": "비철 제련"
+  },
+  {
+   "id": "krx:047050",
+   "type": "kr_listed",
+   "ticker": "047050",
+   "nameKo": "포스코인터내셔널",
+   "nameEn": "포스코인터내셔널",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "trading",
+   "role": "금속 유통·가공서비스"
+  },
+  {
+   "id": "krx:004020",
+   "type": "kr_listed",
+   "ticker": "004020",
+   "nameKo": "현대제철",
+   "nameEn": "현대제철",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "steel",
+   "role": "종합 철강"
+  },
+  {
+   "id": "krx:001430",
+   "type": "kr_listed",
+   "ticker": "001430",
+   "nameKo": "세아베스틸지주",
+   "nameEn": "세아베스틸지주",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "special",
+   "role": "특수강·단조"
+  },
+  {
+   "id": "krx:006110",
+   "type": "kr_listed",
+   "ticker": "006110",
+   "nameKo": "삼아알미늄",
+   "nameEn": "삼아알미늄",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "nonferrous",
+   "role": "비철 가공·첨단금속"
+  },
+  {
+   "id": "krx:000670",
+   "type": "kr_listed",
+   "ticker": "000670",
+   "nameKo": "영풍",
+   "nameEn": "영풍",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "smelting",
+   "role": "비철 제련"
+  },
+  {
+   "id": "krx:295310",
+   "type": "kr_listed",
+   "ticker": "295310",
+   "nameKo": "에이치브이엠",
+   "nameEn": "에이치브이엠",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "nonferrous",
+   "role": "비철 가공·첨단금속"
+  },
+  {
+   "id": "krx:016380",
+   "type": "kr_listed",
+   "ticker": "016380",
+   "nameKo": "KG스틸",
+   "nameEn": "KG스틸",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "flat",
+   "role": "판재·도금강판"
+  },
+  {
+   "id": "krx:001530",
+   "type": "kr_listed",
+   "ticker": "001530",
+   "nameKo": "DI동일",
+   "nameEn": "DI동일",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "nonferrous",
+   "role": "비철 가공·첨단금속"
+  },
+  {
+   "id": "krx:009520",
+   "type": "kr_listed",
+   "ticker": "009520",
+   "nameKo": "포스코엠텍",
+   "nameEn": "포스코엠텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "trading",
+   "role": "금속 유통·가공서비스"
+  },
+  {
+   "id": "krx:460860",
+   "type": "kr_listed",
+   "ticker": "460860",
+   "nameKo": "동국제강",
+   "nameEn": "동국제강",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "long",
+   "role": "봉형강·선재"
+  },
+  {
+   "id": "krx:002240",
+   "type": "kr_listed",
+   "ticker": "002240",
+   "nameKo": "고려제강",
+   "nameEn": "고려제강",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "long",
+   "role": "봉형강·선재"
+  },
+  {
+   "id": "krx:306200",
+   "type": "kr_listed",
+   "ticker": "306200",
+   "nameKo": "세아제강",
+   "nameEn": "세아제강",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pipe",
+   "role": "강관"
+  },
+  {
+   "id": "krx:092790",
+   "type": "kr_listed",
+   "ticker": "092790",
+   "nameKo": "넥스틸",
+   "nameEn": "넥스틸",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "pipe",
+   "role": "강관"
+  },
+  {
+   "id": "krx:104700",
+   "type": "kr_listed",
+   "ticker": "104700",
+   "nameKo": "한국철강",
+   "nameEn": "한국철강",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "long",
+   "role": "봉형강·선재"
+  },
+  {
+   "id": "global:posco",
+   "type": "kr_other",
+   "nameKo": "포스코홀딩스",
+   "nameEn": "POSCO Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "철강 1위·그룹 지주",
+   "exchange": "KRX:005490"
+  },
+  {
+   "id": "global:hyundai",
+   "type": "kr_other",
+   "nameKo": "현대차·기아",
+   "nameEn": "Hyundai Motor / Kia",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "자동차강판·특수강 수요",
+   "exchange": "KRX:005380"
+  },
+  {
+   "id": "global:lges",
+   "type": "kr_other",
+   "nameKo": "LG에너지솔루션",
+   "nameEn": "LG Energy Solution",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "양극박 수요",
+   "exchange": "KRX:373220"
+  },
+  {
+   "id": "global:skon",
+   "type": "kr_other",
+   "nameKo": "SK온",
+   "nameEn": "SK On",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "양극박 수요 (삼아 90%)",
+   "exchange": ""
+  },
+  {
+   "id": "global:sdi",
+   "type": "kr_other",
+   "nameKo": "삼성SDI",
+   "nameEn": "Samsung SDI",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "양극박 수요",
+   "exchange": "KRX:006400"
+  },
+  {
+   "id": "global:mbk",
+   "type": "kr_other",
+   "nameKo": "MBK파트너스",
+   "nameEn": "MBK Partners",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "영풍 연합 (고려아연 분쟁)",
+   "exchange": ""
+  },
+  {
+   "id": "global:hmg_global",
+   "type": "global",
+   "nameKo": "HMG글로벌",
+   "nameEn": "HMG Global (현대차그룹)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "고려아연 5%",
+   "exchange": ""
+  },
+  {
+   "id": "global:catl",
+   "type": "global",
+   "nameKo": "CATL",
+   "nameEn": "CATL",
+   "country": "cn",
+   "chain": "end_customer",
+   "role": "양극박 수요 (ESS)",
+   "exchange": "SZSE:300750"
+  },
+  {
+   "id": "global:gm",
+   "type": "global",
+   "nameKo": "GM",
+   "nameEn": "General Motors",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "자동차강판 고객",
+   "exchange": "NYSE:GM"
+  },
+  {
+   "id": "global:ford",
+   "type": "global",
+   "nameKo": "포드",
+   "nameEn": "Ford",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "자동차강판 고객",
+   "exchange": "NYSE:F"
+  },
+  {
+   "id": "global:glencore",
+   "type": "global",
+   "nameKo": "글렌코어",
+   "nameEn": "Glencore",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "아연 제련·트레이딩",
+   "exchange": "LSE:GLEN"
+  },
+  {
+   "id": "global:nyrstar",
+   "type": "global",
+   "nameKo": "니어스타",
+   "nameEn": "Nyrstar (Trafigura)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "아연 제련",
+   "exchange": ""
+  },
+  {
+   "id": "global:trafigura",
+   "type": "global",
+   "nameKo": "트라피구라",
+   "nameEn": "Trafigura",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "고려아연 4.51% 주주·트레이더",
+   "exchange": ""
+  },
+  {
+   "id": "global:baowu",
+   "type": "global",
+   "nameKo": "중국보무강철",
+   "nameEn": "China Baowu",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "조강 1위",
+   "exchange": ""
+  },
+  {
+   "id": "global:nippon_steel",
+   "type": "global",
+   "nameKo": "일본제철",
+   "nameEn": "Nippon Steel",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "조강·자동차강판",
+   "exchange": "TSE:5401"
+  },
+  {
+   "id": "global:arcelor",
+   "type": "global",
+   "nameKo": "아르셀로미탈",
+   "nameEn": "ArcelorMittal",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "조강·자동차강판",
+   "exchange": "NYSE:MT"
+  },
+  {
+   "id": "global:jfe",
+   "type": "global",
+   "nameKo": "JFE스틸",
+   "nameEn": "JFE Holdings",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "조강",
+   "exchange": "TSE:5411"
+  },
+  {
+   "id": "global:tenaris",
+   "type": "global",
+   "nameKo": "테나리스",
+   "nameEn": "Tenaris",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "유정관 1위",
+   "exchange": "NYSE:TS"
+  },
+  {
+   "id": "global:us_steel",
+   "type": "global",
+   "nameKo": "US스틸",
+   "nameEn": "U.S. Steel (Nippon Steel)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "미국 철강·강관",
+   "exchange": ""
+  },
+  {
+   "id": "global:bekaert",
+   "type": "global",
+   "nameKo": "베카르트",
+   "nameEn": "Bekaert",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "선재·와이어 1위",
+   "exchange": "EBR:BEKB"
+  },
+  {
+   "id": "global:uacj",
+   "type": "global",
+   "nameKo": "UACJ",
+   "nameEn": "UACJ",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "알루미늄박",
+   "exchange": "TSE:5741"
+  },
+  {
+   "id": "global:lotte_al",
+   "type": "kr_other",
+   "nameKo": "롯데알미늄",
+   "nameEn": "Lotte Aluminium",
+   "country": "kr",
+   "chain": "global_peer",
+   "role": "양극박 경쟁",
+   "exchange": ""
+  },
+  {
+   "id": "global:texsteel",
+   "type": "global",
+   "nameKo": "텍스아일",
+   "nameEn": "Texsteel",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "넥스틸 50% 인수 (강관 유통)",
+   "exchange": ""
+  },
+  {
+   "id": "global:posco_steeleon",
+   "type": "kr_other",
+   "nameKo": "포스코스틸리온",
+   "nameEn": "POSCO Steeleon",
+   "country": "kr",
+   "chain": "global_peer",
+   "role": "컬러강판 (포스코 계열)",
+   "exchange": "KRX:058430"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_000670>krx_010130",
+   "source": "krx:000670",
+   "target": "krx:010130",
+   "type": "equity",
+   "labelKo": "영풍 최대주주 지분 (영풍·MBK 연합 vs 최윤범)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026030417352390997",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_mbk>krx_010130",
+   "source": "global:mbk",
+   "target": "krx:010130",
+   "type": "equity",
+   "labelKo": "공개매수 지분 (영풍 연합)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026030417352390997",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hmg_global>krx_010130",
+   "source": "global:hmg_global",
+   "target": "krx:010130",
+   "type": "equity",
+   "labelKo": "현대차그룹 5% (2023 제3자배정)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202308311448436440107039",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_trafigura>krx_010130",
+   "source": "global:trafigura",
+   "target": "krx:010130",
+   "type": "equity",
+   "labelKo": "트라피구라 4.51%",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%EA%B3%A0%EB%A0%A4%EC%95%84%EC%97%B0",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_000670>global_mbk",
+   "source": "krx:000670",
+   "target": "global:mbk",
+   "type": "partner",
+   "labelKo": "영풍·MBK 경영협력계약",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026030417352390997",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010130>krx_000670",
+   "source": "krx:010130",
+   "target": "krx:000670",
+   "type": "peer",
+   "labelKo": "아연 제련 (국내 양사, 분쟁 중)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026030417352390997",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010130>global_glencore",
+   "source": "krx:010130",
+   "target": "global:glencore",
+   "type": "peer",
+   "labelKo": "글로벌 아연 제련 경쟁 (고려아연 세계 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.biztribune.co.kr/news/articleView.html?idxno=323951",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010130>global_nyrstar",
+   "source": "krx:010130",
+   "target": "global:nyrstar",
+   "type": "peer",
+   "labelKo": "글로벌 아연 제련 경쟁 (고려아연 세계 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.biztribune.co.kr/news/articleView.html?idxno=323951",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_010130>global_hmg_global",
+   "source": "krx:010130",
+   "target": "global:hmg_global",
+   "type": "partner",
+   "labelKo": "전구체·니켈 등 배터리 소재 협력",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202308311448436440107039",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004020>global_hyundai",
+   "source": "krx:004020",
+   "target": "global:hyundai",
+   "type": "supply",
+   "labelKo": "자동차강판 (현대차·기아 ~80%, 378만톤)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10431100",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004020>global_gm",
+   "source": "krx:004020",
+   "target": "global:gm",
+   "type": "supply",
+   "labelKo": "해외 완성차 강판 (100만톤 돌파)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.meconomynews.com/news/articleView.html?idxno=108836",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004020>global_ford",
+   "source": "krx:004020",
+   "target": "global:ford",
+   "type": "supply",
+   "labelKo": "해외 완성차 강판 (100만톤 돌파)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.meconomynews.com/news/articleView.html?idxno=108836",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004020>global_posco",
+   "source": "krx:004020",
+   "target": "global:posco",
+   "type": "peer",
+   "labelKo": "국내 고로 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10431100",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004020>global_baowu",
+   "source": "krx:004020",
+   "target": "global:baowu",
+   "type": "peer",
+   "labelKo": "글로벌 조강·자동차강판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.meconomynews.com/news/articleView.html?idxno=108836",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004020>global_nippon_steel",
+   "source": "krx:004020",
+   "target": "global:nippon_steel",
+   "type": "peer",
+   "labelKo": "글로벌 조강·자동차강판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.meconomynews.com/news/articleView.html?idxno=108836",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004020>global_arcelor",
+   "source": "krx:004020",
+   "target": "global:arcelor",
+   "type": "peer",
+   "labelKo": "글로벌 조강·자동차강판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.meconomynews.com/news/articleView.html?idxno=108836",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004020>global_jfe",
+   "source": "krx:004020",
+   "target": "global:jfe",
+   "type": "peer",
+   "labelKo": "글로벌 조강·자동차강판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.meconomynews.com/news/articleView.html?idxno=108836",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004020>krx_001430",
+   "source": "krx:004020",
+   "target": "krx:001430",
+   "type": "peer",
+   "labelKo": "특수강 경쟁 (현대제철 특수강 진출)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/57230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_001430>global_hyundai",
+   "source": "krx:001430",
+   "target": "global:hyundai",
+   "type": "supply",
+   "labelKo": "자동차용 특수강 (국내 완성차 20%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/57230",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_460860>krx_004020",
+   "source": "krx:460860",
+   "target": "krx:004020",
+   "type": "peer",
+   "labelKo": "봉형강(철근·H형강) 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.dt.co.kr/article/11450965",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_104700>krx_460860",
+   "source": "krx:104700",
+   "target": "krx:460860",
+   "type": "peer",
+   "labelKo": "철근 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.dt.co.kr/article/11450965",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_104700>krx_004020",
+   "source": "krx:104700",
+   "target": "krx:004020",
+   "type": "peer",
+   "labelKo": "철근 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.dt.co.kr/article/11450965",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_460860>krx_016380",
+   "source": "krx:460860",
+   "target": "krx:016380",
+   "type": "peer",
+   "labelKo": "컬러강판 1·2위 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.dt.co.kr/article/11450965",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_posco_steeleon>krx_460860",
+   "source": "global:posco_steeleon",
+   "target": "krx:460860",
+   "type": "peer",
+   "labelKo": "컬러강판 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.dt.co.kr/article/11450965",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_posco_steeleon>krx_016380",
+   "source": "global:posco_steeleon",
+   "target": "krx:016380",
+   "type": "peer",
+   "labelKo": "컬러강판 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.dt.co.kr/article/11450965",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_posco>krx_016380",
+   "source": "global:posco",
+   "target": "krx:016380",
+   "type": "supply",
+   "labelKo": "열연 소재 (냉연·도금 원재료)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.dt.co.kr/article/11450965",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_306200>krx_092790",
+   "source": "krx:306200",
+   "target": "krx:092790",
+   "type": "peer",
+   "labelKo": "유정관·강관 대미 수출 경쟁 (덤핑세율 9.8% vs 29.9%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2026/09/202609250638465895fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_092790>global_texsteel",
+   "source": "krx:092790",
+   "target": "global:texsteel",
+   "type": "equity",
+   "labelKo": "텍스아일 50% 인수 (5,000만$)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=423628",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_306200>global_tenaris",
+   "source": "krx:306200",
+   "target": "global:tenaris",
+   "type": "peer",
+   "labelKo": "북미 유정관 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2026/09/202609250638465895fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_306200>global_us_steel",
+   "source": "krx:306200",
+   "target": "global:us_steel",
+   "type": "peer",
+   "labelKo": "북미 유정관 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2026/09/202609250638465895fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_092790>global_tenaris",
+   "source": "krx:092790",
+   "target": "global:tenaris",
+   "type": "peer",
+   "labelKo": "유정관 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.g-enews.com/article/Global-Biz/2026/09/202609250638465895fbbec65dfb_1",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002240>global_bekaert",
+   "source": "krx:002240",
+   "target": "global:bekaert",
+   "type": "peer",
+   "labelKo": "선재·와이어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=002240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_posco>krx_002240",
+   "source": "global:posco",
+   "target": "krx:002240",
+   "type": "supply",
+   "labelKo": "선재 원소재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=002240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_posco>krx_047050",
+   "source": "global:posco",
+   "target": "krx:047050",
+   "type": "equity",
+   "labelKo": "포스코홀딩스 자회사 (포스코인터내셔널)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.topdaily.kr/articles/72635",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_posco>krx_009520",
+   "source": "global:posco",
+   "target": "krx:009520",
+   "type": "equity",
+   "labelKo": "포스코 계열 (포스코엠텍)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.topdaily.kr/articles/72635",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_009520>global_posco",
+   "source": "krx:009520",
+   "target": "global:posco",
+   "type": "supply",
+   "labelKo": "철강 포장·부원료 (포스코 92.3%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=328453",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_047050>global_posco",
+   "source": "krx:047050",
+   "target": "global:posco",
+   "type": "supply",
+   "labelKo": "철강 트레이딩·원료 조달",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.topdaily.kr/articles/72635",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006110>global_lges",
+   "source": "krx:006110",
+   "target": "global:lges",
+   "type": "supply",
+   "labelKo": "2차전지 양극박 (SK온 ~90% 조달)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/16153221/Analysis/View?News_No=21571",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006110>global_skon",
+   "source": "krx:006110",
+   "target": "global:skon",
+   "type": "supply",
+   "labelKo": "2차전지 양극박 (SK온 ~90% 조달)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/16153221/Analysis/View?News_No=21571",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006110>global_sdi",
+   "source": "krx:006110",
+   "target": "global:sdi",
+   "type": "supply",
+   "labelKo": "2차전지 양극박 (SK온 ~90% 조달)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/16153221/Analysis/View?News_No=21571",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_006110>global_catl",
+   "source": "krx:006110",
+   "target": "global:catl",
+   "type": "supply",
+   "labelKo": "ESS 양극박 (증설 협의)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260831n20327",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006110>global_lotte_al",
+   "source": "krx:006110",
+   "target": "global:lotte_al",
+   "type": "peer",
+   "labelKo": "양극박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/16153221/Analysis/View?News_No=21571",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006110>global_uacj",
+   "source": "krx:006110",
+   "target": "global:uacj",
+   "type": "peer",
+   "labelKo": "양극박 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/16153221/Analysis/View?News_No=21571",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001530>krx_006110",
+   "source": "krx:001530",
+   "target": "krx:006110",
+   "type": "peer",
+   "labelKo": "알루미늄 가공",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/16153221/Analysis/View?News_No=21571",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_295310>krx_001430",
+   "source": "krx:295310",
+   "target": "krx:001430",
+   "type": "peer",
+   "labelKo": "특수합금·단조",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=295310",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

@@ -1,0 +1,1720 @@
+{
+ "sectorId": "construction",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "general": "종합건설",
+  "plant": "플랜트·EPC",
+  "housing": "주택·개발",
+  "cement": "시멘트·기초 건자재",
+  "interior": "마감재·인테리어",
+  "realestate": "부동산 서비스",
+  "end_customer": "그룹·발주처",
+  "global_peer": "글로벌 건설·건자재"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:028260",
+   "type": "kr_listed",
+   "ticker": "028260",
+   "nameKo": "삼성물산",
+   "nameEn": "삼성물산",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:000720",
+   "type": "kr_listed",
+   "ticker": "000720",
+   "nameKo": "현대건설",
+   "nameEn": "현대건설",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:028050",
+   "type": "kr_listed",
+   "ticker": "028050",
+   "nameKo": "삼성E&A",
+   "nameEn": "삼성E&A",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "plant",
+   "role": "플랜트·EPC"
+  },
+  {
+   "id": "krx:047040",
+   "type": "kr_listed",
+   "ticker": "047040",
+   "nameKo": "대우건설",
+   "nameEn": "대우건설",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:375500",
+   "type": "kr_listed",
+   "ticker": "375500",
+   "nameKo": "DL이앤씨",
+   "nameEn": "DL이앤씨",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:006360",
+   "type": "kr_listed",
+   "ticker": "006360",
+   "nameKo": "GS건설",
+   "nameEn": "GS건설",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:294870",
+   "type": "kr_listed",
+   "ticker": "294870",
+   "nameKo": "IPARK현대산업개발",
+   "nameEn": "IPARK현대산업개발",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "housing",
+   "role": "주택·개발"
+  },
+  {
+   "id": "krx:300720",
+   "type": "kr_listed",
+   "ticker": "300720",
+   "nameKo": "한일시멘트",
+   "nameEn": "한일시멘트",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cement",
+   "role": "시멘트·기초 건자재"
+  },
+  {
+   "id": "krx:009240",
+   "type": "kr_listed",
+   "ticker": "009240",
+   "nameKo": "한샘",
+   "nameEn": "한샘",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "interior",
+   "role": "마감재·인테리어"
+  },
+  {
+   "id": "krx:038500",
+   "type": "kr_listed",
+   "ticker": "038500",
+   "nameKo": "삼표시멘트",
+   "nameEn": "삼표시멘트",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "cement",
+   "role": "시멘트·기초 건자재"
+  },
+  {
+   "id": "krx:009410",
+   "type": "kr_listed",
+   "ticker": "009410",
+   "nameKo": "태영건설",
+   "nameEn": "태영건설",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:002990",
+   "type": "kr_listed",
+   "ticker": "002990",
+   "nameKo": "금호건설",
+   "nameEn": "금호건설",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:035890",
+   "type": "kr_listed",
+   "ticker": "035890",
+   "nameKo": "서희건설",
+   "nameEn": "서희건설",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "housing",
+   "role": "주택·개발"
+  },
+  {
+   "id": "krx:010780",
+   "type": "kr_listed",
+   "ticker": "010780",
+   "nameKo": "아이에스동서",
+   "nameEn": "아이에스동서",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "general",
+   "role": "종합건설"
+  },
+  {
+   "id": "krx:183190",
+   "type": "kr_listed",
+   "ticker": "183190",
+   "nameKo": "아세아시멘트",
+   "nameEn": "아세아시멘트",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "cement",
+   "role": "시멘트·기초 건자재"
+  },
+  {
+   "id": "krx:317400",
+   "type": "kr_listed",
+   "ticker": "317400",
+   "nameKo": "자이에스앤디",
+   "nameEn": "자이에스앤디",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "housing",
+   "role": "주택·개발"
+  },
+  {
+   "id": "krx:344820",
+   "type": "kr_listed",
+   "ticker": "344820",
+   "nameKo": "KCC글라스",
+   "nameEn": "KCC글라스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "interior",
+   "role": "마감재·인테리어"
+  },
+  {
+   "id": "krx:025900",
+   "type": "kr_listed",
+   "ticker": "025900",
+   "nameKo": "동화기업",
+   "nameEn": "동화기업",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "interior",
+   "role": "마감재·인테리어"
+  },
+  {
+   "id": "krx:123890",
+   "type": "kr_listed",
+   "ticker": "123890",
+   "nameKo": "한국자산신탁",
+   "nameEn": "한국자산신탁",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "realestate",
+   "role": "부동산 서비스"
+  },
+  {
+   "id": "krx:108670",
+   "type": "kr_listed",
+   "ticker": "108670",
+   "nameKo": "LX하우시스",
+   "nameEn": "LX하우시스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "interior",
+   "role": "마감재·인테리어"
+  },
+  {
+   "id": "global:samsung_el",
+   "type": "kr_other",
+   "nameKo": "삼성전자",
+   "nameEn": "Samsung Electronics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "삼성물산 5.01% 피투자·반도체 공장 발주",
+   "exchange": "KRX:005930"
+  },
+  {
+   "id": "global:hyundai",
+   "type": "kr_other",
+   "nameKo": "현대차",
+   "nameEn": "Hyundai Motor",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "현대건설 최대주주 20.95%",
+   "exchange": "KRX:005380"
+  },
+  {
+   "id": "global:hyundai_eng",
+   "type": "kr_other",
+   "nameKo": "현대엔지니어링",
+   "nameEn": "Hyundai Engineering",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "현대건설 자회사 (비상장)",
+   "exchange": ""
+  },
+  {
+   "id": "global:dl_holdings",
+   "type": "kr_other",
+   "nameKo": "DL",
+   "nameEn": "DL Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "DL이앤씨 모회사",
+   "exchange": "KRX:000210"
+  },
+  {
+   "id": "global:kcc",
+   "type": "kr_other",
+   "nameKo": "KCC",
+   "nameEn": "KCC Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "KCC글라스 계열",
+   "exchange": "KRX:002380"
+  },
+  {
+   "id": "global:lx_holdings",
+   "type": "kr_other",
+   "nameKo": "LX홀딩스",
+   "nameEn": "LX Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "LX하우시스 모회사",
+   "exchange": "KRX:383800"
+  },
+  {
+   "id": "global:hanil_holdings",
+   "type": "kr_other",
+   "nameKo": "한일홀딩스",
+   "nameEn": "Hanil Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "한일시멘트 모회사",
+   "exchange": "KRX:003300"
+  },
+  {
+   "id": "global:sampyo",
+   "type": "kr_other",
+   "nameKo": "삼표",
+   "nameEn": "Sampyo Group",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "삼표시멘트 모회사",
+   "exchange": ""
+  },
+  {
+   "id": "global:ssangyong",
+   "type": "kr_other",
+   "nameKo": "쌍용C&E",
+   "nameEn": "Ssangyong C&E",
+   "country": "kr",
+   "chain": "global_peer",
+   "role": "시멘트 (한앤코, 상장폐지)",
+   "exchange": ""
+  },
+  {
+   "id": "global:khnp",
+   "type": "kr_other",
+   "nameKo": "한국수력원자력",
+   "nameEn": "KHNP",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "체코 원전 시공 발주",
+   "exchange": ""
+  },
+  {
+   "id": "global:bechtel",
+   "type": "global",
+   "nameKo": "벡텔",
+   "nameEn": "Bechtel",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "글로벌 EPC",
+   "exchange": ""
+  },
+  {
+   "id": "global:fluor",
+   "type": "global",
+   "nameKo": "플루어",
+   "nameEn": "Fluor",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "글로벌 EPC",
+   "exchange": "NYSE:FLR"
+  },
+  {
+   "id": "global:vinci",
+   "type": "global",
+   "nameKo": "빈치",
+   "nameEn": "VINCI",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "건설 1위 (유럽)",
+   "exchange": "EPA:DG"
+  },
+  {
+   "id": "global:technip",
+   "type": "global",
+   "nameKo": "테크닙에너지",
+   "nameEn": "Technip Energies",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "플랜트 EPC",
+   "exchange": "EPA:TE"
+  },
+  {
+   "id": "global:saipem",
+   "type": "global",
+   "nameKo": "사이펨",
+   "nameEn": "Saipem",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "플랜트 EPC",
+   "exchange": "BIT:SPM"
+  },
+  {
+   "id": "global:cscec",
+   "type": "global",
+   "nameKo": "중국건축(CSCEC)",
+   "nameEn": "China State Construction",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "건설 매출 1위",
+   "exchange": "SSE:601668"
+  },
+  {
+   "id": "global:obayashi",
+   "type": "global",
+   "nameKo": "오바야시",
+   "nameEn": "Obayashi",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "일본 건설",
+   "exchange": "TSE:1802"
+  },
+  {
+   "id": "global:holcim",
+   "type": "global",
+   "nameKo": "홀심",
+   "nameEn": "Holcim",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "시멘트 1위",
+   "exchange": "SIX:HOLN"
+  },
+  {
+   "id": "global:heidelberg",
+   "type": "global",
+   "nameKo": "하이델베르크머티리얼즈",
+   "nameEn": "Heidelberg Materials",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "시멘트",
+   "exchange": "XETRA:HEI"
+  },
+  {
+   "id": "global:taiheiyo",
+   "type": "global",
+   "nameKo": "타이헤이요시멘트",
+   "nameEn": "Taiheiyo Cement",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "시멘트",
+   "exchange": "TSE:5233"
+  },
+  {
+   "id": "global:ikea",
+   "type": "global",
+   "nameKo": "이케아",
+   "nameEn": "IKEA",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "가구·인테리어",
+   "exchange": ""
+  },
+  {
+   "id": "global:saint_gobain",
+   "type": "global",
+   "nameKo": "생고뱅",
+   "nameEn": "Saint-Gobain",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "건자재·유리",
+   "exchange": "EPA:SGO"
+  },
+  {
+   "id": "global:agc",
+   "type": "global",
+   "nameKo": "AGC",
+   "nameEn": "AGC Inc.",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "판유리",
+   "exchange": "TSE:5201"
+  },
+  {
+   "id": "global:aramco",
+   "type": "global",
+   "nameKo": "사우디 아람코",
+   "nameEn": "Saudi Aramco",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "플랜트 발주처",
+   "exchange": "TADAWUL:2222"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_028260>global_samsung_el",
+   "source": "krx:028260",
+   "target": "global:samsung_el",
+   "type": "equity",
+   "labelKo": "삼성물산→삼성전자 5.01% (그룹 지배구조 정점)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=005930&cn=",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_samsung_el>krx_028260",
+   "source": "global:samsung_el",
+   "target": "krx:028260",
+   "type": "supply",
+   "labelKo": "반도체 팹 등 그룹 공사 발주",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=005930&cn=",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hyundai>krx_000720",
+   "source": "global:hyundai",
+   "target": "krx:000720",
+   "type": "equity",
+   "labelKo": "현대차→현대건설 20.95%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%ED%98%84%EB%8C%80%EC%9E%90%EB%8F%99%EC%B0%A8%EA%B7%B8%EB%A3%B9",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_000720>global_hyundai_eng",
+   "source": "krx:000720",
+   "target": "global:hyundai_eng",
+   "type": "equity",
+   "labelKo": "현대건설→현대엔지니어링 (자회사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/Zv1bPZGhWM?f=p",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_dl_holdings>krx_375500",
+   "source": "global:dl_holdings",
+   "target": "krx:375500",
+   "type": "equity",
+   "labelKo": "DL→DL이앤씨",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=375500",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_006360>krx_317400",
+   "source": "krx:006360",
+   "target": "krx:317400",
+   "type": "equity",
+   "labelKo": "GS건설→자이에스앤디",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=317400",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_kcc>krx_344820",
+   "source": "global:kcc",
+   "target": "krx:344820",
+   "type": "partner",
+   "labelKo": "KCC 계열 (KCC글라스 분할)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=344820",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lx_holdings>krx_108670",
+   "source": "global:lx_holdings",
+   "target": "krx:108670",
+   "type": "equity",
+   "labelKo": "LX홀딩스→LX하우시스",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hanil_holdings>krx_300720",
+   "source": "global:hanil_holdings",
+   "target": "krx:300720",
+   "type": "equity",
+   "labelKo": "한일홀딩스→한일시멘트",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_sampyo>krx_038500",
+   "source": "global:sampyo",
+   "target": "krx:038500",
+   "type": "equity",
+   "labelKo": "삼표→삼표시멘트",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010780>krx_035890",
+   "source": "krx:010780",
+   "target": "krx:035890",
+   "type": "peer",
+   "labelKo": "주택·건설",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>krx_000720",
+   "source": "krx:028260",
+   "target": "krx:000720",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>krx_047040",
+   "source": "krx:028260",
+   "target": "krx:047040",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>krx_375500",
+   "source": "krx:028260",
+   "target": "krx:375500",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>krx_006360",
+   "source": "krx:028260",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>krx_294870",
+   "source": "krx:028260",
+   "target": "krx:294870",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>krx_047040",
+   "source": "krx:000720",
+   "target": "krx:047040",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>krx_375500",
+   "source": "krx:000720",
+   "target": "krx:375500",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>krx_006360",
+   "source": "krx:000720",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>krx_294870",
+   "source": "krx:000720",
+   "target": "krx:294870",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_047040>krx_375500",
+   "source": "krx:047040",
+   "target": "krx:375500",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_047040>krx_006360",
+   "source": "krx:047040",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_047040>krx_294870",
+   "source": "krx:047040",
+   "target": "krx:294870",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_375500>krx_006360",
+   "source": "krx:375500",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_375500>krx_294870",
+   "source": "krx:375500",
+   "target": "krx:294870",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006360>krx_294870",
+   "source": "krx:006360",
+   "target": "krx:294870",
+   "type": "peer",
+   "labelKo": "상장 대형 건설 6사 (시공능력 삼성물산 1위·현대건설 2위·GS 3위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009410>krx_047040",
+   "source": "krx:009410",
+   "target": "krx:047040",
+   "type": "peer",
+   "labelKo": "중견 종합건설",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=733715",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009410>krx_006360",
+   "source": "krx:009410",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "중견 종합건설",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=733715",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002990>krx_047040",
+   "source": "krx:002990",
+   "target": "krx:047040",
+   "type": "peer",
+   "labelKo": "중견 종합건설",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=733715",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002990>krx_006360",
+   "source": "krx:002990",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "중견 종합건설",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=733715",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010780>krx_047040",
+   "source": "krx:010780",
+   "target": "krx:047040",
+   "type": "peer",
+   "labelKo": "중견 종합건설",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=733715",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010780>krx_006360",
+   "source": "krx:010780",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "중견 종합건설",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=733715",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035890>krx_294870",
+   "source": "krx:035890",
+   "target": "krx:294870",
+   "type": "peer",
+   "labelKo": "주택 개발",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.newsprime.co.kr/section_view.html?no=733715",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028050>krx_006360",
+   "source": "krx:028050",
+   "target": "krx:006360",
+   "type": "peer",
+   "labelKo": "중동 플랜트 재건 (삼성E&A·GS건설)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028050>krx_000720",
+   "source": "krx:028050",
+   "target": "krx:000720",
+   "type": "peer",
+   "labelKo": "플랜트 EPC",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_028050>global_aramco",
+   "source": "krx:028050",
+   "target": "global:aramco",
+   "type": "supply",
+   "labelKo": "사우디 플랜트 EPC (아람코 발주)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028050>global_bechtel",
+   "source": "krx:028050",
+   "target": "global:bechtel",
+   "type": "peer",
+   "labelKo": "글로벌 플랜트 EPC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028050>global_fluor",
+   "source": "krx:028050",
+   "target": "global:fluor",
+   "type": "peer",
+   "labelKo": "글로벌 플랜트 EPC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028050>global_technip",
+   "source": "krx:028050",
+   "target": "global:technip",
+   "type": "peer",
+   "labelKo": "글로벌 플랜트 EPC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028050>global_saipem",
+   "source": "krx:028050",
+   "target": "global:saipem",
+   "type": "peer",
+   "labelKo": "글로벌 플랜트 EPC 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hanaw.com/main/research/research/download.cmd?bbsSeq=1287413&attachFileSeq=1&bbsId=&dbType=&bbsCd=2220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_047040>global_khnp",
+   "source": "krx:047040",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "체코 두코바니 원전 시공 (팀코리아)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.khan.co.kr/article/202506052035005/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_000720>global_khnp",
+   "source": "krx:000720",
+   "target": "global:khnp",
+   "type": "supply",
+   "labelKo": "국내 신한울 3·4 등 원전 시공",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.khan.co.kr/article/202506052035005/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>global_vinci",
+   "source": "krx:028260",
+   "target": "global:vinci",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>global_vinci",
+   "source": "krx:000720",
+   "target": "global:vinci",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>global_cscec",
+   "source": "krx:028260",
+   "target": "global:cscec",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>global_cscec",
+   "source": "krx:000720",
+   "target": "global:cscec",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>global_obayashi",
+   "source": "krx:028260",
+   "target": "global:obayashi",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>global_obayashi",
+   "source": "krx:000720",
+   "target": "global:obayashi",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028260>global_bechtel",
+   "source": "krx:028260",
+   "target": "global:bechtel",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000720>global_bechtel",
+   "source": "krx:000720",
+   "target": "global:bechtel",
+   "type": "peer",
+   "labelKo": "글로벌 건설사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.youtube.com/watch?v=syQ67xpbQjo",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_300720>krx_038500",
+   "source": "krx:300720",
+   "target": "krx:038500",
+   "type": "peer",
+   "labelKo": "시멘트 Top3 (한일 21.8%·쌍용 21.2%·아세아 18.8%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_300720>krx_183190",
+   "source": "krx:300720",
+   "target": "krx:183190",
+   "type": "peer",
+   "labelKo": "시멘트 Top3 (한일 21.8%·쌍용 21.2%·아세아 18.8%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_038500>krx_183190",
+   "source": "krx:038500",
+   "target": "krx:183190",
+   "type": "peer",
+   "labelKo": "시멘트 Top3 (한일 21.8%·쌍용 21.2%·아세아 18.8%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_300720>global_ssangyong",
+   "source": "krx:300720",
+   "target": "global:ssangyong",
+   "type": "peer",
+   "labelKo": "시멘트 경쟁 (쌍용C&E 21.2%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_038500>global_ssangyong",
+   "source": "krx:038500",
+   "target": "global:ssangyong",
+   "type": "peer",
+   "labelKo": "시멘트 경쟁 (쌍용C&E 21.2%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_183190>global_ssangyong",
+   "source": "krx:183190",
+   "target": "global:ssangyong",
+   "type": "peer",
+   "labelKo": "시멘트 경쟁 (쌍용C&E 21.2%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_300720>krx_028260",
+   "source": "krx:300720",
+   "target": "krx:028260",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_300720>krx_000720",
+   "source": "krx:300720",
+   "target": "krx:000720",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_300720>krx_047040",
+   "source": "krx:300720",
+   "target": "krx:047040",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_300720>krx_006360",
+   "source": "krx:300720",
+   "target": "krx:006360",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_038500>krx_028260",
+   "source": "krx:038500",
+   "target": "krx:028260",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_038500>krx_000720",
+   "source": "krx:038500",
+   "target": "krx:000720",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_038500>krx_047040",
+   "source": "krx:038500",
+   "target": "krx:047040",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_038500>krx_006360",
+   "source": "krx:038500",
+   "target": "krx:006360",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183190>krx_028260",
+   "source": "krx:183190",
+   "target": "krx:028260",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183190>krx_000720",
+   "source": "krx:183190",
+   "target": "krx:000720",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183190>krx_047040",
+   "source": "krx:183190",
+   "target": "krx:047040",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_183190>krx_006360",
+   "source": "krx:183190",
+   "target": "krx:006360",
+   "type": "supply",
+   "labelKo": "시멘트·레미콘 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_300720>global_holcim",
+   "source": "krx:300720",
+   "target": "global:holcim",
+   "type": "peer",
+   "labelKo": "글로벌 시멘트",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_300720>global_heidelberg",
+   "source": "krx:300720",
+   "target": "global:heidelberg",
+   "type": "peer",
+   "labelKo": "글로벌 시멘트",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_300720>global_taiheiyo",
+   "source": "krx:300720",
+   "target": "global:taiheiyo",
+   "type": "peer",
+   "labelKo": "글로벌 시멘트",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.metroseoul.co.kr/article/20250720500095",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009240>global_ikea",
+   "source": "krx:009240",
+   "target": "global:ikea",
+   "type": "peer",
+   "labelKo": "가구·인테리어 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009240",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108670>krx_344820",
+   "source": "krx:108670",
+   "target": "krx:344820",
+   "type": "peer",
+   "labelKo": "건자재 (창호·바닥재 vs 유리)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108670>krx_009240",
+   "source": "krx:108670",
+   "target": "krx:009240",
+   "type": "peer",
+   "labelKo": "인테리어 자재",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_025900>krx_108670",
+   "source": "krx:025900",
+   "target": "krx:108670",
+   "type": "peer",
+   "labelKo": "보드·바닥재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=025900",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_025900>krx_009240",
+   "source": "krx:025900",
+   "target": "krx:009240",
+   "type": "supply",
+   "labelKo": "가구용 보드(PB·MDF)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=025900",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_344820>global_saint_gobain",
+   "source": "krx:344820",
+   "target": "global:saint_gobain",
+   "type": "peer",
+   "labelKo": "판유리·건축유리 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=344820",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_344820>global_agc",
+   "source": "krx:344820",
+   "target": "global:agc",
+   "type": "peer",
+   "labelKo": "판유리·건축유리 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=344820",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_108670>global_saint_gobain",
+   "source": "krx:108670",
+   "target": "global:saint_gobain",
+   "type": "peer",
+   "labelKo": "건자재 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_108670>krx_028260",
+   "source": "krx:108670",
+   "target": "krx:028260",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_108670>krx_000720",
+   "source": "krx:108670",
+   "target": "krx:000720",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_108670>krx_006360",
+   "source": "krx:108670",
+   "target": "krx:006360",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_108670>krx_375500",
+   "source": "krx:108670",
+   "target": "krx:375500",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_344820>krx_028260",
+   "source": "krx:344820",
+   "target": "krx:028260",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_344820>krx_000720",
+   "source": "krx:344820",
+   "target": "krx:000720",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_344820>krx_006360",
+   "source": "krx:344820",
+   "target": "krx:006360",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_344820>krx_375500",
+   "source": "krx:344820",
+   "target": "krx:375500",
+   "type": "supply",
+   "labelKo": "창호·유리·마감재 (건설사 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=108670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_123890>krx_294870",
+   "source": "krx:123890",
+   "target": "krx:294870",
+   "type": "partner",
+   "labelKo": "부동산 신탁 (개발 사업 신탁)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=123890",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

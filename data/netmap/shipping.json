@@ -1,0 +1,832 @@
+{
+ "sectorId": "shipping",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "container": "컨테이너 해운",
+  "roro": "자동차·특수화물 운송",
+  "bulk": "벌크 해운",
+  "logistics": "종합물류",
+  "end_customer": "모회사·화주",
+  "global_peer": "글로벌 해운·물류"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:011200",
+   "type": "kr_listed",
+   "ticker": "011200",
+   "nameKo": "HMM",
+   "nameEn": "HMM",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "container",
+   "role": "컨테이너 해운"
+  },
+  {
+   "id": "krx:086280",
+   "type": "kr_listed",
+   "ticker": "086280",
+   "nameKo": "현대글로비스",
+   "nameEn": "현대글로비스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "roro",
+   "role": "자동차·특수화물 운송"
+  },
+  {
+   "id": "krx:028670",
+   "type": "kr_listed",
+   "ticker": "028670",
+   "nameKo": "팬오션",
+   "nameEn": "팬오션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "bulk",
+   "role": "벌크 해운"
+  },
+  {
+   "id": "krx:000120",
+   "type": "kr_listed",
+   "ticker": "000120",
+   "nameKo": "CJ대한통운",
+   "nameEn": "CJ대한통운",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "logistics",
+   "role": "종합물류"
+  },
+  {
+   "id": "krx:005880",
+   "type": "kr_listed",
+   "ticker": "005880",
+   "nameKo": "대한해운",
+   "nameEn": "대한해운",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "bulk",
+   "role": "벌크 해운"
+  },
+  {
+   "id": "krx:003280",
+   "type": "kr_listed",
+   "ticker": "003280",
+   "nameKo": "흥아해운",
+   "nameEn": "흥아해운",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "container",
+   "role": "컨테이너 해운"
+  },
+  {
+   "id": "global:kdb",
+   "type": "kr_other",
+   "nameKo": "산업은행",
+   "nameEn": "KDB",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "HMM 35.42%",
+   "exchange": ""
+  },
+  {
+   "id": "global:kobc",
+   "type": "kr_other",
+   "nameKo": "해양진흥공사",
+   "nameEn": "KOBC",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "HMM 35.08%",
+   "exchange": ""
+  },
+  {
+   "id": "global:harim",
+   "type": "kr_other",
+   "nameKo": "하림지주",
+   "nameEn": "Harim Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "팬오션 54.9%",
+   "exchange": "KRX:003380"
+  },
+  {
+   "id": "global:sm_group",
+   "type": "kr_other",
+   "nameKo": "SM그룹(SM상선)",
+   "nameEn": "SM Group",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "대한해운 최대주주",
+   "exchange": ""
+  },
+  {
+   "id": "global:sinokor",
+   "type": "kr_other",
+   "nameKo": "장금상선",
+   "nameEn": "Sinokor Merchant Marine",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "흥아해운 70.7%",
+   "exchange": ""
+  },
+  {
+   "id": "global:cj",
+   "type": "kr_other",
+   "nameKo": "CJ",
+   "nameEn": "CJ Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "CJ대한통운 모회사",
+   "exchange": "KRX:001040"
+  },
+  {
+   "id": "global:naver",
+   "type": "kr_other",
+   "nameKo": "네이버",
+   "nameEn": "NAVER",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "CJ대한통운 7.85% (지분교환)",
+   "exchange": "KRX:035420"
+  },
+  {
+   "id": "global:hyundai",
+   "type": "kr_other",
+   "nameKo": "현대차·기아",
+   "nameEn": "Hyundai Motor / Kia",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "글로비스 매출 75.6%",
+   "exchange": "KRX:005380"
+  },
+  {
+   "id": "global:posco",
+   "type": "kr_other",
+   "nameKo": "포스코",
+   "nameEn": "POSCO",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "벌크 장기운송 화주",
+   "exchange": "KRX:005490"
+  },
+  {
+   "id": "global:msc",
+   "type": "global",
+   "nameKo": "MSC",
+   "nameEn": "MSC",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "컨테이너 1위 (프리미어 협력)",
+   "exchange": ""
+  },
+  {
+   "id": "global:maersk",
+   "type": "global",
+   "nameKo": "머스크",
+   "nameEn": "Maersk",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "컨테이너 (제미나이)",
+   "exchange": "CPH:MAERSK-B"
+  },
+  {
+   "id": "global:cma_cgm",
+   "type": "global",
+   "nameKo": "CMA CGM",
+   "nameEn": "CMA CGM",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "컨테이너 (오션)",
+   "exchange": ""
+  },
+  {
+   "id": "global:cosco",
+   "type": "global",
+   "nameKo": "코스코",
+   "nameEn": "COSCO Shipping",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "컨테이너 (오션)",
+   "exchange": "HKEX:1919"
+  },
+  {
+   "id": "global:hapag",
+   "type": "global",
+   "nameKo": "하팍로이드",
+   "nameEn": "Hapag-Lloyd",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "컨테이너 (제미나이, 디얼라이언스 이탈)",
+   "exchange": "XETRA:HLAG"
+  },
+  {
+   "id": "global:one",
+   "type": "global",
+   "nameKo": "ONE",
+   "nameEn": "Ocean Network Express",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "프리미어 얼라이언스",
+   "exchange": ""
+  },
+  {
+   "id": "global:yang_ming",
+   "type": "global",
+   "nameKo": "양밍",
+   "nameEn": "Yang Ming",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "프리미어 얼라이언스",
+   "exchange": "TWSE:2609"
+  },
+  {
+   "id": "global:evergreen",
+   "type": "global",
+   "nameKo": "에버그린",
+   "nameEn": "Evergreen",
+   "country": "tw",
+   "chain": "global_peer",
+   "role": "컨테이너 (오션)",
+   "exchange": "TWSE:2603"
+  },
+  {
+   "id": "global:nyk",
+   "type": "global",
+   "nameKo": "NYK",
+   "nameEn": "NYK Line",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "자동차선·벌크",
+   "exchange": "TSE:9101"
+  },
+  {
+   "id": "global:mol",
+   "type": "global",
+   "nameKo": "MOL",
+   "nameEn": "Mitsui O.S.K. Lines",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "자동차선·벌크",
+   "exchange": "TSE:9104"
+  },
+  {
+   "id": "global:wallenius",
+   "type": "global",
+   "nameKo": "발레니우스 빌헬름센",
+   "nameEn": "Wallenius Wilhelmsen",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "자동차선",
+   "exchange": "OSL:WAWI"
+  },
+  {
+   "id": "global:star_bulk",
+   "type": "global",
+   "nameKo": "스타벌크",
+   "nameEn": "Star Bulk",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "벌크",
+   "exchange": "NASDAQ:SBLK"
+  },
+  {
+   "id": "global:golden_ocean",
+   "type": "global",
+   "nameKo": "골든오션",
+   "nameEn": "Golden Ocean",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "벌크",
+   "exchange": "NASDAQ:GOGL"
+  },
+  {
+   "id": "global:dhl",
+   "type": "global",
+   "nameKo": "DHL",
+   "nameEn": "DHL Group",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "종합물류",
+   "exchange": "XETRA:DHL"
+  },
+  {
+   "id": "global:fedex",
+   "type": "global",
+   "nameKo": "페덱스",
+   "nameEn": "FedEx",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "택배·물류",
+   "exchange": "NYSE:FDX"
+  },
+  {
+   "id": "global:coupang",
+   "type": "global",
+   "nameKo": "쿠팡",
+   "nameEn": "Coupang",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "자체 물류 (택배 경쟁)",
+   "exchange": "NYSE:CPNG"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:global_kdb>krx_011200",
+   "source": "global:kdb",
+   "target": "krx:011200",
+   "type": "equity",
+   "labelKo": "산업은행 35.42%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://alphabiz.co.kr/news/view/1065569988619540",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_kobc>krx_011200",
+   "source": "global:kobc",
+   "target": "krx:011200",
+   "type": "equity",
+   "labelKo": "해양진흥공사 35.08% (합산 70.5%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://alphabiz.co.kr/news/view/1065569988619540",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_harim>krx_028670",
+   "source": "global:harim",
+   "target": "krx:028670",
+   "type": "equity",
+   "labelKo": "하림지주 54.91%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260225n37790",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_sm_group>krx_005880",
+   "source": "global:sm_group",
+   "target": "krx:005880",
+   "type": "equity",
+   "labelKo": "SM그룹(SM상선 등) 최대주주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/SM%EA%B7%B8%EB%A3%B9",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_sinokor>krx_003280",
+   "source": "global:sinokor",
+   "target": "krx:003280",
+   "type": "equity",
+   "labelKo": "장금상선 70.71%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03886806629084344",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_cj>krx_000120",
+   "source": "global:cj",
+   "target": "krx:000120",
+   "type": "equity",
+   "labelKo": "CJ→CJ대한통운",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fetimes.co.kr/news/articleView.html?idxno=94976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_naver>krx_000120",
+   "source": "global:naver",
+   "target": "krx:000120",
+   "type": "equity",
+   "labelKo": "네이버 7.85% (3대주주, 2020 지분교환)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fetimes.co.kr/news/articleView.html?idxno=94976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_000120>global_naver",
+   "source": "krx:000120",
+   "target": "global:naver",
+   "type": "partner",
+   "labelKo": "네이버 커머스 풀필먼트 협력",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fetimes.co.kr/news/articleView.html?idxno=94976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_011200>global_one",
+   "source": "krx:011200",
+   "target": "global:one",
+   "type": "partner",
+   "labelKo": "프리미어 얼라이언스 (2025.2~, 5년)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20250131184511127",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_011200>global_yang_ming",
+   "source": "krx:011200",
+   "target": "global:yang_ming",
+   "type": "partner",
+   "labelKo": "프리미어 얼라이언스",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20250131184511127",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_011200>global_msc",
+   "source": "krx:011200",
+   "target": "global:msc",
+   "type": "partner",
+   "labelKo": "MSC와 선복 교환 협력 (동맹 아님)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "http://www.haesanews.com/news/articleView.html?idxno=124626",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011200>global_maersk",
+   "source": "krx:011200",
+   "target": "global:maersk",
+   "type": "peer",
+   "labelKo": "컨테이너 선사 경쟁 (프리미어 11.4% vs 제미나이·오션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/136646",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011200>global_cma_cgm",
+   "source": "krx:011200",
+   "target": "global:cma_cgm",
+   "type": "peer",
+   "labelKo": "컨테이너 선사 경쟁 (프리미어 11.4% vs 제미나이·오션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/136646",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011200>global_cosco",
+   "source": "krx:011200",
+   "target": "global:cosco",
+   "type": "peer",
+   "labelKo": "컨테이너 선사 경쟁 (프리미어 11.4% vs 제미나이·오션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/136646",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011200>global_hapag",
+   "source": "krx:011200",
+   "target": "global:hapag",
+   "type": "peer",
+   "labelKo": "컨테이너 선사 경쟁 (프리미어 11.4% vs 제미나이·오션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/136646",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011200>global_evergreen",
+   "source": "krx:011200",
+   "target": "global:evergreen",
+   "type": "peer",
+   "labelKo": "컨테이너 선사 경쟁 (프리미어 11.4% vs 제미나이·오션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/136646",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011200>global_msc",
+   "source": "krx:011200",
+   "target": "global:msc",
+   "type": "peer",
+   "labelKo": "컨테이너 선사 경쟁 (프리미어 11.4% vs 제미나이·오션)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/136646",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_maersk>global_hapag",
+   "source": "global:maersk",
+   "target": "global:hapag",
+   "type": "partner",
+   "labelKo": "제미나이 협력",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/136646",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003280>krx_011200",
+   "source": "krx:003280",
+   "target": "krx:011200",
+   "type": "peer",
+   "labelKo": "컨테이너 (아시아 역내 vs 원양)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03886806629084344",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_086280>global_hyundai",
+   "source": "krx:086280",
+   "target": "global:hyundai",
+   "type": "supply",
+   "labelKo": "완성차 해상운송·물류 (현대차·기아 75.6%, 국내 물량 40%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=408480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086280>global_nyk",
+   "source": "krx:086280",
+   "target": "global:nyk",
+   "type": "peer",
+   "labelKo": "자동차운반선(PCTC) 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=408480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086280>global_mol",
+   "source": "krx:086280",
+   "target": "global:mol",
+   "type": "peer",
+   "labelKo": "자동차운반선(PCTC) 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=408480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086280>global_wallenius",
+   "source": "krx:086280",
+   "target": "global:wallenius",
+   "type": "peer",
+   "labelKo": "자동차운반선(PCTC) 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=408480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028670>krx_005880",
+   "source": "krx:028670",
+   "target": "krx:005880",
+   "type": "peer",
+   "labelKo": "벌크 해운 (장기운송계약)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260225n37790",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_028670>global_posco",
+   "source": "krx:028670",
+   "target": "global:posco",
+   "type": "supply",
+   "labelKo": "철광석·석탄 장기운송계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%ED%8C%AC%EC%98%A4%EC%85%98",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_005880>global_posco",
+   "source": "krx:005880",
+   "target": "global:posco",
+   "type": "supply",
+   "labelKo": "철광석·석탄 장기운송계약",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%ED%8C%AC%EC%98%A4%EC%85%98",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028670>global_star_bulk",
+   "source": "krx:028670",
+   "target": "global:star_bulk",
+   "type": "peer",
+   "labelKo": "벌크 선사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%ED%8C%AC%EC%98%A4%EC%85%98",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028670>global_golden_ocean",
+   "source": "krx:028670",
+   "target": "global:golden_ocean",
+   "type": "peer",
+   "labelKo": "벌크 선사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%ED%8C%AC%EC%98%A4%EC%85%98",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028670>global_nyk",
+   "source": "krx:028670",
+   "target": "global:nyk",
+   "type": "peer",
+   "labelKo": "벌크 선사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%ED%8C%AC%EC%98%A4%EC%85%98",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_028670>global_mol",
+   "source": "krx:028670",
+   "target": "global:mol",
+   "type": "peer",
+   "labelKo": "벌크 선사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://namu.wiki/w/%ED%8C%AC%EC%98%A4%EC%85%98",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_028670>global_harim",
+   "source": "krx:028670",
+   "target": "global:harim",
+   "type": "supply",
+   "labelKo": "곡물 운송 (하림 사료 원료)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260225n37790",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000120>global_dhl",
+   "source": "krx:000120",
+   "target": "global:dhl",
+   "type": "peer",
+   "labelKo": "글로벌 물류 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.fetimes.co.kr/news/articleView.html?idxno=94976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000120>global_fedex",
+   "source": "krx:000120",
+   "target": "global:fedex",
+   "type": "peer",
+   "labelKo": "글로벌 물류 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.fetimes.co.kr/news/articleView.html?idxno=94976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000120>global_coupang",
+   "source": "krx:000120",
+   "target": "global:coupang",
+   "type": "peer",
+   "labelKo": "택배·풀필먼트 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.fetimes.co.kr/news/articleView.html?idxno=94976",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000120>krx_086280",
+   "source": "krx:000120",
+   "target": "krx:086280",
+   "type": "peer",
+   "labelKo": "종합물류",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=408480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

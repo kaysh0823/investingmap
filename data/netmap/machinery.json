@@ -1,0 +1,746 @@
+{
+ "sectorId": "machinery",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "construction_eq": "건설기계",
+  "elevator": "승강기",
+  "tools": "핵심부품·공구",
+  "machine_tools": "공작·금속가공기계",
+  "end_customer": "모회사·유통",
+  "global_peer": "글로벌 기계"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:241560",
+   "type": "kr_listed",
+   "ticker": "241560",
+   "nameKo": "두산밥캣",
+   "nameEn": "두산밥캣",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "construction_eq",
+   "role": "건설기계"
+  },
+  {
+   "id": "krx:017800",
+   "type": "kr_listed",
+   "ticker": "017800",
+   "nameKo": "현대엘리베이터",
+   "nameEn": "현대엘리베이터",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "elevator",
+   "role": "승강기"
+  },
+  {
+   "id": "krx:019210",
+   "type": "kr_listed",
+   "ticker": "019210",
+   "nameKo": "와이지-원",
+   "nameEn": "와이지-원",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "tools",
+   "role": "핵심부품·공구"
+  },
+  {
+   "id": "krx:009160",
+   "type": "kr_listed",
+   "ticker": "009160",
+   "nameKo": "SIMPAC",
+   "nameEn": "SIMPAC",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "machine_tools",
+   "role": "공작·금속가공기계"
+  },
+  {
+   "id": "krx:267270",
+   "type": "kr_listed",
+   "ticker": "267270",
+   "nameKo": "HD건설기계",
+   "nameEn": "HD건설기계",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "construction_eq",
+   "role": "건설기계"
+  },
+  {
+   "id": "krx:079900",
+   "type": "kr_listed",
+   "ticker": "079900",
+   "nameKo": "전진건설로봇",
+   "nameEn": "전진건설로봇",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "construction_eq",
+   "role": "건설기계"
+  },
+  {
+   "id": "global:doosan",
+   "type": "kr_other",
+   "nameKo": "두산",
+   "nameEn": "Doosan Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "두산밥캣 모회사(에너빌리티 경유)",
+   "exchange": "KRX:000150"
+  },
+  {
+   "id": "global:hd_site",
+   "type": "kr_other",
+   "nameKo": "HD현대사이트솔루션",
+   "nameEn": "HD Hyundai Site Solutions",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "HD건설기계 중간지주",
+   "exchange": ""
+  },
+  {
+   "id": "global:caterpillar",
+   "type": "global",
+   "nameKo": "캐터필러",
+   "nameEn": "Caterpillar",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "건설기계 1위 (15.2%)",
+   "exchange": "NYSE:CAT"
+  },
+  {
+   "id": "global:komatsu",
+   "type": "global",
+   "nameKo": "코마츠",
+   "nameEn": "Komatsu",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "건설기계 2위",
+   "exchange": "TSE:6301"
+  },
+  {
+   "id": "global:deere",
+   "type": "global",
+   "nameKo": "디어",
+   "nameEn": "John Deere",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "소형 건설·농기계",
+   "exchange": "NYSE:DE"
+  },
+  {
+   "id": "global:volvo_ce",
+   "type": "global",
+   "nameKo": "볼보건설기계",
+   "nameEn": "Volvo CE",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "굴착기",
+   "exchange": "STO:VOLV-B"
+  },
+  {
+   "id": "global:sany",
+   "type": "global",
+   "nameKo": "싼이중공업",
+   "nameEn": "SANY",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "건설기계·콘크리트펌프",
+   "exchange": "SSE:600031"
+  },
+  {
+   "id": "global:xcmg",
+   "type": "global",
+   "nameKo": "XCMG",
+   "nameEn": "XCMG",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "건설기계",
+   "exchange": "SZSE:000425"
+  },
+  {
+   "id": "global:kubota",
+   "type": "global",
+   "nameKo": "구보타",
+   "nameEn": "Kubota",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "소형장비·농기계",
+   "exchange": "TSE:6326"
+  },
+  {
+   "id": "global:otis",
+   "type": "global",
+   "nameKo": "오티스",
+   "nameEn": "Otis",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "승강기 (쉰들러 한국 인수)",
+   "exchange": "NYSE:OTIS"
+  },
+  {
+   "id": "global:schindler",
+   "type": "global",
+   "nameKo": "쉰들러",
+   "nameEn": "Schindler",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "승강기 (현대엘리베이터 2대주주 이력)",
+   "exchange": "SIX:SCHP"
+  },
+  {
+   "id": "global:kone",
+   "type": "global",
+   "nameKo": "코네",
+   "nameEn": "KONE",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "승강기",
+   "exchange": "HEL:KNEBV"
+  },
+  {
+   "id": "global:tk_elevator",
+   "type": "global",
+   "nameKo": "TK엘리베이터",
+   "nameEn": "TK Elevator",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "승강기",
+   "exchange": ""
+  },
+  {
+   "id": "global:mitsubishi_el",
+   "type": "global",
+   "nameKo": "미쓰비시전기",
+   "nameEn": "Mitsubishi Electric",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "승강기",
+   "exchange": "TSE:6503"
+  },
+  {
+   "id": "global:sandvik",
+   "type": "global",
+   "nameKo": "샌드빅",
+   "nameEn": "Sandvik",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "절삭공구 1위",
+   "exchange": "STO:SAND"
+  },
+  {
+   "id": "global:kennametal",
+   "type": "global",
+   "nameKo": "케나메탈",
+   "nameEn": "Kennametal",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "절삭공구",
+   "exchange": "NYSE:KMT"
+  },
+  {
+   "id": "global:osg",
+   "type": "global",
+   "nameKo": "OSG",
+   "nameEn": "OSG Corp.",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "절삭공구",
+   "exchange": "TSE:6136"
+  },
+  {
+   "id": "global:putzmeister",
+   "type": "global",
+   "nameKo": "푸츠마이스터",
+   "nameEn": "Putzmeister (SANY)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "콘크리트펌프카",
+   "exchange": ""
+  },
+  {
+   "id": "global:schwing",
+   "type": "global",
+   "nameKo": "슈윙",
+   "nameEn": "Schwing (XCMG)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "콘크리트펌프카",
+   "exchange": ""
+  },
+  {
+   "id": "global:alliance",
+   "type": "global",
+   "nameKo": "얼라이언스 콘크리트펌프",
+   "nameEn": "Alliance Concrete Pumps",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "전진건설로봇 북미 대리점",
+   "exchange": ""
+  },
+  {
+   "id": "global:amada",
+   "type": "global",
+   "nameKo": "아마다",
+   "nameEn": "Amada",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "판금·프레스 기계",
+   "exchange": "TSE:6113"
+  },
+  {
+   "id": "global:schuler",
+   "type": "global",
+   "nameKo": "슐러",
+   "nameEn": "Schuler (Andritz)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "프레스",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:global_doosan>krx_241560",
+   "source": "global:doosan",
+   "target": "krx:241560",
+   "type": "equity",
+   "labelKo": "두산 계열 (두산에너빌리티 경유)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10018364",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hd_site>krx_267270",
+   "source": "global:hd_site",
+   "target": "krx:267270",
+   "type": "equity",
+   "labelKo": "HD현대사이트솔루션 → HD건설기계 (인프라코어 합병, 2026.1)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.bloter.net/news/articleView.html?idxno=639496",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>krx_267270",
+   "source": "krx:241560",
+   "target": "krx:267270",
+   "type": "peer",
+   "labelKo": "국내 건설기계 양강 (글로벌 13위·15위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.kcea.or.kr/news/articleView.html?idxno=20425",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>global_caterpillar",
+   "source": "krx:241560",
+   "target": "global:caterpillar",
+   "type": "peer",
+   "labelKo": "건설기계 경쟁 (소형장비: 디어·구보타)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>global_komatsu",
+   "source": "krx:241560",
+   "target": "global:komatsu",
+   "type": "peer",
+   "labelKo": "건설기계 경쟁 (소형장비: 디어·구보타)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>global_deere",
+   "source": "krx:241560",
+   "target": "global:deere",
+   "type": "peer",
+   "labelKo": "건설기계 경쟁 (소형장비: 디어·구보타)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>global_volvo_ce",
+   "source": "krx:241560",
+   "target": "global:volvo_ce",
+   "type": "peer",
+   "labelKo": "건설기계 경쟁 (소형장비: 디어·구보타)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>global_sany",
+   "source": "krx:241560",
+   "target": "global:sany",
+   "type": "peer",
+   "labelKo": "건설기계 경쟁 (소형장비: 디어·구보타)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>global_xcmg",
+   "source": "krx:241560",
+   "target": "global:xcmg",
+   "type": "peer",
+   "labelKo": "건설기계 경쟁 (소형장비: 디어·구보타)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241560>global_kubota",
+   "source": "krx:241560",
+   "target": "global:kubota",
+   "type": "peer",
+   "labelKo": "건설기계 경쟁 (소형장비: 디어·구보타)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267270>global_caterpillar",
+   "source": "krx:267270",
+   "target": "global:caterpillar",
+   "type": "peer",
+   "labelKo": "굴착기·건설기계 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267270>global_komatsu",
+   "source": "krx:267270",
+   "target": "global:komatsu",
+   "type": "peer",
+   "labelKo": "굴착기·건설기계 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267270>global_volvo_ce",
+   "source": "krx:267270",
+   "target": "global:volvo_ce",
+   "type": "peer",
+   "labelKo": "굴착기·건설기계 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267270>global_sany",
+   "source": "krx:267270",
+   "target": "global:sany",
+   "type": "peer",
+   "labelKo": "굴착기·건설기계 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_267270>global_xcmg",
+   "source": "krx:267270",
+   "target": "global:xcmg",
+   "type": "peer",
+   "labelKo": "굴착기·건설기계 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10736345",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017800>global_otis",
+   "source": "krx:017800",
+   "target": "global:otis",
+   "type": "peer",
+   "labelKo": "승강기 경쟁 (현대엘리베이터 국내 1위 ~40%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsspace.kr/news/article.html?no=4285",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017800>global_tk_elevator",
+   "source": "krx:017800",
+   "target": "global:tk_elevator",
+   "type": "peer",
+   "labelKo": "승강기 경쟁 (현대엘리베이터 국내 1위 ~40%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsspace.kr/news/article.html?no=4285",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017800>global_mitsubishi_el",
+   "source": "krx:017800",
+   "target": "global:mitsubishi_el",
+   "type": "peer",
+   "labelKo": "승강기 경쟁 (현대엘리베이터 국내 1위 ~40%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsspace.kr/news/article.html?no=4285",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017800>global_schindler",
+   "source": "krx:017800",
+   "target": "global:schindler",
+   "type": "peer",
+   "labelKo": "승강기 경쟁 (현대엘리베이터 국내 1위 ~40%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsspace.kr/news/article.html?no=4285",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017800>global_kone",
+   "source": "krx:017800",
+   "target": "global:kone",
+   "type": "peer",
+   "labelKo": "승강기 경쟁 (현대엘리베이터 국내 1위 ~40%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.newsspace.kr/news/article.html?no=4285",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_otis>global_schindler",
+   "source": "global:otis",
+   "target": "global:schindler",
+   "type": "partner",
+   "labelKo": "오티스, 쉰들러 한국사업 인수",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiatime.co.kr/article/20251017500142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_019210>global_sandvik",
+   "source": "krx:019210",
+   "target": "global:sandvik",
+   "type": "peer",
+   "labelKo": "절삭공구 경쟁 (와이지-원 세계 5대·국내 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kidd.co.kr/news/100743",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_019210>global_kennametal",
+   "source": "krx:019210",
+   "target": "global:kennametal",
+   "type": "peer",
+   "labelKo": "절삭공구 경쟁 (와이지-원 세계 5대·국내 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kidd.co.kr/news/100743",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_019210>global_osg",
+   "source": "krx:019210",
+   "target": "global:osg",
+   "type": "peer",
+   "labelKo": "절삭공구 경쟁 (와이지-원 세계 5대·국내 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kidd.co.kr/news/100743",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "distribution:krx_079900>global_alliance",
+   "source": "krx:079900",
+   "target": "global:alliance",
+   "type": "distribution",
+   "labelKo": "북미 대리점 (텍사스 서비스센터)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.newsis.com/view/NISX20241126_0002972391",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079900>global_putzmeister",
+   "source": "krx:079900",
+   "target": "global:putzmeister",
+   "type": "peer",
+   "labelKo": "북미 콘크리트펌프카 3강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ferrotimes.com/news/articleView.html?idxno=35723",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079900>global_schwing",
+   "source": "krx:079900",
+   "target": "global:schwing",
+   "type": "peer",
+   "labelKo": "북미 콘크리트펌프카 3강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ferrotimes.com/news/articleView.html?idxno=35723",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079900>global_sany",
+   "source": "krx:079900",
+   "target": "global:sany",
+   "type": "peer",
+   "labelKo": "콘크리트펌프카 (푸츠마이스터 모회사)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.ferrotimes.com/news/articleView.html?idxno=35723",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009160>global_amada",
+   "source": "krx:009160",
+   "target": "global:amada",
+   "type": "peer",
+   "labelKo": "프레스·금속가공기계 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009160",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009160>global_schuler",
+   "source": "krx:009160",
+   "target": "global:schuler",
+   "type": "peer",
+   "labelKo": "프레스·금속가공기계 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009160",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009160>krx_019210",
+   "source": "krx:009160",
+   "target": "krx:019210",
+   "type": "peer",
+   "labelKo": "금속가공 (기계 vs 공구)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=009160",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}
