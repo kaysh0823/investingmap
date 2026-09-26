@@ -355,6 +355,19 @@
       "legacyId": "bio_26"
     },
     {
+      "id": "krx:127120",
+      "type": "listed_company",
+      "ticker": "127120",
+      "nameKo": "제이에스링크",
+      "nameEn": "JS Link",
+      "market": "KOSDAQ",
+      "role": "연구도구·서비스",
+      "group": "smallmol",
+      "mcapWon": 1204598427500,
+      "isListedKorea": true,
+      "legacyId": "bio_27"
+    },
+    {
       "id": "krx:195940",
       "type": "listed_company",
       "ticker": "195940",
@@ -365,7 +378,7 @@
       "group": "pharma_integrated",
       "mcapWon": 1104865749000,
       "isListedKorea": true,
-      "legacyId": "bio_27"
+      "legacyId": "bio_28"
     },
     {
       "id": "krx:086450",
@@ -378,7 +391,7 @@
       "group": "pharma_integrated",
       "mcapWon": 934008173000,
       "isListedKorea": true,
-      "legacyId": "bio_28"
+      "legacyId": "bio_29"
     },
     {
       "id": "krx:003090",
@@ -391,7 +404,7 @@
       "group": "bio_holdings",
       "mcapWon": 913410505800,
       "isListedKorea": true,
-      "legacyId": "bio_29"
+      "legacyId": "bio_30"
     },
     {
       "id": "krx:950260",
@@ -404,7 +417,7 @@
       "group": "smallmol",
       "mcapWon": 913241891290,
       "isListedKorea": true,
-      "legacyId": "bio_30"
+      "legacyId": "bio_31"
     },
     {
       "id": "krx:185750",
@@ -417,7 +430,7 @@
       "group": "pharma_integrated",
       "mcapWon": 880617364000,
       "isListedKorea": true,
-      "legacyId": "bio_31"
+      "legacyId": "bio_32"
     },
     {
       "id": "krx:475830",
@@ -430,7 +443,7 @@
       "group": "drug_discovery",
       "mcapWon": 813559058400,
       "isListedKorea": true,
-      "legacyId": "bio_32"
+      "legacyId": "bio_33"
     },
     {
       "id": "krx:115180",
@@ -443,7 +456,7 @@
       "group": "drug_discovery",
       "mcapWon": 803230831400,
       "isListedKorea": true,
-      "legacyId": "bio_33"
+      "legacyId": "bio_34"
     },
     {
       "id": "krx:445680",
@@ -456,7 +469,7 @@
       "group": "research_tools",
       "mcapWon": 789752449150,
       "isListedKorea": true,
-      "legacyId": "bio_34"
+      "legacyId": "bio_35"
     },
     {
       "id": "krx:476830",
@@ -469,7 +482,7 @@
       "group": "drug_discovery",
       "mcapWon": 760302315600,
       "isListedKorea": true,
-      "legacyId": "bio_35"
+      "legacyId": "bio_36"
     },
     {
       "id": "krx:005690",
@@ -482,7 +495,7 @@
       "group": "api_materials",
       "mcapWon": 751850295420,
       "isListedKorea": true,
-      "legacyId": "bio_36"
+      "legacyId": "bio_37"
     },
     {
       "id": "krx:085660",
@@ -495,7 +508,7 @@
       "group": "bio_holdings",
       "mcapWon": 743782768000,
       "isListedKorea": true,
-      "legacyId": "bio_37"
+      "legacyId": "bio_38"
     },
     {
       "id": "krx:041960",
@@ -508,7 +521,7 @@
       "group": "pharma_integrated",
       "mcapWon": 734243097840,
       "isListedKorea": true,
-      "legacyId": "bio_38"
+      "legacyId": "bio_39"
     },
     {
       "id": "krx:003850",
@@ -521,7 +534,7 @@
       "group": "pharma_integrated",
       "mcapWon": 707744457750,
       "isListedKorea": true,
-      "legacyId": "bio_39"
+      "legacyId": "bio_40"
     },
     {
       "id": "krx:476060",
@@ -534,7 +547,7 @@
       "group": "drug_discovery",
       "mcapWon": 674760502400,
       "isListedKorea": true,
-      "legacyId": "bio_40"
+      "legacyId": "bio_41"
     },
     {
       "id": "krx:048410",
@@ -547,7 +560,7 @@
       "group": "drug_discovery",
       "mcapWon": 656237889600,
       "isListedKorea": true,
-      "legacyId": "bio_41"
+      "legacyId": "bio_42"
     },
     {
       "id": "krx:001060",
@@ -560,7 +573,7 @@
       "group": "pharma_integrated",
       "mcapWon": 647348854000,
       "isListedKorea": true,
-      "legacyId": "bio_42"
+      "legacyId": "bio_43"
     },
     {
       "id": "krx:000640",
@@ -573,7 +586,7 @@
       "group": "bio_holdings",
       "mcapWon": 630164527200,
       "isListedKorea": true,
-      "legacyId": "bio_43"
+      "legacyId": "bio_44"
     },
     {
       "id": "krx:317450",
@@ -586,7 +599,7 @@
       "group": "pharma_integrated",
       "mcapWon": 621230000000,
       "isListedKorea": true,
-      "legacyId": "bio_44"
+      "legacyId": "bio_45"
     },
     {
       "id": "krx:358570",
@@ -599,7 +612,7 @@
       "group": "drug_discovery",
       "mcapWon": 616773017360,
       "isListedKorea": true,
-      "legacyId": "bio_45"
+      "legacyId": "bio_46"
     },
     {
       "id": "krx:456160",
@@ -612,7 +625,7 @@
       "group": "drug_discovery",
       "mcapWon": 530478689400,
       "isListedKorea": true,
-      "legacyId": "bio_46"
+      "legacyId": "bio_47"
     },
     {
       "id": "krx:397030",
@@ -625,7 +638,7 @@
       "group": "drug_discovery",
       "mcapWon": 503774534960,
       "isListedKorea": true,
-      "legacyId": "bio_47"
+      "legacyId": "bio_48"
     },
     {
       "id": "krx:019170",
@@ -638,7 +651,7 @@
       "group": "pharma_integrated",
       "mcapWon": 493782477240,
       "isListedKorea": true,
-      "legacyId": "bio_48"
+      "legacyId": "bio_49"
     },
     {
       "id": "krx:052020",
@@ -651,7 +664,7 @@
       "group": "drug_discovery",
       "mcapWon": 493558692660,
       "isListedKorea": true,
-      "legacyId": "bio_49"
+      "legacyId": "bio_50"
     },
     {
       "id": "krx:249420",
@@ -664,7 +677,7 @@
       "group": "pharma_integrated",
       "mcapWon": 453059768640,
       "isListedKorea": true,
-      "legacyId": "bio_50"
+      "legacyId": "bio_51"
     },
     {
       "id": "krx:005250",
@@ -677,7 +690,7 @@
       "group": "bio_holdings",
       "mcapWon": 449119405500,
       "isListedKorea": true,
-      "legacyId": "bio_51"
+      "legacyId": "bio_52"
     },
     {
       "id": "krx:187660",
@@ -690,7 +703,7 @@
       "group": "smallmol",
       "mcapWon": 417699632090,
       "isListedKorea": true,
-      "legacyId": "bio_52"
+      "legacyId": "bio_53"
     },
     {
       "id": "krx:003000",
@@ -703,7 +716,7 @@
       "group": "pharma_integrated",
       "mcapWon": 395152007355,
       "isListedKorea": true,
-      "legacyId": "bio_53"
+      "legacyId": "bio_54"
     },
     {
       "id": "krx:174900",
@@ -716,7 +729,7 @@
       "group": "drug_discovery",
       "mcapWon": 390263643240,
       "isListedKorea": true,
-      "legacyId": "bio_54"
+      "legacyId": "bio_55"
     },
     {
       "id": "krx:468530",
@@ -729,7 +742,7 @@
       "group": "research_tools",
       "mcapWon": 389235437400,
       "isListedKorea": true,
-      "legacyId": "bio_55"
+      "legacyId": "bio_56"
     },
     {
       "id": "krx:950210",
@@ -742,7 +755,7 @@
       "group": "biosimilar",
       "mcapWon": 359375006900,
       "isListedKorea": true,
-      "legacyId": "bio_56"
+      "legacyId": "bio_57"
     },
     {
       "id": "krx:078160",
@@ -755,7 +768,7 @@
       "group": "drug_discovery",
       "mcapWon": 347744828610,
       "isListedKorea": true,
-      "legacyId": "bio_57"
+      "legacyId": "bio_58"
     },
     {
       "id": "krx:170900",
@@ -768,7 +781,7 @@
       "group": "pharma_integrated",
       "mcapWon": 344853381450,
       "isListedKorea": true,
-      "legacyId": "bio_58"
+      "legacyId": "bio_59"
     },
     {
       "id": "krx:389470",
@@ -781,7 +794,7 @@
       "group": "drug_discovery",
       "mcapWon": 338681168600,
       "isListedKorea": true,
-      "legacyId": "bio_59"
+      "legacyId": "bio_60"
     },
     {
       "id": "krx:372320",
@@ -794,7 +807,7 @@
       "group": "drug_discovery",
       "mcapWon": 326622410400,
       "isListedKorea": true,
-      "legacyId": "bio_60"
+      "legacyId": "bio_61"
     },
     {
       "id": "krx:004310",
@@ -807,7 +820,7 @@
       "group": "biosimilar",
       "mcapWon": 322240000000,
       "isListedKorea": true,
-      "legacyId": "bio_61"
+      "legacyId": "bio_62"
     },
     {
       "id": "krx:206650",
@@ -820,7 +833,7 @@
       "group": "vaccine_blood",
       "mcapWon": 309086901870,
       "isListedKorea": true,
-      "legacyId": "bio_62"
+      "legacyId": "bio_63"
     },
     {
       "id": "krx:215600",
@@ -833,7 +846,7 @@
       "group": "drug_discovery",
       "mcapWon": 305510608620,
       "isListedKorea": true,
-      "legacyId": "bio_63"
+      "legacyId": "bio_64"
     },
     {
       "id": "krx:009290",
@@ -846,7 +859,7 @@
       "group": "pharma_integrated",
       "mcapWon": 305272823040,
       "isListedKorea": true,
-      "legacyId": "bio_64"
+      "legacyId": "bio_65"
     },
     {
       "id": "global:gsk",

@@ -16,7 +16,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { elec: 29, software: 22, telecom: 10, robot: 16 };
+const EXPECTED_N = { elec: 32, software: 21, telecom: 11, robot: 17 };
 
 for (const key of ['elec', 'software', 'telecom', 'robot']) {
   const cfg = TECH_04D[key];
@@ -71,7 +71,13 @@ check(maps.telecom.some((c) => c.ticker === '189300' && c.chain === '위성통�
 
 check(maps.battery.length === 26, `battery expected 26, got ${maps.battery.length}`);
 check(maps.semi.length === 91, `semi expected 91, got ${maps.semi.length}`);
-check(maps.auto.length === 26, `auto expected 26, got ${maps.auto.length}`);
+check(
+  maps.elec.some((c) => c.ticker === '332570' && c.chain === '전자부품·기판' && c.nameEn === 'PS Electronics'),
+  '332570 missing/wrong on elec',
+);
+check(!maps.semi.some((c) => c.ticker === '332570'), '332570 still on semi');
+check(exclusiveSector('332570') === 'elec', 'exclusive 332570');
+check(maps.auto.length === 27, `auto expected 27, got ${maps.auto.length}`);
 check(!maps.software.some((c) => c.ticker === '377300'), '377300 still on software');
 check(exclusiveSector('377300') === 'finance', '377300 exclusive finance');
 
@@ -84,11 +90,11 @@ check(exclusiveSector('000660') === 'bigchip', 'bigchip 000660');
 const chemical = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'chemical/korea_chemical_map.html'), 'utf8'),
 );
-check(chemical.length === 27, `chemical expected 27, got ${chemical.length}`);
+check(chemical.length === 26, `chemical expected 26, got ${chemical.length}`);
 const defense = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'defense/korea_defense_map.html'), 'utf8'),
 );
-check(defense.length === 13, `defense expected 13, got ${defense.length}`);
+check(defense.length === 14, `defense expected 14, got ${defense.length}`);
 
 console.log('Tech §0-4D verification');
 console.log('failures:', failures.length);

@@ -38,14 +38,56 @@ const maps = {
   bigchip: load('bigchip/korea_bigchip_map.html'),
 };
 
-check(maps.semi.length === 92, `semi ${maps.semi.length}`);
+check(maps.semi.length === 91, `semi ${maps.semi.length}`);
 check(maps.bio.length === 66, `bio ${maps.bio.length}`);
 check(maps.battery.length === 26, `battery ${maps.battery.length}`);
-check(maps.chemical.length === 29, `chemical ${maps.chemical.length}`);
+check(maps.chemical.length === 26, `chemical ${maps.chemical.length}`);
 check(maps.ship.length === 17, `ship ${maps.ship.length}`);
 check(maps.renewable.length === 13, `renewable ${maps.renewable.length}`);
 check(maps.powergrid.length === 17, `powergrid ${maps.powergrid.length}`);
-check(maps.holdings.length === 52, `holdings ${maps.holdings.length}`);
+check(maps.holdings.length === 51, `holdings ${maps.holdings.length}`);
+
+// 2026-09-27 sector reclass 4 tickers
+const elecMap = load('elec/korea_elec_map.html');
+check(
+  maps.bio.some((c) => c.ticker === '127120' && c.chain === '연구도구·서비스'),
+  '127120 missing on bio',
+);
+check(!maps.semi.some((c) => c.ticker === '127120'), '127120 still on semi');
+check(exclusiveSector('127120') === 'bio', 'excl 127120');
+check(
+  maps.holdings.some((c) => c.ticker === '015360' && c.chain === '에너지·화학'),
+  '015360 missing on holdings',
+);
+check(!maps.semi.some((c) => c.ticker === '015360'), '015360 still on semi');
+check(exclusiveSector('015360') === 'holdings', 'excl 015360');
+check(
+  elecMap.some((c) => c.ticker === '332570' && c.chain === '전자부품·기판'),
+  '332570 missing on elec',
+);
+check(!maps.semi.some((c) => c.ticker === '332570'), '332570 still on semi');
+check(exclusiveSector('332570') === 'elec', 'excl 332570');
+check(
+  maps.battery.some((c) => c.ticker === '033790' && c.chain === '양극재·전구체'),
+  '033790 chain not 양극재·전구체',
+);
+check(exclusiveSector('033790') === 'battery', 'excl 033790');
+
+const searchIdx = JSON.parse(fs.readFileSync(join(ROOT, 'data/search_index.json'), 'utf8'));
+const searchByT = Object.fromEntries(searchIdx.map((r) => [String(r.t).padStart(6, '0'), r]));
+check(searchByT['127120']?.s === 'bio', 'search 127120 sector');
+check(searchByT['015360']?.s === 'holdings', 'search 015360 sector');
+check(searchByT['332570']?.s === 'elec', 'search 332570 sector');
+check(searchByT['033790']?.s === 'battery', 'search 033790 sector');
+const homes = {};
+for (const r of searchIdx) {
+  const t = String(r.t).padStart(6, '0');
+  if (!homes[t]) homes[t] = [];
+  homes[t].push(r.s);
+}
+for (const t of ['127120', '015360', '332570', '033790']) {
+  check(homes[t]?.length === 1, `search ${t} multi-sector ${homes[t]}`);
+}
 
 check(
   maps.semi.some((c) => c.ticker === '082270' && c.chain === '팹 인프라·지원설비'),

@@ -4,12 +4,20 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { extractCompaniesFromHtml } from '../lib/map_company_serialize.mjs';
 import { validateChainInvariants } from '../lib/chain_reclass_invariants.mjs';
+import { loadMergedKrxMap } from '../lib/krx_data_sources.mjs';
+import { passesMcapFloor } from '../lib/mcap_policy.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const failures = [];
+const krx = loadMergedKrxMap(join(ROOT, 'data'));
 
 function check(condition, message) {
   if (!condition) failures.push(message);
+}
+
+function aboveFloor(ticker) {
+  const k = krx.get(String(ticker).padStart(6, '0'));
+  return passesMcapFloor({ mcapWon: k?.mcap });
 }
 
 function mapCompanies(rel) {
@@ -53,6 +61,10 @@ for (const [ticker, expected] of Object.entries({
   '145020': 'cosmetics',
 })) {
   const got = homes.get(ticker) || [];
+  if (ticker === '067630' && !aboveFloor(ticker)) {
+    check(got.length === 0, `${ticker}: below mcap floor but still on ${got.join(',')}`);
+    continue;
+  }
   check(got.length === 1 && got[0] === expected, `${ticker}: expected only ${expected}, got ${got.join(',') || 'none'}`);
 }
 
@@ -63,10 +75,14 @@ for (const ticker of ['086450', '009290']) {
 for (const retired of ['체외진단 (IVD)', '의료기기 / 디지털헬스', '합성신약 / 제네릭', '항체신약 / ADC']) {
   check(!sectors.bio.some((c) => c.chain === retired), `bio still contains retired chain ${retired}`);
 }
-check(
-  sectors.medtech.find((c) => c.ticker === '067630')?.chain === '체외진단',
-  '067630 is not in medtech 체외진단',
-);
+if (aboveFloor('067630')) {
+  check(
+    sectors.medtech.find((c) => c.ticker === '067630')?.chain === '체외진단',
+    '067630 is not in medtech 체외진단',
+  );
+} else {
+  check(!sectors.medtech.some((c) => c.ticker === '067630'), '067630 below floor still on medtech');
+}
 check(
   !sectors.bio.some((c) => c.ticker === '086900'),
   '086900 still on bio',

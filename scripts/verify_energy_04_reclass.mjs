@@ -19,7 +19,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { battery: 26, renewable: 13, nuclear: 9, powergrid: 17 };
+const EXPECTED_N = { battery: 26, renewable: 13, nuclear: 10, powergrid: 17 };
 
 for (const key of ['battery', 'renewable', 'nuclear', 'powergrid']) {
   const cfg = ENERGY_04[key];
@@ -75,6 +75,10 @@ check(
   maps.battery.some((c) => c.ticker === '222080' && c.chain === '제조·검사 장비'),
   '222080 not battery 제조·검사 장비',
 );
+check(
+  maps.battery.some((c) => c.ticker === '033790' && c.chain === '양극재·전구체'),
+  '033790 not battery 양극재·전구체',
+);
 check(exclusiveSector('001570') === 'chemical', 'exclusive 001570');
 check(exclusiveSector('044490') === 'renewable', 'exclusive 044490');
 check(exclusiveSector('222080') === 'battery', 'exclusive 222080');
@@ -100,7 +104,7 @@ check(String(fields['006910']?.products || '').includes('내진'), '006910 produ
 const semi = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'semiconductor/korea_semiconductor_map.html'), 'utf8'),
 );
-check(semi.length === 92, `semi expected 92, got ${semi.length}`);
+check(semi.length === 91, `semi expected 91, got ${semi.length}`);
 check(!semi.some((c) => c.ticker === '005930' || c.ticker === '000660'), 'bigchip on semi');
 check(exclusiveSector('005930') === 'bigchip', 'bigchip 005930');
 check(exclusiveSector('000660') === 'bigchip', 'bigchip 000660');

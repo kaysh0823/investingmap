@@ -484,6 +484,18 @@
       "isListedKorea": true
     },
     {
+      "id": "krx:015360",
+      "type": "listed_company",
+      "ticker": "015360",
+      "nameKo": "INVENI",
+      "nameEn": "INVENI",
+      "market": "KOSPI",
+      "role": "에너지·화학",
+      "group": "에너지·화학",
+      "mcapWon": 392400000000,
+      "isListedKorea": true
+    },
+    {
       "id": "krx:001940",
       "type": "listed_company",
       "ticker": "001940",

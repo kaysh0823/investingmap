@@ -286,5 +286,18 @@
     "partners": [],
     "subSector": "소비·유통",
     "level": "core"
+  },
+  {
+    "ticker": "015360",
+    "name": "INVENI",
+    "nameEn": "INVENI",
+    "chain": "에너지·화학",
+    "semType": "투자형 지주",
+    "semTypeEn": "Investment holding company",
+    "products": "투자형 지주회사(구 예스코홀딩스, 도시가스 자회사 예스코)",
+    "productsEn": "Investment holding (formerly YESCO Holdings; city-gas subsidiary YESCO)",
+    "partners": [],
+    "subSector": "에너지·화학",
+    "level": "core"
   }
 ]

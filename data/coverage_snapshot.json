@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-21T00:55:47.449Z",
+  "generatedAt": "2026-09-26T15:52:01.283Z",
   "krxCsvDate": "20260918",
   "floorWon": 300000000000,
-  "coverageCount": 646,
+  "coverageCount": 648,
   "coverage": {
     "100090": {
       "name": "SK오션플랜트",
@@ -234,7 +234,7 @@
     },
     "127120": {
       "name": "제이에스링크",
-      "sector": "semi",
+      "sector": "bio",
       "mcapWon": 1204598427500,
       "market": "KOSDAQ"
     },
@@ -279,6 +279,12 @@
       "sector": "finance",
       "mcapWon": 21236368943700,
       "market": "KOSPI"
+    },
+    "138080": {
+      "name": "오이솔루션",
+      "sector": "telecom",
+      "mcapWon": 339769457100,
+      "market": "KOSDAQ"
     },
     "138930": {
       "name": "BNK금융지주",
@@ -3196,6 +3202,12 @@
       "mcapWon": 443963920620,
       "market": "KOSPI"
     },
+    "015360": {
+      "name": "INVENI",
+      "sector": "holdings",
+      "mcapWon": 392400000000,
+      "market": "KOSPI"
+    },
     "033780": {
       "name": "KT&G",
       "sector": "kconsume",
@@ -3248,12 +3260,6 @@
       "name": "케이씨",
       "sector": "semi",
       "mcapWon": 455148095500,
-      "market": "KOSPI"
-    },
-    "015360": {
-      "name": "INVENI",
-      "sector": "semi",
-      "mcapWon": 392400000000,
       "market": "KOSPI"
     },
     "011200": {
@@ -3328,17 +3334,17 @@
       "mcapWon": 4200000000000,
       "market": "KOSPI"
     },
-    "001820": {
-      "name": "삼화콘덴서",
-      "sector": "elec",
-      "mcapWon": 1503117000000,
-      "market": "KOSPI"
-    },
     "043260": {
       "name": "성호전자",
       "sector": "elec",
       "mcapWon": 2022109526400,
       "market": "KOSDAQ"
+    },
+    "001820": {
+      "name": "삼화콘덴서",
+      "sector": "elec",
+      "mcapWon": 1503117000000,
+      "market": "KOSPI"
     },
     "065350": {
       "name": "신성델타테크",
@@ -3352,17 +3358,23 @@
       "mcapWon": 692772105900,
       "market": "KOSPI"
     },
+    "017900": {
+      "name": "광전자",
+      "sector": "elec",
+      "mcapWon": 609568386760,
+      "market": "KOSPI"
+    },
     "033240": {
       "name": "자화전자",
       "sector": "elec",
       "mcapWon": 587669654400,
       "market": "KOSPI"
     },
-    "017900": {
-      "name": "광전자",
+    "052710": {
+      "name": "아모텍",
       "sector": "elec",
-      "mcapWon": 609568386760,
-      "market": "KOSPI"
+      "mcapWon": 317573600000,
+      "market": "KOSDAQ"
     },
     "018260": {
       "name": "삼성에스디에스",
@@ -3382,16 +3394,16 @@
       "mcapWon": 3177525836100,
       "market": "KOSPI"
     },
-    "093320": {
-      "name": "케이아이엔엑스",
-      "sector": "software",
-      "mcapWon": 683200000000,
-      "market": "KOSDAQ"
-    },
     "053800": {
       "name": "안랩",
       "sector": "software",
       "mcapWon": 758827709200,
+      "market": "KOSDAQ"
+    },
+    "093320": {
+      "name": "케이아이엔엑스",
+      "sector": "software",
+      "mcapWon": 683200000000,
       "market": "KOSDAQ"
     },
     "079940": {
@@ -3682,16 +3694,16 @@
       "mcapWon": 6884932950000,
       "market": "KOSPI"
     },
-    "029780": {
-      "name": "삼성카드",
-      "sector": "finance",
-      "mcapWon": 5068826481250,
-      "market": "KOSPI"
-    },
     "088350": {
       "name": "한화생명",
       "sector": "finance",
       "mcapWon": 5089585800000,
+      "market": "KOSPI"
+    },
+    "029780": {
+      "name": "삼성카드",
+      "sector": "finance",
+      "mcapWon": 5068826481250,
       "market": "KOSPI"
     },
     "001450": {
@@ -3736,6 +3748,12 @@
       "mcapWon": 487862717160,
       "market": "KOSPI"
     },
+    "027360": {
+      "name": "아주IB투자",
+      "sector": "finance",
+      "mcapWon": 468226994190,
+      "market": "KOSDAQ"
+    },
     "041190": {
       "name": "우리기술투자",
       "sector": "finance",
@@ -3747,12 +3765,6 @@
       "sector": "finance",
       "mcapWon": 399573974250,
       "market": "KOSPI"
-    },
-    "027360": {
-      "name": "아주IB투자",
-      "sector": "finance",
-      "mcapWon": 468226994190,
-      "market": "KOSDAQ"
     },
     "078020": {
       "name": "LS증권",
@@ -3832,28 +3844,28 @@
       "mcapWon": 1142095678000,
       "market": "KOSPI"
     },
-    "058650": {
-      "name": "세아홀딩스",
-      "sector": "holdings",
-      "mcapWon": 528802774400,
-      "market": "KOSPI"
-    },
     "007700": {
       "name": "F&F홀딩스",
       "sector": "holdings",
       "mcapWon": 531173103860,
       "market": "KOSPI"
     },
-    "000070": {
-      "name": "삼양홀딩스",
+    "058650": {
+      "name": "세아홀딩스",
       "sector": "holdings",
-      "mcapWon": 446383482500,
+      "mcapWon": 528802774400,
       "market": "KOSPI"
     },
     "003030": {
       "name": "세아제강지주",
       "sector": "holdings",
       "mcapWon": 448541453100,
+      "market": "KOSPI"
+    },
+    "000070": {
+      "name": "삼양홀딩스",
+      "sector": "holdings",
+      "mcapWon": 446383482500,
       "market": "KOSPI"
     },
     "072710": {

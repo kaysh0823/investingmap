@@ -862,6 +862,17 @@
    "chain": "global_peer",
    "role": "ESL",
    "exchange": ""
+  },
+  {
+   "id": "krx:332570",
+   "type": "kr_listed",
+   "ticker": "332570",
+   "nameKo": "PS일렉트로닉스",
+   "nameEn": "PS Electronics",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "RF 전력증폭모듈(PAM/FEM)·차량 RF 부품 (구 와이팜)"
   }
  ],
  "edges": [

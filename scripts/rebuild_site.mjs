@@ -52,6 +52,7 @@ run('node scripts/prune_defense_energy_universe.mjs', 'prune defense/energy cura
 run('node scripts/split_energy_clean_sectors.mjs', 'split energy into battery/renewable/nuclear');
 run('node scripts/split_kconsume_cosmetics.mjs', 'split cosmetics from kconsume + Pharmaresearch→medtech');
 run('node scripts/apply_p3_mcap_admissions.mjs', 'P3 mcap floor admissions');
+run('node scripts/apply_sector_reclass_4tickers_20260927.mjs', '4ticker reclass: 127120 bio / 015360 holdings / 332570 elec / 033790 cathode');
 run('node scripts/apply_p1a_cross_memberships.mjs', 'clear P1-A cross homes → single exclusive');
 run('node scripts/apply_cp_list_sector_additions.mjs', 'cp_list additions → semi/ship/battery/robot/kconsume/software/kcontent/medtech/metal/elec/auto/telecom/cosmetics/holdings');
 run('node scripts/split_ship_sectors.mjs', 'split shipping from ship (before exclusive)');

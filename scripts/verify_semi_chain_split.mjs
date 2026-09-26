@@ -42,7 +42,7 @@ const html = fs.readFileSync(HTML_PATH, 'utf8');
 // 1) koreanCompanies + invariant rules
 const companies = extractCompaniesFromHtml(html);
 check(companies.length > 0, 'koreanCompanies: empty map');
-check(companies.length === 92, `koreanCompanies: expected 92, got ${companies.length}`);
+check(companies.length === 91, `koreanCompanies: expected 91, got ${companies.length}`);
 for (const err of validateChainInvariants('semi', companies, { label: 'koreanCompanies' })) {
   failures.push(err);
 }

@@ -544,11 +544,6 @@
           "nameEn": "YEST Co.,Ltd."
         },
         {
-          "ticker": "015360",
-          "name": "INVENI",
-          "nameEn": "INVENI"
-        },
-        {
           "ticker": "079370",
           "name": "제우스",
           "nameEn": "ZEUS CO., LTD."
@@ -894,11 +889,6 @@
           "nameEn": "Exicon Co., Ltd."
         },
         {
-          "ticker": "332570",
-          "name": "PS일렉트로닉스",
-          "nameEn": "Pentastone Electronics"
-        },
-        {
           "ticker": "348210",
           "name": "넥스틴",
           "nameEn": "NEXTIN Inc."
@@ -1232,11 +1222,6 @@
           "ticker": "183300",
           "name": "코미코",
           "nameEn": "KoMiCo Ltd."
-        },
-        {
-          "ticker": "127120",
-          "name": "제이에스링크",
-          "nameEn": "JS Link"
         },
         {
           "ticker": "166090",

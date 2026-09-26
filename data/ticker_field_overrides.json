@@ -368,17 +368,17 @@
   "127120": {
     "name": "제이에스링크",
     "nameEn": "JS Link",
-    "semType": "장비 부품·기술서비스",
-    "semTypeEn": "Tool parts & tech service",
-    "products": "반도체 장비 부품·기술서비스",
-    "productsEn": "Semiconductor equipment parts and technical service",
+    "semType": "유전체 분석·영구자석",
+    "semTypeEn": "Genomic analysis & permanent magnets",
+    "products": "유전체 분석 서비스, 희토류 영구자석(신사업)",
+    "productsEn": "Genomic analysis services; rare-earth permanent magnets (new business)",
     "byIndustry": {
-      "semi": {
-        "chain": "공정 부품·유지관리",
+      "bio": {
+        "chain": "연구도구·서비스",
         "needs_review": false,
-        "evidence": "P3 mcap admission: 반도체 장비 부품·기술서비스",
-        "semType": "장비 부품·기술서비스",
-        "products": "반도체 장비 부품·기술서비스"
+        "evidence": "2026-09 reclass: 유전체 분석 서비스(구 디엔에이링크) · 희토류 영구자석 신사업 — bio 연구도구·서비스",
+        "semType": "유전체 분석·영구자석",
+        "products": "유전체 분석 서비스, 희토류 영구자석(신사업)"
       }
     }
   },
@@ -1802,13 +1802,20 @@
   },
   "332570": {
     "byIndustry": {
-      "semi": {
+      "elec": {
+        "chain": "전자부품·기판",
         "needs_review": false,
-        "chain": "검사·계측 장비",
-        "review_status": "confirmed",
-        "review_evidence": "검사·계측 장비 — 현 그룹 확정"
+        "evidence": "2026-09 reclass: RF PAM/FEM·차량 RF (구 와이팜) — elec 전자부품·기판; nameEn Pentastone→PS Electronics",
+        "semType": "RF PAM/FEM",
+        "products": "RF 전력증폭모듈(PAM/FEM), 차량용 RF·무선충전 부품"
       }
-    }
+    },
+    "name": "PS일렉트로닉스",
+    "nameEn": "PS Electronics",
+    "semType": "RF PAM/FEM",
+    "semTypeEn": "RF PAM/FEM modules",
+    "products": "RF 전력증폭모듈(PAM/FEM), 차량용 RF·무선충전 부품",
+    "productsEn": "RF power amplifier modules (PAM/FEM); automotive RF and wireless charging parts"
   },
   "336260": {
     "semType": "수소·연료전지",
@@ -4879,7 +4886,8 @@
     "finance_holding_gap": "012030·023590·032190 — holdings '금융' 그룹(#5C6BC0, 9번째)으로 확정. software 자동 덮어쓰기 금지.",
     "needs_review_closure": "2026-09 needs_review 마감: 이동4(含005090→powergrid)·정정4·신설2. needs_review 잔여 0. 공백=001740·126560.",
     "p1_cross": "P1 single-home: 028260 construction only, 034020 nuclear only, 377300 finance only. SECTOR_CROSS={}. P1-B relations UI-only.",
-    "p3_mcap_admissions": "2026-09 P3: admitted 31 tickers (≥3천억). Gaps=7. Excluded already-mapped 033780,285130."
+    "p3_mcap_admissions": "2026-09 P3: admitted 32 tickers (≥3천억). Gaps=7. Excluded already-mapped 033780,285130.",
+    "sector_reclass_4tickers_20260927": "2026-09-27: 127120→bio, 015360→holdings, 332570→elec, 033790 battery chain→양극재·전구체"
   },
   "086900": {
     "name": "메디톡스",
@@ -6271,17 +6279,17 @@
   "015360": {
     "name": "INVENI",
     "nameEn": "INVENI",
-    "semType": "건식식각장비",
-    "semTypeEn": "Dry etch tools",
-    "products": "디스플레이·반도체 건식식각장비",
-    "productsEn": "Display/semiconductor dry etch equipment",
+    "semType": "투자형 지주",
+    "semTypeEn": "Investment holding company",
+    "products": "투자형 지주회사(구 예스코홀딩스, 도시가스 자회사 예스코)",
+    "productsEn": "Investment holding (formerly YESCO Holdings; city-gas subsidiary YESCO)",
     "byIndustry": {
-      "semi": {
-        "chain": "전공정 장비",
+      "holdings": {
+        "chain": "에너지·화학",
         "needs_review": false,
-        "evidence": "P3 mcap admission: 건식식각장비",
-        "semType": "건식식각장비",
-        "products": "디스플레이·반도체 건식식각장비"
+        "evidence": "2026-09 reclass: 구 예스코홀딩스 투자형 지주 — holdings 에너지·화학",
+        "semType": "투자형 지주",
+        "products": "투자형 지주회사(구 예스코홀딩스, 도시가스 자회사 예스코)"
       }
     }
   },
@@ -6356,17 +6364,17 @@
   "033790": {
     "name": "피노",
     "nameEn": "FINO INC.",
-    "semType": "전지 자동화 장비",
-    "semTypeEn": "Battery automation tools",
-    "products": "2차전지 소재·자동화 장비",
-    "productsEn": "Battery materials and automation equipment",
+    "semType": "전구체",
+    "semTypeEn": "Precursors",
+    "products": "이차전지 전구체(CNGR 계열)",
+    "productsEn": "Secondary-battery precursors (CNGR group)",
     "byIndustry": {
       "battery": {
-        "chain": "제조·검사 장비",
+        "chain": "양극재·전구체",
         "needs_review": false,
-        "evidence": "P3 mcap admission: 전지 장비",
-        "semType": "전지 자동화 장비",
-        "products": "2차전지 소재·자동화 장비"
+        "evidence": "2026-09 reclass: CNGR 계열 전구체 — battery 양극재·전구체 (장비 오분류 정정)",
+        "semType": "전구체",
+        "products": "이차전지 전구체(CNGR 계열)"
       }
     }
   },

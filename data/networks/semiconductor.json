@@ -677,18 +677,6 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:015360",
-      "type": "listed_company",
-      "ticker": "015360",
-      "nameKo": "INVENI",
-      "nameEn": "INVENI",
-      "market": "KOSPI",
-      "role": "건식식각장비",
-      "group": "전공정 장비",
-      "mcapWon": 392400000000,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:079370",
       "type": "listed_company",
       "ticker": "079370",
@@ -1063,18 +1051,6 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:332570",
-      "type": "listed_company",
-      "ticker": "332570",
-      "nameKo": "PS일렉트로닉스",
-      "nameEn": "Pentastone Electronics",
-      "market": "KOSDAQ",
-      "role": "반도체 테스트",
-      "group": "검사·계측 장비",
-      "mcapWon": 418059487300,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:348210",
       "type": "listed_company",
       "ticker": "348210",
@@ -1359,18 +1335,6 @@
       "role": "부품 세정·코팅 서비스",
       "group": "공정 부품·유지관리",
       "mcapWon": 1584557033750,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:127120",
-      "type": "listed_company",
-      "ticker": "127120",
-      "nameKo": "제이에스링크",
-      "nameEn": "JS Link",
-      "market": "KOSDAQ",
-      "role": "장비 부품·기술서비스",
-      "group": "공정 부품·유지관리",
-      "mcapWon": 1204598427500,
       "isListedKorea": true
     },
     {
@@ -3226,21 +3190,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-front_equip-015360",
-      "source": "krx:015360",
-      "target": "group:front_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "전공정 장비 밸류체인 분류",
-      "labelEn": "Front-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-front_equip-079370",
       "source": "krx:079370",
       "target": "group:front_equip",
@@ -3914,21 +3863,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-inspect_metro-332570",
-      "source": "krx:332570",
-      "target": "group:inspect_metro",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "검사·계측 장비 밸류체인 분류",
-      "labelEn": "Inspection & metrology value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-inspect_metro-348210",
       "source": "krx:348210",
       "target": "group:inspect_metro",
@@ -4566,21 +4500,6 @@
     {
       "id": "member-process_parts-183300",
       "source": "krx:183300",
-      "target": "group:process_parts",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "공정 부품·유지관리 밸류체인 분류",
-      "labelEn": "Process parts & MRO value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-process_parts-127120",
-      "source": "krx:127120",
       "target": "group:process_parts",
       "type": "member_of",
       "direction": "source_to_target",

@@ -296,9 +296,9 @@
       "nameKo": "피노",
       "nameEn": "FINO INC.",
       "market": "KOSDAQ",
-      "role": "제조·검사 장비",
-      "group": "제조·검사 장비",
-      "layer": "제조·검사 장비",
+      "role": "양극재·전구체",
+      "group": "양극재·전구체",
+      "layer": "양극재·전구체",
       "mcapWon": 666575096000,
       "isListedKorea": true,
       "legacyId": "battery_fino_inc"

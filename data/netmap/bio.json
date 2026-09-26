@@ -1027,6 +1027,17 @@
    "chain": "end_customer",
    "role": "차바이오텍 지배",
    "exchange": ""
+  },
+  {
+   "id": "krx:127120",
+   "type": "kr_listed",
+   "ticker": "127120",
+   "nameKo": "제이에스링크",
+   "nameEn": "JS Link",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "tools",
+   "role": "유전체 분석 서비스 (구 디엔에이링크) · 희토류 영구자석 신사업"
   }
  ],
  "edges": [

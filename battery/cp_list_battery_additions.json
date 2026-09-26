@@ -85,13 +85,13 @@
     "ticker": "033790",
     "name": "피노",
     "nameEn": "FINO INC.",
-    "chain": "제조·검사 장비",
-    "semType": "전지 자동화 장비",
-    "semTypeEn": "Battery automation tools",
-    "products": "2차전지 소재·자동화 장비",
-    "productsEn": "Battery materials and automation equipment",
+    "chain": "양극재·전구체",
+    "semType": "전구체",
+    "semTypeEn": "Precursors",
+    "products": "이차전지 전구체(CNGR 계열)",
+    "productsEn": "Secondary-battery precursors (CNGR group)",
     "partners": [],
-    "subSector": "제조·검사 장비",
+    "subSector": "양극재·전구체",
     "level": "core"
   }
 ]

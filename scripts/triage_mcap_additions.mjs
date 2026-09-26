@@ -42,12 +42,13 @@ const CURATED = {
 
   // 반도체 (semi - 18개)
   '323280': { sector: 'semi', note: 'PCB·반도체 습식세정·식각장비' }, // 태성
-  '127120': { sector: 'semi', note: '반도체 장비 부품·기술서비스' }, // 제이에스링크
+  '127120': { sector: 'bio', note: '유전체 분석 서비스·희토류 영구자석' }, // 제이에스링크
   '031330': { sector: 'semi', note: '삼성전자 반도체·IT 유통' }, // 에스에이엠티
   '388210': { sector: 'semi', note: '반도체 SiC 포커스링 소재' }, // 씨엠티엑스
   '024850': { sector: 'semi', note: '반도체 리드프레임·바이오' }, // HLB이노베이션
   '029460': { sector: 'semi', note: '반도체 가스공급장치·화학소재' }, // 케이씨
-  '015360': { sector: 'semi', note: '디스플레이·반도체 건식식각장비' }, // INVENI
+  '015360': { sector: 'holdings', note: '투자형 지주(구 예스코홀딩스)' }, // INVENI
+  '332570': { sector: 'elec', note: 'RF PAM/FEM·차량용 RF 부품' }, // PS일렉트로닉스
   '170920': { sector: 'semi', note: '반도체 세정/박리액 케미컬' }, // 엘티씨
   '159010': { sector: 'semi', note: '반도체 고순도 가스배관 부품' }, // 아스플로
   '452430': { sector: 'semi', note: '마이크로LED DDI 팹리스' }, // 사피엔반도체
@@ -93,7 +94,7 @@ const CURATED = {
   '237880': { sector: 'cosmetics', note: '색조 화장품 브랜드(클리오)' }, // 클리오
 
   // 2차전지 (battery - 10개)
-  '033790': { sector: 'battery', note: '2차전지 소재·자동화 장비' }, // 피노
+  '033790': { sector: 'battery', note: '이차전지 전구체(CNGR 계열)' }, // 피노
   '091580': { sector: 'battery', note: '2차전지 캔·케이스 부품' }, // 상신이디피
   '378340': { sector: 'battery', note: '2차전지 레이저 노칭·스태킹장비' }, // 필에너지
   '089980': { sector: 'battery', note: '2차전지 부품·수소차 멤브레인' }, // 상아프론테크

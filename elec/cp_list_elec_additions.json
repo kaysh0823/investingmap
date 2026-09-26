@@ -159,5 +159,18 @@
     "partners": [],
     "subSector": "전자부품·기판",
     "level": "core"
+  },
+  {
+    "ticker": "332570",
+    "name": "PS일렉트로닉스",
+    "nameEn": "PS Electronics",
+    "chain": "전자부품·기판",
+    "semType": "RF PAM/FEM",
+    "semTypeEn": "RF PAM/FEM modules",
+    "products": "RF 전력증폭모듈(PAM/FEM), 차량용 RF·무선충전 부품",
+    "productsEn": "RF power amplifier modules (PAM/FEM); automotive RF and wireless charging parts",
+    "partners": [],
+    "subSector": "전자부품·기판",
+    "level": "core"
   }
 ]

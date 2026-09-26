@@ -17,7 +17,7 @@ function check(cond, msg) {
 }
 
 /** Spec auto=25 but 000430/010690 below mcap floor; 437730 moved to robot → on-map 26. */
-const EXPECTED_N = { auto: 26, ship: 17, shipping: 6, defense: 13 };
+const EXPECTED_N = { auto: 27, ship: 17, shipping: 6, defense: 14 };
 
 for (const key of ['auto', 'ship', 'shipping', 'defense']) {
   const cfg = MOBILITY_04C[key];
@@ -67,7 +67,8 @@ check(
   '437730 not robot 구동부품',
 );
 check(!maps.auto.some((c) => c.ticker === '437730'), '437730 still on auto');
-check(!maps.auto.some((c) => c.ticker === '000430' || c.ticker === '010690'), 'below-floor auto still on map');
+check(!maps.auto.some((c) => c.ticker === '010690'), 'below-floor auto still on map');
+check(maps.auto.some((c) => c.ticker === '000430'), '000430 above-floor should be on auto');
 check(maps.shipping.length === 6, `shipping expected 6, got ${maps.shipping.length}`);
 check(
   maps.shipping.some((c) => c.ticker === '086280' && c.chain === '자동차·특수화물 운송'),
@@ -99,7 +100,7 @@ check(semi.length === 91, `semi expected 91, got ${semi.length}`);
 const chemical = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'chemical/korea_chemical_map.html'), 'utf8'),
 );
-check(chemical.length === 27, `chemical expected 27, got ${chemical.length}`);
+check(chemical.length === 26, `chemical expected 26, got ${chemical.length}`);
 const battery = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'battery/korea_battery_map.html'), 'utf8'));
 check(battery.length === 26, `battery expected 26, got ${battery.length}`);
 check(maps.auto.some((c) => c.ticker === '125490' && c.chain === '차체·내외장'), '125490 on auto');

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T02:45:54.616Z",
+  "generatedAt": "2026-09-26T15:46:42.961Z",
   "auditAdditionsCount": 58,
   "admitted": [
     "323280",
@@ -10,6 +10,7 @@
     "383310",
     "029460",
     "015360",
+    "332570",
     "170920",
     "032820",
     "126720",
@@ -35,20 +36,20 @@
     "008060"
   ],
   "admittedBySector": {
-    "semi": 9,
+    "semi": 7,
+    "bio": 3,
+    "holdings": 4,
+    "elec": 3,
     "nuclear": 2,
     "auto": 3,
     "battery": 1,
-    "elec": 2,
     "machinery": 1,
     "chemical": 1,
-    "bio": 2,
     "medtech": 1,
     "defense": 2,
     "kconsume": 2,
     "travel": 1,
-    "software": 1,
-    "holdings": 3
+    "software": 1
   },
   "skippedFloor": [
     {

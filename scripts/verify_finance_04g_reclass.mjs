@@ -16,7 +16,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { finance: 50, holdings: 52 };
+const EXPECTED_N = { finance: 48, holdings: 51 };
 
 for (const key of ['finance', 'holdings']) {
   const cfg = FINANCE_04G[key];
@@ -50,9 +50,14 @@ const software = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'software/k
 
 check(finance.some((c) => c.ticker === '377300' && c.chain === '결제·핀테크'), '377300 not finance 결제·핀테크');
 check(!software.some((c) => c.ticker === '377300'), '377300 still on software');
-check(software.length === 22, `software expected 22, got ${software.length}`);
+check(software.length === 21, `software expected 21, got ${software.length}`);
 check(exclusiveSector('377300') === 'finance', '377300 exclusive finance');
 check(!crossSectors('377300'), '377300 still in SECTOR_CROSS');
+check(
+  holdings.some((c) => c.ticker === '015360' && c.chain === '에너지·화학'),
+  '015360 missing on holdings',
+);
+check(exclusiveSector('015360') === 'holdings', 'exclusive 015360');
 
 for (const t of ['012030', '023590', '032190']) {
   check(holdings.some((c) => c.ticker === t && c.chain === '금융'), `${t} not holdings 금융`);
@@ -63,7 +68,7 @@ check(FINANCE_04G.holdings.chains[8] === '금융', 'holdings 금융 not 9th');
 
 check(exclusiveSector('005930') === 'bigchip', 'bigchip');
 const kconsume = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'kconsume/korea_kconsume_map.html'), 'utf8'));
-check(kconsume.length === 37, `kconsume expected 37, got ${kconsume.length}`);
+check(kconsume.length === 36, `kconsume expected 36, got ${kconsume.length}`);
 const shipping = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'shipping/korea_shipping_map.html'), 'utf8'));
 check(shipping.length === 6, `shipping expected 6, got ${shipping.length}`);
 

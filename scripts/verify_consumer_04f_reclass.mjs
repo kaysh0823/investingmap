@@ -16,7 +16,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { kconsume: 37, kcontent: 25, travel: 12 };
+const EXPECTED_N = { kconsume: 36, kcontent: 25, travel: 12 };
 
 for (const key of ['kconsume', 'kcontent', 'travel']) {
   const cfg = CONSUMER_04F[key];
@@ -66,7 +66,7 @@ check(!String(kakao?.semType || '').includes('카카오'), '293490 semType still
 check(!maps.kconsume.some((c) => c.ticker === '001740'), '001740 auto-entered kconsume');
 check(!maps.kconsume.some((c) => c.ticker === '028260'), '028260 still on kconsume');
 check(exclusiveSector('028260') === 'construction', '028260 exclusive construction');
-check(maps.chemical.length === 29, `chemical expected 29, got ${maps.chemical.length}`);
+check(maps.chemical.length === 26, `chemical expected 26, got ${maps.chemical.length}`);
 check(exclusiveSector('086280') === 'shipping', 'exclusive 086280');
 check(exclusiveSector('000120') === 'shipping', 'exclusive 000120');
 check(exclusiveSector('005930') === 'bigchip', 'bigchip');
@@ -76,7 +76,7 @@ const bioMatch = bioSrc.match(/const koreanCompanies = (\[[\s\S]*?\]);/);
 const bio = Function(`"use strict"; return (${bioMatch[1]});`)();
 check(bio.length === 66, `bio expected 66, got ${bio.length}`);
 const elec = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'elec/korea_elec_map.html'), 'utf8'));
-check(elec.length === 29, `elec expected 29, got ${elec.length}`);
+check(elec.length === 32, `elec expected 32, got ${elec.length}`);
 
 console.log('Consumer §0-4F verification');
 console.log('failures:', failures.length);

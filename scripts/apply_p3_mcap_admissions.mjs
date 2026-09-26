@@ -20,14 +20,15 @@ function pad(t) {
 const ADMISSIONS = [
   // semi
   { ticker: '323280', sector: 'semi', chain: '전공정 장비', semType: '습식세정·식각장비', semTypeEn: 'Wet clean / etch tools', products: 'PCB·반도체 습식세정·식각장비', productsEn: 'PCB/semiconductor wet clean and etch equipment', note: 'PCB·반도체 습식세정·식각장비' },
-  { ticker: '127120', sector: 'semi', chain: '공정 부품·유지관리', semType: '장비 부품·기술서비스', semTypeEn: 'Tool parts & tech service', products: '반도체 장비 부품·기술서비스', productsEn: 'Semiconductor equipment parts and technical service', note: '반도체 장비 부품·기술서비스' },
+  { ticker: '127120', sector: 'bio', chain: '연구도구·서비스', semType: '유전체 분석·영구자석', semTypeEn: 'Genomic analysis & permanent magnets', products: '유전체 분석 서비스, 희토류 영구자석(신사업)', productsEn: 'Genomic analysis services; rare-earth permanent magnets (new business)', note: '유전체 분석·영구자석 — semi→bio 정정' },
   { ticker: '388210', sector: 'semi', chain: '공정 부품·유지관리', semType: 'SiC 포커스링', semTypeEn: 'SiC focus rings', products: '반도체 SiC 포커스링 소재', productsEn: 'SiC focus-ring materials for semiconductors', note: 'SiC 포커스링' },
   { ticker: '159010', sector: 'semi', chain: '공정 부품·유지관리', semType: '고순도 가스배관', semTypeEn: 'UHP gas tubing', products: '반도체 고순도 가스배관 부품', productsEn: 'Ultra-high-purity gas tubing parts', note: '고순도 가스배관' },
   { ticker: '031330', sector: 'semi', chain: '반도체 유통', semType: '반도체·IT 유통', semTypeEn: 'Semi/IT distribution', products: '삼성전자 반도체·IT 유통', productsEn: 'Samsung Electronics semiconductor and IT distribution', note: '반도체·IT 유통' },
   { ticker: '024850', sector: 'semi', chain: '기판·패키징 소재', semType: '리드프레임', semTypeEn: 'Lead frames', products: '반도체 리드프레임·관련소재', productsEn: 'Semiconductor lead frames and related materials', note: '리드프레임', tags: ['바이오'] },
   { ticker: '383310', sector: 'semi', chain: '팹 인프라·지원설비', semType: '클린룸 필터', semTypeEn: 'Cleanroom filters', products: '반도체 클린룸 필터·친환경 소재', productsEn: 'Semiconductor cleanroom filters and eco materials', note: '클린룸 필터' },
   { ticker: '029460', sector: 'semi', chain: '팹 인프라·지원설비', semType: '가스공급장치', semTypeEn: 'Gas delivery systems', products: '반도체 가스공급장치·화학소재', productsEn: 'Semiconductor gas delivery systems and chemicals', note: '가스공급장치' },
-  { ticker: '015360', sector: 'semi', chain: '전공정 장비', semType: '건식식각장비', semTypeEn: 'Dry etch tools', products: '디스플레이·반도체 건식식각장비', productsEn: 'Display/semiconductor dry etch equipment', note: '건식식각장비' },
+  { ticker: '015360', sector: 'holdings', chain: '에너지·화학', semType: '투자형 지주', semTypeEn: 'Investment holding company', products: '투자형 지주회사(구 예스코홀딩스, 도시가스 자회사 예스코)', productsEn: 'Investment holding (formerly YESCO Holdings; city-gas subsidiary YESCO)', note: '예스코홀딩스 투자형 지주 — semi→holdings 정정' },
+  { ticker: '332570', sector: 'elec', chain: '전자부품·기판', semType: 'RF PAM/FEM', semTypeEn: 'RF PAM/FEM modules', products: 'RF 전력증폭모듈(PAM/FEM), 차량용 RF·무선충전 부품', productsEn: 'RF power amplifier modules (PAM/FEM); automotive RF and wireless charging parts', note: 'RF PAM/FEM — semi→elec 정정' },
   { ticker: '170920', sector: 'semi', chain: '공정 소재', semType: '세정·박리액', semTypeEn: 'Cleaners/strippers', products: '반도체 세정/박리액 케미컬', productsEn: 'Semiconductor cleaners and strippers', note: '세정·박리액' },
   // nuclear
   { ticker: '032820', sector: 'nuclear', chain: '계측·제어', semType: '원전 MMIS', semTypeEn: 'Nuclear I&C / MMIS', products: '원전 제어계측시스템(MMIS)', productsEn: 'Nuclear plant MMIS / I&C systems', note: '원전 MMIS — 빈 그룹 계측·제어 충원' },
@@ -38,7 +39,7 @@ const ADMISSIONS = [
   { ticker: '004700', sector: 'auto', chain: '차체·내외장', semType: '카시트 가죽', semTypeEn: 'Seat leather', products: '자동차 카시트용 천연가죽', productsEn: 'Automotive seat leather', note: '카시트 가죽' },
   { ticker: '448900', sector: 'auto', chain: '섀시·안전', semType: 'MIM 정밀부품', semTypeEn: 'MIM precision parts', products: '차량용 MIM 정밀부품', productsEn: 'Automotive MIM precision parts', note: 'MIM' },
   // battery / elec / machinery
-  { ticker: '033790', sector: 'battery', chain: '제조·검사 장비', semType: '전지 자동화 장비', semTypeEn: 'Battery automation tools', products: '2차전지 소재·자동화 장비', productsEn: 'Battery materials and automation equipment', note: '전지 장비' },
+  { ticker: '033790', sector: 'battery', chain: '양극재·전구체', semType: '전구체', semTypeEn: 'Precursors', products: '이차전지 전구체(CNGR 계열)', productsEn: 'Secondary-battery precursors (CNGR group)', note: 'CNGR 계열 전구체 — 장비 오분류 정정' },
   { ticker: '009450', sector: 'elec', chain: '가전·생활기기', semType: '보일러·온수기', semTypeEn: 'Boilers & water heaters', products: '콘덴싱 보일러·온수기', productsEn: 'Condensing boilers and water heaters', note: '보일러' },
   { ticker: '025320', sector: 'elec', chain: '전자부품·기판', semType: 'FPCB·필터', semTypeEn: 'FPCB & filters', products: 'FPCB·반도체 필터·의료필터', productsEn: 'FPCB, semiconductor and medical filters', note: 'FPCB·필터' },
   { ticker: '079900', sector: 'machinery', chain: '건설기계', semType: '콘크리트 펌프카', semTypeEn: 'Concrete pump trucks', products: '콘크리트 펌프카·건설로봇', productsEn: 'Concrete pump trucks and construction robots', note: '펌프카', tags: ['건설로봇'] },

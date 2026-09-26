@@ -19,7 +19,7 @@ function check(cond, msg) {
   if (!cond) failures.push(msg);
 }
 
-const EXPECTED_N = { chemical: 27, metal: 17, machinery: 6, construction: 20 };
+const EXPECTED_N = { chemical: 26, metal: 15, machinery: 6, construction: 20 };
 
 for (const key of ['chemical', 'metal', 'machinery', 'construction']) {
   const cfg = INDUSTRY_04B[key];

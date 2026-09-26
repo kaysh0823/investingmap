@@ -1343,6 +1343,27 @@
    "chain": "global_peer",
    "role": "산업 복합",
    "exchange": "TSE:6501"
+  },
+  {
+   "id": "krx:015360",
+   "type": "kr_listed",
+   "ticker": "015360",
+   "nameKo": "INVENI",
+   "nameEn": "INVENI",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "energy",
+   "role": "투자형 지주회사 (구 예스코홀딩스, LS 계열)"
+  },
+  {
+   "id": "global:yesco",
+   "type": "kr_other",
+   "nameKo": "예스코",
+   "nameEn": "YESCO",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "도시가스 자회사 (비상장)",
+   "exchange": ""
   }
  ],
  "edges": [
@@ -3261,6 +3282,20 @@
     {
      "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=000210",
      "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_015360>global_yesco",
+   "source": "krx:015360",
+   "target": "global:yesco",
+   "type": "equity",
+   "labelKo": "지주→도시가스 자회사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.lsholdings.com/ko/media/news/6c6f66454e444764634a797a596763354d766973677a4a4e465433616e706c63",
+     "accessedAt": "2026-09-27"
     }
    ]
   }

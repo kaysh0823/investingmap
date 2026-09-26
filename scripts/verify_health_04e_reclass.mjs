@@ -23,7 +23,7 @@ function bioCompanies() {
   return Function(`"use strict"; return (${match[1]});`)();
 }
 
-const EXPECTED_N = { bio: 66, medtech: 17, cosmetics: 19 };
+const EXPECTED_N = { bio: 66, medtech: 16, cosmetics: 18 };
 
 const maps = {
   bio: bioCompanies(),
@@ -85,9 +85,15 @@ for (const r of HEALTH_04E.bio.retired) {
 const semi = extractCompaniesFromHtml(
   fs.readFileSync(join(ROOT, 'semiconductor/korea_semiconductor_map.html'), 'utf8'),
 );
-check(semi.length === 92, `semi expected 92, got ${semi.length}`);
 const elec = extractCompaniesFromHtml(fs.readFileSync(join(ROOT, 'elec/korea_elec_map.html'), 'utf8'));
-check(elec.length === 29, `elec expected 29, got ${elec.length}`);
+check(semi.length === 91, `semi expected 91, got ${semi.length}`);
+check(elec.length === 32, `elec expected 32, got ${elec.length}`);
+
+check(
+  maps.bio.some((c) => c.ticker === '127120' && c.chain === '연구도구·서비스'),
+  '127120 missing on bio',
+);
+check(exclusiveSector('127120') === 'bio', 'exclusive 127120');
 
 console.log('Health §0-4E verification');
 console.log('failures:', failures.length);

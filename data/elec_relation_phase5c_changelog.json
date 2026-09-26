@@ -2,13 +2,13 @@
   "asOf": "2026-08-23",
   "phase": "5C",
   "reviewedBy": "editorial_phase5c",
-  "listedCompanyCount": 31,
+  "listedCompanyCount": 32,
   "metrics": {
-    "listedCompanyCount": 31,
+    "listedCompanyCount": 32,
     "listedReferenceCompanyCount": 0,
-    "nodeCount": 91,
-    "edgeCount": 125,
-    "structuralGeneratedEdgeCount": 78,
+    "nodeCount": 92,
+    "edgeCount": 126,
+    "structuralGeneratedEdgeCount": 79,
     "legacyMigratedEdgeCount": 45,
     "manuallyCuratedEdgeCount": 2,
     "confirmedBusinessEdgeCount": 0,
@@ -23,15 +23,15 @@
     "groupMembershipEdgeCount": 0,
     "crossSectorReferenceCount": 2,
     "crossSectorReferenceOnlyCompanyCount": 2,
-    "businessRelationOrphanCount": 31,
-    "directRelationshipOrphanCount": 31,
-    "directCommercialRelationshipOrphanCount": 31,
-    "classificationOnlyCompanyCount": 31,
+    "businessRelationOrphanCount": 32,
+    "directRelationshipOrphanCount": 32,
+    "directCommercialRelationshipOrphanCount": 32,
+    "classificationOnlyCompanyCount": 32,
     "groupMembershipOnlyCompanyCount": 0,
     "hasPeerButNoBusinessCompanyCount": 29,
     "peerOnlyCompanyCount": 0,
-    "weakRelationOnlyCompanyCount": 31,
-    "structuralOnlyCompanyCount": 2,
+    "weakRelationOnlyCompanyCount": 32,
+    "structuralOnlyCompanyCount": 3,
     "orphanMetricDefinitions": {
       "listedCompanyCount": {
         "denominator": null,
@@ -487,6 +487,7 @@
         "krx:004710",
         "krx:192650",
         "krx:290550",
+        "krx:332570",
         "krx:092190",
         "krx:078350",
         "krx:441270",
@@ -520,6 +521,7 @@
         "krx:004710",
         "krx:192650",
         "krx:290550",
+        "krx:332570",
         "krx:092190",
         "krx:078350",
         "krx:441270",
@@ -553,6 +555,7 @@
         "krx:004710",
         "krx:192650",
         "krx:290550",
+        "krx:332570",
         "krx:092190",
         "krx:078350",
         "krx:441270",
@@ -587,6 +590,7 @@
         "krx:004710",
         "krx:192650",
         "krx:290550",
+        "krx:332570",
         "krx:092190",
         "krx:078350",
         "krx:441270",
@@ -629,6 +633,7 @@
       "peerOnly": [],
       "structuralOnly": [
         "krx:009450",
+        "krx:332570",
         "krx:025320"
       ]
     },
@@ -1126,6 +1131,11 @@
     {
       "action": "add_structural",
       "source": "krx:290550",
+      "target": "group:electronic_component"
+    },
+    {
+      "action": "add_structural",
+      "source": "krx:332570",
       "target": "group:electronic_component"
     },
     {

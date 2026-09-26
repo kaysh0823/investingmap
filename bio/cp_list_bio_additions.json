@@ -1,5 +1,18 @@
 [
   {
+    "ticker": "127120",
+    "name": "제이에스링크",
+    "nameEn": "JS Link",
+    "chain": "연구도구·서비스",
+    "semType": "유전체 분석·영구자석",
+    "semTypeEn": "Genomic analysis & permanent magnets",
+    "products": "유전체 분석 서비스, 희토류 영구자석(신사업)",
+    "productsEn": "Genomic analysis services; rare-earth permanent magnets (new business)",
+    "partners": [],
+    "subSector": "연구도구·서비스",
+    "level": "core"
+  },
+  {
     "ticker": "950260",
     "name": "인제니아테라퓨틱스(Reg.S)",
     "nameEn": "인제니아테라퓨틱스(Reg.S)",

@@ -239,30 +239,6 @@
     "level": "core"
   },
   {
-    "ticker": "332570",
-    "name": "PS일렉트로닉스",
-    "nameEn": "Pentastone Electronics",
-    "chain": "패키징/테스트",
-    "semType": "반도체 테스트",
-    "semTypeEn": "Semiconductor test",
-    "products": "반도체 테스트·검사 장비·소켓",
-    "productsEn": "Semiconductor test, inspection equipment and sockets",
-    "partners": [
-      "teradyne",
-      "advantest",
-      "kulicke",
-      "henkel",
-      "samsung_d",
-      "skhynix_d",
-      "ase",
-      "amkor",
-      "jcet",
-      "pti"
-    ],
-    "subSector": "반도체 테스트",
-    "level": "core"
-  },
-  {
     "ticker": "077360",
     "name": "덕산하이메탈",
     "nameEn": "Duksan Hi Metal",
@@ -299,19 +275,6 @@
     "productsEn": "PCB/semiconductor wet clean and etch equipment",
     "partners": [],
     "subSector": "전공정 장비",
-    "level": "core"
-  },
-  {
-    "ticker": "127120",
-    "name": "제이에스링크",
-    "nameEn": "JS Link",
-    "chain": "공정 부품·유지관리",
-    "semType": "장비 부품·기술서비스",
-    "semTypeEn": "Tool parts & tech service",
-    "products": "반도체 장비 부품·기술서비스",
-    "productsEn": "Semiconductor equipment parts and technical service",
-    "partners": [],
-    "subSector": "공정 부품·유지관리",
     "level": "core"
   },
   {
@@ -390,19 +353,6 @@
     "productsEn": "Semiconductor gas delivery systems and chemicals",
     "partners": [],
     "subSector": "팹 인프라·지원설비",
-    "level": "core"
-  },
-  {
-    "ticker": "015360",
-    "name": "INVENI",
-    "nameEn": "INVENI",
-    "chain": "전공정 장비",
-    "semType": "건식식각장비",
-    "semTypeEn": "Dry etch tools",
-    "products": "디스플레이·반도체 건식식각장비",
-    "productsEn": "Display/semiconductor dry etch equipment",
-    "partners": [],
-    "subSector": "전공정 장비",
     "level": "core"
   },
   {
