@@ -1,0 +1,1351 @@
+{
+ "sectorId": "telecom",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "carrier": "통신서비스",
+  "optical": "광통신 부품·장비",
+  "wireless": "무선통신 장비",
+  "satellite": "위성통신 장비",
+  "end_customer": "글로벌 장비사·사업자",
+  "global_peer": "글로벌 통신 경쟁사"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:017670",
+   "type": "kr_listed",
+   "ticker": "017670",
+   "nameKo": "SK텔레콤",
+   "nameEn": "SK텔레콤",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "carrier",
+   "role": "통신서비스"
+  },
+  {
+   "id": "krx:030200",
+   "type": "kr_listed",
+   "ticker": "030200",
+   "nameKo": "KT",
+   "nameEn": "KT",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "carrier",
+   "role": "통신서비스"
+  },
+  {
+   "id": "krx:032640",
+   "type": "kr_listed",
+   "ticker": "032640",
+   "nameKo": "LG유플러스",
+   "nameEn": "LG유플러스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "carrier",
+   "role": "통신서비스"
+  },
+  {
+   "id": "krx:010170",
+   "type": "kr_listed",
+   "ticker": "010170",
+   "nameKo": "대한광통신",
+   "nameEn": "대한광통신",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "optical",
+   "role": "광통신 부품·장비"
+  },
+  {
+   "id": "krx:218410",
+   "type": "kr_listed",
+   "ticker": "218410",
+   "nameKo": "RFHIC",
+   "nameEn": "RFHIC",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "wireless",
+   "role": "무선통신 장비"
+  },
+  {
+   "id": "krx:032500",
+   "type": "kr_listed",
+   "ticker": "032500",
+   "nameKo": "케이엠더블유",
+   "nameEn": "케이엠더블유",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "wireless",
+   "role": "무선통신 장비"
+  },
+  {
+   "id": "krx:189300",
+   "type": "kr_listed",
+   "ticker": "189300",
+   "nameKo": "인텔리안테크",
+   "nameEn": "인텔리안테크",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "satellite",
+   "role": "위성통신 장비"
+  },
+  {
+   "id": "krx:050890",
+   "type": "kr_listed",
+   "ticker": "050890",
+   "nameKo": "쏠리드",
+   "nameEn": "쏠리드",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "wireless",
+   "role": "무선통신 장비"
+  },
+  {
+   "id": "krx:037460",
+   "type": "kr_listed",
+   "ticker": "037460",
+   "nameKo": "삼지전자",
+   "nameEn": "삼지전자",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "wireless",
+   "role": "무선통신 장비"
+  },
+  {
+   "id": "krx:069540",
+   "type": "kr_listed",
+   "ticker": "069540",
+   "nameKo": "빛과전자",
+   "nameEn": "빛과전자",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "optical",
+   "role": "광통신 부품·장비"
+  },
+  {
+   "id": "krx:138080",
+   "type": "kr_listed",
+   "ticker": "138080",
+   "nameKo": "오이솔루션",
+   "nameEn": "오이솔루션",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "optical",
+   "role": "광통신 부품·장비"
+  },
+  {
+   "id": "global:samsung_net",
+   "type": "kr_other",
+   "nameKo": "삼성전자 네트워크",
+   "nameEn": "Samsung Networks",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "5G 기지국 장비",
+   "exchange": "KRX:005930"
+  },
+  {
+   "id": "global:nokia",
+   "type": "global",
+   "nameKo": "노키아",
+   "nameEn": "Nokia",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "통신장비 (RF·광트랜시버 고객)",
+   "exchange": "HEL:NOKIA"
+  },
+  {
+   "id": "global:ericsson",
+   "type": "global",
+   "nameKo": "에릭슨",
+   "nameEn": "Ericsson",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "통신장비",
+   "exchange": "STO:ERIC-B"
+  },
+  {
+   "id": "global:zte",
+   "type": "global",
+   "nameKo": "ZTE",
+   "nameEn": "ZTE",
+   "country": "cn",
+   "chain": "end_customer",
+   "role": "통신장비 (KMW 고객)",
+   "exchange": "HKEX:0763"
+  },
+  {
+   "id": "global:huawei",
+   "type": "global",
+   "nameKo": "화웨이",
+   "nameEn": "Huawei",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "통신장비 1위 (수출 중단)",
+   "exchange": ""
+  },
+  {
+   "id": "global:cisco",
+   "type": "global",
+   "nameKo": "시스코",
+   "nameEn": "Cisco",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "네트워크 장비 (광트랜시버 고객)",
+   "exchange": "NASDAQ:CSCO"
+  },
+  {
+   "id": "global:ciena",
+   "type": "global",
+   "nameKo": "시에나",
+   "nameEn": "Ciena",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "광전송 장비",
+   "exchange": "NYSE:CIEN"
+  },
+  {
+   "id": "global:rakuten",
+   "type": "global",
+   "nameKo": "라쿠텐모바일",
+   "nameEn": "Rakuten Mobile",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "일본 사업자 (KMW 고객)",
+   "exchange": "TSE:4755"
+  },
+  {
+   "id": "global:verizon",
+   "type": "global",
+   "nameKo": "버라이즌",
+   "nameEn": "Verizon",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "미국 사업자 (쏠리드 DAS)",
+   "exchange": "NYSE:VZ"
+  },
+  {
+   "id": "global:tmobile",
+   "type": "global",
+   "nameKo": "T모바일",
+   "nameEn": "T-Mobile US",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "미국 사업자",
+   "exchange": "NASDAQ:TMUS"
+  },
+  {
+   "id": "global:att",
+   "type": "global",
+   "nameKo": "AT&T",
+   "nameEn": "AT&T",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "미국 통신사",
+   "exchange": "NYSE:T"
+  },
+  {
+   "id": "global:ntt",
+   "type": "global",
+   "nameKo": "NTT",
+   "nameEn": "NTT Docomo",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "일본 통신사",
+   "exchange": "TSE:9432"
+  },
+  {
+   "id": "global:softbank_corp",
+   "type": "global",
+   "nameKo": "소프트뱅크(통신)",
+   "nameEn": "SoftBank Corp.",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "일본 통신사",
+   "exchange": "TSE:9434"
+  },
+  {
+   "id": "global:china_mobile",
+   "type": "global",
+   "nameKo": "차이나모바일",
+   "nameEn": "China Mobile",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "가입자 1위 통신사",
+   "exchange": "HKEX:0941"
+  },
+  {
+   "id": "global:dt",
+   "type": "global",
+   "nameKo": "도이치텔레콤",
+   "nameEn": "Deutsche Telekom",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "유럽 통신사",
+   "exchange": "XETRA:DTE"
+  },
+  {
+   "id": "global:eutelsat",
+   "type": "global",
+   "nameKo": "유텔샛 원웹",
+   "nameEn": "Eutelsat OneWeb",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "LEO 위성 (지상 안테나 고객)",
+   "exchange": "EPA:ETL"
+  },
+  {
+   "id": "global:ses",
+   "type": "global",
+   "nameKo": "SES",
+   "nameEn": "SES",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "MEO/GEO 위성",
+   "exchange": "EPA:SESG"
+  },
+  {
+   "id": "global:telesat",
+   "type": "global",
+   "nameKo": "텔레샛",
+   "nameEn": "Telesat",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "LEO 위성 (캐나다)",
+   "exchange": "NASDAQ:TSAT"
+  },
+  {
+   "id": "global:iridium",
+   "type": "global",
+   "nameKo": "이리듐",
+   "nameEn": "Iridium",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "LEO 위성",
+   "exchange": "NASDAQ:IRDM"
+  },
+  {
+   "id": "global:starlink",
+   "type": "global",
+   "nameKo": "스타링크(스페이스X)",
+   "nameEn": "Starlink",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "LEO 위성통신 경쟁",
+   "exchange": ""
+  },
+  {
+   "id": "global:commscope",
+   "type": "global",
+   "nameKo": "콤스코프",
+   "nameEn": "CommScope",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "DAS·안테나",
+   "exchange": "NASDAQ:COMM"
+  },
+  {
+   "id": "global:corning",
+   "type": "global",
+   "nameKo": "코닝",
+   "nameEn": "Corning",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "광섬유·DAS",
+   "exchange": "NYSE:GLW"
+  },
+  {
+   "id": "global:prysmian",
+   "type": "global",
+   "nameKo": "프리즈미안",
+   "nameEn": "Prysmian",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "광케이블",
+   "exchange": "BIT:PRY"
+  },
+  {
+   "id": "global:coherent",
+   "type": "global",
+   "nameKo": "코히런트",
+   "nameEn": "Coherent (II-VI)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "광트랜시버",
+   "exchange": "NYSE:COHR"
+  },
+  {
+   "id": "global:innolight",
+   "type": "global",
+   "nameKo": "이노라이트",
+   "nameEn": "InnoLight",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "광트랜시버 1위",
+   "exchange": "SZSE:300308"
+  },
+  {
+   "id": "global:wolfspeed",
+   "type": "global",
+   "nameKo": "울프스피드",
+   "nameEn": "Wolfspeed",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "GaN·SiC",
+   "exchange": "NYSE:WOLF"
+  },
+  {
+   "id": "global:qorvo",
+   "type": "global",
+   "nameKo": "코보",
+   "nameEn": "Qorvo",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "GaN RF",
+   "exchange": "NASDAQ:QRVO"
+  },
+  {
+   "id": "global:lig",
+   "type": "kr_other",
+   "nameKo": "LIG넥스원",
+   "nameEn": "LIG Nex1",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "방산 (RFHIC GaN 고객)",
+   "exchange": "KRX:079550"
+  }
+ ],
+ "edges": [
+  {
+   "id": "peer:krx_017670>krx_030200",
+   "source": "krx:017670",
+   "target": "krx:030200",
+   "type": "peer",
+   "labelKo": "이동통신 3사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017670>krx_032640",
+   "source": "krx:017670",
+   "target": "krx:032640",
+   "type": "peer",
+   "labelKo": "이동통신 3사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030200>krx_032640",
+   "source": "krx:030200",
+   "target": "krx:032640",
+   "type": "peer",
+   "labelKo": "이동통신 3사",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017670>global_att",
+   "source": "krx:017670",
+   "target": "global:att",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017670>global_ntt",
+   "source": "krx:017670",
+   "target": "global:ntt",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017670>global_softbank_corp",
+   "source": "krx:017670",
+   "target": "global:softbank_corp",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017670>global_china_mobile",
+   "source": "krx:017670",
+   "target": "global:china_mobile",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017670>global_dt",
+   "source": "krx:017670",
+   "target": "global:dt",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017670>global_verizon",
+   "source": "krx:017670",
+   "target": "global:verizon",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030200>global_att",
+   "source": "krx:030200",
+   "target": "global:att",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030200>global_ntt",
+   "source": "krx:030200",
+   "target": "global:ntt",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030200>global_softbank_corp",
+   "source": "krx:030200",
+   "target": "global:softbank_corp",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030200>global_china_mobile",
+   "source": "krx:030200",
+   "target": "global:china_mobile",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030200>global_dt",
+   "source": "krx:030200",
+   "target": "global:dt",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030200>global_verizon",
+   "source": "krx:030200",
+   "target": "global:verizon",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032640>global_att",
+   "source": "krx:032640",
+   "target": "global:att",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032640>global_ntt",
+   "source": "krx:032640",
+   "target": "global:ntt",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032640>global_softbank_corp",
+   "source": "krx:032640",
+   "target": "global:softbank_corp",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032640>global_china_mobile",
+   "source": "krx:032640",
+   "target": "global:china_mobile",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032640>global_dt",
+   "source": "krx:032640",
+   "target": "global:dt",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032640>global_verizon",
+   "source": "krx:032640",
+   "target": "global:verizon",
+   "type": "peer",
+   "labelKo": "글로벌 통신사 피어",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_samsung_net>krx_017670",
+   "source": "global:samsung_net",
+   "target": "krx:017670",
+   "type": "supply",
+   "labelKo": "5G 기지국 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_samsung_net>krx_030200",
+   "source": "global:samsung_net",
+   "target": "krx:030200",
+   "type": "supply",
+   "labelKo": "5G 기지국 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_samsung_net>krx_032640",
+   "source": "global:samsung_net",
+   "target": "krx:032640",
+   "type": "supply",
+   "labelKo": "5G 기지국 장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_050890>krx_017670",
+   "source": "krx:050890",
+   "target": "krx:017670",
+   "type": "supply",
+   "labelKo": "중계기·DAS (3사 모두 납품하는 유일 기업)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_050890>krx_030200",
+   "source": "krx:050890",
+   "target": "krx:030200",
+   "type": "supply",
+   "labelKo": "중계기·DAS (3사 모두 납품하는 유일 기업)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_050890>krx_032640",
+   "source": "krx:050890",
+   "target": "krx:032640",
+   "type": "supply",
+   "labelKo": "중계기·DAS (3사 모두 납품하는 유일 기업)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_050890>global_verizon",
+   "source": "krx:050890",
+   "target": "global:verizon",
+   "type": "supply",
+   "labelKo": "인빌딩 DAS (미국 31.8%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_050890>global_tmobile",
+   "source": "krx:050890",
+   "target": "global:tmobile",
+   "type": "supply",
+   "labelKo": "인빌딩 DAS",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_050890>global_commscope",
+   "source": "krx:050890",
+   "target": "global:commscope",
+   "type": "peer",
+   "labelKo": "DAS 경쟁 (쏠리드 글로벌 3위 15.1%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_050890>global_corning",
+   "source": "krx:050890",
+   "target": "global:corning",
+   "type": "peer",
+   "labelKo": "DAS 경쟁 (쏠리드 글로벌 3위 15.1%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260407153300142",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_218410>global_samsung_net",
+   "source": "krx:218410",
+   "target": "global:samsung_net",
+   "type": "supply",
+   "labelKo": "GaN 트랜지스터·전력증폭기 (삼성전자 60%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/97879",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_218410>global_lig",
+   "source": "krx:218410",
+   "target": "global:lig",
+   "type": "supply",
+   "labelKo": "방산용 GaN 전력증폭기",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.finance-scope.com/article/view/scp202511020001",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_218410>global_nokia",
+   "source": "krx:218410",
+   "target": "global:nokia",
+   "type": "supply",
+   "labelKo": "벤더 등록·공급 추진",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/97879",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_218410>global_wolfspeed",
+   "source": "krx:218410",
+   "target": "global:wolfspeed",
+   "type": "peer",
+   "labelKo": "GaN RF 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/97879",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_218410>global_qorvo",
+   "source": "krx:218410",
+   "target": "global:qorvo",
+   "type": "peer",
+   "labelKo": "GaN RF 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/97879",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_032500>global_samsung_net",
+   "source": "krx:032500",
+   "target": "global:samsung_net",
+   "type": "supply",
+   "labelKo": "RF 필터·안테나 (주요 고객)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_032500>global_zte",
+   "source": "krx:032500",
+   "target": "global:zte",
+   "type": "supply",
+   "labelKo": "RF 필터",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_032500>global_rakuten",
+   "source": "krx:032500",
+   "target": "global:rakuten",
+   "type": "supply",
+   "labelKo": "안테나·필터 (2020 16.3%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_032500>global_nokia",
+   "source": "krx:032500",
+   "target": "global:nokia",
+   "type": "supply",
+   "labelKo": "과거 최대 고객 (2020 45.8%) → 이탈",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032500>global_commscope",
+   "source": "krx:032500",
+   "target": "global:commscope",
+   "type": "peer",
+   "labelKo": "기지국 안테나·필터 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_032500>krx_037460",
+   "source": "krx:032500",
+   "target": "krx:037460",
+   "type": "peer",
+   "labelKo": "무선통신 장비",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202406071516033640108145",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_037460>krx_032640",
+   "source": "krx:037460",
+   "target": "krx:032640",
+   "type": "supply",
+   "labelKo": "중계기·통신장비 (LG유플러스 협력사)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=037460",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_189300>global_eutelsat",
+   "source": "krx:189300",
+   "target": "global:eutelsat",
+   "type": "supply",
+   "labelKo": "위성 지상 안테나 (상위 3사 56.6%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202504180045455570107094",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_189300>global_ses",
+   "source": "krx:189300",
+   "target": "global:ses",
+   "type": "supply",
+   "labelKo": "위성 지상 안테나 (상위 3사 56.6%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202504180045455570107094",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_189300>global_telesat",
+   "source": "krx:189300",
+   "target": "global:telesat",
+   "type": "supply",
+   "labelKo": "위성 지상 안테나 (상위 3사 56.6%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202504180045455570107094",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_189300>global_iridium",
+   "source": "krx:189300",
+   "target": "global:iridium",
+   "type": "supply",
+   "labelKo": "위성 지상 안테나 (상위 3사 56.6%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202504180045455570107094",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_189300>global_starlink",
+   "source": "krx:189300",
+   "target": "global:starlink",
+   "type": "peer",
+   "labelKo": "LEO 단말 경쟁 (스타링크 자체 단말)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.dailyinvest.kr/news/articleView.html?idxno=69602",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_189300>krx_017670",
+   "source": "krx:189300",
+   "target": "krx:017670",
+   "type": "partner",
+   "labelKo": "위성통신 협력",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/front/newsview.asp?key=202504180045455570107094",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_138080>global_samsung_net",
+   "source": "krx:138080",
+   "target": "global:samsung_net",
+   "type": "supply",
+   "labelKo": "5G 광트랜시버",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_138080>global_nokia",
+   "source": "krx:138080",
+   "target": "global:nokia",
+   "type": "supply",
+   "labelKo": "광트랜시버",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_138080>global_ericsson",
+   "source": "krx:138080",
+   "target": "global:ericsson",
+   "type": "supply",
+   "labelKo": "광트랜시버",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_138080>global_cisco",
+   "source": "krx:138080",
+   "target": "global:cisco",
+   "type": "supply",
+   "labelKo": "광트랜시버",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_138080>global_ciena",
+   "source": "krx:138080",
+   "target": "global:ciena",
+   "type": "supply",
+   "labelKo": "광트랜시버",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_138080>global_coherent",
+   "source": "krx:138080",
+   "target": "global:coherent",
+   "type": "peer",
+   "labelKo": "광트랜시버 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_138080>global_innolight",
+   "source": "krx:138080",
+   "target": "global:innolight",
+   "type": "peer",
+   "labelKo": "광트랜시버 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_138080>krx_069540",
+   "source": "krx:138080",
+   "target": "krx:069540",
+   "type": "peer",
+   "labelKo": "국내 광트랜시버",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.asiae.co.kr/article/2025121108425856023",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_069540>krx_017670",
+   "source": "krx:069540",
+   "target": "krx:017670",
+   "type": "supply",
+   "labelKo": "광트랜시버 (통신사 유선망)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=069540",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_069540>krx_030200",
+   "source": "krx:069540",
+   "target": "krx:030200",
+   "type": "supply",
+   "labelKo": "광트랜시버 (통신사 유선망)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=069540",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_069540>krx_032640",
+   "source": "krx:069540",
+   "target": "krx:032640",
+   "type": "supply",
+   "labelKo": "광트랜시버 (통신사 유선망)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=069540",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010170>krx_017670",
+   "source": "krx:010170",
+   "target": "krx:017670",
+   "type": "supply",
+   "labelKo": "광케이블·광섬유",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=010170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010170>krx_030200",
+   "source": "krx:010170",
+   "target": "krx:030200",
+   "type": "supply",
+   "labelKo": "광케이블·광섬유",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=010170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010170>krx_032640",
+   "source": "krx:010170",
+   "target": "krx:032640",
+   "type": "supply",
+   "labelKo": "광케이블·광섬유",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=010170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010170>global_prysmian",
+   "source": "krx:010170",
+   "target": "global:prysmian",
+   "type": "peer",
+   "labelKo": "광섬유·광케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=010170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010170>global_corning",
+   "source": "krx:010170",
+   "target": "global:corning",
+   "type": "peer",
+   "labelKo": "광섬유·광케이블 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=010170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:global_huawei>global_samsung_net",
+   "source": "global:huawei",
+   "target": "global:samsung_net",
+   "type": "peer",
+   "labelKo": "통신장비 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/97879",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

@@ -1,0 +1,888 @@
+{
+ "sectorId": "renewable",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "equipment": "발전설비 제조",
+  "material": "핵심 소재·부품",
+  "hydrogen": "수소·연료전지",
+  "structure": "구조물·보조설비",
+  "epc": "개발·EPC",
+  "end_customer": "터빈사·발주처",
+  "global_peer": "글로벌 태양광·풍력·연료전지"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:009830",
+   "type": "kr_listed",
+   "ticker": "009830",
+   "nameKo": "한화솔루션",
+   "nameEn": "한화솔루션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "equipment",
+   "role": "발전설비 제조"
+  },
+  {
+   "id": "krx:010060",
+   "type": "kr_listed",
+   "ticker": "010060",
+   "nameKo": "OCI홀딩스",
+   "nameEn": "OCI홀딩스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "material",
+   "role": "핵심 소재·부품"
+  },
+  {
+   "id": "krx:336260",
+   "type": "kr_listed",
+   "ticker": "336260",
+   "nameKo": "두산퓨얼셀",
+   "nameEn": "두산퓨얼셀",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "hydrogen",
+   "role": "수소·연료전지"
+  },
+  {
+   "id": "krx:112610",
+   "type": "kr_listed",
+   "ticker": "112610",
+   "nameKo": "씨에스윈드",
+   "nameEn": "씨에스윈드",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "structure",
+   "role": "구조물·보조설비"
+  },
+  {
+   "id": "krx:475150",
+   "type": "kr_listed",
+   "ticker": "475150",
+   "nameKo": "SK이터닉스",
+   "nameEn": "SK이터닉스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "epc",
+   "role": "개발·EPC"
+  },
+  {
+   "id": "krx:322000",
+   "type": "kr_listed",
+   "ticker": "322000",
+   "nameKo": "HD현대에너지솔루션",
+   "nameEn": "HD현대에너지솔루션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "equipment",
+   "role": "발전설비 제조"
+  },
+  {
+   "id": "krx:044490",
+   "type": "kr_listed",
+   "ticker": "044490",
+   "nameKo": "태웅",
+   "nameEn": "태웅",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "structure",
+   "role": "구조물·보조설비"
+  },
+  {
+   "id": "krx:100090",
+   "type": "kr_listed",
+   "ticker": "100090",
+   "nameKo": "SK오션플랜트",
+   "nameEn": "SK오션플랜트",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "structure",
+   "role": "구조물·보조설비"
+  },
+  {
+   "id": "krx:456040",
+   "type": "kr_listed",
+   "ticker": "456040",
+   "nameKo": "OCI",
+   "nameEn": "OCI",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "material",
+   "role": "핵심 소재·부품"
+  },
+  {
+   "id": "krx:126340",
+   "type": "kr_listed",
+   "ticker": "126340",
+   "nameKo": "비나텍",
+   "nameEn": "비나텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "hydrogen",
+   "role": "수소·연료전지"
+  },
+  {
+   "id": "krx:271940",
+   "type": "kr_listed",
+   "ticker": "271940",
+   "nameKo": "일진하이솔루스",
+   "nameEn": "일진하이솔루스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "hydrogen",
+   "role": "수소·연료전지"
+  },
+  {
+   "id": "krx:018000",
+   "type": "kr_listed",
+   "ticker": "018000",
+   "nameKo": "유니슨",
+   "nameEn": "유니슨",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "equipment",
+   "role": "발전설비 제조"
+  },
+  {
+   "id": "krx:011930",
+   "type": "kr_listed",
+   "ticker": "011930",
+   "nameKo": "신성이엔지",
+   "nameEn": "신성이엔지",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "equipment",
+   "role": "발전설비 제조"
+  },
+  {
+   "id": "global:vestas",
+   "type": "global",
+   "nameKo": "베스타스",
+   "nameEn": "Vestas",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "풍력터빈 1위 (타워 고객)",
+   "exchange": "CPH:VWS"
+  },
+  {
+   "id": "global:sgre",
+   "type": "global",
+   "nameKo": "지멘스가메사",
+   "nameEn": "Siemens Gamesa (Siemens Energy)",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "풍력터빈",
+   "exchange": "XETRA:ENR"
+  },
+  {
+   "id": "global:ge_vernova",
+   "type": "global",
+   "nameKo": "GE 버노바",
+   "nameEn": "GE Vernova",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "풍력터빈",
+   "exchange": "NYSE:GEV"
+  },
+  {
+   "id": "global:orsted",
+   "type": "global",
+   "nameKo": "오스테드",
+   "nameEn": "Ørsted",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "해상풍력 개발사",
+   "exchange": "CPH:ORSTED"
+  },
+  {
+   "id": "global:goldwind",
+   "type": "global",
+   "nameKo": "골드윈드",
+   "nameEn": "Goldwind",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "풍력터빈 (중국 1위)",
+   "exchange": "SZSE:002202"
+  },
+  {
+   "id": "global:longi",
+   "type": "global",
+   "nameKo": "롱지",
+   "nameEn": "LONGi",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "태양광 모듈·웨이퍼",
+   "exchange": "SSE:601012"
+  },
+  {
+   "id": "global:jinko",
+   "type": "global",
+   "nameKo": "징코솔라",
+   "nameEn": "JinkoSolar",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "태양광 모듈",
+   "exchange": "NYSE:JKS"
+  },
+  {
+   "id": "global:trina",
+   "type": "global",
+   "nameKo": "트리나솔라",
+   "nameEn": "Trina Solar",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "태양광 모듈",
+   "exchange": "SSE:688599"
+  },
+  {
+   "id": "global:first_solar",
+   "type": "global",
+   "nameKo": "퍼스트솔라",
+   "nameEn": "First Solar",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "박막 모듈 (미국)",
+   "exchange": "NASDAQ:FSLR"
+  },
+  {
+   "id": "global:tongwei",
+   "type": "global",
+   "nameKo": "통위",
+   "nameEn": "Tongwei",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "폴리실리콘·셀",
+   "exchange": "SSE:600438"
+  },
+  {
+   "id": "global:wacker",
+   "type": "global",
+   "nameKo": "바커",
+   "nameEn": "Wacker Chemie",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "폴리실리콘 (비중국)",
+   "exchange": "XETRA:WCH"
+  },
+  {
+   "id": "global:cubicpv",
+   "type": "global",
+   "nameKo": "큐빅PV",
+   "nameEn": "CubicPV",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "폴리실리콘 장기고객 (10억$)",
+   "exchange": ""
+  },
+  {
+   "id": "global:bloom",
+   "type": "global",
+   "nameKo": "블룸에너지",
+   "nameEn": "Bloom Energy",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "SOFC 연료전지 (SK와 JV)",
+   "exchange": "NYSE:BE"
+  },
+  {
+   "id": "global:fuelcell_energy",
+   "type": "global",
+   "nameKo": "퓨얼셀에너지",
+   "nameEn": "FuelCell Energy",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "연료전지",
+   "exchange": "NASDAQ:FCEL"
+  },
+  {
+   "id": "global:plug",
+   "type": "global",
+   "nameKo": "플러그파워",
+   "nameEn": "Plug Power",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "수소·연료전지",
+   "exchange": "NASDAQ:PLUG"
+  },
+  {
+   "id": "global:hexagon",
+   "type": "global",
+   "nameKo": "헥사곤 퓨러스",
+   "nameEn": "Hexagon Purus",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "수소 저장용기 (Type4)",
+   "exchange": "OSL:HPUR"
+  },
+  {
+   "id": "global:sk_ecoplant",
+   "type": "kr_other",
+   "nameKo": "SK에코플랜트",
+   "nameEn": "SK ecoplant",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "연료전지·재생에너지 EPC",
+   "exchange": ""
+  },
+  {
+   "id": "global:hanwha_qcells",
+   "type": "kr_other",
+   "nameKo": "한화큐셀 (한화솔루션 부문)",
+   "nameEn": "Qcells",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "태양광 셀·모듈",
+   "exchange": ""
+  },
+  {
+   "id": "global:hyundai_mobis",
+   "type": "kr_other",
+   "nameKo": "현대차·모비스",
+   "nameEn": "Hyundai Motor / Mobis",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "수소차 (넥쏘) 용기",
+   "exchange": "KRX:005380"
+  },
+  {
+   "id": "global:doosan_enerbility",
+   "type": "kr_other",
+   "nameKo": "두산에너빌리티",
+   "nameEn": "Doosan Enerbility",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "풍력터빈·모회사",
+   "exchange": "KRX:034020"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_009830>global_hanwha_qcells",
+   "source": "krx:009830",
+   "target": "global:hanwha_qcells",
+   "type": "equity",
+   "labelKo": "한화솔루션 큐셀부문 (미국 주택·상업용 모듈 1위 35%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/2023/07/03/20230703500014",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009830>global_longi",
+   "source": "krx:009830",
+   "target": "global:longi",
+   "type": "peer",
+   "labelKo": "태양광 모듈 경쟁 (미국 시장)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Silicon_Module_Super_League",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009830>global_jinko",
+   "source": "krx:009830",
+   "target": "global:jinko",
+   "type": "peer",
+   "labelKo": "태양광 모듈 경쟁 (미국 시장)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Silicon_Module_Super_League",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009830>global_trina",
+   "source": "krx:009830",
+   "target": "global:trina",
+   "type": "peer",
+   "labelKo": "태양광 모듈 경쟁 (미국 시장)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Silicon_Module_Super_League",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_009830>global_first_solar",
+   "source": "krx:009830",
+   "target": "global:first_solar",
+   "type": "peer",
+   "labelKo": "태양광 모듈 경쟁 (미국 시장)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Silicon_Module_Super_League",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_010060>krx_456040",
+   "source": "krx:010060",
+   "target": "krx:456040",
+   "type": "equity",
+   "labelKo": "지주사 (OCI홀딩스→OCI, 2023 인적분할)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/OCI_(company)",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010060>global_cubicpv",
+   "source": "krx:010060",
+   "target": "global:cubicpv",
+   "type": "supply",
+   "labelKo": "말레이시아 폴리실리콘 장기공급 10억$ (2025~2033)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20231219084450939",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_010060>krx_009830",
+   "source": "krx:010060",
+   "target": "krx:009830",
+   "type": "supply",
+   "labelKo": "비중국 폴리실리콘 (한화큐셀향)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55206",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010060>global_tongwei",
+   "source": "krx:010060",
+   "target": "global:tongwei",
+   "type": "peer",
+   "labelKo": "폴리실리콘 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55206",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010060>global_wacker",
+   "source": "krx:010060",
+   "target": "global:wacker",
+   "type": "peer",
+   "labelKo": "폴리실리콘 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=55206",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_322000>krx_009830",
+   "source": "krx:322000",
+   "target": "krx:009830",
+   "type": "peer",
+   "labelKo": "국내 태양광 모듈 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/2023/07/03/20230703500014",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011930>krx_009830",
+   "source": "krx:011930",
+   "target": "krx:009830",
+   "type": "peer",
+   "labelKo": "국내 태양광 모듈",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/2023/07/03/20230703500014",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_322000>global_longi",
+   "source": "krx:322000",
+   "target": "global:longi",
+   "type": "peer",
+   "labelKo": "태양광 모듈 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Silicon_Module_Super_League",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_322000>global_jinko",
+   "source": "krx:322000",
+   "target": "global:jinko",
+   "type": "peer",
+   "labelKo": "태양광 모듈 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Silicon_Module_Super_League",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_112610>global_vestas",
+   "source": "krx:112610",
+   "target": "global:vestas",
+   "type": "supply",
+   "labelKo": "풍력 타워 (주요 고객)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165769",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_112610>global_sgre",
+   "source": "krx:112610",
+   "target": "global:sgre",
+   "type": "supply",
+   "labelKo": "풍력 타워 (주요 고객)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165769",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_112610>global_ge_vernova",
+   "source": "krx:112610",
+   "target": "global:ge_vernova",
+   "type": "supply",
+   "labelKo": "풍력 타워 (주요 고객)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165769",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_112610>global_orsted",
+   "source": "krx:112610",
+   "target": "global:orsted",
+   "type": "supply",
+   "labelKo": "해상풍력 타워·모노파일",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165769",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_044490>global_vestas",
+   "source": "krx:044490",
+   "target": "global:vestas",
+   "type": "supply",
+   "labelKo": "풍력 단조품 (메인샤프트 등)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=044490",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_044490>krx_112610",
+   "source": "krx:044490",
+   "target": "krx:112610",
+   "type": "peer",
+   "labelKo": "풍력 구조물·부품",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165769",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_100090>global_orsted",
+   "source": "krx:100090",
+   "target": "global:orsted",
+   "type": "supply",
+   "labelKo": "해상풍력 하부구조물 (대만 44% 점유)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260506152024643",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_100090>krx_112610",
+   "source": "krx:100090",
+   "target": "krx:112610",
+   "type": "peer",
+   "labelKo": "해상풍력 하부구조물·모노파일",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260506152024643",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018000>global_doosan_enerbility",
+   "source": "krx:018000",
+   "target": "global:doosan_enerbility",
+   "type": "peer",
+   "labelKo": "국내 풍력터빈 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=018000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018000>global_vestas",
+   "source": "krx:018000",
+   "target": "global:vestas",
+   "type": "peer",
+   "labelKo": "풍력터빈 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=018000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018000>global_sgre",
+   "source": "krx:018000",
+   "target": "global:sgre",
+   "type": "peer",
+   "labelKo": "풍력터빈 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=018000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018000>global_goldwind",
+   "source": "krx:018000",
+   "target": "global:goldwind",
+   "type": "peer",
+   "labelKo": "풍력터빈 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=018000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_doosan_enerbility>krx_336260",
+   "source": "global:doosan_enerbility",
+   "target": "krx:336260",
+   "type": "partner",
+   "labelKo": "두산 계열 (연료전지)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20211026150627414",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336260>global_sk_ecoplant",
+   "source": "krx:336260",
+   "target": "global:sk_ecoplant",
+   "type": "peer",
+   "labelKo": "발전용 연료전지 점유율 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20211026150627414",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_bloom>global_sk_ecoplant",
+   "source": "global:bloom",
+   "target": "global:sk_ecoplant",
+   "type": "partner",
+   "labelKo": "블룸SK퓨얼셀 JV",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20211026150627414",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336260>global_bloom",
+   "source": "krx:336260",
+   "target": "global:bloom",
+   "type": "peer",
+   "labelKo": "연료전지 경쟁 (PAFC·SOFC)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20211026150627414",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336260>global_fuelcell_energy",
+   "source": "krx:336260",
+   "target": "global:fuelcell_energy",
+   "type": "peer",
+   "labelKo": "연료전지 경쟁 (PAFC·SOFC)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20211026150627414",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_475150>krx_336260",
+   "source": "krx:475150",
+   "target": "krx:336260",
+   "type": "peer",
+   "labelKo": "연료전지·재생에너지 개발",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.ajunews.com/view/20211026150627414",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_475150>global_sk_ecoplant",
+   "source": "krx:475150",
+   "target": "global:sk_ecoplant",
+   "type": "partner",
+   "labelKo": "SK 계열 (구 SK디앤디 에너지 부문)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=475150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_271940>global_hyundai_mobis",
+   "source": "krx:271940",
+   "target": "global:hyundai_mobis",
+   "type": "supply",
+   "labelKo": "수소차 Type4 저장용기 (넥쏘)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=271940",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_271940>global_hexagon",
+   "source": "krx:271940",
+   "target": "global:hexagon",
+   "type": "peer",
+   "labelKo": "수소 저장용기 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=271940",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_126340>krx_336260",
+   "source": "krx:126340",
+   "target": "krx:336260",
+   "type": "supply",
+   "labelKo": "연료전지용 소재·슈퍼커패시터",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=126340",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_126340>global_plug",
+   "source": "krx:126340",
+   "target": "global:plug",
+   "type": "peer",
+   "labelKo": "수소 연료전지 부품",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=126340",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

@@ -1,0 +1,1540 @@
+{
+ "sectorId": "software",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "platform": "인터넷 플랫폼",
+  "itservice": "IT서비스·SI",
+  "security": "보안·인증",
+  "infra": "클라우드·인터넷 인프라",
+  "payment": "결제·데이터 인프라",
+  "enterprise": "기업 소프트웨어",
+  "ai": "AI 소프트웨어",
+  "end_customer": "수요처·그룹사",
+  "global_peer": "글로벌 빅테크·IT서비스"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:035420",
+   "type": "kr_listed",
+   "ticker": "035420",
+   "nameKo": "NAVER",
+   "nameEn": "NAVER",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "platform",
+   "role": "인터넷 플랫폼"
+  },
+  {
+   "id": "krx:018260",
+   "type": "kr_listed",
+   "ticker": "018260",
+   "nameKo": "삼성에스디에스",
+   "nameEn": "삼성에스디에스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "itservice",
+   "role": "IT서비스·SI"
+  },
+  {
+   "id": "krx:035720",
+   "type": "kr_listed",
+   "ticker": "035720",
+   "nameKo": "카카오",
+   "nameEn": "카카오",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "platform",
+   "role": "인터넷 플랫폼"
+  },
+  {
+   "id": "krx:064400",
+   "type": "kr_listed",
+   "ticker": "064400",
+   "nameKo": "LG씨엔에스",
+   "nameEn": "LG씨엔에스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "itservice",
+   "role": "IT서비스·SI"
+  },
+  {
+   "id": "krx:022100",
+   "type": "kr_listed",
+   "ticker": "022100",
+   "nameKo": "포스코DX",
+   "nameEn": "포스코DX",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "itservice",
+   "role": "IT서비스·SI"
+  },
+  {
+   "id": "krx:181710",
+   "type": "kr_listed",
+   "ticker": "181710",
+   "nameKo": "NHN",
+   "nameEn": "NHN",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "platform",
+   "role": "인터넷 플랫폼"
+  },
+  {
+   "id": "krx:053800",
+   "type": "kr_listed",
+   "ticker": "053800",
+   "nameKo": "안랩",
+   "nameEn": "안랩",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "security",
+   "role": "보안·인증"
+  },
+  {
+   "id": "krx:124500",
+   "type": "kr_listed",
+   "ticker": "124500",
+   "nameKo": "아이티센글로벌",
+   "nameEn": "아이티센글로벌",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "itservice",
+   "role": "IT서비스·SI"
+  },
+  {
+   "id": "krx:093320",
+   "type": "kr_listed",
+   "ticker": "093320",
+   "nameKo": "케이아이엔엑스",
+   "nameEn": "케이아이엔엑스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "infra",
+   "role": "클라우드·인터넷 인프라"
+  },
+  {
+   "id": "krx:052400",
+   "type": "kr_listed",
+   "ticker": "052400",
+   "nameKo": "코나아이",
+   "nameEn": "코나아이",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "payment",
+   "role": "결제·데이터 인프라"
+  },
+  {
+   "id": "krx:079940",
+   "type": "kr_listed",
+   "ticker": "079940",
+   "nameKo": "가비아",
+   "nameEn": "가비아",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "infra",
+   "role": "클라우드·인터넷 인프라"
+  },
+  {
+   "id": "krx:060250",
+   "type": "kr_listed",
+   "ticker": "060250",
+   "nameKo": "NHN KCP",
+   "nameEn": "NHN KCP",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "payment",
+   "role": "결제·데이터 인프라"
+  },
+  {
+   "id": "krx:356680",
+   "type": "kr_listed",
+   "ticker": "356680",
+   "nameKo": "엑스게이트",
+   "nameEn": "엑스게이트",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "security",
+   "role": "보안·인증"
+  },
+  {
+   "id": "krx:030520",
+   "type": "kr_listed",
+   "ticker": "030520",
+   "nameKo": "한컴",
+   "nameEn": "한컴",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "enterprise",
+   "role": "기업 소프트웨어"
+  },
+  {
+   "id": "krx:477850",
+   "type": "kr_listed",
+   "ticker": "477850",
+   "nameKo": "마키나락스",
+   "nameEn": "마키나락스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "ai",
+   "role": "AI 소프트웨어"
+  },
+  {
+   "id": "krx:486990",
+   "type": "kr_listed",
+   "ticker": "486990",
+   "nameKo": "노타",
+   "nameEn": "노타",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "ai",
+   "role": "AI 소프트웨어"
+  },
+  {
+   "id": "krx:036800",
+   "type": "kr_listed",
+   "ticker": "036800",
+   "nameKo": "나이스정보통신",
+   "nameEn": "나이스정보통신",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "payment",
+   "role": "결제·데이터 인프라"
+  },
+  {
+   "id": "krx:042000",
+   "type": "kr_listed",
+   "ticker": "042000",
+   "nameKo": "카페24",
+   "nameEn": "카페24",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "enterprise",
+   "role": "기업 소프트웨어"
+  },
+  {
+   "id": "krx:236200",
+   "type": "kr_listed",
+   "ticker": "236200",
+   "nameKo": "슈프리마",
+   "nameEn": "슈프리마",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "security",
+   "role": "보안·인증"
+  },
+  {
+   "id": "krx:064260",
+   "type": "kr_listed",
+   "ticker": "064260",
+   "nameKo": "다날",
+   "nameEn": "다날",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "payment",
+   "role": "결제·데이터 인프라"
+  },
+  {
+   "id": "krx:025770",
+   "type": "kr_listed",
+   "ticker": "025770",
+   "nameKo": "한국정보통신",
+   "nameEn": "한국정보통신",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "payment",
+   "role": "결제·데이터 인프라"
+  },
+  {
+   "id": "global:google",
+   "type": "global",
+   "nameKo": "구글(알파벳)",
+   "nameEn": "Alphabet",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "검색·클라우드·AI",
+   "exchange": "NASDAQ:GOOGL"
+  },
+  {
+   "id": "global:meta",
+   "type": "global",
+   "nameKo": "메타",
+   "nameEn": "Meta Platforms",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "SNS·메신저",
+   "exchange": "NASDAQ:META"
+  },
+  {
+   "id": "global:microsoft",
+   "type": "global",
+   "nameKo": "마이크로소프트",
+   "nameEn": "Microsoft",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "클라우드·오피스",
+   "exchange": "NASDAQ:MSFT"
+  },
+  {
+   "id": "global:amazon",
+   "type": "global",
+   "nameKo": "아마존(AWS)",
+   "nameEn": "Amazon / AWS",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "클라우드·커머스",
+   "exchange": "NASDAQ:AMZN"
+  },
+  {
+   "id": "global:openai",
+   "type": "global",
+   "nameKo": "오픈AI",
+   "nameEn": "OpenAI",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "생성형 AI",
+   "exchange": ""
+  },
+  {
+   "id": "global:nvidia",
+   "type": "global",
+   "nameKo": "엔비디아",
+   "nameEn": "NVIDIA",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "GPU·AI 인프라 (네이버 3대주주)",
+   "exchange": "NASDAQ:NVDA"
+  },
+  {
+   "id": "global:apple",
+   "type": "global",
+   "nameKo": "애플",
+   "nameEn": "Apple",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "애플페이",
+   "exchange": "NASDAQ:AAPL"
+  },
+  {
+   "id": "global:softbank",
+   "type": "global",
+   "nameKo": "소프트뱅크",
+   "nameEn": "SoftBank Group",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "A홀딩스 공동주주",
+   "exchange": "TSE:9984"
+  },
+  {
+   "id": "global:lineyahoo",
+   "type": "global",
+   "nameKo": "라인야후",
+   "nameEn": "LY Corp.",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "라인·야후재팬",
+   "exchange": "TSE:4689"
+  },
+  {
+   "id": "global:tencent",
+   "type": "global",
+   "nameKo": "텐센트",
+   "nameEn": "Tencent",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "메신저·게임·핀테크",
+   "exchange": "HKEX:0700"
+  },
+  {
+   "id": "global:accenture",
+   "type": "global",
+   "nameKo": "액센츄어",
+   "nameEn": "Accenture",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "IT서비스 1위",
+   "exchange": "NYSE:ACN"
+  },
+  {
+   "id": "global:infosys",
+   "type": "global",
+   "nameKo": "인포시스",
+   "nameEn": "Infosys",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "IT서비스",
+   "exchange": "NYSE:INFY"
+  },
+  {
+   "id": "global:tcs",
+   "type": "global",
+   "nameKo": "TCS",
+   "nameEn": "Tata Consultancy Services",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "IT서비스",
+   "exchange": "NSE:TCS"
+  },
+  {
+   "id": "global:capgemini",
+   "type": "global",
+   "nameKo": "캡제미니",
+   "nameEn": "Capgemini",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "IT서비스",
+   "exchange": "EPA:CAP"
+  },
+  {
+   "id": "global:ibm",
+   "type": "global",
+   "nameKo": "IBM",
+   "nameEn": "IBM",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "IT서비스·하이브리드 클라우드",
+   "exchange": "NYSE:IBM"
+  },
+  {
+   "id": "global:adyen",
+   "type": "global",
+   "nameKo": "아디옌",
+   "nameEn": "Adyen",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "글로벌 PG",
+   "exchange": "AMS:ADYEN"
+  },
+  {
+   "id": "global:stripe",
+   "type": "global",
+   "nameKo": "스트라이프",
+   "nameEn": "Stripe",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "글로벌 PG",
+   "exchange": ""
+  },
+  {
+   "id": "global:paypal",
+   "type": "global",
+   "nameKo": "페이팔",
+   "nameEn": "PayPal",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "결제",
+   "exchange": "NASDAQ:PYPL"
+  },
+  {
+   "id": "global:shopify",
+   "type": "global",
+   "nameKo": "쇼피파이",
+   "nameEn": "Shopify",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "커머스 플랫폼",
+   "exchange": "NASDAQ:SHOP"
+  },
+  {
+   "id": "global:crowdstrike",
+   "type": "global",
+   "nameKo": "크라우드스트라이크",
+   "nameEn": "CrowdStrike",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "엔드포인트 보안",
+   "exchange": "NASDAQ:CRWD"
+  },
+  {
+   "id": "global:palo_alto",
+   "type": "global",
+   "nameKo": "팔로알토네트웍스",
+   "nameEn": "Palo Alto Networks",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "네트워크 보안",
+   "exchange": "NASDAQ:PANW"
+  },
+  {
+   "id": "global:fortinet",
+   "type": "global",
+   "nameKo": "포티넷",
+   "nameEn": "Fortinet",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "방화벽·UTM",
+   "exchange": "NASDAQ:FTNT"
+  },
+  {
+   "id": "global:idemia",
+   "type": "global",
+   "nameKo": "아이데미아",
+   "nameEn": "IDEMIA",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "생체인식",
+   "exchange": ""
+  },
+  {
+   "id": "global:hid",
+   "type": "global",
+   "nameKo": "HID 글로벌",
+   "nameEn": "HID Global (ASSA ABLOY)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "출입통제·생체인식",
+   "exchange": "STO:ASSA-B"
+  },
+  {
+   "id": "global:equinix",
+   "type": "global",
+   "nameKo": "이퀴닉스",
+   "nameEn": "Equinix",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "IDC·IX",
+   "exchange": "NASDAQ:EQIX"
+  },
+  {
+   "id": "global:godaddy",
+   "type": "global",
+   "nameKo": "고대디",
+   "nameEn": "GoDaddy",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "도메인·호스팅",
+   "exchange": "NYSE:GDDY"
+  },
+  {
+   "id": "global:samsung",
+   "type": "kr_other",
+   "nameKo": "삼성전자",
+   "nameEn": "Samsung Electronics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "그룹 IT 수요",
+   "exchange": "KRX:005930"
+  },
+  {
+   "id": "global:lg",
+   "type": "kr_other",
+   "nameKo": "LG그룹",
+   "nameEn": "LG Group",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "그룹 IT 수요",
+   "exchange": ""
+  },
+  {
+   "id": "global:posco",
+   "type": "kr_other",
+   "nameKo": "포스코그룹",
+   "nameEn": "POSCO Group",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "그룹 IT 수요",
+   "exchange": "KRX:005490"
+  },
+  {
+   "id": "global:dunamu",
+   "type": "kr_other",
+   "nameKo": "두나무",
+   "nameEn": "Dunamu (Upbit)",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "가상자산 거래소 (네이버 결합)",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:global_nvidia>krx_035420",
+   "source": "global:nvidia",
+   "target": "krx:035420",
+   "type": "equity",
+   "labelKo": "엔비디아 네이버 지분 4.5% (AI 팩토리 1.48조 투자)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2026091516152870323",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_035420>global_nvidia",
+   "source": "krx:035420",
+   "target": "global:nvidia",
+   "type": "partner",
+   "labelKo": "AI 팩토리 (데이터센터·GPU·모델)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2026091516152870323",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_035420>global_dunamu",
+   "source": "krx:035420",
+   "target": "global:dunamu",
+   "type": "partner",
+   "labelKo": "네이버파이낸셜–두나무 결합 (결제·가상자산)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2026091516152870323",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_035420>global_lineyahoo",
+   "source": "krx:035420",
+   "target": "global:lineyahoo",
+   "type": "equity",
+   "labelKo": "A홀딩스 50% (라인야후 모회사), 위탁관계 2026.3 종료",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20240701000383",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_softbank>global_lineyahoo",
+   "source": "global:softbank",
+   "target": "global:lineyahoo",
+   "type": "equity",
+   "labelKo": "A홀딩스 50%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20240701000383",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_035420>global_softbank",
+   "source": "krx:035420",
+   "target": "global:softbank",
+   "type": "partner",
+   "labelKo": "A홀딩스 공동경영",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.etnews.com/20240701000383",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035420>krx_035720",
+   "source": "krx:035420",
+   "target": "krx:035720",
+   "type": "peer",
+   "labelKo": "국내 인터넷 플랫폼 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2026091516152870323",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035420>global_google",
+   "source": "krx:035420",
+   "target": "global:google",
+   "type": "peer",
+   "labelKo": "검색·AI 플랫폼 경쟁 (글로벌 빅테크)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260405060127231",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035420>global_meta",
+   "source": "krx:035420",
+   "target": "global:meta",
+   "type": "peer",
+   "labelKo": "검색·AI 플랫폼 경쟁 (글로벌 빅테크)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260405060127231",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035420>global_openai",
+   "source": "krx:035420",
+   "target": "global:openai",
+   "type": "peer",
+   "labelKo": "검색·AI 플랫폼 경쟁 (글로벌 빅테크)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260405060127231",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035420>global_microsoft",
+   "source": "krx:035420",
+   "target": "global:microsoft",
+   "type": "peer",
+   "labelKo": "검색·AI 플랫폼 경쟁 (글로벌 빅테크)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260405060127231",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035720>global_meta",
+   "source": "krx:035720",
+   "target": "global:meta",
+   "type": "peer",
+   "labelKo": "메신저·SNS 플랫폼 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260405060127231",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035720>global_tencent",
+   "source": "krx:035720",
+   "target": "global:tencent",
+   "type": "peer",
+   "labelKo": "메신저·SNS 플랫폼 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260405060127231",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035720>global_lineyahoo",
+   "source": "krx:035720",
+   "target": "global:lineyahoo",
+   "type": "peer",
+   "labelKo": "메신저·SNS 플랫폼 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20260405060127231",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_181710>krx_035720",
+   "source": "krx:181710",
+   "target": "krx:035720",
+   "type": "peer",
+   "labelKo": "게임·결제(페이코 vs 카카오페이)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_181710>krx_060250",
+   "source": "krx:181710",
+   "target": "krx:060250",
+   "type": "equity",
+   "labelKo": "NHN 계열 PG (NHN KCP)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://kcp.co.kr/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_035420>krx_042000",
+   "source": "krx:035420",
+   "target": "krx:042000",
+   "type": "equity",
+   "labelKo": "네이버 카페24 지분 인수 (2021, 자본 교류)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2021080893911",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_042000>global_shopify",
+   "source": "krx:042000",
+   "target": "global:shopify",
+   "type": "peer",
+   "labelKo": "커머스 플랫폼 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/cafe24",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_060250>krx_042000",
+   "source": "krx:060250",
+   "target": "krx:042000",
+   "type": "partner",
+   "labelKo": "카페24 사업자 애플페이 결제 지원",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thevaluenews.co.kr/news/175405",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_060250>global_apple",
+   "source": "krx:060250",
+   "target": "global:apple",
+   "type": "partner",
+   "labelKo": "애플페이 온·오프라인 결제 인프라",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thevaluenews.co.kr/news/175405",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_samsung>krx_018260",
+   "source": "global:samsung",
+   "target": "krx:018260",
+   "type": "equity",
+   "labelKo": "삼성 계열 (삼성SDS)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ceoscoredaily.com/page/view/2026062316245296286",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018260>global_samsung",
+   "source": "krx:018260",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "IT서비스 (내부거래 비중 증가)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ceoscoredaily.com/page/view/2026062316245296286",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lg>krx_064400",
+   "source": "global:lg",
+   "target": "krx:064400",
+   "type": "equity",
+   "labelKo": "LG 계열 (LG CNS)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260825110446",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_064400>global_lg",
+   "source": "krx:064400",
+   "target": "global:lg",
+   "type": "supply",
+   "labelKo": "IT서비스 (내부거래 48.9%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260825110446",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_posco>krx_022100",
+   "source": "global:posco",
+   "target": "krx:022100",
+   "type": "equity",
+   "labelKo": "포스코 계열 (포스코DX)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260201n00933",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_022100>global_posco",
+   "source": "krx:022100",
+   "target": "global:posco",
+   "type": "supply",
+   "labelKo": "그룹 IT·자동화 (그룹 의존도 높음)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260201n00933",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018260>krx_064400",
+   "source": "krx:018260",
+   "target": "krx:064400",
+   "type": "peer",
+   "labelKo": "IT서비스 빅2",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.ceoscoredaily.com/page/view/2026062316245296286",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018260>krx_022100",
+   "source": "krx:018260",
+   "target": "krx:022100",
+   "type": "peer",
+   "labelKo": "대기업 IT서비스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260825110446",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064400>krx_022100",
+   "source": "krx:064400",
+   "target": "krx:022100",
+   "type": "peer",
+   "labelKo": "대기업 IT서비스",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20260825110446",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_124500>krx_018260",
+   "source": "krx:124500",
+   "target": "krx:018260",
+   "type": "peer",
+   "labelKo": "공공 SI",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260201n02921",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018260>global_accenture",
+   "source": "krx:018260",
+   "target": "global:accenture",
+   "type": "peer",
+   "labelKo": "글로벌 IT서비스 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://sitsi.pacanalyst.com/top-10-it-services-worldwide-228520/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018260>global_infosys",
+   "source": "krx:018260",
+   "target": "global:infosys",
+   "type": "peer",
+   "labelKo": "글로벌 IT서비스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://sitsi.pacanalyst.com/top-10-it-services-worldwide-228520/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018260>global_tcs",
+   "source": "krx:018260",
+   "target": "global:tcs",
+   "type": "peer",
+   "labelKo": "글로벌 IT서비스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://sitsi.pacanalyst.com/top-10-it-services-worldwide-228520/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018260>global_capgemini",
+   "source": "krx:018260",
+   "target": "global:capgemini",
+   "type": "peer",
+   "labelKo": "글로벌 IT서비스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://sitsi.pacanalyst.com/top-10-it-services-worldwide-228520/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018260>global_ibm",
+   "source": "krx:018260",
+   "target": "global:ibm",
+   "type": "peer",
+   "labelKo": "글로벌 IT서비스 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://sitsi.pacanalyst.com/top-10-it-services-worldwide-228520/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064400>global_accenture",
+   "source": "krx:064400",
+   "target": "global:accenture",
+   "type": "peer",
+   "labelKo": "글로벌 IT서비스·클라우드 MSP 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://sitsi.pacanalyst.com/top-10-it-services-worldwide-228520/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064400>global_ibm",
+   "source": "krx:064400",
+   "target": "global:ibm",
+   "type": "peer",
+   "labelKo": "글로벌 IT서비스·클라우드 MSP 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://sitsi.pacanalyst.com/top-10-it-services-worldwide-228520/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_018260>global_amazon",
+   "source": "krx:018260",
+   "target": "global:amazon",
+   "type": "partner",
+   "labelKo": "클라우드 MSP (하이퍼스케일러 파트너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=29974",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_018260>global_microsoft",
+   "source": "krx:018260",
+   "target": "global:microsoft",
+   "type": "partner",
+   "labelKo": "클라우드 MSP (하이퍼스케일러 파트너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=29974",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_018260>global_google",
+   "source": "krx:018260",
+   "target": "global:google",
+   "type": "partner",
+   "labelKo": "클라우드 MSP (하이퍼스케일러 파트너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=29974",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_064400>global_amazon",
+   "source": "krx:064400",
+   "target": "global:amazon",
+   "type": "partner",
+   "labelKo": "클라우드 MSP (하이퍼스케일러 파트너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=29974",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_064400>global_microsoft",
+   "source": "krx:064400",
+   "target": "global:microsoft",
+   "type": "partner",
+   "labelKo": "클라우드 MSP (하이퍼스케일러 파트너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=29974",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_064400>global_google",
+   "source": "krx:064400",
+   "target": "global:google",
+   "type": "partner",
+   "labelKo": "클라우드 MSP (하이퍼스케일러 파트너)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.kharn.kr/news/article.html?no=29974",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060250>krx_064260",
+   "source": "krx:060250",
+   "target": "krx:064260",
+   "type": "peer",
+   "labelKo": "PG·VAN 경쟁 (상위 5개 PG 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060250>krx_036800",
+   "source": "krx:060250",
+   "target": "krx:036800",
+   "type": "peer",
+   "labelKo": "PG·VAN 경쟁 (상위 5개 PG 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060250>krx_025770",
+   "source": "krx:060250",
+   "target": "krx:025770",
+   "type": "peer",
+   "labelKo": "PG·VAN 경쟁 (상위 5개 PG 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064260>krx_036800",
+   "source": "krx:064260",
+   "target": "krx:036800",
+   "type": "peer",
+   "labelKo": "PG·VAN 경쟁 (상위 5개 PG 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_064260>krx_025770",
+   "source": "krx:064260",
+   "target": "krx:025770",
+   "type": "peer",
+   "labelKo": "PG·VAN 경쟁 (상위 5개 PG 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036800>krx_025770",
+   "source": "krx:036800",
+   "target": "krx:025770",
+   "type": "peer",
+   "labelKo": "PG·VAN 경쟁 (상위 5개 PG 80%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060250>global_adyen",
+   "source": "krx:060250",
+   "target": "global:adyen",
+   "type": "peer",
+   "labelKo": "글로벌 PG 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060250>global_stripe",
+   "source": "krx:060250",
+   "target": "global:stripe",
+   "type": "peer",
+   "labelKo": "글로벌 PG 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_060250>global_paypal",
+   "source": "krx:060250",
+   "target": "global:paypal",
+   "type": "peer",
+   "labelKo": "글로벌 PG 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_035420>krx_060250",
+   "source": "krx:035420",
+   "target": "krx:060250",
+   "type": "partner",
+   "labelKo": "네이버페이 결제 연동",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_052400>krx_064260",
+   "source": "krx:052400",
+   "target": "krx:064260",
+   "type": "peer",
+   "labelKo": "결제 플랫폼 (지역화폐·휴대폰결제)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://dealsite.co.kr/articles/165471",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_053800>krx_356680",
+   "source": "krx:053800",
+   "target": "krx:356680",
+   "type": "peer",
+   "labelKo": "보안 (엔드포인트 vs 네트워크)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.ahnlab.com",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_053800>global_crowdstrike",
+   "source": "krx:053800",
+   "target": "global:crowdstrike",
+   "type": "peer",
+   "labelKo": "엔드포인트 보안 경쟁 (안랩 국내 1위·아태 리더십)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260805n22596",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_053800>global_palo_alto",
+   "source": "krx:053800",
+   "target": "global:palo_alto",
+   "type": "peer",
+   "labelKo": "엔드포인트 보안 경쟁 (안랩 국내 1위·아태 리더십)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260805n22596",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_053800>global_fortinet",
+   "source": "krx:053800",
+   "target": "global:fortinet",
+   "type": "peer",
+   "labelKo": "엔드포인트 보안 경쟁 (안랩 국내 1위·아태 리더십)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260805n22596",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_356680>global_palo_alto",
+   "source": "krx:356680",
+   "target": "global:palo_alto",
+   "type": "peer",
+   "labelKo": "방화벽·VPN 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.xgate.co.kr",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_356680>global_fortinet",
+   "source": "krx:356680",
+   "target": "global:fortinet",
+   "type": "peer",
+   "labelKo": "방화벽·VPN 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.xgate.co.kr",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_236200>global_idemia",
+   "source": "krx:236200",
+   "target": "global:idemia",
+   "type": "peer",
+   "labelKo": "생체인식 경쟁 (슈프리마 中제외 글로벌 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.supremainc.com/ko/about/news-detail.asp?iBOARD_CONT_NO=3919&News_Type=Releases",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_236200>global_hid",
+   "source": "krx:236200",
+   "target": "global:hid",
+   "type": "peer",
+   "labelKo": "생체인식 경쟁 (슈프리마 中제외 글로벌 1위)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.supremainc.com/ko/about/news-detail.asp?iBOARD_CONT_NO=3919&News_Type=Releases",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_093320>global_equinix",
+   "source": "krx:093320",
+   "target": "global:equinix",
+   "type": "peer",
+   "labelKo": "IX·IDC (중립 IX)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.kinx.net",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079940>global_godaddy",
+   "source": "krx:079940",
+   "target": "global:godaddy",
+   "type": "peer",
+   "labelKo": "도메인·호스팅",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.gabia.com",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079940>krx_093320",
+   "source": "krx:079940",
+   "target": "krx:093320",
+   "type": "peer",
+   "labelKo": "클라우드·IDC",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.kinx.net",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079940>global_amazon",
+   "source": "krx:079940",
+   "target": "global:amazon",
+   "type": "peer",
+   "labelKo": "클라우드 (국내 중소기업 vs 하이퍼스케일러)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.gabia.com",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_079940>global_microsoft",
+   "source": "krx:079940",
+   "target": "global:microsoft",
+   "type": "peer",
+   "labelKo": "클라우드 (국내 중소기업 vs 하이퍼스케일러)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.gabia.com",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_030520>global_microsoft",
+   "source": "krx:030520",
+   "target": "global:microsoft",
+   "type": "peer",
+   "labelKo": "오피스 SW 경쟁 (한컴오피스 vs MS오피스)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hancom.com",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_477850>krx_486990",
+   "source": "krx:477850",
+   "target": "krx:486990",
+   "type": "peer",
+   "labelKo": "AI 소프트웨어 (산업AI vs 경량화)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.makinarocks.ai",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_486990>global_samsung",
+   "source": "krx:486990",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "AI 모델 경량화 (삼성 협력)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.nota.ai",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

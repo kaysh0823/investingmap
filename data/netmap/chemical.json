@@ -1,0 +1,1397 @@
+{
+ "sectorId": "chemical",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "refining": "정유·석유제품",
+  "specialty": "정밀·특수화학",
+  "polymer": "합성수지·고무",
+  "petrochem": "기초유분·석유화학",
+  "gas": "가스",
+  "fiber": "섬유·산업소재",
+  "distribution": "화학 유통",
+  "packaging": "포장재",
+  "agri": "비료·농화학",
+  "end_customer": "원료·수요처",
+  "global_peer": "글로벌 화학·정유"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:010950",
+   "type": "kr_listed",
+   "ticker": "010950",
+   "nameKo": "S-Oil",
+   "nameEn": "S-Oil",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "refining",
+   "role": "정유·석유제품"
+  },
+  {
+   "id": "krx:002380",
+   "type": "kr_listed",
+   "ticker": "002380",
+   "nameKo": "KCC",
+   "nameEn": "KCC",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:011780",
+   "type": "kr_listed",
+   "ticker": "011780",
+   "nameKo": "금호석유화학",
+   "nameEn": "금호석유화학",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "polymer",
+   "role": "합성수지·고무"
+  },
+  {
+   "id": "krx:011170",
+   "type": "kr_listed",
+   "ticker": "011170",
+   "nameKo": "롯데케미칼",
+   "nameEn": "롯데케미칼",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "petrochem",
+   "role": "기초유분·석유화학"
+  },
+  {
+   "id": "krx:018670",
+   "type": "kr_listed",
+   "ticker": "018670",
+   "nameKo": "SK가스",
+   "nameEn": "SK가스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "gas",
+   "role": "가스"
+  },
+  {
+   "id": "krx:457190",
+   "type": "kr_listed",
+   "ticker": "457190",
+   "nameKo": "이수스페셜티케미컬",
+   "nameEn": "이수스페셜티케미컬",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:120110",
+   "type": "kr_listed",
+   "ticker": "120110",
+   "nameKo": "코오롱인더",
+   "nameEn": "코오롱인더",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fiber",
+   "role": "섬유·산업소재"
+  },
+  {
+   "id": "krx:298020",
+   "type": "kr_listed",
+   "ticker": "298020",
+   "nameKo": "효성티앤씨",
+   "nameEn": "효성티앤씨",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fiber",
+   "role": "섬유·산업소재"
+  },
+  {
+   "id": "krx:001740",
+   "type": "kr_listed",
+   "ticker": "001740",
+   "nameKo": "SK네트웍스",
+   "nameEn": "SK네트웍스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "distribution",
+   "role": "화학 유통"
+  },
+  {
+   "id": "krx:004000",
+   "type": "kr_listed",
+   "ticker": "004000",
+   "nameKo": "롯데정밀화학",
+   "nameEn": "롯데정밀화학",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:003240",
+   "type": "kr_listed",
+   "ticker": "003240",
+   "nameKo": "태광산업",
+   "nameEn": "태광산업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fiber",
+   "role": "섬유·산업소재"
+  },
+  {
+   "id": "krx:298050",
+   "type": "kr_listed",
+   "ticker": "298050",
+   "nameKo": "HS효성첨단소재",
+   "nameEn": "HS효성첨단소재",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fiber",
+   "role": "섬유·산업소재"
+  },
+  {
+   "id": "krx:268280",
+   "type": "kr_listed",
+   "ticker": "268280",
+   "nameKo": "미원에스씨",
+   "nameEn": "미원에스씨",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:002960",
+   "type": "kr_listed",
+   "ticker": "002960",
+   "nameKo": "한국쉘석유",
+   "nameEn": "한국쉘석유",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "refining",
+   "role": "정유·석유제품"
+  },
+  {
+   "id": "krx:069260",
+   "type": "kr_listed",
+   "ticker": "069260",
+   "nameKo": "TKG휴켐스",
+   "nameEn": "TKG휴켐스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:017940",
+   "type": "kr_listed",
+   "ticker": "017940",
+   "nameKo": "E1",
+   "nameEn": "E1",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "gas",
+   "role": "가스"
+  },
+  {
+   "id": "krx:006650",
+   "type": "kr_listed",
+   "ticker": "006650",
+   "nameKo": "대한유화",
+   "nameEn": "대한유화",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "petrochem",
+   "role": "기초유분·석유화학"
+  },
+  {
+   "id": "krx:001570",
+   "type": "kr_listed",
+   "ticker": "001570",
+   "nameKo": "금양",
+   "nameEn": "금양",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:014820",
+   "type": "kr_listed",
+   "ticker": "014820",
+   "nameKo": "동원시스템즈",
+   "nameEn": "동원시스템즈",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "packaging",
+   "role": "포장재"
+  },
+  {
+   "id": "krx:002840",
+   "type": "kr_listed",
+   "ticker": "002840",
+   "nameKo": "미원상사",
+   "nameEn": "미원상사",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:161000",
+   "type": "kr_listed",
+   "ticker": "161000",
+   "nameKo": "애경케미칼",
+   "nameEn": "애경케미칼",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:014830",
+   "type": "kr_listed",
+   "ticker": "014830",
+   "nameKo": "유니드",
+   "nameEn": "유니드",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:002810",
+   "type": "kr_listed",
+   "ticker": "002810",
+   "nameKo": "삼영무역",
+   "nameEn": "삼영무역",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "distribution",
+   "role": "화학 유통"
+  },
+  {
+   "id": "krx:008730",
+   "type": "kr_listed",
+   "ticker": "008730",
+   "nameKo": "율촌화학",
+   "nameEn": "율촌화학",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "packaging",
+   "role": "포장재"
+  },
+  {
+   "id": "krx:007690",
+   "type": "kr_listed",
+   "ticker": "007690",
+   "nameKo": "국도화학",
+   "nameEn": "국도화학",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "specialty",
+   "role": "정밀·특수화학"
+  },
+  {
+   "id": "krx:025860",
+   "type": "kr_listed",
+   "ticker": "025860",
+   "nameKo": "남해화학",
+   "nameEn": "남해화학",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "agri",
+   "role": "비료·농화학"
+  },
+  {
+   "id": "global:aramco",
+   "type": "global",
+   "nameKo": "사우디 아람코",
+   "nameEn": "Saudi Aramco",
+   "country": "other",
+   "chain": "end_customer",
+   "role": "원유 공급·S-Oil 최대주주",
+   "exchange": "TADAWUL:2222"
+  },
+  {
+   "id": "global:shell",
+   "type": "global",
+   "nameKo": "쉘",
+   "nameEn": "Shell",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "윤활유·정유 (한국쉘석유 모회사)",
+   "exchange": "LSE:SHEL"
+  },
+  {
+   "id": "global:exxon",
+   "type": "global",
+   "nameKo": "엑슨모빌",
+   "nameEn": "ExxonMobil",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "정유·화학",
+   "exchange": "NYSE:XOM"
+  },
+  {
+   "id": "global:sinopec",
+   "type": "global",
+   "nameKo": "시노펙",
+   "nameEn": "Sinopec",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "정유·석유화학",
+   "exchange": "HKEX:0386"
+  },
+  {
+   "id": "global:basf",
+   "type": "global",
+   "nameKo": "BASF",
+   "nameEn": "BASF",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "화학 1위",
+   "exchange": "XETRA:BAS"
+  },
+  {
+   "id": "global:dow",
+   "type": "global",
+   "nameKo": "다우",
+   "nameEn": "Dow",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "석유화학",
+   "exchange": "NYSE:DOW"
+  },
+  {
+   "id": "global:lyondell",
+   "type": "global",
+   "nameKo": "라이온델바젤",
+   "nameEn": "LyondellBasell",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "폴리올레핀",
+   "exchange": "NYSE:LYB"
+  },
+  {
+   "id": "global:sabic",
+   "type": "global",
+   "nameKo": "SABIC",
+   "nameEn": "SABIC",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "석유화학 (아람코 계열)",
+   "exchange": "TADAWUL:2010"
+  },
+  {
+   "id": "global:arlanxeo",
+   "type": "global",
+   "nameKo": "아란세오",
+   "nameEn": "ARLANXEO (Aramco)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "합성고무",
+   "exchange": ""
+  },
+  {
+   "id": "global:synthos",
+   "type": "global",
+   "nameKo": "신토스",
+   "nameEn": "Synthos",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "합성고무·NB라텍스",
+   "exchange": ""
+  },
+  {
+   "id": "global:invista",
+   "type": "global",
+   "nameKo": "인비스타",
+   "nameEn": "Invista (Koch)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "스판덱스 (라이크라)",
+   "exchange": ""
+  },
+  {
+   "id": "global:huafon",
+   "type": "global",
+   "nameKo": "화펑",
+   "nameEn": "Huafon",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "스판덱스",
+   "exchange": "SSE:002064"
+  },
+  {
+   "id": "global:kordsa",
+   "type": "global",
+   "nameKo": "코르드사",
+   "nameEn": "Kordsa",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "타이어코드",
+   "exchange": "BIST:KORDS"
+  },
+  {
+   "id": "global:michelin",
+   "type": "global",
+   "nameKo": "미쉐린",
+   "nameEn": "Michelin",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "타이어코드 고객",
+   "exchange": "EPA:ML"
+  },
+  {
+   "id": "global:bridgestone",
+   "type": "global",
+   "nameKo": "브리지스톤",
+   "nameEn": "Bridgestone",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "타이어코드 고객",
+   "exchange": "TSE:5108"
+  },
+  {
+   "id": "global:hankook",
+   "type": "kr_other",
+   "nameKo": "한국타이어",
+   "nameEn": "Hankook Tire",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "타이어코드 고객",
+   "exchange": "KRX:161390"
+  },
+  {
+   "id": "global:momentive",
+   "type": "global",
+   "nameKo": "모멘티브",
+   "nameEn": "Momentive Performance Materials",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "실리콘 (KCC 100% 자회사)",
+   "exchange": ""
+  },
+  {
+   "id": "global:dow_silicone",
+   "type": "global",
+   "nameKo": "다우 실리콘",
+   "nameEn": "Dow Silicones",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "실리콘",
+   "exchange": "NYSE:DOW"
+  },
+  {
+   "id": "global:shin_etsu",
+   "type": "global",
+   "nameKo": "신에츠화학",
+   "nameEn": "Shin-Etsu Chemical",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "실리콘·PVC",
+   "exchange": "TSE:4063"
+  },
+  {
+   "id": "global:hanwha",
+   "type": "kr_other",
+   "nameKo": "한화",
+   "nameEn": "Hanwha Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "질산 고객·경쟁 (한화 질산 증설)",
+   "exchange": "KRX:000880"
+  },
+  {
+   "id": "global:basf_kr",
+   "type": "kr_other",
+   "nameKo": "한국바스프",
+   "nameEn": "BASF Korea",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "질산 고객",
+   "exchange": ""
+  },
+  {
+   "id": "global:nonghyup",
+   "type": "kr_other",
+   "nameKo": "농협",
+   "nameEn": "NongHyup",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "남해화학 최대주주·비료 유통",
+   "exchange": ""
+  },
+  {
+   "id": "global:samsung",
+   "type": "kr_other",
+   "nameKo": "삼성전자",
+   "nameEn": "Samsung Electronics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "반도체 소재 수요 (동원시스템즈·율촌화학 등 포장·소재)",
+   "exchange": "KRX:005930"
+  },
+  {
+   "id": "global:miwon_holdings",
+   "type": "kr_other",
+   "nameKo": "미원홀딩스",
+   "nameEn": "Miwon Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "미원그룹 지주",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:global_aramco>krx_010950",
+   "source": "global:aramco",
+   "target": "krx:010950",
+   "type": "equity",
+   "labelKo": "아람코(AOC) 63.4% 최대주주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/S-Oil",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_aramco>krx_010950",
+   "source": "global:aramco",
+   "target": "krx:010950",
+   "type": "supply",
+   "labelKo": "원유 우선 공급 + 샤힌 프로젝트 9.26조 투자",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://story.s-oil.com/2026/08/18/s-oil-%EC%83%A4%ED%9E%8C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A1%9C-%EA%B8%80%EB%A1%9C%EB%B2%8C-%EA%B2%BD%EC%9F%81%EB%A0%A5-%EA%B0%96%EC%B6%98-%EC%84%9D%EC%9C%A0%ED%99%94%ED%95%99-%EC%83%9D/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_shell>krx_002960",
+   "source": "global:shell",
+   "target": "krx:002960",
+   "type": "equity",
+   "labelKo": "쉘 계열 (한국쉘석유, 윤활유)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=002960",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002960>krx_010950",
+   "source": "krx:002960",
+   "target": "krx:010950",
+   "type": "peer",
+   "labelKo": "윤활유 (S-Oil 윤활기유)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=002960",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010950>global_exxon",
+   "source": "krx:010950",
+   "target": "global:exxon",
+   "type": "peer",
+   "labelKo": "정유·석유화학 통합사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/S-Oil",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010950>global_sinopec",
+   "source": "krx:010950",
+   "target": "global:sinopec",
+   "type": "peer",
+   "labelKo": "정유·석유화학 통합사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/S-Oil",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010950>global_shell",
+   "source": "krx:010950",
+   "target": "global:shell",
+   "type": "peer",
+   "labelKo": "정유·석유화학 통합사 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/S-Oil",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010950>krx_011170",
+   "source": "krx:010950",
+   "target": "krx:011170",
+   "type": "peer",
+   "labelKo": "샤힌 크래커 가동 후 에틸렌 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://story.s-oil.com/2026/08/18/s-oil-%EC%83%A4%ED%9E%8C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A1%9C-%EA%B8%80%EB%A1%9C%EB%B2%8C-%EA%B2%BD%EC%9F%81%EB%A0%A5-%EA%B0%96%EC%B6%98-%EC%84%9D%EC%9C%A0%ED%99%94%ED%95%99-%EC%83%9D/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_010950>krx_006650",
+   "source": "krx:010950",
+   "target": "krx:006650",
+   "type": "peer",
+   "labelKo": "기초유분 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://story.s-oil.com/2026/08/18/s-oil-%EC%83%A4%ED%9E%8C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A1%9C-%EA%B8%80%EB%A1%9C%EB%B2%8C-%EA%B2%BD%EC%9F%81%EB%A0%A5-%EA%B0%96%EC%B6%98-%EC%84%9D%EC%9C%A0%ED%99%94%ED%95%99-%EC%83%9D/",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_011170>krx_004000",
+   "source": "krx:011170",
+   "target": "krx:004000",
+   "type": "equity",
+   "labelKo": "롯데케미칼→롯데정밀화학 43.5% (종속기업)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202211130630219365",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011170>krx_006650",
+   "source": "krx:011170",
+   "target": "krx:006650",
+   "type": "peer",
+   "labelKo": "NCC 기초유분 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011170>krx_011780",
+   "source": "krx:011170",
+   "target": "krx:011780",
+   "type": "peer",
+   "labelKo": "석유화학 빅4",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011170>global_basf",
+   "source": "krx:011170",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "글로벌 석유화학 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011170>global_dow",
+   "source": "krx:011170",
+   "target": "global:dow",
+   "type": "peer",
+   "labelKo": "글로벌 석유화학 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011170>global_lyondell",
+   "source": "krx:011170",
+   "target": "global:lyondell",
+   "type": "peer",
+   "labelKo": "글로벌 석유화학 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011170>global_sabic",
+   "source": "krx:011170",
+   "target": "global:sabic",
+   "type": "peer",
+   "labelKo": "글로벌 석유화학 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011170>global_sinopec",
+   "source": "krx:011170",
+   "target": "global:sinopec",
+   "type": "peer",
+   "labelKo": "글로벌 석유화학 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006650>global_lyondell",
+   "source": "krx:006650",
+   "target": "global:lyondell",
+   "type": "peer",
+   "labelKo": "폴리올레핀 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006650>global_sinopec",
+   "source": "krx:006650",
+   "target": "global:sinopec",
+   "type": "peer",
+   "labelKo": "폴리올레핀 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://v.daum.net/v/20250213210318111",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_aramco>global_sabic",
+   "source": "global:aramco",
+   "target": "global:sabic",
+   "type": "equity",
+   "labelKo": "아람코→SABIC 70%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/SABIC",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011780>global_arlanxeo",
+   "source": "krx:011780",
+   "target": "global:arlanxeo",
+   "type": "peer",
+   "labelKo": "합성고무·NB라텍스 경쟁 (금호 NB라텍스 세계 1위 25%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260527n24413",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_011780>global_synthos",
+   "source": "krx:011780",
+   "target": "global:synthos",
+   "type": "peer",
+   "labelKo": "합성고무·NB라텍스 경쟁 (금호 NB라텍스 세계 1위 25%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260527n24413",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011780>global_hankook",
+   "source": "krx:011780",
+   "target": "global:hankook",
+   "type": "supply",
+   "labelKo": "타이어용 합성고무",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.ceoscoredaily.com/page/view/2022032515405893453",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298020>global_invista",
+   "source": "krx:298020",
+   "target": "global:invista",
+   "type": "peer",
+   "labelKo": "스판덱스 경쟁 (효성 세계 1위 30%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10476759",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298020>global_huafon",
+   "source": "krx:298020",
+   "target": "global:huafon",
+   "type": "peer",
+   "labelKo": "스판덱스 경쟁 (효성 세계 1위 30%+)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10476759",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298020>krx_003240",
+   "source": "krx:298020",
+   "target": "krx:003240",
+   "type": "peer",
+   "labelKo": "스판덱스·섬유",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://biz.heraldcorp.com/article/10476759",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298050>krx_120110",
+   "source": "krx:298050",
+   "target": "krx:120110",
+   "type": "peer",
+   "labelKo": "타이어코드 1·2위 (48% vs 15%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_298050>global_kordsa",
+   "source": "krx:298050",
+   "target": "global:kordsa",
+   "type": "peer",
+   "labelKo": "타이어코드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_120110>global_kordsa",
+   "source": "krx:120110",
+   "target": "global:kordsa",
+   "type": "peer",
+   "labelKo": "타이어코드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_298050>global_michelin",
+   "source": "krx:298050",
+   "target": "global:michelin",
+   "type": "supply",
+   "labelKo": "타이어코드 (인증 2~3년)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_298050>global_bridgestone",
+   "source": "krx:298050",
+   "target": "global:bridgestone",
+   "type": "supply",
+   "labelKo": "타이어코드 (인증 2~3년)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_298050>global_hankook",
+   "source": "krx:298050",
+   "target": "global:hankook",
+   "type": "supply",
+   "labelKo": "타이어코드 (인증 2~3년)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_120110>global_michelin",
+   "source": "krx:120110",
+   "target": "global:michelin",
+   "type": "supply",
+   "labelKo": "타이어코드 (인증 2~3년)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_120110>global_bridgestone",
+   "source": "krx:120110",
+   "target": "global:bridgestone",
+   "type": "supply",
+   "labelKo": "타이어코드 (인증 2~3년)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_120110>global_hankook",
+   "source": "krx:120110",
+   "target": "global:hankook",
+   "type": "supply",
+   "labelKo": "타이어코드 (인증 2~3년)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mtn.co.kr/news-detail/2025011409420241894",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_002380>global_momentive",
+   "source": "krx:002380",
+   "target": "global:momentive",
+   "type": "equity",
+   "labelKo": "KCC→모멘티브 100%",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=347304",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002380>global_dow_silicone",
+   "source": "krx:002380",
+   "target": "global:dow_silicone",
+   "type": "peer",
+   "labelKo": "실리콘 경쟁 (모멘티브 세계 3대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=347304",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002380>global_shin_etsu",
+   "source": "krx:002380",
+   "target": "global:shin_etsu",
+   "type": "peer",
+   "labelKo": "실리콘 경쟁 (모멘티브 세계 3대)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.businesspost.co.kr/BP?command=article_view&num=347304",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_069260>global_hanwha",
+   "source": "krx:069260",
+   "target": "global:hanwha",
+   "type": "supply",
+   "labelKo": "질산 장기공급 (국내 90%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2025111177241",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_069260>global_hanwha",
+   "source": "krx:069260",
+   "target": "global:hanwha",
+   "type": "peer",
+   "labelKo": "한화 질산 증설 → 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2025111177241",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_069260>global_basf_kr",
+   "source": "krx:069260",
+   "target": "global:basf_kr",
+   "type": "supply",
+   "labelKo": "질산 장기공급",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2025111177241",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_025860>krx_069260",
+   "source": "krx:025860",
+   "target": "krx:069260",
+   "type": "partner",
+   "labelKo": "2002 남해화학에서 분할",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/TKG%ED%9C%B4%EC%BC%90%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_nonghyup>krx_025860",
+   "source": "global:nonghyup",
+   "target": "krx:025860",
+   "type": "equity",
+   "labelKo": "농협 계열 (남해화학)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/TKG%ED%9C%B4%EC%BC%90%EC%8A%A4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_miwon_holdings>krx_268280",
+   "source": "global:miwon_holdings",
+   "target": "krx:268280",
+   "type": "equity",
+   "labelKo": "미원홀딩스 33.9% (특수관계 73.6%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202411291337404480103529",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_miwon_holdings>krx_002840",
+   "source": "global:miwon_holdings",
+   "target": "krx:002840",
+   "type": "equity",
+   "labelKo": "미원그룹 지주 (미원상사)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202411291337404480103529",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002840>krx_268280",
+   "source": "krx:002840",
+   "target": "krx:268280",
+   "type": "peer",
+   "labelKo": "미원그룹 (계면활성제 vs 광개시제)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202411291337404480103529",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_002840>global_basf",
+   "source": "krx:002840",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "계면활성제 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202411291337404480103529",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_268280>global_basf",
+   "source": "krx:268280",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "광경화 소재 (BASF 사업 인수 이력)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202411291337404480103529",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_014830>global_shin_etsu",
+   "source": "krx:014830",
+   "target": "global:shin_etsu",
+   "type": "peer",
+   "labelKo": "염화칼륨 유도체·가성칼륨 (유니드 세계 1위)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014830",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_457190>krx_004000",
+   "source": "krx:457190",
+   "target": "krx:004000",
+   "type": "peer",
+   "labelKo": "정밀화학",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.fnnews.com/news/202211130630219365",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161000>krx_007690",
+   "source": "krx:161000",
+   "target": "krx:007690",
+   "type": "peer",
+   "labelKo": "정밀화학 (가소제·에폭시)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=161000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007690>global_basf",
+   "source": "krx:007690",
+   "target": "global:basf",
+   "type": "peer",
+   "labelKo": "에폭시 수지 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=007690",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001570>krx_161000",
+   "source": "krx:001570",
+   "target": "krx:161000",
+   "type": "peer",
+   "labelKo": "정밀화학 (발포제·가소제)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=001570",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018670>krx_017940",
+   "source": "krx:018670",
+   "target": "krx:017940",
+   "type": "peer",
+   "labelKo": "LPG 수입 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=018670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_aramco>krx_018670",
+   "source": "global:aramco",
+   "target": "krx:018670",
+   "type": "supply",
+   "labelKo": "LPG 수입 (중동 CP 연동)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=018670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_aramco>krx_017940",
+   "source": "global:aramco",
+   "target": "krx:017940",
+   "type": "supply",
+   "labelKo": "LPG 수입 (중동 CP 연동)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=018670",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001740>krx_002810",
+   "source": "krx:001740",
+   "target": "krx:002810",
+   "type": "peer",
+   "labelKo": "화학 유통·상사",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=002810",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_014820>krx_008730",
+   "source": "krx:014820",
+   "target": "krx:008730",
+   "type": "peer",
+   "labelKo": "포장재 (연포장·알루미늄)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=008730",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_008730>global_samsung",
+   "source": "krx:008730",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "전자재료·포장재 (삼성 계열 수요)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=008730",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_011170>krx_014820",
+   "source": "krx:011170",
+   "target": "krx:014820",
+   "type": "supply",
+   "labelKo": "포장재용 수지 (원료)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=014820",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}
