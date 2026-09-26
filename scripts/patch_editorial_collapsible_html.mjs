@@ -74,8 +74,8 @@ const PANEL_CSS = `
       transform: rotate(180deg)
     }
     .map-editorial-panel.is-collapsed {
-      /* Lead/how-to stay visible; long notes use #map-editorial-detail.is-collapsed */
-      display: block
+      /* Entire intro panel (lead/how-to/more) hidden until h1 toggle */
+      display: none
     }
     .map-editorial-detail.is-collapsed {
       display: none
@@ -136,6 +136,24 @@ function convertDetailsToPanel(html) {
 }
 
 function injectPanelCss(html) {
+  // Idempotent: always refresh the marked block so display:none cannot drift after prerender.
+  if (html.includes(PANEL_CSS_MARKER)) {
+    const refreshed = html.replace(
+      /\/\*\s*investingmap-map-title-toggle\s*\*\/[\s\S]*?\.map-editorial-title-sr\s*\{[\s\S]*?\}/,
+      PANEL_CSS.trim(),
+    );
+    return refreshed;
+  }
+  // Also upgrade any legacy collapsed rule that predates the marker.
+  if (/\.map-editorial-panel\.is-collapsed\s*\{/.test(html)) {
+    html = html.replace(
+      /\.map-editorial-panel\.is-collapsed\s*\{[\s\S]*?\}/,
+      `.map-editorial-panel.is-collapsed {
+      /* Entire intro panel (lead/how-to/more) hidden until h1 toggle */
+      display: none
+    }`,
+    );
+  }
   if (html.includes(PANEL_CSS_MARKER)) {
     return html;
   }

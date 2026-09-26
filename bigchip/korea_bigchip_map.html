@@ -179,7 +179,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=8d92012e"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
+  <script src="../js/map_mobile_ux.js?v=8f62be52"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
 <style>
     :root {
@@ -862,6 +862,60 @@
       background: var(--surface2)
     }
 
+    /* investingmap-map-title-toggle */
+    .map-title-toggle {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      font: inherit
+    }
+    .map-title-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px
+    }
+    .map-title-toggle h1 {
+      flex: 1;
+      min-width: 0;
+      margin: 0
+    }
+    .map-title-chevron {
+      flex-shrink: 0;
+      margin-top: 0.35em;
+      font-size: 0.7em;
+      line-height: 1;
+      color: var(--text-muted);
+      transition: transform .15s ease
+    }
+    .map-title-toggle[aria-expanded="true"] .map-title-chevron {
+      transform: rotate(180deg)
+    }
+    .map-editorial-panel.is-collapsed {
+      /* Entire intro panel (lead/how-to/more) hidden until h1 toggle */
+      display: none
+    }
+    .map-editorial-detail.is-collapsed {
+      display: none
+    }
+    .map-editorial-title-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -1966,8 +2020,8 @@
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Samsung Electronics and SK hynix</h2>
     <p lang="ko" class="im-seo-lead map-editorial-lead">삼성전자·SK하이닉스 전용 지도로, 두 종목의 KRX 시총·PER·PBR과 메모리·HBM·시스템반도체 노출을 일반 반도체 지도와 분리해 비교합니다.</p>
     <p lang="en" class="im-seo-lead map-editorial-lead" hidden>A dedicated Samsung Electronics and SK hynix map comparing KRX market cap, PER, PBR, and memory/HBM/system-chip exposure—kept separate from the general semiconductor map.</p>
-    <p lang="ko" class="im-seo-howto map-editorial-howto">표·히트맵·모멘텀·밸류에이션 탭으로 두 종목과 관련 상장 노드의 지표를 비교하세요. 관계 네트워크 탭은 공개 메뉴에 없습니다. 삼성전자·SK하이닉스는 일반 반도체 지도에 중복 편입하지 않습니다.</p>
-    <p lang="en" class="im-seo-howto map-editorial-howto" hidden>Use the table, heatmap, momentum, and valuation tabs. The relationship-network tab is not in the public menu. Neither name is duplicated on the general semiconductor map.</p>
+    <p lang="ko" class="im-seo-howto map-editorial-howto">표·히트맵·모멘텀·밸류에이션 탭으로 두 종목과 관련 상장 노드의 지표를 비교하세요. 삼성전자·SK하이닉스는 일반 반도체 지도에 중복 편입하지 않습니다.</p>
+    <p lang="en" class="im-seo-howto map-editorial-howto" hidden>Use the table, heatmap, momentum, and valuation tabs. Neither name is duplicated on the general semiconductor map.</p>
     <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
     <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
     <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>

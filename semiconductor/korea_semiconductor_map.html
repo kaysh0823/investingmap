@@ -732,7 +732,7 @@
   <script src="../js/map_valuation.js?v=8d92012e"></script>
   <script src="../js/map_netmap.js?v=7ebde5ef"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
+  <script src="../js/map_mobile_ux.js?v=8f62be52"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
 <style>
     :root {
@@ -2372,6 +2372,10 @@
       transform: rotate(180deg)
     }
     .map-editorial-panel.is-collapsed {
+      /* Entire intro panel (lead/how-to/more) hidden until h1 toggle */
+      display: none
+    }
+    .map-editorial-detail.is-collapsed {
       display: none
     }
     .map-editorial-title-sr {
@@ -2644,8 +2648,8 @@
     <h2 id="im-seo-body-title-en" class="map-editorial-seo-title" lang="en" hidden>Korean semiconductor value chain &amp; listed stocks</h2>
     <p lang="ko" class="im-seo-lead map-editorial-lead">국내 KOSPI·KOSDAQ 반도체 상장사를 IDM·팹리스·파운드리·소재·장비·기판·패키징·테스트 등 밸류체인 축으로 묶어, 시가총액 3천억원 이상 종목의 KRX 지표와 산업 구조를 한 화면에서 비교합니다.</p>
     <p lang="en" class="im-seo-lead map-editorial-lead" hidden>Listed Korean semiconductor companies on KOSPI/KOSDAQ are grouped by value-chain roles—IDM, fabless, foundry, materials, equipment, substrates, packaging &amp; test—so you can compare KRX metrics for names above the KRW 300 billion market-cap floor.</p>
-    <p lang="ko" class="im-seo-howto map-editorial-howto">사용 예: (1) 히트맵에서 시총·당일 등락을 훑고, (2) 기업 표에서 체인·PER·PBR·52주 위치를 정렬·필터하며, (3) 모멘텀·변동성·밸류에이션·퍼포먼스 캘린더 탭으로 상대 강도·변동·배수 분포를 확인하세요. 관계 네트워크 탭은 현재 공개 메뉴에서 제공하지 않습니다.</p>
-    <p lang="en" class="im-seo-howto map-editorial-howto" hidden>How to use: (1) scan the heatmap for size and 1-day moves, (2) sort/filter the company table by chain, PER, PBR, and 52-week position, (3) open momentum, volatility, valuation, or performance-calendar tabs for relative strength, range, multiples, and YTD paths. The relationship-network tab is not in the public menu while under revision.</p>
+    <p lang="ko" class="im-seo-howto map-editorial-howto">사용 예: (1) 히트맵에서 시총·당일 등락을 훑고, (2) 기업 표에서 체인·PER·PBR·52주 위치를 정렬·필터하며, (3) 모멘텀·변동성·밸류에이션·퍼포먼스 캘린더 탭으로 상대 강도·변동·배수 분포를 확인하세요.</p>
+    <p lang="en" class="im-seo-howto map-editorial-howto" hidden>How to use: (1) scan the heatmap for size and 1-day moves, (2) sort/filter the company table by chain, PER, PBR, and 52-week position, (3) open momentum, volatility, valuation, or performance-calendar tabs for relative strength, range, multiples, and YTD paths.</p>
     <div class="map-editorial-detail-wrap" id="map-editorial-detail-wrap">
     <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn" aria-expanded="false" aria-controls="map-editorial-detail" lang="ko">산업 해설·출처 보기</button>
     <button type="button" class="map-editorial-more-btn" id="map-editorial-more-btn-en" aria-expanded="false" aria-controls="map-editorial-detail" lang="en" hidden>Show industry notes &amp; sources</button>

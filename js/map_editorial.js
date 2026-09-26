@@ -2,7 +2,8 @@
  * Sector editorial intro on industry map pages.
  * Paragraph text: lib/sector_editorial.mjs → js/sector_editorial_data.js (IM_SECTOR_EDITORIAL).
  * Static HTML (#im-seo-body) is prerendered from the same source; this script syncs lang / open state.
- * Lead + how-to stay visible; longer notes open via “산업 해설·출처 보기”.
+ * Lead + how-to sit inside #map-editorial-panel (collapsed by default via h1 toggle).
+ * Longer notes open via “산업 해설·출처 보기”.
  */
 (function (global) {
   'use strict';
@@ -46,7 +47,7 @@
       '.map-editorial-body .map-editorial-seo-title{font-size:14px;font-weight:700;color:var(--text);margin:0 0 8px}' +
       '.map-editorial-body .im-seo-keywords,.map-editorial-body .im-seo-snapshot-note{font-size:12px;opacity:.9}' +
       '.map-editorial-body p[hidden],.map-editorial-body h2[hidden],.map-editorial-more-btn[hidden]{display:none}' +
-      '#map-editorial-panel.is-collapsed{display:block}' +
+      '#map-editorial-panel.is-collapsed{display:none}' +
       '#map-editorial-panel.is-collapsed .map-editorial-detail.is-collapsed{display:none}' +
       '#tab-btn-graph[hidden],#tab-btn-graph{display:none!important}';
     var el = document.createElement('style');

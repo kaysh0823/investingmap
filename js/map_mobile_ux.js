@@ -95,17 +95,8 @@
   function setEditorialExpanded(btn, panel, expanded) {
     if (!btn || !panel) return;
     btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    // Prefer detail region so summary stay visible.
-    var detail = document.getElementById('map-editorial-detail');
-    if (detail) {
-      if (expanded) detail.classList.remove('is-collapsed');
-      else detail.classList.add('is-collapsed');
-      if (global.InvestingMapEditorial && typeof global.InvestingMapEditorial.setDetailExpanded === 'function') {
-        global.InvestingMapEditorial.setDetailExpanded(expanded);
-      }
-      panel.classList.remove('is-collapsed');
-      return;
-    }
+    // Title toggle shows/hides the whole intro panel (lead, how-to, more button).
+    // Detail (#map-editorial-detail) stays collapsed until the more-button is clicked.
     if (expanded) panel.classList.remove('is-collapsed');
     else panel.classList.add('is-collapsed');
   }
@@ -180,6 +171,8 @@
     return panel;
   }
 
+  var EDITORIAL_OPEN_KEY = 'im.editorial.open';
+
   function setupMapTitleToggle() {
     var btn = ensureTitleToggleButton();
     var panel = ensureEditorialPanel();
@@ -187,10 +180,19 @@
 
     if (!titleToggleReady) {
       titleToggleReady = true;
-      setEditorialExpanded(btn, panel, false);
+      var open = false;
+      try {
+        open = sessionStorage.getItem(EDITORIAL_OPEN_KEY) === '1';
+      } catch (e) {}
+      setEditorialExpanded(btn, panel, open);
       btn.addEventListener('click', function () {
-        var open = btn.getAttribute('aria-expanded') === 'true';
-        setEditorialExpanded(btn, panel, !open);
+        var isOpen = btn.getAttribute('aria-expanded') === 'true';
+        var next = !isOpen;
+        setEditorialExpanded(btn, panel, next);
+        try {
+          if (next) sessionStorage.setItem(EDITORIAL_OPEN_KEY, '1');
+          else sessionStorage.removeItem(EDITORIAL_OPEN_KEY);
+        } catch (e2) {}
       });
     }
 
@@ -199,8 +201,15 @@
   }
 
   function injectStyles() {
-    var styleId = 'im-mobile-ux-css-v8';
-    ['im-mobile-ux-css-v7', 'im-mobile-ux-css-v6', 'im-mobile-ux-css-v5', 'im-mobile-ux-css-v4', 'im-mobile-ux-css'].forEach(function (id) {
+    var styleId = 'im-mobile-ux-css-v9';
+    [
+      'im-mobile-ux-css-v8',
+      'im-mobile-ux-css-v7',
+      'im-mobile-ux-css-v6',
+      'im-mobile-ux-css-v5',
+      'im-mobile-ux-css-v4',
+      'im-mobile-ux-css',
+    ].forEach(function (id) {
       var old = document.getElementById(id);
       if (old) old.remove();
     });
@@ -216,8 +225,8 @@
       '.map-title-toggle h1{flex:1;min-width:0;margin:0}' +
       '.map-title-chevron{flex-shrink:0;margin-top:.35em;font-size:.7em;line-height:1;color:var(--text-muted);transition:transform .15s ease}' +
       '.map-title-toggle[aria-expanded="true"] .map-title-chevron{transform:rotate(180deg)}' +
-      /* Panel stays visible so lead/how-to remain readable; detail uses its own collapse. */
-      '.map-editorial-panel.is-collapsed{display:block}' +
+      /* Entire intro panel hidden until h1 toggle; detail has its own collapse. */
+      '.map-editorial-panel.is-collapsed{display:none}' +
       '.map-editorial-detail.is-collapsed{display:none}' +
       '.map-editorial-title-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}' +
       '@media (min-width:769px){' +

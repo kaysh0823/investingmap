@@ -270,7 +270,7 @@
   <script src="../js/map_valuation.js?v=8d92012e"></script>
   <script src="../js/map_netmap.js?v=7ebde5ef"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=80bfa7be"></script>
+  <script src="../js/map_mobile_ux.js?v=8f62be52"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
 <style>
     :root {
@@ -953,6 +953,60 @@
       background: var(--surface2)
     }
 
+    /* investingmap-map-title-toggle */
+    .map-title-toggle {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      font: inherit
+    }
+    .map-title-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 4px
+    }
+    .map-title-toggle h1 {
+      flex: 1;
+      min-width: 0;
+      margin: 0
+    }
+    .map-title-chevron {
+      flex-shrink: 0;
+      margin-top: 0.35em;
+      font-size: 0.7em;
+      line-height: 1;
+      color: var(--text-muted);
+      transition: transform .15s ease
+    }
+    .map-title-toggle[aria-expanded="true"] .map-title-chevron {
+      transform: rotate(180deg)
+    }
+    .map-editorial-panel.is-collapsed {
+      /* Entire intro panel (lead/how-to/more) hidden until h1 toggle */
+      display: none
+    }
+    .map-editorial-detail.is-collapsed {
+      display: none
+    }
+    .map-editorial-title-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
     @media(max-width:768px) {
       html {
         overflow-x: hidden
