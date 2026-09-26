@@ -175,8 +175,9 @@
   }
 
   function injectStyles() {
-    var styleId = 'im-mobile-ux-css-v10';
+    var styleId = 'im-mobile-ux-css-v11';
     [
+      'im-mobile-ux-css-v10',
       'im-mobile-ux-css-v9',
       'im-mobile-ux-css-v8',
       'im-mobile-ux-css-v7',
@@ -205,6 +206,7 @@
       '.map-editorial-detail.is-collapsed{display:none}' +
       '.map-editorial-title-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}' +
       '@media (min-width:769px){' +
+      '.header{padding-right:max(28px,min(42vw,320px))!important}' +
       '.header>.im-map-topbar{border:none;padding:0;margin:0;background:transparent}' +
       '.im-map-topbar .hub-brand{display:none!important}' +
       '.header>.im-map-topbar{display:block}' +

@@ -39,8 +39,12 @@ const MAP_FILES = [
 
 const I18N_JS_FILES = ['bio/bio_inline_tail.js', 'bio/korea_bio_map.inline.js'];
 
-const PANEL_CSS_MARKER = 'investingmap-header-editorial-toggle';
-const OLD_CSS_MARKER = 'investingmap-map-title-toggle';
+const PANEL_CSS_MARKER = 'investingmap-header-editorial-toggle-v2';
+const PANEL_CSS_END = 'investingmap-header-editorial-toggle-v2-end';
+const OLD_CSS_MARKERS = [
+  'investingmap-map-title-toggle',
+  'investingmap-header-editorial-toggle',
+];
 
 const PANEL_CSS = `
     /* ${PANEL_CSS_MARKER} */
@@ -104,6 +108,13 @@ const PANEL_CSS = `
       white-space: nowrap;
       border: 0
     }
+    @media (min-width: 769px) {
+      /* Keep title/subtitle/toggle clear of absolute .header-actions (right:20px). */
+      .header {
+        padding-right: max(28px, min(42vw, 320px))
+      }
+    }
+    /* ${PANEL_CSS_END} */
 `;
 
 const TOGGLE_BTN = `  <button type="button" class="map-editorial-toggle" id="map-editorial-toggle"
@@ -185,52 +196,141 @@ function unwrapTitleToggle(html) {
   );
 }
 
-function ensureHeaderTitleRow(html) {
-  if (html.includes('class="header-title-row"') || html.includes("class='header-title-row'")) {
-    html = html.replace(
-      /(<div class="header-title-row">[\s\S]*?<div class="header-meta)(?! header-meta-inline)(")/,
-      '$1 header-meta-inline$2',
-    );
-    return html;
+/** Balanced <div>…</div> starting at startIdx (must point at '<div'). */
+function extractBalancedDiv(html, startIdx) {
+  if (startIdx < 0 || !/^<div\b/i.test(html.slice(startIdx))) return null;
+  let depth = 0;
+  const re = /<\/?div\b[^>]*>/gi;
+  re.lastIndex = startIdx;
+  let m;
+  while ((m = re.exec(html))) {
+    if (/^<\//.test(m[0])) {
+      depth -= 1;
+      if (depth === 0) {
+        return {
+          start: startIdx,
+          end: m.index + m[0].length,
+          outer: html.slice(startIdx, m.index + m[0].length),
+        };
+      }
+    } else {
+      depth += 1;
+    }
   }
-
-  const re =
-    /(<h1\b[^>]*\bid=["']hdr-title["'][^>]*>[\s\S]*?<\/h1>)\s*(<p\b[^>]*\bid=["']hdr-subtitle["'][^>]*>[\s\S]*?<\/p>)\s*(<div class="header-meta">[\s\S]*?<\/div>)/;
-  if (!re.test(html)) {
-    console.warn('header title/meta pattern not found');
-    return html;
-  }
-  return html.replace(re, (_, h1, sub, meta) => {
-    const metaInline = meta.replace(
-      'class="header-meta"',
-      'class="header-meta header-meta-inline"',
-    );
-    return `<div class="header-title-row">
-    ${h1}
-    ${metaInline}
-  </div>
-  ${sub}`;
-  });
+  return null;
 }
 
-function ensureEditorialToggle(html) {
-  if (html.includes('id="map-editorial-toggle"')) return html;
-  if (!/<p\b[^>]*\bid=["']hdr-subtitle["']/.test(html)) {
-    console.warn('hdr-subtitle not found for editorial toggle');
+function matchById(html, tag, id) {
+  const re = new RegExp(
+    `<${tag}\\b[^>]*\\bid=["']${id}["'][^>]*>[\\s\\S]*?<\\/${tag}>`,
+    'i',
+  );
+  const m = re.exec(html);
+  return m ? { outer: m[0], index: m.index } : null;
+}
+
+function headerStructureOk(html) {
+  const rowOpen = html.search(/<div\b[^>]*\bclass=["'][^"']*\bheader-title-row\b[^"']*["'][^>]*>/i);
+  if (rowOpen < 0) return false;
+  const row = extractBalancedDiv(html, rowOpen);
+  if (!row) return false;
+  if (/id=["']hdr-subtitle["']/.test(row.outer)) return false;
+  if (/id=["']map-editorial-toggle["']/.test(row.outer)) return false;
+  if (!/id=["']hdr-title["']/.test(row.outer)) return false;
+  if (!/id=["']badge-total["']/.test(row.outer)) return false;
+  if (!/id=["']badge-market["']/.test(row.outer)) return false;
+
+  const metaOpen = row.outer.search(
+    /<div\b[^>]*\bclass=["'][^"']*\bheader-meta\b[^"']*["'][^>]*>/i,
+  );
+  if (metaOpen < 0) return false;
+  const meta = extractBalancedDiv(row.outer, metaOpen);
+  if (!meta) return false;
+  const badges = meta.outer.match(/id=["']badge-(?:total|market)["']/g) || [];
+  if (badges.length !== 2) return false;
+
+  const after = html.slice(row.end);
+  if (!/^\s*<p\b[^>]*\bid=["']hdr-subtitle["']/.test(after)) return false;
+  if (!/<p\b[^>]*\bid=["']hdr-subtitle["'][^>]*>[\s\S]*?<\/p>\s*<button\b[^>]*\bid=["']map-editorial-toggle["']/.test(after)) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Rebuild header block (migration + idempotent):
+ *   .header-title-row > h1 + .header-meta-inline(badges)
+ *   #hdr-subtitle
+ *   #map-editorial-toggle
+ * as siblings under .header (before #map-editorial section).
+ */
+function rebuildMapHeader(html) {
+  const h1 = matchById(html, 'h1', 'hdr-title');
+  const badgeTotal = matchById(html, 'div', 'badge-total');
+  const badgeMarket = matchById(html, 'div', 'badge-market');
+  const subtitle = matchById(html, 'p', 'hdr-subtitle');
+  const toggle = matchById(html, 'button', 'map-editorial-toggle');
+
+  if (!h1 || !badgeTotal || !badgeMarket || !subtitle) {
+    console.warn('header pieces missing (h1/badges/subtitle)');
     return html;
   }
-  return html.replace(/(<p\b[^>]*\bid=["']hdr-subtitle["'][^>]*>[\s\S]*?<\/p>)/, `$1\n${TOGGLE_BTN}`);
+
+  if (headerStructureOk(html) && toggle) return html;
+
+  const sectionIdx = html.search(/<section\b[^>]*\bid=["']map-editorial["']/i);
+  if (sectionIdx < 0) {
+    console.warn('map-editorial section not found for header rebuild');
+    return html;
+  }
+
+  let startIdx = html.search(/<div\b[^>]*\bclass=["'][^"']*\bheader-title-row\b[^"']*["'][^>]*>/i);
+  if (startIdx < 0) startIdx = h1.index;
+
+  // Drop any trailing </div> that close .header before the section — re-emit one.
+  let prefix = html.slice(0, startIdx);
+  let between = html.slice(startIdx, sectionIdx);
+  // If between ends with the .header closer, strip it (we'll re-add).
+  between = between.replace(/<\/div>\s*$/, '');
+
+  // If prefix somehow lost the header open, don't invent it — only replace the title block.
+  const toggleHtml = toggle ? toggle.outer : TOGGLE_BTN.trim();
+  const rebuilt = `<div class="header-title-row">
+    ${h1.outer}
+    <div class="header-meta header-meta-inline">
+      ${badgeTotal.outer}
+      ${badgeMarket.outer}
+    </div>
+  </div>
+  ${subtitle.outer}
+  ${toggleHtml}
+  </div>
+  `;
+
+  // Ensure we don't leave a duplicate </div> — if original had no header closer
+  // before section (broken), rebuilt adds one. If original had closer only after
+  // between, we stripped it and re-added. Good.
+  // Guard: if `prefix` already closed .header, we'd add an extra — check section
+  // is immediately after header in healthy pages.
+  return prefix + rebuilt + html.slice(sectionIdx);
 }
 
 function stripMarkedCss(html) {
-  for (const marker of [OLD_CSS_MARKER, PANEL_CSS_MARKER]) {
-    const re = new RegExp(
+  // Prefer start→end markers (handles nested @media braces safely).
+  html = html.replace(
+    /\/\*\s*investingmap-header-editorial-toggle-v2\s*\*\/[\s\S]*?\/\*\s*investingmap-header-editorial-toggle-v2-end\s*\*\//g,
+    '',
+  );
+  for (const marker of OLD_CSS_MARKERS) {
+    if (marker === PANEL_CSS_MARKER) continue;
+    const precise = new RegExp(
       `\\/\\*\\s*${marker}\\s*\\*\\/[\\s\\S]*?\\.map-editorial-title-sr\\s*\\{[\\s\\S]*?\\}`,
       'g',
     );
-    html = html.replace(re, '');
+    html = html.replace(precise, '');
   }
-  // Drop leftover map-title-toggle rules from older patches (outside marker).
+  // Orphan braces left by older incomplete @media strips.
+  html = html.replace(/\n[ \t]*\}\s*\n([ \t]*\/\*\s*investingmap-header-editorial)/g, '\n$1');
   html = html.replace(/\n?\s*\.map-title-toggle\s*\{[\s\S]*?\}\s*/g, '\n');
   html = html.replace(/\n?\s*\.map-title-toggle:focus-visible\s*\{[\s\S]*?\}\s*/g, '\n');
   html = html.replace(/\n?\s*\.map-title-toggle\s+h1\s*\{[\s\S]*?\}\s*/g, '\n');
@@ -238,17 +338,25 @@ function stripMarkedCss(html) {
     /\n?\s*\.map-title-toggle\[aria-expanded="true"\]\s+\.map-title-chevron\s*\{[\s\S]*?\}\s*/g,
     '\n',
   );
-  // Empty style shells left after stripping a dedicated block.
   html = html.replace(/<style>\s*<\/style>\s*/gi, '');
   return html;
 }
 
+function hasOldCssMarker(html) {
+  return (
+    html.includes('investingmap-map-title-toggle') ||
+    (/investingmap-header-editorial-toggle(?!-v2)/.test(html) &&
+      !html.includes(PANEL_CSS_END))
+  );
+}
+
 function injectPanelCss(html) {
-  // Already on the new marker — leave alone (idempotent).
-  if (html.includes(PANEL_CSS_MARKER) && !html.includes(OLD_CSS_MARKER)) {
+  if (html.includes(PANEL_CSS_MARKER) && html.includes(PANEL_CSS_END) && !hasOldCssMarker(html)) {
     return html;
   }
   html = stripMarkedCss(html);
+  // Clean leftover orphan closing braces / blank lines before @media.
+  html = html.replace(/\n[ \t]*\}\s*\n+(\s*@media\s*\(\s*max-width)/g, '\n$1');
   html = html.replace(/\n{3,}([ \t]*@media)/g, '\n\n$1');
   const block = PANEL_CSS.trim();
   const mobileMedia = /@media\s*\(\s*max-width:\s*768px\s*\)\s*\{/;
@@ -338,8 +446,7 @@ function patchApplyLang(source) {
 function patchHtml(html) {
   html = convertDetailsToPanel(html);
   html = unwrapTitleToggle(html);
-  html = ensureHeaderTitleRow(html);
-  html = ensureEditorialToggle(html);
+  html = rebuildMapHeader(html);
   html = injectPanelCss(html);
   html = patchTranslationKeys(html);
   html = patchApplyLang(html);

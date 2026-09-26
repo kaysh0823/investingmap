@@ -1,6 +1,6 @@
 /**
- * Assert sector map HTML (+ dist copies): header-title-row, editorial toggle,
- * no legacy map-title-toggle, panel starts collapsed.
+ * Assert sector map HTML (+ dist): correct header nesting for title-row,
+ * badges, subtitle, and editorial toggle.
  */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -23,27 +23,137 @@ function listMapHtml(base) {
   return out.sort();
 }
 
+function extractBalancedDiv(html, startIdx) {
+  if (startIdx < 0 || !/^<div\b/i.test(html.slice(startIdx))) return null;
+  let depth = 0;
+  const re = /<\/?div\b[^>]*>/gi;
+  re.lastIndex = startIdx;
+  let m;
+  while ((m = re.exec(html))) {
+    if (/^<\//.test(m[0])) {
+      depth -= 1;
+      if (depth === 0) {
+        return {
+          start: startIdx,
+          end: m.index + m[0].length,
+          outer: html.slice(startIdx, m.index + m[0].length),
+        };
+      }
+    } else {
+      depth += 1;
+    }
+  }
+  return null;
+}
+
+function findOpenById(html, tag, id) {
+  const re = new RegExp(`<${tag}\\b[^>]*\\bid=["']${id}["'][^>]*>`, 'i');
+  const m = re.exec(html);
+  return m ? m.index : -1;
+}
+
+function enclosingDivClass(html, pos) {
+  // Walk back to find the nearest unclosed <div class="..."> that still contains pos.
+  const opens = [];
+  const re = /<\/?div\b[^>]*>/gi;
+  let m;
+  while ((m = re.exec(html)) && m.index < pos) {
+    if (/^<\//.test(m[0])) {
+      opens.pop();
+    } else {
+      const cls = (m[0].match(/\bclass=["']([^"']*)["']/i) || [])[1] || '';
+      opens.push(cls);
+    }
+  }
+  return opens.length ? opens[opens.length - 1] : '';
+}
+
 function checkHtml(rel, html, label) {
   const failures = [];
 
-  const titleRowMatch = html.match(
-    /<div class="header-title-row">([\s\S]*?)<\/div>\s*<p[^>]*id=["']hdr-subtitle["']/,
+  if (!html.includes('id="map-editorial-panel"') && !html.includes("id='map-editorial-panel'")) {
+    return failures;
+  }
+
+  const rowOpen = html.search(
+    /<div\b[^>]*\bclass=["'][^"']*\bheader-title-row\b[^"']*["'][^>]*>/i,
   );
-  if (!titleRowMatch) {
-    failures.push(`${label}: missing .header-title-row before #hdr-subtitle`);
+  if (rowOpen < 0) {
+    failures.push(`${label}: missing .header-title-row`);
+    return failures;
+  }
+  const row = extractBalancedDiv(html, rowOpen);
+  if (!row) {
+    failures.push(`${label}: unbalanced .header-title-row`);
+    return failures;
+  }
+  if (!/id=["']hdr-title["']/.test(row.outer)) {
+    failures.push(`${label}: #hdr-title not inside .header-title-row`);
+  }
+  if (/id=["']hdr-subtitle["']/.test(row.outer)) {
+    failures.push(`${label}: #hdr-subtitle must not be inside .header-title-row`);
+  }
+  if (/id=["']map-editorial-toggle["']/.test(row.outer)) {
+    failures.push(`${label}: #map-editorial-toggle must not be inside .header-title-row`);
+  }
+
+  const metaOpen = row.outer.search(
+    /<div\b[^>]*\bclass=["'][^"']*\bheader-meta(?:\s|["'])[^"']*\bheader-meta-inline\b[^"']*["'][^>]*>/i,
+  );
+  const metaOpenAlt = row.outer.search(
+    /<div\b[^>]*\bclass=["'][^"']*\bheader-meta-inline\b[^"']*["'][^>]*>/i,
+  );
+  const metaIdx = metaOpen >= 0 ? metaOpen : metaOpenAlt;
+  if (metaIdx < 0) {
+    failures.push(`${label}: missing .header-meta-inline inside .header-title-row`);
   } else {
-    const row = titleRowMatch[1];
-    if (!/id=["']hdr-title["']/.test(row)) {
-      failures.push(`${label}: #hdr-title not inside .header-title-row`);
-    }
-    if (!/id=["']badge-total["']/.test(row)) {
-      failures.push(`${label}: #badge-total not inside .header-title-row`);
+    const meta = extractBalancedDiv(row.outer, metaIdx);
+    if (!meta) {
+      failures.push(`${label}: unbalanced .header-meta-inline`);
+    } else {
+      const total = (meta.outer.match(/id=["']badge-total["']/g) || []).length;
+      const market = (meta.outer.match(/id=["']badge-market["']/g) || []).length;
+      const badgeDivs = (meta.outer.match(/<div\b[^>]*\bclass=["'][^"']*\bbadge\b/gi) || [])
+        .length;
+      if (total !== 1 || market !== 1 || badgeDivs !== 2) {
+        failures.push(
+          `${label}: .header-meta-inline needs exactly 2 badges (#badge-total, #badge-market); got total=${total} market=${market} badgeDivs=${badgeDivs}`,
+        );
+      }
     }
   }
 
-  const toggleCount = (html.match(/id=["']map-editorial-toggle["']/g) || []).length;
-  if (toggleCount !== 1) {
-    failures.push(`${label}: expected exactly 1 #map-editorial-toggle, got ${toggleCount}`);
+  const subIdx = findOpenById(html, 'p', 'hdr-subtitle');
+  const toggleIdx = findOpenById(html, 'button', 'map-editorial-toggle');
+  if (subIdx < 0) failures.push(`${label}: missing #hdr-subtitle`);
+  if (toggleIdx < 0) failures.push(`${label}: missing #map-editorial-toggle`);
+
+  if (subIdx >= 0) {
+    if (subIdx > rowOpen && subIdx < row.end) {
+      failures.push(`${label}: #hdr-subtitle is a descendant of .header-title-row`);
+    }
+    const parentCls = enclosingDivClass(html, subIdx);
+    if (!/\bheader\b/.test(parentCls) || /\bheader-title-row\b/.test(parentCls)) {
+      failures.push(
+        `${label}: #hdr-subtitle parent should be .header (got class="${parentCls}")`,
+      );
+    }
+  }
+
+  if (toggleIdx >= 0) {
+    if (toggleIdx > rowOpen && toggleIdx < row.end) {
+      failures.push(`${label}: #map-editorial-toggle is a descendant of .header-title-row`);
+    }
+    const parentCls = enclosingDivClass(html, toggleIdx);
+    if (!/\bheader\b/.test(parentCls) || /\bheader-title-row\b/.test(parentCls)) {
+      failures.push(
+        `${label}: #map-editorial-toggle parent should be .header (got class="${parentCls}")`,
+      );
+    }
+    const toggleCount = (html.match(/id=["']map-editorial-toggle["']/g) || []).length;
+    if (toggleCount !== 1) {
+      failures.push(`${label}: expected exactly 1 #map-editorial-toggle, got ${toggleCount}`);
+    }
   }
 
   const legacyCount = (html.match(/map-title-toggle/g) || []).length;
@@ -64,7 +174,7 @@ const failures = [];
 for (const rel of listMapHtml(ROOT)) {
   const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
   if (!html.includes('id="map-editorial-panel"') && !html.includes("id='map-editorial-panel'")) {
-    continue; // stub / landing without editorial
+    continue;
   }
   checked++;
   failures.push(...checkHtml(rel, html, rel));
@@ -83,7 +193,7 @@ if (fs.existsSync(DIST)) {
 assert.ok(checked >= 20, `expected many sector maps with editorial panel, got ${checked}`);
 if (failures.length) {
   for (const f of failures) console.error('  FAIL', f);
-  console.error(`verify:editorial-toggle FAILED — ${failures.length} issue(s)`);
+  console.error(`verify:editorial-toggle FAILED — ${failures.length} issue(s) across ${checked} maps`);
   process.exit(1);
 }
 console.log(`verify:editorial-toggle OK — ${checked} source maps (+ dist when present)`);
