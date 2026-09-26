@@ -61,7 +61,7 @@
   }
   </script>
   <script src="../js/seo.js"></script>
-        <!-- investingmap-geo-webpage -->
+          <!-- investingmap-geo-webpage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -278,7 +278,7 @@
   <script src="../js/map_perfcalendar.js?v=445d7ded"></script>
   <script src="../js/map_valuation.js?v=8d92012e"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=e4068ca9"></script>
+  <script src="../js/map_mobile_ux.js?v=e127da69"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
 <style>
     :root {
@@ -961,6 +961,67 @@
       background: var(--surface2)
     }
 
+    /* investingmap-header-editorial-toggle */
+    .header-title-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+    .header-title-row h1 {
+      margin: 0
+    }
+    .header-meta-inline {
+      margin: 0;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+    .map-editorial-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 6px 0 0;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer
+    }
+    .map-editorial-toggle:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px
+    }
+    .map-title-chevron {
+      flex-shrink: 0;
+      font-size: 0.85em;
+      line-height: 1;
+      color: var(--text-muted);
+      transition: transform .15s ease
+    }
+    .map-editorial-toggle[aria-expanded="true"] .map-title-chevron {
+      transform: rotate(180deg)
+    }
+    .map-editorial-panel.is-collapsed {
+      display: none
+    }
+    .map-editorial-detail.is-collapsed {
+      display: none
+    }
+    .map-editorial-title-sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
     @media(max-width:768px) {
       html {
         overflow-x: hidden
@@ -2103,13 +2164,16 @@
     </button>
       <span class="quotes-asof" id="quotes-asof" aria-live="polite"></span>
     </div>
-    <button type="button" class="map-title-toggle" id="map-title-toggle" aria-expanded="false" aria-controls="map-editorial-panel">
-      <h1 id="hdr-title">🇰🇷 한국 화장품/미용기기 투자 지도</h1>
-      <span class="map-title-chevron" aria-hidden="true">▾</span>
-    </button>
-    <p id="hdr-subtitle">브랜드·ODM/OEM·미용기기·유통·채널 — 상장사와 글로벌 참고 관계</p>
-    <div class="header-meta">
+    <div class="header-title-row">
+    <h1 id="hdr-title">🇰🇷 한국 화장품/미용기기 투자 지도</h1>
+    <div class="header-meta header-meta-inline">
       <div class="badge" id="badge-total">Total <span>20</span> listed companies</div>
+  </div>
+  <p id="hdr-subtitle">브랜드·ODM/OEM·미용기기·유통·채널 — 상장사와 글로벌 참고 관계</p>
+  <button type="button" class="map-editorial-toggle" id="map-editorial-toggle"
+          aria-expanded="false" aria-controls="map-editorial-panel">
+    <span id="map-editorial-toggle-text">섹터 설명 보기</span><span class="map-title-chevron" aria-hidden="true">▾</span>
+  </button>
       <div class="badge" id="badge-market">KOSPI <span>8</span> · KOSDAQ <span>12</span></div>
     </div>
   </div>
@@ -2755,7 +2819,7 @@
         "title": "🇰🇷 한국 화장품/미용기기 투자 지도",
         "subtitle": "브랜드·ODM/OEM·미용기기·유통·채널 — 상장사와 글로벌 참고 관계",
         "badgeTotal": "총 <span>25</span>개 상장사",
-        "badgeMarket": "KOSPI <span>17</span>사 · KOSDAQ <span>8</span>사",
+        "badgeMarket": "KOSPI <span>17</span>사 · KOSDAQ <span>8</span>사","editorialToggleShow":"섹터 설명 보기","editorialToggleHide":"섹터 설명 접기",
         "dataAsof": "업데이트 기준일: 2026년 6월 12일",
         "tabHeatmap": "🔥 섹터 히트맵",
 
@@ -2907,7 +2971,7 @@
         "title": "🇰🇷 Korea Cosmetics / Aesthetic Devices Map",
         "subtitle": "Brands, ODM/OEM, aesthetic devices, and channels — listed companies and reference relationships",
         "badgeTotal": "<span>25</span> listed companies",
-        "badgeMarket": "KOSPI <span>17</span> · KOSDAQ <span>8</span>",
+        "badgeMarket": "KOSPI <span>17</span> · KOSDAQ <span>8</span>","editorialToggleShow":"섹터 설명 보기","editorialToggleHide":"섹터 설명 접기",
         "dataAsof": "Data as of: June 12, 2026",
         "tabHeatmap": "🔥 Sector heatmap",
 

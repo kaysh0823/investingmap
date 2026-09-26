@@ -1,5 +1,5 @@
 /**
- * Mobile layout fixes: hub-style topbar, tab labels, h1 sector-description toggle.
+ * Mobile layout fixes: hub-style topbar, tab labels, editorial toggle button.
  * Collapsed editorial stays in the DOM (CSS display:none) for SEO.
  */
 (function (global) {
@@ -7,7 +7,7 @@
 
   var MQ = '(max-width: 768px)';
   var mql = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(MQ) : null;
-  var titleToggleReady = false;
+  var editorialToggleReady = false;
   var topbarReady = false;
 
   var TAB_SHORT = {
@@ -92,47 +92,29 @@
     document.body.classList.toggle('im-map-topbar-active', isMobile());
   }
 
+  function editorialToggleLabel(expanded) {
+    var lang = pageLang();
+    if (expanded) return lang === 'en' ? 'Hide notes' : '섹터 설명 접기';
+    return lang === 'en' ? 'About this map' : '섹터 설명 보기';
+  }
+
   function setEditorialExpanded(btn, panel, expanded) {
     if (!btn || !panel) return;
     btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    // Title toggle shows/hides the whole intro panel (lead, how-to, more button).
-    // Detail (#map-editorial-detail) stays collapsed until the more-button is clicked.
     if (expanded) panel.classList.remove('is-collapsed');
     else panel.classList.add('is-collapsed');
+    var text = document.getElementById('map-editorial-toggle-text');
+    if (text) text.textContent = editorialToggleLabel(expanded);
   }
 
-  function ensureTitleToggleButton() {
-    var existing = document.getElementById('map-title-toggle');
-    if (existing) return existing;
-
-    var h1 = document.getElementById('hdr-title');
-    if (!h1 || !h1.parentNode) return null;
-
-    // Unwrap legacy hdr-title-wrap / info button if present.
-    var wrap = document.getElementById('hdr-title-wrap');
-    if (wrap && wrap.contains(h1)) {
-      var wrapParent = wrap.parentNode;
-      if (wrapParent && wrapParent.contains(h1)) wrapParent.insertBefore(h1, wrap);
-      wrap.remove();
+  function unwrapLegacyTitleToggle() {
+    var legacy = document.getElementById('map-title-toggle');
+    if (!legacy || !legacy.parentNode) return;
+    var h1 = legacy.querySelector('#hdr-title') || document.getElementById('hdr-title');
+    if (h1 && legacy.contains(h1)) {
+      legacy.parentNode.insertBefore(h1, legacy);
     }
-
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'map-title-toggle';
-    btn.id = 'map-title-toggle';
-    btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-controls', 'map-editorial-panel');
-    var h1Parent = h1.parentNode;
-    if (h1Parent && h1Parent.contains(h1)) h1Parent.insertBefore(btn, h1);
-    else if (h1Parent) h1Parent.appendChild(btn);
-    btn.appendChild(h1);
-
-    var chevron = document.createElement('span');
-    chevron.className = 'map-title-chevron';
-    chevron.setAttribute('aria-hidden', 'true');
-    chevron.textContent = '▾';
-    btn.appendChild(chevron);
-    return btn;
+    legacy.remove();
   }
 
   function ensureEditorialPanel() {
@@ -171,13 +153,14 @@
     return panel;
   }
 
-  function setupMapTitleToggle() {
-    var btn = ensureTitleToggleButton();
+  function setupEditorialToggle() {
+    unwrapLegacyTitleToggle();
+    var btn = document.getElementById('map-editorial-toggle');
     var panel = ensureEditorialPanel();
     if (!btn || !panel) return;
 
-    if (!titleToggleReady) {
-      titleToggleReady = true;
+    if (!editorialToggleReady) {
+      editorialToggleReady = true;
       try {
         sessionStorage.removeItem('im.editorial.open');
       } catch (e) {}
@@ -188,13 +171,13 @@
       });
     }
 
-    // Keep subtitle compact on mobile (content still in DOM).
     document.body.classList.toggle('im-mobile-hdr-compact', isMobile());
   }
 
   function injectStyles() {
-    var styleId = 'im-mobile-ux-css-v9';
+    var styleId = 'im-mobile-ux-css-v10';
     [
+      'im-mobile-ux-css-v9',
       'im-mobile-ux-css-v8',
       'im-mobile-ux-css-v7',
       'im-mobile-ux-css-v6',
@@ -212,12 +195,12 @@
       '.hub-topbar.im-map-topbar .hub-brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);min-width:0}' +
       '.hub-topbar.im-map-topbar .hub-brand-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#1f6feb,#58a6ff);flex-shrink:0;box-shadow:0 2px 8px rgba(88,166,255,.25)}' +
       '.hub-topbar.im-map-topbar .hub-brand-name{font-size:15px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}' +
-      '.map-title-toggle{display:flex;align-items:flex-start;gap:6px;width:100%;margin:0;padding:0;border:none;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}' +
-      '.map-title-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}' +
-      '.map-title-toggle h1{flex:1;min-width:0;margin:0}' +
-      '.map-title-chevron{flex-shrink:0;margin-top:.35em;font-size:.7em;line-height:1;color:var(--text-muted);transition:transform .15s ease}' +
-      '.map-title-toggle[aria-expanded="true"] .map-title-chevron{transform:rotate(180deg)}' +
-      /* Entire intro panel hidden until h1 toggle; detail has its own collapse. */
+      '.header-title-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}' +
+      '.header-meta-inline{margin:0;display:flex;gap:6px;flex-wrap:wrap}' +
+      '.map-editorial-toggle{display:inline-flex;align-items:center;gap:6px;margin:6px 0 0;padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);color:var(--text-muted);font:inherit;font-size:12px;cursor:pointer}' +
+      '.map-editorial-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}' +
+      '.map-title-chevron{flex-shrink:0;font-size:.85em;line-height:1;color:var(--text-muted);transition:transform .15s ease}' +
+      '.map-editorial-toggle[aria-expanded="true"] .map-title-chevron{transform:rotate(180deg)}' +
       '.map-editorial-panel.is-collapsed{display:none}' +
       '.map-editorial-detail.is-collapsed{display:none}' +
       '.map-editorial-title-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}' +
@@ -239,10 +222,12 @@
       'body.im-map-topbar-active .lang-toggle .flag{margin-right:0!important;font-size:15px;line-height:1}' +
       'body.im-map-topbar-active .lang-toggle{min-width:32px;justify-content:center}' +
       'body.im-mobile-hdr-compact #hdr-subtitle{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}' +
-      'body.im-map-topbar-active .header h1,body.im-map-topbar-active .map-title-toggle,body.im-map-topbar-active .header-meta{padding-left:12px!important;padding-right:12px!important}' +
+      'body.im-map-topbar-active .header .header-title-row,body.im-map-topbar-active .header .map-editorial-toggle,body.im-map-topbar-active .header-meta{padding-left:12px!important;padding-right:12px!important}' +
       'body.im-map-topbar-active .header h1{font-size:15px!important;line-height:1.2!important;padding-top:4px!important;padding-bottom:0!important;margin:0!important}' +
-      'body.im-map-topbar-active .header-meta{display:flex!important;flex-wrap:wrap!important;margin-top:0!important;gap:4px!important;padding-top:2px!important;padding-bottom:0!important}' +
+      'body.im-map-topbar-active .header-title-row{gap:8px!important;padding-top:2px!important}' +
+      'body.im-map-topbar-active .header-meta{display:flex!important;flex-wrap:wrap!important;margin-top:0!important;gap:4px!important;padding-top:0!important;padding-bottom:0!important}' +
       'body.im-map-topbar-active .header .badge{font-size:10px!important;padding:1px 8px!important;line-height:1.3!important}' +
+      'body.im-map-topbar-active .map-editorial-toggle{font-size:11px!important;padding:4px 8px!important;margin-top:4px!important}' +
       '.tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;flex-wrap:unset!important;overflow:visible!important;padding:0!important;border-bottom:1px solid var(--border)}' +
       '.tab-btn{flex:unset!important;min-width:0!important;padding:8px 4px!important;font-size:11px!important;line-height:1.25!important;white-space:normal!important;word-break:keep-all!important;text-align:center!important;min-height:40px;display:flex;align-items:center;justify-content:center;border-bottom:2px solid transparent;margin:0!important}' +
       '.tab-btn.active{border-bottom-color:var(--accent)}' +
@@ -303,6 +288,11 @@
       if (el) delete el.dataset.fullLabel;
     });
     syncTabs();
+    var btn = document.getElementById('map-editorial-toggle');
+    var text = document.getElementById('map-editorial-toggle-text');
+    if (btn && text) {
+      text.textContent = editorialToggleLabel(btn.getAttribute('aria-expanded') === 'true');
+    }
     try {
       if (global.InvestingMapLiveQuotes && InvestingMapLiveQuotes.syncReturnMetaBadges) {
         InvestingMapLiveQuotes.syncReturnMetaBadges(pageLang());
@@ -313,7 +303,7 @@
   function syncAll() {
     injectStyles();
     setupMapTopbar();
-    setupMapTitleToggle();
+    setupEditorialToggle();
     syncTabs();
   }
 

@@ -14,6 +14,7 @@ const STEPS = [
   'verify_seed_coverage.mjs',
   'verify_supabase_hub_prefer.mjs',
   'verify_seo.mjs',
+  'verify_editorial_toggle.mjs',
   'verify_netmap.mjs',
   'verify_map_init.mjs',
 ];

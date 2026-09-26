@@ -115,6 +115,15 @@
       document.getElementById('hdr-subtitle').textContent = t.subtitle;
       document.getElementById('badge-total').innerHTML = t.badgeTotal;
       document.getElementById('badge-market').innerHTML = t.badgeMarket;
+      var edToggleText = document.getElementById('map-editorial-toggle-text');
+      var edToggleBtn = document.getElementById('map-editorial-toggle');
+      if (edToggleText && edToggleBtn) {
+        var edOpen = edToggleBtn.getAttribute('aria-expanded') === 'true';
+        edToggleText.textContent = edOpen
+          ? (t.editorialToggleHide || (lang === 'en' ? 'Hide notes' : '섹터 설명 접기'))
+          : (t.editorialToggleShow || (lang === 'en' ? 'About this map' : '섹터 설명 보기'));
+      }
+
             document.getElementById('tab-btn-heatmap').innerHTML = t.tabHeatmap || (lang === 'en' ? '🔥 Sector heatmap' : '🔥 섹터 히트맵');
       var momentumBtn = document.getElementById('tab-btn-momentum');
       if (momentumBtn) momentumBtn.innerHTML = t.tabMomentum || (lang === 'en' ? '📊 Momentum matrix' : '📊 모멘텀 매트릭스');
