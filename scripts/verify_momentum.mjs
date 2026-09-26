@@ -25,7 +25,7 @@ new vm.Script(source, { filename: 'map_momentum.js' }).runInContext(context);
 const momentum = context.InvestingMapMomentum;
 assert.ok(momentum, 'momentum module export missing');
 assert.ok(source.includes("attr('data-ticker'"), 'momentum nodes must expose data-ticker');
-assert.ok(source.includes('applyTickerFocus'), 'momentum must highlight ?ticker focus');
+assert.ok(source.includes('applyUrlTickerFocus') || source.includes('applyTickerFocus'), 'momentum must highlight ?ticker focus');
 assert.ok(source.includes('var CHG_CLIP = 15'), 'momentum CHG_CLIP must be 15');
 assert.equal(momentum.getYMode(), '5d', '5D BOX is the default y-axis mode');
 assert.equal(

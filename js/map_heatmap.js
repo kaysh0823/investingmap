@@ -35,6 +35,145 @@
   var observedEl = null;
   var pendingSizeRetry = null;
   var visibilityBound = false;
+  var searchQ = '';
+  var tabSearchCtrl = null;
+  var lastSearchCompanies = [];
+
+  function tabSearchLib() {
+    return global.InvestingMapTabSearch || null;
+  }
+
+  function matchOpacity(isMatch, hasQuery) {
+    if (!hasQuery) return 1;
+    return isMatch ? 1 : 0.25;
+  }
+
+  function visibleHeatmapTickers(container) {
+    var set = new Set();
+    if (!container) return set;
+    container.querySelectorAll('g.hm-tile[data-ticker][data-leaf="1"]').forEach(function (el) {
+      var t = el.getAttribute('data-ticker');
+      if (t) set.add(String(t));
+    });
+    return set;
+  }
+
+  function scrollFirstChartSearchHit(container, companies) {
+    var lib = tabSearchLib();
+    var q = String(searchQ || '').trim();
+    if (!lib || !q || !container) return;
+    var hits = lib.classifyChartHits(companies, visibleHeatmapTickers(container), q);
+    if (hits.chartHits.length !== 1) return;
+    var t = hits.chartHits[0].ticker;
+    var tile = container.querySelector('g.hm-tile[data-ticker="' + t + '"][data-leaf="1"]');
+    lib.scrollIntoViewIfNeeded(tile);
+  }
+
+  function applySearchHighlight(container, companies, lang) {
+    var lib = tabSearchLib();
+    if (!container) return;
+    var q = String(searchQ || '').trim();
+    var hasQuery = !!q;
+    var byTicker = {};
+    (companies || []).forEach(function (c) {
+      if (c && c.ticker) byTicker[String(c.ticker)] = c;
+    });
+
+    container.querySelectorAll('g.hm-tile[data-ticker][data-leaf="1"]').forEach(function (tileEl) {
+      var ticker = tileEl.getAttribute('data-ticker');
+      var c = byTicker[ticker];
+      var isMatch = !!(hasQuery && lib && c && lib.matches(c, q));
+      var rect = tileEl.querySelector('rect');
+      tileEl.querySelectorAll('text.hm-search-label').forEach(function (lbl) {
+        if (lbl.parentNode) lbl.parentNode.removeChild(lbl);
+      });
+
+      if (hasQuery) {
+        tileEl.classList.remove('im-hm-focus');
+        tileEl.style.opacity = String(matchOpacity(isMatch, true));
+        if (rect) {
+          if (!rect.getAttribute('data-base-stroke')) {
+            rect.setAttribute('data-base-stroke', rect.getAttribute('stroke') || 'rgba(0,0,0,0.18)');
+            rect.setAttribute(
+              'data-base-stroke-width',
+              rect.getAttribute('stroke-width') || '1',
+            );
+          }
+          if (isMatch) {
+            rect.setAttribute('stroke', lib.MATCH_STROKE);
+            rect.setAttribute('stroke-width', String(lib.MATCH_STROKE_WIDTH));
+          } else {
+            rect.setAttribute('stroke', rect.getAttribute('data-base-stroke'));
+            rect.setAttribute('stroke-width', rect.getAttribute('data-base-stroke-width') || '1');
+          }
+        }
+        if (isMatch && !tileEl.querySelector('text.hm-name') && c && typeof d3 !== 'undefined') {
+          var tw = rect ? parseFloat(rect.getAttribute('width')) || 48 : 48;
+          var nm = displayName(c, lang || 'ko');
+          d3.select(tileEl)
+            .append('text')
+            .attr('class', 'hm-search-label')
+            .attr('x', 4)
+            .attr('y', 14)
+            .attr('font-size', Math.max(8, Math.min(11, Math.floor(tw / 7))))
+            .attr('fill', TEXT_LIGHT)
+            .text(nm.length > Math.floor(tw / 6) ? nm.slice(0, Math.max(3, Math.floor(tw / 6) - 1)) + '…' : nm);
+        }
+      } else {
+        tileEl.style.opacity = '';
+        if (rect) {
+          var baseStroke = rect.getAttribute('data-base-stroke');
+          if (baseStroke != null) rect.setAttribute('stroke', baseStroke);
+          var baseW = rect.getAttribute('data-base-stroke-width');
+          if (baseW != null) rect.setAttribute('stroke-width', baseW);
+        }
+      }
+    });
+
+    if (tabSearchCtrl && lib && hasQuery) {
+      var classified = lib.classifyChartHits(companies, visibleHeatmapTickers(container), q);
+      if (classified.chartHits.length) {
+        tabSearchCtrl.setStatus(classified.chartHits.length, { query: classified.query });
+      } else if (classified.nameOnlyHits.length) {
+        tabSearchCtrl.setStatus(0, { notOnChart: true, query: classified.query });
+      } else {
+        tabSearchCtrl.setStatus(0, { query: classified.query });
+      }
+    } else if (tabSearchCtrl && !hasQuery) {
+      tabSearchCtrl.setStatus(0, { query: '' });
+    }
+  }
+
+  function ensureTabSearchRow(wrap, bar, container, lang) {
+    var lib = tabSearchLib();
+    if (!lib || !wrap || !bar) return;
+    var row = wrap.querySelector('.hm-tab-search-row');
+    if (!row) {
+      row = document.createElement('div');
+      row.className = 'im-tab-search-row hm-controls-row hm-tab-search-row';
+    }
+    if (bar.parentNode !== row) row.appendChild(bar);
+    if (row.parentNode !== wrap || (container && row.nextSibling !== container)) {
+      if (container && wrap.contains(container)) wrap.insertBefore(row, container);
+      else wrap.appendChild(row);
+    }
+    if (!tabSearchCtrl) {
+      tabSearchCtrl = lib.create({
+        container: row,
+        lang: lang,
+        onQuery: function (next) {
+          onUserSearchQuery(next);
+        },
+        onEnter: function (next) {
+          onUserSearchQuery(next);
+        },
+      });
+    } else {
+      tabSearchCtrl.setLang(lang);
+      if (tabSearchCtrl.el.parentNode !== row) row.appendChild(tabSearchCtrl.el);
+      tabSearchCtrl.setQuery(searchQ);
+    }
+  }
 
   function horizonById(id) {
     for (var i = 0; i < HORIZONS.length; i++) {
@@ -224,7 +363,8 @@
       '.im-hm-tooltip .im-hm-tt-name{display:block;font-size:13px;font-weight:700;color:var(--text,#e6edf3)}' +
       '.im-hm-tooltip .im-hm-tt-mcap,.im-hm-tooltip .im-hm-tt-chg{display:block;margin-top:2px;font-size:12px;font-weight:600;color:var(--text-muted,#8b949e)}' +
       '.hm-horizon-tabs{display:flex!important;visibility:visible!important;opacity:1!important;' +
-      'flex-wrap:wrap;gap:6px;margin:0 0 12px;align-items:center;position:relative;z-index:2}' +
+      'flex-wrap:wrap;gap:6px;margin:0;align-items:center;position:relative;z-index:2;flex:1 1 auto}' +
+      '.hm-tab-search-row{margin:0 0 12px}' +
       '.hm-horizon-tab{padding:6px 12px;border-radius:16px;border:1px solid var(--border,#30363d);' +
       'background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;cursor:pointer;' +
       '-webkit-appearance:none;appearance:none;min-height:32px;line-height:1.2}' +
@@ -247,7 +387,8 @@
       '.hm-tile.im-hm-focus{animation:im-hm-pulse 1.2s ease-in-out 2}' +
       '@keyframes im-hm-pulse{0%,100%{opacity:1}50%{opacity:.88}}' +
       '@media (max-width:768px){' +
-      '.hm-horizon-tabs{display:flex!important;gap:5px;margin:0 0 10px;width:100%}' +
+      '.hm-tab-search-row{margin:0 0 10px}' +
+      '.hm-horizon-tabs{display:flex!important;gap:5px;margin:0;width:100%;flex:1 1 100%}' +
       '.hm-horizon-tab{flex:1 1 auto;min-width:calc(20% - 4px);padding:8px 6px;font-size:11px;min-height:36px;' +
       'text-align:center;touch-action:manipulation}' +
       '#heatmap-root{min-height:min(52vh,480px)!important;height:min(58vh,560px)!important}' +
@@ -255,7 +396,7 @@
       '.hm-legend-title{font-size:11px}' +
       '.hm-legend-ticks{font-size:10px}' +
       '}';
-  }
+    }
 
   function getTooltip() {
     injectStyles();
@@ -383,14 +524,7 @@
         if (lastOpts) render(lastOpts);
       });
     }
-    /* Always keep tabs immediately before #heatmap-root (visible on mobile). */
-    if (bar.parentNode !== wrap || bar.nextSibling !== container) {
-      if (container && wrap.contains(container)) {
-        wrap.insertBefore(bar, container);
-      } else {
-        wrap.appendChild(bar);
-      }
-    }
+    /* Placement: ensureTabSearchRow keeps tabs + search in one row above #heatmap-root. */
     bar.hidden = false;
     bar.style.display = 'flex';
     bar.innerHTML = HORIZONS.map(function (hz) {
@@ -404,6 +538,7 @@
         '</button>'
       );
     }).join('');
+    ensureTabSearchRow(wrap, bar, container, lang);
   }
 
   function paintLeaf(g, company) {
@@ -432,8 +567,24 @@
     }
   }
 
-  function applyTickerFocus(container) {
+  function applyFocusState(container, companies, lang) {
+    applySearchHighlight(container, companies, lang);
+    applyUrlTickerFocus(container);
+  }
+
+  /** User input path only — highlight then scroll if exactly one chart hit. */
+  function onUserSearchQuery(next, containerOpt, companiesOpt, langOpt) {
+    searchQ = next == null ? '' : String(next);
+    var container = containerOpt || (lastOpts && lastOpts.container);
+    var companies = companiesOpt != null ? companiesOpt : lastSearchCompanies;
+    var lang = langOpt || (lastOpts && lastOpts.lang) || 'ko';
     if (!container) return;
+    applyFocusState(container, companies, lang);
+    scrollFirstChartSearchHit(container, companies);
+  }
+
+  function applyUrlTickerFocus(container) {
+    if (!container || String(searchQ || '').trim()) return;
     var ticker = getUrlTicker();
     container.querySelectorAll('.hm-tile.im-hm-focus').forEach(function (el) {
       el.classList.remove('im-hm-focus');
@@ -464,7 +615,7 @@
         if (!c) return;
         paintLeaf(g, c);
       });
-    applyTickerFocus(container);
+    applyFocusState(container, companies, lastOpts && lastOpts.lang ? lastOpts.lang : 'ko');
   }
 
   function observeContainer(el) {
@@ -577,6 +728,7 @@
     if (!container || typeof d3 === 'undefined') return;
     lastOpts = opts;
     var companies = opts.companies || [];
+    lastSearchCompanies = companies;
     if (opts.excludeTickers && opts.excludeTickers.length) {
       var skip = {};
       opts.excludeTickers.forEach(function (t) {
@@ -621,7 +773,7 @@
     var key = layoutKey(companies, w, h, lang);
     if (key === lastLayoutKey && container.querySelector('svg.im-hm-svg')) {
       recolorLeaves(container, companies);
-      applyTickerFocus(container);
+      applyFocusState(container, companies, lang);
       return;
     }
 
@@ -637,7 +789,7 @@
     if (companies.length <= 3) {
       renderSmallCards(container, companies, w, h, lang, formatMcap, opts);
       lastLayoutKey = key;
-      applyTickerFocus(container);
+      applyFocusState(container, companies, lang);
       return;
     }
 
@@ -803,7 +955,7 @@
       });
 
     lastLayoutKey = key;
-    applyTickerFocus(container);
+    applyFocusState(container, companies, lang);
   }
 
   global.InvestingMapHeatmap = {
@@ -820,6 +972,20 @@
     chgFill: chgFill,
     colorForChange: function (pct) {
       return makeScale(HORIZONS[0].clip)(pct);
+    },
+    _test: {
+      matchOpacity: matchOpacity,
+      applySearchHighlight: applySearchHighlight,
+      applyFocusState: applyFocusState,
+      scrollFirstChartSearchHit: scrollFirstChartSearchHit,
+      onUserSearchQuery: onUserSearchQuery,
+      setSearchQ: function (q) {
+        searchQ = q == null ? '' : String(q);
+      },
+      getSearchQ: function () {
+        return searchQ;
+      },
+      visibleHeatmapTickers: visibleHeatmapTickers,
     },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

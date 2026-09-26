@@ -17,6 +17,136 @@
   var CHG_CLIP = 15;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var selectedColorMode = 'pctb';
+  var searchQ = '';
+  var tabSearchCtrl = null;
+  var lastSearchCompanies = [];
+
+  function tabSearchLib() {
+    return global.InvestingMapTabSearch || null;
+  }
+
+  function matchOpacity(isMatch, hasQuery) {
+    if (!hasQuery) return 1;
+    return isMatch ? 1 : 0.15;
+  }
+
+  function visibleVolatilityTickers(container) {
+    var set = new Set();
+    if (!container) return set;
+    container.querySelectorAll('g.im-vol-node[data-ticker]').forEach(function (el) {
+      var t = el.getAttribute('data-ticker');
+      if (t) set.add(String(t));
+    });
+    return set;
+  }
+
+  function applySearchHighlight(container, companies, nameByTicker) {
+    var lib = tabSearchLib();
+    if (!container) return;
+    var q = String(searchQ || '').trim();
+    var hasQuery = !!q;
+    var byTicker = {};
+    (companies || []).forEach(function (c) {
+      if (c && c.ticker) byTicker[String(c.ticker)] = c;
+    });
+    nameByTicker = nameByTicker || {};
+
+    container.querySelectorAll('g.im-vol-node[data-ticker]').forEach(function (node) {
+      var ticker = node.getAttribute('data-ticker');
+      var c = byTicker[ticker] || { ticker: ticker, name: nameByTicker[ticker] };
+      var isMatch = !!(hasQuery && lib && lib.matches(c, q));
+      var dot = node.querySelector('.im-vol-dot');
+      node.style.opacity = hasQuery ? String(matchOpacity(isMatch, true)) : '';
+      if (dot) {
+        if (!dot.getAttribute('data-base-stroke')) {
+          dot.setAttribute('data-base-stroke', dot.getAttribute('stroke') || 'rgba(255,255,255,.35)');
+          dot.setAttribute('data-base-stroke-width', dot.getAttribute('stroke-width') || '1');
+          if (!dot.getAttribute('data-base-r')) dot.setAttribute('data-base-r', dot.getAttribute('r') || '7');
+        }
+        if (hasQuery) {
+          node.classList.remove('im-vol-focus');
+          if (isMatch) {
+            dot.setAttribute('stroke', lib.MATCH_STROKE);
+            dot.setAttribute('stroke-width', String(lib.MATCH_STROKE_WIDTH));
+          } else {
+            dot.setAttribute('stroke', dot.getAttribute('data-base-stroke'));
+            dot.setAttribute('stroke-width', dot.getAttribute('data-base-stroke-width') || '1');
+            dot.setAttribute('r', dot.getAttribute('data-base-r'));
+          }
+        } else {
+          dot.setAttribute('stroke', dot.getAttribute('data-base-stroke') || 'rgba(255,255,255,.35)');
+          dot.setAttribute('stroke-width', dot.getAttribute('data-base-stroke-width') || '1');
+          dot.setAttribute('r', dot.getAttribute('data-base-r') || dot.getAttribute('r'));
+        }
+      }
+      node.querySelectorAll('text').forEach(function (t) {
+        if (hasQuery && isMatch) {
+          t.style.opacity = '1';
+          t.style.display = '';
+          t.setAttribute('font-weight', '700');
+        } else if (hasQuery) {
+          t.style.opacity = '0.35';
+        } else {
+          t.style.opacity = '';
+          t.removeAttribute('font-weight');
+        }
+      });
+    });
+
+    if (tabSearchCtrl && lib && hasQuery) {
+      var classified = lib.classifyChartHits(companies, visibleVolatilityTickers(container), q);
+      if (classified.chartHits.length) {
+        tabSearchCtrl.setStatus(classified.chartHits.length, { query: classified.query });
+      } else if (classified.nameOnlyHits.length) {
+        tabSearchCtrl.setStatus(0, { notOnChart: true, query: classified.query });
+      } else {
+        tabSearchCtrl.setStatus(0, { query: classified.query });
+      }
+    } else if (tabSearchCtrl && !hasQuery) {
+      tabSearchCtrl.setStatus(0, { query: '' });
+    }
+  }
+
+  function scrollFirstChartSearchHit(container, companies) {
+    var lib = tabSearchLib();
+    var q = String(searchQ || '').trim();
+    if (!lib || !q || !container) return;
+    var hits = lib.classifyChartHits(companies, visibleVolatilityTickers(container), q);
+    if (hits.chartHits.length !== 1) return;
+    var node = container.querySelector('g.im-vol-node[data-ticker="' + hits.chartHits[0].ticker + '"]');
+    lib.scrollIntoViewIfNeeded(node);
+  }
+
+  function ensureTabSearchRow(wrap, tabs, container, lang) {
+    var lib = tabSearchLib();
+    if (!lib || !wrap || !tabs) return;
+    var row = wrap.querySelector('.vol-tab-search-row');
+    if (!row) {
+      row = document.createElement('div');
+      row.className = 'im-tab-search-row vol-tab-search-row';
+    }
+    if (tabs.parentNode !== row) row.appendChild(tabs);
+    if (row.parentNode !== wrap || (container && row.nextSibling !== container)) {
+      if (container && wrap.contains(container)) wrap.insertBefore(row, container);
+      else wrap.appendChild(row);
+    }
+    if (!tabSearchCtrl) {
+      tabSearchCtrl = lib.create({
+        container: row,
+        lang: lang,
+        onQuery: function (next) {
+          onUserSearchQuery(next);
+        },
+        onEnter: function (next) {
+          onUserSearchQuery(next);
+        },
+      });
+    } else {
+      tabSearchCtrl.setLang(lang);
+      if (tabSearchCtrl.el.parentNode !== row) row.appendChild(tabSearchCtrl.el);
+      tabSearchCtrl.setQuery(searchQ);
+    }
+  }
 
   var COPY = {
     ko: {
@@ -561,8 +691,26 @@
     }
   }
 
-  function applyTickerFocus(container) {
+  function applyFocusState(container, companies, nameByTicker) {
+    applySearchHighlight(container, companies, nameByTicker);
+    applyUrlTickerFocus(container);
+  }
+
+  function onUserSearchQuery(next, containerOpt, companiesOpt, nameByTickerOpt) {
+    searchQ = next == null ? '' : String(next);
+    var container = containerOpt || (lastOpts && lastOpts.container);
+    var companies = companiesOpt != null ? companiesOpt : lastSearchCompanies;
+    var nameByTicker =
+      nameByTickerOpt != null
+        ? nameByTickerOpt
+        : (lastOpts && lastOpts._volNameByTicker) || {};
     if (!container) return;
+    applyFocusState(container, companies, nameByTicker);
+    scrollFirstChartSearchHit(container, companies);
+  }
+
+  function applyUrlTickerFocus(container) {
+    if (!container || String(searchQ || '').trim()) return;
     var ticker = getUrlTicker();
     container.querySelectorAll('.im-vol-node.im-vol-focus').forEach(function (el) {
       el.classList.remove('im-vol-focus');
@@ -673,13 +821,7 @@
         );
       })
       .join('');
-    if (tabs.parentNode !== wrap || tabs.nextSibling !== container) {
-      if (container && wrap.contains(container)) {
-        wrap.insertBefore(tabs, container);
-      } else {
-        wrap.appendChild(tabs);
-      }
-    }
+    ensureTabSearchRow(wrap, tabs, container, opts.lang || 'ko');
   }
 
   function renderLegend(el, opts) {
@@ -1013,7 +1155,9 @@
       .attr('font-size', 12)
       .text(labels.yAxis);
 
-    applyTickerFocus(container);
+    lastSearchCompanies = opts.companies || [];
+    lastOpts._volNameByTicker = nameByTicker;
+    applyFocusState(container, lastSearchCompanies, nameByTicker);
   }
 
   global.InvestingMapVolatility = {
@@ -1039,6 +1183,17 @@
       selectedColorMode = normalizeColorMode(mode);
       saveColorMode(selectedColorMode);
       if (lastOpts) render(lastOpts);
+    },
+    _test: {
+      matchOpacity: matchOpacity,
+      applySearchHighlight: applySearchHighlight,
+      applyFocusState: applyFocusState,
+      scrollFirstChartSearchHit: scrollFirstChartSearchHit,
+      onUserSearchQuery: onUserSearchQuery,
+      setSearchQ: function (q) {
+        searchQ = q == null ? '' : String(q);
+      },
+      visibleVolatilityTickers: visibleVolatilityTickers,
     },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

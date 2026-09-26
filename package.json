@@ -41,6 +41,7 @@
     "audit:relation-release": "node scripts/skip_rn_wip_verify.mjs audit:relation-release",
     "verify:relation-release-suite": "node scripts/skip_rn_wip_verify.mjs verify:relation-release-suite",
     "verify:no-graph-tab": "node scripts/verify_no_graph_tab.mjs",
+    "verify:tab-search": "node scripts/verify_tab_search.mjs",
     "verify:candle": "node scripts/verify_candle_modal.mjs",
     "verify:hub-trend": "node scripts/verify_hub_trend.mjs",
     "verify:hub-sectors-trend": "node scripts/verify_hub_sectors_vs_trend.mjs",

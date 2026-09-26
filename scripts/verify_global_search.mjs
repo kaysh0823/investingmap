@@ -82,12 +82,18 @@ for (const rel of ROOT_PAGES) {
 }
 
 const heatmapSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_heatmap.js'), 'utf8');
-assert.ok(heatmapSrc.includes('applyTickerFocus'), 'map_heatmap must highlight ?ticker');
+assert.ok(
+  heatmapSrc.includes('applyUrlTickerFocus') || heatmapSrc.includes('applyTickerFocus'),
+  'map_heatmap must highlight ?ticker',
+);
 assert.ok(heatmapSrc.includes('im-hm-focus'), 'map_heatmap must define focus class');
 
 const momentumSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_momentum.js'), 'utf8');
 assert.ok(momentumSrc.includes("attr('data-ticker'"), 'map_momentum must set data-ticker');
-assert.ok(momentumSrc.includes('applyTickerFocus'), 'map_momentum must highlight ?ticker');
+assert.ok(
+  momentumSrc.includes('applyUrlTickerFocus') || momentumSrc.includes('applyTickerFocus'),
+  'map_momentum must highlight ?ticker',
+);
 
 const searchSrc = fs.readFileSync(GLOBAL_SEARCH_JS, 'utf8');
 assert.ok(searchSrc.includes("tab: 'volatility'"), 'global_search modal must offer volatility');
@@ -256,7 +262,10 @@ assert.ok(searchSrc.includes("hint.className = 'im-gs-hint'"), 'global_search mu
 }
 
 const volSrc = fs.readFileSync(path.join(ROOT, 'js', 'map_volatility.js'), 'utf8');
-assert.ok(volSrc.includes('applyTickerFocus'), 'map_volatility must highlight ?ticker');
+assert.ok(
+  volSrc.includes('applyUrlTickerFocus') || volSrc.includes('applyTickerFocus'),
+  'map_volatility must highlight ?ticker',
+);
 assert.ok(volSrc.includes('im-vol-focus'), 'map_volatility must define focus class');
 
 if (fs.existsSync(path.join(ROOT, 'dist'))) {

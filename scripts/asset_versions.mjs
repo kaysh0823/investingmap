@@ -30,6 +30,7 @@ export const JS_FILES = [
   'js/map_mobile_ux.js',
   'js/map_momentum.js',
   'js/map_perfcalendar.js',
+  'js/map_tab_search.js',
   'js/map_tab_state.js',
   'js/map_valuation.js',
   'js/map_netmap.js',

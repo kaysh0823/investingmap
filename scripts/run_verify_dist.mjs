@@ -6,6 +6,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const STEPS = [
   'verify_inline_js_syntax.mjs',
   'verify_dist_js.mjs',
+  'verify_tab_search.mjs',
   'verify_heatmap_exclude_chips.mjs',
   'verify_global_search.mjs',
   'verify_asset_versions.mjs',

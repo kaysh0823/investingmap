@@ -86,6 +86,165 @@
   }
 
   selectedYMode = loadYMode();
+  var searchQ = '';
+  var tabSearchCtrl = null;
+  var lastSearchItems = [];
+  var lastSearchCompanies = [];
+
+  function tabSearchLib() {
+    return global.InvestingMapTabSearch || null;
+  }
+
+  function matchOpacity(isMatch, hasQuery) {
+    if (!hasQuery) return 1;
+    return isMatch ? 1 : 0.15;
+  }
+
+  function visibleMomentumTickers(container) {
+    var set = new Set();
+    if (!container) return set;
+    container.querySelectorAll('g.im-mm-node[data-ticker]').forEach(function (el) {
+      var t = el.getAttribute('data-ticker');
+      if (t) set.add(String(t));
+    });
+    return set;
+  }
+
+  function appendMomentumSearchLabel(node, item, lang) {
+    if (!node || !item || node.querySelector('text')) return;
+    var circle = node.querySelector('.im-mm-bubble');
+    var r = circle ? parseFloat(circle.getAttribute('r')) || item.radius : item.radius;
+    var labelR =
+      global.InvestingMapTurnoverRadius && global.InvestingMapTurnoverRadius.hoverRadius
+        ? global.InvestingMapTurnoverRadius.hoverRadius(r)
+        : Math.max(r * 1.4, 18);
+    var label = bubbleLabelText(item.company, lang, labelR);
+    d3.select(node)
+      .append('text')
+      .attr('class', 'im-mm-search-label')
+      .attr('text-anchor', 'middle')
+      .attr('dy', '.35em')
+      .attr('fill', '#f0f3f6')
+      .attr('stroke', 'rgba(0,0,0,.55)')
+      .attr('stroke-width', 2)
+      .style('paint-order', 'stroke')
+      .attr('font-size', label.fontSize)
+      .attr('font-weight', 700)
+      .attr('pointer-events', 'none')
+      .text(label.text);
+  }
+
+  function applySearchHighlight(container, companies, items, lang) {
+    var lib = tabSearchLib();
+    if (!container) return;
+    var q = String(searchQ || '').trim();
+    var hasQuery = !!q;
+    var byTicker = {};
+    (companies || []).forEach(function (c) {
+      if (c && c.ticker) byTicker[String(c.ticker)] = c;
+    });
+    var itemByTicker = {};
+    (items || []).forEach(function (it) {
+      if (it && it.company && it.company.ticker) itemByTicker[String(it.company.ticker)] = it;
+    });
+
+    container.querySelectorAll('g.im-mm-node[data-ticker]').forEach(function (node) {
+      var ticker = node.getAttribute('data-ticker');
+      var c = byTicker[ticker];
+      var isMatch = !!(hasQuery && lib && c && lib.matches(c, q));
+      var bubble = node.querySelector('.im-mm-bubble');
+      node.querySelectorAll('text.im-mm-search-label').forEach(function (lbl) {
+        if (lbl.parentNode) lbl.parentNode.removeChild(lbl);
+      });
+      node.style.opacity = hasQuery ? String(matchOpacity(isMatch, true)) : '';
+      if (bubble) {
+        if (!bubble.getAttribute('data-base-stroke')) {
+          bubble.setAttribute('data-base-stroke', bubble.getAttribute('stroke') || 'rgba(255,255,255,.38)');
+          bubble.setAttribute('data-base-stroke-width', bubble.getAttribute('stroke-width') || '1');
+          var baseR = bubble.getAttribute('data-base-r');
+          if (!baseR) bubble.setAttribute('data-base-r', bubble.getAttribute('r') || '10');
+        }
+        if (hasQuery) {
+          node.classList.remove('im-mm-focus');
+          if (isMatch) {
+            bubble.setAttribute('stroke', lib.MATCH_STROKE);
+            bubble.setAttribute('stroke-width', String(lib.MATCH_STROKE_WIDTH));
+          } else {
+            bubble.setAttribute('stroke', bubble.getAttribute('data-base-stroke'));
+            bubble.setAttribute('stroke-width', bubble.getAttribute('data-base-stroke-width') || '1');
+            bubble.setAttribute('r', bubble.getAttribute('data-base-r'));
+          }
+        } else {
+          bubble.setAttribute('stroke', bubble.getAttribute('data-base-stroke') || 'rgba(255,255,255,.38)');
+          bubble.setAttribute('stroke-width', bubble.getAttribute('data-base-stroke-width') || '1');
+          bubble.setAttribute('r', bubble.getAttribute('data-base-r') || bubble.getAttribute('r'));
+        }
+      }
+      if (hasQuery && isMatch && !node.querySelector('text')) {
+        appendMomentumSearchLabel(node, itemByTicker[ticker], lang);
+      }
+      if (hasQuery && isMatch) {
+        node.querySelectorAll('text').forEach(function (t) {
+          t.style.opacity = '1';
+          t.style.display = '';
+        });
+      }
+    });
+
+    if (tabSearchCtrl && lib && hasQuery) {
+      var classified = lib.classifyChartHits(companies, visibleMomentumTickers(container), q);
+      if (classified.chartHits.length) {
+        tabSearchCtrl.setStatus(classified.chartHits.length, { query: classified.query });
+      } else if (classified.nameOnlyHits.length) {
+        tabSearchCtrl.setStatus(0, { notOnChart: true, query: classified.query });
+      } else {
+        tabSearchCtrl.setStatus(0, { query: classified.query });
+      }
+    } else if (tabSearchCtrl && !hasQuery) {
+      tabSearchCtrl.setStatus(0, { query: '' });
+    }
+  }
+
+  function scrollFirstChartSearchHit(container, companies) {
+    var lib = tabSearchLib();
+    var q = String(searchQ || '').trim();
+    if (!lib || !q || !container) return;
+    var hits = lib.classifyChartHits(companies, visibleMomentumTickers(container), q);
+    if (hits.chartHits.length !== 1) return;
+    var tile = container.querySelector('g.im-mm-node[data-ticker="' + hits.chartHits[0].ticker + '"]');
+    lib.scrollIntoViewIfNeeded(tile);
+  }
+
+  function ensureTabSearchRow(wrap, tabs, container, lang) {
+    var lib = tabSearchLib();
+    if (!lib || !wrap || !tabs) return;
+    var row = wrap.querySelector('.mm-tab-search-row');
+    if (!row) {
+      row = document.createElement('div');
+      row.className = 'im-tab-search-row mm-tab-search-row';
+    }
+    if (tabs.parentNode !== row) row.appendChild(tabs);
+    if (row.parentNode !== wrap || (container && row.nextSibling !== container)) {
+      if (container && wrap.contains(container)) wrap.insertBefore(row, container);
+      else wrap.appendChild(row);
+    }
+    if (!tabSearchCtrl) {
+      tabSearchCtrl = lib.create({
+        container: row,
+        lang: lang,
+        onQuery: function (next) {
+          onUserSearchQuery(next);
+        },
+        onEnter: function (next) {
+          onUserSearchQuery(next);
+        },
+      });
+    } else {
+      tabSearchCtrl.setLang(lang);
+      if (tabSearchCtrl.el.parentNode !== row) row.appendChild(tabSearchCtrl.el);
+      tabSearchCtrl.setQuery(searchQ);
+    }
+  }
 
   function boxBounds(company, mode) {
     var period = mode === '10d' ? 10 : mode === '20d' ? 20 : 5;
@@ -336,13 +495,7 @@
         );
       })
       .join('');
-    if (tabs.parentNode !== wrap || tabs.nextSibling !== container) {
-      if (container && wrap.contains(container)) {
-        wrap.insertBefore(tabs, container);
-      } else {
-        wrap.appendChild(tabs);
-      }
-    }
+    ensureTabSearchRow(wrap, tabs, container, opts.lang || 'ko');
   }
 
   function renderLegend(el, opts) {
@@ -392,8 +545,24 @@
     }
   }
 
-  function applyTickerFocus(container, items, lang) {
+  function applyFocusState(container, companies, items, lang) {
+    applySearchHighlight(container, companies, items, lang);
+    applyUrlTickerFocus(container, items, lang);
+  }
+
+  function onUserSearchQuery(next, containerOpt, companiesOpt, itemsOpt, langOpt) {
+    searchQ = next == null ? '' : String(next);
+    var container = containerOpt || (lastOpts && lastOpts.container);
+    var companies = companiesOpt != null ? companiesOpt : lastSearchCompanies;
+    var items = itemsOpt != null ? itemsOpt : lastSearchItems;
+    var lang = langOpt || (lastOpts && lastOpts.lang) || 'ko';
     if (!container) return;
+    applyFocusState(container, companies, items, lang);
+    scrollFirstChartSearchHit(container, companies);
+  }
+
+  function applyUrlTickerFocus(container, items, lang) {
+    if (!container || String(searchQ || '').trim()) return;
     var ticker = getUrlTicker();
     container.querySelectorAll('.im-mm-node.im-mm-focus').forEach(function (el) {
       el.classList.remove('im-mm-focus');
@@ -728,7 +897,9 @@
         if (opts.onSelect) opts.onSelect(item.company);
       });
 
-    applyTickerFocus(container, items, opts.lang || 'ko');
+    lastSearchItems = items;
+    lastSearchCompanies = opts.companies || [];
+    applyFocusState(container, lastSearchCompanies, items, opts.lang || 'ko');
   }
 
   global.InvestingMapMomentum = {
@@ -750,6 +921,17 @@
     },
     getYMode: function () {
       return selectedYMode;
+    },
+    _test: {
+      matchOpacity: matchOpacity,
+      applySearchHighlight: applySearchHighlight,
+      applyFocusState: applyFocusState,
+      scrollFirstChartSearchHit: scrollFirstChartSearchHit,
+      onUserSearchQuery: onUserSearchQuery,
+      setSearchQ: function (q) {
+        searchQ = q == null ? '' : String(q);
+      },
+      visibleMomentumTickers: visibleMomentumTickers,
     },
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -132,6 +132,7 @@ run('node scripts/patch_desktop_sidebar.mjs', 'desktop left sidebar');
 run('node scripts/patch_map_nav_filters.mjs', 'desktop sector nav, filters, tab state');
 run('node scripts/patch_tab_heatmap_i18n.mjs', 'tabHeatmap i18n');
 run('node scripts/patch_heatmap_chg.mjs', 'heatmap 1D return colors');
+run('node scripts/patch_tab_search.mjs', 'in-tab search helper script before map_heatmap');
 run('node scripts/patch_momentum_tab.mjs', 'momentum matrix tab');
 run('node scripts/patch_volatility_tab.mjs', 'volatility distribution tab');
 run('node scripts/patch_perfcalendar_tab.mjs', 'performance calendar tab');

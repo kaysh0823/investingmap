@@ -23,6 +23,152 @@
   var lastPaintMetric = null;
   var TRANS_MS = 200;
   var tickerScrollDone = false;
+  var searchQ = '';
+  var tabSearchCtrl = null;
+  var lastSearchCompanies = [];
+
+  function tabSearchLib() {
+    return global.InvestingMapTabSearch || null;
+  }
+
+  function matchOpacity(isMatch, hasQuery) {
+    if (!hasQuery) return 1;
+    return isMatch ? 1 : 0.15;
+  }
+
+  function visibleValuationTickers(container) {
+    var set = new Set();
+    if (!container) return set;
+    container.querySelectorAll('.val-dot[data-ticker], .val-outlier[data-ticker]').forEach(function (el) {
+      var t = el.getAttribute('data-ticker');
+      if (t) set.add(String(t));
+    });
+    return set;
+  }
+
+  function appendValuationSearchLabel(mark, name) {
+    if (!mark || !mark.parentNode) return;
+    var tag = mark.tagName && mark.tagName.toLowerCase();
+    var cx =
+      parseFloat(mark.getAttribute('data-cx')) ||
+      parseFloat(mark.getAttribute('cx') || mark.getAttribute('x')) ||
+      0;
+    var cy =
+      parseFloat(mark.getAttribute('data-cy')) ||
+      parseFloat(mark.getAttribute('cy') || mark.getAttribute('y')) ||
+      0;
+    var rLab = tag === 'circle' ? parseFloat(mark.getAttribute('r')) || 10 : 10;
+    var label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('class', 'val-search-label');
+    label.setAttribute('x', String(cx + rLab + 6));
+    label.setAttribute('y', String(cy));
+    label.setAttribute('dominant-baseline', 'middle');
+    label.setAttribute('fill', '#f0b429');
+    label.setAttribute('font-size', '11');
+    label.setAttribute('font-weight', '600');
+    label.textContent = name;
+    mark.parentNode.appendChild(label);
+  }
+
+  function applySearchHighlight(container, companies, labels, lang) {
+    var lib = tabSearchLib();
+    if (!container) return;
+    var q = String(searchQ || '').trim();
+    var hasQuery = !!q;
+    var byTicker = {};
+    (companies || []).forEach(function (c) {
+      if (c && c.ticker) byTicker[String(c.ticker)] = c;
+    });
+
+    container.querySelectorAll('.val-search-label, .val-ticker-focus-label').forEach(function (el) {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    });
+    var hintEl = ensureTickerHintEl();
+    if (hintEl && hasQuery) hintEl.textContent = '';
+
+    container.querySelectorAll('.val-dot[data-ticker], .val-outlier[data-ticker]').forEach(function (mark) {
+      var ticker = mark.getAttribute('data-ticker');
+      var c = byTicker[ticker];
+      var isMatch = !!(hasQuery && lib && c && lib.matches(c, q));
+      var tag = mark.tagName && mark.tagName.toLowerCase();
+      if (!mark.getAttribute('data-base-stroke')) {
+        mark.setAttribute('data-base-stroke', mark.getAttribute('stroke') || 'none');
+        mark.setAttribute('data-base-stroke-width', mark.getAttribute('stroke-width') || '0');
+        if (tag === 'circle' && !mark.getAttribute('data-base-r')) {
+          mark.setAttribute('data-base-r', mark.getAttribute('r') || '6');
+        }
+      }
+      if (hasQuery) {
+        mark.style.opacity = String(matchOpacity(isMatch, true));
+        if (isMatch) {
+          if (mark.parentNode && typeof mark.parentNode.appendChild === 'function') {
+            mark.parentNode.appendChild(mark);
+          }
+          if (tag === 'circle') {
+            var r0 = parseFloat(mark.getAttribute('data-base-r')) || parseFloat(mark.getAttribute('r')) || 6;
+            mark.setAttribute('r', String(r0 * 1.15));
+          }
+          mark.setAttribute('stroke', lib.MATCH_STROKE);
+          mark.setAttribute('stroke-width', String(lib.MATCH_STROKE_WIDTH));
+          if (tag !== 'circle') mark.style.paintOrder = 'stroke';
+          appendValuationSearchLabel(mark, companyDisplayName(companies, ticker, lang));
+        } else {
+          mark.setAttribute('stroke', mark.getAttribute('data-base-stroke') || 'none');
+          mark.setAttribute('stroke-width', mark.getAttribute('data-base-stroke-width') || '0');
+          if (tag === 'circle') mark.setAttribute('r', mark.getAttribute('data-base-r') || mark.getAttribute('r'));
+        }
+      } else {
+        mark.style.opacity = '';
+        mark.setAttribute('stroke', mark.getAttribute('data-base-stroke') || 'none');
+        mark.setAttribute('stroke-width', mark.getAttribute('data-base-stroke-width') || '0');
+        if (tag === 'circle') mark.setAttribute('r', mark.getAttribute('data-base-r') || mark.getAttribute('r'));
+      }
+    });
+
+    if (tabSearchCtrl && lib && hasQuery) {
+      var classified = lib.classifyChartHits(companies, visibleValuationTickers(container), q);
+      if (classified.chartHits.length) {
+        tabSearchCtrl.setStatus(classified.chartHits.length, { query: classified.query });
+      } else if (classified.nameOnlyHits.length) {
+        tabSearchCtrl.setStatus(0, { notOnChart: true, query: classified.query });
+      } else {
+        tabSearchCtrl.setStatus(0, { query: classified.query });
+      }
+    } else if (tabSearchCtrl && !hasQuery) {
+      tabSearchCtrl.setStatus(0, { query: '' });
+    }
+  }
+
+  function scrollFirstChartSearchHit(container, companies) {
+    var lib = tabSearchLib();
+    var q = String(searchQ || '').trim();
+    if (!lib || !q || !container) return;
+    var hits = lib.classifyChartHits(companies, visibleValuationTickers(container), q);
+    if (hits.chartHits.length !== 1) return;
+    var t = hits.chartHits[0].ticker;
+    var mark =
+      container.querySelector('.val-dot[data-ticker="' + t + '"]') ||
+      container.querySelector('.val-outlier[data-ticker="' + t + '"]');
+    lib.scrollIntoViewIfNeeded(mark);
+  }
+
+  function applyFocusState(container, companies, labels, lang) {
+    applySearchHighlight(container, companies, labels, lang);
+    if (!String(searchQ || '').trim()) {
+      applyUrlTickerHighlight(container, companies, labels, lang);
+    }
+  }
+
+  function onUserSearchQuery(next, containerOpt, companiesOpt, labelsOpt, langOpt) {
+    searchQ = next == null ? '' : String(next);
+    var container = containerOpt || (lastOpts && lastOpts.container);
+    var companies = companiesOpt != null ? companiesOpt : lastSearchCompanies;
+    var labels = labelsOpt || (lastOpts ? labelsFor(lastOpts) : {});
+    var lang = langOpt || (lastOpts && lastOpts.lang === 'en' ? 'en' : 'ko');
+    if (!container) return;
+    applyFocusState(container, companies, labels, lang);
+    scrollFirstChartSearchHit(container, companies);
+  }
 
   var METRICS = ['perTtm', 'perFy', 'pbr', 'dvd'];
   var METRIC_STORAGE = 'im.valuation.metric';
@@ -39,6 +185,7 @@
       title: '밸류에이션 비교',
       groupMetric: '지표',
       groupSort: '정렬',
+      search: '검색',
       metricPerTtm: 'PER TTM',
       metricPerFy: 'PER FY',
       metricPbr: 'PBR',
@@ -104,6 +251,7 @@
       title: 'Valuation',
       groupMetric: 'Metric',
       groupSort: 'Sort',
+      search: 'Search',
       metricPerTtm: 'PER TTM',
       metricPerFy: 'PER FY',
       metricPbr: 'PBR',
@@ -273,6 +421,7 @@
       '.valuation-wrap{display:flex;flex-direction:column;gap:10px;min-height:420px;padding:0 4px 8px 12px;min-width:0}' +
       '.valuation-toolbar{display:flex;flex-direction:column;gap:8px;min-width:0}' +
       '.valuation-seg-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}' +
+      '.valuation-search-row .im-tab-search{flex:1 1 200px;max-width:320px}' +
       '.valuation-seg-title{font-size:11px;font-weight:600;color:var(--text-muted,#8b949e);min-width:2.5em;flex:0 0 auto}' +
       '.valuation-seg{display:inline-flex;flex-wrap:wrap;gap:0;border:1px solid var(--border,#30363d);border-radius:8px;overflow:hidden;background:var(--surface2,#21262d)}' +
       '.valuation-seg button{appearance:none;border:0;border-right:1px solid var(--border,#30363d);background:transparent;color:var(--text,#e6edf3);padding:6px 12px;font-size:12px;cursor:pointer}' +
@@ -289,7 +438,7 @@
       '.valuation-tip b{display:block;margin-bottom:4px}' +
       '.valuation-band-label{font-size:11px;fill:var(--text-muted,#8b949e)}' +
       '.valuation-fy-tag{font-size:8px;fill:var(--text-muted,#8b949e);pointer-events:none}' +
-      '@media (max-width:640px){.valuation-toolbar{gap:10px}.valuation-seg button{padding:6px 10px}}';
+      '@media (max-width:640px){.valuation-toolbar{gap:10px}.valuation-seg button{padding:6px 10px}.valuation-search-row .im-tab-search{flex:1 1 100%;max-width:none;width:100%}}';
     var el = document.createElement('style');
     el.id = 'im-map-valuation-css';
     el.textContent = css;
@@ -678,7 +827,32 @@
       ],
       'sort',
     );
+    mountTabSearch(toolbar, labels, opts.lang === 'en' ? 'en' : 'ko');
     assertToolbarActive(toolbar);
+  }
+
+  function mountTabSearch(toolbar, labels, lang) {
+    var lib = tabSearchLib();
+    if (!lib || !toolbar) return;
+    var row = document.createElement('div');
+    row.className = 'valuation-seg-row valuation-search-row';
+    var tit = document.createElement('span');
+    tit.className = 'valuation-seg-title';
+    tit.textContent = labels.search || (lang === 'en' ? 'Search' : '검색');
+    row.appendChild(tit);
+    toolbar.appendChild(row);
+    tabSearchCtrl = lib.create({
+      container: row,
+      lang: lang,
+      value: searchQ,
+      onQuery: function (next) {
+        onUserSearchQuery(next);
+      },
+      onEnter: function (next) {
+        onUserSearchQuery(next);
+      },
+    });
+    tabSearchCtrl.setQuery(searchQ);
   }
 
   function marketRsLoaded() {
@@ -1243,7 +1417,8 @@
         '</div>';
     }
 
-    applyUrlTickerHighlight(container, companies, labels, lang);
+    lastSearchCompanies = companies;
+    applyFocusState(container, companies, labels, lang);
   }
 
   function getUrlTicker() {
@@ -1568,6 +1743,15 @@
       },
       pruneExtraSvgs: pruneExtraSvgs,
       applyUrlTickerHighlight: applyUrlTickerHighlight,
+      matchOpacity: matchOpacity,
+      applySearchHighlight: applySearchHighlight,
+      applyFocusState: applyFocusState,
+      scrollFirstChartSearchHit: scrollFirstChartSearchHit,
+      onUserSearchQuery: onUserSearchQuery,
+      setSearchQ: function (q) {
+        searchQ = q == null ? '' : String(q);
+      },
+      visibleValuationTickers: visibleValuationTickers,
       resetTickerScrollDone: function () {
         tickerScrollDone = false;
       },
