@@ -1,0 +1,1354 @@
+{
+ "sectorId": "cosmetics",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "brand": "화장품 브랜드",
+  "odm": "화장품 ODM·OEM",
+  "aesthetic": "에스테틱 의약품·소모품",
+  "channel": "유통·채널",
+  "device": "미용 의료장비",
+  "packaging": "용기·부자재",
+  "end_customer": "글로벌 채널·고객",
+  "global_peer": "글로벌 뷰티·에스테틱"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:278470",
+   "type": "kr_listed",
+   "ticker": "278470",
+   "nameKo": "에이피알",
+   "nameEn": "에이피알",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "brand",
+   "role": "화장품 브랜드"
+  },
+  {
+   "id": "krx:090430",
+   "type": "kr_listed",
+   "ticker": "090430",
+   "nameKo": "아모레퍼시픽",
+   "nameEn": "아모레퍼시픽",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "brand",
+   "role": "화장품 브랜드"
+  },
+  {
+   "id": "krx:051900",
+   "type": "kr_listed",
+   "ticker": "051900",
+   "nameKo": "LG생활건강",
+   "nameEn": "LG생활건강",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "brand",
+   "role": "화장품 브랜드"
+  },
+  {
+   "id": "krx:161890",
+   "type": "kr_listed",
+   "ticker": "161890",
+   "nameKo": "한국콜마",
+   "nameEn": "한국콜마",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "odm",
+   "role": "화장품 ODM·OEM"
+  },
+  {
+   "id": "krx:214450",
+   "type": "kr_listed",
+   "ticker": "214450",
+   "nameKo": "파마리서치",
+   "nameEn": "파마리서치",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "aesthetic",
+   "role": "에스테틱 의약품·소모품"
+  },
+  {
+   "id": "krx:192820",
+   "type": "kr_listed",
+   "ticker": "192820",
+   "nameKo": "코스맥스",
+   "nameEn": "코스맥스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "odm",
+   "role": "화장품 ODM·OEM"
+  },
+  {
+   "id": "krx:257720",
+   "type": "kr_listed",
+   "ticker": "257720",
+   "nameKo": "실리콘투",
+   "nameEn": "실리콘투",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "channel",
+   "role": "유통·채널"
+  },
+  {
+   "id": "krx:145020",
+   "type": "kr_listed",
+   "ticker": "145020",
+   "nameKo": "휴젤",
+   "nameEn": "휴젤",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "aesthetic",
+   "role": "에스테틱 의약품·소모품"
+  },
+  {
+   "id": "krx:483650",
+   "type": "kr_listed",
+   "ticker": "483650",
+   "nameKo": "달바글로벌",
+   "nameEn": "달바글로벌",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "brand",
+   "role": "화장품 브랜드"
+  },
+  {
+   "id": "krx:214370",
+   "type": "kr_listed",
+   "ticker": "214370",
+   "nameKo": "케어젠",
+   "nameEn": "케어젠",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "aesthetic",
+   "role": "에스테틱 의약품·소모품"
+  },
+  {
+   "id": "krx:214150",
+   "type": "kr_listed",
+   "ticker": "214150",
+   "nameKo": "클래시스",
+   "nameEn": "클래시스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "device",
+   "role": "미용 의료장비"
+  },
+  {
+   "id": "krx:002790",
+   "type": "kr_listed",
+   "ticker": "002790",
+   "nameKo": "아모레퍼시픽홀딩스",
+   "nameEn": "아모레퍼시픽홀딩스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "brand",
+   "role": "화장품 브랜드"
+  },
+  {
+   "id": "krx:241710",
+   "type": "kr_listed",
+   "ticker": "241710",
+   "nameKo": "코스메카코리아",
+   "nameEn": "코스메카코리아",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "odm",
+   "role": "화장품 ODM·OEM"
+  },
+  {
+   "id": "krx:251970",
+   "type": "kr_listed",
+   "ticker": "251970",
+   "nameKo": "펌텍코리아",
+   "nameEn": "펌텍코리아",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "packaging",
+   "role": "용기·부자재"
+  },
+  {
+   "id": "krx:086900",
+   "type": "kr_listed",
+   "ticker": "086900",
+   "nameKo": "메디톡스",
+   "nameEn": "메디톡스",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "aesthetic",
+   "role": "에스테틱 의약품·소모품"
+  },
+  {
+   "id": "krx:336570",
+   "type": "kr_listed",
+   "ticker": "336570",
+   "nameKo": "원텍",
+   "nameEn": "원텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "device",
+   "role": "미용 의료장비"
+  },
+  {
+   "id": "krx:018290",
+   "type": "kr_listed",
+   "ticker": "018290",
+   "nameKo": "브이티",
+   "nameEn": "브이티",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "brand",
+   "role": "화장품 브랜드"
+  },
+  {
+   "id": "krx:092730",
+   "type": "kr_listed",
+   "ticker": "092730",
+   "nameKo": "네오팜",
+   "nameEn": "네오팜",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "brand",
+   "role": "화장품 브랜드"
+  },
+  {
+   "id": "global:amazon",
+   "type": "global",
+   "nameKo": "아마존",
+   "nameEn": "Amazon",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "K뷰티 주요 온라인 채널",
+   "exchange": "NASDAQ:AMZN"
+  },
+  {
+   "id": "global:walgreens",
+   "type": "global",
+   "nameKo": "월그린",
+   "nameEn": "Walgreens",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "실리콘투 1,800개 매장 입점",
+   "exchange": ""
+  },
+  {
+   "id": "global:loreal",
+   "type": "global",
+   "nameKo": "로레알",
+   "nameEn": "L'Oréal",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "뷰티 1위 (ODM 고객이자 경쟁)",
+   "exchange": "EPA:OR"
+  },
+  {
+   "id": "global:estee",
+   "type": "global",
+   "nameKo": "에스티로더",
+   "nameEn": "Estée Lauder",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "뷰티 (닥터자르트 인수)",
+   "exchange": "NYSE:EL"
+  },
+  {
+   "id": "global:shiseido",
+   "type": "global",
+   "nameKo": "시세이도",
+   "nameEn": "Shiseido",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "뷰티",
+   "exchange": "TSE:4911"
+  },
+  {
+   "id": "global:unilever",
+   "type": "global",
+   "nameKo": "유니레버",
+   "nameEn": "Unilever",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "뷰티·생활용품 (카버코리아 인수)",
+   "exchange": "LSE:ULVR"
+  },
+  {
+   "id": "global:pg",
+   "type": "global",
+   "nameKo": "P&G",
+   "nameEn": "Procter & Gamble",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "생활용품·뷰티",
+   "exchange": "NYSE:PG"
+  },
+  {
+   "id": "global:elf",
+   "type": "global",
+   "nameKo": "e.l.f.",
+   "nameEn": "e.l.f. Beauty",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "가성비 뷰티 (아마존)",
+   "exchange": "NYSE:ELF"
+  },
+  {
+   "id": "global:intercos",
+   "type": "global",
+   "nameKo": "인터코스",
+   "nameEn": "Intercos",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "화장품 ODM",
+   "exchange": "BIT:ICOS"
+  },
+  {
+   "id": "global:abbvie",
+   "type": "global",
+   "nameKo": "애브비(앨러간)",
+   "nameEn": "AbbVie (Allergan Aesthetics)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "보톡스 1위 (26억$)",
+   "exchange": "NYSE:ABBV"
+  },
+  {
+   "id": "global:ipsen",
+   "type": "global",
+   "nameKo": "입센",
+   "nameEn": "Ipsen",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "디스포트",
+   "exchange": "EPA:IPN"
+  },
+  {
+   "id": "global:merz",
+   "type": "global",
+   "nameKo": "멀츠",
+   "nameEn": "Merz Aesthetics",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "제오민·울쎄라",
+   "exchange": ""
+  },
+  {
+   "id": "global:galderma",
+   "type": "global",
+   "nameKo": "갈더마",
+   "nameEn": "Galderma",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "필러·톡신",
+   "exchange": "SIX:GALD"
+  },
+  {
+   "id": "global:cutera",
+   "type": "global",
+   "nameKo": "큐테라",
+   "nameEn": "Cutera",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "미용 의료장비",
+   "exchange": ""
+  },
+  {
+   "id": "global:inmode",
+   "type": "global",
+   "nameKo": "인모드",
+   "nameEn": "InMode",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "미용 의료장비",
+   "exchange": "NASDAQ:INMD"
+  },
+  {
+   "id": "global:solta",
+   "type": "global",
+   "nameKo": "솔타(써마지)",
+   "nameEn": "Solta Medical (Bausch)",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "써마지 (볼뉴머·올리지오 경쟁)",
+   "exchange": "NYSE:BHC"
+  },
+  {
+   "id": "global:albea",
+   "type": "global",
+   "nameKo": "알베아",
+   "nameEn": "Albéa",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "화장품 용기",
+   "exchange": ""
+  },
+  {
+   "id": "global:oliveyoung",
+   "type": "kr_other",
+   "nameKo": "CJ올리브영",
+   "nameEn": "CJ Olive Young",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "국내 H&B 채널 1위",
+   "exchange": ""
+  },
+  {
+   "id": "global:cosrx",
+   "type": "kr_other",
+   "nameKo": "코스알엑스",
+   "nameEn": "COSRX",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "아모레퍼시픽 자회사",
+   "exchange": ""
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:krx_002790>krx_090430",
+   "source": "krx:002790",
+   "target": "krx:090430",
+   "type": "equity",
+   "labelKo": "아모레퍼시픽홀딩스→아모레퍼시픽",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_090430>global_cosrx",
+   "source": "krx:090430",
+   "target": "global:cosrx",
+   "type": "equity",
+   "labelKo": "아모레퍼시픽→코스알엑스 (2024 완전 자회사)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090430>krx_051900",
+   "source": "krx:090430",
+   "target": "krx:051900",
+   "type": "peer",
+   "labelKo": "국내 뷰티 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090430>global_loreal",
+   "source": "krx:090430",
+   "target": "global:loreal",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090430>global_estee",
+   "source": "krx:090430",
+   "target": "global:estee",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090430>global_shiseido",
+   "source": "krx:090430",
+   "target": "global:shiseido",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090430>global_unilever",
+   "source": "krx:090430",
+   "target": "global:unilever",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_090430>global_pg",
+   "source": "krx:090430",
+   "target": "global:pg",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051900>global_loreal",
+   "source": "krx:051900",
+   "target": "global:loreal",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051900>global_estee",
+   "source": "krx:051900",
+   "target": "global:estee",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051900>global_shiseido",
+   "source": "krx:051900",
+   "target": "global:shiseido",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051900>global_unilever",
+   "source": "krx:051900",
+   "target": "global:unilever",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_051900>global_pg",
+   "source": "krx:051900",
+   "target": "global:pg",
+   "type": "peer",
+   "labelKo": "글로벌 뷰티 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Amorepacific_Corporation",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_278470>global_amazon",
+   "source": "krx:278470",
+   "target": "global:amazon",
+   "type": "supply",
+   "labelKo": "아마존 채널 (메디큐브·달바 등 K뷰티)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_483650>global_amazon",
+   "source": "krx:483650",
+   "target": "global:amazon",
+   "type": "supply",
+   "labelKo": "아마존 채널 (메디큐브·달바 등 K뷰티)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018290>global_amazon",
+   "source": "krx:018290",
+   "target": "global:amazon",
+   "type": "supply",
+   "labelKo": "아마존 채널 (메디큐브·달바 등 K뷰티)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_092730>global_amazon",
+   "source": "krx:092730",
+   "target": "global:amazon",
+   "type": "supply",
+   "labelKo": "아마존 채널 (메디큐브·달바 등 K뷰티)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_278470>global_oliveyoung",
+   "source": "krx:278470",
+   "target": "global:oliveyoung",
+   "type": "supply",
+   "labelKo": "올리브영 채널",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_483650>global_oliveyoung",
+   "source": "krx:483650",
+   "target": "global:oliveyoung",
+   "type": "supply",
+   "labelKo": "올리브영 채널",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018290>global_oliveyoung",
+   "source": "krx:018290",
+   "target": "global:oliveyoung",
+   "type": "supply",
+   "labelKo": "올리브영 채널",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_278470>global_elf",
+   "source": "krx:278470",
+   "target": "global:elf",
+   "type": "peer",
+   "labelKo": "온라인 중심 뷰티 (아마존)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_278470>krx_483650",
+   "source": "krx:278470",
+   "target": "krx:483650",
+   "type": "peer",
+   "labelKo": "K뷰티 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_278470>krx_018290",
+   "source": "krx:278470",
+   "target": "krx:018290",
+   "type": "peer",
+   "labelKo": "K뷰티 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_483650>krx_018290",
+   "source": "krx:483650",
+   "target": "krx:018290",
+   "type": "peer",
+   "labelKo": "K뷰티 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_278470>krx_090430",
+   "source": "krx:278470",
+   "target": "krx:090430",
+   "type": "peer",
+   "labelKo": "K뷰티 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_483650>krx_090430",
+   "source": "krx:483650",
+   "target": "krx:090430",
+   "type": "peer",
+   "labelKo": "K뷰티 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_018290>krx_092730",
+   "source": "krx:018290",
+   "target": "krx:092730",
+   "type": "peer",
+   "labelKo": "K뷰티 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161890>krx_192820",
+   "source": "krx:161890",
+   "target": "krx:192820",
+   "type": "peer",
+   "labelKo": "화장품 ODM 양강 (33년 경쟁)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://magazine.hankyung.com/business/article/202502261762b",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241710>krx_161890",
+   "source": "krx:241710",
+   "target": "krx:161890",
+   "type": "peer",
+   "labelKo": "화장품 ODM",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://magazine.hankyung.com/business/article/202502261762b",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_241710>krx_192820",
+   "source": "krx:241710",
+   "target": "krx:192820",
+   "type": "peer",
+   "labelKo": "화장품 ODM",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://magazine.hankyung.com/business/article/202502261762b",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_192820>global_loreal",
+   "source": "krx:192820",
+   "target": "global:loreal",
+   "type": "supply",
+   "labelKo": "글로벌 톱20 중 18곳 거래 (로레알 등)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://magazine.hankyung.com/business/article/202502261762b",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_192820>global_estee",
+   "source": "krx:192820",
+   "target": "global:estee",
+   "type": "supply",
+   "labelKo": "ODM 공급",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://magazine.hankyung.com/business/article/202502261762b",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_161890>krx_483650",
+   "source": "krx:161890",
+   "target": "krx:483650",
+   "type": "supply",
+   "labelKo": "달바 ODM (고객 3,776곳)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://magazine.hankyung.com/business/article/202502261762b",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_161890>krx_278470",
+   "source": "krx:161890",
+   "target": "krx:278470",
+   "type": "supply",
+   "labelKo": "ODM 공급",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://magazine.hankyung.com/business/article/202502261762b",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_161890>krx_090430",
+   "source": "krx:161890",
+   "target": "krx:090430",
+   "type": "supply",
+   "labelKo": "ODM 공급 (아모레 일부 품목)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=90681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_192820>krx_090430",
+   "source": "krx:192820",
+   "target": "krx:090430",
+   "type": "supply",
+   "labelKo": "ODM 공급 (아모레 일부 품목)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=90681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_161890>global_intercos",
+   "source": "krx:161890",
+   "target": "global:intercos",
+   "type": "peer",
+   "labelKo": "글로벌 ODM 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=90681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_192820>global_intercos",
+   "source": "krx:192820",
+   "target": "global:intercos",
+   "type": "peer",
+   "labelKo": "글로벌 ODM 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.theguru.co.kr/news/article.html?no=90681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_257720>global_walgreens",
+   "source": "krx:257720",
+   "target": "global:walgreens",
+   "type": "supply",
+   "labelKo": "월그린 1,800개 매장 K뷰티 입점",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032314424161640",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_257720>global_amazon",
+   "source": "krx:257720",
+   "target": "global:amazon",
+   "type": "partner",
+   "labelKo": "K뷰티 브랜드 아마존 유통 대행",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_483650>krx_257720",
+   "source": "krx:483650",
+   "target": "krx:257720",
+   "type": "supply",
+   "labelKo": "실리콘투 통한 해외 유통",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_018290>krx_257720",
+   "source": "krx:018290",
+   "target": "krx:257720",
+   "type": "supply",
+   "labelKo": "실리콘투 통한 해외 유통",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_092730>krx_257720",
+   "source": "krx:092730",
+   "target": "krx:257720",
+   "type": "supply",
+   "labelKo": "실리콘투 통한 해외 유통",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_257720>global_cosrx",
+   "source": "krx:257720",
+   "target": "global:cosrx",
+   "type": "partner",
+   "labelKo": "코스알엑스 해외 진출 동행",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://view.asiae.co.kr/article/2026032416315088248",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145020>krx_086900",
+   "source": "krx:145020",
+   "target": "krx:086900",
+   "type": "peer",
+   "labelKo": "보툴리눔 톡신 경쟁 (ITC 분쟁, 휴젤 승)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.monews.co.kr/news/articleView.html?idxno=332538",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145020>global_abbvie",
+   "source": "krx:145020",
+   "target": "global:abbvie",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145020>global_ipsen",
+   "source": "krx:145020",
+   "target": "global:ipsen",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145020>global_merz",
+   "source": "krx:145020",
+   "target": "global:merz",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145020>global_galderma",
+   "source": "krx:145020",
+   "target": "global:galderma",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086900>global_abbvie",
+   "source": "krx:086900",
+   "target": "global:abbvie",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086900>global_ipsen",
+   "source": "krx:086900",
+   "target": "global:ipsen",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086900>global_merz",
+   "source": "krx:086900",
+   "target": "global:merz",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_086900>global_galderma",
+   "source": "krx:086900",
+   "target": "global:galderma",
+   "type": "peer",
+   "labelKo": "글로벌 톡신 경쟁 (애브비·입센·멀츠 3파전)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_214450>krx_145020",
+   "source": "krx:214450",
+   "target": "krx:145020",
+   "type": "peer",
+   "labelKo": "에스테틱 (리쥬란 vs 톡신)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_214370>krx_214450",
+   "source": "krx:214370",
+   "target": "krx:214450",
+   "type": "peer",
+   "labelKo": "펩타이드·재생 에스테틱",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.hkn24.com/news/articleView.html?idxno=327674",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_214150>krx_336570",
+   "source": "krx:214150",
+   "target": "krx:336570",
+   "type": "peer",
+   "labelKo": "미용 의료장비 (슈링크·볼뉴머 vs 올리지오)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=214150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_214150>global_solta",
+   "source": "krx:214150",
+   "target": "global:solta",
+   "type": "peer",
+   "labelKo": "글로벌 에너지기반 미용장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=214150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_214150>global_inmode",
+   "source": "krx:214150",
+   "target": "global:inmode",
+   "type": "peer",
+   "labelKo": "글로벌 에너지기반 미용장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=214150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_214150>global_cutera",
+   "source": "krx:214150",
+   "target": "global:cutera",
+   "type": "peer",
+   "labelKo": "글로벌 에너지기반 미용장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=214150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336570>global_solta",
+   "source": "krx:336570",
+   "target": "global:solta",
+   "type": "peer",
+   "labelKo": "글로벌 에너지기반 미용장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=214150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336570>global_inmode",
+   "source": "krx:336570",
+   "target": "global:inmode",
+   "type": "peer",
+   "labelKo": "글로벌 에너지기반 미용장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=214150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_336570>global_cutera",
+   "source": "krx:336570",
+   "target": "global:cutera",
+   "type": "peer",
+   "labelKo": "글로벌 에너지기반 미용장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=214150",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_251970>krx_090430",
+   "source": "krx:251970",
+   "target": "krx:090430",
+   "type": "supply",
+   "labelKo": "화장품 용기·펌프",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=251970",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_251970>krx_051900",
+   "source": "krx:251970",
+   "target": "krx:051900",
+   "type": "supply",
+   "labelKo": "화장품 용기·펌프",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=251970",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_251970>krx_161890",
+   "source": "krx:251970",
+   "target": "krx:161890",
+   "type": "supply",
+   "labelKo": "화장품 용기·펌프",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=251970",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_251970>krx_192820",
+   "source": "krx:251970",
+   "target": "krx:192820",
+   "type": "supply",
+   "labelKo": "화장품 용기·펌프",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=251970",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_251970>global_albea",
+   "source": "krx:251970",
+   "target": "global:albea",
+   "type": "peer",
+   "labelKo": "화장품 용기 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=251970",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

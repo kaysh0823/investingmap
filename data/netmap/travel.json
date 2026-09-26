@@ -1,0 +1,1077 @@
+{
+ "sectorId": "travel",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "airline": "항공운송",
+  "casino": "카지노",
+  "dutyfree": "면세",
+  "hotel": "호텔·리조트",
+  "travel": "여행·예약",
+  "end_customer": "모회사·파트너",
+  "global_peer": "글로벌 항공·카지노·면세"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:003490",
+   "type": "kr_listed",
+   "ticker": "003490",
+   "nameKo": "대한항공",
+   "nameEn": "대한항공",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "airline",
+   "role": "항공운송"
+  },
+  {
+   "id": "krx:035250",
+   "type": "kr_listed",
+   "ticker": "035250",
+   "nameKo": "강원랜드",
+   "nameEn": "강원랜드",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "casino",
+   "role": "카지노"
+  },
+  {
+   "id": "krx:008770",
+   "type": "kr_listed",
+   "ticker": "008770",
+   "nameKo": "호텔신라",
+   "nameEn": "호텔신라",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "dutyfree",
+   "role": "면세"
+  },
+  {
+   "id": "krx:020560",
+   "type": "kr_listed",
+   "ticker": "020560",
+   "nameKo": "아시아나항공",
+   "nameEn": "아시아나항공",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "airline",
+   "role": "항공운송"
+  },
+  {
+   "id": "krx:032350",
+   "type": "kr_listed",
+   "ticker": "032350",
+   "nameKo": "롯데관광개발",
+   "nameEn": "롯데관광개발",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "casino",
+   "role": "카지노"
+  },
+  {
+   "id": "krx:034230",
+   "type": "kr_listed",
+   "ticker": "034230",
+   "nameKo": "파라다이스",
+   "nameEn": "파라다이스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "casino",
+   "role": "카지노"
+  },
+  {
+   "id": "krx:114090",
+   "type": "kr_listed",
+   "ticker": "114090",
+   "nameKo": "GKL",
+   "nameEn": "GKL",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "casino",
+   "role": "카지노"
+  },
+  {
+   "id": "krx:025980",
+   "type": "kr_listed",
+   "ticker": "025980",
+   "nameKo": "아난티",
+   "nameEn": "아난티",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "hotel",
+   "role": "호텔·리조트"
+  },
+  {
+   "id": "krx:039130",
+   "type": "kr_listed",
+   "ticker": "039130",
+   "nameKo": "하나투어",
+   "nameEn": "하나투어",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "travel",
+   "role": "여행·예약"
+  },
+  {
+   "id": "krx:089590",
+   "type": "kr_listed",
+   "ticker": "089590",
+   "nameKo": "제주항공",
+   "nameEn": "제주항공",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "airline",
+   "role": "항공운송"
+  },
+  {
+   "id": "krx:272450",
+   "type": "kr_listed",
+   "ticker": "272450",
+   "nameKo": "진에어",
+   "nameEn": "진에어",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "airline",
+   "role": "항공운송"
+  },
+  {
+   "id": "krx:006730",
+   "type": "kr_listed",
+   "ticker": "006730",
+   "nameKo": "서부T&D",
+   "nameEn": "서부T&D",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "hotel",
+   "role": "호텔·리조트"
+  },
+  {
+   "id": "global:hanjin_kal",
+   "type": "kr_other",
+   "nameKo": "한진칼",
+   "nameEn": "Hanjin KAL",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "대한항공 지주 (호반과 경영권 분쟁)",
+   "exchange": "KRX:180640"
+  },
+  {
+   "id": "global:delta",
+   "type": "global",
+   "nameKo": "델타항공",
+   "nameEn": "Delta Air Lines",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "한진칼 14.9% · 대한항공 JV",
+   "exchange": "NYSE:DAL"
+  },
+  {
+   "id": "global:jal",
+   "type": "global",
+   "nameKo": "일본항공",
+   "nameEn": "Japan Airlines",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "한진칼 지분 취득",
+   "exchange": "TSE:9201"
+  },
+  {
+   "id": "global:ak_holdings",
+   "type": "kr_other",
+   "nameKo": "AK홀딩스",
+   "nameEn": "AK Holdings",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "제주항공 최대주주",
+   "exchange": "KRX:006840"
+  },
+  {
+   "id": "global:imm_pe",
+   "type": "kr_other",
+   "nameKo": "IMM PE",
+   "nameEn": "IMM Private Equity",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "하나투어 최대주주",
+   "exchange": ""
+  },
+  {
+   "id": "global:samsung_cnt",
+   "type": "kr_other",
+   "nameKo": "삼성물산",
+   "nameEn": "Samsung C&T",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "호텔신라 계열 (삼성)",
+   "exchange": "KRX:028260"
+  },
+  {
+   "id": "global:lotte_df",
+   "type": "kr_other",
+   "nameKo": "롯데면세점(호텔롯데)",
+   "nameEn": "Lotte Duty Free",
+   "country": "kr",
+   "chain": "global_peer",
+   "role": "면세 1·2위 경쟁",
+   "exchange": ""
+  },
+  {
+   "id": "global:shinsegae_df",
+   "type": "kr_other",
+   "nameKo": "신세계면세점",
+   "nameEn": "Shinsegae DF",
+   "country": "kr",
+   "chain": "global_peer",
+   "role": "면세",
+   "exchange": ""
+  },
+  {
+   "id": "global:hyundai_df",
+   "type": "kr_other",
+   "nameKo": "현대면세점",
+   "nameEn": "Hyundai Duty Free",
+   "country": "kr",
+   "chain": "global_peer",
+   "role": "면세",
+   "exchange": ""
+  },
+  {
+   "id": "global:dfs",
+   "type": "global",
+   "nameKo": "DFS(LVMH)",
+   "nameEn": "DFS Group",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "글로벌 면세",
+   "exchange": "EPA:MC"
+  },
+  {
+   "id": "global:dufry",
+   "type": "global",
+   "nameKo": "아볼타(듀프리)",
+   "nameEn": "Avolta (Dufry)",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "글로벌 면세 1위",
+   "exchange": "SIX:AVOL"
+  },
+  {
+   "id": "global:sega_sammy",
+   "type": "global",
+   "nameKo": "세가사미",
+   "nameEn": "Sega Sammy",
+   "country": "jp",
+   "chain": "end_customer",
+   "role": "파라다이스세가사미 45%",
+   "exchange": "TSE:6460"
+  },
+  {
+   "id": "global:kto",
+   "type": "kr_other",
+   "nameKo": "한국관광공사",
+   "nameEn": "Korea Tourism Organization",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "GKL 최대주주",
+   "exchange": ""
+  },
+  {
+   "id": "global:komir",
+   "type": "kr_other",
+   "nameKo": "한국광해광업공단",
+   "nameEn": "KOMIR",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "강원랜드 최대주주",
+   "exchange": ""
+  },
+  {
+   "id": "global:lvs",
+   "type": "global",
+   "nameKo": "라스베이거스샌즈",
+   "nameEn": "Las Vegas Sands",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "카지노 (마카오·싱가포르)",
+   "exchange": "NYSE:LVS"
+  },
+  {
+   "id": "global:galaxy_ent",
+   "type": "global",
+   "nameKo": "갤럭시엔터",
+   "nameEn": "Galaxy Entertainment",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "마카오 카지노",
+   "exchange": "HKEX:0027"
+  },
+  {
+   "id": "global:genting",
+   "type": "global",
+   "nameKo": "겐팅",
+   "nameEn": "Genting",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "카지노·리조트",
+   "exchange": "SGX:G13"
+  },
+  {
+   "id": "global:ana",
+   "type": "global",
+   "nameKo": "ANA",
+   "nameEn": "ANA Holdings",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "항공",
+   "exchange": "TSE:9202"
+  },
+  {
+   "id": "global:cathay",
+   "type": "global",
+   "nameKo": "캐세이퍼시픽",
+   "nameEn": "Cathay Pacific",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "항공",
+   "exchange": "HKEX:0293"
+  },
+  {
+   "id": "global:sia",
+   "type": "global",
+   "nameKo": "싱가포르항공",
+   "nameEn": "Singapore Airlines",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "항공",
+   "exchange": "SGX:C6L"
+  },
+  {
+   "id": "global:airasia",
+   "type": "global",
+   "nameKo": "에어아시아",
+   "nameEn": "Capital A (AirAsia)",
+   "country": "other",
+   "chain": "global_peer",
+   "role": "LCC",
+   "exchange": "KLSE:CAPITALA"
+  },
+  {
+   "id": "global:boeing",
+   "type": "global",
+   "nameKo": "보잉",
+   "nameEn": "Boeing",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "기재 공급",
+   "exchange": "NYSE:BA"
+  },
+  {
+   "id": "global:airbus",
+   "type": "global",
+   "nameKo": "에어버스",
+   "nameEn": "Airbus",
+   "country": "eu",
+   "chain": "end_customer",
+   "role": "기재 공급",
+   "exchange": "EPA:AIR"
+  },
+  {
+   "id": "global:booking",
+   "type": "global",
+   "nameKo": "부킹홀딩스",
+   "nameEn": "Booking Holdings",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "OTA",
+   "exchange": "NASDAQ:BKNG"
+  },
+  {
+   "id": "global:expedia",
+   "type": "global",
+   "nameKo": "익스피디아",
+   "nameEn": "Expedia",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "OTA",
+   "exchange": "NASDAQ:EXPE"
+  },
+  {
+   "id": "global:trip",
+   "type": "global",
+   "nameKo": "트립닷컴",
+   "nameEn": "Trip.com",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "OTA",
+   "exchange": "NASDAQ:TCOM"
+  }
+ ],
+ "edges": [
+  {
+   "id": "equity:global_hanjin_kal>krx_003490",
+   "source": "global:hanjin_kal",
+   "target": "krx:003490",
+   "type": "equity",
+   "labelKo": "한진칼→대한항공 (지주)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_delta>global_hanjin_kal",
+   "source": "global:delta",
+   "target": "global:hanjin_kal",
+   "type": "equity",
+   "labelKo": "델타 14.9% (우호지분)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_jal>global_hanjin_kal",
+   "source": "global:jal",
+   "target": "global:hanjin_kal",
+   "type": "equity",
+   "labelKo": "JAL 한진칼 지분 취득 (2026.9)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.seoul.co.kr/news/economy/industry/2026/09/08/20260908002001",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_003490>global_delta",
+   "source": "krx:003490",
+   "target": "global:delta",
+   "type": "partner",
+   "labelKo": "태평양 노선 조인트벤처",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_003490>krx_020560",
+   "source": "krx:003490",
+   "target": "krx:020560",
+   "type": "equity",
+   "labelKo": "대한항공→아시아나 (인수, 통합 대한항공 2026.12)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202608241247078398fa6b69a559_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_003490>krx_272450",
+   "source": "krx:003490",
+   "target": "krx:272450",
+   "type": "equity",
+   "labelKo": "대한항공 계열 LCC (통합 진에어 2027.3, 에어부산·에어서울 흡수)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202608241247078398fa6b69a559_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_020560>krx_272450",
+   "source": "krx:020560",
+   "target": "krx:272450",
+   "type": "partner",
+   "labelKo": "아시아나 계열 에어부산·에어서울 → 진에어로 통합",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202608241247078398fa6b69a559_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_ak_holdings>krx_089590",
+   "source": "global:ak_holdings",
+   "target": "krx:089590",
+   "type": "equity",
+   "labelKo": "AK홀딩스(애경) 최대주주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Jeju_Air",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089590>krx_272450",
+   "source": "krx:089590",
+   "target": "krx:272450",
+   "type": "peer",
+   "labelKo": "국내 LCC 1·2위 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202608241247078398fa6b69a559_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003490>krx_020560",
+   "source": "krx:003490",
+   "target": "krx:020560",
+   "type": "peer",
+   "labelKo": "국내 FSC (통합 전)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202608241247078398fa6b69a559_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003490>global_ana",
+   "source": "krx:003490",
+   "target": "global:ana",
+   "type": "peer",
+   "labelKo": "아시아 FSC 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003490>global_cathay",
+   "source": "krx:003490",
+   "target": "global:cathay",
+   "type": "peer",
+   "labelKo": "아시아 FSC 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003490>global_sia",
+   "source": "krx:003490",
+   "target": "global:sia",
+   "type": "peer",
+   "labelKo": "아시아 FSC 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003490>global_delta",
+   "source": "krx:003490",
+   "target": "global:delta",
+   "type": "peer",
+   "labelKo": "아시아 FSC 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003490>global_jal",
+   "source": "krx:003490",
+   "target": "global:jal",
+   "type": "peer",
+   "labelKo": "아시아 FSC 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.sisajournal-e.com/news/articleView.html?idxno=412478",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_089590>global_airasia",
+   "source": "krx:089590",
+   "target": "global:airasia",
+   "type": "peer",
+   "labelKo": "아시아 LCC 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Jeju_Air",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_boeing>krx_003490",
+   "source": "global:boeing",
+   "target": "krx:003490",
+   "type": "supply",
+   "labelKo": "항공기 기재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Jeju_Air",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_boeing>krx_020560",
+   "source": "global:boeing",
+   "target": "krx:020560",
+   "type": "supply",
+   "labelKo": "항공기 기재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Jeju_Air",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_boeing>krx_089590",
+   "source": "global:boeing",
+   "target": "krx:089590",
+   "type": "supply",
+   "labelKo": "항공기 기재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Jeju_Air",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_boeing>krx_272450",
+   "source": "global:boeing",
+   "target": "krx:272450",
+   "type": "supply",
+   "labelKo": "항공기 기재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Jeju_Air",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_airbus>krx_003490",
+   "source": "global:airbus",
+   "target": "krx:003490",
+   "type": "supply",
+   "labelKo": "항공기 기재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202608241247078398fa6b69a559_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:global_airbus>krx_020560",
+   "source": "global:airbus",
+   "target": "krx:020560",
+   "type": "supply",
+   "labelKo": "항공기 기재",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.fntimes.com/html/view.php?ud=202608241247078398fa6b69a559_18",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:global_samsung_cnt>krx_008770",
+   "source": "global:samsung_cnt",
+   "target": "krx:008770",
+   "type": "partner",
+   "labelKo": "삼성 계열 (호텔신라)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_008770>global_lotte_df",
+   "source": "krx:008770",
+   "target": "global:lotte_df",
+   "type": "peer",
+   "labelKo": "국내 면세 경쟁 (신라·롯데 투톱)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_008770>global_shinsegae_df",
+   "source": "krx:008770",
+   "target": "global:shinsegae_df",
+   "type": "peer",
+   "labelKo": "국내 면세 경쟁 (신라·롯데 투톱)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_008770>global_hyundai_df",
+   "source": "krx:008770",
+   "target": "global:hyundai_df",
+   "type": "peer",
+   "labelKo": "국내 면세 경쟁 (신라·롯데 투톱)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_008770>global_dfs",
+   "source": "krx:008770",
+   "target": "global:dfs",
+   "type": "peer",
+   "labelKo": "글로벌 면세 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_008770>global_dufry",
+   "source": "krx:008770",
+   "target": "global:dufry",
+   "type": "peer",
+   "labelKo": "글로벌 면세 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_008770>krx_003490",
+   "source": "krx:008770",
+   "target": "krx:003490",
+   "type": "partner",
+   "labelKo": "인천공항 면세·항공 수요 연계",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_034230>global_sega_sammy",
+   "source": "krx:034230",
+   "target": "global:sega_sammy",
+   "type": "partner",
+   "labelKo": "파라다이스세가사미 JV (55:45, 파라다이스시티)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2023080179681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_sega_sammy>krx_034230",
+   "source": "global:sega_sammy",
+   "target": "krx:034230",
+   "type": "equity",
+   "labelKo": "합작사 45% (파라다이스시티)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2023080179681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_kto>krx_114090",
+   "source": "global:kto",
+   "target": "krx:114090",
+   "type": "equity",
+   "labelKo": "한국관광공사 최대주주 (51%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Grand_Korea_Leisure",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_komir>krx_035250",
+   "source": "global:komir",
+   "target": "krx:035250",
+   "type": "equity",
+   "labelKo": "한국광해광업공단 최대주주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Kangwon_Land",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034230>krx_114090",
+   "source": "krx:034230",
+   "target": "krx:114090",
+   "type": "peer",
+   "labelKo": "외국인 전용 카지노 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Grand_Korea_Leisure",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034230>krx_032350",
+   "source": "krx:034230",
+   "target": "krx:032350",
+   "type": "peer",
+   "labelKo": "외국인 카지노 (제주 드림타워)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Grand_Korea_Leisure",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_114090>krx_032350",
+   "source": "krx:114090",
+   "target": "krx:032350",
+   "type": "peer",
+   "labelKo": "외국인 카지노",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Grand_Korea_Leisure",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_035250>krx_034230",
+   "source": "krx:035250",
+   "target": "krx:034230",
+   "type": "peer",
+   "labelKo": "카지노 (내국인 독점 vs 외국인 전용)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Kangwon_Land",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034230>global_lvs",
+   "source": "krx:034230",
+   "target": "global:lvs",
+   "type": "peer",
+   "labelKo": "아시아 IR·카지노 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2023080179681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034230>global_galaxy_ent",
+   "source": "krx:034230",
+   "target": "global:galaxy_ent",
+   "type": "peer",
+   "labelKo": "아시아 IR·카지노 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2023080179681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_034230>global_genting",
+   "source": "krx:034230",
+   "target": "global:genting",
+   "type": "peer",
+   "labelKo": "아시아 IR·카지노 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/2023080179681",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_imm_pe>krx_039130",
+   "source": "global:imm_pe",
+   "target": "krx:039130",
+   "type": "equity",
+   "labelKo": "IMM PE 최대주주",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%82%98%ED%88%AC%EC%96%B4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_039130>global_booking",
+   "source": "krx:039130",
+   "target": "global:booking",
+   "type": "peer",
+   "labelKo": "OTA 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%82%98%ED%88%AC%EC%96%B4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_039130>global_expedia",
+   "source": "krx:039130",
+   "target": "global:expedia",
+   "type": "peer",
+   "labelKo": "OTA 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%82%98%ED%88%AC%EC%96%B4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_039130>global_trip",
+   "source": "krx:039130",
+   "target": "global:trip",
+   "type": "peer",
+   "labelKo": "OTA 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%82%98%ED%88%AC%EC%96%B4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_039130>krx_003490",
+   "source": "krx:039130",
+   "target": "krx:003490",
+   "type": "partner",
+   "labelKo": "항공권 판매 (패키지)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%82%98%ED%88%AC%EC%96%B4",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_025980>krx_008770",
+   "source": "krx:025980",
+   "target": "krx:008770",
+   "type": "peer",
+   "labelKo": "호텔·리조트",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_025980>krx_006730",
+   "source": "krx:025980",
+   "target": "krx:006730",
+   "type": "peer",
+   "labelKo": "호텔·리조트 개발",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://zdnet.co.kr/view/?no=20251118161719",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}

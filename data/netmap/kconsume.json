@@ -1,0 +1,1792 @@
+{
+ "sectorId": "kconsume",
+ "version": 1,
+ "asOf": "2026-09-25",
+ "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+ "chains": {
+  "tobacco": "담배·건강소비재",
+  "food": "가공식품",
+  "retail": "유통",
+  "apparel_oem": "의류 제조",
+  "fashion": "패션 브랜드",
+  "trading": "종합상사",
+  "agri": "농축수산·가공",
+  "beverage": "음료·주류",
+  "ingredients": "식품소재·급식",
+  "living": "가구·생활소비재",
+  "end_customer": "글로벌 채널·바이어",
+  "global_peer": "글로벌 소비재 경쟁사"
+ },
+ "edgeTypes": {
+  "supply": "공급 (source → target)",
+  "partner": "협력·JV",
+  "equity": "지분 (source가 target 보유)",
+  "peer": "경쟁·피어",
+  "distribution": "유통"
+ },
+ "nodes": [
+  {
+   "id": "krx:033780",
+   "type": "kr_listed",
+   "ticker": "033780",
+   "nameKo": "KT&G",
+   "nameEn": "KT&G",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "tobacco",
+   "role": "담배·건강소비재"
+  },
+  {
+   "id": "krx:003230",
+   "type": "kr_listed",
+   "ticker": "003230",
+   "nameKo": "삼양식품",
+   "nameEn": "삼양식품",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:271560",
+   "type": "kr_listed",
+   "ticker": "271560",
+   "nameKo": "오리온",
+   "nameEn": "오리온",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:004170",
+   "type": "kr_listed",
+   "ticker": "004170",
+   "nameKo": "신세계",
+   "nameEn": "신세계",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:023530",
+   "type": "kr_listed",
+   "ticker": "023530",
+   "nameKo": "롯데쇼핑",
+   "nameEn": "롯데쇼핑",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:111770",
+   "type": "kr_listed",
+   "ticker": "111770",
+   "nameKo": "영원무역",
+   "nameEn": "영원무역",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "apparel_oem",
+   "role": "의류 제조"
+  },
+  {
+   "id": "krx:383220",
+   "type": "kr_listed",
+   "ticker": "383220",
+   "nameKo": "F&F",
+   "nameEn": "F&F",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fashion",
+   "role": "패션 브랜드"
+  },
+  {
+   "id": "krx:097950",
+   "type": "kr_listed",
+   "ticker": "097950",
+   "nameKo": "CJ제일제당",
+   "nameEn": "CJ제일제당",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:026960",
+   "type": "kr_listed",
+   "ticker": "026960",
+   "nameKo": "동서",
+   "nameEn": "동서",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:282330",
+   "type": "kr_listed",
+   "ticker": "282330",
+   "nameKo": "BGF리테일",
+   "nameEn": "BGF리테일",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:004370",
+   "type": "kr_listed",
+   "ticker": "004370",
+   "nameKo": "농심",
+   "nameEn": "농심",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:069960",
+   "type": "kr_listed",
+   "ticker": "069960",
+   "nameKo": "현대백화점",
+   "nameEn": "현대백화점",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:139480",
+   "type": "kr_listed",
+   "ticker": "139480",
+   "nameKo": "이마트",
+   "nameEn": "이마트",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:081660",
+   "type": "kr_listed",
+   "ticker": "081660",
+   "nameKo": "미스토홀딩스",
+   "nameEn": "미스토홀딩스",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fashion",
+   "role": "패션 브랜드"
+  },
+  {
+   "id": "krx:007070",
+   "type": "kr_listed",
+   "ticker": "007070",
+   "nameKo": "GS리테일",
+   "nameEn": "GS리테일",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:001120",
+   "type": "kr_listed",
+   "ticker": "001120",
+   "nameKo": "LX인터내셔널",
+   "nameEn": "LX인터내셔널",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "trading",
+   "role": "종합상사"
+  },
+  {
+   "id": "krx:006040",
+   "type": "kr_listed",
+   "ticker": "006040",
+   "nameKo": "동원산업",
+   "nameEn": "동원산업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "agri",
+   "role": "농축수산·가공"
+  },
+  {
+   "id": "krx:007310",
+   "type": "kr_listed",
+   "ticker": "007310",
+   "nameKo": "오뚜기",
+   "nameEn": "오뚜기",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:280360",
+   "type": "kr_listed",
+   "ticker": "280360",
+   "nameKo": "롯데웰푸드",
+   "nameEn": "롯데웰푸드",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:000080",
+   "type": "kr_listed",
+   "ticker": "000080",
+   "nameKo": "하이트진로",
+   "nameEn": "하이트진로",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "beverage",
+   "role": "음료·주류"
+  },
+  {
+   "id": "krx:005300",
+   "type": "kr_listed",
+   "ticker": "005300",
+   "nameKo": "롯데칠성",
+   "nameEn": "롯데칠성",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "beverage",
+   "role": "음료·주류"
+  },
+  {
+   "id": "krx:005180",
+   "type": "kr_listed",
+   "ticker": "005180",
+   "nameKo": "빙그레",
+   "nameEn": "빙그레",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:093050",
+   "type": "kr_listed",
+   "ticker": "093050",
+   "nameKo": "LF",
+   "nameEn": "LF",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fashion",
+   "role": "패션 브랜드"
+  },
+  {
+   "id": "krx:001680",
+   "type": "kr_listed",
+   "ticker": "001680",
+   "nameKo": "대상",
+   "nameEn": "대상",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:453340",
+   "type": "kr_listed",
+   "ticker": "453340",
+   "nameKo": "현대그린푸드",
+   "nameEn": "현대그린푸드",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "ingredients",
+   "role": "식품소재·급식"
+  },
+  {
+   "id": "krx:452260",
+   "type": "kr_listed",
+   "ticker": "452260",
+   "nameKo": "한화갤러리아",
+   "nameEn": "한화갤러리아",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:145990",
+   "type": "kr_listed",
+   "ticker": "145990",
+   "nameKo": "삼양사",
+   "nameEn": "삼양사",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "ingredients",
+   "role": "식품소재·급식"
+  },
+  {
+   "id": "krx:020000",
+   "type": "kr_listed",
+   "ticker": "020000",
+   "nameKo": "한섬",
+   "nameEn": "한섬",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "fashion",
+   "role": "패션 브랜드"
+  },
+  {
+   "id": "krx:194370",
+   "type": "kr_listed",
+   "ticker": "194370",
+   "nameKo": "제이에스코퍼레이션",
+   "nameEn": "제이에스코퍼레이션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "apparel_oem",
+   "role": "의류 제조"
+  },
+  {
+   "id": "krx:031430",
+   "type": "kr_listed",
+   "ticker": "031430",
+   "nameKo": "신세계인터내셔날",
+   "nameEn": "신세계인터내셔날",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "retail",
+   "role": "유통"
+  },
+  {
+   "id": "krx:003800",
+   "type": "kr_listed",
+   "ticker": "003800",
+   "nameKo": "에이스침대",
+   "nameEn": "에이스침대",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "living",
+   "role": "가구·생활소비재"
+  },
+  {
+   "id": "krx:105630",
+   "type": "kr_listed",
+   "ticker": "105630",
+   "nameKo": "한세실업",
+   "nameEn": "한세실업",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "apparel_oem",
+   "role": "의류 제조"
+  },
+  {
+   "id": "krx:011760",
+   "type": "kr_listed",
+   "ticker": "011760",
+   "nameKo": "현대코퍼레이션",
+   "nameEn": "현대코퍼레이션",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "trading",
+   "role": "종합상사"
+  },
+  {
+   "id": "krx:005610",
+   "type": "kr_listed",
+   "ticker": "005610",
+   "nameKo": "삼립",
+   "nameEn": "삼립",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:017810",
+   "type": "kr_listed",
+   "ticker": "017810",
+   "nameKo": "풀무원",
+   "nameEn": "풀무원",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "food",
+   "role": "가공식품"
+  },
+  {
+   "id": "krx:036620",
+   "type": "kr_listed",
+   "ticker": "036620",
+   "nameKo": "감성코퍼레이션",
+   "nameEn": "감성코퍼레이션",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "fashion",
+   "role": "패션 브랜드"
+  },
+  {
+   "id": "global:walmart",
+   "type": "global",
+   "nameKo": "월마트",
+   "nameEn": "Walmart",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "유통 채널 (라면·의류 PB)",
+   "exchange": "NYSE:WMT"
+  },
+  {
+   "id": "global:costco",
+   "type": "global",
+   "nameKo": "코스트코",
+   "nameEn": "Costco",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "유통 채널",
+   "exchange": "NASDAQ:COST"
+  },
+  {
+   "id": "global:target",
+   "type": "global",
+   "nameKo": "타겟",
+   "nameEn": "Target",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "의류 PB 바이어",
+   "exchange": "NYSE:TGT"
+  },
+  {
+   "id": "global:gap",
+   "type": "global",
+   "nameKo": "갭",
+   "nameEn": "Gap Inc.",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "의류 OEM 바이어",
+   "exchange": "NYSE:GAP"
+  },
+  {
+   "id": "global:nike",
+   "type": "global",
+   "nameKo": "나이키",
+   "nameEn": "Nike",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "의류 OEM 바이어",
+   "exchange": "NYSE:NKE"
+  },
+  {
+   "id": "global:lululemon",
+   "type": "global",
+   "nameKo": "룰루레몬",
+   "nameEn": "Lululemon",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "영원무역 최대 고객 (20%)",
+   "exchange": "NASDAQ:LULU"
+  },
+  {
+   "id": "global:vf",
+   "type": "global",
+   "nameKo": "VF(노스페이스)",
+   "nameEn": "VF Corp (The North Face)",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "영원무역 고객 (15%)",
+   "exchange": "NYSE:VFC"
+  },
+  {
+   "id": "global:patagonia",
+   "type": "global",
+   "nameKo": "파타고니아",
+   "nameEn": "Patagonia",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "영원무역 고객",
+   "exchange": ""
+  },
+  {
+   "id": "global:guess",
+   "type": "global",
+   "nameKo": "게스",
+   "nameEn": "Guess",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "핸드백 OEM 고객",
+   "exchange": "NYSE:GES"
+  },
+  {
+   "id": "global:tapestry",
+   "type": "global",
+   "nameKo": "태피스트리(코치·케이트스페이드)",
+   "nameEn": "Tapestry",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "핸드백 OEM 고객",
+   "exchange": "NYSE:TPR"
+  },
+  {
+   "id": "global:capri",
+   "type": "global",
+   "nameKo": "카프리(마이클코어스)",
+   "nameEn": "Capri Holdings",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "핸드백 OEM 고객",
+   "exchange": "NYSE:CPRI"
+  },
+  {
+   "id": "global:acushnet",
+   "type": "global",
+   "nameKo": "아쿠쉬네트(타이틀리스트)",
+   "nameEn": "Acushnet",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "미스토홀딩스 자회사",
+   "exchange": "NYSE:GOLF"
+  },
+  {
+   "id": "global:mlb",
+   "type": "global",
+   "nameKo": "MLB",
+   "nameEn": "Major League Baseball",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "F&F 라이선스",
+   "exchange": ""
+  },
+  {
+   "id": "global:discovery",
+   "type": "global",
+   "nameKo": "워너브라더스 디스커버리",
+   "nameEn": "Warner Bros. Discovery",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "F&F 디스커버리 라이선스",
+   "exchange": "NASDAQ:WBD"
+  },
+  {
+   "id": "global:starbucks",
+   "type": "global",
+   "nameKo": "스타벅스",
+   "nameEn": "Starbucks",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "SCK컴퍼니 32.5%",
+   "exchange": "NASDAQ:SBUX"
+  },
+  {
+   "id": "global:schwans",
+   "type": "global",
+   "nameKo": "슈완스",
+   "nameEn": "Schwan's",
+   "country": "us",
+   "chain": "end_customer",
+   "role": "CJ제일제당 미국 자회사",
+   "exchange": ""
+  },
+  {
+   "id": "global:nestle",
+   "type": "global",
+   "nameKo": "네슬레",
+   "nameEn": "Nestlé",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "식품 1위",
+   "exchange": "SIX:NESN"
+  },
+  {
+   "id": "global:nissin",
+   "type": "global",
+   "nameKo": "닛신식품",
+   "nameEn": "Nissin Foods",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "라면",
+   "exchange": "TSE:2897"
+  },
+  {
+   "id": "global:toyo_suisan",
+   "type": "global",
+   "nameKo": "토요수산(마루찬)",
+   "nameEn": "Toyo Suisan",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "라면 (미국)",
+   "exchange": "TSE:2875"
+  },
+  {
+   "id": "global:mondelez",
+   "type": "global",
+   "nameKo": "몬델리즈",
+   "nameEn": "Mondelez",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "제과",
+   "exchange": "NASDAQ:MDLZ"
+  },
+  {
+   "id": "global:pmi",
+   "type": "global",
+   "nameKo": "필립모리스",
+   "nameEn": "Philip Morris Intl",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "담배 (KT&G 협력·경쟁)",
+   "exchange": "NYSE:PM"
+  },
+  {
+   "id": "global:bat",
+   "type": "global",
+   "nameKo": "BAT",
+   "nameEn": "British American Tobacco",
+   "country": "eu",
+   "chain": "global_peer",
+   "role": "담배",
+   "exchange": "LSE:BATS"
+  },
+  {
+   "id": "global:jt",
+   "type": "global",
+   "nameKo": "JT",
+   "nameEn": "Japan Tobacco",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "담배",
+   "exchange": "TSE:2914"
+  },
+  {
+   "id": "global:shenzhou",
+   "type": "global",
+   "nameKo": "선저우인터내셔널",
+   "nameEn": "Shenzhou International",
+   "country": "cn",
+   "chain": "global_peer",
+   "role": "의류 OEM 1위",
+   "exchange": "HKEX:2313"
+  },
+  {
+   "id": "global:cocacola",
+   "type": "global",
+   "nameKo": "코카콜라",
+   "nameEn": "Coca-Cola",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "음료",
+   "exchange": "NYSE:KO"
+  },
+  {
+   "id": "global:asahi",
+   "type": "global",
+   "nameKo": "아사히",
+   "nameEn": "Asahi Group",
+   "country": "jp",
+   "chain": "global_peer",
+   "role": "주류",
+   "exchange": "TSE:2502"
+  },
+  {
+   "id": "global:lotte_holdings",
+   "type": "kr_other",
+   "nameKo": "롯데지주",
+   "nameEn": "Lotte Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "롯데 계열 지주",
+   "exchange": "KRX:004990"
+  },
+  {
+   "id": "global:hyundai_ds_grp",
+   "type": "kr_other",
+   "nameKo": "현대백화점그룹",
+   "nameEn": "Hyundai Dept Store Group",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "지주",
+   "exchange": ""
+  },
+  {
+   "id": "global:cj",
+   "type": "kr_other",
+   "nameKo": "CJ",
+   "nameEn": "CJ Corp.",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "지주",
+   "exchange": "KRX:001040"
+  },
+  {
+   "id": "global:coupang",
+   "type": "global",
+   "nameKo": "쿠팡",
+   "nameEn": "Coupang",
+   "country": "us",
+   "chain": "global_peer",
+   "role": "이커머스 1위",
+   "exchange": "NYSE:CPNG"
+  }
+ ],
+ "edges": [
+  {
+   "id": "supply:krx_003230>global_walmart",
+   "source": "krx:003230",
+   "target": "global:walmart",
+   "type": "supply",
+   "labelKo": "불닭 미국 대형 유통 입점 (삼양아메리카 2.97억$)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.bizwatch.co.kr/article/consumer/2025/11/21/0026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_003230>global_costco",
+   "source": "krx:003230",
+   "target": "global:costco",
+   "type": "supply",
+   "labelKo": "불닭 미국 대형 유통 입점 (삼양아메리카 2.97억$)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.bizwatch.co.kr/article/consumer/2025/11/21/0026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004370>global_walmart",
+   "source": "krx:004370",
+   "target": "global:walmart",
+   "type": "supply",
+   "labelKo": "신라면 월마트 전점 입점·주류 코너",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.mt.co.kr/mtview.php?no=2024052812564291915",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_004370>global_costco",
+   "source": "krx:004370",
+   "target": "global:costco",
+   "type": "supply",
+   "labelKo": "라면 (미국 유통)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://news.mt.co.kr/mtview.php?no=2024052812564291915",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003230>krx_004370",
+   "source": "krx:003230",
+   "target": "krx:004370",
+   "type": "peer",
+   "labelKo": "라면 경쟁 (해외 수출)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://news.bizwatch.co.kr/article/consumer/2025/11/21/0026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007310>krx_004370",
+   "source": "krx:007310",
+   "target": "krx:004370",
+   "type": "peer",
+   "labelKo": "라면·식품 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.bizwatch.co.kr/article/consumer/2025/11/21/0026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_007310>krx_003230",
+   "source": "krx:007310",
+   "target": "krx:003230",
+   "type": "peer",
+   "labelKo": "라면 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.bizwatch.co.kr/article/consumer/2025/11/21/0026",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003230>global_nissin",
+   "source": "krx:003230",
+   "target": "global:nissin",
+   "type": "peer",
+   "labelKo": "미국·글로벌 라면 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mt.co.kr/mtview.php?no=2024052812564291915",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_003230>global_toyo_suisan",
+   "source": "krx:003230",
+   "target": "global:toyo_suisan",
+   "type": "peer",
+   "labelKo": "미국·글로벌 라면 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mt.co.kr/mtview.php?no=2024052812564291915",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004370>global_nissin",
+   "source": "krx:004370",
+   "target": "global:nissin",
+   "type": "peer",
+   "labelKo": "미국·글로벌 라면 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mt.co.kr/mtview.php?no=2024052812564291915",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004370>global_toyo_suisan",
+   "source": "krx:004370",
+   "target": "global:toyo_suisan",
+   "type": "peer",
+   "labelKo": "미국·글로벌 라면 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://news.mt.co.kr/mtview.php?no=2024052812564291915",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_097950>global_schwans",
+   "source": "krx:097950",
+   "target": "global:schwans",
+   "type": "equity",
+   "labelKo": "CJ제일제당→슈완스 (2019 인수, 미국 냉동피자 3조)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_097950>global_walmart",
+   "source": "krx:097950",
+   "target": "global:walmart",
+   "type": "supply",
+   "labelKo": "비비고·슈완스 미국 유통",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_097950>global_costco",
+   "source": "krx:097950",
+   "target": "global:costco",
+   "type": "supply",
+   "labelKo": "비비고 (미국 유통)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_cj>krx_097950",
+   "source": "global:cj",
+   "target": "krx:097950",
+   "type": "equity",
+   "labelKo": "CJ→CJ제일제당",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_097950>global_nestle",
+   "source": "krx:097950",
+   "target": "global:nestle",
+   "type": "peer",
+   "labelKo": "글로벌 식품 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_097950>global_mondelez",
+   "source": "krx:097950",
+   "target": "global:mondelez",
+   "type": "peer",
+   "labelKo": "글로벌 식품 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_271560>global_mondelez",
+   "source": "krx:271560",
+   "target": "global:mondelez",
+   "type": "peer",
+   "labelKo": "제과 경쟁 (중국·베트남)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sentv.co.kr/article/view/sentv202608140126",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_271560>krx_280360",
+   "source": "krx:271560",
+   "target": "krx:280360",
+   "type": "peer",
+   "labelKo": "국내 제과 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.sentv.co.kr/article/view/sentv202608140126",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005180>krx_280360",
+   "source": "krx:005180",
+   "target": "krx:280360",
+   "type": "peer",
+   "labelKo": "빙과·유제품",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.sentv.co.kr/article/view/sentv202608140126",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001680>krx_097950",
+   "source": "krx:001680",
+   "target": "krx:097950",
+   "type": "peer",
+   "labelKo": "조미료·장류 (대상 vs CJ)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005610>krx_097950",
+   "source": "krx:005610",
+   "target": "krx:097950",
+   "type": "peer",
+   "labelKo": "가공식품",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_017810>krx_097950",
+   "source": "krx:017810",
+   "target": "krx:097950",
+   "type": "peer",
+   "labelKo": "가공식품 (미국 진출)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_026960>global_starbucks",
+   "source": "krx:026960",
+   "target": "global:starbucks",
+   "type": "peer",
+   "labelKo": "커피 (맥심 vs 스타벅스)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://www.investchosun.com/site/data/html_dir/2021/07/27/2021072786010.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_145990>krx_097950",
+   "source": "krx:145990",
+   "target": "krx:097950",
+   "type": "peer",
+   "labelKo": "식품소재 (설탕·전분당)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_006040>krx_097950",
+   "source": "krx:006040",
+   "target": "krx:097950",
+   "type": "peer",
+   "labelKo": "수산·가공식품",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://m.news.nate.com/view/20260501n12123",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000080>krx_005300",
+   "source": "krx:000080",
+   "target": "krx:005300",
+   "type": "peer",
+   "labelKo": "소주·맥주 vs 음료·주류",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=000080",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lotte_holdings>krx_005300",
+   "source": "global:lotte_holdings",
+   "target": "krx:005300",
+   "type": "equity",
+   "labelKo": "롯데지주→롯데칠성",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.lotte.co.kr/ir/inc.do",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lotte_holdings>krx_280360",
+   "source": "global:lotte_holdings",
+   "target": "krx:280360",
+   "type": "equity",
+   "labelKo": "롯데지주→롯데웰푸드",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.lotte.co.kr/ir/inc.do",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_lotte_holdings>krx_023530",
+   "source": "global:lotte_holdings",
+   "target": "krx:023530",
+   "type": "equity",
+   "labelKo": "롯데지주→롯데쇼핑",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.lotte.co.kr/ir/inc.do",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_005300>global_cocacola",
+   "source": "krx:005300",
+   "target": "global:cocacola",
+   "type": "peer",
+   "labelKo": "음료 경쟁 (칠성 vs 코카콜라)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=005300",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_000080>global_asahi",
+   "source": "krx:000080",
+   "target": "global:asahi",
+   "type": "peer",
+   "labelKo": "맥주 경쟁",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=000080",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033780>global_pmi",
+   "source": "krx:033780",
+   "target": "global:pmi",
+   "type": "peer",
+   "labelKo": "담배 경쟁 (국내·수출)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/KT%26G",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033780>global_bat",
+   "source": "krx:033780",
+   "target": "global:bat",
+   "type": "peer",
+   "labelKo": "담배 경쟁 (국내·수출)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/KT%26G",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_033780>global_jt",
+   "source": "krx:033780",
+   "target": "global:jt",
+   "type": "peer",
+   "labelKo": "담배 경쟁 (국내·수출)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/KT%26G",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_033780>global_pmi",
+   "source": "krx:033780",
+   "target": "global:pmi",
+   "type": "partner",
+   "labelKo": "릴(lil) 해외 판매 계약 (PMI)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/KT%26G",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004170>krx_139480",
+   "source": "krx:004170",
+   "target": "krx:139480",
+   "type": "peer",
+   "labelKo": "신세계그룹 백화점 vs 마트 (오너 지배)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.investchosun.com/site/data/html_dir/2021/07/27/2021072786010.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_139480>global_starbucks",
+   "source": "krx:139480",
+   "target": "global:starbucks",
+   "type": "partner",
+   "labelKo": "SCK컴퍼니 67.5% (스타벅스 32.5%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.investchosun.com/site/data/html_dir/2021/07/27/2021072786010.html",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_004170>krx_031430",
+   "source": "krx:004170",
+   "target": "krx:031430",
+   "type": "equity",
+   "labelKo": "신세계→신세계인터내셔날",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=031430",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hyundai_ds_grp>krx_069960",
+   "source": "global:hyundai_ds_grp",
+   "target": "krx:069960",
+   "type": "equity",
+   "labelKo": "현대백화점그룹",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=069960",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_069960>krx_020000",
+   "source": "krx:069960",
+   "target": "krx:020000",
+   "type": "equity",
+   "labelKo": "현대백화점→한섬",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=020000",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:global_hyundai_ds_grp>krx_453340",
+   "source": "global:hyundai_ds_grp",
+   "target": "krx:453340",
+   "type": "equity",
+   "labelKo": "현대백화점그룹 (현대그린푸드)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=453340",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004170>krx_023530",
+   "source": "krx:004170",
+   "target": "krx:023530",
+   "type": "peer",
+   "labelKo": "백화점 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=004170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004170>krx_069960",
+   "source": "krx:004170",
+   "target": "krx:069960",
+   "type": "peer",
+   "labelKo": "백화점 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=004170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_023530>krx_069960",
+   "source": "krx:023530",
+   "target": "krx:069960",
+   "type": "peer",
+   "labelKo": "백화점 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=004170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_004170>krx_452260",
+   "source": "krx:004170",
+   "target": "krx:452260",
+   "type": "peer",
+   "labelKo": "백화점 경쟁",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=004170",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_139480>krx_023530",
+   "source": "krx:139480",
+   "target": "krx:023530",
+   "type": "peer",
+   "labelKo": "대형마트 (이마트 vs 롯데마트)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=139480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_282330>krx_007070",
+   "source": "krx:282330",
+   "target": "krx:007070",
+   "type": "peer",
+   "labelKo": "편의점 양강 (CU vs GS25)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=282330",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_139480>global_coupang",
+   "source": "krx:139480",
+   "target": "global:coupang",
+   "type": "peer",
+   "labelKo": "이커머스·유통 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=139480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_023530>global_coupang",
+   "source": "krx:023530",
+   "target": "global:coupang",
+   "type": "peer",
+   "labelKo": "이커머스·유통 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=139480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_139480>global_walmart",
+   "source": "krx:139480",
+   "target": "global:walmart",
+   "type": "peer",
+   "labelKo": "대형마트 (글로벌 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=139480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_023530>global_walmart",
+   "source": "krx:023530",
+   "target": "global:walmart",
+   "type": "peer",
+   "labelKo": "대형마트 (글로벌 참조)",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=139480",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_111770>global_lululemon",
+   "source": "krx:111770",
+   "target": "global:lululemon",
+   "type": "supply",
+   "labelKo": "의류 OEM (최대 고객 20%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.insight.co.kr/news/554275",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_111770>global_vf",
+   "source": "krx:111770",
+   "target": "global:vf",
+   "type": "supply",
+   "labelKo": "노스페이스 OEM (15%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.insight.co.kr/news/554275",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_111770>global_patagonia",
+   "source": "krx:111770",
+   "target": "global:patagonia",
+   "type": "supply",
+   "labelKo": "의류 OEM",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.insight.co.kr/news/554275",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_105630>global_gap",
+   "source": "krx:105630",
+   "target": "global:gap",
+   "type": "supply",
+   "labelKo": "의류 OEM (브랜드·마트 PB)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/1939592/Analysis/View?News_No=15235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_105630>global_nike",
+   "source": "krx:105630",
+   "target": "global:nike",
+   "type": "supply",
+   "labelKo": "의류 OEM (브랜드·마트 PB)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/1939592/Analysis/View?News_No=15235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_105630>global_target",
+   "source": "krx:105630",
+   "target": "global:target",
+   "type": "supply",
+   "labelKo": "의류 OEM (브랜드·마트 PB)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/1939592/Analysis/View?News_No=15235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_105630>global_walmart",
+   "source": "krx:105630",
+   "target": "global:walmart",
+   "type": "supply",
+   "labelKo": "의류 OEM (브랜드·마트 PB)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/1939592/Analysis/View?News_No=15235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_194370>global_guess",
+   "source": "krx:194370",
+   "target": "global:guess",
+   "type": "supply",
+   "labelKo": "핸드백 OEM/ODM",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679958204131.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_194370>global_tapestry",
+   "source": "krx:194370",
+   "target": "global:tapestry",
+   "type": "supply",
+   "labelKo": "핸드백 OEM/ODM",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679958204131.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_194370>global_capri",
+   "source": "krx:194370",
+   "target": "global:capri",
+   "type": "supply",
+   "labelKo": "핸드백 OEM/ODM",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679958204131.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_194370>global_gap",
+   "source": "krx:194370",
+   "target": "global:gap",
+   "type": "supply",
+   "labelKo": "니트 의류 OEM (68%)",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1679958204131.pdf",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_111770>krx_105630",
+   "source": "krx:111770",
+   "target": "krx:105630",
+   "type": "peer",
+   "labelKo": "의류 OEM 양강",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/1939592/Analysis/View?News_No=15235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_111770>global_shenzhou",
+   "source": "krx:111770",
+   "target": "global:shenzhou",
+   "type": "peer",
+   "labelKo": "글로벌 의류 OEM 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/1939592/Analysis/View?News_No=15235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_105630>global_shenzhou",
+   "source": "krx:105630",
+   "target": "global:shenzhou",
+   "type": "peer",
+   "labelKo": "글로벌 의류 OEM 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://m.jobkorea.co.kr/company/1939592/Analysis/View?News_No=15235",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_383220>global_mlb",
+   "source": "krx:383220",
+   "target": "global:mlb",
+   "type": "partner",
+   "labelKo": "MLB 브랜드 라이선스 (한국·중국·동남아)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "partner:krx_383220>global_discovery",
+   "source": "krx:383220",
+   "target": "global:discovery",
+   "type": "partner",
+   "labelKo": "디스커버리 익스페디션 라이선스",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "equity:krx_081660>global_acushnet",
+   "source": "krx:081660",
+   "target": "global:acushnet",
+   "type": "equity",
+   "labelKo": "미스토홀딩스(휠라)→아쿠쉬네트 (타이틀리스트)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Acushnet_Company",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_383220>krx_093050",
+   "source": "krx:383220",
+   "target": "krx:093050",
+   "type": "peer",
+   "labelKo": "패션 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_383220>krx_020000",
+   "source": "krx:383220",
+   "target": "krx:020000",
+   "type": "peer",
+   "labelKo": "패션 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_093050>krx_020000",
+   "source": "krx:093050",
+   "target": "krx:020000",
+   "type": "peer",
+   "labelKo": "패션 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_081660>krx_383220",
+   "source": "krx:081660",
+   "target": "krx:383220",
+   "type": "peer",
+   "labelKo": "패션 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_036620>krx_383220",
+   "source": "krx:036620",
+   "target": "krx:383220",
+   "type": "peer",
+   "labelKo": "패션 브랜드 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=383220",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_031430>krx_020000",
+   "source": "krx:031430",
+   "target": "krx:020000",
+   "type": "peer",
+   "labelKo": "수입 패션·자체 브랜드",
+   "confidence": "low",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=031430",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_001120>krx_011760",
+   "source": "krx:001120",
+   "target": "krx:011760",
+   "type": "peer",
+   "labelKo": "종합상사",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=001120",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  }
+ ],
+ "flaggedSeeds": []
+}
