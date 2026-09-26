@@ -375,6 +375,55 @@ assert.ok(/var renderSeq/.test(mapJs), 'renderSeq guard');
     );
   }
 
+  {
+    const rOpen = Net._test.computeVisibleRect(1000, 600, {
+      open: true,
+      overlay: true,
+      widthPx: 320,
+      gapPx: 12,
+      pxToVb: 1,
+    });
+    assert.equal(rOpen.x1, 656, `overlay open → x1=656 (got ${rOpen.x1})`);
+
+    const rClosed = Net._test.computeVisibleRect(1000, 600, {
+      open: false,
+      overlay: true,
+      widthPx: 320,
+      gapPx: 12,
+      pxToVb: 1,
+    });
+    assert.equal(rClosed.x1, 1000, 'open:false → full width');
+
+    const rFlow = Net._test.computeVisibleRect(1000, 600, {
+      open: true,
+      overlay: false,
+      widthPx: 320,
+      gapPx: 12,
+      pxToVb: 1,
+    });
+    assert.equal(rFlow.x1, 1000, 'overlay:false → full width');
+
+    const rNarrow = Net._test.computeVisibleRect(500, 600, {
+      open: true,
+      overlay: true,
+      widthPx: 320,
+      gapPx: 12,
+      pxToVb: 1,
+    });
+    assert.equal(rNarrow.x1, 500, 'narrow guard → ignore inset');
+
+    const cin = Net._test.centerTransformIn(
+      300,
+      200,
+      { x0: 0, x1: 656, y0: 0, y1: 600 },
+      1.6,
+    );
+    assert.ok(
+      Math.abs(cin.applyX(300) - 328) < 1e-6,
+      `centerTransformIn applyX → 328 (got ${cin.applyX(300)})`,
+    );
+  }
+
   for (const t of Net._test.EDGE_TYPES) {
     const st = Net._test.edgeStyle(t, 'high');
     assert.ok(st.color && st.width > 0, `edgeStyle ${t}`);

@@ -236,24 +236,74 @@
     };
   }
 
-  /** d3.zoomIdentity.translate(w/2,h/2).scale(k).translate(-x,-y) — centers (x,y) in view. */
-  function centerTransform(x, y, w, h, k) {
+  /** Pure: visible viewBox rect when side panel overlays the stage. */
+  function computeVisibleRect(w, h, side) {
+    side = side || {};
+    var x0 = 0;
+    var y0 = 0;
+    var y1 = h;
+    var x1 = w;
+    var pxToVb = side.pxToVb > 0 ? side.pxToVb : 1;
+    if (side.open && side.overlay) {
+      var insetPx = (Number(side.widthPx) || 0) + (Number(side.gapPx) || 0) * 2;
+      var next = w - insetPx * pxToVb;
+      if (next - x0 >= 240 * pxToVb) x1 = next;
+    }
+    return { x0: x0, x1: x1, y0: y0, y1: y1 };
+  }
+
+  function readSideInfo() {
+    var info = { open: false, overlay: false, widthPx: 0, gapPx: 12, pxToVb: 1 };
+    var side = lastOpts && lastOpts.side;
+    if (!side) return info;
+    info.open = !side.hidden;
+    try {
+      var cs = typeof global.getComputedStyle === 'function' ? global.getComputedStyle(side) : null;
+      info.overlay = !!(cs && cs.position === 'absolute');
+    } catch (e) {}
+    try {
+      info.widthPx = side.getBoundingClientRect().width || 0;
+    } catch (e2) {}
+    var sz = stageSize();
+    var clientW = sz.w;
+    try {
+      var svg = svgRoot && svgRoot.node && svgRoot.node();
+      if (svg && svg.clientWidth > 0) clientW = svg.clientWidth;
+    } catch (e3) {}
+    info.pxToVb = sz.w / (clientW || sz.w || 1);
+    return info;
+  }
+
+  function visibleStageRect() {
+    var sz = stageSize();
+    return computeVisibleRect(sz.w, sz.h, readSideInfo());
+  }
+
+  /** Center (x,y) in the midpoint of rect (viewBox units). */
+  function centerTransformIn(x, y, rect, k) {
+    rect = rect || { x0: 0, x1: 0, y0: 0, y1: 0 };
+    var cx = (rect.x0 + rect.x1) / 2;
+    var cy = (rect.y0 + rect.y1) / 2;
     var d3z = global.d3 && global.d3.zoomIdentity;
     if (d3z) {
-      return d3z.translate(w / 2, h / 2).scale(k).translate(-x, -y);
+      return d3z.translate(cx, cy).scale(k).translate(-x, -y);
     }
-    // Pure fallback for unit tests without d3
     return {
       k: k,
-      x: w / 2 - k * x,
-      y: h / 2 - k * y,
+      x: cx - k * x,
+      y: cy - k * y,
       applyX: function (px) {
-        return w / 2 + k * (px - x);
+        return cx + k * (px - x);
       },
       applyY: function (py) {
-        return h / 2 + k * (py - y);
+        return cy + k * (py - y);
       },
     };
+  }
+
+  /** Compat wrapper: full stage rect {0,w,0,h}. */
+  function centerTransform(x, y, w, h, k) {
+    return centerTransformIn(x, y, { x0: 0, x1: w, y0: 0, y1: h }, k);
   }
 
   function stageSize() {
@@ -815,7 +865,8 @@
     return set;
   }
 
-  function selectNode(id) {
+  function selectNode(id, opts) {
+    opts = opts || {};
     if (selectedId === id) {
       clearSelection();
       return;
@@ -826,6 +877,34 @@
       return n.id === id;
     });
     renderSide(node);
+    if (opts.panIfObscured && node) {
+      var raf =
+        typeof global.requestAnimationFrame === 'function'
+          ? global.requestAnimationFrame
+          : function (fn) {
+              setTimeout(fn, 0);
+            };
+      raf(function () {
+        panNodeIntoVisibleIfNeeded(node);
+      });
+    }
+  }
+
+  /** Horizontal-only pan when selected node sits under the overlay side panel. */
+  function panNodeIntoVisibleIfNeeded(node) {
+    if (!node || node.x == null || !isFinite(node.x)) return;
+    if (!svgRoot || !zoomBehavior || typeof global.d3 === 'undefined') return;
+    var rect = visibleStageRect();
+    var t = global.d3.zoomTransform(svgRoot.node());
+    var screenX = t.applyX(node.x);
+    var margin = 24;
+    if (screenX <= rect.x1 - margin) return;
+    markUserNavigated();
+    var k = t.k;
+    var midX = (rect.x0 + rect.x1) / 2;
+    var newTx = midX - k * node.x;
+    var transform = global.d3.zoomIdentity.translate(newTx, t.y).scale(k);
+    svgRoot.transition().duration(350).call(zoomBehavior.transform, transform);
   }
 
   function renderSide(node) {
@@ -1296,18 +1375,20 @@
     });
     if (!hits.length) return;
     markUserNavigated();
-    var sz = stageSize();
-    var w = sz.w;
-    var h = sz.h;
+    var rect = visibleStageRect();
+    var vw = Math.max(1, rect.x1 - rect.x0);
+    var vh = Math.max(1, rect.y1 - rect.y0);
     var transform;
     if (hits.length === 1) {
       var hit = hits[0];
       var curK = currentZoomK();
       var k = Math.max(curK, 1.6);
-      transform = centerTransform(hit.x, hit.y, w, h, k);
+      transform = centerTransformIn(hit.x, hit.y, rect, k);
     } else {
-      var fit = computeFit(hits, w, h, { padding: 80, maxScale: 2 });
-      transform = global.d3.zoomIdentity.translate(fit.tx, fit.ty).scale(fit.scale);
+      var fit = computeFit(hits, vw, vh, { padding: 80, maxScale: 2 });
+      transform = global.d3.zoomIdentity
+        .translate(fit.tx + rect.x0, fit.ty + rect.y0)
+        .scale(fit.scale);
     }
     svgRoot.transition().duration(350).call(zoomBehavior.transform, transform);
   }
@@ -1317,12 +1398,16 @@
     var nodes = graphState.nodes;
     if (!nodes.length) return;
     opts = opts || {};
-    var sz = stageSize();
-    var fit = computeFit(nodes, sz.w, sz.h, {
+    var rect = visibleStageRect();
+    var vw = Math.max(1, rect.x1 - rect.x0);
+    var vh = Math.max(1, rect.y1 - rect.y0);
+    var fit = computeFit(nodes, vw, vh, {
       padding: opts.padding != null ? opts.padding : 40,
       maxScale: opts.maxScale != null ? opts.maxScale : 1.6,
     });
-    var transform = d3.zoomIdentity.translate(fit.tx, fit.ty).scale(fit.scale);
+    var transform = d3.zoomIdentity
+      .translate(fit.tx + rect.x0, fit.ty + rect.y0)
+      .scale(fit.scale);
     if (opts.animate === false) {
       svgRoot.call(zoomBehavior.transform, transform);
     } else {
@@ -1507,7 +1592,7 @@
       .on('mouseleave', hideTip)
       .on('click', function (ev, d) {
         ev.stopPropagation();
-        selectNode(d.id);
+        selectNode(d.id, { panIfObscured: true });
       });
 
     nodeG.each(function (d) {
@@ -1784,8 +1869,16 @@
       if (searchInputEl) searchInputEl.value = display;
       applySearchHighlight();
       updateSearchStatus();
-      focusSearchMatch();
       selectNode(hit.id);
+      var raf =
+        typeof global.requestAnimationFrame === 'function'
+          ? global.requestAnimationFrame
+          : function (fn) {
+              setTimeout(fn, 0);
+            };
+      raf(function () {
+        focusSearchMatch();
+      });
     } else {
       filters.search = String(code);
       if (searchInputEl) searchInputEl.value = String(code);
@@ -1820,6 +1913,8 @@
       clampNodeToStage: clampNodeToStage,
       mcapRadiusScale: mcapRadiusScale,
       centerTransform: centerTransform,
+      centerTransformIn: centerTransformIn,
+      computeVisibleRect: computeVisibleRect,
       stageSize: stageSize,
       isDomesticNode: isDomesticNode,
       isGlobalNode: isGlobalNode,
