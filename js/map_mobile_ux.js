@@ -14,12 +14,12 @@
     ko: {
       'tab-btn-heatmap': '🔥 히트맵',
       'tab-btn-table': '📋 기업목록',
-      'tab-btn-graph': '🌐 네트워크',
+      'tab-btn-netmap': '🕸️ 네트워크맵',
     },
     en: {
       'tab-btn-heatmap': '🔥 Heatmap',
       'tab-btn-table': '📋 List',
-      'tab-btn-graph': '🌐 Network',
+      'tab-btn-netmap': '🕸️ Network',
     },
   };
 
@@ -270,7 +270,7 @@
     var lang = pageLang();
     var short = TAB_SHORT[lang] || TAB_SHORT.ko;
     if (!isMobile()) return;
-    ['tab-btn-heatmap', 'tab-btn-table', 'tab-btn-graph'].forEach(function (id) {
+    ['tab-btn-heatmap', 'tab-btn-table', 'tab-btn-netmap'].forEach(function (id) {
       var el = document.getElementById(id);
       if (!el) return;
       var shortLabel = short[id];
@@ -285,7 +285,7 @@
 
   /** Call from map applyLang() after tab labels are set (mobile short labels only). */
   function notifyLangApplied() {
-    ['tab-btn-heatmap', 'tab-btn-table', 'tab-btn-graph'].forEach(function (id) {
+    ['tab-btn-heatmap', 'tab-btn-table', 'tab-btn-netmap'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) delete el.dataset.fullLabel;
     });

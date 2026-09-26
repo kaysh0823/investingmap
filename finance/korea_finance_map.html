@@ -61,7 +61,7 @@
   }
   </script>
   <script src="../js/seo.js"></script>
-                    <!-- investingmap-geo-webpage -->
+                      <!-- investingmap-geo-webpage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -112,7 +112,6 @@
     ]
   }
   </script>
-
 
   <!-- investingmap-seo-ld-start -->
   <script type="application/ld+json">
@@ -445,8 +444,8 @@
 <script src="../js/live_quotes.js?v=93530df8"></script>
   <script src="../js/map_i18n.js?v=b0e7bb18"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=6d8687eb"></script>
-  <script src="../js/sector_nav.js?v=432e3f2e"></script>
+  <script src="../js/map_tab_state.js?v=0b448bb5"></script>
+  <script src="../js/sector_nav.js?v=3cdd36dc"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
@@ -459,7 +458,7 @@
   <script src="../js/map_valuation.js?v=3453611f"></script>
   <script src="../js/map_netmap.js?v=4ebe04c9"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
-  <script src="../js/map_mobile_ux.js?v=58cbc54d"></script>
+  <script src="../js/map_mobile_ux.js?v=88e05362"></script>
   <script src="../js/candle_modal.js?v=feaea78b"></script>
 <style>
     :root {
@@ -1498,131 +1497,6 @@
         line-height: 1.25
       }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       .header {
         padding: 14px 14px 16px;
         display: flex;
@@ -1701,7 +1575,6 @@
         margin-left: 0;
         flex: 1 1 100%
       }
-
 
       thead th {
         white-space: normal;
@@ -1821,7 +1694,6 @@
     .im-trust-disclaimer {
       max-width: 720px
     }
-
 
     .heatmap-wrap {
       padding: 20px 28px 28px;
@@ -2088,12 +1960,6 @@
       max-width: 720px
     }
 
-
-
-
-
-
-
 .quote-spark { display: block; width: 56px; height: 22px; flex-shrink: 0; }
     .spark-cell { width: 64px; padding: 4px 6px; vertical-align: middle; }
     .spark-cell .quote-spark { display: block; width: 56px; height: 22px; }
@@ -2102,179 +1968,7 @@
     #th-spark { cursor: default; font-size: 11px; white-space: nowrap; font-weight: 600; }
 
   
-    /* relation network v2 + filter sidebar layout */
-    .rn-workspace.graph-container,
-    .graph-container.rn-workspace {
-      display: grid;
-      grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
-      height: calc(100vh - 110px);
-      min-height: 420px;
-    }
-    .graph-sidebar { display: none !important; }
-    .rn-filter-sidebar {
-      display: flex;
-      flex-direction: column;
-      min-width: 240px;
-      max-width: 300px;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      overflow: hidden;
-      z-index: 20;
-    }
-    .rn-filter-content {
-      flex: 1;
-      overflow-x: hidden;
-      overflow-y: auto;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .rn-filter-drawer-toggle {
-      display: none;
-      min-height: 44px;
-      min-width: 44px;
-      padding: 8px 14px;
-      margin: 0 0 8px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface2);
-      color: var(--text);
-      font: inherit;
-      font-size: 13px;
-      cursor: pointer;
-    }
-    .rn-filter-drawer-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 24;
-    }
-    .rn-filter-drawer-backdrop.is-open { display: block; }
-    .rn-graph-main {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      min-height: 0;
-      position: relative;
-    }
-    .rn-graph-header { flex: none; padding: 8px 12px 0; }
-    .rn-graph-canvas {
-      flex: 1;
-      min-height: 0;
-      position: relative;
-    }
-    .rn-graph-canvas #graph-svg { width: 100%; height: 100%; }
-    .rn-model-desc { margin: 0 0 8px; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-    .rn-sparse-notice { margin: 0 0 8px; padding: 8px 10px; font-size: 12px; line-height: 1.5; color: var(--text-muted); background: var(--surface2); border: 1px dashed var(--border); border-radius: 8px; }
-    .rn-toolbar {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
-      margin: 0;
-      max-width: none;
-      overflow: visible;
-    }
-    .rn-filter-group { display: flex; flex-direction: column; gap: 6px; }
-    .rn-filter-group-title {
-      margin: 0;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .rn-filter-row { display: flex; flex-wrap: wrap; gap: 6px; }
-    .rn-filter-stack { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-    .rn-toolbar input[type="search"] {
-      min-height: 40px;
-      width: 100%;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface2);
-      color: var(--text);
-      font: inherit;
-      min-width: 0;
-      flex: none;
-    }
-    .rn-chip {
-      min-height: 36px;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--surface2);
-      color: var(--text-muted);
-      font: inherit;
-      font-size: 11px;
-      cursor: pointer;
-      white-space: normal;
-      text-align: center;
-      line-height: 1.25;
-    }
-    .rn-chip.active { border-color: var(--accent); color: var(--accent); }
-    .rn-chip[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
-    .rn-sticky-bar { position: sticky; top: 0; z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 13px; }
-    .rn-sticky-bar button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface2); cursor: pointer; font: inherit; }
-    .rn-detail-panel { position: absolute; right: 12px; top: 12px; z-index: 15; width: min(320px, 92vw); max-height: 60%; overflow: auto; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: 0 8px 24px rgba(0,0,0,.25); font-size: 12px; line-height: 1.6; }
-    .rn-detail-panel h3 { margin: 0 0 8px; font-size: 14px; }
-    .rn-detail-close { position: absolute; top: 8px; right: 10px; min-width: 44px; min-height: 44px; border: none; background: transparent; font-size: 22px; cursor: pointer; color: var(--text-muted); line-height: 1; }
-    .rn-graph-only-badge { color: var(--text-muted); font-size: 11px; margin: 0 0 6px; }
-    .rn-legend-help { margin-top: 4px; border-top: 1px solid var(--border); padding-top: 8px; }
-    .rn-legend-help-summary {
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-      min-height: 40px;
-      display: flex;
-      align-items: center;
-      list-style: none;
-    }
-    .rn-legend-help-summary::-webkit-details-marker { display: none; }
-    .rn-legend { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; font-size: 11px; color: var(--text-muted); }
-    .rn-legend-item { white-space: normal; line-height: 1.45; }
-    .rn-legend-key { font-weight: 600; color: var(--text); }
-    .rn-legend-static { font-size: 11px; color: var(--text-muted); line-height: 1.55; }
-    .rn-legend-static dl { margin: 0; }
-    .rn-legend-static dt { font-weight: 600; color: var(--text); margin-top: 6px; }
-    .rn-legend-static dd { margin: 2px 0 0; }
-    .rn-evidence { margin: 8px 0 0; padding-left: 18px; }
-    .rn-a11y-list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-    @media (max-width: 1023px) {
-      .rn-workspace.graph-container,
-      .graph-container.rn-workspace { grid-template-columns: minmax(200px, 220px) minmax(0, 1fr); }
-      .rn-filter-sidebar { min-width: 200px; max-width: 220px; }
-    @media (max-width: 767px) {
-      .rn-workspace.graph-container,
-      .graph-container.rn-workspace { grid-template-columns: 1fr; height: min(70vh, 620px); }
-      .rn-filter-drawer-toggle { display: inline-flex; align-items: center; justify-content: center; }
-      .rn-filter-sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: min(92vw, 320px);
-        max-width: none;
-        transform: translateX(-105%);
-        transition: transform .2s ease;
-        box-shadow: 8px 0 24px rgba(0,0,0,.25);
-      }
-      .rn-filter-sidebar.is-open { transform: translateX(0); }
-      #tab-graph .rn-graph-main { position: relative; touch-action: pan-y; }
-      .rn-graph-canvas #graph-svg { height: min(72svh, 680px) !important; min-height: 420px; touch-action: none; }
-      .rn-detail-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-height: 48svh; border-radius: 14px 14px 0 0; padding-top: 18px; }
-      .rn-toolbar .rn-chip { min-height: 44px; }
-      .rn-sticky-bar button { min-height: 44px; }
-      .rn-detail-close { min-width: 44px; min-height: 44px; }
-      .rn-legend-help-summary { min-height: 44px; }
-    }
-
-  
-    }
-</style>
+    </style>
   <!-- Google AdSense: ca-pub-6448775418895050 — turn on Auto ads in AdSense, or paste Display unit slot IDs into manual ad snippets if you add them. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6448775418895050"
     crossorigin="anonymous"></script>
@@ -2344,7 +2038,6 @@
     <button id="tab-btn-valuation" class="tab-btn" onclick="switchTab('valuation',this)">⚖️ 밸류에이션 비교</button>
     <button id="tab-btn-netmap" class="tab-btn" onclick="switchTab('netmap',this)">🕸️ 네트워크맵</button>
     <button id="tab-btn-table" class="tab-btn" onclick="switchTab('table',this)">📋 기업 목록 &amp; 필터</button>
-    <button id="tab-btn-graph" class="tab-btn" onclick="switchTab('graph',this)">🌐 관계 네트워크 지도</button>
   </div>
   <!-- HEATMAP TAB -->
   <div id="tab-heatmap" class="tab-content active">
@@ -2401,20 +2094,7 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
   <!-- TABLE TAB -->
-
 
   <div id="tab-table" class="tab-content">
     <div class="table-container">
@@ -3574,38 +3254,6 @@
     </div>
   </div>
 
-  <!-- GRAPH TAB -->
-  <div id="tab-graph" class="tab-content">
-    <div class="graph-container rn-workspace">
-      <aside class="rn-filter-sidebar" id="rn-filter-sidebar" aria-label="Relation network filters">
-        <div class="rn-filter-content" id="rn-filter-content"></div>
-      </aside>
-      <div class="graph-main">
-        <div id="rn-sticky-bar" class="rn-sticky-bar" hidden></div>
-        <p id="rn-model-desc" class="rn-model-desc" aria-live="polite"></p>
-        <p id="rn-sparse-notice" class="rn-sparse-notice" aria-live="polite"></p>
-        <div id="rn-legend" class="rn-legend" aria-label="Relation line legend"></div>
-        <div class="rn-toolbar" role="toolbar" aria-label="Relation network filters">
-          <input type="search" id="rn-search" placeholder="기업 검색" aria-label="Search company" autocomplete="off" />
-          <label class="rn-chip"><input type="checkbox" id="rn-filter-confirmed" style="margin-right:4px" />확정만</label>
-          <button type="button" class="rn-chip" id="rn-depth-1">1단계</button>
-          <button type="button" class="rn-chip" id="rn-depth-2">2단계</button>
-          <button type="button" class="rn-chip" onclick="RelationNetwork.resetView()">전체</button>
-        </div>
-        <ul id="rn-a11y-list" class="rn-a11y-list" aria-label="Relation list"></ul>
-        <div id="rn-detail-panel" class="rn-detail-panel" hidden aria-hidden="true"></div>
-        <svg id="graph-svg"></svg>
-        <div id="graph-tooltip" class="graph-tooltip" style="display:none"></div>
-        <div class="graph-hint" id="graph-hint-text">노드를 클릭하면 peer 연결이 강조됩니다</div>
-        <div class="graph-controls">
-          <button class="graph-ctrl-btn" onclick="resetZoom()" title="Reset">⟳</button>
-          <button class="graph-ctrl-btn" onclick="zoomIn()">+</button>
-          <button class="graph-ctrl-btn" onclick="zoomOut()">−</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
     // ═══════════════════════════════════════════════════════
     // CONSTANTS
@@ -3777,7 +3425,6 @@
         "momentumLegend": "색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS",
         "heatmapHint": "칸 크기 = 시가총액 · 색 = 당일 등락률",
         "tabTable": "📋 기업목록 & 필터",
-        "tabGraph": "🌐 관계 네트워크 (수정중)",
         "thLast": "현재가",
         "thChg1d": "1일",
         "thRet20d": "20일",
@@ -3988,7 +3635,6 @@
         "momentumLegend": "Color = 1-day return · size = daily turnover · vertical lines = market index RS",
         "heatmapHint": "Tile size = market cap · color = 1-day return",
         "tabTable": "📋 Company list & filters",
-        "tabGraph": "🌐 Relationship network (WIP)",
         "thLast": "Last",
         "thChg1d": "Day",
         "thRet20d": "1M",
@@ -4440,7 +4086,6 @@
       { id: 'ifc', name: 'IFC', nameEn: 'IFC (World Bank)', country: '미국/USA', region: 'us', sector: 'Development finance' }
     ];
 
-
     // ═══════════════════════════════════════════════════════
     // STATE
     // ═══════════════════════════════════════════════════════
@@ -4471,7 +4116,6 @@
     }
     let selectedChains = new Set(), currentMarket = 'all', searchTerm = '', sortKey = 'quotePosition', sortDir = -1;
 
-
     function chainMatchesFilter(companyChain, filter) {
       if (filter === 'all') return true;
       if (!companyChain) return false;
@@ -4498,9 +4142,6 @@
       if (typeof svgEl !== 'undefined' && svgEl && svgEl !== true && svgEl.selectAll) {
         svgEl.selectAll('*').remove();
         svgEl = null;
-      }
-      if (document.getElementById('tab-graph').classList.contains('active')) {
-        if (typeof buildGraph === 'function') buildGraph();
       }
     }
 
@@ -4549,7 +4190,6 @@
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
-      document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
       document.getElementById('fl-chain-label').textContent = t.flChain;
@@ -4598,7 +4238,6 @@
       if(document.getElementById('sb-how'))document.getElementById('sb-how').textContent= t.sbHow;
       if(document.getElementById('sb-size-desc'))if(document.getElementById('sb-size-desc'))document.getElementById('sb-size-desc').innerHTML= t.sizeDesc.replace(/\n/g, '<br>');
       if(document.getElementById('sb-how-desc'))if(document.getElementById('sb-how-desc'))document.getElementById('sb-how-desc').innerHTML= t.howDesc.replace(/\n/g, '<br>');
-      /* sb-korean guard */ if(document.getElementById('graph-hint-text'))document.getElementById('graph-hint-text').textContent= t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
       if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
@@ -4824,67 +4463,8 @@
       renderTable();
     }
 
-    // ═══════════════════════════════════════════════════════
-    // ═══════════════════════════════════════════════════════
-    // GRAPH (RelationNetwork v2)
-    // ═══════════════════════════════════════════════════════
     let svgEl = null;
 
-    function rnProfileKey() {
-      const ds = document.body.getAttribute('data-sector') || 'powergrid';
-      if (ds === 'semi') return 'semiconductor';
-      return ds;
-    }
-
-    function rnGraphCtx() {
-      return {
-        sectorId: rnProfileKey(),
-        profileKey: rnProfileKey(),
-        lang: lang,
-        T: T,
-        koreanCompanies: koreanCompanies,
-        globalCompanies: globalCompanies,
-        CHAIN_COLORS: CHAIN_COLORS,
-        REGION_COLORS: REGION_COLORS,
-        container: document.getElementById('graph-svg'),
-        networkVersion: 1,
-      };
-    }
-
-    function buildGraph() {
-      if (!window.RelationNetwork) return;
-      RelationNetwork.onTabVisible(rnGraphCtx());
-      svgEl = true;
-    }
-
-    function selectNode() { /* handled by RelationNetwork */ }
-    function resetSelection() { if (window.RelationNetwork) RelationNetwork.resetView(); }
-    function toggleChainHighlight() { /* chain highlight via search/filters in v2 */ }
-
-    function resetZoom() {
-      const el = document.getElementById('graph-svg');
-      if (!el || !window.d3) return;
-      d3.select(el).transition().duration(400).call(
-        d3.zoom().transform,
-        d3.zoomIdentity.translate(el.clientWidth * 0.05, el.clientHeight * 0.05).scale(0.88)
-      );
-    }
-    function zoomIn() {
-      const el = document.getElementById('graph-svg');
-      if (!el || !window.d3) return;
-      d3.select(el).transition().call(d3.zoom().scaleBy, 1.35);
-    }
-    function zoomOut() {
-      const el = document.getElementById('graph-svg');
-      if (!el || !window.d3) return;
-      d3.select(el).transition().call(d3.zoom().scaleBy, 0.74);
-    }
-
-    function showTooltip() { /* v2 uses detail panel */ }
-    function hideTooltip() { }
-
-
-    
     function renderHeatmap() {
       if (!window.InvestingMapHeatmap) return;
       var el = document.getElementById('heatmap-root');
@@ -5112,8 +4692,6 @@
       });
     }
 
-
-
     function switchTab(tab, btn) {
       document.body.classList.toggle('im-tab-table', tab === 'table');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -5125,9 +4703,7 @@
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
       if (tab === 'valuation') setTimeout(renderValuation, 40);
-      if (tab === 'netmap') setTimeout(renderNetmap, 40);
-      if (tab === 'graph') setTimeout(() => { buildGraph(); }, 50);
-      else if (window.RelationNetwork) RelationNetwork.onTabHidden();
+      if (tab === 'netmap') setTimeout(renderNetmap, 40); }, 50);
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
     }
 
@@ -5199,9 +4775,9 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
   </footer>
-  <script src="../js/desktop_sidebar_nav.js?v=64ef2fdc"></script>
+  <script src="../js/desktop_sidebar_nav.js?v=12805cc9"></script>
   <script src="../js/global_search.js?v=1dbb73f9"></script>
-  <script src="../js/global_bottom_nav.js?v=26c1dc05"></script>
+  <script src="../js/global_bottom_nav.js?v=5074cd24"></script>
   <script src="../js/geo_footer.js"></script>
 <!-- investingmap-seo-related-start -->
   <section class="im-seo-related" id="im-seo-related" aria-labelledby="im-seo-related-title">
@@ -5237,10 +4813,6 @@
     </nav>
   </section>
 <!-- investingmap-seo-related-end -->
-
-  <script src="../js/network_profiles.js?v=5e488c53"></script>
-  <script src="../js/relation_network_legacy.js?v=e094875e"></script>
-  <script src="../js/relation_network.js?v=1ddbd06e"></script>
 </body>
 
 </html>

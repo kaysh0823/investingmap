@@ -88,8 +88,6 @@
         svgEl.selectAll('*').remove();
         svgEl = null;
       }
-      var tabG = document.getElementById('tab-graph');
-      if (tabG && tabG.classList.contains('active') && typeof buildGraph === 'function') buildGraph();
     }
 
     function toggleLang() {
@@ -148,7 +146,6 @@
       document.getElementById('tab-btn-table').innerHTML = t.tabTable;
       var hmHint = document.getElementById('heatmap-hint');
       if (hmHint && t.heatmapHint) hmHint.textContent = t.heatmapHint;
-      document.getElementById('tab-btn-graph').innerHTML = t.tabGraph;
       document.querySelector('.lang-toggle .flag').textContent = t.langFlag;
       document.getElementById('lang-toggle-text').textContent = t.langText;
       document.getElementById('fl-chain-label').textContent = t.flChain;
@@ -197,7 +194,6 @@
       if(document.getElementById('sb-how'))document.getElementById('sb-how').textContent= t.sbHow;
       if(document.getElementById('sb-size-desc'))document.getElementById('sb-size-desc').innerHTML= t.sizeDesc;
       if(document.getElementById('sb-how-desc'))document.getElementById('sb-how-desc').innerHTML= t.howDesc;
-      /* sb-korean guard */ if(document.getElementById('graph-hint-text'))document.getElementById('graph-hint-text').textContent= t.graphHint;
       syncThemeToggle();
       updateQuotesAsofDisplay();
       if (window.InvestingMapMobileUx) { InvestingMapMobileUx.syncAll(); if (InvestingMapMobileUx.notifyLangApplied) InvestingMapMobileUx.notifyLangApplied(); }
@@ -432,74 +428,8 @@
     }
 
     
-    // ═══════════════════════════════════════════════════════
-    // GRAPH (RelationNetwork v2)
-    // ═══════════════════════════════════════════════════════
+
     let svgEl = null;
-
-    function rnProfileKey() {
-      const ds = document.body.getAttribute('data-sector') || 'powergrid';
-      if (ds === 'semi') return 'semiconductor';
-      return ds;
-    }
-
-    function rnGraphCtx() {
-      return {
-        sectorId: rnProfileKey(),
-        profileKey: rnProfileKey(),
-        lang: lang,
-        T: T,
-        koreanCompanies: koreanCompanies,
-        globalCompanies: globalCompanies,
-        CHAIN_COLORS: CHAIN_COLORS,
-        REGION_COLORS: REGION_COLORS,
-        container: document.getElementById('graph-svg'),
-        networkVersion: 1,
-      };
-    }
-
-    function buildGraph() {
-      if (!window.RelationNetwork) return;
-      RelationNetwork.onTabVisible(rnGraphCtx());
-      svgEl = true;
-    }
-
-    function selectNode() { /* handled by RelationNetwork */ }
-    function resetSelection() { if (window.RelationNetwork) RelationNetwork.resetView(); }
-    function toggleChainHighlight() { /* chain highlight via search/filters in v2 */ }
-
-    function resetZoom() {
-      const el = document.getElementById('graph-svg');
-      if (!el || !window.d3) return;
-      d3.select(el).transition().duration(400).call(
-        d3.zoom().transform,
-        d3.zoomIdentity.translate(el.clientWidth * 0.05, el.clientHeight * 0.05).scale(0.88)
-      );
-    }
-    function zoomIn() {
-      const el = document.getElementById('graph-svg');
-      if (!el || !window.d3) return;
-      d3.select(el).transition().call(d3.zoom().scaleBy, 1.35);
-    }
-    function zoomOut() {
-      const el = document.getElementById('graph-svg');
-      if (!el || !window.d3) return;
-      d3.select(el).transition().call(d3.zoom().scaleBy, 0.74);
-    }
-
-    function showTooltip() { /* v2 uses detail panel */ }
-    function hideTooltip() { }
-
-    function resetTableFilters() {
-      selectedChains.clear();
-      currentMarket = 'all';
-      searchTerm = '';
-      var inp = document.getElementById('search-input');
-      if (inp) inp.value = '';
-      buildChainChips();
-      buildMarketChips();
-      renderTable();
-    }
 
     function renderHeatmap() {
       if (!window.InvestingMapHeatmap) return;
@@ -605,7 +535,6 @@
       });
       __imNetmapPainted = true;
     }
-
 
     function renderNetmap() {
       if (!window.InvestingMapNetmap) return;
@@ -809,8 +738,6 @@
       });
     }
 
-
-
     function switchTab(tab, btn) {
       document.body.classList.toggle('im-tab-table', tab === 'table');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -822,9 +749,7 @@
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
       if (tab === 'valuation') setTimeout(renderValuation, 40);
-      if (tab === 'netmap') setTimeout(renderNetmap, 40);
-      if (tab === 'graph') setTimeout(function() { buildGraph(); }, 50);
-      else if (window.RelationNetwork) RelationNetwork.onTabHidden();
+      if (tab === 'netmap') setTimeout(renderNetmap, 40); }, 50);
       if (window.InvestingMapTabState) InvestingMapTabState.onTabChange(tab);
     }
 

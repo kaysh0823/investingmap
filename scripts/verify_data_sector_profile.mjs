@@ -64,11 +64,9 @@ for (const rel of MAP_FILES) {
   if (profile.dataSector !== dataSector && !(dataSector === 'semi' && profile.sectorId === 'semiconductor')) {
     fail(`${rel}: profile dataSector mismatch for "${dataSector}"`);
   }
-  if (!html.includes('id="graph-svg"')) {
-    fail(`${rel}: missing graph-svg container`);
-  }
-  if (!html.includes('relation_network.js')) {
-    fail(`${rel}: missing relation_network.js`);
+  // Graph tab retired — do not require graph-svg / relation_network.js on pages.
+  if (html.includes('id="tab-btn-graph"') || html.includes('relation_network.js')) {
+    fail(`${rel}: WIP graph tab chrome must be stripped`);
   }
   if (dataSector === 'semi' && rel.includes('robot/')) {
     fail(`${rel}: robot page must not use data-sector="semi"`);
