@@ -13,6 +13,7 @@ const STEPS = [
   'verify_valuation.mjs',
   'verify_seed_coverage.mjs',
   'verify_supabase_hub_prefer.mjs',
+  'verify_seo.mjs',
   'verify_netmap.mjs',
   'verify_map_init.mjs',
 ];

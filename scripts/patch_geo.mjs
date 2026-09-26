@@ -117,7 +117,19 @@ function patchMapPage(rel, key) {
     const wpBlock = `  <!-- ${MARKER}-webpage -->\n${ldScript(wp)}\n`;
     html = html.replace(
       /(<!-- investingmap-geo-org -->[\s\S]*?<\/script>\n|<!-- investingmap-seo -->[\s\S]*?<script src="\.\.\/js\/seo\.js"><\/script>\n)/,
-      (m) => m + wpBlock
+      (m) => m + wpBlock,
+    );
+  } else {
+    // Resync cloned / drifted WebPage JSON-LD to this sector's geo page config.
+    const wp = webPageLd({
+      name: page.title.ko,
+      description: page.summary.ko,
+      url,
+      dateModified: geo.dates.dataAsOf,
+    });
+    html = html.replace(
+      /<!-- investingmap-geo-webpage -->\s*<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/,
+      `  <!-- ${MARKER}-webpage -->\n${ldScript(wp)}\n`,
     );
   }
 
