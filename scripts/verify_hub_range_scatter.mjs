@@ -50,11 +50,13 @@ const inside = api._test.clampX(0.2);
 assert.equal(inside.x, 0.2);
 assert.equal(inside.overflow, false);
 
-const both = api._test.classifyGroup('005930', new Set(['005930']), new Set(['005930']));
-assert.equal(both, 'both');
-assert.equal(api._test.classifyGroup('000660', new Set(['000660']), new Set()), 'turnover');
-assert.equal(api._test.classifyGroup('035420', new Set(), new Set(['035420'])), 'gain');
-assert.equal(api._test.classifyGroup('068270', new Set(), new Set()), 'other');
+const filtersOn = { turnover5d: true, gain5d: true, rs: true, other: true };
+const rsGain = ['gain5d', 'rs'];
+assert.equal(api._test.displayKind(rsGain, filtersOn), 'multi');
+assert.equal(api._test.displayKind(rsGain, { turnover5d: true, gain5d: true, rs: false, other: true }), 'gain5d');
+assert.equal(api._test.displayKind(rsGain, { turnover5d: true, gain5d: false, rs: false, other: true }), 'other');
+assert.equal(api._test.displayKind(['turnover5d'], filtersOn), 'turnover5d');
+assert.equal(api._test.displayKind([], filtersOn), 'other');
 
 const model = api._test.buildModel(
   {
@@ -87,7 +89,57 @@ const over = model.points.filter((row) => row.overflow);
 assert.equal(over.length, 1);
 assert.equal(over[0].x, 0.5);
 assert.equal(over[0].name, '오버플로');
-assert.equal(over[0].group, 'both');
+assert.equal(over[0].groups.join(','), 'turnover5d,gain5d');
+assert.equal(api._test.displayKind(over[0].groups, filtersOn), 'multi');
 assert.ok(Math.abs(over[0].rangeVol5 - 0.621) < 1e-9);
 
-console.log('verify:hub-range-scatter OK — dist markup, percentile, clampX overflow, group both');
+const mixed = api._test.buildModel(
+  {
+    sectors: {
+      elec: {
+        meta: { ko: '전기·전자', en: 'Electrical' },
+        companies: [{ ticker: '000500', name: '가온전선', nameEn: 'Gaon Cable' }],
+      },
+    },
+  },
+  { recentDd: '20260923', quotes: { '000500': { rangeVol5: 0.08, mcap: 5e11 } } },
+  [],
+  [{ ticker: '000500', ret5dPct: 4.2 }],
+  [{ ticker: '000500', rs: 96.2, rank: 1 }],
+);
+assert.equal(mixed.shown, 1);
+assert.equal(mixed.points[0].groups.join(','), 'gain5d,rs');
+assert.equal(mixed.points[0].rs, 96.2);
+assert.equal(mixed.points[0].rsRank, 1);
+assert.equal(api._test.displayKind(mixed.points[0].groups, filtersOn), 'multi');
+assert.equal(
+  api._test.displayKind(mixed.points[0].groups, { turnover5d: true, gain5d: true, rs: false, other: true }),
+  'gain5d',
+);
+assert.equal(
+  api._test.displayKind(mixed.points[0].groups, { turnover5d: true, gain5d: false, rs: false, other: true }),
+  'other',
+);
+
+assert.doesNotThrow(() => {
+  api.setRs({ rsTop20: [{ ticker: '000500', rs: 96.2, rank: 1 }] });
+  api.setMovers({ turnover5dTop10: [], gainers5dTop10: [{ ticker: '000500', ret5dPct: 4.2 }] });
+});
+assert.equal(api._test.inputs().rsTop20.length, 1);
+assert.equal(api._test.inputs().gainers5d.length, 1);
+assert.doesNotThrow(() => {
+  api.setMovers({ turnover5dTop10: [{ ticker: '005930' }], gainers5dTop10: [] });
+  api.setRs({ rsTop20: [{ ticker: '000660', rs: 80, rank: 2 }] });
+});
+assert.equal(api._test.inputs().turnover5d[0].ticker, '005930');
+assert.equal(api._test.inputs().rsTop20[0].ticker, '000660');
+assert.equal(api._test.inputs().gainers5d.length, 0);
+
+const staggered = api._test.staggerPercentileLabels([
+  { px: 10, label: 'P25' },
+  { px: 20, label: 'P50' },
+  { px: 30, label: 'P75' },
+]);
+assert.equal(staggered.map((row) => row.dy).join(','), '0,12,24');
+
+console.log('verify:hub-range-scatter OK — dist markup, percentile, clampX, RS/multi groups, setRs/setMovers');

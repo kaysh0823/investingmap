@@ -1,7 +1,7 @@
 /**
  * Hub scatter: 5-day high-low range (X) × log market cap (Y).
  * Universe = hub_index companies present in hub_volatility_snapshot.
- * Highlight = hub_movers turnover5d Top20 / gainers5d Top20 (existing fetch).
+ * Highlight = turnover5d Top20, gainers5d Top20, RS Top20 (existing fetches).
  */
 (function (global) {
   'use strict';
@@ -11,10 +11,12 @@
   var Y_TICKS = [1e11, 1e12, 1e13, 1e14, 1e15];
   var COLOR = {
     other: '#58a6ff',
-    turnover: '#f85149',
-    gain: '#f0883e',
-    both: '#a371f7',
+    turnover5d: '#f85149',
+    gain5d: '#f0883e',
+    rs: '#3fb950',
+    multi: '#a371f7',
   };
+  var STORE_KEY = 'im.hub.scatter.groups';
   var STYLE_ID = 'im-hub-range-scatter-css';
 
   var state = {
@@ -27,7 +29,8 @@
     recentDd: '',
     turnover5d: [],
     gainers5d: [],
-    groups: { turnover: true, gain: true, both: true, other: true },
+    rsTop20: [],
+    groups: { turnover5d: true, gain5d: true, rs: true, other: true },
     searchQ: '',
     tabSearchCtrl: null,
     resizeObs: null,
@@ -45,8 +48,12 @@
       },
       legendTurnover: '5일 거래대금 Top20',
       legendGain: '5일 상승률 Top20',
-      legendBoth: '둘 다',
+      legendRs: 'RS Top20',
+      legendMulti: '복수 그룹',
       legendOther: '기타',
+      tipRsRank: function (n) {
+        return n + '위';
+      },
       overflowTitle: '5일 레인지 50% 초과',
       xAxis: '5일 레인지',
       yAxis: '시가총액',
@@ -69,8 +76,12 @@
       },
       legendTurnover: '5D turnover Top 20',
       legendGain: '5D gainers Top 20',
-      legendBoth: 'Both',
+      legendRs: 'RS Top 20',
+      legendMulti: 'Multiple groups',
       legendOther: 'Other',
+      tipRsRank: function (n) {
+        return '#' + n;
+      },
       overflowTitle: '5-day range above 50%',
       xAxis: '5-day range',
       yAxis: 'Market cap',
@@ -115,13 +126,62 @@
     return { x: n, overflow: false };
   }
 
-  function classifyGroup(ticker, turnoverSet, gainSet) {
-    var t = turnoverSet && turnoverSet.has(String(ticker));
-    var g = gainSet && gainSet.has(String(ticker));
-    if (t && g) return 'both';
-    if (t) return 'turnover';
-    if (g) return 'gain';
-    return 'other';
+  function membershipOf(ticker, turnoverSet, gainSet, rsSet) {
+    var groups = [];
+    var id = String(ticker);
+    if (turnoverSet && turnoverSet.has(id)) groups.push('turnover5d');
+    if (gainSet && gainSet.has(id)) groups.push('gain5d');
+    if (rsSet && rsSet.has(id)) groups.push('rs');
+    return groups;
+  }
+
+  /** Display bucket after chip filters. multi | turnover5d | gain5d | rs | other */
+  function displayKind(groups, filters) {
+    filters = filters || {};
+    var on = [];
+    (groups || []).forEach(function (g) {
+      if (filters[g] !== false) on.push(g);
+    });
+    if (!on.length) return 'other';
+    if (on.length === 1) return on[0];
+    return 'multi';
+  }
+
+  function loadGroupFilters() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return;
+      var saved = JSON.parse(raw);
+      ['turnover5d', 'gain5d', 'rs', 'other'].forEach(function (k) {
+        if (saved && typeof saved[k] === 'boolean') state.groups[k] = saved[k];
+      });
+    } catch (e) {}
+  }
+
+  function saveGroupFilters() {
+    try {
+      localStorage.setItem(
+        STORE_KEY,
+        JSON.stringify({
+          turnover5d: state.groups.turnover5d !== false,
+          gain5d: state.groups.gain5d !== false,
+          rs: state.groups.rs !== false,
+          other: state.groups.other !== false,
+        }),
+      );
+    } catch (e) {}
+  }
+
+  function staggerPercentileLabels(entries) {
+    var last = -1e9;
+    var level = 0;
+    return (entries || []).map(function (e) {
+      var px = Number(e.px);
+      if (px - last < 28) level = (level + 1) % 3;
+      else level = 0;
+      last = px;
+      return { px: px, label: e.label, dy: [0, 12, 24][level] };
+    });
   }
 
   function formatDashDd(raw) {
@@ -211,22 +271,31 @@
     return out;
   }
 
-  function buildModel(hub, vol, turnoverRows, gainRows) {
+  function buildModel(hub, vol, turnoverRows, gainRows, rsRows) {
     var quotes = (vol && vol.quotes) || {};
     var companies = listHubCompanies(hub);
     var tSet = tickerSet(turnoverRows);
     var gSet = tickerSet(gainRows);
+    var rSet = tickerSet(rsRows);
     var tMap = rowByTicker(turnoverRows);
     var gMap = rowByTicker(gainRows);
+    var rMap = rowByTicker(rsRows);
+    var rsRank = {};
+    (rsRows || []).forEach(function (r, i) {
+      if (!r || r.ticker == null) return;
+      var id = String(r.ticker).trim();
+      rsRank[id] = r.rank != null && isFinite(Number(r.rank)) ? Number(r.rank) : i + 1;
+    });
     var points = [];
     companies.forEach(function (c) {
       var q = quotes[c.ticker];
       if (!q || q.rangeVol5 == null || !isFinite(q.rangeVol5)) return;
       if (q.mcap == null || !isFinite(q.mcap) || q.mcap <= 0) return;
       var clamped = clampX(q.rangeVol5);
-      var group = classifyGroup(c.ticker, tSet, gSet);
+      var groups = membershipOf(c.ticker, tSet, gSet, rSet);
       var tRow = tMap[c.ticker];
       var gRow = gMap[c.ticker];
+      var rRow = rMap[c.ticker];
       points.push({
         ticker: c.ticker,
         name: c.name,
@@ -237,9 +306,11 @@
         x: clamped.x,
         overflow: clamped.overflow,
         mcap: q.mcap,
-        group: group,
+        groups: groups,
         ret5dPct: gRow && gRow.ret5dPct != null ? gRow.ret5dPct : null,
         turnoverWon: tRow && tRow.turnoverWon != null ? tRow.turnoverWon : null,
+        rs: rRow && rRow.rs != null && isFinite(Number(rRow.rs)) ? Number(rRow.rs) : null,
+        rsRank: rsRank[c.ticker] != null ? rsRank[c.ticker] : null,
       });
     });
     return {
@@ -256,16 +327,31 @@
 
   function groupLabel(group) {
     var L = labels();
-    if (group === 'turnover') return L.legendTurnover;
-    if (group === 'gain') return L.legendGain;
-    if (group === 'both') return L.legendBoth;
+    if (group === 'turnover5d') return L.legendTurnover;
+    if (group === 'gain5d') return L.legendGain;
+    if (group === 'rs') return L.legendRs;
+    if (group === 'multi') return L.legendMulti;
     return L.legendOther;
+  }
+
+  function pointKind(p) {
+    return displayKind(p && p.groups, state.groups);
   }
 
   function visiblePoints() {
     return state.points.filter(function (p) {
-      return state.groups[p.group] !== false;
+      var kind = pointKind(p);
+      if (kind === 'other' && state.groups.other === false) return false;
+      return true;
     });
+  }
+
+  function countInGroup(id) {
+    var n = 0;
+    state.points.forEach(function (p) {
+      if (p.groups && p.groups.indexOf(id) >= 0) n += 1;
+    });
+    return n;
   }
 
   function injectStyles() {
@@ -279,10 +365,13 @@
       '#hub-range-scatter-title{margin:0;font-size:16px;font-weight:700;color:var(--text,#e6edf3)}' +
       '#hub-range-scatter-sub,#hub-range-scatter-count{margin:4px 0 0;font-size:12px;color:var(--text-muted,#8b949e);line-height:1.4}' +
       '.hub-range-legend{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 8px}' +
-      '.hub-range-legend button{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12px;' +
+      '.hub-range-chip{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12px;' +
       'font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--border,#30363d);' +
-      'background:var(--surface2,#21262d);color:var(--text,#e6edf3);cursor:pointer}' +
-      '.hub-range-legend button.is-off{opacity:.4}' +
+      'background:var(--surface2,#21262d);color:var(--text,#e6edf3)}' +
+      '.hub-range-legend button.hub-range-chip{cursor:pointer}' +
+      '.hub-range-chip.is-static{cursor:default}' +
+      '.hub-range-chip.is-off{opacity:.4}' +
+      '#hub-range-scatter-pct{margin:0 0 8px;font-size:12px;color:var(--text-muted,#8b949e);line-height:1.4}' +
       '.hub-range-swatch{width:9px;height:9px;border-radius:50%;display:inline-block}' +
       '#hub-range-scatter-search{margin:0 0 8px;max-width:320px}' +
       '#hub-range-wrap{order:1;min-width:0;width:100%;max-width:100%}' +
@@ -325,7 +414,15 @@
     if (p.ret5dPct != null && isFinite(p.ret5dPct)) lines.push(L.tipRet + ' ' + formatSignedPct(p.ret5dPct));
     var tv = formatTurnover(p.turnoverWon);
     if (tv) lines.push(L.tipTurnover + ' ' + tv);
-    lines.push(L.tipGroup + ' ' + groupLabel(p.group));
+    var memberNames = (p.groups || []).map(groupLabel);
+    var rsBit = '';
+    if (p.rs != null && isFinite(p.rs)) {
+      rsBit = 'RS ' + Number(p.rs).toFixed(1);
+      if (p.rsRank != null && isFinite(p.rsRank)) rsBit += ' (' + L.tipRsRank(p.rsRank) + ')';
+    }
+    if (rsBit && memberNames.length) lines.push(rsBit + ' · ' + memberNames.join(', '));
+    else if (rsBit) lines.push(rsBit);
+    else lines.push(L.tipGroup + ' ' + (memberNames.length ? memberNames.join(', ') : L.legendOther));
     tip.textContent = lines.filter(Boolean).join('\n');
     tip.style.whiteSpace = 'pre-line';
     tip.hidden = false;
@@ -353,31 +450,39 @@
       legend.className = 'hub-range-legend';
       legend._built = true;
       [
-        ['turnover', COLOR.turnover, 'legendTurnover'],
-        ['gain', COLOR.gain, 'legendGain'],
-        ['both', COLOR.both, 'legendBoth'],
-        ['other', COLOR.other, 'legendOther'],
+        ['turnover5d', COLOR.turnover5d, true],
+        ['gain5d', COLOR.gain5d, true],
+        ['rs', COLOR.rs, true],
+        ['multi', COLOR.multi, false],
+        ['other', COLOR.other, true],
       ].forEach(function (row) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.setAttribute('data-group', row[0]);
-        b.innerHTML = '<span class="hub-range-swatch" style="background:' + row[1] + '"></span><span></span>';
-        b.addEventListener('click', function () {
-          state.groups[row[0]] = !state.groups[row[0]];
-          b.classList.toggle('is-off', !state.groups[row[0]]);
-          paint();
-        });
-        legend.appendChild(b);
+        var el = document.createElement(row[2] ? 'button' : 'span');
+        el.className = 'hub-range-chip' + (row[2] ? '' : ' is-static');
+        if (row[2]) el.type = 'button';
+        el.setAttribute('data-group', row[0]);
+        el.innerHTML = '<span class="hub-range-swatch" style="background:' + row[1] + '"></span><span></span>';
+        if (row[2]) {
+          el.addEventListener('click', function () {
+            state.groups[row[0]] = state.groups[row[0]] === false;
+            saveGroupFilters();
+            paint();
+          });
+        }
+        legend.appendChild(el);
       });
     }
     if (legend) {
-      legend.querySelectorAll('button[data-group]').forEach(function (b) {
+      legend.querySelectorAll('[data-group]').forEach(function (b) {
         var g = b.getAttribute('data-group');
         var span = b.querySelector('span:last-child');
-        var key =
-          g === 'turnover' ? 'legendTurnover' : g === 'gain' ? 'legendGain' : g === 'both' ? 'legendBoth' : 'legendOther';
-        if (span) span.textContent = L[key];
-        b.classList.toggle('is-off', state.groups[g] === false);
+        var text = groupLabel(g);
+        if (g === 'turnover5d' || g === 'gain5d' || g === 'rs') text += ' (' + countInGroup(g) + ')';
+        if (span) span.textContent = text;
+        if (b.tagName === 'BUTTON') {
+          var on = state.groups[g] !== false;
+          b.classList.toggle('is-off', !on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
       });
     }
     var searchHost = document.getElementById('hub-range-scatter-search');
@@ -455,13 +560,13 @@
     var list = [];
     drawn.forEach(function (p) {
       var searchHit = q && matchesPoint(p, q);
-      var highlight = p.group !== 'other';
+      var highlight = pointKind(p) !== 'other';
       if (searchHit || highlight) list.push(p);
     });
     if (mobile) {
       var highlights = list
         .filter(function (p) {
-          return p.group !== 'other' && !(q && matchesPoint(p, q));
+          return pointKind(p) !== 'other' && !(q && matchesPoint(p, q));
         })
         .sort(function (a, b) {
           return b.mcap - a.mcap;
@@ -574,6 +679,8 @@
       .attr('height', h);
     var g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+    var pctNote = document.getElementById('hub-range-scatter-pct');
+    var pctEntries = [];
     [p25, p50, p75].forEach(function (v, idx) {
       if (v == null || !isFinite(v)) return;
       var cx = clampX(v).x;
@@ -586,13 +693,29 @@
         .attr('stroke', '#8b949e')
         .attr('stroke-dasharray', '4 4')
         .attr('stroke-width', 1);
-      g.append('text')
-        .attr('x', px + 3)
-        .attr('y', 10)
-        .attr('fill', '#8b949e')
-        .attr('font-size', 10)
-        .text(['P25', 'P50', 'P75'][idx]);
+      pctEntries.push({ px: px, label: ['P25', 'P50', 'P75'][idx] });
     });
+    if (!mobile) {
+      staggerPercentileLabels(pctEntries).forEach(function (row) {
+        g.append('text')
+          .attr('x', row.px + 3)
+          .attr('y', 10 + row.dy)
+          .attr('fill', '#8b949e')
+          .attr('font-size', 10)
+          .attr('pointer-events', 'none')
+          .text(row.label);
+      });
+    }
+    if (pctNote) {
+      if (mobile && p25 != null && p50 != null && p75 != null) {
+        pctNote.hidden = false;
+        pctNote.textContent =
+          'P25 ' + formatPct1(p25) + ' · P50 ' + formatPct1(p50) + ' · P75 ' + formatPct1(p75);
+      } else {
+        pctNote.hidden = true;
+        pctNote.textContent = '';
+      }
+    }
 
     var xAxis = d3
       .axisBottom(x)
@@ -614,10 +737,10 @@
 
     var q = String(state.searchQ || '').trim();
     var base = drawn.filter(function (p) {
-      return p.group === 'other';
+      return pointKind(p) === 'other';
     });
     var hi = drawn.filter(function (p) {
-      return p.group !== 'other';
+      return pointKind(p) !== 'other';
     });
 
     function bindDot(sel, r, fill, opacity) {
@@ -676,7 +799,7 @@
         .join('circle'),
       5,
       function (p) {
-        return COLOR[p.group] || COLOR.other;
+        return COLOR[pointKind(p)] || COLOR.other;
       },
       0.95,
     );
@@ -762,11 +885,7 @@
       .then(function (pair) {
         state.hub = pair[0];
         state.vol = pair[1];
-        var model = buildModel(state.hub, state.vol, state.turnover5d, state.gainers5d);
-        state.points = model.points;
-        state.total = model.total;
-        state.shown = model.shown;
-        state.recentDd = model.recentDd;
+        applyModel(buildModel(state.hub, state.vol, state.turnover5d, state.gainers5d, state.rsTop20));
         state.ready = true;
         paint();
         observe(document.getElementById('hub-range-scatter-chart'));
@@ -777,17 +896,33 @@
       });
   }
 
+  function applyModel(model) {
+    state.points = model.points;
+    state.total = model.total;
+    state.shown = model.shown;
+    state.recentDd = model.recentDd;
+  }
+
+  function rebuildIfReady() {
+    if (!state.hub || !state.vol) return;
+    applyModel(buildModel(state.hub, state.vol, state.turnover5d, state.gainers5d, state.rsTop20));
+    state.ready = true;
+    paint();
+  }
+
   function setMovers(payload) {
     payload = payload || {};
     state.turnover5d = payload.turnover5dTop10 || [];
     state.gainers5d = payload.gainers5dTop10 || [];
     if (payload.lang === 'en' || payload.lang === 'ko') state.lang = payload.lang;
-    if (!state.hub || !state.vol) return;
-    var model = buildModel(state.hub, state.vol, state.turnover5d, state.gainers5d);
-    state.points = model.points;
-    state.total = model.total;
-    state.shown = model.shown;
-    paint();
+    rebuildIfReady();
+  }
+
+  function setRs(payload) {
+    payload = payload || {};
+    state.rsTop20 = payload.rsTop20 || [];
+    if (payload.lang === 'en' || payload.lang === 'ko') state.lang = payload.lang;
+    rebuildIfReady();
   }
 
   function setLang(lang) {
@@ -805,20 +940,31 @@
     } catch (e) {}
     var htmlLang = document.documentElement.getAttribute('lang');
     if (htmlLang === 'en' || htmlLang === 'ko') state.lang = htmlLang;
+    loadGroupFilters();
     load();
   }
 
   global.InvestingMapHubRangeScatter = {
     init: init,
     setMovers: setMovers,
+    setRs: setRs,
     setLang: setLang,
     paint: paint,
     _test: {
       percentile: percentile,
       clampX: clampX,
-      classifyGroup: classifyGroup,
+      displayKind: displayKind,
+      membershipOf: membershipOf,
       buildModel: buildModel,
       formatDashDd: formatDashDd,
+      staggerPercentileLabels: staggerPercentileLabels,
+      inputs: function () {
+        return {
+          turnover5d: state.turnover5d,
+          gainers5d: state.gainers5d,
+          rsTop20: state.rsTop20,
+        };
+      },
     },
   };
 

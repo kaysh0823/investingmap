@@ -1021,6 +1021,12 @@
   }
 
   function renderRsTop10(lang) {
+    if (global.InvestingMapHubRangeScatter && typeof global.InvestingMapHubRangeScatter.setRs === 'function') {
+      global.InvestingMapHubRangeScatter.setRs({
+        rsTop20: (dashboardData && dashboardData.rsTop10) || [],
+        lang: pageLang(lang),
+      });
+    }
     var list = document.getElementById('hub-top-rs-list');
     if (!list) return;
     var labels = t(lang);
