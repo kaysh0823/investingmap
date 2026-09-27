@@ -1121,6 +1121,13 @@
   }
 
   function renderMovers(lang) {
+    if (global.InvestingMapHubRangeScatter && typeof global.InvestingMapHubRangeScatter.setMovers === 'function') {
+      global.InvestingMapHubRangeScatter.setMovers({
+        turnover5dTop10: (dashboardData && dashboardData.turnover5dTop10) || [],
+        gainers5dTop10: (dashboardData && dashboardData.gainers5dTop10) || [],
+        lang: pageLang(lang),
+      });
+    }
     renderMcapTop10(lang);
     renderTurnoverTop10(lang);
     renderTurnover5dTop10(lang);

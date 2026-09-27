@@ -291,6 +291,13 @@
       align-items: start
     }
 
+    .hub-range-wrap {
+      order: 1;
+      min-width: 0;
+      width: 100%;
+      max-width: 100%
+    }
+
     .hub-rank-panel {
       position: static;
       background: var(--surface);
@@ -2328,90 +2335,15 @@
     </div>
     </div>
 
-    <div class="hub-rank-panels" id="hub-rank-panels">
-      <section class="hub-rank-panel" id="hub-top-mcap" aria-labelledby="hub-mcap-title">
-        <button type="button" class="hub-rank-toggle" id="hub-mcap-toggle" aria-expanded="false" aria-controls="hub-top-mcap-body">
-          <span class="hub-rank-toggle-inner">
-            <h2 id="hub-mcap-title">시총 Top 20</h2>
-            <p class="hub-rank-toggle-sub" id="hub-mcap-sub">허브 수록 종목 · KRX 시가총액 기준</p>
-          </span>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-mcap-body" class="hub-rank-body is-collapsed">
-          <ol class="hub-top-list" id="hub-top-mcap-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-          </ol>
-        </div>
-      </section>
-      <section class="hub-rank-panel" id="hub-top-rs" aria-labelledby="hub-rs-title">
-        <button type="button" class="hub-rank-toggle" id="hub-rs-toggle" aria-expanded="false" aria-controls="hub-top-rs-body">
-          <span class="hub-rank-toggle-inner">
-            <h2 id="hub-rs-title">RS Top 20</h2>
-            <p class="hub-rank-toggle-sub" id="hub-rs-sub">KRX 전종목 · 20·50·120일 수익률 백분위 평균</p>
-          </span>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-rs-body" class="hub-rank-body is-collapsed">
-          <ol class="hub-top-list" id="hub-top-rs-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-          </ol>
-        </div>
-      </section>
-      <section class="hub-rank-panel" id="hub-top-turnover" aria-labelledby="hub-turnover-title">
-        <button type="button" class="hub-rank-toggle" id="hub-turnover-toggle" aria-expanded="false" aria-controls="hub-top-turnover-body">
-          <span class="hub-rank-toggle-inner">
-            <h2 id="hub-turnover-title">당일 거래대금 Top 20</h2>
-            <p class="hub-rank-toggle-sub" id="hub-turnover-sub">허브 수록 종목 · 당일 거래대금 기준</p>
-          </span>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-turnover-body" class="hub-rank-body is-collapsed">
-          <ol class="hub-top-list" id="hub-top-turnover-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-          </ol>
-        </div>
-      </section>
-      <section class="hub-rank-panel" id="hub-top-turnover5d" aria-labelledby="hub-turnover5d-title">
-        <button type="button" class="hub-rank-toggle" id="hub-turnover5d-toggle" aria-expanded="false" aria-controls="hub-top-turnover5d-body">
-          <span class="hub-rank-toggle-inner">
-            <h2 id="hub-turnover5d-title">5일 거래대금 Top 20</h2>
-            <p class="hub-rank-toggle-sub" id="hub-turnover5d-sub">허브 수록 종목 · 최근 5거래일 누적 거래대금</p>
-          </span>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-turnover5d-body" class="hub-rank-body is-collapsed">
-          <ol class="hub-top-list" id="hub-top-turnover5d-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-          </ol>
-        </div>
-      </section>
-      <section class="hub-rank-panel" id="hub-top-gain1d" aria-labelledby="hub-gain1d-title">
-        <button type="button" class="hub-rank-toggle" id="hub-gain1d-toggle" aria-expanded="false" aria-controls="hub-top-gain1d-body">
-          <span class="hub-rank-toggle-inner">
-            <h2 id="hub-gain1d-title">당일 상승률 Top 20</h2>
-            <p class="hub-rank-toggle-sub" id="hub-gain1d-sub">허브 수록 종목 · 당일 등락률 기준</p>
-          </span>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-gain1d-body" class="hub-rank-body is-collapsed">
-          <ol class="hub-top-list" id="hub-top-gain1d-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-          </ol>
-        </div>
-      </section>
-      <section class="hub-rank-panel" id="hub-top-gain5d" aria-labelledby="hub-gain5d-title">
-        <button type="button" class="hub-rank-toggle" id="hub-gain5d-toggle" aria-expanded="false" aria-controls="hub-top-gain5d-body">
-          <span class="hub-rank-toggle-inner">
-            <h2 id="hub-gain5d-title">5일 상승률 Top 20</h2>
-            <p class="hub-rank-toggle-sub" id="hub-gain5d-sub">허브 수록 종목 · 5거래일 수익률 기준</p>
-          </span>
-          <span class="hub-rank-chevron" aria-hidden="true">▾</span>
-        </button>
-        <div id="hub-top-gain5d-body" class="hub-rank-body is-collapsed">
-          <ol class="hub-top-list" id="hub-top-gain5d-list">
-            <li class="hub-top-loading" style="font-size:12px;color:var(--text-muted)">Loading…</li>
-          </ol>
-        </div>
+    <div class="hub-range-wrap" id="hub-range-wrap">
+      <section id="hub-range-scatter" aria-labelledby="hub-range-scatter-title">
+        <h2 id="hub-range-scatter-title">5일 변동폭 × 시가총액</h2>
+        <p id="hub-range-scatter-sub">기준 종가 · 5거래일 고저 레인지 ÷ 종가</p>
+        <p id="hub-range-scatter-count"></p>
+        <div id="hub-range-scatter-legend"></div>
+        <div id="hub-range-scatter-search"></div>
+        <div id="hub-range-scatter-chart"></div>
+        <div id="hub-range-scatter-overflow"></div>
       </section>
     </div>
     </div>
@@ -2460,8 +2392,11 @@
     <script src="js/return_live.js?v=58abf587"></script>
   <script src="js/returns_tick.js?v=67fa0ba1"></script>
   <script src="js/returns_badge.js?v=a875ae42"></script>
-  <script src="js/hub_dashboard.js?v=f4f8ff30"></script>
+  <script src="js/hub_dashboard.js?v=7b0f1539"></script>
+  <script src="js/map_tab_search.js?v=c1d43a06"></script>
+  <script src="js/candle_modal.js?v=feaea78b"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="js/hub_range_scatter.js?v=b4252039"></script>
   <script src="js/hub_trend_chart.js?v=15ff39b8"></script>
   <script src="js/im_collapsible.js?v=098f0bc5"></script>
 <script>
@@ -2872,6 +2807,7 @@ document.title = lang === 'en'
         if (InvestingMapHubDashboard.renderHubCardTags) InvestingMapHubDashboard.renderHubCardTags(lang);
         InvestingMapHubDashboard.refresh(lang);
       }
+      if (window.InvestingMapHubRangeScatter) InvestingMapHubRangeScatter.setLang(lang);
       if (window.InvestingMapHubTrendChart) {
         InvestingMapHubTrendChart.setLang(lang);
         InvestingMapHubTrendChart.init({ lang: lang, horizon: '20d' });
