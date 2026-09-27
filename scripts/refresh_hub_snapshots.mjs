@@ -28,5 +28,6 @@ runOptional('node scripts/build_hub_rs_snapshot.mjs', 'hub RS snapshot');
 runOptional('node scripts/build_hub_return_refs.mjs', 'hub return refs');
 runOptional('node scripts/build_hub_sector_returns.mjs', 'hub sector returns');
 runOptional('node scripts/build_hub_volatility_snapshot.mjs', 'hub volatility snapshot');
+run('node scripts/build_hub_bb_score.mjs', 'hub BB score');
 runOptional('node scripts/build_hub_valuation_snapshot.mjs', 'hub valuation snapshot');
 console.log('\nOK refresh_hub_snapshots');

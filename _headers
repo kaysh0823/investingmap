@@ -22,6 +22,10 @@
   ! Cache-Control
   Cache-Control: public, max-age=60, must-revalidate
 
+/data/hub_bb_score.json
+  ! Cache-Control
+  Cache-Control: public, max-age=60, must-revalidate
+
 /data/hub_valuation_snapshot.json
   ! Cache-Control
   Cache-Control: public, max-age=60, must-revalidate

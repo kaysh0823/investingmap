@@ -57,6 +57,12 @@ assert.equal(api._test.displayKind(rsGain, { turnover5d: true, gain5d: true, rs:
 assert.equal(api._test.displayKind(rsGain, { turnover5d: true, gain5d: false, rs: false, other: true }), 'other');
 assert.equal(api._test.displayKind(['turnover5d'], filtersOn), 'turnover5d');
 assert.equal(api._test.displayKind([], filtersOn), 'other');
+const rsBb = ['rs', 'bb'];
+const withBb = { turnover5d: true, gain5d: true, rs: true, bb: true, other: true };
+assert.equal(api._test.displayKind(rsBb, withBb), 'multi');
+assert.equal(api._test.displayKind(rsBb, { turnover5d: true, gain5d: true, rs: true, bb: false, other: true }), 'rs');
+assert.equal(api._test.displayKind(['bb'], withBb), 'bb');
+assert.equal(api._test.displayKind(['bb'], { turnover5d: true, gain5d: true, rs: true, bb: false, other: true }), 'other');
 
 const model = api._test.buildModel(
   {
@@ -134,6 +140,26 @@ assert.doesNotThrow(() => {
 assert.equal(api._test.inputs().turnover5d[0].ticker, '005930');
 assert.equal(api._test.inputs().rsTop20[0].ticker, '000660');
 assert.equal(api._test.inputs().gainers5d.length, 0);
+
+const bbModel = api._test.buildModel(
+  {
+    sectors: {
+      chemical: {
+        meta: { ko: '화학', en: 'Chemicals' },
+        companies: [{ ticker: '357780', name: '솔브레인', nameEn: 'Soulbrain' }],
+      },
+    },
+  },
+  { recentDd: '20260923', quotes: { '357780': { rangeVol5: 0.05, mcap: 3e12 } } },
+  [],
+  [],
+  [],
+  [{ ticker: '357780', name: '솔브레인', score: 2.198, pctB: 1.31, bbw: 0.128, bbwNorm: 11, rank: 1 }],
+);
+assert.equal(bbModel.points[0].groups.join(','), 'bb');
+assert.equal(api._test.displayKind(bbModel.points[0].groups, withBb), 'bb');
+assert.equal(bbModel.points[0].bbScore, 2.198);
+assert.equal(bbModel.points[0].bbRank, 1);
 
 const staggered = api._test.staggerPercentileLabels([
   { px: 10, label: 'P25' },

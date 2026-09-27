@@ -1,7 +1,7 @@
 /**
  * Hub scatter: 5-day high-low range (X) × log market cap (Y).
  * Universe = hub_index companies present in hub_volatility_snapshot.
- * Highlight = turnover5d Top20, gainers5d Top20, RS Top20 (existing fetches).
+ * Highlight = turnover5d / gainers5d / RS / BB-score Top20.
  */
 (function (global) {
   'use strict';
@@ -14,6 +14,7 @@
     turnover5d: '#f85149',
     gain5d: '#f0883e',
     rs: '#3fb950',
+    bb: '#39c5cf',
     multi: '#a371f7',
   };
   var STORE_KEY = 'im.hub.scatter.groups';
@@ -30,7 +31,8 @@
     turnover5d: [],
     gainers5d: [],
     rsTop20: [],
-    groups: { turnover5d: true, gain5d: true, rs: true, other: true },
+    bbTop20: [],
+    groups: { turnover5d: true, gain5d: true, rs: true, bb: true, other: true },
     searchQ: '',
     tabSearchCtrl: null,
     resizeObs: null,
@@ -49,10 +51,27 @@
       legendTurnover: '5일 거래대금 Top20',
       legendGain: '5일 상승률 Top20',
       legendRs: 'RS Top20',
+      legendBb: 'BB 스코어 Top20',
+      legendBbInfo: 'BB 스코어 = %b + (1 − BBW%/100), BBW%는 최근 125일 밴드폭 최저~최고 대비 위치(0–100)',
       legendMulti: '복수 그룹',
       legendOther: '기타',
       tipRsRank: function (n) {
         return n + '위';
+      },
+      tipBb: function (p) {
+        return (
+          'BB 스코어 ' +
+          Number(p.bbScore).toFixed(3) +
+          ' (' +
+          p.bbRank +
+          '위) · %b ' +
+          Number(p.bbPctB).toFixed(2) +
+          ' · BBW ' +
+          (Number(p.bbw) * 100).toFixed(1) +
+          '% (125일 정규화 ' +
+          Math.round(Number(p.bbwNorm)) +
+          ')'
+        );
       },
       overflowTitle: '5일 레인지 50% 초과',
       xAxis: '5일 레인지',
@@ -77,10 +96,27 @@
       legendTurnover: '5D turnover Top 20',
       legendGain: '5D gainers Top 20',
       legendRs: 'RS Top 20',
+      legendBb: 'BB score Top 20',
+      legendBbInfo: 'BB score = %b + (1 − BBW%/100); BBW% = 125-day min–max position of band width',
       legendMulti: 'Multiple groups',
       legendOther: 'Other',
       tipRsRank: function (n) {
         return '#' + n;
+      },
+      tipBb: function (p) {
+        return (
+          'BB score ' +
+          Number(p.bbScore).toFixed(3) +
+          ' (#' +
+          p.bbRank +
+          ') · %b ' +
+          Number(p.bbPctB).toFixed(2) +
+          ' · BBW ' +
+          (Number(p.bbw) * 100).toFixed(1) +
+          '% (125-day norm ' +
+          Math.round(Number(p.bbwNorm)) +
+          ')'
+        );
       },
       overflowTitle: '5-day range above 50%',
       xAxis: '5-day range',
@@ -126,12 +162,13 @@
     return { x: n, overflow: false };
   }
 
-  function membershipOf(ticker, turnoverSet, gainSet, rsSet) {
+  function membershipOf(ticker, turnoverSet, gainSet, rsSet, bbSet) {
     var groups = [];
     var id = String(ticker);
     if (turnoverSet && turnoverSet.has(id)) groups.push('turnover5d');
     if (gainSet && gainSet.has(id)) groups.push('gain5d');
     if (rsSet && rsSet.has(id)) groups.push('rs');
+    if (bbSet && bbSet.has(id)) groups.push('bb');
     return groups;
   }
 
@@ -152,9 +189,10 @@
       var raw = localStorage.getItem(STORE_KEY);
       if (!raw) return;
       var saved = JSON.parse(raw);
-      ['turnover5d', 'gain5d', 'rs', 'other'].forEach(function (k) {
+      ['turnover5d', 'gain5d', 'rs', 'bb', 'other'].forEach(function (k) {
         if (saved && typeof saved[k] === 'boolean') state.groups[k] = saved[k];
       });
+      if (!saved || typeof saved.bb !== 'boolean') state.groups.bb = true;
     } catch (e) {}
   }
 
@@ -166,6 +204,7 @@
           turnover5d: state.groups.turnover5d !== false,
           gain5d: state.groups.gain5d !== false,
           rs: state.groups.rs !== false,
+          bb: state.groups.bb !== false,
           other: state.groups.other !== false,
         }),
       );
@@ -271,15 +310,17 @@
     return out;
   }
 
-  function buildModel(hub, vol, turnoverRows, gainRows, rsRows) {
+  function buildModel(hub, vol, turnoverRows, gainRows, rsRows, bbRows) {
     var quotes = (vol && vol.quotes) || {};
     var companies = listHubCompanies(hub);
     var tSet = tickerSet(turnoverRows);
     var gSet = tickerSet(gainRows);
     var rSet = tickerSet(rsRows);
+    var bSet = tickerSet(bbRows);
     var tMap = rowByTicker(turnoverRows);
     var gMap = rowByTicker(gainRows);
     var rMap = rowByTicker(rsRows);
+    var bMap = rowByTicker(bbRows);
     var rsRank = {};
     (rsRows || []).forEach(function (r, i) {
       if (!r || r.ticker == null) return;
@@ -292,10 +333,11 @@
       if (!q || q.rangeVol5 == null || !isFinite(q.rangeVol5)) return;
       if (q.mcap == null || !isFinite(q.mcap) || q.mcap <= 0) return;
       var clamped = clampX(q.rangeVol5);
-      var groups = membershipOf(c.ticker, tSet, gSet, rSet);
+      var groups = membershipOf(c.ticker, tSet, gSet, rSet, bSet);
       var tRow = tMap[c.ticker];
       var gRow = gMap[c.ticker];
       var rRow = rMap[c.ticker];
+      var bRow = bMap[c.ticker];
       points.push({
         ticker: c.ticker,
         name: c.name,
@@ -311,6 +353,11 @@
         turnoverWon: tRow && tRow.turnoverWon != null ? tRow.turnoverWon : null,
         rs: rRow && rRow.rs != null && isFinite(Number(rRow.rs)) ? Number(rRow.rs) : null,
         rsRank: rsRank[c.ticker] != null ? rsRank[c.ticker] : null,
+        bbScore: bRow && bRow.score != null && isFinite(Number(bRow.score)) ? Number(bRow.score) : null,
+        bbPctB: bRow && bRow.pctB != null && isFinite(Number(bRow.pctB)) ? Number(bRow.pctB) : null,
+        bbw: bRow && bRow.bbw != null && isFinite(Number(bRow.bbw)) ? Number(bRow.bbw) : null,
+        bbwNorm: bRow && bRow.bbwNorm != null && isFinite(Number(bRow.bbwNorm)) ? Number(bRow.bbwNorm) : null,
+        bbRank: bRow && bRow.rank != null && isFinite(Number(bRow.rank)) ? Number(bRow.rank) : null,
       });
     });
     return {
@@ -330,6 +377,7 @@
     if (group === 'turnover5d') return L.legendTurnover;
     if (group === 'gain5d') return L.legendGain;
     if (group === 'rs') return L.legendRs;
+    if (group === 'bb') return L.legendBb;
     if (group === 'multi') return L.legendMulti;
     return L.legendOther;
   }
@@ -371,6 +419,13 @@
       '.hub-range-legend button.hub-range-chip{cursor:pointer}' +
       '.hub-range-chip.is-static{cursor:default}' +
       '.hub-range-chip.is-off{opacity:.4}' +
+      '.hub-range-info-wrap{position:relative;display:inline-flex;align-items:center}' +
+      '.hub-range-info{width:16px;height:16px;padding:0;border-radius:50%;border:1px solid var(--border,#30363d);' +
+      'background:var(--surface2,#21262d);color:var(--text-muted,#8b949e);font:700 10px/16px inherit;cursor:help}' +
+      '.hub-range-info-tip{display:none;position:absolute;z-index:6;top:calc(100% + 6px);left:0;width:min(280px,72vw);' +
+      'padding:8px 10px;border-radius:8px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);' +
+      'border:1px solid var(--border,#30363d);font-size:11px;font-weight:500;line-height:1.4;white-space:normal}' +
+      '.hub-range-info-wrap:hover .hub-range-info-tip,.hub-range-info-wrap:focus-within .hub-range-info-tip{display:block}' +
       '#hub-range-scatter-pct{margin:0 0 8px;font-size:12px;color:var(--text-muted,#8b949e);line-height:1.4}' +
       '.hub-range-swatch{width:9px;height:9px;border-radius:50%;display:inline-block}' +
       '#hub-range-scatter-search{margin:0 0 8px;max-width:320px}' +
@@ -420,6 +475,7 @@
       rsBit = 'RS ' + Number(p.rs).toFixed(1);
       if (p.rsRank != null && isFinite(p.rsRank)) rsBit += ' (' + L.tipRsRank(p.rsRank) + ')';
     }
+    if (p.bbScore != null && isFinite(p.bbScore) && p.bbRank != null) lines.push(L.tipBb(p));
     if (rsBit && memberNames.length) lines.push(rsBit + ' · ' + memberNames.join(', '));
     else if (rsBit) lines.push(rsBit);
     else lines.push(L.tipGroup + ' ' + (memberNames.length ? memberNames.join(', ') : L.legendOther));
@@ -453,6 +509,7 @@
         ['turnover5d', COLOR.turnover5d, true],
         ['gain5d', COLOR.gain5d, true],
         ['rs', COLOR.rs, true],
+        ['bb', COLOR.bb, true],
         ['multi', COLOR.multi, false],
         ['other', COLOR.other, true],
       ].forEach(function (row) {
@@ -469,6 +526,21 @@
           });
         }
         legend.appendChild(el);
+        if (row[0] === 'bb') {
+          var wrap = document.createElement('span');
+          wrap.className = 'hub-range-info-wrap';
+          var info = document.createElement('button');
+          info.type = 'button';
+          info.className = 'hub-range-info';
+          info.setAttribute('data-bb-info', '1');
+          info.textContent = 'i';
+          var tip = document.createElement('span');
+          tip.className = 'hub-range-info-tip';
+          tip.setAttribute('data-bb-info-tip', '1');
+          wrap.appendChild(info);
+          wrap.appendChild(tip);
+          legend.appendChild(wrap);
+        }
       });
     }
     if (legend) {
@@ -476,7 +548,7 @@
         var g = b.getAttribute('data-group');
         var span = b.querySelector('span:last-child');
         var text = groupLabel(g);
-        if (g === 'turnover5d' || g === 'gain5d' || g === 'rs') text += ' (' + countInGroup(g) + ')';
+        if (g === 'turnover5d' || g === 'gain5d' || g === 'rs' || g === 'bb') text += ' (' + countInGroup(g) + ')';
         if (span) span.textContent = text;
         if (b.tagName === 'BUTTON') {
           var on = state.groups[g] !== false;
@@ -484,6 +556,10 @@
           b.setAttribute('aria-pressed', on ? 'true' : 'false');
         }
       });
+      var infoBtn = legend.querySelector('[data-bb-info]');
+      var infoTip = legend.querySelector('[data-bb-info-tip]');
+      if (infoBtn) infoBtn.setAttribute('aria-label', L.legendBbInfo);
+      if (infoTip) infoTip.textContent = L.legendBbInfo;
     }
     var searchHost = document.getElementById('hub-range-scatter-search');
     var lib = global.InvestingMapTabSearch;
@@ -881,11 +957,20 @@
         if (!r.ok) throw new Error('vol');
         return r.json();
       }),
+      fetch('data/hub_bb_score.json', { cache: 'default' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('bb');
+          return r.json();
+        })
+        .catch(function () {
+          return null;
+        }),
     ])
       .then(function (pair) {
         state.hub = pair[0];
         state.vol = pair[1];
-        applyModel(buildModel(state.hub, state.vol, state.turnover5d, state.gainers5d, state.rsTop20));
+        state.bbTop20 = (pair[2] && pair[2].top20) || [];
+        applyModel(currentModel());
         state.ready = true;
         paint();
         observe(document.getElementById('hub-range-scatter-chart'));
@@ -903,9 +988,13 @@
     state.recentDd = model.recentDd;
   }
 
+  function currentModel() {
+    return buildModel(state.hub, state.vol, state.turnover5d, state.gainers5d, state.rsTop20, state.bbTop20);
+  }
+
   function rebuildIfReady() {
     if (!state.hub || !state.vol) return;
-    applyModel(buildModel(state.hub, state.vol, state.turnover5d, state.gainers5d, state.rsTop20));
+    applyModel(currentModel());
     state.ready = true;
     paint();
   }
@@ -963,6 +1052,7 @@
           turnover5d: state.turnover5d,
           gainers5d: state.gainers5d,
           rsTop20: state.rsTop20,
+          bbTop20: state.bbTop20,
         };
       },
     },
