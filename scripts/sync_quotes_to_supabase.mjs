@@ -2139,7 +2139,12 @@ async function main() {
   console.log(`Sync ${tickers.length} hub tickers → Supabase`);
   console.log(`  kst=${todayYmdDash} clockRegular=${clockRegular}${force ? ' --force' : ''}`);
 
+  const syncSlot = String(process.env.SYNC_SLOT || '').trim() || 'intraday';
+  const tNaverFetch = Date.now();
   const naverResult = await fetchNaverQuotes(tickers);
+  if (syncSlot === 'intraday') {
+    console.log(`[timing] naver fetch ${Date.now() - tNaverFetch}ms`);
+  }
   const supabaseCfg = { url: supabaseUrl, anonKey: serviceKey };
   const krxResult = await loadKrxQuotes(authKey, supabaseCfg);
 
@@ -2164,7 +2169,6 @@ async function main() {
   // Same sessionOpen rule as /api/quotes — regular auction only (never aftermarket).
   const krxNow = krxSessionInfo();
   const sessionOpenForReturns = !!krxNow.regular;
-  const syncSlot = String(process.env.SYNC_SLOT || '').trim() || 'intraday';
 
   let prevLastByTicker = new Map();
   try {
@@ -2301,7 +2305,11 @@ async function main() {
     console.log('  stock_quotes_latest upsert: skip (non-trading day / pre-open)');
   } else {
     console.log(`Upserting ${rows.length} rows…`);
+    const tLatestUpsert = Date.now();
     upsertResult = await upsertToSupabase(rows, supabaseUrl, serviceKey);
+    if (syncSlot === 'intraday') {
+      console.log(`[timing] latest upsert ${Date.now() - tLatestUpsert}ms`);
+    }
   }
 
   // Keep stock_price_history current: regular-session close bar once the
@@ -2454,10 +2462,12 @@ async function main() {
   const quoteByTicker = new Map(rows.map((r) => [r.ticker, r]));
   const historyCtx = await prepareSectorHistoryContext(supabaseUrl, serviceKey);
 
+  let sectorRecordMs = 0;
   let intradayFrozen = false;
   if (skipLatestAndIntraday) {
     console.log('  sector intraday returns: skip (non-trading day / pre-open)');
   } else if (regularSession) {
+    const tSectorIntraday = Date.now();
     const ir = await syncSectorIntradayReturns({
       hubIndex,
       quoteRows: rows,
@@ -2468,6 +2478,7 @@ async function main() {
       sessionKind: 'regular',
       now: new Date(),
     });
+    sectorRecordMs += Date.now() - tSectorIntraday;
     if (ir.frozen) intradayFrozen = true;
   } else if (syncSlot === 'regular_close') {
     await syncSectorIntradayReturns({
@@ -2508,9 +2519,14 @@ async function main() {
     SUPABASE_ANON_KEY: env.SUPABASE_ANON_KEY || serviceKey,
   };
   console.log('[legacy] Building sector_returns from hub_trend mcap series…');
+  const tSectorReturns = Date.now();
   const sectorRows = await buildSectorReturnRowsFromTrend(hubIndex, trendEnv, asOf);
   console.log(`[legacy] Upserting ${sectorRows.length} sector_returns rows…`);
   const sectorResult = await upsertSectorReturns(sectorRows, supabaseUrl, serviceKey);
+  sectorRecordMs += Date.now() - tSectorReturns;
+  if (syncSlot === 'intraday') {
+    console.log(`[timing] sector returns ${sectorRecordMs}ms`);
+  }
   for (const r of sectorRows) {
     const vals = SECTOR_HORIZONS.map((f) => `${f.out}=${r[f.out] == null ? 'null' : r[f.out]}`).join(' ');
     console.log(`  ${r.sector_id}: ${vals}`);
