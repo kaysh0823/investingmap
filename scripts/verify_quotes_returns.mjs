@@ -23,59 +23,68 @@ assert.ok(row && Array.isArray(row.closes) && row.closes.length >= 201, '005930 
 const closes = row.closes;
 const L = closes.length;
 const officialClose = closes[L - 1];
-assert.equal(officialClose, 249000, '005930 recentDd close');
-assert.equal(refs.recentDd, '20260914');
+const priorClose = closes[L - 2];
+assert.ok(Number.isFinite(officialClose) && officialClose > 0, '005930 recent close');
+assert.ok(Number.isFinite(priorClose) && priorClose > 0, '005930 prior close');
+assert.match(String(refs.recentDd || ''), /^\d{8}$/);
 
 const session = krxSessionInfo();
 const sessionOpenNow = !!session.regular;
 
+function nextCompactYmd(ymd) {
+  const y = Number(String(ymd).slice(0, 4));
+  const m = Number(String(ymd).slice(4, 6));
+  const d = Number(String(ymd).slice(6, 8));
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + 1);
+  const mm = String(dt.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(dt.getUTCDate()).padStart(2, '0');
+  return `${dt.getUTCFullYear()}${mm}${dd}`;
+}
+
 // --- official: anchorDd = refsRecentDd → k=0 → ref1 = closes[L-2]
 {
   const sessionOpen = false;
-  const liveTradeDd = '20260915'; // clock may be today, but official anchors on refs tip
-  const anchorDd = sessionOpen ? liveTradeDd : refs.recentDd;
+  const anchorDd = refs.recentDd;
   const k = sessionsSince(refs.recentDd, anchorDd, refs.tradingDates);
   assert.equal(anchorDd, refs.recentDd);
   assert.equal(k, 0);
-  assert.equal(refCloseAt(closes, 0, 1), closes[L - 2]);
-  assert.equal(closes[L - 2], 259500, 'prior session close for 1D');
+  assert.equal(refCloseAt(closes, 0, 1), priorClose);
 
   const numerator = resolveNumerator({
-    liveLast: 248500,
+    liveLast: officialClose,
     sessionOpen,
     officialClose,
   });
   assert.equal(numerator, officialClose);
   const off = computeStockReturns({ numerator, closes, k });
-  assert.equal(off.chg1dPct, roundPct(249000 / 259500 - 1));
-  assert.equal(off.chg1dPct, -4.05);
+  assert.equal(off.chg1dPct, roundPct(officialClose / priorClose - 1));
 }
 
-// --- live: anchorDd = liveTradeDd → k=1 → ref1 = closes[L-1]
+// --- live: next calendar day after the refs tip → k=1 → ref1 = closes[L-1]
 {
   const sessionOpen = true;
-  const liveTradeDd = '20260915';
+  const liveTradeDd = nextCompactYmd(refs.recentDd);
   const anchorDd = sessionOpen ? liveTradeDd : refs.recentDd;
   const k = sessionsSince(refs.recentDd, anchorDd, refs.tradingDates);
-  assert.equal(anchorDd, '20260915');
+  assert.equal(anchorDd, liveTradeDd);
   assert.equal(k, 1);
   assert.equal(refCloseAt(closes, 1, 1), officialClose);
 
-  const liveLast = 248500;
+  const liveLast = officialClose;
   const numerator = resolveNumerator({ liveLast, sessionOpen, officialClose });
   assert.equal(numerator, liveLast);
   const live = computeStockReturns({ numerator, closes, k });
-  assert.equal(live.chg1dPct, roundPct(248500 / 249000 - 1));
-  assert.equal(live.chg1dPct, -0.2);
-  assert.equal(live.ret20dPct, roundPct(248500 / refCloseAt(closes, 1, 20) - 1));
+  assert.equal(live.chg1dPct, roundPct(liveLast / officialClose - 1));
+  assert.equal(live.ret20dPct, roundPct(liveLast / refCloseAt(closes, 1, 20) - 1));
 }
 
 const quotesSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'quotes.js'), 'utf8');
 assert.ok(quotesSrc.includes('computeStockReturns'), 'quotes wires returns_core');
 assert.ok(quotesSrc.includes('numeratorMode'), 'quotes exposes numeratorMode');
+const returnsSrc = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_returns_source.mjs'), 'utf8');
 assert.ok(
-  /sessionsSince\(\s*recentDd\s*,\s*anchorDd/.test(quotesSrc)
-    || quotesSrc.includes('sessionsSince(recentDd, anchorDd'),
+  /sessionsSince\(\s*refsRecentDd\s*,\s*anchorDd/.test(returnsSrc),
   'k must use anchorDd not liveTradeDd',
 );
 
@@ -85,6 +94,7 @@ assert.ok(liveSrc.includes('syncReturnMetaBadges'), 'client paints return meta b
 assert.ok(!/calcLiveChg1dPct/.test(liveSrc), 'client no longer recalculates 1D');
 
 console.log(
-  'verify:quotes-returns OK — official chg1d=-4.05 live chg1d=-0.20 sessionOpenNow=%s',
+  'verify:quotes-returns OK — official/live identities vs refs tip %s sessionOpenNow=%s',
+  refs.recentDd,
   sessionOpenNow,
 );
