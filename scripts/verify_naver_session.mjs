@@ -22,7 +22,7 @@ import {
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { computeStockReturns, roundPct } from '../functions/lib/returns_core.mjs';
+import { computeStockReturns } from '../functions/lib/returns_core.mjs';
 import { kstDateParts } from '../functions/lib/krx_session.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -339,7 +339,6 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
   );
   const closes = refsFile.quotes['005930'].closes;
   const L = closes.length;
-  const official1d = roundPct(closes[L - 1] / closes[L - 2] - 1);
   const prevDd = String(refsFile.recentDd || '').replace(/-/g, '');
   assert(/^\d{8}$/.test(prevDd), 'refs.recentDd');
 
@@ -363,46 +362,91 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
   const naverPrev = { tradeDate: prevDd, last: closes[L - 1], sessionClose: closes[L - 1] + 999 };
   const naverToday = { tradeDate: simToday, last: closes[L - 1] + 5000, sessionClose: closes[L - 1] + 999 };
 
-  // 08:30 pre-open → official k=0, refs tip 1D
+  // 08:30 pre-open → official N-day. 1D is Naver only; missing prevClose → null (no refs fallback).
   {
     const now = kstAt(dash(simToday), 8, 30);
     const fields = stockReturnFieldsFromRefs('005930', naverPrev, refs, false, null, now);
-    assert(fields.chg_1d_pct != null, '08:30 chg_1d_pct');
-    assert(
-      Math.abs(fields.chg_1d_pct - official1d) <= 0.01,
-      `08:30 chg=${fields.chg_1d_pct} vs official=${official1d}`,
+    assert(fields.chg_1d_pct == null, `08:30 without prevClose must be null, got ${fields.chg_1d_pct}`);
+    assert(fields.ret_20d_pct != null, '08:30 N-day still uses refs');
+    const withPrev = stockReturnFieldsFromRefs(
+      '005930',
+      { ...naverPrev, prevClose: closes[L - 1] - 1000 },
+      refs,
+      false,
+      null,
+      now,
     );
-    if (official1d !== 0) {
-      assert(fields.chg_1d_pct !== 0, '08:30 must not force 0%');
-    }
+    const expected = computeStockReturns({
+      numerator: closes[L - 1],
+      closes,
+      k: 0,
+      prevClose1d: closes[L - 1] - 1000,
+      numerator1d: closes[L - 1],
+    });
+    assert(
+      Math.abs(withPrev.chg_1d_pct - expected.chg1dPct) <= 0.01,
+      `08:30 naver 1d=${withPrev.chg_1d_pct} vs ${expected.chg1dPct}`,
+    );
   }
 
-  // Holiday afternoon: tradeDate still prev → official (not B)
+  // Holiday afternoon: tradeDate still prev → official (not B). sessionClose must not be the 1D price.
   {
     const now = kstAt(dash(simToday), 16, 0);
-    const fields = stockReturnFieldsFromRefs('005930', naverPrev, refs, false, null, now);
+    const fields = stockReturnFieldsFromRefs(
+      '005930',
+      { ...naverPrev, prevClose: closes[L - 2] },
+      refs,
+      false,
+      null,
+      now,
+    );
+    const expected = computeStockReturns({
+      numerator: closes[L - 1],
+      closes,
+      k: 0,
+      prevClose1d: closes[L - 2],
+      numerator1d: closes[L - 1],
+    });
     assert(
-      Math.abs(fields.chg_1d_pct - official1d) <= 0.01,
-      `holiday chg=${fields.chg_1d_pct} vs official=${official1d}`,
+      Math.abs(fields.chg_1d_pct - expected.chg1dPct) <= 0.01,
+      `holiday chg=${fields.chg_1d_pct} vs naver=${expected.chg1dPct}`,
     );
   }
 
-  // 15:45 B without overrideLast → numerator null (chg null); with override → close return
+  // 15:45 B: numerator is naver.close, denominator is naver.prevClose.
+  // History overrideLast and NXT sessionClose must not become the 1D price.
   {
     const now = kstAt(dash(simToday), 15, 45);
-    const missing = stockReturnFieldsFromRefs('005930', naverToday, refs, false, null, now);
-    assert(missing.chg_1d_pct == null, `B missing override must be null, got ${missing.chg_1d_pct}`);
-    const override = closes[L - 1] + 1000;
-    const ok = stockReturnFieldsFromRefs('005930', naverToday, refs, false, override, now);
+    const missing = stockReturnFieldsFromRefs(
+      '005930',
+      naverToday,
+      refs,
+      false,
+      closes[L - 1],
+      now,
+    );
+    assert(missing.chg_1d_pct == null, `B without regular close must be null, got ${missing.chg_1d_pct}`);
+    const regularClose = closes[L - 1] + 1000;
+    const prevClose = closes[L - 1] - 2500;
+    const naverClosed = { ...naverToday, close: regularClose, prevClose };
+    const ok = stockReturnFieldsFromRefs(
+      '005930',
+      naverClosed,
+      refs,
+      false,
+      closes[L - 1] + 50,
+      now,
+    );
     const expected = computeStockReturns({
-      numerator: override,
+      numerator: regularClose,
       closes,
       k: 1,
+      prevClose1d: prevClose,
     });
-    assert(ok.chg_1d_pct != null, 'B with overrideLast');
+    assert(ok.chg_1d_pct != null, 'B with regular close');
     assert(
       Math.abs(ok.chg_1d_pct - expected.chg1dPct) <= 0.01,
-      `B override chg=${ok.chg_1d_pct} vs ${expected.chg1dPct}`,
+      `B close chg=${ok.chg_1d_pct} vs ${expected.chg1dPct}`,
     );
   }
 }

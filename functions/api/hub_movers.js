@@ -164,7 +164,13 @@ async function buildMoversFromReturnSource(hubIndex, config, request, env) {
     if (!t) continue;
     const src = source?.byTicker?.[t];
     const returns = src
-      ? computeStockReturns({ numerator: src.numerator, closes: src.closes, k })
+      ? computeStockReturns({
+          numerator: src.numerator,
+          closes: src.closes,
+          k,
+          prevClose1d: src.prevClose1d,
+          numerator1d: src.numerator1d,
+        })
       : {
           chg1dPct: null,
           ret5dPct: null,

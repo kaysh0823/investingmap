@@ -252,6 +252,7 @@ function applyReturnsFromSource(items, source) {
       closes: src.closes,
       k,
       prevClose1d: src.prevClose1d,
+      numerator1d: src.numerator1d,
     });
     item.chg1dPct = returns.chg1dPct;
     item.ret5dPct = returns.ret5dPct;

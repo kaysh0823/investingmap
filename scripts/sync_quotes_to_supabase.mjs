@@ -248,7 +248,7 @@ function compactYmdLocal(v) {
  * @param {object|null} naver
  * @param {object|null} refs
  * @param {boolean} sessionOpen regular auction only
- * @param {number|null} [overrideLast] forced numerator (regular-close last)
+ * @param {number|null} [overrideLast] live-session numerator override; ignored after the close
  * @param {Date} [now]
  */
 export function stockReturnFieldsFromRefs(
@@ -292,31 +292,50 @@ export function stockReturnFieldsFromRefs(
 
   const extraTradeDates = Array.isArray(opts.extraTradeDates) ? opts.extraTradeDates : [];
   const tradingDates = extendTradingDates(refs.tradingDates, refsRecentDd, extraTradeDates);
-  const prevHit = opts.prevClose1d != null && Number(opts.prevClose1d) > 0
-    ? Number(opts.prevClose1d)
+  const naverPrev = naver?.prevClose != null && Number(naver.prevClose) > 0
+    ? Number(naver.prevClose)
     : null;
+  const regularClose = naver?.close != null && Number(naver.close) > 0 ? Number(naver.close) : null;
+  const naverLast = naver?.last != null && Number(naver.last) > 0 ? Number(naver.last) : null;
 
   let numerator = null;
   let k = 0;
+  let anchorDd = refsRecentDd || todayDd;
   if (sessionOpen) {
-    const liveLast = overrideLast != null
-      ? overrideLast
-      : (naver?.last != null && Number.isFinite(naver.last) ? naver.last : null);
+    const liveLast = overrideLast != null && Number(overrideLast) > 0
+      ? Number(overrideLast)
+      : naverLast;
     numerator = resolveNumerator({ liveLast, sessionOpen: true, officialClose: official });
-    k = refsRecentDd && liveTradeDd
-      ? sessionsSince(refsRecentDd, liveTradeDd, tradingDates)
+    anchorDd = liveTradeDd || todayDd;
+    k = refsRecentDd && anchorDd
+      ? sessionsSince(refsRecentDd, anchorDd, tradingDates)
       : 0;
   } else if (closeEligible) {
-    // B: overrideLast only — never Naver sessionClose (may be NXT integrated).
-    numerator = overrideLast != null && Number(overrideLast) > 0 ? Number(overrideLast) : null;
+    // B N-day: regular-session 종가. Never history, never NXT last/sessionClose.
+    numerator = regularClose;
+    anchorDd = todayDd;
     k = sessionsSince(refsRecentDd, todayDd, tradingDates);
   } else {
-    // C official
+    // C official — N-day stays on the refs tip.
     numerator = official;
+    anchorDd = refsRecentDd || todayDd;
     k = 0;
   }
 
-  const returns = computeStockReturns({ numerator, closes, k, prevClose1d: prevHit });
+  // 1D is Naver-only. Trade date must be the anchor day or both inputs stay null.
+  const onAnchor = !!anchorDd && liveTradeDd === anchorDd;
+  const prevClose1d = onAnchor ? naverPrev : null;
+  const numerator1d = sessionOpen
+    ? (overrideLast != null && Number(overrideLast) > 0 ? Number(overrideLast) : naverLast)
+    : (onAnchor ? (regularClose ?? naverLast) : null);
+
+  const returns = computeStockReturns({
+    numerator,
+    closes,
+    k,
+    prevClose1d,
+    numerator1d,
+  });
   return {
     chg_1d_pct: returns.chg1dPct,
     ret_5d_pct: returns.ret5dPct,
@@ -327,24 +346,25 @@ export function stockReturnFieldsFromRefs(
   };
 }
 
-export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null, krxPrevClose = null) {
-  // last stays the live/session price. prev_close is the KRX official previous
-  // close only — Naver prevClose can be an NXT/after-hours print.
-  const last = naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
+export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null, historyPrevClose = null) {
+  // During the auction, last is the Naver current price.
+  // After the close, last is the regular-session 종가 (naver.close), never NXT/aftermarket last.
+  // prev_close stays Naver prevClose. trade_date is not on this payload, so post_close cannot replace it.
+  const liveLast = naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
+  const regularClose = naver?.close != null && Number(naver.close) > 0 ? Number(naver.close) : null;
+  const last = regularSession ? liveLast : regularClose;
 
-  let prevClose = null;
-  if (krxPrevClose != null && Number.isFinite(Number(krxPrevClose)) && Number(krxPrevClose) > 0) {
-    prevClose = Number(krxPrevClose);
-  }
-  const naverPrev = naver?.prevClose;
+  const prevClose = naver?.prevClose != null && Number.isFinite(Number(naver.prevClose)) && Number(naver.prevClose) > 0
+    ? Number(naver.prevClose)
+    : null;
   if (
     prevClose != null
-    && naverPrev != null
-    && Number.isFinite(Number(naverPrev))
-    && Math.abs(Number(naverPrev) - prevClose) > 0
+    && historyPrevClose != null
+    && Number.isFinite(Number(historyPrevClose))
+    && Math.abs(Number(historyPrevClose) - prevClose) > 0
   ) {
     console.warn(
-      `  prev_close ${ticker}: naver ${naverPrev} != krx ${prevClose} — store KRX`,
+      `  prev_close ${ticker}: naver ${prevClose} != history ${historyPrevClose} — store Naver`,
     );
   }
 
@@ -449,37 +469,6 @@ async function loadLatestLastByTicker(tickers, supabaseUrl, serviceKey) {
     for (const r of rows || []) {
       const t = normalizeTicker(r.ticker);
       if (t) map.set(t, { last: r.last, asOf: r.as_of || null });
-    }
-  }
-  return map;
-}
-
-/** Today’s regular-close from stock_price_history (MDCSTAT / session-close upsert). */
-async function loadHistoryCloseByTicker(tickers, tradeDateDash, supabaseUrl, serviceKey) {
-  const map = new Map();
-  if (!tradeDateDash) return map;
-  const CHUNK = 100;
-  for (let i = 0; i < tickers.length; i += CHUNK) {
-    const batch = tickers.slice(i, i + CHUNK);
-    const filter = batch.map((t) => encodeURIComponent(t)).join(',');
-    const url =
-      `${supabaseUrl}/rest/v1/stock_price_history?trade_date=eq.${encodeURIComponent(tradeDateDash)}`
-      + `&select=ticker,close&ticker=in.(${filter})`;
-    const res = await fetch(url, {
-      headers: {
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-      },
-    });
-    if (!res.ok) {
-      const body = await res.text();
-      throw new Error(`stock_price_history close read failed ${res.status}: ${body.slice(0, 160)}`);
-    }
-    const rows = await res.json();
-    for (const r of rows || []) {
-      const t = normalizeTicker(r.ticker);
-      const c = Number(r.close);
-      if (t && Number.isFinite(c) && c > 0) map.set(t, c);
     }
   }
   return map;
@@ -1788,6 +1777,7 @@ async function syncSectorIntradayReturns({
         k,
         shares: src.shares,
         prevClose1d: src.prevClose1d,
+        numerator1d: src.numerator1d,
       });
     }
     const agg = aggregateSectorReturns(members);
@@ -2268,21 +2258,18 @@ async function main() {
       console.warn('  krx prev-close load failed:', e.message || e);
     }
   }
-  const returnOptsFor = (ticker) => {
+  const historyPrevFor = (ticker) => {
     const code = normalizeTicker(ticker);
     const hit = krxReturnHistory.prevByTicker.get(code);
-    const prev = hit
-      ? adjustedKrxClose(hit.close, hit.tradeDate, krxReturnHistory.adjByTicker.get(code))
-      : null;
-    return {
-      extraTradeDates: krxReturnHistory.extraTradeDates,
-      prevClose1d: prev,
-    };
+    if (!hit) return null;
+    return adjustedKrxClose(hit.close, hit.tradeDate, krxReturnHistory.adjByTicker.get(code));
+  };
+  const returnOpts = {
+    extraTradeDates: krxReturnHistory.extraTradeDates,
   };
 
   let returnsFilled = 0;
   let rows = tickers.map((ticker) => {
-    const returnOpts = returnOptsFor(ticker);
     const returnFields = stockReturnFieldsFromRefs(
       ticker,
       naverResult.quotes[ticker],
@@ -2301,7 +2288,7 @@ async function main() {
       regularSession,
       session.marketClosed,
       returnFields,
-      returnOpts.prevClose1d,
+      historyPrevFor(ticker),
     );
   });
   console.log(
@@ -2309,38 +2296,21 @@ async function main() {
     + ` sessionOpen=${sessionOpenForReturns} slot=${syncSlot} refs=${refsForReturns ? 'ok' : 'null'}`,
   );
 
-  // Post-15:30: never overwrite last with Naver aftermarket/NXT.
-  // Prefer stock_price_history(today).close; else keep prior last + as_of.
+  // Post-15:30: last becomes the regular-session close. Do not touch prev_close or trade_date.
+  // NXT/aftermarket last is never written. History close is not written onto last.
   if (!sessionOpenForReturns && !skipLatestAndIntraday) {
-    const histDate = consensus.tradeDate || todayYmdDash;
-    let histCloses = new Map();
-    try {
-      histCloses = await loadHistoryCloseByTicker(
-        tickers,
-        histDate,
-        supabaseUrl,
-        serviceKey,
-      );
-    } catch (e) {
-      console.warn('  history close preload failed:', e.message || e);
-    }
-    let fromHist = 0;
-    let keptPrev = 0;
     let fromSessionClose = 0;
+    let keptPrev = 0;
     for (const row of rows) {
-      const hc = histCloses.get(row.ticker);
-      if (hc != null) {
-        row.last = hc;
-        fromHist += 1;
+      if (row._sessionClose != null && Number.isFinite(Number(row._sessionClose)) && Number(row._sessionClose) > 0) {
+        row.last = Number(row._sessionClose);
+        fromSessionClose += 1;
       } else {
         const prev = prevLastByTicker.get(row.ticker);
         if (prev?.last != null && Number.isFinite(Number(prev.last))) {
           row.last = Number(prev.last);
           if (prev.asOf) row.as_of = prev.asOf;
           keptPrev += 1;
-        } else if (row._sessionClose != null && Number.isFinite(Number(row._sessionClose))) {
-          row.last = Number(row._sessionClose);
-          fromSessionClose += 1;
         }
       }
       const rf = stockReturnFieldsFromRefs(
@@ -2348,9 +2318,9 @@ async function main() {
         naverResult.quotes[row.ticker],
         refsForReturns,
         false,
-        row.last,
+        null,
         new Date(),
-        returnOptsFor(row.ticker),
+        returnOpts,
       );
       row.chg_1d_pct = rf.chg_1d_pct;
       row.ret_5d_pct = rf.ret_5d_pct;
@@ -2358,12 +2328,10 @@ async function main() {
       row.ret_50d_pct = rf.ret_50d_pct;
       row.ret_120d_pct = rf.ret_120d_pct;
       row.ret_200d_pct = rf.ret_200d_pct;
-      const prev = returnOptsFor(row.ticker).prevClose1d;
-      if (prev != null) row.prev_close = prev;
     }
     console.log(
-      `  post-close last guard: hist=${fromHist} keptPrev=${keptPrev}`
-      + ` sessionClose=${fromSessionClose} (no Naver aftermarket last)`,
+      `  post-close last guard: sessionClose=${fromSessionClose} keptPrev=${keptPrev}`
+      + ' (no history close, no Naver aftermarket last)',
     );
   }
 
@@ -2425,51 +2393,6 @@ async function main() {
       supabaseUrl,
       serviceKey,
     });
-  }
-  // After history upsert: refresh stock_quotes_latest.last from today's close bar.
-  if (!sessionOpenForReturns && !skipLatestAndIntraday && historyTradeDateDash) {
-    try {
-      const histCloses = await loadHistoryCloseByTicker(
-        tickers,
-        historyTradeDateDash,
-        supabaseUrl,
-        serviceKey,
-      );
-      if (histCloses.size) {
-        let patched = 0;
-        for (const row of rows) {
-          const hc = histCloses.get(row.ticker);
-          if (hc == null) continue;
-          if (row.last === hc) continue;
-          row.last = hc;
-          row.as_of = new Date().toISOString();
-          const rf = stockReturnFieldsFromRefs(
-            row.ticker,
-            naverResult.quotes[row.ticker],
-            refsForReturns,
-            false,
-            row.last,
-            new Date(),
-            returnOptsFor(row.ticker),
-          );
-          row.chg_1d_pct = rf.chg_1d_pct;
-          row.ret_5d_pct = rf.ret_5d_pct;
-          row.ret_20d_pct = rf.ret_20d_pct;
-          row.ret_50d_pct = rf.ret_50d_pct;
-          row.ret_120d_pct = rf.ret_120d_pct;
-          row.ret_200d_pct = rf.ret_200d_pct;
-          const prev = returnOptsFor(row.ticker).prevClose1d;
-          if (prev != null) row.prev_close = prev;
-          patched += 1;
-        }
-        if (patched) {
-          console.log(`  post-history last refresh: ${patched} tickers from stock_price_history`);
-          await upsertToSupabase(rows, supabaseUrl, serviceKey);
-        }
-      }
-    } catch (e) {
-      console.warn('  post-history last refresh failed:', e.message || e);
-    }
   }
   await fillMissingHistoryDays(
     authKey,

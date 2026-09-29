@@ -90,6 +90,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
         k,
         shares: src.shares,
         prevClose1d: src.prevClose1d,
+        numerator1d: src.numerator1d,
       });
     }
     const agg = aggregateSectorReturns(members);

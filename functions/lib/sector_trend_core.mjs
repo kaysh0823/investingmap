@@ -143,6 +143,7 @@ export async function computeLiveSectorAggregates(hubIndex, env, request, now = 
         k,
         shares: src.shares,
         prevClose1d: src.prevClose1d,
+        numerator1d: src.numerator1d,
       });
     }
     bySector.set(sid, aggregateSectorReturns(members));
@@ -455,6 +456,7 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
         k,
         shares: m.shares,
         prevClose1d: src?.prevClose1d,
+        numerator1d: src?.numerator1d,
       };
     });
     const agg = aggregateSectorReturns(aggMembers);

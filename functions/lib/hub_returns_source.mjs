@@ -2,9 +2,11 @@
  * Shared return inputs for /api/quotes, /api/hub_sectors, calendar tip, sync intraday.
  *
  * Numerator modes (regular auction only — never aftermarket NXT):
- *   A live     — 09:00–15:30: stock_quotes_latest.last (Naver basic)
- *   B close    — weekday ≥15:30, liveTradeDd==today, refs not tip yet
- *   C official — pre-open / holiday / weekend / refs tip (k=0)
+ *   A live     — 09:00–15:30: stock_quotes_latest.last (Naver current)
+ *   B close    — weekday ≥15:30: Naver regular-session close (not NXT, not history)
+ *   C official — pre-open / holiday / weekend / refs tip (k=0) for N-day
+ * 1D is always the Naver quote on anchorDd (last / session close over prev_close).
+ * Missing either 1D input → null. History is not a 1D fallback.
  */
 
 import {
@@ -243,7 +245,7 @@ async function fetchLatestQuoteRows(tickers, config) {
     const url =
       `${config.url}/rest/v1/stock_quotes_latest`
       + `?ticker=in.(${part.join(',')})`
-      + `&select=ticker,last,as_of,trade_date`;
+      + `&select=ticker,last,prev_close,as_of,trade_date`;
     const res = await fetch(url, {
       headers: {
         apikey: config.anonKey,
@@ -255,7 +257,7 @@ async function fetchLatestQuoteRows(tickers, config) {
       const url2 =
         `${config.url}/rest/v1/stock_quotes_latest`
         + `?ticker=in.(${part.join(',')})`
-        + `&select=ticker,last,as_of`;
+        + `&select=ticker,last,prev_close,as_of`;
       const res2 = await fetch(url2, {
         headers: {
           apikey: config.anonKey,
@@ -273,6 +275,7 @@ async function fetchLatestQuoteRows(tickers, config) {
         const asOf = row.as_of ? String(row.as_of) : null;
         rows.set(t, {
           last: numOrNull(row.last),
+          prevClose: numOrNull(row.prev_close),
           asOf,
           tradeDd: ymdFromAsOf(asOf),
         });
@@ -294,6 +297,7 @@ async function fetchLatestQuoteRows(tickers, config) {
       const tradeDd = compactYmd(row.trade_date) || ymdFromAsOf(asOf);
       rows.set(t, {
         last: numOrNull(row.last),
+        prevClose: numOrNull(row.prev_close),
         asOf,
         tradeDd,
       });
@@ -364,6 +368,8 @@ function rowsFromQuoteOverrides(quoteRows) {
       || ymdFromAsOf(asOf);
     rows.set(t, {
       last: numOrNull(q.last),
+      prevClose: numOrNull(q.prev_close ?? q.prevClose),
+      sessionClose: numOrNull(q._sessionClose ?? q.sessionClose),
       asOf: asOf ? String(asOf) : null,
       tradeDd,
     });
@@ -379,16 +385,26 @@ function rowsFromQuoteOverrides(quoteRows) {
 }
 
 /**
- * @param {{
- *   env: object,
- *   request?: Request|null,
- *   tickers: string[],
- *   refs?: object|null,
- *   quoteRows?: Array<object>|null,
- *   staleRefresh?: (codes: string[]) => Promise<{ items?: Record<string, { last?: number, tradeDate?: string }> }|null>,
- *   now?: Date,
- * }} args
+ * 1D inputs from stock_quotes_latest. Independent of the N-day numerator.
+ * live: last. close/official: session close or last only when trade_date is anchorDd.
+ * prev_close only when trade_date is anchorDd. No history fallback.
+ * @param {'live'|'close'|'official'} numeratorMode
+ * @param {{ last?: number|null, prevClose?: number|null, sessionClose?: number|null, tradeDd?: string }|undefined} row
+ * @param {string} anchorDd
  */
+function quoteDayReturn(numeratorMode, row, anchorDd) {
+  const tradeDd = compactYmd(row?.tradeDd);
+  const onAnchor = !!anchorDd && tradeDd === anchorDd;
+  const prevClose1d = onAnchor ? numOrNull(row?.prevClose) : null;
+  let numerator1d = null;
+  if (numeratorMode === 'live') {
+    numerator1d = numOrNull(row?.last);
+  } else if (onAnchor) {
+    numerator1d = numOrNull(row?.sessionClose) ?? numOrNull(row?.last);
+  }
+  return { numerator1d, prevClose1d };
+}
+
 /**
  * Completed sessions after refs.recentDd and each ticker's KRX previous close.
  * @returns {Promise<{ extraTradeDates: string[], prevByTicker: Map<string, { tradeDate: string, close: number }>, adjByTicker: Map<string, Array<{ effective_date: string, ratio: number }>> }>}
@@ -642,24 +658,10 @@ export async function loadReturnSource({
   let extraTradeDates = Array.isArray(krxHistory?.extraTradeDates)
     ? krxHistory.extraTradeDates
     : [];
-  /** @type {Map<string, { tradeDate: string, close: number }>} */
-  let prevByTicker = krxHistory?.prevByTicker instanceof Map
-    ? krxHistory.prevByTicker
-    : new Map();
-  /** @type {Map<string, Array<{ effective_date: string, ratio: number }>>} */
-  let adjByTicker = krxHistory?.adjByTicker instanceof Map
-    ? krxHistory.adjByTicker
-    : new Map();
   if (!krxHistory) {
     const config = getSupabaseConfig(env, { preferServiceRole: true });
     if (config && refsRecentDd) {
       extraTradeDates = await fetchCompletedSessionsAfter(config, refsRecentDd);
-      const [prevMap, adjMap] = await Promise.all([
-        fetchPrevClosesBefore(config, anchorDd, codes),
-        fetchAdjustmentsAfter(config, refsRecentDd),
-      ]);
-      prevByTicker = prevMap;
-      adjByTicker = adjMap;
     }
   }
   const tradingDates = extendTradingDates(refs.tradingDates, refsRecentDd, extraTradeDates);
@@ -679,6 +681,8 @@ export async function loadReturnSource({
     const row = rows.get(t);
     const rowLast = numOrNull(row?.last);
     const rowTradeDd = compactYmd(row?.tradeDd);
+    const sessionClose = numOrNull(row?.sessionClose);
+    const onAnchor = !!anchorDd && rowTradeDd === anchorDd;
     let numerator = null;
     let displayLast = officialClose;
     if (numeratorMode === 'live') {
@@ -686,30 +690,29 @@ export async function loadReturnSource({
       displayLast = rowLast ?? officialClose;
     } else if (numeratorMode === 'official') {
       numerator = officialClose;
-      displayLast = officialClose;
+      displayLast = (onAnchor ? (sessionClose ?? rowLast) : null) ?? officialClose;
     } else {
-      // B close: today row required — no officialClose fallback (exclude from sector agg)
-      if (rowTradeDd === todayDd && rowLast != null) {
-        numerator = rowLast;
-        displayLast = rowLast;
+      // B close N-day numerator: regular-session close, else today's last. Never history.
+      const closePx = sessionClose ?? (rowTradeDd === todayDd ? rowLast : null);
+      if (closePx != null) {
+        numerator = closePx;
+        displayLast = closePx;
       } else {
         numerator = null;
         displayLast = officialClose;
         closeMissingCount += 1;
       }
     }
+    const quote1d = quoteDayReturn(numeratorMode, row, anchorDd);
     const shares = numOrNull(refQ.shares);
-    const prevHit = prevByTicker.get(t) || null;
-    const prevClose1d = prevHit
-      ? adjustedKrxClose(prevHit.close, prevHit.tradeDate, adjByTicker.get(t))
-      : null;
     byTicker[t] = {
       numerator,
+      numerator1d: quote1d.numerator1d,
       closes,
       shares: shares != null && shares > 0 ? shares : null,
       last: displayLast,
       officialClose,
-      prevClose1d,
+      prevClose1d: quote1d.prevClose1d,
     };
   }
 

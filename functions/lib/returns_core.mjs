@@ -77,8 +77,12 @@ export function refCloseAt(closes, k, n) {
 }
 
 /**
- * Per-stock returns from a shared numerator and adjusted close history.
- * @param {{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number, prevClose1d?: number|null }} args
+ * Per-stock returns.
+ * N-day (5/20/50/120/200) uses `numerator` and the refs close series.
+ * 1D uses `numerator1d` / `prevClose1d` when `numerator1d` is passed (including null).
+ * Either 1D input missing → chg1dPct stays null. No history fallback on that path.
+ * Omitting `numerator1d` keeps the legacy shared-numerator 1D (unit tests).
+ * @param {{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number, prevClose1d?: number|null, numerator1d?: number|null }} args
  * @returns {{
  *   chg1dPct: number|null,
  *   ret5dPct: number|null,
@@ -88,7 +92,13 @@ export function refCloseAt(closes, k, n) {
  *   ret200dPct: number|null,
  * }}
  */
-export function computeStockReturns({ numerator, closes, k = 0, prevClose1d = null }) {
+export function computeStockReturns({
+  numerator,
+  closes,
+  k = 0,
+  prevClose1d = null,
+  numerator1d = undefined,
+}) {
   const num = numPos(numerator);
   const out = {
     chg1dPct: null,
@@ -98,6 +108,12 @@ export function computeStockReturns({ numerator, closes, k = 0, prevClose1d = nu
     ret120dPct: null,
     ret200dPct: null,
   };
+  const quote1d = numerator1d !== undefined;
+  if (quote1d) {
+    const n1 = numPos(numerator1d);
+    const d1 = numPos(prevClose1d);
+    if (n1 != null && d1 != null) out.chg1dPct = roundPct(n1 / d1 - 1);
+  }
   if (num == null || !Array.isArray(closes)) return out;
 
   const fieldByN = {
@@ -108,9 +124,10 @@ export function computeStockReturns({ numerator, closes, k = 0, prevClose1d = nu
     120: 'ret120dPct',
     200: 'ret200dPct',
   };
-  const krxPrev = numPos(prevClose1d);
+  const legacyPrev = numPos(prevClose1d);
   for (const n of RETURN_HORIZONS) {
-    const ref = n === 1 && krxPrev != null ? krxPrev : refCloseAt(closes, k, n);
+    if (n === 1 && quote1d) continue;
+    const ref = n === 1 && legacyPrev != null ? legacyPrev : refCloseAt(closes, k, n);
     if (ref == null) continue;
     out[fieldByN[n]] = roundPct(num / ref - 1);
   }
@@ -121,7 +138,7 @@ export function computeStockReturns({ numerator, closes, k = 0, prevClose1d = nu
  * Cap-weighted sector return using the same numerator / refN as stocks:
  * Σ(numerator_i × shares_i) / Σ(refN_i × shares_i) − 1
  * Members with null refN (or non-positive shares/numerator) are dropped from both sides.
- * @param {Array<{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number, shares: number|null|undefined, prevClose1d?: number|null }>} members
+ * @param {Array<{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number, shares: number|null|undefined, prevClose1d?: number|null, numerator1d?: number|null }>} members
  * @returns {{
  *   chg1dPct: number|null,
  *   ret5dPct: number|null,
@@ -156,10 +173,19 @@ export function aggregateSectorReturns(members) {
     let denSum = 0;
     for (const m of members) {
       const shares = numPos(m?.shares);
+      if (shares == null) continue;
+      if (n === 1 && m != null && Object.prototype.hasOwnProperty.call(m, 'numerator1d')) {
+        const n1 = numPos(m.numerator1d);
+        const d1 = numPos(m.prevClose1d);
+        if (n1 == null || d1 == null) continue;
+        numSum += n1 * shares;
+        denSum += d1 * shares;
+        continue;
+      }
       const numerator = numPos(m?.numerator);
-      if (shares == null || numerator == null) continue;
-      const krxPrev = numPos(m?.prevClose1d);
-      const ref = n === 1 && krxPrev != null ? krxPrev : refCloseAt(m.closes, m.k ?? 0, n);
+      if (numerator == null) continue;
+      const legacyPrev = numPos(m?.prevClose1d);
+      const ref = n === 1 && legacyPrev != null ? legacyPrev : refCloseAt(m.closes, m.k ?? 0, n);
       if (ref == null) continue;
       numSum += numerator * shares;
       denSum += ref * shares;

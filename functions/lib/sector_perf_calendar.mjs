@@ -462,6 +462,7 @@ export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, ye
         k,
         shares: src.shares,
         prevClose1d: src.prevClose1d,
+        numerator1d: src.numerator1d,
       });
     }
     const agg = aggregateSectorReturns(members);
