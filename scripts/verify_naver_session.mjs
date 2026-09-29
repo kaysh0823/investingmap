@@ -119,7 +119,8 @@ assert(mobile.high === 1721000, `mobile high: ${mobile.high}`);
 assert(mobile.low === 1576000, `mobile low: ${mobile.low}`);
 assert(mobile.volume === 9397942, `mobile volume: ${mobile.volume}`);
 assert(mobile.last == null, `mobile last must not use dealTrend: ${mobile.last}`);
-assert(mobile.sessionClose === 1691000, `mobile sessionClose: ${mobile.sessionClose}`);
+assert(mobile.prevCloseFromMobile === 1691000, `mobile prevCloseFromMobile: ${mobile.prevCloseFromMobile}`);
+assert(mobile.sessionClose == null, 'mobile must not expose sessionClose');
 assert(mobile.prevClose === 1500000, `mobile prevClose: ${mobile.prevClose}`);
 
 const basic = parseNaverBasicQuote({
@@ -222,7 +223,7 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
   assert(nonTrading.nonTradingDay === true, 'tradeDate=yesterday → nonTradingDay=true');
 }
 
-// mobile sessionClose must not fill merged.close while market is open
+// mobile prevCloseFromMobile must not fill merged.close or last
 {
   let merged = emptyQuote();
   merged = mergeNaverIntoQuote(
@@ -235,21 +236,42 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     { close: null, last: null, marketClosed: false },
     { preferNaverLast: true },
   );
-  assert(merged.sessionClose === 253500, `merged.sessionClose: ${merged.sessionClose}`);
+  assert(merged.prevCloseFromMobile === 253500, `merged.prevCloseFromMobile: ${merged.prevCloseFromMobile}`);
+  assert(merged.sessionClose == null, 'legacy sessionClose is not stored');
   assert(merged.close == null, `merged.close must stay null: ${merged.close}`);
+  assert(merged.last == null, `merged.last must stay null: ${merged.last}`);
 }
 
-// sessionClose must never become _sessionClose (NXT / mobile integrated close)
+// prevCloseFromMobile must never become the stored last after the close
 {
-  const row = toSupabaseRow(
+  const today = kstDateParts(new Date());
+  const todayDash = `${today.year}-${String(today.month).padStart(2, '0')}-${String(today.day).padStart(2, '0')}`;
+  const stale = toSupabaseRow(
     '005930',
-    { close: null, sessionClose: 253500, last: 250000 },
+    { close: 270000, prevCloseFromMobile: 270000, last: 250000, basicLast: 272500, basicTradeDate: '1999-01-01' },
     null,
     new Date().toISOString(),
     false,
     true,
   );
-  assert(row._sessionClose === null, `_sessionClose must be null, got ${row._sessionClose}`);
+  assert(stale.last == null, `stale basic trade date must not set last, got ${stale.last}`);
+  assert(stale._sessionClose == null, '_sessionClose must not be stored');
+  const row = toSupabaseRow(
+    '005930',
+    {
+      close: 270000,
+      prevCloseFromMobile: 270000,
+      last: 999,
+      basicLast: 272500,
+      basicTradeDate: todayDash,
+    },
+    null,
+    new Date().toISOString(),
+    false,
+    true,
+  );
+  assert(row.last === 272500, `after-close last is basic.last, got ${row.last}`);
+  assert(row.prev_close == null, 'prevCloseFromMobile is not prev_close');
   assert(row.session_open === undefined, 'B-path must omit session_open');
   assert(row.session_high === undefined, 'B-path must omit session_high');
   assert(row.session_low === undefined, 'B-path must omit session_low');
@@ -272,19 +294,29 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
   assert(liveRow._sessionOpen === 250000, 'A-path keeps _sessionOpen for history helpers');
 }
 
-// resolveRegularSessionClose never uses last / marketClosed marker
+// Today's regular close is basic.last on that trade date. NXT last and mobile prev are ignored.
 {
   assert(
-    resolveRegularSessionClose({ _sessionClose: null, last: 253500, _naverMarketClosed: true }) === null,
-    '장마감 last must not become regular close',
+    resolveRegularSessionClose({
+      last: 253500,
+      prevCloseFromMobile: 270000,
+      basicLast: 272500,
+      basicTradeDate: '2026-09-28',
+    }, '2026-09-29') === null,
+    'basic.last from another day is not today close',
   );
   assert(
-    resolveRegularSessionClose({ _sessionClose: 252500, last: 253500 }) === 252500,
-    '_sessionClose preferred',
+    resolveRegularSessionClose({
+      last: 999,
+      prevCloseFromMobile: 270000,
+      basicLast: 272500,
+      basicTradeDate: '2026-09-29',
+    }, '2026-09-29') === 272500,
+    'basic.last on the session date',
   );
 }
 
-// Session-close lock: existing mdcstat close wins; volume may refresh
+// mdcstat rows may be overwritten. Only apihub (T+1) stays locked.
 {
   const existing = new Map([
     [
@@ -300,29 +332,31 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
       },
     ],
   ]);
-  const locked = applySessionCloseLock(
-    [
-      {
-        ticker: '005930',
-        trade_date: '2026-03-20',
-        open: 271000,
-        high: 276000,
-        low: 270000,
-        close: 274500,
-        volume: 12_500_000,
-        source: 'mdcstat',
-      },
-    ],
-    existing,
+  const incoming = {
+    ticker: '005930',
+    trade_date: '2026-03-20',
+    open: 271000,
+    high: 276000,
+    low: 270000,
+    close: 274500,
+    volume: 12_500_000,
+    source: 'mdcstat',
+  };
+  const overwritten = applySessionCloseLock([incoming], existing);
+  assert(overwritten.conflicts === 0, `mdcstat overwrite is not a conflict: ${overwritten.conflicts}`);
+  assert(overwritten.rows[0].close === 274500, `mdcstat close updated: ${overwritten.rows[0].close}`);
+  assert(overwritten.rows[0].open === 271000, `mdcstat open updated: ${overwritten.rows[0].open}`);
+  assert(overwritten.changes.some((c) => c.ticker === '005930' && c.field === 'close' && c.from === 274000 && c.to === 274500), 'close change logged');
+
+  const apihub = applySessionCloseLock(
+    [incoming],
+    new Map([['005930', { ...existing.get('005930'), source: 'apihub' }]]),
   );
-  assert(locked.conflicts === 1, `close conflict count: ${locked.conflicts}`);
-  assert(locked.rows.length === 1, 'one merged row');
-  assert(locked.rows[0].close === 274000, `locked close: ${locked.rows[0].close}`);
-  assert(locked.rows[0].open === 270000, `locked open: ${locked.rows[0].open}`);
-  assert(locked.rows[0].high === 275000, `locked high: ${locked.rows[0].high}`);
-  assert(locked.rows[0].low === 269000, `locked low: ${locked.rows[0].low}`);
-  assert(locked.rows[0].volume === 12_500_000, `volume refresh: ${locked.rows[0].volume}`);
-  assert(locked.rows[0].source === 'mdcstat', 'source stays locked');
+  assert(apihub.conflicts === 1, `apihub close conflict count: ${apihub.conflicts}`);
+  assert(apihub.rows[0].close === 274000, `apihub close stays: ${apihub.rows[0].close}`);
+  assert(apihub.rows[0].open === 270000, `apihub open stays: ${apihub.rows[0].open}`);
+  assert(apihub.rows[0].volume === 12_500_000, `apihub volume refresh: ${apihub.rows[0].volume}`);
+  assert(apihub.rows[0].source === 'apihub', 'apihub source stays locked');
 
   // conflict ≥1% of hub → warning only, never exit 3 (chain continues)
   const action = closeConflictChainAction(3, 100); // 3%
@@ -359,8 +393,18 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     simToday = nextYmd(simToday);
   }
   const refs = { ...refsFile, recentDd: prevDd };
-  const naverPrev = { tradeDate: prevDd, last: closes[L - 1], sessionClose: closes[L - 1] + 999 };
-  const naverToday = { tradeDate: simToday, last: closes[L - 1] + 5000, sessionClose: closes[L - 1] + 999 };
+  const naverPrev = {
+    tradeDate: prevDd,
+    last: closes[L - 1],
+    basicLast: closes[L - 1],
+    basicTradeDate: dash(prevDd),
+    prevCloseFromMobile: closes[L - 1] - 5000,
+  };
+  const naverToday = {
+    tradeDate: simToday,
+    last: closes[L - 1] + 5000,
+    prevCloseFromMobile: closes[L - 1] - 5000,
+  };
 
   // 08:30 pre-open → official N-day. 1D is Naver only; missing prevClose → null (no refs fallback).
   {
@@ -413,8 +457,7 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     );
   }
 
-  // 15:45 B: numerator is naver.close, denominator is naver.prevClose.
-  // History overrideLast and NXT sessionClose must not become the 1D price.
+  // 15:45 B: numerator is basic.last for today. prevCloseFromMobile and NXT last are not.
   {
     const now = kstAt(dash(simToday), 15, 45);
     const missing = stockReturnFieldsFromRefs(
@@ -425,10 +468,17 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
       closes[L - 1],
       now,
     );
-    assert(missing.chg_1d_pct == null, `B without regular close must be null, got ${missing.chg_1d_pct}`);
+    assert(missing.chg_1d_pct == null, `B without basic.last must be null, got ${missing.chg_1d_pct}`);
     const regularClose = closes[L - 1] + 1000;
     const prevClose = closes[L - 1] - 2500;
-    const naverClosed = { ...naverToday, close: regularClose, prevClose };
+    const naverClosed = {
+      ...naverToday,
+      close: prevClose,
+      prevCloseFromMobile: prevClose,
+      basicLast: regularClose,
+      basicTradeDate: dash(simToday),
+      prevClose,
+    };
     const ok = stockReturnFieldsFromRefs(
       '005930',
       naverClosed,
@@ -442,12 +492,37 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
       closes,
       k: 1,
       prevClose1d: prevClose,
+      numerator1d: regularClose,
     });
-    assert(ok.chg_1d_pct != null, 'B with regular close');
+    assert(ok.chg_1d_pct != null, 'B with basic.last');
     assert(
       Math.abs(ok.chg_1d_pct - expected.chg1dPct) <= 0.01,
       `B close chg=${ok.chg_1d_pct} vs ${expected.chg1dPct}`,
     );
+  }
+
+  // Press fixture: basic.last 272500, mobile prev 270000, prev_close 270000 → +0.93.
+  {
+    const now = kstAt(dash(simToday), 18, 0);
+    const fields = stockReturnFieldsFromRefs(
+      '005930',
+      {
+        tradeDate: simToday,
+        last: 999999,
+        close: 270000,
+        prevCloseFromMobile: 270000,
+        sessionClose: 270000,
+        basicLast: 272500,
+        basicTradeDate: dash(simToday),
+        prevClose: 270000,
+        marketClosed: true,
+      },
+      refs,
+      false,
+      null,
+      now,
+    );
+    assert(fields.chg_1d_pct === 0.93, `after-close 1D must be +0.93, got ${fields.chg_1d_pct}`);
   }
 }
 

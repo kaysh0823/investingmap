@@ -342,7 +342,7 @@ export async function fetchNaverSiseQuote(code, init) {
 export function parseNaverMobileIntegration(json) {
   const out = {
     last: null,
-    sessionClose: null,
+    prevCloseFromMobile: null,
     prevClose: null,
     open: null,
     high: null,
@@ -389,8 +389,8 @@ export function parseNaverMobileIntegration(json) {
 
   const dt = json.dealTrendInfos;
   if (Array.isArray(dt) && dt[0] && dt[0].closePrice != null) {
-    // Recent session close only — never use as live last (stale after open).
-    out.sessionClose = parseKoreanNumber(dt[0].closePrice);
+    // dealTrend closePrice is the previous regular close, not today's close.
+    out.prevCloseFromMobile = parseKoreanNumber(dt[0].closePrice);
     if (out.volume == null && dt[0].accumulatedTradingVolume != null) {
       out.volume = parseKoreanNumber(dt[0].accumulatedTradingVolume);
     }
@@ -495,7 +495,7 @@ export async function fetchNaverBasicQuote(code, init) {
 
 /**
  * Merge sources with live-last priority: basic → PC sise → mobile integration.
- * Mobile dealTrend close is sessionClose only (never live last).
+ * Mobile dealTrend close is prevCloseFromMobile only (previous close, never today's numerator).
  */
 export async function fetchNaverQuote(code, init) {
   const [basicR, siseR, mobileR] = await Promise.allSettled([
@@ -545,8 +545,9 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   if (naver.high != null && (preferLast || out.high == null)) out.high = naver.high;
   if (naver.low != null && (preferLast || out.low == null)) out.low = naver.low;
   if (naver.close != null && (preferLast || out.close == null)) out.close = naver.close;
-  if (naver.sessionClose != null && (preferLast || out.sessionClose == null)) {
-    out.sessionClose = naver.sessionClose;
+  const mobilePrev = naver.prevCloseFromMobile ?? naver.sessionClose;
+  if (mobilePrev != null && (preferLast || out.prevCloseFromMobile == null)) {
+    out.prevCloseFromMobile = mobilePrev;
   }
   if (naver.volume != null && (preferLast || out.volume == null)) out.volume = naver.volume;
   if (naver.chg1dPct != null && (preferLast || out.chg1dPct == null)) out.chg1dPct = naver.chg1dPct;
@@ -593,7 +594,7 @@ export function emptyQuote() {
     high: null,
     low: null,
     close: null,
-    sessionClose: null,
+    prevCloseFromMobile: null,
     volume: null,
     high52w: null,
     low52w: null,

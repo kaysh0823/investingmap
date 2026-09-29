@@ -162,7 +162,7 @@ async function fetchNaverQuotes(codes) {
           sample005930 = {
             siseLast: sources.siseQuote?.last ?? null,
             mobileLast: sources.mobileQuote?.last ?? null,
-            mobileSessionClose: sources.mobileQuote?.sessionClose ?? null,
+            prevCloseFromMobile: sources.mobileQuote?.prevCloseFromMobile ?? null,
             basicLast: sources.basicQuote?.last ?? null,
             siseTradeDate: sources.siseQuote?.tradeDate ?? null,
             mobileTradeDate: sources.mobileQuote?.tradeDate ?? null,
@@ -172,6 +172,8 @@ async function fetchNaverQuotes(codes) {
           };
         }
         const { _sources, ...clean } = row.q;
+        clean.basicLast = sources.basicQuote?.last ?? null;
+        clean.basicTradeDate = sources.basicQuote?.tradeDate ?? null;
         quotes[row.code] = clean;
         ok += 1;
       } else {
@@ -196,7 +198,7 @@ async function fetchNaverQuotes(codes) {
   if (sample005930) {
     console.log(
       `  005930 sample: sise.last=${sample005930.siseLast} basic.last=${sample005930.basicLast} `
-      + `mobile.last=${sample005930.mobileLast} mobile.sessionClose=${sample005930.mobileSessionClose} `
+      + `mobile.last=${sample005930.mobileLast} mobile.prevCloseFromMobile=${sample005930.prevCloseFromMobile} `
       + `sise.tradeDate=${sample005930.siseTradeDate} basic.tradeDate=${sample005930.basicTradeDate} `
       + `merged.last=${sample005930.mergedLast} merged.tradeDate=${sample005930.mergedTradeDate}`,
     );
@@ -239,6 +241,21 @@ async function loadKrxQuotes(authKey, supabase) {
 function compactYmdLocal(v) {
   const s = String(v || '').replace(/-/g, '');
   return /^\d{8}$/.test(s) ? s : '';
+}
+
+/**
+ * Today's regular-session close is basic.last only when basic.tradeDate is that
+ * trading day. prevCloseFromMobile (mobile dealTrend) is the previous close.
+ * @param {object|null|undefined} naver
+ * @param {string} sessionYmd YYYYMMDD or YYYY-MM-DD
+ * @returns {number|null}
+ */
+export function basicRegularClose(naver, sessionYmd) {
+  const td = compactYmdLocal(naver?.basicTradeDate);
+  const session = compactYmdLocal(sessionYmd);
+  if (!td || td !== session) return null;
+  const last = Number(naver?.basicLast);
+  return Number.isFinite(last) && last > 0 ? last : null;
 }
 
 /**
@@ -295,7 +312,6 @@ export function stockReturnFieldsFromRefs(
   const naverPrev = naver?.prevClose != null && Number(naver.prevClose) > 0
     ? Number(naver.prevClose)
     : null;
-  const regularClose = naver?.close != null && Number(naver.close) > 0 ? Number(naver.close) : null;
   const naverLast = naver?.last != null && Number(naver.last) > 0 ? Number(naver.last) : null;
 
   let numerator = null;
@@ -311,8 +327,6 @@ export function stockReturnFieldsFromRefs(
       ? sessionsSince(refsRecentDd, anchorDd, tradingDates)
       : 0;
   } else if (closeEligible) {
-    // B N-day: regular-session 종가. Never history, never NXT last/sessionClose.
-    numerator = regularClose;
     anchorDd = todayDd;
     k = sessionsSince(refsRecentDd, todayDd, tradingDates);
   } else {
@@ -322,12 +336,15 @@ export function stockReturnFieldsFromRefs(
     k = 0;
   }
 
-  // 1D is Naver-only. Trade date must be the anchor day or both inputs stay null.
+  // 1D denominator is prev_close only on the anchor session.
+  // After the close the numerator is basic.last for that trading day, never prevCloseFromMobile.
+  const sessionClosePx = basicRegularClose(naver, sessionOpen ? todayDd : anchorDd);
+  if (!sessionOpen && closeEligible) numerator = sessionClosePx;
   const onAnchor = !!anchorDd && liveTradeDd === anchorDd;
   const prevClose1d = onAnchor ? naverPrev : null;
   const numerator1d = sessionOpen
     ? (overrideLast != null && Number(overrideLast) > 0 ? Number(overrideLast) : naverLast)
-    : (onAnchor ? (regularClose ?? naverLast) : null);
+    : (onAnchor ? sessionClosePx : null);
 
   const returns = computeStockReturns({
     numerator,
@@ -348,11 +365,11 @@ export function stockReturnFieldsFromRefs(
 
 export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null, historyPrevClose = null) {
   // During the auction, last is the Naver current price.
-  // After the close, last is the regular-session 종가 (naver.close), never NXT/aftermarket last.
+  // After the close, last is basic.last for today's trade date. Never NXT last or prevCloseFromMobile.
   // prev_close stays Naver prevClose. trade_date is not on this payload, so post_close cannot replace it.
   const liveLast = naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
-  const regularClose = naver?.close != null && Number(naver.close) > 0 ? Number(naver.close) : null;
-  const last = regularSession ? liveLast : regularClose;
+  const sessionClosePx = basicRegularClose(naver, kstYmd());
+  const last = regularSession ? liveLast : sessionClosePx;
 
   const prevClose = naver?.prevClose != null && Number.isFinite(Number(naver.prevClose)) && Number(naver.prevClose) > 0
     ? Number(naver.prevClose)
@@ -407,11 +424,12 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
     regular_session: regularSession,
     // In-memory only — stripped before stock_quotes_latest upsert; used for
     // session-close history when KRX day OHLC is not published yet.
-    // _sessionClose is regular-session close (never aftermarket last).
+    // _basicLast is today's basic.last. prevCloseFromMobile is not a close.
     _sessionOpen: sessionOpen,
     _sessionHigh: sessionHigh,
     _sessionLow: sessionLow,
-    _sessionClose: naver?.close ?? null,
+    _basicLast: naver?.basicLast ?? null,
+    _basicTradeDate: naver?.basicTradeDate ?? null,
     _sessionVolume: sessionVolume,
     _naverMarketClosed: naver?.marketClosed ?? null,
   };
@@ -436,6 +454,8 @@ function stripSessionOhlcvFields(row) {
     _sessionHigh,
     _sessionLow,
     _sessionClose,
+    _basicLast,
+    _basicTradeDate,
     _sessionVolume,
     _naverMarketClosed,
     ...rest
@@ -802,15 +822,23 @@ async function fetchHistoryRowsForDate(supabaseUrl, serviceKey, tradeDate) {
   return byTicker;
 }
 
-/** Sources whose close is authoritative for the session (first 15:40 KRX write). */
-export const LOCKED_SESSION_CLOSE_SOURCES = new Set(['mdcstat', 'apihub']);
+/** T+1 confirmed bars. Same-day mdcstat rows stay replaceable. */
+export const LOCKED_SESSION_CLOSE_SOURCES = new Set(['apihub']);
+
+const OHLC_FIELDS = ['open', 'high', 'low', 'close'];
+
+function ohlcNum(value) {
+  if (value == null || value === '') return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
 
 /**
- * If (ticker, trade_date) already has source ∈ {mdcstat, apihub} and the new
- * close differs, keep OHLC from the existing row and update volume only.
+ * source=apihub keeps its OHLC (volume may refresh).
+ * source=mdcstat is overwritten by a newer mdcstat or apihub bar.
  * @param {Array<object>} incomingRows
  * @param {Map<string, object>|Record<string, object>} existingByTicker
- * @returns {{ rows: Array<object>, conflicts: number }}
+ * @returns {{ rows: Array<object>, conflicts: number, changes: Array<{ ticker: string, field: string, from: number|null, to: number|null }> }}
  */
 export function applySessionCloseLock(incomingRows, existingByTicker) {
   const lookup = (ticker) => {
@@ -822,19 +850,18 @@ export function applySessionCloseLock(incomingRows, existingByTicker) {
     return null;
   };
   const rows = [];
+  const changes = [];
   let conflicts = 0;
   for (const row of incomingRows || []) {
     const ticker = normalizeTicker(row?.ticker) || row?.ticker;
     const existing = lookup(ticker);
-    const lockedSource = existing && LOCKED_SESSION_CLOSE_SOURCES.has(String(existing.source || ''));
-    const existingClose = existing?.close != null ? Number(existing.close) : null;
-    const incomingClose = row?.close != null ? Number(row.close) : null;
+    const existingSource = String(existing?.source || '');
+    const existingClose = ohlcNum(existing?.close);
+    const incomingClose = ohlcNum(row?.close);
     if (
-      lockedSource
+      existingSource === 'apihub'
       && existingClose != null
-      && Number.isFinite(existingClose)
       && incomingClose != null
-      && Number.isFinite(incomingClose)
       && existingClose !== incomingClose
     ) {
       conflicts += 1;
@@ -847,13 +874,22 @@ export function applySessionCloseLock(incomingRows, existingByTicker) {
         volume: row.volume,
         mcap_won: existing.mcap_won ?? row.mcap_won,
         turnover_won: existing.turnover_won ?? row.turnover_won,
-        source: existing.source,
+        source: 'apihub',
       });
       continue;
     }
+    if (existingSource === 'mdcstat') {
+      for (const field of OHLC_FIELDS) {
+        const from = ohlcNum(existing[field]);
+        const to = ohlcNum(row[field]);
+        if (from === to) continue;
+        if (from == null && to == null) continue;
+        changes.push({ ticker, field, from, to });
+      }
+    }
     rows.push(row);
   }
-  return { rows, conflicts };
+  return { rows, conflicts, changes };
 }
 
 /**
@@ -923,13 +959,15 @@ async function repairHistoryCoverageForDate(
  * Persist today's regular-session OHLC into stock_price_history once the
  * regular auction has ended (15:30+ clock) or Naver reports 장마감.
  * Source priority (regular close only — never Naver/NXT last):
- *   (a) apihub fetchMarketDay
- *   (b) data.krx MDCSTAT01501
+ *   (a) apihub fetchMarketDay (T+1 confirmed; locks OHLC)
+ *   (b) data.krx MDCSTAT01501 (same-day; later mdcstat/apihub may replace it)
+ * post_close / post_close_retry always re-query MDCSTAT so a 15:40 print can be corrected.
  * Both empty → HISTORY_PENDING (no row write).
- * Existing source ∈ {mdcstat,apihub} with a different close → volume-only
+ * Existing source=apihub with a different close → volume-only
  * update (CLOSE_CONFLICT warning); chain continues (exit 3 only for HISTORY_PENDING).
  *
  * @param {boolean} sessionClosedForHistory naverMarketClosed || regularSessionEnded
+ * @param {string} [syncSlot]
  */
 async function upsertSessionCloseHistory(
   quoteRows,
@@ -939,6 +977,7 @@ async function upsertSessionCloseHistory(
   serviceKey,
   authKey,
   env = process.env,
+  syncSlot = '',
 ) {
   if (!tradeDateDash) {
     console.log('  history session close: skip (no tradeDate)');
@@ -990,11 +1029,15 @@ async function upsertSessionCloseHistory(
     );
   }
 
-  // (b) data.krx [12001] 전종목 시세 — regular-session close (T+0)
-  if (!byCode) {
+  // (b) data.krx [12001] 전종목 시세 — regular-session close (T+0).
+  // post_close always re-queries MDCSTAT. apihub (T+1) still wins when it has rows;
+  // otherwise the fresh MDCSTAT bar replaces the 15:40 mdcstat print.
+  const reconfirmMdc = syncSlot === 'post_close' || syncSlot === 'post_close_retry';
+  if (!byCode || reconfirmMdc) {
     try {
       const dailyMap = await fetchKrxDailyOhlc(basDd, env);
-      if (dailyMap && dailyMap.size > 0) {
+      const mdcRows = dailyMap && dailyMap.size > 0 ? dailyMap.size : 0;
+      if (mdcRows > 0 && source !== 'apihub') {
         byCode = new Map();
         for (const [ticker, fields] of dailyMap) {
           const t = normalizeTicker(ticker) || ticker;
@@ -1002,14 +1045,12 @@ async function upsertSessionCloseHistory(
           if (t && krxRow) byCode.set(t, krxRow);
         }
         source = 'mdcstat';
-        console.log(
-          `  history session close ${tradeDateDash}: source=mdcstat/MDCSTAT01501 rows=${byCode.size}`,
-        );
-      } else {
-        console.log(
-          `  history session close ${tradeDateDash}: data.krx empty`,
-        );
       }
+      console.log(
+        `  history session close ${tradeDateDash}: MDCSTAT01501 rows=${mdcRows}`
+        + (reconfirmMdc ? ' (post_close re-query)' : '')
+        + (source === 'apihub' ? ' — keep apihub' : source === 'mdcstat' ? ' source=mdcstat' : ''),
+      );
     } catch (e) {
       console.warn(`  history session close data.krx failed: ${e.message || e}`);
     }
@@ -1073,9 +1114,13 @@ async function upsertSessionCloseHistory(
     tradeDateDash,
   );
   const locked = applySessionCloseLock(rows, existingByTicker);
+  for (const change of locked.changes || []) {
+    console.log(`  history OHLC ${change.ticker} ${change.field} ${change.from}→${change.to}`);
+  }
   if (locked.conflicts > 0) {
     console.warn(`CLOSE_CONFLICT ${locked.conflicts}`);
   }
+  logBasicLastGap(locked.rows, quoteRows, tradeDateDash);
 
   const result = await upsertHistoryRows(locked.rows, supabaseUrl, serviceKey);
   console.log(
@@ -1106,14 +1151,50 @@ async function upsertSessionCloseHistory(
 }
 
 /**
- * @deprecated Naver last is never a regular-session close. Kept for tests only:
- * returns _sessionClose when present; never q.last.
+ * Confirmed history close vs basic.last for quotes whose basic trade date is this session.
+ * A handful of mismatches (about 5/643) is normal.
+ * @param {Array<{ ticker: string, close: number }>} historyRows
+ * @param {Array<object>} quoteRows
+ * @param {string} tradeDateDash
  */
-export function resolveRegularSessionClose(q) {
-  if (q._sessionClose != null && Number.isFinite(q._sessionClose) && q._sessionClose > 0) {
-    return q._sessionClose;
+export function logBasicLastGap(historyRows, quoteRows, tradeDateDash) {
+  const session = compactYmdLocal(tradeDateDash);
+  const byTicker = new Map();
+  for (const row of quoteRows || []) {
+    if (row?.ticker) byTicker.set(normalizeTicker(row.ticker) || row.ticker, row);
   }
-  return null;
+  let compared = 0;
+  let mismatch = 0;
+  for (const row of historyRows || []) {
+    const q = byTicker.get(normalizeTicker(row.ticker) || row.ticker);
+    if (!q) continue;
+    if (compactYmdLocal(q._basicTradeDate || q.basicTradeDate) !== session) continue;
+    const basic = Number(q._basicLast ?? q.basicLast);
+    const close = Number(row.close);
+    if (!(basic > 0) || !(close > 0)) continue;
+    compared += 1;
+    if (close !== basic) mismatch += 1;
+  }
+  const normal = compared === 0 || mismatch <= 5;
+  console.log(
+    `  close vs basic.last mismatch ${mismatch}/${compared}`
+    + (normal ? ' (정상)' : ''),
+  );
+  return { mismatch, compared };
+}
+
+/**
+ * Today's regular close is basic.last when basic.tradeDate matches that session.
+ * prevCloseFromMobile and sise close are not used.
+ */
+export function resolveRegularSessionClose(q, sessionYmd) {
+  return basicRegularClose(
+    {
+      basicLast: q?.basicLast ?? q?._basicLast,
+      basicTradeDate: q?.basicTradeDate ?? q?._basicTradeDate,
+    },
+    sessionYmd,
+  );
 }
 
 async function fetchHistoryMaxTradeDate(supabaseUrl, serviceKey, sampleTicker = '005930') {
@@ -2296,15 +2377,18 @@ async function main() {
     + ` sessionOpen=${sessionOpenForReturns} slot=${syncSlot} refs=${refsForReturns ? 'ok' : 'null'}`,
   );
 
-  // Post-15:30: last becomes the regular-session close. Do not touch prev_close or trade_date.
-  // NXT/aftermarket last is never written. History close is not written onto last.
+  // Post-15:30: last becomes basic.last for today's trade date. Do not touch prev_close or trade_date.
+  // prevCloseFromMobile and NXT/aftermarket last are never written.
   if (!sessionOpenForReturns && !skipLatestAndIntraday) {
-    let fromSessionClose = 0;
+    let fromBasic = 0;
     let keptPrev = 0;
+    const todayDd = kstYmd();
     for (const row of rows) {
-      if (row._sessionClose != null && Number.isFinite(Number(row._sessionClose)) && Number(row._sessionClose) > 0) {
-        row.last = Number(row._sessionClose);
-        fromSessionClose += 1;
+      const naver = naverResult.quotes[row.ticker];
+      const basicClose = basicRegularClose(naver, todayDd);
+      if (basicClose != null) {
+        row.last = basicClose;
+        fromBasic += 1;
       } else {
         const prev = prevLastByTicker.get(row.ticker);
         if (prev?.last != null && Number.isFinite(Number(prev.last))) {
@@ -2330,8 +2414,8 @@ async function main() {
       row.ret_200d_pct = rf.ret_200d_pct;
     }
     console.log(
-      `  post-close last guard: sessionClose=${fromSessionClose} keptPrev=${keptPrev}`
-      + ' (no history close, no Naver aftermarket last)',
+      `  post-close last guard: basicLast=${fromBasic} keptPrev=${keptPrev}`
+      + ' (no prevCloseFromMobile, no Naver aftermarket last)',
     );
   }
 
@@ -2359,15 +2443,31 @@ async function main() {
     + `(naverMarketClosed=${naverMarketClosed} regularSessionEnded=${regularSessionEnded}) `
     + `historyTradeDate=${historyTradeDateDash}`,
   );
-  const histResult = await upsertSessionCloseHistory(
-    rows,
-    historyTradeDateDash,
-    sessionClosedForHistory,
-    supabaseUrl,
-    serviceKey,
-    authKey,
-    env,
-  );
+  const HISTORY_WRITE_SLOTS = new Set(['regular_close', 'post_close', 'post_close_retry']);
+  let histResult = {
+    upserted: 0,
+    skipped: true,
+    byCode: null,
+    source: null,
+    pending: false,
+    conflicts: 0,
+  };
+  if (!HISTORY_WRITE_SLOTS.has(syncSlot)) {
+    console.log(
+      `  history session close: skip (slot=${syncSlot}; intraday does not write stock_price_history)`,
+    );
+  } else {
+    histResult = await upsertSessionCloseHistory(
+      rows,
+      historyTradeDateDash,
+      sessionClosedForHistory,
+      supabaseUrl,
+      serviceKey,
+      authKey,
+      env,
+      syncSlot,
+    );
+  }
   if (histResult.pending && (syncSlot === 'post_close' || syncSlot === 'post_close_retry')) {
     console.error(
       'HISTORY_PENDING on post_close — skip RS/refs/volatility chain (exit 3)',

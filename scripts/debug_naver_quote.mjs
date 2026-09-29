@@ -45,7 +45,7 @@ async function probeHttp(label, url, { html = false, parse } = {}) {
     console.log(
       `  last=${q.last} prevClose=${q.prevClose} chg1dPct=${q.chg1dPct} `
       + `tradeDate=${q.tradeDate} marketClosed=${q.marketClosed}`
-      + (q.sessionClose != null ? ` sessionClose=${q.sessionClose}` : ''),
+      + (q.prevCloseFromMobile != null ? ` prevCloseFromMobile=${q.prevCloseFromMobile}` : ''),
     );
     return q;
   } catch (e) {

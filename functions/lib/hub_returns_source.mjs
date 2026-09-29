@@ -3,9 +3,9 @@
  *
  * Numerator modes (regular auction only — never aftermarket NXT):
  *   A live     — 09:00–15:30: stock_quotes_latest.last (Naver current)
- *   B close    — weekday ≥15:30: Naver regular-session close (not NXT, not history)
+ *   B close    — weekday ≥15:30: basic.last for that trading day (not NXT, not prevCloseFromMobile, not history)
  *   C official — pre-open / holiday / weekend / refs tip (k=0) for N-day
- * 1D is always the Naver quote on anchorDd (last / session close over prev_close).
+ * 1D is basic.last (stored last) over prev_close on anchorDd. prevCloseFromMobile is never the numerator.
  * Missing either 1D input → null. History is not a 1D fallback.
  */
 
@@ -369,7 +369,6 @@ function rowsFromQuoteOverrides(quoteRows) {
     rows.set(t, {
       last: numOrNull(q.last),
       prevClose: numOrNull(q.prev_close ?? q.prevClose),
-      sessionClose: numOrNull(q._sessionClose ?? q.sessionClose),
       asOf: asOf ? String(asOf) : null,
       tradeDd,
     });
@@ -386,10 +385,11 @@ function rowsFromQuoteOverrides(quoteRows) {
 
 /**
  * 1D inputs from stock_quotes_latest. Independent of the N-day numerator.
- * live: last. close/official: session close or last only when trade_date is anchorDd.
+ * live: last. close/official: stored last (basic.last) only when trade_date is anchorDd.
+ * prevCloseFromMobile is the previous close and is never the numerator.
  * prev_close only when trade_date is anchorDd. No history fallback.
  * @param {'live'|'close'|'official'} numeratorMode
- * @param {{ last?: number|null, prevClose?: number|null, sessionClose?: number|null, tradeDd?: string }|undefined} row
+ * @param {{ last?: number|null, prevClose?: number|null, tradeDd?: string }|undefined} row
  * @param {string} anchorDd
  */
 function quoteDayReturn(numeratorMode, row, anchorDd) {
@@ -400,7 +400,7 @@ function quoteDayReturn(numeratorMode, row, anchorDd) {
   if (numeratorMode === 'live') {
     numerator1d = numOrNull(row?.last);
   } else if (onAnchor) {
-    numerator1d = numOrNull(row?.sessionClose) ?? numOrNull(row?.last);
+    numerator1d = numOrNull(row?.last);
   }
   return { numerator1d, prevClose1d };
 }
@@ -681,7 +681,6 @@ export async function loadReturnSource({
     const row = rows.get(t);
     const rowLast = numOrNull(row?.last);
     const rowTradeDd = compactYmd(row?.tradeDd);
-    const sessionClose = numOrNull(row?.sessionClose);
     const onAnchor = !!anchorDd && rowTradeDd === anchorDd;
     let numerator = null;
     let displayLast = officialClose;
@@ -690,10 +689,10 @@ export async function loadReturnSource({
       displayLast = rowLast ?? officialClose;
     } else if (numeratorMode === 'official') {
       numerator = officialClose;
-      displayLast = (onAnchor ? (sessionClose ?? rowLast) : null) ?? officialClose;
+      displayLast = (onAnchor ? rowLast : null) ?? officialClose;
     } else {
-      // B close N-day numerator: regular-session close, else today's last. Never history.
-      const closePx = sessionClose ?? (rowTradeDd === todayDd ? rowLast : null);
+      // B close N-day numerator: stored last for today (basic.last). Never prevCloseFromMobile.
+      const closePx = rowTradeDd === todayDd ? rowLast : null;
       if (closePx != null) {
         numerator = closePx;
         displayLast = closePx;

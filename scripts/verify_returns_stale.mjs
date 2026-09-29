@@ -82,6 +82,8 @@ assert.equal(sectorJu.chg1dPct, 6.22);
         ticker: '005930',
         last: 272500,
         prev_close: 270000,
+        sessionClose: 270000,
+        prevCloseFromMobile: 270000,
         trade_date: '2026-09-29',
         as_of: '2026-09-29T15:30:00+09:00',
       },
