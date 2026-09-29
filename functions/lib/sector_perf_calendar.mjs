@@ -461,6 +461,7 @@ export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, ye
         closes: src.closes,
         k,
         shares: src.shares,
+        prevClose1d: src.prevClose1d,
       });
     }
     const agg = aggregateSectorReturns(members);
@@ -477,6 +478,7 @@ export async function buildSectorPerfCalendarFromEnv(hubIndex, env, sectorId, ye
       anchorDd: source.meta?.anchorDd,
       refsRecentDd: source.meta?.refsRecentDd,
       k: source.meta?.k,
+      refsStale: !!source.meta?.refsStale,
       dataVersion: source.meta?.dataVersion,
       refsEtag: source.meta?.refsEtag,
     };

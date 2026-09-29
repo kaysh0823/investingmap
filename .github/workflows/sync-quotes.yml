@@ -396,6 +396,24 @@ jobs:
             echo "skip verify:views for mid-session intraday (KST=$KST_HM)"
           fi
 
+      - name: Confirm Cloudflare published return refs
+        if: >
+          steps.fresh.outputs.skip != 'true' &&
+          steps.slot.outputs.chain_slot == 'post_close' &&
+          steps.sync_quotes.outputs.history_pending != 'true' &&
+          steps.refs.outputs.skipped != 'true'
+        run: |
+          set -euo pipefail
+          EXPECT="$(node --input-type=module -e "import fs from 'fs'; const j=JSON.parse(fs.readFileSync('data/hub_return_refs.json','utf8')); process.stdout.write(String(j.recentDd||''))")"
+          echo "expect recentDd=$EXPECT — waiting 5 minutes for Cloudflare"
+          sleep 300
+          LIVE="$(curl -fsS --max-time 30 https://investingmap.kr/data/hub_return_refs.json | node --input-type=module -e "let s=''; process.stdin.on('data',d=>s+=d); process.stdin.on('end',()=>{ const j=JSON.parse(s); process.stdout.write(String(j.recentDd||'')); })")"
+          echo "live recentDd=$LIVE"
+          if [ "$LIVE" != "$EXPECT" ]; then
+            echo "::error::Cloudflare hub_return_refs recentDd=$LIVE expected=$EXPECT (deploy failed or stale)"
+            exit 1
+          fi
+
       # Surface HISTORY_PENDING / tip-guard skip as a soft failure marker for dashboards.
       - name: Fail job when post_close still pending
         if: >

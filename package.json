@@ -62,6 +62,7 @@
     "refresh:return-refs": "node scripts/build_hub_return_refs.mjs",
     "build:hub-return-refs": "node scripts/build_hub_return_refs.mjs",
     "verify:returns-core": "node scripts/verify_returns_core.mjs",
+    "verify:returns-stale": "node scripts/verify_returns_stale.mjs",
     "verify:quotes-returns": "node scripts/verify_quotes_returns.mjs",
     "verify:returns-consistency": "node scripts/verify_returns_consistency.mjs",
     "verify:views": "node scripts/verify_views_consistency.mjs",

@@ -32,7 +32,12 @@ import {
   resolveNumerator,
   sessionsSince,
 } from '../functions/lib/returns_core.mjs';
-import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
+import {
+  adjustedKrxClose,
+  extendTradingDates,
+  loadKrxReturnHistory,
+  loadReturnSource,
+} from '../functions/lib/hub_returns_source.mjs';
 import {
   buildSectorMcapDailyRows,
   upsertSectorMcapDaily,
@@ -253,6 +258,7 @@ export function stockReturnFieldsFromRefs(
   sessionOpen,
   overrideLast = null,
   now = new Date(),
+  opts = {},
 ) {
   const empty = {
     chg_1d_pct: null,
@@ -284,6 +290,12 @@ export function stockReturnFieldsFromRefs(
     && !!refsRecentDd
     && refsRecentDd < todayDd;
 
+  const extraTradeDates = Array.isArray(opts.extraTradeDates) ? opts.extraTradeDates : [];
+  const tradingDates = extendTradingDates(refs.tradingDates, refsRecentDd, extraTradeDates);
+  const prevHit = opts.prevClose1d != null && Number(opts.prevClose1d) > 0
+    ? Number(opts.prevClose1d)
+    : null;
+
   let numerator = null;
   let k = 0;
   if (sessionOpen) {
@@ -292,19 +304,19 @@ export function stockReturnFieldsFromRefs(
       : (naver?.last != null && Number.isFinite(naver.last) ? naver.last : null);
     numerator = resolveNumerator({ liveLast, sessionOpen: true, officialClose: official });
     k = refsRecentDd && liveTradeDd
-      ? sessionsSince(refsRecentDd, liveTradeDd, refs.tradingDates || [])
+      ? sessionsSince(refsRecentDd, liveTradeDd, tradingDates)
       : 0;
   } else if (closeEligible) {
     // B: overrideLast only — never Naver sessionClose (may be NXT integrated).
     numerator = overrideLast != null && Number(overrideLast) > 0 ? Number(overrideLast) : null;
-    k = sessionsSince(refsRecentDd, todayDd, refs.tradingDates || []);
+    k = sessionsSince(refsRecentDd, todayDd, tradingDates);
   } else {
     // C official
     numerator = official;
     k = 0;
   }
 
-  const returns = computeStockReturns({ numerator, closes, k });
+  const returns = computeStockReturns({ numerator, closes, k, prevClose1d: prevHit });
   return {
     chg_1d_pct: returns.chg1dPct,
     ret_5d_pct: returns.ret5dPct,
@@ -315,16 +327,25 @@ export function stockReturnFieldsFromRefs(
   };
 }
 
-export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null) {
-  // last is always Naver (live or last session). Pair prev_close from the same
-  // quote when possible for display / history helpers.
+export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null, krxPrevClose = null) {
+  // last stays the live/session price. prev_close is the KRX official previous
+  // close only — Naver prevClose can be an NXT/after-hours print.
   const last = naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
 
   let prevClose = null;
-  if (naver?.prevClose != null && Number.isFinite(naver.prevClose) && naver.prevClose > 0) {
-    prevClose = naver.prevClose;
-  } else if (krx?.refClose != null && Number.isFinite(krx.refClose) && krx.refClose > 0) {
-    prevClose = krx.refClose;
+  if (krxPrevClose != null && Number.isFinite(Number(krxPrevClose)) && Number(krxPrevClose) > 0) {
+    prevClose = Number(krxPrevClose);
+  }
+  const naverPrev = naver?.prevClose;
+  if (
+    prevClose != null
+    && naverPrev != null
+    && Number.isFinite(Number(naverPrev))
+    && Math.abs(Number(naverPrev) - prevClose) > 0
+  ) {
+    console.warn(
+      `  prev_close ${ticker}: naver ${naverPrev} != krx ${prevClose} — store KRX`,
+    );
   }
 
   const returns = returnFields || {
@@ -1730,6 +1751,7 @@ async function syncSectorIntradayReturns({
   serviceKey,
   sessionKind = 'regular',
   now = new Date(),
+  krxHistory = null,
 }) {
   if (!tradeDateDash || !refs?.quotes) {
     console.log('  sector intraday returns: skip (no tradeDate/refs)');
@@ -1743,6 +1765,7 @@ async function syncSectorIntradayReturns({
     tickers,
     refs,
     quoteRows,
+    krxHistory,
   });
   const k = source.meta?.k ?? 0;
   const anchorDd = source.meta?.anchorDd || dashToBasDd(tradeDateDash);
@@ -1764,6 +1787,7 @@ async function syncSectorIntradayReturns({
         closes: src.closes,
         k,
         shares: src.shares,
+        prevClose1d: src.prevClose1d,
       });
     }
     const agg = aggregateSectorReturns(members);
@@ -2222,13 +2246,51 @@ async function main() {
     refsForReturns = null;
   }
 
+  let krxReturnHistory = {
+    extraTradeDates: [],
+    prevByTicker: new Map(),
+    adjByTicker: new Map(),
+  };
+  if (refsForReturns && !skipLatestAndIntraday) {
+    try {
+      const anchorDd = consensus.tradeDate || todayYmdDash;
+      krxReturnHistory = await loadKrxReturnHistory(
+        { url: supabaseUrl, anonKey: serviceKey },
+        refsForReturns.recentDd,
+        anchorDd,
+        tickers,
+      );
+      console.log(
+        `  krx prev closes ${krxReturnHistory.prevByTicker.size}`
+        + ` extra sessions ${krxReturnHistory.extraTradeDates.length}`,
+      );
+    } catch (e) {
+      console.warn('  krx prev-close load failed:', e.message || e);
+    }
+  }
+  const returnOptsFor = (ticker) => {
+    const code = normalizeTicker(ticker);
+    const hit = krxReturnHistory.prevByTicker.get(code);
+    const prev = hit
+      ? adjustedKrxClose(hit.close, hit.tradeDate, krxReturnHistory.adjByTicker.get(code))
+      : null;
+    return {
+      extraTradeDates: krxReturnHistory.extraTradeDates,
+      prevClose1d: prev,
+    };
+  };
+
   let returnsFilled = 0;
   let rows = tickers.map((ticker) => {
+    const returnOpts = returnOptsFor(ticker);
     const returnFields = stockReturnFieldsFromRefs(
       ticker,
       naverResult.quotes[ticker],
       refsForReturns,
       sessionOpenForReturns,
+      null,
+      new Date(),
+      returnOpts,
     );
     if (returnFields.chg_1d_pct != null || returnFields.ret_20d_pct != null) returnsFilled += 1;
     return toSupabaseRow(
@@ -2239,6 +2301,7 @@ async function main() {
       regularSession,
       session.marketClosed,
       returnFields,
+      returnOpts.prevClose1d,
     );
   });
   console.log(
@@ -2286,6 +2349,8 @@ async function main() {
         refsForReturns,
         false,
         row.last,
+        new Date(),
+        returnOptsFor(row.ticker),
       );
       row.chg_1d_pct = rf.chg_1d_pct;
       row.ret_5d_pct = rf.ret_5d_pct;
@@ -2293,6 +2358,8 @@ async function main() {
       row.ret_50d_pct = rf.ret_50d_pct;
       row.ret_120d_pct = rf.ret_120d_pct;
       row.ret_200d_pct = rf.ret_200d_pct;
+      const prev = returnOptsFor(row.ticker).prevClose1d;
+      if (prev != null) row.prev_close = prev;
     }
     console.log(
       `  post-close last guard: hist=${fromHist} keptPrev=${keptPrev}`
@@ -2382,6 +2449,8 @@ async function main() {
             refsForReturns,
             false,
             row.last,
+            new Date(),
+            returnOptsFor(row.ticker),
           );
           row.chg_1d_pct = rf.chg_1d_pct;
           row.ret_5d_pct = rf.ret_5d_pct;
@@ -2389,6 +2458,8 @@ async function main() {
           row.ret_50d_pct = rf.ret_50d_pct;
           row.ret_120d_pct = rf.ret_120d_pct;
           row.ret_200d_pct = rf.ret_200d_pct;
+          const prev = returnOptsFor(row.ticker).prevClose1d;
+          if (prev != null) row.prev_close = prev;
           patched += 1;
         }
         if (patched) {
@@ -2477,6 +2548,7 @@ async function main() {
       serviceKey,
       sessionKind: 'regular',
       now: new Date(),
+      krxHistory: krxReturnHistory,
     });
     sectorRecordMs += Date.now() - tSectorIntraday;
     if (ir.frozen) intradayFrozen = true;
@@ -2490,6 +2562,7 @@ async function main() {
       serviceKey,
       sessionKind: 'close',
       now: new Date(),
+      krxHistory: krxReturnHistory,
     });
   } else {
     console.log(

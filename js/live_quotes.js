@@ -219,6 +219,7 @@
       refsRecentDd: j.refsRecentDd || null,
       k: typeof j.k === 'number' && isFinite(j.k) ? j.k : null,
       dataVersion: j.dataVersion || null,
+      refsStale: j.refsStale === true,
     };
     try {
       if (global.InvestingMapReturnsBadge) {
@@ -242,6 +243,7 @@
       refsRecentDd: returnMeta.refsRecentDd || null,
       k: returnMeta.k,
       dataVersion: returnMeta.dataVersion || null,
+      refsStale: returnMeta.refsStale === true,
     };
   }
 
@@ -263,7 +265,11 @@
       ? 'live'
       : (lang === 'en' ? 'closed' : '\uB9C8\uAC10');
     var label = lang === 'en' ? 'Basis' : '\uAE30\uC900';
-    return label + ' \u00B7 ' + dash + ' \u00B7 ' + mode;
+    var text = label + ' \u00B7 ' + dash + ' \u00B7 ' + mode;
+    if (meta.refsStale) {
+      text += ' \u00B7 ' + (lang === 'en' ? 'Reference data delayed' : '\uAE30\uC900 \uB370\uC774\uD130 \uAC31\uC2E0 \uC9C0\uC5F0');
+    }
+    return text;
   }
 
   function syncReturnMetaBadges(lang) {

@@ -57,3 +57,16 @@ jobs:
           fi
           git commit -m "chore: refresh hub_return_refs + hub_rs_snapshot + hub_sector_returns + hub_volatility_snapshot + hub_bb_score"
           git push
+
+      - name: Confirm Cloudflare published return refs
+        run: |
+          set -euo pipefail
+          EXPECT="$(node --input-type=module -e "import fs from 'fs'; const j=JSON.parse(fs.readFileSync('data/hub_return_refs.json','utf8')); process.stdout.write(String(j.recentDd||''))")"
+          echo "expect recentDd=$EXPECT — waiting 5 minutes for Cloudflare"
+          sleep 300
+          LIVE="$(curl -fsS --max-time 30 https://investingmap.kr/data/hub_return_refs.json | node --input-type=module -e "let s=''; process.stdin.on('data',d=>s+=d); process.stdin.on('end',()=>{ const j=JSON.parse(s); process.stdout.write(String(j.recentDd||'')); })")"
+          echo "live recentDd=$LIVE"
+          if [ "$LIVE" != "$EXPECT" ]; then
+            echo "::error::Cloudflare hub_return_refs recentDd=$LIVE expected=$EXPECT (deploy failed or stale)"
+            exit 1
+          fi

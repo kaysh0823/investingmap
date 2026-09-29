@@ -9,6 +9,7 @@ const STEPS = [
   'verify_tab_search.mjs',
   'verify_hub_range_scatter.mjs',
   'verify_hub_bb_score.mjs',
+  'verify_returns_stale.mjs',
   'verify_heatmap_exclude_chips.mjs',
   'verify_global_search.mjs',
   'verify_asset_versions.mjs',

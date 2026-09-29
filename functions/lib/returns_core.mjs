@@ -78,7 +78,7 @@ export function refCloseAt(closes, k, n) {
 
 /**
  * Per-stock returns from a shared numerator and adjusted close history.
- * @param {{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number }} args
+ * @param {{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number, prevClose1d?: number|null }} args
  * @returns {{
  *   chg1dPct: number|null,
  *   ret5dPct: number|null,
@@ -88,7 +88,7 @@ export function refCloseAt(closes, k, n) {
  *   ret200dPct: number|null,
  * }}
  */
-export function computeStockReturns({ numerator, closes, k = 0 }) {
+export function computeStockReturns({ numerator, closes, k = 0, prevClose1d = null }) {
   const num = numPos(numerator);
   const out = {
     chg1dPct: null,
@@ -108,8 +108,9 @@ export function computeStockReturns({ numerator, closes, k = 0 }) {
     120: 'ret120dPct',
     200: 'ret200dPct',
   };
+  const krxPrev = numPos(prevClose1d);
   for (const n of RETURN_HORIZONS) {
-    const ref = refCloseAt(closes, k, n);
+    const ref = n === 1 && krxPrev != null ? krxPrev : refCloseAt(closes, k, n);
     if (ref == null) continue;
     out[fieldByN[n]] = roundPct(num / ref - 1);
   }
@@ -120,7 +121,7 @@ export function computeStockReturns({ numerator, closes, k = 0 }) {
  * Cap-weighted sector return using the same numerator / refN as stocks:
  * Σ(numerator_i × shares_i) / Σ(refN_i × shares_i) − 1
  * Members with null refN (or non-positive shares/numerator) are dropped from both sides.
- * @param {Array<{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number, shares: number|null|undefined }>} members
+ * @param {Array<{ numerator: number|null|undefined, closes: Array<number|null|undefined>, k?: number, shares: number|null|undefined, prevClose1d?: number|null }>} members
  * @returns {{
  *   chg1dPct: number|null,
  *   ret5dPct: number|null,
@@ -157,7 +158,8 @@ export function aggregateSectorReturns(members) {
       const shares = numPos(m?.shares);
       const numerator = numPos(m?.numerator);
       if (shares == null || numerator == null) continue;
-      const ref = refCloseAt(m.closes, m.k ?? 0, n);
+      const krxPrev = numPos(m?.prevClose1d);
+      const ref = n === 1 && krxPrev != null ? krxPrev : refCloseAt(m.closes, m.k ?? 0, n);
       if (ref == null) continue;
       numSum += numerator * shares;
       denSum += ref * shares;

@@ -18,7 +18,8 @@ import {
   sessionsSince,
   aggregateSectorReturns,
 } from './returns_core.mjs';
-import { getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
+import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
+import { cumulativeAdjustmentRatio } from './price_adjustments.mjs';
 
 const REFS_CHECK_MS = 60 * 1000;
 const STALE_ASOF_MS = 15 * 60 * 1000;
@@ -29,6 +30,82 @@ let returnRefsCache = { at: 0, refs: null, etag: null };
 function compactYmd(v) {
   const s = String(v || '').replace(/-/g, '');
   return /^\d{8}$/.test(s) ? s : '';
+}
+
+function dashYmd(v) {
+  const s = compactYmd(v);
+  return s ? `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}` : '';
+}
+
+/**
+ * refs.tradingDates plus completed sessions after refs.recentDd.
+ * extraDates come from stock_price_history or market_index_daily.
+ * @param {string[]|undefined} tradingDates
+ * @param {string} recentDd
+ * @param {string[]|undefined} extraDates
+ * @returns {string[]} YYYYMMDD ascending
+ */
+export function extendTradingDates(tradingDates, recentDd, extraDates) {
+  const recent = compactYmd(recentDd);
+  const set = new Set();
+  for (const raw of tradingDates || []) {
+    const d = compactYmd(raw);
+    if (d) set.add(d);
+  }
+  for (const raw of extraDates || []) {
+    const d = compactYmd(raw);
+    if (d && (!recent || d > recent)) set.add(d);
+  }
+  return [...set].sort();
+}
+
+/** Last completed session in the calendar is newer than refs.recentDd. */
+export function isRefsStale(recentDd, tradingDates) {
+  const recent = compactYmd(recentDd);
+  if (!recent) return false;
+  let tip = '';
+  for (const raw of tradingDates || []) {
+    const d = compactYmd(raw);
+    if (d && d > tip) tip = d;
+  }
+  return !!(tip && tip > recent);
+}
+
+/**
+ * Latest positive close with trade_date < T.
+ * @param {Array<{ tradeDate?: string, trade_date?: string, close?: number }>} rows
+ * @param {string} tradeDateT
+ * @returns {{ tradeDate: string, close: number }|null}
+ */
+export function latestCloseBefore(rows, tradeDateT) {
+  const T = compactYmd(tradeDateT);
+  if (!T) return null;
+  let best = '';
+  let close = null;
+  for (const row of rows || []) {
+    const d = compactYmd(row?.tradeDate || row?.trade_date);
+    const c = Number(row?.close);
+    if (!d || d >= T || !Number.isFinite(c) || !(c > 0)) continue;
+    if (d > best) {
+      best = d;
+      close = c;
+    }
+  }
+  return best ? { tradeDate: best, close } : null;
+}
+
+/**
+ * KRX official previous close in current-price terms (adjusted).
+ * @param {number|null} close
+ * @param {string} barDate
+ * @param {Array<{ effective_date: string, ratio: number }>|undefined} adjustments
+ */
+export function adjustedKrxClose(close, barDate, adjustments) {
+  const c = Number(close);
+  if (!Number.isFinite(c) || !(c > 0)) return null;
+  const ratio = cumulativeAdjustmentRatio(dashYmd(barDate), adjustments || []);
+  const v = c * (Number.isFinite(ratio) && ratio > 0 ? ratio : 1);
+  return v > 0 ? v : null;
 }
 
 /**
@@ -312,6 +389,100 @@ function rowsFromQuoteOverrides(quoteRows) {
  *   now?: Date,
  * }} args
  */
+/**
+ * Completed sessions after refs.recentDd and each ticker's KRX previous close.
+ * @returns {Promise<{ extraTradeDates: string[], prevByTicker: Map<string, { tradeDate: string, close: number }>, adjByTicker: Map<string, Array<{ effective_date: string, ratio: number }>> }>}
+ */
+export async function loadKrxReturnHistory(config, recentDd, anchorDd, tickers) {
+  const [extraTradeDates, prevByTicker, adjByTicker] = await Promise.all([
+    fetchCompletedSessionsAfter(config, recentDd),
+    fetchPrevClosesBefore(config, anchorDd, tickers),
+    fetchAdjustmentsAfter(config, recentDd),
+  ]);
+  return { extraTradeDates, prevByTicker, adjByTicker };
+}
+
+async function fetchCompletedSessionsAfter(config, recentDd) {
+  const dash = dashYmd(recentDd);
+  if (!config?.url || !dash) return [];
+  const read = async (query) => {
+    const rows = await fetchSupabaseJson(config, query);
+    return (rows || []).map((r) => compactYmd(r.trade_date)).filter(Boolean);
+  };
+  try {
+    const fromHistory = await read(
+      `stock_price_history?ticker=eq.005930&trade_date=gt.${dash}`
+      + '&select=trade_date&order=trade_date.asc&limit=40',
+    );
+    if (fromHistory.length) return fromHistory;
+  } catch {
+    /* try the index calendar */
+  }
+  try {
+    return await read(
+      `market_index_daily?index_code=eq.KOSPI&trade_date=gt.${dash}`
+      + '&select=trade_date&order=trade_date.asc&limit=40',
+    );
+  } catch {
+    return [];
+  }
+}
+
+async function fetchPrevClosesBefore(config, anchorDd, tickers) {
+  /** @type {Map<string, { tradeDate: string, close: number }>} */
+  const out = new Map();
+  const dash = dashYmd(anchorDd);
+  const codes = [...new Set((tickers || []).map(normalizeTicker).filter(Boolean))];
+  if (!config?.url || !dash || !codes.length) return out;
+  const CHUNK = 40;
+  for (let i = 0; i < codes.length; i += CHUNK) {
+    const part = codes.slice(i, i + CHUNK);
+    let rows = [];
+    try {
+      rows = await fetchSupabaseJson(
+        config,
+        `stock_price_history?ticker=in.(${part.join(',')})`
+        + `&trade_date=lt.${dash}&select=ticker,trade_date,close&order=trade_date.desc&limit=1000`,
+      );
+    } catch {
+      continue;
+    }
+    for (const row of rows || []) {
+      const t = normalizeTicker(row.ticker);
+      if (!t || out.has(t)) continue;
+      const hit = latestCloseBefore([row], anchorDd);
+      if (hit) out.set(t, hit);
+    }
+  }
+  return out;
+}
+
+async function fetchAdjustmentsAfter(config, recentDd) {
+  /** @type {Map<string, Array<{ effective_date: string, ratio: number }>>} */
+  const out = new Map();
+  const dash = dashYmd(recentDd);
+  if (!config?.url || !dash) return out;
+  let rows = [];
+  try {
+    rows = await fetchSupabaseJson(
+      config,
+      `price_adjustments?effective_date=gt.${dash}`
+      + '&select=ticker,effective_date,ratio&limit=1000',
+    );
+  } catch {
+    return out;
+  }
+  for (const row of rows || []) {
+    const t = normalizeTicker(row.ticker);
+    const ratio = Number(row.ratio);
+    if (!t || !row.effective_date || !Number.isFinite(ratio) || !(ratio > 0)) continue;
+    const list = out.get(t) || [];
+    list.push({ effective_date: String(row.effective_date), ratio });
+    out.set(t, list);
+  }
+  return out;
+}
+
 export async function loadReturnSource({
   env,
   request = null,
@@ -320,6 +491,7 @@ export async function loadReturnSource({
   quoteRows = null,
   staleRefresh = null,
   now = new Date(),
+  krxHistory = null,
 }) {
   const session = krxSessionInfo(now);
   // A: regular auction only — aftermarket is never "session open" for returns.
@@ -339,6 +511,8 @@ export async function loadReturnSource({
         anchorDd: null,
         refsRecentDd: null,
         k: 0,
+        refsStale: false,
+        tradingDates: [],
         closeMissingCount: 0,
         stale: false,
         dataVersion: buildDataVersion(null, null),
@@ -465,6 +639,35 @@ export async function loadReturnSource({
     k = 0;
   }
 
+  let extraTradeDates = Array.isArray(krxHistory?.extraTradeDates)
+    ? krxHistory.extraTradeDates
+    : [];
+  /** @type {Map<string, { tradeDate: string, close: number }>} */
+  let prevByTicker = krxHistory?.prevByTicker instanceof Map
+    ? krxHistory.prevByTicker
+    : new Map();
+  /** @type {Map<string, Array<{ effective_date: string, ratio: number }>>} */
+  let adjByTicker = krxHistory?.adjByTicker instanceof Map
+    ? krxHistory.adjByTicker
+    : new Map();
+  if (!krxHistory) {
+    const config = getSupabaseConfig(env, { preferServiceRole: true });
+    if (config && refsRecentDd) {
+      extraTradeDates = await fetchCompletedSessionsAfter(config, refsRecentDd);
+      const [prevMap, adjMap] = await Promise.all([
+        fetchPrevClosesBefore(config, anchorDd, codes),
+        fetchAdjustmentsAfter(config, refsRecentDd),
+      ]);
+      prevByTicker = prevMap;
+      adjByTicker = adjMap;
+    }
+  }
+  const tradingDates = extendTradingDates(refs.tradingDates, refsRecentDd, extraTradeDates);
+  if (numeratorMode !== 'official' && refsRecentDd && anchorDd) {
+    k = sessionsSince(refsRecentDd, anchorDd, tradingDates);
+  }
+  const refsStale = isRefsStale(refsRecentDd, tradingDates);
+
   let closeMissingCount = 0;
   /** @type {Record<string, { numerator: number|null, closes: number[], shares: number|null, last: number|null, officialClose: number|null }>} */
   const byTicker = {};
@@ -496,12 +699,17 @@ export async function loadReturnSource({
       }
     }
     const shares = numOrNull(refQ.shares);
+    const prevHit = prevByTicker.get(t) || null;
+    const prevClose1d = prevHit
+      ? adjustedKrxClose(prevHit.close, prevHit.tradeDate, adjByTicker.get(t))
+      : null;
     byTicker[t] = {
       numerator,
       closes,
       shares: shares != null && shares > 0 ? shares : null,
       last: displayLast,
       officialClose,
+      prevClose1d,
     };
   }
 
@@ -517,6 +725,8 @@ export async function loadReturnSource({
       anchorDd: anchorDd || null,
       refsRecentDd: refsRecentDd || null,
       k,
+      tradingDates,
+      refsStale,
       closeMissingCount,
       stale,
       dataVersion,

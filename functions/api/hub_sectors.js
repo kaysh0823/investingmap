@@ -89,6 +89,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
         closes: src.closes,
         k,
         shares: src.shares,
+        prevClose1d: src.prevClose1d,
       });
     }
     const agg = aggregateSectorReturns(members);
@@ -105,7 +106,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
     console.warn(`[hub_sectors] skipped ${missingShares} member(s) without shares`);
   }
 
-  const tradingDates = source.refs.tradingDates || [];
+  const tradingDates = source.meta.tradingDates || source.refs.tradingDates || [];
   const anchorDd = source.meta.anchorDd;
 
   return {
@@ -117,6 +118,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
     anchorDd,
     refsRecentDd: source.meta.refsRecentDd,
     k: source.meta.k,
+    refsStale: !!source.meta.refsStale,
     stale: !!source.meta.stale,
     dataVersion: source.meta.dataVersion || null,
     refsEtag: source.meta.refsEtag || null,
