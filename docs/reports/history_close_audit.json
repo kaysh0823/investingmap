@@ -1,0 +1,1339 @@
+{
+  "generatedAt": "2026-09-29T16:04:44.234Z",
+  "diagnosticOnly": true,
+  "sessionsRequested": 60,
+  "sessionsCompared": 60,
+  "hubTickers": 643,
+  "anchorTicker": "005930",
+  "firstMismatchDate": "2026-07-08",
+  "mismatchRows": 1664,
+  "datesWithMismatch": 17,
+  "apihubEmptyDates": [
+    "2026-09-29"
+  ],
+  "byDate": [
+    {
+      "date": "2026-07-02",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 47150
+        }
+      ]
+    },
+    {
+      "date": "2026-07-03",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 47900
+        }
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 48000
+        }
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 45850
+        }
+      ]
+    },
+    {
+      "date": "2026-07-08",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 1,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "002990",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        },
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 43800
+        }
+      ]
+    },
+    {
+      "date": "2026-07-09",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 42250
+        }
+      ]
+    },
+    {
+      "date": "2026-07-10",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": []
+    },
+    {
+      "date": "2026-07-13",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 43400
+        }
+      ]
+    },
+    {
+      "date": "2026-07-14",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 43300
+        }
+      ]
+    },
+    {
+      "date": "2026-07-15",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 44900
+        }
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 42700
+        }
+      ]
+    },
+    {
+      "date": "2026-07-20",
+      "source": "apihub",
+      "compared": 639,
+      "mismatch": 0,
+      "missingInDb": 1,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "0120G0",
+          "kind": "missingInDb",
+          "apihubClose": 41000
+        }
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": []
+    },
+    {
+      "date": "2026-07-22",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": []
+    },
+    {
+      "date": "2026-07-23",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": []
+    },
+    {
+      "date": "2026-07-24",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": []
+    },
+    {
+      "date": "2026-07-27",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": []
+    },
+    {
+      "date": "2026-07-28",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": []
+    },
+    {
+      "date": "2026-07-29",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 1,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-07-30",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 1,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 1,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-03",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 1,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 1,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 1,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-06",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 1,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-07",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 2,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        },
+        {
+          "ticker": "082640",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-10",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 2,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        },
+        {
+          "ticker": "082640",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-11",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 2,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        },
+        {
+          "ticker": "082640",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-12",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 2,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        },
+        {
+          "ticker": "082640",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-13",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 2,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        },
+        {
+          "ticker": "082640",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-14",
+      "source": "apihub",
+      "compared": 640,
+      "mismatch": 2,
+      "missingInDb": 0,
+      "missingInApihub": 3,
+      "samples": [
+        {
+          "ticker": "036800",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        },
+        {
+          "ticker": "082640",
+          "source": null,
+          "fields": [
+            {
+              "field": "open",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "high",
+              "db": 0,
+              "apihub": null
+            },
+            {
+              "field": "low",
+              "db": 0,
+              "apihub": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-18",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-08-19",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-08-20",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-08-21",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-08-24",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-08-25",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-08-26",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-08-27",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-08-28",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-08-31",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-09-01",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-09-02",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-09-03",
+      "source": "apihub",
+      "compared": 641,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 2,
+      "samples": []
+    },
+    {
+      "date": "2026-09-04",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-07",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-08",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-09",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-10",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-11",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-14",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-15",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-16",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-17",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-18",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-21",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": []
+    },
+    {
+      "date": "2026-09-22",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 540,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": [
+        {
+          "ticker": "005930",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 277750,
+              "apihub": 276500
+            }
+          ]
+        },
+        {
+          "ticker": "000660",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 1847000,
+              "apihub": 1840000
+            }
+          ]
+        },
+        {
+          "ticker": "042700",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 239500,
+              "apihub": 240000
+            }
+          ]
+        },
+        {
+          "ticker": "036930",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 203000,
+              "apihub": 203500
+            }
+          ]
+        },
+        {
+          "ticker": "007660",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 112200,
+              "apihub": 112900
+            }
+          ]
+        },
+        {
+          "ticker": "240810",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 130500,
+              "apihub": 130300
+            }
+          ]
+        },
+        {
+          "ticker": "039030",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 475000,
+              "apihub": 473500
+            }
+          ]
+        },
+        {
+          "ticker": "000990",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 131400,
+              "apihub": 130700
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-23",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 546,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": [
+        {
+          "ticker": "005930",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 284500,
+              "apihub": 285500
+            }
+          ]
+        },
+        {
+          "ticker": "000660",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 1851000,
+              "apihub": 1862000
+            }
+          ]
+        },
+        {
+          "ticker": "036930",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 209000,
+              "apihub": 209500
+            }
+          ]
+        },
+        {
+          "ticker": "007660",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 118200,
+              "apihub": 118900
+            }
+          ]
+        },
+        {
+          "ticker": "240810",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 133800,
+              "apihub": 133700
+            }
+          ]
+        },
+        {
+          "ticker": "039030",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 476500,
+              "apihub": 481500
+            }
+          ]
+        },
+        {
+          "ticker": "058470",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 74200,
+              "apihub": 74300
+            }
+          ]
+        },
+        {
+          "ticker": "353200",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 119700,
+              "apihub": 119400
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "source": "apihub",
+      "compared": 642,
+      "mismatch": 558,
+      "missingInDb": 0,
+      "missingInApihub": 1,
+      "samples": [
+        {
+          "ticker": "005930",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "low",
+              "db": 271000,
+              "apihub": 270000
+            },
+            {
+              "field": "close",
+              "db": 272250,
+              "apihub": 270000
+            }
+          ]
+        },
+        {
+          "ticker": "000660",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "low",
+              "db": 1769000,
+              "apihub": 1768000
+            },
+            {
+              "field": "close",
+              "db": 1782000,
+              "apihub": 1768000
+            }
+          ]
+        },
+        {
+          "ticker": "042700",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 236000,
+              "apihub": 234500
+            }
+          ]
+        },
+        {
+          "ticker": "036930",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 210000,
+              "apihub": 209000
+            }
+          ]
+        },
+        {
+          "ticker": "007660",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "low",
+              "db": 112500,
+              "apihub": 112300
+            },
+            {
+              "field": "close",
+              "db": 112600,
+              "apihub": 112300
+            }
+          ]
+        },
+        {
+          "ticker": "240810",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 124300,
+              "apihub": 123200
+            }
+          ]
+        },
+        {
+          "ticker": "039030",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 472500,
+              "apihub": 468500
+            }
+          ]
+        },
+        {
+          "ticker": "000990",
+          "source": "mdcstat",
+          "fields": [
+            {
+              "field": "close",
+              "db": 128000,
+              "apihub": 127100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-29",
+      "source": null,
+      "compared": 0,
+      "mismatch": 0,
+      "missingInDb": 0,
+      "missingInApihub": 0,
+      "samples": [],
+      "note": "apihub empty — later overwrite may use MDCSTAT"
+    }
+  ],
+  "note": "Read-only. Mismatched rows are not overwritten. apihub-empty dates are listed for a later MDCSTAT fallback."
+}
