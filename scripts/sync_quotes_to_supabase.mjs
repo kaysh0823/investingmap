@@ -19,6 +19,7 @@ import {
   fetchMarketDay,
   historyFieldsFromKrxRow,
 } from '../functions/lib/krx_yoy.mjs';
+import { reconcileRecentHistoryWithApihub } from './history_apihub_reconcile.mjs';
 import {
   SECTOR_ORDER,
   listHubCompanies,
@@ -2467,6 +2468,18 @@ async function main() {
       env,
       syncSlot,
     );
+  }
+  // Past sessions only. Today's bar stays on the session-close path until apihub is T+1.
+  // This finishes before the workflow refs chain (return refs → RS → sector → volatility → BB).
+  if (syncSlot === 'post_close' || syncSlot === 'post_close_retry') {
+    await reconcileRecentHistoryWithApihub({
+      supabaseUrl,
+      serviceKey,
+      authKey,
+      tickers,
+      todayDash: todayYmdDash,
+      fetchMarket: fetchMarketDay,
+    });
   }
   if (histResult.pending && (syncSlot === 'post_close' || syncSlot === 'post_close_retry')) {
     console.error(

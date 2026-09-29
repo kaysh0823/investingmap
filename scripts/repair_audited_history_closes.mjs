@@ -10,14 +10,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { fetchMarketDay, getAuthKey, historyFieldsFromKrxRow } from '../functions/lib/krx_yoy.mjs';
+import { fetchMarketDay, getAuthKey } from '../functions/lib/krx_yoy.mjs';
 import { listHubCompanies, normalizeTicker } from '../functions/lib/hub_dashboard_core.mjs';
+import {
+  fetchDbRowsForDate,
+  planApihubOverwrites,
+  upsertApihubHistoryRows,
+} from './history_apihub_reconcile.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT_PATH = path.join(ROOT, 'docs', 'reports', 'history_close_audit.json');
-const PAGE_SIZE = 1000;
-const UPSERT_BATCH = 500;
-const OHLC = ['open', 'high', 'low', 'close'];
 const SAMPLE_TICKERS = ['005930', '000660', '036930', '042700'];
 
 function loadEnv() {
@@ -46,20 +48,6 @@ function argValue(name) {
   return arg ? arg.slice(prefix.length) : '';
 }
 
-function price(value) {
-  if (value == null || value === '') return null;
-  const n = Number(value);
-  return Number.isFinite(n) ? n : null;
-}
-
-function samePrice(stored, expected) {
-  const a = price(stored);
-  const b = price(expected);
-  if (a == null && b == null) return true;
-  if (a == null || b == null) return false;
-  return a === b;
-}
-
 function hubTickers() {
   const hub = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'hub_index.json'), 'utf8'));
   const tickers = [];
@@ -73,71 +61,8 @@ function hubTickers() {
   return tickers;
 }
 
-async function supabaseSelect(url, key, query) {
-  const rows = [];
-  for (let offset = 0; ; offset += PAGE_SIZE) {
-    const endpoint = `${url}/rest/v1/stock_price_history?${query}&limit=${PAGE_SIZE}&offset=${offset}`;
-    const res = await fetch(endpoint, {
-      headers: { apikey: key, Authorization: `Bearer ${key}` },
-    });
-    if (!res.ok) throw new Error(`history fetch ${res.status}: ${(await res.text()).slice(0, 180)}`);
-    const page = await res.json();
-    rows.push(...page);
-    if (page.length < PAGE_SIZE) break;
-  }
-  return rows;
-}
-
-async function fetchDbRowsForDate(url, key, date) {
-  const rows = await supabaseSelect(
-    url,
-    key,
-    `trade_date=eq.${date}&select=ticker,open,high,low,close,volume,source&order=ticker.asc`,
-  );
-  const byTicker = new Map();
-  for (const row of rows) {
-    const ticker = normalizeTicker(row.ticker);
-    if (ticker) byTicker.set(ticker, row);
-  }
-  return byTicker;
-}
-
-function fieldDiffs(db, krx) {
-  const fields = [];
-  for (const field of OHLC) {
-    if (samePrice(db[field], krx[field])) continue;
-    fields.push({ field, from: price(db[field]), to: price(krx[field]) });
-  }
-  return fields;
-}
-
-function mismatchesForDate(tickers, dbByTicker, market) {
-  const rows = [];
-  for (const ticker of tickers) {
-    const krx = historyFieldsFromKrxRow(market.get(ticker));
-    const db = dbByTicker.get(ticker) || null;
-    if (!krx || !db) continue;
-    const fields = fieldDiffs(db, krx);
-    if (!fields.length) continue;
-    rows.push({
-      ticker,
-      fromSource: db.source || null,
-      fields,
-      payload: {
-        ticker,
-        trade_date: null,
-        open: krx.open,
-        high: krx.high,
-        low: krx.low,
-        close: krx.close,
-        volume: krx.volume,
-        mcap_won: krx.mcap_won,
-        turnover_won: krx.turnover_won,
-        source: 'apihub',
-      },
-    });
-  }
-  return rows;
+function mismatchesForDate(tickers, dbByTicker, market, date) {
+  return planApihubOverwrites(tickers, dbByTicker, market, date).fixes;
 }
 
 function printSamples(date, rows) {
@@ -149,28 +74,6 @@ function printSamples(date, rows) {
     const changes = row.fields.map((field) => `${field.field} ${field.from}→${field.to}`).join(', ');
     console.log(`  ${row.ticker} ${date} ${changes} (${row.fromSource || 'null'}→apihub)`);
   }
-}
-
-async function upsertRows(url, key, rows) {
-  let upserted = 0;
-  for (let i = 0; i < rows.length; i += UPSERT_BATCH) {
-    const batch = rows.slice(i, i + UPSERT_BATCH);
-    const res = await fetch(`${url}/rest/v1/stock_price_history`, {
-      method: 'POST',
-      headers: {
-        apikey: key,
-        Authorization: `Bearer ${key}`,
-        'Content-Type': 'application/json',
-        Prefer: 'resolution=merge-duplicates,on_conflict=ticker,trade_date,return=minimal',
-      },
-      body: JSON.stringify(batch),
-    });
-    if (!res.ok) {
-      throw new Error(`history upsert ${res.status}: ${(await res.text()).slice(0, 240)}`);
-    }
-    upserted += batch.length;
-  }
-  return upserted;
 }
 
 async function main() {
@@ -209,18 +112,17 @@ async function main() {
       throw new Error(`${date}: apihub empty — wrote nothing for this date`);
     }
     const beforeDb = await fetchDbRowsForDate(url, key, date);
-    const before = mismatchesForDate(tickers, beforeDb, market);
-    for (const row of before) row.payload.trade_date = date;
+    const before = mismatchesForDate(tickers, beforeDb, market, date);
     const reportCount = reported.get(date).mismatch;
     console.log(`${date} before ${before.length} (report ${reportCount})`);
     printSamples(date, before);
     beforeTotal += before.length;
 
-    const upserted = await upsertRows(url, key, before.map((row) => row.payload));
+    const upserted = await upsertApihubHistoryRows(url, key, before.map((row) => row.payload));
     upsertedTotal += upserted;
 
     const afterDb = await fetchDbRowsForDate(url, key, date);
-    const after = mismatchesForDate(tickers, afterDb, market);
+    const after = mismatchesForDate(tickers, afterDb, market, date);
     afterTotal += after.length;
     console.log(`${date} upserted ${upserted} after ${after.length}`);
     if (after.length) printSamples(date, after);

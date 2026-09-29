@@ -31,6 +31,13 @@ jobs:
             npm install
           fi
 
+      - name: Reconcile recent history with apihub
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          KRX_AUTH_KEY: ${{ secrets.KRX_AUTH_KEY }}
+        run: node scripts/reconcile_recent_history.mjs
+
       - name: Build hub return refs + RS snapshot
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
