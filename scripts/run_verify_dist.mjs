@@ -25,6 +25,7 @@ const STEPS = [
   'verify_netmap.mjs',
   'verify_no_graph_tab.mjs',
   'verify_map_init.mjs',
+  'verify_map_badges.mjs',
 ];
 
 for (const step of STEPS) {

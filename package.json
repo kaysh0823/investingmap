@@ -54,6 +54,7 @@
     "verify:tickers": "node scripts/verify_tickers.mjs",
     "verify:heatmap-exclude": "node scripts/verify_heatmap_exclude_chips.mjs",
     "verify:dist": "node scripts/run_verify_dist.mjs",
+    "verify:map-badges": "node scripts/verify_map_badges.mjs",
     "verify:volatility": "node scripts/verify_volatility.mjs",
     "verify:valuation": "node scripts/verify_valuation.mjs",
     "verify:global-search": "node scripts/verify_global_search.mjs",
