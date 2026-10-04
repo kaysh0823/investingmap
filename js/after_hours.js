@@ -1,6 +1,6 @@
 /**
  * investingmap — KRX after-hours single-price hint (시간외 단일가) under the
- * official regular close in map tables. Display only; returns stay on the KRX
+ * official regular close in map tables and mobile cards. Display only; returns stay on the KRX
  * regular close. Data: /data/hub_after_hours.json (written by the post_close sync).
  * Shown from 15:30 on the session date until the next session opens (validUntil).
  */
@@ -44,6 +44,17 @@
   }
 
   function priceCell(tr) {
+    if (tr.tagName === 'ARTICLE') {
+      // Mobile card (map_mobile_table.js): .im-kv with the price label.
+      var kvs = tr.querySelectorAll('.im-kv');
+      for (var k = 0; k < kvs.length; k++) {
+        var lbl = kvs[k].querySelector('.im-kv-lbl');
+        if (lbl && /현재가|종가|Price|Last|Close/i.test(lbl.textContent || '')) {
+          return kvs[k].querySelector('.im-kv-val');
+        }
+      }
+      return null;
+    }
     var cells = tr.querySelectorAll('td.quote-cell');
     for (var i = 0; i < cells.length; i++) {
       if (!cells[i].classList.contains('ret-cell')) return cells[i];
@@ -66,7 +77,7 @@
     var title = lang() === 'en'
       ? 'KRX after-hours single-price (16:00–18:00). Returns use the regular close.'
       : 'KRX 시간외 단일가(16:00~18:00) 가격입니다. 등락률·수익률은 정규장 종가 기준입니다.';
-    var rows = document.querySelectorAll('tr[data-ticker]');
+    var rows = document.querySelectorAll('tr[data-ticker], article.im-stock-card[data-ticker]');
     for (var i = 0; i < rows.length; i++) {
       var tr = rows[i];
       var item = snapshot.items[tr.getAttribute('data-ticker')];
