@@ -653,18 +653,6 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:323280",
-      "type": "listed_company",
-      "ticker": "323280",
-      "nameKo": "태성",
-      "nameEn": "TAESUNG",
-      "market": "KOSDAQ",
-      "role": "습식세정·식각장비",
-      "group": "전공정 장비",
-      "mcapWon": 1387951191000,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:122640",
       "type": "listed_company",
       "ticker": "122640",
@@ -807,6 +795,18 @@
       "isListedKorea": true
     },
     {
+      "id": "krx:323280",
+      "type": "listed_company",
+      "ticker": "323280",
+      "nameKo": "태성",
+      "nameEn": "TAESUNG",
+      "market": "KOSDAQ",
+      "role": "기판 습식공정 장비",
+      "group": "패키징 장비",
+      "mcapWon": 1387951191000,
+      "isListedKorea": true
+    },
+    {
       "id": "krx:053610",
       "type": "listed_company",
       "ticker": "053610",
@@ -943,18 +943,6 @@
       "group": "검사·계측 장비"
     },
     {
-      "id": "krx:098460",
-      "type": "listed_company",
-      "ticker": "098460",
-      "nameKo": "고영",
-      "nameEn": "Koh Young Technology Inc.",
-      "market": "KOSDAQ",
-      "role": "계측·검사장비 (3D SPI/AOI)",
-      "group": "검사·계측 장비",
-      "mcapWon": 1885846489450,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:140860",
       "type": "listed_company",
       "ticker": "140860",
@@ -1072,18 +1060,6 @@
       "role": "레이저 검사장비",
       "group": "검사·계측 장비",
       "mcapWon": 317709000000,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:168360",
-      "type": "listed_company",
-      "ticker": "168360",
-      "nameKo": "펨트론",
-      "nameEn": "PEMTRON Corporation",
-      "market": "KOSDAQ",
-      "role": "검사장비·SMT/반도체",
-      "group": "검사·계측 장비",
-      "mcapWon": 304538775200,
       "isListedKorea": true
     },
     {
@@ -1430,18 +1406,6 @@
       "group": "기판·패키징 소재"
     },
     {
-      "id": "krx:007660",
-      "type": "listed_company",
-      "ticker": "007660",
-      "nameKo": "이수페타시스",
-      "nameEn": "Isupetasys",
-      "market": "KOSPI",
-      "role": "고다층 MLB PCB",
-      "group": "기판·패키징 소재",
-      "mcapWon": 7612536010300,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:353200",
       "type": "listed_company",
       "ticker": "353200",
@@ -1463,18 +1427,6 @@
       "role": "반도체 기판 (PCB)",
       "group": "기판·패키징 소재",
       "mcapWon": 4773360459600,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:078600",
-      "type": "listed_company",
-      "ticker": "078600",
-      "nameKo": "대주전자재료",
-      "nameEn": "Daejoo Electronic Materials Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "전자재료·실리콘계 소재",
-      "group": "기판·패키징 소재",
-      "mcapWon": 1381964144000,
       "isListedKorea": true
     },
     {
@@ -1502,18 +1454,6 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:356860",
-      "type": "listed_company",
-      "ticker": "356860",
-      "nameKo": "티엘비",
-      "nameEn": "TLB Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "메모리 모듈·SSD PCB",
-      "group": "기판·패키징 소재",
-      "mcapWon": 887612187000,
-      "isListedKorea": true
-    },
-    {
       "id": "krx:327260",
       "type": "listed_company",
       "ticker": "327260",
@@ -1523,18 +1463,6 @@
       "role": "RF 세라믹 패키지·부품",
       "group": "기판·패키징 소재",
       "mcapWon": 874257575400,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:178920",
-      "type": "listed_company",
-      "ticker": "178920",
-      "nameKo": "PI첨단소재",
-      "nameEn": "PI Advanced Materials Co., Ltd.",
-      "market": "KOSPI",
-      "role": "PI필름 (반도체 패키징소재)",
-      "group": "기판·패키징 소재",
-      "mcapWon": 541514977680,
       "isListedKorea": true
     },
     {
@@ -1559,18 +1487,6 @@
       "role": "리드프레임",
       "group": "기판·패키징 소재",
       "mcapWon": 435341088240,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:272290",
-      "type": "listed_company",
-      "ticker": "272290",
-      "nameKo": "이녹스첨단소재",
-      "nameEn": "INNOX Advanced Materials Co., Ltd.",
-      "market": "KOSDAQ",
-      "role": "FPCB/OLED/반도체 소재",
-      "group": "기판·패키징 소재",
-      "mcapWon": 404731432700,
       "isListedKorea": true
     },
     {
@@ -1662,6 +1578,50 @@
       "isDomesticAnchor": false,
       "excludeFromGlobalCount": false,
       "graphOnly": false
+    },
+    {
+      "id": "group:memory_module_boards",
+      "type": "group",
+      "nameKo": "메모리 모듈·서버 기판",
+      "nameEn": "Memory modules & server boards",
+      "role": "메모리 모듈·서버 기판",
+      "group": "메모리 모듈·서버 기판"
+    },
+    {
+      "id": "krx:007660",
+      "type": "listed_company",
+      "ticker": "007660",
+      "nameKo": "이수페타시스",
+      "nameEn": "Isupetasys",
+      "market": "KOSPI",
+      "role": "AI 서버·네트워크용 고다층 MLB",
+      "group": "메모리 모듈·서버 기판",
+      "mcapWon": 7612536010300,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:356860",
+      "type": "listed_company",
+      "ticker": "356860",
+      "nameKo": "티엘비",
+      "nameEn": "TLB Co., Ltd.",
+      "market": "KOSDAQ",
+      "role": "메모리 모듈·SSD PCB",
+      "group": "메모리 모듈·서버 기판",
+      "mcapWon": 887612187000,
+      "isListedKorea": true
+    },
+    {
+      "id": "krx:078350",
+      "type": "listed_company",
+      "ticker": "078350",
+      "nameKo": "한양디지텍",
+      "nameEn": "Hanyang Digitech",
+      "market": "KOSDAQ",
+      "role": "메모리 모듈·SSD 조립",
+      "group": "메모리 모듈·서버 기판",
+      "mcapWon": 389493960100,
+      "isListedKorea": true
     },
     {
       "id": "group:test_parts",
@@ -3160,21 +3120,6 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-front_equip-323280",
-      "source": "krx:323280",
-      "target": "group:front_equip",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "전공정 장비 밸류체인 분류",
-      "labelEn": "Front-end equipment value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-front_equip-122640",
       "source": "krx:122640",
       "target": "group:front_equip",
@@ -3481,6 +3426,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-pack_equip-323280",
+      "source": "krx:323280",
+      "target": "group:pack_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "패키징 장비 밸류체인 분류",
+      "labelEn": "Packaging equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-09-10",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "member-pack_equip-053610",
       "source": "krx:053610",
       "target": "group:pack_equip",
@@ -3728,21 +3688,6 @@
       "defaultHidden": true
     },
     {
-      "id": "member-inspect_metro-098460",
-      "source": "krx:098460",
-      "target": "group:inspect_metro",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "검사·계측 장비 밸류체인 분류",
-      "labelEn": "Inspection & metrology value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-inspect_metro-140860",
       "source": "krx:140860",
       "target": "group:inspect_metro",
@@ -3880,21 +3825,6 @@
     {
       "id": "member-inspect_metro-110990",
       "source": "krx:110990",
-      "target": "group:inspect_metro",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "검사·계측 장비 밸류체인 분류",
-      "labelEn": "Inspection & metrology value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-inspect_metro-168360",
-      "source": "krx:168360",
       "target": "group:inspect_metro",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4826,21 +4756,6 @@
       "defaultHidden": true
     },
     {
-      "id": "member-substrate_pack_mat-007660",
-      "source": "krx:007660",
-      "target": "group:substrate_pack_mat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "기판·패키징 소재 밸류체인 분류",
-      "labelEn": "Substrate & packaging materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-substrate_pack_mat-353200",
       "source": "krx:353200",
       "target": "group:substrate_pack_mat",
@@ -4858,21 +4773,6 @@
     {
       "id": "member-substrate_pack_mat-222800",
       "source": "krx:222800",
-      "target": "group:substrate_pack_mat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "기판·패키징 소재 밸류체인 분류",
-      "labelEn": "Substrate & packaging materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-substrate_pack_mat-078600",
-      "source": "krx:078600",
       "target": "group:substrate_pack_mat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4916,38 +4816,8 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
-      "id": "member-substrate_pack_mat-356860",
-      "source": "krx:356860",
-      "target": "group:substrate_pack_mat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "기판·패키징 소재 밸류체인 분류",
-      "labelEn": "Substrate & packaging materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
       "id": "member-substrate_pack_mat-327260",
       "source": "krx:327260",
-      "target": "group:substrate_pack_mat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "기판·패키징 소재 밸류체인 분류",
-      "labelEn": "Substrate & packaging materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-substrate_pack_mat-178920",
-      "source": "krx:178920",
       "target": "group:substrate_pack_mat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4978,21 +4848,6 @@
     {
       "id": "member-substrate_pack_mat-024850",
       "source": "krx:024850",
-      "target": "group:substrate_pack_mat",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "기판·패키징 소재 밸류체인 분류",
-      "labelEn": "Substrate & packaging materials value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-substrate_pack_mat-272290",
-      "source": "krx:272290",
       "target": "group:substrate_pack_mat",
       "type": "member_of",
       "direction": "source_to_target",
@@ -5290,6 +5145,332 @@
     {
       "id": "hub-substrate_pack_mat-ats-peer",
       "source": "group:substrate_pack_mat",
+      "target": "global:ats",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "고밀도 상호연결·기판 peer",
+      "labelEn": "HDI and substrate peer",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "defaultHidden": true
+    },
+    {
+      "id": "member-memory_module_boards-007660",
+      "source": "krx:007660",
+      "target": "group:memory_module_boards",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "메모리 모듈·서버 기판 밸류체인 분류",
+      "labelEn": "Memory modules & server boards value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-09-10",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-memory_module_boards-356860",
+      "source": "krx:356860",
+      "target": "group:memory_module_boards",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "메모리 모듈·서버 기판 밸류체인 분류",
+      "labelEn": "Memory modules & server boards value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-09-10",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-memory_module_boards-078350",
+      "source": "krx:078350",
+      "target": "group:memory_module_boards",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "메모리 모듈·서버 기판 밸류체인 분류",
+      "labelEn": "Memory modules & server boards value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-09-10",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "hub-memory_module_boards-nan_ya-supplier",
+      "source": "global:nan_ya",
+      "target": "group:memory_module_boards",
+      "type": "supplies_to",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "동박적층판(CCL)·기판 소재",
+      "labelEn": "Copper-clad laminate (CCL) and substrate materials",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "동박적층판(CCL)·기판 소재",
+          "url": "https://www.npc.com.tw/",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review",
+          "directEvidence": false,
+          "evidenceSummaryKo": "밸류체인 그룹 수준 참고 연결 — 특정 거래·계약 직접 입증 아님",
+          "relationshipSupported": "산업 밸류체인 참고(특정 상대 미입증)"
+        }
+      ],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-emc_laminate-supplier",
+      "source": "global:emc_laminate",
+      "target": "group:memory_module_boards",
+      "type": "supplies_to",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "고속·고주파 CCL 소재",
+      "labelEn": "High-speed and high-frequency CCL materials",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "고속·고주파 CCL 소재",
+          "url": "https://www.emctw.com/",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review",
+          "directEvidence": false,
+          "evidenceSummaryKo": "밸류체인 그룹 수준 참고 연결 — 특정 거래·계약 직접 입증 아님",
+          "relationshipSupported": "산업 밸류체인 참고(특정 상대 미입증)"
+        }
+      ],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-dupont-supplier",
+      "source": "global:dupont",
+      "target": "group:memory_module_boards",
+      "type": "supplies_to",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "기판·패키징 관련 전자재료",
+      "labelEn": "Electronic materials for substrates and packaging",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "기판·패키징 관련 전자재료",
+          "url": "https://www.dupont.com/electronics-industrial.html",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review",
+          "directEvidence": false,
+          "evidenceSummaryKo": "밸류체인 그룹 수준 참고 연결 — 특정 거래·계약 직접 입증 아님",
+          "relationshipSupported": "산업 밸류체인 참고(특정 상대 미입증)"
+        }
+      ],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-samsung_d-customer",
+      "source": "group:memory_module_boards",
+      "target": "anchor:005930",
+      "type": "customer_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "메모리·패키지 기판·소켓 수요",
+      "labelEn": "Memory/package substrate and socket demand",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "메모리·패키지 기판·소켓 수요",
+          "url": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review"
+        }
+      ],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-skhynix_d-customer",
+      "source": "group:memory_module_boards",
+      "target": "anchor:000660",
+      "type": "customer_of",
+      "direction": "source_to_target",
+      "status": "reported",
+      "labelKo": "HBM·메모리 기판 수요",
+      "labelEn": "HBM and memory substrate demand",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "HBM·메모리 기판 수요",
+          "url": "https://www.skhynix.com/eng/sustainability/supplyChain.do",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-qualcomm-customer",
+      "source": "group:memory_module_boards",
+      "target": "global:qualcomm",
+      "type": "customer_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "모바일·패키지 기판 수요",
+      "labelEn": "Mobile and package substrate demand",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "모바일·패키지 기판 수요",
+          "url": "https://www.qualcomm.com/",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review",
+          "directEvidence": false,
+          "evidenceSummaryKo": "밸류체인 그룹 수준 참고 연결 — 특정 거래·계약 직접 입증 아님",
+          "relationshipSupported": "산업 밸류체인 참고(특정 상대 미입증)"
+        }
+      ],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-micron_eq-customer",
+      "source": "group:memory_module_boards",
+      "target": "global:micron_eq",
+      "type": "customer_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "메모리 기판·인터포저 수요",
+      "labelEn": "Memory substrate and interposer demand",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "메모리 기판·인터포저 수요",
+          "url": "https://www.micron.com/",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review",
+          "directEvidence": false,
+          "evidenceSummaryKo": "밸류체인 그룹 수준 참고 연결 — 특정 거래·계약 직접 입증 아님",
+          "relationshipSupported": "산업 밸류체인 참고(특정 상대 미입증)"
+        }
+      ],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-intel-customer",
+      "source": "group:memory_module_boards",
+      "target": "global:intel",
+      "type": "customer_of",
+      "direction": "source_to_target",
+      "status": "reported",
+      "labelKo": "서버·패키지 기판 수요",
+      "labelEn": "Server and package substrate demand",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "서버·패키지 기판 수요",
+          "url": "https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review"
+        }
+      ],
+      "confidence": "medium",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-nvidia-customer",
+      "source": "group:memory_module_boards",
+      "target": "global:nvidia",
+      "type": "customer_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "AI·GPU 패키지 기판 수요",
+      "labelEn": "AI/GPU package substrate demand",
+      "evidence": [
+        {
+          "sourceType": "official",
+          "title": "AI·GPU 패키지 기판 수요",
+          "url": "https://www.nvidia.com/",
+          "publishedAt": null,
+          "accessedAt": "2026-09-10",
+          "reviewStatus": "needs_human_review",
+          "directEvidence": false,
+          "evidenceSummaryKo": "밸류체인 그룹 수준 참고 연결 — 특정 거래·계약 직접 입증 아님",
+          "relationshipSupported": "산업 밸류체인 참고(특정 상대 미입증)"
+        }
+      ],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "reviewStatus": "needs_human_review"
+    },
+    {
+      "id": "hub-memory_module_boards-ibiden-peer",
+      "source": "group:memory_module_boards",
+      "target": "global:ibiden",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "패키지 기판 글로벌 peer",
+      "labelEn": "Global package-substrate peer",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "defaultHidden": true
+    },
+    {
+      "id": "hub-memory_module_boards-shinko-peer",
+      "source": "group:memory_module_boards",
+      "target": "global:shinko",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "패키지 기판 peer",
+      "labelEn": "Package-substrate peer",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "defaultHidden": true
+    },
+    {
+      "id": "hub-memory_module_boards-unimicron-peer",
+      "source": "group:memory_module_boards",
+      "target": "global:unimicron",
+      "type": "peer",
+      "direction": "undirected",
+      "status": "peer",
+      "labelKo": "PCB·패키지 기판 peer",
+      "labelEn": "PCB and package-substrate peer",
+      "evidence": [],
+      "confidence": "low",
+      "lastVerifiedAt": "2026-09-10",
+      "defaultHidden": true
+    },
+    {
+      "id": "hub-memory_module_boards-ats-peer",
+      "source": "group:memory_module_boards",
       "target": "global:ats",
       "type": "peer",
       "direction": "undirected",

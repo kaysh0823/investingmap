@@ -1,0 +1,282 @@
+{
+  "appliedOn": "2026-10-04",
+  "movedNodes": [
+    {
+      "id": "krx:078350",
+      "from": "netmap/elec",
+      "to": "netmap/semiconductor",
+      "chain": "memory_module_boards"
+    },
+    {
+      "id": "krx:272290",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec",
+      "chain": "display_mat"
+    },
+    {
+      "id": "krx:078600",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec",
+      "chain": "components"
+    },
+    {
+      "id": "krx:178920",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec",
+      "chain": "components"
+    },
+    {
+      "id": "krx:098460",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec",
+      "chain": "smt_inspect"
+    },
+    {
+      "id": "krx:168360",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec",
+      "chain": "smt_inspect"
+    },
+    {
+      "id": "krx:078350",
+      "from": "networks/elec",
+      "to": "networks/semiconductor",
+      "chain": "메모리 모듈·서버 기판"
+    },
+    {
+      "id": "krx:272290",
+      "from": "networks/semiconductor",
+      "to": "networks/elec",
+      "chain": "디스플레이 소재"
+    },
+    {
+      "id": "krx:078600",
+      "from": "networks/semiconductor",
+      "to": "networks/elec",
+      "chain": "전자부품·기판"
+    },
+    {
+      "id": "krx:178920",
+      "from": "networks/semiconductor",
+      "to": "networks/elec",
+      "chain": "전자부품·기판"
+    },
+    {
+      "id": "krx:098460",
+      "from": "networks/semiconductor",
+      "to": "networks/elec",
+      "chain": "전자·SMT 검사장비"
+    },
+    {
+      "id": "krx:168360",
+      "from": "networks/semiconductor",
+      "to": "networks/elec",
+      "chain": "전자·SMT 검사장비"
+    }
+  ],
+  "movedEdges": [
+    {
+      "id": "supply:krx_078350>global_samsung",
+      "source": "krx:078350",
+      "target": "global:samsung",
+      "from": "netmap/elec",
+      "to": "netmap/semiconductor"
+    },
+    {
+      "id": "supply:krx_098460>global_foxconn",
+      "source": "krx:098460",
+      "target": "global:foxconn",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "supply:krx_178920>global_apple",
+      "source": "krx:178920",
+      "target": "global:apple",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "supply:krx_168360>global_micron",
+      "source": "krx:168360",
+      "target": "global:micron",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "supply:krx_168360>global_kingston",
+      "source": "krx:168360",
+      "target": "global:kingston",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "peer:krx_098460>global_kla",
+      "source": "krx:098460",
+      "target": "global:kla",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "peer:krx_098460>global_hitachi_ht",
+      "source": "krx:098460",
+      "target": "global:hitachi_ht",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "peer:krx_098460>global_onto",
+      "source": "krx:098460",
+      "target": "global:onto",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "peer:krx_098460>global_camtek",
+      "source": "krx:098460",
+      "target": "global:camtek",
+      "from": "netmap/semiconductor",
+      "to": "netmap/elec"
+    },
+    {
+      "id": "peer-078350-murata",
+      "source": "krx:078350",
+      "target": "global:murata",
+      "from": "networks/elec",
+      "to": "networks/semiconductor"
+    },
+    {
+      "id": "peer-078350-sony",
+      "source": "krx:078350",
+      "target": "global:sony",
+      "from": "networks/elec",
+      "to": "networks/semiconductor"
+    },
+    {
+      "id": "peer-078350-panasonic",
+      "source": "krx:078350",
+      "target": "global:panasonic",
+      "from": "networks/elec",
+      "to": "networks/semiconductor"
+    }
+  ],
+  "unmovedEdges": [
+    {
+      "id": "supply:krx_178920>krx_005930",
+      "source": "krx:178920",
+      "target": "krx:005930",
+      "type": "supply",
+      "evidence": [
+        {
+          "url": "https://www.thelec.kr/news/articleView.html?idxno=9379",
+          "accessedAt": "2026-09-25"
+        }
+      ],
+      "from": "netmap/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "supply:krx_272290>krx_005930",
+      "source": "krx:272290",
+      "target": "krx:005930",
+      "type": "supply",
+      "evidence": [
+        {
+          "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02558406645485000",
+          "accessedAt": "2026-09-25"
+        }
+      ],
+      "from": "netmap/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "supply:krx_272290>krx_000660",
+      "source": "krx:272290",
+      "target": "krx:000660",
+      "type": "supply",
+      "evidence": [
+        {
+          "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02558406645485000",
+          "accessedAt": "2026-09-25"
+        }
+      ],
+      "from": "netmap/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "supply:krx_168360>krx_000660",
+      "source": "krx:168360",
+      "target": "krx:000660",
+      "type": "supply",
+      "evidence": [
+        {
+          "url": "https://www.creditnews.kr/news/articleView.html?idxno=31385",
+          "accessedAt": "2026-09-25"
+        }
+      ],
+      "from": "netmap/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "member-078350-electronic_component",
+      "source": "krx:078350",
+      "target": "group:electronic_component",
+      "type": "member_of",
+      "evidence": [],
+      "from": "networks/elec",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "member-inspect_metro-098460",
+      "source": "krx:098460",
+      "target": "group:inspect_metro",
+      "type": "member_of",
+      "evidence": [],
+      "from": "networks/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "member-inspect_metro-168360",
+      "source": "krx:168360",
+      "target": "group:inspect_metro",
+      "type": "member_of",
+      "evidence": [],
+      "from": "networks/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "member-substrate_pack_mat-078600",
+      "source": "krx:078600",
+      "target": "group:substrate_pack_mat",
+      "type": "member_of",
+      "evidence": [],
+      "from": "networks/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "member-substrate_pack_mat-178920",
+      "source": "krx:178920",
+      "target": "group:substrate_pack_mat",
+      "type": "member_of",
+      "evidence": [],
+      "from": "networks/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    },
+    {
+      "id": "member-substrate_pack_mat-272290",
+      "source": "krx:272290",
+      "target": "group:substrate_pack_mat",
+      "type": "member_of",
+      "evidence": [],
+      "from": "networks/semiconductor",
+      "reason": "counterpart stays outside the moved set; edge recorded and removed so the source graph has no dangling endpoint"
+    }
+  ],
+  "missingNodes": [],
+  "notes": [
+    "networks/elec.json is regenerated by migrate_elec_network_phase5c.mjs from the elec map. Nodes that arrive on elec reappear there as map constituents.",
+    "memory_module_boards hub suppliers/customers/peers are the substrate hub arrays copied with their existing evidence URLs. No new company edge was created.",
+    "Added semi_relations hub memory_module_boards by copying substrate_pack_mat supplier/customer/peer arrays.",
+    "cross_relations 272290 sector semi→elec (1)"
+  ]
+}

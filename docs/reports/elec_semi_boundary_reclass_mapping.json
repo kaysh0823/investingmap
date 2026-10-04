@@ -1,0 +1,326 @@
+{
+  "appliedOn": "2026-10-04",
+  "rule": "majority chip manufacturing, packaging, test, or memory/AI-server demand → semi; otherwise core-business map plus AI·메모리 tag",
+  "tickers": [
+    {
+      "ticker": "007660",
+      "name": "이수페타시스",
+      "from": {
+        "sector": "semi",
+        "group": "기판·패키징 소재"
+      },
+      "to": {
+        "sector": "semi",
+        "group": "메모리 모듈·서버 기판"
+      },
+      "tags": [
+        "AI서버",
+        "네트워크",
+        "MLB",
+        "AI·메모리"
+      ],
+      "evidenceUrl": "https://comp.wisereport.co.kr/company/c1020001.aspx?cmp_cd=007660",
+      "appliedOn": "2026-10-04",
+      "action": "group_change",
+      "notes": "과반이 AI 서버·네트워크용 MLB. semi 유지, 그룹만 이동"
+    },
+    {
+      "ticker": "356860",
+      "name": "티엘비",
+      "from": {
+        "sector": "semi",
+        "group": "기판·패키징 소재"
+      },
+      "to": {
+        "sector": "semi",
+        "group": "메모리 모듈·서버 기판"
+      },
+      "tags": [
+        "메모리모듈",
+        "SSD",
+        "AI·메모리"
+      ],
+      "evidenceUrl": "https://comp.wisereport.co.kr/company/c1020001.aspx?cmp_cd=356860",
+      "appliedOn": "2026-10-04",
+      "action": "group_change",
+      "notes": "DDR5 모듈·SSD PCB. 메모리 사이클 연동으로 semi 유지. bigchip 관계 유지"
+    },
+    {
+      "ticker": "009150",
+      "name": "삼성전기",
+      "from": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "tags": [
+        "MLCC",
+        "카메라모듈",
+        "스마트폰",
+        "반도체기판(FC-BGA)",
+        "AI·메모리"
+      ],
+      "evidenceUrl": "https://comp.wisereport.co.kr/company/c1020001.aspx?cmp_cd=009150",
+      "appliedOn": "2026-10-04",
+      "action": "tag_add",
+      "notes": "패키지기판은 과반 미만. 태그 반도체기판(FC-BGA), AI·메모리 추가"
+    },
+    {
+      "ticker": "078350",
+      "name": "한양디지텍",
+      "from": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "to": {
+        "sector": "semi",
+        "group": "메모리 모듈·서버 기판"
+      },
+      "tags": [
+        "메모리모듈",
+        "SSD",
+        "AI·메모리"
+      ],
+      "evidenceUrl": "https://comp.wisereport.co.kr/company/c1020001.aspx?cmp_cd=078350",
+      "appliedOn": "2026-10-04",
+      "action": "move",
+      "notes": "메모리모듈 64%·SSD 34%. 메모리 사이클 연동으로 elec→semi"
+    },
+    {
+      "ticker": "353200",
+      "name": "대덕전자",
+      "from": {
+        "sector": "semi",
+        "group": "기판·패키징 소재"
+      },
+      "to": {
+        "sector": "semi",
+        "group": "기판·패키징 소재"
+      },
+      "tags": [
+        "FC-BGA",
+        "메모리패키지기판",
+        "MLB"
+      ],
+      "evidenceUrl": "https://www.mt.co.kr/stock/2026/06/16/2026061608055282845",
+      "appliedOn": "2026-10-04",
+      "action": "tag_add",
+      "notes": "그룹 유지. 태그 FC-BGA, 메모리패키지기판, MLB"
+    },
+    {
+      "ticker": "098460",
+      "name": "고영",
+      "from": {
+        "sector": "semi",
+        "group": "검사·계측 장비"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자·SMT 검사장비"
+      },
+      "tags": [
+        "SMT검사",
+        "반도체패키징검사",
+        "의료로봇"
+      ],
+      "evidenceUrl": "https://stock.pstatic.net/stock-research/company/40/20260820_company_422486000.pdf",
+      "appliedOn": "2026-10-04",
+      "action": "move",
+      "notes": "SMT 검사 과반. 신설 elec 그룹. 디스플레이 장비와 분리"
+    },
+    {
+      "ticker": "168360",
+      "name": "펨트론",
+      "from": {
+        "sector": "semi",
+        "group": "검사·계측 장비"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자·SMT 검사장비"
+      },
+      "tags": [
+        "SMT검사",
+        "반도체검사",
+        "HBM"
+      ],
+      "evidenceUrl": "https://stock.pstatic.net/stock-research/company/15/20260226_company_736457000.pdf",
+      "appliedOn": "2026-10-04",
+      "action": "move",
+      "notes": "SMT 검사 주력. 신설 elec 그룹. HBM 검사는 태그"
+    },
+    {
+      "ticker": "323280",
+      "name": "태성",
+      "from": {
+        "sector": "semi",
+        "group": "전공정 장비"
+      },
+      "to": {
+        "sector": "semi",
+        "group": "패키징 장비"
+      },
+      "tags": [
+        "FC-BGA",
+        "유리기판",
+        "PCB장비"
+      ],
+      "evidenceUrl": "https://news.mtn.co.kr/news-detail/2026090415441860843",
+      "appliedOn": "2026-10-04",
+      "action": "group_change",
+      "notes": "FC-BGA·PCB 습식장비. 전공정 장비에서 패키징 장비로. semi 유지"
+    },
+    {
+      "ticker": "178920",
+      "name": "PI첨단소재",
+      "from": {
+        "sector": "semi",
+        "group": "기판·패키징 소재"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "tags": [
+        "FPCB",
+        "방열시트",
+        "EV",
+        "반도체"
+      ],
+      "evidenceUrl": "https://newstomato.com/ReadNews.aspx?no=1308799",
+      "appliedOn": "2026-10-04",
+      "action": "move",
+      "notes": "PI 필름 주력. SECTOR_EXCLUSIVE semi 해제 → elec"
+    },
+    {
+      "ticker": "272290",
+      "name": "이녹스첨단소재",
+      "from": {
+        "sector": "semi",
+        "group": "기판·패키징 소재"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "디스플레이 소재"
+      },
+      "tags": [
+        "OLED소재",
+        "FPCB소재",
+        "반도체패키징소재"
+      ],
+      "evidenceUrl": "https://stock.pstatic.net/stock-research/company/61/20260519_company_62274000.pdf",
+      "appliedOn": "2026-10-04",
+      "action": "move",
+      "notes": "semi_needs_review_confirmed의 그룹 유지를 뒤집음. OLED·FPCB 소재가 주력"
+    },
+    {
+      "ticker": "078600",
+      "name": "대주전자재료",
+      "from": {
+        "sector": "semi",
+        "group": "기판·패키징 소재"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "tags": [
+        "MLCC페이스트",
+        "태양전지페이스트",
+        "실리콘음극재"
+      ],
+      "evidenceUrl": "https://stock.pstatic.net/stock-research/company/39/20260515_company_976221000.pdf",
+      "appliedOn": "2026-10-04",
+      "action": "move",
+      "notes": "기판·패키징 소재 정정과 SECTOR_EXCLUSIVE semi를 뒤집음. 페이스트·음극재가 주력"
+    },
+    {
+      "ticker": "178320",
+      "name": "서진시스템",
+      "from": {
+        "sector": "semi",
+        "group": "공정 부품·유지관리"
+      },
+      "to": {
+        "sector": "semi",
+        "group": "공정 부품·유지관리"
+      },
+      "tags": [
+        "ESS",
+        "통신장비",
+        "반도체장비부품"
+      ],
+      "evidenceUrl": "https://www.mt.co.kr/stock/2026/08/20/2026082008029688754",
+      "appliedOn": "2026-10-04",
+      "action": "tag_add",
+      "notes": "그룹 유지. 태그 ESS, 통신장비, 반도체장비부품"
+    },
+    {
+      "ticker": "004710",
+      "name": "한솔테크닉스",
+      "from": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "tags": [
+        "파워보드",
+        "EMS",
+        "반도체장비부품",
+        "전장"
+      ],
+      "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260813001607",
+      "appliedOn": "2026-10-04",
+      "action": "description_fix",
+      "notes": "전자·화학 소재와 LED BLU 설명은 둘 다 오류. 파워보드·EMS로 교정"
+    },
+    {
+      "ticker": "089010",
+      "name": "켐트로닉스",
+      "from": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "tags": [
+        "PBA모듈",
+        "무선충전",
+        "반도체케미칼",
+        "전장"
+      ],
+      "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814000921",
+      "appliedOn": "2026-10-04",
+      "action": "description_fix",
+      "notes": "전자 모듈·케미칼 설명으로 교정"
+    },
+    {
+      "ticker": "025320",
+      "name": "시노펙스",
+      "from": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "to": {
+        "sector": "elec",
+        "group": "전자부품·기판"
+      },
+      "tags": [
+        "FPCB",
+        "반도체필터"
+      ],
+      "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814004084",
+      "appliedOn": "2026-10-04",
+      "action": "tag_add",
+      "notes": "그룹 유지. 태그 FPCB, 반도체필터"
+    }
+  ]
+}

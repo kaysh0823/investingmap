@@ -384,7 +384,7 @@
     },
     "168360": {
       "name": "펨트론",
-      "sector": "semi",
+      "sector": "elec",
       "mcapWon": 304538775200,
       "market": "KOSDAQ"
     },
@@ -426,7 +426,7 @@
     },
     "178920": {
       "name": "PI첨단소재",
-      "sector": "semi",
+      "sector": "elec",
       "mcapWon": 541514977680,
       "market": "KOSPI"
     },
@@ -804,7 +804,7 @@
     },
     "272290": {
       "name": "이녹스첨단소재",
-      "sector": "semi",
+      "sector": "elec",
       "mcapWon": 404731432700,
       "market": "KOSDAQ"
     },
@@ -1758,13 +1758,13 @@
     },
     "078600": {
       "name": "대주전자재료",
-      "sector": "semi",
+      "sector": "elec",
       "mcapWon": 1381964144000,
       "market": "KOSDAQ"
     },
     "098460": {
       "name": "고영",
-      "sector": "semi",
+      "sector": "elec",
       "mcapWon": 1885846489450,
       "market": "KOSDAQ"
     },
@@ -2880,7 +2880,7 @@
     },
     "078350": {
       "name": "한양디지텍",
-      "sector": "elec",
+      "sector": "semi",
       "mcapWon": 389493960100,
       "market": "KOSDAQ"
     },

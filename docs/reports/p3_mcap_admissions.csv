@@ -1,5 +1,5 @@
 ticker,name,sector,chain,mcap_eok,tags,evidence,status
-323280,"태성",semi,"전공정 장비",13879.51,"","PCB·반도체 습식세정·식각장비",admitted
+323280,"태성",semi,"패키징 장비",13879.51,"FC-BGA|유리기판|PCB장비","FC-BGA·고다층 PCB 습식세정·식각, 유리기판 장비",admitted
 127120,"제이에스링크",bio,"연구도구·서비스",12045.98,"","유전체 분석·영구자석 — semi→bio 정정",admitted
 388210,"씨엠티엑스",semi,"공정 부품·유지관리",7163.59,"","SiC 포커스링",admitted
 031330,"에스에이엠티",semi,"반도체 유통",8349.59,"","반도체·IT 유통",admitted

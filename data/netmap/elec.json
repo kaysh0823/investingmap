@@ -12,7 +12,8 @@
   "display_equip": "디스플레이 장비",
   "display_mat": "디스플레이 소재",
   "end_customer": "수요처·세트",
-  "global_peer": "글로벌 부품·경쟁사"
+  "global_peer": "글로벌 부품·경쟁사",
+  "smt_inspect": "전자·SMT 검사장비"
  },
  "edgeTypes": {
   "supply": "공급 (source → target)",
@@ -296,17 +297,6 @@
    "country": "kr",
    "chain": "optics",
    "role": "카메라·광학·센서"
-  },
-  {
-   "id": "krx:078350",
-   "type": "kr_listed",
-   "ticker": "078350",
-   "nameKo": "한양디지텍",
-   "nameEn": "한양디지텍",
-   "market": "KOSDAQ",
-   "country": "kr",
-   "chain": "components",
-   "role": "전자부품·기판"
   },
   {
    "id": "krx:441270",
@@ -873,6 +863,131 @@
    "country": "kr",
    "chain": "components",
    "role": "RF 전력증폭모듈(PAM/FEM)·차량 RF 부품 (구 와이팜)"
+  },
+  {
+   "id": "krx:272290",
+   "type": "kr_listed",
+   "ticker": "272290",
+   "nameKo": "이녹스첨단소재",
+   "nameEn": "INNOX Advanced Materials Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "display_mat",
+   "role": "OLED·FPCB 소재"
+  },
+  {
+   "id": "krx:078600",
+   "type": "kr_listed",
+   "ticker": "078600",
+   "nameKo": "대주전자재료",
+   "nameEn": "Daejoo Electronic Materials Co., Ltd.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "components",
+   "role": "전자부품용 페이스트·실리콘 음극재"
+  },
+  {
+   "id": "krx:178920",
+   "type": "kr_listed",
+   "ticker": "178920",
+   "nameKo": "PI첨단소재",
+   "nameEn": "PI Advanced Materials Co., Ltd.",
+   "market": "KOSPI",
+   "country": "kr",
+   "chain": "components",
+   "role": "PI 필름"
+  },
+  {
+   "id": "krx:098460",
+   "type": "kr_listed",
+   "ticker": "098460",
+   "nameKo": "고영",
+   "nameEn": "Koh Young Technology Inc.",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "smt_inspect",
+   "role": "3D SPI·AOI 검사장비"
+  },
+  {
+   "id": "krx:168360",
+   "type": "kr_listed",
+   "ticker": "168360",
+   "nameKo": "펨트론",
+   "nameEn": "PEMTRON Corporation",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "smt_inspect",
+   "role": "SMT·반도체 검사장비"
+  },
+  {
+   "id": "global:foxconn",
+   "type": "global",
+   "nameKo": "폭스콘",
+   "nameEn": "Foxconn (Hon Hai)",
+   "country": "tw",
+   "chain": "end_customer",
+   "role": "EMS",
+   "exchange": "TWSE:2317"
+  },
+  {
+   "id": "global:micron",
+   "type": "global",
+   "nameKo": "마이크론",
+   "nameEn": "Micron",
+   "country": "us",
+   "chain": "idm",
+   "role": "메모리 IDM",
+   "exchange": "NASDAQ:MU"
+  },
+  {
+   "id": "global:kingston",
+   "type": "global",
+   "nameKo": "킹스턴",
+   "nameEn": "Kingston Technology",
+   "country": "tw",
+   "chain": "end_customer",
+   "role": "메모리 모듈",
+   "exchange": ""
+  },
+  {
+   "id": "global:kla",
+   "type": "global",
+   "nameKo": "KLA",
+   "nameEn": "KLA",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "검사·계측",
+   "exchange": "NASDAQ:KLAC"
+  },
+  {
+   "id": "global:hitachi_ht",
+   "type": "global",
+   "nameKo": "히타치하이테크",
+   "nameEn": "Hitachi High-Tech",
+   "country": "jp",
+   "chain": "inspect_metro",
+   "role": "검사·계측",
+   "exchange": ""
+  },
+  {
+   "id": "global:onto",
+   "type": "global",
+   "nameKo": "온토",
+   "nameEn": "Onto Innovation",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "검사·계측",
+   "exchange": "NYSE:ONTO"
+  },
+  {
+   "id": "global:camtek",
+   "type": "global",
+   "nameKo": "캠텍",
+   "nameEn": "Camtek",
+   "country": "us",
+   "chain": "inspect_metro",
+   "role": "패키징 검사",
+   "exchange": "NASDAQ:CAMT"
   }
  ],
  "edges": [
@@ -1306,20 +1421,6 @@
    "evidence": [
     {
      "url": "https://www.thelec.kr/news/articleView.html?idxno=13881",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "supply:krx_078350>global_samsung",
-   "source": "krx:078350",
-   "target": "global:samsung",
-   "type": "supply",
-   "labelKo": "메모리 모듈 외주 (삼성전자 97.1%)",
-   "confidence": "high",
-   "evidence": [
-    {
-     "url": "https://thevc.kr/hanyangdigitech",
      "accessedAt": "2026-09-25"
     }
    ]
@@ -2384,6 +2485,118 @@
    "evidence": [
     {
      "url": "https://www.gminsights.com/industry-analysis/electronic-shelf-label-esl-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_098460>global_foxconn",
+   "source": "krx:098460",
+   "target": "global:foxconn",
+   "type": "supply",
+   "labelKo": "3D SPI 검사장비",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.hankyung.com/article/202302109400i",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_178920>global_apple",
+   "source": "krx:178920",
+   "target": "global:apple",
+   "type": "supply",
+   "labelKo": "아이폰 방열시트용 PI 필름",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.thelec.kr/news/articleView.html?idxno=18488",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_168360>global_micron",
+   "source": "krx:168360",
+   "target": "global:micron",
+   "type": "supply",
+   "labelKo": "검사장비 50억 계약 (SOCAMM2)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2596890",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_168360>global_kingston",
+   "source": "krx:168360",
+   "target": "global:kingston",
+   "type": "supply",
+   "labelKo": "검사장비 수주",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://www.etoday.co.kr/news/view/2588367",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_kla",
+   "source": "krx:098460",
+   "target": "global:kla",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_hitachi_ht",
+   "source": "krx:098460",
+   "target": "global:hitachi_ht",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_onto",
+   "source": "krx:098460",
+   "target": "global:onto",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "peer:krx_098460>global_camtek",
+   "source": "krx:098460",
+   "target": "global:camtek",
+   "type": "peer",
+   "labelKo": "검사·계측 장비 경쟁",
+   "confidence": "medium",
+   "evidence": [
+    {
+     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
      "accessedAt": "2026-09-25"
     }
    ]

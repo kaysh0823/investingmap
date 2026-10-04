@@ -588,6 +588,23 @@
       }
     }
   },
+  "168360": {
+    "semType": "SMT·반도체 검사장비",
+    "semTypeEn": "SMT and semiconductor inspection equipment",
+    "products": "SMT 3D 검사장비, 반도체·HBM 검사장비",
+    "productsEn": "SMT 3D inspection and semiconductor/HBM inspection equipment",
+    "tags": [
+      "SMT검사",
+      "반도체검사",
+      "HBM"
+    ],
+    "byIndustry": {
+      "elec": {
+        "chain": "전자·SMT 검사장비",
+        "admittedOn": "2026-10-04"
+      }
+    }
+  },
   "170900": {
     "byIndustry": {
       "bio": {
@@ -648,14 +665,31 @@
         "review_evidence": "공정 부품·기구물 (ESS 주력 비중↑ 모니터링) — 그룹 유지",
         "monitor_note": "ESS 주력 비중 확대 — semi 비중 축소 모니터링, 그룹 유지"
       }
-    }
+    },
+    "tags": [
+      "ESS",
+      "통신장비",
+      "반도체장비부품"
+    ]
   },
   "178920": {
     "byIndustry": {
-      "semi": {
-        "chain": "기판·패키징 소재"
+      "semi": {},
+      "elec": {
+        "chain": "전자부품·기판",
+        "admittedOn": "2026-10-04"
       }
-    }
+    },
+    "semType": "PI 필름",
+    "semTypeEn": "PI film",
+    "products": "FPCB·방열시트·EV·반도체용 폴리이미드 필름",
+    "productsEn": "Polyimide film for FPCB, heat-spreader sheets, EVs and semiconductors",
+    "tags": [
+      "FPCB",
+      "방열시트",
+      "EV",
+      "반도체"
+    ]
   },
   "180640": {
     "tags": [
@@ -1425,11 +1459,24 @@
     "byIndustry": {
       "semi": {
         "needs_review": false,
-        "chain": "기판·패키징 소재",
         "review_status": "confirmed",
         "review_evidence": "FPCB/패키징 소재 — 현 그룹 확정"
+      },
+      "elec": {
+        "chain": "디스플레이 소재",
+        "admittedOn": "2026-10-04",
+        "review_note": "2026-10-04: reverses semi_needs_review_confirmed “현 그룹 확정”. Semiconductor packaging materials are not a majority of sales."
       }
-    }
+    },
+    "semType": "OLED·FPCB 소재",
+    "semTypeEn": "OLED and FPCB materials",
+    "products": "OLED 소재(INNOLED)·FPCB 소재·반도체 패키징 소재",
+    "productsEn": "OLED materials (INNOLED), FPCB materials and semiconductor packaging materials",
+    "tags": [
+      "OLED소재",
+      "FPCB소재",
+      "반도체패키징소재"
+    ]
   },
   "272450": {
     "byIndustry": {
@@ -1752,19 +1799,24 @@
   "323280": {
     "name": "태성",
     "nameEn": "TAESUNG",
-    "semType": "습식세정·식각장비",
-    "semTypeEn": "Wet clean / etch tools",
-    "products": "PCB·반도체 습식세정·식각장비",
-    "productsEn": "PCB/semiconductor wet clean and etch equipment",
+    "semType": "기판 습식공정 장비",
+    "semTypeEn": "Wet-process equipment for substrates",
+    "products": "FC-BGA·고다층 PCB 습식세정·식각 장비, 유리기판 장비",
+    "productsEn": "Wet clean and etch tools for FC-BGA and high-layer PCBs, plus glass-substrate equipment",
     "byIndustry": {
       "semi": {
-        "chain": "전공정 장비",
+        "chain": "패키징 장비",
         "needs_review": false,
-        "evidence": "P3 mcap admission: PCB·반도체 습식세정·식각장비",
-        "semType": "습식세정·식각장비",
-        "products": "PCB·반도체 습식세정·식각장비"
+        "evidence": "P3 mcap admission: FC-BGA·고다층 PCB 습식세정·식각, 유리기판 장비",
+        "semType": "기판 습식공정 장비",
+        "products": "FC-BGA·고다층 PCB 습식세정·식각 장비, 유리기판 장비"
       }
-    }
+    },
+    "tags": [
+      "FC-BGA",
+      "유리기판",
+      "PCB장비"
+    ]
   },
   "326030": {
     "byIndustry": {
@@ -1960,7 +2012,12 @@
       "semi": {
         "chain": "기판·패키징 소재"
       }
-    }
+    },
+    "tags": [
+      "FC-BGA",
+      "메모리패키지기판",
+      "MLB"
+    ]
   },
   "356680": {
     "byIndustry": {
@@ -1972,14 +2029,19 @@
   },
   "356860": {
     "semType": "메모리 모듈·SSD PCB",
-    "semTypeEn": "Memory module & SSD PCB",
-    "products": "DRAM 모듈·SSD·서버용 고다층 PCB",
-    "productsEn": "High-layer-count PCBs for DRAM modules, SSDs and servers",
+    "semTypeEn": "Memory-module and SSD PCBs",
+    "products": "DDR5 메모리 모듈·SSD·서버용 PCB",
+    "productsEn": "PCBs for DDR5 memory modules, SSDs and servers",
     "byIndustry": {
       "semi": {
-        "chain": "기판·패키징 소재"
+        "chain": "메모리 모듈·서버 기판"
       }
-    }
+    },
+    "tags": [
+      "메모리모듈",
+      "SSD",
+      "AI·메모리"
+    ]
   },
   "357780": {
     "byIndustry": {
@@ -2967,7 +3029,6 @@
         "products": "반도체·디스플레이용 전자재료·실리콘계 소재",
         "productsEn": "Electronic and silicone-based materials for semiconductors and displays",
         "needs_review": false,
-        "chain": "기판·패키징 소재",
         "review_status": "corrected",
         "review_evidence": "대주전자재료 — 기판·패키징 소재로 정정 (배터리 주력 모니터링)",
         "monitor_note": "배터리 주력 — 향후 elec/battery 홈 재검토 후보, 현 그룹 기판·패키징 소재 유지"
@@ -2977,8 +3038,22 @@
         "semTypeEn": "Battery & Electronic Materials",
         "products": "2차전지·전자재료·실리콘계 소재",
         "productsEn": "Battery and electronic silicone-based materials"
+      },
+      "elec": {
+        "chain": "전자부품·기판",
+        "admittedOn": "2026-10-04",
+        "review_note": "2026-10-04: reverses the “기판·패키징 소재 정정” decision and releases the semi exclusive pin. Core sales are component pastes and silicon anodes."
       }
-    }
+    },
+    "semType": "전자부품용 페이스트·실리콘 음극재",
+    "semTypeEn": "Pastes for electronic components and silicon anodes",
+    "products": "MLCC·칩부품·태양전지용 전도성 페이스트, 실리콘 음극재",
+    "productsEn": "Conductive pastes for MLCC, chip components and solar cells, plus silicon anode material",
+    "tags": [
+      "MLCC페이스트",
+      "태양전지페이스트",
+      "실리콘음극재"
+    ]
   },
   "003240": {
     "semType": "석유화학·섬유",
@@ -2993,16 +3068,22 @@
     }
   },
   "004710": {
-    "semType": "전자·화학 소재",
-    "semTypeEn": "Electronic & Chemical Materials",
-    "products": "전자·반도체·디스플레이용 화학·소재",
-    "productsEn": "Chemical and electronic materials for semiconductors and displays",
+    "semType": "전자부품·EMS",
+    "semTypeEn": "Electronic components and EMS",
+    "products": "가전용 파워보드·스마트폰 EMS·반도체 장비 부품·전장부품",
+    "productsEn": "Appliance power boards, smartphone EMS, semiconductor equipment parts and auto-electronics parts",
     "byIndustry": {
       "elec": {
         "chain": "전자부품·기판",
         "needs_review": false
       }
-    }
+    },
+    "tags": [
+      "파워보드",
+      "EMS",
+      "반도체장비부품",
+      "전장"
+    ]
   },
   "011930": {
     "byIndustry": {
@@ -3347,10 +3428,21 @@
   },
   "098460": {
     "byIndustry": {
-      "semi": {
-        "chain": "검사·계측 장비"
+      "semi": {},
+      "elec": {
+        "chain": "전자·SMT 검사장비",
+        "admittedOn": "2026-10-04"
       }
-    }
+    },
+    "semType": "3D SPI·AOI 검사장비",
+    "semTypeEn": "3D SPI and AOI inspection equipment",
+    "products": "SMT 3D SPI·AOI 검사장비, 반도체 패키징 검사, 의료로봇",
+    "productsEn": "SMT 3D SPI and AOI inspection, semiconductor packaging inspection, and medical robots",
+    "tags": [
+      "SMT검사",
+      "반도체패키징검사",
+      "의료로봇"
+    ]
   },
   "089030": {
     "byIndustry": {
@@ -3390,9 +3482,19 @@
   "007660": {
     "byIndustry": {
       "semi": {
-        "chain": "기판·패키징 소재"
+        "chain": "메모리 모듈·서버 기판"
       }
-    }
+    },
+    "semType": "AI 서버·네트워크용 고다층 MLB",
+    "semTypeEn": "High-layer MLB for AI servers and networks",
+    "products": "AI 가속기·서버·네트워크 스위치용 고다층 MLB PCB",
+    "productsEn": "High-layer MLB PCBs for AI accelerators, servers and network switches",
+    "tags": [
+      "AI서버",
+      "네트워크",
+      "MLB",
+      "AI·메모리"
+    ]
   },
   "007810": {
     "byIndustry": {
@@ -4574,7 +4676,9 @@
     "tags": [
       "MLCC",
       "카메라모듈",
-      "스마트폰"
+      "스마트폰",
+      "반도체기판(FC-BGA)",
+      "AI·메모리"
     ]
   },
   "001820": {
@@ -4599,7 +4703,17 @@
         "chain": "전자부품·기판",
         "needs_review": false
       }
-    }
+    },
+    "semType": "전자 모듈·케미칼",
+    "semTypeEn": "Electronic modules and chemicals",
+    "products": "Function PBA·카메라모듈·무선충전, 반도체용 케미칼 원료",
+    "productsEn": "Function PBA, camera modules, wireless charging, and chemical materials for semiconductors",
+    "tags": [
+      "PBA모듈",
+      "무선충전",
+      "반도체케미칼",
+      "전장"
+    ]
   },
   "043260": {
     "byIndustry": {
@@ -6410,7 +6524,11 @@
         "semType": "FPCB·필터",
         "products": "FPCB·반도체 필터·의료필터"
       }
-    }
+    },
+    "tags": [
+      "FPCB",
+      "반도체필터"
+    ]
   },
   "079900": {
     "name": "전진건설로봇",
@@ -6560,6 +6678,23 @@
         "evidence": "P3 mcap admission: 이지홀딩스",
         "semType": "사료·축산 지주",
         "products": "사료·축산·바이오 지주"
+      }
+    }
+  },
+  "078350": {
+    "semType": "메모리 모듈·SSD 조립",
+    "semTypeEn": "Memory module and SSD assembly",
+    "products": "서버용 DRAM 메모리 모듈·SSD 조립·테스트 (삼성전자향)",
+    "productsEn": "Server DRAM memory modules and SSD assembly/test (Samsung Electronics)",
+    "tags": [
+      "메모리모듈",
+      "SSD",
+      "AI·메모리"
+    ],
+    "byIndustry": {
+      "semi": {
+        "chain": "메모리 모듈·서버 기판",
+        "admittedOn": "2026-10-04"
       }
     }
   }

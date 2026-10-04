@@ -268,13 +268,13 @@
     "ticker": "323280",
     "name": "태성",
     "nameEn": "TAESUNG",
-    "chain": "전공정 장비",
-    "semType": "습식세정·식각장비",
-    "semTypeEn": "Wet clean / etch tools",
-    "products": "PCB·반도체 습식세정·식각장비",
-    "productsEn": "PCB/semiconductor wet clean and etch equipment",
+    "chain": "패키징 장비",
+    "semType": "기판 습식공정 장비",
+    "semTypeEn": "Wet-process equipment for substrates",
+    "products": "FC-BGA·고다층 PCB 습식세정·식각 장비, 유리기판 장비",
+    "productsEn": "Wet clean and etch tools for FC-BGA and high-layer PCBs, plus glass-substrate equipment",
     "partners": [],
-    "subSector": "전공정 장비",
+    "subSector": "패키징 장비",
     "level": "core"
   },
   {
@@ -366,6 +366,18 @@
     "productsEn": "Semiconductor cleaners and strippers",
     "partners": [],
     "subSector": "공정 소재",
+    "level": "core"
+  },
+  {
+    "ticker": "078350",
+    "name": "한양디지텍",
+    "nameEn": "Hanyang Digitech",
+    "chain": "메모리 모듈·서버 기판",
+    "semType": "메모리 모듈·SSD 조립",
+    "semTypeEn": "Memory module and SSD assembly",
+    "products": "서버용 DRAM 메모리 모듈·SSD 조립·테스트 (삼성전자향)",
+    "productsEn": "Server DRAM memory modules and SSD assembly/test (Samsung Electronics)",
+    "subSector": "메모리 모듈·SSD 조립",
     "level": "core"
   }
 ]

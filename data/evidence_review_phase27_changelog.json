@@ -362,6 +362,76 @@
       "evidenceUrl": "https://www.nvidia.com/"
     },
     {
+      "edgeId": "hub-memory_module_boards-nan_ya-supplier",
+      "source": "global:nan_ya",
+      "target": "group:memory_module_boards",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.npc.com.tw/"
+    },
+    {
+      "edgeId": "hub-memory_module_boards-emc_laminate-supplier",
+      "source": "global:emc_laminate",
+      "target": "group:memory_module_boards",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.emctw.com/"
+    },
+    {
+      "edgeId": "hub-memory_module_boards-dupont-supplier",
+      "source": "global:dupont",
+      "target": "group:memory_module_boards",
+      "type": "supplies_to",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.dupont.com/electronics-industrial.html"
+    },
+    {
+      "edgeId": "hub-memory_module_boards-samsung_d-customer",
+      "source": "group:memory_module_boards",
+      "target": "anchor:005930",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "삼성 공급사 PDF는 그룹 수준 참고 — 특정 멤버사 거래 아님",
+      "evidenceUrl": "https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf"
+    },
+    {
+      "edgeId": "hub-memory_module_boards-qualcomm-customer",
+      "source": "group:memory_module_boards",
+      "target": "global:qualcomm",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.qualcomm.com/"
+    },
+    {
+      "edgeId": "hub-memory_module_boards-micron_eq-customer",
+      "source": "group:memory_module_boards",
+      "target": "global:micron_eq",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.micron.com/"
+    },
+    {
+      "edgeId": "hub-memory_module_boards-nvidia-customer",
+      "source": "group:memory_module_boards",
+      "target": "global:nvidia",
+      "type": "customer_of",
+      "before": "reported",
+      "after": "reference",
+      "reason": "홈페이지·뉴스룸 URL — hub 집계 관계는 reference로 강등",
+      "evidenceUrl": "https://www.nvidia.com/"
+    },
+    {
       "edgeId": "hub-test_parts-teradyne-supplier",
       "source": "global:teradyne",
       "target": "group:test_parts",
