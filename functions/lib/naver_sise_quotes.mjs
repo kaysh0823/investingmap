@@ -403,9 +403,10 @@ export function parseNaverMobileIntegration(json) {
 }
 
 /**
- * /basic closePrice is the KRX auction price only while the market is OPEN
- * (regular session). preMarket / afterMarket closePrice is the NXT integrated
- * price. overMarketPriceInfo.overPrice is the NXT print and can differ.
+ * /basic closePrice is the KRX regular-session price only while the market is OPEN.
+ * In afterMarket it is the KRX after-hours single-price print (시간외 단일가,
+ * Naver's KRX tab), e.g. 주성엔지니어링 10/02 239,500 vs regular close 237,000
+ * with no NXT trading. overMarketPriceInfo.overPrice is the NXT print.
  * There is no separate regular-close field on this payload after the auction.
  * @param {string} marketStatus
  * @param {string} marketSessionType
@@ -478,6 +479,14 @@ export function parseNaverBasicQuote(json) {
   const tradedAt = String(json.localTradedAt || '');
   const dM = tradedAt.match(/^(\d{4}-\d{2}-\d{2})/);
   if (dM) out.tradeDate = dM[1];
+
+  // KRX after-hours single-price print + Naver's ratio vs the KRX regular prev close.
+  out.afterHoursPrice = null;
+  out.afterHoursChgPct = null;
+  if (out.overMarket && out.marketSessionType === 'afterMarket' && closePx != null && closePx > 0) {
+    out.afterHoursPrice = closePx;
+    out.afterHoursChgPct = Number.isFinite(ratio) ? ratio : null;
+  }
 
   const status = String(json.marketStatus || '').toUpperCase();
   if (status) out.marketClosed = status !== 'OPEN';

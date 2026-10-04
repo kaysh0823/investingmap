@@ -10,6 +10,7 @@ import { fetchNaverQuote, resolveNaverSession } from '../functions/lib/naver_sis
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
 import { isKrxClockRegularSession, isKrxRegularSessionEnded, krxSessionInfo, kstAnchorYmd, kstDateParts, kstWeekday, kstYmd, kstYmdDash } from '../functions/lib/krx_session.mjs';
 import { pricePhase, resolveSessionQuote } from '../functions/lib/session_price_policy.mjs';
+import { buildAfterHoursSnapshot } from '../functions/lib/after_hours_snapshot.mjs';
 import {
   fetchKrxDailyOhlc,
   dailyOhlcFieldsToKrxRow,
@@ -178,6 +179,8 @@ async function fetchNaverQuotes(codes) {
         clean.basicTradeDate = sources.basicQuote?.tradeDate ?? null;
         clean.overMarket = sources.basicQuote?.overMarket === true;
         clean.marketSessionType = sources.basicQuote?.marketSessionType ?? null;
+        clean.afterHoursPrice = sources.basicQuote?.afterHoursPrice ?? null;
+        clean.afterHoursChgPct = sources.basicQuote?.afterHoursChgPct ?? null;
         quotes[row.code] = clean;
         ok += 1;
       } else {
@@ -2237,6 +2240,15 @@ async function main() {
   const naverResult = await fetchNaverQuotes(tickers);
   if (syncSlot === 'intraday') {
     console.log(`[timing] naver fetch ${Date.now() - tNaverFetch}ms`);
+  }
+  if (syncSlot === 'post_close' || syncSlot === 'post_close_retry') {
+    // KRX after-hours single-price hint (display only; committed with the refs chain).
+    const snap = buildAfterHoursSnapshot(naverResult.quotes, todayYmdDash);
+    const n = Object.keys(snap.items).length;
+    if (n > 0) {
+      fs.writeFileSync(path.join(ROOT, 'data', 'hub_after_hours.json'), `${JSON.stringify(snap)}\n`, 'utf8');
+    }
+    console.log(`  after-hours snapshot ${todayYmdDash}: ${n} ticker(s)${n ? '' : ' — not written'}`);
   }
   const supabaseCfg = { url: supabaseUrl, anonKey: serviceKey };
   const krxResult = await loadKrxQuotes(authKey, supabaseCfg);

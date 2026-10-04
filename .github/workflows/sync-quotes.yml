@@ -359,6 +359,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/hub_return_refs.json data/hub_rs_snapshot.json data/hub_sector_returns.json data/hub_volatility_snapshot.json data/hub_valuation_snapshot.json data/hub_bb_score.json
+          if [ -f data/hub_after_hours.json ]; then git add data/hub_after_hours.json; fi
           if git diff --staged --quiet; then
             echo "No changes to commit."
             exit 0

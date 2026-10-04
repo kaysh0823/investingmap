@@ -14,6 +14,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * Keep basename → js/<name> mapping only for files that exist under js/.
  */
 export const JS_FILES = [
+  'js/after_hours.js',
   'js/candle_modal.js',
   'js/desktop_sidebar_nav.js',
   'js/global_bottom_nav.js',
