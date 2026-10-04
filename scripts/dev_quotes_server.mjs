@@ -12,8 +12,12 @@ import {
   mergeNaverIntoQuote,
 } from '../functions/lib/naver_sise_quotes.mjs';
 import { isKrxRegularSession, naverRefreshMs } from '../functions/lib/krx_session.mjs';
-import { buildHubDashboard, buildHubSectors, buildHubTop10, buildHubRsTop10Payload } from '../functions/lib/hub_dashboard_core.mjs';
+import { buildHubDashboard, buildHubTop10, buildHubRsTop10Payload } from '../functions/lib/hub_dashboard_core.mjs';
 import { buildHubSectorTrendPayload } from '../functions/lib/hub_sector_trend.mjs';
+import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
+import { computeStockReturns } from '../functions/lib/returns_core.mjs';
+import { buildHubSectorsFromReturnSource } from '../functions/api/hub_sectors.js';
+import { pricePhase } from '../functions/lib/session_price_policy.mjs';
 
 const PORT = Number(process.env.PORT) || 8788;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -121,10 +125,52 @@ async function handleQuotes(url) {
     if (r.fetched) fetched++;
   }
 
+  const refsRaw = await fs.readFile(path.join(__dirname, '..', 'data', 'hub_return_refs.json'), 'utf8');
+  const refs = JSON.parse(refsRaw);
+  const quoteRows = codes.map((code) => ({
+    ticker: code,
+    last: items[code]?.last ?? null,
+    prev_close: items[code]?.prevClose ?? null,
+    trade_date: items[code]?.tradeDate ?? null,
+    as_of: new Date().toISOString(),
+  }));
+  const source = await loadReturnSource({
+    env: process.env,
+    tickers: codes,
+    refs,
+    quoteRows,
+    now: new Date(),
+  });
+  const k = source.meta?.k ?? 0;
+  for (const code of codes) {
+    const src = source.byTicker?.[code];
+    if (!src || !items[code]) continue;
+    const returns = computeStockReturns({
+      numerator: src.numerator,
+      closes: src.closes,
+      k,
+      prevClose1d: src.prevClose1d,
+      numerator1d: src.numerator1d,
+    });
+    if (src.last != null) items[code].last = src.last;
+    items[code].chg1dPct = returns.chg1dPct;
+    items[code].ret5dPct = returns.ret5dPct;
+    items[code].ret20dPct = returns.ret20dPct;
+    items[code].ret50dPct = returns.ret50dPct;
+    items[code].ret120dPct = returns.ret120dPct;
+    items[code].ret200dPct = returns.ret200dPct;
+  }
+
   return {
-    asOf: new Date().toISOString(),
+    asOf: source.meta?.asOf || new Date().toISOString(),
     source: 'naver-sise-cache',
     regularSession: isKrxRegularSession(),
+    sessionOpen: pricePhase() === 'live',
+    numeratorMode: source.meta?.numeratorMode || 'official',
+    provisional: source.meta?.provisional === true,
+    anchorDd: source.meta?.anchorDd || null,
+    refsRecentDd: source.meta?.refsRecentDd || null,
+    k,
     cacheHits,
     naverFetched: fetched,
     items,
@@ -170,9 +216,13 @@ const server = http.createServer(async (req, res) => {
     try {
       const raw = await fs.readFile(HUB_INDEX_FILE, 'utf8');
       const hubIndex = JSON.parse(raw);
-      const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : null;
-      const horizon = url.searchParams.get('horizon') || '1m';
-      const payload = await buildHubSectors(hubIndex, env, { horizon });
+      const env = process.env.KRX_AUTH_KEY ? { KRX_AUTH_KEY: process.env.KRX_AUTH_KEY } : {};
+      const horizon = url.searchParams.get('horizon') || '1d';
+      const refsRaw = await fs.readFile(path.join(__dirname, '..', 'data', 'hub_return_refs.json'), 'utf8');
+      const payload = await buildHubSectorsFromReturnSource(hubIndex, env, null, horizon, {
+        refs: JSON.parse(refsRaw),
+        quoteRows: [],
+      });
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify(payload));
     } catch (e) {

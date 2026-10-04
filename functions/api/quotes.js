@@ -7,6 +7,7 @@
 
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
 import { krxSessionInfo } from '../lib/krx_session.mjs';
+import { pricePhase } from '../lib/session_price_policy.mjs';
 import { getAuthKey, mergeKrxYoy } from '../lib/krx_yoy.mjs';
 import { loadHubRsSnapshotFromRequest } from '../lib/hub_dashboard_core.mjs';
 import { computeStockReturns } from '../lib/returns_core.mjs';
@@ -16,7 +17,7 @@ import {
   simpleHash,
 } from '../lib/returns_cache_headers.mjs';
 
-const QUOTES_CACHE_VERSION = 'v13';
+const QUOTES_CACHE_VERSION = 'v14';
 
 let rsSnapshotCache = { at: 0, snap: null };
 
@@ -296,7 +297,7 @@ export async function onRequest(context) {
   const codes = [...new Set(codesRaw.split(/[, ]+/).map(normalizeTicker).filter(Boolean))];
   const session = krxSessionInfo();
   // Prefer loader meta; fall back to regular-only session (never aftermarket).
-  const sessionOpenFallback = !!session.regular;
+  const sessionOpenFallback = pricePhase() === 'live';
   const warmHist = url.searchParams.get('warm') === '1';
   const supabaseConfig = getSupabaseConfig(env);
 
