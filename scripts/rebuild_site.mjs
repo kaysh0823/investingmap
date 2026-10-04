@@ -148,5 +148,6 @@ run('node scripts/patch_spark_column.mjs', 'spark chart column');
 run('node scripts/patch_candle_modal.mjs', 'candle chart modal');
 run('node scripts/patch_cross_sector_ui.mjs', 'cross-sector table badges (final)');
 run('node scripts/patch_adsense_head.mjs', 'AdSense head snippet');
+run('node scripts/patch_after_hours.mjs', 'after-hours price hint script on map pages');
 run('node scripts/patch_asset_versions.mjs', 'content-hash ?v= for /js assets');
 console.log('\nOK rebuild_site');

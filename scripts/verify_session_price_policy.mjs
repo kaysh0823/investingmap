@@ -11,6 +11,7 @@ import {
 } from '../functions/lib/session_price_policy.mjs';
 import { parseNaverBasicQuote } from '../functions/lib/naver_sise_quotes.mjs';
 import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
+import { buildAfterHoursSnapshot, nextTradingDayDash } from '../functions/lib/after_hours_snapshot.mjs';
 import {
   RETURNS_LOGIC_VERSION,
   maybeNotModified,
@@ -262,6 +263,39 @@ for (const stamp of ['2026-10-02T08:30', '2026-10-03T11:00', '2026-10-04T11:00']
   const ifNoneMatch = (etag) => new Request('https://example.test/', { headers: { 'If-None-Match': etag } });
   assert.equal(maybeNotModified(ifNoneMatch(`W/"${dataVersion}:1d"`), headers), null);
   assert.equal(maybeNotModified(ifNoneMatch(headers.ETag), headers)?.status, 304);
+}
+
+// KRX after-hours single-price hint: Naver afterMarket closePrice, display only.
+{
+  const json = {
+    closePrice: '239,500',
+    compareToPreviousClosePrice: '-1,500',
+    compareToPreviousPrice: { code: '5', name: 'FALLING' },
+    fluctuationsRatio: '-0.62',
+    marketStatus: 'CLOSE',
+    marketSessionType: 'afterMarket',
+    localTradedAt: '2026-10-02T20:20:20+09:00',
+  };
+  const q = parseNaverBasicQuote(json);
+  assert.equal(q.last, null, 'after-hours print is never the last/1D numerator');
+  assert.equal(q.afterHoursPrice, 239500);
+  assert.equal(q.afterHoursChgPct, -0.62);
+  const live = parseNaverBasicQuote({ ...json, marketStatus: 'OPEN', marketSessionType: 'regularMarket' });
+  assert.equal(live.afterHoursPrice, null);
+
+  assert.equal(nextTradingDayDash('2026-10-02'), '2026-10-06', 'skips weekend + 10/05 substitute holiday');
+  const snap = buildAfterHoursSnapshot(
+    {
+      '036930': { afterHoursPrice: 239500, afterHoursChgPct: -0.62, basicTradeDate: '2026-10-02' },
+      '000000': { afterHoursPrice: 1000, afterHoursChgPct: 1, basicTradeDate: '2026-10-01' },
+      '111111': { afterHoursPrice: null },
+    },
+    '2026-10-02',
+    new Date('2026-10-02T20:10:00+09:00'),
+  );
+  assert.deepEqual(Object.keys(snap.items), ['036930']);
+  assert.equal(snap.validFrom, '2026-10-02T15:30:00+09:00');
+  assert.equal(snap.validUntil, '2026-10-06T09:00:00+09:00');
 }
 
 console.log('verify:session-price-policy OK');
