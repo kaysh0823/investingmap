@@ -12,8 +12,8 @@ import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.
 export const TREND_MAX_POINTS = 200;
 /** Chart fetch resolution — downsample window dates before Supabase queries (CF subrequest cap). */
 export const TREND_CHART_MAX_POINTS = 50;
-const DAILY_LOOKBACK = { '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
-const HORIZON_TRADING_DAYS = { '1d': 1, '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
+const DAILY_LOOKBACK = { '5d': 5, '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
+const HORIZON_TRADING_DAYS = { '1d': 1, '5d': 5, '20d': 20, '50d': 50, '120d': 120, '200d': 200 };
 const INDEX_CODES = ['KOSPI', 'KOSDAQ'];
 const INDEX_FILTER = `index_code=in.(${INDEX_CODES.join(',')})`;
 const MIN_FIXED_MEMBERS = 3;
@@ -32,7 +32,7 @@ const TICKER_BATCH = 80;
 /** Max trade_date values per in.(…) clause — must exceed TREND_CHART_MAX_POINTS for single-batch chart fetches. */
 const DATE_BATCH = 64;
 const CALENDAR_DAYS = 260;
-const CARD_ANCHOR_OFFSETS = [1, 20, 50, 120, 200];
+const CARD_ANCHOR_OFFSETS = [1, 5, 20, 50, 120, 200];
 
 export const TREND_INDEX_CODES = INDEX_CODES;
 
@@ -84,10 +84,11 @@ export function returnPctFromRebasedSeries(series) {
   return Math.round((v - 100) * 100) / 100;
 }
 
-export const TREND_HORIZONS = ['1d', '20d', '50d', '120d', '200d'];
+export const TREND_HORIZONS = ['1d', '5d', '20d', '50d', '120d', '200d'];
 
 export const TREND_RET_COL = {
   '1d': 'ret_1d_pct',
+  '5d': 'ret_5d_pct',
   '20d': 'ret_20d_pct',
   '50d': 'ret_50d_pct',
   '120d': 'ret_120d_pct',
@@ -96,6 +97,7 @@ export const TREND_RET_COL = {
 
 export const TREND_RET_KEY = {
   '1d': 'return1dPct',
+  '5d': 'return5dPct',
   '20d': 'return20dPct',
   '50d': 'return50dPct',
   '120d': 'return120dPct',
