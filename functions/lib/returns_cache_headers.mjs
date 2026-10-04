@@ -6,6 +6,14 @@
 export const RETURNS_CACHE_CONTROL = 'public, max-age=60, must-revalidate';
 
 /**
+ * Bump whenever how returns/prices are computed changes (not the data).
+ * dataVersion alone stays the same across deploys, so without this a browser
+ * holding a body from the old logic keeps getting 304 for it until the next
+ * trading day's data lands.
+ */
+export const RETURNS_LOGIC_VERSION = 'L2-krx-close-after-session';
+
+/**
  * @param {string} s
  * @returns {string}
  */
@@ -23,7 +31,7 @@ export function simpleHash(s) {
  * @returns {string}
  */
 export function buildReturnsETag({ dataVersion, horizon, codesHash } = {}) {
-  const parts = [String(dataVersion || '0')];
+  const parts = [RETURNS_LOGIC_VERSION, String(dataVersion || '0')];
   if (horizon) parts.push(String(horizon));
   if (codesHash) parts.push(String(codesHash));
   return `W/"${parts.join(':')}"`;
