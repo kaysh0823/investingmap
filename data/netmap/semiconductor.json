@@ -18,7 +18,8 @@
   "osat": "패키징·테스트 서비스",
   "fab_infra": "팹 인프라·지원설비",
   "distribution": "반도체 유통",
-  "end_customer": "수요처·세트"
+  "end_customer": "수요처·세트",
+  "memory_module_boards": "메모리 모듈·서버 기판"
  },
  "edgeTypes": {
   "supply": "공급 (source → target)",
@@ -212,7 +213,7 @@
    "nameEn": "TAESUNG",
    "market": "KOSDAQ",
    "country": "kr",
-   "chain": "front_equip",
+   "chain": "pack_equip",
    "role": "습식세정·식각장비"
   },
   {
@@ -291,17 +292,6 @@
    "country": "kr",
    "chain": "pack_equip",
    "role": "레이저 후공정 장비"
-  },
-  {
-   "id": "krx:098460",
-   "type": "kr_listed",
-   "ticker": "098460",
-   "nameKo": "고영",
-   "nameEn": "Koh Young Technology Inc.",
-   "market": "KOSDAQ",
-   "country": "kr",
-   "chain": "inspect_metro",
-   "role": "계측·검사장비 (3D SPI/AOI)"
   },
   {
    "id": "krx:140860",
@@ -412,17 +402,6 @@
    "country": "kr",
    "chain": "inspect_metro",
    "role": "레이저 검사장비"
-  },
-  {
-   "id": "krx:168360",
-   "type": "kr_listed",
-   "ticker": "168360",
-   "nameKo": "펨트론",
-   "nameEn": "PEMTRON Corporation",
-   "market": "KOSDAQ",
-   "country": "kr",
-   "chain": "inspect_metro",
-   "role": "검사장비·SMT/반도체"
   },
   {
    "id": "krx:357780",
@@ -641,7 +620,7 @@
    "nameEn": "Isupetasys",
    "market": "KOSPI",
    "country": "kr",
-   "chain": "substrate",
+   "chain": "memory_module_boards",
    "role": "고다층 MLB PCB"
   },
   {
@@ -665,17 +644,6 @@
    "country": "kr",
    "chain": "substrate",
    "role": "반도체 기판 (PCB)"
-  },
-  {
-   "id": "krx:078600",
-   "type": "kr_listed",
-   "ticker": "078600",
-   "nameKo": "대주전자재료",
-   "nameEn": "Daejoo Electronic Materials Co., Ltd.",
-   "market": "KOSDAQ",
-   "country": "kr",
-   "chain": "substrate",
-   "role": "전자재료·실리콘계 소재"
   },
   {
    "id": "krx:007810",
@@ -707,7 +675,7 @@
    "nameEn": "TLB Co., Ltd.",
    "market": "KOSDAQ",
    "country": "kr",
-   "chain": "substrate",
+   "chain": "memory_module_boards",
    "role": "메모리 모듈·SSD PCB"
   },
   {
@@ -720,17 +688,6 @@
    "country": "kr",
    "chain": "substrate",
    "role": "RF 세라믹 패키지·부품"
-  },
-  {
-   "id": "krx:178920",
-   "type": "kr_listed",
-   "ticker": "178920",
-   "nameKo": "PI첨단소재",
-   "nameEn": "PI Advanced Materials Co., Ltd.",
-   "market": "KOSPI",
-   "country": "kr",
-   "chain": "substrate",
-   "role": "PI필름 (반도체 패키징소재)"
   },
   {
    "id": "krx:077360",
@@ -753,17 +710,6 @@
    "country": "kr",
    "chain": "substrate",
    "role": "리드프레임"
-  },
-  {
-   "id": "krx:272290",
-   "type": "kr_listed",
-   "ticker": "272290",
-   "nameKo": "이녹스첨단소재",
-   "nameEn": "INNOX Advanced Materials Co., Ltd.",
-   "market": "KOSDAQ",
-   "country": "kr",
-   "chain": "substrate",
-   "role": "FPCB/OLED/반도체 소재"
   },
   {
    "id": "krx:033160",
@@ -2020,6 +1966,27 @@
    "chain": "inspect_metro",
    "role": "ATE (어드반테스트와 양강)",
    "exchange": "NASDAQ:TER"
+  },
+  {
+   "id": "krx:078350",
+   "type": "kr_listed",
+   "ticker": "078350",
+   "nameKo": "한양디지텍",
+   "nameEn": "한양디지텍",
+   "market": "KOSDAQ",
+   "country": "kr",
+   "chain": "memory_module_boards",
+   "role": "메모리 모듈·SSD 조립"
+  },
+  {
+   "id": "global:samsung",
+   "type": "kr_other",
+   "nameKo": "삼성전자",
+   "nameEn": "Samsung Electronics",
+   "country": "kr",
+   "chain": "end_customer",
+   "role": "세트·MX·VD",
+   "exchange": "KRX:005930"
   }
  ],
  "edges": [
@@ -3055,20 +3022,6 @@
    "evidence": [
     {
      "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=005290",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "supply:krx_098460>global_foxconn",
-   "source": "krx:098460",
-   "target": "global:foxconn",
-   "type": "supply",
-   "labelKo": "3D SPI 검사장비",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://www.hankyung.com/article/202302109400i",
      "accessedAt": "2026-09-25"
     }
    ]
@@ -4684,34 +4637,6 @@
    ]
   },
   {
-   "id": "supply:krx_178920>krx_005930",
-   "source": "krx:178920",
-   "target": "krx:005930",
-   "type": "supply",
-   "labelKo": "갤럭시 5G 안테나용 MPI 필름",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://www.thelec.kr/news/articleView.html?idxno=9379",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "supply:krx_178920>global_apple",
-   "source": "krx:178920",
-   "target": "global:apple",
-   "type": "supply",
-   "labelKo": "아이폰 방열시트용 PI 필름",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://www.thelec.kr/news/articleView.html?idxno=18488",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
    "id": "supply:krx_253590>global_micron",
    "source": "krx:253590",
    "target": "global:micron",
@@ -5258,34 +5183,6 @@
    ]
   },
   {
-   "id": "supply:krx_272290>krx_005930",
-   "source": "krx:272290",
-   "target": "krx:005930",
-   "type": "supply",
-   "labelKo": "LPDDR용 DAF 양산",
-   "confidence": "high",
-   "evidence": [
-    {
-     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02558406645485000",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "supply:krx_272290>krx_000660",
-   "source": "krx:272290",
-   "target": "krx:000660",
-   "type": "supply",
-   "labelKo": "반도체 패키지 소재",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02558406645485000",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
    "id": "supply:krx_241770>krx_000660",
    "source": "krx:241770",
    "target": "krx:000660",
@@ -5729,48 +5626,6 @@
    "evidence": [
     {
      "url": "https://biz.heraldcorp.com/article/10855183",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "supply:krx_168360>krx_000660",
-   "source": "krx:168360",
-   "target": "krx:000660",
-   "type": "supply",
-   "labelKo": "HBM 3D 검사장비",
-   "confidence": "high",
-   "evidence": [
-    {
-     "url": "https://www.creditnews.kr/news/articleView.html?idxno=31385",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "supply:krx_168360>global_micron",
-   "source": "krx:168360",
-   "target": "global:micron",
-   "type": "supply",
-   "labelKo": "검사장비 50억 계약 (SOCAMM2)",
-   "confidence": "high",
-   "evidence": [
-    {
-     "url": "https://www.etoday.co.kr/news/view/2596890",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "supply:krx_168360>global_kingston",
-   "source": "krx:168360",
-   "target": "global:kingston",
-   "type": "supply",
-   "labelKo": "검사장비 수주",
-   "confidence": "high",
-   "evidence": [
-    {
-     "url": "https://www.etoday.co.kr/news/view/2588367",
      "accessedAt": "2026-09-25"
     }
    ]
@@ -7330,62 +7185,6 @@
    ]
   },
   {
-   "id": "peer:krx_098460>global_kla",
-   "source": "krx:098460",
-   "target": "global:kla",
-   "type": "peer",
-   "labelKo": "검사·계측 장비 경쟁",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "peer:krx_098460>global_hitachi_ht",
-   "source": "krx:098460",
-   "target": "global:hitachi_ht",
-   "type": "peer",
-   "labelKo": "검사·계측 장비 경쟁",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "peer:krx_098460>global_onto",
-   "source": "krx:098460",
-   "target": "global:onto",
-   "type": "peer",
-   "labelKo": "검사·계측 장비 경쟁",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "peer:krx_098460>global_camtek",
-   "source": "krx:098460",
-   "target": "global:camtek",
-   "type": "peer",
-   "labelKo": "검사·계측 장비 경쟁",
-   "confidence": "medium",
-   "evidence": [
-    {
-     "url": "https://www.mordorintelligence.com/industry-reports/semiconductor-test-equipment-market",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
    "id": "peer:krx_420770>global_kla",
    "source": "krx:420770",
    "target": "global:kla",
@@ -8333,6 +8132,20 @@
    "evidence": [
     {
      "url": "https://www.researchandmarkets.com/report/cmp-slurry",
+     "accessedAt": "2026-09-25"
+    }
+   ]
+  },
+  {
+   "id": "supply:krx_078350>global_samsung",
+   "source": "krx:078350",
+   "target": "global:samsung",
+   "type": "supply",
+   "labelKo": "메모리 모듈 외주 (삼성전자 97.1%)",
+   "confidence": "high",
+   "evidence": [
+    {
+     "url": "https://thevc.kr/hanyangdigitech",
      "accessedAt": "2026-09-25"
     }
    ]

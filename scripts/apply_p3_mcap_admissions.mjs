@@ -19,7 +19,7 @@ function pad(t) {
 /** @type {Array<{ticker:string,sector:string,chain:string,semType:string,semTypeEn:string,products:string,productsEn:string,tags?:string[],note:string}>} */
 const ADMISSIONS = [
   // semi
-  { ticker: '323280', sector: 'semi', chain: '전공정 장비', semType: '습식세정·식각장비', semTypeEn: 'Wet clean / etch tools', products: 'PCB·반도체 습식세정·식각장비', productsEn: 'PCB/semiconductor wet clean and etch equipment', note: 'PCB·반도체 습식세정·식각장비' },
+  { ticker: '323280', sector: 'semi', chain: '패키징 장비', semType: '기판 습식공정 장비', semTypeEn: 'Wet-process equipment for substrates', products: 'FC-BGA·고다층 PCB 습식세정·식각 장비, 유리기판 장비', productsEn: 'Wet clean and etch tools for FC-BGA and high-layer PCBs, plus glass-substrate equipment', tags: ['FC-BGA', '유리기판', 'PCB장비'], note: 'FC-BGA·고다층 PCB 습식세정·식각, 유리기판 장비' },
   { ticker: '127120', sector: 'bio', chain: '연구도구·서비스', semType: '유전체 분석·영구자석', semTypeEn: 'Genomic analysis & permanent magnets', products: '유전체 분석 서비스, 희토류 영구자석(신사업)', productsEn: 'Genomic analysis services; rare-earth permanent magnets (new business)', note: '유전체 분석·영구자석 — semi→bio 정정' },
   { ticker: '388210', sector: 'semi', chain: '공정 부품·유지관리', semType: 'SiC 포커스링', semTypeEn: 'SiC focus rings', products: '반도체 SiC 포커스링 소재', productsEn: 'SiC focus-ring materials for semiconductors', note: 'SiC 포커스링' },
   { ticker: '159010', sector: 'semi', chain: '공정 부품·유지관리', semType: '고순도 가스배관', semTypeEn: 'UHP gas tubing', products: '반도체 고순도 가스배관 부품', productsEn: 'Ultra-high-purity gas tubing parts', note: '고순도 가스배관' },

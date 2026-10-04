@@ -1,5 +1,7 @@
 /**
- * Rewrite data/chain_overrides.json "semi" to the 13-group mapping (81 tickers),
+ * Rewrite data/chain_overrides.json "semi" to the leaf-group mapping.
+ * 2026-10-04 boundary: memory-module boards stay semi; SMT inspection and
+ * non-majority materials leave for elec. Later admissions not in SEMI_MAP are kept.
  * write needs_review CSV, and append product tags without overwriting descriptions.
  */
 import fs from 'fs';
@@ -18,17 +20,18 @@ const SEMI_MAP = {
   '전공정 장비': [
     '036930', '240810', '403870', '319660', '084370', '095610', '089970', '281820', '122640', '079370',
   ],
-  '패키징 장비': ['042700', '031980', '053610', '089890', '039030'],
+  '패키징 장비': ['042700', '031980', '053610', '089890', '039030', '323280'],
   '검사·계측 장비': [
-    '098460', '140860', '089030', '420770', '064290', '253590', '092870', '348210', '232140', '003160',
+    '140860', '089030', '420770', '064290', '253590', '092870', '348210', '232140', '003160',
   ],
   '공정 소재': [
     '357780', '014680', '005290', '281740', '101490', '102710', '104830', '036810',
   ],
   '공정 부품·유지관리': ['064760', '183300', '166090', '074600', '101160', '114810', '059090', '178320', '241770'],
   '기판·패키징 소재': [
-    '007660', '353200', '222800', '007810', '356860', '195870', '033160', '178920', '272290', '327260', '078600', '077360',
+    '353200', '222800', '007810', '195870', '033160', '327260', '077360',
   ],
+  '메모리 모듈·서버 기판': ['007660', '356860', '078350'],
   '테스트 부품·인터페이스': [
     '058470', '095340', '131290', '252990', '425420', '080580', '098120', '219130',
   ],
@@ -67,11 +70,17 @@ for (const [chain, tickers] of Object.entries(SEMI_MAP)) {
     semi[ticker] = chain;
   }
 }
-if (byTicker.size !== 80) throw new Error(`expected 80 tickers, got ${byTicker.size}`);
+if (byTicker.size !== 78) throw new Error(`expected 78 tickers, got ${byTicker.size}`);
+const LEAVE_SEMI = new Set(['098460', '168360', '178920', '272290', '078600']);
 
 const overridesPath = path.join(ROOT, 'data', 'chain_overrides.json');
 const overrides = JSON.parse(fs.readFileSync(overridesPath, 'utf8'));
 const prevSemi = { ...(overrides.semi || {}) };
+for (const [ticker, chain] of Object.entries(prevSemi)) {
+  if (LEAVE_SEMI.has(ticker) || semi[ticker]) continue;
+  semi[ticker] = chain;
+}
+for (const ticker of LEAVE_SEMI) delete semi[ticker];
 overrides.semi = semi;
 fs.writeFileSync(overridesPath, JSON.stringify(overrides, null, 2) + '\n', 'utf8');
 console.log('OK chain_overrides.json semi rewritten', Object.keys(semi).length);

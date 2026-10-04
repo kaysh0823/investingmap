@@ -22,6 +22,9 @@ const CHAIN_LANE = {
   '디스플레이': 'display',
   '카메라·모듈': 'camera_module',
   '전자부품': 'electronic_component',
+  '전자부품·기판': 'electronic_component',
+  '디스플레이 소재': 'display_material',
+  '전자·SMT 검사장비': 'smt_inspection',
 };
 
 const LANE_HUBS = [
@@ -29,6 +32,8 @@ const LANE_HUBS = [
   { id: 'group:display', lane: 'display', nameKo: '디스플레이', nameEn: 'Display' },
   { id: 'group:camera_module', lane: 'camera_module', nameKo: '카메라·모듈', nameEn: 'Camera & modules' },
   { id: 'group:electronic_component', lane: 'electronic_component', nameKo: '전자부품', nameEn: 'Electronic components' },
+  { id: 'group:display_material', lane: 'display_material', nameKo: '디스플레이 소재', nameEn: 'Display materials' },
+  { id: 'group:smt_inspection', lane: 'smt_inspection', nameKo: '전자·SMT 검사장비', nameEn: 'Electronics & SMT inspection equipment' },
 ];
 
 const GLOBAL_META = Object.fromEntries(

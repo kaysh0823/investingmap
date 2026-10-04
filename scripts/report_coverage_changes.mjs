@@ -68,12 +68,12 @@ function ymdToDash(ymd) {
 function loadCuratedUniverse() {
   const byTicker = new Map();
 
-  const upsert = (tickerRaw, patch) => {
+  const upsert = (tickerRaw, patch, { overrideSector = false } = {}) => {
     const ticker = padTicker(tickerRaw);
     if (!ticker) return;
     const prev = byTicker.get(ticker) || { ticker, name: '', sector: '' };
     if (patch.name && !prev.name) prev.name = patch.name;
-    if (patch.sector && !prev.sector) prev.sector = patch.sector;
+    if (patch.sector && (overrideSector || !prev.sector)) prev.sector = patch.sector;
     byTicker.set(ticker, prev);
   };
 
@@ -113,8 +113,9 @@ function loadCuratedUniverse() {
   if (fs.existsSync(hubPath)) {
     try {
       const hub = JSON.parse(fs.readFileSync(hubPath, 'utf8'));
+      // hub_index reflects SECTOR_EXCLUSIVE reclassifications; cp_list markdown can lag behind.
       for (const c of listHubCompanies(hub)) {
-        upsert(c.ticker, { name: c.name || c.nameEn || '', sector: c.sectorId || '' });
+        upsert(c.ticker, { name: c.name || c.nameEn || '', sector: c.sectorId || '' }, { overrideSector: true });
       }
     } catch {
       /* hub optional for sector enrichment */

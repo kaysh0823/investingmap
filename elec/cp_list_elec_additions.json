@@ -68,23 +68,6 @@
     "level": "core"
   },
   {
-    "ticker": "078350",
-    "name": "한양디지텍",
-    "nameEn": "Hanyang Digitech",
-    "chain": "전자부품",
-    "semType": "전자부품(메모리 모듈)",
-    "semTypeEn": "Memory modules",
-    "products": "메모리 모듈·PCB",
-    "productsEn": "Memory modules and PCBs",
-    "partners": [
-      "murata",
-      "sony",
-      "panasonic"
-    ],
-    "subSector": "메모리 모듈",
-    "level": "core"
-  },
-  {
     "ticker": "290550",
     "name": "디케이티",
     "nameEn": "DKT",
@@ -171,6 +154,66 @@
     "productsEn": "RF power amplifier modules (PAM/FEM); automotive RF and wireless charging parts",
     "partners": [],
     "subSector": "전자부품·기판",
+    "level": "core"
+  },
+  {
+    "ticker": "272290",
+    "name": "이녹스첨단소재",
+    "nameEn": "INNOX Advanced Materials",
+    "chain": "디스플레이 소재",
+    "semType": "OLED·FPCB 소재",
+    "semTypeEn": "OLED and FPCB materials",
+    "products": "OLED 소재(INNOLED)·FPCB 소재·반도체 패키징 소재",
+    "productsEn": "OLED materials (INNOLED), FPCB materials and semiconductor packaging materials",
+    "subSector": "OLED·FPCB 소재",
+    "level": "core"
+  },
+  {
+    "ticker": "078600",
+    "name": "대주전자재료",
+    "nameEn": "Daejoo Electronic Materials",
+    "chain": "전자부품·기판",
+    "semType": "전자부품용 페이스트·실리콘 음극재",
+    "semTypeEn": "Pastes for electronic components and silicon anodes",
+    "products": "MLCC·칩부품·태양전지용 전도성 페이스트, 실리콘 음극재",
+    "productsEn": "Conductive pastes for MLCC, chip components and solar cells, plus silicon anode material",
+    "subSector": "전자부품용 페이스트·실리콘 음극재",
+    "level": "core"
+  },
+  {
+    "ticker": "178920",
+    "name": "PI첨단소재",
+    "nameEn": "PI Advanced Materials",
+    "chain": "전자부품·기판",
+    "semType": "PI 필름",
+    "semTypeEn": "PI film",
+    "products": "FPCB·방열시트·EV·반도체용 폴리이미드 필름",
+    "productsEn": "Polyimide film for FPCB, heat-spreader sheets, EVs and semiconductors",
+    "subSector": "PI 필름",
+    "level": "core"
+  },
+  {
+    "ticker": "098460",
+    "name": "고영",
+    "nameEn": "Koh Young Technology",
+    "chain": "전자·SMT 검사장비",
+    "semType": "3D SPI·AOI 검사장비",
+    "semTypeEn": "3D SPI and AOI inspection equipment",
+    "products": "SMT 3D SPI·AOI 검사장비, 반도체 패키징 검사, 의료로봇",
+    "productsEn": "SMT 3D SPI and AOI inspection, semiconductor packaging inspection, and medical robots",
+    "subSector": "3D SPI·AOI 검사장비",
+    "level": "core"
+  },
+  {
+    "ticker": "168360",
+    "name": "펨트론",
+    "nameEn": "Pemtron",
+    "chain": "전자·SMT 검사장비",
+    "semType": "SMT·반도체 검사장비",
+    "semTypeEn": "SMT and semiconductor inspection equipment",
+    "products": "SMT 3D 검사장비, 반도체·HBM 검사장비",
+    "productsEn": "SMT 3D inspection and semiconductor/HBM inspection equipment",
+    "subSector": "SMT·반도체 검사장비",
     "level": "core"
   }
 ]
