@@ -123,6 +123,7 @@ run('node scripts/apply_sgc_energy_005090_move.mjs', '005090 SGC에너지 chemic
 run('node scripts/apply_needs_review_closure_chain.mjs', 'needs_review closure moves/new groups');
 run('node scripts/sync_map_badges.mjs', 'map header badges from koreanCompanies (after all membership steps)');
 run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
+run('node scripts/sync_hub_card_badges.mjs', 'static hub card badges from hub index');
 run('node scripts/build_search_index.mjs', 'search index');
 console.log('\n==> hub snapshots (consume committed files; refresh via npm run refresh:hub-snapshots)');
 run('node scripts/build_hub_quote_snapshot.mjs', 'hub quote snapshot gate');

@@ -11,6 +11,11 @@ import {
 } from '../functions/lib/session_price_policy.mjs';
 import { parseNaverBasicQuote } from '../functions/lib/naver_sise_quotes.mjs';
 import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
+import {
+  RETURNS_LOGIC_VERSION,
+  maybeNotModified,
+  returnsResponseHeaders,
+} from '../functions/lib/returns_cache_headers.mjs';
 
 function at(dash, hh, mm) {
   return new Date(
@@ -247,6 +252,16 @@ for (const stamp of ['2026-10-02T08:30', '2026-10-03T11:00', '2026-10-04T11:00']
   assert.equal(source.byTicker['009150'].last, 1600000);
   assert.equal(source.byTicker['009150'].numerator1d, 1600000);
   assert.equal(source.byTicker['009150'].prevClose1d, semcoKrx);
+}
+
+// A browser holding a body from the pre-policy logic (same dataVersion) must not get 304.
+{
+  const dataVersion = '20261002-1790922600-2026-10-02';
+  const headers = returnsResponseHeaders({ dataVersion, horizon: '1d' });
+  assert.ok(headers.ETag.includes(RETURNS_LOGIC_VERSION), 'ETag carries the logic version');
+  const ifNoneMatch = (etag) => new Request('https://example.test/', { headers: { 'If-None-Match': etag } });
+  assert.equal(maybeNotModified(ifNoneMatch(`W/"${dataVersion}:1d"`), headers), null);
+  assert.equal(maybeNotModified(ifNoneMatch(headers.ETag), headers)?.status, 304);
 }
 
 console.log('verify:session-price-policy OK');
