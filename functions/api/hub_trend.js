@@ -1,5 +1,5 @@
 /**
- * GET /api/hub_trend?horizon=1d|20d|50d|120d|200d
+ * GET /api/hub_trend?horizon=1d|5d|20d|50d|120d|200d
  * Stock-aggregate sector series rebased to 100 (same math as /api/hub_sectors).
  */
 import { loadHubIndexFromRequest } from '../lib/hub_dashboard_core.mjs';

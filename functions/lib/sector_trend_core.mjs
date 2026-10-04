@@ -21,6 +21,7 @@ import {
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 
 export const TREND_DAILY_LOOKBACK = {
+  '5d': 5,
   '20d': 20,
   '50d': 50,
   '120d': 120,

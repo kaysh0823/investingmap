@@ -15,6 +15,7 @@ import {
 } from './hub_trend.mjs';
 
 export const TREND_LOOKBACK_DAYS = {
+  '5d': 5,
   '20d': 20,
   '50d': 50,
   '120d': 120,

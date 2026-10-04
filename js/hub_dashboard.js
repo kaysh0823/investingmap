@@ -7,6 +7,7 @@
   var SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'machinery', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance', 'holdings'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
+    { retKey: 'return5dPct', labelKey: 'pulseRow5d' },
     { retKey: 'return20dPct', labelKey: 'pulseRow20d' },
     { retKey: 'return50dPct', labelKey: 'pulseRow50d' },
     { retKey: 'return120dPct', labelKey: 'pulseRow120d' },
@@ -17,7 +18,7 @@
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
   var HUB_API_RETRY_DELAY_MS = 2500;
-  var SWR_KEY = 'im-hub-dashboard-v18';
+  var SWR_KEY = 'im-hub-dashboard-v19';
   var SWR_TTL_MS = 30 * 60 * 1000;
   var hubData = null;
   var dashboardData = { sectors: {}, rsTop10: [], mcapTop10: [], gainers1dTop10: [], turnoverTop10: [], turnover5dTop10: [], gainers5dTop10: [], regularSession: null, asOf: null };
@@ -107,8 +108,9 @@
   var I18N = {
     ko: {
       pulseTitle: '섹터 퍼포먼스',
-      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1D·20D·50D·120D·200D',
+      pulseSub: '시총 합산 수익률 (최근 종가 시총 ÷ 과거 시총) — 1D·5D·20D·50D·120D·200D',
       pulseRow1d: '1D',
+      pulseRow5d: '5D',
       pulseRow20d: '20D',
       pulseRow50d: '50D',
       pulseRow120d: '120D',
@@ -146,8 +148,9 @@
     },
     en: {
       pulseTitle: 'Sector performance',
-      pulseSub: 'Market-cap-weighted return (recent ÷ past cap) — 1D, 20D, 50D, 120D, 200D',
+      pulseSub: 'Market-cap-weighted return (recent ÷ past cap) — 1D, 5D, 20D, 50D, 120D, 200D',
       pulseRow1d: '1D',
+      pulseRow5d: '5D',
       pulseRow20d: '20D',
       pulseRow50d: '50D',
       pulseRow120d: '120D',
@@ -603,6 +606,7 @@
         weightPct: totalMcap > 0 ? (sectorMcap / totalMcap) * 100 : 0,
         listingCount: block.companies.length,
         return1dPct: null,
+        return5dPct: null,
         return20dPct: null,
         return50dPct: null,
         return120dPct: null,
@@ -789,6 +793,7 @@
 
   function retKeyToHorizonParam(retKey) {
     if (retKey === 'return1dPct') return '1d';
+    if (retKey === 'return5dPct') return '5d';
     if (retKey === 'return50dPct') return '50d';
     if (retKey === 'return120dPct') return '120d';
     if (retKey === 'return200dPct' || retKey === 'return250dPct') return '200d';
@@ -808,7 +813,7 @@
     var onlyMissing = opts && opts.onlyMissing;
     var incoming = j.sectors || {};
     var base = dashboardData.sectors || {};
-    var keys = ['return1dPct', 'return20dPct', 'return50dPct', 'return120dPct', 'return200dPct', 'mcapWon', 'weightPct', 'listingCount'];
+    var keys = ['return1dPct', 'return5dPct', 'return20dPct', 'return50dPct', 'return120dPct', 'return200dPct', 'mcapWon', 'weightPct', 'listingCount'];
     for (var sid in incoming) {
       if (!incoming.hasOwnProperty(sid)) continue;
       if (!base[sid]) base[sid] = {};

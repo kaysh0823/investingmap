@@ -5,7 +5,7 @@
 (function (global) {
   'use strict';
 
-  var HORIZONS = ['1d', '20d', '50d', '120d', '200d'];
+  var HORIZONS = ['1d', '5d', '20d', '50d', '120d', '200d'];
   var INDEX_COLORS = { KOSPI: '#f85149', KOSDAQ: '#58a6ff' };
   var INDEX_NAMES = {
     ko: { KOSPI: '코스피', KOSDAQ: '코스닥' },
