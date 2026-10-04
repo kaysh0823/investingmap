@@ -403,6 +403,20 @@ export function parseNaverMobileIntegration(json) {
 }
 
 /**
+ * /basic closePrice is the KRX auction price only while the market is OPEN
+ * (regular session). preMarket / afterMarket closePrice is the NXT integrated
+ * price. overMarketPriceInfo.overPrice is the NXT print and can differ.
+ * There is no separate regular-close field on this payload after the auction.
+ * @param {string} marketStatus
+ * @param {string} marketSessionType
+ */
+export function isNaverOverMarket(marketStatus, marketSessionType) {
+  if (String(marketStatus || '').toUpperCase() === 'OPEN') return false;
+  const session = String(marketSessionType || '');
+  return session === 'afterMarket' || session === 'preMarket';
+}
+
+/**
  * Parse m.stock /basic JSON (live last while marketStatus is OPEN).
  * @param {object} json
  */
@@ -426,7 +440,20 @@ export function parseNaverBasicQuote(json) {
   };
   if (!json || typeof json !== 'object') return out;
 
-  out.last = parseKoreanNumber(json.closePrice);
+  const closePx = parseKoreanNumber(json.closePrice);
+  out.closePriceRaw = closePx;
+  out.marketSessionType = json.marketSessionType ? String(json.marketSessionType) : null;
+  out.overPrice = parseKoreanNumber(json.overMarketPriceInfo?.overPrice);
+  out.overMarket = isNaverOverMarket(json.marketStatus, json.marketSessionType);
+  if (out.overMarket) {
+    out.last = null;
+    out.krxLast = null;
+    out.nxtLast = out.overPrice ?? closePx;
+  } else {
+    out.last = closePx;
+    out.krxLast = closePx;
+    out.nxtLast = out.overPrice;
+  }
   const compareAbs = parseKoreanNumber(json.compareToPreviousClosePrice);
   const code = String(json.compareToPreviousPrice?.code ?? json.compareToPreviousPrice?.name ?? '');
   const name = String(json.compareToPreviousPrice?.name || '').toUpperCase();
@@ -441,7 +468,9 @@ export function parseNaverBasicQuote(json) {
   }
 
   const ratio = parseFloat(String(json.fluctuationsRatio ?? '').replace(/,/g, ''));
-  if (Number.isFinite(ratio)) out.chg1dPct = ratio;
+  if (out.overMarket) {
+    out.chg1dPct = null;
+  } else if (Number.isFinite(ratio)) out.chg1dPct = ratio;
   else if (out.last != null && out.prevClose != null && out.prevClose > 0) {
     out.chg1dPct = Math.round(((out.last / out.prevClose) - 1) * 10000) / 100;
   }
@@ -514,6 +543,18 @@ export async function fetchNaverQuote(code, init) {
   }
   if (basicR.status === 'fulfilled') {
     merged = mergeNaverIntoQuote(merged, basicR.value, mergeOpts);
+  }
+  const basicQuote = basicR.status === 'fulfilled' ? basicR.value : null;
+  if (basicQuote?.overMarket) {
+    merged.last = null;
+    merged.krxLast = null;
+    merged.chg1dPct = null;
+    merged.overMarket = true;
+    merged.nxtLast = basicQuote.nxtLast ?? null;
+    merged.marketSessionType = basicQuote.marketSessionType;
+  } else if (basicQuote?.krxLast != null) {
+    merged.krxLast = basicQuote.krxLast;
+    merged.marketSessionType = basicQuote.marketSessionType;
   }
   if (
     basicR.status === 'rejected' &&

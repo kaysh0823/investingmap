@@ -192,13 +192,16 @@ assert.deepEqual(
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v21'",
-  'anchoredCachePath',
+  "CACHE_VERSION = '/api/hub_trend/cache/v22'",
+  'cachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',
-  'regularMax: 300',
 ]) {
   assert.ok(api.includes(marker), `hub trend API marker missing: ${marker}`);
+}
+const hubCache = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_api_cache.mjs'), 'utf8');
+for (const marker of ['anchoredCachePath', 'regularMax: 300']) {
+  assert.ok(hubCache.includes(marker), `hub cache marker missing: ${marker}`);
 }
 
 const core = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_trend.mjs'), 'utf8');

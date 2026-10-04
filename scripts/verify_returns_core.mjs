@@ -100,3 +100,4 @@ assert.equal(
 );
 
 console.log('verify:returns-core OK — k/refN/20D/aggregate');
+await import('./verify_session_price_policy.mjs');

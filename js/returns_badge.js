@@ -77,6 +77,7 @@
       k: typeof apiMeta.k === 'number' && isFinite(apiMeta.k) ? apiMeta.k : null,
       dataVersion: apiMeta.dataVersion || null,
       refsStale: apiMeta.refsStale === true,
+      provisional: apiMeta.provisional === true,
     };
   }
 
@@ -92,6 +93,7 @@
       k: meta.k,
       dataVersion: meta.dataVersion,
       refsStale: meta.refsStale === true,
+      provisional: meta.provisional === true,
     };
   }
 
@@ -110,6 +112,9 @@
     var hash = shortHash(m.dataVersion);
     if (hash) parts.push('v' + hash);
     if (syncing) parts.push(lang === 'en' ? 'Syncing…' : '동기화 중…');
+    if (m.provisional) {
+      parts.push(lang === 'en' ? 'Provisional' : '잠정');
+    }
     if (m.refsStale) {
       parts.push(lang === 'en' ? 'Reference data delayed' : '기준 데이터 갱신 지연');
     }

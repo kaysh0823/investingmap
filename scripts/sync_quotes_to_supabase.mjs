@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import { fetchNaverQuote, resolveNaverSession } from '../functions/lib/naver_sise_quotes.mjs';
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
 import { isKrxClockRegularSession, isKrxRegularSessionEnded, krxSessionInfo, kstAnchorYmd, kstDateParts, kstWeekday, kstYmd, kstYmdDash } from '../functions/lib/krx_session.mjs';
+import { pricePhase, resolveSessionQuote } from '../functions/lib/session_price_policy.mjs';
 import {
   fetchKrxDailyOhlc,
   dailyOhlcFieldsToKrxRow,
@@ -175,6 +176,8 @@ async function fetchNaverQuotes(codes) {
         const { _sources, ...clean } = row.q;
         clean.basicLast = sources.basicQuote?.last ?? null;
         clean.basicTradeDate = sources.basicQuote?.tradeDate ?? null;
+        clean.overMarket = sources.basicQuote?.overMarket === true;
+        clean.marketSessionType = sources.basicQuote?.marketSessionType ?? null;
         quotes[row.code] = clean;
         ok += 1;
       } else {
@@ -252,6 +255,9 @@ function compactYmdLocal(v) {
  * @returns {number|null}
  */
 export function basicRegularClose(naver, sessionYmd) {
+  if (naver?.overMarket) return null;
+  const sessionType = String(naver?.marketSessionType || '');
+  if (sessionType === 'afterMarket' || sessionType === 'preMarket') return null;
   const td = compactYmdLocal(naver?.basicTradeDate);
   const session = compactYmdLocal(sessionYmd);
   if (!td || td !== session) return null;
@@ -294,65 +300,48 @@ export function stockReturnFieldsFromRefs(
 
   const officialClose = Number(closes[closes.length - 1]);
   const official = Number.isFinite(officialClose) && officialClose > 0 ? officialClose : null;
-  const todayDd = kstAnchorYmd(now);
+  const refsPrev = closes.length >= 2 && Number(closes[closes.length - 2]) > 0
+    ? Number(closes[closes.length - 2])
+    : null;
+  const todayDd = kstYmd(now);
   const refsRecentDd = compactYmdLocal(refs.recentDd);
-  const p = kstDateParts(now);
-  const minutes = p.hour * 60 + p.minute;
-  const liveTradeDd = compactYmdLocal(naver?.tradeDate) || todayDd;
-  const closeEligible =
-    !sessionOpen
-    && p.weekday >= 1
-    && p.weekday <= 5
-    && minutes >= 15 * 60 + 30
-    && liveTradeDd === todayDd
-    && !!refsRecentDd
-    && refsRecentDd < todayDd;
-
+  const phase = pricePhase(now);
   const extraTradeDates = Array.isArray(opts.extraTradeDates) ? opts.extraTradeDates : [];
   const tradingDates = extendTradingDates(refs.tradingDates, refsRecentDd, extraTradeDates);
-  const naverPrev = naver?.prevClose != null && Number(naver.prevClose) > 0
-    ? Number(naver.prevClose)
+  const overMarket = !!(naver?.overMarket)
+    || naver?.marketSessionType === 'afterMarket'
+    || naver?.marketSessionType === 'preMarket';
+  const naverLast = !overMarket && naver?.last != null && Number(naver.last) > 0
+    ? Number(naver.last)
     : null;
-  const naverLast = naver?.last != null && Number(naver.last) > 0 ? Number(naver.last) : null;
-
-  let numerator = null;
-  let k = 0;
-  let anchorDd = refsRecentDd || todayDd;
-  if (sessionOpen) {
-    const liveLast = overrideLast != null && Number(overrideLast) > 0
+  const krxClose = naver?.krxCloseToday != null && Number(naver.krxCloseToday) > 0
+    ? Number(naver.krxCloseToday)
+    : (refsRecentDd && refsRecentDd === todayDd ? official : null);
+  const quotePhase = phase === 'afterClose' && refsRecentDd === todayDd ? 'official' : phase;
+  const liveLast = overrideLast != null && Number(overrideLast) > 0
+    ? Number(overrideLast)
+    : naverLast;
+  const resolved = resolveSessionQuote({
+    phase: sessionOpen && phase === 'live' ? 'live' : quotePhase,
+    krxClose: quotePhase === 'live' ? null : krxClose,
+    refsTipClose: official,
+    refsPrevClose: refsPrev,
+    naverKrxLast: quotePhase === 'live' ? liveLast : null,
+    lastRegularLast: quotePhase === 'afterClose' && liveLast != null && overrideLast != null
       ? Number(overrideLast)
-      : naverLast;
-    numerator = resolveNumerator({ liveLast, sessionOpen: true, officialClose: official });
-    anchorDd = liveTradeDd || todayDd;
-    k = refsRecentDd && anchorDd
-      ? sessionsSince(refsRecentDd, anchorDd, tradingDates)
-      : 0;
-  } else if (closeEligible) {
-    anchorDd = todayDd;
-    k = sessionsSince(refsRecentDd, todayDd, tradingDates);
-  } else {
-    // C official — N-day stays on the refs tip.
-    numerator = official;
-    anchorDd = refsRecentDd || todayDd;
-    k = 0;
+      : null,
+  });
+  let k = 0;
+  const anchorDd = quotePhase === 'official' ? (refsRecentDd || todayDd) : todayDd;
+  if (quotePhase !== 'official' && refsRecentDd && anchorDd) {
+    k = sessionsSince(refsRecentDd, anchorDd, tradingDates);
   }
-
-  // 1D denominator is prev_close only on the anchor session.
-  // After the close the numerator is basic.last for that trading day, never prevCloseFromMobile.
-  const sessionClosePx = basicRegularClose(naver, sessionOpen ? todayDd : anchorDd);
-  if (!sessionOpen && closeEligible) numerator = sessionClosePx;
-  const onAnchor = !!anchorDd && liveTradeDd === anchorDd;
-  const prevClose1d = onAnchor ? naverPrev : null;
-  const numerator1d = sessionOpen
-    ? (overrideLast != null && Number(overrideLast) > 0 ? Number(overrideLast) : naverLast)
-    : (onAnchor ? sessionClosePx : null);
-
   const returns = computeStockReturns({
-    numerator,
+    numerator: resolved.numerator,
     closes,
     k,
-    prevClose1d,
-    numerator1d,
+    prevClose1d: resolved.prevClose1d,
+    numerator1d: resolved.numerator1d,
   });
   return {
     chg_1d_pct: returns.chg1dPct,
@@ -365,25 +354,32 @@ export function stockReturnFieldsFromRefs(
 }
 
 export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketClosed, returnFields = null, historyPrevClose = null) {
-  // During the auction, last is the Naver current price.
-  // After the close, last is basic.last for today's trade date. Never NXT last or prevCloseFromMobile.
-  // prev_close stays Naver prevClose. trade_date is not on this payload, so post_close cannot replace it.
-  const liveLast = naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
-  const sessionClosePx = basicRegularClose(naver, kstYmd());
-  const last = regularSession ? liveLast : sessionClosePx;
+  // During the auction, last is the Naver KRX price (not pre/after market).
+  // After the close, do not write basic.last — that field is the NXT integrated
+  // price. Omit last so the pre-15:30 value stays until a KRX close is stored.
+  const overMarket = !!(naver?.overMarket)
+    || naver?.marketSessionType === 'afterMarket'
+    || naver?.marketSessionType === 'preMarket';
+  const liveLast = !overMarket && naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
+  const krxClose = naver?.krxCloseToday != null && Number(naver.krxCloseToday) > 0
+    ? Number(naver.krxCloseToday)
+    : null;
+  const last = regularSession ? liveLast : krxClose;
 
-  const prevClose = naver?.prevClose != null && Number.isFinite(Number(naver.prevClose)) && Number(naver.prevClose) > 0
+  const naverPrev = naver?.prevClose != null && Number.isFinite(Number(naver.prevClose)) && Number(naver.prevClose) > 0
     ? Number(naver.prevClose)
     : null;
-  if (
-    prevClose != null
-    && historyPrevClose != null
-    && Number.isFinite(Number(historyPrevClose))
-    && Math.abs(Number(historyPrevClose) - prevClose) > 0
-  ) {
+  const historyPrev = historyPrevClose != null && Number.isFinite(Number(historyPrevClose)) && Number(historyPrevClose) > 0
+    ? Number(historyPrevClose)
+    : null;
+  let prevClose = naverPrev;
+  if (historyPrev != null && naverPrev != null && Math.abs(historyPrev - naverPrev) > 0) {
     console.warn(
-      `  prev_close ${ticker}: naver ${prevClose} != history ${historyPrevClose} — store Naver`,
+      `  prev_close ${ticker}: naver ${naverPrev} != history ${historyPrev} — store KRX`,
     );
+    prevClose = historyPrev;
+  } else if (historyPrev != null) {
+    prevClose = historyPrev;
   }
 
   const returns = returnFields || {
@@ -443,6 +439,7 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
     row.session_low = sessionLow;
     row.session_volume = sessionVolume;
   }
+  if (last == null) delete row.last;
 
   return row;
 }
@@ -2378,25 +2375,14 @@ async function main() {
     + ` sessionOpen=${sessionOpenForReturns} slot=${syncSlot} refs=${refsForReturns ? 'ok' : 'null'}`,
   );
 
-  // Post-15:30: last becomes basic.last for today's trade date. Do not touch prev_close or trade_date.
-  // prevCloseFromMobile and NXT/aftermarket last are never written.
+  // Post-15:30: do not replace last with basic.last (NXT integrated price).
+  // A missing last is omitted so the pre-15:30 print stays until the KRX row is applied.
   if (!sessionOpenForReturns && !skipLatestAndIntraday) {
-    let fromBasic = 0;
-    let keptPrev = 0;
-    const todayDd = kstYmd();
+    let omitted = 0;
     for (const row of rows) {
-      const naver = naverResult.quotes[row.ticker];
-      const basicClose = basicRegularClose(naver, todayDd);
-      if (basicClose != null) {
-        row.last = basicClose;
-        fromBasic += 1;
-      } else {
-        const prev = prevLastByTicker.get(row.ticker);
-        if (prev?.last != null && Number.isFinite(Number(prev.last))) {
-          row.last = Number(prev.last);
-          if (prev.asOf) row.as_of = prev.asOf;
-          keptPrev += 1;
-        }
+      if (row.last == null) {
+        delete row.last;
+        omitted += 1;
       }
       const rf = stockReturnFieldsFromRefs(
         row.ticker,
@@ -2415,8 +2401,8 @@ async function main() {
       row.ret_200d_pct = rf.ret_200d_pct;
     }
     console.log(
-      `  post-close last guard: basicLast=${fromBasic} keptPrev=${keptPrev}`
-      + ' (no prevCloseFromMobile, no Naver aftermarket last)',
+      `  post-close last guard: omitted=${omitted}`
+      + ' (basic.last / NXT not written; pre-15:30 last kept)',
     );
   }
 

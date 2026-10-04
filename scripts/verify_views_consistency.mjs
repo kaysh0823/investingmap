@@ -15,6 +15,7 @@ import {
   aggregateSectorReturns,
 } from '../functions/lib/returns_core.mjs';
 import { krxSessionInfo, kstDateParts, kstAnchorYmd } from '../functions/lib/krx_session.mjs';
+import { pricePhase } from '../functions/lib/session_price_policy.mjs';
 import { getSupabaseConfig, numOrNull } from '../functions/lib/supabase_hub.mjs';
 import { normalizeTicker } from '../functions/lib/hub_dashboard_core.mjs';
 
@@ -476,11 +477,9 @@ async function main() {
       return `${p.year}${String(p.month).padStart(2, '0')}${String(p.day).padStart(2, '0')}`;
     }
     let simToday = nextYmd(prevDd);
-    // Advance until weekday for B/closeEligible sims
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
       const probe = kstAt(simToday, 12, 0);
-      const wp = kstDateParts(probe);
-      if (wp.weekday >= 1 && wp.weekday <= 5) break;
+      if (pricePhase(probe) === 'live') break;
       simToday = nextYmd(simToday);
     }
 
@@ -519,27 +518,29 @@ async function main() {
       console.log(`  f) 08:30 pre-open official ok chg1d=${ret.chg1dPct}`);
     }
 
-    // Holiday: weekday afternoon clock but tradeDd still prior session → official
+    // Holiday 2026-10-05 afternoon → official KRX tip, even if the clock is past 15:30.
     {
-      const now = kstAt(simToday, 16, 0);
+      const now = kstAt('20261005', 16, 0);
       const src = await loadReturnSource({
         env: {},
         tickers: ['005930'],
         refs: { ...refsFile, recentDd: prevDd },
         quoteRows: [{
           ticker: '005930',
-          last: closes[L - 1],
-          as_of: `${prevDd.slice(0, 4)}-${prevDd.slice(4, 6)}-${prevDd.slice(6, 8)}T15:30:00+09:00`,
-          trade_date: `${prevDd.slice(0, 4)}-${prevDd.slice(4, 6)}-${prevDd.slice(6, 8)}`,
+          last: closes[L - 1] + 5000,
+          as_of: '2026-10-05T16:00:00+09:00',
+          trade_date: '2026-10-05',
         }],
         now,
       });
       if (src.meta.numeratorMode !== 'official' || src.meta.k !== 0) {
         fail('f) holiday sim expected official/k=0', {
           meta: src.meta,
-          simToday,
           prevDd,
         });
+      }
+      if (src.byTicker['005930']?.last !== closes[L - 1]) {
+        fail('f) holiday must keep refs tip, not the quote last', src.byTicker['005930']);
       }
       console.log('  f) holiday sim official/k=0 ok');
     }
@@ -555,7 +556,7 @@ async function main() {
           {
             ticker: '005930',
             last: closes[L - 1] + 1000,
-            as_of: now.toISOString(),
+            as_of: `${simToday.slice(0, 4)}-${simToday.slice(4, 6)}-${simToday.slice(6, 8)}T15:29:00+09:00`,
             trade_date: `${simToday.slice(0, 4)}-${simToday.slice(4, 6)}-${simToday.slice(6, 8)}`,
           },
           // 000660: prior-day row only — missing today close

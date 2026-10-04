@@ -52,16 +52,17 @@ function assertSectorHasMostHorizons(sid, row, label, minFilled = 4) {
 }
 
 const apiSrc = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sectors.js'), 'utf8');
-assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v22'"), 'hub_sectors cache v22');
+assert.ok(apiSrc.includes("CACHE_VERSION = '/api/hub_sectors/cache/v24'"), 'hub_sectors cache v24');
 assert.ok(apiSrc.includes('buildHubSectorsFromReturnSource') || apiSrc.includes('aggregateSectorReturns') || apiSrc.includes('loadReturnSource'), 'hub_sectors stock-aggregate path');
 assert.ok(apiSrc.includes('stock_aggregate'), 'hub_sectors source tag');
 
 const trendApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
-assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v21'"), 'hub_trend cache v21');
-assert.ok(trendApi.includes('regularMax: 300') || trendApi.includes('return 300'), 'hub_trend session TTL ~5m');
+assert.ok(trendApi.includes("CACHE_VERSION = '/api/hub_trend/cache/v22'"), 'hub_trend cache v22');
+const hubCache = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_api_cache.mjs'), 'utf8');
+assert.ok(hubCache.includes('regularMax: 300'), 'hub session TTL ~5m');
 
 const sparkApi = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_sector_trend.js'), 'utf8');
-assert.ok(sparkApi.includes("CACHE_VERSION = '/api/hub_sector_trend/cache/v8'"), 'hub_sector_trend cache v8');
+assert.ok(sparkApi.includes("CACHE_VERSION = '/api/hub_sector_trend/cache/v10'"), 'hub_sector_trend cache v10');
 assert.ok(sparkApi.includes('synthesized'), 'hub_sector_trend exposes synthesized meta');
 
 const sparkLib = fs.readFileSync(path.join(ROOT, 'functions', 'lib', 'hub_sector_trend.mjs'), 'utf8');

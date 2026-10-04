@@ -1,7 +1,6 @@
 /**
  * Refs lag: k counts completed sessions after recentDd.
- * 1D uses the Naver reference (prev_close) and the regular-session price,
- * not stock_price_history.
+ * After the close, 1D uses the KRX close already in refs, not an NXT last.
  */
 import assert from 'node:assert/strict';
 import {
@@ -60,11 +59,11 @@ const sectorJu = aggregateSectorReturns([{
 }]);
 assert.equal(sectorJu.chg1dPct, 6.22);
 
-// Official mode (k=0, refs tip = anchor). Contaminated history must not become 1D.
+// After close, refs tip is the KRX close. An NXT last on the quote row is ignored.
 {
   const anchor = '20260929';
   const now = new Date('2026-09-29T18:00:00+09:00');
-  const samsungCloses = [100, 110, 120, 130, 140, 272250];
+  const samsungCloses = [260000, 270000, 272500];
   const source = await loadReturnSource({
     env: {},
     tickers: ['005930', '036930', '000660'],
@@ -73,26 +72,25 @@ assert.equal(sectorJu.chg1dPct, 6.22);
       tradingDates: ['20260928', anchor],
       quotes: {
         '005930': { closes: samsungCloses, shares: 1000 },
-        '036930': { closes: [200000, 200000], shares: 1000 },
+        '036930': { closes: [209000, 222000], shares: 1000 },
         '000660': { closes: [100, 150], shares: 1000 },
       },
     },
     quoteRows: [
       {
         ticker: '005930',
-        last: 272500,
+        last: 280000,
         prev_close: 270000,
-        sessionClose: 270000,
         prevCloseFromMobile: 270000,
         trade_date: '2026-09-29',
-        as_of: '2026-09-29T15:30:00+09:00',
+        as_of: '2026-09-29T20:00:00+09:00',
       },
       {
         ticker: '036930',
-        last: 222000,
+        last: 230000,
         prev_close: 209000,
         trade_date: '20260929',
-        as_of: '2026-09-29T15:30:00+09:00',
+        as_of: '2026-09-29T20:00:00+09:00',
       },
       {
         ticker: '000660',
@@ -108,9 +106,11 @@ assert.equal(sectorJu.chg1dPct, 6.22);
   assert.equal(source.meta.numeratorMode, 'official');
   assert.equal(source.meta.k, 0);
   assert.equal(source.meta.anchorDd, anchor);
+  assert.equal(source.meta.provisional, false);
 
   const offSamsung = source.byTicker['005930'];
-  assert.equal(offSamsung.numerator, 272250);
+  assert.equal(offSamsung.last, 272500);
+  assert.equal(offSamsung.numerator, 272500);
   assert.equal(offSamsung.numerator1d, 272500);
   assert.equal(offSamsung.prevClose1d, 270000);
   const offSamsungRet = computeStockReturns({
@@ -121,9 +121,9 @@ assert.equal(sectorJu.chg1dPct, 6.22);
     numerator1d: offSamsung.numerator1d,
   });
   assert.equal(offSamsungRet.chg1dPct, 0.93);
-  assert.equal(offSamsungRet.ret5dPct, roundPct(272250 / 100 - 1));
 
   const offJu = source.byTicker['036930'];
+  assert.equal(offJu.last, 222000);
   const offJuRet = computeStockReturns({
     numerator: offJu.numerator,
     closes: offJu.closes,
@@ -133,7 +133,8 @@ assert.equal(sectorJu.chg1dPct, 6.22);
   });
   assert.equal(offJuRet.chg1dPct, 6.22);
 
-  assert.equal(source.byTicker['000660'].numerator1d, null);
+  assert.equal(source.byTicker['000660'].last, 150);
+  assert.equal(source.byTicker['000660'].numerator1d, 150);
   const sector = aggregateSectorReturns(
     ['005930', '036930', '000660'].map((t) => {
       const src = source.byTicker[t];
@@ -147,7 +148,7 @@ assert.equal(sectorJu.chg1dPct, 6.22);
       };
     }),
   );
-  assert.equal(sector.chg1dPct, 3.24);
+  assert.equal(sector.chg1dPct, roundPct((272500 + 222000 + 150) / (270000 + 209000 + 100) - 1));
 }
 
 console.log('verify:returns-stale OK — k=2 and official 005930 +0.93 036930 +6.22');

@@ -13,6 +13,7 @@ import {
 } from '../lib/hub_dashboard_core.mjs';
 import { getAuthKey } from '../lib/krx_yoy.mjs';
 import { kstAnchorYmd, krxSessionInfo } from '../lib/krx_session.mjs';
+import { pricePhase } from '../lib/session_price_policy.mjs';
 import {
   corsHeaders,
   hasSectorHorizon,
@@ -34,7 +35,7 @@ import {
   returnsResponseHeaders,
 } from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v23';
+const CACHE_VERSION = '/api/hub_sectors/cache/v24';
 
 function cachePath(horizon, dataVersion) {
   return `${CACHE_VERSION}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
@@ -47,16 +48,18 @@ function cachePath(horizon, dataVersion) {
  * @param {Request} request
  * @param {string} horizon
  */
-export async function buildHubSectorsFromReturnSource(hubIndex, env, request, horizon = '1d') {
+export async function buildHubSectorsFromReturnSource(hubIndex, env, request, horizon = '1d', opts = {}) {
   const companies = listHubCompanies(hubIndex);
   const tickers = companies.map((c) => normalizeTicker(c.ticker)).filter(Boolean);
   const session = krxSessionInfo();
-  const sessionOpen = !!session.regular;
+  const sessionOpen = pricePhase() === 'live';
 
   const source = await loadReturnSource({
     env,
     request,
     tickers,
+    refs: opts.refs || null,
+    quoteRows: opts.quoteRows,
     staleRefresh: sessionOpen
       ? async (staleCodes) => getCachedNaverQuotes(staleCodes, { concurrency: 4 })
       : null,

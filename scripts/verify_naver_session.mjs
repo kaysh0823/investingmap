@@ -24,6 +24,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { computeStockReturns } from '../functions/lib/returns_core.mjs';
 import { kstDateParts } from '../functions/lib/krx_session.mjs';
+import { pricePhase } from '../functions/lib/session_price_policy.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -270,7 +271,7 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     false,
     true,
   );
-  assert(row.last === 272500, `after-close last is basic.last, got ${row.last}`);
+  assert(row.last == null, `after-close must not store basic.last, got ${row.last}`);
   assert(row.prev_close == null, 'prevCloseFromMobile is not prev_close');
   assert(row.session_open === undefined, 'B-path must omit session_open');
   assert(row.session_high === undefined, 'B-path must omit session_high');
@@ -386,10 +387,9 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     return `${p.year}${String(p.month).padStart(2, '0')}${String(p.day).padStart(2, '0')}`;
   }
   let simToday = nextYmd(prevDd);
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 8; i++) {
     const probe = kstAt(dash(simToday), 12, 0);
-    const wp = kstDateParts(probe);
-    if (wp.weekday >= 1 && wp.weekday <= 5) break;
+    if (pricePhase(probe) === 'live') break;
     simToday = nextYmd(simToday);
   }
   const refs = { ...refsFile, recentDd: prevDd };
@@ -406,39 +406,43 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     prevCloseFromMobile: closes[L - 1] - 5000,
   };
 
-  // 08:30 pre-open → official N-day. 1D is Naver only; missing prevClose → null (no refs fallback).
+  // 08:30 pre-open → previous KRX close. Naver prevClose is not the 1D denominator.
   {
     const now = kstAt(dash(simToday), 8, 30);
     const fields = stockReturnFieldsFromRefs('005930', naverPrev, refs, false, null, now);
-    assert(fields.chg_1d_pct == null, `08:30 without prevClose must be null, got ${fields.chg_1d_pct}`);
+    const expected = computeStockReturns({
+      numerator: closes[L - 1],
+      closes,
+      k: 0,
+      prevClose1d: closes[L - 2],
+      numerator1d: closes[L - 1],
+    });
+    assert(
+      Math.abs(fields.chg_1d_pct - expected.chg1dPct) <= 0.01,
+      `08:30 krx 1d=${fields.chg_1d_pct} vs ${expected.chg1dPct}`,
+    );
     assert(fields.ret_20d_pct != null, '08:30 N-day still uses refs');
     const withPrev = stockReturnFieldsFromRefs(
       '005930',
-      { ...naverPrev, prevClose: closes[L - 1] - 1000 },
+      { ...naverPrev, prevClose: closes[L - 1] - 1000, last: closes[L - 1] + 9000 },
       refs,
       false,
       null,
       now,
     );
-    const expected = computeStockReturns({
-      numerator: closes[L - 1],
-      closes,
-      k: 0,
-      prevClose1d: closes[L - 1] - 1000,
-      numerator1d: closes[L - 1],
-    });
     assert(
       Math.abs(withPrev.chg_1d_pct - expected.chg1dPct) <= 0.01,
-      `08:30 naver 1d=${withPrev.chg_1d_pct} vs ${expected.chg1dPct}`,
+      `08:30 must ignore Naver last/prev, got ${withPrev.chg_1d_pct}`,
     );
   }
 
-  // Holiday afternoon: tradeDate still prev → official (not B). sessionClose must not be the 1D price.
+  // Holiday afternoon (2026-10-05) stays on the refs tip, not a live last.
   {
-    const now = kstAt(dash(simToday), 16, 0);
+    const now = kstAt('2026-10-05', 16, 0);
+    assert(pricePhase(now) === 'official', '2026-10-05 is a holiday');
     const fields = stockReturnFieldsFromRefs(
       '005930',
-      { ...naverPrev, prevClose: closes[L - 2] },
+      { ...naverPrev, prevClose: closes[L - 2], last: closes[L - 1] + 8000 },
       refs,
       false,
       null,
@@ -453,11 +457,11 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
     });
     assert(
       Math.abs(fields.chg_1d_pct - expected.chg1dPct) <= 0.01,
-      `holiday chg=${fields.chg_1d_pct} vs naver=${expected.chg1dPct}`,
+      `holiday chg=${fields.chg_1d_pct} vs krx=${expected.chg1dPct}`,
     );
   }
 
-  // 15:45 B: numerator is basic.last for today. prevCloseFromMobile and NXT last are not.
+  // 15:45 without a KRX row: basic.last is ignored. A pre-15:30 override is provisional.
   {
     const now = kstAt(dash(simToday), 15, 45);
     const missing = stockReturnFieldsFromRefs(
@@ -465,43 +469,43 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
       naverToday,
       refs,
       false,
-      closes[L - 1],
+      null,
       now,
     );
-    assert(missing.chg_1d_pct == null, `B without basic.last must be null, got ${missing.chg_1d_pct}`);
-    const regularClose = closes[L - 1] + 1000;
-    const prevClose = closes[L - 1] - 2500;
+    assert(missing.chg_1d_pct == null, `pending close without a regular print must be null, got ${missing.chg_1d_pct}`);
+    const provisional = closes[L - 1] + 50;
     const naverClosed = {
       ...naverToday,
-      close: prevClose,
-      prevCloseFromMobile: prevClose,
-      basicLast: regularClose,
+      last: closes[L - 1] + 9000,
+      marketSessionType: 'afterMarket',
+      overMarket: true,
+      basicLast: closes[L - 1] + 1000,
       basicTradeDate: dash(simToday),
-      prevClose,
+      prevClose: closes[L - 1] - 2500,
     };
     const ok = stockReturnFieldsFromRefs(
       '005930',
       naverClosed,
       refs,
       false,
-      closes[L - 1] + 50,
+      provisional,
       now,
     );
     const expected = computeStockReturns({
-      numerator: regularClose,
+      numerator: provisional,
       closes,
       k: 1,
-      prevClose1d: prevClose,
-      numerator1d: regularClose,
+      prevClose1d: closes[L - 1],
+      numerator1d: provisional,
     });
-    assert(ok.chg_1d_pct != null, 'B with basic.last');
+    assert(ok.chg_1d_pct != null, 'provisional regular print');
     assert(
       Math.abs(ok.chg_1d_pct - expected.chg1dPct) <= 0.01,
-      `B close chg=${ok.chg_1d_pct} vs ${expected.chg1dPct}`,
+      `provisional chg=${ok.chg_1d_pct} vs ${expected.chg1dPct}`,
     );
   }
 
-  // Press fixture: basic.last 272500, mobile prev 270000, prev_close 270000 → +0.93.
+  // After close, basic.last (NXT) is not the 1D numerator.
   {
     const now = kstAt(dash(simToday), 18, 0);
     const fields = stockReturnFieldsFromRefs(
@@ -511,18 +515,19 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
         last: 999999,
         close: 270000,
         prevCloseFromMobile: 270000,
-        sessionClose: 270000,
         basicLast: 272500,
         basicTradeDate: dash(simToday),
         prevClose: 270000,
         marketClosed: true,
+        marketSessionType: 'afterMarket',
+        overMarket: true,
       },
       refs,
       false,
       null,
       now,
     );
-    assert(fields.chg_1d_pct === 0.93, `after-close 1D must be +0.93, got ${fields.chg_1d_pct}`);
+    assert(fields.chg_1d_pct == null, `NXT basic.last must not be 1D, got ${fields.chg_1d_pct}`);
   }
 }
 
