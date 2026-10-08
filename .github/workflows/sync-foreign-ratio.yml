@@ -2,9 +2,15 @@ name: Sync foreign ratio to Supabase
 
 on:
   schedule:
-    # Mon–Fri 19:35 KST = 10:35 UTC (after KRX foreign ownership publish)
-    - cron: '35 10 * * 1-5'
+    # Backup only — GitHub schedule runs hours late. Primary trigger: sync-quotes
+    # post_close (20:05 KST) / post_close_retry (20:30–21:30) dispatches this workflow.
+    # Mon–Fri 20:10 KST = 11:10 UTC
+    - cron: '10 11 * * 1-5'
   workflow_dispatch:
+
+concurrency:
+  group: sync-foreign-ratio
+  cancel-in-progress: false
 
 jobs:
   sync:
@@ -35,3 +41,13 @@ jobs:
           KRX_ID: ${{ secrets.KRX_ID }}
           KRX_PW: ${{ secrets.KRX_PW }}
         run: npm run sync:foreign-ratio
+
+      # Refill recent days a failed run left empty (e.g. KRX login failure). Skips existing dates.
+      - name: Backfill missing recent days
+        if: always()
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
+        run: npm run backfill:foreign-ratio -- --days=10

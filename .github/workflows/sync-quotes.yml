@@ -32,6 +32,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync:
@@ -154,6 +155,19 @@ jobs:
             exit 0
           fi
           echo "freshness guard: as_of age ${age:-n/a}s — continue"
+
+      # KRX investor net / foreign ratio publish after ~20:00 KST. Chain them off the
+      # reliable post_close dispatches (20:05, retries 20:30–21:30) instead of the
+      # hours-late GitHub schedule. GITHUB_TOKEN may trigger workflow_dispatch.
+      - name: Trigger investor / foreign ratio sync
+        if: steps.fresh.outputs.slot == 'post_close' || steps.fresh.outputs.slot == 'post_close_retry'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for wf in sync-investor-net.yml sync-foreign-ratio.yml; do
+            gh workflow run "$wf" --repo "${{ github.repository }}" --ref main \
+              || echo "::warning::failed to dispatch $wf"
+          done
 
       - name: Checkout
         if: steps.fresh.outputs.skip != 'true'
