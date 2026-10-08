@@ -324,15 +324,13 @@
    "role": "은행·은행계 금융그룹"
   },
   {
-   "id": "krx:082640",
-   "type": "kr_listed",
-   "ticker": "082640",
+   "id": "global:tongyang_life",
+   "type": "kr_other",
    "nameKo": "동양생명",
-   "nameEn": "동양생명",
-   "market": "KOSPI",
+   "nameEn": "Tongyang Life",
    "country": "kr",
    "chain": "life",
-   "role": "생명보험"
+   "role": "우리금융 완전자회사 (2026.8 상장폐지)"
   },
   {
    "id": "krx:003540",
@@ -1111,9 +1109,9 @@
    ]
   },
   {
-   "id": "equity:krx_316140>krx_082640",
+   "id": "equity:krx_316140>tongyang_life",
    "source": "krx:316140",
-   "target": "krx:082640",
+   "target": "global:tongyang_life",
    "type": "equity",
    "labelKo": "우리금융→동양생명 완전자회사 (2026.8, ABL생명 통합 예정)",
    "confidence": "high",
@@ -1694,20 +1692,6 @@
    "evidence": [
     {
      "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
-     "accessedAt": "2026-09-25"
-    }
-   ]
-  },
-  {
-   "id": "peer:krx_088350>krx_082640",
-   "source": "krx:088350",
-   "target": "krx:082640",
-   "type": "peer",
-   "labelKo": "생명보험",
-   "confidence": "low",
-   "evidence": [
-    {
-     "url": "https://marketin.edaily.co.kr/News/ReadE?newsId=05303766645419400",
      "accessedAt": "2026-09-25"
     }
    ]

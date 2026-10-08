@@ -104,19 +104,6 @@
     "level": "core"
   },
   {
-    "ticker": "082640",
-    "name": "동양생명",
-    "nameEn": "Tongyang Life",
-    "chain": "보험",
-    "semType": "생명보험",
-    "semTypeEn": "Life insurance",
-    "products": "종신·연금·보장성 생명보험",
-    "productsEn": "Life, annuity and protection products",
-    "partners": ["metlife", "prudential"],
-    "subSector": "생명보험",
-    "level": "core"
-  },
-  {
     "ticker": "030610",
     "name": "교보증권",
     "nameEn": "Kyobo Securities",
