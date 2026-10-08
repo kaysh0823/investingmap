@@ -165,7 +165,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           for wf in sync-investor-net.yml sync-foreign-ratio.yml; do
-            gh workflow run "$wf" --repo "${{ github.repository }}" --ref main               || echo "::warning::failed to dispatch $wf"
+            gh workflow run "$wf" --repo "${{ github.repository }}" --ref main \
+              || echo "::warning::failed to dispatch $wf"
           done
 
       - name: Checkout
