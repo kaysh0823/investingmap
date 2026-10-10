@@ -296,6 +296,29 @@ jobs:
           fi
           echo "valuation_pending=false" >> "$GITHUB_OUTPUT"
 
+      - name: Sync consensus EPS
+        id: sync_consensus
+        if: >
+          steps.fresh.outputs.skip != 'true' &&
+          (steps.slot.outputs.chain_slot == 'post_close') &&
+          (steps.sync_quotes.outputs.history_pending != 'true')
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          set +e
+          node scripts/sync_consensus_eps.mjs
+          code=$?
+          set -e
+          if [ "$code" -eq 3 ]; then
+            echo "::warning::CONSENSUS_PENDING (exit 3) — continue chain"
+            exit 0
+          fi
+          if [ "$code" -ne 0 ]; then
+            echo "::warning::consensus EPS sync failed (exit $code) — continuing"
+            exit 0
+          fi
+
       - name: Note regular_close OHLC
         if: steps.fresh.outputs.skip != 'true' && steps.slot.outputs.slot == 'regular_close'
         run: |
