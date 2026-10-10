@@ -245,13 +245,6 @@ const investorPanel5 = indicators.buildPanelData(
   5,
   20,
 );
-const investorPanel10p50 = indicators.buildPanelData(
-  indicators.normalizeBars(investorBars),
-  '1y',
-  'daily',
-  10,
-  50,
-);
 assert.equal(investorPanel10.instOscLine.length, 10, 'daily investor instOsc10 lines skip null warmup');
 assert.equal(investorPanel5.instOscLine.length, 10, 'daily investor instOsc5 lines skip null warmup');
 assert.equal(investorPanel10.foreignRatioBars.length, 10, 'daily foreignRatio histogram bars on OSC pane');
@@ -270,21 +263,17 @@ assert.notEqual(
   investorPanel10.instOscLine[9].value,
   '5d vs 10d toggle uses different fields',
 );
-assert.notEqual(
-  investorPanel10.instOscLine[9].value,
-  investorPanel10p50.instOscLine[9].value,
-  '20 vs 50 period toggle uses different fields',
-);
 assert.equal(investorPanel10.byTime['2026-02-21'].instOsc_10_20, 60, 'instOsc_10_20 in crosshair byTime');
-assert.equal(investorPanel10p50.byTime['2026-02-21'].instOsc_10_50, 58, 'instOsc_10_50 in crosshair byTime');
 assert.equal(
   ui.buildInvestorOscLinesFromByTime(investorPanel10.byTime, 20, 20).instOscLine.length,
   10,
   'byTime rebuild for 20d cum / 20 period',
 );
 assert.match(source, /im-candle-inv-cum/, 'investor cum toggle markup');
-assert.match(source, /im-candle-inv-period/, 'investor period toggle markup');
-assert.match(source, /im_inv_period/, 'investor period localStorage key');
+assert.doesNotMatch(source, /im-candle-inv-period/, 'investor period toggle removed');
+assert.deepEqual(Array.from(ui.investorCumOptions), [5, 10, 20, 50, 120, 200], 'investor cum options');
+assert.deepEqual(Array.from(ui.investorPeriodOptions), [20], 'investor OSC lookback fixed at 20');
+assert.match(source, /investorFlow: '기관 및 외국인 수급'/, 'investor flow label');
 assert.ok(
   source.includes("wrap.hidden = state.interval === 'weekly'"),
   'investor toggles hidden on weekly',
@@ -459,7 +448,8 @@ try {
   assert.ok('instOsc10' in payload.bars[0], 'daily bars include instOsc10');
   assert.ok('frgnOsc10' in payload.bars[0], 'daily bars include frgnOsc10');
   assert.ok('instOsc_10_20' in payload.bars[0], 'daily bars include instOsc_10_20');
-  assert.ok('instOsc_10_50' in payload.bars[0], 'daily bars include instOsc_10_50');
+  assert.ok('instOsc_200_20' in payload.bars[0], 'daily bars include instOsc_200_20');
+  assert.ok(!('instOsc_10_50' in payload.bars[0]), 'daily bars drop period-50 combos');
   assert.ok('foreignRatio' in payload.bars[0], 'daily bars include foreignRatio');
   assert.match(historyRequests[0], /limit=1000&offset=0/);
   assert.match(historyRequests[1], /limit=1000&offset=1000/);
