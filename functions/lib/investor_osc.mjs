@@ -7,7 +7,7 @@ import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
 import { putHubCache, readHubCache } from './hub_api_cache.mjs';
 
 /** Edge cache for ticker-agnostic investor_net / foreign_ratio depth signature. */
-const INVESTOR_DEPTH_SIG_CACHE = '/api/_sig/investor_depth/v1';
+const INVESTOR_DEPTH_SIG_CACHE = '/api/_sig/investor_depth/v2';
 const INVESTOR_DEPTH_SIG_MAX_AGE = 60;
 
 export const INVESTOR_INST_CODES = Object.freeze(['3000', '3100', '6000']);
@@ -16,8 +16,8 @@ export const INVESTOR_OSC_CODES = Object.freeze([
   ...INVESTOR_INST_CODES,
   INVESTOR_FRGN_CODE,
 ]);
-export const INVESTOR_CUM_WINDOWS = Object.freeze([5, 10, 20]);
-export const INVESTOR_OSC_PERIODS = Object.freeze([20, 50]);
+export const INVESTOR_CUM_WINDOWS = Object.freeze([5, 10, 20, 50, 120, 200]);
+export const INVESTOR_OSC_PERIODS = Object.freeze([20]);
 /** Weekly OSC: fixed 4-week cum / 13-week stochastic (no UI toggle). */
 export const WEEKLY_CUM = 4;
 export const WEEKLY_PERIOD = 13;
@@ -116,8 +116,8 @@ function clipOsc(v) {
  * Stochastic-style OSC on a daily net series aligned to trading bars.
  * Full cumWindow cumulative net, then `period`-bar min/max (default 20).
  * @param {number[]} netByBar — one value per bar (missing days = 0)
- * @param {number} [cumWindow=10] cumulative net window (5, 10, or 20)
- * @param {number} [period=20] stochastic lookback (20 or 50)
+ * @param {number} [cumWindow=10] cumulative net window (5, 10, 20, 50, 120, 200)
+ * @param {number} [period=20] stochastic lookback (daily UI fixes 20)
  * @returns {(number|null)[]}
  */
 export function computeInvestorOscSeries(
@@ -226,15 +226,15 @@ export async function fetchLatestInvestorNetSignature(config, cacheCtx = {}) {
     }
   };
 
-  let sig = 'inv-v9-none';
+  let sig = 'inv-v10-none';
   try {
     const [invDepth, frDepth] = await Promise.all([
       depthSig('stock_investor_net'),
       depthSig('stock_foreign_ratio'),
     ]);
-    sig = `inv-v9-${invDepth}-fr-${frDepth}`;
+    sig = `inv-v10-${invDepth}-fr-${frDepth}`;
   } catch {
-    sig = 'inv-v9-none';
+    sig = 'inv-v10-none';
   }
 
   if (origin && cacheCtx.context) {
@@ -393,7 +393,7 @@ function writeInvestorOscFromNets(bars, instNet, frgnNet) {
 
 /**
  * Attach instOsc_{cum}_{period} and frgnOsc_{cum}_{period} to daily OHLC bars (mutates bars).
- * Legacy instOsc5/10/20 and instOsc / frgnOsc alias the period-20 combination.
+ * Legacy instOsc{cum} and instOsc / frgnOsc alias the period-20 combination.
  * @param {Array<{ t: string }>} bars ascending trade dates
  * @param {Map<string, { inst: number, frgn: number }>} byDate
  */
@@ -405,7 +405,7 @@ export function attachInvestorOscToBars(bars, byDate) {
 
 /**
  * Attach OSC to weekly bars: sum daily nets inside each ISO week, then fixed
- * WEEKLY_CUM / WEEKLY_PERIOD OSC only (no daily 5/10/20 × 20/50 grid).
+ * WEEKLY_CUM / WEEKLY_PERIOD OSC only (no daily cum-window grid).
  * @param {Array<{ t: string }>} weeklyBars
  * @param {Map<string, { inst: number, frgn: number }>} byDate daily nets
  */

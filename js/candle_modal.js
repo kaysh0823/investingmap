@@ -61,10 +61,10 @@
   var RANGE_PERIOD = 5;
   var RANGE_SIGNAL = 20;
   var INVESTOR_OSC_LEVELS = [20, 50, 80];
-  var INVESTOR_CUM_OPTIONS = [5, 10, 20];
-  var INVESTOR_PERIOD_OPTIONS = [20, 50];
+  /** Daily OSC: selectable N-day cumulative net; stochastic lookback fixed at 20 bars. */
+  var INVESTOR_CUM_OPTIONS = [5, 10, 20, 50, 120, 200];
+  var INVESTOR_PERIOD_OPTIONS = [20];
   var INVESTOR_CUM_STORAGE = 'im_inv_cum';
-  var INVESTOR_PERIOD_STORAGE = 'im_inv_period';
   var DEFAULT_INVESTOR_CUM = 10;
   var DEFAULT_INVESTOR_PERIOD = 20;
   /** Weekly investor OSC is fixed (no cum/period toggle). */
@@ -136,6 +136,7 @@
       paneMacd: 'MACD',
       paneInvestorTpl: '투자자 OSC · 기관·외국인·보유비율 · 누적 {CUM}{UNIT} / 기준 {PER}{UNIT} (0~100)',
       paneInvestorUnitDay: '일',
+      investorFlow: '기관 및 외국인 수급',
       paneInvestorUnitWeek: '주',
       paneNorm: 'BBW% · 이격도% (125일)',
       paneRange: '5일 변동성(고저/종가)% · SMA20',
@@ -182,6 +183,7 @@
       paneMacd: 'MACD',
       paneInvestorTpl: 'Investor OSC · Inst·Frgn·Hold% · cum {CUM}{UNIT} / base {PER}{UNIT} (0-100)',
       paneInvestorUnitDay: 'd',
+      investorFlow: 'Inst & foreign flow',
       paneInvestorUnitWeek: 'w',
       paneNorm: 'BBW% · DISP% (125d)',
       paneRange: '5D Range Vol% · SMA20',
@@ -953,7 +955,10 @@
       '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}' +
       '.im-candle-close:hover,.im-candle-close:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
       '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
-      '.im-candle-ranges,.im-candle-intervals,.im-candle-inv-cum,.im-candle-inv-period{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
+      '.im-candle-ranges,.im-candle-intervals,.im-candle-inv-cum{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
+      '.im-candle-inv{display:inline-flex;align-items:center;gap:6px}' +
+      '.im-candle-inv[hidden]{display:none}' +
+      '.im-candle-inv-label{font-size:11px;color:var(--text-muted,#8b949e);white-space:nowrap}' +
       '.im-candle-range{border:0;background:transparent;color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer}' +
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
       '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
@@ -1016,7 +1021,7 @@
         !document.getElementById('im-candle-pane-labels') ||
         !document.getElementById('im-candle-intervals') ||
         !document.getElementById('im-candle-inv-cum') ||
-        !document.getElementById('im-candle-inv-period') ||
+        !document.getElementById('im-candle-inv') ||
         !document.getElementById('im-candle-expand') ||
         !document.getElementById('im-candle-hovertip') ||
         !document.getElementById('im-candle-prev') ||
@@ -1053,8 +1058,10 @@
       '<div class="im-candle-toolbar">' +
       '<div class="im-candle-ranges" role="group" id="im-candle-ranges"></div>' +
       '<div class="im-candle-intervals" role="group" id="im-candle-intervals"></div>' +
-      '<div class="im-candle-inv-cum" role="group" id="im-candle-inv-cum" hidden></div>' +
-      '<div class="im-candle-inv-period" role="group" id="im-candle-inv-period" hidden></div>' +
+      '<div class="im-candle-inv" id="im-candle-inv" hidden>' +
+      '<div class="im-candle-inv-cum" role="group" id="im-candle-inv-cum" aria-labelledby="im-candle-inv-label"></div>' +
+      '<span class="im-candle-inv-label" id="im-candle-inv-label"></span>' +
+      '</div>' +
       '<div class="im-candle-tip" id="im-candle-tip" aria-live="polite"></div>' +
       '</div>' +
       '<div class="im-candle-body">' +
@@ -1102,7 +1109,6 @@
       syncRangeButtons();
       syncIntervalButtons();
       syncInvestorCumVisibility();
-      syncInvestorPeriodVisibility();
       syncPaneLabels();
       updateSubtitle();
       document
@@ -1119,12 +1125,6 @@
       var cum = parseInt(btn.getAttribute('data-inv-cum'), 10);
       setInvestorCum(cum);
     });
-    root.querySelector('#im-candle-inv-period').addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-inv-period]');
-      if (!btn) return;
-      var period = parseInt(btn.getAttribute('data-inv-period'), 10);
-      setInvestorPeriod(period);
-    });
     return root;
   }
 
@@ -1139,20 +1139,6 @@
   function saveInvestorCum(v) {
     try {
       localStorage.setItem(INVESTOR_CUM_STORAGE, String(v));
-    } catch (e2) {}
-  }
-
-  function readStoredInvestorPeriod() {
-    try {
-      var v = parseInt(localStorage.getItem(INVESTOR_PERIOD_STORAGE), 10);
-      if (INVESTOR_PERIOD_OPTIONS.indexOf(v) >= 0) return v;
-    } catch (e) {}
-    return DEFAULT_INVESTOR_PERIOD;
-  }
-
-  function saveInvestorPeriod(v) {
-    try {
-      localStorage.setItem(INVESTOR_PERIOD_STORAGE, String(v));
     } catch (e2) {}
   }
 
@@ -1249,14 +1235,6 @@
     refreshInvestorOscSeries();
   }
 
-  function setInvestorPeriod(period) {
-    if (INVESTOR_PERIOD_OPTIONS.indexOf(period) < 0 || period === state.investorPeriod) return;
-    state.investorPeriod = period;
-    saveInvestorPeriod(period);
-    syncInvestorPeriodButtons();
-    refreshInvestorOscSeries();
-  }
-
   function syncInvestorCumButtons() {
     var wrap = document.getElementById('im-candle-inv-cum');
     if (!wrap) return;
@@ -1273,34 +1251,12 @@
         '</button>';
     }
     wrap.innerHTML = html;
-  }
-
-  function syncInvestorPeriodButtons() {
-    var wrap = document.getElementById('im-candle-inv-period');
-    if (!wrap) return;
-    var html = '';
-    for (var i = 0; i < INVESTOR_PERIOD_OPTIONS.length; i++) {
-      var period = INVESTOR_PERIOD_OPTIONS[i];
-      html +=
-        '<button type="button" class="im-candle-range" data-inv-period="' +
-        period +
-        '" aria-pressed="' +
-        (period === state.investorPeriod ? 'true' : 'false') +
-        '">' +
-        period +
-        '</button>';
-    }
-    wrap.innerHTML = html;
+    var label = document.getElementById('im-candle-inv-label');
+    if (label) label.textContent = t().investorFlow;
   }
 
   function syncInvestorCumVisibility() {
-    var wrap = document.getElementById('im-candle-inv-cum');
-    if (!wrap) return;
-    wrap.hidden = state.interval === 'weekly';
-  }
-
-  function syncInvestorPeriodVisibility() {
-    var wrap = document.getElementById('im-candle-inv-period');
+    var wrap = document.getElementById('im-candle-inv');
     if (!wrap) return;
     wrap.hidden = state.interval === 'weekly';
   }
@@ -2443,12 +2399,8 @@
       }
     }
     state.investorCum = readStoredInvestorCum();
-    state.investorPeriod = readStoredInvestorPeriod();
     if (opts && opts.investorCum && INVESTOR_CUM_OPTIONS.indexOf(opts.investorCum) >= 0) {
       state.investorCum = opts.investorCum;
-    }
-    if (opts && opts.investorPeriod && INVESTOR_PERIOD_OPTIONS.indexOf(opts.investorPeriod) >= 0) {
-      state.investorPeriod = opts.investorPeriod;
     }
     state.interval =
       opts && opts.interval && INTERVALS.indexOf(opts.interval) >= 0 ? opts.interval : 'daily';
@@ -2476,9 +2428,7 @@
     syncRangeButtons();
     syncIntervalButtons();
     syncInvestorCumButtons();
-    syncInvestorPeriodButtons();
     syncInvestorCumVisibility();
-    syncInvestorPeriodVisibility();
     syncPaneLabels();
     document
       .getElementById('im-candle-stack')
@@ -2622,9 +2572,7 @@
     syncRangeButtons();
     syncIntervalButtons();
     syncInvestorCumButtons();
-    syncInvestorPeriodButtons();
     syncInvestorCumVisibility();
-    syncInvestorPeriodVisibility();
     syncPaneLabels();
     refreshInvestorOscSeries();
   }
@@ -2652,10 +2600,8 @@
       investorCumOptions: INVESTOR_CUM_OPTIONS,
       investorPeriodOptions: INVESTOR_PERIOD_OPTIONS,
       readStoredInvestorCum: readStoredInvestorCum,
-      readStoredInvestorPeriod: readStoredInvestorPeriod,
       buildInvestorOscLinesFromByTime: buildInvestorOscLinesFromByTime,
       setInvestorCum: setInvestorCum,
-      setInvestorPeriod: setInvestorPeriod,
       paneInvestorLabel: paneInvestorLabel,
       setExpanded: setExpanded,
       isExpanded: function () {

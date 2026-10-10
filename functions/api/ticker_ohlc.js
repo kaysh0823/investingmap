@@ -85,7 +85,7 @@ export async function onRequest(context) {
   const config = getSupabaseConfig(env);
   let lastSig = 'none';
   let adjSig = 'adj-none';
-  let invSig = 'inv-v9-none';
+  let invSig = 'inv-v10-none';
   const tSig0 = Date.now();
   if (config) {
     try {
@@ -97,7 +97,7 @@ export async function onRequest(context) {
     } catch {
       lastSig = 'none';
       adjSig = 'adj-none';
-      invSig = 'inv-v9-none';
+      invSig = 'inv-v10-none';
     }
   }
   const sigDur = msSince(tSig0);

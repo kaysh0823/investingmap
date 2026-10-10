@@ -168,15 +168,20 @@ if (config?.url && config?.anonKey) {
   assert.ok('instOsc5' in last && 'instOsc10' in last && 'instOsc20' in last);
   assert.ok('frgnOsc5' in last && 'frgnOsc10' in last && 'frgnOsc20' in last);
   assert.equal(last.instOsc, last.instOsc10, 'instOsc aliases 10d');
-  for (const cum of [5, 10, 20]) {
-    for (const period of [20, 50]) {
+  for (const cum of INVESTOR_CUM_WINDOWS) {
+    for (const period of INVESTOR_OSC_PERIODS) {
       assert.ok(investorOscBarKey('instOsc', cum, period) in last, `${cum}/${period} inst field`);
       assert.ok(investorOscBarKey('frgnOsc', cum, period) in last, `${cum}/${period} frgn field`);
     }
   }
   console.log(
-    `Live ${ticker} @ ${last.t}: instOsc_10_20=${last.instOsc_10_20}, instOsc_10_50=${last.instOsc_10_50} ` +
+    `Live ${ticker} @ ${last.t}: instOsc_10_20=${last.instOsc_10_20}, instOsc_200_20=${last.instOsc_200_20} ` +
       `(legacy10=${last.instOsc10}; filled ${withInst.length}/${payload.bars.length})`,
+  );
+  const display1y = payload.bars.slice(-payload.displayDays);
+  assert.ok(
+    display1y.every((b) => b.instOsc_200_20 != null || b.instOsc_10_20 == null),
+    '200d cum OSC fills the 1Y display window wherever 10d does',
   );
   assert.ok('foreignRatio' in last, 'daily bars include foreignRatio field');
 
