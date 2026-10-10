@@ -67,6 +67,7 @@
     "verify:returns-core": "node scripts/verify_returns_core.mjs",
     "verify:returns-stale": "node scripts/verify_returns_stale.mjs",
     "verify:quotes-returns": "node scripts/verify_quotes_returns.mjs",
+    "verify:postgrest-keys": "node scripts/verify_postgrest_key_groups.mjs",
     "verify:returns-consistency": "node scripts/verify_returns_consistency.mjs",
     "verify:views": "node scripts/verify_views_consistency.mjs",
     "lint:returns": "node scripts/lint_return_sources.mjs",

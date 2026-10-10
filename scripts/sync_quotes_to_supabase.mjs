@@ -161,6 +161,12 @@ async function fetchNaverQuotes(codes) {
         else counters.siseFail += 1;
         if (sources.mobile === 'ok') counters.mobileOk += 1;
         else counters.mobileFail += 1;
+        if (sources.basic !== 'ok' || sources.mobile !== 'ok' || sources.sise !== 'ok') {
+          console.warn(
+            `  naver source fail ${row.code}: basic=${sources.basic} mobile=${sources.mobile}`
+            + ` sise=${sources.sise} last=${row.q.last ?? 'null'}`,
+          );
+        }
         if (row.code === '005930') {
           sample005930 = {
             siseLast: sources.siseQuote?.last ?? null,
@@ -413,12 +419,12 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
     turnover_won: naver?.turnoverWon ?? null,
     per: naver?.per ?? null,
     pbr: naver?.pbr ?? null,
-    chg_1d_pct: returns.chg_1d_pct,
-    ret_5d_pct: returns.ret_5d_pct,
-    ret_20d_pct: returns.ret_20d_pct,
-    ret_50d_pct: returns.ret_50d_pct,
-    ret_120d_pct: returns.ret_120d_pct,
-    ret_200d_pct: returns.ret_200d_pct,
+    chg_1d_pct: returns.chg_1d_pct ?? null,
+    ret_5d_pct: returns.ret_5d_pct ?? null,
+    ret_20d_pct: returns.ret_20d_pct ?? null,
+    ret_50d_pct: returns.ret_50d_pct ?? null,
+    ret_120d_pct: returns.ret_120d_pct ?? null,
+    ret_200d_pct: returns.ret_200d_pct ?? null,
     rs: krx?.rs ?? null,
     as_of: asOf,
     regular_session: regularSession,
@@ -442,6 +448,9 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
     row.session_low = sessionLow;
     row.session_volume = sessionVolume;
   }
+  // Omit last instead of writing null. resolution=merge-duplicates would erase
+  // the stored price. A halted name (082640 basic/mobile HTTP 409, sise has
+  // no print) is the row that otherwise drops only this key and trips PGRST102.
   if (last == null) delete row.last;
 
   return row;
@@ -588,26 +597,134 @@ function detectNaverStaleInner({
   return { stale: false, nonTradingDay: false, reason: null, compared, same, ratio };
 }
 
-async function upsertBatch(table, rows, supabaseUrl, serviceKey, attempt = 0) {
-  const res = await fetch(`${supabaseUrl}/rest/v1/${table}`, {
+/** Keys PostgREST will see. JSON.stringify drops undefined, so those keys are absent. */
+export function postgrestJsonKeys(row) {
+  if (!row || typeof row !== 'object') return [];
+  return Object.keys(row).filter((key) => row[key] !== undefined).sort();
+}
+
+/**
+ * Group rows that stringify to the same key set.
+ * Does not add missing keys and does not replace omissions with null.
+ */
+export function groupRowsByKeySignature(rows) {
+  const groups = new Map();
+  for (const row of rows || []) {
+    const sig = postgrestJsonKeys(row).join('\0');
+    if (!groups.has(sig)) groups.set(sig, []);
+    groups.get(sig).push(row);
+  }
+  return [...groups.values()];
+}
+
+/** Tickers whose key set differs from the majority, with missing and extra keys. */
+export function keyMismatchReport(rows) {
+  const parsed = (rows || []).map((row) => ({
+    id: row?.ticker || row?.sector_id || row?.index_code || '?',
+    keys: postgrestJsonKeys(row),
+  }));
+  if (parsed.length < 2) return '';
+  const counts = new Map();
+  for (const item of parsed) {
+    const sig = item.keys.join(',');
+    counts.set(sig, (counts.get(sig) || 0) + 1);
+  }
+  if (counts.size < 2) return '';
+  let majoritySig = '';
+  let best = -1;
+  for (const [sig, count] of counts) {
+    if (count > best) {
+      best = count;
+      majoritySig = sig;
+    }
+  }
+  const majority = new Set(majoritySig.split(',').filter(Boolean));
+  const lines = [];
+  for (const item of parsed) {
+    const set = new Set(item.keys);
+    const missing = [...majority].filter((key) => !set.has(key));
+    const extra = item.keys.filter((key) => !majority.has(key));
+    if (!missing.length && !extra.length) continue;
+    lines.push(
+      `${item.id}: missing=[${missing.join(', ')}] extra=[${extra.join(', ')}]`,
+    );
+  }
+  return lines.join('\n');
+}
+
+function isPgrst102(body) {
+  return /PGRST102/.test(String(body || ''));
+}
+
+async function postgrestPostGroup(table, rows, supabaseUrl, serviceKey, options, attempt = 0) {
+  const res = await fetch(`${supabaseUrl}/rest/v1/${table}${options.query || ''}`, {
     method: 'POST',
     headers: {
       apikey: serviceKey,
       Authorization: `Bearer ${serviceKey}`,
       'Content-Type': 'application/json',
-      Prefer: 'resolution=merge-duplicates',
+      Prefer: options.prefer,
     },
     body: JSON.stringify(rows),
   });
-
-  if (res.ok) return { ok: true, status: res.status };
-
+  if (res.ok) return { ok: true, status: res.status, body: '' };
   const body = await res.text();
-  if (attempt < SUPABASE_MAX_RETRIES) {
-    await sleep(1000);
-    return upsertBatch(table, rows, supabaseUrl, serviceKey, attempt + 1);
+  const retries = options.maxRetries ?? 0;
+  if (attempt < retries && !isPgrst102(body)) {
+    await sleep(options.retryDelayMs ?? 1000);
+    return postgrestPostGroup(table, rows, supabaseUrl, serviceKey, options, attempt + 1);
   }
   return { ok: false, status: res.status, body };
+}
+
+/**
+ * Bulk merge-upsert. Rows with different key sets are posted separately so
+ * PostgREST does not reject the batch, and omitted keys stay omitted.
+ */
+async function postgrestBulkUpsert(table, rows, supabaseUrl, serviceKey, options = {}) {
+  const groups = groupRowsByKeySignature(rows);
+  const label = options.label || table;
+  if (groups.length > 1) {
+    const report = keyMismatchReport(rows);
+    console.warn(
+      `  ${label}: split ${rows.length} rows into ${groups.length} key groups`
+      + (report ? `\n${report}` : ''),
+    );
+  }
+  let ok = true;
+  let status = 200;
+  let body = '';
+  let upserted = 0;
+  let failed = 0;
+  const failedRows = [];
+  for (const group of groups) {
+    const result = await postgrestPostGroup(table, group, supabaseUrl, serviceKey, options);
+    if (result.ok) {
+      upserted += group.length;
+      continue;
+    }
+    ok = false;
+    status = result.status;
+    body = result.body || '';
+    failed += group.length;
+    failedRows.push(...group);
+    if (isPgrst102(body)) {
+      const report = keyMismatchReport(group);
+      console.error(
+        `  PGRST102 key mismatch (${label}): ${report || 'keys already uniform in this group'}`,
+      );
+    }
+  }
+  return { ok, status, body, upserted, failed, failedRows };
+}
+
+async function upsertBatch(table, rows, supabaseUrl, serviceKey) {
+  return postgrestBulkUpsert(table, rows, supabaseUrl, serviceKey, {
+    prefer: 'resolution=merge-duplicates',
+    maxRetries: SUPABASE_MAX_RETRIES,
+    retryDelayMs: 1000,
+    label: table,
+  });
 }
 
 async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
@@ -620,11 +737,22 @@ async function upsertToSupabase(rows, supabaseUrl, serviceKey) {
     if (result.ok) {
       upserted.push(...batch.map((r) => r.ticker));
     } else {
-      failed.push(...batch.map((r) => r.ticker));
+      const failedSet = new Set((result.failedRows || []).map((r) => r.ticker));
+      const failedBatch = failedSet.size
+        ? batch.filter((r) => failedSet.has(r.ticker))
+        : batch;
+      for (const row of batch) {
+        if (failedSet.size && !failedSet.has(row.ticker)) upserted.push(row.ticker);
+        else failed.push(row.ticker);
+      }
       console.error(
-        `\n  Supabase batch failed (${result.status}): tickers ${batch.map((r) => r.ticker).join(', ')}`,
+        `\n  Supabase batch failed (${result.status}): tickers ${failedBatch.map((r) => r.ticker).join(', ')}`,
       );
       if (result.body) console.error(`  ${result.body.slice(0, 300)}`);
+      if (isPgrst102(result.body)) {
+        const report = keyMismatchReport(failedBatch);
+        if (report) console.error(`  PGRST102 key mismatch:\n${report}`);
+      }
     }
     const done = Math.min(i + UPSERT_BATCH_SIZE, rows.length);
     process.stdout.write(`\r  Supabase upsert ${done}/${rows.length}`);
@@ -687,24 +815,25 @@ function mcapFromKrxRow(row) {
   return null;
 }
 
-async function upsertHistoryBatch(rows, supabaseUrl, serviceKey, attempt = 0) {
-  const res = await fetch(`${supabaseUrl}/rest/v1/stock_price_history`, {
-    method: 'POST',
-    headers: {
-      apikey: serviceKey,
-      Authorization: `Bearer ${serviceKey}`,
-      'Content-Type': 'application/json',
-      Prefer: 'resolution=merge-duplicates, on_conflict=ticker,trade_date',
+async function upsertHistoryBatch(rows, supabaseUrl, serviceKey) {
+  const result = await postgrestBulkUpsert(
+    'stock_price_history',
+    rows,
+    supabaseUrl,
+    serviceKey,
+    {
+      prefer: 'resolution=merge-duplicates, on_conflict=ticker,trade_date',
+      maxRetries: SUPABASE_MAX_RETRIES,
+      retryDelayMs: 800,
+      label: 'stock_price_history',
     },
-    body: JSON.stringify(rows),
-  });
-  if (res.ok) return { ok: true };
-  const body = await res.text();
-  if (attempt < SUPABASE_MAX_RETRIES) {
-    await sleep(800);
-    return upsertHistoryBatch(rows, supabaseUrl, serviceKey, attempt + 1);
-  }
-  return { ok: false, body };
+  );
+  return {
+    ok: result.ok,
+    body: result.body,
+    upserted: result.upserted,
+    failed: result.failed,
+  };
 }
 
 async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
@@ -749,7 +878,12 @@ async function upsertHistoryRows(rows, supabaseUrl, serviceKey) {
     }
     if (!result.ok) {
       console.error(`  history upsert failed: ${(result.body || '').slice(0, 200)}`);
-      failed += batch.length;
+      if (isPgrst102(result.body)) {
+        const report = keyMismatchReport(batch);
+        if (report) console.error(`  PGRST102 key mismatch:\n${report}`);
+      }
+      failed += result.failed ?? batch.length;
+      upserted += result.upserted || 0;
       continue;
     }
     upserted += batch.length;
@@ -1635,19 +1769,22 @@ async function upsertHubRankDaily(rows, supabaseUrl, serviceKey) {
   let upserted = 0;
   for (let i = 0; i < rows.length; i += HISTORY_UPSERT_BATCH) {
     const batch = rows.slice(i, i + HISTORY_UPSERT_BATCH);
-    const res = await fetch(`${supabaseUrl}/rest/v1/hub_rank_daily`, {
-      method: 'POST',
-      headers: {
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-        'Content-Type': 'application/json',
-        Prefer: 'resolution=merge-duplicates, on_conflict=metric,ticker,trade_date',
-      },
-      body: JSON.stringify(batch),
+    const result = await postgrestBulkUpsert('hub_rank_daily', batch, supabaseUrl, serviceKey, {
+      prefer: 'resolution=merge-duplicates, on_conflict=metric,ticker,trade_date',
+      maxRetries: 0,
+      label: 'hub_rank_daily',
     });
-    if (!res.ok) {
-      const body = await res.text();
-      return { ok: false, upserted, status: res.status, body };
+    if (!result.ok) {
+      if (isPgrst102(result.body)) {
+        const report = keyMismatchReport(batch);
+        if (report) console.error(`  PGRST102 key mismatch:\n${report}`);
+      }
+      return {
+        ok: false,
+        upserted: upserted + result.upserted,
+        status: result.status,
+        body: result.body,
+      };
     }
     upserted += batch.length;
   }
@@ -1773,19 +1910,27 @@ async function loadIntradaySectorIds(supabaseUrl, serviceKey, tradeDateDash) {
 
 async function insertIntradaySnapshots(rows, supabaseUrl, serviceKey) {
   if (!rows.length) return { ok: true, upserted: 0 };
-  const res = await fetch(`${supabaseUrl}/rest/v1/sector_intraday_snapshots`, {
-    method: 'POST',
-    headers: {
-      apikey: serviceKey,
-      Authorization: `Bearer ${serviceKey}`,
-      'Content-Type': 'application/json',
-      Prefer: 'resolution=merge-duplicates, on_conflict=sector_id,ts',
+  const result = await postgrestBulkUpsert(
+    'sector_intraday_snapshots',
+    rows,
+    supabaseUrl,
+    serviceKey,
+    {
+      prefer: 'resolution=merge-duplicates, on_conflict=sector_id,ts',
+      maxRetries: 0,
+      label: 'sector_intraday_snapshots',
     },
-    body: JSON.stringify(rows),
-  });
-  if (res.ok) return { ok: true, upserted: rows.length };
-  const body = await res.text();
-  return { ok: false, upserted: 0, status: res.status, body };
+  );
+  if (!result.ok && isPgrst102(result.body)) {
+    const report = keyMismatchReport(rows);
+    if (report) console.error(`  PGRST102 key mismatch:\n${report}`);
+  }
+  return {
+    ok: result.ok,
+    upserted: result.upserted,
+    status: result.status,
+    body: result.body,
+  };
 }
 
 async function pruneIntradaySnapshots(supabaseUrl, serviceKey, keepDates) {
@@ -1902,22 +2047,25 @@ async function syncSectorIntradayReturns({
     }
   }
 
-  const url = `${supabaseUrl}/rest/v1/sector_intraday_returns`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      apikey: serviceKey,
-      Authorization: `Bearer ${serviceKey}`,
-      'Content-Type': 'application/json',
-      Prefer: 'resolution=merge-duplicates, on_conflict=sector_id,ts',
+  const result = await postgrestBulkUpsert(
+    'sector_intraday_returns',
+    rows,
+    supabaseUrl,
+    serviceKey,
+    {
+      prefer: 'resolution=merge-duplicates, on_conflict=sector_id,ts',
+      maxRetries: 0,
+      label: 'sector_intraday_returns',
     },
-    body: JSON.stringify(rows),
-  });
-  if (!res.ok) {
-    const body = await res.text();
+  );
+  if (!result.ok) {
     console.error(
-      `  sector intraday returns insert failed (${res.status}): ${body.slice(0, 200)}`,
+      `  sector intraday returns insert failed (${result.status}): ${(result.body || '').slice(0, 200)}`,
     );
+    if (isPgrst102(result.body)) {
+      const report = keyMismatchReport(rows);
+      if (report) console.error(`  PGRST102 key mismatch:\n${report}`);
+    }
     return { appended: 0, failed: true };
   }
   console.log(
@@ -2116,24 +2264,20 @@ async function upsertMarketIndexRows(table, rows, supabaseUrl, serviceKey, confl
     );
   });
   if (!clean.length) return 0;
-  const response = await fetch(
-    `${supabaseUrl}/rest/v1/${table}?on_conflict=${encodeURIComponent(conflict)}`,
-    {
-      method: 'POST',
-      headers: {
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-        'Content-Type': 'application/json',
-        Prefer: 'resolution=merge-duplicates,return=minimal',
-      },
-      body: JSON.stringify(clean),
-    },
-  );
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`${table} upsert: ${response.status} ${body.slice(0, 180)}`);
+  const result = await postgrestBulkUpsert(table, clean, supabaseUrl, serviceKey, {
+    prefer: 'resolution=merge-duplicates,return=minimal',
+    query: `?on_conflict=${encodeURIComponent(conflict)}`,
+    maxRetries: 0,
+    label: table,
+  });
+  if (!result.ok) {
+    if (isPgrst102(result.body)) {
+      const report = keyMismatchReport(clean);
+      if (report) console.error(`  PGRST102 key mismatch:\n${report}`);
+    }
+    throw new Error(`${table} upsert: ${result.status} ${(result.body || '').slice(0, 180)}`);
   }
-  return clean.length;
+  return result.upserted;
 }
 
 /** Market-index failures are intentionally isolated from the stock quote sync. */
