@@ -41,6 +41,101 @@ function round4(v) {
   return Math.round(v * 10000) / 10000;
 }
 
+function dashDay(value) {
+  const s = String(value || '').replace(/\D/g, '');
+  if (s.length < 8) return null;
+  return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+}
+
+function utcMs(dash) {
+  const [y, m, d] = dash.split('-').map(Number);
+  return Date.UTC(y, m - 1, d);
+}
+
+function dayDiff(later, earlier) {
+  return Math.round((utcMs(later) - utcMs(earlier)) / 86400000);
+}
+
+/** Same month-end, one year earlier (leap-day safe). */
+function yearBefore(dash) {
+  const [y, m] = dash.split('-').map(Number);
+  const dt = new Date(Date.UTC(y - 1, m, 0));
+  const mm = String(dt.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(dt.getUTCDate()).padStart(2, '0');
+  return `${dt.getUTCFullYear()}-${mm}-${dd}`;
+}
+
+/**
+ * Forward EPS / PER FTM / PEG from a consensus row.
+ * FY1+FY2 → time-weighted blend. FY1 only → that EPS. No FY1 → nulls.
+ * fetched_at 10 or more days older than recentDd is ignored.
+ */
+export function computeForwardValuation({
+  fy1Eps,
+  fy1End,
+  fy2Eps,
+  fy2End,
+  close,
+  epsTtm,
+  recentDd,
+  fetchedAt,
+}) {
+  const out = {
+    fy1Eps: null,
+    fy1End: null,
+    fy2Eps: null,
+    fy2End: null,
+    epsFtm: null,
+    ftmBasis: null,
+    ftmW: null,
+    perFtm: null,
+    epsGrowthFtm: null,
+    peg: null,
+  };
+  const recent = dashDay(recentDd);
+  const fetched = dashDay(fetchedAt);
+  if (!recent || !fetched || dayDiff(recent, fetched) >= 10) return out;
+
+  const e1 = numOrNull(fy1Eps);
+  const e2 = numOrNull(fy2Eps);
+  const end1 = dashDay(fy1End);
+  const end2 = dashDay(fy2End);
+  if (e1 == null || !end1) return out;
+
+  out.fy1Eps = e1;
+  out.fy1End = end1;
+  out.fy2Eps = e2;
+  out.fy2End = end2;
+
+  let epsFtm;
+  if (e2 != null) {
+    const span = dayDiff(end1, yearBefore(end1));
+    let w = span > 0 ? dayDiff(end1, recent) / span : 0;
+    if (!Number.isFinite(w)) w = 0;
+    w = Math.max(0, Math.min(1, w));
+    epsFtm = w * e1 + (1 - w) * e2;
+    out.ftmBasis = 'blend';
+    out.ftmW = Math.round(w * 1000) / 1000;
+  } else {
+    epsFtm = e1;
+    out.ftmBasis = 'fy1';
+    out.ftmW = null;
+  }
+  out.epsFtm = round4(epsFtm);
+  const px = numOrNull(close);
+  const ttm = numOrNull(epsTtm);
+  out.perFtm = out.epsFtm != null && out.epsFtm > 0 && px != null && px > 0
+    ? round4(px / out.epsFtm)
+    : null;
+  out.epsGrowthFtm = out.epsFtm != null && out.epsFtm > 0 && ttm != null && ttm > 0
+    ? round4(out.epsFtm / ttm - 1)
+    : null;
+  out.peg = out.perFtm != null && out.epsGrowthFtm != null && out.epsGrowthFtm > 0
+    ? round4(out.perFtm / (out.epsGrowthFtm * 100))
+    : null;
+  return out;
+}
+
 async function resolveRecentDd(config) {
   const refsPath = path.join(ROOT, 'data', 'hub_return_refs.json');
   if (fs.existsSync(refsPath)) {
@@ -74,6 +169,16 @@ function fyQuoteFromKrx(v) {
     pbrTtm: null,
     epsTtm: null,
     valAsOf: null,
+    fy1Eps: null,
+    fy1End: null,
+    fy2Eps: null,
+    fy2End: null,
+    epsFtm: null,
+    ftmBasis: null,
+    ftmW: null,
+    perFtm: null,
+    epsGrowthFtm: null,
+    peg: null,
   };
 }
 
@@ -186,6 +291,51 @@ async function attachHubTtm(quotes, hubTickers, config) {
   return { hubHit, ttmFilled, ttmNullLoss, ttmMissingQuote };
 }
 
+/**
+ * Attach WiseReport forward EPS for hub tickers. A missing table leaves FTM/PEG null.
+ */
+async function attachHubConsensus(quotes, hubTickers, config, recentDd) {
+  const stats = { cnsCovered: 0, ftmBlend: 0, ftmFy1Only: 0, pegFilled: 0 };
+  let byTicker = null;
+  try {
+    const rows = await fetchSupabaseJson(
+      config,
+      'stock_consensus_latest?select=ticker,fy1_end,fy1_eps,fy2_end,fy2_eps,fetched_at',
+      { paginate: true, pageSize: 1000, preferCountExact: false },
+    );
+    byTicker = new Map();
+    for (const row of rows || []) {
+      const t = normalizeTicker(row.ticker);
+      if (t) byTicker.set(t, row);
+    }
+  } catch (e) {
+    console.warn(`consensus table read failed: ${e.message || e} — FTM/PEG left null`);
+    return stats;
+  }
+
+  for (const t of hubTickers) {
+    if (!quotes[t]) continue;
+    const row = byTicker.get(t);
+    if (!row) continue;
+    const fwd = computeForwardValuation({
+      fy1Eps: row.fy1_eps,
+      fy1End: row.fy1_end,
+      fy2Eps: row.fy2_eps,
+      fy2End: row.fy2_end,
+      close: quotes[t].close,
+      epsTtm: quotes[t].epsTtm,
+      recentDd,
+      fetchedAt: row.fetched_at,
+    });
+    Object.assign(quotes[t], fwd);
+    if (fwd.epsFtm != null) stats.cnsCovered += 1;
+    if (fwd.ftmBasis === 'blend') stats.ftmBlend += 1;
+    if (fwd.ftmBasis === 'fy1') stats.ftmFy1Only += 1;
+    if (fwd.peg != null) stats.pegFilled += 1;
+  }
+  return stats;
+}
+
 export async function buildValuationSnapshot(env = loadEnv()) {
   const config = getSupabaseConfig(env, { preferServiceRole: true });
   if (!config) throw new Error('SUPABASE_URL + key required');
@@ -209,6 +359,12 @@ export async function buildValuationSnapshot(env = loadEnv()) {
     hubTickers,
     config,
   );
+  const { cnsCovered, ftmBlend, ftmFy1Only, pegFilled } = await attachHubConsensus(
+    quotes,
+    hubTickers,
+    config,
+    recentDd,
+  );
   const ttmAttachRate = hubHit > 0 ? (ttmFilled + ttmNullLoss) / hubHit : 0;
   const ttmPositiveRate = hubHit > 0 ? ttmFilled / hubHit : 0;
 
@@ -226,13 +382,18 @@ export async function buildValuationSnapshot(env = loadEnv()) {
     ttmMissingQuote,
     ttmAttachRate: Math.round(ttmAttachRate * 1000) / 1000,
     ttmFillRate: Math.round(ttmPositiveRate * 1000) / 1000,
+    cnsCovered,
+    ftmBlend,
+    ftmFy1Only,
+    pegFilled,
     quotes,
   };
   fs.writeFileSync(OUT_PATH, `${JSON.stringify(out)}\n`, 'utf8');
   console.log(
     `Wrote ${OUT_PATH} recentDd=${recentDd} universe=${universe} `
     + `hubHit=${hubHit}/${hubTickers.size} ttm+=${ttmFilled} lossNull=${ttmNullLoss} `
-    + `attach=${(ttmAttachRate * 100).toFixed(1)}%`,
+    + `attach=${(ttmAttachRate * 100).toFixed(1)}% `
+    + `cnsCovered=${cnsCovered} ftmBlend=${ftmBlend} ftmFy1Only=${ftmFy1Only} pegFilled=${pegFilled}`,
   );
   return out;
 }

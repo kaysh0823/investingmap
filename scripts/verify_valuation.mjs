@@ -8,6 +8,7 @@
  * cross-check: `node scripts/verify_valuation.mjs --expect-per-fy=41.48`.
  */
 import assert from 'node:assert/strict';
+import './verify_wisereport_parse.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -141,6 +142,33 @@ console.log(
   `  005930 perTtm=${samsung.perTtm} perFy=${samsung.perFy} pbrFy=${samsung.pbrFy} `
   + `close=${samsung.close} epsFy=${samsung.epsFy} epsTtm=${samsung.epsTtm}`,
 );
+assert.ok(samsung.fy1Eps != null && samsung.fy2Eps != null, '005930 fy1Eps and fy2Eps');
+{
+  const lo = Math.min(Number(samsung.fy1Eps), Number(samsung.fy2Eps));
+  const hi = Math.max(Number(samsung.fy1Eps), Number(samsung.fy2Eps));
+  assert.ok(
+    Number(samsung.epsFtm) >= lo - 1e-4 && Number(samsung.epsFtm) <= hi + 1e-4,
+    `005930 epsFtm=${samsung.epsFtm} between fy1=${samsung.fy1Eps} and fy2=${samsung.fy2Eps}`,
+  );
+}
+assert.ok(Number(samsung.perFtm) > 0, `005930 perFtm=${samsung.perFtm}`);
+assert.ok(samsung.peg == null || Number(samsung.peg) > 0, `005930 peg=${samsung.peg}`);
+{
+  const covered = Number(snapshot.cnsCovered) || 0;
+  const hubN = Number(snapshot.hubCount) || Number(snapshot.hubHit) || 0;
+  assert.ok(hubN > 0 && covered / hubN >= 0.5, `cnsCovered ${covered}/${hubN} >= 0.5`);
+  let pegBad = 0;
+  for (const [ticker, q] of Object.entries(snapshot.quotes || {})) {
+    if (q && q.peg != null && !(Number(q.epsGrowthFtm) > 0)) {
+      pegBad += 1;
+      console.error(`peg without positive growth: ${ticker}`);
+    }
+  }
+  assert.equal(pegBad, 0, 'every peg must have epsGrowthFtm > 0');
+  console.log(
+    `  cnsCovered=${covered}/${hubN} 005930 epsFtm=${samsung.epsFtm} perFtm=${samsung.perFtm} peg=${samsung.peg}`,
+  );
+}
 
 const hubCount = Number(snapshot.hubHit) || 0;
 const ttmFilled = Number(snapshot.ttmFilled) || 0;
@@ -164,6 +192,8 @@ console.log(
 assert.ok(fs.existsSync(path.join(ROOT, 'js', 'map_valuation.js')), 'map_valuation.js');
 const mapJs = fs.readFileSync(path.join(ROOT, 'js', 'map_valuation.js'), 'utf8');
 assert.ok(/perTtm/.test(mapJs), 'map_valuation uses perTtm');
+assert.ok(/perFtm/.test(mapJs), 'map_valuation uses perFtm');
+assert.ok(/['"]peg['"]/.test(mapJs), 'map_valuation uses peg');
 assert.ok(/resolveDisplay/.test(mapJs), 'map_valuation resolveDisplay');
 assert.ok(/groupMetric/.test(mapJs), 'map_valuation segmented groupMetric');
 assert.ok(!/ \|\| 'Div'/.test(mapJs), 'map_valuation must not fall back to bare Div');

@@ -170,7 +170,7 @@
     scrollFirstChartSearchHit(container, companies);
   }
 
-  var METRICS = ['perTtm', 'perFy', 'pbr', 'dvd'];
+  var METRICS = ['perTtm', 'perFtm', 'perFy', 'pbr', 'peg', 'dvd'];
   var METRIC_STORAGE = 'im.valuation.metric';
   var state = { metric: 'perTtm', sort: 'chain' };
 
@@ -187,8 +187,10 @@
       groupSort: '정렬',
       search: '검색',
       metricPerTtm: 'PER TTM',
+      metricPerFtm: 'PER FTM',
       metricPerFy: 'PER FY',
       metricPbr: 'PBR',
+      metricPeg: 'PEG',
       metricDvd: '배당수익률',
       sortChain: '체인 순',
       sortMedian: '그룹 중앙값 순',
@@ -197,12 +199,22 @@
         var unit = metric === 'dvd' ? '%' : '×';
         var name =
           metric === 'perTtm' ? 'PER(TTM)' :
+          metric === 'perFtm' ? 'PER(FTM)' :
           metric === 'perFy' ? 'PER(FY)' :
-          metric === 'pbr' ? 'PBR' : '배당';
+          metric === 'pbr' ? 'PBR' :
+          metric === 'peg' ? 'PEG' : '배당';
         return name + ' 중앙값 ' + formatMetric(v, metric) + unit;
       },
       naDeficit: 'N/A(적자)',
+      naNoCns: 'N/A(적자·컨센 없음)',
+      naPeg: 'N/A(역성장·적자·컨센 없음)',
       fyTag: 'FY',
+      fy1OnlyTag: function (end) {
+        var y = String(end || '').replace(/\D/g, '').slice(2, 4);
+        return /^\d{2}$/.test(y) ? y + 'E' : 'E';
+      },
+      fy1OnlyTip: '(FY1 추정만)',
+      reboundTag: '급반등',
       fyFallbackTip: '(FY 대체)',
       tickerNotPlottable: function (name) {
         return name + ': 현재 지표로 표시할 수 없음';
@@ -214,6 +226,10 @@
         '점 크기 = EPS(TTM) · 색 = RS (시장 RS 초과 초록 · 미만 빨강) · 세로 점선 = 전 시장 P25/P50/P75(KRX FY)',
       legendPer:
         'PER(TTM) = 주가 ÷ 최근 4분기 EPS (Naver/WISEfn) · 시장 백분위선은 KRX 직전 사업연도 EPS 기준',
+      legendFtm:
+        'PER(FTM) = 주가 ÷ 향후 12개월 EPS (FnGuide 컨센서스, FY1·FY2 기간 가중) · 컨센서스가 있는 종목만 표시 · 시장 백분위선 없음',
+      legendPeg:
+        'PEG = PER(FTM) ÷ 이익성장률(%) · 성장률 = FTM EPS ÷ TTM EPS − 1 · 1 미만 = 성장 대비 저평가 · 이익 급반등 업종은 값이 매우 작게 나옴',
       legendRsLo: '시장 RS 미만',
       legendRsMid: '시장 RS',
       legendRsHi: '초과',
@@ -224,9 +240,14 @@
         return '기준 ' + formatDash(dd) + ' · 장중 현재가 기준';
       },
       tipPerTtm: 'PER TTM',
+      tipPerFtm: 'PER FTM',
       tipPerFy: 'PER FY',
       tipPbr: 'PBR',
       tipEpsTtm: 'EPS(TTM)',
+      tipEpsFtm: 'EPS FTM',
+      tipGrowth: '이익성장률(TTM→FTM)',
+      tipPeg: 'PEG',
+      pegOne: 'PEG 1',
       tipRs: 'RS',
       tipRsVs: function (marketRs, delta) {
         if (marketRs == null || !isFinite(marketRs)) return '';
@@ -253,8 +274,10 @@
       groupSort: 'Sort',
       search: 'Search',
       metricPerTtm: 'PER TTM',
+      metricPerFtm: 'PER FTM',
       metricPerFy: 'PER FY',
       metricPbr: 'PBR',
+      metricPeg: 'PEG',
       metricDvd: 'Div. yield',
       sortChain: 'Chain order',
       sortMedian: 'By group median',
@@ -263,12 +286,22 @@
         var unit = metric === 'dvd' ? '%' : '×';
         var name =
           metric === 'perTtm' ? 'PER(TTM)' :
+          metric === 'perFtm' ? 'PER(FTM)' :
           metric === 'perFy' ? 'PER(FY)' :
-          metric === 'pbr' ? 'PBR' : 'Yield';
+          metric === 'pbr' ? 'PBR' :
+          metric === 'peg' ? 'PEG' : 'Yield';
         return name + ' median ' + formatMetric(v, metric) + unit;
       },
       naDeficit: 'N/A (loss)',
+      naNoCns: 'N/A (loss / no est.)',
+      naPeg: 'N/A (neg. growth / loss / no est.)',
       fyTag: 'FY',
+      fy1OnlyTag: function (end) {
+        var y = String(end || '').replace(/\D/g, '').slice(2, 4);
+        return /^\d{2}$/.test(y) ? y + 'E' : 'E';
+      },
+      fy1OnlyTip: '(FY1 only)',
+      reboundTag: 'rebound',
       fyFallbackTip: '(FY fallback)',
       tickerNotPlottable: function (name) {
         return name + ': not plottable on this metric';
@@ -280,6 +313,10 @@
         'Dot size = EPS(TTM) · color = RS (green above market RS · red below) · dashed lines = market P25/P50/P75 (KRX FY)',
       legendPer:
         'PER(TTM) = price ÷ TTM EPS (Naver/WISEfn) · market percentile lines use KRX prior-year EPS',
+      legendFtm:
+        'PER(FTM) = price ÷ next-12-month EPS (FnGuide consensus, FY1·FY2 time-weighted) · names with a consensus only · no market percentile lines',
+      legendPeg:
+        'PEG = PER(FTM) ÷ EPS growth (%) · growth = FTM EPS ÷ TTM EPS − 1 · below 1 = inexpensive vs growth · a sharp earnings rebound makes PEG very small',
       legendRsLo: 'Below market RS',
       legendRsMid: 'Market RS',
       legendRsHi: 'Above',
@@ -290,9 +327,14 @@
         return 'As of ' + formatDash(dd) + ' · intraday last';
       },
       tipPerTtm: 'PER TTM',
+      tipPerFtm: 'PER FTM',
       tipPerFy: 'PER FY',
       tipPbr: 'PBR',
       tipEpsTtm: 'EPS (TTM)',
+      tipEpsFtm: 'EPS FTM',
+      tipGrowth: 'EPS growth (TTM→FTM)',
+      tipPeg: 'PEG',
+      pegOne: 'PEG 1',
       tipRs: 'RS',
       tipRsVs: function (marketRs, delta) {
         if (marketRs == null || !isFinite(marketRs)) return '';
@@ -571,8 +613,9 @@
     }
 
     var isPbr = metric === 'pbr';
-    var loBound = isPbr ? [0.1, 2] : [0.3, 5];
-    var hiBound = isPbr ? [3, 50] : [20, 1000];
+    var isPeg = metric === 'peg';
+    var loBound = isPeg ? [0.01, 0.5] : isPbr ? [0.1, 2] : [0.3, 5];
+    var hiBound = isPeg ? [2, 20] : isPbr ? [3, 50] : [20, 1000];
     var q05 = vals.length ? quantileAsc(vals, 0.05) : isPbr ? 0.5 : 1;
     var q95 = vals.length ? quantileAsc(vals, 0.95) : hiBound[0];
     var lo = clampNum(q05 / 1.25, loBound[0], loBound[1]);
@@ -686,11 +729,44 @@
         live: false,
       };
     }
+    if (metric === 'perFtm') {
+      var epsF = q.epsFtm;
+      var fy1Only = q.ftmBasis === 'fy1';
+      if (liveSession && epsF != null && epsF > 0 && last != null) {
+        return { value: last / epsF, fyFallback: false, fy1Only: fy1Only, live: true };
+      }
+      return {
+        value: q.perFtm != null && q.perFtm > 0 ? q.perFtm : null,
+        fyFallback: false,
+        fy1Only: fy1Only,
+        live: false,
+      };
+    }
+    if (metric === 'peg') {
+      var growth = q.epsGrowthFtm;
+      var epsFg = q.epsFtm;
+      var fy1OnlyPeg = q.ftmBasis === 'fy1';
+      if (liveSession && last != null && epsFg != null && epsFg > 0 && growth != null && growth > 0) {
+        return {
+          value: (last / epsFg) / (growth * 100),
+          fyFallback: false,
+          fy1Only: fy1OnlyPeg,
+          live: true,
+        };
+      }
+      return {
+        value: q.peg != null && q.peg > 0 ? q.peg : null,
+        fyFallback: false,
+        fy1Only: fy1OnlyPeg,
+        live: false,
+      };
+    }
     return { value: null, fyFallback: false, live: false };
   }
 
   function marketMetricValue(q, metric) {
     if (!q) return null;
+    if (metric === 'perFtm' || metric === 'peg') return null;
     if (metric === 'perTtm' || metric === 'perFy') {
       return q.perFy != null && q.perFy > 0 ? q.perFy : null;
     }
@@ -722,8 +798,10 @@
 
   function metricButtonLabel(m, labels) {
     if (m === 'perTtm') return labels.metricPerTtm;
+    if (m === 'perFtm') return labels.metricPerFtm;
     if (m === 'perFy') return labels.metricPerFy;
     if (m === 'pbr') return labels.metricPbr;
+    if (m === 'peg') return labels.metricPeg;
     return labels.metricDvd;
   }
 
@@ -1074,6 +1152,7 @@
         value: resolved.value,
         plottable: isPlottable(resolved.value, metric),
         fyFallback: !!resolved.fyFallback,
+        fy1Only: !!resolved.fy1Only,
         live: !!resolved.live,
         eps: eps,
         q: q,
@@ -1119,7 +1198,11 @@
 
     var bandH = 44;
     var labelW = Math.min(140, Math.floor(width * 0.22));
-    var naW = measureTextWidth(labels.naDeficit, 10) + 16;
+    var naLabel =
+      metric === 'perFtm' ? labels.naNoCns :
+      metric === 'peg' ? labels.naPeg :
+      labels.naDeficit;
+    var naW = measureTextWidth(naLabel, 10) + 16;
     var margin = { top: 32, right: 24, bottom: 28, left: labelW };
     var innerW = Math.max(80, width - margin.left - margin.right - naW);
     var height = margin.top + margin.bottom + groups.length * bandH;
@@ -1207,6 +1290,37 @@
       }
     });
 
+    if (metric === 'peg' && domain[0] <= 1 && domain[1] >= 1) {
+      var pegX = x(1);
+      var pegX0 = prevX ? prevX(1) : pegX;
+      if (isFinite(pegX)) {
+        var pegLine = gRoot
+          .append('line')
+          .attr('class', 'val-pct-line val-peg-one')
+          .attr('x1', doTrans && isFinite(pegX0) ? pegX0 : pegX)
+          .attr('x2', doTrans && isFinite(pegX0) ? pegX0 : pegX)
+          .attr('y1', 0)
+          .attr('y2', groups.length * bandH)
+          .attr('stroke', 'var(--text-muted,#8b949e)')
+          .attr('stroke-opacity', 0.55)
+          .attr('stroke-dasharray', '4,4');
+        if (doTrans && isFinite(pegX0)) {
+          pegLine.transition().duration(TRANS_MS).attr('x1', pegX).attr('x2', pegX);
+        }
+        var pegLab = gRoot
+          .append('text')
+          .attr('class', 'val-pct-label')
+          .attr('x', (doTrans && isFinite(pegX0) ? pegX0 : pegX) + 3)
+          .attr('y', -8)
+          .attr('fill', 'var(--text-muted,#8b949e)')
+          .attr('font-size', 10)
+          .text(labels.pegOne || 'PEG 1');
+        if (doTrans && isFinite(pegX0)) {
+          pegLab.transition().duration(TRANS_MS).attr('x', pegX + 3);
+        }
+      }
+    }
+
     var tickVals =
       metric === 'dvd'
         ? [0, 2, 4, 6, 8, 10, 12].filter(function (v) {
@@ -1291,7 +1405,7 @@
           .attr('text-anchor', 'middle')
           .attr('fill', 'var(--text-muted,#8b949e)')
           .attr('font-size', 10)
-          .text(labels.naDeficit);
+          .text(naLabel);
       }
 
       g.items.forEach(function (d) {
@@ -1299,8 +1413,11 @@
         var cx;
         var cx0;
         var clampDir = 0;
-        // EPS ≤ 0 (deficit) → N/A lane at min radius; else metric x when plottable.
-        var inNaLane = !d.plottable || !(d.eps > 0);
+        // TTM/FY/PBR/배당: EPS ≤ 0 also sits in the N/A lane.
+        // PER FTM / PEG use plottable only, so a TTM loss can still show a positive FTM.
+        var inNaLane = metric === 'perFtm' || metric === 'peg'
+          ? !d.plottable
+          : (!d.plottable || !(d.eps > 0));
         if (!inNaLane) {
           var cp = clampPlot(d.value);
           clampDir = cp.dir;
@@ -1362,14 +1479,26 @@
           if (doTrans) {
             circle.transition().duration(TRANS_MS).attr('cx', cx);
           }
-          if (d.fyFallback && d.plottable) {
+          var pointTag = '';
+          if (d.plottable && (metric === 'perFtm' || metric === 'peg')) {
+            var gq = d.q || {};
+            if (metric === 'peg' && gq.epsGrowthFtm > 1) pointTag = labels.reboundTag;
+            else if (d.fy1Only || gq.ftmBasis === 'fy1') {
+              pointTag = typeof labels.fy1OnlyTag === 'function'
+                ? labels.fy1OnlyTag(gq.fy1End)
+                : labels.fy1OnlyTag;
+            }
+          } else if (d.fyFallback && d.plottable) {
+            pointTag = labels.fyTag;
+          }
+          if (pointTag) {
             var fyT = gRoot
               .append('text')
               .attr('class', 'valuation-fy-tag')
               .attr('x', doTrans ? cx0 : cx)
               .attr('y', cy - r - 2)
               .attr('text-anchor', 'middle')
-              .text(labels.fyTag);
+              .text(pointTag);
             if (doTrans) {
               fyT.transition().duration(TRANS_MS).attr('x', cx);
             }
@@ -1413,7 +1542,7 @@
         '<span class="valuation-gradient-label">' +
         rsLabel +
         '</span></div><div style="margin-top:4px">' +
-        labels.legendPer +
+        (metric === 'perFtm' ? labels.legendFtm : metric === 'peg' ? labels.legendPeg : labels.legendPer) +
         '</div>';
     }
 
@@ -1547,6 +1676,54 @@
     return tipEl;
   }
 
+  function formatInt(v) {
+    if (v == null || !isFinite(Number(v))) return '—';
+    return Math.round(Number(v)).toLocaleString('en-US');
+  }
+
+  function formatGrowthRatio(v) {
+    if (v == null || !isFinite(v)) return '—';
+    var pct = v * 100;
+    var shown = Math.abs(pct) >= 10 ? Math.round(pct) : Math.round(pct * 10) / 10;
+    return (pct > 0 ? '+' : '') + shown + '%';
+  }
+
+  function yyE(end) {
+    var y = String(end || '').replace(/\D/g, '').slice(2, 4);
+    return /^\d{2}$/.test(y) ? y + 'E' : '';
+  }
+
+  function forwardTipLine(q, labels, liveSession, last) {
+    q = q || {};
+    var epsF = q.epsFtm != null && isFinite(q.epsFtm) ? q.epsFtm : null;
+    var growth = q.epsGrowthFtm != null && isFinite(q.epsGrowthFtm) ? q.epsGrowthFtm : null;
+    var per = liveSession && last > 0 && epsF != null && epsF > 0
+      ? last / epsF
+      : q.perFtm != null && q.perFtm > 0
+        ? q.perFtm
+        : null;
+    var peg = liveSession && last > 0 && epsF != null && epsF > 0 && growth != null && growth > 0
+      ? (last / epsF) / (growth * 100)
+      : q.peg != null && q.peg > 0
+        ? q.peg
+        : null;
+    var mix = '';
+    if (q.ftmBasis === 'fy1' && q.fy1Eps != null) {
+      mix = ' (' + yyE(q.fy1End) + ' ' + formatInt(q.fy1Eps) + ' · ' + (labels.fy1OnlyTip || '') + ')';
+    } else if (q.fy1Eps != null && q.fy2Eps != null && q.ftmW != null && isFinite(q.ftmW)) {
+      var w1 = Math.round(q.ftmW * 100);
+      mix = ' (' + yyE(q.fy1End) + ' ' + formatInt(q.fy1Eps)
+        + ' / ' + yyE(q.fy2End) + ' ' + formatInt(q.fy2Eps)
+        + ' · ' + w1 + '%/' + (100 - w1) + '%)';
+    }
+    return (
+      labels.tipPerFtm + ' ' + formatMetric(per, 'perFtm') + '× · ' +
+      labels.tipEpsFtm + ' ' + (epsF != null ? formatInt(epsF) : '—') + mix + ' · ' +
+      labels.tipGrowth + ' ' + formatGrowthRatio(growth) + ' · ' +
+      labels.tipPeg + ' ' + formatMetric(peg, 'peg')
+    );
+  }
+
   function showTip(ev, d, labels, liveSession) {
     var el = ensureTip();
     var q = d.q || {};
@@ -1615,7 +1792,16 @@
       ' · ' +
       labels.tipChg +
       ': ' +
-      formatPct(d.chg1dPct);
+      formatPct(d.chg1dPct) +
+      '<br>' +
+      forwardTipLine(q, labels, liveSession, d.last) +
+      (function () {
+        if (d.plottable) return '';
+        if (state.metric === 'perFtm') return '<br>' + labels.naNoCns;
+        if (state.metric === 'peg') return '<br>' + labels.naPeg;
+        if (!(d.eps > 0)) return '<br>' + labels.naDeficit;
+        return '';
+      })();
     el.style.display = 'block';
     moveTip(ev);
   }
