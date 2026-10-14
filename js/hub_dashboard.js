@@ -822,7 +822,7 @@
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i];
         if (onlyMissing && tgt[k] != null && isFinite(tgt[k])) continue;
-        if (inc[k] != null) tgt[k] = inc[k];
+        if (Object.prototype.hasOwnProperty.call(inc, k)) tgt[k] = inc[k];
       }
     }
     dashboardData.sectors = base;

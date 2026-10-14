@@ -665,6 +665,24 @@ export async function loadReturnSource({
     k = sessionsSince(refsRecentDd, anchorDd, tradingDates);
   }
   const refsStale = isRefsStale(refsRecentDd, tradingDates);
+  const completedDd = tradingDates.filter((d) => d < anchorDd).at(-1);
+  const prevRefsStale = !!(completedDd && completedDd > refsRecentDd);
+
+  // A delayed refs build must not turn a one-day move into a multi-day move.
+  // Use the latest completed KRX session, in current-price terms, for 1D.
+  let prevByTicker = krxHistory?.prevByTicker instanceof Map ? krxHistory.prevByTicker : null;
+  let adjByTicker = krxHistory?.adjByTicker instanceof Map ? krxHistory.adjByTicker : null;
+  if (numeratorMode !== 'official' && prevRefsStale && (!prevByTicker || !adjByTicker)) {
+    const config = getSupabaseConfig(env, { preferServiceRole: true });
+    if (config) {
+      const [prev, adj] = await Promise.all([
+        prevByTicker ? Promise.resolve(prevByTicker) : fetchPrevClosesBefore(config, anchorDd, codes),
+        adjByTicker ? Promise.resolve(adjByTicker) : fetchAdjustmentsAfter(config, refsRecentDd),
+      ]);
+      prevByTicker = prev;
+      adjByTicker = adj;
+    }
+  }
 
   let closeByTicker = krxHistory?.closeByTicker instanceof Map ? krxHistory.closeByTicker : null;
   if (!closeByTicker && phase === 'afterClose' && refsRecentDd && refsRecentDd < todayDd) {
@@ -698,6 +716,13 @@ export async function loadReturnSource({
       naverKrxLast: phase === 'live' ? rowLast : null,
       lastRegularLast: quotePhase === 'afterClose' ? trustedRegularLast(row, todayDd) : null,
     });
+    if (numeratorMode !== 'official' && prevRefsStale) {
+      const prev = prevByTicker?.get(t);
+      // A close older than the latest completed session is not yesterday's close.
+      resolved.prevClose1d = prev && compactYmd(prev.tradeDate) === completedDd
+        ? adjustedKrxClose(prev.close, prev.tradeDate, adjByTicker?.get(t))
+        : null;
+    }
     if (quotePhase === 'afterClose' && resolved.provisional) provisionalCount += 1;
     if (numeratorMode === 'close' && resolved.numerator == null) closeMissingCount += 1;
     const shares = numOrNull(refQ.shares);

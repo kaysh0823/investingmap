@@ -11,7 +11,7 @@ export const RETURNS_CACHE_CONTROL = 'public, max-age=60, must-revalidate';
  * holding a body from the old logic keeps getting 304 for it until the next
  * trading day's data lands.
  */
-export const RETURNS_LOGIC_VERSION = 'L2-krx-close-after-session';
+export const RETURNS_LOGIC_VERSION = 'L3-krx-previous-session';
 
 /**
  * @param {string} s

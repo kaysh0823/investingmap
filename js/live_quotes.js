@@ -151,6 +151,10 @@
 
   function applyQuoteReturnsFromApi(c, q) {
     if (!q) return;
+    // Explicit null means unavailable now; do not keep a previous session's return.
+    ['chg1dPct', 'ret5dPct', 'ret20dPct', 'ret50dPct', 'ret120dPct', 'ret200dPct'].forEach(function (key) {
+      if (Object.prototype.hasOwnProperty.call(q, key) && q[key] == null) c[key] = null;
+    });
     var v;
     v = pickRetPct(q, 'chg1dPct');
     if (v != null) c.chg1dPct = v;
