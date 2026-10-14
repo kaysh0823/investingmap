@@ -231,6 +231,13 @@ jobs:
           echo "chain_slot=$CHAIN_SLOT" >> "$GITHUB_OUTPUT"
           echo "Resolved slot=$SLOT chain=$CHAIN_SLOT event=$EVENT_NAME KST=$KST_NOW (HM=$KST_HM)"
 
+      - name: Store regular closing candles
+        if: steps.fresh.outputs.skip != 'true' && steps.slot.outputs.slot != 'intraday'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/sync_regular_closes.mjs
+
       - name: Sync hub quotes to Supabase
         id: sync_quotes
         if: steps.fresh.outputs.skip != 'true'

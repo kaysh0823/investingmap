@@ -81,6 +81,18 @@ export function trustedRegularLast(row, todayDd) {
   return null;
 }
 
+/** Final daily candle persisted at the regular auction's closing time. */
+export function storedRegularCloseDate(row) {
+  if (row?.regularSession !== true || numPos(row?.last) == null || !row?.asOf) return null;
+  const at = new Date(row.asOf);
+  if (!Number.isFinite(at.getTime())) return null;
+  const p = kstDateParts(at);
+  if (p.hour !== 15 || p.minute !== 30 || at.getUTCSeconds() !== 0) return null;
+  const dd = kstYmd(at);
+  if (row.tradeDd && String(row.tradeDd).replace(/-/g, '') !== dd) return null;
+  return dd;
+}
+
 /**
  * @param {{
  *   phase: 'live'|'afterClose'|'official',

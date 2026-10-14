@@ -23,6 +23,7 @@ import {
   pricePhase,
   resolveSessionQuote,
   trustedRegularLast,
+  storedRegularCloseDate,
 } from './session_price_policy.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 import { cumulativeAdjustmentRatio } from './price_adjustments.mjs';
@@ -261,7 +262,7 @@ async function fetchLatestQuoteRows(tickers, config) {
       const url2 =
         `${config.url}/rest/v1/stock_quotes_latest`
         + `?ticker=in.(${part.join(',')})`
-        + `&select=ticker,last,prev_close,as_of`;
+        + `&select=ticker,last,prev_close,as_of,regular_session`;
       const res2 = await fetch(url2, {
         headers: {
           apikey: config.anonKey,
@@ -630,6 +631,8 @@ export async function loadReturnSource({
   }
 
   const refsRecentDd = compactYmd(refs.recentDd);
+  const storedCloseDd = [...rows.values()].map(storedRegularCloseDate)
+    .filter((dd) => dd && dd <= todayDd).sort().at(-1);
 
   /** @type {'live'|'close'|'official'} */
   let numeratorMode;
@@ -645,6 +648,10 @@ export async function loadReturnSource({
     numeratorMode = 'close';
     anchorDd = todayDd;
     k = sessionsSince(refsRecentDd, todayDd, refs.tradingDates || []);
+  } else if (phase === 'official' && storedCloseDd && storedCloseDd > refsRecentDd) {
+    numeratorMode = 'close';
+    anchorDd = storedCloseDd;
+    k = 0;
   } else {
     numeratorMode = 'official';
     anchorDd = refsRecentDd || todayDd;
@@ -660,7 +667,7 @@ export async function loadReturnSource({
       extraTradeDates = await fetchCompletedSessionsAfter(config, refsRecentDd);
     }
   }
-  const tradingDates = extendTradingDates(refs.tradingDates, refsRecentDd, extraTradeDates);
+  const tradingDates = extendTradingDates(refs.tradingDates, refsRecentDd, [...extraTradeDates, ...(storedCloseDd ? [storedCloseDd] : [])]);
   if (numeratorMode !== 'official' && refsRecentDd && anchorDd) {
     k = sessionsSince(refsRecentDd, anchorDd, tradingDates);
   }
@@ -685,9 +692,9 @@ export async function loadReturnSource({
   }
 
   let closeByTicker = krxHistory?.closeByTicker instanceof Map ? krxHistory.closeByTicker : null;
-  if (!closeByTicker && phase === 'afterClose' && refsRecentDd && refsRecentDd < todayDd) {
+  if (!closeByTicker && numeratorMode === 'close' && refsRecentDd && refsRecentDd < anchorDd) {
     const config = getSupabaseConfig(env, { preferServiceRole: true });
-    if (config) closeByTicker = await fetchClosesOnDate(config, todayDd, codes);
+    if (config) closeByTicker = await fetchClosesOnDate(config, anchorDd, codes);
   }
   if (!closeByTicker) closeByTicker = new Map();
 
@@ -704,17 +711,20 @@ export async function loadReturnSource({
     const row = rows.get(t);
     const rowLast = numOrNull(row?.last);
     const krxHit = closeByTicker.get(t);
-    const krxToday = krxHit && compactYmd(krxHit.tradeDate) === todayDd
+    const krxToday = krxHit && compactYmd(krxHit.tradeDate) === anchorDd
       ? numOrNull(krxHit.close)
       : null;
-    const quotePhase = phase === 'afterClose' && refsRecentDd === todayDd ? 'official' : phase;
+    const storedClose = storedRegularCloseDate(row) === anchorDd ? rowLast : null;
+    const usingStoredClose = krxToday == null && storedClose != null && numeratorMode === 'close';
+    const quotePhase = numeratorMode === 'close' ? 'afterClose'
+      : phase === 'afterClose' && refsRecentDd === todayDd ? 'official' : phase;
     const resolved = resolveSessionQuote({
       phase: quotePhase,
-      krxClose: krxToday,
+      krxClose: krxToday ?? (usingStoredClose ? storedClose : null),
       refsTipClose: officialClose,
       refsPrevClose: refsPrev,
       naverKrxLast: phase === 'live' ? rowLast : null,
-      lastRegularLast: quotePhase === 'afterClose' ? trustedRegularLast(row, todayDd) : null,
+      lastRegularLast: quotePhase === 'afterClose' ? trustedRegularLast(row, anchorDd) : null,
     });
     if (numeratorMode !== 'official' && prevRefsStale) {
       const prev = prevByTicker?.get(t);
@@ -723,6 +733,7 @@ export async function loadReturnSource({
         ? adjustedKrxClose(prev.close, prev.tradeDate, adjByTicker?.get(t))
         : null;
     }
+    if (usingStoredClose) resolved.prevClose1d = numOrNull(row?.prevClose);
     if (quotePhase === 'afterClose' && resolved.provisional) provisionalCount += 1;
     if (numeratorMode === 'close' && resolved.numerator == null) closeMissingCount += 1;
     const shares = numOrNull(refQ.shares);

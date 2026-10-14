@@ -451,7 +451,13 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
   // Omit last instead of writing null. resolution=merge-duplicates would erase
   // the stored price. A halted name (082640 basic/mobile HTTP 409, sise has
   // no print) is the row that otherwise drops only this key and trips PGRST102.
-  if (last == null) delete row.last;
+  if (last == null) {
+    delete row.last;
+    // These describe the stored price, not the time of a metadata-only poll.
+    delete row.as_of;
+    delete row.regular_session;
+    delete row.prev_close;
+  }
 
   return row;
 }
