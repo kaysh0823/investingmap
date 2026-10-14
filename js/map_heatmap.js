@@ -256,7 +256,7 @@
 
   function formatChg(pct) {
     if (pct == null || !isFinite(pct)) return '—';
-    var abs = Math.abs(pct).toFixed(1);
+    var abs = Math.abs(pct).toFixed(2);
     if (pct > 0) return '+' + abs + '%';
     if (pct < 0) return '\u2212' + abs + '%';
     return '0.0%';

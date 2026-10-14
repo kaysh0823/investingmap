@@ -1,30 +1,33 @@
 import { pricePhase } from './session_price_policy.mjs';
 import { kstYmd } from './krx_session.mjs';
 
-// Daily KRX candles, not /basic afterMarket or NXT overPrice.
-export function parseRegularClose(text, tradeDd) {
-  const bars = [];
-  for (const match of String(text).matchAll(/\[\s*["'](\d{8})["']\s*,([^\]]+)\]/g)) {
-    const values = match[2].split(',').map((value) => Number(value.trim()));
-    const [open, high, low, close, volume] = values;
-    if (!Number.isFinite(close) || close <= 0 || match[1] > tradeDd) continue;
-    bars.push({ date: match[1], open, high, low, close, volume });
-  }
-  bars.sort((a, b) => a.date.localeCompare(b.date));
-  const today = bars.find((bar) => bar.date === tradeDd);
-  const prev = bars.filter((bar) => bar.date < tradeDd).at(-1);
-  return today && prev ? { ...today, prevClose: prev.close } : null;
+// Even KRX day charts continue through 20:00. The closing auction is 15:30;
+// siseJson daily closes and the last chart point can contain after-hours prices.
+export function parseRegularClose(chart, tradeDd) {
+  if (!chart || chart.stockExchangeType !== 'KRX' || String(chart.tradeBaseAt) !== tradeDd) return null;
+  const prevClose = Number(chart.lastClosePrice);
+  if (!(prevClose > 0) || !Number.isFinite(prevClose)) return null;
+  if (!/^\d{8}$/.test(String(chart.lastTradeBaseAt)) || chart.lastTradeBaseAt >= tradeDd) return null;
+  const bars = (Array.isArray(chart.priceInfos) ? chart.priceInfos : [])
+    .filter((bar) => /^\d{14}$/.test(String(bar.localDateTime))
+      && bar.localDateTime >= `${tradeDd}090000` && bar.localDateTime <= `${tradeDd}153000`);
+  const closing = bars.find((bar) => bar.localDateTime === `${tradeDd}153000`);
+  if (!closing || !Number.isFinite(Number(closing.currentPrice)) || !(Number(closing.currentPrice) > 0)) return null;
+  const highs = bars.map((bar) => Number(bar.highPrice)).filter((value) => Number.isFinite(value) && value > 0);
+  const lows = bars.map((bar) => Number(bar.lowPrice)).filter((value) => Number.isFinite(value) && value > 0);
+  if (!highs.length || !lows.length || !(Number(chart.openPrice) > 0) || !Number.isFinite(Number(closing.accumulatedTradingVolume))) return null;
+  return { date: tradeDd, open: Number(chart.openPrice), high: Math.max(...highs), low: Math.min(...lows),
+    close: Number(closing.currentPrice), volume: Number(closing.accumulatedTradingVolume), prevClose };
 }
 
 export async function fetchRegularClose(ticker, now = new Date(), fetchImpl = fetch) {
   if (pricePhase(now) !== 'afterClose') return null;
   const tradeDd = kstYmd(now);
-  const start = new Date(now.getTime() - 15 * 86400000);
-  const url = new URL('https://api.finance.naver.com/siseJson.naver');
-  url.search = new URLSearchParams({ symbol: ticker, requestType: '1', startTime: kstYmd(start), endTime: tradeDd, timeframe: 'day' });
+  const url = new URL(`https://api.stock.naver.com/chart/domestic/item/${encodeURIComponent(ticker)}`);
+  url.search = new URLSearchParams({ periodType: 'day', range: '5' });
   const response = await fetchImpl(url, { signal: AbortSignal.timeout(20000), headers: { 'User-Agent': 'Mozilla/5.0', Referer: 'https://finance.naver.com/' } });
-  if (!response.ok) throw new Error(`daily candle ${ticker}: HTTP ${response.status}`);
-  return parseRegularClose(await response.text(), tradeDd);
+  if (!response.ok) throw new Error(`regular closing auction ${ticker}: HTTP ${response.status}`);
+  return parseRegularClose(await response.json(), tradeDd);
 }
 
 export function regularCloseRow(ticker, bar) {
