@@ -192,7 +192,7 @@ assert.deepEqual(
 
 const api = fs.readFileSync(path.join(ROOT, 'functions', 'api', 'hub_trend.js'), 'utf8');
 for (const marker of [
-  "CACHE_VERSION = '/api/hub_trend/cache/v22'",
+  "CACHE_VERSION = '/api/hub_trend/cache/v23'",
   'cachePath',
   'buildHubTrendPayload',
   'X-Hub-Anchor',

@@ -11,6 +11,7 @@ import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
 import { isKrxClockRegularSession, isKrxRegularSessionEnded, krxSessionInfo, kstAnchorYmd, kstDateParts, kstWeekday, kstYmd, kstYmdDash } from '../functions/lib/krx_session.mjs';
 import { pricePhase, resolveSessionQuote } from '../functions/lib/session_price_policy.mjs';
 import { buildAfterHoursSnapshot } from '../functions/lib/after_hours_snapshot.mjs';
+import { buildSectorReturnCaptureRows } from '../functions/lib/sector_return_captures.mjs';
 import {
   fetchKrxDailyOhlc,
   dailyOhlcFieldsToKrxRow,
@@ -1994,36 +1995,7 @@ async function syncSectorIntradayReturns({
   const liveTs = sessionKind === 'close'
     ? `${tradeDateDash}T15:30:00+09:00`
     : now.toISOString();
-  const rows = [];
-
-  for (const sid of SECTOR_ORDER) {
-    const block = hubIndex.sectors?.[sid];
-    if (!block) continue;
-    const members = [];
-    for (const c of block.companies || []) {
-      const t = normalizeTicker(c.ticker);
-      const src = t ? source.byTicker[t] : null;
-      if (!src || src.shares == null || !(src.shares > 0)) continue;
-      members.push({
-        numerator: src.numerator,
-        closes: src.closes,
-        k,
-        shares: src.shares,
-        prevClose1d: src.prevClose1d,
-        numerator1d: src.numerator1d,
-      });
-    }
-    const agg = aggregateSectorReturns(members);
-    if (agg.chg1dPct == null) continue;
-    rows.push({
-      sector_id: sid,
-      ts: liveTs,
-      ret_1d_pct: agg.chg1dPct,
-      anchor_dd: anchorDd,
-      trade_date: tradeDateDash,
-      session_kind: sessionKind,
-    });
-  }
+  const rows = buildSectorReturnCaptureRows(hubIndex, source, liveTs, tradeDateDash, sessionKind);
 
   if (!rows.length) {
     console.log('  sector intraday returns: 0 rows');

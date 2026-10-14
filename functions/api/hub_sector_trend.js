@@ -1,3 +1,4 @@
+import { normalizeSectorWeighting } from '../lib/sector_weighting.mjs';
 /**
  * Cloudflare Pages Function: GET /api/hub_sector_trend?horizon=20d
  * 1d → sector_intraday_returns + live tip / synthesized point (== hub_sectors 1D);
@@ -20,10 +21,10 @@ import {
   returnsResponseHeaders,
 } from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_sector_trend/cache/v10';
+const CACHE_VERSION = '/api/hub_sector_trend/cache/v11';
 
-function cachePath(horizon, dataVersion) {
-  return `${CACHE_VERSION}/dv/${encodeURIComponent(dataVersion || '0')}/${normalizeSectorHorizon(horizon)}`;
+function cachePath(horizon, dataVersion, weighting = 'cap') {
+  return `${CACHE_VERSION}/${normalizeSectorWeighting(weighting)}/dv/${encodeURIComponent(dataVersion || '0')}/${normalizeSectorHorizon(horizon)}`;
 }
 
 export async function onRequest(context) {
@@ -38,11 +39,12 @@ export async function onRequest(context) {
 
   const url = new URL(request.url);
   const horizon = normalizeSectorHorizon(url.searchParams.get('horizon'));
+  const weighting = normalizeSectorWeighting(url.searchParams.get('weighting'));
   const nocache = url.searchParams.get('nocache') === '1';
   const session = krxSessionInfo();
   const anchor = kstAnchorYmd();
   const peek = await peekReturnsDataVersion(env, request);
-  const path = cachePath(horizon, peek.dataVersion);
+  const path = cachePath(horizon, peek.dataVersion, weighting);
 
   if (!nocache) {
     const hit = await readHubCache(path, url.origin);
@@ -51,6 +53,7 @@ export async function onRequest(context) {
         cors: ch,
         dataVersion: peek.dataVersion,
         horizon,
+        codesHash: weighting,
         extra: {
           'X-Hub-Cache': 'HIT',
           'X-Hub-Horizon': horizon,
@@ -65,10 +68,11 @@ export async function onRequest(context) {
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubSectorTrendPayload(hubIndex, env, horizon, new Date(), request);
+    const payload = await buildHubSectorTrendPayload(hubIndex, env, horizon, new Date(), request, weighting);
     const bodyObj = {
       ...payload.trends,
       horizon: payload.horizon,
+      weighting,
       asOf: payload.asOf,
       tradeDate: payload.tradeDate,
       regularSession: payload.regularSession ?? session.regular,
@@ -88,6 +92,7 @@ export async function onRequest(context) {
       cors: ch,
       dataVersion,
       horizon,
+      codesHash: weighting,
       extra: {
         'X-Hub-Cache': 'MISS',
         'X-Hub-Horizon': horizon,
@@ -95,7 +100,7 @@ export async function onRequest(context) {
       },
     });
     if (!nocache && response.status === 200 && Object.keys(payload.trends || {}).length > 0) {
-      putHubCache(context, cachePath(horizon, dataVersion), url.origin, response);
+      putHubCache(context, cachePath(horizon, dataVersion, weighting), url.origin, response);
     }
     return response;
   } catch (e) {

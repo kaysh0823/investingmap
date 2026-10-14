@@ -1,3 +1,4 @@
+import { normalizeSectorWeighting } from '../lib/sector_weighting.mjs';
 /**
  * GET /api/hub_trend?horizon=1d|5d|20d|50d|120d|200d
  * Stock-aggregate sector series rebased to 100 (same math as /api/hub_sectors).
@@ -18,10 +19,10 @@ import {
   returnsResponseHeaders,
 } from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v22';
+const CACHE_VERSION = '/api/hub_trend/cache/v23';
 
-function cachePath(horizon, dataVersion) {
-  return `${CACHE_VERSION}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
+function cachePath(horizon, dataVersion, weighting = 'cap') {
+  return `${CACHE_VERSION}/${normalizeSectorWeighting(weighting)}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
 }
 
 export async function onRequest(context) {
@@ -34,10 +35,11 @@ export async function onRequest(context) {
 
   const url = new URL(request.url);
   const horizon = normalizeSectorHorizon(url.searchParams.get('horizon'));
+  const weighting = normalizeSectorWeighting(url.searchParams.get('weighting'));
   const nocache = url.searchParams.get('nocache') === '1';
   const anchor = kstAnchorYmd();
   const peek = await peekReturnsDataVersion(env, request);
-  const path = cachePath(horizon, peek.dataVersion);
+  const path = cachePath(horizon, peek.dataVersion, weighting);
 
   if (!nocache) {
     const hit = await readHubCache(path, url.origin);
@@ -46,6 +48,7 @@ export async function onRequest(context) {
         cors,
         dataVersion: peek.dataVersion,
         horizon,
+        codesHash: weighting,
         extra: {
           'X-Hub-Cache': 'HIT',
           'X-Hub-Horizon': horizon,
@@ -61,12 +64,13 @@ export async function onRequest(context) {
 
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
-    const payload = await buildHubTrendPayload(hubIndex, env, horizon, new Date(), request);
+    const payload = await buildHubTrendPayload(hubIndex, env, horizon, new Date(), request, weighting);
     const dataVersion = payload.dataVersion || peek.dataVersion;
     const response = returnsJsonResponse(request, payload, {
       cors,
       dataVersion,
       horizon,
+      codesHash: weighting,
       extra: {
         'X-Hub-Cache': 'MISS',
         'X-Hub-Horizon': horizon,
@@ -75,7 +79,7 @@ export async function onRequest(context) {
       },
     });
     if (!nocache && response.status === 200) {
-      putHubCache(context, cachePath(horizon, dataVersion), url.origin, response);
+      putHubCache(context, cachePath(horizon, dataVersion, weighting), url.origin, response);
     }
     return response;
   } catch (error) {

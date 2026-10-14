@@ -148,7 +148,7 @@ export function computeStockReturns({
  *   ret200dPct: number|null,
  * }}
  */
-export function aggregateSectorReturns(members) {
+export function aggregateSectorReturns(members, weighting = 'cap') {
   const out = {
     chg1dPct: null,
     ret5dPct: null,
@@ -172,14 +172,14 @@ export function aggregateSectorReturns(members) {
     let numSum = 0;
     let denSum = 0;
     for (const m of members) {
-      const shares = numPos(m?.shares);
+      const shares = weighting === 'equal' ? 1 : numPos(m?.shares);
       if (shares == null) continue;
       if (n === 1 && m != null && Object.prototype.hasOwnProperty.call(m, 'numerator1d')) {
         const n1 = numPos(m.numerator1d);
         const d1 = numPos(m.prevClose1d);
         if (n1 == null || d1 == null) continue;
-        numSum += n1 * shares;
-        denSum += d1 * shares;
+        numSum += weighting === 'equal' ? n1 / d1 : n1 * shares;
+        denSum += weighting === 'equal' ? 1 : d1 * shares;
         continue;
       }
       const numerator = numPos(m?.numerator);
@@ -187,8 +187,8 @@ export function aggregateSectorReturns(members) {
       const legacyPrev = numPos(m?.prevClose1d);
       const ref = n === 1 && legacyPrev != null ? legacyPrev : refCloseAt(m.closes, m.k ?? 0, n);
       if (ref == null) continue;
-      numSum += numerator * shares;
-      denSum += ref * shares;
+      numSum += weighting === 'equal' ? numerator / ref : numerator * shares;
+      denSum += weighting === 'equal' ? 1 : ref * shares;
     }
     if (denSum > 0) out[fieldByN[n]] = roundPct(numSum / denSum - 1);
   }

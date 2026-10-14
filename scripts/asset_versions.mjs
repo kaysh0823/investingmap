@@ -20,6 +20,7 @@ export const JS_FILES = [
   'js/global_bottom_nav.js',
   'js/global_search.js',
   'js/hub_dashboard.js',
+  'js/sector_weighting.js',
   'js/hub_trend_chart.js',
   'js/hub_range_scatter.js',
   'js/im_collapsible.js',

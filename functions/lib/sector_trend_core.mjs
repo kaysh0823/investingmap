@@ -19,6 +19,7 @@ import {
   pastSessionDd,
 } from './hub_returns_source.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
+import { normalizeSectorWeighting, sectorFromCaptureKey } from './sector_weighting.mjs';
 
 export const TREND_DAILY_LOOKBACK = {
   '5d': 5,
@@ -122,11 +123,11 @@ export function pctSeriesToBase100(series) {
 /**
  * Cap-weighted returns by sector from loadReturnSource (all horizons).
  */
-export async function computeLiveSectorAggregates(hubIndex, env, request, now = new Date()) {
+export async function computeLiveSectorAggregates(hubIndex, env, request, now = new Date(), weighting = 'cap') {
   const tickers = listHubCompanies(hubIndex)
     .map((c) => normalizeTicker(c.ticker))
     .filter(Boolean);
-  const source = await loadReturnSource({ env, request, tickers });
+  const source = await loadReturnSource({ env, request, tickers, now });
   const k = source.meta?.k ?? 0;
   /** @type {Map<string, ReturnType<typeof aggregateSectorReturns>>} */
   const bySector = new Map();
@@ -137,7 +138,7 @@ export async function computeLiveSectorAggregates(hubIndex, env, request, now = 
     for (const c of block.companies || []) {
       const t = normalizeTicker(c.ticker);
       const src = t ? source.byTicker[t] : null;
-      if (!src || src.shares == null || !(src.shares > 0)) continue;
+      if (!src || (weighting === 'cap' && (src.shares == null || !(src.shares > 0)))) continue;
       members.push({
         numerator: src.numerator,
         closes: src.closes,
@@ -147,7 +148,7 @@ export async function computeLiveSectorAggregates(hubIndex, env, request, now = 
         numerator1d: src.numerator1d,
       });
     }
-    bySector.set(sid, aggregateSectorReturns(members));
+    bySector.set(sid, aggregateSectorReturns(members, weighting));
   }
   const session = krxSessionInfo(now);
   const sessionOpen = source.meta?.sessionOpen ?? !!session.regular;
@@ -155,6 +156,7 @@ export async function computeLiveSectorAggregates(hubIndex, env, request, now = 
     bySector,
     source,
     meta: {
+      weighting,
       asOf: source.meta?.asOf || now.toISOString(),
       sessionOpen,
       regularSession: source.meta?.regularSession ?? !!session.regular,
@@ -186,8 +188,9 @@ export async function buildIntraday1dSeries({
   env,
   request = null,
   now = new Date(),
+  weighting = 'cap',
 }) {
-  const live = await computeLiveSectorAggregates(hubIndex, env, request, now);
+  const live = await computeLiveSectorAggregates(hubIndex, env, request, now, weighting);
   const meta = live.meta;
   const numeratorMode = meta.numeratorMode || (meta.sessionOpen ? 'live' : 'official');
   const liveTip = numeratorMode === 'live';
@@ -215,7 +218,7 @@ export async function buildIntraday1dSeries({
 
   const bySector = new Map();
   for (const row of rows || []) {
-    const sid = row.sector_id;
+    const sid = sectorFromCaptureKey(row.sector_id, weighting);
     if (!sid) continue;
     const kind = String(row.session_kind || 'regular');
     if (kind !== 'regular' && kind !== 'close') continue;
@@ -329,7 +332,7 @@ export async function buildIntraday1dSeries({
  *
  * @param {number} horizonN 20|50|120|200
  */
-export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN) {
+export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN, weighting = 'cap') {
   const tradingDates = (refs?.tradingDates || []).map(compactYmd).filter(Boolean);
   if (!tradingDates.length || !refs?.quotes) return { sectors: [], metaExtras: {} };
 
@@ -384,7 +387,7 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
     for (const t of tickers) {
       const q = refs.quotes[t];
       const shares = numOrNull(q?.shares);
-      if (!q?.closes?.length || shares == null || !(shares > 0)) continue;
+      if (!q?.closes?.length || (weighting === 'cap' && (shares == null || !(shares > 0)))) continue;
       members.push({ ticker: t, shares, closes: q.closes });
     }
     if (!members.length || !windowDates.length) {
@@ -393,6 +396,25 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
     }
 
     const baseDate = windowDates[0];
+    if (weighting === 'equal') {
+      const baseMembers = members.map((m) => ({ ...m, base: closeOnDate(m.ticker, baseDate) }))
+        .filter((m) => m.base > 0);
+      const dates = [...windowDates];
+      if (tipAtAnchor && k >= 1 && anchorDd && !dates.includes(anchorDd)) dates.push(anchorDd);
+      const series = [];
+      for (const date of dates) {
+        const ratios = baseMembers.map((m) => {
+          const value = date === anchorDd && tipAtAnchor ? source?.byTicker?.[m.ticker]?.numerator : closeOnDate(m.ticker, date);
+          return value > 0 ? value / m.base : null;
+        }).filter((value) => value != null && Number.isFinite(value));
+        if (ratios.length) series.push({ t: basDdToDash(date), v: roundIndex(100 * ratios.reduce((a, b) => a + b, 0) / ratios.length) });
+      }
+      const agg = aggregateSectorReturns(members.map((m) => ({ ...source?.byTicker?.[m.ticker], closes: m.closes, k })), 'equal');
+      const field = { 5: 'ret5dPct', 20: 'ret20dPct', 50: 'ret50dPct', 120: 'ret120dPct', 200: 'ret200dPct' }[horizonN];
+      if (agg[field] != null && series.length) series[series.length - 1].v = retPctToBase100(agg[field]);
+      sectors.push({ sector: sid, name: sectorName(hubIndex, sid), series });
+      continue;
+    }
     let baseSum = 0;
     let baseN = 0;
     for (const m of members) {
@@ -462,6 +484,7 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN)
     });
     const agg = aggregateSectorReturns(aggMembers);
     const fieldByN = {
+      5: 'ret5dPct',
       20: 'ret20dPct',
       50: 'ret50dPct',
       120: 'ret120dPct',
@@ -628,12 +651,14 @@ export async function buildAggregateHubTrendPayload(
   horizon,
   now = new Date(),
   request = null,
+  weighting = 'cap',
 ) {
+  weighting = normalizeSectorWeighting(weighting);
   const h = String(horizon || '20d');
   const config = getSupabaseConfig(env);
 
   if (h === '1d') {
-    const one = await buildIntraday1dSeries({ hubIndex, env, request, now });
+    const one = await buildIntraday1dSeries({ hubIndex, env, request, now, weighting });
     const sectors = SECTOR_ORDER.map((sid) => ({
       sector: sid,
       name: sectorName(hubIndex, sid),
@@ -665,7 +690,7 @@ export async function buildAggregateHubTrendPayload(
   }
 
   const horizonN = TREND_DAILY_LOOKBACK[h] || 20;
-  const live = await computeLiveSectorAggregates(hubIndex, env, request, now);
+  const live = await computeLiveSectorAggregates(hubIndex, env, request, now, weighting);
   const refs = live.source?.refs || await loadCachedReturnRefs(request, env, null);
   if (!refs?.quotes) {
     return {
@@ -688,6 +713,7 @@ export async function buildAggregateHubTrendPayload(
     refs,
     live.source,
     horizonN,
+    weighting,
   );
 
   const tradingDates = (refs.tradingDates || []).map(compactYmd).filter(Boolean);

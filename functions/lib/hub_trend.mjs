@@ -1010,8 +1010,9 @@ export async function buildHubTrendPayload(
   requestedHorizon,
   now = new Date(),
   request = null,
+  weighting = 'cap',
 ) {
   const horizon = normalizeSectorHorizon(requestedHorizon);
   const { buildAggregateHubTrendPayload } = await import('./sector_trend_core.mjs');
-  return buildAggregateHubTrendPayload(hubIndex, env, horizon, now, request);
+  return buildAggregateHubTrendPayload(hubIndex, env, horizon, now, request, weighting);
 }

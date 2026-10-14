@@ -10,6 +10,8 @@ const STEPS = [
   'verify_hub_range_scatter.mjs',
   'verify_hub_bb_score.mjs',
   'verify_returns_stale.mjs',
+  'verify_sector_weighting.mjs',
+  'verify_sector_weighting_ui.mjs',
   'verify_apihub_reconcile.mjs',
   'verify_heatmap_exclude_chips.mjs',
   'verify_global_search.mjs',

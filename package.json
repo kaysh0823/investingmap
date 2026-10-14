@@ -65,6 +65,7 @@
     "refresh:return-refs": "node scripts/build_hub_return_refs.mjs",
     "build:hub-return-refs": "node scripts/build_hub_return_refs.mjs",
     "verify:returns-core": "node scripts/verify_returns_core.mjs",
+    "verify:sector-weighting": "node scripts/verify_sector_weighting.mjs && node scripts/verify_sector_weighting_ui.mjs",
     "verify:returns-stale": "node scripts/verify_returns_stale.mjs",
     "verify:quotes-returns": "node scripts/verify_quotes_returns.mjs",
     "verify:postgrest-keys": "node scripts/verify_postgrest_key_groups.mjs",

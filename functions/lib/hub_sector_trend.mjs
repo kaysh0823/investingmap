@@ -61,13 +61,14 @@ export async function buildHubSectorTrendPayload(
   horizon,
   now = new Date(),
   request = null,
+  weighting = 'cap',
 ) {
   const h = normalizeSectorHorizon(horizon);
   const asOf = now.toISOString();
   const tradeDate = kstYmdDash(now);
 
   if (h === '1d') {
-    const one = await buildIntraday1dSeries({ hubIndex, env, request, now });
+    const one = await buildIntraday1dSeries({ hubIndex, env, request, now, weighting });
     return {
       horizon: '1d',
       trends: one.trends,
@@ -85,7 +86,7 @@ export async function buildHubSectorTrendPayload(
   }
 
   // Daily sparklines: same aggregate series as /api/hub_trend, expressed as %.
-  const payload = await buildHubTrendPayload(hubIndex, env, h, now, request);
+  const payload = await buildHubTrendPayload(hubIndex, env, h, now, request, weighting);
   const trends = {};
   for (const entry of payload.sectors || []) {
     if (!entry?.sector) continue;
@@ -102,6 +103,7 @@ export async function buildHubSectorTrendPayload(
   }
 
   return {
+    weighting,
     horizon: h,
     asOf: payload.asOf || asOf,
     tradeDate: payload.tradeDate || tradeDate,

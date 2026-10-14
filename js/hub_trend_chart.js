@@ -50,6 +50,7 @@
   var state = {
     lang: 'ko',
     horizon: '20d',
+    weighting: global.InvestingMapSectorWeighting ? global.InvestingMapSectorWeighting.get() : 'cap',
     payload: null,
     payloadAsOf: null,
     initialized: false,
@@ -243,6 +244,16 @@
   }
 
   function updateTabs() {
+    var host = document.querySelector('.hub-trend-head');
+    if (host && global.InvestingMapSectorWeighting) {
+      var controls = document.getElementById('hub-trend-weighting');
+      if (!controls) { controls = document.createElement('div'); controls.id = 'hub-trend-weighting'; host.appendChild(controls); }
+      global.InvestingMapSectorWeighting.mount(controls, state.lang);
+    }
+    var subtitle = document.getElementById('hub-trend-sub');
+    if (subtitle) subtitle.textContent = state.lang === 'en'
+      ? (state.weighting === 'equal' ? 'Equal-weighted stock returns' : 'Market-cap-weighted stock returns') + ' and KOSPI/KOSDAQ, rebased to 100'
+      : (state.weighting === 'equal' ? '동일가중' : '시가총액 가중') + ' 섹터 수익률과 코스피·코스닥, 기준값 100';
     document.querySelectorAll('.hub-trend-tab').forEach(function (button) {
       var active = button.getAttribute('data-horizon') === state.horizon;
       button.classList.toggle('is-active', active);
@@ -258,9 +269,9 @@
 
   function formatLegendReturn(pct) {
     if (!isFinite(pct)) return '';
-    var rounded = Math.round(pct * 10) / 10;
+    var rounded = Math.round(pct * 100) / 100;
     var sign = rounded > 0 ? '+' : '';
-    return ' ' + sign + rounded.toFixed(1) + '%';
+    return ' ' + sign + rounded.toFixed(2) + '%';
   }
 
   function renderLegend(lines, applyEmphasis) {
@@ -542,7 +553,7 @@
     updateTabs();
     setStatus(COPY[state.lang].loading);
     var requestId = ++state.requestId;
-    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&v=7';
+    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&weighting=' + state.weighting + '&v=8';
     return fetch(url, {
       headers: { Accept: 'application/json' },
       cache: 'default',
@@ -557,7 +568,7 @@
         });
       })
       .then(function (payload) {
-        if (requestId !== state.requestId) return;
+        if (requestId !== state.requestId || (payload.weighting || 'cap') !== state.weighting) return;
         var nextAsOf = payload && payload.asOf ? String(payload.asOf) : '';
         var prevAsOf = state.payloadAsOf ? String(state.payloadAsOf) : '';
         if (!prevAsOf || !nextAsOf || nextAsOf >= prevAsOf) {
@@ -585,7 +596,7 @@
             dataVersion: (state.payload && state.payload.dataVersion) || '',
           });
         }
-        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&v=7';
+        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&weighting=' + state.weighting + '&v=8';
         return fetch(url, {
           headers: { Accept: 'application/json' },
           cache: 'default',
@@ -599,7 +610,7 @@
           });
         });
       }, function (payload) {
-        if (!payload) return;
+        if (!payload || (payload.weighting || 'cap') !== state.weighting) return;
         var nextAsOf = payload.asOf ? String(payload.asOf) : '';
         var prevAsOf = state.payloadAsOf ? String(state.payloadAsOf) : '';
         if (!prevAsOf || !nextAsOf || nextAsOf >= prevAsOf) {
@@ -667,8 +678,17 @@
 
   function setLang(lang) {
     state.lang = pageLang(lang);
+    updateTabs();
     if (state.payload) render();
   }
+
+  if (global.InvestingMapSectorWeighting) global.InvestingMapSectorWeighting.subscribe(function (mode) {
+    state.weighting = mode;
+    state.payload = null;
+    state.payloadAsOf = null;
+    if (state.initialized) { render(); fetchAndRender(state.horizon); }
+    else updateTabs();
+  });
 
   global.InvestingMapHubTrendChart = {
     init: init,

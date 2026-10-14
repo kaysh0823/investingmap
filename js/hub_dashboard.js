@@ -14,6 +14,8 @@
     { retKey: 'return200dPct', labelKey: 'pulseRow200d' },
   ];
   var pulseHorizonKey = 'return1dPct';
+  var sectorWeighting = global.InvestingMapSectorWeighting ? global.InvestingMapSectorWeighting.get() : 'cap';
+  var weightingGeneration = 0;
   var PULSE_HORIZON_KEY = 'im-hub-pulse-horizon-v4';
   var HUB_API_TIMEOUT_MS = 90000;
   var HUB_API_RETRIES = 2;
@@ -406,7 +408,7 @@
         return { data: j, dataVersion: (j && j.dataVersion) || '' };
       });
     }, function (j) {
-      if (!j || j.error) return;
+      if (!j || j.error || (j.weighting || 'cap') !== sectorWeighting) return;
       hubSectorReturnsMeta.mcapRecentDd = newerYmd(hubSectorReturnsMeta.mcapRecentDd, j.mcapRecentDd);
       hubSectorReturnsMeta.effectiveAnchorDd = newerYmd(hubSectorReturnsMeta.effectiveAnchorDd, j.effectiveAnchorDd);
       mergeSectorsPayload(j);
@@ -441,7 +443,7 @@
           return { data: j, dataVersion: (j && j.dataVersion) || '' };
         });
       }, function (j) {
-        if (!j || j.error) return;
+        if (!j || j.error || (j.weighting || 'cap') !== sectorWeighting) return;
         var prevMeta = trendMetaByHorizon['1d'] || {};
         var nextAsOf = j.asOf ? String(j.asOf) : '';
         var prevAsOf = prevMeta.asOf ? String(prevMeta.asOf) : '';
@@ -485,7 +487,8 @@
     var base = custom ? custom.replace(/\/+$/, '') : (hubApiEnabled() ? '' : '');
     if (!base && !hubApiEnabled()) return '';
     var sep = path.indexOf('?') >= 0 ? '&' : '?';
-    var bust = sep + '_v=6';
+    var bust = sep + '_v=7';
+    if (/\/api\/hub_(sectors|sector_trend)(?:\?|$)/.test(path)) bust += '&weighting=' + sectorWeighting;
     return (base || '') + path + bust;
   }
 
@@ -544,7 +547,7 @@
       var raw = sessionStorage.getItem(SWR_KEY);
       if (!raw) return null;
       var d = JSON.parse(raw);
-      if (!d || !d.t || Date.now() - d.t > SWR_TTL_MS) return null;
+      if (!d || !d.t || Date.now() - d.t > SWR_TTL_MS || (d.weighting || 'cap') !== sectorWeighting) return null;
       return d;
     } catch (e) {
       return null;
@@ -570,6 +573,7 @@
     try {
       sessionStorage.setItem(SWR_KEY, JSON.stringify({
         t: Date.now(),
+        weighting: sectorWeighting,
         sectors: dashboardData.sectors || {},
         rsTop10: dashboardData.rsTop10 || [],
         mcapTop10: dashboardData.mcapTop10 || [],
@@ -788,7 +792,7 @@
           ' role="tab" aria-selected="' + (active ? 'true' : 'false') + '"' +
           ' data-horizon="' + h.retKey + '">' + labels[h.labelKey] + '</button>';
       }).join('') +
-      '</div></div>';
+      '</div><div id="hub-pulse-weighting"></div></div>';
   }
 
   function retKeyToHorizonParam(retKey) {
@@ -809,7 +813,7 @@
   }
 
   function mergeSectorsPayload(j, opts) {
-    if (!j || j.error) return;
+    if (!j || j.error || (j.weighting || 'cap') !== sectorWeighting) return;
     var onlyMissing = opts && opts.onlyMissing;
     var incoming = j.sectors || {};
     var base = dashboardData.sectors || {};
@@ -836,7 +840,7 @@
     var meta = {
       horizon: 1, asOf: 1, tradeDate: 1, regularSession: 1, sessionOpen: 1,
       numeratorMode: 1, anchorDd: 1, refsRecentDd: 1, k: 1, synthesized: 1,
-      source: 1, stale: 1, error: 1, message: 1, dataVersion: 1, refsEtag: 1,
+      source: 1, stale: 1, error: 1, message: 1, dataVersion: 1, refsEtag: 1, weighting: 1,
     };
     var out = {};
     for (var k in j) {
@@ -858,16 +862,20 @@
 
   function fetchTrends(lang, retKey, opts) {
     opts = opts || {};
+    var generation = weightingGeneration;
+    var mode = sectorWeighting;
     var horizonParam = retKeyToHorizonParam(retKey);
-    if (trendFetchInFlight[horizonParam]) return trendFetchInFlight[horizonParam];
+    var fetchKey = mode + ':' + generation + ':' + horizonParam;
+    if (trendFetchInFlight[fetchKey]) return trendFetchInFlight[fetchKey];
     var url = hubApiUrl('/api/hub_sector_trend?horizon=' + encodeURIComponent(horizonParam));
     if (!url) return Promise.resolve();
     // Always bust browser/CDN stale series; replace map only when asOf is newer/equal.
     url += (url.indexOf('?') >= 0 ? '&' : '?') + 'cb=' + Date.now();
     if (opts.bust) url += '&_t=' + Date.now();
     if (!opts.quiet) trendsLoadingHorizon = horizonParam;
-    trendFetchInFlight[horizonParam] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
+    trendFetchInFlight[fetchKey] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
       .then(function (j) {
+        if (generation !== weightingGeneration || mode !== sectorWeighting) return;
         if (j && j.error) throw new Error(j.error);
         var prevMeta = trendMetaByHorizon[horizonParam] || {};
         var nextAsOf = j && j.asOf ? String(j.asOf) : '';
@@ -884,14 +892,16 @@
         }
       })
       .catch(function () {
+        if (generation !== weightingGeneration) return;
         if (!trendByHorizon[horizonParam]) trendByHorizon[horizonParam] = {};
       })
       .then(function () {
-        delete trendFetchInFlight[horizonParam];
+        if (generation !== weightingGeneration) { delete trendFetchInFlight[fetchKey]; return; }
+        delete trendFetchInFlight[fetchKey];
         if (trendsLoadingHorizon === horizonParam) trendsLoadingHorizon = null;
         renderPulse(lang);
       });
-    return trendFetchInFlight[horizonParam];
+    return trendFetchInFlight[fetchKey];
   }
 
   function bindPulseTabs(wrap, lang) {
@@ -1000,6 +1010,7 @@
       '<div class="hub-pulse-cards" role="tabpanel">' + cards + '</div>';
 
     bindPulseTabs(wrap, lang);
+    if (global.InvestingMapSectorWeighting) global.InvestingMapSectorWeighting.mount(wrap.querySelector('#hub-pulse-weighting'), lang);
 
     var statusWrap = document.getElementById('hub-pulse-status');
     if (statusWrap) {
@@ -1182,7 +1193,9 @@
   }
 
   function pulseSubText(lang) {
-    return t(lang).pulseSub;
+    return sectorWeighting === 'equal'
+      ? (lang === 'en' ? 'Equal-weighted mean of constituent stock returns — available prices only' : '동일가중 수익률 — 유효한 가격이 있는 구성 종목 수익률의 산술평균')
+      : t(lang).pulseSub;
   }
 
   function hubTotalCompanies() {
@@ -1254,7 +1267,10 @@
 
   function fetchSectorsHorizon(lang, retKey, opts) {
     opts = opts || {};
-    if (sectorFetchInFlight[retKey]) return sectorFetchInFlight[retKey];
+    var generation = weightingGeneration;
+    var mode = sectorWeighting;
+    var fetchKey = mode + ':' + generation + ':' + retKey;
+    if (sectorFetchInFlight[fetchKey]) return sectorFetchInFlight[fetchKey];
     var horizonParam = retKeyToHorizonParam(retKey);
     var url = hubApiUrl('/api/hub_sectors?horizon=' + encodeURIComponent(horizonParam));
     if (!url) {
@@ -1270,8 +1286,9 @@
       sectorsFailed = false;
       renderPulse(lang);
     }
-    sectorFetchInFlight[retKey] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
+    sectorFetchInFlight[fetchKey] = fetchWithRetry(url, HUB_API_TIMEOUT_MS, HUB_API_RETRIES, true)
       .then(function (j) {
+        if (generation !== weightingGeneration || mode !== sectorWeighting) return;
         if (j && j.error) throw new Error(j.error);
         // Fresh API wins over static hub_sector_returns.json (onlyMissing merge).
         hubSectorReturnsMeta.mcapRecentDd = newerYmd(hubSectorReturnsMeta.mcapRecentDd, j.mcapRecentDd);
@@ -1285,19 +1302,21 @@
         writeSwr();
       })
       .catch(function () {
+        if (generation !== weightingGeneration) return;
         if (!opts.quiet) sectorsFailed = true;
         // Fresh fetch failed — fall back to bundled/cached values instead of an endless skeleton.
         sectorsReady = true;
       })
       .then(function () {
+        if (generation !== weightingGeneration) { delete sectorFetchInFlight[fetchKey]; return; }
         sectorsAuthFetched = true;
-        delete sectorFetchInFlight[retKey];
+        delete sectorFetchInFlight[fetchKey];
         if (sectorsLoadingHorizon === retKey) sectorsLoadingHorizon = null;
         // Re-paint session label after meta (mcapRecentDd) may have advanced.
         renderPulse(lang);
         renderLabels(lang);
       });
-    return sectorFetchInFlight[retKey];
+    return sectorFetchInFlight[fetchKey];
   }
 
   function fetchSectors(lang) {
@@ -1479,6 +1498,25 @@
     renderRsTop10(lang);
     renderMovers(lang);
   }
+
+  if (global.InvestingMapSectorWeighting) global.InvestingMapSectorWeighting.subscribe(function (mode) {
+    if (mode === sectorWeighting) return;
+    sectorWeighting = mode;
+    weightingGeneration += 1;
+    dashboardData.sectors = {};
+    trendByHorizon = {};
+    trendMetaByHorizon = {};
+    sectorsReady = false;
+    sectorsFailed = false;
+    sectorsLoadingHorizon = pulseHorizonKey;
+    var lang = pageLang();
+    renderLabels(lang);
+    renderPulse(lang);
+    if (hubData) {
+      fetchSectorsHorizon(lang, pulseHorizonKey);
+      fetchTrends(lang, pulseHorizonKey);
+    }
+  });
 
   global.InvestingMapHubDashboard = {
     init: init,

@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import { fetchRegularClose, regularCloseRow } from '../functions/lib/naver_regular_close.mjs';
 import { pricePhase } from '../functions/lib/session_price_policy.mjs';
+import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
+import { buildSectorReturnCaptureRows } from '../functions/lib/sector_return_captures.mjs';
 
 const now = new Date();
 if (pricePhase(now) !== 'afterClose') {
@@ -38,6 +40,19 @@ for (let i = 0; i < rows.length; i += 40) {
   if (!response.ok) throw new Error(`Regular close snapshot write: HTTP ${response.status}`);
 }
 console.log(`Regular close snapshot saved: ${rows.length}/${tickers.length}; unavailable=${missing}`);
+const refs = JSON.parse(fs.readFileSync(new URL('../data/hub_return_refs.json', import.meta.url), 'utf8'));
+const source = await loadReturnSource({ env: {}, refs, tickers, quoteRows: rows, now });
+const tradeDate = rows[0].as_of.slice(0, 10);
+const captures = buildSectorReturnCaptureRows(index, source, rows[0].as_of, tradeDate, 'close');
+if (captures.length) {
+  const response = await fetch(`${base}/rest/v1/sector_intraday_returns?on_conflict=sector_id,ts`, {
+    method: 'POST', signal: AbortSignal.timeout(30000),
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify(captures),
+  });
+  if (!response.ok) throw new Error(`Closing sector returns write: HTTP ${response.status}`);
+  console.log(`Closing sector returns saved: ${captures.length} market-cap/equal-weight captures`);
+}
 for (const ticker of ['005930', '000660']) {
   const row = rows.find((r) => r.ticker === ticker);
   if (row) console.log(`${ticker}: close=${row.last} previous=${row.prev_close}`);

@@ -23,6 +23,7 @@ import {
 } from '../lib/hub_api_cache.mjs';
 import { getCachedNaverQuotes } from '../lib/naver_quote_store.mjs';
 import { aggregateSectorReturns } from '../lib/returns_core.mjs';
+import { normalizeSectorWeighting } from '../lib/sector_weighting.mjs';
 import {
   loadReturnSource,
   pastSessionDd,
@@ -35,10 +36,10 @@ import {
   returnsResponseHeaders,
 } from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_sectors/cache/v27';
+const CACHE_VERSION = '/api/hub_sectors/cache/v28';
 
-function cachePath(horizon, dataVersion) {
-  return `${CACHE_VERSION}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
+function cachePath(horizon, dataVersion, weighting = 'cap') {
+  return `${CACHE_VERSION}/${normalizeSectorWeighting(weighting)}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
 }
 
 /**
@@ -49,10 +50,12 @@ function cachePath(horizon, dataVersion) {
  * @param {string} horizon
  */
 export async function buildHubSectorsFromReturnSource(hubIndex, env, request, horizon = '1d', opts = {}) {
+  const weighting = normalizeSectorWeighting(opts.weighting ?? (request ? new URL(request.url).searchParams.get('weighting') : null));
   const companies = listHubCompanies(hubIndex);
   const tickers = companies.map((c) => normalizeTicker(c.ticker)).filter(Boolean);
-  const session = krxSessionInfo();
-  const sessionOpen = pricePhase() === 'live';
+  const now = opts.now || new Date();
+  const session = krxSessionInfo(now);
+  const sessionOpen = pricePhase(now) === 'live';
 
   const source = await loadReturnSource({
     env,
@@ -60,6 +63,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
     tickers,
     refs: opts.refs || null,
     quoteRows: opts.quoteRows,
+    now,
     staleRefresh: sessionOpen
       ? async (staleCodes) => getCachedNaverQuotes(staleCodes, { concurrency: 4 })
       : null,
@@ -83,7 +87,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
       const t = normalizeTicker(c.ticker);
       const src = t ? source.byTicker[t] : null;
       if (!src) continue;
-      if (src.shares == null || !(src.shares > 0)) {
+      if (weighting === 'cap' && (src.shares == null || !(src.shares > 0))) {
         missingShares += 1;
         continue;
       }
@@ -96,7 +100,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
         numerator1d: src.numerator1d,
       });
     }
-    const agg = aggregateSectorReturns(members);
+    const agg = aggregateSectorReturns(members, weighting);
     const sectorMcap = companiesInSector.reduce((s, c) => s + (c.mcapWon || 0), 0);
     sectors[sid] = {
       ...sectorReturnsToApiFields(agg),
@@ -114,6 +118,7 @@ export async function buildHubSectorsFromReturnSource(hubIndex, env, request, ho
   const anchorDd = source.meta.anchorDd;
 
   return {
+    weighting,
     asOf: source.meta.asOf,
     builtAt: hubIndex.builtAt || null,
     regularSession: source.meta.regularSession ?? !!session.regular,
@@ -158,10 +163,11 @@ export async function onRequest(context) {
 
   const url = new URL(request.url);
   const horizon = normalizeSectorHorizon(url.searchParams.get('horizon') || '1d');
+  const weighting = normalizeSectorWeighting(url.searchParams.get('weighting'));
   const nocache = url.searchParams.get('nocache') === '1';
   const anchor = kstAnchorYmd();
   const peek = await peekReturnsDataVersion(env, request);
-  const path = cachePath(horizon, peek.dataVersion);
+  const path = cachePath(horizon, peek.dataVersion, weighting);
 
   if (!nocache) {
     const hit = await readHubCache(path, url.origin);
@@ -170,6 +176,7 @@ export async function onRequest(context) {
         cors: ch,
         dataVersion: peek.dataVersion,
         horizon,
+        codesHash: weighting,
         extra: {
           'X-Hub-Cache': 'HIT',
           'X-Hub-Horizon': horizon,
@@ -192,6 +199,7 @@ export async function onRequest(context) {
       cors: ch,
       dataVersion,
       horizon,
+      codesHash: weighting,
       extra: {
         'X-Hub-Cache': 'MISS',
         'X-Hub-Horizon': horizon,
@@ -199,7 +207,7 @@ export async function onRequest(context) {
       },
     });
     if (!nocache && response.status === 200 && hasSectorHorizon(payload.sectors, horizon)) {
-      putHubCache(context, cachePath(horizon, dataVersion), url.origin, response);
+      putHubCache(context, cachePath(horizon, dataVersion, weighting), url.origin, response);
     }
     return response;
   } catch (e) {
