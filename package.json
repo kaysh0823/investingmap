@@ -79,6 +79,7 @@
     "sync:investor-net": "node scripts/sync_investor_net_to_supabase.mjs",
     "backfill:investor-net": "node scripts/backfill_investor_net.mjs",
     "sync:foreign-ratio": "node scripts/sync_foreign_ratio_to_supabase.mjs",
+    "sync:credit-balance": "node scripts/sync_credit_balance.mjs",
     "backfill:foreign-ratio": "node scripts/backfill_foreign_ratio.mjs",
     "backfill:daily-ohlc": "node scripts/backfill_daily_ohlc_krxweb.mjs",
     "verify:krx-daily-ohlc": "node scripts/verify_krx_daily_ohlc.mjs",

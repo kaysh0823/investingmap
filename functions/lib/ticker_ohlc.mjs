@@ -18,6 +18,7 @@ import {
   aggregateDailyBarsToWeekly,
 } from './investor_osc.mjs';
 import { loadAndAttachForeignRatio } from './foreign_ratio.mjs';
+import { loadAndAttachCreditRatio } from './credit_balance.mjs';
 
 export { fetchLatestInvestorNetSignature, fetchPriceAdjustmentsSignature };
 
@@ -171,6 +172,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
       });
       // Week stamp is the last session; attach that day's foreignRatio.
       await loadAndAttachForeignRatio(config, ticker, weeklyBars);
+      await loadAndAttachCreditRatio(config, ticker, weeklyBars, { weekly: true, fromDate: dailyFrom });
       const displayWeeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];
       return {
         code: ticker,
@@ -183,6 +185,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
     }
     await loadAndAttachInvestorOsc(config, ticker, bars);
     await loadAndAttachForeignRatio(config, ticker, bars);
+    await loadAndAttachCreditRatio(config, ticker, bars);
   }
   return {
     code: ticker,

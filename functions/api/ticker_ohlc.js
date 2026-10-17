@@ -23,7 +23,7 @@ import {
 import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-const CACHE_BASE = '/api/ticker_ohlc/cache/v26';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v27';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {
@@ -102,7 +102,7 @@ export async function onRequest(context) {
   }
   const sigDur = msSince(tSig0);
 
-  // Signature invalidates when history, adjustments, investor_net, or foreign_ratio depth changes.
+  // Signature invalidates when history, adjustments, investor_net, foreign_ratio, or credit_balance depth changes.
   const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${interval}/${lastSig}/${adjSig}/${invSig}`;
   const tCache0 = Date.now();
   const hit = await readHubCache(cachePath, url.origin);
