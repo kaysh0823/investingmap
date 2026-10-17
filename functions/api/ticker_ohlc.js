@@ -1,7 +1,7 @@
 /**
  * Cloudflare Pages Function: GET /api/ticker_ohlc?code=005930&range=1y
  * Daily OHLC+volume bars from stock_price_history ({t,o,h,l,c,v}[]).
- * range=3m|6m|1y|3y|5y. Fetch includes trailing indicator warmup where available.
+ * range=3m|6m|1y|2y|3y|5y. Fetch includes trailing indicator warmup where available.
  */
 
 import {
