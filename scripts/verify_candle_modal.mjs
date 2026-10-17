@@ -34,7 +34,7 @@ const indicators = context.InvestingMapCandleModal?._indicators;
 assert.ok(indicators, 'indicator test exports missing');
 const ui = context.InvestingMapCandleModal?._ui;
 assert.ok(ui, 'candle UI test exports missing');
-assert.equal(ui.rangeForInterval('daily'), '1y', 'daily default range');
+assert.equal(ui.rangeForInterval('daily'), '2y', 'daily default range');
 assert.equal(ui.rangeForInterval('weekly'), '5y', 'weekly default range');
 // The five panels are panes of one v5 chart. That is what makes their x axes
 // line up, so guard both the version we load and the single-chart structure.
@@ -397,6 +397,7 @@ assert.ok(Math.abs(rangePack.value[4] - (8 / 14) * 100) < 1e-9, 'range vol5 / cl
 assert.equal(rangePack.signal[22], null, 'SMA20 warmup through bar 23');
 assert.ok(Number.isFinite(rangePack.signal[23]), 'SMA20 from 24th bar');
 
+assert.equal(normalizeOhlcRange('2y'), '2y');
 assert.equal(normalizeOhlcRange('3y'), '3y');
 assert.equal(normalizeOhlcRange('5y'), '5y');
 assert.equal(ohlcFetchLimit('3y'), 1655, '3Y covers weekly 156+125+50 weeks');

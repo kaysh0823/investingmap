@@ -10,14 +10,16 @@
   var LWC_SRC =
     'https://cdn.jsdelivr.net/npm/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';
 
-  var RANGES = ['3m', '6m', '1y', '3y', '5y'];
+  var RANGES = ['3m', '6m', '1y', '2y', '3y', '5y'];
   var INTERVALS = ['daily', 'weekly'];
-  var DEFAULT_RANGE_BY_INTERVAL = { daily: '1y', weekly: '5y' };
+  var DEFAULT_RANGE_BY_INTERVAL = { daily: '2y', weekly: '5y' };
   var DISPLAY_BARS = {
-    daily: { '3m': 50, '6m': 120, '1y': 200, '3y': 750, '5y': 1250 },
-    weekly: { '3m': 13, '6m': 26, '1y': 52, '3y': 156, '5y': 260 },
+    daily: { '3m': 50, '6m': 120, '1y': 200, '2y': 500, '3y': 750, '5y': 1250 },
+    weekly: { '3m': 13, '6m': 26, '1y': 52, '2y': 104, '3y': 156, '5y': 260 },
   };
   var RIGHT_OFFSET_BARS = 7;
+  /** Bars in view when the modal opens (or interval switches); scroll/zoom out for the rest. */
+  var INITIAL_VISIBLE_BARS = { daily: 120, weekly: 52 };
   var AXIS_FONT_SIZE = 11;
   var PANE_MARGINS = {
     price: { top: 0.06, bottom: 0.1 },
@@ -109,6 +111,7 @@
       range3m: '3M',
       range6m: '6M',
       range1y: '1Y',
+      range2y: '2Y',
       range3y: '3Y',
       range5y: '5Y',
       daily: '일봉',
@@ -156,6 +159,7 @@
       range3m: '3M',
       range6m: '6M',
       range1y: '1Y',
+      range2y: '2Y',
       range3y: '3Y',
       range5y: '5Y',
       daily: 'Daily',
@@ -201,6 +205,7 @@
     navIndex: -1,
     range: DEFAULT_RANGE_BY_INTERVAL.daily,
     interval: 'daily',
+    zoomInitial: true,
     investorCum: DEFAULT_INVESTOR_CUM,
     investorPeriod: DEFAULT_INVESTOR_PERIOD,
     crosshairTime: null,
@@ -1096,6 +1101,7 @@
       if (!range || range === state.range) return;
       state.range = range;
       state.rangeByInterval[state.interval] = range;
+      state.zoomInitial = false;
       syncRangeButtons();
       if (state.ticker) loadAndRender(state.ticker, state.range);
     });
@@ -1106,6 +1112,7 @@
       if (INTERVALS.indexOf(interval) < 0 || interval === state.interval) return;
       state.interval = interval;
       state.range = rangeForInterval(interval);
+      state.zoomInitial = true;
       syncRangeButtons();
       syncIntervalButtons();
       syncInvestorCumVisibility();
@@ -1293,11 +1300,13 @@
           ? labels.range3m
           : r === '6m'
             ? labels.range6m
-            : r === '3y'
-              ? labels.range3y
-              : r === '5y'
-                ? labels.range5y
-                : labels.range1y;
+            : r === '2y'
+              ? labels.range2y
+              : r === '3y'
+                ? labels.range3y
+                : r === '5y'
+                  ? labels.range5y
+                  : labels.range1y;
       html +=
         '<button type="button" class="im-candle-range" data-range="' +
         r +
@@ -2090,6 +2099,7 @@
       updateHoverTip(param);
     });
     chart.timeScale().fitContent();
+    applyInitialZoom(chart, data.barCount);
 
     state.chart = chart;
     state.seriesRefs = {
@@ -2117,6 +2127,22 @@
     observeResize();
     resizeCharts();
     afterLayout(resizeCharts);
+  }
+
+  /**
+   * Opening view: zoom to the latest INITIAL_VISIBLE_BARS. An explicit range
+   * button click shows the whole range instead (state.zoomInitial = false).
+   */
+  function applyInitialZoom(chart, barCount) {
+    if (!state.zoomInitial) return;
+    var n = INITIAL_VISIBLE_BARS[state.interval] || INITIAL_VISIBLE_BARS.daily;
+    if (!(barCount > n)) return;
+    try {
+      chart.timeScale().setVisibleLogicalRange({
+        from: barCount - n,
+        to: barCount - 1 + RIGHT_OFFSET_BARS,
+      });
+    } catch (e) {}
   }
 
   /** Give each pane its share of the height and its own right-scale margins. */
@@ -2408,6 +2434,7 @@
       state.rangeByInterval[state.interval] = opts.range;
     }
     state.range = rangeForInterval(state.interval);
+    state.zoomInitial = true;
 
     var root = document.getElementById('im-candle-root');
     root.removeAttribute('hidden');

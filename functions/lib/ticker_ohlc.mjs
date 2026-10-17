@@ -26,6 +26,7 @@ export const OHLC_RANGE_DAYS = Object.freeze({
   '3m': 50,
   '6m': 120,
   '1y': 200,
+  '2y': 500,
   '3y': 750,
   '5y': 1250,
 });
@@ -35,6 +36,7 @@ export const OHLC_WEEKLY_DISPLAY = Object.freeze({
   '3m': 13,
   '6m': 26,
   '1y': 52,
+  '2y': 104,
   '3y': 156,
   '5y': 260,
 });
@@ -58,6 +60,7 @@ export function normalizeOhlcRange(raw) {
   if (s === '3m' || s === '3mo' || s === '50d') return '3m';
   if (s === '6m' || s === '6mo' || s === '120d') return '6m';
   if (s === '1y' || s === '12m' || s === '200d' || s === 'yoy') return '1y';
+  if (s === '2y' || s === '24m' || s === '500d') return '2y';
   if (s === '3y' || s === '36m' || s === '750d') return '3y';
   if (s === '5y' || s === '60m' || s === '1250d') return '5y';
   return '1y';
@@ -129,7 +132,7 @@ export async function fetchLatestHistorySignature(config, ticker) {
 /**
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker normalized 6-char
- * @param {string} rangeToken 3m|6m|1y|3y|5y
+ * @param {string} rangeToken 3m|6m|1y|2y|3y|5y
  * @param {{ interval?: 'daily'|'weekly' }} [options]
  */
 export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = {}) {
