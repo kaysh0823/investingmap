@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v5 + /api/ticker_ohlc.
- * One chart, six native panes (price / volume / MACD / investor OSC / BBW%·DISP% / 5D range vol%).
+ * One chart, seven native panes (price / volume / MACD / investor OSC / credit balance % / BBW%·DISP% / 5D range vol% · ATR3%).
  * The panes share a single time scale, so their x axes align by construction.
  */
 (function (global) {
@@ -26,6 +26,7 @@
     vol: { top: 0.12, bottom: 0.08 },
     macd: { top: 0.12, bottom: 0.12 },
     investor: { top: 0.12, bottom: 0.12 },
+    credit: { top: 0.15, bottom: 0.12 },
     norm: { top: 0.12, bottom: 0.12 },
     range: { top: 0.12, bottom: 0.12 },
   };
@@ -35,6 +36,7 @@
     { key: 'vol', stretch: 13 },
     { key: 'macd', stretch: 16 },
     { key: 'investor', stretch: 16 },
+    { key: 'credit', stretch: 11 },
     { key: 'norm', stretch: 16 },
     { key: 'range', stretch: 15 },
   ];
@@ -62,6 +64,7 @@
   var MACD_SIGNAL = 9;
   var RANGE_PERIOD = 5;
   var RANGE_SIGNAL = 20;
+  var ATR_PERIOD = 3;
   var INVESTOR_OSC_LEVELS = [20, 50, 80];
   /** Daily OSC: selectable N-day cumulative net; stochastic lookback fixed at 20 bars. */
   var INVESTOR_CUM_OPTIONS = [5, 10, 20, 50, 120, 200];
@@ -130,8 +133,9 @@
       instOsc: '기관',
       frgnOsc: '외국인',
       foreignRatio: '외국인 보유비율(%)',
+      creditRatio: '신용잔고율(%)',
       range: '5일 변동성%',
-      rangeSignal: 'SMA20',
+      atr: 'ATR3/종가%',
       chartLabel: '일봉 차트',
       weeklyChartLabel: '주봉 차트',
       panePrice: '가격',
@@ -141,8 +145,9 @@
       paneInvestorUnitDay: '일',
       investorFlow: '기관 및 외국인 수급',
       paneInvestorUnitWeek: '주',
+      paneCredit: '신용잔고율 (신용잔고/시총, %) · T+2 공시',
       paneNorm: 'BBW% · 이격도% (125일)',
-      paneRange: '5일 변동성(고저/종가)% · SMA20',
+      paneRange: '5일 변동성(고저/종가)% · ATR3/종가%',
       liveSession: '장중(현재가)',
       closeOnly: '종가만',
     },
@@ -178,8 +183,9 @@
       instOsc: 'Inst',
       frgnOsc: 'Frgn',
       foreignRatio: 'Foreign hold %',
+      creditRatio: 'Credit bal. % of mcap',
       range: '5D Range Vol%',
-      rangeSignal: 'SMA20',
+      atr: 'ATR3/Close%',
       chartLabel: 'Daily chart',
       weeklyChartLabel: 'Weekly chart',
       panePrice: 'Price',
@@ -189,8 +195,9 @@
       paneInvestorUnitDay: 'd',
       investorFlow: 'Inst & foreign flow',
       paneInvestorUnitWeek: 'w',
+      paneCredit: 'Credit balance / mcap (%) · published T+2',
       paneNorm: 'BBW% · DISP% (125d)',
-      paneRange: '5D Range Vol% · SMA20',
+      paneRange: '5D Range Vol% · ATR3/Close%',
       liveSession: 'Live (last)',
       closeOnly: 'Close only',
     },
@@ -434,6 +441,40 @@
     var readyAt = p > 0 && sp > 0 ? p + sp - 2 : signal.length;
     for (var s = 0; s < signal.length && s < readyAt; s++) signal[s] = null;
     return { value: value, signal: signal };
+  }
+
+  /**
+   * ATR(period) / close × 100 [%]. TR uses the prior close; ATR is Wilder-smoothed
+   * (seed = SMA of the first `period` TRs). Bars with missing h/l/c reset the run.
+   */
+  function atrPercent(bars, period) {
+    var p = period | 0;
+    var out = new Array(bars.length);
+    var atr = null;
+    var seed = [];
+    for (var i = 0; i < bars.length; i++) {
+      out[i] = null;
+      var b = bars[i];
+      if (!b || !isFinite(b.h) || !isFinite(b.l) || !(b.c > 0) || p < 1) {
+        atr = null;
+        seed = [];
+        continue;
+      }
+      var pc = i > 0 && bars[i - 1] && bars[i - 1].c > 0 ? bars[i - 1].c : null;
+      var tr = b.h - b.l;
+      if (pc != null) tr = Math.max(tr, Math.abs(b.h - pc), Math.abs(b.l - pc));
+      if (atr == null) {
+        seed.push(tr);
+        if (seed.length < p) continue;
+        atr = seed.reduce(function (a, x) {
+          return a + x;
+        }, 0) / p;
+      } else {
+        atr = (atr * (p - 1) + tr) / p;
+      }
+      out[i] = (atr / b.c) * 100;
+    }
+    return out;
   }
 
   function isoWeekKey(isoDate) {
@@ -1196,6 +1237,7 @@
     if ('instOsc' in src) dest.instOsc = oscNum(src.instOsc);
     if ('frgnOsc' in src) dest.frgnOsc = oscNum(src.frgnOsc);
     if ('foreignRatio' in src) dest.foreignRatio = oscNum(src.foreignRatio);
+    if ('creditRatio' in src) dest.creditRatio = oscNum(src.creditRatio);
     var wik = investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
     var wfk = investorOscField('frgnOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
     if (wik in src) dest[wik] = oscNum(src[wik]);
@@ -1277,6 +1319,7 @@
       vol: labels.paneVol,
       macd: labels.paneMacd,
       investor: paneInvestorLabel(state.investorCum, state.investorPeriod),
+      credit: labels.paneCredit,
       norm: labels.paneNorm,
       range: labels.paneRange,
     };
@@ -1490,6 +1533,7 @@
     var dispPct = trailingMinMaxNorm(disparity, NORM_WINDOW);
     var macdPack = macd(closes, MACD_FAST, MACD_SLOW, MACD_SIGNAL);
     var rangePack = rangeVolPercent(fullBars, RANGE_PERIOD, RANGE_SIGNAL);
+    var atrPct = atrPercent(fullBars, ATR_PERIOD);
 
     var displayMap = DISPLAY_BARS[interval] || DISPLAY_BARS.daily;
     var displayN = displayMap[range] || displayMap['1y'];
@@ -1510,10 +1554,11 @@
     var instOscLine = [];
     var frgnOscLine = [];
     var foreignRatioBars = [];
+    var creditLine = [];
     var bbwLine = [];
     var dispLine = [];
     var rangeLine = [];
-    var rangeSignalLine = [];
+    var atrLine = [];
     var byTime = Object.create(null);
 
     for (var i = start; i < fullBars.length; i++) {
@@ -1556,13 +1601,15 @@
           color: 'rgba(126,231,135,0.28)',
         });
       }
+      var cr = oscNum(b.creditRatio);
+      if (cr != null) creditLine.push({ time: b.t, value: cr });
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
       if (rangePack.value[i] != null && isFinite(rangePack.value[i])) {
         rangeLine.push({ time: b.t, value: rangePack.value[i] });
       }
-      if (rangePack.signal[i] != null && isFinite(rangePack.signal[i])) {
-        rangeSignalLine.push({ time: b.t, value: rangePack.signal[i] });
+      if (atrPct[i] != null && isFinite(atrPct[i])) {
+        atrLine.push({ time: b.t, value: atrPct[i] });
       }
       var row = {
         o: b.o,
@@ -1581,9 +1628,10 @@
         bbw: bbwPct[i],
         disp: dispPct[i],
         range: rangePack.value[i],
-        rangeSignal: rangePack.signal[i],
+        atr: atrPct[i],
         live: !!b.live,
         foreignRatio: fr,
+        creditRatio: cr,
       };
       if (weekly) {
         row[investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD)] = iv;
@@ -1625,10 +1673,11 @@
       instOscLine: instOscLine,
       frgnOscLine: frgnOscLine,
       foreignRatioBars: foreignRatioBars,
+      creditLine: creditLine,
       bbwLine: bbwLine,
       dispLine: dispLine,
       rangeLine: rangeLine,
-      rangeSignalLine: rangeSignalLine,
+      atrLine: atrLine,
       byTime: byTime,
     };
   }
@@ -1703,6 +1752,9 @@
       html += hoverTipRow(labels.frgnOsc, fmtNum(frgnVal, 1));
       html += hoverTipRow(labels.foreignRatio, fmtNum(b.foreignRatio, 2));
     }
+    if (typeof b.creditRatio === 'number' && isFinite(b.creditRatio)) {
+      html += hoverTipRow(labels.creditRatio, fmtNum(b.creditRatio, 2) + '%');
+    }
     if (typeof b.bbw === 'number' && isFinite(b.bbw)) {
       html += hoverTipRow(labels.bbw, fmtNum(b.bbw, 1) + '%');
     }
@@ -1711,6 +1763,9 @@
     }
     if (typeof b.range === 'number' && isFinite(b.range)) {
       html += hoverTipRow(labels.range, fmtNum(b.range, 2) + '%');
+    }
+    if (typeof b.atr === 'number' && isFinite(b.atr)) {
+      html += hoverTipRow(labels.atr, fmtNum(b.atr, 2) + '%');
     }
     tip.innerHTML = html;
     tip.style.display = 'block';
@@ -1816,6 +1871,9 @@
         ' ' +
         fmtNum(b.foreignRatio, 2);
     }
+    if (typeof b.creditRatio === 'number' && isFinite(b.creditRatio)) {
+      text += ' · ' + labels.creditRatio + ' ' + fmtNum(b.creditRatio, 2);
+    }
     text +=
       ' · ' +
       labels.bbw +
@@ -1830,9 +1888,9 @@
       ' ' +
       fmtNum(b.range, 2) +
       ' ' +
-      labels.rangeSignal +
+      labels.atr +
       ' ' +
-      fmtNum(b.rangeSignal, 2);
+      fmtNum(b.atr, 2);
     if (b.live) text += ' · ' + labels.liveSession;
     tip.textContent = text;
   }
@@ -2072,6 +2130,13 @@
     var frgnOscSeries = addInvestorOscLine('investor', { color: '#58a6ff', title: t().frgnOsc });
     frgnOscSeries.setData(data.frgnOscLine || []);
 
+    var creditSeries = addLine('credit', {
+      color: '#f778ba',
+      priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
+      title: t().creditRatio,
+    });
+    creditSeries.setData(data.creditLine || []);
+
     var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW%' });
     bbwSeries.setData(data.bbwLine);
 
@@ -2085,12 +2150,12 @@
     });
     rangeSeries.setData(data.rangeLine);
 
-    var rangeSignalSeries = addLine('range', {
+    var atrSeries = addLine('range', {
       color: '#e3b341',
       priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
-      title: t().rangeSignal,
+      title: t().atr,
     });
-    rangeSignalSeries.setData(data.rangeSignalLine);
+    atrSeries.setData(data.atrLine);
 
     applyPaneLayout(LWC, chart);
 
@@ -2117,10 +2182,11 @@
       instOsc: instOscSeries,
       frgnOsc: frgnOscSeries,
       foreignRatio: foreignRatioSeries,
+      credit: creditSeries,
       bbw: bbwSeries,
       disp: dispSeries,
       range: rangeSeries,
-      rangeSignal: rangeSignalSeries,
+      atr: atrSeries,
     };
     state.barsByTime = data.byTime;
 
@@ -2651,6 +2717,7 @@
       disparityFromMa: disparityFromMa,
       macd: macd,
       rangeVolPercent: rangeVolPercent,
+      atrPercent: atrPercent,
       aggregateWeeklyBars: aggregateWeeklyBars,
       isoWeekKey: isoWeekKey,
       normalizeBars: normalizeBars,

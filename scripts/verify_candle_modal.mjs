@@ -4,6 +4,11 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import {
+  attachCreditRatioToBars,
+  attachCreditRatioToWeeklyBars,
+} from '../functions/lib/credit_balance.mjs';
+import { attachCreditRatio, kisCreditRowToRecord } from '../functions/lib/kis_credit_balance.mjs';
+import {
   fetchTickerOhlcBars,
   normalizeOhlcRange,
   ohlcFetchLimit,
@@ -51,7 +56,7 @@ for (const removed of [
 }
 assert.equal(source.match(/createChart\(/g)?.length, 1, 'exactly one chart is created');
 const paneKeys = ui.panes.map((pane) => pane.key);
-assert.equal(paneKeys.join(','), 'price,vol,macd,investor,norm,range', 'pane order');
+assert.equal(paneKeys.join(','), 'price,vol,macd,investor,credit,norm,range', 'pane order');
 paneKeys.forEach((key, index) => {
   assert.equal(ui.paneIndex[key], index, `pane index for ${key}`);
 });
@@ -396,6 +401,20 @@ assert.ok(Number.isFinite(rangePack.value[4]), 'range value from 5th bar');
 assert.ok(Math.abs(rangePack.value[4] - (8 / 14) * 100) < 1e-9, 'range vol5 / close calculation');
 assert.equal(rangePack.signal[22], null, 'SMA20 warmup through bar 23');
 assert.ok(Number.isFinite(rangePack.signal[23]), 'SMA20 from 24th bar');
+// TR = max(h-l=4, |h-pc|=3, |l-pc|=1) = 4 every bar → ATR3 = 4.
+const atrPct = indicators.atrPercent(rangeBars, 3);
+assert.equal(atrPct[1], null, 'ATR3 warmup bar 2');
+assert.ok(Math.abs(atrPct[2] - (4 / 12) * 100) < 1e-9, 'ATR3 seed / close');
+assert.ok(Math.abs(atrPct[3] - (4 / 13) * 100) < 1e-9, 'ATR3 Wilder step / close');
+const gapAtr = indicators.atrPercent([
+  { h: 12, l: 8, c: 10 },
+  { h: 30, l: 10, c: 20 },
+  { h: 22, l: 18, c: 20 },
+  { h: 21, l: 19, c: 20 },
+], 3);
+// TR: 4, max(20,20,0)=20, max(4,2,2)=4 → seed 28/3; next TR=max(2,1,1)=2 → (28/3*2+2)/3
+assert.ok(Math.abs(gapAtr[2] - (28 / 3 / 20) * 100) < 1e-9, 'ATR3 uses prior-close TR');
+assert.ok(Math.abs(gapAtr[3] - (((28 / 3) * 2 + 2) / 3 / 20) * 100) < 1e-9, 'ATR3 Wilder smoothing');
 
 assert.equal(normalizeOhlcRange('2y'), '2y');
 assert.equal(normalizeOhlcRange('3y'), '3y');
@@ -710,6 +729,39 @@ assert.ok(
     /numeratorMode === ['"]live['"]/.test(quotesApi),
     'quotes exposes OHLV only when numeratorMode is live',
   );
+}
+
+// Credit balance: KIS 만원 → won, ratio vs same-day mcap, T+2 gap stays null.
+{
+  const rec = kisCreditRowToRecord('005930', {
+    deal_date: '20261014', stlm_date: '20261016',
+    whol_loan_rmnd_stcn: '20978878', whol_loan_rmnd_amt: '456793427', whol_loan_rmnd_rate: '0.35',
+  });
+  assert.equal(rec.trade_date, '2026-10-14');
+  assert.equal(rec.loan_amt_won, 4567934270000, 'KIS credit amount is 만원');
+  attachCreditRatio([rec], new Map([['2026-10-14', 1356e12]]));
+  assert.ok(Math.abs(rec.credit_ratio - (4567934270000 / 1356e12) * 100) < 1e-6, 'credit / mcap %');
+  const noMcap = kisCreditRowToRecord('069500', { deal_date: '20261014', whol_loan_rmnd_amt: '1', whol_loan_rmnd_rate: '0.23' });
+  attachCreditRatio([noMcap], new Map());
+  assert.equal(noMcap.credit_ratio, 0.23, 'falls back to share-based loan_rate');
+
+  const daily = attachCreditRatioToBars(
+    [{ t: '2026-10-14' }, { t: '2026-10-15' }],
+    [{ trade_date: '2026-10-14', credit_ratio: 0.34 }],
+  );
+  assert.equal(daily[0].creditRatio, 0.34);
+  assert.equal(daily[1].creditRatio, null, 'unpublished T+2 day stays null');
+
+  const weekly = attachCreditRatioToWeeklyBars(
+    [{ t: '2026-10-09' }, { t: '2026-10-16' }, { t: '2026-10-23' }],
+    [
+      { trade_date: '2026-10-08', credit_ratio: 0.3 },
+      { trade_date: '2026-10-09', credit_ratio: 0.31 },
+      { trade_date: '2026-10-13', credit_ratio: 0.32 },
+      { trade_date: '2026-10-14', credit_ratio: 0.33 },
+    ],
+  );
+  assert.deepEqual(weekly.map((b) => b.creditRatio), [0.31, 0.33, null], 'weekly: latest published day in that week');
 }
 
 console.log('verify:candle OK — session OHLV tooltip/patch, weekly OHLCV, hover tip OHLC+bbw/disp/range, prev/next nav (v=36)');

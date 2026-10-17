@@ -51,3 +51,19 @@ jobs:
           KRX_ID: ${{ secrets.KRX_ID }}
           KRX_PW: ${{ secrets.KRX_PW }}
         run: npm run backfill:investor-net -- --days=10
+
+      # 신용잔고율 (KIS daily-credit-balance, T+2). Re-fetches the last 30 sessions
+      # per ticker, so a missed day self-heals on the next run.
+      - name: Sync credit balance (KIS)
+        if: always()
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          KIS_APP_KEY: ${{ secrets.KIS_APP_KEY }}
+          KIS_APP_SECRET: ${{ secrets.KIS_APP_SECRET }}
+        run: |
+          if [ -z "$KIS_APP_KEY" ] || [ -z "$KIS_APP_SECRET" ]; then
+            echo "::warning::KIS_APP_KEY / KIS_APP_SECRET secrets missing — skip credit balance"
+            exit 0
+          fi
+          npm run sync:credit-balance

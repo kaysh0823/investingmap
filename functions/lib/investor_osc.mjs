@@ -7,7 +7,7 @@ import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
 import { putHubCache, readHubCache } from './hub_api_cache.mjs';
 
 /** Edge cache for ticker-agnostic investor_net / foreign_ratio depth signature. */
-const INVESTOR_DEPTH_SIG_CACHE = '/api/_sig/investor_depth/v2';
+const INVESTOR_DEPTH_SIG_CACHE = '/api/_sig/investor_depth/v3';
 const INVESTOR_DEPTH_SIG_MAX_AGE = 60;
 
 export const INVESTOR_INST_CODES = Object.freeze(['3000', '3100', '6000']);
@@ -228,11 +228,12 @@ export async function fetchLatestInvestorNetSignature(config, cacheCtx = {}) {
 
   let sig = 'inv-v10-none';
   try {
-    const [invDepth, frDepth] = await Promise.all([
+    const [invDepth, frDepth, crDepth] = await Promise.all([
       depthSig('stock_investor_net'),
       depthSig('stock_foreign_ratio'),
+      depthSig('stock_credit_balance'),
     ]);
-    sig = `inv-v10-${invDepth}-fr-${frDepth}`;
+    sig = `inv-v10-${invDepth}-fr-${frDepth}-cr-${crDepth}`;
   } catch {
     sig = 'inv-v10-none';
   }
