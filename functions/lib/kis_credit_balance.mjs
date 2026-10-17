@@ -35,7 +35,7 @@ function ymdToDash(ymd) {
  * @param {{ KIS_APP_KEY?: string, KIS_APP_SECRET?: string }} env
  * @returns {Promise<string>} access token (valid ~24h; KIS throttles reissue to 1/min)
  */
-export async function issueKisToken(env) {
+export async function issueKisToken(env, attempt = 0) {
   const res = await fetch(`${KIS_BASE_URL}/oauth2/tokenP`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -47,6 +47,11 @@ export async function issueKisToken(env) {
   });
   const json = await res.json().catch(() => ({}));
   if (!json.access_token) {
+    // EGW00133: token reissue is limited to once per minute.
+    if (attempt < 2 && (json.error_code === 'EGW00133' || /1분당 1회/.test(json.error_description || ''))) {
+      await sleep(61000);
+      return issueKisToken(env, attempt + 1);
+    }
     throw new Error(`KIS token failed (${res.status}): ${json.error_description || json.msg1 || ''}`);
   }
   return json.access_token;
