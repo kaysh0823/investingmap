@@ -357,7 +357,8 @@ async function main() {
     const mode = quotes.numeratorMode;
     const k = quotes.k;
     const today = kstAnchorYmd();
-    if (session.regular) {
+    // krxSessionInfo ignores KRX holidays; pricePhase does not.
+    if (session.regular && pricePhase() === 'live') {
       if (mode !== 'live') fail(`f) 11:00-ish expected live, got ${mode}`);
       if (k < 1 && quotes.refsRecentDd && quotes.refsRecentDd < today) {
         fail(`f) live expected k≥1, got k=${k}`);

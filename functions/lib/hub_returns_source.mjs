@@ -613,14 +613,17 @@ export async function loadReturnSource({
           const live = numOrNull(items[t]?.last);
           if (live == null) continue;
           const prev = rows.get(t) || { last: null, asOf: null, tradeDd: '' };
+          const tradeDd = compactYmd(items[t]?.tradeDate || refreshed?.tradeDate)
+            || prev.tradeDd
+            || todayDd;
           rows.set(t, {
             ...prev,
+            // A base price from an older session is not today's 1D denominator.
+            prevClose: numOrNull(items[t]?.prevClose)
+              ?? (prev.tradeDd === tradeDd ? prev.prevClose : null),
             last: live,
             asOf: now.toISOString(),
-            tradeDd:
-              compactYmd(items[t]?.tradeDate || refreshed?.tradeDate)
-              || prev.tradeDd
-              || todayDd,
+            tradeDd,
           });
           stale = true;
         }
@@ -732,6 +735,11 @@ export async function loadReturnSource({
       resolved.prevClose1d = prev && compactYmd(prev.tradeDate) === completedDd
         ? adjustedKrxClose(prev.close, prev.tradeDate, adjByTicker?.get(t))
         : null;
+      // History row missing or the lookup failed: today's quote row carries the
+      // KRX base price (previous session close, already adjusted) for 1D.
+      if (resolved.prevClose1d == null && row?.tradeDd === anchorDd) {
+        resolved.prevClose1d = numOrNull(row.prevClose);
+      }
     }
     if (usingStoredClose) resolved.prevClose1d = numOrNull(row?.prevClose);
     if (quotePhase === 'afterClose' && resolved.provisional) provisionalCount += 1;

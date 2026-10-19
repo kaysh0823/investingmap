@@ -518,7 +518,7 @@ export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN,
   return { sectors, startDd, anchorDd, refsRecentDd };
 }
 
-async function fetchIndexDailyRebased(config, windowDatesDash, liveTips) {
+async function fetchIndexDailyRebased(config, windowDatesDash, liveTips, { preferDaily = false } = {}) {
   if (!config || !windowDatesDash?.length) {
     return INDEX_CODES.map((code) => ({ code, series: [] }));
   }
@@ -543,7 +543,8 @@ async function fetchIndexDailyRebased(config, windowDatesDash, liveTips) {
       }))
       .filter((r) => r.value != null && r.value > 0);
     const today = windowDatesDash[windowDatesDash.length - 1];
-    if (liveTips?.get(code) != null) {
+    const hasDailyToday = pts.length > 0 && pts[pts.length - 1].t === today;
+    if (liveTips?.get(code) != null && !(preferDaily && hasDailyToday)) {
       pts = applyLiveTip(pts, today, liveTips.get(code));
     }
     return { code, series: rebaseRowsTo100(pts) };
@@ -622,20 +623,21 @@ async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 
     }
 
     const first = captures[0].value;
+    if (mode !== 'live') {
+      // Captures stamped after 15:30 (e.g. 15:33) hold the final index value but
+      // must not become the tip. Close = daily row, else the latest capture.
+      const closeMs = Date.parse(closeTs);
+      const inSession = captures.filter((r) => {
+        const ms = Date.parse(r.t);
+        return !Number.isFinite(ms) || ms < closeMs;
+      });
+      const dayClose = dailyCloseByCode.get(code) ?? captures[captures.length - 1].value;
+      const pts = [{ t: openTs, value: first }, ...inSession, { t: closeTs, value: dayClose }];
+      return { code, series: rebaseRowsTo100(pts) };
+    }
+
     // 09:00 base 100 from first capture (not prev_close), then capture points.
     const pts = [{ t: openTs, value: first }, ...captures];
-
-    if (mode !== 'live') {
-      const dayClose = dailyCloseByCode.get(code);
-      if (dayClose != null && dayClose > 0) {
-        const last = pts[pts.length - 1];
-        if (last?.t === closeTs) {
-          pts[pts.length - 1] = { t: closeTs, value: dayClose };
-        } else {
-          pts.push({ t: closeTs, value: dayClose });
-        }
-      }
-    }
     // live: last capture remains tip (already in series).
 
     return { code, series: rebaseRowsTo100(pts) };
@@ -730,14 +732,17 @@ export async function buildAggregateHubTrendPayload(
     return true;
   }).map(basDdToDash);
 
-  // B mode: extend index window to today (market_index_daily.close tip), matching sector tip date.
-  if (isBMode && todayDash && !windowDates.includes(todayDash)) {
+  // A/B mode: sector tips sit on today (anchor), so the index window must end
+  // there too — otherwise the live tip overwrites the stale refs date.
+  const tipAtToday = live.meta.sessionOpen || isBMode;
+  if (tipAtToday && todayDash && !windowDates.includes(todayDash)) {
     windowDates = [...windowDates, todayDash];
   }
 
-  // Live tip (A mode) — latest intraday capture; B mode uses daily close via windowDates.
+  // Latest intraday capture: live tip in A mode; in B mode only until
+  // market_index_daily has today's close.
   const liveTips = new Map();
-  if (live.meta.sessionOpen && config) {
+  if (tipAtToday && config) {
     try {
       const tipRows = await fetchSupabaseJson(
         config,
@@ -762,7 +767,9 @@ export async function buildAggregateHubTrendPayload(
     }
   }
 
-  const indices = await fetchIndexDailyRebased(config, windowDates, liveTips);
+  const indices = await fetchIndexDailyRebased(config, windowDates, liveTips, {
+    preferDaily: !live.meta.sessionOpen,
+  });
 
   return {
     horizon: h,
