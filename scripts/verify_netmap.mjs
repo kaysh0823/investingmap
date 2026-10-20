@@ -7,6 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createContext, runInContext } from 'node:vm';
 import { MAP_SECTOR } from './patch_netmap_tab.mjs';
+import { extractCompaniesFromHtml } from '../lib/map_company_serialize.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const NETMAP_DIR = path.join(ROOT, 'data', 'netmap');
@@ -119,9 +120,7 @@ for (const [rel, sector] of Object.entries(MAP_SECTOR)) {
     if (sector === 'bio') {
       const inlineSrc = path.join(ROOT, 'bio', 'korea_bio_map.inline.js');
       const inline = fs.readFileSync(inlineSrc, 'utf8');
-      const m = inline.match(/const koreanCompanies\s*=\s*(\[[\s\S]*?\]);/);
-      assert.ok(m, 'bio inline: koreanCompanies array');
-      const companies = JSON.parse(m[1]);
+      const companies = extractCompaniesFromHtml(inline);
       const htmlTickers = new Set(
         companies.map((c) => String(c.ticker).padStart(6, '0')).filter((t) => /^\d{6}$/.test(t)),
       );

@@ -107,6 +107,9 @@
       collapse: '축소',
       prevStock: '이전 종목',
       nextStock: '다음 종목',
+      selectStock: '종목 선택',
+      searchStock: '종목명 또는 코드 검색',
+      noStocks: '검색 결과가 없습니다.',
       loading: '차트 불러오는 중…',
       empty: '표시할 일봉 데이터가 없습니다.',
       error: '차트를 불러오지 못했습니다.',
@@ -157,6 +160,9 @@
       collapse: 'Restore',
       prevStock: 'Previous stock',
       nextStock: 'Next stock',
+      selectStock: 'Select stock',
+      searchStock: 'Search name or ticker',
+      noStocks: 'No matching stocks.',
       loading: 'Loading chart…',
       empty: 'No daily candle data available.',
       error: 'Failed to load chart.',
@@ -994,6 +1000,16 @@
       '.im-candle-navbtn{flex-shrink:0;width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:20px;font-weight:400;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background .15s,opacity .15s}' +
       '.im-candle-navbtn:hover:not(:disabled),.im-candle-navbtn:focus-visible:not(:disabled){background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
       '.im-candle-navbtn:disabled{opacity:.25;cursor:not-allowed}' +
+      '.im-candle-picker{position:relative}' +
+      '.im-candle-picker-toggle{border:1px solid var(--border,#30363d);border-radius:8px;padding:6px 10px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);cursor:pointer;font-size:12px;white-space:nowrap}' +
+      '.im-candle-picker-toggle[aria-expanded="true"]{border-color:var(--accent,#58a6ff)}' +
+      '.im-candle-picker-panel{position:absolute;left:0;top:calc(100% + 6px);z-index:20;width:min(300px,calc(100vw - 48px));padding:8px;border:1px solid var(--border,#30363d);border-radius:10px;background:var(--surface,#161b22);box-shadow:0 8px 28px #0005}' +
+      '.im-candle-picker-panel[hidden]{display:none}' +
+      '.im-candle-picker-search{box-sizing:border-box;width:100%;padding:8px;border:1px solid var(--border,#30363d);border-radius:6px;background:var(--surface2,#21262d);color:var(--text,#e6edf3);font-size:13px}' +
+      '.im-candle-picker-list{max-height:min(300px,45vh);overflow:auto;margin-top:6px}' +
+      '.im-candle-picker-option{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;border:0;border-radius:6px;padding:9px 8px;background:transparent;color:var(--text,#e6edf3);cursor:pointer;font-size:13px}' +
+      '.im-candle-picker-option:hover,.im-candle-picker-option:focus-visible,.im-candle-picker-option[aria-current="true"]{background:var(--surface2,#21262d);outline:1px solid var(--accent,#58a6ff);outline-offset:-1px}' +
+      '.im-candle-picker-option small{opacity:.65}.im-candle-picker-empty{padding:12px 8px;font-size:13px;opacity:.65}' +
       '.im-candle-sub{margin:4px 0 0;font-size:12px;color:var(--text-muted,#8b949e);font-family:ui-monospace,monospace}' +
       '.im-candle-head-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}' +
       '.im-candle-expand{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}' +
@@ -1093,6 +1109,11 @@
       '<button type="button" id="im-candle-prev" class="im-candle-navbtn" aria-label="이전 종목" title="이전 종목 (←)">‹</button>' +
       '<button type="button" id="im-candle-next" class="im-candle-navbtn" aria-label="다음 종목" title="다음 종목 (→)">›</button>' +
       '</div>' +
+      '<div class="im-candle-picker" id="im-candle-picker">' +
+      '<button type="button" class="im-candle-picker-toggle" id="im-candle-picker-toggle" aria-expanded="false" aria-controls="im-candle-picker-panel"></button>' +
+      '<div class="im-candle-picker-panel" id="im-candle-picker-panel" hidden>' +
+      '<input type="search" class="im-candle-picker-search" id="im-candle-picker-search" autocomplete="off">' +
+      '<div class="im-candle-picker-list" id="im-candle-picker-list"></div></div></div>' +
       '</div>' +
       '<p class="im-candle-sub" id="im-candle-sub"></p>' +
       '</div>' +
@@ -1134,6 +1155,25 @@
     });
     root.querySelector('#im-candle-next').addEventListener('click', function () {
       goTo(1);
+    });
+    root.querySelector('#im-candle-picker-toggle').addEventListener('click', function () {
+      setStockPickerOpen(document.getElementById('im-candle-picker-panel').hidden);
+    });
+    root.querySelector('#im-candle-picker-search').addEventListener('input', renderStockPicker);
+    root.querySelector('#im-candle-picker-search').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === 'ArrowDown') {
+        var first = document.querySelector('#im-candle-picker-list button');
+        if (first) { e.preventDefault(); if (e.key === 'Enter') first.click(); else first.focus(); }
+      }
+    });
+    root.querySelector('#im-candle-picker-list').addEventListener('click', function (e) {
+      var option = e.target.closest('[data-stock-index]');
+      if (!option) return;
+      selectStock(Number(option.getAttribute('data-stock-index')));
+      setStockPickerOpen(false, true);
+    });
+    root.addEventListener('click', function (e) {
+      if (!e.target.closest('#im-candle-picker')) setStockPickerOpen(false);
     });
     root.querySelector('#im-candle-ranges').addEventListener('click', function (e) {
       var btn = e.target.closest('[data-range]');
@@ -2432,6 +2472,63 @@
       nextBtn.setAttribute('aria-label', nextLabel);
       nextBtn.setAttribute('title', nextLabel + (disabled ? '' : ' (→)'));
     }
+    var picker = document.getElementById('im-candle-picker-toggle');
+    if (picker) {
+      picker.textContent = labels.selectStock + ' ▾';
+      picker.disabled = !state.navList || !state.navList.length;
+    }
+    var search = document.getElementById('im-candle-picker-search');
+    if (search) {
+      search.placeholder = labels.searchStock;
+      search.setAttribute('aria-label', labels.searchStock);
+    }
+  }
+
+  function stockMatches(stock, query) {
+    var text = (String(stock.name || '') + ' ' + String(stock.ticker || '')).toLowerCase();
+    return text.replace(/\s/g, '').indexOf(String(query || '').toLowerCase().replace(/\s/g, '')) >= 0;
+  }
+
+  function renderStockPicker() {
+    var list = document.getElementById('im-candle-picker-list');
+    var search = document.getElementById('im-candle-picker-search');
+    if (!list || !search) return;
+    list.textContent = '';
+    state.navList.forEach(function (stock, index) {
+      if (!stockMatches(stock, search.value)) return;
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'im-candle-picker-option';
+      button.setAttribute('data-stock-index', String(index));
+      if (stock.ticker === state.ticker) button.setAttribute('aria-current', 'true');
+      var name = document.createElement('span');
+      name.textContent = stock.name;
+      var code = document.createElement('small');
+      code.textContent = stock.ticker;
+      button.appendChild(name);
+      button.appendChild(code);
+      list.appendChild(button);
+    });
+    if (!list.childNodes.length) {
+      var empty = document.createElement('div');
+      empty.className = 'im-candle-picker-empty';
+      empty.textContent = t().noStocks;
+      list.appendChild(empty);
+    }
+  }
+
+  function setStockPickerOpen(open, restoreFocus) {
+    var panel = document.getElementById('im-candle-picker-panel');
+    var toggle = document.getElementById('im-candle-picker-toggle');
+    if (!panel || !toggle) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(!!open));
+    if (open) {
+      var search = document.getElementById('im-candle-picker-search');
+      search.value = '';
+      renderStockPicker();
+      search.focus();
+    } else if (restoreFocus) toggle.focus();
   }
 
   function goTo(delta) {
@@ -2439,8 +2536,14 @@
     var n = state.navList.length;
     if (n < 2 || state.navIndex < 0) return;
     var newIdx = (state.navIndex + delta + n) % n;
+    selectStock(newIdx);
+  }
+
+  function selectStock(newIdx) {
+    if (!state.open || !Number.isInteger(newIdx)) return;
     var target = state.navList[newIdx];
     if (!target) return;
+    if (target.ticker === state.ticker) return;
     state.ticker = target.ticker;
     state.name = resolveName(target.ticker, target.name);
     state.navIndex = newIdx;
@@ -2448,6 +2551,7 @@
     if (titleEl) titleEl.textContent = state.name || target.ticker;
     updateSubtitle();
     syncNavButtons();
+    renderStockPicker();
     loadAndRender(target.ticker, state.range);
   }
 
@@ -2517,6 +2621,7 @@
     state.liveBarTime = null;
     updateSubtitle();
     syncNavButtons();
+    setStockPickerOpen(false);
     document.getElementById('im-candle-close').setAttribute('aria-label', labels.close);
     syncRangeButtons();
     syncIntervalButtons();
@@ -2541,6 +2646,7 @@
   function close() {
     if (!state.open) return;
     state.open = false;
+    setStockPickerOpen(false);
     state.fetchToken += 1;
     setExpanded(false);
     destroyCharts();
@@ -2635,7 +2741,10 @@
     if (!state.open) return;
     if (e.key === 'Escape') {
       e.preventDefault();
-      if (state.expanded) {
+      var picker = document.getElementById('im-candle-picker-panel');
+      if (picker && !picker.hidden) {
+        setStockPickerOpen(false, true);
+      } else if (state.expanded) {
         setExpanded(false);
       } else {
         close();
@@ -2661,6 +2770,7 @@
     if (closeBtn) closeBtn.setAttribute('aria-label', labels.close);
     syncExpandButton();
     syncNavButtons();
+    renderStockPicker();
     updateSubtitle();
     syncRangeButtons();
     syncIntervalButtons();
@@ -2684,6 +2794,7 @@
     close: close,
     applyLang: applyLang,
     _ui: {
+      stockMatches: stockMatches,
       defaultRangeByInterval: DEFAULT_RANGE_BY_INTERVAL,
       rangeForInterval: rangeForInterval,
       panes: PANES,
