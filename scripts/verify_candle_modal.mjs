@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import { filterRowsByCloseJumpSanity } from '../functions/lib/history_close_sanity.mjs';
 import { fileURLToPath } from 'node:url';
 import {
   attachCreditRatioToBars,
@@ -614,6 +615,11 @@ assert.ok(source.includes("prevStock: 'Previous stock'"), 'en prevStock translat
 assert.ok(source.includes("nextStock: 'Next stock'"), 'en nextStock translation');
 assert.ok(typeof ui.getSectorList === 'function', 'getSectorList must be exposed in _ui');
 assert.ok(typeof ui.goTo === 'function', 'goTo must be exposed in _ui');
+assert.ok(ui.stockMatches({ name: 'RF머트리얼즈', ticker: '327260' }, 'RF 머트리얼즈'));
+assert.ok(ui.stockMatches({ name: 'RF머트리얼즈', ticker: '327260' }, '327'));
+assert.ok(ui.stockMatches({ name: '새 종목', ticker: '0009K0' }, '0009k0'));
+assert.ok(ui.stockMatches({ name: '삼성전자', ticker: '005930' }, ''));
+assert.equal(ui.stockMatches({ name: '삼성전자', ticker: '005930' }, '없는종목'), false);
 assert.ok(typeof ui.syncNavButtons === 'function', 'syncNavButtons must be exposed in _ui');
 assert.ok(source.includes("ArrowLeft") && source.includes("ArrowRight"), 'keyboard navigation ArrowLeft/ArrowRight');
 
@@ -764,4 +770,22 @@ assert.ok(
   assert.deepEqual(weekly.map((b) => b.creditRatio), [0.31, 0.33, null], 'weekly: latest published day in that week');
 }
 
-console.log('verify:candle OK — session OHLV tooltip/patch, weekly OHLCV, hover tip OHLC+bbw/disp/range, prev/next nav (v=36)');
+// A resumed ticker and a multi-session history gap must not be treated as a
+// one-session price-limit breach; an actual one-session jump still is rejected.
+{
+  const previous = new Map([['005930', 100], ['000660', 100], ['035420', 100]]);
+  previous.meta = new Map([
+    ['005930', { volume: 0, gapSessions: 1 }],
+    ['000660', { volume: 100, gapSessions: 2 }],
+    ['035420', { volume: 100, gapSessions: 1 }],
+  ]);
+  const result = filterRowsByCloseJumpSanity([
+    { ticker: '005930', close: 200 },
+    { ticker: '000660', close: 180 },
+    { ticker: '035420', close: 180 },
+  ], { prevCloseByTicker: previous, abortPct: 1 });
+  assert.deepEqual(result.accepted.map(r => r.ticker), ['005930', '000660']);
+  assert.deepEqual(result.rejected.map(r => r.ticker), ['035420']);
+}
+
+console.log('verify:candle OK — credit ratio daily/weekly, ATR3, 2Y default, session OHLV, investor filters, navigation and close-jump guard');
