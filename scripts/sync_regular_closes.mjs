@@ -16,6 +16,7 @@ if (!base || !key) throw new Error('Database service credentials required');
 const index = JSON.parse(fs.readFileSync(new URL('../data/hub_index.json', import.meta.url), 'utf8'));
 const tickers = [...new Set(Object.values(index.sectors).flatMap((s) => s.companies.map((c) => c.ticker)))];
 const rows = [];
+const historyRows = [];
 let next = 0;
 let missing = 0;
 await Promise.all(Array.from({ length: 6 }, async () => {
@@ -26,7 +27,12 @@ await Promise.all(Array.from({ length: 6 }, async () => {
       try { bar = await fetchRegularClose(ticker, now); break; }
       catch (error) { if (attempt === 1) console.warn(`${ticker}: ${error.message}`); }
     }
-    if (bar) rows.push(regularCloseRow(ticker, bar));
+    if (bar) {
+      rows.push(regularCloseRow(ticker, bar));
+      historyRows.push({ ticker, trade_date: `${bar.date.slice(0, 4)}-${bar.date.slice(4, 6)}-${bar.date.slice(6, 8)}`,
+        open: bar.open, high: bar.high, low: bar.low, close: bar.close, volume: bar.volume,
+        source: 'naver_regular_close' });
+    }
     else missing++;
   }
 }));
@@ -40,6 +46,17 @@ for (let i = 0; i < rows.length; i += 40) {
   if (!response.ok) throw new Error(`Regular close snapshot write: HTTP ${response.status}`);
 }
 console.log(`Regular close snapshot saved: ${rows.length}/${tickers.length}; unavailable=${missing}`);
+// Refs/RS rebuilds read history, so persist the same auction there too. Partial
+// upserts preserve existing market cap/turnover metadata; never use a daily tip.
+for (let i = 0; i < historyRows.length; i += 40) {
+  const response = await fetch(`${base}/rest/v1/stock_price_history?on_conflict=ticker,trade_date`, {
+    method: 'POST', signal: AbortSignal.timeout(30000),
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify(historyRows.slice(i, i + 40)),
+  });
+  if (!response.ok) throw new Error(`Regular close history write: HTTP ${response.status}`);
+}
+console.log(`Regular closing auction history saved: ${historyRows.length}`);
 const refs = JSON.parse(fs.readFileSync(new URL('../data/hub_return_refs.json', import.meta.url), 'utf8'));
 const source = await loadReturnSource({ env: {}, refs, tickers, quoteRows: rows, now });
 const tradeDate = rows[0].as_of.slice(0, 10);

@@ -109,7 +109,7 @@ async function fetchHistoryMaxTradeDate(config) {
   return String(rows[0].trade_date).slice(0, 10);
 }
 
-const TRUSTED_HISTORY_SOURCES = new Set(['apihub', 'mdcstat', 'backfill']);
+const TRUSTED_HISTORY_SOURCES = new Set(['apihub', 'mdcstat', 'backfill', 'naver_regular_close']);
 
 /**
  * Reject tip build when hub coverage/source quality on the anchor day is poor.

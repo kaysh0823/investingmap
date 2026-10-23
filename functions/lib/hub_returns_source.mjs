@@ -742,6 +742,15 @@ export async function loadReturnSource({
       }
     }
     if (usingStoredClose) resolved.prevClose1d = numOrNull(row?.prevClose);
+    // A timestamped 15:30 auction snapshot remains authoritative after refs
+    // advance to the same day. Daily feeds may include later trading prices.
+    if (phase !== 'live' && storedClose != null) {
+      resolved.displayLast = storedClose;
+      resolved.numerator = storedClose;
+      resolved.numerator1d = storedClose;
+      resolved.prevClose1d = numOrNull(row?.prevClose);
+      resolved.provisional = false;
+    }
     if (quotePhase === 'afterClose' && resolved.provisional) provisionalCount += 1;
     if (numeratorMode === 'close' && resolved.numerator == null) closeMissingCount += 1;
     const shares = numOrNull(refQ.shares);

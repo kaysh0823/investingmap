@@ -39,6 +39,18 @@ for (const when of ['2026-10-14T20:00:00+09:00', '2026-10-15T08:00:00+09:00', '2
   assert.equal(computeStockReturns({ ...source.byTicker['005930'], k: source.meta.k }).chg1dPct, 0);
 }
 const metadataOnly = toSupabaseRow('005930', { overMarket: true, last: 999999, prevClose: 1 }, {}, '2026-10-14T15:30:00+09:00', false, true);
+// Same-day refs must not supersede a frozen auction quote with an after-hours tip.
+const sameDayRefs = { recentDd: '20261014', tradingDates: ['20261013', '20261014'],
+  quotes: { '005930': { closes: [232000, 234500], shares: 1000 } } };
+const sameDaySource = await loadReturnSource({ env: {}, tickers: ['005930'], refs: sameDayRefs,
+  quoteRows: [row], now: new Date('2026-10-14T21:00:00+09:00'), krxHistory });
+assert.equal(sameDaySource.byTicker['005930'].last, 232000, 'same-day refs cannot replace closing auction');
+assert.equal(sameDaySource.byTicker['005930'].numerator1d, 232000);
+assert.equal(sameDaySource.byTicker['005930'].prevClose1d, 232000);
+assert.equal(computeStockReturns({ ...sameDaySource.byTicker['005930'], k: 0 }).chg1dPct, 0);
+const workflow = (await import('node:fs')).readFileSync(new URL('../.github/workflows/sync-quotes.yml', import.meta.url), 'utf8');
+assert.ok(workflow.indexOf('Finalize regular closing candles after daily feeds') > workflow.indexOf('name: Sync hub quotes to Supabase'));
+assert.ok(workflow.indexOf('Finalize regular closing candles after daily feeds') < workflow.indexOf('node scripts/build_hub_return_refs.mjs'));
 for (const key of ['last', 'prev_close', 'as_of', 'regular_session']) assert.equal(Object.hasOwn(metadataOnly, key), false, `preserve stored ${key}`);
 
 const originalFetch = globalThis.fetch;
