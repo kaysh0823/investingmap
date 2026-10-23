@@ -44,6 +44,8 @@
   var trendMetaByHorizon = {};
   var trendsLoadingHorizon = null;
   var trendFetchInFlight = {};
+  var indexTrendsByHorizon = {};
+  var indexFetchInFlight = {};
   var rsTop10Ready = false;
   var moversReady = false;
   var swrHold = null;
@@ -246,6 +248,8 @@
       '.hub-pulse-cards{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}' +
       '.hub-pulse-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:14px 10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;min-width:0;transition:border-color .15s,box-shadow .15s}' +
       '.hub-pulse-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(0,0,0,.12)}' +
+      '.hub-pulse-card-index-kospi,.hub-pulse-card-index-kospi:hover{border:2px solid #f85149;box-shadow:0 0 0 1px rgba(248,81,73,.22),0 4px 16px rgba(248,81,73,.18)}' +
+      '.hub-pulse-card-index-kosdaq,.hub-pulse-card-index-kosdaq:hover{border:2px solid #58a6ff;box-shadow:0 0 0 1px rgba(88,166,255,.22),0 4px 16px rgba(88,166,255,.18)}' +
       '.hub-pulse-card-sector{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.02em;line-height:1.2;word-break:keep-all}' +
       '.hub-pulse-card-sector .hub-pulse-icon{font-size:20px;line-height:1}' +
       '.hub-pulse-card-ret{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}' +
@@ -414,6 +418,7 @@
       mergeSectorsPayload(j);
       sectorsReady = true;
       sectorsAuthFetched = true;
+      fetchIndexTrends(lang, pulseHorizonKey);
       try {
         if (global.InvestingMapReturnsBadge) {
           global.InvestingMapReturnsBadge.updateFromApi(j, lang);
@@ -861,6 +866,7 @@
   }
 
   function fetchTrends(lang, retKey, opts) {
+    fetchIndexTrends(lang, retKey);
     opts = opts || {};
     var generation = weightingGeneration;
     var mode = sectorWeighting;
@@ -938,6 +944,46 @@
     });
   }
 
+  function fetchIndexTrends(lang, retKey) {
+    var horizon = retKeyToHorizonParam(retKey);
+    if (indexFetchInFlight[horizon]) return indexFetchInFlight[horizon];
+    var url = hubApiUrl('/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&weighting=cap&indexReturnVersion=2');
+    if (!url) return Promise.resolve();
+    indexFetchInFlight[horizon] = fetchWithTimeout(url, HUB_API_TIMEOUT_MS, true)
+      .then(function (payload) {
+        if (!payload || payload.error || !Array.isArray(payload.indices)) return;
+        indexTrendsByHorizon[horizon] = payload.indices;
+      })
+      .catch(function () {})
+      .then(function () {
+        delete indexFetchInFlight[horizon];
+        if (!indexTrendsByHorizon[horizon]) indexTrendsByHorizon[horizon] = [];
+        renderPulse(lang);
+      });
+    return indexFetchInFlight[horizon];
+  }
+
+  function buildIndexPulseCards(lang, retKey) {
+    var horizon = retKeyToHorizonParam(retKey);
+    var entries = indexTrendsByHorizon[horizon];
+    return ['KOSPI', 'KOSDAQ'].map(function (code) {
+      var entry = (entries || []).filter(function (item) { return item.code === code; })[0];
+      var series = ((entry && entry.series) || []).filter(function (point) {
+        return point && point.v != null && isFinite(point.v);
+      });
+      var pct = series.length ? series[series.length - 1].v - 100 : null;
+      var loading = !entries;
+      var cls = loading ? 'is-loading' : pct > 0 ? 'is-up' : pct < 0 ? 'is-down' : 'is-flat';
+      var label = lang === 'en' ? code + ' Index' : code === 'KOSPI' ? '코스피지수' : '코스닥지수';
+      return { returnPct: pct, html: '<div class="hub-pulse-card hub-pulse-card-index hub-pulse-card-index-' + code.toLowerCase() + '">' +
+        '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">📊</span><span>' + label + '</span></div>' +
+        '<div class="hub-pulse-card-ret ' + cls + '">' +
+        (loading ? '<span class="hub-pulse-skel" aria-label="' + t(lang).pulseLoading + '"></span>' : formatPct(pct, lang)) + '</div>' +
+        '<div class="hub-pulse-spark-wrap">' + sparklineSvg(series, pct, loading) + '</div>' +
+        '<div class="hub-pulse-mcap-label">' + (lang === 'en' ? 'Market index return' : '시장지수 수익률') + '</div></div>' };
+    });
+  }
+
   function buildPulseCards(lang, sectors, local, retKey) {
     var labels = t(lang);
     var ql = '?lang=' + encodeURIComponent(lang);
@@ -988,13 +1034,13 @@
         sparkBadge +
         sparkHint +
         '</div>';
-      return '<a class="hub-pulse-card" href="' + href + '">' +
+      return { returnPct: retPct, html: '<a class="hub-pulse-card" href="' + href + '">' +
         '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">' + (meta.icon || '') + '</span><span>' + label + '</span></div>' +
         '<div class="' + cls + '">' + retText + '</div>' +
         sparkBlock +
         mcapBlock +
-        '</a>';
-    }).join('');
+        '</a>' };
+    });
   }
 
   function renderPulse(lang) {
@@ -1003,7 +1049,16 @@
     var labels = t(lang);
     var local = localSectorStats();
     var sectors = dashboardData && dashboardData.sectors ? dashboardData.sectors : {};
-    var cards = buildPulseCards(lang, sectors, local, pulseHorizonKey);
+    var cards = buildPulseCards(lang, sectors, local, pulseHorizonKey)
+      .concat(buildIndexPulseCards(lang, pulseHorizonKey))
+      .sort(function (a, b) {
+        var ra = a.returnPct;
+        var rb = b.returnPct;
+        if (ra == null && rb == null) return 0;
+        if (ra == null) return 1;
+        if (rb == null) return -1;
+        return rb - ra;
+      }).map(function (card) { return card.html; }).join('');
 
     wrap.innerHTML =
       buildPulseTabs(lang) +
