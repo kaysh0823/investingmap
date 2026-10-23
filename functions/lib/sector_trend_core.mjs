@@ -551,7 +551,7 @@ async function fetchIndexDailyRebased(config, windowDatesDash, liveTips, { prefe
   });
 }
 
-async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 'live') {
+export async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 'live') {
   if (!config || !tradeDateDash) {
     return INDEX_CODES.map((code) => ({ code, series: [] }));
   }
@@ -561,7 +561,7 @@ async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 
     rows = await fetchSupabaseJson(
       config,
       `market_index_intraday?trade_date=eq.${encodeURIComponent(tradeDateDash)}`
-        + `&select=index_code,captured_at,value`
+        + `&select=index_code,captured_at,value,prev_close`
         + `&order=captured_at.asc&limit=2000`,
     );
   } catch (e) {
@@ -577,6 +577,18 @@ async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 
     rows = [];
   }
 
+  const previousCloseByCode = new Map();
+  try {
+    const previous = await fetchSupabaseJson(config,
+      `market_index_daily?trade_date=lt.${encodeURIComponent(tradeDateDash)}`
+        + `&index_code=in.(${INDEX_CODES.join(',')})&select=index_code,close,trade_date`
+        + '&order=trade_date.desc&limit=10');
+    for (const row of previous || []) {
+      if (!previousCloseByCode.has(row.index_code) && numOrNull(row.close) > 0) {
+        previousCloseByCode.set(row.index_code, Number(row.close));
+      }
+    }
+  } catch { /* Intraday captures also carry the official previous close. */ }
   let dailyCloseByCode = new Map();
   const mode = String(numeratorMode || 'live');
   if (mode !== 'live') {
@@ -618,11 +630,14 @@ async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 
       }))
       .filter((r) => r.t && r.value != null && r.value > 0);
 
-    if (!captures.length) {
+    const capturedPrev = (rows || []).filter((r) => r.index_code === code)
+      .map((r) => numOrNull(r.prev_close)).find((value) => value > 0);
+    const previousClose = previousCloseByCode.get(code) ?? capturedPrev;
+    if (!(previousClose > 0) || (!captures.length && !dailyCloseByCode.has(code))) {
       return { code, series: [] };
     }
 
-    const first = captures[0].value;
+    const first = previousClose;
     if (mode !== 'live') {
       // Captures stamped after 15:30 (e.g. 15:33) hold the final index value but
       // must not become the tip. Close = daily row, else the latest capture.
@@ -631,12 +646,12 @@ async function fetchIndexIntradayRebased(config, tradeDateDash, numeratorMode = 
         const ms = Date.parse(r.t);
         return !Number.isFinite(ms) || ms < closeMs;
       });
-      const dayClose = dailyCloseByCode.get(code) ?? captures[captures.length - 1].value;
+      const dayClose = dailyCloseByCode.get(code) ?? captures[captures.length - 1]?.value;
       const pts = [{ t: openTs, value: first }, ...inSession, { t: closeTs, value: dayClose }];
       return { code, series: rebaseRowsTo100(pts) };
     }
 
-    // 09:00 base 100 from first capture (not prev_close), then capture points.
+    // Return is measured against the previous session close, including the opening gap.
     const pts = [{ t: openTs, value: first }, ...captures];
     // live: last capture remains tip (already in series).
 

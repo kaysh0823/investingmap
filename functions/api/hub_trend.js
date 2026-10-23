@@ -19,7 +19,7 @@ import {
   returnsResponseHeaders,
 } from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v23';
+const CACHE_VERSION = '/api/hub_trend/cache/v24';
 
 function cachePath(horizon, dataVersion, weighting = 'cap') {
   return `${CACHE_VERSION}/${normalizeSectorWeighting(weighting)}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
@@ -48,7 +48,7 @@ export async function onRequest(context) {
         cors,
         dataVersion: peek.dataVersion,
         horizon,
-        codesHash: weighting,
+        codesHash: `${weighting}:${CACHE_VERSION}`,
         extra: {
           'X-Hub-Cache': 'HIT',
           'X-Hub-Horizon': horizon,
@@ -70,7 +70,7 @@ export async function onRequest(context) {
       cors,
       dataVersion,
       horizon,
-      codesHash: weighting,
+      codesHash: `${weighting}:${CACHE_VERSION}`,
       extra: {
         'X-Hub-Cache': 'MISS',
         'X-Hub-Horizon': horizon,
