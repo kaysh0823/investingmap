@@ -136,7 +136,11 @@ export function buildDataVersion(refs, maxAsOf) {
   const recent = compactYmd(refs?.recentDd) || '0';
   const ms = maxAsOf ? Date.parse(maxAsOf) : NaN;
   const epoch = Number.isFinite(ms) ? Math.floor(ms / 1000) : 0;
-  return `${recent}-${epoch}-${builtAtToken(refs)}`;
+  // builtAt is only a date. Same-day refs repairs must invalidate API bodies
+  // even when the latest quote timestamp is still the fixed 15:30 auction.
+  const refsMs = Date.parse(refs?.asOf || '');
+  const refsRevision = Number.isFinite(refsMs) ? refsMs : 0;
+  return `${recent}-${epoch}-${builtAtToken(refs)}-${refsRevision}`;
 }
 
 function normalizeTicker(t) {
@@ -742,6 +746,15 @@ export async function loadReturnSource({
       }
     }
     if (usingStoredClose) resolved.prevClose1d = numOrNull(row?.prevClose);
+    // A timestamped 15:30 auction snapshot remains authoritative after refs
+    // advance to the same day. Daily feeds may include later trading prices.
+    if (phase !== 'live' && storedClose != null) {
+      resolved.displayLast = storedClose;
+      resolved.numerator = storedClose;
+      resolved.numerator1d = storedClose;
+      resolved.prevClose1d = numOrNull(row?.prevClose);
+      resolved.provisional = false;
+    }
     if (quotePhase === 'afterClose' && resolved.provisional) provisionalCount += 1;
     if (numeratorMode === 'close' && resolved.numerator == null) closeMissingCount += 1;
     const shares = numOrNull(refQ.shares);
