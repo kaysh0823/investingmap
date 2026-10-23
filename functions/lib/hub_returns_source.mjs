@@ -136,7 +136,11 @@ export function buildDataVersion(refs, maxAsOf) {
   const recent = compactYmd(refs?.recentDd) || '0';
   const ms = maxAsOf ? Date.parse(maxAsOf) : NaN;
   const epoch = Number.isFinite(ms) ? Math.floor(ms / 1000) : 0;
-  return `${recent}-${epoch}-${builtAtToken(refs)}`;
+  // builtAt is only a date. Same-day refs repairs must invalidate API bodies
+  // even when the latest quote timestamp is still the fixed 15:30 auction.
+  const refsMs = Date.parse(refs?.asOf || '');
+  const refsRevision = Number.isFinite(refsMs) ? refsMs : 0;
+  return `${recent}-${epoch}-${builtAtToken(refs)}-${refsRevision}`;
 }
 
 function normalizeTicker(t) {

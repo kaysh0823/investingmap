@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { parseRegularClose, regularCloseRow, fetchRegularClose } from '../functions/lib/naver_regular_close.mjs';
 import { storedRegularCloseDate } from '../functions/lib/session_price_policy.mjs';
-import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
+import { loadReturnSource, buildDataVersion } from '../functions/lib/hub_returns_source.mjs';
 import { computeStockReturns } from '../functions/lib/returns_core.mjs';
 import { toSupabaseRow } from './sync_quotes_to_supabase.mjs';
 
@@ -48,6 +48,10 @@ assert.equal(sameDaySource.byTicker['005930'].last, 232000, 'same-day refs canno
 assert.equal(sameDaySource.byTicker['005930'].numerator1d, 232000);
 assert.equal(sameDaySource.byTicker['005930'].prevClose1d, 232000);
 assert.equal(computeStockReturns({ ...sameDaySource.byTicker['005930'], k: 0 }).chg1dPct, 0);
+assert.notEqual(
+  buildDataVersion({ ...sameDayRefs, builtAt: '2026-10-14', asOf: '2026-10-14T11:00:00Z' }, row.as_of),
+  buildDataVersion({ ...sameDayRefs, builtAt: '2026-10-14', asOf: '2026-10-14T11:30:00Z' }, row.as_of),
+  'same-day refs repair must invalidate cached returns despite an unchanged auction timestamp');
 const workflow = (await import('node:fs')).readFileSync(new URL('../.github/workflows/sync-quotes.yml', import.meta.url), 'utf8');
 assert.ok(workflow.indexOf('Finalize regular closing candles after daily feeds') > workflow.indexOf('name: Sync hub quotes to Supabase'));
 assert.ok(workflow.indexOf('Finalize regular closing candles after daily feeds') < workflow.indexOf('node scripts/build_hub_return_refs.mjs'));
