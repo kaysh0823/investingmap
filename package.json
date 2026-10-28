@@ -50,6 +50,7 @@
     "verify:sector-perf-calendar": "node scripts/verify_sector_perf_calendar.mjs",
     "verify:sector-mcap-coverage": "node scripts/verify_sector_mcap_coverage.mjs",
     "verify:momentum": "node scripts/verify_momentum.mjs",
+    "verify:momentum-filters": "node scripts/verify_momentum_filters.mjs",
     "verify:reorg": "node scripts/run_verify_reorg.mjs",
     "verify:tickers": "node scripts/verify_tickers.mjs",
     "verify:heatmap-exclude": "node scripts/verify_heatmap_exclude_chips.mjs",
@@ -94,5 +95,8 @@
   },
   "dependencies": {
     "iconv-lite": "^0.6.3"
+  },
+  "devDependencies": {
+    "linkedom": "0.18.14"
   }
 }

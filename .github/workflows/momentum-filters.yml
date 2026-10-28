@@ -1,0 +1,26 @@
+name: Momentum sector filter regression
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  momentum-filters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      # The real build regenerates sector HTML and runs verify:dist, which includes
+      # the DOM regression gate. A missing control or stale asset fails the build.
+      - run: npm run build
