@@ -13,6 +13,9 @@
   var selectedYMode = '5d';
   var YMODES = ['5d', '10d', '20d'];
   var YMODE_STORAGE = 'im_mm_ymode';
+  var XMODES = ['rs5', 'rs10', 'rs20', 'rs50'];
+  var selectedXMode = 'rs20';
+  try { selectedXMode = XMODES.indexOf(global.localStorage.getItem('im_mm_xmode')) >= 0 ? global.localStorage.getItem('im_mm_xmode') : 'rs20'; } catch (e) {}
   var CHG_CLIP = 15;
   var CHG_RANGE = ['#c62828', '#e53935', '#8e3a3a', '#2a2e38', '#2e7d32', '#43a047', '#00c853'];
   var CONTRAST_EXP = 0.55;
@@ -35,7 +38,7 @@
       change: '당일 등락률',
       position: '주가 위치',
       noData: 'RS·주가 위치·거래대금 데이터가 있는 종목이 없습니다.',
-      legend: '색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS',
+      legend: '색 = 당일 등락률 · 크기 = 당일 거래대금 · 세로선 = 시장지수 RS · 섹터 RS (기간 시작 시가총액 가중)',
     },
     en: {
       xAxis: 'RS',
@@ -54,7 +57,7 @@
       change: '1-day return',
       position: 'Price position',
       noData: 'No companies have RS, price-position and turnover data.',
-      legend: 'Color = 1-day return · size = daily turnover · vertical lines = market index RS',
+      legend: 'Color = 1-day return · size = daily turnover · vertical lines = market/sector RS (period-start cap weighted)',
     },
   };
 
@@ -266,13 +269,14 @@
     return { raw: raw, plot: clamp100(raw), mode: mode };
   }
 
-  function datum(company, mode) {
-    if (!company || !isFiniteNumber(company.rs) || !isFiniteNumber(company.turnoverWon)) return null;
+  function datum(company, mode, xMode) {
+    var rs = company && company[xMode || 'rs'];
+    if (!company || !isFiniteNumber(rs) || !isFiniteNumber(company.turnoverWon)) return null;
     var position = pricePosition(company, mode);
     if (position == null) return null;
     return {
       company: company,
-      rs: clamp100(company.rs),
+      rs: clamp100(rs),
       position: position.plot,
       rawPosition: position.raw,
       yMode: position.mode,
@@ -293,6 +297,9 @@
     var yKey = 'y' + mode;
     out.yAxis = out[yKey] || out.y5d;
     out.position = out.yAxis;
+    // Keep the shared guide description current when pages supply older copy.
+    out.legend = base.legend;
+    out.xAxis = selectedXMode.toUpperCase();
     return out;
   }
 
@@ -377,6 +384,12 @@
       '.mm-mode-tab:hover{border-color:var(--accent,#58a6ff);color:var(--text,#e6edf3)}' +
       '.mm-mode-tab[aria-selected="true"]{border-color:var(--accent,#58a6ff);color:var(--accent,#58a6ff);' +
       'background:color-mix(in srgb,var(--accent,#58a6ff) 14%,var(--surface2,#21262d))}' +
+      '#mm-rs-tabs{order:1;margin:0 0 0 auto;justify-content:flex-end}' +
+      '.mm-chart-layout{display:flex;align-items:stretch;gap:8px;min-width:0}' +
+      '.mm-y-tabs{flex:0 0 70px;flex-direction:column;justify-content:center;flex-wrap:nowrap;margin:0}' +
+      '.mm-y-tabs .mm-mode-tab{flex:0 0 auto;width:100%;padding:7px 3px}' +
+      '.mm-chart-layout #momentum-root{flex:1;min-width:0}' +
+      '@media(max-width:768px){.mm-y-tabs{flex-basis:56px}.mm-chart-layout{gap:4px}}' +
       '#momentum-root{position:relative;width:100%;min-height:420px;height:min(62vh,640px);' +
       'background:var(--surface,#161b22);border:1px solid var(--border,#30363d);border-radius:10px;overflow:hidden}' +
       '#momentum-root svg{display:block;width:100%;height:100%}' +
@@ -455,14 +468,21 @@
   }
 
   function ensureModeTabs(container, opts) {
-    var wrap = container.parentNode;
-    if (!wrap) return;
+    var layout = container.parentNode;
+    if (!layout) return;
+    if (!layout.classList.contains('mm-chart-layout')) {
+      layout = document.createElement('div');
+      layout.className = 'mm-chart-layout';
+      container.parentNode.insertBefore(layout, container);
+      layout.appendChild(container);
+    }
+    var wrap = layout.parentNode;
     var labels = labelsFor(opts, selectedYMode);
     var tabs = wrap.querySelector('#mm-mode-tabs');
     if (!tabs) {
       tabs = document.createElement('div');
       tabs.id = 'mm-mode-tabs';
-      tabs.className = 'mm-mode-tabs';
+      tabs.className = 'mm-mode-tabs mm-y-tabs';
       tabs.setAttribute('role', 'tablist');
       tabs.addEventListener('click', function (event) {
         var button = event.target.closest('[data-mm-mode]');
@@ -495,7 +515,27 @@
         );
       })
       .join('');
-    ensureTabSearchRow(wrap, tabs, container, opts.lang || 'ko');
+    layout.insertBefore(tabs, container);
+    var xTabs = wrap.querySelector('#mm-rs-tabs');
+    if (!xTabs) {
+      xTabs = document.createElement('div');
+      xTabs.id = 'mm-rs-tabs';
+      xTabs.className = 'mm-mode-tabs';
+      xTabs.setAttribute('role', 'tablist');
+      xTabs.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-mm-rs]');
+        if (!button) return;
+        selectedXMode = button.getAttribute('data-mm-rs');
+        try { global.localStorage.setItem('im_mm_xmode', selectedXMode); } catch (e) {}
+        if (lastOpts) render(lastOpts);
+      });
+    }
+    xTabs.setAttribute('aria-label', opts.lang === 'en' ? 'Momentum horizontal axis' : '모멘텀 가로축');
+    xTabs.innerHTML = XMODES.map(function (mode) {
+      return '<button type="button" class="mm-mode-tab" role="tab" data-mm-rs="' + mode + '" aria-selected="' + (mode === selectedXMode) + '">' + mode.toUpperCase() + '</button>';
+    }).join('');
+    wrap.insertBefore(xTabs, layout);
+    ensureTabSearchRow(wrap, xTabs, layout, opts.lang || 'ko');
   }
 
   function renderLegend(el, opts) {
@@ -615,15 +655,30 @@
     }
   }
 
-  function drawMarketIndexGuides(plot, x, innerH, indices, mobile) {
+  function sectorIndexForPage(sectors, pathname) {
+    var folder = String(pathname || '').split('/').filter(Boolean)[0];
+    var found = null;
+    Object.keys(sectors || {}).some(function (id) {
+      var sector = sectors[id];
+      if (!sector || !sector.map || sector.map.split('/')[0] !== folder) return false;
+      found = { id: id, entry: sector };
+      return true;
+    });
+    return found;
+  }
+
+  function drawMarketIndexGuides(plot, x, innerH, indices, mobile, opts) {
     indices = indices || {};
+    var sector = sectorIndexForPage(indices.sectors, global.location && global.location.pathname);
+    var period = selectedXMode.slice(2);
+    indices = { kospiRs: indices['kospiRs' + period], kosdaqRs: indices['kosdaqRs' + period] };
     var guides = [];
     if (isFiniteNumber(indices.kospiRs)) {
       guides.push({
         key: 'kospi',
         rs: clamp100(indices.kospiRs),
         color: '#42A5F5',
-        label: 'KOSPI RS ' + Number(indices.kospiRs).toFixed(1),
+        label: 'KOSPI ' + selectedXMode.toUpperCase() + ' ' + Number(indices.kospiRs).toFixed(1),
       });
     }
     if (isFiniteNumber(indices.kosdaqRs)) {
@@ -631,15 +686,24 @@
         key: 'kosdaq',
         rs: clamp100(indices.kosdaqRs),
         color: '#FFA726',
-        label: 'KOSDAQ RS ' + Number(indices.kosdaqRs).toFixed(1),
+        label: 'KOSDAQ ' + selectedXMode.toUpperCase() + ' ' + Number(indices.kosdaqRs).toFixed(1),
+      });
+    }
+    if (sector && isFiniteNumber(sector.entry[selectedXMode])) {
+      var sectorValue = sector.entry[selectedXMode];
+      var sectorName = opts && opts.lang === 'en' ? sector.entry.nameEn : sector.entry.name;
+      guides.push({
+        key: 'sector-' + sector.id,
+        rs: clamp100(sectorValue),
+        color: '#ce93d8',
+        label: sectorName + ' ' + selectedXMode.toUpperCase() + ' ' + sectorValue.toFixed(1),
       });
     }
     if (!guides.length) return;
     guides.sort(function (a, b) {
       return a.rs - b.rs;
     });
-    var prevX = null;
-    var labelOffset = 0;
+    var labelLanes = [];
     guides.forEach(function (guide) {
       var px = x(guide.rs);
       plot
@@ -655,13 +719,17 @@
         .attr('stroke-dasharray', '4 4')
         .attr('opacity', 0.8)
         .attr('pointer-events', 'none');
-      if (prevX != null && Math.abs(px - prevX) < (mobile ? 52 : 64)) {
-        labelOffset += mobile ? 11 : 13;
-      } else {
-        labelOffset = 0;
-      }
-      prevX = px;
-      var anchor = px < 40 ? 'start' : px > x(100) - 40 ? 'end' : 'middle';
+      var labelWidth = Array.from(guide.label).reduce(function (sum, char) {
+        return sum + (char.charCodeAt(0) > 127 ? (mobile ? 10 : 11) : (mobile ? 5.5 : 6.2));
+      }, 0);
+      var anchor = px < labelWidth / 2 ? 'start' : px > x(100) - labelWidth / 2 ? 'end' : 'middle';
+      var left = anchor === 'start' ? px : anchor === 'end' ? px - labelWidth : px - labelWidth / 2;
+      var right = left + labelWidth;
+      var lane = 0;
+      while ((labelLanes[lane] || []).some(function (bounds) { return left < bounds.right + 8 && right > bounds.left - 8; })) lane += 1;
+      if (!labelLanes[lane]) labelLanes[lane] = [];
+      labelLanes[lane].push({ left: left, right: right });
+      var labelOffset = lane * (mobile ? 12 : 14);
       plot
         .append('text')
         .attr('class', 'im-mm-index-label')
@@ -700,7 +768,7 @@
     }
 
     var items = (opts.companies || [])
-      .map(function (company) { return datum(company, selectedYMode); })
+      .map(function (company) { return datum(company, selectedYMode, selectedXMode); })
       .filter(function (item) { return !!item; });
     container.innerHTML = '';
     hideTooltip();
@@ -711,7 +779,7 @@
       empty.style.cssText =
         'display:flex;align-items:center;justify-content:center;height:100%;padding:24px;' +
         'color:var(--text-muted,#8b949e);text-align:center';
-      empty.textContent = labels.noData;
+      empty.textContent = labels.xAxis + ' · ' + labels.yAxis + ': ' + labels.noData;
       container.appendChild(empty);
       return;
     }
@@ -802,7 +870,7 @@
       .attr('stroke-dasharray', '4 5')
       .attr('opacity', 0.48);
 
-    drawMarketIndexGuides(plot, x, innerH, opts.indices, mobile);
+    drawMarketIndexGuides(plot, x, innerH, opts.indices, mobile, opts);
 
     var tickCount = mobile ? 5 : 10;
     plot
@@ -923,6 +991,7 @@
       return selectedYMode;
     },
     _test: {
+      sectorIndexForPage: sectorIndexForPage,
       matchOpacity: matchOpacity,
       applySearchHighlight: applySearchHighlight,
       applyFocusState: applyFocusState,

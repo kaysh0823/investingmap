@@ -17,12 +17,12 @@ import {
   simpleHash,
 } from '../lib/returns_cache_headers.mjs';
 
-const QUOTES_CACHE_VERSION = 'v14';
+const QUOTES_CACHE_VERSION = 'v16';
 
 let rsSnapshotCache = { at: 0, snap: null };
 
-function slimMarketIndices(indices) {
-  if (!indices || typeof indices !== 'object') return null;
+function slimMarketIndices(indices, sectors) {
+  indices = indices || {};
   const out = {};
   for (const code of ['KOSPI', 'KOSDAQ']) {
     const row = indices[code];
@@ -30,6 +30,8 @@ function slimMarketIndices(indices) {
     if (rs == null) continue;
     out[code] = {
       rs,
+      rs5: numOrNull(row.rs5),
+      rs10: numOrNull(row.rs10),
       rs20: numOrNull(row.rs20),
       rs50: numOrNull(row.rs50),
       rs120: numOrNull(row.rs120),
@@ -40,6 +42,7 @@ function slimMarketIndices(indices) {
       ret200: numOrNull(row.ret200),
     };
   }
+  if (sectors && typeof sectors === 'object') out.sectors = sectors;
   return Object.keys(out).length ? out : null;
 }
 
@@ -132,6 +135,8 @@ function mapSupabaseRow(row, snapQuote = null) {
     ret50dPct: null,
     ret120dPct: null,
     ret200dPct: null,
+    rs5: numOrNull(snapQuote?.rs5),
+    rs10: numOrNull(snapQuote?.rs10),
     rs: snapRs != null ? snapRs : numOrNull(row.rs),
     rs20: snapRs20 != null ? snapRs20 : numOrNull(row.rs20 ?? row.rs_20),
     rs50: snapRs50 != null ? snapRs50 : numOrNull(row.rs50 ?? row.rs_50),
@@ -181,6 +186,8 @@ function applySnapshotRsToItems(items, snapQuotes) {
     const snapQuote = ticker ? snapQuotes[ticker] : null;
     if (!snapQuote) continue;
     const snapRs = numOrNull(snapQuote.rs);
+    item.rs5 = numOrNull(snapQuote.rs5);
+    item.rs10 = numOrNull(snapQuote.rs10);
     const snapRs20 = numOrNull(snapQuote.rs20);
     const snapRs50 = numOrNull(snapQuote.rs50);
     const snapRs120 = numOrNull(snapQuote.rs120);
@@ -303,7 +310,7 @@ export async function onRequest(context) {
 
   const snap = await loadRsSnapshot(request, env);
   const snapQuotes = snap && snap.quotes ? snap.quotes : null;
-  const indices = slimMarketIndices(snap && snap.indices);
+  const indices = slimMarketIndices(snap && snap.indices, snap && snap.sectors);
 
   const emptyMeta = {
     sessionOpen: sessionOpenFallback,

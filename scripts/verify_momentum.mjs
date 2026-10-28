@@ -89,6 +89,12 @@ for (const missing of [
   assert.equal(momentum.datum(missing, '5d'), null, 'incomplete bubble is skipped');
 }
 
+// Period selection must use the requested rank without substituting composite RS.
+assert.equal(momentum.datum({ rs: 99, rs5: 12, quoteLast: 75, high5d: 100, low5d: 50, turnoverWon: 1 }, '5d', 'rs5').rs, 12);
+assert.equal(momentum.datum({ rs: 99, quoteLast: 75, high5d: 100, low5d: 50, turnoverWon: 1 }, '5d', 'rs10'), null);
+assert.ok(source.includes('mm-chart-layout'));
+assert.ok(source.includes("['rs5', 'rs10', 'rs20', 'rs50']"));
+
 const history = Array.from({ length: 120 }, (_, i) => ({
   high: i + 11,
   low: i + 1,
@@ -262,12 +268,12 @@ for (const field of [
 ]) {
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
-assert.ok(quotesApi.includes("QUOTES_CACHE_VERSION = 'v12'"), 'quotes response cache version');
+assert.ok(Number(quotesApi.match(/QUOTES_CACHE_VERSION = 'v(\d+)'/)?.[1]) >= 15, 'quotes cache version must include period RS payload');
 assert.ok(quotesApi.includes('slimMarketIndices'), 'quotes API attaches RS indices');
 assert.ok(quotesApi.includes('computeStockReturns'), 'quotes API uses returns_core');
 assert.ok(quotesApi.includes('loadReturnSource'), 'quotes API uses shared return source');
 assert.ok(!quotesApi.includes("'supabase+naver-live'"), 'no per-request Naver overlay on happy path');
-assert.ok(quotesApi.includes('stale-while-revalidate=120'), 'quotes SWR cache header');
+assert.ok(quotesApi.includes('returnsJsonResponse'), 'quotes uses shared returns cache headers');
 const migration12 = fs.readFileSync(
   path.join(ROOT, 'supabase', 'migrations', '0012_stock_quotes_momentum_bounds.sql'),
   'utf8',

@@ -22,6 +22,8 @@ import { fetchNaverMarketIndexHistory } from './naver_index.mjs';
 export { getAuthKey };
 
 export const RS_PERIODS = [
+  { key: 'rs5', days: 5 },
+  { key: 'rs10', days: 10 },
   { key: 'rs20', days: 20 },
   { key: 'rs50', days: 50 },
   { key: 'rs120', days: 120 },
@@ -188,12 +190,55 @@ async function fetchDayMapsWithFallback(authKey, dates, minSize, maxBasDd) {
 
 async function fetchCloseMapWithFallback(authKey, dates, minSize, maxBasDd) {
   const snap = await fetchDayMapsWithFallback(authKey, dates, minSize, maxBasDd);
-  return { closes: snap.closes, basDd: snap.basDd };
+  return { closes: snap.closes, mcaps: snap.mcaps, basDd: snap.basDd };
 }
 
 export function periodReturn(closeNow, closePast) {
   if (closeNow == null || closePast == null || closePast <= 0) return null;
   return ((closeNow / closePast) - 1) * 100;
+}
+
+/**
+ * Sector price return, weighted by each member's market cap at the start of
+ * the period. Rank each sector independently in the same stock/index pool;
+ * sectors never change the existing stock or market-index ranks.
+ */
+export function buildSectorRs(sectorGroups, returnsByPeriod, startCapsByPeriod) {
+  const sectors = {};
+  for (const [id, group] of Object.entries(sectorGroups || {})) {
+    const members = [...new Set((group.companies || []).map(c => String(c.ticker || '').trim().toUpperCase()).filter(Boolean))];
+    const entry = {
+      name: group.meta?.shortKo || group.meta?.ko || id,
+      nameEn: group.meta?.shortEn || group.meta?.en || id,
+      map: group.meta?.map || null,
+      weighting: 'period-start-market-cap',
+      members: members.length,
+      coverage: {},
+    };
+    for (const { key } of RS_PERIODS) {
+      const pool = returnsByPeriod[key] || [];
+      const byCode = new Map(pool.map(row => [row.code, row.ret]));
+      let weighted = 0;
+      let totalCap = 0;
+      let covered = 0;
+      for (const code of members) {
+        const ret = byCode.get(code);
+        const cap = startCapsByPeriod[key]?.get(code);
+        if (!Number.isFinite(ret) || !Number.isFinite(cap) || cap <= 0) continue;
+        weighted += ret * cap;
+        totalCap += cap;
+        covered += 1;
+      }
+      entry.coverage[key] = covered;
+      const ret = totalCap > 0 ? weighted / totalCap : null;
+      const rank = ret == null ? null : percentileRanks([...pool, { code: '__SECTOR_PROBE', ret }]).get('__SECTOR_PROBE');
+      entry[key] = rank == null ? null : Math.round(rank * 10) / 10;
+      entry[key.replace(/^rs/, 'ret')] = ret == null ? null : Math.round(ret * 100) / 100;
+    }
+    entry.rs = compositeRs(entry);
+    sectors[id] = entry;
+  }
+  return sectors;
 }
 
 /**
@@ -356,6 +401,7 @@ export async function buildKrxRsSnapshot(authKeyOrOpts) {
       const snap = await buildRsSnapshotFromHistory(supabase, {
         authKey,
         listingMeta: opts.listingMeta || null,
+        sectorGroups: opts.sectorGroups || null,
       });
       if (snap?.quotes && Object.keys(snap.quotes).length > 500) return snap;
       console.warn('[krx_rs] history snapshot incomplete — falling back to KRX bydd_trd');
@@ -367,7 +413,7 @@ export async function buildKrxRsSnapshot(authKeyOrOpts) {
     }
   }
 
-  return buildRsSnapshotFromKrx(authKey);
+  return buildRsSnapshotFromKrx(authKey, opts);
 }
 
 /**
@@ -375,7 +421,7 @@ export async function buildKrxRsSnapshot(authKeyOrOpts) {
  * @param {string} authKey
  * @returns {Promise<object|null>}
  */
-export async function buildRsSnapshotFromKrx(authKey) {
+export async function buildRsSnapshotFromKrx(authKey, opts = {}) {
   if (!authKey) return null;
 
   const dates = tradingDates(260);
@@ -425,6 +471,7 @@ export async function buildRsSnapshotFromKrx(authKey) {
   );
 
   const pastMaps = {};
+  const startCapsByPeriod = {};
   const pastDds = {};
   for (const { key, days } of RS_PERIODS) {
     // tradingKRX: close.shift(period) → N trading sessions ago (not N-1).
@@ -436,6 +483,7 @@ export async function buildRsSnapshotFromKrx(authKey) {
       recent.basDd,
     );
     pastMaps[key] = snap.closes;
+    startCapsByPeriod[key] = snap.mcaps;
     pastDds[key] = snap.basDd;
   }
 
@@ -561,6 +609,7 @@ export async function buildRsSnapshotFromKrx(authKey) {
     builtAt: kstYmdDash(),
     asOf: new Date().toISOString(),
     source: 'krx-rs-percentile',
+    sectors: buildSectorRs(opts.sectorGroups, returnsByPeriod, startCapsByPeriod),
     universe: universeOrdinary,
     universeRaw,
     universeOrdinary,

@@ -21,7 +21,15 @@
     var ix = source.indices || source;
     if (!ix || typeof ix !== 'object') return;
     var prev = momentumIndices;
-    var next = prev ? { kospiRs: prev.kospiRs, kosdaqRs: prev.kosdaqRs } : {};
+    var next = Object.assign({}, prev || {});
+    // Both the quote API and full RS snapshot carry sector benchmark ranks.
+    if (source.sectors || ix.sectors) next.sectors = source.sectors || ix.sectors;
+    ['5', '10', '20', '50'].forEach(function (period) {
+      ['KOSPI', 'KOSDAQ'].forEach(function (market) {
+        var value = ix[market] && ix[market]['rs' + period];
+        if (typeof value === 'number' && isFinite(value)) next[market.toLowerCase() + 'Rs' + period] = value;
+      });
+    });
     var kospi =
       ix.KOSPI && typeof ix.KOSPI.rs === 'number'
         ? ix.KOSPI.rs
@@ -36,21 +44,18 @@
           : null;
     if (kospi != null && isFinite(kospi)) next.kospiRs = kospi;
     if (kosdaq != null && isFinite(kosdaq)) next.kosdaqRs = kosdaq;
-    if (next.kospiRs == null && next.kosdaqRs == null) return;
+    if (next.kospiRs == null && next.kosdaqRs == null && !next.sectors) return;
 
     var firstPublish = !prev;
     var changed =
       !prev ||
       prev.kospiRs !== next.kospiRs ||
-      prev.kosdaqRs !== next.kosdaqRs;
+      prev.kosdaqRs !== next.kosdaqRs || JSON.stringify(prev) !== JSON.stringify(next);
     momentumIndices = next;
     // Always publish on first successful load and whenever values change.
     if (firstPublish || changed) {
       try {
-        global.InvestingMapMarketRs = {
-          kospiRs: next.kospiRs,
-          kosdaqRs: next.kosdaqRs,
-        };
+        global.InvestingMapMarketRs = Object.assign({}, next);
         if (typeof global.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
           global.dispatchEvent(
             new CustomEvent('im:market-rs', { detail: global.InvestingMapMarketRs }),
@@ -68,7 +73,7 @@
 
   function getMomentumIndices() {
     if (!momentumIndices) return {};
-    var out = {};
+    var out = Object.assign({}, momentumIndices);
     if (typeof momentumIndices.kospiRs === 'number' && isFinite(momentumIndices.kospiRs)) {
       out.kospiRs = momentumIndices.kospiRs;
     }
@@ -146,6 +151,7 @@
       c.rs = null;
       return;
     }
+    ['rs5', 'rs10', 'rs20', 'rs50'].forEach(function (key) { c[key] = typeof row[key] === 'number' && isFinite(row[key]) ? row[key] : null; });
     c.rs = typeof row.rs === 'number' && isFinite(row.rs) ? row.rs : null;
   }
 
@@ -418,6 +424,7 @@
       } else {
         c.spark20 = null;
       }
+      ['rs5', 'rs10', 'rs20', 'rs50'].forEach(function (key) { c[key] = typeof q[key] === 'number' && isFinite(q[key]) ? q[key] : null; });
       if (typeof q.rs === 'number' && isFinite(q.rs)) c.rs = q.rs;
       applyQuoteReturnsFromApi(c, q);
     }

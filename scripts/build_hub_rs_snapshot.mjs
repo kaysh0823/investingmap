@@ -55,23 +55,24 @@ async function main() {
   console.log(
     'Building KRX RS snapshot '
     + `(${supabase ? 'supabase history+adj+ffill' : 'KRX bydd_trd fallback'}; `
-    + '20/50/120/200, tradingKRX weights)…',
+    + '5/10/20/50/120/200, tradingKRX weights)…',
   );
   const listingMeta = loadListedShareMeta3557(path.join(ROOT, 'data'));
+  const hubPath = path.join(ROOT, 'data', 'hub_index.json');
+  const hubIndex = JSON.parse(fs.readFileSync(hubPath, 'utf8'));
   console.log(`Listing meta (data_3557): ${listingMeta.size} codes for spac/reit/kind filter`);
   const snapshot = await buildKrxRsSnapshot({
     authKey,
     supabase,
     env,
     listingMeta,
+    sectorGroups: hubIndex.sectors,
   });
   if (!snapshot || !snapshot.quotes) {
     console.error('RS snapshot build failed');
     process.exit(1);
   }
 
-  const hubPath = path.join(ROOT, 'data', 'hub_index.json');
-  const hubIndex = JSON.parse(fs.readFileSync(hubPath, 'utf8'));
   const hubPreview = listHubCompanies(hubIndex)
     .map((c) => {
       const key = normalizeTicker(c.ticker);
@@ -84,7 +85,12 @@ async function main() {
     .slice(0, 10);
 
   const out = { ...snapshot, hubTop10Preview: hubPreview };
+  const sectorRows = Object.values(snapshot.sectors || {});
+  if (sectorRows.length !== Object.keys(hubIndex.sectors || {}).length || sectorRows.some(row => ['rs5', 'rs10', 'rs20', 'rs50'].some(key => !Number.isFinite(row[key])))) {
+    throw new Error('Sector RS snapshot is incomplete; keeping the previous snapshot');
+  }
   fs.writeFileSync(outPath, `${JSON.stringify(out)}\n`, 'utf8');
+  console.log(`Sector RS: ${sectorRows.length} sectors, period-start market-cap weighted`);
   console.log(
     `OK ${outPath} — ${snapshot.quotesOk}/${snapshot.universeOrdinary || snapshot.universe} RS scores`
     + ` source=${snapshot.source || 'n/a'}`,

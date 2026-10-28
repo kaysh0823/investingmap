@@ -21,6 +21,7 @@ import {
   nameFromKrxRow,
   periodReturn,
   buildIndexRsEntry,
+  buildSectorRs,
 } from './krx_rs.mjs';
 
 export const RS_HISTORY_LOOKBACK = 230;
@@ -560,10 +561,16 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
     ok += 1;
   }
 
+  const startCapsByPeriod = {};
+  for (const { key, days } of RS_PERIODS) {
+    startCapsByPeriod[key] = new Map([...seriesByTicker].map(([code, series]) => [code, series.mcaps[anchorIdx - days] ?? null]));
+  }
+
   return {
     builtAt: kstYmdDash(),
     asOf: new Date().toISOString(),
     source: 'supabase-history-adj',
+    sectors: buildSectorRs(opts.sectorGroups, returnsByPeriod, startCapsByPeriod),
     universe: universeOrdinary,
     universeRaw,
     universeOrdinary,
