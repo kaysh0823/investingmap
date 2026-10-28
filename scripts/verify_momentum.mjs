@@ -235,7 +235,7 @@ for (const field of [
 ]) {
   assert.ok(liveQuotes.includes(`c.${field} =`), `live quote field missing: ${field}`);
 }
-assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '11'"), 'quotes API cache key version');
+assert.ok(liveQuotes.includes("QUOTES_API_VERSION = '16'"), 'quotes API cache key version');
 assert.ok(liveQuotes.includes('getReturnMeta'), 'live quotes must expose return meta');
 assert.ok(liveQuotes.includes('applyLiveReturns'), 'applyLiveReturns kept as no-op export');
 assert.ok(!/function applyLiveReturns\(companies/.test(liveQuotes), 'client must not recompute live 1D returns');
