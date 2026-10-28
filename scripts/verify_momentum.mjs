@@ -269,6 +269,7 @@ for (const field of [
   assert.ok(quotesApi.includes(`${field}: numOrNull(`), `quotes API field missing: ${field}`);
 }
 assert.ok(Number(quotesApi.match(/QUOTES_CACHE_VERSION = 'v(\d+)'/)?.[1]) >= 15, 'quotes cache version must include period RS payload');
+assert.ok(quotesApi.includes('horizon: QUOTES_CACHE_VERSION'), 'quote ETag must invalidate older period RS payloads');
 assert.ok(quotesApi.includes('slimMarketIndices'), 'quotes API attaches RS indices');
 assert.ok(quotesApi.includes('computeStockReturns'), 'quotes API uses returns_core');
 assert.ok(quotesApi.includes('loadReturnSource'), 'quotes API uses shared return source');

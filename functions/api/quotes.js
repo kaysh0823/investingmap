@@ -392,6 +392,7 @@ export async function onRequest(context) {
       cors: ch,
       dataVersion: payload.dataVersion || source.meta?.dataVersion || null,
       codesHash,
+      horizon: QUOTES_CACHE_VERSION,
       extra: { 'X-InvestingMap-Quotes-Version': QUOTES_CACHE_VERSION },
     });
   } catch (e) {
