@@ -33,7 +33,6 @@
     medtech: 'medtech/korea_medtech_map.html',
     bio: 'bio/korea_bio_map.html',
     finance: 'finance/korea_finance_map.html',
-    holdings: 'holdings/korea_holdings_map.html',
   };
 
   /** item.s → data/netmap/<id>.json basename (must match sector map dataUrl). */
@@ -63,7 +62,6 @@
     medtech: 'medtech',
     bio: 'bio',
     finance: 'finance',
-    holdings: 'holdings',
   };
 
   var SECTOR_LABELS = {
@@ -71,7 +69,7 @@
     semi: { ko: "반도체", en: "Semi" },
     elec: { ko: "전기·전자", en: "Electrical & Electronics" },
     software: { ko: "IT·소프트웨어", en: "IT & Software" },
-    telecom: { ko: "통신", en: "Telecom" },
+    telecom: { ko: "통신/네트워크", en: "Telecom" },
     robot: { ko: "로봇", en: "Robot" },
     auto: { ko: "자동차", en: "Auto" },
     battery: { ko: "2차전지", en: "Battery" },
@@ -92,7 +90,6 @@
     medtech: { ko: "의료기기/헬스케어", en: "MedTech" },
     bio: { ko: "바이오", en: "Bio" },
     finance: { ko: "금융", en: "Finance" },
-    holdings: { ko: "지주회사", en: "Holdings" },
   };
 
   var COPY = {

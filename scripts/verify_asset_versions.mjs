@@ -12,6 +12,7 @@ const ROOT = projectRoot();
 const SKIP_DIRS = new Set([
   'node_modules',
   '.git',
+  '.diagnostics',
   'functions',
   'dist',
   'supabase',

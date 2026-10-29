@@ -160,7 +160,7 @@ assert.ok(source.includes("mode20d: '20D BOX'"), '20D BOX labels required');
 
 const mapFiles = fs
   .readdirSync(ROOT, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
+  .filter((entry) => entry.isDirectory() && entry.name !== "holdings" && !entry.name.startsWith("."))
   .flatMap((entry) => {
     const dir = path.join(ROOT, entry.name);
     return fs

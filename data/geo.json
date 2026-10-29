@@ -272,7 +272,7 @@
     "telecom": {
       "path": "/telecom/korea_telecom_map.html",
       "title": {
-        "ko": "한국 통신 투자 지도",
+        "ko": "한국 통신/네트워크 투자 지도",
         "en": "Korea Telecom Map"
       },
       "summary": {

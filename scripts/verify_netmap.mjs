@@ -206,7 +206,7 @@ for (const [rel, sector] of Object.entries(MAP_SECTOR)) {
     assert.ok(rel, `MAP_SECTOR entry for ${id}`);
     n += 1;
   }
-  assert.equal(n, 26, `expected 26 NETMAP_ID entries, got ${n}`);
+  assert.equal(n, Object.keys(MAP_SECTOR).length, `NETMAP_ID entries must cover active sectors, got ${n}`);
   console.log(`  NETMAP_ID OK ${n} sectors ↔ dataUrl basename`);
 }
 

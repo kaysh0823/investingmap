@@ -12,7 +12,7 @@
     { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: "💠", ko: "반도체", en: "Semi", koShort: "반도체", enShort: "Semi" },
     { id: 'elec', path: 'elec/korea_elec_map.html', icon: "💡", ko: "전기·전자", en: "Electrical & Electronics", koShort: "전기·전자", enShort: "Electronics" },
     { id: 'software', path: 'software/korea_software_map.html', icon: "💻", ko: "IT·소프트웨어", en: "IT & Software", koShort: "IT·SW", enShort: "Software" },
-    { id: 'telecom', path: 'telecom/korea_telecom_map.html', icon: "📡", ko: "통신", en: "Telecom", koShort: "통신", enShort: "Telecom" },
+    { id: 'telecom', path: 'telecom/korea_telecom_map.html', icon: "📡", ko: "통신/네트워크", en: "Telecom", koShort: "통신/네트워크", enShort: "Telecom" },
     { id: 'robot', path: 'robot/korea_robot_map.html', icon: "🤖", ko: "로봇", en: "Robot", koShort: "로봇", enShort: "Robot" },
     { id: 'auto', path: 'auto/korea_auto_map.html', icon: "🚗", ko: "자동차", en: "Auto", koShort: "자동차", enShort: "Auto" },
     { id: 'battery', path: 'battery/korea_battery_map.html', icon: "🔋", ko: "2차전지", en: "Battery", koShort: "2차전지", enShort: "Battery" },
@@ -33,7 +33,6 @@
     { id: 'medtech', path: 'medtech/korea_medtech_map.html', icon: "🩺", ko: "의료기기/헬스케어", en: "MedTech", koShort: "헬스케어", enShort: "MedTech" },
     { id: 'bio', path: 'bio/korea_bio_map.html', icon: "🧬", ko: "바이오", en: "Bio", koShort: "바이오", enShort: "Bio" },
     { id: 'finance', path: 'finance/korea_finance_map.html', icon: "🏦", ko: "금융", en: "Finance", koShort: "금융", enShort: "Finance" },
-    { id: 'holdings', path: 'holdings/korea_holdings_map.html', icon: "🏢", ko: "지주회사", en: "Holdings", koShort: "지주회사", enShort: "Holdings" },
   ];
 
   function pageLang(lang) {

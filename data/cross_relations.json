@@ -194,11 +194,11 @@
       "members": [
         {
           "ticker": "034730",
-          "sector": "holdings"
+          "sector": "chemical"
         },
         {
           "ticker": "402340",
-          "sector": "holdings"
+          "sector": "semi"
         },
         {
           "ticker": "000660",
@@ -221,7 +221,7 @@
       "members": [
         {
           "ticker": "003550",
-          "sector": "holdings"
+          "sector": "elec"
         },
         {
           "ticker": "066570",
@@ -252,7 +252,7 @@
       "members": [
         {
           "ticker": "267250",
-          "sector": "holdings"
+          "sector": "ship"
         },
         {
           "ticker": "329180",
@@ -275,7 +275,7 @@
       "members": [
         {
           "ticker": "005490",
-          "sector": "holdings"
+          "sector": "metal"
         },
         {
           "ticker": "003670",
@@ -294,7 +294,7 @@
       "members": [
         {
           "ticker": "000880",
-          "sector": "holdings"
+          "sector": "defense"
         },
         {
           "ticker": "012450",

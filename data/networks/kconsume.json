@@ -167,6 +167,23 @@
       "lane": "brand_owner"
     },
     {
+      "id": "krx:001040",
+      "type": "listed_company",
+      "ticker": "001040",
+      "nameKo": "CJ",
+      "nameEn": "CJ Corp.",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 3720067245000,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "cj",
+      "owningSector": "kconsume"
+    },
+    {
       "id": "krx:004170",
       "type": "listed_company",
       "ticker": "004170",
@@ -325,6 +342,23 @@
       "owningSector": "kconsume"
     },
     {
+      "id": "krx:004990",
+      "type": "listed_company",
+      "ticker": "004990",
+      "nameKo": "롯데지주",
+      "nameEn": "Lotte Corp.",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 2451728889600,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "lotte",
+      "owningSector": "kconsume"
+    },
+    {
       "id": "krx:282330",
       "type": "listed_company",
       "ticker": "282330",
@@ -371,6 +405,40 @@
       "nameKo": "짜파게티",
       "nameEn": "Chapagetti",
       "lane": "brand_owner"
+    },
+    {
+      "id": "krx:005440",
+      "type": "listed_company",
+      "ticker": "005440",
+      "nameKo": "현대지에프홀딩스",
+      "nameEn": "Hyundai GF Holdings",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 2318140595360,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "holdings_hyundai_gf_holdings",
+      "owningSector": "kconsume"
+    },
+    {
+      "id": "krx:009970",
+      "type": "listed_company",
+      "ticker": "009970",
+      "nameKo": "영원무역홀딩스",
+      "nameEn": "Youngone Holdings",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 2152924385400,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "youngone_holdings",
+      "owningSector": "kconsume"
     },
     {
       "id": "krx:069960",
@@ -496,6 +564,23 @@
       "owningSector": "kconsume"
     },
     {
+      "id": "krx:001800",
+      "type": "listed_company",
+      "ticker": "001800",
+      "nameKo": "오리온홀딩스",
+      "nameEn": "Orion Holdings",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 1449775313200,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "orion_holdings",
+      "owningSector": "kconsume"
+    },
+    {
       "id": "krx:007310",
       "type": "listed_company",
       "ticker": "007310",
@@ -532,6 +617,23 @@
       "nameKo": "소스·조미",
       "nameEn": "Sauces / condiments",
       "lane": "brand_owner"
+    },
+    {
+      "id": "krx:003380",
+      "type": "listed_company",
+      "ticker": "003380",
+      "nameKo": "하림지주",
+      "nameEn": "Harim Holdings",
+      "market": "KOSDAQ",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 1230941774790,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "harim_holdings",
+      "owningSector": "kconsume"
     },
     {
       "id": "krx:280360",
@@ -695,6 +797,23 @@
       "owningSector": "kconsume"
     },
     {
+      "id": "krx:007700",
+      "type": "listed_company",
+      "ticker": "007700",
+      "nameKo": "F&F홀딩스",
+      "nameEn": "F&F Holdings",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 531173103860,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "fnf_holdings",
+      "owningSector": "kconsume"
+    },
+    {
       "id": "krx:452260",
       "type": "listed_company",
       "ticker": "452260",
@@ -734,6 +853,23 @@
       "nameKo": "식품 소재",
       "nameEn": "Food ingredients",
       "lane": "manufacturing"
+    },
+    {
+      "id": "krx:072710",
+      "type": "listed_company",
+      "ticker": "072710",
+      "nameKo": "농심홀딩스",
+      "nameEn": "Nongshim Holdings",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 418792437000,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "nongshim_holdings",
+      "owningSector": "kconsume"
     },
     {
       "id": "krx:020000",
@@ -808,6 +944,23 @@
       "isListedKorea": true,
       "isMapConstituent": true,
       "legacyId": "kc_ace_bed",
+      "owningSector": "kconsume"
+    },
+    {
+      "id": "krx:027410",
+      "type": "listed_company",
+      "ticker": "027410",
+      "nameKo": "BGF",
+      "nameEn": "BGF",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "lane": "brand_owner",
+      "group": "지주회사",
+      "layer": "brand_owner",
+      "mcapWon": 357502214385,
+      "isListedKorea": true,
+      "isMapConstituent": true,
+      "legacyId": "holdings_bgf",
       "owningSector": "kconsume"
     },
     {
@@ -1194,6 +1347,21 @@
           "evidenceUsageType": "classification"
         }
       ],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
+      "id": "member-001040-brand_owner",
+      "source": "krx:001040",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
       "confidence": "high",
       "edgeOrigin": "structuralGenerated",
       "relationClass": "structural",
@@ -1631,6 +1799,21 @@
       "asOf": "2026-08-29"
     },
     {
+      "id": "member-004990-brand_owner",
+      "source": "krx:004990",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
       "id": "member-282330-brand_owner",
       "source": "krx:282330",
       "target": "group:brand_owner",
@@ -1770,6 +1953,36 @@
           "evidenceUsageType": "classification"
         }
       ],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
+      "id": "member-005440-brand_owner",
+      "source": "krx:005440",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
+      "id": "member-009970-brand_owner",
+      "source": "krx:009970",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
       "confidence": "high",
       "edgeOrigin": "structuralGenerated",
       "relationClass": "structural",
@@ -2053,6 +2266,21 @@
       "asOf": "2026-08-29"
     },
     {
+      "id": "member-001800-brand_owner",
+      "source": "krx:001800",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
       "id": "member-007310-brand_owner",
       "source": "krx:007310",
       "target": "group:brand_owner",
@@ -2177,6 +2405,21 @@
           "evidenceUsageType": "classification"
         }
       ],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
+      "id": "member-003380-brand_owner",
+      "source": "krx:003380",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
       "confidence": "high",
       "edgeOrigin": "structuralGenerated",
       "relationClass": "structural",
@@ -2594,6 +2837,21 @@
       "asOf": "2026-08-29"
     },
     {
+      "id": "member-007700-brand_owner",
+      "source": "krx:007700",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
       "id": "member-452260-brand_owner",
       "source": "krx:452260",
       "target": "group:brand_owner",
@@ -2655,6 +2913,21 @@
           "evidenceUsageType": "classification"
         }
       ],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
+      "id": "member-072710-brand_owner",
+      "source": "krx:072710",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
       "confidence": "high",
       "edgeOrigin": "structuralGenerated",
       "relationClass": "structural",
@@ -2784,6 +3057,21 @@
     {
       "id": "member-003800-brand_owner",
       "source": "krx:003800",
+      "target": "group:brand_owner",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "브랜드 가치사슬 분류",
+      "labelEn": "Brand owners value-chain category",
+      "evidence": [],
+      "confidence": "high",
+      "edgeOrigin": "structuralGenerated",
+      "relationClass": "structural",
+      "asOf": "2026-08-29"
+    },
+    {
+      "id": "member-027410-brand_owner",
+      "source": "krx:027410",
       "target": "group:brand_owner",
       "type": "member_of",
       "direction": "source_to_target",
@@ -3007,10 +3295,10 @@
     }
   ],
   "metrics": {
-    "listedCompanyCount": 36,
-    "nodeCount": 75,
-    "edgeCount": 78,
-    "structuralGeneratedEdgeCount": 75,
+    "listedCompanyCount": 45,
+    "nodeCount": 84,
+    "edgeCount": 87,
+    "structuralGeneratedEdgeCount": 84,
     "legacyMigratedEdgeCount": 3,
     "manuallyCuratedEdgeCount": 0,
     "brandNodeCount": 19,
@@ -3028,9 +3316,9 @@
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 0,
     "peerEdgeCount": 3,
-    "businessRelationOrphanCount": 36,
-    "directCommercialRelationshipOrphanCount": 36,
-    "classificationOnlyCompanyCount": 36,
+    "businessRelationOrphanCount": 45,
+    "directCommercialRelationshipOrphanCount": 45,
+    "classificationOnlyCompanyCount": 45,
     "hasPeerButNoBusinessCompanyCount": 3,
     "peerOnlyCompanyCount": 0,
     "zeroDegreeNodeCount": 1,
@@ -3109,7 +3397,7 @@
     "nodeCountByType": {
       "group": 4,
       "cross_sector_anchor": 2,
-      "listed_company": 36,
+      "listed_company": 45,
       "brand": 19,
       "product_category": 11,
       "global_company": 3

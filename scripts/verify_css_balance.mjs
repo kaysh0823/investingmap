@@ -35,7 +35,6 @@ const SECTOR_MAP_RELS = [
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
   'software/korea_software_map.html',
-  'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
   'chemical/korea_chemical_map.html',
   'travel/korea_travel_map.html',
@@ -125,7 +124,7 @@ if (!fs.existsSync(DIST)) {
 
 const failures = [];
 const sectorRels = SECTOR_MAP_RELS.filter((rel) => fs.existsSync(path.join(DIST, rel)));
-assert.ok(sectorRels.length >= 26, `expected ≥26 sector maps in dist, got ${sectorRels.length}`);
+assert.ok(sectorRels.length === 25, `expected 25 sector maps in dist, got ${sectorRels.length}`);
 
 for (const rel of sectorRels) {
   const html = fs.readFileSync(path.join(DIST, rel), 'utf8');

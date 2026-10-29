@@ -11,6 +11,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SKIP_DIRS = new Set([
   'node_modules',
   '.git',
+  '.diagnostics',
   'functions',
   'dist',
   'supabase',

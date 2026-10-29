@@ -121,6 +121,7 @@ run('node scripts/apply_consumer_04f_chain_reclass.mjs', 'consumer §0-4F kconsu
 run('node scripts/apply_finance_04g_chain_reclass.mjs', 'finance §0-4G finance/holdings + Kakao Pay finance-only');
 run('node scripts/apply_sgc_energy_005090_move.mjs', '005090 SGC에너지 chemical→powergrid 유틸리티');
 run('node scripts/apply_needs_review_closure_chain.mjs', 'needs_review closure moves/new groups');
+run('node scripts/apply_holdings_migration.mjs', 'approved holdings migration after historical chain patches');
 run('node scripts/sync_map_badges.mjs', 'map header badges from koreanCompanies (after all membership steps)');
 run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
 run('node scripts/sync_hub_card_badges.mjs', 'static hub card badges from hub index');
@@ -149,5 +150,8 @@ run('node scripts/patch_candle_modal.mjs', 'candle chart modal');
 run('node scripts/patch_cross_sector_ui.mjs', 'cross-sector table badges (final)');
 run('node scripts/patch_adsense_head.mjs', 'AdSense head snippet');
 run('node scripts/patch_after_hours.mjs', 'after-hours price hint script on map pages');
+run('node scripts/apply_holdings_migration.mjs', 'restore migrated holdings after bio regeneration');
+run('node scripts/sync_map_badges.mjs', 'migrated company header counts');
+run('node scripts/retire_holdings_sector.mjs', 'remove retired holdings navigation');
 run('node scripts/patch_asset_versions.mjs', 'content-hash ?v= for /js assets');
 console.log('\nOK rebuild_site');

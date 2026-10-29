@@ -17,6 +17,7 @@ const out = join(repo, 'dist');
 const ROOT_STATIC_FILES = [
   'ads.txt',
   '_headers',
+  '_redirects',
   '_routes.json',
   'robots.txt',
   'sitemap.xml',
@@ -36,7 +37,7 @@ function discoverMapDirs() {
   const dirs = [];
   for (const ent of fs.readdirSync(repo, { withFileTypes: true })) {
     if (!ent.isDirectory()) continue;
-    if (ent.name === 'dist' || ent.name.startsWith('.')) continue;
+    if (ent.name === 'dist' || ent.name === 'holdings' || ent.name.startsWith('.')) continue;
     const dirPath = join(repo, ent.name);
     let hasMap = false;
     try {

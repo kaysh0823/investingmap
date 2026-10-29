@@ -330,6 +330,21 @@
       "legacyId": "shi"
     },
     {
+      "id": "krx:267250",
+      "type": "listed_company",
+      "ticker": "267250",
+      "nameKo": "HD현대",
+      "nameEn": "HD HYUNDAI",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "group": "지주회사",
+      "layer": "지주회사",
+      "lane": "shipyard",
+      "mcapWon": 16430561680000,
+      "isListedKorea": true,
+      "legacyId": "ship_hd_hyundai"
+    },
+    {
       "id": "krx:443060",
       "type": "listed_company",
       "ticker": "443060",

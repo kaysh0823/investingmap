@@ -31,7 +31,6 @@ const MAP_SECTOR = {
   'cosmetics/korea_cosmetics_map.html': 'cosmetics',
   'kcontent/korea_kcontent_map.html': 'kcontent',
   'software/korea_software_map.html': 'software',
-  'holdings/korea_holdings_map.html': 'holdings',
   'telecom/korea_telecom_map.html': 'telecom',
   'chemical/korea_chemical_map.html': 'chemical',
   'travel/korea_travel_map.html': 'travel',

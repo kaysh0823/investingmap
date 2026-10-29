@@ -69,6 +69,19 @@
       "legacyId": "kai"
     },
     {
+      "id": "krx:000880",
+      "type": "listed_company",
+      "ticker": "000880",
+      "nameKo": "한화",
+      "nameEn": "Hanwha",
+      "market": "KOSPI",
+      "role": "지주회사",
+      "group": "지주회사",
+      "mcapWon": 7066078852500,
+      "isListedKorea": true,
+      "legacyId": "def_hanwha"
+    },
+    {
       "id": "krx:103140",
       "type": "listed_company",
       "ticker": "103140",

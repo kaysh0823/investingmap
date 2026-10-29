@@ -6,13 +6,16 @@ import vm from 'node:vm';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { parseHTML } from 'linkedom';
+import { SECTOR_META } from '../lib/sector_meta.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const target = path.resolve(ROOT, process.argv[2] || 'dist');
 const read = rel => fs.readFileSync(path.join(target, rel), 'utf8');
 const groups = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/hub_index.json'), 'utf8')).sectors;
 const pages = [...new Set(Object.values(groups).map(group => group.meta.map))];
-assert.ok(pages.length >= 26, 'sector inventory must not silently shrink below 26 pages');
+assert.equal(pages.length, Object.keys(SECTOR_META).length, 'all active sectors must be tested');
+assert.ok(pages.length >= 25, 'active sector inventory must not shrink below 25');
+assert.ok(!groups.holdings, 'retired holdings sector must not return');
 const source = read('js/map_momentum.js');
 const searchSource = read('js/map_tab_search.js');
 const ranks = ['rs5', 'rs10', 'rs20', 'rs50'];

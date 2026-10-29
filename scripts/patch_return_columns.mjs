@@ -24,7 +24,6 @@ const TARGETS = [
   'finance/korea_finance_map.html',
   'construction/korea_construction_map.html',
   'software/korea_software_map.html',
-  'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
   'chemical/korea_chemical_map.html',
   'travel/korea_travel_map.html',

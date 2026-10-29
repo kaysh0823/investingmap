@@ -9,7 +9,7 @@
     { id: 'semi', path: '../semiconductor/korea_semiconductor_map.html', ko: "반도체", en: "Semi" },
     { id: 'elec', path: '../elec/korea_elec_map.html', ko: "전기·전자", en: "Electrical & Electronics" },
     { id: 'software', path: '../software/korea_software_map.html', ko: "IT·소프트웨어", en: "IT & Software" },
-    { id: 'telecom', path: '../telecom/korea_telecom_map.html', ko: "통신", en: "Telecom" },
+    { id: 'telecom', path: '../telecom/korea_telecom_map.html', ko: "통신/네트워크", en: "Telecom" },
     { id: 'robot', path: '../robot/korea_robot_map.html', ko: "로봇", en: "Robot" },
     { id: 'auto', path: '../auto/korea_auto_map.html', ko: "자동차", en: "Auto" },
     { id: 'battery', path: '../battery/korea_battery_map.html', ko: "2차전지", en: "Battery" },
@@ -30,7 +30,6 @@
     { id: 'medtech', path: '../medtech/korea_medtech_map.html', ko: "의료기기/헬스케어", en: "MedTech" },
     { id: 'bio', path: '../bio/korea_bio_map.html', ko: "바이오", en: "Bio" },
     { id: 'finance', path: '../finance/korea_finance_map.html', ko: "금융", en: "Finance" },
-    { id: 'holdings', path: '../holdings/korea_holdings_map.html', ko: "지주회사", en: "Holdings" },
   ];
 
   function navLabel(s, lang, mobile) {

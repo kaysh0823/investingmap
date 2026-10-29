@@ -29,7 +29,6 @@ const REQUIRED = [
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
   'software/korea_software_map.html',
-  'holdings/korea_holdings_map.html',
   'telecom/korea_telecom_map.html',
   'chemical/korea_chemical_map.html',
   'travel/korea_travel_map.html',
@@ -75,7 +74,7 @@ function assertInitDecoupled(rel, html) {
   );
 }
 
-assert.equal(REQUIRED.length, 25, 'expected 25 sector HTML maps with inline loadFx INIT');
+assert.equal(REQUIRED.length, 24, 'expected 24 sector HTML maps with inline loadFx INIT');
 
 let ok = 0;
 for (const rel of REQUIRED) {
