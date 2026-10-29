@@ -5610,87 +5610,746 @@
 
     ];
     const globalCompanies = [
-      { id: 'nvidia', name: 'NVIDIA', nameEn: 'NVIDIA', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'apple', name: 'Apple', nameEn: 'Apple', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'microsoft', name: 'Microsoft', nameEn: 'Microsoft', country: '미국/USA', region: 'us', sector: 'Cloud/AI' },
-      { id: 'amd', name: 'AMD', nameEn: 'AMD', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'qualcomm', name: 'Qualcomm', nameEn: 'Qualcomm', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'intel', name: 'Intel', nameEn: 'Intel', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'google', name: 'Google', nameEn: 'Google', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'meta', name: 'Meta', nameEn: 'Meta', country: '미국/USA', region: 'us', sector: 'AI/Social' },
-      { id: 'aws', name: 'Amazon AWS', nameEn: 'Amazon AWS', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'dell', name: 'Dell', nameEn: 'Dell', country: '미국/USA', region: 'us', sector: 'Server/PC' },
-      { id: 'hp', name: 'HP', nameEn: 'HP', country: '미국/USA', region: 'us', sector: 'Server/PC' },
-      { id: 'cisco', name: 'Cisco', nameEn: 'Cisco', country: '미국/USA', region: 'us', sector: 'Networking' },
-      { id: 'ti', name: 'Texas Instruments', nameEn: 'Texas Instruments', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'onsemi', name: 'onsemi', nameEn: 'onsemi', country: '미국/USA', region: 'us', sector: 'Downstream customer', countryCode: 'US' },
-      { id: 'micron_eq', name: 'Micron', nameEn: 'Micron', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'lam', name: 'Lam Research', nameEn: 'Lam Research', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'appmat', name: 'Applied Materials', nameEn: 'Applied Materials', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'ase', name: 'ASE Group', nameEn: 'ASE Group', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'amkor', name: 'Amkor Technology', nameEn: 'Amkor Technology', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'tsmc', name: 'TSMC', nameEn: 'TSMC', country: '대만/Taiwan', region: 'tw', sector: 'Downstream customer', countryCode: 'TW' },
-      { id: 'mediatek', name: 'MediaTek', nameEn: 'MediaTek', country: '대만/Taiwan', region: 'tw', sector: 'Downstream customer', countryCode: 'TW' },
-      { id: 'asml', name: 'ASML', nameEn: 'ASML', country: '네덜란드/Netherlands', region: 'eu', sector: 'Global peer', countryCode: 'NL' },
-      { id: 'renesas', name: 'Renesas', nameEn: 'Renesas', country: '일본/Japan', region: 'jp', sector: 'Downstream customer', countryCode: 'JP' },
-      { id: 'bosch', name: 'Bosch', nameEn: 'Bosch', country: '독일/Germany', region: 'eu', sector: 'Auto Parts' },
-      { id: 'continental', name: 'Continental', nameEn: 'Continental', country: '독일/Germany', region: 'eu', sector: 'Auto Parts' },
-      { id: 'bmw', name: 'BMW', nameEn: 'BMW', country: '독일/Germany', region: 'eu', sector: 'Automotive' },
-      { id: 'boe', name: 'BOE Technology', nameEn: 'BOE Technology', country: '중국/China', region: 'cn', sector: 'Downstream customer', countryCode: 'CN' },
-      { id: 'csot', name: 'CSOT', nameEn: 'CSOT', country: '중국/China', region: 'cn', sector: 'Display' },
-      { id: 'lenovo', name: 'Lenovo', nameEn: 'Lenovo', country: '중국/China', region: 'cn', sector: 'Server/PC' },
-      { id: 'hyundai', name: '현대자동차', nameEn: 'Hyundai Motor', country: '한국/Korea', region: 'kr', sector: 'Downstream customer', countryCode: 'KR', isKR: true },
-      { id: 'hyundai_mobis', name: 'Hyundai Mobis', nameEn: 'Hyundai Mobis', country: '한국/Korea', region: 'kr', sector: 'Auto Parts' },
-      { id: 'gm', name: 'General Motors', nameEn: 'General Motors', country: '미국/USA', region: 'us', sector: 'Automotive' },
-      { id: 'lgdisplay', name: 'LG디스플레이', nameEn: 'LG Display', country: '한국/Korea', region: 'kr', sector: 'Downstream customer', countryCode: 'KR', isKR: true },
-      { id: 'samsung_display', name: 'Samsung Display', nameEn: 'Samsung Display', country: '한국/Korea', region: 'kr', sector: 'Downstream customer', countryCode: 'KR', isKR: true },
-      { id: 'samsung_d', name: '삼성전자', nameEn: 'Samsung Electronics', country: '한국/Korea', region: 'kr', sector: 'Upstream supplier', countryCode: 'KR', isKR: true },
-      { id: 'skhynix_d', name: 'SK하이닉스', nameEn: 'SK hynix', country: '한국/Korea', region: 'kr', sector: 'Downstream customer', countryCode: 'KR', isKR: true },
-      { id: 'hanamicron_g', name: '하나마이크론(↑패키징)', nameEn: 'Hana Micron (packaging)', country: '한국/Korea', region: 'kr', sector: 'OSAT', isKR: true },
-      { id: 'lg_elec', name: 'LG전자', nameEn: 'LG Electronics', country: '한국/Korea', region: 'kr', sector: 'Downstream customer', countryCode: 'KR', isKR: true },
-      { id: 'mks', name: 'MKS Instruments', nameEn: 'MKS Instruments', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'edwards', name: 'Edwards Vacuum', nameEn: 'Edwards Vacuum (Atlas Copco)', country: '영국/UK', region: 'gb', sector: 'Upstream supplier', countryCode: 'GB' },
-      { id: 'tokyo_electron', name: '도쿄일렉트론', nameEn: 'Tokyo Electron', country: '일본/Japan', region: 'jp', sector: 'Global peer', countryCode: 'JP' },
-      { id: 'kla', name: 'KLA', nameEn: 'KLA', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'coherent', name: 'Coherent', nameEn: 'Coherent', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'kulicke', name: 'Kulicke & Soffa', nameEn: 'Kulicke & Soffa', country: '싱가포르/Singapore', region: 'eu', sector: 'Upstream supplier', countryCode: 'SG' },
-      { id: 'disco', name: 'DISCO', nameEn: 'DISCO Corporation', country: '일본/Japan', region: 'jp', sector: 'Global peer', countryCode: 'JP' },
-      { id: 'advantest', name: 'Advantest', nameEn: 'Advantest', country: '일본/Japan', region: 'jp', sector: 'Upstream supplier', countryCode: 'JP' },
-      { id: 'teradyne', name: 'Teradyne', nameEn: 'Teradyne', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'besi', name: 'Besi', nameEn: 'BE Semiconductor Industries', country: '네덜란드/Netherlands', region: 'eu', sector: 'Global peer', countryCode: 'NL' },
-      { id: 'air_liquide', name: 'Air Liquide', nameEn: 'Air Liquide', country: '프랑스/France', region: 'eu', sector: 'Upstream supplier', countryCode: 'FR' },
-      { id: 'linde', name: 'Linde', nameEn: 'Linde', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'dupont', name: 'DuPont', nameEn: 'DuPont', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'shin_etsu', name: '신에츠화학', nameEn: 'Shin-Etsu Chemical', country: '일본/Japan', region: 'jp', sector: 'Global peer', countryCode: 'JP' },
-      { id: 'tok', name: '도쿄오카공업', nameEn: 'Tokyo Ohka Kogyo (TOK)', country: '일본/Japan', region: 'jp', sector: 'Global peer', countryCode: 'JP' },
-      { id: 'merck_em', name: 'Merck Electronics', nameEn: 'Merck Electronics', country: '독일/Germany', region: 'eu', sector: 'Global peer', countryCode: 'DE' },
-      { id: 'entegris', name: 'Entegris', nameEn: 'Entegris', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'globalfoundries', name: 'GlobalFoundries', nameEn: 'GlobalFoundries', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'umc', name: 'UMC', nameEn: 'United Microelectronics', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'smic', name: 'SMIC', nameEn: 'SMIC', country: '중국/China', region: 'cn', sector: 'Global peer', countryCode: 'CN' },
-      { id: 'arm', name: 'Arm', nameEn: 'Arm', country: '영국/UK', region: 'gb', sector: 'Upstream supplier', countryCode: 'GB' },
-      { id: 'synopsys', name: 'Synopsys', nameEn: 'Synopsys', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'broadcom', name: 'Broadcom', nameEn: 'Broadcom', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'cadence', name: 'Cadence', nameEn: 'Cadence Design Systems', country: '미국/USA', region: 'us', sector: 'Upstream supplier', countryCode: 'US' },
-      { id: 'guc', name: 'GUC', nameEn: 'Global Unichip Corp.', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'alchip', name: 'Alchip', nameEn: 'Alchip Technologies', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'faraday', name: 'Faraday', nameEn: 'Faraday Technology', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'nan_ya', name: '남야플라스틱', nameEn: 'Nan Ya Plastics', country: '대만/Taiwan', region: 'tw', sector: 'Upstream supplier', countryCode: 'TW' },
-      { id: 'emc_laminate', name: 'Elite Material', nameEn: 'Elite Material Co. (EMC)', country: '대만/Taiwan', region: 'tw', sector: 'Upstream supplier', countryCode: 'TW' },
-      { id: 'ibiden', name: 'Ibiden', nameEn: 'Ibiden', country: '일본/Japan', region: 'jp', sector: 'Global peer', countryCode: 'JP' },
-      { id: 'shinko', name: 'Shinko Electric', nameEn: 'Shinko Electric Industries', country: '일본/Japan', region: 'jp', sector: 'Global peer', countryCode: 'JP' },
-      { id: 'unimicron', name: 'Unimicron', nameEn: 'Unimicron Technology', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'ats', name: 'AT&S', nameEn: 'AT&S', country: '오스트리아/Austria', region: 'eu', sector: 'Global peer', countryCode: 'AT' },
-      { id: 'henkel', name: 'Henkel', nameEn: 'Henkel', country: '독일/Germany', region: 'eu', sector: 'Upstream supplier', countryCode: 'DE' },
-      { id: 'jcet', name: 'JCET', nameEn: 'JCET Group', country: '중국/China', region: 'cn', sector: 'Global peer', countryCode: 'CN' },
-      { id: 'pti', name: 'Powertech Technology', nameEn: 'Powertech Technology (PTI)', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'infineon', name: 'Infineon', nameEn: 'Infineon Technologies', country: '독일/Germany', region: 'eu', sector: 'Upstream supplier', countryCode: 'DE' },
-      { id: 'wpg', name: 'WPG Holdings', nameEn: 'WPG Holdings', country: '대만/Taiwan', region: 'tw', sector: 'Global peer', countryCode: 'TW' },
-      { id: 'arrow', name: 'Arrow Electronics', nameEn: 'Arrow Electronics', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'avnet', name: 'Avnet', nameEn: 'Avnet', country: '미국/USA', region: 'us', sector: 'Global peer', countryCode: 'US' },
-      { id: 'fabless_sys_customers', name: '팹리스·시스템반도체 고객사', nameEn: 'Fabless / system-IC customers', country: '한국/Korea', region: 'kr', sector: 'Downstream customer', countryCode: 'KR', isKR: true },
-      { id: 'coasia', name: '코아시아', nameEn: 'CoAsia', country: '한국/Korea', region: 'kr', sector: 'Global peer', countryCode: 'KR', isKR: true },
-      { id: 'asicland', name: '에이직랜드', nameEn: 'ASICLAND', country: '한국/Korea', region: 'kr', sector: 'Global peer', countryCode: 'KR', isKR: true }
+          {
+                "id": "nvidia",
+                "name": "NVIDIA",
+                "nameEn": "NVIDIA",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "apple",
+                "name": "Apple",
+                "nameEn": "Apple",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "microsoft",
+                "name": "Microsoft",
+                "nameEn": "Microsoft",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Cloud/AI"
+          },
+          {
+                "id": "amd",
+                "name": "AMD",
+                "nameEn": "AMD",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "qualcomm",
+                "name": "Qualcomm",
+                "nameEn": "Qualcomm",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "intel",
+                "name": "Intel",
+                "nameEn": "Intel",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "google",
+                "name": "Google",
+                "nameEn": "Google",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "meta",
+                "name": "Meta",
+                "nameEn": "Meta",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "AI/Social"
+          },
+          {
+                "id": "aws",
+                "name": "Amazon AWS",
+                "nameEn": "Amazon AWS",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "dell",
+                "name": "Dell",
+                "nameEn": "Dell",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Server/PC"
+          },
+          {
+                "id": "hp",
+                "name": "HP",
+                "nameEn": "HP",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Server/PC"
+          },
+          {
+                "id": "cisco",
+                "name": "Cisco",
+                "nameEn": "Cisco",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Networking"
+          },
+          {
+                "id": "ti",
+                "name": "Texas Instruments",
+                "nameEn": "Texas Instruments",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "onsemi",
+                "name": "onsemi",
+                "nameEn": "onsemi",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Downstream customer",
+                "countryCode": "US"
+          },
+          {
+                "id": "micron_eq",
+                "name": "Micron",
+                "nameEn": "Micron",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "lam",
+                "name": "Lam Research",
+                "nameEn": "Lam Research",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "appmat",
+                "name": "Applied Materials",
+                "nameEn": "Applied Materials",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "ase",
+                "name": "ASE Group",
+                "nameEn": "ASE Group",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "amkor",
+                "name": "Amkor Technology",
+                "nameEn": "Amkor Technology",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "tsmc",
+                "name": "TSMC",
+                "nameEn": "TSMC",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Downstream customer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "mediatek",
+                "name": "MediaTek",
+                "nameEn": "MediaTek",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Downstream customer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "asml",
+                "name": "ASML",
+                "nameEn": "ASML",
+                "country": "네덜란드/Netherlands",
+                "region": "eu",
+                "sector": "Global peer",
+                "countryCode": "NL"
+          },
+          {
+                "id": "renesas",
+                "name": "Renesas",
+                "nameEn": "Renesas",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Downstream customer",
+                "countryCode": "JP"
+          },
+          {
+                "id": "bosch",
+                "name": "Bosch",
+                "nameEn": "Bosch",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Auto Parts"
+          },
+          {
+                "id": "continental",
+                "name": "Continental",
+                "nameEn": "Continental",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Auto Parts"
+          },
+          {
+                "id": "bmw",
+                "name": "BMW",
+                "nameEn": "BMW",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Automotive"
+          },
+          {
+                "id": "boe",
+                "name": "BOE Technology",
+                "nameEn": "BOE Technology",
+                "country": "중국/China",
+                "region": "cn",
+                "sector": "Downstream customer",
+                "countryCode": "CN"
+          },
+          {
+                "id": "csot",
+                "name": "CSOT",
+                "nameEn": "CSOT",
+                "country": "중국/China",
+                "region": "cn",
+                "sector": "Display"
+          },
+          {
+                "id": "lenovo",
+                "name": "Lenovo",
+                "nameEn": "Lenovo",
+                "country": "중국/China",
+                "region": "cn",
+                "sector": "Server/PC"
+          },
+          {
+                "id": "hyundai",
+                "name": "현대자동차",
+                "nameEn": "Hyundai Motor",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Downstream customer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "hyundai_mobis",
+                "name": "Hyundai Mobis",
+                "nameEn": "Hyundai Mobis",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Auto Parts"
+          },
+          {
+                "id": "gm",
+                "name": "General Motors",
+                "nameEn": "General Motors",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Automotive"
+          },
+          {
+                "id": "lgdisplay",
+                "name": "LG디스플레이",
+                "nameEn": "LG Display",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Downstream customer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "samsung_display",
+                "name": "Samsung Display",
+                "nameEn": "Samsung Display",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Downstream customer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "samsung_d",
+                "name": "삼성전자",
+                "nameEn": "Samsung Electronics",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Upstream supplier",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "skhynix_d",
+                "name": "SK하이닉스",
+                "nameEn": "SK hynix",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Downstream customer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "hanamicron_g",
+                "name": "하나마이크론(↑패키징)",
+                "nameEn": "Hana Micron (packaging)",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "OSAT",
+                "isKR": true
+          },
+          {
+                "id": "lg_elec",
+                "name": "LG전자",
+                "nameEn": "LG Electronics",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Downstream customer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "mks",
+                "name": "MKS Instruments",
+                "nameEn": "MKS Instruments",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "edwards",
+                "name": "Edwards Vacuum",
+                "nameEn": "Edwards Vacuum (Atlas Copco)",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "Upstream supplier",
+                "countryCode": "GB"
+          },
+          {
+                "id": "tokyo_electron",
+                "name": "도쿄일렉트론",
+                "nameEn": "Tokyo Electron",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Global peer",
+                "countryCode": "JP"
+          },
+          {
+                "id": "kla",
+                "name": "KLA",
+                "nameEn": "KLA",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "coherent",
+                "name": "Coherent",
+                "nameEn": "Coherent",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "kulicke",
+                "name": "Kulicke & Soffa",
+                "nameEn": "Kulicke & Soffa",
+                "country": "싱가포르/Singapore",
+                "region": "eu",
+                "sector": "Upstream supplier",
+                "countryCode": "SG"
+          },
+          {
+                "id": "disco",
+                "name": "DISCO",
+                "nameEn": "DISCO Corporation",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Global peer",
+                "countryCode": "JP"
+          },
+          {
+                "id": "advantest",
+                "name": "Advantest",
+                "nameEn": "Advantest",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Upstream supplier",
+                "countryCode": "JP"
+          },
+          {
+                "id": "teradyne",
+                "name": "Teradyne",
+                "nameEn": "Teradyne",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "besi",
+                "name": "Besi",
+                "nameEn": "BE Semiconductor Industries",
+                "country": "네덜란드/Netherlands",
+                "region": "eu",
+                "sector": "Global peer",
+                "countryCode": "NL"
+          },
+          {
+                "id": "air_liquide",
+                "name": "Air Liquide",
+                "nameEn": "Air Liquide",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Upstream supplier",
+                "countryCode": "FR"
+          },
+          {
+                "id": "linde",
+                "name": "Linde",
+                "nameEn": "Linde",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "dupont",
+                "name": "DuPont",
+                "nameEn": "DuPont",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "shin_etsu",
+                "name": "신에츠화학",
+                "nameEn": "Shin-Etsu Chemical",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Global peer",
+                "countryCode": "JP"
+          },
+          {
+                "id": "tok",
+                "name": "도쿄오카공업",
+                "nameEn": "Tokyo Ohka Kogyo (TOK)",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Global peer",
+                "countryCode": "JP"
+          },
+          {
+                "id": "merck_em",
+                "name": "Merck Electronics",
+                "nameEn": "Merck Electronics",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Global peer",
+                "countryCode": "DE"
+          },
+          {
+                "id": "entegris",
+                "name": "Entegris",
+                "nameEn": "Entegris",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "globalfoundries",
+                "name": "GlobalFoundries",
+                "nameEn": "GlobalFoundries",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "umc",
+                "name": "UMC",
+                "nameEn": "United Microelectronics",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "smic",
+                "name": "SMIC",
+                "nameEn": "SMIC",
+                "country": "중국/China",
+                "region": "cn",
+                "sector": "Global peer",
+                "countryCode": "CN"
+          },
+          {
+                "id": "arm",
+                "name": "Arm",
+                "nameEn": "Arm",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "Upstream supplier",
+                "countryCode": "GB"
+          },
+          {
+                "id": "synopsys",
+                "name": "Synopsys",
+                "nameEn": "Synopsys",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "broadcom",
+                "name": "Broadcom",
+                "nameEn": "Broadcom",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "cadence",
+                "name": "Cadence",
+                "nameEn": "Cadence Design Systems",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Upstream supplier",
+                "countryCode": "US"
+          },
+          {
+                "id": "guc",
+                "name": "GUC",
+                "nameEn": "Global Unichip Corp.",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "alchip",
+                "name": "Alchip",
+                "nameEn": "Alchip Technologies",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "faraday",
+                "name": "Faraday",
+                "nameEn": "Faraday Technology",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "nan_ya",
+                "name": "남야플라스틱",
+                "nameEn": "Nan Ya Plastics",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Upstream supplier",
+                "countryCode": "TW"
+          },
+          {
+                "id": "emc_laminate",
+                "name": "Elite Material",
+                "nameEn": "Elite Material Co. (EMC)",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Upstream supplier",
+                "countryCode": "TW"
+          },
+          {
+                "id": "ibiden",
+                "name": "Ibiden",
+                "nameEn": "Ibiden",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Global peer",
+                "countryCode": "JP"
+          },
+          {
+                "id": "shinko",
+                "name": "Shinko Electric",
+                "nameEn": "Shinko Electric Industries",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Global peer",
+                "countryCode": "JP"
+          },
+          {
+                "id": "unimicron",
+                "name": "Unimicron",
+                "nameEn": "Unimicron Technology",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "ats",
+                "name": "AT&S",
+                "nameEn": "AT&S",
+                "country": "오스트리아/Austria",
+                "region": "eu",
+                "sector": "Global peer",
+                "countryCode": "AT"
+          },
+          {
+                "id": "henkel",
+                "name": "Henkel",
+                "nameEn": "Henkel",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Upstream supplier",
+                "countryCode": "DE"
+          },
+          {
+                "id": "jcet",
+                "name": "JCET",
+                "nameEn": "JCET Group",
+                "country": "중국/China",
+                "region": "cn",
+                "sector": "Global peer",
+                "countryCode": "CN"
+          },
+          {
+                "id": "pti",
+                "name": "Powertech Technology",
+                "nameEn": "Powertech Technology (PTI)",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "infineon",
+                "name": "Infineon",
+                "nameEn": "Infineon Technologies",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Upstream supplier",
+                "countryCode": "DE"
+          },
+          {
+                "id": "wpg",
+                "name": "WPG Holdings",
+                "nameEn": "WPG Holdings",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Global peer",
+                "countryCode": "TW"
+          },
+          {
+                "id": "arrow",
+                "name": "Arrow Electronics",
+                "nameEn": "Arrow Electronics",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "avnet",
+                "name": "Avnet",
+                "nameEn": "Avnet",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global peer",
+                "countryCode": "US"
+          },
+          {
+                "id": "fabless_sys_customers",
+                "name": "팹리스·시스템반도체 고객사",
+                "nameEn": "Fabless / system-IC customers",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Downstream customer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "coasia",
+                "name": "코아시아",
+                "nameEn": "CoAsia",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Global peer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "asicland",
+                "name": "에이직랜드",
+                "nameEn": "ASICLAND",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Global peer",
+                "countryCode": "KR",
+                "isKR": true
+          },
+          {
+                "id": "softbank",
+                "name": "SoftBank Group",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Investment holding peer"
+          },
+          {
+                "id": "ckh",
+                "name": "CK Hutchison Holdings",
+                "country": "홍콩/Hong Kong",
+                "region": "cn",
+                "sector": "Operating holding peer"
+          }
     ];
     // ═══════════════════════════════════════════════════════
     // STATE

@@ -3308,23 +3308,149 @@
 
     ];
     const globalCompanies = [
-      { id: 'toyota', name: 'Toyota', nameEn: 'Toyota', country: '일본/Japan', region: 'jp', sector: 'Global OEM' },
-      { id: 'gm', name: 'GM', nameEn: 'General Motors', country: '미국/USA', region: 'us', sector: 'Global OEM' },
-      { id: 'vw', name: 'Volkswagen', nameEn: 'Volkswagen', country: '독일/Germany', region: 'eu', sector: 'Global OEM' },
-      { id: 'stellantis', name: 'Stellantis', nameEn: 'Stellantis', country: '네덜란드/NL', region: 'eu', sector: 'Global OEM' },
-      { id: 'bosch', name: 'Bosch', nameEn: 'Bosch', country: '독일/Germany', region: 'eu', sector: 'Auto parts' },
-      { id: 'continental', name: 'Continental', nameEn: 'Continental', country: '독일/Germany', region: 'eu', sector: 'Auto parts / ADAS' },
-      { id: 'denso', name: 'DENSO', nameEn: 'DENSO', country: '일본/Japan', region: 'jp', sector: 'Auto parts' },
-      { id: 'zf', name: 'ZF', nameEn: 'ZF', country: '독일/Germany', region: 'eu', sector: 'Driveline / chassis' },
-      { id: 'michelin', name: 'Michelin', nameEn: 'Michelin', country: '프랑스/France', region: 'eu', sector: 'Tires' },
-      { id: 'bridgestone', name: 'Bridgestone', nameEn: 'Bridgestone', country: '일본/Japan', region: 'jp', sector: 'Tires' },
-      { id: 'goodyear', name: 'Goodyear', nameEn: 'Goodyear', country: '미국/USA', region: 'us', sector: 'Tires' },
-      { id: 'nvidia', name: 'NVIDIA', nameEn: 'NVIDIA', country: '미국/USA', region: 'us', sector: 'ADAS compute' },
-      { id: 'mahindra', name: 'Mahindra', nameEn: 'Mahindra', country: '인도/India', region: 'eu', sector: 'OEM / JV peer' },
-      { id: 'uber', name: 'Uber', nameEn: 'Uber', country: '미국/USA', region: 'us', sector: 'Mobility platform' },
-      { id: 'lyft', name: 'Lyft', nameEn: 'Lyft', country: '미국/USA', region: 'us', sector: 'Ride-hailing' },
-      { id: 'carvana', name: 'Carvana', nameEn: 'Carvana', country: '미국/USA', region: 'us', sector: 'Used-car retail' },
-      { id: 'autonation', name: 'AutoNation', nameEn: 'AutoNation', country: '미국/USA', region: 'us', sector: 'Auto retail' }
+          {
+                "id": "toyota",
+                "name": "Toyota",
+                "nameEn": "Toyota",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Global OEM"
+          },
+          {
+                "id": "gm",
+                "name": "GM",
+                "nameEn": "General Motors",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global OEM"
+          },
+          {
+                "id": "vw",
+                "name": "Volkswagen",
+                "nameEn": "Volkswagen",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Global OEM"
+          },
+          {
+                "id": "stellantis",
+                "name": "Stellantis",
+                "nameEn": "Stellantis",
+                "country": "네덜란드/NL",
+                "region": "eu",
+                "sector": "Global OEM"
+          },
+          {
+                "id": "bosch",
+                "name": "Bosch",
+                "nameEn": "Bosch",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Auto parts"
+          },
+          {
+                "id": "continental",
+                "name": "Continental",
+                "nameEn": "Continental",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Auto parts / ADAS"
+          },
+          {
+                "id": "denso",
+                "name": "DENSO",
+                "nameEn": "DENSO",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Auto parts"
+          },
+          {
+                "id": "zf",
+                "name": "ZF",
+                "nameEn": "ZF",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Driveline / chassis"
+          },
+          {
+                "id": "michelin",
+                "name": "Michelin",
+                "nameEn": "Michelin",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Tires"
+          },
+          {
+                "id": "bridgestone",
+                "name": "Bridgestone",
+                "nameEn": "Bridgestone",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Tires"
+          },
+          {
+                "id": "goodyear",
+                "name": "Goodyear",
+                "nameEn": "Goodyear",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Tires"
+          },
+          {
+                "id": "nvidia",
+                "name": "NVIDIA",
+                "nameEn": "NVIDIA",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "ADAS compute"
+          },
+          {
+                "id": "mahindra",
+                "name": "Mahindra",
+                "nameEn": "Mahindra",
+                "country": "인도/India",
+                "region": "eu",
+                "sector": "OEM / JV peer"
+          },
+          {
+                "id": "uber",
+                "name": "Uber",
+                "nameEn": "Uber",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Mobility platform"
+          },
+          {
+                "id": "lyft",
+                "name": "Lyft",
+                "nameEn": "Lyft",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Ride-hailing"
+          },
+          {
+                "id": "carvana",
+                "name": "Carvana",
+                "nameEn": "Carvana",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Used-car retail"
+          },
+          {
+                "id": "autonation",
+                "name": "AutoNation",
+                "nameEn": "AutoNation",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Auto retail"
+          },
+          {
+                "id": "ckh",
+                "name": "CK Hutchison Holdings",
+                "country": "홍콩/Hong Kong",
+                "region": "cn",
+                "sector": "Operating holding peer"
+          }
     ];
 
     // ═══════════════════════════════════════════════════════

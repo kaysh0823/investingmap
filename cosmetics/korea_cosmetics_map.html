@@ -3075,30 +3075,205 @@
 
     ];
     const globalCompanies = [
-      { id: 'netflix', name: 'Netflix', nameEn: 'Netflix', country: '미국/USA', region: 'us', sector: 'Streaming' },
-      { id: 'disney', name: 'Disney', nameEn: 'Disney', country: '미국/USA', region: 'us', sector: 'Film & streaming' },
-      { id: 'warner', name: 'Warner Bros. Discovery', nameEn: 'Warner Bros. Discovery', country: '미국/USA', region: 'us', sector: 'TV & film' },
-      { id: 'spotify', name: 'Spotify', nameEn: 'Spotify', country: '스웨덴/Sweden', region: 'eu', sector: 'Music streaming' },
-      { id: 'youtube', name: 'YouTube (Google)', nameEn: 'YouTube (Google)', country: '미국/USA', region: 'us', sector: 'Video & music' },
-      { id: 'umg', name: 'Universal Music Group', nameEn: 'Universal Music Group', country: '미국/USA', region: 'us', sector: 'Music distribution' },
-      { id: 'lvmh', name: 'LVMH', nameEn: 'LVMH', country: '프랑스/France', region: 'eu', sector: 'Luxury beauty' },
-      { id: 'estee', name: 'Estée Lauder', nameEn: 'Estée Lauder', country: '미국/USA', region: 'us', sector: 'Beauty' },
-      { id: 'nestle', name: 'Nestlé', nameEn: 'Nestlé', country: '스위스/Switzerland', region: 'eu', sector: 'F&B global' },
-      { id: 'pepsico', name: 'PepsiCo', nameEn: 'PepsiCo', country: '미국/USA', region: 'us', sector: 'F&B global' },
-      { id: 'costco', name: 'Costco', nameEn: 'Costco', country: '미국/USA', region: 'us', sector: 'Retail' },
-      { id: 'booking', name: 'Booking.com', nameEn: 'Booking.com', country: '네덜란드/NL', region: 'eu', sector: 'OTA' },
-      { id: 'expedia', name: 'Expedia', nameEn: 'Expedia', country: '미국/USA', region: 'us', sector: 'OTA' },
-      { id: 'marriott', name: 'Marriott', nameEn: 'Marriott', country: '미국/USA', region: 'us', sector: 'Hotels' },
-      { id: 'boeing', name: 'Boeing', nameEn: 'Boeing', country: '미국/USA', region: 'us', sector: 'Aircraft' },
-      { id: 'airbus', name: 'Airbus', nameEn: 'Airbus', country: '유럽/Europe', region: 'eu', sector: 'Aircraft' },
-      { id: 'delta', name: 'Delta Air Lines', nameEn: 'Delta Air Lines', country: '미국/USA', region: 'us', sector: 'Airline alliance' },
-      { id: 'tencent', name: 'Tencent', nameEn: 'Tencent', country: '중국/China', region: 'cn', sector: 'Digital content' },
-      { id: 'hwave_flow', name: '한류 수요 흐름(참고)', nameEn: 'K-wave demand flow (reference)', country: '테마/Korea', region: 'kr', sector: 'Cross-sector K-demand (illus.)' },
-      { id: 'loreal', name: 'L\'Oréal', nameEn: 'L\'Oréal', country: '프랑스/France', region: 'eu', sector: 'Beauty' },
-      { id: 'shiseido', name: 'Shiseido', nameEn: 'Shiseido', country: '일본/Japan', region: 'jp', sector: 'Beauty' },
-      { id: 'intercos', name: 'Intercos', nameEn: 'Intercos', country: '이탈리아/Italy', region: 'eu', sector: 'Cosmetics ODM' },
-      { id: 'albea', name: 'Albéa', nameEn: 'Albéa', country: '프랑스/France', region: 'eu', sector: 'Cosmetics packaging' },
-      { id: 'aptar', name: 'Aptar', nameEn: 'Aptar', country: '미국/USA', region: 'us', sector: 'Dispensing packaging' }
+          {
+                "id": "netflix",
+                "name": "Netflix",
+                "nameEn": "Netflix",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Streaming"
+          },
+          {
+                "id": "disney",
+                "name": "Disney",
+                "nameEn": "Disney",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Film & streaming"
+          },
+          {
+                "id": "warner",
+                "name": "Warner Bros. Discovery",
+                "nameEn": "Warner Bros. Discovery",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "TV & film"
+          },
+          {
+                "id": "spotify",
+                "name": "Spotify",
+                "nameEn": "Spotify",
+                "country": "스웨덴/Sweden",
+                "region": "eu",
+                "sector": "Music streaming"
+          },
+          {
+                "id": "youtube",
+                "name": "YouTube (Google)",
+                "nameEn": "YouTube (Google)",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Video & music"
+          },
+          {
+                "id": "umg",
+                "name": "Universal Music Group",
+                "nameEn": "Universal Music Group",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Music distribution"
+          },
+          {
+                "id": "lvmh",
+                "name": "LVMH",
+                "nameEn": "LVMH",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Luxury beauty"
+          },
+          {
+                "id": "estee",
+                "name": "Estée Lauder",
+                "nameEn": "Estée Lauder",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Beauty"
+          },
+          {
+                "id": "nestle",
+                "name": "Nestlé",
+                "nameEn": "Nestlé",
+                "country": "스위스/Switzerland",
+                "region": "eu",
+                "sector": "F&B global"
+          },
+          {
+                "id": "pepsico",
+                "name": "PepsiCo",
+                "nameEn": "PepsiCo",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "F&B global"
+          },
+          {
+                "id": "costco",
+                "name": "Costco",
+                "nameEn": "Costco",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Retail"
+          },
+          {
+                "id": "booking",
+                "name": "Booking.com",
+                "nameEn": "Booking.com",
+                "country": "네덜란드/NL",
+                "region": "eu",
+                "sector": "OTA"
+          },
+          {
+                "id": "expedia",
+                "name": "Expedia",
+                "nameEn": "Expedia",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "OTA"
+          },
+          {
+                "id": "marriott",
+                "name": "Marriott",
+                "nameEn": "Marriott",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Hotels"
+          },
+          {
+                "id": "boeing",
+                "name": "Boeing",
+                "nameEn": "Boeing",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Aircraft"
+          },
+          {
+                "id": "airbus",
+                "name": "Airbus",
+                "nameEn": "Airbus",
+                "country": "유럽/Europe",
+                "region": "eu",
+                "sector": "Aircraft"
+          },
+          {
+                "id": "delta",
+                "name": "Delta Air Lines",
+                "nameEn": "Delta Air Lines",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Airline alliance"
+          },
+          {
+                "id": "tencent",
+                "name": "Tencent",
+                "nameEn": "Tencent",
+                "country": "중국/China",
+                "region": "cn",
+                "sector": "Digital content"
+          },
+          {
+                "id": "hwave_flow",
+                "name": "한류 수요 흐름(참고)",
+                "nameEn": "K-wave demand flow (reference)",
+                "country": "테마/Korea",
+                "region": "kr",
+                "sector": "Cross-sector K-demand (illus.)"
+          },
+          {
+                "id": "loreal",
+                "name": "L'Oréal",
+                "nameEn": "L'Oréal",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Beauty"
+          },
+          {
+                "id": "shiseido",
+                "name": "Shiseido",
+                "nameEn": "Shiseido",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Beauty"
+          },
+          {
+                "id": "intercos",
+                "name": "Intercos",
+                "nameEn": "Intercos",
+                "country": "이탈리아/Italy",
+                "region": "eu",
+                "sector": "Cosmetics ODM"
+          },
+          {
+                "id": "albea",
+                "name": "Albéa",
+                "nameEn": "Albéa",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Cosmetics packaging"
+          },
+          {
+                "id": "aptar",
+                "name": "Aptar",
+                "nameEn": "Aptar",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Dispensing packaging"
+          },
+          {
+                "id": "ckh",
+                "name": "CK Hutchison Holdings",
+                "country": "홍콩/Hong Kong",
+                "region": "cn",
+                "sector": "Operating holding peer"
+          }
     ];
 
     // ═══════════════════════════════════════════════════════

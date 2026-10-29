@@ -2984,27 +2984,174 @@
 
     ];
     const globalCompanies = [
-      { id: 'maersk', name: 'Maersk', nameEn: 'Maersk', country: '덴마크/Denmark', region: 'eu', sector: 'Container shipping' },
-      { id: 'msc', name: 'MSC', nameEn: 'MSC', country: '스위스/Switzerland', region: 'eu', sector: 'Container shipping' },
-      { id: 'cma_cgm', name: 'CMA CGM', nameEn: 'CMA CGM', country: '프랑스/France', region: 'eu', sector: 'Container shipping' },
-      { id: 'modec', name: 'MODEC', nameEn: 'MODEC', country: '일본/Japan', region: 'jp', sector: 'FPSO / offshore' },
-      { id: 'technip', name: 'Technip Energies', nameEn: 'Technip Energies', country: '프랑스/France', region: 'eu', sector: 'Offshore EPCI' },
-      { id: 'shell', name: 'Shell', nameEn: 'Shell', country: '영국/UK', region: 'gb', sector: 'LNG / energy' },
-      { id: 'total', name: 'TotalEnergies', nameEn: 'TotalEnergies', country: '프랑스/France', region: 'eu', sector: 'LNG / energy' },
-      { id: 'carnival', name: 'Carnival', nameEn: 'Carnival', country: '미국/USA', region: 'us', sector: 'Cruise' },
-      { id: 'wartsila', name: 'Wärtsilä', nameEn: 'Wärtsilä', country: '핀란드/Finland', region: 'eu', sector: 'Marine engines' },
-      { id: 'man_es', name: 'MAN ES', nameEn: 'MAN ES', country: '독일/Germany', region: 'eu', sector: 'Marine engines' },
-      { id: 'rolls_marine', name: 'Rolls-Royce MTU', nameEn: 'Rolls-Royce MTU', country: '영국/UK', region: 'gb', sector: 'Marine propulsion' },
-      { id: 'bae_systems', name: 'BAE Systems', nameEn: 'BAE Systems', country: '영국/UK', region: 'gb', sector: 'Naval systems' },
-      { id: 'lockheed', name: 'Lockheed Martin', nameEn: 'Lockheed Martin', country: '미국/USA', region: 'us', sector: 'Defense' },
-      { id: 'vale', name: 'Vale', nameEn: 'Vale', country: '브라질/Brazil', region: 'us', sector: 'Mining / dry bulk' },
-      { id: 'bhp', name: 'BHP', nameEn: 'BHP', country: '호주/Australia', region: 'us', sector: 'Mining' },
-      { id: 'rio_tinto', name: 'Rio Tinto', nameEn: 'Rio Tinto', country: '영국/UK', region: 'gb', sector: 'Mining' },
-      { id: 'airbus_d', name: 'Airbus', nameEn: 'Airbus', country: '유럽/Europe', region: 'eu', sector: 'Aerospace' },
-      { id: 'theme_lng', name: 'Theme: LNG선·엔진', nameEn: 'Theme: LNG선·엔진', country: '테마/Korea', region: 'kr', sector: 'Order cycle' },
-      { id: 'theme_green', name: 'Theme: 암모니아·메탄온 선', nameEn: 'Theme: 암모니아·메탄온 선', country: '테마/Korea', region: 'kr', sector: 'Order cycle' },
-      { id: 'theme_contain', name: 'Theme: 컨선·컨테이너', nameEn: 'Theme: 컨선·컨테이너', country: '테마/Korea', region: 'kr', sector: 'Order cycle' },
-      { id: 'theme_offshore', name: 'Theme: 해양플랜트·FPSO', nameEn: 'Theme: 해양플랜트·FPSO', country: '테마/Korea', region: 'kr', sector: 'Order cycle' }
+          {
+                "id": "maersk",
+                "name": "Maersk",
+                "nameEn": "Maersk",
+                "country": "덴마크/Denmark",
+                "region": "eu",
+                "sector": "Container shipping"
+          },
+          {
+                "id": "msc",
+                "name": "MSC",
+                "nameEn": "MSC",
+                "country": "스위스/Switzerland",
+                "region": "eu",
+                "sector": "Container shipping"
+          },
+          {
+                "id": "cma_cgm",
+                "name": "CMA CGM",
+                "nameEn": "CMA CGM",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Container shipping"
+          },
+          {
+                "id": "modec",
+                "name": "MODEC",
+                "nameEn": "MODEC",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "FPSO / offshore"
+          },
+          {
+                "id": "technip",
+                "name": "Technip Energies",
+                "nameEn": "Technip Energies",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Offshore EPCI"
+          },
+          {
+                "id": "shell",
+                "name": "Shell",
+                "nameEn": "Shell",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "LNG / energy"
+          },
+          {
+                "id": "total",
+                "name": "TotalEnergies",
+                "nameEn": "TotalEnergies",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "LNG / energy"
+          },
+          {
+                "id": "carnival",
+                "name": "Carnival",
+                "nameEn": "Carnival",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Cruise"
+          },
+          {
+                "id": "wartsila",
+                "name": "Wärtsilä",
+                "nameEn": "Wärtsilä",
+                "country": "핀란드/Finland",
+                "region": "eu",
+                "sector": "Marine engines"
+          },
+          {
+                "id": "man_es",
+                "name": "MAN ES",
+                "nameEn": "MAN ES",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Marine engines"
+          },
+          {
+                "id": "rolls_marine",
+                "name": "Rolls-Royce MTU",
+                "nameEn": "Rolls-Royce MTU",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "Marine propulsion"
+          },
+          {
+                "id": "bae_systems",
+                "name": "BAE Systems",
+                "nameEn": "BAE Systems",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "Naval systems"
+          },
+          {
+                "id": "lockheed",
+                "name": "Lockheed Martin",
+                "nameEn": "Lockheed Martin",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Defense"
+          },
+          {
+                "id": "vale",
+                "name": "Vale",
+                "nameEn": "Vale",
+                "country": "브라질/Brazil",
+                "region": "us",
+                "sector": "Mining / dry bulk"
+          },
+          {
+                "id": "bhp",
+                "name": "BHP",
+                "nameEn": "BHP",
+                "country": "호주/Australia",
+                "region": "us",
+                "sector": "Mining"
+          },
+          {
+                "id": "rio_tinto",
+                "name": "Rio Tinto",
+                "nameEn": "Rio Tinto",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "Mining"
+          },
+          {
+                "id": "airbus_d",
+                "name": "Airbus",
+                "nameEn": "Airbus",
+                "country": "유럽/Europe",
+                "region": "eu",
+                "sector": "Aerospace"
+          },
+          {
+                "id": "theme_lng",
+                "name": "Theme: LNG선·엔진",
+                "nameEn": "Theme: LNG선·엔진",
+                "country": "테마/Korea",
+                "region": "kr",
+                "sector": "Order cycle"
+          },
+          {
+                "id": "theme_green",
+                "name": "Theme: 암모니아·메탄온 선",
+                "nameEn": "Theme: 암모니아·메탄온 선",
+                "country": "테마/Korea",
+                "region": "kr",
+                "sector": "Order cycle"
+          },
+          {
+                "id": "theme_contain",
+                "name": "Theme: 컨선·컨테이너",
+                "nameEn": "Theme: 컨선·컨테이너",
+                "country": "테마/Korea",
+                "region": "kr",
+                "sector": "Order cycle"
+          },
+          {
+                "id": "theme_offshore",
+                "name": "Theme: 해양플랜트·FPSO",
+                "nameEn": "Theme: 해양플랜트·FPSO",
+                "country": "테마/Korea",
+                "region": "kr",
+                "sector": "Order cycle"
+          }
     ];
 
     // ═══════════════════════════════════════════════════════

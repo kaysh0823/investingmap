@@ -4109,25 +4109,158 @@
 
     ];
     const globalCompanies = [
-      { id: 'jpmorgan', name: 'JPMorgan Chase', nameEn: 'JPMorgan Chase', country: '미국/USA', region: 'us', sector: 'Global bank' },
-      { id: 'goldman', name: 'Goldman Sachs', nameEn: 'Goldman Sachs', country: '미국/USA', region: 'us', sector: 'Investment bank' },
-      { id: 'morgan_stanley', name: 'Morgan Stanley', nameEn: 'Morgan Stanley', country: '미국/USA', region: 'us', sector: 'Investment bank' },
-      { id: 'citi', name: 'Citigroup', nameEn: 'Citigroup', country: '미국/USA', region: 'us', sector: 'Global bank' },
-      { id: 'hsbc', name: 'HSBC', nameEn: 'HSBC', country: '영국/UK', region: 'gb', sector: 'Global bank' },
-      { id: 'blackrock', name: 'BlackRock', nameEn: 'BlackRock', country: '미국/USA', region: 'us', sector: 'Asset manager' },
-      { id: 'visa', name: 'Visa', nameEn: 'Visa', country: '미국/USA', region: 'us', sector: 'Payments' },
-      { id: 'mastercard', name: 'Mastercard', nameEn: 'Mastercard', country: '미국/USA', region: 'us', sector: 'Payments' },
-      { id: 'aig', name: 'AIG', nameEn: 'AIG', country: '미국/USA', region: 'us', sector: 'Insurance' },
-      { id: 'allianz', name: 'Allianz', nameEn: 'Allianz', country: '독일/Germany', region: 'eu', sector: 'Insurance' },
-      { id: 'metlife', name: 'MetLife', nameEn: 'MetLife', country: '미국/USA', region: 'us', sector: 'Life insurance' },
-      { id: 'prudential', name: 'Prudential', nameEn: 'Prudential', country: '미국/USA', region: 'us', sector: 'Life insurance' },
-      { id: 'munich_re', name: 'Munich Re', nameEn: 'Munich Re', country: '독일/Germany', region: 'eu', sector: 'Reinsurance' },
-      { id: 'lloyds', name: 'Lloyd\'s', nameEn: 'Lloyd\'s', country: '영국/UK', region: 'gb', sector: 'Insurance market' },
-      { id: 'interactive_brokers', name: 'Interactive Brokers', nameEn: 'Interactive Brokers', country: '미국/USA', region: 'us', sector: 'Online brokerage' },
-      { id: 'schwab', name: 'Charles Schwab', nameEn: 'Charles Schwab', country: '미국/USA', region: 'us', sector: 'Brokerage' },
-      { id: 'yuanta_tw', name: 'Yuanta Financial', nameEn: 'Yuanta Financial', country: '대만/Taiwan', region: 'tw', sector: 'Financial holding' },
-      { id: 'adb', name: 'ADB', nameEn: 'Asian Development Bank', country: '필리핀/Philippines', region: 'as', sector: 'Development finance' },
-      { id: 'ifc', name: 'IFC', nameEn: 'IFC (World Bank)', country: '미국/USA', region: 'us', sector: 'Development finance' }
+          {
+                "id": "jpmorgan",
+                "name": "JPMorgan Chase",
+                "nameEn": "JPMorgan Chase",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global bank"
+          },
+          {
+                "id": "goldman",
+                "name": "Goldman Sachs",
+                "nameEn": "Goldman Sachs",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Investment bank"
+          },
+          {
+                "id": "morgan_stanley",
+                "name": "Morgan Stanley",
+                "nameEn": "Morgan Stanley",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Investment bank"
+          },
+          {
+                "id": "citi",
+                "name": "Citigroup",
+                "nameEn": "Citigroup",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Global bank"
+          },
+          {
+                "id": "hsbc",
+                "name": "HSBC",
+                "nameEn": "HSBC",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "Global bank"
+          },
+          {
+                "id": "blackrock",
+                "name": "BlackRock",
+                "nameEn": "BlackRock",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Asset manager"
+          },
+          {
+                "id": "visa",
+                "name": "Visa",
+                "nameEn": "Visa",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Payments"
+          },
+          {
+                "id": "mastercard",
+                "name": "Mastercard",
+                "nameEn": "Mastercard",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Payments"
+          },
+          {
+                "id": "aig",
+                "name": "AIG",
+                "nameEn": "AIG",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Insurance"
+          },
+          {
+                "id": "allianz",
+                "name": "Allianz",
+                "nameEn": "Allianz",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Insurance"
+          },
+          {
+                "id": "metlife",
+                "name": "MetLife",
+                "nameEn": "MetLife",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Life insurance"
+          },
+          {
+                "id": "prudential",
+                "name": "Prudential",
+                "nameEn": "Prudential",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Life insurance"
+          },
+          {
+                "id": "munich_re",
+                "name": "Munich Re",
+                "nameEn": "Munich Re",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Reinsurance"
+          },
+          {
+                "id": "lloyds",
+                "name": "Lloyd's",
+                "nameEn": "Lloyd's",
+                "country": "영국/UK",
+                "region": "gb",
+                "sector": "Insurance market"
+          },
+          {
+                "id": "interactive_brokers",
+                "name": "Interactive Brokers",
+                "nameEn": "Interactive Brokers",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Online brokerage"
+          },
+          {
+                "id": "schwab",
+                "name": "Charles Schwab",
+                "nameEn": "Charles Schwab",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Brokerage"
+          },
+          {
+                "id": "yuanta_tw",
+                "name": "Yuanta Financial",
+                "nameEn": "Yuanta Financial",
+                "country": "대만/Taiwan",
+                "region": "tw",
+                "sector": "Financial holding"
+          },
+          {
+                "id": "adb",
+                "name": "ADB",
+                "nameEn": "Asian Development Bank",
+                "country": "필리핀/Philippines",
+                "region": "as",
+                "sector": "Development finance"
+          },
+          {
+                "id": "ifc",
+                "name": "IFC",
+                "nameEn": "IFC (World Bank)",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Development finance"
+          }
     ];
 
     // ═══════════════════════════════════════════════════════

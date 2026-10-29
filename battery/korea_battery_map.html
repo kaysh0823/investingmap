@@ -3351,26 +3351,166 @@
 
     ];
     const globalCompanies = [
-      { id: 'catl', name: 'CATL', nameEn: 'CATL', country: '중국/China', region: 'cn', sector: 'Battery cells & ESS' },
-      { id: 'tesla', name: 'Tesla', nameEn: 'Tesla', country: '미국/USA', region: 'us', sector: 'EV & Megapack' },
-      { id: 'vw_group', name: '폭스바겐 그룹', nameEn: 'Volkswagen Group', country: '독일/Germany', region: 'eu', sector: 'OEM EV platforms' },
-      { id: 'bmw', name: 'BMW', nameEn: 'BMW', country: '독일/Germany', region: 'eu', sector: 'Premium EV' },
-      { id: 'gm_ev', name: 'GM', nameEn: 'General Motors', country: '미국/USA', region: 'us', sector: 'Ultium platform' },
-      { id: 'siemens_energy', name: 'Siemens Energy', nameEn: 'Siemens Energy', country: '독일/Germany', region: 'eu', sector: 'Turbines & grid' },
-      { id: 'ge_vernova', name: 'GE Vernova', nameEn: 'GE Vernova', country: '미국/USA', region: 'us', sector: 'Gas turbines & grid' },
-      { id: 'vestas', name: 'Vestas', nameEn: 'Vestas', country: '덴마크/Denmark', region: 'eu', sector: 'Wind turbines' },
-      { id: 'first_solar', name: 'First Solar', nameEn: 'First Solar', country: '미국/USA', region: 'us', sector: 'Thin-film solar' },
-      { id: 'enphase', name: 'Enphase', nameEn: 'Enphase Energy', country: '미국/USA', region: 'us', sector: 'Microinverters' },
-      { id: 'orano', name: '오라노', nameEn: 'Orano', country: '프랑스/France', region: 'eu', sector: 'Nuclear fuel cycle' },
-      { id: 'mitsubishi_heavy', name: '미쓰비시중공업', nameEn: 'Mitsubishi Heavy Industries', country: '일본/Japan', region: 'jp', sector: 'Nuclear & GT' },
-      { id: 'bloom_energy', name: 'Bloom Energy', nameEn: 'Bloom Energy', country: '미국/USA', region: 'us', sector: 'Solid-oxide FC' },
-      { id: 'plug_power', name: 'Plug Power', nameEn: 'Plug Power', country: '미국/USA', region: 'us', sector: 'Hydrogen systems' },
-      { id: 'schneider_e', name: '슈나이더 일렉트릭', nameEn: 'Schneider Electric', country: '프랑스/France', region: 'eu', sector: 'Grid & automation' },
-      { id: 'abb', name: 'ABB', nameEn: 'ABB', country: '스위스/Switzerland', region: 'eu', sector: 'Electrification' },
-      { id: 'toyota_ms', name: '도요타', nameEn: 'Toyota Motor', country: '일본/Japan', region: 'jp', sector: 'FC mobility' },
-      { id: 'hyundai_mt', name: '현대차', nameEn: 'Hyundai Motor', country: '한국/Korea', region: 'kr', sector: 'Hydrogen mobility pilot' },
-      { id: 'panasonic', name: 'Panasonic', nameEn: 'Panasonic', country: '일본/Japan', region: 'jp', sector: 'Battery cells & industrial' },
-      { id: 'umicore', name: 'Umicore', nameEn: 'Umicore', country: '벨기에/Belgium', region: 'eu', sector: 'Battery recycling & materials' }
+          {
+                "id": "catl",
+                "name": "CATL",
+                "nameEn": "CATL",
+                "country": "중국/China",
+                "region": "cn",
+                "sector": "Battery cells & ESS"
+          },
+          {
+                "id": "tesla",
+                "name": "Tesla",
+                "nameEn": "Tesla",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "EV & Megapack"
+          },
+          {
+                "id": "vw_group",
+                "name": "폭스바겐 그룹",
+                "nameEn": "Volkswagen Group",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "OEM EV platforms"
+          },
+          {
+                "id": "bmw",
+                "name": "BMW",
+                "nameEn": "BMW",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Premium EV"
+          },
+          {
+                "id": "gm_ev",
+                "name": "GM",
+                "nameEn": "General Motors",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Ultium platform"
+          },
+          {
+                "id": "siemens_energy",
+                "name": "Siemens Energy",
+                "nameEn": "Siemens Energy",
+                "country": "독일/Germany",
+                "region": "eu",
+                "sector": "Turbines & grid"
+          },
+          {
+                "id": "ge_vernova",
+                "name": "GE Vernova",
+                "nameEn": "GE Vernova",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Gas turbines & grid"
+          },
+          {
+                "id": "vestas",
+                "name": "Vestas",
+                "nameEn": "Vestas",
+                "country": "덴마크/Denmark",
+                "region": "eu",
+                "sector": "Wind turbines"
+          },
+          {
+                "id": "first_solar",
+                "name": "First Solar",
+                "nameEn": "First Solar",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Thin-film solar"
+          },
+          {
+                "id": "enphase",
+                "name": "Enphase",
+                "nameEn": "Enphase Energy",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Microinverters"
+          },
+          {
+                "id": "orano",
+                "name": "오라노",
+                "nameEn": "Orano",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Nuclear fuel cycle"
+          },
+          {
+                "id": "mitsubishi_heavy",
+                "name": "미쓰비시중공업",
+                "nameEn": "Mitsubishi Heavy Industries",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Nuclear & GT"
+          },
+          {
+                "id": "bloom_energy",
+                "name": "Bloom Energy",
+                "nameEn": "Bloom Energy",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Solid-oxide FC"
+          },
+          {
+                "id": "plug_power",
+                "name": "Plug Power",
+                "nameEn": "Plug Power",
+                "country": "미국/USA",
+                "region": "us",
+                "sector": "Hydrogen systems"
+          },
+          {
+                "id": "schneider_e",
+                "name": "슈나이더 일렉트릭",
+                "nameEn": "Schneider Electric",
+                "country": "프랑스/France",
+                "region": "eu",
+                "sector": "Grid & automation"
+          },
+          {
+                "id": "abb",
+                "name": "ABB",
+                "nameEn": "ABB",
+                "country": "스위스/Switzerland",
+                "region": "eu",
+                "sector": "Electrification"
+          },
+          {
+                "id": "toyota_ms",
+                "name": "도요타",
+                "nameEn": "Toyota Motor",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "FC mobility"
+          },
+          {
+                "id": "hyundai_mt",
+                "name": "현대차",
+                "nameEn": "Hyundai Motor",
+                "country": "한국/Korea",
+                "region": "kr",
+                "sector": "Hydrogen mobility pilot"
+          },
+          {
+                "id": "panasonic",
+                "name": "Panasonic",
+                "nameEn": "Panasonic",
+                "country": "일본/Japan",
+                "region": "jp",
+                "sector": "Battery cells & industrial"
+          },
+          {
+                "id": "umicore",
+                "name": "Umicore",
+                "nameEn": "Umicore",
+                "country": "벨기에/Belgium",
+                "region": "eu",
+                "sector": "Battery recycling & materials"
+          }
     ];
 
     // ═══════════════════════════════════════════════════════

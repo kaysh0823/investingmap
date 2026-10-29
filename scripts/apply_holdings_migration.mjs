@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { HUB_MAP_PATHS, SECTOR_META } from '../lib/sector_meta.mjs';
 import { esc, extractCompaniesFromHtml, patchKoreanCompaniesHtml } from '../lib/map_company_serialize.mjs';
 import { HOLDINGS_DESTINATIONS } from '../lib/holdings_migration.mjs';
+import { HOLDINGS_CONFIG } from '../lib/curated_sector_configs.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const migration = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/holdings_migration.json'), 'utf8'));
@@ -20,6 +21,10 @@ function remapRefs(value) {
   const ticker = String(out.ticker || out.id?.replace(/^krx:/, '') || '');
   const sector = HOLDINGS_DESTINATIONS[ticker];
   if (sector) {
+    if (out.map && (!out.name || out.name === ticker)) {
+      out.name = rows.get(ticker).company.name;
+      out.nameEn = rows.get(ticker).company.nameEn;
+    }
     if (out.sector === 'holdings') out.sector = sector;
     if (out.sectorId === 'holdings') out.sectorId = sector;
     for (const key of ['map', 'mapPath', 'href', 'url']) {
@@ -86,6 +91,17 @@ for (const [sector, rel] of HUB_MAP_PATHS) {
   });
   const companies = [...retained, ...incoming].map(remapRefs).sort((a, b) => (b.mcapWon || 0) - (a.mcapWon || 0));
   content = patchKoreanCompaniesHtml(content, companies);
+  // Keep existing holding-peer labels resolvable in their new sector tables.
+  if (incoming.length) {
+    content = content.replace(/const globalCompanies\s*=\s*(\[[\s\S]*?\]);/, (_, literal) => {
+      const globals = Function('return (' + literal + ')')();
+      const used = new Set(incoming.flatMap(c => (c.partners || []).map(p => typeof p === 'string' ? p : p.id)));
+      for (const peer of HOLDINGS_CONFIG.globals) {
+        if (used.has(peer.id) && !globals.some(g => g.id === peer.id)) globals.push(peer);
+      }
+      return 'const globalCompanies = ' + JSON.stringify(globals, null, 6).replace(/\n/g, '\n    ') + ';';
+    });
+  }
   if (incoming.length) content = patchChainUi(content);
   fs.writeFileSync(file, content);
   if (incoming.length) console.log(`${sector}: ${incoming.length} companies -> 지주회사`);
