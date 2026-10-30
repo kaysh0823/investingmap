@@ -11,7 +11,7 @@ const DIST = path.join(ROOT, 'dist');
 const read = rel => fs.readFileSync(path.join(DIST, rel), 'utf8');
 const hub = JSON.parse(read('data/hub_index.json'));
 const migration = JSON.parse(read('data/holdings_migration.json'));
-assert.equal(Object.keys(hub.sectors).length, 25, '25 active sectors after holdings retirement');
+assert.equal(Object.keys(hub.sectors).length, 24, '24 active sectors after holdings retirement');
 assert.ok(!hub.sectors.holdings && !SECTOR_META.holdings, 'holdings must not return as an aggregate sector');
 assert.equal(migration.rows.length, 51);
 assert.equal(Object.keys(HOLDINGS_DESTINATIONS).length, 51);
@@ -54,4 +54,4 @@ for (const rel of ['data/hub_rs_snapshot.json', 'data/hub_sector_returns.json'])
 for (const [id, meta] of Object.entries(SECTOR_META)) {
   assert.ok(!/<a\b[^>]*href=["'][^"']*holdings\/korea_holdings_map/.test(read(meta.map)), `${id}: retired navigation link`);
 }
-console.log('verify:holdings-migration OK — 51 stocks, 17 destination sectors, 25 active sectors, stable identities, unique aggregation, chain UI, search and redirects');
+console.log('verify:holdings-migration OK — 51 stocks, 16 destination sectors, 24 active sectors, stable identities, unique aggregation, chain UI, search and redirects');

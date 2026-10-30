@@ -1,3 +1,7 @@
 /holdings/korea_holdings_map.html /index.html 301
 /holdings/korea_holdings_map /index.html 301
 /holdings/ /index.html 301
+
+/machinery/korea_machinery_map.html /construction/korea_construction_map.html 301
+/machinery/korea_machinery_map /construction/korea_construction_map 301
+/machinery/ /construction/korea_construction_map.html 301

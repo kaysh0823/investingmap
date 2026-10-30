@@ -11,6 +11,7 @@ const STEPS = [
   'verify_momentum.mjs',
   'verify_momentum_filters.mjs',
   'verify_holdings_migration.mjs',
+  'verify_construction_machinery.mjs',
   'verify_sector_rs.mjs',
   'verify_hub_range_scatter.mjs',
   'verify_hub_bb_score.mjs',

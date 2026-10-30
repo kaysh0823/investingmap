@@ -28,6 +28,7 @@ const steps = [
   ['node', ['scripts/patch_adsense_head.mjs']],
   // Must be last after every patch_* that may insert/rewrite script tags.
   ['node', ['scripts/apply_holdings_migration.mjs']],
+  ['node', ['scripts/merge_construction_machinery.mjs']],
   ['node', ['scripts/sync_map_badges.mjs']],
   ['node', ['scripts/retire_holdings_sector.mjs']],
   ['node', ['scripts/patch_asset_versions.mjs']],

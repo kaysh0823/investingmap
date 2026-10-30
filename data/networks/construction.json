@@ -597,6 +597,50 @@
       "defaultHidden": true
     },
     {
+      "id": "global:ckh",
+      "type": "global_company",
+      "nameKo": "CK Hutchison Holdings",
+      "nameEn": "CK Hutchison Holdings",
+      "country": "홍콩/Hong Kong",
+      "region": "cn",
+      "role": "global_contractor_peer",
+      "lane": "overseas_epc",
+      "defaultHidden": true
+    },
+    {
+      "id": "global:nippon_steel",
+      "type": "global_company",
+      "nameKo": "Nippon Steel",
+      "nameEn": "Nippon Steel",
+      "country": "일본/Japan",
+      "region": "jp",
+      "role": "global_contractor_peer",
+      "lane": "overseas_epc",
+      "defaultHidden": true
+    },
+    {
+      "id": "global:arcelormittal",
+      "type": "global_company",
+      "nameKo": "ArcelorMittal",
+      "nameEn": "ArcelorMittal",
+      "country": "룩셈부르크/Luxembourg",
+      "region": "eu",
+      "role": "global_contractor_peer",
+      "lane": "overseas_epc",
+      "defaultHidden": true
+    },
+    {
+      "id": "global:glencore",
+      "type": "global_company",
+      "nameKo": "Glencore",
+      "nameEn": "Glencore",
+      "country": "스위스/Switzerland",
+      "region": "eu",
+      "role": "global_contractor_peer",
+      "lane": "overseas_epc",
+      "defaultHidden": true
+    },
+    {
       "id": "org:qatar-energy",
       "type": "public_corporation",
       "nameKo": "카타르에너지(QatarEnergy)",

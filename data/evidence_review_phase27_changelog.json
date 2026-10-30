@@ -682,16 +682,6 @@
       "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250114800153"
     },
     {
-      "edgeId": "controls-sk-sksquare",
-      "source": "krx:034730",
-      "target": "krx:402340",
-      "type": "owns",
-      "before": "reported/controls",
-      "after": "reported/owns",
-      "reason": "지배 미확인 — 최대주주 지분 32.16% owns로 교정",
-      "evidenceUrl": "https://kind.krx.co.kr/external/2024/05/31/000228/20240531000414/99667.htm"
-    },
-    {
       "edgeId": "prime-kf21-kai",
       "source": "krx:047810",
       "target": "program:kf21",

@@ -1,5 +1,5 @@
 {
-  "sectorId": "machinery",
+  "sectorId": "construction",
   "version": 1,
   "asOf": "2026-09-25",
   "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",

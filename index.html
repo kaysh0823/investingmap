@@ -2195,19 +2195,13 @@
         <p class="hub-card-keyplayers" id="card-metal-keyplayers"></p><div class="hub-card-tags" id="card-metal-tags"></div>
         <p class="hub-card-map" id="card-metal-map">KRX metrics, value-chain tags, company table, and analysis tabs.</p><span class="hub-card-cta" id="card-metal-cta">Open map →</span>
       </a>
-      <a class="hub-card" id="hub-link-machinery" href="machinery/korea_machinery_map.html?tab=heatmap">
-        <div class="hub-card-head"><span class="hub-card-icon" aria-hidden="true">🚧</span><span class="hub-card-badge" id="card-machinery-badge">7 LISTINGS</span></div>
-        <h2 id="card-machinery-title">한국 산업·건설기계 투자 지도</h2>
-        <p class="hub-card-lead" id="card-machinery-lead"></p>
-        <p class="hub-card-keyplayers" id="card-machinery-keyplayers"></p><div class="hub-card-tags" id="card-machinery-tags"></div>
-        <p class="hub-card-map" id="card-machinery-map">KRX metrics, value-chain tags, company table, and analysis tabs.</p><span class="hub-card-cta" id="card-machinery-cta">Open map →</span>
-      </a>
+
 <a class="hub-card" id="hub-link-construction" href="construction/korea_construction_map.html?tab=heatmap">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">🏗️</span>
-          <span class="hub-card-badge" id="card-construction-badge">23 LISTINGS</span>
+          <span class="hub-card-badge" id="card-construction-badge">30 LISTINGS</span>
         </div>
-        <h2 id="card-construction-title">한국 건설 투자 지도</h2>
+        <h2 id="card-construction-title">한국 건설/기계 투자 지도</h2>
         <p class="hub-card-lead" id="card-construction-lead">종합건설·주택·디벨로퍼·건설기계 밸류체인과 글로벌 peer 참고 관계</p>
         <p class="hub-card-keyplayers" id="card-construction-keyplayers"></p>
         <div class="hub-card-tags" id="card-construction-tags"></div>
@@ -2389,7 +2383,7 @@
   <script src="js/returns_tick.js?v=67fa0ba1"></script>
   <script src="js/returns_badge.js?v=20348c1a"></script>
   <script src="js/sector_weighting.js?v=9b87ed82"></script>
-  <script src="js/hub_dashboard.js?v=b90725b7"></script>
+  <script src="js/hub_dashboard.js?v=be95ff1f"></script>
   <script src="js/map_tab_search.js?v=c1d43a06"></script>
   <script src="js/candle_modal.js?v=df8c7b98"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -2480,7 +2474,7 @@
         financeTitle: '한국 금융 투자 지도',
         financeLead: '은행·증권·보험·카드·캐피탈 밸류체인과 글로벌 peer 참고 관계',
         financeCta: '지도 열기 →',
-        constructionTitle: '한국 건설 투자 지도',
+        constructionTitle: '한국 건설/기계 투자 지도',
         constructionLead: '종합건설·주택·디벨로퍼·건설기계 밸류체인과 글로벌 peer 참고 관계',
         constructionCta: '지도 열기 →',
         bigchipTitle: '한국 삼성전자/하이닉스 투자 지도',
@@ -2598,7 +2592,7 @@
         financeTitle: 'Korea Listed Financials Map',
         financeLead: 'Banks, securities, insurance, cards and consumer finance—listed Korean financials with global peer relationships.',
         financeCta: 'Open map →',
-        constructionTitle: 'Korea Construction Sector Map',
+        constructionTitle: 'Korea Construction & Machinery Map',
         constructionLead: 'General contractors, housing developers, and construction equipment—listed Korean companies with global peer relationships.',
         constructionCta: 'Open map →',
         bigchipTitle: 'Korea Samsung/SK hynix Map',
@@ -2706,7 +2700,7 @@
       document.getElementById('hub-link-elec').href = 'elec/korea_elec_map.html' + mapQl;
       document.getElementById('hub-link-metal').href = 'metal/korea_metal_map.html' + mapQl;
       var elMachinery = document.getElementById('hub-link-machinery');
-      if (elMachinery) elMachinery.href = 'machinery/korea_machinery_map.html' + mapQl;
+      if (elMachinery) elMachinery.href = 'construction/korea_construction_map.html' + mapQl;
       var elShipping = document.getElementById('hub-link-shipping');
       if (elShipping) elShipping.href = 'shipping/korea_shipping_map.html' + mapQl;
       document.getElementById('hdr-title').textContent = t.introTitle;
@@ -2770,7 +2764,7 @@
       document.getElementById('card-construction-title').textContent = t.constructionTitle;
       document.getElementById('card-construction-lead').textContent = t.constructionLead;
       document.getElementById('card-construction-cta').textContent = t.constructionCta;
-      ['bigchip', 'software', 'telecom', 'chemical', 'travel', 'elec', 'metal', 'machinery', 'shipping'].forEach(function (id) {
+      ['bigchip', 'software', 'telecom', 'chemical', 'travel', 'elec', 'metal', 'shipping'].forEach(function (id) {
         var titleEl = document.getElementById('card-' + id + '-title');
         if (!titleEl) return;
         titleEl.textContent = t[id + 'Title'];
@@ -2815,9 +2809,9 @@ document.title = lang === 'en'
 
     applyLang();
   </script>
-  <script src="js/desktop_sidebar_nav.js?v=42255504"></script>
-  <script src="js/global_search.js?v=0b6c6649"></script>
-  <script src="js/global_bottom_nav.js?v=99ed7c0e"></script>
+  <script src="js/desktop_sidebar_nav.js?v=80e99482"></script>
+  <script src="js/global_search.js?v=14296898"></script>
+  <script src="js/global_bottom_nav.js?v=9c649cb1"></script>
   <script src="js/geo_footer.js"></script>
 </body>
 

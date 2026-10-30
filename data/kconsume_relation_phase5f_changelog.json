@@ -2,10 +2,10 @@
   "phase": "5F",
   "sector": "kconsume",
   "asOf": "2026-08-29",
-  "listedCompanyCount": 36,
-  "nodeCount": 75,
-  "edgeCount": 78,
-  "structuralGenerated": 75,
+  "listedCompanyCount": 45,
+  "nodeCount": 84,
+  "edgeCount": 87,
+  "structuralGenerated": 84,
   "legacyMigrated": 3,
   "manuallyCurated": 2,
   "removedUnsupported": 1,
@@ -56,6 +56,11 @@
       "action": "structural_specializes_in",
       "ticker": "271560",
       "category": "consumer_category:confectionery"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "001040",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -134,6 +139,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "004990",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "282330",
       "lane": "brand_owner"
     },
@@ -156,6 +166,16 @@
       "action": "structural_specializes_in",
       "ticker": "004370",
       "category": "consumer_category:instant-noodles"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "005440",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "009970",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -214,6 +234,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "001800",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "007310",
       "lane": "brand_owner"
     },
@@ -231,6 +256,11 @@
       "action": "structural_specializes_in",
       "ticker": "007310",
       "category": "consumer_category:sauces-condiments"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "003380",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -309,6 +339,11 @@
     },
     {
       "action": "structural_member_of",
+      "ticker": "007700",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
       "ticker": "452260",
       "lane": "brand_owner"
     },
@@ -321,6 +356,11 @@
       "action": "structural_specializes_in",
       "ticker": "145990",
       "category": "consumer_category:food-ingredients"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "072710",
+      "lane": "brand_owner"
     },
     {
       "action": "structural_member_of",
@@ -350,6 +390,11 @@
     {
       "action": "structural_member_of",
       "ticker": "003800",
+      "lane": "brand_owner"
+    },
+    {
+      "action": "structural_member_of",
+      "ticker": "027410",
       "lane": "brand_owner"
     },
     {

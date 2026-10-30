@@ -1002,7 +1002,7 @@
     },
     {
       "ticker": "0220W0",
-      "sector": "machinery",
+      "sector": "construction",
       "reason": "한화모멘텀 등 기계·자동화 테크 사업 연결",
       "company": {
         "id": "holdings_hanwha_machinery_service",

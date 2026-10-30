@@ -49,7 +49,7 @@
       "merged": [],
       "entityIssues": [],
       "validateFailures": 0,
-      "validateWarnings": 1
+      "validateWarnings": 0
     },
     "defense": {
       "remap": [

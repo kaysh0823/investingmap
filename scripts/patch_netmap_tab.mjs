@@ -36,7 +36,6 @@ const MAP_SECTOR = {
   'travel/korea_travel_map.html': 'travel',
   'elec/korea_elec_map.html': 'elec',
   'metal/korea_metal_map.html': 'metal',
-  'machinery/korea_machinery_map.html': 'machinery',
   'shipping/korea_shipping_map.html': 'shipping',
 };
 

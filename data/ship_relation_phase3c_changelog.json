@@ -26,9 +26,9 @@
     "supplies_equipment_to": 5
   },
   "orphanMetrics": {
-    "structuralOrphanCount": 8,
-    "businessRelationOrphanCount": 17,
-    "directRelationshipOrphanCount": 10,
+    "structuralOrphanCount": 9,
+    "businessRelationOrphanCount": 18,
+    "directRelationshipOrphanCount": 11,
     "classificationOnlyCompanyCount": 2,
     "weakRelationOnlyCompanyCount": 9
   },

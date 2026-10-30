@@ -311,6 +311,50 @@
     },
     {
       "legacyEdgeId": null,
+      "source": "krx:006260",
+      "target": "group:chain_%EC%A7%80%EC%A3%BC%ED%9A%8C%EC%82%AC",
+      "beforeType": null,
+      "afterType": "member_of",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "chain classification"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:006260",
+      "target": "equipment:power_transformer",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:006260",
+      "target": "equipment:switchgear",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:006260",
+      "target": "equipment:grid_automation",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
       "source": "krx:000500",
       "target": "group:chain_%EC%A0%84%EC%84%A0%C2%B7%EC%BC%80%EC%9D%B4%EB%B8%94",
       "beforeType": null,
@@ -455,6 +499,50 @@
     {
       "legacyEdgeId": null,
       "source": "krx:036460",
+      "target": "equipment:grid_automation",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:004800",
+      "target": "group:chain_%EC%A7%80%EC%A3%BC%ED%9A%8C%EC%82%AC",
+      "beforeType": null,
+      "afterType": "member_of",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "chain classification"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:004800",
+      "target": "equipment:power_transformer",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:004800",
+      "target": "equipment:switchgear",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:004800",
       "target": "equipment:grid_automation",
       "beforeType": null,
       "afterType": "manufactures",
@@ -750,6 +838,50 @@
       "reason": "role equipment"
     },
     {
+      "legacyEdgeId": null,
+      "source": "krx:015860",
+      "target": "group:chain_%EC%A7%80%EC%A3%BC%ED%9A%8C%EC%82%AC",
+      "beforeType": null,
+      "afterType": "member_of",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "chain classification"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:015860",
+      "target": "equipment:power_transformer",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:015860",
+      "target": "equipment:switchgear",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "krx:015860",
+      "target": "equipment:grid_automation",
+      "beforeType": null,
+      "afterType": "manufactures",
+      "beforeStatus": null,
+      "afterStatus": "reference",
+      "origin": "structuralGenerated",
+      "reason": "role equipment"
+    },
+    {
       "legacyEdgeId": "010120-abb",
       "source": "krx:010120",
       "target": "global:abb",
@@ -871,6 +1003,17 @@
       "reason": "non-grid global dropped from powergrid peer set"
     },
     {
+      "legacyEdgeId": "006260-ckh",
+      "source": "krx:006260",
+      "target": "ckh",
+      "beforeType": "partner",
+      "afterType": "removed",
+      "beforeStatus": "legacy",
+      "afterStatus": "removed",
+      "origin": "legacyMigrated",
+      "reason": "non-grid global dropped from powergrid peer set"
+    },
+    {
       "legacyEdgeId": "062040-siemens_energy",
       "source": "krx:062040",
       "target": "global:siemens_energy",
@@ -957,6 +1100,17 @@
       "afterStatus": "removed",
       "origin": "legacyMigrated",
       "reason": "theme/utility demand → market exposure, not partner edge"
+    },
+    {
+      "legacyEdgeId": "004800-ckh",
+      "source": "krx:004800",
+      "target": "ckh",
+      "beforeType": "partner",
+      "afterType": "removed",
+      "beforeStatus": "legacy",
+      "afterStatus": "removed",
+      "origin": "legacyMigrated",
+      "reason": "non-grid global dropped from powergrid peer set"
     },
     {
       "legacyEdgeId": "033100-schneider_e",
@@ -1049,30 +1203,30 @@
   ],
   "metrics": {
     "legacyMigratedEdgeCount": 19,
-    "structuralGeneratedEdgeCount": 141,
+    "structuralGeneratedEdgeCount": 165,
     "manuallyCuratedEdgeCount": 6,
-    "removedEdgeCount": 2,
-    "finalEdgeCount": 166,
+    "removedEdgeCount": 4,
+    "finalEdgeCount": 190,
     "legacyMigratedBusinessEdgeCount": 19,
     "manuallyCuratedBusinessEdgeCount": 6,
     "confirmedBusinessEdgeCount": 0,
     "reportedBusinessEdgeCount": 2,
-    "businessRelationOrphanCount": 15,
-    "classificationOnlyCompanyCount": 8,
+    "businessRelationOrphanCount": 18,
+    "classificationOnlyCompanyCount": 11,
     "weakRelationOnlyCompanyCount": 0,
-    "directRelationshipOrphanCount": 15,
+    "directRelationshipOrphanCount": 18,
     "phase4aMigratedAt": "2026-08-23"
   },
   "statusCounts": {
-    "reference": 145,
+    "reference": 169,
     "peer": 19,
     "reported": 2
   },
   "typeCounts": {
-    "used_in_grid_stage": 48,
-    "member_of": 17,
-    "manufactures": 37,
-    "exposed_to": 39,
+    "used_in_grid_stage": 54,
+    "member_of": 20,
+    "manufactures": 46,
+    "exposed_to": 45,
     "peer": 19,
     "awarded_contract": 2,
     "supplies_transformer_to": 1,
@@ -1089,7 +1243,7 @@
     ]
   },
   "audit": {
-    "listedCount": 17,
+    "listedCount": 20,
     "tickers": [
       {
         "ticker": "010120",
@@ -1114,6 +1268,12 @@
         "name": "한국전력",
         "chain": "유틸리티",
         "partners": 3
+      },
+      {
+        "ticker": "006260",
+        "name": "LS",
+        "chain": "지주회사",
+        "partners": 1
       },
       {
         "ticker": "000500",
@@ -1144,6 +1304,12 @@
         "name": "한국가스공사",
         "chain": "유틸리티",
         "partners": 2
+      },
+      {
+        "ticker": "004800",
+        "name": "효성",
+        "chain": "지주회사",
+        "partners": 1
       },
       {
         "ticker": "229640",
@@ -1192,10 +1358,16 @@
         "name": "삼천리",
         "chain": "유틸리티",
         "partners": 0
+      },
+      {
+        "ticker": "015860",
+        "name": "일진홀딩스",
+        "chain": "지주회사",
+        "partners": 0
       }
     ],
-    "legacyPartnerEdges": 21,
-    "globalCandidates": 18,
+    "legacyPartnerEdges": 23,
+    "globalCandidates": 19,
     "gridGlobalsKept": [
       "siemens_energy",
       "ge_vernova",

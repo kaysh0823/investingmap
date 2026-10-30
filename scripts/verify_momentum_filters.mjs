@@ -14,7 +14,7 @@ const read = rel => fs.readFileSync(path.join(target, rel), 'utf8');
 const groups = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/hub_index.json'), 'utf8')).sectors;
 const pages = [...new Set(Object.values(groups).map(group => group.meta.map))];
 assert.equal(pages.length, Object.keys(SECTOR_META).length, 'all active sectors must be tested');
-assert.ok(pages.length >= 25, 'active sector inventory must not shrink below 25');
+assert.ok(pages.length >= 24, 'active sector inventory must not shrink below 24');
 assert.ok(!groups.holdings, 'retired holdings sector must not return');
 const source = read('js/map_momentum.js');
 const searchSource = read('js/map_tab_search.js');

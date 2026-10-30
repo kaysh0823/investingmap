@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'machinery', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance', 'holdings'];
+  var SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return5dPct', labelKey: 'pulseRow5d' },

@@ -30,13 +30,13 @@ const jsMaps = extractSectorMapFromJs();
 
 assert.equal(
   Object.keys(metaMaps).length,
-  25,
-  'sector_meta must define 25 sectors',
+  24,
+  'sector_meta must define 24 sectors',
 );
 assert.equal(
   Object.keys(jsMaps).length,
-  25,
-  'global_search SECTOR_MAP must define 25 sectors',
+  24,
+  'global_search SECTOR_MAP must define 24 sectors',
 );
 
 for (const [sid, mapPath] of Object.entries(metaMaps)) {

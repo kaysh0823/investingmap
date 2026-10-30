@@ -216,7 +216,6 @@
         semType: 'Integrated pharma', semTypeEn: 'Integrated pharma',
         products: '나보타(보톡스), 펙수클루 등', productsEn: 'Biotech and healthcare products and services',
         sectorId: 'pharma_integrated',
-        relations: [{"relationId":"aesthetic-bio","type":"제품연관","label":"에스테틱↔바이오(톡신·재생)","chip":"연관","chipEn":"Related","ticker":"145020","name":"휴젤","nameEn":"Hugel, Inc.","sector":"cosmetics","map":"cosmetics/korea_cosmetics_map.html"},{"relationId":"aesthetic-bio","type":"제품연관","label":"에스테틱↔바이오(톡신·재생)","chip":"연관","chipEn":"Related","ticker":"086900","name":"메디톡스","nameEn":"Medytox","sector":"cosmetics","map":"cosmetics/korea_cosmetics_map.html"},{"relationId":"aesthetic-bio","type":"제품연관","label":"에스테틱↔바이오(톡신·재생)","chip":"연관","chipEn":"Related","ticker":"214450","name":"파마리서치","nameEn":"Pharma Research","sector":"cosmetics","map":"cosmetics/korea_cosmetics_map.html"}],
         revenue: '1.27조원', mcapWon: 1265253990000, per: 7.06, pbr: 1.37, revTier: 2, partners: ['glob_sdz', 'glob_amgn', 'glob_teva']
       },
 

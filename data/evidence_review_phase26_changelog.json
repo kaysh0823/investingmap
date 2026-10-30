@@ -12,16 +12,6 @@
       "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250114800153"
     },
     {
-      "edgeId": "controls-sk-sksquare",
-      "source": "krx:034730",
-      "target": "krx:402340",
-      "type": "controls",
-      "before": "reported",
-      "after": "reported",
-      "reason": "DART 루트 URL → SK스퀘어 반기보고서로 교체, controls 직접 입증 미완",
-      "evidenceUrl": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20250814002335"
-    },
-    {
       "edgeId": "prime-kf21-kai",
       "source": "krx:047810",
       "target": "program:kf21",

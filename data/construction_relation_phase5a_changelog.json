@@ -103,6 +103,21 @@
       "reason": "Structural ecosystem membership"
     },
     {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
+      "afterType": "member_of",
+      "origin": "phase5a_structural",
+      "reason": "Structural ecosystem membership"
+    },
+    {
       "beforeType": "partners_array",
       "afterType": "peer",
       "afterEditorialStatus": "peer",

@@ -1,5 +1,5 @@
 /**
- * Assert WIP relation-network GRAPH tab is gone from all 25 sector pages.
+ * Assert WIP relation-network GRAPH tab is gone from all 24 sector pages.
  * Also unit-tests map_tab_state graph→netmap remap.
  */
 import assert from 'node:assert/strict';
@@ -20,7 +20,7 @@ const FORBIDDEN = [
 ];
 
 const mapFiles = Object.keys(MAP_SECTOR);
-assert.equal(mapFiles.length, 25, `expected 25 sector maps, got ${mapFiles.length}`);
+assert.equal(mapFiles.length, 24, `expected 24 sector maps, got ${mapFiles.length}`);
 
 for (const rel of mapFiles) {
   const candidates = [path.join(ROOT, 'dist', rel), path.join(ROOT, rel)];
@@ -95,4 +95,4 @@ for (const rel of mapFiles) {
   assert.equal(Tab.publicTab('graph'), 'heatmap');
 }
 
-console.log('verify:no-graph-tab OK — 25 maps clean; getTab(?tab=graph)→netmap');
+console.log('verify:no-graph-tab OK — 24 maps clean; getTab(?tab=graph)→netmap');

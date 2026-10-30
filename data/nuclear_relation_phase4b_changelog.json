@@ -9,7 +9,7 @@
     "structuralGenerated": 19,
     "manuallyCurated": 22,
     "legacyMigrated": 7,
-    "removedUnsupported": 15,
+    "removedUnsupported": 16,
     "metrics": {
       "structuralGeneratedEdgeCount": 20,
       "lifecycleRoleEdgeCount": 2,
@@ -249,6 +249,19 @@
     {
       "legacyEdgeId": null,
       "source": "global:hyundai_mt",
+      "target": null,
+      "beforeType": "global_company",
+      "afterType": "removed",
+      "beforeEditorialStatus": null,
+      "afterEditorialStatus": null,
+      "beforeProjectStatus": null,
+      "afterProjectStatus": null,
+      "origin": "legacy_global_roster",
+      "reason": "Not nuclear-relevant leftover from energy split; excluded from nuclear network"
+    },
+    {
+      "legacyEdgeId": null,
+      "source": "global:ckh",
       "target": null,
       "beforeType": "global_company",
       "afterType": "removed",

@@ -1,0 +1,155 @@
+{
+  "name": "건설/기계",
+  "companies": [
+    {
+      "ticker": "028260",
+      "id": "samsung_ct",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "000720",
+      "id": "hyundai_enc",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "028050",
+      "id": "construction_samsung_e_a",
+      "chain": "플랜트·EPC"
+    },
+    {
+      "ticker": "047040",
+      "id": "daewoo_enc",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "375500",
+      "id": "dl_enc",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "006360",
+      "id": "gs_enc",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "012630",
+      "id": "hdc",
+      "chain": "지주회사"
+    },
+    {
+      "ticker": "294870",
+      "id": "ipark_hdc",
+      "chain": "주택·개발"
+    },
+    {
+      "ticker": "300720",
+      "id": "construction_hanil_cement",
+      "chain": "시멘트·기초 건자재"
+    },
+    {
+      "ticker": "009240",
+      "id": "construction_hanssem",
+      "chain": "마감재·인테리어"
+    },
+    {
+      "ticker": "038500",
+      "id": "construction_sampyo_cement",
+      "chain": "시멘트·기초 건자재"
+    },
+    {
+      "ticker": "003300",
+      "id": "holdings_hanil_holdings",
+      "chain": "지주회사"
+    },
+    {
+      "ticker": "009410",
+      "id": "taeyoung",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "002990",
+      "id": "construction_kumho_e_c",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "035890",
+      "id": "seohee",
+      "chain": "주택·개발"
+    },
+    {
+      "ticker": "010780",
+      "id": "construction_is_dongseo",
+      "chain": "종합건설"
+    },
+    {
+      "ticker": "002030",
+      "id": "holdings_asia_holdings",
+      "chain": "지주회사"
+    },
+    {
+      "ticker": "183190",
+      "id": "construction_asia_cement",
+      "chain": "시멘트·기초 건자재"
+    },
+    {
+      "ticker": "317400",
+      "id": "construction_xi_s_d",
+      "chain": "주택·개발"
+    },
+    {
+      "ticker": "344820",
+      "id": "construction_kcc_glass",
+      "chain": "마감재·인테리어"
+    },
+    {
+      "ticker": "025900",
+      "id": "construction_dongwha_enterprise",
+      "chain": "마감재·인테리어"
+    },
+    {
+      "ticker": "123890",
+      "id": "construction_korea_asset_trust",
+      "chain": "부동산 서비스"
+    },
+    {
+      "ticker": "108670",
+      "id": "construction_lx_hausys",
+      "chain": "마감재·인테리어"
+    },
+    {
+      "ticker": "267270",
+      "id": "machinery_hd_construction_equipmen",
+      "chain": "건설기계"
+    },
+    {
+      "ticker": "241560",
+      "id": "doosan_bobcat",
+      "chain": "건설기계"
+    },
+    {
+      "ticker": "017800",
+      "id": "hyundai_elevator",
+      "chain": "승강기"
+    },
+    {
+      "ticker": "079900",
+      "id": "machinery_junjin_c_r",
+      "chain": "건설기계"
+    },
+    {
+      "ticker": "0220W0",
+      "id": "holdings_hanwha_machinery_service",
+      "chain": "지주회사"
+    },
+    {
+      "ticker": "019210",
+      "id": "yg1",
+      "chain": "핵심부품·공구"
+    },
+    {
+      "ticker": "009160",
+      "id": "simpac",
+      "chain": "공작·금속가공기계"
+    }
+  ]
+}

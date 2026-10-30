@@ -37,7 +37,7 @@ function discoverMapDirs() {
   const dirs = [];
   for (const ent of fs.readdirSync(repo, { withFileTypes: true })) {
     if (!ent.isDirectory()) continue;
-    if (ent.name === 'dist' || ent.name === 'holdings' || ent.name.startsWith('.')) continue;
+    if (ent.name === 'dist' || ent.name === 'holdings' || ent.name === 'machinery' || ent.name.startsWith('.')) continue;
     const dirPath = join(repo, ent.name);
     let hasMap = false;
     try {
