@@ -41,9 +41,13 @@
   {
     "ticker": "004310",
     "name": "현대약품",
-    "chain": "바이오시밀러",
-    "sectorId": "biosimilar",
-    "subSector": "제약",
-    "level": "core"
+    "chain": "종합 제약",
+    "sectorId": "pharma_integrated",
+    "subSector": "종합 제약",
+    "level": "core",
+    "semType": "전문·일반의약품",
+    "semTypeEn": "Prescription and OTC pharmaceuticals",
+    "products": "전문·일반의약품 제조·판매, 건강음료·화장품",
+    "productsEn": "Prescription and OTC medicines, health beverages and cosmetics"
   }
 ]

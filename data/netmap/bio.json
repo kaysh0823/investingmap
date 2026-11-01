@@ -703,8 +703,8 @@
       "nameEn": "Hyundai pharm",
       "market": "KOSPI",
       "country": "kr",
-      "chain": "biosimilar",
-      "role": "제약"
+      "chain": "pharma",
+      "role": "전문·일반의약품"
     },
     {
       "id": "krx:206650",

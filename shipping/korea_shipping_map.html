@@ -61,7 +61,7 @@
   }
   </script>
   <script src="../js/seo.js"></script>
-                                                      <!-- investingmap-geo-webpage -->
+                                                        <!-- investingmap-geo-webpage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -2025,9 +2025,9 @@
       <td class="fin-cell">14.26</td>
       <td class="fin-cell">1.71</td>
       <td><span class="market-badge kospi">KOSPI</span></td>
-      <td><span class="chain-tag">컨테이너 해운</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">컨테이너 해운</td>
-      <td class="products-cell">컨테이너·근해 정기선</td>
+      <td><span class="chain-tag">케미컬탱커</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">케미컬탱커 운송</td>
+      <td class="products-cell">액체 석유화학제품 해상운송 및 케미컬탱커 운영</td>
       <td><div class="partners-list">—</div></td>
     </tr>
 <!-- investingmap-seo-prerender-end -->
@@ -2078,7 +2078,7 @@
       return lang === 'en' ? fmtMcapUsdBillion(c.mcapWon) : fmtMcapKoJo(c.mcapWon);
     }
 
-    const CHAIN_COLORS = {"컨테이너 해운":"#42A5F5","벌크 해운":"#8D6E63","탱커·가스 운송":"#FFA726","자동차·특수화물 운송":"#26A69A","종합물류":"#5C6BC0","택배·풀필먼트":"#66BB6A","포워딩·국제물류":"#AB47BC","항만·터미널":"#78909C"};
+    const CHAIN_COLORS = {"컨테이너 해운":"#42A5F5","케미컬탱커":"#FFA726","벌크 해운":"#8D6E63","탱커·가스 운송":"#FFA726","자동차·특수화물 운송":"#26A69A","종합물류":"#5C6BC0","택배·풀필먼트":"#66BB6A","포워딩·국제물류":"#AB47BC","항만·터미널":"#78909C"};
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
 
     // ═══════════════════════════════════════════════════════
@@ -2244,6 +2244,7 @@
         "sbHow": "조작 방법",
         "chainLabel": {
             "컨테이너 해운": "컨테이너 해운",
+            "케미컬탱커": "케미컬탱커",
             "벌크 해운": "벌크 해운",
             "탱커·가스 운송": "탱커·가스 운송",
             "자동차·특수화물 운송": "자동차·특수화물 운송",
@@ -2254,6 +2255,7 @@
         },
         "chainFilter": {
             "컨테이너 해운": "컨테이너 해운",
+            "케미컬탱커": "케미컬탱커",
             "벌크 해운": "벌크 해운",
             "탱커·가스 운송": "탱커·가스 운송",
             "자동차·특수화물 운송": "자동차·특수화물 운송",
@@ -2448,6 +2450,7 @@
         "sbHow": "Controls",
         "chainLabel": {
             "컨테이너 해운": "Container shipping",
+            "케미컬탱커": "Chemical tankers",
             "벌크 해운": "Bulk shipping",
             "탱커·가스 운송": "Tanker & gas transport",
             "자동차·특수화물 운송": "Auto & special cargo",
@@ -2458,6 +2461,7 @@
         },
         "chainFilter": {
             "컨테이너 해운": "Container",
+            "케미컬탱커": "Chemical tankers",
             "벌크 해운": "Bulk",
             "탱커·가스 운송": "Tanker/gas",
             "자동차·특수화물 운송": "Auto/special",
@@ -2535,9 +2539,9 @@
       },
 
       {
-        id: 'ship_heung_a_shipping', name: '흥아해운', nameEn: 'Heung-A Shipping', ticker: '003280', market: 'KOSPI', chain: '컨테이너 해운',
-        semType: '컨테이너 해운', semTypeEn: 'Container shipping',
-        products: '컨테이너·근해 정기선', productsEn: 'Container and short-sea liner services',
+        id: 'ship_heung_a_shipping', name: '흥아해운', nameEn: 'Heung-A Shipping', ticker: '003280', market: 'KOSPI', chain: '케미컬탱커',
+        semType: '케미컬탱커 운송', semTypeEn: 'Chemical tanker shipping',
+        products: '액체 석유화학제품 해상운송 및 케미컬탱커 운영', productsEn: 'Marine transportation of liquid petrochemical products and chemical tanker operations',
         revenue: '0.43조원', mcapWon: 433486092897, per: 14.26, pbr: 1.71, revTier: 1, partners: []
       }
 
@@ -2887,7 +2891,7 @@
     function buildChainChips() {
       const t = T[lang];
       const container = document.getElementById('chain-chips');
-      const chains = ['all', '컨테이너 해운', '벌크 해운', '탱커·가스 운송', '자동차·특수화물 운송', '종합물류', '택배·풀필먼트', '포워딩·국제물류', '항만·터미널'];
+      const chains = ['all', '컨테이너 해운', '케미컬탱커', '벌크 해운', '탱커·가스 운송', '자동차·특수화물 운송', '종합물류', '택배·풀필먼트', '포워딩·국제물류', '항만·터미널'];
       container.innerHTML = chains.map(ch => {
         const label = ch === 'all' ? t.allFilter : ((window.InvestingMapI18n && InvestingMapI18n.chainDisplayLabel) ? InvestingMapI18n.chainDisplayLabel(ch, t) : (t.chainFilter[ch] || ch));
         const isActive = ch === 'all' ? selectedChains.size === 0 : selectedChains.has(ch);
@@ -2913,7 +2917,7 @@
       const t = T[lang];
       // Chain legend
       const chainContainer = document.getElementById('sb-chain-legend');
-      const chains = ['컨테이너 해운', '벌크 해운', '탱커·가스 운송', '자동차·특수화물 운송', '종합물류', '택배·풀필먼트', '포워딩·국제물류', '항만·터미널'];
+      const chains = ['컨테이너 해운', '케미컬탱커', '벌크 해운', '탱커·가스 운송', '자동차·특수화물 운송', '종합물류', '택배·풀필먼트', '포워딩·국제물류', '항만·터미널'];
       chainContainer.innerHTML = chains.map(ch =>
         `<div class="legend-item" onclick="toggleChainHighlight('${ch}')">
       <div class="legend-dot" style="background:${CHAIN_COLORS[ch]}"></div>

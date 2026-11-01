@@ -151,8 +151,8 @@
       "nameEn": "아모레퍼시픽홀딩스",
       "market": "KOSPI",
       "country": "kr",
-      "chain": "brand",
-      "role": "화장품 브랜드"
+      "chain": "holdings",
+      "role": "화장품·뷰티 지주"
     },
     {
       "id": "krx:241710",

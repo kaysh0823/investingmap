@@ -9,7 +9,8 @@
     "bulk": "벌크 해운",
     "logistics": "종합물류",
     "end_customer": "모회사·화주",
-    "global_peer": "글로벌 해운·물류"
+    "global_peer": "글로벌 해운·물류",
+    "chemical_tanker": "케미컬탱커"
   },
   "edgeTypes": {
     "supply": "공급 (source → target)",
@@ -82,8 +83,8 @@
       "nameEn": "흥아해운",
       "market": "KOSPI",
       "country": "kr",
-      "chain": "container",
-      "role": "컨테이너 해운"
+      "chain": "chemical_tanker",
+      "role": "케미컬탱커 운송"
     },
     {
       "id": "global:kdb",

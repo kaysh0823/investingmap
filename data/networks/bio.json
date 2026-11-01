@@ -816,8 +816,8 @@
       "nameKo": "현대약품",
       "nameEn": "Hyundai pharm",
       "market": "KOSPI",
-      "role": "바이오시밀러",
-      "group": "biosimilar",
+      "role": "전문·일반의약품",
+      "group": "pharma_integrated",
       "mcapWon": 322240000000,
       "isListedKorea": true,
       "legacyId": "bio_62"

@@ -500,10 +500,10 @@
       },
 
       {
-        id: 'bio_62', name: '현대약품', nameEn: 'Hyundai pharm', ticker: '004310', market: 'KOSPI', chain: '바이오시밀러',
-        semType: '제약', semTypeEn: '—',
-        products: '제약', productsEn: 'Biotech and healthcare products and services',
-        sectorId: 'biosimilar',
+        id: 'bio_62', name: '현대약품', nameEn: 'Hyundai pharm', ticker: '004310', market: 'KOSPI', chain: '종합 제약',
+        semType: '전문·일반의약품', semTypeEn: 'Prescription and OTC pharmaceuticals',
+        products: '전문·일반의약품 제조·판매, 건강음료·화장품', productsEn: 'Prescription and OTC medicines, health beverages and cosmetics',
+        sectorId: 'pharma_integrated',
         revenue: '0.32조원', mcapWon: 322240000000, per: 59.69, pbr: 1.82, revTier: 1, partners: []
       },
 

@@ -1,0 +1,49 @@
+{
+  "approvedOn": "2026-11-01",
+  "policy": "Correct value chains and descriptions only; retain sector homes, tickers and existing company IDs.",
+  "rows": [
+    {
+      "ticker": "003280",
+      "sector": "shipping",
+      "id": "ship_heung_a_shipping",
+      "graphChain": "chemical_tanker",
+      "fields": {
+        "chain": "케미컬탱커",
+        "semType": "케미컬탱커 운송",
+        "semTypeEn": "Chemical tanker shipping",
+        "products": "액체 석유화학제품 해상운송 및 케미컬탱커 운영",
+        "productsEn": "Marine transportation of liquid petrochemical products and chemical tanker operations"
+      },
+      "source": "https://kind.krx.co.kr/external/2026/03/18/000952/20260318004603/11011.htm"
+    },
+    {
+      "ticker": "004310",
+      "sector": "bio",
+      "id": "bio_62",
+      "graphChain": "pharma",
+      "fields": {
+        "chain": "종합 제약",
+        "sectorId": "pharma_integrated",
+        "semType": "전문·일반의약품",
+        "semTypeEn": "Prescription and OTC pharmaceuticals",
+        "products": "전문·일반의약품 제조·판매, 건강음료·화장품",
+        "productsEn": "Prescription and OTC medicines, health beverages and cosmetics"
+      },
+      "source": "https://kind.krx.co.kr/external/2026/07/15/000784/20260715002021/11012.htm"
+    },
+    {
+      "ticker": "002790",
+      "sector": "cosmetics",
+      "id": "cos_002790",
+      "graphChain": "holdings",
+      "fields": {
+        "chain": "지주회사",
+        "semType": "화장품·뷰티 지주",
+        "semTypeEn": "Beauty holding company",
+        "products": "아모레퍼시픽 등 뷰티 계열사 지배·경영관리",
+        "productsEn": "Ownership and management of Amorepacific and beauty subsidiaries"
+      },
+      "source": "https://kind.krx.co.kr/external/2026/05/15/001430/20260515003119/11013.htm"
+    }
+  ]
+}

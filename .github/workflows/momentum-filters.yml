@@ -1,4 +1,4 @@
-name: Momentum sector filter regression
+name: Sector classification and momentum regression
 
 on:
   push:
@@ -22,5 +22,6 @@ jobs:
           cache: npm
       - run: npm ci
       # The real build regenerates sector HTML and runs verify:dist, which includes
-      # the DOM regression gate. A missing control or stale asset fails the build.
+      # classification facts and the DOM regression gate. A reverted company chain,
+      # missing control or stale asset fails the build.
       - run: npm run build
