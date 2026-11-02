@@ -677,6 +677,18 @@
       "isListedKorea": true
     },
     {
+      "id": "krx:110990",
+      "type": "listed_company",
+      "ticker": "110990",
+      "nameKo": "디아이티",
+      "nameEn": "DIT",
+      "market": "KOSDAQ",
+      "role": "레이저 어닐링·광학검사 장비",
+      "group": "전공정 장비",
+      "mcapWon": 317709000000,
+      "isListedKorea": true
+    },
+    {
       "id": "global:mks",
       "type": "global_company",
       "ticker": "",
@@ -1051,18 +1063,6 @@
       "isListedKorea": true
     },
     {
-      "id": "krx:110990",
-      "type": "listed_company",
-      "ticker": "110990",
-      "nameKo": "디아이티",
-      "nameEn": "DIT",
-      "market": "KOSDAQ",
-      "role": "레이저 검사장비",
-      "group": "검사·계측 장비",
-      "mcapWon": 317709000000,
-      "isListedKorea": true
-    },
-    {
       "id": "group:process_mat",
       "type": "group",
       "nameKo": "공정 소재",
@@ -1374,13 +1374,25 @@
       "isListedKorea": true
     },
     {
+      "id": "krx:144960",
+      "type": "listed_company",
+      "ticker": "144960",
+      "nameKo": "뉴파워프라즈마",
+      "nameEn": "New Power Plasma",
+      "market": "KOSDAQ",
+      "role": "RF 전원·플라즈마 발생장치",
+      "group": "공정 부품·유지관리",
+      "mcapWon": 449160174720,
+      "isListedKorea": true
+    },
+    {
       "id": "krx:241770",
       "type": "listed_company",
       "ticker": "241770",
       "nameKo": "메카로",
       "nameEn": "Mecaro",
       "market": "KOSDAQ",
-      "role": "전구체 소재",
+      "role": "히터블록·반도체 정밀부품",
       "group": "공정 부품·유지관리",
       "mcapWon": 394455168000,
       "isListedKorea": true
@@ -1900,18 +1912,6 @@
       "role": "팹 케미컬필터·유틸리티",
       "group": "팹 인프라·지원설비",
       "mcapWon": 453441452390,
-      "isListedKorea": true
-    },
-    {
-      "id": "krx:144960",
-      "type": "listed_company",
-      "ticker": "144960",
-      "nameKo": "뉴파워프라즈마",
-      "nameEn": "New Power Plasma",
-      "market": "KOSDAQ",
-      "role": "플라즈마 발생장치",
-      "group": "팹 인프라·지원설비",
-      "mcapWon": 449160174720,
       "isListedKorea": true
     },
     {
@@ -3150,6 +3150,21 @@
       "noteEn": "Value-chain category only; not a trade relationship."
     },
     {
+      "id": "member-front_equip-110990",
+      "source": "krx:110990",
+      "target": "group:front_equip",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "전공정 장비 밸류체인 분류",
+      "labelEn": "Front-end equipment value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-09-10",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
       "id": "hub-front_equip-mks-supplier",
       "source": "global:mks",
       "target": "group:front_equip",
@@ -3810,21 +3825,6 @@
     {
       "id": "member-inspect_metro-348210",
       "source": "krx:348210",
-      "target": "group:inspect_metro",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "검사·계측 장비 밸류체인 분류",
-      "labelEn": "Inspection & metrology value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-inspect_metro-110990",
-      "source": "krx:110990",
       "target": "group:inspect_metro",
       "type": "member_of",
       "direction": "source_to_target",
@@ -4505,6 +4505,21 @@
     {
       "id": "member-process_parts-101160",
       "source": "krx:101160",
+      "target": "group:process_parts",
+      "type": "member_of",
+      "direction": "source_to_target",
+      "status": "reference",
+      "labelKo": "공정 부품·유지관리 밸류체인 분류",
+      "labelEn": "Process parts & MRO value-chain grouping",
+      "evidence": [],
+      "confidence": "high",
+      "lastVerifiedAt": "2026-09-10",
+      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
+      "noteEn": "Value-chain category only; not a trade relationship."
+    },
+    {
+      "id": "member-process_parts-144960",
+      "source": "krx:144960",
       "target": "group:process_parts",
       "type": "member_of",
       "direction": "source_to_target",
@@ -6308,21 +6323,6 @@
     {
       "id": "member-fab_infra-082270",
       "source": "krx:082270",
-      "target": "group:fab_infra",
-      "type": "member_of",
-      "direction": "source_to_target",
-      "status": "reference",
-      "labelKo": "팹 인프라·지원설비 밸류체인 분류",
-      "labelEn": "Fab infrastructure value-chain grouping",
-      "evidence": [],
-      "confidence": "high",
-      "lastVerifiedAt": "2026-09-10",
-      "noteKo": "동일 밸류체인 그룹 분류이며 기업 간 거래를 의미하지 않습니다.",
-      "noteEn": "Value-chain category only; not a trade relationship."
-    },
-    {
-      "id": "member-fab_infra-144960",
-      "source": "krx:144960",
       "target": "group:fab_infra",
       "type": "member_of",
       "direction": "source_to_target",

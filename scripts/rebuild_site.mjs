@@ -125,6 +125,7 @@ run('node scripts/merge_construction_machinery.mjs', 'unified construction/machi
 run('node scripts/apply_holdings_migration.mjs', 'approved holdings migration after historical chain patches');
 run('node scripts/merge_construction_machinery.mjs', 'restore construction/machinery links');
 run('node scripts/apply_company_classification_corrections.mjs', 'approved individual company facts');
+run('node scripts/apply_semi_classification_review.mjs', 'approved semiconductor classification and process-stage filters');
 run('node scripts/sync_map_badges.mjs', 'map header badges from koreanCompanies (after all membership steps)');
 run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
 run('node scripts/sync_hub_card_badges.mjs', 'static hub card badges from hub index');

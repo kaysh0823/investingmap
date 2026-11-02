@@ -61,7 +61,7 @@
   }
   </script>
   <script src="../js/seo.js"></script>
-                                                    <!-- investingmap-geo-webpage -->
+                                                      <!-- investingmap-geo-webpage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -4203,10 +4203,10 @@
       <td class="fin-cell">47.63</td>
       <td class="fin-cell">1.42</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">팹 인프라·지원설비</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">플라즈마 발생장치</td>
-      <td class="products-cell">반도체·디스플레이용 플라즈마 발생·처리 장비</td>
-      <td><div class="partners-list">MKS Instruments, Edwards Vacuum, 삼성전자, SK하이닉스, TSMC, Intel</div></td>
+      <td><span class="chain-tag">공정 부품·유지관리</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">RF 전원·플라즈마 발생장치</td>
+      <td class="products-cell">증착·식각 장비용 RF Generator·Matcher·Remote Plasma Generator</td>
+      <td><div class="partners-list">Air Liquide, Linde, 삼성전자, SK하이닉스, TSMC, Intel</div></td>
     </tr>
           <tr data-ticker="098120">
       <td><div class="company-name">마이크로컨텍솔</div><div class="company-name-sub">Micro Contact Solution Co.,Ltd.</div></td>
@@ -4296,8 +4296,8 @@
       <td class="fin-cell">2.26</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
       <td><span class="chain-tag">공정 부품·유지관리</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">전구체 소재</td>
-      <td class="products-cell">반도체·디스플레이용 전구체·특수금속 소재</td>
+      <td style="font-size:12px;color:var(--text-muted)">히터블록·반도체 정밀부품</td>
+      <td class="products-cell">반도체 공정용 히터블록·정밀부품 (기존 화학소재 사업 매각)</td>
       <td><div class="partners-list">Air Liquide, Linde, 삼성전자, SK하이닉스, TSMC, Intel</div></td>
     </tr>
           <tr data-ticker="078350">
@@ -4525,10 +4525,10 @@
       <td class="fin-cell">15.39</td>
       <td class="fin-cell">1.98</td>
       <td><span class="market-badge kosdaq">KOSDAQ</span></td>
-      <td><span class="chain-tag">검사·계측 장비</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">레이저 검사장비</td>
-      <td class="products-cell">레이저 기반 반도체·디스플레이 검사 장비</td>
-      <td><div class="partners-list">Coherent, 삼성전자, SK하이닉스, ASE Group, Amkor Technology, Intel</div></td>
+      <td><span class="chain-tag">전공정 장비</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">레이저 어닐링·광학검사 장비</td>
+      <td class="products-cell">DRAM·NAND·SiC 웨이퍼 레이저 어닐링 시스템, AOI·비전 검사장비</td>
+      <td><div class="partners-list">MKS Instruments, Edwards Vacuum, 삼성전자, SK하이닉스, TSMC, Intel</div></td>
     </tr>
           <tr data-ticker="093520">
       <td><div class="company-name">매커스</div><div class="company-name-sub">Makus</div></td>
@@ -4648,18 +4648,22 @@
     const CURATED_HUB_ANGLE = { '팹리스·IP': 0, '디자인하우스': 26, '파운드리': 51, '전공정 장비': 77, '패키징 장비': 103, '검사·계측 장비': 129, '공정 소재': 154, '공정 부품·유지관리': 180, '기판·패키징 소재': 206, '메모리 모듈·서버 기판': 231, '테스트 부품·인터페이스': 257, '패키징·테스트 서비스': 283, '팹 인프라·지원설비': 309, '반도체 유통': 334 };
     const CURATED_FALLBACK_ANGLE = { '팹리스·IP': 0, '디자인하우스': 28, 파운드리: 55, '전공정 장비': 83, '패키징 장비': 110, '검사·계측 장비': 138, '공정 소재': 166, '공정 부품·유지관리': 194, '기판·패키징 소재': 221, '메모리 모듈·서버 기판': 235, '테스트 부품·인터페이스': 263, '패키징·테스트 서비스': 291, '팹 인프라·지원설비': 319, '반도체 유통': 347 };
 
-    const FE_CHAINS = ["팹리스·IP","디자인하우스","파운드리","전공정 장비","공정 소재","공정 부품·유지관리","팹 인프라·지원설비"];
-    const BE_CHAINS = ["패키징 장비","검사·계측 장비","기판·패키징 소재","메모리 모듈·서버 기판","테스트 부품·인터페이스","패키징·테스트 서비스","반도체 유통"];
+    const FE_CHAINS = ["파운드리","전공정 장비","공정 소재","공정 부품·유지관리","팹 인프라·지원설비"];
+    const BE_CHAINS = ["패키징 장비","검사·계측 장비","기판·패키징 소재","메모리 모듈·서버 기판","테스트 부품·인터페이스","패키징·테스트 서비스"];
     const SEMI_LEGACY_CHAIN_ALIASES = {"팹리스":"팹리스·IP","소재":"공정 소재","후공정 장비":"패키징 장비","부품/기판":"기판·패키징 소재","패키징/테스트":"패키징·테스트 서비스","IDM":"all","IDM/종합반도체":"all","장비":"전공정 장비"};
     function normalizeChainFilter(filter) {
       if (!filter || filter === 'all') return filter;
       return SEMI_LEGACY_CHAIN_ALIASES[filter] || filter;
     }
-    function chainMatchesFilter(companyChain, filter) {
+    const SEMI_PROCESS_STAGES = {"110990":["전공정","후공정"],"140860":["전공정"],"348210":["전공정"],"039030":["전공정","후공정"],"039440":["전공정","후공정"]};
+    function chainMatchesFilter(companyChain, filter, ticker) {
       filter = normalizeChainFilter(filter);
       if (filter === 'all') return true;
-      if (filter === '전공정') return FE_CHAINS.includes(companyChain);
-      if (filter === '후공정') return BE_CHAINS.includes(companyChain);
+      if (filter === '전공정' || filter === '후공정') {
+        const stages = SEMI_PROCESS_STAGES[ticker];
+        if (stages) return stages.includes(filter);
+        return (filter === '전공정' ? FE_CHAINS : BE_CHAINS).includes(companyChain);
+      }
       return companyChain === filter;
     }
     const REGION_COLORS = { us: '#90A4AE', tw: '#80CBC4', eu: '#B0BEC5', cn: '#F48FB1', kr: '#A5D6A7', jp: '#F472B6', gb: '#A5B4FC' };
@@ -4807,8 +4811,8 @@
         filterRole: '관계 역할', filterCountry: '국가', filterReset: '전체 초기화', filterActive: '선택됨', edgeLegend: '연결선',
         reportedEvidence: '보도', confirmedEvidence: '확인',
         sbSize: '노드 크기 기준', sbHow: '조작 방법',
-        chainLabel: {"전공정":"전공정 (설계·제조·소재·장비·인프라)","후공정":"후공정 (패키징·검사·테스트·유통)","팹리스·IP":"팹리스·IP","디자인하우스":"디자인하우스","파운드리":"파운드리 (위탁제조)","전공정 장비":"전공정 장비","패키징 장비":"패키징 장비","검사·계측 장비":"검사·계측 장비","공정 소재":"공정 소재","공정 부품·유지관리":"공정 부품·유지관리","기판·패키징 소재":"기판·패키징 소재","테스트 부품·인터페이스":"테스트 부품·인터페이스","패키징·테스트 서비스":"패키징·테스트 서비스","팹 인프라·지원설비":"팹 인프라·지원설비","반도체 유통":"반도체 유통","지주회사":"지주회사"},
-        chainFilter: {"전공정":"전공정","후공정":"후공정","팹리스·IP":"팹리스·IP","디자인하우스":"디자인하우스","파운드리":"파운드리","전공정 장비":"전공정 장비","패키징 장비":"패키징 장비","검사·계측 장비":"검사·계측","공정 소재":"공정 소재","공정 부품·유지관리":"공정 부품","기판·패키징 소재":"기판·패키징 소재","테스트 부품·인터페이스":"테스트 부품","패키징·테스트 서비스":"패키징·테스트","팹 인프라·지원설비":"팹 인프라","반도체 유통":"유통","지주회사":"지주회사"},
+        chainLabel: {"전공정":"전공정 (웨이퍼 제조·공정 소재·부품·설비)","후공정":"후공정 (패키징·테스트·모듈·기판)","팹리스·IP":"팹리스·IP","디자인하우스":"디자인하우스","파운드리":"파운드리 (위탁제조)","전공정 장비":"전공정 장비","패키징 장비":"패키징 장비","검사·계측 장비":"검사·계측 장비","공정 소재":"공정 소재","공정 부품·유지관리":"공정 부품·유지관리","기판·패키징 소재":"기판·패키징 소재","테스트 부품·인터페이스":"테스트 부품·인터페이스","패키징·테스트 서비스":"패키징·테스트 서비스","팹 인프라·지원설비":"팹 인프라·지원설비","반도체 유통":"반도체 유통","지주회사":"지주회사","메모리 모듈·서버 기판":"메모리 모듈·서버 기판"},
+        chainFilter: {"전공정":"전공정","후공정":"후공정","팹리스·IP":"팹리스·IP","디자인하우스":"디자인하우스","파운드리":"파운드리","전공정 장비":"전공정 장비","패키징 장비":"패키징 장비","검사·계측 장비":"검사·계측","공정 소재":"공정 소재","공정 부품·유지관리":"공정 부품","기판·패키징 소재":"기판·패키징 소재","테스트 부품·인터페이스":"테스트 부품","패키징·테스트 서비스":"패키징·테스트","팹 인프라·지원설비":"팹 인프라","반도체 유통":"유통","지주회사":"지주회사","메모리 모듈·서버 기판":"메모리 모듈·서버 기판"},
         allFilter: '전체', kosp: 'KOSPI', kosdaq: 'KOSDAQ',
         regionLabel: { us: '미국', tw: '대만', cn: '중국', eu: '유럽', kr: '한국(비상장)', jp: '일본', gb: '영국' },
         sizeDesc: '대형: 시가총액 약 15조원↑\n중형: 약 1~15조원\n소형: 1조원 미만\n◆ 글로벌 거래처(◇)',
@@ -4957,8 +4961,8 @@
         filterRole: 'Relationship role', filterCountry: 'Country', filterReset: 'Reset all', filterActive: 'Selected', edgeLegend: 'Edges',
         reportedEvidence: 'Reported', confirmedEvidence: 'Confirmed',
         sbSize: 'Node Size', sbHow: 'How to Use',
-        chainLabel: {"전공정":"Front-end (design, fab, materials, equipment, infra)","후공정":"Back-end (packaging, inspection, test, distribution)","팹리스·IP":"Fabless & IP","디자인하우스":"Design house","파운드리":"Foundry","전공정 장비":"Front-end equipment","패키징 장비":"Packaging equipment","검사·계측 장비":"Inspection & metrology","공정 소재":"Process materials","공정 부품·유지관리":"Process parts & MRO","기판·패키징 소재":"Substrate & packaging materials","테스트 부품·인터페이스":"Test parts & interface","패키징·테스트 서비스":"Packaging & test services","팹 인프라·지원설비":"Fab infrastructure","반도체 유통":"Semiconductor distribution","지주회사":"Holding companies"},
-        chainFilter: {"전공정":"Front-end","후공정":"Back-end","팹리스·IP":"Fabless & IP","디자인하우스":"Design house","파운드리":"Foundry","전공정 장비":"FE equipment","패키징 장비":"Packaging tools","검사·계측 장비":"Inspection","공정 소재":"Materials","공정 부품·유지관리":"Parts & MRO","기판·패키징 소재":"Substrate mats","테스트 부품·인터페이스":"Test parts","패키징·테스트 서비스":"OSAT","팹 인프라·지원설비":"Fab infra","반도체 유통":"Distribution","지주회사":"Holding companies"},
+        chainLabel: {"전공정":"Front-end (wafer processing and supporting equipment)","후공정":"Back-end (packaging, testing, modules and boards)","팹리스·IP":"Fabless & IP","디자인하우스":"Design house","파운드리":"Foundry","전공정 장비":"Front-end equipment","패키징 장비":"Packaging equipment","검사·계측 장비":"Inspection & metrology","공정 소재":"Process materials","공정 부품·유지관리":"Process parts & MRO","기판·패키징 소재":"Substrate & packaging materials","테스트 부품·인터페이스":"Test parts & interface","패키징·테스트 서비스":"Packaging & test services","팹 인프라·지원설비":"Fab infrastructure","반도체 유통":"Semiconductor distribution","지주회사":"Holding companies","메모리 모듈·서버 기판":"Memory modules & server boards"},
+        chainFilter: {"전공정":"Front-end","후공정":"Back-end","팹리스·IP":"Fabless & IP","디자인하우스":"Design house","파운드리":"Foundry","전공정 장비":"FE equipment","패키징 장비":"Packaging tools","검사·계측 장비":"Inspection","공정 소재":"Materials","공정 부품·유지관리":"Parts & MRO","기판·패키징 소재":"Substrate mats","테스트 부품·인터페이스":"Test parts","패키징·테스트 서비스":"OSAT","팹 인프라·지원설비":"Fab infra","반도체 유통":"Distribution","지주회사":"Holding companies","메모리 모듈·서버 기판":"Memory modules & server boards"},
         allFilter: 'All', kosp: 'KOSPI', kosdaq: 'KOSDAQ',
         regionLabel: { us: 'USA', tw: 'Taiwan', cn: 'China', eu: 'Europe', kr: 'Korea (non-listed)', jp: 'Japan', gb: 'UK' },
         sizeDesc: 'Large: mcap ~₩15T+\nMid: ~₩1–15T\nSmall: <₩1T\n◆ Global counterparties (◇)',
@@ -5490,10 +5494,10 @@
       },
 
       {
-        id: 'new_power_plasma_co_ltd', name: '뉴파워프라즈마', nameEn: 'New Power Plasma', ticker: '144960', market: 'KOSDAQ', chain: '팹 인프라·지원설비',
-        semType: '플라즈마 발생장치', semTypeEn: 'Plasma generation equipment',
-        products: '반도체·디스플레이용 플라즈마 발생·처리 장비', productsEn: 'Plasma generation and process equipment for semiconductors and displays',
-        revenue: '0.45조원', mcapWon: 449160174720, per: 47.63, pbr: 1.42, revTier: 1, partners: [{ id: 'mks', edgeLabel: '진공·공정제어 하위 부품·계측', edgeLabelEn: 'Vacuum and process-control subsystems', kind: 'supplier', evidence: 'reported', source: 'https://www.mks.com/n/semiconductor' }, { id: 'edwards', edgeLabel: '건식 진공펌프·배기 시스템', edgeLabelEn: 'Dry vacuum pumps and abatement systems', kind: 'supplier', evidence: 'reported', source: 'https://www.edwardsvacuum.com/en/markets/semiconductor' }, { id: 'samsung_d', edgeLabel: '메모리·파운드리 전공정 장비 납품', edgeLabelEn: 'Front-end tools for memory and foundry lines', kind: 'customer', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'skhynix_d', edgeLabel: 'DRAM·HBM 전공정 장비 납품', edgeLabelEn: 'Front-end tools for DRAM and HBM fabs', kind: 'customer', evidence: 'confirmed', source: 'https://www.skhynix.com/eng/sustainability/supplyChain.do' }, { id: 'tsmc', edgeLabel: '로직 파운드리 라인 장비 공급(일부)', edgeLabelEn: 'Selected tools for logic foundry lines', kind: 'customer', evidence: 'reported', source: 'https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf' }, { id: 'intel', edgeLabel: '로직·파운드리 전공정 장비', edgeLabelEn: 'Logic and foundry front-end equipment', kind: 'customer', evidence: 'reported', source: 'https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html' }, { id: 'micron_eq', edgeLabel: '메모리 팹 전공정 장비', edgeLabelEn: 'Memory-fab front-end equipment', kind: 'customer', evidence: 'reported', source: 'https://www.micron.com/about/our-commitment/operating-thoughtfully/supply-chain' }, { id: 'appmat', edgeLabel: '증착·CMP·이온주입 글로벌 peer', edgeLabelEn: 'Global peer in deposition, CMP and implant', kind: 'peer', evidence: 'confirmed', source: 'https://www.appliedmaterials.com/us/en/semiconductor.html' }, { id: 'lam', edgeLabel: '식각·세정 장비 글로벌 peer', edgeLabelEn: 'Global peer in etch and clean', kind: 'peer', evidence: 'confirmed', source: 'https://www.lamresearch.com/' }, { id: 'tokyo_electron', edgeLabel: '코터·식각·증착 글로벌 peer', edgeLabelEn: 'Global peer in coat/develop, etch and deposition', kind: 'peer', evidence: 'confirmed', source: 'https://www.tel.com/product/' }, { id: 'kla', edgeLabel: '공정제어·계측 글로벌 peer', edgeLabelEn: 'Global peer in process control and metrology', kind: 'peer', evidence: 'confirmed', source: 'https://www.kla.com/' }, { id: 'asml', edgeLabel: '노광 장비 글로벌 peer', edgeLabelEn: 'Global peer in lithography', kind: 'peer', evidence: 'confirmed', source: 'https://www.asml.com/en/products' }]
+        id: 'new_power_plasma_co_ltd', name: '뉴파워프라즈마', nameEn: 'New Power Plasma', ticker: '144960', market: 'KOSDAQ', chain: '공정 부품·유지관리',
+        semType: 'RF 전원·플라즈마 발생장치', semTypeEn: 'RF power and remote plasma sources',
+        products: '증착·식각 장비용 RF Generator·Matcher·Remote Plasma Generator', productsEn: 'RF generators, matching networks and remote plasma generators for deposition and etch equipment',
+        revenue: '0.45조원', mcapWon: 449160174720, per: 47.63, pbr: 1.42, revTier: 1, partners: [{ id: 'air_liquide', edgeLabel: '특수가스·케미컬 원료', edgeLabelEn: 'Specialty gases and chemical feedstocks', kind: 'supplier', evidence: 'reported', source: 'https://www.airliquide.com/electronics' }, { id: 'linde', edgeLabel: '반도체 특수가스 공급', edgeLabelEn: 'Semiconductor specialty gases', kind: 'supplier', evidence: 'reported', source: 'https://www.linde.com/electronics' }, { id: 'samsung_d', edgeLabel: '포토레지스트·식각액·특수가스 등', edgeLabelEn: 'Photoresist, etchants, specialty gases and more', kind: 'customer', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'skhynix_d', edgeLabel: '메모리 공정 소재·가스', edgeLabelEn: 'Memory process materials and gases', kind: 'customer', evidence: 'confirmed', source: 'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf' }, { id: 'tsmc', edgeLabel: '파운드리 공정 소재', edgeLabelEn: 'Foundry process materials', kind: 'customer', evidence: 'reported', source: 'https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf' }, { id: 'intel', edgeLabel: '로직 공정 소재', edgeLabelEn: 'Logic process materials', kind: 'customer', evidence: 'reported', source: 'https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html' }, { id: 'dupont', edgeLabel: '전자재료·CMP·레지스트 peer', edgeLabelEn: 'Peer in electronic materials, CMP and resists', kind: 'peer', evidence: 'confirmed', source: 'https://www.dupont.com/electronics-industrial.html' }, { id: 'shin_etsu', edgeLabel: '실리콘 웨이퍼·레지스트 peer', edgeLabelEn: 'Peer in silicon wafers and resists', kind: 'peer', evidence: 'confirmed', source: 'https://www.shinetsu.co.jp/en/products/electronics-materials/' }, { id: 'tok', edgeLabel: '포토레지스트 글로벌 peer', edgeLabelEn: 'Global peer in photoresist', kind: 'peer', evidence: 'confirmed', source: 'https://www.tok.co.jp/eng/' }, { id: 'merck_em', edgeLabel: '전자재료·공정 케미컬 peer', edgeLabelEn: 'Peer in electronic materials and process chemicals', kind: 'peer', evidence: 'confirmed', source: 'https://www.merckgroup.com/en/company/merck-electronics.html' }, { id: 'entegris', edgeLabel: '여과·특수가스·웨이퍼 핸들링 peer', edgeLabelEn: 'Peer in filtration, specialty gas and wafer handling', kind: 'peer', evidence: 'confirmed', source: 'https://www.entegris.com/' }]
       },
 
       {
@@ -5519,8 +5523,8 @@
 
       {
         id: 'mecaro_co_ltd', name: '메카로', nameEn: 'Mecaro', ticker: '241770', market: 'KOSDAQ', chain: '공정 부품·유지관리',
-        semType: '전구체 소재', semTypeEn: 'Precursor materials',
-        products: '반도체·디스플레이용 전구체·특수금속 소재', productsEn: 'Precursor and specialty metal materials for semiconductors and displays',
+        semType: '히터블록·반도체 정밀부품', semTypeEn: 'Heater blocks and precision semiconductor parts',
+        products: '반도체 공정용 히터블록·정밀부품 (기존 화학소재 사업 매각)', productsEn: 'Heater blocks and precision parts for semiconductor processes (legacy chemicals business divested)',
         revenue: '0.39조원', mcapWon: 394455168000, per: 36.42, pbr: 2.26, revTier: 1, partners: [{ id: 'air_liquide', edgeLabel: '특수가스·케미컬 원료', edgeLabelEn: 'Specialty gases and chemical feedstocks', kind: 'supplier', evidence: 'reported', source: 'https://www.airliquide.com/electronics' }, { id: 'linde', edgeLabel: '반도체 특수가스 공급', edgeLabelEn: 'Semiconductor specialty gases', kind: 'supplier', evidence: 'reported', source: 'https://www.linde.com/electronics' }, { id: 'samsung_d', edgeLabel: '포토레지스트·식각액·특수가스 등', edgeLabelEn: 'Photoresist, etchants, specialty gases and more', kind: 'customer', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'skhynix_d', edgeLabel: '메모리 공정 소재·가스', edgeLabelEn: 'Memory process materials and gases', kind: 'customer', evidence: 'confirmed', source: 'https://images.samsung.com/is/content/samsung/assets/global/ir/docs/2024_4Q_Interim_Report.pdf' }, { id: 'tsmc', edgeLabel: '파운드리 공정 소재', edgeLabelEn: 'Foundry process materials', kind: 'customer', evidence: 'reported', source: 'https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf' }, { id: 'intel', edgeLabel: '로직 공정 소재', edgeLabelEn: 'Logic process materials', kind: 'customer', evidence: 'reported', source: 'https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html' }, { id: 'dupont', edgeLabel: '전자재료·CMP·레지스트 peer', edgeLabelEn: 'Peer in electronic materials, CMP and resists', kind: 'peer', evidence: 'confirmed', source: 'https://www.dupont.com/electronics-industrial.html' }, { id: 'shin_etsu', edgeLabel: '실리콘 웨이퍼·레지스트 peer', edgeLabelEn: 'Peer in silicon wafers and resists', kind: 'peer', evidence: 'confirmed', source: 'https://www.shinetsu.co.jp/en/products/electronics-materials/' }, { id: 'tok', edgeLabel: '포토레지스트 글로벌 peer', edgeLabelEn: 'Global peer in photoresist', kind: 'peer', evidence: 'confirmed', source: 'https://www.tok.co.jp/eng/' }, { id: 'merck_em', edgeLabel: '전자재료·공정 케미컬 peer', edgeLabelEn: 'Peer in electronic materials and process chemicals', kind: 'peer', evidence: 'confirmed', source: 'https://www.merckgroup.com/en/company/merck-electronics.html' }, { id: 'entegris', edgeLabel: '여과·특수가스·웨이퍼 핸들링 peer', edgeLabelEn: 'Peer in filtration, specialty gas and wafer handling', kind: 'peer', evidence: 'confirmed', source: 'https://www.entegris.com/' }]
       },
 
@@ -5588,10 +5592,10 @@
       },
 
       {
-        id: 'dit', name: '디아이티', nameEn: 'DIT', ticker: '110990', market: 'KOSDAQ', chain: '검사·계측 장비',
-        semType: '레이저 검사장비', semTypeEn: 'Laser inspection equipment',
-        products: '레이저 기반 반도체·디스플레이 검사 장비', productsEn: 'Laser-based semiconductor and display inspection tools',
-        revenue: '0.32조원', mcapWon: 317709000000, per: 15.39, pbr: 1.98, revTier: 1, partners: [{ id: 'coherent', edgeLabel: '레이저 소스·광학 (레이저 마킹·컷)', edgeLabelEn: 'Laser sources and optics for marking/cutting tools', kind: 'supplier', evidence: 'reported', source: 'https://www.coherent.com/markets/semiconductor' }, { id: 'samsung_d', edgeLabel: '패키징·테스트·본딩 장비 납품', edgeLabelEn: 'Packaging, test and bonding equipment', kind: 'customer', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'skhynix_d', edgeLabel: 'HBM·패키지 후공정 장비', edgeLabelEn: 'HBM and package back-end equipment', kind: 'customer', evidence: 'confirmed', source: 'https://news.skhynix.com/' }, { id: 'ase', edgeLabel: 'OSAT 후공정 장비 수요', edgeLabelEn: 'OSAT demand for back-end tools', kind: 'customer', evidence: 'reported', source: 'https://www.aseglobal.com/' }, { id: 'amkor', edgeLabel: 'OSAT 패키징·테스트 라인', edgeLabelEn: 'OSAT packaging and test lines', kind: 'customer', evidence: 'reported', source: 'https://amkor.com/' }, { id: 'intel', edgeLabel: '어셈블리·테스트 장비', edgeLabelEn: 'Assembly and test equipment', kind: 'customer', evidence: 'reported', source: 'https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html' }, { id: 'kulicke', edgeLabel: '와이어·플립칩 본더 글로벌 peer', edgeLabelEn: 'Global peer in wire and flip-chip bonders', kind: 'peer', evidence: 'confirmed', source: 'https://www.kns.com/' }, { id: 'disco', edgeLabel: '다이싱·그라인딩 글로벌 peer', edgeLabelEn: 'Global peer in dicing and grinding', kind: 'peer', evidence: 'confirmed', source: 'https://www.disco.co.jp/eg/' }, { id: 'advantest', edgeLabel: '반도체 테스터 글로벌 peer', edgeLabelEn: 'Global peer in semiconductor testers', kind: 'peer', evidence: 'confirmed', source: 'https://www.advantest.com/' }, { id: 'teradyne', edgeLabel: '자동 테스트 장비 글로벌 peer', edgeLabelEn: 'Global peer in automated test equipment', kind: 'peer', evidence: 'confirmed', source: 'https://www.teradyne.com/' }, { id: 'besi', edgeLabel: '다이 어태치·패키징 장비 peer', edgeLabelEn: 'Peer in die attach and packaging equipment', kind: 'peer', evidence: 'confirmed', source: 'https://www.besi.com/' }]
+        id: 'dit', name: '디아이티', nameEn: 'DIT', ticker: '110990', market: 'KOSDAQ', chain: '전공정 장비',
+        semType: '레이저 어닐링·광학검사 장비', semTypeEn: 'Laser annealing and optical inspection equipment',
+        products: 'DRAM·NAND·SiC 웨이퍼 레이저 어닐링 시스템, AOI·비전 검사장비', productsEn: 'Laser annealing systems for DRAM, NAND and SiC wafers; AOI and vision inspection equipment',
+        revenue: '0.32조원', mcapWon: 317709000000, per: 15.39, pbr: 1.98, revTier: 1, partners: [{ id: 'mks', edgeLabel: '진공·공정제어 하위 부품·계측', edgeLabelEn: 'Vacuum and process-control subsystems', kind: 'supplier', evidence: 'reported', source: 'https://www.mks.com/n/semiconductor' }, { id: 'edwards', edgeLabel: '건식 진공펌프·배기 시스템', edgeLabelEn: 'Dry vacuum pumps and abatement systems', kind: 'supplier', evidence: 'reported', source: 'https://www.edwardsvacuum.com/en/markets/semiconductor' }, { id: 'samsung_d', edgeLabel: '메모리·파운드리 전공정 장비 납품', edgeLabelEn: 'Front-end tools for memory and foundry lines', kind: 'customer', evidence: 'confirmed', source: 'https://www.samsung.com/global/sustainability/policy-file/AYVhOfYaBGoAIx95/2022_Supplier%20List_220608_F.pdf' }, { id: 'skhynix_d', edgeLabel: 'DRAM·HBM 전공정 장비 납품', edgeLabelEn: 'Front-end tools for DRAM and HBM fabs', kind: 'customer', evidence: 'confirmed', source: 'https://www.skhynix.com/eng/sustainability/supplyChain.do' }, { id: 'tsmc', edgeLabel: '로직 파운드리 라인 장비 공급(일부)', edgeLabelEn: 'Selected tools for logic foundry lines', kind: 'customer', evidence: 'reported', source: 'https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2024-09/3c0d5f5e7b/2023SustainabilityReport.pdf' }, { id: 'intel', edgeLabel: '로직·파운드리 전공정 장비', edgeLabelEn: 'Logic and foundry front-end equipment', kind: 'customer', evidence: 'reported', source: 'https://www.intel.com/content/www/us/en/corporate-responsibility/supply-chain.html' }, { id: 'micron_eq', edgeLabel: '메모리 팹 전공정 장비', edgeLabelEn: 'Memory-fab front-end equipment', kind: 'customer', evidence: 'reported', source: 'https://www.micron.com/about/our-commitment/operating-thoughtfully/supply-chain' }, { id: 'appmat', edgeLabel: '증착·CMP·이온주입 글로벌 peer', edgeLabelEn: 'Global peer in deposition, CMP and implant', kind: 'peer', evidence: 'confirmed', source: 'https://www.appliedmaterials.com/us/en/semiconductor.html' }, { id: 'lam', edgeLabel: '식각·세정 장비 글로벌 peer', edgeLabelEn: 'Global peer in etch and clean', kind: 'peer', evidence: 'confirmed', source: 'https://www.lamresearch.com/' }, { id: 'tokyo_electron', edgeLabel: '코터·식각·증착 글로벌 peer', edgeLabelEn: 'Global peer in coat/develop, etch and deposition', kind: 'peer', evidence: 'confirmed', source: 'https://www.tel.com/product/' }, { id: 'kla', edgeLabel: '공정제어·계측 글로벌 peer', edgeLabelEn: 'Global peer in process control and metrology', kind: 'peer', evidence: 'confirmed', source: 'https://www.kla.com/' }, { id: 'asml', edgeLabel: '노광 장비 글로벌 peer', edgeLabelEn: 'Global peer in lithography', kind: 'peer', evidence: 'confirmed', source: 'https://www.asml.com/en/products' }]
       },
 
       {
@@ -6681,7 +6685,7 @@
       const t = T[lang];
       let data = koreanCompanies.filter(c => {
         if (window.InvestingMapLiveQuotes && InvestingMapLiveQuotes.shouldHideFromTable && InvestingMapLiveQuotes.shouldHideFromTable(c)) return false;
-        if (selectedChains.size > 0 && ![...selectedChains].some(ch => chainMatchesFilter(c.chain, ch))) return false;
+        if (selectedChains.size > 0 && ![...selectedChains].some(ch => chainMatchesFilter(c.chain, ch, c.ticker))) return false;
         if (currentMarket !== 'all' && c.market !== currentMarket) return false;
         if (searchTerm) {
           const s = searchTerm.toLowerCase();

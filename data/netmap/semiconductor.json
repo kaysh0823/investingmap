@@ -401,8 +401,8 @@
       "nameEn": "DIT",
       "market": "KOSDAQ",
       "country": "kr",
-      "chain": "inspect_metro",
-      "role": "레이저 검사장비"
+      "chain": "front_equip",
+      "role": "레이저 어닐링·광학검사 장비"
     },
     {
       "id": "krx:357780",
@@ -600,7 +600,7 @@
       "market": "KOSDAQ",
       "country": "kr",
       "chain": "process_parts",
-      "role": "전구체 소재"
+      "role": "히터블록·반도체 정밀부품"
     },
     {
       "id": "krx:114810",
@@ -929,8 +929,8 @@
       "nameEn": "New Power Plasma",
       "market": "KOSDAQ",
       "country": "kr",
-      "chain": "fab_infra",
-      "role": "플라즈마 발생장치"
+      "chain": "process_parts",
+      "role": "RF 전원·플라즈마 발생장치"
     },
     {
       "id": "krx:417840",

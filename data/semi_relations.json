@@ -542,6 +542,11 @@
           "ticker": "079370",
           "name": "제우스",
           "nameEn": "ZEUS CO., LTD."
+        },
+        {
+          "ticker": "110990",
+          "name": "디아이티",
+          "nameEn": "DIT"
         }
       ],
       "suppliers": [
@@ -887,11 +892,6 @@
           "ticker": "348210",
           "name": "넥스틴",
           "nameEn": "NEXTIN Inc."
-        },
-        {
-          "ticker": "110990",
-          "name": "디아이티",
-          "nameEn": "DIT"
         }
       ],
       "suppliers": [
@@ -1237,6 +1237,11 @@
           "ticker": "101160",
           "name": "월덱스",
           "nameEn": "WORLDEX INDUSTRY & TRADING CO., LTD"
+        },
+        {
+          "ticker": "144960",
+          "name": "뉴파워프라즈마",
+          "nameEn": "New Power Plasma"
         },
         {
           "ticker": "241770",
@@ -2123,11 +2128,6 @@
           "ticker": "082270",
           "name": "젬백스",
           "nameEn": "GemVax"
-        },
-        {
-          "ticker": "144960",
-          "name": "뉴파워프라즈마",
-          "nameEn": "New Power Plasma"
         },
         {
           "ticker": "417840",

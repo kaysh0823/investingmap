@@ -170,6 +170,20 @@
     "products": "신약·바이오 R&D",
     "productsEn": "New drug and biotech R&D"
   },
+  "110990": {
+    "byIndustry": {
+      "semi": {
+        "chain": "전공정 장비",
+        "semType": "레이저 어닐링·광학검사 장비",
+        "semTypeEn": "Laser annealing and optical inspection equipment",
+        "products": "DRAM·NAND·SiC 웨이퍼 레이저 어닐링 시스템, AOI·비전 검사장비",
+        "productsEn": "Laser annealing systems for DRAM, NAND and SiC wafers; AOI and vision inspection equipment",
+        "review_status": "corrected",
+        "review_evidence": "https://kind.krx.co.kr/external/2026/05/15/000683/20260515001442/11013.htm",
+        "needs_review": false
+      }
+    }
+  },
   "111770": {
     "byIndustry": {
       "kconsume": {
@@ -483,10 +497,14 @@
     "byIndustry": {
       "semi": {
         "needs_review": false,
-        "chain": "팹 인프라·지원설비",
-        "review_status": "confirmed",
-        "review_evidence": "플라즈마·팹 설비 (방산 매출 비중↑ 모니터링) — 그룹 유지",
-        "monitor_note": "방산 매출 비중 약 52% — semi 비중 축소 모니터링, 그룹 유지"
+        "chain": "공정 부품·유지관리",
+        "review_status": "corrected",
+        "review_evidence": "https://www.newpower.co.kr/mobile/sub_eng/sub_02_02.php",
+        "monitor_note": "방산 매출 비중 약 52% — semi 비중 축소 모니터링, 그룹 유지",
+        "semType": "RF 전원·플라즈마 발생장치",
+        "semTypeEn": "RF power and remote plasma sources",
+        "products": "증착·식각 장비용 RF Generator·Matcher·Remote Plasma Generator",
+        "productsEn": "RF generators, matching networks and remote plasma generators for deposition and etch equipment"
       }
     }
   },
@@ -1224,7 +1242,11 @@
         "needs_review": false,
         "chain": "공정 부품·유지관리",
         "review_status": "corrected",
-        "review_evidence": "메카로 — 공정 부품·유지관리로 정정 확정"
+        "review_evidence": "https://www.emdgroup.com/en/news/q4-2022-02-03-2023.html",
+        "semType": "히터블록·반도체 정밀부품",
+        "semTypeEn": "Heater blocks and precision semiconductor parts",
+        "products": "반도체 공정용 히터블록·정밀부품 (기존 화학소재 사업 매각)",
+        "productsEn": "Heater blocks and precision parts for semiconductor processes (legacy chemicals business divested)"
       }
     }
   },

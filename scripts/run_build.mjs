@@ -30,6 +30,8 @@ const steps = [
   ['node', ['scripts/apply_holdings_migration.mjs']],
   ['node', ['scripts/merge_construction_machinery.mjs']],
   ['node', ['scripts/apply_company_classification_corrections.mjs']],
+  ['node', ['scripts/apply_semi_classification_review.mjs']],
+  ['node', ['scripts/verify_semi_classification_review.mjs']],
   ['node', ['scripts/sync_map_badges.mjs']],
   ['node', ['scripts/retire_holdings_sector.mjs']],
   ['node', ['scripts/verify_spark_baseline.mjs']],
