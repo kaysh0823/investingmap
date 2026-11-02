@@ -702,6 +702,44 @@
     return 'is-flat';
   }
 
+  function sparkSegments(vals, baseline, min, span) {
+    function point(i, v) {
+      return (2 + i / (vals.length - 1) * 52).toFixed(3) + ',' +
+        (2 + (1 - (v - min) / span) * 18).toFixed(3);
+    }
+    function line(a, b, value) {
+      var color = baseline == null ? '#8b949e' : value > baseline ? '#3fb950' : value < baseline ? '#f85149' : '#8b949e';
+      return '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + a + ' ' + b + '"/>';
+    }
+    var html = '';
+    if (baseline != null) {
+      var baselineY = (2 + (1 - (baseline - min) / span) * 18).toFixed(3);
+      html += '<line class="spark-prev-close" x1="2" x2="54" y1="' + baselineY + '" y2="' + baselineY + '" stroke="#8b949e" stroke-opacity="0.45" stroke-width="0.8" stroke-dasharray="2 2"/>';
+    }
+    if (vals.length === 1) {
+      var dotY = (2 + (1 - (vals[0] - min) / span) * 18).toFixed(3);
+      var dotColor = baseline == null ? '#8b949e' : vals[0] > baseline ? '#3fb950' : vals[0] < baseline ? '#f85149' : '#8b949e';
+      return html + '<circle cx="28" cy="' + dotY + '" r="3.2" fill="' + dotColor + '"/>';
+    }
+    for (var i = 1; i < vals.length; i++) {
+      var a = vals[i - 1], b = vals[i];
+      var start = point(i - 1, a), end = point(i, b);
+      if (baseline != null && ((a < baseline && b > baseline) || (a > baseline && b < baseline))) {
+        var cross = point(i - 1 + (baseline - a) / (b - a), baseline);
+        html += line(start, cross, a) + line(cross, end, b);
+      } else {
+        html += line(start, end, (a + b) / 2);
+      }
+    }
+    return html;
+  }
+
+  function previousSectorClose(series, dayReturn) {
+    if (!series || !series.length || dayReturn == null || !isFinite(dayReturn) || dayReturn <= -100) return null;
+    return ((1 + series[series.length - 1].v / 100) / (1 + dayReturn / 100) - 1) * 100;
+  }
+
+
   function sparklineSvg(series, pct, loading, opts) {
     opts = opts || {};
     var placeholder =
@@ -715,32 +753,22 @@
       vals.push(v);
     }
     if (!vals.length) return placeholder;
-    var colorBasis = pct != null && isFinite(pct) ? pct : vals[vals.length - 1];
-    var color = colorBasis == null ? '#8b949e' : colorBasis >= 0 ? '#3fb950' : '#f85149';
-    // Single point: draw a dot (synthesized / first intraday sample).
-    if (vals.length === 1) {
-      return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
-        '<circle cx="28" cy="11" r="3.2" fill="' + color + '"/></svg>';
-    }
+    var baseline = opts.baseline === undefined ? 0 : opts.baseline;
     var min = vals[0];
     var max = vals[0];
     for (var j = 1; j < vals.length; j++) {
       if (vals[j] < min) min = vals[j];
       if (vals[j] > max) max = vals[j];
     }
-    var span = max - min;
-    if (!(span > 0)) span = 1;
-    var w = 56;
-    var h = 22;
-    var pad = 2;
-    var pts = [];
-    for (var k = 0; k < vals.length; k++) {
-      var x = pad + (k / (vals.length - 1)) * (w - 2 * pad);
-      var y = pad + (1 - (vals[k] - min) / span) * (h - 2 * pad);
-      pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+    // Keep previous close visible even when the whole series is above or below it.
+    if (baseline != null) {
+      min = Math.min(min, baseline);
+      max = Math.max(max, baseline);
     }
+    if (max === min) { min -= 0.5; max += 0.5; }
+    var span = max - min;
     return '<svg class="hub-pulse-spark" viewBox="0 0 56 22" aria-hidden="true">' +
-      '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts.join(' ') + '"/></svg>';
+      sparkSegments(vals, baseline, min, span) + '</svg>';
   }
 
   function positionClass(n) {
@@ -946,6 +974,7 @@
 
   function fetchIndexTrends(lang, retKey) {
     var horizon = retKeyToHorizonParam(retKey);
+    if (horizon !== '1d' && !indexTrendsByHorizon['1d'] && !indexFetchInFlight['1d']) fetchIndexTrends(lang, 'return1dPct');
     if (indexFetchInFlight[horizon]) return indexFetchInFlight[horizon];
     var url = hubApiUrl('/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&weighting=cap&indexReturnVersion=2');
     if (!url) return Promise.resolve();
@@ -971,6 +1000,10 @@
       var series = ((entry && entry.series) || []).filter(function (point) {
         return point && point.v != null && isFinite(point.v);
       });
+      var dailyEntry = (indexTrendsByHorizon['1d'] || []).filter(function (item) { return item.code === code; })[0];
+      var dailySeries = (dailyEntry && dailyEntry.series) || [];
+      var dayReturn = dailySeries.length ? dailySeries[dailySeries.length - 1].v - 100 : null;
+      var indexBaseline = horizon === '1d' ? 100 : dayReturn != null && dayReturn > -100 && series.length ? series[series.length - 1].v / (1 + dayReturn / 100) : null;
       var pct = series.length ? series[series.length - 1].v - 100 : null;
       var loading = !entries;
       var cls = loading ? 'is-loading' : pct > 0 ? 'is-up' : pct < 0 ? 'is-down' : 'is-flat';
@@ -979,7 +1012,7 @@
         '<div class="hub-pulse-card-sector"><span class="hub-pulse-icon" aria-hidden="true">📊</span><span>' + label + '</span></div>' +
         '<div class="hub-pulse-card-ret ' + cls + '">' +
         (loading ? '<span class="hub-pulse-skel" aria-label="' + t(lang).pulseLoading + '"></span>' : formatPct(pct, lang)) + '</div>' +
-        '<div class="hub-pulse-spark-wrap">' + sparklineSvg(series, pct, loading) + '</div>' +
+        '<div class="hub-pulse-spark-wrap">' + sparklineSvg(series, pct, loading, { baseline: indexBaseline }) + '</div>' +
         '<div class="hub-pulse-mcap-label">' + (lang === 'en' ? 'Market index return' : '시장지수 수익률') + '</div></div>' };
     });
   }
@@ -1030,7 +1063,7 @@
       }
       var sparkBlock =
         '<div class="hub-pulse-spark-wrap">' +
-        sparklineSvg(series, retPct, sparkLoading) +
+        sparklineSvg(series, retPct, sparkLoading, { baseline: horizonParam === '1d' ? 0 : previousSectorClose(series, pulse.return1dPct) }) +
         sparkBadge +
         sparkHint +
         '</div>';

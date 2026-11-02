@@ -508,7 +508,40 @@
     return '<span style="' + rsColorStyle(n, c) + '">' + text + '</span>';
   }
 
-  function formatSpark20Svg(closes) {
+  function sparkSegments(vals, baseline, min, span) {
+    function point(i, v) {
+      return (2 + i / (vals.length - 1) * 52).toFixed(3) + ',' +
+        (2 + (1 - (v - min) / span) * 18).toFixed(3);
+    }
+    function line(a, b, value) {
+      var color = baseline == null ? '#8b949e' : value > baseline ? '#3fb950' : value < baseline ? '#f85149' : '#8b949e';
+      return '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + a + ' ' + b + '"/>';
+    }
+    var html = '';
+    if (baseline != null) {
+      var baselineY = (2 + (1 - (baseline - min) / span) * 18).toFixed(3);
+      html += '<line class="spark-prev-close" x1="2" x2="54" y1="' + baselineY + '" y2="' + baselineY + '" stroke="#8b949e" stroke-opacity="0.45" stroke-width="0.8" stroke-dasharray="2 2"/>';
+    }
+    if (vals.length === 1) {
+      var dotY = (2 + (1 - (vals[0] - min) / span) * 18).toFixed(3);
+      var dotColor = baseline == null ? '#8b949e' : vals[0] > baseline ? '#3fb950' : vals[0] < baseline ? '#f85149' : '#8b949e';
+      return html + '<circle cx="28" cy="' + dotY + '" r="3.2" fill="' + dotColor + '"/>';
+    }
+    for (var i = 1; i < vals.length; i++) {
+      var a = vals[i - 1], b = vals[i];
+      var start = point(i - 1, a), end = point(i, b);
+      if (baseline != null && ((a < baseline && b > baseline) || (a > baseline && b < baseline))) {
+        var cross = point(i - 1 + (baseline - a) / (b - a), baseline);
+        html += line(start, cross, a) + line(cross, end, b);
+      } else {
+        html += line(start, end, (a + b) / 2);
+      }
+    }
+    return html;
+  }
+
+
+  function formatSpark20Svg(closes, prevClose) {
     var placeholder =
       '<svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true">' +
       '<polyline fill="none" stroke="#8b949e" stroke-width="1.8" stroke-dasharray="3 3" points="2,11 54,11"/></svg>';
@@ -520,28 +553,23 @@
       vals.push(n);
     }
     if (vals.length < 2) return placeholder;
+    var baseline = typeof prevClose === 'number' && isFinite(prevClose) && prevClose > 0 ? prevClose : null;
     var min = vals[0];
     var max = vals[0];
     for (var j = 1; j < vals.length; j++) {
       if (vals[j] < min) min = vals[j];
       if (vals[j] > max) max = vals[j];
     }
-    var span = max - min;
-    if (!(span > 0)) span = 1;
-    var w = 56;
-    var h = 22;
-    var pad = 2;
-    var pts = [];
-    for (var k = 0; k < vals.length; k++) {
-      var x = pad + (k / (vals.length - 1)) * (w - 2 * pad);
-      var y = pad + (1 - (vals[k] - min) / span) * (h - 2 * pad);
-      pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+    // Keep previous close visible even when the whole series is above or below it.
+    if (baseline != null) {
+      min = Math.min(min, baseline);
+      max = Math.max(max, baseline);
     }
-    var delta = vals[vals.length - 1] - vals[0];
-    var color = delta > 0 ? '#3fb950' : delta < 0 ? '#f85149' : '#8b949e';
+    if (max === min) { min -= 0.5; max += 0.5; }
+    var span = max - min;
     return (
       '<svg class="quote-spark" viewBox="0 0 56 22" aria-hidden="true">' +
-      '<polyline fill="none" stroke="' + color + '" stroke-width="1.8" points="' + pts.join(' ') + '"/></svg>'
+      sparkSegments(vals, baseline, min, span) + '</svg>'
     );
   }
 
@@ -549,7 +577,7 @@
     var posHtml = formatPositionHtml(c);
     return {
       last: formatWon(c.quoteLast, lang),
-      spark: formatSpark20Svg(c && c.spark20),
+      spark: formatSpark20Svg(c && c.spark20, c && c.quotePrevClose),
       chg1d: formatReturnPct(c.chg1dPct),
       ret20d: formatReturnPct(c.ret20dPct),
       ret50d: formatReturnPct(c.ret50dPct),
