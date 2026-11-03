@@ -10,12 +10,14 @@ import {
   KRX_MDI_REFERER,
   KRX_USER_AGENT,
   krxDataPost,
+  KrxDataError,
+  validateKrxParsedRows,
 } from './krx_data_session.mjs';
 import { normalizeKrxCode } from './krx_code.mjs';
 
-const KRX_OTP_URL = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
-const KRX_DOWNLOAD_URL = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
-const KRX_JSON_URL = 'http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd';
+const KRX_OTP_URL = 'https://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
+const KRX_DOWNLOAD_URL = 'https://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
+const KRX_JSON_URL = 'https://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd';
 export const KRX_VALUATION_BLD = 'dbms/MDC/STAT/standard/MDCSTAT03501';
 
 /** [12021] PER/PBR/배당수익률 menu */
@@ -217,7 +219,7 @@ async function fetchViaJson(env, dayYmd) {
   } catch {
     return [];
   }
-  return parseValuationJson(json);
+  return validateKrxParsedRows(json, parseValuationJson(json), KRX_VALUATION_BLD, dayYmd);
 }
 
 async function fetchViaOtpCsv(env, dayYmd) {
@@ -287,6 +289,7 @@ export async function fetchKrxValuationDay(basDd, env = process.env) {
       });
     }
   } catch (err) {
+    if (err instanceof KrxDataError) throw err;
     console.warn(`fetchKrxValuationDay ${ymd}: ${err.message || err}`);
   }
   return out;

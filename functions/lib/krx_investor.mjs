@@ -9,12 +9,14 @@ import {
   KRX_MDI_REFERER,
   KRX_USER_AGENT,
   krxDataPost,
+  KrxDataError,
+  validateKrxParsedRows,
 } from './krx_data_session.mjs';
 import { normalizeKrxCode } from './krx_code.mjs';
 
-const KRX_OTP_URL = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
-const KRX_DOWNLOAD_URL = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
-const KRX_JSON_URL = 'http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd';
+const KRX_OTP_URL = 'https://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
+const KRX_DOWNLOAD_URL = 'https://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
+const KRX_JSON_URL = 'https://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd';
 const KRX_BLD = 'dbms/MDC/STAT/standard/MDCSTAT02401';
 
 /** OSC Phase 1: trust, PE, pension, foreign. */
@@ -166,7 +168,7 @@ async function fetchViaJson(env, dayYmd, invstTpCd) {
   } catch {
     return [];
   }
-  return parseInvestorNetJson(json);
+  return validateKrxParsedRows(json, parseInvestorNetJson(json), KRX_BLD, dayYmd);
 }
 
 async function fetchViaOtpCsv(env, dayYmd, invstTpCd) {
@@ -207,8 +209,9 @@ export async function fetchKrxInvestorNet(dayYmd, invstTpCd, env = process.env) 
   try {
     const csvRows = await fetchViaOtpCsv(env, ymd, code);
     if (csvRows.length) return csvRows;
-    return fetchViaJson(env, ymd, code);
+    return await fetchViaJson(env, ymd, code);
   } catch (err) {
+    if (err instanceof KrxDataError) throw err;
     console.warn(`fetchKrxInvestorNet ${ymd} ${code}: ${err.message || err}`);
     return [];
   }
