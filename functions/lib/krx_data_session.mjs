@@ -15,6 +15,14 @@ let state = null;
 
 const KRX_ORIGIN = 'https://data.krx.co.kr';
 const REQUEST_TIMEOUT_MS = 20_000;
+const WARMUP_REDIRECT_LIMIT = 2;
+const WARMUP_URLS = new Map([
+  [LOGIN_PAGE, 'login_page'],
+  [LOGIN_JSP, 'login_view'],
+  [`${KRX_ORIGIN}/contents/MDC/MAIN/main/index.cmd`, 'main_page'],
+  [KRX_MDI_REFERER, 'market_page'],
+]);
+const WARMUP_REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
 
 /** Safe diagnostics only: never include response bodies, cookies, or credentials. */
 export class KrxDataError extends Error {
@@ -65,40 +73,87 @@ function storeCookies(jar, res) {
   }
 }
 
-async function krxFetch(jar, url, { method = 'GET', referer, body, contentType } = {}) {
-  // Validate before constructing or sending any Cookie header. Never forward
-  // session cookies on redirects, including HTTP downgrades or other origins.
-  const target = secureUrl(url);
-  const stage = requestStage(target);
-  const headers = {
-    'User-Agent': KRX_USER_AGENT,
-    Referer: referer || KRX_MDI_REFERER,
-    Cookie: cookieHeader(jar),
+function redirectFailure(code, stage, status, request, reason) {
+  const error = new KrxDataError(code, stage, status);
+  // Fixed labels only. Location may contain credentials or session identifiers.
+  error.request = WARMUP_URLS.get(request) || 'other';
+  error.redirect = reason;
+  error.message += ` request=${error.request} redirect=${reason}`;
+  return error;
+}
+
+function warmupRedirectTarget(location, current, stage, status) {
+  const refuse = (reason) => {
+    throw redirectFailure('REDIRECT_REFUSED', stage, status, current, reason);
   };
-  if (contentType) headers['Content-Type'] = contentType;
-  let res;
-  try {
-    res = await fetch(target, {
-      method, headers, body, redirect: 'manual', signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    });
-  } catch (error) {
-    throw transportError(error, stage);
+  if (!location) return refuse('missing_location');
+  let target;
+  try { target = new URL(location, current); } catch { return refuse('invalid_location'); }
+  if (target.username || target.password) return refuse('userinfo');
+  if (target.protocol !== 'https:') return refuse('insecure_scheme');
+  if (target.origin !== KRX_ORIGIN) return refuse('different_origin');
+  if (target.hash) return refuse('fragment');
+  // Exact existing warmup URLs only, including their known query strings.
+  // Same-origin alone would also allow logout or other action endpoints.
+  if (!WARMUP_URLS.has(target.href)) return refuse('unapproved_target');
+  return target.href;
+}
+
+async function krxFetch(jar, url, {
+  method = 'GET', referer, body, contentType, allowWarmupRedirects = false,
+} = {}) {
+  // Validate before constructing or sending any Cookie header. Redirects are
+  // opt-in on the four known warmup GETs, never inferred from requestStage().
+  let target = secureUrl(url);
+  const stage = requestStage(target);
+  const canRedirect = allowWarmupRedirects && method === 'GET' && WARMUP_URLS.has(target);
+  const visited = new Set([target]);
+  // One deadline for the entire redirect chain, not a fresh timeout per hop.
+  const signal = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+  for (let hops = 0; ; hops++) {
+    const headers = {
+      'User-Agent': KRX_USER_AGENT,
+      Referer: referer || KRX_MDI_REFERER,
+      Cookie: cookieHeader(jar),
+    };
+    if (contentType) headers['Content-Type'] = contentType;
+    let res;
+    try {
+      res = await fetch(target, { method, headers, body, redirect: 'manual', signal });
+    } catch (error) {
+      throw transportError(error, stage);
+    }
+    if (res.status >= 300 && res.status < 400) {
+      if (!canRedirect || !WARMUP_REDIRECT_STATUSES.has(res.status)) {
+        throw redirectFailure('REDIRECT_REFUSED', stage, res.status, target, 'not_permitted');
+      }
+      const next = warmupRedirectTarget(res.headers.get('Location'), target, stage, res.status);
+      if (visited.has(next)) {
+        throw redirectFailure('REDIRECT_LOOP', stage, res.status, target, 'loop');
+      }
+      if (hops >= WARMUP_REDIRECT_LIMIT) {
+        throw redirectFailure('REDIRECT_LIMIT', stage, res.status, target, 'hop_limit');
+      }
+      // Never retain redirect cookies until its destination has been approved.
+      storeCookies(jar, res);
+      visited.add(next);
+      referer = target;
+      target = next;
+      continue;
+    }
+    if (!res.ok) throw new KrxDataError('HTTP_ERROR', stage, res.status);
+    storeCookies(jar, res);
+    return res;
   }
-  if (res.status >= 300 && res.status < 400) {
-    throw new KrxDataError('REDIRECT_REFUSED', stage, res.status);
-  }
-  if (!res.ok) throw new KrxDataError('HTTP_ERROR', stage, res.status);
-  storeCookies(jar, res);
-  return res;
 }
 
 async function warmupSession(jar) {
-  await krxFetch(jar, LOGIN_PAGE, { referer: 'https://data.krx.co.kr/' });
-  await krxFetch(jar, LOGIN_JSP, { referer: LOGIN_PAGE });
+  await krxFetch(jar, LOGIN_PAGE, { referer: 'https://data.krx.co.kr/', allowWarmupRedirects: true });
+  await krxFetch(jar, LOGIN_JSP, { referer: LOGIN_PAGE, allowWarmupRedirects: true });
   await krxFetch(jar, 'https://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd', {
-    referer: 'https://data.krx.co.kr/',
+    referer: 'https://data.krx.co.kr/', allowWarmupRedirects: true,
   });
-  await krxFetch(jar, KRX_MDI_REFERER, { referer: 'https://data.krx.co.kr/' });
+  await krxFetch(jar, KRX_MDI_REFERER, { referer: 'https://data.krx.co.kr/', allowWarmupRedirects: true });
 }
 
 async function loginSession(jar, loginId, loginPw) {
