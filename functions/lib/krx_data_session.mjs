@@ -13,6 +13,45 @@ export const KRX_USER_AGENT =
 /** @type {{ jar: Map<string,string>, loggedIn: boolean, expiresAt: number } | null} */
 let state = null;
 
+const KRX_ORIGIN = 'https://data.krx.co.kr';
+const REQUEST_TIMEOUT_MS = 20_000;
+
+/** Safe diagnostics only: never include response bodies, cookies, or credentials. */
+export class KrxDataError extends Error {
+  constructor(code, stage, status = null) {
+    super(`KRX_DATA ${code} stage=${stage}${status == null ? '' : ` status=${status}`}`);
+    this.name = 'KrxDataError';
+    this.code = code;
+    this.stage = stage;
+    this.status = status;
+  }
+}
+
+function requestStage(url) {
+  const pathname = new URL(url).pathname;
+  if (pathname.includes('MDCCOMS001D1')) return 'login';
+  if (pathname.includes('GenerateOTP')) return 'otp';
+  if (pathname.includes('download_csv')) return 'csv';
+  if (pathname.includes('getJsonData')) return 'json';
+  return 'warmup';
+}
+
+function secureUrl(url) {
+  let parsed;
+  try { parsed = new URL(url); } catch { throw new KrxDataError('INVALID_URL', 'request'); }
+  if (parsed.origin !== KRX_ORIGIN || parsed.username || parsed.password) {
+    throw new KrxDataError('UNSAFE_DESTINATION', 'request');
+  }
+  return parsed.href;
+}
+
+function transportError(error, stage) {
+  return new KrxDataError(
+    error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'TIMEOUT' : 'TRANSPORT_ERROR',
+    stage,
+  );
+}
+
 function cookieHeader(jar) {
   return [...jar.entries()].map(([k, v]) => `${k}=${v}`).join('; ');
 }
@@ -27,13 +66,28 @@ function storeCookies(jar, res) {
 }
 
 async function krxFetch(jar, url, { method = 'GET', referer, body, contentType } = {}) {
+  // Validate before constructing or sending any Cookie header. Never forward
+  // session cookies on redirects, including HTTP downgrades or other origins.
+  const target = secureUrl(url);
+  const stage = requestStage(target);
   const headers = {
     'User-Agent': KRX_USER_AGENT,
     Referer: referer || KRX_MDI_REFERER,
     Cookie: cookieHeader(jar),
   };
   if (contentType) headers['Content-Type'] = contentType;
-  const res = await fetch(url, { method, headers, body });
+  let res;
+  try {
+    res = await fetch(target, {
+      method, headers, body, redirect: 'manual', signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    });
+  } catch (error) {
+    throw transportError(error, stage);
+  }
+  if (res.status >= 300 && res.status < 400) {
+    throw new KrxDataError('REDIRECT_REFUSED', stage, res.status);
+  }
+  if (!res.ok) throw new KrxDataError('HTTP_ERROR', stage, res.status);
   storeCookies(jar, res);
   return res;
 }
@@ -63,7 +117,7 @@ async function loginSession(jar, loginId, loginPw) {
     contentType: 'application/x-www-form-urlencoded',
     body: new URLSearchParams(payload),
   });
-  let data = await res.json().catch(() => ({}));
+  let data = await readLoginJson(res);
   if (data._error_code === 'CD011') {
     payload.skipDup = 'Y';
     res = await krxFetch(jar, LOGIN_URL, {
@@ -72,9 +126,20 @@ async function loginSession(jar, loginId, loginPw) {
       contentType: 'application/x-www-form-urlencoded',
       body: new URLSearchParams(payload),
     });
-    data = await res.json().catch(() => ({}));
+    data = await readLoginJson(res);
   }
   return data._error_code === 'CD001';
+}
+
+async function readLoginJson(res) {
+  let text;
+  try { text = await res.text(); } catch (error) { throw transportError(error, 'login'); }
+  let data;
+  try { data = JSON.parse(text); } catch { throw new KrxDataError('INVALID_JSON', 'login', res.status); }
+  if (!data || typeof data !== 'object' || Array.isArray(data) || typeof data._error_code !== 'string') {
+    throw new KrxDataError('UNEXPECTED_SCHEMA', 'login', res.status);
+  }
+  return data;
 }
 
 /**
@@ -98,21 +163,93 @@ export async function getKrxDataSession(env = process.env) {
   }
 
   const ok = await loginSession(jar, loginId, loginPw);
-  if (!ok) throw new Error('KRX data.krx.co.kr login failed — check KRX_ID/KRX_PW');
+  if (!ok) throw new KrxDataError('LOGIN_REJECTED', 'login');
   state = { jar, loggedIn: true, expiresAt: now + 50 * 60_000 };
   return state;
 }
 
 /** Authenticated POST (form) to data.krx.co.kr. */
 export async function krxDataPost(env, url, fields, referer = KRX_MDI_REFERER) {
-  const session = await getKrxDataSession(env);
+  secureUrl(url);
   const body = fields instanceof URLSearchParams ? fields : new URLSearchParams(fields);
+  try {
+    return await postKrxData(env, url, body, referer);
+  } catch (error) {
+    if (error instanceof KrxDataError) {
+      const { dataset, date } = dataRequestContext(body);
+      error.message += ` dataset=${dataset} date=${date}`;
+      error.dataset = dataset;
+      error.date = date;
+    }
+    throw error;
+  }
+}
+
+function dataRequestContext(body) {
+  const day = body.get('trdDd') || body.get('strtDd') || '';
+  const bld = body.get('bld') || body.get('url') || '';
+  return {
+    date: /^\d{8}$/.test(day) ? day : 'unknown',
+    dataset: /MDCSTAT\d+$/.exec(bld)?.[0] || 'unknown',
+  };
+}
+
+/** Nonempty upstream records that yield no usable rows are a schema failure. */
+export function validateKrxParsedRows(json, rows, dataset, date) {
+  const raw = json?.OutBlock_1 || json?.output || json?.outBlock_1;
+  if (!Array.isArray(rows) || (Array.isArray(raw) && raw.length > 0 && rows.length === 0)) {
+    const error = new KrxDataError('UNUSABLE_ROWS', 'json', 200);
+    const context = dataRequestContext(new URLSearchParams({ bld: dataset, trdDd: date }));
+    error.message += ` dataset=${context.dataset} date=${context.date}`;
+    error.dataset = context.dataset;
+    error.date = context.date;
+    throw error;
+  }
+  return rows;
+}
+
+async function postKrxData(env, url, body, referer) {
+  const session = await getKrxDataSession(env);
   const res = await krxFetch(session.jar, url, {
     method: 'POST',
     referer,
     contentType: 'application/x-www-form-urlencoded',
     body,
   });
+  const stage = requestStage(url);
+  let text;
+  try { text = await res.clone().text(); } catch (error) { throw transportError(error, stage); }
+  const trimmed = text.trim();
+  let json;
+  let parsedJson = false;
+  if (stage === 'json' || trimmed.startsWith('{')) {
+    try { json = JSON.parse(trimmed); parsedJson = true; } catch { /* classified below */ }
+  }
+  if (trimmed === 'LOGOUT' || json?.RESULT === 'LOGOUT') {
+    // Report the revoked session. Do not automatically force another login,
+    // which could invalidate a concurrent job using the same KRX account.
+    throw new KrxDataError('SESSION_EXPIRED', stage, res.status);
+  }
+  if (/^\s*(?:<!doctype\s+html|<html\b)/i.test(trimmed)) {
+    throw new KrxDataError('HTML_RESPONSE', stage, res.status);
+  }
+  if (stage === 'json') {
+    if (!parsedJson) throw new KrxDataError('INVALID_JSON', stage, res.status);
+    if (!json || typeof json !== 'object' || Array.isArray(json)) {
+      throw new KrxDataError('UNEXPECTED_SCHEMA', stage, res.status);
+    }
+    const rows = json.OutBlock_1 ?? json.output ?? json.outBlock_1;
+    if (!Array.isArray(rows) || rows.some((row) => !row || typeof row !== 'object' || Array.isArray(row))) {
+      throw new KrxDataError('UNEXPECTED_SCHEMA', stage, res.status);
+    }
+    const { dataset, date } = dataRequestContext(body);
+    console.info(`KRX_DATA_RESPONSE stage=json dataset=${dataset} date=${date} status=${res.status} rows=${rows.length}`);
+  }
+  if (stage === 'otp' && (!trimmed || trimmed.length < 8 || /html/i.test(trimmed))) {
+    // An unavailable OTP can still use the existing JSON fallback. Explicit
+    // authentication, HTTP, and HTML errors above remain terminal failures.
+    console.warn(`KRX_DATA INVALID_OTP_RESPONSE stage=otp status=${res.status}`);
+  }
   return { res, session };
 }
 

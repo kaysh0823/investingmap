@@ -8,12 +8,14 @@ import iconv from 'iconv-lite';
 import {
   KRX_USER_AGENT,
   krxDataPost,
+  KrxDataError,
+  validateKrxParsedRows,
 } from './krx_data_session.mjs';
 import { normalizeKrxCode } from './krx_code.mjs';
 
-const KRX_OTP_URL = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
-const KRX_DOWNLOAD_URL = 'http://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
-const KRX_JSON_URL = 'http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd';
+const KRX_OTP_URL = 'https://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
+const KRX_DOWNLOAD_URL = 'https://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
+const KRX_JSON_URL = 'https://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd';
 const KRX_BLD = 'dbms/MDC/STAT/standard/MDCSTAT03701';
 export const KRX_FOREIGN_RATIO_REFERER =
   'https://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201020501';
@@ -166,7 +168,7 @@ async function fetchViaJson(env, dayYmd) {
   } catch {
     return [];
   }
-  return parseForeignRatioJson(json);
+  return validateKrxParsedRows(json, parseForeignRatioJson(json), KRX_BLD, dayYmd);
 }
 
 async function fetchViaOtpCsv(env, dayYmd) {
@@ -210,8 +212,9 @@ export async function fetchKrxForeignRatio(dayYmd, env = process.env) {
   try {
     const csvRows = await fetchViaOtpCsv(env, ymd);
     if (csvRows.length) return csvRows;
-    return fetchViaJson(env, ymd);
+    return await fetchViaJson(env, ymd);
   } catch (err) {
+    if (err instanceof KrxDataError) throw err;
     console.warn(`fetchKrxForeignRatio ${ymd}: ${err.message || err}`);
     return [];
   }

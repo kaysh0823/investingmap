@@ -15,6 +15,7 @@ const KRX_ENV_KEY_NAMES = [
 ];
 
 const KRX_BASE = 'https://data-dbg.krx.co.kr/svc/apis';
+const KRX_REQUEST_TIMEOUT_MS = 20_000;
 const KOSPI_DAILY = '/sto/stk_bydd_trd';
 const KOSDAQ_DAILY = '/sto/ksq_bydd_trd';
 const HIST_CACHE_MS = 6 * 60 * 60 * 1000;
@@ -127,19 +128,89 @@ function pastDatesFromAnchor(anchorDd, dates, tradingDaysAgo, window = MCAP_FALL
   return dates.slice(startIdx, startIdx + window);
 }
 
+// Keep diagnostics safe for logs: never include upstream text, headers, keys, or causes.
+function apiHubError(endpoint, basDd, method, category, status, postStatus) {
+  const safeEndpoint = [KOSPI_DAILY, KOSDAQ_DAILY].includes(endpoint) ? endpoint : 'unknown';
+  const safeDate = typeof basDd === 'string' && /^\d{8}$/.test(basDd) ? basDd : 'invalid';
+  const safeStatus = (value) => Number.isInteger(value) && value >= 100 && value <= 599 ? value : null;
+  const error = new Error(
+    `KRX apihub ${safeEndpoint} basDd=${safeDate} method=${method}`
+    + ` status=${safeStatus(status) ?? 'unavailable'} category=${category}`
+    + (safeStatus(postStatus) == null ? '' : ` postStatus=${safeStatus(postStatus)}`),
+  );
+  error.name = 'KrxApiHubError';
+  error.endpoint = safeEndpoint;
+  error.basDd = safeDate;
+  error.method = method;
+  error.status = safeStatus(status);
+  error.category = category;
+  if (safeStatus(postStatus) != null) error.postStatus = safeStatus(postStatus);
+  return error;
+}
+
+function apiHubHttpCategory(status) {
+  if (status === 401) return 'unauthorized';
+  if (status === 403) return 'forbidden';
+  if (status === 429) return 'rate_limited';
+  if (status >= 500) return 'upstream';
+  return 'http';
+}
+
 async function krxDaily(authKey, endpoint, basDd) {
   const url = `${KRX_BASE}${endpoint}`;
   const headers = { AUTH_KEY: authKey, Accept: 'application/json', 'Content-Type': 'application/json' };
-  let res = await fetch(url, { method: 'POST', headers, body: JSON.stringify({ basDd }) });
-  if (!res.ok) {
-    res = await fetch(`${url}?basDd=${encodeURIComponent(basDd)}`, {
-      method: 'GET',
+  let method = 'POST';
+  let postStatus;
+  let signal;
+  const transportCategory = (error) => signal?.aborted || error?.name === 'TimeoutError' ? 'timeout' : 'transport';
+  const request = async (requestUrl, options) => {
+    signal = AbortSignal.timeout(KRX_REQUEST_TIMEOUT_MS);
+    let response;
+    try {
+      response = await fetch(requestUrl, { ...options, redirect: 'manual', signal });
+    } catch (error) {
+      throw apiHubError(endpoint, basDd, method, transportCategory(error), null, postStatus);
+    }
+    // AUTH_KEY is a custom header, so never let fetch forward it to a redirect target.
+    if (response.status >= 300 && response.status < 400) {
+      throw apiHubError(endpoint, basDd, method, 'redirect', response.status, postStatus);
+    }
+    return response;
+  };
+  let res = await request(url, { method, headers, body: JSON.stringify({ basDd }) });
+  // Only a method rejection warrants a compatibility retry. Authentication,
+  // rate limiting, and upstream failures must not trigger duplicate requests.
+  if (res.status === 405) {
+    postStatus = res.status;
+    method = 'GET';
+    res = await request(`${url}?basDd=${encodeURIComponent(basDd)}`, {
+      method,
       headers: { AUTH_KEY: authKey, Accept: 'application/json' },
     });
   }
-  if (!res.ok) return [];
-  const j = await res.json();
-  return Array.isArray(j.OutBlock_1) ? j.OutBlock_1 : [];
+  if (!res.ok) {
+    throw apiHubError(endpoint, basDd, method, apiHubHttpCategory(res.status), res.status, postStatus);
+  }
+  let text;
+  try {
+    text = await res.text();
+  } catch (error) {
+    throw apiHubError(endpoint, basDd, method, transportCategory(error), res.status, postStatus);
+  }
+  let payload;
+  try {
+    payload = JSON.parse(text);
+  } catch {
+    throw apiHubError(endpoint, basDd, method, 'invalid_json', res.status, postStatus);
+  }
+  if (!payload || !Array.isArray(payload.OutBlock_1)
+      || payload.OutBlock_1.some((row) => !row || typeof row !== 'object' || Array.isArray(row)
+        || [row.ISU_SRT_CD, row.ISU_CD].some((code) => code != null
+          && typeof code !== 'string' && typeof code !== 'number')
+        || !shortCodeFromRow(row))) {
+    throw apiHubError(endpoint, basDd, method, 'invalid_schema', res.status, postStatus);
+  }
+  return payload.OutBlock_1;
 }
 
 async function fetchMarketDay(authKey, basDd) {
