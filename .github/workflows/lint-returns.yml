@@ -22,5 +22,8 @@ jobs:
         with:
           node-version: '22'
 
+      - name: View consistency regression tests
+        run: npm run verify:views-unit
+
       - name: lint:returns
         run: npm run lint:returns
