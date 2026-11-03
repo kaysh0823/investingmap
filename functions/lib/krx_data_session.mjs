@@ -82,7 +82,7 @@ function redirectFailure(code, stage, status, request, reason) {
   return error;
 }
 
-function warmupRedirectTarget(location, current, stage, status) {
+function warmupRedirectTarget(location, current, stage, status, authenticatedWarmup) {
   const refuse = (reason) => {
     throw redirectFailure('REDIRECT_REFUSED', stage, status, current, reason);
   };
@@ -96,11 +96,16 @@ function warmupRedirectTarget(location, current, stage, status) {
   // Exact existing warmup URLs only, including their known query strings.
   // Same-origin alone would also allow logout or other action endpoints.
   if (!WARMUP_URLS.has(target.href)) return refuse('unapproved_target');
+  if (target.href === KRX_MDI_REFERER && !authenticatedWarmup) return refuse('login_required');
+  // A login-page redirect after CD001 is not successful market initialization.
+  if (authenticatedWarmup && (target.href === LOGIN_PAGE || target.href === LOGIN_JSP)) {
+    return refuse('login_gate');
+  }
   return target.href;
 }
 
 async function krxFetch(jar, url, {
-  method = 'GET', referer, body, contentType, allowWarmupRedirects = false,
+  method = 'GET', referer, body, contentType, allowWarmupRedirects = false, authenticatedWarmup = false,
 } = {}) {
   // Validate before constructing or sending any Cookie header. Redirects are
   // opt-in on the four known warmup GETs, never inferred from requestStage().
@@ -127,7 +132,9 @@ async function krxFetch(jar, url, {
       if (!canRedirect || !WARMUP_REDIRECT_STATUSES.has(res.status)) {
         throw redirectFailure('REDIRECT_REFUSED', stage, res.status, target, 'not_permitted');
       }
-      const next = warmupRedirectTarget(res.headers.get('Location'), target, stage, res.status);
+      const next = warmupRedirectTarget(
+        res.headers.get('Location'), target, stage, res.status, authenticatedWarmup,
+      );
       if (visited.has(next)) {
         throw redirectFailure('REDIRECT_LOOP', stage, res.status, target, 'loop');
       }
@@ -148,12 +155,13 @@ async function krxFetch(jar, url, {
 }
 
 async function warmupSession(jar) {
+  // Public login preparation only. The market loader can present a login gate
+  // even with HTTP 200, so do not visit it before a successful login response.
   await krxFetch(jar, LOGIN_PAGE, { referer: 'https://data.krx.co.kr/', allowWarmupRedirects: true });
   await krxFetch(jar, LOGIN_JSP, { referer: LOGIN_PAGE, allowWarmupRedirects: true });
   await krxFetch(jar, 'https://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd', {
     referer: 'https://data.krx.co.kr/', allowWarmupRedirects: true,
   });
-  await krxFetch(jar, KRX_MDI_REFERER, { referer: 'https://data.krx.co.kr/', allowWarmupRedirects: true });
 }
 
 async function loginSession(jar, loginId, loginPw) {
@@ -183,7 +191,13 @@ async function loginSession(jar, loginId, loginPw) {
     });
     data = await readLoginJson(res);
   }
-  return data._error_code === 'CD001';
+  if (data._error_code !== 'CD001') return false;
+  // Preserve market initialization, but use the authenticated session. Failure
+  // here must propagate before getKrxDataSession caches a logged-in state.
+  await krxFetch(jar, KRX_MDI_REFERER, {
+    referer: 'https://data.krx.co.kr/', allowWarmupRedirects: true, authenticatedWarmup: true,
+  });
+  return true;
 }
 
 async function readLoginJson(res) {
