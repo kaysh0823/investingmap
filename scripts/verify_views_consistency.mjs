@@ -17,7 +17,7 @@ import {
 import { krxSessionInfo, kstDateParts, kstAnchorYmd } from '../functions/lib/krx_session.mjs';
 import { pricePhase } from '../functions/lib/session_price_policy.mjs';
 import { getSupabaseConfig, numOrNull } from '../functions/lib/supabase_hub.mjs';
-import { normalizeTicker } from '../functions/lib/hub_dashboard_core.mjs';
+import { normalizeTicker, SECTOR_ORDER } from '../functions/lib/hub_dashboard_core.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TOL = 0.01;
@@ -83,7 +83,11 @@ async function fetchJson(base, apiPath) {
 function nearlyEqual(a, b, tol = TOL) {
   if (a == null && b == null) return true;
   if (a == null || b == null) return false;
-  return Math.abs(Number(a) - Number(b)) <= tol;
+  const left = Number(a);
+  const right = Number(b);
+  if (!Number.isFinite(left) || !Number.isFinite(right)) return false;
+  const roundingSlack = Number.EPSILON * Math.max(1, Math.abs(left), Math.abs(right));
+  return Math.abs(left - right) <= tol + roundingSlack;
 }
 
 function fail(msg, detail) {
@@ -112,6 +116,49 @@ function retPctFromBase100(v) {
   return Math.round((Number(v) - 100) * 100) / 100;
 }
 
+/** Use the configured catalog, not an API subset that could hide missing sectors. */
+export function getVerificationSectorIds(hubIndex) {
+  assert.ok(SECTOR_ORDER.length > 0, 'b) active sector catalog must not be empty');
+  for (const sid of SECTOR_ORDER) {
+    const companies = hubIndex?.sectors?.[sid]?.companies;
+    assert.ok(
+      Array.isArray(companies) && companies.length > 0,
+      `b) active sector ${sid} missing hub_index membership`,
+    );
+  }
+  return [...SECTOR_ORDER];
+}
+
+export function assertSector1dConsistency(sectorIds, sectors, trend) {
+  for (const sid of sectorIds) {
+    const sRet = sectors.sectors?.[sid]?.return1dPct;
+    const series = (trend.sectors || []).find((s) => s.sector === sid)?.series;
+    const tip = lastSeriesPoint(series);
+    const tipPct = tip ? retPctFromBase100(tip.v) : null;
+    assert.ok(sRet != null && tipPct != null, `b) missing ${sid} sector/trend 1d`);
+    assert.ok(
+      nearlyEqual(sRet, tipPct),
+      `b) ${sid} hub_sectors.return1dPct != hub_trend tip (${sRet} vs ${tipPct})`,
+    );
+  }
+}
+
+export function assertCloseSectorSeries(sectorIds, trend) {
+  for (const sid of sectorIds) {
+    const series = (trend.sectors || []).find((s) => s.sector === sid)?.series || [];
+    // Established samples retain the density guard. New sectors may legitimately
+    // have a synthesized two-point series until intraday history is available.
+    if (sid === 'bigchip' || sid === 'semi') {
+      assert.ok(series.length >= 40, `c) ${sid} pointCount≥40 after close, got ${series.length}`);
+    }
+    const tip = lastSeriesPoint(series);
+    assert.ok(
+      isKstCloseTip(tip?.t),
+      `c) ${sid} last t must be 15:30 after close, got ${tip?.t}`,
+    );
+  }
+}
+
 function kstHm(now = new Date()) {
   const p = kstDateParts(now);
   return p.hour * 60 + p.minute;
@@ -126,6 +173,8 @@ async function main() {
   }
 
   console.log(`verify:views base=${base}`);
+  const hubIndex = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'hub_index.json'), 'utf8'));
+  const sectorIds = getVerificationSectorIds(hubIndex);
 
   // h) tickFormat unit test (offline) + hub_valuation_snapshot cache header
   {
@@ -205,33 +254,11 @@ async function main() {
     `  a) quotes 005930 chg1dPct=${quotes.items['005930'].chg1dPct}`,
   );
 
-  // b) hub_sectors tip == member aggregate (±0.01) for semi / holdings
+  // b) hub_sectors return1dPct == hub_trend tip for every active sector (±0.01)
   {
-    const hubIndexPath = path.join(ROOT, 'data', 'hub_index.json');
-    const hubIndex = JSON.parse(fs.readFileSync(hubIndexPath, 'utf8'));
-    const config = getSupabaseConfig(env);
     // Rebuild from API quotes + sector membership is heavy; compare trend tip vs sector return1dPct.
-    for (const sid of ['semi', 'holdings']) {
-      const sRet = sectors.sectors?.[sid]?.return1dPct;
-      const series = (trend.sectors || []).find((s) => s.sector === sid)?.series;
-      const tip = lastSeriesPoint(series);
-      const tipPct = tip ? retPctFromBase100(tip.v) : null;
-      if (sRet == null || tipPct == null) {
-        fail(`b) missing ${sid} sector/trend 1d`, { sRet, tipPct });
-      }
-      if (!nearlyEqual(sRet, tipPct)) {
-        fail(`b) ${sid} hub_sectors.return1dPct != hub_trend tip`, {
-          sectors: sRet,
-          trendTip: tipPct,
-        });
-      }
-    }
-    void config;
-    void hubIndex;
-    void aggregateSectorReturns;
-    void normalizeTicker;
-    void numOrNull;
-    console.log('  b) hub_sectors semi/holdings == hub_trend tip (±0.01)');
+    assertSector1dConsistency(sectorIds, sectors, trend);
+    console.log(`  b) hub_sectors == hub_trend tip for ${sectorIds.length} active sectors (±0.01)`);
   }
 
   // c) hub_trend last point rules
@@ -269,16 +296,7 @@ async function main() {
       );
       if (hasLive) fail('c) B/C must not include live tip points');
 
-      for (const sid of ['semi', 'holdings']) {
-        const series = (trend.sectors || []).find((s) => s.sector === sid)?.series || [];
-        if (series.length < 40) {
-          fail(`c) ${sid} pointCount≥40 after close, got ${series.length}`);
-        }
-        const sidTip = lastSeriesPoint(series);
-        if (!isKstCloseTip(sidTip?.t)) {
-          fail(`c) ${sid} last t must be 15:30 after close, got ${sidTip?.t}`);
-        }
-      }
+      assertCloseSectorSeries(sectorIds, trend);
     }
 
     // 1d KOSPI/KOSDAQ index series

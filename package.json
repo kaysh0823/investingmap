@@ -72,6 +72,7 @@
     "verify:postgrest-keys": "node scripts/verify_postgrest_key_groups.mjs",
     "verify:returns-consistency": "node scripts/verify_returns_consistency.mjs",
     "verify:views": "node scripts/verify_views_consistency.mjs",
+    "verify:views-unit": "node --test scripts/verify_views_consistency.test.mjs",
     "lint:returns": "node scripts/lint_return_sources.mjs",
     "seed:price-adjustments": "node scripts/seed_price_adjustments_from_history.mjs",
     "scan:price-jumps": "node scripts/scan_residual_price_jumps.mjs",
