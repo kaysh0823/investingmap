@@ -213,9 +213,10 @@ for (const stamp of ['2026-10-02T08:30', '2026-10-03T11:00', '2026-10-04T11:00']
     quoteRows: [{
       ticker: '009150',
       last: 1575000,
+      prev_close: semcoKrx,
       trade_date: '2026-10-06',
       as_of: '2026-10-06T15:29:00+09:00',
-      regular_session: false,
+      regular_session: true,
     }],
     krxHistory: { extraTradeDates: [], closeByTicker: new Map() },
   });
@@ -252,7 +253,7 @@ for (const stamp of ['2026-10-02T08:30', '2026-10-03T11:00', '2026-10-04T11:00']
   assert.equal(source.meta.provisional, false);
   assert.equal(source.byTicker['009150'].last, 1600000);
   assert.equal(source.byTicker['009150'].numerator1d, 1600000);
-  assert.equal(source.byTicker['009150'].prevClose1d, semcoKrx);
+  assert.equal(source.byTicker['009150'].prevClose1d, null, 'official price without a trustworthy same-session base cannot manufacture daily return');
 }
 
 // A browser holding a body from the pre-policy logic (same dataVersion) must not get 304.

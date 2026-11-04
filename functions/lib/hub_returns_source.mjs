@@ -6,7 +6,8 @@
  *   close      — trading day ≥15:30 before today's KRX row: last pre-15:30 price, provisional
  *   official   — KRX regular close (history row, else refs tip): after the row exists,
  *                pre-open, weekend, holiday
- * 1D denominator is always the previous KRX regular close. prevCloseFromMobile is never the numerator.
+ * Live 1D uses a same-session regular price/base pair, including corporate-action bases.
+ * prevCloseFromMobile is never the numerator.
  */
 
 import {
@@ -27,6 +28,7 @@ import {
 } from './session_price_policy.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 import { cumulativeAdjustmentRatio } from './price_adjustments.mjs';
+import { regularQuotePair, naverRegularQuotePair } from './regular_quote_pair.mjs';
 
 const REFS_CHECK_MS = 60 * 1000;
 const STALE_ASOF_MS = 15 * 60 * 1000;
@@ -107,11 +109,15 @@ export function latestCloseBefore(rows, tradeDateT) {
  * @param {string} barDate
  * @param {Array<{ effective_date: string, ratio: number }>|undefined} adjustments
  */
-export function adjustedKrxClose(close, barDate, adjustments) {
+export function adjustedKrxClose(close, barDate, adjustments, anchorDd = null) {
   const c = Number(close);
   if (!Number.isFinite(c) || !(c > 0)) return null;
-  const ratio = cumulativeAdjustmentRatio(dashYmd(barDate), adjustments || []);
-  const v = c * (Number.isFinite(ratio) && ratio > 0 ? ratio : 1);
+  const anchor = dashYmd(anchorDd);
+  const applicable = (adjustments || []).filter((a) => !anchor || dashYmd(a.effective_date) <= anchor);
+  const ratio = cumulativeAdjustmentRatio(dashYmd(barDate), applicable);
+  if (!Number.isFinite(ratio) || ratio <= 0) return null;
+  // ratio = shares_after / shares_before, as in applyPriceAdjustmentsToBars.
+  const v = c / ratio;
   return v > 0 ? v : null;
 }
 
@@ -132,7 +138,7 @@ function builtAtToken(refs) {
   return raw.replace(/[^0-9A-Za-z:-]/g, '').slice(0, 32) || '0';
 }
 
-export function buildDataVersion(refs, maxAsOf) {
+export function buildDataVersion(refs, maxAsOf, now = new Date()) {
   const recent = compactYmd(refs?.recentDd) || '0';
   const ms = maxAsOf ? Date.parse(maxAsOf) : NaN;
   const epoch = Number.isFinite(ms) ? Math.floor(ms / 1000) : 0;
@@ -140,7 +146,11 @@ export function buildDataVersion(refs, maxAsOf) {
   // even when the latest quote timestamp is still the fixed 15:30 auction.
   const refsMs = Date.parse(refs?.asOf || '');
   const refsRevision = Number.isFinite(refsMs) ? refsMs : 0;
-  return `${recent}-${epoch}-${builtAtToken(refs)}-${refsRevision}`;
+  // Freshness is time-dependent even when no collection succeeds. Without a
+  // live minute bucket a cached valid 1D can survive indefinitely via 304.
+  const phase = pricePhase(now);
+  const freshness = phase === 'live' ? Math.floor(now.getTime() / 60000) : phase;
+  return `${recent}-${epoch}-${builtAtToken(refs)}-${refsRevision}-${freshness}`;
 }
 
 function normalizeTicker(t) {
@@ -405,7 +415,7 @@ export async function loadKrxReturnHistory(config, recentDd, anchorDd, tickers) 
   const [extraTradeDates, prevByTicker, adjByTicker] = await Promise.all([
     fetchCompletedSessionsAfter(config, recentDd),
     fetchPrevClosesBefore(config, anchorDd, tickers),
-    fetchAdjustmentsAfter(config, recentDd),
+    fetchAdjustmentsAfter(config, recentDd, anchorDd),
   ]);
   return { extraTradeDates, prevByTicker, adjByTicker };
 }
@@ -494,7 +504,7 @@ async function fetchClosesOnDate(config, ymd, tickers) {
   return out;
 }
 
-async function fetchAdjustmentsAfter(config, recentDd) {
+async function fetchAdjustmentsAfter(config, recentDd, anchorDd) {
   /** @type {Map<string, Array<{ effective_date: string, ratio: number }>>} */
   const out = new Map();
   const dash = dashYmd(recentDd);
@@ -504,6 +514,7 @@ async function fetchAdjustmentsAfter(config, recentDd) {
     rows = await fetchSupabaseJson(
       config,
       `price_adjustments?effective_date=gt.${dash}`
+      + (dashYmd(anchorDd) ? `&effective_date=lte.${dashYmd(anchorDd)}` : '')
       + '&select=ticker,effective_date,ratio&limit=1000',
     );
   } catch {
@@ -550,7 +561,7 @@ export async function loadReturnSource({
         tradingDates: [],
         closeMissingCount: 0,
         stale: false,
-        dataVersion: buildDataVersion(null, null),
+        dataVersion: buildDataVersion(null, null, now),
         refsEtag,
       },
       refs: null,
@@ -567,7 +578,7 @@ export async function loadReturnSource({
   if (!quoteRows) {
     const config = getSupabaseConfig(env);
     if (!config) {
-      const dataVersion = buildDataVersion(refs, null);
+      const dataVersion = buildDataVersion(refs, null, now);
       return {
         meta: {
           asOf: null,
@@ -614,21 +625,11 @@ export async function loadReturnSource({
         const refreshed = await staleRefresh(staleCodes);
         const items = refreshed?.items || {};
         for (const t of staleCodes) {
-          const live = numOrNull(items[t]?.last);
-          if (live == null) continue;
-          const prev = rows.get(t) || { last: null, asOf: null, tradeDd: '' };
-          const tradeDd = compactYmd(items[t]?.tradeDate || refreshed?.tradeDate)
-            || prev.tradeDd
-            || todayDd;
-          rows.set(t, {
-            ...prev,
-            // A base price from an older session is not today's 1D denominator.
-            prevClose: numOrNull(items[t]?.prevClose)
-              ?? (prev.tradeDd === tradeDd ? prev.prevClose : null),
-            last: live,
-            asOf: now.toISOString(),
-            tradeDd,
-          });
+          const pair = naverRegularQuotePair(items[t], todayDd, now);
+          if (!pair) continue;
+          rows.set(t, { ...pair, tradeDd: pair.tradeDate });
+          if (!maxAsOf || Date.parse(pair.asOf) > Date.parse(maxAsOf)) maxAsOf = pair.asOf;
+          if (!globalMaxAsOf || Date.parse(pair.asOf) > Date.parse(globalMaxAsOf)) globalMaxAsOf = pair.asOf;
           stale = true;
         }
       } catch {
@@ -691,7 +692,7 @@ export async function loadReturnSource({
     if (config) {
       const [prev, adj] = await Promise.all([
         prevByTicker ? Promise.resolve(prevByTicker) : fetchPrevClosesBefore(config, anchorDd, codes),
-        adjByTicker ? Promise.resolve(adjByTicker) : fetchAdjustmentsAfter(config, refsRecentDd),
+        adjByTicker ? Promise.resolve(adjByTicker) : fetchAdjustmentsAfter(config, refsRecentDd, anchorDd),
       ]);
       prevByTicker = prev;
       adjByTicker = adj;
@@ -737,13 +738,24 @@ export async function loadReturnSource({
       const prev = prevByTicker?.get(t);
       // A close older than the latest completed session is not yesterday's close.
       resolved.prevClose1d = prev && compactYmd(prev.tradeDate) === completedDd
-        ? adjustedKrxClose(prev.close, prev.tradeDate, adjByTicker?.get(t))
+        ? adjustedKrxClose(prev.close, prev.tradeDate, adjByTicker?.get(t), anchorDd)
         : null;
       // History row missing or the lookup failed: today's quote row carries the
       // KRX base price (previous session close, already adjusted) for 1D.
       if (resolved.prevClose1d == null && row?.tradeDd === anchorDd) {
         resolved.prevClose1d = numOrNull(row.prevClose);
       }
+    }
+    // Apply even when refs are current: yesterday's raw close can be on the
+    // pre-split scale. An absent/untrusted pair must not invent a daily move.
+    if (phase === 'live') {
+      const pair = regularQuotePair(row, anchorDd, now);
+      resolved.numerator1d = pair?.last ?? null;
+      resolved.prevClose1d = pair?.prevClose ?? null;
+    } else {
+      const pair = regularQuotePair(row, anchorDd, now, { maxAgeMs: Infinity });
+      // A refs build advancing to today must not discard a verified daily base.
+      if (pair || quotePhase === 'afterClose') resolved.prevClose1d = pair?.prevClose ?? null;
     }
     if (usingStoredClose) resolved.prevClose1d = numOrNull(row?.prevClose);
     // A timestamped 15:30 auction snapshot remains authoritative after refs
@@ -771,7 +783,7 @@ export async function loadReturnSource({
   }
 
   const versionAsOf = globalMaxAsOf || maxAsOf;
-  const dataVersion = buildDataVersion(refs, versionAsOf);
+  const dataVersion = buildDataVersion(refs, versionAsOf, now);
 
   return {
     meta: {

@@ -10,6 +10,7 @@ import { fetchNaverQuote, resolveNaverSession } from '../functions/lib/naver_sis
 import { buildKrxRsSnapshot, getAuthKey } from '../functions/lib/krx_rs.mjs';
 import { isKrxClockRegularSession, isKrxRegularSessionEnded, krxSessionInfo, kstAnchorYmd, kstDateParts, kstWeekday, kstYmd, kstYmdDash } from '../functions/lib/krx_session.mjs';
 import { pricePhase, resolveSessionQuote } from '../functions/lib/session_price_policy.mjs';
+import { naverRegularQuotePair } from '../functions/lib/regular_quote_pair.mjs';
 import { buildAfterHoursSnapshot } from '../functions/lib/after_hours_snapshot.mjs';
 import { buildSectorReturnCaptureRows } from '../functions/lib/sector_return_captures.mjs';
 import {
@@ -341,6 +342,15 @@ export function stockReturnFieldsFromRefs(
       ? Number(overrideLast)
       : null,
   });
+  if (phase === 'live') {
+    const pair = naverRegularQuotePair(naver, todayDd, now);
+    resolved.numerator1d = pair && (overrideLast == null || Number(overrideLast) === pair.last) ? pair.last : null;
+    resolved.prevClose1d = resolved.numerator1d != null ? pair.prevClose : null;
+  } else {
+    const baseDd = quotePhase === 'official' ? (refsRecentDd || todayDd) : todayDd;
+    const pair = naverRegularQuotePair(naver, baseDd, now, { maxAgeMs: Infinity });
+    if (pair || quotePhase === 'afterClose') resolved.prevClose1d = pair?.prevClose ?? null;
+  }
   let k = 0;
   const anchorDd = quotePhase === 'official' ? (refsRecentDd || todayDd) : todayDd;
   if (quotePhase !== 'official' && refsRecentDd && anchorDd) {
@@ -367,30 +377,18 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
   // During the auction, last is the Naver KRX price (not pre/after market).
   // After the close, do not write basic.last — that field is the NXT integrated
   // price. Omit last so the pre-15:30 value stays until a KRX close is stored.
-  const overMarket = !!(naver?.overMarket)
-    || naver?.marketSessionType === 'afterMarket'
-    || naver?.marketSessionType === 'preMarket';
-  const liveLast = !overMarket && naver?.last != null && Number.isFinite(naver.last) ? naver.last : null;
   const krxClose = naver?.krxCloseToday != null && Number(naver.krxCloseToday) > 0
     ? Number(naver.krxCloseToday)
     : null;
-  const last = regularSession ? liveLast : krxClose;
-
-  const naverPrev = naver?.prevClose != null && Number.isFinite(Number(naver.prevClose)) && Number(naver.prevClose) > 0
-    ? Number(naver.prevClose)
-    : null;
+  const collectedAt = new Date(asOf);
+  const pair = naverRegularQuotePair(naver, kstYmd(collectedAt), collectedAt,
+    { maxAgeMs: regularSession ? undefined : Infinity });
+  // Persist an atomic pair with provider time. Never label an old cached print
+  // as fresh or overwrite a corporate-action base with raw historical price.
+  const last = regularSession ? pair?.last ?? null : krxClose;
   const historyPrev = historyPrevClose != null && Number.isFinite(Number(historyPrevClose)) && Number(historyPrevClose) > 0
-    ? Number(historyPrevClose)
-    : null;
-  let prevClose = naverPrev;
-  if (historyPrev != null && naverPrev != null && Math.abs(historyPrev - naverPrev) > 0) {
-    console.warn(
-      `  prev_close ${ticker}: naver ${naverPrev} != history ${historyPrev} — store KRX`,
-    );
-    prevClose = historyPrev;
-  } else if (historyPrev != null) {
-    prevClose = historyPrev;
-  }
+    ? Number(historyPrevClose) : null;
+  const prevClose = pair?.prevClose ?? (regularSession ? null : historyPrev);
 
   const returns = returnFields || {
     chg_1d_pct: null,
@@ -420,14 +418,16 @@ export function toSupabaseRow(ticker, naver, krx, asOf, regularSession, _marketC
     turnover_won: naver?.turnoverWon ?? null,
     per: naver?.per ?? null,
     pbr: naver?.pbr ?? null,
-    chg_1d_pct: returns.chg_1d_pct ?? null,
+    chg_1d_pct: regularSession
+      ? (pair ? computeStockReturns({ numerator1d: pair.last, prevClose1d: pair.prevClose }).chg1dPct : null)
+      : returns.chg_1d_pct ?? null,
     ret_5d_pct: returns.ret_5d_pct ?? null,
     ret_20d_pct: returns.ret_20d_pct ?? null,
     ret_50d_pct: returns.ret_50d_pct ?? null,
     ret_120d_pct: returns.ret_120d_pct ?? null,
     ret_200d_pct: returns.ret_200d_pct ?? null,
     rs: krx?.rs ?? null,
-    as_of: asOf,
+    as_of: regularSession ? pair?.asOf ?? asOf : asOf,
     regular_session: regularSession,
     // In-memory only — stripped before stock_quotes_latest upsert; used for
     // session-close history when KRX day OHLC is not published yet.
@@ -2475,7 +2475,7 @@ async function main() {
     const code = normalizeTicker(ticker);
     const hit = krxReturnHistory.prevByTicker.get(code);
     if (!hit) return null;
-    return adjustedKrxClose(hit.close, hit.tradeDate, krxReturnHistory.adjByTicker.get(code));
+    return adjustedKrxClose(hit.close, hit.tradeDate, krxReturnHistory.adjByTicker.get(code), consensus.tradeDate || todayYmdDash);
   };
   const returnOpts = {
     extraTradeDates: krxReturnHistory.extraTradeDates,

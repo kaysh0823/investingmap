@@ -3,6 +3,8 @@
  * https://finance.naver.com/item/sise.naver?code=XXXXXX
  */
 
+import { regularQuotePair } from './regular_quote_pair.mjs';
+
 export const NAVER_SISE_URL = 'https://finance.naver.com/item/sise.naver';
 export const NAVER_MOBILE_INTEGRATION_URL = 'https://m.stock.naver.com/api/stock';
 export const NAVER_MOBILE_BASIC_URL = 'https://m.stock.naver.com/api/stock';
@@ -459,7 +461,7 @@ export function parseNaverBasicQuote(json) {
   const code = String(json.compareToPreviousPrice?.code ?? json.compareToPreviousPrice?.name ?? '');
   const name = String(json.compareToPreviousPrice?.name || '').toUpperCase();
   const falling =
-    code === '3' || code === '5' || name.includes('FALL') || name.includes('DECLIN');
+    code === '4' || code === '5' || name.includes('LOWER') || name.includes('FALL') || name.includes('DECLIN');
   const rising =
     code === '1' || code === '2' || name.includes('RIS') || name.includes('UPPER');
   if (out.last != null && compareAbs != null) {
@@ -490,6 +492,20 @@ export function parseNaverBasicQuote(json) {
 
   const status = String(json.marketStatus || '').toUpperCase();
   if (status) out.marketClosed = status !== 'OPEN';
+
+  // Preserve the price/base/timestamp from this one response. Generic merged
+  // prevClose may come from an undated PC/mobile response and is not evidence.
+  out.regularQuote = null;
+  const knownDirection = falling || rising || compareAbs === 0
+    || (typeof json.compareToPreviousClosePrice === 'string' && /^[+-]/.test(json.compareToPreviousClosePrice.trim()));
+  const computedPct = out.prevClose > 0 ? (out.last / out.prevClose - 1) * 100 : NaN;
+  const consistent = !Number.isFinite(ratio) || Math.abs(computedPct - ratio) <= 0.02;
+  if (status === 'OPEN' && !out.overMarket && knownDirection && consistent) {
+    const pair = regularQuotePair({ last: out.last, prevClose: out.prevClose,
+      asOf: tradedAt, tradeDate: out.tradeDate, regularSession: true },
+    out.tradeDate, new Date(tradedAt), { maxAgeMs: 0 });
+    if (pair) out.regularQuote = { ...pair, source: 'naver-basic' };
+  }
 
   // Optional session OHLV on /basic (prefer over mobile when present).
   if (json.openPrice != null) out.open = parseKoreanNumber(json.openPrice);
@@ -559,6 +575,7 @@ export async function fetchNaverQuote(code, init) {
     merged.krxLast = null;
     merged.chg1dPct = null;
     merged.overMarket = true;
+    merged.regularQuote = null;
     merged.nxtLast = basicQuote.nxtLast ?? null;
     merged.marketSessionType = basicQuote.marketSessionType;
   } else if (basicQuote?.krxLast != null) {
@@ -589,7 +606,11 @@ export function mergeNaverIntoQuote(quote, naver, opts) {
   const preferLast = opts && opts.preferNaverLast;
   const preferFundamentals = opts && opts.preferNaverFundamentals;
   const out = { ...quote };
-  if (naver.last != null && (preferLast || out.last == null)) out.last = naver.last;
+  if (naver.last != null && (preferLast || out.last == null)) {
+    out.last = naver.last;
+    // A new price invalidates the old pair, even if the new source lacks a base.
+    out.regularQuote = naver.regularQuote || null;
+  }
   if (naver.prevClose != null && (preferLast || out.prevClose == null)) out.prevClose = naver.prevClose;
   if (naver.open != null && (preferLast || out.open == null)) out.open = naver.open;
   if (naver.high != null && (preferLast || out.high == null)) out.high = naver.high;

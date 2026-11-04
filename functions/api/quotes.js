@@ -17,7 +17,7 @@ import {
   simpleHash,
 } from '../lib/returns_cache_headers.mjs';
 
-const QUOTES_CACHE_VERSION = 'v16';
+const QUOTES_CACHE_VERSION = 'v17';
 
 let rsSnapshotCache = { at: 0, snap: null };
 
@@ -247,6 +247,7 @@ function applyReturnsFromSource(items, source) {
     const t = normalizeTicker(code);
     const src = t ? source?.byTicker?.[t] : null;
     if (!src) {
+      item.prevClose = null;
       item.chg1dPct = null;
       item.ret5dPct = null;
       item.ret20dPct = null;
@@ -262,6 +263,7 @@ function applyReturnsFromSource(items, source) {
       prevClose1d: src.prevClose1d,
       numerator1d: src.numerator1d,
     });
+    item.prevClose = src.prevClose1d ?? null;
     item.chg1dPct = returns.chg1dPct;
     item.ret5dPct = returns.ret5dPct;
     item.ret20dPct = returns.ret20dPct;

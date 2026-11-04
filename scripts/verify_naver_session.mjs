@@ -498,11 +498,8 @@ assert(noMarker.regularSession === true, 'no marker → trust clock (regular)');
       prevClose1d: closes[L - 1],
       numerator1d: provisional,
     });
-    assert(ok.chg_1d_pct != null, 'provisional regular print');
-    assert(
-      Math.abs(ok.chg_1d_pct - expected.chg1dPct) <= 0.01,
-      `provisional chg=${ok.chg_1d_pct} vs ${expected.chg1dPct}`,
-    );
+    assert(ok.chg_1d_pct == null, 'provisional price without a same-session base cannot manufacture a daily return');
+    assert(ok.ret_20d_pct != null, 'longer return math remains available');
   }
 
   // After close, basic.last (NXT) is not the 1D numerator.

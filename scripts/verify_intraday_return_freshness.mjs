@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import { loadReturnSource } from '../functions/lib/hub_returns_source.mjs';
+import { loadReturnSource, adjustedKrxClose } from '../functions/lib/hub_returns_source.mjs';
 import { computeStockReturns, aggregateSectorReturns } from '../functions/lib/returns_core.mjs';
 
 const tickers = ['005930', '000660'];
@@ -14,8 +14,8 @@ const refs = {
   },
 };
 const quoteRows = [
-  { ticker: '005930', last: 234000, trade_date: '2026-10-14', as_of: '2026-10-14T10:00:00+09:00' },
-  { ticker: '000660', last: 1426000, trade_date: '2026-10-14', as_of: '2026-10-14T10:00:00+09:00' },
+  { ticker: '005930', last: 234000, prev_close: 232000, regular_session: true, trade_date: '2026-10-14', as_of: '2026-10-14T10:00:00+09:00' },
+  { ticker: '000660', last: 1426000, prev_close: 1443000, regular_session: true, trade_date: '2026-10-14', as_of: '2026-10-14T10:00:00+09:00' },
 ];
 const history = {
   extraTradeDates: ['20261013'],
@@ -35,15 +35,16 @@ assert.equal(computeStockReturns(members[0]).chg1dPct, 0.86);
 assert.equal(computeStockReturns(members[1]).chg1dPct, -1.18);
 assert.equal(aggregateSectorReturns(members).chg1dPct, -0.9);
 const missing = await load({ ...history, prevByTicker: new Map() });
-assert.equal(missing.byTicker['005930'].prevClose1d, null);
+assert.equal(missing.byTicker['005930'].prevClose1d, 232000, 'paired daily base survives missing history');
 const old = await load({ ...history, prevByTicker: new Map([['005930', { tradeDate: '20261012', close: 250500 }]]) });
-assert.equal(old.byTicker['005930'].prevClose1d, null);
+assert.equal(old.byTicker['005930'].prevClose1d, 232000, 'stale history does not override provider base');
 const split = await load({
   ...history,
   prevByTicker: new Map([['005930', { tradeDate: '20261013', close: 464000 }]]),
-  adjByTicker: new Map([['005930', [{ effective_date: '2026-10-14', ratio: 0.5 }]]]),
+  adjByTicker: new Map([['005930', [{ effective_date: '2026-10-14', ratio: 2 }]]]),
 });
 assert.equal(split.byTicker['005930'].prevClose1d, 232000);
+assert.equal(adjustedKrxClose(464000, '20261013', [{ effective_date: '2026-10-14', ratio: 2 }]), 232000);
 
 const context = vm.createContext({ console });
 vm.runInContext(fs.readFileSync(new URL('../js/live_quotes.js', import.meta.url), 'utf8'), context);

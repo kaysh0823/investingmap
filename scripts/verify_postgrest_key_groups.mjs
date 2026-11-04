@@ -24,6 +24,7 @@ function quote(last) {
   return {
     last,
     prevClose: 1000,
+    regularQuote: { source: 'naver-basic', last, prevClose: 1000, asOf: '2026-10-08T02:00:00.000Z', tradeDate: '20261008', regularSession: true },
     open: 990,
     high: 1010,
     low: 980,
@@ -99,7 +100,7 @@ const withUndefinedReturn = toSupabaseRow(
   { chg_1d_pct: undefined, ret_5d_pct: 2 },
   null,
 );
-assert.equal(withUndefinedReturn.chg_1d_pct, null);
+assert.equal(withUndefinedReturn.chg_1d_pct, 50, 'daily return is calculated from the persisted pair');
 assert.equal(withUndefinedReturn.ret_5d_pct, 2);
 assert.equal('chg_1d_pct' in withUndefinedReturn, true);
 
