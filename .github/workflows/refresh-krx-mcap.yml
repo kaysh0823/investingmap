@@ -1,9 +1,7 @@
 name: Refresh KRX market cap CSV
 
+# Paused at the owner's request. Do not resume collection without approval.
 on:
-  schedule:
-    # Mon 08:00 KST = Sun 23:00 UTC
-    - cron: '0 23 * * 0'
   workflow_dispatch:
 
 permissions:
@@ -11,6 +9,7 @@ permissions:
 
 jobs:
   refresh:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
 

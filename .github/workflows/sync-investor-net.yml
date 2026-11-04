@@ -1,11 +1,7 @@
 name: Sync investor net to Supabase
 
+# Paused at the owner's request. Do not resume collection without approval.
 on:
-  schedule:
-    # Backup only — GitHub schedule runs hours late. Primary trigger: sync-quotes
-    # post_close (20:05 KST) / post_close_retry (20:30–21:30) dispatches this workflow.
-    # Mon–Fri 20:10 KST = 11:10 UTC
-    - cron: '10 11 * * 1-5'
   workflow_dispatch:
 
 concurrency:
@@ -14,6 +10,7 @@ concurrency:
 
 jobs:
   sync:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
 

@@ -1,34 +1,8 @@
 name: Sync quotes to Supabase
 
+# Paused at the owner's request. Do not resume collection without approval.
 on:
-  # Backup only — GitHub schedule cron is heavily throttled (often 1–3h gaps).
-  # Prefer external cron → repository_dispatch (intraday + close slots).
-  # Backup cron stays every 10 min. A 5 min GitHub schedule still pays runner
-  # startup; overlapping intraday runs are dropped by the freshness guard.
-  # Slots: regular 09:00–15:30 / regular_close 15:40 / post_close 20:05
-  #         + post_close_retry 20:30 / 21:00 / 21:30 (HISTORY_PENDING / tip guard).
-  # No aftermarket 16:00–19:50 runs (NXT prices must never feed returns).
-  schedule:
-    # KST 09:00–14:50 (UTC 00:00–05:50), every 10 min, Mon–Fri
-    - cron: '*/10 0-5 * * 1-5'
-    # KST 15:00–15:30 (UTC 06:00–06:30), every 10 min
-    - cron: '0,10,20,30 6 * * 1-5'
-    # KST 15:40 (UTC 06:40) backup — regular_close
-    - cron: '40 6 * * 1-5'
-    # KST 20:00 (UTC 11:00) backup — post_close
-    - cron: '0 11 * * 1-5'
-    # KST 20:30 / 21:00 / 21:30 — post_close_retry (HISTORY_PENDING / tip guard)
-    - cron: '30 11 * * 1-5'
-    - cron: '0 12 * * 1-5'
-    - cron: '30 12 * * 1-5'
-  repository_dispatch:
-    types: [sync-quotes]
   workflow_dispatch:
-    inputs:
-      slot:
-        description: "regular_close | post_close | post_close_retry | intraday (empty = auto/KST)"
-        required: false
-        default: ''
 
 permissions:
   contents: write
@@ -36,6 +10,7 @@ permissions:
 
 jobs:
   sync:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     concurrency:
