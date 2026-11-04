@@ -61,7 +61,7 @@
   }
   </script>
   <script src="../js/seo.js"></script>
-                                                        <!-- investingmap-geo-webpage -->
+                                                          <!-- investingmap-geo-webpage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -559,8 +559,8 @@
   <script src="../js/live_quotes.js?v=ac3f515b"></script>
   <script src="../js/map_i18n.js"></script>
   <script src="../js/map_cross_sector.js?v=790a8455"></script>
-  <script src="../js/map_tab_state.js?v=964c5ee7"></script>
-  <script src="../js/sector_nav.js?v=4155395a"></script>
+  <script src="../js/map_tab_state.js?v=100d0cb6"></script>
+  <script src="../js/sector_nav.js?v=77013851"></script>
   <script src="../js/map_filter_ux.js?v=9eb9ec96"></script>
 <script src="../js/sector_editorial_data.js"></script>
 <script src="../js/map_editorial.js"></script>
@@ -568,14 +568,16 @@
   <script src="../js/map_heatmap.js?v=1a6d03a6"></script>
   <script src="../js/turnover_radius.js?v=b8ab5ec8"></script>
   <script src="../js/map_momentum.js?v=52656879"></script>
+  <script src="../js/map_volatility_candles.js?v=71d82c1a"></script>
   <script src="../js/rs_color_scale.js?v=c28cc811"></script>
   <script src="../js/map_volatility.js?v=5faa7fb4"></script>
-  <script src="../js/map_perfcalendar.js?v=87b7547d"></script>
+  <script src="../js/map_perfcalendar_years.js?v=d00c0491"></script>
+  <script src="../js/map_perfcalendar.js?v=2f7e89b8"></script>
   <script src="../js/map_valuation.js?v=31656691"></script>
   <script src="../js/map_netmap.js?v=4ebe04c9"></script>
   <script src="../js/map_mobile_table.js?v=fc899b89"></script>
   <script src="../js/map_mobile_ux.js?v=88e05362"></script>
-  <script src="../js/candle_modal.js?v=df8c7b98"></script>
+  <script src="../js/candle_modal.js?v=cce19f1e"></script>
   <style>
     :root {
       --bg: #0d1117;
@@ -2136,6 +2138,7 @@
 <div class="tabs">
     <button id="tab-btn-heatmap" class="tab-btn active" onclick="switchTab('heatmap',this)">🔥 섹터 히트맵</button>
     <button id="tab-btn-momentum" class="tab-btn" onclick="switchTab('momentum',this)">📊 모멘텀 매트릭스</button>
+    <button id="tab-btn-volatility-candles" class="tab-btn" onclick="switchTab('volatility-candles',this)">🕯️ 변동성 캔들</button>
     <button id="tab-btn-volatility" class="tab-btn" onclick="switchTab('volatility',this)">📉 변동성 분포</button>
     <button id="tab-btn-perfcalendar" class="tab-btn" onclick="switchTab('perfcalendar',this)">📅 퍼포먼스 캘린더</button>
     <button id="tab-btn-valuation" class="tab-btn" onclick="switchTab('valuation',this)">⚖️ 밸류에이션 비교</button>
@@ -2151,6 +2154,7 @@
     </div>
   </div>
   <!-- MOMENTUM TAB -->
+  <div id="tab-volatility-candles" class="tab-content"><section id="mm-volatility" aria-label="Volatility candles"></section></div>
   <div id="tab-momentum" class="tab-content">
     <div class="momentum-wrap">
       <p class="momentum-meta" id="momentum-hint">RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률</p>
@@ -3807,9 +3811,9 @@
     </nav>
     <p class="im-trust-disclaimer" id="tf-inline-disclaimer">본 콘텐츠는 정보 제공 목적이며 투자 권유·자문이 아닙니다. 투자 결정과 책임은 투자자 본인에게 있습니다.</p>
   </footer>
-  <script src="../js/desktop_sidebar_nav.js?v=80e99482"></script>
+  <script src="../js/desktop_sidebar_nav.js?v=4e65f55f"></script>
   <script src="../js/global_search.js?v=14296898"></script>
-  <script src="../js/global_bottom_nav.js?v=9c649cb1"></script>
+  <script src="../js/global_bottom_nav.js?v=e09916a1"></script>
   <script src="../js/geo_footer.js"></script>
 <!-- investingmap-seo-related-start -->
   <section class="im-seo-related" id="im-seo-related" aria-labelledby="im-seo-related-title">

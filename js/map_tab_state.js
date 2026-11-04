@@ -11,6 +11,7 @@
   var PUBLIC_TABS = {
     heatmap: 1,
     momentum: 1,
+    'volatility-candles': 1,
     volatility: 1,
     perfcalendar: 1,
     valuation: 1,
@@ -80,6 +81,8 @@
       if (s && PUBLIC_TABS[s]) return s;
     } catch (e2) {}
     if (isTableTabActive()) return 'table';
+    var candlesEl = document.getElementById('tab-volatility-candles');
+    if (candlesEl && candlesEl.classList.contains('active')) return 'volatility-candles';
     var momentumEl = document.getElementById('tab-momentum');
     if (momentumEl && momentumEl.classList.contains('active')) return 'momentum';
     var volatilityEl = document.getElementById('tab-volatility');
@@ -208,6 +211,7 @@
       table: 'tab-btn-table',
       heatmap: 'tab-btn-heatmap',
       momentum: 'tab-btn-momentum',
+      'volatility-candles': 'tab-btn-volatility-candles',
       volatility: 'tab-btn-volatility',
       perfcalendar: 'tab-btn-perfcalendar',
       valuation: 'tab-btn-valuation',
