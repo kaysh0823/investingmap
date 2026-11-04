@@ -17,7 +17,7 @@ import {
   simpleHash,
 } from '../lib/returns_cache_headers.mjs';
 
-const QUOTES_CACHE_VERSION = 'v17';
+const QUOTES_CACHE_VERSION = 'v18';
 
 let rsSnapshotCache = { at: 0, snap: null };
 

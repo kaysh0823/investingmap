@@ -388,14 +388,41 @@ export function shouldReviewAdjustment(sharesRatio) {
  * @param {string} barDate YYYY-MM-DD
  * @param {Array<{effective_date:string,ratio:number}>} adjustments asc by effective_date
  */
-export function cumulativeAdjustmentRatio(barDate, adjustments) {
+export function normalizeAdjustmentEvents(adjustments, throughDate) {
+  const through = throughDate == null ? null : String(throughDate).slice(0, 10);
+  if (through != null && !validAdjustmentDate(through)) throw new Error('Invalid adjustment throughDate');
+  const byDate = new Map();
+  for (const adj of adjustments || []) {
+    const effective_date = String(adj?.effective_date || '').slice(0, 10);
+    if (!validAdjustmentDate(effective_date)) throw new Error('Invalid adjustment effective_date');
+    if (through != null && effective_date > through) continue;
+    if (typeof adj.ratio !== 'number' && typeof adj.ratio !== 'string') throw new Error('Invalid adjustment ratio');
+    const ratio = Number(adj.ratio);
+    if (!Number.isFinite(ratio) || ratio <= 0) throw new Error('Invalid adjustment ratio');
+    const prior = byDate.get(effective_date);
+    if (prior != null && Math.abs(prior - ratio) > 1e-10 * Math.max(prior, ratio)) {
+      throw new Error(`Conflicting adjustment ratios on ${effective_date}`);
+    }
+    if (prior == null) byDate.set(effective_date, ratio);
+  }
+  return [...byDate].sort(([a], [b]) => a.localeCompare(b))
+    .map(([effective_date, ratio]) => ({ effective_date, ratio }));
+}
+
+function validAdjustmentDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const ms = Date.parse(`${value}T00:00:00Z`);
+  return Number.isFinite(ms) && new Date(ms).toISOString().slice(0, 10) === value;
+}
+
+export function cumulativeAdjustmentRatio(barDate, adjustments, throughDate) {
   if (!barDate || !adjustments?.length) return 1;
   const t = String(barDate).slice(0, 10);
   let cum = 1;
-  for (const adj of adjustments) {
-    const eff = String(adj.effective_date).slice(0, 10);
-    if (t < eff) cum *= Number(adj.ratio);
+  for (const adj of normalizeAdjustmentEvents(adjustments, throughDate)) {
+    if (t < adj.effective_date) cum *= adj.ratio;
   }
+  if (!Number.isFinite(cum) || cum <= 0) throw new Error('Invalid cumulative adjustment ratio');
   return cum;
 }
 
@@ -409,13 +436,14 @@ function roundWon(v) {
  * @param {Array<{t:string,o?:number|null,h?:number|null,l?:number|null,c:number,v?:number|null}>} bars
  * @param {Array<{effective_date:string,ratio:number}>} adjustments
  */
-export function applyPriceAdjustmentsToBars(bars, adjustments) {
+export function applyPriceAdjustmentsToBars(bars, adjustments, throughDate) {
   if (!bars?.length || !adjustments?.length) return bars;
-  const sorted = [...adjustments].sort((a, b) =>
-    String(a.effective_date).localeCompare(String(b.effective_date)),
-  );
-  for (const bar of bars) {
-    const cum = cumulativeAdjustmentRatio(bar.t, sorted);
+  const sorted = normalizeAdjustmentEvents(adjustments, throughDate);
+  // Validate every factor before mutating any bar.
+  const factors = bars.map((bar) => cumulativeAdjustmentRatio(bar.t, sorted, throughDate));
+  for (let i = 0; i < bars.length; i++) {
+    const bar = bars[i];
+    const cum = factors[i];
     if (cum === 1) continue;
     if (bar.o != null) bar.o = roundWon(bar.o / cum);
     if (bar.h != null) bar.h = roundWon(bar.h / cum);
@@ -430,13 +458,14 @@ export function applyPriceAdjustmentsToBars(bars, adjustments) {
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker
  */
-export async function fetchPriceAdjustments(config, ticker) {
+export async function fetchPriceAdjustments(config, ticker, options = {}) {
   const q =
     `price_adjustments?ticker=eq.${encodeURIComponent(ticker)}` +
     `&select=effective_date,ratio,type,source,note&order=effective_date.asc`;
   try {
     return await fetchSupabaseJson(config, q);
-  } catch {
+  } catch (error) {
+    if (options.throwOnError) throw error;
     return [];
   }
 }
@@ -446,8 +475,8 @@ export async function fetchPriceAdjustments(config, ticker) {
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker
  */
-export async function fetchPriceAdjustmentsSignature(config, ticker) {
-  const rows = await fetchPriceAdjustments(config, ticker);
+export async function fetchPriceAdjustmentsSignature(config, ticker, options = {}) {
+  const rows = await fetchPriceAdjustments(config, ticker, options);
   if (!rows.length) return 'adj-none';
   return (
     'adj-' +

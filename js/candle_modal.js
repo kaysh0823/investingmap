@@ -632,7 +632,7 @@
    * - Quotes trade date newer than last history bar → append (session or after hours).
      After close this keeps today's bar until stock_price_history catches up.
    */
-  function applyLiveQuoteToBars(bars, quotesJson, code) {
+  function applyLiveQuoteToBars(bars, quotesJson, code, adjustmentBasis) {
     if (!bars || !bars.length || !quotesJson) {
       return { bars: bars, live: false, liveTime: null };
     }
@@ -652,6 +652,12 @@
 
     var qDate = asOfToTradeDate(quotesJson.asOf);
     if (!qDate) return { bars: bars, live: false, liveTime: null };
+    // A newer quote must not be joined to history on a different corporate-action
+    // basis (including a cached pre-open payload or an unavailable closing row).
+    if (adjustmentBasis && (qDate > adjustmentBasis.throughDate ||
+        (adjustmentBasis.events || []).some(function (event) { return event.effective_date > qDate; }))) {
+      return { bars: bars, live: false, liveTime: null };
+    }
 
     var inSession = quotesJson.regularSession === true;
     var out = bars.slice();
@@ -777,7 +783,7 @@
    * Live overlay for server-aggregated weekly bars.
    * Same ISO week as last bar → patch OHLC (keep OSC); newer week → append without OSC.
    */
-  function applyLiveQuoteToWeeklyBars(bars, quotesJson, code) {
+  function applyLiveQuoteToWeeklyBars(bars, quotesJson, code, adjustmentBasis) {
     if (!bars || !bars.length || !quotesJson) {
       return { bars: bars, live: false, liveTime: null };
     }
@@ -795,6 +801,12 @@
 
     var qDate = asOfToTradeDate(quotesJson.asOf);
     if (!qDate) return { bars: bars, live: false, liveTime: null };
+    // A newer quote must not be joined to history on a different corporate-action
+    // basis (including a cached pre-open payload or an unavailable closing row).
+    if (adjustmentBasis && (qDate > adjustmentBasis.throughDate ||
+        (adjustmentBasis.events || []).some(function (event) { return event.effective_date > qDate; }))) {
+      return { bars: bars, live: false, liveTime: null };
+    }
 
     var inSession = quotesJson.regularSession === true;
     var out = bars.slice();
@@ -2358,8 +2370,8 @@
         }
         var serverWeekly = state.interval === 'weekly' && pack.json && pack.json.interval === 'weekly';
         var overlaid = serverWeekly
-          ? applyLiveQuoteToWeeklyBars(fullBars, pack.quotes, code)
-          : applyLiveQuoteToBars(fullBars, pack.quotes, code);
+          ? applyLiveQuoteToWeeklyBars(fullBars, pack.quotes, code, pack.json.adjustmentBasis)
+          : applyLiveQuoteToBars(fullBars, pack.quotes, code, pack.json.adjustmentBasis);
         fullBars = overlaid.bars;
         state.liveOverlay = !!overlaid.live;
         state.liveBarTime = overlaid.liveTime || null;

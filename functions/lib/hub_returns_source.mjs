@@ -28,6 +28,7 @@ import {
 } from './session_price_policy.mjs';
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 import { cumulativeAdjustmentRatio } from './price_adjustments.mjs';
+import { loadAdjustmentState, reconcileReturnRefs, adjustmentFreshnessToken } from './return_adjustment_basis.mjs';
 import { regularQuotePair, naverRegularQuotePair } from './regular_quote_pair.mjs';
 
 const REFS_CHECK_MS = 60 * 1000;
@@ -114,7 +115,8 @@ export function adjustedKrxClose(close, barDate, adjustments, anchorDd = null) {
   if (!Number.isFinite(c) || !(c > 0)) return null;
   const anchor = dashYmd(anchorDd);
   const applicable = (adjustments || []).filter((a) => !anchor || dashYmd(a.effective_date) <= anchor);
-  const ratio = cumulativeAdjustmentRatio(dashYmd(barDate), applicable);
+  let ratio;
+  try { ratio = cumulativeAdjustmentRatio(dashYmd(barDate), applicable); } catch { return null; }
   if (!Number.isFinite(ratio) || ratio <= 0) return null;
   // ratio = shares_after / shares_before, as in applyPriceAdjustmentsToBars.
   const v = c / ratio;
@@ -138,7 +140,7 @@ function builtAtToken(refs) {
   return raw.replace(/[^0-9A-Za-z:-]/g, '').slice(0, 32) || '0';
 }
 
-export function buildDataVersion(refs, maxAsOf, now = new Date()) {
+export function buildDataVersion(refs, maxAsOf, now = new Date(), adjustmentVersion = null) {
   const recent = compactYmd(refs?.recentDd) || '0';
   const ms = maxAsOf ? Date.parse(maxAsOf) : NaN;
   const epoch = Number.isFinite(ms) ? Math.floor(ms / 1000) : 0;
@@ -150,7 +152,7 @@ export function buildDataVersion(refs, maxAsOf, now = new Date()) {
   // live minute bucket a cached valid 1D can survive indefinitely via 304.
   const phase = pricePhase(now);
   const freshness = phase === 'live' ? Math.floor(now.getTime() / 60000) : phase;
-  return `${recent}-${epoch}-${builtAtToken(refs)}-${refsRevision}-${freshness}`;
+  return `${recent}-${epoch}-${builtAtToken(refs)}-${refsRevision}-${freshness}${adjustmentVersion ? `-${adjustmentVersion}-${adjustmentFreshnessToken(now)}` : ''}`;
 }
 
 function normalizeTicker(t) {
@@ -363,9 +365,13 @@ async function fetchGlobalMaxAsOf(config) {
 export async function peekReturnsDataVersion(env, request = null) {
   const refs = await loadCachedReturnRefs(request, env, null);
   const config = getSupabaseConfig(env);
-  const maxAsOf = config ? await fetchGlobalMaxAsOf(config) : null;
+  const now = new Date();
+  const [maxAsOf, adjustmentState] = await Promise.all([
+    config ? fetchGlobalMaxAsOf(config) : null,
+    config ? loadAdjustmentState(config, kstYmd(now)) : null,
+  ]);
   return {
-    dataVersion: buildDataVersion(refs, maxAsOf),
+    dataVersion: buildDataVersion(refs, maxAsOf, now, adjustmentState?.version),
     refsEtag: getCachedRefsEtag(),
     maxAsOf,
     refs,
@@ -540,12 +546,14 @@ export async function loadReturnSource({
   staleRefresh = null,
   now = new Date(),
   krxHistory = null,
+  adjustmentState: adjustmentStateOverride = null,
+  rawHistoryByTicker = null,
 }) {
   const session = krxSessionInfo(now);
   const phase = pricePhase(now);
   const sessionOpen = phase === 'live';
   const todayDd = kstYmd(now);
-  const refs = await loadCachedReturnRefs(request, env, refsOverride);
+  let refs = await loadCachedReturnRefs(request, env, refsOverride);
   const refsEtag = getCachedRefsEtag();
   if (!refs?.quotes) {
     return {
@@ -706,6 +714,17 @@ export async function loadReturnSource({
   }
   if (!closeByTicker) closeByTicker = new Map();
 
+  // Normalize price AND share basis once for every stock/card/chart consumer.
+  // Keep the valuation anchor chosen above; pre-open must not apply today's event
+  // to a prior-session official numerator.
+  const originalQuotes = refs.quotes;
+  const adjustmentConfig = getSupabaseConfig(env);
+  const adjustmentState = adjustmentStateOverride || (adjustmentConfig
+    ? await loadAdjustmentState(adjustmentConfig, todayDd) : null);
+  if (adjustmentState) refs = await reconcileReturnRefs(
+    refs, codes, anchorDd, adjustmentState, adjustmentConfig, rawHistoryByTicker, now,
+  );
+
   let closeMissingCount = 0;
   let provisionalCount = 0;
   /** @type {Record<string, { numerator: number|null, closes: number[], shares: number|null, last: number|null, officialClose: number|null }>} */
@@ -714,7 +733,8 @@ export async function loadReturnSource({
     const refQ = refs.quotes[t];
     const closes = refQ && Array.isArray(refQ.closes) ? refQ.closes : null;
     if (!closes || !closes.length) continue;
-    const officialClose = numOrNull(closes[closes.length - 1]);
+    const officialClose = numOrNull(closes[closes.length - 1])
+      ?? (refQ.adjustmentError ? numOrNull(originalQuotes[t]?.closes?.at(-1)) : null);
     const refsPrev = closes.length >= 2 ? numOrNull(closes[closes.length - 2]) : null;
     const row = rows.get(t);
     const rowLast = numOrNull(row?.last);
@@ -783,7 +803,7 @@ export async function loadReturnSource({
   }
 
   const versionAsOf = globalMaxAsOf || maxAsOf;
-  const dataVersion = buildDataVersion(refs, versionAsOf, now);
+  const dataVersion = buildDataVersion(refs, versionAsOf, now, adjustmentState?.version);
 
   return {
     meta: {
@@ -798,6 +818,9 @@ export async function loadReturnSource({
       tradingDates,
       refsStale,
       closeMissingCount,
+      adjustmentVersion: adjustmentState?.version || null,
+      adjustmentVerified: adjustmentState?.verified ?? null,
+      adjustmentMissingCount: codes.filter((t) => refs.quotes[t]?.adjustmentError).length,
       stale,
       dataVersion,
       refsEtag,

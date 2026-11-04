@@ -17,7 +17,7 @@ import { kstDateParts, kstYmdDash } from './krx_session.mjs';
 import { aggregateSectorReturns } from './returns_core.mjs';
 import { loadReturnSource } from './hub_returns_source.mjs';
 
-export const PERF_CALENDAR_CACHE_VERSION = 'v5';
+export const PERF_CALENDAR_CACHE_VERSION = 'v6';
 export const PERF_CALENDAR_YEAR_SPAN = 5; // current .. current-4
 export const PERF_CALENDAR_TICKER_BATCH = 40;
 /** In-year chart points (weekly-ish); +1 prior-year base day fetched separately. */
@@ -243,7 +243,9 @@ function roundIndex(v) {
 export function rebaseMemberPoints(closes, adjustments, yearStart, yearEnd) {
   if (!closes?.length) return [];
   const bars = closes.map((r) => ({ t: r.t, c: r.c, o: null, h: null, l: null, v: null }));
-  applyPriceAdjustmentsToBars(bars, adjustments || []);
+  const latestDate = bars.reduce((latest, bar) => bar.t <= yearEnd && bar.t > latest ? bar.t : latest, '');
+  if (!latestDate) return [];
+  applyPriceAdjustmentsToBars(bars, adjustments || [], latestDate);
 
   let baseBar = null;
   for (let i = bars.length - 1; i >= 0; i--) {

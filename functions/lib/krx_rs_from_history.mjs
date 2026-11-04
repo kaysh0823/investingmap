@@ -7,6 +7,7 @@ import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
 import {
   applyPriceAdjustmentsToBars,
   cumulativeAdjustmentRatio,
+  normalizeAdjustmentEvents,
 } from './price_adjustments.mjs';
 import { normalizeTicker } from './hub_dashboard_core.mjs';
 import { kstYmdDash, kstAnchorYmd } from './krx_session.mjs';
@@ -313,10 +314,10 @@ function logAdjustmentSamples(byTickerRaw, adjustmentsByTicker, datesAsc) {
     const mid = points[Math.floor(points.length / 2)];
     const bars = points.map((p) => ({ t: p.t, c: p.c }));
     const before = bars.map((b) => ({ ...b }));
-    applyPriceAdjustmentsToBars(bars, adjs);
+    applyPriceAdjustmentsToBars(bars, adjs, datesAsc.at(-1));
     const i = bars.findIndex((b) => b.t === mid.t);
     if (i < 0) continue;
-    const cum = cumulativeAdjustmentRatio(mid.t, adjs);
+    const cum = cumulativeAdjustmentRatio(mid.t, adjs, datesAsc.at(-1));
     samples.push({
       ticker,
       date: mid.t,
@@ -436,7 +437,7 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
     const points = historyByTicker.get(code) || [];
     if (!points.length) continue;
     const bars = points.map((p) => ({ t: p.t, c: p.c }));
-    applyPriceAdjustmentsToBars(bars, adjustmentsByTicker.get(code) || []);
+    applyPriceAdjustmentsToBars(bars, adjustmentsByTicker.get(code) || [], anchorDash);
     const adjPoints = bars.map((b, i) => ({
       t: b.t,
       c: b.c,
@@ -599,7 +600,7 @@ export async function buildRsSnapshotFromHistory(config, opts = {}) {
  * @returns {Promise<{
  *   recentDd: string,
  *   tradingDates: string[],
- *   quotes: Map<string, { closes: (number|null)[], mcap: number|null }>,
+ *   quotes: Map<string, { closes: (number|null)[], mcap: number|null, rawClose: number|null, sharesBasisDate: string|null, adjustmentBasis: object }>,
  * }|null>}
  */
 export async function buildAdjustedCloseRefsFromHistory(config, tickers, opts = {}) {
@@ -625,7 +626,6 @@ export async function buildAdjustedCloseRefsFromHistory(config, tickers, opts = 
   const datesAsc = [...datesDesc].reverse();
   const anchorDash = datesDesc[0];
   const sinceDash = datesDesc[datesDesc.length - 1];
-  const anchorIdx = datesAsc.length - 1;
   const recentDd = dashToBasDd(anchorDash);
   const tradingDates = datesAsc.map(dashToBasDd);
 
@@ -643,26 +643,42 @@ export async function buildAdjustedCloseRefsFromHistory(config, tickers, opts = 
   for (const code of codes) {
     const points = historyByTicker.get(code) || [];
     if (!points.length) continue;
-    const bars = points.map((p) => ({ t: p.t, c: p.c }));
-    applyPriceAdjustmentsToBars(bars, adjustmentsByTicker.get(code) || []);
-    const adjPoints = bars.map((b, i) => ({
-      t: b.t,
-      c: b.c,
-      m: points[i]?.m ?? null,
-    }));
-    const { raw, mcaps } = alignToCalendar(adjPoints, datesAsc);
-    const filled = ffillLimited(raw, RS_FFILL_LIMIT);
-    // Prefer real recentDd close; allow ffill≤20 as halt safety net.
-    const last = filled[anchorIdx];
-    if (last == null || !(last > 0)) continue;
-    const closes = filled.slice(-closesCount);
-    const mcap = mcaps[anchorIdx] != null && mcaps[anchorIdx] > 0
-      ? mcaps[anchorIdx]
-      : null;
-    quotes.set(code, { closes, mcap });
+    const row = buildAdjustedCloseRefRow(points, adjustmentsByTicker.get(code) || [], datesAsc, closesCount);
+    if (row) quotes.set(code, row);
   }
 
   return { recentDd, tradingDates, quotes };
+}
+
+/** Pure per-ticker builder. Keep anchor values and matched raw share observations separate. */
+export function buildAdjustedCloseRefRow(points, adjustments, datesAsc, closesCount = RETURN_REF_CLOSES) {
+  const throughDate = datesAsc.at(-1);
+  if (!throughDate || !points?.length) return null;
+  const boundedPoints = points.filter((p) => p.t <= throughDate);
+  const events = normalizeAdjustmentEvents(adjustments, throughDate);
+  const bars = boundedPoints.map((p) => ({ t: p.t, c: p.c }));
+  applyPriceAdjustmentsToBars(bars, events, throughDate);
+  const adjPoints = bars.map((b, i) => ({ ...b, m: boundedPoints[i]?.m ?? null }));
+  const { raw, mcaps } = alignToCalendar(adjPoints, datesAsc);
+  const filled = ffillLimited(raw, RS_FFILL_LIMIT);
+  if (!(filled.at(-1) > 0)) return null;
+  const anchor = boundedPoints.findLast((p) => p.t === throughDate);
+  const rawClose = anchor?.c > 0 ? anchor.c : null;
+  const mcap = mcaps.at(-1) > 0 ? mcaps.at(-1) : null;
+  // Keep a matched raw observation separate from the (possibly missing) anchor cap.
+  const sharePoint = boundedPoints.reduce((latest, p) =>
+    Number.isFinite(p.c) && p.c > 0 && Number.isFinite(p.m) && p.m > 0
+      && (!latest || p.t >= latest.t) ? p : latest, null);
+  const rawShareObservation = sharePoint
+    ? { date: sharePoint.t, close: sharePoint.c, mcap: sharePoint.m } : null;
+  return {
+    closes: filled.slice(-closesCount),
+    mcap,
+    rawClose,
+    rawShareObservation,
+    sharesBasisDate: rawClose != null && mcap != null ? throughDate : null,
+    adjustmentBasis: { version: 1, throughDate, events },
+  };
 }
 
 /**
@@ -728,7 +744,7 @@ export async function buildAdjustedOhlcSeriesFromHistory(config, tickers, opts =
       h: p.h != null ? p.h : p.c,
       l: p.l != null ? p.l : p.c,
     }));
-    applyPriceAdjustmentsToBars(bars, adjustmentsByTicker.get(code) || []);
+    applyPriceAdjustmentsToBars(bars, adjustmentsByTicker.get(code) || [], anchorDash);
     const byDate = new Map(bars.map((b, i) => [b.t, { ...b, m: points[i]?.m ?? null }]));
     const rawC = datesAsc.map((d) => {
       const p = byDate.get(d);

@@ -15,12 +15,12 @@ import {
   RETURN_REF_CLOSES,
   RETURN_REF_TRADING_DATES,
 } from '../functions/lib/krx_rs_from_history.mjs';
+import { cumulativeAdjustmentRatio } from '../functions/lib/price_adjustments.mjs';
 import { fetchSupabaseJson, getSupabaseConfig } from '../functions/lib/supabase_hub.mjs';
 import {
   listHubCompanies,
   normalizeTicker,
 } from '../functions/lib/hub_dashboard_core.mjs';
-import { fetchKrxDailyOhlc } from '../functions/lib/krx_daily_ohlc.mjs';
 import { kstDateParts, kstYmdDash } from '../functions/lib/krx_session.mjs';
 import { fetchNaverQuote } from '../functions/lib/naver_sise_quotes.mjs';
 
@@ -94,9 +94,38 @@ function collectUniverseTickers() {
 }
 
 function sharesFromMcapClose(mcap, close) {
-  if (mcap == null || !(mcap > 0) || close == null || !(close > 0)) return null;
+  if (!Number.isFinite(mcap) || !(mcap > 0) || !Number.isFinite(close) || !(close > 0)) return null;
   const sh = Math.round(mcap / close);
-  return sh > 0 ? sh : null;
+  return Number.isFinite(sh) && sh > 0 ? sh : null;
+}
+
+/** Pure serialization step, exported for offline basis tests. */
+export function buildReturnRefQuote(row, ohlc, anchorDash) {
+  let shares = Number.isFinite(ohlc?.list_shrs) && ohlc.list_shrs > 0 ? ohlc.list_shrs : null;
+  let sharesBasisDate = shares != null ? anchorDash : null;
+  if (shares == null) {
+    // Never mix two sources, or divide unadjusted mcap by an adjusted/ffilled close.
+    shares = sharesFromMcapClose(ohlc?.mcap_won, ohlc?.close);
+    if (shares != null) sharesBasisDate = anchorDash;
+    else {
+      shares = sharesFromMcapClose(row.mcap, row.rawClose);
+      sharesBasisDate = shares != null ? row.sharesBasisDate : null;
+      const observation = row.rawShareObservation;
+      if (shares == null && observation?.date <= anchorDash
+          && row.adjustmentBasis?.version === 1
+          && row.adjustmentBasis.throughDate === anchorDash
+          && Array.isArray(row.adjustmentBasis.events)) {
+        const observedShares = sharesFromMcapClose(observation.mcap, observation.close);
+        if (observedShares != null) {
+          const factor = cumulativeAdjustmentRatio(observation.date, row.adjustmentBasis.events, anchorDash);
+          const adjustedShares = Math.round(observedShares * factor);
+          shares = Number.isFinite(adjustedShares) && adjustedShares > 0 ? adjustedShares : null;
+          sharesBasisDate = shares != null ? anchorDash : null;
+        }
+      }
+    }
+  }
+  return { closes: row.closes, shares, sharesBasisDate, adjustmentBasis: row.adjustmentBasis };
 }
 
 async function fetchHistoryMaxTradeDate(config) {
@@ -340,6 +369,7 @@ async function main() {
 
   let ohlcByTicker = new Map();
   try {
+    const { fetchKrxDailyOhlc } = await import('../functions/lib/krx_daily_ohlc.mjs');
     ohlcByTicker = await fetchKrxDailyOhlc(recentDd, env);
     console.log(`MDCSTAT01501 list_shrs rows for ${recentDd}: ${ohlcByTicker.size}`);
   } catch (e) {
@@ -349,21 +379,9 @@ async function main() {
   const quotes = {};
   let withShares = 0;
   for (const [ticker, row] of seriesMap) {
-    const last = row.closes[row.closes.length - 1];
-    const ohlc = ohlcByTicker.get(ticker);
-    let shares = ohlc?.list_shrs != null && ohlc.list_shrs > 0
-      ? ohlc.list_shrs
-      : null;
-    if (shares == null) {
-      const mcap = ohlc?.mcap_won ?? row.mcap;
-      const close = ohlc?.close ?? last;
-      shares = sharesFromMcapClose(mcap, close);
-    }
-    if (shares != null) withShares += 1;
-    quotes[ticker] = {
-      closes: row.closes,
-      shares,
-    };
+    const quote = buildReturnRefQuote(row, ohlcByTicker.get(ticker), tipDash);
+    if (quote.shares != null) withShares += 1;
+    quotes[ticker] = quote;
   }
 
   const sample = quotes[SAMPLE_TICKER];
@@ -411,7 +429,9 @@ async function main() {
   );
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

@@ -160,8 +160,8 @@ test('closing auction and next pre-open retain the paired regular daily base', a
 
 test('runtime and server body caches invalidate old logic without changing workflows', () => {
   const root = new URL('../', import.meta.url);
-  assert.match(fs.readFileSync(new URL('functions/lib/returns_cache_headers.mjs', root), 'utf8'), /L9-corporate-action-daily-base/);
-  for (const [file, version] of [['hub_sectors.js', 'v29'], ['hub_trend.js', 'v25'], ['hub_sector_trend.js', 'v12']])
+  assert.match(fs.readFileSync(new URL('functions/lib/returns_cache_headers.mjs', root), 'utf8'), /L10-historical-adjustment-basis/);
+  for (const [file, version] of [['hub_sectors.js', 'v30'], ['hub_trend.js', 'v26'], ['hub_sector_trend.js', 'v13']])
     assert.ok(fs.readFileSync(new URL(`functions/api/${file}`, root), 'utf8').includes(`/cache/${version}`));
 });
 

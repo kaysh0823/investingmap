@@ -333,6 +333,8 @@ export async function buildIntraday1dSeries({
  * @param {number} horizonN 20|50|120|200
  */
 export function buildDailySectorSeriesFromRefs(hubIndex, refs, source, horizonN, weighting = 'cap') {
+  // Source owns the normalized corporate-action basis, including share counts.
+  refs = source?.refs || refs;
   const tradingDates = (refs?.tradingDates || []).map(compactYmd).filter(Boolean);
   if (!tradingDates.length || !refs?.quotes) return { sectors: [], metaExtras: {} };
 

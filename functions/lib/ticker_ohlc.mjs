@@ -7,8 +7,12 @@
 
 import { fetchSupabaseJson, getSupabaseConfig, numOrNull } from './supabase_hub.mjs';
 import { normalizeTicker } from './hub_dashboard_core.mjs';
+import { kstYmdDash } from './krx_session.mjs';
+import { pricePhase, storedRegularCloseDate } from './session_price_policy.mjs';
+import { regularQuotePair } from './regular_quote_pair.mjs';
 import {
   applyPriceAdjustmentsToBars,
+  normalizeAdjustmentEvents,
   fetchPriceAdjustments,
   fetchPriceAdjustmentsSignature,
 } from './price_adjustments.mjs';
@@ -130,13 +134,59 @@ export async function fetchLatestHistorySignature(config, ticker) {
   }
 }
 
+/** Validate only an exact regular closing pair, even when retained across sessions. */
+function closingQuoteBasis(row, now) {
+  const dd = storedRegularCloseDate(row);
+  if (!dd || !regularQuotePair(row, dd, now, { maxAgeMs: Infinity })) return null;
+  return { ...row, quoteDate: `${dd.slice(0, 4)}-${dd.slice(4, 6)}-${dd.slice(6, 8)}` };
+}
+
+/** Read-only persisted quote lookup. Failure cannot advance the chart's price basis. */
+export async function fetchOhlcQuoteBasis(config, ticker, now = new Date()) {
+  if (!config || !ticker) return null;
+  try {
+    const rows = await fetchSupabaseJson(config,
+      `stock_quotes_latest?ticker=eq.${encodeURIComponent(ticker)}`
+      + '&select=last,prev_close,as_of,regular_session&limit=1');
+    const row = rows?.[0];
+    if (!row) return null;
+    return closingQuoteBasis({
+      last: numOrNull(row.last),
+      prevClose: numOrNull(row.prev_close),
+      asOf: row.as_of,
+      regularSession: row.regular_session === true,
+    }, now);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Chart history must use the same basis as today's appended live candle.
+ * Off-session charts remain on their last stored official date, never a future row.
+ * Pure helper: returns the exact bounded ledger used for the in-place overlay.
+ */
+export function applyTickerOhlcAdjustments(bars, adjustmentRows, now = new Date(), quoteBasis = null) {
+  const today = kstYmdDash(now);
+  const phase = pricePhase(now);
+  const latestOfficialDate = bars.reduce((latest, bar) =>
+    bar.t <= today && bar.t > latest ? bar.t : latest, '');
+  const quoteDate = closingQuoteBasis(quoteBasis, now)?.quoteDate || '';
+  const officialDate = quoteDate > latestOfficialDate ? quoteDate : latestOfficialDate;
+  const throughDate = phase === 'live' || phase === 'afterClose' ? today : officialDate;
+  const events = throughDate ? normalizeAdjustmentEvents(adjustmentRows, throughDate) : [];
+  applyPriceAdjustmentsToBars(bars, events, throughDate);
+  return { version: 1, throughDate: throughDate || null, events };
+}
+
 /**
  * @param {{ url: string, anonKey: string }} config
  * @param {string} ticker normalized 6-char
  * @param {string} rangeToken 3m|6m|1y|2y|3y|5y
- * @param {{ interval?: 'daily'|'weekly' }} [options]
+ * @param {{ interval?: 'daily'|'weekly', now?: Date, quoteBasis?: object|null }} [options]
  */
 export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = {}) {
+  const now = options.now || new Date();
   const interval = options.interval === 'weekly' ? 'weekly' : 'daily';
   const range = normalizeOhlcRange(rangeToken);
   const displayDays = OHLC_RANGE_DAYS[range] || OHLC_RANGE_DAYS['1y'];
@@ -160,8 +210,9 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
     const bar = historyRowToBar(rows[i]);
     if (bar) bars.push(bar);
   }
-  const adjustments = await fetchPriceAdjustments(config, ticker);
-  applyPriceAdjustmentsToBars(bars, adjustments);
+  const adjustmentRows = await fetchPriceAdjustments(config, ticker, { throwOnError: true });
+  const adjustmentBasis = applyTickerOhlcAdjustments(bars, adjustmentRows, now, options.quoteBasis);
+  const adjustments = adjustmentBasis.events;
   if (bars.length) {
     if (interval === 'weekly') {
       const dailyFrom = bars[0].t;
@@ -181,6 +232,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
         displayDays: displayWeeks,
         bars: weeklyBars,
         adjusted: adjustments.length > 0,
+        adjustmentBasis,
       };
     }
     await loadAndAttachInvestorOsc(config, ticker, bars);
@@ -194,6 +246,7 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
     displayDays,
     bars,
     adjusted: adjustments.length > 0,
+    adjustmentBasis,
   };
 }
 

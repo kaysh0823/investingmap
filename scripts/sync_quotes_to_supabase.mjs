@@ -3,6 +3,7 @@
  * then sector_mcap_daily / intraday-aligned sector returns → sector_returns
  * (same sources as /api/hub_trend so card % == trend end − 100).
  */
+import { loadAdjustmentState, reconcileReturnRefs } from '../functions/lib/return_adjustment_basis.mjs';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -2470,6 +2471,14 @@ async function main() {
     } catch (e) {
       console.warn('  krx prev-close load failed:', e.message || e);
     }
+  }
+  if (refsForReturns && !skipLatestAndIntraday) {
+    const adjustmentConfig = { url: supabaseUrl, anonKey: serviceKey };
+    const adjustmentAnchor = consensus.tradeDate || todayYmdDash;
+    const adjustmentState = await loadAdjustmentState(adjustmentConfig, adjustmentAnchor);
+    refsForReturns = await reconcileReturnRefs(
+      refsForReturns, tickers, adjustmentAnchor, adjustmentState, adjustmentConfig,
+    );
   }
   const historyPrevFor = (ticker) => {
     const code = normalizeTicker(ticker);

@@ -10,6 +10,7 @@ import {
   fetchLatestInvestorNetSignature,
   fetchPriceAdjustmentsSignature,
   fetchTickerOhlcBars,
+  fetchOhlcQuoteBasis,
   getSupabaseConfig,
   normalizeOhlcRange,
   normalizeTicker,
@@ -21,9 +22,10 @@ import {
   readHubCache,
 } from '../lib/hub_api_cache.mjs';
 import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
+import { pricePhase } from '../lib/session_price_policy.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-const CACHE_BASE = '/api/ticker_ohlc/cache/v27';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v28';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {
@@ -35,7 +37,7 @@ function jsonResponse(ch, body, maxAge) {
     headers: {
       ...ch,
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': `public, max-age=${maxAge}, stale-while-revalidate=${Math.max(maxAge * 2, 600)}`,
+      'Cache-Control': `public, max-age=${maxAge}, must-revalidate`,
     },
   });
 }
@@ -76,7 +78,8 @@ export async function onRequest(context) {
   const code = normalizeTicker(url.searchParams.get('code') || url.searchParams.get('ticker'));
   const range = normalizeOhlcRange(url.searchParams.get('range'));
   const interval = normalizeInterval(url.searchParams.get('interval'));
-  const maxAge = ohlcEdgeMaxAge();
+  const now = new Date();
+  const maxAge = ohlcEdgeMaxAge(now);
 
   if (!code) {
     return jsonResponse(ch, emptyTickerOhlcPayload(null, range, interval), maxAge);
@@ -86,24 +89,25 @@ export async function onRequest(context) {
   let lastSig = 'none';
   let adjSig = 'adj-none';
   let invSig = 'inv-v10-none';
+  let quoteBasis = null;
   const tSig0 = Date.now();
   if (config) {
     try {
-      [lastSig, adjSig, invSig] = await Promise.all([
+      [lastSig, adjSig, invSig, quoteBasis] = await Promise.all([
         fetchLatestHistorySignature(config, code),
-        fetchPriceAdjustmentsSignature(config, code),
+        fetchPriceAdjustmentsSignature(config, code, { throwOnError: true }),
         fetchLatestInvestorNetSignature(config, { origin: url.origin, context }),
+        fetchOhlcQuoteBasis(config, code, now),
       ]);
     } catch {
-      lastSig = 'none';
-      adjSig = 'adj-none';
-      invSig = 'inv-v10-none';
+      // An unavailable ledger is not evidence that history is unadjusted.
+      return jsonResponse(ch, emptyTickerOhlcPayload(code, range, interval), 60);
     }
   }
   const sigDur = msSince(tSig0);
 
   // Signature invalidates when history, adjustments, investor_net, foreign_ratio, or credit_balance depth changes.
-  const cachePath = `${anchoredCachePath(CACHE_BASE)}/${code}/${range}/${interval}/${lastSig}/${adjSig}/${invSig}`;
+  const cachePath = `${anchoredCachePath(CACHE_BASE, now)}/${pricePhase(now)}/${quoteBasis?.quoteDate || 'no-close'}/${code}/${range}/${interval}/${lastSig}/${adjSig}/${invSig}`;
   const tCache0 = Date.now();
   const hit = await readHubCache(cachePath, url.origin);
   const cacheDur = msSince(tCache0);
@@ -127,7 +131,7 @@ export async function onRequest(context) {
   const tBars0 = Date.now();
   if (config) {
     try {
-      payload = await fetchTickerOhlcBars(config, code, range, { interval });
+      payload = await fetchTickerOhlcBars(config, code, range, { interval, now, quoteBasis });
     } catch (err) {
       console.warn(
         '[ticker_ohlc] fetch failed:',

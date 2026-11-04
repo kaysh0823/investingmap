@@ -65,6 +65,7 @@
     "refresh:hub-snapshots": "node scripts/refresh_hub_snapshots.mjs",
     "refresh:return-refs": "node scripts/build_hub_return_refs.mjs",
     "build:hub-return-refs": "node scripts/build_hub_return_refs.mjs",
+    "verify:historical-adjustment-basis": "node --test scripts/verify_historical_adjustment_basis.test.mjs scripts/verify_adjustment_basis_builders.test.mjs",
     "verify:intraday-corporate-actions": "node --test scripts/verify_intraday_corporate_actions.test.mjs",
     "verify:returns-core": "node scripts/verify_returns_core.mjs",
     "verify:sector-weighting": "node scripts/verify_sector_weighting.mjs && node scripts/verify_sector_weighting_ui.mjs",
