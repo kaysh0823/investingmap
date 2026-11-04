@@ -12,16 +12,15 @@ export async function onRequest(context) {
   try { codes = candleCodes(url.searchParams.get('codes')); }
   catch { return new Response(JSON.stringify({ error: 'too_many_codes' }), { status: 400, headers }); }
   if (!codes.length) return new Response(JSON.stringify({ error: 'codes_required' }), { status: 400, headers });
-  const cachePath = '/api/volatility_candles/cache/v1?codes=' + codes.join(',');
+  const cachePath = '/api/volatility_candles/cache/v2?codes=' + codes.join(',');
   const cached = await readHubCache(cachePath, url.origin);
   if (cached) return cached;
   const config = getSupabaseConfig(env);
   try {
     if (!config) throw new Error('missing_config');
     const data = await loadVolatilityCandles(config, codes);
-    // Empty/partial history should be retried soon as the daily ingestion catches up.
-    const complete = Object.values(data.tickers).every(entry => entry.status === 'ok' && entry.bars.length === 21 && entry.bars.every(bar => [bar.o, bar.h, bar.l, bar.c].every(v => Number.isFinite(v) && v > 0)));
-    const response = new Response(JSON.stringify(data), { headers: { ...headers, 'Cache-Control': `public, max-age=${complete ? 300 : 30}` } });
+    // Keep persisted intraday OHLC fresh without triggering upstream collection.
+    const response = new Response(JSON.stringify(data), { headers: { ...headers, 'Cache-Control': 'public, max-age=30' } });
     putHubCache(context, cachePath, url.origin, response);
     return response;
   } catch (error) {

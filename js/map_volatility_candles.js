@@ -10,6 +10,7 @@ var lastOpts = null;
   var lastWidth = 0;
   var redrawTimer = null;
   var storedCacheLoaded = false;
+  var refreshTimer = null;
 
   function queueRedraw() {
     if (redrawTimer) return;
@@ -146,7 +147,7 @@ var lastOpts = null;
     note.textContent = en ? 'Trading sessions · 0% = preceding close · Shared % scale · Hover or focus for details' : '거래일 기준 · 0% = 기간 시작 전 종가 · 모든 종목에 같은 % 축 적용 · 마우스를 올리거나 선택해 상세 확인'; panel.appendChild(note);
     var rows = companies.map(function (c) {
       var cached = volatilityCache[c.ticker];
-      var expired = cached && Date.now() - cached.time > (cached.status && cached.status !== 'ok' ? 30000 : 300000);
+      var expired = cached && Date.now() - cached.time > 30000;
       if (!cached || (!cached.pending && expired && (!cached.retryAfter || Date.now() >= cached.retryAfter))) {
         volatilityCache[c.ticker] = { bars: cached && cached.bars || [], status: cached && cached.status, pending: true, time: cached && cached.time || 0 };
         volatilityQueue.push(c.ticker);
@@ -200,7 +201,7 @@ var lastOpts = null;
       var name = en && c.nameEn ? c.nameEn : c.name || c.nameKo || c.ticker;
       var detail = name + ' (' + c.ticker + ')';
       if (bar) {
-        var color = bar.c >= bar.o ? '#ef5350' : '#4c9aff';
+        var color = bar.c >= bar.o ? '#22c55e' : '#ef4444';
         g.append('line').attr('x1', x).attr('x2', x).attr('y1', y(bar.h)).attr('y2', y(bar.l)).attr('stroke', color).attr('stroke-width', 2);
         g.append('rect').attr('x', x - bodyWidth / 2).attr('width', bodyWidth).attr('y', Math.min(y(bar.o), y(bar.c))).attr('height', Math.max(2, Math.abs(y(bar.o) - y(bar.c)))).attr('fill', color);
         detail += '\n' + bar.start + ' ~ ' + bar.end + '\n' + (en ? ['Open', 'High', 'Low', 'Close'] : ['시가', '고가', '저가', '종가']).map(function (label, n) { return label + ': ' + [bar.o, bar.h, bar.l, bar.c][n].toFixed(2) + '%'; }).join('\n');
@@ -238,6 +239,10 @@ function render(opts) {
     style.textContent = "#mm-volatility{min-width:0;padding:16px;border:1px solid var(--border,#2b3645);border-radius:12px;background:var(--surface,#101722);color:var(--text,#cbd5e1)}#mm-volatility h3{margin:0 0 12px;font-size:16px}#mm-volatility .mm-mode-tabs{display:flex;flex-wrap:wrap;gap:8px}#mm-volatility .mm-mode-tab{padding:8px 16px;border:1px solid var(--border,#334155);border-radius:20px;background:var(--surface2,#1e293b);color:var(--text,#cbd5e1);cursor:pointer}#mm-volatility [aria-pressed=true]{background:#334155;color:#fff;border-color:#818cf8}"; document.head.appendChild(style);
   }
   drawVolatility(opts);
+  if (!refreshTimer && global.setInterval) refreshTimer = global.setInterval(function () {
+    var target = document.getElementById('mm-volatility');
+    if (lastOpts && !document.hidden && target && target.getClientRects().length) drawVolatility(lastOpts);
+  }, 35000);
 }
 global.InvestingMapVolatilityCandles = { render: render, _test: { volatilityBar: volatilityBar, candleRows: candleRows } };
 })(typeof window !== 'undefined' ? window : globalThis);
