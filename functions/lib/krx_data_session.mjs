@@ -82,6 +82,19 @@ function redirectFailure(code, stage, status, request, reason) {
   return error;
 }
 
+function approvedMarketLoginRedirect(target, current) {
+  // Observed KRX market-page login redirect: the return route is an opaque,
+  // server-generated token. It is passed to the existing login page, never fetched.
+  if (current !== KRX_MDI_REFERER || target.pathname !== new URL(LOGIN_PAGE).pathname) return false;
+  const entries = [...target.searchParams];
+  if (entries.length !== 2 || target.searchParams.getAll('locale').length !== 1 || target.searchParams.getAll('redirectURL').length !== 1) return false;
+  if (target.searchParams.get('locale') !== 'ko_KR') return false;
+  let back;
+  try { back = new URL(target.searchParams.get('redirectURL'), current); } catch { return false; }
+  if (back.origin !== KRX_ORIGIN || back.username || back.password || back.search || back.hash) return false;
+  return /^\/contents\/MDC\/MDI\/mdiLoader\/[A-Za-z0-9+_=-]{32,2048}$/.test(back.pathname);
+}
+
 function warmupRedirectTarget(location, current, stage, status) {
   const refuse = (reason) => {
     throw redirectFailure('REDIRECT_REFUSED', stage, status, current, reason);
@@ -93,9 +106,9 @@ function warmupRedirectTarget(location, current, stage, status) {
   if (target.protocol !== 'https:') return refuse('insecure_scheme');
   if (target.origin !== KRX_ORIGIN) return refuse('different_origin');
   if (target.hash) return refuse('fragment');
-  // Exact existing warmup URLs only, including their known query strings.
+  // Exact warmup URLs plus the verified, tightly scoped market-login variant.
   // Same-origin alone would also allow logout or other action endpoints.
-  if (!WARMUP_URLS.has(target.href)) return refuse('unapproved_target');
+  if (!WARMUP_URLS.has(target.href) && !approvedMarketLoginRedirect(target, current)) return refuse('unapproved_target');
   return target.href;
 }
 

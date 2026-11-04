@@ -33,6 +33,50 @@ const originalWarn = console.warn;
 let requests;
 let diagnostics;
 
+test('market warmup accepts the scoped KRX login return-route variant without logging its token', async () => {
+  const token = 'fixtureOpaqueReturnToken'.repeat(4);
+  const back = '/contents/MDC/MDI/mdiLoader/' + token;
+  for (const returnRoute of [token, back, 'https://data.krx.co.kr' + back]) {
+    const target = WARMUP_URLS[0] + '?' + new URLSearchParams({ locale: 'ko_KR', redirectURL: returnRoute });
+    fixtureFetch(() => new Response('{"OutBlock_1":[]}'), '{"_error_code":"CD001"}', (url, options) => {
+      if (url === WARMUP_URLS[3] && options.method === 'GET') return new Response(null, { status: 302, headers: { Location: target } });
+    });
+    const { res } = await krxDataPost(ENV, JSON_URL, FIELDS);
+    assert.deepEqual(await res.json(), { OutBlock_1: [] });
+    assert.equal(requests.filter(r => r.url === target).length, 1);
+    assert.equal(requests.filter(r => r.url === LOGIN_URL).length, 1);
+    assert.equal(requests.some(r => r.url.includes('/mdiLoader/' + token)), false, 'opaque return route must never be fetched');
+    assert.doesNotMatch(diagnostics.join('\n'), new RegExp(token));
+  }
+});
+
+test('market login redirect rejects other destinations, extra parameters and non-market callers', async () => {
+  const back = '/contents/MDC/MDI/mdiLoader/' + 'fixtureOpaqueReturnToken'.repeat(4);
+  const safe = new URLSearchParams({ locale: 'ko_KR', redirectURL: back });
+  const queries = [
+    new URLSearchParams({ locale: 'ko_KR', redirectURL: 'https://example.com' + back }),
+    new URLSearchParams({ locale: 'ko_KR', redirectURL: '/contents/MDC/logout.cmd' }),
+    new URLSearchParams({ locale: 'ko_KR', redirectURL: back + '?action=logout' }),
+    new URLSearchParams({ locale: 'ko_KR', redirectURL: back + '#fragment' }),
+    new URLSearchParams({ locale: 'en_US', redirectURL: back }),
+    new URLSearchParams(safe.toString() + '&locale=ko_KR'),
+    new URLSearchParams(safe.toString() + '&extra=unexpected'),
+  ];
+  for (const query of queries) {
+    const target = WARMUP_URLS[0] + '?' + query;
+    fixtureFetch(() => { throw new Error('data request must not occur'); }, '{"_error_code":"CD001"}', url => {
+      if (url === WARMUP_URLS[3]) return new Response(null, { status: 302, headers: { Location: target } });
+    });
+    await assert.rejects(krxDataPost(ENV, JSON_URL, FIELDS), hasCode('REDIRECT_REFUSED'));
+    assert.equal(requests.some(r => r.url === target), false);
+  }
+  const target = WARMUP_URLS[0] + '?' + safe;
+  fixtureFetch(() => { throw new Error('data request must not occur'); }, '{"_error_code":"CD001"}', url => {
+    if (url === WARMUP_URLS[0]) return new Response(null, { status: 302, headers: { Location: target } });
+  });
+  await assert.rejects(krxDataPost(ENV, JSON_URL, FIELDS), hasCode('REDIRECT_REFUSED'));
+});
+
 function fixtureFetch(handler, loginPayload = '{"_error_code":"CD001"}', intercept = () => undefined) {
   requests = [];
   diagnostics = [];
