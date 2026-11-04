@@ -1,0 +1,37 @@
+import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
+import { applyPriceAdjustmentsToBars } from './price_adjustments.mjs';
+
+export function candleCodes(raw) {
+  const codes = [...new Set(String(raw || '').toUpperCase().split(',').map(s => s.trim()).filter(s => /^[0-9A-Z]{6}$/.test(s)))].sort();
+  if (codes.length > 40) throw new Error('too_many_codes');
+  return codes;
+}
+
+export async function loadVolatilityCandles(config, codes, query = fetchSupabaseJson) {
+  const calendar = await query(config, 'stock_price_history?ticker=eq.005930&select=trade_date&order=trade_date.desc&limit=21');
+  const dates = [...new Set(calendar.map(row => String(row.trade_date).slice(0, 10)))].sort();
+  if (!dates.length) throw new Error('history_unavailable');
+  const filter = `ticker=in.(${codes.join(',')})`;
+  // A maximum of 40 tickers × 21 unique sessions stays below PostgREST's row cap.
+  const [history, adjustments] = await Promise.all([
+    query(config, `stock_price_history?${filter}&trade_date=in.(${dates.join(',')})&select=ticker,trade_date,open,high,low,close,volume&order=ticker.asc,trade_date.asc&limit=1000`),
+    query(config, `price_adjustments?${filter}&effective_date=gt.${dates[0]}&effective_date=lte.${dates[dates.length - 1]}&select=ticker,effective_date,ratio&order=effective_date.asc&limit=1000`),
+  ]);
+  if (adjustments.length >= 1000) throw new Error('adjustments_truncated');
+  const tickers = Object.fromEntries(codes.map(code => [code, { bars: [] }]));
+  for (const row of history) {
+    const entry = tickers[row.ticker];
+    if (!entry) continue;
+    entry.bars.push({ t: String(row.trade_date).slice(0, 10), o: numOrNull(row.open), h: numOrNull(row.high), l: numOrNull(row.low), c: numOrNull(row.close), v: numOrNull(row.volume) });
+  }
+  for (const [code, entry] of Object.entries(tickers)) {
+    entry.bars.sort((a, b) => a.t.localeCompare(b.t));
+    applyPriceAdjustmentsToBars(entry.bars, adjustments.filter(row => row.ticker === code));
+    entry.asOf = entry.bars.at(-1)?.t || null;
+    entry.status = !entry.bars.length ? 'no_history' : entry.asOf !== dates.at(-1) ? 'stale_history' : 'ok';
+    const byDate = new Map(entry.bars.map(bar => [bar.t, bar]));
+    // Keep missing market sessions in place; never silently turn 5D into 6D.
+    entry.bars = dates.map(t => byDate.get(t) || { t, o: null, h: null, l: null, c: null, v: null });
+  }
+  return { asOf: dates.at(-1), sessions: dates.length, tickers };
+}

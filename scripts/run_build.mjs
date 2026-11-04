@@ -35,6 +35,7 @@ const steps = [
   ['node', ['scripts/sync_map_badges.mjs']],
   ['node', ['scripts/retire_holdings_sector.mjs']],
   ['node', ['scripts/verify_spark_baseline.mjs']],
+  ['node', ['scripts/patch_volatility_candles_tab.mjs']],
   ['node', ['scripts/patch_asset_versions.mjs']],
   ['node', ['scripts/pages_build.mjs']],
   ['npm', ['run', 'verify:dist']],

@@ -160,5 +160,6 @@ run('node scripts/merge_construction_machinery.mjs', 'restore construction/machi
 run('node scripts/apply_company_classification_corrections.mjs', 'approved individual company facts');
 run('node scripts/sync_map_badges.mjs', 'migrated company header counts');
 run('node scripts/retire_holdings_sector.mjs', 'remove retired holdings navigation');
+run('node scripts/patch_volatility_candles_tab.mjs', 'standalone volatility candles tab');
 run('node scripts/patch_asset_versions.mjs', 'content-hash ?v= for /js assets');
 console.log('\nOK rebuild_site');

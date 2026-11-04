@@ -58,6 +58,7 @@ const RENDER_PERF_FN = `    function renderPerfCalendar() {
       var sid = (document.body && document.body.getAttribute('data-sector')) || '';
       InvestingMapPerfCalendar.render({
         container: el,
+        companies: koreanCompanies,
         legend: document.getElementById('perfcalendar-legend'),
         sectorId: sid,
         lang: lang,
@@ -152,6 +153,7 @@ function patchTranslationObjects(source) {
 
 function patchRuntime(source) {
   source = patchTranslationObjects(source);
+  source = source.replace(/(InvestingMapPerfCalendar\.render\(\{\s*\n\s*container: el,)(?!\s*companies:)/g, '$1\n        companies: koreanCompanies,');
 
   if (!source.includes("getElementById('tab-btn-perfcalendar')")) {
     source = source.replace(
@@ -206,6 +208,10 @@ function patchHtml(source) {
       /(<script src="\.\.\/js\/map_volatility\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
       `$1\n  <script src="../js/map_perfcalendar.js?v=${V_PLACEHOLDER}"></script>`,
     );
+  }
+  if (!source.includes('map_perfcalendar_years.js')) {
+    source = source.replace(/(<script src="\.\.\/js\/map_perfcalendar\.js(?:\?v=[\w.\-]+)?"><\/script>)/,
+      `<script src="../js/map_perfcalendar_years.js?v=${V_PLACEHOLDER}"></script>\n  $1`);
   }
   return patchRuntime(source);
 }

@@ -1004,6 +1004,7 @@
 
   function fetchAndRender(opts) {
     ensureChrome(opts);
+    if (global.InvestingMapPerfCalendarYears && global.InvestingMapPerfCalendarYears.mount(opts)) return Promise.resolve();
     var container = opts.container;
     var labels = labelsFor(opts);
     var sectorId = resolveSectorId(opts);
