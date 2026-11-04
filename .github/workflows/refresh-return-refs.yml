@@ -1,7 +1,9 @@
 name: Refresh hub return refs
 
-# Paused at the owner's request. Do not resume collection without approval.
 on:
+  schedule:
+    # After regular close + MDCSTAT T+0 OHLC settle — UTC 08:10 = KST 17:10, Mon–Fri
+    - cron: '10 8 * * 1-5'
   workflow_dispatch:
 
 permissions:
@@ -9,7 +11,6 @@ permissions:
 
 jobs:
   refresh:
-    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
