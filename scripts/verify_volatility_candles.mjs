@@ -10,6 +10,19 @@ vm.createContext(context);
 vm.runInContext(fs.readFileSync(new URL('../js/map_volatility_candles.js', import.meta.url), 'utf8'), context);
 const aggregate = context.InvestingMapVolatilityCandles._test.volatilityBar;
 const metrics = context.InvestingMapVolatilityCandles._test.volatilityMetrics;
+assert.deepEqual(Array.from(context.InvestingMapVolatilityCandles._test.metricLabels(false)), ['고가−저가','시가→종가','시가→고가','시가→저가','저가→종가','고가→종가']);
+const { preserveViewport } = context.InvestingMapVolatilityCandles._test;
+let scrollRegion = {scrollTop:350,scrollLeft:80};
+const scrollPanel = {style:{minHeight:''},getBoundingClientRect:()=>({height:1800}),querySelector:()=>scrollRegion};
+context.scrollX=0; context.scrollY=900;
+context.scrollTo=(x,y)=>{context.scrollX=x;context.scrollY=y;};
+preserveViewport(scrollPanel,()=>{
+  assert.equal(scrollPanel.style.minHeight,'1800px','document height must not collapse during replacement');
+  context.scrollY=0; scrollRegion={scrollTop:0,scrollLeft:0};
+});
+assert.equal(context.scrollY,900,'refresh preserves the document reading position');
+assert.deepEqual(scrollRegion,{scrollTop:350,scrollLeft:80},'refresh preserves both table scroll axes');
+assert.equal(scrollPanel.style.minHeight,'');
 const { dailyMetricSummary, sortMetricRows } = context.InvestingMapVolatilityCandles._test;
 const dailyFixture = [
   {t:'2026-11-02',o:100,h:120,l:80,c:110},
@@ -18,7 +31,7 @@ const dailyFixture = [
 ];
 const dailySummary = dailyMetricSummary(dailyFixture,3);
 assert.equal(dailySummary.metrics.length,6,'keep all existing metrics and add both downward excursions');
-assert.ok(Math.abs(dailySummary.metrics[4].mean + 40/3) < 1e-9,'open-to-low uses each day open as its base');
+assert.ok(Math.abs(dailySummary.metrics[3].mean + 40/3) < 1e-9,'open-to-low uses each day open as its base');
 assert.ok(Math.abs(dailySummary.metrics[5].mean - ((110/120-1)+(180/220-1)+(120/130-1))*100/3) < 1e-9,'high-to-close uses each day high as its base');
 assert.ok(Math.abs(dailySummary.metrics[1].mean - 20/3) < 1e-9, 'daily 10%, -10%, 20% use arithmetic mean, not accumulated return');
 assert.ok(Math.abs(dailySummary.metrics[1].min + 10) < 1e-9);
@@ -34,7 +47,7 @@ const sortingRows = [
 assert.deepEqual(Array.from(sortMetricRows(sortingRows,1),r=>r.company.ticker),['c','a','d','b'],'sort means descending within each chain with missing values last');
 const { metricScales, metricBarGeometry } = context.InvestingMapVolatilityCandles._test;
 const comparisonScales = metricScales([{ bar: { o: 0, h: 20, l: -20, c: -10 } }, { bar: { o: 0, h: 10, l: -10, c: 5 } }, { bar: null }]);
-assert.deepEqual(Array.from(comparisonScales), [50, 10, 20, 17, 20, 25], 'column scales include all stocks and keep direction out of the magnitude');
+assert.deepEqual(Array.from(comparisonScales), [50, 10, 20, 20, 17, 25], 'column scales include all stocks and keep direction out of the magnitude');
 assert.equal(metricBarGeometry(-5, 10, true).left, 25);
 assert.equal(metricBarGeometry(-5, 10, true).width, 25);
 assert.equal(metricBarGeometry(5, 10, true).left, 50);
@@ -42,7 +55,7 @@ assert.equal(metricBarGeometry(5, 10, true).width, 25, 'equal rise/fall magnitud
 assert.equal(metricBarGeometry(10, 20, false).width, 50);
 assert.equal(metricBarGeometry(0, 20, false).width, 0, 'zero must have no bar');
 const measurement = metrics(aggregate([{ t: '2026-11-03', c: 80 }, { t: '2026-11-04', o: 100, h: 120, l: 90, c: 110 }], 1));
-for (const [index, expected] of [100 / 3, 10, 20, 200 / 9, -10, -25 / 3].entries()) assert.ok(Math.abs(measurement[index] - expected) < 1e-9, 'metrics use price ratios, not percentage-point differences');
+for (const [index, expected] of [100 / 3, 10, 20, -10, 200 / 9, -25 / 3].entries()) assert.ok(Math.abs(measurement[index] - expected) < 1e-9, 'metrics use price ratios, not percentage-point differences');
 assert.equal(metrics(null), null);
 assert.ok(metrics({ o: 0, h: 20, l: -10, c: -5 })[1] < 0, 'open-close retains falling direction');
 const candleRows = context.InvestingMapVolatilityCandles._test.candleRows;
@@ -71,7 +84,7 @@ for (const days of [1, 3, 5, 10, 20]) {
   const base = bars[20 - days].c;
   const expected = { o: bars[21 - days].o, h: 130, l: bars[21 - days].l, c: 125 };
   for (const key of Object.keys(expected)) assert.ok(Math.abs(result[key] - (expected[key] / base - 1) * 100) < 1e-9);
-  const expectedMetrics = [expected.h / expected.l - 1, expected.c / expected.o - 1, expected.h / expected.o - 1, expected.c / expected.l - 1, expected.l / expected.o - 1, expected.c / expected.h - 1];
+  const expectedMetrics = [expected.h / expected.l - 1, expected.c / expected.o - 1, expected.h / expected.o - 1, expected.l / expected.o - 1, expected.c / expected.l - 1, expected.c / expected.h - 1];
   metrics(result).forEach((value, i) => assert.ok(Math.abs(value - expectedMetrics[i] * 100) < 1e-9, 'period metrics use aggregated OHLC'));
   assert.equal(result.start, bars[21 - days].t);
   assert.equal(result.end, bars[20].t);
