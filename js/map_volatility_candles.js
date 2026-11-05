@@ -11,6 +11,8 @@ var lastOpts = null;
   var redrawTimer = null;
   var storedCacheLoaded = false;
   var refreshTimer = null;
+  var metricDays = 1;
+  var metricSort = null;
 
   function queueRedraw() {
     if (redrawTimer) return;
@@ -128,9 +130,37 @@ var lastOpts = null;
     return en ? ['Low → High', 'Open → Close', 'Open → High', 'Low → Close'] : ['고가−저가', '시가→종가', '시가→고가', '저가→종가'];
   }
 
+  function dailyMetricSummary(bars, days) {
+    var sorted = (bars || []).slice().sort(function (a, b) { return String(a.t).localeCompare(String(b.t)); });
+    if (sorted.length < days) return null;
+    var sample = sorted.slice(-days);
+    if (sample.some(function (b) { return ![b.o,b.h,b.l,b.c].every(function (v) { return Number.isFinite(v) && v > 0; }) || b.h < Math.max(b.o,b.c) || b.l > Math.min(b.o,b.c); })) return null;
+    var values = sample.map(function (b) { return [(b.h/b.l-1)*100,(b.c/b.o-1)*100,(b.h/b.o-1)*100,(b.c/b.l-1)*100]; });
+    return { start: sample[0].t, end: sample[sample.length-1].t, metrics: [0,1,2,3].map(function (i) {
+      var column = values.map(function (v) { return v[i]; });
+      return { min: Math.min.apply(null,column), max: Math.max.apply(null,column), mean: column.reduce(function (a,b) { return a+b; },0)/days };
+    }) };
+  }
+
+  function sortMetricRows(rows, index) {
+    var groups = new Map();
+    rows.forEach(function (r) { var key = r.company.chain || '기타'; if (!groups.has(key)) groups.set(key,[]); groups.get(key).push(r); });
+    var result = [];
+    groups.forEach(function (group) {
+      if (index != null) group.sort(function (a,b) {
+        var av = a.summary && a.summary.metrics[index].mean, bv = b.summary && b.summary.metrics[index].mean;
+        if (av == null || bv == null) return av == null ? bv == null ? 0 : 1 : -1;
+        return bv-av;
+      });
+      result = result.concat(group);
+    });
+    return result;
+  }
+
   function metricScales(rows) {
     var scales = [0, 0, 0, 0];
     rows.forEach(function (row) {
+      if (row.summary) { row.summary.metrics.forEach(function (m,i) { scales[i] = Math.max(scales[i],Math.abs(m.min),Math.abs(m.max)); }); return; }
       var values = volatilityMetrics(row.bar);
       if (values) values.forEach(function (value, i) { scales[i] = Math.max(scales[i], Math.abs(value)); });
     });
@@ -143,38 +173,49 @@ var lastOpts = null;
   }
 
   function appendMetrics(panel, rows, en) {
+    var section = document.createElement('section'); section.className = 'mm-daily-metrics'; panel.appendChild(section);
+    var host = panel; panel = section;
+    function redraw() { section.remove(); appendMetrics(host, rows, en); }
     var heading = document.createElement('h4'); heading.textContent = en ? 'Compare volatility by company' : '종목별 변동성 비교'; heading.style.cssText = 'margin:18px 0 6px;font-size:14px'; panel.appendChild(heading);
+    var periods = document.createElement('div'); periods.className = 'mm-mode-tabs'; panel.appendChild(periods);
+    [1,3,5,10,20].forEach(function (days) { var button = document.createElement('button'); button.type = 'button'; button.className = 'mm-mode-tab'; button.textContent = en ? days + 'D average' : days + '일 평균'; button.setAttribute('aria-pressed',String(days === metricDays)); button.onclick = function () { metricDays = days; redraw(); }; periods.appendChild(button); });
+    var measured = sortMetricRows(rows.map(function (r) { return { company:r.company, summary:dailyMetricSummary((volatilityCache[r.company.ticker] || {}).bars, metricDays) }; }), metricSort);
     var note = document.createElement('p'); note.style.cssText = 'font-size:11px;color:#94a3b8;line-height:1.7';
-    note.textContent = en ? 'Selected period · Range = (High / Low − 1) × 100; other changes = (End / Start − 1) × 100. During trading, Close means latest price.' : '선택 기간 기준 · 고가−저가 = (고가 ÷ 저가 − 1) × 100 · 나머지는 (도착 가격 ÷ 시작 가격 − 1) × 100 · 장중 종가는 현재가입니다.';
+    note.textContent = en ? 'Arithmetic mean of daily changes · Range = (High / Low − 1) × 100; others = (End / Start − 1) × 100 · Intraday close is latest price.' : '일별 변동률의 산술평균 · 고가−저가 = (고가 ÷ 저가 − 1) × 100 · 나머지는 (도착 가격 ÷ 시작 가격 − 1) × 100 · 장중 종가는 현재가입니다.';
     panel.appendChild(note);
-    var legend = document.createElement('p'); legend.style.cssText = 'font-size:11px;color:#94a3b8;line-height:1.7'; legend.textContent = en ? 'Longer bar = larger change · Shared scale within each column · Open → Close: left = decline, right = rise · — = insufficient data' : '막대가 길수록 큰 변동 · 같은 열은 모든 종목에 동일한 눈금 · 시가→종가: 왼쪽 하락 / 오른쪽 상승 · —는 데이터 부족'; panel.appendChild(legend);
-    var scales = metricScales(rows);
+    var legend = document.createElement('p'); legend.style.cssText = 'font-size:11px;color:#94a3b8;line-height:1.7'; legend.textContent = en ? 'Line = min–max · Diamond = mean · Click a heading to sort by descending mean within each value chain · — = insufficient sessions' : '막대 범위: 최저~최고 · ◆ 평균 · 제목을 누르면 밸류체인 안에서 평균 높은 순 정렬 · 같은 열은 동일 눈금 · —는 기간 데이터 부족'; panel.appendChild(legend);
+    var scales = metricScales(measured);
     var wrapper = document.createElement('div'); wrapper.style.cssText = 'overflow-x:auto'; panel.appendChild(wrapper);
     var table = document.createElement('table'); table.className = 'mm-metric-comparison'; table.style.cssText = 'width:100%;min-width:560px;table-layout:fixed;border-collapse:collapse;font-size:12px'; wrapper.appendChild(table);
     var head = table.createTHead().insertRow();
     [en ? 'Company / period' : '종목 / 기간'].concat(metricLabels(en)).forEach(function (label, index) {
       var th = document.createElement('th'); th.textContent = label; th.scope = 'col'; th.style.cssText = 'padding:10px 8px;text-align:left;white-space:nowrap;background:var(--surface,#101722)';
       if (index === 0) th.style.width = '28%';
-      else { var scale = document.createElement('small'); scale.style.cssText = 'display:block;color:#94a3b8;font-weight:normal;margin-top:5px'; scale.textContent = index === 2 ? '−' + scales[index - 1] + '% / 0 / +' + scales[index - 1] + '%' : '0 ~ ' + scales[index - 1] + '%'; th.appendChild(scale); }
+      else { th.textContent = ''; th.setAttribute('aria-sort',metricSort === index-1 ? 'descending' : 'none'); var sort = document.createElement('button'); sort.type = 'button'; sort.textContent = label + (metricSort === index-1 ? ' ▼' : ' ↕'); sort.style.cssText = 'background:none;border:0;padding:0;color:inherit;font:inherit;font-weight:inherit;cursor:pointer'; sort.onclick = function () { metricSort = index-1; redraw(); }; th.appendChild(sort); var scale = document.createElement('small'); scale.style.cssText = 'display:block;color:#94a3b8;font-weight:normal;margin-top:5px'; scale.textContent = index === 2 ? '−' + scales[index - 1] + '% / 0 / +' + scales[index - 1] + '%' : '0 ~ ' + scales[index - 1] + '%'; th.appendChild(scale); }
       head.appendChild(th);
     });
     var body = table.createTBody(), chain = null;
-    rows.forEach(function (r) {
+    measured.forEach(function (r) {
       var c = r.company, key = c.chain || (en ? 'Other' : '기타');
       if (chain !== key) { chain = key; var group = body.insertRow(); var th = document.createElement('th'); th.colSpan = 5; th.scope = 'rowgroup'; th.textContent = key; th.style.cssText = 'padding:12px 8px;text-align:left;background:var(--surface2,#1e293b);color:#a5b4fc'; group.appendChild(th); }
       var tr = body.insertRow(), name = document.createElement('th'); name.scope = 'row'; name.style.cssText = 'padding:10px 8px;text-align:left;border-bottom:1px solid var(--border,#334155)';
       name.textContent = (en && c.nameEn ? c.nameEn : c.name || c.nameKo || c.ticker) + ' (' + c.ticker + ')';
-      if (r.bar) { var date = document.createElement('small'); date.style.cssText = 'display:block;color:#94a3b8;font-weight:normal'; date.textContent = r.bar.start + ' ~ ' + r.bar.end; name.appendChild(date); }
+      if (r.summary) { var date = document.createElement('small'); date.style.cssText = 'display:block;color:#94a3b8;font-weight:normal'; date.textContent = r.summary.start + ' ~ ' + r.summary.end; name.appendChild(date); }
       tr.appendChild(name);
-      var values = volatilityMetrics(r.bar);
+      var values = r.summary && r.summary.metrics.map(function (m) { return m.mean; });
       for (var i = 0; i < 4; i++) {
         var td = tr.insertCell(); td.style.cssText = 'padding:10px 8px;border-bottom:1px solid var(--border,#334155);font-variant-numeric:tabular-nums';
         if (!values) { td.textContent = '—'; continue; }
         var color = i === 1 ? values[i] > 0 ? '#22c55e' : values[i] < 0 ? '#ef4444' : '#94a3b8' : ['#818cf8', '', '#fbbf24', '#38bdf8'][i];
         var value = document.createElement('span'); value.textContent = (i === 1 && values[i] > 0 ? '+' : '') + values[i].toFixed(2) + '%'; value.style.cssText = 'display:block;text-align:right;margin-bottom:6px;color:' + color; td.appendChild(value);
         var track = document.createElement('div'); track.className = 'mm-metric-track'; track.setAttribute('aria-hidden', 'true'); track.style.cssText = 'position:relative;height:12px;background:var(--surface2,#1e293b);border-radius:3px;overflow:hidden'; td.appendChild(track);
-        var geometry = metricBarGeometry(values[i], scales[i], i === 1);
-        var fill = document.createElement('div'); fill.style.cssText = 'position:absolute;top:2px;height:8px;border-radius:2px;background:' + color + ';left:' + geometry.left + '%;width:' + geometry.width + '%'; track.appendChild(fill);
+        var stats = r.summary.metrics[i];
+        function position(v) { return i === 1 ? 50 + v/scales[i]*50 : v/scales[i]*100; }
+        var fill = document.createElement('div'); fill.style.cssText = 'position:absolute;top:4px;height:4px;border-radius:2px;background:' + color + ';left:' + position(stats.min) + '%;width:' + Math.max(0,position(stats.max)-position(stats.min)) + '%'; track.appendChild(fill);
+        [stats.min,stats.max].forEach(function (v) { var tick = document.createElement('div'); tick.style.cssText = 'position:absolute;top:2px;height:8px;width:2px;background:' + color + ';left:clamp(0px,' + position(v) + '%,calc(100% - 2px))'; track.appendChild(tick); });
+        var mean = document.createElement('div'); mean.style.cssText = 'position:absolute;top:3px;height:6px;width:6px;transform:rotate(45deg);background:' + color + ';left:clamp(0px,calc(' + position(stats.mean) + '% - 3px),calc(100% - 6px))'; track.appendChild(mean);
+        var bounds = document.createElement('small'); bounds.textContent = (en ? 'Min ' : '최저 ') + stats.min.toFixed(2) + '% · ' + (en ? 'Max ' : '최고 ') + stats.max.toFixed(2) + '%'; bounds.style.cssText = 'display:block;color:#94a3b8;font-size:10px;margin-top:5px;line-height:1.5'; td.appendChild(bounds);
+        value.textContent = (en ? 'Mean ' : '평균 ') + value.textContent;
         var zero = document.createElement('div'); zero.style.cssText = 'position:absolute;top:0;bottom:0;width:1px;background:#94a3b8;left:' + (i === 1 ? 50 : 0) + '%'; track.appendChild(zero);
       }
     });
@@ -310,5 +351,5 @@ function render(opts) {
     if (lastOpts && !document.hidden && target && target.getClientRects().length) drawVolatility(lastOpts);
   }, 35000);
 }
-global.InvestingMapVolatilityCandles = { render: render, _test: { volatilityBar: volatilityBar, candleRows: candleRows, volatilityMetrics: volatilityMetrics, metricScales: metricScales, metricBarGeometry: metricBarGeometry } };
+global.InvestingMapVolatilityCandles = { render: render, _test: { volatilityBar: volatilityBar, candleRows: candleRows, volatilityMetrics: volatilityMetrics, metricScales: metricScales, metricBarGeometry: metricBarGeometry, dailyMetricSummary: dailyMetricSummary, sortMetricRows: sortMetricRows } };
 })(typeof window !== 'undefined' ? window : globalThis);
