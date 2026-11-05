@@ -123,11 +123,11 @@ var lastOpts = null;
     if (!bar) return null;
     // Convert normalized prices back to ratios; differences alone are % points.
     function change(from, to) { return ((100 + to) / (100 + from) - 1) * 100; }
-    return [change(bar.l, bar.h), change(bar.o, bar.c), change(bar.o, bar.h), change(bar.l, bar.c)];
+    return [change(bar.l, bar.h), change(bar.o, bar.c), change(bar.o, bar.h), change(bar.l, bar.c), change(bar.o, bar.l), change(bar.h, bar.c)];
   }
 
   function metricLabels(en) {
-    return en ? ['Low → High', 'Open → Close', 'Open → High', 'Low → Close'] : ['고가−저가', '시가→종가', '시가→고가', '저가→종가'];
+    return en ? ['Low → High', 'Open → Close', 'Open → High', 'Low → Close', 'Open → Low', 'High → Close'] : ['고가−저가', '시가→종가', '시가→고가', '저가→종가', '시가→저가', '고가→종가'];
   }
 
   function dailyMetricSummary(bars, days) {
@@ -135,8 +135,8 @@ var lastOpts = null;
     if (sorted.length < days) return null;
     var sample = sorted.slice(-days);
     if (sample.some(function (b) { return ![b.o,b.h,b.l,b.c].every(function (v) { return Number.isFinite(v) && v > 0; }) || b.h < Math.max(b.o,b.c) || b.l > Math.min(b.o,b.c); })) return null;
-    var values = sample.map(function (b) { return [(b.h/b.l-1)*100,(b.c/b.o-1)*100,(b.h/b.o-1)*100,(b.c/b.l-1)*100]; });
-    return { start: sample[0].t, end: sample[sample.length-1].t, metrics: [0,1,2,3].map(function (i) {
+    var values = sample.map(function (b) { return [(b.h/b.l-1)*100,(b.c/b.o-1)*100,(b.h/b.o-1)*100,(b.c/b.l-1)*100,(b.l/b.o-1)*100,(b.c/b.h-1)*100]; });
+    return { start: sample[0].t, end: sample[sample.length-1].t, metrics: [0,1,2,3,4,5].map(function (i) {
       var column = values.map(function (v) { return v[i]; });
       return { min: Math.min.apply(null,column), max: Math.max.apply(null,column), mean: column.reduce(function (a,b) { return a+b; },0)/days };
     }) };
@@ -158,7 +158,7 @@ var lastOpts = null;
   }
 
   function metricScales(rows) {
-    var scales = [0, 0, 0, 0];
+    var scales = [0, 0, 0, 0, 0, 0];
     rows.forEach(function (row) {
       if (row.summary) { row.summary.metrics.forEach(function (m,i) { scales[i] = Math.max(scales[i],Math.abs(m.min),Math.abs(m.max)); }); return; }
       var values = volatilityMetrics(row.bar);
@@ -186,37 +186,37 @@ var lastOpts = null;
     var legend = document.createElement('p'); legend.style.cssText = 'font-size:11px;color:#94a3b8;line-height:1.7'; legend.textContent = en ? 'Line = min–max · Diamond = mean · Click a heading to sort by descending mean within each value chain · — = insufficient sessions' : '막대 범위: 최저~최고 · ◆ 평균 · 제목을 누르면 밸류체인 안에서 평균 높은 순 정렬 · 같은 열은 동일 눈금 · —는 기간 데이터 부족'; panel.appendChild(legend);
     var scales = metricScales(measured);
     var wrapper = document.createElement('div'); wrapper.style.cssText = 'overflow-x:auto'; panel.appendChild(wrapper);
-    var table = document.createElement('table'); table.className = 'mm-metric-comparison'; table.style.cssText = 'width:100%;min-width:560px;table-layout:fixed;border-collapse:collapse;font-size:12px'; wrapper.appendChild(table);
+    var table = document.createElement('table'); table.className = 'mm-metric-comparison'; table.style.cssText = 'width:100%;min-width:760px;table-layout:fixed;border-collapse:collapse;font-size:12px'; wrapper.appendChild(table);
     var head = table.createTHead().insertRow();
     [en ? 'Company / period' : '종목 / 기간'].concat(metricLabels(en)).forEach(function (label, index) {
       var th = document.createElement('th'); th.textContent = label; th.scope = 'col'; th.style.cssText = 'padding:10px 8px;text-align:left;white-space:nowrap;background:var(--surface,#101722)';
-      if (index === 0) th.style.width = '28%';
-      else { th.textContent = ''; th.setAttribute('aria-sort',metricSort === index-1 ? 'descending' : 'none'); var sort = document.createElement('button'); sort.type = 'button'; sort.textContent = label + (metricSort === index-1 ? ' ▼' : ' ↕'); sort.style.cssText = 'background:none;border:0;padding:0;color:inherit;font:inherit;font-weight:inherit;cursor:pointer'; sort.onclick = function () { metricSort = index-1; redraw(); }; th.appendChild(sort); var scale = document.createElement('small'); scale.style.cssText = 'display:block;color:#94a3b8;font-weight:normal;margin-top:5px'; scale.textContent = index === 2 ? '−' + scales[index - 1] + '% / 0 / +' + scales[index - 1] + '%' : '0 ~ ' + scales[index - 1] + '%'; th.appendChild(scale); }
+      if (index === 0) th.style.width = '22%';
+      else { th.textContent = ''; th.setAttribute('aria-sort',metricSort === index-1 ? 'descending' : 'none'); var sort = document.createElement('button'); sort.type = 'button'; sort.textContent = label + (metricSort === index-1 ? ' ▼' : ' ↕'); sort.style.cssText = 'background:none;border:0;padding:0;color:inherit;font:inherit;font-weight:inherit;cursor:pointer'; sort.onclick = function () { metricSort = index-1; redraw(); }; th.appendChild(sort); var scale = document.createElement('small'); scale.style.cssText = 'display:block;color:#94a3b8;font-weight:normal;margin-top:5px'; scale.textContent = (index === 2 || index >= 5) ? '−' + scales[index - 1] + '% / 0 / +' + scales[index - 1] + '%' : '0 ~ ' + scales[index - 1] + '%'; th.appendChild(scale); }
       head.appendChild(th);
     });
     var body = table.createTBody(), chain = null;
     measured.forEach(function (r) {
       var c = r.company, key = c.chain || (en ? 'Other' : '기타');
-      if (chain !== key) { chain = key; var group = body.insertRow(); var th = document.createElement('th'); th.colSpan = 5; th.scope = 'rowgroup'; th.textContent = key; th.style.cssText = 'padding:12px 8px;text-align:left;background:var(--surface2,#1e293b);color:#a5b4fc'; group.appendChild(th); }
+      if (chain !== key) { chain = key; var group = body.insertRow(); var th = document.createElement('th'); th.colSpan = 7; th.scope = 'rowgroup'; th.textContent = key; th.style.cssText = 'padding:12px 8px;text-align:left;background:var(--surface2,#1e293b);color:#a5b4fc'; group.appendChild(th); }
       var tr = body.insertRow(), name = document.createElement('th'); name.scope = 'row'; name.style.cssText = 'padding:10px 8px;text-align:left;border-bottom:1px solid var(--border,#334155)';
       name.textContent = (en && c.nameEn ? c.nameEn : c.name || c.nameKo || c.ticker) + ' (' + c.ticker + ')';
       if (r.summary) { var date = document.createElement('small'); date.style.cssText = 'display:block;color:#94a3b8;font-weight:normal'; date.textContent = r.summary.start + ' ~ ' + r.summary.end; name.appendChild(date); }
       tr.appendChild(name);
       var values = r.summary && r.summary.metrics.map(function (m) { return m.mean; });
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < 6; i++) {
         var td = tr.insertCell(); td.style.cssText = 'padding:10px 8px;border-bottom:1px solid var(--border,#334155);font-variant-numeric:tabular-nums';
         if (!values) { td.textContent = '—'; continue; }
-        var color = i === 1 ? values[i] > 0 ? '#22c55e' : values[i] < 0 ? '#ef4444' : '#94a3b8' : ['#818cf8', '', '#fbbf24', '#38bdf8'][i];
-        var value = document.createElement('span'); value.textContent = (i === 1 && values[i] > 0 ? '+' : '') + values[i].toFixed(2) + '%'; value.style.cssText = 'display:block;text-align:right;margin-bottom:6px;color:' + color; td.appendChild(value);
+        var color = (i === 1 || i >= 4) ? values[i] > 0 ? '#22c55e' : values[i] < 0 ? '#ef4444' : '#94a3b8' : ['#818cf8', '', '#fbbf24', '#38bdf8'][i];
+        var value = document.createElement('span'); value.textContent = ((i === 1 || i >= 4) && values[i] > 0 ? '+' : '') + values[i].toFixed(2) + '%'; value.style.cssText = 'display:block;text-align:right;margin-bottom:6px;color:' + color; td.appendChild(value);
         var track = document.createElement('div'); track.className = 'mm-metric-track'; track.setAttribute('aria-hidden', 'true'); track.style.cssText = 'position:relative;height:12px;background:var(--surface2,#1e293b);border-radius:3px;overflow:hidden'; td.appendChild(track);
         var stats = r.summary.metrics[i];
-        function position(v) { return i === 1 ? 50 + v/scales[i]*50 : v/scales[i]*100; }
+        function position(v) { return (i === 1 || i >= 4) ? 50 + v/scales[i]*50 : v/scales[i]*100; }
         var fill = document.createElement('div'); fill.style.cssText = 'position:absolute;top:4px;height:4px;border-radius:2px;background:' + color + ';left:' + position(stats.min) + '%;width:' + Math.max(0,position(stats.max)-position(stats.min)) + '%'; track.appendChild(fill);
         [stats.min,stats.max].forEach(function (v) { var tick = document.createElement('div'); tick.style.cssText = 'position:absolute;top:2px;height:8px;width:2px;background:' + color + ';left:clamp(0px,' + position(v) + '%,calc(100% - 2px))'; track.appendChild(tick); });
         var mean = document.createElement('div'); mean.style.cssText = 'position:absolute;top:3px;height:6px;width:6px;transform:rotate(45deg);background:' + color + ';left:clamp(0px,calc(' + position(stats.mean) + '% - 3px),calc(100% - 6px))'; track.appendChild(mean);
         var bounds = document.createElement('small'); bounds.textContent = (en ? 'Min ' : '최저 ') + stats.min.toFixed(2) + '% · ' + (en ? 'Max ' : '최고 ') + stats.max.toFixed(2) + '%'; bounds.style.cssText = 'display:block;color:#94a3b8;font-size:10px;margin-top:5px;line-height:1.5'; td.appendChild(bounds);
         value.textContent = (en ? 'Mean ' : '평균 ') + value.textContent;
-        var zero = document.createElement('div'); zero.style.cssText = 'position:absolute;top:0;bottom:0;width:1px;background:#94a3b8;left:' + (i === 1 ? 50 : 0) + '%'; track.appendChild(zero);
+        var zero = document.createElement('div'); zero.style.cssText = 'position:absolute;top:0;bottom:0;width:1px;background:#94a3b8;left:' + ((i === 1 || i >= 4) ? 50 : 0) + '%'; track.appendChild(zero);
       }
     });
   }
