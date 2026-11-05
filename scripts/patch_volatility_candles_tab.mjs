@@ -19,12 +19,13 @@ const renderFunction = `    function renderVolatilityCandles() {
 `;
 
 function patchRuntime(source) {
+  source = source.replaceAll('🕯️ Volatility candles', '📊 Volatility measurement').replaceAll('🕯️ 변동성 캔들', '📊 변동성 측정').replaceAll('aria-label="Volatility candles"', 'aria-label="Volatility measurement"');
   if (source.includes('function renderVolatilityCandles()')) return source;
   source = source.replace(/^(\s*)function switchTab\(tab, btn\) \{/m, `${renderFunction}$1function switchTab(tab, btn) {`);
   source = source.replace(/(if \(tab === 'momentum'\) setTimeout\(renderMomentum, 40\);)/g,
     `$1\n      if (tab === 'volatility-candles') setTimeout(renderVolatilityCandles, 40);`);
   source = source.replace(/(var momentumBtn = document.getElementById\('tab-btn-momentum'\);)/g,
-    `$1\n      var candlesBtn = document.getElementById('tab-btn-volatility-candles');\n      if (candlesBtn) candlesBtn.textContent = lang === 'en' ? '🕯️ Volatility candles' : '🕯️ 변동성 캔들';`);
+    `$1\n      var candlesBtn = document.getElementById('tab-btn-volatility-candles');\n      if (candlesBtn) candlesBtn.textContent = lang === 'en' ? '📊 Volatility measurement' : '📊 변동성 측정';`);
   source = source.replace(/(if \(document.getElementById\('tab-momentum'\)\?\.classList.contains\('active'\)\) renderMomentum\(\);)/g,
     `$1 if (document.getElementById('tab-volatility-candles')?.classList.contains('active')) renderVolatilityCandles();`);
   source = source.replace(/(if \(document.getElementById\('tab-momentum'\)\?\.classList.contains\('active'\)\) setTimeout\(renderMomentum, 80\);)/g,
@@ -45,9 +46,9 @@ for (const dir of fs.readdirSync(root, { withFileTypes: true })) {
     if (!source.includes('tab-btn-momentum')) continue;
     if (!source.includes('id="tab-btn-volatility-candles"')) {
       source = source.replace(/(<button id="tab-btn-momentum"[^>]*>[\s\S]*?<\/button>)/,
-        `$1\n    <button id="tab-btn-volatility-candles" class="tab-btn" onclick="switchTab('volatility-candles',this)">🕯️ 변동성 캔들</button>`);
+        `$1\n    <button id="tab-btn-volatility-candles" class="tab-btn" onclick="switchTab('volatility-candles',this)">📊 변동성 측정</button>`);
       source = source.replace(/(<div id="tab-momentum"[^>]*>)/,
-        `<div id="tab-volatility-candles" class="tab-content"><section id="mm-volatility" aria-label="Volatility candles"></section></div>\n  $1`);
+        `<div id="tab-volatility-candles" class="tab-content"><section id="mm-volatility" aria-label="Volatility measurement"></section></div>\n  $1`);
       source = source.replace(/(<script src="\.\.\/js\/map_momentum\.js[^"\n]*"><\/script>)/,
         `$1\n  <script src="../js/map_volatility_candles.js?v=0"></script>`);
     }
