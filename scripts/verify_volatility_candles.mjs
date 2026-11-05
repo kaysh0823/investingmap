@@ -10,6 +10,25 @@ vm.createContext(context);
 vm.runInContext(fs.readFileSync(new URL('../js/map_volatility_candles.js', import.meta.url), 'utf8'), context);
 const aggregate = context.InvestingMapVolatilityCandles._test.volatilityBar;
 const metrics = context.InvestingMapVolatilityCandles._test.volatilityMetrics;
+const { dailyMetricSummary, sortMetricRows } = context.InvestingMapVolatilityCandles._test;
+const dailyFixture = [
+  {t:'2026-11-02',o:100,h:120,l:80,c:110},
+  {t:'2026-11-03',o:200,h:220,l:180,c:180},
+  {t:'2026-11-04',o:100,h:130,l:90,c:120},
+];
+const dailySummary = dailyMetricSummary(dailyFixture,3);
+assert.ok(Math.abs(dailySummary.metrics[1].mean - 20/3) < 1e-9, 'daily 10%, -10%, 20% use arithmetic mean, not accumulated return');
+assert.ok(Math.abs(dailySummary.metrics[1].min + 10) < 1e-9);
+assert.ok(Math.abs(dailySummary.metrics[1].max - 20) < 1e-9);
+assert.equal(dailyMetricSummary(dailyFixture,5),null,'do not average fewer than requested sessions');
+assert.equal(dailyMetricSummary([dailyFixture[0],{...dailyFixture[1],h:null}],2),null);
+const sortingRows = [
+ {company:{chain:'A',ticker:'a'},summary:dailyMetricSummary([dailyFixture[1]],1)},
+ {company:{chain:'B',ticker:'b'},summary:dailyMetricSummary([dailyFixture[2]],1)},
+ {company:{chain:'A',ticker:'c'},summary:dailyMetricSummary([dailyFixture[0]],1)},
+ {company:{chain:'A',ticker:'d'},summary:null},
+];
+assert.deepEqual(Array.from(sortMetricRows(sortingRows,1),r=>r.company.ticker),['c','a','d','b'],'sort means descending within each chain with missing values last');
 const { metricScales, metricBarGeometry } = context.InvestingMapVolatilityCandles._test;
 const comparisonScales = metricScales([{ bar: { o: 0, h: 20, l: -20, c: -10 } }, { bar: { o: 0, h: 10, l: -10, c: 5 } }, { bar: null }]);
 assert.deepEqual(Array.from(comparisonScales), [50, 10, 20, 17], 'column scales include all stocks and keep direction out of the magnitude');
