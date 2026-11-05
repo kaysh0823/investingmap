@@ -9,6 +9,11 @@ const context = { localStorage: { getItem: () => null } };
 vm.createContext(context);
 vm.runInContext(fs.readFileSync(new URL('../js/map_volatility_candles.js', import.meta.url), 'utf8'), context);
 const aggregate = context.InvestingMapVolatilityCandles._test.volatilityBar;
+const metrics = context.InvestingMapVolatilityCandles._test.volatilityMetrics;
+const measurement = metrics(aggregate([{ t: '2026-11-03', c: 80 }, { t: '2026-11-04', o: 100, h: 120, l: 90, c: 110 }], 1));
+for (const [index, expected] of [100 / 3, 10, 20, 200 / 9].entries()) assert.ok(Math.abs(measurement[index] - expected) < 1e-9, 'metrics use price ratios, not percentage-point differences');
+assert.equal(metrics(null), null);
+assert.ok(metrics({ o: 0, h: 20, l: -10, c: -5 })[1] < 0, 'open-close retains falling direction');
 const candleRows = context.InvestingMapVolatilityCandles._test.candleRows;
 const companies = Array.from({ length: 89 }, (_, i) => ({ ticker: String(i), chain: String(Math.floor(i / 8)) }));
 for (const width of [240, 375, 960, 1600]) {
@@ -35,6 +40,8 @@ for (const days of [1, 3, 5, 10, 20]) {
   const base = bars[20 - days].c;
   const expected = { o: bars[21 - days].o, h: 130, l: bars[21 - days].l, c: 125 };
   for (const key of Object.keys(expected)) assert.ok(Math.abs(result[key] - (expected[key] / base - 1) * 100) < 1e-9);
+  const expectedMetrics = [expected.h / expected.l - 1, expected.c / expected.o - 1, expected.h / expected.o - 1, expected.c / expected.l - 1];
+  metrics(result).forEach((value, i) => assert.ok(Math.abs(value - expectedMetrics[i] * 100) < 1e-9, 'period metrics use aggregated OHLC'));
   assert.equal(result.start, bars[21 - days].t);
   assert.equal(result.end, bars[20].t);
 }
@@ -52,6 +59,7 @@ for (const map of new Set(Object.values(groups).map(g => g.meta.map))) {
   const { document } = parseHTML(html);
   const button = document.getElementById('tab-btn-volatility-candles');
   assert.ok(button, map);
+  assert.ok(button.textContent.includes('변동성 측정'), map + ': renamed measurement tab');
   assert.equal(document.getElementById('tab-btn-momentum').nextElementSibling, button, map + ': tab order');
   assert.ok(document.querySelector('#tab-volatility-candles #mm-volatility'), map + ': standalone panel');
   assert.equal(document.querySelector('#tab-momentum #mm-volatility'), null);

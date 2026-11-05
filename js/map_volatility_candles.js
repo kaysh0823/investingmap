@@ -117,6 +117,38 @@ var lastOpts = null;
     }
   }
 
+  function volatilityMetrics(bar) {
+    if (!bar) return null;
+    // Convert normalized prices back to ratios; differences alone are % points.
+    function change(from, to) { return ((100 + to) / (100 + from) - 1) * 100; }
+    return [change(bar.l, bar.h), change(bar.o, bar.c), change(bar.o, bar.h), change(bar.l, bar.c)];
+  }
+
+  function metricLabels(en) {
+    return en ? ['Low → High', 'Open → Close', 'Open → High', 'Low → Close'] : ['고가−저가', '시가→종가', '시가→고가', '저가→종가'];
+  }
+
+  function appendMetrics(panel, rows, en) {
+    var note = document.createElement('p'); note.style.cssText = 'font-size:11px;color:#94a3b8;line-height:1.7';
+    note.textContent = en ? 'Selected period · Range = (High / Low − 1) × 100; other changes = (End / Start − 1) × 100. During trading, Close means latest price.' : '선택 기간 기준 · 고가−저가 = (고가 ÷ 저가 − 1) × 100 · 나머지는 (도착 가격 ÷ 시작 가격 − 1) × 100 · 장중 종가는 현재가입니다.';
+    panel.appendChild(note);
+    var wrapper = document.createElement('div'); wrapper.style.cssText = 'overflow-x:auto'; panel.appendChild(wrapper);
+    var table = document.createElement('table'); table.style.cssText = 'width:100%;border-collapse:collapse;font-size:12px'; wrapper.appendChild(table);
+    var head = table.createTHead().insertRow();
+    [en ? 'Company / period' : '종목 / 기간'].concat(metricLabels(en)).forEach(function (label) { var th = document.createElement('th'); th.textContent = label; th.scope = 'col'; th.style.cssText = 'padding:10px 8px;text-align:right;white-space:nowrap'; head.appendChild(th); });
+    var body = table.createTBody(), chain = null;
+    rows.forEach(function (r) {
+      var c = r.company, key = c.chain || (en ? 'Other' : '기타');
+      if (chain !== key) { chain = key; var group = body.insertRow(); var th = document.createElement('th'); th.colSpan = 5; th.scope = 'rowgroup'; th.textContent = key; th.style.cssText = 'padding:12px 8px;text-align:left;background:var(--surface2,#1e293b);color:#a5b4fc'; group.appendChild(th); }
+      var tr = body.insertRow(), name = document.createElement('th'); name.scope = 'row'; name.style.cssText = 'padding:10px 8px;text-align:left;border-bottom:1px solid var(--border,#334155)';
+      name.textContent = (en && c.nameEn ? c.nameEn : c.name || c.nameKo || c.ticker) + ' (' + c.ticker + ')';
+      if (r.bar) { var date = document.createElement('small'); date.style.cssText = 'display:block;color:#94a3b8;font-weight:normal'; date.textContent = r.bar.start + ' ~ ' + r.bar.end; name.appendChild(date); }
+      tr.appendChild(name);
+      var values = volatilityMetrics(r.bar);
+      for (var i = 0; i < 4; i++) { var td = tr.insertCell(); td.style.cssText = 'padding:10px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--border,#334155);font-variant-numeric:tabular-nums'; td.textContent = values ? (i === 1 && values[i] > 0 ? '+' : '') + values[i].toFixed(2) + '%' : '—'; if (values && i === 1 && values[i] !== 0) td.style.color = values[i] > 0 ? '#22c55e' : '#ef4444'; }
+    });
+  }
+
   function drawVolatility(opts) {
     var panel = document.getElementById('mm-volatility');
     if (!panel) return;
@@ -128,7 +160,7 @@ var lastOpts = null;
     });
     companies.sort(function (a, b) { return String(a.chain || '기타').localeCompare(String(b.chain || '기타'), 'ko'); });
     panel.replaceChildren();
-    var title = document.createElement('h3'); title.textContent = en ? 'Volatility candles' : '변동성 캔들'; panel.appendChild(title);
+    var title = document.createElement('h3'); title.textContent = en ? 'Volatility measurement' : '변동성 측정'; panel.appendChild(title);
     var filters = document.createElement('div'); filters.className = 'mm-mode-tabs'; panel.appendChild(filters);
     [1, 3, 5, 10, 20].forEach(function (days) {
       var button = document.createElement('button'); button.className = 'mm-mode-tab'; button.type = 'button';
@@ -172,7 +204,7 @@ var lastOpts = null;
     var y = d3.scaleLinear().domain([-extent, extent]).nice().range([plotBottom, 22]);
     var detailBox = document.createElement('div'); detailBox.setAttribute('aria-live', 'polite');
     detailBox.style.cssText = 'min-height:36px;font-size:12px;line-height:1.6;padding:6px 0;white-space:pre-wrap;color:var(--text,#cbd5e1)';
-    detailBox.textContent = en ? 'Hover a candle to see its company and OHLC.' : '캔들 위에 마우스를 올리면 종목명과 시가·고가·저가·종가를 확인할 수 있습니다.';
+    detailBox.textContent = en ? 'OHLC BAR: vertical = high/low · left tick = open · right tick = close. Hover for details.' : 'OHLC BAR: 세로선은 고가·저가, 왼쪽 눈금은 시가, 오른쪽 눈금은 종가입니다. 마우스를 올려 상세 정보를 확인하세요.';
     panel.appendChild(detailBox);
     bands.forEach(function (band) {
     var w = Math.max(60, width - 58);
@@ -203,8 +235,10 @@ var lastOpts = null;
       if (bar) {
         var color = bar.c >= bar.o ? '#22c55e' : '#ef4444';
         g.append('line').attr('x1', x).attr('x2', x).attr('y1', y(bar.h)).attr('y2', y(bar.l)).attr('stroke', color).attr('stroke-width', 2);
-        g.append('rect').attr('x', x - bodyWidth / 2).attr('width', bodyWidth).attr('y', Math.min(y(bar.o), y(bar.c))).attr('height', Math.max(2, Math.abs(y(bar.o) - y(bar.c)))).attr('fill', color);
+        g.append('line').attr('class', 'ohlc-open').attr('x1', x - bodyWidth / 2).attr('x2', x).attr('y1', y(bar.o)).attr('y2', y(bar.o)).attr('stroke', color).attr('stroke-width', 2);
+        g.append('line').attr('class', 'ohlc-close').attr('x1', x).attr('x2', x + bodyWidth / 2).attr('y1', y(bar.c)).attr('y2', y(bar.c)).attr('stroke', color).attr('stroke-width', 2);
         detail += '\n' + bar.start + ' ~ ' + bar.end + '\n' + (en ? ['Open', 'High', 'Low', 'Close'] : ['시가', '고가', '저가', '종가']).map(function (label, n) { return label + ': ' + [bar.o, bar.h, bar.l, bar.c][n].toFixed(2) + '%'; }).join('\n');
+        detail += '\n' + volatilityMetrics(bar).map(function (value, n) { return metricLabels(en)[n] + ': ' + value.toFixed(2) + '%'; }).join('\n');
       } else {
         g.append('text').attr('x', x).attr('y', y(0) - 8).attr('fill', '#64748b').attr('text-anchor', 'middle').text('—');
       }
@@ -217,6 +251,7 @@ var lastOpts = null;
       g.on('click', select).on('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); select(); } });
     });
     });
+    appendMetrics(panel, rows, en);
     pumpVolatility();
   }
 
@@ -244,5 +279,5 @@ function render(opts) {
     if (lastOpts && !document.hidden && target && target.getClientRects().length) drawVolatility(lastOpts);
   }, 35000);
 }
-global.InvestingMapVolatilityCandles = { render: render, _test: { volatilityBar: volatilityBar, candleRows: candleRows } };
+global.InvestingMapVolatilityCandles = { render: render, _test: { volatilityBar: volatilityBar, candleRows: candleRows, volatilityMetrics: volatilityMetrics } };
 })(typeof window !== 'undefined' ? window : globalThis);
