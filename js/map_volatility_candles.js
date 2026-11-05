@@ -128,14 +128,36 @@ var lastOpts = null;
     return en ? ['Low → High', 'Open → Close', 'Open → High', 'Low → Close'] : ['고가−저가', '시가→종가', '시가→고가', '저가→종가'];
   }
 
+  function metricScales(rows) {
+    var scales = [0, 0, 0, 0];
+    rows.forEach(function (row) {
+      var values = volatilityMetrics(row.bar);
+      if (values) values.forEach(function (value, i) { scales[i] = Math.max(scales[i], Math.abs(value)); });
+    });
+    return scales.map(function (value) { return Math.max(1, Math.ceil(value)); });
+  }
+
+  function metricBarGeometry(value, extent, signed) {
+    var size = Math.min(1, Math.abs(value) / Math.max(1, extent)) * (signed ? 50 : 100);
+    return { left: signed ? value < 0 ? 50 - size : 50 : 0, width: size };
+  }
+
   function appendMetrics(panel, rows, en) {
+    var heading = document.createElement('h4'); heading.textContent = en ? 'Compare volatility by company' : '종목별 변동성 비교'; heading.style.cssText = 'margin:18px 0 6px;font-size:14px'; panel.appendChild(heading);
     var note = document.createElement('p'); note.style.cssText = 'font-size:11px;color:#94a3b8;line-height:1.7';
     note.textContent = en ? 'Selected period · Range = (High / Low − 1) × 100; other changes = (End / Start − 1) × 100. During trading, Close means latest price.' : '선택 기간 기준 · 고가−저가 = (고가 ÷ 저가 − 1) × 100 · 나머지는 (도착 가격 ÷ 시작 가격 − 1) × 100 · 장중 종가는 현재가입니다.';
     panel.appendChild(note);
+    var legend = document.createElement('p'); legend.style.cssText = 'font-size:11px;color:#94a3b8;line-height:1.7'; legend.textContent = en ? 'Longer bar = larger change · Shared scale within each column · Open → Close: left = decline, right = rise · — = insufficient data' : '막대가 길수록 큰 변동 · 같은 열은 모든 종목에 동일한 눈금 · 시가→종가: 왼쪽 하락 / 오른쪽 상승 · —는 데이터 부족'; panel.appendChild(legend);
+    var scales = metricScales(rows);
     var wrapper = document.createElement('div'); wrapper.style.cssText = 'overflow-x:auto'; panel.appendChild(wrapper);
-    var table = document.createElement('table'); table.style.cssText = 'width:100%;border-collapse:collapse;font-size:12px'; wrapper.appendChild(table);
+    var table = document.createElement('table'); table.className = 'mm-metric-comparison'; table.style.cssText = 'width:100%;min-width:560px;table-layout:fixed;border-collapse:collapse;font-size:12px'; wrapper.appendChild(table);
     var head = table.createTHead().insertRow();
-    [en ? 'Company / period' : '종목 / 기간'].concat(metricLabels(en)).forEach(function (label) { var th = document.createElement('th'); th.textContent = label; th.scope = 'col'; th.style.cssText = 'padding:10px 8px;text-align:right;white-space:nowrap'; head.appendChild(th); });
+    [en ? 'Company / period' : '종목 / 기간'].concat(metricLabels(en)).forEach(function (label, index) {
+      var th = document.createElement('th'); th.textContent = label; th.scope = 'col'; th.style.cssText = 'padding:10px 8px;text-align:left;white-space:nowrap;background:var(--surface,#101722)';
+      if (index === 0) th.style.width = '28%';
+      else { var scale = document.createElement('small'); scale.style.cssText = 'display:block;color:#94a3b8;font-weight:normal;margin-top:5px'; scale.textContent = index === 2 ? '−' + scales[index - 1] + '% / 0 / +' + scales[index - 1] + '%' : '0 ~ ' + scales[index - 1] + '%'; th.appendChild(scale); }
+      head.appendChild(th);
+    });
     var body = table.createTBody(), chain = null;
     rows.forEach(function (r) {
       var c = r.company, key = c.chain || (en ? 'Other' : '기타');
@@ -145,7 +167,16 @@ var lastOpts = null;
       if (r.bar) { var date = document.createElement('small'); date.style.cssText = 'display:block;color:#94a3b8;font-weight:normal'; date.textContent = r.bar.start + ' ~ ' + r.bar.end; name.appendChild(date); }
       tr.appendChild(name);
       var values = volatilityMetrics(r.bar);
-      for (var i = 0; i < 4; i++) { var td = tr.insertCell(); td.style.cssText = 'padding:10px 8px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--border,#334155);font-variant-numeric:tabular-nums'; td.textContent = values ? (i === 1 && values[i] > 0 ? '+' : '') + values[i].toFixed(2) + '%' : '—'; if (values && i === 1 && values[i] !== 0) td.style.color = values[i] > 0 ? '#22c55e' : '#ef4444'; }
+      for (var i = 0; i < 4; i++) {
+        var td = tr.insertCell(); td.style.cssText = 'padding:10px 8px;border-bottom:1px solid var(--border,#334155);font-variant-numeric:tabular-nums';
+        if (!values) { td.textContent = '—'; continue; }
+        var color = i === 1 ? values[i] > 0 ? '#22c55e' : values[i] < 0 ? '#ef4444' : '#94a3b8' : ['#818cf8', '', '#fbbf24', '#38bdf8'][i];
+        var value = document.createElement('span'); value.textContent = (i === 1 && values[i] > 0 ? '+' : '') + values[i].toFixed(2) + '%'; value.style.cssText = 'display:block;text-align:right;margin-bottom:6px;color:' + color; td.appendChild(value);
+        var track = document.createElement('div'); track.className = 'mm-metric-track'; track.setAttribute('aria-hidden', 'true'); track.style.cssText = 'position:relative;height:12px;background:var(--surface2,#1e293b);border-radius:3px;overflow:hidden'; td.appendChild(track);
+        var geometry = metricBarGeometry(values[i], scales[i], i === 1);
+        var fill = document.createElement('div'); fill.style.cssText = 'position:absolute;top:2px;height:8px;border-radius:2px;background:' + color + ';left:' + geometry.left + '%;width:' + geometry.width + '%'; track.appendChild(fill);
+        var zero = document.createElement('div'); zero.style.cssText = 'position:absolute;top:0;bottom:0;width:1px;background:#94a3b8;left:' + (i === 1 ? 50 : 0) + '%'; track.appendChild(zero);
+      }
     });
   }
 
@@ -279,5 +310,5 @@ function render(opts) {
     if (lastOpts && !document.hidden && target && target.getClientRects().length) drawVolatility(lastOpts);
   }, 35000);
 }
-global.InvestingMapVolatilityCandles = { render: render, _test: { volatilityBar: volatilityBar, candleRows: candleRows, volatilityMetrics: volatilityMetrics } };
+global.InvestingMapVolatilityCandles = { render: render, _test: { volatilityBar: volatilityBar, candleRows: candleRows, volatilityMetrics: volatilityMetrics, metricScales: metricScales, metricBarGeometry: metricBarGeometry } };
 })(typeof window !== 'undefined' ? window : globalThis);
