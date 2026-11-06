@@ -100,7 +100,7 @@ assert.deepEqual(
   [4, 13, 26, 52],
   'weekly price MA periods are 4/13/26/52',
 );
-assert.equal(indicators.DISP_MA_PERIOD, 50, 'disparity keeps a fixed 50-bar SMA');
+assert.ok(!source.includes('dispSeries'), 'disparity is removed');
 assert.equal(indicators.maLabel(13), 'MA13', 'MA labels are period-dynamic');
 assert.ok(source.includes('function maLabel(period)'), 'maLabel helper exists');
 assert.ok(source.includes('title: maLabel(maPeriods[0])'), 'fast MA series title is dynamic');
@@ -204,6 +204,20 @@ assert.equal(maPanel.ma20Line.length, 1, 'MA20 starts on the twentieth bar');
 assert.equal(maPanel.byTime['2026-02-20'].ma5, 18, 'MA5 crosshair value');
 assert.equal(maPanel.byTime['2026-02-20'].ma20, 10.5, 'MA20 crosshair value');
 
+// Each BBW needs its own band period plus a complete trailing normalization window.
+const bbwBars = Array.from({ length: 180 }, (_, i) => ({
+  t: new Date(Date.UTC(2025, 0, i + 1)).toISOString().slice(0, 10),
+  o: 100 + i, h: 102 + i, l: 98 + i, c: 100 + i + Math.sin(i) * 5, v: 100,
+}));
+const bbwPanel = indicators.buildPanelData(indicators.normalizeBars(bbwBars), '5y', 'daily');
+for (const [key, period, window] of [['bbw', 20, 125], ['bbw10', 10, 50], ['bbw5', 5, 20]]) {
+  const line = bbwPanel[key + 'Line'];
+  assert.equal(line[0].time, bbwBars[period + window - 2].t, key + ' warmup');
+  assert.ok(line.every(p => p.value >= 0 && p.value <= 100), key + ' stays in 0–100');
+  assert.equal(bbwPanel.byTime[line.at(-1).time][key], line.at(-1).value, key + ' tooltip value');
+}
+assert.ok(!('dispLine' in bbwPanel), 'panel omits disparity');
+
 const investorBars = [];
 for (let i = 0; i < 30; i++) {
   const base = i >= 20 ? i : null;
@@ -253,7 +267,7 @@ const investorPanel5 = indicators.buildPanelData(
 );
 assert.equal(investorPanel10.instOscLine.length, 10, 'daily investor instOsc10 lines skip null warmup');
 assert.equal(investorPanel5.instOscLine.length, 10, 'daily investor instOsc5 lines skip null warmup');
-assert.equal(investorPanel10.foreignRatioBars.length, 10, 'daily foreignRatio histogram bars on OSC pane');
+assert.equal(investorPanel10.foreignRatioBars.length, 10, 'daily foreignRatio histogram bars on credit pane');
 assert.equal(
   investorPanel10.byTime['2026-02-21'].foreignRatio,
   45,
@@ -706,11 +720,11 @@ for (const rel of MAP_FILES) {
   assert.ok(html.includes('candle_modal.js'), `${rel} must reference candle_modal.js`);
 }
 
-assert.ok(source.includes("priceScaleId: 'fr'"), 'foreignRatio uses overlay scale fr');
+assert.ok(source.includes("priceScaleId: 'left'"), 'foreignRatio uses overlay scale fr');
 assert.ok(source.includes('im-candle-hovertip'), 'floating hover tip element');
 assert.ok(source.includes('updateHoverTip'), 'updateHoverTip helper');
 assert.ok(
-  /labels\.bbw[\s\S]*labels\.disp[\s\S]*labels\.range/.test(source.slice(source.indexOf('function updateHoverTip'))),
+  /labels\.bbw[\s\S]*labels\.bbw10[\s\S]*labels\.bbw5[\s\S]*labels\.range/.test(source.slice(source.indexOf('function updateHoverTip'))),
   'hovertip includes bbw/disp/range rows',
 );
 {
@@ -788,3 +802,8 @@ assert.ok(
 }
 
 console.log('verify:candle OK — credit ratio daily/weekly, ATR3, 2Y default, session OHLV, investor filters, navigation and close-jump guard');
+
+assert.match(source.slice(source.indexOf('var foreignRatioSeries = chart.addSeries('), source.indexOf('foreignRatioSeries.setData')), /PANE_INDEX\.credit/, 'foreign ownership belongs to the credit pane');
+assert.match(source, /spec\.key === 'credit'[\s\S]{0,80}priceScale\('left'\)/, 'foreign ownership overlay scale follows the credit pane');
+
+assert.ok(source.indexOf('var frgnOscSeries =') < source.indexOf('var foreignRatioSeries ='), 'OSC pane must exist before adding the foreign ownership credit pane');

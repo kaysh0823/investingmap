@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v5 + /api/ticker_ohlc.
- * One chart, seven native panes (price / volume / MACD / investor OSC / credit balance % / BBW%·DISP% / 5D range vol% · ATR3%).
+ * One chart, seven native panes (price / volume / MACD / investor OSC / credit balance % / BBW% (20/125 · 10/50 · 5/20) / 5D range vol% · ATR3%).
  * The panes share a single time scale, so their x axes align by construction.
  */
 (function (global) {
@@ -52,12 +52,10 @@
     { daily: 50, weekly: 26, color: '#e3b341', slot: 'ma50', hideLast: false },
     { daily: 120, weekly: 52, color: '#58a6ff', slot: 'ma120', hideLast: false },
   ];
-  /** Disparity% stays on a fixed 50-bar SMA of the active series (not the weekly MA26 slot). */
-  var DISP_MA_PERIOD = 50;
   var MA_VOL = 20;
   var BB_PERIOD = 20;
   var BB_MULT = 2;
-  /** Trailing min/max window for BBW% and DISP% normalization (not MA periods). */
+  /** Trailing min/max window for the 20-period BBW% normalization (not MA periods). */
   var NORM_WINDOW = 125;
   var MACD_FAST = 12;
   var MACD_SLOW = 26;
@@ -128,8 +126,9 @@
       closePx: '종가',
       volume: '거래량',
       vma20: 'VMA20',
-      bbw: 'BBW%',
-      disp: '이격도%',
+      bbw: 'BBW% 20/125',
+      bbw10: 'BBW% 10/50',
+      bbw5: 'BBW% 5/20',
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
@@ -144,12 +143,12 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
-      paneInvestorTpl: '투자자 OSC · 기관·외국인·보유비율 · 누적 {CUM}{UNIT} / 기준 {PER}{UNIT} (0~100)',
+      paneInvestorTpl: '투자자 OSC · 기관·외국인 · 누적 {CUM}{UNIT} / 기준 {PER}{UNIT} (0~100)',
       paneInvestorUnitDay: '일',
       investorFlow: '기관 및 외국인 수급',
       paneInvestorUnitWeek: '주',
-      paneCredit: '신용잔고율 (신용잔고/시총, %) · T+2 공시',
-      paneNorm: 'BBW% · 이격도% (125일)',
+      paneCredit: '외국인 보유비율(%) · 신용잔고율(%, T+2)',
+      paneNorm: 'BBW% (20/125 · 10/50 · 5/20)',
       paneRange: '5일 변동성(고저/종가)% · ATR3/종가%',
       liveSession: '장중(현재가)',
       closeOnly: '종가만',
@@ -181,8 +180,9 @@
       closePx: 'Close',
       volume: 'Volume',
       vma20: 'VMA20',
-      bbw: 'BBW%',
-      disp: 'DISP%',
+      bbw: 'BBW% 20/125',
+      bbw10: 'BBW% 10/50',
+      bbw5: 'BBW% 5/20',
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
@@ -197,12 +197,12 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
-      paneInvestorTpl: 'Investor OSC · Inst·Frgn·Hold% · cum {CUM}{UNIT} / base {PER}{UNIT} (0-100)',
+      paneInvestorTpl: 'Investor OSC · Inst·Frgn% · cum {CUM}{UNIT} / base {PER}{UNIT} (0-100)',
       paneInvestorUnitDay: 'd',
       investorFlow: 'Inst & foreign flow',
       paneInvestorUnitWeek: 'w',
-      paneCredit: 'Credit balance / mcap (%) · published T+2',
-      paneNorm: 'BBW% · DISP% (125d)',
+      paneCredit: 'Foreign hold % · Credit balance / mcap % (T+2)',
+      paneNorm: 'BBW% (20/125 · 10/50 · 5/20)',
       paneRange: '5D Range Vol% · ATR3/Close%',
       liveSession: 'Live (last)',
       closeOnly: 'Close only',
@@ -308,7 +308,7 @@
   }
 
   /**
-   * Normalize a series to 0..100 with a PAST-only trailing window (shared by BBW% / DISP%).
+   * Normalize a series to 0..100 with a PAST-only trailing window (used by all three BBW% lines).
    * At each i: use values[i-window+1 .. i] (never future bars).
    * pct_i = (values_i - min) / (max - min) * 100. Requires `window` finite values in range.
    */
@@ -351,17 +351,6 @@
   }
 
   /** Close / MA50 × 100 (null until MA50 is ready). */
-  function disparityFromMa(closes, ma) {
-    var out = new Array(closes.length);
-    for (var i = 0; i < closes.length; i++) {
-      out[i] = null;
-      var c = closes[i];
-      var m = ma[i];
-      if (c == null || !isFinite(c) || m == null || !isFinite(m) || !(m > 0)) continue;
-      out[i] = (c / m) * 100;
-    }
-    return out;
-  }
 
   /**
    * Trailing EMA (SMA-seeded). Gaps reset the seed; warmup left as null.
@@ -1580,9 +1569,8 @@
     var vma20 = sma(vols, MA_VOL);
     var bb = bollinger(closes, BB_PERIOD, BB_MULT);
     var bbwPct = trailingMinMaxNorm(bb.width, NORM_WINDOW);
-    var disparityMa = sma(closes, DISP_MA_PERIOD);
-    var disparity = disparityFromMa(closes, disparityMa);
-    var dispPct = trailingMinMaxNorm(disparity, NORM_WINDOW);
+    var bbw10Pct = trailingMinMaxNorm(bollinger(closes, 10, BB_MULT).width, 50);
+    var bbw5Pct = trailingMinMaxNorm(bollinger(closes, 5, BB_MULT).width, 20);
     var macdPack = macd(closes, MACD_FAST, MACD_SLOW, MACD_SIGNAL);
     var rangePack = rangeVolPercent(fullBars, RANGE_PERIOD, RANGE_SIGNAL);
     var atrPct = atrPercent(fullBars, ATR_PERIOD);
@@ -1608,7 +1596,8 @@
     var foreignRatioBars = [];
     var creditLine = [];
     var bbwLine = [];
-    var dispLine = [];
+    var bbw10Line = [];
+    var bbw5Line = [];
     var rangeLine = [];
     var atrLine = [];
     var byTime = Object.create(null);
@@ -1656,7 +1645,8 @@
       var cr = oscNum(b.creditRatio);
       if (cr != null) creditLine.push({ time: b.t, value: cr });
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
-      if (dispPct[i] != null && isFinite(dispPct[i])) dispLine.push({ time: b.t, value: dispPct[i] });
+      if (bbw10Pct[i] != null && isFinite(bbw10Pct[i])) bbw10Line.push({ time: b.t, value: bbw10Pct[i] });
+      if (bbw5Pct[i] != null && isFinite(bbw5Pct[i])) bbw5Line.push({ time: b.t, value: bbw5Pct[i] });
       if (rangePack.value[i] != null && isFinite(rangePack.value[i])) {
         rangeLine.push({ time: b.t, value: rangePack.value[i] });
       }
@@ -1678,7 +1668,8 @@
         macdSignal: macdPack.signal[i],
         macdHist: macdPack.hist[i],
         bbw: bbwPct[i],
-        disp: dispPct[i],
+        bbw10: bbw10Pct[i],
+        bbw5: bbw5Pct[i],
         range: rangePack.value[i],
         atr: atrPct[i],
         live: !!b.live,
@@ -1727,7 +1718,8 @@
       foreignRatioBars: foreignRatioBars,
       creditLine: creditLine,
       bbwLine: bbwLine,
-      dispLine: dispLine,
+      bbw10Line: bbw10Line,
+      bbw5Line: bbw5Line,
       rangeLine: rangeLine,
       atrLine: atrLine,
       byTime: byTime,
@@ -1810,8 +1802,11 @@
     if (typeof b.bbw === 'number' && isFinite(b.bbw)) {
       html += hoverTipRow(labels.bbw, fmtNum(b.bbw, 1) + '%');
     }
-    if (typeof b.disp === 'number' && isFinite(b.disp)) {
-      html += hoverTipRow(labels.disp, fmtNum(b.disp, 1) + '%');
+    if (typeof b.bbw10 === 'number' && isFinite(b.bbw10)) {
+      html += hoverTipRow(labels.bbw10, fmtNum(b.bbw10, 1) + '%');
+    }
+    if (typeof b.bbw5 === 'number' && isFinite(b.bbw5)) {
+      html += hoverTipRow(labels.bbw5, fmtNum(b.bbw5, 1) + '%');
     }
     if (typeof b.range === 'number' && isFinite(b.range)) {
       html += hoverTipRow(labels.range, fmtNum(b.range, 2) + '%');
@@ -1932,9 +1927,13 @@
       ' ' +
       fmtNum(b.bbw, 1) +
       ' · ' +
-      labels.disp +
+      labels.bbw10 +
       ' ' +
-      fmtNum(b.disp, 1) +
+      fmtNum(b.bbw10, 1) +
+      ' · ' +
+      labels.bbw5 +
+      ' ' +
+      fmtNum(b.bbw5, 1) +
       ' · ' +
       labels.range +
       ' ' +
@@ -2132,12 +2131,28 @@
     var macdSignalSeries = addLine('macd', { color: '#f778ba', title: 'Signal' });
     macdSignalSeries.setData(data.macdSignalLine);
 
-    // Foreign ratio histogram behind OSC lines — own overlay scale so range zooms to data.
+    var instOscSeries = addInvestorOscLine('investor', { color: '#e3b341', title: t().instOsc });
+    instOscSeries.setData(data.instOscLine || []);
+    for (var li = 0; li < INVESTOR_OSC_LEVELS.length; li++) {
+      instOscSeries.createPriceLine({
+        price: INVESTOR_OSC_LEVELS[li],
+        color: 'rgba(139,148,158,0.35)',
+        lineWidth: 1,
+        lineStyle: 2,
+        axisLabelVisible: false,
+        title: '',
+      });
+    }
+
+    var frgnOscSeries = addInvestorOscLine('investor', { color: '#58a6ff', title: t().frgnOsc });
+    frgnOscSeries.setData(data.frgnOscLine || []);
+
+    // Foreign ownership shares the credit pane, with an independent overlay scale.
     var foreignRatioSeries = chart.addSeries(
       LWC.HistogramSeries,
       {
         color: 'rgba(126,231,135,0.28)',
-        priceScaleId: 'fr',
+        priceScaleId: 'left',
         priceLineVisible: false,
         lastValueVisible: true,
         base: 0,
@@ -2162,25 +2177,9 @@
           };
         },
       },
-      PANE_INDEX.investor,
+      PANE_INDEX.credit,
     );
     foreignRatioSeries.setData(data.foreignRatioBars || []);
-
-    var instOscSeries = addInvestorOscLine('investor', { color: '#e3b341', title: t().instOsc });
-    instOscSeries.setData(data.instOscLine || []);
-    for (var li = 0; li < INVESTOR_OSC_LEVELS.length; li++) {
-      instOscSeries.createPriceLine({
-        price: INVESTOR_OSC_LEVELS[li],
-        color: 'rgba(139,148,158,0.35)',
-        lineWidth: 1,
-        lineStyle: 2,
-        axisLabelVisible: false,
-        title: '',
-      });
-    }
-
-    var frgnOscSeries = addInvestorOscLine('investor', { color: '#58a6ff', title: t().frgnOsc });
-    frgnOscSeries.setData(data.frgnOscLine || []);
 
     var creditSeries = addLine('credit', {
       color: '#f778ba',
@@ -2189,11 +2188,13 @@
     });
     creditSeries.setData(data.creditLine || []);
 
-    var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW%' });
+    var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW% 20/125' });
     bbwSeries.setData(data.bbwLine);
 
-    var dispSeries = addLine('norm', { color: '#39c5cf', title: 'DISP%' });
-    dispSeries.setData(data.dispLine);
+    var bbw10Series = addLine('norm', { color: '#39c5cf', title: 'BBW% 10/50' });
+    bbw10Series.setData(data.bbw10Line);
+    var bbw5Series = addLine('norm', { color: '#c297ff', title: 'BBW% 5/20' });
+    bbw5Series.setData(data.bbw5Line);
 
     var rangeSeries = addLine('range', {
       color: '#a371f7',
@@ -2236,7 +2237,8 @@
       foreignRatio: foreignRatioSeries,
       credit: creditSeries,
       bbw: bbwSeries,
-      disp: dispSeries,
+      bbw10: bbw10Series,
+      bbw5: bbw5Series,
       range: rangeSeries,
       atr: atrSeries,
     };
@@ -2284,9 +2286,10 @@
       try {
         panes[i].priceScale('right').applyOptions(scaleOptions);
       } catch (eScale) {}
-      if (spec.key === 'investor') {
+      if (spec.key === 'credit') {
         try {
-          panes[i].priceScale('fr').applyOptions({
+          panes[i].priceScale('left').applyOptions({
+            visible: true,
             scaleMargins: { top: 0.12, bottom: 0.06 },
             borderVisible: false,
           });
@@ -2837,7 +2840,6 @@
       bollinger: bollinger,
       trailingMinMaxNorm: trailingMinMaxNorm,
       bandwidthPercentile: bandwidthPercentile,
-      disparityFromMa: disparityFromMa,
       macd: macd,
       rangeVolPercent: rangeVolPercent,
       atrPercent: atrPercent,
@@ -2853,7 +2855,6 @@
       priceMaPeriods: priceMaPeriods,
       maLabel: maLabel,
       PRICE_MA_SPECS: PRICE_MA_SPECS,
-      DISP_MA_PERIOD: DISP_MA_PERIOD,
       NORM_WINDOW: NORM_WINDOW,
     },
   };
