@@ -25,8 +25,7 @@ import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 import { pricePhase } from '../lib/session_price_policy.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-// Invalidate responses cached before the 2026-10-29 through 11-03 ownership repair.
-const CACHE_BASE = '/api/ticker_ohlc/cache/v29';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v30';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {
@@ -89,7 +88,7 @@ export async function onRequest(context) {
   const config = getSupabaseConfig(env);
   let lastSig = 'none';
   let adjSig = 'adj-none';
-  let invSig = 'inv-v10-none';
+  let invSig = 'inv-v11-none';
   let quoteBasis = null;
   const tSig0 = Date.now();
   if (config) {
@@ -107,7 +106,7 @@ export async function onRequest(context) {
   }
   const sigDur = msSince(tSig0);
 
-  // Signature invalidates when history, adjustments, investor_net, foreign_ratio, or credit_balance depth changes.
+  // Signature invalidates when history, adjustments, or investor_net depth changes.
   const cachePath = `${anchoredCachePath(CACHE_BASE, now)}/${pricePhase(now)}/${quoteBasis?.quoteDate || 'no-close'}/${code}/${range}/${interval}/${lastSig}/${adjSig}/${invSig}`;
   const tCache0 = Date.now();
   const hit = await readHubCache(cachePath, url.origin);

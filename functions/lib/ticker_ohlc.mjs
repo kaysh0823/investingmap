@@ -18,11 +18,9 @@ import {
 } from './price_adjustments.mjs';
 import {
   fetchLatestInvestorNetSignature,
-  loadAndAttachInvestorOsc,
+  loadAndAttachInvestorSupply,
   aggregateDailyBarsToWeekly,
 } from './investor_osc.mjs';
-import { loadAndAttachForeignRatio } from './foreign_ratio.mjs';
-import { loadAndAttachCreditRatio } from './credit_balance.mjs';
 
 export { fetchLatestInvestorNetSignature, fetchPriceAdjustmentsSignature };
 
@@ -199,45 +197,37 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
     const requested = Math.min(pageSize, limit - offset);
     const q =
       `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}` +
-      `&select=trade_date,open,high,low,close,volume` +
+      `&select=trade_date,open,high,low,close,volume,mcap_won` +
       `&order=trade_date.desc&limit=${requested}&offset=${offset}`;
     const page = await fetchSupabaseJson(config, q);
     rows.push(...page);
     if (page.length < requested) break;
   }
   const bars = [];
+  const marketCaps = new Map();
   for (let i = rows.length - 1; i >= 0; i--) {
     const bar = historyRowToBar(rows[i]);
-    if (bar) bars.push(bar);
+    if (bar) {
+      bars.push(bar);
+      marketCaps.set(bar.t, numOrNull(rows[i].mcap_won));
+    }
   }
   const adjustmentRows = await fetchPriceAdjustments(config, ticker, { throwOnError: true });
   const adjustmentBasis = applyTickerOhlcAdjustments(bars, adjustmentRows, now, options.quoteBasis);
   const adjustments = adjustmentBasis.events;
-  if (bars.length) {
-    if (interval === 'weekly') {
-      const dailyFrom = bars[0].t;
-      const weeklyBars = aggregateDailyBarsToWeekly(bars);
-      await loadAndAttachInvestorOsc(config, ticker, weeklyBars, {
-        interval: 'weekly',
-        netFromDate: dailyFrom,
-      });
-      // Week stamp is the last session; attach that day's foreignRatio.
-      await loadAndAttachForeignRatio(config, ticker, weeklyBars);
-      await loadAndAttachCreditRatio(config, ticker, weeklyBars, { weekly: true, fromDate: dailyFrom });
-      const displayWeeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];
-      return {
-        code: ticker,
-        range,
-        interval: 'weekly',
-        displayDays: displayWeeks,
-        bars: weeklyBars,
-        adjusted: adjustments.length > 0,
-        adjustmentBasis,
-      };
-    }
-    await loadAndAttachInvestorOsc(config, ticker, bars);
-    await loadAndAttachForeignRatio(config, ticker, bars);
-    await loadAndAttachCreditRatio(config, ticker, bars);
+  await loadAndAttachInvestorSupply(config, ticker, bars, marketCaps);
+  if (bars.length && interval === 'weekly') {
+    const weeklyBars = aggregateDailyBarsToWeekly(bars);
+    const displayWeeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];
+    return {
+      code: ticker,
+      range,
+      interval: 'weekly',
+      displayDays: displayWeeks,
+      bars: weeklyBars,
+      adjusted: adjustments.length > 0,
+      adjustmentBasis,
+    };
   }
   return {
     code: ticker,
