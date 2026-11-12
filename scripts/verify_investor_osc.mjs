@@ -36,22 +36,20 @@ const bars = Array.from({ length: 165 }, (_, i) => ({
   t: new Date(Date.UTC(2025, 0, i + 1)).toISOString().slice(0, 10),
   c: 100,
 }));
-const marketCaps = new Map(bars.map(({ t }, i) => [t, 1000 + i]));
 const rows = bars.flatMap(({ t }, i) => {
-  const cap = marketCaps.get(t);
-  // Individual nets sum to cap * (i + 1). The excluded codes must have no effect.
+  // Individual nets sum to i + 1 KRW. The excluded codes must have no effect.
   return [
-    ['3000', cap * i],
-    ['3100', -cap],
-    ['6000', 2 * cap],
+    ['3000', i],
+    ['3100', -1],
+    ['6000', 2],
     ['9000', 0],
-    ['9001', 500 * cap],
-    ['2000', 500 * cap],
+    ['9001', 500],
+    ['2000', 500],
   ].map(([invst_tp_cd, net_val]) => ({ trade_date: t, invst_tp_cd, net_val }));
 });
 
 const byDate = groupInvestorNetByDate(rows);
-attachInvestorSupplyToBars(bars, byDate, marketCaps);
+attachInvestorSupplyToBars(bars, byDate);
 assert.equal(bars[22].supplyPercentB, null);
 const expectedPercentB = 0.5 + 47.5 / (4 * Math.sqrt(25 * 399 / 12));
 assert.ok(Math.abs(bars[23].supplyPercentB - expectedPercentB) < 1e-12);
@@ -59,8 +57,8 @@ assert.equal(bars[146].supplyBandwidthRank, null);
 assert.equal(bars[147].supplyBandwidthRank, 50, 'equal widths share the midpoint rank');
 
 const last = bars.at(-1);
-byDate.get(last.t).set('9000', 1000 * marketCaps.get(last.t));
-attachInvestorSupplyToBars(bars, byDate, marketCaps);
+byDate.get(last.t).set('9000', 1000);
+attachInvestorSupplyToBars(bars, byDate);
 assert.equal(last.supplyBandwidthRank, 100, 'largest width ranks at 100');
 assert.ok(last.supplyPercentB > 1, '%B can exceed its upper band');
 const week = aggregateDailyBarsToWeekly(bars).at(-1);
@@ -69,33 +67,30 @@ assert.equal(week.supplyPercentB, last.supplyPercentB);
 assert.equal(week.supplyBandwidthRank, last.supplyBandwidthRank);
 
 byDate.get(last.t).delete('9000');
-attachInvestorSupplyToBars(bars, byDate, marketCaps);
+attachInvestorSupplyToBars(bars, byDate);
 assert.ok(Math.abs(last.supplyPercentB - expectedPercentB) < 1e-12, 'sum available investor categories');
 assert.equal(last.supplyBandwidthRank, 50, 'a missing category does not interrupt the band');
 
 const missingDay = bars[153];
 byDate.delete(missingDay.t);
-attachInvestorSupplyToBars(bars, byDate, marketCaps);
+attachInvestorSupplyToBars(bars, byDate);
 assert.equal(missingDay.supplyPercentB, null, 'an unreported session stays blank');
 assert.equal(missingDay.supplyBandwidthRank, null);
 const nextDay = bars[154];
 assert.ok(Number.isFinite(nextDay.supplyPercentB), '%B resumes on the next reported session');
 assert.ok(Number.isFinite(nextDay.supplyBandwidthRank), 'rank resumes on the next reported session');
 const observedBars = bars.filter(({ t }) => byDate.has(t)).map(({ t }) => ({ t }));
-attachInvestorSupplyToBars(observedBars, byDate, marketCaps);
+attachInvestorSupplyToBars(observedBars, byDate);
 const nextObserved = observedBars.find(({ t }) => t === nextDay.t);
 assert.equal(nextDay.supplyPercentB, nextObserved.supplyPercentB);
 assert.equal(nextDay.supplyBandwidthRank, nextObserved.supplyBandwidthRank);
 
-for (const [date, net] of byDate) {
-  for (const code of ['3000', '3100', '6000', '9000']) net.set(code, marketCaps.get(date));
+for (const net of byDate.values()) {
+  for (const code of ['3000', '3100', '6000', '9000']) net.set(code, 1000);
 }
-attachInvestorSupplyToBars(bars, byDate, marketCaps);
+attachInvestorSupplyToBars(bars, byDate);
 assert.equal(last.supplyPercentB, null, 'a flat band has undefined %B');
 assert.equal(last.supplyBandwidthRank, 50, 'a flat band has a valid width rank');
-marketCaps.set(last.t, 0);
-attachInvestorSupplyToBars(bars, byDate, marketCaps);
-assert.equal(last.supplyBandwidthRank, null, 'a missing or invalid cap leaves a gap');
 
 const ticker = process.argv[2];
 if (ticker) {
