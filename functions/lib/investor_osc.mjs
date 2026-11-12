@@ -15,7 +15,7 @@ export const INVESTOR_OSC_CODES = Object.freeze([
 ]);
 const CUM_WINDOW = 5;
 const BAND_WINDOW = 20;
-const RANK_WINDOW = 125;
+const RANK_WINDOW = 50;
 const SUPPLY_CODE_SET = new Set(INVESTOR_OSC_CODES);
 
 export function groupInvestorNetByDate(rows) {
@@ -32,17 +32,22 @@ export function groupInvestorNetByDate(rows) {
 }
 
 export function attachInvestorSupplyToBars(bars, byDate) {
+  attachBandwidthRank(bars, byDate, INVESTOR_INST_CODES, 'institutionalBandwidthRank');
+  attachBandwidthRank(bars, byDate, [INVESTOR_FRGN_CODE], 'foreignBandwidthRank');
+  return bars;
+}
+
+function attachBandwidthRank(bars, byDate, codes, field) {
   const daily = [];
   const cumulative = [];
   const widths = [];
   for (const bar of bars) {
-    bar.supplyPercentB = null;
-    bar.supplyBandwidthRank = null;
+    bar[field] = null;
     const net = byDate.get(bar.t);
     // KRX category reports can omit individual tickers. Sum the available
     // categories and leave sessions without any usable observation blank.
-    if (!net?.size) continue;
-    const flow = INVESTOR_OSC_CODES.reduce((sum, code) => sum + (net.get(code) ?? 0), 0);
+    if (!net || !codes.some((code) => net.has(code))) continue;
+    const flow = codes.reduce((sum, code) => sum + (net.get(code) ?? 0), 0);
     if (!Number.isFinite(flow)) continue;
     daily.push(flow);
     if (daily.length < CUM_WINDOW) continue;
@@ -56,7 +61,6 @@ export function attachInvestorSupplyToBars(bars, byDate) {
     const mean = band.reduce((sum, value) => sum + value, 0) / BAND_WINDOW;
     const variance = band.reduce((sum, value) => sum + (value - mean) ** 2, 0) / BAND_WINDOW;
     const width = band.every((value) => value === cum) ? 0 : 4 * Math.sqrt(variance);
-    if (width > 0) bar.supplyPercentB = 0.5 + (cum - mean) / width;
     widths.push(width);
 
     const window = widths.slice(-RANK_WINDOW);
@@ -67,10 +71,9 @@ export function attachInvestorSupplyToBars(bars, byDate) {
         if (prior < width) rank += 1;
         else if (prior === width) rank += 0.5;
       }
-      bar.supplyBandwidthRank = (rank * 100) / (RANK_WINDOW - 1);
+      bar[field] = (rank * 100) / (RANK_WINDOW - 1);
     }
   }
-  return bars;
 }
 
 /**
@@ -207,8 +210,8 @@ export function aggregateDailyBarsToWeekly(dailyBars) {
       current.c = bar.c;
       current.v += Number(bar.v) || 0;
     }
-    current.supplyPercentB = bar.supplyPercentB;
-    current.supplyBandwidthRank = bar.supplyBandwidthRank;
+    current.institutionalBandwidthRank = bar.institutionalBandwidthRank;
+    current.foreignBandwidthRank = bar.foreignBandwidthRank;
   }
   if (current) {
     const { key: _k, ...rest } = current;

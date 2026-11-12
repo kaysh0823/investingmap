@@ -118,8 +118,8 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
-      supplyPercentB: '수급 %B (20일)',
-      supplyBandwidthRank: '밴드폭 순위 (125일)',
+      institutionalBandwidthRank: '기관',
+      foreignBandwidthRank: '외국인',
       range: '5일 변동성%',
       atr: 'ATR3/종가%',
       chartLabel: '일봉 차트',
@@ -127,7 +127,7 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
-      paneInvestor: '기관·외국인 수급 · 5일 누적',
+      paneInvestor: '수급 밴드폭 백분위 · 50일',
       paneNorm: 'BBW% (20/125 · 10/50 · 5/20)',
       paneRange: '5일 변동성(고저/종가)% · ATR3/종가%',
       liveSession: '장중(현재가)',
@@ -166,8 +166,8 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
-      supplyPercentB: 'Supply %B (20d)',
-      supplyBandwidthRank: 'Bandwidth rank (125d)',
+      institutionalBandwidthRank: 'Institutional',
+      foreignBandwidthRank: 'Foreign',
       range: '5D Range Vol%',
       atr: 'ATR3/Close%',
       chartLabel: 'Daily chart',
@@ -175,7 +175,7 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
-      paneInvestor: 'Institutional & foreign supply · 5-day cumulative',
+      paneInvestor: 'Supply bandwidth percentile · 50d',
       paneNorm: 'BBW% (20/125 · 10/50 · 5/20)',
       paneRange: '5D Range Vol% · ATR3/Close%',
       liveSession: 'Live (last)',
@@ -488,7 +488,8 @@
         current.live = current.live || !!bar.live;
         current.closeOnly = current.closeOnly && !!bar.closeOnly;
       }
-      if ('supplyPercentB' in bar || 'supplyPercentB' in current) {
+      if ('institutionalBandwidthRank' in bar || 'foreignBandwidthRank' in bar ||
+          'institutionalBandwidthRank' in current || 'foreignBandwidthRank' in current) {
         copyInvestorSupplyFields(bar, current);
       }
     }
@@ -1174,8 +1175,8 @@
   }
 
   function copyInvestorSupplyFields(src, dest) {
-    dest.supplyPercentB = src.supplyPercentB ?? null;
-    dest.supplyBandwidthRank = src.supplyBandwidthRank ?? null;
+    dest.institutionalBandwidthRank = src.institutionalBandwidthRank ?? null;
+    dest.foreignBandwidthRank = src.foreignBandwidthRank ?? null;
   }
 
   function syncPaneLabels() {
@@ -1407,8 +1408,8 @@
     var macdLine = [];
     var macdSignalLine = [];
     var macdHist = [];
-    var supplyPercentBLine = [];
-    var supplyBandwidthRankLine = [];
+    var institutionalBandwidthRankLine = [];
+    var foreignBandwidthRankLine = [];
     var bbwLine = [];
     var bbw10Line = [];
     var bbw5Line = [];
@@ -1444,11 +1445,11 @@
       if (macdPack.signal[i] != null && isFinite(macdPack.signal[i])) {
         macdSignalLine.push({ time: b.t, value: macdPack.signal[i] });
       }
-      supplyPercentBLine.push(
-        b.supplyPercentB == null ? { time: b.t } : { time: b.t, value: b.supplyPercentB },
+      institutionalBandwidthRankLine.push(
+        b.institutionalBandwidthRank == null ? { time: b.t } : { time: b.t, value: b.institutionalBandwidthRank },
       );
-      supplyBandwidthRankLine.push(
-        b.supplyBandwidthRank == null ? { time: b.t } : { time: b.t, value: b.supplyBandwidthRank },
+      foreignBandwidthRankLine.push(
+        b.foreignBandwidthRank == null ? { time: b.t } : { time: b.t, value: b.foreignBandwidthRank },
       );
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (bbw10Pct[i] != null && isFinite(bbw10Pct[i])) bbw10Line.push({ time: b.t, value: bbw10Pct[i] });
@@ -1499,8 +1500,8 @@
       macdLine: macdLine,
       macdSignalLine: macdSignalLine,
       macdHist: macdHist,
-      supplyPercentBLine: supplyPercentBLine,
-      supplyBandwidthRankLine: supplyBandwidthRankLine,
+      institutionalBandwidthRankLine: institutionalBandwidthRankLine,
+      foreignBandwidthRankLine: foreignBandwidthRankLine,
       bbwLine: bbwLine,
       bbw10Line: bbw10Line,
       bbw5Line: bbw5Line,
@@ -1570,8 +1571,8 @@
         fmtNum(b.macd, 2) + ' / ' + fmtNum(b.macdSignal, 2),
       );
     }
-    html += hoverTipRow(labels.supplyPercentB, fmtNum(b.supplyPercentB, 2));
-    html += hoverTipRow(labels.supplyBandwidthRank, fmtNum(b.supplyBandwidthRank, 1));
+    html += hoverTipRow(labels.institutionalBandwidthRank, fmtNum(b.institutionalBandwidthRank, 1));
+    html += hoverTipRow(labels.foreignBandwidthRank, fmtNum(b.foreignBandwidthRank, 1));
     if (typeof b.bbw === 'number' && isFinite(b.bbw)) {
       html += hoverTipRow(labels.bbw, fmtNum(b.bbw, 1) + '%');
     }
@@ -1674,8 +1675,8 @@
       ' ' +
       fmtNum(b.macdHist, 2);
     text +=
-      ' · ' + labels.supplyPercentB + ' ' + fmtNum(b.supplyPercentB, 2) +
-      ' · ' + labels.supplyBandwidthRank + ' ' + fmtNum(b.supplyBandwidthRank, 1);
+      ' · ' + labels.institutionalBandwidthRank + ' ' + fmtNum(b.institutionalBandwidthRank, 1) +
+      ' · ' + labels.foreignBandwidthRank + ' ' + fmtNum(b.foreignBandwidthRank, 1);
     text +=
       ' · ' +
       labels.bbw +
@@ -1863,21 +1864,23 @@
     var macdSignalSeries = addLine('macd', { color: '#f778ba', title: 'Signal' });
     macdSignalSeries.setData(data.macdSignalLine);
 
-    var supplyPercentBSeries = addLine('investor', {
-      color: '#e3b341',
-      title: t().supplyPercentB,
-      priceScaleId: 'left',
-    });
-    supplyPercentBSeries.setData(data.supplyPercentBLine);
+    function supplyRankScale() {
+      return { priceRange: { minValue: 0, maxValue: 100 } };
+    }
 
-    var supplyBandwidthRankSeries = addLine('investor', {
-      color: '#58a6ff',
-      title: t().supplyBandwidthRank,
-      autoscaleInfoProvider: function () {
-        return { priceRange: { minValue: 0, maxValue: 100 } };
-      },
+    var institutionalBandwidthRankSeries = addLine('investor', {
+      color: '#e3b341',
+      title: t().institutionalBandwidthRank,
+      autoscaleInfoProvider: supplyRankScale,
     });
-    supplyBandwidthRankSeries.setData(data.supplyBandwidthRankLine);
+    institutionalBandwidthRankSeries.setData(data.institutionalBandwidthRankLine);
+
+    var foreignBandwidthRankSeries = addLine('investor', {
+      color: '#58a6ff',
+      title: t().foreignBandwidthRank,
+      autoscaleInfoProvider: supplyRankScale,
+    });
+    foreignBandwidthRankSeries.setData(data.foreignBandwidthRankLine);
 
     var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW% 20/125' });
     bbwSeries.setData(data.bbwLine);
@@ -1970,15 +1973,6 @@
       try {
         panes[i].priceScale('right').applyOptions(scaleOptions);
       } catch (eScale) {}
-      if (spec.key === 'investor') {
-        try {
-          panes[i].priceScale('left').applyOptions({
-            visible: true,
-            scaleMargins: PANE_MARGINS.investor,
-            borderVisible: false,
-          });
-        } catch (eFr) {}
-      }
     }
   }
 
