@@ -49,48 +49,40 @@ const rows = bars.flatMap(({ t }, i) => {
 });
 
 const byDate = groupInvestorNetByDate(rows);
+const fields = ['institutionalBandwidthRank', 'foreignBandwidthRank'];
 attachInvestorSupplyToBars(bars, byDate);
-assert.equal(bars[22].supplyPercentB, null);
-const expectedPercentB = 0.5 + 47.5 / (4 * Math.sqrt(25 * 399 / 12));
-assert.ok(Math.abs(bars[23].supplyPercentB - expectedPercentB) < 1e-12);
-assert.equal(bars[146].supplyBandwidthRank, null);
-assert.equal(bars[147].supplyBandwidthRank, 50, 'equal widths share the midpoint rank');
+assert.deepEqual(fields.map((key) => bars[71][key]), [null, null], '50 widths are required');
+assert.deepEqual(fields.map((key) => bars[72][key]), [50, 50], 'tied widths rank at 50');
 
 const last = bars.at(-1);
-byDate.get(last.t).set('9000', 1000);
+const lastNet = byDate.get(last.t);
+lastNet.set('9000', 1000);
 attachInvestorSupplyToBars(bars, byDate);
-assert.equal(last.supplyBandwidthRank, 100, 'largest width ranks at 100');
-assert.ok(last.supplyPercentB > 1, '%B can exceed its upper band');
+assert.equal(last.foreignBandwidthRank, 100, 'largest foreign width ranks at 100');
+assert.equal(last.institutionalBandwidthRank, 50, 'foreign flow cannot affect the institutional rank');
 const week = aggregateDailyBarsToWeekly(bars).at(-1);
 assert.equal(week.t, last.t);
-assert.equal(week.supplyPercentB, last.supplyPercentB);
-assert.equal(week.supplyBandwidthRank, last.supplyBandwidthRank);
+for (const key of fields) assert.equal(week[key], last[key]);
 
-byDate.get(last.t).delete('9000');
+lastNet.delete('9000');
+lastNet.set('6000', 1000);
+lastNet.delete('3100');
 attachInvestorSupplyToBars(bars, byDate);
-assert.ok(Math.abs(last.supplyPercentB - expectedPercentB) < 1e-12, 'sum available investor categories');
-assert.equal(last.supplyBandwidthRank, 50, 'a missing category does not interrupt the band');
+assert.equal(last.institutionalBandwidthRank, 100, 'sum the available institutional categories');
+assert.equal(last.foreignBandwidthRank, null, 'foreign data is missing despite institutional activity');
 
 const missingDay = bars[153];
 byDate.delete(missingDay.t);
 attachInvestorSupplyToBars(bars, byDate);
-assert.equal(missingDay.supplyPercentB, null, 'an unreported session stays blank');
-assert.equal(missingDay.supplyBandwidthRank, null);
+assert.deepEqual(fields.map((key) => missingDay[key]), [null, null], 'unreported session stays blank');
 const nextDay = bars[154];
-assert.ok(Number.isFinite(nextDay.supplyPercentB), '%B resumes on the next reported session');
-assert.ok(Number.isFinite(nextDay.supplyBandwidthRank), 'rank resumes on the next reported session');
 const observedBars = bars.filter(({ t }) => byDate.has(t)).map(({ t }) => ({ t }));
 attachInvestorSupplyToBars(observedBars, byDate);
 const nextObserved = observedBars.find(({ t }) => t === nextDay.t);
-assert.equal(nextDay.supplyPercentB, nextObserved.supplyPercentB);
-assert.equal(nextDay.supplyBandwidthRank, nextObserved.supplyBandwidthRank);
-
-for (const net of byDate.values()) {
-  for (const code of ['3000', '3100', '6000', '9000']) net.set(code, 1000);
+for (const key of fields) {
+  assert.ok(Number.isFinite(nextDay[key]), 'rank resumes on the next reported session');
+  assert.equal(nextDay[key], nextObserved[key]);
 }
-attachInvestorSupplyToBars(bars, byDate);
-assert.equal(last.supplyPercentB, null, 'a flat band has undefined %B');
-assert.equal(last.supplyBandwidthRank, 50, 'a flat band has a valid width rank');
 
 const ticker = process.argv[2];
 if (ticker) {
@@ -98,13 +90,14 @@ if (ticker) {
   assert.ok(config, 'Supabase credentials required for a live check');
   const daily = await fetchTickerOhlcBars(config, ticker, '1y');
   const weekly = await fetchTickerOhlcBars(config, ticker, '1y', { interval: 'weekly' });
-  assert.ok(daily.bars.some((bar) => Number.isFinite(bar.supplyPercentB)), 'live %B data');
-  assert.ok(daily.bars.some((bar) => Number.isFinite(bar.supplyBandwidthRank)), 'live bandwidth rank data');
+  for (const key of fields) {
+    assert.ok(daily.bars.some((bar) => Number.isFinite(bar[key])), 'live daily ' + key);
+    assert.ok(weekly.bars.some((bar) => Number.isFinite(bar[key])), 'live weekly ' + key);
+  }
   const dailyByDate = new Map(daily.bars.map((bar) => [bar.t, bar]));
   for (const bar of weekly.bars) {
     const day = dailyByDate.get(bar.t);
-    assert.equal(bar.supplyPercentB, day.supplyPercentB);
-    assert.equal(bar.supplyBandwidthRank, day.supplyBandwidthRank);
+    for (const key of fields) assert.equal(bar[key], day[key]);
   }
 }
 

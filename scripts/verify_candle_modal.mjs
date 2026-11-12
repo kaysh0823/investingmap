@@ -220,20 +220,20 @@ assert.ok(!('dispLine' in bbwPanel), 'panel omits disparity');
 
 const supplyBars = [
   { t: '2026-02-19', o: 100, h: 101, l: 99, c: 100, v: 1000 },
-  { t: '2026-02-20', o: 100, h: 101, l: 99, c: 100, v: 1000, supplyPercentB: 1.2, supplyBandwidthRank: 0 },
+  { t: '2026-02-20', o: 100, h: 101, l: 99, c: 100, v: 1000, institutionalBandwidthRank: 100, foreignBandwidthRank: 0 },
 ];
 const normalizedSupplyBars = indicators.normalizeBars(supplyBars);
 const supplyPanel = indicators.buildPanelData(normalizedSupplyBars, '1y', 'daily');
-assert.equal(supplyPanel.supplyPercentBLine[0].value, undefined, 'warmup stays blank');
-assert.equal(supplyPanel.supplyPercentBLine[1].value, 1.2, '%B is not clipped');
-assert.equal(supplyPanel.supplyBandwidthRankLine[1].value, 0, 'zero rank is plotted');
-assert.equal(supplyPanel.byTime['2026-02-20'].supplyPercentB, 1.2, 'crosshair uses %B');
-assert.equal(supplyPanel.byTime['2026-02-20'].supplyBandwidthRank, 0, 'crosshair uses rank');
+assert.equal(supplyPanel.institutionalBandwidthRankLine[0].value, undefined, 'warmup stays blank');
+assert.equal(supplyPanel.institutionalBandwidthRankLine[1].value, 100, 'institutional rank is plotted');
+assert.equal(supplyPanel.foreignBandwidthRankLine[1].value, 0, 'zero rank is plotted');
+assert.equal(supplyPanel.byTime['2026-02-20'].institutionalBandwidthRank, 100, 'crosshair uses institutional rank');
+assert.equal(supplyPanel.byTime['2026-02-20'].foreignBandwidthRank, 0, 'crosshair uses rank');
 const weeklySupplyBars = indicators.aggregateWeeklyBars(normalizedSupplyBars);
-assert.equal(weeklySupplyBars[0].supplyPercentB, 1.2, 'weekly fallback samples the last session');
+assert.equal(weeklySupplyBars[0].institutionalBandwidthRank, 100, 'weekly fallback samples the last session');
 assert.doesNotMatch(source, /im-candle-inv-cum|foreignRatio|creditRatio/);
-assert.match(source, /var supplyPercentBSeries = addLine\('investor'/);
-assert.match(source, /var supplyBandwidthRankSeries = addLine\('investor'/);
+assert.match(source, /var institutionalBandwidthRankSeries = addLine\('investor'/);
+assert.match(source, /var foreignBandwidthRankSeries = addLine\('investor'/);
 for (const label of ['chartLabel', 'weeklyChartLabel', 'range', 'atr']) {
   assert.equal(source.match(new RegExp(`^      ${label}: '`, 'gm'))?.length, 2, `${label} is translated`);
 }
@@ -353,8 +353,8 @@ try {
   assert.equal(historyRequests.length, 3, '5Y+warmup PostgREST pagination');
   assert.equal(payload.bars.length, 2175, '5Y returns display+weekly-warmup bars');
   assert.equal(payload.interval, 'daily', 'default interval is daily');
-  assert.equal(payload.bars[0].supplyPercentB, null, 'missing data leaves %B blank');
-  assert.equal(payload.bars[0].supplyBandwidthRank, null, 'missing data leaves rank blank');
+  assert.equal(payload.bars[0].institutionalBandwidthRank, null, 'missing institutional data leaves rank blank');
+  assert.equal(payload.bars[0].foreignBandwidthRank, null, 'missing data leaves rank blank');
   assert.ok(!requests.some((u) => /stock_foreign_ratio|stock_credit_balance/.test(u)));
   assert.match(historyRequests[0], /limit=1000&offset=0/);
   assert.match(historyRequests[1], /limit=1000&offset=1000/);
@@ -370,8 +370,8 @@ try {
   assert.equal(weeklyPayload.interval, 'weekly', 'weekly interval flag');
   assert.ok(weeklyPayload.bars.length > 0, 'weekly bars returned');
   assert.ok(weeklyPayload.bars.length < 2175, 'weekly aggregates below daily count');
-  assert.equal(weeklyPayload.bars[0].supplyPercentB, null);
-  assert.equal(weeklyPayload.bars[0].supplyBandwidthRank, null);
+  assert.equal(weeklyPayload.bars[0].institutionalBandwidthRank, null);
+  assert.equal(weeklyPayload.bars[0].foreignBandwidthRank, null);
 } finally {
   globalThis.fetch = originalFetch;
 }
