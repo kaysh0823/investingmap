@@ -197,25 +197,21 @@ export async function fetchTickerOhlcBars(config, ticker, rangeToken, options = 
     const requested = Math.min(pageSize, limit - offset);
     const q =
       `stock_price_history?ticker=eq.${encodeURIComponent(ticker)}` +
-      `&select=trade_date,open,high,low,close,volume,mcap_won` +
+      `&select=trade_date,open,high,low,close,volume` +
       `&order=trade_date.desc&limit=${requested}&offset=${offset}`;
     const page = await fetchSupabaseJson(config, q);
     rows.push(...page);
     if (page.length < requested) break;
   }
   const bars = [];
-  const marketCaps = new Map();
   for (let i = rows.length - 1; i >= 0; i--) {
     const bar = historyRowToBar(rows[i]);
-    if (bar) {
-      bars.push(bar);
-      marketCaps.set(bar.t, numOrNull(rows[i].mcap_won));
-    }
+    if (bar) bars.push(bar);
   }
   const adjustmentRows = await fetchPriceAdjustments(config, ticker, { throwOnError: true });
   const adjustmentBasis = applyTickerOhlcAdjustments(bars, adjustmentRows, now, options.quoteBasis);
   const adjustments = adjustmentBasis.events;
-  await loadAndAttachInvestorSupply(config, ticker, bars, marketCaps);
+  await loadAndAttachInvestorSupply(config, ticker, bars);
   if (bars.length && interval === 'weekly') {
     const weeklyBars = aggregateDailyBarsToWeekly(bars);
     const displayWeeks = OHLC_WEEKLY_DISPLAY[range] || OHLC_WEEKLY_DISPLAY['1y'];

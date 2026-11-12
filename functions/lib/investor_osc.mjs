@@ -31,7 +31,7 @@ export function groupInvestorNetByDate(rows) {
   return byDate;
 }
 
-export function attachInvestorSupplyToBars(bars, byDate, marketCaps) {
+export function attachInvestorSupplyToBars(bars, byDate) {
   const daily = [];
   const cumulative = [];
   const widths = [];
@@ -39,11 +39,10 @@ export function attachInvestorSupplyToBars(bars, byDate, marketCaps) {
     bar.supplyPercentB = null;
     bar.supplyBandwidthRank = null;
     const net = byDate.get(bar.t);
-    const cap = marketCaps.get(bar.t);
     // KRX category reports can omit individual tickers. Sum the available
     // categories and leave sessions without any usable observation blank.
-    if (!net?.size || !(cap > 0)) continue;
-    const flow = INVESTOR_OSC_CODES.reduce((sum, code) => sum + (net.get(code) ?? 0), 0) / cap;
+    if (!net?.size) continue;
+    const flow = INVESTOR_OSC_CODES.reduce((sum, code) => sum + (net.get(code) ?? 0), 0);
     if (!Number.isFinite(flow)) continue;
     daily.push(flow);
     if (daily.length < CUM_WINDOW) continue;
@@ -218,7 +217,7 @@ export function aggregateDailyBarsToWeekly(dailyBars) {
   return out;
 }
 
-export async function loadAndAttachInvestorSupply(config, ticker, bars, marketCaps) {
+export async function loadAndAttachInvestorSupply(config, ticker, bars) {
   if (!bars.length) return bars;
   let rows = [];
   try {
@@ -226,5 +225,5 @@ export async function loadAndAttachInvestorSupply(config, ticker, bars, marketCa
   } catch (err) {
     console.warn('[investor_osc] fetch failed:', err?.message ?? err);
   }
-  return attachInvestorSupplyToBars(bars, groupInvestorNetByDate(rows), marketCaps);
+  return attachInvestorSupplyToBars(bars, groupInvestorNetByDate(rows));
 }
