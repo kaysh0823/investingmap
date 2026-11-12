@@ -70,8 +70,22 @@ assert.equal(week.supplyBandwidthRank, last.supplyBandwidthRank);
 
 byDate.get(last.t).delete('9000');
 attachInvestorSupplyToBars(bars, byDate, marketCaps);
-assert.equal(last.supplyPercentB, null, 'a missing investor category leaves a gap');
-assert.equal(last.supplyBandwidthRank, null);
+assert.ok(Math.abs(last.supplyPercentB - expectedPercentB) < 1e-12, 'sum available investor categories');
+assert.equal(last.supplyBandwidthRank, 50, 'a missing category does not interrupt the band');
+
+const missingDay = bars[153];
+byDate.delete(missingDay.t);
+attachInvestorSupplyToBars(bars, byDate, marketCaps);
+assert.equal(missingDay.supplyPercentB, null, 'an unreported session stays blank');
+assert.equal(missingDay.supplyBandwidthRank, null);
+const nextDay = bars[154];
+assert.ok(Number.isFinite(nextDay.supplyPercentB), '%B resumes on the next reported session');
+assert.ok(Number.isFinite(nextDay.supplyBandwidthRank), 'rank resumes on the next reported session');
+const observedBars = bars.filter(({ t }) => byDate.has(t)).map(({ t }) => ({ t }));
+attachInvestorSupplyToBars(observedBars, byDate, marketCaps);
+const nextObserved = observedBars.find(({ t }) => t === nextDay.t);
+assert.equal(nextDay.supplyPercentB, nextObserved.supplyPercentB);
+assert.equal(nextDay.supplyBandwidthRank, nextObserved.supplyBandwidthRank);
 
 for (const [date, net] of byDate) {
   for (const code of ['3000', '3100', '6000', '9000']) net.set(code, marketCaps.get(date));

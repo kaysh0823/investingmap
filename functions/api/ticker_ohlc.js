@@ -25,7 +25,7 @@ import { edgeCacheMaxAgeSeconds } from '../lib/krx_session.mjs';
 import { pricePhase } from '../lib/session_price_policy.mjs';
 
 /** Bump when payload shape / invalidation rules change. */
-const CACHE_BASE = '/api/ticker_ohlc/cache/v30';
+const CACHE_BASE = '/api/ticker_ohlc/cache/v31';
 
 /** Closed-session TTL: short enough for post-close history/OHLCV catch-up. */
 function ohlcEdgeMaxAge(now = new Date()) {

@@ -32,35 +32,36 @@ export function groupInvestorNetByDate(rows) {
 }
 
 export function attachInvestorSupplyToBars(bars, byDate, marketCaps) {
-  const daily = bars.map(({ t }) => {
-    const net = byDate.get(t);
-    const cap = marketCaps.get(t);
-    if (!net || net.size !== SUPPLY_CODE_SET.size || !(cap > 0)) return null;
-    return INVESTOR_OSC_CODES.reduce((sum, code) => sum + net.get(code), 0) / cap;
-  });
+  const daily = [];
   const cumulative = [];
   const widths = [];
-  for (const [i, bar] of bars.entries()) {
+  for (const bar of bars) {
     bar.supplyPercentB = null;
     bar.supplyBandwidthRank = null;
-    const flows = daily.slice(Math.max(0, i - CUM_WINDOW + 1), i + 1);
-    const cum = flows.length === CUM_WINDOW && flows.every(Number.isFinite)
-      ? flows.reduce((sum, value) => sum + value, 0)
-      : null;
+    const net = byDate.get(bar.t);
+    const cap = marketCaps.get(bar.t);
+    // KRX category reports can omit individual tickers. Sum the available
+    // categories and leave sessions without any usable observation blank.
+    if (!net?.size || !(cap > 0)) continue;
+    const flow = INVESTOR_OSC_CODES.reduce((sum, code) => sum + (net.get(code) ?? 0), 0) / cap;
+    if (!Number.isFinite(flow)) continue;
+    daily.push(flow);
+    if (daily.length < CUM_WINDOW) continue;
+
+    // Count observations so an unpublished session doesn't reset each window.
+    const cum = daily.slice(-CUM_WINDOW).reduce((sum, value) => sum + value, 0);
     cumulative.push(cum);
+    if (cumulative.length < BAND_WINDOW) continue;
 
     const band = cumulative.slice(-BAND_WINDOW);
-    let width = null;
-    if (band.length === BAND_WINDOW && band.every(Number.isFinite)) {
-      const mean = band.reduce((sum, value) => sum + value, 0) / BAND_WINDOW;
-      const variance = band.reduce((sum, value) => sum + (value - mean) ** 2, 0) / BAND_WINDOW;
-      width = band.every((value) => value === cum) ? 0 : 4 * Math.sqrt(variance);
-      if (width > 0) bar.supplyPercentB = 0.5 + (cum - mean) / width;
-    }
+    const mean = band.reduce((sum, value) => sum + value, 0) / BAND_WINDOW;
+    const variance = band.reduce((sum, value) => sum + (value - mean) ** 2, 0) / BAND_WINDOW;
+    const width = band.every((value) => value === cum) ? 0 : 4 * Math.sqrt(variance);
+    if (width > 0) bar.supplyPercentB = 0.5 + (cum - mean) / width;
     widths.push(width);
 
     const window = widths.slice(-RANK_WINDOW);
-    if (window.length === RANK_WINDOW && window.every(Number.isFinite)) {
+    if (window.length === RANK_WINDOW) {
       // Midrank for ties. Exclude today's observation from the comparison.
       let rank = 0;
       for (const prior of window.slice(0, -1)) {
