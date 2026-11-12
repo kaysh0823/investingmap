@@ -1,5 +1,5 @@
 /**
- * Unit + optional live checks for investor OSC on ticker_ohlc bars.
+ * Investor supply checks. Pass a ticker to also verify the configured Supabase feed.
  * Usage: node scripts/verify_investor_osc.mjs [ticker]
  */
 import assert from 'node:assert/strict';
@@ -7,19 +7,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  attachInvestorOscToBars,
-  attachInvestorOscToWeeklyBars,
   aggregateDailyBarsToWeekly,
-  computeInvestorOscSeries,
-  ewmSpan,
+  attachInvestorSupplyToBars,
   groupInvestorNetByDate,
-  investorOscBarKey,
-  isoWeekKey,
-  INVESTOR_CUM_WINDOWS,
-  INVESTOR_OSC_PERIODS,
-  WEEKLY_CUM,
-  WEEKLY_PERIOD,
-  rollingSum,
 } from '../functions/lib/investor_osc.mjs';
 import { fetchTickerOhlcBars, getSupabaseConfig } from '../functions/lib/ticker_ohlc.mjs';
 
@@ -42,185 +32,71 @@ function loadEnv() {
   return env;
 }
 
-// rolling 5, min_periods=1
-assert.deepEqual(rollingSum([1, 2, 3, 4, 5], 5, 1), [1, 3, 6, 10, 15]);
+const bars = Array.from({ length: 165 }, (_, i) => ({
+  t: new Date(Date.UTC(2025, 0, i + 1)).toISOString().slice(0, 10),
+  c: 100,
+}));
+const marketCaps = new Map(bars.map(({ t }, i) => [t, 1000 + i]));
+const rows = bars.flatMap(({ t }, i) => {
+  const cap = marketCaps.get(t);
+  // Individual nets sum to cap * (i + 1). The excluded codes must have no effect.
+  return [
+    ['3000', cap * i],
+    ['3100', -cap],
+    ['6000', 2 * cap],
+    ['9000', 0],
+    ['9001', 500 * cap],
+    ['2000', 500 * cap],
+  ].map(([invst_tp_cd, net_val]) => ({ trade_date: t, invst_tp_cd, net_val }));
+});
 
-// warmup: cumWindow + period − 1 ⇒ first OSC at bar index (w + p − 2)
-{
-  const nets = [];
-  for (let i = 0; i < 40; i++) nets.push(100 + i * 10);
-  const osc10 = computeInvestorOscSeries(nets, 10, 20);
-  assert.equal(osc10[27], null, 'OSC null before 20-day range on 10-day cum');
-  assert.ok(Number.isFinite(osc10[28]), 'OSC finite at bar 29');
-  const osc5 = computeInvestorOscSeries(nets, 5, 20);
-  assert.ok(Number.isFinite(osc5[23]), 'OSC finite at bar 24 on 5-day cum');
-  assert.ok(Number.isFinite(osc5[27]), '5d OSC ready before 10d at bar 28');
-  assert.equal(osc10[27], null, '10d OSC still warming at bar 28');
-  const osc10p50 = computeInvestorOscSeries(
-    Array.from({ length: 70 }, (_, i) => 100 + (i % 7) * 50),
-    10,
-    50,
-  );
-  assert.equal(osc10p50[57], null, 'period-50 OSC null before warmup');
-  assert.ok(Number.isFinite(osc10p50[58]), 'period-50 OSC finite after warmup');
-  const osc10p20 = computeInvestorOscSeries(
-    Array.from({ length: 70 }, (_, i) => 100 + (i % 7) * 50),
-    10,
-    20,
-  );
-  assert.ok(Number.isFinite(osc10p20[69]) && Number.isFinite(osc10p50[69]), 'both periods on tail bar');
+const byDate = groupInvestorNetByDate(rows);
+attachInvestorSupplyToBars(bars, byDate, marketCaps);
+assert.equal(bars[22].supplyPercentB, null);
+const expectedPercentB = 0.5 + 47.5 / (4 * Math.sqrt(25 * 399 / 12));
+assert.ok(Math.abs(bars[23].supplyPercentB - expectedPercentB) < 1e-12);
+assert.equal(bars[146].supplyBandwidthRank, null);
+assert.equal(bars[147].supplyBandwidthRank, 50, 'equal widths share the midpoint rank');
+
+const last = bars.at(-1);
+byDate.get(last.t).set('9000', 1000 * marketCaps.get(last.t));
+attachInvestorSupplyToBars(bars, byDate, marketCaps);
+assert.equal(last.supplyBandwidthRank, 100, 'largest width ranks at 100');
+assert.ok(last.supplyPercentB > 1, '%B can exceed its upper band');
+const week = aggregateDailyBarsToWeekly(bars).at(-1);
+assert.equal(week.t, last.t);
+assert.equal(week.supplyPercentB, last.supplyPercentB);
+assert.equal(week.supplyBandwidthRank, last.supplyBandwidthRank);
+
+byDate.get(last.t).delete('9000');
+attachInvestorSupplyToBars(bars, byDate, marketCaps);
+assert.equal(last.supplyPercentB, null, 'a missing investor category leaves a gap');
+assert.equal(last.supplyBandwidthRank, null);
+
+for (const [date, net] of byDate) {
+  for (const code of ['3000', '3100', '6000', '9000']) net.set(code, marketCaps.get(date));
 }
+attachInvestorSupplyToBars(bars, byDate, marketCaps);
+assert.equal(last.supplyPercentB, null, 'a flat band has undefined %B');
+assert.equal(last.supplyBandwidthRank, 50, 'a flat band has a valid width rank');
+marketCaps.set(last.t, 0);
+attachInvestorSupplyToBars(bars, byDate, marketCaps);
+assert.equal(last.supplyBandwidthRank, null, 'a missing or invalid cap leaves a gap');
 
-// ewm span=2 null propagation
-{
-  const ema = ewmSpan([null, null, 50, 60, null, 70], 2);
-  assert.equal(ema[1], null);
-  assert.equal(ema[2], 50);
-  assert.ok(Math.abs(ema[3] - (2 / 3) * 60 - (1 / 3) * 50) < 1e-9);
-  assert.ok(Math.abs(ema[4] - ema[3]) < 1e-9, 'null raw keeps previous EMA');
-}
-
-// group inst = 3000+3100+6000, frgn = 9000
-{
-  const grouped = groupInvestorNetByDate([
-    { trade_date: '2026-08-28', invst_tp_cd: '3000', net_val: 10 },
-    { trade_date: '2026-08-28', invst_tp_cd: '3100', net_val: 20 },
-    { trade_date: '2026-08-28', invst_tp_cd: '6000', net_val: 30 },
-    { trade_date: '2026-08-28', invst_tp_cd: '9000', net_val: 100 },
-  ]);
-  assert.equal(grouped.get('2026-08-28').inst, 60);
-  assert.equal(grouped.get('2026-08-28').frgn, 100);
-}
-
-// attach fields on bars
-{
-  const bars = [{ t: '2026-08-27' }, { t: '2026-08-28' }];
-  const byDate = groupInvestorNetByDate([
-    { trade_date: '2026-08-27', invst_tp_cd: '9000', net_val: 1 },
-    { trade_date: '2026-08-28', invst_tp_cd: '9000', net_val: 2 },
-  ]);
-  attachInvestorOscToBars(bars, byDate);
-  assert.ok('instOsc5' in bars[0] && 'instOsc10' in bars[0] && 'instOsc20' in bars[0]);
-  assert.ok('frgnOsc5' in bars[0] && 'frgnOsc10' in bars[0] && 'frgnOsc20' in bars[0]);
-  assert.equal(bars[1].instOsc, bars[1].instOsc10, 'instOsc aliases instOsc10');
-  for (const cum of INVESTOR_CUM_WINDOWS) {
-    for (const period of INVESTOR_OSC_PERIODS) {
-      assert.ok(investorOscBarKey('instOsc', cum, period) in bars[0]);
-      assert.ok(investorOscBarKey('frgnOsc', cum, period) in bars[0]);
-    }
-    assert.equal(
-      bars[1][`instOsc${cum}`],
-      bars[1][investorOscBarKey('instOsc', cum, 20)],
-      `instOsc${cum} aliases period-20`,
-    );
+const ticker = process.argv[2];
+if (ticker) {
+  const config = getSupabaseConfig(loadEnv());
+  assert.ok(config, 'Supabase credentials required for a live check');
+  const daily = await fetchTickerOhlcBars(config, ticker, '1y');
+  const weekly = await fetchTickerOhlcBars(config, ticker, '1y', { interval: 'weekly' });
+  assert.ok(daily.bars.some((bar) => Number.isFinite(bar.supplyPercentB)), 'live %B data');
+  assert.ok(daily.bars.some((bar) => Number.isFinite(bar.supplyBandwidthRank)), 'live bandwidth rank data');
+  const dailyByDate = new Map(daily.bars.map((bar) => [bar.t, bar]));
+  for (const bar of weekly.bars) {
+    const day = dailyByDate.get(bar.t);
+    assert.equal(bar.supplyPercentB, day.supplyPercentB);
+    assert.equal(bar.supplyBandwidthRank, day.supplyBandwidthRank);
   }
-}
-
-// weekly: sum daily nets by ISO week, then OSC on weekly series
-{
-  assert.equal(isoWeekKey('2025-12-29'), isoWeekKey('2026-01-02'), 'same ISO week');
-  const daily = [
-    { t: '2025-12-29', o: 10, h: 12, l: 8, c: 10, v: 100 },
-    { t: '2025-12-30', o: 10, h: 13, l: 9, c: 12, v: 150 },
-    { t: '2026-01-02', o: 12, h: 15, l: 11, c: 14, v: 200 },
-    { t: '2026-01-05', o: 14, h: 16, l: 13, c: 15, v: 250 },
-  ];
-  const weekly = aggregateDailyBarsToWeekly(daily);
-  assert.equal(weekly.length, 2, 'weekly bar count');
-  assert.equal(weekly[0].t, '2026-01-02');
-  assert.equal(weekly[0].v, 450);
-  const byDate = groupInvestorNetByDate([
-    { trade_date: '2025-12-29', invst_tp_cd: '9000', net_val: 10 },
-    { trade_date: '2025-12-30', invst_tp_cd: '9000', net_val: 20 },
-    { trade_date: '2026-01-02', invst_tp_cd: '9000', net_val: 30 },
-    { trade_date: '2026-01-05', invst_tp_cd: '9000', net_val: 40 },
-  ]);
-  attachInvestorOscToWeeklyBars(weekly, byDate);
-  assert.equal(WEEKLY_CUM, 4, 'weekly cum constant');
-  assert.equal(WEEKLY_PERIOD, 13, 'weekly period constant');
-  assert.ok(
-    investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD) in weekly[0],
-    'weekly bars get OSC 4/13 fields',
-  );
-  assert.equal(
-    weekly[0].frgnOsc,
-    weekly[0][investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD)],
-    'weekly frgnOsc aliases 4/13',
-  );
-  assert.equal(weekly[0].frgnOsc_10_20, null, 'weekly clears daily OSC grid');
-}
-
-const ticker = process.argv[2] || '005930';
-const env = loadEnv();
-const config = getSupabaseConfig(env);
-if (config?.url && config?.anonKey) {
-  const payload = await fetchTickerOhlcBars(config, ticker, '1y');
-  assert.ok(payload.bars.length > 200, '1y bars loaded');
-  const withInst = payload.bars.filter((b) => b.instOsc != null);
-  const withFrgn = payload.bars.filter((b) => b.frgnOsc != null);
-  assert.ok(withInst.length > 0, 'instOsc populated in recent window');
-  assert.ok(withFrgn.length > 0, 'frgnOsc populated in recent window');
-  const tail = payload.bars.slice(-250);
-  const firstInTail = tail.findIndex((b) => b.instOsc != null);
-  assert.ok(firstInTail >= 0, 'instOsc present in recent window');
-
-  const last = payload.bars[payload.bars.length - 1];
-  assert.ok('instOsc5' in last && 'instOsc10' in last && 'instOsc20' in last);
-  assert.ok('frgnOsc5' in last && 'frgnOsc10' in last && 'frgnOsc20' in last);
-  assert.equal(last.instOsc, last.instOsc10, 'instOsc aliases 10d');
-  for (const cum of INVESTOR_CUM_WINDOWS) {
-    for (const period of INVESTOR_OSC_PERIODS) {
-      assert.ok(investorOscBarKey('instOsc', cum, period) in last, `${cum}/${period} inst field`);
-      assert.ok(investorOscBarKey('frgnOsc', cum, period) in last, `${cum}/${period} frgn field`);
-    }
-  }
-  console.log(
-    `Live ${ticker} @ ${last.t}: instOsc_10_20=${last.instOsc_10_20}, instOsc_200_20=${last.instOsc_200_20} ` +
-      `(legacy10=${last.instOsc10}; filled ${withInst.length}/${payload.bars.length})`,
-  );
-  const display1y = payload.bars.slice(-payload.displayDays);
-  assert.ok(
-    display1y.every((b) => b.instOsc_200_20 != null || b.instOsc_10_20 == null),
-    '200d cum OSC fills the 1Y display window wherever 10d does',
-  );
-  assert.ok('foreignRatio' in last, 'daily bars include foreignRatio field');
-
-  const payload5y = await fetchTickerOhlcBars(config, ticker, '5y');
-  assert.ok(payload5y.bars.length > 1000, '5y bars loaded');
-  const withInst5y = payload5y.bars.filter((b) => b.instOsc != null);
-  assert.ok(
-    withInst5y.length >= 1000,
-    `5y instOsc filled leftward (got ${withInst5y.length}/${payload5y.bars.length})`,
-  );
-  const withFr5y = payload5y.bars.filter((b) => b.foreignRatio != null);
-  console.log(
-    `Live 5y ${ticker}: instOsc filled ${withInst5y.length}/${payload5y.bars.length}, ` +
-      `foreignRatio filled ${withFr5y.length}/${payload5y.bars.length}`,
-  );
-  if (withFr5y.length > 0) {
-    assert.ok(
-      withFr5y.length >= 200,
-      `5y foreignRatio should cover recent window (got ${withFr5y.length})`,
-    );
-  }
-
-  const weeklyPayload = await fetchTickerOhlcBars(config, ticker, '1y', { interval: 'weekly' });
-  assert.equal(weeklyPayload.interval, 'weekly', 'weekly payload interval');
-  assert.ok(weeklyPayload.bars.length > 40, 'weekly bars loaded');
-  assert.ok(weeklyPayload.bars.length < payload.bars.length, 'weekly fewer than daily bars');
-  const wLast = weeklyPayload.bars[weeklyPayload.bars.length - 1];
-  assert.ok('instOsc_4_13' in wLast, 'weekly bar has instOsc_4_13');
-  assert.equal(wLast.instOsc_10_20, null, 'weekly clears daily 10/20 field');
-  assert.ok('foreignRatio' in wLast, 'weekly bar has foreignRatio field');
-  const wFilled = weeklyPayload.bars.filter((b) => b.instOsc_4_13 != null).length;
-  const wFr = weeklyPayload.bars.filter((b) => b.foreignRatio != null).length;
-  assert.ok(wFilled > 0, 'weekly instOsc_4_13 populated');
-  console.log(
-    `Live weekly ${ticker} @ ${wLast.t}: bars=${weeklyPayload.bars.length}, ` +
-      `instOsc_4_13 filled=${wFilled}, foreignRatio filled=${wFr}`,
-  );
-} else {
-  console.log('Skipping live Supabase check (SUPABASE_URL/ANON_KEY missing)');
 }
 
 console.log('verify_investor_osc: OK');

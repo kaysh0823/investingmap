@@ -1,6 +1,6 @@
 /**
  * Map company candle modal: lightweight-charts v5 + /api/ticker_ohlc.
- * One chart, seven native panes (price / volume / MACD / investor OSC / credit balance % / BBW% (20/125 · 10/50 · 5/20) / 5D range vol% · ATR3%).
+ * One chart, six native panes (price / volume / MACD / investor supply / BBW% (20/125 · 10/50 · 5/20) / 5D range vol% · ATR3%).
  * The panes share a single time scale, so their x axes align by construction.
  */
 (function (global) {
@@ -26,7 +26,6 @@
     vol: { top: 0.12, bottom: 0.08 },
     macd: { top: 0.12, bottom: 0.12 },
     investor: { top: 0.12, bottom: 0.12 },
-    credit: { top: 0.15, bottom: 0.12 },
     norm: { top: 0.12, bottom: 0.12 },
     range: { top: 0.12, bottom: 0.12 },
   };
@@ -36,7 +35,6 @@
     { key: 'vol', stretch: 13 },
     { key: 'macd', stretch: 16 },
     { key: 'investor', stretch: 16 },
-    { key: 'credit', stretch: 11 },
     { key: 'norm', stretch: 16 },
     { key: 'range', stretch: 15 },
   ];
@@ -63,17 +61,6 @@
   var RANGE_PERIOD = 5;
   var RANGE_SIGNAL = 20;
   var ATR_PERIOD = 3;
-  var INVESTOR_OSC_LEVELS = [20, 50, 80];
-  /** Daily OSC: selectable N-day cumulative net; stochastic lookback fixed at 20 bars. */
-  var INVESTOR_CUM_OPTIONS = [5, 10, 20, 50, 120, 200];
-  var INVESTOR_PERIOD_OPTIONS = [20];
-  var INVESTOR_CUM_STORAGE = 'im_inv_cum';
-  var DEFAULT_INVESTOR_CUM = 10;
-  var DEFAULT_INVESTOR_PERIOD = 20;
-  /** Weekly investor OSC is fixed (no cum/period toggle). */
-  var WEEKLY_INVESTOR_CUM = 4;
-  var WEEKLY_INVESTOR_PERIOD = 13;
-
   function paneIndexMap() {
     var map = Object.create(null);
     for (var i = 0; i < PANES.length; i++) map[PANES[i].key] = i;
@@ -82,7 +69,6 @@
 
   var PANE_INDEX = paneIndexMap();
 
-  /** Investor OSC pane stays visible on weekly (fixed 4w/13w). */
   function paneStretch(spec, interval) {
     return spec.stretch;
   }
@@ -132,10 +118,8 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
-      instOsc: '기관',
-      frgnOsc: '외국인',
-      foreignRatio: '외국인 보유비율(%)',
-      creditRatio: '신용잔고율(%)',
+      supplyPercentB: '수급 %B (20일)',
+      supplyBandwidthRank: '밴드폭 순위 (125일)',
       range: '5일 변동성%',
       atr: 'ATR3/종가%',
       chartLabel: '일봉 차트',
@@ -143,11 +127,7 @@
       panePrice: '가격',
       paneVol: '거래량',
       paneMacd: 'MACD',
-      paneInvestorTpl: '투자자 OSC · 기관·외국인 · 누적 {CUM}{UNIT} / 기준 {PER}{UNIT} (0~100)',
-      paneInvestorUnitDay: '일',
-      investorFlow: '기관 및 외국인 수급',
-      paneInvestorUnitWeek: '주',
-      paneCredit: '외국인 보유비율(%) · 신용잔고율(%, T+2)',
+      paneInvestor: '기관·외국인 수급 · 5일 누적',
       paneNorm: 'BBW% (20/125 · 10/50 · 5/20)',
       paneRange: '5일 변동성(고저/종가)% · ATR3/종가%',
       liveSession: '장중(현재가)',
@@ -186,10 +166,8 @@
       macd: 'MACD',
       macdSignal: 'Signal',
       macdHist: 'Hist',
-      instOsc: 'Inst',
-      frgnOsc: 'Frgn',
-      foreignRatio: 'Foreign hold %',
-      creditRatio: 'Credit bal. % of mcap',
+      supplyPercentB: 'Supply %B (20d)',
+      supplyBandwidthRank: 'Bandwidth rank (125d)',
       range: '5D Range Vol%',
       atr: 'ATR3/Close%',
       chartLabel: 'Daily chart',
@@ -197,11 +175,7 @@
       panePrice: 'Price',
       paneVol: 'Volume',
       paneMacd: 'MACD',
-      paneInvestorTpl: 'Investor OSC · Inst·Frgn% · cum {CUM}{UNIT} / base {PER}{UNIT} (0-100)',
-      paneInvestorUnitDay: 'd',
-      investorFlow: 'Inst & foreign flow',
-      paneInvestorUnitWeek: 'w',
-      paneCredit: 'Foreign hold % · Credit balance / mcap % (T+2)',
+      paneInvestor: 'Institutional & foreign supply · 5-day cumulative',
       paneNorm: 'BBW% (20/125 · 10/50 · 5/20)',
       paneRange: '5D Range Vol% · ATR3/Close%',
       liveSession: 'Live (last)',
@@ -219,8 +193,6 @@
     range: DEFAULT_RANGE_BY_INTERVAL.daily,
     interval: 'daily',
     zoomInitial: true,
-    investorCum: DEFAULT_INVESTOR_CUM,
-    investorPeriod: DEFAULT_INVESTOR_PERIOD,
     crosshairTime: null,
     rangeByInterval: {
       daily: DEFAULT_RANGE_BY_INTERVAL.daily,
@@ -516,6 +488,9 @@
         current.live = current.live || !!bar.live;
         current.closeOnly = current.closeOnly && !!bar.closeOnly;
       }
+      if ('supplyPercentB' in bar || 'supplyPercentB' in current) {
+        copyInvestorSupplyFields(bar, current);
+      }
     }
     if (current) {
       delete current.key;
@@ -694,7 +669,7 @@
         live: true,
         closeOnly: qOpen == null && qHigh == null && qLow == null ? !!lastBar.closeOnly : false,
       };
-      copyInvestorOscFields(lastBar, patched);
+      copyInvestorSupplyFields(lastBar, patched);
       out[out.length - 1] = patched;
       return { bars: out, live: true, liveTime: lastT };
     }
@@ -770,7 +745,6 @@
 
   /**
    * Live overlay for server-aggregated weekly bars.
-   * Same ISO week as last bar → patch OHLC (keep OSC); newer week → append without OSC.
    */
   function applyLiveQuoteToWeeklyBars(bars, quotesJson, code, adjustmentBasis) {
     if (!bars || !bars.length || !quotesJson) {
@@ -806,7 +780,6 @@
     if (sameWeek && qDate >= lastT) {
       if (!inSession && qDate === lastT) return { bars: bars, live: false, liveTime: null };
       if (!inSession && qDate > lastT) {
-        // After hours: advance week stamp to quote date, keep OSC from last week bar.
         var settled = {
           t: qDate,
           o: lastBar.o,
@@ -817,7 +790,6 @@
           live: false,
           closeOnly: !!lastBar.closeOnly,
         };
-        copyInvestorOscFields(lastBar, settled);
         out[out.length - 1] = settled;
         return { bars: out, live: false, liveTime: null };
       }
@@ -859,7 +831,7 @@
         live: true,
         closeOnly: qOpenW == null && qHighW == null && qLowW == null ? !!lastBar.closeOnly : false,
       };
-      copyInvestorOscFields(lastBar, patchedW);
+      if (qDate === lastT) copyInvestorSupplyFields(lastBar, patchedW);
       out[out.length - 1] = patchedW;
       return { bars: out, live: true, liveTime: patchedW.t };
     }
@@ -1018,10 +990,7 @@
       '.im-candle-close{flex-shrink:0;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#e6edf3);font-size:22px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}' +
       '.im-candle-close:hover,.im-candle-close:focus-visible{background:var(--surface2,#21262d);outline:2px solid var(--accent,#58a6ff);outline-offset:0}' +
       '.im-candle-toolbar{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px;padding:8px 16px;border-bottom:1px solid var(--border,#30363d);flex:0 0 auto}' +
-      '.im-candle-ranges,.im-candle-intervals,.im-candle-inv-cum{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
-      '.im-candle-inv{display:inline-flex;align-items:center;gap:6px}' +
-      '.im-candle-inv[hidden]{display:none}' +
-      '.im-candle-inv-label{font-size:11px;color:var(--text-muted,#8b949e);white-space:nowrap}' +
+      '.im-candle-ranges,.im-candle-intervals{display:inline-flex;gap:4px;padding:2px;border-radius:8px;background:var(--surface2,#21262d)}' +
       '.im-candle-range{border:0;background:transparent;color:var(--text-muted,#8b949e);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;cursor:pointer}' +
       '.im-candle-range[aria-pressed="true"]{background:var(--surface,#161b22);color:var(--text,#e6edf3);box-shadow:0 0 0 1px var(--border,#30363d)}' +
       '.im-candle-tip{flex:1;min-width:140px;max-height:3.6em;overflow:hidden;font-size:11px;color:var(--text-muted,#8b949e);font-variant-numeric:tabular-nums;line-height:1.35}' +
@@ -1083,8 +1052,6 @@
         !document.getElementById('im-candle-chart') ||
         !document.getElementById('im-candle-pane-labels') ||
         !document.getElementById('im-candle-intervals') ||
-        !document.getElementById('im-candle-inv-cum') ||
-        !document.getElementById('im-candle-inv') ||
         !document.getElementById('im-candle-expand') ||
         !document.getElementById('im-candle-hovertip') ||
         !document.getElementById('im-candle-prev') ||
@@ -1126,10 +1093,6 @@
       '<div class="im-candle-toolbar">' +
       '<div class="im-candle-ranges" role="group" id="im-candle-ranges"></div>' +
       '<div class="im-candle-intervals" role="group" id="im-candle-intervals"></div>' +
-      '<div class="im-candle-inv" id="im-candle-inv" hidden>' +
-      '<div class="im-candle-inv-cum" role="group" id="im-candle-inv-cum" aria-labelledby="im-candle-inv-label"></div>' +
-      '<span class="im-candle-inv-label" id="im-candle-inv-label"></span>' +
-      '</div>' +
       '<div class="im-candle-tip" id="im-candle-tip" aria-live="polite"></div>' +
       '</div>' +
       '<div class="im-candle-body">' +
@@ -1197,7 +1160,6 @@
       state.zoomInitial = true;
       syncRangeButtons();
       syncIntervalButtons();
-      syncInvestorCumVisibility();
       syncPaneLabels();
       updateSubtitle();
       document
@@ -1208,147 +1170,12 @@
         );
       if (state.ticker) loadAndRender(state.ticker, state.range);
     });
-    root.querySelector('#im-candle-inv-cum').addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-inv-cum]');
-      if (!btn) return;
-      var cum = parseInt(btn.getAttribute('data-inv-cum'), 10);
-      setInvestorCum(cum);
-    });
     return root;
   }
 
-  function readStoredInvestorCum() {
-    try {
-      var v = parseInt(localStorage.getItem(INVESTOR_CUM_STORAGE), 10);
-      if (INVESTOR_CUM_OPTIONS.indexOf(v) >= 0) return v;
-    } catch (e) {}
-    return DEFAULT_INVESTOR_CUM;
-  }
-
-  function saveInvestorCum(v) {
-    try {
-      localStorage.setItem(INVESTOR_CUM_STORAGE, String(v));
-    } catch (e2) {}
-  }
-
-  function paneInvestorLabel(cum, period) {
-    var labels = t();
-    var weekly = state.interval === 'weekly';
-    var c = weekly ? WEEKLY_INVESTOR_CUM : cum != null ? cum : state.investorCum;
-    var p = weekly ? WEEKLY_INVESTOR_PERIOD : period != null ? period : state.investorPeriod;
-    var unit = weekly ? labels.paneInvestorUnitWeek : labels.paneInvestorUnitDay;
-    return labels.paneInvestorTpl
-      .replace('{CUM}', String(c))
-      .replace('{PER}', String(p))
-      .replace(/\{UNIT\}/g, unit);
-  }
-
-  function activeInvestorCumPeriod() {
-    if (state.interval === 'weekly') {
-      return { cum: WEEKLY_INVESTOR_CUM, period: WEEKLY_INVESTOR_PERIOD };
-    }
-    return { cum: state.investorCum, period: state.investorPeriod };
-  }
-
-  function investorOscField(prefix, cum, period) {
-    var c = cum != null ? cum : state.investorCum;
-    var p = period != null ? period : state.investorPeriod;
-    return prefix + '_' + c + '_' + p;
-  }
-
-  function oscNum(v) {
-    return v != null && isFinite(Number(v)) ? Number(v) : null;
-  }
-
-  function copyInvestorOscFields(src, dest) {
-    for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
-      var w = INVESTOR_CUM_OPTIONS[wi];
-      for (var pi = 0; pi < INVESTOR_PERIOD_OPTIONS.length; pi++) {
-        var p = INVESTOR_PERIOD_OPTIONS[pi];
-        var ik = investorOscField('instOsc', w, p);
-        var fk = investorOscField('frgnOsc', w, p);
-        if (ik in src) dest[ik] = oscNum(src[ik]);
-        if (fk in src) dest[fk] = oscNum(src[fk]);
-      }
-      var lk = 'instOsc' + w;
-      var lf = 'frgnOsc' + w;
-      if (lk in src) dest[lk] = oscNum(src[lk]);
-      if (lf in src) dest[lf] = oscNum(src[lf]);
-    }
-    if ('instOsc' in src) dest.instOsc = oscNum(src.instOsc);
-    if ('frgnOsc' in src) dest.frgnOsc = oscNum(src.frgnOsc);
-    if ('foreignRatio' in src) dest.foreignRatio = oscNum(src.foreignRatio);
-    if ('creditRatio' in src) dest.creditRatio = oscNum(src.creditRatio);
-    var wik = investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
-    var wfk = investorOscField('frgnOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD);
-    if (wik in src) dest[wik] = oscNum(src[wik]);
-    if (wfk in src) dest[wfk] = oscNum(src[wfk]);
-  }
-
-  function buildInvestorOscLinesFromByTime(byTime, cum, period) {
-    var instOscLine = [];
-    var frgnOscLine = [];
-    var ik = investorOscField('instOsc', cum, period);
-    var fk = investorOscField('frgnOsc', cum, period);
-    var times = Object.keys(byTime).sort();
-    for (var i = 0; i < times.length; i++) {
-      var time = times[i];
-      var row = byTime[time];
-      var iv = row[ik];
-      var fv = row[fk];
-      if (iv != null && isFinite(iv)) instOscLine.push({ time: time, value: iv });
-      if (fv != null && isFinite(fv)) frgnOscLine.push({ time: time, value: fv });
-    }
-    return { instOscLine: instOscLine, frgnOscLine: frgnOscLine };
-  }
-
-  function refreshInvestorOscSeries() {
-    var refs = state.seriesRefs;
-    if (!refs || !refs.instOsc || !refs.frgnOsc || !state.barsByTime) return;
-    if (state.interval === 'weekly') return;
-    var lines = buildInvestorOscLinesFromByTime(
-      state.barsByTime,
-      state.investorCum,
-      state.investorPeriod,
-    );
-    refs.instOsc.setData(lines.instOscLine);
-    refs.frgnOsc.setData(lines.frgnOscLine);
-    syncPaneLabels();
-    updateTip(state.crosshairTime);
-  }
-
-  function setInvestorCum(cum) {
-    if (INVESTOR_CUM_OPTIONS.indexOf(cum) < 0 || cum === state.investorCum) return;
-    state.investorCum = cum;
-    saveInvestorCum(cum);
-    syncInvestorCumButtons();
-    refreshInvestorOscSeries();
-  }
-
-  function syncInvestorCumButtons() {
-    var wrap = document.getElementById('im-candle-inv-cum');
-    if (!wrap) return;
-    var html = '';
-    for (var i = 0; i < INVESTOR_CUM_OPTIONS.length; i++) {
-      var cum = INVESTOR_CUM_OPTIONS[i];
-      html +=
-        '<button type="button" class="im-candle-range" data-inv-cum="' +
-        cum +
-        '" aria-pressed="' +
-        (cum === state.investorCum ? 'true' : 'false') +
-        '">' +
-        cum +
-        '</button>';
-    }
-    wrap.innerHTML = html;
-    var label = document.getElementById('im-candle-inv-label');
-    if (label) label.textContent = t().investorFlow;
-  }
-
-  function syncInvestorCumVisibility() {
-    var wrap = document.getElementById('im-candle-inv');
-    if (!wrap) return;
-    wrap.hidden = state.interval === 'weekly';
+  function copyInvestorSupplyFields(src, dest) {
+    dest.supplyPercentB = src.supplyPercentB ?? null;
+    dest.supplyBandwidthRank = src.supplyBandwidthRank ?? null;
   }
 
   function syncPaneLabels() {
@@ -1359,8 +1186,7 @@
       price: labels.panePrice,
       vol: labels.paneVol,
       macd: labels.paneMacd,
-      investor: paneInvestorLabel(state.investorCum, state.investorPeriod),
-      credit: labels.paneCredit,
+      investor: labels.paneInvestor,
       norm: labels.paneNorm,
       range: labels.paneRange,
     };
@@ -1537,24 +1363,14 @@
       // Newly listed names can arrive with close only; those render as a line.
       var closeOnly = !hasOpen && !hasHigh && !hasLow;
       var bar = { t: b.t, o: o, h: h, l: l, c: c, v: v, closeOnly: closeOnly };
-      copyInvestorOscFields(b, bar);
+      copyInvestorSupplyFields(b, bar);
       bars.push(bar);
     }
     return bars;
   }
 
-  function buildPanelData(fullBars, range, interval, investorCum, investorPeriod) {
+  function buildPanelData(fullBars, range, interval) {
     var weekly = interval === 'weekly';
-    var cum = weekly
-      ? WEEKLY_INVESTOR_CUM
-      : investorCum != null && INVESTOR_CUM_OPTIONS.indexOf(investorCum) >= 0
-        ? investorCum
-        : state.investorCum;
-    var period = weekly
-      ? WEEKLY_INVESTOR_PERIOD
-      : investorPeriod != null && INVESTOR_PERIOD_OPTIONS.indexOf(investorPeriod) >= 0
-        ? investorPeriod
-        : state.investorPeriod;
     var closes = fullBars.map(function (b) {
       return b.c;
     });
@@ -1591,10 +1407,8 @@
     var macdLine = [];
     var macdSignalLine = [];
     var macdHist = [];
-    var instOscLine = [];
-    var frgnOscLine = [];
-    var foreignRatioBars = [];
-    var creditLine = [];
+    var supplyPercentBLine = [];
+    var supplyBandwidthRankLine = [];
     var bbwLine = [];
     var bbw10Line = [];
     var bbw5Line = [];
@@ -1630,20 +1444,12 @@
       if (macdPack.signal[i] != null && isFinite(macdPack.signal[i])) {
         macdSignalLine.push({ time: b.t, value: macdPack.signal[i] });
       }
-      var iv = oscNum(b[investorOscField('instOsc', cum, period)]);
-      var fv = oscNum(b[investorOscField('frgnOsc', cum, period)]);
-      var fr = oscNum(b.foreignRatio);
-      if (iv != null) instOscLine.push({ time: b.t, value: iv });
-      if (fv != null) frgnOscLine.push({ time: b.t, value: fv });
-      if (fr != null) {
-        foreignRatioBars.push({
-          time: b.t,
-          value: fr,
-          color: 'rgba(126,231,135,0.28)',
-        });
-      }
-      var cr = oscNum(b.creditRatio);
-      if (cr != null) creditLine.push({ time: b.t, value: cr });
+      supplyPercentBLine.push(
+        b.supplyPercentB == null ? { time: b.t } : { time: b.t, value: b.supplyPercentB },
+      );
+      supplyBandwidthRankLine.push(
+        b.supplyBandwidthRank == null ? { time: b.t } : { time: b.t, value: b.supplyBandwidthRank },
+      );
       if (bbwPct[i] != null && isFinite(bbwPct[i])) bbwLine.push({ time: b.t, value: bbwPct[i] });
       if (bbw10Pct[i] != null && isFinite(bbw10Pct[i])) bbw10Line.push({ time: b.t, value: bbw10Pct[i] });
       if (bbw5Pct[i] != null && isFinite(bbw5Pct[i])) bbw5Line.push({ time: b.t, value: bbw5Pct[i] });
@@ -1673,28 +1479,8 @@
         range: rangePack.value[i],
         atr: atrPct[i],
         live: !!b.live,
-        foreignRatio: fr,
-        creditRatio: cr,
       };
-      if (weekly) {
-        row[investorOscField('instOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD)] = iv;
-        row[investorOscField('frgnOsc', WEEKLY_INVESTOR_CUM, WEEKLY_INVESTOR_PERIOD)] = fv;
-        row.instOsc = iv;
-        row.frgnOsc = fv;
-      } else {
-        for (var wi = 0; wi < INVESTOR_CUM_OPTIONS.length; wi++) {
-          var w = INVESTOR_CUM_OPTIONS[wi];
-          for (var pi = 0; pi < INVESTOR_PERIOD_OPTIONS.length; pi++) {
-            var p = INVESTOR_PERIOD_OPTIONS[pi];
-            row[investorOscField('instOsc', w, p)] = oscNum(b[investorOscField('instOsc', w, p)]);
-            row[investorOscField('frgnOsc', w, p)] = oscNum(b[investorOscField('frgnOsc', w, p)]);
-          }
-          row['instOsc' + w] = oscNum(b['instOsc' + w]);
-          row['frgnOsc' + w] = oscNum(b['frgnOsc' + w]);
-        }
-        row.instOsc = row[investorOscField('instOsc', cum, period)];
-        row.frgnOsc = row[investorOscField('frgnOsc', cum, period)];
-      }
+      copyInvestorSupplyFields(b, row);
       byTime[b.t] = row;
     }
 
@@ -1713,10 +1499,8 @@
       macdLine: macdLine,
       macdSignalLine: macdSignalLine,
       macdHist: macdHist,
-      instOscLine: instOscLine,
-      frgnOscLine: frgnOscLine,
-      foreignRatioBars: foreignRatioBars,
-      creditLine: creditLine,
+      supplyPercentBLine: supplyPercentBLine,
+      supplyBandwidthRankLine: supplyBandwidthRankLine,
       bbwLine: bbwLine,
       bbw10Line: bbw10Line,
       bbw5Line: bbw5Line,
@@ -1786,19 +1570,8 @@
         fmtNum(b.macd, 2) + ' / ' + fmtNum(b.macdSignal, 2),
       );
     }
-    if (state.interval === 'daily' || state.interval === 'weekly') {
-      var ap = activeInvestorCumPeriod();
-      var ik = investorOscField('instOsc', ap.cum, ap.period);
-      var fk = investorOscField('frgnOsc', ap.cum, ap.period);
-      var instVal = b[ik] != null ? b[ik] : b.instOsc;
-      var frgnVal = b[fk] != null ? b[fk] : b.frgnOsc;
-      html += hoverTipRow(labels.instOsc, fmtNum(instVal, 1));
-      html += hoverTipRow(labels.frgnOsc, fmtNum(frgnVal, 1));
-      html += hoverTipRow(labels.foreignRatio, fmtNum(b.foreignRatio, 2));
-    }
-    if (typeof b.creditRatio === 'number' && isFinite(b.creditRatio)) {
-      html += hoverTipRow(labels.creditRatio, fmtNum(b.creditRatio, 2) + '%');
-    }
+    html += hoverTipRow(labels.supplyPercentB, fmtNum(b.supplyPercentB, 2));
+    html += hoverTipRow(labels.supplyBandwidthRank, fmtNum(b.supplyBandwidthRank, 1));
     if (typeof b.bbw === 'number' && isFinite(b.bbw)) {
       html += hoverTipRow(labels.bbw, fmtNum(b.bbw, 1) + '%');
     }
@@ -1900,27 +1673,9 @@
       labels.macdHist +
       ' ' +
       fmtNum(b.macdHist, 2);
-    if (state.interval === 'daily' || state.interval === 'weekly') {
-      var ap = activeInvestorCumPeriod();
-      var ik = investorOscField('instOsc', ap.cum, ap.period);
-      var fk = investorOscField('frgnOsc', ap.cum, ap.period);
-      text +=
-        ' · ' +
-        labels.instOsc +
-        ' ' +
-        fmtNum(b[ik] != null ? b[ik] : b.instOsc, 1) +
-        ' · ' +
-        labels.frgnOsc +
-        ' ' +
-        fmtNum(b[fk] != null ? b[fk] : b.frgnOsc, 1) +
-        ' · ' +
-        labels.foreignRatio +
-        ' ' +
-        fmtNum(b.foreignRatio, 2);
-    }
-    if (typeof b.creditRatio === 'number' && isFinite(b.creditRatio)) {
-      text += ' · ' + labels.creditRatio + ' ' + fmtNum(b.creditRatio, 2);
-    }
+    text +=
+      ' · ' + labels.supplyPercentB + ' ' + fmtNum(b.supplyPercentB, 2) +
+      ' · ' + labels.supplyBandwidthRank + ' ' + fmtNum(b.supplyBandwidthRank, 1);
     text +=
       ' · ' +
       labels.bbw +
@@ -2039,29 +1794,6 @@
       );
     }
 
-    function addInvestorOscLine(paneKey, options) {
-      return chart.addSeries(
-        LWC.LineSeries,
-        Object.assign(
-          {
-            lineWidth: 2,
-            priceLineVisible: false,
-            lastValueVisible: true,
-            autoscaleInfoProvider: function () {
-              return {
-                priceRange: {
-                  minValue: 0,
-                  maxValue: 100,
-                },
-              };
-            },
-          },
-          options,
-        ),
-        PANE_INDEX[paneKey],
-      );
-    }
-
     var candle = chart.addSeries(
       LWC.CandlestickSeries,
       {
@@ -2131,62 +1863,21 @@
     var macdSignalSeries = addLine('macd', { color: '#f778ba', title: 'Signal' });
     macdSignalSeries.setData(data.macdSignalLine);
 
-    var instOscSeries = addInvestorOscLine('investor', { color: '#e3b341', title: t().instOsc });
-    instOscSeries.setData(data.instOscLine || []);
-    for (var li = 0; li < INVESTOR_OSC_LEVELS.length; li++) {
-      instOscSeries.createPriceLine({
-        price: INVESTOR_OSC_LEVELS[li],
-        color: 'rgba(139,148,158,0.35)',
-        lineWidth: 1,
-        lineStyle: 2,
-        axisLabelVisible: false,
-        title: '',
-      });
-    }
-
-    var frgnOscSeries = addInvestorOscLine('investor', { color: '#58a6ff', title: t().frgnOsc });
-    frgnOscSeries.setData(data.frgnOscLine || []);
-
-    // Foreign ownership shares the credit pane, with an independent overlay scale.
-    var foreignRatioSeries = chart.addSeries(
-      LWC.HistogramSeries,
-      {
-        color: 'rgba(126,231,135,0.28)',
-        priceScaleId: 'left',
-        priceLineVisible: false,
-        lastValueVisible: true,
-        base: 0,
-        title: t().foreignRatio,
-        autoscaleInfoProvider: function () {
-          var vals = (data.foreignRatioBars || [])
-            .map(function (b) {
-              return b.value;
-            })
-            .filter(function (v) {
-              return typeof v === 'number' && isFinite(v);
-            });
-          if (!vals.length) return null;
-          var mn = Math.min.apply(null, vals);
-          var mx = Math.max.apply(null, vals);
-          var pad = Math.max((mx - mn) * 0.15, 0.5);
-          return {
-            priceRange: {
-              minValue: Math.max(0, mn - pad),
-              maxValue: mx + pad,
-            },
-          };
-        },
-      },
-      PANE_INDEX.credit,
-    );
-    foreignRatioSeries.setData(data.foreignRatioBars || []);
-
-    var creditSeries = addLine('credit', {
-      color: '#f778ba',
-      priceFormat: { type: 'price', precision: 2, minMove: 0.01 },
-      title: t().creditRatio,
+    var supplyPercentBSeries = addLine('investor', {
+      color: '#e3b341',
+      title: t().supplyPercentB,
+      priceScaleId: 'left',
     });
-    creditSeries.setData(data.creditLine || []);
+    supplyPercentBSeries.setData(data.supplyPercentBLine);
+
+    var supplyBandwidthRankSeries = addLine('investor', {
+      color: '#58a6ff',
+      title: t().supplyBandwidthRank,
+      autoscaleInfoProvider: function () {
+        return { priceRange: { minValue: 0, maxValue: 100 } };
+      },
+    });
+    supplyBandwidthRankSeries.setData(data.supplyBandwidthRankLine);
 
     var bbwSeries = addLine('norm', { color: '#f0883e', title: 'BBW% 20/125' });
     bbwSeries.setData(data.bbwLine);
@@ -2232,10 +1923,6 @@
       macdHist: macdHistSeries,
       macd: macdLineSeries,
       macdSignal: macdSignalSeries,
-      instOsc: instOscSeries,
-      frgnOsc: frgnOscSeries,
-      foreignRatio: foreignRatioSeries,
-      credit: creditSeries,
       bbw: bbwSeries,
       bbw10: bbw10Series,
       bbw5: bbw5Series,
@@ -2277,20 +1964,17 @@
         panes[i].setStretchFactor(paneStretch(spec));
       } catch (eStretch) {}
       var scaleOptions = { scaleMargins: PANE_MARGINS[spec.key] };
-      if (spec.key === 'investor') {
-        scaleOptions.autoScale = false;
-      }
       if (spec.key === 'price' && LWC.PriceScaleMode) {
         scaleOptions.mode = LWC.PriceScaleMode.Logarithmic;
       }
       try {
         panes[i].priceScale('right').applyOptions(scaleOptions);
       } catch (eScale) {}
-      if (spec.key === 'credit') {
+      if (spec.key === 'investor') {
         try {
           panes[i].priceScale('left').applyOptions({
             visible: true,
-            scaleMargins: { top: 0.12, bottom: 0.06 },
+            scaleMargins: PANE_MARGINS.investor,
             borderVisible: false,
           });
         } catch (eFr) {}
@@ -2383,13 +2067,7 @@
         if (state.interval === 'weekly' && !serverWeekly) {
           fullBars = aggregateWeeklyBars(fullBars);
         }
-        var data = buildPanelData(
-          fullBars,
-          range,
-          state.interval,
-          state.investorCum,
-          state.investorPeriod,
-        );
+        var data = buildPanelData(fullBars, range, state.interval);
         if (!data.barCount) {
           destroyCharts();
           setStatus(labels.empty, true);
@@ -2609,10 +2287,6 @@
         break;
       }
     }
-    state.investorCum = readStoredInvestorCum();
-    if (opts && opts.investorCum && INVESTOR_CUM_OPTIONS.indexOf(opts.investorCum) >= 0) {
-      state.investorCum = opts.investorCum;
-    }
     state.interval =
       opts && opts.interval && INTERVALS.indexOf(opts.interval) >= 0 ? opts.interval : 'daily';
     if (opts && opts.range && RANGES.indexOf(opts.range) >= 0) {
@@ -2640,8 +2314,6 @@
     document.getElementById('im-candle-close').setAttribute('aria-label', labels.close);
     syncRangeButtons();
     syncIntervalButtons();
-    syncInvestorCumButtons();
-    syncInvestorCumVisibility();
     syncPaneLabels();
     document
       .getElementById('im-candle-stack')
@@ -2789,10 +2461,7 @@
     updateSubtitle();
     syncRangeButtons();
     syncIntervalButtons();
-    syncInvestorCumButtons();
-    syncInvestorCumVisibility();
     syncPaneLabels();
-    refreshInvestorOscSeries();
   }
 
   function bind() {
@@ -2816,12 +2485,6 @@
       paneIndex: PANE_INDEX,
       paneMargins: PANE_MARGINS,
       paneStretch: paneStretch,
-      investorCumOptions: INVESTOR_CUM_OPTIONS,
-      investorPeriodOptions: INVESTOR_PERIOD_OPTIONS,
-      readStoredInvestorCum: readStoredInvestorCum,
-      buildInvestorOscLinesFromByTime: buildInvestorOscLinesFromByTime,
-      setInvestorCum: setInvestorCum,
-      paneInvestorLabel: paneInvestorLabel,
       setExpanded: setExpanded,
       isExpanded: function () {
         return !!state.expanded;
@@ -2847,8 +2510,6 @@
       isoWeekKey: isoWeekKey,
       normalizeBars: normalizeBars,
       buildPanelData: buildPanelData,
-      buildInvestorOscLinesFromByTime: buildInvestorOscLinesFromByTime,
-      investorOscField: investorOscField,
       applyLiveQuoteToBars: applyLiveQuoteToBars,
       applyLiveQuoteToWeeklyBars: applyLiveQuoteToWeeklyBars,
       asOfToTradeDate: asOfToTradeDate,

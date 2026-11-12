@@ -57,7 +57,7 @@ for (const removed of [
 }
 assert.equal(source.match(/createChart\(/g)?.length, 1, 'exactly one chart is created');
 const paneKeys = ui.panes.map((pane) => pane.key);
-assert.equal(paneKeys.join(','), 'price,vol,macd,investor,credit,norm,range', 'pane order');
+assert.equal(paneKeys.join(','), 'price,vol,macd,investor,norm,range', 'pane order');
 paneKeys.forEach((key, index) => {
   assert.equal(ui.paneIndex[key], index, `pane index for ${key}`);
 });
@@ -218,152 +218,25 @@ for (const [key, period, window] of [['bbw', 20, 125], ['bbw10', 10, 50], ['bbw5
 }
 assert.ok(!('dispLine' in bbwPanel), 'panel omits disparity');
 
-const investorBars = [];
-for (let i = 0; i < 30; i++) {
-  const base = i >= 20 ? i : null;
-  investorBars.push({
-    t: `2026-02-${String(i + 1).padStart(2, '0')}`,
-    o: 100,
-    h: 101,
-    l: 99,
-    c: 100,
-    v: 1000,
-    instOsc_5_20: base != null ? 30 + i : null,
-    instOsc_10_20: base != null ? 40 + i : null,
-    instOsc_20_20: base != null ? 50 + i : null,
-    instOsc_5_50: base != null ? 28 + i : null,
-    instOsc_10_50: base != null ? 38 + i : null,
-    instOsc_20_50: base != null ? 48 + i : null,
-    frgnOsc_5_20: base != null ? 20 + i : null,
-    frgnOsc_10_20: base != null ? 30 + i : null,
-    frgnOsc_20_20: base != null ? 40 + i : null,
-    frgnOsc_5_50: base != null ? 18 + i : null,
-    frgnOsc_10_50: base != null ? 28 + i : null,
-    frgnOsc_20_50: base != null ? 38 + i : null,
-    instOsc5: base != null ? 30 + i : null,
-    instOsc10: base != null ? 40 + i : null,
-    instOsc20: base != null ? 50 + i : null,
-    frgnOsc5: base != null ? 20 + i : null,
-    frgnOsc10: base != null ? 30 + i : null,
-    frgnOsc20: base != null ? 40 + i : null,
-    instOsc: base != null ? 40 + i : null,
-    frgnOsc: base != null ? 30 + i : null,
-    foreignRatio: base != null ? 45 + (i % 10) : null,
-  });
+const supplyBars = [
+  { t: '2026-02-19', o: 100, h: 101, l: 99, c: 100, v: 1000 },
+  { t: '2026-02-20', o: 100, h: 101, l: 99, c: 100, v: 1000, supplyPercentB: 1.2, supplyBandwidthRank: 0 },
+];
+const normalizedSupplyBars = indicators.normalizeBars(supplyBars);
+const supplyPanel = indicators.buildPanelData(normalizedSupplyBars, '1y', 'daily');
+assert.equal(supplyPanel.supplyPercentBLine[0].value, undefined, 'warmup stays blank');
+assert.equal(supplyPanel.supplyPercentBLine[1].value, 1.2, '%B is not clipped');
+assert.equal(supplyPanel.supplyBandwidthRankLine[1].value, 0, 'zero rank is plotted');
+assert.equal(supplyPanel.byTime['2026-02-20'].supplyPercentB, 1.2, 'crosshair uses %B');
+assert.equal(supplyPanel.byTime['2026-02-20'].supplyBandwidthRank, 0, 'crosshair uses rank');
+const weeklySupplyBars = indicators.aggregateWeeklyBars(normalizedSupplyBars);
+assert.equal(weeklySupplyBars[0].supplyPercentB, 1.2, 'weekly fallback samples the last session');
+assert.doesNotMatch(source, /im-candle-inv-cum|foreignRatio|creditRatio/);
+assert.match(source, /var supplyPercentBSeries = addLine\('investor'/);
+assert.match(source, /var supplyBandwidthRankSeries = addLine\('investor'/);
+for (const label of ['chartLabel', 'weeklyChartLabel', 'range', 'atr']) {
+  assert.equal(source.match(new RegExp(`^      ${label}: '`, 'gm'))?.length, 2, `${label} is translated`);
 }
-const investorPanel10 = indicators.buildPanelData(
-  indicators.normalizeBars(investorBars),
-  '1y',
-  'daily',
-  10,
-  20,
-);
-const investorPanel5 = indicators.buildPanelData(
-  indicators.normalizeBars(investorBars),
-  '1y',
-  'daily',
-  5,
-  20,
-);
-assert.equal(investorPanel10.instOscLine.length, 10, 'daily investor instOsc10 lines skip null warmup');
-assert.equal(investorPanel5.instOscLine.length, 10, 'daily investor instOsc5 lines skip null warmup');
-assert.equal(investorPanel10.foreignRatioBars.length, 10, 'daily foreignRatio histogram bars on credit pane');
-assert.equal(
-  investorPanel10.byTime['2026-02-21'].foreignRatio,
-  45,
-  'foreignRatio in crosshair byTime',
-);
-assert.equal(
-  investorPanel10.foreignRatioBars[0].color,
-  'rgba(126,231,135,0.28)',
-  'foreignRatio bar uses translucent green',
-);
-assert.notEqual(
-  investorPanel5.instOscLine[9].value,
-  investorPanel10.instOscLine[9].value,
-  '5d vs 10d toggle uses different fields',
-);
-assert.equal(investorPanel10.byTime['2026-02-21'].instOsc_10_20, 60, 'instOsc_10_20 in crosshair byTime');
-assert.equal(
-  ui.buildInvestorOscLinesFromByTime(investorPanel10.byTime, 20, 20).instOscLine.length,
-  10,
-  'byTime rebuild for 20d cum / 20 period',
-);
-assert.match(source, /im-candle-inv-cum/, 'investor cum toggle markup');
-assert.doesNotMatch(source, /im-candle-inv-period/, 'investor period toggle removed');
-assert.deepEqual(Array.from(ui.investorCumOptions), [5, 10, 20, 50, 120, 200], 'investor cum options');
-assert.deepEqual(Array.from(ui.investorPeriodOptions), [20], 'investor OSC lookback fixed at 20');
-assert.match(source, /investorFlow: '기관 및 외국인 수급'/, 'investor flow label');
-assert.ok(
-  source.includes("wrap.hidden = state.interval === 'weekly'"),
-  'investor toggles hidden on weekly',
-);
-assert.match(
-  source,
-  /state\.interval = interval;\s*state\.range = rangeForInterval\(interval\);[\s\S]*?syncPaneLabels\(\);/,
-  'interval switch syncs pane labels after state.interval is set',
-);
-assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'daily'), 16, 'investor pane stretch on daily');
-assert.equal(ui.paneStretch({ key: 'investor', stretch: 16 }, 'weekly'), 16, 'investor pane stretch on weekly');
-assert.match(source, /WEEKLY_INVESTOR_CUM = 4/, 'weekly fixed cum 4');
-assert.match(source, /WEEKLY_INVESTOR_PERIOD = 13/, 'weekly fixed period 13');
-assert.match(source, /HistogramSeries/, 'foreignRatio uses histogram series');
-assert.match(source, /rgba\(126,231,135,0\.28\)/, 'foreignRatio translucent green');
-
-const weeklyInvestorBars = [];
-for (let i = 0; i < 30; i++) {
-  const base = i >= 13 ? i : null;
-  weeklyInvestorBars.push({
-    t: `2026-02-${String(i + 1).padStart(2, '0')}`,
-    o: 100,
-    h: 101,
-    l: 99,
-    c: 100,
-    v: 1000,
-    instOsc_4_13: base != null ? 55 + i : null,
-    frgnOsc_4_13: base != null ? 45 + i : null,
-    instOsc: base != null ? 55 + i : null,
-    frgnOsc: base != null ? 45 + i : null,
-    foreignRatio: base != null ? 48 + (i % 5) : null,
-  });
-}
-const weeklyInvestorPanel = indicators.buildPanelData(
-  indicators.normalizeBars(weeklyInvestorBars),
-  '5y',
-  'weekly',
-  10,
-  20,
-);
-assert.equal(
-  weeklyInvestorPanel.instOscLine.length,
-  17,
-  'weekly investor OSC uses fixed 4/13 (ignores daily toggle args)',
-);
-assert.equal(
-  weeklyInvestorPanel.foreignRatioBars.length,
-  17,
-  'weekly foreignRatio histogram bars',
-);
-assert.equal(
-  weeklyInvestorPanel.byTime['2026-02-21'].instOsc_4_13,
-  75,
-  'weekly crosshair keeps instOsc_4_13',
-);
-assert.equal(
-  weeklyInvestorPanel.byTime['2026-02-21'].instOsc,
-  75,
-  'weekly instOsc aliases 4/13',
-);
-assert.equal(
-  weeklyInvestorPanel.byTime['2026-02-21'].foreignRatio,
-  48,
-  'weekly foreignRatio in crosshair',
-);
-assert.match(source, /paneInvestorUnitWeek/, 'weekly investor unit label');
-assert.ok(
-  source.includes('WEEKLY_INVESTOR_CUM') && source.includes('paneInvestorUnitWeek'),
-  'weekly pane label uses week unit and fixed 4/13',
-);
 
 const weeklyMaBars = [];
 for (let i = 0; i < 52; i++) {
@@ -480,12 +353,9 @@ try {
   assert.equal(historyRequests.length, 3, '5Y+warmup PostgREST pagination');
   assert.equal(payload.bars.length, 2175, '5Y returns display+weekly-warmup bars');
   assert.equal(payload.interval, 'daily', 'default interval is daily');
-  assert.ok('instOsc10' in payload.bars[0], 'daily bars include instOsc10');
-  assert.ok('frgnOsc10' in payload.bars[0], 'daily bars include frgnOsc10');
-  assert.ok('instOsc_10_20' in payload.bars[0], 'daily bars include instOsc_10_20');
-  assert.ok('instOsc_200_20' in payload.bars[0], 'daily bars include instOsc_200_20');
-  assert.ok(!('instOsc_10_50' in payload.bars[0]), 'daily bars drop period-50 combos');
-  assert.ok('foreignRatio' in payload.bars[0], 'daily bars include foreignRatio');
+  assert.equal(payload.bars[0].supplyPercentB, null, 'missing data leaves %B blank');
+  assert.equal(payload.bars[0].supplyBandwidthRank, null, 'missing data leaves rank blank');
+  assert.ok(!requests.some((u) => /stock_foreign_ratio|stock_credit_balance/.test(u)));
   assert.match(historyRequests[0], /limit=1000&offset=0/);
   assert.match(historyRequests[1], /limit=1000&offset=1000/);
   assert.match(historyRequests[2], /limit=175&offset=2000/);
@@ -500,9 +370,8 @@ try {
   assert.equal(weeklyPayload.interval, 'weekly', 'weekly interval flag');
   assert.ok(weeklyPayload.bars.length > 0, 'weekly bars returned');
   assert.ok(weeklyPayload.bars.length < 2175, 'weekly aggregates below daily count');
-  assert.ok('instOsc_4_13' in weeklyPayload.bars[0], 'weekly bars include investor OSC 4/13');
-  assert.ok('foreignRatio' in weeklyPayload.bars[0], 'weekly bars include foreignRatio');
-  assert.equal(weeklyPayload.bars[0].instOsc_10_20, null, 'weekly does not keep daily 10/20 grid');
+  assert.equal(weeklyPayload.bars[0].supplyPercentB, null);
+  assert.equal(weeklyPayload.bars[0].supplyBandwidthRank, null);
 } finally {
   globalThis.fetch = originalFetch;
 }
@@ -720,7 +589,6 @@ for (const rel of MAP_FILES) {
   assert.ok(html.includes('candle_modal.js'), `${rel} must reference candle_modal.js`);
 }
 
-assert.ok(source.includes("priceScaleId: 'left'"), 'foreignRatio uses overlay scale fr');
 assert.ok(source.includes('im-candle-hovertip'), 'floating hover tip element');
 assert.ok(source.includes('updateHoverTip'), 'updateHoverTip helper');
 assert.ok(
@@ -801,9 +669,4 @@ assert.ok(
   assert.deepEqual(result.rejected.map(r => r.ticker), ['035420']);
 }
 
-console.log('verify:candle OK — credit ratio daily/weekly, ATR3, 2Y default, session OHLV, investor filters, navigation and close-jump guard');
-
-assert.match(source.slice(source.indexOf('var foreignRatioSeries = chart.addSeries('), source.indexOf('foreignRatioSeries.setData')), /PANE_INDEX\.credit/, 'foreign ownership belongs to the credit pane');
-assert.match(source, /spec\.key === 'credit'[\s\S]{0,80}priceScale\('left'\)/, 'foreign ownership overlay scale follows the credit pane');
-
-assert.ok(source.indexOf('var frgnOscSeries =') < source.indexOf('var foreignRatioSeries ='), 'OSC pane must exist before adding the foreign ownership credit pane');
+console.log('verify:candle OK — credit ratio daily/weekly, ATR3, 2Y default, session OHLV, investor supply, navigation and close-jump guard');

@@ -1,13 +1,10 @@
-/**
- * Investor net-buy OSC (inst = trust+PE+pension, frgn = foreign).
- * Algorithm mirrors indicators_core.stochastic_osc on cumulative net series.
- */
+/** Daily investor supply indicators for trust, private equity, pension and foreign investors. */
 
 import { fetchSupabaseJson, numOrNull } from './supabase_hub.mjs';
 import { putHubCache, readHubCache } from './hub_api_cache.mjs';
 
-/** Edge cache for ticker-agnostic investor_net / foreign_ratio depth signature. */
-const INVESTOR_DEPTH_SIG_CACHE = '/api/_sig/investor_depth/v3';
+/** Edge cache for ticker-agnostic investor_net depth signature. */
+const INVESTOR_DEPTH_SIG_CACHE = '/api/_sig/investor_depth/v4';
 const INVESTOR_DEPTH_SIG_MAX_AGE = 60;
 
 export const INVESTOR_INST_CODES = Object.freeze(['3000', '3100', '6000']);
@@ -16,150 +13,64 @@ export const INVESTOR_OSC_CODES = Object.freeze([
   ...INVESTOR_INST_CODES,
   INVESTOR_FRGN_CODE,
 ]);
-export const INVESTOR_CUM_WINDOWS = Object.freeze([5, 10, 20, 50, 120, 200]);
-export const INVESTOR_OSC_PERIODS = Object.freeze([20]);
-/** Weekly OSC: fixed 4-week cum / 13-week stochastic (no UI toggle). */
-export const WEEKLY_CUM = 4;
-export const WEEKLY_PERIOD = 13;
+const CUM_WINDOW = 5;
+const BAND_WINDOW = 20;
+const RANK_WINDOW = 125;
+const SUPPLY_CODE_SET = new Set(INVESTOR_OSC_CODES);
 
-const INST_CODE_SET = new Set(INVESTOR_INST_CODES);
-const DEFAULT_CUM_WINDOW = 10;
-const DEFAULT_OSC_PERIOD = 20;
-const EMA_SPAN = 2;
-
-/** Bar field name: instOsc_10_20, frgnOsc_5_50, … */
-export function investorOscBarKey(prefix, cum, period) {
-  return `${prefix}_${cum}_${period}`;
-}
-
-/**
- * Rolling sum; minPeriods defaults to 1.
- * @param {number[]} values
- * @param {number} window
- * @param {number} [minPeriods=1]
- * @returns {(number|null)[]}
- */
-export function rollingSum(values, window, minPeriods = 1) {
-  const out = new Array(values.length).fill(null);
-  for (let i = 0; i < values.length; i++) {
-    const from = Math.max(0, i - window + 1);
-    let sum = 0;
-    let count = 0;
-    for (let j = from; j <= i; j++) {
-      sum += values[j] ?? 0;
-      count += 1;
-    }
-    if (count >= minPeriods) out[i] = sum;
-  }
-  return out;
-}
-
-/**
- * Rolling min/max with minPeriods (default = full window).
- * @param {number[]} values
- * @param {number} window
- * @param {number} [minPeriods]
- * @returns {{ lo: (number|null)[], hi: (number|null)[] }}
- */
-export function rollingMinMax(values, window, minPeriods = window) {
-  const lo = new Array(values.length).fill(null);
-  const hi = new Array(values.length).fill(null);
-  for (let i = 0; i < values.length; i++) {
-    const from = i - window + 1;
-    if (from < 0) continue;
-    let minV = Infinity;
-    let maxV = -Infinity;
-    let n = 0;
-    for (let j = from; j <= i; j++) {
-      const v = values[j];
-      if (v == null || !Number.isFinite(v)) continue;
-      n += 1;
-      if (v < minV) minV = v;
-      if (v > maxV) maxV = v;
-    }
-    if (n >= minPeriods) {
-      lo[i] = minV;
-      hi[i] = maxV;
-    }
-  }
-  return { lo, hi };
-}
-
-/**
- * pandas ewm(span, adjust=False): null input keeps previous EMA.
- * @param {(number|null)[]} values
- * @param {number} span
- * @returns {(number|null)[]}
- */
-export function ewmSpan(values, span) {
-  const alpha = 2 / (span + 1);
-  const out = new Array(values.length).fill(null);
-  let prev = null;
-  for (let i = 0; i < values.length; i++) {
-    const v = values[i];
-    if (v == null || !Number.isFinite(v)) {
-      out[i] = prev;
-      continue;
-    }
-    prev = prev == null ? v : alpha * v + (1 - alpha) * prev;
-    out[i] = prev;
-  }
-  return out;
-}
-
-function clipOsc(v) {
-  if (v == null || !Number.isFinite(v)) return null;
-  return Math.min(100, Math.max(0, v));
-}
-
-/**
- * Stochastic-style OSC on a daily net series aligned to trading bars.
- * Full cumWindow cumulative net, then `period`-bar min/max (default 20).
- * @param {number[]} netByBar — one value per bar (missing days = 0)
- * @param {number} [cumWindow=10] cumulative net window (5, 10, 20, 50, 120, 200)
- * @param {number} [period=20] stochastic lookback (daily UI fixes 20)
- * @returns {(number|null)[]}
- */
-export function computeInvestorOscSeries(
-  netByBar,
-  cumWindow = DEFAULT_CUM_WINDOW,
-  period = DEFAULT_OSC_PERIOD,
-) {
-  if (!netByBar?.length) return [];
-  const w = Number(cumWindow) || DEFAULT_CUM_WINDOW;
-  const p = Number(period) || DEFAULT_OSC_PERIOD;
-  const cum = rollingSum(netByBar, w, w);
-  const { lo, hi } = rollingMinMax(cum, p, p);
-  const raw = new Array(netByBar.length).fill(null);
-  for (let i = 0; i < netByBar.length; i++) {
-    if (lo[i] == null || hi[i] == null || cum[i] == null) continue;
-    const range = hi[i] - lo[i];
-    if (range === 0) continue;
-    raw[i] = (100 * (cum[i] - lo[i])) / range;
-  }
-  return ewmSpan(raw, EMA_SPAN).map(clipOsc);
-}
-
-/**
- * @param {Array<{trade_date:string,invst_tp_cd:string,net_val:number}>} rows
- * @returns {Map<string, { inst: number, frgn: number }>}
- */
 export function groupInvestorNetByDate(rows) {
   const byDate = new Map();
   for (const row of rows) {
-    const d = String(row.trade_date || '').slice(0, 10);
-    if (!d) continue;
-    let bucket = byDate.get(d);
-    if (!bucket) {
-      bucket = { inst: 0, frgn: 0 };
-      byDate.set(d, bucket);
-    }
+    const date = String(row.trade_date || '').slice(0, 10);
     const code = String(row.invst_tp_cd || '');
-    const val = numOrNull(row.net_val) ?? 0;
-    if (INST_CODE_SET.has(code)) bucket.inst += val;
-    else if (code === INVESTOR_FRGN_CODE) bucket.frgn += val;
+    const net = numOrNull(row.net_val);
+    if (!date || !SUPPLY_CODE_SET.has(code) || net == null) continue;
+    if (!byDate.has(date)) byDate.set(date, new Map());
+    byDate.get(date).set(code, net);
   }
   return byDate;
+}
+
+export function attachInvestorSupplyToBars(bars, byDate, marketCaps) {
+  const daily = bars.map(({ t }) => {
+    const net = byDate.get(t);
+    const cap = marketCaps.get(t);
+    if (!net || net.size !== SUPPLY_CODE_SET.size || !(cap > 0)) return null;
+    return INVESTOR_OSC_CODES.reduce((sum, code) => sum + net.get(code), 0) / cap;
+  });
+  const cumulative = [];
+  const widths = [];
+  for (const [i, bar] of bars.entries()) {
+    bar.supplyPercentB = null;
+    bar.supplyBandwidthRank = null;
+    const flows = daily.slice(Math.max(0, i - CUM_WINDOW + 1), i + 1);
+    const cum = flows.length === CUM_WINDOW && flows.every(Number.isFinite)
+      ? flows.reduce((sum, value) => sum + value, 0)
+      : null;
+    cumulative.push(cum);
+
+    const band = cumulative.slice(-BAND_WINDOW);
+    let width = null;
+    if (band.length === BAND_WINDOW && band.every(Number.isFinite)) {
+      const mean = band.reduce((sum, value) => sum + value, 0) / BAND_WINDOW;
+      const variance = band.reduce((sum, value) => sum + (value - mean) ** 2, 0) / BAND_WINDOW;
+      width = band.every((value) => value === cum) ? 0 : 4 * Math.sqrt(variance);
+      if (width > 0) bar.supplyPercentB = 0.5 + (cum - mean) / width;
+    }
+    widths.push(width);
+
+    const window = widths.slice(-RANK_WINDOW);
+    if (window.length === RANK_WINDOW && window.every(Number.isFinite)) {
+      // Midrank for ties. Exclude today's observation from the comparison.
+      let rank = 0;
+      for (const prior of window.slice(0, -1)) {
+        if (prior < width) rank += 1;
+        else if (prior === width) rank += 0.5;
+      }
+      bar.supplyBandwidthRank = (rank * 100) / (RANK_WINDOW - 1);
+    }
+  }
+  return bars;
 }
 
 /**
@@ -176,7 +87,7 @@ export async function fetchInvestorNetForRange(config, ticker, fromDate, toDate)
       `stock_investor_net?ticker=eq.${encodeURIComponent(ticker)}` +
       `&invst_tp_cd=in.(${INVESTOR_OSC_CODES.join(',')})` +
       `&trade_date=gte.${fromDate}&trade_date=lte.${toDate}` +
-      `&select=trade_date,invst_tp_cd,net_val&order=trade_date.asc` +
+      `&select=trade_date,invst_tp_cd,net_val&order=trade_date.asc,invst_tp_cd.asc` +
       `&limit=${pageSize}&offset=${offset}`;
     const page = await fetchSupabaseJson(config, q);
     rows.push(...page);
@@ -186,10 +97,7 @@ export async function fetchInvestorNetForRange(config, ticker, fromDate, toDate)
 }
 
 /**
- * Investor-net + foreign-ratio cache signature.
- * Includes min+max for both tables so historical depth backfills invalidate
- * even when MAX(trade_date) is unchanged.
- * Depth min/max are ticker-agnostic globals — cache 60s via caches.default.
+ * Cache the earliest and latest investor-net dates so depth backfills invalidate OHLC.
  *
  * @param {{ url: string, anonKey: string }} config
  * @param {{ origin?: string, context?: { waitUntil?: Function } }} [cacheCtx]
@@ -226,17 +134,7 @@ export async function fetchLatestInvestorNetSignature(config, cacheCtx = {}) {
     }
   };
 
-  let sig = 'inv-v10-none';
-  try {
-    const [invDepth, frDepth, crDepth] = await Promise.all([
-      depthSig('stock_investor_net'),
-      depthSig('stock_foreign_ratio'),
-      depthSig('stock_credit_balance'),
-    ]);
-    sig = `inv-v10-${invDepth}-fr-${frDepth}-cr-${crDepth}`;
-  } catch {
-    sig = 'inv-v10-none';
-  }
+  const sig = `inv-v11-${await depthSig('stock_investor_net')}`;
 
   if (origin && cacheCtx.context) {
     try {
@@ -309,6 +207,8 @@ export function aggregateDailyBarsToWeekly(dailyBars) {
       current.c = bar.c;
       current.v += Number(bar.v) || 0;
     }
+    current.supplyPercentB = bar.supplyPercentB;
+    current.supplyBandwidthRank = bar.supplyBandwidthRank;
   }
   if (current) {
     const { key: _k, ...rest } = current;
@@ -317,139 +217,13 @@ export function aggregateDailyBarsToWeekly(dailyBars) {
   return out;
 }
 
-/**
- * Sum daily investor nets into each ISO week (aligned to weeklyBars order).
- * @param {Array<{ t: string }>} weeklyBars
- * @param {Map<string, { inst: number, frgn: number }>} byDate
- * @returns {{ inst: number[], frgn: number[] }}
- */
-export function weeklyNetSeriesFromDaily(weeklyBars, byDate) {
-  const weekNets = new Map();
-  for (const [d, bucket] of byDate || []) {
-    const key = isoWeekKey(d);
-    let w = weekNets.get(key);
-    if (!w) {
-      w = { inst: 0, frgn: 0 };
-      weekNets.set(key, w);
-    }
-    w.inst += bucket?.inst ?? 0;
-    w.frgn += bucket?.frgn ?? 0;
-  }
-  const inst = [];
-  const frgn = [];
-  for (const bar of weeklyBars || []) {
-    const pack = weekNets.get(isoWeekKey(bar.t));
-    inst.push(pack?.inst ?? 0);
-    frgn.push(pack?.frgn ?? 0);
-  }
-  return { inst, frgn };
-}
-
-function clearInvestorOscOnBar(bar) {
-  for (const cum of INVESTOR_CUM_WINDOWS) {
-    for (const period of INVESTOR_OSC_PERIODS) {
-      bar[investorOscBarKey('instOsc', cum, period)] = null;
-      bar[investorOscBarKey('frgnOsc', cum, period)] = null;
-    }
-    bar[`instOsc${cum}`] = null;
-    bar[`frgnOsc${cum}`] = null;
-  }
-  bar[investorOscBarKey('instOsc', WEEKLY_CUM, WEEKLY_PERIOD)] = null;
-  bar[investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD)] = null;
-  bar.instOsc = null;
-  bar.frgnOsc = null;
-}
-
-/**
- * Write OSC combo fields onto bars from aligned net series (mutates bars).
- * @param {Array<object>} bars
- * @param {number[]} instNet
- * @param {number[]} frgnNet
- */
-function writeInvestorOscFromNets(bars, instNet, frgnNet) {
-  const byCombo = new Map();
-  for (const cum of INVESTOR_CUM_WINDOWS) {
-    for (const period of INVESTOR_OSC_PERIODS) {
-      byCombo.set(`${cum}_${period}`, {
-        inst: computeInvestorOscSeries(instNet, cum, period),
-        frgn: computeInvestorOscSeries(frgnNet, cum, period),
-      });
-    }
-  }
-  for (let i = 0; i < bars.length; i++) {
-    for (const cum of INVESTOR_CUM_WINDOWS) {
-      for (const period of INVESTOR_OSC_PERIODS) {
-        const pack = byCombo.get(`${cum}_${period}`);
-        bars[i][investorOscBarKey('instOsc', cum, period)] = pack.inst[i] ?? null;
-        bars[i][investorOscBarKey('frgnOsc', cum, period)] = pack.frgn[i] ?? null;
-      }
-      bars[i][`instOsc${cum}`] = bars[i][investorOscBarKey('instOsc', cum, 20)];
-      bars[i][`frgnOsc${cum}`] = bars[i][investorOscBarKey('frgnOsc', cum, 20)];
-    }
-    bars[i].instOsc = bars[i].instOsc10;
-    bars[i].frgnOsc = bars[i].frgnOsc10;
-  }
-  return bars;
-}
-
-/**
- * Attach instOsc_{cum}_{period} and frgnOsc_{cum}_{period} to daily OHLC bars (mutates bars).
- * Legacy instOsc{cum} and instOsc / frgnOsc alias the period-20 combination.
- * @param {Array<{ t: string }>} bars ascending trade dates
- * @param {Map<string, { inst: number, frgn: number }>} byDate
- */
-export function attachInvestorOscToBars(bars, byDate) {
-  const instNet = bars.map((b) => byDate.get(b.t)?.inst ?? 0);
-  const frgnNet = bars.map((b) => byDate.get(b.t)?.frgn ?? 0);
-  return writeInvestorOscFromNets(bars, instNet, frgnNet);
-}
-
-/**
- * Attach OSC to weekly bars: sum daily nets inside each ISO week, then fixed
- * WEEKLY_CUM / WEEKLY_PERIOD OSC only (no daily cum-window grid).
- * @param {Array<{ t: string }>} weeklyBars
- * @param {Map<string, { inst: number, frgn: number }>} byDate daily nets
- */
-export function attachInvestorOscToWeeklyBars(weeklyBars, byDate) {
-  const { inst, frgn } = weeklyNetSeriesFromDaily(weeklyBars, byDate);
-  const instSeries = computeInvestorOscSeries(inst, WEEKLY_CUM, WEEKLY_PERIOD);
-  const frgnSeries = computeInvestorOscSeries(frgn, WEEKLY_CUM, WEEKLY_PERIOD);
-  const ik = investorOscBarKey('instOsc', WEEKLY_CUM, WEEKLY_PERIOD);
-  const fk = investorOscBarKey('frgnOsc', WEEKLY_CUM, WEEKLY_PERIOD);
-  for (let i = 0; i < weeklyBars.length; i++) {
-    clearInvestorOscOnBar(weeklyBars[i]);
-    weeklyBars[i][ik] = instSeries[i] ?? null;
-    weeklyBars[i][fk] = frgnSeries[i] ?? null;
-    weeklyBars[i].instOsc = weeklyBars[i][ik];
-    weeklyBars[i].frgnOsc = weeklyBars[i][fk];
-  }
-  return weeklyBars;
-}
-
-/**
- * Fetch investor net and attach OSC fields to bars.
- * @param {{ url: string, anonKey: string }} config
- * @param {string} ticker
- * @param {Array<{ t: string }>} bars daily or weekly (see options.interval)
- * @param {{ interval?: 'daily'|'weekly', netFromDate?: string }} [options]
- *   netFromDate: optional earlier bound when bars are weekly (cover first week days)
- */
-export async function loadAndAttachInvestorOsc(config, ticker, bars, options = {}) {
+export async function loadAndAttachInvestorSupply(config, ticker, bars, marketCaps) {
   if (!bars.length) return bars;
-  const interval = options.interval === 'weekly' ? 'weekly' : 'daily';
-  const fromDate = options.netFromDate || bars[0].t;
-  const toDate = bars[bars.length - 1].t;
+  let rows = [];
   try {
-    const rows = await fetchInvestorNetForRange(config, ticker, fromDate, toDate);
-    const byDate = groupInvestorNetByDate(rows);
-    if (interval === 'weekly') attachInvestorOscToWeeklyBars(bars, byDate);
-    else attachInvestorOscToBars(bars, byDate);
+    rows = await fetchInvestorNetForRange(config, ticker, bars[0].t, bars.at(-1).t);
   } catch (err) {
-    console.warn(
-      '[investor_osc] fetch failed:',
-      err && err.message ? err.message : err,
-    );
-    for (const bar of bars) clearInvestorOscOnBar(bar);
+    console.warn('[investor_osc] fetch failed:', err?.message ?? err);
   }
-  return bars;
+  return attachInvestorSupplyToBars(bars, groupInvestorNetByDate(rows), marketCaps);
 }
