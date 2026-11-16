@@ -22,6 +22,7 @@ export const JS_FILES = [
   'js/hub_dashboard.js',
   'js/sector_weighting.js',
   'js/hub_trend_chart.js',
+  'js/hub_sector_rankings.js',
   'js/hub_range_scatter.js',
   'js/im_collapsible.js',
   'js/live_quotes.js',

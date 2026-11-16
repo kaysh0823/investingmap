@@ -1995,6 +1995,49 @@
 
 
 
+    .hub-sector-rankings { min-width: 0; }
+    .hub-sector-rankings-scroll {
+      max-width: 100%;
+      max-height: 34rem;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+    .hub-sector-rankings-scroll table {
+      width: max-content;
+      border-spacing: 0;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+    .hub-sector-rankings-scroll th,
+    .hub-sector-rankings-scroll td {
+      padding: 7px 11px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .hub-sector-rankings-scroll th {
+      position: sticky;
+      background: var(--surface2);
+      color: var(--text-muted);
+    }
+    .hub-sector-rankings-scroll thead th { top: 0; z-index: 2; }
+    .hub-sector-rankings-scroll tr > th:first-child { left: 0; }
+    .hub-sector-rankings-scroll thead th:first-child { z-index: 3; }
+    .hub-sector-rankings-scroll tbody th { z-index: 1; }
+    .hub-sector-rankings-scroll td { min-width: 7.5rem; }
+    .hub-sector-rankings-scroll tr:nth-child(even) td {
+      background: color-mix(in srgb, var(--surface2) 45%, var(--surface));
+    }
+    .hub-sector-rankings-scroll td > span,
+    .hub-sector-rankings-scroll td > strong { display: block; }
+    .hub-sector-rankings-scroll td > strong { margin-top: 2px; }
+    .hub-sector-rankings-scroll .is-up { color: #ff7b72; }
+    .hub-sector-rankings-scroll .is-down { color: #79b8ff; }
+    [data-theme="light"] .hub-sector-rankings-scroll .is-up { color: #b42318; }
+    [data-theme="light"] .hub-sector-rankings-scroll .is-down { color: #175bb0; }
+    #hub-sector-rankings-status { color: var(--text-muted); font-size: 12px; }
+    #hub-sector-rankings-status button { margin-inline-start: 8px; }
   </style>
 </head>
 
@@ -2061,6 +2104,23 @@
         <div id="hub-trend-tooltip" class="hub-trend-tooltip" hidden></div>
       </div>
       <div id="hub-trend-legend" class="hub-trend-legend"></div>
+    </section>
+
+    <section id="hub-sector-rankings" class="hub-trend hub-sector-rankings" aria-labelledby="hub-sector-rankings-title">
+      <div class="hub-trend-head">
+        <div>
+          <h2 id="hub-sector-rankings-title">섹터 수익률 순위</h2>
+          <p id="hub-sector-rankings-note">확정 종가 기준 · 최신 기간부터</p>
+        </div>
+        <div class="hub-trend-tabs" role="group" aria-labelledby="hub-sector-rankings-title">
+          <button type="button" class="hub-trend-tab is-active" data-period="daily" aria-pressed="true">일간</button>
+          <button type="button" class="hub-trend-tab" data-period="weekly" aria-pressed="false">주간</button>
+        </div>
+      </div>
+      <p id="hub-sector-rankings-status" role="status" hidden></p>
+      <div class="hub-sector-rankings-scroll" role="region" aria-labelledby="hub-sector-rankings-title" tabindex="0" hidden>
+        <table aria-labelledby="hub-sector-rankings-title"></table>
+      </div>
     </section>
 
     <div class="hub-dashboard-row" id="hub-dashboard-row">
@@ -2388,7 +2448,8 @@
   <script src="js/candle_modal.js?v=cce19f1e"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="js/hub_range_scatter.js?v=eb81af1f"></script>
-  <script src="js/hub_trend_chart.js?v=6ab1fb39"></script>
+  <script src="js/hub_trend_chart.js?v=e1c4ee4e"></script>
+  <script src="js/hub_sector_rankings.js?v=34508d1c"></script>
   <script src="js/im_collapsible.js?v=098f0bc5"></script>
 <script>
     const T = {
@@ -2798,6 +2859,7 @@ document.title = lang === 'en'
         InvestingMapHubDashboard.refresh(lang);
       }
       if (window.InvestingMapHubRangeScatter) InvestingMapHubRangeScatter.setLang(lang);
+      if (window.InvestingMapHubSectorRankings) InvestingMapHubSectorRankings.setLang(lang);
       if (window.InvestingMapHubTrendChart) {
         InvestingMapHubTrendChart.setLang(lang);
         InvestingMapHubTrendChart.init({ lang: lang, horizon: '20d' });

@@ -254,7 +254,7 @@
     if (subtitle) subtitle.textContent = state.lang === 'en'
       ? (state.weighting === 'equal' ? 'Equal-weighted stock returns' : 'Market-cap-weighted stock returns') + ' and KOSPI/KOSDAQ, rebased to 100'
       : (state.weighting === 'equal' ? '동일가중' : '시가총액 가중') + ' 섹터 수익률과 코스피·코스닥, 기준값 100';
-    document.querySelectorAll('.hub-trend-tab').forEach(function (button) {
+    document.querySelectorAll('#hub-sector-trend [data-horizon]').forEach(function (button) {
       var active = button.getAttribute('data-horizon') === state.horizon;
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-selected', active ? 'true' : 'false');
@@ -652,7 +652,7 @@
     var root = document.getElementById('hub-trend-chart');
     if (!root) return;
     state.initialized = true;
-    document.querySelectorAll('.hub-trend-tab').forEach(function (button) {
+    document.querySelectorAll('#hub-sector-trend [data-horizon]').forEach(function (button) {
       button.addEventListener('click', function () {
         fetchAndRender(button.getAttribute('data-horizon'));
       });
