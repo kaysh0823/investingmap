@@ -28,9 +28,9 @@ import {
 export const RS_HISTORY_LOOKBACK = 230;
 export const RS_FFILL_LIMIT = 20;
 /** Trading-session calendar length for hub_return_refs.json */
-export const RETURN_REF_TRADING_DATES = 260;
-/** Adjusted-close window length (supports N=200 with k≤1) */
-export const RETURN_REF_CLOSES = 201;
+export const RETURN_REF_TRADING_DATES = 280;
+/** Adjusted closes for daily horizons and 12 monthly rankings. */
+export const RETURN_REF_CLOSES = 280;
 const PAGE_SIZE = 1000;
 const TICKER_BATCH = 40;
 const FETCH_CONCURRENCY = 3;
