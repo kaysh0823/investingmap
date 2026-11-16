@@ -102,6 +102,9 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
     return [{ index, date: iso, week: monday.toISOString().slice(0, 10) }];
   });
   const weeks = sessions.filter((session, i) => session.week !== sessions[i + 1]?.week);
+  const months = sessions.filter((session, i) =>
+    session.date.slice(0, 7) !== sessions[i + 1]?.date.slice(0, 7),
+  );
   const sectors = SECTOR_ORDER.filter((id) => hubIndex.sectors?.[id]).map((id) => {
     const { meta, companies } = hubIndex.sectors[id];
     return {
@@ -115,7 +118,7 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
   });
 
   function rank(periods) {
-    const window = periods.slice(-21);
+    const window = periods.slice(-11);
     return window.slice(1).map((end, i) => {
       const start = window[i];
       const returns = sectors.flatMap(({ id, members }) => {
@@ -139,6 +142,7 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
     sectors: sectors.map(({ id, ko, en }) => ({ id, ko, en })),
     daily: rank(sessions),
     weekly: rank(weeks),
+    monthly: rank(months),
   };
 }
 

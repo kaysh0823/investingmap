@@ -2005,7 +2005,6 @@
       font-size: 12px;
       font-variant-numeric: tabular-nums;
     }
-    .hub-sector-rankings-tables table + table { margin-top: 12px; }
     .hub-sector-rankings-tables th {
       padding: 7px 4px;
       background: var(--surface2);
@@ -2046,6 +2045,12 @@
     .hub-sector-rankings-tables .is-down { color: #79b8ff; }
     [data-theme="light"] .hub-sector-rankings-tables .is-up { color: #b42318; }
     [data-theme="light"] .hub-sector-rankings-tables .is-down { color: #175bb0; }
+    @media (max-width: 640px) {
+      .hub-sector-rankings-tables table { font-size: 10px; }
+      .hub-sector-rankings-tables tr > th:first-child { width: 20px; }
+      .hub-sector-rankings-tables th { padding: 5px 1px; }
+      .hub-sector-rankings-tables td button { padding: 4px 1px; text-align: center; }
+    }
     #hub-sector-rankings-status { color: var(--text-muted); font-size: 12px; }
     #hub-sector-rankings-status button { margin-inline-start: 8px; }
   </style>
@@ -2125,6 +2130,7 @@
         <div class="hub-trend-tabs" role="group" aria-labelledby="hub-sector-rankings-title">
           <button type="button" class="hub-trend-tab is-active" data-period="daily" aria-pressed="true">일간</button>
           <button type="button" class="hub-trend-tab" data-period="weekly" aria-pressed="false">주간</button>
+          <button type="button" class="hub-trend-tab" data-period="monthly" aria-pressed="false">월간</button>
         </div>
       </div>
       <p id="hub-sector-rankings-status" role="status" hidden></p>
@@ -2457,7 +2463,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="js/hub_range_scatter.js?v=eb81af1f"></script>
   <script src="js/hub_trend_chart.js?v=e1c4ee4e"></script>
-  <script src="js/hub_sector_rankings.js?v=add1b3d1"></script>
+  <script src="js/hub_sector_rankings.js?v=6d2e41b5"></script>
   <script src="js/im_collapsible.js?v=098f0bc5"></script>
 <script>
     const T = {
