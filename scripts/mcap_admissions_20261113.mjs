@@ -75,11 +75,17 @@ const latestByMarket = {
   KOSDAQ: path.basename(resolveLatestCsv(DATA, 'data_4848_')),
 };
 const tickers = new Set(admissions.map(({ ticker }) => ticker));
+const reset = process.argv.includes('--reset');
 
 for (const [sector, rel] of HUB_MAP_PATHS) {
   const file = path.join(ROOT, rel);
   const html = fs.readFileSync(file, 'utf8');
   const original = extractCompaniesFromHtml(html);
+  if (reset) {
+    const base = original.filter((company) => !tickers.has(company.ticker) || !company.mcapAsOf);
+    if (base.length !== original.length) fs.writeFileSync(file, patchKoreanCompaniesHtml(html, base));
+    continue;
+  }
   const rows = admissions.filter((row) => row.sector === sector);
   if (!rows.length && !original.some((company) => tickers.has(company.ticker))) continue;
 
@@ -111,4 +117,4 @@ for (const [sector, rel] of HUB_MAP_PATHS) {
   fs.writeFileSync(file, patchKoreanCompaniesHtml(html, companies));
 }
 
-console.log('OK KRX 2026-11-13 approved company admissions');
+console.log(reset ? 'OK cleared previously generated admissions' : 'OK KRX 2026-11-13 approved company admissions');

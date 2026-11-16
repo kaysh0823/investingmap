@@ -33,6 +33,7 @@ function ensureMapBuilder(relHtml, builderCmd, label) {
   run(builderCmd, label);
 }
 
+run('node scripts/mcap_admissions_20261113.mjs --reset', 'clear generated admissions before legacy builders');
 run('node build_korea_auto_map.mjs', 'rebuild auto map');
 ensureMapBuilder('medtech/korea_medtech_map.html', 'node build_korea_medtech_map.mjs', 'build medtech map');
 run('node build_korea_robot_map.mjs', 'rebuild robot map');
