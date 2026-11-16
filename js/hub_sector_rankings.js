@@ -12,22 +12,23 @@
   var lang = 'ko';
   var period = 'daily';
   var selectedSector = null;
-  var columnsPerTable = 0;
   var payload;
   var state = 'loading';
   var requestId = 0;
   var copy = {
     ko: {
-      title: '섹터 수익률 순위', daily: '일간', weekly: '주간', rank: '순위',
+      title: '섹터 수익률 순위', daily: '일간', weekly: '주간', monthly: '월간', rank: '순위',
       dailyNote: '직전 거래일 종가 대비 · 최신 기간부터',
       weeklyNote: '직전 주 마지막 종가 대비 · 이번 주는 최신 확정 종가까지',
+      monthlyNote: '직전 달 마지막 종가 대비 · 이번 달은 최신 확정 종가까지',
       loading: '수익률 순위를 불러오는 중…', empty: '표시할 수익률 데이터가 없습니다.',
       error: '수익률 순위를 불러오지 못했습니다.', retry: '다시 시도',
     },
     en: {
-      title: 'Sector return rankings', daily: 'Daily', weekly: 'Weekly', rank: 'Rank',
+      title: 'Sector return rankings', daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', rank: 'Rank',
       dailyNote: 'Previous session close to close · newest first',
       weeklyNote: 'Compared with the previous week’s final close · this week through the latest close',
+      monthlyNote: 'Compared with the previous month’s final close · this month through the latest close',
       loading: 'Loading sector rankings…', empty: 'No return data available.',
       error: 'Could not load sector rankings.', retry: 'Retry',
     },
@@ -52,7 +53,7 @@
       button.classList.toggle('is-active', active);
     });
 
-    var columns = payload ? payload[period] : [];
+    var columns = payload?.[period] || [];
     var rowCount = Math.max(0, ...columns.map(function (column) { return column.returns.length; }));
     tables.hidden = !rowCount;
     status.hidden = !!rowCount;
@@ -65,7 +66,7 @@
       retry.addEventListener('click', load);
       status.appendChild(retry);
     }
-    renderTables();
+    renderRankingsTable();
   }
 
   function updateSelection() {
@@ -74,25 +75,18 @@
     });
   }
 
-  function renderTables() {
+  function renderRankingsTable() {
     tables.replaceChildren();
     if (tables.hidden) return;
 
     var labels = copy[lang];
-    var columns = payload[period];
+    var columns = payload[period].slice(0, 10);
     var names = new Map(payload.sectors.map(function (sector) { return [sector.id, sector[lang]]; }));
     var number = new Intl.NumberFormat(lang === 'ko' ? 'ko-KR' : 'en', {
       minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: 'exceptZero',
     });
-    columnsPerTable = fitColumns();
-    for (var offset = 0; offset < columns.length; offset += columnsPerTable) {
-      renderTable(columns.slice(offset, offset + columnsPerTable), labels.rank, names, number);
-    }
+    renderTable(columns, labels.rank, names, number);
     updateSelection();
-  }
-
-  function fitColumns() {
-    return Math.max(1, Math.floor((tables.clientWidth - 44) / 110));
   }
 
   function renderTable(columns, rankLabel, names, number) {
@@ -104,8 +98,9 @@
       var date = period === 'weekly' ? column.week : column.date;
       var cell = addCell(header, 'th', '', 'col');
       var time = document.createElement('time');
-      time.dateTime = date;
-      time.textContent = date;
+      time.dateTime = period === 'monthly' ? date.slice(0, 7) : date;
+      time.title = date;
+      time.textContent = period === 'monthly' ? date.slice(0, 7).replace('-', '/') : date.slice(5).replace('-', '/');
       cell.appendChild(time);
     });
     var body = table.createTBody();
@@ -166,11 +161,6 @@
     selectedSector = selectedSector === sector ? null : sector;
     updateSelection();
   });
-  if (global.ResizeObserver) {
-    new ResizeObserver(function () {
-      if (!tables.hidden && fitColumns() !== columnsPerTable) renderTables();
-    }).observe(root);
-  }
   if (weighting) weighting.subscribe(load);
   global.InvestingMapHubSectorRankings = {
     setLang: function (value) {

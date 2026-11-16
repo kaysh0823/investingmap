@@ -14,7 +14,7 @@ export async function onRequest(context) {
 
   const url = new URL(request.url);
   const weighting = normalizeSectorWeighting(url.searchParams.get('weighting'));
-  const path = `/api/hub_sector_rankings/cache/v1/${weighting}`;
+  const path = `/api/hub_sector_rankings/cache/v3/${weighting}`;
   const hit = await readHubCache(path, url.origin);
   if (hit) {
     const headers = new Headers(hit.headers);
