@@ -91,6 +91,57 @@ function sectorName(hubIndex, sector) {
   return meta?.ko || meta?.shortKo || sector;
 }
 
+export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
+  const dates = (refs?.tradingDates || []).map(compactYmd);
+  const lastClose = compactYmd(refs?.recentDd);
+  const sessions = dates.flatMap((date, index) => {
+    if (!date || !lastClose || date > lastClose) return [];
+    const iso = basDdToDash(date);
+    const monday = new Date(iso + 'T00:00:00Z');
+    monday.setUTCDate(monday.getUTCDate() - (monday.getUTCDay() + 6) % 7);
+    return [{ index, date: iso, week: monday.toISOString().slice(0, 10) }];
+  });
+  const weeks = sessions.filter((session, i) => session.week !== sessions[i + 1]?.week);
+  const sectors = SECTOR_ORDER.filter((id) => hubIndex.sectors?.[id]).map((id) => {
+    const { meta, companies } = hubIndex.sectors[id];
+    return {
+      id,
+      ko: meta?.shortKo || sectorName(hubIndex, id),
+      en: meta?.shortEn || meta?.en || id,
+      members: [...new Set((companies || []).map(({ ticker }) => normalizeTicker(ticker)))]
+        .map((ticker) => refs?.quotes?.[ticker])
+        .filter((quote) => quote?.closes?.length),
+    };
+  });
+
+  function rank(periods) {
+    const window = periods.slice(-21);
+    return window.slice(1).map((end, i) => {
+      const start = window[i];
+      const returns = sectors.flatMap(({ id, members }) => {
+        const inputs = members.map(({ closes, shares }) => {
+          const offset = dates.length - closes.length;
+          return {
+            shares,
+            prevClose1d: closes[start.index - offset],
+            numerator1d: closes[end.index - offset],
+          };
+        });
+        const value = aggregateSectorReturns(inputs, weighting).chg1dPct;
+        return value == null ? [] : [{ id, value }];
+      });
+      returns.sort((a, b) => b.value - a.value || a.id.localeCompare(b.id));
+      return { date: end.date, week: end.week, returns };
+    }).reverse();
+  }
+
+  return {
+    sectors: sectors.map(({ id, ko, en }) => ({ id, ko, en })),
+    daily: rank(sessions),
+    weekly: rank(weeks),
+  };
+}
+
 function round2(n) {
   return Math.round(Number(n) * 100) / 100;
 }
