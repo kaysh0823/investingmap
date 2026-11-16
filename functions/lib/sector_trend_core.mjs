@@ -118,7 +118,7 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
   });
 
   function rank(periods) {
-    const window = periods.slice(-11);
+    const window = periods.slice(-13);
     return window.slice(1).map((end, i) => {
       const start = window[i];
       const returns = sectors.flatMap(({ id, members }) => {

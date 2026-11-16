@@ -80,7 +80,7 @@
     if (tables.hidden) return;
 
     var labels = copy[lang];
-    var columns = payload[period].slice(0, 10);
+    var columns = payload[period].slice(0, 12);
     var names = new Map(payload.sectors.map(function (sector) { return [sector.id, sector[lang]]; }));
     var number = new Intl.NumberFormat(lang === 'ko' ? 'ko-KR' : 'en', {
       minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: 'exceptZero',

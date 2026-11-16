@@ -2005,6 +2005,7 @@
       font-size: 12px;
       font-variant-numeric: tabular-nums;
     }
+    .hub-sector-rankings-tables time { overflow-wrap: anywhere; }
     .hub-sector-rankings-tables th {
       padding: 7px 4px;
       background: var(--surface2);
@@ -2046,7 +2047,7 @@
     [data-theme="light"] .hub-sector-rankings-tables .is-up { color: #b42318; }
     [data-theme="light"] .hub-sector-rankings-tables .is-down { color: #175bb0; }
     @media (max-width: 640px) {
-      .hub-sector-rankings-tables table { font-size: 10px; }
+      .hub-sector-rankings-tables table { font-size: clamp(8px, 2.4vw, 10px); }
       .hub-sector-rankings-tables tr > th:first-child { width: 20px; }
       .hub-sector-rankings-tables th { padding: 5px 1px; }
       .hub-sector-rankings-tables td button { padding: 4px 1px; text-align: center; }
@@ -2463,7 +2464,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="js/hub_range_scatter.js?v=eb81af1f"></script>
   <script src="js/hub_trend_chart.js?v=e1c4ee4e"></script>
-  <script src="js/hub_sector_rankings.js?v=6d2e41b5"></script>
+  <script src="js/hub_sector_rankings.js?v=c7576f54"></script>
   <script src="js/im_collapsible.js?v=098f0bc5"></script>
 <script>
     const T = {
