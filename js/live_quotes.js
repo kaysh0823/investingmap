@@ -372,7 +372,7 @@
     return false;
   }
 
-  function mergeCompanies(companies, items) {
+  function mergeCompanies(companies, items, mcapQuoteDates) {
     if (!companies || !items) return;
     for (var i = 0; i < companies.length; i++) {
       var c = companies[i];
@@ -411,10 +411,13 @@
       c.low5d = typeof q.low5d === 'number' && isFinite(q.low5d) ? q.low5d : null;
       c.bbUpper = typeof q.bbUpper === 'number' && isFinite(q.bbUpper) ? q.bbUpper : null;
       c.bbLower = typeof q.bbLower === 'number' && isFinite(q.bbLower) ? q.bbLower : null;
-      if (typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) {
+      var quoteAsOf = mcapQuoteDates && mcapQuoteDates[key];
+      var mcapIsFresh = !c.mcapAsOf || Date.parse(quoteAsOf) >= Date.parse(c.mcapAsOf);
+      if (mcapIsFresh && typeof q.mcapWon === 'number' && isFinite(q.mcapWon) && q.mcapWon > 0) {
         var mcapFmt = global.InvestingMapMcapFmt;
         if (!mcapFmt || mcapFmt.shouldApplyLiveMcap(c.mcapWon, q.mcapWon)) {
           c.mcapWon = q.mcapWon;
+          if (c.mcapAsOf) c.mcapAsOf = quoteAsOf;
         }
       }
       if (typeof q.per === 'number' && isFinite(q.per)) c.per = q.per;
@@ -670,6 +673,7 @@
 
   function fetchAllCodes(base, codes) {
     var merged = {};
+    var mcapQuoteDates = {};
     var asOf = '';
     var regularSession = null;
     var source = '';
@@ -702,7 +706,10 @@
           }
           var items = (j && j.items) || {};
           for (var k in items) {
-            if (Object.prototype.hasOwnProperty.call(items, k)) merged[k] = items[k];
+            if (Object.prototype.hasOwnProperty.call(items, k)) {
+              merged[k] = items[k];
+              mcapQuoteDates[k] = j.asOf;
+            }
           }
         });
       })(codes.slice(i, i + CHUNK_SIZE));
@@ -711,6 +718,7 @@
       var out = {
         asOf: asOf,
         items: merged,
+        mcapQuoteDates: mcapQuoteDates,
         regularSession: regularSession,
         source: source,
         indices: indices,
@@ -783,7 +791,7 @@
     function applyPayload(j) {
       if (!j) return null;
       lastPayload = j;
-      mergeCompanies(getCompanies(), j.items || {});
+      mergeCompanies(getCompanies(), j.items || {}, j.mcapQuoteDates);
       rememberReturnMeta(j);
       if (j && j.indices) rememberMomentumIndices(j);
       function finishQuotes() {
