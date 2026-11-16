@@ -33,6 +33,7 @@ function ensureMapBuilder(relHtml, builderCmd, label) {
   run(builderCmd, label);
 }
 
+run('node scripts/mcap_admissions_20261113.mjs --reset', 'clear generated admissions before legacy builders');
 run('node build_korea_auto_map.mjs', 'rebuild auto map');
 ensureMapBuilder('medtech/korea_medtech_map.html', 'node build_korea_medtech_map.mjs', 'build medtech map');
 run('node build_korea_robot_map.mjs', 'rebuild robot map');
@@ -126,6 +127,7 @@ run('node scripts/apply_holdings_migration.mjs', 'approved holdings migration af
 run('node scripts/merge_construction_machinery.mjs', 'restore construction/machinery links');
 run('node scripts/apply_company_classification_corrections.mjs', 'approved individual company facts');
 run('node scripts/apply_semi_classification_review.mjs', 'approved semiconductor classification and process-stage filters');
+run('node scripts/mcap_admissions_20261113.mjs', 'approved KRX market-cap admissions');
 run('node scripts/sync_map_badges.mjs', 'map header badges from koreanCompanies (after all membership steps)');
 run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
 run('node scripts/sync_hub_card_badges.mjs', 'static hub card badges from hub index');
@@ -145,6 +147,7 @@ run('node scripts/patch_volatility_tab.mjs', 'volatility distribution tab');
 run('node scripts/patch_perfcalendar_tab.mjs', 'performance calendar tab');
 run('node scripts/patch_valuation_tab.mjs', 'valuation comparison tab');
 run('node scripts/patch_netmap_tab.mjs', 'network map tab (data/netmap)');
+run('node scripts/mcap_admissions_20261113.mjs', 'restore approved admissions after bio regeneration');
 run('node scripts/patch_editorial_collapsible_html.mjs', 'editorial collapsible HTML');
 run('node scripts/fix_mcap_script_order.mjs', 'mcap fmt + script order');
 run('node scripts/patch_rs_column.mjs', 'RS table column');
