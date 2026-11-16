@@ -91,6 +91,7 @@ for (const [sector, rel] of HUB_MAP_PATHS) {
 
   const companies = original.filter((company) => !tickers.has(company.ticker));
   const chains = extractChainColors(html);
+  const admitted = [];
   for (const row of rows) {
     const { sector: admissionSector, ...company } = row;
     if (!chains.includes(company.chain)) throw new Error(`${admissionSector}: unknown chain ${company.chain}`);
@@ -113,8 +114,24 @@ for (const [sector, rel] of HUB_MAP_PATHS) {
       revenue: fmtMcap(company.mcapWon),
       revTier: mcapTier(company.mcapWon),
     });
+    admitted.push(company);
   }
   fs.writeFileSync(file, patchKoreanCompaniesHtml(html, companies));
+
+  if (!admitted.length) continue;
+  const graphFile = path.join(DATA, 'netmap', `${sector}.json`);
+  const graph = JSON.parse(fs.readFileSync(graphFile, 'utf8'));
+  for (const company of admitted) {
+    const id = `krx:${company.ticker}`;
+    if (graph.nodes.some((node) => node.id === id || node.ticker === company.ticker)) continue;
+    const chain = Object.keys(graph.chains).find((key) => graph.chains[key] === company.chain);
+    if (!chain) throw new Error(`${sector} network map: unknown chain ${company.chain}`);
+    graph.nodes.push({
+      id, ticker: company.ticker, type: 'kr_listed', country: 'kr', market: company.market,
+      nameKo: company.name, nameEn: company.nameEn, chain, role: company.semType,
+    });
+  }
+  fs.writeFileSync(graphFile, JSON.stringify(graph, null, 2) + '\n');
 }
 
 console.log(reset ? 'OK cleared previously generated admissions' : 'OK KRX 2026-11-13 approved company admissions');
