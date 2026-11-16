@@ -6,12 +6,13 @@
   var heading = document.getElementById('hub-sector-rankings-title');
   var note = document.getElementById('hub-sector-rankings-note');
   var status = document.getElementById('hub-sector-rankings-status');
-  var scroll = root.querySelector('.hub-sector-rankings-scroll');
-  var table = scroll.querySelector('table');
+  var tables = root.querySelector('.hub-sector-rankings-tables');
   var buttons = root.querySelectorAll('[data-period]');
   var weighting = global.InvestingMapSectorWeighting;
   var lang = 'ko';
   var period = 'daily';
+  var selectedSector = null;
+  var columnsPerTable = 0;
   var payload;
   var state = 'loading';
   var requestId = 0;
@@ -53,7 +54,7 @@
 
     var columns = payload ? payload[period] : [];
     var rowCount = Math.max(0, ...columns.map(function (column) { return column.returns.length; }));
-    scroll.hidden = !rowCount;
+    tables.hidden = !rowCount;
     status.hidden = !!rowCount;
     status.textContent = rowCount ? '' : labels[state === 'ready' ? 'empty' : state];
     if (state === 'error') {
@@ -64,12 +65,41 @@
       retry.addEventListener('click', load);
       status.appendChild(retry);
     }
-    table.replaceChildren();
-    if (!rowCount) return;
+    renderTables();
+  }
 
+  function updateSelection() {
+    tables.querySelectorAll('[data-sector]').forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.dataset.sector === selectedSector));
+    });
+  }
+
+  function renderTables() {
+    tables.replaceChildren();
+    if (tables.hidden) return;
+
+    var labels = copy[lang];
+    var columns = payload[period];
     var names = new Map(payload.sectors.map(function (sector) { return [sector.id, sector[lang]]; }));
+    var number = new Intl.NumberFormat(lang === 'ko' ? 'ko-KR' : 'en', {
+      minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: 'exceptZero',
+    });
+    columnsPerTable = fitColumns();
+    for (var offset = 0; offset < columns.length; offset += columnsPerTable) {
+      renderTable(columns.slice(offset, offset + columnsPerTable), labels.rank, names, number);
+    }
+    updateSelection();
+  }
+
+  function fitColumns() {
+    return Math.max(1, Math.floor((tables.clientWidth - 44) / 110));
+  }
+
+  function renderTable(columns, rankLabel, names, number) {
+    var table = document.createElement('table');
+    table.setAttribute('aria-labelledby', heading.id);
     var header = table.createTHead().insertRow();
-    addCell(header, 'th', labels.rank, 'col');
+    addCell(header, 'th', rankLabel, 'col');
     columns.forEach(function (column) {
       var date = period === 'weekly' ? column.week : column.date;
       var cell = addCell(header, 'th', '', 'col');
@@ -79,9 +109,7 @@
       cell.appendChild(time);
     });
     var body = table.createTBody();
-    var number = new Intl.NumberFormat(lang === 'ko' ? 'ko-KR' : 'en', {
-      minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: 'exceptZero',
-    });
+    var rowCount = Math.max(0, ...columns.map(function (column) { return column.returns.length; }));
     for (var index = 0; index < rowCount; index++) {
       var row = body.insertRow();
       addCell(row, 'th', String(index + 1), 'row');
@@ -89,14 +117,19 @@
         var entry = column.returns[index];
         var cell = addCell(row, 'td', entry ? '' : '—');
         if (!entry) return;
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.dataset.sector = entry.id;
         var name = document.createElement('span');
         var value = document.createElement('strong');
         name.textContent = names.get(entry.id) || entry.id;
         value.textContent = number.format(entry.value) + '%';
         value.className = entry.value > 0 ? 'is-up' : entry.value < 0 ? 'is-down' : '';
-        cell.append(name, value);
+        button.append(name, value);
+        cell.appendChild(button);
       });
     }
+    tables.appendChild(table);
   }
 
   async function load() {
@@ -123,10 +156,21 @@
     button.addEventListener('click', function () {
       if (button.dataset.period === period) return;
       period = button.dataset.period;
-      scroll.scrollLeft = 0;
       render();
     });
   });
+  tables.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-sector]');
+    if (!button) return;
+    var sector = button.dataset.sector;
+    selectedSector = selectedSector === sector ? null : sector;
+    updateSelection();
+  });
+  if (global.ResizeObserver) {
+    new ResizeObserver(function () {
+      if (!tables.hidden && fitColumns() !== columnsPerTable) renderTables();
+    }).observe(root);
+  }
   if (weighting) weighting.subscribe(load);
   global.InvestingMapHubSectorRankings = {
     setLang: function (value) {
