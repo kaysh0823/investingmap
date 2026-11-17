@@ -14,7 +14,7 @@ export async function onRequest(context) {
 
   const url = new URL(request.url);
   const weighting = normalizeSectorWeighting(url.searchParams.get('weighting'));
-  const path = `/api/hub_sector_rankings/cache/v4/${weighting}`;
+  const path = `/api/hub_sector_rankings/cache/v5/${weighting}`;
   const hit = await readHubCache(path, url.origin);
   if (hit) {
     const headers = new Headers(hit.headers);
@@ -25,9 +25,10 @@ export async function onRequest(context) {
   try {
     const hubIndex = await loadHubIndexFromRequest(request, env);
     const tickers = listHubCompanies(hubIndex).map(({ ticker }) => ticker);
-    const { refs } = await loadReturnSource({ env, request, tickers, quoteRows: [] });
+    const source = await loadReturnSource({ env, request, tickers });
+    const { refs } = source;
     if (!refs?.quotes) throw new Error('return_refs_unavailable');
-    const payload = buildSectorReturnRankings(hubIndex, refs, weighting);
+    const payload = buildSectorReturnRankings(hubIndex, refs, weighting, source);
     const response = Response.json(payload, {
       headers: { ...cors, 'Cache-Control': 'public, max-age=300' },
     });

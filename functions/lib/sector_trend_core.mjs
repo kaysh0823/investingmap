@@ -91,16 +91,24 @@ function sectorName(hubIndex, sector) {
   return meta?.ko || meta?.shortKo || sector;
 }
 
-export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
+export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap', source = null) {
   const dates = (refs?.tradingDates || []).map(compactYmd);
   const lastClose = compactYmd(refs?.recentDd);
-  const sessions = dates.flatMap((date, index) => {
-    if (!date || !lastClose || date > lastClose) return [];
+  const anchor = compactYmd(source?.meta?.anchorDd);
+  const appendClose = source?.meta?.numeratorMode === 'close' && anchor > lastClose &&
+    Object.values(source.byTicker || {}).some((row) => !row.provisional && row.numerator > 0);
+  function session(date, index) {
     const iso = basDdToDash(date);
     const monday = new Date(iso + 'T00:00:00Z');
     monday.setUTCDate(monday.getUTCDate() - (monday.getUTCDay() + 6) % 7);
-    return [{ index, date: iso, week: monday.toISOString().slice(0, 10) }];
-  });
+    return { index, date: iso, week: monday.toISOString().slice(0, 10) };
+  }
+  const sessions = dates.flatMap((date, index) =>
+    date && lastClose && date <= lastClose ? [session(date, index)] : [],
+  );
+  if (appendClose) {
+    sessions.push({ ...session(anchor, dates.length), appended: true });
+  }
   const weeks = sessions.filter((session, i) => session.week !== sessions[i + 1]?.week);
   const months = sessions.filter((session, i) =>
     session.date.slice(0, 7) !== sessions[i + 1]?.date.slice(0, 7),
@@ -112,18 +120,27 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
       ko: meta?.shortKo || sectorName(hubIndex, id),
       en: meta?.shortEn || meta?.en || id,
       members: [...new Set((companies || []).map(({ ticker }) => normalizeTicker(ticker)))]
-        .map((ticker) => refs?.quotes?.[ticker])
-        .filter((quote) => quote?.closes?.length),
+        .filter((ticker) => refs?.quotes?.[ticker]?.closes?.length),
     };
   });
 
-  function rank(periods) {
+  function rank(periods, daily = false) {
     const window = periods.slice(-13);
     return window.slice(1).map((end, i) => {
       const start = window[i];
       const returns = sectors.flatMap(({ id, members }) => {
-        const inputs = members.map(({ closes, shares }) => {
+        const inputs = members.map((ticker) => {
+          const { closes, shares } = refs.quotes[ticker];
           const offset = dates.length - closes.length;
+          const latest = end.appended ? source.byTicker?.[ticker] : null;
+          if (end.appended) {
+            if (!latest || latest.provisional || !(latest.numerator > 0)) return null;
+            return {
+              shares,
+              prevClose1d: daily ? latest.prevClose1d : closes[start.index - offset],
+              numerator1d: latest.numerator,
+            };
+          }
           return {
             shares,
             prevClose1d: closes[start.index - offset],
@@ -140,7 +157,7 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap') {
 
   return {
     sectors: sectors.map(({ id, ko, en }) => ({ id, ko, en })),
-    daily: rank(sessions),
+    daily: rank(sessions, true),
     weekly: rank(weeks),
     monthly: rank(months),
   };
