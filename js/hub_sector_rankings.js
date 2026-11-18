@@ -19,16 +19,16 @@
     ko: {
       title: '섹터 수익률 순위', daily: '일간', weekly: '주간', monthly: '월간', rank: '순위',
       dailyNote: '직전 거래일 종가 대비 · 최신 기간부터',
-      weeklyNote: '직전 주 마지막 종가 대비 · 이번 주는 최신 확정 종가까지',
-      monthlyNote: '직전 달 마지막 종가 대비 · 이번 달은 최신 확정 종가까지',
+      weeklyNote: '직전 주 마지막 종가 대비 · 이번 주는 장중 시세 반영',
+      monthlyNote: '직전 달 마지막 종가 대비 · 이번 달은 장중 시세 반영',
       loading: '수익률 순위를 불러오는 중…', empty: '표시할 수익률 데이터가 없습니다.',
       error: '수익률 순위를 불러오지 못했습니다.', retry: '다시 시도',
     },
     en: {
       title: 'Sector return rankings', daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', rank: 'Rank',
-      dailyNote: 'Previous session close to close · newest first',
-      weeklyNote: 'Compared with the previous week’s final close · this week through the latest close',
-      monthlyNote: 'Compared with the previous month’s final close · this month through the latest close',
+      dailyNote: 'Compared with the previous session close · newest first',
+      weeklyNote: 'Compared with the previous week’s final close · current week includes intraday prices',
+      monthlyNote: 'Compared with the previous month’s final close · current month includes intraday prices',
       loading: 'Loading sector rankings…', empty: 'No return data available.',
       error: 'Could not load sector rankings.', retry: 'Retry',
     },
@@ -127,19 +127,31 @@
     tables.appendChild(table);
   }
 
+  async function fetchRankings() {
+    var mode = weighting ? weighting.get() : 'cap';
+    var response = await fetch('/api/hub_sector_rankings?weighting=' + mode, { cache: 'no-cache' });
+    if (!response.ok) throw new Error('Rankings unavailable');
+    var result = await response.json();
+    return { data: result, dataVersion: result.dataVersion || '' };
+  }
+
+  function applyRankings(result) {
+    if (result.weighting !== (weighting ? weighting.get() : 'cap')) return;
+    payload = result;
+    state = 'ready';
+    render();
+  }
+
   async function load() {
     var id = ++requestId;
-    var mode = weighting ? weighting.get() : 'cap';
     state = 'loading';
     payload = null;
     render();
     try {
-      var response = await fetch('/api/hub_sector_rankings?weighting=' + mode);
-      if (!response.ok) throw new Error('Rankings unavailable');
-      var result = await response.json();
+      var result = await fetchRankings();
       if (id !== requestId) return;
-      payload = result;
-      state = 'ready';
+      applyRankings(result.data);
+      return;
     } catch (error) {
       if (id !== requestId) return;
       state = 'error';
@@ -162,6 +174,9 @@
     updateSelection();
   });
   if (weighting) weighting.subscribe(load);
+  if (global.InvestingMapReturnsTick) {
+    global.InvestingMapReturnsTick.register('hub_sector_rankings', fetchRankings, applyRankings);
+  }
   global.InvestingMapHubSectorRankings = {
     setLang: function (value) {
       lang = value === 'en' ? 'en' : 'ko';
