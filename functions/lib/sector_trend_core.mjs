@@ -95,8 +95,9 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap', sou
   const dates = (refs?.tradingDates || []).map(compactYmd);
   const lastClose = compactYmd(refs?.recentDd);
   const anchor = compactYmd(source?.meta?.anchorDd);
-  const appendClose = source?.meta?.numeratorMode === 'close' && anchor > lastClose &&
-    Object.values(source.byTicker || {}).some((row) => !row.provisional && row.numerator > 0);
+  const live = source?.meta?.numeratorMode === 'live';
+  const appendCurrentSession = (live || source?.meta?.numeratorMode === 'close') && anchor > lastClose &&
+    Object.values(source.byTicker || {}).some((row) => (live || !row.provisional) && row.numerator > 0);
   function session(date, index) {
     const iso = basDdToDash(date);
     const monday = new Date(iso + 'T00:00:00Z');
@@ -106,7 +107,7 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap', sou
   const sessions = dates.flatMap((date, index) =>
     date && lastClose && date <= lastClose ? [session(date, index)] : [],
   );
-  if (appendClose) {
+  if (appendCurrentSession) {
     sessions.push({ ...session(anchor, dates.length), appended: true });
   }
   const weeks = sessions.filter((session, i) => session.week !== sessions[i + 1]?.week);
@@ -132,9 +133,12 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap', sou
         const inputs = members.map((ticker) => {
           const { closes, shares } = refs.quotes[ticker];
           const offset = dates.length - closes.length;
-          const latest = end.appended ? source.byTicker?.[ticker] : null;
-          if (end.appended) {
-            if (!latest || latest.provisional || !(latest.numerator > 0)) return null;
+          const latest = end.date === basDdToDash(anchor) ? source?.byTicker?.[ticker] : null;
+          if (daily && latest && (live || !latest.provisional)) {
+            return { shares, prevClose1d: latest.prevClose1d, numerator1d: latest.numerator1d };
+          }
+          if (end.appended || latest) {
+            if (!latest || (!live && latest.provisional) || !(latest.numerator > 0)) return null;
             return {
               shares,
               prevClose1d: daily ? latest.prevClose1d : closes[start.index - offset],
@@ -156,6 +160,8 @@ export function buildSectorReturnRankings(hubIndex, refs, weighting = 'cap', sou
   }
 
   return {
+    weighting,
+    dataVersion: source?.meta?.dataVersion || '',
     sectors: sectors.map(({ id, ko, en }) => ({ id, ko, en })),
     daily: rank(sessions, true),
     weekly: rank(weeks),
