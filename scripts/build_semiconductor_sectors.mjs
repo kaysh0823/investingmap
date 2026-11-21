@@ -13,8 +13,7 @@ const write = (path, data) => {
 };
 const sourcePath = SECTOR_META.semi.map;
 const source = read(sourcePath);
-// RF Materials was admitted separately and remains available on the legacy map.
-const companies = extractCompaniesFromHtml(source).filter(({ ticker }) => ticker !== '327260');
+const companies = extractCompaniesFromHtml(source);
 const frontInspection = new Set(['140860', '348210']); // Wafer inspection and metrology
 const backChains = new Set(SEMI_BE_CHAINS);
 const sectorFor = ({ chain, ticker }) =>

@@ -264,6 +264,17 @@
       "role": "메모리 모듈·SSD PCB"
     },
     {
+      "id": "krx:327260",
+      "type": "kr_listed",
+      "ticker": "327260",
+      "nameKo": "RF머트리얼즈",
+      "nameEn": "RFMaterials",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "substrate",
+      "role": "RF 세라믹 패키지·부품"
+    },
+    {
       "id": "krx:077360",
       "type": "kr_listed",
       "ticker": "077360",
@@ -582,6 +593,36 @@
       "chain": "osat",
       "role": "OSAT",
       "exchange": "NASDAQ:AMKR"
+    },
+    {
+      "id": "global:wolfspeed",
+      "type": "global",
+      "nameKo": "울프스피드",
+      "nameEn": "Wolfspeed",
+      "country": "us",
+      "chain": "idm",
+      "role": "SiC 전력반도체",
+      "exchange": "NYSE:WOLF"
+    },
+    {
+      "id": "global:lumentum",
+      "type": "global",
+      "nameKo": "루멘텀",
+      "nameEn": "Lumentum",
+      "country": "us",
+      "chain": "idm",
+      "role": "광통신 반도체",
+      "exchange": "NASDAQ:LITE"
+    },
+    {
+      "id": "global:macom",
+      "type": "global",
+      "nameKo": "메이콤",
+      "nameEn": "MACOM",
+      "country": "us",
+      "chain": "fabless",
+      "role": "RF·광 반도체",
+      "exchange": "NASDAQ:MTSI"
     },
     {
       "id": "global:tsmc",
@@ -2086,6 +2127,48 @@
       "evidence": [
         {
           "url": "https://www.thelec.net/news/articleView.html?idxno=1927",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_327260>global_wolfspeed",
+      "source": "krx:327260",
+      "target": "global:wolfspeed",
+      "type": "supply",
+      "labelKo": "세라믹 패키지 (매출 ~20%)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://ssl.pstatic.net/imgstock/upload/research/company/1673392286815.pdf",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_327260>global_lumentum",
+      "source": "krx:327260",
+      "target": "global:lumentum",
+      "type": "supply",
+      "labelKo": "화합물 반도체 패키지",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=71988",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_327260>global_macom",
+      "source": "krx:327260",
+      "target": "global:macom",
+      "type": "supply",
+      "labelKo": "화합물 반도체 패키지",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "http://www.dailyinvest.kr/news/articleView.html?idxno=71988",
           "accessedAt": "2026-09-25"
         }
       ]
