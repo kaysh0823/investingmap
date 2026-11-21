@@ -20,8 +20,7 @@ const chainOverrides=JSON.parse(read('data/chain_overrides.json'));
 const fieldOverrides=JSON.parse(read('data/ticker_field_overrides.json'));
 const additions=JSON.parse(read('bio/cp_list_bio_additions.json'));
 const hub=JSON.parse(read('data/hub_index.json',true));
-assert.equal(Object.keys(hub.sectors).length,24,'retain the 24-sector structure');
-assert.deepEqual(Object.keys(hub.sectors).sort(),Object.keys(SECTOR_META).sort());
+assert.deepEqual(Object.keys(hub.sectors).sort(),HUB_MAP_PATHS.map(([id]) => id).sort());
 const search=JSON.parse(read('data/search_index.json',true));
 const allMaps=HUB_MAP_PATHS.flatMap(([sector,p])=>extractCompaniesFromHtml(read(p,true)).map(c=>({...c,home:sector})));
 const verifyCompany=(c,e)=>{

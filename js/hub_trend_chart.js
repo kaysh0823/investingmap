@@ -12,7 +12,7 @@
     en: { KOSPI: 'KOSPI', KOSDAQ: 'KOSDAQ' },
   };
   var SECTOR_NAMES_EN = {
-    bigchip: 'Chip leaders', semi: 'Semiconductors', elec: 'Electrical & electronics',
+    bigchip: 'Chip leaders', semifront: 'Semiconductor front-end', semiback: 'Semiconductor back-end & packaging', elec: 'Electrical & electronics',
     battery: 'Batteries', renewable: 'Renewable energy', nuclear: 'Nuclear power',
     powergrid: 'Power equipment', ship: 'Shipbuilding & equipment', shipping: 'Shipping & logistics',
     metal: 'Steel & nonferrous', machinery: 'Industrial machinery',

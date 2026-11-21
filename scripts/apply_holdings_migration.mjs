@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
-import { HUB_MAP_PATHS, SECTOR_META } from '../lib/sector_meta.mjs';
+import { SOURCE_MAP_PATHS, SECTOR_META } from '../lib/sector_meta.mjs';
 import { esc, extractCompaniesFromHtml, patchKoreanCompaniesHtml } from '../lib/map_company_serialize.mjs';
 import { HOLDINGS_DESTINATIONS } from '../lib/holdings_migration.mjs';
 import { HOLDINGS_CONFIG } from '../lib/curated_sector_configs.mjs';
@@ -79,7 +79,7 @@ function patchChainUi(content) {
   return content;
 }
 
-for (const [sector, rel] of HUB_MAP_PATHS) {
+for (const [sector, rel] of SOURCE_MAP_PATHS) {
   const file = path.join(ROOT, rel);
   let content = fs.readFileSync(file, 'utf8');
   const existing = extractCompaniesFromHtml(content);

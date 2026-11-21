@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { extractCompaniesFromHtml, patchKoreanCompaniesHtml, esc } from '../lib/map_company_serialize.mjs';
-import { HUB_MAP_PATHS } from '../lib/sector_meta.mjs';
+import { SOURCE_MAP_PATHS } from '../lib/sector_meta.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = p => fs.readFileSync(path.join(ROOT,p),'utf8');
 const write = (p,s) => fs.writeFileSync(path.join(ROOT,p),s);
@@ -52,7 +52,7 @@ function remap(value) {
 for(const dir of ['data/netmap','data/networks']) for(const name of fs.readdirSync(path.join(ROOT,dir))) if(name.endsWith('.json')) save(dir+'/'+name,remap(json(dir+'/'+name)));
 save('data/cross_relations.json',remap(json('data/cross_relations.json')));
 
-const pages=['index.html','about.html','authors.html','faq.html','privacy.html','disclaimer.html','editorial-policy.html',...HUB_MAP_PATHS.map(([,p])=>p).filter(p=>p.endsWith('.html'))];
+const pages=['index.html','about.html','authors.html','faq.html','privacy.html','disclaimer.html','editorial-policy.html',...SOURCE_MAP_PATHS.map(([,p])=>p).filter(p=>p.endsWith('.html'))];
 for(const p of pages) {
   let s=read(p);
   if(p==='index.html') {

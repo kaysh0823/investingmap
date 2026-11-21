@@ -57,7 +57,7 @@ export function normalizePerfCalendarYear(raw, now = new Date()) {
 export function normalizePerfCalendarSector(raw) {
   const sid = String(raw || '').trim().toLowerCase();
   if (!sid) return null;
-  if (SECTOR_ORDER.includes(sid)) return sid;
+  if (sid === 'semi' || SECTOR_ORDER.includes(sid)) return sid;
   return null;
 }
 
@@ -67,8 +67,10 @@ export function normalizePerfCalendarSector(raw) {
  * @returns {{ ticker: string, name: string, nameEn: string, market: string }[]}
  */
 export function listSectorMembers(hubIndex, sectorId) {
-  const block = hubIndex?.sectors?.[sectorId];
-  const companies = Array.isArray(block?.companies) ? block.companies : [];
+  const sectors = hubIndex?.sectors;
+  const companies = sectorId === 'semi' && !sectors?.semi
+    ? [...(sectors?.semifront?.companies || []), ...(sectors?.semiback?.companies || [])]
+    : sectors?.[sectorId]?.companies || [];
   const out = [];
   const seen = new Set();
   for (const c of companies) {

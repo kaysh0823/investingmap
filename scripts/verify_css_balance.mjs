@@ -19,6 +19,8 @@ const DIST = path.join(ROOT, 'dist');
 const SECTOR_MAP_RELS = [
   'bigchip/korea_bigchip_map.html',
   'semiconductor/korea_semiconductor_map.html',
+  'semiconductor/korea_semiconductor_front_map.html',
+  'semiconductor/korea_semiconductor_back_map.html',
   'bio/korea_bio_map.html',
   'ship/korea_ship_map.html',
   'defense/korea_defense_map.html',
@@ -123,7 +125,7 @@ if (!fs.existsSync(DIST)) {
 
 const failures = [];
 const sectorRels = SECTOR_MAP_RELS.filter((rel) => fs.existsSync(path.join(DIST, rel)));
-assert.ok(sectorRels.length === 24, `expected 24 sector maps in dist, got ${sectorRels.length}`);
+assert.equal(sectorRels.length, SECTOR_MAP_RELS.length, 'all sector maps must be in dist');
 
 for (const rel of sectorRels) {
   const html = fs.readFileSync(path.join(DIST, rel), 'utf8');

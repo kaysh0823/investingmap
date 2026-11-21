@@ -11,7 +11,8 @@
   var ITEMS = [
     { id: 'home', path: 'index.html', icon: '\u2302', ko: '\uD5C8\uBE0C', en: 'Hub' },
     { id: 'bigchip', path: 'bigchip/korea_bigchip_map.html', icon: "🏆", ko: "삼성전자/하이닉스", en: "Samsung/SK hynix" },
-    { id: 'semi', path: 'semiconductor/korea_semiconductor_map.html', icon: "💠", ko: "반도체", en: "Semi" },
+    { id: 'semifront', path: 'semiconductor/korea_semiconductor_front_map.html', icon: "💠", ko: "반도체 전공정", en: "Semiconductor Front-end" },
+    { id: 'semiback', path: 'semiconductor/korea_semiconductor_back_map.html', icon: "💠", ko: "반도체 후공정·패키징", en: "Semiconductor Back-end & Packaging" },
     { id: 'elec', path: 'elec/korea_elec_map.html', icon: "💡", ko: "전기·전자", en: "Electrical & Electronics" },
     { id: 'software', path: 'software/korea_software_map.html', icon: "💻", ko: "IT·소프트웨어", en: "IT & Software" },
     { id: 'telecom', path: 'telecom/korea_telecom_map.html', icon: "📡", ko: "통신/네트워크", en: "Telecom" },
@@ -58,6 +59,8 @@
   function detectActiveId() {
     var path = window.location.pathname.replace(/\\/g, '/').toLowerCase();
     if (path.indexOf('/bigchip/') !== -1) return 'bigchip';
+    if (path.indexOf('korea_semiconductor_front_map') !== -1) return 'semifront';
+    if (path.indexOf('korea_semiconductor_back_map') !== -1) return 'semiback';
     if (path.indexOf('/semiconductor/') !== -1) return 'semi';
     if (path.indexOf('/bio/') !== -1) return 'bio';
     if (path.indexOf('/shipping/') !== -1) return 'shipping';

@@ -6,7 +6,8 @@
 
   var SECTORS = [
     { id: 'bigchip', path: '../bigchip/korea_bigchip_map.html', ko: "삼성전자/하이닉스", en: "Samsung/SK hynix" },
-    { id: 'semi', path: '../semiconductor/korea_semiconductor_map.html', ko: "반도체", en: "Semi" },
+    { id: 'semifront', path: '../semiconductor/korea_semiconductor_front_map.html', ko: "반도체 전공정", en: "Semiconductor Front-end" },
+    { id: 'semiback', path: '../semiconductor/korea_semiconductor_back_map.html', ko: "반도체 후공정·패키징", en: "Semiconductor Back-end & Packaging" },
     { id: 'elec', path: '../elec/korea_elec_map.html', ko: "전기·전자", en: "Electrical & Electronics" },
     { id: 'software', path: '../software/korea_software_map.html', ko: "IT·소프트웨어", en: "IT & Software" },
     { id: 'telecom', path: '../telecom/korea_telecom_map.html', ko: "통신/네트워크", en: "Telecom" },

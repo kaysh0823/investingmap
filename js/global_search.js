@@ -10,6 +10,8 @@
   var SECTOR_MAP = {
     bigchip: 'bigchip/korea_bigchip_map.html',
     semi: 'semiconductor/korea_semiconductor_map.html',
+    semifront: 'semiconductor/korea_semiconductor_front_map.html',
+    semiback: 'semiconductor/korea_semiconductor_back_map.html',
     elec: 'elec/korea_elec_map.html',
     software: 'software/korea_software_map.html',
     telecom: 'telecom/korea_telecom_map.html',
@@ -38,6 +40,8 @@
   var NETMAP_ID = {
     bigchip: 'bigchip',
     semi: 'semiconductor',
+    semifront: 'semiconductor',
+    semiback: 'semiconductor',
     elec: 'elec',
     software: 'software',
     telecom: 'telecom',
@@ -65,6 +69,8 @@
   var SECTOR_LABELS = {
     bigchip: { ko: "삼성전자/하이닉스", en: "Samsung/SK hynix" },
     semi: { ko: "반도체", en: "Semi" },
+    semifront: { ko: "반도체 전공정", en: "Semiconductor Front-end" },
+    semiback: { ko: "반도체 후공정·패키징", en: "Semiconductor Back-end & Packaging" },
     elec: { ko: "전기·전자", en: "Electrical & Electronics" },
     software: { ko: "IT·소프트웨어", en: "IT & Software" },
     telecom: { ko: "통신/네트워크", en: "Telecom" },

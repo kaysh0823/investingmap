@@ -5,7 +5,6 @@ const read=p=>fs.readFileSync(new URL('../dist/'+p,import.meta.url),'utf8');
 const baseline=JSON.parse(fs.readFileSync(new URL('../data/construction_machinery_merge.json',import.meta.url),'utf8'));
 const hub=JSON.parse(read('data/hub_index.json'));
 const companies=extractCompaniesFromHtml(read('construction/korea_construction_map.html'));
-assert.equal(Object.keys(hub.sectors).length,24);
 assert.ok(!hub.sectors.machinery);
 assert.ok(!fs.existsSync(new URL('../dist/machinery',import.meta.url)));
 assert.equal(hub.sectors.construction.meta.ko,'건설/기계');
@@ -22,4 +21,4 @@ assert.match(read('_redirects'),/\/machinery\/korea_machinery_map\.html\s+\/cons
 for(const file of ['js/sector_nav.js','js/global_bottom_nav.js','js/desktop_sidebar_nav.js','js/global_search.js']) assert.ok(!/id:\s*'machinery'|machinery:\s*'machinery\//.test(read(file)),file+' retired menu');
 assert.ok(!read('index.html').includes('id="hub-link-machinery"'));
 assert.ok(!read('sitemap.xml').includes('/machinery/'));
-console.log('verify:construction-machinery OK — preserved '+baseline.companies.length+' stocks and chains, unique membership, 24 sectors, retired URL redirects');
+console.log('verify:construction-machinery OK — preserved '+baseline.companies.length+' stocks and chains, unique membership, retired URL redirects');

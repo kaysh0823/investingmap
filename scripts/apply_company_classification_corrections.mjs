@@ -3,13 +3,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
-import { HUB_MAP_PATHS } from '../lib/sector_meta.mjs';
+import { SOURCE_MAP_PATHS } from '../lib/sector_meta.mjs';
 import { MOBILITY_04C } from '../lib/mobility_04c_chain_ui.mjs';
 import { esc, extractCompaniesFromHtml, patchKoreanCompaniesHtml } from '../lib/map_company_serialize.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const rows=JSON.parse(fs.readFileSync(path.join(ROOT,'data/company_classification_corrections.json'),'utf8')).rows;
 assert.equal(rows.length,3);
-for(const [sector,rel] of HUB_MAP_PATHS) {
+for(const [sector,rel] of SOURCE_MAP_PATHS) {
  const changes=rows.filter(r=>r.sector===sector);
  if(!changes.length)continue;
  const file=path.join(ROOT,rel);

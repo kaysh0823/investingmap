@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SECTOR_META } from '../lib/sector_meta.mjs';
+import { SECTOR_META, HUB_MAP_PATHS } from '../lib/sector_meta.mjs';
 import { HOLDINGS_DESTINATIONS } from '../lib/holdings_migration.mjs';
 import { extractCompaniesFromHtml } from '../lib/map_company_serialize.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -11,7 +11,7 @@ const DIST = path.join(ROOT, 'dist');
 const read = rel => fs.readFileSync(path.join(DIST, rel), 'utf8');
 const hub = JSON.parse(read('data/hub_index.json'));
 const migration = JSON.parse(read('data/holdings_migration.json'));
-assert.equal(Object.keys(hub.sectors).length, 24, '24 active sectors after holdings retirement');
+assert.equal(Object.keys(hub.sectors).length, HUB_MAP_PATHS.length, 'active sector inventory after holdings retirement');
 assert.ok(!hub.sectors.holdings && !SECTOR_META.holdings, 'holdings must not return as an aggregate sector');
 assert.equal(migration.rows.length, 51);
 assert.equal(Object.keys(HOLDINGS_DESTINATIONS).length, 51);
@@ -24,9 +24,10 @@ const search = JSON.parse(read('data/search_index.json'));
 for (const row of migration.rows) {
   const hits = all.filter(c => c.ticker === row.ticker);
   assert.equal(hits.length, 1, `${row.ticker}: exactly one home`);
-  assert.equal(hits[0].sector, row.sector, `${row.ticker}: approved sector`);
-  const meta = SECTOR_META[row.sector];
-  const runtime = row.sector === 'bio' ? read('bio/korea_bio_map.inline.js') : read(meta.map);
+  const sector = row.sector === 'semi' ? 'semifront' : row.sector;
+  assert.equal(hits[0].sector, sector, `${row.ticker}: approved sector`);
+  const meta = SECTOR_META[sector];
+  const runtime = sector === 'bio' ? read('bio/korea_bio_map.inline.js') : read(meta.map);
   const c = extractCompaniesFromHtml(runtime).find(c => c.ticker === row.ticker);
   assert.ok(c, `${row.ticker}: missing in deployed page`);
   assert.equal(c.id, row.company.id, `${row.ticker}: preserve existing company identity`);
@@ -36,7 +37,7 @@ for (const row of migration.rows) {
   assert.ok(color && Function('return (' + color[1] + ')')()['지주회사'], `${row.sector}: visible chain color`);
   const result = search.filter(c => c.t === row.ticker);
   assert.equal(result.length, 1, `${row.ticker}: one search entry`);
-  assert.equal(result[0].s, row.sector, `${row.ticker}: search destination`);
+  assert.equal(result[0].s, sector, `${row.ticker}: search destination`);
 }
 for (const file of ['js/sector_nav.js', 'js/global_bottom_nav.js', 'js/desktop_sidebar_nav.js']) {
   assert.ok(!/id:\s*['"]holdings['"]/.test(read(file)), `${file}: retired navigation`);
@@ -54,4 +55,4 @@ for (const rel of ['data/hub_rs_snapshot.json', 'data/hub_sector_returns.json'])
 for (const [id, meta] of Object.entries(SECTOR_META)) {
   assert.ok(!/<a\b[^>]*href=["'][^"']*holdings\/korea_holdings_map/.test(read(meta.map)), `${id}: retired navigation link`);
 }
-console.log('verify:holdings-migration OK — 51 stocks, 16 destination sectors, 24 active sectors, stable identities, unique aggregation, chain UI, search and redirects');
+console.log('verify:holdings-migration OK — 51 stocks, 16 destination sectors, stable identities, unique aggregation, chain UI, search and redirects');

@@ -6,7 +6,7 @@ import { passesMcapFloor } from '../lib/mcap_policy.mjs';
 import {
   extractChainColors, extractCompaniesFromHtml, fmtMcap, mcapTier, patchKoreanCompaniesHtml,
 } from '../lib/map_company_serialize.mjs';
-import { HUB_MAP_PATHS } from '../lib/sector_meta.mjs';
+import { SOURCE_MAP_PATHS } from '../lib/sector_meta.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const DATA = path.join(ROOT, 'data');
@@ -77,7 +77,7 @@ const latestByMarket = {
 const tickers = new Set(admissions.map(({ ticker }) => ticker));
 const reset = process.argv.includes('--reset');
 
-for (const [sector, rel] of HUB_MAP_PATHS) {
+for (const [sector, rel] of SOURCE_MAP_PATHS) {
   const file = path.join(ROOT, rel);
   const html = fs.readFileSync(file, 'utf8');
   const original = extractCompaniesFromHtml(html);

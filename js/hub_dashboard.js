@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['bigchip', 'semi', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance'];
+  var SECTOR_ORDER = ['bigchip', 'semifront', 'semiback', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return5dPct', labelKey: 'pulseRow5d' },
@@ -57,7 +57,8 @@
   var HUB_CARD_TAGS = {
     ko: {
       bigchip: ['삼성전자', 'SK하이닉스', 'HBM', '메모리'],
-      semi: ['설계', '파운드리', '메모리', '소재', '장비', '기판', '패키징'],
+      semifront: ['설계', '파운드리', '장비', '소재', '공정 부품'],
+      semiback: ['패키징', '기판', '테스트', '인터페이스'],
       battery: ['셀', '소재', '장비', '부품', 'ESS'],
       renewable: ['태양광', '풍력', '수소', '운영'],
       nuclear: ['원자로', 'SMR', '기자재', '정비'],
@@ -83,7 +84,8 @@
     },
     en: {
       bigchip: ['Samsung Electronics', 'SK hynix', 'HBM', 'Memory'],
-      semi: ['Design', 'Foundry', 'Memory', 'Materials', 'Equipment', 'Substrates', 'Packaging'],
+      semifront: ['Design', 'Foundry', 'Equipment', 'Materials', 'Process parts'],
+      semiback: ['Packaging', 'Substrates', 'Testing', 'Interfaces'],
       battery: ['Cells', 'Materials', 'Equipment', 'Parts', 'ESS'],
       renewable: ['Solar', 'Wind', 'Hydrogen', 'Operators'],
       nuclear: ['Reactors', 'SMR', 'Components', 'O&M'],

@@ -14,6 +14,8 @@ const NETMAP_DIR = path.join(ROOT, 'data', 'netmap');
 /** Map HTML path → sector id used under data/netmap/<sector>.json */
 const MAP_SECTOR = {
   'semiconductor/korea_semiconductor_map.html': 'semiconductor',
+  'semiconductor/korea_semiconductor_front_map.html': 'semiconductor_front',
+  'semiconductor/korea_semiconductor_back_map.html': 'semiconductor_back',
   'bigchip/korea_bigchip_map.html': 'bigchip',
   'bio/korea_bio_map.html': 'bio',
   'ship/korea_ship_map.html': 'ship',
