@@ -129,7 +129,7 @@
 
   async function fetchRankings() {
     var mode = weighting ? weighting.get() : 'cap';
-    var response = await fetch('/api/hub_sector_rankings?weighting=' + mode + '&v=8', { cache: 'no-cache' });
+    var response = await fetch('/api/hub_sector_rankings?weighting=' + mode + '&v=9', { cache: 'no-cache' });
     if (!response.ok) throw new Error('Rankings unavailable');
     var result = await response.json();
     return { data: result, dataVersion: result.dataVersion || '' };

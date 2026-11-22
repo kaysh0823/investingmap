@@ -17,7 +17,7 @@ import { kstDateParts, kstYmdDash } from './krx_session.mjs';
 import { aggregateSectorReturns } from './returns_core.mjs';
 import { loadReturnSource } from './hub_returns_source.mjs';
 
-export const PERF_CALENDAR_CACHE_VERSION = 'v7';
+export const PERF_CALENDAR_CACHE_VERSION = 'v8';
 export const PERF_CALENDAR_YEAR_SPAN = 5; // current .. current-4
 export const PERF_CALENDAR_TICKER_BATCH = 40;
 /** In-year chart points (weekly-ish); +1 prior-year base day fetched separately. */
@@ -57,7 +57,7 @@ export function normalizePerfCalendarYear(raw, now = new Date()) {
 export function normalizePerfCalendarSector(raw) {
   const sid = String(raw || '').trim().toLowerCase();
   if (!sid) return null;
-  if (sid === 'semi' || SECTOR_ORDER.includes(sid)) return sid;
+  if (sid === 'semi' || sid === 'finance' || SECTOR_ORDER.includes(sid)) return sid;
   return null;
 }
 
@@ -70,7 +70,9 @@ export function listSectorMembers(hubIndex, sectorId) {
   const sectors = hubIndex?.sectors;
   const companies = sectorId === 'semi' && !sectors?.semi
     ? [...(sectors?.semifront?.companies || []), ...(sectors?.semiback?.companies || [])]
-    : sectors?.[sectorId]?.companies || [];
+    : sectorId === 'finance' && !sectors?.finance
+      ? ['banking', 'securities', 'insurance'].flatMap((id) => sectors?.[id]?.companies || [])
+      : sectors?.[sectorId]?.companies || [];
   const out = [];
   const seen = new Set();
   for (const c of companies) {

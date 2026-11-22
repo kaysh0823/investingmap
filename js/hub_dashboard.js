@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['bigchip', 'semifront', 'semiback', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'gaming', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance'];
+  var SECTOR_ORDER = ['bigchip', 'semifront', 'semiback', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'gaming', 'kcontent', 'cosmetics', 'medtech', 'bio', 'banking', 'securities', 'insurance'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return5dPct', labelKey: 'pulseRow5d' },
@@ -74,7 +74,9 @@
       robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
       auto: ['완성차', '부품', '타이어', '전장'],
       medtech: ['진단', '임플란트', '의료장비', '헬스케어'],
-      finance: ['은행', '증권', '보험', '카드', '캐피탈'],
+      banking: ['은행', '카드', '결제', '기타 금융'],
+      securities: ['증권', '운용', 'PE·VC'],
+      insurance: ['생명보험', '손해보험', '재보험', '보험중개'],
       construction: ['종합건설', '주택', '디벨로퍼', '건설기계'],
       software: ['플랫폼·AI', 'SI·클라우드', '기업SW·SaaS', '보안'],
       holdings: ['반도체', '정유·화학', '철강·금속·기계', '소비/유통', '건설', '자동차', '전기·전자', 'IT·SW', '조선/해운', '여행·항공', '방산/우주', '화장품', '콘텐츠', '바이오', '전력설비'],
@@ -102,7 +104,9 @@
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
       auto: ['OEMs', 'Parts', 'Tires', 'Electronics'],
       medtech: ['Diagnostics', 'Implants', 'Equipment', 'Healthcare'],
-      finance: ['Banks', 'Securities', 'Insurance', 'Cards', 'Consumer finance'],
+      banking: ['Banks', 'Cards', 'Payments', 'Other finance'],
+      securities: ['Brokerages', 'Asset management', 'PE & VC'],
+      insurance: ['Life', 'Non-life', 'Reinsurance', 'Brokerage'],
       construction: ['Contractors', 'Housing', 'Developers', 'Equipment'],
       software: ['Platforms & AI', 'IT services & cloud', 'Enterprise SW', 'Security'],
       holdings: ['Semi', 'Chemicals', 'Metals', 'Retail', 'Construction', 'Auto', 'Electronics', 'Software', 'Ship', 'Travel', 'Defense', 'Cosmetics', 'Content', 'Bio', 'Power'],
@@ -474,7 +478,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=25')
+    return fetch('data/hub_index.json?v=26')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();

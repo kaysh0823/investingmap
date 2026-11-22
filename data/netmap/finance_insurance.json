@@ -1,0 +1,842 @@
+{
+  "sectorId": "finance_insurance",
+  "version": 1,
+  "asOf": "2026-09-25",
+  "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+  "chains": {
+    "bank": "은행·은행계 금융그룹",
+    "life": "생명보험",
+    "nonlife": "손해보험·재보험",
+    "nonbank": "비은행 금융그룹",
+    "securities": "증권",
+    "fintech": "결제·핀테크",
+    "card": "카드·캐피탈·여신금융",
+    "am": "자산운용·PE·VC",
+    "info": "금융정보·평가",
+    "reit": "부동산금융·투자기구",
+    "broker": "보험판매·중개",
+    "end_customer": "그룹·주요주주",
+    "global_peer": "글로벌 금융",
+    "holdings": "지주회사"
+  },
+  "edgeTypes": {
+    "supply": "공급 (source → target)",
+    "partner": "협력·JV",
+    "equity": "지분 (source가 target 보유)",
+    "peer": "경쟁·피어",
+    "distribution": "유통"
+  },
+  "nodes": [
+    {
+      "id": "krx:032830",
+      "type": "kr_listed",
+      "ticker": "032830",
+      "nameKo": "삼성생명",
+      "nameEn": "삼성생명",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "life",
+      "role": "생명보험"
+    },
+    {
+      "id": "krx:000810",
+      "type": "kr_listed",
+      "ticker": "000810",
+      "nameKo": "삼성화재",
+      "nameEn": "삼성화재",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonlife",
+      "role": "손해보험·재보험"
+    },
+    {
+      "id": "krx:138040",
+      "type": "kr_listed",
+      "ticker": "138040",
+      "nameKo": "메리츠금융지주",
+      "nameEn": "메리츠금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonbank",
+      "role": "비은행 금융그룹"
+    },
+    {
+      "id": "krx:006800",
+      "type": "kr_other",
+      "ticker": "006800",
+      "nameKo": "미래에셋증권",
+      "nameEn": "미래에셋증권",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "securities",
+      "role": "증권",
+      "map": "finance/korea_finance_securities_map.html"
+    },
+    {
+      "id": "krx:005830",
+      "type": "kr_listed",
+      "ticker": "005830",
+      "nameKo": "DB손해보험",
+      "nameEn": "DB손해보험",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonlife",
+      "role": "손해보험·재보험"
+    },
+    {
+      "id": "krx:071050",
+      "type": "kr_other",
+      "ticker": "071050",
+      "nameKo": "한국금융지주",
+      "nameEn": "한국금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonbank",
+      "role": "비은행 금융그룹",
+      "map": "finance/korea_finance_securities_map.html"
+    },
+    {
+      "id": "krx:016360",
+      "type": "kr_other",
+      "ticker": "016360",
+      "nameKo": "삼성증권",
+      "nameEn": "삼성증권",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "securities",
+      "role": "증권",
+      "map": "finance/korea_finance_securities_map.html"
+    },
+    {
+      "id": "krx:088350",
+      "type": "kr_listed",
+      "ticker": "088350",
+      "nameKo": "한화생명",
+      "nameEn": "한화생명",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "life",
+      "role": "생명보험"
+    },
+    {
+      "id": "krx:029780",
+      "type": "kr_other",
+      "ticker": "029780",
+      "nameKo": "삼성카드",
+      "nameEn": "삼성카드",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "card",
+      "role": "카드·캐피탈·여신금융",
+      "map": "finance/korea_finance_bank_map.html"
+    },
+    {
+      "id": "krx:001450",
+      "type": "kr_listed",
+      "ticker": "001450",
+      "nameKo": "현대해상",
+      "nameEn": "현대해상",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonlife",
+      "role": "손해보험·재보험"
+    },
+    {
+      "id": "krx:031210",
+      "type": "kr_listed",
+      "ticker": "031210",
+      "nameKo": "서울보증보험",
+      "nameEn": "서울보증보험",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonlife",
+      "role": "손해보험·재보험"
+    },
+    {
+      "id": "krx:003690",
+      "type": "kr_listed",
+      "ticker": "003690",
+      "nameKo": "코리안리",
+      "nameEn": "코리안리",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonlife",
+      "role": "손해보험·재보험"
+    },
+    {
+      "id": "krx:085620",
+      "type": "kr_listed",
+      "ticker": "085620",
+      "nameKo": "미래에셋생명",
+      "nameEn": "미래에셋생명",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "life",
+      "role": "생명보험"
+    },
+    {
+      "id": "krx:003530",
+      "type": "kr_other",
+      "ticker": "003530",
+      "nameKo": "한화투자증권",
+      "nameEn": "한화투자증권",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "securities",
+      "role": "증권",
+      "map": "finance/korea_finance_securities_map.html"
+    },
+    {
+      "id": "krx:000370",
+      "type": "kr_listed",
+      "ticker": "000370",
+      "nameKo": "한화손해보험",
+      "nameEn": "한화손해보험",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonlife",
+      "role": "손해보험·재보험"
+    },
+    {
+      "id": "krx:000400",
+      "type": "kr_listed",
+      "ticker": "000400",
+      "nameKo": "롯데손해보험",
+      "nameEn": "롯데손해보험",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonlife",
+      "role": "손해보험·재보험"
+    },
+    {
+      "id": "krx:211050",
+      "type": "kr_listed",
+      "ticker": "211050",
+      "nameKo": "인카금융서비스",
+      "nameEn": "인카금융서비스",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "broker",
+      "role": "보험판매·중개"
+    },
+    {
+      "id": "krx:016610",
+      "type": "kr_other",
+      "ticker": "016610",
+      "nameKo": "DB증권",
+      "nameEn": "DB증권",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "securities",
+      "role": "증권",
+      "map": "finance/korea_finance_securities_map.html"
+    },
+    {
+      "id": "global:samsung_el",
+      "type": "kr_other",
+      "nameKo": "삼성전자",
+      "nameEn": "Samsung Electronics",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "삼성생명 8.5% 피투자",
+      "exchange": "KRX:005930"
+    },
+    {
+      "id": "global:hanwha",
+      "type": "kr_other",
+      "nameKo": "한화",
+      "nameEn": "Hanwha Corp.",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "한화생명 지배",
+      "exchange": "KRX:000880"
+    },
+    {
+      "id": "global:db_grp",
+      "type": "kr_other",
+      "nameKo": "DB(구 동부)",
+      "nameEn": "DB Inc.",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "DB손보·DB증권 계열",
+      "exchange": "KRX:012030"
+    },
+    {
+      "id": "global:kdic",
+      "type": "kr_other",
+      "nameKo": "예금보험공사",
+      "nameEn": "KDIC",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "서울보증보험 최대주주",
+      "exchange": ""
+    },
+    {
+      "id": "global:jkl",
+      "type": "kr_other",
+      "nameKo": "JKL파트너스",
+      "nameEn": "JKL Partners",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "롯데손보 최대주주",
+      "exchange": ""
+    },
+    {
+      "id": "global:aia",
+      "type": "global",
+      "nameKo": "AIA",
+      "nameEn": "AIA Group",
+      "country": "cn",
+      "chain": "global_peer",
+      "role": "아시아 생보",
+      "exchange": "HKEX:1299"
+    },
+    {
+      "id": "global:allianz",
+      "type": "global",
+      "nameKo": "알리안츠",
+      "nameEn": "Allianz",
+      "country": "eu",
+      "chain": "global_peer",
+      "role": "보험",
+      "exchange": "XETRA:ALV"
+    },
+    {
+      "id": "global:tokio",
+      "type": "global",
+      "nameKo": "도쿄해상",
+      "nameEn": "Tokio Marine",
+      "country": "jp",
+      "chain": "global_peer",
+      "role": "손보",
+      "exchange": "TSE:8766"
+    },
+    {
+      "id": "global:munichre",
+      "type": "global",
+      "nameKo": "뮌헨리",
+      "nameEn": "Munich Re",
+      "country": "eu",
+      "chain": "global_peer",
+      "role": "재보험 1위",
+      "exchange": "XETRA:MUV2"
+    },
+    {
+      "id": "global:swissre",
+      "type": "global",
+      "nameKo": "스위스리",
+      "nameEn": "Swiss Re",
+      "country": "eu",
+      "chain": "global_peer",
+      "role": "재보험",
+      "exchange": "SIX:SREN"
+    }
+  ],
+  "edges": [
+    {
+      "id": "equity:krx_032830>global_samsung_el",
+      "source": "krx:032830",
+      "target": "global:samsung_el",
+      "type": "equity",
+      "labelKo": "삼성생명→삼성전자 8.5%",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://v.daum.net/v/20260615151200002",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_032830>krx_000810",
+      "source": "krx:032830",
+      "target": "krx:000810",
+      "type": "equity",
+      "labelKo": "삼성생명→삼성화재 (계열 지분)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=032830&cn=",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_032830>krx_029780",
+      "source": "krx:032830",
+      "target": "krx:029780",
+      "type": "equity",
+      "labelKo": "삼성생명→삼성카드 (71%)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=032830&cn=",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_032830>krx_016360",
+      "source": "krx:032830",
+      "target": "krx:016360",
+      "type": "equity",
+      "labelKo": "삼성생명→삼성증권",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=032830&cn=",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_032830>global_samsung_el",
+      "source": "krx:032830",
+      "target": "global:samsung_el",
+      "type": "partner",
+      "labelKo": "삼성그룹 금융 계열",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_000810>global_samsung_el",
+      "source": "krx:000810",
+      "target": "global:samsung_el",
+      "type": "partner",
+      "labelKo": "삼성그룹 금융 계열",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_032830>krx_088350",
+      "source": "krx:032830",
+      "target": "krx:088350",
+      "type": "peer",
+      "labelKo": "생명보험 경쟁",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_032830>krx_085620",
+      "source": "krx:032830",
+      "target": "krx:085620",
+      "type": "peer",
+      "labelKo": "생명보험",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_032830>global_aia",
+      "source": "krx:032830",
+      "target": "global:aia",
+      "type": "peer",
+      "labelKo": "아시아·글로벌 보험 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_032830>global_allianz",
+      "source": "krx:032830",
+      "target": "global:allianz",
+      "type": "peer",
+      "labelKo": "아시아·글로벌 보험 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_000810>krx_005830",
+      "source": "krx:000810",
+      "target": "krx:005830",
+      "type": "peer",
+      "labelKo": "손해보험 경쟁 (삼성·DB·현대·한화·롯데)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_000810>krx_001450",
+      "source": "krx:000810",
+      "target": "krx:001450",
+      "type": "peer",
+      "labelKo": "손해보험 경쟁 (삼성·DB·현대·한화·롯데)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_000810>krx_000370",
+      "source": "krx:000810",
+      "target": "krx:000370",
+      "type": "peer",
+      "labelKo": "손해보험 경쟁 (삼성·DB·현대·한화·롯데)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_000810>krx_000400",
+      "source": "krx:000810",
+      "target": "krx:000400",
+      "type": "peer",
+      "labelKo": "손해보험 경쟁 (삼성·DB·현대·한화·롯데)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_005830>krx_001450",
+      "source": "krx:005830",
+      "target": "krx:001450",
+      "type": "peer",
+      "labelKo": "손해보험 경쟁 (삼성·DB·현대·한화·롯데)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_001450>krx_000370",
+      "source": "krx:001450",
+      "target": "krx:000370",
+      "type": "peer",
+      "labelKo": "손해보험 경쟁 (삼성·DB·현대·한화·롯데)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_000370>krx_000400",
+      "source": "krx:000370",
+      "target": "krx:000400",
+      "type": "peer",
+      "labelKo": "손해보험 경쟁 (삼성·DB·현대·한화·롯데)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_000810>global_tokio",
+      "source": "krx:000810",
+      "target": "global:tokio",
+      "type": "peer",
+      "labelKo": "손보 글로벌 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_003690>global_munichre",
+      "source": "krx:003690",
+      "target": "global:munichre",
+      "type": "peer",
+      "labelKo": "재보험 경쟁",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=003690",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_003690>global_swissre",
+      "source": "krx:003690",
+      "target": "global:swissre",
+      "type": "peer",
+      "labelKo": "재보험 경쟁",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=003690",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_003690>krx_000810",
+      "source": "krx:003690",
+      "target": "krx:000810",
+      "type": "supply",
+      "labelKo": "재보험 출재 (국내 손보사)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=003690",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_003690>krx_005830",
+      "source": "krx:003690",
+      "target": "krx:005830",
+      "type": "supply",
+      "labelKo": "재보험 출재 (국내 손보사)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=003690",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_003690>krx_001450",
+      "source": "krx:003690",
+      "target": "krx:001450",
+      "type": "supply",
+      "labelKo": "재보험 출재 (국내 손보사)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=003690",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_003690>krx_000370",
+      "source": "krx:003690",
+      "target": "krx:000370",
+      "type": "supply",
+      "labelKo": "재보험 출재 (국내 손보사)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=003690",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_003690>krx_000400",
+      "source": "krx:003690",
+      "target": "krx:000400",
+      "type": "supply",
+      "labelKo": "재보험 출재 (국내 손보사)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=003690",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_kdic>krx_031210",
+      "source": "global:kdic",
+      "target": "krx:031210",
+      "type": "equity",
+      "labelKo": "예금보험공사 최대주주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=031210",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "distribution:krx_211050>krx_032830",
+      "source": "krx:211050",
+      "target": "krx:032830",
+      "type": "distribution",
+      "labelKo": "보험 판매 대리(GA) — 생보",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=211050",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "distribution:krx_211050>krx_000810",
+      "source": "krx:211050",
+      "target": "krx:000810",
+      "type": "distribution",
+      "labelKo": "보험 판매 대리(GA) — 손보",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=211050",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_jkl>krx_000400",
+      "source": "global:jkl",
+      "target": "krx:000400",
+      "type": "equity",
+      "labelKo": "JKL파트너스 최대주주",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=000400",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_hanwha>krx_088350",
+      "source": "global:hanwha",
+      "target": "krx:088350",
+      "type": "equity",
+      "labelKo": "한화→한화생명",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_088350>krx_000370",
+      "source": "krx:088350",
+      "target": "krx:000370",
+      "type": "equity",
+      "labelKo": "한화생명→한화손보",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_088350>krx_003530",
+      "source": "krx:088350",
+      "target": "krx:003530",
+      "type": "equity",
+      "labelKo": "한화생명→한화투자증권",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:global_db_grp>krx_005830",
+      "source": "global:db_grp",
+      "target": "krx:005830",
+      "type": "partner",
+      "labelKo": "DB그룹 계열 (DB손보)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_005830>krx_016610",
+      "source": "krx:005830",
+      "target": "krx:016610",
+      "type": "partner",
+      "labelKo": "DB 계열 (증권)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_006800>krx_085620",
+      "source": "krx:006800",
+      "target": "krx:085620",
+      "type": "equity",
+      "labelKo": "미래에셋증권→미래에셋생명",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_138040>krx_071050",
+      "source": "krx:138040",
+      "target": "krx:071050",
+      "type": "peer",
+      "labelKo": "비은행 금융지주 (메리츠 vs 한국금융)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://m.meritzgroup.com/commfiles/hld/attach/2026/20260331/202603311717578640001U.pdf",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    }
+  ],
+  "flaggedSeeds": []
+}

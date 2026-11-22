@@ -31,7 +31,7 @@ export function buildSplitSectorMaps({ sourcePath, sourceGraph, graphSlugs, sect
       .replace(`../${sourceGraph}`, `../${graphPath}`)
       .replace(/(<span id="show-count">)\d+(<\/span>)/, (_, open, close) => `${open}${members.length}${close}`)
       .replace(/<tr data-ticker="([A-Z0-9]{6})">[\s\S]*?<\/tr>/g, (row, ticker) => tickers.has(ticker) ? row : '')
-      .replace(/const chains = (\['(?:all|게임)'[^;]*\]);/g, (_, list) => {
+      .replace(/const chains = (\['(?:all|게임|은행·은행계 금융그룹)'[^;]*\]);/g, (_, list) => {
         const present = [...list.matchAll(/'([^']+)'/g)].map(([, chain]) => chain)
           .filter((chain) => chain === 'all' || chains.has(chain));
         return `const chains = ${JSON.stringify(present)};`;

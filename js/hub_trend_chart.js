@@ -18,7 +18,7 @@
     metal: 'Steel & nonferrous', machinery: 'Industrial machinery',
     defense: 'Defense & aerospace', kconsume: 'Consumer/Retail',
     cosmetics: 'Cosmetics', gaming: 'Gaming', kcontent: 'Entertainment & Media', bio: 'Bio & pharma',
-    robot: 'Robotics', auto: 'Automotive', medtech: 'MedTech', finance: 'Financials',
+    robot: 'Robotics', auto: 'Automotive', medtech: 'MedTech', banking: 'Banking', securities: 'Securities', insurance: 'Insurance',
     construction: 'Construction', software: 'IT & software', holdings: 'Holdings',
     telecom: 'Telecom',
   };
@@ -553,7 +553,7 @@
     updateTabs();
     setStatus(COPY[state.lang].loading);
     var requestId = ++state.requestId;
-    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&weighting=' + state.weighting + '&v=9';
+    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&weighting=' + state.weighting + '&v=10';
     return fetch(url, {
       headers: { Accept: 'application/json' },
       cache: 'default',
@@ -596,7 +596,7 @@
             dataVersion: (state.payload && state.payload.dataVersion) || '',
           });
         }
-        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&weighting=' + state.weighting + '&v=9';
+        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&weighting=' + state.weighting + '&v=10';
         return fetch(url, {
           headers: { Accept: 'application/json' },
           cache: 'default',

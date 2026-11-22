@@ -30,7 +30,9 @@
     { id: 'cosmetics', path: '../cosmetics/korea_cosmetics_map.html', ko: "화장품/미용기기", en: "Cosmetics" },
     { id: 'medtech', path: '../medtech/korea_medtech_map.html', ko: "의료기기/헬스케어", en: "MedTech" },
     { id: 'bio', path: '../bio/korea_bio_map.html', ko: "바이오", en: "Bio" },
-    { id: 'finance', path: '../finance/korea_finance_map.html', ko: "금융", en: "Finance" },
+    { id: 'banking', path: '../finance/korea_finance_bank_map.html', ko: "은행", en: "Banking" },
+    { id: 'securities', path: '../finance/korea_finance_securities_map.html', ko: "증권", en: "Securities" },
+    { id: 'insurance', path: '../finance/korea_finance_insurance_map.html', ko: "보험", en: "Insurance" },
   ];
 
   function navLabel(s, lang, mobile) {

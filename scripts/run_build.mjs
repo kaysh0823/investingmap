@@ -38,6 +38,7 @@ const steps = [
   ['node', ['scripts/patch_volatility_candles_tab.mjs']],
   ['node', ['scripts/build_semiconductor_sectors.mjs']],
   ['node', ['scripts/build_content_sectors.mjs']],
+  ['node', ['scripts/build_finance_sectors.mjs']],
   ['node', ['scripts/build_hub_index.mjs']],
   ['node', ['scripts/build_search_index.mjs']],
   ['node', ['scripts/patch_asset_versions.mjs']],

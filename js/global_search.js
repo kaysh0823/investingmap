@@ -35,6 +35,9 @@
     medtech: 'medtech/korea_medtech_map.html',
     bio: 'bio/korea_bio_map.html',
     finance: 'finance/korea_finance_map.html',
+    banking: 'finance/korea_finance_bank_map.html',
+    securities: 'finance/korea_finance_securities_map.html',
+    insurance: 'finance/korea_finance_insurance_map.html',
   };
 
   /** item.s → data/netmap/<id>.json basename (must match sector map dataUrl). */
@@ -66,6 +69,9 @@
     medtech: 'medtech',
     bio: 'bio',
     finance: 'finance',
+    banking: 'finance_bank',
+    securities: 'finance_securities',
+    insurance: 'finance_insurance',
   };
 
   var SECTOR_LABELS = {
@@ -96,6 +102,9 @@
     medtech: { ko: "의료기기/헬스케어", en: "MedTech" },
     bio: { ko: "바이오", en: "Bio" },
     finance: { ko: "금융", en: "Finance" },
+    banking: { ko: "은행", en: "Banking" },
+    securities: { ko: "증권", en: "Securities" },
+    insurance: { ko: "보험", en: "Insurance" },
   };
 
   var COPY = {

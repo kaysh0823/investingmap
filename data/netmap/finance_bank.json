@@ -1,0 +1,1174 @@
+{
+  "sectorId": "finance_bank",
+  "version": 1,
+  "asOf": "2026-09-25",
+  "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+  "chains": {
+    "bank": "은행·은행계 금융그룹",
+    "life": "생명보험",
+    "nonlife": "손해보험·재보험",
+    "nonbank": "비은행 금융그룹",
+    "securities": "증권",
+    "fintech": "결제·핀테크",
+    "card": "카드·캐피탈·여신금융",
+    "am": "자산운용·PE·VC",
+    "info": "금융정보·평가",
+    "reit": "부동산금융·투자기구",
+    "broker": "보험판매·중개",
+    "end_customer": "그룹·주요주주",
+    "global_peer": "글로벌 금융",
+    "holdings": "지주회사"
+  },
+  "edgeTypes": {
+    "supply": "공급 (source → target)",
+    "partner": "협력·JV",
+    "equity": "지분 (source가 target 보유)",
+    "peer": "경쟁·피어",
+    "distribution": "유통"
+  },
+  "nodes": [
+    {
+      "id": "krx:105560",
+      "type": "kr_listed",
+      "ticker": "105560",
+      "nameKo": "KB금융",
+      "nameEn": "KB금융",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:032830",
+      "type": "kr_other",
+      "ticker": "032830",
+      "nameKo": "삼성생명",
+      "nameEn": "삼성생명",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "life",
+      "role": "생명보험",
+      "map": "finance/korea_finance_insurance_map.html"
+    },
+    {
+      "id": "krx:055550",
+      "type": "kr_listed",
+      "ticker": "055550",
+      "nameKo": "신한지주",
+      "nameEn": "신한지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:086790",
+      "type": "kr_listed",
+      "ticker": "086790",
+      "nameKo": "하나금융지주",
+      "nameEn": "하나금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:316140",
+      "type": "kr_listed",
+      "ticker": "316140",
+      "nameKo": "우리금융지주",
+      "nameEn": "우리금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:024110",
+      "type": "kr_listed",
+      "ticker": "024110",
+      "nameKo": "기업은행",
+      "nameEn": "기업은행",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:071050",
+      "type": "kr_other",
+      "ticker": "071050",
+      "nameKo": "한국금융지주",
+      "nameEn": "한국금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "nonbank",
+      "role": "비은행 금융그룹",
+      "map": "finance/korea_finance_securities_map.html"
+    },
+    {
+      "id": "krx:323410",
+      "type": "kr_listed",
+      "ticker": "323410",
+      "nameKo": "카카오뱅크",
+      "nameEn": "카카오뱅크",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:175330",
+      "type": "kr_listed",
+      "ticker": "175330",
+      "nameKo": "JB금융지주",
+      "nameEn": "JB금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:377300",
+      "type": "kr_listed",
+      "ticker": "377300",
+      "nameKo": "카카오페이",
+      "nameEn": "카카오페이",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "fintech",
+      "role": "결제·핀테크"
+    },
+    {
+      "id": "krx:029780",
+      "type": "kr_listed",
+      "ticker": "029780",
+      "nameKo": "삼성카드",
+      "nameEn": "삼성카드",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "card",
+      "role": "카드·캐피탈·여신금융"
+    },
+    {
+      "id": "krx:138930",
+      "type": "kr_listed",
+      "ticker": "138930",
+      "nameKo": "BNK금융지주",
+      "nameEn": "BNK금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:139130",
+      "type": "kr_listed",
+      "ticker": "139130",
+      "nameKo": "iM금융지주",
+      "nameEn": "iM금융지주",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "krx:279570",
+      "type": "kr_listed",
+      "ticker": "279570",
+      "nameKo": "케이뱅크",
+      "nameEn": "케이뱅크",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "global:tongyang_life",
+      "type": "kr_other",
+      "nameKo": "동양생명",
+      "nameEn": "Tongyang Life",
+      "country": "kr",
+      "chain": "life",
+      "role": "우리금융 완전자회사 (2026.8 상장폐지)"
+    },
+    {
+      "id": "krx:030190",
+      "type": "kr_listed",
+      "ticker": "030190",
+      "nameKo": "NICE평가정보",
+      "nameEn": "NICE평가정보",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "info",
+      "role": "금융정보·평가"
+    },
+    {
+      "id": "krx:034950",
+      "type": "kr_listed",
+      "ticker": "034950",
+      "nameKo": "한국기업평가",
+      "nameEn": "한국기업평가",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "info",
+      "role": "금융정보·평가"
+    },
+    {
+      "id": "krx:006220",
+      "type": "kr_listed",
+      "ticker": "006220",
+      "nameKo": "제주은행",
+      "nameEn": "제주은행",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "bank",
+      "role": "은행·은행계 금융그룹"
+    },
+    {
+      "id": "global:samsung_el",
+      "type": "kr_other",
+      "nameKo": "삼성전자",
+      "nameEn": "Samsung Electronics",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "삼성생명 8.5% 피투자",
+      "exchange": "KRX:005930"
+    },
+    {
+      "id": "global:kakao",
+      "type": "kr_other",
+      "nameKo": "카카오",
+      "nameEn": "Kakao",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "카카오뱅크·카카오페이 최대주주",
+      "exchange": "KRX:035720"
+    },
+    {
+      "id": "global:ant",
+      "type": "global",
+      "nameKo": "앤트그룹(알리페이)",
+      "nameEn": "Ant Group (Alipay)",
+      "country": "cn",
+      "chain": "end_customer",
+      "role": "카카오페이 27.07%",
+      "exchange": ""
+    },
+    {
+      "id": "global:bccard",
+      "type": "kr_other",
+      "nameKo": "BC카드(KT)",
+      "nameEn": "BC Card (KT)",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "케이뱅크 최대주주",
+      "exchange": "KRX:030200"
+    },
+    {
+      "id": "global:nice_hd",
+      "type": "kr_other",
+      "nameKo": "NICE",
+      "nameEn": "NICE Holdings",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "NICE평가정보 모회사",
+      "exchange": "KRX:034310"
+    },
+    {
+      "id": "global:jpm",
+      "type": "global",
+      "nameKo": "JP모건",
+      "nameEn": "JPMorgan Chase",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "글로벌 은행 1위",
+      "exchange": "NYSE:JPM"
+    },
+    {
+      "id": "global:hsbc",
+      "type": "global",
+      "nameKo": "HSBC",
+      "nameEn": "HSBC",
+      "country": "eu",
+      "chain": "global_peer",
+      "role": "글로벌 은행",
+      "exchange": "LSE:HSBA"
+    },
+    {
+      "id": "global:mufg",
+      "type": "global",
+      "nameKo": "MUFG",
+      "nameEn": "Mitsubishi UFJ",
+      "country": "jp",
+      "chain": "global_peer",
+      "role": "일본 은행 1위",
+      "exchange": "TSE:8306"
+    },
+    {
+      "id": "global:dbs",
+      "type": "global",
+      "nameKo": "DBS",
+      "nameEn": "DBS Group",
+      "country": "other",
+      "chain": "global_peer",
+      "role": "아시아 은행",
+      "exchange": "SGX:D05"
+    },
+    {
+      "id": "global:visa",
+      "type": "global",
+      "nameKo": "비자",
+      "nameEn": "Visa",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "결제 네트워크",
+      "exchange": "NYSE:V"
+    },
+    {
+      "id": "global:amex",
+      "type": "global",
+      "nameKo": "아메리칸익스프레스",
+      "nameEn": "American Express",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "카드",
+      "exchange": "NYSE:AXP"
+    },
+    {
+      "id": "global:paypal",
+      "type": "global",
+      "nameKo": "페이팔",
+      "nameEn": "PayPal",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "핀테크",
+      "exchange": "NASDAQ:PYPL"
+    },
+    {
+      "id": "global:nubank",
+      "type": "global",
+      "nameKo": "누뱅크",
+      "nameEn": "Nu Holdings",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "디지털 은행",
+      "exchange": "NYSE:NU"
+    },
+    {
+      "id": "global:sp",
+      "type": "global",
+      "nameKo": "S&P글로벌",
+      "nameEn": "S&P Global",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "신용평가·데이터",
+      "exchange": "NYSE:SPGI"
+    },
+    {
+      "id": "global:moodys",
+      "type": "global",
+      "nameKo": "무디스",
+      "nameEn": "Moody's",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "신용평가",
+      "exchange": "NYSE:MCO"
+    },
+    {
+      "id": "krx:034310",
+      "ticker": "034310",
+      "type": "kr_listed",
+      "country": "kr",
+      "market": "KOSPI",
+      "nameKo": "NICE",
+      "nameEn": "NICEHoldings",
+      "chain": "holdings",
+      "role": "금융정보 지주"
+    },
+    {
+      "id": "krx:015360",
+      "ticker": "015360",
+      "type": "kr_listed",
+      "country": "kr",
+      "market": "KOSPI",
+      "nameKo": "INVENI",
+      "nameEn": "INVENI",
+      "chain": "holdings",
+      "role": "투자형 지주"
+    }
+  ],
+  "edges": [
+    {
+      "id": "peer:krx_105560>krx_055550",
+      "source": "krx:105560",
+      "target": "krx:055550",
+      "type": "peer",
+      "labelKo": "4대 금융지주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_105560>krx_086790",
+      "source": "krx:105560",
+      "target": "krx:086790",
+      "type": "peer",
+      "labelKo": "4대 금융지주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_105560>krx_316140",
+      "source": "krx:105560",
+      "target": "krx:316140",
+      "type": "peer",
+      "labelKo": "4대 금융지주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_055550>krx_086790",
+      "source": "krx:055550",
+      "target": "krx:086790",
+      "type": "peer",
+      "labelKo": "4대 금융지주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_055550>krx_316140",
+      "source": "krx:055550",
+      "target": "krx:316140",
+      "type": "peer",
+      "labelKo": "4대 금융지주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_086790>krx_316140",
+      "source": "krx:086790",
+      "target": "krx:316140",
+      "type": "peer",
+      "labelKo": "4대 금융지주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_105560>krx_024110",
+      "source": "krx:105560",
+      "target": "krx:024110",
+      "type": "peer",
+      "labelKo": "은행",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_055550>krx_024110",
+      "source": "krx:055550",
+      "target": "krx:024110",
+      "type": "peer",
+      "labelKo": "은행",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_086790>krx_024110",
+      "source": "krx:086790",
+      "target": "krx:024110",
+      "type": "peer",
+      "labelKo": "은행",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_316140>krx_024110",
+      "source": "krx:316140",
+      "target": "krx:024110",
+      "type": "peer",
+      "labelKo": "은행",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_175330>krx_105560",
+      "source": "krx:175330",
+      "target": "krx:105560",
+      "type": "peer",
+      "labelKo": "지방 금융지주 vs 대형 지주",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_138930>krx_105560",
+      "source": "krx:138930",
+      "target": "krx:105560",
+      "type": "peer",
+      "labelKo": "지방 금융지주 vs 대형 지주",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_139130>krx_105560",
+      "source": "krx:139130",
+      "target": "krx:105560",
+      "type": "peer",
+      "labelKo": "지방 금융지주 vs 대형 지주",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_006220>krx_055550",
+      "source": "krx:006220",
+      "target": "krx:055550",
+      "type": "equity",
+      "labelKo": "신한지주→제주은행",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1263043/000095017025040736/form-6-k-250318.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_175330>krx_138930",
+      "source": "krx:175330",
+      "target": "krx:138930",
+      "type": "peer",
+      "labelKo": "지방 금융지주 (JB·BNK·iM)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_138930>krx_139130",
+      "source": "krx:138930",
+      "target": "krx:139130",
+      "type": "peer",
+      "labelKo": "지방 금융지주 (JB·BNK·iM)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_316140>tongyang_life",
+      "source": "krx:316140",
+      "target": "global:tongyang_life",
+      "type": "equity",
+      "labelKo": "우리금융→동양생명 완전자회사 (2026.8, ABL생명 통합 예정)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://marketin.edaily.co.kr/News/ReadE?newsId=05303766645419400",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_105560>global_jpm",
+      "source": "krx:105560",
+      "target": "global:jpm",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_105560>global_hsbc",
+      "source": "krx:105560",
+      "target": "global:hsbc",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_105560>global_mufg",
+      "source": "krx:105560",
+      "target": "global:mufg",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_105560>global_dbs",
+      "source": "krx:105560",
+      "target": "global:dbs",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_055550>global_jpm",
+      "source": "krx:055550",
+      "target": "global:jpm",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_055550>global_hsbc",
+      "source": "krx:055550",
+      "target": "global:hsbc",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_055550>global_mufg",
+      "source": "krx:055550",
+      "target": "global:mufg",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_055550>global_dbs",
+      "source": "krx:055550",
+      "target": "global:dbs",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_086790>global_jpm",
+      "source": "krx:086790",
+      "target": "global:jpm",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_086790>global_hsbc",
+      "source": "krx:086790",
+      "target": "global:hsbc",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_086790>global_mufg",
+      "source": "krx:086790",
+      "target": "global:mufg",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_086790>global_dbs",
+      "source": "krx:086790",
+      "target": "global:dbs",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_316140>global_jpm",
+      "source": "krx:316140",
+      "target": "global:jpm",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_316140>global_hsbc",
+      "source": "krx:316140",
+      "target": "global:hsbc",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_316140>global_mufg",
+      "source": "krx:316140",
+      "target": "global:mufg",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_316140>global_dbs",
+      "source": "krx:316140",
+      "target": "global:dbs",
+      "type": "peer",
+      "labelKo": "글로벌 은행 그룹 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1445930/000119312526183398/R93.htm",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_kakao>krx_323410",
+      "source": "global:kakao",
+      "target": "krx:323410",
+      "type": "equity",
+      "labelKo": "카카오 최대주주 (27%)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_071050>krx_323410",
+      "source": "krx:071050",
+      "target": "krx:323410",
+      "type": "equity",
+      "labelKo": "한국금융지주 27% 2대주주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_bccard>krx_279570",
+      "source": "global:bccard",
+      "target": "krx:279570",
+      "type": "equity",
+      "labelKo": "BC카드(KT) 최대주주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/K_Bank",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_323410>krx_279570",
+      "source": "krx:323410",
+      "target": "krx:279570",
+      "type": "peer",
+      "labelKo": "인터넷전문은행 경쟁",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_323410>krx_105560",
+      "source": "krx:323410",
+      "target": "krx:105560",
+      "type": "peer",
+      "labelKo": "리테일 뱅킹 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_323410>krx_055550",
+      "source": "krx:323410",
+      "target": "krx:055550",
+      "type": "peer",
+      "labelKo": "리테일 뱅킹 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_323410>krx_086790",
+      "source": "krx:323410",
+      "target": "krx:086790",
+      "type": "peer",
+      "labelKo": "리테일 뱅킹 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_323410>krx_316140",
+      "source": "krx:323410",
+      "target": "krx:316140",
+      "type": "peer",
+      "labelKo": "리테일 뱅킹 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_323410>global_nubank",
+      "source": "krx:323410",
+      "target": "global:nubank",
+      "type": "peer",
+      "labelKo": "디지털 은행 글로벌 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://economist.co.kr/article/view/ecn202311020037",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_kakao>krx_377300",
+      "source": "global:kakao",
+      "target": "krx:377300",
+      "type": "equity",
+      "labelKo": "카카오 최대주주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://v.daum.net/v/yJkgUTCElJ",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_ant>krx_377300",
+      "source": "global:ant",
+      "target": "krx:377300",
+      "type": "equity",
+      "labelKo": "알리페이(앤트) 27.07%",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://v.daum.net/v/yJkgUTCElJ",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_377300>global_ant",
+      "source": "krx:377300",
+      "target": "global:ant",
+      "type": "partner",
+      "labelKo": "알리페이 글로벌 결제 제휴",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://v.daum.net/v/yJkgUTCElJ",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_377300>global_paypal",
+      "source": "krx:377300",
+      "target": "global:paypal",
+      "type": "peer",
+      "labelKo": "결제·핀테크 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://v.daum.net/v/yJkgUTCElJ",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_377300>global_visa",
+      "source": "krx:377300",
+      "target": "global:visa",
+      "type": "peer",
+      "labelKo": "결제·핀테크 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://v.daum.net/v/yJkgUTCElJ",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_377300>krx_323410",
+      "source": "krx:377300",
+      "target": "krx:323410",
+      "type": "partner",
+      "labelKo": "카카오 금융 계열 (페이·뱅크)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://v.daum.net/v/yJkgUTCElJ",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_032830>krx_029780",
+      "source": "krx:032830",
+      "target": "krx:029780",
+      "type": "equity",
+      "labelKo": "삼성생명→삼성카드 (71%)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=032830&cn=",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_029780>global_samsung_el",
+      "source": "krx:029780",
+      "target": "global:samsung_el",
+      "type": "partner",
+      "labelKo": "삼성그룹 금융 계열",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_nice_hd>krx_030190",
+      "source": "global:nice_hd",
+      "target": "krx:030190",
+      "type": "equity",
+      "labelKo": "NICE→NICE평가정보",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=030190",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_030190>krx_034950",
+      "source": "krx:030190",
+      "target": "krx:034950",
+      "type": "peer",
+      "labelKo": "신용평가·정보",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=034950",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_034950>global_sp",
+      "source": "krx:034950",
+      "target": "global:sp",
+      "type": "peer",
+      "labelKo": "글로벌 신용평가 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=034950",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_034950>global_moodys",
+      "source": "krx:034950",
+      "target": "global:moodys",
+      "type": "peer",
+      "labelKo": "글로벌 신용평가 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=034950",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_029780>global_amex",
+      "source": "krx:029780",
+      "target": "global:amex",
+      "type": "peer",
+      "labelKo": "카드 피어",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://www.ftc.go.kr/www/selectBbsNttView.do?key=12&bordCd=3&nttSn=46053",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    }
+  ],
+  "flaggedSeeds": []
+}

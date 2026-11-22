@@ -2406,17 +2406,41 @@
         <p class="hub-card-map" id="card-bio-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
         <span class="hub-card-cta" id="card-bio-cta">Open map →</span>
       </a>
-<a class="hub-card" id="hub-link-finance" href="finance/korea_finance_map.html?tab=heatmap">
+<a class="hub-card" id="hub-link-banking" href="finance/korea_finance_bank_map.html?tab=heatmap">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">🏦</span>
-          <span class="hub-card-badge" id="card-finance-badge">49 LISTINGS</span>
+          <span class="hub-card-badge" id="card-banking-badge">17 LISTINGS</span>
         </div>
-        <h2 id="card-finance-title">한국 금융 투자 지도</h2>
-        <p class="hub-card-lead" id="card-finance-lead">은행·증권·보험·카드·캐피탈 밸류체인과 글로벌 peer 참고 관계</p>
-        <p class="hub-card-keyplayers" id="card-finance-keyplayers"></p>
-        <div class="hub-card-tags" id="card-finance-tags"></div>
-        <p class="hub-card-map" id="card-finance-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
-        <span class="hub-card-cta" id="card-finance-cta">Open map →</span>
+        <h2 id="card-banking-title">Banking</h2>
+        <p class="hub-card-lead" id="card-banking-lead">Banks, cards, payments, and other financial services</p>
+        <p class="hub-card-keyplayers" id="card-banking-keyplayers"></p>
+        <div class="hub-card-tags" id="card-banking-tags"></div>
+        <p class="hub-card-map" id="card-banking-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
+        <span class="hub-card-cta" id="card-banking-cta">Open map →</span>
+      </a>
+<a class="hub-card" id="hub-link-securities" href="finance/korea_finance_securities_map.html?tab=heatmap">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">📈</span>
+          <span class="hub-card-badge" id="card-securities-badge">20 LISTINGS</span>
+        </div>
+        <h2 id="card-securities-title">Securities</h2>
+        <p class="hub-card-lead" id="card-securities-lead">Brokerages, asset management, private equity, and venture capital</p>
+        <p class="hub-card-keyplayers" id="card-securities-keyplayers"></p>
+        <div class="hub-card-tags" id="card-securities-tags"></div>
+        <p class="hub-card-map" id="card-securities-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
+        <span class="hub-card-cta" id="card-securities-cta">Open map →</span>
+      </a>
+<a class="hub-card" id="hub-link-insurance" href="finance/korea_finance_insurance_map.html?tab=heatmap">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🛡️</span>
+          <span class="hub-card-badge" id="card-insurance-badge">12 LISTINGS</span>
+        </div>
+        <h2 id="card-insurance-title">Insurance</h2>
+        <p class="hub-card-lead" id="card-insurance-lead">Life, non-life and reinsurance, and insurance brokerage</p>
+        <p class="hub-card-keyplayers" id="card-insurance-keyplayers"></p>
+        <div class="hub-card-tags" id="card-insurance-tags"></div>
+        <p class="hub-card-map" id="card-insurance-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
+        <span class="hub-card-cta" id="card-insurance-cta">Open map →</span>
       </a>
 
     </div>
@@ -2481,13 +2505,13 @@
   <script src="js/returns_tick.js?v=67fa0ba1"></script>
   <script src="js/returns_badge.js?v=20348c1a"></script>
   <script src="js/sector_weighting.js?v=9b87ed82"></script>
-  <script src="js/hub_dashboard.js?v=e41ace51"></script>
+  <script src="js/hub_dashboard.js?v=d8de8f55"></script>
   <script src="js/map_tab_search.js?v=c1d43a06"></script>
   <script src="js/candle_modal.js?v=6767710b"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="js/hub_range_scatter.js?v=eb81af1f"></script>
-  <script src="js/hub_trend_chart.js?v=7b14da3c"></script>
-  <script src="js/hub_sector_rankings.js?v=9c1ea123"></script>
+  <script src="js/hub_trend_chart.js?v=d2148d29"></script>
+  <script src="js/hub_sector_rankings.js?v=3c7ad2af"></script>
   <script src="js/im_collapsible.js?v=098f0bc5"></script>
 <script>
     const T = {
@@ -2570,8 +2594,6 @@
         powergridTitle: '한국 전력설비 투자 지도',
         powergridLead: '전력설비·송배전·발전설비 밸류체인과 글로벌 장비·EPC 참고 관계',
         powergridCta: '지도 열기 →',
-        financeTitle: '한국 금융 투자 지도',
-        financeLead: '은행·증권·보험·카드·캐피탈 밸류체인과 글로벌 peer 참고 관계',
         financeCta: '지도 열기 →',
         constructionTitle: '한국 건설/기계 투자 지도',
         constructionLead: '종합건설·주택·디벨로퍼·건설기계 밸류체인과 글로벌 peer 참고 관계',
@@ -2688,8 +2710,6 @@
         powergridTitle: 'Korea Power Equipment Map',
         powergridLead: 'Power equipment, T&D, and generation—transformers, cables, nuclear and gas turbines with global peer relationships.',
         powergridCta: 'Open map →',
-        financeTitle: 'Korea Listed Financials Map',
-        financeLead: 'Banks, securities, insurance, cards and consumer finance—listed Korean financials with global peer relationships.',
         financeCta: 'Open map →',
         constructionTitle: 'Korea Construction & Machinery Map',
         constructionLead: 'General contractors, housing developers, and construction equipment—listed Korean companies with global peer relationships.',
@@ -2791,7 +2811,9 @@
       document.getElementById('hub-link-renewable').href = 'renewable/korea_renewable_map.html' + mapQl;
       document.getElementById('hub-link-nuclear').href = 'nuclear/korea_nuclear_map.html' + mapQl;
       document.getElementById('hub-link-powergrid').href = 'powergrid/korea_powergrid_map.html' + mapQl;
-      document.getElementById('hub-link-finance').href = 'finance/korea_finance_map.html' + mapQl;
+      document.getElementById('hub-link-banking').href = 'finance/korea_finance_bank_map.html' + mapQl;
+      document.getElementById('hub-link-securities').href = 'finance/korea_finance_securities_map.html' + mapQl;
+      document.getElementById('hub-link-insurance').href = 'finance/korea_finance_insurance_map.html' + mapQl;
       document.getElementById('hub-link-construction').href = 'construction/korea_construction_map.html' + mapQl;
       document.getElementById('hub-link-bigchip').href = 'bigchip/korea_bigchip_map.html' + mapQl;
       document.getElementById('hub-link-software').href = 'software/korea_software_map.html' + mapQl;
@@ -2865,9 +2887,15 @@
       document.getElementById('card-powergrid-title').textContent = t.powergridTitle;
       document.getElementById('card-powergrid-lead').textContent = t.powergridLead;
       document.getElementById('card-powergrid-cta').textContent = t.powergridCta;
-      document.getElementById('card-finance-title').textContent = t.financeTitle;
-      document.getElementById('card-finance-lead').textContent = t.financeLead;
-      document.getElementById('card-finance-cta').textContent = t.financeCta;
+      document.getElementById('card-banking-title').textContent = lang === 'ko' ? '은행' : 'Banking';
+      document.getElementById('card-banking-lead').textContent = lang === 'ko' ? '은행·카드·결제·기타 금융' : 'Banks, cards, payments, and other financial services';
+      document.getElementById('card-banking-cta').textContent = t.financeCta;
+      document.getElementById('card-securities-title').textContent = lang === 'ko' ? '증권' : 'Securities';
+      document.getElementById('card-securities-lead').textContent = lang === 'ko' ? '증권·자산운용·PE·VC' : 'Brokerages, asset management, private equity, and venture capital';
+      document.getElementById('card-securities-cta').textContent = t.financeCta;
+      document.getElementById('card-insurance-title').textContent = lang === 'ko' ? '보험' : 'Insurance';
+      document.getElementById('card-insurance-lead').textContent = lang === 'ko' ? '생명보험·손해보험·재보험·보험중개' : 'Life, non-life and reinsurance, and insurance brokerage';
+      document.getElementById('card-insurance-cta').textContent = t.financeCta;
       document.getElementById('card-construction-title').textContent = t.constructionTitle;
       document.getElementById('card-construction-lead').textContent = t.constructionLead;
       document.getElementById('card-construction-cta').textContent = t.constructionCta;
@@ -2917,9 +2945,9 @@ document.title = lang === 'en'
 
     applyLang();
   </script>
-  <script src="js/desktop_sidebar_nav.js?v=0af0a575"></script>
-  <script src="js/global_search.js?v=375dd023"></script>
-  <script src="js/global_bottom_nav.js?v=c1316b2b"></script>
+  <script src="js/desktop_sidebar_nav.js?v=c1699065"></script>
+  <script src="js/global_search.js?v=8f5119b8"></script>
+  <script src="js/global_bottom_nav.js?v=af11f1f9"></script>
   <script src="js/geo_footer.js"></script>
 </body>
 

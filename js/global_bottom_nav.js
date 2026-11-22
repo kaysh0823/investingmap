@@ -33,7 +33,9 @@
     { id: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html', icon: "💄", ko: "화장품/미용기기", en: "Cosmetics", koShort: "화장품", enShort: "Cosmetics" },
     { id: 'medtech', path: 'medtech/korea_medtech_map.html', icon: "🩺", ko: "의료기기/헬스케어", en: "MedTech", koShort: "헬스케어", enShort: "MedTech" },
     { id: 'bio', path: 'bio/korea_bio_map.html', icon: "🧬", ko: "바이오", en: "Bio", koShort: "바이오", enShort: "Bio" },
-    { id: 'finance', path: 'finance/korea_finance_map.html', icon: "🏦", ko: "금융", en: "Finance", koShort: "금융", enShort: "Finance" },
+    { id: 'banking', path: 'finance/korea_finance_bank_map.html', icon: "🏦", ko: "은행", en: "Banking", koShort: "은행", enShort: "Banking" },
+    { id: 'securities', path: 'finance/korea_finance_securities_map.html', icon: "📈", ko: "증권", en: "Securities", koShort: "증권", enShort: "Securities" },
+    { id: 'insurance', path: 'finance/korea_finance_insurance_map.html', icon: "🛡️", ko: "보험", en: "Insurance", koShort: "보험", enShort: "Insurance" },
   ];
 
   function pageLang(lang) {
@@ -79,6 +81,9 @@
     if (path.includes('korea_kcontent_game_map')) return 'gaming';
     if (path.indexOf('/kcontent/') !== -1) return 'kcontent';
     if (path.indexOf('/kculture/') !== -1) return 'kconsume';
+    if (path.includes('korea_finance_bank_map')) return 'banking';
+    if (path.includes('korea_finance_securities_map')) return 'securities';
+    if (path.includes('korea_finance_insurance_map')) return 'insurance';
     if (path.indexOf('/finance/') !== -1) return 'finance';
     if (path.indexOf('/construction/') !== -1) return 'construction';
     if (path.indexOf('/software/') !== -1) return 'software';

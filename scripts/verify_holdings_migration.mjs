@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SECTOR_META, HUB_MAP_PATHS } from '../lib/sector_meta.mjs';
+import { financeSectorFor } from '../lib/finance_sector_split.mjs';
 import { HOLDINGS_DESTINATIONS } from '../lib/holdings_migration.mjs';
 import { extractCompaniesFromHtml } from '../lib/map_company_serialize.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -24,7 +25,9 @@ const search = JSON.parse(read('data/search_index.json'));
 for (const row of migration.rows) {
   const hits = all.filter(c => c.ticker === row.ticker);
   assert.equal(hits.length, 1, `${row.ticker}: exactly one home`);
-  const sector = row.sector === 'semi' ? 'semifront' : row.sector;
+  const sector = row.sector === 'semi' ? 'semifront'
+    : row.sector === 'finance' ? financeSectorFor({ ...row.company, ticker: row.ticker, chain: '지주회사' })
+    : row.sector;
   assert.equal(hits[0].sector, sector, `${row.ticker}: approved sector`);
   const meta = SECTOR_META[sector];
   const runtime = sector === 'bio' ? read('bio/korea_bio_map.inline.js') : read(meta.map);
