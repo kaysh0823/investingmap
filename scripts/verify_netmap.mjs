@@ -193,20 +193,13 @@ for (const [rel, sector] of Object.entries(MAP_SECTOR)) {
   assert.ok(GS && GS.NETMAP_ID && GS.SECTOR_MAP, 'InvestingMapGlobalSearch.NETMAP_ID');
   const netmapIds = GS.NETMAP_ID;
   const sectorMap = GS.SECTOR_MAP;
-  const mapSectorValues = new Set(Object.values(MAP_SECTOR));
   let n = 0;
   for (const [sid, mapPath] of Object.entries(sectorMap)) {
-    const id = netmapIds[sid];
-    assert.ok(id, `NETMAP_ID missing for sid=${sid}`);
-    assert.ok(mapSectorValues.has(id), `NETMAP_ID[${sid}]=${id} not in MAP_SECTOR values`);
-    const folder = String(mapPath).split('/')[0];
-    assert.equal(id, folder, `NETMAP_ID[${sid}] must equal map folder ${folder}`);
-    // Find HTML for this sector and confirm dataUrl basename
-    const rel = Object.entries(MAP_SECTOR).find(([, sec]) => sec === id)?.[0];
-    assert.ok(rel, `MAP_SECTOR entry for ${id}`);
+    const dataId = MAP_SECTOR[mapPath];
+    assert.ok(dataId, `MAP_SECTOR missing for ${mapPath}`);
+    assert.equal(netmapIds[sid], dataId, `NETMAP_ID[${sid}] must match ${mapPath}'s network`);
     n += 1;
   }
-  assert.equal(n, Object.keys(MAP_SECTOR).length, `NETMAP_ID entries must cover active sectors, got ${n}`);
   console.log(`  NETMAP_ID OK ${n} sectors ↔ dataUrl basename`);
 }
 

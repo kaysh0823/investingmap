@@ -1,0 +1,792 @@
+{
+  "sectorId": "kcontent_media",
+  "version": 1,
+  "asOf": "2026-09-25",
+  "note": "기업↔기업 직접 관계만 수록. 각 엣지는 출처 URL 1건 이상.",
+  "chains": {
+    "game": "게임",
+    "music": "음악·엔터테인먼트",
+    "ad": "광고·마케팅",
+    "cinema": "극장·배급",
+    "media": "방송·스트리밍",
+    "studio": "영상 제작·IP",
+    "fandom": "팬덤 플랫폼",
+    "edu": "교육서비스",
+    "end_customer": "모회사·플랫폼·투자자",
+    "global_peer": "글로벌 게임·엔터·미디어"
+  },
+  "edgeTypes": {
+    "supply": "공급 (source → target)",
+    "partner": "협력·JV",
+    "equity": "지분 (source가 target 보유)",
+    "peer": "경쟁·피어",
+    "distribution": "유통"
+  },
+  "nodes": [
+    {
+      "id": "krx:352820",
+      "type": "kr_listed",
+      "ticker": "352820",
+      "nameKo": "하이브",
+      "nameEn": "하이브",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "music",
+      "role": "음악·엔터테인먼트"
+    },
+    {
+      "id": "krx:030000",
+      "type": "kr_listed",
+      "ticker": "030000",
+      "nameKo": "제일기획",
+      "nameEn": "제일기획",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "ad",
+      "role": "광고·마케팅"
+    },
+    {
+      "id": "krx:041510",
+      "type": "kr_listed",
+      "ticker": "041510",
+      "nameKo": "에스엠",
+      "nameEn": "에스엠",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "music",
+      "role": "음악·엔터테인먼트"
+    },
+    {
+      "id": "krx:035900",
+      "type": "kr_listed",
+      "ticker": "035900",
+      "nameKo": "JYP Ent.",
+      "nameEn": "JYP Ent.",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "music",
+      "role": "음악·엔터테인먼트"
+    },
+    {
+      "id": "krx:079160",
+      "type": "kr_listed",
+      "ticker": "079160",
+      "nameKo": "CJ CGV",
+      "nameEn": "CJ CGV",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "cinema",
+      "role": "극장·배급"
+    },
+    {
+      "id": "krx:122870",
+      "type": "kr_listed",
+      "ticker": "122870",
+      "nameKo": "와이지엔터테인먼트",
+      "nameEn": "와이지엔터테인먼트",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "music",
+      "role": "음악·엔터테인먼트"
+    },
+    {
+      "id": "krx:035760",
+      "type": "kr_listed",
+      "ticker": "035760",
+      "nameKo": "CJ ENM",
+      "nameEn": "CJ ENM",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "media",
+      "role": "방송·스트리밍"
+    },
+    {
+      "id": "krx:214320",
+      "type": "kr_listed",
+      "ticker": "214320",
+      "nameKo": "이노션",
+      "nameEn": "이노션",
+      "market": "KOSPI",
+      "country": "kr",
+      "chain": "ad",
+      "role": "광고·마케팅"
+    },
+    {
+      "id": "krx:253450",
+      "type": "kr_listed",
+      "ticker": "253450",
+      "nameKo": "스튜디오드래곤",
+      "nameEn": "스튜디오드래곤",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "studio",
+      "role": "영상 제작·IP"
+    },
+    {
+      "id": "krx:067160",
+      "type": "kr_listed",
+      "ticker": "067160",
+      "nameKo": "SOOP",
+      "nameEn": "SOOP",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "media",
+      "role": "방송·스트리밍"
+    },
+    {
+      "id": "krx:376300",
+      "type": "kr_listed",
+      "ticker": "376300",
+      "nameKo": "디어유",
+      "nameEn": "디어유",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "fandom",
+      "role": "팬덤 플랫폼"
+    },
+    {
+      "id": "krx:215200",
+      "type": "kr_listed",
+      "ticker": "215200",
+      "nameKo": "메가스터디교육",
+      "nameEn": "메가스터디교육",
+      "market": "KOSDAQ",
+      "country": "kr",
+      "chain": "edu",
+      "role": "교육서비스"
+    },
+    {
+      "id": "global:tencent",
+      "type": "global",
+      "nameKo": "텐센트",
+      "nameEn": "Tencent",
+      "country": "cn",
+      "chain": "end_customer",
+      "role": "시프트업 34.8%·크래프톤 13.7% 2대주주, 텐센트뮤직 SM 2대주주",
+      "exchange": "HKEX:0700"
+    },
+    {
+      "id": "global:kakao",
+      "type": "kr_other",
+      "nameKo": "카카오",
+      "nameEn": "Kakao",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "카카오게임즈·SM 최대주주",
+      "exchange": "KRX:035720"
+    },
+    {
+      "id": "global:cj",
+      "type": "kr_other",
+      "nameKo": "CJ",
+      "nameEn": "CJ Corp.",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "CJ ENM·CJ CGV 지주",
+      "exchange": "KRX:001040"
+    },
+    {
+      "id": "global:samsung",
+      "type": "kr_other",
+      "nameKo": "삼성전자",
+      "nameEn": "Samsung Electronics",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "제일기획 최대 광고주·계열",
+      "exchange": "KRX:005930"
+    },
+    {
+      "id": "global:hyundai",
+      "type": "kr_other",
+      "nameKo": "현대차그룹",
+      "nameEn": "Hyundai Motor Group",
+      "country": "kr",
+      "chain": "end_customer",
+      "role": "이노션 최대 광고주·계열",
+      "exchange": "KRX:005380"
+    },
+    {
+      "id": "global:netflix",
+      "type": "global",
+      "nameKo": "넷플릭스",
+      "nameEn": "Netflix",
+      "country": "us",
+      "chain": "end_customer",
+      "role": "K-드라마 구매·스트리밍 경쟁",
+      "exchange": "NASDAQ:NFLX"
+    },
+    {
+      "id": "global:umg",
+      "type": "global",
+      "nameKo": "유니버설뮤직",
+      "nameEn": "Universal Music Group",
+      "country": "eu",
+      "chain": "global_peer",
+      "role": "하이브 글로벌 유통 파트너·경쟁",
+      "exchange": "AMS:UMG"
+    },
+    {
+      "id": "global:sony_music",
+      "type": "global",
+      "nameKo": "소니뮤직",
+      "nameEn": "Sony Music",
+      "country": "jp",
+      "chain": "global_peer",
+      "role": "음악 메이저",
+      "exchange": ""
+    },
+    {
+      "id": "global:wmg",
+      "type": "global",
+      "nameKo": "워너뮤직",
+      "nameEn": "Warner Music Group",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "음악 메이저",
+      "exchange": "NASDAQ:WMG"
+    },
+    {
+      "id": "global:wpp",
+      "type": "global",
+      "nameKo": "WPP",
+      "nameEn": "WPP",
+      "country": "eu",
+      "chain": "global_peer",
+      "role": "광고",
+      "exchange": "LSE:WPP"
+    },
+    {
+      "id": "global:dentsu",
+      "type": "global",
+      "nameKo": "덴츠",
+      "nameEn": "Dentsu",
+      "country": "jp",
+      "chain": "global_peer",
+      "role": "광고",
+      "exchange": "TSE:4324"
+    },
+    {
+      "id": "global:disney",
+      "type": "global",
+      "nameKo": "디즈니",
+      "nameEn": "Disney",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "미디어·스트리밍",
+      "exchange": "NYSE:DIS"
+    },
+    {
+      "id": "global:twitch",
+      "type": "global",
+      "nameKo": "트위치(아마존)",
+      "nameEn": "Twitch",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "라이브 스트리밍",
+      "exchange": "NASDAQ:AMZN"
+    },
+    {
+      "id": "global:amc",
+      "type": "global",
+      "nameKo": "AMC",
+      "nameEn": "AMC Entertainment",
+      "country": "us",
+      "chain": "global_peer",
+      "role": "극장 체인",
+      "exchange": "NYSE:AMC"
+    }
+  ],
+  "edges": [
+    {
+      "id": "equity:global_kakao>krx_041510",
+      "source": "global:kakao",
+      "target": "krx:041510",
+      "type": "equity",
+      "labelKo": "카카오·카카오엔터 41.5% 최대주주",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_tencent>krx_041510",
+      "source": "global:tencent",
+      "target": "krx:041510",
+      "type": "equity",
+      "labelKo": "텐센트뮤직 2대주주 (하이브 지분 인수)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_041510>krx_376300",
+      "source": "krx:041510",
+      "target": "krx:376300",
+      "type": "equity",
+      "labelKo": "SM 자회사 (디어유 버블)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_376300>global_tencent",
+      "source": "krx:376300",
+      "target": "global:tencent",
+      "type": "partner",
+      "labelKo": "텐센트뮤직과 중국 진출",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_352820>krx_376300",
+      "source": "krx:352820",
+      "target": "krx:376300",
+      "type": "peer",
+      "labelKo": "팬덤 플랫폼 (위버스 vs 버블)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_035900>krx_376300",
+      "source": "krx:035900",
+      "target": "krx:376300",
+      "type": "partner",
+      "labelKo": "JYP 아티스트 버블 입점·지분",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1070001.aspx?cmp_cd=376300",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_352820>krx_041510",
+      "source": "krx:352820",
+      "target": "krx:041510",
+      "type": "peer",
+      "labelKo": "K-팝 4대 기획사",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_352820>krx_035900",
+      "source": "krx:352820",
+      "target": "krx:035900",
+      "type": "peer",
+      "labelKo": "K-팝 4대 기획사",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_352820>krx_122870",
+      "source": "krx:352820",
+      "target": "krx:122870",
+      "type": "peer",
+      "labelKo": "K-팝 4대 기획사",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_041510>krx_035900",
+      "source": "krx:041510",
+      "target": "krx:035900",
+      "type": "peer",
+      "labelKo": "K-팝 4대 기획사",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_041510>krx_122870",
+      "source": "krx:041510",
+      "target": "krx:122870",
+      "type": "peer",
+      "labelKo": "K-팝 4대 기획사",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_035900>krx_122870",
+      "source": "krx:035900",
+      "target": "krx:122870",
+      "type": "peer",
+      "labelKo": "K-팝 4대 기획사",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.khan.co.kr/article/202505272036001",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_352820>global_umg",
+      "source": "krx:352820",
+      "target": "global:umg",
+      "type": "partner",
+      "labelKo": "글로벌 유통 계약 (UMG)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Hybe_Corporation",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_352820>global_umg",
+      "source": "krx:352820",
+      "target": "global:umg",
+      "type": "peer",
+      "labelKo": "글로벌 음악 메이저 경쟁",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Hybe_Corporation",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_352820>global_sony_music",
+      "source": "krx:352820",
+      "target": "global:sony_music",
+      "type": "peer",
+      "labelKo": "글로벌 음악 메이저 경쟁",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Hybe_Corporation",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_352820>global_wmg",
+      "source": "krx:352820",
+      "target": "global:wmg",
+      "type": "peer",
+      "labelKo": "글로벌 음악 메이저 경쟁",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Hybe_Corporation",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_cj>krx_035760",
+      "source": "global:cj",
+      "target": "krx:035760",
+      "type": "equity",
+      "labelKo": "CJ→CJ ENM",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CJ_ENM",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_cj>krx_079160",
+      "source": "global:cj",
+      "target": "krx:079160",
+      "type": "equity",
+      "labelKo": "CJ→CJ CGV",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CJ_CGV",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:krx_035760>krx_253450",
+      "source": "krx:035760",
+      "target": "krx:253450",
+      "type": "equity",
+      "labelKo": "CJ ENM→스튜디오드래곤 (최대주주)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Studio_Dragon",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_253450>global_netflix",
+      "source": "krx:253450",
+      "target": "global:netflix",
+      "type": "supply",
+      "labelKo": "드라마 공급·공동제작 (넷플릭스)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Studio_Dragon",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_netflix>krx_253450",
+      "source": "global:netflix",
+      "target": "krx:253450",
+      "type": "equity",
+      "labelKo": "넷플릭스 지분 투자 (2019)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Studio_Dragon",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_035760>global_netflix",
+      "source": "krx:035760",
+      "target": "global:netflix",
+      "type": "peer",
+      "labelKo": "OTT 경쟁 (티빙 vs 넷플릭스)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CJ_ENM",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_035760>global_disney",
+      "source": "krx:035760",
+      "target": "global:disney",
+      "type": "peer",
+      "labelKo": "미디어·OTT 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CJ_ENM",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_067160>global_twitch",
+      "source": "krx:067160",
+      "target": "global:twitch",
+      "type": "peer",
+      "labelKo": "라이브 스트리밍 (트위치 한국 철수 후 수혜)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SOOP_(company)",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_067160>krx_035760",
+      "source": "krx:067160",
+      "target": "krx:035760",
+      "type": "peer",
+      "labelKo": "방송·스트리밍",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SOOP_(company)",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_079160>global_amc",
+      "source": "krx:079160",
+      "target": "global:amc",
+      "type": "peer",
+      "labelKo": "극장 체인",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CJ_CGV",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "partner:krx_035760>krx_079160",
+      "source": "krx:035760",
+      "target": "krx:079160",
+      "type": "partner",
+      "labelKo": "영화 배급·상영 (CJ 계열)",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/CJ_CGV",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_samsung>krx_030000",
+      "source": "global:samsung",
+      "target": "krx:030000",
+      "type": "equity",
+      "labelKo": "삼성 계열 (제일기획)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cheil_Worldwide",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_030000>global_samsung",
+      "source": "krx:030000",
+      "target": "global:samsung",
+      "type": "supply",
+      "labelKo": "광고 대행 (최대 광고주 삼성)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cheil_Worldwide",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "equity:global_hyundai>krx_214320",
+      "source": "global:hyundai",
+      "target": "krx:214320",
+      "type": "equity",
+      "labelKo": "현대차그룹 계열 (이노션)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Innocean",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "supply:krx_214320>global_hyundai",
+      "source": "krx:214320",
+      "target": "global:hyundai",
+      "type": "supply",
+      "labelKo": "광고 대행 (최대 광고주 현대차·기아)",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Innocean",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_030000>krx_214320",
+      "source": "krx:030000",
+      "target": "krx:214320",
+      "type": "peer",
+      "labelKo": "광고 대행 양강",
+      "confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Innocean",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_030000>global_wpp",
+      "source": "krx:030000",
+      "target": "global:wpp",
+      "type": "peer",
+      "labelKo": "글로벌 광고 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cheil_Worldwide",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_030000>global_dentsu",
+      "source": "krx:030000",
+      "target": "global:dentsu",
+      "type": "peer",
+      "labelKo": "글로벌 광고 경쟁",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cheil_Worldwide",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "peer:krx_215200>krx_035760",
+      "source": "krx:215200",
+      "target": "krx:035760",
+      "type": "peer",
+      "labelKo": "콘텐츠 (교육 vs 미디어) — 섹터 내 참고",
+      "confidence": "low",
+      "evidence": [
+        {
+          "url": "https://comp.wisereport.co.kr/company/c1010001.aspx?cmp_cd=215200",
+          "accessedAt": "2026-09-25"
+        }
+      ]
+    }
+  ],
+  "flaggedSeeds": []
+}

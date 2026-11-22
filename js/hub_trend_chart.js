@@ -17,7 +17,7 @@
     powergrid: 'Power equipment', ship: 'Shipbuilding & equipment', shipping: 'Shipping & logistics',
     metal: 'Steel & nonferrous', machinery: 'Industrial machinery',
     defense: 'Defense & aerospace', kconsume: 'Consumer/Retail',
-    cosmetics: 'Cosmetics', kcontent: 'K-content', bio: 'Bio & pharma',
+    cosmetics: 'Cosmetics', gaming: 'Gaming', kcontent: 'Entertainment & Media', bio: 'Bio & pharma',
     robot: 'Robotics', auto: 'Automotive', medtech: 'MedTech', finance: 'Financials',
     construction: 'Construction', software: 'IT & software', holdings: 'Holdings',
     telecom: 'Telecom',
@@ -553,7 +553,7 @@
     updateTabs();
     setStatus(COPY[state.lang].loading);
     var requestId = ++state.requestId;
-    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&weighting=' + state.weighting + '&v=8';
+    var url = '/api/hub_trend?horizon=' + encodeURIComponent(horizon) + '&weighting=' + state.weighting + '&v=9';
     return fetch(url, {
       headers: { Accept: 'application/json' },
       cache: 'default',
@@ -596,7 +596,7 @@
             dataVersion: (state.payload && state.payload.dataVersion) || '',
           });
         }
-        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&weighting=' + state.weighting + '&v=8';
+        var url = '/api/hub_trend?horizon=' + encodeURIComponent(state.horizon || '20d') + '&weighting=' + state.weighting + '&v=9';
         return fetch(url, {
           headers: { Accept: 'application/json' },
           cache: 'default',

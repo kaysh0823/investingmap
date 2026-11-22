@@ -4,7 +4,7 @@
 (function (global) {
   'use strict';
 
-  var SECTOR_ORDER = ['bigchip', 'semifront', 'semiback', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance'];
+  var SECTOR_ORDER = ['bigchip', 'semifront', 'semiback', 'elec', 'software', 'telecom', 'robot', 'auto', 'battery', 'renewable', 'nuclear', 'powergrid', 'chemical', 'metal', 'construction', 'ship', 'defense', 'shipping', 'travel', 'kconsume', 'gaming', 'kcontent', 'cosmetics', 'medtech', 'bio', 'finance'];
   var PULSE_HORIZONS = [
     { retKey: 'return1dPct', labelKey: 'pulseRow1d' },
     { retKey: 'return5dPct', labelKey: 'pulseRow5d' },
@@ -68,7 +68,8 @@
       defense: ['방산/우주', '군용 항공', '미사일·C4ISR', '육상무기', '해군·함정', '우주·위성', '민항'],
       kconsume: ['라면·식품', '여행·항공', '패션', '쇼핑·유통'],
       cosmetics: ['브랜드', 'ODM', '미용기기', '유통·채널'],
-      kcontent: ['게임', '드라마·웹툰', 'K-pop'],
+      gaming: ['게임 개발·퍼블리싱'],
+      kcontent: ['음악·공연', '영상·방송', '광고·마케팅', '교육서비스'],
       bio: ['신약', 'CDMO', '바이오시밀러', '의료기기', '진단'],
       robot: ['FA', 'AMR', '협동로봇', '센싱', '모션제어', '피지컬AI'],
       auto: ['완성차', '부품', '타이어', '전장'],
@@ -95,7 +96,8 @@
       defense: ['Defense & Space', 'Military aviation', 'Missiles & C4ISR', 'Land systems', 'Naval', 'Space & satellites', 'Civil aviation'],
       kconsume: ['Food', 'Travel', 'Fashion', 'Retail'],
       cosmetics: ['Brands', 'ODM', 'Aesthetic', 'Channels'],
-      kcontent: ['Games', 'Drama & webtoon', 'K-pop'],
+      gaming: ['Game development & publishing'],
+      kcontent: ['Music & live events', 'Film & broadcasting', 'Advertising', 'Education'],
       bio: ['Novel drugs', 'CDMO', 'Biosimilars', 'Devices', 'Diagnostics'],
       robot: ['FA', 'AMR', 'Cobots', 'Sensing', 'Motion control', 'Physical AI'],
       auto: ['OEMs', 'Parts', 'Tires', 'Electronics'],
@@ -472,7 +474,7 @@
 
   function loadHubIndex() {
     if (hubData) return Promise.resolve(hubData);
-    return fetch('data/hub_index.json?v=24')
+    return fetch('data/hub_index.json?v=25')
       .then(function (r) {
         if (!r.ok) throw new Error('hub_index');
         return r.json();

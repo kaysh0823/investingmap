@@ -28,7 +28,8 @@
     { id: 'shipping', path: 'shipping/korea_shipping_map.html', icon: "🚢", ko: "해운·물류", en: "Shipping & Logistics", koShort: "해운·물류", enShort: "Shipping" },
     { id: 'travel', path: 'travel/korea_travel_map.html', icon: "✈️", ko: "여행·레저·항공", en: "Travel & Airlines", koShort: "여행·항공", enShort: "Travel" },
     { id: 'kconsume', path: 'kconsume/korea_kconsume_map.html', icon: "🛒", ko: "소비/유통", en: "Consumer/Retail", koShort: "소비/유통", enShort: "Consumer/Retail" },
-    { id: 'kcontent', path: 'kcontent/korea_kcontent_map.html', icon: "🎬", ko: "콘텐츠", en: "K-Content", koShort: "콘텐츠", enShort: "K-Content" },
+    { id: 'gaming', path: 'kcontent/korea_kcontent_game_map.html', icon: "🎮", ko: "게임", en: "Gaming", koShort: "게임", enShort: "Gaming" },
+    { id: 'kcontent', path: 'kcontent/korea_kcontent_media_map.html', icon: "🎬", ko: "엔터테인먼트·미디어", en: "Entertainment & Media", koShort: "엔터테인먼트·미디어", enShort: "Entertainment & Media" },
     { id: 'cosmetics', path: 'cosmetics/korea_cosmetics_map.html', icon: "💄", ko: "화장품/미용기기", en: "Cosmetics", koShort: "화장품", enShort: "Cosmetics" },
     { id: 'medtech', path: 'medtech/korea_medtech_map.html', icon: "🩺", ko: "의료기기/헬스케어", en: "MedTech", koShort: "헬스케어", enShort: "MedTech" },
     { id: 'bio', path: 'bio/korea_bio_map.html', icon: "🧬", ko: "바이오", en: "Bio", koShort: "바이오", enShort: "Bio" },
@@ -75,6 +76,7 @@
     if (path.indexOf('/powergrid/') !== -1) return 'powergrid';
     if (path.indexOf('/kconsume/') !== -1) return 'kconsume';
     if (path.indexOf('/cosmetics/') !== -1) return 'cosmetics';
+    if (path.includes('korea_kcontent_game_map')) return 'gaming';
     if (path.indexOf('/kcontent/') !== -1) return 'kcontent';
     if (path.indexOf('/kculture/') !== -1) return 'kconsume';
     if (path.indexOf('/finance/') !== -1) return 'finance';

@@ -130,6 +130,7 @@ run('node scripts/apply_semi_classification_review.mjs', 'approved semiconductor
 run('node scripts/mcap_admissions_20261113.mjs', 'approved KRX market-cap admissions');
 run('node scripts/sync_map_badges.mjs', 'map header badges from koreanCompanies (after all membership steps)');
 run('node scripts/build_semiconductor_sectors.mjs', 'publish split semiconductor maps');
+run('node scripts/build_content_sectors.mjs', 'publish split content maps');
 run('node scripts/build_hub_index.mjs', 'hub index JSON + crossSectors');
 run('node scripts/sync_hub_card_badges.mjs', 'static hub card badges from hub index');
 run('node scripts/build_search_index.mjs', 'search index');
@@ -166,5 +167,6 @@ run('node scripts/sync_map_badges.mjs', 'migrated company header counts');
 run('node scripts/retire_holdings_sector.mjs', 'remove retired holdings navigation');
 run('node scripts/patch_volatility_candles_tab.mjs', 'standalone volatility candles tab');
 run('node scripts/build_semiconductor_sectors.mjs', 'refresh split semiconductor maps');
+run('node scripts/build_content_sectors.mjs', 'refresh split content maps');
 run('node scripts/patch_asset_versions.mjs', 'content-hash ?v= for /js assets');
 console.log('\nOK rebuild_site');

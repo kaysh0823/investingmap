@@ -33,4 +33,6 @@
   <url><loc>https://www.investingmap.kr/authors.html</loc><lastmod>2026-11-21</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.investingmap.kr/semiconductor/korea_semiconductor_front_map.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.investingmap.kr/semiconductor/korea_semiconductor_back_map.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.investingmap.kr/kcontent/korea_kcontent_game_map.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.investingmap.kr/kcontent/korea_kcontent_media_map.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
 </urlset>

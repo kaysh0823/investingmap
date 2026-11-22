@@ -2345,13 +2345,25 @@
         <p class="hub-card-map" id="card-kconsume-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
         <span class="hub-card-cta" id="card-kconsume-cta">Open map →</span>
       </a>
-<a class="hub-card" id="hub-link-kcontent" href="kcontent/korea_kcontent_map.html?tab=heatmap">
+<a class="hub-card" id="hub-link-gaming" href="kcontent/korea_kcontent_game_map.html?tab=heatmap">
         <div class="hub-card-head">
           <span class="hub-card-icon" aria-hidden="true">🎬</span>
-          <span class="hub-card-badge" id="card-kcontent-badge">25 LISTINGS</span>
+          <span class="hub-card-badge" id="card-gaming-badge">13 LISTINGS</span>
         </div>
-        <h2 id="card-kcontent-title">Korea K-Content Industry Map</h2>
-        <p class="hub-card-lead" id="card-kcontent-lead">Games, drama·webtoon·streaming IP, and K-pop labels—listed Korean content equities with illustrative global links.</p>
+        <h2 id="card-gaming-title">Gaming</h2>
+        <p class="hub-card-lead" id="card-gaming-lead">Game developers and publishers</p>
+        <p class="hub-card-keyplayers" id="card-gaming-keyplayers"></p>
+        <div class="hub-card-tags" id="card-gaming-tags"></div>
+        <p class="hub-card-map" id="card-gaming-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
+        <span class="hub-card-cta" id="card-gaming-cta">Open map →</span>
+      </a>
+<a class="hub-card" id="hub-link-kcontent" href="kcontent/korea_kcontent_media_map.html?tab=heatmap">
+        <div class="hub-card-head">
+          <span class="hub-card-icon" aria-hidden="true">🎬</span>
+          <span class="hub-card-badge" id="card-kcontent-badge">12 LISTINGS</span>
+        </div>
+        <h2 id="card-kcontent-title">Entertainment & Media</h2>
+        <p class="hub-card-lead" id="card-kcontent-lead">Music, film, broadcasting, advertising, fan platforms, and education</p>
         <p class="hub-card-keyplayers" id="card-kcontent-keyplayers"></p>
         <div class="hub-card-tags" id="card-kcontent-tags"></div>
         <p class="hub-card-map" id="card-kcontent-map">Each map: value-chain tags, KRX market cap, a sortable company table, and analysis tabs (heatmap, momentum, valuation).</p>
@@ -2469,13 +2481,13 @@
   <script src="js/returns_tick.js?v=67fa0ba1"></script>
   <script src="js/returns_badge.js?v=20348c1a"></script>
   <script src="js/sector_weighting.js?v=9b87ed82"></script>
-  <script src="js/hub_dashboard.js?v=6f690eb8"></script>
+  <script src="js/hub_dashboard.js?v=e41ace51"></script>
   <script src="js/map_tab_search.js?v=c1d43a06"></script>
   <script src="js/candle_modal.js?v=6767710b"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="js/hub_range_scatter.js?v=eb81af1f"></script>
-  <script src="js/hub_trend_chart.js?v=9caed2e3"></script>
-  <script src="js/hub_sector_rankings.js?v=96549bdc"></script>
+  <script src="js/hub_trend_chart.js?v=7b14da3c"></script>
+  <script src="js/hub_sector_rankings.js?v=9c1ea123"></script>
   <script src="js/im_collapsible.js?v=098f0bc5"></script>
 <script>
     const T = {
@@ -2541,8 +2553,10 @@
         cosmeticsTitle: '한국 화장품/미용기기 투자 지도',
         cosmeticsLead: '브랜드·ODM/OEM·미용기기·유통·채널 밸류체인과 글로벌 K-뷰티 peer 참고 관계',
         cosmeticsCta: '지도 열기 →',
-        kcontentTitle: '한국 콘텐츠 투자 지도',
-        kcontentLead: '게임·드라마·웹툰·스트리밍 IP·K-pop 레이블 등 상장 한국 콘텐츠 주식과 글로벌 연계 예시',
+        gamingTitle: '게임',
+        kcontentTitle: '엔터테인먼트·미디어',
+        gamingLead: '게임 개발·퍼블리싱',
+        kcontentLead: '음악·영상·방송·팬덤·광고·교육서비스',
         kcontentCta: '지도 열기 →',
         batteryTitle: '한국 2차전지·배터리 투자 지도',
         batteryLead: '셀·소재·장비·부품·ESS 밸류체인과 글로벌 배터리 peer 참고 관계',
@@ -2657,8 +2671,10 @@
         cosmeticsTitle: 'Korea Cosmetics / Aesthetic Devices Map',
         cosmeticsLead: 'Brands, ODM/OEM, aesthetic devices, and channels—listed Korean equities with global K-beauty peer relationships.',
         cosmeticsCta: 'Open map →',
-        kcontentTitle: 'Korea K-Content Industry Map',
-        kcontentLead: 'Games, drama, webtoon and streaming IP, and K-pop labels—listed Korean content equities with illustrative global relationships.',
+        gamingTitle: 'Gaming',
+        kcontentTitle: 'Entertainment & Media',
+        gamingLead: 'Game developers and publishers',
+        kcontentLead: 'Music, film, broadcasting, advertising, fan platforms, and education',
         kcontentCta: 'Open map →',
         batteryTitle: 'Korea Battery Value Chain Map',
         batteryLead: 'Battery cells, materials, equipment, parts, and ESS with illustrative global peer relationships.',
@@ -2769,7 +2785,8 @@
       document.getElementById('hub-link-medtech').href = 'medtech/korea_medtech_map.html' + mapQl;
       document.getElementById('hub-link-kconsume').href = 'kconsume/korea_kconsume_map.html' + mapQl;
       document.getElementById('hub-link-cosmetics').href = 'cosmetics/korea_cosmetics_map.html' + mapQl;
-      document.getElementById('hub-link-kcontent').href = 'kcontent/korea_kcontent_map.html' + mapQl;
+      document.getElementById('hub-link-gaming').href = 'kcontent/korea_kcontent_game_map.html' + mapQl;
+      document.getElementById('hub-link-kcontent').href = 'kcontent/korea_kcontent_media_map.html' + mapQl;
       document.getElementById('hub-link-battery').href = 'battery/korea_battery_map.html' + mapQl;
       document.getElementById('hub-link-renewable').href = 'renewable/korea_renewable_map.html' + mapQl;
       document.getElementById('hub-link-nuclear').href = 'nuclear/korea_nuclear_map.html' + mapQl;
@@ -2830,8 +2847,11 @@
       document.getElementById('card-cosmetics-title').textContent = t.cosmeticsTitle;
       document.getElementById('card-cosmetics-lead').textContent = t.cosmeticsLead;
       document.getElementById('card-cosmetics-cta').textContent = t.cosmeticsCta;
+      document.getElementById('card-gaming-title').textContent = t.gamingTitle;
       document.getElementById('card-kcontent-title').textContent = t.kcontentTitle;
+      document.getElementById('card-gaming-lead').textContent = t.gamingLead;
       document.getElementById('card-kcontent-lead').textContent = t.kcontentLead;
+      document.getElementById('card-gaming-cta').textContent = t.kcontentCta;
       document.getElementById('card-kcontent-cta').textContent = t.kcontentCta;
       document.getElementById('card-battery-title').textContent = t.batteryTitle;
       document.getElementById('card-battery-lead').textContent = t.batteryLead;
@@ -2897,9 +2917,9 @@ document.title = lang === 'en'
 
     applyLang();
   </script>
-  <script src="js/desktop_sidebar_nav.js?v=c5955747"></script>
-  <script src="js/global_search.js?v=50a8a622"></script>
-  <script src="js/global_bottom_nav.js?v=3a10514d"></script>
+  <script src="js/desktop_sidebar_nav.js?v=0af0a575"></script>
+  <script src="js/global_search.js?v=375dd023"></script>
+  <script src="js/global_bottom_nav.js?v=c1316b2b"></script>
   <script src="js/geo_footer.js"></script>
 </body>
 

@@ -36,6 +36,8 @@ const SECTOR_MAP_RELS = [
   'kconsume/korea_kconsume_map.html',
   'cosmetics/korea_cosmetics_map.html',
   'kcontent/korea_kcontent_map.html',
+  'kcontent/korea_kcontent_game_map.html',
+  'kcontent/korea_kcontent_media_map.html',
   'software/korea_software_map.html',
   'telecom/korea_telecom_map.html',
   'chemical/korea_chemical_map.html',

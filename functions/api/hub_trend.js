@@ -19,7 +19,7 @@ import {
   returnsResponseHeaders,
 } from '../lib/returns_cache_headers.mjs';
 
-const CACHE_VERSION = '/api/hub_trend/cache/v26';
+const CACHE_VERSION = '/api/hub_trend/cache/v27';
 
 function cachePath(horizon, dataVersion, weighting = 'cap') {
   return `${CACHE_VERSION}/${normalizeSectorWeighting(weighting)}/dv/${encodeURIComponent(dataVersion || '0')}/${horizon}`;
