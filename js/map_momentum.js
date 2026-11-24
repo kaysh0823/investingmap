@@ -11,9 +11,11 @@
   var resizeTimer = null;
   var visibilityBound = false;
   var selectedYMode = '5d';
-  var YMODES = ['5d', '10d', '20d'];
+  var YMODES = ['5d', '10d', '20d', '50d', 'avg'];
   var YMODE_STORAGE = 'im_mm_ymode';
-  var XMODES = ['rs5', 'rs10', 'rs20', 'rs50'];
+  var XMODES = ['rs5', 'rs10', 'rs20', 'rs50', 'avg'];
+  var AVERAGE_PERIODS = [50, 20, 10, 5];
+  var AVERAGE_WEIGHTS = [0.4, 0.3, 0.2, 0.1];
   var selectedXMode = 'rs20';
   try { selectedXMode = XMODES.indexOf(global.localStorage.getItem('im_mm_xmode')) >= 0 ? global.localStorage.getItem('im_mm_xmode') : 'rs20'; } catch (e) {}
   var CHG_CLIP = 15;
@@ -30,6 +32,9 @@
       y5d: '5D BOX',
       y10d: '10D BOX',
       y20d: '20D BOX',
+      y50d: '50D BOX',
+      yavg: '평균',
+      xavg: 'RS 평균',
       leader: '주도(강세)',
       pullback: '되돌림주의',
       emerging: '신규부상',
@@ -49,6 +54,9 @@
       y5d: '5D BOX',
       y10d: '10D BOX',
       y20d: '20D BOX',
+      y50d: '50D BOX',
+      yavg: 'Average',
+      xavg: 'RS Average',
       leader: 'Leading (strong)',
       pullback: 'Pullback risk',
       emerging: 'Emerging',
@@ -249,28 +257,40 @@
     }
   }
 
-  function boxBounds(company, mode) {
-    var period = mode === '10d' ? 10 : mode === '20d' ? 20 : 5;
-    return {
-      high: company['high' + period + 'd'],
-      low: company['low' + period + 'd'],
-    };
+  function weightedAverage(valueForPeriod) {
+    var values = AVERAGE_PERIODS.map(valueForPeriod);
+    if (!values.every(isFiniteNumber)) return null;
+    return values.reduce(function (total, value, index) {
+      return total + value * AVERAGE_WEIGHTS[index];
+    }, 0);
+  }
+
+  function rsValue(row, mode, prefix) {
+    if (!row) return null;
+    if (mode !== 'avg') return row[prefix + mode.slice(2)];
+    return weightedAverage(function (period) { return row[prefix + period]; });
+  }
+
+  function rawBoxPosition(company, mode) {
+    var last = company.quoteLast;
+    var high = company['high' + mode];
+    var low = company['low' + mode];
+    if (!isFiniteNumber(last) || !isFiniteNumber(high) || !isFiniteNumber(low) || high <= low) return null;
+    return ((last - low) / (high - low)) * 100;
   }
 
   function pricePosition(company, mode) {
     if (!company) return null;
     mode = normalizeYMode(mode || selectedYMode);
-    var last = company.quoteLast;
-    var bounds = boxBounds(company, mode);
-    var high = bounds.high;
-    var low = bounds.low;
-    if (!isFiniteNumber(last) || !isFiniteNumber(high) || !isFiniteNumber(low) || high <= low) return null;
-    var raw = ((last - low) / (high - low)) * 100;
+    var raw = mode === 'avg'
+      ? weightedAverage(function (period) { return rawBoxPosition(company, period + 'd'); })
+      : rawBoxPosition(company, mode);
+    if (!isFiniteNumber(raw)) return null;
     return { raw: raw, plot: clamp100(raw), mode: mode };
   }
 
   function datum(company, mode, xMode) {
-    var rs = company && company[xMode || 'rs'];
+    var rs = xMode === 'avg' ? rsValue(company, xMode, 'rs') : company && company[xMode || 'rs'];
     if (!company || !isFiniteNumber(rs) || !isFiniteNumber(company.turnoverWon)) return null;
     var position = pricePosition(company, mode);
     if (position == null) return null;
@@ -299,7 +319,7 @@
     out.position = out.yAxis;
     // Keep the shared guide description current when pages supply older copy.
     out.legend = base.legend;
-    out.xAxis = selectedXMode.toUpperCase();
+    out.xAxis = selectedXMode === 'avg' ? out.xavg : selectedXMode.toUpperCase();
     return out;
   }
 
@@ -502,6 +522,8 @@
       { id: '5d', text: labels.mode5d },
       { id: '10d', text: labels.mode10d },
       { id: '20d', text: labels.mode20d },
+      { id: '50d', text: labels.y50d },
+      { id: 'avg', text: labels.yavg },
     ]
       .map(function (mode) {
         return (
@@ -532,7 +554,8 @@
     }
     xTabs.setAttribute('aria-label', opts.lang === 'en' ? 'Momentum horizontal axis' : '모멘텀 가로축');
     xTabs.innerHTML = XMODES.map(function (mode) {
-      return '<button type="button" class="mm-mode-tab" role="tab" data-mm-rs="' + mode + '" aria-selected="' + (mode === selectedXMode) + '">' + mode.toUpperCase() + '</button>';
+      var text = mode === 'avg' ? labels.yavg : mode.toUpperCase();
+      return '<button type="button" class="mm-mode-tab" role="tab" data-mm-rs="' + mode + '" aria-selected="' + (mode === selectedXMode) + '">' + text + '</button>';
     }).join('');
     wrap.insertBefore(xTabs, layout);
     ensureTabSearchRow(wrap, xTabs, layout, opts.lang || 'ko');
@@ -670,15 +693,18 @@
   function drawMarketIndexGuides(plot, x, innerH, indices, mobile, opts) {
     indices = indices || {};
     var sector = sectorIndexForPage(indices.sectors, global.location && global.location.pathname);
-    var period = selectedXMode.slice(2);
-    indices = { kospiRs: indices['kospiRs' + period], kosdaqRs: indices['kosdaqRs' + period] };
+    var axisLabel = labelsFor(opts || {}).xAxis;
+    indices = {
+      kospiRs: rsValue(indices, selectedXMode, 'kospiRs'),
+      kosdaqRs: rsValue(indices, selectedXMode, 'kosdaqRs'),
+    };
     var guides = [];
     if (isFiniteNumber(indices.kospiRs)) {
       guides.push({
         key: 'kospi',
         rs: clamp100(indices.kospiRs),
         color: '#42A5F5',
-        label: 'KOSPI ' + selectedXMode.toUpperCase() + ' ' + Number(indices.kospiRs).toFixed(1),
+        label: 'KOSPI ' + axisLabel + ' ' + indices.kospiRs.toFixed(1),
       });
     }
     if (isFiniteNumber(indices.kosdaqRs)) {
@@ -686,17 +712,17 @@
         key: 'kosdaq',
         rs: clamp100(indices.kosdaqRs),
         color: '#FFA726',
-        label: 'KOSDAQ ' + selectedXMode.toUpperCase() + ' ' + Number(indices.kosdaqRs).toFixed(1),
+        label: 'KOSDAQ ' + axisLabel + ' ' + indices.kosdaqRs.toFixed(1),
       });
     }
-    if (sector && isFiniteNumber(sector.entry[selectedXMode])) {
-      var sectorValue = sector.entry[selectedXMode];
+    var sectorValue = rsValue(sector && sector.entry, selectedXMode, 'rs');
+    if (isFiniteNumber(sectorValue)) {
       var sectorName = opts && opts.lang === 'en' ? sector.entry.nameEn : sector.entry.name;
       guides.push({
         key: 'sector-' + sector.id,
         rs: clamp100(sectorValue),
         color: '#ce93d8',
-        label: sectorName + ' ' + selectedXMode.toUpperCase() + ' ' + sectorValue.toFixed(1),
+        label: sectorName + ' ' + axisLabel + ' ' + sectorValue.toFixed(1),
       });
     }
     if (!guides.length) return;

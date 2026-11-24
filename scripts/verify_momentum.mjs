@@ -93,7 +93,7 @@ for (const missing of [
 assert.equal(momentum.datum({ rs: 99, rs5: 12, quoteLast: 75, high5d: 100, low5d: 50, turnoverWon: 1 }, '5d', 'rs5').rs, 12);
 assert.equal(momentum.datum({ rs: 99, quoteLast: 75, high5d: 100, low5d: 50, turnoverWon: 1 }, '5d', 'rs10'), null);
 assert.ok(source.includes('mm-chart-layout'));
-assert.ok(source.includes("['rs5', 'rs10', 'rs20', 'rs50']"));
+assert.ok(source.includes("['rs5', 'rs10', 'rs20', 'rs50', 'avg']"));
 
 const history = Array.from({ length: 120 }, (_, i) => ({
   high: i + 11,
@@ -128,7 +128,7 @@ for (const marker of [
   "mode5d: '5D BOX'",
   "mode10d: '10D BOX'",
   "mode20d: '20D BOX'",
-  "YMODES = ['5d', '10d', '20d']",
+  "YMODES = ['5d', '10d', '20d', '50d', 'avg']",
   "YMODE_STORAGE = 'im_mm_ymode'",
   "id: '5d'",
   "id: '10d'",
@@ -152,10 +152,9 @@ assert.ok(!source.includes("id: 'bb'"), '50D %b mode tab must be removed');
 assert.ok(!source.includes('modeBb'), '50D %b mode labels must be removed');
 assert.ok(!source.includes("mode === 'bb'"), 'bb branch must be removed from normalizeYMode');
 assert.ok(!source.includes("id: '120d'"), '120D BOX mode tab must be removed');
-assert.ok(!source.includes("id: '50d'"), '50D BOX mode tab must be removed');
+assert.ok(source.includes("id: '50d'"), '50D BOX mode tab must be available');
 assert.ok(!source.includes("mode120d:"), '120D BOX labels must be removed');
-assert.ok(!source.includes("mode50d:"), '50D BOX labels must be removed');
-assert.ok(source.includes("mode === '20d'"), '20d period branch required');
+assert.ok(source.includes("y50d: '50D BOX'"), '50D BOX label must be available');
 assert.ok(source.includes("mode20d: '20D BOX'"), '20D BOX labels required');
 
 const mapFiles = fs

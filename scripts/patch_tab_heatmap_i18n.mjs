@@ -67,6 +67,7 @@ for (const rel of MAPS) {
     /document\.getElementById\('tab-btn-heatmap'\)\.innerHTML = t\.tabHeatmap;/g,
     TAB_FALLBACK,
   );
+  if (rel === 'robot/korea_robot_map.html') c = c.replaceAll(TAB_HEATMAP_KO, '🔥 섹터 히트맵');
   fs.writeFileSync(p, c, 'utf8');
   console.log('patched', rel);
 }

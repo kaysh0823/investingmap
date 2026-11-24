@@ -19,7 +19,8 @@ assert.ok(!groups.holdings, 'retired holdings sector must not return');
 const source = read('js/map_momentum.js');
 const searchSource = read('js/map_tab_search.js');
 const ranks = ['rs5', 'rs10', 'rs20', 'rs50'];
-const modes = ['5d', '10d', '20d'];
+const xModes = [...ranks, 'avg'];
+const modes = ['5d', '10d', '20d', '50d', 'avg'];
 
 // Exercise the real private builders without adding test hooks to shipped JS.
 assert.equal(source.split('_test: {').length, 2, 'momentum test export anchor missing');
@@ -61,8 +62,8 @@ function assertLayout(document, container, label) {
   const row = x.closest('.mm-tab-search-row');
   assert.ok(row, `${label}: RS controls must share the top search row`);
   assert.equal(row.nextElementSibling, layout, `${label}: RS controls must stay above the chart`);
-  assert.deepEqual([...x.querySelectorAll('button')].map(b => b.dataset.mmRs), ranks, `${label}: four RS options`);
-  assert.deepEqual([...y.querySelectorAll('button')].map(b => b.dataset.mmMode), modes, `${label}: three BOX options`);
+  assert.deepEqual([...x.querySelectorAll('button')].map(b => b.dataset.mmRs), xModes, `${label}: RS options`);
+  assert.deepEqual([...y.querySelectorAll('button')].map(b => b.dataset.mmMode), modes, `${label}: BOX options`);
   for (const id of ['mm-rs-tabs', 'mm-mode-tabs']) {
     assert.equal(document.querySelectorAll('#' + id).length, 1, `${label}: duplicate ${id}`);
     assert.equal(document.querySelectorAll(`#${id} [aria-selected="true"]`).length, 1, `${label}: selected state`);
@@ -77,9 +78,10 @@ function assertLayout(document, container, label) {
 const fixture = {
   rs: 99, rs5: 12, rs10: 34, rs20: 56, rs50: 78,
   quoteLast: 75, high5d: 100, low5d: 50,
-  high10d: 125, low10d: 0, high20d: 150, low20d: 50, turnoverWon: 1e9,
+  high10d: 125, low10d: 0, high20d: 150, low20d: 50,
+  high50d: 125, low50d: 25, turnoverWon: 1e9,
 };
-const expectedPosition = { '5d': 50, '10d': 60, '20d': 25 };
+const expectedPosition = { '5d': 50, '10d': 60, '20d': 25, '50d': 50, avg: 44.5 };
 let combinations = 0;
 for (const rel of pages) {
   const html = read(rel);
@@ -104,7 +106,7 @@ for (const rel of pages) {
     for (const mode of modes) {
       h.document.querySelector(`[data-mm-mode="${mode}"]`).dispatchEvent(new h.Event('click', { bubbles: true }));
       h.refresh(lang);
-      for (const rank of ranks) {
+      for (const rank of xModes) {
         h.document.querySelector(`[data-mm-rs="${rank}"]`).dispatchEvent(new h.Event('click', { bubbles: true }));
         h.refresh(lang);
         assert.equal(h.saved.get('im_mm_ymode') ?? '5d', mode, `${rel}: BOX click/persistence`);
@@ -112,17 +114,18 @@ for (const rel of pages) {
         assert.equal(h.document.querySelector('#mm-mode-tabs [aria-selected="true"]').dataset.mmMode, mode);
         assert.equal(h.document.querySelector('#mm-rs-tabs [aria-selected="true"]').dataset.mmRs, rank);
         const datum = h.api.datum(fixture, h.api.getYMode(), h.api._test.currentX());
-        assert.equal(datum.rs, fixture[rank], `${rel}: selected RS must drive x`);
+        assert.ok(Math.abs(datum.rs - (rank === 'avg' ? 56 : fixture[rank])) < 1e-9, `${rel}: selected RS must drive x`);
         assert.equal(datum.position, expectedPosition[mode], `${rel}: selected BOX must drive y`);
-        assert.equal(h.api.datum({ ...fixture, [rank]: null }, mode, rank), null, `${rel}: no composite RS fallback`);
+        assert.equal(h.api.datum({ ...fixture, [rank === 'avg' ? 'rs50' : rank]: null }, mode, rank), null, `${rel}: missing RS data`);
         combinations++;
       }
     }
     assertLayout(h.document, h.container, `${rel}/${lang}/after switching`);
     const reloaded = mount(html, rel, h.saved);
     reloaded.refresh(lang);
-    assert.equal(reloaded.document.querySelector('#mm-rs-tabs [aria-selected="true"]').dataset.mmRs, 'rs50');
-    assert.equal(reloaded.document.querySelector('#mm-mode-tabs [aria-selected="true"]').dataset.mmMode, '20d');
+    assert.equal(reloaded.document.querySelector('#mm-rs-tabs [aria-selected="true"]').dataset.mmRs, 'avg');
+    assert.equal(reloaded.document.querySelector('#mm-mode-tabs [aria-selected="true"]').dataset.mmMode, 'avg');
+    assert.equal(reloaded.api.pricePosition({ ...fixture, high50d: null }, 'avg'), null);
   }
 }
 
