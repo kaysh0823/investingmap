@@ -11,6 +11,7 @@
   var PUBLIC_TABS = {
     heatmap: 1,
     momentum: 1,
+    'supply-matrix': 1,
     'volatility-candles': 1,
     volatility: 1,
     perfcalendar: 1,
@@ -85,6 +86,7 @@
     if (candlesEl && candlesEl.classList.contains('active')) return 'volatility-candles';
     var momentumEl = document.getElementById('tab-momentum');
     if (momentumEl && momentumEl.classList.contains('active')) return 'momentum';
+    if (document.getElementById('tab-supply-matrix')?.classList.contains('active')) return 'supply-matrix';
     var volatilityEl = document.getElementById('tab-volatility');
     if (volatilityEl && volatilityEl.classList.contains('active')) return 'volatility';
     var perfEl = document.getElementById('tab-perfcalendar');
@@ -211,6 +213,7 @@
       table: 'tab-btn-table',
       heatmap: 'tab-btn-heatmap',
       momentum: 'tab-btn-momentum',
+      'supply-matrix': 'tab-btn-supply-matrix',
       'volatility-candles': 'tab-btn-volatility-candles',
       volatility: 'tab-btn-volatility',
       perfcalendar: 'tab-btn-perfcalendar',

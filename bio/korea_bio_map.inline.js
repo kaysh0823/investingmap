@@ -787,6 +787,7 @@
       var candlesBtn = document.getElementById('tab-btn-volatility-candles');
       if (candlesBtn) candlesBtn.textContent = lang === 'en' ? '🕯️ Volatility candles' : '🕯️ 변동성 캔들';
       if (momentumBtn) momentumBtn.innerHTML = t.tabMomentum || (lang === 'en' ? '📊 Momentum matrix' : '📊 모멘텀 매트릭스');
+      document.getElementById('tab-btn-supply-matrix').textContent = lang === 'en' ? '📊 Supply matrix' : '📊 수급 매트릭스';
       var momentumHint = document.getElementById('momentum-hint');
       if (momentumHint) momentumHint.textContent = t.momentumHint || (lang === 'en' ? 'RS × 52W position · size = daily turnover · color = 1-day return' : 'RS × 주가 위치 · 크기 = 당일 거래대금 · 색 = 당일 등락률');
       var volatilityBtn = document.getElementById('tab-btn-volatility');
@@ -866,7 +867,7 @@
       buildMarketChips();
       buildSidebarLegend();
       renderTable();
-      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility-candles')?.classList.contains('active')) renderVolatilityCandles(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
+      if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-supply-matrix')?.classList.contains('active')) renderSupplyMatrix(); if (document.getElementById('tab-volatility-candles')?.classList.contains('active')) renderVolatilityCandles(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
       if (svgEl) {
         svgEl.selectAll('.node text')
           .text(d => (lang === 'en' ? (d.labelEn || d.label) : d.label));
@@ -1365,6 +1366,22 @@
       });
     }
 
+    function renderSupplyMatrix() {
+      if (!window.InvestingMapSupplyMatrix) return;
+      InvestingMapSupplyMatrix.render({
+        container: document.getElementById('supply-matrix-root'),
+        companies: koreanCompanies,
+        lang: lang,
+        onSelect: function (company) {
+          if (!window.InvestingMapCandleModal) return;
+          InvestingMapCandleModal.open({
+            ticker: company.ticker,
+            name: (lang === 'en' && company.nameEn) || company.name || company.nameKo || company.ticker
+          });
+        }
+      });
+    }
+
     function renderMomentum() {
       if (!window.InvestingMapMomentum) return;
       var el = document.getElementById('momentum-root');
@@ -1421,6 +1438,7 @@
       if (btn) btn.classList.add('active');
       if (tab === 'heatmap') setTimeout(renderHeatmap, 40);
       if (tab === 'momentum') setTimeout(renderMomentum, 40);
+      if (tab === 'supply-matrix') setTimeout(renderSupplyMatrix, 40);
       if (tab === 'volatility-candles') setTimeout(renderVolatilityCandles, 40);
       if (tab === 'volatility') setTimeout(renderVolatility, 40);
       if (tab === 'perfcalendar') setTimeout(renderPerfCalendar, 40);
@@ -1444,6 +1462,7 @@
           getCompanies: function () { return koreanCompanies; },
           renderTable: function () { renderTable(); },
           onQuotesReady: function () {
+            if (document.getElementById('tab-supply-matrix')?.classList.contains('active')) renderSupplyMatrix();
             if (window.InvestingMapNetmap && typeof InvestingMapNetmap.recolorNodes === 'function') InvestingMapNetmap.recolorNodes();
             function isActive(id) {
               var el = document.getElementById(id);
@@ -1477,7 +1496,7 @@
             imQuotesAsOf = '';
             updateQuotesAsofDisplay();
             renderTable();
-            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-volatility-candles')?.classList.contains('active')) renderVolatilityCandles(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
+            if (document.getElementById('tab-heatmap')?.classList.contains('active')) renderHeatmap(); if (document.getElementById('tab-momentum')?.classList.contains('active')) renderMomentum(); if (document.getElementById('tab-supply-matrix')?.classList.contains('active')) renderSupplyMatrix(); if (document.getElementById('tab-volatility-candles')?.classList.contains('active')) renderVolatilityCandles(); if (document.getElementById('tab-volatility')?.classList.contains('active')) renderVolatility(); if (document.getElementById('tab-perfcalendar')?.classList.contains('active')) renderPerfCalendar(); if (document.getElementById('tab-valuation')?.classList.contains('active')) renderValuation(); if (document.getElementById('tab-netmap')?.classList.contains('active')) { __imNetmapPainted = false; renderNetmap(true); }
           }
         };
       applyLang();

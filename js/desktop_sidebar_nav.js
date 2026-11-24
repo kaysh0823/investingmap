@@ -111,6 +111,7 @@
     if (
       t === 'heatmap' ||
       t === 'momentum' ||
+      t === 'supply-matrix' ||
       t === 'volatility' ||
       t === 'perfcalendar' ||
       t === 'valuation' ||
@@ -147,7 +148,7 @@
       var cleaned = String(href || '').replace(/([?&])ticker=[^&]*/g, '$1').replace(/[?&]$/, '');
       if (tab === 'table') {
         return cleaned
-          .replace(/([?&])tab=(heatmap|momentum|volatility-candles|volatility|perfcalendar|valuation|netmap|graph|table)\b/g, '$1')
+          .replace(/([?&])tab=(heatmap|momentum|supply-matrix|volatility-candles|volatility|perfcalendar|valuation|netmap|graph|table)\b/g, '$1')
           .replace(/[?&]$/, '');
       }
       try {

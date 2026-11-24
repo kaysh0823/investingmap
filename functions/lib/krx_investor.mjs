@@ -13,14 +13,15 @@ import {
   validateKrxParsedRows,
 } from './krx_data_session.mjs';
 import { normalizeKrxCode } from './krx_code.mjs';
+import { SUPPLY_INSTITUTION_CODE } from './supply_investor_codes.mjs';
 
 const KRX_OTP_URL = 'https://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd';
 const KRX_DOWNLOAD_URL = 'https://data.krx.co.kr/comm/fileDn/download_csv/download.cmd';
 const KRX_JSON_URL = 'https://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd';
 const KRX_BLD = 'dbms/MDC/STAT/standard/MDCSTAT02401';
 
-/** OSC Phase 1: trust, PE, pension, foreign. */
-export const INVESTOR_NET_CODES = ['3000', '3100', '6000', '9000'];
+/** Chart components plus the official institution aggregate for the supply matrix. */
+export const INVESTOR_NET_CODES = ['3000', '3100', '6000', '9000', SUPPLY_INSTITUTION_CODE];
 
 function decodeCsvBuffer(buf) {
   if (!buf || !buf.length) return '';

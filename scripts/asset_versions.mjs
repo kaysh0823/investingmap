@@ -33,6 +33,8 @@ export const JS_FILES = [
   'js/map_mobile_table.js',
   'js/map_mobile_ux.js',
   'js/map_momentum.js',
+  'js/map_supply_matrix.js',
+  'js/map_supply_matrix.css',
   'js/map_perfcalendar.js',
   'js/map_perfcalendar_years.js',
   'js/map_tab_search.js',
@@ -83,7 +85,7 @@ export function clearAssetVersionCache() {
 export function stampAssetVersions(html) {
   // Match one or more ?v= suffixes so prior double-stamps collapse to a single hash.
   return String(html).replace(
-    /((?:\.\.\/|\/)?js\/([\w\-]+\.js))(?:\?v=[\w.\-]+)+/g,
+    /((?:\.\.\/|\/)?js\/([\w\-]+\.(?:js|css)))(?:\?v=[\w.\-]+)+/g,
     (full, prefixPath, fileName) => {
       const rel = `js/${fileName}`;
       if (!JS_SET.has(rel)) return full;

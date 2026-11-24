@@ -104,7 +104,9 @@ for (const map of new Set(Object.values(groups).map(g => g.meta.map))) {
   const button = document.getElementById('tab-btn-volatility-candles');
   assert.ok(button, map);
   assert.ok(button.textContent.includes('변동성 측정'), map + ': renamed measurement tab');
-  assert.equal(document.getElementById('tab-btn-momentum').nextElementSibling, button, map + ': tab order');
+  const supplyButton = document.getElementById('tab-btn-momentum').nextElementSibling;
+  assert.equal(supplyButton?.id, 'tab-btn-supply-matrix', map + ': supply follows momentum');
+  assert.equal(supplyButton.nextElementSibling?.id, button.id, map + ': volatility follows supply');
   assert.ok(document.querySelector('#tab-volatility-candles #mm-volatility'), map + ': standalone panel');
   assert.equal(document.querySelector('#tab-momentum #mm-volatility'), null);
   assert.equal(document.querySelectorAll('script[src*="map_volatility_candles.js"]').length, 1);
