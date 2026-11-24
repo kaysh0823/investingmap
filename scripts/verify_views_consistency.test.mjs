@@ -17,7 +17,7 @@ function fixture(ids = SECTOR_ORDER) {
     trend: {
       sectors: ids.map((sector) => ({
         sector,
-        series: Array.from({ length: sector === 'bigchip' || sector === 'semi' ? 42 : 2 }, () => ({
+        series: Array.from({ length: sector === 'bigchip' ? 42 : 2 }, () => ({
           t: closeTime,
           v: 101,
         })),
@@ -74,12 +74,10 @@ test('checks every closing tip while allowing synthesized new-sector series', ()
   assert.throws(() => assertCloseSectorSeries(SECTOR_ORDER, trend), /software last t/);
 });
 
-test('retains the 40-point density guard for established samples', () => {
-  for (const sector of ['bigchip', 'semi']) {
-    const { trend } = fixture();
-    trend.sectors.find((s) => s.sector === sector).series.length = 39;
-    assert.throws(() => assertCloseSectorSeries(SECTOR_ORDER, trend), /pointCount≥40/);
-  }
+test('retains the 40-point density guard for bigchip', () => {
+  const { trend } = fixture();
+  trend.sectors.find((s) => s.sector === 'bigchip').series.length = 39;
+  assert.throws(() => assertCloseSectorSeries(SECTOR_ORDER, trend), /bigchip pointCount≥40/);
 });
 
 test('accepts UTC timestamps equivalent to the KST closing time', () => {

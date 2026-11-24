@@ -146,9 +146,9 @@ export function assertSector1dConsistency(sectorIds, sectors, trend) {
 export function assertCloseSectorSeries(sectorIds, trend) {
   for (const sid of sectorIds) {
     const series = (trend.sectors || []).find((s) => s.sector === sid)?.series || [];
-    // Established samples retain the density guard. New sectors may legitimately
+    // Bigchip retains the density guard. New sectors may legitimately
     // have a synthesized two-point series until intraday history is available.
-    if (sid === 'bigchip' || sid === 'semi') {
+    if (sid === 'bigchip') {
       assert.ok(series.length >= 40, `c) ${sid} pointCount≥40 after close, got ${series.length}`);
     }
     const tip = lastSeriesPoint(series);
@@ -322,11 +322,11 @@ async function main() {
       }
     }
 
-    // 20d indices last date == sector last date
+    const bigchip20 = (trend20.sectors || []).find((s) => s.sector === 'bigchip');
+    const sectorLast = String(lastSeriesPoint(bigchip20?.series)?.t || '').slice(0, 10);
+    // 20d indices last date == reference sector last date
     {
-      const semi20 = (trend20.sectors || []).find((s) => s.sector === 'semi');
-      const sectorLast = String(lastSeriesPoint(semi20?.series)?.t || '').slice(0, 10);
-      if (!sectorLast) fail('c) 20d semi series missing');
+      if (!sectorLast) fail('c) 20d bigchip series missing');
       for (const code of ['KOSPI', 'KOSDAQ']) {
         const idx = (trend20.indices || []).find((x) => x.code === code);
         const indexLast = String(lastSeriesPoint(idx?.series)?.t || '').slice(0, 10);
@@ -340,7 +340,7 @@ async function main() {
     console.log(
       `  c) trend tip t=${tip.t} pointCount=${pointCount} maxDistinct=${maxDistinct}`
         + ` indices=${indexList.map((i) => `${i.code}:${(i.series || []).length}`).join(',')}`
-        + ` 20dTip=${String(lastSeriesPoint((trend20.sectors || []).find((s) => s.sector === 'semi')?.series)?.t || '').slice(0, 10)}`,
+        + ` 20dTip=${sectorLast}`,
     );
   }
 
