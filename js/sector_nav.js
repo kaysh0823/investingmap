@@ -58,6 +58,7 @@
   var PUBLIC_TABS = {
     heatmap: 1,
     momentum: 1,
+    'supply-matrix': 1,
     volatility: 1,
     perfcalendar: 1,
     valuation: 1,
@@ -101,7 +102,7 @@
       var cleaned = String(href || '').replace(/([?&])ticker=[^&]*/g, '$1').replace(/[?&]$/, '');
       if (tab === 'table') {
         return cleaned
-          .replace(/([?&])tab=(heatmap|momentum|volatility-candles|volatility|perfcalendar|valuation|netmap|graph|table)\b/g, '$1')
+          .replace(/([?&])tab=(heatmap|momentum|supply-matrix|volatility-candles|volatility|perfcalendar|valuation|netmap|graph|table)\b/g, '$1')
           .replace(/[?&]$/, '');
       }
       try {

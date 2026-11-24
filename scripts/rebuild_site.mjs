@@ -170,5 +170,6 @@ run('node scripts/patch_volatility_candles_tab.mjs', 'standalone volatility cand
 run('node scripts/build_semiconductor_sectors.mjs', 'refresh split semiconductor maps');
 run('node scripts/build_content_sectors.mjs', 'refresh split content maps');
 run('node scripts/build_finance_sectors.mjs', 'refresh split finance maps');
+run('node scripts/patch_supply_matrix_tab.mjs', 'supply matrix tab');
 run('node scripts/patch_asset_versions.mjs', 'content-hash ?v= for /js assets');
 console.log('\nOK rebuild_site');
